@@ -10,7 +10,7 @@ In case you aren't familiar, here's how the folks at GitHub [define a pull reque
 
 > Pull requests let you tell others about changes you've pushed to a branch in a repository on GitHub. Once a pull request is opened, you can discuss and review the potential changes with collaborators and add follow-up commits before your changes are merged into the base branch.
 
-Gatsby uses the PR process to review and test changes before they’re added to Gatsby’s GitHub repository. Anyone can open a pull request. The same process is used for all contributors, whether this is your first open source contribution or you’re a core member of the Gatsby team.
+Gatsby uses the PR process to review and test changes before they're added to Gatsby's GitHub repository. Anyone can open a pull request. The same process is used for all contributors, whether this is your first open source contribution or you're a core member of the Gatsby team.
 
 When someone wants to contribute to Gatsby, they open a request to _pull_ their code into the repo. Depending on the type of change, PRs are categorized into:
 

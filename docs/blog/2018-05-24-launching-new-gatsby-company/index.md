@@ -5,21 +5,21 @@ author: "Kyle Mathews"
 tags: ["gatsby-inc"]
 ---
 
-Together with my co-founder, [Sam Bhagwat](https://twitter.com/calcsam), I’m thrilled to announce the formation of [Gatsby Inc.](https://www.gatsbyjs.com/) Based on the open source project Gatsby I founded, Gatsby the company will make feature-rich and blazing-fast websites easier to build and run.
+Together with my co-founder, [Sam Bhagwat](https://twitter.com/calcsam), I'm thrilled to announce the formation of [Gatsby Inc.](https://www.gatsbyjs.com/) Based on the open source project Gatsby I founded, Gatsby the company will make feature-rich and blazing-fast websites easier to build and run.
 
-First of all, if you haven’t used Gatsby yet, what is it? Gatsby:
+First of all, if you haven't used Gatsby yet, what is it? Gatsby:
 
 - is a blazing fast static site generator for React
 - is a powerful and flexible modern website framework that simplifies every step of starting, developing and running websites
 - helps you leverage open source innovations in the React, NPM, and Gatsby communities for your web projects
 - lets you pull data into pages from WordPress, Drupal, Contentful, markdown—and any other data source you can imagine
-- compiles and optimizes your site’s code to make your sites lightning fast—even on mobile
+- compiles and optimizes your site's code to make your sites lightning fast—even on mobile
 
 Gatsby is used by tens of thousands of developers and organizations and is downloaded nearly ½ million times per month.
 
 Follow our [getting started instructions](/docs/) to try out Gatsby in less than 5 minutes!
 
-I’ll get to the new company in a bit, but first, let me tell the story of how Gatsby came to be.
+I'll get to the new company in a bit, but first, let me tell the story of how Gatsby came to be.
 
 ## Origins of Gatsby
 
@@ -35,7 +35,7 @@ But after years of building Drupal sites, I started feeling the pull of the emer
 
 Like most people, I was blown away when I first tried Gmail. How was an application running in my browser faster to load and use than my desktop email app?
 
-During my years building Drupal sites, I’d occasionally cast envious eyes at apps like Gmail, wishing I could work on something like that. But I could never quite figure out how they worked. JavaScript was a second-class citizen in Drupal those days, and I spent 99% of my time writing PHP.
+During my years building Drupal sites, I'd occasionally cast envious eyes at apps like Gmail, wishing I could work on something like that. But I could never quite figure out how they worked. JavaScript was a second-class citizen in Drupal those days, and I spent 99% of my time writing PHP.
 
 ### Backbone.js/Node.js/NPM
 
@@ -55,7 +55,7 @@ I was hooked on being able to ship production code so quickly. Life was good.
 
 Then in 2013, React was released.
 
-I first heard about React from [David Nolen’s blog post introducing his ClojureScript wrapper of React Om](http://swannodette.github.io/2013/12/17/the-future-of-javascript-mvcs). I was completely fascinated by his analysis; his identification of DOM manipulation code as a major contributor to application complexity and slowdowns resonated with me. I started reading everything I could find on React and soon became a huge fan.
+I first heard about React from [David Nolen's blog post introducing his ClojureScript wrapper of React Om](http://swannodette.github.io/2013/12/17/the-future-of-javascript-mvcs). I was completely fascinated by his analysis; his identification of DOM manipulation code as a major contributor to application complexity and slowdowns resonated with me. I started reading everything I could find on React and soon became a huge fan.
 
 Early in 2014, I left Pantheon to explore new opportunities. I dove deeper into React and built a number of sample applications and was astounded at how productive I was. Problems that used to take me weeks to solve in Backbone.js took me hours in React. Not only was I productive; my code felt remarkably simple. With Backbone.js, I always felt I was one or two slip-ups from the whole application spiraling out of control. With React, elegant and simple solutions seemed to come naturally from using the library. Again, I could feel things in web land were changing in a very big way.
 
@@ -63,7 +63,7 @@ Early in 2014, I left Pantheon to explore new opportunities. I dove deeper into 
 
 A friend and I decided to work on a startup idea using React to build data-driven landing pages for sales reps.
 
-During this time, I read two articles that had an enormous impact on me—“[The Log: What every software engineer should know about real-time data's unifying abstraction](https://engineering.linkedin.com/distributed-systems/log-what-every-software-engineer-should-know-about-real-time-datas-unifying)” and “[Turning the database inside-out with Apache Samza](https://www.confluent.io/blog/turning-the-database-inside-out-with-apache-samza/).” Databases and distributed systems finally clicked for me, and I obsessed over how to implement event sourcing for my startup. The latter article’s elegant critique of caching as an inevitable source of bugs and complexity and its suggestion to use materialized views generated through event sourcing sunk deep.
+During this time, I read two articles that had an enormous impact on me—"[The Log: What every software engineer should know about real-time data's unifying abstraction](https://engineering.linkedin.com/distributed-systems/log-what-every-software-engineer-should-know-about-real-time-datas-unifying)" and "[Turning the database inside-out with Apache Samza](https://www.confluent.io/blog/turning-the-database-inside-out-with-apache-samza/)." Databases and distributed systems finally clicked for me, and I obsessed over how to implement event sourcing for my startup. The latter article's elegant critique of caching as an inevitable source of bugs and complexity and its suggestion to use materialized views generated through event sourcing sunk deep.
 
 The traditional batch processing mode of computing—which reached its pinnacle with Hadoop—was taking heavy criticism as more and more applications demanded real-time data processing. The era of Big Data had arrived as the volume of data rolling through systems reached stratospheric levels at large numbers of companies. Kafka and stream processing frameworks like Spark were getting lots of attention.
 
@@ -73,7 +73,7 @@ Meanwhile, I was having lots of fun in my startup optimizing my landing pages. I
 
 We reached the point where we needed a website for the startup and after having focused on web apps for so long, all of the solutions in the content website world felt out of date.
 
-Spinning up a local DB & server felt like a return to 2006, while template-based site generation felt far inferior to React’s elegant component model.
+Spinning up a local DB & server felt like a return to 2006, while template-based site generation felt far inferior to React's elegant component model.
 
 After some exploration with React server rendering for our app, I realized that React could actually be used as the basis for a static site generator. I got really excited about the potential and started scribbling notes in my notebook from time to time. Eventually, I took a week to build this out and launched Gatsby in late May 2015.
 To my surprise and delight, people started using Gatsby almost immediately after I open sourced it. I spoke about Gatsby at the React conference in January of 2016 and was surprised at how many people knew about it and were using it.
@@ -86,15 +86,15 @@ These developers realized that the scaling and performance challenges faced by t
 
 They also like static sites generators because they easily leverage modern engineering ideas like Git, cheap development environments, continuous integration and deployment, open source innovations, modern JavaScript tooling and frameworks that dramatically improve productivity and developer happiness.
 
-Static sites let you focus on what’s unique to your site—components, data structures, and design.
+Static sites let you focus on what's unique to your site—components, data structures, and design.
 
 ### Limitations of static site generators
 
-But static sites, despite how much developers love them, have never gained widespread usage. They have real limitations in real-world use cases—they can’t handle frequent content updates and can’t scale to large and complex sites.
+But static sites, despite how much developers love them, have never gained widespread usage. They have real limitations in real-world use cases—they can't handle frequent content updates and can't scale to large and complex sites.
 
 ### Rebuild Gatsby on a stream processing architecture to eliminate the build step
 
-As I thought deeply about this problem, it occurred to me that there were strong parallels between this problem and everything I’d learned about event sourcing and building cloud-native applications.
+As I thought deeply about this problem, it occurred to me that there were strong parallels between this problem and everything I'd learned about event sourcing and building cloud-native applications.
 
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Static sites are the materialized views of websites.</p>&mdash; Kyle Mathews (@kylemathews) <a href="https://twitter.com/kylemathews/status/825512417337544705?ref_src=twsrc%5Etfw">January 29, 2017</a></blockquote>
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Event sourcing potentially fantastic model for static site builder. Continually rebuilding website on events.</p>&mdash; Kyle Mathews (@kylemathews) <a href="https://twitter.com/kylemathews/status/825513977329307648?ref_src=twsrc%5Etfw">January 29, 2017</a></blockquote>
@@ -118,11 +118,11 @@ After spending fall 2016, and most of 2017 consulting with companies around Gats
 
 We were lucky to find some great investors, led by [Dan Scholnick of Trinity Ventures](http://www.trinityventures.com/team/dan-scholnick/), who shared our vision for new cloud-native website infrastructure and has extensive experience investing in and working with open source & cloud infrastructure startups like New Relic, Docker, Meteor, InfluxData and more, to back us with \$3.8M in seed funding.
 
-I want to emphasize that this new startup doesn’t signal any move away from open source. I’ve been heavily involved in open source communities since I started programming 12 years ago and strongly believe it’s the best way to build software. We will be building cloud services for Gatsby but Gatsby itself will remain 100% open source as will most of what we intend to do. What the investment and company will enable is a much larger amount of effort towards improving Gatsby core and its surrounding ecosystem. Several core contributors have already joined to work full-time on Gatsby. We’ve been able to work with upstreams to make targeted improvements that benefit not just Gatsby but the whole frontend ecosystem. And as our company grows, we’ll be able to proportionally increase our investment in open source.
+I want to emphasize that this new startup doesn't signal any move away from open source. I've been heavily involved in open source communities since I started programming 12 years ago and strongly believe it's the best way to build software. We will be building cloud services for Gatsby but Gatsby itself will remain 100% open source as will most of what we intend to do. What the investment and company will enable is a much larger amount of effort towards improving Gatsby core and its surrounding ecosystem. Several core contributors have already joined to work full-time on Gatsby. We've been able to work with upstreams to make targeted improvements that benefit not just Gatsby but the whole frontend ecosystem. And as our company grows, we'll be able to proportionally increase our investment in open source.
 
-Gatsby, the company, is just getting off the ground, but, since the open source project is widely used, we wanted to talk about it now vs. keeping it a secret. If you’re a company exploring building some of your websites with React and headless CMSs, we would love to talk with you. If you are an engineer interested in helping us build the future of web development, we’d love to talk with you as well.
+Gatsby, the company, is just getting off the ground, but, since the open source project is widely used, we wanted to talk about it now vs. keeping it a secret. If you're a company exploring building some of your websites with React and headless CMSs, we would love to talk with you. If you are an engineer interested in helping us build the future of web development, we'd love to talk with you as well.
 
-It’s been an amazing journey so far. Wish Sam and I and our new colleagues luck on this new adventure.
+It's been an amazing journey so far. Wish Sam and I and our new colleagues luck on this new adventure.
 
 ### Learn more about Gatsby
 

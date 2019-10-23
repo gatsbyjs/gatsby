@@ -8,7 +8,7 @@ tags:
   - theme-ui
 ---
 
-If you’re looking into using [Theme UI](https://theme-ui.com/) , you’ll come across some (potentially) unfamiliar looking syntax:
+If you're looking into using [Theme UI](https://theme-ui.com/) , you'll come across some (potentially) unfamiliar looking syntax:
 
 ```javascript
 /** @jsx jsx */
@@ -23,11 +23,11 @@ This is a JSX pragma. What the heck is a JSX pragma? I had heard the phrase, but
 
 In any software project or framework, it can be difficult to define where documentation should start or end. While you might not need to know exactly what a custom JSX pragma is in order to use Theme UI, for example, maybe you want to.
 
-🤔 If we exclude it, will that be distracting? “What the heck is that? I’m going to go down a Google rabbit hole trying to find out.”
+🤔 If we exclude it, will that be distracting? "What the heck is that? I'm going to go down a Google rabbit hole trying to find out."
 
-🤯 If we include it, will it be overwhelming? “I just want to style a theme, why are you talking to me about pragmas??”
+🤯 If we include it, will it be overwhelming? "I just want to style a theme, why are you talking to me about pragmas??"
 
-So, a happy medium. If you **are** interested, here’s a blog post for you!
+So, a happy medium. If you **are** interested, here's a blog post for you!
 
 ## What is a pragma?
 
@@ -37,7 +37,7 @@ An example of this in JavaScript is `'use strict'` mode. `'use strict'` is a dir
 
 ## What is JSX pragma?
 
-JSX syntax on its own isn’t readable by the browser. In order to ship something readable to the browser, JSX needs to be converted to plain JavaScript.
+JSX syntax on its own isn't readable by the browser. In order to ship something readable to the browser, JSX needs to be converted to plain JavaScript.
 
 Most React-based frameworks (like Gatsby), come with tooling already set up to support this conversion (usually Babel). How does that tooling know how to transform JSX? By default, [the Babel plugin](https://babeljs.io/docs/en/babel-plugin-transform-react-jsx) will convert JSX into JavaScript that calls the `React.createElement` function.
 

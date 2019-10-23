@@ -10,7 +10,7 @@ There are three major steps:
 
 1.  If this is your first contribution to the Gatsby open source repo, follow the [Contribution guidelines](/contributing/code-contributions/).
 
-2.  If there is a chance that someone else could have already submitted the site, please make sure no one else has already submitted it by searching existing PRs: https://github.com/gatsbyjs/gatsby/pulls
+2.  If there is a chance that someone else could have already submitted the site, please make sure no one else has already submitted it by searching [existing PRs](https://github.com/gatsbyjs/gatsby/pulls)
 
 3.  Edit the [`sites.yml`](https://github.com/gatsbyjs/gatsby/blob/master/docs/sites.yml) file by adding your submission to the bottom of the list of sites in the following format:
 
@@ -120,7 +120,7 @@ Featured sites will be chosen quarterly based on the following criteria:
 
 #### How many can be featured at a time?
 
-9, since that’s what can fit on one page of the site showcase
+9, since that's what can fit on one page of the site showcase
 
 #### How to set a site as featured
 

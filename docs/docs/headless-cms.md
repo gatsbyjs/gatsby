@@ -7,7 +7,7 @@ A _headless CMS_ is content management software that enables writers to produce 
 
 A traditional, monolithic CMS is responsible for both the backend management of content, and serving that content to end users. In contrast, a headless CMS is decoupled from frontend concerns, which frees developers to build rich experiences for end users, using the best technology available.
 
-Many content management systems (CMS) now support a “headless” or “decoupled” mode, which is perfect for Gatsby sites.
+Many content management systems (CMS) now support a "headless" or "decoupled" mode, which is perfect for Gatsby sites.
 
 Through use of [source plugins](/plugins/?=source), Gatsby has support for dozens of headless CMS options, allowing your content team the comfort and familiarity of its preferred admin interface, and your development team the improved developer experience and performance gains of using Gatsby, GraphQL, and React to build the frontend.
 
@@ -46,6 +46,6 @@ Here are more resources for guides, plugins, and starters for CMS systems you ca
 
 ## How to add new guides to this section
 
-If you don’t see your preferred CMS in this list, you can [write a new guide yourself](/contributing/how-to-contribute/) or [open an issue to request it](https://github.com/gatsbyjs/gatsby/issues/new/choose).
+If you don't see your preferred CMS in this list, you can [write a new guide yourself](/contributing/how-to-contribute/) or [open an issue to request it](https://github.com/gatsbyjs/gatsby/issues/new/choose).
 
 You can also [write your own source plugin](/docs/creating-a-source-plugin/) to integrate Gatsby with a CMS that is not in the list.

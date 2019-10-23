@@ -11,11 +11,11 @@ excerpt: A five minute starter for Gatsby and Contentful
 
 _This blog post was originally posted on the [Contentful Docs](https://www.contentful.com/r/knowledgebase/gatsbyjs-and-contentful-in-five-minutes/)_
 
-Working with React and having an emphasis on speedy performance, Gatsby is a promising static site generator that allows you to connect your projects to a variety of APIs and data sources; including Contentful’s content infrastructure.
+Working with React and having an emphasis on speedy performance, Gatsby is a promising static site generator that allows you to connect your projects to a variety of APIs and data sources; including Contentful's content infrastructure.
 
 This piece will walk you through getting your Gatsby website up and running with Contentful. Contentful makes it easy for you to focus on developing beautiful, well-performing websites while we deliver the content - this makes us a great companion to the full-fledged static content authoring experience offered by Gatsby.
 
-Here’s an overview of what’s involved:
+Here's an overview of what's involved:
 
 - Create a free Contentful account
 - Clone a sample repo
@@ -66,11 +66,11 @@ Before getting to the exciting part of setting up your website, you first need t
 
 Head over to your Space Settings dropdown menu and navigate to the APIs section. From there, navigate to the tab for the API token you would like to generate.
 
-The Content Management API is used for write access to your space, so keep the generated token safe and private. Hit "Generate Personal Token", give it a name and click “Generate”. Copy the token value and keep it safe and private - this is the only time you’ll be able to view it in your dashboard.
+The Content Management API is used for write access to your space, so keep the generated token safe and private. Hit "Generate Personal Token", give it a name and click "Generate". Copy the token value and keep it safe and private - this is the only time you'll be able to view it in your dashboard.
 
 ![Generating a personal access token](access_token.png)
 
-The Content Delivery API provides read-only access to your data and is one of the ways we deliver content to your website. Content is served via our Content Delivery Network (CDN). Click "Add API key" in the Content Delivery/Preview tab area. Grab the Space ID and personal Content Delivery API access token - you’ll need this in a bit.
+The Content Delivery API provides read-only access to your data and is one of the ways we deliver content to your website. Content is served via our Content Delivery Network (CDN). Click "Add API key" in the Content Delivery/Preview tab area. Grab the Space ID and personal Content Delivery API access token - you'll need this in a bit.
 
 The Content Preview API works much like the Content Delivery API, except it shows content internally for you to preview and hence does not use the CDN to serve content; since viewing is only limited to you, the previewing user. Creating an API key is the same here as you did with Content Delivery.
 
@@ -98,7 +98,7 @@ After that, it writes the credentials you provided into a file named .contentful
 
 Using the credentials in the .contentful.json file, [content can now be imported](https://www.contentful.com/developers/docs/tutorials/general/import-and-export/) into your space to being displayed on your website via our API.
 
-###It’s ready, let’s publish
+###It's ready, let's publish
 
 Time to check out your new website - preview changes in a local environment by running your project using the npm run dev command. This uses the [Contentful Preview API](https://www.contentful.com/developers/docs/references/content-preview-api/) to show unpublished content as if they were already published - perfect for a development or staging environment.
 
@@ -114,7 +114,7 @@ Contentful ensures your website and its users can access your content quickly an
 
 ###Summary
 
-That’s a quick overview of how to get your website up and running from scratch using Contentful and Gatsby.
+That's a quick overview of how to get your website up and running from scratch using Contentful and Gatsby.
 
 Contentful's platform offers speed, flexibility, and ease of integration with your code, supporting any stack you use with SDKs for common languages like [JavaScript](https://www.contentful.com/developers/docs/javascript/sdks/), [Python](https://www.contentful.com/developers/docs/python/sdks/), and [PHP](https://www.contentful.com/developers/docs/php/sdks/). Unlike a CMS, Contentful provides you with separation between content and presentation, allowing you to focus on developing your website and leave content delivery to Contentful.
 

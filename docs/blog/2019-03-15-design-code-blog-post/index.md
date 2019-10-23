@@ -12,7 +12,7 @@ When [Design+Code](https://designcode.io/) needed to rebuild their website to fo
 
 Design+Code started in 2015 when Meng To began with a digital book on designing iOS apps and Sketch. With Swift, Design+Code taught how to build the real iOS app from the app itself. This would serve as the foundation for future Design+Code courses – teaching how to build real, live apps, but in a compelling and design-focused way. The Design+Code React course has become their most popular course by far, and teaches how to build a production website (designcode.io) for designers and beginners. It goes from basic React concepts all the way to adding content with Contentful, to deployment and accepting payments. There have been some beautiful sites from students who've taken the course (such as [Cyfa](https://cyfa.io/)).
 
-#### Example of a student-built website, Cyfa
+## Example of a student-built website, Cyfa
 
 ![](./images/cyfa.png)
 
@@ -24,7 +24,7 @@ We needed a new CMS to handle the amount of content we were creating and a more 
 
 ### **Learn from Doing**
 
-The Design+Code team chose Gatsby for its out-of-the-box support for page routing and its compatibility with GraphQL. Thomas also acknowledges they were well aware of Gatsby’s emerging popularity in the React ecosystem. Gatsby’s signature simplicity of starting up a new website with its variety of starter templates ticked off even more extras they were looking for.
+The Design+Code team chose Gatsby for its out-of-the-box support for page routing and its compatibility with GraphQL. Thomas also acknowledges they were well aware of Gatsby's emerging popularity in the React ecosystem. Gatsby's signature simplicity of starting up a new website with its variety of starter templates ticked off even more extras they were looking for.
 
 AND, not to be overlooked, they wanted to be on the leading-side of offering Gatsby-build training.
 

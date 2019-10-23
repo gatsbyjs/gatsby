@@ -100,7 +100,7 @@ Testing out unpublished packages locally can be tricky. We have just the tool to
 
 Say hello to your new best friend, `gatsby-dev-cli`.
 
-#### gatsby-dev-cli
+#### `gatsby-dev-cli`
 
 `gatsby-dev-cli` is a command-line tool for local Gatsby development. When making changes in Gatsby packages, this helps copy changes in the packages to a Gatsby site that you can test your changes on.
 
@@ -116,17 +116,17 @@ Let's look at some examples of good and bad PR titles:
 
 #### Good PR Titles ✅
 
-- chore(docs): Fix links in contributing page
-- feat(gatsby): Add support for per page manifests
-- fix(gatsby-plugin-sharp): Ensure images exist before attempting conversion
+- `chore(docs): Fix links in contributing page`
+- `feat(gatsby): Add support for per page manifests`
+- `fix(gatsby-plugin-sharp): Ensure images exist before attempting conversion`
 
 These are good PR titles because they are concise, specific and use the [conventional commit](https://www.conventionalcommits.org/en/v1.0.0-beta.3) format.
 
 #### Bad PR Titles ❌
 
-- new tests
-- add support for my new cms
-- fix bug in gatsby
+- `new tests`
+- `add support for my new cms`
+- `fix bug in gatsby`
 
 These are bad PR titles because they are generic, don't communicate the change properly and don't use the conventional commit format.
 
@@ -154,8 +154,8 @@ Every PR opened in the repository needs to be approved before it can be merged. 
 
 Typically this is:
 
-- **gatsbyjs/core** for Code
-- **gatsbyjs/docs** for Documentation
+- `gatsbyjs/core` for Code
+- `gatsbyjs/docs` for Documentation
 
 We also have `CODEOWNERS` set on different parts of the repo and an approval by someone in the `CODEOWNERS` for the file(s) the PR is changing can also suffice.
 

@@ -6,7 +6,7 @@ Markdown is a very common way to write content in Gatsby posts and pages. This g
 
 ## Headings
 
-```
+```markdown
 # heading 1
 ## heading 2
 ### heading 3
@@ -57,7 +57,7 @@ Here's how those tags render in HTML:
 
 - can use `*`, `-`, or `+` for each list item
 
-```
+```markdown
 * Gatsby
   * docs
 - Gatsby
@@ -71,7 +71,7 @@ How unordered lists are rendered in HTML:
 - Gatsby
   - docs
 
-* Gatsby
+- Gatsby
   - docs
 
 - Gatsby
@@ -82,7 +82,7 @@ How unordered lists are rendered in HTML:
 - number and period for each list item
 - using `1.` for each item can automatically increment depending on the content
 
-```
+```markdown
   1. One
   1. Two
   1. Three
@@ -98,7 +98,7 @@ How unordered lists are rendered in HTML:
 
 Links in Markdown use this format. URLs can be relative or remote:
 
-```
+```markdown
 [Text](url)
 ```
 
@@ -108,7 +108,7 @@ Example of a link rendering in HTML:
 
 ### Image with alt text
 
-```
+```markdown
 ![alt text](path-to-image)
 ```
 
@@ -116,7 +116,7 @@ Example of a link rendering in HTML:
 
 This pattern is appropriate for [decorative or repetitive images](https://www.w3.org/WAI/tutorials/images/decision-tree/):
 
-```
+```markdown
 ![](path-to-image)
 ```
 
@@ -127,7 +127,7 @@ This pattern is appropriate for [decorative or repetitive images](https://www.w3
 - It is recommended to place `>` before each line
 - You can use other Markdown syntax inside blockquotes
 
-```
+```markdown
 > blockquote
 >
 > > nested blockquote
@@ -173,7 +173,7 @@ This pattern is appropriate for [decorative or repetitive images](https://www.w3
   - At the top of the file
   - Valid YAML
   - Between triple dashed lines
-  ```
+  ```markdown
   ---
   title: My Frontmatter Title
   example_boolean: true
@@ -182,14 +182,14 @@ This pattern is appropriate for [decorative or repetitive images](https://www.w3
 
 ## Frontmatter + MDX example
 
-```
+```markdown
 ---
 description: A simple example of a description in frontmatter
 ---
 
 import { Chart } from '../components/chart'
 
-# Here’s a chart
+# Here's a chart
 
 The chart is rendered inside our MDX document.
 
@@ -198,5 +198,5 @@ The chart is rendered inside our MDX document.
 
 ## Helpful resources
 
-- https://daringfireball.net/projects/markdown/syntax
-- https://www.markdownguide.org/basic-syntax
+- <https://daringfireball.net/projects/markdown/syntax>
+- <https://www.markdownguide.org/basic-syntax>

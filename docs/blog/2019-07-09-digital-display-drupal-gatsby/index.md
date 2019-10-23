@@ -26,11 +26,11 @@ Sandy Springs needed a better way to publish messages across many content channe
 
 Sandy Springs came to [Mediacurrent](https://www.mediacurrent.com/?utm_source=gatsbyjs&utm_medium=blog&utm_campaign=partners2019&utm_content=mediacurrent) with a challenge: redesign an existing website to promote City Springs and use Drupal 8 to share event data with digital signage as well as other information systems in the future.
 
-## Mediacurrent’s Solution
+## Mediacurrent's Solution
 
-A decoupled approach, where front end templating is separate from the content management system and database was required to achieve a unified system. Proven as a powerful decoupled CMS, Drupal replaced the city’s existing WordPress site.
+A decoupled approach, where front end templating is separate from the content management system and database was required to achieve a unified system. Proven as a powerful decoupled CMS, Drupal replaced the city's existing WordPress site.
 
-On the back end, a [Drupal 8](https://www.drupal.org/8) foundation manages content. On the front end, Gatsby presents content. With this approach, the Sandy Springs team can “create once, publish everywhere,” with a more efficient process for sharing information with the local community.
+On the back end, a [Drupal 8](https://www.drupal.org/8) foundation manages content. On the front end, Gatsby presents content. With this approach, the Sandy Springs team can "create once, publish everywhere," with a more efficient process for sharing information with the local community.
 
 ![Drupal-powered large scale digital signage in a cafe](./images/CitySprings2.jpg "City Spring's large scale digital signage")
 
@@ -52,4 +52,4 @@ In this [video presentation](https://www.youtube.com/watch?time_continue=3&v=Qio
 
 ## Final Thoughts
 
-Today, Sandy Springs can publish content at scale, reduced training needs, and a streamlined infrastructure. Through a support agreement, Mediacurrent and Sandy Springs continue working together to achieve the city’s vision of a unified platform for all its information systems.
+Today, Sandy Springs can publish content at scale, reduced training needs, and a streamlined infrastructure. Through a support agreement, Mediacurrent and Sandy Springs continue working together to achieve the city's vision of a unified platform for all its information systems.

@@ -9,7 +9,7 @@ React Hooks are _cool_. Besides simplifying your code and removing the need for 
 
 You can probably tell that we've been super excited about [React Hooks][hooks-intro]. So when they finally landed in React 16.8, we figured it was time to give our very own `StaticQuery` component the hook treatment!
 
-#### Say hello to useStaticQuery
+## Say hello to useStaticQuery
 
 `useStaticQuery` is a hook that takes a GraphQL query and returns your data. That's it.
 
@@ -19,7 +19,7 @@ This simplifies accessing data in your components and also keeps your component 
 
 Let's quickly check out a basic example. Here's a typical Header component, first written using `StaticQuery` and then `useStaticQuery`.
 
-#### Before
+### Before
 
 ```jsx
 import React from "react"
@@ -51,7 +51,7 @@ const Header = () => {
 export default Header
 ```
 
-#### After
+### After
 
 ```jsx
 import React from "react"

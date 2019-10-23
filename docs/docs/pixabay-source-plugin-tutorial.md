@@ -28,7 +28,7 @@ _**NOTE:** if your data is local i.e. on your file system and part of your site'
 
 Your plugin is going to source images from Pixabay. You'll be able to configure your plugin in your site's `gatsby-config.js` file and write GraphQL queries to access your plugin's data.
 
-> **NOTE:** You'll need a Pixabay API key which you can get by [registering for a Pixabay account](https://pixabay.com/en/accounts/register/). Your API key is in the [“Search Images” section of the Pixabay API docs](https://pixabay.com/api/docs/#api_search_images).
+> **NOTE:** You'll need a Pixabay API key which you can get by [registering for a Pixabay account](https://pixabay.com/en/accounts/register/). Your API key is in the ["Search Images" section of the Pixabay API docs](https://pixabay.com/api/docs/#api_search_images).
 
 ### An example API request
 
@@ -68,7 +68,7 @@ cd plugins
 
 The bare essentials of a plugin are a directory named after your plugin, which contains a `package.json` file and a `gatsby-node.js` file:
 
-```
+```flow
 |-- plugins
     |-- gatsby-source-pixabay
         |-- gatsby-node.js
@@ -379,7 +379,7 @@ Congratulations!
 
 ## Where next?
 
-Your plugin has been adapted from Jason Lengstorf's [gatsby-source-pixabay plugin](https://www.npmjs.com/package/gatsby-source-pixabay). Check out [the source on GitHub](https://github.com/jlengstorf/gatsby-source-pixabay).
+Your plugin has been adapted from Jason Lengstorf's [`gatsby-source-pixabay` plugin](https://www.npmjs.com/package/gatsby-source-pixabay). Check out [the source on GitHub](https://github.com/jlengstorf/gatsby-source-pixabay).
 
 Try adding new features to your plugin, for example - download images from Pixabay, improve error handling, add documentation or automated tests.
 

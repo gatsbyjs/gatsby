@@ -29,7 +29,7 @@ Why do we write so much?
 
 The answer:
 
-## Principle 2: content acts as a guide unlocking the power of Gatsby.
+## Principle 2: content acts as a guide unlocking the power of Gatsby
 
 Gatsby is so powerful, because of its core _and the ecosystem_ — not just plugins and themes, but React, Webpack and Babel, the entire npm ecosystem, and modern JavaScript in general.
 
@@ -72,7 +72,7 @@ _"Gatsby can't do X"_ gets rebutted by _"Here's a case study of Gatsby doing X"_
 
 The challenge, is of course _how do we write all of that content?_
 
-## Principle 4: Leverage ourselves through collaboration.
+## Principle 4: Leverage ourselves through collaboration
 
 Some examples:
 
@@ -86,7 +86,7 @@ Some examples:
 
 If you're doing interesting, innovative things with Gatsby, especially in a professional context, we'd love you to write blog posts, tutorials, and documentation about what you're doing!
 
-## Principle 5: Content is not just individual pieces of work, it's compilations.
+## Principle 5: Content is not just individual pieces of work, it's compilations
 
 If content were music, it wouldn't consist of just "songs" -- it would also include "playlists", "albums", "discographies", "soundtracks", and "multi-box sets".
 

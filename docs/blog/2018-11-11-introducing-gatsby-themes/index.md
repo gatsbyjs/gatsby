@@ -26,7 +26,7 @@ Creating a single Gatsby site works super well. The power of
 breeze. However, what if you want to re-use this configuration on our
 next site? Sure, you could clone a boilerplate each time, but that gets
 old, quickly. Wouldn't it be great if you could re-use our
-gatsby-config.js across projects? That's where starters come in.
+`gatsby-config.js` across projects? That's where starters come in.
 
 ### Improving Reusability with Starters
 
@@ -110,11 +110,11 @@ module.exports = {
 Themes also function as plugins and any config passed into the theme
 in your `gatsby-config.js` will also be passed to your theme's `gatsby-*.js`
 files as plugin options. This allows themes to override any settings
-inherited from the theme's own plugin declarations or apply gatsby
+inherited from the theme's own plugin declarations or apply Gatsby
 lifecycle hooks such as [`onCreatePage`](/docs/node-apis/#onCreatePage).
 
-Check out the theme examples in this multi-package repo for more
-examples of using and building themes: https://github.com/ChristopherBiscardi/gatsby-theme-examples.
+Check out the theme examples in this multi-package repo for [more
+examples of using and building themes](https://github.com/ChristopherBiscardi/gatsby-theme-examples).
 
 ## Next Steps
 

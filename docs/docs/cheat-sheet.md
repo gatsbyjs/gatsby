@@ -4,7 +4,7 @@ title: Cheat Sheet
 
 The Gatsby team has created a resource that you might find useful when building a Gatsby site: a cheat sheet with all the top commands and development tips! Feel free to download and print yourself a copy (and tape it by your workstation!). For related online information, visit [Quick Start](/docs/quick-start/) and [Commands (Gatsby CLI)](/docs/gatsby-cli/).
 
-Get the PDF: <a href="/gatsby-cheat-sheet.pdf" download>gatsby-cheat-sheet.pdf</a>
+Get the PDF: [`gatsby-cheat-sheet.pdf`](/gatsby-cheat-sheet.pdf)
 
 <figure aria-labelledby="cheat_sheet-text">
     <h2>Page 1</h2>
@@ -139,7 +139,7 @@ Get the PDF: <a href="/gatsby-cheat-sheet.pdf" download>gatsby-cheat-sheet.pdf</
         <code>npm install -g gatsby-cli</code></p>
     <p>Run <code>gatsby --help</code> for a list of commands and options.</p>
     <h3><code>gatsby new <span style="font-weight:normal">my-site-name</span></code></h3>
-    <p>Create a new local Gatsby site using the default starter (see “Quick Start Commands” in this cheat sheet on how to use other starters).</p>
+    <p>Create a new local Gatsby site using the default starter (see "Quick Start Commands" in this cheat sheet on how to use other starters).</p>
     <h3><code>gatsby develop</code></h3>
     <p>Start the Gatsby development server.</p>
     <table>
@@ -261,23 +261,23 @@ Get the PDF: <a href="/gatsby-cheat-sheet.pdf" download>gatsby-cheat-sheet.pdf</
         </tbody>
     </table>
     <h3>gatsby clean</h3>
-    <p>Wipe out Gatsby’s <code>.cache</code> and <code>public</code> directories.</p>
+    <p>Wipe out Gatsby's <code>.cache</code> and <code>public</code> directories.</p>
     <h2>T-Shirts, Hats, Hoodies, and more!</h2>
     <p>Sign up for the Gatsby Newsletter and <strong>get 30% off</strong> your Gatsby Store purchase! (<a href="https://gatsby.dev/store">gatsby.dev/store</a>)</p>
     <p>Sign up at <a href="https://gatsby.dev/discount">gatsby.dev/discount</a></p>
     <h2>Quick Start Commands</h2>
-    <p>Create a new Gatsby site using the “Blog” starter:<br />
+    <p>Create a new Gatsby site using the "Blog" starter:<br />
     <code>gatsby new my-blog-starter https://github.com/gatsbyjs/gatsby-starter-blog</code></p>
-    <p>Navigate into your new site’s directory and start it up:<br />
+    <p>Navigate into your new site's directory and start it up:<br />
     <code>cd my-blog-starter/<br />
     gatsby develop</code></p>
     <p>Your site is now running at <code>http://localhost:8000</code>!</p>
-    <p>You’ll also see a second link: <code>http://localhost:8000/___graphql</code>. This is a tool you can use to experiment with querying your data. Learn more about it at <a href="https://gatsby.dev/tutorial">gatsby.dev/tutorial</a></p>
+    <p>You'll also see a second link: <code>http://localhost:8000/___graphql</code>. This is a tool you can use to experiment with querying your data. Learn more about it at <a href="https://gatsby.dev/tutorial">gatsby.dev/tutorial</a></p>
     <p>For more Gatsby starters, visit <a href="https://gatsby.dev/starters">gatsby.dev/starters</a>.</p>
     <h2>Helpful File Definitions</h2>
     <p>Each of these files should live at the root of your Gatsby project folder. See <a href="https://gatsby.dev/projects">gatsby.dev/projects</a></p>
     <p><code>gatsby-config.js</code> — configure options for a Gatsby site, with metadata for project title, description, plugins, etc.</p>
-    <p><code>gatsby-node.js</code> — implement Gatsby’s Node.js APIs to customize and extend default settings affecting the build process</p>
-    <p><code>gatsby-browser.js</code> — customize and extend default settings affecting the browser, using Gatsby’s browser APIs</p>
-    <p><code>gatsby-ssr.js</code> — use Gatsby’s server-side rendering APIs to customize default settings affecting server-side rendering</p>
+    <p><code>gatsby-node.js</code> — implement Gatsby's Node.js APIs to customize and extend default settings affecting the build process</p>
+    <p><code>gatsby-browser.js</code> — customize and extend default settings affecting the browser, using Gatsby's browser APIs</p>
+    <p><code>gatsby-ssr.js</code> — use Gatsby's server-side rendering APIs to customize default settings affecting server-side rendering</p>
 </div>

@@ -25,7 +25,7 @@ As a result, developers struggled with the challenges of shifting from UI code t
 
 The power within IT has clearly moved from infrastructure teams to application teams. Developers and architects prefer to think in services and they expect the infrastructure to be programmable, cheap, elastic, and secure. They no longer want to worry about low-level concerns of infrastructure management and instead, they want frictionless and limitless capabilities and then access to APIs for other services to help them compose applications. We are moving more toward an application- or service-centric model as opposed to an infrastructure-centric approach.
 
-Things are still evolving, but some of the elements of this new “cloud-native” architecture appear clear and include:
+Things are still evolving, but some of the elements of this new "cloud-native" architecture appear clear and include:
 
 - **Cloud**. Public or private cloud infrastructure provides the base services of compute, storage and networking. AWS, Azure, and Google are all racing to add more and more infrastructure and application services — though architects should actively consider finding abstractions that give them portability.
 - **Containers**: Containers provide the packaging format for how to build and deploy software as components. In earlier generations we were forced to think in larger constructs (.exe or jar files) that were sometimes tied to the underlying hardware, operating systems or runtimes.
@@ -35,9 +35,9 @@ Things are still evolving, but some of the elements of this new “cloud-native�
 
 These aspects all address the architecture for the backend application services and data. In this shift, open source software is prevalent and playing a critical role in every category of infrastructure software. Enterprise adoption of open source has skyrocketed as these open source solutions have been built specifically for cloud deployment and horizontal scalability.
 
-## What’s Next?
+## What's Next?
 
-It is trite but true to say that every company is becoming a software company. This focus on digital transformation means that businesses are using apps and experiences as the primary interface to the customer. Most of the emphasis to date has been solving the backend services for digital transformation. But as an industry, we haven’t rethought the frontend presentation layer architecture which is a vital part of that new customer interface.
+It is trite but true to say that every company is becoming a software company. This focus on digital transformation means that businesses are using apps and experiences as the primary interface to the customer. Most of the emphasis to date has been solving the backend services for digital transformation. But as an industry, we haven't rethought the frontend presentation layer architecture which is a vital part of that new customer interface.
 
 We now live in a world of cheap compute and storage, cloud/edge capabilities, and generally fast and pervasive network coverage. So it seems the time has come to dramatically improve the presentation layer. In this world, for instance, running traditional web servers and web content management systems may not make sense anymore. It is incredibly inefficient to have a web server talking to a content management system to pull information, create a response page and send it back to the user. Serverless is gaining interest in terms of the backend architecture, so why not apply a similar approach to the presentation layer?
 
@@ -55,6 +55,6 @@ Based on these new technologies, it seems that we can move to a new serverless p
 There are lots of pieces to this puzzle to still work out, but the shapes are starting to come into focus. The end result should be a streamlined process to design, build, test, and deploy new user experiences. And the resulting applications should be much faster, simpler to operate, cheaper to run, and more secure.
 
 <Pullquote citation="Elon Musk">
-  Some people don’t like change, but you need to embrace change if the
+  Some people don't like change, but you need to embrace change if the
   alternative is disaster.
 </Pullquote>

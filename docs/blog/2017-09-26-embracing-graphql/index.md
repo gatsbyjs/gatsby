@@ -29,10 +29,10 @@ data layer".
 
 ![issue-420](issue-420.png)
 
-Things in Gatsby were about to change. I read on to see how easy it’d be to
+Things in Gatsby were about to change. I read on to see how easy it'd be to
 upgrade.
 
-Having never used GraphQL, the new “routeQuery” in components looked very
+Having never used GraphQL, the new "routeQuery" in components looked very
 foreign.
 
 ```javascript
@@ -51,11 +51,11 @@ export const routeQuery = `
 }
 ```
 
-What happened to my “drop files into a folder and call it a day” setup? What
+What happened to my "drop files into a folder and call it a day" setup? What
 _is_ all this weird syntax [@kylemathews](https://twitter.com/kylemathews)?
 
 Reading the issue, Kyle's reasoning made sense but this didn't seem to be simple
-at all. 0.x seemed more “automatic” to me. Drop in your files and go.
+at all. 0.x seemed more "automatic" to me. Drop in your files and go.
 
 ## 1.0 Released
 
@@ -75,12 +75,12 @@ With the [`gatsby-starter-blog`](https://github.com/gatsbyjs/gatsby-starter-blog
 in hand as a solid example, I started converting my website over to v1.0.
 
 There were a few bumps into the road but thanks to the starter example, I pieced
-things together quickly. Quickly as in “I have no idea how this GraphQL stuff
-works, but I have it working, so cool”. Easy to update — check.
+things together quickly. Quickly as in "I have no idea how this GraphQL stuff
+works, but I have it working, so cool". Easy to update — check.
 
 ## Digging deeper
 
-I'm not the type of person to settle on “It's working so don't touch anything”.
+I'm not the type of person to settle on "It's working so don't touch anything".
 So I started digging into how Gatsby 1.x works—particular the
 [data layer](/tutorial/part-four/#data-in-gatsby).
 
@@ -90,11 +90,11 @@ how to drill down on the data.
 ![GraphiQL](graphiql.gif)
 
 Prior to reading / seeing that part in the documentation, looking at the code I
-could understand roughly what was going on but it didn’t feel familiar. Like
-anything new, there’s that “I don’t know what I’m doing” stage. I know what I
-want to do, but I don’t understand the syntax enough to make it happen. Seeing
+could understand roughly what was going on but it didn't feel familiar. Like
+anything new, there's that "I don't know what I'm doing" stage. I know what I
+want to do, but I don't understand the syntax enough to make it happen. Seeing
 the docs and how you can explore the schema in GraphiQL (autocomplete is 👌) to
-see what data is available really helped in my “play around and break stuff”
+see what data is available really helped in my "play around and break stuff"
 phase.
 
 **From the docs:**
@@ -102,10 +102,10 @@ phase.
 > You first sketch out the data query by playing in GraphiQL, then copy this to
 > a React page component to start building the UI.
 
-“Sketch & Copy” using the GraphiQL was a revelation. I was thinking it’s going
+"Sketch & Copy" using the GraphiQL was a revelation. I was thinking it's going
 to be tricky to manually write the queries until I become more familiar with the
 syntax. Using GraphiQL helped me make a quick leap forward with the learning
-curve. “Aha this is amazing”. I have lots to learn still but the comfort level
+curve. "Aha this is amazing". I have lots to learn still but the comfort level
 is going up.
 
 ## That's a wrap
@@ -115,7 +115,7 @@ pick, but it's something that is going to evolve the way I build websites. It's
 a nice starter push into GraphQL and many other advanced features the websites
 of the future will need to be performant.
 
-Sometimes we don’t do things because they are unfamiliar to us. Sometimes we
+Sometimes we don't do things because they are unfamiliar to us. Sometimes we
 need a little push. Thanks for the push Gatsby. The learning curve may seem
 daunting but the payoff is huge. Gatsby has become a powerful tool in my
-arsenal and I’m happy to have extended my development skills.
+arsenal and I'm happy to have extended my development skills.

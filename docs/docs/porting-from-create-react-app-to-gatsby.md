@@ -61,7 +61,7 @@ The following sections explain the above steps as well as other changes that you
 
 To show some of the differences of how your project structure could differ by moving to Gatsby, a default Create React App project looks something like this:
 
-```
+```flow
   my-create-react-app
   ├── .git
   ├── .gitignore

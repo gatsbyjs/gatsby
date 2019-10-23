@@ -17,13 +17,13 @@ We recently announced the [second major release of Gatsby](/blog/2018-09-17-gats
 
 ## How does it support accessibility?
 
-When you visit a Gatsby site, a static, server-rendered HTML page is loaded first, and then the JavaScript to hydrate the site into a web app is loaded. From there, internal routing is handled with the [Gatsby Link component](/docs/gatsby-link/), which wraps [@reach/router’s Link component](https://reach.tech/router/api/Link).
+When you visit a Gatsby site, a static, server-rendered HTML page is loaded first, and then the JavaScript to hydrate the site into a web app is loaded. From there, internal routing is handled with the [Gatsby Link component](/docs/gatsby-link/), which wraps [@reach/router's Link component](https://reach.tech/router/api/Link).
 
 Web apps rerender in the client -- without making a request to the server to fetch new HTML -- resulting in a faster, more seamless user experience. These performance benefits, however, can create a broken experience for users who rely on assistive technology like screen readers.
 
-When a user navigates between traditional server-rendered pages, the page is fully reloaded; In response, screen readers can announce the new content. When using most client-side routing solutions (out of the box), without the page reload, screen readers don’t know new content has been loaded to focus or announce.
+When a user navigates between traditional server-rendered pages, the page is fully reloaded; In response, screen readers can announce the new content. When using most client-side routing solutions (out of the box), without the page reload, screen readers don't know new content has been loaded to focus or announce.
 
-The video below demonstrates this challenge (Video by [Rob DeLuca](https://twitter.com/robdel12), which accompanied his related article, “[Single page app routers are broken](https://medium.com/@robdel12/single-page-apps-routers-are-broken-255daa310cf)”)
+The video below demonstrates this challenge (Video by [Rob DeLuca](https://twitter.com/robdel12), which accompanied his related article, "[Single page app routers are broken](https://medium.com/@robdel12/single-page-apps-routers-are-broken-255daa310cf)")
 
 <iframe
   width="560"
@@ -76,7 +76,7 @@ In terms of the development experience with Gatsby, this change is mostly under 
 
 ## Migrating from v1 ➡️ v2
 
-For most sites, migrating from v1 to v2 shouldn’t be too painful, but there are a few instances you might want to be aware of. Check out the [v2 migration guide](/docs/migrating-from-v1-to-v2/#migrate-from-react-router-to-reachrouter) for details.
+For most sites, migrating from v1 to v2 shouldn't be too painful, but there are a few instances you might want to be aware of. Check out the [v2 migration guide](/docs/migrating-from-v1-to-v2/#migrate-from-react-router-to-reachrouter) for details.
 
 ## TLDR;
 

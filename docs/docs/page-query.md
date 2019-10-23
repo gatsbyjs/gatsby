@@ -6,7 +6,7 @@ Gatsby's `graphql` tag enables page components to retrieve data via a GraphQL qu
 
 In this guide, you will learn [how to use the `graphql` tag](/docs/page-query#add-the-graphql-query) in your pages, as well as go a little deeper into [how the `graphql` tag works](/docs/page-query#how-does-the-graphql-tag-work).
 
-If you’re curious, you can also read more about [why Gatsby uses GraphQL](/docs/why-gatsby-uses-graphql/).
+If you're curious, you can also read more about [why Gatsby uses GraphQL](/docs/why-gatsby-uses-graphql/).
 
 ## How to use the `graphql` tag in pages
 
@@ -143,7 +143,7 @@ The longer answer is a little more involved: Gatsby borrows a technique from
 
 _More information about [how queries work](/docs/query-behind-the-scenes/) is included in the Gatsby Internals section of the docs._
 
-This means that the `graphql` tag isn’t executed the way that JavaScript code is typically handled. For example, you cannot use [expression interpolation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#Expression_interpolation) with Gatsby's `graphql` tag. However, it's possible to pass variables into page queries with the `context` object [when creating pages](/docs/creating-and-modifying-pages).
+This means that the `graphql` tag isn't executed the way that JavaScript code is typically handled. For example, you cannot use [expression interpolation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#Expression_interpolation) with Gatsby's `graphql` tag. However, it's possible to pass variables into page queries with the `context` object [when creating pages](/docs/creating-and-modifying-pages).
 
 ## How to add query variables to a page query
 

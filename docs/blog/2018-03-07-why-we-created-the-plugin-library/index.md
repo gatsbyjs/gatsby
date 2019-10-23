@@ -15,7 +15,7 @@ From October 2017 to February 2018, I conducted over 60 interviews with Gatsby u
 
 ## Jobs to be done
 
-After compiling data from the interviews, I drew what’s called an “empathy map” to put myself in the shoes of Gatsby users. This map describes what Gatsby users usually experienced when searching for plugins.
+After compiling data from the interviews, I drew what's called an "empathy map" to put myself in the shoes of Gatsby users. This map describes what Gatsby users usually experienced when searching for plugins.
 
 ![Empathy map](empathy-map.png)
 
@@ -64,7 +64,7 @@ We _didn't_ like these things in some of the above libraries:
 
 ## Prototypes and their evolutions
 
-Here’s a sampling of screenshots that many community members contributed to and gave feedback about. It’s rewarding to see how much the design has progressed (and will keep progressing).
+Here's a sampling of screenshots that many community members contributed to and gave feedback about. It's rewarding to see how much the design has progressed (and will keep progressing).
 
 <video controls="controls" autoplay="true" loop="true">
   <source type="video/mp4" src="/images/gatsby-plugin-library-compressed.mp4" />
@@ -78,7 +78,7 @@ The plugin ecosystem is a huge part of what makes Gatsby awesome because plugins
 Here are some ways you can help make the Gatsby plugin ecosystem great:
 
 - Share feedback on the plugin library on [GitHub Issue #4394](https://github.com/gatsbyjs/gatsby/issues/4394).
-- If you created a plugin and it's not showing up in the library, double check that the package has "gatsby-plugin" in its keywords.
+- If you created a plugin and it's not showing up in the library, double check that the package has `gatsby-plugin` in its keywords.
 - Create plugins (or publish ones you've already built)! If you're interested, the [Plugin Authoring](/docs/creating-plugins/) page can help.
 - [Contact me](https://twitter.com/shannonb_ux/status/938551014956732418) here if you have feedback that differs from or provides deeper insight into one of the pain points this article mentions.
 - Follow us on [Twitter](https://twitter.com/gatsbyjs).

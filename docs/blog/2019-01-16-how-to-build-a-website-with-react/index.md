@@ -11,7 +11,7 @@ React is a fantastic and wildly popular tool for building websites and apps. It 
 
 ## Declarative
 
-With React, you can create reusable components that will always render the same data in the same way, which wasn't always the case pre-React. Let’s say you’re a huge Olympics fan and you build a React website for tracking scores. Users who visit your site won’t need to wait for the entire tree to deconstruct and reconstruct when the newest data on the half-pipe is available. React components will efficiently update to accommodate the changing data.
+With React, you can create reusable components that will always render the same data in the same way, which wasn't always the case pre-React. Let's say you're a huge Olympics fan and you build a React website for tracking scores. Users who visit your site won't need to wait for the entire tree to deconstruct and reconstruct when the newest data on the half-pipe is available. React components will efficiently update to accommodate the changing data.
 
 ## Reactive
 
@@ -42,14 +42,14 @@ For example, in a To-Do list, the hierarchy of components would include:
 
 The [Reactjs.org website recommends](https://reactjs.org/docs/thinking-in-react.html) that you work with your designer(s) when creating a hierarchy of React components and subcomponents, because the designers probably already have names for each small piece of the design, and you can make sure your components have the same names.
 
-React components work just like other functions in any programming language because we call components with some input (called “property” in React) and spit out an output (a chunk of UI in React). Also, components are reusable and can contain other components. All these things are the same as other functions in other programming languages.
+React components work just like other functions in any programming language because we call components with some input (called "property" in React) and spit out an output (a chunk of UI in React). Also, components are reusable and can contain other components. All these things are the same as other functions in other programming languages.
 
 ## Using React with Gatsby
 
 Gatsby is a great way to build websites with React and actually solves some unique problems by making the following things more straightforward:
 
-- _Pulling in data:_ In Gatsby, GraphQL and plugins help you use data from nearly any source, including both traditional CMSs and headless CMSs. Some people I’ve talked to recently even built their Gatsby sites with Google sheets as the data source.
-- _Creating pages and routes:_ Gatsby also gives you an intuitive interface for creating pages and routes. So intuitive, in fact, that when I talked to a coworker, I said, “I remember creating pages and links to those pages from other pages, but I don’t remember creating any routes in Gatsby.” They responded, “Yeah, Gatsby took care of that for you.”
-- _Solving performance problems:_ Gatsby sites rarely have performance problems due to Gatsby’s way of loading static files.
+- _Pulling in data:_ In Gatsby, GraphQL and plugins help you use data from nearly any source, including both traditional CMSs and headless CMSs. Some people I've talked to recently even built their Gatsby sites with Google sheets as the data source.
+- _Creating pages and routes:_ Gatsby also gives you an intuitive interface for creating pages and routes. So intuitive, in fact, that when I talked to a coworker, I said, "I remember creating pages and links to those pages from other pages, but I don't remember creating any routes in Gatsby." They responded, "Yeah, Gatsby took care of that for you."
+- _Solving performance problems:_ Gatsby sites rarely have performance problems due to Gatsby's way of loading static files.
 
-Gatsby combines the awesomeness of React with all the friendly helpfulness you’d hope for in a modern PWA framework. [Get started with Gatsby](/docs/), happy coding, and let us know how it goes by joining us on [Twitter](https://twitter.com/gatsbyjs) and [GitHub](https://github.com/gatsbyjs/gatsby)!
+Gatsby combines the awesomeness of React with all the friendly helpfulness you'd hope for in a modern PWA framework. [Get started with Gatsby](/docs/), happy coding, and let us know how it goes by joining us on [Twitter](https://twitter.com/gatsbyjs) and [GitHub](https://github.com/gatsbyjs/gatsby)!

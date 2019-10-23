@@ -8,7 +8,7 @@ On the Gatsby core team, we've found patterns that help us effectively triage in
 
 We want to share these patterns with the broader community, so that if you're interested in helping us triage, you're able to do so more effectively!
 
-In this document we’ll answer common questions, list guidelines and illustrate a decision tree.
+In this document we'll answer common questions, list guidelines and illustrate a decision tree.
 
 ## First touch maintenance
 
@@ -50,9 +50,9 @@ Gatsby is unique among most open source projects because:
 
 ### General guidelines
 
-- **Be empathetic.** The author of an issue might be asking something that’s obvious to you but that doesn’t mean it’s obvious to them - it's important to consider the issue from the author’s viewpoint. People often remember how you make them feel, not what you told them.
+- **Be empathetic.** The author of an issue might be asking something that's obvious to you but that doesn't mean it's obvious to them - it's important to consider the issue from the author's viewpoint. People often remember how you make them feel, not what you told them.
 - **Add context.** When answering an issue, it can be useful to link to existing documentation, issues, PRs, or provide related context. This means the issue can serve as a reference to future readers.
-- **Encourage community contributions.** Getting people involved makes a huge impact. It’s often worth spending the time to write up a task as a `good first issue` instead of fixing the issue yourself. This can provide a low friction way for someone to get more involved in open source!
+- **Encourage community contributions.** Getting people involved makes a huge impact. It's often worth spending the time to write up a task as a `good first issue` instead of fixing the issue yourself. This can provide a low friction way for someone to get more involved in open source!
 - **Give issue authors time to close their own issues.** Sometimes, it might feel like an issue is resolved but the author could have follow up questions. It's usually best to give them a day or two to close the issue themselves.
 
 ### Labeling
@@ -91,11 +91,11 @@ Every bug report should provide details on how to reproduce the bug. This is so 
 
 > How much time do I spend on an issue?
 
-Some issues might need more time than others and there isn’t any hard and fast rule. However, it's best to spend time on an issue after the relevant info and reproduction is available.
+Some issues might need more time than others and there isn't any hard and fast rule. However, it's best to spend time on an issue after the relevant info and reproduction is available.
 
 > Do I have to look at Discord?
 
-You don’t have to. Some of us are active on Discord and you can be too if you like.
+You don't have to. Some of us are active on Discord and you can be too if you like.
 
 > Do I use the same issue to track documentation additions or open a new one?
 
@@ -103,8 +103,8 @@ If the issue describes the context well enough, then it is okay to update its ti
 
 > When do I follow up on an issue?
 
-If an author hasn’t responded to a comment for a week or two, it might be nice to follow up and ask if there’s anything else we can do to help. If the issue goes stale after that, our bot should be able to clean it up.
+If an author hasn't responded to a comment for a week or two, it might be nice to follow up and ask if there's anything else we can do to help. If the issue goes stale after that, our bot should be able to clean it up.
 
 > What do I do if an issue relates to something upstream?
 
-It’s a good practice to open an issue in the upstream repository in cases like this but isn’t strictly necessary. Upstream in this case refers to repositories that house dependencies for Gatsby.
+It's a good practice to open an issue in the upstream repository in cases like this but isn't strictly necessary. Upstream in this case refers to repositories that house dependencies for Gatsby.

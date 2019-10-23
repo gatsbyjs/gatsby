@@ -4,17 +4,17 @@ title: "Adding Images to a WordPress Site"
 
 ## What this tutorial covers:
 
-In this tutorial, you will install the several image plugins and components in order to pull image data from a WordPress account into your Gatsby site and render that data. This [Gatsby + WordPress demo site](https://using-wordpress.gatsbyjs.org/sample-post-1) shows you a sample of what you’re going to be building in this tutorial, although in this tutorial you’ll just focus on adding images.
+In this tutorial, you will install the several image plugins and components in order to pull image data from a WordPress account into your Gatsby site and render that data. This [Gatsby + WordPress demo site](https://using-wordpress.gatsbyjs.org/sample-post-1) shows you a sample of what you're going to be building in this tutorial, although in this tutorial you'll just focus on adding images.
 
 ## Why go through this tutorial?
 
 Images are one of the most beautiful and striking ways to communicate to people, and are a key part of creating an effective and positive user experience; at the same time, high quality images can load slowly and cause text boxes to jump around, both of which make it difficult for people to be patient with visiting your website.
 
-The Gatsby Way™ of creating images describes a set of best practices that help you optimize performance and responsiveness of images so that you can get the benefits of awesome images that don't slow down your site. This [Gatsbygram site](https://gatsbygram.gatsbyjs.org/) (an Instagram feed fed through Gatsby) shows off the svg image tracing effect. Here’s an [image processing demo site](https://image-processing.gatsbyjs.org/) exploring how to have fun with images in your Gatsby site.
+The Gatsby Way™ of creating images describes a set of best practices that help you optimize performance and responsiveness of images so that you can get the benefits of awesome images that don't slow down your site. This [Gatsbygram site](https://gatsbygram.gatsbyjs.org/) (an Instagram feed fed through Gatsby) shows off the svg image tracing effect. Here's an [image processing demo site](https://image-processing.gatsbyjs.org/) exploring how to have fun with images in your Gatsby site.
 
 ### Installing the `gatsby-source-wordpress` plugin
 
-First you’ll need to install the `gatsby-source-wordpress` plugin that has images ready for you to pull into your site.
+First you'll need to install the `gatsby-source-wordpress` plugin that has images ready for you to pull into your site.
 
 Create a new Gatsby project and change directories into the new project you just created:
 
@@ -23,13 +23,13 @@ gatsby new images-tutorial-site
 cd images-tutorial-site
 ```
 
-Install the `gatsby-source-wordpress` plugin. For extra reading on the plugin’s features and examples of GraphQL queries not included in this tutorial, see the [`gatsby-source-wordpress` plugin’s README file](/packages/gatsby-source-wordpress/?=wordpress).
+Install the `gatsby-source-wordpress` plugin. For extra reading on the plugin's features and examples of GraphQL queries not included in this tutorial, see the [`gatsby-source-wordpress` plugin's README file](/packages/gatsby-source-wordpress/?=wordpress).
 
 ```shell
 npm install --save gatsby-source-wordpress
 ```
 
-Add the `gatsby-source-wordpress` plugin to `gatsby-config.js` using the following code, which you can also find in the [demo site’s source code](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-wordpress/gatsby-config.js).
+Add the `gatsby-source-wordpress` plugin to `gatsby-config.js` using the following code, which you can also find in the [demo site's source code](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-wordpress/gatsby-config.js).
 
 ```javascript:title=gatsby-config.js
 module.exports = {
@@ -39,7 +39,7 @@ module.exports = {
   plugins: [
     // https://public-api.wordpress.com/wp/v2/sites/gatsbyjsexamplewordpress.wordpress.com/pages/
     /*
-     * Gatsby's data processing layer begins with “source”
+     * Gatsby's data processing layer begins with "source"
      * plugins. Here the site sources its data from WordPress.
      */
     // highlight-start
@@ -72,7 +72,7 @@ module.exports = {
 
 Now you will need to add the `gatsby-transformer-sharp` and `gatsby-plugin-sharp` plugins to `gatsby-config.js`, add a GraphQL query to a page, add an image to the page, and then view the result in the browser.
 
-First, you’ll need to install a few plugins and their dependencies:
+First, you'll need to install a few plugins and their dependencies:
 
 ```shell
 npm install --save gatsby-transformer-sharp gatsby-plugin-sharp gatsby-image
@@ -88,7 +88,7 @@ module.exports = {
   plugins: [
     // https://public-api.wordpress.com/wp/v2/sites/gatsbyjsexamplewordpress.wordpress.com/pages/
     /*
-     * Gatsby's data processing layer begins with “source”
+     * Gatsby's data processing layer begins with "source"
      * plugins. Here the site sources its data from WordPress.
      */
     {
@@ -131,7 +131,7 @@ npm run develop
 
 Open localhost:8000 and localhost:8000/\_\_\_graphql.
 
-Here’s an example of creating specific widths and heights for images:
+Here's an example of creating specific widths and heights for images:
 
 ```graphql
 {
@@ -163,7 +163,7 @@ Here’s an example of creating specific widths and heights for images:
 }
 ```
 
-Here’s an example query for generating different sizes of an image:
+Here's an example query for generating different sizes of an image:
 
 ```graphql
 {
@@ -195,7 +195,7 @@ Here’s an example query for generating different sizes of an image:
 }
 ```
 
-In either case, you can add traced SVG support by adding `_tracedSVG` to the end of each fragment. _Note this won’t work in the GraphQL explorer._
+In either case, you can add traced SVG support by adding `_tracedSVG` to the end of each fragment. _Note this won't work in the GraphQL explorer._
 
 ### Rendering the images to `index.js`
 
@@ -259,7 +259,7 @@ Your demo site should look something like this:
 
 It is useful and can be fun to purposefully slow down your browser to see image effects animate more slowly.
 
-Open your browser console and change the network speed to something slower. In Chrome, you can click on the “network” tab, then on the drop down arrow next to the word “Online.” Then click “Slow 3G.” Now, reload your page and watch the blur-up and SVG effects in action. The network tab also shows statistics on when each image loaded and how much time it took them to load.
+Open your browser console and change the network speed to something slower. In Chrome, you can click on the "network" tab, then on the drop down arrow next to the word "Online." Then click "Slow 3G." Now, reload your page and watch the blur-up and SVG effects in action. The network tab also shows statistics on when each image loaded and how much time it took them to load.
 
 ![Network](./images/network.png)
 

@@ -37,7 +37,7 @@ Craving a happy medium between [full-length tutorials](/tutorial/) and crawling 
 
 Inside a Gatsby project, you may see some or all of the following folders and files:
 
-```
+```flow
 |-- /.cache
 |-- /plugins
 |-- /public
@@ -55,9 +55,9 @@ Inside a Gatsby project, you may see some or all of the following folders and fi
 Some notable files and their definitions:
 
 - `gatsby-config.js` — configure options for a Gatsby site, with metadata for project title, description, plugins, etc.
-- `gatsby-node.js` — implement Gatsby’s Node.js APIs to customize and extend default settings affecting the build process
-- `gatsby-browser.js` — customize and extend default settings affecting the browser, using Gatsby’s browser APIs
-- `gatsby-ssr.js` — use Gatsby’s server-side rendering APIs to customize default settings affecting server-side rendering
+- `gatsby-node.js` — implement Gatsby's Node.js APIs to customize and extend default settings affecting the build process
+- `gatsby-browser.js` — customize and extend default settings affecting the browser, using Gatsby's browser APIs
+- `gatsby-ssr.js` — use Gatsby's server-side rendering APIs to customize default settings affecting server-side rendering
 
 #### Additional resources
 
@@ -352,7 +352,7 @@ export default () => <Layout>Hello world!</Layout>
 #### Prerequisites
 
 - A [Gatsby site](/docs/quick-start/) with an index page component
-- [gatsby-plugin-styled-components, styled-components, and babel-plugin-styled-components](/packages/gatsby-plugin-styled-components/) installed in `package.json`
+- [`gatsby-plugin-styled-components`, styled-components, and babel-plugin-styled-components](/packages/gatsby-plugin-styled-components/) installed in `package.json`
 
 #### Directions
 
@@ -710,7 +710,7 @@ gatsby develop
 
 ## 4. Working with themes
 
-A Gatsby theme abstracts Gatsby configuration (shared functionality, data sourcing, design) into an installable package. This means that the configuration and functionality isn’t directly written into your project, but rather versioned, centrally managed, and installed as a dependency. You can seamlessly update a theme, compose themes together, and even swap out one compatible theme for another.
+A Gatsby theme abstracts Gatsby configuration (shared functionality, data sourcing, design) into an installable package. This means that the configuration and functionality isn't directly written into your project, but rather versioned, centrally managed, and installed as a dependency. You can seamlessly update a theme, compose themes together, and even swap out one compatible theme for another.
 
 - Read more on [What is a Gatsby Theme?](/docs/themes/what-are-gatsby-themes)
 
@@ -752,7 +752,7 @@ gatsby develop
 
 - The [Gatsby CLI](/docs/gatsby-cli) installed
 
-* [Yarn](https://yarnpkg.com/lang/en/docs/install/#mac-stable) installed
+- [Yarn](https://yarnpkg.com/lang/en/docs/install/#mac-stable) installed
 
 #### Directions
 
@@ -844,8 +844,8 @@ This recipe shows how to create pages from Markdown files on your local filesyst
 
 - A [Gatsby site](/docs/quick-start) with a `gatsby-config.js` file
 - The [Gatsby CLI](/docs/gatsby-cli) installed
-- The [gatsby-source-filesystem plugin](/packages/gatsby-source-filesystem) installed
-- The [gatsby-transformer-remark plugin](/packages/gatsby-transformer-remark) installed
+- The [`gatsby-source-filesystem` plugin](/packages/gatsby-source-filesystem) installed
+- The [`gatsby-transformer-remark` plugin](/packages/gatsby-transformer-remark) installed
 - A `gatsby-node.js` file
 
 #### Directions
@@ -984,7 +984,7 @@ export const pageQuery = graphql`
 
 You don't have to use the GraphQL data layer to include data in pages, [though there are reasons why you should consider GraphQL](/docs/why-gatsby-uses-graphql/). You can use the node `createPages` API to pull unstructured data directly into Gatsby sites rather than through GraphQL and source plugins.
 
-In this recipe, you'll create dynamic pages from data fetched from the [PokéAPI’s REST endpoints](https://www.pokeapi.co/). The [full example](https://github.com/jlengstorf/gatsby-with-unstructured-data/) can be found on GitHub.
+In this recipe, you'll create dynamic pages from data fetched from the [PokéAPI's REST endpoints](https://www.pokeapi.co/). The [full example](https://github.com/jlengstorf/gatsby-with-unstructured-data/) can be found on GitHub.
 
 #### Prerequisites
 
@@ -1642,7 +1642,7 @@ This is an **escape route** for [specific use cases](/docs/static-folder/#when-t
 
 1. Ensure that the image is in your `static` folder at the root of the project. Your project structure might look something like this:
 
-```
+```flow
 ├── gatsby-config.js
 ├── src
 │   └── pages
@@ -1670,7 +1670,7 @@ export default () => (
 - [Using the Static Folder](/docs/static-folder/)
 - [More on all image techniques in Gatsby](/docs/images-and-files/)
 
-### Optimizing and querying local images with gatsby-image
+### Optimizing and querying local images with `gatsby-image`
 
 The `gatsby-image` plugin can relieve much of the pain associated with optimizing images in your site.
 
@@ -1871,7 +1871,7 @@ return (
 - [More on working with images in Gatsby](/docs/working-with-images/)
 - [Free egghead.io videos explaining these steps](https://egghead.io/playlists/using-gatsby-image-with-gatsby-ea85129e)
 
-### Optimizing and querying images in post frontmatter with gatsby-image
+### Optimizing and querying images in post frontmatter with `gatsby-image`
 
 For use cases like a featured image in a blog post, you can _still_ use `gatsby-image`. The `Img` component needs processed image data, which can come from a local (or remote) file, including from a URL in the frontmatter of a `.md` or `.mdx` file.
 

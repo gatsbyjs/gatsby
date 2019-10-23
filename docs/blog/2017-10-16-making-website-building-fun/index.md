@@ -38,13 +38,13 @@ and use it like an HTML element?
 
 Compare this with the minimum code necessary for the original headroom.js.
 
-#### HTML
+## HTML
 
 ```html
 <header class="headroom"><h1>header content</h1></header>
 ```
 
-#### JavaScript
+## JavaScript
 
 ```js
 // grab the element
@@ -55,7 +55,7 @@ var headroom = new Headroom(myElement)
 headroom.init()
 ```
 
-#### CSS
+## CSS
 
 ```css
 .headroom {
@@ -99,7 +99,7 @@ Fred Brooks wrote in his classic book _The Mythical Man-Month_:
 >
 > Yet the program construct, unlike the poet's words, is real in the sense that
 > it moves and works, producing visible outputs separate from the construct
-> itself. […] The magic of myth and legend has come true in our time. One types
+> itself. \[…\] The magic of myth and legend has come true in our time. One types
 > the correct incantation on a keyboard, and a display screen comes to life,
 > showing things that never were nor could be.
 
@@ -185,7 +185,7 @@ headroom.js is probably as simple as vanilla HTML/JS/CSS will allow it. We
 couldn't make building for the web simpler until we moved to a more
 sophisticated component model like React provides.
 
-## Another case study: gatsby-image
+## Another case study: `gatsby-image`
 
 I recently introduced a new Gatsby/React component called
 [`gatsby-image`](/packages/gatsby-image/).
@@ -276,7 +276,7 @@ export const query = graphql`
 So instead of a long pipeline of tasks to setup optimized images for your site,
 the steps now are:
 
-1.  Install gatsby-image
+1.  Install `gatsby-image`
 2.  Decide what size of image you need (125x125 in the example above)
 3.  Add your query and the `gatsby-image` component to your page
 4.  And… that's it!
@@ -292,7 +292,7 @@ The goal of Gatsby is to make it easy to build incredibly fast websites. Right
 now, that's far too hard to do and
 [most sites fail at it](/blog/2017-09-13-why-is-gatsby-so-fast/).
 
-We’ll make website building fun by creating higher-level components and design
+We'll make website building fun by creating higher-level components and design
 tools that allow us to more easily express our intent.
 
 We'll make the web fast again through efforts like `gatsby-image` where we

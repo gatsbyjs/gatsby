@@ -14,7 +14,7 @@ The main reasons Gatsby uses `@reach/router` are:
 
 With Gatsby, you will mostly be using the `<Link />` component provided by the `gatsby` package. The [`<Link />` API docs](https://www.gatsbyjs.org/docs/gatsby-link/) explain the relationship between `gatsby` `<Link />` and `@reach/router` `<Link />` very nicely:
 
-> The component is a wrapper around @reach/router’s Link component that adds useful enhancements specific to Gatsby.
+> The component is a wrapper around @reach/router's Link component that adds useful enhancements specific to Gatsby.
 
 ## Client and Server Routing 🤝
 

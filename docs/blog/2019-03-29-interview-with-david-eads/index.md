@@ -2,7 +2,7 @@
 title: Interview with David Eads
 date: 2019-03-29
 author: Sam Bhagwat
-excerpt: "Discover what David Eads has used Gatsby for and why he’s used it for ProPublica's Ticket Trap data visualization."
+excerpt: "Discover what David Eads has used Gatsby for and why he's used it for ProPublica's Ticket Trap data visualization."
 tags:
   - react
   - data-visualization
@@ -10,11 +10,11 @@ tags:
 
 I recently sat down with David Eads, who recently wrote a [fascinating deep dive](https://www.propublica.org/nerds/the-ticket-trap-news-app-front-to-back-david-eads-propublica-illinois) about how he used Gatsby for ProPublica's Ticket Trap data visualization. David and I talked about what he's used Gatsby for and why.
 
-### David's work with Gatsby
+## David's work with Gatsby
 
 **Sam:** You've used Gatsby extensively to create a number of data visualization projects that are really interesting from both a technical and a journalistic perspective. Could you talk a little about what you've built with Gatsby and what you're most proud of.
 
-**David:** Everything I've made since 2018 has been in Gatsby. <https://projects.propublica.org/graphics/il/stuck-kids/> is one example, <https://projects.propublica.org/chicago-tickets/> is another. I've also done embedded graphics with Gatsby, like the one seen here https://features.propublica.org/the-bad-bet/how-illinois-bet-on-video-gambling-and-lost/
+**David:** Everything I've made since 2018 has been in Gatsby. <https://projects.propublica.org/graphics/il/stuck-kids/> is one example, <https://projects.propublica.org/chicago-tickets/> is another. I've also done embedded graphics with Gatsby, like the one seen here <https://features.propublica.org/the-bad-bet/how-illinois-bet-on-video-gambling-and-lost/>
 
 <Pullquote citation="ProPublica">
   Every day, a child is held beyond medical necessity in Illinois. They've been
@@ -38,14 +38,14 @@ I recently sat down with David Eads, who recently wrote a [fascinating deep dive
 <Pullquote citation="ProPublica">
   Illinois Bet on Video Gambling — and Lost Legalizing video poker and slots was
   supposed to generate billions of dollars for the state. A decade later, that
-  hasn’t happened. Now, legislators want to double down on gambling.
+  hasn't happened. Now, legislators want to double down on gambling.
 </Pullquote>
 
 ![Illinois video gambling](./images/illinoisgambling.jpg)
 
 We've used it to simply embed responsive content in stories but also to build full-blown news applications.
 
-### Using Gatsby in a news organization
+## Using Gatsby in a news organization
 
 **Sam:** Can you talk a bit about the benefit of using Gatsby specifically in a news organization?
 
@@ -59,7 +59,7 @@ We've used it to simply embed responsive content in stories but also to build fu
 
 The dependence on React has been a barrier to wider adoption within ProPublica -- rightfully, not everyone wants to be tied to React. But ProPublica Illinois has seen a lot of benefit from it.
 
-### Creating beautiful data visualizations
+## Creating beautiful data visualizations
 
 **Sam:** What visualization tools have you found helpful or useful? The graphics you've made are interactive and really just gorgeous.
 
@@ -78,7 +78,7 @@ This is pure HTML and CSS -- no extra libraries.
 
 ![pure HTML and CSS](./images/htmlcss.png)
 
-### Why maintainability is important, and how Gatsby helps
+## Why maintainability is important, and how Gatsby helps
 
 **Sam:** Could you dive deeper into the challenges of maintainability in a newsroom environment?
 
@@ -94,7 +94,7 @@ That variability is a real resource allocation problem with dynamic systems, and
 
 **Sam:** So publish it, then forget about it.
 
-### Building with Gatsby's plugin system
+## Building with Gatsby's plugin system
 
 **Sam:** What's been your experience with Gatsby's source plugin system? You mentioned that you've built on top of Google spreadsheets, databases, and so on.
 
@@ -102,7 +102,7 @@ That variability is a real resource allocation problem with dynamic systems, and
 
 For The Ticket Trap, my collaborators and I wrote all the text that goes into the app in a Google Sheet which we could then pass off to editors to edit, and then pull into the app itself.
 
-### Using Gatsby + Google Sheets as a content workflow
+## Using Gatsby + Google Sheets as a content workflow
 
 **Sam:** What impact has Gatsby had in terms of data workflow collaborating with reporters?
 
@@ -140,7 +140,7 @@ In creating an effective content authoring and publishing workflow, a recipe I'v
 (1) find the best tool or format for authoring, and then
 (2) write a Gatsby source plugin for that (if it doesn't already exist)
 
-### Why web performance matters for publications
+## Why web performance matters for publications
 
 **Sam:**: So we've talked about maintenance and scalability, as well a content authoring workflows. Let's talk a bit about performance -- what's the benefit of performance in a journalistic context? Do you track it?
 

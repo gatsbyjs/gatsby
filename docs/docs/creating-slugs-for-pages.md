@@ -8,7 +8,7 @@ The logic for creating slugs from file names can get tricky, the `gatsby-source-
 
 `npm install --save gatsby-source-filesystem`
 
-## Create slugs in gatsby-node.js
+## Create slugs in `gatsby-node.js`
 
 Add your new slugs directly onto the `MarkdownRemark` nodes. Any data you add to nodes is available to query later with GraphQL.
 

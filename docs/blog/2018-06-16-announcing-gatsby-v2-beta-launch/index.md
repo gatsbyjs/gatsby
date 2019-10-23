@@ -6,7 +6,7 @@ tags: ["v2"]
 image: "astronaut-v2.jpg"
 ---
 
-We’re excited to announce that today we shipped the first beta for Gatsby v2! 36 contributors have made over 300 commits to v2 since Gatsby v1 was released in July 2017.
+We're excited to announce that today we shipped the first beta for Gatsby v2! 36 contributors have made over 300 commits to v2 since Gatsby v1 was released in July 2017.
 
 ## What's coming in v2?
 
@@ -18,13 +18,13 @@ Gatsby v2 builds on the foundations of v1 to introduce a range of improvements:
 
 - Improve APIs
 
-  We’ve renamed `sizes` and `resolutions` to `fluid` and `fixed`, `boundActionCreators` to `actions`, as well as other changes intended to make API names more consistent and prevent common gotchas.
+  We've renamed `sizes` and `resolutions` to `fluid` and `fixed`, `boundActionCreators` to `actions`, as well as other changes intended to make API names more consistent and prevent common gotchas.
 
   To see the full list of renamings, take a look at the upgrade guide for [image queries](/docs/migrating-from-v1-to-v2/#rename-responsive-image-queries), [actions](/docs/migrating-from-v1-to-v2/#rename-boundactioncreators-to-actions) and the [babel](/docs/migrating-from-v1-to-v2/#change-modifybabelrc-to-oncreatebabelconfig) and [webpack](/docs/migrating-from-v1-to-v2/#change-modifywebpackconfig-to-oncreatewebpackconfig) API hooks.
 
 - Hotter Hot Reloading
 
-  Previously, hot reloading of code and data had been dependent on new webpack builds. On larger sites, that could take ten or fifteen seconds -- more like lukewarm reloading, really. With [_ludicrous mode_](https://twitter.com/gatsbyjs/status/974507205121617920) we’ve decoupled data updates from webpack so changes you make to your content show up on your site at blistering speeds.
+  Previously, hot reloading of code and data had been dependent on new webpack builds. On larger sites, that could take ten or fifteen seconds -- more like lukewarm reloading, really. With [_ludicrous mode_](https://twitter.com/gatsbyjs/status/974507205121617920) we've decoupled data updates from webpack so changes you make to your content show up on your site at blistering speeds.
 
 - Upgraded Dependencies
 
@@ -40,7 +40,7 @@ Gatsby v2 builds on the foundations of v1 to introduce a range of improvements:
 
 ## Can I upgrade now to v2?
 
-Yes! We’ve built [gatsbyjs.com](https://www.gatsbyjs.com) with v2 and the Gatsby community is [converting over the example sites](https://github.com/gatsbyjs/gatsby/issues/5598). While the effort to migrate individual sites may vary, we’ve noticed significant build speedups in Gatsby v2 versus v1 and would love you to dig in and try it. We're working hard on refining Gatsby v2 for full release and would love your help!
+Yes! We've built [gatsbyjs.com](https://www.gatsbyjs.com) with v2 and the Gatsby community is [converting over the example sites](https://github.com/gatsbyjs/gatsby/issues/5598). While the effort to migrate individual sites may vary, we've noticed significant build speedups in Gatsby v2 versus v1 and would love you to dig in and try it. We're working hard on refining Gatsby v2 for full release and would love your help!
 
 ## What's coming next?
 

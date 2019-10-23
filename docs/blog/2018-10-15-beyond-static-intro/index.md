@@ -11,7 +11,7 @@ We hear it regularly. Gatsby is for static sites, Next.js (or similar) is for wh
 
 If this question interests you, consider attending [the upcoming webinar][webinar] where we'll focus on shedding some light on this very question as well as talk about how to build dynamic web apps with Gatsby.
 
-Until then, I’d like to offer some brief teasers of some of the content we’ll be discussing during the webinar and some introductory information in _how_ Gatsby enables app development.
+Until then, I'd like to offer some brief teasers of some of the content we'll be discussing during the webinar and some introductory information in _how_ Gatsby enables app development.
 
 > My first impression of Gatsby is that it is more of a static site generator which I interpret as being aimed at content or marketing websites and not as focused on web apps. That is a complete assumption so please correct me if I am wrong.
 >

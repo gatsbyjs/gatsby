@@ -1,17 +1,17 @@
 ---
 title: Gatsby Image API
 ---
+<!--lint disable no-duplicate-headings-->
+Part of what makes Gatsby sites so fast is its recommended approach to handling images. `gatsby-image` is a React component designed to work seamlessly with Gatsby's [native image processing](https://image-processing.gatsbyjs.org/) capabilities powered by GraphQL and [`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp/) to easily and completely optimize image loading for your sites.
 
-Part of what makes Gatsby sites so fast is its recommended approach to handling images. `gatsby-image` is a React component designed to work seamlessly with Gatsby’s [native image processing](https://image-processing.gatsbyjs.org/) capabilities powered by GraphQL and [`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp/) to easily and completely optimize image loading for your sites.
+> _Note: `gatsby-image` is **not** a drop-in replacement for `<img />`. It's optimized for responsive fixed width/height images and images that stretch the full-width of a container. There are also other ways to [work with images](/docs/images-and-files/) in Gatsby that don't require GraphQL._
 
-> _Note: `gatsby-image` is **not** a drop-in replacement for `<img />`. It’s optimized for responsive fixed width/height images and images that stretch the full-width of a container. There are also other ways to [work with images](/docs/images-and-files/) in Gatsby that don't require GraphQL._
-
-Demo: [https://using-gatsby-image.gatsbyjs.org/](https://using-gatsby-image.gatsbyjs.org/)
+[Demo here](https://using-gatsby-image.gatsbyjs.org/)
 
 ## In this doc
 
 - [Setting up Gatsby Image](#setting-up-gatsby-image)
-- [Types of images with gatsby-image](#types-of-images-with-gatsby-image)
+- [Types of images with `gatsby-image`](#types-of-images-with-gatsby-image)
   - [Fixed images and parameters](#images-with-a-fixed-width-and-height)
   - [Fluid images and parameters](#images-that-stretch-across-a-fluid-container)
   - [Resized images](#resized-images)
@@ -337,7 +337,7 @@ file(relativePath: { eq: "images/default.jpg" }) {
 }
 ```
 
-For more info on how these options work, check out the Gatsby Image demo: [https://using-gatsby-image.gatsbyjs.org/](https://using-gatsby-image.gatsbyjs.org/)
+For more info on how these options work, check out the [Gatsby Image demo](https://using-gatsby-image.gatsbyjs.org/)
 
 #### Additional plugin fragments
 

@@ -7,7 +7,7 @@ tags: ["headless-cms", "contentful", "content-mesh"]
 
 ## What is a traditional CMS?
 
-A traditional Content Management System (CMS)--like WordPress, Drupal, or Joomla--manages three things for a website: content, admin screens, and presentation layer. These three things are tightly integrated, which has advantages. For example, there’s only one system to learn / one vendor relationship, and overall, there may be fewer choices to make. In addition, traditional CMSs have been around for so long that many teams are familiar with them and many websites are already be running on them. Both advantages.
+A traditional Content Management System (CMS)--like WordPress, Drupal, or Joomla--manages three things for a website: content, admin screens, and presentation layer. These three things are tightly integrated, which has advantages. For example, there's only one system to learn / one vendor relationship, and overall, there may be fewer choices to make. In addition, traditional CMSs have been around for so long that many teams are familiar with them and many websites are already be running on them. Both advantages.
 
 You can think of a traditional CMS like an old home built by one person and with custom fittings. Gorgeous, and expensive to maintain, like the home in _The Money Pit_ (1986) with Tom Hanks and Shelley Long.
 
@@ -26,13 +26,13 @@ When content exists in a tight relationship with the presentation layer, adaptin
 ## What is a headless CMS?
 
 <Pullquote citation="Deane Barker">
-  A headless CMS does nothing but manage content. It doesn’t deliver content to
+  A headless CMS does nothing but manage content. It doesn't deliver content to
   humans at all. Rather, it 'delivers' content to an application of some type.
-  Its immediate consumer is code, and it’s assumed that code will reformat the
+  Its immediate consumer is code, and it's assumed that code will reformat the
   content for final delivery to a human.
 </Pullquote>
 
-To add to Deane Barker's eloquent explanation in the quote above (see his article [here](https://gadgetopia.com/post/9743)), a headless CMS only handles two things--content and managing that content through admin screens. This means that a separate presentation layer (or “head”) like Gatsby must reformat the content for delivery to a CDN and then final delivery to humans.
+To add to Deane Barker's eloquent explanation in the quote above (see his article [here](https://gadgetopia.com/post/9743)), a headless CMS only handles two things--content and managing that content through admin screens. This means that a separate presentation layer (or "head") like Gatsby must reformat the content for delivery to a CDN and then final delivery to humans.
 
 _Note on how CMSs usually work:_ Most headless CMSs require you to create various structures for your content, typically called "content models", and then enter content into that structure. Content can include words, images, URLs, lists, etc. Then, outside of the CMS, you push this content through a presentation layer (GraphQL queries are one way to do this pushing).
 
@@ -42,19 +42,19 @@ Following are some advantages to using a headless CMS.
 
 With much less time (and therefore less money), you can set up a headless CMS with a presentation layer like Gatsby and a CDN and get your site running on edge servers.
 
-Besides being faster and therefore less expensive to set up, this method also produces faster load times for most sites. Let’s say a person in Australia accesses a US site built with a headless CMS and Gatsby; the site can run off of a closer server, so it will load quickly. This is an enormous advantage for both the user and for whomever created the site.
+Besides being faster and therefore less expensive to set up, this method also produces faster load times for most sites. Let's say a person in Australia accesses a US site built with a headless CMS and Gatsby; the site can run off of a closer server, so it will load quickly. This is an enormous advantage for both the user and for whomever created the site.
 
 Faster load times can be taken to the next level with sites that run offline. I recently chatted with a friend in New Delhi who used Gatsby to build his blog to run offline, which is an incredible advantage for commuters who want to read while on public transportation with spotty internet access.
 
 ### Higher quality AND cheaper?
 
-The separation between a headless CMS and the presentation layer allows both to become highly specialized and efficient, similar to the food production system in the Jetson’s house:
+The separation between a headless CMS and the presentation layer allows both to become highly specialized and efficient, similar to the food production system in the Jetson's house:
 
-![The Jetson’s microwave shoots food at them and makes it so easy to eat!](the-jetsons.jpeg)
+![The Jetson's microwave shoots food at them and makes it so easy to eat!](the-jetsons.jpeg)
 
 When businesses specialize in one thing instead of several, they tend to become more time-efficient and can produce things at a lower cost. In human terms, this means that headless CMSs tend to cost you less than traditional CMSs, because they cost less up front or they take you less time to maintain.
 
-This specialization also means that headless CMSs perform well in scenarios in which a traditional CMS would prove inadequate. I’d like to point to Deane Barker’s [excellent article on use cases for headless CMSs](https://gadgetopia.com/post/9743), from which we've extracted a partial list:
+This specialization also means that headless CMSs perform well in scenarios in which a traditional CMS would prove inadequate. I'd like to point to Deane Barker's [excellent article on use cases for headless CMSs](https://gadgetopia.com/post/9743), from which we've extracted a partial list:
 
 - You need to gather content from disparate places and pull it together into one platform
 - You need to push content to various formats, including desktop sites, mobile sites, smart watches, ads, etc.
@@ -66,17 +66,17 @@ In all of these cases, a headless CMS is an excellent solution for you.
 
 ## Which headless CMS should I choose?
 
-Whether or not you’re convinced that a headless CMS is a good idea, the next step would be to try some out for yourself. I found this handy site with a [list of headless CMSs to keep an eye on](https://headlesscms.org/about/).
+Whether or not you're convinced that a headless CMS is a good idea, the next step would be to try some out for yourself. I found this handy site with a [list of headless CMSs to keep an eye on](https://headlesscms.org/about/).
 
-And here’s what I learned from testing several popular CMSs for five minutes each. (Background: I’m a writer and content editor who knows just enough about developing to get myself into major trouble :)
+And here's what I learned from testing several popular CMSs for five minutes each. (Background: I'm a writer and content editor who knows just enough about developing to get myself into major trouble :)
 
 ### GraphCMS
 
-Their sleek design impressed me: the left hand side bar and onboarding process was quick and easy-to-understand. For example, I pretty much understand what web hooks are now, after 30 seconds of going through their tutorial. Very cool. Also, very excited to see their handy API explorer (built-in GraphiQL)! Not totally sure I get the concept called “enumerations” and the names for different kinds of permissions. The one called “create” was confusing because “create” is also a verb, so I expected something to happen when I clicked that button, but nothing happened. I suspect it is the name of one of the roles.
+Their sleek design impressed me: the left hand side bar and onboarding process was quick and easy-to-understand. For example, I pretty much understand what web hooks are now, after 30 seconds of going through their tutorial. Very cool. Also, very excited to see their handy API explorer (built-in GraphiQL)! Not totally sure I get the concept called "enumerations" and the names for different kinds of permissions. The one called "create" was confusing because "create" is also a verb, so I expected something to happen when I clicked that button, but nothing happened. I suspect it is the name of one of the roles.
 
 ### ButterCMS
 
-I've read that [ButterCMS](https://buttercms.com) is particularly good for blogs, and after seeing how easy it is to add metadata and SEO title / metadescription to blog posts, it makes sense why this might be the case. Sometimes there were more clicks than necessary when saving things. And sometimes the jargon in this environment threw me off. Like “object”? What is that? It’s basically a category of content. So, if I’m going to create a lot of event descriptions, the event titles will be one object, the event description, another object, etc. It's an unfamiliar and abstract word for someone new to headless CMSs.
+I've read that [ButterCMS](https://buttercms.com) is particularly good for blogs, and after seeing how easy it is to add metadata and SEO title / metadescription to blog posts, it makes sense why this might be the case. Sometimes there were more clicks than necessary when saving things. And sometimes the jargon in this environment threw me off. Like "object"? What is that? It's basically a category of content. So, if I'm going to create a lot of event descriptions, the event titles will be one object, the event description, another object, etc. It's an unfamiliar and abstract word for someone new to headless CMSs.
 
 ### Contentful
 
@@ -88,4 +88,4 @@ This system gives you lots of options when it comes to creating content. Maybe t
 
 ## Conclusion
 
-I’d definitely choose a headless CMS over a traditional CMS if I had talented frontend developers, because they could choose their favorite framework for the presentation layer. That setup would give us the flexibility to switch delivery methods, presentation methods, and content management methods with agility.
+I'd definitely choose a headless CMS over a traditional CMS if I had talented frontend developers, because they could choose their favorite framework for the presentation layer. That setup would give us the flexibility to switch delivery methods, presentation methods, and content management methods with agility.

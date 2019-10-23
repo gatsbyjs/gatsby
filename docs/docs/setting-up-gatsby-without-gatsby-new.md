@@ -6,7 +6,7 @@ There are many Enterprise level companies that maintain an internal clone of the
 
 ## Preparing your environment
 
-To get started with Gatsby, you’ll need to make sure you have the following software tools installed:
+To get started with Gatsby, you'll need to make sure you have the following software tools installed:
 
 1. [Node.js](/tutorial/part-zero/#install-nodejs)
 1. [npm CLI](/tutorial/part-zero/#familiarize-with-npm)

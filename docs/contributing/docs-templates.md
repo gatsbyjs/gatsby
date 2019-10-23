@@ -11,7 +11,7 @@ Here are some things to keep in mind when deciding where to contribute to Gatsby
 - [Recipes](#recipes) add concise, discoverable, and easy-to-follow instructions for common Gatsby tasks. They are smaller units than tutorials.
 - [Tutorials](#tutorials) should provide step-by-step guidance for Gatsby workflows, listing all pre-requisites and not assuming knowledge or skipping steps.
 
-### Why use templates?
+## Why use templates?
 
 Here are templates (models) to follow when contributing to Gatsby docs to ensure that the docs accomplish their purpose. If you have a good reason to deviate from the following template structures, mention those reasons in the PR so others can give proper feedback.
 
@@ -35,9 +35,9 @@ Each guide article should explain exactly one concept and that concept should be
 
 ### What if I want to include multiple tasks and concepts in a reference guide?
 
-If you find yourself wanting to include multiple related topics in one article, consider splitting each into its own individual guide and referencing the other topics under sections called “Prerequisites” and/or "Other Resources" sections in the related guide articles.
+If you find yourself wanting to include multiple related topics in one article, consider splitting each into its own individual guide and referencing the other topics under sections called "Prerequisites" and/or "Other Resources" sections in the related guide articles.
 
-It’s more ideal to have many articles that cover a broad range of technical topics rather than smashing too many topics into one article.
+It's more ideal to have many articles that cover a broad range of technical topics rather than smashing too many topics into one article.
 
 If you find yourself wanting to teach the reader how to accomplish a series of related tasks, you might want to write a tutorial. For short and super common how-to instructions for a single task, a recipe may work best.
 
@@ -137,7 +137,7 @@ Ideally, a guide overview fits above the fold on a desktop computer screen. This
 
 ### When should I create a new reference guide overview?
 
-Guide overview articles are essentially new parent categories that help organize all the reference guides. Here’s how to decide if you should create a new reference guide overview:
+Guide overview articles are essentially new parent categories that help organize all the reference guides. Here's how to decide if you should create a new reference guide overview:
 
 1.  [Stub articles](/contributing/stub-list/) (docs that already exist on the site but don't have content in them yet)
 2.  Article sections with the [help wanted and type:documentation](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22+label%3A%22type%3A+documentation%22) labels on GitHub
@@ -312,9 +312,9 @@ Topics should be chosen based on these priorities:
 
 ## Length of a tutorial
 
-If a tutorial is longer than 3 8.5x11” pages or has more than about 5 headers and you’re finding yourself creating a Table of Contents at the top, it will probably be easier to read and easier for readers to complete if you turn it into a multi-page tutorial, like the [main Gatsby tutorial](https://www.gatsbyjs.org/tutorial/).
+If a tutorial is longer than 3 8.5x11" pages or has more than about 5 headers and you're finding yourself creating a Table of Contents at the top, it will probably be easier to read and easier for readers to complete if you turn it into a multi-page tutorial, like the [main Gatsby tutorial](https://www.gatsbyjs.org/tutorial/).
 
-If you have a tutorial that falls into this category, it is likely a big enough project that you’ll benefit from the feedback process provided by creating an [RFC (Request for Comments) document](https://github.com/gatsbyjs/rfcs).
+If you have a tutorial that falls into this category, it is likely a big enough project that you'll benefit from the feedback process provided by creating an [RFC (Request for Comments) document](https://github.com/gatsbyjs/rfcs).
 
 ## Tutorial template
 
@@ -325,9 +325,9 @@ You can copy and paste the markdown text below and fill it in with your own info
 title: How to Create a Decoupled Drupal Site with Gatsby
 ---
 
-## What’s contained in this tutorial?
+## What's contained in this tutorial?
 
-By the end of this tutorial, you’ll have done the following:
+By the end of this tutorial, you'll have done the following:
 
 - learned how to **\_\_**
 - built a \***\*\_\*\***
@@ -369,7 +369,7 @@ In this tutorial, you did the following:
 - built a \***\*\_\*\***
 - used a **\_\_\_** with Gatsby
 
-## What’s next
+## What's next
 
 If there are more parts to the tutorial, link to the next step here.
 

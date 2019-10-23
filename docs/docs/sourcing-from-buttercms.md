@@ -1,7 +1,7 @@
 ---
 title: Sourcing from ButterCMS
 ---
-
+<!--lint disable no-duplicate-headings-->
 ## Overview
 
 In this guide you'll be setting up a CMS powered Gatsby site that uses [ButterCMS](https://buttercms.com/) as its content management system.
@@ -89,9 +89,9 @@ ButterCMS has integrated with a rich image transformation API called Filestack. 
 
 After you upload an image to ButterCMS, it's stored on our CDN. To create a thumbnail, here's an example:
 
-Original URL = https://cdn.buttercms.com/zjypya5tRny63LqhHQrv
+Original URL = <https://cdn.buttercms.com/zjypya5tRny63LqhHQrv>
 
-Thumbnail URL = https://fs.buttercms.com/resize=width:200,height:200/zjypya5tRny63LqhHQrv
+Thumbnail URL = <https://fs.buttercms.com/resize=width:200,height:200/zjypya5tRny63LqhHQrv>
 
 Resizing is just one of the many different transformations you can do to your images. Refer to the [Filestack docs](https://www.filestack.com/docs/) for full details.
 
@@ -295,7 +295,7 @@ Then populate our new page with content. In the next step, we'll call the Butter
 
 ![](https://buttercms.com/static/images/docs/guides/PagesNewPageTypeCreateContent.png)
 
-To Pull down content into gatsby run:
+To Pull down content into `gatsby` run:
 
 ```shell
 gatsby develop

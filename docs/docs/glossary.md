@@ -142,7 +142,7 @@ Gatsby is a modern website framework that builds performance into every website 
 
 ### GraphQL
 
-A [query](#query) language that allows you to pull data into your website or app. It’s the [interface that Gatsby uses](/docs/graphql/) for managing site data.
+A [query](#query) language that allows you to pull data into your website or app. It's the [interface that Gatsby uses](/docs/graphql/) for managing site data.
 
 ## H
 
@@ -172,7 +172,7 @@ Once a site has been [built](#build) by Gatsby and loaded in a web browser, [cli
 
 ### JAMStack
 
-JAMStack refers to a modern web architecture using [JavaScript](#javascript), [APIs](#api), and ([HTML](#html)) markup. From [JAMStack.org](https://jamstack.org): "It’s a new way of building websites and apps that delivers better performance, higher security, lower cost of scaling, and a better developer experience."
+JAMStack refers to a modern web architecture using [JavaScript](#javascript), [APIs](#api), and ([HTML](#html)) markup. From [JAMStack.org](https://jamstack.org): "It's a new way of building websites and apps that delivers better performance, higher security, lower cost of scaling, and a better developer experience."
 
 ### JavaScript
 
@@ -258,7 +258,7 @@ The process of requesting specific data from somewhere. With Gatsby you normally
 
 ### React
 
-A code library (written with [JavaScript](#javascript)) for building user interfaces. It’s the framework that [Gatsby](#gatsby) uses to build pages and structure content.
+A code library (written with [JavaScript](#javascript)) for building user interfaces. It's the framework that [Gatsby](#gatsby) uses to build pages and structure content.
 
 ### Remark
 

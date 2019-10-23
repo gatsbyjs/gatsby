@@ -15,7 +15,7 @@ A common challenge when building apps is setting up authentication. If our apps 
 
 ## Authentication in Gatsby
 
-We regularly get questions about how to add authentication to Gatsby, and while we have [simple examples](https://github.com/gatsbyjs/gatsby/blob/master/examples/simple-auth/) that wouldn’t help in a production app and [the more complex logic of our store](https://github.com/gatsbyjs/store.gatsbyjs.org), we don’t have a straightforward, “here’s how to add authentication for a user account page in Gatsby” example.
+We regularly get questions about how to add authentication to Gatsby, and while we have [simple examples](https://github.com/gatsbyjs/gatsby/blob/master/examples/simple-auth/) that wouldn't help in a production app and [the more complex logic of our store](https://github.com/gatsbyjs/store.gatsbyjs.org), we don't have a straightforward, "here's how to add authentication for a user account page in Gatsby" example.
 
 On a recent livestream, [Ado Kukic](https://twitter.com/KukicAdo) helped me create an example for setting up auth for a Gatsby account page.
 
@@ -54,11 +54,11 @@ The code we built is [available on GitHub](https://github.com/jlengstorf/gatsby-
 
 ## Watch future livestreams
 
-There’s a **new livestream every Thursday at 9 am Pacific.** The streams are even more fun live with the chat, so join in and let’s learn together!
+There's a **new livestream every Thursday at 9 am Pacific.** The streams are even more fun live with the chat, so join in and let's learn together!
 
-- Click the “follow” button on [my Twitch account][twitch] to get notified when streams start
-- Check the “Upcoming Streams” section to learn who’ll be joining me to teach us
-- [Send me ideas on Twitter](https://twitter.com/jlengstorf) for who you’d like to see on the stream
+- Click the "follow" button on [my Twitch account][twitch] to get notified when streams start
+- Check the "Upcoming Streams" section to learn who'll be joining me to teach us
+- [Send me ideas on Twitter](https://twitter.com/jlengstorf) for who you'd like to see on the stream
 
 See you on the next stream!
 

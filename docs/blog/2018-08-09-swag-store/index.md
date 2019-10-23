@@ -6,18 +6,18 @@ author: Jason Lengstorf
 tags: ["open-source", "community"]
 ---
 
-Today, we’re _so excited_ to announce the launch of the [Gatsby Swag Store][store]! If you’ve been following along [on Twitter][twitter], you may have seen the news a little while back.
+Today, we're _so excited_ to announce the launch of the [Gatsby Swag Store][store]! If you've been following along [on Twitter][twitter], you may have seen the news a little while back.
 
 <blockquote class="twitter-tweet" data-lang="en">
   <p lang="en" dir="ltr">
     🎉The Gatsby Store is officially open! 🎉
     <br />
     <br />
-    We’ve got snuggly socks, soft t-shirts, and enough stickers to wallpaper your
+    We've got snuggly socks, soft t-shirts, and enough stickers to wallpaper your
     house. 🧦👕🏡
     <br />
     <br />
-    Get ’em at <a href="https://t.co/e7xq9qTaP7">https://t.co/e7xq9qTaP7</a>
+    Get 'em at <a href="https://t.co/e7xq9qTaP7">https://t.co/e7xq9qTaP7</a>
     <br />
     <br />
     P.S. Do you <a href="https://twitter.com/hashtag/buildwithgatsby?src=hash&amp;ref_src=twsrc%5Etfw">
@@ -27,7 +27,7 @@ Today, we’re _so excited_ to announce the launch of the [Gatsby Swag Store][st
   &mdash; Marisa Morby (@marisamorby) <a href="https://twitter.com/marisamorby/status/1019256499799912449?ref_src=twsrc%5Etfw">July 17, 2018</a>
 </blockquote>
 
-We’ve spent the last couple weeks working the kinks out, and we couldn’t be happier with the response we’ve seen.
+We've spent the last couple weeks working the kinks out, and we couldn't be happier with the response we've seen.
 
 <figure>
   <img
@@ -51,9 +51,9 @@ We’ve spent the last couple weeks working the kinks out, and we couldn’t be 
 
 ## Free swag for all contributors 💪💜
 
-We’re extremely excited about the launch of the store because it means contributors are now able to get stickers, socks, and/or t-shirts for free — a little token of our appreciation for putting the time in to make the open source community even better. You’re all amazing, and we 💜 you for it.
+We're extremely excited about the launch of the store because it means contributors are now able to get stickers, socks, and/or t-shirts for free — a little token of our appreciation for putting the time in to make the open source community even better. You're all amazing, and we 💜 you for it.
 
-Going forward, all contributors to the [Gatsby organization on GitHub][org] will automatically qualify for free Gatsby swag. **And when we say _all_ contributors, we mean it: even if you contributed to Gatsby before the store was launched, you’re qualified for free swag!**
+Going forward, all contributors to the [Gatsby organization on GitHub][org] will automatically qualify for free Gatsby swag. **And when we say _all_ contributors, we mean it: even if you contributed to Gatsby before the store was launched, you're qualified for free swag!**
 
 <blockquote class="twitter-tweet" data-lang="en">
   <p lang="en" dir="ltr">
@@ -65,20 +65,20 @@ Going forward, all contributors to the [Gatsby organization on GitHub][org] will
   &mdash; LekoArts (@lekoarts_de) <a href="https://twitter.com/lekoarts_de/status/1023823370620727296?ref_src=twsrc%5Etfw">July 30, 2018</a>
 </blockquote>
 
-For more details and instructions on how to claim your free swag, see [the “swag for contributors” section of the docs][swag].
+For more details and instructions on how to claim your free swag, see [the "swag for contributors" section of the docs][swag].
 
-Here’s the short version:
+Here's the short version:
 
 1.  Head to the [swag store][store]
 2.  Log in with your GitHub account at the top right of the page
 3.  Request a discount code with your name and email
 4.  Use that discount code at checkout to get one free item from the swag store!
 
-> **NOTE:** The way this works is by checking that your GitHub account has at least one merged PR in the [Gatsby organization][org]. However, **contributing code is _not_ the only way to contribute to open source!** Check out [the “how to contribute” docs][contribute] for more examples of contributions that qualify for free swag. Email us at <mailto:team@gatsbyjs.com> if you’re a non-code contributor and want your free swag.
+> **NOTE:** The way this works is by checking that your GitHub account has at least one merged PR in the [Gatsby organization][org]. However, **contributing code is _not_ the only way to contribute to open source!** Check out [the "how to contribute" docs][contribute] for more examples of contributions that qualify for free swag. Email us at <mailto:team@gatsbyjs.com> if you're a non-code contributor and want your free swag.
 
 ## Shipping is free on all orders globally
 
-We know how much it sucks when things aren’t available in your country, so — for now, at least — Gatsby Inc. is footing the bill for shipping, no matter where you are in the world. It is our sincere hope that we can keep this up, but we can’t guarantee it’s sustainable. (_Hint: this means you should probably order sooner rather than later, just in case._)
+We know how much it sucks when things aren't available in your country, so — for now, at least — Gatsby Inc. is footing the bill for shipping, no matter where you are in the world. It is our sincere hope that we can keep this up, but we can't guarantee it's sustainable. (_Hint: this means you should probably order sooner rather than later, just in case._)
 
 ## Post your swag photos on Twitter!
 
@@ -113,7 +113,7 @@ We love seeing how great the community looks in purple, so please post your Gats
 
 All of the source code for the swag store [has been open sourced][swag-source]. The frontend is a [Gatsby v2][v2] site (naturally) using [Shopify][shopify] (and their [JS Buy SDK][js-buy-sdk]) to display products and manage carts, [Auth0][auth0] to handle authentication, and a [custom Express API][swag-api] to manage discount code requests.
 
-We also use [Peril][peril] to [automatically invite contributors][invite] to the Gatsby organization on GitHub and post details about claiming swag. Here’s an example (and some kind words from Gatsby contributor [Payton Burdette](https://twitter.com/beardedpayton)) showing what the automated response looks like:
+We also use [Peril][peril] to [automatically invite contributors][invite] to the Gatsby organization on GitHub and post details about claiming swag. Here's an example (and some kind words from Gatsby contributor [Payton Burdette](https://twitter.com/beardedpayton)) showing what the automated response looks like:
 
 <blockquote class="twitter-tweet" data-lang="en">
   <p lang="en" dir="ltr">
@@ -124,18 +124,18 @@ We also use [Peril][peril] to [automatically invite contributors][invite] to the
   &mdash; Payton Burdette (@beardedpayton) <a href="https://twitter.com/beardedpayton/status/1020339698332512256?ref_src=twsrc%5Etfw">July 20, 2018</a>
 </blockquote>
 
-## What’s next?
+## What's next?
 
-We have a lot of ideas for the Gatsby store — from [new swag ideas](https://github.com/gatsbyjs/store.gatsbyjs.org/issues?q=is%3Aissue+is%3Aopen+label%3A%22Swag+Ideas%22+sort%3Aupdated-desc) to adding more rewards for contributors who go above and beyond — but we’d love to hear more from you! Please [tweet at us][twitter] or open issues on [the store repo][swag-source] with ideas.
+We have a lot of ideas for the Gatsby store — from [new swag ideas](https://github.com/gatsbyjs/store.gatsbyjs.org/issues?q=is%3Aissue+is%3Aopen+label%3A%22Swag+Ideas%22+sort%3Aupdated-desc) to adding more rewards for contributors who go above and beyond — but we'd love to hear more from you! Please [tweet at us][twitter] or open issues on [the store repo][swag-source] with ideas.
 
-For now, that’s it! We’ll leave you with our favorite genre of tweet: “dogs wearing Gatsby swag”.
+For now, that's it! We'll leave you with our favorite genre of tweet: "dogs wearing Gatsby swag".
 
 <blockquote class="twitter-tweet" data-lang="en">
   <p lang="en" dir="ltr">
     Thanks{" "}
     <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> for
-    the t-shirt! If there are any developers out there that haven’t tried out
-    Gatsby yet here is my dog Birch silently judging you. 😉 Trust me, it’s
+    the t-shirt! If there are any developers out there that haven't tried out
+    Gatsby yet here is my dog Birch silently judging you. 😉 Trust me, it's
     awesome. <a href="https://t.co/THDSmhKdBb">pic.twitter.com/THDSmhKdBb</a>
   </p>
   &mdash; Ryan Wiemer (@ryanwiemer) <a href="https://twitter.com/ryanwiemer/status/1022267081998266368?ref_src=twsrc%5Etfw">July 25, 2018</a>

@@ -17,8 +17,8 @@ to modify pages created in core or plugins or to create [client-only routes](/do
 ## Debugging help
 
 To see what pages are being created by your code or plugins, you can query for
-page information while developing in Graph*i*QL. Paste the following query in
-the Graph*i*QL IDE for your site. The Graph*i*QL IDE is available when running
+page information while developing in Graph _i_ QL. Paste the following query in
+the Graph _i_ QL IDE for your site. The Graph _i_ QL IDE is available when running
 your sites development server at `HOST:PORT/___graphql` e.g.
 `localhost:8000/___graphql`.
 
@@ -45,7 +45,7 @@ You can also query for any `context` data you or plugins added to pages.
 
 > **NOTE:** There are a few reserved names that _cannot_ be used in `context`. They are: `path`, `matchPath`, `component`, `componentChunkName`, `pluginCreator___NODE`, and `pluginCreatorId`.
 
-## Creating pages in gatsby-node.js
+## Creating pages in `gatsby-node.js`
 
 Often you will need to programmatically create pages. For example, you have
 markdown files where each should be a page.
@@ -54,7 +54,7 @@ This example assumes that each markdown page has a `path` set in the frontmatter
 of the markdown file.
 
 ```javascript:title=gatsby-node.js
-// Implement the Gatsby API “createPages”. This is called once the
+// Implement the Gatsby API "createPages". This is called once the
 // data layer is bootstrapped to let plugins create pages from data.
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
@@ -120,7 +120,7 @@ _Note: If you need to perform an asynchronous action within `onCreatePage` you c
 ```javascript:title=gatsby-node.js
 // Replacing '/' would result in empty string which is invalid
 const replacePath = path => (path === `/` ? path : path.replace(/\/$/, ``))
-// Implement the Gatsby API “onCreatePage”. This is
+// Implement the Gatsby API "onCreatePage". This is
 // called after every page is created.
 exports.onCreatePage = ({ page, actions }) => {
   const { createPage, deletePage } = actions

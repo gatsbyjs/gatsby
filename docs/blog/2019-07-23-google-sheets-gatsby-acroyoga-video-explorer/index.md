@@ -181,7 +181,7 @@ I then used the Gatsby `createPage` method to create pages for each of these row
 
 ## Making Gatsby Pages for Tags and Instructors
 
-Every tag and instructor should have its own page (with a list of matching videos). I'll now show you how I created these pages within gatsby-node.js.
+Every tag and instructor should have its own page (with a list of matching videos). I'll now show you how I created these pages within `gatsby-node.js`.
 
 If you went through the Gatsby tutorial at some point, you're probably familiar with the flow of creating nodes then creating pages with those nodes. You can also create pages with what I'd call 'derivatives of nodes'. Put more simply, you can, for example, loop over a node (like my rows node created in the previous section) and create pages with the result of your loop. This is what I did to create my tag pages, like so:
 
@@ -236,9 +236,9 @@ export const tagPageQuery = graphql`
 }
 ```
 
-This query uses $tag from React context (which was created in gatsby-node.js) to do the filtering. If $tag is found in the array of tags (for that row), then it returns that row (which is a video). This is how I can create separate instructor and tag pages that only show those relevant videos (the videos with those specific tags or instructors).
+This query uses $tag from React context (which was created in `gatsby-node.js`) to do the filtering. If $tag is found in the array of tags (for that row), then it returns that row (which is a video). This is how I can create separate instructor and tag pages that only show those relevant videos (the videos with those specific tags or instructors).
 
-At the top of my tag pages, I have a title that says “24 videos tagged with [the tag]”. To get the tag for that page, I need to pass pageContext as a prop to this template component. That allows me to access that \$tag variable within the template (instead of a graphql query). Now I can make the title with the following code:
+At the top of my tag pages, I have a title that says "24 videos tagged with `[the tag]`". To get the tag for that page, I need to pass pageContext as a prop to this template component. That allows me to access that \$tag variable within the template (instead of a graphql query). Now I can make the title with the following code:
 
 ```jsx
 {itemsWithTag.length} {itemsWithTag.length > 1 ? 'videos' : 'video'} tagged with
@@ -305,7 +305,7 @@ Linking to the instructor and tags is done with this code:
 </CardContent>
 ```
 
-That's it. It's just `<Link to=` and the relative path, e.g. `<Link to="/some-resource/" />`. I don't need to worry about passing the right props or anything else. I know the page exists (because I built it using createPage in gatsby-node.js). I know the template will have the right data (because I setup the graphql query in that template file). I just need to Link to the right URL, and the pages will connect correctly. This creates a fast and intuitive user experience wherein the user can quickly click through the pages to find the right video.
+That's it. It's just `<Link to=` and the relative path, e.g. `<Link to="/some-resource/" />`. I don't need to worry about passing the right props or anything else. I know the page exists (because I built it using createPage in `gatsby-node.js`). I know the template will have the right data (because I setup the graphql query in that template file). I just need to Link to the right URL, and the pages will connect correctly. This creates a fast and intuitive user experience wherein the user can quickly click through the pages to find the right video.
 
 ## Creating a simple video player with React-Player
 
@@ -336,7 +336,7 @@ This was such a clear and easy 'aha!' moment. I hadn't optimized my images and w
 
 I dug into my normal `gatsby-image` workflow but I quickly hit a snag. My previous use of Gatsby-image had been for local images whilst I was now trying to use remote images (cloud storage image links). Thankfully, with just a bit more searching, I found the right plugin to solve this: [`gatsby-plugin-remote-images`](/packages/gatsby-plugin-remote-images/).
 
-Gatsby-plugin-remote-images fetches image URL links (e.g. http://super-image.png) and prepares them in a way that `gatsby-image` can use them. To make my cards load faster, I'd need to optimize both the video thumbnail as well as the small instructor image. It makes no sense at all to load a 300+ pixel image of an instructor when all you really need are maybe 40 pixels max.
+Gatsby-plugin-remote-images fetches image URL links (e.g. <http://super-image.png>) and prepares them in a way that `gatsby-image` can use them. To make my cards load faster, I'd need to optimize both the video thumbnail as well as the small instructor image. It makes no sense at all to load a 300+ pixel image of an instructor when all you really need are maybe 40 pixels max.
 
 ![Acroyoga Card with Optimized Images](./images/word-image-4.png)
 

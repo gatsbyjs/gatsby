@@ -4,7 +4,7 @@ title: Adding an RSS Feed
 
 ## What is an RSS feed?
 
-An [RSS Feed](https://en.wikipedia.org/wiki/RSS) is a standard XML file listing a website’s content in a subscribable format, allowing readers to consume your content in news aggregators, also called feed reader apps.
+An [RSS Feed](https://en.wikipedia.org/wiki/RSS) is a standard XML file listing a website's content in a subscribable format, allowing readers to consume your content in news aggregators, also called feed reader apps.
 
 Think of it as a syndicated distribution channel for your site's content.
 

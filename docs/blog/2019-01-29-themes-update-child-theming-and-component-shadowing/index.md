@@ -51,7 +51,7 @@ to achieve, so more on that at a later date.
 Taking advantage of child theming requires some familiarity with theming itself
 to be used effectively. If you're already experienced with themes and want to
 see how one possible way to upgrade your themes to use this feature, the
-corresponding PR in the [gatsby-theme-examples
+corresponding PR in the [`gatsby-theme-examples`
 repo](https://github.com/ChristopherBiscardi/gatsby-theme-examples) has [also
 been
 merged](https://github.com/ChristopherBiscardi/gatsby-theme-examples/pull/13).

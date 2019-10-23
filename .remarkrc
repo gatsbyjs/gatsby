@@ -1,5 +1,6 @@
 {
   "plugins": [
-    "remark-preset-lint-gatsby"
+    "remark-preset-lint-gatsby",
+    ["remark-lint-maximum-heading-length", false]
   ]
 }

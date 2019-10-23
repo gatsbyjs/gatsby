@@ -62,7 +62,7 @@ We were able to close out almost the entire [content migration effort](https://g
 
 ### We were overwhelmed
 
-We’re a small team, and we weren’t fully prepared to handle the overwhelmingly enthusiastic response from the community. Many issues, particularly docs issues, were claimed within minutes of opening them. It slowed our response time, which was frustrating -- both for contributors, and for us.
+We're a small team, and we weren't fully prepared to handle the overwhelmingly enthusiastic response from the community. Many issues, particularly docs issues, were claimed within minutes of opening them. It slowed our response time, which was frustrating -- both for contributors, and for us.
 
 #### ➡️ We created codeowner teams
 

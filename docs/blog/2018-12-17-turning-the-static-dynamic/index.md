@@ -10,7 +10,7 @@ excerpt: Gatsby is great for not only static sites but also traditional web appl
 
 > Q: What is one thing that Gatsby is capable of doing that might surprise some people? — ctlee
 
-> A: Gatsby can be used to build fully dynamic sites, which surprises some people because of it’s label as a “static site generator”. It’s fully equipped to be a powerful alternative to create-react-app and other similar solutions with the addition of easy pre-rendering and perf baked in. — biscarch
+> A: Gatsby can be used to build fully dynamic sites, which surprises some people because of it's label as a "static site generator". It's fully equipped to be a powerful alternative to create-react-app and other similar solutions with the addition of easy pre-rendering and perf baked in. — biscarch
 
 Even though Dustin [recently wrote about Gatsby for Apps](/blog/2018-11-07-gatsby-for-apps/) and open sourced his [Gatsby Mail](https://gatsby-mail.netlify.com/) demo, I do still find people constantly having to explain that Gatsby is "not just for sites".
 
@@ -389,6 +389,6 @@ export function handler(event, context, callback) {
 
 It's 5 steps each to turn your static Gatsby sites into dynamic, authenticated, fully serverless apps with Netlify's free tools. This makes Gatsby a perfect tool for your next app. If you're at a hackathon, short on time, or just like to see a full working demo, check any of the following links.
 
-- **Code:** https://github.com/sw-yx/jamstack-hackathon-starter
-- **Starter:** https://www.gatsbyjs.org/starters/jamstack-hackathon-starter
-- **Live Demo:** https://jamstack-hackathon-starter.netlify.com/
+- **Code:** <https://github.com/sw-yx/jamstack-hackathon-starter>
+- **Starter:** <https://www.gatsbyjs.org/starters/jamstack-hackathon-starter>
+- **Live Demo:** <https://jamstack-hackathon-starter.netlify.com/>

@@ -12,7 +12,7 @@ The component is a wrapper around [@reach/router's Link component](https://reach
 
 <EggheadEmbed
   lessonLink="https://egghead.io/lessons/gatsby-why-and-how-to-use-gatsby-s-link-component"
-  lessonTitle="Why and How to Use Gatsby’s Link Component"
+  lessonTitle="Why and How to Use Gatsby's Link Component"
 />
 
 ### Replace `a` tags with the `Link` tag for local links
@@ -42,10 +42,10 @@ const Page = () => (
 
 <EggheadEmbed
   lessonLink="https://egghead.io/lessons/gatsby-add-custom-styles-for-the-active-link-using-gatsby-s-link-component"
-  lessonTitle="Add Custom Styles for the Active Link Using Gatsby’s Link Component"
+  lessonTitle="Add Custom Styles for the Active Link Using Gatsby's Link Component"
 />
 
-It’s often a good idea to show which page is currently being viewed by visually changing the link matching the current page.
+It's often a good idea to show which page is currently being viewed by visually changing the link matching the current page.
 
 `Link` provides two options for adding styles to the active link:
 
@@ -122,7 +122,7 @@ _**Note:** Available from Gatsby V2.1.31, if you are experiencing issues please 
 
 <EggheadEmbed
   lessonLink="https://egghead.io/lessons/gatsby-include-information-about-state-in-navigation-with-gatsby-s-link-component"
-  lessonTitle="Include Information About State in Navigation With Gatsby’s Link Component"
+  lessonTitle="Include Information About State in Navigation With Gatsby's Link Component"
 />
 
 Sometimes you'll want to pass data from the source page to the linked page. You can do this by passing a `state` prop to the `Link` component or on a call to the `navigate` function. The linked page will have a `location` prop containing a nested `state` object structure containing the passed data.
@@ -152,14 +152,14 @@ const Photo = ({ location, photoId }) => {
 }
 ```
 
-### Replace history to change “back” button behavior
+### Replace history to change "back" button behavior
 
 <EggheadEmbed
   lessonLink="https://egghead.io/lessons/gatsby-replace-navigation-history-items-with-gatsby-s-link-component"
-  lessonTitle="Replace Navigation History Items with Gatsby’s Link Component"
+  lessonTitle="Replace Navigation History Items with Gatsby's Link Component"
 />
 
-There are a few cases where it might make sense to modify the “back” button’s behavior. For example, if you build a page where you choose something, then see an “are you sure?” page to make sure it’s what you really wanted, and finally see a confirmation page, it may be desirable to skip the “are you sure?” page if the “back” button is clicked.
+There are a few cases where it might make sense to modify the "back" button's behavior. For example, if you build a page where you choose something, then see an "are you sure?" page to make sure it's what you really wanted, and finally see a confirmation page, it may be desirable to skip the "are you sure?" page if the "back" button is clicked.
 
 In those cases, use the `replace` prop to replace the current URL in history with the target of the `Link`.
 
@@ -173,7 +173,7 @@ const AreYouSureLink = () => (
     {/* highlight-next-line */}
     replace
   >
-    Yes, I’m sure
+    Yes, I'm sure
   </Link>
 )
 ```
@@ -185,7 +185,7 @@ const AreYouSureLink = () => (
   lessonTitle="Navigate to a New Page Programmatically in Gatsby"
 />
 
-Sometimes you need to navigate to pages programmatically, such as during form submissions. In these cases, `Link` won’t work.
+Sometimes you need to navigate to pages programmatically, such as during form submissions. In these cases, `Link` won't work.
 
 _**Note:** `navigate` was previously named `navigateTo`. `navigateTo` is deprecated in Gatsby v2 and will be removed in the next major release._
 
@@ -194,7 +194,7 @@ Instead, Gatsby exports a `navigate` helper function that accepts `to` and `opti
 | Argument          | Required | Description                                                                                     |
 | ----------------- | -------- | ----------------------------------------------------------------------------------------------- |
 | `to`              | yes      | The page to navigate to (e.g. `/blog/`).                                                        |
-| `options.state`   | no       | An object. Values passed here will be available in `location.state` in the target page’s props. |
+| `options.state`   | no       | An object. Values passed here will be available in `location.state` in the target page's props. |
 | `options.replace` | no       | A boolean value. If true, replaces the current URL in history.                                  |
 
 By default, `navigate` operates the same way as a clicked `Link` component.

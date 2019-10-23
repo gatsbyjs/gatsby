@@ -9,7 +9,7 @@ tags:
   - getting-started
 ---
 
-One of the most exciting things we’re working on at Gatsby right now is themes.
+One of the most exciting things we're working on at Gatsby right now is themes.
 
 You can find more details in [the announcement post](/blog/2018-11-11-introducing-gatsby-themes/) and [why we think themes are important](/blog/2019-01-31-why-themes/), but the short version is this:
 
@@ -21,13 +21,13 @@ What this means in practical terms is that you can use Gatsby themes to create a
 - `gatsby-config.js` with metadata and a reference to your theme
 - a folder full of Markdown files for content
 
-And _that’s it_.
+And _that's it_.
 
 No code. No assembling plugins. Just writing content.
 
 ## Learn how to build a Gatsby theme
 
-Recently I had the pleasure of building a theme from scratch with Gatsby’s own [John Otander](https://twitter.com/4lpine) live on [my weekly livestream](https://twitch.tv/jlengstorf).
+Recently I had the pleasure of building a theme from scratch with Gatsby's own [John Otander](https://twitter.com/4lpine) live on [my weekly livestream](https://twitch.tv/jlengstorf).
 
 <iframe id="ytplayer" title="Theme livestream on YouTube" type="text/html" width="720" height="405"
 src="https://www.youtube.com/embed/PS2784YfPpw?list=PLz8Iz-Fnk_eTpvd49Sa77NiF8Uqq5Iykx"
@@ -54,6 +54,6 @@ The code we built is [available on GitHub](https://github.com/jlengstorf/livestr
 
 ## Watch future livestreams
 
-If you’re interested in watching more livestreams, I go live every Thursday at 9am Pacific.
+If you're interested in watching more livestreams, I go live every Thursday at 9am Pacific.
 
 [Follow me on Twitch](https://twitch.tv/jlengstorf) to get notified when I go live.

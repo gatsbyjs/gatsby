@@ -15,7 +15,7 @@ Furthermore, Gitpod prebuilds any branch of a repository so that you don't need 
 
 To start a fresh dev environment you can prefix the any GitHub URL with `gitpod.io/#`.
 
-> Example: https://gitpod.io/#https://github.com/gatsbyjs/gatsby
+> [Example](https://gitpod.io/#https://github.com/gatsbyjs/gatsby)
 
 The started dev environment will open with a ready-built Gatsby core project as well as one built example (gatsbygram).
 Three terminals are started side-by-side running the following processes:
@@ -33,7 +33,7 @@ The running example app is shown on the right in a preview window.
 
 To start working on an issue, you can prefix the issue URL with `gitpod.io/#`.
 
-> Example: https://gitpod.io/#https://github.com/gatsbyjs/gatsby/issues/1199
+> [Example](https://gitpod.io/#https://github.com/gatsbyjs/gatsby/issues/1199)
 
 This will open a fresh environment with a local branch named after the issue.
 You can now code, test, commit, push and create a PR from within the workspace.

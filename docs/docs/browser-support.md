@@ -31,7 +31,7 @@ and your CSS (via [`autoprefixer`](https://github.com/postcss/autoprefixer))
 output.
 
 This article is a good introduction to the growing community of tools around
-Browserslist — https://css-tricks.com/browserlist-good-idea/
+Browserslist — <https://css-tricks.com/browserlist-good-idea/>
 
 By default, Gatsby emulates the following config:
 

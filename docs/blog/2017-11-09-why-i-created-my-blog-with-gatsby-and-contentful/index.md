@@ -135,7 +135,7 @@ Say what?
 
 <div style="width:100%;height:0;padding-bottom:75%;position:relative;"><iframe src="https://giphy.com/embed/xT0xeqCPRLHBUvWa88" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/way-orange-better-xT0xeqCPRLHBUvWa88">via GIPHY</a></p>
 
-## Enter the world of static site generators...
+## Enter the world of static site generators…
 
 If you are a developer, you probably are familiar with Static Site Generators,
 or you have at least come across a site that was built with one, even if you
@@ -197,12 +197,12 @@ thought of that and created Gatsby.
 A little disclaimer: I absolutely love React, so, when I first learned that
 there were some emerging Static Site Generators who leveraged only React and
 Webpack, I knew that I had to try at least one of them for the new upcoming blog
-I was planning to build. These projects were [Gatsby ](http://gatsbyjs.org/)
+I was planning to build. These projects were [Gatsby](http://gatsbyjs.org/)
 and [Phenomic](https://phenomic.io/), and both were still quite young back then,
 neither of them having reached the 1.0 release yet.
 
 Ironically I chose Phenomic, mainly because I liked what the guys from
-[Serverless.com ](http://serverless.com/)had done with their website at that
+[Serverless.com](http://serverless.com/)had done with their website at that
 time -- built using Phenomic.
 
 So, I went ahead and built my blog using Phenomic. Overall, I thought it was a

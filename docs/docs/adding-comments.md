@@ -24,7 +24,7 @@ In this guide, we'll show you how to implement Disqus on your blog as it has a n
 - It provides official [React support](https://github.com/disqus/disqus-react).
 - It offers a [generous free tier](https://disqus.com/pricing).
 - It [seems to be by far the most widely used service](https://www.datanyze.com/market-share/comment-systems/disqus-market-share).
-- It’s easier to comment: Disqus has a large existing user base and the onboarding experience for new users is fast. You can register with your Google, Facebook or Twitter account and users can more seamlessly share the comments they write through those channels.
+- It's easier to comment: Disqus has a large existing user base and the onboarding experience for new users is fast. You can register with your Google, Facebook or Twitter account and users can more seamlessly share the comments they write through those channels.
 - The Disqus UI has a distinct but unobtrusive look that many users will recognize and trust.
 - All Disqus components are lazy-loaded, meaning they won't negatively impact the load time of your posts.
 

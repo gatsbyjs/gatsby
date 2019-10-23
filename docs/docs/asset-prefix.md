@@ -6,7 +6,7 @@ Gatsby produces static content that can be hosted _anywhere_ at scale in a cost-
 
 In some circumstances you may want to deploy _assets_ (non-HTML resources such as JavaScript, CSS, etc.) to a separate domain. Typically this is when you're required to use a dedicated CDN for assets or need to follow company-specific hosting policies.
 
-This `assetPrefix` functionality is available starting in gatsby@2.4.0, so that you can seamlessly use Gatsby with assets hosted from a separate domain. To use this functionality, ensure that your version of `gatsby` specified in `package.json` is at least `2.4.0`.
+This `assetPrefix` functionality is available starting in `gatsby@2.4.0`, so that you can seamlessly use Gatsby with assets hosted from a separate domain. To use this functionality, ensure that your version of `gatsby` specified in `package.json` is at least `2.4.0`.
 
 ## Usage
 

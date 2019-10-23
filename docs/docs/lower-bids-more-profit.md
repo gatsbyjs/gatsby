@@ -12,4 +12,4 @@ Ben Robertson, of the 80-person Mediacurrent agency, [explains this strategy](ht
 
 Not only was the team able to deliver the project on time and under budget, but the client was so happy they were able to [get additional work immediately](https://www.youtube.com/watch?v=QiocnDGnKfs&feature=youtu.be&t=1531):
 
-> Because they saved a significant portion of the money that they had already set aside, they [told us], "Hey, you guys just saved us a bunch of money, and also we would like some new features, so can we please pay you some money to build those features for us?"
+> Because they saved a significant portion of the money that they had already set aside, they \[told us\], "Hey, you guys just saved us a bunch of money, and also we would like some new features, so can we please pay you some money to build those features for us?"

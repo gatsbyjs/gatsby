@@ -40,7 +40,7 @@ Thanks to progression with modern browsers, static site generators, APIs and con
 **Going back to the benefits:** better performance, higher security, cheaper to scale & a better experience. These aren't just developer benefits, they apply directly to the marketing team too. Better performance means better site engagement and improved SEO. Higher security means less chance of not hitting your stretch goal next June because the site got hacked. Cheaper to scale means there will be less roadblocks in your way when you want to add that Shopify store or when a big campaign sends 1M visitors to the site. Better experience — who wouldn't want that?
 
 **The rise of static sites**
-Static site generators like Gatsby play a huge part in making all of this possible, and there are lots of [exciting new tools](https://www.staticgen.com/) appearing that support the future of publishing on the JAMstack. Static site generators work by pulling content from APIs and running a build task in the background to generate your site. So when your visitors arrive, they’re met with blazing-fast load times, and your security and SEO is taken care of.
+Static site generators like Gatsby play a huge part in making all of this possible, and there are lots of [exciting new tools](https://www.staticgen.com/) appearing that support the future of publishing on the JAMstack. Static site generators work by pulling content from APIs and running a build task in the background to generate your site. So when your visitors arrive, they're met with blazing-fast load times, and your security and SEO is taken care of.
 
 ## Enter the headless CMS
 

@@ -12,19 +12,19 @@ to feel pretty comfortable 😀
 So far, you've been learning how to use React—how powerful it is to be able to
 create your _own_ components to act as custom building blocks for websites.
 
-You’ve also explored styling components using CSS Modules.
+You've also explored styling components using CSS Modules.
 
 ## What's in this tutorial?
 
 In the next four parts of the tutorial (including this one), you'll be diving into the Gatsby data layer, which is a powerful feature of Gatsby that lets you easily build sites from Markdown, WordPress, headless CMSs, and other data sources of all flavors.
 
-**NOTE:** Gatsby’s data layer is powered by GraphQL. For an in-depth tutorial on
+**NOTE:** Gatsby's data layer is powered by GraphQL. For an in-depth tutorial on
 GraphQL, we recommend [How to GraphQL](https://www.howtographql.com/).
 
 ## Data in Gatsby
 
 A website has four parts: HTML, CSS, JS, and data. The first half of the
-tutorial focused on the first three. Now let’s learn how to use data in Gatsby
+tutorial focused on the first three. Now let's learn how to use data in Gatsby
 sites.
 
 **What is data?**

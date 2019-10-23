@@ -7,11 +7,11 @@ tags: ["content-mesh"]
 
 _This is Part 5, the conclusion of a series. Part 1 is_ [The Journey to a Content Mesh](/blog/2018-10-04-journey-to-the-content-mesh)_; Part 2 is_ [Unbundling of the CMS](/blog/2018-10-10-unbundling-of-the-cms)_; Part 3 is_ [The Rise of Modern Web Development](/blog/2018-10-11-rise-of-modern-web-development); _Part 4 is_ [Why Mobile Performance is Crucial](/blog/2018-10-16-why-mobile-performance-is-crucial).
 
-In the last three sections, we’ve described the different facets of how to create modern, compelling content experiences. We’ve covered trends in [content management](/blog/2018-10-10-unbundling-of-the-cms), [web development](/blog/2018-10-11-rise-of-modern-web-development), and [website performance](/blog/2018-10-16-why-mobile-performance-is-crucial).
+In the last three sections, we've described the different facets of how to create modern, compelling content experiences. We've covered trends in [content management](/blog/2018-10-10-unbundling-of-the-cms), [web development](/blog/2018-10-11-rise-of-modern-web-development), and [website performance](/blog/2018-10-16-why-mobile-performance-is-crucial).
 
-While these trends target different stakeholders, they’re deeply interrelated. That’s because to adopt a new architecture in one area, you often need to adopt new technologies in the other two.
+While these trends target different stakeholders, they're deeply interrelated. That's because to adopt a new architecture in one area, you often need to adopt new technologies in the other two.
 
-With users after user writing headlines like "[Gatsby + Contentful + Netlify (and Algolia)](/blog/2017-12-06-gatsby-plus-contentful-plus-netlify/)" -- grouping a React-based website framework, a headless CMS, a static host + CDN, and a search provider -- it’s clear these these technologies are meant to be used together.
+With users after user writing headlines like "[Gatsby + Contentful + Netlify (and Algolia)](/blog/2017-12-06-gatsby-plus-contentful-plus-netlify/)" -- grouping a React-based website framework, a headless CMS, a static host + CDN, and a search provider -- it's clear these these technologies are meant to be used together.
 
 Website teams moving to this space have to plan four steps -- one for each category, plus integration.
 
@@ -24,7 +24,7 @@ Website teams moving to this space have to plan four steps -- one for each categ
 
 ## Moving to the content mesh
 
-### First, choose content systems.
+### First, choose content systems
 
 In a modular CMS system, website teams can [use preferred workflows to choose your content systems](/blog/2018-10-10-unbundling-of-the-cms).
 

@@ -17,7 +17,7 @@ I looked at all the options, but I really didn't want to invest in setting up so
 
 Here's some pros and cons to rolling your own comment system:
 
-#### Pros
+## Pros
 
 - Free
 - No ads
@@ -27,7 +27,7 @@ Here's some pros and cons to rolling your own comment system:
 - Little to no spam because spambots aren't set up to spam your custom content
 - Easy to migrate - it all exists in one Heroku + Postgres server
 
-#### Cons
+## Cons
 
 - More work to set up
 - Less features

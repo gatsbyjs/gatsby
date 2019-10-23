@@ -8,24 +8,30 @@ Gatsby provides an easy way to use a local HTTPS server during development, than
 
 Start the development server using `npm run develop` as usual, and add either the `-S` or `--https` flag.
 
-    $ npm run develop -- --https
+```shell
+npm run develop -- --https
+```
 
 ## Setup
 
 When setting up a development SSL certificate for the first time, you may be asked to type in your password after starting the development environment:
 
-    info setting up SSL certificate (may require sudo)
+```shell
+info setting up SSL certificate (may require sudo)
 
-    Password:
+Password:
+```
 
 This is _only_ required the first time you are using Gatsby's HTTPS feature on your machine. After that, certificates will be created on the fly.
 
 After typing in your password, `devcert` will attempt to install some software necessary to tell Firefox (and Chrome, only on Linux) to trust your development certificates.
 
-    Unable to automatically install SSL certificate - please follow the
-    prompts at http://localhost:52175 in Firefox to trust the root certificate
-    See https://github.com/davewasmer/devcert#how-it-works for more details
-    -- Press <Enter> once you finish the Firefox prompts --
+```shell
+Unable to automatically install SSL certificate - please follow the
+prompts at http://localhost:52175 in Firefox to trust the root certificate
+See https://github.com/davewasmer/devcert#how-it-works for more details
+-- Press <Enter> once you finish the Firefox prompts --
+```
 
 If you wish to support Firefox (or Chrome on Linux), visit [localhost:52175](http://localhost:52175) in Firefox and follow the point-and-click wizard. Otherwise, you may press enter without following the prompts. **Reminder: you'll only need to do this once per machine.**
 
@@ -41,8 +47,8 @@ machines for development (or if your dev environment is containerized in Docker)
 If you need to use a custom https setup, you can pass the `--https`, `--key-file` and
 `--cert-file` flags to `npm run develop`.
 
-- `--cert-file` [relative path to ssl certificate file]
-- `--key-file` [relative path to ssl key file]
+- `--cert-file [relative path to ssl certificate file]`
+- `--key-file [relative path to ssl key file]`
 
 See the example command:
 

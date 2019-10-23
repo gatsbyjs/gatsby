@@ -4,11 +4,11 @@ typora-copy-images-to: ./
 disableTableOfContents: true
 ---
 
-Before you start building your first Gatsby site, you’ll need to familiarize yourself with some core web technologies and make sure that you have installed all required software tools.
+Before you start building your first Gatsby site, you'll need to familiarize yourself with some core web technologies and make sure that you have installed all required software tools.
 
 ## Familiarize yourself with the command line
 
-The command line is a text-based interface used to run commands on your computer. You’ll also often see it referred to as the terminal. In this tutorial, we’ll use both interchangeably. It’s a lot like using the Finder on a Mac or Explorer on Windows. Finder and Explorer are examples of graphical user interfaces (GUI). The command line is a powerful, text-based way to interact with your computer.
+The command line is a text-based interface used to run commands on your computer. You'll also often see it referred to as the terminal. In this tutorial, we'll use both interchangeably. It's a lot like using the Finder on a Mac or Explorer on Windows. Finder and Explorer are examples of graphical user interfaces (GUI). The command line is a powerful, text-based way to interact with your computer.
 
 Take a moment to locate and open up the command line interface (CLI) for your computer. Depending on which operating system you are using, see [**instructions for Mac**](http://www.macworld.co.uk/feature/mac-software/how-use-terminal-on-mac-3608274/), [**instructions for Windows**](https://www.quora.com/How-do-I-open-terminal-in-windows) or [**instructions for Linux**](https://www.howtogeek.com/140679/beginner-geek-how-to-start-using-the-linux-terminal/).
 
@@ -32,7 +32,7 @@ How to install or verify Homebrew on your computer:
 
 ## ⌚ Install Node.js and npm
 
-Node.js is an environment that can run JavaScript code outside of a web browser. Gatsby is built with Node.js. To get up and running with Gatsby, you’ll need to have a recent version installed on your computer.
+Node.js is an environment that can run JavaScript code outside of a web browser. Gatsby is built with Node.js. To get up and running with Gatsby, you'll need to have a recent version installed on your computer.
 
 _Note: Gatsby's minimum supported Node.js version is Node 8, but feel free to use a more recent version._
 
@@ -45,10 +45,10 @@ Once you have followed the installation steps, make sure everything was installe
 ### Check your Node.js installation
 
 1.  Open up your terminal.
-2.  Run `node --version`. (If you’re new to the command line, “run `command`” means “type `node --version` in the command prompt, and hit the Enter key”. From here on, this is what we mean by “run `command`”).
+2.  Run `node --version`. (If you're new to the command line, "run `command`" means "type `node --version` in the command prompt, and hit the Enter key". From here on, this is what we mean by "run `command`").
 3.  Run `npm --version`.
 
-The output of each of those commands should be a version number. Your versions may not be the same as those shown below! If entering those commands doesn’t show you a version number, go back and make sure you have installed Node.js.
+The output of each of those commands should be a version number. Your versions may not be the same as those shown below! If entering those commands doesn't show you a version number, go back and make sure you have installed Node.js.
 
 ![Check node and npm versions in terminal](01-node-npm-versions.png)
 
@@ -78,7 +78,7 @@ To see the commands available, run `gatsby --help`.
 
 ## Create a Gatsby site
 
-Now you are ready to use the Gatsby CLI tool to create your first Gatsby site. Using the tool, you can download “starters” (partially built sites with some default configuration) to help you get moving faster on creating a certain type of site. The “Hello World” starter you’ll be using here is a starter with the bare essentials needed for a Gatsby site.
+Now you are ready to use the Gatsby CLI tool to create your first Gatsby site. Using the tool, you can download "starters" (partially built sites with some default configuration) to help you get moving faster on creating a certain type of site. The "Hello World" starter you'll be using here is a starter with the bare essentials needed for a Gatsby site.
 
 1.  Open up your terminal.
 2.  Run `gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world`. (_Note: Depending on your download speed, the amount of time this takes will vary. For brevity's sake, the gif below was paused during part of the install_).
@@ -97,14 +97,14 @@ gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
 - `new` is a `gatsby` command to create a new Gatsby project.
-- Here, `hello-world` is an arbitrary title — you could pick anything. The CLI tool will place the code for your new site in a new folder called “hello-world”.
+- Here, `hello-world` is an arbitrary title — you could pick anything. The CLI tool will place the code for your new site in a new folder called "hello-world".
 - Lastly, the GitHub URL specified points to a code repository that holds the starter code you want to use.
 
 ```shell
 cd hello-world
 ```
 
-- This says 'I want to change directories (`cd`) to the “hello-world” subfolder'. Whenever you want to run any commands for your site, you need to be in the context for that site (aka, your terminal needs to be pointed at the directory where your site code lives).
+- This says 'I want to change directories (`cd`) to the "hello-world" subfolder'. Whenever you want to run any commands for your site, you need to be in the context for that site (aka, your terminal needs to be pointed at the directory where your site code lives).
 
 ```shell
 gatsby develop
@@ -120,7 +120,7 @@ Open up a new tab in your browser and navigate to [**http://localhost:8000**](ht
 
 Congrats! This is the beginning of your very first Gatsby site! 🎉
 
-You’ll be able to visit the site locally at [**_http://localhost:8000_**](http://localhost:8000/) for as long as your development server is running. That’s the process you started by running the `gatsby develop` command. To stop running that process (or to “stop running the development server”), go back to your terminal window, hold down the “control” key, and then hit “c” (ctrl-c). To start it again, run `gatsby develop` again!
+You'll be able to visit the site locally at [**_http://localhost:8000_**](http://localhost:8000/) for as long as your development server is running. That's the process you started by running the `gatsby develop` command. To stop running that process (or to "stop running the development server"), go back to your terminal window, hold down the "control" key, and then hit "c" (ctrl-c). To start it again, run `gatsby develop` again!
 
 **Note:** If you are using VM setup like `vagrant` and/or would like to listen on your local IP address, run `gatsby develop -- --host=0.0.0.0`. Now, the development server listens on both 'localhost' and your local IP.
 
@@ -144,7 +144,7 @@ You can use Prettier directly in your editor using the [Prettier VS Code plugin]
 
 > 💡 If you're not using VS Code, check out the Prettier docs for [install instructions](https://prettier.io/docs/en/install.html) or [other editor integrations](https://prettier.io/docs/en/editors.html).
 
-## ➡️ What’s Next?
+## ➡️ What's Next?
 
 To summarize, in this section you:
 
@@ -161,21 +161,21 @@ Now, move on to [**getting to know Gatsby building blocks**](/tutorial/part-one/
 
 ### Overview of core technologies
 
-It’s not necessary to be an expert with these already — if you’re not, don’t worry! You’ll pick up a lot through the course of this tutorial series. These are some of the main web technologies you’ll use when building a Gatsby site:
+It's not necessary to be an expert with these already — if you're not, don't worry! You'll pick up a lot through the course of this tutorial series. These are some of the main web technologies you'll use when building a Gatsby site:
 
 - **HTML**: A markup language that every web browser is able to understand. It stands for HyperText Markup Language. HTML gives your web content a universal informational structure, defining things like headings, paragraphs, and more.
 - **CSS**: A presentational language used to style the appearance of your web content (fonts, colors, layout, etc). It stands for Cascading Style Sheets.
 - **JavaScript**: A programming language that helps us make the web dynamic and interactive.
-- **React**: A code library (built with JavaScript) for building user interfaces. It’s the framework that Gatsby uses to build pages and structure content.
-- **GraphQL**: A query language that allows you to pull data into your website. It’s the interface that Gatsby uses for managing site data.
+- **React**: A code library (built with JavaScript) for building user interfaces. It's the framework that Gatsby uses to build pages and structure content.
+- **GraphQL**: A query language that allows you to pull data into your website. It's the interface that Gatsby uses for managing site data.
 
 ### What is a website?
 
-For a comprehensive introduction to what a website is--including an intro to HTML and CSS--check out “[**Building your first web page**](https://learn.shayhowe.com/html-css/building-your-first-web-page/)”. It’s a great place to start learning about the web. For a more hands-on introduction to [**HTML**](https://www.codecademy.com/learn/learn-html), [**CSS**](https://www.codecademy.com/learn/learn-css), and [**JavaScript**](https://www.codecademy.com/learn/introduction-to-javascript), check out the tutorials from Codecademy. [**React**](https://reactjs.org/tutorial/tutorial.html) and [**GraphQL**](http://graphql.org/graphql-js/) also have their own introductory tutorials.
+For a comprehensive introduction to what a website is--including an intro to HTML and CSS--check out "[**Building your first web page**](https://learn.shayhowe.com/html-css/building-your-first-web-page/)". It's a great place to start learning about the web. For a more hands-on introduction to [**HTML**](https://www.codecademy.com/learn/learn-html), [**CSS**](https://www.codecademy.com/learn/learn-css), and [**JavaScript**](https://www.codecademy.com/learn/introduction-to-javascript), check out the tutorials from Codecademy. [**React**](https://reactjs.org/tutorial/tutorial.html) and [**GraphQL**](http://graphql.org/graphql-js/) also have their own introductory tutorials.
 
 ### Learn more about the command line
 
-For a great introduction to using the command line, check out [**Codecademy’s Command Line tutorial**](https://www.codecademy.com/courses/learn-the-command-line/lessons/navigation/exercises/your-first-command) for Mac and Linux users, and [**this tutorial**](https://www.computerhope.com/issues/chusedos.htm) for Windows users. Even if you are a Windows user, the first page of the Codecademy tutorial is a valuable read. It explains what the command line is, not just how to interface with it.
+For a great introduction to using the command line, check out [**Codecademy's Command Line tutorial**](https://www.codecademy.com/courses/learn-the-command-line/lessons/navigation/exercises/your-first-command) for Mac and Linux users, and [**this tutorial**](https://www.computerhope.com/issues/chusedos.htm) for Windows users. Even if you are a Windows user, the first page of the Codecademy tutorial is a valuable read. It explains what the command line is, not just how to interface with it.
 
 ### Learn more about npm
 
@@ -185,9 +185,9 @@ npm has three distinct components: the npm website, the npm registry, and the np
 
 - On the npm website, you can browse what JavaScript packages are available in the npm registry.
 - The npm registry is a large database of information about JavaScript packages available on npm.
-- Once you’ve identified a package you want, you can use the npm CLI to install it in your project or globally (like other CLI tools). The npm CLI is what talks to the registry — you generally only interact with the npm website or the npm CLI.
+- Once you've identified a package you want, you can use the npm CLI to install it in your project or globally (like other CLI tools). The npm CLI is what talks to the registry — you generally only interact with the npm website or the npm CLI.
 
-> 💡 Check out npm’s introduction, “[**What is npm?**](https://docs.npmjs.com/getting-started/what-is-npm)”.
+> 💡 Check out npm's introduction, "[**What is npm?**](https://docs.npmjs.com/getting-started/what-is-npm)".
 
 ### Learn more about Git
 

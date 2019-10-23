@@ -32,7 +32,7 @@ After the v1 release of Gatsby (June '17) I also went live with my personal site
 
 ## Move Fast and Break Things
 
-After I launched my site I continued to learn React and Gatsby. As it doesn't limit you in how you can use React. I treated my website as an experiment. I experimented with new, cutting-edge React techniques just to see how they worked, and they worked quite well! Gatsby also had a lot more to learn: GraphQL, Node APIs and gatsby-image, to name a few.
+After I launched my site I continued to learn React and Gatsby. As it doesn't limit you in how you can use React. I treated my website as an experiment. I experimented with new, cutting-edge React techniques just to see how they worked, and they worked quite well! Gatsby also had a lot more to learn: GraphQL, Node APIs and `gatsby-image`, to name a few.
 
 Gatsby's rich plugin ecosystem allowed me to easily try other packages. I tried different styling approaches, different data sources, and so on... Most plugins work without manual configuration: Install the package, put it in your config and see it working — awesome!
 

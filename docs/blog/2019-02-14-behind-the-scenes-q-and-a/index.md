@@ -8,7 +8,7 @@ image: "./images/what-makes-gatsby-great.png"
 showImageInArticle: true
 ---
 
-We recently held a webinar, [Behind the Scenes Webinar](https://www.gatsbyjs.com/behind-the-scenes/), on what makes Gatsby so fast, with performance optimization out of the box. During the live event, we got over 100 questions that we want to share with you here. There’s a mix of topics from how we do image optimization, route-based code splitting, prefetching of routes with intersection observers, and more. Read on to get the answers to all the webinar questions as well as links to learn more.
+We recently held a webinar, [Behind the Scenes Webinar](https://www.gatsbyjs.com/behind-the-scenes/), on what makes Gatsby so fast, with performance optimization out of the box. During the live event, we got over 100 questions that we want to share with you here. There's a mix of topics from how we do image optimization, route-based code splitting, prefetching of routes with intersection observers, and more. Read on to get the answers to all the webinar questions as well as links to learn more.
 
 To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/behind-the-scenes/).
 
@@ -32,8 +32,8 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Question:** How would you recommend handling Gatsby pointing to environment specific endpoints? For example, we're required to deploy the same artifact to dev - uat - prod, so for pointing our app at the appropriate endpoint, we're looking at location.href and using if/else to determine the endpoint. Is there a better way?
 **Answer:** Check out [Environment Variables](/docs/environment-variables/).
 
-**Question:** Is it possible to have the gatsby-\*.js files be rewritten in TypeScript?
-**Answer:** `gatsby-browser.js` and gatsby-ssr.js work just fine if you add gatsby-plugin-typescript. We don't have a out-of-the-box solution for `gatsby-node.js` but you could require the TypeScript interpreter and then require another TypeScript file and re-export its code from gatsby-node.js.
+**Question:** Is it possible to have the `gatsby-*.js` files be rewritten in TypeScript?
+**Answer:** `gatsby-browser.js` and `gatsby-ssr.js` work just fine if you add `gatsby-plugin-typescript`. We don't have a out-of-the-box solution for `gatsby-node.js` but you could require the TypeScript interpreter and then require another TypeScript file and re-export its code from `gatsby-node.js`.
 
 **Question:** Gatsby transformers support Markdown and asciidoc. Possible support for Sphinx reStructuredText?
 **Answer:** Certainly! Gatsby is super pluggable, so whatever content you want to bring to Gatsby, just write a plugin! Check out [Creating a Source Plugin](/docs/creating-a-source-plugin/).
@@ -216,7 +216,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Answer:** All of the above!
 
 **Question:** Is Gatsby production ready? It's fantastic!
-**Answer:** Yep! Here are some sites using Gatsby in production: [Gatsby Showcase ](/showcase/)(includes the Flamingo e-commerce site).
+**Answer:** Yep! Here are some sites using Gatsby in production: [Gatsby Showcase](/showcase/)(includes the Flamingo e-commerce site).
 
 ### Misc. questions
 
@@ -232,7 +232,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Question:** You mention not having to worry about the web server, but what about the APIs that handle the order flow? Are those just separate API servers?
 **Answer:** Exactly, yep. You'll almost certainly have to worry about some servers, but it's incredibly freeing to not have to worry about your UI going down! Nice thing of going static/build-time SSR is that you're isolated from your API going down if you are able to generate static content from your API.
 
-**Question:** What CI system did you use for the (Harry’s [shopflamingo.com](https://www.shopflamingo.com/)) website?
+**Question:** What CI system did you use for the (Harry's [shopflamingo.com](https://www.shopflamingo.com/)) website?
 **Answer:** CircleCI. it's incredible, definitely check it out.
 
 **Question:** Can we pre-fetch video thumbnail images without pre-fetching entire videos until clicked on?
@@ -248,7 +248,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Answer:** Prefetching starts when a link appears on the screen so it works on mobile very well.
 
 **Question:** Does the lazy-loading technique apply to images hosted on a cloud based management service such as Cloudinary?
-**Answer:** There would need to be support added for Cloudinary. There's been talk about this but nobody has built it yet. Some CMSs like Contentful, Datocms, and sanity.io have added support gatsby-image.
+**Answer:** There would need to be support added for Cloudinary. There's been talk about this but nobody has built it yet. Some CMSs like Contentful, Datocms, and sanity.io have added support `gatsby-image`.
 
 **Question:** Does Gatsby provide a polyfill for IntersectionObserver (for older browser which don't support it)?
 **Answer:** Not by default as it's rather heavy. There's docs on how to do this though if you want to support it. It's a progressive enhancement so things will all still work in older browsers. They just won't be as efficient.

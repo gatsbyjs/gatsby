@@ -16,7 +16,7 @@ It only takes a few steps to use Gatsby with Drupal as a headless CMS (also know
 
 This guide assumes that you have a Gatsby project set up. If you need to set up a project, head to the [Quick Start guide](/docs/quick-start/), then come back.
 
-### gatsby-config.js
+### `gatsby-config.js`
 
 Hooking up Gatsby to a new or existing Drupal site takes only a few steps.
 
@@ -59,11 +59,11 @@ module.exports = {
 
 ## Why use Gatsby and Drupal together?
 
-[“Decoupled Drupal”](https://www.acquia.com/drupal/decoupled-drupal) has become an increasingly popular approach to building enterprise-grade websites, and has the [full-throated support](https://dri.es/how-to-decouple-drupal-in-2018) of Drupal community leaders. Using Gatsby in a decoupled Drupal setup allows your team to access the powerful content modeling and access workflow capabilities of Drupal 8, as well as the powerful UI creation & performance toolset of Gatsby.
+["Decoupled Drupal"](https://www.acquia.com/drupal/decoupled-drupal) has become an increasingly popular approach to building enterprise-grade websites, and has the [full-throated support](https://dri.es/how-to-decouple-drupal-in-2018) of Drupal community leaders. Using Gatsby in a decoupled Drupal setup allows your team to access the powerful content modeling and access workflow capabilities of Drupal 8, as well as the powerful UI creation & performance toolset of Gatsby.
 
 ## When is Drupal a great choice?
 
-Many development teams, content teams, and client decision-makers are familiar with Drupal. Here are some scenarios in which Drupal is a great choice (and a few scenarios for which it’s not-so-great):
+Many development teams, content teams, and client decision-makers are familiar with Drupal. Here are some scenarios in which Drupal is a great choice (and a few scenarios for which it's not-so-great):
 
 ### Drupal is great for:
 
@@ -80,9 +80,9 @@ Many development teams, content teams, and client decision-makers are familiar w
 
 Using Gatsby together with Drupal offers a powerful, full-featured, open-source, and free alternative to expensive enterprise content management systems. To learn more:
 
-- Read a [Drupal agency’s introduction to Gatsby](https://www.mediacurrent.com/what-is-gatsby.js/)
-- Watch [Kyle Mathews’ presentation on Gatsby + Drupal](https://2017.badcamp.net/session/coding-development/beginner/headless-drupal-building-blazing-fast-websites-reactgatsbyjs)
-- Get started with Robert Ngo’s [Decoupling Drupal with Gatsby tutorial](https://evolvingweb.ca/blog/decoupling-drupal-gatsby) and watch his [Evolving Web 2018 Drupal conference presentation](https://www.youtube.com/watch?v=s5kUJRGDz6I)
+- Read a [Drupal agency's introduction to Gatsby](https://www.mediacurrent.com/what-is-gatsby.js/)
+- Watch [Kyle Mathews' presentation on Gatsby + Drupal](https://2017.badcamp.net/session/coding-development/beginner/headless-drupal-building-blazing-fast-websites-reactgatsbyjs)
+- Get started with Robert Ngo's [Decoupling Drupal with Gatsby tutorial](https://evolvingweb.ca/blog/decoupling-drupal-gatsby) and watch his [Evolving Web 2018 Drupal conference presentation](https://www.youtube.com/watch?v=s5kUJRGDz6I)
 - Example site that demonstrates [how to build Gatsby sites that pull data from the Drupal CMS](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-drupal).
 - Take a [free course on building a Gatsby site with Drupal](https://gatsbyguides.com/).
 - Read [Gatsby blog posts on Gatsby + Drupal](/blog/tags/drupal/).

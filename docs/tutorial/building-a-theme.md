@@ -1315,7 +1315,7 @@ By replacing the `h1` with `Styled.h1`, `ul` with `Styled.ul`, and `li` with `St
 
 By publishing your theme to npm, you make it available to pull in as a dependency for any of your projects, and for anyone in the community to use, too.
 
-> 💡 Please note that publishing your theme is only required if you want to install it on other sites or share it with the community. If you’re only building this theme as a learning exercise, you can skip this step.
+> 💡 Please note that publishing your theme is only required if you want to install it on other sites or share it with the community. If you're only building this theme as a learning exercise, you can skip this step.
 
 ### Namespace your theme
 

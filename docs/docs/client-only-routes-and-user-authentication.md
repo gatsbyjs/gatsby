@@ -10,10 +10,10 @@ Gatsby uses [@reach/router](https://reach.tech/router/) under the hood. You shou
 
 These routes will exist on the client only and will not correspond to index.html files in an app's built assets. If you'd like site users to be able to visit client routes directly, you'll need to set up your server to handle those routes appropriately.
 
-To create client-only routes, add the following code to your site’s `gatsby-node.js` file:
+To create client-only routes, add the following code to your site's `gatsby-node.js` file:
 
 ```javascript:title=gatsby-node.js
-// Implement the Gatsby API “onCreatePage”. This is
+// Implement the Gatsby API "onCreatePage". This is
 // called after every page is created.
 exports.onCreatePage = async ({ page, actions }) => {
   const { createPage } = actions

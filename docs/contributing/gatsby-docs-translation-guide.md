@@ -31,7 +31,7 @@ The first step for starting a new translation is to check what exists. So far, t
 - [Spanish](https://github.com/gatsbyjs/gatsby-es)
 - [Russian](https://github.com/gatsbyjs/gatsby-ru)
 
-You can find the list of all translation requests here: https://github.com/gatsbyjs/gatsby/issues?utf8=%E2%9C%93&q=is%3Aissue+%22New+Translation+Request%22+
+You can find the list of all translation requests on [issues page](https://github.com/gatsbyjs/gatsby/issues?utf8=%E2%9C%93&q=is%3Aissue+%22New+Translation+Request%22+)
 
 > Note: Once a new translation repository is created, feel free to add it here in a PR!
 
@@ -61,7 +61,7 @@ As repo maintainers and members of the Gatsby community, your responsibilities a
 - Act as point of contact for your language and answer questions from both contributors to your language and the core Gatsby team.
 - Set up a process in order to get your translation published. (details to come)
 
-As a maintainer, you are welcome to add a contributing doc written in your language to assist with the process. You can find an example in the [gatsby-es repo](https://github.com/gatsbyjs/gatsby-es/blob/master/CONTRIBUTING.MD). Translating [this page](https://github.com/gatsbyjs/gatsby/blob/master/docs/contributing/gatsby-docs-translation-guide.md) and copying it into a `contributing.md` file would be an option as well.
+As a maintainer, you are welcome to add a contributing doc written in your language to assist with the process. You can find an example in the [`gatsby-es` repo](https://github.com/gatsbyjs/gatsby-es/blob/master/CONTRIBUTING.MD). Translating [this page](https://github.com/gatsbyjs/gatsby/blob/master/docs/contributing/gatsby-docs-translation-guide.md) and copying it into a `contributing.md` file would be an option as well.
 
 Additional tips:
 
@@ -85,7 +85,7 @@ If a PR includes content that is of poor quality (such as from Google Translate 
 ```markdown
 Hey! Thanks so much for opening a pull request!
 
-We really appreciate you sending this over, but the change you’ve proposed is not going to be accepted because it doesn't meaningfully translate the Gatsby docs content.
+We really appreciate you sending this over, but the change you've proposed is not going to be accepted because it doesn't meaningfully translate the Gatsby docs content.
 
 We absolutely want to have you as a contributor, so please take a look at [our open issues][open-issues] for ideas and reach out to the Gatsby team [on Twitter at @gatsbyjs](https://twitter.com/gatsbyjs) with questions.
 
@@ -100,7 +100,7 @@ Because the main Gatsby repo is the source of content, more substantive changes 
 ```markdown
 Hey! Thanks so much for opening a pull request!
 
-We really appreciate you sending this over, but the change you’ve proposed is not going to be accepted because it includes broad changes to the docs content that should be done in the [main Gatsby repo](https://github.com/gatsbyjs/gatsby) instead.
+We really appreciate you sending this over, but the change you've proposed is not going to be accepted because it includes broad changes to the docs content that should be done in the [main Gatsby repo](https://github.com/gatsbyjs/gatsby) instead.
 
 We absolutely want to have you as a contributor, so please take a look at the original source for these changes and make them there first before translating. You can also visit [our open issues][open-issues] for ideas and reach out to the Gatsby team [on Twitter at @gatsbyjs](https://twitter.com/gatsbyjs) with questions.
 
@@ -118,4 +118,4 @@ Guidelines that remain firm no matter the language stem from the goals and value
 
 Each translation group may want to have a space for maintainers and community members to ask questions and coordinate the project. **[Discord](https://gatsby.dev/discord) is the official channel** and maintainers can have their own private groups if desired. Some groups may elect to use a different platform such as Wechat or Whatsapp, but that will be at your own discretion.
 
-To set up a Discord channel for a translation group (if it doesn't already exist), [ping the Gatsbyjs team](/contributing/how-to-contribute/#not-sure-how-to-start-contributing).
+To set up a Discord channel for a translation group (if it doesn't already exist), [ping the Gatsby team](/contributing/how-to-contribute/#not-sure-how-to-start-contributing).

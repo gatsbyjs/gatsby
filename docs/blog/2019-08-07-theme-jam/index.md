@@ -3,7 +3,7 @@ title: "Gatsby Theme Jam: Congratulations Vojtěch Holík and Allan Pooley!"
 date: 2019-08-07T12:00:00
 author: Jason Lengstorf
 excerpt: >
-  During the Theme Jam, 111 themes were created by our incredible community. Join us in celebrating the Gatsby community (that’s you!) and congratulating Vojtěch and Allan!
+  During the Theme Jam, 111 themes were created by our incredible community. Join us in celebrating the Gatsby community (that's you!) and congratulating Vojtěch and Allan!
 tags:
   - themes
   - community
@@ -59,33 +59,33 @@ Two of the themes we received stood out especially. As we reviewed, we all took 
 
 **So please join us in congratulating Vojtěch Holík and Allan Pooley on their outstanding work on [`gatsby-theme-simplecast`](https://github.com/vojtaholik/gatsby-theme-simplecast) and [`gatsby-theme-legals-prismic`](https://github.com/littleplusbig/gatsby-theme-legals-prismic)!**
 
-### Vojtěch’s Simplecast Gatsby Theme
+### Vojtěch's Simplecast Gatsby Theme
 
 ![Demo of the Simplecast Gatsby theme.](images/gatsby-theme-simplecast.gif)
 
-Vojtěch combined data sourcing from [Simplecast](https://simplecast.com/)’s API, beautiful design, and an explorable UX to create this powerful theme for podcasters.
+Vojtěch combined data sourcing from [Simplecast](https://simplecast.com/)'s API, beautiful design, and an explorable UX to create this powerful theme for podcasters.
 
 **Check out the theme: [source code](https://github.com/vojtaholik/gatsby-theme-simplecast) · [demo](https://gatsby-theme-simplecast.netlify.com/)**
 
-### Allan’s Prismic-Powered Legal Pages Theme
+### Allan's Prismic-Powered Legal Pages Theme
 
 ![Screenshot of the Gatsby Prismic Legals theme.](images/gatsby-theme-legals-prismic-mockup.jpg)
 
-Allan turned something boring (required legal pages) into something beautiful by pulling common legal pages — such as a “terms & conditions” page — from [Prismic](https://prismic.io/) and putting them into a gorgeous UI. This theme highlights theme composability: combine this theme with others to quickly add required legal pages to any Gatsby site!
+Allan turned something boring (required legal pages) into something beautiful by pulling common legal pages — such as a "terms & conditions" page — from [Prismic](https://prismic.io/) and putting them into a gorgeous UI. This theme highlights theme composability: combine this theme with others to quickly add required legal pages to any Gatsby site!
 
 **Check out the theme: [source code](https://github.com/littleplusbig/gatsby-theme-legals-prismic) · [demo](https://gatsby-theme-legals.netlify.com/)**
 
 ## Thanks to the Entire Community
 
-We also want to say an enormous **thank you** to everyone who participated in Theme Jam. It was so much fun to watch everyone building and creating incredible things using themes, and we can’t wait to see what the future holds.
+We also want to say an enormous **thank you** to everyone who participated in Theme Jam. It was so much fun to watch everyone building and creating incredible things using themes, and we can't wait to see what the future holds.
 
 Stay tuned for additional creator spotlights — there were way too many amazing themes to try and pack them all into one post.
 
 ## Want to Get Involved?
 
-Just because the Theme Jam is over, it doesn’t mean we’re not super excited to build more themes and see what you can come up with!
+Just because the Theme Jam is over, it doesn't mean we're not super excited to build more themes and see what you can come up with!
 
-If you’d like to start building themes, here are a few resources:
+If you'd like to start building themes, here are a few resources:
 
 - [Gatsby theme official docs](/docs/themes/)
 - [Official egghead course on Gatsby themes](https://egghead.io/courses/gatsby-theme-authoring)

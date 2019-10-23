@@ -2,9 +2,9 @@
 title: Using Gatsby-Image With Your Site
 ---
 
-## What’s contained in this tutorial?
+## What's contained in this tutorial?
 
-By the end of this tutorial, you’ll have done the following:
+By the end of this tutorial, you'll have done the following:
 
 - learned how to use `gatsby-image` for responsive images
 - queried for a single image with GraphQL
@@ -99,7 +99,7 @@ You might expect the relative path to be relative to the file the code sits in, 
 
 ### Image fragments
 
-Another thing to note about this query is how it uses the fragment `GatsbyImageSharpFixed` to return a fixed width and height image. You could also use the fragment `GatsbyImageSharpFluid` which produces scalable images that fill their container instead of fitting specific dimensions. In `gatsby-image`, _fluid_ images are meant for images that don’t have a finite size depending on the screen, where as other images are _fixed_.
+Another thing to note about this query is how it uses the fragment `GatsbyImageSharpFixed` to return a fixed width and height image. You could also use the fragment `GatsbyImageSharpFluid` which produces scalable images that fill their container instead of fitting specific dimensions. In `gatsby-image`, _fluid_ images are meant for images that don't have a finite size depending on the screen, where as other images are _fixed_.
 
 The query will return a data object including the processed image in a format usable by the `gatsby-image` component. The returned result will be automatically passed into the component and attached to the `data` prop. You can then display the image using JSX to automatically output responsive, highly performant HTML.
 
@@ -243,7 +243,7 @@ export default () => {
 }
 ```
 
-Instead of a query constant and data that references the result like in the first section above, you can put the `useStaticQuery` hook directly in the JSX code and then reference it in the `Img` component. Note that the query language didn’t change and neither did the `Img` tag syntax; the only change was the location of the query and the usage of the `useStaticQuery` function to wrap it.
+Instead of a query constant and data that references the result like in the first section above, you can put the `useStaticQuery` hook directly in the JSX code and then reference it in the `Img` component. Note that the query language didn't change and neither did the `Img` tag syntax; the only change was the location of the query and the usage of the `useStaticQuery` function to wrap it.
 
 ## Multiple queries and aliasing
 
@@ -270,7 +270,7 @@ talks: allSpeakingYaml {
 }
 ```
 
-When you do that, you’ve changed the reference to the query object available in your JSX code. While it was previously referenced as this:
+When you do that, you've changed the reference to the query object available in your JSX code. While it was previously referenced as this:
 
 ```jsx
 {

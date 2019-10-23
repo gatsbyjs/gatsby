@@ -54,10 +54,10 @@ Now that you have your project created, let's take a look inside. You will see a
 - **.prettierrc**: Determines styles in code editor (tabs, quotes, etc)
 - **LICENSE**: Basic MIT license
 - **README.md**: Markdown file with instructions for use
-- **gatsby-browser.js**: Gatsby Browser API stuff goes here. Global style calls go here too
-- **gatsby-config.js**: Configuration for your project including meta data and plugins
-- **gatsby-node.js**: Where you tell Gatsby to build pages from a template using provided data
-- **gatsby-ssr.js**: Gatsby Server Side Rendering APIs go here
+- **`gatsby-browser.js`**: Gatsby Browser API stuff goes here. Global style calls go here too
+- **`gatsby-config.js`**: Configuration for your project including meta data and plugins
+- **`gatsby-node.js`**: Where you tell Gatsby to build pages from a template using provided data
+- **`gatsby-ssr.js`**: Gatsby Server Side Rendering APIs go here
 - **package.json**: File which holds custom scripts, dependency information, etc
 
 These files will be present in all Gatsby starters you use, so it's worth your time to have at least a basic level of understanding with each one. Let's take a look and see what dependencies and plugins you have by default. Open up the `package.json` file and scroll down to dependencies. This will tell you what packages you already have. Mine looks like this:
@@ -234,7 +234,7 @@ You may notice that there are several drilldowns inside of the `acf` field. This
 
 Since you are seeing stuff on the right-hand side, it means that you are getting your data from WordPress, which is awesome! Now you need to tell Gatsby what to do with the data, so let's talk about the `gatsby-node.js` file a bit.
 
-## Creating pages in gatsby-node.js
+## Creating pages in `gatsby-node.js`
 
 As I briefly mentioned earlier, the `gatsby-node.js` file is there so you can build pages programmatically from data. There are two pieces to make this work: the logic in `gatsby-node.js` and a template file to render the data. Let's start by creating a simple template with no dynamic data just to make sure your logic is working properly.
 

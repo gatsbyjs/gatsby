@@ -3,7 +3,7 @@ title: Taking Gatsby for a spin
 date: 2017-12-06
 author: "Arden de Raaij"
 image: "great-gatsby.jpg"
-excerpt: "A static site generator based on React, does that even make sense? Gatsby tries to answer this question with a hypermodern, feature-packed, *jamstacked* development tool that you can try out right now!"
+excerpt: "A static site generator based on React, does that even make sense? Gatsby tries to answer this question with a hypermodern, feature-packed, _jamstacked_ development tool that you can try out right now!"
 tags: ["performance", "pwa", "react", "graphql", "netlify"]
 ---
 
@@ -13,7 +13,7 @@ A static site generator based on React, does that even make sense? [Gatsby](/) t
 
 Ever since I started following the [Gatsby Twitter account](https://twitter.com/gatsbyjs), I've wanted in on the action. It's not that I really _need_ a new tool to create static sites, it's just that every developer tweeting about Gatsby seems to think it's the most exciting thing on the web since they learned they could combine the `marquee` and `blink` tag. Call it FOMO. Also, the sites that these developers have been showcasing were all so fast and snappy, I had to see what the buzz was about.
 
-Let’s jump in. Here are some of the important features of Gatsby:
+Let's jump in. Here are some of the important features of Gatsby:
 
 ### React
 
@@ -21,7 +21,7 @@ Gatsby is based on React which means that you'll be writing almost everything in
 
 ### GraphQL
 
-Gatsby was my first introduction to [GraphQL](http://graphql.org/learn/) and I'm loving it already. GraphQL is a query language used by Gatsby to let you connect to all kinds of APIs. With it as an abstraction layer, you can pull in all the data you can think of and utilize it in your app. Gatsby comes with plugins to pull in data from several APIs, CMS systems and local files. With GraphQL, you're able to query data from all these sources in a clear and readable way. The data is instantly available in your components and that's just super cool. Also, it comes with a browser-based IDE called Graph*i*QL which starts along with your development environment. You can use it to see which queries are available, test them out, and see what data these queries return.
+Gatsby was my first introduction to [GraphQL](http://graphql.org/learn/) and I'm loving it already. GraphQL is a query language used by Gatsby to let you connect to all kinds of APIs. With it as an abstraction layer, you can pull in all the data you can think of and utilize it in your app. Gatsby comes with plugins to pull in data from several APIs, CMS systems and local files. With GraphQL, you're able to query data from all these sources in a clear and readable way. The data is instantly available in your components and that's just super cool. Also, it comes with a browser-based IDE called Graph _i_ QL which starts along with your development environment. You can use it to see which queries are available, test them out, and see what data these queries return.
 
 ![Screenshot of GraphiQl](./grahiql_screenshot.png "GraphiQL")
 
@@ -31,7 +31,7 @@ With an eye on the future, Gatsby already implements lots of Googles so called '
 
 ### Webpack and Plugins
 
-Can you say React without webpack? I can hardly say `hello world` without webpack anymore, although I'm still not sure how to configure it right on the first go. Gatsby comes with an extensive webpack configuration and you don't really need to touch if you don't want to. If you do, you can modify and add to the default configuration with a plugin or in the `gatsby-node` file. There's already a great range of plugins so most likely any webpack tweak is a plugin install away. With all the plenty of good examples, it’s often straightforward to write your own plugin too.
+Can you say React without webpack? I can hardly say `hello world` without webpack anymore, although I'm still not sure how to configure it right on the first go. Gatsby comes with an extensive webpack configuration and you don't really need to touch if you don't want to. If you do, you can modify and add to the default configuration with a plugin or in the `gatsby-node` file. There's already a great range of plugins so most likely any webpack tweak is a plugin install away. With all the plenty of good examples, it's often straightforward to write your own plugin too.
 
 ### Community
 
@@ -49,7 +49,7 @@ Gatsby definitely delivers on speed. The whole PRPL pattern thing seems to work 
 
 ### GraphQL is amazing
 
-Data from anywhere with static output. That's sort of the holy grail isn't it? Right now the data I use in this site comes from markdown files, but I can already see that switching to another content source is going to be a breeze with GraphQL. The queries are clean and readable and the Graph*i*QL IDE is the perfect helper. In a way, GraphQL allows you to separate your frontend from the type of data source.
+Data from anywhere with static output. That's sort of the holy grail isn't it? Right now the data I use in this site comes from markdown files, but I can already see that switching to another content source is going to be a breeze with GraphQL. The queries are clean and readable and the Graph _i_ QL IDE is the perfect helper. In a way, GraphQL allows you to separate your frontend from the type of data source.
 
 ```es6
 export const query = graphql`
@@ -85,7 +85,7 @@ Incremental builds aren't yet possible, so every update means a complete rebuild
 
 ### Gatsby Image plugin is cool
 
-Did you see the SVG traced image before the image was loaded? If not, you're probably on Safari and I still haven't implemented the `intersection observer` polyfill. But in other browsers, images you add with the [gatsby image](https://using-gatsby-image.gatsbyjs.org/) component will include a blur or traced svg placeholder effect by default. It also has `srcset` and `webp`. It can use some work though it adds a few wrappers around your images that are hard to reconfigure without using `!important`. Oh and be warned, it uses `object-fit` by default, which is unsupported by IE11 and older browsers. Of course, you don't have to use this plugin and every addition / change is discussable on GitHub.
+Did you see the SVG traced image before the image was loaded? If not, you're probably on Safari and I still haven't implemented the `intersection observer` polyfill. But in other browsers, images you add with the [Gatsby image](https://using-gatsby-image.gatsbyjs.org/) component will include a blur or traced svg placeholder effect by default. It also has `srcset` and `webp`. It can use some work though it adds a few wrappers around your images that are hard to reconfigure without using `!important`. Oh and be warned, it uses `object-fit` by default, which is unsupported by IE11 and older browsers. Of course, you don't have to use this plugin and every addition / change is discussable on GitHub.
 
 ### Keep an eye on the output
 
@@ -95,7 +95,7 @@ I'll start by admitting that I haven't validated the HTML of my own site yet, bu
 
 Doing everything in React is a blessing and a curse. You can solve everything with JavaScript but that doesn't mean you HAVE to solve everything with JavaScript. At times I find myself in such a flow of writing just JavaScript that I tend to use it to solve problems that could have been fixed with a `hover` selector in CSS.
 
-### CSS in JavaScript, I can dig it.
+### CSS in JavaScript, I can dig it
 
 You can use anything to style your Gatsby site; CSS, SCSS, Styled Components, CSS-in-JS, you name it. I wanted to give the whole "Use CSS in your JavaScript" a spin and chose for a library called [emotion-js](https://github.com/emotion-js/emotion) based on the fact that I dig the Bowie emoji on its page. After trying it out for a few days I have to admit that I really like it. Creating and styling a component in the same place is such a nice way of working. Even without the cleverness of using React state to toggle CSS values, it's a great tool. There's still some work to do considering autocomplete and syntax highlighting, but when working with components like this it makes a lot of sense.
 

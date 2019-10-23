@@ -22,7 +22,7 @@ The high level process is:
 
 For the first step, we use webpack to build an optimized Node.js bundle. The entry point for this is called `static-entry.js`
 
-## static-entry.js
+### static-entry.js
 
 [static-entry.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js) exports a function that takes a path and returns rendered HTML. Here's what it does to create that HTML:
 

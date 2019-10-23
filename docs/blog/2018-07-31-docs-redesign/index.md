@@ -26,15 +26,15 @@ Here's the design process.
 We wanted to make sure that the site provides necessary information to developers at each of these stages (thank you, Pronovix, for the excellent articles on this, like [Eliminating API Friction Along Downstream Developer Journey](https://pronovix.com/blog/eliminating-api-friction-along-downstream-developer-journey-1) and [What is the MVP for a Developer Portal?](https://pronovix.com/blog/what-mvp-developer-portal))
 
 1.  Discover/Research - what is this site? how can this portal help me to solve my specific task?
-2.  Evaluate - can I trust this organization’s commitment to its project?
+2.  Evaluate - can I trust this organization's commitment to its project?
 3.  Get Started - where do I begin?
-4.  Develop/Troubleshoot - do I know everything to make this work? How do I get X done with Gatsby? How do I use Gatsby with [insert other tech or CMS]? Where do I go when I have a problem with Gatsby?
+4.  Develop/Troubleshoot - do I know everything to make this work? How do I get X done with Gatsby? How do I use Gatsby with \[insert other tech or CMS\]? Where do I go when I have a problem with Gatsby?
 5.  Celebrate - will they care about my work?
 6.  Maintain - how hard will it be to keep this running?
 
 ## Investigating other "excellent docs showcase" structures
 
-Here is a list of what we liked and didn’t like in docs with similar goals to ours. We looked at NextJS, React, Expo, Ghost, Drupal, WordPress, Joomla, Silver Stripe, Netlify, and Apollo.
+Here is a list of what we liked and didn't like in docs with similar goals to ours. We looked at NextJS, React, Expo, Ghost, Drupal, WordPress, Joomla, Silver Stripe, Netlify, and Apollo.
 
 ### The goods:
 
@@ -44,7 +44,7 @@ Here is a list of what we liked and didn’t like in docs with similar goals to 
 - Task focused titles and headers
 - Explanation of why to use the software and when not to use it
 - Lots of organized "how does this work" content
-- List of “lessons”
+- List of "lessons"
 - Different organizational structures for different services
 
 ### The bads:
@@ -52,11 +52,11 @@ Here is a list of what we liked and didn’t like in docs with similar goals to 
 - Not enough categories
 - Cluttered landing pages
 - Conflicting menus on the same page
-- Not enough “how to get a task done” docs
+- Not enough "how to get a task done" docs
 - Accordion menus make things hard to find at a glance because you can only look at one bucket at a time
 - Open menus are often unorganized
 
-As you can see, accordion menus and flat menus both have desirable pros and undesirable cons. We decided to adopt an accordion menu that will eventually be fully expandable with a toggle “open/closed” button as well as allowing you to open as many or as few buckets as you want, as opposed to one at a time. Hopefully you’ll have the best of both worlds this way!
+As you can see, accordion menus and flat menus both have desirable pros and undesirable cons. We decided to adopt an accordion menu that will eventually be fully expandable with a toggle "open/closed" button as well as allowing you to open as many or as few buckets as you want, as opposed to one at a time. Hopefully you'll have the best of both worlds this way!
 
 ## RFC Process
 

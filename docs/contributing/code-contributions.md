@@ -109,7 +109,7 @@ services:
        - /sessions
 ```
 
-Use the above file contents when following the Docker WordPress install instructions: https://docs.docker.com/compose/wordpress/
+Use the above file contents when following the Docker WordPress install instructions: <https://docs.docker.com/compose/wordpress/>
 
 Using Docker Compose, you can start and stop a WordPress instance and integrate it with the [Gatsby WordPress source plugin](/docs/sourcing-from-wordpress/).
 

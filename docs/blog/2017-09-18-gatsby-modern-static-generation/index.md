@@ -28,13 +28,13 @@ Static site generators like Jekyll all work pretty similarly:
 - Finally, render the whole site in static HTML and deploy. The generator will
   combine your files and produce a well formed HTML content.
 
-Let’s say you navigate to the good old site example.com:
+Let's say you navigate to the good old site example.com:
 
 - The browser requests the page at example.com
 - The server responds with the HTML content
 - The browser renders the page and loads the asset related to the script tag
 - JS will instruct the browser to manipulate the DOM, for example, to show a
-  “welcome to this page” popup dialog.
+  "welcome to this page" popup dialog.
 
 A caveat here is that you have to keep the client side logic separated from the
 backend. The client side JS file that shows the modal dialog has nothing to do
@@ -43,7 +43,7 @@ only manipulates directly the DOM.
 
 This architecture is fairly similar to a WordPress site. A WordPress engine also
 generates the HTML and serve it to the browser, after which the client side JS
-you wrote kicks in and starts manipulating the DOM. WordPress’s responses can be
+you wrote kicks in and starts manipulating the DOM. WordPress's responses can be
 cached, of course, and served to the client; that setup effectively makes it
 another static site generator with a GUI text editor.
 
@@ -60,11 +60,11 @@ eventually manipulate that HTML again on the browser (and CSS assets too).
 
 I [started experimenting](https://kostasbariotis.com/hands-on-react-js/) with
 React two years ago. It came with so many features out of the box that no one
-ever has seen except the guys working internally on Facebook’s codebase. But the
+ever has seen except the guys working internally on Facebook's codebase. But the
 thing that stood out immediately was the way which React was handling the DOM,
 aka the Virtual DOM.
 
-To change a page’s display, you have to change the DOM -- but changing the DOM
+To change a page's display, you have to change the DOM -- but changing the DOM
 is computationally expensive, so -- slow. React is smart, and analyzes the
 changes you want to make so it applies only required changes, thus making the
 rendering much faster.
@@ -88,7 +88,7 @@ On your end, the development flow looks:
 - Use React Server Side Rendering API to convert this code to static HTML
   content, and JavaScript code, on your server
 
-It’s really that easy? Well, sort of.
+It's really that easy? Well, sort of.
 
 There is the need for a strong abstraction that will…
 
@@ -106,7 +106,7 @@ very early stage and none of them could generate my site's content the way I
 wanted.
 
 I wanted to make the generated site, exactly like the old one, in terms of both
-user experience and keeping my old routes and paths so I don’t have weird 404s.
+user experience and keeping my old routes and paths so I don't have weird 404s.
 
 Gatsby came with client side routing out of the box and an extensive API that
 you can use to generate your content exactly like you need. And once Gatsby
@@ -150,12 +150,12 @@ You can try it yourself by cloning the
 installing dependencies, run:
 
 - `npm run develop` to fire up the development server
-- `npm run build` to build the site (check the `/public` folder after it’s done)
+- `npm run build` to build the site (check the `/public` folder after it's done)
 
 ## An alternative to HTML caching
 
-Now let’s bring these threads together. Let’s say you have a WordPress site.
-You’re caching the content, which is nice for performance, but you’re building
+Now let's bring these threads together. Let's say you have a WordPress site.
+You're caching the content, which is nice for performance, but you're building
 on it now and want to move to a more modern web development experience.
 
 One path is the one I took -- for the last three years, I was using a similar
@@ -169,7 +169,7 @@ content, is to separate the backend from the frontend.
 
 Imagine that instead of having [memcached](https://memcached.org/) caching your
 HTML in front of your WordPress site, you trigger a hook each time your database
-changes that will re-generate the frontend using Gatsby’s
+changes that will re-generate the frontend using Gatsby's
 [WordPress plugin](/packages/gatsby-source-wordpress/). Yes, Gatsby supports
 multiple backend sources to load your content. Instead of storing them inside
 your version control like me, you can just as well load them from your

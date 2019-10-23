@@ -2,12 +2,12 @@
 title: Commands (Gatsby CLI)
 tableOfContentsDepth: 2
 ---
-
+<!--lint disable no-duplicate-headings-->
 The Gatsby command line tool (CLI) is the main entry point for getting up and running with a Gatsby application and for using functionality including like running a development server and building out your Gatsby application for deployment.
 
 _We provide similar documentation available with the `gatsby-cli` [README](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-cli/README.md), and our [cheat sheet](/docs/cheat-sheet/) has all the top CLI commands ready to print out._
 
-## How to use gatsby-cli
+## How to use `gatsby-cli`
 
 The Gatsby CLI (`gatsby-cli`) is packaged as an executable that can be used globally. The Gatsby CLI is available via [npm](https://www.npmjs.com/) and should be installed globally by running `npm install -g gatsby-cli` to use it locally.
 
@@ -33,9 +33,9 @@ gatsby new [<site-name> [<starter-url>]]
 
 #### Arguments
 
-| Argument    | Description                                                                                                                                                                                                     |
-| ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| site-name   | Your Gatsby site name, which is also used to create a project directory.                                                                                                                                        |
+| Argument    | Description                                                                                                                                                                                                       |
+| ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| site-name   | Your Gatsby site name, which is also used to create a project directory.                                                                                                                                          |
 | starter-url | A Gatsby starter URL or local file path. Defaults to [`gatsby-starter-default`](https://github.com/gatsbyjs/gatsby-starter-default); see the [Gatsby starters](/docs/gatsby-starters/) docs for more information. |
 
 > Note: The `site-name` should only consist of letters and numbers. If you specify a `.`, `./` or a `<space>` in the name, `gatsby new` will throw an error.
@@ -130,12 +130,12 @@ At the root of a Gatsby site, serve the production build of your site for testin
 
 #### Options
 
-|      Option      | Description                                                                              |
-| :--------------: | ---------------------------------------------------------------------------------------- |
-|  `-H`, `--host`  | Set host. Defaults to localhost                                                          |
-|  `-p`, `--port`  | Set port. Defaults to 9000                                                               |
-|  `-o`, `--open`  | Open the site in your (default) browser for you                                          |
-| `--prefix-paths` | Serve site with link paths prefixed (if built with pathPrefix in your gatsby-config.js). |
+|      Option      | Description                                                                                |
+| :--------------: | ------------------------------------------------------------------------------------------ |
+|  `-H`, `--host`  | Set host. Defaults to localhost                                                            |
+|  `-p`, `--port`  | Set port. Defaults to 9000                                                                 |
+|  `-o`, `--open`  | Open the site in your (default) browser for you                                            |
+| `--prefix-paths` | Serve site with link paths prefixed (if built with pathPrefix in your `gatsby-config.js`). |
 
 ### `info`
 
@@ -164,7 +164,7 @@ This is useful as a last resort when your local project seems to have issues or 
 
 ### `plugin`
 
-Run commands pertaining to gatsby plugins.
+Run commands pertaining to Gatsby plugins.
 
 #### `docs`
 

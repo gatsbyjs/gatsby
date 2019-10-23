@@ -12,9 +12,9 @@ Share your ideas and report how these workshops go for you in the [Open source r
 
 Here are some advantages that we experienced in the workshops; if these appeal to you, you could consider hosting your own workshop at your work, a meetup, or any other setting that makes sense!
 
-- _Dedicated time and place to learn:_ it’s easier to set aside time to learn something new when you are in a room with other people doing the same thing
+- _Dedicated time and place to learn:_ it's easier to set aside time to learn something new when you are in a room with other people doing the same thing
 - _Quicker problem-solving:_ you can usually get answers to your questions and solve problems faster than you could otherwise
-- _Customized content:_ the workshop host can customize the workshop for the group’s needs ahead of time by sending out a survey, and the workshop can shift focus depending on real-time needs and questions of the group and individuals
+- _Customized content:_ the workshop host can customize the workshop for the group's needs ahead of time by sending out a survey, and the workshop can shift focus depending on real-time needs and questions of the group and individuals
 
 ## Where to find workshop resources
 

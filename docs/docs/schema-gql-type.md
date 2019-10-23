@@ -36,7 +36,7 @@ During the [sourceNodes](/docs/node-apis/#sourceNodes) phase, let's say that [`g
 
 There are 3 categories of node fields that we can query.
 
-#### Fields on the created node object. E.g.
+### Fields on the created node object. E.g.:
 
 ```graphql
 node {
@@ -47,7 +47,7 @@ node {
 }
 ```
 
-#### Child/Parent. E.g.:
+### Child/Parent. E.g.:
 
 ```graphql
 node {
@@ -58,7 +58,7 @@ node {
 }
 ```
 
-#### fields created by setFieldsOnGraphQLNodeType
+### fields created by setFieldsOnGraphQLNodeType
 
 ```graphql
 node {
@@ -84,13 +84,13 @@ Fields on the node that were created directly by the source and transform plugin
 
 The creation of these fields is handled by the [inferObjectStructureFromNodes](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js#L317) function in [infer-graphql-type.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js). Given an object, a field could be in one of 3 sub-categories:
 
-1.  It involves a mapping in [gatsby-config.js](/docs/gatsby-config/#mapping-node-types)
+1.  It involves a mapping in [`gatsby-config.js`](/docs/gatsby-config/#mapping-node-types)
 2.  It's value is a foreign key reference to some other node (ends in `___NODE`)
 3.  It's a plain object or value (e.g. String, number, etc)
 
 #### Mapping field
 
-Mappings are explained in the [gatsby-config.js docs](/docs/gatsby-config/#mapping-node-types). If the object field we're generating a GraphQL type for is configured in the `gatsby-config` mapping, then we handle it specially.
+Mappings are explained in the [`gatsby-config.js` docs](/docs/gatsby-config/#mapping-node-types). If the object field we're generating a GraphQL type for is configured in the `gatsby-config` mapping, then we handle it specially.
 
 Imagine our top level Type we're currently generating fields for is `MarkdownRemark.frontmatter`. And the field we are creating a GraphQL field for is called `author`. And, that we have a mapping setup of:
 

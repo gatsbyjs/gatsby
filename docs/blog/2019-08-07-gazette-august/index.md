@@ -50,7 +50,7 @@ Our team has been hard at work on improving the documentation on [gatsbyjs.org](
 
 [Marcy](https://twitter.com/marcysutton) also taught a workshop at Frontend Masters and this is a must watch for all of us to learn how to build accessible applications on the web.
 
-Accessibility is very important to us and this is one of many steps we're taking in helping make the web more accessible. Check out the workshop at [frontendmasters.com/workshops/javascript-accessibility](https://frontendmasters.com/workshops/javascript-accessibility/).
+Accessibility is very important to us and this is one of many steps we're taking in helping make the web more accessible. Check out the workshop at [`frontendmasters.com/workshops/javascript-accessibility`](https://frontendmasters.com/workshops/javascript-accessibility/).
 
 ### Copy Button for Code Snippets
 

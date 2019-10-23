@@ -12,7 +12,7 @@ The community plans, writes, and maintains these Docs on GitHub.
 You don't have to be an expert in a
 topic to write about it--this entire website is open source, so even if you make a mistake, another contributor will help you correct it before the PR gets merged.
 
-If you’d like to help by writing an article, find a stub article in the Gatsby
+If you'd like to help by writing an article, find a stub article in the Gatsby
 Docs (with a grey instead of black title in the sidebar of the Docs), write the article, then
 [open a pull request (PR)](/contributing/how-to-contribute/#contributing-to-the-documentation) in the Gatsby GitHub repo to replace the stub with your article.
 
@@ -151,7 +151,7 @@ abstract syntax tree (AST) is ..."
 
 This explains how to create a doc that shows up in search engines like Google or Bing.
 
-When you create the new guide or tutorial under `/docs/`, you’ll either create a file or a folder if there will be images pulled into the doc.
+When you create the new guide or tutorial under `/docs/`, you'll either create a file or a folder if there will be images pulled into the doc.
 
 File:
 `querying-data-with-graphql.md`
@@ -165,7 +165,7 @@ Folder:
 
 The `.md` title or the folder title gets turned into the URL route automatically.
 
-Article titles should be short and reflect the main theme of the article to help readers quickly find relevant info. Many people use a search engine to find topics like "gatsby graphql", so the article title should ideally reflect common search terms.
+Article titles should be short and reflect the main theme of the article to help readers quickly find relevant info. Many people use a search engine to find topics like "Gatsby graphql", so the article title should ideally reflect common search terms.
 
 Here are some title examples:
 
@@ -190,9 +190,9 @@ what-is-graphql).
 
 ### Format titles and headers
 
-Title case article titles (each major word is uppercase). Sentence case article headings (only the initial word is uppercase). Neither need punctuation at the end of the phrase unless a question mark is required. Article titles do not take the Oxford comma and use the ampersand in place of “and.” Article headings do take the Oxford comma and use the word “and.”
+Title case article titles (each major word is uppercase). Sentence case article headings (only the initial word is uppercase). Neither need punctuation at the end of the phrase unless a question mark is required. Article titles do not take the Oxford comma and use the ampersand in place of "and." Article headings do take the Oxford comma and use the word "and."
 
-Titles are automatically formatted as h1. Mark up article headings as h2 and subheads as h3 or h4 as needed. Most article headings are conceptually and rhetorically at the same level as each other; avoid unnecessary complexity and mark them up as h2 unless they’re true subheads.
+Titles are automatically formatted as h1. Mark up article headings as h2 and subheads as h3 or h4 as needed. Most article headings are conceptually and rhetorically at the same level as each other; avoid unnecessary complexity and mark them up as h2 unless they're true subheads.
 
 Article title or document title:
 
@@ -210,7 +210,7 @@ Use the following as reference when creating and editing docs:
 
 - [formatting inline code and code blocks](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#code)
 - [adding images to articles](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#images).
-  If the images aren’t already hosted somewhere else on the web, you’ll need to put them online yourself.
+  If the images aren't already hosted somewhere else on the web, you'll need to put them online yourself.
   A good way to do this is to commit them to a GitHub repository of your own, then push them to GitHub.
   Then you can right click the image and copy its image source. And don't forget image alt text for accessibility!
   For help with crafting efficient screen reader text, refer to the [W3C's alt decision tree](https://www.w3.org/WAI/tutorials/images/decision-tree/).
@@ -220,7 +220,7 @@ Use the following as reference when creating and editing docs:
 
 Each code snippet will include a tab showing the language type the snippet contains. For example, the following YAML snippet will show a "YAML" tab...
 
-````
+````markdown
 ```yaml
 - id: John Smith
   bio: Thinks documentation is the coolest.
@@ -255,7 +255,7 @@ If a language keyword is omitted, the type will show as `TEXT` (as shown above).
 
 Where appropriate, add code titles to your code blocks. Switching between multiple files in the course of the document can confuse some readers. It's best to explicitly tell them where the code example should go. You can use syntax highlighting as usual, then add `:title=your-path-name` to it. Use it like so:
 
-````
+````markdown
 ```javascript:title=src/util/alert.js
 const s = "I solemnly swear that I'm up to no good.";
 alert(s);
@@ -278,10 +278,10 @@ You may also choose to include line highlighting in your code snippets, using th
 ````no-highlight
 ```javascript:title=gatsby-config.js
 module.exports = {
-	siteMetadata: {
-		title: `Gatsby`, // highlight-line
-		siteUrl: `https://www.gatsbyjs.org`,
-	},
+  siteMetadata: {
+    title: `Gatsby`, // highlight-line
+    siteUrl: `https://www.gatsbyjs.org`,
+  },
 }
 ```
 ````
@@ -300,11 +300,11 @@ module.exports = {
 ````no-highlight
 ```javascript:title=gatsby-config.js
 module.exports = {
-	siteMetadata: {
-		title: `Gatsby`,
-		// highlight-next-line
-		siteUrl: `https://www.gatsbyjs.org`,
-	},
+  siteMetadata: {
+    title: `Gatsby`,
+    // highlight-next-line
+    siteUrl: `https://www.gatsbyjs.org`,
+  },
 }
 ```
 ````
@@ -324,12 +324,12 @@ module.exports = {
 ````no-highlight
 ```javascript:title=gatsby-config.js
 module.exports = {
-	// highlight-start
-	siteMetadata: {
-		title: `Gatsby`,
-		siteUrl: `https://www.gatsbyjs.org`,
-	},
-	// highlight-end
+  // highlight-start
+  siteMetadata: {
+    title: `Gatsby`,
+    siteUrl: `https://www.gatsbyjs.org`,
+  },
+  // highlight-end
 }
 ```
 ````
@@ -371,7 +371,7 @@ straightforward way to communicate a subject. For example:
 ### Make lists clear with the Oxford Comma
 
 Use the Oxford Comma except in titles. It is a comma used after the penultimate
-item in a list of three or more items, before ‘and’ or ‘or’ e.g. an Italian
+item in a list of three or more items, before 'and' or 'or' e.g. an Italian
 painter, sculptor, and architect. It makes things clearer.
 
 [Confusion can happen when you don't use the Oxford comma](https://img.buzzfeed.com/buzzfeed-static/static/2015-02/22/18/enhanced/webdr11/enhanced-buzz-32156-1424646300-12.jpg?downsize=715:*&output-format=auto&output-quality=auto).
@@ -385,7 +385,7 @@ For words that have multiple spellings, prefer the US English word over British 
 
 ### Use apps that help you edit
 
-Use the [Hemingway App](https://www.hemingwayapp.com/). There’s nothing magical
+Use the [Hemingway App](https://www.hemingwayapp.com/). There's nothing magical
 about this tool, but it will automatically detect widely agreed-upon
 style issues:
 
@@ -393,7 +393,7 @@ style issues:
 - unnecessary adverbs
 - words that have more common equivalents
 
-The Hemingway App will assign a “grade level” for your writing. You should aim
+The Hemingway App will assign a "grade level" for your writing. You should aim
 for a grade level of 6. Another tool available is the De-Jargonizer, originally
 designed for scientific communication but might help avoid overspecialized
 wording.
@@ -464,7 +464,7 @@ The tone and style of a Gatsby tutorial should effectively help the audience rea
 
 ### Use personal "you" and be warm
 
-The main tutorial ought to use the same personal “you” like the rest of the docs; in addition, the tutorial ought to use a warm, validating tone by congratulating users, complimenting them, and generally saying things like “yay!” more often.
+The main tutorial ought to use the same personal "you" like the rest of the docs; in addition, the tutorial ought to use a warm, validating tone by congratulating users, complimenting them, and generally saying things like "yay!" more often.
 
 > Why not use "yay" in the docs as well? Since the tutorial's goal is to help users complete a series of steps, it is possible and helpful to congratulate them on successfully completing each step. Guides in the docs act as reference guides that users can browse at will rather than read from top to bottom. It doesn't make sense to congratulate someone on finishing a guide, since it's not a series of steps.
 
@@ -530,11 +530,11 @@ Looking for:
 - step-by-step tutorials for advanced tasks
 - understanding how Gatsby works at a deep level, so deep that they could actually modify or customize their own projects, or contribute to Gatsby core
 - how does Gatsby really work with Redux, React, and GraphQL?
-- error messages that tell them if it’s a known bug/issue, lead them to docs, and/or suggest fixes
+- error messages that tell them if it's a known bug/issue, lead them to docs, and/or suggest fixes
 - guides for how things work in Gatsby
 - they usually already have strong opinions or requirements about what they want to use as their CMS or data source and want to know best practices for their workflow
 - signs that Gatsby is a reliable, long-term choice (signs that it is growing and improving and evidence it will be around for a long time)
-- ways to check their project’s requirements against what Gatsby offers
+- ways to check their project's requirements against what Gatsby offers
 - open source code from well-built example sites
 
 ### Docs purpose
@@ -557,7 +557,7 @@ The tone and style of the docs should effectively help the audience reach their 
 
 ### Use personal "you"
 
-The docs use the personal “you” to address the user.
+The docs use the personal "you" to address the user.
 
 ### Give experts as much relevant info to get the task done as quickly as possible
 

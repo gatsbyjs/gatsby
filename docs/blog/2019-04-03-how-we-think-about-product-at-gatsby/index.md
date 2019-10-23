@@ -7,15 +7,15 @@ tags:
   - gatsby-inc
 ---
 
-As a company grows, it will eventually start offering products or services to the community it’s trying to serve. It’s an exciting time filled with near constant changes. At Gatsby, we realized that this meant we needed to have a better understanding and core philosophy around the products we create.
+As a company grows, it will eventually start offering products or services to the community it's trying to serve. It's an exciting time filled with near constant changes. At Gatsby, we realized that this meant we needed to have a better understanding and core philosophy around the products we create.
 
 So, we blocked out our schedules and met for 3 days over [Zoom](https://zoom.us/), with people calling in from different parts of the USA, Germany, and England to read, workshop, and talk about product.
 
-On the call, we read excerpts from Marty Cagan’s [_Inspired: How to Create Tech Products Customers Love_](https://svpg.com/inspired-how-to-create-products-customers-love/). We’re using a lot of his advice to help create a product organization and product management framework at Gatsby.
+On the call, we read excerpts from Marty Cagan's [_Inspired: How to Create Tech Products Customers Love_](https://svpg.com/inspired-how-to-create-products-customers-love/). We're using a lot of his advice to help create a product organization and product management framework at Gatsby.
 
 ## What is a product and what are Gatsby products?
 
-After a lot of back and forth, talking through examples, and working through questions, we landed on what we think of as “a product” at Gatsby.
+After a lot of back and forth, talking through examples, and working through questions, we landed on what we think of as "a product" at Gatsby.
 
 A product is an individual thing (software, hardware, etc.) that facilitates stable customer behaviors and is scalable.
 
@@ -37,7 +37,7 @@ We focus all of our conversations around problems at Gatsby. We want to discover
 
 ### Driving alignment with company Objectives and Key Results (OKRs)
 
-Identifying and writing down these problems also helps us write our objectives and key results because the objectives are created to list **what we want to do** based on the problem we are trying to solve, and the key results show **how we will measure that it’s been done**.
+Identifying and writing down these problems also helps us write our objectives and key results because the objectives are created to list **what we want to do** based on the problem we are trying to solve, and the key results show **how we will measure that it's been done**.
 
 Each team in Gatsby has objectives and key results that they are responsible for hitting.
 
@@ -45,11 +45,11 @@ The product organization is responsible for making sure our key results are set 
 
 ### Creating an outcome-based roadmap that gives the company a sense of where we are with product development or features
 
-As we learn more about our community and our customers through research, discovery, and metrics, we will create a roadmap that shows what outcomes we want to provide for people. This is different from a traditional roadmap because we won’t be focusing on features, but rather on the problems we’ve seen and the outcome that will show we’ve solved the problem.
+As we learn more about our community and our customers through research, discovery, and metrics, we will create a roadmap that shows what outcomes we want to provide for people. This is different from a traditional roadmap because we won't be focusing on features, but rather on the problems we've seen and the outcome that will show we've solved the problem.
 
 ### Giving internal stakeholders high integrity commitments
 
-There is always some measure of conflict between sales, marketing, engineering, and product. Each group has a goal that it’s trying to accomplish. These goals should create a checks and balances system that keeps teams researching, prototyping, building, and communicating with customers. As an example, engineering wants to build the best possible product from a technical standpoint. Product wants to create value for the users. Sales wants to sell as much of the product as possible to the broadest audience on the shortest timeline. Marketing wants exciting improvements that generate buzz and create opportunities for publicity.
+There is always some measure of conflict between sales, marketing, engineering, and product. Each group has a goal that it's trying to accomplish. These goals should create a checks and balances system that keeps teams researching, prototyping, building, and communicating with customers. As an example, engineering wants to build the best possible product from a technical standpoint. Product wants to create value for the users. Sales wants to sell as much of the product as possible to the broadest audience on the shortest timeline. Marketing wants exciting improvements that generate buzz and create opportunities for publicity.
 
 All of these goals are important, and create a necessary tension that forces us to make collaborate and make decisions in order to keep moving forward.
 
@@ -59,9 +59,9 @@ Because we believe that setting timelines creates an arbitrary end date, we inst
 
 A high integrity commitment is a commitment that we can make to internal stakeholders about when an iteration, product, or feature will be complete.
 
-Instead of giving this outright, we instead look at the problem we’re trying to solve, do prototyping and feasibility testing, and create a scope. After taking the time to understand what the problem is, how we can solve it, and how much time it will take us to create the solution, we’re able to give a much better estimate for highly awaited products or features.
+Instead of giving this outright, we instead look at the problem we're trying to solve, do prototyping and feasibility testing, and create a scope. After taking the time to understand what the problem is, how we can solve it, and how much time it will take us to create the solution, we're able to give a much better estimate for highly awaited products or features.
 
-We won’t give these high-integrity commitments for everything, but if we know that sales or marketing is waiting on us to move forward, then we have a reasonable timeframe to talk about that’s based in reality.
+We won't give these high-integrity commitments for everything, but if we know that sales or marketing is waiting on us to move forward, then we have a reasonable timeframe to talk about that's based in reality.
 
 This will also help us set better expectations with our community, and make our plans more clear.
 
@@ -71,25 +71,25 @@ The product org is the group of people within Gatsby responsible for identifying
 
 ## What processes do we want to focus on?
 
-Since we are a growing startup, any process we write here will probably change a bit in the next few months. What won’t change is how we think about product and what we communicate across the company. That means a few key areas will be really important for us to focus on.
+Since we are a growing startup, any process we write here will probably change a bit in the next few months. What won't change is how we think about product and what we communicate across the company. That means a few key areas will be really important for us to focus on.
 
 ### How we communicate product ideas
 
-We are a remote company, so it’s very important that we have common knowledge and understanding. Introducing a communication strategy that is more agile and allows for open communication is one way we will tackle this.
+We are a remote company, so it's very important that we have common knowledge and understanding. Introducing a communication strategy that is more agile and allows for open communication is one way we will tackle this.
 
 That means that product initiatives will collaborate with research, engineering, and design right from the beginning to make sure we have shared context where it counts most.
 
-We’ll also focus on product discovery, rapid prototyping, and validation so that we can prioritize effectively. We’ll make sure to do MVPs, described as Minimum Viable _Prototypes_ in Marty Cagan’s book _Inspired_. This is really a difference in functionality and fidelity. A product will typically have many features at high fidelity, while a prototype will have limited functionality at a lower fidelity.
+We'll also focus on product discovery, rapid prototyping, and validation so that we can prioritize effectively. We'll make sure to do MVPs, described as Minimum Viable _Prototypes_ in Marty Cagan's book _Inspired_. This is really a difference in functionality and fidelity. A product will typically have many features at high fidelity, while a prototype will have limited functionality at a lower fidelity.
 
-We typically think of MVPs and Minimum Viable Products, but that often means that we are creating something that’s very well thought out and crafted _before_ we check to make sure it’s something people want or something we should spend our time doing. By focusing on research, discovery, and _prototyping_ we keep the focus on our end users and retain the ability to rapidly test potential solutions.
+We typically think of MVPs and Minimum Viable Products, but that often means that we are creating something that's very well thought out and crafted _before_ we check to make sure it's something people want or something we should spend our time doing. By focusing on research, discovery, and _prototyping_ we keep the focus on our end users and retain the ability to rapidly test potential solutions.
 
 ### How we focus on personas
 
-Because we want to stay user-focused, we will also be doing discovery and usability research against specific personas that are important to Gatsby. As we learn more about our audience, we’ll get a better understanding of current personas and start to see new personas that we should define.
+Because we want to stay user-focused, we will also be doing discovery and usability research against specific personas that are important to Gatsby. As we learn more about our audience, we'll get a better understanding of current personas and start to see new personas that we should define.
 How we prioritize
-Since we’ll be doing a lot of discovery, usability research, and prototyping, that means we’ll have quite a bit of prioritization to do.
+Since we'll be doing a lot of discovery, usability research, and prototyping, that means we'll have quite a bit of prioritization to do.
 
-We’ll prioritize based on OKRs we talked about before. Objectives show what we want to accomplish and key results show how we’ll measure that we’ve accomplished it.
+We'll prioritize based on OKRs we talked about before. Objectives show what we want to accomplish and key results show how we'll measure that we've accomplished it.
 
 The business vision and objective is set at the company level, and the business results are set by the individual teams. This means that teams will have the autonomy to hit the business objective in the best way they see fit.
 
@@ -97,17 +97,17 @@ The business vision and objective is set at the company level, and the business 
 
 ### Outcome-based roadmaps
 
-Once we understand the ideas we want to prioritize, the objectives we’re trying to hit, and the results we’ll use to measure those outcomes, we can put together a roadmap that shows where we want to focus.
+Once we understand the ideas we want to prioritize, the objectives we're trying to hit, and the results we'll use to measure those outcomes, we can put together a roadmap that shows where we want to focus.
 
-Typical roadmaps are difficult to use because they don’t communicate information in a way that addresses everyone’s needs.
+Typical roadmaps are difficult to use because they don't communicate information in a way that addresses everyone's needs.
 
-To make sure that we don’t fall into this trap, we will do outcome-based roadmaps. Our roadmap will include:
+To make sure that we don't fall into this trap, we will do outcome-based roadmaps. Our roadmap will include:
 
 - our business vision
 - our objectives
 - our business results
 
-This will help us focus our roadmaps on business problems we’re trying to solve, rather than a general feature that we’re not sure is important.
+This will help us focus our roadmaps on business problems we're trying to solve, rather than a general feature that we're not sure is important.
 
 ## Where will all of this information live?
 
@@ -119,24 +119,24 @@ Specifically for product, we create Product Requirement Documents (PRDs) that wi
 
 ### RFCs
 
-At Gatsby, we also create Request for Comment (RFC) docs. These are detailed proposals that explain what’s changing in the codebase and why. It’s basically a technical proposal for a spec change.
+At Gatsby, we also create Request for Comment (RFC) docs. These are detailed proposals that explain what's changing in the codebase and why. It's basically a technical proposal for a spec change.
 How do PRDs relate to RFCs?
 PRDs lay out what the product, product feature, or product change is and why we are doing it. RFCs relate to what is changing in the codebase and why.
 
 ### Rolling with changes
 
-We’re sure that processes and needs will change as we scale and grow. But how we think about product within Gatsby will help us make decisions on whether the processes we currently have are helping us, and give us a foundation for new processes in the future.
+We're sure that processes and needs will change as we scale and grow. But how we think about product within Gatsby will help us make decisions on whether the processes we currently have are helping us, and give us a foundation for new processes in the future.
 
 ## We need your help to be better
 
-You may be wondering why we’re telling you all of this. One of our [company values is to work in the open](/blog/2018-09-07-gatsby-values/#work-in-the-open). And that means letting our community know what our plans are, how we’re organizing our work, and how you can help us.
+You may be wondering why we're telling you all of this. One of our [company values is to work in the open](/blog/2018-09-07-gatsby-values/#work-in-the-open). And that means letting our community know what our plans are, how we're organizing our work, and how you can help us.
 
 This is our initial effort to let you know how we think about product at Gatsby and what it means to us.
 
-We’d love your help in hearing what Gatsby means to you. The first step in all of this is talking with the community and continuing to learn from you.
+We'd love your help in hearing what Gatsby means to you. The first step in all of this is talking with the community and continuing to learn from you.
 
 ### Tell us about your experience
 
 One of the best ways you can help is by talking to us about how you use Gatsby now, what works for you, and what problems you have. Getting the opportunity to understand your problems helps us create better solutions for you!
 
-If you’d like to participate in our research efforts, [@shannonbux](https://twitter.com/shannonb_ux) is always looking for research participants. Sign up to [get notified about upcoming research studies](https://airtable.com/shrKDSF2E7ljCaYCd).
+If you'd like to participate in our research efforts, [@shannonbux](https://twitter.com/shannonb_ux) is always looking for research participants. Sign up to [get notified about upcoming research studies](https://airtable.com/shrKDSF2E7ljCaYCd).

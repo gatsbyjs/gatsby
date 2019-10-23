@@ -4,7 +4,7 @@ title: Proxying API Requests in Development
 
 ## Resources
 
-If you’re not familiar with Gatsby’s lifecycle, see the overview [Gatsby Lifecycle APIs](/docs/gatsby-lifecycle-apis/).
+If you're not familiar with Gatsby's lifecycle, see the overview [Gatsby Lifecycle APIs](/docs/gatsby-lifecycle-apis/).
 
 ## Proxying API requests in development
 
@@ -24,7 +24,7 @@ module.exports = {
 ```
 
 This way, when you `fetch('/api/todos')` in development, the development server
-will recognize that it’s not a static asset, and will proxy your request to
+will recognize that it's not a static asset, and will proxy your request to
 `http://dev-mysite.com/api/todos` as a fallback.
 
 Keep in mind that `proxy` only has effect in development (with `gatsby develop`), and it is up to you to ensure that URLs like `/api/todos` point to

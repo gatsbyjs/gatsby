@@ -12,14 +12,14 @@ On March 29th, we launched [Eviction Free NYC](http://www.evictionfreenyc.org/) 
 
 In order to build this new resource we applied a [human-centered design process](https://medium.com/@JustFixNYC/co-designing-eviction-free-nyc-b54570c69153) followed by specialized technical scoping in order to determine what was best for our users and build something for this unique context. **That process led us to using Gatsby, Contentful, and Netlify!** Below, we've written up how we mapped design to dev, approached different stakeholders, and utilized Gatsby's great flexibility & plugin library.
 
-#### **Mapping Design Considerations to Technical Scoping**
+## **Mapping Design Considerations to Technical Scoping**
 
 ![Design Mapping](design-mapping.jpeg)
 _Journey mapping for a tenant organizing process!_
 
-We started this process with a pretty strong sense of our average user’s
+We started this process with a pretty strong sense of our average user's
 technical capacity and degree of comfort in using a website or app. For the past
-3 years, we’ve been collecting user insights from the [JustFix.nyc Tenant
+3 years, we've been collecting user insights from the [JustFix.nyc Tenant
 Web-App](https://www.justfix.nyc/) and other resources. As you might imagine,
 the majority of our users are coming from mobile devices (**over 95% of
 low-income Americans now have a device that connects to the Internet**) and
@@ -39,21 +39,21 @@ outdated. We also wanted to utilize this system to make it easy for new
 languages to be added and maintained with as little technical knowledge as
 possible.
 
-#### **Our solution: Gatsby**
+## **Our solution: Gatsby**
 
 We knew that we would build the site in [React](https://reactjs.org/).
 Developers can build websites quickly and reliably through its modular
-architecture and extensive system of third-party components. React’s simple
+architecture and extensive system of third-party components. React's simple
 component-based philosophy creates code and structure that just _makes sense_,
 allowing other developers to more easily contribute to the project as well.
-It’s also unobtrusive enough that it can be applied to both large and small web
+It's also unobtrusive enough that it can be applied to both large and small web
 development projects.
 
 From there, we looked for different scaffolds that would help us get
-up-and-running quickly. While we’re big fans of
+up-and-running quickly. While we're big fans of
 [create-react-app](https://github.com/facebook/create-react-app) and have used
 it on other projects, due to an aggressive project timeline, we needed something
-that provided a more “out-of-the-box” solution. We wound up building the site in
+that provided a more "out-of-the-box" solution. We wound up building the site in
 Gatsby, which is a **React-based static site generator**. Gatsby is the
 perfect fit for a number of reasons:
 
@@ -65,10 +65,10 @@ perfect fit for a number of reasons:
     reliable experience for tenants utilizing the service.
 1.  Gatsby ships with an incredible amount of pre-handled optimization features,
     from prefetching resources to progressive image loading to inlining code blocks
-    so they don’t need to be fetched via
+    so they don't need to be fetched via
     [AJAX](<https://en.wikipedia.org/wiki/Ajax_(programming)>). There was no way we
     could have achieved this level of optimization on our own in this timeframe.
-1.  A growing plugin library that allows for easy integrations that utilize Gatsby’s
+1.  A growing plugin library that allows for easy integrations that utilize Gatsby's
     GraphQL data query system. With these we could easily use things like
     [`gatsby-source-contentful`](/packages/gatsby-source-contentful/?=conten)
     and [`gatsby-plugin-i18n`](https://github.com/angeloocana/gatsby-plugin-i18n).
@@ -78,9 +78,9 @@ perfect fit for a number of reasons:
     a boilerplate that synced Contentful and i18n features together and allowed us
     to hit the ground running.
 
-#### **Using Contentful**
+## **Using Contentful**
 
-[Contentful](https://www.contentful.com/) is a “headless” [Content Management
+[Contentful](https://www.contentful.com/) is a "headless" [Content Management
 System](https://en.wikipedia.org/wiki/Content_management_system), or CMS.
 Traditional CMS platforms, like WordPress or Drupal, allow authors and editors
 to easily create websites and publish content such as text articles, image, or
@@ -92,7 +92,7 @@ In previous projects where we used Contentful, content was loaded dynamically
 (via AJAX) when a user visits the site. Gatsby instead pulls content from
 Contentful _as the site compiles_ (pre-deploy), not when the user visits it.
 This change creates significantly less server requests after page load and
-further speeds up the site’s final load time.
+further speeds up the site's final load time.
 
 With Contentful, you define _Content Models_ in tandem with coding individual
 pages in order to construct the structure of the site and its content. For
@@ -103,34 +103,36 @@ Court Action Steps**, and meta-level page models, such as **LandingPage**.
 _An example of the Provider content model_
 
 As Gatsby compiles the site (either in dev or building for production), it
-will pull content from Contentful and make it available via GraphQL. A file’s
-GraphQL `pageQuery` will then populate your React component’s `props` with the
+will pull content from Contentful and make it available via GraphQL. A file's
+GraphQL `pageQuery` will then populate your React component's `props` with the
 corresponding data, creating an incredibly simple pipeline from content → code.
-As an example, here’s the provider portion of a sample `pageQuery`:
+As an example, here's the provider portion of a sample `pageQuery`:
 
-    providers {
-      title
-      acceptsRtcCases
-      phoneNumber
-      website
-      hours
-      intakeInstructions
-      address
-      logo {
-        resolutions(width: 100, height: 100) {
-          aspectRatio
-          width
-          height
-          src
-          srcSet
-        }
-      }
+```graphql
+providers {
+  title
+  acceptsRtcCases
+  phoneNumber
+  website
+  hours
+  intakeInstructions
+  address
+  logo {
+    resolutions(width: 100, height: 100) {
+      aspectRatio
+      width
+      height
+      src
+      srcSet
     }
+  }
+}
+```
 
-#### **Challenge: Hyper-personalized result pages in a static site**
+## **Challenge: Hyper-personalized result pages in a static site**
 
 When a tenant goes to Eviction Free NYC, they answer a simple questionnaire that
-determines a results page. It's tailored to their borough’s housing court
+determines a results page. It's tailored to their borough's housing court
 (including information about room numbers and different parts) and factors in
 their eligibility for legal representation as well as different types of
 eviction proceedings. **This level of personalization is difficult to achieve in
@@ -145,17 +147,17 @@ pages:
 > **2 languages x 5 different housing courts x 3 different case types x (y/n)
 > eligibility = 60 static results pages**!
 
-This doesn’t include additional pages we built afterwards to account for NYCHA
-tenants and other situations. Here’s an example of what this looks like in
+This doesn't include additional pages we built afterwards to account for NYCHA
+tenants and other situations. Here's an example of what this looks like in
 Contentful:
 
 ![Housing Court Example](housing-court-example.png)
 
 There are 6 potential pathways that a user could be taken (seen above as
-Holdover, Qualifies; Holdover, Doesn’t Qualify, etc) per housing court. These
+Holdover, Qualifies; Holdover, Doesn't Qualify, etc) per housing court. These
 were represented as _arrays of references_ to Housing Court Action Steps, which
 are in turn represented in Contentful as editable Markdown snippets. This system
-allows for steps to be reused (see “Brooklyn Housing Court location” above) and for
+allows for steps to be reused (see "Brooklyn Housing Court location" above) and for
 third-party content, such as Google Maps, to be embedded in the steps. To
 reorder a step or change a part of the process for a specific court or case
 type, you can simply drag-n-drop things in Contentful!
@@ -172,22 +174,22 @@ Feel free to [explore the source
 code](https://github.com/JustFixNYC/eviction-free-nyc) to get a better sense of
 how all this works!
 
-#### **Wrapping everything up: using Netlify**
+## **Wrapping everything up: using Netlify**
 
 When it came time to deploy, we were very excited to try out a new hosting
-platform called [Netlify](https://www.netlify.com/) that we’d been hearing a lot
+platform called [Netlify](https://www.netlify.com/) that we'd been hearing a lot
 about. It has a great free tier and is perfect for hosting static sites. We
 simply linked Netlify to a branch in the Eviction Free NYC GitHub repo and it
 compiles and deploys the site with each push. It simplifies HTTPS certificate
 generation and even includes a system for deploying AWS Lambda functions, which
-we used to ship a small Twilio integration for the site's “Save to Phone”
-feature. _(note: we’re actually still using the original
-_[Serverless](https://serverless.com/)_ solution, but this code is in the repo
+we used to ship a small Twilio integration for the site's "Save to Phone"
+feature. _(note: we're actually still using the original
+[Serverless](https://serverless.com/) solution, but this code is in the repo
 as a to-do)_
 
 The best feature of Netlify is its ability to utilize build hooks. This allows
 us to trigger a new site build when someone edits or adds content from
-Contentful. Contentful’s [webhook](https://en.wikipedia.org/wiki/Webhook)
+Contentful. Contentful's [webhook](https://en.wikipedia.org/wiki/Webhook)
 functionality will fire an event when content is edited or published. Once you
 link the two together, Netlify will receive the event, rebuild the site, and
 deploy everything. Done!
@@ -195,16 +197,16 @@ deploy everything. Done!
 ![Mobile Comps](mobile-comps.png)
 _Mobile comps for Eviction Free NYC_
 
-#### In Conclusion
+## In Conclusion
 
 The technical process for building the site went by incredibly fast — this all
 came together in a little over a month! Despite the frenzied speed, we created a
 valuable new service that also acts as a launching pad for future feature
-development and refinement. **It’s already been used by over 1,000 people in the
-past few weeks!** We’re really excited for this site to grow and develop as
+development and refinement. **It's already been used by over 1,000 people in the
+past few weeks!** We're really excited for this site to grow and develop as
 tenants take advantage of this historic new right.
 
 **Footnote: Our code for [evictionfreenyc.org](http://www.evictionfreenyc.org/) is
 open source! [Click
 here](https://github.com/JustFixNYC/eviction-free-nyc) to view the code on
-github.**
+GitHub.**

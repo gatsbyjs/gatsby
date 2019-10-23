@@ -15,9 +15,9 @@ And while creating rich user experiences is never an easy task, walled-garden CM
 
 Some challenges of traditional CMS development environments include:
 
-- **Walled-garden development.** Work on projects across CMS systems often requires reimplementing basic functionality like carousels or banners. Development can be blocked due to CMS access restrictions or code freezes. Upgrade paths can be challenging when CMSs don’t support component UI versioning.
+- **Walled-garden development.** Work on projects across CMS systems often requires reimplementing basic functionality like carousels or banners. Development can be blocked due to CMS access restrictions or code freezes. Upgrade paths can be challenging when CMSs don't support component UI versioning.
 
-- **Maintaining local environments**. Setting up a local app server and database and keeping it up to date with team members’ changes is time-consuming, especially when switching between projects or returning after a gap in development.
+- **Maintaining local environments**. Setting up a local app server and database and keeping it up to date with team members' changes is time-consuming, especially when switching between projects or returning after a gap in development.
 
 - **Project organization.** Reliably installing and managing third-party dependencies, including cross-compatibility and handling bugs in upstream, is challenging. Vanilla JavaScript offers no standard project organization or code bundling patterns.
 
@@ -44,9 +44,9 @@ Modern frameworks also represent a core _technology advance_ over previous solut
 
 - **Reusable UIs.** Key UI elements, such as headers, dropdowns, typeaheads, buttons, tables and so forth may be reused across the application, without copy-pasta.
 
-- **Local application state.** Previous methods of modifying web page display relied on global state. When code at any place can modify state everywhere, the result at scale is spaghetti code. In React/Angular’s component model, components cannot modify outside state without being granted explicit permission.
+- **Local application state.** Previous methods of modifying web page display relied on global state. When code at any place can modify state everywhere, the result at scale is spaghetti code. In React/Angular's component model, components cannot modify outside state without being granted explicit permission.
 
-- **A declarative virtual DOM.** Instead of imperatively changing specific page elements’ state in reaction to specific user actions, developers can specify desired UI state as a "view" on application state, making code more readable and less buggy.
+- **A declarative virtual DOM.** Instead of imperatively changing specific page elements' state in reaction to specific user actions, developers can specify desired UI state as a "view" on application state, making code more readable and less buggy.
 
 React and Angular, along with mature ES2015+ JavaScript, and stable dependency/bundling solutions like npm and webpack, are blowing away conceptions of JS as an unserious language. They are in production of leading Fortune 500 companies, including Facebook, Twitter, Microsoft, Autodesk, Airbnb, and McDonalds.
 
@@ -73,7 +73,7 @@ And the evidence? Increasingly, award-winning websites such as the leading "corp
   </figcaption>
 </figure>
 
-Modern web development frameworks like React and Angular are the latest step transforming the content web from its original simple, document-based model to a complex, rich web experience and app platform -- and it’s happening _fast_.
+Modern web development frameworks like React and Angular are the latest step transforming the content web from its original simple, document-based model to a complex, rich web experience and app platform -- and it's happening _fast_.
 
 <figure>
   <img alt="" src="./modern-frameworks.png" />
@@ -82,6 +82,6 @@ Modern web development frameworks like React and Angular are the latest step tra
   </figcaption>
 </figure>
 
-In the next blog post, [Why Mobile Performance is Crucial](/blog/2018-10-16-why-mobile-performance-is-crucial), we’ll move on to the final piece of the changing content landscape puzzle.
+In the next blog post, [Why Mobile Performance is Crucial](/blog/2018-10-16-why-mobile-performance-is-crucial), we'll move on to the final piece of the changing content landscape puzzle.
 
-We'll discuss how growing smartphone usage both in the US and globally has made mobile performance crucial -- as well as suddenly easier to optimize in the [headless CMS](/docs/headless-cms/) world. We’ll also explore two modern, complementary trends for improving web performance and how website teams can get the best of both out of the box.
+We'll discuss how growing smartphone usage both in the US and globally has made mobile performance crucial -- as well as suddenly easier to optimize in the [headless CMS](/docs/headless-cms/) world. We'll also explore two modern, complementary trends for improving web performance and how website teams can get the best of both out of the box.

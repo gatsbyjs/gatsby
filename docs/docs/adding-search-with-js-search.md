@@ -565,7 +565,7 @@ Breaking down the code into smaller parts:
 4. The data is then indexed using js-search.
 5. When the contents of the input changes, js-search starts the search process based on the `input`'s value and returns the search results if any, which is then presented to the user via the `table` element.
 
-### Joining all the pieces
+### Summarizing
 
 Once again to get it to work on your site you would only need to copy over [the `gatsby-node.js` file located here](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-js-search/gatsby-node.js).
 

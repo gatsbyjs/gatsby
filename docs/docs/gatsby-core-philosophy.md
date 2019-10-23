@@ -25,7 +25,7 @@ Using abstractions like React components, `gatsby-image`, and `gatsby-link`, we'
 
 To [quote Alan Kay](https://www.youtube.com/watch?v=NdSD07U5uBs):
 
-> “You get simplicity by finding slightly more sophisticated building blocks“.
+> "You get simplicity by finding slightly more sophisticated building blocks".
 
 [Read more here](/blog/2017-10-16-making-website-building-fun/#find-the-right-building-blocks).
 
@@ -43,7 +43,7 @@ Gatsby's vision is to make website development fun by making it simple.
 
 Fred Brooks wrote in _The Mythical Man-Month_:
 
-> The programmer, like the poet, works only slightly removed from pure thought-stuff. [They] build [their] castles in the air, from air, creating by exertion of the imagination. Few media of creation are so flexible, so easy to polish and rework, so readily capable of realizing grand conceptual structures…
+> The programmer, like the poet, works only slightly removed from pure thought-stuff. \[They\] build \[their\] castles in the air, from air, creating by exertion of the imagination. Few media of creation are so flexible, so easy to polish and rework, so readily capable of realizing grand conceptual structures…
 
 Technology is incredibly fun when we, like the wizard of fantasy, can type an incantation on our computer and a new creation comes to life.
 
@@ -51,7 +51,7 @@ When this incantation is simple and takes seconds, we can easily get lost for ho
 
 Developers, designers, demand-gen marketers, copywriters -- every stakeholder in a website project _can_ feel this -- with proper tooling.
 
-As Bret Victor suggested in _Inventing on Principle_, each creator needs "an immediate connection to what they're making.”
+As Bret Victor suggested in _Inventing on Principle_, each creator needs "an immediate connection to what they're making."
 
 These instant feedback loops are often felt near the beginning of projects. But they can quickly be drowned by project complexity.
 
@@ -59,7 +59,7 @@ Developers can spend hours waiting for deploys, tracking down phantom "tooling" 
 
 We believe that with the right building blocks, and an integrated content mesh system, website projects should continue to feel fun no matter how big they get. We believe that every member of a website team deserves the ability to easily see how their work fits into the whole.
 
-When a copywriter edits a headline in their CMS, a designer draws a button in their illustration app, or a developer adds an if statement in their text editor, they shouldn’t have to imagine what their change looks like in context. They should see it -- immediately.
+When a copywriter edits a headline in their CMS, a designer draws a button in their illustration app, or a developer adds an if statement in their text editor, they shouldn't have to imagine what their change looks like in context. They should see it -- immediately.
 
 [Read more here](/blog/2017-10-16-making-website-building-fun/).
 
@@ -91,7 +91,7 @@ For more on this, look at [the features Gatsby bundles together](/features).
 
 ### Progressively disclose complexity
 
-One concept UX designers use to make applications easier to learn and less error-prone is called “progressive disclosure".
+One concept UX designers use to make applications easier to learn and less error-prone is called "progressive disclosure".
 
 If you were designing a user interface, you might move advanced or rarely-used features to a secondary screen, such as "advanced settings".
 
@@ -105,11 +105,11 @@ We progressively disclose complexity by making features such as modifying webpac
 
 ### Work in the open
 
-Open source is at the core of Gatsby’s success, and one of the central tenets of open source is that things are done in the open and without smoke and mirrors.
+Open source is at the core of Gatsby's success, and one of the central tenets of open source is that things are done in the open and without smoke and mirrors.
 
-Two of Gatsby’s core strengths are its community and ecosystem.
+Two of Gatsby's core strengths are its community and ecosystem.
 
-We’re convinced that the right path forward is to continue working in the open with both trust and support of our community.
+We're convinced that the right path forward is to continue working in the open with both trust and support of our community.
 
 Anyone can [open an issue](/contributing/how-to-file-an-issue/) and ask a question, and we'll respond. Anyone can submit a pull request, and we'll give honest feedback on it. Anyone can [submit an RFC](/contributing/rfc-process/) to make a major change to Gatsby. And when we want to do this, we'll submit an RFC as a proposal.
 
@@ -131,7 +131,7 @@ First, **getting started in open source is daunting**. OSS projects can be intim
 
 Second, **open source is an expense not everyone can afford**. Potential contributors may not have free time to work on open source, and their jobs may not support contributing as part of our workload.
 
-Third, **many people don’t see themselves represented in open source.**
+Third, **many people don't see themselves represented in open source.**
 
 #### Overcoming these obstacles
 
@@ -163,6 +163,6 @@ Some things we do in order to create an inclusive, welcoming community include:
 - Active gratitude
 - [Active mentorship](/contributing/pair-programming/)
 
-We’ve built an active community with hundreds of contributors, and we want to live the example of what a great open source community can be.
+We've built an active community with hundreds of contributors, and we want to live the example of what a great open source community can be.
 
 [See more here](https://www.youtube.com/watch?v=8ARA7AD4yPs&feature=youtu.be&list=PLz8Iz-Fnk_eQGt4-VFFCXYuYcuKaw4F07)

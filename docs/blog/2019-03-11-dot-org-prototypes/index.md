@@ -23,7 +23,7 @@ We found some testers through [userinterviews.com](https://www.userinterviews.co
 
 ### We did another usability test in November with bummer results!
 
-Back in November, we watched 8 people who had never heard of Gatsby before as they landed on the homepage and asked them “what is Gatsby” and “how do you decide if you want to use it?” The results were...not as accurate as we hoped!
+Back in November, we watched 8 people who had never heard of Gatsby before as they landed on the homepage and asked them "what is Gatsby" and "how do you decide if you want to use it?" The results were...not as accurate as we hoped!
 
 Two problems became clear as a result:
 
@@ -32,19 +32,19 @@ Two problems became clear as a result:
   - Who is the audience for .org?
   - What are our value propositions for that audience?
   - What is the purpose of the homepage?
-  - How do we know if we’re succeeding in that purpose?
+  - How do we know if we're succeeding in that purpose?
 
-It is important to the Gatsby community to solve these problems, because tons of new visitors come to the gatsbyjs.org homepage each month: 130,000 in January alone! We want to make sure we’re accurately representing Gatsby’s value and helping more developers experience that value by clicking the “get started” button.
+It is important to the Gatsby community to solve these problems, because tons of new visitors come to the gatsbyjs.org homepage each month: 130,000 in January alone! We want to make sure we're accurately representing Gatsby's value and helping more developers experience that value by clicking the "get started" button.
 
 ## The goal of usability testing
 
 The goal:
 
-> How can we support first-time visitors so they experience Gatsby’s value powerfully and quickly?
+> How can we support first-time visitors so they experience Gatsby's value powerfully and quickly?
 
 Measuring that goal:
 
-> How many people click on “Get started” and then stay on the site? Are our monthly active users increasing?
+> How many people click on "Get started" and then stay on the site? Are our monthly active users increasing?
 
 ## How did we make the prototypes?
 
@@ -57,15 +57,15 @@ We held a workshop that involved organizing a group of people. Each person had a
 We gathered a couple engineers, a product manager, and a product designer and assigned a couple special roles:
 
 1.  Timer: someone to use a timer to make sure people move through the activities below.
-2.  Note taker: at the end, someone needs to take notes during the “final feedback” section.
+2.  Note taker: at the end, someone needs to take notes during the "final feedback" section.
 
 ### Review design requirements
 
 We briefly reminded ourselves of what the current homepage looks like on mobile, and then reviewed the following information on the requirements for redesigning the homepage:
 
 - Optimize for the purpose of the homepage: to help as many developers as possible use Gatsby
-- How do we know if we’re succeeding in that purpose? Increase in number of clicks on Get Started button and monthly active users growing
-- What should the homepage communicate about Gatsby? “Gatsby is a free, open-source, modern website framework based on React to create and deploy blazing fast websites or apps with ease.”
+- How do we know if we're succeeding in that purpose? Increase in number of clicks on Get Started button and monthly active users growing
+- What should the homepage communicate about Gatsby? "Gatsby is a free, open-source, modern website framework based on React to create and deploy blazing fast websites or apps with ease."
 - Who is the audience? developers who build sites for clients, companies, and their own projects
 - What are our value propositions for that audience? fast sites, performance out of the box, productive from the start
 
@@ -82,8 +82,8 @@ We did 3 rounds of the following pattern and saw that in round two, our sketches
 - 2 minutes per person in which they share comments in these categories:
 - Factual observations about this exercise.
 - What I liked about these sketches and why.
-- What I don’t like about these sketches and why.
-- What I don’t understand.
+- What I don't like about these sketches and why.
+- What I don't understand.
 
 ## What did we conclude from the prototype workshop?
 
@@ -96,18 +96,18 @@ The homepage should be ordered by explaining the following:
 
 We left the prototype workshop with a few concerns that could be validated through testing:
 
-- Logos of companies could turn off developers because some consider logos to be cliche and therefore meaningless. Alternatively, the logos could provide social proof that world-class engineers use Gatsby. One possibility is to combine the logos with case studies so they aren’t in the classic “logos floating on white space” design that most startups use.
+- Logos of companies could turn off developers because some consider logos to be cliche and therefore meaningless. Alternatively, the logos could provide social proof that world-class engineers use Gatsby. One possibility is to combine the logos with case studies so they aren't in the classic "logos floating on white space" design that most startups use.
 - We debated how to help developers know that Gatsby also has some upcoming commercial offerings. What do we call the commercial offerings so they make sense to first time visitors?
 
 ### Settled concerns:
 
-"Install Gatsby" is a more specific call to action, so it is likely better than “Get Started”.
+"Install Gatsby" is a more specific call to action, so it is likely better than "Get Started".
 
-> Spoiler alert! The button label “Install Gatsby” did not work in the usability tests. Nearly everyone thought that when they clicked on it, they would be taken to their phone’s app store.
+> Spoiler alert! The button label "Install Gatsby" did not work in the usability tests. Nearly everyone thought that when they clicked on it, they would be taken to their phone's app store.
 
 ## What is the final lo-fi prototype?
 
-Here is the [final lo-fi prototype](https://www.figma.com/proto/0rROnAzH4mFLYLEx9TDleN/For-Flo---Gatsbyjs.org-mobile-homepage-prototype?node-id=140%3A487&viewport=-1603%2C423%2C1&scaling=scale-down) that we’ll use to guide the next phase of visual design. Below, I list the reasons we’re moving forward with this prototype.
+Here is the [final lo-fi prototype](https://www.figma.com/proto/0rROnAzH4mFLYLEx9TDleN/For-Flo---Gatsbyjs.org-mobile-homepage-prototype?node-id=140%3A487&viewport=-1603%2C423%2C1&scaling=scale-down) that we'll use to guide the next phase of visual design. Below, I list the reasons we're moving forward with this prototype.
 
 ### What is Gatsby?
 
@@ -115,15 +115,15 @@ The definition was clear in the prototype and the testers could explain what Gat
 
 ### Why use Gatsby?
 
-We learned that Lighthouse scores weren’t as persuasive to testers as we anticipated because many people don’t know how the scores are calculated. Other ideas that could show Gatsby’s value more concretely might be case studies, sites in the site showcase, a diagram of how Gatsby works, code snippets, and more.
+We learned that Lighthouse scores weren't as persuasive to testers as we anticipated because many people don't know how the scores are calculated. Other ideas that could show Gatsby's value more concretely might be case studies, sites in the site showcase, a diagram of how Gatsby works, code snippets, and more.
 
 ### What can I use Gatsby for?
 
-This is a question that testers had and the prototype didn’t quite answer it, so we concluded that we will simply answer that question above the fold on the homepage and then include a button labelled “Learn more” that leads to a list of the kinds of sites people build with Gatsby and resources for people who want to build each kind of site.
+This is a question that testers had and the prototype didn't quite answer it, so we concluded that we will simply answer that question above the fold on the homepage and then include a button labelled "Learn more" that leads to a list of the kinds of sites people build with Gatsby and resources for people who want to build each kind of site.
 
 ### How do I use Gatsby?
 
-The “Install Gatsby” button label did not work in the usability tests. Nearly everyone thought that when they clicked on it, they would be taken to their phone’s app store. For this reason, we are sticking with “Get started” as a button label (this worked in usability tests).
+The "Install Gatsby" button label did not work in the usability tests. Nearly everyone thought that when they clicked on it, they would be taken to their phone's app store. For this reason, we are sticking with "Get started" as a button label (this worked in usability tests).
 
 ## What we've done with the research so far
 

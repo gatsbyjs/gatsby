@@ -14,7 +14,7 @@ Users may always opt-out from the telemetry with `gatsby telemetry --disable` or
 ## Why?
 
 **Anonymous** aggregate user analytics allow us to prioritize fixes and features based on how and when people use Gatsby.
-Since much of Gatsby’s function revolves around community plugins and starters, we want to collect information on usage
+Since much of Gatsby's function revolves around community plugins and starters, we want to collect information on usage
 and reliability so that we can ensure a high-quality ecosystem.
 
 This raises a question: how will we use this telemetry data to improve the ecosystem? Some examples are helpful:
@@ -46,4 +46,4 @@ The access to the raw data is highly controlled, and we cannot identify individu
 
 We perform additional steps to ensure that secure data (e.g. environment variables used to store secrets for the build process) **do not** make their way into our analytics. [We strip logs, error messages, etc.](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-telemetry/src/error-helpers.js) of this sensitive data to ensure we _never_ gain access to this sensitive data.
 
-You can view all the information that is sent by Gatsby’s telemetry by setting the environment variable `GATSBY_TELEMETRY_DEBUG`to `1` to print the telemetry data instead of sending it over.
+You can view all the information that is sent by Gatsby's telemetry by setting the environment variable `GATSBY_TELEMETRY_DEBUG`to `1` to print the telemetry data instead of sending it over.

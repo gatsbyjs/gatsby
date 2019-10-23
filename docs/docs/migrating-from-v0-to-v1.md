@@ -21,7 +21,7 @@ git mv utils src
 ...
 ```
 
-## Replace react-router's Link component with gatsby-link
+## Replace react-router's Link component with `gatsby-link`
 
 `gatsby-link` is a wrapper for the `<Link>` component in react-router. It
 automatically prefixes urls and handles prefetching. Add `gatsby-link` to your
@@ -51,7 +51,7 @@ so remove usages of `prefixLink` in links.
 
 Use `gatsby-link` everywhere and things will Just Work™.
 
-## config.toml is now gatsby-config.js
+## config.toml is now `gatsby-config.js`
 
 If you previously added site metadata to `config.toml`, move that into the new
 `gatsby-config.js`.
@@ -294,7 +294,7 @@ exactly the data they need.
 
 There will be a more in-depth tutorial and GraphQL-specific documentation soon
 but in the meantime, check out <http://graphql.org/> and play around on Gatsby's
-built-in GraphQL IDE (Graph*i*QL) which can be reached when you start the
+built-in GraphQL IDE (Graph _i_ QL) which can be reached when you start the
 development server.
 
 At this point you should have working markdown pages when you run `npm run develop`! Now start gradually adding back what you had in your wrapper component

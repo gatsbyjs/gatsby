@@ -36,7 +36,7 @@ By adding a timeout, your "Time to interactive" won't take these scripts into ac
 
 Wanting to improve the performance rating of my own site, I forked the [`gatsby-plugin-segment-js`](https://github.com/Kilian/gatsby-plugin-segment-js) repository and set to work.
 
-## Updating gatsby-plugin-segment-js
+## Updating `gatsby-plugin-segment-js`
 
 The way this solution works is as follows:
 

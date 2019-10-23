@@ -12,13 +12,13 @@ The wait is over! Gatsby Days talks are posted below. Gatsby Days are one-day, i
 
 Get caught up on all the latest presentations from Gatsby Days in Mountain View, California such as Kyle Mathews' presentation on the future of the web, Chris Biscardi on Gatsby Themes, product announcements, how to sell Gatsby to your clients, and more. Check out the recordings below and if you'd like to see a Gatsby Days come to your city, [**cast your vote here**](https://www.gatsbyjs.com/gatsby-days-signup/).
 
-### Gatsby Days Talks
+## Gatsby Days Talks
 
 [How We Got Here and The Future of Website Development](https://www.gatsbyjs.com/gatsby-days-keynote-kyle/) by **Kyle Mathews**, CEO and Co-founder, Gatsby
 
 [Introducing Gatsby Themes](https://www.gatsbyjs.com/gatsby-days-themes-chris/) with **Chris Biscardi**, Developer, Gatsby
 
-[Announcing Gatsby Preview: The Future is in the Cloud ](https://www.gatsbyjs.com/gatsby-days-preview-andrew/) with **Andrew Rhyne**, Cloud Services Engineer, Gatsby
+[Announcing Gatsby Preview: The Future is in the Cloud](https://www.gatsbyjs.com/gatsby-days-preview-andrew/) with **Andrew Rhyne**, Cloud Services Engineer, Gatsby
 
 [The Power of Positioning: Selling Gatsby to Your Clients](https://www.gatsbyjs.com/gatsby-days-positioning-linda/) by **Linda Watkins**, Director of Marketing, Gatsby
 

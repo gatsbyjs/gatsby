@@ -13,7 +13,7 @@ Some things that marketers care about include:
 
 A basic explanation of Gatsby to marketers is often along these lines:
 
-> Over 50% of people will abandon a site if it takes more than 3 seconds to load. This translates directly into lost revenue, decreased lead conversion, and a poor user experience. Get the most out of your website with a site that’s blazing fast and optimized for SEO, lead conversion, and revenue generation. Gatsby is the modern way to build reliable, lightning fast websites and apps.
+> Over 50% of people will abandon a site if it takes more than 3 seconds to load. This translates directly into lost revenue, decreased lead conversion, and a poor user experience. Get the most out of your website with a site that's blazing fast and optimized for SEO, lead conversion, and revenue generation. Gatsby is the modern way to build reliable, lightning fast websites and apps.
 
 ## Specific benefits
 
@@ -33,7 +33,7 @@ Marketers may be curious about more information on specific topics such as SEO, 
 
 ### Generating revenue
 
-> Generating revenue with your website is especially important for e-commerce sites. If an e-commerce company doesn’t get a high enough ROI (return on investment), then they may be out of business in a few months. Even just a one second improvement in page load time can increase revenue by 7%. The less time it takes a page to load, the more money you make.
+> Generating revenue with your website is especially important for e-commerce sites. If an e-commerce company doesn't get a high enough ROI (return on investment), then they may be out of business in a few months. Even just a one second improvement in page load time can increase revenue by 7%. The less time it takes a page to load, the more money you make.
 
 ## Case studies
 
@@ -41,7 +41,7 @@ One question marketers often ask themselves when hearing new ideas, whether they
 
 In order to proactively diffuse these concerns, you might consider sharing stories of organizations that have adopted Gatsby:
 
-- [Flamingo, women’s body care brand from Harry’s, chooses Gatsby for critical ecommerce launch, 5X faster page loads](/blog/2019-01-30-flamingo-case-study/)
+- [Flamingo, women's body care brand from Harry's, chooses Gatsby for critical ecommerce launch, 5X faster page loads](/blog/2019-01-30-flamingo-case-study/)
 - [Youfit uses Gatsby to increase lead generation by 60%](/blog/2018-11-16-youfit-case-study/)
 - [IBM Uses Gatsby to Manage Enterprise-Level Content](/blog/2018-12-17-ibm-case-study/#big-company-big-website)
 

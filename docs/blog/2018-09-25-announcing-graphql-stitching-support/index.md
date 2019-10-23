@@ -25,7 +25,7 @@ To fix this, [Gatsby 2.0](/blog/2018-09-17-gatsby-v2/) adds experimental support
 
 Gatsby's data model is powered by an internal GraphQL API. It is a great abstraction that allows you to define the data requirements of your app, be it some files in the filesystem or a third-party API.
 
-Previously, when you wanted to add a 3rd-party GraphQL API, you needed to write a custom source plugin. But now, you simply add a small bit of config to your site's gatsby-config.js. The following example adds the Star Wars GraphQL API:
+Previously, when you wanted to add a 3rd-party GraphQL API, you needed to write a custom source plugin. But now, you simply add a small bit of config to your site's `gatsby-config.js`. The following example adds the Star Wars GraphQL API:
 
 ```js
 // In your gatsby-config.js

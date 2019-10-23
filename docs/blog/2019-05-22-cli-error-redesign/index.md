@@ -10,7 +10,7 @@ tags:
 
 ## How did this project come about?
 
-The CLI is the main entry point and interface people have (currently) for Gatsby. Everyone sees it! So it has a huge influence on people’s experience of Gatsby.
+The CLI is the main entry point and interface people have (currently) for Gatsby. Everyone sees it! So it has a huge influence on people's experience of Gatsby.
 
 We conducted 4 usability tests with awesome Gatsby users to learn how they do tasks using the Gatsby CLI and how they use error messages to debug their projects. Thanks [Simon Koelewijn](https://github.com/smnk), [Gene Smith](https://twitter.com/gene_r_smith), [Jonathan Prozzi](https://github.com/jonathanprozzi), and [Benjamin Lannon](https://github.com/lannonbr) for teaching us how you use the CLI, and thanks to [@sidharthachatterjee](https://github.com/sidharthachatterjee), [@wardpeet](https://github.com/wardpeet), [@pieh](https://github.com/pieh), [@m-allanson](https://github.com/m-allanson), [@gillkyle](https://github.com/gillkyle) for copiloting the interviews with me and helping turn what we learned into action.
 
@@ -27,11 +27,11 @@ We did a thorough search of other CLIs and style guides to learn what we're doin
 - [Nielsen Norman Group error message design](https://www.nngroup.com/articles/error-message-guidelines/)
 - [Heroku CLI style guide](https://devcenter.heroku.com/articles/cli-style-guide)
 - [12 Factor CLI Apps](https://medium.com/@jdxcode/12-factor-cli-apps-dd3c227a0e46)
-- [User journey through the Gatsby CLI](https://whimsical.co/2PxMcRGE63bwk1Ayc3emAB) (informed by usability interviews and the Gatsby core team’s observations of what issues are most common regarding the CLI)
+- [User journey through the Gatsby CLI](https://whimsical.co/2PxMcRGE63bwk1Ayc3emAB) (informed by usability interviews and the Gatsby core team's observations of what issues are most common regarding the CLI)
 
 ## What do we need to do next?
 
-To optimize the CLI design, we’ll use the data being collected through our telemetry setup, which collects data about CLI usage (opt out is possible).
+To optimize the CLI design, we'll use the data being collected through our telemetry setup, which collects data about CLI usage (opt out is possible).
 
 1.  Crunch some numbers to find out what the most common error messages are that people get
 2.  Make error messages better, starting with the most common ones

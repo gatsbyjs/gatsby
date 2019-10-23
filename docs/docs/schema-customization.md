@@ -1045,7 +1045,7 @@ a third-party schema, you can use the [`createResolvers`](/docs/node-apis/#creat
 
 ### Feeding remote images into `gatsby-image`
 
-As an example, you could look at [using-gatsby-source-graphql](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-gatsby-source-graphql/gatsby-node.js) to see how you could use `createResolvers` to feed images from a CMS into `gatsby-image` (the assumption is that `gatsby-source-graphql` was configured
+As an example, you could look at [`using-gatsby-source-graphql`](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-gatsby-source-graphql/gatsby-node.js) to see how you could use `createResolvers` to feed images from a CMS into `gatsby-image` (the assumption is that `gatsby-source-graphql` was configured
 to prefix all types from the third-party schema with `CMS`):
 
 ```js:title=gatsby-node.js

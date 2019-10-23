@@ -153,20 +153,20 @@ const path = require(`path`)
 const slug = require(`slug`)
 const slash = require(`slash`)
 
-// Implement the Gatsby API “createPages”. This is
+// Implement the Gatsby API "createPages". This is
 // called after the Gatsby bootstrap is finished so you have
 // access to any information necessary to programmatically
 // create pages.
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
 
-  // The “graphql” function allows us to run arbitrary
+  // The "graphql" function allows us to run arbitrary
   // queries against this Gatsbygram's graphql schema. Think of
   // it like Gatsbygram has a built-in database constructed
   // from static data that you can run queries against.
   //
   // Post is a data node type derived from data/posts.json
-  // which is created when scraping Instagram. “allPostsJson”
+  // which is created when scraping Instagram. "allPostsJson"
   // is a "connection" (a GraphQL convention for accessing
   // a list of nodes) gives us an easy way to query all
   // Post nodes.
@@ -245,7 +245,7 @@ class PostTemplate extends React.Component {
 
 export default PostTemplate
 
-// The post template's GraphQL query. Notice the “id”
+// The post template's GraphQL query. Notice the "id"
 // variable which is passed in. We set this on the page
 // context in gatsby-node.js.
 //
@@ -270,7 +270,7 @@ export const pageQuery = `
       image {
         children {
           ... on ImageSharp {
-            # Here we query for *multiple* image thumbnails to be
+            # Here we query for _multiple_ image thumbnails to be
             # created. So with no effort on our part, 100s of
             # thumbnails are created. This makes iterating on
             # designs effortless as we simply change the args
@@ -390,11 +390,11 @@ module.exports = {
   },
   plugins: [
     /*
-     * Gatsby's data processing layer begins with “source”
+     * Gatsby's data processing layer begins with "source"
      * plugins.  You can source data nodes from anywhere but
      * most sites, like Gatsbygram, will include data from
      * the filesystem so we start here with
-     * “gatsby-source-filesystem”.
+     * "gatsby-source-filesystem".
      *
      * A site can have as many instances of
      * `gatsby-source-filesystem` as you need.  Each plugin
@@ -410,11 +410,11 @@ module.exports = {
       },
     },
     // This plugin exposes helper functions for processing
-    // images with the NPM package “sharp”. It's used by
+    // images with the NPM package "sharp". It's used by
     // several other plugins.
     `gatsby-plugin-sharp`,
     // This plugin identifies file nodes that are images and
-    // transforms these to create new “ImageSharp” nodes.
+    // transforms these to create new "ImageSharp" nodes.
     // With them you can resize images and
     // generate responsive image thumbnails.
     `gatsby-transformer-sharp`,
@@ -482,7 +482,7 @@ class SampleComponent extends React {
   render () {
     return (
       <div
-        {/* The “css” prop works the same as the built-in “style” prop */}
+        {/* The "css" prop works the same as the built-in "style" prop */}
         css={{
           // 1 rhythm is equal to the height of the line-height of
           // normal body text.
@@ -553,11 +553,11 @@ npm run develop
 While writing this post I scraped a few accounts and published their resulting
 "Gatsbygram" sites:
 
-- https://iceland-gatsbygram.netlify.com
-- https://tinyhouses-gatsbygram.netlify.com
+- <https://iceland-gatsbygram.netlify.com>
+- <https://tinyhouses-gatsbygram.netlify.com>
 
 _With thanks to Sam Bhagwatt, Sunil Pai, Nolan Lawson, Nik Graf, Jeff Posnick,
 and Addy Osmani for their reviews._
 
 _And a special thanks to Kristo Jorgenson for his
-[refactor of the “App structure” section](https://github.com/gatsbyjs/gatsby/pull/708)._
+[refactor of the "App structure" section](https://github.com/gatsbyjs/gatsby/pull/708)._

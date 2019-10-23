@@ -26,7 +26,7 @@ This documentation page covers the _how_ of migrating from v1 to v2. Various blo
 
   - [Update Gatsby version](#update-gatsby-version)
   - [Install React](#install-react)
-  - [Install plugins’ peer dependencies](#install-plugins-peer-dependencies)
+  - [Install plugins' peer dependencies](#install-plugins-peer-dependencies)
 
 - [Handling Breaking Changes](#handling-breaking-changes)
 
@@ -45,7 +45,7 @@ This documentation page covers the _how_ of migrating from v1 to v2. Various blo
   - [Typography.js Plugin Config](#typographyjs-plugin-config-changes)
   - [Update CSS Modules class names that use dashes](#update-css-modules-class-names-that-use-dashes)
   - [Update Jest configuration](#update-jest-configuration)
-  - [gatsby-image's `outerWrapperClassName` was removed](#gatsby-images-outerwrapperclassname-was-removed)
+  - [`gatsby-image`'s `outerWrapperClassName` was removed](#gatsby-images-outerwrapperclassname-was-removed)
 
 - [Resolving Deprecations](#resolving-deprecations)
 
@@ -96,7 +96,7 @@ npm i gatsby@latest
 
 ### Update Gatsby related packages
 
-Update your `package.json` to use the latest versions of Gatsby related packages. You should upgrade any package name that starts with `gatsby-`. Note, this only applies to plugins managed in the gatsbyjs/gatsby repo. If you're using community plugins, they might not be upgraded yet. Check their repo for the status. Many plugins won't actually need upgrading so they very well might keep working. You can run
+Update your `package.json` to use the latest versions of Gatsby related packages. You should upgrade any package name that starts with `gatsby-`. Note, this only applies to plugins managed in the `gatsbyjs/gatsby` repo. If you're using community plugins, they might not be upgraded yet. Check their repo for the status. Many plugins won't actually need upgrading so they very well might keep working. You can run
 
 ```shell
 npm outdated
@@ -209,7 +209,7 @@ export default props => (
 
 #### 5. Change query to use `StaticQuery`
 
-If you were using the `data` prop in your Gatsby v1 layout, you now need to use Gatsby v2’s [StaticQuery feature](/docs/static-query/). This is because a layout is now a normal component.
+If you were using the `data` prop in your Gatsby v1 layout, you now need to use Gatsby v2's [StaticQuery feature](/docs/static-query/). This is because a layout is now a normal component.
 
 Replacing a layout's query with `StaticQuery`:
 
@@ -373,7 +373,7 @@ Two common ways this change _might_ break your site is:
 - You use the object form of the `to` prop in the `<Link>` component
 - You have client side routes
 
-Read more about the features of our new router at https://reach.tech/router
+Read more about the features of our new router at <https://reach.tech/router>
 
 **NOTE:** One prominent feature of @reach/router, relative routes, isn't working currently in Gatsby. We're working with Ryan Florence on hopefully supporting it soon.
 
@@ -505,7 +505,7 @@ in store.gatsbyjs.org) from React Router to @reach/router.
 -    {...rest}
 -    render={props =>
 -      !isAuthenticated() ? (
--        // If we’re not logged in, redirect to the home page.
+-        // If we're not logged in, redirect to the home page.
 -        <Redirect to={{ pathname: '/login' }} />
 -      ) : (
 -        <Component {...props} />
@@ -515,7 +515,7 @@ in store.gatsbyjs.org) from React Router to @reach/router.
 -);
 +export default ({ component: Component, ...rest }) => {
 +  if (!isAuthenticated() && window.location.pathname !== `/login`) {
-+    // If we’re not logged in, redirect to the home page.
++    // If we're not logged in, redirect to the home page.
 +    navigate(`/app/login`);
 +    return null;
 +  }
@@ -750,7 +750,7 @@ plugins: [
 
 If you were using Jest with Gatsby V1, you will need to make some updates to your configuration when upgrading to Gatsby V2. You can view the complete details of setting up your test environment on the [Unit Testing](/docs/unit-testing/) page of the docs.
 
-### gatsby-image's `outerWrapperClassName` was removed
+### `gatsby-image`'s `outerWrapperClassName` was removed
 
 Because the outer wrapper `div` was removed, you can no longer use the `outerWrapperClassName` prop for styling your images. You should merge those styles into your wrapper's class.
 
@@ -820,7 +820,7 @@ export const query = graphql`
 
 ### Rename `boundActionCreators` to `actions`
 
-`boundActionCreators` is deprecated in v2. You can continue using it, but it’s recommended that you rename it to `actions`.
+`boundActionCreators` is deprecated in v2. You can continue using it, but it's recommended that you rename it to `actions`.
 
 ### Rename `pathContext` to `pageContext`
 

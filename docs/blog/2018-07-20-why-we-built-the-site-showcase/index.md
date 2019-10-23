@@ -42,7 +42,7 @@ Many of you contributed to the discussion and development of the site showcase. 
 
 ### Empathy map
 
-Here’s a summary of what I learned from over 80 interviews with Gatsby users. This "empathy map" describes what kinds of pain points we're trying to solve with the site showcase.
+Here's a summary of what I learned from over 80 interviews with Gatsby users. This "empathy map" describes what kinds of pain points we're trying to solve with the site showcase.
 
 ![Empathy Map Site Showcase](empathy-map-site-showcase.jpg)
 
@@ -52,9 +52,9 @@ The empathy map reflects the following pain points:
 
 - the Awesome Gatsby list of sites (used to be part of the README in the open source repo) was growing long and was not searchable or filterable
 - the Awesome Gatsby list also had no visual indication of what the sites looked like
-- there isn’t enough time or room for everyone's awesome sites to get retweeted by the @Gatsbyjs account
+- there isn't enough time or room for everyone's awesome sites to get retweeted by the @Gatsbyjs account
 
-With the empathy map and the interviews as our guide, we created a list of jobs to be done and imagined the typical flow a user would take through the site showcase. We did this to make sure we planned both a sensible information architecture and the necessary functionality to meet user’s main needs.
+With the empathy map and the interviews as our guide, we created a list of jobs to be done and imagined the typical flow a user would take through the site showcase. We did this to make sure we planned both a sensible information architecture and the necessary functionality to meet user's main needs.
 
 ![User flow](user-flow-site-showcase.jpg)
 

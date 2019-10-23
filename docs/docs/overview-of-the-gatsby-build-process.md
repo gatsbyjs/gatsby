@@ -29,7 +29,7 @@ To gain a greater understanding of what happens when you run either command, it 
 
 ### Understanding `gatsby develop` (runtime)
 
-Using `gatsby develop` runs a server in the background, enabling useful features like live reloading and Gatsby’s [data explorer](/docs/running-queries-with-graphiql/).
+Using `gatsby develop` runs a server in the background, enabling useful features like live reloading and Gatsby's [data explorer](/docs/running-queries-with-graphiql/).
 
 `gatsby develop` is optimized for rapid feedback and extra debugging information. The output of running `gatsby develop` in a fresh install of the Gatsby default starter looks like this:
 
@@ -66,7 +66,7 @@ Some of the steps may be self-explanatory, but others require context of Gatsby 
 
 ### Understanding `gatsby build` (build time)
 
-Gatsby's `build` command should be run when you’ve added the finishing touches to your site and everything looks great. `gatsby build` creates a version of your site with production-ready optimizations like packaging up your site’s config, data, and code, and creating all the static HTML pages that eventually get [rehydrated](/docs/glossary#hydration) into a React application.
+Gatsby's `build` command should be run when you've added the finishing touches to your site and everything looks great. `gatsby build` creates a version of your site with production-ready optimizations like packaging up your site's config, data, and code, and creating all the static HTML pages that eventually get [rehydrated](/docs/glossary#hydration) into a React application.
 
 The output of running `gatsby build` in a fresh install of the Gatsby default starter looks like this:
 

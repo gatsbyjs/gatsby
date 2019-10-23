@@ -8,7 +8,7 @@ excerpt: Gatsby is great for not only static sites but also traditional web appl
 cover: images/what-if-i-told-you.jpg
 ---
 
-Gatsby is great for static sites. You probably know this! It’s equally great for web applications. You may not know this. Gatsby is great for building web experiences that leverage the benefits of both so called static sites and web applications -- simultaneously. You don't have to sacrifice the advantages of one approach to reap the benefits of the other.
+Gatsby is great for static sites. You probably know this! It's equally great for web applications. You may not know this. Gatsby is great for building web experiences that leverage the benefits of both so called static sites and web applications -- simultaneously. You don't have to sacrifice the advantages of one approach to reap the benefits of the other.
 
 <!-- ☝️ Shout out to Amberley for the assist with this intro 🔥 -->
 
@@ -43,7 +43,7 @@ Gmail served as an early proof of concept that proved out two, key functional wi
 1. Client-side JavaScript can power an app-like experience, and
 1. a JavaScript application (running in your browser) can compare favorably to traditional, native applications for desktop and mobile
 
-The impact of these wins can’t be understated. Gmail _proved_ that a native, app-like experience is not only possible for end users, but that it can even be preferable and more convenient than the native experience. We'll revisit this trusty Gmail web application example in due time.
+The impact of these wins can't be understated. Gmail _proved_ that a native, app-like experience is not only possible for end users, but that it can even be preferable and more convenient than the native experience. We'll revisit this trusty Gmail web application example in due time.
 
 Next up, is Twitter, for slightly different reasons.
 
@@ -185,7 +185,7 @@ If we consider this approach, the technique looks like the following:
 1. Render as much content, as possible, up front (e.g. the app shell)
 1. Make async data requests to load disparate pieces, e.g. load page content from an API, particularly an API with authentication
 
-Let’s compare this approach with the server-rendered approach. Consider an authenticated API call for this example. This API call is used to populate page data before it's sent (as HTML) to the end user. We're forced to defer loading for the entire page and the bottleneck of the API response, rather than serving the app shell as dynamic data loads in the background.
+Let's compare this approach with the server-rendered approach. Consider an authenticated API call for this example. This API call is used to populate page data before it's sent (as HTML) to the end user. We're forced to defer loading for the entire page and the bottleneck of the API response, rather than serving the app shell as dynamic data loads in the background.
 
 Consider the following animation to clarify this example. On the left, an application using a service worker and an app shell, e.g. a Gatsby application. On the right, a server-rendered application that waits until the API call has resolved to serve the _entire_ page all at once.
 

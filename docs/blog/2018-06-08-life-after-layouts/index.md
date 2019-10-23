@@ -29,10 +29,10 @@ Our app also might have a home page at `src/pages/index.js` that looks like this
 ```jsx
 import React from "react"
 
-export default () => <h1>I’m in a layout?</h1>
+export default () => <h1>I'm in a layout?</h1>
 ```
 
-Once we start the app, we’ll see the following in the browser console:
+Once we start the app, we'll see the following in the browser console:
 
 ![Screenshot of the generated markup with the layout wrapper around the page content.](simple-layout.png)
 
@@ -66,7 +66,7 @@ import Layout from "../components/layout"
 
 export default () => (
   <Layout>
-    <h1>I’m in a layout!</h1>
+    <h1>I'm in a layout!</h1>
   </Layout>
 )
 ```
@@ -115,13 +115,13 @@ Removing layouts isn't the only improvement coming in Gatsby V2. We're really ex
 - Upgraded to the latest versions of React, Babel, Webpack, and other libraries Gatsby depends on
 - Better support for CSS inlining and splitting, which will boost performance
 
-For a full list of what's new, check out our [V2 migration guide](/docs/migrating-from-v1-to-v2/) and [_What’s New in Gatsby V2?_](/blog/2018-06-16-announcing-gatsby-v2-beta-launch/).
+For a full list of what's new, check out our [V2 migration guide](/docs/migrating-from-v1-to-v2/) and [_What's New in Gatsby V2?_](/blog/2018-06-16-announcing-gatsby-v2-beta-launch/).
 
 ## What's next?
 
 - You can get started using Gatsby V2 right now by installing our V2 default starter:
 
-  ```
+  ```shell
   gatsby new my-gatsby-v2-site https://github.com/gatsbyjs/gatsby-starter-default
   ```
 

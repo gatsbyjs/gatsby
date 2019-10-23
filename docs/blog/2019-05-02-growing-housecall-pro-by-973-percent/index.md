@@ -48,7 +48,7 @@ With Gatsby, we can generate several hundred pages for all of the industries tha
 
 - Designers create a mock-up of the page
 - Developers create React components for each piece (composing as needed for re-use)
-- Developers create a JSON structure that holds all of the page’s data
+- Developers create a JSON structure that holds all of the page's data
 - Content authors fill that structure
 - Gatsby loops through data structure and generates the pages
 

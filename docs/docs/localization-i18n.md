@@ -12,7 +12,7 @@ This guide is a brief look at the options that exist for enhancing your Gatsby p
 
 There are a few React i18n packages out there. Several options include [react-intl](https://github.com/yahoo/react-intl), the community [Gatsby plugin](https://www.npmjs.com/package/gatsby-plugin-i18n) and [react-i18next](https://github.com/i18next/react-i18next/). There are several factors to consider when choosing a package: Do you already use a similar package in another project? How well does the package meet the needs of your users? Are you or your team already familiar with a certain package? Is the package well documented and maintained?
 
-### gatsby-plugin-i18n
+### `gatsby-plugin-i18n`
 
 This plugin helps you use `react-intl`, `i18next` or any other i18n library with Gatsby. This plugin does not translate or format your content, but rather it creates routes for each language, allowing Google to more easily find the correct version of your site, and if you need to, designate alternative UI layouts.
 
@@ -24,7 +24,7 @@ File - src/pages/about.**en**.js
 
 URL - /**en**/about
 
-[gatsby-plugin-i18n on GitHub](https://github.com/angeloocana/gatsby-plugin-i18n)
+[`gatsby-plugin-i18n` on GitHub](https://github.com/angeloocana/gatsby-plugin-i18n)
 
 ### react-intl
 

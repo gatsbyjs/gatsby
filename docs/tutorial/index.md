@@ -3,7 +3,7 @@ title: Gatsby Tutorials
 disableTableOfContents: true
 ---
 
-Welcome to Gatsby! We’re glad you’re here. The goal of this tutorial is to guide you through setting up and deploying your first Gatsby site using a starter template. As we walk through that process, we’ll introduce some more general web development topics, and go over the underlying structure of a Gatsby site.
+Welcome to Gatsby! We're glad you're here. The goal of this tutorial is to guide you through setting up and deploying your first Gatsby site using a starter template. As we walk through that process, we'll introduce some more general web development topics, and go over the underlying structure of a Gatsby site.
 
 > The full tutorial is intended to be as accessible as possible to people without much web development experience (yet!) — no need to be an expert. If you prefer to jump straight to code, feel free to skip the step-by-step tutorial and see the [quick start](/docs/quick-start/) page.
 
@@ -28,7 +28,7 @@ In these intermediate tutorials, you'll learn how to pull data from almost anywh
 
 Gatsby themes abstract all of your default configuration (shared functionality, data sourcing, design) out of your site and into an installable package.
 
-This means that the configuration and functionality isn’t directly written into your project, but rather versioned, centrally managed, and installed as a dependency. You can seamlessly update a theme, compose themes together, and even swap out one compatible theme for another.
+This means that the configuration and functionality isn't directly written into your project, but rather versioned, centrally managed, and installed as a dependency. You can seamlessly update a theme, compose themes together, and even swap out one compatible theme for another.
 
 Learn more about using and building themes with the [Gatsby theme tutorials](/tutorial/theme-tutorials/).
 

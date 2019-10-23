@@ -22,7 +22,7 @@ Early in the bootstrap phase, you [load all the configured plugins](https://gith
 - **id**: String concatenation of 'Plugin ' and the name of the plugin. E.g. `Plugin query-runner`
 - **name**: The name of the plugin. E.g. `query-runner`
 - **version**: The version as per the package.json. Or if it is a site plugin, one is generated from the file's hash
-- **pluginOptions**: Plugin options as specified in [gatsby-config.js](/docs/gatsby-config/)
+- **pluginOptions**: Plugin options as specified in [`gatsby-config.js`](/docs/gatsby-config/)
 - **nodeAPIs**: A list of node APIs that this plugin implements. E.g. `[ 'sourceNodes', ...]`
 - **browserAPIs**: List of browser APIs that this plugin implements
 - **ssrAPIs**: List of SSR APIs that this plugin implements

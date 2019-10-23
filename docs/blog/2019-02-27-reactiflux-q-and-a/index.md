@@ -5,7 +5,7 @@ author: Linda Watkins
 canonicalLink: https://www.reactiflux.com/transcripts/gatsby-team/
 ---
 
-Below is a transcript of an interview with Kyle Mathews, Chris Biscardi, and Dustin Schau that took place on the [Reactiflux Discord](https://reactiflux.com). Thanks to the Reactiflux team for organizing this Q&A and writing the original post (https://www.reactiflux.com/transcripts/gatsby-team/). Read on to hear members of the Gatsby team answer the most burning questions about Gatsby.
+Below is a transcript of an interview with Kyle Mathews, Chris Biscardi, and Dustin Schau that took place on the [Reactiflux Discord](https://reactiflux.com). Thanks to the Reactiflux team for organizing this Q&A and writing the [original post](https://www.reactiflux.com/transcripts/gatsby-team/). Read on to hear members of the Gatsby team answer the most burning questions about Gatsby.
 
 Date of interview: December 13 2018
 
@@ -69,7 +69,7 @@ We're also working on adding [Gatsby Theme support](/blog/2018-11-11-introducing
 
 ---
 
-**Q:** Is there any specific place for documented or known issues with the react component lifecycle/prerendering in v2? I have a website that renders images correctly using gatsby build and serve, but when deployed to a CDN it seems my component never starts its animation and images are stuck with 0 opacity. (no asset optimization or configured prerendering selected on the CDN) — Tyler Churchill
+**Q:** Is there any specific place for documented or known issues with the react component lifecycle/prerendering in v2? I have a website that renders images correctly using `gatsby build` and `serve`, but when deployed to a CDN it seems my component never starts its animation and images are stuck with 0 opacity. (no asset optimization or configured prerendering selected on the CDN) — Tyler Churchill
 
 **A:** Yes, [this is GitHub issues](https://github.com/gatsbyjs/gatsby/issues) which you should definitely file an issue for so we can investigate your issue in depth.
 
@@ -155,7 +155,7 @@ It's a great place to get started. That said, I'd also encourage to check out [a
 
 ---
 
-**Q:** How is authentication handled in gatsby? — Reinhard
+**Q:** How is authentication handled in Gatsby? — Reinhard
 
 **A:** Great question! So in general, and I probably say it far too often, but a Gatsby app is just a React application.
 
@@ -171,9 +171,9 @@ Check it out, and hope it's helpful!
 
 **Q:** What is the most exciting feature you are working right now? — Checkmatez
 
-**A:** I'm very excited about themes right now. With the core functionality (composable Gatsby configs and Component Shadowing) merged in as experimental, we can start to build very powerful abstractions for complete documentation sites, marketing sites, ecommerce sites, etc. I'm happy to talk to anyone in more depth about themes at any time either in the community spectrum (https://spectrum.chat/gatsby-themes) or on Twitter (https://twitter.com/chrisbiscardi)
+**A:** I'm very excited about themes right now. With the core functionality (composable Gatsby configs and Component Shadowing) merged in as experimental, we can start to build very powerful abstractions for complete documentation sites, marketing sites, ecommerce sites, etc. I'm happy to talk to anyone in more depth about themes at any time either in the community spectrum ([`https://spectrum.chat/gatsby-themes`](https://spectrum.chat/gatsby-themes)) or on Twitter (<https://twitter.com/chrisbiscardi>)
 
-A Gatsby email _application_. Contribute to DSchau/gatsby-mail development by creating an account on GitHub.
+A Gatsby email _application_. Contribute to `DSchau/gatsby-mail` development by creating an account on GitHub.
 
 — biscarch
 
@@ -187,7 +187,7 @@ A Gatsby email _application_. Contribute to DSchau/gatsby-mail development by cr
 
 ---
 
-**Q:** I have found developing plugins that create nodes or interact with the `gatsby-api` to be a big hassle in comparison to how pages and other content is developed. Is there any plans on making something like "hot-reload" nodes or generation during development without having to stop and start gatsby? — Everspace
+**Q:** I have found developing plugins that create nodes or interact with the `gatsby-api` to be a big hassle in comparison to how pages and other content is developed. Is there any plans on making something like "hot-reload" nodes or generation during development without having to stop and start `gatsby`? — Everspace
 
 **A:** Source and transformer plugins can "hot reload" data during development. Support for this is baked into Gatsby's data layer. It's a bit complicated to explain in a Q&A but basically a source plugin can watch for data to change and re-emit nodes. Gatsby will then notice this and automatically re-run graphql queries for pages affected by the changing data. `gatsby-source-filesystem` is the most prominent example of this. It watches for file changes and re-emits File nodes as the data changes. [This is what drives Ludicrous Mode™️](https://twitter.com/gatsbyjs/status/974507205121617920?lang=en) You can see the code for this [here](https://github.com/gatsbyjs/gatsby/blob/d4d33467bcff60ad3c740244d7585227d7e117ee/packages/gatsby-source-filesystem/src/gatsby-node.js#L129-L136).
 
@@ -197,7 +197,7 @@ A Gatsby email _application_. Contribute to DSchau/gatsby-mail development by cr
 
 **Q:** Would be interested in the Gatsby team's take on this: What are currently the best and/or most up-and-coming tech locations in the world besides Silicon Valley? — tiny
 
-**A:** The best up-and-coming tech locations are wherever you currently are. Distributed teams (like gatsby) are the future, especially when Open Source is already built largely by people who may have never even met in person
+**A:** The best up-and-coming tech locations are wherever you currently are. Distributed teams (like Gatsby) are the future, especially when Open Source is already built largely by people who may have never even met in person
 
 P.S. Gatsby is hiring worldwide for OSS Maintainers
 

@@ -10,13 +10,13 @@ You often feel the unsettling flash of a bright phone screen while relaxing in a
 
 <Pullquote citation="Heydon Pickering">
   One of the few types of alternative theme that adds real value to users is a
-  low light intensity “night mode” theme. Not only is it easier on the eyes when
+  low light intensity "night mode" theme. Not only is it easier on the eyes when
   reading in the dark, but it also reduces the likelihood of migraine and the
-  irritation of other light sensitivity disorders. As a migraine sufferer, I’m
+  irritation of other light sensitivity disorders. As a migraine sufferer, I'm
   interested!
 </Pullquote>
 
-In considering the different ways to implement this a natural fit become apparent: React’s new Context API. Having worked with Context API before, this seemed like a particularly well suited use for this API. However, I soon realized I would need to do a little set-up work to get this up and running.
+In considering the different ways to implement this a natural fit become apparent: React's new Context API. Having worked with Context API before, this seemed like a particularly well suited use for this API. However, I soon realized I would need to do a little set-up work to get this up and running.
 
 After a brief search, I came across just what I was looking for, the Gatsby Browser APIs. Specifically, the [`wrapRootElement`](/docs/browser-apis/#wrapRootElement) API was a perfect fit for this use case. This API allows you to wrap your root element with a wrapping component, e.g. a `Provider` from Redux or... a ThemeProvider from React Context. Using this, I managed to achieve dark mode for my use case.
 
@@ -26,9 +26,9 @@ Let's do a deep dive into how this feature was actually implemented step by step
 
 First of all, you have to initialize a Gatsby project and start it in develop mode.
 
-1. gatsby new gatsby-dark-mode
-1. cd gatsby-dark-mode
-1. npm start
+1. `gatsby new gatsby-dark-mode`
+1. `cd gatsby-dark-mode`
+1. `npm start`
 
 Then, create a `context` folder within src and the `ThemeContext.js` file within it.
 
@@ -276,7 +276,7 @@ At this point, we've set up a dark mode toggle and conditionally render a `class
 
 In just a few, simple steps we've enabled a conditional dark mode that our users will certainly appreciate. We've leveraged APIs like `Context` in React, as well as internal Gatsby APIs to wrap our code with a provider. Now if you visit `http://localhost:8000/` you can see all of our work pay off!
 
-We covered the following in today’s article:
+We covered the following in today's article:
 
 - Introduction to dark mode in web development
 - Initializing a Gatsby project
@@ -286,4 +286,4 @@ We covered the following in today’s article:
 - Adding the switch inside the header
 - Adding the styles relevant to the Dark mode
 
-Interested in seeing this in action? Head over to <https://github.com/m-muhsin/gatsby-dark-mode> and clone or fork my project.
+Interested in seeing this in action? Head over to [`https://github.com/m-muhsin/gatsby-dark-mode`](https://github.com/m-muhsin/gatsby-dark-mode) and clone or fork my project.

@@ -13,7 +13,7 @@ we're branching out from our staple of WordPress and trying different methods of
 creating websites with functionality that our clients require, whilst maximising
 their budget.
 
-We're also bracing ourselves for what we’re anticipating to be the stormfront of
+We're also bracing ourselves for what we're anticipating to be the stormfront of
 [Gutenberg](https://wordpress.org/plugins/gutenberg/)
 for our WordPress projects. Once it's included in the WordPress Core, writing
 components in JavaScript for the Gutenberg editor will be necessary for every
@@ -79,7 +79,7 @@ export const query = graphql`
 ```
 
 Whilst this might _look_ weird, it actually makes it much easier to understand
-what’s going on. You know you’re dealing with this data, using this HTML, and
+what's going on. You know you're dealing with this data, using this HTML, and
 with CSS-in-JS strategies such as Styled Components, you can see exactly what
 CSS is going to be implemented too. In one file.
 
@@ -130,13 +130,13 @@ focus on context without having to grok SCSS again, reducing mental friction.
 
 ## My Project
 
-Following the [tutorial on Gatsbyjs](/tutorial/) I built
+Following the [tutorial on Gatsby](/tutorial/) I built
 up my project from scratch, breaking things profusely at first, but it honestly
-didn’t take long to gain confidence enough so that I launched my first site at
+didn't take long to gain confidence enough so that I launched my first site at
 [https://freebabylon5.com](https://freebabylon5.com)
 recently.
 
-Be warned: the tutorial isn’t quite finished yet, you might be better off
+Be warned: the tutorial isn't quite finished yet, you might be better off
 starting with
 [one of the starter kits already available](/docs/gatsby-starters/),
 so that you get `react-helmet` and active links implemented, the 2 things I had
@@ -158,15 +158,15 @@ now live at
 
 Together with my colleagues at
 [Indigo Tree](https://indigotree.co.uk)
-we’re now looking at using WordPress as a backend, where clients can edit their
+we're now looking at using WordPress as a backend, where clients can edit their
 content without the worries of insecure plugins or other methods of being
 hacked.
 
-Using Gatsby with its “Bring Your Own Data” strategy makes perfect sense, and
-we’re about to start building our first Gatsby client site using the plugin
+Using Gatsby with its "Bring Your Own Data" strategy makes perfect sense, and
+we're about to start building our first Gatsby client site using the plugin
 [`gatsby-source-wordpress`](/packages/gatsby-source-wordpress/)
 to pull in our data and build a totally secure website with some pretty
-impressive gains on loading time. We’ll also sleep better at night knowing
+impressive gains on loading time. We'll also sleep better at night knowing
 insecurities in WordPress are no longer putting our clients at risk.
 
 The web is always changing. And the way forward isn't always easy to see. Now,

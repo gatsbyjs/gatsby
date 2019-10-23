@@ -2,9 +2,9 @@
 title: Gatsby without GraphQL
 ---
 
-Most examples in the Gatsby docs and on the web at large focus on leveraging source plugins to manage your data in Gatsby sites. However, source plugins (or even Gatsby nodes) aren't strictly necessary to pull data into a Gatsby site! It's also possible to use an “unstructured data” approach in Gatsby sites, no GraphQL required.
+Most examples in the Gatsby docs and on the web at large focus on leveraging source plugins to manage your data in Gatsby sites. However, source plugins (or even Gatsby nodes) aren't strictly necessary to pull data into a Gatsby site! It's also possible to use an "unstructured data" approach in Gatsby sites, no GraphQL required.
 
-> Note: For our purposes here, “unstructured data” means data “handled outside of Gatsby’s data layer” (we’re using the data directly, and not transforming the data into Gatsby nodes).
+> Note: For our purposes here, "unstructured data" means data "handled outside of Gatsby's data layer" (we're using the data directly, and not transforming the data into Gatsby nodes).
 
 ## The approach: Fetch data and use Gatsby's `createPages` API
 
@@ -71,17 +71,17 @@ You may find this approach useful when using Gatsby's data layer feels a bit too
 
 ## The pros of using unstructured data
 
-- The approach is familiar and comfortable, especially if you’re new to GraphQL
-- There’s no intermediate step: you fetch some data, then build pages with it
+- The approach is familiar and comfortable, especially if you're new to GraphQL
+- There's no intermediate step: you fetch some data, then build pages with it
 
 ## The tradeoffs of foregoing Gatsby's data layer
 
 Using Gatsby's data layer provides the following benefits:
 
 - Enables you to declaratively specify what data a page component needs, alongside the page component
-- Eliminates frontend data boilerplate — no need to worry about requesting & waiting for data. Just ask for the data you need with a GraphQL query and it’ll show up when you need it
+- Eliminates frontend data boilerplate — no need to worry about requesting & waiting for data. Just ask for the data you need with a GraphQL query and it'll show up when you need it
 - Pushes frontend complexity into queries — many data transformations can be done at build-time within your GraphQL queries
-- It’s the perfect data querying language for the often complex/nested data dependencies of modern applications
+- It's the perfect data querying language for the often complex/nested data dependencies of modern applications
 - Improves performance by removing data bloat — GraphQL is a big part of why Gatsby is so fast as it enables lazy-loading the exact data in the exact form each view needs
 - Enables you to take advantage of hot reloading when developing; For example, in this post's example "Pokémon" site, if you wanted to add a "see other pokémon" section to the pokémon detail view, you would need to change your `gatsby-node.js` to pass all pokémon to the page, and restart the dev server. In contrast, when using queries, you can add a query and it will hot reload.
 

@@ -8,7 +8,7 @@ This guide walks you through the steps involved in setting up a Gatsby site that
 
 Contentstack is a headless CMS that offers developers turnkey Content-as-a-Service (CaaS). It lets you create flexible content components and deliver them to any destination platform via CDN-backed Content Delivery APIs. Instead of having to create separate content for all your sites and apps, Contentstack lets you reuse content across different digital channels (web, mobile, IoT, voice, etc.) and present it optimized for its digital endpoint, be it a browser on a laptop, a smartphone, a smartwatch, a kiosk, or a jumbotron.
 
-Gatsby, with its powerful UI toolset, serves as the “head” for your websites while Contentstack – being the headless CMS – acts as the “body”. Combining these two best-in-class tools provide a powerful solution to create modern, enterprise-grade sites and apps.
+Gatsby, with its powerful UI toolset, serves as the "head" for your websites while Contentstack – being the headless CMS – acts as the "body". Combining these two best-in-class tools provide a powerful solution to create modern, enterprise-grade sites and apps.
 
 _**Note:** This guide uses the `gatsby-source-contentstack` plugin to create a Gatsby-powered site._
 
@@ -40,10 +40,10 @@ _**Note:** if you wish to preview the pages of your Gatsby site from within the 
 
 To build a sample home page, perform the following steps in Contentstack:
 
-1. Create a ‘Home’ content type with ‘Title’ and ‘Body’ fields
-1. Create an entry for the ‘Home’ content type
+1. Create a 'Home' content type with 'Title' and 'Body' fields
+1. Create an entry for the 'Home' content type
 1. Create a development environment
-1. Publish the ‘Home’ entry to the development environment
+1. Publish the 'Home' entry to the development environment
 
 ### Step 4: Run Gatsby
 
@@ -55,7 +55,7 @@ After running this, you will be able to view your site at `http://localhost:8000
 
 Now, you will able to query Contentstack data. Try the query below to get the 'Home' content type data:
 
-```
+```graphql
 {
   contentstackHome {
     title

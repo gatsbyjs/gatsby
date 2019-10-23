@@ -17,9 +17,9 @@ I generated a new site using the [default starter](https://github.com/gatsbyjs/g
 
 `gatsby new gatsby-example-site`
 
-That gets us a new site directory with a couple (mostly) empty "gatsby"-prefixed files and a src directory with some basic scaffolding. The configuration and lifecycle hooks for Gatsby get put in those "gatsby"-prefixed files, `gatsby-config.js`, `gatsby-node.js` and `gatsby-browser.js`.
+That gets us a new site directory with a couple (mostly) empty `"gatsby"-prefixed` files and a src directory with some basic scaffolding. The configuration and lifecycle hooks for Gatsby get put in those `"gatsby"-prefixed` files, `gatsby-config.js`, `gatsby-node.js` and `gatsby-browser.js`.
 
-## gatsby-config.js
+## `gatsby-config.js`
 
 Essentially the Gatsby home base. The two things defined here initially (in the starter) are `siteMetadata` and `plugins`.
 
@@ -32,25 +32,25 @@ module.exports = {
 }
 ```
 
-See the [docs page on gatsby-config.js](/docs/gatsby-config/) for more.
+See the [docs page on `gatsby-config.js`](/docs/gatsby-config/) for more.
 
 For the curious:
 
 - `gatsby-plugin-react-helmet` is a plugin the starter includes. It's a [document head manager for React](/packages/gatsby-plugin-react-helmet/).
 
-## gatsby-node.js
+## `gatsby-node.js`
 
 We can make use of any of [Gatsby's node APIs](/docs/node-apis/) by exporting a function with the name of that API from this file.
 
 For my purposes, the only one I have interacted with so far to get up and running is the [`createPages`](/docs/node-apis/#createPages) API. This gets called after our data has been fetched and is available to use to dynamically build out our static pages. More on this later.
 
-## gatsby-browser.js
+## `gatsby-browser.js`
 
 Same as above, we can make use of any of [Gatsby's browser APIs](/docs/browser-apis/) by exporting them from this file.
 
 I haven't needed to make use of any of these yet, but they provide a hook into [client runtime operations](/docs/gatsby-lifecycle-apis/) — for example, replacing the router component, as seen in [this example](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-redux/gatsby-browser.js#L7).
 
-## Plugin: gatsby-source-wordpress
+## Plugin: `gatsby-source-wordpress`
 
 Having familiarized with the basic structure, my next step was getting my data successfully pulling from WordPress. There's a plugin for that. [`gatsby-source-wordpress`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress) is Gatsby's plugin for sourcing data from WordPress sites using the WordPress JSON REST API.
 

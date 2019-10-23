@@ -22,7 +22,7 @@ releases before today's first beta release. It's been a really enjoyable
 experience watching Gatsby v1 take form and helping shape that and the growing
 community around it.
 
-### What's part of v1
+## What's part of v1
 
 From Gatsby's initial release just over two years ago, Gatsby has let you build
 static websites using React components as well as markdown, JSON, and YAML.
@@ -118,10 +118,10 @@ these infrastructure providers.
   @kyleamathews
 - Use custom delimiter when flattening example values for enum fields so easy to
   convert back @kyleamathews
-- gatsby-remark-responsive-image: use span instead of div
+- `gatsby-remark-responsive-image`: use span instead of div
   [#1151](https://github.com/gatsbyjs/gatsby/pull/1151) @rstacruz
 - Add check that we can actually find a linked image file node @kyleamathews
-- Ignore SVGs in gatsby-remark-responsive-image
+- Ignore SVGs in `gatsby-remark-responsive-image`
   [#1157](https://github.com/gatsbyjs/gatsby/pull/1157) @fk
 - Replace using levelup for caching with lowdb to avoid native dependency
   [#1142](https://github.com/gatsbyjs/gatsby/pull/1142) @kyleamathews

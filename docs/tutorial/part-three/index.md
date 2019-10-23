@@ -18,13 +18,13 @@ Let's dive into part three.
 
 ## Using plugins
 
-You’re probably familiar with the idea of plugins. Many software systems support adding custom plugins to add new functionality or even modify the core workings of the software. Gatsby plugins work the same way.
+You're probably familiar with the idea of plugins. Many software systems support adding custom plugins to add new functionality or even modify the core workings of the software. Gatsby plugins work the same way.
 
 Community members (like you!) can contribute plugins (small amounts of JavaScript code) that others can then use when building Gatsby sites.
 
 > There are already hundreds of plugins! Explore the Gatsby [Plugin Library](/plugins/).
 
-Our goal with plugins is to make them straightforward to install and use. You will likely be using plugins in almost every Gatsby site you build. While working through the rest of the tutorial you’ll have many opportunities to practice installing and using plugins.
+Our goal with plugins is to make them straightforward to install and use. You will likely be using plugins in almost every Gatsby site you build. While working through the rest of the tutorial you'll have many opportunities to practice installing and using plugins.
 
 For an initial introduction to using plugins, we'll install and implement the Gatsby plugin for Typography.js.
 
@@ -88,7 +88,7 @@ export default typography
 gatsby develop
 ```
 
-Once you load the site, if you inspect the generated HTML using the Chrome developer tools, you’ll see that the typography plugin added a `<style>` element to the `<head>` element with its generated CSS:
+Once you load the site, if you inspect the generated HTML using the Chrome developer tools, you'll see that the typography plugin added a `<style>` element to the `<head>` element with its generated CSS:
 
 ![typography-styles](typography-styles.png)
 
@@ -147,7 +147,7 @@ import React from "react"
 export default () => (
   <div>
     <h1>About me</h1>
-    <p>I’m good enough, I’m smart enough, and gosh darn it, people like me!</p>
+    <p>I'm good enough, I'm smart enough, and gosh darn it, people like me!</p>
   </div>
 )
 ```

@@ -63,7 +63,7 @@ will I query it?
 
 The answer... [GraphQL](http://graphql.org/). Gatsby ships with it and through
 an npm install of a
-[gatsby-source plugin](/docs/plugins/) of your choice
+[`gatsby-source` plugin](/docs/plugins/) of your choice
 and a tiny bit of a config, you can start querying in no time. I was amazed with
 how simple queries are using GraphQL. You look at them and you go "Huh, that's
 it? Really?". Gatsby even ships with an in-browser query tester so you can see
@@ -93,7 +93,7 @@ export const projectsPageQuery = graphql`
 `
 ```
 
-Pulling blog posts was even easier! If you’d like to sort them by date, ID,
+Pulling blog posts was even easier! If you'd like to sort them by date, ID,
 title etc. you just add a simple flag to the query like so:
 
 ```js
@@ -131,7 +131,7 @@ project I didn't know a lot about:
 Moving forward with Gatsby, I'd like to extend my site to include pagination
 within the blog, use [Styled Components](https://www.styled-components.com/) and
 ensure the site scores a 90+ overall on
-[Lighthouse](https://developers.google.com/web/tools/lighthouse/), Google’s
+[Lighthouse](https://developers.google.com/web/tools/lighthouse/), Google's
 performance auditing tool.
 
 Another goal is for my team to start using it with client sites, as the sheer
@@ -139,5 +139,5 @@ performance out of the box is amazing. My original WordPress (PHP based theme)
 was scoring around 70 for Performance, however without any optimizations, my
 Gatsby based site scored 94. Later it scored 99 with some minor optimizations.
 We have recently had many clients ask for highly performant websites and
-Progressive Web App’s. Gatsby will be perfect to bridge the gaps between
+Progressive Web App's. Gatsby will be perfect to bridge the gaps between
 WordPress and React and allow my team to achieve these goals with ease.

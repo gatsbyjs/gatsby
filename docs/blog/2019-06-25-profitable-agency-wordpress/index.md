@@ -9,7 +9,9 @@ tags:
   - aws
 ---
 
+```jsx
 import { Link } from "gatsby"
+```
 
 Are you a WordPress Developer?
 
@@ -17,13 +19,13 @@ If yes, then you can relate to this. Every off-year we're greeted by a sales pit
 
 You know what I'm talking about. Their conference slide decks always have the same structure:
 
-## SLIDE 1: WordPress is slow.
+## SLIDE 1: WordPress is slow
 
-## SLIDE 2: WordPress is not secure.
+## SLIDE 2: WordPress is not secure
 
 ## SLIDE 3: WordPress is old
 
-## FINAL SLIDE: So use our NewThing.
+## FINAL SLIDE: So use our NewThing
 
 Skeptical minds in the audience might sit back and laugh each time:
 

@@ -18,7 +18,7 @@ title: "Gatsby E-Commerce Tutorial"
   - [Advanced: Import SKUs via source plugin](#advanced-import-skus-via-source-plugin)
 - [Testing Payments](#testing-payments)
 
-In this advanced tutorial, you’ll learn how to use Gatsby to build the UI for a basic e-commerce site that can accept payments, with [Stripe](https://stripe.com) as the backend for processing payments.
+In this advanced tutorial, you'll learn how to use Gatsby to build the UI for a basic e-commerce site that can accept payments, with [Stripe](https://stripe.com) as the backend for processing payments.
 
 ## Why use Gatsby for an e-commerce site?
 
@@ -37,7 +37,7 @@ You can see the [working demo hosted here](https://gatsby-ecommerce-stripe.netli
 
 ### How does Gatsby work with Stripe?
 
-Stripe is a payment processing service that allows you to securely collect and process payment information from your customers. To try out Stripe for yourself, go to [Stripe’s Quick Start Guide](https://stripe.com/docs/payments/checkout#tryout).
+Stripe is a payment processing service that allows you to securely collect and process payment information from your customers. To try out Stripe for yourself, go to [Stripe's Quick Start Guide](https://stripe.com/docs/payments/checkout#tryout).
 
 There are alternatives to Stripe, like Square and Braintree, and their setup is very similar to Stripe.
 
@@ -54,7 +54,7 @@ cd ecommerce-gatsby-tutorial
 
 ## Installing the StripeJS plugin
 
-You can extend the functionality of this default starter with plugins. One such plugin is `gatsby-plugin-stripe`, which you’ll install in this project:
+You can extend the functionality of this default starter with plugins. One such plugin is `gatsby-plugin-stripe`, which you'll install in this project:
 
 ```shell
 npm install gatsby-plugin-stripe
@@ -100,7 +100,7 @@ You have 2 keys in both test mode and production mode:
 - a publishable key
 - a secret key
 
-While testing, you must use the key(s) that include _test_. For production code, you will need to use the live keys. As the names imply, your publishable key may be included in code that you share publicly (for example, on the frontend, and in GitHub), whereas your secret key should not be shared with anyone or committed to any public repo. It’s important to restrict access to this secret key because anyone who has it could potentially read or send requests from your Stripe account and see information about charges or purchases or even refund customers.
+While testing, you must use the key(s) that include _test_. For production code, you will need to use the live keys. As the names imply, your publishable key may be included in code that you share publicly (for example, on the frontend, and in GitHub), whereas your secret key should not be shared with anyone or committed to any public repo. It's important to restrict access to this secret key because anyone who has it could potentially read or send requests from your Stripe account and see information about charges or purchases or even refund customers.
 
 ## Examples
 

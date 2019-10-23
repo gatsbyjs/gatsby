@@ -9,14 +9,14 @@ tags:
   - open-source
 ---
 
-_Note: A "core maintainer" is an official member of the Gatsby team--you'll see them around GitHub day-to-day and they're accessible via the `@gatsbyjs/core` team. Gatsby Core is the open-source Gatsby you know and love, e.g. [gatsbyjs/gatsby](https://github.com/gatsbyjs/gatsby)._
+_Note: A "core maintainer" is an official member of the Gatsby team--you'll see them around GitHub day-to-day and they're accessible via the `@gatsbyjs/core` team. Gatsby Core is the open-source Gatsby you know and love, e.g. [`gatsbyjs/gatsby`](https://github.com/gatsbyjs/gatsby)._
 
 The day-to-day responsibilities of a core maintainer are some of the most challenging of any in the organization. Constantly being pulled in many, seemingly infinite directions leads to a feeling that it's challenging to get productive work accomplished. Balancing community needs, internally surfaced issues and support requests, and a desire to work on substantive bug-fixes and features is a **hard problem.**
 
 In this post, I attempt to outline a model for a productive, healthy, and balanced schedule for a core maintainer. In doing so, I also hope to illustrate the decisions, trade-offs, and general thought process for approaching the day-to-day responsibilities in a way that is as productive as possible. The ideas in this post are informed by the following guidelines:
 
 - Time-boxing and focus/productive time
-- Consider the impact of work you’re doing
+- Consider the impact of work you're doing
 - Nurture and focus on the community, when you can
 - Take breaks
 - Productive interruptions
@@ -44,7 +44,7 @@ Some examples:
 - **Reviewing PRs**. Giving timely, thorough, and fair reviews for pull requests from both the community and other Gatsby Core team members unblocks future work or changes required for merging, and delivers or eventually delivers meaningful fixes or improvements for the community, at large.
 - **Helpful, targeted use of expertise**. Unblocking a community member or Gatsby team member, which may take just a few minutes of your time may unblock and drastically reduce the time spent on a particularly tough issue by an ally. If someone surfaces a question in Slack or Discord—if you have a few moments, help them out!
 - **Pairing**. Leveraging your skill set to help another member of the team is a great way to get a meaningful feature delivered more quickly. Hop on a Zoom and build something great!
-- **Writing**. Writing docs, writing a blog post, speaking at a conference or on a podcast, cultivating community members to level-up, etc. [See “Why we Write” by Sam Bhagwat](https://www.gatsbyjs.org/blog/2019-04-19-gatsby-why-we-write/).
+- **Writing**. Writing docs, writing a blog post, speaking at a conference or on a podcast, cultivating community members to level-up, etc. [See "Why we Write" by Sam Bhagwat](https://www.gatsbyjs.org/blog/2019-04-19-gatsby-why-we-write/).
 - **Creating issues**. Create and/or edit issues, RFCs, etc. for community members to discuss or pick up. If the community is able to pick up these features, fixes, and documentation tasks, it frees us up to focus on large-scale projects which tend to be more complex and require more focused effort.
 
 This is by no means a complete list because the day-to-day work of a maintainer can seemingly vary in infinite ways. However, it does serve as a valuable mental model to think of when considering "what is productive work?" A question to consider when considering if something is productive is as simple as:
@@ -87,7 +87,7 @@ Sweet! You have reviewed a few PRs, helped solve an issue or two, and possibly f
 
 Feeling pretty good! Community focused tasks make it clear that the community is, and will always be, a priority for Gatsby. However--we also want to measurably move the needle forward and make Gatsby better for everyone. This will often involve features and fixes that require a deep context and understanding of Gatsby internals. Oftentimes (perhaps most of the time) these will correspond to a roadmap item which will support eventual larger goals tying to an Objective and Key Result (OKR), Key Performance Indicator (KPI), and/or another team at Gatsby, e.g. Cloud. These are features that require deliberate focus to think about, approach, and ship with minimal outside distractions. To this end, some have found it valuable to block off chunks of time in their calendar so that meetings can't be scheduled, Slack is in do not disturb, etc. If these measures help you to truly focus and ship impactful features, by all means--do so! All at Gatsby recognize the value of focus and how it can effectively drive key results and features.
 
-### Make moves and ship, as often as possible.
+### Make moves and ship, as often as possible
 
 However--meaningful fixes and features are absolutely by no means the only or even always the most valuable use of focus time. You may need the mental head space to write a truly impactful blog post. You could use this time to lean on your area(s) of excellence to move an open PR to the finish line (whether it's documentation, deep Core knowledge, or something else entirely). It could be a great time to outline and jot down notes for a great conference talk, podcast, or document a current or upcoming feature (like a Request for Commentary--RFC). Whatever you work on--the overriding principle should again be an awareness and appreciation that your time is valuable, and reserving this focus time to deliver **impactful value to a significant amount of Gatsby users** is paramount to ensuring the Gatsby ecosystem remains an incredible place for everyone.
 
@@ -129,6 +129,6 @@ _Step away and revisit challenging and blocked problems later, as needed._
 
 ## Closing notes
 
-Due to the infinitely varied tasks that can be worked on day-to-day, this entire post is very possibly inaccurate from the outset. It _could_ represent a typical day, but oftentimes, a core maintainer’s day-to-day will differ every day, every week, and every month. We are chameleons who adapt to changing requirements and shifting priorities to best accommodate the moving target of **making Gatsby as great as it possibly can be for as many users as possible**. Some days may be more focused on delivering a hugely valuable feature. Others could be more support work and community engagement. Others still may be a bit more play and interrupt-driven work. All are valuable outcomes, and all are examples of meaningful, productive work.
+Due to the infinitely varied tasks that can be worked on day-to-day, this entire post is very possibly inaccurate from the outset. It _could_ represent a typical day, but oftentimes, a core maintainer's day-to-day will differ every day, every week, and every month. We are chameleons who adapt to changing requirements and shifting priorities to best accommodate the moving target of **making Gatsby as great as it possibly can be for as many users as possible**. Some days may be more focused on delivering a hugely valuable feature. Others could be more support work and community engagement. Others still may be a bit more play and interrupt-driven work. All are valuable outcomes, and all are examples of meaningful, productive work.
 
 That said--this post does intend to show and explain the thought process and rationale for helping plan your day in a way that can oftentimes be most productive. It may not exactly match your most productive day (e.g. perhaps you like to start your day with working on features, perhaps you like to work on features near the end of the week, etc.), but it is my intent that it serves as a gentle guide and a helpful, living and breathing post for an exemplary Core Maintainer. We're so glad you're here, and we can't wait to see all the great things you'll continue to do!

@@ -7,8 +7,8 @@ title: Environment Variables
 You can provide environment variables to your site to customise its behavior in different environments.
 
 Environment variables can be distinguished between different types.
-There are environment variables that are defined in special places intended to be used in different deployment environments. Let's call these “Project Env Vars”.
-And there are true OS-level environment variables that might be used in command-line calls. Let's call these “OS Env Vars”.
+There are environment variables that are defined in special places intended to be used in different deployment environments. Let's call these "Project Env Vars".
+And there are true OS-level environment variables that might be used in command-line calls. Let's call these "OS Env Vars".
 
 In both cases you want to be able to access the relevant value of these variables for the environment you are in.
 
@@ -17,7 +17,7 @@ By default Gatsby supports only 2 environments:
 - If you run `gatsby develop`, then you will be in the 'development' environment.
 - If you run `gatsby build` or `gatsby serve`, then you will be in the 'production' environment.
 
-If you want to define other environments then you'll need to do a little more work. See[ "Additional Environments" below](#additional-environments-staging-test-etc). You can also have a look at our [environment variables codesandbox](https://codesandbox.io/s/6w9jjrnnjn) while reading the examples below.
+If you want to define other environments then you'll need to do a little more work. See ["Additional Environments" below](#additional-environments-staging-test-etc). You can also have a look at our [environment variables codesandbox](https://codesandbox.io/s/6w9jjrnnjn) while reading the examples below.
 
 ## Accessing Environment Variables in JavaScript
 
@@ -155,7 +155,7 @@ Specifically, you can use `dotenv` and your individual OS Env Var to locate the 
 
 For instance: if you would like to add a `staging` environment with a custom Google Analytics Tracking ID, and a dedicated `apiUrl`. You can add `.env.staging` at the root of your project with the following modification to your `gatsby-config.js`
 
-### Example
+### Config example
 
 ```text:title=.env.staging
 GA_TRACKING_ID="UA-1234567890"

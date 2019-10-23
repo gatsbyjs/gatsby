@@ -38,7 +38,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     isBrowser &&
     window.location.pathname !== `/login`
   ) {
-    // If we’re not logged in, redirect to the home page.
+    // If we're not logged in, redirect to the home page.
     navigate(`/app/login`)
     return null
   }

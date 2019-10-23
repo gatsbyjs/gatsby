@@ -1,16 +1,16 @@
 ---
 title: Modern publications with Gatsby & Ghost
 date: 2019-01-14T08:00:00+00:00
-author: John O’Nolan
+author: John O'Nolan
 tags:
   - ghost
 image: "./images/ghost-headless-feature-image.png"
 showImageInArticle: true
 ---
 
-There has been a lot of progress around static site generators, front end frameworks and API-centric infrastructure in recent years. At [Ghost](https://ghost.org/), we’ve been building open source technology for modern publishing for over 5 years and as a developer-centric team, the momentum around static sites didn’t go unnoticed.
+There has been a lot of progress around static site generators, front end frameworks and API-centric infrastructure in recent years. At [Ghost](https://ghost.org/), we've been building open source technology for modern publishing for over 5 years and as a developer-centric team, the momentum around static sites didn't go unnoticed.
 
-Wildly fast websites which have no back end and can be deployed just about anywhere felt very much like the future. So I’m thrilled to share that with the recent updates to the Ghost API, it’s now possible to use Ghost as a completely decoupled headless CMS and bring your own front-end written in Gatsby!
+Wildly fast websites which have no back end and can be deployed just about anywhere felt very much like the future. So I'm thrilled to share that with the recent updates to the Ghost API, it's now possible to use Ghost as a completely decoupled headless CMS and bring your own front-end written in Gatsby!
 
 ## API driven publishing
 
@@ -32,9 +32,9 @@ When you look at the bigger picture of the [content mesh](/blog/2018-10-04-journ
 
 ## Official Gatsby Source Plugin + Starter
 
-We rebuilt our entire [Ghost Docs site](https://docs.ghost.org/) with Gatsby, using the Ghost API to deliver content. Truth be told, we fell in love straight away and have been building new things with Gatsby ever since. To give others a head start on building their own publications using the same stack, we’ve just shipped some new tooling:
+We rebuilt our entire [Ghost Docs site](https://docs.ghost.org/) with Gatsby, using the Ghost API to deliver content. Truth be told, we fell in love straight away and have been building new things with Gatsby ever since. To give others a head start on building their own publications using the same stack, we've just shipped some new tooling:
 
-- [gatsby-source-ghost plugin](https://github.com/tryghost/gatsby-source-ghost)
+- [`gatsby-source-ghost` plugin](https://github.com/tryghost/gatsby-source-ghost)
 
 A straightforward Gatsby source plugin which wraps the Ghost API and makes it compatible with Gatsby and GraphQL, so it's quick and easy to load all your Ghost data into any Gatsby project.
 
@@ -42,10 +42,10 @@ A straightforward Gatsby source plugin which wraps the Ghost API and makes it co
 
 An official [Gatsby starter repository](https://github.com/tryghost/gatsby-starter-ghost) which is pre-configured to get content from Ghost and output it in a clean, blog-style design. The fastest way to get up and running with Gatsby and Ghost is to fork this repository, and check out our [Gatsby docs.](https://docs.ghost.org/api/gatsby/)
 
-We’ve also introduced an official [Netlify integration](https://docs.ghost.org/integrations/netlify/) to make deployment a breeze, with outgoing webhooks in Ghost to trigger a site rebuild and automate the publishing process.
+We've also introduced an official [Netlify integration](https://docs.ghost.org/integrations/netlify/) to make deployment a breeze, with outgoing webhooks in Ghost to trigger a site rebuild and automate the publishing process.
 
 ## Publishing on the JAMstack
 
-I’m really excited to see what people build with these new technologies. The concept of having just one front-end and many APIs all connected together and served as a single site or application with Gatsby opens up so much opportunity in the publishing space.
+I'm really excited to see what people build with these new technologies. The concept of having just one front-end and many APIs all connected together and served as a single site or application with Gatsby opens up so much opportunity in the publishing space.
 
-If you want to give it a try with Ghost, sign up for a free trial account at [Ghost.org](https://ghost.org/pricing/) and use our official Gatsby plugin + starter to put it through it’s paces!
+If you want to give it a try with Ghost, sign up for a free trial account at [Ghost.org](https://ghost.org/pricing/) and use our official Gatsby plugin + starter to put it through it's paces!

@@ -12,7 +12,7 @@ title: Resource Handling & Service Workers
 
 This document aims to outline how resources are fetched and cached by various parts of Gatsby.
 
-## Offline Plugin (gatsby-plugin-offline)
+## Offline Plugin (`gatsby-plugin-offline`)
 
 ### Service worker (`sw.js`)
 

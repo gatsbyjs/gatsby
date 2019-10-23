@@ -9,9 +9,9 @@ Used alongside Gatsby it lets you create fast, editable sites.
 
 Note that the Gatsby Prismic source plugin you will use during this tutorial, as a main feature, allows for **real previews** of your pages so you can know how they will look like before publishing or building them. You can generate **shareable links** that can even be seen by non-Prismic users.
 
-## What’s contained in this tutorial?
+## What's contained in this tutorial?
 
-By the end of this tutorial, you’ll have done the following:
+By the end of this tutorial, you'll have done the following:
 
 - Learned how to configure the latest version of the Prismic source plugin
 - Fetch and render data from a Prismic repository

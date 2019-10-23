@@ -6,7 +6,7 @@ The quickest way to get started using a Gatsby theme is to use a starter that's 
 
 For example, `gatsby-starter-blog-theme` is a theme starter for the `gatsby-theme-blog` package.
 
-A **regular Gatsby starter** creates a new Gatsby site that is preconfigured for a particular use case. The resulting site effectively forks off the starter — after it’s created, the site maintains no connection to the starter.
+A **regular Gatsby starter** creates a new Gatsby site that is preconfigured for a particular use case. The resulting site effectively forks off the starter — after it's created, the site maintains no connection to the starter.
 
 A **Gatsby theme starter** creates a new Gatsby site that installs and configures one or more Gatsby themes. When a starter installs a theme, it maintains the connection to that theme as a standalone npm package.
 

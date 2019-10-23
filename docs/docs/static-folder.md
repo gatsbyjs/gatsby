@@ -7,7 +7,7 @@ In general, every website needs assets: images, stylesheets, scripts, etc. When 
 
 - Scripts and stylesheets are minified and bundled together to avoid extra network requests.
 - Missing files cause compilation errors instead of 404 errors for your users.
-- Result filenames include content hashes so you don’t need to worry about browsers caching their old versions.
+- Result filenames include content hashes so you don't need to worry about browsers caching their old versions.
 
 However, there is an **escape hatch** that you can use to add an asset outside of the module system.
 
@@ -23,7 +23,7 @@ You can reference assets from the `static` folder in your code without anything 
 render() {
   // Note: this is an escape hatch and should be used sparingly!
   // Normally we recommend using `import` for getting asset URLs
-  // as described in the “Importing Assets Directly Into Files” page.
+  // as described in the "Importing Assets Directly Into Files" page.
   return <img src={'/logo.png'} alt="Logo" />;
 }
 ```
@@ -39,7 +39,7 @@ Keep in mind the downsides of this approach:
 
 - None of the files in the `static` folder will be post-processed or minified.
 - Missing files will not be called at compilation time, and will cause 404 errors for your users.
-- Result filenames won’t include content hashes, so you’ll need to add query arguments or rename them every time they change.
+- Result filenames won't include content hashes, so you'll need to add query arguments or rename them every time they change.
 
 ## When to use the `static` folder
 

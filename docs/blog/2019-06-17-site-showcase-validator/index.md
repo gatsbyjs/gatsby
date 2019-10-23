@@ -9,7 +9,7 @@ Gatsby has rapidly been growing in the market of website generators. As such, th
 
 ## Why a validator
 
-As with most websites, nothing is constant. Designs and even frameworks that companies and developers use to build sites will evolve and change over time. With that, it would be diligent to make sure that Gatsby’s showcase is kept updated and all sites in the showcase are still using Gatsby. Doing this by hand would become unmaintainable as more and more sites were added; automating the workflow would relieve the burden for such an important task.
+As with most websites, nothing is constant. Designs and even frameworks that companies and developers use to build sites will evolve and change over time. With that, it would be diligent to make sure that Gatsby's showcase is kept updated and all sites in the showcase are still using Gatsby. Doing this by hand would become unmaintainable as more and more sites were added; automating the workflow would relieve the burden for such an important task.
 
 ## Creating the validator
 
@@ -19,7 +19,7 @@ All Gatsby sites by default have a container element with the `___gatsby` id as 
 
 With such, an HTTP request can be done to grab the initial HTML of the page. Then it can examine the DOM using [cheerio](https://github.com/cheeriojs/cheerio), a jQuery-like DOM parser designed for the server. If it is able to find the Gatsby root container, it will continue on to the next site. If not, it marks down the site and will fail the validator upon completion.
 
-For deployment, we decided upon [GitHub Actions](https://github.com/features/actions) which allows for a script like the validator to live inside the Gatsby Git repository and be run on a daily schedule on GitHub’s servers rather than needing to spin up separate infrastructure for the script.
+For deployment, we decided upon [GitHub Actions](https://github.com/features/actions) which allows for a script like the validator to live inside the Gatsby Git repository and be run on a daily schedule on GitHub's servers rather than needing to spin up separate infrastructure for the script.
 
 ## Benefits and moving forward
 

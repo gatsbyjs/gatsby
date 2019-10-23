@@ -5,7 +5,7 @@ author: "Vlad Pasculescu"
 tags: ["netlify", "deployment", "jamstack"]
 ---
 
-If you’re reading this, chances are you’ve heard a thing or two about Gatsby. Let me take you through a _jamstacked_ workflow that is friendly to both developers, as well as content-creators.
+If you're reading this, chances are you've heard a thing or two about Gatsby. Let me take you through a _jamstacked_ workflow that is friendly to both developers, as well as content-creators.
 
 ![JAM Out Your Blog Header Image](jam-header.jpg)
 
@@ -13,19 +13,19 @@ If you’re reading this, chances are you’ve heard a thing or two about Gatsby
 
 As a freelance developer, the business person inside of me is constantly looking for ways to streamline the development process. At the same time, the inner developer is looking for the most modern development experience. If you add this working with non-technical content-creators, it becomes quite the balancing act.
 
-I’m willing to assume that many readers have been here before and are currently cringing in unison. Luckily, I found a solution.
+I'm willing to assume that many readers have been here before and are currently cringing in unison. Luckily, I found a solution.
 
 My goal here is to share a tool set helps bring order to my freelance chaos. I'll be walking through a workflow that's ideal for personal blogs and hand-off projects where some sort of a CMS is in scope.
 
-I'll also be referencing a wonderful article written by Josh Weaver, [Gatsby + Contentful + Netlify (and Algolia)](/blog/2017-12-06-gatsby-plus-contentful-plus-netlify/). Josh’s article spoke to my goals and frustrations perfectly and inspired me to share this alternative approach.
+I'll also be referencing a wonderful article written by Josh Weaver, [Gatsby + Contentful + Netlify (and Algolia)](/blog/2017-12-06-gatsby-plus-contentful-plus-netlify/). Josh's article spoke to my goals and frustrations perfectly and inspired me to share this alternative approach.
 
-_**Let’s get into it.**_
+_**Let's get into it.**_
 
 <div style="width:100%;height:0;padding-bottom:55%;position:relative;"><iframe src="https://giphy.com/embed/WDtCGLCXBAgow" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/tom-cruise-top-gun-WDtCGLCXBAgow">via GIPHY</a></p>
 
 ## My Requirements
 
-### Like Josh’s requirements, my list includes:
+### Like Josh's requirements, my list includes:
 
 - **Speed** - this includes development, website performance, and deployment
 - **Development Experience** - I want to use React and Webpack
@@ -34,16 +34,16 @@ _**Let’s get into it.**_
 - **Lean** - simplify the tools and services use to a bare minimum
 - **Revision History** - for accountability and allowing for versioning
 - **Inexpensive Hosting** - again, to maximize value and keep personal costs down
-- **NO WordPress** - similarly, I don’t want to deal with updates, themes, hacks...etc
+- **NO WordPress** - similarly, I don't want to deal with updates, themes, hacks...etc
 - **Continuous Deployment** - the site needs to always be up and running and current
 
-For the sake of brevity, let's infer that speed, development experience, scalability and lack of WordPress will be handled by Gatsby and the JAMstack. If you’re unfamiliar, take a look at [http://jamstack.org/](http://jamstack.org/).
+For the sake of brevity, let's infer that speed, development experience, scalability and lack of WordPress will be handled by Gatsby and the JAMstack. If you're unfamiliar, take a look at [http://jamstack.org/](http://jamstack.org/).
 
 ## CMS-Induced Headaches
 
 From a non-technical content-creator perspective, more UI and less code is ideal. So if we want to avoid WordPress, how can we provide the experience of a simple login where a user can create, edit and publish posts?
 
-Josh’s article provides a solution by way of using Contentful to manage content on his company’s documentation website.
+Josh's article provides a solution by way of using Contentful to manage content on his company's documentation website.
 
 ### Here are some Pros (at the time of writing):
 
@@ -60,7 +60,7 @@ While, a fully-customizable frontend may seem really flexible, _**there is NOTHI
 
 <div style="width:100%;height:0;padding-bottom:55%;position:relative;"><iframe src="https://giphy.com/embed/16e1J9ztaZ3na"  width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/bored-kanye-west-16e1J9ztaZ3na">via GIPHY</a></p>
 
-If you’re like me and have no previous experience with Contentful, expect a few headaches. Your first time working with the service will involve a great deal of trial and error to get content/posts into your Gatsby website. Couple this with being a GraphQL newbie (like me), and you will get frustrated..._**very quickly**_.
+If you're like me and have no previous experience with Contentful, expect a few headaches. Your first time working with the service will involve a great deal of trial and error to get content/posts into your Gatsby website. Couple this with being a GraphQL newbie (like me), and you will get frustrated..._**very quickly**_.
 
 All I wanted to do was streamline my process and here I was adding another service into the mix and creating more work for myself. No bueno.
 
@@ -92,7 +92,7 @@ So, a service that works on top of GitHub where I, or anyone with a GitHub accou
 
 <div style="width:100%;height:0;padding-bottom:55%;position:relative;"><iframe src="https://giphy.com/embed/l0HlDtKDqfGGQtwic"  width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed"  allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/emmys-emmy-awards-emmys-2016-l0HlDtKDqfGGQtwic">via GIPHY</a></p>
 
-_**Yes, there’s more.**_
+_**Yes, there's more.**_
 
 Because Prose was built for Jekyll, it recognizes any headmatter you add to your .md files. This will give developers the ability to build queries and replicate familiar features from other CMS platforms. Say hello to publish states, publish date, article author and more.
 
@@ -100,7 +100,7 @@ I should also mention that Prose is an open source project that is available for
 
 ## Get Lean and Get on Netlify
 
-Let’s summarize where we are and why [Netlify](https://www.netlify.com/) will take care of the rest.
+Let's summarize where we are and why [Netlify](https://www.netlify.com/) will take care of the rest.
 
 ```[ ] Lean - simplify the tools and services use to a bare minimum
 [ ] Inexpensive Hosting - again, to maximize value and keep personal costs down
@@ -117,12 +117,12 @@ Let’s summarize where we are and why [Netlify](https://www.netlify.com/) will 
 
 [x] Revision History - for accountability and allowing for versioning
 
-[x] NO WordPress - similarly, I don’t want to deal with updates, themes, hacks...etc
+[x] NO WordPress - similarly, I don't want to deal with updates, themes, hacks...etc
 ```
 
-When it comes to continuous deployment and inexpensive hosting, using Netlify is, as Josh mentions “ a no brainer.”  Check out [Netlify’s features here](https://www.netlify.com/features/) for a more in-depth look.
+When it comes to continuous deployment and inexpensive hosting, using Netlify is, as Josh mentions " a no brainer."  Check out [Netlify's features here](https://www.netlify.com/features/) for a more in-depth look.
 
-With streamlining in mind, a workflow doesn’t get any leaner than working within the confines of GitHub and Netlify. Think about the magic:
+With streamlining in mind, a workflow doesn't get any leaner than working within the confines of GitHub and Netlify. Think about the magic:
 
 1.  Use Gatsby to create your website.
 2.  Set up a GitHub repository to track changes and version history.
@@ -143,17 +143,17 @@ With all of that said, this process has a few caveats related to working within 
 1.  If you follow a folder structure enclosing an index.md file for your posts, you will need to add the new folder within the URL of the post
 2.  Inserting an image adds extra markup which you will need to remove for an image to show up within your post. Prose will upload the image within the same directory as your index.md file.
 
-#### Default
+### Default
 
 ![Default Prose image path](before-post-title.png)
 
-#### After (this will work)
+### After (this will work)
 
 ![After image path change](after-post-title.png)
 
 3.  You must commit a file by hitting the save icon or else the file is not saved. Posts cannot be saved as drafts in Prose. So, you will have to build the functionality within your headmatter and query posts based upon a draft/published state (if you need it).
 4.  Whoever will be posting will need to manually add headmatter to each .md file. Be warned that there is no specific area to do so. But after it's added, a fourth icon appears in the right pane where you can then edit and add other post details.
 
-I hope you try playing around with this workflow yourself with a Gatsby starter and see if this works for you. Gatsby provides incredible tools that “just work” without sacrificing an exciting development environment. If you pair it with Netlify and Prose, you will cut overhead and manage content directly from a GitHub repository. Let this approach bring some order to the chaos.
+I hope you try playing around with this workflow yourself with a Gatsby starter and see if this works for you. Gatsby provides incredible tools that "just work" without sacrificing an exciting development environment. If you pair it with Netlify and Prose, you will cut overhead and manage content directly from a GitHub repository. Let this approach bring some order to the chaos.
 
 _**Thank you for reading...Now get to hacking.**_ ✌🏼

@@ -57,7 +57,7 @@ RFC merged into the RFC repo as a markdown file. At that point the RFC is
 'active' and may be implemented with the goal of eventual inclusion into
 Gatsby.
 
-- Fork the RFC repo <https://github.com/gatsbyjs/rfcs> Copy `0000-template.md` to
+- Fork the [RFC repo](https://github.com/gatsbyjs/rfcs) Copy `0000-template.md` to
 - `text/0000-my-feature.md` (where
   'my-feature' is descriptive. Don't assign an RFC number yet).
 - Fill in the RFC. Put care into the details: **RFCs that do not
@@ -122,8 +122,8 @@ We try to make sure that any RFC that we accept is accepted at the weekly team
 meeting. Every accepted feature should have a core team champion, who will
 represent the feature and its progress.
 
-**Gatsby's RFC process owes its inspiration to the [React RFC process], [Yarn
-RFC process], [Rust RFC process], and [Ember RFC process]**
+**Gatsby's RFC process owes its inspiration to the [React RFC process][], [Yarn
+RFC process][], [Rust RFC process][], and [Ember RFC process][]**
 
 [react rfc process]: https://github.com/reactjs/rfcs
 [yarn rfc process]: https://github.com/yarnpkg/rfcs

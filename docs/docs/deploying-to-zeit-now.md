@@ -24,7 +24,7 @@ now
 
 That's all!
 
-Your site will now deploy, and you will receive a link similar to the following: https://gatsby-functions.now-examples.now.sh
+Your site will now deploy, and you will receive a link similar to the following [`https://gatsby-functions.now-examples.now.sh`](https://gatsby-functions.now-examples.now.sh)
 
 ## References:
 

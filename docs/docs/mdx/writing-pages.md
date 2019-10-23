@@ -75,7 +75,7 @@ directly in MDX files. You can also import other MDX documents.
 import { Chart } from "../components/chart"
 import FAQ from "../components/faq.mdx"
 
-# Here’s a chart
+# Here's a chart
 
 The chart is rendered inside our MDX document.
 

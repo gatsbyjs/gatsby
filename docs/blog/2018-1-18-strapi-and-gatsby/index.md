@@ -8,7 +8,7 @@ tags: ["blogs", "cms", "headless-cms", "getting-started"]
 
 (Article updated on 20 March 2019. This updates the tutorial code examples. We added videos with additional explanations to each section.)
 
-![Showing the idea of using Gatsby with Strapi ](gatsby-strapi.png)
+![Showing the idea of using Gatsby with Strapi](gatsby-strapi.png)
 
 A static website contains Web pages with fixed content. Technically, it is a simple list of HTML files, which displays the same information to every visitor. Unlike dynamic websites, they do not require any back-end programming or database. Publishing a static website is easy: the files are uploaded on a simple Web server or storage provider. The two main advantages of static websites are security and speed: there is no database so it can not be hacked and there is no need to render a page for each request, which makes Web browsing faster.
 
@@ -164,7 +164,7 @@ From `cms/`, launch the Strapi server:
 strapi start
 ```
 
-Starting here, you should be able to visit the admin panel of your project: http://localhost:1337/admin. You will now be directed to a login screen. Login using your **_admin root user_** or other user you have already created.
+Starting here, you should be able to visit the admin panel of your project: <http://localhost:1337/admin>. You will now be directed to a login screen. Login using your **_admin root user_** or other user you have already created.
 
 ### 3. Content Types
 
@@ -281,7 +281,7 @@ Start the server:
 gatsby develop
 ```
 
-At this point, you should already be able to get access to your Gatsby website at this address: http://localhost:8000.
+At this point, you should already be able to get access to your Gatsby website at this address: <http://localhost:8000>.
 
 #### Install the Strapi source plugin
 
@@ -505,7 +505,7 @@ _Important links from Video:_
 
 #### Article view
 
-Our website now starts looking like a blog which is a good thing. However, an important part is still missing: the article’s details page.
+Our website now starts looking like a blog which is a good thing. However, an important part is still missing: the article's details page.
 
 Let's create the template, containing a specific GraphQL request and defining the content displayed:
 
@@ -575,7 +575,7 @@ const makeRequest = (graphql, request) =>
     )
   })
 
-// Implement the Gatsby API “createPages”. This is called once the
+// Implement the Gatsby API "createPages". This is called once the
 // data layer is bootstrapped to let plugins create pages from data.
 exports.createPages = ({ boundActionCreators, graphql }) => {
   const { createPage } = boundActionCreators
@@ -706,7 +706,7 @@ const makeRequest = (graphql, request) =>
     )
   })
 
-// Implement the Gatsby API “createPages”. This is called once the
+// Implement the Gatsby API "createPages". This is called once the
 // data layer is bootstrapped to let plugins create pages from data.
 exports.createPages = ({ boundActionCreators, graphql }) => {
   const { createPage } = boundActionCreators
@@ -774,7 +774,7 @@ Finally, restart the server and visit the author page from the article view's li
 
 ## Conclusion
 
-Congrats! You’ve successfully built a super fast and easy-to-maintain blog!
+Congrats! You've successfully built a super fast and easy-to-maintain blog!
 
 Since the content is managed by Strapi, the authors can write articles through a nice UI and developers only have to rebuild the Gatsby blog in order to update the content.
 

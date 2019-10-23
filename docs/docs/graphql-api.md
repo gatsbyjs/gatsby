@@ -2,7 +2,7 @@
 title: GraphQL API
 tableOfContentsDepth: 2
 ---
-
+<!--lint disable no-duplicate-headings-->
 import { GraphqlApiQuery } from "../../www/src/components/api-reference/doc-static-queries"
 import APIReference from "../../www/src/components/api-reference"
 
@@ -83,7 +83,7 @@ const HomePage = ({ data }) => {
 
 ### `StaticQuery`
 
-StaticQuery is a built-in component for retrieving data from Gatsby’s data layer in non-page components, such as a header, navigation, or any other child component.
+StaticQuery is a built-in component for retrieving data from Gatsby's data layer in non-page components, such as a header, navigation, or any other child component.
 
 You can only have one `StaticQuery` per page: in order to include the data you need from multiple sources, you can use one query with multiple [root fields](/docs/graphql-concepts/#query-fields). It cannot take variables as arguments.
 

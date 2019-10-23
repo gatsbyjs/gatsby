@@ -7,7 +7,7 @@ tags: ["content-mesh"]
 
 When creating web experiences, an inevitable question is, "how do I get my data from point A (the source) to point B (the component)?". This can end up being a deceptively complex question.
 
-Gatsby’s rich data plugin ecosystem lets you build sites with the data you want — from one or many sources. You can pull data from headless CMSs, SaaS services, APIs, databases, your file system & more directly into your components.
+Gatsby's rich data plugin ecosystem lets you build sites with the data you want — from one or many sources. You can pull data from headless CMSs, SaaS services, APIs, databases, your file system & more directly into your components.
 
 <figure>
   <img
@@ -28,7 +28,7 @@ Most examples in the Gatsby docs and on the web at large focus on leveraging sou
   </figcaption>
 </figure>
 
-> _[Source plugins](/docs/creating-a-source-plugin/)_ “source” data from remote or local locations into Gatsby nodes, which are then queryable within your Gatsby site using GraphQL. _[Gatsby nodes](/docs/node-interface/)_ are the center of Gatsby’s data handling layer.
+> _[Source plugins](/docs/creating-a-source-plugin/)_ "source" data from remote or local locations into Gatsby nodes, which are then queryable within your Gatsby site using GraphQL. _[Gatsby nodes](/docs/node-interface/)_ are the center of Gatsby's data handling layer.
 
 We're calling this the **"content mesh"** — the infrastructure layer for a decoupled website. ([Sam Bhagwat](https://twitter.com/calcsam) introduced and explored this concept in his recent five-part series, [The Journey to a Content Mesh](/blog/2018-10-04-journey-to-the-content-mesh)).
 
@@ -40,7 +40,7 @@ We're calling this the **"content mesh"** — the infrastructure layer for a dec
 
 We'll take a look at a (very serious) example of how this works. In the example, we'll:
 
-1. Load data from the [PokéAPI’s](https://pokeapi.co/) REST endpoints
+1. Load data from the [PokéAPI's](https://pokeapi.co/) REST endpoints
 2. Create pages (and nested pages) from this data
 
 That's it!
@@ -69,7 +69,7 @@ That's it!
 
 > Note: This walkthrough assumes you have working knowledge of Gatsby fundamentals. If you're not (yet!) familiar with Gatsby, you may want to take a look at our [Quick Start doc](/docs/) first.
 
-#### 1. Use Gatsby's `createPages` API.
+#### 1. Use Gatsby's `createPages` API
 
 `createPages` is a [Gatsby Node API](/docs/node-apis/#createPages). It hooks into a certain point in [Gatsby's bootstrap sequence](/docs/gatsby-lifecycle-apis/#bootstrap-sequence).
 
@@ -82,7 +82,7 @@ exports.createPages = () => {
 } // highlight-line
 ```
 
-#### 2. [Fetch the data](https://github.com/jlengstorf/gatsby-with-unstructured-data/blob/0a91d87b9d4d24a0e6b04b33cc271e054b7467b6/gatsby-node.js#L22) from the PokéAPI.
+#### 2. [Fetch the data](https://github.com/jlengstorf/gatsby-with-unstructured-data/blob/0a91d87b9d4d24a0e6b04b33cc271e054b7467b6/gatsby-node.js#L22) from the PokéAPI
 
 ```javascript:title=gatsby-node.js
 exports.createPages = async () => {
@@ -103,7 +103,7 @@ exports.createPages = async ({ actions: { createPage } }) => {
 }
 ```
 
-#### 4. Create a page that [lists all Pokémon](https://github.com/jlengstorf/gatsby-with-unstructured-data/blob/0a91d87b9d4d24a0e6b04b33cc271e054b7467b6/gatsby-node.js#L25).
+#### 4. Create a page that [lists all Pokémon](https://github.com/jlengstorf/gatsby-with-unstructured-data/blob/0a91d87b9d4d24a0e6b04b33cc271e054b7467b6/gatsby-node.js#L25)
 
 ```javascript:title=gatsby-node.js
 exports.createPages = async ({ actions: { createPage } }) => {
@@ -126,7 +126,7 @@ The [`createPage` action](/docs/actions/#createPage) is passed an object contain
 - `component`: This is the absolute path to the React component you've defined for this page.
 - `context`: Context data for this page. Available either as props to the component (`this.props.pageContext`) or as `graphql` arguments.
 
-In our example, we're accessing the context as [props to the component](https://github.com/jlengstorf/gatsby-with-unstructured-data/blob/0a91d87b9d4d24a0e6b04b33cc271e054b7467b6/src/templates/all-pokemon.js#L4). This allows us to completely circumvent Gatsby’s data layer; it’s just props.
+In our example, we're accessing the context as [props to the component](https://github.com/jlengstorf/gatsby-with-unstructured-data/blob/0a91d87b9d4d24a0e6b04b33cc271e054b7467b6/src/templates/all-pokemon.js#L4). This allows us to completely circumvent Gatsby's data layer; it's just props.
 
 ```jsx:title=src/templates/all-pokemon.js
 export default ({ pageContext: { allPokemon } }) => (// highlight-line
@@ -152,7 +152,7 @@ export default ({ pageContext: { allPokemon } }) => (// highlight-line
 );
 ```
 
-#### 5. Create a page [for each Pokémon](https://github.com/jlengstorf/gatsby-with-unstructured-data/blob/0a91d87b9d4d24a0e6b04b33cc271e054b7467b6/gatsby-node.js#L32).
+#### 5. Create a page [for each Pokémon](https://github.com/jlengstorf/gatsby-with-unstructured-data/blob/0a91d87b9d4d24a0e6b04b33cc271e054b7467b6/gatsby-node.js#L32)
 
 ```javascript:title=gatsby-node.js
 exports.createPages = async ({ actions: { createPage } }) => {
@@ -178,7 +178,7 @@ exports.createPages = async ({ actions: { createPage } }) => {
 }
 ```
 
-#### 6. Create a page [for each ability of each Pokémon](https://github.com/jlengstorf/gatsby-with-unstructured-data/blob/0a91d87b9d4d24a0e6b04b33cc271e054b7467b6/gatsby-node.js#L40).
+#### 6. Create a page [for each ability of each Pokémon](https://github.com/jlengstorf/gatsby-with-unstructured-data/blob/0a91d87b9d4d24a0e6b04b33cc271e054b7467b6/gatsby-node.js#L40)
 
 ```javascript:title=gatsby-node.js
 exports.createPages = async ({ actions: { createPage } }) => {
@@ -215,21 +215,21 @@ exports.createPages = async ({ actions: { createPage } }) => {
 
 For each type of page, we are invoking the `createPage` action, and supplying it with our desired path, React component, and data (as `context`).
 
-> View the full source code of this example at Jason Lengstorf's ["gatsby-with-unstructured-data" repo](https://github.com/jlengstorf/gatsby-with-unstructured-data). Also check out the ["using-gatsby-data-layer" branch](https://github.com/jlengstorf/gatsby-with-unstructured-data/tree/using-gatsby-data-layer) of that repo, to compare a refactor that uses Gatsby's data layer in the same example.
+> View the full source code of this example at Jason Lengstorf's [`gatsby-with-unstructured-data` repo](https://github.com/jlengstorf/gatsby-with-unstructured-data). Also check out the [`using-gatsby-data-layer` branch](https://github.com/jlengstorf/gatsby-with-unstructured-data/tree/using-gatsby-data-layer) of that repo, to compare a refactor that uses Gatsby's data layer in the same example.
 
 ## The pros of using unstructured data
 
 - When prototyping, or when new to Gatsby, this approach may feel more familiar, comfortable, and faster
-- There’s no intermediate step: you fetch some data, then build pages with it
+- There's no intermediate step: you fetch some data, then build pages with it
 
 ## The tradeoffs of foregoing Gatsby's data layer
 
 Using Gatsby's data layer provides the following benefits:
 
 - Enables you to declaratively specify what data a page component needs, alongside the page component
-- Eliminates frontend data boilerplate — no need to worry about requesting & waiting for data. Just ask for the data you need with a GraphQL query and it’ll show up when you need it
+- Eliminates frontend data boilerplate — no need to worry about requesting & waiting for data. Just ask for the data you need with a GraphQL query and it'll show up when you need it
 - Pushes frontend complexity into queries — many data transformations can be done at build-time within your GraphQL queries (e.g. Markdown -> HTML, images -> responsive images, etc)
-- It’s the perfect data querying language for the often complex/nested data dependencies of modern applications
+- It's the perfect data querying language for the often complex/nested data dependencies of modern applications
 - Improves performance by removing data bloat — GraphQL enables you to select only the data you need, not whatever an API returns
 - Enables you to take advantage of hot reloading when developing; For example, in this post's example "Pokémon" site, if you wanted to add a "see other pokémon" section to the pokémon detail view, you would need to change your `gatsby-node.js` to pass all pokémon to to the page, and restart the dev server. In contrast, when using queries, you can add a query and it will hot reload.
 

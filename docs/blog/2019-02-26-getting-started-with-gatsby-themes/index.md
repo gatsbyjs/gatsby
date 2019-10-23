@@ -7,7 +7,7 @@ tags: ["themes", "getting-started"]
 
 > _Updated July 9, 2019 to reflect using the `gatsby-plugin-mdx` package instead of the (now deprecated) `gatsby-mdx` package._
 
-### What is a Gatsby theme?
+## What is a Gatsby theme?
 
 <Pullquote cite="Jason Lengstorf">Gatsby themes allow you to focus only on the parts of the site and app building process that you need to care about by abstracting the rest away into a package.</Pullquote>
 
@@ -36,7 +36,7 @@ Tidy up your _package.json_ file and create workspaces which includes the projec
 }
 ```
 
-Next, you want to create your _site_ directory and your _packages_ directory within your _gatsby-theme_ project directory. Make sure the names that you choose for your directories are the same as what you put in your workspaces. You will also want to go into your packages directory and make another directory with the name of your theme. For the purpose of this tutorial, we will call it _theme_. Then you will want to `yarn init` the _theme_ directory and the _site_ directory.
+Next, you want to create your _`site`_ directory and your _`packages`_ directory within your _`gatsby-theme`_ project directory. Make sure the names that you choose for your directories are the same as what you put in your workspaces. You will also want to go into your packages directory and make another directory with the name of your theme. For the purpose of this tutorial, we will call it _theme_. Then you will want to `yarn init` the _theme_ directory and the _site_ directory.
 
 ```shell
 mkdir site
@@ -85,7 +85,7 @@ You will want to make Gatsby, React, and ReactDom peer dependencies in the _them
   },
 ```
 
-## Installing MDX and gatsby-plugin-page-creator
+## Installing MDX and `gatsby-plugin-page-creator`
 
 ### What is MDX?
 
@@ -99,7 +99,7 @@ Then you need to add `gatsby-plugin-mdx` and MDX as dependencies.
 
 `yarn workspace theme add gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react`
 
-Next, you will want to add gatsby-plugin-page-creator
+Next, you will want to add `gatsby-plugin-page-creator`
 
 `yarn workspace theme add gatsby-plugin-page-creator`
 
@@ -109,7 +109,7 @@ In the future, Gatsby will automatically handle adding the page-creator plugin.
 
 Read more about the page-creator plugin [here.](/packages/gatsby-plugin-page-creator/)
 
-Next, you will want to create your _gatsby-config.js_ file under your _theme_ directory. Make sure to include 'gatsby-plugin-mdx' and 'gatsby-plugin-page-creator.'
+Next, you will want to create your `gatsby-config.js` file under your _theme_ directory. Make sure to include `gatsby-plugin-mdx` and `gatsby-plugin-page-creator`
 
 ```javascript:title=packages/theme/gatsby-config.js
 const path = require(`path`)
@@ -130,7 +130,7 @@ module.exports = {
 }
 ```
 
-Lastly, you're going to want to add a _gatsby-config.js_ file to your _site_ directory.
+Lastly, you're going to want to add a `gatsby-config.js` file to your _site_ directory.
 
 ```javascript:title=site/gatsby-config.js
 module.exports = {
@@ -234,7 +234,7 @@ export default ({ children }) => (
 )
 ```
 
-To make sure your _layout.js_ file is connected to your theme you will navigate to your _gatsby-config.js_ file in your _theme_ directory. You will add defaultLayouts under options and make sure that the _layout.js_ is required.
+To make sure your _layout.js_ file is connected to your theme you will navigate to your `gatsby-config.js` file in your _theme_ directory. You will add defaultLayouts under options and make sure that the _layout.js_ is required.
 
 ```javascript:title=packages/theme/gatsby-config.js
 const path = require(`path`)
@@ -263,7 +263,7 @@ module.exports = {
 
 If you want to reuse a specific style, you can create styled components. In your components directory, you will create a new file (for example: _header.js_).
 
-Here is an example of how you can set-up your styled component in _header.js_. Please make sure you write css-in-javascript when styling your div.
+Here is an example of how you can set-up your styled component in _header.js_. Please make sure you write `css-in-javascript` when styling your div.
 
 ```javascript:title=header.js
 export default ({ children }) => (
@@ -296,7 +296,7 @@ You can then use it to style specific things in your file.
 
 ## Using Your Theme
 
-It's finally time to use and share your theme! You can push your whole directory (_gatsby-themes_) to GitHub.
+It's finally time to use and share your theme! You can push your whole directory (`gatsby-themes`) to GitHub.
 
 If you ever want to use your theme, you will do:
 

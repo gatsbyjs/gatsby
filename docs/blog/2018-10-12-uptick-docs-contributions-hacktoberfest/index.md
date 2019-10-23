@@ -7,9 +7,9 @@ tags: ["documentation", "hacktoberfest", "open-source"]
 
 ## Hacktoberfest docs explosion!
 
-Since October 1st -- the start of Hacktoberfest -- the Gatsby OSS community has seen a huge uptick in docs contributions. In the first 5 days of October we [merged 31 PR's with the `documentation` label](https://github.com/gatsbyjs/gatsby/pulls?utf8=%E2%9C%93&q=is%3Apr+sort%3Aupdated-desc+is%3Aclosed+label%3A%22type%3A+documentation%22+language%3Aswift+closed%3A%3E2018-10-01) (and by the time you click on that link, it will likely be more than 31, especially if PR’s are labeled correctly!).
+Since October 1st -- the start of Hacktoberfest -- the Gatsby OSS community has seen a huge uptick in docs contributions. In the first 5 days of October we [merged 31 PR's with the `documentation` label](https://github.com/gatsbyjs/gatsby/pulls?utf8=%E2%9C%93&q=is%3Apr+sort%3Aupdated-desc+is%3Aclosed+label%3A%22type%3A+documentation%22+language%3Aswift+closed%3A%3E2018-10-01) (and by the time you click on that link, it will likely be more than 31, especially if PR's are labeled correctly!).
 
-A big thanks to every contributor who jumped in to help Gatsby docs keep becoming more polished, comprehensive, and clear. In fact, many of the PR’s fixed problems we hadn’t even created issues for yet! And we’re increasing the number of `hacktoberfest` + `documentation` labeled issues to account for the surge of helpful contributions. A special thanks to [@amberleyromo](https://github.com/amberleyromo), [@jlengstorf](https://github.com/jlengstorf), [@DSchau](https://github.com/DSchau), and [@pieh](https://github.com/pieh) for their hard work giving feedback and merging PR’s!
+A big thanks to every contributor who jumped in to help Gatsby docs keep becoming more polished, comprehensive, and clear. In fact, many of the PR's fixed problems we hadn't even created issues for yet! And we're increasing the number of `hacktoberfest` + `documentation` labeled issues to account for the surge of helpful contributions. A special thanks to [@amberleyromo](https://github.com/amberleyromo), [@jlengstorf](https://github.com/jlengstorf), [@DSchau](https://github.com/DSchau), and [@pieh](https://github.com/pieh) for their hard work giving feedback and merging PR's!
 
 Read more on how to participate in Gatsby Hacktoberfest in our [Hacktoberfest kickoff post](/blog/2018-10-09-hacktoberfest-kickoff/)
 
@@ -21,11 +21,11 @@ This has led to two changes:
 
 1.  [@jlengstorf](https://github.com/jlengstorf) created the [@gatsbyjs/docs team](https://github.com/orgs/gatsbyjs/teams/docs) in GitHub that automatically notifies whomever is on the team whenever a PR includes edits to anything within /docs/.
 
-2.  With the help of many people, I created a “docs decision tree,” so that when the [@gatsbyjs/docs team](https://github.com/orgs/gatsbyjs/teams/docs) is notified, they can make decisions in a unified manner according to a set of agreed-upon principles (which can be adjusted over time). This will help anyone making decisions pertaining to docs escape any biases and fickleness. The “docs decision tree” will be tested over Hacktoberfest with all issues labeled `documentation` and collect discussion in the [Docs Decision Tree RFC](https://github.com/gatsbyjs/rfcs/pull/14).
+2.  With the help of many people, I created a "docs decision tree," so that when the [@gatsbyjs/docs team](https://github.com/orgs/gatsbyjs/teams/docs) is notified, they can make decisions in a unified manner according to a set of agreed-upon principles (which can be adjusted over time). This will help anyone making decisions pertaining to docs escape any biases and fickleness. The "docs decision tree" will be tested over Hacktoberfest with all issues labeled `documentation` and collect discussion in the [Docs Decision Tree RFC](https://github.com/gatsbyjs/rfcs/pull/14).
 
 ## Docs Decision Tree and Examples
 
-Here is a summary of the “docs decision tree,” a tool we’ll use to make decisions about how to grow and maintain Gatsby docs.
+Here is a summary of the "docs decision tree," a tool we'll use to make decisions about how to grow and maintain Gatsby docs.
 
 > You can also look at a visualization of the decision tree(s) in [Whimsical](https://whimsical.co/78PmoqFTbJJxpXHA1a6gba).
 
@@ -35,7 +35,7 @@ A doc qualifies to be in the .org site if it:
 
 1.  Deals with a piece of Gatsby-maintained software (e.g. pertains to code in the [Gatsby OSS repository](https://www.github.com/gatsbyjs/gatsby)), a core dependency of the code in the Gatsby OSS repo, or a third-party software that works well with Gatsby and is in high demand
 
-> **Yes** --> Belongs in the docs (to make sure we don’t have to maintain docs about core dependencies and third-party software, we will focus on linking to their docs as much as possible)
+> **Yes** --> Belongs in the docs (to make sure we don't have to maintain docs about core dependencies and third-party software, we will focus on linking to their docs as much as possible)
 
 > **No** --> Belongs in blog, marketing, Twitter, podcast, starter library, plugin library, etc.
 
@@ -111,6 +111,6 @@ Names for guides, tutorial sections, and sub-headings in the .org site should:
 
 ## Thanks and keep Hacktoberfesting with Gatsby
 
-It’s been incredible to see how many hard-working contributors have gotten PR’s merged with us so far! Don't forget to check out [how to participate in Gatsby Hacktoberfest!](/blog/2018-10-09-hacktoberfest-kickoff/)
+It's been incredible to see how many hard-working contributors have gotten PR's merged with us so far! Don't forget to check out [how to participate in Gatsby Hacktoberfest!](/blog/2018-10-09-hacktoberfest-kickoff/)
 
-And don’t forget to also read the [Docs Decision Tree RFC](https://github.com/gatsbyjs/rfcs/pull/14) and leave your comments before October 31st, when the commenting period will be closed.
+And don't forget to also read the [Docs Decision Tree RFC](https://github.com/gatsbyjs/rfcs/pull/14) and leave your comments before October 31st, when the commenting period will be closed.

@@ -115,8 +115,8 @@ as we do and find it useful for all your projects.
 
 When starting out with GraphQL, we recommend the following two tutorials:
 
-- https://www.howtographql.com/
-- http://graphql.org/learn/
+- <https://www.howtographql.com/>
+- <http://graphql.org/learn/>
 
 [The official Gatsby tutorial](/tutorial/part-four/) also includes an introduction to using GraphQL specifically with Gatsby.
 
@@ -262,7 +262,7 @@ query($path: String!) {
 }
 ```
 
-It’s good practice for your helper components to define and export a fragment for the data they need. For example, on your index page you might map over all of your posts to show them in a list.
+It's good practice for your helper components to define and export a fragment for the data they need. For example, on your index page you might map over all of your posts to show them in a list.
 
 ```jsx:title=src/pages/index.jsx
 import React from "react"
@@ -368,10 +368,10 @@ export const query = graphql`
 
 ### Getting started with GraphQL
 
-- http://graphql.org/learn/
-- https://www.howtographql.com/
-- https://reactjs.org/blog/2015/05/01/graphql-introduction.html
-- https://services.github.com/on-demand/graphql/
+- <http://graphql.org/learn/>
+- <https://www.howtographql.com/>
+- <https://reactjs.org/blog/2015/05/01/graphql-introduction.html>
+- <https://services.github.com/on-demand/graphql/>
 
 ### Advanced readings on GraphQL
 

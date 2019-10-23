@@ -19,15 +19,15 @@ Two types of people will be excited about this article.
 
 As Sam Bhagwat wrote [when announcing Gatsby Preview](/blog/2018-07-17-announcing-gatsby-preview/):
 
-> Content teams are creators. And creators, as Bret Victor put it, “need an immediate connection to what they’re making.”
+> Content teams are creators. And creators, as Bret Victor put it, "need an immediate connection to what they're making."
 
-> When a copywriter edits a headline in their CMS, they shouldn’t have to imagine what their change looks like in context. They should see it—immediately.
+> When a copywriter edits a headline in their CMS, they shouldn't have to imagine what their change looks like in context. They should see it—immediately.
 
 At [Third and Grove](https://www.thirdandgrove.com/), we've been working on a preview module for Drupal to be used with Gatsby Cloud.
 
 **Today, we're excited to announce that we're beta launching live preview with Drupal and Gatsby!**
 
-With modern JavaScript, React’s component model, and Progressive Web App features built in, Gatsby + Gatsby Preview is a compelling alternative to traditional CMS site building, while still allowing content teams to use mature CMS content workflows. So far, it's been available for Contentful, Sanity, DatoCMS, and Contentstack.
+With modern JavaScript, React's component model, and Progressive Web App features built in, Gatsby + Gatsby Preview is a compelling alternative to traditional CMS site building, while still allowing content teams to use mature CMS content workflows. So far, it's been available for Contentful, Sanity, DatoCMS, and Contentstack.
 
 Today's launch of Gatsby Preview + Drupal is a major milestone, making Gatsby Preview available for a huge, thriving open-source community.
 
@@ -62,9 +62,9 @@ Once your plugin is set up the Gatsby plugin will listen for changes at a specif
 
 ### Step 3: Enable JSON API in Drupal
 
-Let’s make our transition in to Drupal. First things first, enable the JSON API in your Drupal instance. Then get the Gatsby Preview module at [this link on drupal.org](https://www.drupal.org/project/gatsby).
+Let's make our transition in to Drupal. First things first, enable the JSON API in your Drupal instance. Then get the Gatsby Preview module at [this link on drupal.org](https://www.drupal.org/project/gatsby).
 
-Install the module and enable it on your Drupal instance. Configuring the Drupal module is straightforward: under ‘Configuration > System’, you should now have the option for ‘Gatsby Live Preview Settings’. The URL you copied earlier from your Gatsby Cloud instance can be pasted into the ‘Gatsby Preview Server URL’ field in Drupal and saved.
+Install the module and enable it on your Drupal instance. Configuring the Drupal module is straightforward: under 'Configuration > System', you should now have the option for 'Gatsby Live Preview Settings'. The URL you copied earlier from your Gatsby Cloud instance can be pasted into the 'Gatsby Preview Server URL' field in Drupal and saved.
 
 Now you're all set up to use Preview! Make a change to your content, press Save, and watch as Gatsby updates before Drupal even notifies you that your changes have been saved.
 

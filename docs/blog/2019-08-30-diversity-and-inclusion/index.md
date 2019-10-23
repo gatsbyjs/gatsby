@@ -1,5 +1,5 @@
 ---
-title: Gatsby’s Commitments to Diversity and Inclusion (D&I)
+title: Gatsby's Commitments to Diversity and Inclusion (D&I)
 date: 2019-08-30
 author: Maddie Wolf
 excerpt: "An update on the tactical steps we are working on which align with the Gatsby value of You Belong Here"
@@ -7,9 +7,9 @@ tags:
   - diversity-and-inclusion
 ---
 
-You may have seen the [“You Belong Here”](/blog/2018-09-07-gatsby-values/) phrase used by folks at Gatsby. You may have also thought, “Does that really include me?” The answer is **YES**. We want the Gatsby community and developer community at large to not just accept everyone, but actively seek and elevate the voices of those from underrepresented groups.
+You may have seen the ["You Belong Here"](/blog/2018-09-07-gatsby-values/) phrase used by folks at Gatsby. You may have also thought, "Does that really include me?" The answer is **YES**. We want the Gatsby community and developer community at large to not just accept everyone, but actively seek and elevate the voices of those from underrepresented groups.
 
-We’re so excited to announce the following 5 steps, which are just the beginning of our efforts:
+We're so excited to announce the following 5 steps, which are just the beginning of our efforts:
 
 **Investing in the Community**: Gatsby is going to sponsor two interns at [Outreachy](https://www.outreachy.org). Outreachy provides internships in programming, user experience, documentation, illustration, graphical design, or data science to work in Free and Open Source Software. Internships are open to applicants around the world who face under-representation or systemic bias in the technology industry.
 

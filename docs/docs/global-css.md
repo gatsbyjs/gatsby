@@ -58,7 +58,7 @@ import Layout from "../components/layout"
 export default () => <Layout>Hello world!</Layout>
 ```
 
-Run `npm run develop` and you’ll see the global styles applied.
+Run `npm run develop` and you'll see the global styles applied.
 
 ![Global styles](./images/global-styles.png)
 
