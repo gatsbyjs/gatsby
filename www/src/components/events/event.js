@@ -8,7 +8,7 @@ const displayDate = date =>
     year: `numeric`,
     month: `long`,
     day: `numeric`,
-    timeZone: `UTC`
+    timeZone: `UTC`,
   })
 
 const Event = ({
