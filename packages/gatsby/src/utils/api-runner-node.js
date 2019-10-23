@@ -68,6 +68,11 @@ const initAPICallTracing = parentSpan => {
   }
 }
 
+const getLocalReporter = (activity, reporter) =>
+  activity
+    ? { ...reporter, panicOnBuild: activity.panicOnBuild.bind(activity) }
+    : reporter
+
 const runAPI = (plugin, api, args, activity) => {
   const gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
   if (gatsbyNode[api]) {
@@ -161,9 +166,7 @@ const runAPI = (plugin, api, args, activity) => {
         },
       }
     }
-    let localReporter = activity
-      ? { ...reporter, panicOnBuild: activity.panicOnBuild.bind(activity) }
-      : reporter
+    let localReporter = getLocalReporter(activity, reporter)
 
     const apiCallArgs = [
       {
@@ -335,27 +338,17 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
           pluginName: `${plugin.name}@${plugin.version}`,
         })
 
-        if (activity) {
-          activity.panicOnBuild({
-            id: `11321`,
-            context: {
-              pluginName,
-              api,
-              message: err instanceof Error ? err.message : err,
-            },
-            error: err instanceof Error ? err : undefined,
-          })
-        } else {
-          reporter.panicOnBuild({
-            id: `11321`,
-            context: {
-              pluginName,
-              api,
-              message: err instanceof Error ? err.message : err,
-            },
-            error: err instanceof Error ? err : undefined,
-          })
-        }
+        let localReporter = getLocalReporter(activity, reporter)
+
+        localReporter.panicOnBuild({
+          id: `11321`,
+          context: {
+            pluginName,
+            api,
+            message: err instanceof Error ? err.message : err,
+          },
+          error: err instanceof Error ? err : undefined,
+        })
 
         return null
       })
