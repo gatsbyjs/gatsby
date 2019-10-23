@@ -32,3 +32,6 @@ coverage
 
 # forestry files
 .forestry/**/*
+
+# docs
+docs/
