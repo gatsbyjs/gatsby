@@ -5,25 +5,15 @@ import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import Button from "./button"
 
 const MastheadContent = () => (
-  <div
-    className="masthead-content"
-    sx={{
-      margin: `0 auto`,
-      px: 8,
-      py: [9, null, null, 12],
-      mb: [null, null, null, 6],
-      textAlign: `center`,
-    }}
-  >
+  <div sx={{ mb: 8 }}>
     <h1
       sx={{
-        fontSize: `calc(28px + 0.5vh + 1.5vw)`,
+        fontSize: 11,
         letterSpacing: `tight`,
         lineHeight: `solid`,
         maxWidth: `15em`,
         mb: 6,
         mt: 0,
-        mx: `auto`,
       }}
     >
       Fast in every way that&nbsp;matters
@@ -37,7 +27,6 @@ const MastheadContent = () => (
         maxWidth: `45rem`,
         mb: 10,
         mt: 0,
-        mx: `auto`,
       }}
     >
       Gatsby is a free and open source framework based on React that helps

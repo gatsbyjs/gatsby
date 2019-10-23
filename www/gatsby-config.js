@@ -63,6 +63,7 @@ module.exports = {
   mapping: {
     "MarkdownRemark.frontmatter.author": `AuthorYaml`,
     "Mdx.frontmatter.author": `AuthorYaml`,
+    // "HomepageMastheadYaml.id": `SitesYaml.title`,
   },
   plugins: [
     `gatsby-plugin-theme-ui`,
@@ -92,6 +93,13 @@ module.exports = {
       options: {
         name: `ecosystem`,
         path: `${__dirname}/src/data/ecosystem/`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `homepage`,
+        path: `${__dirname}/src/data/homepage/`,
       },
     },
     {

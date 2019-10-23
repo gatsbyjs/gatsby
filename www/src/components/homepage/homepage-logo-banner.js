@@ -8,10 +8,8 @@ import { mediaQueries } from "gatsby-design-tokens"
 import { Name } from "./homepage-section"
 
 const Section = styled(`section`)`
-  border-bottom: 1px solid ${p => p.theme.colors.ui.border};
   overflow: hidden;
   padding: ${p => p.theme.space[5]} 0;
-  width: 100%;
 
   ${mediaQueries.xl} {
     margin-top: -1px;
@@ -50,7 +48,7 @@ const LogoGroup = styled(`div`)`
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: auto;
-  grid-gap: ${p => p.theme.space[8]};
+  grid-gap: ${p => p.theme.space[6]};
   align-items: center;
   overflow-x: scroll;
   padding-left: ${p => p.theme.space[3]};
@@ -77,7 +75,7 @@ const HomepageLogoBanner = () => {
           node {
             base
             childImageSharp {
-              fixed(quality: 75, height: 24) {
+              fixed(quality: 75, height: 20) {
                 ...GatsbyImageSharpFixed_tracedSVG
               }
             }

@@ -25,6 +25,7 @@ const contributingLinksData = yaml.load(
 )
 
 let ecosystemFeaturedItems
+let homepageMastheadItems
 
 if (
   process.env.gatsby_executing_command === `build` &&
@@ -510,6 +511,18 @@ exports.createPages = ({ graphql, actions, reporter }) => {
             }
           }
         }
+        allHomepageMastheadYaml {
+          edges {
+            node {
+              scale
+              shape
+              title
+              x
+              y
+              color
+            }
+          }
+        }
       }
     `).then(result => {
       if (result.errors) {
@@ -824,6 +837,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
 
       // Read featured starters and plugins for Ecosystem
       ecosystemFeaturedItems = result.data.allEcosystemYaml.edges[0].node
+      homepageMastheadItems = result.data.allHomepageMastheadYaml.edges
 
       return resolve()
     })
@@ -1064,6 +1078,36 @@ exports.onCreatePage = ({ page, actions }) => {
 
     page.context.featuredStarters = ecosystemFeaturedItems.starters
     page.context.featuredPlugins = ecosystemFeaturedItems.plugins
+
+    // small items
+    page.context.mastheadItems = [
+      ...new Set(
+        homepageMastheadItems
+          .filter(
+            obj =>
+              obj.node.shape !== `rectangle` &&
+              !obj.node.scale &&
+              obj.node.title
+          )
+          .map(it => it.node.title)
+      ),
+    ]
+    // large items
+    page.context.mastheadItemsLarge = [
+      ...new Set(
+        homepageMastheadItems
+          .filter(obj => obj.node.scale === 2)
+          .map(it => it.node.title)
+      ),
+    ]
+    // rectangular items
+    page.context.mastheadItemsRectangular = [
+      ...new Set(
+        homepageMastheadItems
+          .filter(obj => obj.node.shape === `rectangle` && obj.node.title)
+          .map(it => it.node.title)
+      ),
+    ]
 
     deletePage(oldPage)
     createPage(page)

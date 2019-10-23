@@ -8,6 +8,7 @@ import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import Layout from "../components/layout"
 import Container from "../components/container"
 import MastheadContent from "../components/masthead"
+import MastheadVisual from "../components/masthead-visual"
 import Diagram from "../components/diagram"
 import FuturaParagraph from "../components/futura-paragraph"
 import Button from "../components/button"
@@ -46,6 +47,7 @@ class IndexRoute extends React.Component {
         allMdx: { edges: postsData },
         allStartersYaml: { edges: startersData },
         allNpmPackage: { edges: pluginsData },
+        allHomepageMastheadYaml: { edges: mastheadData },
       },
     } = this.props
 
@@ -103,7 +105,38 @@ class IndexRoute extends React.Component {
             justifyContent: `space-between`,
           }}
         >
-          <MastheadContent />
+          <div
+            sx={{
+              display: `flex`,
+              // background: `green`,
+              maxWidth: 1180,
+              width: `100%`,
+              mx: `auto`,
+              pl: [8, null, null, 12],
+              pr: [8, null, null, 0, 0],
+              py: [9, null, null, null, 12],
+            }}
+          >
+            <div
+              sx={{
+                pr: 12,
+                maxWidth: 540,
+                flexShrink: 1,
+                // background: `blue`,
+              }}
+            >
+              <MastheadContent />
+              <HomepageLogoBanner />
+            </div>
+            <MastheadVisual
+              items={mastheadData}
+              showcaseItems={[
+                ...this.props.data.mastheadItems.edges,
+                ...this.props.data.mastheadItemsLarge.edges,
+                ...this.props.data.mastheadItemsRectangular.edges,
+              ]}
+            />
+          </div>
           <div
             sx={{
               width: `100%`,
@@ -113,7 +146,6 @@ class IndexRoute extends React.Component {
           >
             <Diagram />
           </div>
-          <HomepageLogoBanner />
           <HomepageFeatures />
           <div css={{ flex: `1 1 100%` }}>
             <Container withSidebar={false}>
@@ -161,16 +193,10 @@ export const pageQuery = graphql`
   query IndexRouteQuery(
     $featuredStarters: [String]!
     $featuredPlugins: [String]!
+    $mastheadItems: [String]!
+    $mastheadItemsLarge: [String]!
+    $mastheadItemsRectangular: [String]!
   ) {
-    file(relativePath: { eq: "gatsby-explanation.png" }) {
-      childImageSharp {
-        fluid(maxWidth: 870) {
-          src
-          srcSet
-          sizes
-        }
-      }
-    }
     allMdx(
       sort: { order: DESC, fields: [frontmatter___date, fields___slug] }
       limit: 4
@@ -224,6 +250,70 @@ export const pageQuery = graphql`
           name
           description
           humanDownloadsLast30Days
+        }
+      }
+    }
+    allHomepageMastheadYaml {
+      edges {
+        node {
+          scale
+          shape
+          title
+          x
+          y
+          color
+        }
+      }
+    }
+    mastheadItems: allSitesYaml(filter: { title: { in: $mastheadItems } }) {
+      edges {
+        node {
+          title
+          childScreenshot {
+            screenshotFile {
+              childImageSharp {
+                fixed(width: 64, height: 64) {
+                  ...GatsbyImageSharpFixed_noBase64
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    mastheadItemsLarge: allSitesYaml(
+      filter: { title: { in: $mastheadItemsLarge } }
+    ) {
+      edges {
+        node {
+          title
+          childScreenshot {
+            screenshotFile {
+              childImageSharp {
+                fixed(width: 128, height: 128) {
+                  ...GatsbyImageSharpFixed_noBase64
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    mastheadItemsRectangular: allSitesYaml(
+      filter: { title: { in: $mastheadItemsRectangular } }
+    ) {
+      edges {
+        node {
+          title
+          childScreenshot {
+            screenshotFile {
+              childImageSharp {
+                fixed(width: 128, height: 64) {
+                  ...GatsbyImageSharpFixed_noBase64
+                }
+              }
+            }
+          }
         }
       }
     }
