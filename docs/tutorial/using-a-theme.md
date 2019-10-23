@@ -63,9 +63,9 @@ module.exports = {
 
 ## Replace the content of the bio
 
-When using Gatsby themes, you can take advantage of something called component shadowing.
+When using Gatsby themes, you can take advantage of something called component shadowing. This allows you to override the default component included in the theme with a custom one you've created.
 
-The Gatsby blog theme package has a component that contains the content of the site author's biography. The file path to that component (in the blog theme package, not your site) is `gatsby-theme-blog/src/components/bio-content.js`.
+The Gatsby blog theme package has a component that contains the content of the site author's biography. The file path to that component (in the blog theme package, not your site) is `gatsby-theme-blog/src/components/bio-content.js`. You can find this path by looking through the theme in your site's `node_modules/gatsby-theme-blog` directory.
 
 If you look at the file tree of your site, you'll see it looks like this:
 
@@ -87,7 +87,7 @@ my-blog
 └── package.json
 ```
 
-In the `src` directory of the site, there's a `gatsby-theme-blog` directory. Any file placed in that directory that corresponds to a file in the blog theme will completely shadow the theme.
+In the `src` directory of the site, there's a `gatsby-theme-blog` directory. Any file placed in that directory with a path that matches the path of a file in the blog theme directory will completely shadow the theme.
 
 > 💡 The name of the directory (here `gatsby-theme-blog`) must exactly mirror the name of the published theme package, which in this case is [`gatsby-theme-blog`](https://www.npmjs.com/package/gatsby-theme-blog).
 
