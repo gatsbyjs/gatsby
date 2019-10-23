@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.17.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.17.1...gatsby@2.17.2) (2019-10-23)
+
+### Bug Fixes
+
+- fix overriding default options of `gatsby-plugin-page-creator` on Windows ([#18828](https://github.com/gatsbyjs/gatsby/issues/18828)) ([fc61f06](https://github.com/gatsbyjs/gatsby/commit/fc61f06))
+- **gatsby:** ensure `[@child](https://github.com/child)Of` adds convenience fields before root field arguments ([#18935](https://github.com/gatsbyjs/gatsby/issues/18935)) ([366d915](https://github.com/gatsbyjs/gatsby/commit/366d915))
+
+### Features
+
+- **gatsby:** Ensure status is set to Failed for thrown errors or panicOnBuild in plugins ([#18887](https://github.com/gatsbyjs/gatsby/issues/18887)) ([d7950e1](https://github.com/gatsbyjs/gatsby/commit/d7950e1))
+
 ## [2.17.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.17.0...gatsby@2.17.1) (2019-10-22)
 
 **Note:** Version bump only for package gatsby
