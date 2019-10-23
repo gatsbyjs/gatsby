@@ -10,7 +10,8 @@ If you are already comfortable with Gatsby and Shopify, you might want to check 
 
 1. Create a new [Shopify account](https://www.shopify.com) and store if you don't have one.
 2. Create a private app in your store by navigating to `Apps`, then `Manage private apps`.
-3. Create a new private app and enable the [Shopify Storefront API](https://help.shopify.com/en/api/storefront-api). Make sure to also grant access to read product and customer tags.
+3. Create a new private app, with any "Private app name" and leaving the default permissions as Read access under Admin API.
+4. Enable the [Shopify Storefront API](https://help.shopify.com/en/api/storefront-api) by checking the box that says "Allow this app to access your storefront data using Storefront API". Make sure to also grant access to read product and customer tags by checking their corresponding boxes.
 
 ## Set up the Gatsby Shopify plugin
 
@@ -22,7 +23,7 @@ If you are already comfortable with Gatsby and Shopify, you might want to check 
 npm install --save gatsby-source-shopify shopify-buy
 ```
 
-3. Enable and configure the plugin in your `gatsby-config.js` file.
+3. Enable and configure the plugin in your `gatsby-config.js` file, replacing [some-shop] with your shop name and [token] with your Storefront access token.
 
 ```javascript:title=/gatsby-config.js
 plugins: [
@@ -30,7 +31,7 @@ plugins: [
     resolve: `gatsby-source-shopify`,
     options: {
       // The domain name of your Shopify shop.
-      shopName: `[some-shop].myshopify.com`,
+      shopName: `[some-shop]`,
 
       // The storefront access token
       accessToken: `[token]`,
@@ -43,7 +44,7 @@ plugins: [
 
 ## Querying Shopify data and listing products
 
-Open the Gatsby GraphiQL interface by visiting `http://localhost:8000/___graphql`. You should see several new types of nodes in the Explorer tab, like `allShopifyProduct`. To query all products in your store sorted by title, try running the query:
+Open the Gatsby GraphiQL interface by visiting `http://localhost:8000/___graphql`. With at least one example product added into Shopify you should see several new types of nodes in the Explorer tab, like `allShopifyProduct`. To query all products in your store sorted by title, try running the query:
 
 ```graphql
 {
