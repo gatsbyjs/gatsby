@@ -275,6 +275,8 @@ Your repository [${transRepo.name}](${transRepo.url}) has been created.
 
 Please use this [progress issue](${progressIssue.url}) to keep track of the translation progress.
 
+Make sure to check out the [maintainer responsibilities](https://www.gatsbyjs.org/contributing/gatsby-docs-translation-guide/#maintainer-responsibilities) and review your duties as a maintainer.
+
 Feel free to reach out to the Gatsby team if you need any help!
 
 Happy translating!
