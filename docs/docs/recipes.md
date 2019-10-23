@@ -869,7 +869,9 @@ export const pageQuery = graphql`
 contentful login
 ```
 
-2. Create a new space. Make sure to save the space ID given to you at the end of the command.
+2. Create a new space if you don't already have one. Make sure to save the space ID given to you at the end of the command. If you already have a Contentful space and space ID, you can skip steps 2 and 3.
+
+Note: for new accounts, you can overwrite the default onboarding space. Check to see the [spaces included with your account](https://app.contentful.com/account/profile/space_memberships).
 
 ```shell
 contentful space create --name 'Gatsby example'
@@ -883,7 +885,7 @@ contentful space seed -s '<space ID>' -t blog
 
 For example, with a space ID in place: `contentful space seed -s '22fzx88spbp7' -t blog`
 
-4. Create a new access token for your space.
+4. Create a new access token for your space. Remember this token, as you will need it in step 6.
 
 ```shell
 contentful space accesstoken create -s '<space ID>' --name 'Example token'
@@ -895,18 +897,23 @@ contentful space accesstoken create -s '<space ID>' --name 'Example token'
 npm install --save gatsby-source-contentful
 ```
 
-6. Edit the file `gatsby-config.js` to enable the `gatsby-source-contentful` plugin. You should strongly consider using [environment variables](/docs/environment-variables/) to store your space ID and token for security purposes.
+6. Edit the file `gatsby-config.js` and add the `gatsby-source-contentful` to the `plugins` array to enable the plugin. You should strongly consider using [environment variables](/docs/environment-variables/) to store your space ID and token for security purposes.
 
 ```javascript:title=gatsby-config.js
 plugins: [
-  {
+   // add to array along with any other installed plugins
+   // highlight-start
+   {
+
+
     resolve: `gatsby-source-contentful`,
     options: {
       spaceId: `<space ID>`, // or process.env.CONTENTFUL_SPACE_ID
       accessToken: `<access token>`, // or process.env.CONTENTFUL_TOKEN
     },
   },
-]
+  // highlight-end
+],
 ```
 
 7. Run `gatsby develop` and make sure the site compiled successfully.
@@ -931,7 +938,7 @@ To query for Blog Post titles from Contentful, use the following GraphQL query:
 
 Contentful nodes also include several metadata fields like `createdAt` or `node_locale`.
 
-9. To show a simple list of blog posts, create a new file in `/src/pages/blog.js`. This page will display all posts, sorted by updated date.
+9. To show a list of links to the blog posts, create a new file in `/src/pages/blog.js`. This page will display all posts, sorted by updated date.
 
 ```jsx:title=src/pages/blog.js
 import React from "react"
