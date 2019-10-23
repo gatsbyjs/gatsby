@@ -29,6 +29,7 @@
  * GITHUB_BOT_AUTH_TOKEN - An auth token with write permissions for the gatsbybot
  *
  */
+const fs = require(`fs`)
 const yaml = require(`js-yaml`)
 const shell = require(`shelljs`)
 const { graphql } = require(`@octokit/graphql`)
@@ -46,7 +47,7 @@ const branch = `master`
 // const issueRepo = "tesseralis.club"
 
 const owner = `gatsbyjs`
-const sourceRepoName = `gatsbyjs-i18n-source`
+const sourceRepoName = `gatsby-i18n-source`
 const issueRepo = `gatsby` // repo where the request issues are
 
 const sourceUrl = `${host}/${owner}/${sourceRepoName}.git`
@@ -105,7 +106,7 @@ function setupSourceRepo() {
   }
 }
 
-function pushSourceContent(transRepo, codeowners) {
+function pushSourceContent(transRepo, langName, codeowners) {
   // Delete old version of cache if it exists
   if (shell.ls(transRepo.name).code === 0) {
     logger.debug(`folder name ${transRepo.name} exists already. Deleting...`)
@@ -121,7 +122,21 @@ function pushSourceContent(transRepo, codeowners) {
   const codeownersFileContent = `*   ${codeowners.map(m => `@` + m).join(` `)}`
   shell.exec(`echo "${codeownersFileContent}" > ${codeownersFile}`)
   shell.exec(`git add ${codeownersFile}`)
-  shell.exec(`git commit -am 'add ${codeownersFile}'`)
+
+  // create the new README
+  const readmeTemplate = `
+# Gatsby ${langName} Translation
+
+This repo contains the ${langName} translation for Gatsby.
+
+Please refer to the [Gatsby Translation Guide](https://www.gatsbyjs.org/contributing/gatsby-docs-translation-guide/) for instructions.
+
+[Feel free to translate this document and add any content you feel would be useful to contributors].
+  `
+  fs.writeFileSync(`README.md`, readmeTemplate)
+  shell.exec(`git add README.md`)
+
+  shell.exec(`git commit -am 'add CODEOWNERS and README'`)
 
   // push new content
   logger.info(`pushing source content`)
@@ -340,7 +355,7 @@ async function setupRepository(issueNo) {
     createProgressIssue(transRepo, langName),
     createBranchProtections(transRepo),
     closeRequestIssue(issue.id),
-    pushSourceContent(transRepo, maintainers),
+    pushSourceContent(transRepo, langName, maintainers),
   ])
 
   await commentOnRequestIssue(issue.id, transRepo, progressIssue, maintainers)
