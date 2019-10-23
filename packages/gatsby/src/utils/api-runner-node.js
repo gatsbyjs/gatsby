@@ -107,7 +107,7 @@ const runAPI = (plugin, api, args, activity) => {
       boundActionCreators,
       api,
       plugin,
-      { ...args, parentSpan: pluginSpan }
+      { ...args, parentSpan: pluginSpan, activity }
     )
 
     const { config, program } = store.getState()

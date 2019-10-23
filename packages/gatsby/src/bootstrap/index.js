@@ -461,12 +461,18 @@ module.exports = async (args: BootstrapArgs) => {
     parentSpan: bootstrapSpan,
   })
   activity.start()
-  await apiRunnerNode(`createPagesStatefully`, {
-    graphql: graphqlRunner,
-    traceId: `initial-createPagesStatefully`,
-    waitForCascadingActions: true,
-    parentSpan: activity.span,
-  })
+  await apiRunnerNode(
+    `createPagesStatefully`,
+    {
+      graphql: graphqlRunner,
+      traceId: `initial-createPagesStatefully`,
+      waitForCascadingActions: true,
+      parentSpan: activity.span,
+    },
+    {
+      activity,
+    }
+  )
   activity.end()
 
   activity = report.activityTimer(`onPreExtractQueries`, {
