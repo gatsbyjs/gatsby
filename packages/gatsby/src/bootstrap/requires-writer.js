@@ -121,9 +121,9 @@ const preferDefault = m => m && m.default || m
   syncRequires += `exports.components = {\n${components
     .map(
       c =>
-        `  "${c.componentChunkName}": hot(preferDefault(require("${joinPath(
+        `  "${c.componentChunkName}": preferDefault(require("${joinPath(
           c.component
-        )}")))`
+        )}"))`
     )
     .join(`,\n`)}
 }\n\n`

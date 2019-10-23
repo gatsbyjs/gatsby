@@ -110,6 +110,7 @@ export default (pagePath, callback) => {
     preBodyComponents,
     postBodyComponents: postBodyComponents.concat([
       <script key={`commons`} src="/commons.js" />,
+      <script key={`webpack-runtime`} src="/webpack-runtime.js" />,
     ]),
   })
   htmlStr = renderToStaticMarkup(htmlElement)

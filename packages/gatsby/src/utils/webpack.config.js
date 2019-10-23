@@ -223,7 +223,8 @@ module.exports = async (
   function getDevtool() {
     switch (stage) {
       case `develop`:
-        return `cheap-module-source-map`
+        return `source-map`
+      // return `cheap-module-source-map`
       // use a normal `source-map` for the html phases since
       // it gives better line and column numbers
       case `develop-html`:
@@ -271,6 +272,13 @@ module.exports = async (
         use: [{
           loader: require.resolve(`./reach-router-add-basecontext-export-loader`),
         }],
+      },
+      {
+        test: (input) => {
+          const pageComponents = Array.from(store.getState().components.keys())
+          return pageComponents.includes(input)
+        }, // regex to match files to receive react-hot-loader functionality
+        loader: require.resolve(`react-hot-loader-loader`),
       }
     ]
 
@@ -505,6 +513,36 @@ module.exports = async (
         !program.noUglify && plugins.minifyJs(),
         plugins.minifyCss(),
       ].filter(Boolean),
+    }
+  }
+
+  if (stage === `develop`) {
+    // const componentsCount = store.getState().components.size
+
+    config.optimization = {
+      runtimeChunk: {
+        name: `webpack-runtime`,
+      },
+      splitChunks: {
+        name: false,
+        chunks: `all`,
+        cacheGroups: {
+          default: false,
+          vendors: false,
+          // commons: {
+          //   name: `vendor`,
+          //   chunks: `all`,
+          //   // if a chunk is used more than half the components count,
+          //   // we can assume it's pretty global
+          //   minChunks: componentsCount > 2 ? componentsCount * 0.5 : 2,
+          // },
+          // react: {
+          //   name: `vendor`,
+          //   chunks: `all`,
+          //   test: /[\\/]node_modules[\\/](react|react-dom|scheduler)[\\/]/,
+          // },
+        },
+      },
     }
   }
 
