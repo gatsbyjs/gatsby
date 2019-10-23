@@ -109,8 +109,9 @@ export default (pagePath, callback) => {
     bodyAttributes,
     preBodyComponents,
     postBodyComponents: postBodyComponents.concat([
-      <script key={`commons`} src="/commons.js" />,
-      <script key={`webpack-runtime`} src="/webpack-runtime.js" />,
+      <script async key={`commons`} src="/commons.js" />,
+      <script async key={`webpack-runtime`} src="/webpack-runtime.js" />,
+      <script async key={`vendor`} src="/vendor.js" />,
     ]),
   })
   htmlStr = renderToStaticMarkup(htmlElement)

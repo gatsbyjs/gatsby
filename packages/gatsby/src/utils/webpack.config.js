@@ -517,7 +517,7 @@ module.exports = async (
   }
 
   if (stage === `develop`) {
-    // const componentsCount = store.getState().components.size
+    const componentsCount = store.getState().components.size
 
     config.optimization = {
       runtimeChunk: {
@@ -529,18 +529,18 @@ module.exports = async (
         cacheGroups: {
           default: false,
           vendors: false,
-          // commons: {
-          //   name: `vendor`,
-          //   chunks: `all`,
-          //   // if a chunk is used more than half the components count,
-          //   // we can assume it's pretty global
-          //   minChunks: componentsCount > 2 ? componentsCount * 0.5 : 2,
-          // },
-          // react: {
-          //   name: `vendor`,
-          //   chunks: `all`,
-          //   test: /[\\/]node_modules[\\/](react|react-dom|scheduler)[\\/]/,
-          // },
+          commons: {
+            name: `vendor`,
+            chunks: `all`,
+            // if a chunk is used more than half the components count,
+            // we can assume it's pretty global
+            minChunks: componentsCount > 2 ? componentsCount * 0.5 : 2,
+          },
+          react: {
+            name: `vendor`,
+            chunks: `all`,
+            test: /[\\/]node_modules[\\/](react|react-dom|scheduler)[\\/]/,
+          },
         },
       },
     }
