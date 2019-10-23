@@ -4186,14 +4186,14 @@
     - TypeScript
     - Basic design
     - Visual effects-url: https://gatsby-starter-mdx-website-blog.netlify.com/
--url: https://gatsby-starter-mdx-website-blog.netlify.com/
-repo: https://github.com/doakheggeness/gatsby-starter-mdx-website-blog.git
-description: Gatsby website and blog starter utilizing MDX for adding components to mdx pages and posts. Incorportates Emotion.
-tags:
-	- MDX
-  - Blog
-  - Styling:CSS-in-JS
-  - Netlify
-features:
-	- Create pages and posts using MDX
-	- Incorporates the CSS-in-JS library Emotion
+- url: https://gatsby-starter-mdx-website-blog.netlify.com/
+  repo: https://github.com/doakheggeness/gatsby-starter-mdx-website-blog.git
+  description: Gatsby website and blog starter utilizing MDX for adding components to mdx pages and posts. Incorportates Emotion.
+  tags:
+	  - MDX
+    - Blog
+    - Styling:CSS-in-JS
+    - Netlify
+  features:
+	  - Create pages and posts using MDX
+	  - Incorporates the CSS-in-JS library Emotion
