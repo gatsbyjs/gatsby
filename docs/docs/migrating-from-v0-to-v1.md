@@ -247,8 +247,8 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
 ```
 
 You've now generated the pathname or slug for each markdown page as well as told
-Gatsby about these pages. You'll notice above that a blog post template file is
-referenced when creating the pages. You haven't created that template file yet,
+Gatsby about these pages. You'll notice above that you reference a blog post
+template file when creating the pages. You haven't created that template file yet,
 so in your `src` directory, create a templates directory and add `blog-post.js`.
 
 This is a normal React.js component with a special Gatsby twist—a GraphQL query
