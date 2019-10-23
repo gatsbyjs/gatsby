@@ -16,7 +16,7 @@ const queryUtil = require(`../query`)
 const appDataUtil = require(`../utils/app-data`)
 const WorkerPool = require(`../utils/worker/pool`)
 const { structureWebpackErrors } = require(`../utils/webpack-error-utils`)
-const cleanCommand = require(`../clean.js`)
+const cleanCommand = require(`./clean.js`)
 
 type BuildArgs = {
   directory: string,
