@@ -429,7 +429,7 @@ The other 2 `Who We Are` pages for Marin and Sam can now be made with a similar 
 Once `/services` and the root level HTML files are ported, here is what the finished Gatsby project file structure looks like:
 
 ```
-gatsby-site-sections
+gatsby-site
 ├── static
 │   ├── favicon.ico
 │   └── person.png
