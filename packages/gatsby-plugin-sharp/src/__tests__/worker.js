@@ -42,4 +42,32 @@ describe(`worker`, () => {
       job.pluginOptions
     )
   })
+
+  it(`should fail a promise when image processing fails`, async () => {
+    processFile.mockImplementation(() => [
+      Promise.reject(new Error(`transform failed`)),
+    ])
+
+    const job = {
+      inputPath: `inputpath/file.jpg`,
+      contentDigest: `1234`,
+      transforms: [
+        {
+          outputPath: `myoutputpath/1234/file.jpg`,
+          args: {
+            width: 100,
+            height: 100,
+          },
+        },
+      ],
+      pluginOptions: {},
+    }
+
+    expect.assertions(1)
+    try {
+      await worker(job)
+    } catch (err) {
+      expect(err.message).toEqual(`transform failed`)
+    }
+  })
 })
