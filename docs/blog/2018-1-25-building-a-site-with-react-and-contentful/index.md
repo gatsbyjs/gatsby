@@ -51,7 +51,7 @@ If you have a JSON file with content in it, you could pull it into Contentful us
 
 If you do create content directly in Contentful, make sure to name your fields in a way you can remember when you create GraphQL queries. If you use GraphiQL, it can suggest fields to you, but this will only help if the field names are clear and memorable.
 
-As far as pushing data out to my site goes, I didn't know which API or token I needed. I wondered why there were four APIs and two management tokens. The Contentful documentation on this was fairly fragmented, so I just installed the gatsby-source-contentful plugin and then put the example Space ID and Example token into my gatsby-config.js file. I think this was the right thing to do, because it worked.
+As far as pushing data out to my site goes, I didn't know which API or token I needed. I wondered why there were four APIs and two management tokens. The Contentful documentation on this was fairly fragmented, so I just installed the `gatsby-source-contentful` plugin and then put the example Space ID and Example token into my `gatsby-config.js` file. I think this was the right thing to do, because it worked.
 
 Gatsby-config.js file:
 
@@ -68,7 +68,7 @@ module.exports = {
         pathToConfigModule: `src/utils/typography`,
       },
     },
-    //Here's where I include the gatsby-source-contentful plugin.
+    //Here's where I include the `gatsby-source-contentful` plugin.
     // And also I added the spaceID and accessToken I got from my Contentful account.
     {
       resolve: `gatsby-source-contentful`,
@@ -185,7 +185,7 @@ export default ({ data }) => {
           <h2>{trick.node.commandPhrase}</h2>
           // This next bit of code was a little tricky. // Definitely needed
           help figuring out how to render HTML. // I ended up using
-          gatsby-transformer-remark plugin and this `dangerouslySetInnerHTML`.
+          `gatsby-transformer-remark` plugin and this `dangerouslySetInnerHTML`.
           <div
             dangerouslySetInnerHTML={{
               __html: trick.node.commandDescription.childMarkdownRemark.html,

@@ -27,12 +27,16 @@ By the end of this tutorial, you’ll have done the following:
 
 Start a new Gatsby project using the default starter.
 
-    $ gatsby new gatsby-prismic-blog
-    $ cd gatsby-prismic-blog
+```shell
+gatsby new gatsby-prismic-blog
+cd gatsby-prismic-blog
+```
 
 Now, you will have to install missing packages. This command includes the Gatsby Prismic source plugin, and the Prismic kits for facilitating processes in React:
 
-    $ npm i --save gatsby-source-prismic-graphql prismic-javascript prismic-reactjs
+```shell
+npm i --save gatsby-source-prismic-graphql prismic-javascript prismic-reactjs
+```
 
 If you want to focus on learning how to fetch and render data from a Prismic repository, it's safe to just use the sample repository `gatsby-blog-scratch` but you should create your own so you can modify the content and test out previews. Otherwise, you can follow [this article](https://prismic.io/docs/reactjs/getting-started/create-repo-minimalist-blog) to create your own Prismic repository. You will want to write several blog posts to have some nice content to show off.
 

@@ -35,7 +35,7 @@ For example, Tyler Barnes is working on alternative WordPress source plugin, wit
 Why? Pulling all data and images every time he started `gatsby develop` was annoying — some of the sites were big and it could take 2 minutes to download. Local images would get dumped so he’d wait 10 minutes for the images to get processed again. Some cheaper servers were limited and would crash when trying to handle large numbers of images. He said he “wanted to make WP and Gatsby work on a crappy server.”
 
 What did he do to solve his problem?
-He commits the data instead so it’s available on the local machine instead. He was using gatsby-source-wordpress and adding extra stuff to it (permalink support, etc.) and then turned that functionality into a plugin. He basically added the features necessary to make it work like Netlify CMS and didn’t need to use the source plugin anymore.
+He commits the data instead so it’s available on the local machine instead. He was using `gatsby-source-wordpress` and adding extra stuff to it (permalink support, etc.) and then turned that functionality into a plugin. He basically added the features necessary to make it work like Netlify CMS and didn’t need to use the source plugin anymore.
 
 Creating a plugin isn't the only kind of contribution that helps others; @pieh's story of how he started to contribute to Gatsby involves editing a plugin:“`gatsby-source-wordpress` didn’t handle gallery type fields which I needed for some freelance work. It was my first PR to work on that plugin”.
 

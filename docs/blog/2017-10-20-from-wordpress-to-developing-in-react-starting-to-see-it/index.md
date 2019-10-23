@@ -162,7 +162,7 @@ we’re now looking at using WordPress as a backend, where clients can edit thei
 content without the worries of insecure plugins or other methods of being
 hacked.
 
-Using GatsbyJS with its “Bring Your Own Data” strategy makes perfect sense, and
+Using Gatsby with its “Bring Your Own Data” strategy makes perfect sense, and
 we’re about to start building our first Gatsby client site using the plugin
 [`gatsby-source-wordpress`](/packages/gatsby-source-wordpress/)
 to pull in our data and build a totally secure website with some pretty
@@ -170,5 +170,5 @@ impressive gains on loading time. We’ll also sleep better at night knowing
 insecurities in WordPress are no longer putting our clients at risk.
 
 The web is always changing. And the way forward isn't always easy to see. Now,
-with GatsbyJS, we're beginning to feel like we can visualise where things are
+with Gatsby, we're beginning to feel like we can visualise where things are
 going.

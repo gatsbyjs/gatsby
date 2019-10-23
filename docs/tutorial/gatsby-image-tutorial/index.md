@@ -187,7 +187,7 @@ In order to reference your images in YAML make sure that the relative paths are 
 
 The inside of the YAML file would look something like this:
 
-```
+```yaml
 - image: speaking/kcdc.jpg
 ```
 

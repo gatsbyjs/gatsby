@@ -1989,7 +1989,7 @@ The `gatsby-transformer-remark` plugin can transform Markdown files to HTML.
 
 ```js:title=gatsby-config.js
 plugins: [
-  // not shown: gatsby-source-filesystem for creating nodes to transform
+  // not shown: `gatsby-source-filesystem` for creating nodes to transform
   `gatsby-transformer-remark`
 ],
 ```
@@ -2085,7 +2085,7 @@ Use [`netlify-cli`](https://www.netlify.com/docs/cli/) to deploy your Gatsby app
 
 #### Directions
 
-1. Build your gatsby application using `gatsby build`
+1. Build your Gatsby application using `gatsby build`
 
 2. Login into Netlify using `netlify login`
 

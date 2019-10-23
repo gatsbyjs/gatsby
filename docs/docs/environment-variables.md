@@ -12,7 +12,7 @@ And there are true OS-level environment variables that might be used in command-
 
 In both cases you want to be able to access the relevant value of these variables for the environment you are in.
 
-By default gatsby supports only 2 environments:
+By default Gatsby supports only 2 environments:
 
 - If you run `gatsby develop`, then you will be in the 'development' environment.
 - If you run `gatsby build` or `gatsby serve`, then you will be in the 'production' environment.

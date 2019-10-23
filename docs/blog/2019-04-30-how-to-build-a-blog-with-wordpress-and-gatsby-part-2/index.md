@@ -33,9 +33,9 @@ In the future, it may be beneficial to take a look at the various starters and s
 
 ### Gatsby default starter
 
-Before I get into the code, I want to talk about the [Gatsby starter default](https://github.com/gatsbyjs/gatsby-starter-default). This project is the default (obviously) project that will be built when you create a new gatsby project with the Command Line Interface, or CLI. It comes with a few plugins, but not too much so it's wide open for customization.
+Before I get into the code, I want to talk about the [Gatsby starter default](https://github.com/gatsbyjs/gatsby-starter-default). This project is the default (obviously) project that will be built when you create a new Gatsby project with the Command Line Interface, or CLI. It comes with a few plugins, but not too much so it's wide open for customization.
 
-Before you dig into the project files, you need to create your project. First you need to install the gatsby-cli tool with the code below:
+Before you dig into the project files, you need to create your project. First you need to install the `gatsby-cli` tool with the code below:
 
 ```shell
 npm install -g gatsby-cli
@@ -56,7 +56,7 @@ Now that you have your project created, let's take a look inside. You will see a
 - **README.md**: Markdown file with instructions for use
 - **gatsby-browser.js**: Gatsby Browser API stuff goes here. Global style calls go here too
 - **gatsby-config.js**: Configuration for your project including meta data and plugins
-- **gatsby-node.js**: Where you tell gatsby to build pages from a template using provided data
+- **gatsby-node.js**: Where you tell Gatsby to build pages from a template using provided data
 - **gatsby-ssr.js**: Gatsby Server Side Rendering APIs go here
 - **package.json**: File which holds custom scripts, dependency information, etc
 
@@ -147,7 +147,7 @@ To do this, you can use this code in the terminal:
 npm install gatsby-source-wordpress gatsby-plugin-sitemap
 ```
 
-Looking at your `package.json` file will reveal that each of these packages have been added to the project, but this isn't enough to start using the gatsby-plugin files. You first need to add them to the `gatsby-config.js` file. Luckily, the docs for these plugins are awesome and do a good job explaining all of this. I'd recommend you take a look at them to find out what each of the settings does, but I'll provide the code for the `gatsby-config.js` file after adding all of these plugins to your site:
+Looking at your `package.json` file will reveal that each of these packages have been added to the project, but this isn't enough to start using the `gatsby-plugin` files. You first need to add them to the `gatsby-config.js` file. Luckily, the docs for these plugins are awesome and do a good job explaining all of this. I'd recommend you take a look at them to find out what each of the settings does, but I'll provide the code for the `gatsby-config.js` file after adding all of these plugins to your site:
 
 ```javascript
 // gatsby-config.js
@@ -264,11 +264,11 @@ const BlogPostTemplate = () => (
 export default BlogPostTemplate
 ```
 
-### What is gatsby-node.js doing?
+### What is `gatsby-node.js` doing?
 
 Now let's talk about `gatsby-node.js` a bit more. Let's start off by discussing why you should use it. You have the ability to create pages and query information for a single blog post, which is very useful... sometimes. Imagine your blog had 100 blog posts and you have to develop a Gatsby site to display all of them. Do you really want to go in and create a separate page for every single one of them? That would be a lot of copying and pasting, not to mention a huge waste of time.
 
-The gatsby-node.js file allows you to pull in a template file, then query your data using GraphQL. Then you can loop through the appropriate data and programmatically create a page for each piece of data, in this case blog posts and pages. This template will be universal so all content of that type will look the same. You can also use different templates for different content types so your pages and blog posts don't have to look the same.
+The `gatsby-node.js` file allows you to pull in a template file, then query your data using GraphQL. Then you can loop through the appropriate data and programmatically create a page for each piece of data, in this case blog posts and pages. This template will be universal so all content of that type will look the same. You can also use different templates for different content types so your pages and blog posts don't have to look the same.
 
 <figure>
   <video autoplay muted loop>

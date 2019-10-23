@@ -11,9 +11,9 @@ excerpt: A five minute starter for Gatsby and Contentful
 
 _This blog post was originally posted on the [Contentful Docs](https://www.contentful.com/r/knowledgebase/gatsbyjs-and-contentful-in-five-minutes/)_
 
-Working with React and having an emphasis on speedy performance, GatsbyJS is a promising static site generator that allows you to connect your projects to a variety of APIs and data sources; including Contentful’s content infrastructure.
+Working with React and having an emphasis on speedy performance, Gatsby is a promising static site generator that allows you to connect your projects to a variety of APIs and data sources; including Contentful’s content infrastructure.
 
-This piece will walk you through getting your GatsbyJS website up and running with Contentful. Contentful makes it easy for you to focus on developing beautiful, well-performing websites while we deliver the content - this makes us a great companion to the full-fledged static content authoring experience offered by GatsbyJS.
+This piece will walk you through getting your Gatsby website up and running with Contentful. Contentful makes it easy for you to focus on developing beautiful, well-performing websites while we deliver the content - this makes us a great companion to the full-fledged static content authoring experience offered by Gatsby.
 
 Here’s an overview of what’s involved:
 
@@ -28,7 +28,7 @@ Here’s an overview of what’s involved:
 
 ###Getting started
 
-This guide assumes that you have [GatsbyJS installed](/docs/) and, optionally, a [GitHub account](https://github.com/join). You will also need a free Contentful account - [creating one](https://www.contentful.com/sign-up/) only takes a moment.
+This guide assumes that you have [Gatsby installed](/docs/) and, optionally, a [GitHub account](https://github.com/join). You will also need a free Contentful account - [creating one](https://www.contentful.com/sign-up/) only takes a moment.
 
 Start by using this with the Gatsby CLI:
 
@@ -114,7 +114,7 @@ Contentful ensures your website and its users can access your content quickly an
 
 ###Summary
 
-That’s a quick overview of how to get your website up and running from scratch using Contentful and GatsbyJS.
+That’s a quick overview of how to get your website up and running from scratch using Contentful and Gatsby.
 
 Contentful's platform offers speed, flexibility, and ease of integration with your code, supporting any stack you use with SDKs for common languages like [JavaScript](https://www.contentful.com/developers/docs/javascript/sdks/), [Python](https://www.contentful.com/developers/docs/python/sdks/), and [PHP](https://www.contentful.com/developers/docs/php/sdks/). Unlike a CMS, Contentful provides you with separation between content and presentation, allowing you to focus on developing your website and leave content delivery to Contentful.
 

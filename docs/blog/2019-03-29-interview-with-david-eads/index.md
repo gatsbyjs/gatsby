@@ -14,7 +14,7 @@ I recently sat down with David Eads, who recently wrote a [fascinating deep dive
 
 **Sam:** You've used Gatsby extensively to create a number of data visualization projects that are really interesting from both a technical and a journalistic perspective. Could you talk a little about what you've built with Gatsby and what you're most proud of.
 
-**David:** Everything I've made since 2018 has been in Gatsby. https://projects.propublica.org/graphics/il/stuck-kids/ is one example, https://projects.propublica.org/chicago-tickets/ is another. I've also done embedded graphics with Gatsby, like the one seen here https://features.propublica.org/the-bad-bet/how-illinois-bet-on-video-gambling-and-lost/
+**David:** Everything I've made since 2018 has been in Gatsby. <https://projects.propublica.org/graphics/il/stuck-kids/> is one example, <https://projects.propublica.org/chicago-tickets/> is another. I've also done embedded graphics with Gatsby, like the one seen here https://features.propublica.org/the-bad-bet/how-illinois-bet-on-video-gambling-and-lost/
 
 <Pullquote citation="ProPublica">
   Every day, a child is held beyond medical necessity in Illinois. They've been
@@ -67,7 +67,7 @@ The dependence on React has been a barrier to wider adoption within ProPublica -
 
 After reading a blog post by Tom MacWright, I realized that a lot of the stuff I was doing with heavy D3 code could be accomplished more directly using React; that technique shows up in Stuck Kids.
 
-https://macwright.org/2016/10/11/d3-and-react.html
+<https://macwright.org/2016/10/11/d3-and-react.html>
 macwright.org
 
 Mixing d3 and React. Use JSX instead of the d3 selection API and keep everything else.
@@ -124,7 +124,7 @@ For translation, pulling from Google Sheets is really powerful.
 
 **David:** I used that technique quite extensively at NPR. ProPublica uses the same techniques as well as ArchieML in Google Docs, which is helpful for longer pieces of text and more complex data structures.
 
-http://archieml.org/
+<http://archieml.org/>
 ArchieML.org
 
 Archie Markup Language (ArchieML). ArchieML is a text format optimized for human writability, with a syntax designed to be as simple as possible.

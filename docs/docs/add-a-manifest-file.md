@@ -34,8 +34,8 @@ npm install --save gatsby-plugin-manifest
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: "GatsbyJS",
-        short_name: "GatsbyJS",
+        name: "Gatsby",
+        short_name: "Gatsby",
         start_url: "/",
         background_color: "#6b37bf",
         theme_color: "#6b37bf",

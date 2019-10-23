@@ -33,7 +33,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Answer:** Check out [Environment Variables](/docs/environment-variables/).
 
 **Question:** Is it possible to have the gatsby-\*.js files be rewritten in TypeScript?
-**Answer:** gatsby-browser.js and gatsby-ssr.js work just fine if you add gatsby-plugin-typescript. We don't have a out-of-the-box solution for gatsby-node.js but you could require the TypeScript interpreter and then require another TypeScript file and re-export its code from gatsby-node.js.
+**Answer:** `gatsby-browser.js` and gatsby-ssr.js work just fine if you add gatsby-plugin-typescript. We don't have a out-of-the-box solution for `gatsby-node.js` but you could require the TypeScript interpreter and then require another TypeScript file and re-export its code from gatsby-node.js.
 
 **Question:** Gatsby transformers support Markdown and asciidoc. Possible support for Sphinx reStructuredText?
 **Answer:** Certainly! Gatsby is super pluggable, so whatever content you want to bring to Gatsby, just write a plugin! Check out [Creating a Source Plugin](/docs/creating-a-source-plugin/).
@@ -85,13 +85,13 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Answer:** A CI can do a build and then run the lighthouse test on the built site.
 
 **Question:** Regarding Environment Variables and security- how do we keep secure endpoints using env vars like process.env to handle authorization keys and secrets? Does this mean Node would be required in prod environment?
-**Answer:** Yes, process.env is recommended for secret management. [Environment Variables](/docs/environment-variables/). Generally you'd add these to gatsby-config.js — so would be used for the build but wouldn't be sent to users, so the keys wouldn't leak.
+**Answer:** Yes, process.env is recommended for secret management. [Environment Variables](/docs/environment-variables/). Generally you'd add these to `gatsby-config.js` — so would be used for the build but wouldn't be sent to users, so the keys wouldn't leak.
 
 **Question:** What is your opinion on using CSS, i.e. Styled Components, Emotion or BEM?
 **Answer:** We don't really have an official opinion--we want you to build apps however you prefer! That being said, I quite like CSS in JS (particularly emotion). I did a little podcast with Chris Coyier if you're interested--[CSS-in-JS Podcast on CSS Tricks](https://css-tricks.com/video-screencasts/168-css-in-js/)
 
 **Question:** How about best practices with Styles and Web Fonts?
-**Answer:** Re: Styles, I'd recommend using something like CSS Modules (enabled by default!) or a CSS in JS solution if you're into that. We're not opinionated and want to enable everyone to build performant sites, by default! As far as web fonts, depends! You could use gatsby-plugin-typography and load google fonts if that's your thing. [Typefaces](https://github.com/kyleamathews/typefaces) lets you add open source fonts from NPM packages.
+**Answer:** Re: Styles, I'd recommend using something like CSS Modules (enabled by default!) or a CSS in JS solution if you're into that. We're not opinionated and want to enable everyone to build performant sites, by default! As far as web fonts, depends! You could use `gatsby-plugin-typography` and load google fonts if that's your thing. [Typefaces](https://github.com/kyleamathews/typefaces) lets you add open source fonts from NPM packages.
 
 ### Content Management Systems (CMS)
 
@@ -126,19 +126,19 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Question:** The Preview feature is awesome. But I'm thinking like a 24 hours news channel, which our company has, and a manager needing to post content at 2 am, or even more, stories being posted multiple times an hour at all hours. Will each update require a new build?
 **Answer:** Yes. Builds are fast and automatic though so doesn't take any extra work or mental overhead.
 
-**Question:** How can I use gatsby-image for images in the content body like a WordPress post?
+**Question:** How can I use `gatsby-image` for images in the content body like a WordPress post?
 **Answer:** That's a bit tricky as the content body is a HTML string. There's issues talking about how to make this happen so jump into the discussion and help out.
 
 **Question:** Is there a 3rd party CMS that you recommend that works particular well with Gatsby?
 **Answer:** Lots of CMS-s! Here's a list: [Headless CMS](/docs/headless-cms/)
 
-**Question:** How can you trigger a content refresh on the Gatsby site (frontend) when using gatsby-source-wordpress with a WordPress CMS?
+**Question:** How can you trigger a content refresh on the Gatsby site (frontend) when using `gatsby-source-wordpress` with a WordPress CMS?
 **Answer:** You create a webhook on your CMS, and point the webhook at your CI system (e.g. Netlify).
 
 **Question:** I have a site built on Drupal 7. How easy would it be to migrate to Gatsby with say Netlify as a CDN?
 **Answer:** [`gatsby-source-drupal`](/packages/gatsby-source-drupal/) only supports Drupal 8 at the moment, I believe.
 
-**Question:** Have you implemented a rich text field from Contentful? If so, were you able to get gatsby-image working with embedded images in the rich text field?
+**Question:** Have you implemented a rich text field from Contentful? If so, were you able to get `gatsby-image` working with embedded images in the rich text field?
 **Answer:** Gatsby works with Contentful rich text in beta right now. If you have specific Qs about the status, you can raise as a GH issue.
 
 ### Gatsby for Dynamic Web Apps
@@ -155,7 +155,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 ](/docs/seo/)
 
 **Question:** How do you keep on top of things like price changes and stock availability with a static generated site?
-**Answer:** We actually do this on the GatsbyJS store. Check out the code, and hope it's helpful: [Gatsby Swag Store](https://github.com/gatsbyjs/store.gatsbyjs.org)
+**Answer:** We actually do this on the Gatsby store. Check out the code, and hope it's helpful: [Gatsby Swag Store](https://github.com/gatsbyjs/store.gatsbyjs.org)
 
 **Question:** Would it makes sense to still use Gatsby for a more "dynamic" type of app?
 **Answer:** Yes! You can learn more about what types of dynamic apps you can build with Gatsby here: [Dynamic Apps Webinar](https://www.gatsbyjs.com/build-web-apps-webinar).
@@ -200,7 +200,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 
 ### Gatsby Use Cases
 
-**Question:** To use gatsby for a blog - is this overengineering?
+**Question:** To use Gatsby for a blog - is this overengineering?
 **Answer:** Definitely not! [Here are some blogs built with Gatsby](/showcase/?filters%5B0%5D=Blog). One notable one is Dan Abramov's — [https://overreacted.io/](https://overreacted.io/)
 
 **Question:** Is it overkill to build every site with Gatsby?
@@ -242,7 +242,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Answer:** Yes — if possible, you can lazy load components as that'll move the code into their own bundle which will only be loaded on demand.
 
 **Question:** Would you briefly overview Continuous Integration (CI) and the process when a test fails?
-**Answer:** Sure! So CI is oftentimes used as a sanity check. We can run unit tests, e2e tests, and/or a linter. We can use these checks to give us some degree of confidence that we aren't introducing a regression, whether that regression is failing tests, performance regression, etc. I'll take a note of this and perhaps write a post on this--I think we have a great setup for our GatsbyJS repo.
+**Answer:** Sure! So CI is oftentimes used as a sanity check. We can run unit tests, e2e tests, and/or a linter. We can use these checks to give us some degree of confidence that we aren't introducing a regression, whether that regression is failing tests, performance regression, etc. I'll take a note of this and perhaps write a post on this--I think we have a great setup for our Gatsby repo.
 
 **Question:** On mobile, where a user is not able to hover, how does this prefetching method differ?
 **Answer:** Prefetching starts when a link appears on the screen so it works on mobile very well.
@@ -277,7 +277,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Question:** Can you talk more about Themes & how to create custom themes for V2?
 **Answer:** Look at [Introducing Gatsby Themes blog post](/blog/2018-11-11-introducing-gatsby-themes/) and [Introducing Gatsby Themes video](https://www.gatsbyjs.com/gatsby-days-themes-chris/) and stay tuned for more posts in next week!
 
-**Question:** Does Gatsby also have a solution for optimizing the experience of videos out of the box? Like gatsby-image for videos?
+**Question:** Does Gatsby also have a solution for optimizing the experience of videos out of the box? Like `gatsby-image` for videos?
 **Answer:** Not at the moment. Video is harder to work with than images as video processing is very CPU intensive. We'd love to find a solution that works with video providers like YouTube, Vimeo, etc.
 
 **Question:** Can we access previously recorded webinars?

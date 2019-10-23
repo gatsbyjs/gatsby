@@ -28,7 +28,7 @@ Benefits of using Gatsby for e-commerce sites include the following:
 - Blazing fast performance when your pages are converted from React into static files
 - Easy to host
 
-You can see the working demo hosted here: https://gatsby-ecommerce-stripe.netlify.com/
+You can see the [working demo hosted here](https://gatsby-ecommerce-stripe.netlify.com/)
 
 ## Prerequisites
 
@@ -250,11 +250,11 @@ If you go back to [localhost:8000](http://localhost:8000/) in your browser and y
 
 ### Advanced: Import SKUs via source plugin
 
-Instead of hardcoding the SKU IDs, you can use the [gatsby-source-stripe plugin](https://www.gatsbyjs.org/packages/gatsby-source-stripe/) to retrieve your SKUs at build time.
+Instead of hardcoding the SKU IDs, you can use the [`gatsby-source-stripe` plugin](https://www.gatsbyjs.org/packages/gatsby-source-stripe/) to retrieve your SKUs at build time.
 
 #### Add the Stripe source plugin
 
-Add the [gatsby-source-stripe plugin](https://www.gatsbyjs.org/packages/gatsby-source-stripe/) which you can use to pull in the SKUs from your Stripe account.
+Add the [`gatsby-source-stripe` plugin](https://www.gatsbyjs.org/packages/gatsby-source-stripe/) which you can use to pull in the SKUs from your Stripe account.
 
 ```shell
 npm install gatsby-source-stripe
@@ -345,7 +345,7 @@ export default props => (
 )
 ```
 
-You can validate your query and see what data is being returned in GraphiQL, which is available at http://localhost:8000/___graphql when running `npm run develop`.
+You can validate your query and see what data is being returned in GraphiQL, which is available at <http://localhost:8000/___graphql> when running `npm run develop`.
 
 Once you're happy with your query, create a new page where you can import the newly created Sku component:
 
@@ -369,7 +369,7 @@ const AdvancedExamplePage = () => (
 export default AdvancedExamplePage
 ```
 
-When navigating to http://localhost:8000/advanced/ you should now see a list of paragraphs with your SKU names.
+When navigating to <http://localhost:8000/advanced/> you should now see a list of paragraphs with your SKU names.
 
 #### Create a component that presents a single SKU
 

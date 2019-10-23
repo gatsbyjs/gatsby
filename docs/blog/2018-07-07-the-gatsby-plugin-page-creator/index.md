@@ -47,7 +47,7 @@ I set out to determine a solution for this problem.
 
 ## The great pull request
 
-![Pull request for gatsby plugin page creator](page-creator-pull-request.png)
+![Pull request for Gatsby plugin page creator](page-creator-pull-request.png)
 
 With the help of Kyle Mathews, he directed me to the location of the
 internal plugin responsible for the hardcoded behavior. To support the desired
@@ -78,7 +78,7 @@ having to give up on the most powerful out-of-the-box feature.
 
 ## Community reception
 
-![NPM stats for gatsby plugin page creator](npm-stats.png)
+![NPM stats for Gatsby plugin page creator](npm-stats.png)
 
 This plugin has by far been the most impactful open source contribution I have made
 to date. As of writing, the newly published Gatsby plugin has been

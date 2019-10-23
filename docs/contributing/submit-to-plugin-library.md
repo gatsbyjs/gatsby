@@ -11,7 +11,7 @@ In order to add your plugin to the [Plugin Library](/plugins/), you need to:
 3.  **include a `keywords` field** in your plugin's `package.json`, containing `gatsby` and `gatsby-plugin`,
 4.  and document your plugin with a README, there are [plugin templates](/contributing/docs-templates/#plugin-readme-template) available to be used as reference.
 
-After doing so, Algolia will take up to 12 hours to add it to the library search index (the exact time necessary is still unknown), and wait for the daily rebuild of https://gatsbyjs.org to automatically include your plugin page to the website. Then, all you have to do is share your wonderful plugin with the community!
+After doing so, Algolia will take up to 12 hours to add it to the library search index (the exact time necessary is still unknown), and wait for the daily rebuild of <https://gatsbyjs.org> to automatically include your plugin page to the website. Then, all you have to do is share your wonderful plugin with the community!
 
 ## Notes
 

@@ -110,12 +110,12 @@ is going up.
 
 ## That's a wrap
 
-With my 1.x update complete, I'm feeling that not only was GatsbyJS a solid
+With my 1.x update complete, I'm feeling that not only was Gatsby a solid
 pick, but it's something that is going to evolve the way I build websites. It's
 a nice starter push into GraphQL and many other advanced features the websites
 of the future will need to be performant.
 
 Sometimes we don’t do things because they are unfamiliar to us. Sometimes we
-need a little push. Thanks for the push GatsbyJS. The learning curve may seem
-daunting but the payoff is huge. GatsbyJS has become a powerful tool in my
+need a little push. Thanks for the push Gatsby. The learning curve may seem
+daunting but the payoff is huge. Gatsby has become a powerful tool in my
 arsenal and I’m happy to have extended my development skills.

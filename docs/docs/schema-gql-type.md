@@ -90,7 +90,7 @@ The creation of these fields is handled by the [inferObjectStructureFromNodes](h
 
 #### Mapping field
 
-Mappings are explained in the [gatsby-config.js docs](/docs/gatsby-config/#mapping-node-types). If the object field we're generating a GraphQL type for is configured in the gatsby-config mapping, then we handle it specially.
+Mappings are explained in the [gatsby-config.js docs](/docs/gatsby-config/#mapping-node-types). If the object field we're generating a GraphQL type for is configured in the `gatsby-config` mapping, then we handle it specially.
 
 Imagine our top level Type we're currently generating fields for is `MarkdownRemark.frontmatter`. And the field we are creating a GraphQL field for is called `author`. And, that we have a mapping setup of:
 

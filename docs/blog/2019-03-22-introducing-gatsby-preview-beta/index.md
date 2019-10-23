@@ -55,7 +55,7 @@ We’re currently running a closed beta for Gatsby Preview. [Sign up here](https
 
 ## Gatsby Preview Docs
 
-Once you've been invited to Gatsby Preview, you can view the documentation for integrating Preview with the CMS platforms that are supported on [GatsbyJS.com](https://www.gatsbyjs.com/docs/).
+Once you've been invited to Gatsby Preview, you can view the documentation for integrating Preview with the CMS platforms that are supported on [Gatsby.com](https://www.gatsbyjs.com/docs/).
 
 ## What’s coming next
 

@@ -32,7 +32,7 @@ gatsby-config.js across projects? That's where starters come in.
 
 One way to create more sites with similar functionality faster is to
 use starters. Starters are basically whole Gatsby sites that can be
-scaffolded through the gatsby CLI. This helps you start your project
+scaffolded through the Gatsby CLI. This helps you start your project
 by cloning the boilerplate, installing dependencies, and clearing Git
 history. The community around Gatsby has built a lot of different
 starters for various use cases including blogging, working with
@@ -53,7 +53,7 @@ If a single `gatsby-config.js` encodes the functionality of a whole Gatsby
 site, then if you can
 [compose](https://medium.com/javascript-scene/master-the-javascript-interview-what-is-function-composition-20dfb109a1a0)
 the `gatsby-config.js` data structure together you have the base for
-themes. You can encode portions of our gatsby-config as themes and
+themes. You can encode portions of our `gatsby-config` as themes and
 re-use them across sites. This is a big deal because you can have a
 theme config (or multiple configs) that composes together with the
 custom config (for the current site). Upgrading the underlying theme
@@ -92,7 +92,7 @@ module.exports = {
 Themes often need to be parameterized for various reasons, such as
 changing the base url for subsections of a site or applying branding
 variables. You can do this through the theme options if you define our
-theme's gatsby-config as a function that returns an object.
+theme's `gatsby-config` as a function that returns an object.
 
 ```js
 module.exports = {

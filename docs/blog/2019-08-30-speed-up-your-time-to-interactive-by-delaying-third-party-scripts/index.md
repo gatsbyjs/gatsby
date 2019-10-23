@@ -64,7 +64,7 @@ Then, either on `scroll` or `onRouteChange`, we only call the load function if `
 
 After implementing this on my own website, my performance score shot back up from 63 to 94 and I had an over 60% decrease in the time to interactive. Pretty good for a few lines of code.
 
-There is currently a [PR](https://github.com/benjaminhoffman/gatsby-plugin-segment-js/pull/19) open to add a `delayLoad` option to gatsby-plugin-segment-js to enable this feature. Alternatively, you can build it from [my fork](https://github.com/Kilian/gatsby-plugin-segment-js).
+There is currently a [PR](https://github.com/benjaminhoffman/gatsby-plugin-segment-js/pull/19) open to add a `delayLoad` option to `gatsby-plugin-segment-js` to enable this feature. Alternatively, you can build it from [my fork](https://github.com/Kilian/gatsby-plugin-segment-js).
 
 ## In closing
 

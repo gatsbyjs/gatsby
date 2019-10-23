@@ -36,7 +36,7 @@ export const query = graphql`
 `
 ```
 
-## Optimizing images with gatsby-image
+## Optimizing images with `gatsby-image`
 
 [`gatsby-image`](/packages/gatsby-image/) is a plugin that automatically creates React components for optimized images that:
 
@@ -94,7 +94,7 @@ export const query = graphql`
 ### Additional resources
 
 - [Gatsby Image API docs](/docs/gatsby-image/)
-- [Using gatsby-image with Gatsby](https://egghead.io/playlists/using-gatsby-image-with-gatsby-ea85129e), free egghead.io playlist
-- [gatsby-image plugin README file](/packages/gatsby-image/)
-- [gatsby-plugin-sharp README file](/packages/gatsby-plugin-sharp/)
-- [gatsby-transformer-sharp README file](/packages/gatsby-transformer-sharp/)
+- [Using `gatsby-image` with Gatsby](https://egghead.io/playlists/using-gatsby-image-with-gatsby-ea85129e), free egghead.io playlist
+- [`gatsby-image` plugin README file](/packages/gatsby-image/)
+- [`gatsby-plugin-sharp` README file](/packages/gatsby-plugin-sharp/)
+- [`gatsby-transformer-sharp` README file](/packages/gatsby-transformer-sharp/)

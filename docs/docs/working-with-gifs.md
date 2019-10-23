@@ -45,5 +45,5 @@ Beware that flashing and autoplaying GIFs can cause issues for users who are sen
 
 For more information on accessible motion:
 
-- https://source.opennews.org/articles/motion-sick/
-- https://www.w3.org/TR/UNDERSTANDING-WCAG20/time-limits-pause.html
+- <https://source.opennews.org/articles/motion-sick/>
+- <https://www.w3.org/TR/UNDERSTANDING-WCAG20/time-limits-pause.html>

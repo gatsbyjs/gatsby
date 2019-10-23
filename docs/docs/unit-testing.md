@@ -20,7 +20,7 @@ concepts should be the same or very similar for your site._
 
 ### 1. Installing dependencies
 
-First you need to install Jest and some more required packages. We install babel-jest and babel-preset-gatsby to ensure that the babel preset(s) that are used match what are used internally for your Gatsby site.
+First you need to install Jest and some more required packages. We install `babel-jest` and `babel-preset-gatsby` to ensure that the babel preset(s) that are used match what are used internally for your Gatsby site.
 
 ```shell
 npm install --save-dev jest babel-jest react-test-renderer babel-preset-gatsby identity-obj-proxy
@@ -88,7 +88,7 @@ module.exports = "test-file-stub"
   includes un-transpiled ES6 code. By default Jest doesn't try to transform code
   inside `node_modules`, so you will get an error like this:
 
-```
+```shell
 /my-app/node_modules/gatsby/cache-dir/gatsby-browser-entry.js:1
 ({"Object.<anonymous>":function(module,exports,require,__dirname,__filename,global,jest){import React from "react"
                                                                                             ^^^^^^

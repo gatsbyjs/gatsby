@@ -4,7 +4,7 @@ title: Gatsby Image API
 
 Part of what makes Gatsby sites so fast is its recommended approach to handling images. `gatsby-image` is a React component designed to work seamlessly with Gatsby’s [native image processing](https://image-processing.gatsbyjs.org/) capabilities powered by GraphQL and [`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp/) to easily and completely optimize image loading for your sites.
 
-> _Note: gatsby-image is **not** a drop-in replacement for `<img />`. It’s optimized for responsive fixed width/height images and images that stretch the full-width of a container. There are also other ways to [work with images](/docs/images-and-files/) in Gatsby that don't require GraphQL._
+> _Note: `gatsby-image` is **not** a drop-in replacement for `<img />`. It’s optimized for responsive fixed width/height images and images that stretch the full-width of a container. There are also other ways to [work with images](/docs/images-and-files/) in Gatsby that don't require GraphQL._
 
 Demo: [https://using-gatsby-image.gatsbyjs.org/](https://using-gatsby-image.gatsbyjs.org/)
 
@@ -208,7 +208,7 @@ Read more in the [`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp/?=#fluid)
 
 ### Resized images
 
-In addition to _fixed_ and _fluid_ images, the gatsby-image API allows you to call a `resize` method with `gatsby-plugin-sharp` to return a single image as opposed to multiple sizes. There are no default fragments available for the resize method.
+In addition to _fixed_ and _fluid_ images, the `gatsby-image` API allows you to call a `resize` method with `gatsby-plugin-sharp` to return a single image as opposed to multiple sizes. There are no default fragments available for the resize method.
 
 #### Parameters
 
@@ -345,7 +345,7 @@ Additionally, plugins supporting `gatsby-image` currently include [`gatsby-sourc
 
 ## Gatsby-image props
 
-After you've made a query, you can pass additional options to the gatsby-image component.
+After you've made a query, you can pass additional options to the `gatsby-image` component.
 
 | Name                   | Type                | Description                                                                                                                   |
 | ---------------------- | ------------------- | ----------------------------------------------------------------------------------------------------------------------------- |

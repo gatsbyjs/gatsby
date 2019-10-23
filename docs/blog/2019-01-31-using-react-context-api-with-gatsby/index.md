@@ -286,4 +286,4 @@ We covered the following in today’s article:
 - Adding the switch inside the header
 - Adding the styles relevant to the Dark mode
 
-Interested in seeing this in action? Head over to https://github.com/m-muhsin/gatsby-dark-mode and clone or fork my project.
+Interested in seeing this in action? Head over to <https://github.com/m-muhsin/gatsby-dark-mode> and clone or fork my project.

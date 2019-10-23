@@ -102,7 +102,7 @@ Say hello to your new best friend, `gatsby-dev-cli`.
 
 #### gatsby-dev-cli
 
-`gatsby-dev-cli` is a command-line tool for local Gatsby development. When making changes in gatsby packages, this helps copy changes in the packages to a Gatsby site that you can test your changes on.
+`gatsby-dev-cli` is a command-line tool for local Gatsby development. When making changes in Gatsby packages, this helps copy changes in the packages to a Gatsby site that you can test your changes on.
 
 Check out the [`gatsby-dev-cli` README](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli) to learn more.
 

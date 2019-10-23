@@ -60,7 +60,7 @@ where to hold your content, and moved everything else away or removed it.
 
 Here's what that looks like for me:
 
-```
+```flow
 .
 ├── content
 │   ├── _drafts
@@ -82,7 +82,7 @@ are many ways you could do this but I'll go over what I did.
 To get all the Gatsby files you can use the Gatsby CLI.
 
 ```yaml
-gatsby new temp-gatsby-files # Initialize gatsby in a temp directory
+gatsby new temp-gatsby-files # Initialize Gatsby in a temp directory
 cp -R temp-gatsby-files/* ./ # Copy all the files into your root directory
 rm -rf temp-gatsby-files     # Remove the temp directory
 ```
@@ -238,8 +238,8 @@ As before, add it to the `plugins` field in `gatsby-config.js`:
 
 This particular plugin can also take _its own_ plugins via the `plugins` option.
 I've left it empty but this is where you can add things like syntax highlighting
-or auto-linking of headers. Here's the current list:
-https://www.npmjs.com/search?q=gatsby-remark
+or auto-linking of headers. Here's the current list
+[on npm](https://www.npmjs.com/search?q=gatsby-remark)
 
 Save and restart your dev server, then go into GraphiQL and try out the new
 `allMarkdownRemark` field:
@@ -509,7 +509,7 @@ exports.setFieldsOnGraphQLNodeType = ({ type }) => {
 ```
 
 > Source code for
-> [gatsby-node.js here](https://github.com/iansinnott/iansinnott.github.io/blob/source/gatsby-node.js).
+> [`gatsby-node.js` here](https://github.com/iansinnott/iansinnott.github.io/blob/source/gatsby-node.js).
 
 If you've worked with GraphQL before this should look very familiar. In fact, as
 you can see the string type is imported directly from GraphQL and not from

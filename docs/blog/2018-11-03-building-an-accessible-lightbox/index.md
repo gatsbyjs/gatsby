@@ -6,7 +6,7 @@ tags: ["cutting-edge-experiences", "gatsby-image", "accessibility"]
 canonicalLink: "https://416serg.me/building-a-custom-accessible-image-lightbox-in-gatsbyjs"
 ---
 
-In this tutorial you're going to cover the steps to creating a simple, custom, accessible image lightbox inside a [GatsbyJS](/) application. You can check out the finished example on [GitHub](https://github.com/416serg/GatsbyLightbox) ([Demo](https://gatsbylightboxv2.416serg.me/)) or continue reading to dive right into the magic.
+In this tutorial you're going to cover the steps to creating a simple, custom, accessible image lightbox inside a [Gatsby](/) application. You can check out the finished example on [GitHub](https://github.com/416serg/GatsbyLightbox) ([Demo](https://gatsbylightboxv2.416serg.me/)) or continue reading to dive right into the magic.
 
 ## Getting started
 

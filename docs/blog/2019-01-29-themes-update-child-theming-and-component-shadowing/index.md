@@ -6,7 +6,7 @@ excerpt: "Making it easier to abstract themes into reusable modules"
 tags: ["themes", "content-mesh"]
 ---
 
-> _Updated July 9, 2019 to reflect using the `gatsby-plugin-mdx` package instead of the (now deprecated) gatsby-mdx package._
+> _Updated July 9, 2019 to reflect using the `gatsby-plugin-mdx` package instead of the (now deprecated) `gatsby-mdx` package._
 
 > If you aren't familiar with Gatsby themes yet, then check out [Introducing
 > Gatsby
@@ -21,7 +21,7 @@ We've merged [a PR](https://github.com/gatsbyjs/gatsby/pull/10787) into Gatsby
 core to support Child theming. Child theming is an extension of the core theming
 algorithm to support a "parent/child" style relationship where child themes can
 rely on parent themes in the same way sites rely on themes. This means you can
-now add a child theme using the `plugins` gatsby-config key in a theme as well as your
+now add a child theme using the `plugins` `gatsby-config` key in a theme as well as your
 sites.
 
 This change is being made to make it easier for theme authors to produce themes

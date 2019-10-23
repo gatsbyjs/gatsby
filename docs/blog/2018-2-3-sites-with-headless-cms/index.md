@@ -32,7 +32,7 @@ When content exists in a tight relationship with the presentation layer, adaptin
   content for final delivery to a human.
 </Pullquote>
 
-To add to Deane Barker's eloquent explanation in the quote above (see his article [here](https://gadgetopia.com/post/9743)), a headless CMS only handles two things--content and managing that content through admin screens. This means that a separate presentation layer (or “head”) like GatsbyJS must reformat the content for delivery to a CDN and then final delivery to humans.
+To add to Deane Barker's eloquent explanation in the quote above (see his article [here](https://gadgetopia.com/post/9743)), a headless CMS only handles two things--content and managing that content through admin screens. This means that a separate presentation layer (or “head”) like Gatsby must reformat the content for delivery to a CDN and then final delivery to humans.
 
 _Note on how CMSs usually work:_ Most headless CMSs require you to create various structures for your content, typically called "content models", and then enter content into that structure. Content can include words, images, URLs, lists, etc. Then, outside of the CMS, you push this content through a presentation layer (GraphQL queries are one way to do this pushing).
 
@@ -40,11 +40,11 @@ Following are some advantages to using a headless CMS.
 
 ### Faster load times AND cheaper?
 
-With much less time (and therefore less money), you can set up a headless CMS with a presentation layer like GatsbyJS and a CDN and get your site running on edge servers.
+With much less time (and therefore less money), you can set up a headless CMS with a presentation layer like Gatsby and a CDN and get your site running on edge servers.
 
-Besides being faster and therefore less expensive to set up, this method also produces faster load times for most sites. Let’s say a person in Australia accesses a US site built with a headless CMS and GatsbyJS; the site can run off of a closer server, so it will load quickly. This is an enormous advantage for both the user and for whomever created the site.
+Besides being faster and therefore less expensive to set up, this method also produces faster load times for most sites. Let’s say a person in Australia accesses a US site built with a headless CMS and Gatsby; the site can run off of a closer server, so it will load quickly. This is an enormous advantage for both the user and for whomever created the site.
 
-Faster load times can be taken to the next level with sites that run offline. I recently chatted with a friend in New Delhi who used GatsbyJS to build his blog to run offline, which is an incredible advantage for commuters who want to read while on public transportation with spotty internet access.
+Faster load times can be taken to the next level with sites that run offline. I recently chatted with a friend in New Delhi who used Gatsby to build his blog to run offline, which is an incredible advantage for commuters who want to read while on public transportation with spotty internet access.
 
 ### Higher quality AND cheaper?
 
@@ -80,7 +80,7 @@ I've read that [ButterCMS](https://buttercms.com) is particularly good for blogs
 
 ### Contentful
 
-I already built this site http://watson.surge.sh/ with Contentful and talk about that experience [here](/blog/2018-1-25-building-a-site-with-react-and-contentful/). Another thing I like about Contentful, which I didn't mention in the other article, is how smooth it is to toggle between content models (categories of content types). Their recent product update says you can add images inline in chunks of text, which makes the editing experience feel more like using a WYSIWYG. This seems like it would make things easy on the editing side, although I haven't explored if this would affect image presentation.
+I already built this site <http://watson.surge.sh/> with Contentful and talk about that experience [here](/blog/2018-1-25-building-a-site-with-react-and-contentful/). Another thing I like about Contentful, which I didn't mention in the other article, is how smooth it is to toggle between content models (categories of content types). Their recent product update says you can add images inline in chunks of text, which makes the editing experience feel more like using a WYSIWYG. This seems like it would make things easy on the editing side, although I haven't explored if this would affect image presentation.
 
 ### CloudCMS
 

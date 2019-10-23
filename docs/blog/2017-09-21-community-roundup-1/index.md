@@ -30,7 +30,7 @@ By the numbers we've seen:
 - Freelancer web developer [Oliver Benns'](https://twitter.com/oliverbenns/)
   [portfolio site](https://oliverbenns.com/)
 - [Daniel Stefanovic](https://twitter.com/danistefanovic) launched his online
-  book http://digitalpsychology.io/
+  book <http://digitalpsychology.io/>
 
 ## New tutorials!
 

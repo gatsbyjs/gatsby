@@ -1389,7 +1389,7 @@
   built_by_url: "https://parkersarsfield.com"
 - title: Frontend web development with Greg
   description: |
-    JavaScript, GatsbyJS, React, CSS in JS... Let's learn some stuff together.
+    JavaScript, Gatsby, React, CSS in JS... Let's learn some stuff together.
   main_url: "https://dev.greglobinski.com"
   url: "https://dev.greglobinski.com"
   categories:
@@ -1888,7 +1888,7 @@
   main_url: "https://bestvideogame.deals/"
   url: "https://bestvideogame.deals/"
   description: |
-    Video game comparison website for the UK, build with GatsbyJS.
+    Video game comparison website for the UK, build with Gatsby.
   categories:
     - eCommerce
   built_by: Koen Kamphuis
@@ -2640,7 +2640,7 @@
   url: https://dfjames.com/
   source_url: https://github.com/daviddeejjames/dfjames-gatsby
   description: >
-    Portfolio Site using GatsbyJS and headless WordPress
+    Portfolio Site using Gatsby and headless WordPress
   categories:
     - WordPress
     - Portfolio
@@ -3199,7 +3199,7 @@
   source_url: https://github.com/ooloth/gatsby-tutorials
   featured: false
   description: >
-    Gatsby Tutorials is a community-updated list of video, audio and written tutorials to help you learn GatsbyJS.
+    Gatsby Tutorials is a community-updated list of video, audio and written tutorials to help you learn Gatsby.
   categories:
     - Web Development
     - Education
@@ -4824,7 +4824,7 @@
   url: https://paulcliftonphotography.com
   featured: false
   description: >
-    A full migration from WordPress to GatsbyJS and DatoCMS. Includes custom cropping on images as viewport changes size and also an infinity scroll that doesn't preload all of the results.
+    A full migration from WordPress to Gatsby and DatoCMS. Includes custom cropping on images as viewport changes size and also an infinity scroll that doesn't preload all of the results.
   categories:
     - Blog
     - Portfolio
@@ -5438,7 +5438,7 @@
   main_url: https://camiloholguin.me
   source_url: https://github.com/camiloholguin/gatsby-portfolio
   description: >
-    Portfolio site using GatsbyJS and WordPress REST API.
+    Portfolio site using Gatsby and WordPress REST API.
   categories:
     - WordPress
     - Portfolio
@@ -5531,7 +5531,7 @@
   main_url: https://www.gonzalonunez.com
   url: https://www.gonzalonunez.com
   description: >
-    Website for Cancun based destination wedding photographer Gonzalo Nuñez. Site built with GatsbyJS, WordPress API and Netlify.
+    Website for Cancun based destination wedding photographer Gonzalo Nuñez. Site built with Gatsby, WordPress API and Netlify.
   categories:
     - Photography
     - Portfolio
@@ -5562,7 +5562,7 @@
   main_url: https://www.measuresforjustice.org
   url: https://www.measuresforjustice.org
   description: >
-    Measures for Justice gathers criminal justice data at the county level and makes it available on a free public Data Portal. Site rebuilt from scratch with GatsbyJS.
+    Measures for Justice gathers criminal justice data at the county level and makes it available on a free public Data Portal. Site rebuilt from scratch with Gatsby.
   categories:
     - Nonprofit
     - Marketing
@@ -5571,7 +5571,7 @@
   main_url: https://www.raconteur.net/agency
   url: https://www.raconteur.net/agency
   description: >
-    Raconteur Agency is a London-based content marketing agency for B2B brands. We have rebuilt their site with Gatsby v2 using their existing WordPress backend as the data source. By switching from WordPress to GatsbyJS we have achieved a 200%+ improvement in page load times and went from a Lighthouse performance score of 49 to 100.
+    Raconteur Agency is a London-based content marketing agency for B2B brands. We have rebuilt their site with Gatsby v2 using their existing WordPress backend as the data source. By switching from WordPress to Gatsby we have achieved a 200%+ improvement in page load times and went from a Lighthouse performance score of 49 to 100.
   categories:
     - Agency
     - Marketing
@@ -6540,7 +6540,7 @@
   main_url: https://runbytech.github.io/ueofcweb/
   source_url: https://github.com/runbytech/ueofcweb
   description: >
-    UltronEle is a light, fast, simple yet interesting serverless e-learning CMS based on GatsbyJS. It aims to provide a easy-use product for tutors, teachers, instructors from all kinks of fields with near-zero efforts to setup their own authoring tool and content publish website.
+    UltronEle is a light, fast, simple yet interesting serverless e-learning CMS based on Gatsby. It aims to provide a easy-use product for tutors, teachers, instructors from all kinks of fields with near-zero efforts to setup their own authoring tool and content publish website.
   categories:
     - Education
     - Consulting
@@ -7300,7 +7300,7 @@
   url: https://gatsbyfinds.netlify.com
   source_url: https://github.com/bvlktech/GatsbyFinds
   description: >
-    GatsbyFinds is a website built ontop of Gatsby v2 by providing developers with a showcase of all the lastest projects made with the beloved GatsbyJS.
+    GatsbyFinds is a website built ontop of Gatsby v2 by providing developers with a showcase of all the lastest projects made with the beloved Gatsby.
   categories:
     - Portfolio
     - Gallery

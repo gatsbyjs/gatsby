@@ -6,7 +6,7 @@ Gatsby allows powerful image processing features using the [`Sharp`](https://git
 
 If you want the same functionality for files that are remotely hosted online and not located in your Git repo, [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/) has an API called `createRemoteFileNode` to solve this.
 
-This guide will show you how to use the `createRemoteFileNode` process and get the same benefits of gatsby-transformer-sharp with externally sourced images.
+This guide will show you how to use the `createRemoteFileNode` process and get the same benefits of `gatsby-transformer-sharp` with externally sourced images.
 
 ## Setup
 

@@ -53,7 +53,7 @@ If you only want to update **for patch releases**, you can add a tilde (`~`) bef
 
 For major updates follow up with the corresponding guide from the [Release and Migrations](/docs/releases-and-migration/) reference guide overview.
 
-If you are updating Gatsby, you'll likely also need to update Gatsby related plugins, you can identify them by their names starting with `gatsby-`. This only applies to plugins managed in the [gatsbyjs/gatsby](https://github.com/gatsbyjs/gatsby) repo; for community plugins check beforehand if there is a new version available for upgrading.
+If you are updating Gatsby, you'll likely also need to update Gatsby related plugins, you can identify them by their names starting with `gatsby-`. This only applies to plugins managed in the [`gatsbyjs/gatsby`ocs/unit-testing.md](https://github.com/gatsbyjs/gatsby) repo; for community plugins check beforehand if there is a new version available for upgrading.
 
 ## Updating all your dependencies at once
 

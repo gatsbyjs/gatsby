@@ -20,7 +20,7 @@ So far, I've talked about what themes and plugins to use for a WordPress backend
 
 ## Creating a page template
 
-As you'll recall from the last post, you should create a page template before adding the `createPages` API to the gatsby-node.js file so it has something to call. To do this, you'll create a file in the templates directory called PageTemplate.js using the code below:
+As you'll recall from the last post, you should create a page template before adding the `createPages` API to the `gatsby-node.js` file so it has something to call. To do this, you'll create a file in the templates directory called PageTemplate.js using the code below:
 
 ```shell
 touch ./src/templates/Page.js
@@ -46,7 +46,7 @@ export default PageTemplate
 
 ## Adding pages to gatsby-node.js
 
-Awesome! Now that you have your page template created, you can add pages to the gatsby-node.js file. First, you will import the template just like you did for the BlogPostTemplate. Then you will add the allWordpressPage piece to the GraphQL query. Finally, you will use the `createPage` API to create pages based on the information retrieved from the GraphQL query and use the Page template to build the pages automatically. Below is the finished gatsby-node.js file. See if you can spot the things I mentioned for the pages.
+Awesome! Now that you have your page template created, you can add pages to the `gatsby-node.js` file. First, you will import the template just like you did for the BlogPostTemplate. Then you will add the allWordpressPage piece to the GraphQL query. Finally, you will use the `createPage` API to create pages based on the information retrieved from the GraphQL query and use the Page template to build the pages automatically. Below is the finished `gatsby-node.js` file. See if you can spot the things I mentioned for the pages.
 
 ```javascript
 // gatsby-node.js
@@ -115,7 +115,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 }
 ```
 
-Just like before, you can test this to make sure the pages were created as expected by starting your development server and visiting [localhost:8000/stuff](http://localhost:8000/stuff) to get a list of all of the available pages. Again, this is only available in a development environment since a live site will show a different 404 page. You should see an `/about` page and a `/sample-page` page in there. If so, your gatsby-node.js file worked and you can update the template to show the data you want.
+Just like before, you can test this to make sure the pages were created as expected by starting your development server and visiting [localhost:8000/stuff](http://localhost:8000/stuff) to get a list of all of the available pages. Again, this is only available in a development environment since a live site will show a different 404 page. You should see an `/about` page and a `/sample-page` page in there. If so, your `gatsby-node.js` file worked and you can update the template to show the data you want.
 
 ![See a list of available pages](images/gatsby1.png)
 
@@ -156,7 +156,7 @@ export const query = graphql`
 `
 ```
 
-I mentioned at the end of [part two](/blog/2019-04-30-how-to-build-a-blog-with-wordpress-and-gatsby-part-2) that configuring the gatsby-node.js file is probably the most difficult part of this whole thing. Since you worked your way through that already and understand how it works, setting up another content type was cake, right?
+I mentioned at the end of [part two](/blog/2019-04-30-how-to-build-a-blog-with-wordpress-and-gatsby-part-2) that configuring the `gatsby-node.js` file is probably the most difficult part of this whole thing. Since you worked your way through that already and understand how it works, setting up another content type was cake, right?
 
 <figure>
 <video autoplay muted loop width="400">
@@ -294,9 +294,9 @@ It's looking pretty good so far. You're getting pretty close to being done, you 
 
 One of the first things I notice about the blog pictured above is the header. It doesn't look bad, but you probably don't want your blog to say "Gatsby Default Starter". There are a few ways you can change this, which I'll go over real quick.
 
-### In the gatsby-config.js file
+### In the `gatsby-config.js` file
 
-In the gatsby-config.js file, you can see a piece at the top called `siteMetaData` with a title, description, and author. This is where some basic information is kept about the project for the SEO component, but also for the site name.
+In the `gatsby-config.js` file, you can see a piece at the top called `siteMetaData` with a title, description, and author. This is where some basic information is kept about the project for the SEO component, but also for the site name.
 
 ```javascript
 // gatsby-config.js
@@ -427,7 +427,7 @@ The header component above looks a little different than it originally did, but 
 
 Let's take it a step further and say your user wants a menu in the header that he or she can update from WordPress. If you'll recall in the [first part of this series](/blog/2019-04-26-how-to-build-a-blog-with-wordpress-and-gatsby-part-1), I mentioned a plugin called WP API Menus which will make your menus available in the Rest API.
 
-When you were setting your gatsby-config.js file in the [second part of the series](/blog/2019-04-30-how-to-build-a-blog-with-wordpress-and-gatsby-part-2), you just stuck with the default routes provided in the gatsby-source-wordpress docs. The WP API Menus plugin creates a few new routes for those endpoints, so the first thing you need to do is add these endpoints to the gatsby-config.js file.
+When you were setting your `gatsby-config.js` file in the [second part of the series](/blog/2019-04-30-how-to-build-a-blog-with-wordpress-and-gatsby-part-2), you just stuck with the default routes provided in the `gatsby-source-wordpress` docs. The WP API Menus plugin creates a few new routes for those endpoints, so the first thing you need to do is add these endpoints to the `gatsby-config.js` file.
 
 ```javascript
 // gatsby-config.js

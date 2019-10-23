@@ -42,7 +42,7 @@ We decided to solve these 2 major problems by slicing our website into smaller (
   our build time from 20+ minutes to 3 minutes.
 </Pullquote>
 
-Technically, we achieved this by setting an environment variable `GATSBY_LOCALE` when building the website, and that will restrict the amount of gatsby nodes and pages we create. To build the whole website, we parallelize the builds on multiple machines.
+Technically, we achieved this by setting an environment variable `GATSBY_LOCALE` when building the website, and that will restrict the amount of Gatsby nodes and pages we create. To build the whole website, we parallelize the builds on multiple machines.
 
 To manage this, we built our own internal interface as a separate React app. This enables content managers to preview their changes by requesting builds for specific markets.
 

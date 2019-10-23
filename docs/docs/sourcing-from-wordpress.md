@@ -15,7 +15,7 @@ _Note: this guide uses the `gatsby-starter-default` to provide you with the know
 
 This guide assumes that you have a Gatsby project set up. If you need to set up a project, head to the [Quick Start guide](/docs/quick-start), then come back.
 
-### gatsby-config.js
+### `gatsby-config.js`
 
 Essentially the Gatsby home base. The two things defined here initially (in the starter) are `siteMetadata` and `plugins` you can add to enable new functionalities on your site.
 
@@ -29,7 +29,7 @@ module.exports = {
 }
 ```
 
-### Plugin: gatsby-source-wordpress
+### Plugin: `gatsby-source-wordpress`
 
 Now that you have some understanding of project structure lets add fetching WordPress data functionality. There's a plugin for that. [`gatsby-source-wordpress`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress) is Gatsby's plugin for sourcing data from WordPress sites using the WordPress JSON REST API. You can install it by running the following command:
 

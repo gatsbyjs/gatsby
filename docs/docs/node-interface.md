@@ -43,11 +43,11 @@ A globally unique node type chosen by the plugin owner.
 
 ### `owner`
 
-The plugin which created this node. This field is added by gatsby itself (and not the plugin).
+The plugin which created this node. This field is added by Gatsby itself (and not the plugin).
 
 ### `fieldOwners`
 
-Stores which plugins created which fields. This field is added by gatsby itself (and not the plugin).
+Stores which plugins created which fields. This field is added by Gatsby itself (and not the plugin).
 
 ### `content`
 

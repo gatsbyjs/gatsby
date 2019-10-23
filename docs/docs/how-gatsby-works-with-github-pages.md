@@ -119,7 +119,7 @@ node_js:
   - "10"
 deploy:
   provider: script
-  # Note: change "docs" to the directory where your gatsby-site lives, if necessary
+  # Note: change "docs" to the directory where your `gatsby-site` lives, if necessary
   script: cd docs/ && yarn install && yarn run deploy
   skip_cleanup: true
   on:

@@ -44,7 +44,7 @@ This framework also has experimental support for the React suspense API and Reac
 
 - [Building i18n with Gatsby](https://www.gatsbyjs.org/blog/2017-10-17-building-i18n-with-gatsby/)
 
-- [Building Eviction Free NYC with GatsbyJS + Contentful](https://www.gatsbyjs.org/blog/2018-04-27-building-eviction-free-nyc-with-gatsbyjs-and-contentful/)
+- [Building Eviction Free NYC with Gatsby + Contentful](https://www.gatsbyjs.org/blog/2018-04-27-building-eviction-free-nyc-with-gatsbyjs-and-contentful/)
 
 - [Gatsby i18n packages](https://www.gatsbyjs.org/packages/gatsby-plugin-i18n/?=i18)
 

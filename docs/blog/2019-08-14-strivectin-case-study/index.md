@@ -76,7 +76,7 @@ Prismic is an API-first CMS. Users can define the shape of their content through
 
 Prismic also offers a "slices" feature. Different "types" can share the slices. This enables a Product and Homepage type to share a Hero Banner slice.
 
-The gatsby-source-prismic plugin integrates Gatsby with Prismic.
+The `gatsby-source-prismic` plugin integrates Gatsby with Prismic.
 
 ## Firebase
 

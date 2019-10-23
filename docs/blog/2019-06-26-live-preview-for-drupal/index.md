@@ -43,7 +43,7 @@ You will need to sign up for a Gatsby Preview account, so this is a meta beta. Y
 
 ### Step 2: Install Gatsby Source Drupal
 
-The gatsby source plugin is available on [npm under the package name `gatsby-source-drupal`](https://www.npmjs.com/package/gatsby-source-drupal).
+The Gatsby source plugin is available on [npm under the package name `gatsby-source-drupal`](https://www.npmjs.com/package/gatsby-source-drupal).
 
 ```javascript:title=gatsby-config.js
 module.exports = {

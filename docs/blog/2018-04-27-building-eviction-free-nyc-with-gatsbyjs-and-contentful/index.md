@@ -1,5 +1,5 @@
 ---
-title: Building Eviction Free NYC with GatsbyJS + Contentful
+title: Building Eviction Free NYC with Gatsby + Contentful
 date: 2018-04-27
 author: "Dan Kass"
 excerpt: Lessons in building a minimal, low-connectivity site for navigating a daunting legal process.
@@ -10,7 +10,7 @@ publishedAt: "JustFixNYC"
 
 On March 29th, we launched [Eviction Free NYC](http://www.evictionfreenyc.org/) with the [Right to Counsel Coalition](https://www.righttocounselnyc.org/) as part of a campaign to educate tenants living in affordable housing on their legal rights and how to navigate the daunting process of receiving an eviction notice.
 
-In order to build this new resource we applied a [human-centered design process](https://medium.com/@JustFixNYC/co-designing-eviction-free-nyc-b54570c69153) followed by specialized technical scoping in order to determine what was best for our users and build something for this unique context. **That process led us to using GatsbyJS, Contentful, and Netlify!** Below, we've written up how we mapped design to dev, approached different stakeholders, and utilized Gatsby's great flexibility & plugin library.
+In order to build this new resource we applied a [human-centered design process](https://medium.com/@JustFixNYC/co-designing-eviction-free-nyc-b54570c69153) followed by specialized technical scoping in order to determine what was best for our users and build something for this unique context. **That process led us to using Gatsby, Contentful, and Netlify!** Below, we've written up how we mapped design to dev, approached different stakeholders, and utilized Gatsby's great flexibility & plugin library.
 
 #### **Mapping Design Considerations to Technical Scoping**
 
@@ -39,7 +39,7 @@ outdated. We also wanted to utilize this system to make it easy for new
 languages to be added and maintained with as little technical knowledge as
 possible.
 
-#### **Our solution: GatsbyJS**
+#### **Our solution: Gatsby**
 
 We knew that we would build the site in [React](https://reactjs.org/).
 Developers can build websites quickly and reliably through its modular
@@ -54,7 +54,7 @@ up-and-running quickly. While we’re big fans of
 [create-react-app](https://github.com/facebook/create-react-app) and have used
 it on other projects, due to an aggressive project timeline, we needed something
 that provided a more “out-of-the-box” solution. We wound up building the site in
-GatsbyJS, which is a **React-based static site generator**. GatsbyJS is the
+Gatsby, which is a **React-based static site generator**. Gatsby is the
 perfect fit for a number of reasons:
 
 1.  [Static sites](https://en.wikipedia.org/wiki/Static_web_page) load content much
@@ -63,7 +63,7 @@ perfect fit for a number of reasons:
     to the user. They are more easily adaptable for low connectivity / offline
     functionality for this reason. This allows us to provide a faster and more
     reliable experience for tenants utilizing the service.
-1.  GatsbyJS ships with an incredible amount of pre-handled optimization features,
+1.  Gatsby ships with an incredible amount of pre-handled optimization features,
     from prefetching resources to progressive image loading to inlining code blocks
     so they don’t need to be fetched via
     [AJAX](<https://en.wikipedia.org/wiki/Ajax_(programming)>). There was no way we
@@ -89,7 +89,7 @@ tools that come with them) and additionally gives you total flexibility as to
 how the website itself is constructed.
 
 In previous projects where we used Contentful, content was loaded dynamically
-(via AJAX) when a user visits the site. GatsbyJS instead pulls content from
+(via AJAX) when a user visits the site. Gatsby instead pulls content from
 Contentful _as the site compiles_ (pre-deploy), not when the user visits it.
 This change creates significantly less server requests after page load and
 further speeds up the site’s final load time.
@@ -102,7 +102,7 @@ Court Action Steps**, and meta-level page models, such as **LandingPage**.
 ![Provider Model](provider-example.png)
 _An example of the Provider content model_
 
-As GatsbyJS compiles the site (either in dev or building for production), it
+As Gatsby compiles the site (either in dev or building for production), it
 will pull content from Contentful and make it available via GraphQL. A file’s
 GraphQL `pageQuery` will then populate your React component’s `props` with the
 corresponding data, creating an incredibly simple pipeline from content → code.
@@ -136,7 +136,7 @@ their eligibility for legal representation as well as different types of
 eviction proceedings. **This level of personalization is difficult to achieve in
 a static site and manage in a CMS.** We wound up finding a solution that gave us
 flexibility and reuse of content while preserving the static page nature of
-GatsbyJS.
+Gatsby.
 
 The four variables for generating these pages were language, housing court, case
 type, and eligibility. A quick calculation gave us the basic number of result
@@ -160,7 +160,7 @@ third-party content, such as Google Maps, to be embedded in the steps. To
 reorder a step or change a part of the process for a specific court or case
 type, you can simply drag-n-drop things in Contentful!
 
-From there, we had to teach GatsbyJS how to properly render each page based on
+From there, we had to teach Gatsby how to properly render each page based on
 pathway. We did this by implementing the `createPages` function in the [Gatsby
 Node API](/docs/node-apis/). For each Housing Court Page
 (also per language!), Gatsby creates 6 different pages based on the pathways.

@@ -102,7 +102,7 @@ A treatise on the efficacy of bezoar for treating agricultural pesticide poisoni
 
 ```yaml:title=author.yaml
 - id: Kyle Mathews
-  bio: Founder @ GatsbyJS. Likes tech, reading/writing, founding things. Blogs at bricolage.io.
+  bio: Founder @ Gatsby. Likes tech, reading/writing, founding things. Blogs at bricolage.io.
   twitter: "@kylemathews"
 ```
 
@@ -229,7 +229,7 @@ author_id: Kyle Mathews
 twitter: "@kylemathews"
 ---
 
-Founder @ GatsbyJS. Likes tech, reading/writing, founding things. Blogs at bricolage.io.
+Founder @ Gatsby. Likes tech, reading/writing, founding things. Blogs at bricolage.io.
 ```
 
 And then add the following rule to your `gatsby-config.js`:

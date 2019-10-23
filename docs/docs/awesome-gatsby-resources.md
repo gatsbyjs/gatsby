@@ -18,7 +18,7 @@ See the [library of official and community plugins](/plugins/)
 
 ## Tools
 
-- [Develop & Build GatsbyJS static sites within Docker](https://github.com/aripalo/gatsby-docker/)
+- [Develop & Build Gatsby static sites within Docker](https://github.com/aripalo/gatsby-docker/)
 - Is Gatsby? - Browser extension for [Chrome](https://chrome.google.com/webstore/detail/is-gatsby/jgaejkhmgkpagdmapahohjennkhbpgfj) and [Firefox](https://addons.mozilla.org/en-US/firefox/addon/is-gatsby/) to check if a site / page is using Gatsby.
 
 ## Podcasts
@@ -28,10 +28,10 @@ See the [library of official and community plugins](/plugins/)
 - [2019-04-12: Jason Lengstorf on JS Party #71](https://changelog.com/jsparty/71)
 - [2018-11-30: Kyle Mathews on Founders Talk #59](https://changelog.com/founderstalk/59)
 - [2018-11-14: Jason Lengstorf on React Podcast](https://reactpodcast.simplecast.fm/28)
-- [2018-07-18: The Great GatsbyJS w/ Jason Lengstorf on The Changelog #306](https://changelog.com/podcast/306)
+- [2018-07-18: The Great Gatsby w/ Jason Lengstorf on The Changelog #306](https://changelog.com/podcast/306)
 - [2018-04-17: Gatsby w/Jason Lengstorf](https://spec.fm/podcasts/toolsday/134337)
 - [2018-02-28: syntax.fm on Static Site Generators (lots of Gatsby love)](https://syntax.fm/show/034/why-static-site-generators-are-awesome)
-- [2017-09-21: Kyle Mathews on JAMSTACK radio on "Static Site Generation with GatsbyJS](https://www.heavybit.com/library/podcasts/jamstack-radio/ep-22-static-site-generation-with-gatsbyjs/)
+- [2017-09-21: Kyle Mathews on JAMSTACK radio on "Static Site Generation with Gatsby](https://www.heavybit.com/library/podcasts/jamstack-radio/ep-22-static-site-generation-with-gatsbyjs/)
 - [2017-07-21: Kyle Mathews on Web of Tomorrow](https://www.orbit.fm/weboftomorrow/39/)
 - [2017-08-17: Kyle Mathews on Software Engineering Daily](https://softwareengineeringdaily.com/2017/08/17/gatsbyjs-with-kyle-mathews/)
 
@@ -44,7 +44,7 @@ See the [library of official and community plugins](/plugins/)
 - [React Conf 2016 - Lightning Talks - Kyle Mathews](https://www.youtube.com/watch?v=RFkNRKL6ZoE)
 - [Developing with React and Gatsby — Kyle Mathews](https://www.youtube.com/watch?v=G4LVKJOOj7o)
 - [GraphQL Summit Open Source Lightning Talk on Gatsby — Kyle Mathews](https://youtu.be/y588qNiCZZo)
-- [Talk on GatsbyJS @ ViennaJS — Gerald Bauer](https://www.youtube.com/watch?v=f0O1nCgqA3E&feature=youtu.be&a)
+- [Talk on Gatsby @ ViennaJS — Gerald Bauer](https://www.youtube.com/watch?v=f0O1nCgqA3E&feature=youtu.be&a)
 
 ## Livestreams
 
@@ -69,13 +69,13 @@ See the [library of official and community plugins](/plugins/)
 - [How I made my portfolio website blazing fast with Gatsby](https://medium.freecodecamp.org/how-i-made-my-portfolio-website-blazing-fast-with-gatsby-82ccddc2f671)
 - [JAMstack Basics: How to Create a Gatsby Starter with Contentful and Deploy to Netlify](https://itnext.io/jamstack-basics-how-to-create-a-gatsby-starter-with-contentful-and-deploy-to-netlify-846354cc74bc)
 - [How to deploy a static Gatsby app to Heroku](https://medium.freecodecamp.org/how-to-deploy-a-static-gatsby-app-to-heroku-3362e3ecda0f)
-- [A comprehensive guide to build your personal website using GatsbyJS and Ghost deployed on AWS](https://nishantdania.com/blog/guide-to-setup-ghost-gatsby-website)
+- [A comprehensive guide to build your personal website using Gatsby and Ghost deployed on AWS](https://nishantdania.com/blog/guide-to-setup-ghost-gatsby-website)
 - [Zero to Deploy: A Practical Guide to Static Sites with Gatsby](https://scotch.io/tutorials/zero-to-deploy-a-practical-guide-to-static-sites-with-gatsbyjs)
 - [Build blazing fast web applications with Gatsby 101](https://gatsbyguides.com/)
 - [Build a Coffee Shop Website w/ Gatsby, Contentful, SnipCard & Formspree](https://www.youtube.com/watch?v=oAVhEPey_qA)
-- [Why I used GatsbyJS](https://medium.com/@jameshunt.co/why-i-used-gatsbyjs-70bbb0f5c4a7)
+- [Why I used Gatsby](https://medium.com/@jameshunt.co/why-i-used-gatsbyjs-70bbb0f5c4a7)
 - [Introducing Dashbored — Generate Static Dashboards Using Gatsby](https://medium.com/planes-agency/introducing-dashbored-62550a028fcc)
-- [12 Factor Applications with GatsbyJS](https://medium.com/@wonderboymusic/12-factor-applications-with-gatsbyjs-ef8a2b1f883a)
+- [12 Factor Applications with Gatsby](https://medium.com/@wonderboymusic/12-factor-applications-with-gatsbyjs-ef8a2b1f883a)
 - [Reading Data From A JSON File With Gatsby + GraphQL](https://itnext.io/reading-data-from-a-json-file-with-gatsby-graphql-572b18ab98a)
 - [The Great Gatsby Bootcamp \[Full Course\] - Andrew Mead](https://www.youtube.com/watch?v=8t0vNu2fCCM)
 - [Understanding the Gatsby lifecycle](https://medium.com/narative/understanding-gatsbys-lifecycle-31c473ba2f2d)
@@ -104,7 +104,7 @@ See the [library of official and community plugins](/plugins/)
 
 ### Turkish
 
-- [GatsbyJS ile Modern Web Sitesi | 1. Bölüm (Başlangıç ve Kurulum) (Turkish)](https://medium.com/@raufsamestone/reactjs-ve-gatsbyjs-ile-modern-web-sitesi-1-b%C3%B6l%C3%BCm-ba%C5%9Flang%C4%B1%C3%A7-ve-kurulum-27437d6aaf54)
+- [Gatsby ile Modern Web Sitesi | 1. Bölüm (Başlangıç ve Kurulum) (Turkish)](https://medium.com/@raufsamestone/reactjs-ve-gatsbyjs-ile-modern-web-sitesi-1-b%C3%B6l%C3%BCm-ba%C5%9Flang%C4%B1%C3%A7-ve-kurulum-27437d6aaf54)
 
 ### Ukrainian
 

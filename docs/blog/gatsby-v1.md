@@ -218,7 +218,7 @@ well as transformer plugins for
 [JSDoc](/packages/gatsby-transformer-documentationjs/), React prop-types, and
 [images](/packages/gatsby-plugin-sharp/). We're collecting a list of additional
 source/transformer plugins that'd be useful to have over at
-https://github.com/gatsbyjs/gatsby/issues/1199
+<https://github.com/gatsbyjs/gatsby/issues/1199>
 
 These plugins are easy to write (somewhat similar to webpack loaders) so we
 expect to see the list of plugins grow rapidly.

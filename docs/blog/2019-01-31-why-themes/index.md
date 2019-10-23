@@ -71,7 +71,7 @@ Some tweets to that effect:
 
 ---
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">A thread about a lesson. I want to update my website. I spent about ten hours this weekend messing with GatsbyJS, GraphQL, React, Netlify, all that. I got a working version that does some really magical stuff with a static page.</p>&mdash; jordan t. thevenow-harrison (@jtth) <a href="https://twitter.com/jtth/status/1080519113930350592?ref_src=twsrc%5Etfw">January 2, 2019</a></blockquote>
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">A thread about a lesson. I want to update my website. I spent about ten hours this weekend messing with Gatsby, GraphQL, React, Netlify, all that. I got a working version that does some really magical stuff with a static page.</p>&mdash; jordan t. thevenow-harrison (@jtth) <a href="https://twitter.com/jtth/status/1080519113930350592?ref_src=twsrc%5Etfw">January 2, 2019</a></blockquote>
 
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">A lot of that time was spent refreshing, learning, and digesting new technologies that are interesting and powerful. But here&#39;s the thing: there&#39;s no reason for me to use this complex stuff to make my website slightly better. It doesn&#39;t make me more likely to write.</p>&mdash; jordan t. thevenow-harrison (@jtth) <a href="https://twitter.com/jtth/status/1080519116195356674?ref_src=twsrc%5Etfw">January 2, 2019</a></blockquote>
 

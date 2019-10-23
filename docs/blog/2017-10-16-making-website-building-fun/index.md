@@ -197,7 +197,7 @@ to cheaply lazy load images. It holds an image's position so your page doesn't
 jump around as images load. It makes it easy to add a placeholder—either a gray
 background or a blurry version of the image.
 
-Here's what a really simple Gatsby page component using gatsby-image would look
+Here's what a really simple Gatsby page component using `gatsby-image` would look
 like:
 
 ```jsx
@@ -215,7 +215,7 @@ export default ({ data }) => (
 So this is all very nice and it's far better to be able to use this from NPM vs.
 implementing it yourself or cobbling together several standalone libraries.
 
-But if this was all gatsby-image did, it'd be a nice new component to have
+But if this was all `gatsby-image` did, it'd be a nice new component to have
 around, but it wouldn't be anything special.
 
 ## Reducing the complexity around the _entire_ process of building a website
@@ -232,7 +232,7 @@ For example, how does a single image typically get on a website?
 4.  And finally, the image(s) are included in the HTML/CSS/JS (or React
     component) for the page.
 
-What makes gatsby-image really interesting is it's _seamlessly integrated into
+What makes `gatsby-image` really interesting is it's _seamlessly integrated into
 Gatsby's data layer_ which has native image processing capabilities.
 
 Gatsby lets you _query your site data_ with GraphQL _including_ querying for
@@ -278,7 +278,7 @@ the steps now are:
 
 1.  Install gatsby-image
 2.  Decide what size of image you need (125x125 in the example above)
-3.  Add your query and the gatsby-image component to your page
+3.  Add your query and the `gatsby-image` component to your page
 4.  And… that's it!
 
 Now playing with images is fun! Want to tweak your design? No problem, just
@@ -295,7 +295,7 @@ now, that's far too hard to do and
 We’ll make website building fun by creating higher-level components and design
 tools that allow us to more easily express our intent.
 
-We'll make the web fast again through efforts like gatsby-image where we
+We'll make the web fast again through efforts like `gatsby-image` where we
 re-examine basic building blocks of the web like `<img>` and improve their
 design through **seamless integration of data processing and React components**.
 

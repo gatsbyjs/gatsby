@@ -35,9 +35,9 @@ Date of interview: December 13 2018
 
 ---
 
-**Q:** When would I choose gatsby over next js — f_youngblood
+**Q:** When would I choose Gatsby over next js — f_youngblood
 
-**A:** Gatsby and Next are similar in many respects, but Gatsby is hyper-focused on baking performance in by default and in the ecosystem with approaches like the offline-plugin, etc. Personally I'd default to starting with gatsby and move to next only if I couldn't find a way to prerender my SEO critical applications.
+**A:** Gatsby and Next are similar in many respects, but Gatsby is hyper-focused on baking performance in by default and in the ecosystem with approaches like the offline-plugin, etc. Personally I'd default to starting with Gatsby and move to next only if I couldn't find a way to prerender my SEO critical applications.
 
 — biscarch
 
@@ -55,7 +55,7 @@ We're also working on adding [Gatsby Theme support](/blog/2018-11-11-introducing
 
 **Q:** Is Gatsby ready to be used with dynamic Apps and an equivalent alternative to CRA by now? For example, a couple of months ago it was not possible yet to use Apollo Client (as in post-build to make dynamic requests to a GQL server from the client-side). Is this available now and are there any other limitations? In general, it has been confusing for me to understand why to use Gatsby for dynamic apps in the first place. It has been clearly advertised as a static site generator after all. Could you shed some light on that? Thanks! — tiny
 
-**A:** Yes. You can see how to approach using apollo-client in examples like [the gatsby store repo](https://github.com/gatsbyjs/store.gatsbyjs.org). "Static site generator" is a bit of a misnomer, since Gatsby melds pre-rendering with a fully bootstrapable performant application like you'd get with something like CRA.
+**A:** Yes. You can see how to approach using apollo-client in examples like [the Gatsby store repo](https://github.com/gatsbyjs/store.gatsbyjs.org). "Static site generator" is a bit of a misnomer, since Gatsby melds pre-rendering with a fully bootstrapable performant application like you'd get with something like CRA.
 
 — biscarch
 
@@ -85,7 +85,7 @@ We're also working on adding [Gatsby Theme support](/blog/2018-11-11-introducing
 
 ---
 
-**Q:** Do you hope or believe that gatsby (and JAM-stack in general), headless CMS's and microservices will overcome rigid and outdated WordPress sites and architecture? — max
+**Q:** Do you hope or believe that Gatsby (and JAM-stack in general), headless CMS's and microservices will overcome rigid and outdated WordPress sites and architecture? — max
 
 **A:** Yup! That's why I started [the Gatsby OSS project and company](/blog/2018-05-24-launching-new-gatsby-company/)! CMSs we're designed in the late 1990s and are very outdated for today's cloud/serverless computing environment. We want Gatsby to be able to replace CMSs.
 
@@ -95,7 +95,7 @@ We're also working on adding [Gatsby Theme support](/blog/2018-11-11-introducing
 
 **Q:** What's the roadmap for Gatsby themes? When would it graduate from "experimental" feature? — alexluong
 
-**A:** It will graduate from experimental when we're confident in supporting the API for the lifecycle of gatsby 2. Currently I'm reaching out to people who have built starters and talking them through converting starters to themes. I anticipate that this is when we'll find any breaking changes that need to happen, with future feedback loops being smaller ease of use type fixes.
+**A:** It will graduate from experimental when we're confident in supporting the API for the lifecycle of Gatsby 2. Currently I'm reaching out to people who have built starters and talking them through converting starters to themes. I anticipate that this is when we'll find any breaking changes that need to happen, with future feedback loops being smaller ease of use type fixes.
 
 — biscarch
 
@@ -109,7 +109,7 @@ We're also working on adding [Gatsby Theme support](/blog/2018-11-11-introducing
 
 ---
 
-**Q:** Where would you like to see gatsby in a few years, what is your vision / long-term goal with it? — mo
+**Q:** Where would you like to see Gatsby in a few years, what is your vision / long-term goal with it? — mo
 
 **A:** We want to create a wonderful inclusive community where people and companies build their livelihoods around Gatsby. We're investing heavily in the OSS community and learning resources. If we're successful, there'll be millions of sites built with Gatsby and 100s of thousands of developers and designers using Gatsby every day.
 
@@ -127,7 +127,7 @@ While it's inevitable that bugs come with any platform you choose to build on, G
 
 ---
 
-**Q:** Is there some sort of change list or changelog? I have had problems finding one in the past, for gatsby and its packages. — Everspace
+**Q:** Is there some sort of change list or changelog? I have had problems finding one in the past, for Gatsby and its packages. — Everspace
 
 **A:** There are per-package changelogs maintained in each package, for example [Gatsby's](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/CHANGELOG.md).
 
@@ -171,7 +171,7 @@ Check it out, and hope it's helpful!
 
 **Q:** What is the most exciting feature you are working right now? — Checkmatez
 
-**A:** I'm very excited about themes right now. With the core functionality (composable gatsby configs and Component Shadowing) merged in as experimental, we can start to build very powerful abstractions for complete documentation sites, marketing sites, ecommerce sites, etc. I'm happy to talk to anyone in more depth about themes at any time either in the community spectrum (https://spectrum.chat/gatsby-themes) or on Twitter (https://twitter.com/chrisbiscardi)
+**A:** I'm very excited about themes right now. With the core functionality (composable Gatsby configs and Component Shadowing) merged in as experimental, we can start to build very powerful abstractions for complete documentation sites, marketing sites, ecommerce sites, etc. I'm happy to talk to anyone in more depth about themes at any time either in the community spectrum (https://spectrum.chat/gatsby-themes) or on Twitter (https://twitter.com/chrisbiscardi)
 
 A Gatsby email _application_. Contribute to DSchau/gatsby-mail development by creating an account on GitHub.
 
@@ -187,9 +187,9 @@ A Gatsby email _application_. Contribute to DSchau/gatsby-mail development by cr
 
 ---
 
-**Q:** I have found developing plugins that create nodes or interact with the gatsby-api to be a big hassle in comparison to how pages and other content is developed. Is there any plans on making something like "hot-reload" nodes or generation during development without having to stop and start gatsby? — Everspace
+**Q:** I have found developing plugins that create nodes or interact with the `gatsby-api` to be a big hassle in comparison to how pages and other content is developed. Is there any plans on making something like "hot-reload" nodes or generation during development without having to stop and start gatsby? — Everspace
 
-**A:** Source and transformer plugins can "hot reload" data during development. Support for this is baked into Gatsby's data layer. It's a bit complicated to explain in a Q&A but basically a source plugin can watch for data to change and re-emit nodes. Gatsby will then notice this and automatically re-run graphql queries for pages affected by the changing data. gatsby-source-filesystem is the most prominent example of this. It watches for file changes and re-emits File nodes as the data changes. [This is what drives Ludicrous Mode™️](https://twitter.com/gatsbyjs/status/974507205121617920?lang=en) You can see the code for this [here](https://github.com/gatsbyjs/gatsby/blob/d4d33467bcff60ad3c740244d7585227d7e117ee/packages/gatsby-source-filesystem/src/gatsby-node.js#L129-L136).
+**A:** Source and transformer plugins can "hot reload" data during development. Support for this is baked into Gatsby's data layer. It's a bit complicated to explain in a Q&A but basically a source plugin can watch for data to change and re-emit nodes. Gatsby will then notice this and automatically re-run graphql queries for pages affected by the changing data. `gatsby-source-filesystem` is the most prominent example of this. It watches for file changes and re-emits File nodes as the data changes. [This is what drives Ludicrous Mode™️](https://twitter.com/gatsbyjs/status/974507205121617920?lang=en) You can see the code for this [here](https://github.com/gatsbyjs/gatsby/blob/d4d33467bcff60ad3c740244d7585227d7e117ee/packages/gatsby-source-filesystem/src/gatsby-node.js#L129-L136).
 
 — kylemathews
 
@@ -233,8 +233,8 @@ P.S. Gatsby is hiring worldwide for OSS Maintainers
 
 **A:** Here's two!
 
-https://www.gatsbyjs.com/careers/open-source-maintainer/
+<https://www.gatsbyjs.com/careers/open-source-maintainer/>
 
-https://www.gatsbyjs.com/careers/cloud-services-engineer/
+<https://www.gatsbyjs.com/careers/cloud-services-engineer/>
 
 — kylemathews

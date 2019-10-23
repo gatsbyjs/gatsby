@@ -52,7 +52,7 @@ From generator supporters (the 34%):
 
 From framework supporters (31%):
 
-- "because imho gatsby is a set of tools, that help you with the heavy-lifting of creating web products, it’s a framework, a very amazing and flexible framework :)"
+- "because imho Gatsby is a set of tools, that help you with the heavy-lifting of creating web products, it’s a framework, a very amazing and flexible framework :)"
 - "I would like it to be framework agnostic, like Hugo. React is good but not perfect... and so is Vue. Vanilla JS remains the best."
 - “Gatsby provides so much functionality that I would never be able to build myself, while still empowering me to build any website or web app I want. All this comes with low-to-no costs for deploying projects, and is an immensely valuable tool. To make things even better, I get to use my favorite technologies without having to learn a bunch of proprietary conventions like other frameworks.”
 
@@ -80,7 +80,7 @@ At companies, 44% said this was crucial: “Performance and flexibility to use a
 
 Gatsby makes you productive right from the start -- it takes away the overhead of time-consuming dev and build tooling setup and configuration which leads to faster iterations.
 
-At agencies, 49% said this was crucial because “it makes the creation of optimal websites a breeze, [and] it’s important to have a fast workflow.” Another respondent said “I use Gatsby mostly at the agency I work at. Previously we were building WordPress sites and we would spend a ton of time manually configuring and setting things up to get gatsby level speeds and security. Essentially I chose gatsby because all of these things were crucial and gatsby ticks all the boxes.”
+At agencies, 49% said this was crucial because “it makes the creation of optimal websites a breeze, [and] it’s important to have a fast workflow.” Another respondent said “I use Gatsby mostly at the agency I work at. Previously we were building WordPress sites and we would spend a ton of time manually configuring and setting things up to get Gatsby level speeds and security. Essentially I chose Gatsby because all of these things were crucial and Gatsby ticks all the boxes.”
 
 At companies, 43% said this was crucial. “It's f\*cking fast to dev with, ultimate performance and also good points for the "serverless" with solutions like Netlify.” Another person mentioned that with Gatsby, there’s “less tooling to get started. I like building websites fast, and focusing on content and design, instead of build/deployment.”
 

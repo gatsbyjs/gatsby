@@ -31,7 +31,7 @@ In the `authoring-themes-tutorial` folder, create two new folders, `gatsby-theme
 
 Create a `package.json` file in each of the new folders. Your file tree will look like this:
 
-```
+```flow
 .
 ├── gatsby-theme-events
 │   └── package.json
@@ -600,7 +600,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 - You'll loop over all the events that were returned, and use `createPage` to create a page for each event.
   - _Note the "wishful programming" again -- `"./src/templates/event.js"` doesn't exist yet._
 
-### Create the "events" and "event" template components.
+### Create the "events" and "event" template components
 
 The last step to make sure that these pages build is to create the page template components.
 
@@ -1089,7 +1089,7 @@ However, you don't have any event data in the site. Copy the `events.yml` file f
 
 The events listing page will now be accessible at [http://localhost:8000/events](http://localhost:8000/events). Hitting [the root path](http://localhost:8000/) will return a 404.
 
-## Make themes extendable with gatsby-plugin-theme-ui
+## Make themes extendable with `gatsby-plugin-theme-ui`
 
 You can make your theme styles extendable using the `gatsby-plugin-theme-ui` package.
 

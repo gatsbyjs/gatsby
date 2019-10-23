@@ -21,9 +21,9 @@ These are not to be considered universal definitions, just how the author will u
 
 - **site** - Any website, web-app, or other content you can browse on the internet in a web browser.
 
-- **server-side site** - Any site that pre-processes code at time of request -- whether using node.js, PHP, Python, or any other method -- before delivering it to the user's browser.
+- **server-side site** - Any site that pre-processes code at time of request -- whether using Node.js, PHP, Python, or any other method -- before delivering it to the user's browser.
 
-- **client-side site** - Any site (GatsbyJS, NuxtJS, NextJS, Single Page App, etc...) where static files(HTML/CSS/JS) are shipped to the browser for processing -- pre-processing may happen at build time, but does not happen time of request.
+- **client-side site** - Any site (Gatsby, NuxtJS, NextJS, Single Page App, etc...) where static files(HTML/CSS/JS) are shipped to the browser for processing -- pre-processing may happen at build time, but does not happen time of request.
 
 - **attack vector** - A resource through which to hack a site. Just because an attack vector exists does not mean your site is vulnerable to that attack, however. A server is an attack vector; but, the server requires a vulnerability for an attacker to exploit (use) that server as an attack vector.
 

@@ -133,7 +133,7 @@ your React components/pages with GraphQL is beautiful.
 
 After you install the `gatsby-source-contentful`
 [plugin](/packages/gatsby-source-contentful/) with NPM
-and add your Contentful API credentials to the gatsby-config file, the fun
+and add your Contentful API credentials to the `gatsby-config` file, the fun
 begins.
 
 Every time you run Gatsby with the `develop` command or do a new build with the

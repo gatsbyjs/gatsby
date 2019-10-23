@@ -12,7 +12,7 @@ This solution assumes you already have programmatically generated pages from Mar
 
 > Note: This can be done similarly using [MDX](/docs/mdx/) as well. Instead of the `markdownRemark` nodes in GraphQL, `Mdx` can be swapped in and should work.
 
-To start out, download the plugins for Gatsby-image as mentioned in [Using gatsby-image](/docs/using-gatsby-image/).
+To start out, download the plugins for Gatsby-image as mentioned in [Using `gatsby-image`](/docs/using-gatsby-image/).
 
 ```shell
 npm install --save gatsby-image gatsby-transformer-sharp gatsby-plugin-sharp

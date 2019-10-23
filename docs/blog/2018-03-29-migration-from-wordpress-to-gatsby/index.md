@@ -1,5 +1,5 @@
 ---
-title: Migration to GatsbyJS and JAM stack from WordPress
+title: Migration to Gatsby and JAM stack from WordPress
 date: 2018-03-29
 author: Vojtech Ruzicka
 canonicalLink: https://www.vojtechruzicka.com/gatsby-migration/
@@ -46,7 +46,7 @@ One important part to realize is that static does not mean limited interactivity
 
 Another key part is that everything is in Git, no database, no App server with configuration, just your code which is built by a static site generator. And everything builds and deploys quickly. That allows you to automate the build and deployment workflow easily. When you make changes in the master branch, it automatically builds the site with your Static Site Generator and just replaces the old static files. That's it. That means easy continuous deployment. And there are services for this.
 
-## GatsbyJS
+## Gatsby
 
 Alright, JAM Stack is a way to go, no doubt about that. Which of the static site generator to use though? A good place to start is a site called [StaticGen](https://www.staticgen.com/), which contains a nice list of many Static Site Generators. You can filter by language and templates used. And sort by popularity. That's a good way to determine what generators are currently widely used, which is important because it determines community size, resources, and plugins available. Currently, there are 214 generators and the number is constantly growing. So which one should I choose?
 

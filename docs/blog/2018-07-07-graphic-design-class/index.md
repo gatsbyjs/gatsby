@@ -45,24 +45,24 @@ Patrick wanted me to find a better, more modern solution and that’s where I st
 
 The speed is lightning fast. We removed WordPress entirely from the equation and replaced it with the more user-friendly, less of a headache [Contentful](https://www.contentful.com/).
 
-He also liked the cost-effectiveness of Godaddy but when things broke, it was a huge time suck to repair. We swapped Godaddy with [Netlify](https://netlify.com) and used Netlify to automatically run production builds from our GitHub repo. We wired Contentful to Netlify using a hook and to GatsbyJS using API keys and now Iron Cove’s site was fast and super simple to update. A win-win all around.
+He also liked the cost-effectiveness of Godaddy but when things broke, it was a huge time suck to repair. We swapped Godaddy with [Netlify](https://netlify.com) and used Netlify to automatically run production builds from our GitHub repo. We wired Contentful to Netlify using a hook and to Gatsby using API keys and now Iron Cove’s site was fast and super simple to update. A win-win all around.
 
-Patrick loved Gatsby so much he created a new product line where he is actively looking to help companies build sites using GatsbyJS and all the other tools he used on his current site.
+Patrick loved Gatsby so much he created a new product line where he is actively looking to help companies build sites using Gatsby and all the other tools he used on his current site.
 
 ### What do you teach?
 
 This term I teach Emerging Technologies at AI, which is a class that gives me the freedom to teach something cutting edge. This is my favorite class to teach as I get to teach something I am currently using/learning.
 
-Since I just built a site using GatsbyJS, I decided this was the perfect topic to cover in the class. A year ago, I was thinking of teaching Jekyll (jekyllrb.com) because it was so cool and fast, but it was not well received, and the students hated the process and typing Markdown. So, I scrapped it and just introduced them to Node.
+Since I just built a site using Gatsby, I decided this was the perfect topic to cover in the class. A year ago, I was thinking of teaching Jekyll (jekyllrb.com) because it was so cool and fast, but it was not well received, and the students hated the process and typing Markdown. So, I scrapped it and just introduced them to Node.
 
 Structure of the class:
 
 1.  _Taught them React._ They loved `create-react-app` and how it magically created a server and gave them hot code push powers.
 2.  _Taught them NextJS._ They liked how routing was removed from the equation and they could just drop stuff into the pages directory and they would magically work.
-3.  _Taught them Gatsby._ Learning NextJS wasn’t as smooth as I would have liked but once we jumped to learn GatsbyJS, some interesting things happened. A light when on. They were excited.
+3.  _Taught them Gatsby._ Learning NextJS wasn’t as smooth as I would have liked but once we jumped to learn Gatsby, some interesting things happened. A light when on. They were excited.
 
 <Pullquote>
-  Once we jumped to learn GatsbyJS, some interesting things happened. A light
+  Once we jumped to learn Gatsby, some interesting things happened. A light
   when on. They were excited.
 </Pullquote>
 

@@ -80,7 +80,7 @@ these infrastructure providers.
 
 ### Added
 
-- Allow for gatsby-remark-smartypants options
+- Allow for `gatsby-remark-smartypants` options
   [#1166](https://github.com/gatsbyjs/gatsby/pull/1166) @mitchejj
 - New design (for gatsbyjs.org) + new home page
   [#1170](https://github.com/gatsbyjs/gatsby/pull/1170) @kyleamathews
@@ -94,7 +94,7 @@ these infrastructure providers.
   @scottyeck
 - Sitemap Generator Plugin [#1115](https://github.com/gatsbyjs/gatsby/pull/1115)
   @nicholaswyoung
-- Add documentation to gatsby-remark-prism @kyleamathews
+- Add documentation to `gatsby-remark-prism` @kyleamathews
 
 ### Changed
 

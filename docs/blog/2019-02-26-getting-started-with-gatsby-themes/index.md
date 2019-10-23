@@ -5,7 +5,7 @@ author: Katie Fujihara
 tags: ["themes", "getting-started"]
 ---
 
-> _Updated July 9, 2019 to reflect using the `gatsby-plugin-mdx` package instead of the (now deprecated) gatsby-mdx package._
+> _Updated July 9, 2019 to reflect using the `gatsby-plugin-mdx` package instead of the (now deprecated) `gatsby-mdx` package._
 
 ### What is a Gatsby theme?
 
@@ -95,7 +95,7 @@ Read more about Gatsby+MDX [here.](https://gatsby-mdx.netlify.com/)
 
 In your _theme_ directory, add src/pages/index.mdx
 
-Then you need to add gatsby-plugin-mdx and MDX as dependencies.
+Then you need to add `gatsby-plugin-mdx` and MDX as dependencies.
 
 `yarn workspace theme add gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react`
 

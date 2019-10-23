@@ -9,9 +9,9 @@ _This post was originally published on
 [my blog](https://amberley.blog/2018-01-18-getting-started-with-gatsby-wordpress/)
 on January 18, 2018._
 
-Earlier this week I began rebuilding my blog using GatsbyJS + WordPress. As I familiarized with Gatsby, I found myself flipping through a million tabs, and I thought it might be useful to summarize concepts and to aggregate links I found helpful.
+Earlier this week I began rebuilding my blog using Gatsby + WordPress. As I familiarized with Gatsby, I found myself flipping through a million tabs, and I thought it might be useful to summarize concepts and to aggregate links I found helpful.
 
-I recently decided to tackle a redo of my blog. I wanted to do something different and I've been hearing a lot about GatsbyJS. A static site generator for React that I can easily pull my existing WordPress data for? Sold. I'll try it.
+I recently decided to tackle a redo of my blog. I wanted to do something different and I've been hearing a lot about Gatsby. A static site generator for React that I can easily pull my existing WordPress data for? Sold. I'll try it.
 
 I generated a new site using the [default starter](https://github.com/gatsbyjs/gatsby-starter-default) and read through what it gave me. Assuming you have the [Gatsby CLI](/docs/) installed, run:
 

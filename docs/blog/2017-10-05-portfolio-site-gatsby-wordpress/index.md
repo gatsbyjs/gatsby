@@ -1,9 +1,9 @@
 ---
-title: "Rebuilding my portfolio website with the great GatsbyJS and WordPress"
+title: "Rebuilding my portfolio website with the great Gatsby and WordPress"
 date: 2017-10-05
 image: "gatsby-article-cover-image.jpg"
 author: "David James"
-excerpt: "Recreating my WordPress portfolio site using GatsbyJS, React and the WordPress REST API"
+excerpt: "Recreating my WordPress portfolio site using Gatsby, React and the WordPress REST API"
 tags:
   [
     "portfolio-site",
@@ -19,7 +19,7 @@ _This article was originally published on
 [my portfolio site](http://dfjames.com/blog/site-generating-with-the-great-gatsbyjs)
 on October 1, 2017._
 
-## Site generating with the great GatsbyJS
+## Site generating with the great Gatsby
 
 When someone mentions static site generation, many people think of
 [Jekyll](https://jekyllrb.com/). I had heard some good things about it and
@@ -28,9 +28,9 @@ something new and get something up and running that was more than just my usual
 WordPress theme. I was on the verge of rebuilding my portfolio site until a
 certain [Scott Tolinski](https://www.youtube.com/user/LevelUpTuts) released a
 video on
-[GatsbyJS](https://www.youtube.com/watch?v=b2H7fWhQcdE&feature=youtu.be).
+[Gatsby](https://www.youtube.com/watch?v=b2H7fWhQcdE&feature=youtu.be).
 
-[GatsbyJS](/) is a static site generator, similar to Jekyll, however it is
+[Gatsby](/) is a static site generator, similar to Jekyll, however it is
 written using [React](https://reactjs.org/) and allows you to write your pages
 as React components! It is somewhat similar to create-react-app where almost all
 the scary Webpack config has been abstracted away from you and everything is

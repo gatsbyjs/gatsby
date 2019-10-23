@@ -62,4 +62,4 @@ Read more about [Pull Request Previews](https://render.com/docs/pull-request-pre
 
 ## Support
 
-Chat with Render developers at https://render.com/chat or email `support@render.com` if you need help.
+Chat with Render developers at <https://render.com/chat> or email `support@render.com` if you need help.

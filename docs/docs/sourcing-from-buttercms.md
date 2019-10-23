@@ -79,7 +79,7 @@ To see a fully complete Gatsby+ButterCMS project check out this [Gatsby ButterCM
 ### Webhooks
 
 Webhooks are a powerful feature that allow you to notify your internal systems whenever content in ButterCMS has changed.
-Your host platform need to be notified so that gatsby can create fresh pages from the new data. You can learn more about Webhooks in this [blog post](https://buttercms.com/blog/webhook-vs-api-whats-the-difference). Checkout your host platform form incoming webhooks so you can hit it anytime your content changes. Netlify lets you generate a build hook that will be triggered by butter on certain event e.g. when you create or update a blog post more details [here](https://buttercms.com/docs/api/#webhooks)
+Your host platform need to be notified so that Gatsby can create fresh pages from the new data. You can learn more about Webhooks in this [blog post](https://buttercms.com/blog/webhook-vs-api-whats-the-difference). Checkout your host platform form incoming webhooks so you can hit it anytime your content changes. Netlify lets you generate a build hook that will be triggered by butter on certain event e.g. when you create or update a blog post more details [here](https://buttercms.com/docs/api/#webhooks)
 
 ![Webhook](https://buttercms.com/static/images/docs/guides/OverviewWebhooks.png "Webhook")
 
@@ -445,7 +445,7 @@ export const query = graphql`
 export default IndexPage
 ```
 
-Next you'll refactor `gatsby-node-js` to programmatically create customer case study pages with gatsby create pages API. First you need to define a customer case study template
+Next you'll refactor `gatsby-node-js` to programmatically create customer case study pages with Gatsby create pages API. First you need to define a customer case study template
 
 ```jsx:title=src/templates/customer-case-study.js
 import React from "react"
@@ -600,7 +600,7 @@ gatsby develop
 
 Now the home page should contain links to customer case study pages, click around
 you'll notice that the template you defined in `src/template/customer_case_study.js`
-was use by gatsby to create each case study page.
+was use by Gatsby to create each case study page.
 
 ## Setup content fields
 
@@ -824,7 +824,7 @@ export const pageQuery = graphql`
 
 ### Creating a blog template
 
-Now you've listed our blog posts in `src/pages/blog.js`, using gatsby [createpages](/docs/node-apis/#createPages) API you would generate blog post pages using a template:
+Now you've listed our blog posts in `src/pages/blog.js`, using Gatsby [createpages](/docs/node-apis/#createPages) API you would generate blog post pages using a template:
 
 ```jsx:title=src/pages/template/blog-post.js
 import React from "react"

@@ -1,10 +1,10 @@
 ---
-title: Adding and retrieving localized strings from Kentico Cloud to GatsbyJS and GraphQL
+title: Adding and retrieving localized strings from Kentico Cloud to Gatsby and GraphQL
 date: 2019-08-13
 author: Ilesh Mistry
 image: "images/country-clocks.jpg"
 imageTitle: Different country flag clocks on the wall showing the different times
-excerpt: "This blog post talks about how to add and retrieve localized strings from Kentico Cloud by using GatsbyJS and GraphQL"
+excerpt: "This blog post talks about how to add and retrieve localized strings from Kentico Cloud by using Gatsby and GraphQL"
 canonicalLink: https://www.ileshmistry.com/adding-and-retrieving-localised-strings-from-kentico-cloud-to-gatsbyjs-and-graphql/
 publishedAt: Ilesh Mistry's website
 tags: ["gatsby", "graphql", "kentico-cloud", "kentico"]
@@ -51,15 +51,15 @@ _(If you need to know how to switch the content from one culture to another have
 
 One thing to remember at this point is that if you want to use similar text (or simply give yourself a starting point) in the destination culture to your original culture, then you can use the [Copy from language](https://docs.kenticocloud.com/tutorials/write-and-collaborate/create-multilingual-content/translating-content-items#a-translating-a-content-item) option once you have switched over to the new culture.
 
-## Using GatsbyJS and GraphQL to retrieve the localized content
+## Using Gatsby and GraphQL to retrieve the localized content
 
-Now we have the localized string Content Types and Content Items created in Kentico Cloud, the next step is to retrieve the content. I'm using the awesome and very popular static site generator [GatsbyJS](/) with [GraphQL](https://graphql.org/), a query language for your API.
+Now we have the localized string Content Types and Content Items created in Kentico Cloud, the next step is to retrieve the content. I'm using the awesome and very popular static site generator [Gatsby](/) with [GraphQL](https://graphql.org/), a query language for your API.
 
-_(Another assumption for you... We’re assuming you have GatsbyJS + GraphQL set up for your project. If not, you can find a starting point here, [GatsbyJS sourcing from Kentico Cloud](/docs/sourcing-from-kentico-cloud/).)_
+_(Another assumption for you... We’re assuming you have Gatsby + GraphQL set up for your project. If not, you can find a starting point here, [Gatsby sourcing from Kentico Cloud](/docs/sourcing-from-kentico-cloud/).)_
 
 With your content items in Kentico Cloud, you should be able to see them when you conduct a GraphQL query.
 
-Here is an example of the GraphQL query you will use to retrieve the ID and CodeName for the Content Items from Kentico Cloud using GatsbyJS. Think of this as the 'key' you would need to retrieve the 'value'. You can see the 'codename' and 'id' as potential options that you could use in the below GraphQL query.
+Here is an example of the GraphQL query you will use to retrieve the ID and CodeName for the Content Items from Kentico Cloud using Gatsby. Think of this as the 'key' you would need to retrieve the 'value'. You can see the 'codename' and 'id' as potential options that you could use in the below GraphQL query.
 ![A view of the GraphiQL preview of retrieving language nodes](images/GraphiQL-retrieve-lang-nodes.png)
 
 You can retrieve all localization strings using the following GraphQL query.
@@ -73,7 +73,7 @@ Here is an example of a GraphQL query where I am using the 'CodeName'.
 And, here is an example of a GraphQL query where I am using the ID.
 ![GraphiQL retrieve language nodes localized strings condition ID](images/GraphiQL-retrieve-lang-variants-based-on-condition-id.png)
 
-As you can see, once you know which 'key' you need, then it's pretty simple to get the 'value' and also detect the language variant you need to retrieve in GatsbyJS using this GraphQL query format.
+As you can see, once you know which 'key' you need, then it's pretty simple to get the 'value' and also detect the language variant you need to retrieve in Gatsby using this GraphQL query format.
 
 ## Separate projects
 
@@ -89,7 +89,7 @@ There’s a lot to consider there so let's recap:
 - Add appropriate Content Items with the values for each localized string item.
 - Create the relevant culture alternatives for the content items created.
 - Once you know the desired culture you would then look in GraphQL nodes for the localized strings you need to show and use the filter option to help you bring specific localized strings back.
-- Utilize the query within your GatsbyJS layout/React code.
+- Utilize the query within your Gatsby layout/React code.
 - Making sure you create a new project to house all your localized strings.
 
 Like with many things in the CaaS arena, there’s many ways to approach tasks. There are other ways of handling localization but, having been round this before, I recommend this approach.

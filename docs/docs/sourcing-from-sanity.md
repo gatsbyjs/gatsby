@@ -133,7 +133,7 @@ export const query = graphql`
 
 ### Available fragments
 
-These are the fragments available on image assets, which allows easy lookup of the fields required by gatsby-image in various modes:
+These are the fragments available on image assets, which allows easy lookup of the fields required by `gatsby-image` in various modes:
 
 - `GatsbySanityImageFixed`
 - `GatsbySanityImageFixed_noBase64`
@@ -236,7 +236,7 @@ SANITY_PROJECT_ID = abc123
 SANITY_DATASET = production
 SANITY_TOKEN = my-super-secret-token
 
-// In your gatsby-config.js file
+// In your `gatsby-config.js` file
 require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`
 })

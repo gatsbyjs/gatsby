@@ -338,7 +338,7 @@ Just like [every magic act has a pledge, a turn, and a prestige](<https://en.wik
 The best way to do authenticated actions inside serverless functions is to do it from inside the context of the function itself. Fortunately, [Netlify Identity and Functions work seamlessly together](https://www.netlify.com/docs/functions/#identity-and-functions). All you have to do is to send along the user's [JWT](https://jwt.io/) when hitting your endpoint:
 
 ```js
-// in your gatsby app
+// in your Gatsby app
 const user = getUser()
 fetch("/.netlify/functions/auth-hello", {
   headers: {

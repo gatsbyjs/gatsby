@@ -96,8 +96,8 @@ npm install --save gatsby-plugin-manifest
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `GatsbyJS`,
-        short_name: `GatsbyJS`,
+        name: `Gatsby`,
+        short_name: `Gatsby`,
         start_url: `/`,
         background_color: `#6b37bf`,
         theme_color: `#6b37bf`,
@@ -135,8 +135,8 @@ npm install --save gatsby-plugin-offline
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `GatsbyJS`,
-        short_name: `GatsbyJS`,
+        name: `Gatsby`,
+        short_name: `Gatsby`,
         start_url: `/`,
         background_color: `#6b37bf`,
         theme_color: `#6b37bf`,
@@ -187,8 +187,8 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `GatsbyJS`,
-        short_name: `GatsbyJS`,
+        name: `Gatsby`,
+        short_name: `Gatsby`,
         start_url: `/`,
         background_color: `#6b37bf`,
         theme_color: `#6b37bf`,
@@ -367,7 +367,7 @@ This is just the beginning. Keep going!
 
 - Did you build something cool? Share it on Twitter, tag [#buildwithgatsby](https://twitter.com/search?q=%23buildwithgatsby), and [@mention us](https://twitter.com/gatsbyjs)!
 - Did you write a cool blog post about what you learned? Share that, too!
-- Contribute! Take a stroll through [open issues](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22) on the gatsby repo and [become a contributor](/contributing/how-to-contribute/).
+- Contribute! Take a stroll through [open issues](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22) on the Gatsby repo and [become a contributor](/contributing/how-to-contribute/).
 
 Check out the ["how to contribute"](/contributing/how-to-contribute/) docs for even more ideas.
 

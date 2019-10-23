@@ -60,7 +60,7 @@ To access this data, I first must 'publish to the web' (under the file menu). Th
 
 ## Making Gatsby Pages for Each Google Sheet Row
 
-To create Gatsby pages for each row, I'll need to GET this Google Sheets JSON data within gatsby-node.js (I use Axios for this but fetch is also cool). There a couple of steps I'll need to take to make these spreadsheet rows available as Gatsby nodes.
+To create Gatsby pages for each row, I'll need to GET this Google Sheets JSON data within `gatsby-node.js` (I use Axios for this but fetch is also cool). There a couple of steps I'll need to take to make these spreadsheet rows available as Gatsby nodes.
 
 First, I need to format the Google Sheets JSON to be a big array of row objects with the row headers as properties. Google Sheets outputs the data as an array of arrays for each row like so:
 
@@ -213,7 +213,7 @@ I did exactly the same for my instructors so I'll skip it here for brevity. As y
 
 ## Creating the UI with Material-UI
 
-As I mentioned at the beginning, I won't show the code for each and every component here. But I will explain the general process I used to create this UI. I first created the templates, which are single-tag.js, single-item.js, and single-instructor.js. These templates are used in gatsby-node.js when the createPage methods are called.
+As I mentioned at the beginning, I won't show the code for each and every component here. But I will explain the general process I used to create this UI. I first created the templates, which are single-tag.js, single-item.js, and single-instructor.js. These templates are used in `gatsby-node.js` when the createPage methods are called.
 
 My templates are fairly standard Gatsby templates with a React component at the top and a graphql query at the bottom. On the single-tag.js and single-instructor.js templates, I use filters in the query to get only the videos that match that tag. Here's how that query looks:
 
@@ -334,13 +334,13 @@ But something about my new Acroyoga video site felt sluggish. I tried it on my o
 
 This was such a clear and easy 'aha!' moment. I hadn't optimized my images and was missing out on one of the best parts of Gatsby: [`gatsby-image`](/packages/gatsby-image/). Gatsby image gives Gatsby users a whole bunch of built-in image optimizations. Images will be properly optimized (so you're not loading image sizes you don't need to) and the images will load a small blurred version first before loading the complete image. This makes for much faster page loads and a better user experience.
 
-I dug into my normal gatsby-image workflow but I quickly hit a snag. My previous use of Gatsby-image had been for local images whilst I was now trying to use remote images (cloud storage image links). Thankfully, with just a bit more searching, I found the right plugin to solve this: [`gatsby-plugin-remote-images`](/packages/gatsby-plugin-remote-images/).
+I dug into my normal `gatsby-image` workflow but I quickly hit a snag. My previous use of Gatsby-image had been for local images whilst I was now trying to use remote images (cloud storage image links). Thankfully, with just a bit more searching, I found the right plugin to solve this: [`gatsby-plugin-remote-images`](/packages/gatsby-plugin-remote-images/).
 
-Gatsby-plugin-remote-images fetches image URL links (e.g. http://super-image.png) and prepares them in a way that gatsby-image can use them. To make my cards load faster, I'd need to optimize both the video thumbnail as well as the small instructor image. It makes no sense at all to load a 300+ pixel image of an instructor when all you really need are maybe 40 pixels max.
+Gatsby-plugin-remote-images fetches image URL links (e.g. http://super-image.png) and prepares them in a way that `gatsby-image` can use them. To make my cards load faster, I'd need to optimize both the video thumbnail as well as the small instructor image. It makes no sense at all to load a 300+ pixel image of an instructor when all you really need are maybe 40 pixels max.
 
 ![Acroyoga Card with Optimized Images](./images/word-image-4.png)
 
-Here's what I had to add to my gatsby-config.js to configure the plugin:
+Here's what I had to add to my `gatsby-config.js` to configure the plugin:
 
 ```javascript
 module.exports = {
@@ -367,9 +367,9 @@ module.exports = {
 }
 ```
 
-This tells the plugin that it will be the item nodes (the nodes created in `gatsby-node.js` for my videos) and to grab the instructor_image and thumbnail paths. Optimized_instructor_image and optimized_thumbnail are the aliases for the new gatsby-image friendly fields.
+This tells the plugin that it will be the item nodes (the nodes created in `gatsby-node.js` for my videos) and to grab the instructor_image and thumbnail paths. Optimized_instructor_image and optimized_thumbnail are the aliases for the new `gatsby-image` friendly fields.
 
-Next, I had to change my GraphQL queries to fit the gatsby-image way of getting images (vs. just getting an image url link string like I was doing before). Here's how `single-item.js` query now looks.
+Next, I had to change my GraphQL queries to fit the `gatsby-image` way of getting images (vs. just getting an image url link string like I was doing before). Here's how `single-item.js` query now looks.
 
 ```javascript
 export const ItemPageQuery = graphql\`
@@ -402,7 +402,7 @@ export const ItemPageQuery = graphql\`
 \`
 ```
 
-You probably recognize those `fluid` and `childImageSharp` fields if you've worked with gatsby-image and gatsby-plugin-sharp before. The `maxHeight: 50` part there scales the instructor images down from 267 pixels to 50. I run my site through GTmetrix again and lo and behold, I had shaved my site down from 543KB to 385KB.
+You probably recognize those `fluid` and `childImageSharp` fields if you've worked with `gatsby-image` and `gatsby-plugin-sharp` before. The `maxHeight: 50` part there scales the instructor images down from 267 pixels to 50. I run my site through GTmetrix again and lo and behold, I had shaved my site down from 543KB to 385KB.
 
 ### Before
 
