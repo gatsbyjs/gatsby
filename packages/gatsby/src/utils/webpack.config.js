@@ -472,6 +472,9 @@ module.exports = async (
       splitChunks: {
         name: false,
         chunks: `all`,
+        // use hashes instead of ids for module identifiers
+        // @see https://webpack.js.org/guides/caching/#module-identifiers
+        moduleIds: `hashed`,
         cacheGroups: {
           default: false,
           vendors: false,
