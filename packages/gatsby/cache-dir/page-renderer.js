@@ -2,6 +2,7 @@ import React, { createElement } from "react"
 import PropTypes from "prop-types"
 import { publicLoader } from "./loader"
 import { apiRunner } from "./api-runner-browser"
+import loadable from "@loadable/component"
 
 // Renders page
 class PageRenderer extends React.Component {
@@ -16,9 +17,13 @@ class PageRenderer extends React.Component {
       loader: publicLoader,
     })
 
+    const AsyncPageComponent = loadable(() =>
+      this.props.pageResources.component()
+    )
+
     const pageElement =
       replacementElement ||
-      createElement(this.props.pageResources.component, {
+      createElement(AsyncPageComponent, {
         ...props,
         key: this.props.path || this.props.pageResources.page.path,
       })

@@ -7,13 +7,13 @@ import emitter from "./emitter"
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import { setLoader, publicLoader } from "./loader"
 import DevLoader from "./dev-loader"
-import syncRequires from "./sync-requires"
+import asyncRequires from "./async-requires"
 // Generated during bootstrap
 import matchPaths from "./match-paths.json"
 
 window.___emitter = emitter
 
-const loader = new DevLoader(syncRequires, matchPaths)
+const loader = new DevLoader(asyncRequires, matchPaths)
 setLoader(loader)
 loader.setApiRunner(apiRunner)
 
