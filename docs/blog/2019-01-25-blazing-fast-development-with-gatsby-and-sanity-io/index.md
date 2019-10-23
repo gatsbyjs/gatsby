@@ -7,7 +7,7 @@ image: "./images/gatsby-sanity.png"
 showImageInArticle: true
 ---
 
-Sanity.io is a content management system with real-time at its very core. We built the React.js [editing environment](https://github.com/sanity-io/sanity) as a real-time React.js app so you can collaborate on the same documents without locking. It connects to our document store through real-time APIs. Naturally, we've been looking for frontend frameworks that can reflect changes in real-time as well. Problem was, we didn't know of a reasonable way to accomplish this for everyday needs.
+Sanity.io is a content management system with real-time at its very core. We built the React [editing environment](https://github.com/sanity-io/sanity) as a real-time React app so you can collaborate on the same documents without locking. It connects to our document store through real-time APIs. Naturally, we've been looking for frontend frameworks that can reflect changes in real-time as well. Problem was, we didn't know of a reasonable way to accomplish this for everyday needs.
 
 Then we came across [Gatsby Preview](/blog/2018-07-17-announcing-gatsby-preview/), a general way to get real-time previews that doesn't involve custom code! When combining Sanity with Gatsby, we get the best of both worlds: A fully dynamic development experience where code and content is instantly reflected in preview.
 
@@ -19,7 +19,7 @@ You can experience it yourself with the sample [company website](https://github.
 
 ## Get started, with minimal configuration
 
-The Gatsby source plugin for Sanity comes with the ability to easily overlay drafts, compatibility with the [gatsby-image](/packages/gatsby-image) plugin, no mysteriously missing types/fields, and a watch mode for instant preview of edits in development. We also made sure that it requires as little configuration as possible.
+The Gatsby source plugin for Sanity comes with the ability to easily overlay drafts, compatibility with the [`gatsby-image`](/packages/gatsby-image) plugin, no mysteriously missing types/fields, and a watch mode for instant preview of edits in development. We also made sure that it requires as little configuration as possible.
 
 Add the source plugin to your Gatsby project:
 
@@ -123,7 +123,7 @@ Sanity already comes with a capable and easy to use image pipeline on a superfas
 
 ![Setting hotspot and cropping in Sanity Studio](./images/hotspot-cropping.png)
 
-## Sanity.io + Gatsby.js = Perfect JAMstack companions
+## Sanity.io + Gatsby = Perfect JAMstack companions
 
 Gatsby has already set high standards for developer experience by striking a good balance between code and configuration. We have worked hard to make it as effortless as possible to use [Sanity.io](https://www.sanity.io) as a content backend with Gatsby, and we hope that you will enjoy building websites with this combo.
 

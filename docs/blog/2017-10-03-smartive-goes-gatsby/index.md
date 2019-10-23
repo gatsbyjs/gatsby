@@ -3,7 +3,7 @@ title: "Why we choose Gatsby over Next.js and Wintersmith"
 date: 2017-10-03
 image: "smartive-loves-gatsby.png"
 author: "Moreno Feltscher"
-excerpt: "At smartive we always saw the potential of static site generators. We recently made the switch to Gatsby.js for our company site. A decision we don’t regret. Here’s why."
+excerpt: "At smartive we always saw the potential of static site generators. We recently made the switch to Gatsby for our company site. A decision we don’t regret. Here’s why."
 tags: ["case-studies", "blogs", "deployment"]
 ---
 
@@ -11,7 +11,7 @@ _This article was originally published on
 [our company blog](https://blog.smartive.ch/smartive-ch-goes-gatsby-js-27a056b3b817)
 on September 27, 2017._
 
-# smartive.ch goes Gatsby
+## smartive.ch goes Gatsby
 
 At smartive, a Swiss-based web agency, we always saw the potential of static
 site generators. After using Wintersmith and Next.js we recently made the switch

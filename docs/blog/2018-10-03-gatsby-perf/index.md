@@ -36,7 +36,7 @@ It can oftentimes be overwhelming and exhausting to truly _know_ all the perform
 
 Lighthouse measures your site's speed and performance on a variety of meaningful criteria including: performance, progressive web app functionality (e.g. service workers, offline functionality, etc.), accessibility, best practices, and search engine optimization. These core measurements, when maximized, give strong evidence that your site is performant, following the latest web performance techniques, and you know, _actually_ fast.
 
-Our baseline is going to be Gatsby v1. I've created a [repository][gatsby-v1-repo] that I've then [deployed to Netlify][gatsby-v1-netlify]. To use Lighthouse, simply open up Chrome's Developer Tools and navigate to the Audits tab, like so:
+Our baseline is going to be Gatsby v1. I've created a [repository][`gatsby-v1-repo`] that I've then [deployed to Netlify][`gatsby-v1-netlify`]. To use Lighthouse, simply open up Chrome's Developer Tools and navigate to the Audits tab, like so:
 
 <video controls="controls" autoplay="true" loop="true">
   <source type="video/mp4" src="/lighthouse.mp4" />
@@ -78,7 +78,7 @@ Gatsby v1 was in many ways an experiment to prove out some meaningful ideas:
 - Static site generation _and_ app-like functionality with React hydration
 - A pluggable and extensible architecture to augment and enhance Gatsby's base feature set and give Gatsby superpowers.
 
-[Pull data from WordPress at build time][gatsby-source-wordpress]? Sure. [Author your application in TypeScript][gatsby-plugin-typescript]? Seems reasonable. All this while maintaining sane and optimized defaults to truly squeeze every ounce of performance out of your application.
+[Pull data from WordPress at build time][`gatsby-source-wordpress`]? Sure. [Author your application in TypeScript][`gatsby-plugin-typescript`]? Seems reasonable. All this while maintaining sane and optimized defaults to truly squeeze every ounce of performance out of your application.
 
 Gatsby v2 set out to build upon this solid foundation, while focusing on improvements in speed and developer experience.
 
@@ -100,7 +100,7 @@ To that end, Gatsby v2 ships 31% less JavaScript in its client runtime. While we
 
 ## Bringing it home
 
-Let's take another look at performance in Gatsby v2 by revisiting our trusty friends Lighthouse and WebPagetest. Refer to [the repo][gatsby-v2-repo] and [deployed site][gatsby-v2-netlify] to judge for yourself!
+Let's take another look at performance in Gatsby v2 by revisiting our trusty friends Lighthouse and WebPagetest. Refer to [the repo][`gatsby-v2-repo`] and [deployed site][`gatsby-v2-netlify`] to judge for yourself!
 
 ### Lighthouse
 
@@ -129,12 +129,12 @@ Gatsby v2 is an iterative approach to improving the solid foundational base that
 [web-perf]: https://github.com/google/WebFundamentals/blob/master/src/data/glossary.yaml
 [speed-index]: https://sites.google.com/a/webpagetest.org/docs/using-webpagetest/metrics/speed-index
 [lighthouse]: https://www.google.com/search?q=google+audit&ie=utf-8&oe=utf-8&client=firefox-b-1-ab
-[gatsby-v1-repo]: https://github.com/dschau/gatsby-v1
-[gatsby-v1-netlify]: https://gatsby-v1-perf.netlify.com/
-[gatsby-v2-repo]: https://github.com/dschau/gatsby-v2
-[gatsby-v2-netlify]: https://gatsby-v2-perf.netlify.com/
-[gatsby-source-wordpress]: /packages/gatsby-source-wordpress
-[gatsby-plugin-typescript]: /packages/gatsby-plugin-typescript
+[`gatsby-v1-repo`]: https://github.com/dschau/gatsby-v1
+[`gatsby-v1-netlify`]: https://gatsby-v1-perf.netlify.com/
+[`gatsby-v2-repo`]: https://github.com/dschau/gatsby-v2
+[`gatsby-v2-netlify`]: https://gatsby-v2-perf.netlify.com/
+[`gatsby-source-wordpress`]: /packages/gatsby-source-wordpress
+[`gatsby-plugin-typescript`]: /packages/gatsby-plugin-typescript
 [migration-guide]: /docs/migrating-from-v1-to-v2/
 [webpagetest]: https://webpagetest.org
 [webpagetestv1-results]: https://www.webpagetest.org/result/181003_VD_1f8cbe4e27749d9725031de0be11c677/

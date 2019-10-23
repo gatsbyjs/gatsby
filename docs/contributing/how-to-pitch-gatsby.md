@@ -2,7 +2,7 @@
 title: How to Pitch Gatsby
 ---
 
-If you love Gatsby.js as much as we do, you might want to pitch your colleagues, managers or anyone in your life about its value. As such, we've put together some talking points that could help you make a case for building with Gatsby:
+If you love Gatsby as much as we do, you might want to pitch your colleagues, managers or anyone in your life about its value. As such, we've put together some talking points that could help you make a case for building with Gatsby:
 
 Build blazing-fast websites without the hosting hassles of managing complex, costly infrastructure or fear that your site might go down. **Gatsby is a website development tool for React, the most modern way to build reliable, lightning fast websites.**
 

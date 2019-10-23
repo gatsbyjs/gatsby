@@ -6,7 +6,7 @@ A big part of what makes Gatsby great is each and every one of you in the commun
 
 We welcome all contributions from you in the community, and would be thrilled to amplify your voice. Contributions are not limited to code, and can take all shapes and forms:
 
-- Your wonderful Gatsby.js website!
+- Your wonderful Gatsby website!
 - Gatsby starters
 - Gatsby plugins
 - Blog posts and case studies

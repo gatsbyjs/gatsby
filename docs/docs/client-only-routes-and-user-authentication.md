@@ -30,7 +30,7 @@ exports.onCreatePage = async ({ page, actions }) => {
 ```
 
 > 💡 Note: There's also a plugin to simplify the creation of client-only routes in your site:
-> [gatsby-plugin-create-client-paths](/packages/gatsby-plugin-create-client-paths/).
+> [`gatsby-plugin-create-client-paths`](/packages/gatsby-plugin-create-client-paths/).
 
 > Tip: For applications with complex routing, you may want to override Gatsby's default scroll behavior with the [shouldUpdateScroll](/docs/browser-apis/#shouldUpdateScroll) Browser API.
 

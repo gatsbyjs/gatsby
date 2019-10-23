@@ -26,10 +26,10 @@ This downloads the required files and initializes the site.
 
 Create copies of the `env.sample` file for `.env.development`, `.env.production` and any other environment, then add the following stack details to each respective file:
 
-```
+```javascript
 CONTENTSTACK_API_KEY='apikey'
 CONTENTSTACK_ACCESS_TOKEN='deliverytoken'
-CONTENTSTACK_ENVIRONMENT='development' # or production, staging, etc.
+CONTENTSTACK_ENVIRONMENT='development' // or production, staging, etc.
 ```
 
 These will be pulled into the `gatsby-config.js` file under the `gatsby-source-contentstack` plugin.
@@ -68,7 +68,7 @@ Now, you will able to query Contentstack data. Try the query below to get the 'H
 
 Go to the pages folder inside the src folder, and create a home.js file. Add the code below to it.
 
-```
+```jsx
 import React from 'react';
 import { graphql } from 'gatsby';
 

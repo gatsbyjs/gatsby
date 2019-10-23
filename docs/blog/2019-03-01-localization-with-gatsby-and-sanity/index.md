@@ -283,7 +283,7 @@ exports.onCreatePage = ({ page, actions }) => {
 }
 ```
 
-## Sanity.io + Gatsby.js + Localization = Win
+## Sanity.io + Gatsby + Localization = Win
 
 If you haven't already started using [Sanity.io](https://www.sanity.io) as your content backend I encourage you to check it out. You and your content team will love it.
 

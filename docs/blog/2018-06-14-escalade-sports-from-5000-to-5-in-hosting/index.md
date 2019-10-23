@@ -12,7 +12,7 @@ Escalade recently started migrating its sites to Gatsby. They first chose to mig
 
 ![cajunbowfishing.com homepage](./cajun-bowfishing-homepage.jpg)
 
-# Making the decision to migrate to Gatsby
+## Making the decision to migrate to Gatsby
 
 When lead developer Kennedy Rose took responsibility for Escalade’s web stack, the first challenges he confronted were stability issues.
 
@@ -30,7 +30,7 @@ Data loading is a big deal to Rose because of the way Escalade is structured. As
 
 ![cajunbowfishing.com product categories](./cajun-bowfishing-product-categories.jpg)
 
-# Benefits they’ve found using Gatsby
+## Benefits they’ve found using Gatsby
 
 Then Rose found Gatsby. Gatsby’s plugin system solved his data problems—he was able to encapsulate data fetching into Gatsby plugins that ran at build time. It also prevented data bloat—he often didn’t need the full JSON data being returned by APIs, and with GraphQL he could query only what he needed.
 

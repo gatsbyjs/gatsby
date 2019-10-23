@@ -8,7 +8,7 @@ So the Gatsby V2 beta is out, and Gatsby's [layout components are going away](ht
 
 This article will dive into the Gatsby V2's approach to layouts, talk about what changed and why, and walk through the migration process to get your existing projects updated to V2.
 
-If you still need the v1 layout behavior, checkout [gatsby-plugin-layout](/packages/gatsby-plugin-layout/).
+If you still need the v1 layout behavior, checkout [`gatsby-plugin-layout`](/packages/gatsby-plugin-layout/).
 
 ## What changed?
 

@@ -85,4 +85,4 @@ Using a custom JSX pragma is useful when you want to customize the transform pro
 
 - [WTF is JSX](https://jasonformat.com/wtf-is-jsx/)
 - [JSX Pragma doc](https://theme-ui.com/jsx-pragma) in Theme UI documentation.
-- [JSX Represents Objects](https://reactjs.org/docs/introducing-jsx.html#jsx-represents-objects) in React.js documentation.
+- [JSX Represents Objects](https://reactjs.org/docs/introducing-jsx.html#jsx-represents-objects) in React documentation.

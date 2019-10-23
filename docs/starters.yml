@@ -693,7 +693,7 @@
     - Styling:Material
     - Netlify
   features:
-    - Gatsby + ReactJS (server side rendering)
+    - Gatsby + React (server side rendering)
     - GraphCMS Headless CMS
     - DraftJS (in-place) Medium-like Editing
     - Apollo GraphQL (client-side)
@@ -800,7 +800,7 @@
     - Uses Flexbox
 - url: https://gatsby-starter-typescript-plus.netlify.com/
   repo: https://github.com/resir014/gatsby-starter-typescript-plus
-  description: This is a starter kit for Gatsby.js websites written in TypeScript. It includes the bare essentials for you to get started (styling, Markdown parsing, minimal toolset).
+  description: This is a starter kit for Gatsby websites written in TypeScript. It includes the bare essentials for you to get started (styling, Markdown parsing, minimal toolset).
   tags:
     - Styling:CSS-in-JS
     - Language:TypeScript
@@ -1877,7 +1877,7 @@
     - Testing with Jest!
 - url: https://foxandgeese.github.io/tiny-agency/
   repo: https://github.com/foxandgeese/tiny-agency
-  description: Simple Gatsby.js starter that uses material design and that's perfect for tiny agencies.
+  description: Simple Gatsby starter that uses material design and that's perfect for tiny agencies.
   tags:
     - Styling:Material
   features:
@@ -3697,7 +3697,7 @@
     - Simple layout & scss architecture, easily extensible
 - url: https://gatsby-firebase-starter.netlify.com/
   repo: https://github.com/ovidiumihaibelciug/gatsby-firebase-starter
-  description: Starter / Project Boilerplate for Authentication and creating Dynamic pages from collections with Firebase and Gatsby.js
+  description: Starter / Project Boilerplate for Authentication and creating Dynamic pages from collections with Firebase and Gatsby
   tags:
     - Firebase
     - SEO

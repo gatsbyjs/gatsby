@@ -6,7 +6,7 @@ title: Client Data Fetching
 
 This article touches on how to fetch data at both _build time_ and _run time_. It uses the plugin [`gatsby-source-graphql`](/packages/gatsby-source-graphql/) to fetch data at [build time](/docs/glossary#build) on the server, while it uses the [`axios`](https://github.com/axios/axios) package to fetch different data on the [client-side](/docs/glossary#client-side) when the page loads.
 
-When this article mentions [hydration](/docs/glossary#hydration), it means that Gatsby (through React.js) builds static files to render server-side. When Gatsby's script bundle downloads and executes in the browser, it preserves the HTML markup built by Gatsby and turns the site into a full React web application that can manipulate the [DOM](/docs/glossary#dom). The result of this process creates fast loading pages and a nice user experience.
+When this article mentions [hydration](/docs/glossary#hydration), it means that Gatsby (through React) builds static files to render server-side. When Gatsby's script bundle downloads and executes in the browser, it preserves the HTML markup built by Gatsby and turns the site into a full React web application that can manipulate the [DOM](/docs/glossary#dom). The result of this process creates fast loading pages and a nice user experience.
 
 Compiling pages at [build-time](/docs/glossary#build) is useful when your website content won't change often, or when triggering a build process to recompile works fine. However, some websites with more dynamic needs require a [client-side](/docs/glossary#client-side) [runtime](/docs/glossary#runtime) to handle constantly changing content after the page loads, like a chat widget or an email client web application.
 

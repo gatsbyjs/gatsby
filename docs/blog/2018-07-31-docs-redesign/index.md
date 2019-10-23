@@ -34,7 +34,7 @@ We wanted to make sure that the site provides necessary information to developer
 
 ## Investigating other "excellent docs showcase" structures
 
-Here is a list of what we liked and didn’t like in docs with similar goals to ours. We looked at NextJS, ReactJS, Expo, Ghost, Drupal, WordPress, Joomla, Silver Stripe, Netlify, and Apollo.
+Here is a list of what we liked and didn’t like in docs with similar goals to ours. We looked at NextJS, React, Expo, Ghost, Drupal, WordPress, Joomla, Silver Stripe, Netlify, and Apollo.
 
 ### The goods:
 

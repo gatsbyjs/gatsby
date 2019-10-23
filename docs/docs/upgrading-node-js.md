@@ -14,7 +14,7 @@ Check [Node's releases document](https://github.com/nodejs/Release#nodejs-releas
 
 Run `node -v` in a terminal to see which version of Node.js you have.
 
-```
+```shell
 node -v
 v10.16.0
 ```
@@ -39,13 +39,13 @@ You will have homebrew installed on your computer if you [followed part zero of 
 
 To update from Node.js 6 to Node.js 8 using Homebrew, open a terminal and run the following commands:
 
-```
+```shell
 brew search node
 ```
 
 You should see output similar to this:
 
-```
+```shell
 brew search node
 ==> Formulae
 heroku/brew/heroku-node ✔        llnode                           node@10                          nodebrew
@@ -55,13 +55,13 @@ libbitcoin-node                  node-build                       node_exporter 
 
 You're interested in the next stable version of Node.js after Node.js 6, which is Node.js 8. Homebrew makes this available in a package called `node@8`. Run:
 
-```
+```shell
 brew install node@8
 ```
 
 Once that's complete, run:
 
-```
+```shell
 node -v
 ```
 
@@ -77,13 +77,13 @@ These packages are very useful for people that regularly work with different ver
 
 Run
 
-```
+```shell
 nvm
 ```
 
 in a terminal to see if nvm is installed on your system. If it's installed, you can run:
 
-```
+```shell
 nvm install 8
 nvm alias default 8
 ```
@@ -96,7 +96,7 @@ to install and use Node.js version 8.
 
 Run:
 
-```
+```shell
 n
 ```
 

@@ -1,8 +1,8 @@
 ---
-title: "How To Build A Blog with WordPress and Gatsby.js - Part 1"
+title: "How To Build A Blog with WordPress and Gatsby - Part 1"
 date: 2019-04-26
 author: Tim Smith
-excerpt: "Ever wondered how to use Gatsby.js with WordPress? This post will cover everything you need to know about getting WordPress ready for a Gatsby site."
+excerpt: "Ever wondered how to use Gatsby with WordPress? This post will cover everything you need to know about getting WordPress ready for a Gatsby site."
 tags:
   - wordpress
   - apis
@@ -12,15 +12,15 @@ tags:
 canonicalLink: https://www.iamtimsmith.com/blog/how-to-build-a-blog-with-wordpress-and-gatsby-part-1/
 ---
 
-> Note: This is part one in a series of posts about Gatsby.js and WordPress. You can find [Part Two here](/blog/2019-04-30-how-to-build-a-blog-with-wordpress-and-gatsby-part-2), and [Part Three here](/blog/2019-05-02-how-to-build-a-blog-with-wordpress-and-gatsby-part-3).
+> Note: This is part one in a series of posts about Gatsby and WordPress. You can find [Part Two here](/blog/2019-04-30-how-to-build-a-blog-with-wordpress-and-gatsby-part-2), and [Part Three here](/blog/2019-05-02-how-to-build-a-blog-with-wordpress-and-gatsby-part-3).
 
-Ever wondered how to use Gatsby.js with WordPress? This post will cover everything you need to know about getting WordPress ready for a Gatsby site.
+Ever wondered how to use Gatsby with WordPress? This post will cover everything you need to know about getting WordPress ready for a Gatsby site.
 
-In a [previous post](https://www.iamtimsmith.com/blog/using-wordpress-with-react/), I spoke about using React.js to build a frontend for a WordPress site. I talked about a simple setup to do this, but also mentioned some drawbacks to doing this.
+In a [previous post](https://www.iamtimsmith.com/blog/using-wordpress-with-react/), I spoke about using React to build a frontend for a WordPress site. I talked about a simple setup to do this, but also mentioned some drawbacks to doing this.
 
-One such drawback is the difficulties faced when trying to rank for SEO, because search engine crawlers have a hard time indexing information being loaded into React. I mentioned briefly that there are ways around this and one of these ways is [Gatsby.js](https://www.gatsbyjs.org/).
+One such drawback is the difficulties faced when trying to rank for SEO, because search engine crawlers have a hard time indexing information being loaded into React. I mentioned briefly that there are ways around this and one of these ways is [Gatsby](https://www.gatsbyjs.org/).
 
-In this series of blog posts, I'll be talking about how to build a Gatsby.js site with a WordPress backend. The aim of the setup is to allow non-developer users to make changes on their website while allowing developers to use a fast, modern, and enjoyable tool to build with.
+In this series of blog posts, I'll be talking about how to build a Gatsby site with a WordPress backend. The aim of the setup is to allow non-developer users to make changes on their website while allowing developers to use a fast, modern, and enjoyable tool to build with.
 
 <figure>
   <video autoplay muted loop>
@@ -29,11 +29,11 @@ In this series of blog posts, I'll be talking about how to build a Gatsby.js sit
   <figcaption>Kylo Ren Approves!</figcaption>
 </figure>
 
-## Why use Gatsby.js with WordPress at all?
+## Why use Gatsby with WordPress at all?
 
-When I made my last post about using React.js with WordPress, a few people asked why one might do such a thing?
+When I made my last post about using React with WordPress, a few people asked why one might do such a thing?
 
-There are a few reasons that creating a separate frontend in React.js is beneficial:
+There are a few reasons that creating a separate frontend in React is beneficial:
 
 First, it really allows a lot of customization for the developer to choose tools that will a) benefit the site most and b) create an enjoyable development experience. And let's be honest, as developers aren't we all looking for better development experience?
 
@@ -48,11 +48,11 @@ Second, I believe that plugins are a double-edged sword. They allow some cool fu
 
 Third, I've seen cases where the developer and designer create an amazing site for a client and then the client decides to start poking around trying to change something minute like font-size from 12px to 14px and ends up taking the whole site down. This is an extreme example, but it definitely happens. If the frontend is a totally separate entity, then the client doesn't have the ability to do so.
 
-Finally, WordPress powers something like one-third of the internet. What this means is that there's a lot of people who know how to figure out if a site is a WordPress site so they can hack it and steal information. They can write bots which check various pieces of information about the site and determine if it's a WordPress site. The benefit to using something like Gatsby.js is that it creates static files at build time and serves the static HTML, so users and bots will never know there's a WordPress site managing the content.
+Finally, WordPress powers something like one-third of the internet. What this means is that there's a lot of people who know how to figure out if a site is a WordPress site so they can hack it and steal information. They can write bots which check various pieces of information about the site and determine if it's a WordPress site. The benefit to using something like Gatsby is that it creates static files at build time and serves the static HTML, so users and bots will never know there's a WordPress site managing the content.
 
-## What is Gatsby.js?
+## What is Gatsby?
 
-Now that you've learned about why it is beneficial to use a setup like this, let's talk about what Gatsby.js is.
+Now that you've learned about why it is beneficial to use a setup like this, let's talk about what Gatsby is.
 
 According to their site, "Gatsby is a free and open source framework based on React that helps developers build blazing fast websites and apps". In other words, it allows you to develop a website using React and just about any content source you want. Then at build time, it pulls in all of the data from the specified sources and turns your site into a bunch of static HTML files that are optimized for performance.
 
@@ -97,7 +97,7 @@ The first plugin I'd like to mention is [Advanced Custom Fields](https://www.adv
 
 ### ACF to REST API
 
-Another plugin that works hand-in-hand with ACF is called [ACF to REST API](https://github.com/airesvsg/acf-to-rest-api). I bet you already guessed what it does. It exposes the data from your custom fields to the REST API so you can use it in your Gatsby.js site.
+Another plugin that works hand-in-hand with ACF is called [ACF to REST API](https://github.com/airesvsg/acf-to-rest-api). I bet you already guessed what it does. It exposes the data from your custom fields to the REST API so you can use it in your Gatsby site.
 
 ### WP API Menus
 
@@ -126,10 +126,10 @@ Netlify has the ability to create webhooks that you can grab to say, "Hey, there
 
 ## You have themes and plugins, now what?
 
-Not to be too anti-climactic, but there's really not a ton more to do on the WordPress side other than create content. These plugins and theme will pretty much expose everything you need to build your Gatsby.js blog.
+Not to be too anti-climactic, but there's really not a ton more to do on the WordPress side other than create content. These plugins and theme will pretty much expose everything you need to build your Gatsby blog.
 
 That being said, if you are creating custom content types for your blog you will need a way to differentiate them in ACF. Creating a custom page template will serve this purpose so you can filter on the page template to show the custom fields. You can also use the page template to filter in your Gatsby project to make sure you are receiving the desired fields for a given page.
 
 If you have any questions, you can hit me up on twitter at [@iam_timsmith](https://twitter.com/iam_timsmith)!
 
-See you in [How To Build A Blog with WordPress and Gatsby.js - Part 2](/blog/2019-04-30-how-to-build-a-blog-with-wordpress-and-gatsby-part-2)!
+See you in [How To Build A Blog with WordPress and Gatsby - Part 2](/blog/2019-04-30-how-to-build-a-blog-with-wordpress-and-gatsby-part-2)!

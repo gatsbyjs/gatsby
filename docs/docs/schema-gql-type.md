@@ -32,7 +32,7 @@ When running a GraphQL query, there are a variety of fields that you will want t
 
 When GraphQL runs, it will query all `file` nodes by their relativePath and return the first node that satisfies that query. Then, it will filter down the fields to return by the inner expression. I.e `{ childMarkdownRemark ... }`. The building of the query arguments is covered by the [Inferring Input Filters](/docs/schema-input-gql) doc. This section instead explains how the inner filter schema is generated (it must be generated before input filters are inferred).
 
-During the [sourceNodes](/docs/node-apis/#sourceNodes) phase, let's say that [gatsby-source-filesystem](/packages/gatsby-source-filesystem) ran and created a bunch of `File` nodes. Then, different transformers react via [onCreateNode](/docs/node-apis/#onCreateNode), resulting in children of different `node.internal.type`s being created.
+During the [sourceNodes](/docs/node-apis/#sourceNodes) phase, let's say that [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem) ran and created a bunch of `File` nodes. Then, different transformers react via [onCreateNode](/docs/node-apis/#onCreateNode), resulting in children of different `node.internal.type`s being created.
 
 There are 3 categories of node fields that we can query.
 
@@ -148,7 +148,7 @@ Another convenience Gatsby provides is the ability to query a node's `child` or 
 
 When defining our parent `File` gqlType, [createNodeFields](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/build-node-types.js#L48) will iterate over the distinct types of its children, and create their fields. Let's say one of these child types is `markdownRemark`. Let's assume there is only one `markdownRemark` child per `File`. Therefore, its field name is `childMarkdownRemark`. Now, we must create its graphql Resolver.
 
-```
+```javascript
 resolve(node, args, context, info)
 ```
 
@@ -180,7 +180,7 @@ As described in [plain object or value field](#plain-object-or-value-field), if 
 
 It creates a new GraphQL Field Config whose type is the just created `File` GqlType, and whose resolver converts a string into a File object. Here's how it works:
 
-Say we have a `data/posts.json` file that has been sourced (of type `File`), and then the [gatsby-transformer-json](/packages/gatsby-transformer-json) transformer creates a child node (of type `PostsJson`)
+Say we have a `data/posts.json` file that has been sourced (of type `File`), and then the [`gatsby-transformer-json`](/packages/gatsby-transformer-json) transformer creates a child node (of type `PostsJson`)
 
 ```javascript:title=data/posts.json
 ;[

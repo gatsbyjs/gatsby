@@ -2,10 +2,10 @@
 title: Recipes
 tableOfContentsDepth: 2
 ---
-
+<!--lint disable no-duplicate-headings-->
 <!-- Basic template for a Gatsby recipe:
 
-## Task to accomplish.
+## Task to accomplish
 1-2 sentences about it. The more concise and focused, the better!
 
 ### Prerequisites
@@ -482,7 +482,7 @@ Sass will compile .scss and .sass files to .css files for you, so you can write 
 
 #### Directions
 
-1. Install the Gatsby plugin [gatsby-plugin-sass](https://www.gatsbyjs.org/packages/gatsby-plugin-sass/) and `node-sass`.
+1. Install the Gatsby plugin [`gatsby-plugin-sass`](https://www.gatsbyjs.org/packages/gatsby-plugin-sass/) and `node-sass`.
 
 `npm install --save node-sass gatsby-plugin-sass`
 
@@ -535,12 +535,7 @@ _Note: You can use Sass/SCSS files as modules too, like mentioned in the previou
 
 #### Directions
 
-1. Copy a font file into your Gatsby project, such as `src/fonts/fontname.woff2`.
-
-```
-src/fonts/fontname.woff2
-```
-
+1. Copy a font file into your Gatsby project, such as `src/fonts/fontname.woff2`
 2. Import the font asset into a CSS file to bundle it into your Gatsby site:
 
 ```css:title=src/css/typography.css
@@ -1066,7 +1061,7 @@ export default ({ pageContext: { allPokemon } }) => (
 
 1. Install the `gatsby-source-drupal` plugin.
 
-```
+```shell
 npm install --save gatsby-source-drupal
 ```
 
@@ -2107,7 +2102,7 @@ Use [`netlify-cli`](https://www.netlify.com/docs/cli/) to deploy your Gatsby app
 #### Additional resources
 
 - [Hosting on Netlify](/docs/hosting-on-netlify)
-- [gatsby-plugin-netlify](/packages/gatsby-plugin-netlify)
+- [`gatsby-plugin-netlify`](/packages/gatsby-plugin-netlify)
 
 ### Deploying to ZEIT Now
 
@@ -2124,7 +2119,7 @@ Use [Now CLI](https://zeit.co/download) to deploy your Gatsby application withou
 
 1. Login into Now CLI using `now login`
 
-2. Change to the directory of your Gatsby.js application in the Terminal if you aren't already there
+2. Change to the directory of your Gatsby application in the Terminal if you aren't already there
 
 3. Run `now` to deploy it
 

@@ -69,10 +69,10 @@ By the numbers we've seen:
   [source plugin for Firebase](https://github.com/ReactTraining/gatsby-source-firebase)
   so he could easily query data stored there while rebuilding his company
   website!
-- [gatsby-remark-katex](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-katex)
+- [`gatsby-remark-katex`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-katex)
   lets you write math equations in your markdown and
   [see them beautifully rendered](https://using-remark.gatsbyjs.org/katex/).
-- [gatsby-plugin-purify-css](https://github.com/rongierlach/gatsby-plugin-purify-css)
+- [`gatsby-plugin-purify-css`](https://github.com/rongierlach/gatsby-plugin-purify-css)
   adds drop-in support for removing unused CSS during Gatsby builds! It uses
   [PurifyCSS](https://github.com/purifycss/purifycss) and can lead to huge
   reductions in CSS weight.

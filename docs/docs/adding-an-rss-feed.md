@@ -16,7 +16,7 @@ To generate an RSS feed, you can use the [`gatsby-plugin-feed`](/packages/gatsby
 npm install --save gatsby-plugin-feed
 ```
 
-## How to use [gatsby-plugin-feed](/packages/gatsby-plugin-feed/)
+## How to use [`gatsby-plugin-feed`](/packages/gatsby-plugin-feed/)
 
 Once installation is complete, you can now add this plugin to your site's config file, like so:
 
@@ -50,7 +50,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 
 Next run a build (`npm run build`) since the RSS feed generation will only happen for production builds. By default, the generated RSS feed path is `/rss.xml`, but the plugin exposes options to configure this default functionality.
 
-For basic setups with Markdown content like the [gatsby-starter-blog](https://github.com/gatsbyjs/gatsby-starter-blog), that's all you need! However, you can craft a custom RSS feed schema using custom code in your `gatsby-node.js` and `gatsby-config.js` files.
+For basic setups with Markdown content like the [`gatsby-starter-blog`](https://github.com/gatsbyjs/gatsby-starter-blog), that's all you need! However, you can craft a custom RSS feed schema using custom code in your `gatsby-node.js` and `gatsby-config.js` files.
 
 ## Customizing the RSS feed plugin
 

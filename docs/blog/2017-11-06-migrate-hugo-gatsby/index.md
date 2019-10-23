@@ -46,7 +46,7 @@ single-page-application point of view.
 Gatsby might feel a bit more "raw"—there are starters and typography.js, but not
 so many ready made solutions in the conventional sense. Probably the closest
 marketplace for themes compared to others is
-[gatsbythemes](https://gatsbythemes.com/) which is a young project.
+[`gatsbythemes`](https://gatsbythemes.com/) which is a young project.
 
 If you have landed at this article researching which tool is better for your
 job, take a look at
@@ -228,7 +228,7 @@ available in
 issue queue. There, in the issue queue, is a gem
 [epic about plugins wishlist](https://github.com/gatsbyjs/gatsby/issues/1199)
 where I found the discussion leading to
-[gatsby-paginate](https://github.com/pixelstew/gatsby-paginate).
+[`gatsby-paginate`](https://github.com/pixelstew/gatsby-paginate).
 
 I wanted to have different contexts than the plugin, so I took inspiration for
 both tags and pagination scenarios. I kept them as separate action creators and

@@ -10,7 +10,7 @@ title: Internal Data Bridge
 >
 > You can help by making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228).
 
-The Internal Data Bridge is an internal Gatsby plugin located at [internal-plugins/internal-data-bridge](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby/src/internal-plugins/internal-data-bridge). Its purpose is to create nodes representing pages, plugins, and site config so that they can be introspected for arbitrary purposes. As of writing, the only usage of this is by the [gatsby-plugin-sitemap](/packages/gatsby-plugin-sitemap) which uses it to... yes you guessed it, create a site map of your site.
+The Internal Data Bridge is an internal Gatsby plugin located at [internal-plugins/internal-data-bridge](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby/src/internal-plugins/internal-data-bridge). Its purpose is to create nodes representing pages, plugins, and site config so that they can be introspected for arbitrary purposes. As of writing, the only usage of this is by the [`gatsby-plugin-sitemap`](/packages/gatsby-plugin-sitemap) which uses it to... yes you guessed it, create a site map of your site.
 
 ## Example usage
 

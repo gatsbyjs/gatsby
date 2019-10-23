@@ -38,7 +38,7 @@ you can do so with Component Shadowing.
 `gatsby-theme-blog` has the following file structure (some files have been omitted for
 brevity):
 
-```
+```flow
 gatsby-theme-blog
 └── src
     ├── components
@@ -73,7 +73,7 @@ export default () => <h1>My new bio component!</h1>
 With a successful shadow of the `Bio` component you'll result in the following directory
 tree:
 
-```
+```flow
 user-site
 └── src
     └── gatsby-theme-blog
@@ -111,7 +111,7 @@ export default {
 
 You'll result in the following directory tree:
 
-```
+```flow
 user-site
 └── src
     └── gatsby-theme-blog

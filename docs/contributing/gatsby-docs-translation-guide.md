@@ -8,7 +8,7 @@ If you're a fluent speaker of a language other than English and you're intereste
 
 ## The general process
 
-Each translation has its own repository in the [gatsbyjs](https://github.com/gatsbyjs/) organization on GitHub, with designated codeowners to review and approve changes. Each repo will include all pages needing translations (with some prioritized over others), and a bot to notify of changes in the main repo to keep everything up to date.
+Each translation has its own repository in the [`gatsbyjs`](https://github.com/gatsbyjs/) organization on GitHub, with designated codeowners to review and approve changes. Each repo will include all pages needing translations (with some prioritized over others), and a bot to notify of changes in the main repo to keep everything up to date.
 
 This doc will outline how to request a new language repository with its own team, what decisions each team can make, and suggestions for how you can work together.
 
@@ -16,7 +16,7 @@ This doc will outline how to request a new language repository with its own team
 
 The Gatsby learning team is in charge of determining priorities for which docs should be translated. Refer to the [i18n page spreadsheet](https://docs.google.com/spreadsheets/d/1u2amGnqFLKxJuL5h9UrDblUueFgg0EBt7xbau4n8iTM/edit) to get the most up-to-date priority list, which includes frequently-visited pages in the Gatsby docs, tutorial, recipes, and other important pages.
 
-[Reference guide overview pages](/contributing/docs-templates/#reference-guide-overview) are also worth translating to establish a fully translated path to a frequently visited [reference guide](/contributing/docs-templates/#reference-guides), though they are listed at a lower priority. Pages not translated will appear in English alongside translated pages to present a complete website without gaps, similar to the [React.js docs](https://reactjs.org).
+[Reference guide overview pages](/contributing/docs-templates/#reference-guide-overview) are also worth translating to establish a fully translated path to a frequently visited [reference guide](/contributing/docs-templates/#reference-guides), though they are listed at a lower priority. Pages not translated will appear in English alongside translated pages to present a complete website without gaps, similar to the [React docs](https://reactjs.org).
 
 ### Use English as the source
 
@@ -82,7 +82,7 @@ Sometimes a PR has a valid reason to not be merged as-is. Templates can help spe
 
 If a PR includes content that is of poor quality (such as from Google Translate or missing important nuance) or doesn't meet the requirements, it would help to include a drafted reply to encourage contributors to continue with the project. Here is an example that can be translated for a given repo:
 
-```
+```markdown
 Hey! Thanks so much for opening a pull request!
 
 We really appreciate you sending this over, but the change you’ve proposed is not going to be accepted because it doesn't meaningfully translate the Gatsby docs content.
@@ -97,7 +97,7 @@ Thanks again, and we look forward to seeing more PRs from you in the future! �
 
 Because the main Gatsby repo is the source of content, more substantive changes should be closed and redirected there. Here is a template that could be translated for your repo:
 
-```
+```markdown
 Hey! Thanks so much for opening a pull request!
 
 We really appreciate you sending this over, but the change you’ve proposed is not going to be accepted because it includes broad changes to the docs content that should be done in the [main Gatsby repo](https://github.com/gatsbyjs/gatsby) instead.

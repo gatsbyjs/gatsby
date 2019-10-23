@@ -154,7 +154,7 @@ If you give Gatsby data that looks like this:
 
 Gatsby will create a schema that looks something like this:
 
-```
+```yaml
 title: String
 ```
 
@@ -194,7 +194,7 @@ markdownRemark {
 
 Gatsby has rich support for processing images. Responsive images are a big part of the modern web and typically involve creating 5+ sized thumbnails per photo. With Gatsby's [`gatsby-transformer-sharp`](/packages/gatsby-transformer-sharp/), you can _query_ your images for responsive versions. The query automatically creates all the needed responsive thumbnails and returns `src` and `srcSet` fields to add to your image element.
 
-Combined with a special Gatsby image component, [gatsby-image](/packages/gatsby-image/), you have a very powerful set of primitives for building sites with images.
+Combined with a special Gatsby image component, [`gatsby-image`](/packages/gatsby-image/), you have a very powerful set of primitives for building sites with images.
 
 This is what a component using `gatsby-image` looks like:
 
@@ -228,7 +228,7 @@ export const query = graphql`
 See also the following blog posts:
 
 - [Making Website Building Fun](/blog/2017-10-16-making-website-building-fun/)
-- [Image Optimization Made Easy with Gatsby.js](https://medium.com/@kyle.robert.gill/ridiculously-easy-image-optimization-with-gatsby-js-59d48e15db6e)
+- [Image Optimization Made Easy with Gatsby](https://medium.com/@kyle.robert.gill/ridiculously-easy-image-optimization-with-gatsby-js-59d48e15db6e)
 
 ## Advanced
 

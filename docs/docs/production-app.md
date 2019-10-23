@@ -93,7 +93,7 @@ Then, the app, webpack-runtime, component, and data json bundles are loaded via 
 
 ### onClientEntry (api-runner-browser)
 
-The first thing your app does is run the [onClientEntry](/docs/browser-apis/#onClientEntry) browser API. This allows plugins to perform any operations before you hit the rest of the page loading logic. For example [gatsby-plugin-glamor](/packages/gatsby-plugin-glamor/) will call rehydrate.
+The first thing your app does is run the [onClientEntry](/docs/browser-apis/#onClientEntry) browser API. This allows plugins to perform any operations before you hit the rest of the page loading logic. For example [`gatsby-plugin-glamor`](/packages/gatsby-plugin-glamor/) will call rehydrate.
 
 It's worth noting that the browser API runner is completely different to `api-runner-node` which is explained in [How APIs/Plugins Are Run](/docs/how-plugins-apis-are-run/). `api-runner-node` runs in Node.js and has to deal with complex server based execution paths. Whereas running APIs on the browser is simply a matter of iterating through the site's registered browser plugins and running them one after the other (see [api-runner-browser.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/api-runner-browser.js#L9)).
 
@@ -121,7 +121,7 @@ Gatsby attaches global state to the `window` object via `window.___somevar` vari
 
 ##### `___loader`
 
-This is a reference to the [loader.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/loader.js) object that can be used for getting page resources and [enqueueing prefetch](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/loader.js#L188) commands. It is used by [gatsby-link](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-link/src/index.js#L60) to prefetch pages. And by [gatsby-plugin-guess-js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-guess-js/src/gatsby-browser.js#L60) to implement its own prefetching algorithm.
+This is a reference to the [loader.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/loader.js) object that can be used for getting page resources and [enqueueing prefetch](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/loader.js#L188) commands. It is used by [`gatsby-link`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-link/src/index.js#L60) to prefetch pages. And by [`gatsby-plugin-guess-js`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-guess-js/src/gatsby-browser.js#L60) to implement its own prefetching algorithm.
 
 ##### `___emitter`
 

@@ -31,7 +31,7 @@ Yarn is a package manager for your code, similar to [NPM](https://www.npmjs.com/
 - Run `yarn run watch` from the root of the repo to watch for changes to packages' source code and compile these changes on-the-fly as you work.
   - Note that the watch command can be resource intensive. To limit it to the packages you're working on, add a scope flag, like `yarn run watch --scope={gatsby,gatsby-cli}`.
   - To watch just one package, run `yarn run watch --scope=gatsby`.
-- Install [gatsby-dev-cli](https://www.npmjs.com/package/gatsby-dev-cli) globally: `yarn global add gatsby-dev-cli`
+- Install [`gatsby-dev-cli`](https://www.npmjs.com/package/gatsby-dev-cli) globally: `yarn global add gatsby-dev-cli`
 - Run `yarn install` in each of the sites you're testing.
 - For each of your Gatsby test sites, run the `gatsby-dev` command inside the test site's directory to copy
   the built files from your cloned copy of Gatsby. It'll watch for your changes

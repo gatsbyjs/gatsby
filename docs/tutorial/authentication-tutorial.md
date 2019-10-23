@@ -144,7 +144,7 @@ exports.onCreatePage = async ({ page, actions }) => {
 }
 ```
 
-> Note: There is a convenient plugin that already does this work for you: [gatsby-plugin-create-client-paths](/packages/gatsby-plugin-create-client-paths)
+> Note: There is a convenient plugin that already does this work for you: [`gatsby-plugin-create-client-paths`](/packages/gatsby-plugin-create-client-paths)
 
 Now, you must create a generic page that will have the task to generate the restricted content:
 
@@ -408,6 +408,6 @@ If you want to learn more about using production-ready auth solutions, these lin
 - [A Gatsby email _application_](https://github.com/DSchau/gatsby-mail), using React Context API to handle authentication
 - [The Gatsby store for swag and other Gatsby goodies](https://github.com/gatsbyjs/store.gatsbyjs.org)
 - [Building a blog with Gatsby, React and Webtask.io!](https://auth0.com/blog/building-a-blog-with-gatsby-react-and-webtask/)
-- [JAMstack PWA — Let’s Build a Polling App. with Gatsby.js, Firebase, and Styled-components Pt. 2](https://medium.com/@UnicornAgency/jamstack-pwa-lets-build-a-polling-app-with-gatsby-js-firebase-and-styled-components-pt-2-9044534ea6bc)
+- [JAMstack PWA — Let’s Build a Polling App. with Gatsby, Firebase, and Styled-components Pt. 2](https://medium.com/@UnicornAgency/jamstack-pwa-lets-build-a-polling-app-with-gatsby-js-firebase-and-styled-components-pt-2-9044534ea6bc)
 - [JAMstack Hackathon Starter - Authenticated Gatsby app starter with Netlify Identity](/starters/sw-yx/jamstack-hackathon-starter)
 - [Learn With Jason Livestream: How to use Netlify Identity and Netlify Functions (with Shawn Wang)](https://www.youtube.com/watch?v=vrSoLMmQ46k&feature=youtu.be)

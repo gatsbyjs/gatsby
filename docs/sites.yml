@@ -1,4 +1,4 @@
-- title: ReactJS
+- title: React
   main_url: "https://reactjs.org/"
   url: "https://reactjs.org/"
   source_url: "https://github.com/reactjs/reactjs.org"
@@ -449,7 +449,7 @@
 #   description: >-
 #     Over 20 years experience delivering customer-facing websites, internet-based
 #     solutions and creative visual design for a wide range of companies and
-#     organisations.
+#     organisations
 #   categories:
 #     - Portfolio
 #     - Blog
@@ -1389,7 +1389,7 @@
   built_by_url: "https://parkersarsfield.com"
 - title: Frontend web development with Greg
   description: |
-    JavaScript, GatsbyJS, ReactJS, CSS in JS... Let's learn some stuff together.
+    JavaScript, GatsbyJS, React, CSS in JS... Let's learn some stuff together.
   main_url: "https://dev.greglobinski.com"
   url: "https://dev.greglobinski.com"
   categories:
@@ -6983,7 +6983,7 @@
   main_url: https://delinx.digital
   url: https://delinx.digital/solutions
   description: >
-    Delinx.digital is a software development oriented digital agency based in Sofia, Bulgaria. We develop bespoke software solutions using  WordPress, WooCommerce, Shopify, eCommerce, React.js, Node.js, PHP, Laravel and many other technologies.
+    Delinx.digital is a software development oriented digital agency based in Sofia, Bulgaria. We develop bespoke software solutions using  WordPress, WooCommerce, Shopify, eCommerce, React, Node.js, PHP, Laravel and many other technologies.
   categories:
     - Agency
     - Web Development
@@ -7101,7 +7101,7 @@
   url: https://www.lereacteur.io/
   main_url: https://www.lereacteur.io/
   description: >
-    Le Reacteur is the first coding bootcamp dedicated to web and mobile apps development (iOS/Android). We offer intensive sessions to train students in a short time (10 weeks). Our goal is to pass on to our students in less than 3 months what they would have learned in 2 years. To achieve this ambitious challenge, our training is based on learning JavaScript (Node.js, Express, ReactJS, React Native).
+    Le Reacteur is the first coding bootcamp dedicated to web and mobile apps development (iOS/Android). We offer intensive sessions to train students in a short time (10 weeks). Our goal is to pass on to our students in less than 3 months what they would have learned in 2 years. To achieve this ambitious challenge, our training is based on learning JavaScript (Node.js, Express, React, React Native).
   categories:
     - JavaScript
     - Learning
@@ -7554,7 +7554,7 @@
   url: https://guusvandewal.nl
   main_url: https://guusvandewal.nl
   description: >
-    Decoupled portfolio site for guusvandewal.nl, a Drupal and ReactJS front-end developer and designer.
+    Decoupled portfolio site for guusvandewal.nl, a Drupal and React front-end developer and designer.
   categories:
     - Open Source
     - Web Development

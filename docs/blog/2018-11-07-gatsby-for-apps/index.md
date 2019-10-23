@@ -74,7 +74,7 @@ What if I told you... that building a Gatsby website enables all of these tradit
 
 Every Gatsby application isn't merely static. It's _as much_ static HTML rendered up-front, as possible. Client-side JavaScript (via React!) takes over as the engine for dynamic application functionality. A quick overview of Gatsby's general build process is effective to illustrate the concept.
 
-1. Inject pages with data (from [GraphQL][gatsby-graphql] or even [without using GraphQL][gatsby-without-graphql])
+1. Inject pages with data (from [GraphQL][`gatsby-graphql`] or even [without using GraphQL][`gatsby-without-graphql`])
 1. Use the [ReactDOMServer.renderToString][react-dom-render-to-string] API to invoke server-side APIs to render React components to _HTML_ files
 1. Inject a runtime and helpers (like a router!) to enable app functionality
    - Gatsby _produces_ a [create-react-app][create-react-app] like experience once this runtime takes over
@@ -157,13 +157,13 @@ These performance optimizations aren't opt-in; they're enabled, by default. As n
 
 ### Plugins and the Gatsby Ecosystem
 
-One of the key benefits of Gatsby is its highly modular architecture. Need a plugin for [sourcing data from WordPress][gatsby-source-wordpress]? Sure, seems reasonable. Need to [transform yaml data][gatsby-transformer-yaml] into a usable, JavaScript object? Yeah, why not! Want to [stitch in a remote GraphQL API][gatsby-source-graphql] and inject the data at _build_ time? Oh, you're fancy! Want to load optimized, responsive, blur-in images? Yep.
+One of the key benefits of Gatsby is its highly modular architecture. Need a plugin for [sourcing data from WordPress][`gatsby-source-wordpress`]? Sure, seems reasonable. Need to [transform yaml data][`gatsby-transformer-yaml`] into a usable, JavaScript object? Yeah, why not! Want to [stitch in a remote GraphQL API][`gatsby-source-graphql`] and inject the data at _build_ time? Oh, you're fancy! Want to load optimized, responsive, blur-in images? Yep.
 
 Let's take a look at that image functionality provided by one of our components, `gatsby-image`, in slightly more detail.
 
 #### `gatsby-image`
 
-Certainly one of my favorite components that Gatsby provides and maintains is `gatsby-image`. This component gives excellent image rendering capabilities, along with image optimizations enabled by plugins like [`gatsby-plugin-sharp`][gatsby-plugin-sharp]. These two techniques, along with the GraphQL API made available to any Gatsby application, vastly simplifies the developer experience of serving optimized images, providing a number of features, including:
+Certainly one of my favorite components that Gatsby provides and maintains is `gatsby-image`. This component gives excellent image rendering capabilities, along with image optimizations enabled by plugins like [`gatsby-plugin-sharp`][`gatsby-plugin-sharp`]. These two techniques, along with the GraphQL API made available to any Gatsby application, vastly simplifies the developer experience of serving optimized images, providing a number of features, including:
 
 - Resizing large images to an optimized size for your design
   - aka banish the practice of 5Mb above-the-fold hero images to the shadow realm
@@ -172,13 +172,13 @@ Certainly one of my favorite components that Gatsby provides and maintains is `g
 
 `gatsby-image` is incredible. If you haven't yet integrated its capabilities into your application, I'd highly recommend taking a look! Check out our recently redesigned [Using Gatsby Image][using-gatsby-image] example to learn more and see some live examples. Use `gatsby-image`, your users will thank you.
 
-The power of these components and plugins is immense. In a similar way that reusable components have been incredibly valuable and successful for the growth of the React ecosystem, so to are plugins and ecosystem valuable for Gatsby applications. Why waste cycles reinventing these plugins and components when you can re-use and leverage the power of our open-source ecosystem? Using these plugins and components means more time to spend on building out your Gatsby application. Check out [our vast plugin library][gatsby-plugins] if you haven't already!
+The power of these components and plugins is immense. In a similar way that reusable components have been incredibly valuable and successful for the growth of the React ecosystem, so to are plugins and ecosystem valuable for Gatsby applications. Why waste cycles reinventing these plugins and components when you can re-use and leverage the power of our open-source ecosystem? Using these plugins and components means more time to spend on building out your Gatsby application. Check out [our vast plugin library][`gatsby-plugins`] if you haven't already!
 
 Next: let's compare and contrast the end user experience of fetching authenticated data between Gatsby and a server-rendered application.
 
 ### The App Shell
 
-In merely adding the [`gatsby-plugin-offline`][gatsby-plugin-offline] plugin, we enable a fully-featured, progressive web application that works offline and creates an app shell by registering a service worker. An app shell is essentially separate components of your application (e.g. header, footer, sidebar, etc.) that are instantly available from a service worker while dynamic content is fetched in the background. This creates a great end-user experience, as the application is able to visually populate instantly as data loads into place in the background.
+In merely adding the [`gatsby-plugin-offline`][`gatsby-plugin-offline`] plugin, we enable a fully-featured, progressive web application that works offline and creates an app shell by registering a service worker. An app shell is essentially separate components of your application (e.g. header, footer, sidebar, etc.) that are instantly available from a service worker while dynamic content is fetched in the background. This creates a great end-user experience, as the application is able to visually populate instantly as data loads into place in the background.
 
 If we consider this approach, the technique looks like the following:
 
@@ -197,9 +197,9 @@ To unify all these concepts, I've assembled a demo application revisiting our ol
 
 ## Introducing... Gatsby Mail! (For demo purposes only!)
 
-[![Gatsby Mail - an example app demoing web app functionality](./images/gatsby-mail.png)][gatsby-mail-app]
+[![Gatsby Mail - an example app demoing web app functionality](./images/gatsby-mail.png)][`gatsby-mail-app`]
 
-[Gatsby Mail][gatsby-mail-app] encapsulates some of the concepts and themes I've been hitting upon, particularly:
+[Gatsby Mail][`gatsby-mail-app`] encapsulates some of the concepts and themes I've been hitting upon, particularly:
 
 1. Gmail, Twitter, et al, are key exemplars of rich, web app experiences
 1. Gatsby provides components, plugins, etc. for delivering great experiences; use them!
@@ -217,7 +217,7 @@ and even a light/dark theme, because why not! You can see all of these concepts 
 
 ![App Shell with Gatsby Mail](./images/gatsby-mail-app-shell.gif)
 
-Check out the [GitHub repo][gatsby-mail-repo] to learn more about how it was built and adopt some of the techniques as you build your next great Gatsby web **application**.
+Check out the [GitHub repo][`gatsby-mail-repo`] to learn more about how it was built and adopt some of the techniques as you build your next great Gatsby web **application**.
 
 We can't wait to see what you build.
 
@@ -228,8 +228,8 @@ We can't wait to see what you build.
 [prpl]: https://developers.google.com/web/fundamentals/performance/prpl-pattern/
 [app-shell]: https://developers.google.com/web/fundamentals/architecture/app-shell
 [case-study]: https://developers.google.com/web/showcase/2017/twitter
-[gatsby-graphql]: /docs/querying-with-graphql/
-[gatsby-without-graphql]: /docs/using-gatsby-without-graphql/
+[`gatsby-graphql`]: /docs/querying-with-graphql/
+[`gatsby-without-graphql`]: /docs/using-gatsby-without-graphql/
 [authentication-data]: /tutorial/authentication-tutorial/
 [client-only-routes]: /docs/client-only-routes-and-user-authentication
 [create-react-app]: https://facebook.github.io/create-react-app/
@@ -238,16 +238,16 @@ We can't wait to see what you build.
 [prpl]: https://developers.google.com/web/fundamentals/performance/prpl-pattern/
 [react-context]: https://reactjs.org/docs/context.html
 [react-lifecycle-methods]: https://reactjs.org/docs/state-and-lifecycle.html
-[gatsby-unstructured]: /blog/2018-10-25-unstructured-data/
+[`gatsby-unstructured`]: /blog/2018-10-25-unstructured-data/
 [authentication-tutorial]: /tutorial/authentication-tutorial/
 [using-gatsby-image]: https://using-gatsby-image.gatsbyjs.org/
 [traced-svg]: https://using-gatsby-image.gatsbyjs.org/traced-svg/
-[gatsby-plugin-offline]: /packages/gatsby-plugin-offline/
-[gatsby-plugin-sharp]: /packages/gatsby-plugin-sharp/
-[gatsby-source-graphql]: /packages/gatsby-source-graphql/
-[gatsby-source-wordpress]: /packages/gatsby-source-wordpress/
-[gatsby-transformer-yaml]: /packages/gatsby-transformer-yaml/
-[gatsby-plugins]: /plugins
-[gatsby-mail-app]: https://gatsby-mail.netlify.com
-[gatsby-mail-repo]: https://github.com/dschau/gatsby-mail
+[`gatsby-plugin-offline`]: /packages/gatsby-plugin-offline/
+[`gatsby-plugin-sharp`]: /packages/gatsby-plugin-sharp/
+[`gatsby-source-graphql`]: /packages/gatsby-source-graphql/
+[`gatsby-source-wordpress`]: /packages/gatsby-source-wordpress/
+[`gatsby-transformer-yaml`]: /packages/gatsby-transformer-yaml/
+[`gatsby-plugins`]: /plugins
+[`gatsby-mail-app`]: https://gatsby-mail.netlify.com
+[`gatsby-mail-repo`]: https://github.com/dschau/gatsby-mail
 [apollo-boost]: https://github.com/apollographql/apollo-client/tree/master/packages/apollo-boost

@@ -15,7 +15,7 @@ tags: ["themes", "content-mesh"]
 > talk](https://www.youtube.com/watch?v=wX84vXBpMR8) for a more audio/visual
 > approach.
 
-# Child Theming
+## Child Theming
 
 We've merged [a PR](https://github.com/gatsbyjs/gatsby/pull/10787) into Gatsby
 core to support Child theming. Child theming is an extension of the core theming

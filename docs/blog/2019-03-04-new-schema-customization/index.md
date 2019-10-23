@@ -17,7 +17,7 @@ npm install gatsby@schema-customization
 
 We would really appreciate your help in surfacing any bugs in this code, so we encourage you to try it and report any issues that you encounter in [this pinned issue](https://github.com/gatsbyjs/gatsby/issues/12272). If you want to contribute to fixing some of those bugs, open PRs against [this branch](https://github.com/gatsbyjs/gatsby/pull/11480).
 
-# Why was it needed?
+## Why was it needed?
 
 The motivation to do this change is a two-fold one. Before this feature, Gatsby automatically generated a GraphQL schema for your site based on the data available from your source plugins. While this schema inference is great for getting started it has also been the cause of many problems.
 
@@ -25,7 +25,7 @@ Automatically generating schemas mean that changing your data can result in a ch
 
 On the other hand, we wanted to reevaluate our approach to schemas in general. In the "wild", GraphQL is used very differently than in Gatsby. Schemas aren't as commonly generated from the data sources and often schemas are the source of truth. We want to experiment with enabling people to use that approach with Gatsby too. By allowing people to define types and resolvers, we open new opportunities in that direction. We want to see how the community reacts to these changes and if that will evolve into new approaches to defining schemas in Gatsby.
 
-# New API
+## New API
 
 There are two main additions to the API:
 
@@ -116,22 +116,22 @@ Gatsby will now know that you want a Date and not override it with a string.
 You can specify types for some or all of the fields that you have on the given node type. Gatsby will add missing fields. This behaviour can be controlled with `@infer` and `@dontInfer` directives.
 
 ```graphql
-# For this type `name` won't be added
+## For this type `name` won't be added
 type AuthorJson implements Node @dontInfer {
   birthday: Date
 }
 
-# For this type `name` won't be added but `birthday` won't get a Gatsby resolver for date formatting
+## For this type `name` won't be added but `birthday` won't get a Gatsby resolver for date formatting
 type AuthorJson implements Node @dontInfer(noDefaultResolvers: true) {
   birthday: Date
 }
 
-# For this type both `name` and `birthday` fields will be added. Current default behaviour, but allows one to be explicit about it.
+## For this type both `name` and `birthday` fields will be added. Current default behaviour, but allows one to be explicit about it.
 type AuthorJson implements Node @infer {
   id: ID!
 }
 
-# `birthday` will be Date, but we won't add a Gatsby resolver for date formatting
+## `birthday` will be Date, but we won't add a Gatsby resolver for date formatting
 type AuthorJson implements Node @infer(noDefaultResolvers: true) {
   id: ID!
 }
@@ -191,7 +191,7 @@ Notice the `context.nodeModel`. We expose our internal node storage to the resol
 
 You can also see [using-type-definitions example](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-type-definitions) in the Gatsby repository.
 
-# Other niceties
+## Other niceties
 
 Refactoring the schema generation allowed us to fix some related long-standing bugs and issues.
 
@@ -234,7 +234,7 @@ We've had some quirks in inference that were dependant on ordering. We've made a
 1. Mix of date and non-date strings is always a string
 2. Conflicting field names always prefer Node references first and then the canonical name of the field.
 
-# How did we do it?
+## How did we do it?
 
 The biggest issue with building GraphQL schemas with `graphql-js` is that `graphql-js` expects all types to be final at the moment where either the schema is created or one inspects the fields of the type. This is solved in `graphql-js` by using _thunks_, non-argument functions that refer to types in some global context. With hand-written schemas usually there are type definitions in the same file as the newly defined type, but this isn't available in a generated schema situation.
 
@@ -311,7 +311,7 @@ The final schema pipeline that we implemented works like this:
 
 You can see the `packages/gatsby/schema/` folder in the [schema refactoring PR](https://github.com/gatsbyjs/gatsby/pull/11480) to learn more about the code.
 
-# Further work
+## Further work
 
 These schema changes are a first step. In the future we want to add more control over the schema and more access to our internal APIs to our users. Our next step would be to add explicit types to the plugins that we maintain. We also want to let those plugins expose their internal APIs through the Model layer, like we did for our root Node API. This way one can reuse the functionality that is only available in plugins in their own resolvers.
 

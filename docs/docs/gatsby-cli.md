@@ -27,7 +27,7 @@ You can also use the `package.json` script variant of these commands, typically 
 
 ### `new`
 
-```
+```shell
 gatsby new [<site-name> [<starter-url>]]
 ```
 
@@ -36,7 +36,7 @@ gatsby new [<site-name> [<starter-url>]]
 | Argument    | Description                                                                                                                                                                                                     |
 | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | site-name   | Your Gatsby site name, which is also used to create a project directory.                                                                                                                                        |
-| starter-url | A Gatsby starter URL or local file path. Defaults to [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default); see the [Gatsby starters](/docs/gatsby-starters/) docs for more information. |
+| starter-url | A Gatsby starter URL or local file path. Defaults to [`gatsby-starter-default`](https://github.com/gatsbyjs/gatsby-starter-default); see the [Gatsby starters](/docs/gatsby-starters/) docs for more information. |
 
 > Note: The `site-name` should only consist of letters and numbers. If you specify a `.`, `./` or a `<space>` in the name, `gatsby new` will throw an error.
 
@@ -48,7 +48,7 @@ gatsby new [<site-name> [<starter-url>]]
 gatsby new my-awesome-site
 ```
 
-- Create a Gatsby site named `my-awesome-blog-site`, using [gatsby-starter-blog](https://www.gatsbyjs.org/starters/gatsbyjs/gatsby-starter-blog/):
+- Create a Gatsby site named `my-awesome-blog-site`, using [`gatsby-starter-blog`](https://www.gatsbyjs.org/starters/gatsbyjs/gatsby-starter-blog/):
 
 ```shell
 gatsby new my-awesome-blog-site https://github.com/gatsbyjs/gatsby-starter-blog
@@ -96,7 +96,7 @@ gatsby develop -H 0.0.0.0
 
 Then the terminal will log information as usual, but will additionally include a URL that you can navigate to from a client on the same network to see how the site renders.
 
-```
+```shell
 You can now view gatsbyjs.org in the browser.
 ⠀
   Local:            http://0.0.0.0:8000/

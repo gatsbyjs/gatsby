@@ -2,9 +2,9 @@
 title: How to Write a Stub
 ---
 
-Sometimes you might have an idea for a Gatsby.js documentation page or agree upon a suggestion in a GitHub issue, but don't have the time or resources to write that page yourself. Rather than let the idea drift off into space, consider **creating a documentation stub** to act as a content placeholder. That way, other members of the community (and/or you, in the future) can come back and fill in the details.
+Sometimes you might have an idea for a Gatsby documentation page or agree upon a suggestion in a GitHub issue, but don't have the time or resources to write that page yourself. Rather than let the idea drift off into space, consider **creating a documentation stub** to act as a content placeholder. That way, other members of the community (and/or you, in the future) can come back and fill in the details.
 
-A **stub** is a temporary placeholder for a piece of Gatsby.js documentation tied to a GitHub issue, using this format (feel free to copy and paste, changing the title and issue number):
+A **stub** is a temporary placeholder for a piece of Gatsby documentation tied to a GitHub issue, using this format (feel free to copy and paste, changing the title and issue number):
 
 ```markdown:title=how-to-tame-dragons.md
 ---
@@ -22,7 +22,7 @@ If you have any questions about titles or other details related to creating stub
 
 ## Community Pair Programming Sessions
 
-If you create a stub or see an existing one on the Gatsby.js site and feel interested in filling out the content, check out the Gatsby.js
+If you create a stub or see an existing one on the Gatsby site and feel interested in filling out the content, check out the Gatsby
 [Pair Programming program](/contributing/pair-programming/). We would love to work with you in your open source contributing journey!
 
 ## Converting a Stub to a Doc

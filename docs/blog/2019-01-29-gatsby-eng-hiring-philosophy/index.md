@@ -17,7 +17,7 @@ tags: ["gatsby-inc"]
 
 ## Introduction
 
-Last year, several contributors to Gatsby.js [created a startup company](/blog/2018-05-24-launching-new-gatsby-company/), Gatsby Inc, to make feature-rich and blazing-fast websites easier to build and run.
+Last year, several contributors to Gatsby [created a startup company](/blog/2018-05-24-launching-new-gatsby-company/), Gatsby Inc, to make feature-rich and blazing-fast websites easier to build and run.
 
 **At Gatsby Inc, we’re trying to build an _organization_ (the Gatsby Inkteam) that can execute on the Gatsby product roadmap and vision**. Our philosophy around recruiting and hiring, as well as team-building, in the product / engineering org is designed to achieve this goal.
 
@@ -69,7 +69,7 @@ Gatsby has the potential to join these projects. We have 1,500+ total contributo
 
 Several Inkteam members have experience & an intuitive sense for how to manage open-source communities.
 
-### Create a scalable platform to run untrusted code.
+### Create a scalable platform to run untrusted code
 
 When you run other people’s code, they can do lots of interesting things, like [mine Bitcoin](https://twitter.com/amasad/status/1083517163153944576) or try to take down your system.
 
@@ -119,7 +119,7 @@ There are Gatsby-ites who have experience in multiple areas listed above, which 
 
 In general, it’s a huge bonus when engineers have skills or experience such as:
 
-- Deep familiarity with the Gatsby.js codebase
+- Deep familiarity with the Gatsby codebase
 
 - Experience in open-source
 

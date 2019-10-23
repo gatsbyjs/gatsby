@@ -190,14 +190,14 @@ static website?
 That would give us the best of both worlds, right?
 
 Well, a guy named [Kyle Mathews](https://github.com/KyleAMathews) already
-thought of that and created Gatsby.js.
+thought of that and created Gatsby.
 
 ## Generating static websites with React and Webpack
 
 A little disclaimer: I absolutely love React, so, when I first learned that
 there were some emerging Static Site Generators who leveraged only React and
 Webpack, I knew that I had to try at least one of them for the new upcoming blog
-I was planning to build. These projects were [Gatsby.js ](http://gatsbyjs.org/)
+I was planning to build. These projects were [Gatsby ](http://gatsbyjs.org/)
 and [Phenomic](https://phenomic.io/), and both were still quite young back then,
 neither of them having reached the 1.0 release yet.
 
@@ -224,11 +224,11 @@ by developers. You just can't expect the average user to clone a GitHub
 repository, add a new Markdown file, add the post metadata in Front Matter
 format, commit the changes and push it upstream.
 
-But then Gatsby.js hit the 1.0 release, and everything changed...
+But then Gatsby hit the 1.0 release, and everything changed...
 
-## Meeting Gatsby.js
+## Meeting Gatsby
 
-My first contact with the 1.0 release of Gatsby.js was thanks to the Facebook
+My first contact with the 1.0 release of Gatsby was thanks to the Facebook
 team behind the [React](http://reactjs.org/) documentation site. They decided to
 migrate their legacy Jekyll site to a completely new site built with Gatsby 1.0.
 I, as the good React fanboy that I am, jumped at the first chance I had to
@@ -280,7 +280,7 @@ won't be affected at all, but we still need to pay to have that CMS server up
 and running listening for requests -- which won't be that many -- and we still
 need to spend some time securing that MySQL database. Being a "Serverless"
 architectures enthusiast, I set out to find a more "serverless" and economic
-approach to this issue. Fortunately, the Gatsby.js community had already found
+approach to this issue. Fortunately, the Gatsby community had already found
 it in a powerful CMS called Contentful.
 
 ## Contentful to the rescue
@@ -308,7 +308,7 @@ before choosing a CMS.
 In my particular case, I knew that Contentful was just exactly what I needed for
 my blog and so I proceed to set up all my Content Types (Posts, Categories,
 Tags, etc) and setup the Gatsby integration using the handy
-[gatsby-source-contentful](https://www.npmjs.com/package/gatsby-source-contentful)
+[`gatsby-source-contentful`](https://www.npmjs.com/package/gatsby-source-contentful)
 plugin that the Gatsby community created.
 
 ## Hosting with Netlify
@@ -333,7 +333,7 @@ exciting or well-looking blog out there, but it's everything I wanted it to be
 -- both as a developer and as a blogger.
 
 Personally I cannot wait to see how far can the limits of technologies like
-Gatsby.js can be stretched, and with the advent and spread of new architectural
+Gatsby can be stretched, and with the advent and spread of new architectural
 paradigms like Serverless, I predict it could be very far.
 
 But whatever that limit is, I am quite sure that this is a step in the right

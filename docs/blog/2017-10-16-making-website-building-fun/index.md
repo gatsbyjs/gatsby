@@ -171,7 +171,7 @@ couldn't figure out that planets' orbits aren't circles. Leonardo da Vinci
 couldn't build most of the machines he dreamt up. And I, no Leonardo, couldn't
 ever improve on headroom.js.
 
-But literally weeks into using React.js, I was able to easily make a new React
+But literally weeks into using React, I was able to easily make a new React
 headroom component that is dramatically simpler than headroom.js.
 
 Which suggests React is a far better building block for the web than raw
@@ -188,7 +188,7 @@ sophisticated component model like React provides.
 ## Another case study: gatsby-image
 
 I recently introduced a new Gatsby/React component called
-[gatsby-image](/packages/gatsby-image/).
+[`gatsby-image`](/packages/gatsby-image/).
 
 It has some nice tricks that you'd expect from a modern image component. It uses
 the new

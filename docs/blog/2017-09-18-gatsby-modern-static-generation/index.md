@@ -3,13 +3,13 @@ title: "Modern static site generation with Gatsby"
 date: 2017-09-18
 image: "code-image.jpg"
 author: "Kostas Bariotis"
-excerpt: "In this post, I will talk about static site generators -- how they have evolved and why I switched from a Ghost powered site to Gatsby.js, a modern static site generator."
+excerpt: "In this post, I will talk about static site generators -- how they have evolved and why I switched from a Ghost powered site to Gatsby, a modern static site generator."
 tags: ["ghost", "wordpress"]
 ---
 
 In this post, I will talk about static site generators -- how they have evolved
 and why I switched from a [Ghost](https://ghost.org) powered site to
-[Gatsby.js](/), a modern static site generator.
+[Gatsby](/), a modern static site generator.
 
 ## Static site generators as we know them
 
@@ -82,10 +82,10 @@ your flow looks something like this:
 
 On your end, the development flow looks:
 
-- Describe your content in React.js Components
+- Describe your content in React Components
 - During development, write code like a boss (hot reloading, modularized code,
   webpack plugins, etc...)
-- Use React.js Server Side Rendering API to convert this code to static HTML
+- Use React Server Side Rendering API to convert this code to static HTML
   content, and JavaScript code, on your server
 
 It’s really that easy? Well, sort of.
@@ -98,7 +98,7 @@ There is the need for a strong abstraction that will…
   content to the user.
 
 Thankfully, there are a few projects that took the initiative on this:
-[Gatsby.js](/), [Phenomic](https://phenomic.io), and
+[Gatsby](/), [Phenomic](https://phenomic.io), and
 [nextein](https://nextein.now.sh).
 
 At the time that I started following them, early 2017, all of them were in a
@@ -109,7 +109,7 @@ I wanted to make the generated site, exactly like the old one, in terms of both
 user experience and keeping my old routes and paths so I don’t have weird 404s.
 
 Gatsby came with client side routing out of the box and an extensive API that
-you can use to generate your content exactly like you need. And once Gatsby.js
+you can use to generate your content exactly like you need. And once Gatsby
 hit major version 1, I started using it and the result...you can
 [look at it](https://kostasbariotis.com/)!
 
@@ -117,7 +117,7 @@ hit major version 1, I started using it and the result...you can
 
 First, if you navigate around my blog (or around this site!), you will notice
 that the browser doesn't fully re-render the site. Gatsby will generate a JSON
-file for each route, so the browser can request only that file and React.js will
+file for each route, so the browser can request only that file and React will
 render only the appropriate components.
 
 (Previously to do this required a lot of customization -- I was using a

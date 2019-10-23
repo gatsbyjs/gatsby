@@ -10,7 +10,7 @@ showImageInArticle: true
 
 There has been a lot of progress around static site generators, front end frameworks and API-centric infrastructure in recent years. At [Ghost](https://ghost.org/), we’ve been building open source technology for modern publishing for over 5 years and as a developer-centric team, the momentum around static sites didn’t go unnoticed.
 
-Wildly fast websites which have no back end and can be deployed just about anywhere felt very much like the future. So I’m thrilled to share that with the recent updates to the Ghost API, it’s now possible to use Ghost as a completely decoupled headless CMS and bring your own front-end written in Gatsby.js!
+Wildly fast websites which have no back end and can be deployed just about anywhere felt very much like the future. So I’m thrilled to share that with the recent updates to the Ghost API, it’s now possible to use Ghost as a completely decoupled headless CMS and bring your own front-end written in Gatsby!
 
 ## API driven publishing
 
@@ -30,7 +30,7 @@ When you look at the bigger picture of the [content mesh](/blog/2018-10-04-journ
 
 ![](./images/ghost-jamstack.png)
 
-## Official Gatsby.js Source Plugin + Starter
+## Official Gatsby Source Plugin + Starter
 
 We rebuilt our entire [Ghost Docs site](https://docs.ghost.org/) with Gatsby, using the Ghost API to deliver content. Truth be told, we fell in love straight away and have been building new things with Gatsby ever since. To give others a head start on building their own publications using the same stack, we’ve just shipped some new tooling:
 
@@ -38,7 +38,7 @@ We rebuilt our entire [Ghost Docs site](https://docs.ghost.org/) with Gatsby, us
 
 A straightforward Gatsby source plugin which wraps the Ghost API and makes it compatible with Gatsby and GraphQL, so it's quick and easy to load all your Ghost data into any Gatsby project.
 
-- [gatsby-starter-ghost](https://github.com/tryghost/gatsby-starter-ghost)
+- [`gatsby-starter-ghost`](https://github.com/tryghost/gatsby-starter-ghost)
 
 An official [Gatsby starter repository](https://github.com/tryghost/gatsby-starter-ghost) which is pre-configured to get content from Ghost and output it in a clean, blog-style design. The fastest way to get up and running with Gatsby and Ghost is to fork this repository, and check out our [Gatsby docs.](https://docs.ghost.org/api/gatsby/)
 

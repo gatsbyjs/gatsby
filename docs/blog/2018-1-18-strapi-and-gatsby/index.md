@@ -277,7 +277,7 @@ cd blog
 
 Start the server:
 
-```
+```shell
 gatsby develop
 ```
 
@@ -295,7 +295,7 @@ In this example, we are using Strapi. Obviously, we are going to need a source p
 
 Let's install it:
 
-```
+```shell
 npm install --save gatsby-source-strapi
 ```
 

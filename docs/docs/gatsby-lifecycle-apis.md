@@ -15,7 +15,7 @@ Gatsby's design principles include:
   trivial and encouraged.
 - Plugins are easy to open source and reuse. They're just NPM packages.
 
-# High level Overview
+## High level Overview
 
 The following model gives a conceptual overview of how data is sourced and transformed in the process of building a Gatsby site:
 

@@ -22,7 +22,7 @@ Why would you use something like Gatsby over Jekyll or Hugo or one of the [hundr
 
 [Gatsby's ability to rehydrate](/docs/production-app/#dom-hydration) (what a delicious word!) the DOM means you can do incredibly dynamic things with JavaScript and React that would be much harder with legacy SSG's.
 
-Let's say you have a typical static Gatsby site, like [gatsby-starter-default](/starters/gatsby-starter-default). You can `npm run build` it, and it spits out a bunch of HTML files. Great! I can host that for free!
+Let's say you have a typical static Gatsby site, like [`gatsby-starter-default`](/starters/gatsby-starter-default). You can `npm run build` it, and it spits out a bunch of HTML files. Great! I can host that for free!
 
 Now your client comes to you and asks you to add some custom logic that needs to be executed on the server:
 

@@ -12,7 +12,7 @@ _This article was originally posted on
 I'm reposting here in the hopes that it helps more people get started with
 Gatsby!_
 
-# Migrating a blog to Gatsby
+## Migrating a blog to Gatsby
 
 ---
 
@@ -90,7 +90,7 @@ rm -rf temp-gatsby-files     # Remove the temp directory
 However you get Gatsby initialized in your repository root, afterwards you
 should have a file structure that looks something like this:
 
-```
+```flow
 .
 ├── content
 │   └── [ Markdown files ... ]
@@ -110,7 +110,7 @@ should have a file structure that looks something like this:
 
 Now run the Gatsby dev server to make sure everything works:
 
-```
+```shell
 npm run develop
 ```
 
@@ -128,11 +128,7 @@ probably want to customize the header and overall layout.
 
 ### Customizing the layout
 
-This is pretty simple. Just modify the primary layout file that was generated:
-
-```
-src/layouts/index.js
-```
+This is pretty simple. Just modify the primary layout file that was generated `src/layouts/index.js`
 
 You can also customize the styles in `src/layouts/index.css`. Stylus, Sass,
 Less, etc are also supported if you add the appropriate plugin.
@@ -144,11 +140,7 @@ I talked about in part 1.
 
 ### Customizing the landing page
 
-Also straightforward, just edit:
-
-```
-src/pages/index.js
-```
+Also straightforward, just edit `src/pages/index.js`
 
 This file is where we'll actually render out the list of posts. So where the
 hell does that data come from??
@@ -180,7 +172,7 @@ If you play around with GraphiQL you'll notice there's not that much there.
 Let's fix that. We need to teach Gatsby how to query the file system. Luckily
 this is so common it's been done for you. Install the file system source plugin:
 
-```
+```shell
 npm i --save gatsby-source-filesystem
 ```
 
@@ -229,7 +221,7 @@ Being able to query files is a big win, and if you have a directory of HTML
 files this is all you will need. But if you want to render markdown files as
 HTML you will need another plugin. Let's add that now:
 
-```
+```shell
 npm i --save gatsby-transformer-remark
 ```
 
@@ -268,7 +260,7 @@ This query gives you the full HTML for all your markdown files. If you are using
 frontmatter you can also access that here. I'm assuming you have a `title` field
 in your frontmatter:
 
-```
+```graphql
 query {
   allMarkdownRemark {
     edges {

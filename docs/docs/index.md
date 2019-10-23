@@ -1,5 +1,5 @@
 ---
-title: Gatsby.js Documentation
+title: Gatsby Documentation
 disableTableOfContents: true
 ---
 

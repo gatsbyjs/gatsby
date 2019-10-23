@@ -21,7 +21,7 @@ developer on a project.
 
 So I decided to dive into learning React with a few courses and some
 experimentation. I had the aim of building a site in
-[Gatsby.js](/)
+[Gatsby](/)
 as a test for doing projects built entirely in React.
 
 ## Letting Go
@@ -87,7 +87,7 @@ Beautiful.
 
 ## GraphQL: SQL-like data queries
 
-One thing I particularly love about Gatsby.js is its inclusion of
+One thing I particularly love about Gatsby is its inclusion of
 [GraphQL](http://graphql.org/). Like SQL, you
 use GraphQL to query your data, whether from the WordPress API, Contentful or
 Markdown, and extract a dataset to display in your template.
@@ -95,7 +95,7 @@ Markdown, and extract a dataset to display in your template.
 This approach to data is really adaptable. I love the fact that you can install
 a plugin and query your API endpoints with such ease.
 
-Gatsby.js comes with GraphiQL, which is a simple web-based IDE so you can query
+Gatsby comes with GraphiQL, which is a simple web-based IDE so you can query
 your data and get back examples of content immediately. You can then copy this
 query into your React module and get back the information you need, whether it's
 the title, content, featured image, categories or any other frontmatter you
@@ -152,7 +152,7 @@ developer, the tools are there (such as Babel, Chrome Dev Tools React extension,
 and others) for a faster, more efficient development experience.
 
 I'm glad to say I'm sold on the idea and methods of developing with JavaScript,
-and React in particular. The site I've re-built from WordPress into Gatsby.js is
+and React in particular. The site I've re-built from WordPress into Gatsby is
 now live at
 [https://freebabylon5.com](https://freebabylon5.com).
 

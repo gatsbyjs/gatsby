@@ -18,7 +18,7 @@ Note that `replaceRenderer` is only used during the build lifecycle. It won't ca
 
 If multiple plugins implement `replaceRenderer`, the build script will warn you:
 
-```
+```markdown
 warning replaceRenderer API found in these plugins:
 warning plugin-name-a, default-site-plugin
 warning This might be an error, see: https://www.gatsbyjs.org/docs/debugging-replace-renderer-api/

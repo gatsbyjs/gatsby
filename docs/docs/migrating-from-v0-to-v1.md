@@ -72,7 +72,7 @@ module.exports = {
 
 and a minimal query would look like
 
-```
+```jsx
 export const pageQuery = graphql`
   query SiteMetadataLookup($slug: String!) {
     site {
@@ -253,7 +253,7 @@ it.
 
 In your `src` directory, create a templates directory and add `blog-post.js`.
 
-This is a normal React.js component with a special Gatsby twist—a GraphQL query
+This is a normal React component with a special Gatsby twist—a GraphQL query
 specifying the data needs of the component. As a start, make the component look
 like the following. You can make it more complex once the basics are working.
 

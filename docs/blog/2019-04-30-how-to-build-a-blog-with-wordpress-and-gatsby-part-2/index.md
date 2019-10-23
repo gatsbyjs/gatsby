@@ -1,5 +1,5 @@
 ---
-title: "How To Build A Blog with WordPress and Gatsby.js - Part 2"
+title: "How To Build A Blog with WordPress and Gatsby - Part 2"
 date: 2019-04-30
 author: Tim Smith
 excerpt: "In the last post, you covered setting up WordPress for use with Gatsby. Today you will cover how to pull the data from WordPress into Gatsby and build pages."
@@ -12,7 +12,7 @@ tags:
 canonicalLink: https://www.iamtimsmith.com/blog/how-to-build-a-blog-with-wordpress-and-gatsby-part-2/
 ---
 
-> Note: This is part two in a series of posts about Gatsby.js and WordPress. You can find [Part One Here](/blog/2019-04-26-how-to-build-a-blog-with-wordpress-and-gatsby-part-1), and [Part Three Here](/blog/2019-05-02-how-to-build-a-blog-with-wordpress-and-gatsby-part-3).
+> Note: This is part two in a series of posts about Gatsby and WordPress. You can find [Part One Here](/blog/2019-04-26-how-to-build-a-blog-with-wordpress-and-gatsby-part-1), and [Part Three Here](/blog/2019-05-02-how-to-build-a-blog-with-wordpress-and-gatsby-part-3).
 
 In the last post, I covered setting up [WordPress for use with Gatsby](/blog/2019-04-26-how-to-build-a-blog-with-wordpress-and-gatsby-part-1). Today I will cover how to pull the data from WordPress into Gatsby and build pages.
 
@@ -25,7 +25,7 @@ I have set up a WordPress site for you to use with the plugins mentioned in the 
   <figcaption>Shut up and take my money!</figcaption>
 </figure>
 
-## Gatsby.js starter
+## Gatsby starter
 
 One of the nice things about Gatsby is the starter projects. These are available for most applications and setups including WordPress, although you won't be using that today. You will just be using the starter default so you can configure everything yourself.
 
@@ -49,7 +49,7 @@ gatsby new gatsby-wordpress
 
 Now that you have your project created, let's take a look inside. You will see a `src` folder along with several files. Here's a little breakdown of what these do:
 
-- **src/**: Directory that holds your React.js project
+- **src/**: Directory that holds your React project
 - **.gitignore**: Tells what shouldn't be captured in git commits
 - **.prettierrc**: Determines styles in code editor (tabs, quotes, etc)
 - **LICENSE**: Basic MIT license
@@ -123,7 +123,7 @@ Whew! That was a mouthful.
 
 ### Running the site
 
-You will be running your Gatsby.js site in development so you can see what you're doing. Kinda hard to fly a plane when you can't see where you're going, right?
+You will be running your Gatsby site in development so you can see what you're doing. Kinda hard to fly a plane when you can't see where you're going, right?
 
 To do this, run the following command in the terminal and it will build the site in a development environment with hot reloading and more.
 
@@ -133,11 +133,11 @@ gatsby develop
 
 After running that command, you can visit [localhost:8000](http://localhost:8000) in the browser and you should see the site pictured below:
 
-![Initial appearance of Gatsby.js starter](images/gatsby1.png)
+![Initial appearance of Gatsby starter](images/gatsby1.png)
 
-The site provides a navbar with a link going back to the homepage. There is also a bit of content with a link to page 2 which then provides a link back to page 1. It's a very simple site, but already you can see how fast Gatsby.js is.
+The site provides a navbar with a link going back to the homepage. There is also a bit of content with a link to page 2 which then provides a link back to page 1. It's a very simple site, but already you can see how fast Gatsby is.
 
-## Adding Gatsby.js plugins
+## Adding Gatsby plugins
 
 Now that you know what's already installed and what it looks like to start, you can add the stuff you need to use WordPress with your site. Fortunately, Gatsby has a page on their site where you can [see what plugins are available](/plugins/). You will be adding the following plugins to your site: [Gatsby-Source-WordPress](/packages/gatsby-source-wordpress/) and [Gatsby-Plugin-Sitemap](/packages/gatsby-plugin-sitemap/).
 
@@ -238,7 +238,7 @@ Since you are seeing stuff on the right-hand side, it means that you are getting
 
 As I briefly mentioned earlier, the `gatsby-node.js` file is there so you can build pages programmatically from data. There are two pieces to make this work: the logic in `gatsby-node.js` and a template file to render the data. Let's start by creating a simple template with no dynamic data just to make sure your logic is working properly.
 
-### Creating templates in Gatsby.js
+### Creating templates in Gatsby
 
 If you look inside the `src/` folder, you can see directories for components, images, and pages. You need to add one that will house your templates and then add a template for your blog posts. The following code will do this for you:
 
@@ -406,7 +406,7 @@ Here's what your completed Blog Post looks like after you update the template:
 
 ## Wrapping up blog posts
 
-You're about half-way done with the actual Gatsby.js build. In this post I covered how to import blog posts from WordPress into your Gatsby application and create pages automatically for each post. Honestly, this is the hardest part about making sites in Gatsby. If you're still keeping up, great job! If you're struggling, don't be too hard on yourself. This stuff is hard. If you need to, you can reach out to me on Twitter [@iam_timsmith](https://www.twitter.com/iam_timsmith) and I'll be happy to help you.
+You're about half-way done with the actual Gatsby build. In this post I covered how to import blog posts from WordPress into your Gatsby application and create pages automatically for each post. Honestly, this is the hardest part about making sites in Gatsby. If you're still keeping up, great job! If you're struggling, don't be too hard on yourself. This stuff is hard. If you need to, you can reach out to me on Twitter [@iam_timsmith](https://www.twitter.com/iam_timsmith) and I'll be happy to help you.
 
 <figure>
   <video autoplay muted loop width="300">
@@ -417,4 +417,4 @@ You're about half-way done with the actual Gatsby.js build. In this post I cover
 
 The [code for this tutorial](https://github.com/iamtimsmith/building-a-blog-with-wordpress-and-gatsby) can be found on Gitub.
 
-See you in [How To Build A Blog with WordPress and Gatsby.js - Part 3](/blog/2019-05-02-how-to-build-a-blog-with-wordpress-and-gatsby-part-3)!
+See you in [How To Build A Blog with WordPress and Gatsby - Part 3](/blog/2019-05-02-how-to-build-a-blog-with-wordpress-and-gatsby-part-3)!

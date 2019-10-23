@@ -15,7 +15,7 @@ It supports features like push notifications and background synchronization.
 
 ### Using service workers in Gatsby with `gatsby-plugin-offline`
 
-Gatsby provides an awesome plugin interface to create and load a service worker into your site: [gatsby-plugin-offline](https://www.npmjs.com/package/gatsby-plugin-offline).
+Gatsby provides an awesome plugin interface to create and load a service worker into your site: [`gatsby-plugin-offline`](https://www.npmjs.com/package/gatsby-plugin-offline).
 
 We recommend using this plugin together with the [manifest plugin](https://www.npmjs.com/package/gatsby-plugin-manifest). (Don’t forget to list the offline plugin after the manifest plugin so that the manifest file can be included in the service worker).
 

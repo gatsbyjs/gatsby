@@ -144,13 +144,13 @@ These are bad PR titles because they are generic, don't communicate the change p
 
 ### Who can review a PR?
 
-If you're a member of the [gatsbyjs](http://github.com/gatsbyjs) organization on GitHub, you can review a PR.
+If you're a member of the [`gatsbyjs`](http://github.com/gatsbyjs) organization on GitHub, you can review a PR.
 
 > 💡 Not a member yet? Want to [get involved in contributing](/contributing/how-to-contribute/) to open source projects? Make your first contribution and you'll be invited automatically!
 
 ### Who can approve a PR?
 
-Every PR opened in the repository needs to be approved before it can be merged. While anyone who is a member of the [gatsbyjs](http://github.com/gatsbyjs) organization can approve a PR, to be merged in, it needs to be reviewed by a member of the team that owns that part of Gatsby.
+Every PR opened in the repository needs to be approved before it can be merged. While anyone who is a member of the [`gatsbyjs`](http://github.com/gatsbyjs) organization can approve a PR, to be merged in, it needs to be reviewed by a member of the team that owns that part of Gatsby.
 
 Typically this is:
 

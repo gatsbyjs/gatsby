@@ -161,7 +161,7 @@ Let's discuss some ways to improve performance.
 ![reactnext-gatsby-performance.039](reactnext-gatsby-performance.039.png)
 
 Clickable
-link—https://developers.google.com/web/fundamentals/performance/critical-rendering-path/
+link—<https://developers.google.com/web/fundamentals/performance/critical-rendering-path/>
 
 ![reactnext-gatsby-performance.040](reactnext-gatsby-performance.040.png)
 
@@ -256,7 +256,7 @@ points in
 
 ![reactnext-gatsby-performance.073](reactnext-gatsby-performance.073.png)
 
-## Performance is hard. Let's make Gatsby do the work.
+## Performance is hard. Let's make Gatsby do the work
 
 Building highly performant websites is a science in and of itself. Our goal with
 Gatsby is to give you an approachable, highly productive modern development

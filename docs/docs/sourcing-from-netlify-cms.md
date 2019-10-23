@@ -22,7 +22,7 @@ _Note: this guide uses the Gatsby Hello World starter to provide a very basic un
 Netlify CMS can work with your Gatsby site. If you get stuck, compare your code to the [example
 project](https://github.com/erquhart/gatsby-netlify-cms-example). If you'd like to start with a full
 blown template, check out
-[gatsby-starter-netlify-cms][1]._
+[`gatsby-starter-netlify-cms`][1]._
 
 ### Setup
 

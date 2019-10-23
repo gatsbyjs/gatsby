@@ -1,8 +1,8 @@
 ---
-title: "How To Build A Blog with WordPress and Gatsby.js - Part 3"
+title: "How To Build A Blog with WordPress and Gatsby - Part 3"
 date: 2019-05-02
 author: Tim Smith
-excerpt: "In the third part of this series about WordPress and Gatsby.js, you will be creating pages using templates and components using data from WordPress."
+excerpt: "In the third part of this series about WordPress and Gatsby, you will be creating pages using templates and components using data from WordPress."
 tags:
   - wordpress
   - apis
@@ -12,11 +12,11 @@ tags:
 canonicalLink: https://www.iamtimsmith.com/blog/how-to-build-a-blog-with-wordpress-and-gatsby-part-3/
 ---
 
-> Note: This is part two in a series of posts about Gatsby.js and WordPress. You can find [Part One here](/blog/2019-04-26-how-to-build-a-blog-with-wordpress-and-gatsby-part-1), and [Part Two here](/blog/2019-04-30-how-to-build-a-blog-with-wordpress-and-gatsby-part-2).
+> Note: This is part two in a series of posts about Gatsby and WordPress. You can find [Part One here](/blog/2019-04-26-how-to-build-a-blog-with-wordpress-and-gatsby-part-1), and [Part Two here](/blog/2019-04-30-how-to-build-a-blog-with-wordpress-and-gatsby-part-2).
 
-In the third part of this series about WordPress and Gatsby.js, you will be creating pages using templates and components with data from WordPress.
+In the third part of this series about WordPress and Gatsby, you will be creating pages using templates and components with data from WordPress.
 
-So far, I've talked about what themes and plugins to use for a WordPress backend and why. You have also created a new Gatsby site and set it up to create routes for your blog posts programmatically. You will be using the same skills for some of the things in this post since you probably want to have a default template for your static pages. After that, you'll create React.js components in the `/pages` directory which will replace the default template for the desired pages, in this case your home page.
+So far, I've talked about what themes and plugins to use for a WordPress backend and why. You have also created a new Gatsby site and set it up to create routes for your blog posts programmatically. You will be using the same skills for some of the things in this post since you probably want to have a default template for your static pages. After that, you'll create React components in the `/pages` directory which will replace the default template for the desired pages, in this case your home page.
 
 ## Creating a page template
 
@@ -26,7 +26,7 @@ As you'll recall from the last post, you should create a page template before ad
 touch ./src/templates/Page.js
 ```
 
-Just like with the blog post template, you can probably just use a [stateless functional component](https://www.iamtimsmith.com/blog/class-components-vs-stateless-functional-components/) for this. Like before, you won't cover how to create a component in this article, but you can read about [creating a React.js component here](https://www.iamtimsmith.com/blog/how-to-create-a-component/).
+Just like with the blog post template, you can probably just use a [stateless functional component](https://www.iamtimsmith.com/blog/class-components-vs-stateless-functional-components/) for this. Like before, you won't cover how to create a component in this article, but you can read about [creating a React component here](https://www.iamtimsmith.com/blog/how-to-create-a-component/).
 
 I will go ahead and start off with a generic template again and then fill it out later with the appropriate data. The code below will get a simple template created for us to use for pages for now:
 
@@ -169,7 +169,7 @@ Now if you visit the about page at [http://localhost:8000/about](http://localhos
 
 ## Creating pages in the pages directory
 
-Gatsby provides some awesome out-of-the-box routing. Anything you create in the `/pages` directory will automatically create a route for you. For instance, if you were to create a file called `gatsby-is-awesome.js`, Gatsby.js would see that and create a route called http://localhost:8000/gatsby-is-awesome.
+Gatsby provides some awesome out-of-the-box routing. Anything you create in the `/pages` directory will automatically create a route for you. For instance, if you were to create a file called `gatsby-is-awesome.js`, Gatsby would see that and create a route called http://localhost:8000/gatsby-is-awesome.
 
 You can also see that the starter default comes with a few pages already in the `/pages` directory. The index page is what will show when a user visits [http://localhost:8000/](http://localhost:8000/). There is also a file called page-2.js which is just a simple page to show how linking works. Finally, there is a 404.js available which is the 404 page that shows when your Gatsby site is live.
 
@@ -421,7 +421,7 @@ export default Header
 
 The header component above looks a little different than it originally did, but as you start to dig into it a bit more you can see it hasn't changed much. You essentially just wrapped your header in the StaticQuery component and then ran your query inside of that component to give the header the necessary data.
 
-![Your Gatsby.js blog after updating the header component](images/gatsby4.png)
+![Your Gatsby blog after updating the header component](images/gatsby4.png)
 
 ### Adding a Menu to the Header
 

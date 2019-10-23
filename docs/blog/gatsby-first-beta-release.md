@@ -6,11 +6,11 @@ image: "images/13382568193_31cfce63be_o-edited.jpg"
 imageAuthor: Kees Torn
 imageAuthorLink: https://flic.kr/p/mozahn
 imageTitle: Container ship loading containers
-excerpt: "We shipped today Gatsby's first beta for 1.0! Gatsby is a modern blazing-fast static site generator for React.js…"
+excerpt: "We shipped today Gatsby's first beta for 1.0! Gatsby is a modern blazing-fast static site generator for React…"
 ---
 
 We shipped today Gatsby's first beta for 1.0! Gatsby is a modern blazing-fast
-static site generator for React.js.
+static site generator for React.
 
 Ten months and one day ago
 [I announced I was now working full-time on Gatsby](https://www.bricolage.io/gatsby-open-source-work/)
@@ -25,7 +25,7 @@ community around it.
 ### What's part of v1
 
 From Gatsby's initial release just over two years ago, Gatsby has let you build
-static websites using React.js components as well as markdown, JSON, and YAML.
+static websites using React components as well as markdown, JSON, and YAML.
 
 Building on this strong foundation, v1 adds:
 
@@ -56,7 +56,7 @@ individuals and companies.
 - [Guten Ye](https://github.com/gutenye)
 - [Rico Sta. Cruz](https://github.com/rstacruz)
 
-### Companies who sponsored time working on Gatsby v1.
+### Companies who sponsored time working on Gatsby v1
 
 - [Thinkmill](https://www.thinkmill.com.au/)
 - [Expo](https://expo.io/)

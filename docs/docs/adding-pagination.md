@@ -130,4 +130,4 @@ The path for the first page is `/blog`, following pages will have a path of the 
 
 - Follow this [step-by-step tutorial](https://nickymeuleman.netlify.com/blog/gatsby-pagination/) to add links to the previous/next page and the traditional page-navigation at the bottom of the page
 
-- See [gatsby-paginated-blog](https://github.com/NickyMeuleman/gatsby-paginated-blog) [(demo)](https://nickymeuleman.github.io/gatsby-paginated-blog/) for an extension of the official [gatsby-starter-blog](https://github.com/gatsbyjs/gatsby-starter-blog) with pagination in place
+- See [`gatsby-paginated-blog`](https://github.com/NickyMeuleman/gatsby-paginated-blog) [(demo)](https://nickymeuleman.github.io/gatsby-paginated-blog/) for an extension of the official [`gatsby-starter-blog`](https://github.com/gatsbyjs/gatsby-starter-blog) with pagination in place

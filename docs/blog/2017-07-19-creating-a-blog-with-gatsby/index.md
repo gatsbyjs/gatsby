@@ -24,7 +24,7 @@ HTML, client-side React/JavaScript _can_ take over (if creating stateful
 components or logic in `componentDidMount`) and add dynamism to the statically
 generated content.
 
-Gatsby [recently released][gatsby-release] a v1.0.0 with a bunch of new
+Gatsby [recently released][`gatsby-release`] a v1.0.0 with a bunch of new
 features, including (but not limited to) the ability to create content queries
 with GraphQL, integration with various CMSs--including WordPress, Contentful,
 Drupal, etc., and route based code splitting to keep the end-user experience as
@@ -53,7 +53,7 @@ progress through the steps.
 
 ## Adding necessary plugins
 
-Gatsby supports a [rich plugin interface][gatsby-plugins], and many incredibly
+Gatsby supports a [rich plugin interface][`gatsby-plugins`], and many incredibly
 useful plugins have been authored to make accomplishing common tasks a breeze.
 Plugins can be broken up into three main categories: **functional** plugins,
 **source** plugins, and **transformer** plugins.
@@ -71,10 +71,10 @@ growing, so oftentimes a plugin already exists that solves the particular
 problem you're trying to solve. To address the functionality you want for _this_
 blog, you can use the following plugins:
 
-- [`gatsby-plugin-catch-links`][gatsby-plugin-catch-links]
+- [`gatsby-plugin-catch-links`][`gatsby-plugin-catch-links`]
   - implements the history `pushState` API and does not require a page reload
     on navigating to a different page in the blog
-- [`gatsby-plugin-react-helmet`][gatsby-plugin-react-helmet]
+- [`gatsby-plugin-react-helmet`][`gatsby-plugin-react-helmet`]
   - [react-helmet][react-helmet] is a tool that allows for modification of the
     `head` tags; Gatsby statically renders any of these `head` tag changes
 
@@ -113,12 +113,12 @@ system.
 Source plugins create _nodes_ which can then be transformed into a usable format
 (if not already usable) by a transformer plugin. For instance, a typical
 workflow often involves using
-[`gatsby-source-filesystem`][gatsby-source-filesystem], which loads files off of
+[`gatsby-source-filesystem`][`gatsby-source-filesystem`], which loads files off of
 disk--e.g. Markdown files--and then specifying a Markdown transformer to
 transform the Markdown into HTML.
 
 Since the bulk of the blog's content and each article will be authored in
-Markdown, let's add that [`gatsby-source-filesystem`][gatsby-source-filesystem]
+Markdown, let's add that [`gatsby-source-filesystem`][`gatsby-source-filesystem`]
 plugin. Similarly to the previous step, install the plugin and then inject
 into your `gatsby-config.js`, like so:
 
@@ -163,7 +163,7 @@ over and convert to usable HTML.
 You only need one transformer plugin (for Markdown), so let's get that
 installed.
 
-- [gatsby-transformer-remark][gatsby-transformer-remark]
+- [`gatsby-transformer-remark`][`gatsby-transformer-remark`]
   - Uses the [remark][remark] Markdown parser to transform .md files on disk
     into HTML; additionally, this transformer can optionally take plugins to
     further extend functionality--e.g. add syntax highlighting with
@@ -250,7 +250,7 @@ begin actually writing some React components that will display this data!
 
 As Gatsby supports server side rendering (to string) of React components, you can
 write your template in... you guessed it, React! (Or
-[Preact][gatsby-plugin-preact], if that's more your style)
+[Preact][`gatsby-plugin-preact`], if that's more your style)
 
 You should create the file `src/templates/blog-post.js` (please create the
 `src/templates` folder if it does not yet exist!).
@@ -398,7 +398,7 @@ action creator/function made available in actions. Gatsby uses Redux
 internally to manage its state, and `actions` are simply the exposed
 action creators of Gatsby, of which `createPage` is one of the action creators!
 For the full list of exposed action creators, check out [Gatsby's
-documentation][gatsby-actions]. You can now construct the GraphQL
+documentation][`gatsby-actions`]. You can now construct the GraphQL
 query, which will fetch all of your Markdown posts.
 
 ### Querying for posts
@@ -643,24 +643,24 @@ Now go build something great.
   - A utility and CLI I created to scaffold out a blog post following the
     predefined Gatsby structure with frontmatter, date, path, etc.
 - [Source code for my blog][blog-source-code]
-  - The source code for my blog, which takes the gatsby-starter-blog-post
+  - The source code for my blog, which takes the `gatsby-starter-blog-post`
     (previous link), and expands upon it with a bunch of features and some more
     advanced functionality
 
 [react-dom-server]: https://facebook.github.io/react/docs/react-dom-server.html
-[gatsby-release]: /blog/gatsby-v1/
-[gatsby-plugins]: /docs/plugins/
-[gatsby-plugin-catch-links]: /packages/gatsby-plugin-catch-links/
-[gatsby-plugin-react-helmet]: /packages/gatsby-plugin-react-helmet/
-[gatsby-plugin-preact]: /packages/gatsby-plugin-preact/
-[gatsby-transformer-remark]: /packages/gatsby-transformer-remark/
+[`gatsby-release`]: /blog/gatsby-v1/
+[`gatsby-plugins`]: /docs/plugins/
+[`gatsby-plugin-catch-links`]: /packages/gatsby-plugin-catch-links/
+[`gatsby-plugin-react-helmet`]: /packages/gatsby-plugin-react-helmet/
+[`gatsby-plugin-preact`]: /packages/gatsby-plugin-preact/
+[`gatsby-transformer-remark`]: /packages/gatsby-transformer-remark/
 [remark]: https://github.com/wooorm/remark
-[gatsby-source-filesystem]: /packages/gatsby-source-filesystem/
+[`gatsby-source-filesystem`]: /packages/gatsby-source-filesystem/
 [react-helmet]: https://github.com/nfl/react-helmet
 [frontmatter]: https://jekyllrb.com/docs/frontmatter/
 [learn-graphql]: https://www.howtographql.com
 [node-spec]: /docs/node-apis/
-[gatsby-actions]: /docs/actions/
+[`gatsby-actions`]: /docs/actions/
 [styled-components]: https://github.com/styled-components/styled-components
 [yarn]: https://yarnpkg.com/en/
 [source-code]: https://github.com/dschau/gatsby-blog-starter-kit

@@ -10,7 +10,7 @@ Moreover, their [Content Slices](https://prismic.io/feature/dynamic-layout-conte
 
 In addition to written instructions, this guide also includes videos for more complex steps. You can find all of them in a [YouTube playlist](https://www.youtube.com/playlist?list=PLB-cmN3u7PHJCG-phPyiydhHfiosyd0VC).
 
-_Note: This guide uses the Gatsby Hello World starter to provide a very basic understanding of how Prismic can work with your Gatsby site. If you'd like to start with a full blown template, check out [gatsby-starter-prismic](https://github.com/LekoArts/gatsby-starter-prismic). If you're not familiar with Prismic and its functionalities yet, check out [Prismic's official documentation](https://prismic.io/docs) which also includes user guides and tutorials. This guide assumes that you have basic knowledge of Prismic & Gatsby (See [Gatsby's official tutorial](/tutorial))._
+_Note: This guide uses the Gatsby Hello World starter to provide a very basic understanding of how Prismic can work with your Gatsby site. If you'd like to start with a full blown template, check out [`gatsby-starter-prismic`](https://github.com/LekoArts/gatsby-starter-prismic). If you're not familiar with Prismic and its functionalities yet, check out [Prismic's official documentation](https://prismic.io/docs) which also includes user guides and tutorials. This guide assumes that you have basic knowledge of Prismic & Gatsby (See [Gatsby's official tutorial](/tutorial))._
 
 ## Setup
 
@@ -50,7 +50,7 @@ npm install --save-dev dotenv
 
 Create a file called `.env.development` at the root of your project with the following content:
 
-```
+```javascript
 API_KEY=paste-your-secret-access-token-here-wou7evoh0eexuf
 ```
 
@@ -222,6 +222,6 @@ This was an example meant to help you understand how Prismic works with Gatsby. 
 - Add relationships between posts, e.g. with categories
 - Query data from Prismic for single pages
 
-As mentioned in the beginning of this guide, if you got stuck, you can compare your code to the [gatsby-starter-prismic](https://github.com/LeKoArts/gatsby-starter-prismic) which is the project set up in the videos. A working example created by following this guide is available in the [commit history](https://github.com/LeKoArts/gatsby-starter-prismic/tree/4aa5d52e79a0b4d90f0a671c24eb8289eb15a42b) of the aforementioned starter. More advanced usages of Prismic in Gatsby would be [Slices](https://intercom.help/prismicio/content-modeling-and-custom-types/field-reference/slices) and [Labels](https://intercom.help/prismicio/content-modeling-and-custom-types/structure-your-content/add-custom-styles-to-rich-text).
+As mentioned in the beginning of this guide, if you got stuck, you can compare your code to the [`gatsby-starter-prismic`](https://github.com/LeKoArts/gatsby-starter-prismic) which is the project set up in the videos. A working example created by following this guide is available in the [commit history](https://github.com/LeKoArts/gatsby-starter-prismic/tree/4aa5d52e79a0b4d90f0a671c24eb8289eb15a42b) of the aforementioned starter. More advanced usages of Prismic in Gatsby would be [Slices](https://intercom.help/prismicio/content-modeling-and-custom-types/field-reference/slices) and [Labels](https://intercom.help/prismicio/content-modeling-and-custom-types/structure-your-content/add-custom-styles-to-rich-text).
 
 <!-- Links to more advanced tutorials will go here -->

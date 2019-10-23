@@ -77,7 +77,7 @@ Figuring out how to set this up in GraphQL took some trial and error, but we set
 
 The GraphQL looks like this:
 
-```
+```graphql
 ContentfulContentPage {
   headline
   slug
@@ -155,7 +155,7 @@ That same validation page also served as a site status page, containing the time
 
 Capturing this information was easy and only took a few additional lines in our `createPages` hook. Netlify exposes a lot of interesting [environment variables](https://www.netlify.com/docs/continuous-deployment/#build-environment-variables) (including some I hope to play with more on a future project, like `WEBHOOK_TITLE`, which can help you deduce the origin of the current build). In order to display these variables on the frontend, we needed to rename them to begin with `GATSBY_`:
 
-```
+```jsx
 exports.createPages = () => {
   ['COMMIT_REF', ‘BRANCH’]].forEach((variableName) => {
     // only variables beginning with GATSBY_ are available client-side
@@ -166,7 +166,7 @@ exports.createPages = () => {
 
 After that, we just added one more variable to store the current time:
 
-```
+```javascript
 process.env.GATSBY_BUILD_TIME = Date.now();
 ```
 
@@ -174,7 +174,7 @@ process.env.GATSBY_BUILD_TIME = Date.now();
 
 We filtered out our dev pages in production by adding a simple `onCreatePage` hook to our `gatsby-node` file:
 
-```
+```jsx
 exports.onCreatePage = ({ page, boundActionCreators }) => {
   if (process.env.GATSBY_ENV === ENV.PRODUCTION) {
     const { deletePage } = boundActionCreators;
@@ -263,7 +263,7 @@ If you’re nervous about contributing to a library, do what I did: make a reall
 
 We developers often take pride in how far we’re able to get _without_ reading the documentation — at least I know I do — but, as I came to make subsequent PRs to Gatsby, I found the [contributor guidelines](https://github.com/gatsbyjs/gatsby/blob/master/CONTRIBUTING.md) to be incredibly helpful.
 
-In particular, the documentation will show you how to use your local Gatsby clone and [gatsby-dev-cli](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli) to:
+In particular, the documentation will show you how to use your local Gatsby clone and [`gatsby-dev-cli`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli) to:
 
 - Watch for your local changes to Gatsby packages
 - Recompile packages on-the-fly

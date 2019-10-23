@@ -2,7 +2,7 @@
 title: API Specification
 ---
 
-Gatsby's APIs are tailored conceptually to some extent after React.js to improve
+Gatsby's APIs are tailored conceptually to some extent after React to improve
 the coherence between the two systems.
 
 The two top priorities of the API are a) enable a broad and robust plugin
@@ -39,10 +39,10 @@ for the CSS-in-JS library [Glamor](/packages/gatsby-plugin-glamor/):
 Plugins can also depend on other plugins. [The Sharp
 plugin](/packages/gatsby-plugin-sharp/) exposes a number of high-level APIs for
 transforming images that several other Gatsby image plugins depend on.
-[gatsby-transformer-remark](/packages/gatsby-transformer-remark/) does basic
+[`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/) does basic
 markdown->html transformation but exposes an API to allow other plugins to
 intervene in the conversion process e.g.
-[gatsby-remark-prismjs](/packages/gatsby-remark-prismjs/) which adds
+[`gatsby-remark-prismjs`](/packages/gatsby-remark-prismjs/) which adds
 highlighting to code blocks.
 
 Transformer plugins are decoupled from source plugins. Transformer plugins look
@@ -55,13 +55,13 @@ in some of its data fields.
 See
 [the full list of (official only for now — adding support for community plugins later) plugins](/docs/plugins/).
 
-# API
+## API
 
-## Concepts
+### Concepts
 
 - _Page_ — a site page with a pathname, a template component, and optional
   GraphQL query.
-- _Page Component_ — React.js component that renders a page and can optionally
+- _Page Component_ — React component that renders a page and can optionally
   specify a GraphQL query
 - _Component extensions_ — extensions that are resolvable as components. `.js`
   and `.jsx` are supported by core. But plugins can add support for other
@@ -78,7 +78,7 @@ See
 
 _More definitions and terms are defined in the [Glossary](/docs/glossary/)_
 
-## Operators
+### Operators
 
 - _Create_ — make a new thing
 - _Get_ — get an existing thing
@@ -86,7 +86,7 @@ _More definitions and terms are defined in the [Glossary](/docs/glossary/)_
 - _Replace_ — replace an existing thing
 - _Set_ — merge into an existing thing
 
-## Extension APIs
+### Extension APIs
 
 Gatsby has multiple processes. The most prominent is the "bootstrap" process. It
 has several subprocesses. One tricky part to their design is that they run both
@@ -115,7 +115,7 @@ In addition to extension APIs in a node, plugins can also implement extension AP
 in the server rendering process and the browser e.g. `onClientEntry` or
 `onRouteUpdate`
 
-The three main inspirations for this API and spec are React.js' API specifically
+The three main inspirations for this API and spec are React' API specifically
 [@leebyron's email on the React API](https://gist.github.com/vjeux/f2b015d230cc1ab18ed1df30550495ed),
 this talk
 ["How to Design a Good API and Why it Matters" by Joshua Bloch](https://www.youtube.com/watch?v=heh4OeB9A-c&app=desktop)

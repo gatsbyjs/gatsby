@@ -11,7 +11,7 @@ A little while ago I had the six-monthly itch to redo my portfolio site, and I d
 
 ## Background - Why Gatsby?
 
-The only thing as abundant than Headless CMS options is Static Site Generator options. From Hugo (built on Google’s Go language) to Jekyll (Ruby) and even Nuxt which is based on VueJS. I picked Gatsby out of the pack for a number of reasons, chief amongst which is that I’m professionally a React.js developer, so getting to use React in these quick projects is a great benefit.
+The only thing as abundant than Headless CMS options is Static Site Generator options. From Hugo (built on Google’s Go language) to Jekyll (Ruby) and even Nuxt which is based on VueJS. I picked Gatsby out of the pack for a number of reasons, chief amongst which is that I’m professionally a React developer, so getting to use React in these quick projects is a great benefit.
 
 Gatsby pitches as a “Blazing-fast static site generator for React”. So if I can build sites, but also encompass some React knowledge, all the better right? And I’m always looking for side-projects and sites for others, so if I can get a JAMstack sorted quicker and easier than my previous WordPress stack, then all the better going forward! I thought it was best to start with my own site, to test the viability.
 

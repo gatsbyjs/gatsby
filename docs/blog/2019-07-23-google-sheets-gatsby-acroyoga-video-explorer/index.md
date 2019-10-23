@@ -24,7 +24,7 @@ As such, this article will show how I built this site. I'll show only the code s
 
 ## Creating a Basic Gatsby Setup with Material-UI
 
-Gatsby's docs have a wide variety of [Gatsby starters](/starters/?v=2), each with different features and advantages. I opted to use a starter I built for [another Gatsby tutorial I wrote](https://appendto.com/2019/04/build-fast-and-elegant-sites-with-gatsby-netlifycms-and-material-ui/). My starter has a simple file structure and is setup to use Material-UI (which I'll use heavily for building this interface). There are a couple ways to use Material-UI in Gatsby but I found the [gatsby-plugin-material-ui](/packages/gatsby-plugin-material-ui/) plugin route the easiest. Unless you have a very specific use case, save yourself the rabbit hole, install the plugin, and setup the theme within `gatsby-config.js` like so:
+Gatsby's docs have a wide variety of [Gatsby starters](/starters/?v=2), each with different features and advantages. I opted to use a starter I built for [another Gatsby tutorial I wrote](https://appendto.com/2019/04/build-fast-and-elegant-sites-with-gatsby-netlifycms-and-material-ui/). My starter has a simple file structure and is setup to use Material-UI (which I'll use heavily for building this interface). There are a couple ways to use Material-UI in Gatsby but I found the [`gatsby-plugin-material-ui`](/packages/gatsby-plugin-material-ui/) plugin route the easiest. Unless you have a very specific use case, save yourself the rabbit hole, install the plugin, and setup the theme within `gatsby-config.js` like so:
 
 ```javascript
 module.exports = {
@@ -332,9 +332,9 @@ But something about my new Acroyoga video site felt sluggish. I tried it on my o
 
 ![Lighthouse Showing Need for Properly Sized Images](./images/word-image-3.png)
 
-This was such a clear and easy 'aha!' moment. I hadn't optimized my images and was missing out on one of the best parts of Gatsby: [gatsby-image](/packages/gatsby-image/). Gatsby image gives Gatsby users a whole bunch of built-in image optimizations. Images will be properly optimized (so you're not loading image sizes you don't need to) and the images will load a small blurred version first before loading the complete image. This makes for much faster page loads and a better user experience.
+This was such a clear and easy 'aha!' moment. I hadn't optimized my images and was missing out on one of the best parts of Gatsby: [`gatsby-image`](/packages/gatsby-image/). Gatsby image gives Gatsby users a whole bunch of built-in image optimizations. Images will be properly optimized (so you're not loading image sizes you don't need to) and the images will load a small blurred version first before loading the complete image. This makes for much faster page loads and a better user experience.
 
-I dug into my normal gatsby-image workflow but I quickly hit a snag. My previous use of Gatsby-image had been for local images whilst I was now trying to use remote images (cloud storage image links). Thankfully, with just a bit more searching, I found the right plugin to solve this: [gatsby-plugin-remote-images](/packages/gatsby-plugin-remote-images/).
+I dug into my normal gatsby-image workflow but I quickly hit a snag. My previous use of Gatsby-image had been for local images whilst I was now trying to use remote images (cloud storage image links). Thankfully, with just a bit more searching, I found the right plugin to solve this: [`gatsby-plugin-remote-images`](/packages/gatsby-plugin-remote-images/).
 
 Gatsby-plugin-remote-images fetches image URL links (e.g. http://super-image.png) and prepares them in a way that gatsby-image can use them. To make my cards load faster, I'd need to optimize both the video thumbnail as well as the small instructor image. It makes no sense at all to load a 300+ pixel image of an instructor when all you really need are maybe 40 pixels max.
 

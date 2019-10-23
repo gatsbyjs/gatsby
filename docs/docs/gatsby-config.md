@@ -34,7 +34,7 @@ module.exports = {
 
 This way you can store it in one place, and pull it whenever you need it. If you ever need to update the info, you only have to change it here.
 
-See a full description and sample usage in [Gatsby.js Tutorial Part Four](/tutorial/part-four/#data-in-gatsby).
+See a full description and sample usage in [Gatsby Tutorial Part Four](/tutorial/part-four/#data-in-gatsby).
 
 ## Plugins
 
@@ -117,7 +117,7 @@ module.exports = {
 }
 ```
 
-You may need to install the appropriate file transformer (in this case [YAML](/packages/gatsby-transformer-yaml/)) and set up [gatsby-source-filesystem](/packages/gatsby-source-filesystem/) properly for Gatsby to pick up the mapping files. This applies to other file types later mentioned in this segment as well.
+You may need to install the appropriate file transformer (in this case [YAML](/packages/gatsby-transformer-yaml/)) and set up [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/) properly for Gatsby to pick up the mapping files. This applies to other file types later mentioned in this segment as well.
 
 Gatsby then uses this mapping when creating the GraphQL schema to enable you to query data from both sources:
 

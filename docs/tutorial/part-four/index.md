@@ -9,7 +9,7 @@ to feel pretty comfortable 😀
 
 ## Recap of the first half of the tutorial
 
-So far, you've been learning how to use React.js—how powerful it is to be able to
+So far, you've been learning how to use React—how powerful it is to be able to
 create your _own_ components to act as custom building blocks for websites.
 
 You’ve also explored styling components using CSS Modules.

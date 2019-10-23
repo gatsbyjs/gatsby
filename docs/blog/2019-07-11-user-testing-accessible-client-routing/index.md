@@ -16,7 +16,7 @@ In June 2019, I conducted 5 user testing sessions for accessibility research wit
 
 The goal of this initiative was to gather feedback from users with disabilities on a [set of prototypes](https://marcysutton.com/prototype-testing-accessible-clientside-routing/) with navigation techniques for JavaScript web apps. There are [multiple variations recommended in the industry](#prior-art) for accessible, client-rendered page changes, yet very little user research on those methods. Therefore, we wanted to find out **which techniques are the most ergonomic and intuitive to users with disabilities**, and **if any of the techniques presented barriers** detracting from their browsing experience.
 
-With this data, we can make better recommendations for accessible client-rendered websites in general and at the JavaScript framework level. By adjusting Gatsby’s implementation of client-side routing–currently leveraging [@reach/router](https://github.com/reach/router) for React.js–to better support a range of people with disabilities, we can improve access for users and also potentially influence accessible UI patterns in other frameworks. Eventually (we hope), this work could encourage new browser APIs through web standards: “paving the accessible cowpaths” with solutions based in user research.
+With this data, we can make better recommendations for accessible client-rendered websites in general and at the JavaScript framework level. By adjusting Gatsby’s implementation of client-side routing–currently leveraging [@reach/router](https://github.com/reach/router) for React–to better support a range of people with disabilities, we can improve access for users and also potentially influence accessible UI patterns in other frameworks. Eventually (we hope), this work could encourage new browser APIs through web standards: “paving the accessible cowpaths” with solutions based in user research.
 
 ## What is client-side routing?
 
@@ -24,7 +24,7 @@ In client-rendered JavaScript applications–also referred to as _Single Page Ap
 
 ## Client-rendering in Gatsby
 
-Gatsby [builds](/docs/glossary#build) [static](/docs/glossary#static) HTML pages with Node.js (a.k.a. “SSR”), which is great for both accessibility and performance: by default, pages will render without JavaScript and links will navigate through the site with traditional page refreshes like they should. With client-side JavaScript enabled, Gatsby scripts will download and [hydrate](/docs/glossary#hydration) the site into a full React.js web application that can manipulate the [DOM](/docs/glossary#dom) and provide a smooth user experience. In this context, Gatsby sites must be accessible and use the best techniques possible, hence the desire for user research data to better support people with disabilities.
+Gatsby [builds](/docs/glossary#build) [static](/docs/glossary#static) HTML pages with Node.js (a.k.a. “SSR”), which is great for both accessibility and performance: by default, pages will render without JavaScript and links will navigate through the site with traditional page refreshes like they should. With client-side JavaScript enabled, Gatsby scripts will download and [hydrate](/docs/glossary#hydration) the site into a full React web application that can manipulate the [DOM](/docs/glossary#dom) and provide a smooth user experience. In this context, Gatsby sites must be accessible and use the best techniques possible, hence the desire for user research data to better support people with disabilities.
 
 ## Common accessibility barriers in client-rendered web apps
 
@@ -48,7 +48,7 @@ Some of the commonly recommended solutions include (references at the end of thi
 - Turn on focus outlines for keyboard and screen reader users while suppressing them for the mouse using [CSS :focus-visible and polyfill](https://github.com/WICG/focus-visible) or the [What Input](https://github.com/ten1seven/what-input) library.
 - Any combination of the above
 
-In Gatsby–which uses React.js for rendering–we’re currently setting focus to an element wrapping the entire application with a [custom implementation of @reach/router](/blog/2018-09-27-reach-router/). But similar to some of the [Reach demos](https://reach.tech/router), page content isn’t announced consistently in Safari and Voiceover or NVDA and Firefox–two critical combinations for users of assistive technology. We’re actively working to improve this automatic accessibility support as we explore more component- and research-driven solutions.
+In Gatsby–which uses React for rendering–we’re currently setting focus to an element wrapping the entire application with a [custom implementation of @reach/router](/blog/2018-09-27-reach-router/). But similar to some of the [Reach demos](https://reach.tech/router), page content isn’t announced consistently in Safari and Voiceover or NVDA and Firefox–two critical combinations for users of assistive technology. We’re actively working to improve this automatic accessibility support as we explore more component- and research-driven solutions.
 
 By user testing a few variations of known routing techniques, we gained some valuable insight into how Gatsby and React can better support people with disabilities. We also uncovered some tips for improving usability of client-rendered apps in general, which we’ll cover below.
 

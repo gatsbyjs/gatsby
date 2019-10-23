@@ -70,11 +70,11 @@ perfect fit for a number of reasons:
     could have achieved this level of optimization on our own in this timeframe.
 1.  A growing plugin library that allows for easy integrations that utilize Gatsby’s
     GraphQL data query system. With these we could easily use things like
-    [gatsby-source-contentful](/packages/gatsby-source-contentful/?=conten)
-    and [gatsby-plugin-i18n](https://github.com/angeloocana/gatsby-plugin-i18n).
+    [`gatsby-source-contentful`](/packages/gatsby-source-contentful/?=conten)
+    and [`gatsby-plugin-i18n`](https://github.com/angeloocana/gatsby-plugin-i18n).
 1.  A growing community of developers sharing resources and best practices. Credit
     is due to [mccrodp](https://github.com/mccrodp) for setting up
-    [gatsby-starter-contentful-i18n](https://github.com/mccrodp/gatsby-starter-contentful-i18n),
+    [`gatsby-starter-contentful-i18n`](https://github.com/mccrodp/gatsby-starter-contentful-i18n),
     a boilerplate that synced Contentful and i18n features together and allowed us
     to hit the ground running.
 

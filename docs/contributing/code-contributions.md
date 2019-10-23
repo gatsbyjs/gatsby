@@ -59,7 +59,7 @@ With all of the possible Gatsby integrations, it might help to spin up a Docker 
 
 To install WordPress to use with Gatsby, this `docker-compose.yml` file will come in handy:
 
-```
+```yaml
 version: '2'
 
 services:

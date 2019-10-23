@@ -27,7 +27,7 @@ Gatsby is a JavaScript web framework that lets you build fast, dynamic,
 mobile-ready websites _without_ an advanced degree in JavaScript wizardry.
 
 It combines the fast performance of static websites with the powerful
-abstractions, tools, and client capabilities of the React.js world.
+abstractions, tools, and client capabilities of the React world.
 
 ### Gatsby is fast
 
@@ -100,7 +100,7 @@ configuring things correctly. Gatsby simplifies website development by
 extracting configuration out of your site and moving it into the framework and
 community plugins.
 
-You give Gatsby React.js components, data, and styles and Gatsby gives you back
+You give Gatsby React components, data, and styles and Gatsby gives you back
 an optimized website.
 
 Gatsbygram is a completely vanilla Gatsby site. Its optimizations are from the
@@ -111,7 +111,7 @@ optimized production builds and an innovative _declarative_ asset pipeline.
 
 For Gatsbygram, Gatsby generates over _1000_ image thumbnails for responsive
 images without _any_ custom scripting by leveraging the Gatsby image processing
-plugin [gatsby-transformer-sharp](/packages/gatsby-transformer-sharp/).
+plugin [`gatsby-transformer-sharp`](/packages/gatsby-transformer-sharp/).
 
 Stop wasting time and build something!
 
@@ -122,7 +122,7 @@ your site. Typically, you define the output file structure (and thus URL
 structure) of your site by way of the input structure. For example the input
 structure:
 
-```
+```flow
 my-site/
   index.md
   blogs/
@@ -131,7 +131,7 @@ my-site/
 
 ...would be transformed to:
 
-```
+```flow
 my-site/
   index.html
   blogs/
@@ -216,7 +216,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
 ## Using templates
 
-Gatsby uses standard React.js components to render pages. When you define a page
+Gatsby uses standard React components to render pages. When you define a page
 in the `createPages` API, you specify its component. Those components, usually
 called templates, get reused with page-specific data to generate the different
 pages.
@@ -287,13 +287,13 @@ export const pageQuery = `
 `
 ```
 
-## Creating React.js component pages
+## Creating React component pages
 
 In addition to creating pages for our Instagram photos, we want to make an index
 page for browsing all photos. To build this index page, Gatsby lets us create
-pages using React.js components.
+pages using React components.
 
-```
+```flow
 pages/
   index.js
   about.js
@@ -466,7 +466,7 @@ Typography.js is a powerful toolkit for building websites with beautiful design.
 Gatsbygram uses Typography.js to generate the _global_ styles for the site
 helping set the overall feel of the design.
 
-Glamor lets you write _real CSS_ in JavaScript inline in your React.js
+Glamor lets you write _real CSS_ in JavaScript inline in your React
 components. It is used for _component_ styles.
 
 Typography.js exposes two helper JavaScript functions, `rhythm` and `scale` to
@@ -528,10 +528,10 @@ Super fast CSS by default. 👏👏👏
 
 It's easy to create your own "Gatsbygram" site from an Instagram account.
 
-### Instructions on setting up your own Gatsbygram site.
+### Instructions on setting up your own Gatsbygram site
 
-```bash
-# Clone the Gatsby repo.
+```bashl/wordpress-source-plugin-tutorial.md
+# Clone the Gatsby repo
 git clone -b 1.0 git@github.com:gatsbyjs/gatsby.git
 cd gatsby/examples/gatsbygram
 npm install
@@ -546,7 +546,7 @@ node scrape.js INSTAGRAM_USERNAME
 
 # Start the Gatsby development server. The initial
 # run will take extra time as it processes
-# images the first time.
+# images the first time
 npm run develop
 ```
 

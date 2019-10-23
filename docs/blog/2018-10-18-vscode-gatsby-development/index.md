@@ -1,5 +1,5 @@
 ---
-title: "Using VS Code for Supercharged Gatsby.js Development"
+title: "Using VS Code for Supercharged Gatsby Development"
 author: Michael Holtzman
 date: 2018-10-22
 tags: ["code-editor", "source", "documentation-sites", "developer-experience"]
@@ -21,7 +21,7 @@ First thing to do is [download VS Code](https://code.visualstudio.com/download) 
 
 ![Install all the Extensions](./images/install-meme.jpg)
 
-OK, not quite, if you browse the list you will notice there are _A LOT_. I'm going to review some popular ones that are applicable to contributing to the Gatsby.js GitHub repo.
+OK, not quite, if you browse the list you will notice there are _A LOT_. I'm going to review some popular ones that are applicable to contributing to the Gatsby GitHub repo.
 
 ### 🚨 Code linting and Formatting 🚨
 

@@ -39,7 +39,7 @@ This is currently a limitation of Gatsby theme shadowing, not Yarn workspaces.
 
 Your directory structure should now look like this:
 
-```
+```flow
 example/
   package.json
 gatsby-theme-example-workspaces/

@@ -16,7 +16,7 @@ npm install gatsby --save
 
 Next, continue reading below to see if any of the great, new features we've enabled scratch a particular itch. We feel very confident they will 💜
 
-# Recap of schema customization
+## Recap of schema customization
 
 Before this change, the Gatsby GraphQL schema was generated automatically from the data that the user added to Gatsby. While very convenient and easy to start, changes to the data could cause changes to the schema, which could cause breakage in unrelated locations. Those bugs were confusing and hard to debug. To alleviate this problem, we've added a schema customization API that lets you customize, fix, and enhance types in your Gatsby GraphQL schema.
 
@@ -39,7 +39,7 @@ exports.sourceNodes = ({ actions }) => {
 }
 ```
 
-After adding this to your [gatsby-node](/docs/gatsby-project-structure/#files) file, the `AuthorJson` type will always have fields name and birthday, regardless of the automatically inferred data shape. The rest of the fields will still be inferred normally, allowing you to enjoy the default benefits of Gatsby schema inference.
+After adding this to your [`gatsby-node`](/docs/gatsby-project-structure/#files) file, the `AuthorJson` type will always have fields name and birthday, regardless of the automatically inferred data shape. The rest of the fields will still be inferred normally, allowing you to enjoy the default benefits of Gatsby schema inference.
 
 ## `createResolvers`
 
@@ -100,7 +100,7 @@ exports.sourceNodes = ({ actions, schema }) => {
 }
 ```
 
-# Potential for Breaking Changes
+## Potential for Breaking Changes
 
 We have tried to avoid any breaking changes in this refactor of the underlying GraphQL layer, testing it in notable Gatsby sites and ensuring all tests were passing. However, there are areas where we needed to introduce more stable naming, and in these instances it _could_ be possible that a breaking change was introduced if you were relying on this undocumented API.
 
@@ -115,7 +115,7 @@ Specifically, before this refactor Gatsby type names weren't stable. They could 
 
 Another change relates to inference. Previously, ordering of the Nodes in your data source could affect which type Gatsby inferred. Now, we always consider all possible types, thus you might experience type conflicts for conflicting data sources. They can be solved by either fixing the data or defining a type using new schema customization APIs that we've exposed.
 
-# Wrap-up
+## Wrap-up
 
 As next steps, we will work on adding more convenient tooling to "freeze" your schema type definitions, so that you can quickly start using this feature. We will also be working on improving API docs for this.
 

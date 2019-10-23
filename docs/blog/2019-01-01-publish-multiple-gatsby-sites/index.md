@@ -6,7 +6,7 @@ tags: ["apps", "testing", "deployment"]
 excerpt: Learn how to create a balanced lasagna instead of a tangled mess of spaghetti.
 ---
 
-## Learn how to create a balanced lasagna instead of a tangled mess of spaghetti.
+## Learn how to create a balanced lasagna instead of a tangled mess of spaghetti
 
 ### Foreword
 
@@ -55,7 +55,7 @@ Go to your GitHub account and create a new repo, this’ll be the repo that you 
 
 Run the code that GitHub outputs when creating a new repo:
 
-```
+```shell
 git remote add origin git@github.com:<account-name>/lerna-monorepo-starter.git
 git push -u origin master
 ```
@@ -98,7 +98,7 @@ The above specifies the version of Lerna we’re using. We also let Lerna know w
 
 Once that’s been completed create a new `packages` directory in the root of the project. Create three additional directories inside of it so the structure looks like the following:
 
-```
+```flow
 packages
  | blog
  | shared-ui
@@ -164,7 +164,7 @@ export { default as PrimaryLayout } from "./layouts/PrimaryLayouts"
 
 Your packages folder hierarchy should look like this now
 
-```
+```flow
 packages
   | blog
   | shared-ui
@@ -446,7 +446,7 @@ We won’t worry about the latter for now, but let’s deal with running scripts
 
 We’ll do this by adding a `matrix` step right after the `install` step to the CI pipeline. This `matrix` step will let us specify which packages we want to run the CI pipeline on. We’ll name each matrix and set a environment variables for the package location. We’ll then change the `script` step so Travis moves into the correct directory and runs the `script` step. Delete everything after the `install` step and add the following:
 
-```
+```yaml
 matrix:
   include:
     - name: "Blog Pipeline"

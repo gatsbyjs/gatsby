@@ -114,7 +114,7 @@ One thing to keep in mind is that you can't always see the exact error message f
 
 You don't have to use the `checkA11y` method only on page load. For example, you can perform a click on a button and check again. This is especially useful if that button opens a modal or a mobile menu for example.
 
-The following test is for the [gatsby-default-starter](https://github.com/gatsbyjs/gatsby-starter-default). Cypress visits the homepage and searches for the link that goes to page 2 with the `getByText` command. Then, performs a click event on that link and checks for accessibility errors on the second page.
+The following test is for the [`gatsby-default-starter`](https://github.com/gatsbyjs/gatsby-starter-default). Cypress visits the homepage and searches for the link that goes to page 2 with the `getByText` command. Then, performs a click event on that link and checks for accessibility errors on the second page.
 
 ```js:title=cypress/e2e/a11y.test.js
 /// <reference types="Cypress" />

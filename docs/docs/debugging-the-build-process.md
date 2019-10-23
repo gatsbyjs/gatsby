@@ -33,7 +33,7 @@ exports.onCreateNode = args => {
 
 There is a bug in this code and using it will produce the error below:
 
-```
+```flow
 TypeError: Cannot read property 'internal' of undefined
 
   - gatsby-node.js:6 Object.exports.onCreateNode.args [as onCreateNode]

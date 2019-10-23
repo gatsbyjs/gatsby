@@ -5,7 +5,7 @@ author: Shannon Soper
 tags: ["react"]
 ---
 
-# What is React?
+## What is React?
 
 React is a fantastic and wildly popular tool for building websites and apps. It creates a world where JavaScript and HTML live in happy harmony in the same files, and it efficiently renders your ever-changing data to the browser.
 

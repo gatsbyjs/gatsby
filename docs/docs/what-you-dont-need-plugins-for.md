@@ -2,7 +2,7 @@
 title: What You Don't Need Plugins For
 ---
 
-Most third-party functionality you want to add to your website will follow standard JavaScript and React.js patterns for importing packages and composing UIs. These do not require a Gatsby plugin!
+Most third-party functionality you want to add to your website will follow standard JavaScript and React patterns for importing packages and composing UIs. These do not require a Gatsby plugin!
 
 Some examples:
 

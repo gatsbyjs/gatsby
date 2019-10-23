@@ -25,7 +25,7 @@ And _that’s it_.
 
 No code. No assembling plugins. Just writing content.
 
-## Learn how to build a Gatsby theme.
+## Learn how to build a Gatsby theme
 
 Recently I had the pleasure of building a theme from scratch with Gatsby’s own [John Otander](https://twitter.com/4lpine) live on [my weekly livestream](https://twitch.tv/jlengstorf).
 

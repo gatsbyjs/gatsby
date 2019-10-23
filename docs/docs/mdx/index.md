@@ -38,7 +38,7 @@ Markdown and JSX are included alongside each other like this:
 ```md
 import { Chart } from '../components/chart'
 
-# Here’s a chart
+## Here’s a chart
 
 The chart is rendered inside our MDX document.
 
