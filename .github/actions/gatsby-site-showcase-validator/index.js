@@ -23,7 +23,7 @@ async function run() {
 
   let sitesVisited = 0
   let nonGatsbySiteCount = 0
-  let nonPublicRepoCount = 0
+  let inaccessibleRepoCount = 0
   let erroredOut = 0
   const totalSitesCount = parsedYaml.length
 
@@ -71,9 +71,9 @@ async function run() {
         console.log(
           `${chalk.yellow(`[Notice]`)}: ${
             site.title
-          } (${siteUrl}) provided a 'source_url', but it's repository is private (${sourceUrl})`
+          } (${siteUrl}) provided a 'source_url', but it's repository is inaccessible (${sourceUrl})`
         )
-        nonPublicRepoCount++
+        inaccessibleRepoCount++
       }
     }
 
@@ -82,12 +82,12 @@ async function run() {
 
   console.log(
     chalk.green(
-      `We visited ${sitesVisited}/${totalSitesCount} sites. Out of them, ${nonGatsbySiteCount} sites were not a Gatsby site, ${nonPublicRepoCount} provided private repositories, and ${erroredOut} errored out when visiting it.`
+      `We visited ${sitesVisited}/${totalSitesCount} sites. Out of them, ${nonGatsbySiteCount} sites were not a Gatsby site, ${inaccessibleRepoCount} provided inaccessible repositories, and ${erroredOut} errored out when visiting it.`
     )
   )
 
-  // If there are any non Gatsby sites or their `source_url` is private, fail (non-zero exit code)
-  const exitCode = nonGatsbySiteCount > 0 || nonPublicRepoCount > 0 ? 1 : 0
+  // If there are any non Gatsby sites or their `source_url` is inaccessible, fail (non-zero exit code)
+  const exitCode = nonGatsbySiteCount > 0 || inaccessibleRepoCount > 0 ? 1 : 0
   process.exit(exitCode)
 }
 
