@@ -10,6 +10,10 @@ describe(`gatsby-plugin-catch-links`, () => {
   })
   it(`calls catchLinks in gatsby-browser's onClientEntry API`, () => {
     onClientEntry()
-    expect(mockedCatchLinks).toHaveBeenCalledWith(window, expect.any(Function))
+    expect(mockedCatchLinks).toHaveBeenCalledWith(
+      window,
+      {},
+      expect.any(Function)
+    )
   })
 })

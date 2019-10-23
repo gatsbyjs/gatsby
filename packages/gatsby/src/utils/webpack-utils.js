@@ -305,9 +305,7 @@ module.exports = async ({
    * and packages that depend on `gatsby`
    */
   {
-    let js = (
-      { modulesThatUseGatsby, ...options } = { modulesThatUseGatsby: [] }
-    ) => {
+    let js = ({ modulesThatUseGatsby = [], ...options } = {}) => {
       return {
         test: /\.(js|mjs|jsx)$/,
         include: modulePath => {
@@ -342,9 +340,7 @@ module.exports = async ({
    * Excludes modules that use Gatsby since the `rules.js` already transpiles those
    */
   {
-    let dependencies = (
-      { modulesThatUseGatsby } = { modulesThatUseGatsby: [] }
-    ) => {
+    let dependencies = ({ modulesThatUseGatsby = [] } = {}) => {
       const jsOptions = {
         babelrc: false,
         configFile: false,

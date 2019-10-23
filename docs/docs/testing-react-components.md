@@ -1,5 +1,5 @@
 ---
-title: "Testing React components"
+title: Testing React Components
 ---
 
 _The recommended testing framework is [Jest](https://jestjs.io/). This guide assumes that you followed the [Unit testing](/docs/unit-testing) guide to setup Jest._
@@ -22,9 +22,6 @@ Create the file `setup-test-env.js` at the root of your project. Insert this cod
 
 ```js:title=setup-test-env.js
 import "@testing-library/jest-dom/extend-expect"
-
-// this is basically: afterEach(cleanup)
-import "@testing-library/react/cleanup-after-each"
 ```
 
 This file gets run automatically by Jest before every test and therefore you don't need to add the imports to every single test file.

@@ -11,7 +11,6 @@ export const PRODUCT_OPTION = `ProductOption`
 export const PRODUCT_VARIANT = `ProductVariant`
 export const PRODUCT_METAFIELD = `ProductMetafield`
 export const SHOP_POLICY = `ShopPolicy`
-export const PRODUCT_TYPE = `ProductType`
 export const PAGE = `Page`
 export const SHOP = `shop`
 export const CONTENT = `content`
@@ -21,6 +20,5 @@ export const NODE_TO_ENDPOINT_MAPPING = {
   [BLOG]: `blogs`,
   [COLLECTION]: `collections`,
   [PRODUCT]: `products`,
-  [PRODUCT_TYPE]: `productTypes`,
   [PAGE]: `pages`,
 }

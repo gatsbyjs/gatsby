@@ -142,9 +142,7 @@ function groupByMedia(imageVariants) {
 
   if (without.length > 1 && process.env.NODE_ENV !== `production`) {
     console.warn(
-      `We've found ${
-        without.length
-      } sources without a media property. They might be ignored by the browser, see: https://www.gatsbyjs.org/packages/gatsby-image/#art-directing-multiple-images`
+      `We've found ${without.length} sources without a media property. They might be ignored by the browser, see: https://www.gatsbyjs.org/packages/gatsby-image/#art-directing-multiple-images`
     )
   }
 
@@ -241,6 +239,7 @@ const Img = React.forwardRef((props, ref) => {
     style,
     onLoad,
     onError,
+    onClick,
     loading,
     draggable,
     ...otherProps
@@ -254,6 +253,7 @@ const Img = React.forwardRef((props, ref) => {
       {...otherProps}
       onLoad={onLoad}
       onError={onError}
+      onClick={onClick}
       ref={ref}
       loading={loading}
       draggable={draggable}
@@ -274,6 +274,7 @@ const Img = React.forwardRef((props, ref) => {
 Img.propTypes = {
   style: PropTypes.object,
   onError: PropTypes.func,
+  onClick: PropTypes.func,
   onLoad: PropTypes.func,
 }
 
@@ -285,15 +286,17 @@ class Image extends React.Component {
     // already in the browser cache so it's cheap to just show directly.
     this.seenBefore = isBrowser && inImageCache(props)
 
-    this.addNoScript = !(props.critical && !props.fadeIn)
+    this.isCritical = props.loading === `eager` || props.critical
+
+    this.addNoScript = !(this.isCritical && !props.fadeIn)
     this.useIOSupport =
       !hasNativeLazyLoadSupport &&
       hasIOSupport &&
-      !props.critical &&
+      !this.isCritical &&
       !this.seenBefore
 
     const isVisible =
-      props.critical ||
+      this.isCritical ||
       (isBrowser && (hasNativeLazyLoadSupport || !this.useIOSupport))
 
     this.state = {
@@ -312,7 +315,7 @@ class Image extends React.Component {
     if (this.state.isVisible && typeof this.props.onStartLoad === `function`) {
       this.props.onStartLoad({ wasCached: inImageCache(this.props) })
     }
-    if (this.props.critical) {
+    if (this.isCritical) {
       const img = this.imageRef.current
       if (img && img.complete) {
         this.handleImageLoaded()
@@ -411,6 +414,7 @@ class Image extends React.Component {
       alt: !this.state.isVisible ? alt : ``,
       style: imagePlaceholderStyle,
       className: placeholderClassName,
+      itemProp,
     }
 
     if (fluid) {
@@ -488,6 +492,7 @@ class Image extends React.Component {
                 ref={this.imageRef}
                 onLoad={this.handleImageLoaded}
                 onError={this.props.onError}
+                onClick={this.props.onClick}
                 itemProp={itemProp}
                 loading={loading}
                 draggable={draggable}
@@ -588,6 +593,7 @@ class Image extends React.Component {
                 ref={this.imageRef}
                 onLoad={this.handleImageLoaded}
                 onError={this.props.onError}
+                onClick={this.props.onClick}
                 itemProp={itemProp}
                 loading={loading}
                 draggable={draggable}
@@ -670,6 +676,7 @@ Image.propTypes = {
   backgroundColor: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   onLoad: PropTypes.func,
   onError: PropTypes.func,
+  onClick: PropTypes.func,
   onStartLoad: PropTypes.func,
   Tag: PropTypes.string,
   itemProp: PropTypes.string,

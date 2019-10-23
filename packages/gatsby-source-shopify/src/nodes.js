@@ -1,5 +1,4 @@
 import createNodeHelpers from "gatsby-node-helpers"
-import { camelCase } from "lodash/fp"
 import { map } from "p-iteration"
 import { createRemoteFileNode } from "gatsby-source-filesystem"
 
@@ -14,7 +13,6 @@ import {
   PRODUCT_VARIANT,
   PRODUCT_METAFIELD,
   SHOP_POLICY,
-  PRODUCT_TYPE,
   PAGE,
 } from "./constants"
 
@@ -78,11 +76,12 @@ export const BlogNode = _imageArgs => createNodeFactory(BLOG)
 
 export const CollectionNode = imageArgs =>
   createNodeFactory(COLLECTION, async node => {
-    if (node.products)
+    if (node.products) {
       node.products___NODE = node.products.edges.map(edge =>
         generateNodeId(PRODUCT, edge.node.id)
       )
-
+      delete node.products
+    }
     if (node.image)
       node.image.localFile___NODE = await downloadImageAndCreateFileNode(
         {
@@ -97,9 +96,6 @@ export const CollectionNode = imageArgs =>
 
 export const CommentNode = _imageArgs => createNodeFactory(COMMENT)
 
-export const ProductTypeNode = imageArgs => rawNode =>
-  createNodeFactory(PRODUCT_TYPE)({ id: camelCase(rawNode), name: rawNode })
-
 export const ProductNode = imageArgs =>
   createNodeFactory(PRODUCT, async node => {
     if (node.variants) {
@@ -108,6 +104,8 @@ export const ProductNode = imageArgs =>
       node.variants___NODE = variants.map(variant =>
         generateNodeId(PRODUCT_VARIANT, variant.id)
       )
+
+      delete node.variants
     }
 
     if (node.metafields) {
@@ -116,12 +114,15 @@ export const ProductNode = imageArgs =>
       node.metafields___NODE = metafields.map(metafield =>
         generateNodeId(PRODUCT_METAFIELD, metafield.id)
       )
+      delete node.metafields
     }
 
-    if (node.options)
+    if (node.options) {
       node.options___NODE = node.options.map(option =>
         generateNodeId(PRODUCT_OPTION, option.id)
       )
+      delete node.options
+    }
 
     if (node.images && node.images.edges)
       node.images = await map(node.images.edges, async edge => {

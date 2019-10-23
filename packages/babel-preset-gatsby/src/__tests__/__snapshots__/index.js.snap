@@ -14,7 +14,7 @@ Object {
     Array [
       "<PROJECT_ROOT>/node_modules/@babel/plugin-transform-runtime/lib/index.js",
       Object {
-        "absoluteRuntimePath": "<PROJECT_ROOT>/packages/babel-preset-gatsby/node_modules/@babel/runtime",
+        "absoluteRuntimePath": "<PROJECT_ROOT>/node_modules/@babel/runtime",
         "corejs": false,
         "helpers": false,
         "regenerator": true,
@@ -71,7 +71,7 @@ Object {
     Array [
       "<PROJECT_ROOT>/node_modules/@babel/plugin-transform-runtime/lib/index.js",
       Object {
-        "absoluteRuntimePath": "<PROJECT_ROOT>/packages/babel-preset-gatsby/node_modules/@babel/runtime",
+        "absoluteRuntimePath": "<PROJECT_ROOT>/node_modules/@babel/runtime",
         "corejs": false,
         "helpers": false,
         "regenerator": true,
@@ -132,7 +132,7 @@ Object {
     Array [
       "<PROJECT_ROOT>/node_modules/@babel/plugin-transform-runtime/lib/index.js",
       Object {
-        "absoluteRuntimePath": "<PROJECT_ROOT>/packages/babel-preset-gatsby/node_modules/@babel/runtime",
+        "absoluteRuntimePath": "<PROJECT_ROOT>/node_modules/@babel/runtime",
         "corejs": false,
         "helpers": false,
         "regenerator": true,
@@ -187,7 +187,7 @@ Object {
     Array [
       "<PROJECT_ROOT>/node_modules/@babel/plugin-transform-runtime/lib/index.js",
       Object {
-        "absoluteRuntimePath": "<PROJECT_ROOT>/packages/babel-preset-gatsby/node_modules/@babel/runtime",
+        "absoluteRuntimePath": "<PROJECT_ROOT>/node_modules/@babel/runtime",
         "corejs": false,
         "helpers": true,
         "regenerator": true,

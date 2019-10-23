@@ -112,7 +112,7 @@ Now you can add your new slugs directly onto the `MarkdownRemark` nodes. This is
 powerful, as any data you add to nodes is available to query later with GraphQL.
 So, it'll be easy to get the slug when it comes time to create the pages.
 
-To do so, you'll use a function passed to our API implementation called
+To do so, you'll use a function passed to your API implementation called
 [`createNodeField`](/docs/actions/#createNodeField). This function
 allows you to create additional fields on nodes created by other plugins. Only
 the original creator of a node can directly modify the node—all other plugins
@@ -180,7 +180,7 @@ exports.createPages = async ({ graphql, actions }) => {
   // **Note:** The graphql function call returns a Promise
   // see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise for more info
   const result = await graphql(`
-    {
+    query {
       allMarkdownRemark {
         edges {
           node {
@@ -254,7 +254,7 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions // highlight-line
   const result = await graphql(`
-    {
+    query {
       allMarkdownRemark {
         edges {
           node {

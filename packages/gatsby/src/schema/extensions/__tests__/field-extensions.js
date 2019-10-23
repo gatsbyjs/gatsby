@@ -3,15 +3,21 @@ const { build } = require(`../..`)
 const withResolverContext = require(`../../context`)
 const { buildObjectType } = require(`../../types/type-builders`)
 const { store } = require(`../../../redux`)
+const { actions } = require(`../../../redux/actions`)
 const { dispatch } = store
-const { actions } = require(`../../../redux/actions/restricted`)
 const { createFieldExtension, createTypes } = actions
-const { trackInlineObjectsInRootNode } = require(`../../../db/node-tracking`)
 require(`../../../db/__tests__/fixtures/ensure-loki`)()
 
 const report = require(`gatsby-cli/lib/reporter`)
 report.error = jest.fn()
 report.panic = jest.fn()
+report.activityTimer = jest.fn(() => {
+  return {
+    start: jest.fn(),
+    setStatus: jest.fn(),
+    end: jest.fn(),
+  }
+})
 afterEach(() => {
   report.error.mockClear()
   report.panic.mockClear()
@@ -24,7 +30,7 @@ describe(`GraphQL field extensions`, () => {
       {
         id: `test1`,
         parent: `test5`,
-        internal: { type: `Test` },
+        internal: { type: `Test`, contentDigest: `0` },
         somedate: `2019-09-01`,
         otherdate: `2019-09-01`,
         nested: {
@@ -35,37 +41,42 @@ describe(`GraphQL field extensions`, () => {
       {
         id: `test2`,
         parent: `test6`,
-        internal: { type: `Test` },
+        internal: { type: `Test`, contentDigest: `0` },
         somedate: `2019-09-13`,
         otherdate: `2019-09-13`,
+        nested: {
+          onemoredate: `2019-09-26`,
+        },
       },
       {
         id: `test3`,
         parent: null,
-        internal: { type: `Test` },
+        internal: { type: `Test`, contentDigest: `0` },
         somedate: `2019-09-26`,
         otherdate: `2019-09-26`,
       },
       {
         id: `test4`,
-        internal: { type: `Test` },
+        internal: { type: `Test`, contentDigest: `0` },
         olleh: `world`,
       },
       {
         id: `test5`,
         children: [`test1`],
-        internal: { type: `AnotherTest` },
+
+        internal: { type: `AnotherTest`, contentDigest: `0` },
         date: `2019-01-01`,
       },
       {
         id: `test6`,
         children: [`test2`],
-        internal: { type: `AnotherTest` },
+
+        internal: { type: `AnotherTest`, contentDigest: `0` },
         date: 0,
       },
       {
         id: `test7`,
-        internal: { type: `NestedTest` },
+        internal: { type: `NestedTest`, contentDigest: `0` },
         top: 78,
         first: {
           next: 26,
@@ -98,10 +109,9 @@ describe(`GraphQL field extensions`, () => {
         },
       },
     ]
-    nodes.forEach(node => {
-      dispatch({ type: `CREATE_NODE`, payload: { ...node } })
-    })
-    nodes.forEach(node => trackInlineObjectsInRootNode(node))
+    nodes.forEach(node =>
+      actions.createNode(node, { name: `test` })(store.dispatch)
+    )
   })
 
   it(`allows creating a custom field extension`, async () => {
@@ -1564,6 +1574,95 @@ describe(`GraphQL field extensions`, () => {
       it.todo(`proxies to nested field on linked in node`)
     })
   })
+
+  it(`link extension accepts return type argument`, async () => {
+    dispatch(
+      createFieldExtension({
+        name: `reduce`,
+        args: {
+          to: `String!`,
+        },
+        extend(options, fieldConfig) {
+          return {
+            async resolve(source, args, context, info) {
+              const { getValueAt } = require(`../../../utils/get-value-at`)
+              const resolver =
+                fieldConfig.resolve || context.defaultFieldResolver
+              const fieldValue = await resolver(source, args, context, info)
+              if (fieldValue == null) return null
+              return getValueAt(fieldValue, options.to)
+            },
+          }
+        },
+      })
+    )
+    dispatch(
+      createTypes(`
+        type Test implements Node @dontInfer {
+          fieldFromParent: Date @link(from: "parent", on: "AnotherTest") @reduce(to: "date") @dateformat(formatString: "MM/DD/YYYY")
+        }
+        type AnotherTest implements Node @dontInfer {
+          fieldsFromChildren: [Date] @link(from: "children", on: "[Test!]!") @reduce(to: "somedate") @dateformat(formatString: "DD/MM/YYYY")
+          nestedFieldsFromChildren: [Date] @link(from: "children", on: "[Test!]!") @reduce(to: "nested.onemoredate") @dateformat(formatString: "DD/MM/YYYY")
+        }
+      `)
+    )
+    const query = `
+      {
+        allTest {
+          nodes {
+            id
+            fieldFromParent
+          }
+        }
+        allAnotherTest {
+          nodes {
+            id
+            fieldsFromChildren
+            nestedFieldsFromChildren
+          }
+        }
+      }
+    `
+    const results = await runQuery(query)
+    const expected = {
+      allTest: {
+        nodes: [
+          {
+            id: `test1`,
+            fieldFromParent: `01/01/2019`,
+          },
+          {
+            id: `test2`,
+            fieldFromParent: `Invalid date`,
+          },
+          {
+            id: `test3`,
+            fieldFromParent: null,
+          },
+          {
+            id: `test4`,
+            fieldFromParent: null,
+          },
+        ],
+      },
+      allAnotherTest: {
+        nodes: [
+          {
+            id: `test5`,
+            fieldsFromChildren: [`01/09/2019`],
+            nestedFieldsFromChildren: [`30/07/2019`],
+          },
+          {
+            id: `test6`,
+            fieldsFromChildren: [`13/09/2019`],
+            nestedFieldsFromChildren: [`26/09/2019`],
+          },
+        ],
+      },
+    }
+    expect(results).toEqual(expected)
+  })
 })
 
 const buildSchema = async () => {
@@ -1572,12 +1671,19 @@ const buildSchema = async () => {
 }
 
 const runQuery = async query => {
-  const schema = await buildSchema()
+  await build({})
+  const {
+    schema,
+    schemaCustomization: { composer: schemaComposer },
+  } = store.getState()
   const results = await graphql(
     schema,
     query,
     undefined,
-    withResolverContext({}, schema)
+    withResolverContext({
+      schema,
+      schemaComposer,
+    })
   )
   expect(results.errors).toBeUndefined()
   return results.data

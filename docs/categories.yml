@@ -12,16 +12,21 @@ starter:
   - CMS:Drupal
   - CMS:Prismic
   - CMS:Netlify
-  - CMS:Wordpress
+  - CMS:WordPress
   - CMS:sanity.io
+  - CMS:Strapi
+  - CMS:Forestry.io
   - CMS:Other
   - Disqus
   - Documentation
   - eCommerce
   - Firebase
+  - Gallery
   - Google Sheets
+  - Hasura
   - HTML5UP
   - i18n
+  - Infinite Scroll
   - Landing Page
   - Language:Other
   - Language:TypeScript
@@ -82,6 +87,7 @@ site:
   - Government
   - Healthcare
   - JavaScript
+  - Law
   - Landing Page
   - Learning
   - Library

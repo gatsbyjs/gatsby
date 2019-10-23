@@ -1,5 +1,5 @@
 ---
-title: "How To Build A Blog with Wordpress and Gatsby.js - Part 2"
+title: "How To Build A Blog with WordPress and Gatsby.js - Part 2"
 date: 2019-04-30
 author: Tim Smith
 excerpt: "In the last post, you covered setting up WordPress for use with Gatsby. Today you will cover how to pull the data from WordPress into Gatsby and build pages."
@@ -98,7 +98,7 @@ These files will be present in all Gatsby starters you use, so it's worth your t
     "format": "prettier --write src/**/*.{js,jsx}",
     "start": "npm run develop",
     "serve": "gatsby serve",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\""
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing \""
   },
   "repository": {
     "type": "git",
@@ -417,4 +417,4 @@ You're about half-way done with the actual Gatsby.js build. In this post I cover
 
 The [code for this tutorial](https://github.com/iamtimsmith/building-a-blog-with-wordpress-and-gatsby) can be found on Gitub.
 
-See you in [How To Build A Blog with Wordpress and Gatsby.js - Part 3](/blog/2019-05-02-how-to-build-a-blog-with-wordpress-and-gatsby-part-3)!
+See you in [How To Build A Blog with WordPress and Gatsby.js - Part 3](/blog/2019-05-02-how-to-build-a-blog-with-wordpress-and-gatsby-part-3)!

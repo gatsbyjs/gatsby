@@ -3,6 +3,54 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-coffeescript@2.1.12...gatsby-plugin-coffeescript@2.1.13) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-plugin-coffeescript
+
+## [2.1.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-coffeescript@2.1.11...gatsby-plugin-coffeescript@2.1.12) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-plugin-coffeescript
+
+## [2.1.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-coffeescript@2.1.10...gatsby-plugin-coffeescript@2.1.11) (2019-10-09)
+
+**Note:** Version bump only for package gatsby-plugin-coffeescript
+
+## [2.1.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-coffeescript@2.1.8...gatsby-plugin-coffeescript@2.1.10) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-plugin-coffeescript
+
+## [2.1.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-coffeescript@2.1.8...gatsby-plugin-coffeescript@2.1.9) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-plugin-coffeescript
+
+## [2.1.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-coffeescript@2.1.7...gatsby-plugin-coffeescript@2.1.8) (2019-09-20)
+
+**Note:** Version bump only for package gatsby-plugin-coffeescript
+
+## [2.1.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-coffeescript@2.1.6...gatsby-plugin-coffeescript@2.1.7) (2019-09-09)
+
+**Note:** Version bump only for package gatsby-plugin-coffeescript
+
+## [2.1.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-coffeescript@2.1.5...gatsby-plugin-coffeescript@2.1.6) (2019-09-01)
+
+### Bug Fixes
+
+- update minor updates in packages except react, babel and eslint ([#17254](https://github.com/gatsbyjs/gatsby/issues/17254)) ([252d867](https://github.com/gatsbyjs/gatsby/commit/252d867))
+
+## [2.1.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-coffeescript@2.1.4...gatsby-plugin-coffeescript@2.1.5) (2019-08-23)
+
+**Note:** Version bump only for package gatsby-plugin-coffeescript
+
+## [2.1.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-coffeescript@2.1.3...gatsby-plugin-coffeescript@2.1.4) (2019-08-21)
+
+### Bug Fixes
+
+- update dependency coffeescript to ^2.4.1 ([#16833](https://github.com/gatsbyjs/gatsby/issues/16833)) ([7d5a9f0](https://github.com/gatsbyjs/gatsby/commit/7d5a9f0))
+
+## [2.1.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-coffeescript@2.1.2...gatsby-plugin-coffeescript@2.1.3) (2019-08-20)
+
+**Note:** Version bump only for package gatsby-plugin-coffeescript
+
 ## [2.1.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-coffeescript@2.1.1...gatsby-plugin-coffeescript@2.1.2) (2019-07-12)
 
 ### Bug Fixes

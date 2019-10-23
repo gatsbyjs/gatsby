@@ -130,7 +130,7 @@ I've already covered some of the benefits of opting to use JAMstack instead of a
 
 **The "downsides":**
 
-- Even if using a headless CMS, there may still be parts of the site that exist entirely in code. So you'll need to get comfortable with editing content and meta data in more than one place.
+- Even if using a [headless CMS](/docs/headless-cms/), there may still be parts of the site that exist entirely in code. So you'll need to get comfortable with editing content and meta data in more than one place.
 - Shipping new marketing material might take a little longer compared to relying on well known methods (depends on your stack and your team, though).
 - New tech means you might stumble upon some exciting new bugs or issues that can take a while to resolve.
 

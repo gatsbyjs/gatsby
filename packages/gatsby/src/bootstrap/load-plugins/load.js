@@ -149,6 +149,7 @@ module.exports = (config = {}, rootDir = null) => {
           pluginOptions: {
             plugins: [],
           },
+          resolve: `__TEST__`,
         }
       }
 
@@ -182,6 +183,23 @@ module.exports = (config = {}, rootDir = null) => {
     })
   }
 
+  // the order of all of these page-creators matters. The "last plugin wins",
+  // so the user's site comes last, and each page-creator instance has to
+  // match the plugin definition order before that. This works fine for themes
+  // because themes have already been added in the proper order to the plugins
+  // array
+  plugins.forEach(plugin => {
+    plugins.push(
+      processPlugin({
+        resolve: require.resolve(`gatsby-plugin-page-creator`),
+        options: {
+          path: slash(path.join(plugin.resolve, `src/pages`)),
+          pathCheck: false,
+        },
+      })
+    )
+  })
+
   // Add the site's default "plugin" i.e. gatsby-x files in root of site.
   plugins.push({
     resolve: slash(process.cwd()),
@@ -194,13 +212,29 @@ module.exports = (config = {}, rootDir = null) => {
   })
 
   const program = store.getState().program
+
+  // default options for gatsby-plugin-page-creator
+  let pageCreatorOptions = {
+    path: slash(path.join(program.directory, `src/pages`)),
+    pathCheck: false,
+  }
+
+  if (config.plugins) {
+    const pageCreatorPlugin = config.plugins.find(
+      plugin =>
+        plugin.resolve === `gatsby-plugin-page-creator` &&
+        plugin.options.path === slash(path.join(program.directory, `src/pages`))
+    )
+    if (pageCreatorPlugin) {
+      // override the options if there are any user specified options
+      pageCreatorOptions = pageCreatorPlugin.options
+    }
+  }
+
   plugins.push(
     processPlugin({
       resolve: require.resolve(`gatsby-plugin-page-creator`),
-      options: {
-        path: slash(path.join(program.directory, `src/pages`)),
-        pathCheck: false,
-      },
+      options: pageCreatorOptions,
     })
   )
 

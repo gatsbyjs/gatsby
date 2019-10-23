@@ -9,6 +9,7 @@ tags:
   - client-side-routing
   - react
   - cutting-edge-experiences
+  - diversity-and-inclusion
 ---
 
 In June 2019, I conducted 5 user testing sessions for accessibility research with [Fable Tech Labs](https://www.makeitfable.com/), a Toronto-based start-up that’s “making it easier for digital teams to engage people with disabilities in product development.”

@@ -43,7 +43,7 @@ After years of building projects with traditional tools like Docker and WordPres
 From my perspective, Gatsby is an invaluable tool.
 </Pullquote>
 
-By embracing Gatsby and headless services, Kevin can now more easily adjust his tools to each project’s needs. To manage Prima’s content, Kevin opted for [Sanity](https://www.sanity.io), a headless CMS which can be connected to a Gatsby site using the [gatsby-source-sanity](/packages/gatsby-source-sanity/) plugin. Prima’s e-commerce functionality is powered by [Shopify](https://www.shopify.com) (integrated with Gatsby using the [gatsby-source-shopify](/packages/gatsby-source-shopify/) plugin). Kevin credits the ease of pulling data from headless services like these into Gatsby with the bulk of his new development speed:
+By embracing Gatsby and headless services, Kevin can now more easily adjust his tools to each project’s needs. To manage Prima’s content, Kevin opted for [Sanity](https://www.sanity.io), a [headless CMS](/docs/headless-cms/) which can be connected to a Gatsby site using the [gatsby-source-sanity](/packages/gatsby-source-sanity/) plugin. Prima’s e-commerce functionality is powered by [Shopify](https://www.shopify.com) (integrated with Gatsby using the [gatsby-source-shopify](/packages/gatsby-source-shopify/) plugin). Kevin credits the ease of pulling data from headless services like these into Gatsby with the bulk of his new development speed:
 
 <Pullquote>
 I’ve set up Contentful, Prismic and Sanity in so many ways that I can now set up the whole backend and data architecture in a day...It’s a testament to those tools and how powerful they’re becoming.

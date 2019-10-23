@@ -3,6 +3,98 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.29](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.28...gatsby-image@2.2.29) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.2.28](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.27...gatsby-image@2.2.28) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.2.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.26...gatsby-image@2.2.27) (2019-10-10)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.2.26](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.25...gatsby-image@2.2.26) (2019-10-10)
+
+### Bug Fixes
+
+- **gatsby-image:** add itemprop on placeholder images ([#18035](https://github.com/gatsbyjs/gatsby/issues/18035)) ([aa8b2fb](https://github.com/gatsbyjs/gatsby/commit/aa8b2fb)), closes [#17419](https://github.com/gatsbyjs/gatsby/issues/17419)
+
+## [2.2.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.24...gatsby-image@2.2.25) (2019-10-09)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.2.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.23...gatsby-image@2.2.24) (2019-10-04)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.2.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.21...gatsby-image@2.2.23) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.2.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.21...gatsby-image@2.2.22) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.2.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.20...gatsby-image@2.2.21) (2019-09-24)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.2.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.19...gatsby-image@2.2.20) (2019-09-20)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.2.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.18...gatsby-image@2.2.19) (2019-09-13)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.2.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.17...gatsby-image@2.2.18) (2019-09-09)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.2.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.16...gatsby-image@2.2.17) (2019-09-04)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.2.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.15...gatsby-image@2.2.16) (2019-09-01)
+
+### Bug Fixes
+
+- update minor updates in packages except react, babel and eslint ([#17254](https://github.com/gatsbyjs/gatsby/issues/17254)) ([252d867](https://github.com/gatsbyjs/gatsby/commit/252d867))
+
+## [2.2.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.14...gatsby-image@2.2.15) (2019-08-30)
+
+### Bug Fixes
+
+- **gatsby-image:** Fix loading="eager" & critical ([#17148](https://github.com/gatsbyjs/gatsby/issues/17148)) ([43536e0](https://github.com/gatsbyjs/gatsby/commit/43536e0))
+
+## [2.2.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.13...gatsby-image@2.2.14) (2019-08-24)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.2.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.12...gatsby-image@2.2.13) (2019-08-23)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.2.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.11...gatsby-image@2.2.12) (2019-08-22)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.2.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.10...gatsby-image@2.2.11) (2019-08-22)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.2.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.9...gatsby-image@2.2.10) (2019-08-20)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.2.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.8...gatsby-image@2.2.9) (2019-08-20)
+
+### Bug Fixes
+
+- **gatsby-image:** Fix eager loading ([#16746](https://github.com/gatsbyjs/gatsby/issues/16746)) ([9040f69](https://github.com/gatsbyjs/gatsby/commit/9040f69))
+
 ## [2.2.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.7...gatsby-image@2.2.8) (2019-08-01)
 
 **Note:** Version bump only for package gatsby-image

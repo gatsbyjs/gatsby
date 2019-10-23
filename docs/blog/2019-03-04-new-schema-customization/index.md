@@ -189,7 +189,7 @@ createResolvers({
 
 Notice the `context.nodeModel`. We expose our internal node storage to the resolvers, so that one can fetch data from there. In addition to lower level access functions (`getNodeById`, `getAllNodes`), full node querying is available in `runQuery`.
 
-You can also see [using-type-definitions example](https://github.com/gatsbyjs/gatsby/tree/schema-refactor-new/examples/using-type-definitions) in the Gatsby repository.
+You can also see [using-type-definitions example](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-type-definitions) in the Gatsby repository.
 
 # Other niceties
 

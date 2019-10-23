@@ -147,9 +147,7 @@ exports.checkDepsChanges = async ({
           // changes - they will be covered
           if (!monoRepoPackages.includes(key)) {
             acc.push(
-              ` - '${key}' changed version from ${
-                localPKGjson.dependencies[key]
-              } to ${monorepoPKGjson.dependencies[key]}`
+              ` - '${key}' changed version from ${localPKGjson.dependencies[key]} to ${monorepoPKGjson.dependencies[key]}`
             )
             needPublishing = true
           }

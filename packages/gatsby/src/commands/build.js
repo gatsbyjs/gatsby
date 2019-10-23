@@ -1,6 +1,5 @@
 /* @flow */
 
-const _ = require(`lodash`)
 const path = require(`path`)
 const report = require(`gatsby-cli/lib/reporter`)
 const buildHTML = require(`./build-html`)
@@ -10,14 +9,13 @@ const apiRunnerNode = require(`../utils/api-runner-node`)
 const { copyStaticDirs } = require(`../utils/get-static-dir`)
 const { initTracer, stopTracer } = require(`../utils/tracer`)
 const db = require(`../db`)
-const tracer = require(`opentracing`).globalTracer()
 const signalExit = require(`signal-exit`)
 const telemetry = require(`gatsby-telemetry`)
 const { store, emitter } = require(`../redux`)
 const queryUtil = require(`../query`)
-const pageDataUtil = require(`../utils/page-data`)
+const appDataUtil = require(`../utils/app-data`)
 const WorkerPool = require(`../utils/worker/pool`)
-const handleWebpackError = require(`../utils/webpack-error-parser`)
+const { structureWebpackErrors } = require(`../utils/webpack-error-utils`)
 
 type BuildArgs = {
   directory: string,
@@ -42,13 +40,15 @@ const waitJobsFinished = () =>
 module.exports = async function build(program: BuildArgs) {
   const publicDir = path.join(program.directory, `public`)
   initTracer(program.openTracingConfigFile)
+  const buildActivity = report.phantomActivity(`build`)
+  buildActivity.start()
 
   telemetry.trackCli(`BUILD_START`)
-  signalExit(() => {
-    telemetry.trackCli(`BUILD_END`)
+  signalExit(exitCode => {
+    telemetry.trackCli(`BUILD_END`, { exitCode })
   })
 
-  const buildSpan = tracer.startSpan(`build`)
+  const buildSpan = buildActivity.span
   buildSpan.setTag(`directory`, program.directory)
 
   const { graphqlRunner } = await bootstrap({
@@ -56,18 +56,14 @@ module.exports = async function build(program: BuildArgs) {
     parentSpan: buildSpan,
   })
 
-  const queryIds = queryUtil.calcInitialDirtyQueryIds(store.getState())
-  const { staticQueryIds, pageQueryIds } = queryUtil.groupQueryIds(queryIds)
-
-  let activity = report.activityTimer(`run static queries`, {
+  const {
+    processPageQueries,
+    processStaticQueries,
+  } = queryUtil.getInitialQueryProcessors({
     parentSpan: buildSpan,
   })
-  activity.start()
-  await queryUtil.processStaticQueries(staticQueryIds, {
-    activity,
-    state: store.getState(),
-  })
-  activity.end()
+
+  await processStaticQueries()
 
   await apiRunnerNode(`onPreBuild`, {
     graphql: graphqlRunner,
@@ -78,20 +74,25 @@ module.exports = async function build(program: BuildArgs) {
   // an equivalent static directory within public.
   copyStaticDirs()
 
-  activity = report.activityTimer(
+  let activity = report.activityTimer(
     `Building production JavaScript and CSS bundles`,
     { parentSpan: buildSpan }
   )
   activity.start()
-  const stats = await buildProductionBundle(program).catch(err => {
-    report.panic(handleWebpackError(`build-javascript`, err))
+  const stats = await buildProductionBundle(program, {
+    parentSpan: activity.span,
+  }).catch(err => {
+    activity.panic(structureWebpackErrors(`build-javascript`, err))
   })
   activity.end()
 
   const workerPool = WorkerPool.create()
 
   const webpackCompilationHash = stats.hash
-  if (webpackCompilationHash !== store.getState().webpackCompilationHash) {
+  if (
+    webpackCompilationHash !== store.getState().webpackCompilationHash ||
+    !appDataUtil.exists(publicDir)
+  ) {
     store.dispatch({
       type: `SET_WEBPACK_COMPILATION_HASH`,
       payload: webpackCompilationHash,
@@ -102,27 +103,12 @@ module.exports = async function build(program: BuildArgs) {
     })
     activity.start()
 
-    // We need to update all page-data.json files with the new
-    // compilation hash. As a performance optimization however, we
-    // don't update the files for `pageQueryIds` (dirty queries),
-    // since they'll be written after query execution.
-    const cleanPagePaths = _.difference(
-      [...store.getState().pages.keys()],
-      pageQueryIds
-    )
-    await pageDataUtil.updateCompilationHashes(
-      { publicDir, workerPool },
-      cleanPagePaths,
-      webpackCompilationHash
-    )
+    await appDataUtil.write(publicDir, webpackCompilationHash)
 
     activity.end()
   }
 
-  activity = report.activityTimer(`run page queries`)
-  activity.start()
-  await queryUtil.processPageQueries(pageQueryIds, { activity })
-  activity.end()
+  await processPageQueries()
 
   require(`../redux/actions`).boundActionCreators.setProgramStatus(
     `BOOTSTRAP_QUERY_RUNNING_FINISHED`
@@ -131,34 +117,45 @@ module.exports = async function build(program: BuildArgs) {
   await waitJobsFinished()
 
   await db.saveState()
-
-  activity = report.activityTimer(`Building static HTML for pages`, {
-    parentSpan: buildSpan,
-  })
+  const pagePaths = [...store.getState().pages.keys()]
+  activity = report.createProgress(
+    `Building static HTML for pages`,
+    pagePaths.length,
+    0,
+    {
+      parentSpan: buildSpan,
+    }
+  )
   activity.start()
   try {
     await buildHTML.buildPages({
       program,
       stage: `build-html`,
-      pagePaths: [...store.getState().pages.keys()],
+      pagePaths,
       activity,
       workerPool,
     })
   } catch (err) {
     let id = `95313` // TODO: verify error IDs exist
-    if (err.message === `ReferenceError: window is not defined`) {
-      id = `95312`
+    const context = {
+      errorPath: err.context && err.context.path,
     }
 
-    report.panic({
+    const match = err.message.match(
+      /ReferenceError: (window|document|localStorage|navigator|alert|location) is not defined/i
+    )
+    if (match && match[1]) {
+      id = `95312`
+      context.ref = match[1]
+    }
+
+    activity.panic({
       id,
+      context,
       error: err,
-      context: {
-        errorPath: err.context && err.context.path,
-      },
     })
   }
-  activity.end()
+  activity.done()
 
   await apiRunnerNode(`onPostBuild`, {
     graphql: graphqlRunner,
@@ -170,4 +167,5 @@ module.exports = async function build(program: BuildArgs) {
   buildSpan.finish()
   await stopTracer()
   workerPool.end()
+  buildActivity.end()
 }

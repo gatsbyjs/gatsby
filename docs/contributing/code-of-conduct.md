@@ -58,7 +58,7 @@ further defined and clarified by project maintainers.
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
 reported by contacting the project team at
-[mathews.kyle@gmail.com](mailto:mathews.kyle@gmail.com). All complaints will be
+[conduct@gatsbyjs.com](mailto:conduct@gatsbyjs.com). All complaints will be
 reviewed and investigated and will result in a response that is deemed necessary
 and appropriate to the circumstances. The project team is obligated to maintain
 confidentiality with regard to the reporter of an incident. Further details of
@@ -72,5 +72,5 @@ members of the project's leadership.
 
 This Code of Conduct is adapted from the Contributor Covenant, version 1.4.
 
-homepage: https://contributor-covenant.org version:
-https://contributor-covenant.org/version/1/4/
+- homepage: https://contributor-covenant.org
+- version: https://contributor-covenant.org/version/1/4/

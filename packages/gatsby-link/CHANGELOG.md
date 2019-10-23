@@ -3,6 +3,86 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.2.21...gatsby-link@2.2.22) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-link
+
+## [2.2.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.2.20...gatsby-link@2.2.21) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-link
+
+## [2.2.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.2.19...gatsby-link@2.2.20) (2019-10-10)
+
+### Bug Fixes
+
+- update dependency @types/reach\_\_router to ^1.2.6 ([#18405](https://github.com/gatsbyjs/gatsby/issues/18405)) ([6c37aa3](https://github.com/gatsbyjs/gatsby/commit/6c37aa3))
+
+## [2.2.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.2.18...gatsby-link@2.2.19) (2019-10-09)
+
+**Note:** Version bump only for package gatsby-link
+
+## [2.2.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.2.17...gatsby-link@2.2.18) (2019-10-04)
+
+**Note:** Version bump only for package gatsby-link
+
+## [2.2.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.2.15...gatsby-link@2.2.17) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-link
+
+## [2.2.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.2.15...gatsby-link@2.2.16) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-link
+
+## [2.2.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.2.14...gatsby-link@2.2.15) (2019-09-20)
+
+**Note:** Version bump only for package gatsby-link
+
+## [2.2.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.2.13...gatsby-link@2.2.14) (2019-09-18)
+
+### Bug Fixes
+
+- update minor updates in packages except react, babel and eslint ([#17716](https://github.com/gatsbyjs/gatsby/issues/17716)) ([af39ae3](https://github.com/gatsbyjs/gatsby/commit/af39ae3))
+
+## [2.2.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.2.12...gatsby-link@2.2.13) (2019-09-09)
+
+**Note:** Version bump only for package gatsby-link
+
+## [2.2.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.2.11...gatsby-link@2.2.12) (2019-09-04)
+
+**Note:** Version bump only for package gatsby-link
+
+## [2.2.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.2.10...gatsby-link@2.2.11) (2019-09-01)
+
+### Bug Fixes
+
+- update minor updates in packages except react, babel and eslint ([#17254](https://github.com/gatsbyjs/gatsby/issues/17254)) ([252d867](https://github.com/gatsbyjs/gatsby/commit/252d867))
+
+## [2.2.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.2.9...gatsby-link@2.2.10) (2019-08-28)
+
+**Note:** Version bump only for package gatsby-link
+
+## [2.2.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.2.8...gatsby-link@2.2.9) (2019-08-24)
+
+**Note:** Version bump only for package gatsby-link
+
+## [2.2.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.2.7...gatsby-link@2.2.8) (2019-08-23)
+
+**Note:** Version bump only for package gatsby-link
+
+## [2.2.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.2.6...gatsby-link@2.2.7) (2019-08-22)
+
+**Note:** Version bump only for package gatsby-link
+
+## [2.2.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.2.5...gatsby-link@2.2.6) (2019-08-20)
+
+### Bug Fixes
+
+- update dependency [@types](https://github.com/types)/reach\_\_router to ^1.2.4 ([#16798](https://github.com/gatsbyjs/gatsby/issues/16798)) ([11b3f11](https://github.com/gatsbyjs/gatsby/commit/11b3f11))
+
+## [2.2.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.2.4...gatsby-link@2.2.5) (2019-08-13)
+
+**Note:** Version bump only for package gatsby-link
+
 ## [2.2.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.2.3...gatsby-link@2.2.4) (2019-07-30)
 
 ### Bug Fixes

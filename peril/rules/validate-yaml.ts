@@ -205,9 +205,7 @@ export const validateYaml = async () => {
     )
   } catch (e) {
     warn(
-      `## "docs/categories.yml" is not valid YAML file:\n\n\`\`\`${
-        e.message
-      }\n\`\`\``
+      `## "docs/categories.yml" is not valid YAML file:\n\n\`\`\`${e.message}\n\`\`\``
     )
     return
   }

@@ -79,7 +79,7 @@ To fix this, you'll need to update all Gatsby plugins in the current project tha
 
 To update these packages, run:
 
-```sh
+```shell
 npm install gatsby-plugin-sharp gatsby-plugin-manifest gatsby-remark-images-contentful gatsby-source-contentful gatsby-transformer-sharp gatsby-transformer-sqip
 ```
 

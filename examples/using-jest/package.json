@@ -30,12 +30,12 @@
     "test": "jest"
   },
   "devDependencies": {
-    "@testing-library/react": "^8.0.5",
+    "@testing-library/jest-dom": "^4.0.0",
+    "@testing-library/react": "^9.1.1",
     "babel-jest": "^24.0.0",
     "babel-preset-gatsby": "^0.1.6",
     "identity-obj-proxy": "^3.0.0",
-    "jest": "^24.0.0",
-    "jest-dom": "^3.0.0"
+    "jest": "^24.0.0"
   },
   "repository": {
     "type": "git",

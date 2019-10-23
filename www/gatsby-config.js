@@ -13,7 +13,10 @@ const dynamicPlugins = []
 if (process.env.ANALYTICS_SERVICE_ACCOUNT) {
   // pick data from 3 months ago
   const startDate = new Date()
-  startDate.setMonth(startDate.getMonth() - 3)
+  // temporary lower guess to use 2 days of data to lower guess data
+  // real fix is to move gatsby-plugin-guess to aot mode
+  // startDate.setMonth(startDate.getMonth() - 3)
+  startDate.setDate(startDate.getDate() - 2)
   dynamicPlugins.push({
     resolve: `gatsby-plugin-guess-js`,
     options: {
@@ -62,6 +65,7 @@ module.exports = {
     "Mdx.frontmatter.author": `AuthorYaml`,
   },
   plugins: [
+    `gatsby-plugin-theme-ui`,
     {
       resolve: `gatsby-source-npm-package-search`,
       options: {
@@ -172,7 +176,23 @@ module.exports = {
             },
           },
           `gatsby-remark-autolink-headers`,
-          `gatsby-remark-prismjs`,
+          {
+            resolve: `gatsby-remark-prismjs`,
+            options: {
+              aliases: {
+                dosini: `ini`,
+                env: `bash`,
+                es6: `js`,
+                flowchart: `none`,
+                gitignore: `none`,
+                gql: `graphql`,
+                htaccess: `apacheconf`,
+                mdx: `markdown`,
+                ml: `fsharp`,
+                styl: `stylus`,
+              },
+            },
+          },
           `gatsby-remark-copy-linked-files`,
           `gatsby-remark-smartypants`,
         ],
@@ -226,6 +246,7 @@ module.exports = {
       options: {
         feeds: [
           {
+            title: `GatsbyJS`,
             query: `
               {
                 allMdx(

@@ -1,18 +1,18 @@
-const slash = require(`slash`);
-const path = require(`path`);
-const fs = require(`fs`);
-const mime = require(`mime`);
-const prettyBytes = require(`pretty-bytes`);
-const crypto = require(`crypto`);
-const md5File = require(`md5-file`);
+const slash = require(`slash`)
+const path = require(`path`)
+const fs = require(`fs`)
+const mime = require(`mime`)
+const prettyBytes = require(`pretty-bytes`)
+const crypto = require(`crypto`)
+const md5File = require(`md5-file`)
 
 exports.createFileNode = async (
   pathToFile,
   createNodeId,
   pluginOptions = {}
 ) => {
-  const slashed = slash(pathToFile);
-  const parsedSlashed = path.parse(slashed);
+  const slashed = slash(pathToFile)
+  const parsedSlashed = path.parse(slashed)
   const slashedFile = {
     ...parsedSlashed,
     absolutePath: slashed,
@@ -20,32 +20,32 @@ exports.createFileNode = async (
     relativeDirectory: path.relative(
       pluginOptions.path || process.cwd(),
       parsedSlashed.dir
-    )
-  };
+    ),
+  }
 
-  const stats = fs.statSync(slashedFile.absolutePath);
-  let internal;
+  const stats = fs.statSync(slashedFile.absolutePath)
+  let internal
   if (stats.isDirectory()) {
     const contentDigest = crypto
       .createHash(`md5`)
       .update(
         JSON.stringify({ stats: stats, absolutePath: slashedFile.absolutePath })
       )
-      .digest(`hex`);
+      .digest(`hex`)
     internal = {
       contentDigest,
       type: `Directory`,
-      description: `Directory "${path.relative(process.cwd(), slashed)}"`
-    };
+      description: `Directory "${path.relative(process.cwd(), slashed)}"`,
+    }
   } else {
-    const contentDigest = md5File.sync(slashedFile.absolutePath);
-    const mediaType = mime.getType(slashedFile.ext);
+    const contentDigest = md5File.sync(slashedFile.absolutePath)
+    const mediaType = mime.getType(slashedFile.ext)
     internal = {
       contentDigest,
       type: `File`,
       mediaType: mediaType ? mediaType : `application/octet-stream`,
-      description: `File "${path.relative(process.cwd(), slashed)}"`
-    };
+      description: `File "${path.relative(process.cwd(), slashed)}"`,
+    }
   }
 
   // Stringify date objects.
@@ -74,7 +74,7 @@ exports.createFileNode = async (
       changeTime: stats.ctime,
       birthTime: stats.birthtime,
       ...slashedFile,
-      ...stats
+      ...stats,
     })
-  );
-};
+  )
+}

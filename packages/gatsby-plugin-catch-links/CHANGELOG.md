@@ -3,6 +3,64 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-catch-links@2.1.14...gatsby-plugin-catch-links@2.1.15) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-plugin-catch-links
+
+## [2.1.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-catch-links@2.1.13...gatsby-plugin-catch-links@2.1.14) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-plugin-catch-links
+
+## [2.1.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-catch-links@2.1.12...gatsby-plugin-catch-links@2.1.13) (2019-10-09)
+
+**Note:** Version bump only for package gatsby-plugin-catch-links
+
+## [2.1.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-catch-links@2.1.10...gatsby-plugin-catch-links@2.1.12) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-plugin-catch-links
+
+## [2.1.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-catch-links@2.1.10...gatsby-plugin-catch-links@2.1.11) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-plugin-catch-links
+
+## [2.1.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-catch-links@2.1.9...gatsby-plugin-catch-links@2.1.10) (2019-09-20)
+
+**Note:** Version bump only for package gatsby-plugin-catch-links
+
+## [2.1.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-catch-links@2.1.8...gatsby-plugin-catch-links@2.1.9) (2019-09-09)
+
+**Note:** Version bump only for package gatsby-plugin-catch-links
+
+## [2.1.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-catch-links@2.1.7...gatsby-plugin-catch-links@2.1.8) (2019-09-03)
+
+### Bug Fixes
+
+- **gatsby-plugin-catch-links:** fix pluginOptions ([#17334](https://github.com/gatsbyjs/gatsby/issues/17334)) ([1d1df95](https://github.com/gatsbyjs/gatsby/commit/1d1df95))
+
+## [2.1.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-catch-links@2.1.6...gatsby-plugin-catch-links@2.1.7) (2019-09-01)
+
+### Bug Fixes
+
+- update minor updates in packages except react, babel and eslint ([#17254](https://github.com/gatsbyjs/gatsby/issues/17254)) ([252d867](https://github.com/gatsbyjs/gatsby/commit/252d867))
+
+## [2.1.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-catch-links@2.1.5...gatsby-plugin-catch-links@2.1.6) (2019-08-30)
+
+**Note:** Version bump only for package gatsby-plugin-catch-links
+
+## [2.1.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-catch-links@2.1.4...gatsby-plugin-catch-links@2.1.5) (2019-08-23)
+
+**Note:** Version bump only for package gatsby-plugin-catch-links
+
+## [2.1.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-catch-links@2.1.3...gatsby-plugin-catch-links@2.1.4) (2019-08-20)
+
+**Note:** Version bump only for package gatsby-plugin-catch-links
+
+## [2.1.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-catch-links@2.1.2...gatsby-plugin-catch-links@2.1.3) (2019-08-13)
+
+### Features
+
+- **gatsby-plugin-catch-links:** Add ability to exclude links ([#15416](https://github.com/gatsbyjs/gatsby/issues/15416)) ([46f514c](https://github.com/gatsbyjs/gatsby/commit/46f514c)), closes [#14835](https://github.com/gatsbyjs/gatsby/issues/14835)
+
 ## [2.1.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-catch-links@2.1.1...gatsby-plugin-catch-links@2.1.2) (2019-07-12)
 
 ### Bug Fixes

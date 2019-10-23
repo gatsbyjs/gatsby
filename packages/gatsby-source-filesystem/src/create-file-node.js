@@ -18,9 +18,8 @@ exports.createFileNode = async (
     ...parsedSlashed,
     absolutePath: slashed,
     // Useful for limiting graphql query with certain parent directory
-    relativeDirectory: path.relative(
-      pluginOptions.path || process.cwd(),
-      parsedSlashed.dir
+    relativeDirectory: slash(
+      path.relative(pluginOptions.path || process.cwd(), parsedSlashed.dir)
     ),
   }
 

@@ -1,10 +1,11 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { graphql, Link } from "gatsby"
 import Helmet from "react-helmet"
 import { sortBy } from "lodash-es"
 
 import APIReference from "../../components/api-reference"
-import { space } from "../../utils/presets"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
 import { itemListDocs } from "../../utils/sidebar/item-list"
@@ -25,7 +26,7 @@ class NodeAPIHelperDocs extends React.Component {
               content="Documentation on API helpers for creating nodes within Gatsby's GraphQL data layer"
             />
           </Helmet>
-          <h1 id="gatsby-node-helpers-apis" css={{ marginTop: 0 }}>
+          <h1 id="gatsby-node-helpers-apis" sx={{ mt: 0 }}>
             Gatsby Node API helpers
           </h1>
           <p>
@@ -76,7 +77,7 @@ exports.createPages = ({ actions, reporter }) => {
             Check documentation of specific APIs in{` `}
             <Link to="/docs/node-apis/">Gatsby Node APIs</Link> for details.
           </p>
-          <h2 id="shared-helpers" css={{ marginBottom: space[3] }}>
+          <h2 id="shared-helpers" sx={{ mb: 3 }}>
             Shared helpers
           </h2>
           <ul>

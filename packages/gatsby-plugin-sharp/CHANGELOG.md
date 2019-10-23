@@ -3,6 +3,116 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.32](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.31...gatsby-plugin-sharp@2.2.32) (2019-10-16)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.2.31](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.30...gatsby-plugin-sharp@2.2.31) (2019-10-14)
+
+### Bug Fixes
+
+- **gatsby-plugin-sharp:** Allow brackets in paths ([#18289](https://github.com/gatsbyjs/gatsby/issues/18289)) ([f9933b1](https://github.com/gatsbyjs/gatsby/commit/f9933b1))
+
+## [2.2.30](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.29...gatsby-plugin-sharp@2.2.30) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.2.29](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.28...gatsby-plugin-sharp@2.2.29) (2019-10-09)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.2.28](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.27...gatsby-plugin-sharp@2.2.28) (2019-10-04)
+
+### Bug Fixes
+
+- update dependency bluebird to ^3.7.0 ([#18029](https://github.com/gatsbyjs/gatsby/issues/18029)) ([bd235a8](https://github.com/gatsbyjs/gatsby/commit/bd235a8))
+
+## [2.2.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.25...gatsby-plugin-sharp@2.2.27) (2019-09-26)
+
+### Bug Fixes
+
+- update dependency sharp to ^0.23.1 ([#17904](https://github.com/gatsbyjs/gatsby/issues/17904)) ([f19ad3c](https://github.com/gatsbyjs/gatsby/commit/f19ad3c))
+
+## [2.2.26](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.25...gatsby-plugin-sharp@2.2.26) (2019-09-26)
+
+### Bug Fixes
+
+- update dependency sharp to ^0.23.1 ([#17904](https://github.com/gatsbyjs/gatsby/issues/17904)) ([f19ad3c](https://github.com/gatsbyjs/gatsby/commit/f19ad3c))
+
+## [2.2.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.24...gatsby-plugin-sharp@2.2.25) (2019-09-20)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.2.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.23...gatsby-plugin-sharp@2.2.24) (2019-09-18)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.2.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.22...gatsby-plugin-sharp@2.2.23) (2019-09-18)
+
+### Bug Fixes
+
+- **gatsby-plugin-sharp:** Set a unique uuid for each job ([#17693](https://github.com/gatsbyjs/gatsby/issues/17693)) ([0926c73](https://github.com/gatsbyjs/gatsby/commit/0926c73))
+
+## [2.2.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.21...gatsby-plugin-sharp@2.2.22) (2019-09-13)
+
+### Features
+
+- **gatsby-remark-images:** Add flag to suppress css background-image to prevent FOUB ([#17154](https://github.com/gatsbyjs/gatsby/issues/17154)) ([125fd01](https://github.com/gatsbyjs/gatsby/commit/125fd01))
+
+## [2.2.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.20...gatsby-plugin-sharp@2.2.21) (2019-09-09)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.2.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.19...gatsby-plugin-sharp@2.2.20) (2019-09-05)
+
+### Bug Fixes
+
+- **gatsby-plugin-sharp:** convert "overlayWith" to "composite" ([#17392](https://github.com/gatsbyjs/gatsby/issues/17392)) ([49913ba](https://github.com/gatsbyjs/gatsby/commit/49913ba)), closes [#17162](https://github.com/gatsbyjs/gatsby/issues/17162)
+
+## [2.2.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.18...gatsby-plugin-sharp@2.2.19) (2019-09-01)
+
+### Bug Fixes
+
+- update minor updates in packages except react, babel and eslint ([#17254](https://github.com/gatsbyjs/gatsby/issues/17254)) ([252d867](https://github.com/gatsbyjs/gatsby/commit/252d867))
+
+## [2.2.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.17...gatsby-plugin-sharp@2.2.18) (2019-08-24)
+
+### Bug Fixes
+
+- update dependency fs-extra to v8 ([#17031](https://github.com/gatsbyjs/gatsby/issues/17031)) ([d891a19](https://github.com/gatsbyjs/gatsby/commit/d891a19))
+
+## [2.2.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.16...gatsby-plugin-sharp@2.2.17) (2019-08-23)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.2.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.15...gatsby-plugin-sharp@2.2.16) (2019-08-22)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.2.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.14...gatsby-plugin-sharp@2.2.15) (2019-08-22)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.2.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.13...gatsby-plugin-sharp@2.2.14) (2019-08-21)
+
+### Bug Fixes
+
+- update dependency bluebird to ^3.5.5 ([#16825](https://github.com/gatsbyjs/gatsby/issues/16825)) ([ec0be83](https://github.com/gatsbyjs/gatsby/commit/ec0be83))
+- update dependency fs-extra to ^7.0.1 ([#16878](https://github.com/gatsbyjs/gatsby/issues/16878)) ([f008fed](https://github.com/gatsbyjs/gatsby/commit/f008fed))
+- **gatsby:** Fix tracing so that everything happens under one span ([#16893](https://github.com/gatsbyjs/gatsby/issues/16893)) ([f8cae16](https://github.com/gatsbyjs/gatsby/commit/f8cae16))
+
+## [2.2.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.12...gatsby-plugin-sharp@2.2.13) (2019-08-20)
+
+### Bug Fixes
+
+- update dependency async to ^2.6.3 ([#16806](https://github.com/gatsbyjs/gatsby/issues/16806)) ([54e8461](https://github.com/gatsbyjs/gatsby/commit/54e8461))
+
+## [2.2.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.11...gatsby-plugin-sharp@2.2.12) (2019-08-16)
+
+### Bug Fixes
+
+- **docs:** dead links to sharp documentation, need to point to new host ([#16687](https://github.com/gatsbyjs/gatsby/issues/16687)) ([7c096e7](https://github.com/gatsbyjs/gatsby/commit/7c096e7))
+
 ## [2.2.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.10...gatsby-plugin-sharp@2.2.11) (2019-08-09)
 
 **Note:** Version bump only for package gatsby-plugin-sharp

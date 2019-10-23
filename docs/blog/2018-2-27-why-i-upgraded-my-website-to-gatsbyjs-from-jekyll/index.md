@@ -14,7 +14,7 @@ For the past couple of weeks, I’ve been rebuilding my personal website from sc
 
 For a bit of background, I originally built my website while I was an undergraduate back in 2016. It was a single page [React](https://reactjs.org/) application, with the design based around an interactive search box where visitors could type in things. The application would then change based on what was typed in, to show projects I’ve done, like a website resume or portfolio. I tagged it on Git for posterity [here](https://github.com/jiahaog/jiahao.codes/releases/tag/1.0.0).
 
-Some drawbacks were that the content was very coupled with the code to to style the page, and it was difficult to change the theme without having to rewrite a lot of code. It uses a customized version of [JSON Resume](https://jsonresume.org/) to display data, but ultimately I didn't do a good job and it was a bit of a mess.
+Some drawbacks were that the content was very coupled with the code to style the page, and it was difficult to change the theme without having to rewrite a lot of code. It uses a customized version of [JSON Resume](https://jsonresume.org/) to display data, but ultimately I didn't do a good job and it was a bit of a mess.
 
 Furthermore, being a single page application, it takes a little too long to load just to display some static content. I wanted to add routing and different pages to add blogging functionality, which it wasn’t really suitable for without major refactoring.
 

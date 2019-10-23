@@ -13,7 +13,7 @@ There are two ways you can use Tailwind with Gatsby:
 
 You have to install and configure Tailwind for both of these methods, so this guide will walk through that step first, then you can follow the instructions for either PostCSS or CSS-in-JS.
 
-## Installing and Configuring Tailwind
+## Installing and configuring Tailwind
 
 This guide assumes that you have a Gatsby project set up. If you need to set up a project, head to the [**Quick Start guide**](/docs/quick-start), then come back.
 
@@ -27,10 +27,10 @@ npm install tailwindcss --save-dev
 
 **Note**: A config file isn't required for Tailwind 1.0.0+
 
-To configure Tailwind, we'll need to add a Tailwind configuration file. Luckily, Tailwind has a built-in script to do this. Just run the following command:
+To configure Tailwind, you'll need to add a Tailwind configuration file. Luckily, Tailwind has a built-in script to do this. Just run the following command:
 
 ```shell
-./node_modules/.bin/tailwind init
+npx tailwind init
 ```
 
 ### Option #1: PostCSS
@@ -59,7 +59,7 @@ module.exports = () => ({
 
 4. Use the Tailwind Directives in your CSS
 
-You can now use the `@tailwind` directives to add Tailwind's utilites, preflight, and components into your CSS. You can also use `@apply` and all of Tailwind's other directives and functions!
+You can now use the `@tailwind` directives to add Tailwind's utilities, preflight, and components into your CSS. You can also use `@apply` and all of Tailwind's other directives and functions!
 
 To learn more about how to use Tailwind in your CSS, visit the [Tailwind Documentation](https://tailwindcss.com/docs/installation#3-use-tailwind-in-your-css)
 

@@ -2,14 +2,7 @@
 import { jsx } from "@emotion/core"
 import styled from "@emotion/styled"
 import { keyframes } from "@emotion/core"
-import {
-  mediaQueries,
-  colors,
-  radii,
-  shadows,
-  space,
-  zIndices,
-} from "../../utils/presets"
+import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 
 const boldEntry = keyframes`
   100% {
@@ -30,13 +23,13 @@ const opacityEntry = keyframes`
 `
 
 const WrapperDiv = styled(`div`)`
-  background-color: ${colors.white};
-  border-top: 1px solid ${colors.ui.border.subtle};
+  background-color: ${p => p.theme.colors.widget.background};
+  border-top: 1px solid ${p => p.theme.colors.ui.border};
   height: 100%;
   opacity: 0.5;
-  padding: ${space[6]} 0;
+  padding: ${p => p.theme.space[6]} 0;
   width: 100%;
-  z-index: ${zIndices.widget};
+  z-index: ${p => p.theme.zIndices.widget};
 
   [tabindex="-1"]:focus {
     outline: none;
@@ -72,11 +65,11 @@ const WrapperDiv = styled(`div`)`
   }
 
   ${mediaQueries.lg} {
-    box-shadow: ${shadows.overlay};
+    box-shadow: ${p => p.theme.shadows.overlay};
     border: 0;
-    border-radius: ${radii[2]}px;
+    border-radius: ${p => p.theme.radii[2]}px;
     height: 100%;
-    padding: ${space[7]} ${space[6]};
+    padding: ${p => p.theme.space[7]} ${p => p.theme.space[6]};
     transform: scale(0);
     transform-origin: top center;
   }

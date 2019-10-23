@@ -38,7 +38,6 @@ const xhrPrefetchStrategy = function(url) {
   return new Promise((resolve, reject) => {
     const req = new XMLHttpRequest()
     req.open(`GET`, url, true)
-    req.withCredentials = true
 
     req.onload = () => {
       if (req.status === 200) {

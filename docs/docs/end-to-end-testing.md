@@ -84,7 +84,7 @@ Cypress right now will look for tests inside the `cypress/integration` folder. I
 
 ```json:title=cypress.json
 {
-  "baseUrl": "http://localhost:8000/"
+  "baseUrl": "http://localhost:8000/",
   "integrationFolder": "cypress/e2e" // highlight-line
 }
 ```

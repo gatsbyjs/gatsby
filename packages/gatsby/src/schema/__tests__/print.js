@@ -11,7 +11,27 @@ afterEach(() => {
   fs.writeFile.mockClear()
 })
 
-jest.mock(`gatsby-cli/lib/reporter`)
+jest.mock(`gatsby-cli/lib/reporter`, () => {
+  return {
+    log: jest.fn(),
+    info: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+    activityTimer: () => {
+      return {
+        start: jest.fn(),
+        setStatus: jest.fn(),
+        end: jest.fn(),
+      }
+    },
+    phantomActivity: () => {
+      return {
+        start: jest.fn(),
+        end: jest.fn(),
+      }
+    },
+  }
+})
 const report = require(`gatsby-cli/lib/reporter`)
 afterEach(() => {
   report.error.mockClear()

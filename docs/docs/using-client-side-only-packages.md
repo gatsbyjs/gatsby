@@ -80,6 +80,33 @@ const LoadableBuyButton = Loadable(() => import("./ShopifyBuyButton"))
 export default LoadableBuyButton
 ```
 
+## Workaround 4: Use React.lazy and Suspense on client side only
+
+React.lazy and Suspense are still not ready for server side rendering, but they can still be used by checking that the code is executed only on the client.
+While this solution is inferior to `loadable-components`, that works both on server side and client, it still provides an alternative for dealing with client side only packages, without an added dependency.
+Remember that the following code could break if executed without the `isSSR` guard.
+
+```jsx
+import React from "react"
+
+const ClientSideOnlyLazy = React.lazy(() =>
+  import("../components/ClientSideOnly")
+)
+const MyPage = () => {
+  const isSSR = typeof window === "undefined"
+
+  return (
+    <>
+      {!isSSR && (
+        <React.Suspense fallback={<div />}>
+          <ClientSideOnlyLazy />
+        </React.Suspense>
+      )}
+    </>
+  )
+}
+```
+
 > **Note:** There are other potential workarounds than those listed here. If you've had success with another method, check out the [contributing docs](/contributing/docs-contributions/) and add yours!
 
 If all else fails, you may also want to check out the documentation on [Debugging HTML Builds](/docs/debugging-html-builds/).

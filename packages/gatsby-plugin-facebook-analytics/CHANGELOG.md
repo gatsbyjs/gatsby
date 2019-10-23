@@ -3,6 +3,52 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-facebook-analytics@2.2.13...gatsby-plugin-facebook-analytics@2.2.14) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-plugin-facebook-analytics
+
+## [2.2.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-facebook-analytics@2.2.12...gatsby-plugin-facebook-analytics@2.2.13) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-plugin-facebook-analytics
+
+## [2.2.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-facebook-analytics@2.2.11...gatsby-plugin-facebook-analytics@2.2.12) (2019-10-09)
+
+**Note:** Version bump only for package gatsby-plugin-facebook-analytics
+
+## [2.2.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-facebook-analytics@2.2.10...gatsby-plugin-facebook-analytics@2.2.11) (2019-10-08)
+
+**Note:** Version bump only for package gatsby-plugin-facebook-analytics
+
+## [2.2.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-facebook-analytics@2.2.8...gatsby-plugin-facebook-analytics@2.2.10) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-plugin-facebook-analytics
+
+## [2.2.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-facebook-analytics@2.2.8...gatsby-plugin-facebook-analytics@2.2.9) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-plugin-facebook-analytics
+
+## [2.2.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-facebook-analytics@2.2.7...gatsby-plugin-facebook-analytics@2.2.8) (2019-09-20)
+
+**Note:** Version bump only for package gatsby-plugin-facebook-analytics
+
+## [2.2.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-facebook-analytics@2.2.6...gatsby-plugin-facebook-analytics@2.2.7) (2019-09-09)
+
+**Note:** Version bump only for package gatsby-plugin-facebook-analytics
+
+## [2.2.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-facebook-analytics@2.2.5...gatsby-plugin-facebook-analytics@2.2.6) (2019-09-01)
+
+### Bug Fixes
+
+- update minor updates in packages except react, babel and eslint ([#17254](https://github.com/gatsbyjs/gatsby/issues/17254)) ([252d867](https://github.com/gatsbyjs/gatsby/commit/252d867))
+
+## [2.2.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-facebook-analytics@2.2.4...gatsby-plugin-facebook-analytics@2.2.5) (2019-08-23)
+
+**Note:** Version bump only for package gatsby-plugin-facebook-analytics
+
+## [2.2.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-facebook-analytics@2.2.3...gatsby-plugin-facebook-analytics@2.2.4) (2019-08-20)
+
+**Note:** Version bump only for package gatsby-plugin-facebook-analytics
+
 ## [2.2.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-facebook-analytics@2.2.2...gatsby-plugin-facebook-analytics@2.2.3) (2019-07-20)
 
 **Note:** Version bump only for package gatsby-plugin-facebook-analytics

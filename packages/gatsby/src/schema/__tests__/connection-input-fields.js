@@ -4,13 +4,14 @@ const { buildSchema } = require(`../schema`)
 const { LocalNodeModel } = require(`../node-model`)
 const nodeStore = require(`../../db/nodes`)
 const { store } = require(`../../redux`)
+const { actions } = require(`../../redux/actions`)
 require(`../../db/__tests__/fixtures/ensure-loki`)()
 
 function makeNodes() {
   return [
     {
       id: `0`,
-      internal: { type: `Test` },
+      internal: { type: `Test`, contentDigest: `0` },
       children: [],
       index: 0,
       name: `The Mad Max`,
@@ -42,7 +43,7 @@ function makeNodes() {
     },
     {
       id: `1`,
-      internal: { type: `Test` },
+      internal: { type: `Test`, contentDigest: `0` },
       children: [],
       index: 1,
       name: `The Mad Wax`,
@@ -81,7 +82,7 @@ function makeNodes() {
     },
     {
       id: `2`,
-      internal: { type: `Test` },
+      internal: { type: `Test`, contentDigest: `0` },
       children: [],
       index: 2,
       name: `The Mad Wax`,
@@ -133,7 +134,9 @@ function makeNodes() {
 
 async function queryResult(nodes, query) {
   store.dispatch({ type: `DELETE_CACHE` })
-  nodes.forEach(node => store.dispatch({ type: `CREATE_NODE`, payload: node }))
+  nodes.forEach(node =>
+    actions.createNode(node, { name: `test` })(store.dispatch)
+  )
 
   const schemaComposer = createSchemaComposer()
   const schema = await buildSchema({
@@ -148,6 +151,7 @@ async function queryResult(nodes, query) {
   return graphql(schema, query, undefined, {
     ...context,
     nodeModel: new LocalNodeModel({
+      schemaComposer,
       schema,
       nodeStore,
       createPageDependency: jest.fn(),
