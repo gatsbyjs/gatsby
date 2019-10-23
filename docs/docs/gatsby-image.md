@@ -1,7 +1,7 @@
 ---
 title: Gatsby Image API
 ---
-<!--lint disable no-duplicate-headings-->
+
 Part of what makes Gatsby sites so fast is its recommended approach to handling images. `gatsby-image` is a React component designed to work seamlessly with Gatsby's [native image processing](https://image-processing.gatsbyjs.org/) capabilities powered by GraphQL and [`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp/) to easily and completely optimize image loading for your sites.
 
 > _Note: `gatsby-image` is **not** a drop-in replacement for `<img />`. It's optimized for responsive fixed width/height images and images that stretch the full-width of a container. There are also other ways to [work with images](/docs/images-and-files/) in Gatsby that don't require GraphQL._

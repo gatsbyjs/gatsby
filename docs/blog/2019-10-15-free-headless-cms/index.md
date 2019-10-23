@@ -5,7 +5,7 @@ author: "Hashim Warren"
 excerpt: "Looking for a free headless CMS? This guide will give you a few solid and budget-friendly options to choose from"
 tags: ["cms"]
 ---
-<!--lint disable no-duplicate-headings-->
+
 So, you have a very big idea. But very little money. You [purchased a domain name](https://twitter.com/gatsbyjs/status/1169991336801525761), and now that great idea needs a proper website.
 
 You decide you want to build your site with Gatsby and one of several [free hosting providers](/docs/deploying-and-hosting/), but you also need a [headless CMS](/docs/headless-cms/) that can start small and grow over time.

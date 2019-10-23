@@ -2,7 +2,7 @@
 title: GraphQL API
 tableOfContentsDepth: 2
 ---
-<!--lint disable no-duplicate-headings-->
+
 import { GraphqlApiQuery } from "../../www/src/components/api-reference/doc-static-queries"
 import APIReference from "../../www/src/components/api-reference"
 

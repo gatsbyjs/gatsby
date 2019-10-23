@@ -2,7 +2,7 @@
 title: Recipes
 tableOfContentsDepth: 2
 ---
-<!--lint disable no-duplicate-headings-->
+
 <!-- Basic template for a Gatsby recipe:
 
 ## Task to accomplish
