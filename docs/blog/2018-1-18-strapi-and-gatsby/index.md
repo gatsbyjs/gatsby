@@ -10,11 +10,11 @@ tags: ["blogs", "cms", "headless-cms", "getting-started"]
 
 ![Showing the idea of using Gatsby with Strapi ](gatsby-strapi.png)
 
-A static website contains Web pages with fixed content. Technically, it is a simple list of HTML files, which displays the same information to every visitor. Unlike dynamic websites, they do not require any back-end programming or database. Publishing a static website is easy: the files are uploaded on a simple Web server or storage provider. The two main advantages of static websites are security and speed: there is no database so it can not be hacked and there is no need to render a page for each request, which makes Web browsing faster.
+A static website contains Web pages with fixed content. Technically, it is a simple list of HTML files, which displays the same information to every visitor. Unlike dynamic websites, they do not require any backend programming or database. Publishing a static website is easy: the files are uploaded on a simple Web server or storage provider. The two main advantages of static websites are security and speed: there is no database so it can not be hacked and there is no need to render a page for each request, which makes Web browsing faster.
 
 To make their creation easier, numerous open-source static websites generators are available: [Jekyll](https://jekyllrb.com/), [Hugo](https://gohugo.io/), [Hexo](https://hexo.io/), etc. Most of the time, the content is managed through static (ideally Markdown) files or a Content API. Then, the generator requests the content, injects it in templates defined by the developer and generates a bunch of HTML files.
 
-Progressive Web Apps (PWA) are web applications, highly based on JavaScript, and are [reliable, fast and engaging](https://developers.google.com/web/progressive-web-apps/). Since they make web browsing much faster and offer a better user experience, PWA have become the default way to build Web interfaces. Thus, many amazing front-end frameworks appeared over the last couple years: Angular, React and more recently, Vue.
+Progressive Web Apps (PWA) are web applications, highly based on JavaScript, and are [reliable, fast and engaging](https://developers.google.com/web/progressive-web-apps/). Since they make web browsing much faster and offer a better user experience, PWA have become the default way to build Web interfaces. Thus, many amazing frontend frameworks appeared over the last couple years: Angular, React and more recently, Vue.
 
 > Gatsby: when static websites meet Progressive Web Apps
 
@@ -32,7 +32,7 @@ Created by [Kyle Mathews](https://twitter.com/kylemathews), the project was offi
 
 ## What is Strapi?
 
-[Strapi](https://strapi.io) is an _open source **Headless CMS Front-End Developers Love**_. It's more than a [Node.js Framework and more than a Headless CMS](https://strapi.io/overview), it saves weeks of API development time, and allows easy long-term content management through a beautiful administration panel _anyone can use_.
+[Strapi](https://strapi.io) is an _open source **Headless CMS Frontend Developers Love**_. It's more than a [Node.js Framework and more than a Headless CMS](https://strapi.io/overview), it saves weeks of API development time, and allows easy long-term content management through a beautiful administration panel _anyone can use_.
 
 ![The Strapi Logo](logo-strapi.png)
 

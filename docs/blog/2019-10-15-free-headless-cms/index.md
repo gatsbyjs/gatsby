@@ -18,7 +18,7 @@ How do you know which headless CMS is right for your site? In this post, we’ll
 
 2. This headless CMS has to be robust enough to grow with the site over time.
 
-3. This headless CMS has to work with with front-end frameworks like Gatsby.
+3. This headless CMS has to work with with frontend frameworks like Gatsby.
 
 The difficulty with these must-haves is that there are no _truly free_ options. There are open source projects that provide code for free, but you have to host it somewhere. Then, there are hosted headless CMS’s with generous free tiers. But most of them have prohibitive pricing once your project grows.
 
@@ -42,7 +42,7 @@ Every writer or marketer who works on the Internet is familiar with WordPress, s
 
 Cheap hosting is easy to find - providers like Bluehost and Amazon Lightsail offer WordPress hosting for about \$4 dollars a month. Other popular hosts like GoDaddy can get you going for less than \$10 dollars a month.
 
-If your website needed all-in-one WordPress, then these cheap, shared hosting packages wouldn’t be enough to handle a website that expects any sort of traffic. However, you’re just using headless WordPress, and all that you ask from the software is to organize your content, and send it to a front-end framework like Gatsby.
+If your website needed all-in-one WordPress, then these cheap, shared hosting packages wouldn’t be enough to handle a website that expects any sort of traffic. However, you’re just using headless WordPress, and all that you ask from the software is to organize your content, and send it to a frontend framework like Gatsby.
 
 So, as long as the host is reputable, and the service is secure, you can buy the most cost-friendly hosting available. See Gatsby’s guide on getting started with [over a dozen headless CMS’s](https://www.gatsbyjs.org/docs/headless-cms/)
 

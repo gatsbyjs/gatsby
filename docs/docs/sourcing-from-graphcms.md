@@ -156,6 +156,6 @@ With this code, you have:
 
 ## Summary
 
-Hopefully you've seen how easy it is to start working with GraphCMS and Gatsby. With projects of all sizes gravitating towards the benefits of the JAM stack, the time has never been better to learn how to work with Gatsby. Adding a content API in the back-end with GraphCMS provides a scalable CMS that you can start using within minutes and keep using for the life of your project.
+Hopefully you've seen how easy it is to start working with GraphCMS and Gatsby. With projects of all sizes gravitating towards the benefits of the JAM stack, the time has never been better to learn how to work with Gatsby. Adding a content API in the backend with GraphCMS provides a scalable CMS that you can start using within minutes and keep using for the life of your project.
 
 [Check out GraphCMS today and build "fast websites", fast!](https://graphcms.com?ref="gatsby-headless-docs-bottom")
