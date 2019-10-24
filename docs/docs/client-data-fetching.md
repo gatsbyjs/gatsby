@@ -226,5 +226,5 @@ That's it -- an example of querying for data at build time using the Gatsby Grap
 
 You may be interested to check out other projects (both used in production and proof of concepts) that illustrate this usage:
 
-- [Gatsby store](https://github.com/gatsbyjs/store.gatsbyjs.org)
-- [Gatsby mail](https://github.com/DSchau/gatsby-mail)
+-   [Gatsby store](https://github.com/gatsbyjs/store.gatsbyjs.org)
+-   [Gatsby mail](https://github.com/DSchau/gatsby-mail)

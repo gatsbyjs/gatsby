@@ -17,15 +17,15 @@ In this post, I'll dive deep into the technical intricacies of what was actually
 
 There were two main symptoms experienced by users of large Gatsby sites.
 
-1. After navigating to a Gatsby site, it took a while for all the JavaScript to load so that it was "interactive". Therefore, clicks immediately after loading the page could take many seconds to actually navigate.
-1. Even after the initial load, clicking links could be somewhat laggy even though the target's resources had already been pre-fetched.
+1.  After navigating to a Gatsby site, it took a while for all the JavaScript to load so that it was "interactive". Therefore, clicks immediately after loading the page could take many seconds to actually navigate.
+2.  Even after the initial load, clicking links could be somewhat laggy even though the target's resources had already been pre-fetched.
 
 ## The Problem: Global pages manifest
 
 The central problem was that Gatsby generates a file for each build called `pages-manifest.json` (also called `data.json`) that must be loaded by the browser before users can navigate to other pages. It contains metadata about every page on the site, including:
 
-- **componentChunkName**: The logical name of the React component for the page
-- **dataPath**: The path to the file that contains the page's graphql query result, and any other page context.
+-   **componentChunkName**: The logical name of the React component for the page
+-   **dataPath**: The path to the file that contains the page's graphql query result, and any other page context.
 
 When a user clicks a link to another page, Gatsby first looks up the manifest for the page's component and query result file. Gatsby then downloads them (if they haven't already been prefetched), and then passes the loaded query results to the page's component and renders it. Since `pages-manifest` contains the list of all pages on the site, Gatsby can also immediately show a 404 if necessary if the page is not able to be located.
 
@@ -37,9 +37,9 @@ Even after the manifest had been loaded, the manifest had to be searched for the
 
 The solution seems abundantly obvious at this point. We needed to introduce a manifest file per page, instead of a global pages-manifest. We called this `page-data.json`. It includes:
 
-- **componentChunkName**: The logical name of the React component for the page
-- **result**: The full graphql query result and page context
-- **webpackCompilationHash**: Unique hash output by webpack any time user's `src` code content changes
+-   **componentChunkName**: The logical name of the React component for the page
+-   **result**: The full graphql query result and page context
+-   **webpackCompilationHash**: Unique hash output by webpack any time user's `src` code content changes
 
 This is very similar to each entry in the pages manifest. The major difference being that the graphql query result is inlined instead of being contained in a separate file.
 

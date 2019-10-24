@@ -64,10 +64,11 @@ This has generally driven by increased page complexity driven by increased user 
 
 Second, the **growing complexity of websites**. Non-critical images, CSS, JS libraries, and 3rd party tracking software will often unintentionally end up on the critical path to page load:
 
-- A marketing analyst drops a `<script>` tag from a hot new vendor inside a Google Tag Manager container. This triggers a blocking network call to a pixel provider on page loads. Time To Interactive (TTI) now averages 800ms longer.
-- After a team whiteboarding session, the lead designer for a popular lifestyle magazine decides to switch to a custom default site font. On Friday afternoon, a developer scans the JIRA ticket, thinks "this should be easy" and implements a two-line code change. The site now takes 20% longer to load.
+-   A marketing analyst drops a `<script>` tag from a hot new vendor inside a Google Tag Manager container. This triggers a blocking network call to a pixel provider on page loads. Time To Interactive (TTI) now averages 800ms longer.
 
-- The business unit of an e-commerce store needs additional inventory management tools, so they purchase a popular plugin in their CMS ecosystem that offers this functionality. What they don't know is that this plugin adds additional database calls every time a user loads a product page, delaying overall page loads by 500ms.
+-   After a team whiteboarding session, the lead designer for a popular lifestyle magazine decides to switch to a custom default site font. On Friday afternoon, a developer scans the JIRA ticket, thinks "this should be easy" and implements a two-line code change. The site now takes 20% longer to load.
+
+-   The business unit of an e-commerce store needs additional inventory management tools, so they purchase a popular plugin in their CMS ecosystem that offers this functionality. What they don't know is that this plugin adds additional database calls every time a user loads a product page, delaying overall page loads by 500ms.
 
 With website performance rarely tracked, almost never systematically, and with no performance "owner", it's easy to see how load times can balloon.
 
@@ -77,11 +78,11 @@ Like factory floors before the advent of [just-in-time manufacturing](https://en
 
 In the last 2-3 years, there's been growing attention to the crisis of mobile performance from a number of different corners:
 
-- As e-commerce grows globally, enterprises are increasingly targeting users on smartphones, often outside the fast-connection First World.
+-   As e-commerce grows globally, enterprises are increasingly targeting users on smartphones, often outside the fast-connection First World.
 
-- In January 2018, Google announced that [it would use mobile page speed](https://webmasters.googleblog.com/2018/01/using-page-speed-in-mobile-search.html) as a ranking for mobile SEO. In July 2018, those changes took effect.
+-   In January 2018, Google announced that [it would use mobile page speed](https://webmasters.googleblog.com/2018/01/using-page-speed-in-mobile-search.html) as a ranking for mobile SEO. In July 2018, those changes took effect.
 
-- Movements such as [Progressive Web Apps](https://developers.google.com/web/progressive-web-apps/) and the [JAMstack](https://jamstack.org/) have brought attention to site performance as a first-order goal.
+-   Movements such as [Progressive Web Apps](https://developers.google.com/web/progressive-web-apps/) and the [JAMstack](https://jamstack.org/) have brought attention to site performance as a first-order goal.
 
 _Performant_ is the new _responsive_.
 
@@ -138,13 +139,13 @@ Comprehensive checklists [weigh in at around 40 items](https://www.smashingmagaz
 
 Among the many implementation challenges are:
 
-- **Time and budget**. Performance optimization happens at the end of projects, which means that even in the rare case time is allocated, it can be dropped in the rush to fix bugs and make up for inevitable schedule slippage.
+-   **Time and budget**. Performance optimization happens at the end of projects, which means that even in the rare case time is allocated, it can be dropped in the rush to fix bugs and make up for inevitable schedule slippage.
 
-- **Skill mismatches**. Performance optimization is not in the skillset of many frontend developers. Simple changes by non-performance-oriented developers can easily undo days or weeks of dedicated performance work without dedicated training or stringent code review.
+-   **Skill mismatches**. Performance optimization is not in the skillset of many frontend developers. Simple changes by non-performance-oriented developers can easily undo days or weeks of dedicated performance work without dedicated training or stringent code review.
 
-- **Lack of executive visibility**. Regular site performance reporting is rare, and difficult to track over time.
+-   **Lack of executive visibility**. Regular site performance reporting is rare, and difficult to track over time.
 
-- **Lack of developer visibility**. While systems like Bugsnag can tie errors to specific lines of code, performance visibility is much higher level, even with detailed tools like Google Lighthouse. For non-experts, it's difficult to pinpoint performance regressions to specific code commits.
+-   **Lack of developer visibility**. While systems like Bugsnag can tie errors to specific lines of code, performance visibility is much higher level, even with detailed tools like Google Lighthouse. For non-experts, it's difficult to pinpoint performance regressions to specific code commits.
 
 ## Performance should be solved at the framework level
 

@@ -42,19 +42,19 @@ gatsby new [<site-name> [<starter-url>]]
 
 #### Examples
 
-- Create a Gatsby site named `my-awesome-site` using the default starter:
+-   Create a Gatsby site named `my-awesome-site` using the default starter:
 
 ```shell
 gatsby new my-awesome-site
 ```
 
-- Create a Gatsby site named `my-awesome-blog-site`, using [`gatsby-starter-blog`](https://www.gatsbyjs.org/starters/gatsbyjs/gatsby-starter-blog/):
+-   Create a Gatsby site named `my-awesome-blog-site`, using [`gatsby-starter-blog`](https://www.gatsbyjs.org/starters/gatsbyjs/gatsby-starter-blog/):
 
 ```shell
 gatsby new my-awesome-blog-site https://github.com/gatsbyjs/gatsby-starter-blog
 ```
 
-- If you leave out both of the arguments, the CLI will run an interactive shell asking for these inputs:
+-   If you leave out both of the arguments, the CLI will run an interactive shell asking for these inputs:
 
 ```shell
 gatsby new
@@ -76,11 +76,11 @@ Once you've installed a Gatsby site, go to the root directory of your project an
 
 #### Options
 
-|     Option      | Description                                     |
+|      Option     | Description                                     |
 | :-------------: | ----------------------------------------------- |
-| `-H`, `--host`  | Set host. Defaults to localhost                 |
-| `-p`, `--port`  | Set port. Defaults to 8000                      |
-| `-o`, `--open`  | Open the site in your (default) browser for you |
+|  `-H`, `--host` | Set host. Defaults to localhost                 |
+|  `-p`, `--port` | Set port. Defaults to 8000                      |
+|  `-o`, `--open` | Open the site in your (default) browser for you |
 | `-S`, `--https` | Use HTTPS                                       |
 
 Follow the [Local HTTPS guide](/docs/local-https/)
@@ -116,9 +116,9 @@ At the root of a Gatsby site, compile your application and make it ready for dep
 |            Option            | Description                                                                                               |
 | :--------------------------: | --------------------------------------------------------------------------------------------------------- |
 |       `--prefix-paths`       | Build site with link paths prefixed (set pathPrefix in your config)                                       |
-|        `--no-uglify`         | Build site without uglifying JS bundles (for debugging)                                                   |
+|         `--no-uglify`        | Build site without uglifying JS bundles (for debugging)                                                   |
 | `--open-tracing-config-file` | Tracer configuration file (OpenTracing compatible). See [Performance Tracing](/docs/performance-tracing/) |
-| `--no-color`, `--no-colors`  | Disables colored terminal output                                                                          |
+|  `--no-color`, `--no-colors` | Disables colored terminal output                                                                          |
 
 In addition to these build options, there are some optional [build environment variables](/docs/environment-variables/#build-variables) for more advanced configurations that can adjust how a build runs. For example, setting `CI=true` as an environment variable will tailor output for [dumb terminals](https://en.wikipedia.org/wiki/Computer_terminal#Dumb_terminals).
 
@@ -145,7 +145,7 @@ At the root of a Gatsby site, get helpful environment information which will be 
 
 #### Options
 
-|       Option        | Description                                             |
+|        Option       | Description                                             |
 | :-----------------: | ------------------------------------------------------- |
 | `-C`, `--clipboard` | Automagically copy environment information to clipboard |
 
@@ -157,10 +157,10 @@ At the root of a Gatsby site, wipe out the cache (`.cache` folder) and public di
 
 This is useful as a last resort when your local project seems to have issues or content does not seem to be refreshing. Issues this may fix commonly include:
 
-- Stale data, e.g. this file/resource/etc. isn't appearing
-- GraphQL error, e.g. this GraphQL resource should be present but is not
-- Dependency issues, e.g. invalid version, cryptic errors in console, etc.
-- Plugin issues, e.g. developing a local plugin and changes don't seem to be taking effect
+-   Stale data, e.g. this file/resource/etc. isn't appearing
+-   GraphQL error, e.g. this GraphQL resource should be present but is not
+-   Dependency issues, e.g. invalid version, cryptic errors in console, etc.
+-   Plugin issues, e.g. developing a local plugin and changes don't seem to be taking effect
 
 ### `plugin`
 

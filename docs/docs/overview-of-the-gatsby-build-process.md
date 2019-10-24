@@ -10,8 +10,8 @@ _This is a high-level overview about the steps in the Gatsby build process. For 
 
 Gatsby has two modes for compiling a site:
 
-1. Develop - run with the `gatsby develop` command
-2. Build - run with `gatsby build`
+1.  Develop - run with the `gatsby develop` command
+2.  Build - run with `gatsby build`
 
 You can start Gatsby in either mode with its respective command: `gatsby develop` or `gatsby build`.
 
@@ -177,11 +177,11 @@ info Done building in 16.143999152 sec
 
 At a high level, what happens during the whole bootstrap and build process is:
 
-1. `Node` objects are sourced from whatever sources you defined in `gatsby-config.js` with plugins as well as in your `gatsby-node.js` file
-2. A schema is inferred from the Node objects
-3. Pages are created based off JavaScript components in your site or in installed themes
-4. GraphQL queries are extracted and run to provide data for all pages
-5. Static files are created and bundled in the `public` directory
+1.  `Node` objects are sourced from whatever sources you defined in `gatsby-config.js` with plugins as well as in your `gatsby-node.js` file
+2.  A schema is inferred from the Node objects
+3.  Pages are created based off JavaScript components in your site or in installed themes
+4.  GraphQL queries are extracted and run to provide data for all pages
+5.  Static files are created and bundled in the `public` directory
 
 For an introduction to what happens at each step throughout the process from the output above, refer to the sections below.
 
@@ -189,41 +189,41 @@ For an introduction to what happens at each step throughout the process from the
 
 The steps of the bootstrap phase are shared between develop and build (with only one exception in the `delete html and css files from previous builds` step). This includes:
 
-1. `open and validate gatsby-configs`
+1.  `open and validate gatsby-configs`
 
 The `gatsby-config.js` file for the site and any installed themes are opened, ensuring that a function or object is exported for each.
 
-2. `load plugins`
+2.  `load plugins`
 
 Plugins installed and included in the config of your site and your site's themes are [loaded](/docs/how-plugins-apis-are-run/). Gatsby uses Redux for state management internally and stores info like the version, name, and what APIs are used by each plugin.
 
-3. `onPreInit`
+3.  `onPreInit`
 
 Runs the [`onPreInit` node API](/docs/node-apis/#onPreInit) if it has been implemented by your site or any installed plugins.
 
-4. `delete html and css files from previous builds`
+4.  `delete html and css files from previous builds`
 
 The only different step between develop and build, the HTML and CSS from previous builds is deleted to prevent problems with styles and pages that no longer exist.
 
-5. `initialize cache`
+5.  `initialize cache`
 
 Check if new dependencies have been installed in the `package.json`; if the versions of installed plugins have changed; or if the `gatsby-config.js` or the `gatsby-node.js` files have changed. Plugins can [interact with the cache](/docs/build-caching/).
 
-6. `copy gatsby files`
+6.  `copy gatsby files`
 
 Copies site files into the cache in the `.cache` folder.
 
-7. `onPreBootstrap`
+7.  `onPreBootstrap`
 
 Calls the [`onPreBootstrap` node API](/docs/node-apis/#onPreBootstrap) in your site or plugins where it is implemented.
 
-8. `source and transform nodes`
+8.  `source and transform nodes`
 
 Creates Node objects from your site and all plugins implementing the [`sourceNodes` API](/docs/node-apis/#sourceNodes), and warns about plugins that aren't creating any nodes. Nodes created by source or transformer plugins are cached.
 
 Node objects created at this stage are considered top level nodes, meaning they don't have a parent node that they are derived from.
 
-9. `Add explicit types`
+9.  `Add explicit types`
 
 Adds types to the GraphQL schema for nodes that you have defined explicitly with Gatsby's [schema optimization APIs](/docs/schema-customization/#explicitly-defining-data-types).
 
@@ -279,27 +279,27 @@ Calls the [`onPostBootstrap` API](/docs/node-apis/#onPostBootstrap) for your sit
 
 ### Steps of the build phase
 
-1. `run static queries`
+1.  `run static queries`
 
 Static queries in [non-page components](/docs/building-with-components/#non-page-components) that were queued up earlier from query extraction are run to provide data to the components that need it.
 
-2. `Generating image thumbnails — 6/6` - (from `gatsby-plugin-sharp`)
+2.  `Generating image thumbnails — 6/6` - (from `gatsby-plugin-sharp`)
 
 Another step that is not a part of the built-in Gatsby functionality, but is the result of installing `gatsby-plugin-sharp`, which taps into the lifecycle. Sharp runs processing on images to create image assets of different sizes.
 
-3. `Building production JavaScript and CSS bundles`
+3.  `Building production JavaScript and CSS bundles`
 
 Compiles JavaScript and CSS using webpack.
 
-4. `Rewriting compilation hashes`
+4.  `Rewriting compilation hashes`
 
 Compilation hashes are used by [webpack for code splitting](/docs/how-code-splitting-works/#chunk-bundle-naming) and keeping the cache up to date, and all files with page data need to be updated with the new hashes since they've been recompiled.
 
-5. `run page queries`
+5.  `run page queries`
 
 Page queries that were queued up earlier from query extraction are run so the data pages need can be provided to them.
 
-6. `Building static HTML for pages`
+6.  `Building static HTML for pages`
 
 With everything ready for the HTML pages in place, HTML is compiled and written out to files so it can be served up statically. Since HTML is being produced in a Node.js server context, [references to browser APIs like `window` can break the build](/docs/debugging-html-builds/) and must be conditionally applied.
 

@@ -12,31 +12,31 @@ We're excited to announce that today we shipped the first beta for Gatsby v2! 36
 
 Gatsby v2 builds on the foundations of v1 to introduce a range of improvements:
 
-- Out With Gatsby Layout Components, In With StaticQuery
+-   Out With Gatsby Layout Components, In With StaticQuery
 
-  Gatsby's special layout components were a common source of confusion in v1. After an RFC and [informative community discussion](https://github.com/gatsbyjs/rfcs/blob/master/text/0002-remove-special-layout-components.md), we decided to remove them and create `StaticQuery` which allows GraphQL queries to be added to any component. For more information on migrating your layouts, check out our [Life After Layouts post](/blog/2018-06-08-life-after-layouts/).
+    Gatsby's special layout components were a common source of confusion in v1. After an RFC and [informative community discussion](https://github.com/gatsbyjs/rfcs/blob/master/text/0002-remove-special-layout-components.md), we decided to remove them and create `StaticQuery` which allows GraphQL queries to be added to any component. For more information on migrating your layouts, check out our [Life After Layouts post](/blog/2018-06-08-life-after-layouts/).
 
-- Improve APIs
+-   Improve APIs
 
-  We've renamed `sizes` and `resolutions` to `fluid` and `fixed`, `boundActionCreators` to `actions`, as well as other changes intended to make API names more consistent and prevent common gotchas.
+    We've renamed `sizes` and `resolutions` to `fluid` and `fixed`, `boundActionCreators` to `actions`, as well as other changes intended to make API names more consistent and prevent common gotchas.
 
-  To see the full list of renamings, take a look at the upgrade guide for [image queries](/docs/migrating-from-v1-to-v2/#rename-responsive-image-queries), [actions](/docs/migrating-from-v1-to-v2/#rename-boundactioncreators-to-actions) and the [babel](/docs/migrating-from-v1-to-v2/#change-modifybabelrc-to-oncreatebabelconfig) and [webpack](/docs/migrating-from-v1-to-v2/#change-modifywebpackconfig-to-oncreatewebpackconfig) API hooks.
+    To see the full list of renamings, take a look at the upgrade guide for [image queries](/docs/migrating-from-v1-to-v2/#rename-responsive-image-queries), [actions](/docs/migrating-from-v1-to-v2/#rename-boundactioncreators-to-actions) and the [babel](/docs/migrating-from-v1-to-v2/#change-modifybabelrc-to-oncreatebabelconfig) and [webpack](/docs/migrating-from-v1-to-v2/#change-modifywebpackconfig-to-oncreatewebpackconfig) API hooks.
 
-- Hotter Hot Reloading
+-   Hotter Hot Reloading
 
-  Previously, hot reloading of code and data had been dependent on new webpack builds. On larger sites, that could take ten or fifteen seconds -- more like lukewarm reloading, really. With [_ludicrous mode_](https://twitter.com/gatsbyjs/status/974507205121617920) we've decoupled data updates from webpack so changes you make to your content show up on your site at blistering speeds.
+    Previously, hot reloading of code and data had been dependent on new webpack builds. On larger sites, that could take ten or fifteen seconds -- more like lukewarm reloading, really. With [_ludicrous mode_](https://twitter.com/gatsbyjs/status/974507205121617920) we've decoupled data updates from webpack so changes you make to your content show up on your site at blistering speeds.
 
-- Upgraded Dependencies
+-   Upgraded Dependencies
 
-  Gatsby is built on top of amazing JavaScript libraries. In this beta, we're delighted to ship the latest improvements from webpack, Babel, and React to you.
+    Gatsby is built on top of amazing JavaScript libraries. In this beta, we're delighted to ship the latest improvements from webpack, Babel, and React to you.
 
-  Key upgrades include:
+    Key upgrades include:
 
-  - [Babel to v7](https://medium.freecodecamp.org/were-nearing-the-7-0-babel-release-here-s-all-the-cool-stuff-we-ve-been-doing-8c1ade684039)
-  - [React to v16](https://reactjs.org/blog/2017/09/26/react-v16.0.html)
-  - [webpack to v4](https://medium.com/webpack/webpack-4-released-today-6cdb994702d4)
+    -   [Babel to v7](https://medium.freecodecamp.org/were-nearing-the-7-0-babel-release-here-s-all-the-cool-stuff-we-ve-been-doing-8c1ade684039)
+    -   [React to v16](https://reactjs.org/blog/2017/09/26/react-v16.0.html)
+    -   [webpack to v4](https://medium.com/webpack/webpack-4-released-today-6cdb994702d4)
 
-  These updates allow Gatsby to take advantage of the [performance](https://medium.com/webpack/webpack-4-released-today-6cdb994702d4) [improvements](https://reactjs.org/blog/2017/09/26/react-v16.0.html#better-server-side-rendering) and [new features](https://github.com/gatsbyjs/gatsby/pull/5709) of these tools.
+    These updates allow Gatsby to take advantage of the [performance](https://medium.com/webpack/webpack-4-released-today-6cdb994702d4) [improvements](https://reactjs.org/blog/2017/09/26/react-v16.0.html#better-server-side-rendering) and [new features](https://github.com/gatsbyjs/gatsby/pull/5709) of these tools.
 
 ## Can I upgrade now to v2?
 
@@ -46,9 +46,9 @@ Yes! We've built [gatsbyjs.com](https://www.gatsbyjs.com) with v2 and the Gatsby
 
 The [v2 roadmap](https://github.com/gatsbyjs/gatsby/projects/2) details everything else we're planning for v2. Improvements include:
 
-- Additional build optimisations
-- Better error messaging
-- PostCSS configuration updates
+-   Additional build optimisations
+-   Better error messaging
+-   PostCSS configuration updates
 
 ## Getting involved
 

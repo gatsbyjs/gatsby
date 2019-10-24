@@ -6,8 +6,8 @@ title: Inferring Input Filters
 >
 > Outdated areas are:
 >
-> - `inferObjectStructureFromNodes` does not exist anymore
-> - input fields are generated differently. Gatsby previously inferred values one by one, now graphql-compose handles this
+> -   `inferObjectStructureFromNodes` does not exist anymore
+> -   input fields are generated differently. Gatsby previously inferred values one by one, now graphql-compose handles this
 >
 > You can help by making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228).
 

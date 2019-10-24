@@ -6,8 +6,8 @@ Plugins can cache data as JSON objects and retrieve them on consecutive builds.
 
 Caching is already used by Gatsby and plugins for example:
 
-- any nodes created by source/transformer plugins are cached
-- `gatsby-plugin-sharp` caches built thumbnails
+-   any nodes created by source/transformer plugins are cached
+-   `gatsby-plugin-sharp` caches built thumbnails
 
 Data is stored in the `.cache` directory relative to your project root.
 
@@ -67,9 +67,9 @@ exports.onPostBuild = async function({ cache, store, graphql }, { query }) {
 Since cache files are stored within the `.cache` directory, simply deleting it will clear all cache. You can also use [`gatsby clean`](/docs/gatsby-cli/#clean) to delete the `.cache` and `public` folders.
 The cache is also invalidated by Gatsby in a few cases, specifically:
 
-- If `package.json` changes, for example a dependency is updated or added
-- If `gatsby-config.js` changes, for example a plugin is added or modified
-- If `gatsby-node.js` changes, for example if you invoke a new Node API, or change a `createPage` call
+-   If `package.json` changes, for example a dependency is updated or added
+-   If `gatsby-config.js` changes, for example a plugin is added or modified
+-   If `gatsby-node.js` changes, for example if you invoke a new Node API, or change a `createPage` call
 
 ## Conclusion
 

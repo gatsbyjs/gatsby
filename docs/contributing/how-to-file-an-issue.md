@@ -6,10 +6,10 @@ The [issue tracker](https://github.com/gatsbyjs/gatsby/issues) is the preferred 
 
 If you want your issue to be resolved quickly, please include in your issue:
 
-- Gatsby version, Node.js version, OS version
-- The contents of your `gatsby-config.js` and `package.json` as well as your
-  `gatsby-node.js`, `gatsby-browser.js` `gatsby-ssr.js` files depending on
-  changes you've made there.
+-   Gatsby version, Node.js version, OS version
+-   The contents of your `gatsby-config.js` and `package.json` as well as your
+    `gatsby-node.js`, `gatsby-browser.js` `gatsby-ssr.js` files depending on
+    changes you've made there.
 
 Please do not use the issue tracker for personal support requests. [Stack Overflow](https://stackoverflow.com/questions/ask?tags=gatsby) (**`gatsby`** tag) and the [Gatsby Discord](https://gatsby.dev/discord) are better places to get help.
 

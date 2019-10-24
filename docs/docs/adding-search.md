@@ -55,9 +55,9 @@ Another option is to use an external search engine. This solution is much more s
 
 There are many available both open source that you can host yourself and commercial hosted options.
 
-- [ElasticSearch](https://www.elastic.co/products/elasticsearch) — OSS and has commercial hosting available
-- [Solr](http://lucene.apache.org/solr/) — OSS and has commercial hosting available
-- [Algolia](https://www.algolia.com/) — Commercial
+-   [ElasticSearch](https://www.elastic.co/products/elasticsearch) — OSS and has commercial hosting available
+-   [Solr](http://lucene.apache.org/solr/) — OSS and has commercial hosting available
+-   [Algolia](https://www.algolia.com/) — Commercial
 
 If you're building a documentation website you can use [Algolia's DocSearch feature](https://community.algolia.com/docsearch/). It will automatically create a search index from the content of your pages.
 

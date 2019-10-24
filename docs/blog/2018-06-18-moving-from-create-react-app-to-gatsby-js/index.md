@@ -20,7 +20,7 @@ If you came across [Gatsby](https://github.com/gatsbyjs/gatsby) you will notice 
 
 ## What is Gatsby?
 
-![`gatsby-logo`](https://images.ctfassets.net/4x6byznv2pet/4OW1X9ex1mImko8G4w4WAK/a16fceab310b718c7f375a760c4e1e16/logo-gatsby-0603eb9dd6bdfec9599dbc7590f891be-347ea.jpg)
+![\`gatsby-logo\`](https://images.ctfassets.net/4x6byznv2pet/4OW1X9ex1mImko8G4w4WAK/a16fceab310b718c7f375a760c4e1e16/logo-gatsby-0603eb9dd6bdfec9599dbc7590f891be-347ea.jpg)
 
 Gatsby is a blazing fast static site generator for [React](https://github.com/facebook/react). Actually, it is more than that. Think of it as a PWA (Progressive Web App) framework with best practices baked in. For example: you get code and data splitting out-of-the-box.
 
@@ -61,8 +61,8 @@ Gatsby uses [GraphQL](https://graphql.org/learn/) to share data across pages. Yo
 
 There are two types of routes:
 
-- static - when you know all the parts that will define your route, like `/home`
-- dynamic - when part of your route is only known at runtime like, `blog/:slug`
+-   static - when you know all the parts that will define your route, like `/home`
+-   dynamic - when part of your route is only known at runtime like, `blog/:slug`
 
 Let's assume you have the following static routes in your `create-react-app` project:
 
@@ -266,6 +266,6 @@ Since Gatsby builds "static" files you can host them on tons of services. One of
 
 ## Resources
 
-- [Contentful tutorials](https://howtocontentful.com/)
-- [Contentful's Gatsby video series](https://www.contentful.com/blog/2018/02/28/contentful-gatsby-video-tutorials/)
-- [Gatsby Getting Started docs](/docs/)
+-   [Contentful tutorials](https://howtocontentful.com/)
+-   [Contentful's Gatsby video series](https://www.contentful.com/blog/2018/02/28/contentful-gatsby-video-tutorials/)
+-   [Gatsby Getting Started docs](/docs/)

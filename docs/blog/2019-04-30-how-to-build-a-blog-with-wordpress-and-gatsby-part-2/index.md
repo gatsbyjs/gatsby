@@ -49,16 +49,16 @@ gatsby new gatsby-wordpress
 
 Now that you have your project created, let's take a look inside. You will see a `src` folder along with several files. Here's a little breakdown of what these do:
 
-- **src/**: Directory that holds your React project
-- **.gitignore**: Tells what shouldn't be captured in git commits
-- **.prettierrc**: Determines styles in code editor (tabs, quotes, etc)
-- **LICENSE**: Basic MIT license
-- **README.md**: Markdown file with instructions for use
-- **`gatsby-browser.js`**: Gatsby Browser API stuff goes here. Global style calls go here too
-- **`gatsby-config.js`**: Configuration for your project including meta data and plugins
-- **`gatsby-node.js`**: Where you tell Gatsby to build pages from a template using provided data
-- **`gatsby-ssr.js`**: Gatsby Server Side Rendering APIs go here
-- **package.json**: File which holds custom scripts, dependency information, etc
+-   **src/**: Directory that holds your React project
+-   **.gitignore**: Tells what shouldn't be captured in git commits
+-   **.prettierrc**: Determines styles in code editor (tabs, quotes, etc)
+-   **LICENSE**: Basic MIT license
+-   **README.md**: Markdown file with instructions for use
+-   **`gatsby-browser.js`**: Gatsby Browser API stuff goes here. Global style calls go here too
+-   **`gatsby-config.js`**: Configuration for your project including meta data and plugins
+-   **`gatsby-node.js`**: Where you tell Gatsby to build pages from a template using provided data
+-   **`gatsby-ssr.js`**: Gatsby Server Side Rendering APIs go here
+-   **package.json**: File which holds custom scripts, dependency information, etc
 
 These files will be present in all Gatsby starters you use, so it's worth your time to have at least a basic level of understanding with each one. Let's take a look and see what dependencies and plugins you have by default. Open up the `package.json` file and scroll down to dependencies. This will tell you what packages you already have. Mine looks like this:
 
@@ -226,7 +226,7 @@ module.exports = {
 
 If the Gatsby site is currently running, you need to stop it and restart it so it pulls in the new content from WordPress. It's important to know that while you can choose what information goes on what pages after your app is built, it will only pull content when it is initially run so changes in the source require a rebuild.
 
-Once you've restarted your server, you can visit [http://localhost:8000/\_\_\_graphql](http://localhost:8000/___graphql) to use the "graphical" playground. Here, you can use GraphQL to query your data for testing purposes. You should create opening and closing curly braces and then you can use shift+space (or ctrl+space on windows) to get suggestions. Once you have the data you want, you will be able to paste the query into your components, pages, and templates so you can use the information available. Here's what my query looks like for now:
+Once you've restarted your server, you can visit <http://localhost:8000/___graphql> to use the "graphical" playground. Here, you can use GraphQL to query your data for testing purposes. You should create opening and closing curly braces and then you can use shift+space (or ctrl+space on windows) to get suggestions. Once you have the data you want, you will be able to paste the query into your components, pages, and templates so you can use the information available. Here's what my query looks like for now:
 
 ![GraphQL query tests](images/gatsby2.png)
 
@@ -327,7 +327,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 }
 ```
 
-Just like before, you will need to restart your development server to see these changes take place. Go ahead and do that so you can make sure your logic is working correctly. The easiest way I've found (in development) to see a list of pages is to go to a route that doesn't exist, such as [http://localhost:8000/stuff](http://localhost:8000/stuff).
+Just like before, you will need to restart your development server to see these changes take place. Go ahead and do that so you can make sure your logic is working correctly. The easiest way I've found (in development) to see a list of pages is to go to a route that doesn't exist, such as <http://localhost:8000/stuff>.
 
 You can now see all of the pages available and clicking on one should take you to the blog post template you created earlier that just shows Hello World. If this is what you're seeing, congrats! You're ready to move to the next section.
 

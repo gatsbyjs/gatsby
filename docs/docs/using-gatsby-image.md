@@ -10,9 +10,9 @@ title: Using Gatsby Image to Prevent Image Bloat
 
 `gatsby-image` includes the tricks you'd expect from a modern image component. It:
 
-- uses the new [IntersectionObserver API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) to cheaply lazy load images
-- holds an image's position so your page doesn't jump around as images load
-- makes it easy to add a placeholder—either a gray background or a blurry version of the image.
+-   uses the new [IntersectionObserver API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) to cheaply lazy load images
+-   holds an image's position so your page doesn't jump around as images load
+-   makes it easy to add a placeholder—either a gray background or a blurry version of the image.
 
 _For more complete API information, check out the [Gatsby Image API](/docs/gatsby-image/) docs._
 
@@ -22,12 +22,12 @@ Large, unoptimized images dramatically slow down your site.
 
 But creating optimized images for websites has long been a thorny problem. Ideally you would:
 
-- Resize large images to the size needed by your design
-- Generate multiple smaller images so smartphones and tablets don't download desktop-sized images
-- Strip all unnecessary metadata and optimize JPEG and PNG compression
-- Efficiently lazy load images to speed initial page load and save bandwidth
-- Use the "blur-up" technique or a "traced placeholder" SVG to show a preview of the image while it loads
-- Hold the image position so your page doesn't jump while images load
+-   Resize large images to the size needed by your design
+-   Generate multiple smaller images so smartphones and tablets don't download desktop-sized images
+-   Strip all unnecessary metadata and optimize JPEG and PNG compression
+-   Efficiently lazy load images to speed initial page load and save bandwidth
+-   Use the "blur-up" technique or a "traced placeholder" SVG to show a preview of the image while it loads
+-   Hold the image position so your page doesn't jump while images load
 
 Doing this consistently across a site feels like sisyphean labor. You manually optimize your images and then… several images are swapped in at the last minute or a design-tweak shaves 100px of width off your images.
 
@@ -41,13 +41,13 @@ With Gatsby, we can make the experience of working with images way, way better.
 
 `gatsby-image` is designed to work seamlessly with Gatsby's native image processing capabilities powered by GraphQL and Sharp. To produce perfect images with minimal effort, you can:
 
-1. Install `gatsby-image` and other, necessary dependencies like `gatsby-plugin-sharp` and `gatsby-transformer-sharp`
+1.  Install `gatsby-image` and other, necessary dependencies like `gatsby-plugin-sharp` and `gatsby-transformer-sharp`
 
 ```shell
   npm install --save gatsby-image gatsby-transformer-sharp gatsby-plugin-sharp
 ```
 
-2. Add the newly installed plugins and transformer plugins to your `gatsby-config.js`
+2.  Add the newly installed plugins and transformer plugins to your `gatsby-config.js`
 
 ```js:title=gatsby-config.js
 module.exports = {
@@ -55,7 +55,7 @@ module.exports = {
 }
 ```
 
-3. Configure `gatsby-source-filesystem` to load images from a folder. In order to use GraphQL to query the image files, the files need to be in a location that is known to Gatsby. This requires an update to `gatsby-config.js` to configure the plugin. Feel free to replace the `path` option to reference wherever your images are located in your project.
+3.  Configure `gatsby-source-filesystem` to load images from a folder. In order to use GraphQL to query the image files, the files need to be in a location that is known to Gatsby. This requires an update to `gatsby-config.js` to configure the plugin. Feel free to replace the `path` option to reference wherever your images are located in your project.
 
 ```js:title=gatsby-config.js
 module.exports = {
@@ -79,7 +79,7 @@ module.exports = {
   lessonTitle="Install gatsby-image and source local images from the filesystem"
 />
 
-4. Write a GraphQL query using one of the included [GraphQL "fragments"](/packages/gatsby-image/#fragments) which specify the fields needed by `gatsby-image` to create a responsive, optimized image. This example queries for an image at a path relative to the location specified in the `gatsby-source-filesystem` options using the `GatsbyImageSharpFluid` fragment.
+4.  Write a GraphQL query using one of the included [GraphQL "fragments"](/packages/gatsby-image/#fragments) which specify the fields needed by `gatsby-image` to create a responsive, optimized image. This example queries for an image at a path relative to the location specified in the `gatsby-source-filesystem` options using the `GatsbyImageSharpFluid` fragment.
 
 ```graphql
 file(relativePath: { eq: "images/default.jpg" }) {
@@ -97,7 +97,7 @@ file(relativePath: { eq: "images/default.jpg" }) {
   lessonTitle="Use gatsby-image with an image from a relative path"
 />
 
-5. Import `Img` to display the fragment in JSX. There are additional features available with the `Img` tag as well, such as the `alt` attribute for accessibility.
+5.  Import `Img` to display the fragment in JSX. There are additional features available with the `Img` tag as well, such as the `alt` attribute for accessibility.
 
 ```jsx
 import Img from "gatsby-image"
@@ -124,10 +124,10 @@ So this is all very nice and it's far better to be able to use this from npm vs.
 
 ### Additional resources
 
-- [Gatsby Image API docs](/docs/gatsby-image/)
-- [`gatsby-image` plugin README file](/packages/gatsby-image/)
-- [Source code for an example site using `gatsby-image`](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-gatsby-image)
-- [Blog articles about `gatsby-image`](/blog/tags/gatsby-image/)
-- [Starters that use `gatsby-image`](/starters/?d=gatsby-image&v=2)
-- [Other image plugins](/plugins/?=image)
-- ["Ridiculously easy image optimization with `gatsby-image`" by Kyle Gill](https://medium.com/@kyle.robert.gill/ridiculously-easy-image-optimization-with-gatsby-js-59d48e15db6e)
+-   [Gatsby Image API docs](/docs/gatsby-image/)
+-   [`gatsby-image` plugin README file](/packages/gatsby-image/)
+-   [Source code for an example site using `gatsby-image`](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-gatsby-image)
+-   [Blog articles about `gatsby-image`](/blog/tags/gatsby-image/)
+-   [Starters that use `gatsby-image`](/starters/?d=gatsby-image&v=2)
+-   [Other image plugins](/plugins/?=image)
+-   ["Ridiculously easy image optimization with `gatsby-image`" by Kyle Gill](https://medium.com/@kyle.robert.gill/ridiculously-easy-image-optimization-with-gatsby-js-59d48e15db6e)

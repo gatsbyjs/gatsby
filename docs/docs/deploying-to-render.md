@@ -6,16 +6,16 @@ title: Deploying to Render
 
 Static sites are **completely free** on Render and include the following features:
 
-- Continuous, automatic builds & deploys from GitHub.
-- Automatic SSL certificates through [Let's Encrypt](https://letsencrypt.org).
-- Instant cache invalidation with a lightning fast, global CDN.
-- Unlimited collaborators.
-- Unlimited [custom domains](https://render.com/docs/custom-domains).
-- Automatic [Brotli compression](https://en.wikipedia.org/wiki/Brotli) for faster sites.
-- Native HTTP/2 support.
-- [Pull Request Previews](https://render.com/docs/pull-request-previews).
-- Automatic HTTP → HTTPS redirects.
-- Custom URL redirects and rewrites.
+-   Continuous, automatic builds & deploys from GitHub.
+-   Automatic SSL certificates through [Let's Encrypt](https://letsencrypt.org).
+-   Instant cache invalidation with a lightning fast, global CDN.
+-   Unlimited collaborators.
+-   Unlimited [custom domains](https://render.com/docs/custom-domains).
+-   Automatic [Brotli compression](https://en.wikipedia.org/wiki/Brotli) for faster sites.
+-   Native HTTP/2 support.
+-   [Pull Request Previews](https://render.com/docs/pull-request-previews).
+-   Automatic HTTP → HTTPS redirects.
+-   Custom URL redirects and rewrites.
 
 ## Prerequisites
 
@@ -25,14 +25,14 @@ This guide assumes you already have a Gatsby project to deploy. If you need a pr
 
 You can set up a Gatsby site on Render in two quick steps:
 
-1. Create a new **Web Service** on Render, and give Render permission to access your GitHub repo.
-2. Use the following values during creation:
+1.  Create a new **Web Service** on Render, and give Render permission to access your GitHub repo.
+2.  Use the following values during creation:
 
-   |                       |                                            |
-   | --------------------- | ------------------------------------------ |
-   | **Environment**       | `Static Site`                              |
-   | **Build Command**     | `gatsby build` (or your own build command) |
-   | **Publish Directory** | `public` (or your own output directory)    |
+    |                       |                                            |
+    | --------------------- | ------------------------------------------ |
+    | **Environment**       | `Static Site`                              |
+    | **Build Command**     | `gatsby build` (or your own build command) |
+    | **Publish Directory** | `public` (or your own output directory)    |
 
 That's it! Your site will be live on your Render URL (which looks like `yoursite.onrender.com`) as soon as the build is done.
 

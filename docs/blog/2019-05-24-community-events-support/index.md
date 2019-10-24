@@ -17,12 +17,12 @@ A community organized Gatsby event can be a local meetup, a small conference, a 
 
 There are several ways Gatsby may support your event:
 
-- Promote event on the [Gatsbyjs.org Events Page](/contributing/events/)
-- Promote event via [Gatsby's Twitter handle](https://twitter.com/gatsbyjs)
-- \$300 off food related expenses
-- Free Gatsby stickers from the [Gatsby Store](https://store.gatsbyjs.org/)
-- 20% off swag in the [Gatsby Store](https://store.gatsbyjs.org/) for your attendees
+-   Promote event on the [Gatsbyjs.org Events Page](/contributing/events/)
+-   Promote event via [Gatsby's Twitter handle](https://twitter.com/gatsbyjs)
+-   \\$300 off food related expenses
+-   Free Gatsby stickers from the [Gatsby Store](https://store.gatsbyjs.org/)
+-   20% off swag in the [Gatsby Store](https://store.gatsbyjs.org/) for your attendees
 
-If you're interested in organizing a Gatsby event, [apply for support here](https://airtable.com/shrpwc99yogJm9sfI) and if you meet a few basic requirements, then you can qualify for Gatsby swag, \$300 for food, learning resources, and more. Get started by [submitting your request](https://airtable.com/shrpwc99yogJm9sfI) or learn more about the [program here](/contributing/organize-a-gatsby-event/).
+If you're interested in organizing a Gatsby event, [apply for support here](https://airtable.com/shrpwc99yogJm9sfI) and if you meet a few basic requirements, then you can qualify for Gatsby swag, \\$300 for food, learning resources, and more. Get started by [submitting your request](https://airtable.com/shrpwc99yogJm9sfI) or learn more about the [program here](/contributing/organize-a-gatsby-event/).
 
 Let us know what Gatsby events you're planning!

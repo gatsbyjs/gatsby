@@ -19,9 +19,9 @@ Our project was to build a new website for [Whittle School & Studios](https://ww
 
 We had a blast building the site, and learned a lot about Gatsby in the process. This post will take you through the different parts of our journey:
 
-- [Choosing a stack](#choosing-a-stack)
-- [Creating a Gatsby workflow](#creating-a-gatsby-workflow)
-- [Contributing to Gatsby](#contributing-to-gatsby)
+-   [Choosing a stack](#choosing-a-stack)
+-   [Creating a Gatsby workflow](#creating-a-gatsby-workflow)
+-   [Contributing to Gatsby](#contributing-to-gatsby)
 
 ## Choosing a stack
 
@@ -103,7 +103,7 @@ We ran into one schematic limitation working with Gatsby that's helpful to be aw
 
 The are some really promising discussions on the topic on GitHub, including an [RFC to refactor Gatsby's schema generation](https://github.com/gatsbyjs/gatsby/issues/4261), but in the meantime, most users are getting around this issue by creating placeholder content on Contentful (or whatever their data source is) to guarantee a fully built-up schema.
 
-This got the job done in our case, and we augmented the approach by creating a `DummyContentIndex` model on Contentful linking to all placeholder content. (In retrospect, I wish I had picked the a more PC name, like 'PlaceholderContentIndex` 😉.) Using this approach, we could inform our Contentful scripts to make sure placeholder content was copied to the production environment during deploys, so that new models would not break the build.
+This got the job done in our case, and we augmented the approach by creating a `DummyContentIndex` model on Contentful linking to all placeholder content. (In retrospect, I wish I had picked the a more PC name, like 'PlaceholderContentIndex\` 😉.) Using this approach, we could inform our Contentful scripts to make sure placeholder content was copied to the production environment during deploys, so that new models would not break the build.
 
 ### Netlify
 
@@ -265,9 +265,9 @@ We developers often take pride in how far we're able to get _without_ reading th
 
 In particular, the documentation will show you how to use your local Gatsby clone and [`gatsby-dev-cli`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli) to:
 
-- Watch for your local changes to Gatsby packages
-- Recompile packages on-the-fly
-- Copy these packages into your project's `node_modules` folder to test as you go
+-   Watch for your local changes to Gatsby packages
+-   Recompile packages on-the-fly
+-   Copy these packages into your project's `node_modules` folder to test as you go
 
 If you've ever used `yarn link` to modify a dependency locally, this provides a similar experience.
 
@@ -287,9 +287,9 @@ Gatsby, however, uses a monorepo architecture, so pushing up a fork with a chang
 
 Our workaround was to create a new repo for the package in question and push the build directly to GitHub. Here's how it would work if you were making an update to, say, `gatsby-source-contentful`:
 
-- Go to your local fork of Gatsby, on the branch with your changes, and run `yarn watch` to compile a built version of your modified package.
-- Copy that package to a new directory `cp -a packages/gatsby-source-contentful path-to-my-repo`
-- Push the contents of this directory to GitHub and link it in your `package.json` as usual.
+-   Go to your local fork of Gatsby, on the branch with your changes, and run `yarn watch` to compile a built version of your modified package.
+-   Copy that package to a new directory `cp -a packages/gatsby-source-contentful path-to-my-repo`
+-   Push the contents of this directory to GitHub and link it in your `package.json` as usual.
 
 ## Following up
 

@@ -38,11 +38,11 @@ The content mesh empowers developers while preserving content creators' workflow
 
 Change is being spurred by the confluence of three revolutions in how we create and consume content:
 
-- _Content management._ Monolithic CMS applications are being replaced by modular, specialized content systems.
+-   _Content management._ Monolithic CMS applications are being replaced by modular, specialized content systems.
 
-- _Development techniques._ Modern UI frameworks like React are becoming essential to rich user experiences.
+-   _Development techniques._ Modern UI frameworks like React are becoming essential to rich user experiences.
 
-- _Performance._ As mobile surpasses 50% of internet traffic, high-performance is becoming a must-have, not a nice-to-have.
+-   _Performance._ As mobile surpasses 50% of internet traffic, high-performance is becoming a must-have, not a nice-to-have.
 
 <figure>
   <img alt="Three areas of rapid innovation" height="300" src="./three-website-revolutions.png" />

@@ -16,44 +16,44 @@ For Gatsby the first line of communication between a user and the team is the is
 
 An opened issue could be:
 
-- a question that can be answered immediately
-- a bug report
-- a request for a feature
-- or a discussion on a complicated use case
+-   a question that can be answered immediately
+-   a bug report
+-   a request for a feature
+-   or a discussion on a complicated use case
 
 On the core team, we regularly designate someone to be a first touch maintainer. That person might sift through, triage, communicate and manage this first line of communication.
 
 First touch maintainers will typically:
 
-- answer questions that can be answered immediately
-- test and reproduce possible bug reports and label them appropriately
-- communicate feature requests to the rest of the team and ensure a valid response
-- enable discussions on complicated use cases, whether themselves or via the rest of team
+-   answer questions that can be answered immediately
+-   test and reproduce possible bug reports and label them appropriately
+-   communicate feature requests to the rest of the team and ensure a valid response
+-   enable discussions on complicated use cases, whether themselves or via the rest of team
 
 ## Why do we do first touch maintenance?
 
 We do first touch maintenance so that:
 
-- Questions are answered swiftly and correctly, therefore making users happy
-- Bug reports are reproducible and the most relevant data is collected before someone jumps in with a fix
-- Unrelated issues are resolved promptly so we don't spend too much time on them
+-   Questions are answered swiftly and correctly, therefore making users happy
+-   Bug reports are reproducible and the most relevant data is collected before someone jumps in with a fix
+-   Unrelated issues are resolved promptly so we don't spend too much time on them
 
 ## What is unique to Gatsby?
 
 Gatsby is unique among most open source projects because:
 
-- Gatsby integrates with many third party tools (WordPress, Drupal, Contentful etc) via source plugins and hence the typical scope of issues is widened significantly
-- Gatsby aims to be really beginner friendly (we want to be the new way someone gets started with web development) and this means that we need to accommodate a wide range of skill levels
-- At Gatsby, we've defined a couple of metrics that we measure to ensure we're responsive and helpful to our open source community
+-   Gatsby integrates with many third party tools (WordPress, Drupal, Contentful etc) via source plugins and hence the typical scope of issues is widened significantly
+-   Gatsby aims to be really beginner friendly (we want to be the new way someone gets started with web development) and this means that we need to accommodate a wide range of skill levels
+-   At Gatsby, we've defined a couple of metrics that we measure to ensure we're responsive and helpful to our open source community
 
 ## How do we do first touch maintenance?
 
 ### General guidelines
 
-- **Be empathetic.** The author of an issue might be asking something that's obvious to you but that doesn't mean it's obvious to them - it's important to consider the issue from the author's viewpoint. People often remember how you make them feel, not what you told them.
-- **Add context.** When answering an issue, it can be useful to link to existing documentation, issues, PRs, or provide related context. This means the issue can serve as a reference to future readers.
-- **Encourage community contributions.** Getting people involved makes a huge impact. It's often worth spending the time to write up a task as a `good first issue` instead of fixing the issue yourself. This can provide a low friction way for someone to get more involved in open source!
-- **Give issue authors time to close their own issues.** Sometimes, it might feel like an issue is resolved but the author could have follow up questions. It's usually best to give them a day or two to close the issue themselves.
+-   **Be empathetic.** The author of an issue might be asking something that's obvious to you but that doesn't mean it's obvious to them - it's important to consider the issue from the author's viewpoint. People often remember how you make them feel, not what you told them.
+-   **Add context.** When answering an issue, it can be useful to link to existing documentation, issues, PRs, or provide related context. This means the issue can serve as a reference to future readers.
+-   **Encourage community contributions.** Getting people involved makes a huge impact. It's often worth spending the time to write up a task as a `good first issue` instead of fixing the issue yourself. This can provide a low friction way for someone to get more involved in open source!
+-   **Give issue authors time to close their own issues.** Sometimes, it might feel like an issue is resolved but the author could have follow up questions. It's usually best to give them a day or two to close the issue themselves.
 
 ### Labeling
 
@@ -75,9 +75,9 @@ Gatsby team members have saved certain [common form responses](https://github.co
 
 We have a bot that helps us automate some aspects:
 
-- Issues with a question mark in their title or starting with "how" are automatically labeled as questions
-- Issues with an empty body are closed
-- Issues with no activity are marked stale after 20 days. They are then closed after another 10 days unless there are additional comments or the "not stale" label is applied
+-   Issues with a question mark in their title or starting with "how" are automatically labeled as questions
+-   Issues with an empty body are closed
+-   Issues with no activity are marked stale after 20 days. They are then closed after another 10 days unless there are additional comments or the "not stale" label is applied
 
 ## Frequently asked questions
 

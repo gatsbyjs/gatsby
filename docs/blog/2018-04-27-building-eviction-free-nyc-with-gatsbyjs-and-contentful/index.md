@@ -63,16 +63,16 @@ perfect fit for a number of reasons:
     to the user. They are more easily adaptable for low connectivity / offline
     functionality for this reason. This allows us to provide a faster and more
     reliable experience for tenants utilizing the service.
-1.  Gatsby ships with an incredible amount of pre-handled optimization features,
+2.  Gatsby ships with an incredible amount of pre-handled optimization features,
     from prefetching resources to progressive image loading to inlining code blocks
     so they don't need to be fetched via
-    [AJAX](<https://en.wikipedia.org/wiki/Ajax_(programming)>). There was no way we
+    [AJAX](https://en.wikipedia.org/wiki/Ajax_(programming)). There was no way we
     could have achieved this level of optimization on our own in this timeframe.
-1.  A growing plugin library that allows for easy integrations that utilize Gatsby's
+3.  A growing plugin library that allows for easy integrations that utilize Gatsby's
     GraphQL data query system. With these we could easily use things like
     [`gatsby-source-contentful`](/packages/gatsby-source-contentful/?=conten)
     and [`gatsby-plugin-i18n`](https://github.com/angeloocana/gatsby-plugin-i18n).
-1.  A growing community of developers sharing resources and best practices. Credit
+4.  A growing community of developers sharing resources and best practices. Credit
     is due to [mccrodp](https://github.com/mccrodp) for setting up
     [`gatsby-starter-contentful-i18n`](https://github.com/mccrodp/gatsby-starter-contentful-i18n),
     a boilerplate that synced Contentful and i18n features together and allowed us

@@ -15,13 +15,13 @@ And while creating rich user experiences is never an easy task, walled-garden CM
 
 Some challenges of traditional CMS development environments include:
 
-- **Walled-garden development.** Work on projects across CMS systems often requires reimplementing basic functionality like carousels or banners. Development can be blocked due to CMS access restrictions or code freezes. Upgrade paths can be challenging when CMSs don't support component UI versioning.
+-   **Walled-garden development.** Work on projects across CMS systems often requires reimplementing basic functionality like carousels or banners. Development can be blocked due to CMS access restrictions or code freezes. Upgrade paths can be challenging when CMSs don't support component UI versioning.
 
-- **Maintaining local environments**. Setting up a local app server and database and keeping it up to date with team members' changes is time-consuming, especially when switching between projects or returning after a gap in development.
+-   **Maintaining local environments**. Setting up a local app server and database and keeping it up to date with team members' changes is time-consuming, especially when switching between projects or returning after a gap in development.
 
-- **Project organization.** Reliably installing and managing third-party dependencies, including cross-compatibility and handling bugs in upstream, is challenging. Vanilla JavaScript offers no standard project organization or code bundling patterns.
+-   **Project organization.** Reliably installing and managing third-party dependencies, including cross-compatibility and handling bugs in upstream, is challenging. Vanilla JavaScript offers no standard project organization or code bundling patterns.
 
-- **A difficult target environment.** Cross-browser API incompatibilities, global DOM application state, and imperative DOM APIs make it easy to inadvertently introduce bugs.
+-   **A difficult target environment.** Cross-browser API incompatibilities, global DOM application state, and imperative DOM APIs make it easy to inadvertently introduce bugs.
 
 ## The rise of modern frameworks
 
@@ -42,11 +42,11 @@ Their _ubiquity_ adds stability to the landscape; React and Angular have become 
 
 Modern frameworks also represent a core _technology advance_ over previous solutions that make it much easier to create visually rich, low-defect frontends:
 
-- **Reusable UIs.** Key UI elements, such as headers, dropdowns, typeaheads, buttons, tables and so forth may be reused across the application, without copy-pasta.
+-   **Reusable UIs.** Key UI elements, such as headers, dropdowns, typeaheads, buttons, tables and so forth may be reused across the application, without copy-pasta.
 
-- **Local application state.** Previous methods of modifying web page display relied on global state. When code at any place can modify state everywhere, the result at scale is spaghetti code. In React/Angular's component model, components cannot modify outside state without being granted explicit permission.
+-   **Local application state.** Previous methods of modifying web page display relied on global state. When code at any place can modify state everywhere, the result at scale is spaghetti code. In React/Angular's component model, components cannot modify outside state without being granted explicit permission.
 
-- **A declarative virtual DOM.** Instead of imperatively changing specific page elements' state in reaction to specific user actions, developers can specify desired UI state as a "view" on application state, making code more readable and less buggy.
+-   **A declarative virtual DOM.** Instead of imperatively changing specific page elements' state in reaction to specific user actions, developers can specify desired UI state as a "view" on application state, making code more readable and less buggy.
 
 React and Angular, along with mature ES2015+ JavaScript, and stable dependency/bundling solutions like npm and webpack, are blowing away conceptions of JS as an unserious language. They are in production of leading Fortune 500 companies, including Facebook, Twitter, Microsoft, Autodesk, Airbnb, and McDonalds.
 

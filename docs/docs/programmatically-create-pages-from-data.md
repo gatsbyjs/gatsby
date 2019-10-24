@@ -118,6 +118,6 @@ programmatically create pages.
 
 ## Other resources
 
-- [Example Repository](https://github.com/jbranchaud/gatsby-programmatic-pages)
-- [Using Gatsby without GraphQL](/docs/using-gatsby-without-graphql/)
-- [CodeSandbox example creating pages from 3rd party data](https://codesandbox.io/s/b84oz)
+-   [Example Repository](https://github.com/jbranchaud/gatsby-programmatic-pages)
+-   [Using Gatsby without GraphQL](/docs/using-gatsby-without-graphql/)
+-   [CodeSandbox example creating pages from 3rd party data](https://codesandbox.io/s/b84oz)

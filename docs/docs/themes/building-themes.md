@@ -71,19 +71,19 @@ The `/gatsby-theme-minimal` directory is the starting point of the new theme you
 
 Inside it you'll find:
 
-- `gatsby-config.js`: An empty `gatsby-config` that you can use as a starting point for building functionality into your theme.
-- `index.js`: Since themes also function as plugins, this is an empty file that Gatsby requires in order to use this theme as a plugin.
-- `package.json`: A file listing the dependencies that your theme will pull in when people install it. Gatsby should be a peer dependency.
+-   `gatsby-config.js`: An empty `gatsby-config` that you can use as a starting point for building functionality into your theme.
+-   `index.js`: Since themes also function as plugins, this is an empty file that Gatsby requires in order to use this theme as a plugin.
+-   `package.json`: A file listing the dependencies that your theme will pull in when people install it. Gatsby should be a peer dependency.
 
-##ocs/using-graphql-playground.md
+\##ocs/using-graphql-playground.md
  `/example`
 
 The `/example` directory is an example Gatsby site that installs and uses the local theme, `gatsby-theme-minimal`.
 
 Inside it you'll find:
 
-- `gatsby-config.js`: Specifies which theme to use and any other one-off configuration a site might need.
-- `/src`: Contains source code such as custom pages or components that might live in a user's site.
+-   `gatsby-config.js`: Specifies which theme to use and any other one-off configuration a site might need.
+-   `/src`: Contains source code such as custom pages or components that might live in a user's site.
 
 ## Further resources
 
@@ -107,6 +107,6 @@ A Gatsby theme is a Gatsby site, therefore building with accessibility in mind i
 
 Check out how some existing themes are built:
 
-- The official [Gatsby blog theme](https://github.com/gatsbyjs/gatsby/tree/master/themes/gatsby-theme-blog)
-- The official [Gatsby notes theme](https://github.com/gatsbyjs/gatsby/tree/master/themes/gatsby-theme-notes)
-- The [Apollo themes](https://github.com/apollographql/gatsby-theme-apollo/tree/master/packages). (_You might also be interested in the [Apollo case study on themes](https://www.gatsbyjs.org/blog/2019-07-03-using-themes-for-distributed-docs/) on the blog._)
+-   The official [Gatsby blog theme](https://github.com/gatsbyjs/gatsby/tree/master/themes/gatsby-theme-blog)
+-   The official [Gatsby notes theme](https://github.com/gatsbyjs/gatsby/tree/master/themes/gatsby-theme-notes)
+-   The [Apollo themes](https://github.com/apollographql/gatsby-theme-apollo/tree/master/packages). (_You might also be interested in the [Apollo case study on themes](https://www.gatsbyjs.org/blog/2019-07-03-using-themes-for-distributed-docs/) on the blog._)

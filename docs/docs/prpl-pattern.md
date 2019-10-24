@@ -12,11 +12,11 @@ unreliable network connections.
 
 PRPL stands for:
 
-- **Push** critical resources for the initial URL route using `<link preload>`
-  and HTTP/2.
-- **Render** initial route.
-- **Pre-cache** remaining routes.
-- **Lazy-load** and create remaining routes on demand.
+-   **Push** critical resources for the initial URL route using `<link preload>`
+    and HTTP/2.
+-   **Render** initial route.
+-   **Pre-cache** remaining routes.
+-   **Lazy-load** and create remaining routes on demand.
 
 _**Note** HTTP/2 Server Push is a developing server technology and not available on
 most hosts just yet._

@@ -50,7 +50,7 @@ Please be advised that this is also a custom feature of Webpack.
 
 ### Additional resources
 
-- More on [using an imported font](https://www.gatsbyjs.org/docs/recipes/#adding-a-local-font).
+-   More on [using an imported font](https://www.gatsbyjs.org/docs/recipes/#adding-a-local-font).
 
 ## Querying for a `File` in GraphQL using `gatsby-source-filesystem`
 
@@ -58,7 +58,7 @@ You can also import files using GraphQL by querying for them in your data layer,
 
 ### Examples
 
-1. Copy all `.pdf` files you have in your data layer to your build directory and return URLs to them:
+1.  Copy all `.pdf` files you have in your data layer to your build directory and return URLs to them:
 
 ```graphql
 {
@@ -113,7 +113,7 @@ const DownloadsPage = () => {
 export default DownloadsPage
 ```
 
-2. Link to attachments in the frontmatter of your Markdown files:
+2.  Link to attachments in the frontmatter of your Markdown files:
 
 ```markdown
 ---

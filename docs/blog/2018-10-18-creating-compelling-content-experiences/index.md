@@ -30,18 +30,18 @@ In a modular CMS system, website teams can [use preferred workflows to choose yo
 
 This allows content teams to replace their heavyweight CMS monolith with their choice of:
 
-- A spreadsheet and text files (for extremely simple sites).
-- Specialized systems tailored to their use case, such as Shopify + Salsify + Bazaarvoice for an e-commerce site.
-- A headless cloud CMS with rich content modelling capabilities, such as Contentful.
+-   A spreadsheet and text files (for extremely simple sites).
+-   Specialized systems tailored to their use case, such as Shopify + Salsify + Bazaarvoice for an e-commerce site.
+-   A headless cloud CMS with rich content modelling capabilities, such as Contentful.
 
 ### Second, pick a UI development library
 
 [React and Angular are both excellent, ubiquitous, modern choices](/blog/2018-10-11-rise-of-modern-web-development), with rich community ecosystems to address website-specific concerns like:
 
-- SEO
-- Routing
-- Accessibility
-- i18n
+-   SEO
+-   Routing
+-   Accessibility
+-   i18n
 
 ### Third, choose a performance strategy
 
@@ -63,11 +63,11 @@ The challenge for website teams is: how to achieve this without a lot of costly,
 
 The answer: choose a content mesh. A content mesh:
 
-- pulls in data from your [headless CMS](/docs/headless-cms/) systems
+-   pulls in data from your [headless CMS](/docs/headless-cms/) systems
 
-- enables you to develop in your preferred UI library while providing website tooling
+-   enables you to develop in your preferred UI library while providing website tooling
 
-- automatically makes your site fast out of the box
+-   automatically makes your site fast out of the box
 
 <figure>
   <img alt="The modern website landscape" src="./content-mesh.png" height="300" />
@@ -80,9 +80,9 @@ The answer: choose a content mesh. A content mesh:
 
 Website teams searching for a content mesh can consider:
 
-- utilizing vendor integrations
-- assorted JAMStack solutions
-- Gatsby
+-   utilizing vendor integrations
+-   assorted JAMStack solutions
+-   Gatsby
 
 While some solutions have _part_ of the puzzle, only Gatsby comes with out-of-the-box CMS integrations, a modern development framework, and cutting-edge performance.
 
@@ -106,11 +106,11 @@ Middleman allows connections to third-party data sources, though currently only 
 
 Gatsby is the only content mesh option that creates fast websites, supports modern development frameworks, _and_ connects to enterprise content systems. Gatsby features:
 
-- **Integrations with 120+ backends**, including 15+ enterprise content systems like WordPress, Drupal, Contentful, Contentstack, Salsify and Shopify, as well as the ability to add additional sources.
+-   **Integrations with 120+ backends**, including 15+ enterprise content systems like WordPress, Drupal, Contentful, Contentstack, Salsify and Shopify, as well as the ability to add additional sources.
 
-- **A React development environment**, along with key plugins that provide key website features like SEO, routing, accessibility, and i18n.
+-   **A React development environment**, along with key plugins that provide key website features like SEO, routing, accessibility, and i18n.
 
-- **Lightning-fast out-of-the-box performance**, including both payload and delivery optimizations.
+-   **Lightning-fast out-of-the-box performance**, including both payload and delivery optimizations.
 
 ## Conclusion
 

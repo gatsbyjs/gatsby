@@ -89,6 +89,7 @@ other React component, while the `<FAQ />` component coming from an `.mdx`
 file might look something like this:
 
 <!-- prettier-ignore -->
+
 ```mdx:title=src/components/faq.mdx
 ## Frequently Asked Questions
 
@@ -146,6 +147,7 @@ variable name you've assigned it.
 You can export variables, objects, or other data structures:
 
 <!-- prettier-ignore -->
+
 ```mdx
 export const metadata = {
   name: "World",
@@ -189,6 +191,7 @@ through the `gatsby-plugin-mdx` plugin options, the exported component you defin
 from this file will replace the default.
 
 <!-- prettier-ignore -->
+
 ```mdx:title=src/pages/layout-example.mdx
 import PurpleBorder from "../components/purple-border"
 
@@ -218,6 +221,7 @@ as a prop, and can be accessed inside any JSX block when writing in
 MDX:
 
 <!-- prettier-ignore -->
+
 ```mdx
 import { graphql } from "gatsby"
 

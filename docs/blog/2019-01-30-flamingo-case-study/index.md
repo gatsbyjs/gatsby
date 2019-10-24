@@ -20,11 +20,11 @@ When it comes to websites, performance is king, especially for ecommerce website
 
 With that in mind, they also needed it to tick off some major development points, such as:
 
-1. Performance, performance, performance! The website had to be fast, as any delay in page load times meant lost customers and revenue.
-2. Improve page load times by at least 20% over the competition
-3. Optimize the site for mobile - the source of the majority of traffic
-4. Develop quickly with easy-to-learn tools because the timeline to launch was tight
-5. Make this project a blueprint for how to build future websites
+1.  Performance, performance, performance! The website had to be fast, as any delay in page load times meant lost customers and revenue.
+2.  Improve page load times by at least 20% over the competition
+3.  Optimize the site for mobile - the source of the majority of traffic
+4.  Develop quickly with easy-to-learn tools because the timeline to launch was tight
+5.  Make this project a blueprint for how to build future websites
 
 If the team didn't find a solution to meet these needs, they'd have to build it themselves and being responsible for performance optimizations, build processes, image optimizations, and edge hosting would have taken them easily another year to build. That definitely was NOT an option as they only had a few months to build and deploy the new Flamingo site.
 

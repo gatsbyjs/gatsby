@@ -15,11 +15,11 @@ Today, enterprise CPG, clothing, and consumer durables companies face dual threa
 
 But creating compelling experiences is challenging:
 
-- Marketers need content systems that model the website domain well to craft compelling messages.
+-   Marketers need content systems that model the website domain well to craft compelling messages.
 
-- Development teams need UI frameworks that allow easy design customization to keep the site look and feel fresh.
+-   Development teams need UI frameworks that allow easy design customization to keep the site look and feel fresh.
 
-- Business owners need high-quality add-ons like search, analytics, forms and payment to demonstrate value and justify continued investment. In addition, they need their sites to be _fast_.
+-   Business owners need high-quality add-ons like search, analytics, forms and payment to demonstrate value and justify continued investment. In addition, they need their sites to be _fast_.
 
 ## Generic vs best-of-breed
 

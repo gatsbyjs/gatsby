@@ -14,15 +14,15 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 
 ## Question Categories
 
-- [Functional Questions](#functional-questions-how-do-i-do-x-with-gatsby)
-- [GraphQL / Data Layer](#graphql--data-layer)
-- [Best Practices with Gatsby](#best-practices-with-gatsby)
-- [Content Management Systems (CMS)](#content-management-systems-cms)
-- [Gatsby for Dynamic Web Apps](#gatsby-for-dynamic-web-apps)
-- [Gatsby vs. Competitors](#gatsby-vs-competitors)
-- [Scaling Gatsby (Gatsby for Large Apps)](#scaling-gatsby-gatsby-for-large-apps)
-- [Gatsby Use Cases](#gatsby-use-cases)
-- [Misc. Questions](#misc-questions)
+-   [Functional Questions](#functional-questions-how-do-i-do-x-with-gatsby)
+-   [GraphQL / Data Layer](#graphql--data-layer)
+-   [Best Practices with Gatsby](#best-practices-with-gatsby)
+-   [Content Management Systems (CMS)](#content-management-systems-cms)
+-   [Gatsby for Dynamic Web Apps](#gatsby-for-dynamic-web-apps)
+-   [Gatsby vs. Competitors](#gatsby-vs-competitors)
+-   [Scaling Gatsby (Gatsby for Large Apps)](#scaling-gatsby-gatsby-for-large-apps)
+-   [Gatsby Use Cases](#gatsby-use-cases)
+-   [Misc. Questions](#misc-questions)
 
 ### Functional Questions (How do I do X with Gatsby?)
 
@@ -201,7 +201,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 ### Gatsby Use Cases
 
 **Question:** To use Gatsby for a blog - is this overengineering?
-**Answer:** Definitely not! [Here are some blogs built with Gatsby](/showcase/?filters%5B0%5D=Blog). One notable one is Dan Abramov's — [https://overreacted.io/](https://overreacted.io/)
+**Answer:** Definitely not! [Here are some blogs built with Gatsby](/showcase/?filters%5B0%5D=Blog). One notable one is Dan Abramov's — <https://overreacted.io/>
 
 **Question:** Is it overkill to build every site with Gatsby?
 **Answer:** We don't think so :)
@@ -256,7 +256,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Question:** Is there a good upgrade path for new versions of Gatsby?
 **Answer:** Unless you're on v1, you won't need a migration. If you are on v1 and want to move to v2, check out [Migrating from v1 to v2](/docs/migrating-from-v1-to-v2/).
 
-**Question:** Following up on upgrade path question—how would you upgrade between version of 2.\~?
+**Question:** Following up on upgrade path question—how would you upgrade between version of 2.~?
 **Answer:** You can bump the version # in your package.json and then you're done.
 
 **Question:** If my .htaccess file is configured to read .html files without the extension in the url, can Gatsby compile the links to pages without the .html ending?
@@ -286,6 +286,6 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Question:** What's the best way to get involved with contributing to Gatsby? Do you have regular calls for contributors or a preferred async channel e.g. Slack / Discord?
 **Answer:** We do have Discord, and highly recommend it! Check out our [Community page](/contributing/community/).
 
----
+* * *
 
 Reminder that if you want to watch the full recorded webinar, [register here](https://www.gatsbyjs.com/behind-the-scenes/). Thanks for stopping by!

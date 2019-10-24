@@ -20,8 +20,8 @@ The original site was a home-grown static site based on Markdown and React that 
 
 The main goals for the new site were simple:
 
-- A faster and easier site that anyone could update - even if they didn't know how to code
-- Good documentation - if anyone leaves the project, all the documentation is there, which eliminates the need to search around for how it was created
+-   A faster and easier site that anyone could update - even if they didn't know how to code
+-   Good documentation - if anyone leaves the project, all the documentation is there, which eliminates the need to search around for how it was created
 
 ## Easy onboarding with Gatsby
 
@@ -59,4 +59,5 @@ We're copying Gatsby as a best practice. Whenever we're working out how to engag
 IBM is the original tech company. Reaching for Gatsby shows they are still on the leading edge of technology and finding the newest and best routes for their people and clients. As the only developer on the Carbon team able to focus solely on the website rebuild, Alison used Gatsby to completely transform the vast mesh of content to provide an experience that literally any user can access, use, update and transform - leaving it even better for the next person. How can Gatsby do the same for you?
 
 [carbon]: https://www.carbondesignsystem.com/
+
 [lighthouse]: https://developers.google.com/web/tools/lighthouse/

@@ -56,9 +56,9 @@ In the `package.json` file in `gatsby-theme-events`, add the following:
 }
 ```
 
-- The `"name"` corresponds to the yarn workspace you defined earlier, in the root-level `package.json` folder.
-- Because you'll install `gatsby-theme-events` as a package, you have to specify a `"main"` entry point.
-  - This file won't do anything, but it does need to resolve, so create a new file in `gatsby-theme-events` called `index.js`.
+-   The `"name"` corresponds to the yarn workspace you defined earlier, in the root-level `package.json` folder.
+-   Because you'll install `gatsby-theme-events` as a package, you have to specify a `"main"` entry point.
+    -   This file won't do anything, but it does need to resolve, so create a new file in `gatsby-theme-events` called `index.js`.
 
 ```javascript:title=gatsby-theme-events/index.js
 // boop
@@ -82,8 +82,8 @@ In the `package.json` file in `site`, add the following:
 }
 ```
 
-- `"private"` is set to true, because you won't be publishing the site to npm.
-- The `"name"` again corresponds to the yarn workspace you defined earlier, in the root-level `package.json` folder.
+-   `"private"` is set to true, because you won't be publishing the site to npm.
+-   The `"name"` again corresponds to the yarn workspace you defined earlier, in the root-level `package.json` folder.
 
 ### Add dependencies to `site`
 
@@ -95,8 +95,8 @@ yarn workspace site add gatsby react react-dom gatsby-theme-events@*
 
 > 🚨 If you use [zsh](https://en.wikipedia.org/wiki/Z_shell), the `*` needs to be quoted, e.g. `gatsby-theme-events@"*"` or `"gatsby-theme-events@*"`.
 
-- When you run `yarn workspace site`, it's as if you were running that command while in the `/site` directory. The dependencies will be added to `site`, even though you're not in the `site` directory.
-- You're installing `gatsby-theme-events@*`, because you need the workspace to reference the unpublished `gatsby-theme-events` theme.
+-   When you run `yarn workspace site`, it's as if you were running that command while in the `/site` directory. The dependencies will be added to `site`, even though you're not in the `site` directory.
+-   You're installing `gatsby-theme-events@*`, because you need the workspace to reference the unpublished `gatsby-theme-events` theme.
 
 > 💡 For more details on using yarn workspaces, you might be interested to check out Gatsby's [blog post on setting up yarn workspaces](/blog/2019-05-22-setting-up-yarn-workspaces-for-theme-development/).
 
@@ -294,9 +294,9 @@ exports.onPreBootstrap = ({ reporter }) => {
 
 To actually create pages, you'll need to:
 
-- Define the `Event` type
-- Define resolvers for custom fields on the `Event` type
-- Query for events
+-   Define the `Event` type
+-   Define resolvers for custom fields on the `Event` type
+-   Query for events
 
 ### Define the "Event" type
 
@@ -331,11 +331,11 @@ exports.sourceNodes = ({ actions }) => {
 // highlight-end
 ```
 
-1. You'll use the `createTypes` to create the new `Event` type
-2. The `Event` type will implement the typical Gatsby `Node` interface.
-3. You'll use `@dontInfer`, because rather than Gatsby inferring fields, you'll be defining them explicitly.
-4. In addition to an `id` field, you'll create new fields for each data point associated with an event (name, location, startDate, endDate, url). _To read more detail about creating types, check out the [`createTypes` documentation](/docs/actions/#createTypes)_.
-5. You'll also create a `slug` field. You'll notice your event data doesn't include "slug" data. You'll define this in the next step.
+1.  You'll use the `createTypes` to create the new `Event` type
+2.  The `Event` type will implement the typical Gatsby `Node` interface.
+3.  You'll use `@dontInfer`, because rather than Gatsby inferring fields, you'll be defining them explicitly.
+4.  In addition to an `id` field, you'll create new fields for each data point associated with an event (name, location, startDate, endDate, url). _To read more detail about creating types, check out the [`createTypes` documentation](/docs/actions/#createTypes)_.
+5.  You'll also create a `slug` field. You'll notice your event data doesn't include "slug" data. You'll define this in the next step.
 
 ### Define resolvers for any custom fields (slug)
 
@@ -513,9 +513,9 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 // highlight-end
 ```
 
-- You'll default the `basePath` to the root path (`"/"`)
-- Then you'll set up the call to the `createPage` action to create the a page at the base path.
-  - _Note that the component listed doesn't exist yet -- you'll create that shortly._
+-   You'll default the `basePath` to the root path (`"/"`)
+-   Then you'll set up the call to the `createPage` action to create the a page at the base path.
+    -   _Note that the component listed doesn't exist yet -- you'll create that shortly._
 
 ### Query for events
 
@@ -548,8 +548,8 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 }
 ```
 
-- You'll retrieve all events, sorted by start date, in ascending order.
-- You'll handle the error, in case the GraphQL query failed.
+-   You'll retrieve all events, sorted by start date, in ascending order.
+-   You'll handle the error, in case the GraphQL query failed.
 
 ### Create a page for each event
 
@@ -596,9 +596,9 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 }
 ```
 
-- You'll grab the event nodes queried from GraphQL.
-- You'll loop over all the events that were returned, and use `createPage` to create a page for each event.
-  - _Note the "wishful programming" again -- `"./src/templates/event.js"` doesn't exist yet._
+-   You'll grab the event nodes queried from GraphQL.
+-   You'll loop over all the events that were returned, and use `createPage` to create a page for each event.
+    -   _Note the "wishful programming" again -- `"./src/templates/event.js"` doesn't exist yet._
 
 ### Create the "events" and "event" template components
 
@@ -636,7 +636,7 @@ yarn workspace gatsby-theme-events develop
 
 You should see the placeholder `events.js` component at [localhost:8000](http://localhost:8000/).
 
-If you hit [http://localhost:8000/404](http://localhost:8000/404) (for example -- or any route that doesn't exist) you should see a listing of event pages, all building with the placeholder `event.js` component.
+If you hit <http://localhost:8000/404> (for example -- or any route that doesn't exist) you should see a listing of event pages, all building with the placeholder `event.js` component.
 
 ## Display sorted data with `useStaticQuery`
 
@@ -724,8 +724,8 @@ For now, this component will display a stringified object from the JSON data you
 
 By updating the `events.js` template with the following code, you will:
 
-- Import the two new components.
-- Refactor the `render` method to use the new components, and give the `<EventList>` component the events data.
+-   Import the two new components.
+-   Refactor the `render` method to use the new components, and give the `<EventList>` component the events data.
 
 ```javascript:title=gatsby-theme-events/src/templates/events.js
 import React from "react"
@@ -805,11 +805,11 @@ const EventList = ({ events }) => (
 export default EventList
 ```
 
-- You've created a header for "Upcoming Events"
-- You've mapped over all of the "event" records, displaying:
-  - The event name (which links to the event page)
-  - The date of the event
-  - The location of the event
+-   You've created a header for "Upcoming Events"
+-   You've mapped over all of the "event" records, displaying:
+    -   The event name (which links to the event page)
+    -   The date of the event
+    -   The location of the event
 
 Checking [localhost:8000](http://localhost:8000/) again, you should see the new markup:
 
@@ -926,9 +926,9 @@ Now, the individual event page reflects the updated markup:
 
 Now you'll refactor this component with some business logic to display the event dates in a way that's more human-readable.
 
-- If the event is one-day: June 30 2019
-- If the event is multi-day: July 4-6, 2019
-- If the event spans different months: July 30 - August 2 2019
+-   If the event is one-day: June 30 2019
+-   If the event is multi-day: July 4-6, 2019
+-   If the event spans different months: July 30 - August 2 2019
 
 ```javascript:title=gatsby-theme-events/src/components/event.js
 import React from "react"
@@ -1069,8 +1069,8 @@ module.exports = {
 }
 ```
 
-- `contentPath` is set to "events". So, rather than looking in the default "data" directory for content, the site will be looking for content in an "events" directory.
-- `basePath` is set to "events". So, rather than creating the events listing at the root (`"/"`), you should see an events listing page at `/events`.
+-   `contentPath` is set to "events". So, rather than looking in the default "data" directory for content, the site will be looking for content in an "events" directory.
+-   `basePath` is set to "events". So, rather than creating the events listing at the root (`"/"`), you should see an events listing page at `/events`.
 
 To test this, run the site:
 
@@ -1080,14 +1080,14 @@ yarn workspace site develop
 
 Once this is running, you'll observe two things:
 
-1. An "events" directory has automatically been generated for you in `site/events`.
-2. If you hit [localhost:8000/404](http://localhost:8000/404) (or any other route that doesn't exist), you'll see that the site has created an `/events` page.
+1.  An "events" directory has automatically been generated for you in `site/events`.
+2.  If you hit [localhost:8000/404](http://localhost:8000/404) (or any other route that doesn't exist), you'll see that the site has created an `/events` page.
 
 However, you don't have any event data in the site. Copy the `events.yml` file from `gatsby-theme-events/data` into `site/events`. Then, restart the dev server:
 
-![Running the site, the basepath is now `/events`](./images/building-a-theme-changed-basepath.png)
+![Running the site, the basepath is now \`/events\`](./images/building-a-theme-changed-basepath.png)
 
-The events listing page will now be accessible at [http://localhost:8000/events](http://localhost:8000/events). Hitting [the root path](http://localhost:8000/) will return a 404.
+The events listing page will now be accessible at <http://localhost:8000/events>. Hitting [the root path](http://localhost:8000/) will return a 404.
 
 ## Make themes extendable with `gatsby-plugin-theme-ui`
 
@@ -1499,8 +1499,8 @@ Restart the dev server for `theme-test`. Your local site should now have a blue 
 
 A few notable things are happening in this `index.js` file:
 
-- The `theme` import from `@jlengstorf/gatsby-theme-events` is the base UI theme from `@jlengstorf/gatsby-theme-events`.
-- The new object exported from `index.js` uses `lodash.merge` to deeply merge the base UI theme with the theme overrides of your choice. In this case, changing the primary color to blue.
+-   The `theme` import from `@jlengstorf/gatsby-theme-events` is the base UI theme from `@jlengstorf/gatsby-theme-events`.
+-   The new object exported from `index.js` uses `lodash.merge` to deeply merge the base UI theme with the theme overrides of your choice. In this case, changing the primary color to blue.
 
 ### Override an entire component
 
@@ -1543,7 +1543,7 @@ Congratulations! You've set up, built, and customized your first Gatsby theme!
 
 ### Further reading
 
-- Check out the [Gatsby themes docs](/docs/themes/) to keep learning.
-- Have an idea for a theme you'd like to build? Get a headstart on a local theme development workspace using the [Theme Workspace starter](https://github.com/gatsbyjs/gatsby/tree/master/themes/gatsby-starter-theme-workspace).
-- Have you built a Gatsby starter before? Perhaps [convert that starter to a theme](/docs/themes/converting-a-starter).
-- All through the month of July 2019, Jason Lengstorf will be live-streaming building themes with community members. Follow [his Twitch channel](https://twitch.tv/jlengstorf) for updates, or check out [recordings from previous streams](https://jason.af/lwj-youtube).
+-   Check out the [Gatsby themes docs](/docs/themes/) to keep learning.
+-   Have an idea for a theme you'd like to build? Get a headstart on a local theme development workspace using the [Theme Workspace starter](https://github.com/gatsbyjs/gatsby/tree/master/themes/gatsby-starter-theme-workspace).
+-   Have you built a Gatsby starter before? Perhaps [convert that starter to a theme](/docs/themes/converting-a-starter).
+-   All through the month of July 2019, Jason Lengstorf will be live-streaming building themes with community members. Follow [his Twitch channel](https://twitch.tv/jlengstorf) for updates, or check out [recordings from previous streams](https://jason.af/lwj-youtube).

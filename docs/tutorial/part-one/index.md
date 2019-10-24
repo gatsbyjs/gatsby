@@ -140,6 +140,7 @@ Take the example of creating a custom button. In the past, you would create a CS
 In the world of components, you instead create a `PrimaryButton` component with your button styles and use it throughout your site like:
 
 <!-- prettier-ignore -->
+
 ```jsx
 <PrimaryButton>Click me</PrimaryButton>
 ```
@@ -339,7 +340,7 @@ Gatsby is a _modern site generator_, which means there are no servers to setup o
 
 Try using [Surge](http://surge.sh/) for deploying your first Gatsby website. Surge is one of many "static site hosts" which make it possible to deploy Gatsby sites.
 
-If you haven't previously installed &amp; set up Surge, open a new terminal window and install their command-line tool:
+If you haven't previously installed & set up Surge, open a new terminal window and install their command-line tool:
 
 ```shell
 npm install --global surge
@@ -379,10 +380,10 @@ case) and you'll see your newly published site! Great work!
 
 In this section you:
 
-- Learned about Gatsby starters, and how to use them to create new projects
-- Learned about JSX syntax
-- Learned about components
-- Learned about Gatsby page components and sub-components
-- Learned about React "props" and reusing React components
+-   Learned about Gatsby starters, and how to use them to create new projects
+-   Learned about JSX syntax
+-   Learned about components
+-   Learned about Gatsby page components and sub-components
+-   Learned about React "props" and reusing React components
 
 Now, move on to [**adding styles to your site**](/tutorial/part-two/)!

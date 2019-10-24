@@ -6,8 +6,8 @@ title: Page -> Node Dependency Tracking
 >
 > Outdated areas are:
 >
-> - `createPageDependency` is not the only way to mutate dependencies now
-> - other helpers exist now
+> -   `createPageDependency` is not the only way to mutate dependencies now
+> -   other helpers exist now
 >
 > You can help by making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228).
 

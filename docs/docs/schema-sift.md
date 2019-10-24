@@ -22,11 +22,11 @@ Remember, at the point this resolve function is created, we have been iterating 
 
 The `resolve()` function calls `run-sift.js`, and provides it with the following arguments:
 
-- GraphQLArgs (as JavaScript object). Within a filter. E.g. `wordcount: { paragraphs: { eq: 4 } }`
-- All nodes in redux of this type. E.g. where `internal.type == MmarkdownRemark'`
-- Context `path`, if being called as part of a [page query](/docs/query-execution/#query-queue-execution)
-- typeName. E.g. `markdownRemark`
-- gqlType. See [more on gqlType](/docs/schema-gql-type)
+-   GraphQLArgs (as JavaScript object). Within a filter. E.g. `wordcount: { paragraphs: { eq: 4 } }`
+-   All nodes in redux of this type. E.g. where `internal.type == MmarkdownRemark'`
+-   Context `path`, if being called as part of a [page query](/docs/query-execution/#query-queue-execution)
+-   typeName. E.g. `markdownRemark`
+-   gqlType. See [more on gqlType](/docs/schema-gql-type)
 
 For example:
 
@@ -53,20 +53,20 @@ runSift({
 This file converts GraphQL Arguments into sift queries and applies them to the collection of all nodes of this type. The rough steps are:
 
 1.  Convert query args to sift args
-1.  Drop leaves from args
-1.  Resolve inner query fields on all nodes
-1.  Track newly realized fields
-1.  Run sift query on all nodes
-1.  Create Page dependency if required
+2.  Drop leaves from args
+3.  Resolve inner query fields on all nodes
+4.  Track newly realized fields
+5.  Run sift query on all nodes
+6.  Create Page dependency if required
 
 ### 1. Convert query args to sift args
 
 Sift expects all field names to be prepended by a `$`. The [siftifyArgs](https://github.com/gatsbyjs/gatsby/blob/6dc8a14f8efc78425b1f225901dce7264001e962/packages/gatsby/src/redux/run-sift.js#L39) function takes care of this. It descends the args tree, performing the following transformations for each field key/value scenario.
 
-- field key is`elemMatch`? Change to `$elemMatch`. Recurse on value object
-- field value is regex? Apply regex cleaning
-- field value is glob, use [minimatch](https://www.npmjs.com/package/minimatch) library to convert to Regex
-- normal value, prepend `$` to field name.
+-   field key is`elemMatch`? Change to `$elemMatch`. Recurse on value object
+-   field value is regex? Apply regex cleaning
+-   field value is glob, use [minimatch](https://www.npmjs.com/package/minimatch) library to convert to Regex
+-   normal value, prepend `$` to field name.
 
 So, the above query would become:
 

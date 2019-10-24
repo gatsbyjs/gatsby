@@ -51,5 +51,5 @@ It is also recommended to include a [visual icon](https://thenounproject.com/ter
 
 ## Other resources
 
-- For the complete example of how to link between pages, see [Part One](/tutorial/part-one/#linking-between-pages/) in the Tutorial
-- Check out more detail on routing in Gatsby in the [API doc for Gatsby Link](/docs/gatsby-link/).
+-   For the complete example of how to link between pages, see [Part One](/tutorial/part-one/#linking-between-pages/) in the Tutorial
+-   Check out more detail on routing in Gatsby in the [API doc for Gatsby Link](/docs/gatsby-link/).

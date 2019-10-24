@@ -6,9 +6,9 @@ title: GraphQL Node Types Creation
 >
 > Outdated areas are:
 >
-> - the `inferObjectStructureFromNodes` function doesn't exist anymore
-> - `setFieldsOnGraphQLNodeType` has been deprecated due to the new `createTypes` action
-> - file node creation has been moved away from `setFileNodeRootType`
+> -   the `inferObjectStructureFromNodes` function doesn't exist anymore
+> -   `setFieldsOnGraphQLNodeType` has been deprecated due to the new `createTypes` action
+> -   file node creation has been moved away from `setFileNodeRootType`
 >
 > You can help by making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228).
 

@@ -66,8 +66,8 @@ Options like transition duration, direction, and more are customizable with prop
 
 You have two main methods of creating page transitions:
 
-1. Use the `trigger` function defined in your `exit`/`entry` prop. More details in the '[Using the `trigger` function](#using-the-trigger-function)' subsection.
-2. Use the props passed by `TransitionLink` to define your transitions. More details in the '[Using passed props](#using-passed-props)' subsection.
+1.  Use the `trigger` function defined in your `exit`/`entry` prop. More details in the '[Using the `trigger` function](#using-the-trigger-function)' subsection.
+2.  Use the props passed by `TransitionLink` to define your transitions. More details in the '[Using passed props](#using-passed-props)' subsection.
 
 Additionally, you can specify a number of props and options on the `TransitionLink` component, like `length`, `delay`, and more. For more options and details, see [the documentation of TransitionLink](https://transitionlink.tylerbarnes.ca/docs/transitionlink/). For further examples of usage, visit the [plugin's GitHub repository.](https://github.com/TylerBarnes/gatsby-plugin-transition-link)
 
@@ -162,8 +162,8 @@ As always, check out [the `TransitionPortal` docs](https://transitionlink.tylerb
 
 ## Further reading
 
-- [Official documentation](https://transitionlink.tylerbarnes.ca/docs/)
-- [Source code for plugin](https://github.com/TylerBarnes/gatsby-plugin-transition-link)
-- [Demo site](https://gatsby-plugin-transition-link.netlify.com/)
-- [Blog post: 'Per-Link Gatsby page transitions with TransitionLink'](/blog/2018-12-04-per-link-gatsby-page-transitions-with-transitionlink/)
-- [Using transition-link with react-spring](https://github.com/TylerBarnes/gatsby-plugin-transition-link/issues/34)
+-   [Official documentation](https://transitionlink.tylerbarnes.ca/docs/)
+-   [Source code for plugin](https://github.com/TylerBarnes/gatsby-plugin-transition-link)
+-   [Demo site](https://gatsby-plugin-transition-link.netlify.com/)
+-   [Blog post: 'Per-Link Gatsby page transitions with TransitionLink'](/blog/2018-12-04-per-link-gatsby-page-transitions-with-transitionlink/)
+-   [Using transition-link with react-spring](https://github.com/TylerBarnes/gatsby-plugin-transition-link/issues/34)

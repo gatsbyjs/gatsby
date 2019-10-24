@@ -8,5 +8,5 @@ Note that this process only applies to queries that are specified directly in co
 
 Almost all logic to do with queries is in the internal-plugin [query-runner](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby/src/internal-plugins/query-runner). There are two steps involved in a Query's life time. The first is extracting it, and the second is running it. These are separated into two bootstrap phases.
 
-1. [Query Extraction](/docs/query-extraction/)
-2. [Query Execution](/docs/query-execution/)
+1.  [Query Extraction](/docs/query-extraction/)
+2.  [Query Execution](/docs/query-execution/)

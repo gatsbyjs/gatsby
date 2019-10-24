@@ -10,7 +10,7 @@ tags: ["wordpress", "netlify", "security", "case-studies"]
 
 [Ecliptic](http://www.ecliptic.io) is a small development team out of Broomfield, Colorado. We build everything from high-performance content-driven sites to richly interactive web and mobile applications using React, GraphQL, and functional programming. [Mike Johnston](https://www.mikejohnstonforcolorado.com) is a Colorado gubernatorial candidate with an ambitious vision. When we heard about his ideas for an online platform to truly engage with his constituents and give them a real voice, we were excited about the opportunity to make his ideas into reality!
 
-While we're still a few phases away from seeing Mike's ultimate vision come to fruition, we've got the foundations in place and we're putting the finishing touches on a gorgeous new interface for Mike's homepage. Check it out at [https://www.mikejohnstonforcolorado.com](https://www.mikejohnstonforcolorado.com)!
+While we're still a few phases away from seeing Mike's ultimate vision come to fruition, we've got the foundations in place and we're putting the finishing touches on a gorgeous new interface for Mike's homepage. Check it out at <https://www.mikejohnstonforcolorado.com>!
 
 ## Laying the Foundation for an Extensible Future
 
@@ -18,9 +18,9 @@ Our goal was to provide a solid architecture to build a long-term future on top 
 
 To execute on this effectively, we prioritized a few architectural goals:
 
-- **System Resources** — Sadly, public sector software budgets often don't match those of their private sector counterparts. We wanted to pursue a system that would not require a large deployment, a lot of performance tuning, and constant monitoring and maintenance.
-- **Security** — It's no secret that there are bad actors across the world that would love to influence campaigns and governance wherever they can. We wanted to provide strong protections to prevent hackers from gaining access and interfering.
-- **Maintainability** — If this stack is going to support a growing engagement and policy platform on a lean budget, it needs to be easy to work on. We wanted to maintain best practices wherever possible and use techniques that would be easy for someone to come in behind me and build on.
+-   **System Resources** — Sadly, public sector software budgets often don't match those of their private sector counterparts. We wanted to pursue a system that would not require a large deployment, a lot of performance tuning, and constant monitoring and maintenance.
+-   **Security** — It's no secret that there are bad actors across the world that would love to influence campaigns and governance wherever they can. We wanted to provide strong protections to prevent hackers from gaining access and interfering.
+-   **Maintainability** — If this stack is going to support a growing engagement and policy platform on a lean budget, it needs to be easy to work on. We wanted to maintain best practices wherever possible and use techniques that would be easy for someone to come in behind me and build on.
 
 ## Content Management with WordPress
 

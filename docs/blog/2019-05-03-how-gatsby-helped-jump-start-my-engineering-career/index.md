@@ -31,7 +31,7 @@ I learned a lot of basic JavaScript functionality from [reading the Gatsbygram c
 
 My wife and I were living in a two bedroom apartment, and couldn't really pay for it -- we were pretty close to broke. And we didn't necessarily see eye to eye about me leaving medical school.
 
-So I promised someone that I would make them a website for \$2K. It was a carpet store and they needed something to replace their triplicate forms.
+So I promised someone that I would make them a website for \\$2K. It was a carpet store and they needed something to replace their triplicate forms.
 
 At that time, I didn't know how forms worked, I didn't know how events worked, and so on. I didn't know anything. But I had 60 days to do it, and that pushed me.
 

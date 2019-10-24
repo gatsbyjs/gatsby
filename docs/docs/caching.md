@@ -44,11 +44,11 @@ How you setup your caching depends on how you host your site. We encourage peopl
 
 The following plugins have been created:
 
-- [`gatsby-plugin-netlify`](/packages/gatsby-plugin-netlify/)
-- [`gatsby-plugin-s3`](https://github.com/jariz/gatsby-plugin-s3)
+-   [`gatsby-plugin-netlify`](/packages/gatsby-plugin-netlify/)
+-   [`gatsby-plugin-s3`](https://github.com/jariz/gatsby-plugin-s3)
 
 When deploying with Now, follow the instructions in the [Now documentation](https://zeit.co/guides/deploying-gatsby-with-now#bonus:-cache-your-gatsby-assets).
 
----
+* * *
 
 <sup>1</sup> It's important that you use the combination of `max-age=0` and `must-revalidate` instead of using `no-cache`. This allows the CDN to store copies of the files on the servers closest to your users and only download a new version from the origin server in the event that the files have changed. Using `no-cache`, on the other hand, decreases performance because it forces the CDN to download a new copy of the file from the origin server on every request.

@@ -4,8 +4,8 @@ title: Debugging Cache Issues
 
 There can be certain scenarios in which the Gatsby caching mechanism appears to fail, which can lead to issues like:
 
-- Content not appearing when it should
-- Changes to plugin source code not appearing to be invoked appropriately
+-   Content not appearing when it should
+-   Changes to plugin source code not appearing to be invoked appropriately
 
 and more! If you've found yourself writing a script like:
 

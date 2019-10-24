@@ -11,10 +11,10 @@ tags:
 
 Recently, I gave a talk with this same title at Gatsby Days in the San Francisco Bay area ([watch and listen to the talk here](https://www.gatsbyjs.com/gatsby-days-uxresearch-shannon/). This article reviews the following:
 
-- Why do UX research on your website?
-- How to do high-impact, low-effort research
-- Top 5 pain points we're solving at Gatsby
-- How to sign up to be a usability tester
+-   Why do UX research on your website?
+-   How to do high-impact, low-effort research
+-   Top 5 pain points we're solving at Gatsby
+-   How to sign up to be a usability tester
 
 ## Why do UX research?
 
@@ -24,8 +24,8 @@ To make sure it's clear why we do UX research at Gatsby, here is the reason:
 
 We do UX research to live up to these two Gatsby values:
 
-1. Create awesome DX
-2. Create awesome UX
+1.  Create awesome DX
+2.  Create awesome UX
 
 Creating awesome DX and UX are two of the company's values. We know that developers who use Gatsby and anyone who visits a Gatsby site are the experts on what makes their lives easier, so we make efforts to empathize deeply with our users so we can create the best available developer experience (DX) for making websites and best user experience (UX) for using websites. I think of these both as UX in a way, so will just use UX from here on out.
 
@@ -33,9 +33,9 @@ Creating awesome DX and UX are two of the company's values. We know that develop
 
 You might wonder whether it's possible to create awesome UX without research; valid question, especially since it's always nice to save time, effort, and money. When done right, UX research:
 
-- ensures meaningful work (e.g. you are focusing your efforts on what will make the most impact on your goals)
-- saves time (because you focus on the right thing earlier and learn about your mistakes faster)
-- is fun, surprising, and confidence building! (It's incredibly fun to meet real users, and imagine having the confidence to _know_ that you're building something that helps them, rather than just _hoping_ it helps them)
+-   ensures meaningful work (e.g. you are focusing your efforts on what will make the most impact on your goals)
+-   saves time (because you focus on the right thing earlier and learn about your mistakes faster)
+-   is fun, surprising, and confidence building! (It's incredibly fun to meet real users, and imagine having the confidence to _know_ that you're building something that helps them, rather than just _hoping_ it helps them)
 
 ## How to do high-impact, low-effort projects
 
@@ -134,9 +134,9 @@ There is also value in gathering passive feedback from something like google ana
 
 Stay tuned for the next articles:
 
-- "Solving the top 5 pain points uncovered by research in 2018"
-- "Creating a smooth-as-butter onboarding experience for new users"
-- "Redesigning the .org homepage"
+-   "Solving the top 5 pain points uncovered by research in 2018"
+-   "Creating a smooth-as-butter onboarding experience for new users"
+-   "Redesigning the .org homepage"
 
 ## How to sign up for a user interview
 

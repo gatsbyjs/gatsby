@@ -6,10 +6,10 @@ Docs reference guides, recipes, and tutorials teach Gatsby concepts to users wit
 
 Here are some things to keep in mind when deciding where to contribute to Gatsby:
 
-- [Blog posts](/contributing/docs-contributions#contributing-to-the-blog) are primarily made for case studies and time-sensitive storytelling.
-- [Reference guides](#reference-guides), in contrast, are evergreen -- or continually relevant -- and discoverable documentation articles that go beyond any one case study or situation.
-- [Recipes](#recipes) add concise, discoverable, and easy-to-follow instructions for common Gatsby tasks. They are smaller units than tutorials.
-- [Tutorials](#tutorials) should provide step-by-step guidance for Gatsby workflows, listing all pre-requisites and not assuming knowledge or skipping steps.
+-   [Blog posts](/contributing/docs-contributions#contributing-to-the-blog) are primarily made for case studies and time-sensitive storytelling.
+-   [Reference guides](#reference-guides), in contrast, are evergreen -- or continually relevant -- and discoverable documentation articles that go beyond any one case study or situation.
+-   [Recipes](#recipes) add concise, discoverable, and easy-to-follow instructions for common Gatsby tasks. They are smaller units than tutorials.
+-   [Tutorials](#tutorials) should provide step-by-step guidance for Gatsby workflows, listing all pre-requisites and not assuming knowledge or skipping steps.
 
 ## Why use templates?
 
@@ -175,7 +175,7 @@ Assume the reader has basic programming knowledge such as the command line, code
 - Links to starters
 ```
 
----
+* * *
 
 ## Recipes
 
@@ -185,12 +185,12 @@ A recipe should list requirements and include a few short instructions to comple
 
 The components of a recipe are:
 
-- The name of the recipe, which should describe a single task
-- A 1-2 sentence description motivating what the recipe is for
-- Prerequisites and requirements
-- Step-by-step directions
-  - Optional embedded examples
-- Links to additional resources
+-   The name of the recipe, which should describe a single task
+-   A 1-2 sentence description motivating what the recipe is for
+-   Prerequisites and requirements
+-   Step-by-step directions
+    -   Optional embedded examples
+-   Links to additional resources
 
 Recipes should be short. This is accomplished by limiting steps to what is unique to the task at-hand; prerequisites and requirements should be mentioned but not include install steps for things like npm or Gatsby CLI. Linking to full reference guide, tutorial, or a working example can complete the loop for anyone who needs more help.
 
@@ -202,15 +202,15 @@ Grouping recipes by topic will allow users to navigate and learn by subject matt
 
 Recipes should fall into these categories to start (suggest your idea in a GitHub issue!):
 
-- Pages/Layouts
-- Styling
-- Using a starter
-- Using themes
-- Sourcing data
-- Querying data
-- Images
-- Transforming data
-- Deploying
+-   Pages/Layouts
+-   Styling
+-   Using a starter
+-   Using themes
+-   Sourcing data
+-   Querying data
+-   Images
+-   Transforming data
+-   Deploying
 
 Here's a template for a new recipe category:
 
@@ -386,7 +386,7 @@ them at the bottom in an "Other Resources" section. You can also mention here an
 - Links to starters
 ```
 
----
+* * *
 
 ## Plugin README template
 
@@ -440,7 +440,7 @@ If this is a source plugin README, source plugins ought to allow people to query
 If you have unanswered questions, would like help with enhancing or debugging the plugin, it is nice to include instructions for people who want to contribute to your plugin.
 ```
 
----
+* * *
 
 ## Starter README template
 

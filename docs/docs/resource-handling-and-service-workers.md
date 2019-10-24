@@ -6,7 +6,7 @@ title: Resource Handling & Service Workers
 >
 > Outdated areas are:
 >
-> - mention the page shell
+> -   mention the page shell
 >
 > You can help by making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228).
 
@@ -26,13 +26,13 @@ It's important that this array is accurate - if a page entered the array when it
 
 When all resources for a page have been successfully prefetched, we do _one_ of the following:
 
-- Add the page's path to a temporary array of prefetched paths, if the service worker has not yet installed
-- Send a message to the service worker to let it know to whitelist the page's path, if it is installed
+-   Add the page's path to a temporary array of prefetched paths, if the service worker has not yet installed
+-   Send a message to the service worker to let it know to whitelist the page's path, if it is installed
 
 Upon initial install, we do the following:
 
-- Loop through all scripts and stylesheets in the head and fetch these again, so that Workbox can now cache them
-- Fetch all resources for pages whose paths are in the temporary prefetched paths array, so that Workbox can now cache them
+-   Loop through all scripts and stylesheets in the head and fetch these again, so that Workbox can now cache them
+-   Fetch all resources for pages whose paths are in the temporary prefetched paths array, so that Workbox can now cache them
 
 Note that in both of the above cases, all these files should have already been downloaded once by the browser, so with [proper HTTP caching setup](/docs/caching/) we don't have to download any of the files again. However, one exception to this is `<style>` elements with a `data-href` attribute (indicating that the embedded stylesheet is the same as the stylesheet at the location specified) - we currently fetch the specified file rather than caching the contents of the element.
 
@@ -50,25 +50,25 @@ In the future, we could refactor these into a single function which takes parame
 
 The `EnsureResources` component exists to (as its name suggest) ensure that we have the resources for a specified page, and load them if we currently don't. There are some valid reasons why we might not have resources at the time of navigation:
 
-1. 404s resulting from site-internal links, when the user has not created a custom 404 page with `404.js`
-2. When visiting a page (which hasn't been visited before), the site may have been updated since our last navigation and so the resources to the unvisited page may have changed location
-3. Ad blockers may block access to certain paths in which case we're unable to load the JS resources for a page
+1.  404s resulting from site-internal links, when the user has not created a custom 404 page with `404.js`
+2.  When visiting a page (which hasn't been visited before), the site may have been updated since our last navigation and so the resources to the unvisited page may have changed location
+3.  Ad blockers may block access to certain paths in which case we're unable to load the JS resources for a page
 
 Here is how the `EnsureResources` component handles each of these scenarios:
 
-1. On non-initial renders, reload upon missing resources so that the browser can load the server's 404 page
+1.  On non-initial renders, reload upon missing resources so that the browser can load the server's 404 page
 
-2. On initial renders, flag the page as failed and throw an error to prevent rendering a blank page (static HTML will suffice), then reload it once the service worker updates
+2.  On initial renders, flag the page as failed and throw an error to prevent rendering a blank page (static HTML will suffice), then reload it once the service worker updates
 
-   On non-initial renders, reload upon missing resources so that the browser can load the latest page
+    On non-initial renders, reload upon missing resources so that the browser can load the latest page
 
-3. On initial renders, throw an error to prevent rendering a blank page (static HTML will suffice)
+3.  On initial renders, throw an error to prevent rendering a blank page (static HTML will suffice)
 
 The following are some invalid reasons why we might not have resources, i.e. things which we should never have to worry about:
 
-1. 404s from external links, without a custom 404 page - the page will load from the server in the first place, so Gatsby won't even kick in at this point
-2. 404s, with a custom 404 page - `getResourcesForPathname` will automatically return the resources for the custom 404 page
-3. Visiting a previously-visited page via an external link, when the site's resources have since updated - previously-visited pages are cached, so they'll work even if the site has updated since. Unvisited pages will always load from the server and get the latest resources.
+1.  404s from external links, without a custom 404 page - the page will load from the server in the first place, so Gatsby won't even kick in at this point
+2.  404s, with a custom 404 page - `getResourcesForPathname` will automatically return the resources for the custom 404 page
+3.  Visiting a previously-visited page via an external link, when the site's resources have since updated - previously-visited pages are cached, so they'll work even if the site has updated since. Unvisited pages will always load from the server and get the latest resources.
 
 ### Service worker update handling
 

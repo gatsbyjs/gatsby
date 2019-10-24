@@ -189,8 +189,8 @@ means that public facing APIs are unaffected.
 
 #### Examples of patch versions
 
-- **Fixing a bug** in a component, such as fixing a warning or adding a fallback value.
-- **Upgrading dependencies** to their latest minor and patch versions.
+-   **Fixing a bug** in a component, such as fixing a warning or adding a fallback value.
+-   **Upgrading dependencies** to their latest minor and patch versions.
 
 ### Minor _(0.X.0)_
 
@@ -199,11 +199,11 @@ backwards-compatible way. This means that _existing_ public facing APIs are unaf
 
 #### Examples of minor versions
 
-- **Adding new pages or queries** to your theme. For example, adding tag pages to a blog.
-- **Adding new configuration options** to further customize a theme.
-- **Displaying additional data** such as displaying excerpts to a post list.
-- **Adding additional props to a component** for new functionality.
-- **Adding a new MDX shortcode** that users can opt into.
+-   **Adding new pages or queries** to your theme. For example, adding tag pages to a blog.
+-   **Adding new configuration options** to further customize a theme.
+-   **Displaying additional data** such as displaying excerpts to a post list.
+-   **Adding additional props to a component** for new functionality.
+-   **Adding a new MDX shortcode** that users can opt into.
 
 ### Major _(X.0.0)_
 
@@ -215,15 +215,15 @@ for performing a theme upgrade.
 
 #### Examples of major versions
 
-- **Changing a filename in `src`** will always be a breaking change due to shadowing.
-  - Moving where a query occurs
-  - Renaming a component
-  - Renaming a directory
-- **Removing or changing the props a component accepts** since it will affect component extending.
-- **Changing queries** since a user could be using the original data in shadowed components.
-- **Removing or changing the behaviour** of your theme's configuration.
-- **Removing attributes in schema definitions** because it can break end user queries.
-- **Removing default data** this could change your generated schema and break a user's site if they
-  depend on some part of that generated schema.
-- **Changing plugins or plugin configuration** such as removing a remark plugin as it will change
-  the behavior of MD/MDX rendering.
+-   **Changing a filename in `src`** will always be a breaking change due to shadowing.
+    -   Moving where a query occurs
+    -   Renaming a component
+    -   Renaming a directory
+-   **Removing or changing the props a component accepts** since it will affect component extending.
+-   **Changing queries** since a user could be using the original data in shadowed components.
+-   **Removing or changing the behaviour** of your theme's configuration.
+-   **Removing attributes in schema definitions** because it can break end user queries.
+-   **Removing default data** this could change your generated schema and break a user's site if they
+    depend on some part of that generated schema.
+-   **Changing plugins or plugin configuration** such as removing a remark plugin as it will change
+    the behavior of MD/MDX rendering.

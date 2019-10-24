@@ -27,17 +27,17 @@ _**Let's get into it.**_
 
 ### Like Josh's requirements, my list includes:
 
-- **Speed** - this includes development, website performance, and deployment
-- **Development Experience** - I want to use React and Webpack
-- **Maintainability** - ease with which anyone can create, update and delete posts
-- **Scalability** - need to make sure that performance is not hindered by a growing needs
-- **Lean** - simplify the tools and services use to a bare minimum
-- **Revision History** - for accountability and allowing for versioning
-- **Inexpensive Hosting** - again, to maximize value and keep personal costs down
-- **NO WordPress** - similarly, I don't want to deal with updates, themes, hacks...etc
-- **Continuous Deployment** - the site needs to always be up and running and current
+-   **Speed** - this includes development, website performance, and deployment
+-   **Development Experience** - I want to use React and Webpack
+-   **Maintainability** - ease with which anyone can create, update and delete posts
+-   **Scalability** - need to make sure that performance is not hindered by a growing needs
+-   **Lean** - simplify the tools and services use to a bare minimum
+-   **Revision History** - for accountability and allowing for versioning
+-   **Inexpensive Hosting** - again, to maximize value and keep personal costs down
+-   **NO WordPress** - similarly, I don't want to deal with updates, themes, hacks...etc
+-   **Continuous Deployment** - the site needs to always be up and running and current
 
-For the sake of brevity, let's infer that speed, development experience, scalability and lack of WordPress will be handled by Gatsby and the JAMstack. If you're unfamiliar, take a look at [http://jamstack.org/](http://jamstack.org/).
+For the sake of brevity, let's infer that speed, development experience, scalability and lack of WordPress will be handled by Gatsby and the JAMstack. If you're unfamiliar, take a look at <http://jamstack.org/>.
 
 ## CMS-Induced Headaches
 
@@ -47,12 +47,12 @@ Josh's article provides a solution by way of using Contentful to manage content 
 
 ### Here are some Pros (at the time of writing):
 
-- Clean UI
-- Free Tier
-- User Roles (admins, editors, content authors)
-- Comprehensive tutorials
-- Fully-customizable frontend
-- Article search and filters
+-   Clean UI
+-   Free Tier
+-   User Roles (admins, editors, content authors)
+-   Comprehensive tutorials
+-   Fully-customizable frontend
+-   Article search and filters
 
 With such a robust set of features, it is easy to see why Contentful is a popular service. However, between a combination of having no prior experience with the platform, and wanting to keep things simple, I ran into issues, and felt that it was _too_ robust for my project goals.
 
@@ -72,10 +72,10 @@ Prose was originally created for editing markdown files on GitHub by the people 
 
 ### Here is a summary:
 
-- Simple Content Authoring Environment
-- Designed for CMS-Free Websites
-- Web-based Interface for Managing Content Directly on GitHub
-- Advanced Support for Markdown Content - Including Syntax Highlighting & Formatting Toolbar
+-   Simple Content Authoring Environment
+-   Designed for CMS-Free Websites
+-   Web-based Interface for Managing Content Directly on GitHub
+-   Advanced Support for Markdown Content - Including Syntax Highlighting & Formatting Toolbar
 
 Source: [Prose](http://prose.io/#about)
 
@@ -102,7 +102,7 @@ I should also mention that Prose is an open source project that is available for
 
 Let's summarize where we are and why [Netlify](https://www.netlify.com/) will take care of the rest.
 
-```[ ] Lean - simplify the tools and services use to a bare minimum
+```\[ ] Lean - simplify the tools and services use to a bare minimum
 [ ] Inexpensive Hosting - again, to maximize value and keep personal costs down
 
 [ ] Continuous Deployment - the site needs to always be up and running and current

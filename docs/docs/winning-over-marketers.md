@@ -4,10 +4,10 @@ title: Winning Over Marketers
 
 Some things that marketers care about include:
 
-- **Generating more "leads".** Leads are people who are interested in buying the product.
-- **Increasing conversion rates.** This means helping more people move through a checkout funnel, or fill out an email capture form.
-- **Making the website faster**. This tends to decrease the "bounce rate", which is the proportion of visitors leaving the website.
-- **Generating revenue**. If the product is bought online through a checkout flow, such as e-commerce, marketers are often measured on revenue the site generates -- the dollar value of total sales.
+-   **Generating more "leads".** Leads are people who are interested in buying the product.
+-   **Increasing conversion rates.** This means helping more people move through a checkout funnel, or fill out an email capture form.
+-   **Making the website faster**. This tends to decrease the "bounce rate", which is the proportion of visitors leaving the website.
+-   **Generating revenue**. If the product is bought online through a checkout flow, such as e-commerce, marketers are often measured on revenue the site generates -- the dollar value of total sales.
 
 ## Basic explanation
 
@@ -41,9 +41,9 @@ One question marketers often ask themselves when hearing new ideas, whether they
 
 In order to proactively diffuse these concerns, you might consider sharing stories of organizations that have adopted Gatsby:
 
-- [Flamingo, women's body care brand from Harry's, chooses Gatsby for critical ecommerce launch, 5X faster page loads](/blog/2019-01-30-flamingo-case-study/)
-- [Youfit uses Gatsby to increase lead generation by 60%](/blog/2018-11-16-youfit-case-study/)
-- [IBM Uses Gatsby to Manage Enterprise-Level Content](/blog/2018-12-17-ibm-case-study/#big-company-big-website)
+-   [Flamingo, women's body care brand from Harry's, chooses Gatsby for critical ecommerce launch, 5X faster page loads](/blog/2019-01-30-flamingo-case-study/)
+-   [Youfit uses Gatsby to increase lead generation by 60%](/blog/2018-11-16-youfit-case-study/)
+-   [IBM Uses Gatsby to Manage Enterprise-Level Content](/blog/2018-12-17-ibm-case-study/#big-company-big-website)
 
 ## Conclusion
 

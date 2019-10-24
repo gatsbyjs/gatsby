@@ -29,8 +29,8 @@ On the other hand, we wanted to reevaluate our approach to schemas in general. I
 
 There are two main additions to the API:
 
-1. A `createTypes` action that allows one to add, extend or fix the types by passing their type definition using [Graphql SDL](https://graphql.org/learn/schema/).
-1. A `createResolvers` [Gatsby Node API](/docs/node-apis/) that can add or override resolvers on any types and fields in the schema. It can also add new fields with such resolvers.
+1.  A `createTypes` action that allows one to add, extend or fix the types by passing their type definition using [Graphql SDL](https://graphql.org/learn/schema/).
+2.  A `createResolvers` [Gatsby Node API](/docs/node-apis/) that can add or override resolvers on any types and fields in the schema. It can also add new fields with such resolvers.
 
 Why the two APIs? `createTypes` primary purpose is to _fix_ the definition for an automatically generated Node type. Often one is totally happy with the default resolvers that Gatsby provides and the only issue is that inference can change based on data changes.
 
@@ -231,8 +231,8 @@ When you have many connections, this becomes pretty tedious, especially destruct
 
 We've had some quirks in inference that were dependant on ordering. We've made all inference deterministic.
 
-1. Mix of date and non-date strings is always a string
-2. Conflicting field names always prefer Node references first and then the canonical name of the field.
+1.  Mix of date and non-date strings is always a string
+2.  Conflicting field names always prefer Node references first and then the canonical name of the field.
 
 ## How did we do it?
 
@@ -298,16 +298,16 @@ const Foo = SchemaComposer.TypeComposer.create(({
 
 The final schema pipeline that we implemented works like this:
 
-1. We collect all types that are created with `createTypes` and add them to the compose type registry (called _Schema Composer_)
-1. We go through all the collected nodes and we infer types for them
-1. We merge user defined types with inferred types and add them to the composer
-1. We add default resolvers for type fields, such as for `File` and `Date` fields
-1. `setFieldsOnNodeType` is called and those fields are added to the types
-1. We create derived input objects, such as filter and sort and then create pagination types such as Connections
-1. Root level resolvers are created for all node types
-1. Third-party schemas are merged into the Gatsby schema
-1. The `createResolvers` API is called and resulting resolvers are added to the schema
-1. We generate the schema
+1.  We collect all types that are created with `createTypes` and add them to the compose type registry (called _Schema Composer_)
+2.  We go through all the collected nodes and we infer types for them
+3.  We merge user defined types with inferred types and add them to the composer
+4.  We add default resolvers for type fields, such as for `File` and `Date` fields
+5.  `setFieldsOnNodeType` is called and those fields are added to the types
+6.  We create derived input objects, such as filter and sort and then create pagination types such as Connections
+7.  Root level resolvers are created for all node types
+8.  Third-party schemas are merged into the Gatsby schema
+9.  The `createResolvers` API is called and resulting resolvers are added to the schema
+10. We generate the schema
 
 You can see the `packages/gatsby/schema/` folder in the [schema refactoring PR](https://github.com/gatsbyjs/gatsby/pull/11480) to learn more about the code.
 

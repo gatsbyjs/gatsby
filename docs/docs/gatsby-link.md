@@ -49,8 +49,8 @@ It's often a good idea to show which page is currently being viewed by visually 
 
 `Link` provides two options for adding styles to the active link:
 
-- `activeStyle` — a style object that will only be applied when the current item is active
-- `activeClassName` — a class name that will only be added to the `Link` when the current item is active
+-   `activeStyle` — a style object that will only be applied when the current item is active
+-   `activeClassName` — a class name that will only be added to the `Link` when the current item is active
 
 For example, to turn the active link red, either of the following approaches is valid:
 
@@ -84,10 +84,10 @@ const SiteNavigation = () => (
 
 Gatsby's `<Link>` component comes with a `getProps` prop, which can be useful for advanced styling. It passes you an object with the following properties:
 
-- `isCurrent` — true if the `location.pathname` is exactly the same as the `<Link>` component's `to` prop
-- `isPartiallyCurrent` — true if the `location.pathname` starts with the `<Link>` component's `to` prop
-- `href` — the value of the `to` prop
-- `location` — the page's `location` object
+-   `isCurrent` — true if the `location.pathname` is exactly the same as the `<Link>` component's `to` prop
+-   `isPartiallyCurrent` — true if the `location.pathname` starts with the `<Link>` component's `to` prop
+-   `href` — the value of the `to` prop
+-   `location` — the page's `location` object
 
 You can read more about it on [`@reach/router`'s documentation](https://reach.tech/router/api/Link).
 
@@ -95,8 +95,8 @@ You can read more about it on [`@reach/router`'s documentation](https://reach.te
 
 By default the `activeStyle` and `activeClassName` props will only be set on a `<Link>` component if the current URL matches its `to` prop _exactly_. Sometimes, you may want to style a `<Link>` as active even if it partially matches the current URL. For example:
 
-- You may want `/blog/hello-world` to match `<Link to="/blog">`
-- Or `/gatsby-link/#passing-state-through-link-and-navigate` to match `<Link to="/gatsby-link">`
+-   You may want `/blog/hello-world` to match `<Link to="/blog">`
+-   Or `/gatsby-link/#passing-state-through-link-and-navigate` to match `<Link to="/gatsby-link">`
 
 In instances like these, just add the `partiallyActive` prop to your `<Link>` component and the style will also be applied even if the `to` prop only is a partial match:
 
@@ -389,4 +389,4 @@ onClick = () => {
 
 ## Additional resources
 
-- [Authentication tutorial for client-only routes](/tutorial/authentication-tutorial/)
+-   [Authentication tutorial for client-only routes](/tutorial/authentication-tutorial/)

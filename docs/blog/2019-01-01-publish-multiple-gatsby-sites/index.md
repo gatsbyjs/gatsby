@@ -219,11 +219,11 @@ This will add the necessary dependencies for our `shared-ui` package.
 
 Now we're going to want to split up our original application into two separate packages; blog and shop. We're going to need to mimic the current hierarchy to ensure that Gatsby keeps working. Each package will have a:
 
-- data directory
-- src directory with layouts and pages
-- `gatsby-config.js`
-- `gatsby-node.js`
-- `package.json` file
+-   data directory
+-   src directory with layouts and pages
+-   `gatsby-config.js`
+-   `gatsby-node.js`
+-   `package.json` file
 
 Go ahead and create blank folders/files for each item in the list above inside of each package. We'll go through each item one by one for the blog package, then I'll leave you to implement this for the shop package. You can refer to the finished repo at anytime if you're stuck.
 
@@ -439,8 +439,8 @@ Run `yarn test` one last time in your command line to make sure that everything 
 
 There are two more sections we need to add to our `.travis.yml` file
 
-- Handling the individual scripts for each package.
-- Handling deployment when the pipeline passes.
+-   Handling the individual scripts for each package.
+-   Handling deployment when the pipeline passes.
 
 We won't worry about the latter for now, but let's deal with running scripts for different repos. Because we're not going to be deploying our `shared-ui` we can skip it from our CI pipeline. We'll run `yarn test` and `yarn build` for both the blog and the shop.
 
@@ -503,10 +503,10 @@ deploy:
 
 Note that we've added some additional environment variables to our matrix so and them in there. There are huge changes we've made to the end of the file so let's go through them line by line:
 
-- deploy — specifies the step of the pipeline; the deployment step.
-- provider — tells the name of the script to run for deployment, in this case it's 'script'
-- skip_cleanup — we don't want Travis to get rid of any files made during the build. We created the 'public' folder when running the build, so we don't want Travis to get rid of it.
-- app — specifies the name of the application we're deploying,
+-   deploy — specifies the step of the pipeline; the deployment step.
+-   provider — tells the name of the script to run for deployment, in this case it's 'script'
+-   skip_cleanup — we don't want Travis to get rid of any files made during the build. We created the 'public' folder when running the build, so we don't want Travis to get rid of it.
+-   app — specifies the name of the application we're deploying,
 
 We have to do add a little bit of configuration on our side to ensure that Now hosts our sites correctly. The config comes in the form of a `now.json` file, which outlines the options we want Now to use when deploying our site. Go into the directory for our blog packages and create a `now.json` file. We want to let Now know that we're deploying a static site, the entry directory to the static site, and what alias we want to assign our site. Put this inside your `now.json` file.
 

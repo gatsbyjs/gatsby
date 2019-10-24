@@ -6,8 +6,8 @@ title: Static vs Normal Queries
 >
 > Outdated areas are:
 >
-> - mention the useStaticQuery hook
-> - describe how queries are stripped and JSON imports are rewritten
+> -   mention the useStaticQuery hook
+> -   describe how queries are stripped and JSON imports are rewritten
 >
 > You can help by making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228).
 
@@ -15,10 +15,10 @@ title: Static vs Normal Queries
 
 StaticQuery can do most of the things that page query can, including fragments. The main differences are:
 
-- page queries can accept variables (via `pageContext`) but can only be added to _page_ components
-- StaticQuery does not accept variables (hence the name "static"), but can be used in _any_ component, including pages
-- StaticQuery does not work with raw React.createElement calls; please use JSX, e.g. `<StaticQuery />`
-- Static Queries don't need to get run for each page.(ie:Just once)
+-   page queries can accept variables (via `pageContext`) but can only be added to _page_ components
+-   StaticQuery does not accept variables (hence the name "static"), but can be used in _any_ component, including pages
+-   StaticQuery does not work with raw React.createElement calls; please use JSX, e.g. `<StaticQuery />`
+-   Static Queries don't need to get run for each page.(ie:Just once)
 
 ### staticQueryComponents
 
@@ -47,10 +47,10 @@ TODO: in query-watcher.js/handleQuery, we remove jsonName from dataDependencies.
 
 ### Usages
 
-- [websocket-manager](#TODO). TODO
-- [query-watcher](#TODO).
+-   [websocket-manager](#TODO). TODO
+-   [query-watcher](#TODO).
 
-  - `getQueriesSnapshot` returns map with snapshot of `state.staticQueryComponents`
-  - handleComponentsWithRemovedQueries. For each staticQueryComponent, if passed in queries doesn't include `staticQueryComponent.componentPath`. TODO: Where is StaticQueryComponent created? TODO: Where is queries passed into `handleComponentsWithRemovedQueries`?
+    -   `getQueriesSnapshot` returns map with snapshot of `state.staticQueryComponents`
+    -   handleComponentsWithRemovedQueries. For each staticQueryComponent, if passed in queries doesn't include `staticQueryComponent.componentPath`. TODO: Where is StaticQueryComponent created? TODO: Where is queries passed into `handleComponentsWithRemovedQueries`?
 
-  TODO: Finish above
+    TODO: Finish above

@@ -25,12 +25,12 @@ and orientation.
 
 The Gatsby community welcomes contributions. Please refer to the guides below on how to make sure your contributions get accepted:
 
-- [How to Contribute](/contributing/how-to-contribute/)
-- [How to File an Issue](/contributing/how-to-file-an-issue/)
-- [How to Open a Pull Request](/contributing/how-to-open-a-pull-request/)
-- [Make feature requests with an RFC](/blog/2018-04-06-introducing-gatsby-rfc-process/)
-- [Gatsby Style Guide](/contributing/gatsby-style-guide/)
-- [Gatsby Translations](/contributing/gatsby-docs-translation-guide/)
+-   [How to Contribute](/contributing/how-to-contribute/)
+-   [How to File an Issue](/contributing/how-to-file-an-issue/)
+-   [How to Open a Pull Request](/contributing/how-to-open-a-pull-request/)
+-   [Make feature requests with an RFC](/blog/2018-04-06-introducing-gatsby-rfc-process/)
+-   [Gatsby Style Guide](/contributing/gatsby-style-guide/)
+-   [Gatsby Translations](/contributing/gatsby-docs-translation-guide/)
 
 ## Gatsby news
 
@@ -84,10 +84,10 @@ tagged with `gatsby` or
 
 ## Learn More About Gatsby:
 
-- [Why Contribute to Gatsby?](/contributing/why-contribute-to-gatsby/)
-- [Gatsby Community Events](/contributing/events/)
-- [Where to Participate in the Community?](/contributing/where-to-participate/)
-- [Organize a Gatsby Event](/contributing/organize-a-gatsby-event/)
-- [How to Run a Gatsby Workshop](/contributing/how-to-run-a-gatsby-workshop/)
-- [How to Pitch Gatsby](/contributing/how-to-pitch-gatsby/)
-- [Blog posts on the Gatsby community](/blog/tags/community/)
+-   [Why Contribute to Gatsby?](/contributing/why-contribute-to-gatsby/)
+-   [Gatsby Community Events](/contributing/events/)
+-   [Where to Participate in the Community?](/contributing/where-to-participate/)
+-   [Organize a Gatsby Event](/contributing/organize-a-gatsby-event/)
+-   [How to Run a Gatsby Workshop](/contributing/how-to-run-a-gatsby-workshop/)
+-   [How to Pitch Gatsby](/contributing/how-to-pitch-gatsby/)
+-   [Blog posts on the Gatsby community](/blog/tags/community/)

@@ -48,10 +48,10 @@ Styled System also takes some effort to set up and generally requires creating c
 
 Theme UI is intended to address some of these issues by:
 
-- Providing guidelines for how to create themeable UI and making configuration more portable
-- Allowing developers to use consistent styles anywhere in React with minimum effort
-- Enabling a simple way to style [MDX][] content, while keeping styles isolated
-- Abstracting some of the implementation details so you don't need to start from scratch
+-   Providing guidelines for how to create themeable UI and making configuration more portable
+-   Allowing developers to use consistent styles anywhere in React with minimum effort
+-   Enabling a simple way to style [MDX][] content, while keeping styles isolated
+-   Abstracting some of the implementation details so you don't need to start from scratch
 
 Theme UI currently includes optional packages for integrating with other libraries like [Typography.js][],
 and we plan to build more tools and integrations around the core foundation of Theme UI to make styling Gatsby sites even better in the future.
@@ -123,15 +123,27 @@ To learn more about how theming works with Theme UI, head over to the [Theme UI 
 and to learn more about using the official Gatsby themes, see our [documentation on themes][theme-docs].
 
 [progressive disclosure]: /docs/gatsby-core-philosophy/#progressively-disclose-complexity
+
 [mdx]: /docs/mdx/
+
 [theme-docs]: /docs/themes/
+
 [shadowing]: /blog/2019-04-29-component-shadowing/
+
 [typography.js]: /docs/typography-js/
+
 [theme ui]: https://theme-ui.com
+
 [overreacted.io]: https://overreacted.io
+
 [digital garden]: https://tomcritchlow.com/2019/02/17/building-digital-garden/
+
 [styled system]: https://styled-system.com
+
 [theme specification]: https://github.com/system-ui/theme-specification
+
 [emotion]: https://emotion.sh/
+
 [amberley romo]: https://mobile.twitter.com/amber1ey
+
 [john otander]: https://mobile.twitter.com/4lpine

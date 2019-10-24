@@ -45,8 +45,8 @@ Open sourcing this is a step forward in our commitment to making Gatsby + WordPr
 
 Our team has been hard at work on improving the documentation on [gatsbyjs.org](https://gatsbyjs.org). Amongst many _many_ other things, we've added:
 
-- Next and previous pagination links to guide users through the documentation
-- A floating Table of Contents
+-   Next and previous pagination links to guide users through the documentation
+-   A floating Table of Contents
 
 [Marcy](https://twitter.com/marcysutton) also taught a workshop at Frontend Masters and this is a must watch for all of us to learn how to build accessible applications on the web.
 
@@ -92,12 +92,12 @@ The team is currently hard at work judging and picking their favourites so resul
 
 Firstly, thank you for all your contributions, folks! Every single contribution to Gatsby makes it better and every single contribution _matters_. Some of the community highlights from the last month include:
 
-- [Benjamin Lannon](https://github.com/lannonbr) [built a Table of Contents component](https://github.com/gatsbyjs/gatsby/pull/15251) that is live on our documentation and is great when reading a lengthy documentation page
-- [Kelly Vaughn](https://github.com/kellyvaughn) [added support for metafields to product nodes](https://github.com/gatsbyjs/gatsby/pull/16312) in `gatsby-source-shopify`
-- [Asko Soukka](https://github.com/datakurre) added a great [fix to ensure touchNode](https://github.com/gatsbyjs/gatsby/pull/15919) populates typeOwners
-- [Grant Glidewell](https://github.com/grantglidewell) added [support](https://github.com/gatsbyjs/gatsby/pull/14630) for Gatsby [Preview](https://www.gatsbyjs.com/preview) for Drupal in `gatsby-source-drupal`
-- [Ellis Kenyő](https://github.com/elken) added [support for the Prism command-line](https://github.com/gatsbyjs/gatsby/pull/16170) plugin in `gatsby-remark-prismjs`
-- [Anthony Powell](https://github.com/cephalization) added a [great error check](https://github.com/gatsbyjs/gatsby/pull/16272) in Gatsby
+-   [Benjamin Lannon](https://github.com/lannonbr) [built a Table of Contents component](https://github.com/gatsbyjs/gatsby/pull/15251) that is live on our documentation and is great when reading a lengthy documentation page
+-   [Kelly Vaughn](https://github.com/kellyvaughn) [added support for metafields to product nodes](https://github.com/gatsbyjs/gatsby/pull/16312) in `gatsby-source-shopify`
+-   [Asko Soukka](https://github.com/datakurre) added a great [fix to ensure touchNode](https://github.com/gatsbyjs/gatsby/pull/15919) populates typeOwners
+-   [Grant Glidewell](https://github.com/grantglidewell) added [support](https://github.com/gatsbyjs/gatsby/pull/14630) for Gatsby [Preview](https://www.gatsbyjs.com/preview) for Drupal in `gatsby-source-drupal`
+-   [Ellis Kenyő](https://github.com/elken) added [support for the Prism command-line](https://github.com/gatsbyjs/gatsby/pull/16170) plugin in `gatsby-remark-prismjs`
+-   [Anthony Powell](https://github.com/cephalization) added a [great error check](https://github.com/gatsbyjs/gatsby/pull/16272) in Gatsby
 
 Gatsby has always been a community effort. You make a _lot_ of contributions. In fact, we achieved a new record in merged PRs last month:
 
@@ -111,10 +111,10 @@ The Gatsby site of the month is [fourpost.com](https://www.fourpost.com)
 
 We love it because:
 
-- Wonderful image loading
-- The illustrations are so very pretty
-- Uses [Gatsby Preview](https://www.gatsbyjs.com/preview)
-- Pulls in content from multiple data sources: DatoCMS & EventBrite
+-   Wonderful image loading
+-   The illustrations are so very pretty
+-   Uses [Gatsby Preview](https://www.gatsbyjs.com/preview)
+-   Pulls in content from multiple data sources: DatoCMS & EventBrite
 
 ## Community Maintainers Meeting
 
@@ -124,9 +124,9 @@ We've renamed the meeting to emphasize that this time is for the community. You 
 
 We've also restructured the meeting with a new format that includes:
 
-- time for questions
-- time for updates
-- live pull request reviews
+-   time for questions
+-   time for updates
+-   live pull request reviews
 
 Live pull request reviews are a great way to involve the community in growing understanding of the PR process _and_ to also get user-impactful PRs merged! We hope these give you some insight into how we review contributions and help make [your first contribution](http://gatsby.dev/pair-programming) as smooth as possible.
 

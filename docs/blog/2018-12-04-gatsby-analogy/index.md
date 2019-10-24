@@ -10,11 +10,11 @@ Gatsby does an incredible amount of cool stuff for you, automatically. This make
 
 In this post, I'll aim for the latter -- an approachable explanation of what Gatsby does using a series of analogies that others have found helpful. I hope you do, too!
 
-1. Start off with a pre-configured development environment and build process (high-performance car)
-2. Benefit from built-in performance optimization (Neo's Matrix skills)
-3. Leverage static site delivery and web app experience (Compressed mattress)
-4. Prefetch resources for snappy routing (Psychic delivery person)
-5. Consolidate data sourcing and transformations (Amazon)
+1.  Start off with a pre-configured development environment and build process (high-performance car)
+2.  Benefit from built-in performance optimization (Neo's Matrix skills)
+3.  Leverage static site delivery and web app experience (Compressed mattress)
+4.  Prefetch resources for snappy routing (Psychic delivery person)
+5.  Consolidate data sourcing and transformations (Amazon)
 
 ## 1. Start off with a pre-configured development environment and build process
 
@@ -94,10 +94,10 @@ You can make a single order to Amazon for a variety of items originating from a 
 
 A lot of the core features of Gatsby seem to happen automagically; In this post I've aimed to abstract some of these core features into more approachable comparisons. These analogies may seem a bit silly, but I hope you enjoyed and found them helpful! We talked about the following developer experience and performance optimization features:
 
-1. Start off with a pre-configured development environment and build process (High-performance car)
-2. Benefit from built-in performance optimization (Neo's Matrix skills)
-3. Leverage static site delivery and web app experience (Compressed mattress)
-4. Prefetch resources for snappy routing (Psychic delivery person)
-5. Consolidate data sourcing and transformations (Amazon)
+1.  Start off with a pre-configured development environment and build process (High-performance car)
+2.  Benefit from built-in performance optimization (Neo's Matrix skills)
+3.  Leverage static site delivery and web app experience (Compressed mattress)
+4.  Prefetch resources for snappy routing (Psychic delivery person)
+5.  Consolidate data sourcing and transformations (Amazon)
 
 > 💡 Looking for a deeper dive into Gatsby's internals? Check out the "[behind the scenes](/docs/behind-the-scenes/)" section of the docs.

@@ -35,8 +35,8 @@ Gatsby is so powerful, because of its core _and the ecosystem_ — not just plug
 
 You can do almost anything you want with Gatsby, you just have to:
 
-1. _know why & that it's possible_
-2. _know how to do it_
+1.  _know why & that it's possible_
+2.  _know how to do it_
 
 Roughly speaking, there are two sides of content at Gatsby — marketing content which focuses on (1), and learning content which focuses on (2).
 
@@ -48,9 +48,9 @@ There's tons of overlap - _why_ points to _how_, and _how_ points to _why_. You 
 
 ## Principle 3: because Gatsby is so powerful, the ground to cover with writing is huge, yet essential
 
-- Marcy's Q2 2019 project is to catalogue the **[Top 25 Workflows](https://docs.google.com/presentation/d/1YJ_4NGwxPqtMo-kyWBmg7NBr_YYZezKZ1phXjl0abD4/edit#slide=id.gcb9a0b074_1_0)** people do with Gatsby and improve the experience for 5-10 of them. You'll notice that many of them are not exclusive to Gatsby, instead they're "what you need to do in order to build a website".
+-   Marcy's Q2 2019 project is to catalogue the **[Top 25 Workflows](https://docs.google.com/presentation/d/1YJ_4NGwxPqtMo-kyWBmg7NBr_YYZezKZ1phXjl0abD4/edit#slide=id.gcb9a0b074_1_0)** people do with Gatsby and improve the experience for 5-10 of them. You'll notice that many of them are not exclusive to Gatsby, instead they're "what you need to do in order to build a website".
 
-- We identified about 50 key messages relating Gatsby to _high-level benefits_ (such as improving security, reducing cost, simplifying your stack), to _different technologies_ (WordPress, Drupal), _vendors_ (Contentful, AWS), and _communities_(JAMStack, modern development, accessibility). In addition, they cover messages that are important for the wide range of personas in the Gatsby ecosystem -- marketers, educators, open-source contributors, plugin authors, numerous flavors of developers, etc.
+-   We identified about 50 key messages relating Gatsby to _high-level benefits_ (such as improving security, reducing cost, simplifying your stack), to _different technologies_ (WordPress, Drupal), _vendors_ (Contentful, AWS), and _communities_(JAMStack, modern development, accessibility). In addition, they cover messages that are important for the wide range of personas in the Gatsby ecosystem -- marketers, educators, open-source contributors, plugin authors, numerous flavors of developers, etc.
 
 Each of these 70-80 messages & workflows probably has ~10 sub-workflows/sub-messages/features — imagine for each of these we had 3-5 case studies, docs pages, dedicated tutorials, starters/themes with annotated open-source source code -- that's thousands, probably tens of thousands, of pieces of content. _That's why we've only scratched the surface of what's possible._
 
@@ -76,13 +76,13 @@ The challenge, is of course _how do we write all of that content?_
 
 Some examples:
 
-- We strive to appear on podcasts, because of the huge reward / time effort, as well as because podcasts build on an existing community/listener base.
+-   We strive to appear on podcasts, because of the huge reward / time effort, as well as because podcasts build on an existing community/listener base.
 
-- We encouraging the community to give conference talks, write on their own blogs, and on the Gatsby blog. Individuals can establish themselves publicly as talented developers and Gatsby experts, while companies using Gatsby can publicly showcase their efforts for both internal and recruiting benefit.
+-   We encouraging the community to give conference talks, write on their own blogs, and on the Gatsby blog. Individuals can establish themselves publicly as talented developers and Gatsby experts, while companies using Gatsby can publicly showcase their efforts for both internal and recruiting benefit.
 
-- Jason's livestreams are fundamentally collaborative — inviting one person who is an expert in a different technology for cross-pollination.
+-   Jason's livestreams are fundamentally collaborative — inviting one person who is an expert in a different technology for cross-pollination.
 
-- We maintain close relationships with educators who create comprehensive, complementary content, and provide encouragement to first-time users that _you can do this!_.
+-   We maintain close relationships with educators who create comprehensive, complementary content, and provide encouragement to first-time users that _you can do this!_.
 
 If you're doing interesting, innovative things with Gatsby, especially in a professional context, we'd love you to write blog posts, tutorials, and documentation about what you're doing!
 

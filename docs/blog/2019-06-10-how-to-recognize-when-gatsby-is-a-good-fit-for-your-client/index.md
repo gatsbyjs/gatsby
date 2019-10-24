@@ -18,8 +18,8 @@ Unlike many technologies, Gatsby is great. But like most technologies, it's some
 
 In November, I began a conversation with a mid-sized retail and digital commerce consumer business in the fashion and beauty space. They were starting to plan the replacement of their aging, over-engineered five year old tech stack and were struggling with two primary challenges.
 
-- First, the content editorial experience for staff was so poor that multiple team members had actually quit because of it (saying as much in their exit interview).
-- Second, development velocity was painfully slow because of the complex implementation.
+-   First, the content editorial experience for staff was so poor that multiple team members had actually quit because of it (saying as much in their exit interview).
+-   Second, development velocity was painfully slow because of the complex implementation.
 
 Once I talked about the value of a microservices approach, the unbeatable fast speed of a React powered front end, preview, and the partial builds feature on the roadmap Gatsby (and was honest about the trade offs), the client enthusiastically wanted to know more, and they are likely proceeding with a Gatsby stack for their replatform.
 
@@ -47,7 +47,7 @@ Mobile websites that take [more than 3 seconds to load have a 53% bounce rate](h
 
 Every site needs to be performant. There isn't a site out there where slow response times won't negatively impact user engagement, conversion, and often, the bottom line. But remember, there is fast (which every site should be) and then there is Gatsby-fast. Companies that migrate to Gatsby will find their site is [between three and 10 times faster](https://www.gatsbyjs.com/guides/why-are-gatsby-sites-fast/). Indeed, the speed of a Gatsby-powered front end resembles more of the instantaneous feel of native mobile apps.
 
----
+* * *
 
 Selling Gatsby is just like selling anything else. Focus the conversation on how using Gatsby will support their organizational and personal goals, not on its cool technical features or its fascinating architecture. Be honest about Gatsby in conversations. If your client points out a challenge with your proposed approach, don't try to minimize it. Acknowledge it, be honest, explore the concern more deeply, and explain it in the greater context of the overall strategy you are advocating.
 

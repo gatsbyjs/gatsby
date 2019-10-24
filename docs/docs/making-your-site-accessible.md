@@ -55,27 +55,27 @@ For more on supported rules, check out the docs for [`eslint-plugin-jsx-a11y`](h
 
 Accessibility by default is a win for everyone. Here's a starting point for accessibility testing when making a Gatsby site or theme:
 
-- [Use your keyboard](https://webaim.org/techniques/keyboard/) to tab through the pages. Can you reach and operate every interactive control (links, buttons, form inputs, etc.) and see a focus indicator on the screen?
-- Use [Lighthouse](https://developers.google.com/web/tools/lighthouse/), [axe](https://www.deque.com/axe/) or [Accessibility Insights](https://accessibilityinsights.io/) to find and fix common accessibility issues in development
-- Test for [adequate color contrast](https://dequeuniversity.com/tips/color-contrast) with the [accessibility color picker in Chrome Developer Tools](https://developers.google.com/web/updates/2018/01/devtools#contrast)
-- Create inclusive and [accessible forms](/docs/building-a-contact-form#creating-an-accessible-form)
-- Employ accessible [headings, landmarks, and semantic structure](https://webaim.org/techniques/semanticstructure/)
-- Include [image, video, and audio text alternatives](https://a11y-style-guide.com/style-guide/section-media.html)
-- Test for [screen magnification and zoom](https://axesslab.com/make-site-accessible-screen-magnifiers/)
-- Ensure accessibility of [interactive menus, modals, and custom widgets](https://developer.mozilla.org/en-US/docs/Web/Accessibility/An_overview_of_accessible_web_applications_and_widgets)
-- Create safe [animations and motion](https://alistapart.com/article/designing-safer-web-animation-for-motion-sensitivity/)
-- Write [Cypress accessibility tests](/docs/end-to-end-testing/#writing-tests) for your site or application
+-   [Use your keyboard](https://webaim.org/techniques/keyboard/) to tab through the pages. Can you reach and operate every interactive control (links, buttons, form inputs, etc.) and see a focus indicator on the screen?
+-   Use [Lighthouse](https://developers.google.com/web/tools/lighthouse/), [axe](https://www.deque.com/axe/) or [Accessibility Insights](https://accessibilityinsights.io/) to find and fix common accessibility issues in development
+-   Test for [adequate color contrast](https://dequeuniversity.com/tips/color-contrast) with the [accessibility color picker in Chrome Developer Tools](https://developers.google.com/web/updates/2018/01/devtools#contrast)
+-   Create inclusive and [accessible forms](/docs/building-a-contact-form#creating-an-accessible-form)
+-   Employ accessible [headings, landmarks, and semantic structure](https://webaim.org/techniques/semanticstructure/)
+-   Include [image, video, and audio text alternatives](https://a11y-style-guide.com/style-guide/section-media.html)
+-   Test for [screen magnification and zoom](https://axesslab.com/make-site-accessible-screen-magnifiers/)
+-   Ensure accessibility of [interactive menus, modals, and custom widgets](https://developer.mozilla.org/en-US/docs/Web/Accessibility/An_overview_of_accessible_web_applications_and_widgets)
+-   Create safe [animations and motion](https://alistapart.com/article/designing-safer-web-animation-for-motion-sensitivity/)
+-   Write [Cypress accessibility tests](/docs/end-to-end-testing/#writing-tests) for your site or application
 
 ## Accessibility resources
 
-- [React accessibility](https://reactjs.org/docs/accessibility.html)
-- [Gatsby's commitment to accessibility](/blog/2019-04-18-gatsby-commitment-to-accessibility/)
-- [How to do an accessibility review](https://developers.google.com/web/fundamentals/accessibility/how-to-review) from Google Web Fundamentals
-- [A11y Project's Quick Tests](https://a11yproject.com/#Quick-tests)
-- [The importance of manual accessibility testing](https://www.smashingmagazine.com/2018/09/importance-manual-accessibility-testing/) from Smashing Magazine
-- [Writing Automated Tests for Accessibility](https://www.24a11y.com/2017/writing-automated-tests-accessibility/)
-- [Free web accessibility course](https://www.udacity.com/course/web-accessibility--ud891) by Google and Udacity
-- [WebAIM introduction](https://webaim.org/intro/) to web accessibility
-- [Deque University](https://dequeuniversity.com), with free online accessibility training for people with disabilities
-- [Web.dev accessibility docs](https://web.dev/accessible)
-- [All Gatsby accessibility blog posts](/blog/tags/accessibility/)
+-   [React accessibility](https://reactjs.org/docs/accessibility.html)
+-   [Gatsby's commitment to accessibility](/blog/2019-04-18-gatsby-commitment-to-accessibility/)
+-   [How to do an accessibility review](https://developers.google.com/web/fundamentals/accessibility/how-to-review) from Google Web Fundamentals
+-   [A11y Project's Quick Tests](https://a11yproject.com/#Quick-tests)
+-   [The importance of manual accessibility testing](https://www.smashingmagazine.com/2018/09/importance-manual-accessibility-testing/) from Smashing Magazine
+-   [Writing Automated Tests for Accessibility](https://www.24a11y.com/2017/writing-automated-tests-accessibility/)
+-   [Free web accessibility course](https://www.udacity.com/course/web-accessibility--ud891) by Google and Udacity
+-   [WebAIM introduction](https://webaim.org/intro/) to web accessibility
+-   [Deque University](https://dequeuniversity.com), with free online accessibility training for people with disabilities
+-   [Web.dev accessibility docs](https://web.dev/accessible)
+-   [All Gatsby accessibility blog posts](/blog/tags/accessibility/)

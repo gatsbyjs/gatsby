@@ -137,8 +137,8 @@ We strongly believe that these new APIs are the foundation of an evolutionary le
 
 ## Additional Resources
 
-- [Meta issue](https://github.com/gatsbyjs/gatsby/issues/12272) for bug reports
-- [API docs for createTypes](/docs/actions/#createTypes)
-- [API docs for createResolvers](/docs/node-apis/#createResolvers)
-- [API docs for node model](/docs/node-model)
-- [Using type definitions example](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-type-definitions)
+-   [Meta issue](https://github.com/gatsbyjs/gatsby/issues/12272) for bug reports
+-   [API docs for createTypes](/docs/actions/#createTypes)
+-   [API docs for createResolvers](/docs/node-apis/#createResolvers)
+-   [API docs for node model](/docs/node-model)
+-   [Using type definitions example](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-type-definitions)

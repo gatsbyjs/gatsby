@@ -30,13 +30,13 @@ Since I primarily write JavaScript these days, I wanted an SSG that runs on Node
 
 ### A few things I really like about Gatsby
 
-- **No page reloads** - this site is now a SPA (single page app), and clicking on any internal page from within the website doesn't need to load a completely new resource
-- **Image optimization** - all the images are automatically stripped of metadata, optimized, resized, lazy-loaded, and compressed
-- **Pre-fetch resources** - Gatsby detects what links are available on a given page and loads that data into the cache
-- **Bundling and minification** - code is minified, bundled, and served
-- **Server-side rendered, at build time** - Gatsby builds optimized static assets, which can be hosted anywhere!
-- **Articles are saved in beautiful Markdown**
-- Every time I push to the repo, the site gets automatically deployed (thanks to Netlify)
+-   **No page reloads** - this site is now a SPA (single page app), and clicking on any internal page from within the website doesn't need to load a completely new resource
+-   **Image optimization** - all the images are automatically stripped of metadata, optimized, resized, lazy-loaded, and compressed
+-   **Pre-fetch resources** - Gatsby detects what links are available on a given page and loads that data into the cache
+-   **Bundling and minification** - code is minified, bundled, and served
+-   **Server-side rendered, at build time** - Gatsby builds optimized static assets, which can be hosted anywhere!
+-   **Articles are saved in beautiful Markdown**
+-   Every time I push to the repo, the site gets automatically deployed (thanks to Netlify)
 
 Very little boilerplate code was necessary to get started with Gatsby. I just forked the [Gatsby Advanced Starter](https://github.com/vagr9k/gatsby-advanced-starter/), a very simple, minimalist, completely UI-free foundation after my own heart, and started working with it.
 
@@ -48,11 +48,11 @@ I've been putting off migrating to a static site for months and months, because 
 
 If you've been thinking about moving your blog from WordPress to a static site but have been putting it off due to fear of how long it will take and how much work it will be, I highly recommend giving it a shot. I'll give you the basics of what I did in case you also want to make the switch.
 
-- First, I downloaded the XML from WordPress in the **Tools -> Export** section.
-- I used the [ExitWP](https://github.com/thomasf/exitwp) tool to convert the XML to Markdown. This did about 50% of the work of converting the posts.
-- I converted tables to Markdown with the [HTML to Markdown Table Converter](https://jmalarcon.github.io/markdowntables/).
-- I manually indented all code blocks, converted all four-indent spaced code blocks to GitHub style fenced codeblocks, and fixed all the broken lists.
-- I used Prettier on all the Markdown files to try to make them consistent. Here is a little snippet I used to run Prettier on all the posts:
+-   First, I downloaded the XML from WordPress in the **Tools -> Export** section.
+-   I used the [ExitWP](https://github.com/thomasf/exitwp) tool to convert the XML to Markdown. This did about 50% of the work of converting the posts.
+-   I converted tables to Markdown with the [HTML to Markdown Table Converter](https://jmalarcon.github.io/markdowntables/).
+-   I manually indented all code blocks, converted all four-indent spaced code blocks to GitHub style fenced codeblocks, and fixed all the broken lists.
+-   I used Prettier on all the Markdown files to try to make them consistent. Here is a little snippet I used to run Prettier on all the posts:
 
 ```shell
 npm i -g prettier # install prettier globally
@@ -67,12 +67,12 @@ prettier
   --parser "markdown"  "**/*.md" # modify this based on whether your posts are in individual folders or not
 ```
 
-- I had to re-write all the styles now that the site wasn't using any WordPress classes, which I did using my Sass boilerplate/CSS framework [Primitive](https://taniarascia.github.io/primitive).
-- I pulled in all the images from `wp-content/uploads` to the `images` folder.
-- I used some regex to delete all WordPress thumbnails, e.g. all images that end in `150x150`, `300x300` and `1024px1024px` or any variation thereof, then I did a find/replace all to make sure all files were linking to `../images/file.ext` instead of `wp-content/uploads/file.ext`.
-- I manually saved all my thumbnails and moved them to a thumbnails folder so I could reuse them easily across multiple posts.
-- I created a new night mode using [React Context API](/blog/2019-01-31-using-react-context-api-with-gatsby/) as a wrapper.
-- I migrate all comments from WordPress to Disqus with the [Disqus manual importer](https://help.disqus.com/import-export-and-syncing/importing-comments-from-wordpress).
+-   I had to re-write all the styles now that the site wasn't using any WordPress classes, which I did using my Sass boilerplate/CSS framework [Primitive](https://taniarascia.github.io/primitive).
+-   I pulled in all the images from `wp-content/uploads` to the `images` folder.
+-   I used some regex to delete all WordPress thumbnails, e.g. all images that end in `150x150`, `300x300` and `1024px1024px` or any variation thereof, then I did a find/replace all to make sure all files were linking to `../images/file.ext` instead of `wp-content/uploads/file.ext`.
+-   I manually saved all my thumbnails and moved them to a thumbnails folder so I could reuse them easily across multiple posts.
+-   I created a new night mode using [React Context API](/blog/2019-01-31-using-react-context-api-with-gatsby/) as a wrapper.
+-   I migrate all comments from WordPress to Disqus with the [Disqus manual importer](https://help.disqus.com/import-export-and-syncing/importing-comments-from-wordpress).
 
 You can [view the source of the completed website](https://github.com/taniarascia/taniarascia.com).
 

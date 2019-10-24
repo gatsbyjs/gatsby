@@ -54,5 +54,5 @@ Consult the [Surge Docs](https://surge.sh/help/) for information about how to cu
 
 ## References:
 
-- [Surge Documentation](https://surge.sh/help/)
-- [Deploying to a Custom Domain](https://surge.sh/help/adding-a-custom-domain)
+-   [Surge Documentation](https://surge.sh/help/)
+-   [Deploying to a Custom Domain](https://surge.sh/help/adding-a-custom-domain)

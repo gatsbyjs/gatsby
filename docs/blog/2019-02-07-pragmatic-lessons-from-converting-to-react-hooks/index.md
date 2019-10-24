@@ -119,10 +119,10 @@ function useMediaQuery() {
 
 Hooks bring many benefits to React functional components. Specific benefits include:
 
-- Abstracting logic with custom Hooks over render props for reduced syntax and elements in devTools
-- Improved ability to share logic across components
-- Ability to call `useState` without the need for state updater functions if referencing the current version of state
-- Encapsulating side effects into their own function by area of concern
-- Provide clean up logic for side effects in a central location compared to across three lifecycle methods
+-   Abstracting logic with custom Hooks over render props for reduced syntax and elements in devTools
+-   Improved ability to share logic across components
+-   Ability to call `useState` without the need for state updater functions if referencing the current version of state
+-   Encapsulating side effects into their own function by area of concern
+-   Provide clean up logic for side effects in a central location compared to across three lifecycle methods
 
 Hooks may not be the death of class based components, but they do encourage critical thought before reaching for a class component. I believe that Hooks are a meaningful shift in the way we approach React development. I can't wait to see what you will build with Hooks.

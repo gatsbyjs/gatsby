@@ -14,8 +14,8 @@ In both cases you want to be able to access the relevant value of these variable
 
 By default Gatsby supports only 2 environments:
 
-- If you run `gatsby develop`, then you will be in the 'development' environment.
-- If you run `gatsby build` or `gatsby serve`, then you will be in the 'production' environment.
+-   If you run `gatsby develop`, then you will be in the 'development' environment.
+-   If you run `gatsby build` or `gatsby serve`, then you will be in the 'production' environment.
 
 If you want to define other environments then you'll need to do a little more work. See ["Additional Environments" below](#additional-environments-staging-test-etc). You can also have a look at our [environment variables codesandbox](https://codesandbox.io/s/6w9jjrnnjn) while reading the examples below.
 
@@ -46,7 +46,7 @@ In addition to these Project Environment Variables defined in `.env.*` files, yo
 OS Env Vars. OS Env Vars which are prefixed with `GATSBY_` will become available in
 browser JavaScript.
 
-```text:title=.env.*
+```text:title=.env.\*
 GATSBY_API_URL=https://dev.example.com/api
 ```
 
@@ -127,12 +127,12 @@ module.exports = {
 > You can not override certain environment variables as some are used internally
 > for optimizations during build
 
-- `NODE_ENV`
-- `PUBLIC_DIR`
+-   `NODE_ENV`
+-   `PUBLIC_DIR`
 
 Gatsby also allows you to specify another environment variable when running the local development server (e.g. `npm run develop`):
 
-- `ENABLE_GATSBY_REFRESH_ENDPOINT`
+-   `ENABLE_GATSBY_REFRESH_ENDPOINT`
 
 If set to true, this will expose a `/__refresh` webhook that is able to receive `POST` requests to _refresh_ the sourced content. This exposed webhook can be triggered whenever remote data changes, which means you can update your data without re-launching the development server.
 

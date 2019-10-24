@@ -6,9 +6,9 @@ title: Adding Analytics
 
 Once you have your site live you will start wanting to get an idea of how many visitors are coming to your site along with other metrics such as:
 
-- What pages are most popular?
-- Where do my visitors come from?
-- When do people visit my site?
+-   What pages are most popular?
+-   Where do my visitors come from?
+-   When do people visit my site?
 
 Google Analytics provides a way to collect this data and perform analytics on it answering the above questions among many others. The platform is free for 10 million hits per month per Tracking ID. There are other analytics options--see the "Other Gatsby analytics plugins" section at the bottom of this doc for ideas.
 
@@ -60,12 +60,12 @@ Once this is configured you can deploy your site to test! If you navigate to the
 
 ## Other Gatsby analytics plugins
 
-- [Google Tag Manager](/packages/gatsby-plugin-google-tagmanager/)
-- [Google Analytics gtag.js](/packages/gatsby-plugin-gtag/)
-- [Segment](/packages/gatsby-plugin-segment-js)
-- [Amplitude Analytics](/packages/gatsby-plugin-amplitude-analytics)
-- [Fathom](/packages/gatsby-plugin-fathom/)
-- [Baidu](/packages/gatsby-plugin-baidu-analytics/)
-- [Matomo (formerly Piwik)](/packages/gatsby-plugin-matomo/)
-- [Simple Analytics](/packages/gatsby-plugin-simple-analytics)
-- [Parse.ly Analytics](/packages/gatsby-plugin-parsely-analytics/)
+-   [Google Tag Manager](/packages/gatsby-plugin-google-tagmanager/)
+-   [Google Analytics gtag.js](/packages/gatsby-plugin-gtag/)
+-   [Segment](/packages/gatsby-plugin-segment-js)
+-   [Amplitude Analytics](/packages/gatsby-plugin-amplitude-analytics)
+-   [Fathom](/packages/gatsby-plugin-fathom/)
+-   [Baidu](/packages/gatsby-plugin-baidu-analytics/)
+-   [Matomo (formerly Piwik)](/packages/gatsby-plugin-matomo/)
+-   [Simple Analytics](/packages/gatsby-plugin-simple-analytics)
+-   [Parse.ly Analytics](/packages/gatsby-plugin-parsely-analytics/)

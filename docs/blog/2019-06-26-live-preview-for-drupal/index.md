@@ -13,9 +13,9 @@ It's the dream: a CMS with rich content modelling capabilities combined with a [
 
 Two types of people will be excited about this article.
 
-1. The developer who has been eyeing Gatsby but their clients are hesitant to leave an established workflow that includes previewing their work.
+1.  The developer who has been eyeing Gatsby but their clients are hesitant to leave an established workflow that includes previewing their work.
 
-2. A content focused client who wants their site to be cutting edge, but doesn't want to leave their comfortable workflow that allows them to rapidly toggle between content changes and the visual impact of those changes on the website.
+2.  A content focused client who wants their site to be cutting edge, but doesn't want to leave their comfortable workflow that allows them to rapidly toggle between content changes and the visual impact of those changes on the website.
 
 As Sam Bhagwat wrote [when announcing Gatsby Preview](/blog/2018-07-17-announcing-gatsby-preview/):
 

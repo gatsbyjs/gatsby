@@ -34,11 +34,11 @@ When you look at the bigger picture of the [content mesh](/blog/2018-10-04-journ
 
 We rebuilt our entire [Ghost Docs site](https://docs.ghost.org/) with Gatsby, using the Ghost API to deliver content. Truth be told, we fell in love straight away and have been building new things with Gatsby ever since. To give others a head start on building their own publications using the same stack, we've just shipped some new tooling:
 
-- [`gatsby-source-ghost` plugin](https://github.com/tryghost/gatsby-source-ghost)
+-   [`gatsby-source-ghost` plugin](https://github.com/tryghost/gatsby-source-ghost)
 
 A straightforward Gatsby source plugin which wraps the Ghost API and makes it compatible with Gatsby and GraphQL, so it's quick and easy to load all your Ghost data into any Gatsby project.
 
-- [`gatsby-starter-ghost`](https://github.com/tryghost/gatsby-starter-ghost)
+-   [`gatsby-starter-ghost`](https://github.com/tryghost/gatsby-starter-ghost)
 
 An official [Gatsby starter repository](https://github.com/tryghost/gatsby-starter-ghost) which is pre-configured to get content from Ghost and output it in a clean, blog-style design. The fastest way to get up and running with Gatsby and Ghost is to fork this repository, and check out our [Gatsby docs.](https://docs.ghost.org/api/gatsby/)
 

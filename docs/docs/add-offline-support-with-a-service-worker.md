@@ -80,5 +80,5 @@ If you would like to fully remove the service worker from your site, you can use
 
 ## References
 
-- [Service Workers: an Introduction](https://developers.google.com/web/fundamentals/primers/service-workers/)
-- [Service Worker API](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API)
+-   [Service Workers: an Introduction](https://developers.google.com/web/fundamentals/primers/service-workers/)
+-   [Service Worker API](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API)

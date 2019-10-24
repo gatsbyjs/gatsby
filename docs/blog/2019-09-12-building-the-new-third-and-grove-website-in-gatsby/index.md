@@ -19,8 +19,8 @@ We're a Drupal agency through and through. But since we saw the promise of front
 
 There are several reasons to modernize from an aging front end but these stick out to us.
 
-1. **User Experience.** It's possible to create an amazing user experience with dated technology (we've done it many a time). BUT it's easier, cheaper, and faster to do with a modern set of solutions.
-2. **Developer Velocity.** Leveraging Gatsby has improved the code quality and tooling. So development, while faster, can produce code that is more testable, has less duplication and is of higher quality. It also reduces the overhead for developers to know HTML, CSS, JavaScript, and PHP. This last part wasn't of huge importance to us but for this can make a world of difference to our clients that don't have as wide a skillset on their team.
+1.  **User Experience.** It's possible to create an amazing user experience with dated technology (we've done it many a time). BUT it's easier, cheaper, and faster to do with a modern set of solutions.
+2.  **Developer Velocity.** Leveraging Gatsby has improved the code quality and tooling. So development, while faster, can produce code that is more testable, has less duplication and is of higher quality. It also reduces the overhead for developers to know HTML, CSS, JavaScript, and PHP. This last part wasn't of huge importance to us but for this can make a world of difference to our clients that don't have as wide a skillset on their team.
 
 It's worth pausing to talk about UX and velocity. The more we work with our clients, the more we realize those two aspects are key for successful projects. Customer expectations and trends are constantly changing so we have to be adaptable and continually iterative in order to engage with our customers. Developers don't have to be a bottleneck when the tech naturally supports speed AND beautiful experiences.
 

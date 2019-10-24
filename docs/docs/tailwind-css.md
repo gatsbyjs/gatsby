@@ -8,8 +8,8 @@ Tailwind is a utility-first CSS framework for rapidly building custom user inter
 
 There are two ways you can use Tailwind with Gatsby:
 
-1. Standard: Use PostCSS to generate Tailwind classes, then you can apply those classes using `className`.
-2. CSS-in-JS: Integrate Tailwind classes into Styled Components.
+1.  Standard: Use PostCSS to generate Tailwind classes, then you can apply those classes using `className`.
+2.  CSS-in-JS: Integrate Tailwind classes into Styled Components.
 
 You have to install and configure Tailwind for both of these methods, so this guide will walk through that step first, then you can follow the instructions for either PostCSS or CSS-in-JS.
 
@@ -17,13 +17,13 @@ You have to install and configure Tailwind for both of these methods, so this gu
 
 This guide assumes that you have a Gatsby project set up. If you need to set up a project, head to the [**Quick Start guide**](/docs/quick-start), then come back.
 
-1. Install Tailwind
+1.  Install Tailwind
 
 ```shell
 npm install tailwindcss --save-dev
 ```
 
-2. Generate Tailwind config file (optional)
+2.  Generate Tailwind config file (optional)
 
 **Note**: A config file isn't required for Tailwind 1.0.0+
 
@@ -47,7 +47,7 @@ npm install --save gatsby-plugin-postcss
 plugins: [`gatsby-plugin-postcss`],
 ```
 
-3. Configure PostCSS to use Tailwind
+3.  Configure PostCSS to use Tailwind
 
 Create a postcss.config.js in your project's root folder with the following contents.
 
@@ -57,7 +57,7 @@ module.exports = () => ({
 })
 ```
 
-4. Use the Tailwind Directives in your CSS
+4.  Use the Tailwind Directives in your CSS
 
 You can now use the `@tailwind` directives to add Tailwind's utilities, preflight, and components into your CSS. You can also use `@apply` and all of Tailwind's other directives and functions!
 
@@ -67,7 +67,7 @@ To learn more about how to use Tailwind in your CSS, visit the [Tailwind Documen
 
 These steps assume you have a CSS-in-JS library already installed, and the examples are based on Styled Components.
 
-1. Install Tailwind Babel Macro
+1.  Install Tailwind Babel Macro
 
 **Note**: `tailwind.macro` isn't currently compatible with Tailwind 1.0.0+. However, a compatible beta is available at `tailwind.macro@next`. Feel free to either use the beta or revert to TailwindCSS 0.7.4.
 
@@ -88,7 +88,7 @@ npm install tailwindcss@0.7.4
 npm install tailwind.macro
 ```
 
-2. Use the Babel Macro (tailwind.macro) in your styled component
+2.  Use the Babel Macro (tailwind.macro) in your styled component
 
 ```javascript
 import styled from "styled-components"
@@ -107,6 +107,6 @@ const Button = tw.button`
 
 ## Other resources
 
-- [Introduction to PostCSS](https://www.smashingmagazine.com/2015/12/introduction-to-postcss/)
-- [Tailwind Documentation](https://tailwindcss.com/)
-- [Gatsby starters that use Tailwind](/starters/?c=Styling%3ATailwind&v=2)
+-   [Introduction to PostCSS](https://www.smashingmagazine.com/2015/12/introduction-to-postcss/)
+-   [Tailwind Documentation](https://tailwindcss.com/)
+-   [Gatsby starters that use Tailwind](/starters/?c=Styling%3ATailwind&v=2)

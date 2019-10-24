@@ -39,13 +39,13 @@ Plugins have been a very successful lower-level abstraction for Gatsby. Themes i
 
 ## Who are themes for?
 
-- People new to Gatsby that want to get started quickly without a difficult learning curve
+-   People new to Gatsby that want to get started quickly without a difficult learning curve
 
-- People who have clear and common use-cases in mind for Gatsby (e.g. blog, ecommerce, documentation) and want to share the complexity of maintaining the underlying functionality with others — so pick a theme as the base for their site instead of starting from scratch
+-   People who have clear and common use-cases in mind for Gatsby (e.g. blog, ecommerce, documentation) and want to share the complexity of maintaining the underlying functionality with others — so pick a theme as the base for their site instead of starting from scratch
 
-- OSS/Commercial entrepreneurs who want to create web products. Themes will enable them to assemble a product they can share or sell with others.
+-   OSS/Commercial entrepreneurs who want to create web products. Themes will enable them to assemble a product they can share or sell with others.
 
-- Designers who want to create unique/beautiful website designs to share with others
+-   Designers who want to create unique/beautiful website designs to share with others
 
 ## Why build themes?
 
@@ -61,7 +61,7 @@ Some tweets to that effect:
 
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">I want to make a really basic docs website. Ideally I just want to write<br/> markdown and CSS. Nothing fancy, everything static. Trying out <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> but feel intimidated with the usage of GraphQL in the boilerplate project and having to use JS to write everything up.</p>&mdash; Sebastian McKenzie (@sebmck) <a href="https://twitter.com/sebmck/status/1085279417151057920?ref_src=twsrc%5Etfw">January 15, 2019</a></blockquote>
 
----
+* * *
 
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">I'm a fan of Gatsby and similar static site generators, there should be a level of discretion exercised when using them it to build certain kinds of static websites <a href="https://twitter.com/hashtag/webdev?src=hash&amp;ref_src=twsrc%5Etfw">#webdev</a> <a href="https://twitter.com/hashtag/html?src=hash&amp;ref_src=twsrc%5Etfw">#html</a> <a href="https://twitter.com/hashtag/css?src=hash&amp;ref_src=twsrc%5Etfw">#css</a> <a href="https://twitter.com/hashtag/javascript?src=hash&amp;ref_src=twsrc%5Etfw">#javascript</a></p>&mdash; Eric Alli (@ericalli) <a href="https://twitter.com/ericalli/status/1083271854653992962?ref_src=twsrc%5Etfw">January 10, 2019</a></blockquote>
 
@@ -69,7 +69,7 @@ Some tweets to that effect:
 
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">When considering to use a static site generator, if it takes a dozen "plugins" to build the approximation of a basic production-ready website, that's probably a good place to draw a line in the sand</p>&mdash; Eric Alli (@ericalli) <a href="https://twitter.com/ericalli/status/1083271858605023232?ref_src=twsrc%5Etfw">January 10, 2019</a></blockquote>
 
----
+* * *
 
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">A thread about a lesson. I want to update my website. I spent about ten hours this weekend messing with Gatsby, GraphQL, React, Netlify, all that. I got a working version that does some really magical stuff with a static page.</p>&mdash; jordan t. thevenow-harrison (@jtth) <a href="https://twitter.com/jtth/status/1080519113930350592?ref_src=twsrc%5Etfw">January 2, 2019</a></blockquote>
 

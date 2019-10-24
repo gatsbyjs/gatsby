@@ -19,13 +19,13 @@ This post will act as an introduction to get you familiar with these concepts in
 
 These are not to be considered universal definitions, just how the author will use them going forward.
 
-- **site** - Any website, web-app, or other content you can browse on the internet in a web browser.
+-   **site** - Any website, web-app, or other content you can browse on the internet in a web browser.
 
-- **server-side site** - Any site that pre-processes code at time of request -- whether using Node.js, PHP, Python, or any other method -- before delivering it to the user's browser.
+-   **server-side site** - Any site that pre-processes code at time of request -- whether using Node.js, PHP, Python, or any other method -- before delivering it to the user's browser.
 
-- **client-side site** - Any site (Gatsby, NuxtJS, NextJS, Single Page App, etc...) where static files(HTML/CSS/JS) are shipped to the browser for processing -- pre-processing may happen at build time, but does not happen time of request.
+-   **client-side site** - Any site (Gatsby, NuxtJS, NextJS, Single Page App, etc...) where static files(HTML/CSS/JS) are shipped to the browser for processing -- pre-processing may happen at build time, but does not happen time of request.
 
-- **attack vector** - A resource through which to hack a site. Just because an attack vector exists does not mean your site is vulnerable to that attack, however. A server is an attack vector; but, the server requires a vulnerability for an attacker to exploit (use) that server as an attack vector.
+-   **attack vector** - A resource through which to hack a site. Just because an attack vector exists does not mean your site is vulnerable to that attack, however. A server is an attack vector; but, the server requires a vulnerability for an attacker to exploit (use) that server as an attack vector.
 
 ## Shared Security Concerns
 
@@ -33,10 +33,10 @@ No matter how you deploy your site, how little JavaScript you use, whether it is
 
 When it comes to client-side sites, if you are going to get hacked, it is likely going to be at the infrastructure or network level:
 
-- **Infrastructure** - This might be your CDN, code repository, DNS, CI, etc. Thanks to the cloud, most of the work securing this layer is done for you. As long as, you are using two-factor authentication (2FA) and a strong password. You are all using 2FA (when possible) and strong passwords, right!? Good.
+-   **Infrastructure** - This might be your CDN, code repository, DNS, CI, etc. Thanks to the cloud, most of the work securing this layer is done for you. As long as, you are using two-factor authentication (2FA) and a strong password. You are all using 2FA (when possible) and strong passwords, right!? Good.
 
-- **Network** - This kind of attack happens when an attacker can access to the network being used to access your site. It could be a rouge third-party in your cloud provider, or someone sitting across the coffee shop on the same public WiFi as your user. The exact attack methods vary, but are collectively referred to as a [Man-in-the-Middle](https://en.wikipedia.org/wiki/Man-in-the-middle_attack) attack.
-  The defense here is HTTPS (TLS encryption). Other related technologies such as [Cross-Origin-Resource-Sharing](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS), [Strict-Transport-Security](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security), [Public Key Pinning](https://developer.mozilla.org/en-US/docs/Web/HTTP/Public_Key_Pinning), and [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) all assist in securing network traffic. No matter who is looking at your network traffic, they can not read or modify it.
+-   **Network** - This kind of attack happens when an attacker can access to the network being used to access your site. It could be a rouge third-party in your cloud provider, or someone sitting across the coffee shop on the same public WiFi as your user. The exact attack methods vary, but are collectively referred to as a [Man-in-the-Middle](https://en.wikipedia.org/wiki/Man-in-the-middle_attack) attack.
+    The defense here is HTTPS (TLS encryption). Other related technologies such as [Cross-Origin-Resource-Sharing](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS), [Strict-Transport-Security](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security), [Public Key Pinning](https://developer.mozilla.org/en-US/docs/Web/HTTP/Public_Key_Pinning), and [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) all assist in securing network traffic. No matter who is looking at your network traffic, they can not read or modify it.
 
 Other possible attacks relate to using `iframes` without securing them or not removing referrer tags on external links. Thankfully, fixing these is a pretty low bar. More on this later.
 
@@ -54,10 +54,10 @@ What's the solution? Well there are several problems to solve.
 
 **Quick Definitions**:
 
-- **Private** - unique to a person or group of people using your site.
-- **Public** - accessible to any and all users on your site.
-- **Dynamic** - any content that is updated more than once in a 5 minute interval and needs to be accessible to all users of the site.
-- **Static** - any content that changes less than once in a given 5 minute interval.
+-   **Private** - unique to a person or group of people using your site.
+-   **Public** - accessible to any and all users on your site.
+-   **Dynamic** - any content that is updated more than once in a 5 minute interval and needs to be accessible to all users of the site.
+-   **Static** - any content that changes less than once in a given 5 minute interval.
 
 NOTE: 5 minutes is somewhat arbitrary. 5 minutes is used because anything changed **less often** generally just means rebuilding and deploying your site with an automated CI/CD pipeline. Build times make anything changed **more often** tricky. This build time problem is a core tenant of [Gatsby](https://www.gatsbyjs.com/) and future features (like [incremental builds](https://github.com/gatsbyjs/gatsby/issues/5002)) that will speed up build times significantly.
 
@@ -100,9 +100,9 @@ Medium's "clap" feature, up-voting on Hacker News or Reddit, liking something on
 
 Why address this scenario? Two reasons:
 
-- **Simplicity** - Consider a small blog or non-profit site where authentication is not already needed. To develop it would require a lot of time and long term investment. Users authenticating to a small blog just to hit "like" is a poor user experience and probably a hurtle they will not bother jumping.
+-   **Simplicity** - Consider a small blog or non-profit site where authentication is not already needed. To develop it would require a lot of time and long term investment. Users authenticating to a small blog just to hit "like" is a poor user experience and probably a hurtle they will not bother jumping.
 
-- **Privacy** - No matter the size of your platform, requiring users to authenticate means having to secure private data: this requires time and money. Alternatively, as a platform, you may decide your users' privacy is more important then better security controls.
+-   **Privacy** - No matter the size of your platform, requiring users to authenticate means having to secure private data: this requires time and money. Alternatively, as a platform, you may decide your users' privacy is more important then better security controls.
 
 Using Medium's "clap" feature as example, what are the security issues? First, we would need some kind of database to store the claps. Do we leave no security mechanism on this database for reads and writes? We could add security, but then the necessary API key has to be shipped in the code and the user can access it. Either way, your more nefarious users could access this database; reading and (more importantly) writing to their devious heart's content.
 
@@ -134,12 +134,12 @@ Remember, keep it **secret**, keep it **safe** 🧙🏼‍! Do not store API key
 
 Now go make awesome Gatsby sites that are completely secure! For more information on web security checkout these resources:
 
-- **General web-app security**: The [OWASP Top Ten](https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project) is a list of top website security vulnerabilities. The [Open Web Application Security Project](https://www.owasp.org/index.php/Main_Page) is a excellent resource for security.
+-   **General web-app security**: The [OWASP Top Ten](https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project) is a list of top website security vulnerabilities. The [Open Web Application Security Project](https://www.owasp.org/index.php/Main_Page) is a excellent resource for security.
 
-- **Shared Security**: The article "[Security for Static Websites](https://blog.sqreen.com/static-websites-security/)" covers shared security issues well and includes complete solutions.
+-   **Shared Security**: The article "[Security for Static Websites](https://blog.sqreen.com/static-websites-security/)" covers shared security issues well and includes complete solutions.
 
-- **Secure APIs**: For information on securing all APIs (authenticated or not) checkout the [Rest Secutiry Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/REST_Security_Cheat_Sheet.md) from OWASP.
+-   **Secure APIs**: For information on securing all APIs (authenticated or not) checkout the [Rest Secutiry Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/REST_Security_Cheat_Sheet.md) from OWASP.
 
-- **[Gatsby Authentication Tutorial](/tutorial/authentication-tutorial/#security-notice)**
+-   **[Gatsby Authentication Tutorial](/tutorial/authentication-tutorial/#security-notice)**
 
 **Disclaimer**: The author does not claim to be a security expert. He is a developer who cares about security and has some experience. This post might contain incomplete or inaccurate information. It is your responsibility to properly secure your sites.

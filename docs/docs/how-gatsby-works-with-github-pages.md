@@ -6,21 +6,21 @@ GitHub pages is a service offered by GitHub that allows hosting for websites con
 
 You can publish your site on GitHub pages several different ways:
 
-- to a path like `username.github.io/reponame/` or `/docs`
-- to a subdomain based on your username or organization name: `username.github.io` or `orgname.github.io`
-- to the root subdomain at `username.github.io`, and then configured to use a custom domain
+-   to a path like `username.github.io/reponame/` or `/docs`
+-   to a subdomain based on your username or organization name: `username.github.io` or `orgname.github.io`
+-   to the root subdomain at `username.github.io`, and then configured to use a custom domain
 
 ## Configuring the GitHub Pages source branch
 
 You must select which branch will be deployed from your repository settings in GitHub for GitHub pages to function. On GitHub:
 
-1. Navigate to your site's repository.
+1.  Navigate to your site's repository.
 
-2. Under the repository name, click Settings.
+2.  Under the repository name, click Settings.
 
-3. In the GitHub Pages section, use the Source drop-down to select master (for publishing to the root subdomain) or gh-pages (for publishing to a path like `/docs`) as your GitHub Pages publishing source.
+3.  In the GitHub Pages section, use the Source drop-down to select master (for publishing to the root subdomain) or gh-pages (for publishing to a path like `/docs`) as your GitHub Pages publishing source.
 
-4. Click Save.
+4.  Click Save.
 
 ## Installing the `gh-pages` package
 
@@ -96,8 +96,8 @@ In [Travis's settings for the repository](https://docs.travis-ci.com/user/enviro
 
 Update the Gatsby project's `package.json` to also include a `deploy` run script which invokes `gh-pages` with two important command-line arguments:
 
-1. `-d public` - specifies the directory in which the built files exist and will be pushed as a source to GitHub pages
-2. `-r URL` - the GitHub repository URL, including the use of the secret GitHub token (as a secret environment variable) to be able to push changes to the `gh-pages` branch, in the form of `https://$GH_TOKEN@github.com/<github username>/<github repository name>.git`
+1.  `-d public` - specifies the directory in which the built files exist and will be pushed as a source to GitHub pages
+2.  `-r URL` - the GitHub repository URL, including the use of the secret GitHub token (as a secret environment variable) to be able to push changes to the `gh-pages` branch, in the form of `https://$GH_TOKEN@github.com/<github username>/<github repository name>.git`
 
 Here's an example (be sure to update the user and repo names to your own):
 
@@ -128,7 +128,7 @@ deploy:
 
 To break-down the important bits here for deploying the Gatsby website from Travis to GitHub pages:
 
-1. `before_script` is used to install the Gatsby CLI so it can be used in the project's run script to build the Gatsby website
-2. `deploy` will only fire when the build runs on the master branch, in which case it will fire off the deploy script. In the above example, the Gatsby site is located in a `docs/` directory. The script changes into that directory, installs all the website dependencies, and runs the deploy script as was set in the previous step.
+1.  `before_script` is used to install the Gatsby CLI so it can be used in the project's run script to build the Gatsby website
+2.  `deploy` will only fire when the build runs on the master branch, in which case it will fire off the deploy script. In the above example, the Gatsby site is located in a `docs/` directory. The script changes into that directory, installs all the website dependencies, and runs the deploy script as was set in the previous step.
 
 Committing and pushing both the `.travis.yml` and `package.json` files to your base branch will be the final step in the process.

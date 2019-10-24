@@ -6,8 +6,8 @@ title: Query Extraction
 >
 > Outdated areas are:
 >
-> - queries in dependencies (node_modules) and themes are now extracted as well
-> - add meta key for hook in JSON in diagram
+> -   queries in dependencies (node_modules) and themes are now extracted as well
+> -   add meta key for hook in JSON in diagram
 >
 > You can help by making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228).
 
@@ -19,8 +19,8 @@ Up until now, Gatsby has [sourced all nodes](/docs/node-creation/) into redux, [
 
 The first thing it does is use [babylon-traverse](https://babeljs.io/docs/en/next/babel-traverse.html) to load all JavaScript files in the site that have graphql queries in them. This produces AST results that are passed to the [relay-compiler](https://facebook.github.io/relay/docs/en/compiler-architecture.html). This accomplishes a couple of things:
 
-1. It informs us of any malformed queries, which are promptly reported back to the user.
-1. It builds a tree of queries and fragments they depend on. And outputs a single optimized query string with the fragments.
+1.  It informs us of any malformed queries, which are promptly reported back to the user.
+2.  It builds a tree of queries and fragments they depend on. And outputs a single optimized query string with the fragments.
 
 After this step, Gatsby will have a map of file paths (of site files with queries in them) to Query Objects, which contain the raw optimized query text, as well as other metadata such as the component path and page `jsonName`. The following diagram shows the flow involved during query compilation
 

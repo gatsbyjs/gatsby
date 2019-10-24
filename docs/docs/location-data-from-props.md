@@ -26,10 +26,10 @@ Using `hash` in JavaScript is one way to update the browser URL and the DOM with
 
 Through client-side routing in Gatsby you can provide a location object instead of strings, which are helpful in a number of situations:
 
-- Providing state to linked components
-- Client-only routes
-- Fetching Data
-- Animation Transition
+-   Providing state to linked components
+-   Client-only routes
+-   Fetching Data
+-   Animation Transition
 
 ## Example of providing state to a link component
 
@@ -64,8 +64,8 @@ The great thing is you can expect the `location` prop to be available to you on 
 
 ## Other resources
 
-- [@reach/router docs](https://reach.tech/router/api/Location)
-- [react-router location docs](https://github.com/ReactTraining/react-router/blob/master/packages/react-router/docs/api/location.md)
-- [Hash Router](https://reacttraining.com/react-router/web/api/HashRouter)
-- [Gatsby Breadcrumb Plugin](/packages/gatsby-plugin-breadcrumb/#breadcrumb-props)
-- [Create Modal w/ Navigation State using React Router](https://codedaily.io/tutorials/47/Create-a-Modal-Route-with-Link-and-Nav-State-in-React-Router)
+-   [@reach/router docs](https://reach.tech/router/api/Location)
+-   [react-router location docs](https://github.com/ReactTraining/react-router/blob/master/packages/react-router/docs/api/location.md)
+-   [Hash Router](https://reacttraining.com/react-router/web/api/HashRouter)
+-   [Gatsby Breadcrumb Plugin](/packages/gatsby-plugin-breadcrumb/#breadcrumb-props)
+-   [Create Modal w/ Navigation State using React Router](https://codedaily.io/tutorials/47/Create-a-Modal-Route-with-Link-and-Nav-State-in-React-Router)

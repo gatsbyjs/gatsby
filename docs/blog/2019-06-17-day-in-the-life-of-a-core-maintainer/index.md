@@ -15,13 +15,13 @@ The day-to-day responsibilities of a core maintainer are some of the most challe
 
 In this post, I attempt to outline a model for a productive, healthy, and balanced schedule for a core maintainer. In doing so, I also hope to illustrate the decisions, trade-offs, and general thought process for approaching the day-to-day responsibilities in a way that is as productive as possible. The ideas in this post are informed by the following guidelines:
 
-- Time-boxing and focus/productive time
-- Consider the impact of work you're doing
-- Nurture and focus on the community, when you can
-- Take breaks
-- Productive interruptions
-- Reserve time for play
-- Know when to pivot, and ignore all of the above
+-   Time-boxing and focus/productive time
+-   Consider the impact of work you're doing
+-   Nurture and focus on the community, when you can
+-   Take breaks
+-   Productive interruptions
+-   Reserve time for play
+-   Know when to pivot, and ignore all of the above
 
 Important caveat: treat this as a guide--it is by no means exhaustive, nor representative of how each individual works most effectively, but it does serve as a reasonably accurate model of a productive core maintainer.
 
@@ -31,21 +31,21 @@ Before we get started, let's take a step back and ask: what exactly is "producti
 
 In general, a non-exhaustive list of productive work: is work that drives valuable outcomes for…
 
-- the community
-- Gatsby Core, or
-- other teams at Gatsby.
+-   the community
+-   Gatsby Core, or
+-   other teams at Gatsby.
 
 An ideal scenario is work that intersects with all three, or that unblocks or leads to future work that can reach a wider audience.
 
 Some examples:
 
-- **Shipping roadmap features**. Many roadmap features are usually high-effort, but often hugely impactful in helping large numbers of Gatsby users.
-- **Shipping meaningful, small bug-fixes**. Many small bug-fixes are low-effort and medium-impact. They "move the needle" and improve the day-to-day experience of using Gatsby for a non-trivial amount of users.
-- **Reviewing PRs**. Giving timely, thorough, and fair reviews for pull requests from both the community and other Gatsby Core team members unblocks future work or changes required for merging, and delivers or eventually delivers meaningful fixes or improvements for the community, at large.
-- **Helpful, targeted use of expertise**. Unblocking a community member or Gatsby team member, which may take just a few minutes of your time may unblock and drastically reduce the time spent on a particularly tough issue by an ally. If someone surfaces a question in Slack or Discord—if you have a few moments, help them out!
-- **Pairing**. Leveraging your skill set to help another member of the team is a great way to get a meaningful feature delivered more quickly. Hop on a Zoom and build something great!
-- **Writing**. Writing docs, writing a blog post, speaking at a conference or on a podcast, cultivating community members to level-up, etc. [See "Why we Write" by Sam Bhagwat](https://www.gatsbyjs.org/blog/2019-04-19-gatsby-why-we-write/).
-- **Creating issues**. Create and/or edit issues, RFCs, etc. for community members to discuss or pick up. If the community is able to pick up these features, fixes, and documentation tasks, it frees us up to focus on large-scale projects which tend to be more complex and require more focused effort.
+-   **Shipping roadmap features**. Many roadmap features are usually high-effort, but often hugely impactful in helping large numbers of Gatsby users.
+-   **Shipping meaningful, small bug-fixes**. Many small bug-fixes are low-effort and medium-impact. They "move the needle" and improve the day-to-day experience of using Gatsby for a non-trivial amount of users.
+-   **Reviewing PRs**. Giving timely, thorough, and fair reviews for pull requests from both the community and other Gatsby Core team members unblocks future work or changes required for merging, and delivers or eventually delivers meaningful fixes or improvements for the community, at large.
+-   **Helpful, targeted use of expertise**. Unblocking a community member or Gatsby team member, which may take just a few minutes of your time may unblock and drastically reduce the time spent on a particularly tough issue by an ally. If someone surfaces a question in Slack or Discord—if you have a few moments, help them out!
+-   **Pairing**. Leveraging your skill set to help another member of the team is a great way to get a meaningful feature delivered more quickly. Hop on a Zoom and build something great!
+-   **Writing**. Writing docs, writing a blog post, speaking at a conference or on a podcast, cultivating community members to level-up, etc. [See "Why we Write" by Sam Bhagwat](https://www.gatsbyjs.org/blog/2019-04-19-gatsby-why-we-write/).
+-   **Creating issues**. Create and/or edit issues, RFCs, etc. for community members to discuss or pick up. If the community is able to pick up these features, fixes, and documentation tasks, it frees us up to focus on large-scale projects which tend to be more complex and require more focused effort.
 
 This is by no means a complete list because the day-to-day work of a maintainer can seemingly vary in infinite ways. However, it does serve as a valuable mental model to think of when considering "what is productive work?" A question to consider when considering if something is productive is as simple as:
 
@@ -101,10 +101,10 @@ Whenever this happens, reserve the right to pivot and focus on other activities.
 
 When you reach a good stopping point, or you feel that you're not able to make a lot of progress on something you're working on currently--always feel comfortable to pivot and find other, valuable ways to contribute. Use your hard-earned skills to make contributions in other realms, perhaps in areas you enjoy and/or that could hone your focus after a productive "break." You may find yourself doing things like:
 
-- **Reviewing PRs**. Getting some "quick wins" for PRs that can be merged easily or with a few, small tweaks
-- **Helping out on Discord**. Seeing if there are any questions you can help answer or open PRs/issues you may have some expertise to advise
-- **Internal Support**. Checking Slack, chiming into a discussion and/or perhaps helping out another team with an issue they're running into
-- **Small features or fixes**. Delivering a relatively non-time consuming bug fix or feature that closes an issue, or that helps out another team at Gatsby (but that may not be prioritized or super valuable for unblocking future work)
+-   **Reviewing PRs**. Getting some "quick wins" for PRs that can be merged easily or with a few, small tweaks
+-   **Helping out on Discord**. Seeing if there are any questions you can help answer or open PRs/issues you may have some expertise to advise
+-   **Internal Support**. Checking Slack, chiming into a discussion and/or perhaps helping out another team with an issue they're running into
+-   **Small features or fixes**. Delivering a relatively non-time consuming bug fix or feature that closes an issue, or that helps out another team at Gatsby (but that may not be prioritized or super valuable for unblocking future work)
 
 _Reserve the right to shift priorities and work on interrupt-driven tasks, when you need to do so._
 
@@ -118,10 +118,10 @@ _Play, experiment, learn, and apply._
 
 There is nary a programmer who doesn't have a story about working on a problem all day, hitting obstacle after obstacle and growing increasingly frustrated for lack of a solution. They step away for the day, revisit it the next morning, and et voila--the problem is clear and obvious and is solved in minutes. Always feel empowered to reserve the right to take some time to yourself and collect your thoughts, to do things like:
 
-- Go for a walk or a run
-- Head to a coffee shop and get a change of scenery
-- Go to a movie, or watch a TV show or a video on YouTube
-- Jump into a game or a task that may not require a lot of cognitive effort
+-   Go for a walk or a run
+-   Head to a coffee shop and get a change of scenery
+-   Go to a movie, or watch a TV show or a video on YouTube
+-   Jump into a game or a task that may not require a lot of cognitive effort
 
 In any case, oftentimes stepping away from the problem and revisiting it with a clearer head typically results in valuable outcomes and an improved understanding of the potential solution or strategy to solve the problem.
 

@@ -42,7 +42,7 @@ Firstly, though, why do we want a Headless CMS and a JAMstack for the project? T
 3.  **No server needed.** Cloud CMSs mean that I don't need to pay the hosting people to setup an SQL database.
 4.  **Easy to edit.** If I need to edit a site on the fly or have a client who needs to do the same, they don't need to touch any code or run to their home workstation to fix a spelling error. They can access it anywhere.
 
----
+* * *
 
 ![Contentful](contentful.png)
 
@@ -50,11 +50,11 @@ Firstly, though, why do we want a Headless CMS and a JAMstack for the project? T
 
 This is the one I've heard the most about in my research. Contentful is big and well-known - used by over 130 thousand developers if their website is to be believed. I also like their description "Fast. Flexible. Future-proof. It's everything your CMS isn't." It might as well say "My CMS could beat up your CMS."
 
-With all the acclaim, however, can come a hefty price tag. Contentful does have a free tier if you display their logo in the footer, you can keep up to 10,000 records and have 3 users - which isn't bad at all. For my personal site I'm happy to plaster whatever attribution on the bottom. If you wanted to use this for a client and they were dead against someone else's logo being on there, you can go up a half-tier with the same spec for \$39 a month.
+With all the acclaim, however, can come a hefty price tag. Contentful does have a free tier if you display their logo in the footer, you can keep up to 10,000 records and have 3 users - which isn't bad at all. For my personal site I'm happy to plaster whatever attribution on the bottom. If you wanted to use this for a client and they were dead against someone else's logo being on there, you can go up a half-tier with the same spec for \\$39 a month.
 
 ![Contentful's Pricing Packages](contentful-pricing.png)
 
-From the paid Developer edition upwards, it seems a pretty steep fee, especially compared to some others. That said, if you've got a client willing to fork out a hot \$949, why not?
+From the paid Developer edition upwards, it seems a pretty steep fee, especially compared to some others. That said, if you've got a client willing to fork out a hot \\$949, why not?
 
 ![A quick sample project](contentful-project.png)
 
@@ -70,7 +70,7 @@ You then setup your fields, choosing from a big list. If you want a simple Title
 
 Contentful looks like a fantastic service. It isn't perfect but it checks all my boxes — and what do you want for nothing? It's definitely the one to beat.
 
----
+* * *
 
 ![WP's REST API](wp.jpeg)
 
@@ -88,7 +88,7 @@ A lot of this information came from a [fantastic tutorial by Jeremey Duvall](htt
 
 The only problem with the WordPress.com setup is that it's restricted to posts and pages that boil down to title/image/content. If you want ACF or other plugins you're going to need a paid-for WP package, which harks back to the WordPress.org issue: I can't use it without paying for it.
 
----
+* * *
 
 ### NetlifyCMS
 
@@ -104,7 +104,7 @@ They also say, however, that if you use NetlifyCMS with Netlify, they convenient
 
 Pedro Duarte has a [great article](https://medium.com/netlify/jamstack-with-gatsby-netlify-and-netlify-cms-a300735e2c5d) about using Gatsby with both Netlify and NetlifyCMS.
 
----
+* * *
 
 ### Best of the rest - Prismic.io & Cockpit
 
@@ -118,11 +118,11 @@ Prismic has a similar pricing structure to Contentful - but has a few more optio
 
 Cockpit also seems to share a lot of the same features except for two big differences:
 
-- It's open source - anyone can download it, anyone can contribute to the Git repository and improve it, meaning it's fully free and will be available - in one form or another - forever. I could see an issue with Contentful if the service ever stopped working. They have backups on AWS and create nightly backups on their premium plans, but the actual interface may become unavailable. Because Cockpit is open source they could go out of business or go offline for a night or just stop working altogether, and there's a repo available with your CMS on.
+-   It's open source - anyone can download it, anyone can contribute to the Git repository and improve it, meaning it's fully free and will be available - in one form or another - forever. I could see an issue with Contentful if the service ever stopped working. They have backups on AWS and create nightly backups on their premium plans, but the actual interface may become unavailable. Because Cockpit is open source they could go out of business or go offline for a night or just stop working altogether, and there's a repo available with your CMS on.
 
-- It's self-hosted - this ties into the last point and if it did all come crashing down, as long as your site is still active so will your CMS be. Great news for the tech-paranoid!
+-   It's self-hosted - this ties into the last point and if it did all come crashing down, as long as your site is still active so will your CMS be. Great news for the tech-paranoid!
 
----
+* * *
 
 ## Conclusion - Which backend is right?
 

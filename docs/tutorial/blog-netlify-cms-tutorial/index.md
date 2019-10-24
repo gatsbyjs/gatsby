@@ -8,8 +8,8 @@ This tutorial will use [`gatsby-personal-starter-blog`](http://t.wang.sh/gatsby-
 
 ## Prerequisites
 
-- A GitHub account
-- The [Gatsby CLI](/docs/gatsby-cli) installed
+-   A GitHub account
+-   The [Gatsby CLI](/docs/gatsby-cli) installed
 
 ## Set up a Netlify CMS-managed Gatsby site in 5 steps:
 

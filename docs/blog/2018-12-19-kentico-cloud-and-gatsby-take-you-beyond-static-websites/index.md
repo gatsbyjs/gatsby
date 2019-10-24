@@ -96,8 +96,8 @@ graphql(`
 
 Implementing the site using Gatsby and the Kentico Cloud source plugin is super easy and fun, but at the end of the day, there are two questions you should ask:
 
-- Where should I host the static files?
-- How can I automatically regenerate the site when there are content or implementation changes?
+-   Where should I host the static files?
+-   How can I automatically regenerate the site when there are content or implementation changes?
 
 The first question is clear; you can keep using the same hosting provider and plan you have currently, right? But with the new implementation, all generated pages are just static files. You probably won't need the same amount of computing power or server memory. In our case, we decided to host the website on GitHub Pages, as the git repository is already hosted there, and the price is very tempting (0 USD). It also supports custom domains.
 

@@ -6,9 +6,9 @@ Gatsby's `build` and `develop` steps run as a Node.js application which you can 
 
 In this guide you will learn how to debug some code using:
 
-- [VS Code debugger (Auto-Config)](#vs-code-debugger-auto-config)
-- [VS Code debugger (Manual-Config)](#vs-code-debugger-manual-config)
-- [Chrome DevTools for Node](#chrome-devtools-for-node)
+-   [VS Code debugger (Auto-Config)](#vs-code-debugger-auto-config)
+-   [VS Code debugger (Manual-Config)](#vs-code-debugger-manual-config)
+-   [Chrome DevTools for Node](#chrome-devtools-for-node)
 
 As an example let's use the following code snippet in a `gatsby-node.js` file:
 
@@ -107,8 +107,8 @@ In your project directory instead of running `npm run develop` run the following
 node --inspect-brk --no-lazy node_modules/gatsby/dist/bin/gatsby develop
 ```
 
-- `--inspect-brk` will enable Node's inspector agent which will allow you to connect a debugger. It will also pause execution until the debugger is connected and then wait for you to resume it.
-- `--no-lazy` - this will force Node's V8 engine to disable lazy compilation and will help with using breakpoints.
+-   `--inspect-brk` will enable Node's inspector agent which will allow you to connect a debugger. It will also pause execution until the debugger is connected and then wait for you to resume it.
+-   `--no-lazy` - this will force Node's V8 engine to disable lazy compilation and will help with using breakpoints.
 
 ### Connecting DevTools
 
@@ -150,11 +150,11 @@ You can now see the problem - `args` doesn't contain `Node` - it contains `node`
 
 You can successfully debug your code using Chrome DevTools but using it isn't really that convenient. There are a lot of steps you need to do manually every time you want to use debugger, thankfully there are other methods that make it simpler to start such as the ones outlined above.
 
-- This was an introduction to Node.js debugging. Using information from this section you can setup debugging in your code editor or IDE of choice (if it supports node debugging).
-- You don't _need_ a code editor or IDE to debug Node.js applications. Using Chrome DevTools is usually a safe fallback.
-- Debugging isn't the only thing you can do in Chrome DevTools. Once you connect to DevTools you can use CPU or memory profilers. Check the `Profiler` and `Memory` tabs in DevTools.
+-   This was an introduction to Node.js debugging. Using information from this section you can setup debugging in your code editor or IDE of choice (if it supports node debugging).
+-   You don't _need_ a code editor or IDE to debug Node.js applications. Using Chrome DevTools is usually a safe fallback.
+-   Debugging isn't the only thing you can do in Chrome DevTools. Once you connect to DevTools you can use CPU or memory profilers. Check the `Profiler` and `Memory` tabs in DevTools.
 
 ## Additional resources
 
-- [Debugging - Getting Started | Node.js](https://nodejs.org/en/docs/guides/debugging-getting-started/)
-- [Debugging with Node.js - Paul Irish talk at Node Summit 2017](https://www.youtube.com/watch?v=Xb_0awoShR8)
+-   [Debugging - Getting Started | Node.js](https://nodejs.org/en/docs/guides/debugging-getting-started/)
+-   [Debugging with Node.js - Paul Irish talk at Node Summit 2017](https://www.youtube.com/watch?v=Xb_0awoShR8)

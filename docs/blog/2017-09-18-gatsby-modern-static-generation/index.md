@@ -21,20 +21,20 @@ production by creating a landing page very fast.
 
 Static site generators like Jekyll all work pretty similarly:
 
-- Describe your content in some common templating language ([Pug](http://pugjs.org),
-  [Handlebars](http://handlebarsjs.com), etc)
-- While in development, start a local web server and add file "watchers" that
-  will listen for content changes and re-render the site
-- Finally, render the whole site in static HTML and deploy. The generator will
-  combine your files and produce a well formed HTML content.
+-   Describe your content in some common templating language ([Pug](http://pugjs.org),
+    [Handlebars](http://handlebarsjs.com), etc)
+-   While in development, start a local web server and add file "watchers" that
+    will listen for content changes and re-render the site
+-   Finally, render the whole site in static HTML and deploy. The generator will
+    combine your files and produce a well formed HTML content.
 
 Let's say you navigate to the good old site example.com:
 
-- The browser requests the page at example.com
-- The server responds with the HTML content
-- The browser renders the page and loads the asset related to the script tag
-- JS will instruct the browser to manipulate the DOM, for example, to show a
-  "welcome to this page" popup dialog.
+-   The browser requests the page at example.com
+-   The server responds with the HTML content
+-   The browser renders the page and loads the asset related to the script tag
+-   JS will instruct the browser to manipulate the DOM, for example, to show a
+    "welcome to this page" popup dialog.
 
 A caveat here is that you have to keep the client side logic separated from the
 backend. The client side JS file that shows the modal dialog has nothing to do
@@ -73,29 +73,29 @@ If you use React with
 [server-side rendering](https://facebook.github.io/react/docs/react-dom-server.html),
 your flow looks something like this:
 
-- A browser requests a page
-- The server responds with static HTML
-- The browser immediately renders the page so the user can see it
-- The browser loads additional JS in the background
-- The client takes some action, like navigating to a different route.
-- The browser uses the additional JS to handle this action.
+-   A browser requests a page
+-   The server responds with static HTML
+-   The browser immediately renders the page so the user can see it
+-   The browser loads additional JS in the background
+-   The client takes some action, like navigating to a different route.
+-   The browser uses the additional JS to handle this action.
 
 On your end, the development flow looks:
 
-- Describe your content in React Components
-- During development, write code like a boss (hot reloading, modularized code,
-  webpack plugins, etc...)
-- Use React Server Side Rendering API to convert this code to static HTML
-  content, and JavaScript code, on your server
+-   Describe your content in React Components
+-   During development, write code like a boss (hot reloading, modularized code,
+    webpack plugins, etc...)
+-   Use React Server Side Rendering API to convert this code to static HTML
+    content, and JavaScript code, on your server
 
 It's really that easy? Well, sort of.
 
 There is the need for a strong abstraction that will…
 
-- track your links across your components
-- parse content written in another format, like blog posts written in Markdown
-- generate code that will not bloat the client and will efficiently serve the
-  content to the user.
+-   track your links across your components
+-   parse content written in another format, like blog posts written in Markdown
+-   generate code that will not bloat the client and will efficiently serve the
+    content to the user.
 
 Thankfully, there are a few projects that took the initiative on this:
 [Gatsby](/), [Phenomic](https://phenomic.io), and
@@ -149,8 +149,8 @@ You can try it yourself by cloning the
 [source code](https://github.com/kbariotis/kostasbariotis.com) and after
 installing dependencies, run:
 
-- `npm run develop` to fire up the development server
-- `npm run build` to build the site (check the `/public` folder after it's done)
+-   `npm run develop` to fire up the development server
+-   `npm run build` to build the site (check the `/public` folder after it's done)
 
 ## An alternative to HTML caching
 
@@ -177,11 +177,11 @@ WordPress's MySQL database.
 
 To conclude, Gatsby will allow us to:
 
-- serve static content without maintaining complex stacks
-- keep a clear separation between content and the presentation layer
-- have cool features like client side routing and hot reload on development, out
-  of the box
-- reuse the same code that is being used to generate the backend content at our
-  visitors' browsers
+-   serve static content without maintaining complex stacks
+-   keep a clear separation between content and the presentation layer
+-   have cool features like client side routing and hot reload on development, out
+    of the box
+-   reuse the same code that is being used to generate the backend content at our
+    visitors' browsers
 
 I hope you will experiment with Gatsby, and let me know what you think!

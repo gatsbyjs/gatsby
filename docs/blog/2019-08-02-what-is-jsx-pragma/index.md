@@ -63,8 +63,8 @@ Other libraries like Preact, Emotion, and Vue.js use different custom functions,
 
 There are two ways to specify a custom function (and therefore replace `React.createElement`):
 
-1. Add an option to the Babel plugin
-2. Set a _pragma comment_ at the beginning of a module
+1.  Add an option to the Babel plugin
+2.  Set a _pragma comment_ at the beginning of a module
 
 ### Add an option to the Babel plugin
 
@@ -78,11 +78,11 @@ Using a pragma comment will limit the change to the modules the comment is added
 
 Using a custom JSX pragma is useful when you want to customize the transform process of JSX => JavaScript.
 
-- Emotion uses a [custom JSX pragma to use the Emotion `css` prop](https://emotion.sh/docs/css-prop#jsx-pragma).
-- Theme UI uses a custom JSX pragma to add support for Theme UI's `sx` prop, which is used to style elements by referencing values from the theme object.
+-   Emotion uses a [custom JSX pragma to use the Emotion `css` prop](https://emotion.sh/docs/css-prop#jsx-pragma).
+-   Theme UI uses a custom JSX pragma to add support for Theme UI's `sx` prop, which is used to style elements by referencing values from the theme object.
 
 ## Further reading
 
-- [WTF is JSX](https://jasonformat.com/wtf-is-jsx/)
-- [JSX Pragma doc](https://theme-ui.com/jsx-pragma) in Theme UI documentation.
-- [JSX Represents Objects](https://reactjs.org/docs/introducing-jsx.html#jsx-represents-objects) in React documentation.
+-   [WTF is JSX](https://jasonformat.com/wtf-is-jsx/)
+-   [JSX Pragma doc](https://theme-ui.com/jsx-pragma) in Theme UI documentation.
+-   [JSX Represents Objects](https://reactjs.org/docs/introducing-jsx.html#jsx-represents-objects) in React documentation.

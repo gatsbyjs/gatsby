@@ -18,17 +18,17 @@ To install Gatsby and Node.js, it is recommended to use [Homebrew](https://brew.
 
 How to install or verify Homebrew on your computer:
 
-1. Open your Terminal.
-1. See if Homebrew is installed by running `brew -v`. You should see "Homebrew" and a version number.
-1. If not, download and install [Homebrew with the instructions](https://docs.brew.sh/Installation) for your operating system (Mac, Linux or Windows).
-1. Once you've installed Homebrew, repeat step 2 to verify.
+1.  Open your Terminal.
+2.  See if Homebrew is installed by running `brew -v`. You should see "Homebrew" and a version number.
+3.  If not, download and install [Homebrew with the instructions](https://docs.brew.sh/Installation) for your operating system (Mac, Linux or Windows).
+4.  Once you've installed Homebrew, repeat step 2 to verify.
 
 ### Mac Users: install Xcode Command Line Tools
 
-1. Open your Terminal.
-1. On a Mac, install Xcode Command line tools by running `xcode-select --install`.
-   1. If that fails, download it [directly from the Apple site](https://developer.apple.com/download/more/), after signing-in with Apple developer account
-1. After being prompted to start the installation, you'll be prompted again to accept a software license for the tools to download.
+1.  Open your Terminal.
+2.  On a Mac, install Xcode Command line tools by running `xcode-select --install`.
+    1.  If that fails, download it [directly from the Apple site](https://developer.apple.com/download/more/), after signing-in with Apple developer account
+3.  After being prompted to start the installation, you'll be prompted again to accept a software license for the tools to download.
 
 ## ⌚ Install Node.js and npm
 
@@ -36,9 +36,9 @@ Node.js is an environment that can run JavaScript code outside of a web browser.
 
 _Note: Gatsby's minimum supported Node.js version is Node 8, but feel free to use a more recent version._
 
-1. Open your Terminal.
-1. Run `brew update` to make sure you have the latest version of Homebrew.
-1. Run this command to install Node and npm in one go: `brew install node`
+1.  Open your Terminal.
+2.  Run `brew update` to make sure you have the latest version of Homebrew.
+3.  Run this command to install Node and npm in one go: `brew install node`
 
 Once you have followed the installation steps, make sure everything was installed properly:
 
@@ -58,9 +58,9 @@ Git is a free and open source distributed version control system designed to han
 
 The steps to download and install Git depend on your operating system. Follow the guide for your system:
 
-- [Install Git on macOS](https://www.atlassian.com/git/tutorials/install-git#mac-os-x)
-- [Install Git on Windows](https://www.atlassian.com/git/tutorials/install-git#windows)
-- [Install Git on Linux](https://www.atlassian.com/git/tutorials/install-git#linux)
+-   [Install Git on macOS](https://www.atlassian.com/git/tutorials/install-git#mac-os-x)
+-   [Install Git on Windows](https://www.atlassian.com/git/tutorials/install-git#windows)
+-   [Install Git on Linux](https://www.atlassian.com/git/tutorials/install-git#linux)
 
 ## Using the Gatsby CLI
 
@@ -96,21 +96,21 @@ What just happened?
 gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
-- `new` is a `gatsby` command to create a new Gatsby project.
-- Here, `hello-world` is an arbitrary title — you could pick anything. The CLI tool will place the code for your new site in a new folder called "hello-world".
-- Lastly, the GitHub URL specified points to a code repository that holds the starter code you want to use.
+-   `new` is a `gatsby` command to create a new Gatsby project.
+-   Here, `hello-world` is an arbitrary title — you could pick anything. The CLI tool will place the code for your new site in a new folder called "hello-world".
+-   Lastly, the GitHub URL specified points to a code repository that holds the starter code you want to use.
 
 ```shell
 cd hello-world
 ```
 
-- This says 'I want to change directories (`cd`) to the "hello-world" subfolder'. Whenever you want to run any commands for your site, you need to be in the context for that site (aka, your terminal needs to be pointed at the directory where your site code lives).
+-   This says 'I want to change directories (`cd`) to the "hello-world" subfolder'. Whenever you want to run any commands for your site, you need to be in the context for that site (aka, your terminal needs to be pointed at the directory where your site code lives).
 
 ```shell
 gatsby develop
 ```
 
-- This command starts a development server. You will be able to see and interact with your new site in a development environment — local (on your computer, not published to the internet).
+-   This command starts a development server. You will be able to see and interact with your new site in a development environment — local (on your computer, not published to the internet).
 
 ### View your site locally
 
@@ -148,12 +148,12 @@ You can use Prettier directly in your editor using the [Prettier VS Code plugin]
 
 To summarize, in this section you:
 
-- Learned about the command line and how to use it
-- Installed and learned about Node.js and the npm CLI tool, the version control system Git, and the Gatsby CLI tool
-- Generated a new Gatsby site using the Gatsby CLI tool
-- Ran the Gatsby development server and visited your site locally
-- Downloaded a code editor
-- Installed a code formatter called Prettier
+-   Learned about the command line and how to use it
+-   Installed and learned about Node.js and the npm CLI tool, the version control system Git, and the Gatsby CLI tool
+-   Generated a new Gatsby site using the Gatsby CLI tool
+-   Ran the Gatsby development server and visited your site locally
+-   Downloaded a code editor
+-   Installed a code formatter called Prettier
 
 Now, move on to [**getting to know Gatsby building blocks**](/tutorial/part-one/).
 
@@ -163,11 +163,11 @@ Now, move on to [**getting to know Gatsby building blocks**](/tutorial/part-one/
 
 It's not necessary to be an expert with these already — if you're not, don't worry! You'll pick up a lot through the course of this tutorial series. These are some of the main web technologies you'll use when building a Gatsby site:
 
-- **HTML**: A markup language that every web browser is able to understand. It stands for HyperText Markup Language. HTML gives your web content a universal informational structure, defining things like headings, paragraphs, and more.
-- **CSS**: A presentational language used to style the appearance of your web content (fonts, colors, layout, etc). It stands for Cascading Style Sheets.
-- **JavaScript**: A programming language that helps us make the web dynamic and interactive.
-- **React**: A code library (built with JavaScript) for building user interfaces. It's the framework that Gatsby uses to build pages and structure content.
-- **GraphQL**: A query language that allows you to pull data into your website. It's the interface that Gatsby uses for managing site data.
+-   **HTML**: A markup language that every web browser is able to understand. It stands for HyperText Markup Language. HTML gives your web content a universal informational structure, defining things like headings, paragraphs, and more.
+-   **CSS**: A presentational language used to style the appearance of your web content (fonts, colors, layout, etc). It stands for Cascading Style Sheets.
+-   **JavaScript**: A programming language that helps us make the web dynamic and interactive.
+-   **React**: A code library (built with JavaScript) for building user interfaces. It's the framework that Gatsby uses to build pages and structure content.
+-   **GraphQL**: A query language that allows you to pull data into your website. It's the interface that Gatsby uses for managing site data.
 
 ### What is a website?
 
@@ -183,9 +183,9 @@ npm is a JavaScript package manager. A package is a module of code that you can 
 
 npm has three distinct components: the npm website, the npm registry, and the npm command line interface (CLI).
 
-- On the npm website, you can browse what JavaScript packages are available in the npm registry.
-- The npm registry is a large database of information about JavaScript packages available on npm.
-- Once you've identified a package you want, you can use the npm CLI to install it in your project or globally (like other CLI tools). The npm CLI is what talks to the registry — you generally only interact with the npm website or the npm CLI.
+-   On the npm website, you can browse what JavaScript packages are available in the npm registry.
+-   The npm registry is a large database of information about JavaScript packages available on npm.
+-   Once you've identified a package you want, you can use the npm CLI to install it in your project or globally (like other CLI tools). The npm CLI is what talks to the registry — you generally only interact with the npm website or the npm CLI.
 
 > 💡 Check out npm's introduction, "[**What is npm?**](https://docs.npmjs.com/getting-started/what-is-npm)".
 

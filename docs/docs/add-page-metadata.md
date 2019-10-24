@@ -12,13 +12,13 @@ Gatsby's [react helmet plugin](/packages/gatsby-plugin-react-helmet/) provides d
 
 ## Using `React Helmet` and `gatsby-plugin-react-helmet`
 
-1. Install both packages:
+1.  Install both packages:
 
 ```shell
 npm install --save gatsby-plugin-react-helmet react-helmet
 ```
 
-2. Add the plugin to the `plugins` array in your `gatsby-config.js` file.
+2.  Add the plugin to the `plugins` array in your `gatsby-config.js` file.
 
 ```javascript:title=gatsby-config.js
 {
@@ -26,7 +26,7 @@ npm install --save gatsby-plugin-react-helmet react-helmet
 }
 ```
 
-3. Use `React Helmet` in your pages:
+3.  Use `React Helmet` in your pages:
 
 ```jsx
 import React from "react"

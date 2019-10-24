@@ -24,7 +24,7 @@ Successful marketing efforts created traffic spikes — but the technology stack
 
 As a long-time React fan, Rose turned first to a Node/Express stack to handle the stability issues, and then Next.js. Ultimately he moved away from the idea due to the complexity of handling the kinds of data he was dealing with.
 
-"We had to create custom modules during the build, then dump data into JSON, then import the JSON from these files, then pull it into the component using getInitialProps," Rose explained. "There isn't really a plugin ecosystem \[in Next.js\] - if you wanted to modify webpack in any way, you want to manually reach into configuration files."
+"We had to create custom modules during the build, then dump data into JSON, then import the JSON from these files, then pull it into the component using getInitialProps," Rose explained. "There isn't really a plugin ecosystem \[in Next.js] - if you wanted to modify webpack in any way, you want to manually reach into configuration files."
 
 Data loading is a big deal to Rose because of the way Escalade is structured. As a portfolio of brands, each brand is a department with wide latitude to run itself almost independently. That meant each brand has its own requirements and own APIs for its product catalog, that might or might not be formatted in similar ways.
 
@@ -44,7 +44,7 @@ Working with another developer, a photographer, and a graphic designer, he found
 
 Another unexpected benefit was the cost reduction of hosting static content, instead of running PHP servers. After migrating to Gatsby, Rose moved the cajunbowfishing.com website hosting over to [Netlify](https://www.netlify.com).
 
-"Our bill went from $5,000 a month to \$5," he says.
+"Our bill went from $5,000 a month to \\$5," he says.
 
 The most challenging piece of the move, Rose said, was helping others understand what the new technology stack looks like.
 

@@ -12,11 +12,11 @@ Issue labels are a tool in GitHub that are used to group issues into one or more
 
 Gatsby is a very active project with many new issues opened each day. Labelling issues helps by identifying:
 
-- good issues for new contributors to work on
-- reported and confirmed bugs
-- feature requests
-- duplicate issues
-- issues that are stalled or blocked
+-   good issues for new contributors to work on
+-   reported and confirmed bugs
+-   feature requests
+-   duplicate issues
+-   issues that are stalled or blocked
 
 ## Who can label issues?
 
@@ -34,9 +34,9 @@ Before continuing, get familiar with [Gatsby's issue labels and their descriptio
 
 The broad steps to labelling an issue are:
 
-- Read an issue
-- Choose the labels that apply to that issue
-- That's it - sit back and relax, maybe take a few moments to enjoy the satisfaction of a job well done
+-   Read an issue
+-   Choose the labels that apply to that issue
+-   That's it - sit back and relax, maybe take a few moments to enjoy the satisfaction of a job well done
 
 The rest of this document will describe how to choose the right labels for an issue.
 
@@ -70,23 +70,23 @@ Check through the [`status:` labels (and their descriptions)](https://github.com
 
 Examples of applying `status:` labels might be:
 
-- An issue that depends on an external dependency being changed could be labelled with `status: blocked`
+-   An issue that depends on an external dependency being changed could be labelled with `status: blocked`
 
-- An issue with a clear description of how it can be resolved could be labelled `status: help wanted`.
+-   An issue with a clear description of how it can be resolved could be labelled `status: help wanted`.
 
-- An issue that's missing information required to help the author could be labelled with `status: needs more info`
+-   An issue that's missing information required to help the author could be labelled with `status: needs more info`
 
-- An issue describing a bug without clear steps to reproduce could be labelled with `status: needs reproduction`
+-   An issue describing a bug without clear steps to reproduce could be labelled with `status: needs reproduction`
 
-- An issue describing a bug where there are steps to reproduce the bug _and_ you've run the code locally and seen the error yourself can be labelled `status: confirmed`
+-   An issue describing a bug where there are steps to reproduce the bug _and_ you've run the code locally and seen the error yourself can be labelled `status: confirmed`
 
 ### Choose any other labels
 
 There are a few other labels that can sometimes be applied to an issue. Here are some more examples of when to use them:
 
-- `good first issue` can be used when an issue is a small, clearly defined piece of work that could be completed by someone without in-depth knowledge of Gatsby and how it works. These issues are particularly suitable for people making their first open source contributions.
+-   `good first issue` can be used when an issue is a small, clearly defined piece of work that could be completed by someone without in-depth knowledge of Gatsby and how it works. These issues are particularly suitable for people making their first open source contributions.
 
-- `stale?` can be used on an issue where the author has not replied to requests for further information in at least 20 days.
+-   `stale?` can be used on an issue where the author has not replied to requests for further information in at least 20 days.
 
 ### Finish
 

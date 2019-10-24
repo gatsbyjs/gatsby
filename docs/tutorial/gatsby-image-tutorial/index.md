@@ -6,10 +6,10 @@ title: Using Gatsby-Image With Your Site
 
 By the end of this tutorial, you'll have done the following:
 
-- learned how to use `gatsby-image` for responsive images
-- queried for a single image with GraphQL
-- sourced multiple images through YAML files
-- learned how to troubleshoot common errors
+-   learned how to use `gatsby-image` for responsive images
+-   queried for a single image with GraphQL
+-   sourced multiple images through YAML files
+-   learned how to troubleshoot common errors
 
 ## Prerequisites
 
@@ -57,7 +57,7 @@ If you haven't already, make sure that your project is set up to see content ins
 npm install gatsby-source-filesystem
 ```
 
-2. The next step is to make sure your `gatsby-config.js` file specifies the correct folder. In this example it would look like this:
+2.  The next step is to make sure your `gatsby-config.js` file specifies the correct folder. In this example it would look like this:
 
 ```javascript:title=gatsby-config.js
 plugins: [
@@ -369,6 +369,6 @@ So that's it. This post included a number of different possible use cases, so do
 
 ## Other resources
 
-- [Gatsby Image API docs](/docs/gatsby-image/)
-- [Using Gatsby Image](/docs/using-gatsby-image/)
-- [Other image and media techniques in Gatsby](/docs/images-and-files/)
+-   [Gatsby Image API docs](/docs/gatsby-image/)
+-   [Using Gatsby Image](/docs/using-gatsby-image/)
+-   [Other image and media techniques in Gatsby](/docs/images-and-files/)

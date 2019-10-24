@@ -15,9 +15,9 @@ We're so excited to announce the following 5 steps, which are just the beginning
 
 **Gatsby Fellowship Program**: In 2020 we will begin having paid Gatsby fellows sourced from diverse communities, who will receive mentorship and the potential to join the Gatsby team after the completion of their fellowship.
 
-**External Partnerships Fund**: We are committing \$10,000 per year to sponsor events and programs, which help bring individuals from underrepresented groups into the developer community. We will evaluate our contributions every six months.
+**External Partnerships Fund**: We are committing \\$10,000 per year to sponsor events and programs, which help bring individuals from underrepresented groups into the developer community. We will evaluate our contributions every six months.
 
-**Donation Credits**: Previously, individuals who contributed to Gatsby received a credit to our Swag Store to put towards merch. As of today, people have the additional [option of donating the credited amount](https://store.gatsbyjs.org/product/diversity-inclusion-donation) to our External Partnerships Fund (in addition to the \$10,000).
+**Donation Credits**: Previously, individuals who contributed to Gatsby received a credit to our Swag Store to put towards merch. As of today, people have the additional [option of donating the credited amount](https://store.gatsbyjs.org/product/diversity-inclusion-donation) to our External Partnerships Fund (in addition to the \\$10,000).
 
 **Code of Conduct**: We have created the [conduct@gatsbyjs.com](mailto:conduct@gatsbyjs.com) alias, which can be used to report any behavior that violates our [Code of Conduct](/contributing/code-of-conduct/) to Gatsby leadership team.
 

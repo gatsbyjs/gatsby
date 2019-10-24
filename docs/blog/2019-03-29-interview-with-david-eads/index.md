@@ -51,11 +51,11 @@ We've used it to simply embed responsive content in stories but also to build fu
 
 **David:** The benefits that I've found are:
 
-1. the general maintainability of static apps (which can be built with all kinds of tools and are critical to sustainable newsroom infrastructure),
+1.  the general maintainability of static apps (which can be built with all kinds of tools and are critical to sustainable newsroom infrastructure),
 
-2. the consolidated query system, which is very important for journalistic work where data can come from many sources such as Google Sheets used to keep track of small bits of text or translations, massive databases, CSV files, and practically anything else you can think of, and
+2.  the consolidated query system, which is very important for journalistic work where data can come from many sources such as Google Sheets used to keep track of small bits of text or translations, massive databases, CSV files, and practically anything else you can think of, and
 
-3. the speed of the built sites. Getting content onto people's screens is of utmost importance in journalism, and Gatsby does a good job with that.
+3.  the speed of the built sites. Getting content onto people's screens is of utmost importance in journalism, and Gatsby does a good job with that.
 
 The dependence on React has been a barrier to wider adoption within ProPublica -- rightfully, not everyone wants to be tied to React. But ProPublica Illinois has seen a lot of benefit from it.
 

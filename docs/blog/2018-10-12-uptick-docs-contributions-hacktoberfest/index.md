@@ -41,12 +41,12 @@ A doc qualifies to be in the .org site if it:
 
 2.  Helps further something on the [developer journey](https://pronovix.com/blog/analyzing-api-docs-and-dx-patterns-best-banking-developer-portals):
 
-    - Discover
-    - Evaluate
-    - Get Started
-    - Implement & Troubleshoot
-    - Celebrate & Share
-    - Contribute & Maintain
+    -   Discover
+    -   Evaluate
+    -   Get Started
+    -   Implement & Troubleshoot
+    -   Celebrate & Share
+    -   Contribute & Maintain
 
 > **Yes** --> Belongs in the docs
 
@@ -100,14 +100,14 @@ Is there evidence that the reorganization would help further one of the steps on
 
 Names categories in the .org site should:
 
-- be SEO-friendly (common google search term, easy-to-remember URL that is not likely to change anytime soon)
-- communicate a core concept of Gatsby (TBD) and/or a core value (TBD)
-- be a noun, like "plugins, styling, guides, core concepts" etc.
+-   be SEO-friendly (common google search term, easy-to-remember URL that is not likely to change anytime soon)
+-   communicate a core concept of Gatsby (TBD) and/or a core value (TBD)
+-   be a noun, like "plugins, styling, guides, core concepts" etc.
 
 Names for guides, tutorial sections, and sub-headings in the .org site should:
 
-- be SEO friendly (common google search term, easy-to-remember URL that is not likely to change anytime soon)
-- nearly always start with an -ing verb, like "adding", since all tasks are action-oriented.
+-   be SEO friendly (common google search term, easy-to-remember URL that is not likely to change anytime soon)
+-   nearly always start with an -ing verb, like "adding", since all tasks are action-oriented.
 
 ## Thanks and keep Hacktoberfesting with Gatsby
 

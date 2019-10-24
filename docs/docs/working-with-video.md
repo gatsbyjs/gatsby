@@ -2,12 +2,12 @@
 title: Working with Video
 ---
 
-- [Sourcing video from a host](#sourcing-video-from-a-host)
-- [Embedding hosted videos in Markdown](#embedding-hosted-videos-in-markdown)
-- [Writing custom components for hosted video](#writing-custom-components-for-hosted-video)
-- [Querying video data from Markdown with GraphQL](#querying-video-data-from-markdown-with-graphql)
-- [Hosting your own HTML5 video files](#hosting-your-own-html5-video-files)
-- [Using custom video players](#using-custom-video-players)
+-   [Sourcing video from a host](#sourcing-video-from-a-host)
+-   [Embedding hosted videos in Markdown](#embedding-hosted-videos-in-markdown)
+-   [Writing custom components for hosted video](#writing-custom-components-for-hosted-video)
+-   [Querying video data from Markdown with GraphQL](#querying-video-data-from-markdown-with-graphql)
+-   [Hosting your own HTML5 video files](#hosting-your-own-html5-video-files)
+-   [Using custom video players](#using-custom-video-players)
 
 ## Sourcing video from a host
 
@@ -138,6 +138,7 @@ HTML5 provides the `<video>` media element for working with videos. Inside the `
 If you have a video called `dog.mp4` in your site under `src/assets/dog.mp4`, you can [include that video in your page with webpack](/docs/importing-assets-into-files) like you would other assets. Then reference it in a `<source>` element, which is wrapped by a `<video>` element:
 
 <!-- prettier-ignore -->
+
 ```javascript:title=src/pages/index.js
 import React from "react"
 import DogVideo from "../assets/dog.mp4"
@@ -157,6 +158,7 @@ The `controls` attribute on the `<video>` will provide a default set of buttons 
 Adding more source tags for additional formats will allow the browser to find a source type that it supports, if there are no matching source types the video will fail to load. You can see what formats are supported in different browsers on [MDN's docs about supported media formats](https://developer.mozilla.org/en-US/docs/Web/HTML/Supported_media_formats#Browser_compatibility).
 
 <!-- prettier-ignore -->
+
 ```javascript:title=src/pages/index.js
 import React from "react"
 import DogMp4 from "../assets/dog.mp4"
@@ -181,10 +183,10 @@ Even though there are two `<source>` elements, only one video will be displayed,
 
 One advantage of integrating a custom component with your own hosted video is it can give you more control over the video player, including its accessibility. Elements of accessible video and audio include:
 
-- captions: a text version of the audio, synchronized with the video
-- transcript (or subtitles): a text version of the audio and visual content, like captions but also including descriptions of key visual elements in the video
-- audio description: an audio version of visual information not conveyed in dialogue
-- accessible controls: buttons to operate the video that can be operated without a mouse, are labeled, and work across environments and browsers
+-   captions: a text version of the audio, synchronized with the video
+-   transcript (or subtitles): a text version of the audio and visual content, like captions but also including descriptions of key visual elements in the video
+-   audio description: an audio version of visual information not conveyed in dialogue
+-   accessible controls: buttons to operate the video that can be operated without a mouse, are labeled, and work across environments and browsers
 
 Though captions, transcripts, and audio descriptions primarily aim to assist those with greater difficulty seeing or hearing, they benefit many other users who prefer reading to listening. Captions can also help people watching videos when they can't have the sound turned on for whatever reason.
 

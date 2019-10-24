@@ -47,7 +47,7 @@ The following components can be customized with the MDXProvider:
 | `table`         | [Table](https://github.com/syntax-tree/mdast#table)                  | `--- \| --- \| --- \| ---`                          |
 | `tr`            | [Table row](https://github.com/syntax-tree/mdast#tablerow)           | `This \| is \| a \| table row`                      |
 | `td`/`th`       | [Table cell](https://github.com/syntax-tree/mdast#tablecell)         |                                                     |
-| `pre`           | [Pre](https://github.com/syntax-tree/mdast#code)                     | ` ```js console.log()``` `                          |
+| `pre`           | [Pre](https://github.com/syntax-tree/mdast#code)                     | ```` ```js console.log()``` ````                    |
 | `code`          | [Code](https://github.com/syntax-tree/mdast#code)                    | `` `console.log()` ``                               |
 | `em`            | [Emphasis](https://github.com/syntax-tree/mdast#emphasis)            | `_emphasis_`                                        |
 | `strong`        | [Strong](https://github.com/syntax-tree/mdast#strong)                | `**strong**`                                        |
@@ -65,4 +65,4 @@ that Markdown creates. It uses
 
 ## Related
 
-- [MDX components](https://mdxjs.com/getting-started/)
+-   [MDX components](https://mdxjs.com/getting-started/)

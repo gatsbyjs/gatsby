@@ -14,11 +14,11 @@ How do you know which headless CMS is right for your site? In this post, we'll w
 
 ## Defining our headless CMS requirements
 
-1. This headless CMS has to be free to use, and free to host.
+1.  This headless CMS has to be free to use, and free to host.
 
-2. This headless CMS has to be robust enough to grow with the site over time.
+2.  This headless CMS has to be robust enough to grow with the site over time.
 
-3. This headless CMS has to work with with front-end frameworks like Gatsby.
+3.  This headless CMS has to work with with front-end frameworks like Gatsby.
 
 The difficulty with these must-haves is that there are no _truly free_ options. There are open source projects that provide code for free, but you have to host it somewhere. Then, there are hosted headless CMS's with generous free tiers. But most of them have prohibitive pricing once your project grows.
 
@@ -40,7 +40,7 @@ Every writer or marketer who works on the Internet is familiar with WordPress, s
 
 ### How "free" is it?
 
-Cheap hosting is easy to find - providers like Bluehost and Amazon Lightsail offer WordPress hosting for about \$4 dollars a month. Other popular hosts like GoDaddy can get you going for less than \$10 dollars a month.
+Cheap hosting is easy to find - providers like Bluehost and Amazon Lightsail offer WordPress hosting for about \\$4 dollars a month. Other popular hosts like GoDaddy can get you going for less than \\$10 dollars a month.
 
 If your website needed all-in-one WordPress, then these cheap, shared hosting packages wouldn't be enough to handle a website that expects any sort of traffic. However, you're just using headless WordPress, and all that you ask from the software is to organize your content, and send it to a front-end framework like Gatsby.
 
@@ -60,7 +60,7 @@ Ghost is a Node-based, robust CMS that recently [added features](https://ghost.o
 
 ### How "free" is it?
 
-Though Ghost is open source, it still requires hosting. The official Ghost recommendation is to use their own Ghost-optimized hosting at about \$30 dollars a month, or generic DigitalOcean hosting which can start at less than \$10 dollars.
+Though Ghost is open source, it still requires hosting. The official Ghost recommendation is to use their own Ghost-optimized hosting at about \\$30 dollars a month, or generic DigitalOcean hosting which can start at less than \\$10 dollars.
 
 ## The Hidden Cost of Any Free Headless CMS
 

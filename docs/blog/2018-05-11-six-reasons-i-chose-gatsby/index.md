@@ -36,6 +36,6 @@ Performance on the web can be difficult. It's especially helpful to have a tool 
 
 This one may be a bit more subjective, but working with Gatsby is plain fun. The plugin system makes it easy to extend, typically with a simple `npm install` and a few lines in the configuration file. When you're developing or writing local content, Gatsby has live-reload so you see your changes immediately. Documentation for the project is solid and keeps improving. The maintainers are extremely helpful on GitHub and Twitter (and I'm sure elsewhere too). It's an all around pleasant experience.
 
----
+* * *
 
 Have you used Gatsby before? What are your reasons for using it? Chat with me about them on [Twitter](https://twitter.com/RayGesualdo)!

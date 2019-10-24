@@ -24,9 +24,9 @@ Fun fact--that website in question is [reactjs.org](https://reactjs.org) which, 
 
 In an effort to answer this initial question, this post outlines several foundational techniques that Gatsby enables _by default_ to deliver this experience. Specifically:
 
-1. Server-side rendering (SSR) at **build time**
-1. Route-based code splitting
-1. Modern APIs
+1.  Server-side rendering (SSR) at **build time**
+2.  Route-based code splitting
+3.  Modern APIs
 
 Finally, this post concludes with tangible, practical advice for measuring and asserting conclusively that your app is _actually_ ludicriously fast.
 
@@ -102,12 +102,12 @@ This is the central idea of server-side rendering. Gatsby uses server-side APIs 
 
 To begin describing why build-time SSR is so appealing, let's first take a look at what a deploy and release looks like if we don't require a server. What's required for a typical set-up for deploying static content (which Gatsby produces)? It looks something like:
 
-- Creating a [Content Delivery Network](https://developer.mozilla.org/en-US/docs/Glossary/CDN) to route your content _as close as possible_ to where your users are requesting it
-  - This is often called "on the edge" and Gatsby can and should be deployed on the edge--[it reduces latency and improves page-load times](https://www.cloudflare.com/learning/cdn/glossary/edge-server/)
-- Creating a bucket/location to host static content (like S3, Google Cloud Storage, etc.)
-- Setting up a [Domain Name System (DNS)](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_is_a_domain_name) to make your content reachable via a pretty URL, e.g. gatsbyjs.org
-- Routing the CDN layer in front of your static content
-- Set up a Continuous Integration (CI) environment so we can build and deploy code to production with minimal impact to end-users
+-   Creating a [Content Delivery Network](https://developer.mozilla.org/en-US/docs/Glossary/CDN) to route your content _as close as possible_ to where your users are requesting it
+    -   This is often called "on the edge" and Gatsby can and should be deployed on the edge--[it reduces latency and improves page-load times](https://www.cloudflare.com/learning/cdn/glossary/edge-server/)
+-   Creating a bucket/location to host static content (like S3, Google Cloud Storage, etc.)
+-   Setting up a [Domain Name System (DNS)](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_is_a_domain_name) to make your content reachable via a pretty URL, e.g. gatsbyjs.org
+-   Routing the CDN layer in front of your static content
+-   Set up a Continuous Integration (CI) environment so we can build and deploy code to production with minimal impact to end-users
 
 ... and, that's it! We're done as far as setup goes! We can use _whatever_ stack you prefer here. Netlify? [You bet.](https://www.gatsbyjs.org/docs/deploying-to-netlify) More a fan of AWS? [Of course.](https://www.gatsbyjs.org/docs/deploying-to-aws-amplify/) Heroku? [Yup.](https://www.gatsbyjs.org/docs/deploying-to-heroku/) You get the idea. Gatsby can be deployed anywhere easily and cheaply.
 
@@ -131,12 +131,12 @@ First: perform the **same** steps in setting up a static content host. Oh and we
 
 Next:
 
-- Set up and provision several [virtual machines (VM)](https://en.wikipedia.org/wiki/Virtual_machine) to run instance(s) of our server-side app
-  - Traditional examples are something like [EC2](https://aws.amazon.com/ec2/)
-- Configure the VM to be able to run Node.js code
-  - Consider using [Docker](https://www.docker.com/) to ensure you have a consistent Node.js environment
-- Set up auto-scaling to ensure we can accommodate and fall-over based upon heavy load or error states
-  - Consider using [Kubernetes](https://kubernetes.io/), [Rancher](https://rancher.com/), etc.
+-   Set up and provision several [virtual machines (VM)](https://en.wikipedia.org/wiki/Virtual_machine) to run instance(s) of our server-side app
+    -   Traditional examples are something like [EC2](https://aws.amazon.com/ec2/)
+-   Configure the VM to be able to run Node.js code
+    -   Consider using [Docker](https://www.docker.com/) to ensure you have a consistent Node.js environment
+-   Set up auto-scaling to ensure we can accommodate and fall-over based upon heavy load or error states
+    -   Consider using [Kubernetes](https://kubernetes.io/), [Rancher](https://rancher.com/), etc.
 
 Does this sound like something that sparks joy? ✨Oh--let's talk about the deploy process, too.
 
@@ -223,10 +223,10 @@ Let's take a deeper look at some of those JavaScript files.
 
 `app-2abedacd9bf03aaca373.js` in the above example is our commons bundle. It contains the shared dependencies for all routes. This can be cached between routes, so that JavaScript libraries like:
 
-- `react`
-- `react-dom`
-- `@reach/router`
-- `react-helmet`
+-   `react`
+-   `react-dom`
+-   `@reach/router`
+-   `react-helmet`
 
 are bundled on _every_ route because they are used on _every_ route.
 
@@ -327,9 +327,9 @@ _Want to dive deeper? Much of this is encapsulated in our internal [Webpack conf
 
 Gatsby uses modern browser APIs to both maximize performance and user experience--which oftentimes go hand in hand!--only loading assets when they are necessary and likely to be requested. Specifically, the following APIs are crucial to the end-user experience in Gatsby:
 
-1. `IntersectionObserver` - an API to conditionally perform some action when an element enters the viewport/view
-1. `link rel="prefetch"` - an API to prefetch resources in the background when the browser is idle
-1. `srcset` powering responsive images - a API to load the _smallest possible_ image that matches the viewport of the requesting device
+1.  `IntersectionObserver` - an API to conditionally perform some action when an element enters the viewport/view
+2.  `link rel="prefetch"` - an API to prefetch resources in the background when the browser is idle
+3.  `srcset` powering responsive images - a API to load the _smallest possible_ image that matches the viewport of the requesting device
 
 Let's get to it.
 
@@ -350,12 +350,12 @@ _Curious what an `IntersectionObserver` can do? Check out the following example.
 
 The `Link` component exported by `gatsby` ships with an `IntersectionObserver`. The behavior is two-fold:
 
-1. An `IntersectionObserver` is registered for all links
-   - This will register an **idle** `prefetch` for a request for that link's resources
-   - [See the code for `gatsby-link`](https://github.com/gatsbyjs/gatsby/blob/e0db68141c146ec532db22b0da2d86fcc467f37e/packages/gatsby-link/src/index.js#L25-L41)
-1. On `hover` a `fetch` will be used to send a **non-idle** request for that link's resources
-   - This will use an `onMouseEnter` prop to make the resources available via our internal loader
-   - [See the code for `gatsby-link`](https://github.com/gatsbyjs/gatsby/blob/e0db68141c146ec532db22b0da2d86fcc467f37e/packages/gatsby-link/src/index.js#L131-L135)
+1.  An `IntersectionObserver` is registered for all links
+    -   This will register an **idle** `prefetch` for a request for that link's resources
+    -   [See the code for `gatsby-link`](https://github.com/gatsbyjs/gatsby/blob/e0db68141c146ec532db22b0da2d86fcc467f37e/packages/gatsby-link/src/index.js#L25-L41)
+2.  On `hover` a `fetch` will be used to send a **non-idle** request for that link's resources
+    -   This will use an `onMouseEnter` prop to make the resources available via our internal loader
+    -   [See the code for `gatsby-link`](https://github.com/gatsbyjs/gatsby/blob/e0db68141c146ec532db22b0da2d86fcc467f37e/packages/gatsby-link/src/index.js#L131-L135)
 
 These two techniques, used together, create an experience that makes navigating around a Gatsby application feel seamless and incredibly fast. Gatsby's use of modern APIs (particularly `IntersectionObserver`) optimistically, idly prefetch resources. Then, when we have a reasonable assurance that the user is _likely_ to need the resource(s) (on a mouse enter), we make a **strong** request for the actual resources. More often than not--the `prefetch` has _already_ made the resources available, in the background 🤯
 
@@ -397,15 +397,15 @@ Whew. It's been quite a ride. Finally, I'd like to discuss one of my favorite Ga
 
 There are far, far, far too many otherwise decently performing websites that load a gargantuan 5Mb image request as a hero image. But--thankfully, this isn't you! You use `gatsby-image` and you get all of the following:
 
-- Responsive, optimized images using a `srcset`
-  - A [`picture`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture) element with a `source srcset` is used
-  - This means that using several media queries, you load the smallest image that matches your device (e.g. mobile devices get smaller images, desktop devices get larger images, etc.)
-  - We even generate 2x DPi images for beautiful images, regardless of the screen quality!
-- A base64 blurred image loaded by default
-  - This has two wins: 1) Larger images outside the viewport are not requested until they're needed, and 2) The blurred image is in a container with the same dimensions as the real image--therefore, no jumping when the image loads!
-  - Also see: [traced SVGs for a super slick alternative](/packages/gatsby-plugin-sharp/#tracedsvg)
-- An `IntersectionObserver` that swaps the base image for the larger image, when the image is in the viewport
-  - See the [image IntersectionObserver code here](https://github.com/gatsbyjs/gatsby/blob/7684b4f0126724521967f7c8d31d32ec8d9b5fa6/packages/gatsby-image/src/index.js#L45-L69)
+-   Responsive, optimized images using a `srcset`
+    -   A [`picture`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture) element with a `source srcset` is used
+    -   This means that using several media queries, you load the smallest image that matches your device (e.g. mobile devices get smaller images, desktop devices get larger images, etc.)
+    -   We even generate 2x DPi images for beautiful images, regardless of the screen quality!
+-   A base64 blurred image loaded by default
+    -   This has two wins: 1) Larger images outside the viewport are not requested until they're needed, and 2) The blurred image is in a container with the same dimensions as the real image--therefore, no jumping when the image loads!
+    -   Also see: [traced SVGs for a super slick alternative](/packages/gatsby-plugin-sharp/#tracedsvg)
+-   An `IntersectionObserver` that swaps the base image for the larger image, when the image is in the viewport
+    -   See the [image IntersectionObserver code here](https://github.com/gatsbyjs/gatsby/blob/7684b4f0126724521967f7c8d31d32ec8d9b5fa6/packages/gatsby-image/src/index.js#L45-L69)
 
 And one of the best wins of all--Gatsby's pluggable ecosystem and GraphQL data layer are both used to produce and pass the optimized images directly to this component. It looks something like:
 

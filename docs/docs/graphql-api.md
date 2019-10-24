@@ -30,9 +30,9 @@ You can also [create custom plugins](/docs/creating-plugins/) to fit your own us
 
 Data can be queried inside pages, components, or the `gatsby-node.js` file, using one of these options:
 
-- The `pageQuery` component
-- The `StaticQuery` component
-- The `useStaticQuery` hook
+-   The `pageQuery` component
+-   The `StaticQuery` component
+-   The `useStaticQuery` hook
 
 **Note**: Because of how Gatsby processes GraphQL queries, you can't mix page queries and static queries in the same file. You also can't have multiple page queries or static queries in one file.
 
@@ -93,8 +93,8 @@ Also, refer to the [guide on querying data in components with static query](/doc
 
 The `StaticQuery` component takes two values as props in JSX:
 
-- `query`: a `graphql` query string
-- `render`: a component with access to the data returned
+-   `query`: a `graphql` query string
+-   `render`: a component with access to the data returned
 
 ```jsx
 <StaticQuery
@@ -146,7 +146,7 @@ Also, refer to the [guide on querying data in components with useStaticQuery](/d
 
 The `useStaticQuery` hook takes one argument:
 
-- `query`: a `graphql` query string
+-   `query`: a `graphql` query string
 
 ```jsx
 const data = useStaticQuery(graphql`
@@ -197,27 +197,27 @@ Different nodes can take different arguments based off of the nature of the node
 
 The arguments you can pass to collections (like arrays or long lists of data - ex. `allFile`, or `allMdx`) are:
 
-- [`filter`](/docs/graphql-reference#filter)
-- [`limit`](/docs/graphql-reference#limit)
-- [`sort`](/docs/graphql-reference#sort)
-- [`skip`](/docs/graphql-reference#skip)
+-   [`filter`](/docs/graphql-reference#filter)
+-   [`limit`](/docs/graphql-reference#limit)
+-   [`sort`](/docs/graphql-reference#sort)
+-   [`skip`](/docs/graphql-reference#skip)
 
 The arguments you can pass to a `date` field are:
 
-- [`formatString`](/docs/graphql-reference#dates)
-- [`locale`](/docs/graphql-reference#dates)
+-   [`formatString`](/docs/graphql-reference#dates)
+-   [`locale`](/docs/graphql-reference#dates)
 
 The arguments you can pass to an `excerpt` field are:
 
-- [`pruneLength`](/docs/graphql-reference#excerpt)
-- [`truncate`](/docs/graphql-reference#excerpt)
+-   [`pruneLength`](/docs/graphql-reference#excerpt)
+-   [`truncate`](/docs/graphql-reference#excerpt)
 
 ### Graphql query operations
 
 Other built-in configurations can be used in queries
 
-- [`Alias`](/docs/graphql-reference#alias)
-- [`Group`](/docs/graphql-reference#group)
+-   [`Alias`](/docs/graphql-reference#alias)
+-   [`Group`](/docs/graphql-reference#group)
 
 For examples, refer to the [query recipes](/docs/recipes/#6-querying-data) and [GraphQL query options reference guide](/docs/graphql-reference/).
 

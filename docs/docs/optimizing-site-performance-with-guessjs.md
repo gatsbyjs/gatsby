@@ -18,6 +18,6 @@ See the [Gatsby Guess.js Plugin](/packages/gatsby-plugin-guess-js) for more info
 
 ### References:
 
-- [Introducing Guess.js](https://blog.mgechev.com/2018/05/09/introducing-guess-js-data-driven-user-experiences-web/)
-- [Gatsby Plugin Guess.js](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-guess-js)
-- [Cutting Edge Static Sites](https://www.contentful.com/blog/2018/06/13/journey-cutting-edge-static-sites-gatsbyjs-v2/)
+-   [Introducing Guess.js](https://blog.mgechev.com/2018/05/09/introducing-guess-js-data-driven-user-experiences-web/)
+-   [Gatsby Plugin Guess.js](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-guess-js)
+-   [Cutting Edge Static Sites](https://www.contentful.com/blog/2018/06/13/journey-cutting-edge-static-sites-gatsbyjs-v2/)

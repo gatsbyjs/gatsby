@@ -98,7 +98,7 @@ This involved an extraordinary commitment to the deadline. We were leading a tea
 
 This allowed us to hit the crucial MVP date for [changeincorporated.com](https://uk.changeincorporated.com/) and be up and running and ready to show key stakeholders. The feedback from investors was incredibly positive and the deliverables far surpassed the expectations considering the ambition and deadline.
 
----
+* * *
 
 Have questions? Feel free to ask us anything. From basic questions to complex queries about your approach to strategy, research, dev and design, Jon is ready to help you out. Call [+ 44(0) 845 838 6163](tel:+448458386163) or [get in touch](mailto:jon@clearleft.com).
 

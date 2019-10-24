@@ -135,14 +135,14 @@ export const query = graphql`
 
 These are the fragments available on image assets, which allows easy lookup of the fields required by `gatsby-image` in various modes:
 
-- `GatsbySanityImageFixed`
-- `GatsbySanityImageFixed_noBase64`
-- `GatsbySanityImageFixed_withWebp`
-- `GatsbySanityImageFixed_withWebp_noBase64`
-- `GatsbySanityImageFluid`
-- `GatsbySanityImageFluid_noBase64`
-- `GatsbySanityImageFluid_withWebp`
-- `GatsbySanityImageFluid_withWebp_noBase64`
+-   `GatsbySanityImageFixed`
+-   `GatsbySanityImageFixed_noBase64`
+-   `GatsbySanityImageFixed_withWebp`
+-   `GatsbySanityImageFixed_withWebp_noBase64`
+-   `GatsbySanityImageFluid`
+-   `GatsbySanityImageFluid_noBase64`
+-   `GatsbySanityImageFluid_withWebp`
+-   `GatsbySanityImageFluid_withWebp_noBase64`
 
 ## Overlaying drafts
 

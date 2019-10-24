@@ -19,19 +19,19 @@ Here's some pros and cons to rolling your own comment system:
 
 ## Pros
 
-- Free
-- No ads
-- No third party scripts injected into your site
-- Complete control over functionality and design
-- Can be as simple or complicated as you want
-- Little to no spam because spambots aren't set up to spam your custom content
-- Easy to migrate - it all exists in one Heroku + Postgres server
+-   Free
+-   No ads
+-   No third party scripts injected into your site
+-   Complete control over functionality and design
+-   Can be as simple or complicated as you want
+-   Little to no spam because spambots aren't set up to spam your custom content
+-   Easy to migrate - it all exists in one Heroku + Postgres server
 
 ## Cons
 
-- More work to set up
-- Less features
-- Need to set up manual anti-spam measures and moderation
+-   More work to set up
+-   Less features
+-   Need to set up manual anti-spam measures and moderation
 
 If you've also struggled with this and wondered if there could be an easier way, or are just intrigued to see one person's implementation, read on!
 
@@ -43,9 +43,9 @@ This guide will _not_ be a full, guided walkthrough - however, all the steps to 
 
 The comments API consists of three parts:
 
-- [Database](#database)
-- [API Server](#api)
-- [Front End](#front-end)
+-   [Database](#database)
+-   [API Server](#api)
+-   [Front End](#front-end)
 
 The front end is written for React, but if you know how to make a form and an API call, it can be easily adjusted to whatever static system you're using.
 

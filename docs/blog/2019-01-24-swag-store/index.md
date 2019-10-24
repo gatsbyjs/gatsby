@@ -24,19 +24,19 @@ That meant we had to do a little bit of research. We asked people what type of s
 
 Overall, a lot of people said they liked:
 
-- T-shirts
+-   T-shirts
 
-- Socks
+-   Socks
 
-- Donations to charities
+-   Donations to charities
 
 We also saw that people were excited about:
 
-- Nail wraps
+-   Nail wraps
 
-- Scrunchies
+-   Scrunchies
 
-- Stickers
+-   Stickers
 
 <blockquote class="twitter-tweet" data-lang="en">
   <p lang="en" dir="ltr">
@@ -69,19 +69,19 @@ And that question could only be answered by looking at what we had—and what we
 
 _Here were the three biggest limitations we saw:_
 
-- lack of time to spend creating, managing, or shipping swag
+-   lack of time to spend creating, managing, or shipping swag
 
-- lack of existing process to identify who qualifies for free swag
+-   lack of existing process to identify who qualifies for free swag
 
-- no way for people to actually see our swag or place orders for it
+-   no way for people to actually see our swag or place orders for it
 
 _And the three biggest strengths that we could use to combat our limitations:_
 
-- we have an amazing designer in Florian Kissling, and the development knowledge to build custom solutions
+-   we have an amazing designer in Florian Kissling, and the development knowledge to build custom solutions
 
-- access to a product manager (that's me!) who specializes in identifying and designing scalable processes
+-   access to a product manager (that's me!) who specializes in identifying and designing scalable processes
 
-- a wealth of open source and SaaS tools that make automation much more feasible
+-   a wealth of open source and SaaS tools that make automation much more feasible
 
 ## Deciding How to Turn Limitations into Solutions
 
@@ -97,17 +97,17 @@ We needed to limit manual touchpoints so that people on the team could focus on 
 
 We needed to figure out all of the manual touchpoints in the process to begin with. We found that we'd need to intervene in all of these instances:
 
-- ordering swag
+-   ordering swag
 
-- packing swag
+-   packing swag
 
-- shipping swag
+-   shipping swag
 
-- responding to contributor questions
+-   responding to contributor questions
 
-- sending out follow-up emails about swag
+-   sending out follow-up emails about swag
 
-- sending out follow-up emails to keep the community involved
+-   sending out follow-up emails to keep the community involved
 
 **How we worked around them**
 
@@ -123,9 +123,9 @@ We noticed that we could use a few different tools to automate the majority of t
 
 Since we're not able to automate everything, there were a few things that will require the deft hands of a human to complete. This included:
 
-- ordering more swag
+-   ordering more swag
 
-- replying to contributor emails and questions
+-   replying to contributor emails and questions
 
 But that was about it. The rest of the process didn't require anybody's help, and would run on its own!
 
@@ -212,13 +212,13 @@ Each **how** is a step in the process that requires an integration, automation, 
 
 Since we were going with an "automation first" framework, we had a lot to consider at each touchpoint:
 
-- Can a tool perform this action?
+-   Can a tool perform this action?
 
-- What tool can perform this action well?
+-   What tool can perform this action well?
 
-- How easy or difficult is it to implement, manage, and troubleshoot this tool?
+-   How easy or difficult is it to implement, manage, and troubleshoot this tool?
 
-- How robust is the tool, is it easily breakable?
+-   How robust is the tool, is it easily breakable?
 
 Eventually, by working backwards from the end, we created a full process and recorded it using [Whimsical](https://whimsical.co/). You can see our flow chart [here](https://whimsical.co/HrgMvcBZxyyWxcPPAUzPXf)!
 
@@ -227,13 +227,13 @@ _Flow chart with the step by step swag process_
 
 The top section lists each tool that we're using to manage and automated the swag process.
 
-- Each **circle** is a key action or endpoint in the flow.
+-   Each **circle** is a key action or endpoint in the flow.
 
-- Each **square with a dashed border** is an action handled by automation
+-   Each **square with a dashed border** is an action handled by automation
 
-- Each **square with a solid border** is an action handled by a person
+-   Each **square with a solid border** is an action handled by a person
 
-- Each **hexagon** is a question that the framework needs to ask to decide how to move forward
+-   Each **hexagon** is a question that the framework needs to ask to decide how to move forward
 
 In this process, just like any site, we have a front-end that people see, and a backend that people don't.
 
@@ -243,21 +243,21 @@ And the backend was the systems design, tools, and automation triggers that hand
 
 _So Gatsby contributors see this:_
 
-- When they create a PR and it's merged, they'll automatically get a response asking them to become a Gatsby Maintainer
+-   When they create a PR and it's merged, they'll automatically get a response asking them to become a Gatsby Maintainer
 
-- If they decide to join as a Maintainer they'll get access to a Gatsby Dashboard that gives them a discount code for a free piece of swag
+-   If they decide to join as a Maintainer they'll get access to a Gatsby Dashboard that gives them a discount code for a free piece of swag
 
-- They'll also get to sign up on a Gatsby Maintainers email list if they want
+-   They'll also get to sign up on a Gatsby Maintainers email list if they want
 
 _And this is what's happening in the background:_
 
-- [Third party distribution](https://corp-couture.com/) so no one at Gatsby has to be responsible for packing and shipping
+-   [Third party distribution](https://corp-couture.com/) so no one at Gatsby has to be responsible for packing and shipping
 
-- Third party email monitoring and customer service if people have problems or questions about their swag
+-   Third party email monitoring and customer service if people have problems or questions about their swag
 
-- Automated distribution list with information on how to continue contributing to Gatsby
+-   Automated distribution list with information on how to continue contributing to Gatsby
 
-- Automated [Peril](https://github.com/danger/peril) integration that invites new contributors to the Gatsby Maintainer group on GitHub
+-   Automated [Peril](https://github.com/danger/peril) integration that invites new contributors to the Gatsby Maintainer group on GitHub
 
 ## Where We Ended Up
 

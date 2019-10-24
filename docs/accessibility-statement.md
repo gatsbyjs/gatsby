@@ -32,12 +32,12 @@ Common Gatsby workflows involve third-party products and services, such as sourc
 
 Our current recommendations for accessible CMS platforms are:
 
-- WordPress with the Classic Editor Plugin
-- Drupal
+-   WordPress with the Classic Editor Plugin
+-   Drupal
 
 For managing and deploying Gatsby sites with accessible tools, we recommend:
 
-- Netlify
+-   Netlify
 
 To provide feedback for third-party services, you can contact those vendors directly or [write to us](mailto:marcy@gatsbyjs.com), and we will do our best to pass the information along. We're also interested in hearing about your successes with third-party platforms!
 

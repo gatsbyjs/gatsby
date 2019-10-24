@@ -5,10 +5,10 @@ title: Creating a Source Plugin
 There are two types of plugins that work within Gatsby's data system: "source"
 and "transformer" plugins.
 
-- **Source** plugins "source" data from remote or local locations into what
-  Gatsby calls [nodes](/docs/node-interface/).
-- **Transformer** plugins "transform" data provided by source plugins into new
-  nodes and/or node fields.
+-   **Source** plugins "source" data from remote or local locations into what
+    Gatsby calls [nodes](/docs/node-interface/).
+-   **Transformer** plugins "transform" data provided by source plugins into new
+    nodes and/or node fields.
 
 This doc focuses on source plugins and uses `gatsby-source-filesystem` to explain how source plugins work.
 
@@ -86,16 +86,16 @@ documentation on implementing those APIs.
 
 At a high-level, these are the jobs of a source plugin:
 
-- Ensure local data is synced with its source and 100% accurate. If your source
-  allows you to add an `updatedSince` query (or something similar) you can store
-  the last time you fetched data using
-  [`setPluginStatus`](/docs/actions/#setPluginStatus).
-- Create nodes with accurate media types, human meaningful types, and accurate
-  contentDigests.
-- "Link" nodes types you create as appropriate (see
-  [_Node Link_](/docs/api-specification/) in the API specification concepts
-  section).
-- Return either a promise or use the callback (3rd parameter) to report back to Gatsby when `sourceNodes` is fully executed. If a promise or callback isn't returned, Gatsby will continue on in the build process, before nodes are finished being created. Your nodes might not end up in the generated schema at compilation, or the process will hang while waiting for an indication that it's finished.
+-   Ensure local data is synced with its source and 100% accurate. If your source
+    allows you to add an `updatedSince` query (or something similar) you can store
+    the last time you fetched data using
+    [`setPluginStatus`](/docs/actions/#setPluginStatus).
+-   Create nodes with accurate media types, human meaningful types, and accurate
+    contentDigests.
+-   "Link" nodes types you create as appropriate (see
+    [_Node Link_](/docs/api-specification/) in the API specification concepts
+    section).
+-   Return either a promise or use the callback (3rd parameter) to report back to Gatsby when `sourceNodes` is fully executed. If a promise or callback isn't returned, Gatsby will continue on in the build process, before nodes are finished being created. Your nodes might not end up in the generated schema at compilation, or the process will hang while waiting for an indication that it's finished.
 
 ## Getting helper functions
 

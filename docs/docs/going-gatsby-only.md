@@ -6,12 +6,12 @@ Some agencies and freelancers have decided that in order to unify their business
 
 Some of the benefits such agencies list include:
 
-- reduced knowledge silos
-- a unified technology stack
-- consistent fast development
-- no time ever spent on performance optimization
-- ability to build projects across CMS-es
-- a more cohesive team.
+-   reduced knowledge silos
+-   a unified technology stack
+-   consistent fast development
+-   no time ever spent on performance optimization
+-   ability to build projects across CMS-es
+-   a more cohesive team.
 
 One example of this is [Narative.co](https://www.narative.co/), based in Montreal. Narative [wrote a blog post](/blog/2018-06-18-why-narative-loves-gatsby/) laying out some of these benefits:
 

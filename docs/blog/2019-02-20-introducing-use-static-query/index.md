@@ -148,15 +148,20 @@ We're working on fixing this soon.
 
 ## Next Steps
 
-- Check out the [documentation][use-static-query]
-- To see `useStaticQuery` in action (and for a really gentle introduction to Hooks in general), check out the [livestream][use-static-query-livestream] Jason Lengstorf and I did last week
-- Hit [me][sidhartha-twitter] up on Twitter for any questions!
+-   Check out the [documentation][use-static-query]
+-   To see `useStaticQuery` in action (and for a really gentle introduction to Hooks in general), check out the [livestream][use-static-query-livestream] Jason Lengstorf and I did last week
+-   Hit [me][sidhartha-twitter] up on Twitter for any questions!
 
 We hope you enjoy using `useStaticQuery` in your Gatsby apps. Happy building!
 
 [use-static-query]: /docs/use-static-query/
+
 [use-static-query-livestream]: https://www.youtube.com/watch?v=asrdFuAxPaU&list=PLz8Iz-Fnk_eTpvd49Sa77NiF8Uqq5Iykx
+
 [sidhartha-twitter]: https://twitter.com/chatsidhartha
+
 [rules-of-hooks]: https://reactjs.org/docs/hooks-rules.html
+
 [hooks-intro]: https://reactjs.org/docs/hooks-intro.html
+
 [themes]: /blog/2019-02-11-gatsby-themes-livestream-and-example/

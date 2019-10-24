@@ -20,11 +20,11 @@ You can read more at [gatsbyjs.com](https://www.gatsbyjs.com/).
 
 While vendor partners have many reasons for working with Gatsby and investing in tight integrations, some top reasons include:
 
-- Customers are asking for a Gatsby integration, or asking you about how to use your solution and Gatsby together well.
+-   Customers are asking for a Gatsby integration, or asking you about how to use your solution and Gatsby together well.
 
-- You're investing in "headless", and you're trying to add integrations with other systems providing website functionality, rather than force your customers into one specific templating language, set of tools, and/or deployment options. [BigCommerce](https://www.bigcommerce.com/blog/flexible-headless-commerce-solutions/#overview-of-bigcommerce-for-react-gatsby) is a good example of a vendor with this strategy.
+-   You're investing in "headless", and you're trying to add integrations with other systems providing website functionality, rather than force your customers into one specific templating language, set of tools, and/or deployment options. [BigCommerce](https://www.bigcommerce.com/blog/flexible-headless-commerce-solutions/#overview-of-bigcommerce-for-react-gatsby) is a good example of a vendor with this strategy.
 
-- Drive "bottom-up" adoption of your tool from developers
+-   Drive "bottom-up" adoption of your tool from developers
 
 ## How to Work With Gatsby
 
@@ -34,13 +34,13 @@ Typically, there are four key phases or stages of partnership, depending on at a
 
 These stages are:
 
-- **First,** your team building a Gatsby integration
+-   **First,** your team building a Gatsby integration
 
-- **Second,** your team launching the integration
+-   **Second,** your team launching the integration
 
-- **Third,** co-marketing, and
+-   **Third,** co-marketing, and
 
-- **Fourth,** integrating with Gatsby Preview and co-selling.
+-   **Fourth,** integrating with Gatsby Preview and co-selling.
 
 ### Step One: Building a Gatsby Integration
 
@@ -62,9 +62,9 @@ If you still have questions, please [raise an issue on GitHub](https://github.co
 
 To launch your Gatsby integration, there are two steps:
 
-1. **Publishing your integration to our [plugin library](/plugins/)**. If you built the integration, we have [developer documentation](/docs/plugin-authoring/#publishing-a-plugin-to-the-library) for publishing that integration to the Node.js package registry (npm). Once you publish it, over the next 24 hours, our system will automatically pull it in.
+1.  **Publishing your integration to our [plugin library](/plugins/)**. If you built the integration, we have [developer documentation](/docs/plugin-authoring/#publishing-a-plugin-to-the-library) for publishing that integration to the Node.js package registry (npm). Once you publish it, over the next 24 hours, our system will automatically pull it in.
 
-2. **Add your example to our [starter library](/starters/)**. Most Gatsby users find it easier to try a new integration when they can start with a ready-made code example. We created [a starter library](http://gatsbyjs.org/starters/) to showcase these plugins to the community. [Here's how you add your starter to it](/contributing/submit-to-starter-library/).
+2.  **Add your example to our [starter library](/starters/)**. Most Gatsby users find it easier to try a new integration when they can start with a ready-made code example. We created [a starter library](http://gatsbyjs.org/starters/) to showcase these plugins to the community. [Here's how you add your starter to it](/contributing/submit-to-starter-library/).
 
 ### Step Three: Co-Marketing With Gatsby
 
@@ -74,13 +74,13 @@ We'd love to work together to share with the community how to use our products t
 
 Depending on your size and reach, there are a few ways we can work together.
 
-1. **Sharing your Gatsby-related content on Twitter.** After you publish your content, and blog about it, just tweet about it and we're happy to retweet your content to the Gatsby community. We currently (March 2019) have an audience of over 22,000 on Twitter and a typical tweet is seen by around 7,000 developers.
+1.  **Sharing your Gatsby-related content on Twitter.** After you publish your content, and blog about it, just tweet about it and we're happy to retweet your content to the Gatsby community. We currently (March 2019) have an audience of over 22,000 on Twitter and a typical tweet is seen by around 7,000 developers.
 
-2. **Blogging about your integration.** Our [gatsbyjs.org](/blog/) developer blog is open to quality posts from key partners to share about how to use our solutions together. A typical blog post gets 3,000 reads in the first 7 days, and around 10,000 reads over the course of a year.
+2.  **Blogging about your integration.** Our [gatsbyjs.org](/blog/) developer blog is open to quality posts from key partners to share about how to use our solutions together. A typical blog post gets 3,000 reads in the first 7 days, and around 10,000 reads over the course of a year.
 
 If you're an established vendor adding a Gatsby integration, we'd love for you to tell that story on our blog (e.g. [Kentico Cloud](/blog/2018-12-19-kentico-cloud-and-gatsby-take-you-beyond-static-websites/)). Here is a [guide to posting this in the blog](/docs/how-to-contribute/#contributing-to-the-blog).
 
-3. **Writing a case study**. If you have customers using Gatsby & your solution, you can work with our marketing team at marketing@gatsbyjs.com to put together a joint case study of how our solutions work together, and post this on the gatsbyjs.org blog
+3.  **Writing a case study**. If you have customers using Gatsby & your solution, you can work with our marketing team at marketing@gatsbyjs.com to put together a joint case study of how our solutions work together, and post this on the gatsbyjs.org blog
 
 ### Step Four: Integrating with Gatsby Preview and Co-Selling
 
@@ -92,21 +92,21 @@ In terms of what a "first-class" Gatsby Preview integration and partnership look
 
 #### Engineering:
 
-- A staging environment accessible by API. Some examples: [Contentful's Preview API](https://www.contentful.com/developers/docs/references/content-preview-api/), [DatoCMS staging environment](https://www.datocms.com/changelog/multiple-deployment-environments), etc
+-   A staging environment accessible by API. Some examples: [Contentful's Preview API](https://www.contentful.com/developers/docs/references/content-preview-api/), [DatoCMS staging environment](https://www.datocms.com/changelog/multiple-deployment-environments), etc
 
-- A way to alert Gatsby Preview about changes to content. If your API includes a way to subscribe to updates, then your Gatsby source plugin can directly subscribe to updates. This is our preferred method as it also works while developers and designers are working on the site. Another way to alert us of content changes is by sending webhooks when content is updated. You should send a webhook in under 3 seconds after the content changes.
+-   A way to alert Gatsby Preview about changes to content. If your API includes a way to subscribe to updates, then your Gatsby source plugin can directly subscribe to updates. This is our preferred method as it also works while developers and designers are working on the site. Another way to alert us of content changes is by sending webhooks when content is updated. You should send a webhook in under 3 seconds after the content changes.
 
-- A button in the CMS editor where users can click through to Preview
+-   A button in the CMS editor where users can click through to Preview
 
-- Featured on a plugin marketplace, if applicable. E.g., [Contentful Marketplace](https://www.contentful.com/developers/marketplace/gatsby-preview-sidebar/)
+-   Featured on a plugin marketplace, if applicable. E.g., [Contentful Marketplace](https://www.contentful.com/developers/marketplace/gatsby-preview-sidebar/)
 
 #### Marketing & Sales:
 
-- Coordination and communication between our team and your marketing team. Executive buy-in or support on your end for co-marketing.
+-   Coordination and communication between our team and your marketing team. Executive buy-in or support on your end for co-marketing.
 
-- Co-marketing, such as co-branded campaigns or content discussing \[YOUR SOLUTION\] + Gatsby Preview.
+-   Co-marketing, such as co-branded campaigns or content discussing \[YOUR SOLUTION] + Gatsby Preview.
 
-- Our team working to train your sales team (both account executives and sales engineers) on describing the benefits of Gatsby to prospective customers. If relevant, we can work to train your customer success team as well.
+-   Our team working to train your sales team (both account executives and sales engineers) on describing the benefits of Gatsby to prospective customers. If relevant, we can work to train your customer success team as well.
 
 ## Conclusion: The Content Mesh
 

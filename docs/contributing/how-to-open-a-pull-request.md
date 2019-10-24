@@ -14,10 +14,10 @@ Gatsby uses the PR process to review and test changes before they're added to Ga
 
 When someone wants to contribute to Gatsby, they open a request to _pull_ their code into the repo. Depending on the type of change, PRs are categorized into:
 
-- [Documentation](#documentation)
-- [Code](#code-changes)
-- [Starters or Site Showcase](#starters-or-site-showcase)
-- [Blog posts](#blog-posts)
+-   [Documentation](#documentation)
+-   [Code](#code-changes)
+-   [Starters or Site Showcase](#starters-or-site-showcase)
+-   [Blog posts](#blog-posts)
 
 Recommendations for different kinds of contributions will follow in this guide and throughout the contributing docs.
 
@@ -37,34 +37,41 @@ Some PRs can be done completely from the [GitHub UI](https://help.github.com/en/
 
 To test changes locally against the Gatsby [site and project files](https://github.com/gatsbyjs/gatsby), you can fork the repo and install parts of it to run on your local machine.
 
-- [Fork and clone the Gatsby repo](/contributing/setting-up-your-local-dev-environment/#gatsby-repo-install-instructions).
-- Install [yarn](https://yarnpkg.com/) to pull in dependencies and build the project.
-- Follow the instructions for the part of the project you want to change. (See specific sections below.)
-- [Create a branch in Git](https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging) to isolate your changes:
+-   [Fork and clone the Gatsby repo](/contributing/setting-up-your-local-dev-environment/#gatsby-repo-install-instructions).
 
-  ```shell
-  git checkout -b some-change
-  ```
+-   Install [yarn](https://yarnpkg.com/) to pull in dependencies and build the project.
 
-- Once you have changes in Git you want to push, [add them and create a commit](https://help.github.com/en/articles/adding-a-file-to-a-repository-using-the-command-line). For information on how to structure your commits, check out the [Managing PRs](/contributing/managing-pull-requests/#commit-and-pr-title) doc.
-  - Using a dot character `.` will add all untracked files in the current directory and subdirectories.
-  ```shell
-  git add .
-  ```
-  - Using a visual tool like [GitHub Desktop](https://desktop.github.com/) or [GitX](https://rowanj.github.io/gitx/) can help for choosing which files and lines to commit.
-- Committing code will run the automated linter using [Prettier](https://prettier.io). To run the linter manually, run an npm script in the project's base directory:
-  ```shell
-  npm run format
-  ```
-- Commit any linting changes before pushing by [amending the previous commit](https://help.github.com/en/articles/changing-a-commit-message) or by adding a new commit. For more on linting and tests, visit the [Managing PRs](/contributing/managing-pull-requests/#automated-checks) doc.
-  ```shell
-  git commit --amend
-  ```
-- Push your changes to your fork, assuming it is set up as [`origin`](https://www.git-tower.com/learn/git/glossary/origin):
-  ```shell
-  git push origin head
-  ```
-- To open a PR with your changes against the Gatsby repo, you can use the [GitHub Pull Request UI](https://help.github.com/en/articles/creating-a-pull-request). Alternatively, you can use the command line: we recommend [hub](https://github.com/github/hub) for that.
+-   Follow the instructions for the part of the project you want to change. (See specific sections below.)
+
+-   [Create a branch in Git](https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging) to isolate your changes:
+
+    ```shell
+    git checkout -b some-change
+    ```
+
+-   Once you have changes in Git you want to push, [add them and create a commit](https://help.github.com/en/articles/adding-a-file-to-a-repository-using-the-command-line). For information on how to structure your commits, check out the [Managing PRs](/contributing/managing-pull-requests/#commit-and-pr-title) doc.
+    -   Using a dot character `.` will add all untracked files in the current directory and subdirectories.
+    ```shell
+    git add .
+    ```
+    -   Using a visual tool like [GitHub Desktop](https://desktop.github.com/) or [GitX](https://rowanj.github.io/gitx/) can help for choosing which files and lines to commit.
+
+-   Committing code will run the automated linter using [Prettier](https://prettier.io). To run the linter manually, run an npm script in the project's base directory:
+    ```shell
+    npm run format
+    ```
+
+-   Commit any linting changes before pushing by [amending the previous commit](https://help.github.com/en/articles/changing-a-commit-message) or by adding a new commit. For more on linting and tests, visit the [Managing PRs](/contributing/managing-pull-requests/#automated-checks) doc.
+    ```shell
+    git commit --amend
+    ```
+
+-   Push your changes to your fork, assuming it is set up as [`origin`](https://www.git-tower.com/learn/git/glossary/origin):
+    ```shell
+    git push origin head
+    ```
+
+-   To open a PR with your changes against the Gatsby repo, you can use the [GitHub Pull Request UI](https://help.github.com/en/articles/creating-a-pull-request). Alternatively, you can use the command line: we recommend [hub](https://github.com/github/hub) for that.
 
 ### Documentation PRs
 
@@ -72,7 +79,7 @@ The Gatsby docs site mostly lives in the [www](https://github.com/gatsbyjs/gatsb
 
 Additional docs PR steps:
 
-- For docs-only changes, consider using `git checkout -b docs/some-change` or `git checkout -b docs-some-change`, as this will short circuit the CI process and only run linting tasks.
+-   For docs-only changes, consider using `git checkout -b docs/some-change` or `git checkout -b docs-some-change`, as this will short circuit the CI process and only run linting tasks.
 
 Further instructions can be found on the [docs contributions](/contributing/docs-contributions/) page.
 
@@ -84,8 +91,8 @@ Instructions for making changes to the Gatsby source code, tests, internals, API
 
 There are specific pages about contributing to various parts of the Gatsby ecosystem:
 
-- [Showcase submissions](/contributing/site-showcase-submissions/)
-- [Starter library](/contributing/submit-to-starter-library/)
+-   [Showcase submissions](/contributing/site-showcase-submissions/)
+-   [Starter library](/contributing/submit-to-starter-library/)
 
 ### Blog posts
 
@@ -95,28 +102,28 @@ For the Gatsby blog, it's necessary to run your content idea by the Gatsby team 
 
 The Gatsby GitHub repo is very active, so it's likely you'll need to update your fork with the latest changes to be able to merge in your code. This requires adding Gatsby as an [upstream remote](https://help.github.com/en/articles/configuring-a-remote-for-a-fork):
 
-- Set Gatsby's repo URL as a remote source. The name of the remote is arbitrary; this example uses `upstream`.
-  ```shell
-  git remote add upstream git@github.com:gatsbyjs/gatsby.git
-  ```
-  - _Note: this syntax [uses SSH and keys: you can also use `https`](https://help.github.com/en/articles/which-remote-url-should-i-use) and your username/password._
-- You can verify the remote name and URL at any time:
-  ```shell
-  git remote -v
-  ```
-- Fetch the latest changes from Gatsby:
-  ```shell
-  git fetch upstream master
-  ```
-- [In the branch](https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging) you want to update, merge any changes from Gatsby into your fork:
-  ```shell
-  git merge upstream/master
-  ```
-  - If there are any [merge conflicts](https://help.github.com/en/articles/resolving-a-merge-conflict-on-github), you'll want to address those to get a clean merge.
-- Once your branch is in good working order, push the changes to your fork:
-  ```shell
-  git push origin head
-  ```
+-   Set Gatsby's repo URL as a remote source. The name of the remote is arbitrary; this example uses `upstream`.
+    ```shell
+    git remote add upstream git@github.com:gatsbyjs/gatsby.git
+    ```
+    -   _Note: this syntax [uses SSH and keys: you can also use `https`](https://help.github.com/en/articles/which-remote-url-should-i-use) and your username/password._
+-   You can verify the remote name and URL at any time:
+    ```shell
+    git remote -v
+    ```
+-   Fetch the latest changes from Gatsby:
+    ```shell
+    git fetch upstream master
+    ```
+-   [In the branch](https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging) you want to update, merge any changes from Gatsby into your fork:
+    ```shell
+    git merge upstream/master
+    ```
+    -   If there are any [merge conflicts](https://help.github.com/en/articles/resolving-a-merge-conflict-on-github), you'll want to address those to get a clean merge.
+-   Once your branch is in good working order, push the changes to your fork:
+    ```shell
+    git push origin head
+    ```
 
 For more information on working with upstream repos, [visit the GitHub docs](https://help.github.com/en/articles/configuring-a-remote-for-a-fork).
 
@@ -124,12 +131,12 @@ _**Note:** as a member of the Gatsby repo, you can also clone it directly (inste
 
 ## Additional resources
 
-- CSS Tricks: [How to Contribute to an Open Source Project](https://css-tricks.com/how-to-contribute-to-an-open-source-project/)
-- [Creating a pull request](https://help.github.com/en/articles/creating-a-pull-request) from GitHub
-- [Configuring a remote for a fork](https://help.github.com/en/articles/configuring-a-remote-for-a-fork)
-- [Which remote URL should I use?](https://help.github.com/en/articles/which-remote-url-should-i-use)
-- [Git Branching and Merging](https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging)
-- [Feature Branching and Workflows](https://git-scm.com/book/en/v1/Git-Branching-Branching-Workflows)
-- [Resolving merge conflicts](https://help.github.com/en/articles/resolving-a-merge-conflict-on-github)
-- [Managing Pull Requests](/contributing/managing-pull-requests/) on the Gatsby core team
-- [Guide on Markdown Syntax](/docs/mdx/markdown-syntax/)
+-   CSS Tricks: [How to Contribute to an Open Source Project](https://css-tricks.com/how-to-contribute-to-an-open-source-project/)
+-   [Creating a pull request](https://help.github.com/en/articles/creating-a-pull-request) from GitHub
+-   [Configuring a remote for a fork](https://help.github.com/en/articles/configuring-a-remote-for-a-fork)
+-   [Which remote URL should I use?](https://help.github.com/en/articles/which-remote-url-should-i-use)
+-   [Git Branching and Merging](https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging)
+-   [Feature Branching and Workflows](https://git-scm.com/book/en/v1/Git-Branching-Branching-Workflows)
+-   [Resolving merge conflicts](https://help.github.com/en/articles/resolving-a-merge-conflict-on-github)
+-   [Managing Pull Requests](/contributing/managing-pull-requests/) on the Gatsby core team
+-   [Guide on Markdown Syntax](/docs/mdx/markdown-syntax/)

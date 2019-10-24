@@ -17,16 +17,16 @@ If you're not familiar with Gatsby's lifecycle, see the overview [Gatsby Lifecyc
 
 Plugins can extend Gatsby in many ways:
 
-- Sourcing data (e.g. from the filesystem or an API or a database)
-- Transforming data from one type to another (e.g. a markdown file to HTML)
-- Creating pages (e.g. a directory of markdown files all gets turned into pages
-  with URLs derived from their file names).
-- Modifying webpack config (e.g. for styling options, adding support for other
-  compile-to-js languages)
-- Adding things to the rendered HTML (e.g. meta tags, analytics JS snippets like
-  Google Analytics)
-- Writing out things to build directory based on site data (e.g. service worker,
-  sitemap, RSS feed)
+-   Sourcing data (e.g. from the filesystem or an API or a database)
+-   Transforming data from one type to another (e.g. a markdown file to HTML)
+-   Creating pages (e.g. a directory of markdown files all gets turned into pages
+    with URLs derived from their file names).
+-   Modifying webpack config (e.g. for styling options, adding support for other
+    compile-to-js languages)
+-   Adding things to the rendered HTML (e.g. meta tags, analytics JS snippets like
+    Google Analytics)
+-   Writing out things to build directory based on site data (e.g. service worker,
+    sitemap, RSS feed)
 
 A single plugin can use multiple APIs to accomplish its purpose. E.g. the plugin
 for the CSS-in-JS library [Glamor](/packages/gatsby-plugin-glamor/):
@@ -59,32 +59,32 @@ See
 
 ### Concepts
 
-- _Page_ — a site page with a pathname, a template component, and optional
-  GraphQL query.
-- _Page Component_ — React component that renders a page and can optionally
-  specify a GraphQL query
-- _Component extensions_ — extensions that are resolvable as components. `.js`
-  and `.jsx` are supported by core. But plugins can add support for other
-  compile-to-js languages.
-- _Dependency_ — Gatsby automatically tracks dependencies between different
-  objects e.g. a page can depend on certain nodes. This allows for hot
-  reloading, caching, incremental rebuilds, etc.
-- _Node_ — a data object
-- _Node Field_ — a field added by a plugin to a node that it doesn't control
-- _Node Link_ — a connection between nodes that gets converted to GraphQL
-  relationships. Can be created in a variety of ways as well as automatically
-  inferred. Parent/child links from nodes and their transformed derivative nodes
-  are first class links.
+-   _Page_ — a site page with a pathname, a template component, and optional
+    GraphQL query.
+-   _Page Component_ — React component that renders a page and can optionally
+    specify a GraphQL query
+-   _Component extensions_ — extensions that are resolvable as components. `.js`
+    and `.jsx` are supported by core. But plugins can add support for other
+    compile-to-js languages.
+-   _Dependency_ — Gatsby automatically tracks dependencies between different
+    objects e.g. a page can depend on certain nodes. This allows for hot
+    reloading, caching, incremental rebuilds, etc.
+-   _Node_ — a data object
+-   _Node Field_ — a field added by a plugin to a node that it doesn't control
+-   _Node Link_ — a connection between nodes that gets converted to GraphQL
+    relationships. Can be created in a variety of ways as well as automatically
+    inferred. Parent/child links from nodes and their transformed derivative nodes
+    are first class links.
 
 _More definitions and terms are defined in the [Glossary](/docs/glossary/)_
 
 ### Operators
 
-- _Create_ — make a new thing
-- _Get_ — get an existing thing
-- _Delete_ — remove an existing thing
-- _Replace_ — replace an existing thing
-- _Set_ — merge into an existing thing
+-   _Create_ — make a new thing
+-   _Get_ — get an existing thing
+-   _Delete_ — remove an existing thing
+-   _Replace_ — replace an existing thing
+-   _Set_ — merge into an existing thing
 
 ### Extension APIs
 

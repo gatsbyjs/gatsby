@@ -37,10 +37,10 @@ After the website rebuild, the Youfit site was blazing fast. Navigating the site
 
 Youfit measured each page's speed post-launch and with the initial page load, the load time was _at least cut in half_! Since the relaunch of the website, they've also experienced:
 
-- 22% increase in organic traffic
-- 50%+ increase in accessibility score, causing their Google search rank to climb
-- An immediate 10% decrease in bounce rate, with exponential improvements projected in the near future
-- 60% increase in lead conversion rates as more people signed up for a free trial
+-   22% increase in organic traffic
+-   50%+ increase in accessibility score, causing their Google search rank to climb
+-   An immediate 10% decrease in bounce rate, with exponential improvements projected in the near future
+-   60% increase in lead conversion rates as more people signed up for a free trial
 
 Prior to the website rebuild, Youfit viewed their website as an "add-on" because the team did not see it as critical to the success of the company. But now that they are experiencing first-hand the benefits of Gatsby, their website has become a primary channel for lead generation.
 
@@ -55,4 +55,5 @@ We are very happy with the results so far, especially the 60% increase in leads.
 By using Gatsby, Youfit significantly increased their organic traffic, lead capture and ROI. Youfit also laid the foundation for long-term success by improving their Google ranking and making their site mobile friendly. This enabled Youfit to focus on what it does best: making proactive wellness more accessible to all.
 
 [youfit-health-clubs]: https://www.youfit.com/
+
 [64-labs]: http://www.64labs.com/

@@ -13,8 +13,8 @@ Honestly, it snuck up on us a bit. We realized October had arrived and immediate
 
 We defined and started tackling our overall goals for Hacktoberfest:
 
-1. To provide a range of issues with a clearly defined scope, with minimal context needed outside of the issue description.
-2. To make contributing to Gatsby as welcoming, friendly, and accessible as we can -- especially to first-time contributors.
+1.  To provide a range of issues with a clearly defined scope, with minimal context needed outside of the issue description.
+2.  To make contributing to Gatsby as welcoming, friendly, and accessible as we can -- especially to first-time contributors.
 
 We created a [master issue](https://github.com/gatsbyjs/gatsby/issues/8719) to be our Hacktoberfest "landing page", and thought of four general issue areas: OSS, Docs, Gatsby Store, and Ecosystem. Within that, our areas of greatest focus and attention were OSS and Docs.
 
@@ -68,10 +68,10 @@ We're a small team, and we weren't fully prepared to handle the overwhelmingly e
 
 To split our time more efficiently, we [created codeowner teams](/blog/2018-10-12-uptick-docs-contributions-hacktoberfest/#with-great-contributions-comes-great-responsibility) to automatically notify Gatsby team members when certain areas of review are required:
 
-- Core - Code owners for core functionality of Gatsby.
-- Docs - Maintainers who have special expertise in docs.
-- Ecosystem - Code owners for the Gatsby ecosystem.
-- Website - Maintainers who keep gatsbyjs.org healthy.
+-   Core - Code owners for core functionality of Gatsby.
+-   Docs - Maintainers who have special expertise in docs.
+-   Ecosystem - Code owners for the Gatsby ecosystem.
+-   Website - Maintainers who keep gatsbyjs.org healthy.
 
 #### ➡️ We're hiring another Open Source Maintainer!
 
@@ -81,8 +81,8 @@ We knew this was an area of need that will continue to grow (which is great!) Th
 
 Especially toward the end of the month, we experienced a noticeable influx of minor, peripheral PRs. Once many issues were claimed and closed out in the first half of the month, especially the more accessible issues, we noticed a marked uptick in these PRs. We believe this was a confluence of two factors:
 
-1. Contributors were strongly motivated to participate in Hacktoberfest
-2. We did not have enough unclaimed issues available that were accessible to first-time contributors.
+1.  Contributors were strongly motivated to participate in Hacktoberfest
+2.  We did not have enough unclaimed issues available that were accessible to first-time contributors.
 
 #### ➡️ Create more accessible Hacktoberfest issues
 
@@ -98,5 +98,5 @@ We had a great time and learned a lot from this year's Hacktoberfest! Thanks to 
 
 Check out other posts from this year's Gatsby Hacktoberfest:
 
-- [Hacktoberfest kickoff](/blog/2018-10-09-hacktoberfest-kickoff/)
-- [Uptick in docs contributions for Gatsby Hacktoberfest](/blog/2018-10-12-uptick-docs-contributions-hacktoberfest/)
+-   [Hacktoberfest kickoff](/blog/2018-10-09-hacktoberfest-kickoff/)
+-   [Uptick in docs contributions for Gatsby Hacktoberfest](/blog/2018-10-12-uptick-docs-contributions-hacktoberfest/)

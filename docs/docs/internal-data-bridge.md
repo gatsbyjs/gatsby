@@ -6,7 +6,7 @@ title: Internal Data Bridge
 >
 > Outdated areas are:
 >
-> - should mention `siteMetaData` as an internal type
+> -   should mention `siteMetaData` as an internal type
 >
 > You can help by making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228).
 

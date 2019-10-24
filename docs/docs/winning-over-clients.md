@@ -9,14 +9,14 @@ In addition, they usually want to be able to use familiar CMS-based workflows to
 
 Some benefits that you can use to pitch Gatsby to clients include:
 
-- Works with their CMS
-- Fast development speed ensures project will be on time
-- Ease of making development changes helps keep project under budget
-- Lower hosting cost helps keep project under budget
+-   Works with their CMS
+-   Fast development speed ensures project will be on time
+-   Ease of making development changes helps keep project under budget
+-   Lower hosting cost helps keep project under budget
 
 [This one-pager](/gatsby-one-pager.pdf) may also be useful for clients -- it explains Gatsby in their language.
 
---
+\--
 
 This is a stub. Help our community expand it.
 

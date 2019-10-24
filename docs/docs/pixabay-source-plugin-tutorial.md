@@ -44,9 +44,9 @@ Take the above URL and paste it in to a browser to see Pixabay's response to you
 
 Your plugin will have the following behavior:
 
-- Accept config options like a Pixabay API key and a search query
-- Make an API request using the provided config options
-- Convert the data in the API response to Gatsby's node system
+-   Accept config options like a Pixabay API key and a search query
+-   Make an API request using the provided config options
+-   Convert the data in the API response to Gatsby's node system
 
 ### Setup a new Gatsby site
 
@@ -339,7 +339,7 @@ exports.sourceNodes = (
 
 ### Query for results
 
-Your plugin is ready. Restart `npm run develop` and open a browser at [http://localhost:8000/\_\_\_graphql](http://localhost:8000/___graphql). The Pixabay data can be queried from here. try:
+Your plugin is ready. Restart `npm run develop` and open a browser at <http://localhost:8000/___graphql>. The Pixabay data can be queried from here. try:
 
 ```graphql
 {
@@ -356,7 +356,7 @@ Your plugin is ready. Restart `npm run develop` and open a browser at [http://lo
 }
 ```
 
-Or [open the query from this link](<http://localhost:8000/___graphql?query=%7B%0A%20%20allPixabayPhoto(limit%3A%2010)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20largeImageURL%0A%20%20%20%20%20%20%20%20pageURL%0A%20%20%20%20%20%20%20%20tags%0A%20%20%20%20%20%20%20%20user%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A>).
+Or [open the query from this link](http://localhost:8000/___graphql?query=%7B%0A%20%20allPixabayPhoto(limit%3A%2010)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20largeImageURL%0A%20%20%20%20%20%20%20%20pageURL%0A%20%20%20%20%20%20%20%20tags%0A%20%20%20%20%20%20%20%20user%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A).
 
 Experiment with different options in your `gatsby-config.js` file to see how that affects your query results. The [Pixabay API docs](https://pixabay.com/api/docs/#api_search_images) might be a useful reference.
 
@@ -370,10 +370,10 @@ Don't publish this particular plugin to npm or the Gatsby Plugin Library, becaus
 
 You've written a local Gatsby plugin that:
 
-- can be configured with an entry in your `gatsby-config.js` file
-- requests data from a third-party API
-- pulls the API data into Gatsby's node system
-- allows the data to be queried with GraphQL
+-   can be configured with an entry in your `gatsby-config.js` file
+-   requests data from a third-party API
+-   pulls the API data into Gatsby's node system
+-   allows the data to be queried with GraphQL
 
 Congratulations!
 

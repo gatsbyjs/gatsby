@@ -37,8 +37,8 @@ The Site Showcase can help you pitch Gatsby to clients and coworkers as the best
 
 Many of you contributed to the discussion and development of the site showcase. Here are the initial issue and PR if you'd like to go through the discussion that led to this project:
 
-- [Site Showcase Issue](https://github.com/gatsbyjs/gatsby/issues/4392)
-- [Site Showcase WIP PR](https://github.com/gatsbyjs/gatsby/pull/5524)
+-   [Site Showcase Issue](https://github.com/gatsbyjs/gatsby/issues/4392)
+-   [Site Showcase WIP PR](https://github.com/gatsbyjs/gatsby/pull/5524)
 
 ### Empathy map
 
@@ -50,9 +50,9 @@ Here's a summary of what I learned from over 80 interviews with Gatsby users. Th
 
 The empathy map reflects the following pain points:
 
-- the Awesome Gatsby list of sites (used to be part of the README in the open source repo) was growing long and was not searchable or filterable
-- the Awesome Gatsby list also had no visual indication of what the sites looked like
-- there isn't enough time or room for everyone's awesome sites to get retweeted by the @Gatsbyjs account
+-   the Awesome Gatsby list of sites (used to be part of the README in the open source repo) was growing long and was not searchable or filterable
+-   the Awesome Gatsby list also had no visual indication of what the sites looked like
+-   there isn't enough time or room for everyone's awesome sites to get retweeted by the @Gatsbyjs account
 
 With the empathy map and the interviews as our guide, we created a list of jobs to be done and imagined the typical flow a user would take through the site showcase. We did this to make sure we planned both a sensible information architecture and the necessary functionality to meet user's main needs.
 
@@ -64,13 +64,13 @@ Based on the process described above, we thought the following features were imp
 
 Users should be able to:
 
-- [x] See screenshots of sites built with Gatsby (Landing page)
-- [x] See source code (Site detail page)
-- [x] Share sites by copying the URL
-- [x] Filter by category
-- [x] Search sites
-- [x] Submit their own site to the showcase through yaml file (Shannon writes the instructions)
-- [x] See featured sites
+-   [x] See screenshots of sites built with Gatsby (Landing page)
+-   [x] See source code (Site detail page)
+-   [x] Share sites by copying the URL
+-   [x] Filter by category
+-   [x] Search sites
+-   [x] Submit their own site to the showcase through yaml file (Shannon writes the instructions)
+-   [x] See featured sites
 
 ## Ways you can help
 
@@ -82,8 +82,8 @@ Here's what's next in [Issue #5927](https://github.com/gatsbyjs/gatsby/issues/59
 
 Our next UX project is finishing up the starter showcase, which will look similar to the site showcase and also have a major functional difference: filter by dependency. Please contribute to these issues to help out!
 
-- [Starter Showcase Issue](https://github.com/gatsbyjs/gatsby/issues/5334)
-- [Starter Showcase WIP PR](https://github.com/gatsbyjs/gatsby/pull/5831)
-  Again, many thanks to all the community members who have contributed to this research and to making Gatsby awesome. Stay tuned for updates on the site showcase and future Gatsby UX research projects!
-- [Contact me](https://twitter.com/shannonb_ux/status/938551014956732418) here if you have feedback that differs from or provides deeper insight into one of the pain points this article mentions.
-- Follow us on [Twitter](https://twitter.com/gatsbyjs).
+-   [Starter Showcase Issue](https://github.com/gatsbyjs/gatsby/issues/5334)
+-   [Starter Showcase WIP PR](https://github.com/gatsbyjs/gatsby/pull/5831)
+    Again, many thanks to all the community members who have contributed to this research and to making Gatsby awesome. Stay tuned for updates on the site showcase and future Gatsby UX research projects!
+-   [Contact me](https://twitter.com/shannonb_ux/status/938551014956732418) here if you have feedback that differs from or provides deeper insight into one of the pain points this article mentions.
+-   Follow us on [Twitter](https://twitter.com/gatsbyjs).

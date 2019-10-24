@@ -4,9 +4,9 @@ title: "Performance Tracing"
 
 Gatsby allows a build to be traced, enabling you to find which plugins or parts of the build are taking the longest. The trace information can be viewed in any [OpenTracing](http://opentracing.io/) compatible tool such as [Jaeger](https://www.jaegertracing.io/). You can also use Zipkin compatible tools such as [Zipkin](https://zipkin.io/) or [Honeycomb](https://www.honeycomb.io/).
 
-- [Running Gatsby with tracing turned on](/docs/performance-tracing/#running-gatsby-with-tracing-turned-on)
-- [Tracing backend examples](/docs/performance-tracing/#tracing-backend-examples)
-- [Adding your own tracing](/docs/performance-tracing/#adding-your-own-tracing)
+-   [Running Gatsby with tracing turned on](/docs/performance-tracing/#running-gatsby-with-tracing-turned-on)
+-   [Tracing backend examples](/docs/performance-tracing/#tracing-backend-examples)
+-   [Adding your own tracing](/docs/performance-tracing/#adding-your-own-tracing)
 
 ![Example Zipkin Trace](./images/zipkin-trace.png)
 
@@ -26,8 +26,8 @@ Each OpenTracing library must be configured. For example, what is the URL of the
 
 The configuration file is a JavaScript file that exports two functions: `create` and `stop`.
 
-- **create**: Create and return an [OpenTracing compatible Tracer](https://github.com/opentracing/opentracing-javascript/blob/master/src/tracer.ts). It is called at the start of the build.
-- **stop**: Called at the end of the build. Any cleanup required by the tracer should be performed here, such as clearing out any span queues and sending them to the tracing backend.
+-   **create**: Create and return an [OpenTracing compatible Tracer](https://github.com/opentracing/opentracing-javascript/blob/master/src/tracer.ts). It is called at the start of the build.
+-   **stop**: Called at the end of the build. Any cleanup required by the tracer should be performed here, such as clearing out any span queues and sending them to the tracing backend.
 
 ### 3. Start Gatsby with tracing turned on
 
@@ -76,7 +76,7 @@ There are many OpenTracing compatible backends available. Below is an example of
     gatsby build --open-tracing-config-file node_modules/gatsby/dist/utils/tracer/jaeger-local.js
     ```
 
-4.  Once the build is complete, view your tracing information at [http://localhost:16686](http://localhost:16686). On the left menu, select the `build` operation to see your build's root trace.
+4.  Once the build is complete, view your tracing information at <http://localhost:16686>. On the left menu, select the `build` operation to see your build's root trace.
 
 ### local Zipkin with Docker
 
@@ -84,9 +84,9 @@ There are many OpenTracing compatible backends available. Below is an example of
 
 1.  Add following dependencies to your site's `package.json`
 
-    - [`zipkin`](https://www.npmjs.com/package/zipkin)
-    - [`zipkin-javascript-opentracing`](https://www.npmjs.com/package/zipkin-javascript-opentracing)
-    - [`zipkin-transport-http`](https://www.npmjs.com/package/zipkin-transport-http)
+    -   [`zipkin`](https://www.npmjs.com/package/zipkin)
+    -   [`zipkin-javascript-opentracing`](https://www.npmjs.com/package/zipkin-javascript-opentracing)
+    -   [`zipkin-transport-http`](https://www.npmjs.com/package/zipkin-transport-http)
 
 2.  Run Zipkin's all-in-one Docker instance with `docker run -d -p 9411:9411 openzipkin/zipkin`. See [Zipkin Getting Started](https://zipkin.io/pages/quickstart.html) for more information.
 
@@ -96,7 +96,7 @@ There are many OpenTracing compatible backends available. Below is an example of
     gatsby build --open-tracing-config-file node_modules/gatsby/dist/utils/tracer/zipkin-local.js
     ```
 
-4.  Once the build is complete, view your tracing information at [http://localhost:9411](http://localhost:9411)
+4.  Once the build is complete, view your tracing information at <http://localhost:9411>
 
 ## Adding your own tracing
 

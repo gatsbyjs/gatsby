@@ -8,16 +8,16 @@ In certain instances, a developer may want to customize the content of the Markd
 
 ## What you will learn in this tutorial
 
-- Further understanding of the remark Abstract Syntax Tree (AST)
-- How to create a plugin that is injected with an AST via `gatsby-transformer-remark`
-- How to manipulate the remark AST to add additional functionality
+-   Further understanding of the remark Abstract Syntax Tree (AST)
+-   How to create a plugin that is injected with an AST via `gatsby-transformer-remark`
+-   How to manipulate the remark AST to add additional functionality
 
 ## Prerequisites
 
 There a few things that you should have some understanding with:
 
-- How to work with Remark in Gatsby as described in [Part Six](/tutorial/part-six/) and [Part Seven](/tutorial/part-seven/) of the Gatsby Tutorial.
-- Understanding of the Markdown Syntax.
+-   How to work with Remark in Gatsby as described in [Part Six](/tutorial/part-six/) and [Part Seven](/tutorial/part-seven/) of the Gatsby Tutorial.
+-   Understanding of the Markdown Syntax.
 
 ## Understanding the Abstract Syntax Tree
 

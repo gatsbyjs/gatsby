@@ -11,9 +11,9 @@ We say it all the time: Gatsby sites are blazing fast.
 
 It's a great tagline. But for you, that might raise more questions:
 
-- What's the value in being blazing fast?
-- How do you know it's blazing fast?
-- How can it be even more blazing (incineratingly?) fast?
+-   What's the value in being blazing fast?
+-   How do you know it's blazing fast?
+-   How can it be even more blazing (incineratingly?) fast?
 
 These are questions the Gatsby core team has thought about recently, since our recent release of Gatsby v2 improved upon Gatsby v1's gold standard to squeeze even more performance out of every site.
 
@@ -73,10 +73,10 @@ Armed with the powerful combo of Lighthouse, WebPagetest, and a knowledge of som
 
 Gatsby v1 was in many ways an experiment to prove out some meaningful ideas:
 
-- Injecting content at _build time_ from remote data sources with GraphQL
-- Statically rendering React components to HTML to maximize performance and SEO
-- Static site generation _and_ app-like functionality with React hydration
-- A pluggable and extensible architecture to augment and enhance Gatsby's base feature set and give Gatsby superpowers.
+-   Injecting content at _build time_ from remote data sources with GraphQL
+-   Statically rendering React components to HTML to maximize performance and SEO
+-   Static site generation _and_ app-like functionality with React hydration
+-   A pluggable and extensible architecture to augment and enhance Gatsby's base feature set and give Gatsby superpowers.
 
 [Pull data from WordPress at build time][`gatsby-source-wordpress`]? Sure. [Author your application in TypeScript][`gatsby-plugin-typescript`]? Seems reasonable. All this while maintaining sane and optimized defaults to truly squeeze every ounce of performance out of your application.
 
@@ -93,10 +93,10 @@ It's not 🚀 science. Shipping less JavaScript to your end users makes your app
 
 To that end, Gatsby v2 ships 31% less JavaScript in its client runtime. While we'd _love_ to brag about this, most of the credit goes to smart optimizations in libraries we rely upon: React--upgrading from 15 to 16--and @reach/router--swapped in place of react-router. Much like performance optimizations, build upgrades, etc. are available for free in something like [create-react-app][create-react-app], these upgrades in Gatsby v2 are available _for free_ simply by updating to Gatsby v2 by following the [migration guide][migration-guide]. The power of opinionated, optimized toolsets that internalize smart defaults!
 
-| Version |  React   |  Router  |  Total   |
+| Version |   React  |  Router  |   Total  |
 | :-----: | :------: | :------: | :------: |
-|   v1    | `49.8kb` | `18.4kb` | `68.2kb` |
-|   v2    | `34.8kb` |  `6kb`   | `40.8kb` |
+|    v1   | `49.8kb` | `18.4kb` | `68.2kb` |
+|    v2   | `34.8kb` |   `6kb`  | `40.8kb` |
 
 ## Bringing it home
 
@@ -116,8 +116,8 @@ _Oncemore: lower is better 😉_
 
 | Version | Speed Index | Time to Interactive |
 | :-----: | :---------: | :-----------------: |
-|   v1    |  `1.787s`   |      `2.532s`       |
-|   v2    |  `1.657s`   |      `2.457s`       |
+|    v1   |   `1.787s`  |       `2.532s`      |
+|    v2   |   `1.657s`  |       `2.457s`      |
 
 We've shaved off ~75ms from Time to Interactive, while also improving the Speed Index score 💪
 
@@ -126,16 +126,29 @@ We've shaved off ~75ms from Time to Interactive, while also improving the Speed 
 Gatsby v2 is an iterative approach to improving the solid foundational base that was Gatsby v1. By upgrading your site, you can fully realize these performance benefits and deliver that blazing fast experience your users want, need, and expect. You've learned some tangible ways to measure performance so you can _prove_ for yourself that your site is as fast as it should be. Finally, you've learned in more depth about some of the changes and improvements that will be available merely by upgrading to Gatsby v2. [Follow our migration guide and update today][migration-guide] to see for yourself!
 
 [bbc]: https://www.blackbeltcommerce.com/bigcommerce/poor-website-performance/
+
 [web-perf]: https://github.com/google/WebFundamentals/blob/master/src/data/glossary.yaml
+
 [speed-index]: https://sites.google.com/a/webpagetest.org/docs/using-webpagetest/metrics/speed-index
+
 [lighthouse]: https://www.google.com/search?q=google+audit&ie=utf-8&oe=utf-8&client=firefox-b-1-ab
+
 [`gatsby-v1-repo`]: https://github.com/dschau/gatsby-v1
+
 [`gatsby-v1-netlify`]: https://gatsby-v1-perf.netlify.com/
+
 [`gatsby-v2-repo`]: https://github.com/dschau/gatsby-v2
+
 [`gatsby-v2-netlify`]: https://gatsby-v2-perf.netlify.com/
+
 [`gatsby-source-wordpress`]: /packages/gatsby-source-wordpress
+
 [`gatsby-plugin-typescript`]: /packages/gatsby-plugin-typescript
+
 [migration-guide]: /docs/migrating-from-v1-to-v2/
+
 [webpagetest]: https://webpagetest.org
+
 [webpagetestv1-results]: https://www.webpagetest.org/result/181003_VD_1f8cbe4e27749d9725031de0be11c677/
+
 [webpagetestv2-results]: https://www.webpagetest.org/result/181003_X2_97d4ff779e4dafae2734af0e7dd7d70f/

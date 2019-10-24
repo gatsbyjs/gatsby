@@ -62,7 +62,7 @@ Use the following template to ensure required fields are filled:
   portfolio: (optional)
 ```
 
-4. If you sent your websites to the Showcase before but have not filled out the "built_by" field, you should edit [`sites.yml`](https://github.com/gatsbyjs/gatsby/blob/master/docs/sites.yml) and add your name (and the built_by field if it is not there) there as well to make sure your portfolio pieces are linked to your page.
+4.  If you sent your websites to the Showcase before but have not filled out the "built_by" field, you should edit [`sites.yml`](https://github.com/gatsbyjs/gatsby/blob/master/docs/sites.yml) and add your name (and the built_by field if it is not there) there as well to make sure your portfolio pieces are linked to your page.
 
 ### Review process
 

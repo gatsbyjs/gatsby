@@ -55,9 +55,9 @@ Alternatively, you can prevent your layout component from unmounting by using [`
 
 ## Other resources
 
-- [Creating nested layout components in Gatsby](/tutorial/part-three/)
-- [Life after layouts in Gatsby V2](/blog/2018-06-08-life-after-layouts/)
-- [Migrating from v1 to v2](/docs/migrating-from-v1-to-v2/#remove-or-refactor-layout-components)
-- [`gatsby-plugin-layout`](/packages/gatsby-plugin-layout/)
-- [wrapPageElement Browser API](/docs/browser-apis/#wrapPageElement)
-- [wrapPageElement SSR API](/docs/ssr-apis/#wrapPageElement)
+-   [Creating nested layout components in Gatsby](/tutorial/part-three/)
+-   [Life after layouts in Gatsby V2](/blog/2018-06-08-life-after-layouts/)
+-   [Migrating from v1 to v2](/docs/migrating-from-v1-to-v2/#remove-or-refactor-layout-components)
+-   [`gatsby-plugin-layout`](/packages/gatsby-plugin-layout/)
+-   [wrapPageElement Browser API](/docs/browser-apis/#wrapPageElement)
+-   [wrapPageElement SSR API](/docs/ssr-apis/#wrapPageElement)

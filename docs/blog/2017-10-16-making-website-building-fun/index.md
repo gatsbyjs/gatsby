@@ -99,7 +99,7 @@ Fred Brooks wrote in his classic book _The Mythical Man-Month_:
 >
 > Yet the program construct, unlike the poet's words, is real in the sense that
 > it moves and works, producing visible outputs separate from the construct
-> itself. \[…\] The magic of myth and legend has come true in our time. One types
+> itself. \[…] The magic of myth and legend has come true in our time. One types
 > the correct incantation on a keyboard, and a display screen comes to life,
 > showing things that never were nor could be.
 

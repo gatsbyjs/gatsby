@@ -6,7 +6,7 @@ title: Building the JavaScript App
 >
 > Outdated areas are:
 >
-> - _Load page resources_ section needs to be updated
+> -   _Load page resources_ section needs to be updated
 >
 > You can help by making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228).
 

@@ -51,7 +51,7 @@ Before we dive into specific areas where costs are lower, let's level set. The W
 
 However, if your job is to build custom WordPress solutions for large sites, then never deal with them again, the cost savings I lay out may not matter as much to you.
 
-## Hosting for Gatsby sites starts at \$0
+## Hosting for Gatsby sites starts at \\$0
 
 Last year I built a WordPress website for an event. I used a few popular membership and ecommerce plugins to get the job done. The price of hosting and plugins were all obscured from the client. I was paid a fee, and then I turned around and paid for hosting and plugins, and pocketed the margin.
 
@@ -61,7 +61,7 @@ After the event, my client no longer needed the membership and ecommerce feature
 
 The hosting cost? [Zero dollars and zero cents.](https://www.netlify.com/pricing/)
 
-That project opened my eyes. The client had a low traffic website, and they barely used the membership and ecommerce functionality I added. Yet, I signed them up with my favorite WordPress host, with pricing that started at \$115 a month, not including the cost of premium plugins. The next time I had a similar project, which was earlier this year, I grabbed Netlify from the beginning.
+That project opened my eyes. The client had a low traffic website, and they barely used the membership and ecommerce functionality I added. Yet, I signed them up with my favorite WordPress host, with pricing that started at \\$115 a month, not including the cost of premium plugins. The next time I had a similar project, which was earlier this year, I grabbed Netlify from the beginning.
 
 The cheaper hosting for static sites, like the ones Gatsby can produce, can be a game changer for your business model. That's because the client is willing to pay for an all-inclusive package, and doesn't care if you use an inexpensive static site host, or a costly WordPress host. By making the right choice your profit can increase from day one, and accelerate if you keep the project over months or years.
 
@@ -101,7 +101,7 @@ Recently, premium plugin companies have discovered that the value of their softw
 
 Again, the Gatsby ecosystem is different. Like hosting, the standard pricing for third-party website services is a generous free tier.
 
-There are a dozen [Gatsby-friendly form builders](/docs/building-a-contact-form) with unlimited trials and free tiers. And if you create a form handler yourself, using a React library for forms, plus [Amazon API Gateway / Lambda / SES](https://aws.amazon.com/blogs/architecture/create-dynamic-contact-forms-for-s3-static-websites-using-aws-lambda-amazon-api-gateway-and-amazon-ses/), then your client can handle half a million submissions a month for under \$5.
+There are a dozen [Gatsby-friendly form builders](/docs/building-a-contact-form) with unlimited trials and free tiers. And if you create a form handler yourself, using a React library for forms, plus [Amazon API Gateway / Lambda / SES](https://aws.amazon.com/blogs/architecture/create-dynamic-contact-forms-for-s3-static-websites-using-aws-lambda-amazon-api-gateway-and-amazon-ses/), then your client can handle half a million submissions a month for under \\$5.
 
 That's amazing!
 

@@ -9,11 +9,11 @@ Together with my co-founder, [Sam Bhagwat](https://twitter.com/calcsam), I'm thr
 
 First of all, if you haven't used Gatsby yet, what is it? Gatsby:
 
-- is a blazing fast static site generator for React
-- is a powerful and flexible modern website framework that simplifies every step of starting, developing and running websites
-- helps you leverage open source innovations in the React, NPM, and Gatsby communities for your web projects
-- lets you pull data into pages from WordPress, Drupal, Contentful, markdown—and any other data source you can imagine
-- compiles and optimizes your site's code to make your sites lightning fast—even on mobile
+-   is a blazing fast static site generator for React
+-   is a powerful and flexible modern website framework that simplifies every step of starting, developing and running websites
+-   helps you leverage open source innovations in the React, NPM, and Gatsby communities for your web projects
+-   lets you pull data into pages from WordPress, Drupal, Contentful, markdown—and any other data source you can imagine
+-   compiles and optimizes your site's code to make your sites lightning fast—even on mobile
 
 Gatsby is used by tens of thousands of developers and organizations and is downloaded nearly ½ million times per month.
 
@@ -116,7 +116,7 @@ I posted my plans on GitHub and with help from 100s of developers in the communi
 
 After spending fall 2016, and most of 2017 consulting with companies around Gatsby and interacting with 100s of developers in the open source world, I started feeling confident that it was time to create a company devoted to bringing the full vision of Gatsby to fruition. My longtime best friend and Gatsby core contributor Sam Bhagwat and I started chatting about forming this startup to bring Gatsby to the world.
 
-We were lucky to find some great investors, led by [Dan Scholnick of Trinity Ventures](http://www.trinityventures.com/team/dan-scholnick/), who shared our vision for new cloud-native website infrastructure and has extensive experience investing in and working with open source & cloud infrastructure startups like New Relic, Docker, Meteor, InfluxData and more, to back us with \$3.8M in seed funding.
+We were lucky to find some great investors, led by [Dan Scholnick of Trinity Ventures](http://www.trinityventures.com/team/dan-scholnick/), who shared our vision for new cloud-native website infrastructure and has extensive experience investing in and working with open source & cloud infrastructure startups like New Relic, Docker, Meteor, InfluxData and more, to back us with \\$3.8M in seed funding.
 
 I want to emphasize that this new startup doesn't signal any move away from open source. I've been heavily involved in open source communities since I started programming 12 years ago and strongly believe it's the best way to build software. We will be building cloud services for Gatsby but Gatsby itself will remain 100% open source as will most of what we intend to do. What the investment and company will enable is a much larger amount of effort towards improving Gatsby core and its surrounding ecosystem. Several core contributors have already joined to work full-time on Gatsby. We've been able to work with upstreams to make targeted improvements that benefit not just Gatsby but the whole frontend ecosystem. And as our company grows, we'll be able to proportionally increase our investment in open source.
 
@@ -126,8 +126,8 @@ It's been an amazing journey so far. Wish Sam and I and our new colleagues luck 
 
 ### Learn more about Gatsby
 
-- [From the New Stack "Gatsby, the Open Source React-Based SSG, Creates Company to Evolve Cloud-Native Website Builds"](https://thenewstack.io/gatsbyjs-the-open-source-react-based-ssg-creates-company-to-evolve-cloud-native-website-builds/)
-- [gatsbyjs.com](https://www.gatsbyjs.com)
-- [gatsbyjs.org](/)
+-   [From the New Stack "Gatsby, the Open Source React-Based SSG, Creates Company to Evolve Cloud-Native Website Builds"](https://thenewstack.io/gatsbyjs-the-open-source-react-based-ssg-creates-company-to-evolve-cloud-native-website-builds/)
+-   [gatsbyjs.com](https://www.gatsbyjs.com)
+-   [gatsbyjs.org](/)
 
 _Also participating in Gatsby's funding round: Fathom Ventures, Robin Vasan, Mulesoft founder Ross Mason & the Pantheon founding team (Zack Rosen, Josh Koenig, Matt Cheney and David Strauss)._

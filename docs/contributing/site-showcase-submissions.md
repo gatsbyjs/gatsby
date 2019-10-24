@@ -68,38 +68,38 @@ Categories currently include both _type of site_ (structure) and the _content of
 
 #### Type of site
 
-- Blog
-- Directory
-- Documentation
-- eCommerce
-- Education
-- Portfolio
-- Gallery
-- See [`categories.yml`](https://github.com/gatsbyjs/gatsby/blob/master/docs/categories.yml) for an up to date list of valid categories.
+-   Blog
+-   Directory
+-   Documentation
+-   eCommerce
+-   Education
+-   Portfolio
+-   Gallery
+-   See [`categories.yml`](https://github.com/gatsbyjs/gatsby/blob/master/docs/categories.yml) for an up to date list of valid categories.
 
 #### Content of site
 
 A few notes on site content: a common question is this: "aren't all Gatsby sites technically in the "web development" category?" Well, no because this category means the _content_ of the site has to be about web development, like [React](https://reactjs.org/). Also, the difference between technology and web development is like this. [Cardiogram](https://cardiogr.am/) is technology, while [React](https://reactjs.org/) is web development.
 
-- Agency
-- Education
-- Entertainment
-- Finance
-- Food
-- Healthcare
-- Government
-- Marketing
-- Music
-- Media
-- Nonprofit
-- Open Source
-- Photography
-- Podcast
-- Real Estate
-- Science
-- Technology
-- Web Development
-- See [`categories.yml`](https://github.com/gatsbyjs/gatsby/blob/master/docs/categories.yml) for an up to date list of valid categories.
+-   Agency
+-   Education
+-   Entertainment
+-   Finance
+-   Food
+-   Healthcare
+-   Government
+-   Marketing
+-   Music
+-   Media
+-   Nonprofit
+-   Open Source
+-   Photography
+-   Podcast
+-   Real Estate
+-   Science
+-   Technology
+-   Web Development
+-   See [`categories.yml`](https://github.com/gatsbyjs/gatsby/blob/master/docs/categories.yml) for an up to date list of valid categories.
 
 #### Adding new tag
 
@@ -113,10 +113,10 @@ By default, all sites submitted to the Site Showcase will be reviewed by the Gat
 
 Featured sites will be chosen quarterly based on the following criteria:
 
-- Well known brands
-- Use case diversity
-- Visual appeal
-- Visual diversity
+-   Well known brands
+-   Use case diversity
+-   Visual appeal
+-   Visual diversity
 
 #### How many can be featured at a time?
 

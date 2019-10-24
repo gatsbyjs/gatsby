@@ -130,8 +130,8 @@ This will be my very first post on this blog!
 
 Delete the two demo posts in the `/content/posts` directory:
 
-- `my-blog/content/posts/hello-world.mdx`
-- `my-blog/content/posts/my-second-post.mdx`
+-   `my-blog/content/posts/hello-world.mdx`
+-   `my-blog/content/posts/my-second-post.mdx`
 
 Restart the dev server, and you'll see your updated blog content:
 

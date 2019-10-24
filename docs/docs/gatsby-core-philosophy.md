@@ -8,8 +8,8 @@ Gatsby's core philosophy can be divided into three parts.
 
 **Second, [our tooling philosophy](#gatsbys-tooling-philosophy).** In order to make website building fun, Gatsby's tooling must embody certain qualities. These include:
 
-- [bundling the modern JavaScript ecosystem](#bundle-the-modern-javascript-ecosystem-for-the-content-web)
-- [progressive disclosure of complexity](#progressively-disclose-complexity)
+-   [bundling the modern JavaScript ecosystem](#bundle-the-modern-javascript-ecosystem-for-the-content-web)
+-   [progressive disclosure of complexity](#progressively-disclose-complexity)
 
 **Third, [our community philosophy](#gatsbys-community-philosophy).** We can't do this alone, so we're striving to build the most inclusive community on the web. For that reason, we _[work in the open](#work-in-the-open)_. At all times, we believe, and strive to communicate, that _[you belong here](#you-belong-here)_.
 
@@ -43,7 +43,7 @@ Gatsby's vision is to make website development fun by making it simple.
 
 Fred Brooks wrote in _The Mythical Man-Month_:
 
-> The programmer, like the poet, works only slightly removed from pure thought-stuff. \[They\] build \[their\] castles in the air, from air, creating by exertion of the imagination. Few media of creation are so flexible, so easy to polish and rework, so readily capable of realizing grand conceptual structures…
+> The programmer, like the poet, works only slightly removed from pure thought-stuff. \[They] build \[their] castles in the air, from air, creating by exertion of the imagination. Few media of creation are so flexible, so easy to polish and rework, so readily capable of realizing grand conceptual structures…
 
 Technology is incredibly fun when we, like the wizard of fantasy, can type an incantation on our computer and a new creation comes to life.
 
@@ -119,9 +119,9 @@ Many of Gatsby's key features emerged from conversation between contributors. If
 
 Open source is great for developers. It lets you:
 
-- create a body of work and experience that looks great on a resumé or CV
-- build a referral network for paid work
-- turn it into a sustainable source of income
+-   create a body of work and experience that looks great on a resumé or CV
+-   build a referral network for paid work
+-   turn it into a sustainable source of income
 
 #### Barriers to contributing to open source
 
@@ -137,15 +137,15 @@ Third, **many people don't see themselves represented in open source.**
 
 We believe that these barriers aren't simply obstacles to contributing, they're also obstacles to creating thriving projects. When these barriers persist:
 
-- projects lose so many brilliant people who have so much to contribute
-- projects lose an opportunity to add more maintainers
-- existing maintainers lose the opportunity to build support networks
+-   projects lose so many brilliant people who have so much to contribute
+-   projects lose an opportunity to add more maintainers
+-   existing maintainers lose the opportunity to build support networks
 
 Our approach is to be proactive in creating community by:
 
-- actively reaching out and welcoming new contributors
-- remembering how steep the learning curve can be
-- investing in community as a primary measure of success
+-   actively reaching out and welcoming new contributors
+-   remembering how steep the learning curve can be
+-   investing in community as a primary measure of success
 
 #### Community is everything
 
@@ -155,13 +155,13 @@ To accomplish this, we follow a guiding core value: you belong here.
 
 Some things we do in order to create an inclusive, welcoming community include:
 
-- An enforced [Code of conduct](/contributing/code-of-conduct/)
-- [Commitment to accessibility](/blog/2019-04-18-gatsby-commitment-to-accessibility/)
-- [Extensive docs](/docs)
-- Friendlier robots
-- Implicit trust
-- Active gratitude
-- [Active mentorship](/contributing/pair-programming/)
+-   An enforced [Code of conduct](/contributing/code-of-conduct/)
+-   [Commitment to accessibility](/blog/2019-04-18-gatsby-commitment-to-accessibility/)
+-   [Extensive docs](/docs)
+-   Friendlier robots
+-   Implicit trust
+-   Active gratitude
+-   [Active mentorship](/contributing/pair-programming/)
 
 We've built an active community with hundreds of contributors, and we want to live the example of what a great open source community can be.
 

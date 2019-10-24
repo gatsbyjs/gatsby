@@ -14,9 +14,9 @@ There's an emerging trend in modern web development called the JAMstack. It's la
 
 It got me excited about the future because I've been in marketing for the best part of a decade and I've never witnessed a site that I've worked on go from zero to hero so quickly. There's often a disjoint in the decision making process when companies with resources (i.e. some money, developers and a marketing team) decide to launch or relaunch a marketing website. So in this post I'm going to summarise:
 
-- What the JAMstack is and what it means for tech-savvy marketers
-- An example of a JAMstack site that I worked on
-- The pros and cons from a marketing perspective
+-   What the JAMstack is and what it means for tech-savvy marketers
+-   An example of a JAMstack site that I worked on
+-   The pros and cons from a marketing perspective
 
 ## What is the JAMstack?
 
@@ -102,11 +102,11 @@ As always, there is still work to do to ensure the site ranks well for the most 
 
 **Here's the stack we're using:**
 
-- [Ghost](https://ghost.org/) delivering content via the API
-- A front-end built in React with [Gatsby](https://gatsbyjs.org/) (our static site generator of choice)
-- Deployed with [Netlifly](https://netlify.com/) (really nifty content delivery network)
-- [Algolia](https://algolia.com/) powering the search functionality
-- [Zapier](https://zapier.com/) to automate community feedback into Slack for content improvements
+-   [Ghost](https://ghost.org/) delivering content via the API
+-   A front-end built in React with [Gatsby](https://gatsbyjs.org/) (our static site generator of choice)
+-   Deployed with [Netlifly](https://netlify.com/) (really nifty content delivery network)
+-   [Algolia](https://algolia.com/) powering the search functionality
+-   [Zapier](https://zapier.com/) to automate community feedback into Slack for content improvements
 
 We have also built and contributed an [advanced sitemap plugin](/packages/gatsby-plugin-advanced-sitemap/?=sitemap) which automatically builds a sitemap for any Gatsby project.
 
@@ -124,15 +124,15 @@ I've already covered some of the benefits of opting to use JAMstack instead of a
 
 **Overall benefits:**
 
-- Improved technical knowledge and skills - including shipping content and working with code every day during the build. End result = easier to manage, improve and optimise the site content after it launched.
-- Became well versed in how the site is structured, resulting in greater understanding and communication between teams (dev + design + marketing).
-- The development cycle and the content were being worked on simultaneously and you could see the iterative improvements being made instantly. No long dev cycles followed by a mad dash to get all of the marketing content in at the last minute.
+-   Improved technical knowledge and skills - including shipping content and working with code every day during the build. End result = easier to manage, improve and optimise the site content after it launched.
+-   Became well versed in how the site is structured, resulting in greater understanding and communication between teams (dev + design + marketing).
+-   The development cycle and the content were being worked on simultaneously and you could see the iterative improvements being made instantly. No long dev cycles followed by a mad dash to get all of the marketing content in at the last minute.
 
 **The "downsides":**
 
-- Even if using a [headless CMS](/docs/headless-cms/), there may still be parts of the site that exist entirely in code. So you'll need to get comfortable with editing content and meta data in more than one place.
-- Shipping new marketing material might take a little longer compared to relying on well known methods (depends on your stack and your team, though).
-- New tech means you might stumble upon some exciting new bugs or issues that can take a while to resolve.
+-   Even if using a [headless CMS](/docs/headless-cms/), there may still be parts of the site that exist entirely in code. So you'll need to get comfortable with editing content and meta data in more than one place.
+-   Shipping new marketing material might take a little longer compared to relying on well known methods (depends on your stack and your team, though).
+-   New tech means you might stumble upon some exciting new bugs or issues that can take a while to resolve.
 
 To be frank, all of these downsides are things that are worth enduring to get a better end result. Being more involved in the technical side didn't slow me down once I'd got my foundational knowledge nailed, and spending a little more time upfront to have a beautiful, blazing-fast site is time well spent. The results speak for themselves.
 

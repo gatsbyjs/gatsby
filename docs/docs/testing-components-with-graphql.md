@@ -30,7 +30,7 @@ done.
 As this is testing a page component you will need to put your tests in another
 folder so that Gatsby doesn't try to turn the tests into pages.
 
-```js:title=src/pages/__tests__/index.js
+```js:title=src/pages/\_\_tests\_\_/index.js
 import React from "react"
 import renderer from "react-test-renderer"
 import Index from "../index"
@@ -44,7 +44,7 @@ describe("Index", () =>
 
 If you run this test you will get an error, as the StaticQuery in the `Layout` component is not mocked. You can fix this by mocking it, like so:
 
-```js:title=src/__tests__/index.js
+```js:title=src/\_\_tests\_\_/index.js
 import React from "react"
 import renderer from "react-test-renderer"
 import { StaticQuery } from "gatsby"
@@ -138,7 +138,7 @@ When you have the result, copy the `data` value from the output panel. Good
 practice is to store your fixtures in a separate file, but for simplicity here
 you will be defining it directly inside your test file:
 
-```js:title=src/pages/__tests__/index.js
+```js:title=src/pages/\_\_tests\_\_/index.js
 import React from "react"
 import renderer from "react-test-renderer"
 import Index from "../index"
@@ -300,7 +300,7 @@ This means it's easier to test, and a snapshot should never change.
 
 Here's how:
 
-```js:title=src/components/__tests__/header.js
+```js:title=src/components/\_\_tests\_\_/header.js
 import React from "react"
 import renderer from "react-test-renderer"
 

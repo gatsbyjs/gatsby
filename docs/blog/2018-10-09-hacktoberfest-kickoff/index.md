@@ -13,8 +13,8 @@ Happy October, everyone! We're stoked, because October means… Hacktoberfest!
 
 Hacktoberfest encourages open source contributions by motivating open source projects to create and label contributor-friendly issues, and pseudo-gamifying the participation of contributors. To take part:
 
-- [sign up](https://hacktoberfest.digitalocean.com/sign_up/register) to participate, and
-- submit five quality pull requests to public GitHub repositories (within the time frame of October 1–31).
+-   [sign up](https://hacktoberfest.digitalocean.com/sign_up/register) to participate, and
+-   submit five quality pull requests to public GitHub repositories (within the time frame of October 1–31).
 
 So far, [30+ people have contributed](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aissue+sort%3Aupdated-desc+label%3AHacktoberfest+is%3Aclosed) to close out Gatsby Hacktoberfest issues, and [there are 35 open](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aissue+sort%3Aupdated-desc+label%3AHacktoberfest+is%3Aopen) Hacktoberfest issues, with more on the way.
 
@@ -39,8 +39,8 @@ Gatsby is a great project to contribute to because you can learn about Gatsby wh
 
 Our Hacktoberfest goals are:
 
-1. To provide a range of issues with a clearly defined scope, with minimal background knowledge needed outside of the issue description.
-2. To make contributing to Gatsby as welcoming, friendly, and accessible as we can -- especially to first-time contributors.
+1.  To provide a range of issues with a clearly defined scope, with minimal background knowledge needed outside of the issue description.
+2.  To make contributing to Gatsby as welcoming, friendly, and accessible as we can -- especially to first-time contributors.
 
 Plus, if you've never contributed to Gatsby before, after your very first PR is merged, you can redeem some [free Gatsby swag](/contributing/contributor-swag/)! (_Note: Not Hacktoberfest related. We do this always!_)
 
@@ -73,6 +73,6 @@ For general questions, you could comment on the [main Hacktoberfest issue](https
 
 ## Quick links
 
-- [Hacktoberfest registration page](https://hacktoberfest.digitalocean.com/sign_up/register)
-- [Hacktoberfest FAQs](https://hacktoberfest.digitalocean.com/faq)
-- [Gatsby Hacktoberfest](https://github.com/gatsbyjs/gatsby/issues/8719)
+-   [Hacktoberfest registration page](https://hacktoberfest.digitalocean.com/sign_up/register)
+-   [Hacktoberfest FAQs](https://hacktoberfest.digitalocean.com/faq)
+-   [Gatsby Hacktoberfest](https://github.com/gatsbyjs/gatsby/issues/8719)

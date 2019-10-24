@@ -6,13 +6,13 @@ disableTableOfContents: true
 
 Wow! You've come a long way! You've learned how to:
 
-- create new Gatsby sites
-- create pages and components
-- style components
-- add plugins to a site
-- source & transform data
-- use GraphQL to query data for pages
-- programmatically create pages from your data
+-   create new Gatsby sites
+-   create pages and components
+-   style components
+-   add plugins to a site
+-   source & transform data
+-   use GraphQL to query data for pages
+-   programmatically create pages from your data
 
 In this final section, you're going to walk through some common steps for preparing a site to go live by introducing a powerful site diagnostic tool called [Lighthouse](https://developers.google.com/web/tools/lighthouse/). Along the way, we'll introduce a few more plugins you'll often want to use in your Gatsby sites.
 
@@ -86,9 +86,9 @@ Quoting [Google](https://developers.google.com/web/fundamentals/web-app-manifest
 npm install --save gatsby-plugin-manifest
 ```
 
-2. Add a favicon for your app under `src/images/icon.png`. For the purposes of this tutorial you can use [this example icon](https://raw.githubusercontent.com/gatsbyjs/gatsby/master/docs/tutorial/part-eight/icon.png), should you not have one available. The icon is necessary to build all images for the manifest. For more information, look at the docs for [`gatsby-plugin-manifest`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-manifest/README.md).
+2.  Add a favicon for your app under `src/images/icon.png`. For the purposes of this tutorial you can use [this example icon](https://raw.githubusercontent.com/gatsbyjs/gatsby/master/docs/tutorial/part-eight/icon.png), should you not have one available. The icon is necessary to build all images for the manifest. For more information, look at the docs for [`gatsby-plugin-manifest`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-manifest/README.md).
 
-3. Add the plugin to the `plugins` array in your `gatsby-config.js` file.
+3.  Add the plugin to the `plugins` array in your `gatsby-config.js` file.
 
 ```javascript:title=gatsby-config.js
 {
@@ -205,7 +205,7 @@ module.exports = {
 }
 ```
 
-3. In the `src/components` directory, create a file called `seo.js` and add the following:
+3.  In the `src/components` directory, create a file called `seo.js` and add the following:
 
 ```jsx:title=src/components/seo.js
 import React from "react"
@@ -347,11 +347,11 @@ Lighthouse is a great tool for site improvements and learning -- Continue lookin
 
 ### Official Documentation
 
-- [Official Documentation](https://www.gatsbyjs.org/docs/): View our Official Documentation for _[Quick Start](https://www.gatsbyjs.org/docs/quick-start/)_, _[Detailed Guides](https://www.gatsbyjs.org/docs/preparing-your-environment/)_, _[API References](https://www.gatsbyjs.org/docs/gatsby-link/)_, and much more.
+-   [Official Documentation](https://www.gatsbyjs.org/docs/): View our Official Documentation for _[Quick Start](https://www.gatsbyjs.org/docs/quick-start/)_, _[Detailed Guides](https://www.gatsbyjs.org/docs/preparing-your-environment/)_, _[API References](https://www.gatsbyjs.org/docs/gatsby-link/)_, and much more.
 
 ### Official Plugins
 
-- [Official Plugins](https://github.com/gatsbyjs/gatsby/tree/master/packages): The complete list of all the Official Plugins maintained by Gatsby.
+-   [Official Plugins](https://github.com/gatsbyjs/gatsby/tree/master/packages): The complete list of all the Official Plugins maintained by Gatsby.
 
 ### Official Starters
 
@@ -365,9 +365,9 @@ Well, not quite; just for this tutorial. There are [Additional Tutorials](/tutor
 
 This is just the beginning. Keep going!
 
-- Did you build something cool? Share it on Twitter, tag [#buildwithgatsby](https://twitter.com/search?q=%23buildwithgatsby), and [@mention us](https://twitter.com/gatsbyjs)!
-- Did you write a cool blog post about what you learned? Share that, too!
-- Contribute! Take a stroll through [open issues](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22) on the Gatsby repo and [become a contributor](/contributing/how-to-contribute/).
+-   Did you build something cool? Share it on Twitter, tag [#buildwithgatsby](https://twitter.com/search?q=%23buildwithgatsby), and [@mention us](https://twitter.com/gatsbyjs)!
+-   Did you write a cool blog post about what you learned? Share that, too!
+-   Contribute! Take a stroll through [open issues](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22) on the Gatsby repo and [become a contributor](/contributing/how-to-contribute/).
 
 Check out the ["how to contribute"](/contributing/how-to-contribute/) docs for even more ideas.
 

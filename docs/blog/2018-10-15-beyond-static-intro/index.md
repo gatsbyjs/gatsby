@@ -15,15 +15,15 @@ Until then, I'd like to offer some brief teasers of some of the content we'll be
 
 > My first impression of Gatsby is that it is more of a static site generator which I interpret as being aimed at content or marketing websites and not as focused on web apps. That is a complete assumption so please correct me if I am wrong.
 >
-> - [Triptcip][reddit-thread]
+> -   [Triptcip][reddit-thread]
 
 ## What is an app?
 
 It's surprisingly challenging to define what separates an app from a static site.
 
-- Authentication?
-- Reacting to remote data changes?
-- A shopping cart?
+-   Authentication?
+-   Reacting to remote data changes?
+-   A shopping cart?
 
 It's surprisingly murky where that line is drawn and why exactly many seem to clearly delineate the two _separate_ concepts.
 
@@ -39,9 +39,9 @@ Gatsby is great for static sites and for truly maximizing performance, while als
 
 One of the central ideas of Gatsby is that we statically generate our HTML content--using React DOM server-side APIs. A less-often illustrated feature is that this static HTML content can then be _enhanced_ with client-side JavaScript via React hydration. The general approach is as follows:
 
-1. Build and render static HTML, creating content and pages with data injected at build time
-1. Invoke [ReactDOM.hydrate method][hydrate] to pick up just where we left our static HTML
-1. Transfer rendering to the [React reconciler][reconciler]
+1.  Build and render static HTML, creating content and pages with data injected at build time
+2.  Invoke [ReactDOM.hydrate method][hydrate] to pick up just where we left our static HTML
+3.  Transfer rendering to the [React reconciler][reconciler]
 
 It's this last phase that bridges the gap between static sites and full-fledged applications. In this phase you can make data calls, authenticate users, and perform all the app-like functionality you desire.
 
@@ -56,6 +56,9 @@ Gatsby enables these hooks to deliver app-like functionality, just as it does fo
 If these briefly described topics and use cases sound interesting to you then please consider [signing up for the Webinar][webinar]. I can't wait to share some practical advice, excellent tooling, and a live demo to show you how you can #BuildWithGatsby in more ways than _just_ static. I hope to see you there!
 
 [reddit-thread]: https://www.reddit.com/r/reactjs/comments/992n2r/next_vs_gatsby/?st=jn6cojmr&sh=1a53fac1
+
 [webinar]: https://www.gatsbyjs.com/build-web-apps-webinar
+
 [hydrate]: https://reactjs.org/docs/react-dom.html#hydrate
+
 [reconciler]: https://reactjs.org/docs/reconciliation.html

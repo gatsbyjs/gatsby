@@ -6,10 +6,10 @@ Developers are often the primary evangelists of Gatsby because they are the prim
 
 Some things that developers care about include:
 
-- **Site Performance** Building sites that are fast and that stay fast as new tools and technology get incorporated.
-- **Working with the best tools and technologies** Getting to use new technologies and having the flexibility to pick the right tools for the job.
-- **Not getting bogged down in configuration and setup** These things are often time consuming, frustrating, and prevent developers from getting to focus on the work they actually care about.
-- **Developing as efficiently and effectively as possible** The more things can be streamlined, automated, and/or simplified, the better.
+-   **Site Performance** Building sites that are fast and that stay fast as new tools and technology get incorporated.
+-   **Working with the best tools and technologies** Getting to use new technologies and having the flexibility to pick the right tools for the job.
+-   **Not getting bogged down in configuration and setup** These things are often time consuming, frustrating, and prevent developers from getting to focus on the work they actually care about.
+-   **Developing as efficiently and effectively as possible** The more things can be streamlined, automated, and/or simplified, the better.
 
 ## Basic explanation
 
@@ -61,9 +61,9 @@ You may find that many of your developer friends and colleagues have some questi
 
 Sometimes the most effective way to get a developer's attention is to show them examples of real sites and dev teams using Gatsby. Here are some case studies you might want to share:
 
-- [Delicious Simplicity <3 Gatsby: Building Happily Ever After](/blog/2019-06-08-delicious-simplicity-case-study-part-1/)
-- [Beyond Static: Haptic Media Uses Gatsby to Build a Dynamic Web App](/blog/2019-02-05-hapticmedia-case-study/)
-- [IBM Uses Gatsby to Manage Enterprise-Level Content](/blog/2018-12-17-ibm-case-study/#big-company-big-website)
+-   [Delicious Simplicity &lt;3 Gatsby: Building Happily Ever After](/blog/2019-06-08-delicious-simplicity-case-study-part-1/)
+-   [Beyond Static: Haptic Media Uses Gatsby to Build a Dynamic Web App](/blog/2019-02-05-hapticmedia-case-study/)
+-   [IBM Uses Gatsby to Manage Enterprise-Level Content](/blog/2018-12-17-ibm-case-study/#big-company-big-website)
 
 For even more examples of Gatsby sites, [check out the Showcase](/showcase/)
 

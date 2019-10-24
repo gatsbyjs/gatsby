@@ -20,12 +20,12 @@ To start a fresh dev environment you can prefix the any GitHub URL with `gitpod.
 The started dev environment will open with a ready-built Gatsby core project as well as one built example (gatsbygram).
 Three terminals are started side-by-side running the following processes:
 
-- `yarn run watch --scope={gatsby,gatsby-image,gatsby-link}`
-  Watches and rebuilds the Gatsby core code on any changes
-- `gatsby-dev`
-  Copies over the changes from core to the example
-- `gatsby develop`
-  Serves the example in development mode
+-   `yarn run watch --scope={gatsby,gatsby-image,gatsby-link}`
+    Watches and rebuilds the Gatsby core code on any changes
+-   `gatsby-dev`
+    Copies over the changes from core to the example
+-   `gatsby develop`
+    Serves the example in development mode
 
 The running example app is shown on the right in a preview window.
 

@@ -42,15 +42,15 @@ If you want to specific Path Prefix, for example `example.com/blog/` instead of 
 Additional actions may be required depending on which server you use.
 If you have a server from one of the following providers, you should read the individual subpages:
 
-- [AWS Amplify](/docs/deploying-to-aws-amplify)
-- [S3/Cloudfront](/docs/deploying-to-s3-cloudfront)
-- [Aerobatic](/docs/deploying-to-aerobatic)
-- [Heroku](/docs/deploying-to-heroku)
-- [ZEIT Now](/docs/deploying-to-zeit-now)
-- [GitLab Pages](/docs/deploying-to-gitlab-pages)
-- [Netlify](/docs/deploying-to-netlify)
-- [Render](/docs/deploying-to-render)
-- [Surge](/docs/deploying-to-surge)
-- [GitHub Pages](/docs/how-gatsby-works-with-github-pages)
+-   [AWS Amplify](/docs/deploying-to-aws-amplify)
+-   [S3/Cloudfront](/docs/deploying-to-s3-cloudfront)
+-   [Aerobatic](/docs/deploying-to-aerobatic)
+-   [Heroku](/docs/deploying-to-heroku)
+-   [ZEIT Now](/docs/deploying-to-zeit-now)
+-   [GitLab Pages](/docs/deploying-to-gitlab-pages)
+-   [Netlify](/docs/deploying-to-netlify)
+-   [Render](/docs/deploying-to-render)
+-   [Surge](/docs/deploying-to-surge)
+-   [GitHub Pages](/docs/how-gatsby-works-with-github-pages)
 
 If you don't see the hosting you are interested, it's possible to add other hosting providers through [contributions to the docs](/contributing/docs-contributions).

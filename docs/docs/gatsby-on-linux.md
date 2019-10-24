@@ -65,7 +65,11 @@ sudo apt update && sudo apt -y upgrade && sudo apt install build-essential && su
 <!-- links -->
 
 [windows store]: https://www.microsoft.com/en-us/store/p/ubuntu/9nblggh4msv6
+
 [n]: https://github.com/tj/n
+
 [n-install]: https://github.com/mklement0/n-install
+
 [nvm]: https://github.com/creationix/nvm
+
 [bash startup]: https://github.com/Microsoft/WSL/issues/776#issuecomment-266112578

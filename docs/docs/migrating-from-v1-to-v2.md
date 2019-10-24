@@ -16,63 +16,63 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
 
 This documentation page covers the _how_ of migrating from v1 to v2. Various blog posts cover the _why_:
 
-- [v2 Overview](/blog/2018-09-17-gatsby-v2/) by Kyle Mathews
-- [Improving accessibility](/blog/2018-09-27-reach-router/) by Amberley Romo
-- [Keeping Gatsby sites blazing fast](/blog/2019-10-03-gatsby-perf/) by Dustin Schau
+-   [v2 Overview](/blog/2018-09-17-gatsby-v2/) by Kyle Mathews
+-   [Improving accessibility](/blog/2018-09-27-reach-router/) by Amberley Romo
+-   [Keeping Gatsby sites blazing fast](/blog/2019-10-03-gatsby-perf/) by Dustin Schau
 
 ## What we'll cover
 
-- [Updating Your Dependencies](#updating-your-dependencies)
+-   [Updating Your Dependencies](#updating-your-dependencies)
 
-  - [Update Gatsby version](#update-gatsby-version)
-  - [Install React](#install-react)
-  - [Install plugins' peer dependencies](#install-plugins-peer-dependencies)
+    -   [Update Gatsby version](#update-gatsby-version)
+    -   [Install React](#install-react)
+    -   [Install plugins' peer dependencies](#install-plugins-peer-dependencies)
 
-- [Handling Breaking Changes](#handling-breaking-changes)
+-   [Handling Breaking Changes](#handling-breaking-changes)
 
-  - [Remove or refactor layout components](#remove-or-refactor-layout-components)
-  - [Change `navigateTo` to `navigate`](#change-navigateto-to-navigate)
-  - [Convert to either pure CommonJS or pure ES6](#convert-to-either-pure-commonjs-or-pure-es6)
-  - [Move Babel configuration](#move-babel-configuration)
-  - [Restore v1 PostCSS plugin setup](#restore-v1-postcss-plugin-setup)
-  - [Migrate from React Router` to @reach/router](#migrate-from-react-router-to-reachrouter)
-  - [APIs onPreRouteUpdate and onRouteUpdate no longer called with the route update action](#apis-onprerouteupdate-and-onrouteupdate-no-longer-called-with-the-route-update-action)
-  - [Browser API `replaceRouterComponent` was removed](#browser-api-replaceroutercomponent-was-removed)
-  - [Browser API `replaceHistory` was removed](#browser-api-replacehistory-was-removed)
-  - [Browser API `wrapRootComponent` was replaced with `wrapRootElement`](#browser-api-wraprootcomponent-was-replaced-with-wraprootelement)
-  - [Don't query nodes by ID](#dont-query-nodes-by-id)
-  - [Use Query in place of RootQueryType](#use-query-in-place-of-rootquerytype)
-  - [Typography.js Plugin Config](#typographyjs-plugin-config-changes)
-  - [Update CSS Modules class names that use dashes](#update-css-modules-class-names-that-use-dashes)
-  - [Update Jest configuration](#update-jest-configuration)
-  - [`gatsby-image`'s `outerWrapperClassName` was removed](#gatsby-images-outerwrapperclassname-was-removed)
+    -   [Remove or refactor layout components](#remove-or-refactor-layout-components)
+    -   [Change `navigateTo` to `navigate`](#change-navigateto-to-navigate)
+    -   [Convert to either pure CommonJS or pure ES6](#convert-to-either-pure-commonjs-or-pure-es6)
+    -   [Move Babel configuration](#move-babel-configuration)
+    -   [Restore v1 PostCSS plugin setup](#restore-v1-postcss-plugin-setup)
+    -   [Migrate from React Router\` to @reach/router](#migrate-from-react-router-to-reachrouter)
+    -   [APIs onPreRouteUpdate and onRouteUpdate no longer called with the route update action](#apis-onprerouteupdate-and-onrouteupdate-no-longer-called-with-the-route-update-action)
+    -   [Browser API `replaceRouterComponent` was removed](#browser-api-replaceroutercomponent-was-removed)
+    -   [Browser API `replaceHistory` was removed](#browser-api-replacehistory-was-removed)
+    -   [Browser API `wrapRootComponent` was replaced with `wrapRootElement`](#browser-api-wraprootcomponent-was-replaced-with-wraprootelement)
+    -   [Don't query nodes by ID](#dont-query-nodes-by-id)
+    -   [Use Query in place of RootQueryType](#use-query-in-place-of-rootquerytype)
+    -   [Typography.js Plugin Config](#typographyjs-plugin-config-changes)
+    -   [Update CSS Modules class names that use dashes](#update-css-modules-class-names-that-use-dashes)
+    -   [Update Jest configuration](#update-jest-configuration)
+    -   [`gatsby-image`'s `outerWrapperClassName` was removed](#gatsby-images-outerwrapperclassname-was-removed)
 
-- [Resolving Deprecations](#resolving-deprecations)
+-   [Resolving Deprecations](#resolving-deprecations)
 
-  - [Import Link from Gatsby](#import-link-from-gatsby)
-  - [Import graphql from Gatsby](#import-graphql-from-gatsby)
-  - [Rename `boundActionCreators` to `actions`](#rename-boundactioncreators-to-actions)
-  - [Rename `pathContext` to `pageContext`](#rename-pathcontext-to-pagecontext)
-  - [Rename responsive image queries](#rename-responsive-image-queries)
-  - [`deleteNodes` API deprecated](#delete-nodes-api-deprecated)
+    -   [Import Link from Gatsby](#import-link-from-gatsby)
+    -   [Import graphql from Gatsby](#import-graphql-from-gatsby)
+    -   [Rename `boundActionCreators` to `actions`](#rename-boundactioncreators-to-actions)
+    -   [Rename `pathContext` to `pageContext`](#rename-pathcontext-to-pagecontext)
+    -   [Rename responsive image queries](#rename-responsive-image-queries)
+    -   [`deleteNodes` API deprecated](#delete-nodes-api-deprecated)
 
-- [Other Changes Worth Noting](#other-changes-worth-noting)
+-   [Other Changes Worth Noting](#other-changes-worth-noting)
 
-  - [Explicit query names no longer required](#explicit-query-names-no-longer-required)
-  - [Remove inlined CSS in `html.js`](#remove-inlined-css-in-htmljs)
-  - [Remove explicit polyfills](#remove-explicit-polyfills)
+    -   [Explicit query names no longer required](#explicit-query-names-no-longer-required)
+    -   [Remove inlined CSS in `html.js`](#remove-inlined-css-in-htmljs)
+    -   [Remove explicit polyfills](#remove-explicit-polyfills)
 
-- [For Plugin Maintainers](#for-plugin-maintainers)
+-   [For Plugin Maintainers](#for-plugin-maintainers)
 
-  - [Setting the proper Peer Dependencies](#setting-the-proper-peer-dependencies)
-  - [Change `modifyBabelrc` to `onCreateBabelConfig`](#change-modifybabelrc-to-oncreatebabelconfig)
-  - [Change `modifyWebpackConfig` to `onCreateWebpackConfig`](#change-modifywebpackconfig-to-oncreatewebpackconfig)
-  - [`createRemoteFileNode` API has changed](#createremotefilenode)
-  - [Only allow defined keys on the `node.internal` object](#only-allow-defined-keys-on-the-node-internal-object)
-  - [Import `graphql` types from `gatsby/graphql`](#import-graphql-types-from-gatsbygraphql)
+    -   [Setting the proper Peer Dependencies](#setting-the-proper-peer-dependencies)
+    -   [Change `modifyBabelrc` to `onCreateBabelConfig`](#change-modifybabelrc-to-oncreatebabelconfig)
+    -   [Change `modifyWebpackConfig` to `onCreateWebpackConfig`](#change-modifywebpackconfig-to-oncreatewebpackconfig)
+    -   [`createRemoteFileNode` API has changed](#createremotefilenode)
+    -   [Only allow defined keys on the `node.internal` object](#only-allow-defined-keys-on-the-node-internal-object)
+    -   [Import `graphql` types from `gatsby/graphql`](#import-graphql-types-from-gatsbygraphql)
 
-- [For Explorers](#for-explorers)
-  - [V2 from Scratch](#starting-a-new-project-with-v2)
+-   [For Explorers](#for-explorers)
+    -   [V2 from Scratch](#starting-a-new-project-with-v2)
 
 ## Updating Your Dependencies
 
@@ -136,10 +136,11 @@ You should search for the plugins that you use in the [plugin library](/plugins)
 
 There are some implications to this change:
 
-- Rendering different layouts for different pages is different. Use the standard React inheritance model. Gatsby no longer maintains, or needs to maintain, separate behavior for handling layouts.
-- Because the "top level component" changes between each page, React will rerender all children. This means that shared components previously in a Gatsby v1 layout-- like navigations-- will unmount and remount. This will break CSS transitions or React state within those shared components. If your use case requires layout component to not unmount use [`gatsby-plugin-layout`](/packages/gatsby-plugin-layout/).
+-   Rendering different layouts for different pages is different. Use the standard React inheritance model. Gatsby no longer maintains, or needs to maintain, separate behavior for handling layouts.
 
-- To learn more about the decision behind this removal, read the [RFC for removing the special layout component](https://github.com/gatsbyjs/rfcs/blob/master/text/0002-remove-special-layout-components.md).
+-   Because the "top level component" changes between each page, React will rerender all children. This means that shared components previously in a Gatsby v1 layout-- like navigations-- will unmount and remount. This will break CSS transitions or React state within those shared components. If your use case requires layout component to not unmount use [`gatsby-plugin-layout`](/packages/gatsby-plugin-layout/).
+
+-   To learn more about the decision behind this removal, read the [RFC for removing the special layout component](https://github.com/gatsbyjs/rfcs/blob/master/text/0002-remove-special-layout-components.md).
 
 We recommend the following migration path:
 
@@ -370,8 +371,8 @@ For _most_ sites, this change won't cause any breaking changes as the two router
 
 Two common ways this change _might_ break your site is:
 
-- You use the object form of the `to` prop in the `<Link>` component
-- You have client side routes
+-   You use the object form of the `to` prop in the `<Link>` component
+-   You have client side routes
 
 Read more about the features of our new router at <https://reach.tech/router>
 
@@ -434,9 +435,9 @@ import { navigate } from "@reach/router"
 
 #### The following props are no longer available on `<Link>`
 
-- `exact`
-- `strict`
-- `location`
+-   `exact`
+-   `strict`
+-   `location`
 
 `exact` and `strict` are no longer necessary as @reach/router does matching
 this way by default.
@@ -472,9 +473,9 @@ exports.onCreatePage = async ({ page, actions }) => {
 
 #### Migrating React Router client routes to @reach/router
 
-- Use `<Location>` instead of `withRouter`
-- `import { navigate } from @reach/router` for programmatic navigation instead of the history object
-- There's no `Route` component any more. You can add a `<Router>` component (a site can have as many routers as it wishes). Then ensure the immediate children of `<Router>` have a prop named `path`.
+-   Use `<Location>` instead of `withRouter`
+-   `import { navigate } from @reach/router` for programmatic navigation instead of the history object
+-   There's no `Route` component any more. You can add a `<Router>` component (a site can have as many routers as it wishes). Then ensure the immediate children of `<Router>` have a prop named `path`.
 
 A basic example of the `<Router>` component:
 
@@ -530,9 +531,9 @@ in store.gatsbyjs.org) from React Router to @reach/router.
 
 Here's links to diffs for three sites with client routes upgraded to @reach/router:
 
-- [store.gatsbyjs.org](https://github.com/gatsbyjs/store.gatsbyjs.org/pull/111)
-- [client-only-routes](https://github.com/gatsbyjs/gatsby/pull/6918/files#diff-69757e54875e28ef83eb8efe45a33fdf)
-- [simple-auth](https://github.com/gatsbyjs/gatsby/pull/6918/files#diff-53ac112a4b2ec760b26a86c953df2339)
+-   [store.gatsbyjs.org](https://github.com/gatsbyjs/store.gatsbyjs.org/pull/111)
+-   [client-only-routes](https://github.com/gatsbyjs/gatsby/pull/6918/files#diff-69757e54875e28ef83eb8efe45a33fdf)
+-   [simple-auth](https://github.com/gatsbyjs/gatsby/pull/6918/files#diff-53ac112a4b2ec760b26a86c953df2339)
 
 ### APIs `onPreRouteUpdate` and `onRouteUpdate` no longer called with the route update action
 
