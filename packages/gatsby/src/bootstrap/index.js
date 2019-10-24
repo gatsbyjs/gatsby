@@ -19,6 +19,7 @@ const report = require(`gatsby-cli/lib/reporter`)
 const getConfigFile = require(`./get-config-file`)
 const tracer = require(`opentracing`).globalTracer()
 const preferDefault = require(`./prefer-default`)
+const pageDataUtil = require(`../utils/page-data`)
 // Add `util.promisify` polyfill for old node versions
 require(`util.promisify/shim`)()
 
@@ -501,6 +502,12 @@ module.exports = async (args: BootstrapArgs) => {
     await requiresWriter.writeAll(store.getState())
   } catch (err) {
     report.panic(`Failed to write out requires`, err)
+  }
+
+  try {
+    await pageDataUtil.deleteUnusedPageData({ store, directory })
+  } catch (err) {
+    report.panic(`Failed to delete unused page-data.json files`, err)
   }
   activity.end()
 
