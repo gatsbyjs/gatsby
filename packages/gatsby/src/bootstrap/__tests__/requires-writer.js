@@ -82,7 +82,7 @@ describe(`requires-writer`, () => {
       })
     })
 
-    it(`should sort matchPaths by specificity`, async () => {
+    it(`should be sorted by specificity`, async () => {
       const pages = generatePagesState([
         {
           path: `/`,
@@ -109,10 +109,40 @@ describe(`requires-writer`, () => {
         program,
       })
 
-      expect(matchPaths[0].path).toBe(pages.get(`/app/clients/`).path)
+      expect(matchPaths[0].path).toBe(pages.get(`/app/login/`).path)
       expect(matchPaths[matchPaths.length - 1].path).toBe(
         pages.get(`/app/`).path
       )
+      expect(matchPaths).toMatchSnapshot()
+    })
+
+    it(`should have static pages that live inside a matchPath`, async () => {
+      const pages = generatePagesState([
+        {
+          path: `/`,
+        },
+        {
+          path: `/app/`,
+          matchPath: `/app/*`,
+        },
+        {
+          path: `/app/clients/`,
+          matchPath: `/app/clients/*`,
+        },
+        {
+          path: `/app/clients/static`,
+        },
+        {
+          path: `/app/login/`,
+        },
+      ])
+
+      await requiresWriter.writeAll({
+        pages,
+        program,
+      })
+
+      expect(matchPaths[0].path).toBe(pages.get(`/app/clients/static`).path)
       expect(matchPaths).toMatchSnapshot()
     })
   })

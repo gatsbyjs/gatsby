@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.15...gatsby-plugin-offline@3.0.16) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+## [3.0.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.14...gatsby-plugin-offline@3.0.15) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+## [3.0.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.13...gatsby-plugin-offline@3.0.14) (2019-10-10)
+
+### Features
+
+- **gatsby-plugin-offline:** Allow configuring Workbox debug m… ([#18123](https://github.com/gatsbyjs/gatsby/issues/18123)) ([3c18b9f](https://github.com/gatsbyjs/gatsby/commit/3c18b9f))
+
+## [3.0.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.12...gatsby-plugin-offline@3.0.13) (2019-10-09)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+## [3.0.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.11...gatsby-plugin-offline@3.0.12) (2019-10-08)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+## [3.0.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.9...gatsby-plugin-offline@3.0.11) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+## [3.0.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.9...gatsby-plugin-offline@3.0.10) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+## [3.0.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.8...gatsby-plugin-offline@3.0.9) (2019-09-25)
+
+### Bug Fixes
+
+- **gatsby-plugin-offline:** skip prefetching all resources ([#16691](https://github.com/gatsbyjs/gatsby/issues/16691)) ([e688b0c](https://github.com/gatsbyjs/gatsby/commit/e688b0c))
+
 ## [3.0.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.7...gatsby-plugin-offline@3.0.8) (2019-09-20)
 
 ### Features

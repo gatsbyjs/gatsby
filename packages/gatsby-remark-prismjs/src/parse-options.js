@@ -18,7 +18,7 @@ module.exports = language => {
       option = option.slice(0, -1)
       let splitOption = option.replace(/ /g, ``).split(`:`)
 
-      // Test if the option is for line hightlighting
+      // Test if the option is for line highlighting
       if (splitOption.length === 1 && rangeParser.parse(option).length > 0) {
         highlightLines = rangeParser.parse(option).filter(n => n > 0)
       }

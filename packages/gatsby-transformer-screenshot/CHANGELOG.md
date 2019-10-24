@@ -3,6 +3,62 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.36](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-screenshot@2.1.35...gatsby-transformer-screenshot@2.1.36) (2019-10-15)
+
+**Note:** Version bump only for package gatsby-transformer-screenshot
+
+## [2.1.35](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-screenshot@2.1.34...gatsby-transformer-screenshot@2.1.35) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-transformer-screenshot
+
+## [2.1.34](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-screenshot@2.1.33...gatsby-transformer-screenshot@2.1.34) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-transformer-screenshot
+
+## [2.1.33](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-screenshot@2.1.32...gatsby-transformer-screenshot@2.1.33) (2019-10-10)
+
+**Note:** Version bump only for package gatsby-transformer-screenshot
+
+## [2.1.32](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-screenshot@2.1.31...gatsby-transformer-screenshot@2.1.32) (2019-10-09)
+
+**Note:** Version bump only for package gatsby-transformer-screenshot
+
+## [2.1.31](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-screenshot@2.1.30...gatsby-transformer-screenshot@2.1.31) (2019-10-08)
+
+**Note:** Version bump only for package gatsby-transformer-screenshot
+
+## [2.1.30](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-screenshot@2.1.29...gatsby-transformer-screenshot@2.1.30) (2019-10-08)
+
+**Note:** Version bump only for package gatsby-transformer-screenshot
+
+## [2.1.29](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-screenshot@2.1.28...gatsby-transformer-screenshot@2.1.29) (2019-10-04)
+
+**Note:** Version bump only for package gatsby-transformer-screenshot
+
+## [2.1.28](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-screenshot@2.1.26...gatsby-transformer-screenshot@2.1.28) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-transformer-screenshot
+
+## [2.1.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-screenshot@2.1.26...gatsby-transformer-screenshot@2.1.27) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-transformer-screenshot
+
+## [2.1.26](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-screenshot@2.1.25...gatsby-transformer-screenshot@2.1.26) (2019-09-25)
+
+**Note:** Version bump only for package gatsby-transformer-screenshot
+
+## [2.1.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-screenshot@2.1.24...gatsby-transformer-screenshot@2.1.25) (2019-09-25)
+
+**Note:** Version bump only for package gatsby-transformer-screenshot
+
+## [2.1.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-screenshot@2.1.23...gatsby-transformer-screenshot@2.1.24) (2019-09-24)
+
+**Note:** Version bump only for package gatsby-transformer-screenshot
+
+## [2.1.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-screenshot@2.1.22...gatsby-transformer-screenshot@2.1.23) (2019-09-23)
+
+**Note:** Version bump only for package gatsby-transformer-screenshot
+
 ## [2.1.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-screenshot@2.1.21...gatsby-transformer-screenshot@2.1.22) (2019-09-20)
 
 **Note:** Version bump only for package gatsby-transformer-screenshot

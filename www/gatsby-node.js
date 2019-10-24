@@ -360,6 +360,29 @@ exports.createPages = ({ graphql, actions, reporter }) => {
     isPermanent: true,
   })
 
+  createRedirect({
+    fromPath: `/docs/querying-with-graphql/`,
+    toPath: `/docs/graphql-concepts/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/introducing-graphiql/`,
+    toPath: `/docs/running-queries-with-graphiql/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/life-and-times-of-a-gatsby-build/`,
+    toPath: `/docs/overview-of-the-gatsby-build-process/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/awesome-gatsby/`,
+    toPath: `/docs/awesome-gatsby-resources/`,
+    isPermanent: true,
+  })
   Object.entries(startersRedirects).forEach(([fromSlug, toSlug]) => {
     createRedirect({
       fromPath: `/starters${fromSlug}`,

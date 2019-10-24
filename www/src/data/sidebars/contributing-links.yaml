@@ -26,6 +26,8 @@
       link: /contributing/code-of-conduct/
     - title: Gatsby Style Guide
       link: /contributing/gatsby-style-guide/
+    - title: Gatsby Docs Translation Guide
+      link: /contributing/gatsby-docs-translation-guide/
     - title: How to Contribute
       link: /contributing/how-to-contribute/
       items:
@@ -33,6 +35,8 @@
           link: /contributing/how-to-file-an-issue/
         - title: How to Make a Reproducible Test Case
           link: /contributing/how-to-make-a-reproducible-test-case/
+        - title: How to Open a Pull Request
+          link: /contributing/how-to-open-a-pull-request/
         - title: How to Label an Issue
           link: /contributing/how-to-label-an-issue/
         - title: Triaging GitHub Issues

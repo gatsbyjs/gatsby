@@ -2,7 +2,7 @@
 title: Styled Components
 ---
 
-In this guide, you will learn setting up a site with the CSS-in-JS library [Styled Components](https://www.styled-components.com/).
+In this guide, you will learn how to set up a site with the CSS-in-JS library [Styled Components](https://www.styled-components.com/).
 
 Styled Components lets you use actual CSS syntax inside your components. Styled Components is a variant on "CSS-in-JS"—which solves many of the problems with traditional CSS.
 
@@ -38,7 +38,7 @@ module.exports = {
 
 Then in your terminal run `gatsby develop` to start the Gatsby development server.
 
-Now let's create a sample Styled Components page at `src/pages/index.js`:
+Now create a sample Styled Components page at `src/pages/index.js`:
 
 ```jsx:title=src/pages/index.js
 import React from "react"

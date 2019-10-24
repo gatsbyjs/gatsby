@@ -1,5 +1,7 @@
 exports.registerServiceWorker = () => true
 
+// only cache relevant resources for this page
+const whiteListLinkRels = /^(stylesheet|preload)$/
 const prefetchedPathnames = []
 
 exports.onServiceWorkerActive = ({
@@ -23,6 +25,12 @@ exports.onServiceWorkerActive = ({
   // get all resource URLs
   const headerResources = [].slice
     .call(nodes)
+    // don't include preconnect/prefetch/prerender resources
+    .filter(
+      node =>
+        node.tagName !== `LINK` ||
+        whiteListLinkRels.test(node.getAttribute(`rel`))
+    )
     .map(node => node.src || node.href || node.getAttribute(`data-href`))
 
   // Loop over prefetched pages and add their resources to an array,

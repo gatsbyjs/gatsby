@@ -32,7 +32,7 @@ Here are some resources with detailed instructions on how to build a Gatsby them
 To enter the Theme Jam Contest, you will need to…
 
 1. Review your theme against the [Theme Jam Submission Checklist](https://github.com/jlengstorf/gatsby-theme-jam-example/blob/master/theme/README.md#submission-checklist).
-2. Complete and submit your entry through the [Theme Jam Contest Submission form](https://airtable.com/shrqRYknYY50YCzeq) by **Wednesday, July 31st at 11:59pm Pacific time**. Your Theme Jam submission will need to include links to its repository on Github, the npm package, and a demo site.
+2. Complete and submit your entry through the [Theme Jam Contest Submission form](https://airtable.com/shrqRYknYY50YCzeq) by **Wednesday, July 31st at 11:59pm Pacific time**. Your Theme Jam submission will need to include links to its repository on GitHub, the npm package, and a demo site.
 
 Submissions will be judged on a range of criteria including code quality and legibility, accessibility, performance, documentation, and creativity.
 

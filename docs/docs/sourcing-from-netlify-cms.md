@@ -2,7 +2,7 @@
 title: Sourcing from Netlify CMS
 ---
 
-In this guide, we'll walk through setting up a site with content management using [Netlify
+In this guide, you'll set up a site with content management using [Netlify
 CMS](https://github.com/netlify/netlify-cms).
 
 Netlify CMS is an open source, single page app written in React that lets you edit content and data
@@ -14,7 +14,7 @@ users alike, and interacts with your static site repository via API so that ever
 a commit.
 
 A primary focus of Netlify CMS is to work well with modern site generators like Gatsby. Installation
-typically requires just an index.html file and a YAML configuration file, but we're going to
+typically requires just an index.html file and a YAML configuration file, but you're going to
 leverage the Gatsby plugin for Netlify CMS to automatically install and build the CMS along with a
 static site.
 
@@ -161,7 +161,7 @@ If you use the [Client-Side Implicit Grant](https://www.netlifycms.org/docs/auth
 }
 ```
 
-#### Making Changes
+#### Making changes
 
 Alright - you're all set to make changes in Netlify CMS and see them as commits in your GitHub repo!
 Open Netlify CMS on your deployed site at `/admin/`, allow access to GitHub when the permissions
@@ -179,7 +179,7 @@ website, mobile app, or something else entirely.
 Right now, Gatsby doesn't know the new blog post is there, and it isn't set up to process Markdown.
 Let's fix that.
 
-### Processing Netlify CMS Output with Gatsby
+### Processing Netlify CMS output with Gatsby
 
 Gatsby can be configured to process Markdown by following the [Adding Markdown
 Pages](/docs/adding-markdown-pages/) guide in the docs. Our `config.yml`
@@ -194,7 +194,7 @@ entry in Netlify CMS. If you followed the example in Gatsby's Adding Markdown Pa
 "/blog/my-first-blog", then your blog post would be at
 "your-site-name.netlify.com/blog/my-first-blog".
 
-### Wrapping Up
+### Wrapping up
 
 This was a very basic example meant to help you understand how Netlify CMS works with Gatsby. As
 mentioned in the beginning of this guide, if you got stuck, you can compare your code to the

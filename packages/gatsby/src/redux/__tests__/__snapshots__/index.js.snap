@@ -3,8 +3,8 @@
 exports[`redux db should write cache to disk 1`] = `
 Object {
   "componentDataDependencies": Object {
-    "connections": Object {},
-    "nodes": Object {},
+    "connections": Map {},
+    "nodes": Map {},
   },
   "components": Map {
     "/Users/username/dev/site/src/templates/my-sweet-new-page.js" => Object {

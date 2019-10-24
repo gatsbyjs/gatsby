@@ -1,6 +1,6 @@
-import React from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import { Link } from "gatsby"
-import { colors } from "../../utils/presets"
 
 const PaginationLink = ({ to, children, ...props }) => {
   if (to) {
@@ -10,7 +10,7 @@ const PaginationLink = ({ to, children, ...props }) => {
       </Link>
     )
   }
-  return <span css={{ color: colors.text.secondary }}>{children}</span>
+  return <span sx={{ color: `textMuted` }}>{children}</span>
 }
 
 export default PaginationLink

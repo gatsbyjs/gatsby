@@ -33,9 +33,9 @@ gatsby build
 
 Then in the `public` directory will be files to copy to the server.
 
-## Adding a Path Prefix
+## Adding a path prefix
 
-If you want to specific Path Prefix, for example `example.com/blog/` instead of `example.com/` read [Adding a Path Prefix](/docs/path-prefix)
+If you want to specific Path Prefix, for example `example.com/blog/` instead of `example.com/` read [adding a path prefix](/docs/path-prefix)
 
 ## Specific deploy
 

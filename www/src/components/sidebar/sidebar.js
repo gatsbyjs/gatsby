@@ -1,19 +1,12 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React, { Component } from "react"
 
 import Item from "./item"
 import ExpandAllButton from "./button-expand-all"
 import getActiveItem from "../../utils/sidebar/get-active-item"
 import getActiveItemParents from "../../utils/sidebar/get-active-item-parents"
-import {
-  colors,
-  space,
-  fontSizes,
-  transition,
-  mediaQueries,
-  sizes,
-  letterSpacings,
-} from "../../utils/presets"
-import presets from "../../utils/sidebar/presets"
+import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 
 // Access to global `localStorage` property must be guarded as it
 // fails under iOS private session mode.
@@ -208,10 +201,22 @@ class SidebarBody extends Component {
         aria-label="Secondary Navigation"
         id="SecondaryNavigation"
         className="docSearch-sidebar"
-        css={{ height: `100%` }}
+        sx={{ height: `100%` }}
       >
         {!this.props.disableExpandAll && (
-          <header css={{ ...styles.utils }}>
+          <header
+            sx={{
+              alignItems: `center`,
+              bg: `background`,
+              borderColor: `ui.border`,
+              borderRightStyle: `solid`,
+              borderRightWidth: `1px`,
+              display: `flex`,
+              height: `sidebarUtilityHeight`,
+              pl: 4,
+              pr: 6,
+            }}
+          >
             <ExpandAllButton
               onClick={this._expandAll}
               expandAll={this.state.expandAll}
@@ -230,35 +235,57 @@ class SidebarBody extends Component {
             })
           }}
           ref={this.scrollRef}
-          css={{
-            ...styles.sidebarScrollContainer,
-            height: this.props.disableExpandAll
-              ? `100%`
-              : `calc(100% - ${sizes.sidebarUtilityHeight})`,
+          sx={{
+            WebkitOverflowScrolling: `touch`,
+            bg: `background`,
+            border: 0,
+            display: `block`,
+            overflowY: `auto`,
+            transition: t =>
+              `opacity ${t.transition.speed.slow} ${t.transition.curve.default}`,
+            zIndex: 10,
+            borderRightWidth: `1px`,
+            borderRightStyle: `solid`,
+            borderColor: `ui.border`,
+            height: t =>
+              this.props.disableExpandAll
+                ? `100%`
+                : `calc(100% - ${t.sizes.sidebarUtilityHeight})`,
             [mediaQueries.md]: {
-              ...styles.sidebarScrollContainerTablet,
+              top: t =>
+                `calc(${t.sizes.headerHeight} + ${t.sizes.bannerHeight})`,
             },
           }}
         >
           <h3
-            css={{
-              color: colors.text.secondary,
-              paddingLeft: space[6],
-              paddingRight: space[6],
-              fontSize: fontSizes[1],
-              paddingTop: space[6],
+            sx={{
+              color: `textMuted`,
+              px: 6,
+              fontSize: 1,
+              pt: 6,
               margin: 0,
-              fontWeight: `normal`,
+              fontWeight: `body`,
               textTransform: `uppercase`,
-              letterSpacing: letterSpacings.tracked,
-              // [mediaQueries.md]: {
-              //   display: `none`,
-              // },
+              letterSpacing: `tracked`,
             }}
           >
             {this.props.title}
           </h3>
-          <ul css={{ ...styles.list }}>
+          <ul
+            sx={{
+              m: 0,
+              py: 4,
+              fontSize: 1,
+              bg: `background`,
+              "& li": {
+                m: 0,
+                listStyle: `none`,
+              },
+              "& > li:last-child > span:before": {
+                display: `none`,
+              },
+            }}
+          >
             {itemList.map((item, index) => (
               <Item
                 activeItemLink={activeItemLink}
@@ -283,42 +310,3 @@ class SidebarBody extends Component {
 }
 
 export default SidebarBody
-
-const styles = {
-  utils: {
-    borderRight: `1px solid ${colors.ui.border.subtle}`,
-    display: `flex`,
-    alignItems: `center`,
-    height: sizes.sidebarUtilityHeight,
-    background: presets.backgroundDefault,
-    paddingLeft: space[4],
-    paddingRight: space[6],
-  },
-  sidebarScrollContainer: {
-    WebkitOverflowScrolling: `touch`,
-    background: presets.backgroundDefault,
-    border: 0,
-    display: `block`,
-    overflowY: `auto`,
-    transition: `opacity ${transition.speed.slow} ${transition.curve.default}`,
-    zIndex: 10,
-    borderRight: `1px solid ${colors.ui.border.subtle}`,
-  },
-  sidebarScrollContainerTablet: {
-    backgroundColor: presets.backgroundTablet,
-    top: `calc(${sizes.headerHeight} + ${sizes.bannerHeight})`,
-  },
-  list: {
-    margin: 0,
-    paddingTop: space[4],
-    paddingBottom: space[4],
-    fontSize: fontSizes[1],
-    "& li": {
-      margin: 0,
-      listStyle: `none`,
-    },
-    "& > li:last-child > span:before": {
-      display: `none`,
-    },
-  },
-}

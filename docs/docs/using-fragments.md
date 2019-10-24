@@ -1,5 +1,5 @@
 ---
-title: Using fragments
+title: Using Fragments
 ---
 
 Fragments allow you to reuse parts of GraphQL queries. It also allows you to split up complex queries into smaller, easier to understand components.
@@ -74,7 +74,7 @@ export const query = graphql`
 `
 ```
 
-When compiling your site, Gatsby preprocesses all GraphQL queries it finds. Therefore, any file that gets included in your project can define a snippet. However, only Pages can define GraphQL queries that actually return data. This is why we can define the fragment in the component file - it doesn't actually return any data directly.
+When compiling your site, Gatsby preprocesses all GraphQL queries it finds. Therefore, any file that gets included in your project can define a snippet. However, only Pages can define GraphQL queries that actually return data. This is why you can define the fragment in the component file - it doesn't actually return any data directly.
 
 ## Further reading
 

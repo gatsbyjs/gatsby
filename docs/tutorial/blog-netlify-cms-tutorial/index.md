@@ -32,7 +32,7 @@ gatsby develop
 
 Now you can go to [`localhost:8000`](http://localhost:8000) to see your new site, but what's extra cool is that Netlify CMS is pre-installed and you can access it at [`localhost:8000/admin`](http://localhost:8000/admin).
 
-A CMS, or content management system, is useful because you can add content like blog posts from a dashboard on your site, instead of having to add posts manually with Markdown. However, you'll likely want to be able to access the CMS from a deployed website, not just locally. For that, you'll need to deploy to Netlify through GitHub, set up continuous deployment, and do a few configurations. We'll go over this in [Step-5](#step-5).
+A CMS, or content management system, is useful because you can add content like blog posts from a dashboard on your site, instead of having to add posts manually with Markdown. However, you'll likely want to be able to access the CMS from a deployed website, not just locally. For that, you'll need to deploy to Netlify through GitHub, set up continuous deployment, and do a few configurations. You'll go over this in [Step-5](#step-5).
 
 ### Step 3
 
@@ -86,6 +86,6 @@ Copy the credentials of your new app listed on [GitHub oAuth Apps](https://githu
 
 #### Benefits of Netlify CMS, GitHub, and Netlify Workflow
 
-Congrats! Now that Netlify CMS is successfully configured to your project, every time you add a new post, the content will be stored in your repostory and versioned on GitHub because Netlify CMS is Git-based. Also, thanks to [Netlify's Continuous Deployment](https://www.netlify.com/docs/continuous-deployment/), a new version will be deployed every time you add or edit a post.
+Congrats! Now that Netlify CMS is successfully configured to your project, every time you add a new post, the content will be stored in your repository and versioned on GitHub because Netlify CMS is Git-based. Also, thanks to [Netlify's Continuous Deployment](https://www.netlify.com/docs/continuous-deployment/), a new version will be deployed every time you add or edit a post.
 
 You can learn more about Netlify CMS and how to configure it further in the [Netlify CMS documentation](https://www.netlifycms.org/docs/intro/).

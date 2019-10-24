@@ -16,7 +16,7 @@ describe(`Process TOML nodes correctly`, () => {
   const loadNodeContent = node => Promise.resolve(node.content)
 
   it(`Correctly creates nodes from TOML test file`, async () => {
-    // Unfortunately due to TOML limitations no JSON -> TOML convertors exist,
+    // Unfortunately due to TOML limitations no JSON -> TOML converters exist,
     // which means that we are stuck with JS template literals.
     node.content = `
     [the]
