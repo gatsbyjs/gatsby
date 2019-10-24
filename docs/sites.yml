@@ -8118,6 +8118,18 @@
     - Web Development
   built_by: Loïc J.
   built_by_url: https://growthnotes.dev
+- title: Baby Notebook
+  main_url: "https://babynotebook.app"
+  url: "https://babynotebook.app"
+  description: >
+    Beautiful Baby Photo Books from your fingertips to your home.
+  categories:
+    - App
+    - JavaScript
+    - Technology
+    - Web Development
+  built_by: Aleksander Hansson
+  built_by_url: https://ahansson.com
 - title: re:store
   url: https://www.visitrestore.com
   main_url: https://www.visitrestore.com
