@@ -3,6 +3,8 @@ import { jsx } from "theme-ui"
 import React from "react"
 import Img from "gatsby-image"
 
+import withColorMode from "../components/with-color-mode"
+
 // we need the sizes in src/pages/index already
 const itemSize = 64
 const gridSize = 32
@@ -40,6 +42,7 @@ class Item extends React.Component {
           fontSize: 0,
           height: `${itemSize * scale}px`,
           left: `${x * itemSize}px`,
+          opacity: this.props.isDark && color && !title ? 0.65 : false,
           overflow: `hidden`,
           position: `absolute`,
           top: `${y * itemSize}px`,
@@ -83,6 +86,7 @@ class Items extends React.Component {
   render() {
     const items = this.props.items
     const showcaseItems = this.props.showcaseItems
+    const isDark = this.props.colorMode[0] === `dark`
 
     return (
       <div
@@ -112,6 +116,7 @@ class Items extends React.Component {
               key={i}
               data={item.node}
               image={getItemImage(item.node.title, showcaseItems)}
+              isDark={isDark}
             />
           ))}
         </div>
@@ -120,4 +125,4 @@ class Items extends React.Component {
   }
 }
 
-export default Items
+export default withColorMode(Items)
