@@ -501,6 +501,8 @@ module.exports = async (
             test: /\.(css|scss|sass|less|styl)$/,
             chunks: `all`,
             enforce: true,
+            // this rule trumps all other rules because of the priority.
+            priority: 10,
           },
         },
       },
