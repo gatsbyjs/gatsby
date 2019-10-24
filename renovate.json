@@ -6,6 +6,7 @@
     "packages/**",
     "www/package.json"
   ],
+  "ignoreDeps": ["yarn"],
   "major": {
     "masterIssueApproval": true
   },
