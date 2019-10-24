@@ -101,6 +101,21 @@ class Items extends React.Component {
               1}px, ${t.colors.ui.border} 20px, ${
               t.colors.ui.border
             } ${gridSize}px)`,
+          position: `relative`,
+          ":after, :before": {
+            content: `" "`,
+            width: `128px`,
+            height: `100%`,
+            bg: `background`,
+            position: `absolute`,
+            top: 0,
+          },
+          ":before": {
+            width: `256px`,
+            height: `192px`,
+            right: 0,
+          },
+          zIndex: 0,
         }}
         ref={r => (this.domNode = r)}
       >
@@ -109,6 +124,7 @@ class Items extends React.Component {
             position: `relative`,
             width: `100%`,
             height: `100%`,
+            zIndex: 1,
           }}
         >
           {items.map((item, i) => (
