@@ -4186,3 +4186,18 @@
     - TypeScript
     - Basic design
     - Visual effects
+- url: https://wataruoguchi-gatsby-starter-typescript-contentful.netlify.com/
+  repo: https://github.com/wataruoguchi/gatsby-starter-typescript-contentful
+  description: Simple TypeScript starter with Contentful Integration
+  tags:
+    - Language:TypeScript
+    - CMS:Contentful
+    - Netlify
+    - Blog
+  features:
+    - Simple
+    - TypeScript
+    - Contentful
+    - Supports Contentful Rich Text
+    - Prettier & ESlint & StyleLint to format & check the code
+    - Husky & lint-staged to automate checking
