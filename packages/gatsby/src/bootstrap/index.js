@@ -352,13 +352,14 @@ module.exports = async (args: BootstrapArgs) => {
   )
 
   const browserPluginsRequires = browserPlugins
-    .map(
-      plugin =>
-        `{
-      plugin: require('${plugin.resolve}'),
+    .map(plugin => {
+      // we need a relative import path to keep contenthash the same if directory changes
+      const relativePluginPath = path.relative(siteDir, plugin.resolve)
+      return `{
+      plugin: require('${slash(relativePluginPath)}'),
       options: ${JSON.stringify(plugin.options)},
     }`
-    )
+    })
     .join(`,`)
 
   const browserAPIRunner = `module.exports = [${browserPluginsRequires}]\n`
