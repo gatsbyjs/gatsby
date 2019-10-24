@@ -29,9 +29,7 @@ const styles = {
   prevNextLink: {
     color: `lilac`,
     fontFamily: `header`,
-    position: `absolute`,
-    top: 280,
-    width: 300,
+    width: 125,
   },
   prevNextLinkSiteTitle: {
     color: `gatsby`,
@@ -194,7 +192,6 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 filters,
               }}
               css={{
-                display: `block`,
                 order: 2,
                 position: `relative`,
                 [mediaQueries.md]: {
@@ -202,7 +199,14 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 },
               }}
             >
-              <div css={{ margin: `25px` }}>
+              <div
+                sx={{
+                  margin: `25px 25px 0 0`,
+                  [mediaQueries.md]: {
+                    margin: `25px`,
+                  },
+                }}
+              >
                 <Img
                   key={nextSite.id}
                   sx={styles.prevNextImage}
@@ -221,10 +225,22 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               <div
                 sx={{
                   ...styles.prevNextLink,
-                  transform: `translateX(-75px) rotate(90deg)`,
+                  [mediaQueries.md]: {
+                    position: `absolute`,
+                    top: 280,
+                    width: 300,
+                    transform: `translateX(-75px) rotate(90deg)`,
+                  },
                 }}
               >
-                <MdArrowUpward />
+                <MdArrowUpward
+                  sx={{
+                    transform: `rotate(90deg)`,
+                    [mediaQueries.md]: {
+                      transform: `none`,
+                    },
+                  }}
+                />
                 <div> Next Site in Showcase </div>
                 <div sx={styles.prevNextLinkSiteTitle}>{nextSite.title}</div>
               </div>
@@ -238,7 +254,6 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 filters,
               }}
               css={{
-                display: `block`,
                 order: 1,
                 position: `relative`,
                 [mediaQueries.md]: {
@@ -247,7 +262,14 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 },
               }}
             >
-              <div css={{ margin: `25px` }}>
+              <div
+                sx={{
+                  margin: `25px 0 0 25px`,
+                  [mediaQueries.md]: {
+                    margin: `25px`,
+                  },
+                }}
+              >
                 <Img
                   key={previousSite.id}
                   sx={styles.prevNextImage}
@@ -266,11 +288,23 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               <div
                 sx={{
                   ...styles.prevNextLink,
-                  transform: `translateX(-75px) rotate(-90deg)`,
                   textAlign: `right`,
+                  [mediaQueries.md]: {
+                    position: `absolute`,
+                    top: 280,
+                    width: 300,
+                    transform: `translateX(-75px) rotate(-90deg)`,
+                  },
                 }}
               >
-                <MdArrowUpward />
+                <MdArrowUpward
+                  sx={{
+                    transform: `rotate(-90deg)`,
+                    [mediaQueries.md]: {
+                      transform: `none`,
+                    },
+                  }}
+                />
                 <div> Previous Site in Showcase </div>
                 <div sx={styles.prevNextLinkSiteTitle}>
                   {previousSite.title}
