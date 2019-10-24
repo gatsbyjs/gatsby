@@ -179,13 +179,15 @@
     - A basic blog, with posts under src/pages/blog
     - A few basic components (Navigation, Layout, Link wrapper around gatsby-link))
     - Based on gatsby-starter-gatsbytheme
-- url: https://xiaoxinghu.github.io/gatsby-orga/
-  repo: https://github.com/xiaoxinghu/gatsby-orga
-  description: n/a
+- url: https://orgapp.github.io/gatsby-starter-orga/
+  repo: https://github.com/orgapp/gatsby-starter-orga
+  description: Want to use org-mode instead of markdown? This is for you.
   tags:
     - Blog
   features:
-    - Parses org-mode files with Orga.
+    - Use org-mode files as source.
+    - Generate post pages, can be configured to be file-based or section-based.
+    - Generate posts index pages.
 - url: http://2column-portfolio.surge.sh/
   repo: https://github.com/praagyajoshi/gatsby-starter-2column-portfolio
   description: n/a
