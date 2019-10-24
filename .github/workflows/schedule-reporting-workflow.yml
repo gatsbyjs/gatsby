@@ -1,6 +1,6 @@
 on:
   schedule:
-    - cron: 1 0 * * 1
+    - cron: 1 0 * * 2
 name: Reporting workflow
 jobs:
   high-priority-prs:
