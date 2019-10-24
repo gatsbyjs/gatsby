@@ -127,10 +127,13 @@ exports.replaceComponentRenderer = true
 /**
  * Allow a plugin to wrap the page element.
  *
- * This is useful for setting wrapper component around pages that won't get
- * unmounted on page change. For setting Provider components use [wrapRootElement](#wrapRootElement).
+ * This is useful for setting wrapper components around pages that won't get
+ * unmounted on page changes. For setting Provider components, use [wrapRootElement](#wrapRootElement).
  *
- * _Note:_ [There is equivalent hook in SSR API](/docs/ssr-apis/#wrapPageElement)
+ * _Note:_
+ * There is an equivalent hook in Gatsby's [SSR API](/docs/ssr-apis/#wrapPageElement).
+ * It is recommended to use both APIs together.
+ * For example usage, check out [Using i18n](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-i18n).
  * @param {object} $0
  * @param {ReactNode} $0.element The "Page" React Element built by Gatsby.
  * @param {object} $0.props Props object used by page.
@@ -151,10 +154,13 @@ exports.wrapPageElement = true
 /**
  * Allow a plugin to wrap the root element.
  *
- * This is useful to setup any Providers component that will wrap your application.
+ * This is useful to set up any Provider components that will wrap your application.
  * For setting persistent UI elements around pages use [wrapPageElement](#wrapPageElement).
  *
- * _Note:_ [There is equivalent hook in SSR API](/docs/ssr-apis/#wrapRootElement)
+ * _Note:_
+ * There is an equivalent hook in Gatsby's [SSR API](/docs/ssr-apis/#wrapRootElement).
+ * It is recommended to use both APIs together.
+ * For example usage, check out [Using redux](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-redux).
  * @param {object} $0
  * @param {ReactNode} $0.element The "Root" React Element built by Gatsby.
  * @param {pluginOptions} pluginOptions

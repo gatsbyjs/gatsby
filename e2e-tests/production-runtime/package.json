@@ -20,8 +20,8 @@
   ],
   "license": "MIT",
   "scripts": {
-    "build": "CYPRESS_SUPPORT=y gatsby build",
-    "build:offline": "TEST_PLUGIN_OFFLINE=y CYPRESS_SUPPORT=y gatsby build",
+    "build": "cross-env CYPRESS_SUPPORT=y gatsby build",
+    "build:offline": "cross-env TEST_PLUGIN_OFFLINE=y CYPRESS_SUPPORT=y gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write '**/*.js'",
     "serve": "gatsby serve",
@@ -36,9 +36,10 @@
     "cy:run": "npm run cy:run:normal && npm run cy:run:slow",
     "cy:run:offline": "npm run cy:run:normal -- --env TEST_PLUGIN_OFFLINE=y && npm run cy:run:slow -- --env TEST_PLUGIN_OFFLINE=y",
     "cy:run:normal": "(is-ci && cypress run --browser chrome --record) || cypress run --browser chrome",
-    "cy:run:slow": "CYPRESS_CONNECTION_TYPE=slow cypress run --browser chrome --config testFiles=prefetching.js"
+    "cy:run:slow": "cross-env CYPRESS_CONNECTION_TYPE=slow cypress run --browser chrome --config testFiles=prefetching.js"
   },
   "devDependencies": {
+    "cross-env": "^5.2.0",
     "fs-extra": "^7.0.1",
     "is-ci": "^2.0.0",
     "prettier": "^1.14.3",

@@ -65,6 +65,7 @@ module.exports = {
     "Mdx.frontmatter.author": `AuthorYaml`,
   },
   plugins: [
+    `gatsby-plugin-theme-ui`,
     {
       resolve: `gatsby-source-npm-package-search`,
       options: {
@@ -175,7 +176,23 @@ module.exports = {
             },
           },
           `gatsby-remark-autolink-headers`,
-          `gatsby-remark-prismjs`,
+          {
+            resolve: `gatsby-remark-prismjs`,
+            options: {
+              aliases: {
+                dosini: `ini`,
+                env: `bash`,
+                es6: `js`,
+                flowchart: `none`,
+                gitignore: `none`,
+                gql: `graphql`,
+                htaccess: `apacheconf`,
+                mdx: `markdown`,
+                ml: `fsharp`,
+                styl: `stylus`,
+              },
+            },
+          },
           `gatsby-remark-copy-linked-files`,
           `gatsby-remark-smartypants`,
         ],

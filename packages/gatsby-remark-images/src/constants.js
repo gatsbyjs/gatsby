@@ -8,6 +8,7 @@ exports.DEFAULT_OPTIONS = {
   withWebp: false,
   tracedSVG: false,
   loading: `lazy`,
+  disableBgImageOnAlpha: false,
 }
 
 exports.imageClass = `gatsby-resp-image-image`

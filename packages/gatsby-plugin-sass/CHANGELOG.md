@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@2.1.19...gatsby-plugin-sass@2.1.20) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-plugin-sass
+
+## [2.1.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@2.1.18...gatsby-plugin-sass@2.1.19) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-plugin-sass
+
+## [2.1.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@2.1.17...gatsby-plugin-sass@2.1.18) (2019-10-09)
+
+**Note:** Version bump only for package gatsby-plugin-sass
+
+## [2.1.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@2.1.15...gatsby-plugin-sass@2.1.17) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-plugin-sass
+
+## [2.1.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@2.1.15...gatsby-plugin-sass@2.1.16) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-plugin-sass
+
+## [2.1.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@2.1.14...gatsby-plugin-sass@2.1.15) (2019-09-20)
+
+**Note:** Version bump only for package gatsby-plugin-sass
+
+## [2.1.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@2.1.13...gatsby-plugin-sass@2.1.14) (2019-09-09)
+
+**Note:** Version bump only for package gatsby-plugin-sass
+
 ## [2.1.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@2.1.12...gatsby-plugin-sass@2.1.13) (2019-09-01)
 
 ### Bug Fixes

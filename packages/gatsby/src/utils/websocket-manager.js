@@ -197,11 +197,7 @@ class WebsocketManager {
           try {
             const result = await getCachedPageData(path, this.programDir)
 
-            if (!result) {
-              return
-            }
-
-            this.pageResults.set(path, result)
+            this.pageResults.set(path, result || { id: path })
           } catch (err) {
             console.log(err.message)
 

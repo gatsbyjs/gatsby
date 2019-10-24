@@ -4,6 +4,7 @@ const {
   contentTypeItems,
   defaultLocale,
   locales,
+  space,
 } = require(`./data.json`)
 
 let entryList
@@ -46,6 +47,7 @@ describe(`Process contentful data`, () => {
       resolvable,
       defaultLocale,
       locales,
+      space,
     })
     expect(foreignReferenceMap).toMatchSnapshot()
   })
@@ -66,6 +68,7 @@ describe(`Process contentful data`, () => {
         foreignReferenceMap,
         defaultLocale,
         locales,
+        space,
       })
     })
     expect(createNode.mock.calls).toMatchSnapshot()
@@ -83,6 +86,7 @@ describe(`Process contentful data`, () => {
         createNodeId,
         defaultLocale,
         locales,
+        space,
       })
     })
     expect(createNode.mock.calls).toMatchSnapshot()
@@ -190,22 +194,24 @@ describe(`Gets field value based on current locale`, () => {
 })
 
 describe(`Make IDs`, () => {
-  it(`It doesn't postfix the id if its the default locale`, () => {
+  it(`It doesn't postfix the spaceId and the id if its the default locale`, () => {
     expect(
       normalize.makeId({
+        spaceId: `spaceId`,
         id: `id`,
         defaultLocale: `en-US`,
         currentLocale: `en-US`,
       })
-    ).toBe(`id`)
+    ).toBe(`spaceId___id`)
   })
-  it(`It does postfix the id if its not the default locale`, () => {
+  it(`It does postfix the spaceId and the id if its not the default locale`, () => {
     expect(
       normalize.makeId({
+        spaceId: `spaceId`,
         id: `id`,
         defaultLocale: `en-US`,
         currentLocale: `en-GB`,
       })
-    ).toBe(`id___en-GB`)
+    ).toBe(`spaceId___id___en-GB`)
   })
 })

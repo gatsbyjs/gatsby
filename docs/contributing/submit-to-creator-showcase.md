@@ -10,7 +10,7 @@ There are only two major steps :)
 
 1.  If this is your first contribution to the Gatsby open source repo, follow the [Contribution guidelines](/contributing/code-contributions/).
 
-2.  Upload a photo of yourself or a logo of your company/agency to [`this directory`](https://github.com/gatsbyjs/gatsby/tree/master/docs/creators/images). Images should have a square aspect ratio with 500px minimum (eg 500px X 500px) to 1000px maximum resolution and should carry the same name as what you put in the name field on creators.yml, but with a dash instead of spaces.
+2.  Upload a photo of yourself or a logo of your company/agency to [`this directory`](https://github.com/gatsbyjs/gatsby/tree/master/docs/creators/images). Images should have a square aspect ratio with 500px minimum (e.g. 500px X 500px) to 1000px maximum resolution and should carry the same name as what you put in the name field on creators.yml, but with a dash instead of spaces.
 
     For example,
 

@@ -25,7 +25,7 @@
     "postbuild": "cp -r public/. assets/blog",
     "develop": "gatsby develop",
     "format": "prettier --write '**/*.js'",
-    "test": "CYPRESS_SUPPORT=y npm run build && npm run start-server-and-test",
+    "test": "cross-env CYPRESS_SUPPORT=y npm run build && npm run start-server-and-test",
     "start-server-and-test": "start-server-and-test serve \"http://localhost:9000/blog/|http://localhost:9001/blog/\" cy:run",
     "serve": "gatsby serve --prefix-paths & npm run serve:assets",
     "serve:assets": "node scripts/serve.js",
@@ -33,6 +33,7 @@
     "cy:run": "(is-ci && cypress run --browser chrome --record) || cypress run --browser chrome"
   },
   "devDependencies": {
+    "cross-env": "^5.2.0",
     "gatsby-cypress": "^0.1.7",
     "is-ci": "^2.0.0",
     "prettier": "^1.14.3",

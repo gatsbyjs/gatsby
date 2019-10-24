@@ -12,16 +12,6 @@ const createFSMachine = (
   { actions: { createNode, deleteNode }, getNode, createNodeId, reporter },
   pluginOptions
 ) => {
-  // For every path that is reported before the 'ready' event, we throw them
-  // into a queue and then flush the queue when 'ready' event arrives.
-  // After 'ready', we handle the 'add' event without putting it into a queue.
-  let pathQueue = []
-  const flushPathQueue = () => {
-    let queue = pathQueue.slice()
-    pathQueue = null
-    return Promise.all(queue.map(createAndProcessNode))
-  }
-
   const createAndProcessNode = path => {
     const fileNodePromise = createFileNode(
       path,
@@ -32,6 +22,35 @@ const createFSMachine = (
       return null
     })
     return fileNodePromise
+  }
+
+  const deletePathNode = path => {
+    const node = getNode(createNodeId(path))
+    // It's possible the node was never created as sometimes tools will
+    // write and then immediately delete temporary files to the file system.
+    if (node) {
+      deleteNode({ node })
+    }
+  }
+
+  // For every path that is reported before the 'ready' event, we throw them
+  // into a queue and then flush the queue when 'ready' event arrives.
+  // After 'ready', we handle the 'add' event without putting it into a queue.
+  let pathQueue = []
+  const flushPathQueue = () => {
+    let queue = pathQueue.slice()
+    pathQueue = null
+    return Promise.all(
+      // eslint-disable-next-line consistent-return
+      queue.map(({ op, path }) => {
+        switch (op) {
+          case `delete`:
+            return deletePathNode(path)
+          case `upsert`:
+            return createAndProcessNode(path)
+        }
+      })
+    )
   }
 
   const fsMachine = Machine(
@@ -59,19 +78,18 @@ const createFSMachine = (
               on: {
                 CHOKIDAR_READY: `READY`,
                 CHOKIDAR_ADD: { actions: `queueNodeProcessing` },
+                CHOKIDAR_CHANGE: { actions: `queueNodeProcessing` },
+                CHOKIDAR_UNLINK: { actions: `queueNodeDeleting` },
               },
               exit: `flushPathQueue`,
             },
             READY: {
               on: {
                 CHOKIDAR_ADD: { actions: `createAndProcessNode` },
+                CHOKIDAR_CHANGE: { actions: `createAndProcessNode` },
+                CHOKIDAR_UNLINK: { actions: `deletePathNode` },
               },
             },
-          },
-          // TODO: those two were not restricted to READY state, but maybe they should? or even maybe it should queue in NOT_READY?
-          on: {
-            CHOKIDAR_CHANGE: { actions: `createAndProcessNode` },
-            CHOKIDAR_UNLINK: { actions: `deleteNode` },
           },
         },
       },
@@ -84,22 +102,20 @@ const createFSMachine = (
           }
           createAndProcessNode(path).catch(err => reporter.error(err))
         },
-        deleteNode(_, { pathType, path }, { state }) {
+        deletePathNode(_, { pathType, path }, { state }) {
           if (state.matches(`BOOTSTRAP.BOOTSTRAPPED`)) {
             reporter.info(`${pathType} deleted at ${path}`)
           }
-          const node = getNode(createNodeId(path))
-          // It's possible the node was never created as sometimes tools will
-          // write and then immediately delete temporary files to the file system.
-          if (node) {
-            deleteNode({ node })
-          }
+          deletePathNode(path)
         },
         flushPathQueue(_, { resolve, reject }) {
           flushPathQueue().then(resolve, reject)
         },
+        queueNodeDeleting(_, { path }) {
+          pathQueue.push({ op: `delete`, path })
+        },
         queueNodeProcessing(_, { path }) {
-          pathQueue.push(path)
+          pathQueue.push({ op: `upsert`, path })
         },
       },
     }

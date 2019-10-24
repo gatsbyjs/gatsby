@@ -13,8 +13,8 @@ for folder in $GLOB; do
   [ -d "$folder" ] || continue # only directories
   cd $BASE
 
-  NAME=$(cat $folder/package.json | jq -r '.name')
-  IS_WORKSPACE=$(cat $folder/package.json | jq -r '.workspaces')
+  NAME=$(jq -r '.name' $folder/package.json)
+  IS_WORKSPACE=$(jq -r '.workspaces' $folder/package.json)
   CLONE_DIR="__${NAME}__clone__"
   
   # sync to read-only clones
@@ -31,9 +31,11 @@ for folder in $GLOB; do
     yarn import # generate a new yarn.lock file based on package-lock.json
   fi
 
-  git add .
-  git commit --message "$COMMIT_MESSAGE"
-  git push origin master
+  if [ -n "$(git status --porcelain)" ]; then
+    git add .
+    git commit -m "$COMMIT_MESSAGE"
+    git push origin master
+  fi
 
   cd $BASE
 done

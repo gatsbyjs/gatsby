@@ -4,7 +4,7 @@ A list of utilities used in multiple gatsby packages.
 
 ## Usage
 
-```sh
+```shell
 npm install --save gatsby-core-utils
 ```
 

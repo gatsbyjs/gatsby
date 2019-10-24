@@ -74,6 +74,11 @@ module.exports = {
 }
 ```
 
+<EggheadEmbed
+  lessonLink="https://egghead.io/lessons/gatsby-install-gatsby-image-and-source-local-images-from-the-filesystem"
+  lessonTitle="Install gatsby-image and source local images from the filesystem"
+/>
+
 4. Write a GraphQL query using one of the included [GraphQL “fragments”](/packages/gatsby-image/#fragments) which specify the fields needed by `gatsby-image` to create a responsive, optimized image. This example queries for an image at a path relative to the location specified in the `gatsby-source-filesystem` options using the `GatsbyImageSharpFluid` fragment.
 
 ```graphql
@@ -86,6 +91,11 @@ file(relativePath: { eq: "images/default.jpg" }) {
       }
 }
 ```
+
+<EggheadEmbed
+  lessonLink="https://egghead.io/lessons/gatsby-use-gatsby-image-with-an-image-from-a-relative-path"
+  lessonTitle="Use gatsby-image with an image from a relative path"
+/>
 
 5. Import `Img` to display the fragment in JSX. There are additional features available with the `Img` tag as well, such as the `alt` attribute for accessibility.
 
@@ -102,6 +112,11 @@ export default ({ data }) => (
   </div>
 )
 ```
+
+<EggheadEmbed
+  lessonLink="https://egghead.io/lessons/gatsby-use-gatsby-image-s-graphql-fragments-for-blurred-up-and-traced-svg-images"
+  lessonTitle="Use gatsby-image's GraphQL fragments for blurred-up and traced SVG images"
+/>
 
 This GraphQL query creates multiple sizes of the image and when the page is rendered the image that is appropriate for the current screen resolution (e.g. desktop, mobile, and everything in between) is used. The `gatsby-image` component automatically enables a blur-up effect as well as lazy loading images that are not currently on screen.
 
