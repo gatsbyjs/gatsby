@@ -3,7 +3,6 @@ title: "How Gatsby can power your site offline - even without JavaScript"
 date: 2019-10-17
 author: David Bailey
 excerpt: "With Gatsby's offline plugin, network troubles are a thing of the past."
-  With Gatsby's offline plugin, network troubles are a thing of the past.
 tags:
   - plugins
   - performance
