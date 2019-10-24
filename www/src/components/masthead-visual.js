@@ -102,7 +102,7 @@ class Items extends React.Component {
             } ${gridSize}px)`,
           flexShrink: 1,
           flexGrow: 1,
-          height: `${itemSize * 11}px`,
+          height: [`${itemSize * 4}px`, null, null, `${itemSize * 11}px`],
           minWidth: 0,
           overflowX: `hidden`,
           position: `relative`,

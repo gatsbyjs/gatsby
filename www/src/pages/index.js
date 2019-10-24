@@ -108,6 +108,7 @@ class IndexRoute extends React.Component {
           <div
             sx={{
               display: `flex`,
+              flexDirection: [`column`, null, null, `row`],
               // background: `green`,
               maxWidth: 1180,
               width: `100%`,
@@ -119,7 +120,7 @@ class IndexRoute extends React.Component {
           >
             <div
               sx={{
-                pr: 12,
+                pr: [0, null, null, 12],
                 maxWidth: 540,
                 flexShrink: 1,
                 // background: `blue`,
