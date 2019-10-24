@@ -230,7 +230,9 @@ const actions = {
       }
 
       const durationS = durationMS / 1000
-
+      if (activity.errored) {
+        status = ActivityStatuses.Failed
+      }
       actionsToEmit.push({
         type: Actions.EndActivity,
         payload: {
@@ -288,6 +290,19 @@ const actions = {
         uuid: activity.uuid,
         id,
         ...rest,
+      },
+    }
+  },
+  setActivityErrored: ({ id, ...rest }) => {
+    const activity = getActivity(id)
+    if (!activity) {
+      return null
+    }
+
+    return {
+      type: Actions.ActivityErrored,
+      payload: {
+        id,
       },
     }
   },

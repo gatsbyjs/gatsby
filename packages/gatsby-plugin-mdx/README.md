@@ -340,9 +340,7 @@ module.exports = {
 }
 ```
 
-###### Note:
-
-Using a string reference is currently not supported for `gatsbyRemarkPlugins`. (A PR would be accepted for this)
+Using a string reference is also supported for `gatsbyRemarkPlugins`.
 
 ```js
 gatsbyRemarkPlugins: [`gatsby-remark-images`]

@@ -402,7 +402,7 @@
             - title: Routing
               link: /docs/routing/
               items:
-                - title: "@reach/router and Gatsby*"
+                - title: "@reach/router and Gatsby"
                   link: /docs/reach-router-and-gatsby/
                 - title: Linking and Prefetching with Gatsby*
                   link: /docs/linking-and-prefetching-with-gatsby/

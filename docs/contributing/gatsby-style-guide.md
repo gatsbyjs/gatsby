@@ -82,7 +82,9 @@ Also, there's a community of contributors to support you. Bounce ideas off of th
 
 ### Use "you" as the pronoun
 
-In English, your articles should use the second person ("you") to provide a conversational tone. This way, the text and instructions seem to speak directly to the person reading it. Try to avoid using the first person ("I", "we", "let's", and "us"). For other languages, refer to each translation's guidelines (if applicable) for consistent phrasing.
+In English, your articles should use the second person ("you") to provide a conversational tone. This way, the text and instructions seem to speak directly to the person reading it. Try to avoid using the first person ("I", "we", "let's", and "us").
+
+For other languages, refer to each translation's guidelines (if applicable) for consistent phrasing. When appropriate, we suggest starting with the informal "you" to keep a conversational tone.
 
 Using "you" in English is also more accurate than saying "we," because typically only one person is reading the tutorial or guide at a time and the person who wrote the tutorial is not actually going through it with them, so "we" would be inaccurate. You might notice that some technical documentation uses third person pronouns and nouns like "they" and "the user," which add more distance and feel colder than the conversational and warm "you" and "your."
 
@@ -90,7 +92,9 @@ When updating a doc to adhere to this part of the Gatsby Style Guide, one except
 
 ### Avoid "easy" and "simple"
 
-Avoid using words like "easy", "simple," and "basic" because if users have a hard time completing the task that is supposedly "easy," they will question their abilities. Consider using more specific descriptors; for example, when you say the phrase "deployment is easy," what do you really mean? Is it easy because it takes fewer steps than another option? If so, just use the most specific descriptor possible, which in that case would be "this deployment method involves fewer steps than other options."
+Avoid using words like "easy", "simple" and "basic" because if users have a hard time completing the task that is supposedly "easy," they will question their abilities. Consider using more specific descriptors; for example, when you say the phrase "deployment is easy," what do you really mean? Is it easy because it takes fewer steps than another option? If so, use the most specific descriptor possible, which in that case would be "this deployment method involves fewer steps than other options."
+
+For even more inclusive docs, avoid phrases that assume a reader's experience or skill level, like "just deploy it and you're done" or "for a refresher (referring to a completely different doc that someone may not have read)". Often, rephrasing results in stronger sentences that appeal to a wider range of contexts.
 
 ### Avoid emojis, slang, and metaphors
 

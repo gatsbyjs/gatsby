@@ -1,7 +1,7 @@
 {
   "name": "gatsby-theme-notes",
   "description": "Gatsby Theme for adding a notes section to your website",
-  "version": "1.0.3",
+  "version": "1.0.7",
   "author": "John Otander",
   "license": "MIT",
   "main": "index.js",
@@ -16,11 +16,11 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",
-    "directory": "themes/gatsby-theme-notes"
+    "directory": "packages/gatsby-theme-notes"
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/themes/gatsby-theme-notes#readme",
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-theme-notes#readme",
   "devDependencies": {
-    "gatsby": "^2.16.1",
+    "gatsby": "^2.17.2",
     "react": "^16.10.2",
     "react-dom": "^16.10.2"
   },
@@ -36,7 +36,7 @@
     "gatsby-core-utils": "^1.0.15",
     "gatsby-plugin-compile-es6-packages": "^2.1.0",
     "gatsby-plugin-emotion": "^4.1.12",
-    "gatsby-plugin-mdx": "^1.0.52",
+    "gatsby-plugin-mdx": "^1.0.53",
     "gatsby-plugin-meta-redirect": "^1.1.1",
     "gatsby-plugin-og-image": "0.0.1",
     "gatsby-plugin-redirects": "^1.0.0",
