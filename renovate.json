@@ -3,7 +3,6 @@
   "includePaths": [
     "package.json",
     "starters/**",
-    "themes/**",
     "packages/**",
     "www/package.json"
   ],

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.44](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.43...gatsby-source-wordpress@3.1.44) (2019-10-22)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** add undefined check to avoid mapPostsToTagsCategories error ([#18895](https://github.com/gatsbyjs/gatsby/issues/18895)) ([ad646d6](https://github.com/gatsbyjs/gatsby/commit/ad646d6))
+
 ## [3.1.43](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.42...gatsby-source-wordpress@3.1.43) (2019-10-14)
 
 **Note:** Version bump only for package gatsby-source-wordpress

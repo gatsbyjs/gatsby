@@ -119,6 +119,9 @@ const reporter: Reporter = {
     //  - ansi-colors: see https://github.com/doowb/ansi-colors/blob/8024126c7115a0efb25a9a0e87bc5e29fd66831f/index.js#L5-L7
     if (isNoColor) {
       process.env.FORCE_COLOR = `0`
+      // chalk determines color level at import time. Before we reach this point,
+      // chalk was already imported, so we need to retroactively adjust level
+      chalk.level = 0
     }
   },
   /**
@@ -245,9 +248,8 @@ const reporter: Reporter = {
       panicOnBuild(...args) {
         span.finish()
 
-        reporterActions.endActivity({
+        reporterActions.setActivityErrored({
           id,
-          status: ActivityStatuses.Failed,
         })
 
         return reporter.panicOnBuild(...args)
@@ -363,9 +365,8 @@ const reporter: Reporter = {
       panicOnBuild(...args) {
         span.finish()
 
-        reporterActions.endActivity({
+        reporterActions.setActivityErrored({
           id,
-          status: ActivityStatuses.Failed,
         })
 
         return reporter.panicOnBuild(...args)
@@ -393,6 +394,9 @@ const reporter: Reporter = {
       span,
     }
   },
+  // This method was called in older versions of gatsby, so we need to keep it to avoid
+  // "reporter._setStage is not a function" error when gatsby@<2.16 is used with gatsby-cli@>=2.8
+  _setStage() {},
 }
 
 console.log = (...args) => reporter.log(util.format(...args))
