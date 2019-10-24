@@ -43,7 +43,7 @@ export default IndexPage
 
 ### Creating the GraphQL query
 
-Second, you need to provide the data to your component with a GraphQL query. Let's add it, so that `index.js` looks like this:
+Second, you need to provide the data to your component with a GraphQL query. Add it, so that `index.js` looks like this:
 
 ```jsx:title=src/pages/index.js
 import React from "react"

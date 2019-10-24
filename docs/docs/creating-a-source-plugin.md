@@ -140,7 +140,7 @@ When an object node is deleted, Gatsby _does not_ delete any referenced entities
 
 #### Creating the relationship
 
-Let's say you want to create a relationship between Posts and Authors, and let's say you want to call the field `author`.
+Suppose you want to create a relationship between Posts and Authors, and you want to call the field `author`.
 
 Before you pass the Post object and Author object into `createNode` and create the respective nodes, you need to create a field called `author___NODE` on the Post object to hold the relationship to Authors. The value of this field should be the node ID of the Author.
 
