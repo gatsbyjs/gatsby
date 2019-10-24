@@ -50,7 +50,7 @@ class Item extends React.Component {
             shape === `rectangle`
               ? `${itemSize * 2 * scale}px`
               : `${itemSize * scale}px`,
-          zIndex: scale === 2 ? 1 : false,
+          zIndex: scale === 2 ? 2 : 1,
           ...(shape === `triangle-up` ? { ...triangleUp } : {}),
           ...(shape === `triangle-down` ? { ...triangleDown } : {}),
         }}
@@ -91,8 +91,7 @@ class Items extends React.Component {
     return (
       <div
         sx={{
-          flexShrink: 1,
-          flexGrow: 1,
+          // background: `red`,
           backgroundImage: t =>
             `repeating-linear-gradient(transparent, transparent ${gridSize -
               1}px, ${t.colors.ui.border} 20px, ${
@@ -101,32 +100,31 @@ class Items extends React.Component {
               1}px, ${t.colors.ui.border} 20px, ${
               t.colors.ui.border
             } ${gridSize}px)`,
+          flexShrink: 1,
+          flexGrow: 1,
+          height: `${itemSize * 11}px`,
+          minWidth: 0,
+          overflowX: `hidden`,
           position: `relative`,
+          zIndex: -1,
           ":after, :before": {
-            content: `" "`,
-            width: `128px`,
-            height: `100%`,
             bg: `background`,
+            content: `" "`,
+            height: `${itemSize * 4}px`,
             position: `absolute`,
             top: 0,
+            width: `${itemSize * 2}px`,
+            zIndex: 0,
           },
           ":before": {
-            width: `256px`,
-            height: `192px`,
+            height: `${itemSize * 3}px`,
             right: 0,
+            width: `${itemSize * 4}px`,
           },
-          zIndex: 0,
         }}
         ref={r => (this.domNode = r)}
       >
-        <div
-          sx={{
-            position: `relative`,
-            width: `100%`,
-            height: `100%`,
-            zIndex: 1,
-          }}
-        >
+        <div sx={{ ml: 7, position: `relative` }}>
           {items.map((item, i) => (
             <Item
               key={i}
