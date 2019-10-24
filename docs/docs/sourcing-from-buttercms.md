@@ -322,7 +322,7 @@ Once GraphiQL is open, paste the query below :
 
 ## Integrate into your application
 
-Now let's refactor our home page to display link(s) to each customer case study page
+Now refactor our home page to display link(s) to each customer case study page
 
 ```jsx:title=src/pages/index.js
 import React from "react"
@@ -600,7 +600,7 @@ was used by Gatsby to create each case study page.
 
 ## Setup content fields
 
-Let's suppose you want to add a CMS to a static FAQ page with a title and a list of questions with answers. Most websites have a FAQ(Frequently Asked Question) page. ButterCMS make it dead easy to create such content with Collections. Now you'll create a collection named `FAQs`having a `question` and `answer` field.
+Suppose you want to add a CMS to a static FAQ page with a title and a list of questions with answers. Most websites have a FAQ (Frequently Asked Questions) page. ButterCMS makes it easy to create such content with Collections. Now you'll create a collection named `FAQs`having a `question` and `answer` field.
 
 Making your content dynamic with Butter is a two-step process:
 
@@ -980,4 +980,4 @@ This was an example meant to help you understand how ButterCMS works with Gatsby
 - Create a ButterCMS repository and set it up together with the Gatsby plugin
 - Query data from ButterCMS for single pages, multiple pages, blog posts, and custom content fields
 
-If you got stuck, you can compare your code to the [gatsby-starter-buttercms](https://github.com/ButterCMS/gatsby-starter-buttercms). To learn more about ButterCMS, check out their [blog](https://buttercms.com/blog/). Their latest updates can be found [here](https://buttercms.com/blog/category/new-to-butter/).
+If you got stuck, you can compare your code to the [gatsby-starter-buttercms](https://github.com/ButterCMS/gatsby-starter-buttercms). To learn more about ButterCMS, check out their [blog](https://buttercms.com/blog/). Their latest updates can be found on [buttercms.com](https://buttercms.com/blog/category/new-to-butter/).
