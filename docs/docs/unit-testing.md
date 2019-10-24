@@ -20,7 +20,7 @@ concepts should be the same or very similar for your site._
 
 ### 1. Installing dependencies
 
-First you need to install Jest and some more required packages. We install babel-jest and babel-preset-gatsby to ensure that the babel preset(s) that are used match what are used internally for your Gatsby site.
+First you need to install Jest and some more required packages. Install babel-jest and babel-preset-gatsby to ensure that the babel preset(s) that are used match what are used internally for your Gatsby site.
 
 ```shell
 npm install --save-dev jest babel-jest react-test-renderer babel-preset-gatsby identity-obj-proxy
@@ -50,7 +50,7 @@ module.exports = {
 }
 ```
 
-Let's go over the content of this configuration file:
+Go over the content of this configuration file:
 
 - The `transform` section tells Jest that all `js` or `jsx` files need to be
   transformed using a `jest-preprocess.js` file in the project root. Go ahead and
@@ -165,7 +165,7 @@ start with a simple snapshot test to check that everything is working.
 First, create the test file. You can either put these in a `__tests__`
 directory, or put them elsewhere (usually next to the component itself), with
 the extension `.spec.js` or `.test.js`. The decision comes down to your own
-preference. In this guide, we will use the `__tests__` folder convention. Let's create a test for our header component, so create a `header.js` file in `src/components/__tests__/`:
+preference. In this guide, you will use the `__tests__` folder convention. Create a test for our header component, so create a `header.js` file in `src/components/__tests__/`:
 
 ```js:title=src/components/__tests__/header.js
 import React from "react"
@@ -193,7 +193,7 @@ learn more about other tests that you can write.
 
 If you look inside `package.json` you will probably find that there is already a
 script for `test`, which just outputs an error message. Change this to use the
-`jest` executable that we now have available, like so:
+`jest` executable that you now have available, like so:
 
 ```json:title=package.json
   "scripts": {
@@ -259,7 +259,7 @@ file inside a `__tests__` directory, or any file elsewhere with the extension
 Option `moduleFileExtensions` is needed when working with TypeScript.
 The only thing it is doing is telling Jest which file extensions you can
 import in your files without making precise the file extension. By default,
-it works with `js`, `json`, `jsx`, `node` file extensions so we just need
+it works with `js`, `json`, `jsx`, `node` file extensions so you just need
 to add `ts` and `tsx`. You can read more about it in [Jest's documentation](https://jestjs.io/docs/en/configuration.html#modulefileextensions-array-string).
 
 ## Other resources
