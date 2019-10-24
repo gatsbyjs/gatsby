@@ -171,7 +171,25 @@ In your Drupal module configuration, set the update URL to your Gatsby Preview i
 _NOTES_:
 
 - This is experimental feature in active development. APIs used for this feature are not yet stable - it can break while we iterate on API design (particularly when versions of `gatsby-source-drupal` and `Gatsby Live Preview` drupal module are incompatible).
-- It's not feature complete yet. There is no handling of deleting content yet.
+
+### Preview Secret
+
+While you don't need to pass any additional options for preview to work, you can pass a `secret` for added security between your drupal instance and gatsby preview. Ensure this secret matches the one set in your Drupal Gatsby Preview settings.
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-drupal`,
+      options: {
+        baseUrl: `https://live-contentacms.pantheonsite.io/`,
+        secret: process.env.PREVIEW_SECRET, // optional, must match Drupal instance preview secret
+      },
+    },
+  ],
+}
+```
 
 ## How to query
 

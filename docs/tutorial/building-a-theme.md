@@ -274,7 +274,7 @@ When you execute the query, you should see the GraphQL server successfully retur
 
 Create a `gatsby-node.js` file in `gatsby-theme-events`.
 
-If you fire up our theme, and the "data" directory doesn't exist, `gatsby-source-filesystem` will throw an error. To guard against this, you'll use the `onPreBootstrap` API hook to check if the data directory exists, and, if not, create it:
+If you fire up your theme, and the "data" directory doesn't exist, `gatsby-source-filesystem` will throw an error. To guard against this, you'll use the `onPreBootstrap` API hook to check if the data directory exists, and, if not, create it:
 
 ```javascript:title=gatsby-theme-events/gatsby-node.js
 const fs = require("fs")
@@ -1047,7 +1047,7 @@ exports.createPages = async ({ actions, graphql, reporter }, options) => {
 }
 ```
 
-> 💡 Up till now, you've mostly worked in the `gatsby-theme-events` space. Because we've converted the theme to use a function export, we can no longer run the theme on its own. The function export in `gatsby-config.js` is only supported for themes. From now on you'll be running `site` -- the Gatsby site consuming `gatsby-theme-events`, instead. Gatsby sites still require the object export in `gatsby-config.js`.
+> 💡 Up till now, you've mostly worked in the `gatsby-theme-events` space. Because you've converted the theme to use a function export, you can no longer run the theme on its own. The function export in `gatsby-config.js` is only supported for themes. From now on you'll be running `site` -- the Gatsby site consuming `gatsby-theme-events`, instead. Gatsby sites still require the object export in `gatsby-config.js`.
 
 Test out this new options-setting by making some adjustments to `site`.
 

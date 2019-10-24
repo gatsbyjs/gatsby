@@ -1,5 +1,5 @@
 ---
-title: Sourcing Content & Data
+title: Sourcing Content and Data
 ---
 
 A core feature of Gatsby is its ability to **load data from anywhere**. This is part of what makes Gatsby more powerful than static site generators that are limited to only loading content from Markdown files.

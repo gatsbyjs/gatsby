@@ -25,6 +25,8 @@ To address missing images, check the doc or tutorial source [in the Gatsby repo]
 
 If you find a broken link in the Gatsby docs, feel free to fix it and submit a PR!
 
+Keep in mind that some links in here are already correct because they work on gatsbyjs.org. While it would be nice for links in documentation to work on GitHub, having them working on gatsbyjs.org is a higher priority!
+
 ## Headings
 
 Docs with frontmatter metadata at the top including a `title` will automatically receive an `<h1>` heading in the rendered page, and it should be the only one. Additional headings in docs content should start with `<h2>`, denoted by `##` in Markdown.
@@ -86,7 +88,7 @@ After going through the [development setup instructions](/contributing/setting-u
 - For docs-only changes, consider using `git checkout -b docs/some-change` or `git checkout -b docs-some-change`, as this will short circuit the CI process and only run linting tasks.
 - Change directories into the docs site folder: `cd www`
 - Install dependencies with Yarn: `yarn install`
-- Add the following env variable to an `.env.development` file to [enable image placeholders](https://github.com/gatsbyjs/gatsby/tree/master/www#running-slow-build-screenshots-placeholder): `GATSBY_SCREENSHOT_PLACEHOLDER=true`. This will speed up building the docs site significantly!
+- Add the following env variable to an `.env.development` file inside the `www` directory to [enable image placeholders](https://github.com/gatsbyjs/gatsby/tree/master/www#running-slow-build-screenshots-placeholder): `GATSBY_SCREENSHOT_PLACEHOLDER=true`. This will speed up building the docs site significantly!
 - Start a build of `www` with `gatsby develop`.
 - Edit Markdown files in the [docs](https://github.com/gatsbyjs/gatsby/tree/master/docs) and [contributing](https://github.com/gatsbyjs/gatsby/tree/master/docs/contributing) folders, as well as the [YAML sidebar files](https://github.com/gatsbyjs/gatsby/tree/master/www/src/data/sidebars).
 - View the changes in your browser at `http://localhost:8000`.

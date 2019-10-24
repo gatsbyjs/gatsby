@@ -1,10 +1,10 @@
 ---
-title: Adding search with js-search
+title: Adding Search with JS Search
 ---
 
 ## Prerequisites
 
-Before we go through the steps needed for adding client-side search to your Gatsby website, you should be familiar with the basics of Gatsby. Check out the [tutorial](/tutorial/) and brush up on the [documentation](/docs/) if you need to. In addition, some knowledge of [ES6 syntax](https://medium.freecodecamp.org/write-less-do-more-with-javascript-es6-5fd4a8e50ee2) will be useful.
+Before you go through the steps needed for adding client-side search to your Gatsby website, you should be familiar with the basics of Gatsby. Check out the [tutorial](/tutorial/) and brush up on the [documentation](/docs/) if you need to. In addition, some knowledge of [ES6 syntax](https://medium.freecodecamp.org/write-less-do-more-with-javascript-es6-5fd4a8e50ee2) will be useful.
 
 ## What is JS Search
 
@@ -257,7 +257,7 @@ Run `gatsby develop` and if all went well, open your browser of choice and enter
 
 ## JS-Search with a big dataset
 
-Now let's try a different approach, this time instead of letting the component do all of the work, it's Gatsby's job to do that and pass all the data to a page defined by the path property, via [pageContext](/docs/behind-the-scenes-terminology/#pagecontext).
+Now try a different approach, this time instead of letting the component do all of the work, it's Gatsby's job to do that and pass all the data to a page defined by the path property, via [pageContext](/docs/behind-the-scenes-terminology/#pagecontext).
 
 To do this, some changes are required.
 
