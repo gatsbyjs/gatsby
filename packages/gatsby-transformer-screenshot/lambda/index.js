@@ -56,10 +56,7 @@ exports.run = async (browser, url, width, height, fullPage) => {
   }
 
   const keyBase = `${url}-(${width},${height})`
-  const contentDigest = createContentDigest
-    .createHash(`md5`)
-    .update(keyBase)
-    .digest(`hex`)
+  const contentDigest = createContentDigest({ url, width, height })
   const key = `${digest}.png`
 
   const screenshotUrl = `https://s3-${region}.amazonaws.com/${
