@@ -28,7 +28,7 @@ _**NOTE:** if your data is local i.e. on your file system and part of your site'
 
 Your plugin is going to source images from Pixabay. You'll be able to configure your plugin in your site's `gatsby-config.js` file and write GraphQL queries to access your plugin's data.
 
-> **NOTE:** You'll need a Pixabay API key which you can get by [registering for a Pixabay account](https://pixabay.com/en/accounts/register/). Your API key is in the ["Search Images" section of the Pixabay API docs](https://pixabay.com/api/docs/#api_search_images).
+> **NOTE:** You'll need a Pixabay API key which you can get by [registering for a Pixabay account](https://pixabay.com/en/accounts/register/). Your API key is in the [“Search Images“ section of the Pixabay API docs](https://pixabay.com/api/docs/#api_search_images).
 
 ### An example API request
 
@@ -362,9 +362,9 @@ Experiment with different options in your `gatsby-config.js` file to see how tha
 
 ## Publishing a plugin
 
-Don't publish this particular plugin to npm or the Gatsby Plugin Library, because it's just a sample plugin for the tutorial. However, if you've built a local plugin for your project, and want to share it with others, npm allows you to publish your plugins. Check out the npm docs on [How to publish & update a package](https://docs.npmjs.com/getting-started/publishing-npm-packages) for more info.
+Don't publish this particular plugin to npm or the Gatsby Plugin Library, because it's just a sample plugin for the tutorial. However, if you've built a local plugin for your project, and want to share it with others, npm allows you to publish your plugins. Check out the npm docs on [How to Publish & Update a Package](https://docs.npmjs.com/getting-started/publishing-npm-packages) for more info.
 
-> **NOTE:** Once you have published your plugin on npm, don't forget to edit your plugin's `package.json` file to include info about your plugin. If you'd like to publish a plugin to the [Gatsby plugin library](/plugins/) (please do!), please [follow these steps](/contributing/submit-to-plugin-library/).
+> **NOTE:** Once you have published your plugin on npm, don't forget to edit your plugin's `package.json` file to include info about your plugin. If you'd like to publish a plugin to the [Gatsby Plugin Library](/plugins/) (please do!), please [follow these steps](/contributing/submit-to-plugin-library/).
 
 ## Summary
 

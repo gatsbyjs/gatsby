@@ -171,7 +171,7 @@ There are two possibilities of routes that you can set up: static and client-onl
 
 > **Note**: An advantage to having pages in separate files like this is a defined way of [automatically code splitting](/docs/how-code-splitting-works/), whereas Create React App requires you to use the `import()` syntax to assign what elements should be loaded dynamically.
 
-For dynamic routes, you should implement routing with [@reach/router](https://reach.tech/router), which is already included with Gatsby. Dynamic routes can be implemented the same way you would implement a router in Create React App (or any other React application). However, because these routes won't be represented as HTML files in the final build, if you want users to be able to visit the routes directly (like entering the URL in the search bar), you'll need to generate pages in the `gatsby-node.js` file which is demonstrated in the [building apps with Gatsby](/docs/building-apps-with-gatsby/) guide.
+For dynamic routes, you should implement routing with [@reach/router](https://reach.tech/router), which is already included with Gatsby. Dynamic routes can be implemented the same way you would implement a router in Create React App (or any other React application). However, because these routes won't be represented as HTML files in the final build, if you want users to be able to visit the routes directly (like entering the URL in the search bar), you'll need to generate pages in the `gatsby-node.js` file which is demonstrated in the [Building Apps with Gatsby](/docs/building-apps-with-gatsby/) guide.
 
 ```jsx
 import React from "react"
@@ -211,7 +211,7 @@ Part of Gatsby's philosophy around tooling is [progressively disclosing complexi
 
 In terms of levels of abstraction, Gatsby allows you to move up or down to tap into more sophisticated, lower-level APIs without needing to eject like you would in Create React App.
 
-#### Webpack
+#### webpack
 
 Create React App will require you to eject or rely on another workaround to edit the webpack configuration. Gatsby allows [custom configuration of webpack](/docs/add-custom-webpack-config/) via the `gatsby-node.js` file.
 

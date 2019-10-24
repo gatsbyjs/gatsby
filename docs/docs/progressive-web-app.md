@@ -54,6 +54,6 @@ A [service worker](https://developers.google.com/web/fundamentals/primers/servic
 
 It's a script that runs separately in the background, supporting features like push notifications and background sync.
 
-Gatsby also provides a plugin interface to create and load a service worker into your site -- [gatsby-plugin-offline](/packages/gatsby-plugin-offline).
+Gatsby also provides a plugin interface to create and load a service worker into your site -- [**gatsby-plugin-offline**](/packages/gatsby-plugin-offline).
 
 We recommend using this plugin together with the [manifest plugin](/packages/gatsby-plugin-manifest). (Don't forget to list the `offline` plugin after the `manifest` plugin so that the manifest file can be included in the service worker).
