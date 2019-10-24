@@ -46,7 +46,9 @@ function handleAPIRequest({ event }) {
     data.api = params
   }
 
-  MessageAPI[data.api]()
+  if (MessageAPI[data.api] !== undefined) {
+    MessageAPI[data.api]()
+  }
 
   if (!data.redirect) {
     return new Response()
