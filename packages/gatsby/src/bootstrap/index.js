@@ -442,12 +442,16 @@ module.exports = async (args: BootstrapArgs) => {
     parentSpan: bootstrapSpan,
   })
   activity.start()
-  await apiRunnerNode(`createPages`, {
-    graphql: graphqlRunner,
-    traceId: `initial-createPages`,
-    waitForCascadingActions: true,
-    parentSpan: activity.span,
-  })
+  await apiRunnerNode(
+    `createPages`,
+    {
+      graphql: graphqlRunner,
+      traceId: `initial-createPages`,
+      waitForCascadingActions: true,
+      parentSpan: activity.span,
+    },
+    { activity }
+  )
   activity.end()
 
   // A variant on createPages for plugins that want to
@@ -458,12 +462,18 @@ module.exports = async (args: BootstrapArgs) => {
     parentSpan: bootstrapSpan,
   })
   activity.start()
-  await apiRunnerNode(`createPagesStatefully`, {
-    graphql: graphqlRunner,
-    traceId: `initial-createPagesStatefully`,
-    waitForCascadingActions: true,
-    parentSpan: activity.span,
-  })
+  await apiRunnerNode(
+    `createPagesStatefully`,
+    {
+      graphql: graphqlRunner,
+      traceId: `initial-createPagesStatefully`,
+      waitForCascadingActions: true,
+      parentSpan: activity.span,
+    },
+    {
+      activity,
+    }
+  )
   activity.end()
 
   activity = report.activityTimer(`onPreExtractQueries`, {

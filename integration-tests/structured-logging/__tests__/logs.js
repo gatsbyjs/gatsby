@@ -148,6 +148,17 @@ describe(`Activities`, () => {
       }),
     ])
   })
+
+  it(`Fails activity corresponding to API if "reporter.panicOnBuild" is called in API callback`, () => {
+    const createPagesEndActivityEvent = events.find(
+      event =>
+        event.type === `LOG_ACTION` &&
+        event.action.type === `ACTIVITY_END` &&
+        event.action.payload.id === `createPages`
+    )
+    expect(createPagesEndActivityEvent).toBeDefined()
+    expect(createPagesEndActivityEvent.action.payload.status).toBe(`FAILED`)
+  })
   ;[`success`, `info`, `warn`, `log`, `error`].forEach(level => {
     // success, info and log all emit `INFO`
     const mapActionToLevel = {
