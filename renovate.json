@@ -6,7 +6,6 @@
     "packages/**",
     "www/package.json"
   ],
-  "ignoreDeps": ["yarn"],
   "major": {
     "masterIssueApproval": true
   },
@@ -24,6 +23,10 @@
     {
       "groupName": "patch updates in packages",
       "updateTypes": ["patch"]
+    },
+    {
+      "depTypeList": ["engines"],
+      "enabled": false
     }
   ],
   "timezone": "GMT",
