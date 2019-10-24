@@ -60,8 +60,8 @@ This step creates GraphQL input filters for each field so the objects can be que
 
 #### 4. ProcessedTypeNode creation with resolve implementation
 
-Finally, we have everything we need to construct our final Gatsby Type object (known as `ProcessedTypeNode`). This contains the input filters and gqlType created above, and implements a resolve function for it using sift. More detail in the [Querying with Sift](/docs/schema-sift) section.
+Finally, you have everything you need to construct your final Gatsby Type object (known as `ProcessedTypeNode`). This contains the input filters and gqlType created above, and implements a resolve function for it using sift. More detail in the [Querying with Sift](/docs/schema-sift) section.
 
 #### 5. Create Connections for each type
 
-We've inferred all GraphQL Types, and the ability to query for a single node. But now we need to be able to query for collections of that type (e.g. `allMarkdownRemark`). [Schema Connections](/docs/schema-connections/) takes care of that.
+You've inferred all GraphQL Types, and the ability to query for a single node. But now you need to be able to query for collections of that type (e.g. `allMarkdownRemark`). [Schema Connections](/docs/schema-connections/) takes care of that.
