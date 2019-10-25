@@ -8152,6 +8152,29 @@
   source_url: https://github.com/IoT-Arduino/Gatsby-MySteps
   built_by: Maruo
   built_by_url: https://twitter.com/DengenT
+- title: Brent Runs Marathons
+  main_url: https://www.brentrunsmarathons.com/
+  url: https://www.brentrunsmarathons.com/
+  source_url: https://github.com/bingr001/brentrunsmarathonsv2
+  description: >
+    Brent Runs Marathons is about the training and race experience for the Comrades Ultra Marathon
+  categories:
+    - Blog
+  built_by: Brent Ingram
+  built_by_url: https://www.brentjingram.com/
+  featured: false
+- title: Pedro LaTorre
+  main_url: https://www.pedrolatorre.com/
+  url: https://www.pedrolatorre.com/
+  source_url: https://github.com/bingr001/pedro-latorre-site
+  description: >
+    A really awesome website built for the motivational speaker Pedro LaTorre
+  categories:
+    - Blog
+  built_by: Brent Ingram
+  built_by_url: https://www.brentjingram.com/
+  featured: false
+
 - title: Veryben
   main_url: https://veryben.com/
   url: https://veryben.com/
