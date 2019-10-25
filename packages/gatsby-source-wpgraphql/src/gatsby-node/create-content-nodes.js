@@ -1,4 +1,5 @@
 const fetch = require(`isomorphic-fetch`)
+const url = require(`url`)
 const _ = require(`lodash`)
 
 const fetchGraphql = async ({ url, query, variables }) =>
@@ -112,16 +113,18 @@ module.exports = async (
   const wpgqlNodes = await fetchWPGQLContentNodes(pluginOptions)
 
   await Promise.all(
-    wpgqlNodes.map(async node =>
-      actions.createNode({
+    wpgqlNodes.map(async node => {
+      node.path = url.parse(node.link).pathname
+
+      return actions.createNode({
         ...node,
-        id: createNodeId(`ContentNode-${node.id}`),
+        id: createNodeId(`WpContent-${node.id}`),
         parent: null,
         internal: {
           contentDigest: createContentDigest(node),
-          type: `ContentNode`,
+          type: `WpContent`,
         },
       })
-    )
+    })
   )
 }

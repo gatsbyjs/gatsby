@@ -2,7 +2,7 @@ import React from "react"
 import { graphql } from "gatsby"
 
 export default ({ data }) => {
-  const { title, content } = data.contentNode
+  const { title, content } = data.wpContent
   return (
     <div>
       <h1>{title}</h1>
@@ -13,7 +13,7 @@ export default ({ data }) => {
 
 export const query = graphql`
   query index($ID: String!) {
-    contentNode(id: { eq: $ID }) {
+    wpContent(id: { eq: $ID }) {
       title
       content
     }
