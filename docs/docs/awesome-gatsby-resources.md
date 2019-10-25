@@ -71,7 +71,6 @@ See the [library of official and community plugins](/plugins/)
 - [How to deploy a static Gatsby app to Heroku](https://medium.freecodecamp.org/how-to-deploy-a-static-gatsby-app-to-heroku-3362e3ecda0f)
 - [A comprehensive guide to build your personal website using GatsbyJS and Ghost deployed on AWS](https://nishantdania.com/blog/guide-to-setup-ghost-gatsby-website)
 - [Zero to Deploy: A Practical Guide to Static Sites with Gatsby.js](https://scotch.io/tutorials/zero-to-deploy-a-practical-guide-to-static-sites-with-gatsbyjs)
-- [Add a chat widget to your Gatsby blog](https://pusher.com/tutorials/chat-gatsby/)
 - [Build blazing fast web applications with Gatsby 101](https://gatsbyguides.com/)
 - [Build a Coffee Shop Website w/ Gatsby, Contentful, SnipCard & Formspree](https://www.youtube.com/watch?v=oAVhEPey_qA)
 - [Why I used GatsbyJS](https://medium.com/@jameshunt.co/why-i-used-gatsbyjs-70bbb0f5c4a7)
@@ -85,6 +84,7 @@ See the [library of official and community plugins](/plugins/)
 - [Gatsby - Full Tutorial for Beginners](https://www.youtube.com/watch?v=mHFAM0CXviE)
 - [Building a Video Blog with Gatsby and Markdown (MDX)](https://scotch.io/tutorials/building-a-video-blog-with-gatsby-and-markdown-mdx)
 - [Deploying Your First Gatsby Site to Netlify](https://scotch.io/tutorials/deploying-your-first-gatsby-site-to-netlify)
+- [Add a chat widget to your Gatsby blog](https://pusher.com/tutorials/chat-gatsby/)
 
 ### German
 
