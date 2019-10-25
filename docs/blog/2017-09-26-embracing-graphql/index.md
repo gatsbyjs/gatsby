@@ -78,7 +78,7 @@ There were a few bumps into the road but thanks to the starter example, I pieced
 things together quickly. Quickly as in “I have no idea how this GraphQL stuff
 works, but I have it working, so cool”. Easy to update — check.
 
-## Digging Deeper
+## Digging deeper
 
 I'm not the type of person to settle on “It's working so don't touch anything”.
 So I started digging into how Gatsby 1.x works—particular the

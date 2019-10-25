@@ -1,6 +1,6 @@
 // @flow
 
-import { print, visit, GraphQLError, getLocation } from "graphql"
+import { print, visit, getLocation } from "graphql"
 import { codeFrameColumns } from "@babel/code-frame"
 import _ from "lodash"
 import report from "gatsby-cli/lib/reporter"
@@ -131,12 +131,13 @@ export function multipleRootQueriesError(
     _.camelCase(otherName)
   )}`
 
-  return formatError(
-    `Multiple "root" queries found in file: "${name}" and "${otherName}". ` +
-      `Only the first ("${otherName}") will be registered.`,
+  return {
+    id: `85910`,
     filePath,
-    `  ${report.format.yellow(`Instead of:`)} \n\n` +
-      codeFrameColumns(
+    context: {
+      name,
+      otherName,
+      beforeCodeFrame: codeFrameColumns(
         report.stripIndent`
         query ${otherName} {
           bar {
@@ -159,9 +160,8 @@ export function multipleRootQueriesError(
         {
           linesBelow: Number.MAX_SAFE_INTEGER,
         }
-      ) +
-      `\n\n  ${report.format.green(`Do:`)} \n\n` +
-      codeFrameColumns(
+      ),
+      afterCodeFrame: codeFrameColumns(
         report.stripIndent`
         query ${unifiedName} {
           bar {
@@ -181,21 +181,9 @@ export function multipleRootQueriesError(
         {
           linesBelow: Number.MAX_SAFE_INTEGER,
         }
-      )
-  )
-}
-
-export function graphqlValidationError(
-  errors: Array<GraphQLError>,
-  filePath: string,
-  doc: any
-): string {
-  if (!errors || !errors.length) return ``
-  let error = errors[0]
-  let { source, locations: [{ line, column }] = [{}] } = error
-  let query = source ? source.body : print(doc)
-
-  return formatError(error.message, filePath, getCodeFrame(query, line, column))
+      ),
+    },
+  }
 }
 
 export function graphqlError(

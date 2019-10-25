@@ -721,7 +721,7 @@ A Gatsby theme abstracts Gatsby configuration (shared functionality, data sourci
 
 ### Creating a new site using a theme starter
 
-Creating a site based on a starter that configures a theme follows the same process as creating a site based on a starter that **doesn't** configure a theme. In this example we'll use the [starter for creating a new site that uses the official Gatsby blog theme](https://github.com/gatsbyjs/gatsby-starter-blog-theme).
+Creating a site based on a starter that configures a theme follows the same process as creating a site based on a starter that **doesn't** configure a theme. In this example you can use the [starter for creating a new site that uses the official Gatsby blog theme](https://github.com/gatsbyjs/gatsby-starter-blog-theme).
 
 #### Prerequisites
 
@@ -984,6 +984,136 @@ export const pageQuery = graphql`
 - [Adding Markdown pages](/docs/adding-markdown-pages/)
 - [Guide to creating pages from data programmatically](/docs/programmatically-create-pages-from-data/)
 - [Example repo](https://github.com/gatsbyjs/gatsby/tree/master/examples/recipe-sourcing-markdown) for this recipe
+
+### Sourcing data from Contentful
+
+#### Prerequisites
+
+- A [Gatsby site](/docs/quick-start/)
+- A [Contentful account](https://www.contentful.com/)
+- The [Contentful CLI](https://www.npmjs.com/package/contentful-cli) installed
+
+#### Directions
+
+1. Log in to Contentful with the CLI and follow the steps. It will help you create an account if you don't have one.
+
+```shell
+contentful login
+```
+
+2. Create a new space if you don't already have one. Make sure to save the space ID given to you at the end of the command. If you already have a Contentful space and space ID, you can skip steps 2 and 3.
+
+Note: for new accounts, you can overwrite the default onboarding space. Check to see the [spaces included with your account](https://app.contentful.com/account/profile/space_memberships).
+
+```shell
+contentful space create --name 'Gatsby example'
+```
+
+3. Seed the new space with example blog content using the new space ID returned from the previous command, in place of `<space ID>`.
+
+```shell
+contentful space seed -s '<space ID>' -t blog
+```
+
+For example, with a space ID in place: `contentful space seed -s '22fzx88spbp7' -t blog`
+
+4. Create a new access token for your space. Remember this token, as you will need it in step 6.
+
+```shell
+contentful space accesstoken create -s '<space ID>' --name 'Example token'
+```
+
+5. Install the `gatsby-source-contentful` plugin in your Gatsby site:
+
+```shell
+npm install --save gatsby-source-contentful
+```
+
+6. Edit the file `gatsby-config.js` and add the `gatsby-source-contentful` to the `plugins` array to enable the plugin. You should strongly consider using [environment variables](/docs/environment-variables/) to store your space ID and token for security purposes.
+
+```javascript:title=gatsby-config.js
+plugins: [
+   // add to array along with any other installed plugins
+   // highlight-start
+   {
+
+
+    resolve: `gatsby-source-contentful`,
+    options: {
+      spaceId: `<space ID>`, // or process.env.CONTENTFUL_SPACE_ID
+      accessToken: `<access token>`, // or process.env.CONTENTFUL_TOKEN
+    },
+  },
+  // highlight-end
+],
+```
+
+7. Run `gatsby develop` and make sure the site compiled successfully.
+
+8. Query data with the [GraphiQL editor](/docs/introducing-graphiql/) at `https://localhost:8000/___graphql`. The Contentful plugin adds several new node types to your site, including every content type in your Contentful website. Your example space with a "Blog Post" content type produces a `allContentfulBlogPost` node type in GraphQL.
+
+![the graphql interface, with a sample query outlined below](./images/recipe-sourcing-contentful-graphql.png)
+
+To query for Blog Post titles from Contentful, use the following GraphQL query:
+
+```graphql
+{
+  allContentfulBlogPost {
+    edges {
+      node {
+        title
+      }
+    }
+  }
+}
+```
+
+Contentful nodes also include several metadata fields like `createdAt` or `node_locale`.
+
+9. To show a list of links to the blog posts, create a new file in `/src/pages/blog.js`. This page will display all posts, sorted by updated date.
+
+```jsx:title=src/pages/blog.js
+import React from "react"
+import { graphql, Link } from "gatsby"
+
+const BlogPage = ({ data }) => (
+  <div>
+    <h1>Blog</h1>
+    <ul>
+      {data.allContentfulBlogPost.edges.map(({ node, index }) => (
+        <li key={index}>
+          <Link to={`/blog/${node.slug}`}>{node.title}</Link>
+        </li>
+      ))}
+    </ul>
+  </div>
+)
+
+export default BlogPage
+
+export const query = graphql`
+  {
+    allContentfulBlogPost(sort: { fields: [updatedAt] }) {
+      edges {
+        node {
+          title
+          slug
+        }
+      }
+    }
+  }
+`
+```
+
+To continue building out your Contentful site including post detail pages, check out the rest of the [Gatsby docs](/docs/sourcing-from-contentful/) and additional resources below.
+
+#### Additional resources
+
+- [Building a Site with React and Contentful](/blog/2018-1-25-building-a-site-with-react-and-contentful/)
+- [More on Sourcing from Contentful](/docs/sourcing-from-contentful/)
+- [Contentful source plugin](/packages/gatsby-source-contentful/)
+- [Long-text field types returned as objects](/packages/gatsby-source-contentful/#a-note-about-longtext-fields)
+- [Example repository for this recipe](https://github.com/gatsbyjs/gatsby/tree/master/examples/recipe-sourcing-contentful)
 
 ### Pulling data from an external source and creating pages without GraphQL
 
@@ -2098,7 +2228,7 @@ Use [`netlify-cli`](https://www.netlify.com/docs/cli/) to deploy your Gatsby app
 
 4. Choose a custom website name if you want or press enter to receive a random one.
 
-5. Choose your [Team](/docs/teams/).
+5. Choose your [Team](https://www.netlify.com/docs/teams/).
 
 6. Change the deploy path to `public/`
 

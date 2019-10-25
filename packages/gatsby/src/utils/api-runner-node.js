@@ -16,7 +16,7 @@ const {
   buildEnumType,
   buildScalarType,
 } = require(`../schema/types/type-builders`)
-const { emitter } = require(`../redux`)
+const { emitter, store } = require(`../redux`)
 const getPublicPath = require(`./get-public-path`)
 const { getNonGatsbyCodeFrameFormatted } = require(`./stack-trace-utils`)
 const { trackBuildError, decorateEvent } = require(`gatsby-telemetry`)
@@ -68,7 +68,12 @@ const initAPICallTracing = parentSpan => {
   }
 }
 
-const runAPI = (plugin, api, args) => {
+const getLocalReporter = (activity, reporter) =>
+  activity
+    ? { ...reporter, panicOnBuild: activity.panicOnBuild.bind(activity) }
+    : reporter
+
+const runAPI = (plugin, api, args, activity) => {
   const gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
   if (gatsbyNode[api]) {
     const parentSpan = args && args.parentSpan
@@ -78,7 +83,6 @@ const runAPI = (plugin, api, args) => {
     pluginSpan.setTag(`api`, api)
     pluginSpan.setTag(`plugin`, plugin.name)
 
-    const { store, emitter } = require(`../redux`)
     const {
       loadNodeContent,
       getNodes,
@@ -103,7 +107,7 @@ const runAPI = (plugin, api, args) => {
       boundActionCreators,
       api,
       plugin,
-      { ...args, parentSpan: pluginSpan }
+      { ...args, parentSpan: pluginSpan, activity }
     )
 
     const { config, program } = store.getState()
@@ -162,6 +166,7 @@ const runAPI = (plugin, api, args) => {
         },
       }
     }
+    let localReporter = getLocalReporter(activity, reporter)
 
     const apiCallArgs = [
       {
@@ -178,7 +183,7 @@ const runAPI = (plugin, api, args) => {
         getNode,
         getNodesByType,
         hasNodeChanged,
-        reporter,
+        reporter: localReporter,
         getNodeAndSavePathDependency,
         cache,
         createNodeId: namespacedCreateNodeId,
@@ -233,7 +238,7 @@ let apisRunningById = new Map()
 let apisRunningByTraceId = new Map()
 let waitingForCasacadeToFinish = []
 
-module.exports = async (api, args = {}, pluginSource) =>
+module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
   new Promise(resolve => {
     const { parentSpan } = args
     const apiSpanArgs = parentSpan ? { childOf: parentSpan } : {}
@@ -244,7 +249,6 @@ module.exports = async (api, args = {}, pluginSource) =>
       apiSpan.setTag(key, value)
     })
 
-    const { store } = require(`../redux`)
     const plugins = store.getState().flattenedPlugins
 
     // Get the list of plugins that implement this API.
@@ -292,6 +296,10 @@ module.exports = async (api, args = {}, pluginSource) =>
       waitingForCasacadeToFinish.push(apiRunInstance)
     }
 
+    if (apisRunningById.size === 0) {
+      emitter.emit(`API_RUNNING_START`)
+    }
+
     apisRunningById.set(apiRunInstance.id, apiRunInstance)
     if (apisRunningByTraceId.has(apiRunInstance.traceId)) {
       const currentCount = apisRunningByTraceId.get(apiRunInstance.traceId)
@@ -324,13 +332,15 @@ module.exports = async (api, args = {}, pluginSource) =>
         plugin.name === `default-site-plugin` ? `gatsby-node.js` : plugin.name
 
       return new Promise(resolve => {
-        resolve(runAPI(plugin, api, { ...args, parentSpan: apiSpan }))
+        resolve(runAPI(plugin, api, { ...args, parentSpan: apiSpan }, activity))
       }).catch(err => {
         decorateEvent(`BUILD_PANIC`, {
           pluginName: `${plugin.name}@${plugin.version}`,
         })
 
-        reporter.panicOnBuild({
+        let localReporter = getLocalReporter(activity, reporter)
+
+        localReporter.panicOnBuild({
           id: `11321`,
           context: {
             pluginName,
@@ -352,7 +362,6 @@ module.exports = async (api, args = {}, pluginSource) =>
       apisRunningByTraceId.set(apiRunInstance.traceId, currentCount - 1)
 
       if (apisRunningById.size === 0) {
-        const { emitter } = require(`../redux`)
         emitter.emit(`API_RUNNING_QUEUE_EMPTY`)
       }
 
