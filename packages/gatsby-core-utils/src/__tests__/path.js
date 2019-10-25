@@ -1,4 +1,4 @@
-const { joinPath, isNodePath } = require(`../path`)
+const { joinPath, isNodeInternalModulePath } = require(`../path`)
 const os = require(`os`)
 
 describe(`paths`, () => {
@@ -23,9 +23,11 @@ describe(`paths`, () => {
   })
   describe(`isNodePath`, () => {
     it(`Matches common node files`, () => {
-      expect(isNodePath(`console.js`)).toBe(true)
-      expect(isNodePath(`http.js`)).toBe(true)
-      expect(isNodePath(`internal/foo`)).toBe(true)
+      expect(isNodeInternalModulePath(`console.js`)).toBe(true)
+      expect(isNodeInternalModulePath(`http.js`)).toBe(true)
+      expect(isNodeInternalModulePath(`internal/foo`)).toBe(true)
+      const modulePath = `/Users/username/dev/project/node_modules/package-name/index.js`
+      expect(isNodeInternalModulePath(modulePath)).toBe(false)
     })
   })
 })

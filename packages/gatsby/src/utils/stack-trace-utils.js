@@ -3,7 +3,7 @@ const { codeFrameColumns } = require(`@babel/code-frame`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const chalk = require(`chalk`)
-const { isNodePath } = require(`gatsby-core-utils`)
+const { isNodeInternalModulePath } = require(`gatsby-core-utils`)
 
 const gatsbyLocation = path.dirname(require.resolve(`gatsby/package.json`))
 const reduxThunkLocation = path.dirname(
@@ -21,7 +21,7 @@ const getNonGatsbyCallSite = () =>
         !callSite.getFileName().includes(gatsbyLocation) &&
         !callSite.getFileName().includes(reduxLocation) &&
         !callSite.getFileName().includes(reduxThunkLocation) &&
-        !isNodePath(callSite.getFileName())
+        !isNodeInternalModulePath(callSite.getFileName())
     )
 
 const getNonGatsbyCodeFrame = ({ highlightCode = true } = {}) => {

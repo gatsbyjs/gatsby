@@ -16,7 +16,7 @@ export declare function joinPath(...paths: string[]): string
  * Checks if the file name matches a node path
  * @param {string} fileName File name
  */
-export declare function isNodePath(fileName: string): boolean
+export declare function isNodeInternalModulePath(fileName: string): boolean
 
 /**
  * Calculate CPU core count

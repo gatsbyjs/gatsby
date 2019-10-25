@@ -3,7 +3,7 @@
 const PrettyError = require(`pretty-error`)
 const prepareStackTrace = require(`./prepare-stack-trace`)
 const _ = require(`lodash`)
-const { isNodePath } = require(`gatsby-core-utils`)
+const { isNodeInternalModulePath } = require(`gatsby-core-utils`)
 
 const packagesToSkip = [`core-js`, `bluebird`, `regenerator-runtime`, `graphql`]
 
@@ -28,7 +28,7 @@ const sanitizeStructuredStackTrace = stack => {
       return false
     }
 
-    if (isNodePath(callSite.fileName)) {
+    if (isNodeInternalModulePath(callSite.fileName)) {
       return false
     }
 

@@ -70,7 +70,7 @@ const nodePaths = [
 ]
 
 /**
- * @type {import('../index').isNodePath}
+ * @type {import('../index').isNodeInternalModulePath}
  */
-export const isNodePath = fileName =>
+export const isNodeInternalModulePath = fileName =>
   nodePaths.some(regTest => regTest.test(fileName))
