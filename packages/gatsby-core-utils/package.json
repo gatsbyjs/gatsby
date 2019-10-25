@@ -28,6 +28,9 @@
     "index.d.ts"
   ],
   "types": "index.d.ts",
+  "dependencies": {
+    "ci-info": "2.0.0"
+  },
   "devDependencies": {
     "@babel/cli": "^7.6.4",
     "@babel/core": "^7.6.4",

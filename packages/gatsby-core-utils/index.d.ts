@@ -25,3 +25,15 @@ export declare function cpuCoreCount(ignoreEnvVar?: boolean): number
  * @param {string[]} segments A sequence of segments
  */
 export declare function urlResolve(...segments: string[]): string
+
+/**
+ * Determines whether the environment where the code is running is in CI
+ * @return {boolean} true if the environment is in CI, false otherwise
+ */
+export declare function isCI(): boolean
+
+/**
+ * Gets the name of the CI environment (e.g. "ZEIT Now", "Heroku", etc.)
+ * @return {string | null} The name of the CI if available. Defaults to null if not in CI
+ */
+export declare function getCIName(): string | null
