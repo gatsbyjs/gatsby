@@ -8,7 +8,7 @@ exports.sourceNodes = (
   { actions, getNode, createNodeId, hasNodeChanged, createContentDigest },
   pluginOptions
 ) => {
-  const { createNode } = actions
+  const { createNode, deleteNode } = actions
 
   let serverOptions = pluginOptions.server || {
     address: `localhost`,
@@ -45,24 +45,30 @@ exports.sourceNodes = (
             createNode,
             createNodeId,
             col,
-            createContentDigest
+            createContentDigest,
+            getNode,
+            deleteNode
           )
         )
       )
-        .then(() => {
-          mongoClient.close()
-        })
-        .catch(err => {
-          console.warn(err)
-          mongoClient.close()
-          return err
-        })
+      // .then(() => {
+      //   mongoClient.close()
+      // })
+      // .catch(err => {
+      //   console.warn(err)
+      //   mongoClient.close()
+      //   return err
+      // })
     })
     .catch(err => {
       console.warn(err)
       return err
     })
 }
+
+// exports.onPostBootstrap = ({ actions, store }) => {
+//   console.log(store.getState().nodes)
+// }
 
 function idToString(id) {
   return id.hasOwnProperty(`toHexString`) ? id.toHexString() : String(id)
@@ -75,11 +81,13 @@ function createNodes(
   createNode,
   createNodeId,
   collectionName,
-  createContentDigest
+  createContentDigest,
+  getNode,
+  deleteNode
 ) {
   const { preserveObjectIds = false } = pluginOptions
+  let collection = db.collection(collectionName)
   return new Promise((resolve, reject) => {
-    let collection = db.collection(collectionName)
     let cursor = collection.find()
 
     // Execute the each command, triggers for each document
@@ -148,6 +156,59 @@ function createNodes(
       })
       resolve()
     })
+  }).then(() => {
+    const changeStream = collection.watch()
+
+    changeStream.on(
+      `change`,
+      ({ operationType, documentKey, fullDocument }) => {
+        switch (operationType) {
+          case `insert`: {
+            const id = idToString(documentKey._id)
+            const nodeId = createNodeId(id)
+
+            // if (preserveObjectIds) {
+            //   for (let key in item) {
+            //     item[key] = stringifyObjectIds(item[key])
+            //   }
+            // }
+
+            const node = {
+              // Data for the node.
+              ...fullDocument,
+              id: nodeId,
+              mongodb_id: id,
+              parent: `__${collectionName}__`,
+              children: [],
+              internal: {
+                type: `mongodb${sanitizeName(dbName)}${sanitizeName(
+                  collectionName
+                )}`,
+                content: JSON.stringify(fullDocument),
+                contentDigest: createContentDigest(fullDocument),
+              },
+            }
+
+            delete node._id
+
+            console.log(node)
+            // Create the Node itself
+            createNode({ node: node })
+            // TODO: Create all references to it
+            break
+          }
+          // case "replace":
+          case `delete`: {
+            const nodeId = createNodeId(idToString(documentKey._id))
+            const node = getNode(nodeId)
+            // Delete the Node itself
+            deleteNode({ node: node })
+            // TODO: Delete all references to it
+            break
+          }
+        }
+      }
+    )
   })
 }
 
