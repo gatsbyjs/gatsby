@@ -18,6 +18,12 @@ Similar to HTML files, the JSON files in the `public/page-data/` directory shoul
 
 The `cache-control` header should be `cache-control: public, max-age=0, must-revalidate`<sup>1</sup>
 
+## App data
+
+The new `app-data.json` file which contains the build hash for the current deployment of the site should also share the same `cache-control` header as `page-data.json`. This is to ensure that the version of the site loaded in the browser is always synchronised with the currently deployed version.
+
+The `cache-control` header should be `cache-control: public, max-age=0, must-revalidate`<sup>1</sup>
+
 ## Static files
 
 All files in `static/` should be cached forever. For files in this directory, Gatsby creates paths that are directly tied to the content of the file. Meaning that if the file content changes, then the file path changes also. These paths look weird e.g. `reactnext-gatsby-performance.001-a3e9d70183ff294e097c4319d0f8cff6-0b1ba.png` but since the same file will always be returned when that path is requested, Gatsby can cache it forever.

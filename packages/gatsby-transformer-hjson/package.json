@@ -8,8 +8,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.6.3",
-    "bluebird": "^3.7.0",
-    "hjson": "^3.2.0"
+    "bluebird": "^3.7.1",
+    "hjson": "^3.2.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.6.4",

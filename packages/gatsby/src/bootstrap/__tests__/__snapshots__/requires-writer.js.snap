@@ -1,5 +1,46 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`requires-writer matchPath have static pages first and prefer more specific matchPaths 1`] = `
+Array [
+  Object {
+    "matchPath": "/mp1/mp2/hello",
+    "path": "/mp1/mp2/hello",
+  },
+  Object {
+    "matchPath": "/mp1/mp2",
+    "path": "/mp1/mp2",
+  },
+  Object {
+    "matchPath": "/some-page",
+    "path": "/some-page",
+  },
+  Object {
+    "matchPath": "/",
+    "path": "/",
+  },
+  Object {
+    "matchPath": "/mp1/mp2/mp3/mp4/*",
+    "path": "/mp4",
+  },
+  Object {
+    "matchPath": "/mp1/mp2/mp3/*",
+    "path": "/mp3",
+  },
+  Object {
+    "matchPath": "/mp1/mp2/*",
+    "path": "/mp2",
+  },
+  Object {
+    "matchPath": "/mp1/*",
+    "path": "/mp1",
+  },
+  Object {
+    "matchPath": "/*",
+    "path": "/custom-404",
+  },
+]
+`;
+
 exports[`requires-writer matchPath should be sorted by specificity 1`] = `
 Array [
   Object {
@@ -17,6 +58,19 @@ Array [
   Object {
     "matchPath": "/app/*",
     "path": "/app/",
+  },
+]
+`;
+
+exports[`requires-writer matchPath should have index pages with higher priority than matchPaths 1`] = `
+Array [
+  Object {
+    "matchPath": "/",
+    "path": "/",
+  },
+  Object {
+    "matchPath": "/*",
+    "path": "/custom-404",
   },
 ]
 `;

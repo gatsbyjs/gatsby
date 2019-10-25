@@ -60,7 +60,7 @@ In the simplest cases, this is all that’s required for building pages with Gat
 
 To pass data to the created pages, you’ll need to pass `context` to the `createPage` call.
 
-In `gatsby-node.js`, we can add context like so:
+In `gatsby-node.js`, you can add context like so:
 
 ```js:title=gatsby-node.js
 exports.createPages = ({ actions: { createPage } }) => {
@@ -75,11 +75,11 @@ exports.createPages = ({ actions: { createPage } }) => {
 }
 ```
 
-The `context` property accepts an object, and we can pass in any data we want the page to be able to access.
+The `context` property accepts an object, and you can pass in any data you want the page to be able to access.
 
 > **NOTE:** There are a few reserved names that _cannot_ be used in `context`. They are: `path`, `matchPath`, `component`, `componentChunkName`, `pluginCreator___NODE`, and `pluginCreatorId`.
 
-When Gatsby creates pages, it includes a prop called `pageContext` and sets its value to `context`, so we can access any of the values in our component:
+When Gatsby creates pages, it includes a prop called `pageContext` and sets its value to `context`, so you can access any of the values in your component:
 
 ```jsx:title=src/templates/with-context.js
 import React from "react"

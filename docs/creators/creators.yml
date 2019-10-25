@@ -434,3 +434,16 @@
   for_hire: true
   hiring: false
   portfolio: true
+- name: Pagepro
+  type: agency
+  description: >-
+    We are engaged, T-shaped React & Gatsby Developers and we can’t wait
+    to build your web or mobile product,
+    or become the part of your remote team.
+  location: UK & Poland
+  website: "https://pagepro.co"
+  github: "https://github.com/Pagepro"
+  image: images/pagepro.jpg
+  for_hire: true
+  hiring: true
+  portfolio: true
