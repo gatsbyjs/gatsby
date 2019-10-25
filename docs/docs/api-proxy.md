@@ -1,5 +1,5 @@
 ---
-title: "Proxying API Requests in Development"
+title: Proxying API Requests in Development
 ---
 
 ## Resources

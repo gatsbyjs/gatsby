@@ -196,6 +196,7 @@ const ColorModal = ({ palette, color, handleModalClose }) => {
         <CloseButton
           onClick={handleModalClose}
           aria-label={`Close “${palette[color].name}” modal`}
+          paddingBottom="6"
         >
           &times;
         </CloseButton>
