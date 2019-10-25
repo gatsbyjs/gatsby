@@ -187,6 +187,8 @@ Note the mix of components and native HTML elements in the React markup here: th
 
 Gatsby itself provides a number of core building blocks: `<Link>` is one of them. The `<Link>` component is imported at the top of the file to use in place of `<a>` tags for internal links, with a `to` prop instead of the `href` attribute. When the site builds, `<Link>` produces native HTML anchors with added performance optimizations like prefetching page content before a user activates a link.
 
+Copy over the `<header>` element contents, changing `<a>` elements to `<Link>` components:
+
 ```jsx:title=/src/pages/index.js
 import React from "react"
 import Helmet from "react-helmet"
@@ -235,11 +237,9 @@ export default () => (
 
 ### Page content
 
-The contents of the `<main>` tag can be copied over from `index.html` to your new `index.js` file unchanged.
+The contents of the `<main>` tag can be copied over from `index.html` to your new `index.js` file mostly unchanged. Your pasted HTML needs a small change to be valid: `class` attributes [must be renamed to `className`](https://reactjs.org/docs/dom-elements.html#classname) for usage with React, as `class` is a reserved word in JavaScript.
 
-Your pasted HTML needs a small change to be valid: `class` attributes [must be renamed to `className`](https://reactjs.org/docs/dom-elements.html#classname) for usage with React, as `class` is a reserved word in JavaScript.
-
-Opening the site in a browser again at `http://localhost:8000`, you should have a visually complete home page! You'll make the links functional next by porting more pages. Before that, this guide will briefly explore how HTML and JavaScript combine in a Gatsby application.
+Opening the site in a browser again at `http://localhost:8000`, you should have a visually complete home page! You'll make the links functional next by porting more pages. Before that, this guide will briefly explore how HTML and JavaScript combine as JSX in a Gatsby application.
 
 ### HTML and JavaScript
 
@@ -465,11 +465,11 @@ gatsby-site
 └── README.md
 ```
 
-## Build
+## Building & Deploying
 
 With your new Gatsby application taking shape, it's time to integrate it into your existing HTML website.
 
-### Build step
+### Gatsby build step
 
 You now have a site that mirrors the existing HTML site section. Stop the development server if it's still running; it's time to run the production build! 🎉
 
@@ -477,13 +477,40 @@ You now have a site that mirrors the existing HTML site section. Stop the develo
 gatsby build
 ```
 
-Once a build is complete, the compiled set of files can be found in `/public`. It's all in there and ready to replace the existing files!
+Once a build is complete, the compiled set of files can be found in `/public`.
 
-> **Note**: To host a Gatsby site at a path, e.g. `/docs`, the [Path Prefix](https://www.gatsbyjs.org/docs/path-prefix/) option will cause Gatsby to alter the build output accordingly. If you want to host non-HTML resources on a dedicated CDN, Gatsby can accomodate this too, with the [Asset Prefix](https://www.gatsbyjs.org/docs/asset-prefix/) option.
+### Hosting the new website
 
-### New site file structure
+Once built, the contents of the `/public` folder are ready to be hosted at the root (`/`) of a domain. The files can be deployed in exactly the same way that your existing HTML site was deployed. For more deployment options, see the [Deploying and Hosting page](/docs/deploying-and-hosting/).
 
-Here is the structure of the HTML & non-JavaScript asset files after the built Gatsby application has replaced the existing HTML files on the website domain:
+If the Gatsby site is to be hosted at a non-root path, e.g. `example.com/blog/`, Gatsby needs to be informed so page and asset links in the built output can be prefixed.
+
+[Path prefix](/docs/path-prefix/) is the Gatsby option for setting a non-root hosting path. Here is the example project `gatsby-config.js` file with a path prefix added for `/blog`:
+
+```js:title=/gatsby-site/gatsby-config.js
+/**
+ * Configure your Gatsby site with this file.
+ *
+ * See: https://www.gatsbyjs.org/docs/gatsby-config/
+ */
+
+module.exports = {
+  pathPrefix: "/blog", // highlight-line
+  plugins: ["gatsby-plugin-react-helmet"],
+}
+```
+
+If the HTML and non-HTML files of the Gatsby build output are to be served in different locations, this can also be supported with the [Asset Prefix](/docs/asset-prefix/) option.
+
+Once prefix options have been set, the build must be run with the `--prefix-paths` flag to apply them:
+
+```shell
+gatsby build --prefix-paths
+```
+
+### New website file structure
+
+Here is the structure of the HTML & non-JavaScript asset files in the Gatsby build output:
 
 ```
 website-domain
