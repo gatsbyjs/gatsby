@@ -54,7 +54,7 @@ By user testing a few variations of known routing techniques, we gained some val
 
 ## Working with Fable
 
-We worked with [Fable Tech Labs](https://makeitfable.com) to conduct this research and found it to be a very productive process. I connected with Fable’s lead front end developer Perry Trinier at the CSUN accessibility conference in early 2019. Fable’s generous offer to pair with us on this initiative has been wonderful, and we’re grateful for the opportunity to see this through.
+We worked with [Fable Tech Labs](https://makeitfable.com) to conduct this research and found it to be a very productive process. I connected with Fable’s lead frontend developer Perry Trinier at the CSUN accessibility conference in early 2019. Fable’s generous offer to pair with us on this initiative has been wonderful, and we’re grateful for the opportunity to see this through.
 
 The experience of testing with people with disabilities and the results that followed felt very important, and something product teams should seek out regularly. We’d highly recommend this process for anyone working on digital experiences; particularly if you can test prototypes to adapt to the findings early and often in design & development. User testing for accessibility can provide game-changing detail that you’ll be eternally grateful to have uncovered. Addressing accessibility issues sooner than later is both a [smart business investment](https://www.w3.org/WAI/business-case/) and can make your project more [inclusive](https://www.microsoft.com/design/inclusive/) from the start!
 
