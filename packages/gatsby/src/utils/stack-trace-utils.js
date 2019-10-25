@@ -76,7 +76,7 @@ const getNonGatsbyCallSite = () =>
         !callSite.getFileName().includes(gatsbyLocation) &&
         !callSite.getFileName().includes(reduxLocation) &&
         !callSite.getFileName().includes(reduxThunkLocation) &&
-        !nodePaths.some(regTest => regTest.test(callSite.fileName))
+        !nodePaths.some(regTest => regTest.test(callSite.getFileName()))
     )
 
 const getNonGatsbyCodeFrame = ({ highlightCode = true } = {}) => {
