@@ -6,6 +6,7 @@ class Homepage extends Component {
     const data = this.props.data
 
     return (
+      <>
         <div>
           <h1>Pages</h1>
           {data.allWordpressPage.edges.map(({ node }) => (
@@ -27,6 +28,7 @@ class Homepage extends Component {
             <h3>{node.excerpt}</h3>
           </div>
         ))}
+      </>
     )
   }
 }
