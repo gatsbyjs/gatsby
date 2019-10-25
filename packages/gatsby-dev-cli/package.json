@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.6.3",
-    "chokidar": "^3.2.1",
+    "chokidar": "^3.2.2",
     "configstore": "^5.0.0",
     "del": "^5.1.0",
     "execa": "^2.1.0",
@@ -21,7 +21,7 @@
     "lodash": "^4.17.15",
     "request": "2.88.0",
     "signal-exit": "^3.0.2",
-    "verdaccio": "^4.3.3",
+    "verdaccio": "^4.3.4",
     "yargs": "^8.0.2"
   },
   "devDependencies": {
