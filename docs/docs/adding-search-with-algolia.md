@@ -57,7 +57,7 @@ module.exports = {
 }
 ```
 
-Notice that you're loading `queries` from a file at `./src/utils/algolia.js` (you can of course put it wherever you like) and your Algolia ID and API key from `.env` so let's add those files.
+Notice that you're loading `queries` from a file at `./src/utils/algolia.js` (you can of course put it wherever you like) and your Algolia ID and API key from `.env` so add those files.
 
 For this, you will need to navigate to [the 'API Keys' section of your Algolia profile](https://www.algolia.com/api-keys). If you already have an account, you will find your API keys here. If not, you will need to sign up for one and then navigate to this link. It should look something like this screenshot, only with actual numbers instead of redacted ones:
 
@@ -161,9 +161,9 @@ If you've come this far, then the "backend" is done. You should now be able to r
 
 ## Adding a search interface to your site
 
-Next, let's build a user-facing search interface for your site. It needs a way for the user to enter a search string, send that string to Algolia, receive matching results (_hits_ in Algolia speak) from your indices and finally display those to the user. Let's dive right in.
+Next, build a user-facing search interface for your site. It needs a way for the user to enter a search string, send that string to Algolia, receive matching results (_hits_ in Algolia speak) from your indices and finally display those to the user.
 
-You're going to assemble everything you need into a React `Search` component that you call from anywhere on your site where you want the user to be able to search. Even though design varies strongly from site to site, I'll also go through the styles implemented with [`styled-components`](https://styled-components.com) in this guide since working out the CSS transitions to have the search field slide out as the user clicks on it and the results pane to appear once Algolia returns matches took some time.
+You're going to assemble everything you need into a React `Search` component that you call from anywhere on your site where you want the user to be able to search. Even though design varies strongly from site to site, you'll note the styles implemented with [`styled-components`](https://styled-components.com) in this guide since working out the CSS transitions to have the search field slide out as the user clicks on it and the results pane to appear once Algolia returns matches took some time.
 
 The `Search` components is made up of the following files:
 
@@ -172,7 +172,7 @@ The `Search` components is made up of the following files:
 - **`hitComps.js`**: the components that will render matching posts/pages
 - **`styles.js`**: the styled components
 
-There's quite a lot happening in these files so let's break them down one by one and piece by piece.
+There's quite a lot happening in these files so break them down one by one and piece by piece.
 
 ### `index.js`
 
@@ -259,7 +259,7 @@ import { Root, SearchBox, HitsWrapper, PoweredBy } from "./styles"
 import Input from "./Input"
 ```
 
-`PoweredBy` renders the string "Powered by Algolia" with a small logo and link. If you're using Algolia's generous free tier, they ask you to acknowledge them in this way below the search results. `react-instantsearch-dom` also provides a [`PoweredBy` component](https://community.algolia.com/react-instantsearch/widgets/PoweredBy.html) specifically for this purpose but I preferred to build my own. You'll get back to these styled components once you're done with `index.js`. For now, let's move on.
+`PoweredBy` renders the string "Powered by Algolia" with a small logo and link. If you're using Algolia's generous free tier, they ask you to acknowledge them in this way below the search results. `react-instantsearch-dom` also provides a [`PoweredBy` component](https://community.algolia.com/react-instantsearch/widgets/PoweredBy.html) specifically for this purpose, but you can build your own. You'll get back to these styled components once you're done with `index.js`.
 
 The last thing you need for the `Search` component to work are hit components for every type of result you want to display to the user. The hit component determines how attributes of matching results (such as author, date, tags and title in the case of a blog post) are displayed to the user.
 
@@ -365,7 +365,7 @@ export default connectSearchBox(({ refine, ...rest }) => (
 
 The `Input` component is where the user enters the search string. It is quite short since the grunt work is done by Algolia's [`connectSearchBox`](https://community.algolia.com/react-instantsearch/connectors/connectSearchBox.html) function.
 
-Now let's look at the styled components `SearchIcon`, `Form`, `Input` as well as the ones imported in `index.js`.
+Now look at the styled components `SearchIcon`, `Form`, `Input` as well as the ones imported in `index.js`.
 
 ## `styles.js`
 
@@ -503,7 +503,7 @@ export const PoweredBy = () => (
 )
 ```
 
-Styles will of course be different from one site to the next so I only list these components here for completeness and because they implement the dynamic behavior of the search interface, i.e. that the input field only slides out once the user clicks the `SearchIcon` (a magnifier) and that the pane displaying search (`HitsWrapper`) results only appears once Algolia's server returned matches, both of you which you might want to keep.
+Styles will of course be different from one site to the next so these components are listed here for completeness and because they implement the dynamic behavior of the search interface, i.e. that the input field only slides out once the user clicks the `SearchIcon` (a magnifier) and that the pane displaying search (`HitsWrapper`) results only appears once Algolia's server returned matches, both of you which you might want to keep.
 
 Now you're almost done, two small steps remain. First you need to put together a hit component for every type of result you want to display. In this example, these are blog posts and pages. And second, you need to call your `Search` component somewhere on your site. Here are the hit components.
 
@@ -557,7 +557,7 @@ export const PostHit = clickHandler => ({ hit }) => (
 
 ## Usage
 
-Now all you need to do is import `Search` somewhere. The obvious place is the `Header` component so let's add it there.
+Now all you need to do is import `Search` somewhere. The obvious place is the `Header` component so add it there.
 
 ```js:title=src/components/Header/index.js
 import React from "react"
