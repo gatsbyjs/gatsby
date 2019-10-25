@@ -872,6 +872,29 @@ describe(`Define parent-child relationships with field extensions`, () => {
     )
     await expect(buildSchema()).resolves.toEqual(expect.any(Object))
   })
+
+  it(`adds root field arguments for searchable child fields (when there are no data nodes)`, async () => {
+    dispatch(
+      createTypes(`
+        type Parent implements Node {
+          id: ID!
+        }
+        type ChildWithoutSourceNodes implements Node @childOf(types: ["Parent"]) {
+          name: String
+        }
+      `)
+    )
+    const { schema } = await buildSchema()
+    const expectedArg = schema
+      .getType(`Query`)
+      .getFields()
+      .parent.args.find(arg => arg.name === `childChildWithoutSourceNodes`)
+    const expectedArgType = schema.getType(`ChildWithoutSourceNodesFilterInput`)
+
+    expect(expectedArg).toBeDefined()
+    expect(expectedArgType).toBeDefined()
+    expect(expectedArg.type).toStrictEqual(expectedArgType)
+  })
 })
 
 const buildSchema = async () => {

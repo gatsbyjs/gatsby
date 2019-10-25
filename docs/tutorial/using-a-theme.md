@@ -145,24 +145,24 @@ Open up `/src/gatsby-theme-blog/gatsby-plugin-theme-ui/colors.js`, and uncomment
 
 ```javascript:title=colors.js
 {/* highlight-start */}
-const blue60 = "#007acc"
-const blue30 = "#66E0FF"
-const blueGray = "#282c35"
+const darkBlue = `#007acc`
+const lightBlue = `#66E0FF`
+const blueGray = `#282c35`
 {/* highlight-end */}
 
-export default merge({}, defaultThemeColors, {
+export default merge(defaultThemeColors, {
   {/* highlight-start */}
-    text: blueGray,
-    primary: blue60,
-    heading: blueGray,
-    modes: {
-      dark: {
-        background: blueGray,
-        primary: blue30,
-        highlight: blue60,
-      },
+  text: blueGray,
+  primary: darkBlue,
+  heading: blueGray,
+  modes: {
+    dark: {
+      background: blueGray,
+      primary: lightBlue,
+      highlight: lightBlue,
     },
-   {/* highlight-end */}
+  },
+  {/* highlight-end */}
 })
 ```
 
@@ -172,7 +172,7 @@ Now, instead of a purple theme, you have a blue theme instead:
 
 In this file, you're pulling in the default color theme (imported as `defaultThemeColors` here), and overriding certain color keys.
 
-To see what other theme colors you can customize, check out the `colors.js` file in the official blog theme (`gatsby-theme-blog/src/gatsby-plugin-theme-ui/colors.js`)
+To see what other theme colors you can customize, check out the `colors.js` file in the official blog theme (`node_modules/gatsby-theme-blog/src/gatsby-plugin-theme-ui/colors.js`)
 
 ## Wrapping up
 

@@ -20,6 +20,7 @@ See the [library of official and community plugins](/plugins/)
 
 - [Develop & Build GatsbyJS static sites within Docker](https://github.com/aripalo/gatsby-docker/)
 - Is Gatsby? - Browser extension for [Chrome](https://chrome.google.com/webstore/detail/is-gatsby/jgaejkhmgkpagdmapahohjennkhbpgfj) and [Firefox](https://addons.mozilla.org/en-US/firefox/addon/is-gatsby/) to check if a site / page is using Gatsby.
+- [Gatsby Docs Kit](https://github.com/brainhubeu/gatsby-docs-kit): A set of tools, extending Gatsby to generate gorgeous documentation static website.
 
 ## Podcasts
 

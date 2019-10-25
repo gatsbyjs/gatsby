@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.6.3",
-    "bluebird": "^3.7.0",
+    "bluebird": "^3.7.1",
     "gatsby-core-utils": "^1.0.15",
     "gray-matter": "^4.0.2",
     "hast-util-raw": "^4.0.0",

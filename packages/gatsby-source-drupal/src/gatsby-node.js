@@ -178,10 +178,19 @@ exports.onCreateDevServer = (
     }),
     async (req, res) => {
       if (!_.isEmpty(req.body)) {
-        // we are missing handling of node deletion
+        const requestBody = JSON.parse(JSON.parse(req.body))
+        const { secret, action, id } = requestBody
+        if (pluginOptions.secret && pluginOptions.secret !== secret) {
+          return reporter.warn(
+            `The secret in this request did not match your plugin options secret.`
+          )
+        }
+        if (action === `delete`) {
+          actions.deleteNode({ node: getNode(createNodeId(id)) })
+          return reporter.log(`Deleted node: ${id}`)
+        }
         const nodeToUpdate = JSON.parse(JSON.parse(req.body)).data
-
-        await handleWebhookUpdate(
+        return await handleWebhookUpdate(
           {
             nodeToUpdate,
             actions,
@@ -196,6 +205,7 @@ exports.onCreateDevServer = (
         )
       } else {
         res.status(400).send(`Received body was empty!`)
+        return reporter.log(`Received body was empty!`)
       }
     }
   )
