@@ -58,9 +58,9 @@ const HomepageFeatures = () => (
       </FuturaParagraph>
     </Card>
     <Card>
-      <CardHeadline>Static Progressive Web Apps</CardHeadline>
+      <CardHeadline>Progressive Web Apps</CardHeadline>
       <FuturaParagraph>
-        Gatsby.js is a static PWA (Progressive Web App) generator. You get code
+        Gatsby.js is a PWA (Progressive Web App) generator. You get code
         and data splitting out-of-the-box. Gatsby loads only the critical HTML,
         CSS, data, and JavaScript so your site loads as fast as possible. Once
         loaded, Gatsby prefetches resources for other pages so clicking around
