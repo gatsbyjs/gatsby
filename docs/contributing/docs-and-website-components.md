@@ -172,6 +172,8 @@ The Horizontal Nav List component takes two props:
 - `slug` - which is provided in the props of the page by default
 - `items` - an array of strings for items to render and wrap with a `<Link />` to subheadings
 
+The docs on Gatsbyjs.org use the [gatsby-remark-autolink-headers](/packages/gatsby-remark-autolink-headers/) plugin to automatically apply hover links to heading tags across docs pages. Because it automatically creates links to subheadings on pages like the glossary, the Horizontal Nav List can supply matching links (like `"guide-list"` which would align with the automatically created link at `/docs/docs-and-website-components#guide-list`).
+
 <!-- prettier-ignore -->
 ```markdown
 ---
@@ -223,6 +225,8 @@ import Breadcrumb from "../../www/src/components/docs-breadcrumb"
 <Breadcrumb location={props.location} itemList={itemList} />
 ```
 
+_You can also refer to [an example of usage of the Breadcrumb in the Gatsbyjs.org source code](https://github.com/gatsbyjs/gatsby/blob/1d65ce051967dda5c4a89da920fc34692524e237/www/src/templates/template-docs-markdown.js#L82)_
+
 #### Optional `breadcrumbTitle` entries in sidebar files
 
 To alter the title of a doc that is displayed in the Breadcrumb component, a `breadcrumbTitle` is supported as a key in the [sidebar YAML files](https://github.com/gatsbyjs/gatsby/tree/master/www/src/data/sidebars). It is commonly used to provide an abbreviated version of a doc's title when displayed next to its parent page title, e.g. shortening "Adding a Custom webpack Config" to "webpack Config".
@@ -257,6 +261,8 @@ import TableOfContents from "../../www/src/components/docs-table-of-contents"
 
 <TableOfContents location={props.location} page={page} />
 ```
+
+_You can also refer to [an example of usage of the Table of Contents in the Gatsbyjs.org source code](https://github.com/gatsbyjs/gatsby/blob/1d65ce051967dda5c4a89da920fc34692524e237/www/src/templates/template-docs-markdown.js#L121)_
 
 #### Sample
 
