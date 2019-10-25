@@ -10,9 +10,12 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-source-wpgraphql`,
+      resolve: `gatsby-source-graphql`,
       options: {
-        url: `http://wpgraphql.local`,
+        fieldName: `cms`,
+        url: `https://api-euwest.graphcms.com/v1/cjjr1at6d0xb801c3scjrm0l0/master`,
+        typeName: `GraphCMS`,
+        refetchInterval: 60,
       },
     },
     `gatsby-plugin-sharp`,
