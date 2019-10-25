@@ -157,7 +157,7 @@ These performance optimizations aren't opt-in; they're enabled, by default. As n
 
 ### Plugins and the Gatsby Ecosystem
 
-One of the key benefits of Gatsby is its highly modular architecture. Need a plugin for [sourcing data from Wordpress][gatsby-source-wordpress]? Sure, seems reasonable. Need to [transform yaml data][gatsby-transformer-yaml] into a usable, JavaScript object? Yeah, why not! Want to [stitch in a remote GraphQL API][gatsby-source-graphql] and inject the data at _build_ time? Oh, you're fancy! Want to load optimized, responsive, blur-in images? Yep.
+One of the key benefits of Gatsby is its highly modular architecture. Need a plugin for [sourcing data from WordPress][gatsby-source-wordpress]? Sure, seems reasonable. Need to [transform yaml data][gatsby-transformer-yaml] into a usable, JavaScript object? Yeah, why not! Want to [stitch in a remote GraphQL API][gatsby-source-graphql] and inject the data at _build_ time? Oh, you're fancy! Want to load optimized, responsive, blur-in images? Yep.
 
 Let's take a look at that image functionality provided by one of our components, `gatsby-image`, in slightly more detail.
 

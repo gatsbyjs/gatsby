@@ -44,7 +44,7 @@ The following configuration will give you a good start point in line with Gatsby
 {
   "root": "public/",
   "headers": {
-    "/**/": {
+    "/**": {
       "Cache-Control": "public, max-age=0, must-revalidate"
     },
     "/**.css": {

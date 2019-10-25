@@ -2,7 +2,6 @@ import React, { Component } from "react"
 import PropTypes from "prop-types"
 import styled from "@emotion/styled"
 import { Link } from "gatsby"
-
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
 import HomepageBlogPost from "./homepage-blog-post"
@@ -11,20 +10,12 @@ import {
   HorizontalScrollerContent,
   HorizontalScrollerItem,
 } from "../shared/horizontal-scroller"
-
-import {
-  colors,
-  space,
-  breakpoints,
-  mediaQueries,
-  fontSizes,
-  lineHeights,
-  fonts,
-} from "../../utils/presets"
+import { mediaQueries } from "../../gatsby-plugin-theme-ui"
+import { breakpoints } from "gatsby-design-tokens"
 import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
 
 const HomepageBlogPostsRootMobile = styled(HorizontalScroller)`
-  margin: -6px -${space[6]};
+  margin: -6px -${p => p.theme.space[6]};
 `
 
 const HorizontalScrollerContentAsDiv = HorizontalScrollerContent.withComponent(
@@ -40,7 +31,7 @@ const PostsColumn = styled(`div`)`
   display: flex;
   flex-direction: column;
   flex-basis: 45%;
-  margin-right: ${space[8]};
+  margin-right: ${p => p.theme.space[8]};
   position: relative;
 
   :last-child {
@@ -52,7 +43,7 @@ const PostsColumn = styled(`div`)`
 
 const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
   display: flex;
-  font-family: ${fonts.header};
+  font-family: ${p => p.theme.fonts.heading};
   overflow: hidden;
   width: auto;
 
@@ -62,10 +53,10 @@ const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
     display: flex;
     flex-direction: column;
     font-weight: bold;
-    font-size: ${fontSizes[4]};
+    font-size: ${p => p.theme.fontSizes[4]};
     justify-content: center;
-    line-height: ${lineHeights.dense};
-    padding: ${space[7]};
+    line-height: ${p => p.theme.lineHeights.dense};
+    padding: ${p => p.theme.space[7]};
     width: 100%;
 
     span {
@@ -75,27 +66,27 @@ const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
 
     svg {
       height: 18px;
-      margin-left: ${space[1]};
+      margin-left: ${p => p.theme.space[1]};
       width: 18px;
     }
   }
 
   ${mediaQueries.lg} {
-    background: ${colors.gatsby};
-    color: ${colors.white};
+    background: ${p => p.theme.colors.gatsby};
+    color: ${p => p.theme.colors.white};
     flex-shrink: 0;
     height: 160px;
 
-    margin-left: ${space[8]};
+    margin-left: ${p => p.theme.space[8]};
     width: 125px;
 
     a {
-      color: ${colors.white};
-      padding: ${space[5]};
+      color: ${p => p.theme.colors.white};
+      padding: ${p => p.theme.space[5]};
       justify-content: flex-start;
 
       &:hover {
-        background: ${colors.purple[80]};
+        background: ${p => p.theme.colors.purple[80]};
       }
     }
   }

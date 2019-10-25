@@ -21,7 +21,10 @@ Object {
 exports[`gets ssl certs Custom SSL certificate panic if cert and key are not both included 1`] = `
 Array [
   Array [
-    "for custom ssl --https, --cert-file, and --key-file must be used together",
+    Object {
+      "context": Object {},
+      "id": "11521",
+    },
   ],
 ]
 `;
@@ -29,7 +32,10 @@ Array [
 exports[`gets ssl certs Custom SSL certificate panic if cert and key are not both included 2`] = `
 Array [
   Array [
-    "for custom ssl --https, --cert-file, and --key-file must be used together",
+    Object {
+      "context": Object {},
+      "id": "11521",
+    },
   ],
 ]
 `;
@@ -37,9 +43,13 @@ Array [
 exports[`gets ssl certs automatic SSL certificate panics if certificate can't be created 1`] = `
 Array [
   Array [
-    "
-Failed to generate dev SSL certificate",
-    [Error: mock error message],
+    Object {
+      "context": Object {
+        "message": "mock error message",
+      },
+      "error": [Error: mock error message],
+      "id": "11522",
+    },
   ],
 ]
 `;

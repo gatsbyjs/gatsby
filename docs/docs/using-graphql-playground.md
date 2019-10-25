@@ -10,7 +10,7 @@ In this page we want to introduce you to an alternative to the current IDE for y
 
 GraphQL Playground is a way for you to interact with the data your sources and plugins add as schemas. You will be interacting with this data a lot and the Playground will help you greatly with exploring this data.
 
-## Accessing the Playground
+## Accessing the playground
 
 To access this experimental feature utilizing GraphQL Playground with Gatsby, add `GATSBY_GRAPHQL_IDE` to your `develop` script in your `package.json`, like this:
 

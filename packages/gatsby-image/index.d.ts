@@ -42,6 +42,7 @@ interface GatsbyImageProps {
   onLoad?: () => void
   onStartLoad?: (param: { wasCached: boolean }) => void
   onError?: (event: any) => void
+  onClick?: () => void
   Tag?: string
   itemProp?: string
   loading?: `auto` | `lazy` | `eager`

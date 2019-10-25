@@ -54,3 +54,17 @@ const errorParser = ({ message, filePath, location }) => {
 }
 
 export default errorParser
+
+export const locInGraphQlToLocInFile = (
+  locationOfGraphQLDocInSourceFile,
+  graphqlLocation
+) => {
+  return {
+    line:
+      graphqlLocation.line + locationOfGraphQLDocInSourceFile.start.line - 1,
+    column:
+      (graphqlLocation.line === 1
+        ? locationOfGraphQLDocInSourceFile.start.column
+        : 0) + graphqlLocation.column,
+  }
+}

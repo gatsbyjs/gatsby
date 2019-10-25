@@ -1,5 +1,5 @@
 ---
-title: "Using third-party GraphQL APIs"
+title: Using Third-party GraphQL APIs
 ---
 
 Gatsby v2 introduces a simple way to integrate any GraphQL API into Gatsby's GraphQL. You can integrate both third-party APIs, like GitHub's, APIs of services like GraphCMS or your custom GraphQL API.
@@ -47,7 +47,7 @@ Third-party APIs will be available under the `fieldName` specified, so you can q
 }
 ```
 
-Note that types of the third-party API will be prefixed with `${typeName}_`. You need to prefix it too, eg when using variables or fragments.
+Note that types of the third-party API will be prefixed with `${typeName}_`. You need to prefix it too, e.g. when using variables or fragments.
 
 ```graphql
 {

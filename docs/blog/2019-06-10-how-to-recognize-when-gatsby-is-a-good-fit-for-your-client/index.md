@@ -33,7 +33,7 @@ If the client is suffering from slow developer velocity, this benefit will reson
 
 ## #2 The client wants to be on the bleeding edge
 
-There are two things you need to remember about predicting the future. First, don’t do it—it rarely works well. Second, if you absolutely must, then a handy trick is to look at what teenagers and college kids are using obsessively today, and then wait five years. Ask yourself, when was the last time you met a new engineer excited about the Wordpress or Drupal theming system? Yeah, I thought so.
+There are two things you need to remember about predicting the future. First, don’t do it—it rarely works well. Second, if you absolutely must, then a handy trick is to look at what teenagers and college kids are using obsessively today, and then wait five years. Ask yourself, when was the last time you met a new engineer excited about the WordPress or Drupal theming system? Yeah, I thought so.
 
 Gatsby is a bleeding-edge approach to solving problems, and it’s pretty different than anything else out there. But being ahead of the curve offers first-mover advantages to organizations that are comfortable dealing with some the inherent uncertainties in exploring new territory. If this is something that your prospect is looking to take advantage of, Gatsby is a good sell.
 

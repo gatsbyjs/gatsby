@@ -105,7 +105,7 @@ class Color extends React.Component {
                     mb={0}
                     mt={{ xxs: 8, lg: 0 }}
                     fontSize={2}
-                    fontWeight={0}
+                    fontWeight="body"
                   >
                     WCAG Contrast Score
                   </Text>
