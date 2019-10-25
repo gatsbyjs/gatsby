@@ -36,7 +36,7 @@ import { action } from "@storybook/addon-actions"
 
 // automatically import all files ending in *.stories.js
 // highlight-next-line
-configure(require.context('../src', true, /\.stories\.js$/), module)
+configure(require.context("../src", true, /\.stories\.js$/), module)
 
 // highlight-start
 // Gatsby's Link overrides:
