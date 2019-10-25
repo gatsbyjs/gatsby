@@ -18,11 +18,11 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-theme-blog#readme",
   "dependencies": {
-    "@emotion/core": "^10.0.21",
+    "@emotion/core": "^10.0.22",
     "@mdx-js/react": "^1.5.1",
     "@theme-ui/prism": "^0.2.40",
     "@theme-ui/typography": "^0.2.40",
-    "deepmerge": "^4.1.1",
+    "deepmerge": "^4.2.1",
     "gatsby-image": "^2.2.29",
     "gatsby-plugin-emotion": "^4.1.12",
     "gatsby-plugin-feed": "^2.3.19",
@@ -41,8 +41,8 @@
   "devDependencies": {
     "gatsby": "^2.17.4",
     "prettier": "^1.18.2",
-    "react": "^16.10.2",
-    "react-dom": "^16.10.2"
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0"
   },
   "peerDependencies": {
     "gatsby": "^2.13.13",
