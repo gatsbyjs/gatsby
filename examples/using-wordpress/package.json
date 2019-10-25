@@ -1,43 +1,28 @@
 {
-  "name": "gatsby-example-using-wordpress",
+  "name": "gatsby-example-sourcing-wordpress",
   "private": true,
-  "description": "Gatsby example site using the WordPress source plugin",
-  "version": "1.0.0-beta.6",
-  "author": "Sebastien Fichot <fichot.sebastien@gmail.com>",
+  "description": "An example to learn how to source data form Wordpress",
+  "version": "0.1.0",
+  "author": "Vishwa Mehta <vishwa.mehta30@gmail.com>",
   "dependencies": {
-    "gatsby": "^2.0.0",
-    "gatsby-image": "^2.0.5",
-    "gatsby-plugin-glamor": "^2.0.5",
-    "gatsby-plugin-react-helmet": "^3.0.0",
-    "gatsby-plugin-sharp": "^2.0.5",
-    "gatsby-plugin-typography": "^2.2.0",
+    "gatsby": "^2.13.73",
     "gatsby-source-wordpress": "^3.0.0",
-    "gatsby-transformer-sharp": "^2.1.1",
-    "glamor": "^2.20.40",
-    "lodash": "^4.17.14",
-    "react": "^16.3.2",
-    "react-dom": "^16.3.2",
-    "react-helmet": "^5.2.0",
-    "react-icons": "^3.4.0",
-    "react-typography": "^0.16.13",
-    "typography": "^0.16.16",
-    "typography-theme-wordpress-2013": "^0.15.10"
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-helmet": "^5.2.1"
+  },
+  "devDependencies": {
+    "prettier": "^1.18.2"
   },
   "keywords": [
     "gatsby"
   ],
   "license": "MIT",
-  "main": "n/a",
   "scripts": {
-    "lint": "./node_modules/.bin/eslint --ext .js,.jsx --ignore-pattern public .",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "develop": "gatsby develop",
     "build": "gatsby build",
-    "serve": "gatsby serve",
+    "develop": "gatsby develop",
+    "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "start": "npm run develop",
-    "predeploy": "gatsby build --prefix-paths"
-  },
-  "devDependencies": {
-    "eslint": "^4.1.1"
+    "serve": "gatsby serve"
   }
 }

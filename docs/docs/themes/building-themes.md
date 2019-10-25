@@ -2,7 +2,7 @@
 title: Building Themes
 ---
 
-The quickest way to get up and running with a workspace for building themes is to use the official [`gatsby-starter-theme-workspace`](https://github.com/gatsbyjs/gatsby/tree/master/themes/gatsby-starter-theme-workspace) starter.
+The quickest way to get up and running with a workspace for building themes is to use the official [`gatsby-starter-theme-workspace`](https://github.com/gatsbyjs/gatsby-starter-theme-workspace) starter.
 
 <EggheadEmbed
   lessonLink="https://egghead.io/lessons/gatsby-use-the-gatsby-theme-workspace-starter-to-begin-building-a-new-theme"
@@ -106,6 +106,6 @@ A Gatsby theme is a Gatsby site, therefore building with accessibility in mind i
 
 Check out how some existing themes are built:
 
-- The official [Gatsby blog theme](https://github.com/gatsbyjs/gatsby/tree/master/themes/gatsby-theme-blog)
-- The official [Gatsby notes theme](https://github.com/gatsbyjs/gatsby/tree/master/themes/gatsby-theme-notes)
+- The official [Gatsby blog theme](https://github.com/gatsbyjs/gatsby-starter-blog-theme)
+- The official [Gatsby notes theme](https://github.com/gatsbyjs/gatsby-starter-notes-theme)
 - The [Apollo themes](https://github.com/apollographql/gatsby-theme-apollo/tree/master/packages). (_You might also be interested in the [Apollo case study on themes](https://www.gatsbyjs.org/blog/2019-07-03-using-themes-for-distributed-docs/) on the blog._)
