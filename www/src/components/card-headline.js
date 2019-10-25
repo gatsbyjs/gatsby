@@ -1,12 +1,12 @@
-import React from "react"
-import { lineHeights, fontSizes } from "../utils/presets"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 
 const CardHeadline = ({ children }) => (
   <h2
-    css={{
-      fontSize: fontSizes[4],
-      lineHeight: lineHeights.dense,
-      marginTop: 0,
+    sx={{
+      fontSize: 4,
+      lineHeight: `dense`,
+      mt: 0,
     }}
   >
     {children}

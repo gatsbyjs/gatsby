@@ -1,18 +1,11 @@
-import React, { Component } from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
+import { Component } from "react"
 
 import Sidebar from "./sidebar"
 import ScrollSyncSidebar from "./scroll-sync-sidebar"
 import ChevronSvg from "./chevron-svg"
-import {
-  colors,
-  transition,
-  shadows,
-  space,
-  mediaQueries,
-  sizes,
-  zIndices,
-} from "../../utils/presets"
-import { rhythm } from "../../utils/typography"
+import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 import ScrollPositionProvider, {
   ScrollPositionConsumer,
 } from "./scrollbar-position-provider"
@@ -42,23 +35,53 @@ class StickyResponsiveSidebar extends Component {
 
     const iconOffset = open ? 5 : -5
     const menuOpacity = open ? 1 : 0
-    const menuOffset = open ? 0 : rhythm(10)
 
     const sidebarType = pathname.split(`/`)[1]
 
     return (
       <ScrollPositionProvider>
         <div
-          css={{
-            ...styles.sidebarScrollContainer,
+          sx={{
+            border: 0,
+            bottom: 0,
+            display: `block`,
+            height: `100vh`,
+            position: `fixed`,
+            top: 0,
+            transition: t =>
+              `opacity ${t.transition.speed.slow} ${t.transition.curve.default}`,
+            width: `sidebarWidth.mobile`,
+            zIndex: `sidebar`,
+            [mediaQueries.md]: {
+              height: t =>
+                `calc(100vh - ${t.sizes.headerHeight} - ${t.sizes.bannerHeight})`,
+              maxWidth: `none`,
+              opacity: `1 !important`,
+              pointerEvents: `auto`,
+              top: t =>
+                `calc(${t.sizes.headerHeight} + ${t.sizes.bannerHeight})`,
+              width: `sidebarWidth.default`,
+            },
+            [mediaQueries.lg]: {
+              width: `sidebarWidth.large`,
+            },
             opacity: menuOpacity,
             pointerEvents: open ? `auto` : `none`,
           }}
         >
           <div
-            css={{
-              ...styles.sidebar,
-              transform: `translateX(-${menuOffset})`,
+            sx={{
+              boxShadow: `dialog`,
+              height: `100%`,
+              transform: open
+                ? `translateX(0)`
+                : t => `translateX(-${t.sizes.sidebarWidth.mobile})`,
+              transition: t =>
+                `transform ${t.transition.speed.slow} ${t.transition.curve.default}`,
+              [mediaQueries.md]: {
+                boxShadow: `none`,
+                transform: `none !important`,
+              },
             }}
           >
             <ScrollPositionConsumer>
@@ -74,7 +97,22 @@ class StickyResponsiveSidebar extends Component {
           </div>
         </div>
         <div
-          css={{ ...styles.sidebarToggleButton }}
+          sx={{
+            backgroundColor: `gatsby`,
+            borderRadius: `50%`,
+            bottom: t => t.space[11],
+            boxShadow: `dialog`,
+            cursor: `pointer`,
+            display: `flex`,
+            height: t => t.space[10],
+            justifyContent: `space-around`,
+            position: `fixed`,
+            right: t => t.space[6],
+            visibility: `visible`,
+            width: t => t.space[10],
+            zIndex: `floatingActionButton`,
+            [mediaQueries.md]: { display: `none` },
+          }}
           onClick={this._openSidebar}
           role="button"
           aria-label="Show Secondary Navigation"
@@ -82,20 +120,32 @@ class StickyResponsiveSidebar extends Component {
           aria-expanded={open ? `true` : `false`}
           tabIndex={0}
         >
-          <div css={{ ...styles.sidebarToggleButtonInner }}>
+          <div
+            sx={{
+              alignSelf: `center`,
+              color: `white`,
+              display: `flex`,
+              flexDirection: `column`,
+              height: t => t.space[5],
+              visibility: `visible`,
+              width: t => t.space[5],
+            }}
+          >
             <ChevronSvg
-              size={15}
+              size={16}
               cssProps={{
                 transform: `translate(${iconOffset}px, 5px) rotate(90deg)`,
-                transition: `transform ${transition.speed.fast} ${transition.curve.default}`,
+                transition: t =>
+                  `transform ${t.transition.speed.slow} ${t.transition.curve.default}`,
               }}
             />
             <ChevronSvg
-              size={15}
+              size={16}
               cssProps={{
                 transform: `translate(${5 -
                   iconOffset}px, -5px) rotate(270deg)`,
-                transition: `transform ${transition.speed.fast} ${transition.curve.default}`,
+                transition: t =>
+                  `transform ${t.transition.speed.slow} ${t.transition.curve.default}`,
               }}
             />
           </div>
@@ -106,62 +156,3 @@ class StickyResponsiveSidebar extends Component {
 }
 
 export default StickyResponsiveSidebar
-
-const styles = {
-  sidebarScrollContainer: {
-    border: 0,
-    bottom: 0,
-    display: `block`,
-    height: `100vh`,
-    position: `fixed`,
-    top: 0,
-    transition: `opacity ${transition.speed.slow} ${transition.curve.default}`,
-    width: 320,
-    zIndex: zIndices.sidebar,
-    [mediaQueries.md]: {
-      height: `calc(100vh - ${sizes.headerHeight} - ${sizes.bannerHeight})`,
-      maxWidth: `none`,
-      opacity: `1 !important`,
-      pointerEvents: `auto`,
-      top: `calc(${sizes.headerHeight} + ${sizes.bannerHeight})`,
-      width: rhythm(sizes.sidebarWidth.default),
-    },
-    [mediaQueries.lg]: {
-      width: rhythm(sizes.sidebarWidth.large),
-    },
-  },
-  sidebar: {
-    height: `100%`,
-    transition: `transform ${transition.speed.slow} ${transition.curve.default}`,
-    boxShadow: shadows.dialog,
-    [mediaQueries.md]: {
-      transform: `none !important`,
-      boxShadow: `none`,
-    },
-  },
-  sidebarToggleButton: {
-    backgroundColor: colors.gatsby,
-    borderRadius: `50%`,
-    bottom: space[11],
-    boxShadow: shadows.dialog,
-    cursor: `pointer`,
-    display: `flex`,
-    height: space[10],
-    justifyContent: `space-around`,
-    position: `fixed`,
-    right: space[6],
-    visibility: `visible`,
-    width: space[10],
-    zIndex: zIndices.floatingActionButton,
-    [mediaQueries.md]: { display: `none` },
-  },
-  sidebarToggleButtonInner: {
-    alignSelf: `center`,
-    color: colors.white,
-    display: `flex`,
-    flexDirection: `column`,
-    height: space[5],
-    visibility: `visible`,
-    width: space[5],
-  },
-}

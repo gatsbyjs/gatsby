@@ -7,12 +7,12 @@ Benchmarks the current production version of the plugin unless you use `gatsby-d
 
 ## To benchmark the current branch:
 
-```sh
+```shell
 # In the root of the Gatsby repository
 $ yarn run watch --scope=gatsby-plugin-manifest .
 ```
 
-```sh
+```shell
 # In ./benchmarks/plugin-manifest
 # You'll need 'gatsby-dev' installed and configured globally.
 $ gatsby-dev --packages gatsby-plugin-manifest

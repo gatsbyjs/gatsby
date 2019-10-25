@@ -86,7 +86,7 @@ describe(`Processing YAML nodes with internal type 'File'`, () => {
       expectCreatedNodeTypeName(`fixed`)
     })
 
-    it(`with the target type name explicitely retrieved from the YAML content`, async () => {
+    it(`with the target type name explicitly retrieved from the YAML content`, async () => {
       // noinspection JSUnusedLocalSymbols (unused fields left as documentation)
       await onCreateNode(createNodeSpec, {
         typeName: ({ node, object, isArray }) => object.funny,
@@ -125,7 +125,7 @@ describe(`Processing YAML nodes with internal type 'File'`, () => {
       expectCreatedNodeTypeName(`fixed`)
     })
 
-    it(`with the target type name explicitely retrieved from the YAML content`, async () => {
+    it(`with the target type name explicitly retrieved from the YAML content`, async () => {
       // noinspection JSUnusedLocalSymbols (unused fields left as documentation)
       await onCreateNode(createNodeSpec, {
         typeName: ({ node, object, isArray }) => object.funny,
@@ -168,7 +168,7 @@ describe(`Processing YAML nodes with internal type other than 'File'`, () => {
       expectCreatedNodeTypeName(`fixed`)
     })
 
-    it(`with the target type name explicitely retrieved from the YAML content`, async () => {
+    it(`with the target type name explicitly retrieved from the YAML content`, async () => {
       // noinspection JSUnusedLocalSymbols (unused fields left as documentation)
       await onCreateNode(createNodeSpec, {
         typeName: ({ node, object, isArray }) => object.funny,
@@ -207,7 +207,7 @@ describe(`Processing YAML nodes with internal type other than 'File'`, () => {
       expectCreatedNodeTypeName(`fixed`)
     })
 
-    it(`with the target type name explicitely retrieved from the YAML content`, async () => {
+    it(`with the target type name explicitly retrieved from the YAML content`, async () => {
       // noinspection JSUnusedLocalSymbols (unused fields left as documentation)
       await onCreateNode(createNodeSpec, {
         typeName: ({ node, object, isArray }) => object.funny,

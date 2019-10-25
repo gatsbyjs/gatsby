@@ -35,8 +35,8 @@ describe(`gatsby-ssr`, () => {
     setCachedAssets({
       [`/foo`]: {
         [`/path/to/font.otf`]: true,
-        [`/path/to/another.ttf`]: true,
-        [`/path/to/another/font.woff`]: true,
+        [`https://foo.bar/path/to/another.ttf`]: true,
+        [`https://foo.baz/path/to/another/font.woff`]: true,
       },
     })
 
@@ -45,54 +45,54 @@ describe(`gatsby-ssr`, () => {
     expect(setHeadComponents.mock.calls[0][0]).toMatchSnapshot()
   })
 
-  it(`accepts boolean \`crossOrigin\` in plugin config`, () => {
-    setCachedAssets({
-      [`/foo`]: {
-        [`/path/to/font.otf`]: true,
-      },
+  describe(`generates <link> tags with \`crossorigin\` prop for external fonts`, () => {
+    it(`accepts string \`crossOrigin\` in plugin config`, () => {
+      setCachedAssets({
+        [`/foo`]: {
+          [`https://foo.bar/path/to/font.otf`]: true,
+        },
+      })
+
+      onRenderBody(
+        { setHeadComponents, pathname: `/foo` },
+        { crossOrigin: `use-credentials` }
+      )
+      expect(setHeadComponents.mock.calls[0][0]).toMatchSnapshot()
     })
 
-    onRenderBody(
-      { setHeadComponents, pathname: `/foo` },
-      { crossOrigin: false }
-    )
-    expect(setHeadComponents.mock.calls[0][0]).toMatchSnapshot()
+    it(`accepts function \`crossOrigin\` in plugin config`, () => {
+      const config = {
+        crossOrigin: path => (path === `/foo` ? false : `use-credentials`),
+      }
+
+      setCachedAssets({
+        [`/foo`]: {
+          [`https://foo.bar/path/to/font.otf`]: true,
+        },
+      })
+      onRenderBody({ setHeadComponents, pathname: `/foo` }, config)
+
+      setCachedAssets({
+        [`/bar`]: {
+          [`https://foo.bar/path/to/another.woff`]: true,
+        },
+      })
+      onRenderBody({ setHeadComponents, pathname: `/bar` }, config)
+
+      expect(setHeadComponents.mock.calls[0][0]).toMatchSnapshot()
+      expect(setHeadComponents.mock.calls[1][0]).toMatchSnapshot()
+    })
   })
 
-  it(`accepts string \`crossOrigin\` in plugin config`, () => {
+  it(`generates <link> tags with \`crossorigin\` \`anonymous\` prop for self-hosted fonts`, () => {
     setCachedAssets({
       [`/foo`]: {
-        [`/path/to/font.otf`]: true,
+        [`/font.otf`]: true,
       },
     })
 
-    onRenderBody(
-      { setHeadComponents, pathname: `/foo` },
-      { crossOrigin: `use-credentials` }
-    )
-    expect(setHeadComponents.mock.calls[0][0]).toMatchSnapshot()
-  })
-
-  it(`accepts function \`crossOrigin\` in plugin config`, () => {
-    const config = {
-      crossOrigin: path => (path === `/foo` ? false : `use-credentials`),
-    }
-
-    setCachedAssets({
-      [`/foo`]: {
-        [`/path/to/font.otf`]: true,
-      },
-    })
-    onRenderBody({ setHeadComponents, pathname: `/foo` }, config)
-
-    setCachedAssets({
-      [`/bar`]: {
-        [`/path/to/another.woff`]: true,
-      },
-    })
-    onRenderBody({ setHeadComponents, pathname: `/bar` }, config)
+    onRenderBody({ setHeadComponents, pathname: `/foo` })
 
     expect(setHeadComponents.mock.calls[0][0]).toMatchSnapshot()
-    expect(setHeadComponents.mock.calls[1][0]).toMatchSnapshot()
   })
 })
