@@ -12,12 +12,11 @@ const db = require(`../db`)
 const tracer = require(`opentracing`).globalTracer()
 const signalExit = require(`signal-exit`)
 const telemetry = require(`gatsby-telemetry`)
-const { store, emitter } = require(`../redux`)
+const { store, emitter, readState } = require(`../redux`)
 const queryUtil = require(`../query`)
 const pageDataUtil = require(`../utils/page-data`)
 const WorkerPool = require(`../utils/worker/pool`)
 const handleWebpackError = require(`../utils/webpack-error-parser`)
-const { readFromCache } = require(`../redux/persist.js`)
 
 type BuildArgs = {
   directory: string,
@@ -128,7 +127,7 @@ module.exports = async function build(program: BuildArgs) {
     activity.start()
     newPageKeys = await pageDataUtil.getNewPageKeys(
       store.getState(),
-      readFromCache()
+      readState()
     )
     activity.end()
   }
@@ -187,7 +186,7 @@ module.exports = async function build(program: BuildArgs) {
     deletedPageKeys = await pageDataUtil.removePreviousPageData(
       program.directory,
       store.getState(),
-      readFromCache()
+      readState()
     )
     activity.end()
   }

@@ -43,35 +43,37 @@ const updateCompilationHashes = (
 const getNewPageKeys = (store, cacheData) =>
   new Promise(resolve => {
     const newPageKeys = []
-
-    store.pages.forEach((value, key) => {
-      if (!cacheData.pages.has(key)) {
-        newPageKeys.push(key)
-      } else {
-        const newPageContext = value.context.page
-        const previousPageContext = cacheData.pages.get(key).context.page
-
-        if (!isEqual(newPageContext, previousPageContext)) {
+    if (cacheData.pages) {
+      store.pages.forEach((value, key) => {
+        if (!cacheData.pages.has(key)) {
           newPageKeys.push(key)
-        }
-      }
-    })
+        } else {
+          const newPageContext = value.context.page
+          const previousPageContext = cacheData.pages.get(key).context.page
 
-    resolve(newPageKeys)
+          if (!isEqual(newPageContext, previousPageContext)) {
+            newPageKeys.push(key)
+          }
+        }
+      })
+      resolve(newPageKeys)
+      return
+    }
+    resolve([...store.pages.keys()])
   })
 
 const removePreviousPageData = (directory, store, cacheData) =>
   new Promise(resolve => {
     const deletedKeys = []
-
-    cacheData.pages.forEach((value, key) => {
-      if (!store.pages.has(key)) {
-        deletedKeys.push(key)
-        fs.removeSync(`${directory}/public${key}`)
-        fs.removeSync(`${directory}/public/page-data${key}`)
-      }
-    })
-
+    if (cacheData.pages) {
+      cacheData.pages.forEach((value, key) => {
+        if (!store.pages.has(key)) {
+          deletedKeys.push(key)
+          fs.removeSync(`${directory}/public${key}`)
+          fs.removeSync(`${directory}/public/page-data${key}`)
+        }
+      })
+    }
     resolve(deletedKeys)
   })
 
