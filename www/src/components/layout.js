@@ -5,10 +5,16 @@ import { navigate, PageRenderer } from "gatsby"
 import mousetrap from "mousetrap"
 import Modal from "react-modal"
 import MdClose from "react-icons/lib/md/close"
+
 import { Global } from "@emotion/core"
 
 import { globalStyles } from "../utils/styles/global"
-import { colors, space, zIndices } from "../gatsby-plugin-theme-ui"
+import {
+  colors,
+  space,
+  zIndices,
+  mediaQueries,
+} from "../gatsby-plugin-theme-ui"
 import { breakpointGutter } from "../utils/styles"
 import Banner from "../components/banner"
 import withColorMode from "../components/with-color-mode"
@@ -86,7 +92,7 @@ class DefaultLayout extends React.Component {
                 padding: `${space[8]} 0`,
                 right: `inherit`,
                 top: `inherit`,
-                width: `750px`,
+                maxWidth: `1050px`,
               },
               overlay: {
                 backgroundColor: isDark
@@ -108,36 +114,50 @@ class DefaultLayout extends React.Component {
           >
             <div
               sx={{
-                bg: `card.background`,
-                borderRadius: 2,
-                boxShadow: `dialog`,
-                position: `relative`,
+                display: `flex`,
+                flexWrap: `wrap`,
+                justifyContent: `space-between`,
+                [mediaQueries.md]: {
+                  flexWrap: `nowrap`,
+                },
               }}
             >
-              <button
-                onClick={this.handleCloseModal}
+              <div
                 sx={{
                   bg: `card.background`,
-                  border: 0,
-                  borderRadius: 6,
-                  color: `textMuted`,
-                  cursor: `pointer`,
-                  fontSize: 4,
-                  height: 40,
-                  left: `auto`,
-                  position: `absolute`,
-                  right: t => t.space[7],
-                  top: t => t.space[8],
-                  width: 40,
-                  "&:hover": {
-                    bg: `ui.hover`,
-                    color: `gatsby`,
-                  },
+                  borderRadius: 2,
+                  boxShadow: `dialog`,
+                  position: `relative`,
+                  alignItems: `center`,
+                  order: 1,
+                  width: `100%`,
                 }}
               >
-                <MdClose />
-              </button>
-              {this.props.children}
+                <button
+                  onClick={this.handleCloseModal}
+                  sx={{
+                    bg: `card.background`,
+                    border: 0,
+                    borderRadius: 6,
+                    color: `textMuted`,
+                    cursor: `pointer`,
+                    fontSize: 4,
+                    height: 40,
+                    left: `auto`,
+                    position: `absolute`,
+                    right: t => t.space[7],
+                    top: t => t.space[8],
+                    width: 40,
+                    "&:hover": {
+                      bg: `ui.hover`,
+                      color: `gatsby`,
+                    },
+                  }}
+                >
+                  <MdClose />
+                </button>
+                {this.props.children}
+              </div>
               {this.props.modalPreviousLink}
               {this.props.modalNextLink}
             </div>
