@@ -60,4 +60,5 @@ module.exports = {
   schemaCustomization: require(`./schema-customization`),
   themes: require(`./themes`),
   logs: require(`gatsby-cli/lib/reporter/redux/reducer`),
+  tasks: require(`./tasks`),
 }

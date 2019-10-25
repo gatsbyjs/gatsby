@@ -40,7 +40,7 @@ if (process.env.GATSBY_LOGGER.includes(`json`)) {
   require(`./loggers/ink`)
 }
 
-const util = require(`util`)
+// const util = require(`util`)
 const { stripIndent } = require(`common-tags`)
 const chalk = require(`chalk`)
 const { trackError } = require(`gatsby-telemetry`)
@@ -399,9 +399,9 @@ const reporter: Reporter = {
   _setStage() {},
 }
 
-console.log = (...args) => reporter.log(util.format(...args))
-console.warn = (...args) => reporter.warn(util.format(...args))
-console.info = (...args) => reporter.info(util.format(...args))
-console.error = (...args) => reporter.error(util.format(...args))
+// console.log = (...args) => reporter.log(util.format(...args))
+// console.warn = (...args) => reporter.warn(util.format(...args))
+// console.info = (...args) => reporter.info(util.format(...args))
+// console.error = (...args) => reporter.error(util.format(...args))
 
 module.exports = reporter

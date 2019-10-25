@@ -86,7 +86,7 @@ module.exports = async (args: BootstrapArgs) => {
 
   emitter.on(`CREATE_JOB`, () => {
     if (!activityForJobs) {
-      activityForJobs = report.phantomActivity(`Running jobs`)
+      activityForJobs = report.activityTimer(`Running jobs`)
       activityForJobs.start()
     }
   })
@@ -99,6 +99,24 @@ module.exports = async (args: BootstrapArgs) => {
   }
 
   emitter.on(`END_JOB`, onEndJob)
+
+  let activityForTasks
+
+  emitter.on(`CREATE_TASK`, () => {
+    if (!activityForTasks) {
+      activityForTasks = report.activityTimer(`Running tasks`)
+      activityForTasks.start()
+    }
+  })
+
+  const onEndTask = () => {
+    if (activityForTasks && store.getState().tasks.tasks.size === 0) {
+      activityForTasks.end()
+      activityForTasks = null
+    }
+  }
+
+  emitter.on(`END_TASK`, onEndTask)
 
   // Try opening the site's gatsby-config.js file.
   let activity = report.activityTimer(`open and validate gatsby-configs`, {

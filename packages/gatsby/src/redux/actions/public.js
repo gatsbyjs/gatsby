@@ -20,6 +20,8 @@ const { getCommonDir } = require(`../../utils/path`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 const { trackCli } = require(`gatsby-telemetry`)
 const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
+const pDefer = require(`p-defer`)
+const uuid = require(`uuid/v4`)
 
 const actions = {}
 const isWindows = platform() === `win32`
@@ -1298,6 +1300,37 @@ actions.createPageDependency = (
       connection,
     },
   }
+}
+
+/**
+ * Create a task. This is a long-running process that is generally
+ * started by a plugin.
+ *
+ * Gatsby doesn't finish its build process until all jobs are complete.
+ * @param {string} name The name of the job
+ * @param {Object} args An object of arguments the worker function will receive
+ * @example
+ * createTask({ name: `IMAGE_PROCESSING`, args: { inputPath: `something.jpeg`, transforms: [] } })
+ */
+
+actions.createTask = ({ name, args }, plugin) => dispatch => {
+  const id = uuid()
+  console.log(`createTask`)
+  const deferred = pDefer()
+  dispatch({
+    id,
+    type: `CREATE_TASK`,
+    name,
+    args,
+    plugin,
+    deferred,
+  })
+  return deferred.promise.finally(() => {
+    dispatch({
+      id,
+      type: `END_TASK`,
+    })
+  })
 }
 
 module.exports = { actions }

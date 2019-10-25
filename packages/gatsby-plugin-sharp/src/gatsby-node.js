@@ -51,9 +51,16 @@ const { setPluginOptions } = require(`./plugin-options`)
 //       reportError(message || err.message, err, reporter)
 //     })
 
-exports.onPreBootstrap = ({ actions }, pluginOptions) => {
+exports.onPreBootstrap = async ({ actions }, pluginOptions) => {
   setBoundActionCreators(actions)
   setPluginOptions(pluginOptions)
+
+  const { createTask } = actions
+
+  createTask({
+    name: `IMAGE_PROCESSING`,
+    args: { inputPath: `something.jpeg`, transforms: [] },
+  })
   // normalizedOptions = setPluginOptions(pluginOptions)
 }
 
