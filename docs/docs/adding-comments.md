@@ -18,7 +18,7 @@ You can also [roll your own comment system](/blog/2019-08-27-roll-your-own-comme
 
 ## Using Disqus for comments
 
-In this guide, we'll show you how to implement Disqus on your blog as it has a number of nice features.
+In this guide, you'll learn how to implement Disqus on your blog as it has a number of nice features.
 
 - It is low maintenance, meaning [moderating your comments and maintaining your forum](https://help.disqus.com/moderation/moderating-101) less hassle.
 - It provides official [React support](https://github.com/disqus/disqus-react).
