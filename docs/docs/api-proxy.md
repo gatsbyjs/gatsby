@@ -56,7 +56,7 @@ module.exports = {
 
 Keep in mind that middleware only has effect in development (with `gatsby develop`).
 
-### Self-signed certificates
+## Self-signed certificates
 
 If you proxy to local APIs with self-signed certificates, set the option `secure` to `false`.
 
