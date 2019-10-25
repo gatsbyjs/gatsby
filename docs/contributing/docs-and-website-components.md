@@ -11,7 +11,7 @@ import TableOfContents from "../../www/src/components/docs-table-of-contents"
 
 The Gatsbyjs.org site has a handful of components that have been developed to facilitate writing new content for the blog and the docs. There are also components that help organize and lay out content in various pages across the website.
 
-This guide lists what components are available and explains how to use them. You can also refer to the [code for this page on GitHub](https://github.com/gatsbyjs/gatsby/blob/master/docs/contributing/docs-and-website-components.md) to see to how each component can be used, because they are all embedded here!
+This guide documents what components are available and explains how to use them. You can also refer to the [code for this page on GitHub](https://github.com/gatsbyjs/gatsby/blob/master/docs/contributing/docs-and-website-components.md) to see to how each component can be used, because they are all embedded here!
 
 Information about authoring in Markdown and styling components on the site is also listed.
 
@@ -23,7 +23,7 @@ A variety of components have been written to help with formatting code and conte
 
 ### Guide List
 
-The `<GuideList />` is a component that renders a list of child docs nested below the current doc in the site's information architecture. It is often used on overview pages like the [Headless CMS](/docs/headless-cms/) guide where many other pages are nested below it, to show what a docs section contains.
+The `<GuideList />` is a component that renders an h2 heading and a list of links to child docs nested below the current doc in the site's information architecture. It is often used on overview pages like the [Headless CMS](/docs/headless-cms/) guide where many other pages are nested below it to show what a docs section contains.
 
 #### Usage
 
@@ -223,7 +223,9 @@ import Breadcrumb from "../../www/src/components/docs-breadcrumb"
 <Breadcrumb location={props.location} itemList={itemList} />
 ```
 
-To alter the title of a doc that is displayed in the Breadcrumb component, a `breadcrumbTitle` is supported as a key in the [sidebar YAML files](https://github.com/gatsbyjs/gatsby/tree/master/www/src/data/sidebars). It is commonly used to provide an abbreviated version of a doc's title, e.g. shortening "Adding a Custom webpack Config" to "webpack Config".
+#### Optional `breadcrumbTitle` entries in sidebar files
+
+To alter the title of a doc that is displayed in the Breadcrumb component, a `breadcrumbTitle` is supported as a key in the [sidebar YAML files](https://github.com/gatsbyjs/gatsby/tree/master/www/src/data/sidebars). It is commonly used to provide an abbreviated version of a doc's title when displayed next to its parent page title, e.g. shortening "Adding a Custom webpack Config" to "webpack Config".
 
 #### Sample
 
@@ -352,7 +354,7 @@ Code can be formatted using regular Markdown syntax, but the docs site has addit
 
 #### Usage
 
-Code blocks are wrapped in 3 backticks. A language can be added immediately after the first set of back ticks to provide syntax highlighting for the language. A title of the file can be added after the language. Line highlighting can be included in the code block by commenting `highlight-line`, or `highlight-start` followed by a `highlight-end`.
+Code blocks are wrapped in 3 backticks. A language can be added immediately after the first set of back ticks to provide syntax highlighting for the language. A `title` of the file can be added after the language. Line highlighting can be included in the code block by commenting `highlight-line`, or `highlight-start` followed by a `highlight-end`.
 
 <!-- prettier-ignore -->
 ````
