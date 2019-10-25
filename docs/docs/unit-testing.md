@@ -246,6 +246,14 @@ module.exports = {
 }
 ```
 
+Also update `jest.preprocess.js` with the following babel preset to look like this:
+
+```js:title=jest-preprocess.js
+const babelOptions = {
+  presets: ["babel-preset-gatsby", "@babel/preset-typescript"],
+}
+```
+
 You may notice that two other options, `testRegex` and `moduleFileExtensions`,
 have been added. Option `testRegex` is the pattern telling Jest which files
 contain tests. The pattern above matches any `.js`, `.jsx`, `.ts` or `.tsx`
