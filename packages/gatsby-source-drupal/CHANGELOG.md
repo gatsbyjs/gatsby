@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.2.38...gatsby-source-drupal@3.3.0) (2019-10-23)
+
+### Features
+
+- **gatsby-source-drupal:** secrets and delete functionality ([#18345](https://github.com/gatsbyjs/gatsby/issues/18345)) ([c1734b6](https://github.com/gatsbyjs/gatsby/commit/c1734b6))
+
 ## [3.2.38](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.2.37...gatsby-source-drupal@3.2.38) (2019-10-14)
 
 ### Bug Fixes

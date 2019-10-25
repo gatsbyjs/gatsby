@@ -10,7 +10,7 @@ In this guide you will learn how to debug some code using:
 - [VS Code debugger (Manual-Config)](#vs-code-debugger-manual-config)
 - [Chrome DevTools for Node](#chrome-devtools-for-node)
 
-As an example let's use the following code snippet in a `gatsby-node.js` file:
+As an example, use the following code snippet in a `gatsby-node.js` file:
 
 ```js:title=gatsby-node.js
 const { createFilePath } = require("gatsby-source-filesystem")
@@ -124,13 +124,13 @@ You should see Chrome DevTools start and that code execution is paused at the st
 
 Right now you can't see your files in Sources. You need to add those using the "Add folder to workspace" button and pick the directory with the code you want to debug. If you want to debug code in your `gatsby-node.js` or your local plugins, pick your project directory. If you want debug the `gatsby` package you will have to pick the `gatsby` directory inside `node_modules`.
 
-This example has problematic code in your local `gatsby-node.js` file, so let's add the directory containing it to Sources. You should have a directory with your code in the left pane:
+This example has problematic code in your local `gatsby-node.js` file, so add the directory containing it to Sources. You should have a directory with your code in the left pane:
 
 ![Files added to Sources tab](./images/chrome-devtools-files.png)
 
 ### Using DevTools
 
-Let's go ahead and add a breakpoint just before the place that the error is thrown. To add a breakpoint navigate to `gatsby-node.js` and left click on a line number:
+Go ahead and add a breakpoint just before the place that the error is thrown. To add a breakpoint navigate to `gatsby-node.js` and left click on a line number:
 
 ![Added breakpoint](./images/chrome-devtools-new-breakpoint.png)
 
@@ -140,7 +140,7 @@ Now you can resume code execution by clicking the "resume" icon in the DevTools 
 
 To inspect variables you can hover your mouse over them or go to the `Scope` section in the right-hand pane (either collapse the "Call Stack" section or scroll through it to the bottom).
 
-In the example `Node` is `undefined` and to figure out why, let's go backwards. `Node` is extracted from `args` so let's examine that by hovering `args`:
+In the example `Node` is `undefined` and to figure out why, let's go backwards. `Node` is extracted from `args` so examine that by hovering `args`:
 
 ![Examine variable](./images/chrome-devtools-examine-var.png)
 

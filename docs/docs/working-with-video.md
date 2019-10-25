@@ -23,7 +23,8 @@ If you would like more control over how YouTube (or similar) videos are embedded
 
 In this reusable sample component, you could include props for video data like URL or title, any necessary markup for styling purposes, and the common `iframe` embed code:
 
-```js:title=components/video.js
+```jsx:title=src/components/video.js
+import React from "react"
 const Video = ({ videoSrcURL, videoTitle, ...props }) => (
   <div className="video">
     <iframe
@@ -37,6 +38,7 @@ const Video = ({ videoSrcURL, videoTitle, ...props }) => (
     />
   </div>
 )
+export default Video
 ```
 
 You would then include this component in a template or page with a video source URL and title passed in as props. The data for video URLs and titles can be sourced in multiple ways, such as importing JSON or [querying data from Markdown with GraphQL](#querying-data-from-markdown-with-graphql). You can also hard-code video data for something fun, like a custom 404 page with an Easter egg YouTube video:

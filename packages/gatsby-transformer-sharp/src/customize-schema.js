@@ -51,7 +51,6 @@ const getTracedSVG = async ({ file, image, fieldArgs, cache, reporter }) =>
   })
 
 const fixedNodeType = ({
-  type,
   pathPrefix,
   getNodeAndSavePathDependency,
   reporter,
@@ -200,7 +199,6 @@ const fixedNodeType = ({
 }
 
 const fluidNodeType = ({
-  type,
   pathPrefix,
   getNodeAndSavePathDependency,
   reporter,
@@ -357,19 +355,13 @@ const fluidNodeType = ({
   }
 }
 
-module.exports = ({
-  type,
+const createFields = ({
   pathPrefix,
   getNodeAndSavePathDependency,
   reporter,
   cache,
 }) => {
-  if (type.name !== `ImageSharp`) {
-    return {}
-  }
-
   const nodeOptions = {
-    type,
     pathPrefix,
     getNodeAndSavePathDependency,
     reporter,
@@ -544,5 +536,37 @@ module.exports = ({
         })
       },
     },
+  }
+}
+
+module.exports = ({
+  actions,
+  schema,
+  pathPrefix,
+  getNodeAndSavePathDependency,
+  reporter,
+  cache,
+}) => {
+  const { createTypes } = actions
+
+  const imageSharpType = schema.buildObjectType({
+    name: `ImageSharp`,
+    fields: createFields({
+      pathPrefix,
+      getNodeAndSavePathDependency,
+      reporter,
+      cache,
+    }),
+    interfaces: [`Node`],
+    extensions: {
+      infer: true,
+      childOf: {
+        types: [`File`],
+      },
+    },
+  })
+
+  if (createTypes) {
+    createTypes([imageSharpType])
   }
 }
