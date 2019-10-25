@@ -19,7 +19,7 @@ const report = require(`gatsby-cli/lib/reporter`)
 const getConfigFile = require(`./get-config-file`)
 const tracer = require(`opentracing`).globalTracer()
 const preferDefault = require(`./prefer-default`)
-const pageDataUtil = require(`../utils/page-data`)
+const pageUtil = require(`../utils/pages`)
 // Add `util.promisify` polyfill for old node versions
 require(`util.promisify/shim`)()
 
@@ -168,8 +168,8 @@ module.exports = async (args: BootstrapArgs) => {
   await apiRunnerNode(`onPreInit`, { parentSpan: activity.span })
   activity.end()
 
-  // During builds, delete html and css files from the public directory as we don't want
-  // deleted pages and styles from previous builds to stick around.
+  // During builds, css files from the public directory as we don't want
+  // deleted styles from previous builds to stick around.
   if (process.env.NODE_ENV === `production`) {
     activity = report.activityTimer(
       `delete html and css files from previous builds`,
@@ -179,10 +179,10 @@ module.exports = async (args: BootstrapArgs) => {
     )
     activity.start()
     await del([
-      `public/**/*.{html,css}`,
-      `!public/page-data/**/*`,
+      // delete all css
+      `public/**/*.css`,
+      // except in static
       `!public/static`,
-      `!public/static/**/*.{html,css}`,
     ])
     activity.end()
   }
@@ -503,9 +503,15 @@ module.exports = async (args: BootstrapArgs) => {
   } catch (err) {
     report.panic(`Failed to write out requires`, err)
   }
+  activity.end()
 
+  // Garbage collect old pages and page-data
+  activity = report.activityTimer(`removing unused pages`, {
+    parentSpan: bootstrapSpan,
+  })
+  activity.start()
   try {
-    await pageDataUtil.deleteUnusedPageData({ store, directory })
+    await pageUtil.deleteUnusedPages({ store, directory })
   } catch (err) {
     report.panic(`Failed to delete unused page-data.json files`, err)
   }
