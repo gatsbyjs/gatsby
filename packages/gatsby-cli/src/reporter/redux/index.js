@@ -14,7 +14,13 @@ const storeSwapListeners = []
 const onLogActionListeners = []
 
 const isInternalAction = action => {
-  if ([Actions.PendingActivity, Actions.CancelActivity].includes(action.type)) {
+  if (
+    [
+      Actions.PendingActivity,
+      Actions.CancelActivity,
+      Actions.ActivityErrored,
+    ].includes(action.type)
+  ) {
     return true
   }
 

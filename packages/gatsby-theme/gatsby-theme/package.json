@@ -13,7 +13,7 @@
     "@babel/plugin-syntax-jsx": "^7.2.0",
     "commander": "^2.20.3",
     "fast-levenshtein": "^2.0.6",
-    "glob": "^7.1.4",
+    "glob": "^7.1.5",
     "globby": "^10.0.1",
     "inquirer": "^6.5.2",
     "lodash": "^4.17.15",
