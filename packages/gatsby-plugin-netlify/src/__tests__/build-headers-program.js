@@ -192,6 +192,7 @@ describe(`build-headers-program`, () => {
       `utf8`
     )
     expect(output).toMatchSnapshot()
+    expect(output).toMatch(/\/undefined/g)
   })
 
   it(`without caching headers`, async () => {
