@@ -32,7 +32,6 @@ const styles = {
     position: `absolute`,
     top: 280,
     width: 300,
-    transform: `translateX(-75px) rotate(90deg)`,
   },
   prevNextLinkSiteTitle: {
     color: `gatsby`,
@@ -131,6 +130,7 @@ const SourceLink = ({ ...props }) => (
       alignItems: `center`,
       mr: 3,
       color: `link.color`,
+      width: `100%`,
     }}
   >
     <GithubIcon sx={{ fontSize: 3, mr: 2, color: `link.color` }} />
@@ -195,9 +195,11 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               }}
               css={{
                 display: `block`,
-                position: `fixed`,
-                top: `150px`,
-                transform: `translateX(750px)`,
+                order: 2,
+                position: `relative`,
+                [mediaQueries.md]: {
+                  top: `110px`,
+                },
               }}
             >
               <div css={{ margin: `25px` }}>
@@ -216,7 +218,12 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                   alt=""
                 />
               </div>
-              <div sx={styles.prevNextLink}>
+              <div
+                sx={{
+                  ...styles.prevNextLink,
+                  transform: `translateX(-75px) rotate(90deg)`,
+                }}
+              >
                 <MdArrowUpward />
                 <div> Next Site in Showcase </div>
                 <div sx={styles.prevNextLinkSiteTitle}>{nextSite.title}</div>
@@ -232,9 +239,12 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
               }}
               css={{
                 display: `block`,
-                position: `fixed`,
-                top: `150px`,
-                transform: `translateX(-100%)`,
+                order: 1,
+                position: `relative`,
+                [mediaQueries.md]: {
+                  order: 0,
+                  top: `110px`,
+                },
               }}
             >
               <div css={{ margin: `25px` }}>
@@ -271,11 +281,12 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
         >
           <div
             sx={{
-              alignItems: `center`,
               display: `flex`,
               flexDirection: `column`,
               maxWidth: isModal ? false : 1080,
               margin: isModal ? false : `0 auto`,
+              width: `100%`,
+              order: 1,
             }}
           >
             <div css={{ width: `100%` }}>
