@@ -1,7 +1,7 @@
 {
   "name": "gatsby-cli",
   "description": "Gatsby command-line interface for creating new sites and running Gatsby commands",
-  "version": "2.7.58",
+  "version": "2.8.5",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "lib/index.js"
@@ -21,12 +21,12 @@
     "common-tags": "^1.8.0",
     "configstore": "^5.0.0",
     "convert-hrtime": "^2.0.0",
-    "core-js": "^2.6.9",
+    "core-js": "^2.6.10",
     "envinfo": "^5.12.1",
     "execa": "^2.1.0",
     "fs-exists-cached": "^1.0.0",
     "fs-extra": "^8.1.0",
-    "gatsby-telemetry": "^1.1.30",
+    "gatsby-telemetry": "^1.1.33",
     "hosted-git-info": "^3.0.2",
     "is-valid-path": "^0.1.1",
     "lodash": "^4.17.15",
@@ -38,8 +38,10 @@
     "progress": "^2.0.3",
     "prompts": "^2.2.1",
     "react": "^16.10.2",
+    "redux": "^4.0.4",
     "resolve-cwd": "^2.0.0",
     "semver": "^6.3.0",
+    "signal-exit": "^3.0.2",
     "source-map": "0.7.3",
     "stack-trace": "^0.0.10",
     "strip-ansi": "^5.2.0",
@@ -49,9 +51,9 @@
     "yurnalist": "^1.1.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.6.3",
-    "@babel/core": "^7.6.3",
-    "babel-preset-gatsby-package": "^0.2.8",
+    "@babel/cli": "^7.6.4",
+    "@babel/core": "^7.6.4",
+    "babel-preset-gatsby-package": "^0.2.9",
     "cross-env": "^5.2.1"
   },
   "optionalDependencies": {

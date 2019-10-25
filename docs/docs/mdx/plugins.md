@@ -58,7 +58,7 @@ by Gatsby image processing.
 ![my image](./my-awesome-image.png)
 ```
 
-## remark plugins
+## Remark plugins
 
 You can use [remark plugins](https://github.com/remarkjs/remark/blob/master/doc/plugins.md)
 directly if there are transformations you'd like to make on your

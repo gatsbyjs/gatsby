@@ -96,7 +96,7 @@ In situations like this, testing the change locally can be very valuable.
 
 > 💡 In case this is the first time you're doing this, you might have to [set up your development environment](/contributing/setting-up-your-local-dev-environment).
 
-Testing out unpublished packages locally can be tricky. We have just the tool to make that easy for you.
+Testing out unpublished packages locally can be tricky. We have just the tool to make that easy.
 
 Say hello to your new best friend, `gatsby-dev-cli`.
 

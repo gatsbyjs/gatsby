@@ -51,6 +51,7 @@ const NavItem = ({ linkTo, children }) => (
     <Link
       to={linkTo}
       activeClassName="active"
+      partiallyActive={true}
       sx={{
         ...navItemStyles,
         "&.active": {

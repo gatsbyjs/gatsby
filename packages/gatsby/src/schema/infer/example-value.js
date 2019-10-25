@@ -100,7 +100,12 @@ const getExampleObject = ({
           value = value.find(v => v != null)
           arrays--
         }
-        return acc.concat(value)
+        if (_.isArray(value)) {
+          acc.push(...value)
+        } else {
+          acc.push(value)
+        }
+        return acc
       }, [])
       const exampleObject = getExampleObject({
         nodes: objects,
@@ -114,10 +119,10 @@ const getExampleObject = ({
       // because the array values are allowed to link to nodes of different types.
       // For those we will create a GraphQLUnionType later.
       arrayWrappers--
-      exampleFieldValue = entries.reduce(
-        (acc, entry) => acc.concat(entry.value),
-        []
-      )
+      exampleFieldValue = entries.reduce((acc, entry) => {
+        acc.push(...entry.value)
+        return acc
+      }, [])
     } else {
       // FIXME: Why not simply treat every number as float (instead of looping through all values again)?
       exampleFieldValue =

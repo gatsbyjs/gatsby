@@ -37,7 +37,7 @@ const loadPageDataJson = loadObj => {
     if (status === 200) {
       try {
         const jsonPayload = JSON.parse(responseText)
-        if (jsonPayload.webpackCompilationHash === undefined) {
+        if (jsonPayload.path === undefined) {
           throw new Error(`not a valid pageData response`)
         }
 
@@ -172,8 +172,12 @@ export class BaseLoader {
       return this.inFlightDb.get(pagePath)
     }
 
-    const inFlight = this.loadPageDataJson(pagePath)
-      .then(result => {
+    const inFlight = Promise.all([
+      this.loadAppData(),
+      this.loadPageDataJson(pagePath),
+    ])
+      .then(allData => {
+        const result = allData[1]
         if (result.status === `error`) {
           return {
             status: `error`,
@@ -186,7 +190,7 @@ export class BaseLoader {
           )
         }
 
-        const pageData = result.payload
+        let pageData = result.payload
         const { componentChunkName } = pageData
         return this.loadComponent(componentChunkName).then(component => {
           const finalResult = { createdAt: new Date() }
@@ -198,6 +202,11 @@ export class BaseLoader {
             if (result.notFound === true) {
               finalResult.notFound = true
             }
+            pageData = Object.assign(pageData, {
+              webpackCompilationHash: allData[0]
+                ? allData[0].webpackCompilationHash
+                : ``,
+            })
             pageResources = toPageResources(pageData, component)
             finalResult.payload = pageResources
             emitter.emit(`onPostLoadPageResources`, {
@@ -305,6 +314,35 @@ export class BaseLoader {
     const page = this.pageDb.get(pagePath)
     return page && page.notFound === true
   }
+
+  loadAppData(retries = 0) {
+    return doFetch(`${__PATH_PREFIX__}/page-data/app-data.json`).then(req => {
+      const { status, responseText } = req
+
+      let appData
+
+      if (status !== 200 && retries < 3) {
+        // Retry 3 times incase of failures
+        return this.loadAppData(retries + 1)
+      }
+
+      // Handle 200
+      if (status === 200) {
+        try {
+          const jsonPayload = JSON.parse(responseText)
+          if (jsonPayload.webpackCompilationHash === undefined) {
+            throw new Error(`not a valid app-data response`)
+          }
+
+          appData = jsonPayload
+        } catch (err) {
+          // continue regardless of error
+        }
+      }
+
+      return appData
+    })
+  }
 }
 
 const createComponentUrls = componentChunkName =>
@@ -374,6 +412,7 @@ export const publicLoader = {
   prefetch: rawPath => instance.prefetch(rawPath),
   isPageNotFound: rawPath => instance.isPageNotFound(rawPath),
   hovering: rawPath => instance.hovering(rawPath),
+  loadAppData: () => instance.loadAppData(),
 }
 
 export default publicLoader

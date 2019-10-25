@@ -94,13 +94,21 @@ const pushJob = (queue, job) =>
  * they're all finished processing (or rejects if one or more jobs
  * fail)
  */
-const processBatch = async (queue, jobs) => {
+const processBatch = async (queue, jobs, activity) => {
   let numJobs = jobs.length
   if (numJobs === 0) {
     return Promise.resolve()
   }
-  const runningJobs = jobs.map(job => pushJob(queue, job))
-  return await Promise.all(runningJobs)
+
+  const runningJobs = jobs.map(job =>
+    pushJob(queue, job).then(v => {
+      if (activity.tick) {
+        activity.tick()
+      }
+      return v
+    })
+  )
+  return Promise.all(runningJobs)
 }
 
 module.exports = {

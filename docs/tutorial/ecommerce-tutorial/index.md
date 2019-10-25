@@ -213,7 +213,7 @@ The `redirectToCheckout()` function validates your checkout request and either r
   }
 ```
 
-The `render()` function applies our styles to the button and binds the `redirectToCheckout()` function to the button's onclick event.
+The `render()` function applies your styles to the button and binds the `redirectToCheckout()` function to the button's onclick event.
 
 #### Importing the checkout component into the homepage
 
@@ -282,7 +282,7 @@ module.exports = {
 }
 ```
 
-To retrieve your SKUs from your Stripe account you will need to provide your secret API key. This key needs to kept secret and must never be shared on the frontend or on GitHub. Therefore we need to set an environment variable to store the secret key. You can read more about the usage of env variables in Gatsby [here](https://www.gatsbyjs.org/docs/environment-variables/).
+To retrieve your SKUs from your Stripe account you will need to provide your secret API key. This key needs to kept secret and must never be shared on the frontend or on GitHub. Therefore you need to set an environment variable to store the secret key. You can read more about the usage of env variables in Gatsby [here](https://www.gatsbyjs.org/docs/environment-variables/).
 
 In the root directory of your project add a `.env.development` file:
 
@@ -448,7 +448,7 @@ export default SkuCard
 
 This component renders a neat card for each individual SKU, with the SKU name, nicely formatted pricing, and a "BUY ME" button. The button triggers the `redirectToCheckout()` function with the corresponding SKU ID.
 
-Lastly, we need to refactor our `Skus` component to initialize the Stripe.js client, and render `SkuCards` while handing down the Stripe.js client in the `props`:
+Lastly, you need to refactor your `Skus` component to initialize the Stripe.js client, and render `SkuCards` while handing down the Stripe.js client in the `props`:
 
 ```jsx:title=src/components/Products/Skus.js
 import React, { Component } from 'react'
