@@ -125,13 +125,13 @@ If you need help after reading this, contact us via email or livechat.
 
 #### Create the page structure
 
-Create a new Page and define it's structure using our Page Builder. Let's create an example homepage.
+Create a new Page and define it's structure using our Page Builder. Create an example homepage.
 
 ![image](https://buttercms.com/static/images/docs/guides/PagesNewSinglePage.png)
 
 #### Populate the content
 
-Then populate our new page with content. In the next step, you'll call the ButterCMS API to retrieve this content from our app.
+Then populate your new page with content. In the next step, you'll call the ButterCMS API to retrieve this content from your app.
 
 ![image](https://buttercms.com/static/images/docs/guides/PagesNewSinglePageContent.png)
 
@@ -269,7 +269,7 @@ Now open up [localhost:8000/home](http://localhost:8000/home) to see the home pa
 
 ## Create multiple pages using Page Types
 
-Let's say you want to add a set of customer case study pages to your marketing site. They all have the same structure but the content is different. Page Types are perfect for this scenario and involves three easy steps:
+Suppose you want to add a set of customer case study pages to your marketing site. They all have the same structure but the content is different. Page Types are perfect for this scenario and involves three easy steps:
 
 1. Create the Page Type structure
 2. Populate the content
@@ -285,13 +285,13 @@ Create a Page Type to represent your Customer Case Study pages:
 After saving, return to the configuration page by clicking the gear icon:
 ![image](https://buttercms.com/static/images/docs/guides/PagesNewPageType2.png)
 
-Then click on Create Page Type and name it "Customer Case Study". This will allow us to reuse this field configuration across multiple customer case study pages:
+Then click on Create Page Type and name it "Customer Case Study". This will allow you to reuse this field configuration across multiple customer case study pages:
 
 ![saving](https://buttercms.com/static/images/docs/guides/PagesNewPageType3.png)
 
 ## Populate the content
 
-Then populate our new page with content. In the next step, we'll call the ButterCMS API to retrieve this content from our app.
+Then populate our new page with content. In the next step, you'll call the ButterCMS API to retrieve this content from your app.
 
 ![](https://buttercms.com/static/images/docs/guides/PagesNewPageTypeCreateContent.png)
 
@@ -490,7 +490,7 @@ export const pageQuery = graphql`
 export default CustomerCaseStudy
 ```
 
-Now let's programmatically create customer case study pages based on the template you defined in `src/template/customer-case-study.js`
+Now programmatically create customer case study pages based on the template you defined in `src/template/customer-case-study.js`
 
 ```javascript:title=gatsby-node.js
 const path = require(`path`)
@@ -604,7 +604,7 @@ was use by gatsby to create each case study page.
 
 ## Setup content fields
 
-Let's suppose you want to add a CMS to a static FAQ page with a title and a list of questions with answers. Most websites have a FAQ(Frequently Asked Question) page. ButterCMS make it dead easy to create such content with Collections . Now you'll create a collection named `FAQs`having a `question` and `answer` field.
+Suppose you want to add a CMS to a static FAQ page with a title and a list of questions with answers. Most websites have a FAQ(Frequently Asked Question) page. ButterCMS make it dead easy to create such content with Collections. Now you'll create a collection named `FAQs`having a `question` and `answer` field.
 
 Making your content dynamic with Butter is a two-step process:
 
