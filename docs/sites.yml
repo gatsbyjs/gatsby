@@ -299,15 +299,17 @@
 - title: Matthias Jordan Portfolio
   main_url: "https://iammatthias.com/"
   url: "https://iammatthias.com/"
-  source_url: "https://github.com/iammatthias/net"
+  source_url: "https://github.com/iammatthias/.com"
   description: >-
-    Photography portfolio and blog built using Contentful + Netlify + Gatsby V2.
+    Photography portfolio of content creator and digital marketer Matthias Jordan
   built_by: Matthias Jordan
   built_by_url: https://github.com/iammatthias
   featured: false
   categories:
     - Photography
     - Portfolio
+    - Blog
+    - Gallery
 - title: Investment Calculator
   main_url: "https://investmentcalculator.io/"
   url: "https://investmentcalculator.io/"
