@@ -1,6 +1,8 @@
 const _ = require(`lodash`)
+const path = require(`path`)
 const fs = require(`fs-extra`)
 const crypto = require(`crypto`)
+const slash = require(`slash`)
 const { store, emitter } = require(`../redux/`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 const { match } = require(`@reach/router/lib/utils`)
@@ -143,12 +145,17 @@ const preferDefault = m => m && m.default || m
 const preferDefault = m => m && m.default || m
 \n`
   asyncRequires += `exports.components = {\n${components
-    .map(
-      c =>
-        `  "${c.componentChunkName}": () => import("${joinPath(
-          c.component
-        )}" /* webpackChunkName: "${c.componentChunkName}" */)`
-    )
+    .map(c => {
+      // we need a relative import path to keep contenthash the same if directory changes
+      const relativeComponentPath = path.relative(
+        path.join(program.directory, `.cache`),
+        c.component
+      )
+
+      return `  "${c.componentChunkName}": () => import("${slash(
+        relativeComponentPath
+      )}" /* webpackChunkName: "${c.componentChunkName}" */)`
+    })
     .join(`,\n`)}
 }\n\n`
 
