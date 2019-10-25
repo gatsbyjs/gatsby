@@ -419,6 +419,11 @@
               link: /docs/client-data-fetching/
             - title: Using Client-Side Only Packages
               link: /docs/using-client-side-only-packages/
+            - title: Building an E-commerce Site
+              link: /docs/building-an-e-commerce-site/
+              items:
+                - title: Building an E-commerce Site with Shopify
+                  link: /docs/building-an-ecommerce-site-with-shopify/
         - title: Improving Performance
           link: /docs/performance/
           items:
