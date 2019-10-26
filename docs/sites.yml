@@ -299,15 +299,17 @@
 - title: Matthias Jordan Portfolio
   main_url: "https://iammatthias.com/"
   url: "https://iammatthias.com/"
-  source_url: "https://github.com/iammatthias/net"
+  source_url: "https://github.com/iammatthias/.com"
   description: >-
-    Photography portfolio and blog built using Contentful + Netlify + Gatsby V2.
+    Photography portfolio of content creator and digital marketer Matthias Jordan
   built_by: Matthias Jordan
   built_by_url: https://github.com/iammatthias
   featured: false
   categories:
     - Photography
     - Portfolio
+    - Blog
+    - Gallery
 - title: Investment Calculator
   main_url: "https://investmentcalculator.io/"
   url: "https://investmentcalculator.io/"
@@ -1181,6 +1183,8 @@
     - eCommerce
     - Food
     - Blog
+  built_by: Caldera Digital
+  built_by_url: https://www.calderadigital.com/
 - title: Michael Uloth
   main_url: "https://www.michaeluloth.com"
   url: "https://www.michaeluloth.com"
@@ -1245,18 +1249,18 @@
     - Technology
   built_by: Thrive
   built_by_url: "https://thriveweb.com.au/"
-- title: Evergov
-  main_url: "https://evergov.com/"
-  url: "https://evergov.com/"
+- title: Papergov
+  main_url: "https://papergov.com/"
+  url: "https://papergov.com/"
   featured: false
-  description: Finding local government services made easier.
+  description: Manage all your government services in a single place
   categories:
     - Directory
     - Government
     - Technology
   source_url: "https://github.com/WeOpenly/localgov.fyi"
-  built_by: Evergov
-  built_by_url: "https://evergov.com/about/"
+  built_by: Openly Technologies
+  built_by_url: "https://papergov.com/about/"
 - title: Kata.ai Documentation
   main_url: "https://docs.kata.ai/"
   url: "https://docs.kata.ai/"
@@ -4230,19 +4234,6 @@
     - Web Development
   built_by: Kirankumar Ambati
   built_by_url: https://github.com/kirankumarambati
-  featured: false
-- title: Mixkit by Envato
-  url: https://mixkit.co
-  main_url: https://mixkit.co
-  description: >
-    Extraordinary free HD videos
-  categories:
-    - Video
-    - Design
-    - Gallery
-    - Video
-  built_by: Envato
-  built_by_url: https://github.com/envato
   featured: false
 - title: Rou Hun Fan's portfolio
   main_url: https://flowen.me
@@ -8022,3 +8013,175 @@
     - Blog
     - Education
   featured: false
+- title: Roger Ramos Development Journal
+  url: "https://rogerramos.me/"
+  main_url: "https://rogerramos.me/"
+  source_url: "https://github.com/rogerramosme/rogerramos.me/"
+  description: >
+    Personal development journal made with Netlify CMS
+  categories:
+    - Blog
+  built_by: Roger Ramos
+  built_by_url: https://rogerramos.me/
+  featured: false
+- title: Global Adviser Alpha
+  main_url: "https://globaladviseralpha.com"
+  url: "https://globaladviseralpha.com"
+  description: >
+    Lead by David Haintz, Global Adviser Alpha transforms advice business into world class firms.
+  categories:
+    - Business
+    - Blog
+    - Finance
+  built_by: Handsome Creative
+  built_by_url: https://www.hellohandsome.com.au
+  featured: false
+- title: Alcamine
+  url: https://alcamine.com/
+  main_url: https://alcamine.com/
+  description: >
+    Never apply to another job online and receive tons of tech jobs in your inbox everyday — all while keeping your information private.
+  categories:
+    - Blog
+    - Technology
+  built_by: Caldera Digital
+  built_by_url: https://www.calderadigital.com/
+  featured: false
+- title: Caldera Digital
+  url: https://www.calderadigital.com/
+  main_url: https://www.calderadigital.com/
+  source_url: https://github.com/caldera-digital/platform
+  description: >
+    Caldera is a product and application development agency that uses innovative technology to bring your vision, brand, and identity to life through user centered design.
+  categories:
+    - Blog
+    - User Experience
+    - Consulting
+  built_by: Caldera Digital
+  built_by_url: https://www.calderadigital.com/
+  featured: false
+- title: Keycodes
+  url: https://www.keycodes.dev
+  main_url: https://www.keycodes.dev
+  source_url: https://github.com/justinjunodev/keycodes.dev
+  description: >
+    A developer resource for getting keyboard key codes.
+  categories:
+    - Programming
+    - Productivity
+    - Open Source
+    - Web Development
+  built_by: Justin Juno
+  built_by_url: https://www.justinjuno.dev
+  featured: false
+- title: Utah Pumpkins
+  url: https://www.utahpumpkins.com/
+  main_url: https://www.utahpumpkins.com/
+  source_url: https://github.com/cadekynaston/utah-pumpkins
+  description: >
+    An awesome pumpkin gallery built using Gatsby and Contentful.
+  categories:
+    - Gallery
+    - Blog
+    - Photography
+  built_by: Cade Kynaston
+  built_by_url: https://cade.codes
+- title: diff001a's blog
+  main_url: https://diff001a.netlify.com/
+  url: https://diff001a.netlify.com/
+  description: >
+    This is diff001a's blog which contains blogs realted to programming.
+  categories:
+    - Blog
+  built_by: diff001a
+- title: Rockwong Blog
+  main_url: http://rockwong.com/blog/
+  url: http://rockwong.com/blog/
+  description: >
+    Rockwong is a techncal blog containing content realted to various web technologies.
+  categories:
+    - Technology
+    - Education
+    - Blog
+- title: RegexGuide
+  main_url: "https://regex.guide"
+  url: "https://regex.guide/playground"
+  source_url: "https://github.com/pacdiv/regex.guide"
+  description: >
+    The easiest way to learn regular expressions! The RegexGuide is a playground helping developers to discover regular expressions. Trying it is adopting regular expressions!
+  categories:
+    - App
+    - Education
+    - JavaScript
+    - Nonprofit
+    - Open Source
+    - Programming
+    - Technology
+    - Web Development
+  built_by: Loïc J.
+  built_by_url: https://growthnotes.dev
+- title: re:store
+  url: https://www.visitrestore.com
+  main_url: https://www.visitrestore.com
+  description: >
+    This is your chance to discover, connect, and shop beyond your feed and get to know the who, how, and why behind your favorite products.
+  categories:
+    - Marketing
+  built_by: The Couch
+  built_by_url: https://thecouch.nyc
+  featured: false
+- title: Bululu Eventos
+  url: https://bululueventos.cl/
+  main_url: https://bululueventos.cl/
+  source_url: https://github.com/enBonnet/bululu-front
+  description: >
+    Sitio de organizadores de eventos
+  categories:
+    - Marketing
+  built_by: Ender Bonnet
+  built_by_url: https://enbonnet.me/
+- title: MyPrograming Steps
+  main_url: https://mysteps.netlify.com/
+  url: https://mysteps.netlify.com/
+  description: >
+    FrontEnd Tutorial Information
+  featured: false
+  categories:
+    - Blog
+    - Portfolio
+  source_url: https://github.com/IoT-Arduino/Gatsby-MySteps
+  built_by: Maruo
+  built_by_url: https://twitter.com/DengenT
+- title: Brent Runs Marathons
+  main_url: https://www.brentrunsmarathons.com/
+  url: https://www.brentrunsmarathons.com/
+  source_url: https://github.com/bingr001/brentrunsmarathonsv2
+  description: >
+    Brent Runs Marathons is about the training and race experience for the Comrades Ultra Marathon
+  categories:
+    - Blog
+  built_by: Brent Ingram
+  built_by_url: https://www.brentjingram.com/
+  featured: false
+- title: Pedro LaTorre
+  main_url: https://www.pedrolatorre.com/
+  url: https://www.pedrolatorre.com/
+  source_url: https://github.com/bingr001/pedro-latorre-site
+  description: >
+    A really awesome website built for the motivational speaker Pedro LaTorre
+  categories:
+    - Blog
+  built_by: Brent Ingram
+  built_by_url: https://www.brentjingram.com/
+  featured: false
+
+- title: Veryben
+  main_url: https://veryben.com/
+  url: https://veryben.com/
+  description: >
+    be water my friend
+  featured: false
+  categories:
+    - Blog
+  built_by: anikijiang
+  built_by_url: https://twitter.com/anikijiang

@@ -18,7 +18,7 @@ With Gatsby, you will mostly be using the `<Link />` component provided by the `
 
 ## Client and Server Routing 🤝
 
-Besides using the [`<Link />` API](https://www.gatsbyjs.org/docs/gatsby-link/) for linking between pages Gatsby generates, you can define your own client-side routes. See this [example](https://github.com/gatsbyjs/gatsby/tree/master/examples/client-only-paths) on how to use `<Router />` from `@reach/router` to make client routes work seamlessly together with your server routes.
+Besides using the [`<Link />` API](https://www.gatsbyjs.org/docs/gatsby-link/) for linking between pages Gatsby generates, you can define your own client-side routes. See the [client only paths example](https://github.com/gatsbyjs/gatsby/tree/master/examples/client-only-paths) on how to use `<Router />` from `@reach/router` to make client routes work seamlessly together with your server routes.
 
 ## Other resources
 
