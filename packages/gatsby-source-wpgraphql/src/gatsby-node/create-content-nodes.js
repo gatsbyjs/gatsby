@@ -63,6 +63,7 @@ const fetchContentTypeNodes = async ({
       after: endCursor,
       url,
       contentTypePlural,
+      contentTypeSingular,
     })
   }
 
@@ -113,8 +114,49 @@ module.exports = async (
   const wpgqlNodes = await fetchWPGQLContentNodes(pluginOptions)
 
   await Promise.all(
-    wpgqlNodes.map(async node => {
+    wpgqlNodes.map(async (node, index) => {
+      //
+      // create a pathname for the node using the WP permalink
       node.path = url.parse(node.link).pathname
+
+      const indexOfLastNodeInContentType =
+        wpgqlNodes.length -
+        [...wpgqlNodes].reverse().findIndex(n => n.type === node.type) -
+        1
+
+      const indexOfFirstNodeInContentType = wpgqlNodes.findIndex(
+        n => n.type === node.type
+      )
+
+      const previousNodeIndex =
+        // if this is the first node
+        index === 0
+          ? // use the last node of this post type as the previous
+            indexOfLastNodeInContentType
+          : // otherwise use the previous node
+            index - 1
+      const previousNode = wpgqlNodes[previousNodeIndex]
+
+      const nextNodeIndex =
+        // if this is the last node
+        index === wpgqlNodes.length - 1
+          ? // use the first node in the same post type as the next
+            indexOfFirstNodeInContentType
+          : // otherwise use the next
+            index + 1
+      const nextNode = wpgqlNodes[nextNodeIndex]
+
+      // create Gatsby ID's from WPGQL ID's
+      const previousNodeId = createNodeId(`WpContent-${previousNode.id}`)
+      const nextNodeId = createNodeId(`WpContent-${nextNode.id}`)
+
+      // create connections to adjacent nodes for pagination
+      node.pagination = {
+        previous___NODE: previousNodeId,
+        next___NODE: nextNodeId,
+        isFirst: index === indexOfFirstNodeInContentType,
+        isLast: index === indexOfLastNodeInContentType,
+      }
 
       return actions.createNode({
         ...node,

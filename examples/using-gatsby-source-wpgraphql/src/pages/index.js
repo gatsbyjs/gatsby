@@ -1,5 +1,5 @@
 import React from "react"
-import { graphql } from "gatsby"
+import { graphql, Link } from "gatsby"
 
 export default ({ data }) => {
   const { pages } = data.allWpContent
@@ -10,7 +10,9 @@ export default ({ data }) => {
       <ul>
         {pages.map(page => (
           <li key={page.path}>
-            <a href={page.path}>{page.title}</a>
+            <Link to={page.path}>
+              {page.contentType} - {page.title}
+            </Link>
           </li>
         ))}
       </ul>
@@ -24,6 +26,7 @@ export const query = graphql`
       pages: nodes {
         title
         path
+        contentType
       }
     }
   }
