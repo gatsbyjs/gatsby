@@ -23,7 +23,7 @@ module.exports = {
       options: {
         // Arbitrary name for the remote schema Query type
         typeName: "SWAPI",
-        // Field under which the remote schema will be accessible. You'll use this in your GatsbyQuery.
+        // Field under which the remote schema will be accessible. You'll use this in your Gatsby query
         fieldName: "swapi",
         // Url to query from
         url: "https://api.graphcms.com/simple/v1/swapi",
@@ -143,7 +143,7 @@ module.exports = {
       options: {
         // Arbitrary name for the remote schema Query type
         typeName: "SWAPI",
-        // Field under which the remote schema will be accessible. You'll use this in your GatsbyQuery.
+        // Field under which the remote schema will be accessible. You'll use this in your Gatsby query
         fieldName: "swapi",
         // Url to query from
         url: "https://api.graphcms.com/simple/v1/swapi",
