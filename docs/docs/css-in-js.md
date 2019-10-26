@@ -12,7 +12,7 @@ CSS-in-JS bridges the gap between CSS and JavaScript:
 3. **Dynamic**: style your site dynamically based on component state by integrating JavaScript variables.
 4. **Bonuses**: many CSS-in-JS libraries generate unique class names which can help with caching, automatic vendor prefixes, timely loading of critical CSS, and implementing many other features, depending on the library you choose.
 
-CSS-in-JS, while not required in Gatsby, is very popular among JavaScript developers for the reasons listed above. For more context, read Max Stoiber's (creator of CSS-in-JS library [styled-components](/docs/styled-components/)) article [_Why I write CSS in JavaScript_](https://mxstbr.com/thoughts/css-in-js/). However, you should also consider whether CSS-in-JS is necessary, as not relying on it can encourage more inclusive front-end skill-sets. It is also more difficult to port styles from JSX to and from CSS.
+CSS-in-JS, while not required in Gatsby, is very popular among JavaScript developers for the reasons listed above. For more context, read Max Stoiber's (creator of CSS-in-JS library [styled-components](/docs/styled-components/)) article [_Why I write CSS in JavaScript_](https://mxstbr.com/thoughts/css-in-js/). However, you should also consider whether CSS-in-JS is necessary, as not relying on it can encourage more inclusive frontend skill-sets. It is also more difficult to port styles from JSX to and from CSS.
 
 _Note that this functionality is not a part of React or Gatsby, and requires using any of the many [third-party CSS-in-JS libraries](https://github.com/MicheleBertoli/css-in-js#css-in-js)._
 

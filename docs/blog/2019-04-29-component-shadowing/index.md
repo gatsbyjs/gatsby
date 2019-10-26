@@ -142,5 +142,5 @@ Gatsby Themes and is currently being used in production.
 
 ## Further reading
 
-- [Component Shadowing Documentation](/docs/themes/api-reference/#component-shadowing)
+- [Component Shadowing Documentation](/docs/themes/shadowing/)
 - [Latent Component Shadowing](https://johno.com/latent-component-shadowing)

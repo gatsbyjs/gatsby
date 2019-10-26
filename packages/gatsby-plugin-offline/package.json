@@ -9,7 +9,7 @@
   "dependencies": {
     "@babel/runtime": "^7.6.3",
     "cheerio": "^1.0.0-rc.3",
-    "glob": "^7.1.4",
+    "glob": "^7.1.5",
     "idb-keyval": "^3.2.0",
     "lodash": "^4.17.15",
     "slash": "^3.0.0",
