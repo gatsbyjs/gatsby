@@ -1,9 +1,10 @@
 const React = require(`react`)
+const { hot } = require(`react-hot-loader/root`)
 
 const preferDefault = m => (m && m.default) || m
 let Layout
 try {
-  Layout = preferDefault(require(GATSBY_LAYOUT_COMPONENT_PATH))
+  Layout = hot(preferDefault(require(GATSBY_LAYOUT_COMPONENT_PATH)))
 } catch (e) {
   if (e.toString().indexOf(`Error: Cannot find module`) !== -1) {
     throw new Error(
