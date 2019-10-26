@@ -26,4 +26,4 @@ Get caught up on all the latest presentations from Gatsby Days in Mountain View,
 
 [How Gatsby Does High-Impact, Low-Effort UX Research (and You Can Too!)](https://www.gatsbyjs.com/gatsby-days-UXresearch-shannon/) by **Shannon Soper**, UX Specialist and Head of Learning, Gatsby
 
-[Move Fast, Don't Break Things: Trends in Modern Web Development with Mediacurrent](https://www.gatsbyjs.com/gatsby-days-mediacurrent-ben/) by **Ben Robertson**, Front-End Developer, Mediacurrent
+[Move Fast, Don't Break Things: Trends in Modern Web Development with Mediacurrent](https://www.gatsbyjs.com/gatsby-days-mediacurrent-ben/) by **Ben Robertson**, Frontend Developer, Mediacurrent

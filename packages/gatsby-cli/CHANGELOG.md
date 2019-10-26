@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.8.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.4...gatsby-cli@2.8.5) (2019-10-23)
+
+### Features
+
+- **gatsby:** Ensure status is set to Failed for thrown errors or panicOnBuild in plugins ([#18887](https://github.com/gatsbyjs/gatsby/issues/18887)) ([d7950e1](https://github.com/gatsbyjs/gatsby/commit/d7950e1))
+
 ## [2.8.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.3...gatsby-cli@2.8.4) (2019-10-22)
 
 ### Bug Fixes

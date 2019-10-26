@@ -6,11 +6,17 @@ import "@babel/polyfill"
 const semver = require(`semver`)
 const util = require(`util`)
 
+const useJsonLogger = process.argv.slice(2).some(arg => arg.includes(`json`))
+
+if (useJsonLogger) {
+  process.env.GATSBY_LOGGER = `json`
+}
+
 const createCli = require(`./create-cli`)
 const report = require(`./reporter`)
-
 const pkg = require(`../package.json`)
 const updateNotifier = require(`update-notifier`)
+
 // Check if update is available
 updateNotifier({ pkg }).notify({ isGlobal: true })
 
