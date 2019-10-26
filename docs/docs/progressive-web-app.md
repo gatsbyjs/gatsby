@@ -34,13 +34,13 @@ Gatsby is designed to provide top-notch performance out of the box. It handles c
 
 Then there are the three baseline criteria for a site to qualify as a PWA.
 
-### It must run under HTTPS.
+### It must run under HTTPS
 
 Running your site under HTTPS is a highly recommended security practice, no matter the content of your site. Specifically concerning progressive web apps, running under HTTPS is a criterion for many new browser features that are required for progressive web apps to work.
 
 This one's all you!
 
-### It must include a Web App Manifest.
+### It must include a Web App Manifest
 
 A [web app manifest](https://www.w3.org/TR/appmanifest/) is a JSON file that provides the browser with information about your web app, and makes it possible for users to save to their home screen.
 
@@ -48,7 +48,7 @@ It includes information like the web app's `name`, `icons`, `start_url`, `backgr
 
 Gatsby provides a plugin interface to add support for shipping a manifest with your site -- [**gatsby-plugin-manifest**](/packages/gatsby-plugin-manifest).
 
-### It must implement a service worker.
+### It must implement a service worker
 
 A [service worker](https://developers.google.com/web/fundamentals/primers/service-workers/) provides support for an offline experience for your site, and makes your site more resilient to bad network connections.
 
