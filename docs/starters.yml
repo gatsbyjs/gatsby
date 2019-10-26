@@ -4197,7 +4197,7 @@
     - Styling:CSS-in-JS
     - Netlify
   features:
-	  - Create pages and posts using MDX
+  - Create pages and posts using MDX
   - Incorporates the CSS-in-JS library Emotion
     - Visual effects
 - url: https://martin2844.github.io/gatsby-starter-dev-portfolio/
