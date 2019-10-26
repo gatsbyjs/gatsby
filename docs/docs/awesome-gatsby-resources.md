@@ -85,6 +85,7 @@ See the [library of official and community plugins](/plugins/)
 - [Gatsby - Full Tutorial for Beginners](https://www.youtube.com/watch?v=mHFAM0CXviE)
 - [Building a Video Blog with Gatsby and Markdown (MDX)](https://scotch.io/tutorials/building-a-video-blog-with-gatsby-and-markdown-mdx)
 - [Deploying Your First Gatsby Site to Netlify](https://scotch.io/tutorials/deploying-your-first-gatsby-site-to-netlify)
+- [Add a chat widget to your Gatsby blog](https://pusher.com/tutorials/chat-gatsby/)
 
 ### German
 
