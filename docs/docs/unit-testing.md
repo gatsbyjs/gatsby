@@ -254,9 +254,7 @@ const babelOptions = {
 }
 ```
 
-You may notice that two other options, `testRegex` and `moduleFileExtensions`,
-have been added. Option `testRegex` is the pattern telling Jest which files
-contain tests. The pattern above matches any `.js`, `.jsx`, `.ts` or `.tsx`
+The pattern above matches any `.js`, `.jsx`, `.ts` or `.tsx`
 file inside a `__tests__` directory, or any file elsewhere with the extension
 `.test.js`, `.test.jsx`, `.test.ts`, `.test.tsx`, or `.spec.js`, `.spec.jsx`,
 `.spec.ts`, `.spec.tsx`.
