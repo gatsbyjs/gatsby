@@ -12,7 +12,12 @@ async function run() {
   let yamlStr
 
   try {
-    yamlStr = await fetch(url).then(resp => resp.text())
+    yamlStr = await fetch(url, {
+      headers: {
+        "User-Agent":
+          "gatsby-site-showcase-validator/1.0 (+https://github.com/gatsbyjs/gatsby/tree/master/.github/actions/gatsby-site-showcase-validator)",
+      },
+    }).then(resp => resp.text())
   } catch (err) {
     console.log(`[Err]: ${err.message}`)
     process.exit(1)
@@ -35,7 +40,12 @@ async function run() {
 
     // Fetch site
     try {
-      siteHtml = await fetch(siteUrl).then(resp => resp.text())
+      siteHtml = await fetch(siteUrl, {
+        headers: {
+          "User-Agent":
+            "gatsby-site-showcase-validator/1.0 (+https://github.com/gatsbyjs/gatsby/tree/master/.github/actions/gatsby-site-showcase-validator)",
+        },
+      }).then(resp => resp.text())
     } catch (err) {
       console.log(
         `${chalk.red(`[Err]`)}: ${site.title} (${siteUrl}) ran into an error: ${
@@ -65,7 +75,12 @@ async function run() {
 
     // Check if provided repository is public
     if (sourceUrl) {
-      const status = await fetch(sourceUrl).then(({ status }) => status)
+      const status = await fetch(sourceUrl, {
+        headers: {
+          "User-Agent":
+            "gatsby-site-showcase-validator/1.0 (+https://github.com/gatsbyjs/gatsby/tree/master/.github/actions/gatsby-site-showcase-validator)",
+        },
+      }).then(({ status }) => status)
 
       if (status !== 200) {
         console.log(
