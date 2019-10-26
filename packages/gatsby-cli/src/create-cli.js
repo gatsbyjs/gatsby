@@ -326,9 +326,10 @@ module.exports = argv => {
       describe: `Turn off the color in output`,
       global: true,
     })
-    .option(`logger`, {
-      describe: `Define a logger for output`,
-      choices: [`json`, `ink`, `yurnalist`],
+    .option(`json`, {
+      describe: `Turn on the JSON logger`,
+      default: false,
+      type: `boolean`,
       global: true,
     })
 
