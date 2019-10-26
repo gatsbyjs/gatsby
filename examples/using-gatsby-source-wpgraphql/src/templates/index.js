@@ -2,15 +2,19 @@ import React from "react"
 import { graphql, Link } from "gatsby"
 
 export default ({ data }) => {
-  const { title, content, pagination } = data.wpContent
+  const { title, content, contentType, pagination } = data.wpContent
 
-  console.log(pagination)
   return (
     <div>
       <h1>{title}</h1>
-      <Link to={pagination.next.path}>{pagination.next.title}</Link>
+      <h2>
+        {contentType} #{pagination.pageNumber}
+      </h2>
+      <Link to={pagination.previous.path}>
+        Previous {pagination.previous.title}
+      </Link>
       <br />
-      <Link to={pagination.previous.path}>{pagination.previous.title}</Link>
+      <Link to={pagination.next.path}>Next {pagination.next.title}</Link>
       <p dangerouslySetInnerHTML={{ __html: content }} />
     </div>
   )
@@ -21,7 +25,9 @@ export const query = graphql`
     wpContent(id: { eq: $ID }) {
       title
       content
+      contentType
       pagination {
+        pageNumber
         next {
           path
           title

@@ -1,6 +1,5 @@
 const fetch = require(`isomorphic-fetch`)
 const url = require(`url`)
-const _ = require(`lodash`)
 
 const fetchGraphql = async ({ url, query, variables }) =>
   (await fetch(url, {
@@ -31,12 +30,11 @@ const getPagesQuery = contentTypePlural => `
   }
 `
 
-const allContentNodes = []
-
 const fetchContentTypeNodes = async ({
   contentTypePlural,
   contentTypeSingular,
   url,
+  allContentNodes = [],
   ...variables
 }) => {
   const query = getPagesQuery(contentTypePlural)
@@ -64,6 +62,7 @@ const fetchContentTypeNodes = async ({
       url,
       contentTypePlural,
       contentTypeSingular,
+      allContentNodes,
     })
   }
 
@@ -88,77 +87,81 @@ const getAvailableContentTypes = () => {
 const fetchWPGQLContentNodes = async ({ url }) => {
   const contentTypes = getAvailableContentTypes()
 
-  const contentNodes = _.flatten(
-    await Promise.all(
-      contentTypes.map(async ({ plural, singular }) => {
-        const allNodesOfContentType = await fetchContentTypeNodes({
-          first: 10,
-          after: null,
-          contentTypePlural: plural,
-          contentTypeSingular: singular,
-          url,
-        })
+  const contentNodeGroups = []
 
-        return allNodesOfContentType
+  await Promise.all(
+    contentTypes.map(async ({ plural, singular }) => {
+      const allNodesOfContentType = await fetchContentTypeNodes({
+        first: 10,
+        after: null,
+        contentTypePlural: plural,
+        contentTypeSingular: singular,
+        url,
       })
-    )
+
+      contentNodeGroups.push({
+        singular,
+        plural,
+        allNodesOfContentType,
+      })
+    })
   )
 
-  return contentNodes
+  return contentNodeGroups
 }
 
 module.exports = async (
   { actions, createNodeId, createContentDigest },
   pluginOptions
 ) => {
-  const wpgqlNodes = await fetchWPGQLContentNodes(pluginOptions)
+  const wpgqlNodesByContentType = await fetchWPGQLContentNodes(pluginOptions)
 
-  await Promise.all(
-    wpgqlNodes.map(async (node, index) => {
+  for (const wpgqlNodesGroup of wpgqlNodesByContentType) {
+    const wpgqlNodes = wpgqlNodesGroup.allNodesOfContentType
+    for (const [index, node] of wpgqlNodes.entries()) {
       //
       // create a pathname for the node using the WP permalink
       node.path = url.parse(node.link).pathname
 
-      const indexOfLastNodeInContentType =
-        wpgqlNodes.length -
-        [...wpgqlNodes].reverse().findIndex(n => n.type === node.type) -
-        1
-
-      const indexOfFirstNodeInContentType = wpgqlNodes.findIndex(
-        n => n.type === node.type
-      )
+      const indexOfLastNode = wpgqlNodes.length - 1
+      const indexOfFirstNode = 0
 
       const previousNodeIndex =
         // if this is the first node
-        index === 0
+        index === indexOfFirstNode
           ? // use the last node of this post type as the previous
-            indexOfLastNodeInContentType
+            indexOfLastNode
           : // otherwise use the previous node
             index - 1
       const previousNode = wpgqlNodes[previousNodeIndex]
 
       const nextNodeIndex =
-        // if this is the last node
-        index === wpgqlNodes.length - 1
+        // if this is the last node in the content type
+        index === indexOfLastNode
           ? // use the first node in the same post type as the next
-            indexOfFirstNodeInContentType
+            indexOfFirstNode
           : // otherwise use the next
             index + 1
       const nextNode = wpgqlNodes[nextNodeIndex]
 
       // create Gatsby ID's from WPGQL ID's
-      const previousNodeId = createNodeId(`WpContent-${previousNode.id}`)
-      const nextNodeId = createNodeId(`WpContent-${nextNode.id}`)
+      const previousNodeId = previousNode
+        ? createNodeId(`WpContent-${previousNode.id}`)
+        : null
+      const nextNodeId = nextNode
+        ? createNodeId(`WpContent-${nextNode.id}`)
+        : null
 
       // create connections to adjacent nodes for pagination
       node.pagination = {
         previous___NODE: previousNodeId,
         next___NODE: nextNodeId,
-        isFirst: index === indexOfFirstNodeInContentType,
-        isLast: index === indexOfLastNodeInContentType,
+        pageNumber: index + 1,
+        isFirst: index === indexOfFirstNode,
+        isLast: index === indexOfLastNode,
       }
 
-      return actions.createNode({
+      await actions.createNode({
         ...node,
         id: createNodeId(`WpContent-${node.id}`),
         parent: null,
@@ -167,6 +170,6 @@ module.exports = async (
           type: `WpContent`,
         },
       })
-    })
-  )
+    }
+  }
 }
