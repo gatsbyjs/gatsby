@@ -26,7 +26,7 @@ So Brian kept trying, and not finding, a better way to develop projects and mana
 
 ## Swiping Right for Gatsby
 
-There was only one potential hurdle to true romance: convincing the Delicious Simplicity team. They were mainly front end developers used to working with HTML/CSS, maybe a little jQuery. Stepping across the divide into the backend to confront the complexities of a headless CMS was not in their comfort zone. But Brian was confident he could get them there.
+There was only one potential hurdle to true romance: convincing the Delicious Simplicity team. They were mainly frontend developers used to working with HTML/CSS, maybe a little jQuery. Stepping across the divide into the backend to confront the complexities of a headless CMS was not in their comfort zone. But Brian was confident he could get them there.
 
 “Once I got hands on with Gatsby, I was shocked how quickly I managed to pick things up. The syntax was just so intuitive, which made it easy to digest,” he says. There were definitely some growing pains -- the team had little experience with React or Node, and some of the devs found the new component-based way of thinking overwhelming to grasp at first. But they eventually fell in love with Gatsby and now don’t want to work in anything else.
 
