@@ -4203,7 +4203,7 @@
     - Graphql queries
     - Sass
     - Markdown
-    
+
 - url: https://wataruoguchi-gatsby-starter-typescript-contentful.netlify.com/
   repo: https://github.com/wataruoguchi/gatsby-starter-typescript-contentful
   description: Simple TypeScript starter with Contentful Integration
