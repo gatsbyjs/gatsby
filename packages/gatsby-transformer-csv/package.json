@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.6.3",
-    "bluebird": "^3.7.0",
+    "bluebird": "^3.7.1",
     "csvtojson": "^1.1"
   },
   "devDependencies": {
