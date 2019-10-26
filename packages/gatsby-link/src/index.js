@@ -199,7 +199,9 @@ export default React.forwardRef((props, ref) => (
 ))
 
 export const navigate = (to, options) => {
-  window.___navigate(withPrefix(to), options)
+  // @reach/router supports a number for going back
+  // or a string for navigation to a path
+  window.___navigate(typeof to === `number` ? to : withPrefix(to), options)
 }
 
 export const push = to => {

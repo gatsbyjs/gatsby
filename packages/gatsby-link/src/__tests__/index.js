@@ -217,6 +217,13 @@ describe(`navigate`, () => {
     expect(global.___navigate).toHaveBeenCalledWith(to, undefined)
   })
 
+  it(`respects back functionality`, () => {
+    const to = -1
+    getNavigate()(to)
+
+    expect(global.___navigate).toHaveBeenCalledWith(to, undefined)
+  })
+
   it(`respects pathPrefix`, () => {
     const to = `/some-path`
     global.__BASE_PATH__ = `/blog`
