@@ -37,7 +37,7 @@ $title-color: #ff0000;
 
 The last step is to import the style and use it.
 
-Let's replace the default contents of the index.js file.
+Replace the default contents of the index.js file.
 
 ```javascript:title=index.js
 import React from "react"
