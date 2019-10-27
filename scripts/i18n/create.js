@@ -129,9 +129,14 @@ function pushSourceContent(transRepo, langName, codeowners) {
 
 This repo contains the ${langName} translation for Gatsby.
 
-Please refer to the [Gatsby Translation Guide](https://www.gatsbyjs.org/contributing/gatsby-docs-translation-guide/) for instructions.
+Please refer to the [Translation Progress Issue](${transRepo.url}/issues/1) to start translating!
 
-[Feel free to translate this document and add any content you feel would be useful to contributors].
+Useful Links:
+
+* [Style Guide](/style-guide)
+* [Gatsby Translation Guide](https://www.gatsbyjs.org/contributing/gatsby-docs-translation-guide/)
+
+(Feel free to translate this document and add any content you feel would be useful to contributors).
   `
   fs.writeFileSync(`README.md`, readmeTemplate)
   shell.exec(`git add README.md`)
