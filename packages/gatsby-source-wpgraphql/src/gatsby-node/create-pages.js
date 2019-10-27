@@ -4,7 +4,7 @@ const getTemplates = require(`../utils/get-templates`)
 module.exports = async ({ actions, graphql }) => {
   const { data } = await graphql(`
     query ALL_CONTENT_NODES {
-      allWpContent {
+      allWpContent(filter: { link: { ne: null } }) {
         nodes {
           path
           id
