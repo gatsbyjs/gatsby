@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-feed@2.3.18...gatsby-plugin-feed@2.3.19) (2019-10-18)
+
+### Bug Fixes
+
+- **gatsby-plugin-feed:** Remove wrong overriding in plugin-feed ([#18793](https://github.com/gatsbyjs/gatsby/issues/18793)) ([ab90296](https://github.com/gatsbyjs/gatsby/commit/ab90296))
+
 ## [2.3.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-feed@2.3.17...gatsby-plugin-feed@2.3.18) (2019-10-14)
 
 **Note:** Version bump only for package gatsby-plugin-feed

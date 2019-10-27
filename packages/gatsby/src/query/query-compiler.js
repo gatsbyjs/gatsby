@@ -373,12 +373,12 @@ export default async function compile({ parentSpan } = {}): Promise<
       websocketManager.emitError(overlayErrorID, structuredErrors)
     }
   } else {
-    activity.end()
     if (process.env.gatsby_executing_command === `develop`) {
       // emitError with `null` as 2nd param to clear browser error overlay
       websocketManager.emitError(overlayErrorID, null)
     }
   }
+  activity.end()
 
   return queries
 }
