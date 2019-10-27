@@ -4,7 +4,7 @@ const preferDefault = m => (m && m.default) || m
 let Layout
 try {
   Layout = preferDefault(require(GATSBY_LAYOUT_COMPONENT_PATH))
-  if (process.env.NODE_ENV !== `production`) {
+  if (process.env.NODE_ENV === `develeopment`) {
     const { hot } = require(`react-hot-loader/root`)
     Layout = hot(Layout)
   }
