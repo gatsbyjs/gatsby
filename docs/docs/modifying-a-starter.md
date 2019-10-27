@@ -62,7 +62,7 @@ At this point, you can navigate to `localhost:8000/speaking` in your browser to 
 
 ## Querying data
 
-Being able to query your own data will provide an added level of customization and control over your site. By default, Gatsby does this using [GraphQL](https://graphql.org/). Note the `siteMetaData` in the default starter's `gatsby-config.js`:
+Being able to query your own data will provide an added level of customization and control over your site. By default, Gatsby does this using [GraphQL](/docs/graphql-reference/). Note the `siteMetadata` in the default starter's `gatsby-config.js`:
 
 ```javascript:title=gatsby-config.js
 module.exports = {
