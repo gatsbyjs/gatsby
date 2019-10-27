@@ -1,3 +1,5 @@
 /*.js
 gatsby-node
+!src/gatsby-node
+!src
 yarn.lock
