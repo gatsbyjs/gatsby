@@ -36,6 +36,7 @@ const { graphql } = require(`@octokit/graphql`)
 const log4js = require(`log4js`)
 
 const { makeProgressIssue } = require(`./make-progress-issue`)
+const { inviteMaintainers } = require(`./invite-maintainers`)
 
 const host = `https://github.com`
 const cacheDir = `.cache`
@@ -366,6 +367,7 @@ async function setupRepository(issueNo) {
     createBranchProtections(transRepo),
     closeRequestIssue(issue.id),
     pushSourceContent(transRepo, langName, maintainers),
+    inviteMaintainers(owner, maintainers),
   ])
 
   await commentOnRequestIssue(issue.id, transRepo, progressIssue, maintainers)

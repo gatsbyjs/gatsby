@@ -9,6 +9,7 @@
   "license": "MIT",
   "dependencies": {
     "@octokit/graphql": "^4.2.2",
+    "@octokit/rest": "^16.34.0",
     "env-cmd": "^10.0.1",
     "js-yaml": "^3.13.1",
     "log4js": "^5.2.2",
