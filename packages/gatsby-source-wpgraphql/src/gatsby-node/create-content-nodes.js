@@ -70,10 +70,12 @@ const fetchContentTypeNodes = async ({
     query: paginatedQuery,
     variables,
   })
-  console.log(`​response`, response)
+
+  // console.log(`​response`, response)
+
   const { data } = response
 
-  console.log(contentTypePlural)
+  // console.log(contentTypePlural)
   if (!data[contentTypePlural] || !data[contentTypePlural].nodes) {
     return allContentNodes
   }
