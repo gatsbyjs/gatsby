@@ -5,24 +5,24 @@ import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import Button from "./button"
 
 const MastheadContent = () => (
-  <div sx={{ mb: 8 }}>
+  <div>
     <h1
       sx={{
-        fontSize: 11,
+        fontSize: [8, null, null, 9, null, 11],
         letterSpacing: `tight`,
         lineHeight: `solid`,
         maxWidth: `15em`,
         mb: 6,
-        mt: 0,
+        mt: 12,
       }}
     >
-      Fast in every way that&nbsp;matters
+      Fast in every way that&nbsp;matters<span sx={{ color: `gatsby` }}>.</span>
     </h1>
     <p
       sx={{
         color: `text`,
         fontFamily: `header`,
-        fontSize: [4, 5],
+        fontSize: [4, null, null, 5],
         lineHeight: `dense`,
         maxWidth: `45rem`,
         mb: 10,

@@ -10,14 +10,12 @@ import Container from "../components/container"
 import MastheadContent from "../components/masthead"
 import MastheadVisual from "../components/masthead-visual"
 import Diagram from "../components/diagram"
-import FuturaParagraph from "../components/futura-paragraph"
 import Button from "../components/button"
 import HomepageLogoBanner from "../components/homepage/homepage-logo-banner"
 import HomepageFeatures from "../components/homepage/homepage-features"
 import HomepageEcosystem from "../components/homepage/homepage-ecosystem"
 import HomepageBlog from "../components/homepage/homepage-blog"
 import HomepageNewsletter from "../components/homepage/homepage-newsletter"
-import HomepageSection from "../components/homepage/homepage-section"
 import FooterLinks from "../components/shared/footer-links"
 import {
   setupScrollersObserver,
@@ -98,7 +96,7 @@ class IndexRoute extends React.Component {
         </Helmet>
         <main
           id={`reach-skip-nav`}
-          css={{
+          sx={{
             display: `flex`,
             flexDirection: `row`,
             flexWrap: `wrap`,
@@ -109,21 +107,19 @@ class IndexRoute extends React.Component {
             sx={{
               display: `flex`,
               flexDirection: [`column`, null, null, `row`],
-              // background: `green`,
-              maxWidth: 1180,
+              // background: `yellow`,
               width: `100%`,
-              mx: `auto`,
-              pl: [8, null, null, 12],
-              pr: [8, null, null, 0, 0],
-              py: [9, null, null, null, 12],
+              justifyContent: `center`,
             }}
           >
             <div
               sx={{
-                pr: [0, null, null, 12],
-                maxWidth: 540,
+                px: [6, null, null, 12],
+                maxWidth: 580,
                 flexShrink: 1,
+                flexGrow: 0,
                 // background: `blue`,
+                overflowX: `hidden`,
               }}
             >
               <MastheadContent />
@@ -143,44 +139,35 @@ class IndexRoute extends React.Component {
               width: `100%`,
               p: 8,
               pt: 0,
+              mt: [null, null, null, null, -12],
+              position: `relative`,
+              zIndex: 0,
             }}
           >
             <Diagram />
           </div>
           <HomepageFeatures />
-          <div css={{ flex: `1 1 100%` }}>
-            <Container withSidebar={false}>
-              <section css={{ textAlign: `center` }}>
-                <h1 sx={{ fontWeight: `heading`, mt: 0 }}>Curious yet?</h1>
-                <FuturaParagraph>
-                  It only takes a few minutes to get up and running!
-                </FuturaParagraph>
-                <Button
-                  secondary
-                  variant="large"
-                  to="/docs/"
-                  tracking="Curious Yet -> Get Started"
-                  overrideCSS={{ mt: 5 }}
-                  icon={<ArrowForwardIcon />}
-                >
-                  Get Started
-                </Button>
-              </section>
-            </Container>
-          </div>
-
+          <Container withSidebar={false}>
+            <section sx={{ textAlign: `center` }}>
+              <h1 sx={{ fontWeight: `heading`, mt: 0 }}>Curious yet?</h1>
+              <p sx={{ fontFamily: `header`, fontSize: 3 }}>
+                It only takes a few minutes to get up and running!
+              </p>
+              <Button
+                secondary
+                variant="large"
+                to="/docs/"
+                tracking="Curious Yet -> Get Started"
+                overrideCSS={{ mt: 5 }}
+                icon={<ArrowForwardIcon />}
+              >
+                Get Started
+              </Button>
+            </section>
+          </Container>
           <HomepageEcosystem featuredItems={ecosystemFeaturedItems} />
-
           <HomepageBlog posts={posts} />
-
           <HomepageNewsletter />
-
-          <HomepageSection
-            css={{
-              paddingTop: `0 !important`,
-              paddingBottom: `0 !important`,
-            }}
-          />
         </main>
         <FooterLinks />
       </Layout>

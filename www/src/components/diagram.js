@@ -6,7 +6,6 @@ import { Link, StaticQuery, graphql } from "gatsby"
 
 import logo from "../assets/monogram.svg"
 import { GraphQLIcon, ReactJSIcon } from "../assets/tech-logos"
-import FuturaParagraph from "../components/futura-paragraph"
 import TechWithIcon from "../components/tech-with-icon"
 
 const lineAnimation = keyframes({
@@ -231,10 +230,17 @@ const Diagram = () => (
         >
           How Gatsby works
         </h1>
-        <div sx={{ maxWidth: `30rem`, mt: 0, mx: `auto`, mb: 9 }}>
-          <FuturaParagraph>
-            Pull data from <em>anywhere</em>
-          </FuturaParagraph>
+        <div
+          sx={{
+            fontFamily: `header`,
+            fontSize: 3,
+            maxWidth: `30rem`,
+            mt: 0,
+            mx: `auto`,
+            mb: 9,
+          }}
+        >
+          Pull data from <em>anywhere</em>
         </div>
 
         <Segment className="Source">

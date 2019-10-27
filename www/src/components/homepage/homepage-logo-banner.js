@@ -5,42 +5,9 @@ import Img from "gatsby-image"
 import styled from "@emotion/styled"
 import { mediaQueries } from "gatsby-design-tokens"
 
-import { Name } from "./homepage-section"
-
 const Section = styled(`section`)`
   overflow: hidden;
-  padding: ${p => p.theme.space[5]} 0;
-
-  ${mediaQueries.xl} {
-    margin-top: -1px;
-    margin-bottom: -1px;
-  }
-
-  ${mediaQueries.xxl} {
-    padding: ${p => p.theme.space[7]} 0;
-  }
-`
-
-const Title = styled(`header`)`
-  padding-right: ${p => p.theme.space[6]};
-  padding-left: ${p => p.theme.space[6]};
-  ${mediaQueries.md} {
-    max-width: 30rem;
-  }
-
-  ${mediaQueries.lg} {
-    margin-left: ${p => p.theme.space[9]};
-  }
-
-  ${mediaQueries.xl} {
-    padding-right: 5%;
-    padding-left: 5%;
-  }
-
-  ${mediaQueries.xxl} {
-    padding-right: 8%;
-    padding-left: 8%;
-  }
+  padding: ${p => p.theme.space[9]} 0;
 `
 
 const LogoGroup = styled(`div`)`
@@ -87,9 +54,17 @@ const HomepageLogoBanner = () => {
 
   return (
     <Section>
-      <Title>
-        <Name>Trusted by</Name>
-      </Title>
+      <h2
+        sx={{
+          color: `textMuted`,
+          fontSize: 2,
+          fontWeight: `body`,
+          m: 0,
+          mb: 4,
+        }}
+      >
+        Trusted by
+      </h2>
       <LogoGroup>
         {data.allFile.edges.map(({ node: image }) => (
           <Img

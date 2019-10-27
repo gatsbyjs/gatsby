@@ -41,11 +41,11 @@ class Item extends React.Component {
           color: color === `black` ? `white` : false,
           fontSize: 0,
           height: `${itemSize * scale}px`,
-          left: `${x * itemSize}px`,
+          gridColumnStart: x + 1,
+          gridRowStart: y + 1,
           opacity: this.props.isDark && color && !title ? 0.65 : false,
           overflow: `hidden`,
-          position: `absolute`,
-          top: `${y * itemSize}px`,
+          position: `relative`,
           width:
             shape === `rectangle`
               ? `${itemSize * 2 * scale}px`
@@ -91,7 +91,7 @@ class Items extends React.Component {
     return (
       <div
         sx={{
-          // background: `red`,
+          // background: `cyan`,
           backgroundImage: t =>
             `repeating-linear-gradient(transparent, transparent ${gridSize -
               1}px, ${t.colors.ui.border} 20px, ${
@@ -101,12 +101,13 @@ class Items extends React.Component {
               t.colors.ui.border
             } ${gridSize}px)`,
           flexShrink: 1,
-          flexGrow: 1,
-          height: [`${itemSize * 4}px`, null, null, `${itemSize * 11}px`],
           minWidth: 0,
-          overflowX: `hidden`,
+          flexGrow: 0,
+          mt: 8,
+          height: [`${itemSize * 4}px`, null, null, `${itemSize * 10}px`],
+          width: [null, null, null, null, `calc(${itemSize * 10}px - 1px)`],
+          overflow: `hidden`,
           position: `relative`,
-          zIndex: -1,
           ":after, :before": {
             bg: `background`,
             content: `" "`,
@@ -118,13 +119,43 @@ class Items extends React.Component {
           },
           ":before": {
             height: `${itemSize * 3}px`,
-            right: 0,
-            width: `${itemSize * 4}px`,
+            left: `calc(${itemSize * 4}px - 1px)`,
+            width: `${itemSize * 6}px`,
           },
         }}
         ref={r => (this.domNode = r)}
       >
-        <div sx={{ ml: 7, position: `relative` }}>
+        <div
+          sx={{
+            position: `relative`,
+            display: `grid`,
+            ml: 7,
+            gridTemplateColumns: [
+              `repeat(4, ${itemSize}px)`,
+              `repeat(8, ${itemSize}px)`,
+            ],
+            gridTemplateRows: [
+              `repeat(6, ${itemSize}px)`,
+              `repeat(11, ${itemSize}px)`,
+            ],
+
+            ":after, :before": {
+              bg: `background`,
+              content: `" "`,
+              height: `${itemSize * 4}px`,
+              position: `absolute`,
+              bottom: 0,
+              left: `-${itemSize}px`,
+              width: `${itemSize * 3}px`,
+              zIndex: 0,
+            },
+            ":before": {
+              height: `${itemSize * 4}px`,
+              left: `calc(${itemSize * 5}px - 1px)`,
+              width: `${itemSize * 5}px`,
+            },
+          }}
+        >
           {items.map((item, i) => (
             <Item
               key={i}

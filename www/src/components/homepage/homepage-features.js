@@ -5,7 +5,18 @@ import { WebpackIcon, ReactJSIcon, GraphQLIcon } from "../../assets/tech-logos"
 import Card from "../card"
 import CardHeadline from "../card-headline"
 import TechWithIcon from "../tech-with-icon"
-import FuturaParagraph from "../futura-paragraph"
+
+const FuturaParagraph = ({ children }) => (
+  <p
+    sx={{
+      fontFamily: `header`,
+      fontSize: 3,
+      mb: 0,
+    }}
+  >
+    {children}
+  </p>
+)
 
 const HomepageFeatures = () => (
   <div

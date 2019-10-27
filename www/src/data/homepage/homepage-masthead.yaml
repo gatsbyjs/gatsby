@@ -15,8 +15,8 @@
   y: 4
   scale: 2
 - title: "Nike - Just Do It"
-  x: 4
-  y: 9
+  x: 7
+  y: 7
   scale: 2
   shape: circle
   color: black
@@ -73,6 +73,9 @@
 - x: 6
   y: 3
   color: green.50
+- x: 8
+  y: 3
+  color: magenta.10
 - title: The State of European Tech
   x: 2
   y: 4
