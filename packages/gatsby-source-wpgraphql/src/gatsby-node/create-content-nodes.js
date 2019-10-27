@@ -44,6 +44,9 @@ const getPageQuery = singleName => `
   }
 `
 
+const getPaginatedQuery = query =>
+  `query GENERIC_QUERY ($first: Int!, $after: String) {${query}}`
+
 // const getContentTypeIntrospection = singleName => ``
 
 const fetchContentTypeNodes = async ({
@@ -55,14 +58,16 @@ const fetchContentTypeNodes = async ({
   ...variables
 }) => {
   // const query = getPagesQuery(contentTypePlural)
-  // dd(query)
+
   if (contentTypePlural === `mediaItems`) {
     return allContentNodes
   }
 
+  const paginatedQuery = getPaginatedQuery(query)
+
   const response = await fetchGraphql({
     url,
-    query: `query GENERIC_QUERY ($first: Int!, $after: String) {${query}}`,
+    query: paginatedQuery,
     variables,
   })
   console.log(`​response`, response)
