@@ -1,126 +1,21 @@
-const fetch = require(`isomorphic-fetch`)
 const url = require(`url`)
 const { dd } = require(`dumper.js`)
 const Query = require(`graphql-query-builder`)
 
-const fetchGraphql = async ({ url, query, variables = {} }) =>
-  (await fetch(url, {
-    method: `POST`,
-    headers: { "Content-Type": `application/json` },
-    body: JSON.stringify({ query, variables }),
-  })).json()
+const handleWpActions = require(`./wp-actions`)
 
-const pageFields = `
-  content
-  title
-  link
-  date
-  id
-`
+const fetchGraphql = require(`../../utils/fetch-graphql`)
 
-// const getPagesQuery = contentTypePlural => `
-//   # Define our query variables
-//   query GET_GATSBY_PAGES($first:Int $after:String) {
-//     ${contentTypePlural}(
-//         first: $first
-//         after: $after
-//       ) {
-//           pageInfo {
-//             hasNextPage
-//             endCursor
-//           }
-//           nodes {
-//             ${pageFields}
-//           }
-//       }
-//   }
-// `
+const paginatedWpNodeFetch = require(`./paginated-wp-node-fetch`)
 
-const getPageQuery = singleName => `
-  query GET_GATSBY_PAGE($id: ID!) {
-    wpContent: ${singleName}(id: $id) {
-      ${pageFields}
-    }
-  }
-`
-
-const getPaginatedQuery = query =>
-  `query GENERIC_QUERY ($first: Int!, $after: String) {${query}}`
-
-// const getContentTypeIntrospection = singleName => ``
-
-const fetchContentTypeNodes = async ({
-  contentTypePlural,
-  contentTypeSingular,
-  url,
-  query,
-  allContentNodes = [],
-  ...variables
-}) => {
-  // const query = getPagesQuery(contentTypePlural)
-
-  if (contentTypePlural === `mediaItems`) {
-    return allContentNodes
-  }
-
-  const paginatedQuery = getPaginatedQuery(query)
-
-  const response = await fetchGraphql({
-    url,
-    query: paginatedQuery,
-    variables,
-  })
-
-  // console.log(`​response`, response)
-
-  const { data } = response
-
-  // console.log(contentTypePlural)
-  if (!data[contentTypePlural] || !data[contentTypePlural].nodes) {
-    return allContentNodes
-  }
-
-  const {
-    [contentTypePlural]: {
-      nodes,
-      pageInfo: { hasNextPage, endCursor },
-    },
-  } = data
-
-  if (nodes) {
-    nodes.forEach(node => {
-      node.contentType = contentTypeSingular
-      node.wpId = node.id
-      allContentNodes.push(node)
-    })
-  }
-
-  if (hasNextPage) {
-    await fetchContentTypeNodes({
-      first: 100,
-      after: endCursor,
-      url,
-      contentTypePlural,
-      contentTypeSingular,
-      query,
-      allContentNodes,
-    })
-  }
-
-  return allContentNodes
-}
+const {
+  getActionMonitorQuery,
+  getAvailablePostTypesQuery,
+} = require(`./graphql-queries`)
 
 const getAvailableContentTypes = async ({ url }) => {
-  const query = `
-  {
-    postTypes {
-      fieldNames {
-        plural
-        singular
-      }
-    }
-  }
-`
+  const query = getAvailablePostTypesQuery()
+
   const { data } = await fetchGraphql({ url, query })
 
   const contentTypes = data.postTypes.map(postTypeObj => {
@@ -143,7 +38,7 @@ const fetchWPGQLContentNodes = async ({ url }, queryStrings) => {
   const contentNodeGroups = []
 
   for (const [fieldName, query] of Object.entries(queryStrings)) {
-    const allNodesOfContentType = await fetchContentTypeNodes({
+    const allNodesOfContentType = await paginatedWpNodeFetch({
       first: 100,
       after: null,
       contentTypePlural: fieldName,
@@ -166,7 +61,7 @@ const fetchWPGQLContentNodes = async ({ url }, queryStrings) => {
   //   Object.entries(queryStrings).map(
   //     ([fieldName, query]) =>
   //       new Promise(async resolve => {
-  //         const allNodesOfContentType = await fetchContentTypeNodes({
+  //         const allNodesOfContentType = await paginatedWpNodeFetch({
   //           first: 10,
   //           after: null,
   //           contentTypePlural: fieldName,
@@ -191,7 +86,7 @@ const fetchWPGQLContentNodes = async ({ url }, queryStrings) => {
   // this just get's post types
   // await Promise.all(
   //   contentTypes.map(async ({ plural, singular }) => {
-  //     const allNodesOfContentType = await fetchContentTypeNodes({
+  //     const allNodesOfContentType = await paginatedWpNodeFetch({
   //       first: 10,
   //       after: null,
   //       contentTypePlural: plural,
@@ -284,20 +179,7 @@ const createGatsbyNodesFromWPGQLContentNodes = async (
 }
 
 const getWpActions = async (__, { url }, variables) => {
-  const query = `
-    query GET_ACTION_MONITOR_ACTIONS($since: Float!) {
-      actionMonitorActions(where: {sinceTimestamp: $since}) {
-        nodes {
-          referencedPostID
-          referencedPostStatus
-          referencedPostGlobalRelayID
-          referencedPostSingleName
-          referencedPostPluralName
-          actionType
-        }
-      }
-    }
-  `
+  const query = getActionMonitorQuery()
 
   const { data } = await fetchGraphql({ url, query, variables })
 
@@ -327,141 +209,6 @@ const getWpActions = async (__, { url }, variables) => {
   })
 
   return actions
-}
-
-const wpActionDELETE = async ({ helpers, cachedNodeIds, wpAction }) => {
-  const { createNodeId } = helpers
-
-  // get the node ID from the WPGQL id
-  const nodeId = createNodeId(wpAction.referencedPostGlobalRelayID)
-
-  // Remove this from cached node id's so we don't try to touch it
-  // we don't need to explicitly delete the node since it will
-  // be deleted if we don't touch it
-  return cachedNodeIds.filter(cachedId => cachedId !== nodeId)
-}
-
-const wpActionUPDATE = async ({
-  helpers,
-  wpAction,
-  cachedNodeIds,
-  pluginOptions,
-}) => {
-  const { createNodeId } = helpers
-  const nodeId = createNodeId(wpAction.referencedPostGlobalRelayID)
-
-  if (wpAction.referencedPostStatus !== `publish`) {
-    // if the post status isn't publish anymore, we need to remove the node
-    // by removing it from cached nodes so it's garbage collected by Gatsby
-    return cachedNodeIds.filter(cachedId => cachedId !== nodeId)
-  }
-
-  // otherwise we need to refetch the post
-  const { url } = pluginOptions
-  const query = getPageQuery(wpAction.referencedPostSingleName)
-  const { data } = await fetchGraphql({
-    url,
-    query,
-    variables: {
-      id: wpAction.referencedPostGlobalRelayID,
-    },
-  })
-
-  // then delete the posts node
-  const { actions, getNode } = helpers
-  const node = await getNode(nodeId)
-  // touch the node so we own it
-  await actions.touchNode({ nodeId })
-  // then we can delete it
-  await actions.deleteNode({ node })
-
-  // Now recreate the deleted node but with updated data
-  const { createContentDigest } = helpers
-  await actions.createNode({
-    ...node,
-    ...data.wpContent,
-    id: nodeId,
-    parent: null,
-    internal: {
-      contentDigest: createContentDigest(node),
-      type: `WpContent`,
-    },
-  })
-
-  // we can leave cachedNodeIds as-is since the ID of the edited
-  // node will be the same
-  return cachedNodeIds
-}
-
-const wpActionCREATE = async ({
-  helpers,
-  pluginOptions,
-  cachedNodeIds,
-  wpAction,
-}) => {
-  // if this post isn't published, we don't want it.
-  if (wpAction.referencedPostStatus !== `publish`) {
-    return cachedNodeIds
-  }
-
-  // fetch the new post
-  const { url: wpUrl } = pluginOptions
-  const query = getPageQuery(wpAction.referencedPostSingleName)
-  const { data } = await fetchGraphql({
-    url: wpUrl,
-    query,
-    variables: {
-      id: wpAction.referencedPostGlobalRelayID,
-    },
-  })
-
-  // create a node from it
-  const { actions, createContentDigest, createNodeId } = helpers
-  const nodeId = createNodeId(wpAction.referencedPostGlobalRelayID)
-
-  const node = {
-    ...data.wpContent,
-    id: nodeId,
-    contentType: wpAction.referencedPostSingleName,
-    // @todo move pagination to create-pages.js using pageContext
-    // we can't add anything here since we don't know what the next/prev nodes are.
-    pagination: {
-      previous___NODE: null,
-      next___NODE: null,
-      pageNumber: null,
-      isFirst: null,
-      isLast: null,
-    },
-    path: url.parse(data.wpContent.link).pathname,
-  }
-
-  await actions.createNode({
-    ...node,
-    parent: null,
-    internal: {
-      contentDigest: createContentDigest(node),
-      type: `WpContent`,
-    },
-  })
-
-  // add our node id to the list of cached node id's
-  return [...cachedNodeIds, nodeId]
-}
-
-const handleWpActions = async helpers => {
-  let cachedNodeIds
-  switch (helpers.wpAction.actionType) {
-    case `DELETE`:
-      cachedNodeIds = await wpActionDELETE(helpers)
-      break
-    case `UPDATE`:
-      cachedNodeIds = await wpActionUPDATE(helpers)
-      break
-    case `CREATE`:
-      cachedNodeIds = await wpActionCREATE(helpers)
-  }
-
-  return cachedNodeIds
 }
 
 module.exports = async (helpers, pluginOptions) => {
