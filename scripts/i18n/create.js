@@ -141,6 +141,7 @@ Useful Links:
 
 * [Style Guide](/style-guide.md)
 * [Gatsby Translation Guide](https://www.gatsbyjs.org/contributing/gatsby-docs-translation-guide/)
+* [Gatsby Discord](https://gatsby.dev/discord)
 
 (Feel free to translate this document and add any content you feel would be useful to contributors).
   `
@@ -300,6 +301,8 @@ Hi ${maintainerStr}!
 Your repository [${transRepo.name}](${transRepo.url}) has been created.
 
 Please use this [progress issue](${progressIssue.url}) to keep track of the translation progress.
+
+If you are not already a member of the [gatsbyjs GitHub organization](https://github.com/gatsbyjs), you should have received an invitation to join. You must accept the invitation to be able to review translations! If you do not see one, please let the Gatsby team know!
 
 Make sure to check out the [maintainer responsibilities](https://www.gatsbyjs.org/contributing/gatsby-docs-translation-guide/#maintainer-responsibilities) and review your duties as a maintainer.
 
