@@ -8,7 +8,7 @@ While a Gatsby [starter](/docs/starters/) is a working website out of the box, c
 
 What you need to know will depend on the starter you choose and the data or functionality you'd like to modify. Even if you choose _not_ to modify the starter's components, you may still want to update text, use data from an external source, and modify the style (CSS) of the site. To do this, you'll write some [Markdown](/docs/mdx/markdown-syntax/) and [JSON](https://www.digitalocean.com/community/tutorials/an-introduction-to-json).
 
-To start modifying the functionality of a starter, you'll want a basic understanding of [JSX](https://reactjs.org/docs/introducing-jsx.html) syntax for updating components and making new ones. You'll also want some knowledge of [GraphQL](https://graphql.org/learn/) for querying your data. Start with these and add to your skills as you continue to add functionality to your starter.
+To modify the functionality of a starter, you'll want a basic understanding of [JSX](/docs/glossary#jsx) syntax for updating components and making new ones. You'll also want some knowledge of [GraphQL](/docs/graphql-concepts/) for querying your data. Start with these and add to your skills as you continue to add functionality to your starter.
 
 ## Choosing a starter
 
