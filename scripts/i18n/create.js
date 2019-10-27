@@ -103,6 +103,11 @@ function setupSourceRepo() {
   if (shell.ls(sourceRepoName).code !== 0) {
     logger.debug(`cloning source repo`)
     shell.exec(`git clone ${sourceUrl}`)
+  } else {
+    // if the repo already exists, pull from it
+    shell.cd(sourceRepoName)
+    shell.exec(`git pull`)
+    shell.cd(`..`)
   }
 }
 
