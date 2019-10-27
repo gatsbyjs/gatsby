@@ -23,6 +23,8 @@ internal: {
 ...other fields specific to this type of node
 ```
 
+## Node Types
+
 ### `parent`
 
 Reserved for plugins who wish to extend other nodes.

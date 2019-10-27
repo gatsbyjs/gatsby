@@ -55,7 +55,7 @@ In the above example, `nodeA` has parent `id1`. So `findRootNodeAncestor({ blog:
 
 Where is node-tracking used? First up, nodes are tracked in 2 places. Firstly, in [createNode](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/actions.js#L539), every time a node is created, we link all its sub objects to the new NodeID. Nodes are also tracked whenever they are resolved in [run-sift](/docs/schema-sift/#3-resolve-inner-query-fields-on-all-nodes). This is necessary because [custom plugin fields](/docs/schema-input-gql/#inferring-input-filters-from-plugin-fields/) might return new objects that weren't created when the node was initially made.
 
-Now, where do we use this information? In 2 places.
+Now, where do you use this information? In 2 places.
 
-1. In the `File` type resolver. It is used to lookup the node's root, which should be of type `File`. We can then use that root node's base directory attribute to create the full path of the resolved field's value, and therefore find the actual `File` node that the string value is describing. See [File GqlType inference](/docs/schema-gql-type/#file-types) for more info.
+1. In the `File` type resolver. It is used to lookup the node's root, which should be of type `File`. You can then use that root node's base directory attribute to create the full path of the resolved field's value, and therefore find the actual `File` node that the string value is describing. See [File GqlType inference](/docs/schema-gql-type/#file-types) for more info.
 1. To recursively look up node descriptions in [type-conflict-reporter.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/type-conflict-reporter.js)
