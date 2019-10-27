@@ -6,15 +6,22 @@ export default ({ data }) => {
 
   return (
     <div>
+      <Link to="/">home</Link>
       <h1>{title}</h1>
       <h2>
         {contentType} #{pagination.pageNumber}
       </h2>
-      <Link to={pagination.previous.path}>
-        Previous {pagination.previous.title}
-      </Link>
-      <br />
-      <Link to={pagination.next.path}>Next {pagination.next.title}</Link>
+      {!!pagination && !!pagination.previous && (
+        <>
+          <Link to={pagination.previous.path}>
+            Previous {pagination.previous.title}
+          </Link>
+          <br />
+        </>
+      )}
+      {!!pagination && !!pagination.next && (
+        <Link to={pagination.next.path}>Next {pagination.next.title}</Link>
+      )}
       <p dangerouslySetInnerHTML={{ __html: content }} />
     </div>
   )
