@@ -304,7 +304,9 @@ Please use this [progress issue](${progressIssue.url}) to keep track of the tran
 
 If you are not already a member of the [gatsbyjs GitHub organization](https://github.com/gatsbyjs), you should have received an invitation to join. You must accept the invitation to be able to review translations! If you do not see one, please let the Gatsby team know!
 
-Make sure to check out the [maintainer responsibilities](https://www.gatsbyjs.org/contributing/gatsby-docs-translation-guide/#maintainer-responsibilities) and review your duties as a maintainer.
+You're free to use the [Gatsby Discord](https://gatsby.dev/discord) to discuss translations. Ask a moderator to create a channel for you in the \`#translations\` channel.
+
+Finally, make sure to check out the [maintainer responsibilities](https://www.gatsbyjs.org/contributing/gatsby-docs-translation-guide/#maintainer-responsibilities) and review your duties as a maintainer.
 
 Feel free to reach out to the Gatsby team if you need any help!
 
