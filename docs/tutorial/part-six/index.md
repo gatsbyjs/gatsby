@@ -90,8 +90,8 @@ available on the `MarkdownRemark` node.
 
 ![markdown-query](markdown-query.png)
 
-Ok! Hopefully, some basics are starting to fall into place. Source plugins bring
-data _into_ Gatsby's data system and _transformer_ plugins transform raw content
+Hopefully, some basics are starting to fall into place. _Source_ plugins bring
+data into Gatsby's data system and _transformer_ plugins transform raw content
 brought by source plugins. This pattern can handle all data sourcing and
 data transformation you might need when building a Gatsby site.
 
