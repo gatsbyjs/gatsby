@@ -20,9 +20,9 @@ All nodes in Gatsby are stored in a flat structure in the redux `nodes` namespac
 
 ```javascript
 {
- `id1`: { type: `File`, children: [`id2`, `id3`], ...other_fields },
- `id2`: { type: `markdownRemark`, ...other_fields },
- `id3`: { type: `postsJson`, ...other_fields }
+  `id1`: { type: `File`, children: [`id2`, `id3`], ...other_fields },
+  `id2`: { type: `markdownRemark`, ...other_fields },
+  `id3`: { type: `postsJson`, ...other_fields }
 }
 ```
 
@@ -44,9 +44,9 @@ Let's say you create the following node by passing it to `createNode`
 
 ```javascript
 {
- foo: 'bar',
- baz: {
- car: 10
+  foo: 'bar',
+  baz: {
+    car: 10
   }
 }
 ```
