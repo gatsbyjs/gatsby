@@ -1,34 +1,3 @@
-/*
- * Creates a new translation repository based on the provided translation request issue.
- *
- * Usage:
- *
- *     yarn run create [issueNo]
- *
- * [issueNo] should be the issue number in the gatsbyjs repo of a "Translation Request".
- * The body of the issue should have a block of yaml with the following contents:
- *
- * ```yaml
- * name: English
- * code: en
- * maintainers:
- *  - tesseralis
- *  - marcysutton
- * ```
- *
- * This script will:
- *
- *  * create a new repository, `gatsby-[code]` for translation
- *  * copy over contents of the repo gatsby-i18n-source, containing all translateable files
- *  * post an issue to the new repo with a prioritized list of pages to translate
- *  * close the original issue and comment with a link to the created repo
- *
- * It requires two environment variables defined in the environment:
- *
- * GITHUB_ADMIN_AUTH_TOKEN - An auth token with admin permissions in the gatsbyjs org
- * GITHUB_BOT_AUTH_TOKEN - An auth token with write permissions for the gatsbybot
- *
- */
 const fs = require(`fs`)
 const yaml = require(`js-yaml`)
 const shell = require(`shelljs`)
