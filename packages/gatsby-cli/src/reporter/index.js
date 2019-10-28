@@ -248,9 +248,8 @@ const reporter: Reporter = {
       panicOnBuild(...args) {
         span.finish()
 
-        reporterActions.endActivity({
+        reporterActions.setActivityErrored({
           id,
-          status: ActivityStatuses.Failed,
         })
 
         return reporter.panicOnBuild(...args)
@@ -366,9 +365,8 @@ const reporter: Reporter = {
       panicOnBuild(...args) {
         span.finish()
 
-        reporterActions.endActivity({
+        reporterActions.setActivityErrored({
           id,
-          status: ActivityStatuses.Failed,
         })
 
         return reporter.panicOnBuild(...args)

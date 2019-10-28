@@ -62,6 +62,7 @@ Gatsby [plugins](https://www.gatsbyjs.org/docs/creating-plugins/) and [themes](h
 #### Plugins Created During Hacktoberfest
 
 - [gatsby-source-etsy](https://www.npmjs.com/package/gatsby-source-etsy): Source plugin for creative goods shop listings
+- [gatsby-plugin-colorblind-filters](https://www.npmjs.com/package/gatsby-plugin-colorblind-filters): Color blindness simulation for Gatsby sites
 
 ## Gatsby's Hacktoberfest Goals
 
