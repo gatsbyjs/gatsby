@@ -7,10 +7,10 @@ import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
 import Layout from "../components/layout"
 import Container from "../components/container"
-import MastheadContent from "../components/homepage/homepage-masthead"
-import MastheadVisual from "../components/homepage/homepage-keyvisual"
 import Diagram from "../components/diagram"
 import Button from "../components/button"
+import MastheadContent from "../components/homepage/homepage-masthead"
+import MastheadVisual from "../components/homepage/homepage-keyvisual"
 import HomepageLogoBanner from "../components/homepage/homepage-logo-banner"
 import HomepageFeatures from "../components/homepage/homepage-features"
 import HomepageEcosystem from "../components/homepage/homepage-ecosystem"
@@ -21,6 +21,12 @@ import {
   setupScrollersObserver,
   unobserveScrollers,
 } from "../utils/scrollers-observer"
+
+const containerStyles = {
+  maxWidth: `80rem`,
+  mx: `auto`,
+  // background: `#ff0`,
+}
 
 class IndexRoute extends React.Component {
   componentDidMount() {
@@ -94,32 +100,24 @@ class IndexRoute extends React.Component {
             content="Blazing fast modern site generator for React. Go beyond static sites: build blogs, ecommerce sites, full-blown apps, and more with Gatsby."
           />
         </Helmet>
-        <main
-          id={`reach-skip-nav`}
-          sx={{
-            display: `flex`,
-            flexDirection: `row`,
-            flexWrap: `wrap`,
-            justifyContent: `space-between`,
-          }}
-        >
+        <main id={`reach-skip-nav`}>
           <div
             sx={{
+              // background: `yellow`,
               display: `flex`,
               flexDirection: [`column`, null, null, `row`],
-              // background: `yellow`,
+              // justifyContent: `center`,
               width: `100%`,
-              justifyContent: `center`,
+              ...containerStyles,
             }}
           >
             <div
               sx={{
-                px: [6, null, null, 12],
-                maxWidth: 580,
-                flexShrink: 1,
-                flexGrow: 0,
                 // background: `blue`,
+                flexGrow: 1,
+                flexShrink: 1,
                 overflowX: `hidden`,
+                maxWidth: 680,
               }}
             >
               <MastheadContent />
@@ -134,19 +132,8 @@ class IndexRoute extends React.Component {
               ]}
             />
           </div>
-          <div
-            sx={{
-              width: `100%`,
-              p: 8,
-              pt: 0,
-              mt: [null, null, null, null, -12],
-              position: `relative`,
-              zIndex: 0,
-            }}
-          >
-            <Diagram />
-          </div>
-          <HomepageFeatures />
+          <Diagram customCSS={containerStyles} />
+          <HomepageFeatures customCSS={containerStyles} />
           <Container withSidebar={false}>
             <section sx={{ textAlign: `center` }}>
               <h1 sx={{ fontWeight: `heading`, mt: 0 }}>Curious yet?</h1>
@@ -165,9 +152,11 @@ class IndexRoute extends React.Component {
               </Button>
             </section>
           </Container>
-          <HomepageEcosystem featuredItems={ecosystemFeaturedItems} />
-          <HomepageBlog posts={posts} />
-          <HomepageNewsletter />
+          <div sx={{ bg: `grey.5` }}>
+            <HomepageEcosystem featuredItems={ecosystemFeaturedItems} />
+            <HomepageBlog posts={posts} />
+            <HomepageNewsletter />
+          </div>
         </main>
         <FooterLinks />
       </Layout>

@@ -3,14 +3,12 @@ import { jsx } from "theme-ui"
 import React from "react"
 import Img from "gatsby-image"
 
-import withColorMode from "../components/with-color-mode"
+import withColorMode from "../with-color-mode"
 
 // we need the sizes in src/pages/index already
 const itemSize = 64
 const gridSize = 32
 
-// we could throw in opacity for all items that don't have an image
-// to make things look a bit nicer (calmer) in dark mode
 const triangleUp = {
   background: `transparent`,
   borderColor: t => `transparent transparent ${t.colors.ui.border}transparent`,

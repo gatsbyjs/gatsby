@@ -89,7 +89,7 @@ const HomepageSection = ({
 }) => (
   <section
     sx={{
-      bg: `background`,
+      // bg: `background`,
       color: `purple.80`,
       px: 6,
       py: 5,

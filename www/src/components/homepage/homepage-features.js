@@ -1,16 +1,29 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 
+import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 import { WebpackIcon, ReactJSIcon, GraphQLIcon } from "../../assets/tech-logos"
-import Card from "../card"
-import CardHeadline from "../card-headline"
 import TechWithIcon from "../tech-with-icon"
+
+const CardHeadline = ({ children }) => (
+  <h2
+    sx={{
+      fontSize: 4,
+      lineHeight: `dense`,
+      mt: 0,
+    }}
+  >
+    {children}
+  </h2>
+)
+
+const Card = ({ children }) => <div sx={{ pb: 6 }}>{children}</div>
 
 const FuturaParagraph = ({ children }) => (
   <p
     sx={{
       fontFamily: `header`,
-      fontSize: 3,
+      fontSize: [3, null, 4],
       mb: 0,
     }}
   >
@@ -18,14 +31,15 @@ const FuturaParagraph = ({ children }) => (
   </p>
 )
 
-const HomepageFeatures = () => (
+const HomepageFeatures = ({ customCSS }) => (
   <div
     sx={{
-      borderBottom: t => `1px solid ${t.colors.ui.border}`,
-      display: `flex`,
-      flex: `0 1 auto`,
-      flexWrap: `wrap`,
-      px: 8,
+      display: `grid`,
+      width: `100%`,
+      px: 12,
+      ...customCSS,
+      gridGap: 12,
+      gridTemplateColumns: `repeat(auto-fit,minmax(33%,1fr))`,
     }}
   >
     <Card>

@@ -9,16 +9,29 @@ import { GraphQLIcon, ReactJSIcon } from "../assets/tech-logos"
 import TechWithIcon from "../components/tech-with-icon"
 
 const lineAnimation = keyframes({
-  to: { strokeDashoffset: 10 },
+  "0%": { transform: `translateX(-8px)` },
+  "100%": { transform: `translateX(4px)` },
 })
 
-const Segment = ({ className, children }) => (
+const box = {
+  borderColor: `ui.border`,
+  borderRadius: 2,
+  bg: `ui.background`,
+  borderStyle: `solid`,
+  borderWidth: `1px`,
+  px: 7,
+  py: 5,
+}
+
+const Segment = ({ className, children, customCSS }) => (
   <div
     className={`Segment ${className}`}
-    css={{
-      margin: `0 auto`,
+    sx={{
+      mx: `auto`,
       maxWidth: `48rem`,
       textAlign: `center`,
+      ...box,
+      ...customCSS,
     }}
   >
     {children}
@@ -29,10 +42,12 @@ const SegmentTitle = ({ children }) => (
   <h2
     className="Segment-title"
     sx={{
-      bg: `accent`,
+      bg: `background`,
+      borderColor: `ui.border`,
       borderRadius: 1,
+      borderStyle: `solid`,
+      borderWidth: 1,
       bottom: t => `-${t.space[2]}`,
-      color: `black`,
       display: `inline`,
       fontSize: 1,
       fontWeight: `body`,
@@ -43,41 +58,41 @@ const SegmentTitle = ({ children }) => (
       px: 3,
       py: 2,
       textTransform: `uppercase`,
-      transform: `translateZ(0)`,
+      top: t => `-${t.space[7]}`,
     }}
   >
     {children}
   </h2>
 )
 
-const VerticalLine = () => (
-  <svg
-    width="20"
-    height="30"
-    viewBox="0 0 20 30"
-    css={{ margin: `0 auto`, display: `block` }}
-  >
-    <path
-      d="M10 40 L10 -10"
-      sx={{
-        stroke: t => t.colors.lilac,
-        strokeWidth: `3`,
-        strokeLinecap: `round`,
-        strokeDasharray: `0.5 10`,
-        animation: `${lineAnimation} 400ms linear infinite`,
-      }}
-    />
-  </svg>
-)
-
-const box = {
-  borderColor: `ui.border`,
-  borderRadius: 2,
-  borderStyle: `solid`,
-  borderWidth: `1px`,
-  px: 7,
-  py: 5,
+const dot = {
+  animation: `${lineAnimation} .5s linear infinite`,
+  backgroundColor: `gatsby`,
+  borderRadius: 5,
+  display: `inline-block`,
+  height: t => t.space[1],
+  margin: 1,
+  width: t => t.space[1],
 }
+
+const DottedLine = () => (
+  <div
+    sx={{
+      lineHeight: 0,
+      overflow: `hidden`,
+      whiteSpace: `nowrap`,
+      width: 44,
+      marginLeft: [1, null, null, 0],
+      // transformOrigin: `0 0`,
+      // transform: [`rotate(90deg)`, null, null, `none`],
+    }}
+  >
+    <div sx={dot}></div>
+    <div sx={dot}></div>
+    <div sx={dot}></div>
+    <div sx={dot}></div>
+  </div>
+)
 
 const borderAndBoxShadow = {
   bg: `card.background`,
@@ -94,7 +109,6 @@ const SourceItems = ({ children }) => (
       display: `flex`,
       flexWrap: `wrap`,
       justifyContent: `center`,
-      ...box,
     }}
   >
     {children}
@@ -110,7 +124,7 @@ const SourceItem = ({ children }) => (
       px: 5,
       display: `flex`,
       flex: [null, `1 1 50%`, null, `1 1 33%`],
-      maxWidth: [null, null, null, `33%`],
+      maxWidth: [null, null, null],
     }}
   >
     <div
@@ -165,15 +179,15 @@ const Gatsby = () => (
       bg: `white`,
       p: 5,
       margin: `0 auto`,
-      width: `8.5rem`,
-      height: `8.5rem`,
+      width: `9rem`,
+      height: `9rem`,
     }}
   >
     <img
       src={logo}
       sx={{
         display: `inline-block`,
-        height: [t => t.space[8], null, null, null, t => t.space[9]],
+        height: t => t.space[10],
         margin: 0,
         verticalAlign: `middle`,
         width: `auto`,
@@ -198,7 +212,7 @@ const Gatsby = () => (
   </div>
 )
 
-const Diagram = () => (
+const Diagram = ({ customCSS }) => (
   <StaticQuery
     query={graphql`
       query StaticHostsQuery {
@@ -216,16 +230,22 @@ const Diagram = () => (
       <section
         className="Diagram"
         sx={{
-          flex: `1 1 100%`,
-          fontFamily: `header`,
-          p: 6,
-          textAlign: `center`,
+          py: 12,
+          px: [6, null, null, 12],
+          mt: [null, null, null, `-120px`],
+          mb: 12,
+          position: `relative`,
+          zIndex: 0,
+          ...customCSS,
         }}
       >
         <h1
           sx={{
+            mb: 0,
+            fontSize: 6,
             fontWeight: `heading`,
-            mb: 6,
+            lineHeight: `solid`,
+            // background: `#f00`,
           }}
         >
           How Gatsby works
@@ -233,43 +253,55 @@ const Diagram = () => (
         <div
           sx={{
             fontFamily: `header`,
-            fontSize: 3,
-            maxWidth: `30rem`,
+            fontSize: 5,
             mt: 0,
-            mx: `auto`,
             mb: 9,
           }}
         >
           Pull data from <em>anywhere</em>
         </div>
 
-        <Segment className="Source">
-          <SegmentTitle>Data Sources</SegmentTitle>
-          <SourceItems>
-            <SourceItem>
-              <ItemTitle>CMSs</ItemTitle>
-              <ItemDescription>
-                Contentful, Drupal, WordPress, etc.
-              </ItemDescription>
-            </SourceItem>
-            <SourceItem>
-              <ItemTitle>Markdown</ItemTitle>
-              <ItemDescription>Documentation, Posts, etc.</ItemDescription>
-            </SourceItem>
-            <SourceItem>
-              <ItemTitle>Data</ItemTitle>
-              <ItemDescription>
-                APIs, Databases, YAML, JSON, CSV, etc.
-              </ItemDescription>
-            </SourceItem>
-          </SourceItems>
-        </Segment>
+        <div
+          sx={{
+            display: `grid`,
+            width: `100%`,
+            gridGap: 6,
+            gridTemplateColumns: [
+              `repeat(1,1fr)`,
+              null,
+              null,
+              null,
+              `repeat(auto-fit,minmax(26%,1fr))`,
+            ],
+            pt: 8,
+            // background: `#ff0`,
+          }}
+        >
+          <Segment className="Source">
+            <SegmentTitle>Data Sources</SegmentTitle>
+            <SourceItems>
+              <SourceItem>
+                <ItemTitle>CMSs</ItemTitle>
+                <ItemDescription>
+                  Contentful, Drupal, WordPress, etc.
+                </ItemDescription>
+              </SourceItem>
+              <SourceItem>
+                <ItemTitle>Markdown</ItemTitle>
+                <ItemDescription>Documentation, Posts, etc.</ItemDescription>
+              </SourceItem>
+              <SourceItem>
+                <ItemTitle>Data</ItemTitle>
+                <ItemDescription>
+                  APIs, Databases, YAML, JSON, CSV, etc.
+                </ItemDescription>
+              </SourceItem>
+            </SourceItems>
+          </Segment>
 
-        <Segment className="Build">
-          <VerticalLine />
-          <SegmentTitle>Build</SegmentTitle>
-          <div
-            sx={{
+          <Segment
+            className="Build"
+            customCSS={{
               ...box,
               backgroundColor: `purple.70`,
               backgroundSize: t => `${t.sizes[10]} ${t.sizes[10]}`,
@@ -284,9 +316,11 @@ const Diagram = () => (
               py: 0,
             }}
           >
-            <VerticalLine />
+            <DottedLine />
+            <SegmentTitle>Build</SegmentTitle>
+            <DottedLine />
             <Gatsby />
-            <VerticalLine />
+            <DottedLine />
             <div
               sx={{
                 ...borderAndBoxShadow,
@@ -305,33 +339,28 @@ const Diagram = () => (
                 </TechWithIcon>
               </ItemDescription>
             </div>
-            <VerticalLine />
-          </div>
-        </Segment>
+            <DottedLine />
+          </Segment>
 
-        <Segment className="Deploy">
-          <VerticalLine />
-          <SegmentTitle>Deploy</SegmentTitle>
-          <div
-            sx={{
-              ...box,
-              pb: 5,
-            }}
-          >
-            <ItemTitle>Static Web Host</ItemTitle>
-            <ItemDescription>
-              {staticHosts.map(({ node: staticHost }, index) => (
-                <Fragment key={staticHost.url}>
-                  {index > 0 && `, `}
-                  <ItemDescriptionLink to={staticHost.url}>
-                    {staticHost.title}
-                  </ItemDescriptionLink>
-                </Fragment>
-              ))}
-              {` `}& many more
-            </ItemDescription>
-          </div>
-        </Segment>
+          <Segment className="Deploy">
+            <DottedLine />
+            <SegmentTitle>Deploy</SegmentTitle>
+            <div sx={{ pb: 5 }}>
+              <ItemTitle>Static Web Host</ItemTitle>
+              <ItemDescription>
+                {staticHosts.map(({ node: staticHost }, index) => (
+                  <Fragment key={staticHost.url}>
+                    {index > 0 && `, `}
+                    <ItemDescriptionLink to={staticHost.url}>
+                      {staticHost.title}
+                    </ItemDescriptionLink>
+                  </Fragment>
+                ))}
+                {` `}& many more
+              </ItemDescription>
+            </div>
+          </Segment>
+        </div>
       </section>
     )}
   />

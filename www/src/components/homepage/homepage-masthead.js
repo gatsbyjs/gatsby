@@ -2,21 +2,30 @@
 import { jsx } from "theme-ui"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
-import Button from "./button"
+import Button from "../button"
 
 const MastheadContent = () => (
-  <div>
+  <div
+    sx={{
+      maxWidth: 620,
+      mt: [6, null, null, 12],
+      px: [6, null, null, 11],
+      textAlign: [`center`, null, null, `left`],
+    }}
+  >
     <h1
       sx={{
-        fontSize: [8, null, null, 9, null, 11],
+        fontSize: [7, 8, null, 9, null, 10],
         letterSpacing: `tight`,
         lineHeight: `solid`,
         maxWidth: `15em`,
-        mb: 6,
-        mt: 12,
+        mb: 8,
+        // fontWeight: "heading",
+        // background: `#f00`,
       }}
     >
-      Fast in every way that&nbsp;matters<span sx={{ color: `gatsby` }}>.</span>
+      Fast in every way that&nbsp;matters
+      {/* <span sx={{ color: `gatsby` }}>.</span> */}
     </h1>
     <p
       sx={{

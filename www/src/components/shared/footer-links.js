@@ -14,7 +14,7 @@ const FooterLinks = props => (
         listStyle: `none`,
         m: 0,
         mb: props => (props.bottomMargin ? props.bottomMargin : 0),
-        mt: 9,
+        // mt: 9,
         px: 6,
         py: 9,
         textAlign: `center`,

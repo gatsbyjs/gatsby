@@ -5,11 +5,6 @@ import Img from "gatsby-image"
 import styled from "@emotion/styled"
 import { mediaQueries } from "gatsby-design-tokens"
 
-const Section = styled(`section`)`
-  overflow: hidden;
-  padding: ${p => p.theme.space[9]} 0;
-`
-
 const LogoGroup = styled(`div`)`
   position: relative;
   display: grid;
@@ -53,7 +48,13 @@ const HomepageLogoBanner = () => {
   `)
 
   return (
-    <Section>
+    <section
+      sx={{
+        py: 9,
+        overflow: `hidden`,
+        px: [null, null, null, 12],
+      }}
+    >
       <h2
         sx={{
           color: `textMuted`,
@@ -74,7 +75,7 @@ const HomepageLogoBanner = () => {
           />
         ))}
       </LogoGroup>
-    </Section>
+    </section>
   )
 }
 
