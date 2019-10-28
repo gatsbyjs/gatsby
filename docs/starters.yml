@@ -3912,7 +3912,7 @@
     - Portfolio
     - Styling:SCSS
   features:
-    - Typescript for type-safe code
+    - TypeScript for type-safe code
     - Source content from WordPress CMS
     - Auto generated Pagination for your WordPress Posts
     - Auto generated Navigation for next and previous post at the end Post
@@ -4052,7 +4052,7 @@
   features:
     - Minumum changes based on default starter template for TypeScript and PWA
     - Added TypeScript support with eslint and tsc check
-    - Support Github Actions CI/CD workflow (beta)
+    - Support GitHub Actions CI/CD workflow (beta)
 - url: https://iceberg-gatsby-multilang.netlify.com/
   repo: https://github.com/diogorodrigues/iceberg-gatsby-multilang
   description: Gatsby multi-language starter. Internationalization / i18n without third party plugins or packages for Posts and Pages. Different URLs dependending on the language. Focused on SEO, PWA, Image Optimization, Styled Components and more. This starter is also integrate with Netlify CMS to manage all pages, posts and images.
@@ -4118,7 +4118,7 @@
     - React Hooks (IntersectionObserver, KeyUp, LocalStorage)
 - url: https://friendly-cray-96d631.netlify.com/
   repo: https://github.com/PABlond/Gatsby-TypeScript-Starter-Blog
-  description: Project boilerplate of a blog app. The starter was built using Gatsby and Typescript.
+  description: Project boilerplate of a blog app. The starter was built using Gatsby and TypeScript.
   tags:
     - Markdown
     - Language:TypeScript
