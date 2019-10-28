@@ -8205,7 +8205,6 @@
   description: >
     This site is built to assess the performance of various approximate string matching algorithms aka fuzzy string searching.
   categories:
-    - Netlify
     - JavaScript
     - Learning
     - Programming
