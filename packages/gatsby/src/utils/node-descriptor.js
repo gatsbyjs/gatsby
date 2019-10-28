@@ -105,35 +105,43 @@ const updateValueDescriptor = ({
   const typeName = getType(value, key)
 
   if (typeName === `null`) {
-    return descriptor
+    return [descriptor, false]
   }
 
   const delta = operation === `del` ? -1 : 1
   const typeInfo = descriptor[typeName] || { total: 0 }
   typeInfo.total += delta
 
+  // Keeping track of structural changes
+  // (when value of a new type is added or an existing type has no more values assigned)
+  let dirty = typeInfo.total === 1 || typeInfo.total === 0
+
   switch (typeName) {
     case `object`: {
       const { props = {} } = typeInfo
       Object.keys(value).forEach(key => {
-        props[key] = updateValueDescriptor({
+        const [propDescriptor, propDirty] = updateValueDescriptor({
           key,
           value: value[key],
           operation,
           descriptor: props[key],
         })
+        props[key] = propDescriptor
+        dirty = dirty || propDirty
       })
       typeInfo.props = props
       break
     }
     case `array`: {
       value.forEach(item => {
-        typeInfo.item = updateValueDescriptor({
+        const [itemDescriptor, itemDirty] = updateValueDescriptor({
           descriptor: typeInfo.item,
           operation,
           value: item,
           key,
         })
+        typeInfo.item = itemDescriptor
+        dirty = dirty || itemDirty
       })
       break
     }
@@ -141,6 +149,11 @@ const updateValueDescriptor = ({
       const { nodes = {} } = typeInfo
       value.forEach(nodeId => {
         nodes[nodeId] = (nodes[nodeId] || 0) + delta
+
+        // Treat any new related node addition or removal as a structural change
+        // FIXME: this will produce false positives as this node can be
+        //  of the same type as another node already in the map (but we don't know it)
+        dirty = dirty || nodes[nodeId] === 0 || nodes[nodeId] === 1
       })
       typeInfo.nodes = nodes
       break
@@ -159,23 +172,28 @@ const updateValueDescriptor = ({
       break
   }
   descriptor[typeName] = typeInfo
-  return descriptor
+  return [descriptor, dirty]
 }
 
 const objFields = (obj, ignoredFields = new Set()) =>
   Object.keys(obj).filter(key => !ignoredFields.has(key))
 
 const updateObjectMetadata = (metadata = {}, operation, object) => {
-  const { ignoredFields, fieldMap = {} } = metadata
+  const { ignoredFields, fieldMap = {}, dirty = false } = metadata
+
+  let hasDirtyFields = false
   objFields(object, ignoredFields).forEach(field => {
-    fieldMap[field] = updateValueDescriptor({
+    const [descriptor, valueStructureChanged] = updateValueDescriptor({
       key: field,
       value: object[field],
       operation,
       descriptor: fieldMap[field],
     })
+    fieldMap[field] = descriptor
+    hasDirtyFields = hasDirtyFields || valueStructureChanged
   })
   metadata.fieldMap = fieldMap
+  metadata.dirty = dirty || hasDirtyFields
   return metadata
 }
 
