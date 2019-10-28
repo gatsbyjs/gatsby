@@ -80,7 +80,8 @@
     {
       "files": ["packages/**/*"],
       "rules": {
-        "no-unused-expressions": "error"
+        "import/no-unresolved": "error",
+        "import/no-extraneous-dependencies": "error"
       }
     }
   ],
