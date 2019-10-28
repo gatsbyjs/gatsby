@@ -20,7 +20,7 @@ If you're not sure what to choose or want only the most essential functionality,
 
 Taking the default Gatsby starter as an example, dedicate some time to looking through some of the most important files in the repository (repo). You'll find most of these in the root (or _main_) folder of your project. Doing so will give you a clearer picture of how the various parts of your Gatsby site work together.
 
-![Default starter file structure in VS Code](./images/default-starter-file-structure.png)
+![Default starter file structure in VS Code](./images/default-starter-vs-code-focus.png)
 
 - `src/pages`: a directory for page components to live, with at least one [index.js file (example)](https://github.com/gatsbyjs/gatsby-starter-hello-world/blob/master/src/pages/index.js).
 - `gatsby-config.js`: a space to add configurable data and plugins. Among the [API files](/docs/api-files/), `gatsby-config.js` is the one you're most likely to need to modify. See [Gatsby Config](/docs/gatsby-config/) for more information.
@@ -103,12 +103,12 @@ module.exports = {
 }
 ```
 
-Elsewhere on the site, GraphQL queries access that data and display it in the browser. The `Layout` component, for instance, runs a query for `siteMetaData`'s `title` property. It then passes that value to the `Header` component via props:
+Elsewhere on the site, GraphQL queries access that data and display it in the browser. The `Layout` component, for instance, runs a query for `siteMetadata`'s `title` property. It then passes that value to the `Header` component via props:
 
 ```javascript:title=src/components/layout.js
 import React from "react"
 import PropTypes from "prop-types"
-import { useStaticQuery, graphql } from "gatsby" // highlight
+import { useStaticQuery, graphql } from "gatsby" // highlight-line
 
 import Header from "./header"
 import "./layout.css"
@@ -128,7 +128,7 @@ const Layout = ({ children }) => {
 
   return (
     <>
-      <Header siteTitle={data.site.siteMetadata.title} /> // highlight
+      <Header siteTitle={data.site.siteMetadata.title} /> // highlight-line
       <div
         style={{
           margin: `0 auto`,
@@ -163,7 +163,7 @@ import PropTypes from "prop-types"
 import React from "react"
 
 const Header = (
-  { siteTitle } // highlight
+  { siteTitle } // highlight-line
 ) => (
   <header
     style={{
@@ -186,7 +186,7 @@ const Header = (
             textDecoration: `none`,
           }}
         >
-          {siteTitle} // highlight
+          {siteTitle} // highlight-line
         </Link>
       </h1>
     </div>
@@ -204,7 +204,7 @@ Header.defaultProps = {
 export default Header
 ```
 
-Try adding a property to `siteMetaData`, querying for it, and displaying the data on a page of your site. The Gatsby docs have a great introduction to [querying your data with GraphQL](/docs/graphql/).
+Try adding a property to `siteMetadata`, querying for it, and displaying the data on a page of your site. The Gatsby docs have a great introduction to [querying your data with GraphQL](/docs/graphql/).
 
 ## Customizing styles
 
