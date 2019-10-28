@@ -90,7 +90,7 @@
     "json-loader": "^0.5.7",
     "json-stringify-safe": "^5.0.1",
     "lodash": "^4.17.15",
-    "lokijs": "^1.5.7",
+    "lokijs": "^1.5.8",
     "md5": "^2.2.1",
     "md5-file": "^3.2.3",
     "micromatch": "^3.1.10",
