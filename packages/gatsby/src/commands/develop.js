@@ -374,6 +374,9 @@ module.exports = async (program: any) => {
   // Start the createPages hot reloader.
   require(`../bootstrap/page-hot-reloader`)(graphqlRunner)
 
+  // Start the schema hot reloader.
+  require(`../bootstrap/schema-hot-reloader`)()
+
   await queryUtil.initialProcessQueries()
 
   require(`../redux/actions`).boundActionCreators.setProgramStatus(
