@@ -10,7 +10,6 @@
     "@babel/runtime": "^7.6.3",
     "bluebird": "^3.7.0",
     "fs-extra": "^8.1.0",
-    "gatsby-core-utils": "^1.0.15",
     "gatsby-plugin-sharp": "^2.2.32",
     "md5-file": "^4.0.0",
     "mini-svg-data-uri": "^1.1.3",
