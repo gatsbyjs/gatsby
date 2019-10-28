@@ -18,7 +18,7 @@ First, if you do not have a Gatsby project set up yet, use the Gatsby CLI to cre
 gatsby new my-gatsby-site-with-docz
 ```
 
-To set up Docz you need to install the Docz Gatsby theme and add some custom configuration. Make sure you are in the root directory of your Gatsby project:
+You'll want to let docz control your pages, so start by deleting the `pages` directory, and all of the files inside of it. Then you need to install the Docz Gatsby theme and add some custom configuration. Make sure you are in the root directory of your Gatsby project:
 
 ```shell
 cd my-gatsby-site-with-docz
