@@ -4187,6 +4187,16 @@
     - NetlifyCMS
     - TypeScript
     - Basic design
+- url: https://gatsby-starter-mdx-website-blog.netlify.com/
+  repo: https://github.com/doakheggeness/gatsby-starter-mdx-website-blog
+  description: Gatsby website and blog starter utilizing MDX for adding components to mdx pages and posts. Incorportates Emotion.
+  tags:
+    - MDX
+    - Blog
+    - Styling:CSS-in-JS
+  features:
+    - Create pages and posts using MDX
+    - Incorporates the CSS-in-JS library Emotion
     - Visual effects
 - url: https://gatsby-starter-zurgbot.netlify.com/
   repo: https://github.com/zurgbot/gatsby-starter-zurgbot
