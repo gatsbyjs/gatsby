@@ -165,7 +165,7 @@ start with a simple snapshot test to check that everything is working.
 First, create the test file. You can either put these in a `__tests__`
 directory, or put them elsewhere (usually next to the component itself), with
 the extension `.spec.js` or `.test.js`. The decision comes down to your own
-preference. In this guide, you will use the `__tests__` folder convention. Create a test for our header component, so create a `header.js` file in `src/components/__tests__/`:
+preference. In this guide, you will use the `__tests__` folder convention. To test the header component, create a `header.js` file in `src/components/__tests__/`:
 
 ```js:title=src/components/__tests__/header.js
 import React from "react"
