@@ -1,7 +1,7 @@
 [
   {
     "name": "community",
-    "pages": ["code-of-conduct", "gatsby-style-guide"]
+    "pages": ["code-of-conduct"]
   },
   {
     "name": "tutorial",
