@@ -6928,7 +6928,6 @@ csstype@^2.2.0, csstype@^2.5.7:
 
 "csstype@github:rtsao/csstype#c4e709f":
   version "2.6.4"
-  uid c4e709f5e047e9cacb721e437f53f0b84d6ada84
   resolved "https://codeload.github.com/rtsao/csstype/tar.gz/c4e709f5e047e9cacb721e437f53f0b84d6ada84"
 
 csvtojson@^1.1:
@@ -9259,11 +9258,6 @@ flatted@^2.0.0:
 flatten@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/flatten/-/flatten-1.0.2.tgz#dae46a9d78fbe25292258cc1e780a41d95c03782"
-
-flow-bin@^0.110.1:
-  version "0.110.1"
-  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.110.1.tgz#24ac70bf0871a5d6bc181ba99801ded4d5e3b442"
-  integrity sha512-6FhvNKNvPQ523mx7sqNxTQvI/HgAWa/pbIsQuCst53qRqs387EFfYqgm4I3Zae5HLaVFacBwgWKmjKd92vf19w==
 
 flow-parser@0.*:
   version "0.105.2"
@@ -19847,7 +19841,7 @@ styletron-standard@^3.0.3:
   resolved "https://registry.yarnpkg.com/styletron-standard/-/styletron-standard-3.0.3.tgz#60790fb23cf1ede5f51fcbaa48f13c92b5b8b949"
   integrity sha512-zr36POeQxvstdY8Sw443h4/AcBj23pNJ30NWPci0TetH6jJXXKn/IE5QBV2XP8ErT7eeB9LJnqlxav3aTe4qRA==
   dependencies:
-    csstype "github:rtsao/csstype#c4e709f"
+    csstype rtsao/csstype#c4e709f
     inline-style-prefixer "^5.1.0"
 
 stylus-loader@^3.0.2:
