@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.1.10...gatsby-theme-blog@1.1.11) (2019-10-28)
+
+### Bug Fixes
+
+- update minor updates in packages ([#19086](https://github.com/gatsbyjs/gatsby/issues/19086)) ([54565f0](https://github.com/gatsbyjs/gatsby/commit/54565f0))
+
 ## [1.1.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.1.9...gatsby-theme-blog@1.1.10) (2019-10-28)
 
 ### Bug Fixes
