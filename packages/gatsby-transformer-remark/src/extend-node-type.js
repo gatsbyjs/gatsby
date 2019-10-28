@@ -79,7 +79,7 @@ const headingLevels = [...Array(6).keys()].reduce((acc, i) => {
   return acc
 }, {})
 
-module.exports = (
+module.exports = async (
   {
     type,
     basePath,
@@ -347,10 +347,10 @@ module.exports = (
     }
 
     async function getExcerptAst(
+      fullAST,
       markdownNode,
       { pruneLength, truncate, excerptSeparator }
     ) {
-      const fullAST = await getHTMLAst(markdownNode)
       if (excerptSeparator && markdownNode.excerpt !== ``) {
         return cloneTreeUntil(
           fullAST,
@@ -375,12 +375,13 @@ module.exports = (
       }
 
       const lastTextNode = findLastTextNode(excerptAST)
-      const amountToPruneLastNode =
-        pruneLength - (unprunedExcerpt.length - lastTextNode.value.length)
+      const amountToPruneBy = unprunedExcerpt.length - pruneLength
+      const desiredLengthOfLastNode =
+        lastTextNode.value.length - amountToPruneBy
       if (!truncate) {
         lastTextNode.value = prune(
           lastTextNode.value,
-          amountToPruneLastNode,
+          desiredLengthOfLastNode,
           `…`
         )
       } else {
@@ -398,7 +399,8 @@ module.exports = (
       truncate,
       excerptSeparator
     ) {
-      const excerptAST = await getExcerptAst(markdownNode, {
+      const fullAST = await getHTMLAst(markdownNode)
+      const excerptAST = await getExcerptAst(fullAST, markdownNode, {
         pruneLength,
         truncate,
         excerptSeparator,
@@ -415,18 +417,20 @@ module.exports = (
       truncate,
       excerptSeparator
     ) {
-      if (excerptSeparator) {
+      // if excerptSeparator in options and excerptSeparator in content then use markdownNode.excerpt.
+      if (excerptSeparator && markdownNode.excerpt !== ``) {
         return markdownNode.excerpt
       }
-      // TODO truncate respecting markdown AST
-      const excerptText = markdownNode.rawMarkdownBody
-      if (!truncate) {
-        return prune(excerptText, pruneLength, `…`)
-      }
-      return _.truncate(excerptText, {
-        length: pruneLength,
-        omission: `…`,
+      const ast = await getMarkdownAST(markdownNode)
+      const excerptAST = await getExcerptAst(ast, markdownNode, {
+        pruneLength,
+        truncate,
+        excerptSeparator,
       })
+      var excerptMarkdown = unified()
+        .use(stringify)
+        .stringify(excerptAST)
+      return excerptMarkdown
     }
 
     async function getExcerptPlain(
@@ -552,14 +556,18 @@ module.exports = (
           },
         },
         resolve(markdownNode, { pruneLength, truncate }) {
-          return getExcerptAst(markdownNode, {
-            pruneLength,
-            truncate,
-            excerptSeparator: pluginOptions.excerpt_separator,
-          }).then(ast => {
-            const strippedAst = stripPosition(_.clone(ast), true)
-            return hastReparseRaw(strippedAst)
-          })
+          return getHTMLAst(markdownNode)
+            .then(fullAST =>
+              getExcerptAst(fullAST, markdownNode, {
+                pruneLength,
+                truncate,
+                excerptSeparator: pluginOptions.excerpt_separator,
+              })
+            )
+            .then(ast => {
+              const strippedAst = stripPosition(_.clone(ast), true)
+              return hastReparseRaw(strippedAst)
+            })
         },
       },
       headings: {
