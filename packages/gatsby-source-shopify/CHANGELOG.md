@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.0.24...gatsby-source-shopify@3.0.25) (2019-10-28)
+
+### Features
+
+- **gatsby-source-shopify:** add SEO field to articles ([#18985](https://github.com/gatsbyjs/gatsby/issues/18985)) ([4178edd](https://github.com/gatsbyjs/gatsby/commit/4178edd))
+
 ## [3.0.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.0.23...gatsby-source-shopify@3.0.24) (2019-10-14)
 
 **Note:** Version bump only for package gatsby-source-shopify
