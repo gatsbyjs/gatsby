@@ -4271,7 +4271,6 @@
     - Storybook
     - Markdown
     - Linting
-    - Netlify
   features:
     - Storybook
     - Simple
