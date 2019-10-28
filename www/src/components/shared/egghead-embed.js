@@ -1,7 +1,7 @@
 import React, { useRef, useState, useCallback, useLayoutEffect } from "react"
 import PropTypes from "prop-types"
 
-const VIDEO_RATIO = 9/16
+const VIDEO_RATIO = 9 / 16
 
 const EggheadEmbed = ({ lessonLink, lessonTitle }) => {
   const [iframeWidth, setIframeWidth] = useState(0)
