@@ -8198,6 +8198,52 @@
   built_by: kentarom
   built_by_url: https://twitter.com/_kentaro_m
   featured: false
+- title: MotionThat
+  main_url: "https://motionthat.com.au"
+  url: "https://motionthat.com.au"
+  description: >
+    MotionThat was created to fill a void in Tabletop Product shooting, whereby the need for consistency, repetition and flexibility was required to eliminate the many variables and inaccuracies that slow the filming process down.
+  categories:
+    - Entertainment
+    - Food
+    - Media
+    - Gallery
+  built_by: Handsome Creative
+  built_by_url: https://www.hellohandsome.com.au
+  featured: false
+- title: TEN ALPHAS
+  main_url: "https://tenalphas.com.au"
+  url: "https://tenalphas.com.au"
+  description: >
+    TEN ALPHAS is a content production company based in Sydney and Wollongong, telling stories through moving image and beautiful design.
+  categories:
+    - Media
+    - Entertainment
+    - Video
+  built_by: Handsome Creative
+  built_by_url: https://www.hellohandsome.com.au
+  featured: false
+- title: SalesGP
+  main_url: "https://salesgp.io"
+  url: "https://salesgp.io"
+  description: >
+    SalesGP is a specialist Sales and Operations partner offering expert skill-sets and decades of experience to companies entering the Australia, NZ (ANZ) and South East Asian (SEA) markets.
+  categories:
+    - Business
+    - Marketing
+    - Consulting
+  built_by: Handsome Creative
+  built_by_url: https://www.hellohandsome.com.au
+  featured: false
+- title: Source Separation Systems
+  main_url: "https://sourceseparationsystems.com.au"
+  url: "https://sourceseparationsystems.com.au"
+  description: >
+    Innovative waste diversion products, designed to connect Australians to a more sustainable world.
+  categories:
+    - Business
+  built_by: Handsome Creative
+  built_by_url: https://www.hellohandsome.com.au
 - title: Fuzzy String Matching
   main_url: https://fuzzy-string-matching.netlify.com
   url: https://fuzzy-string-matching.netlify.com
