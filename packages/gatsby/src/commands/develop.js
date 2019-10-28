@@ -586,15 +586,14 @@ module.exports = async (program: any) => {
     if (webpackActivity) {
       reportWebpackWarnings(stats)
 
-      if (isSuccessful) {
-        webpackActivity.end()
-      } else {
+      if (!isSuccessful) {
         const errors = structureWebpackErrors(
           `develop`,
           stats.compilation.errors
         )
         webpackActivity.panicOnBuild(errors)
       }
+      webpackActivity.end()
       webpackActivity = null
     }
 

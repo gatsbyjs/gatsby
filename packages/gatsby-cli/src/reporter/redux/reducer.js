@@ -55,6 +55,21 @@ module.exports = (
         },
       }
     }
+    case Actions.ActivityErrored: {
+      const { id } = action.payload
+      const activity = state.activities[id]
+
+      return {
+        ...state,
+        activities: {
+          ...state.activities,
+          [id]: {
+            ...activity,
+            errored: true,
+          },
+        },
+      }
+    }
 
     case Actions.EndActivity:
     case Actions.CancelActivity: {

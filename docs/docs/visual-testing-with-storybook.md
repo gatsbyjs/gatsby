@@ -36,10 +36,7 @@ import { action } from "@storybook/addon-actions"
 
 // automatically import all files ending in *.stories.js
 // highlight-next-line
-const req = require.context("../src", true, /.stories.js$/)
-function loadStories() {
-  req.keys().forEach(filename => req(filename))
-}
+configure(require.context("../src", true, /\.stories\.js$/), module)
 
 // highlight-start
 // Gatsby's Link overrides:
@@ -56,8 +53,6 @@ global.__PATH_PREFIX__ = ""
 window.___navigate = pathname => {
   action("NavigateTo:")(pathname)
 }
-
-configure(loadStories, module)
 // highlight-end
 ```
 
