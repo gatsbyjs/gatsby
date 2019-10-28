@@ -94,7 +94,7 @@ export default AboutPage
 ```
 
 3. Run `gatsby develop` to start the development server.
-4. Visit your new page in the browser: `http://localhost:8000/about`
+4. Visit your new page in the browser: <http://localhost:8000/about>
 
 #### Additional resources
 
@@ -253,7 +253,7 @@ export default ({ pageContext: { dog } }) => (
 )
 ```
 
-5. Run `gatsby develop` and navigate to the path of one of the pages you created (like at `http://localhost:8000/Fido`) to see the data you passed it displayed on the page
+5. Run `gatsby develop` and navigate to the path of one of the pages you created (like at <http://localhost:8000/Fido>) to see the data you passed it displayed on the page
 
 #### Additional resources
 
@@ -883,7 +883,7 @@ path: /my-first-post
 This is my first Gatsby post written in Markdown!
 ```
 
-3. Start up the development server with `gatsby develop`, navigate to the GraphiQL explorer at `http://localhost:8000/___graphql`, and write a query to get all markdown data:
+3. Start up the development server with `gatsby develop`, navigate to the GraphiQL explorer at <http://localhost:8000/___graphql>, and write a query to get all markdown data:
 
 ```graphql
 {
@@ -975,7 +975,7 @@ export const pageQuery = graphql`
 `
 ```
 
-6. Run `gatsby develop` to restart the development server. View your post in the browser: `http://localhost:8000/my-first-post`
+6. Run `gatsby develop` to restart the development server. View your post in the browser: <http://localhost:8000/my-first-post>
 
 #### Additional resources
 
@@ -1178,7 +1178,7 @@ plugins: [
 
 7. Run `gatsby develop` and make sure the site compiled successfully.
 
-8. Query data with the [GraphiQL editor](/docs/introducing-graphiql/) at `https://localhost:8000/___graphql`. The Contentful plugin adds several new node types to your site, including every content type in your Contentful website. Your example space with a "Blog Post" content type produces a `allContentfulBlogPost` node type in GraphQL.
+8. Query data with the [GraphiQL editor](/docs/introducing-graphiql/) at <https://localhost:8000/___graphql>. The Contentful plugin adds several new node types to your site, including every content type in your Contentful website. Your example space with a "Blog Post" content type produces a `allContentfulBlogPost` node type in GraphQL.
 
 ![the graphql interface, with a sample query outlined below](./images/recipe-sourcing-contentful-graphql.png)
 
@@ -1304,7 +1304,7 @@ export default ({ pageContext: { allPokemon } }) => (
 ```
 
 3. Run `gatsby develop` to fetch the data, build pages, and start the development server.
-4. View your homepage in a browser: `http://localhost:8000`
+4. View your homepage in a browser: <http://localhost:8000>
 
 #### Additional resources
 
@@ -1344,7 +1344,7 @@ module.exports = {
 }
 ```
 
-3. Start the development server with `gatsby develop`, and open the GraphiQL explorer at `http://localhost:8000/___graphql`. Under the Explorer tab, you should see new node types, such as `allBlockBlock` for Drupal blocks, and one for every content type in your Drupal site. For example, if you have a "Page" content type, it will be available as `allNodePage`. To query all "Page" nodes for their title and body, use a query like:
+3. Start the development server with `gatsby develop`, and open the GraphiQL explorer at <http://localhost:8000/___graphql>. Under the Explorer tab, you should see new node types, such as `allBlockBlock` for Drupal blocks, and one for every content type in your Drupal site. For example, if you have a "Page" content type, it will be available as `allNodePage`. To query all "Page" nodes for their title and body, use a query like:
 
 ```graphql
 {
@@ -1402,7 +1402,7 @@ export const query = graphql`
 }
 ```
 
-5. With the development server running, you can view the new page by visiting `http://localhost:8000/drupal`.
+5. With the development server running, you can view the new page by visiting <http://localhost:8000/drupal>.
 
 #### Additional Resources
 
@@ -1567,7 +1567,7 @@ To limit data, you'll need a Gatsby site with some nodes in the GraphQL data lay
 #### Directions
 
 1. Run `gatsby develop` to start the development server.
-2. Open a tab in your browser at: `http://localhost:8000/___graphql`.
+2. Open a tab in your browser at: <http://localhost:8000/___graphql>.
 3. Add a query in the editor with the following fields on `allSitePage` to start off:
 
 ```graphql
@@ -1627,7 +1627,7 @@ For this recipe, you'll need a Gatsby site with a collection of nodes to sort in
 #### Directions
 
 1. Run `gatsby develop` to start the development server.
-2. Open the GraphiQL explorer in a browser tab at: `http://localhost:8000/___graphql`
+2. Open the GraphiQL explorer in a browser tab at: <http://localhost:8000/___graphql>
 3. Add a query in the editor with the following fields on `allSitePage` to start off:
 
 ```graphql
@@ -1688,7 +1688,7 @@ For this recipe, you'll need a Gatsby site with a collection of nodes to filter 
 #### Directions
 
 1. Run `gatsby develop` to start the development server.
-2. Open the GraphiQL explorer in a browser tab at: `http://localhost:8000/___graphql`
+2. Open the GraphiQL explorer in a browser tab at: <http://localhost:8000/___graphql>
 3. Add a query in the editor using a field prefixed by 'all', like `allMarkdownRemark` (meaning that it will return a list of nodes)
 
 ```graphql
@@ -1748,7 +1748,7 @@ If you would like to run two queries on the same datasource, you can use an alia
 #### Directions
 
 1. Run `gatsby develop` to start the development server.
-2. Open the GraphiQL explorer in a browser tab at: `http://localhost:8000/___graphql`
+2. Open the GraphiQL explorer in a browser tab at: <http://localhost:8000/___graphql>
 3. Add a query in the editor using two fields of the same name like `allFile`
 
 ```graphql
@@ -1878,7 +1878,7 @@ export default () => (
 ```
 
 3. Run `gatsby develop` to start the development server.
-4. View your image in the browser: `http://localhost:8000/`
+4. View your image in the browser: <http://localhost:8000/>
 
 #### Additional resources
 
@@ -1925,7 +1925,7 @@ export default () => (
 ```
 
 3. Run `gatsby develop` to start the development server.
-4. View your image in the browser: `http://localhost:8000/`
+4. View your image in the browser: <http://localhost:8000/>
 
 #### Additional resources
 
@@ -2279,7 +2279,7 @@ export const query = graphql`
 `
 ```
 
-3. Restart the development server and open GraphiQL at `http://localhost:8000/___graphql`. Explore the fields available on the `MarkdownRemark` node.
+3. Restart the development server and open GraphiQL at <http://localhost:8000/___graphql>. Explore the fields available on the `MarkdownRemark` node.
 
 #### Additional resources
 

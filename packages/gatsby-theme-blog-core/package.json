@@ -1,6 +1,6 @@
 {
   "name": "gatsby-theme-blog-core",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "main": "index.js",
   "author": "christopherbiscardi <chris@christopherbiscardi.com> (@chrisbiscardi)",
   "license": "MIT",
@@ -18,18 +18,18 @@
   },
   "dependencies": {
     "@mdx-js/mdx": "^1.5.1",
-    "gatsby-plugin-mdx": "^1.0.53",
-    "gatsby-plugin-sharp": "^2.2.31",
+    "gatsby-plugin-mdx": "^1.0.54",
+    "gatsby-plugin-sharp": "^2.2.33",
     "gatsby-remark-copy-linked-files": "^2.1.28",
     "gatsby-remark-images": "^3.1.28",
     "gatsby-remark-smartypants": "^2.1.14",
-    "gatsby-source-filesystem": "^2.1.33",
-    "gatsby-transformer-sharp": "^2.3.0",
+    "gatsby-source-filesystem": "^2.1.34",
+    "gatsby-transformer-sharp": "^2.3.1",
     "remark-slug": "^5.1.2"
   },
   "devDependencies": {
     "@mdx-js/react": "^1.5.1",
-    "gatsby": "^2.17.4",
+    "gatsby": "^2.17.5",
     "prettier": "^1.18.2",
     "react": "^16.11.0",
     "react-dom": "^16.11.0"

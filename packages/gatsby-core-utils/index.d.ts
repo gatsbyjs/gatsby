@@ -13,6 +13,12 @@ export declare function createContentDigest(input: any): string
 export declare function joinPath(...paths: string[]): string
 
 /**
+ * Checks if the file name matches a node path
+ * @param {string} fileName File name
+ */
+export declare function isNodeInternalModulePath(fileName: string): boolean
+
+/**
  * Calculate CPU core count
  *
  * @param {boolean} ignoreEnvVar Ignore the 'GATSBY_CPU_COUNT' env var to calculate the requested type of CPU cores
