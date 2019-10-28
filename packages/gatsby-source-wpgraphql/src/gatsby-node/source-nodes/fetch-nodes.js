@@ -23,12 +23,14 @@ const fetchWPGQLContentNodes = async ({ queries }, _, { url }) => {
   const contentNodeGroups = []
 
   for (const [fieldName, queryInfo] of Object.entries(queries)) {
-    const { queryString } = queryInfo
+    const { queryString, typeInfo } = queryInfo
+
     const allNodesOfContentType = await paginatedWpNodeFetch({
       first: 100,
       after: null,
-      contentTypePlural: fieldName,
-      contentTypeSingular: fieldName,
+      contentTypePlural: typeInfo.pluralName,
+      contentTypeSingular: typeInfo.singleName,
+      nodeTypeName: typeInfo.nodesTypeName,
       url,
       query: queryString,
     })
@@ -96,17 +98,21 @@ const fetchAndCreateAllNodes = async (helpers, pluginOptions) => {
 
   const queries = await buildNodeQueriesFromIntrospection(...api)
 
+  console.log(`fetch nodes`)
   const wpgqlNodesByContentType = await fetchWPGQLContentNodes(
     { queries },
     ...api
   )
+  console.log(`finish fetch nodes`)
 
+  console.log(`create nodes`)
   const createdNodeIds = await createGatsbyNodesFromWPGQLContentNodes(
     {
       wpgqlNodesByContentType,
     },
     ...api
   )
+  console.log(`finish create nodes`)
 
   const { cache } = helpers
 

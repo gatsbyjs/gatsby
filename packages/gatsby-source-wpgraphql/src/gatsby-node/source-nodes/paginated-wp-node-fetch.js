@@ -1,11 +1,12 @@
 const { getPaginatedQuery } = require(`./graphql-queries`)
 const fetchGraphql = require(`../../utils/fetch-graphql`)
-
+const { dd } = require(`dumper.js`)
 const paginatedWpNodeFetch = async ({
   contentTypePlural,
   contentTypeSingular,
   url,
   query,
+  nodeTypeName,
   allContentNodes = [],
   ...variables
 }) => {
@@ -38,6 +39,8 @@ const paginatedWpNodeFetch = async ({
   if (nodes) {
     nodes.forEach(node => {
       node.contentType = contentTypeSingular
+      node.contentTypePlural = contentTypePlural
+      node.type = nodeTypeName
       node.wpId = node.id
       allContentNodes.push(node)
     })
@@ -50,6 +53,7 @@ const paginatedWpNodeFetch = async ({
       url,
       contentTypePlural,
       contentTypeSingular,
+      nodeTypeName,
       query,
       allContentNodes,
     })

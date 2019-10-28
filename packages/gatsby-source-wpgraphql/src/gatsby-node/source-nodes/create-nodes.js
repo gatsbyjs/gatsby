@@ -1,5 +1,5 @@
 const url = require(`url`)
-
+const { dd } = require(`dumper.js`)
 const createGatsbyNodesFromWPGQLContentNodes = async (
   { wpgqlNodesByContentType },
   { actions, createNodeId, createContentDigest }
@@ -59,6 +59,16 @@ const createGatsbyNodesFromWPGQLContentNodes = async (
       await actions.createNode({
         ...node,
         id: nodeId,
+        parent: null,
+        internal: {
+          contentDigest: createContentDigest(node),
+          type: `Wp${node.type}`,
+        },
+      })
+
+      await actions.createNode({
+        content___NODE: nodeId,
+        id: createNodeId(`wp-content-${node.id}`),
         parent: null,
         internal: {
           contentDigest: createContentDigest(node),
