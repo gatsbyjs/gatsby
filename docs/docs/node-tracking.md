@@ -47,13 +47,13 @@ Its sub objects are `foo` (value = `{ myfile: "blog/my-blog.md", b: 2}`), and th
 
 ## Find Root Nodes
 
-To access this information, `node-tracking.js` provides the [findRootNodeAncestor()](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/node-tracking.js#L52) function. It takes an object, and looks up its parent's nodeID in `rootNodeMap`. It then finds the actual node in redux. It then gets that node's `parent` ID, and gets the parent node from redux. And continues in this way until the root node is found.
+To access this information, `node-tracking.js` provides the [findRootNodeAncestor()](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/node-tracking.js#L52) function. It takes an object, and looks up its parent's nodeID in `rootNodeMap`. It then finds the actual node in redux. It then gets that node's `parent` ID, and gets the parent node from redux. And continues in this way until it founds the root node.
 
 In the above example, `nodeA` has parent `id1`. So `findRootNodeAncestor({ blog: "blog/my-blog.md", b: 2 })` would return the node for `id1` (the parent).
 
 ## Why/Where?
 
-Where is node-tracking used? First up, nodes are tracked in 2 places. Firstly, in [createNode](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/actions.js#L539), every time a node is created, we link all its sub objects to the new NodeID. Nodes are also tracked whenever they are resolved in [run-sift](/docs/schema-sift/#3-resolve-inner-query-fields-on-all-nodes). This is necessary because [custom plugin fields](/docs/schema-input-gql/#inferring-input-filters-from-plugin-fields/) might return new objects that weren't created when the node was initially made.
+Where is node-tracking used? First up, nodes are tracked in 2 places. Firstly, in [createNode](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/actions.js#L539), every time a node is created, Gatsby links all its subobjects to the new NodeID. Nodes are also tracked whenever they are resolved in [run-sift](/docs/schema-sift/#3-resolve-inner-query-fields-on-all-nodes). This is necessary because [custom plugin fields](/docs/schema-input-gql/#inferring-input-filters-from-plugin-fields/) might return new objects that weren't created when the node was initially made.
 
 Now, where do you use this information? In 2 places.
 
