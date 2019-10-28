@@ -9,8 +9,7 @@ const paginatedWpNodeFetch = async ({
   allContentNodes = [],
   ...variables
 }) => {
-  // const query = getPagesQuery(contentTypePlural)
-
+  // skip fetching media items for now
   if (contentTypePlural === `mediaItems`) {
     return allContentNodes
   }
@@ -23,11 +22,8 @@ const paginatedWpNodeFetch = async ({
     variables,
   })
 
-  // console.log(`​response`, response)
-
   const { data } = response
 
-  // console.log(contentTypePlural)
   if (!data[contentTypePlural] || !data[contentTypePlural].nodes) {
     return allContentNodes
   }
