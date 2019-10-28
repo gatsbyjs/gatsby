@@ -22,7 +22,7 @@
     "@mdx-js/react": "^1.5.1",
     "@theme-ui/prism": "^0.2.40",
     "@theme-ui/typography": "^0.2.40",
-    "deepmerge": "^4.2.1",
+    "deepmerge": "^4.2.2",
     "gatsby-image": "^2.2.30",
     "gatsby-plugin-emotion": "^4.1.13",
     "gatsby-plugin-feed": "^2.3.19",
