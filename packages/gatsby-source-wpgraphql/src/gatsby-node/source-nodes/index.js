@@ -13,7 +13,7 @@ const sourceNodes = async (helpers, pluginOptions) => {
 
   const { cache } = helpers
 
-  let cachedNodeIds = await cache.get(CREATED_NODE_IDS)
+  const cachedNodeIds = await cache.get(CREATED_NODE_IDS)
   const lastCompletedSourceTime = await cache.get(LAST_COMPLETED_SOURCE_TIME)
 
   // If we've already successfully pulled everything from WPGraphQL
