@@ -85,7 +85,7 @@
     "react-highcharts": "^16.1.0",
     "react-icons": "^2.2.7",
     "react-instantsearch": "^5.7.0",
-    "react-modal": "^3.10.1",
+    "react-modal": "^3.11.1",
     "react-typography": "^1.0.0-alpha.4",
     "rehype-react": "^3.1.0",
     "remove-markdown": "^0.3.0",
