@@ -1111,7 +1111,7 @@ The dynamic pages created above in `gatsby-node.js` have unique paths for naviga
 
 - [Getting Started with WordPress and Gatsby](/blog/2019-04-26-how-to-build-a-blog-with-wordpress-and-gatsby-part-1/)
 - More on [Sourcing from WordPress](/docs/sourcing-from-wordpress/)
-- [Live example on Sourcing from WordPress](/examples/gatsby-sourcing-wordpress/)
+- [Live example on Sourcing from WordPress](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-wordpress)
 
 ### Sourcing data from Contentful
 
