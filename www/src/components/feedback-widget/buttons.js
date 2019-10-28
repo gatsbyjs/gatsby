@@ -86,7 +86,8 @@ export const ToggleButtonLabel = styled(`span`)`
   padding: 0 ${p => p.theme.space[9]} 0 ${p => p.theme.space[3]};
   background: ${p => p.theme.colors.widget.background};
   color: ${p => p.theme.colors.text};
-  box-shadow: ${p => p.theme.shadows.floating};
+  box-shadow: ${p => p.theme.shadows.floating},
+    inset 0 0 0 1px ${p => p.theme.colors.widget.border};
   transition: 0.5s;
   white-space: nowrap;
   width: 100%;
