@@ -28,8 +28,14 @@ Changes to the meaning of a text or code example should be done in the main [Eng
 
 The first step for starting a new translation is to check what exists. So far, there are repositories for the following languages:
 
-- [Spanish](https://github.com/gatsbyjs/gatsby-es)
+- [Brazilian Portuguese](https://github.com/gatsbyjs/gatsby-pt-BR)
+- [German](https://github.com/gatsbyjs/gatsby-de)
+- [Indonesian](https://github.com/gatsbyjs/gatsby-id)
+- [Italian](https://github.com/gatsbyjs/gatsby-it)
+- [Korean](https://github.com/gatsbyjs/gatsby-ko)
+- [Polish](https://github.com/gatsbyjs/gatsby-pl)
 - [Russian](https://github.com/gatsbyjs/gatsby-ru)
+- [Spanish](https://github.com/gatsbyjs/gatsby-es)
 
 You can find the list of all translation requests here: https://github.com/gatsbyjs/gatsby/issues?utf8=%E2%9C%93&q=is%3Aissue+%22New+Translation+Request%22+
 
