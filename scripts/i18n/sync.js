@@ -3,18 +3,19 @@ const shell = require(`shelljs`)
 
 let logger = log4js.getLogger(`sync`)
 
-const host = "https://github.com"
-const owner = "gatsbyjs"
+const host = `https://github.com`
+const cacheDir = `.cache`
+const owner = `gatsbyjs`
 // Repo to be used as basis for translations
-const sourceRepo = "gatsby-i18n-source"
+const sourceRepo = `gatsby-i18n-source`
 
 const sourceRepoUrl = `${host}/${owner}/${sourceRepo}.git`
 
 const dirsToCopy = [
-  "docs/docs",
-  "docs/tutorial",
-  "docs/contributing",
-  "docs/accessibility-statement.md",
+  `docs/docs`,
+  `docs/tutorial`,
+  `docs/contributing`,
+  `docs/accessibility-statement.md`,
 ]
 
 function cloneOrUpdateRepo(repoName, repoUrl) {
@@ -38,11 +39,13 @@ async function updateSourceRepo() {
   }
   cloneOrUpdateRepo(sourceRepo, sourceRepoUrl)
   // delete old content
-  shell.rm("-rf", `${sourceRepo}/docs/*`)
+  shell.rm(`-rf`, `${sourceRepo}/docs/*`)
   // repopulate content
   dirsToCopy.forEach(dir => {
-    shell.cp("-r", `../../../${dir}`, `${sourceRepo}/docs`)
+    shell.cp(`-r`, `../../../${dir}`, `${sourceRepo}/docs`)
   })
   // push
-  shell.exec("git push origin master")
+  shell.exec(`git push origin master`)
 }
+
+updateSourceRepo()
