@@ -1061,7 +1061,7 @@ export const pageQuery = graphql`
 `
 ```
 
-4. Create dynamic pages for your Wordpress posts by pasting the following sample code in `gatsby-node.js`:
+4. Create dynamic pages for your WordPress posts by pasting the following sample code in `gatsby-node.js`:
 
 ```JS:title=gatsby-node.js
 const path = require(`path`)

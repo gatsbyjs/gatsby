@@ -1,7 +1,7 @@
 {
   "name": "gatsby-example-sourcing-wordpress",
   "private": true,
-  "description": "An example to learn how to source data form Wordpress",
+  "description": "An example to learn how to source data form WordPress",
   "version": "0.1.0",
   "author": "Vishwa Mehta <vishwa.mehta30@gmail.com>",
   "dependencies": {
