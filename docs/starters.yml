@@ -4188,8 +4188,30 @@
     - TypeScript
     - Basic design
     - Visual effects
+- url: https://gatsby-starter-zurgbot.netlify.com/
+  repo: https://github.com/zurgbot/gatsby-starter-zurgbot
+  description: The ultimate force of starter awesomeness in the galaxy of Gatsby
+  tags:
+    - Linting
+    - PWA
+    - SEO
+    - Styling:Bulma
+    - Styling:SCSS
+    - Testing
+  features:
+    - Sass (SCSS Flavored) CSS
+    - Bulma CSS Framework
+    - React Helmet <head> Management
+    - React Icons SVG Icon Components (Including Font Awesome and others)
+    - Eslint for JS linting
+    - Prettier for JS formatting
+    - StyleLint for Scss linting and formatting
+    - Jest for a test framework
+    - Enzyme for testing with React
+    - Husky for git hooks, particularlly precommit management
+    - Lint Staged to run commands only on staged files
 - url: https://martin2844.github.io/gatsby-starter-dev-portfolio/
-  repo: (required - https://github.com/martin2844/gatsby-starter-dev-portfolio
+  repo: https://github.com/martin2844/gatsby-starter-dev-portfolio
   description: A GatsbyJS minimalistic portfolio site, with a blog and about section
   tags:
     - Portfolio
@@ -4203,7 +4225,6 @@
     - Graphql queries
     - Sass
     - Markdown
-
 - url: https://wataruoguchi-gatsby-starter-typescript-contentful.netlify.com/
   repo: https://github.com/wataruoguchi/gatsby-starter-typescript-contentful
   description: Simple TypeScript starter with Contentful Integration
