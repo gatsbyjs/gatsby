@@ -387,6 +387,8 @@
               breadcrumbTitle: Comments
             - title: Creating a Sitemap
               link: /docs/creating-a-sitemap/
+            - title: Personalization
+              link: /docs/personalization/
             - title: Adding an RSS Feed
               link: /docs/adding-an-rss-feed/
               breadcrumbTitle: RSS Feed
