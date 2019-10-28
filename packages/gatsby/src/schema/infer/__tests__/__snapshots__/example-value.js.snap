@@ -121,7 +121,6 @@ Array [
         "value": Array [
           "string1",
           5,
-          "string2",
           true,
         ],
       },
