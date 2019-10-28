@@ -17,7 +17,7 @@ Usage:
 yarn run create [issue #]
 ```
 
-The `create` script sets up a new translation repository. It takes in the issue number of a [translation request issue](https://github.com/gatsbyjs/gatsby/issues/new?template=new_translation.md) that has a yaml code block:
+The `create` script sets up a new translation repository. It takes in the issue number of a [translation request issue](https://github.com/gatsbyjs/gatsby/issues/new?template=new_translation.md) that has a YAML code block:
 
 ```yaml
 name: English # name of the language to be translated *in English*
