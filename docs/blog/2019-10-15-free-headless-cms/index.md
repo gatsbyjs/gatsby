@@ -48,7 +48,7 @@ So, as long as the host is reputable, and the service is secure, you can buy the
 
 ## Option #2. Netlify CMS
 
-Netlify created a free headless CMS modeled after open source projects like WordPress and Drupal, so JAMstack sites would have options beyond SaaS CMS’s. [Netlify CMS](https://www.netlifycms.org/) cleverly uses cloud git services like GitHub and Gitlab as the backend for your content, and claims to work with almost any static site generator, including Gatsby.
+Netlify created a free headless CMS modeled after open source projects like WordPress and Drupal, so JAMstack sites would have options beyond SaaS CMS’s. [Netlify CMS](https://www.netlifycms.org/) cleverly uses cloud git services like GitHub and GitLab as the backend for your content, and claims to work with almost any static site generator, including Gatsby.
 
 ### How “free” is it?
 
