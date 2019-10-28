@@ -1,6 +1,8 @@
 import React, { useRef, useState, useCallback, useLayoutEffect } from "react"
 import PropTypes from "prop-types"
 
+const VIDEO_RATIO = 0.57
+
 const EggheadEmbed = ({ lessonLink, lessonTitle }) => {
   const [iframeWidth, setIframeWidth] = useState(0)
   const iframeRef = useRef()
@@ -25,7 +27,7 @@ const EggheadEmbed = ({ lessonLink, lessonTitle }) => {
         ref={iframeRef}
         className="egghead-video"
         width={600}
-        height={iframeWidth * 0.57}
+        height={iframeWidth * VIDEO_RATIO}
         src={`${lessonLink}/embed`}
         title={`Video: ${lessonTitle}`}
         allowFullScreen
