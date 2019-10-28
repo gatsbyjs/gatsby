@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.8.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.5...gatsby-cli@2.8.6) (2019-10-28)
+
+### Bug Fixes
+
+- **gatsby-cli:** handle git commit failures ([#18839](https://github.com/gatsbyjs/gatsby/issues/18839)) ([8762cb3](https://github.com/gatsbyjs/gatsby/commit/8762cb3))
+- update minor updates in packages ([#18875](https://github.com/gatsbyjs/gatsby/issues/18875)) ([b692879](https://github.com/gatsbyjs/gatsby/commit/b692879))
+
+### Features
+
+- **gatsby-cli:** Add command-line argument for logger ([#18818](https://github.com/gatsbyjs/gatsby/issues/18818)) ([5cb95b5](https://github.com/gatsbyjs/gatsby/commit/5cb95b5))
+
 ## [2.8.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.4...gatsby-cli@2.8.5) (2019-10-23)
 
 ### Features
