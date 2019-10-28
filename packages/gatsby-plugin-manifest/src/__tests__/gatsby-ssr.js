@@ -87,7 +87,7 @@ describe(`gatsby-plugin-manifest`, () => {
       expect(headComponents).toMatchSnapshot()
     })
 
-    it(`Adds "shortcut icon" and "manifest" links and "theme_color" meta tag to head`, () => {
+    it(`Adds "icon" and "manifest" links and "theme_color" meta tag to head`, () => {
       onRenderBody(ssrArgs, {
         icon: true,
         theme_color: `#000000`,
