@@ -49,6 +49,16 @@ const addInferredFieldsImpl = ({
   prefix,
   config,
 }) => {
+  // TODO: find other way to clean-up removed fields (following breaks tests)
+  /*
+  // Remove old inferred fields (will be re-added later in this function)
+  typeComposer.getFieldNames().forEach(name => {
+    if (typeComposer.getFieldExtension(name, `createdFrom`) === `inference`) {
+      typeComposer.removeField(name)
+    }
+  })
+  */
+
   const fields = []
   Object.keys(exampleObject).forEach(unsanitizedKey => {
     const key = createFieldName(unsanitizedKey)

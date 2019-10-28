@@ -12,6 +12,7 @@ const addInferredTypes = ({
   nodeStore,
   typeConflictReporter,
   typeMapping,
+  inferenceMetadata,
   parentSpan,
 }) => {
   // XXX(freiksenet): Won't be needed after plugins set typedefs
@@ -38,9 +39,7 @@ const addInferredTypes = ({
         typesToInfer.push(typeComposer)
       }
     } else {
-      typeComposer = ObjectTypeComposer.create(typeName, schemaComposer)
-      addNodeInterface({ schemaComposer, typeComposer })
-      typeComposer.setExtension(`createdFrom`, `inference`)
+      typeComposer = createInferredTypeComposer({ typeName, schemaComposer })
       typesToInfer.push(typeComposer)
     }
   })
@@ -69,6 +68,7 @@ const addInferredTypes = ({
       typeConflictReporter,
       typeMapping,
       parentSpan,
+      inferenceMetadata,
     })
   )
 }
@@ -79,13 +79,17 @@ const addInferredType = ({
   nodeStore,
   typeConflictReporter,
   typeMapping,
+  inferenceMetadata = {},
   parentSpan,
 }) => {
   const typeName = typeComposer.getTypeName()
   const nodes = nodeStore.getNodesByType(typeName)
   // TODO: Move this to where the type is created once we can get
   // node type owner information directly from store
-  if (typeComposer.getExtension(`createdFrom`) === `inference`) {
+  if (
+    typeComposer.getExtension(`createdFrom`) === `inference` &&
+    nodes.length > 0
+  ) {
     typeComposer.setExtension(`plugin`, nodes[0].internal.owner)
   }
 
@@ -93,6 +97,7 @@ const addInferredType = ({
     nodes,
     typeName,
     typeConflictReporter,
+    typeInferenceMetadata: inferenceMetadata[typeName],
     ignoreFields: [
       ...getNodeInterface({ schemaComposer }).getFieldNames(),
       `$loki`,
@@ -111,6 +116,13 @@ const addInferredType = ({
   return typeComposer
 }
 
+const createInferredTypeComposer = ({ typeName, schemaComposer }) => {
+  const typeComposer = ObjectTypeComposer.create(typeName, schemaComposer)
+  addNodeInterface({ schemaComposer, typeComposer })
+  typeComposer.setExtension(`createdFrom`, `inference`)
+  return typeComposer
+}
+
 const putFileFirst = typeNames => {
   const index = typeNames.indexOf(`File`)
   if (index !== -1) {
@@ -123,4 +135,5 @@ const putFileFirst = typeNames => {
 module.exports = {
   addInferredType,
   addInferredTypes,
+  createInferredTypeComposer,
 }

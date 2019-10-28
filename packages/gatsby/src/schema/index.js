@@ -4,12 +4,12 @@ const tracer = require(`opentracing`).globalTracer()
 const { store } = require(`../redux`)
 const nodeStore = require(`../db/nodes`)
 const { createSchemaComposer } = require(`./schema-composer`)
-const { buildSchema, rebuildSchemaWithSitePage } = require(`./schema`)
+const { buildSchema, rebuildSchemaWithTypes } = require(`./schema`)
 const { builtInFieldExtensions } = require(`./extensions`)
 const { TypeConflictReporter } = require(`./infer/type-conflict-reporter`)
 const apiRunner = require(`../utils/api-runner-node`)
 
-module.exports.build = async ({ parentSpan }) => {
+const build = async ({ parentSpan }) => {
   const spanArgs = parentSpan ? { childOf: parentSpan } : {}
   const span = tracer.startSpan(`build schema`, spanArgs)
 
@@ -33,6 +33,7 @@ module.exports.build = async ({ parentSpan }) => {
       fieldExtensions,
       printConfig,
     },
+    inferenceMetadata,
     config: { mapping: typeMapping },
   } = store.getState()
 
@@ -58,6 +59,7 @@ module.exports.build = async ({ parentSpan }) => {
     typeMapping,
     printConfig,
     typeConflictReporter,
+    inferenceMetadata,
     parentSpan,
   })
 
@@ -75,7 +77,7 @@ module.exports.build = async ({ parentSpan }) => {
   span.finish()
 }
 
-module.exports.rebuildWithSitePage = async ({ parentSpan }) => {
+const rebuildWithTypes = async ({ typeNames, parentSpan }) => {
   const spanArgs = parentSpan ? { childOf: parentSpan } : {}
   const span = tracer.startSpan(
     `rebuild schema with SitePage context`,
@@ -85,16 +87,19 @@ module.exports.rebuildWithSitePage = async ({ parentSpan }) => {
   const {
     schemaCustomization: { composer: schemaComposer, fieldExtensions },
     config: { mapping: typeMapping },
+    inferenceMetadata,
   } = store.getState()
 
   const typeConflictReporter = new TypeConflictReporter()
 
-  const schema = await rebuildSchemaWithSitePage({
+  const schema = await rebuildSchemaWithTypes({
     schemaComposer,
     nodeStore,
     fieldExtensions,
     typeMapping,
     typeConflictReporter,
+    inferenceMetadata,
+    typeNames,
     parentSpan,
   })
 
@@ -110,4 +115,14 @@ module.exports.rebuildWithSitePage = async ({ parentSpan }) => {
   })
 
   span.finish()
+}
+
+const rebuildWithSitePage = async ({ parentSpan }) => {
+  await rebuildWithTypes({ parentSpan, typeNames: [`SitePage`] })
+}
+
+module.exports = {
+  build,
+  rebuildWithSitePage,
+  rebuildWithTypes,
 }

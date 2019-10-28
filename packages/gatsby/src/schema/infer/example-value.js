@@ -4,16 +4,19 @@ const getExampleValue = ({
   nodes,
   typeName,
   typeConflictReporter,
+  typeInferenceMetadata,
   ignoreFields,
 }) => {
-  const initialMetadata = {
-    fieldMap: {},
-    ignoredFields: new Set(ignoreFields),
-    typeName,
-    typeConflictReporter,
-  }
-  const aggregatedMetadata = nodes.reduce(addNode, initialMetadata)
-  return buildExampleObject(aggregatedMetadata)
+  // TODO: remove branch with .reduce() after all tests
+  //  are converted to the syntax with metadata
+  const metadata =
+    typeInferenceMetadata ||
+    nodes.reduce(addNode, { ignoredFields: new Set(ignoreFields) })
+
+  metadata.typeName = typeName
+  metadata.typeConflictReporter = typeConflictReporter
+
+  return buildExampleObject(metadata)
 }
 
 module.exports = {

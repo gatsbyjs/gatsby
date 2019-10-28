@@ -23,7 +23,11 @@ const {
 const apiRunner = require(`../utils/api-runner-node`)
 const report = require(`gatsby-cli/lib/reporter`)
 const { addNodeInterfaceFields } = require(`./types/node-interface`)
-const { addInferredType, addInferredTypes } = require(`./infer`)
+const {
+  addInferredType,
+  addInferredTypes,
+  createInferredTypeComposer,
+} = require(`./infer`)
 const { findOne, findManyPaginated } = require(`./resolvers`)
 const {
   processFieldExtensions,
@@ -44,6 +48,7 @@ const buildSchema = async ({
   thirdPartySchemas,
   printConfig,
   typeConflictReporter,
+  inferenceMetadata,
   parentSpan,
 }) => {
   await updateSchemaComposer({
@@ -55,6 +60,7 @@ const buildSchema = async ({
     thirdPartySchemas,
     printConfig,
     typeConflictReporter,
+    inferenceMetadata,
     parentSpan,
   })
   // const { printSchema } = require(`graphql`)
@@ -63,41 +69,55 @@ const buildSchema = async ({
   return schema
 }
 
-const rebuildSchemaWithSitePage = async ({
+const rebuildSchemaWithTypes = async ({
   schemaComposer,
   nodeStore,
   typeMapping,
   fieldExtensions,
   typeConflictReporter,
   parentSpan,
+  typeNames,
+  inferenceMetadata,
 }) => {
-  const typeComposer = schemaComposer.getOTC(`SitePage`)
-  const shouldInfer =
-    !typeComposer.hasExtension(`infer`) ||
-    typeComposer.getExtension(`infer`) !== false
-  if (shouldInfer) {
-    addInferredType({
+  for (const typeName of typeNames) {
+    // If the type doesn't have a composer - create a new one
+    // (assuming inference is the only possible source of new types for rebuild)
+    const typeComposer = schemaComposer.has(typeName)
+      ? schemaComposer.getOTC(typeName)
+      : createInferredTypeComposer({ typeName, schemaComposer })
+
+    // TODO: handle type deletion
+    //  (only for types originally created from inference and having 0 nodes)
+
+    const shouldInfer =
+      !typeComposer.hasExtension(`infer`) ||
+      typeComposer.getExtension(`infer`) !== false
+    if (shouldInfer) {
+      addInferredType({
+        schemaComposer,
+        typeComposer,
+        nodeStore,
+        typeConflictReporter,
+        typeMapping,
+        inferenceMetadata,
+        parentSpan,
+      })
+    }
+    await processTypeComposer({
       schemaComposer,
       typeComposer,
+      fieldExtensions,
       nodeStore,
-      typeConflictReporter,
-      typeMapping,
       parentSpan,
     })
   }
-  await processTypeComposer({
-    schemaComposer,
-    typeComposer,
-    fieldExtensions,
-    nodeStore,
-    parentSpan,
-  })
+
   return schemaComposer.buildSchema()
 }
 
 module.exports = {
   buildSchema,
-  rebuildSchemaWithSitePage,
+  rebuildSchemaWithTypes,
 }
 
 const updateSchemaComposer = async ({
@@ -109,6 +129,7 @@ const updateSchemaComposer = async ({
   thirdPartySchemas,
   printConfig,
   typeConflictReporter,
+  inferenceMetadata,
   parentSpan,
 }) => {
   let activity = report.phantomActivity(`Add explicit types`, {
@@ -127,6 +148,7 @@ const updateSchemaComposer = async ({
     nodeStore,
     typeConflictReporter,
     typeMapping,
+    inferenceMetadata,
     parentSpan: activity.span,
   })
   activity.end()
