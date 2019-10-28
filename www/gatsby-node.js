@@ -383,7 +383,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
     toPath: `/docs/awesome-gatsby-resources/`,
     isPermanent: true,
   })
-  
+
   createRedirect({
     fromPath: `/docs/using-fragments/`,
     toPath: `/docs/using-graphql-fragments/`,
