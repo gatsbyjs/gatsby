@@ -7,9 +7,11 @@
     "plugin:react/recommended",
     "prettier",
     "prettier/flowtype",
-    "prettier/react"
+    "prettier/react",
+    "plugin:import/errors",
+    "plugin:import/warnings"
   ],
-  "plugins": ["flowtype", "prettier", "react", "filenames"],
+  "plugins": ["flowtype", "prettier", "react", "filenames", "import"],
   "parserOptions": {
     "ecmaVersion": 2016,
     "sourceType": "module",
