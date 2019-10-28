@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.8.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.6...gatsby-cli@2.8.7) (2019-10-28)
+
+### Features
+
+- **gatsby-core-utils:** Add isCI and getCIName ([#19039](https://github.com/gatsbyjs/gatsby/issues/19039)) ([d97bee6](https://github.com/gatsbyjs/gatsby/commit/d97bee6))
+
 ## [2.8.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.5...gatsby-cli@2.8.6) (2019-10-28)
 
 ### Bug Fixes
