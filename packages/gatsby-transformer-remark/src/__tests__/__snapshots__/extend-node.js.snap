@@ -425,6 +425,32 @@ Object {
 }
 `;
 
+exports[`Excerpt is generated correctly from schema returns value with inlineCode 1`] = `
+Object {
+  "headings": Array [
+    Object {
+      "depth": 1,
+      "value": "first title",
+    },
+    Object {
+      "depth": 2,
+      "value": "second title",
+    },
+  ],
+}
+`;
+
+exports[`Excerpt is generated correctly from schema returns value with mixed text 1`] = `
+Object {
+  "headings": Array [
+    Object {
+      "depth": 1,
+      "value": "An important heading with inline code and text",
+    },
+  ],
+}
+`;
+
 exports[`Excerpt is generated correctly from schema when plugins options has a excerpt_separator defined correctly prunes length to default value 1`] = `
 Object {
   "excerpt": "Where oh where is my little pony? Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla…",
