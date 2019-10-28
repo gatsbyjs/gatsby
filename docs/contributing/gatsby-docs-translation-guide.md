@@ -36,6 +36,7 @@ The first step for starting a new translation is to check what exists. So far, t
 - [Polish](https://github.com/gatsbyjs/gatsby-pl)
 - [Russian](https://github.com/gatsbyjs/gatsby-ru)
 - [Spanish](https://github.com/gatsbyjs/gatsby-es)
+- [Turkish](https://github.com/gatsbyjs/gatsby-tr)
 
 You can find the list of all translation requests here: https://github.com/gatsbyjs/gatsby/issues?utf8=%E2%9C%93&q=is%3Aissue+%22New+Translation+Request%22+
 
