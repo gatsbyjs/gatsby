@@ -1,4 +1,3 @@
-const { dd } = require(`dumper.js`)
 const fetchGraphql = require(`./fetch-graphql`)
 
 const isWpGatsby = async (_, pluginOptions) =>
