@@ -1002,7 +1002,7 @@ npm install gatsby-source-wordpress --save
 
 2. Configure the plugin by modifying the `gatsby-config.js` file such that it includes the following:
 
-```JS:title=gatsby-config.js
+```javascript:title=gatsby-config.js
 module.exports = {
   ...
   plugins: [
@@ -1026,7 +1026,7 @@ module.exports = {
 
 3. Create a template component such as `src/templates/post.js` with the following code in it:
 
-```JS:title=post.js
+```javascript:title=post.js
 import React, { Component } from "react"
 import { graphql } from "gatsby"
 import PropTypes from "prop-types"
@@ -1063,7 +1063,7 @@ export const pageQuery = graphql`
 
 4. Create dynamic pages for your Wordpress posts by pasting the following sample code in `gatsby-node.js`:
 
-```JS:title=gatsby-node.js
+```javascript:title=gatsby-node.js
 const path = require(`path`)
 const slash = require(`slash`)
 
