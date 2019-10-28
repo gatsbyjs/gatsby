@@ -1,6 +1,6 @@
 const setup = require(`./starter-kit/setup`)
 
-const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
+const { createContentDigest } = require(`gatsby-core-utils`)
 
 const AWS = require(`aws-sdk`)
 const s3 = new AWS.S3({
@@ -55,9 +55,8 @@ exports.run = async (browser, url, width, height, fullPage) => {
     throw new Error(`invalid bucket ${process.env.S3_BUCKET}`)
   }
 
-  const keyBase = `${url}-(${width},${height})`
   const contentDigest = createContentDigest({ url, width, height })
-  const key = `${digest}.png`
+  const key = `${contentDigest}.png`
 
   const screenshotUrl = `https://s3-${region}.amazonaws.com/${
     process.env.S3_BUCKET
