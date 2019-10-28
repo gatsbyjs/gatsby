@@ -13,7 +13,7 @@ const {
   getAvailableContentTypes,
 } = require(`./generate-queries-from-introspection/index`)
 
-const fetchWPGQLContentNodes = async ({ queryStrings }, _, { url }) => {
+const fetchWPGQLContentNodes = async ({ queries }, _, { url }) => {
   const contentTypes = await getAvailableContentTypes({ url })
 
   if (!contentTypes) {
@@ -22,14 +22,15 @@ const fetchWPGQLContentNodes = async ({ queryStrings }, _, { url }) => {
 
   const contentNodeGroups = []
 
-  for (const [fieldName, query] of Object.entries(queryStrings)) {
+  for (const [fieldName, queryInfo] of Object.entries(queries)) {
+    const { queryString } = queryInfo
     const allNodesOfContentType = await paginatedWpNodeFetch({
       first: 100,
       after: null,
       contentTypePlural: fieldName,
       contentTypeSingular: fieldName,
       url,
-      query,
+      query: queryString,
     })
 
     if (allNodesOfContentType && allNodesOfContentType.length) {
@@ -93,10 +94,10 @@ const fetchWPGQLContentNodes = async ({ queryStrings }, _, { url }) => {
 const fetchAndCreateAllNodes = async (helpers, pluginOptions) => {
   const api = [helpers, pluginOptions]
 
-  const queryStrings = await buildNodeQueriesFromIntrospection(...api)
+  const queries = await buildNodeQueriesFromIntrospection(...api)
 
   const wpgqlNodesByContentType = await fetchWPGQLContentNodes(
-    { queryStrings },
+    { queries },
     ...api
   )
 

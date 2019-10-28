@@ -1,3 +1,4 @@
+const { dd } = require(`dumper.js`)
 const Query = require(`graphql-query-builder`)
 
 const {
@@ -198,15 +199,19 @@ const buildNodeQueriesFromIntrospection = async (helpers, pluginOptions) => {
     {}
   )
 
-  let queryStrings = {}
+  let queries = {}
 
+  // for each root field that returns a list of nodes
+  // build a query to fetch those nodes
   nodeListTypeNames.forEach(typeName => {
     const listType = nodeListTypes[typeName]
 
+    // this builds the gql query
     let queryField = new Query(listType.rootFieldName, {
       $variables: true,
     })
 
+    // this adds subfields to our query
     queryField.find([
       {
         pageInfo: [`hasNextPage`, `endCursor`],
@@ -249,14 +254,24 @@ const buildNodeQueriesFromIntrospection = async (helpers, pluginOptions) => {
       },
     ])
 
-    queryStrings[listType.rootFieldName] = queryField
+    const queryString = queryField
       .toString()
       // add pagination variables.
       .replace(`$variables:true`, `first: $first, after: $after`)
     // can't figure out how to properly do this ^ in graphql-query-builder.
+    // just replacing a placeholder for now.
+
+    queries[listType.rootFieldName] = {
+      typeInfo: {
+        singleName: listType.fieldName,
+        pluralName: listType.rootFieldName,
+        nodesTypeName: listType.nodesTypeName,
+      },
+      queryString,
+    }
   })
 
-  return queryStrings
+  return queries
 }
 
 module.exports = {
