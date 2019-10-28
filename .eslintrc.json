@@ -7,9 +7,7 @@
     "plugin:react/recommended",
     "prettier",
     "prettier/flowtype",
-    "prettier/react",
-    "plugin:import/errors",
-    "plugin:import/warnings"
+    "prettier/react"
   ],
   "plugins": ["flowtype", "prettier", "react", "filenames", "import"],
   "parserOptions": {
@@ -77,6 +75,12 @@
       "globals": {
         "cy": false,
         "Cypress": false
+      }
+    },
+    {
+      "files": ["packages/**/*"],
+      "rules": {
+        "no-unused-expressions": "error"
       }
     }
   ],
