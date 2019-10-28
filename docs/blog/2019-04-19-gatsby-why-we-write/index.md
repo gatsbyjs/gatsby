@@ -96,7 +96,7 @@ In the docs, things are structured hierarchically, so usually content is mostly 
 
 But outside the docs, that's far from the case. We have blog posts, [using-\* example sites / guides](https://github.com/gatsbyjs/gatsby/tree/master/examples), [starters](/starters/), conference talks, podcast appearances, tweets, and whatever Gatsby community members dream up and publish!
 
-**It's a constant challenge to organize these in ways that are useful and obvious for the end-user**. We're always attacking this in five or ten different ways -- discoverability via search, cross-linking, hierarchy, navbars and breadcrumbs, turning conference talks into blog posts and blog posts into docs.
+**It's a constant challenge to organize these in ways that are useful and obvious for the end user**. We're always attacking this in five or ten different ways -- discoverability via search, cross-linking, hierarchy, navbars and breadcrumbs, turning conference talks into blog posts and blog posts into docs.
 
 Our goal is to make it easy for the user to gather relevant context, know where to look when they get stuck, and feel confident that they can make it if they keep on reading, learning, and trying.
 

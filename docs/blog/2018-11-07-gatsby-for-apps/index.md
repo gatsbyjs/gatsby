@@ -178,7 +178,7 @@ Next: let's compare and contrast the end user experience of fetching authenticat
 
 ### The App Shell
 
-In merely adding the [`gatsby-plugin-offline`][gatsby-plugin-offline] plugin, we enable a fully-featured, progressive web application that works offline and creates an app shell by registering a service worker. An app shell is essentially separate components of your application (e.g. header, footer, sidebar, etc.) that are instantly available from a service worker while dynamic content is fetched in the background. This creates a great end-user experience, as the application is able to visually populate instantly as data loads into place in the background.
+In merely adding the [`gatsby-plugin-offline`][gatsby-plugin-offline] plugin, we enable a fully-featured, progressive web application that works offline and creates an app shell by registering a service worker. An app shell is essentially separate components of your application (e.g. header, footer, sidebar, etc.) that are instantly available from a service worker while dynamic content is fetched in the background. This creates a great end user experience, as the application is able to visually populate instantly as data loads into place in the background.
 
 If we consider this approach, the technique looks like the following:
 
@@ -213,7 +213,7 @@ Additionally, Gatsby Mail shows some specific web application functionality, suc
 - GraphQL at build time and _run time_ utilizing a remote GraphQL API and [apollo-boost][apollo-boost], and
 - loading an app shell with `gatsby-plugin-offline` (check out the "Fast 3G" example below!)
 
-and even a light/dark theme, because why not! You can see all of these concepts unify to form this great end-user experience in the below example with a simulated fast 3G connection. The app shell (header, footer, etc.) loads into place _instantly_ as the dynamic content is fetched (from the remote GraphQL API!) in the background.
+and even a light/dark theme, because why not! You can see all of these concepts unify to form this great end user experience in the below example with a simulated fast 3G connection. The app shell (header, footer, etc.) loads into place _instantly_ as the dynamic content is fetched (from the remote GraphQL API!) in the background.
 
 ![App Shell with Gatsby Mail](./images/gatsby-mail-app-shell.gif)
 
