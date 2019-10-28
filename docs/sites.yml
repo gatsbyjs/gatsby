@@ -299,15 +299,17 @@
 - title: Matthias Jordan Portfolio
   main_url: "https://iammatthias.com/"
   url: "https://iammatthias.com/"
-  source_url: "https://github.com/iammatthias/net"
+  source_url: "https://github.com/iammatthias/.com"
   description: >-
-    Photography portfolio and blog built using Contentful + Netlify + Gatsby V2.
+    Photography portfolio of content creator and digital marketer Matthias Jordan
   built_by: Matthias Jordan
   built_by_url: https://github.com/iammatthias
   featured: false
   categories:
     - Photography
     - Portfolio
+    - Blog
+    - Gallery
 - title: Investment Calculator
   main_url: "https://investmentcalculator.io/"
   url: "https://investmentcalculator.io/"
@@ -8150,3 +8152,108 @@
   source_url: https://github.com/IoT-Arduino/Gatsby-MySteps
   built_by: Maruo
   built_by_url: https://twitter.com/DengenT
+- title: Brent Runs Marathons
+  main_url: https://www.brentrunsmarathons.com/
+  url: https://www.brentrunsmarathons.com/
+  source_url: https://github.com/bingr001/brentrunsmarathonsv2
+  description: >
+    Brent Runs Marathons is about the training and race experience for the Comrades Ultra Marathon
+  categories:
+    - Blog
+  built_by: Brent Ingram
+  built_by_url: https://www.brentjingram.com/
+  featured: false
+- title: Pedro LaTorre
+  main_url: https://www.pedrolatorre.com/
+  url: https://www.pedrolatorre.com/
+  source_url: https://github.com/bingr001/pedro-latorre-site
+  description: >
+    A really awesome website built for the motivational speaker Pedro LaTorre
+  categories:
+    - Blog
+  built_by: Brent Ingram
+  built_by_url: https://www.brentjingram.com/
+  featured: false
+
+- title: Veryben
+  main_url: https://veryben.com/
+  url: https://veryben.com/
+  description: >
+    be water my friend
+  featured: false
+  categories:
+    - Blog
+  built_by: anikijiang
+  built_by_url: https://twitter.com/anikijiang
+- title: kentarom's portfolio
+  main_url: https://kentarom.com/
+  url: https://kentarom.com/
+  source_url: https://github.com/kentaro-m/portfolio-gatsby
+  description: >
+    The portfolio of kentarom, frontend developer. This site shows recent activities about him.
+  categories:
+    - Portfolio
+    - Technology
+    - Web Development
+  built_by: kentarom
+  built_by_url: https://twitter.com/_kentaro_m
+  featured: false
+- title: MotionThat
+  main_url: "https://motionthat.com.au"
+  url: "https://motionthat.com.au"
+  description: >
+    MotionThat was created to fill a void in Tabletop Product shooting, whereby the need for consistency, repetition and flexibility was required to eliminate the many variables and inaccuracies that slow the filming process down.
+  categories:
+    - Entertainment
+    - Food
+    - Media
+    - Gallery
+  built_by: Handsome Creative
+  built_by_url: https://www.hellohandsome.com.au
+  featured: false
+- title: TEN ALPHAS
+  main_url: "https://tenalphas.com.au"
+  url: "https://tenalphas.com.au"
+  description: >
+    TEN ALPHAS is a content production company based in Sydney and Wollongong, telling stories through moving image and beautiful design.
+  categories:
+    - Media
+    - Entertainment
+    - Video
+  built_by: Handsome Creative
+  built_by_url: https://www.hellohandsome.com.au
+  featured: false
+- title: SalesGP
+  main_url: "https://salesgp.io"
+  url: "https://salesgp.io"
+  description: >
+    SalesGP is a specialist Sales and Operations partner offering expert skill-sets and decades of experience to companies entering the Australia, NZ (ANZ) and South East Asian (SEA) markets.
+  categories:
+    - Business
+    - Marketing
+    - Consulting
+  built_by: Handsome Creative
+  built_by_url: https://www.hellohandsome.com.au
+  featured: false
+- title: Source Separation Systems
+  main_url: "https://sourceseparationsystems.com.au"
+  url: "https://sourceseparationsystems.com.au"
+  description: >
+    Innovative waste diversion products, designed to connect Australians to a more sustainable world.
+  categories:
+    - Business
+  built_by: Handsome Creative
+  built_by_url: https://www.hellohandsome.com.au
+- title: Fuzzy String Matching
+  main_url: https://fuzzy-string-matching.netlify.com
+  url: https://fuzzy-string-matching.netlify.com
+  source_url: https://github.com/jdemieville/fuzzyStringMatching
+  description: >
+    This site is built to assess the performance of various approximate string matching algorithms aka fuzzy string searching.
+  categories:
+    - JavaScript
+    - Learning
+    - Programming
+  built_by: Jennifer Demieville
+  built_by_url: https://demieville-codes.herokuapp.com/portfolio
+  featured: false

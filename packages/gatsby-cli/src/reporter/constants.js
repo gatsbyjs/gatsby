@@ -9,6 +9,7 @@ export const Actions = {
   UpdateActivity: `ACTIVITY_UPDATE`,
   PendingActivity: `ACTIVITY_PENDING`,
   CancelActivity: `ACTIVITY_CANCEL`,
+  ActivityErrored: `ACTIVITY_ERRORED`,
 }
 
 export const LogLevels = {

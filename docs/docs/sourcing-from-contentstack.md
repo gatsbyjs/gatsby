@@ -51,7 +51,7 @@ Navigate to your root directory and run the following command:
 
 `gatsby develop`
 
-After running this, you will be able to view your site at `http://localhost:8000/`. You can run the GraphiQL IDE at `http://localhost:8000/___graphql`. The GraphiQL IDE will help you explore the app's data, including the Contentstack APIs.
+After running this, you will be able to view your site at <http://localhost:8000/>. You can run the GraphiQL IDE at <http://localhost:8000/___graphql>. The GraphiQL IDE will help you explore the app's data, including the Contentstack APIs.
 
 Now, you will able to query Contentstack data. Try the query below to get the 'Home' content type data:
 
@@ -89,7 +89,7 @@ export const pageQuery = graphql`
 `
 ```
 
-This will display the title of your home page on `http://localhost:8000/home`. Likewise, you can query additional fields in your entry.
+This will display the title of your home page on <http://localhost:8000/home>. Likewise, you can query additional fields in your entry.
 
 ## Closing Note
 

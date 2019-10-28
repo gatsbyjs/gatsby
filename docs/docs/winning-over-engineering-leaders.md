@@ -41,7 +41,7 @@ Gatsby has many benefits that will appeal to engineering leaders and help them m
 
 ### Improved development process
 
-> Gatsby [unifies your stack](/docs/sanitize-your-stack) and eliminates a lot of the complicated and time-consuming configuration steps that come with most development processes. This means happier developers and clearer division between front-end and back-end tasks. Front-end developers can spend more time making great UIs and back-end developers can focus on adding the features and integrations that make your product better. You can find more information on this subject in Sam Bhagwat's article [How Gatsby Changes Teams' Website Development Workflow](/blog/2018-04-25-how-gatsby-changes-teams-website-development-workflow/#architecture)
+> Gatsby [unifies your stack](/docs/sanitize-your-stack) and eliminates a lot of the complicated and time-consuming configuration steps that come with most development processes. This means happier developers and clearer division between frontend and backend tasks. Frontend developers can spend more time making great UIs and backend developers can focus on adding the features and integrations that make your product better. You can find more information on this subject in Sam Bhagwat's article [How Gatsby Changes Teams' Website Development Workflow](/blog/2018-04-25-how-gatsby-changes-teams-website-development-workflow/#architecture)
 
 ## Common concerns
 
