@@ -10,6 +10,13 @@ exports.createPages = ({ actions: { createPage } }) => {
     path: `/client-only-paths/static`,
     component: path.resolve(`src/templates/static-page.js`),
   })
+
+  if (!process.env.SKIP_PAGE_CREATION) {
+    createPage({
+      path: `/page-data-test/`,
+      component: path.resolve(`src/templates/page-data-test.js`),
+    })
+  }
 }
 
 exports.onCreatePage = ({ page, actions }) => {
