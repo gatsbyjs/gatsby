@@ -37,7 +37,7 @@ The digest should be unique to the content of this node since it's used for cach
 
 ### `mediaType`
 
-Optional [media type](https://en.wikipedia.org/wiki/Media_type) to indicate to transformer plugins this node has data they can further process.
+Optional [media type](https://en.wikipedia.org/wiki/Media_type) to notify the transformer plugins this node has data they can further process.
 
 ### `type`
 
@@ -45,11 +45,11 @@ A globally unique node type chosen by the plugin owner.
 
 ### `owner`
 
-The plugin which created this node. This field is added by gatsby itself (and not the plugin).
+The plugin which created this node. Gatsby adds this field itself (not the plugin).
 
 ### `fieldOwners`
 
-Stores which plugins created which fields. This field is added by gatsby itself (and not the plugin).
+Stores which plugins created which fields. Gatsby adds this field itself (not the plugin).
 
 ### `content`
 
@@ -57,7 +57,7 @@ Optional field exposing the raw content for this node that transformer plugins c
 
 ## Source plugins
 
-New nodes are added to Gatsby by "source" plugins. A common one that many Gatsby
+`Source` plugins adds new nodes to Gatbsy. A common one that many Gatsby
 sites use is the [Filesystem source plugin](/packages/gatsby-source-filesystem/)
 which turns files on disk into File nodes.
 
