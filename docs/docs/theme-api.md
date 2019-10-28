@@ -104,7 +104,7 @@ gatsby-theme-amazing/src/components/header.js
 and here is the path where you would shadow it in your site:
 
 ```
-<our-site>/src/gatsby-theme-amazing/components/header.js
+<your-site>/src/gatsby-theme-amazing/components/header.js
 ```
 
 Shadowing only works on imported files in the `src` directory. This is because shadowing is built on top of Webpack, so the module graph needs to include the shadowable file.
