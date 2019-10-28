@@ -189,7 +189,7 @@ const Layout = ({ children }) => (
 
 ### Using the header component to display the navigation
 
-Locate the `header.js` file inside `src/components` and remove everything so only the functional component definition is left (everything else is just boilerplate code given to us when generating our project):
+Locate the `header.js` file inside `src/components` and remove everything so only the functional component definition is left (everything else is just boilerplate code given to you when generating your project):
 
 ```js:title=src/components/header.js
 import React from "react"
