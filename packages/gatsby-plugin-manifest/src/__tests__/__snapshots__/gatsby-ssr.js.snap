@@ -33,7 +33,7 @@ exports[`gatsby-plugin-manifest Cache Busting Does file name cache busting if "c
 Array [
   <link
     href="/icons/icon-48x48-contentDigest.png"
-    rel="shortcut icon"
+    rel="icon"
   />,
   <link
     href="/manifest.webmanifest"
@@ -86,7 +86,7 @@ exports[`gatsby-plugin-manifest Cache Busting Does query cache busting if "cache
 Array [
   <link
     href="/icons/icon-48x48.png?v=contentDigest"
-    rel="shortcut icon"
+    rel="icon"
   />,
   <link
     href="/manifest.webmanifest"
@@ -139,7 +139,7 @@ exports[`gatsby-plugin-manifest Cache Busting Does query cache busting if "cache
 Array [
   <link
     href="/icons/icon-48x48.png?v=contentDigest"
-    rel="shortcut icon"
+    rel="icon"
   />,
   <link
     href="/manifest.webmanifest"
@@ -192,7 +192,7 @@ exports[`gatsby-plugin-manifest Cache Busting doesn't add cache busting if "cach
 Array [
   <link
     href="/icons/icon-48x48.png"
-    rel="shortcut icon"
+    rel="icon"
   />,
   <link
     href="/manifest.webmanifest"
@@ -264,7 +264,7 @@ exports[`gatsby-plugin-manifest Favicon Adds link favicon tag if "include_favico
 Array [
   <link
     href="/icons/icon-48x48.png"
-    rel="shortcut icon"
+    rel="icon"
   />,
   <link
     href="/manifest.webmanifest"
@@ -422,11 +422,11 @@ Array [
 ]
 `;
 
-exports[`gatsby-plugin-manifest Manifest Link Generation Adds "shortcut icon" and "manifest" links and "theme_color" meta tag to head 1`] = `
+exports[`gatsby-plugin-manifest Manifest Link Generation Adds "icon" and "manifest" links and "theme_color" meta tag to head 1`] = `
 Array [
   <link
     href="/icons/icon-48x48.png?v=contentDigest"
-    rel="shortcut icon"
+    rel="icon"
   />,
   <link
     href="/manifest.webmanifest"
