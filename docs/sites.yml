@@ -8198,3 +8198,16 @@
   built_by: kentarom
   built_by_url: https://twitter.com/_kentaro_m
   featured: false
+- title: Fuzzy String Matching
+  main_url: https://fuzzy-string-matching.netlify.com
+  url: https://fuzzy-string-matching.netlify.com
+  source_url: https://github.com/jdemieville/fuzzyStringMatching
+  description: >
+    This site is built to assess the performance of various approximate string matching algorithms aka fuzzy string searching.
+  categories:
+    - JavaScript
+    - Learning
+    - Programming
+  built_by: Jennifer Demieville
+  built_by_url: https://demieville-codes.herokuapp.com/portfolio
+  featured: false
