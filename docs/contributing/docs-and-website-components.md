@@ -98,9 +98,10 @@ The `<Pullquote />` component is used to call out a quote in the blog. It applie
 
 #### Usage
 
-The Pull Quote component takes one prop, and uses the children it wraps to populate its inner content:
+The Pull Quote component takes two optional props, and uses the children it wraps to populate its inner content:
 
 - `citation` - the reference of the person or entity that made the quoted statement
+- `narrow` - styles the pull quote by removing the left and right negative margins, keeping it inside the parent container, this prop is not used in the blog to help the quote stand out, but could be used in docs where a quote is relevant to constrain the quote to the width of the doc (without extending into other sections of the layout)
 
 It is used like this:
 
@@ -111,7 +112,7 @@ author: Jay Gatsby
 ---
 
 <!-- highlight-start -->
-<Pullquote citation="Winston Churchill">
+<Pullquote citation="Winston Churchill" narrow={true}>
   To improve is to change, so to be perfect is to have changed often.
 </Pullquote>
 <!-- highlight-end -->
@@ -121,7 +122,7 @@ author: Jay Gatsby
 
 Rendered, the component looks like this:
 
-<Pullquote citation="Winston Churchill">
+<Pullquote narrow={true} citation="Winston Churchill">
   To improve is to change, so to be perfect is to have changed often.
 </Pullquote>
 
