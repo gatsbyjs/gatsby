@@ -145,6 +145,10 @@ const updateSchemaComposer = async ({
     nodeStore,
     parentSpan: activity.span,
   })
+  await addConvenienceChildrenFields({
+    schemaComposer,
+    parentSpan: activity.span,
+  })
   await Promise.all(
     Array.from(new Set(schemaComposer.values())).map(typeComposer =>
       processTypeComposer({
@@ -157,10 +161,6 @@ const updateSchemaComposer = async ({
     )
   )
   checkQueryableInterfaces({ schemaComposer, parentSpan: activity.span })
-  await addConvenienceChildrenFields({
-    schemaComposer,
-    parentSpan: activity.span,
-  })
   await addThirdPartySchemas({
     schemaComposer,
     thirdPartySchemas,
