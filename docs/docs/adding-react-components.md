@@ -29,18 +29,14 @@ export default () => (
 
 ### Importing third-party components
 
-Just like React, Gatsby also supports third-party components and libraries. You can install a third-party component or library via your package manager, such as `npm`.
+Just like React, Gatsby also supports third-party components and libraries. You can install a third-party component or library via your package manager. We tend to favour and use `npm` and we will reflect this in our examples.
 
 Here's an example of adding a third-party component to your site.
 
-First, you have to install the component or library's package via a package manager. It's recommended not to mix package managers (don't use npm and yarn at the same time).
+First, you have to install the component or library's package via a package manager. It's recommended not to mix package managers, so if you use `npm`, don't use another and vice versa.
 
 ```shell
-// Install material-ui with npm
 npm install @material-ui/core
-
-// Or with yarn
-yarn add @material-ui/core
 ```
 
 After you've installed a package, import and use it in your page's source:
@@ -73,13 +69,13 @@ Some components or code references on "browser globals" such as `window`, `docum
 WebpackError: ReferenceError: window is not defined
 ```
 
-There's a great section on fixing these issues on the [Porting from Create React App](/docs/porting-from-create-react-app-to-gatsby#server-side-rendering-and-browser-apis) page.
+There's a great section on fixing these issues on the [Porting from Create React App documentation](/docs/porting-from-create-react-app-to-gatsby#server-side-rendering-and-browser-apis).
 
 #### Fixing third-party modules
 
 Some packages expect `window` or another browser global to be defined. These packages will have to be patched.
 
-You can learn how to patch these packages on the [Debugging HTML Builds](docs/debugging-html-builds/#fixing-third-party-modules) page.
+You can learn how to patch these packages on the [Debugging HTML Builds documentation](docs/debugging-html-builds/#fixing-third-party-modules).
 
 ### Components without server-side rendering
 
