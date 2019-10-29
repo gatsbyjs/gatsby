@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.34](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.33...gatsby-plugin-sharp@2.2.34) (2019-10-28)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.2.33](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.32...gatsby-plugin-sharp@2.2.33) (2019-10-28)
+
+### Bug Fixes
+
+- update minor updates in packages ([#18875](https://github.com/gatsbyjs/gatsby/issues/18875)) ([b692879](https://github.com/gatsbyjs/gatsby/commit/b692879))
+
+## [2.2.32](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.31...gatsby-plugin-sharp@2.2.32) (2019-10-16)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.2.31](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.30...gatsby-plugin-sharp@2.2.31) (2019-10-14)
+
+### Bug Fixes
+
+- **gatsby-plugin-sharp:** Allow brackets in paths ([#18289](https://github.com/gatsbyjs/gatsby/issues/18289)) ([f9933b1](https://github.com/gatsbyjs/gatsby/commit/f9933b1))
+
+## [2.2.30](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.29...gatsby-plugin-sharp@2.2.30) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.2.29](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.28...gatsby-plugin-sharp@2.2.29) (2019-10-09)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.2.28](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.27...gatsby-plugin-sharp@2.2.28) (2019-10-04)
+
+### Bug Fixes
+
+- update dependency bluebird to ^3.7.0 ([#18029](https://github.com/gatsbyjs/gatsby/issues/18029)) ([bd235a8](https://github.com/gatsbyjs/gatsby/commit/bd235a8))
+
 ## [2.2.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.25...gatsby-plugin-sharp@2.2.27) (2019-09-26)
 
 ### Bug Fixes

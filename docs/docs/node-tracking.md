@@ -4,7 +4,7 @@ title: Node Tracking
 
 ## Track Nodes
 
-You may see calls to `trackInlineObjectsInRootNode()` and `findRootNodeAncestor()` in some parts of the code. These are both defined in schema/node-tracking.js. Node tracking is the tracking of relationships between a node's object values (not children), and the node's ID. E.g Take, the following node:
+You may see calls to `trackInlineObjectsInRootNode()` and `findRootNodeAncestor()` in some parts of the code. These are both defined in schema/node-tracking.js. Node tracking is the tracking of relationships between a node's object values (not children), and the node's ID. E.g. Take, the following node:
 
 ```javascript
 let nodeA = {
@@ -22,7 +22,7 @@ let nodeA = {
 }
 ```
 
-Its sub objects are `foo` (value = `{ myfile: "blog/my-blog.md", b: 2}`), and those in the `baz` array (`{ x: 8 }`). Node tracking will track those back to the top level node's ID (`id2` in this case). The [trackInlineObjectsinRootNode()](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/db/node-tracking.js#L32) function takes care of this and records those relationships in the [rootNodeMap](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/db/node-tracking.js#L9) WeakMap. E.g after calling `trackInlineObjectsInRootNode(nodeA)`, `rootNodeMap` would contain the following records:
+Its sub objects are `foo` (value = `{ myfile: "blog/my-blog.md", b: 2}`), and those in the `baz` array (`{ x: 8 }`). Node tracking will track those back to the top level node's ID (`id2` in this case). The [trackInlineObjectsinRootNode()](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/db/node-tracking.js#L32) function takes care of this and records those relationships in the [rootNodeMap](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/db/node-tracking.js#L9) WeakMap. E.g. after calling `trackInlineObjectsInRootNode(nodeA)`, `rootNodeMap` would contain the following records:
 
 ```javascript
 // rootNodeMap:

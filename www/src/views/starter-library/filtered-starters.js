@@ -1,21 +1,13 @@
-import React, { Component } from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
+import { Component } from "react"
 import SearchIcon from "../../components/search-icon"
 import MdArrowDownward from "react-icons/lib/md/arrow-downward"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import MdSort from "react-icons/lib/md/sort"
 
-import { rhythm } from "../../utils/typography"
-import {
-  colors,
-  space,
-  radii,
-  mediaQueries,
-  sizes,
-  fonts,
-} from "../../utils/presets"
-
-import styles from "../shared/styles"
-
+import { mediaQueries } from "../../gatsby-plugin-theme-ui"
+import { loadMoreButton } from "../shared/styles"
 import LHSFilter from "./lhs-filter"
 import StarterList from "./starter-list"
 import Button from "../../components/button"
@@ -30,6 +22,7 @@ import {
 import FooterLinks from "../../components/shared/footer-links"
 import ResetFilters from "../shared/reset-filters"
 import DebounceInput from "../../components/debounce-input"
+import { themedInput } from "../../utils/styles"
 
 export default class FilteredStarterLibrary extends Component {
   state = {
@@ -112,7 +105,7 @@ export default class FilteredStarterLibrary extends Component {
         <SidebarContainer css={{ overflowY: `auto` }}>
           <SidebarHeader />
           <SidebarBody>
-            <div css={{ height: space[10] }}>
+            <div sx={{ height: t => t.space[10] }}>
               {(filters.size > 0 || urlState.s.length > 0) && ( // search is a filter too https://gatsbyjs.slack.com/archives/CB4V648ET/p1529224551000008
                 <ResetFilters onClick={resetFilters} />
               )}
@@ -166,10 +159,10 @@ export default class FilteredStarterLibrary extends Component {
           <ContentHeader
             cssOverrides={{
               height: `6rem`,
-              paddingTop: `${space[6]}`,
+              pt: 6,
               [mediaQueries.sm]: {
-                height: sizes.headerHeight,
-                paddingTop: 0,
+                height: `headerHeight`,
+                pt: 0,
               },
             }}
           >
@@ -182,73 +175,58 @@ export default class FilteredStarterLibrary extends Component {
               what="size"
             />
             <div
-              css={{
+              sx={{
                 display: `flex`,
                 justifyContent: `space-between`,
-                marginBottom: space[2],
+                mb: 2,
                 width: `100%`,
                 [mediaQueries.sm]: {
                   justifyContent: `flex-end`,
-                  marginBottom: 0,
+                  mb: 0,
                   width: `50%`,
                 },
               }}
             >
-              {/* @todo: add sorting. */}
+              {/* TODO add sorting. */}
               <label
-                css={{
+                sx={{
                   display: `none`,
                   [mediaQueries.lg]: {
                     border: 0,
-                    borderRadius: radii[2],
-                    color: colors.gatsby,
-                    fontFamily: fonts.header,
-                    paddingTop: space[1],
-                    paddingRight: space[1],
-                    paddingBottom: space[1],
-                    width: rhythm(5),
+                    borderRadius: 2,
+                    color: `gatsby`,
+                    fontFamily: `header`,
+                    py: 1,
+                    pr: 1,
+                    width: `10rem`,
                   },
                 }}
                 onClick={toggleSort}
               >
-                <MdSort css={{ marginRight: 8 }} />
+                <MdSort sx={{ mr: 2 }} />
                 {urlState.sort === `recent` ? `Most recent` : `Most stars`}
               </label>
               <label css={{ position: `relative` }}>
                 <DebounceInput
-                  css={{
-                    marginTop: space[1],
-                    ...styles.searchInput,
-                    width: rhythm(6),
+                  sx={{
+                    ...themedInput,
+                    pl: 7,
                   }}
                   value={urlState.s}
                   onChange={this.onChangeUrlWithText}
                   placeholder="Search starters"
                   aria-label="Search starters"
                 />
-                <SearchIcon
-                  overrideCSS={{
-                    fill: colors.lilac,
-                    height: space[4],
-                    left: `5px`,
-                    pointerEvents: `none`,
-                    position: `absolute`,
-                    top: `50%`,
-                    transform: `translateY(-50%)`,
-                    width: space[4],
-                  }}
-                />
+                <SearchIcon />
               </label>
               <Button
                 to="https://gatsbyjs.org/contributing/submit-to-starter-library/"
                 tag="href"
                 target="_blank"
                 rel="noopener noreferrer"
-                small
+                variant="small"
                 icon={<ArrowForwardIcon />}
-                overrideCSS={{
-                  marginLeft: 10,
-                }}
+                overrideCSS={{ ml: 3 }}
               >
                 Submit a Starter
               </Button>
@@ -262,8 +240,9 @@ export default class FilteredStarterLibrary extends Component {
           />
           {this.state.sitesToShow < starters.length && (
             <Button
+              variant="large"
               tag="button"
-              overrideCSS={styles.loadMoreButton}
+              overrideCSS={loadMoreButton}
               onClick={() => this.showMoreSites(starters)}
               icon={<MdArrowDownward />}
             >

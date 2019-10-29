@@ -1,5 +1,5 @@
 ---
-title: "Building With Gatsby in the Enterprise"
+title: Building with Gatsby in the Enterprise
 ---
 
 Some Gatsby advocates may be working inside “enterprise” software development organizations. Others may work at agencies which work closely with such organizations.
@@ -42,7 +42,7 @@ These requirements tend to be in place to enable marketing, security, analytics,
 
 **Solution 1: Dedicate a few days or weeks to build integrations.** If your company has these requirements, building integrations is quite feasible with Gatsby’s plugin system (and even well-documented, with many examples for each category of integration).
 
-**Challenge 2: Need for buy-in from executives.** Sometimes new technology adoption in the enterprise requires buy-in from executives who aren’t end-users of Gatsby.
+**Challenge 2: Need for buy-in from executives.** Sometimes new technology adoption in the enterprise requires buy-in from executives who aren’t end users of Gatsby.
 
 **Solution 2: Potential strategies to get buy-in include building consensus among developers, executing a simple proof of concept, and using the language of execs and managers.**
 

@@ -237,6 +237,7 @@ const watch = async rootDir => {
       ...packagePaths,
     ])
     .on(`change`, path => {
+      report.pendingActivity({ id: `query-extraction` })
       debounceCompile()
     })
 

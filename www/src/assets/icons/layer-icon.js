@@ -1,5 +1,5 @@
 import React from "react"
-import { colors } from "../../utils/presets"
+import { colors } from "gatsby-design-tokens"
 
 const LayerIcon = ({ name, fillColor = colors.grey[`50`] }) => {
   const icons = {

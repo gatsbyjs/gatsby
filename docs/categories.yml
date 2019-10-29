@@ -12,7 +12,7 @@ starter:
   - CMS:Drupal
   - CMS:Prismic
   - CMS:Netlify
-  - CMS:Wordpress
+  - CMS:WordPress
   - CMS:sanity.io
   - CMS:Strapi
   - CMS:Forestry.io

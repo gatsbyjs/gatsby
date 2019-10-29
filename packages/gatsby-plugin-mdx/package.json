@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-mdx",
-  "version": "1.0.46",
+  "version": "1.0.54",
   "description": "MDX integration for Gatsby",
   "main": "index.js",
   "license": "MIT",
@@ -18,13 +18,13 @@
     "@mdx-js/react": "^1.0.0"
   },
   "dependencies": {
-    "@babel/core": "^7.6.2",
-    "@babel/generator": "^7.6.2",
+    "@babel/core": "^7.6.4",
+    "@babel/generator": "^7.6.4",
     "@babel/helper-plugin-utils": "^7.0.0",
     "@babel/plugin-proposal-object-rest-spread": "^7.6.2",
-    "@babel/preset-env": "^7.6.2",
-    "@babel/preset-react": "^7.0.0",
-    "@babel/types": "^7.6.1",
+    "@babel/preset-env": "^7.6.3",
+    "@babel/preset-react": "^7.6.3",
+    "@babel/types": "^7.6.3",
     "camelcase-css": "^2.0.1",
     "change-case": "^3.1.0",
     "core-js": "2",
@@ -49,17 +49,17 @@
     "static-site-generator-webpack-plugin": "^3.4.2",
     "style-to-object": "^0.2.3",
     "underscore.string": "^3.3.5",
-    "unified": "^8.4.0",
+    "unified": "^8.4.1",
     "unist-util-map": "^1.0.5",
     "unist-util-remove": "^1.0.3",
     "unist-util-visit": "^1.4.1"
   },
   "devDependencies": {
-    "@mdx-js/mdx": "^1.5.0",
-    "@mdx-js/react": "^1.5.0",
+    "@mdx-js/mdx": "^1.5.1",
+    "@mdx-js/react": "^1.5.1",
     "jest": "^24.9.0",
     "js-combinatorics": "^0.5.4",
-    "react-test-renderer": "^16.10.1"
+    "react-test-renderer": "^16.11.0"
   },
   "jest": {
     "testEnvironment": "node"
@@ -72,5 +72,6 @@
     "markdown",
     "remark",
     "rehype"
-  ]
+  ],
+  "types": "index.d.ts"
 }

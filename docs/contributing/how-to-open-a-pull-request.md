@@ -14,7 +14,7 @@ Gatsby uses the PR process to review and test changes before they’re added to 
 
 When someone wants to contribute to Gatsby, they open a request to _pull_ their code into the repo. Depending on the type of change, PRs are categorized into:
 
-- [Documentation](#documentation)
+- [Documentation](#documentation-prs)
 - [Code](#code-changes)
 - [Starters or Site Showcase](#starters-or-site-showcase)
 - [Blog posts](#blog-posts)
@@ -116,7 +116,7 @@ The Gatsby GitHub repo is very active, so it's likely you'll need to update your
 
 - Set Gatsby's repo URL as a remote source. The name of the remote is arbitrary; this example uses `upstream`.
   ```shell
-  git remote set-url upstream git@github.com:gatsbyjs/gatsby.git
+  git remote add upstream git@github.com:gatsbyjs/gatsby.git
   ```
   - _Note: this syntax [uses SSH and keys: you can also use `https`](https://help.github.com/en/articles/which-remote-url-should-i-use) and your username/password._
 - You can verify the remote name and URL at any time:
@@ -129,7 +129,7 @@ The Gatsby GitHub repo is very active, so it's likely you'll need to update your
   ```
 - [In the branch](https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging) you want to update, merge any changes from Gatsby into your fork:
   ```shell
-  git merge upstream master
+  git merge upstream/master
   ```
   - If there are any [merge conflicts](https://help.github.com/en/articles/resolving-a-merge-conflict-on-github), you'll want to address those to get a clean merge.
 - Once your branch is in good working order, push the changes to your fork:
@@ -139,7 +139,7 @@ The Gatsby GitHub repo is very active, so it's likely you'll need to update your
 
 For more information on working with upstream repos, [visit the GitHub docs](https://help.github.com/en/articles/configuring-a-remote-for-a-fork).
 
-_**Note:** as a member of the Gatsby repo, you can also clone it directly instead of forking and push your changes to [feature branches](https://git-scm.com/book/en/v1/Git-Branching-Branching-Workflows)._
+_**Note:** as a member of the Gatsby repo, you can also clone it directly (instead of forking and using an upstream remote workflow). You can then push changes to [feature branches](https://git-scm.com/book/en/v1/Git-Branching-Branching-Workflows) to open PRs._
 
 ## Additional resources
 
@@ -151,3 +151,4 @@ _**Note:** as a member of the Gatsby repo, you can also clone it directly instea
 - [Feature Branching and Workflows](https://git-scm.com/book/en/v1/Git-Branching-Branching-Workflows)
 - [Resolving merge conflicts](https://help.github.com/en/articles/resolving-a-merge-conflict-on-github)
 - [Managing Pull Requests](/contributing/managing-pull-requests/) on the Gatsby core team
+- [Guide on Markdown Syntax](/docs/mdx/markdown-syntax/)
