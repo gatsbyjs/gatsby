@@ -5,9 +5,10 @@ const _ = require(`lodash`)
 const debug = require(`debug`)(`gatsby:load-themes`)
 const preferDefault = require(`../prefer-default`)
 const getConfigFile = require(`../get-config-file`)
+const reporter = require(`gatsby-cli/lib/reporter`)
 
 // get the gatsby-config file for a theme
-const resolveTheme = async themeSpec => {
+const resolveTheme = async (themeSpec, configFileThatDeclaredTheme) => {
   const themeName = themeSpec.resolve || themeSpec
   let themeDir
   try {
@@ -15,23 +16,35 @@ const resolveTheme = async themeSpec => {
     themeDir = path.dirname(require.resolve(themeName))
   } catch (e) {
     // is a local plugin OR it doesn't exist
+    const pathToLocalTheme = path.join(path.resolve(`.`), `plugins`, themeName)
     try {
-      console.log(path.resolve(`.`))
-      themeDir = path.dirname(
-        require.resolve(path.join(path.resolve(`.`), `plugins`, themeName))
-      )
+      themeDir = path.dirname(require.resolve(pathToLocalTheme))
     } catch (localErr) {
-      console.log(localErr)
-      throw e
+      const nodeResolutionPaths = module.paths.map(p => path.join(p, themeName))
+      reporter.panic({
+        id: `10226`,
+        context: {
+          themeName,
+          configFilePath: configFileThatDeclaredTheme,
+          pathToLocalTheme,
+          nodeResolutionPaths,
+        },
+      })
     }
   }
-  const theme = await preferDefault(getConfigFile(themeDir, `gatsby-config`))
+
+  const { configModule, configFilePath } = await getConfigFile(
+    themeDir,
+    `gatsby-config`
+  )
+  let theme = preferDefault(configModule)
+
   // if theme is a function, call it with the themeConfig
   let themeConfig = theme
   if (_.isFunction(theme)) {
     themeConfig = theme(themeSpec.options || {})
   }
-  return { themeName, themeConfig, themeSpec, themeDir }
+  return { themeName, themeConfig, themeSpec, themeDir, configFilePath }
 }
 
 // single iteration of a recursive function that resolve parent themes
@@ -42,7 +55,7 @@ const resolveTheme = async themeSpec => {
 // no use case for a loop so I expect that to only happen if someone is very
 // off track and creating their own set of themes
 const processTheme = (
-  { themeName, themeConfig, themeSpec, themeDir },
+  { themeName, themeConfig, themeSpec, themeDir, configFilePath },
   { useLegacyThemes }
 ) => {
   const themesList = useLegacyThemes
@@ -55,7 +68,7 @@ const processTheme = (
     // for every parent theme a theme defines, resolve the parent's
     // gatsby config and return it in order [parentA, parentB, child]
     return Promise.mapSeries(themesList, async spec => {
-      const themeObj = await resolveTheme(spec)
+      const themeObj = await resolveTheme(spec, configFilePath)
       return processTheme(themeObj, { useLegacyThemes })
     }).then(arr =>
       arr.concat([{ themeName, themeConfig, themeSpec, themeDir }])
@@ -66,11 +79,14 @@ const processTheme = (
   }
 }
 
-module.exports = async (config, { useLegacyThemes = false }) => {
+module.exports = async (
+  config,
+  { useLegacyThemes = false, configFilePath }
+) => {
   const themesA = await Promise.mapSeries(
     useLegacyThemes ? config.__experimentalThemes || [] : config.plugins || [],
     async themeSpec => {
-      const themeObj = await resolveTheme(themeSpec)
+      const themeObj = await resolveTheme(themeSpec, configFilePath)
       return processTheme(themeObj, { useLegacyThemes })
     }
   ).then(arr => _.flattenDeep(arr))

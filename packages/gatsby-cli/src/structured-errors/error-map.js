@@ -160,6 +160,23 @@ const errorMap = {
     type: `CONFIG`,
     level: `ERROR`,
   },
+  "10226": {
+    text: context =>
+      stripIndent(`
+      Couldn't find the "${context.themeName}" plugin that is declared in "${
+        context.configFilePath
+      }". 
+      
+      Tried looking for a local plugin in ${context.pathToLocalTheme}.
+      
+      Also tried looking for an installed package in the following paths:
+${context.nodeResolutionPaths
+  .map(potentialLocationPath => `        - ${potentialLocationPath}`)
+  .join(`\n`)}
+      `),
+    type: `CONFIG`,
+    level: `ERROR`,
+  },
   // Plugin errors
   "11321": {
     text: context =>
