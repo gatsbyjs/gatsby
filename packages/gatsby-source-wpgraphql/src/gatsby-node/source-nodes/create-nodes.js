@@ -1,9 +1,27 @@
 const url = require(`url`)
 const { dd } = require(`dumper.js`)
+
+const {
+  getAvailableContentTypes,
+} = require(`./generate-queries-from-introspection/index`)
+
 const createGatsbyNodesFromWPGQLContentNodes = async (
   { wpgqlNodesByContentType },
-  { actions, createNodeId, createContentDigest }
+  { actions, createNodeId, createContentDigest, getNode },
+  pluginOptions
 ) => {
+  // we use this to get all content types in order to make a union of all post types
+  // it's helpful for templating so that the same template can be
+  // used across multiple post types
+  const contentTypes = (await getAvailableContentTypes({
+    url: pluginOptions.url,
+  }))
+    // flatten to object to check against properties
+    .reduce((accumulator, type) => {
+      accumulator[type.singular] = true
+      return accumulator
+    }, {})
+
   const createdNodeIds = []
 
   for (const wpgqlNodesGroup of wpgqlNodesByContentType) {
@@ -56,23 +74,20 @@ const createGatsbyNodesFromWPGQLContentNodes = async (
 
       const nodeId = createNodeId(node.id)
 
+      const nodeType = contentTypes[node.contentType]
+        ? // if this is a post, page or CPT, we want to group it into
+          // the WpContent node type to make sharing templates across post types easy
+          `WpContent`
+        : // otherwise we can namespace the existing type
+          `Wp${node.type}`
+
       await actions.createNode({
         ...node,
         id: nodeId,
         parent: null,
         internal: {
           contentDigest: createContentDigest(node),
-          type: `Wp${node.type}`,
-        },
-      })
-
-      await actions.createNode({
-        content___NODE: nodeId,
-        id: createNodeId(`wp-content-${node.id}`),
-        parent: null,
-        internal: {
-          contentDigest: createContentDigest(node),
-          type: `WpContent`,
+          type: nodeType,
         },
       })
 
