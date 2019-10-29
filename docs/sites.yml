@@ -8174,17 +8174,16 @@
   built_by: Brent Ingram
   built_by_url: https://www.brentjingram.com/
   featured: false
-
 - title: Veryben
   main_url: https://veryben.com/
   url: https://veryben.com/
   description: >
     be water my friend
-  featured: false
   categories:
     - Blog
   built_by: anikijiang
   built_by_url: https://twitter.com/anikijiang
+  featured: false
 - title: kentarom's portfolio
   main_url: https://kentarom.com/
   url: https://kentarom.com/
