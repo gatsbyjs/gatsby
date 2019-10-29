@@ -20,6 +20,7 @@ See the [library of official and community plugins](/plugins/)
 
 - [Develop & Build GatsbyJS static sites within Docker](https://github.com/aripalo/gatsby-docker/)
 - Is Gatsby? - Browser extension for [Chrome](https://chrome.google.com/webstore/detail/is-gatsby/jgaejkhmgkpagdmapahohjennkhbpgfj) and [Firefox](https://addons.mozilla.org/en-US/firefox/addon/is-gatsby/) to check if a site / page is using Gatsby.
+- [Gatsby Docs Kit](https://github.com/brainhubeu/gatsby-docs-kit): A set of tools, extending Gatsby to generate gorgeous documentation static website.
 
 ## Podcasts
 
@@ -81,6 +82,10 @@ See the [library of official and community plugins](/plugins/)
 - [Understanding the Gatsby lifecycle](https://medium.com/narative/understanding-gatsbys-lifecycle-31c473ba2f2d)
 - [GatsbyGuides.com series on building web applications with Gatsby & Drupal](https://gatsbyguides.com/)
 - [Deep dive into Gatsby – Building a static blog using Gatsby, React and GraphQL](https://zocada.com/deep-dive-gatsby-building-a-simple-static-blog-using-gatsby-react-and-graphql/)
+- [Gatsby - Full Tutorial for Beginners](https://www.youtube.com/watch?v=mHFAM0CXviE)
+- [Building a Video Blog with Gatsby and Markdown (MDX)](https://scotch.io/tutorials/building-a-video-blog-with-gatsby-and-markdown-mdx)
+- [Deploying Your First Gatsby Site to Netlify](https://scotch.io/tutorials/deploying-your-first-gatsby-site-to-netlify)
+- [Add a chat widget to your Gatsby blog](https://pusher.com/tutorials/chat-gatsby/)
 
 ### German
 
@@ -90,6 +95,11 @@ See the [library of official and community plugins](/plugins/)
 - [Erstelle dein Design System mit Gatsby (German)](https://www.lekoarts.de/blog/erstelle-dein-design-system-mit-gatsby/)
 - [Upgrade-Guide: Gatsby v2 (German)](https://www.lekoarts.de/blog/upgrade-guide-gatsby-v-2/)
 
+### Russian
+
+- [JAMstack: Как создать свой блог используя Gatsby + Contentful + Netlify (Russian)](https://habr.com/ru/post/439232/)
+- [Gatsby.js в деталях (Russian)](https://habr.com/ru/post/442298/)
+
 ### Spanish
 
 - [Construye y Publica Tu Blog Personal con Gatsby y Netlify (Spanish)](https://medium.com/@n370/construye-y-publica-tu-blog-personal-con-gatsby-y-netlify-parte-1-89804ba63625)
@@ -97,6 +107,11 @@ See the [library of official and community plugins](/plugins/)
 ### Turkish
 
 - [GatsbyJS ile Modern Web Sitesi | 1. Bölüm (Başlangıç ve Kurulum) (Turkish)](https://medium.com/@raufsamestone/reactjs-ve-gatsbyjs-ile-modern-web-sitesi-1-b%C3%B6l%C3%BCm-ba%C5%9Flang%C4%B1%C3%A7-ve-kurulum-27437d6aaf54)
+
+### Ukrainian
+
+- [JAMstack: створюємо блог з Gatsby + Contentful + Netlify (Ukrainian)](https://dou.ua/lenta/articles/creating-blog-with-jamstack/)
+- [Детально про Gatsby.js — інструмент для створення складних веб-сайтів (Ukrainian)](https://dou.ua/lenta/articles/gatsbyjs-guide/)
 
 ## Other resources
 
@@ -111,3 +126,7 @@ See the [library of official and community plugins](/plugins/)
 ### Reddit Community
 
 [Gatsby community on Reddit](https://www.reddit.com/r/gatsbyjs) is a place where you can read news about Gatsby, interact with other Gatsby developers and get advice on Gatsby-related Questions.
+
+### FreeCodeCamp Community
+
+[The FreeCodeCamp News Gatsby tag](https://www.freecodecamp.org/news/tag/gatsby/) is a place where you can write and read substantial articles around Gatsby-related topics.

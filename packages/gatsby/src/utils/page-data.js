@@ -1,7 +1,5 @@
 const fs = require(`fs-extra`)
 const path = require(`path`)
-const Promise = require(`bluebird`)
-const { chunk } = require(`lodash`)
 
 const getFilePath = ({ publicDir }, pagePath) => {
   const fixedPagePath = pagePath === `/` ? `index` : pagePath
@@ -13,35 +11,18 @@ const read = async ({ publicDir }, pagePath) => {
   return JSON.parse(rawPageData)
 }
 
-const write = async ({ publicDir }, page, result, webpackCompilationHash) => {
+const write = async ({ publicDir }, page, result) => {
   const filePath = getFilePath({ publicDir }, page.path)
   const body = {
     componentChunkName: page.componentChunkName,
     path: page.path,
     matchPath: page.matchPath,
-    webpackCompilationHash,
     result,
   }
   await fs.outputFile(filePath, JSON.stringify(body))
 }
 
-const updateCompilationHashes = (
-  { publicDir, workerPool },
-  pagePaths,
-  webpackCompilationHash
-) => {
-  const segments = chunk(pagePaths, 50)
-  return Promise.map(segments, segment =>
-    workerPool.updateCompilationHashes(
-      { publicDir },
-      segment,
-      webpackCompilationHash
-    )
-  )
-}
-
 module.exports = {
   read,
   write,
-  updateCompilationHashes,
 }

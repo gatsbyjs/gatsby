@@ -1,6 +1,8 @@
 const _ = require(`lodash`)
+const path = require(`path`)
 const fs = require(`fs-extra`)
 const crypto = require(`crypto`)
+const slash = require(`slash`)
 const { store, emitter } = require(`../redux/`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 const { match } = require(`@reach/router/lib/utils`)
@@ -27,8 +29,11 @@ const getComponents = pages =>
  */
 const getMatchPaths = pages => {
   const createMatchPathEntry = (page, index) => {
-    let score = page.matchPath.replace(/\/$/, ``).split(`/`).length
+    let score = page.matchPath.replace(/[/][*]?$/, ``).split(`/`).length
+    let wildcard = 0
+
     if (!page.matchPath.includes(`*`)) {
+      wildcard = 1
       score += 1
     }
 
@@ -36,6 +41,7 @@ const getMatchPaths = pages => {
       ...page,
       index,
       score,
+      wildcard,
     }
   }
 
@@ -74,6 +80,12 @@ const getMatchPaths = pages => {
 
   return matchPathPages
     .sort((a, b) => {
+      // Paths with wildcards should appear after those without.
+      const wildcardOrder = b.wildcard - a.wildcard
+      if (wildcardOrder !== 0) {
+        return wildcardOrder
+      }
+
       // The higher the score, the higher the specificity of our matchPath
       const order = b.score - a.score
       if (order !== 0) {
@@ -133,12 +145,17 @@ const preferDefault = m => m && m.default || m
 const preferDefault = m => m && m.default || m
 \n`
   asyncRequires += `exports.components = {\n${components
-    .map(
-      c =>
-        `  "${c.componentChunkName}": () => import("${joinPath(
-          c.component
-        )}" /* webpackChunkName: "${c.componentChunkName}" */)`
-    )
+    .map(c => {
+      // we need a relative import path to keep contenthash the same if directory changes
+      const relativeComponentPath = path.relative(
+        path.join(program.directory, `.cache`),
+        c.component
+      )
+
+      return `  "${c.componentChunkName}": () => import("${slash(
+        relativeComponentPath
+      )}" /* webpackChunkName: "${c.componentChunkName}" */)`
+    })
     .join(`,\n`)}
 }\n\n`
 

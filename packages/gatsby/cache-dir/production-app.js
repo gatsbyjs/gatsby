@@ -26,7 +26,6 @@ loader.setApiRunner(apiRunner)
 window.asyncRequires = asyncRequires
 window.___emitter = emitter
 window.___loader = publicLoader
-window.___webpackCompilationHash = window.webpackCompilationHash
 
 navigationInit()
 
@@ -123,6 +122,9 @@ apiRunnerAsync(`onClientEntry`).then(() => {
         `page resources for ${browserLoc.pathname} not found. Not rendering React`
       )
     }
+
+    window.___webpackCompilationHash = page.page.webpackCompilationHash
+
     const Root = () => (
       <Location>
         {locationContext => <LocationHandler {...locationContext} />}

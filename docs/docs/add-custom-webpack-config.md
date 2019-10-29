@@ -108,7 +108,7 @@ exports.onCreateWebpackConfig = ({ actions, loaders, getConfig }) => {
 
     // Recreate it with custom exclude filter
     {
-      // Called without any arguments, `loaders.js` will return an
+      // Called without any arguments, `loaders.js()` will return an
       // object like:
       // {
       //   options: undefined,
