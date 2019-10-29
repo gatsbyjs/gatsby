@@ -1,5 +1,5 @@
 const url = require(`url`)
-
+const { dd } = require(`dumper.js`)
 const fetchGraphql = require(`../../../utils/fetch-graphql`)
 
 const { getPageQuery } = require(`../graphql-queries`)
@@ -7,6 +7,7 @@ const { getPageQuery } = require(`../graphql-queries`)
 const wpActionCREATE = async ({
   helpers,
   pluginOptions,
+  intervalRefetching,
   cachedNodeIds,
   wpAction,
 }) => {
@@ -55,8 +56,14 @@ const wpActionCREATE = async ({
     },
   })
 
+  if (intervalRefetching) {
+    helpers.reporter.info(
+      `[gatsby-source-wpgraphql] created ${wpAction.referencedPostSingleName} ${wpAction.referencedPostID}`
+    )
+  }
+
   // add our node id to the list of cached node id's
-  return [...cachedNodeIds, nodeId]
+  return [nodeId, ...cachedNodeIds]
 }
 
 module.exports = wpActionCREATE

@@ -1,21 +1,54 @@
+const { CREATED_NODE_IDS } = require(`../constants`)
 const { fetchAndRunWpActions } = require(`./wp-actions`)
+const { dd } = require(`dumper.js`)
 
-const fetchNodeUpdates = async ({ since }, helpers, pluginOptions) => {
+const fetchAndApplyNodeUpdates = async (
+  { since, intervalRefetching },
+  helpers,
+  pluginOptions
+) => {
+  const { cache, reporter } = helpers
+  let cachedNodeIds = await cache.get(CREATED_NODE_IDS)
+
+  let activity
+
+  if (!intervalRefetching) {
+    activity = reporter.activityTimer(
+      `[gatsby-source-wpgraphql] pull updates since last build`
+    )
+    activity.start()
+  }
+
   // Check with WPGQL to create, delete, or update cached WP nodes
-  cachedNodeIds = fetchAndRunWpActions({
-    since: lastCompletedSourceTime,
+  const { validNodeIds, wpActions, didUpdate } = await fetchAndRunWpActions({
+    since,
+    intervalRefetching,
     cachedNodeIds,
-    ...api,
+    helpers,
+    pluginOptions,
   })
 
   const { actions } = helpers
 
-  // touch nodes that haven't been deleted
-  // so that they aren't garbage collected by Gatsby
-  cachedNodeIds.forEach(nodeId => actions.touchNode({ nodeId }))
+  if (
+    // if we're refetching, we only want to touch all nodes
+    // if something changed
+    didUpdate ||
+    // if this is a regular build, we want to touch all nodes
+    // so they don't get garbage collected
+    !intervalRefetching
+  ) {
+    validNodeIds.forEach(nodeId => actions.touchNode({ nodeId }))
 
-  // update cachedNodeIds
-  await cache.set(CREATED_NODE_IDS, cachedNodeIds)
+    // update cachedNodeIds
+    await cache.set(CREATED_NODE_IDS, validNodeIds)
+  }
+
+  if (!intervalRefetching) {
+    activity.end()
+  }
+
+  return { validNodeIds, wpActions, didUpdate }
 }
 
-module.exports = fetchNodeUpdates
+module.exports = fetchAndApplyNodeUpdates

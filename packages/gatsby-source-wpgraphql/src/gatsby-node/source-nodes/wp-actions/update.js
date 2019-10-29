@@ -4,6 +4,7 @@ const { getPageQuery } = require(`../graphql-queries`)
 const wpActionUPDATE = async ({
   helpers,
   wpAction,
+  intervalRefetching,
   cachedNodeIds,
   pluginOptions,
 }) => {
@@ -32,6 +33,7 @@ const wpActionUPDATE = async ({
   const node = await getNode(nodeId)
   // touch the node so we own it
   await actions.touchNode({ nodeId })
+
   // then we can delete it
   await actions.deleteNode({ node })
 
@@ -47,6 +49,12 @@ const wpActionUPDATE = async ({
       type: `WpContent`,
     },
   })
+
+  if (intervalRefetching) {
+    helpers.reporter.info(
+      `[gatsby-source-wpgraphql] updated ${wpAction.referencedPostSingleName} ${wpAction.referencedPostID}`
+    )
+  }
 
   // we can leave cachedNodeIds as-is since the ID of the edited
   // node will be the same

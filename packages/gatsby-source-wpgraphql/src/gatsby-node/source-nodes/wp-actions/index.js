@@ -1,8 +1,8 @@
 const fetchGraphql = require(`../../../utils/fetch-graphql`)
 const { getActionMonitorQuery } = require(`../graphql-queries`)
-const { wpActionCREATE } = require(`./create`)
-const { wpActionDELETE } = require(`./delete`)
-const { wpActionUPDATE } = require(`./update`)
+const wpActionCREATE = require(`./create`)
+const wpActionDELETE = require(`./delete`)
+const wpActionUPDATE = require(`./update`)
 
 const getWpActions = async (__, { url }, variables) => {
   const query = getActionMonitorQuery()
@@ -37,17 +37,20 @@ const getWpActions = async (__, { url }, variables) => {
   return actions
 }
 
-const handleWpActions = async helpers => {
-  let cachedNodeIds
-  switch (helpers.wpAction.actionType) {
+const handleWpActions = async api => {
+  let { cachedNodeIds, helpers } = api
+
+  helpers.reporter.info(`running ${api.wpAction.actionType}`)
+  
+  switch (api.wpAction.actionType) {
     case `DELETE`:
-      cachedNodeIds = await wpActionDELETE(helpers)
+      cachedNodeIds = await wpActionDELETE(api)
       break
     case `UPDATE`:
-      cachedNodeIds = await wpActionUPDATE(helpers)
+      cachedNodeIds = await wpActionUPDATE(api)
       break
     case `CREATE`:
-      cachedNodeIds = await wpActionCREATE(helpers)
+      cachedNodeIds = await wpActionCREATE(api)
   }
 
   return cachedNodeIds
@@ -56,25 +59,35 @@ const handleWpActions = async helpers => {
 const fetchAndRunWpActions = async ({
   helpers,
   pluginOptions,
+  intervalRefetching,
   since,
   cachedNodeIds,
 }) => {
-  // check for new, edited, or deleted posts in WP
+  // check for new, edited, or deleted posts in WP "Action Monitor"
   const wpActions = await getWpActions(helpers, pluginOptions, {
     since,
   })
 
-  for (const wpAction of wpActions) {
-    // Create, update, and delete nodes
-    cachedNodeIds = await handleWpActions({
-      helpers,
-      pluginOptions,
-      wpAction,
-      cachedNodeIds,
-    })
+  const didUpdate = !!wpActions.length
+
+  if (didUpdate) {
+    for (const wpAction of wpActions) {
+      // Create, update, and delete nodes
+      cachedNodeIds = await handleWpActions({
+        helpers,
+        pluginOptions,
+        intervalRefetching,
+        wpAction,
+        cachedNodeIds,
+      })
+    }
   }
 
-  return cachedNodeIds
+  return {
+    wpActions,
+    didUpdate,
+    validNodeIds: cachedNodeIds,
+  }
 }
 
 module.exports = { handleWpActions, getWpActions, fetchAndRunWpActions }

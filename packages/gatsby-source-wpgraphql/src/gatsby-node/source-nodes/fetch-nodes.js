@@ -9,17 +9,7 @@ const {
   buildNodeQueriesFromIntrospection,
 } = require(`./generate-queries-from-introspection`)
 
-const {
-  getAvailableContentTypes,
-} = require(`./generate-queries-from-introspection/index`)
-
 const fetchWPGQLContentNodes = async ({ queries }, _, { url }) => {
-  const contentTypes = await getAvailableContentTypes({ url })
-
-  if (!contentTypes) {
-    return false
-  }
-
   const contentNodeGroups = []
 
   for (const [fieldName, queryInfo] of Object.entries(queries)) {
@@ -71,54 +61,50 @@ const fetchWPGQLContentNodes = async ({ queries }, _, { url }) => {
   //   )
   // )
 
-  // this just get's post types
-  // await Promise.all(
-  //   contentTypes.map(async ({ plural, singular }) => {
-  //     const allNodesOfContentType = await paginatedWpNodeFetch({
-  //       first: 10,
-  //       after: null,
-  //       contentTypePlural: plural,
-  //       contentTypeSingular: singular,
-  //       url,
-  //     })
-
-  //     contentNodeGroups.push({
-  //       singular,
-  //       plural,
-  //       allNodesOfContentType,
-  //     })
-  //   })
-  // )
-
   return contentNodeGroups
 }
 
-const fetchAndCreateAllNodes = async (helpers, pluginOptions) => {
+const fetchAndCreateAllNodes = async (_, helpers, pluginOptions) => {
   const api = [helpers, pluginOptions]
 
-  const queries = await buildNodeQueriesFromIntrospection(...api)
+  const { reporter } = helpers
 
-  console.log(`fetch nodes`)
+  let activity
+
+  //
+  // Introspect schema and build gql queries
+  activity = reporter.activityTimer(
+    `[gatsby-source-wpgraphql] introspect schema`
+  )
+  activity.start()
+  const queries = await buildNodeQueriesFromIntrospection(...api)
+  activity.end()
+
+  activity = reporter.activityTimer(`[gatsby-source-wpgraphql] fetch content`)
+  activity.start()
   const wpgqlNodesByContentType = await fetchWPGQLContentNodes(
     { queries },
     ...api
   )
-  console.log(`finish fetch nodes`)
+  activity.end()
 
-  console.log(`create nodes`)
+  //
+  // Create nodes
+  activity = reporter.activityTimer(`[gatsby-source-wpgraphql] create nodes`)
+  activity.start()
   const createdNodeIds = await createGatsbyNodesFromWPGQLContentNodes(
     {
       wpgqlNodesByContentType,
     },
     ...api
   )
-  console.log(`finish create nodes`)
 
   const { cache } = helpers
 
   // save the node id's so we can touch them on the next build
   // so that we don't have to refetch all nodes
   await cache.set(CREATED_NODE_IDS, createdNodeIds)
+  activity.end()
 }
 
 module.exports = { fetchWPGQLContentNodes, fetchAndCreateAllNodes }

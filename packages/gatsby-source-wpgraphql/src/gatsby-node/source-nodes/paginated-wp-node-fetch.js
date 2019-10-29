@@ -37,6 +37,7 @@ const paginatedWpNodeFetch = async ({
   } = data
 
   if (nodes) {
+    // normalize nodes
     nodes.forEach(node => {
       node.contentType = contentTypeSingular
       node.contentTypePlural = contentTypePlural
@@ -48,7 +49,7 @@ const paginatedWpNodeFetch = async ({
 
   if (hasNextPage) {
     await paginatedWpNodeFetch({
-      first: 100,
+      first: variables.first,
       after: endCursor,
       url,
       contentTypePlural,
