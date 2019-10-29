@@ -339,7 +339,7 @@ export const globalStyles = t => {
     },
     ".egghead-video": {
       border: `none`,
-      "max-width": `100%`,
+      maxWidth: `100%`,
     },
     // Fancy external links in posts, borrowed from
     // https://github.com/comfusion/after-dark/
