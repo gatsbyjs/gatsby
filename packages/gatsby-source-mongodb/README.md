@@ -76,11 +76,11 @@ module.exports = {
         collection: `documents`,
         // highlight-start
         map: {
-          documents: {body: `text/markdown`}
+          documents: { body: `text/markdown` },
         },
         // highlight-end
       },
-    }
+    },
   ],
 }
 ```
