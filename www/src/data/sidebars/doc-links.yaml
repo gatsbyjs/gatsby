@@ -239,6 +239,8 @@
           items:
             - title: Starter Library
               link: /starters/
+            - title: Modifying a Starter
+              link: /docs/modifying-a-starter/
             - title: Creating a Starter
               link: /docs/creating-a-starter/
         - title: Themes
