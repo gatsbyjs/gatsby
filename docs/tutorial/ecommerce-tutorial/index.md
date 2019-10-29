@@ -110,7 +110,7 @@ Through this tutorial you will be using the "Checkout client-only integration" f
 
 > 💡 This change will also modify the interface that Stripe provides to administrate your products, keep this in mind in case you have previously used this tool. If you have never used the product administrator, you don't need to worry.
 
-Lastly, you need to set a name for your Stripe account on your [Account settings](https://dashboard.stripe.com/account) to use this integration.
+Additionally, you need to set a name for your Stripe account on your [Account settings](https://dashboard.stripe.com/account) to use this integration.
 
 To learn more about this integration you may use the [Stripe docs](https://stripe.com/docs/payments/checkout#configure).
 
@@ -294,7 +294,7 @@ module.exports = {
 }
 ```
 
-To retrieve your SKUs from your Stripe account you will need to provide your secret API key. This key needs to kept secret and must never be shared on the frontend or on GitHub. Therefore you need to set an environment variable to store the secret key. You can read more about the usage of env variables in Gatsby [here](https://www.gatsbyjs.org/docs/environment-variables/).
+To retrieve your SKUs from your Stripe account you will need to provide your secret API key. This key needs to be kept secret and must never be shared on the frontend or on GitHub. Therefore you need to set an environment variable to store the secret key. You can read more about the usage of env variables in Gatsby [here](https://www.gatsbyjs.org/docs/environment-variables/).
 
 In the root directory of your project add a `.env.development` file:
 
