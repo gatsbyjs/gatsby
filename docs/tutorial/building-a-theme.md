@@ -970,9 +970,9 @@ const Event = ({ name, location, url, startDate, endDate }) => (
       {name} ({location})
     </h2>
     <p>
-// highlight-start
+      // highlight-start
       <EventDate startDate={startDate} endDate={endDate} />
-// highlight-end
+      // highlight-end
     </p>
     <p>
       Website: <a href={url}>{url}</a>
