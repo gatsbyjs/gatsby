@@ -81,14 +81,31 @@ module.exports = {
 
 4. Write a GraphQL query using one of the included [GraphQL “fragments”](/packages/gatsby-image/#fragments) which specify the fields needed by `gatsby-image` to create a responsive, optimized image. This example queries for an image at a path relative to the location specified in the `gatsby-source-filesystem` options using the `GatsbyImageSharpFluid` fragment.
 
-```graphql
-file(relativePath: { eq: "images/default.jpg" }) {
-      childImageSharp {
-        # Specify the image processing specifications right in the query.
-        fluid {
-          ...GatsbyImageSharpFluid
+```jsx:title=src/pages/my-dogs.js
+import React from "react"
+import { useStaticQuery, graphql } from "gatsby" // highlight-line
+import Layout from "../components/layout"
+
+export default () => {
+  // highlight-start
+  const data = useStaticQuery(graphql`
+    query MyQuery {
+      file(relativePath: { eq: "images/corgi.jpg" }) {
+        childImageSharp {
+          # Specify the image processing specifications right in the query.
+          fluid {
+            ...GatsbyImageSharpFluid
+          }
         }
       }
+    }
+  `)
+  // highlight-end
+  return (
+    <Layout>
+      <h1>I love my corgi!</h1>
+    </Layout>
+  )
 }
 ```
 
@@ -99,18 +116,37 @@ file(relativePath: { eq: "images/default.jpg" }) {
 
 5. Import `Img` to display the fragment in JSX. There are additional features available with the `Img` tag as well, such as the `alt` attribute for accessibility.
 
-```jsx
-import Img from "gatsby-image"
+```jsx:title=src/pages/my-dogs.js
+import React from "react"
+import { useStaticQuery, graphql } from "gatsby"
+import Layout from "../components/layout"
+import Img from "gatsby-image" // highlight-line
 
-export default ({ data }) => (
-  <div>
-    <h1>Hello gatsby-image</h1>
-    <Img
-      fluid={data.file.childImageSharp.fluid}
-      alt="Gatsby Docs are awesome"
-    />
-  </div>
-)
+export default () => {
+  const data = useStaticQuery(graphql`
+    query MyQuery {
+      file(relativePath: { eq: "images/corgi.jpg" }) {
+        childImageSharp {
+          # Specify the image processing specifications right in the query.
+          fluid {
+            ...GatsbyImageSharpFluid
+          }
+        }
+      }
+    }
+  `)
+  return (
+    <Layout>
+      <h1>I love my corgi!</h1>
+      // highlight-start
+      <Img
+        fluid={data.file.childImageSharp.fluid}
+        alt="A corgi smiling happily"
+      />
+      // highlight-end
+    </Layout>
+  )
+}
 ```
 
 <EggheadEmbed
