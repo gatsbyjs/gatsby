@@ -19,6 +19,7 @@
     "imagemin-webp": "^5.1.0",
     "lodash": "^4.17.15",
     "mini-svg-data-uri": "^1.1.3",
+    "p-defer": "^3.0.0",
     "potrace": "^2.1.2",
     "probe-image-size": "^4.1.1",
     "progress": "^2.0.3",
