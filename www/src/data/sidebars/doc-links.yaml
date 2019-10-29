@@ -121,6 +121,8 @@
             - title: Working with Images in Markdown
               link: /docs/working-with-images-in-markdown/
               breadcrumbTitle: Images in Markdown
+            - title: Preprocessing External Images
+              link: /docs/preprocessing-external-images/
         - title: Sourcing Content & Data
           link: /docs/content-and-data/
           items:
@@ -237,6 +239,8 @@
           items:
             - title: Starter Library
               link: /starters/
+            - title: Modifying a Starter
+              link: /docs/modifying-a-starter/
             - title: Creating a Starter
               link: /docs/creating-a-starter/
         - title: Themes
@@ -400,7 +404,7 @@
             - title: Routing
               link: /docs/routing/
               items:
-                - title: "@reach/router and Gatsby*"
+                - title: "@reach/router and Gatsby"
                   link: /docs/reach-router-and-gatsby/
                 - title: Linking and Prefetching with Gatsby*
                   link: /docs/linking-and-prefetching-with-gatsby/
@@ -417,6 +421,11 @@
               link: /docs/client-data-fetching/
             - title: Using Client-Side Only Packages
               link: /docs/using-client-side-only-packages/
+            - title: Building an E-commerce Site
+              link: /docs/building-an-e-commerce-site/
+              items:
+                - title: Building an E-commerce Site with Shopify
+                  link: /docs/building-an-ecommerce-site-with-shopify/
         - title: Improving Performance
           link: /docs/performance/
           items:

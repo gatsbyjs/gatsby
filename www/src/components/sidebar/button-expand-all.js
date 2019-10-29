@@ -27,8 +27,8 @@ const ExpandAllButton = ({ onClick, expandAll }) => (
       textAlign: `left`,
       transition: t => `all ${t.transition.speed.fast}`,
       "&:hover": {
-        bg: `purple.10`,
-        color: `gatsby`,
+        bg: `sidebar.itemHoverBackground`,
+        color: `navigation.linkHover`,
       },
     }}
   >

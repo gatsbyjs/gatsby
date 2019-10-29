@@ -24,7 +24,7 @@ project](https://github.com/erquhart/gatsby-netlify-cms-example). If you'd like 
 blown template, check out
 [gatsby-starter-netlify-cms][1]._
 
-### Setup
+## Setup
 
 First, open a new terminal window and run the following to create a new site. This will create a new
 directory called `netlify-cms-tutorial` that contains the starter site, but you can change
@@ -87,7 +87,7 @@ You should now be viewing your Netlify CMS instance. You defined a "blog" collec
 configuration above, so you can create new blogs, but Netlify CMS will only store them in memory -
 if you refresh, your changes won't be there.
 
-### Saving to a Git Repo
+## Saving to a Git repo
 
 To save your content in a Git repo, the repo will need to be hosted on a service like GitHub, and
 you'll need a way to authenticate with that service so Netlify CMS can make changes through the
@@ -102,14 +102,14 @@ Netlify CMS and your Gatsby site will stay synced, since your site will be rebui
 change, whereas running Netlify CMS locally requires you to pull changes from your remote each time
 to see them in the locally served site.
 
-#### Pushing to GitHub
+### Pushing to GitHub
 
 We can resolve all of the above handily by pushing our test site to GitHub and deploying it to
 Netlify. First, initialize your Gatsby project as a Git repo, and push it up to GitHub. If you need
 help on this part, check out GitHub's
 [guide](https://help.github.com/articles/adding-an-existing-project-to-github-using-the-command-line/).
 
-#### Deploying to Netlify
+### Deploying to Netlify
 
 Now you can publish your Gatsby site straight from GitHub to Netlify from the [create site
 page](https://app.netlify.com/start) - the proper build command for Gatsby will be provided
@@ -120,7 +120,7 @@ minutes since a lot of things aren't cached yet. Subsequent deploys will be fast
 Once deployment is complete you'll be able to view your live site, which should look the same as it
 did locally.
 
-#### Authenticating with GitHub
+### Authenticating with GitHub
 
 Netlify CMS will need to authenticate with GitHub to save your content changes to your repo. As
 mentioned above, this requires a server, and Netlify handles that aspect for you. First you'll need
@@ -144,7 +144,7 @@ backend:
 
 Now you can save the config.yml file, commit the change, and push it to your GitHub repo.
 
-#### Authenticating with GitLab
+### Authenticating with GitLab
 
 See the [GitLab Backend](https://www.netlifycms.org/docs/authentication-backends/#gitlab-backend)
 section for details on how to configure authentication with GitLab.
@@ -161,7 +161,7 @@ If you use the [Client-Side Implicit Grant](https://www.netlifycms.org/docs/auth
 }
 ```
 
-#### Making changes
+### Making changes
 
 Alright - you're all set to make changes in Netlify CMS and see them as commits in your GitHub repo!
 Open Netlify CMS on your deployed site at `/admin/`, allow access to GitHub when the permissions
@@ -179,7 +179,7 @@ website, mobile app, or something else entirely.
 Right now, Gatsby doesn't know the new blog post is there, and it isn't set up to process Markdown.
 Let's fix that.
 
-### Processing Netlify CMS output with Gatsby
+## Processing Netlify CMS output with Gatsby
 
 Gatsby can be configured to process Markdown by following the [Adding Markdown
 Pages](/docs/adding-markdown-pages/) guide in the docs. Our `config.yml`
@@ -194,7 +194,7 @@ entry in Netlify CMS. If you followed the example in Gatsby's Adding Markdown Pa
 "/blog/my-first-blog", then your blog post would be at
 "your-site-name.netlify.com/blog/my-first-blog".
 
-### Wrapping up
+## Wrapping up
 
 This was a very basic example meant to help you understand how Netlify CMS works with Gatsby. As
 mentioned in the beginning of this guide, if you got stuck, you can compare your code to the
