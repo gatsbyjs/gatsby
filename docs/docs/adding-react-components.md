@@ -33,7 +33,7 @@ Just like React, Gatsby also supports third-party components and libraries. You 
 
 Here's an example of adding a third-party component to your site.
 
-First, you have to install the component or library's package via a package manager. It's recommended not to mix package managers, so if you use `npm`, don't use another and vice versa.
+First, you have to install the component or library's package via a package manager. It's recommended not to mix package managers, so if you use npm, don't use another and vice versa.
 
 ```shell
 npm install @material-ui/core
