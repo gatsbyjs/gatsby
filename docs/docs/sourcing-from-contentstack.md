@@ -34,7 +34,7 @@ CONTENTSTACK_ENVIRONMENT='development' # or production, staging, etc.
 
 These will be pulled into the `gatsby-config.js` file under the `gatsby-source-contentstack` plugin.
 
-_**Note:** if you wish to preview the pages of your gatsby site from within the Contentstack entry editor, ensure base URLs are set for each environment and language._
+_**Note:** if you wish to preview the pages of your Gatsby site from within the Contentstack entry editor, ensure base URLs are set for each environment and language._
 
 ### Step 3: Create and publish content
 
