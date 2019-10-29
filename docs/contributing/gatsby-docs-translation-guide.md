@@ -83,7 +83,7 @@ Your language repo comes with a template [style guide](https://github.com/gatsby
 
 Some pages are very long and difficult to translate for a single contributor. Feel free to split these pages up into sections and work on them together!
 
-In addition, sometimes a contributor cannot continue a PR for whatever reason. Feel free to ask them if they need help and to bring someone else in to finish the work for them!
+In addition, sometimes a contributor cannot continue a PR for whatever reason. It may help to ask them if they need assistance and to bring someone else on to complete the work in a timely fashion.
 
 #### Set up a review process
 
