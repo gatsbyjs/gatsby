@@ -93,7 +93,7 @@ You have the ability to install any plugin or automation tool that will make you
 
 #### Ask for help
 
-Don't be afraid to ask for help! If you're not sure about something, feel free to post in the `#localization` channel on the [Gatsby Discord](https://gatsby.dev/discord) or create an issue in the Gatsby repo.
+Don't be afraid to ask for help! If you're not sure about something, you can post in the `#localization` channel on the [Gatsby Discord](https://gatsby.dev/discord) or create an issue in the Gatsby repo.
 
 If it feels like there is too much work and you need help, feel free to add more codeowners by editing the `CODEOWNERS` file in the repo. Are there any contributors who are making exceptional contributions? If so, consider making them a codeowner.
 
