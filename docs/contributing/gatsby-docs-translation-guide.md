@@ -43,7 +43,7 @@ The first step for starting a new translation is to check what exists. So far, t
 
 If your language is not listed above, check the list of [open translation requests](https://github.com/gatsbyjs/gatsby/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+%22New+Translation+Request%22).
 
-If you don't see the language among the issues listed, feel free to creat a new [translation request issue](https://github.com/gatsbyjs/gatsby/issues/new?template=new_translation.md) for it and follow the instructions.
+If you don't see the language among the issues listed, feel free to create a new [translation request issue](https://github.com/gatsbyjs/gatsby/issues/new?template=new_translation.md) for it and follow the instructions.
 
 ### Finding codeowners
 
