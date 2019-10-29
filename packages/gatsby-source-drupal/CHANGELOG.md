@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.3.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.3.1...gatsby-source-drupal@3.3.2) (2019-10-28)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+## [3.3.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.3.0...gatsby-source-drupal@3.3.1) (2019-10-28)
+
+### Bug Fixes
+
+- update minor updates in packages ([#18875](https://github.com/gatsbyjs/gatsby/issues/18875)) ([b692879](https://github.com/gatsbyjs/gatsby/commit/b692879))
+
+# [3.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.2.38...gatsby-source-drupal@3.3.0) (2019-10-23)
+
+### Features
+
+- **gatsby-source-drupal:** secrets and delete functionality ([#18345](https://github.com/gatsbyjs/gatsby/issues/18345)) ([c1734b6](https://github.com/gatsbyjs/gatsby/commit/c1734b6))
+
+## [3.2.38](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.2.37...gatsby-source-drupal@3.2.38) (2019-10-14)
+
+### Bug Fixes
+
+- **gatsby-source-drupal:** add error handling for empty body ([#18568](https://github.com/gatsbyjs/gatsby/issues/18568)) ([dc6642f](https://github.com/gatsbyjs/gatsby/commit/dc6642f))
+
 ## [3.2.37](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.2.36...gatsby-source-drupal@3.2.37) (2019-10-14)
 
 **Note:** Version bump only for package gatsby-source-drupal

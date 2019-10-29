@@ -1,5 +1,5 @@
 ---
-title: "Adding an SEO component"
+title: "Adding an SEO Component"
 ---
 
 Every site on the web has basic _meta-tags_ like the title, favicon or description of the page in their `<head>` element. This information gets displayed in the browser and is used when someone shares your website, e.g. on Twitter. You can give your users and these websites additional data to embed your website with more data — and that's where this guide for a SEO component comes in. At the end you'll have a component you can place in your layout file and have rich previews for other clients, smartphone users, and search engines.
