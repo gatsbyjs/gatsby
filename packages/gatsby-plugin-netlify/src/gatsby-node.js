@@ -16,7 +16,10 @@ import {
 let assetsManifest = {}
 
 // Inject a webpack plugin to get the file manifests so we can translate all link headers
-exports.onCreateWebpackConfig = ({ actions, stage, getConfig }) => {
+exports.onCreateWebpackConfig = (
+  { actions, stage, getConfig },
+  { contentHashes = true }
+) => {
   if (stage === BUILD_HTML_STAGE || stage === BUILD_CSS_STAGE) {
     actions.setWebpackConfig({
       plugins: [
@@ -28,7 +31,7 @@ exports.onCreateWebpackConfig = ({ actions, stage, getConfig }) => {
     })
   }
 
-  if (stage === BUILD_JS_STAGE) {
+  if (stage === BUILD_JS_STAGE && !contentHashes) {
     const config = getConfig()
     const cssExtractIndex = config.plugins.findIndex(
       pl => pl instanceof MiniCssExtractPlugin
