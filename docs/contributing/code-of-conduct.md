@@ -68,7 +68,7 @@ Project maintainers who do not follow or enforce the Code of Conduct in good
 faith may face temporary or permanent repercussions as determined by other
 members of the project's leadership.
 
-When faced with repeated bad faith comments or harassment after an earnest attempt to mediate an issue, the Gatsby team reserves the right to remove someone from the GitHub repository and/or block them on social media.
+When faced with repeated bad faith comments or harassment after an earnest attempt to mediate an issue, the Gatsby team reserves the right to remove someone from the GitHub repository and/or block them on social media. This decision will always be made with consensus from more than one team member.
 
 ## Attribution
 
