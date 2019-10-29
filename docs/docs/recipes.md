@@ -1009,7 +1009,7 @@ module.exports = {
     {
       resolve: `gatsby-source-wordpress`,
       options: {
-        // baseUrl will need to be updated with your wordpress source
+        // baseUrl will need to be updated with your WordPress source
         baseUrl: `wpexample.com`,
         protocol: `https`,
         // is it hosted on wordpress.com, or self-hosted?
