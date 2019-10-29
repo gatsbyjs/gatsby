@@ -108,7 +108,7 @@ Through this tutorial you will be using the "Checkout client-only integration" f
 
 ![Stripe control to enable the Checkout client-side only integration highlighted](stripe-checkout-clientside-functionality.png)
 
-> 💡 This change will also modify the interface that Stripe provides to administrate your products, keep this in mind in case you have previously used this tool. If you have never used the product administrator, you don't need to worry.
+> 💡 This change will also modify the interface that Stripe provides to administer your products: keep this in mind in case you have previously used this tool. If you have never used the product administrator, you don't need to worry.
 
 Additionally, you need to set a name for your Stripe account on your [Account settings](https://dashboard.stripe.com/account) to use this integration.
 
@@ -124,7 +124,7 @@ If you're selling a simple product, like an eBook for example, you can create a 
 
 #### Create a product and SKU
 
-To sell your products, first you need to create them on Stripe using the [Stripe Dashboard](https://dashboard.stripe.com/products) or the [Stripe API](https://stripe.com/docs/api/products/create). This is required for Stripe to validate that the request coming from the frontend is legitimate and to charge the right amount for the selected product/SKU. Stripe requires every SKU used with Stripe Checkout to have a name, be sure to add one to all of your SKUs.
+To sell your products, first you need to create them on Stripe using the [Stripe Dashboard](https://dashboard.stripe.com/products) or the [Stripe API](https://stripe.com/docs/api/products/create). This is required for Stripe to validate that the request coming from the frontend is legitimate and to charge the right amount for the selected product/SKU. Stripe requires every SKU used with Stripe Checkout to have a name: be sure to add one to all of your SKUs.
 
 You will need to create both test and live product SKUs in the Stripe Dashboard. Make sure you toggle to "Viewing test data" and then create your products for local development.
 
@@ -294,7 +294,7 @@ module.exports = {
 }
 ```
 
-To retrieve your SKUs from your Stripe account you will need to provide your secret API key. This key needs to be kept secret and must never be shared on the frontend or on GitHub. Therefore you need to set an environment variable to store the secret key. You can read more about the usage of env variables in Gatsby [here](https://www.gatsbyjs.org/docs/environment-variables/).
+To retrieve your SKUs from your Stripe account you will need to provide your secret API key. This key needs to be kept secret and must never be shared on the frontend or on GitHub. Therefore you need to set an environment variable to store the secret key. You can read more about the usage of env variables in the [Gatsby docs](/docs/environment-variables/).
 
 In the root directory of your project add a `.env.development` file:
 
