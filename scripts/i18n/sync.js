@@ -6,6 +6,7 @@ let logger = log4js.getLogger(`sync`)
 const host = `https://github.com`
 const cacheDir = `.cache`
 const owner = `gatsbyjs`
+const repoBase = "gatsby"
 // Repo to be used as basis for translations
 const sourceRepo = `gatsby-i18n-source`
 
@@ -44,8 +45,12 @@ async function updateSourceRepo() {
   dirsToCopy.forEach(dir => {
     shell.cp(`-r`, `../../../${dir}`, `${sourceRepo}/docs`)
   })
-  // push
+  // push to source repo
   shell.exec(`git push origin master`)
+}
+
+async function syncTranslationRepo(code) {
+  const transRepoName = `${host}/${owner}/${repoBase}-${code}`
 }
 
 updateSourceRepo()
