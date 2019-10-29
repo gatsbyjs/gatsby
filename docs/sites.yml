@@ -8213,7 +8213,7 @@
   featured: false
 - title: Leave Me Alone
   url: https://leavemealone.app
-  main_url: https://titleofthesite.com
+  main_url: https://leavemealone.app
   description: >
     Leave Me Alone helps you unsubscribe from unwanted emails easily. It's built with Gatsby v2. 
   categories:
