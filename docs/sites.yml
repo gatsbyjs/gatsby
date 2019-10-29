@@ -543,6 +543,18 @@
     - Blog
   built_by: Hunter Chang
   built_by_url: "https://hunterchang.com/"
+- title: Open Techiz
+  main_url: "https://www.opentechiz.com/"
+  url: "https://www.opentechiz.com/"
+  featured: false
+  description: >-
+    An agile software development company in Vietnam
+  categories:
+    - Web Development
+    - Mobile Development
+    - Technology
+  built_by: Open Techiz
+  built_by_url: "https://www.opentechiz.com/"  
 - title: Daniel Hollcraft
   main_url: "https://danielhollcraft.com/"
   url: "https://danielhollcraft.com/"
