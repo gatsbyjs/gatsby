@@ -22,7 +22,7 @@ export default ({ data }) => {
 
 export const query = graphql`
   {
-    allWpContent {
+    allWpContent(sort: { fields: date, order: DESC }) {
       pages: nodes {
         title
         path
