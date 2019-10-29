@@ -81,7 +81,14 @@
       "files": ["packages/**/*"],
       "rules": {
         "import/no-unresolved": "error",
-        "import/no-extraneous-dependencies": "error"
+        "import/no-extraneous-dependencies": [
+          "error",
+          {
+            "devDependencies": true,
+            "optionalDependencies": true,
+            "peerDependencies": true
+          }
+        ]
       }
     }
   ],
