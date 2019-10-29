@@ -210,7 +210,7 @@ module.exports = async function build(program: BuildArgs) {
   workerPool.end()
 
   if (incrementalBuild && process.argv.indexOf(`--log-pages`) > -1) {
-    console.log(`incrementalBuildPages:`, newPageKeys)
-    console.log(`incrementalBuildDeletedPages:`, deletedPageKeys)
+    console.log(`incrementalBuildPages:${newPageKeys.join(`|`)}`)
+    console.log(`incrementalBuildDeletedPages:${deletedPageKeys.join(`|`)}`)
   }
 }
