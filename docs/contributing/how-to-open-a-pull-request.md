@@ -14,7 +14,7 @@ Gatsby uses the PR process to review and test changes before they’re added to 
 
 When someone wants to contribute to Gatsby, they open a request to _pull_ their code into the repo. Depending on the type of change, PRs are categorized into:
 
-- [Documentation](#documentation)
+- [Documentation](#documentation-prs)
 - [Code](#code-changes)
 - [Starters or Site Showcase](#starters-or-site-showcase)
 - [Blog posts](#blog-posts)

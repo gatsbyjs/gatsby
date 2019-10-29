@@ -173,6 +173,28 @@ describe(`build-headers-program`, () => {
     ).toMatchSnapshot()
   })
 
+  it(`without manifest['pages-manifest']`, async () => {
+    const pluginData = await createPluginData()
+
+    // gatsby 2.9+ no longer has a pages-manifest key
+    delete pluginData.manifest[`pages-manifest`]
+
+    const pluginOptions = {
+      ...DEFAULT_OPTIONS,
+      mergeCachingHeaders: true,
+    }
+
+    await buildHeadersProgram(pluginData, pluginOptions, reporter)
+
+    expect(reporter.warn).not.toHaveBeenCalled()
+    const output = await fs.readFile(
+      pluginData.publicFolder(`_headers`),
+      `utf8`
+    )
+    expect(output).toMatchSnapshot()
+    expect(output).not.toMatch(/\/undefined/g)
+  })
+
   it(`without caching headers`, async () => {
     const pluginData = await createPluginData()
 

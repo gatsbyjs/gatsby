@@ -338,6 +338,6 @@ paradigms like Serverless, I predict it could be very far.
 
 But whatever that limit is, I am quite sure that this is a step in the right
 direction towards making the web a safer, faster and more enjoyable experience
-for both developers and end-users.
+for both developers and end users.
 
 <div style="width:100%;height:0;padding-bottom:52%;position:relative;"><iframe src="https://giphy.com/embed/12xSrwKxHxB3BS" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/black-and-white-end-ending-12xSrwKxHxB3BS">via GIPHY</a></p>
