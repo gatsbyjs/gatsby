@@ -29,7 +29,7 @@ export default () => (
 
 ### Importing third-party components
 
-Just like React, Gatsby also supports third-party components and libraries. You can install a third-party component or library via your package manager. We tend to favour and use `npm` and we will reflect this in our examples.
+Just like React, Gatsby also supports third-party components and libraries. You can install a third-party component or library via your package manager. We tend to favour and use npm and we will reflect this in our examples.
 
 Here's an example of adding a third-party component to your site.
 
