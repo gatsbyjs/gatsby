@@ -6,7 +6,7 @@ let logger = log4js.getLogger(`sync`)
 const host = `https://github.com`
 const cacheDir = `.cache`
 const owner = `gatsbyjs`
-const repoBase = "gatsby"
+const repoBase = `gatsby`
 // Repo to be used as basis for translations
 const sourceRepo = `gatsby-i18n-source`
 
