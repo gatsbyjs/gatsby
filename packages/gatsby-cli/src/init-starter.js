@@ -86,9 +86,15 @@ const createInitialGitCommit = async (rootPath, starterUrl) => {
   await spawn(`git add -A`, { cwd: rootPath })
   // use execSync instead of spawn to handle git clients using
   // pgp signatures (with password)
-  execSync(`git commit -m "Initial commit from gatsby: (${starterUrl})"`, {
-    cwd: rootPath,
-  })
+  try {
+    execSync(`git commit -m "Initial commit from gatsby: (${starterUrl})"`, {
+      cwd: rootPath,
+    })
+  } catch {
+    // Remove git support if intial commit fails
+    report.info(`Initial git commit failed - removing git support\n`)
+    fs.removeSync(sysPath.join(rootPath, `.git`))
+  }
 }
 
 // Executes `npm install` or `yarn install` in rootPath.

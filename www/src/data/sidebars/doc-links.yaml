@@ -239,6 +239,8 @@
           items:
             - title: Starter Library
               link: /starters/
+            - title: Modifying a Starter
+              link: /docs/modifying-a-starter/
             - title: Creating a Starter
               link: /docs/creating-a-starter/
         - title: Themes
@@ -419,6 +421,11 @@
               link: /docs/client-data-fetching/
             - title: Using Client-Side Only Packages
               link: /docs/using-client-side-only-packages/
+            - title: Building an E-commerce Site
+              link: /docs/building-an-e-commerce-site/
+              items:
+                - title: Building an E-commerce Site with Shopify
+                  link: /docs/building-an-ecommerce-site-with-shopify/
         - title: Improving Performance
           link: /docs/performance/
           items:

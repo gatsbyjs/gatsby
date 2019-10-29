@@ -56,9 +56,9 @@ If everything works correctly, you should now have your GraphCMS data added to t
 
 ### Querying for content
 
-From the root of your project, run the development environment with `npm run development`. Once the server has started and is error free, you should be able to open the following URL in your browser:
+From the root of your project, run the development environment with `gatsby develop`. Once the server has started and is error free, you should be able to open the following URL in your browser:
 
-`http://localhost:8000/___graphql`
+<http://localhost:8000/___graphql>
 
 This will show you an interface where you can test your new content API.
 
@@ -156,6 +156,6 @@ With this code, you have:
 
 ## Summary
 
-Hopefully you've seen how easy it is to start working with GraphCMS and Gatsby. With projects of all sizes gravitating towards the benefits of the JAM stack, the time has never been better to learn how to work with Gatsby. Adding a content API in the back-end with GraphCMS provides a scalable CMS that you can start using within minutes and keep using for the life of your project.
+Hopefully you've seen how easy it is to start working with GraphCMS and Gatsby. With projects of all sizes gravitating towards the benefits of the JAM stack, the time has never been better to learn how to work with Gatsby. Adding a content API in the backend with GraphCMS provides a scalable CMS that you can start using within minutes and keep using for the life of your project.
 
 [Check out GraphCMS today and build "fast websites", fast!](https://graphcms.com?ref="gatsby-headless-docs-bottom")

@@ -30,7 +30,7 @@ Once this starts, you can now view your site at `localhost:9000`.
 
 ## Run a Lighthouse audit
 
-Now let's run your first Lighthouse test.
+Now run your first Lighthouse test.
 
 1.  Open the site in Chrome (if you didn't already do so) and then open up the Chrome DevTools.
 
@@ -47,5 +47,5 @@ As you can see, Gatsby's performance is excellent out of the box but we're missi
 Next steps:
 
 - [Add a manifest file](/docs/add-a-manifest-file/)
-- [Add offline support](/docs/add-offline-support/)
+- [Add offline support](/docs/add-offline-support-with-a-service-worker/)
 - [Add page metadata](/docs/add-page-metadata/)
