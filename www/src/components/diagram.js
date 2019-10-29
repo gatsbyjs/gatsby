@@ -29,6 +29,7 @@ const Segment = ({ className, children, customCSS }) => (
     sx={{
       mx: `auto`,
       maxWidth: `48rem`,
+      position: `relative`,
       textAlign: `center`,
       ...box,
       ...customCSS,
@@ -82,7 +83,10 @@ const DottedLine = () => (
       overflow: `hidden`,
       whiteSpace: `nowrap`,
       width: 44,
-      marginLeft: [1, null, null, 0],
+      marginLeft: `-44px`,
+      position: `absolute`,
+      top: `50%`,
+      left: 0,
       // transformOrigin: `0 0`,
       // transform: [`rotate(90deg)`, null, null, `none`],
     }}
@@ -143,7 +147,7 @@ const SourceItem = ({ children }) => (
 const ItemTitle = ({ children }) => (
   <h3
     sx={{
-      fontSize: 2,
+      fontSize: 3,
       margin: 0,
       color: `card.header`,
     }}
@@ -205,7 +209,7 @@ const Gatsby = () => (
       >
         powered by
       </small>
-      <span sx={{ color: `gatsby` }}>
+      <span sx={{ color: `black` }}>
         <TechWithIcon icon={GraphQLIcon}>GraphQL</TechWithIcon>
       </span>
     </ItemDescription>
@@ -283,11 +287,11 @@ const Diagram = ({ customCSS }) => (
               <SourceItem>
                 <ItemTitle>CMSs</ItemTitle>
                 <ItemDescription>
-                  Contentful, Drupal, WordPress, etc.
+                  Contentful, Drupal, WordPress, Dato, etc.
                 </ItemDescription>
               </SourceItem>
               <SourceItem>
-                <ItemTitle>Markdown</ItemTitle>
+                <ItemTitle>Markdown/MDX</ItemTitle>
                 <ItemDescription>Documentation, Posts, etc.</ItemDescription>
               </SourceItem>
               <SourceItem>
@@ -299,23 +303,7 @@ const Diagram = ({ customCSS }) => (
             </SourceItems>
           </Segment>
 
-          <Segment
-            className="Build"
-            customCSS={{
-              ...box,
-              backgroundColor: `purple.70`,
-              backgroundSize: t => `${t.sizes[10]} ${t.sizes[10]}`,
-              backgroundImage: t =>
-                `linear-gradient(45deg, ${
-                  t.colors.purple[80]
-                } 25%, transparent 25%, transparent 50%, ${
-                  t.colors.purple[80]
-                } 50%, ${
-                  t.colors.purple[80]
-                } 75%, transparent 75%, transparent)`,
-              py: 0,
-            }}
-          >
+          <Segment className="Build">
             <DottedLine />
             <SegmentTitle>Build</SegmentTitle>
             <DottedLine />

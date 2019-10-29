@@ -103,7 +103,13 @@ class Items extends React.Component {
           flexGrow: 0,
           mt: 8,
           height: [`${itemSize * 4}px`, null, null, `${itemSize * 10}px`],
-          width: [null, null, null, null, `calc(${itemSize * 10}px - 1px)`],
+          width: t => [
+            null,
+            null,
+            null,
+            null,
+            `calc(${itemSize * 10}px - 1px + ${t.space[7]})`,
+          ],
           overflow: `hidden`,
           position: `relative`,
           ":after, :before": {

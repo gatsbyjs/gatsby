@@ -31,7 +31,7 @@
   x: 2
   y: 0
   shape: circle
-- title: Braun
+- title: SendGrid
   x: 6
   y: 0
   shape: rectangle
@@ -68,8 +68,10 @@
   color: yellow.40
 - x: 3
   y: 3
-  color: orange.70
+  # color: orange.70
   shape: rectangle
+  title: Braun
+  color: "#8ea1a9"
 - x: 6
   y: 3
   color: green.50
@@ -108,3 +110,6 @@
   x: 3
   y: 8
   color: black
+- x: 3
+  y: 7
+  shape: triangle-up

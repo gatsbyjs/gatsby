@@ -23,7 +23,7 @@ import {
 } from "../utils/scrollers-observer"
 
 const containerStyles = {
-  maxWidth: `80rem`,
+  maxWidth: `76rem`,
   mx: `auto`,
   // background: `#ff0`,
 }

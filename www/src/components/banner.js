@@ -5,18 +5,22 @@ import { OutboundLink } from "gatsby-plugin-google-analytics"
 
 const InnerContainer = styled(`div`)`
   align-items: center;
+  // justify-content: center;
   display: flex;
   height: ${p => p.theme.sizes.bannerHeight};
   overflow-x: auto;
-  mask-image: ${props =>
-    `linear-gradient(to right, transparent, ${props.theme.colors.purple[90]} ${
-      props.theme.space[6]
-    }, ${props.theme.colors.purple[90]} 96%, transparent)`};
+  mask-image: ${p =>
+    `linear-gradient(to right, transparent, ${
+      p.theme.colors.banner.background
+    } ${p.theme.space[6]}, ${
+      p.theme.colors.banner.background
+    } 96%, transparent)`};
 `
 
 const Content = styled(`div`)`
-  color: ${p => p.theme.colors.whiteFade[80]};
-  font-family: ${p => p.theme.fonts.heading};
+  color: ${p => p.theme.colors.banner.color};
+  // font-family: ${p => p.theme.fonts.heading};
+  font-size: ${p => p.theme.fontSizes[1]};
   padding-left: ${p => p.theme.space[6]};
   padding-right: ${p => p.theme.space[6]};
   white-space: nowrap;
@@ -36,7 +40,7 @@ const Banner = () => (
   <aside
     className="banner"
     sx={{
-      backgroundColor: `banner`,
+      bg: `banner.background`,
       height: `bannerHeight`,
       position: `fixed`,
       width: `100%`,
