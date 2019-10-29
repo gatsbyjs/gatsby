@@ -34,43 +34,43 @@ For the first step, we use webpack to build an optimized Node.js bundle. The ent
 6. [Inject Page Info to CDATA](/docs/html-generation/#6-inject-page-info-to-cdata)
 7. [Render Final HTML Document](/docs/html-generation/#7-render-final-html-document)
 
-#### 1. Require page, json, and webpack chunk data sources
+### 1. Require page, json, and webpack chunk data sources
 
 In order to perform the rest of the operations, we need some data sources to work off. These are:
 
-##### sync-requires.js
+#### sync-requires.js
 
 Exports `components` which is a map of componentChunkName to require statements for the disk location of the component. See [Write Out Pages](/docs/write-pages/#sync-requiresjs).
 
-##### data.json
+#### data.json
 
 Contains all the pages (with componentChunkName, jsonName, and path) and the dataPaths which map jsonName to dataPath. See [Write Out Pages](/docs/write-pages/#datajson) for more.
 
-##### webpack.stats.json
+#### webpack.stats.json
 
 Contains a mapping from componentChunkName to the webpack chunks comprising it. See [Code Splitting](/docs/how-code-splitting-works/#webpackstatsjson) for more.
 
-##### chunk-map.json
+#### chunk-map.json
 
 Contains a mapping from componentChunkName to their core (non-shared) chunks. See [Code Splitting](/docs/how-code-splitting-works/#chunk-mapjson) for more.
 
-#### 2. Create HTML React Container
+### 2. Create HTML React Container
 
 We create an `html` React component that will eventually be rendered to a file. It will have props for each section (e.g. `head`, `preBodyComponents`, `postBodyComponents`). This is owned by [default-html.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/default-html.js).
 
-#### 3. Load Page and Data
+### 3. Load Page and Data
 
 The only input to `static-entry.js` is a path. So we must look up the page for that path in order to find its `componentChunkName` and `jsonName`. This is achieved by simply looking up the pages array contained in `data.json`. We can then load its data by looking it up in `dataPaths`.
 
-#### 4. Create Page Component
+### 4. Create Page Component
 
 Now we're ready to create a React component for the page (inside the Html container). This is handled by [RouteHandler](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js#L123). Its render will create an element from the component in `sync-requires.js`.
 
-#### 5. Add Preload Link and Script Tags
+### 5. Add Preload Link and Script Tags
 
 This is covered by the [Code Splitting](/docs/how-code-splitting-works/#construct-link-and-script-tags-for-current-page) docs. We essentially create a `<link rel="preload" href="component.js">` in the document head, and a follow up `<script src="component.js">` at the end of the document. For each component and page JSON.
 
-#### 6. Inject Page Info to CDATA
+### 6. Inject Page Info to CDATA
 
 The [production-app.js](/docs/production-app/#first-load) needs to know the page that it's rendering. The way we pass this information is by setting it in CDATA during HTML generation, since we know that page at this point. So we add the following to the [top of the HTML document](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js#L325):
 
@@ -89,7 +89,7 @@ The [production-app.js](/docs/production-app/#first-load) needs to know the page
 */
 ```
 
-#### 7. Render Final HTML Document
+### 7. Render Final HTML Document
 
 Finally, we call [react-dom](https://reactjs.org/docs/react-dom.html) and render our top level Html component to a string and return it.
 
