@@ -89,7 +89,7 @@ In addition, sometimes a contributor cannot continue a PR for whatever reason. F
 
 As codeowners, you have the freedom and responsibility to decide what your review process will be like. You can decide how many reviewers you'd like. If your team is small, one reviewer may be enough. But if you have lots of contributors and enough codeowners, you may want to require two reviewers for additional quality.
 
-Feel free to install any plugin or automation that will make your life easier as codeowners. Is there a text linter that works well in your language? Is there any automation that you can add? If you feel that these improvements would be beneficial to other languages as well, feel free to create an issue or PR for it in the main Gatsby repository.
+You have the ability to install any plugin or automation tool that will make your life easier as codeowners. Is there a text linter that works well in your language? Is there any automation that you can add? If you feel that these improvements would be beneficial to other languages as well, create an issue or PR for it in the main Gatsby repository.
 
 #### Ask for help
 
