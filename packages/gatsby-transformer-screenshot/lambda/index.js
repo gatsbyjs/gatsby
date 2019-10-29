@@ -1,6 +1,6 @@
 const setup = require(`./starter-kit/setup`)
 
-const crypto = require(`crypto`)
+const { createContentDigest } = require(`gatsby-core-utils`)
 
 const AWS = require(`aws-sdk`)
 const s3 = new AWS.S3({
@@ -55,12 +55,8 @@ exports.run = async (browser, url, width, height, fullPage) => {
     throw new Error(`invalid bucket ${process.env.S3_BUCKET}`)
   }
 
-  const keyBase = `${url}-(${width},${height})`
-  const digest = crypto
-    .createHash(`md5`)
-    .update(keyBase)
-    .digest(`hex`)
-  const key = `${digest}.png`
+  const contentDigest = createContentDigest({ url, width, height })
+  const key = `${contentDigest}.png`
 
   const screenshotUrl = `https://s3-${region}.amazonaws.com/${
     process.env.S3_BUCKET
