@@ -6,7 +6,6 @@ title: Static vs Normal Queries
 >
 > Outdated areas are:
 >
-> - mention the useStaticQuery hook
 > - describe how queries are stripped and JSON imports are rewritten
 >
 > You can help by making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228).
@@ -18,7 +17,14 @@ StaticQuery can do most of the things that page query can, including fragments. 
 - page queries can accept variables (via `pageContext`) but can only be added to _page_ components
 - StaticQuery does not accept variables (hence the name "static"), but can be used in _any_ component, including pages
 - StaticQuery does not work with raw React.createElement calls; please use JSX, e.g. `<StaticQuery />`
+  - _NOTE: you can also use the new `useStaticQuery` hook; more information below_
 - Static Queries don't need to get run for each page.(ie:Just once)
+
+## useStaticQuery hook
+
+- Gatsby v2.1.0 introduces `useStaticQuery`, a Gatsby feature that allows you to use a React hook to query GraphQL
+- `useStaticQuery` is a hook, contrary to `<StaticQuery />` which is a component
+- Check out [how to query data at build time using `useStaticQuery`](https://www.gatsbyjs.org/docs/use-static-query/)
 
 ### staticQueryComponents
 
