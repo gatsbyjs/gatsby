@@ -8174,17 +8174,16 @@
   built_by: Brent Ingram
   built_by_url: https://www.brentjingram.com/
   featured: false
-
 - title: Veryben
   main_url: https://veryben.com/
   url: https://veryben.com/
   description: >
     be water my friend
-  featured: false
   categories:
     - Blog
   built_by: anikijiang
   built_by_url: https://twitter.com/anikijiang
+  featured: false
 - title: kentarom's portfolio
   main_url: https://kentarom.com/
   url: https://kentarom.com/
@@ -8269,3 +8268,14 @@
     - Technology
   built_by: Open Techiz
   built_by_url: "https://www.opentechiz.com/"
+- title: Leave Me Alone
+  url: https://leavemealone.app
+  main_url: https://leavemealone.app
+  description: >
+    Leave Me Alone helps you unsubscribe from unwanted emails easily. It's built with Gatsby v2.
+  categories:
+    - Landing Page
+    - Productivity
+  built_by: James Ivings
+  built_by_url: https://squarecat.io
+  featured: false

@@ -1002,7 +1002,7 @@ npm install gatsby-source-wordpress --save
 
 2. Configure the plugin by modifying the `gatsby-config.js` file such that it includes the following:
 
-```JS:title=gatsby-config.js
+```javascript:title=gatsby-config.js
 module.exports = {
   ...
   plugins: [
@@ -1026,7 +1026,7 @@ module.exports = {
 
 3. Create a template component such as `src/templates/post.js` with the following code in it:
 
-```JS:title=post.js
+```javascript:title=post.js
 import React, { Component } from "react"
 import { graphql } from "gatsby"
 import PropTypes from "prop-types"
@@ -1063,7 +1063,7 @@ export const pageQuery = graphql`
 
 4. Create dynamic pages for your WordPress posts by pasting the following sample code in `gatsby-node.js`:
 
-```JS:title=gatsby-node.js
+```javascript:title=gatsby-node.js
 const path = require(`path`)
 const slash = require(`slash`)
 
@@ -1111,7 +1111,7 @@ The dynamic pages created above in `gatsby-node.js` have unique paths for naviga
 
 - [Getting Started with WordPress and Gatsby](/blog/2019-04-26-how-to-build-a-blog-with-wordpress-and-gatsby-part-1/)
 - More on [Sourcing from WordPress](/docs/sourcing-from-wordpress/)
-- [Live example on Sourcing from WordPress](/examples/gatsby-sourcing-wordpress/)
+- [Live example on Sourcing from WordPress](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-wordpress)
 
 ### Sourcing data from Contentful
 
