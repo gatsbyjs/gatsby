@@ -59,7 +59,7 @@ export default () => (
 
 ## Things to watch out for
 
-Since Gatsby uses Server Side Rendering (SSR) to generate your site's pages, the JSX code you write is usually compiled before the browser loads the page. Because of this, certain features are not available at compile time and can cause a build to error.
+Since Gatsby uses Server-Side Rendering (SSR) to generate your site's pages, the JSX code you write is usually compiled before the browser loads the page. Because of this, certain features are not available at compile time and can cause a build error.
 
 ### Use of browser globals
 
