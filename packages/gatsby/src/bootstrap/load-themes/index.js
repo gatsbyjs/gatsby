@@ -8,18 +8,36 @@ const getConfigFile = require(`../get-config-file`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 
 // get the gatsby-config file for a theme
-const resolveTheme = async (themeSpec, configFileThatDeclaredTheme) => {
+const resolveTheme = async (
+  themeSpec,
+  configFileThatDeclaredTheme,
+  isMainConfig = false
+) => {
   const themeName = themeSpec.resolve || themeSpec
   let themeDir
   try {
     // theme is an node-resolvable module
     themeDir = path.dirname(require.resolve(themeName))
   } catch (e) {
-    // is a local plugin OR it doesn't exist
-    const pathToLocalTheme = path.join(path.resolve(`.`), `plugins`, themeName)
-    try {
-      themeDir = path.dirname(require.resolve(pathToLocalTheme))
-    } catch (localErr) {
+    let panic = false
+    let pathToLocalTheme
+
+    // only try to look for local theme in main site
+    // local themes nested in other themes is potential source of problems:
+    // because those are not hosted by npm, there is potential for multiple
+    // local themes with same name that do different things and name being
+    // main identifier that gatsby uses right now, it's safer not to support it for now.
+    if (isMainConfig) {
+      // is a local plugin OR it doesn't exist
+      pathToLocalTheme = path.join(path.resolve(`.`), `plugins`, themeName)
+      try {
+        themeDir = path.dirname(require.resolve(pathToLocalTheme))
+      } catch (localErr) {
+        panic = true
+      }
+    }
+
+    if (panic) {
       const nodeResolutionPaths = module.paths.map(p => path.join(p, themeName))
       reporter.panic({
         id: `10226`,
@@ -86,7 +104,7 @@ module.exports = async (
   const themesA = await Promise.mapSeries(
     useLegacyThemes ? config.__experimentalThemes || [] : config.plugins || [],
     async themeSpec => {
-      const themeObj = await resolveTheme(themeSpec, configFilePath)
+      const themeObj = await resolveTheme(themeSpec, configFilePath, true)
       return processTheme(themeObj, { useLegacyThemes })
     }
   ).then(arr => _.flattenDeep(arr))
