@@ -69,7 +69,7 @@ Some components or code reference browser globals such as `window`, `document` o
 WebpackError: ReferenceError: window is not defined
 ```
 
-There's a great section on fixing these issues on the [Porting from Create React App documentation](/docs/porting-from-create-react-app-to-gatsby#server-side-rendering-and-browser-apis).
+To learn more about solutions for supporting SSR and client-side libraries, check out the related section on the [Porting from Create React App documentation](/docs/porting-from-create-react-app-to-gatsby#server-side-rendering-and-browser-apis).
 
 #### Fixing third-party modules
 
