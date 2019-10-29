@@ -20,7 +20,7 @@ If you're not sure what to choose or want only the most essential functionality,
 
 Taking the default Gatsby starter as an example, dedicate some time to looking through some of the most important files in the repository (repo). You'll find most of these in the root (or _main_) folder of your project. Doing so will give you a clearer picture of how the various parts of your Gatsby site work together.
 
-![Default starter file structure in VS Code](./images/default-starter-vs-code-focus.png)
+![Default starter file structure in VS Code](./images/default-files-zoom.png)
 
 - `src/pages`: a directory for page components to live, with at least one [index.js file (example)](https://github.com/gatsbyjs/gatsby-starter-hello-world/blob/master/src/pages/index.js).
 - `gatsby-config.js`: a space to add configurable data and plugins. Among the [API files](/docs/api-files/), `gatsby-config.js` is the one you're most likely to need to modify. See [Gatsby Config](/docs/gatsby-config/) for more information.
