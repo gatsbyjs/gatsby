@@ -163,6 +163,7 @@ function createNodes(
       `change`,
       ({ operationType, documentKey, fullDocument }) => {
         switch (operationType) {
+          case `replace`:
           case `insert`: {
             const id = idToString(documentKey._id)
             const nodeId = createNodeId(id)
@@ -189,15 +190,46 @@ function createNodes(
               },
             }
 
+            const childrenNodes = []
+            if (pluginOptions.map) {
+              let mapObj = pluginOptions.map
+              if (pluginOptions.map[collectionName]) {
+                mapObj = pluginOptions.map[collectionName]
+              }
+              // We need to map certain fields to a contenttype.
+              Object.keys(mapObj).forEach(mediaItemFieldKey => {
+                if (
+                  node[mediaItemFieldKey] &&
+                  (typeof mapObj[mediaItemFieldKey] === `string` ||
+                    mapObj[mediaItemFieldKey] instanceof String)
+                ) {
+                  const mappingChildNode = prepareMappingChildNode(
+                    node,
+                    mediaItemFieldKey,
+                    node[mediaItemFieldKey],
+                    mapObj[mediaItemFieldKey],
+                    createContentDigest
+                  )
+
+                  node[`${mediaItemFieldKey}___NODE`] = mappingChildNode.id
+                  childrenNodes.push(mappingChildNode)
+
+                  delete node[mediaItemFieldKey]
+                }
+              })
+            }
+
             delete node._id
 
-            console.log(node)
             // Create the Node itself
-            createNode({ node: node })
-            // TODO: Create all references to it
+            createNode(node)
+
+            // Create children
+            childrenNodes.forEach(node => {
+              createNode(node)
+            })
             break
           }
-          // case "replace":
           case `delete`: {
             const nodeId = createNodeId(idToString(documentKey._id))
             const node = getNode(nodeId)
