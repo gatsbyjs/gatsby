@@ -43,7 +43,7 @@ npm install @material-ui/core
 yarn add @material-ui/core
 ```
 
-After, import and use it in your page's source:
+After you've installed a package, import and use it in your page's source:
 
 ```jsx:title=my-page.jsx
 import React from "react"
