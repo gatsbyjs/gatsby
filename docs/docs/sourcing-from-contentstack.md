@@ -34,7 +34,7 @@ CONTENTSTACK_ENVIRONMENT='development' # or production, staging, etc.
 
 These will be pulled into the `gatsby-config.js` file under the `gatsby-source-contentstack` plugin.
 
-_**Note:** if you wish to preview the pages of your gatsby site from within the Contentstack entry editor, ensure base URLs are set for each environment and language._
+_**Note:** if you wish to preview the pages of your Gatsby site from within the Contentstack entry editor, ensure base URLs are set for each environment and language._
 
 ### Step 3: Create and publish content
 
@@ -51,7 +51,7 @@ Navigate to your root directory and run the following command:
 
 `gatsby develop`
 
-After running this, you will be able to view your site at `http://localhost:8000/`. You can run the GraphiQL IDE at `http://localhost:8000/___graphql`. The GraphiQL IDE will help you explore the app's data, including the Contentstack APIs.
+After running this, you will be able to view your site at <http://localhost:8000/>. You can run the GraphiQL IDE at <http://localhost:8000/___graphql>. The GraphiQL IDE will help you explore the app's data, including the Contentstack APIs.
 
 Now, you will able to query Contentstack data. Try the query below to get the 'Home' content type data:
 
@@ -89,7 +89,7 @@ export const pageQuery = graphql`
 `
 ```
 
-This will display the title of your home page on `http://localhost:8000/home`. Likewise, you can query additional fields in your entry.
+This will display the title of your home page on <http://localhost:8000/home>. Likewise, you can query additional fields in your entry.
 
 ## Closing Note
 

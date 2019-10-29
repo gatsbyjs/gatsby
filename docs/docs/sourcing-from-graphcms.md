@@ -58,7 +58,7 @@ If everything works correctly, you should now have your GraphCMS data added to t
 
 From the root of your project, run the development environment with `gatsby develop`. Once the server has started and is error free, you should be able to open the following URL in your browser:
 
-`http://localhost:8000/___graphql`
+<http://localhost:8000/___graphql>
 
 This will show you an interface where you can test your new content API.
 
