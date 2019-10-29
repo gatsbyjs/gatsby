@@ -19,7 +19,6 @@ const resolveTheme = async (
     // theme is an node-resolvable module
     themeDir = path.dirname(require.resolve(themeName))
   } catch (e) {
-    let panic = false
     let pathToLocalTheme
 
     // only try to look for local theme in main site
@@ -28,18 +27,16 @@ const resolveTheme = async (
     // local themes with same name that do different things and name being
     // main identifier that gatsby uses right now, it's safer not to support it for now.
     if (isMainConfig) {
-      // is a local plugin OR it doesn't exist
       pathToLocalTheme = path.join(path.resolve(`.`), `plugins`, themeName)
+      // is a local plugin OR it doesn't exist
       try {
         themeDir = path.dirname(require.resolve(pathToLocalTheme))
       } catch (localErr) {
-        panic = true
+        // catch shouldn't be empty :shrug:
       }
-    } else {
-      panic = true
     }
 
-    if (panic) {
+    if (!themeDir) {
       const nodeResolutionPaths = module.paths.map(p => path.join(p, themeName))
       reporter.panic({
         id: `10226`,
