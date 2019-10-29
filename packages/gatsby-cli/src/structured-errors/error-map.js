@@ -162,21 +162,16 @@ const errorMap = {
   },
   "10226": {
     text: context =>
-      stripIndent(`
-      Couldn't find the "${context.themeName}" plugin that is declared in "${
-        context.configFilePath
-      }".
-
-${
-  context.pathToLocalTheme
-    ? `Tried looking for a local plugin in ${context.pathToLocalTheme}.\n`
-    : ``
-}
-      Tried looking for an installed package in the following paths:
-${context.nodeResolutionPaths
-  .map(potentialLocationPath => `        - ${potentialLocationPath}`)
-  .join(`\n`)}
-      `),
+      [
+        `Couldn't find the "${context.themeName}" plugin that is declared in "${context.configFilePath}".`,
+        context.pathToLocalTheme &&
+          `Tried looking for a local plugin in ${context.pathToLocalTheme}.`,
+        `Tried looking for an installed package in the following paths:\n${context.nodeResolutionPaths
+          .map(potentialLocationPath => ` - ${potentialLocationPath}`)
+          .join(`\n`)}`,
+      ]
+        .filter(Boolean)
+        .join(`\n\n`),
     type: `CONFIG`,
     level: `ERROR`,
   },

@@ -35,6 +35,8 @@ const resolveTheme = async (
       } catch (localErr) {
         panic = true
       }
+    } else {
+      panic = true
     }
 
     if (panic) {
