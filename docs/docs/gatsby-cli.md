@@ -233,4 +233,4 @@ In it you’re going to see something like this.
 }
 ```
 
-Edit your `packageManager` value, save and you’re good to go for your next project using `gastby new`.
+Edit your `packageManager` value, save and you’re good to go for your next project using `gatsby new`.
