@@ -254,7 +254,7 @@ React elements are [immutable](https://en.wikipedia.org/wiki/Immutable_object).
 Los elementos de React son [inmutables](https://es.wikipedia.org/wiki/Objeto_inmutable).
 ```
 
-For links that have no equivalent (Stack Overflow, YouTube videos, etc.), just use the English link.
+For links that have no equivalent (Stack Overflow, YouTube videos, etc.), use the English link.
 
 ## Language-specific maintainer channels
 
