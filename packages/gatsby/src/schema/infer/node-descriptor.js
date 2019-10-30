@@ -71,7 +71,7 @@ type ValueDescriptor = {
 */
 
 const is32BitInteger = require(`./is-32-bit-integer`)
-const { looksLikeADate } = require(`../schema/types/date`)
+const { looksLikeADate } = require(`../types/date`)
 
 const getType = (value, key) => {
   // Staying as close as possible to GraphQL types

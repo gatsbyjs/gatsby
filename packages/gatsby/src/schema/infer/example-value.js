@@ -1,4 +1,4 @@
-const { addNode, buildExampleObject } = require(`../../utils/node-descriptor`)
+const { addNode, buildExampleObject } = require(`./node-descriptor`)
 
 const getExampleValue = ({
   nodes,

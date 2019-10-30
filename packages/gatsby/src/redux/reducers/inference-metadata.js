@@ -1,7 +1,7 @@
 // Tracking structure of nodes to utilize this metadata for schema inference
 // Type descriptors stay relevant at any point in time making incremental inference trivial
 
-const { addNode, deleteNode } = require(`../../utils/node-descriptor`)
+const { addNode, deleteNode } = require(`../../schema/infer/node-descriptor`)
 
 // FIXME: this has to be injected somehow
 const ignoredFields = new Set([
