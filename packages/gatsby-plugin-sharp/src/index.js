@@ -70,13 +70,37 @@ function queueImageResizing({ file, args = {}, reporter }) {
   let aspectRatio = dimensions.width / dimensions.height
   const originalName = file.base
 
-  // If the width/height are both set, we're cropping so just return
-  // that.
+  // If the width/height are both set, we're cropping the image and need to
+  // check the fit option
   if (options.width && options.height) {
     width = options.width
     height = options.height
     // Recalculate the aspectRatio for the cropped photo
-    aspectRatio = width / height
+    let targetAspectRatio = width / height
+    if(!!options.fit) {
+      if(options.fit === INSIDE) {
+        // If the source image is _wider_ than the crop, preserve the width
+        // Otherwise, preserve the height
+        if(aspectRatio >= targetAspectRatio) {
+          width = options.width
+          height = Math.round(options.width / aspectRatio)
+        } else {
+          width = Math.round(options.height * aspectRatio)
+          height = options.height
+        }
+      } else if(options.fit === OUTSIDE) {
+        // If the source image is _wider_ than the crop, preserve the height
+        // Otherwise, preserve the width
+        if(aspectRatio > targetAspectRatio) {
+          width = Math.round(options.height * aspectRatio)
+          height = options.height
+        } else {
+          width = options.width
+          height = Math.round(options.width / aspectRatio)
+        }
+
+      } else aspectRatio = targetAspectRatio
+    } else aspectRatio = targetAspectRatio
   } else if (options.width) {
     // Use the aspect ratio of the image to calculate what will be the resulting
     // height.
@@ -293,6 +317,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
   const { width, height, density, format } = metadata
 
   // if no maxWidth is passed, we need to resize the image based on the passed maxHeight
+  // TODO: Account for `fit` here (this affects the fluidSizes object later)
   const fixedDimension =
     options.maxWidth === undefined ? `maxHeight` : `maxWidth`
 
@@ -302,6 +327,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
     )
   }
 
+  // TODO: Account for `fit` here (this is returned to gatsby-image)
   let presentationWidth, presentationHeight
   if (fixedDimension === `maxWidth`) {
     presentationWidth = Math.min(options.maxWidth, width)
@@ -391,6 +417,8 @@ async function fluid({ file, args = {}, reporter, cache }) {
       trim: options.trim,
       toFormat: options.toFormat,
       toFormatBase64: options.toFormatBase64,
+      cropFocus: options.cropFocus,
+      fit: options.fit,
       width: base64Width,
       height: base64Height,
     }
@@ -453,6 +481,8 @@ async function fixed({ file, args = {}, reporter, cache }) {
   // if no width is passed, we need to resize the image based on the passed height
   const fixedDimension = options.width === undefined ? `height` : `width`
 
+  // TODO: account for `fit` here
+
   // Create sizes for different resolutions — we do 1x, 1.5x, and 2x.
   const sizes = []
   sizes.push(options[fixedDimension])
@@ -486,6 +516,7 @@ async function fixed({ file, args = {}, reporter, cache }) {
     }
     // Queue images for processing.
     if (options.width !== undefined && options.height !== undefined) {
+      // TODO: use actual aspect ratio from metadata
       arrrgs.height = Math.round(size * (options.height / options.width))
     }
 
@@ -498,16 +529,20 @@ async function fixed({ file, args = {}, reporter, cache }) {
 
   let base64Image
   if (options.base64) {
+    const base64Width = options.base64Width || defaultBase64Width()
+    const base64Height = Math.max(1, Math.round((base64Width * height) / width))
     const base64Args = {
-      // height is adjusted accordingly with respect to the aspect ratio
-      width: options.base64Width,
       duotone: options.duotone,
       grayscale: options.grayscale,
       rotate: options.rotate,
+      trim: options.trim,
       toFormat: options.toFormat,
       toFormatBase64: options.toFormatBase64,
+      cropFocus: options.cropFocus,
+      fit: options.fit,
+      width: base64Width,
+      height: base64Height,
     }
-
     // Get base64 version
     base64Image = await base64({
       file,
