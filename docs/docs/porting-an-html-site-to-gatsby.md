@@ -2,18 +2,7 @@
 title: Porting an HTML Site to Gatsby
 ---
 
-This page will guide you through the process of porting an HTML website to Gatsby.
-
-## Why Gatsby?
-
-There are a few particularly helpful Gatsby features when porting HTML websites:
-
-- Defining the blocks that make up your site as reusable components that can take inputs.
-- A modular system to lift the content out of your code and into files or external services, when the time is right.
-- Options to accomodate serving your website at a path, such as `/docs`, and hosting your assets at a seperate domain.
-- An open and ongoing conversation to join, with our vibrant community of contributors. Over 2500 people have worked on Gatsby and its wealth of documentation to date.
-
-We're proud of the [Gatsby core philosophy](https://www.gatsbyjs.org/docs/gatsby-core-philosophy/), it sets out the overall vision, and philosophy on tooling and community. In short, as a member of the community, You belong here!
+This guide focuses on the parts of Gatsby that are applicable to a static website. For a more comprehensive walk through Gatsby's features check out the [Gatsby tutorial](/tutorial/). By following the example on this page, you will complete the key stages of porting an HTML website to Gatsby and establish your Gatsby development workflow.
 
 ## Getting Started
 
@@ -251,7 +240,7 @@ This guide will stay on the HTML side of the balance to suit a more static site.
 
 ## Porting pages
 
-### Porting the next page
+### Porting a sub-index page
 
 There are 4 pages in the `/who` section of Taylor's Tidy Trees for members of Taylor's tree team. Here is the index page:
 
