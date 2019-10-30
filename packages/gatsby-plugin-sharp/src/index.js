@@ -77,28 +77,27 @@ function queueImageResizing({ file, args = {}, reporter }) {
     height = options.height
     // Recalculate the aspectRatio for the cropped photo
     let targetAspectRatio = width / height
-    if(options.fit !== undefined) {
-      if(options.fit === INSIDE) {
+    if (options.fit !== undefined) {
+      if (options.fit === sharp.fit.inside) {
         // If the source image is _wider_ than the crop, preserve the width
         // Otherwise, preserve the height
-        if(aspectRatio >= targetAspectRatio) {
+        if (aspectRatio >= targetAspectRatio) {
           width = options.width
           height = Math.round(options.width / aspectRatio)
         } else {
           width = Math.round(options.height * aspectRatio)
           height = options.height
         }
-      } else if(options.fit === OUTSIDE) {
+      } else if (options.fit === sharp.fit.outside) {
         // If the source image is _wider_ than the crop, preserve the height
         // Otherwise, preserve the width
-        if(aspectRatio > targetAspectRatio) {
+        if (aspectRatio > targetAspectRatio) {
           width = Math.round(options.height * aspectRatio)
           height = options.height
         } else {
           width = options.width
           height = Math.round(options.width / aspectRatio)
         }
-
       } else aspectRatio = targetAspectRatio
     } else aspectRatio = targetAspectRatio
   } else if (options.width) {
@@ -322,7 +321,9 @@ async function fluid({ file, args = {}, reporter, cache }) {
 
   if (options[fixedDimension] < 1) {
     throw new Error(
-      `${fixedDimension} has to be a positive int larger than zero (> 0), now it's ${options[fixedDimension]}`
+      `${fixedDimension} has to be a positive int larger than zero (> 0), now it's ${
+        options[fixedDimension]
+      }`
     )
   }
 
@@ -494,9 +495,13 @@ async function fixed({ file, args = {}, reporter, cache }) {
     filteredSizes.push(dimensions[fixedDimension])
     console.warn(
       `
-                 The requested ${fixedDimension} "${options[fixedDimension]}px" for a resolutions field for
+                 The requested ${fixedDimension} "${
+        options[fixedDimension]
+      }px" for a resolutions field for
                  the file ${file.absolutePath}
-                 was larger than the actual image ${fixedDimension} of ${dimensions[fixedDimension]}px!
+                 was larger than the actual image ${fixedDimension} of ${
+        dimensions[fixedDimension]
+      }px!
                  If possible, replace the current image with a larger one.
                  `
     )
@@ -525,7 +530,10 @@ async function fixed({ file, args = {}, reporter, cache }) {
   let base64Image
   if (options.base64) {
     const base64Width = options.base64Width || defaultBase64Width()
-    const base64Height = Math.max(1, Math.round((base64Width * height) / width))
+    const base64Height = Math.max(
+      1,
+      Math.round((base64Width * images[0].height) / images[0].width)
+    )
     const base64Args = {
       duotone: options.duotone,
       grayscale: options.grayscale,
