@@ -24,7 +24,7 @@ This metadata can be later utilized for schema inference
   //   },
   // }
 
-  const example1 = buildExampleObject({ meta, typeName, typeConflictReporter })
+  const example1 = getExampleObject({ meta, typeName, typeConflictReporter })
   console.log(example1)
   // outputs { bar: 'str' }
   // and reports conflicts discovered
@@ -39,11 +39,11 @@ This metadata can be later utilized for schema inference
   //   bar: { string: { total: 1, example: 'str' } },
   // }
 
-  const example2 = buildExampleObject({ meta, typeName, typeConflictReporter })
+  const example2 = getExampleObject({ meta, typeName, typeConflictReporter })
   // outputs: { foo: 25, bar: 'str' }
 ```
 
-`addNode`, `deleteNode`, `buildExampleObject` are O(N) where N is the number
+`addNode`, `deleteNode`, `getExampleObject` are O(N) where N is the number
 of fields in the node object (including nested fields)
 
 ### Metadata structure
@@ -52,6 +52,8 @@ of fields in the node object (including nested fields)
 type TypeMetadata = {
   ignoredFields?: Set<string>,
   fieldMap?: { [string]: ValueDescriptor },
+  typeName?: string,
+  dirty?: boolean, // tracks structural changes only
 }
 
 type Count = Number
@@ -63,9 +65,9 @@ type ValueDescriptor = {
   date?: { total: Count, example: string },
   string?: { total: Count, empty: Count, example: string },
   boolean?: { total: Count, example: boolean },
-  array?: { total: Count, item: Descriptor },
+  array?: { total: Count, item: ValueDescriptor },
   union?: { total: Count, nodes: { [NodeId]: Count } },
-  object?: { total: 0, props: { [string]: Descriptor } },
+  object?: { total: 0, props: { [string]: ValueDescriptor } },
 }
 ```
 */
@@ -175,34 +177,30 @@ const updateValueDescriptor = ({
   return [descriptor, dirty]
 }
 
-const objFields = (obj, ignoredFields = new Set()) =>
-  Object.keys(obj).filter(key => !ignoredFields.has(key))
+const nodeFields = (node, ignoredFields = new Set()) =>
+  Object.keys(node).filter(key => !ignoredFields.has(key))
 
-const updateObjectMetadata = (metadata = {}, operation, object) => {
+const updateTypeMetadata = (metadata = {}, operation, node) => {
   const { ignoredFields, fieldMap = {}, dirty = false } = metadata
 
-  let hasDirtyFields = false
-  objFields(object, ignoredFields).forEach(field => {
+  let structureChanged = false
+  nodeFields(node, ignoredFields).forEach(field => {
     const [descriptor, valueStructureChanged] = updateValueDescriptor({
       key: field,
-      value: object[field],
+      value: node[field],
       operation,
       descriptor: fieldMap[field],
     })
     fieldMap[field] = descriptor
-    hasDirtyFields = hasDirtyFields || valueStructureChanged
+    structureChanged = structureChanged || valueStructureChanged
   })
   metadata.fieldMap = fieldMap
-  metadata.dirty = dirty || hasDirtyFields
+  metadata.dirty = dirty || structureChanged
   return metadata
 }
 
-const addNode = (metadata, object) =>
-  updateObjectMetadata(metadata, `add`, object)
-
-const deleteNode = (metadata, object) =>
-  updateObjectMetadata(metadata, `del`, object)
-
+const addNode = (metadata, node) => updateTypeMetadata(metadata, `add`, node)
+const deleteNode = (metadata, node) => updateTypeMetadata(metadata, `del`, node)
 const addNodes = (metadata, nodes) => nodes.reduce(addNode, metadata)
 
 const isMixedNumber = ({ float, int }) =>
@@ -328,7 +326,7 @@ const buildExampleValue = ({
   }
 }
 
-const buildExampleObject = ({ fieldMap, typeName, typeConflictReporter }) =>
+const getExampleObject = ({ fieldMap, typeName, typeConflictReporter }) =>
   Object.keys(fieldMap).reduce((acc, key) => {
     const value = buildExampleValue({
       path: `${typeName}.${key}`,
@@ -345,5 +343,5 @@ module.exports = {
   addNode,
   addNodes,
   deleteNode,
-  buildExampleObject,
+  getExampleObject,
 }
