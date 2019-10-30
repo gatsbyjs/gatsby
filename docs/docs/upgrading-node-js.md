@@ -25,7 +25,7 @@ This example shows Node.js version 10, specifically v10.16.0.
 
 Node.js version 6 reached _End-of-life_ status on 30th April 2019. Many of Gatsby's dependencies are updating to Node.js version 8 and above. Gatsby must also update in order to deliver new features and bug fixes more quickly.
 
-Generally it's recommend to use [the Node version whose status is _Active LTS_](https://github.com/nodejs/Release#nodejs-release-working-group) (Node 10 at time of writing). However, in this document you'll learn how to update from Node 6 to Node 8 as this is likely to be the least disruptive upgrade for you.
+Generally, it's recommended to use [the Node version whose status is _Active LTS_](https://github.com/nodejs/Release#nodejs-release-working-group) (Node 10 at time of writing). However, in this document, you'll learn how to update from Node 6 to Node 8 as this is likely to be the least disruptive upgrade for you.
 
 > What about Node.js 7? Stable versions of Node.js are evenly numbered releases - Node.js 6, Node.js 8, Node.js 10 etc. Only use uneven release numbers if you'd like to try cutting-edge and experimental features.
 
@@ -116,4 +116,4 @@ Gatsby takes backwards compatibility seriously and aims to support older version
 
 Gatsby also relies on a huge ecosystem of JavaScript dependencies. As the ecosystem moves away from older, unsupported Node.js versions we have to keep pace to ensure that bugs can be fixed and new features can be released.
 
-In this document you learned how you upgrade from Node.js version 6 (which has reached _End of Life_ status), to Node.js version 8 (which has reached _Maintenance_) status.
+In this document, you learned how you upgrade from Node.js version 6 (which has reached _End of Life_ status) to Node.js version 8 (which has reached _Maintenance_) status.

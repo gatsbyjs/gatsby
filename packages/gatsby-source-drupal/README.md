@@ -170,11 +170,11 @@ In your Drupal module configuration, set the update URL to your Gatsby Preview i
 
 _NOTES_:
 
-- This is experimental feature in active development. APIs used for this feature are not yet stable - it can break while we iterate on API design (particularly when versions of `gatsby-source-drupal` and `Gatsby Live Preview` drupal module are incompatible).
+- This is experimental feature in active development. APIs used for this feature are not yet stable - it can break while we iterate on API design (particularly when versions of `gatsby-source-drupal` and `Gatsby Live Preview` Drupal module are incompatible).
 
 ### Preview Secret
 
-While you don't need to pass any additional options for preview to work, you can pass a `secret` for added security between your drupal instance and gatsby preview. Ensure this secret matches the one set in your Drupal Gatsby Preview settings.
+While you don't need to pass any additional options for preview to work, you can pass a `secret` for added security between your Drupal instance and Gatsby preview. Ensure this secret matches the one set in your Drupal Gatsby Preview settings.
 
 ```javascript
 // In your gatsby-config.js

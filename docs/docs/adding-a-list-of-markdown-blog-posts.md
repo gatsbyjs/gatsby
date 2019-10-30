@@ -4,7 +4,7 @@ title: Adding a List of Markdown Blog Posts
 
 Once you have added Markdown pages to your site, you are just one step away from being able to list your posts on a dedicated index page.
 
-### Creating posts
+## Creating posts
 
 As described [here](/docs/adding-markdown-pages), you will have to create your posts in Markdown files which will look like this:
 
@@ -18,7 +18,7 @@ title: "My first blog post"
 Has anyone heard about GatsbyJS yet?
 ```
 
-### Creating the page
+## Creating the page
 
 The first step will be to create the page which will display your posts, in `src/pages/`. You can for example use `index.js`.
 
@@ -41,7 +41,7 @@ const IndexPage = ({
 export default IndexPage
 ```
 
-### Creating the GraphQL query
+## Creating the GraphQL query
 
 Second, you need to provide the data to your component with a GraphQL query. Add it, so that `index.js` looks like this:
 
@@ -83,7 +83,7 @@ export const pageQuery = graphql`
 `
 ```
 
-### Creating the `PostLink` component
+## Creating the `PostLink` component
 
 The only thing left to do is to add the `PostLink` component. Create a new file `post-link.js` in `src/components/` and add the following:
 

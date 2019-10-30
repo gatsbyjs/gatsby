@@ -1,7 +1,7 @@
 // @flow
 
 const semver = require(`semver`)
-const { isCI } = require(`ci-info`)
+const { isCI } = require(`gatsby-core-utils`)
 const signalExit = require(`signal-exit`)
 const reporterActions = require(`./redux/actions`)
 
@@ -17,7 +17,7 @@ if (!process.env.GATSBY_LOGGER) {
   if (
     inkExists &&
     semver.satisfies(process.version, `>=8`) &&
-    !isCI &&
+    !isCI() &&
     typeof jest === `undefined`
   ) {
     process.env.GATSBY_LOGGER = `ink`

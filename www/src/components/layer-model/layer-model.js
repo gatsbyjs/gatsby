@@ -3,7 +3,7 @@ import { jsx } from "theme-ui"
 import React, { useState, useEffect, useRef } from "react"
 import hex2rgba from "hex2rgba"
 
-import { colors } from "gatsby-design-tokens"
+import { colors } from "../../gatsby-plugin-theme-ui"
 import LayerIcon from "../../assets/icons/layer-icon"
 import {
   ContentLayerContent,
@@ -27,21 +27,21 @@ const Layer = ({ buttonRef, layer, onClick, selected, index }) => {
       aria-selected={selected}
       onClick={onClick}
       sx={{
-        cursor: `pointer`,
-        borderRadius: 3,
-        p: 2,
-        color: `textMuted`,
-        fontWeight: selected ? `bold` : `body`,
-        backgroundColor: `ui.background`,
+        bg: `ui.background`,
         border: selected
-          ? `2px ${colors[baseColor][60]} solid`
+          ? t => `2px ${t.colors[baseColor][60]} solid`
           : `2px transparent solid`,
+        borderRadius: 3,
+        color: `textMuted`,
+        cursor: `pointer`,
+        fontWeight: selected ? `bold` : `body`,
+        p: 2,
         ":focus": {
+          boxShadow: t => `0 0 0 3px ${hex2rgba(colors[baseColor][30], 0.5)}`,
           outline: 0,
-          boxShadow: `0 0 0 3px ${hex2rgba(colors[baseColor][30], 0.5)}`,
         },
         ":hover": {
-          backgroundColor: colors[baseColor][5],
+          borderColor: t => t.colors[baseColor][60],
         },
       }}
     >
