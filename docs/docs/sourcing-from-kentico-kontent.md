@@ -225,4 +225,3 @@ You've seen how to set up a simple Gatsby site that sources content from Kentico
 
 - See [more about what the Kentico Kontent source plugin can do](https://github.com/Kentico/gatsby-source-kontent#features).
 - Read the [Kentico Kontent documentation](https://docs.kontent.ai/) to see what's possible.
-- Read a [blog post about using Kentico Kontent and Gatsby](/blog/2018-12-19-kentico-cloud-and-gatsby-take-you-beyond-static-websites/).
