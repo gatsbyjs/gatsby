@@ -8,11 +8,11 @@ A page is created by calling the [createPage](/docs/actions/#createPage) action.
 1. The `components` redux namespace is updated
 1. `onCreatePage` API is executed
 
-## Update Pages redux namespace
+## Update pages redux namespace
 
 The `pages` redux namespace is a map of page `path` to page object. The [pages reducer](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/reducers/pages.js) takes care of updating this on a `CREATE_PAGE` action. It also creates a [Foreign Key Reference](/docs/schema-gql-type/#foreign-key-reference-___node) to the plugin that created the page by adding a `pluginCreator___NODE` field.
 
-## Update Components redux namespace
+## Update components redux namespace
 
 The `components` redux namespace is a map of [componentPath](/docs/behind-the-scenes-terminology/#component) (file with React component) to the Component object. A Component object is simply the Page object but with an empty query string (that will be set during [Query Extraction](/docs/query-extraction/#store-queries-in-redux)).
 

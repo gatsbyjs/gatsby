@@ -447,3 +447,13 @@
   for_hire: true
   hiring: true
   portfolio: true
+- name: Bare Advertising & Communications
+  type: agency
+  image: images/bare-advertising-communications.png
+  description: >-
+    We’re an agile group of full-time, fast-moving, hard-working, idea-generating, results-getting, on-timing, on-budgeting, espresso-fuelled content writers, designers, developers, media mavens, strategists, and producers.
+  location: Canada
+  website: "https://bare.ca/"
+  for_hire: true
+  hiring: false
+  portfolio: true
