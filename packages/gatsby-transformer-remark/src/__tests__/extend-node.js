@@ -131,7 +131,6 @@ const bootstrapTest = (
         loadNodeContent,
         actions,
         createNodeId,
-        reporter: { panicOnBuild: err => console.log(err) },
         createContentDigest,
       },
       { ...additionalParameters, ...pluginOptions }
@@ -183,11 +182,11 @@ title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
 ---`,
     `excerpt
-          excerptAst
-          frontmatter {
-              title
-          }
-          `,
+      excerptAst
+      frontmatter {
+          title
+      }
+      `,
     node => {
       expect(node).toMatchSnapshot()
       expect(node.excerpt).toBe(``)
@@ -209,7 +208,8 @@ Where oh where is my little pony?
 <!-- end -->
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla viverra, eros at efficitur pulvinar, lectus orci accumsan nisi, eu blandit elit nulla nec lectus. Integer porttitor imperdiet sapien. Quisque in orci sed nisi consequat aliquam. Aenean id mollis nisi. Sed auctor odio id erat facilisis venenatis. Quisque posuere faucibus libero vel fringilla.
 
-In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincidunt, sem velit vulputate enim, nec interdum augue enim nec mauris. Nulla iaculis ante sed enim placerat pretium. Nulla metus odio, facilisis vestibulum lobortis vitae, bibendum at nunc. Donec sit amet efficitur metus, in bibendum nisi. Vivamus tempus vel turpis sit amet auctor. Maecenas luctus vestibulum velit, at sagittis leo volutpat quis. Praesent posuere nec augue eget sodales. Pellentesque vitae arcu ut est varius venenatis id maximus sem. Curabitur non consectetur turpis.`,
+In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincidunt, sem velit vulputate enim, nec interdum augue enim nec mauris. Nulla iaculis ante sed enim placerat pretium. Nulla metus odio, facilisis vestibulum lobortis vitae, bibendum at nunc. Donec sit amet efficitur metus, in bibendum nisi. Vivamus tempus vel turpis sit amet auctor. Maecenas luctus vestibulum velit, at sagittis leo volutpat quis. Praesent posuere nec augue eget sodales. Pellentesque vitae arcu ut est varius venenatis id maximus sem. Curabitur non consectetur turpis.
+      `,
     `excerpt
       excerptAst
       frontmatter {
@@ -253,7 +253,7 @@ Where oh where **is** my little pony?
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla viverra, eros at efficitur pulvinar, lectus orci accumsan nisi, eu blandit elit nulla nec lectus. Integer porttitor imperdiet sapien. Quisque in orci sed nisi consequat aliquam. Aenean id mollis nisi. Sed auctor odio id erat facilisis venenatis. Quisque posuere faucibus libero vel fringilla.
 
 In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincidunt, sem velit vulputate enim, nec interdum augue enim nec mauris. Nulla iaculis ante sed enim placerat pretium. Nulla metus odio, facilisis vestibulum lobortis vitae, bibendum at nunc. Donec sit amet efficitur metus, in bibendum nisi. Vivamus tempus vel turpis sit amet auctor. Maecenas luctus vestibulum velit, at sagittis leo volutpat quis. Praesent posuere nec augue eget sodales. Pellentesque vitae arcu ut est varius venenatis id maximus sem. Curabitur non consectetur turpis.
-  `
+`
 
   bootstrapTest(
     `given PLAIN correctly uses excerpt separator`,
@@ -304,7 +304,7 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
     contentWithoutSeparator,
     `excerpt(pruneLength: 40, format: MARKDOWN)`,
     node => {
-      // expect(node).toMatchSnapshot()
+      expect(node).toMatchSnapshot()
       expect(node.excerpt.length).toBe(45)
       expect(node.excerpt).toBe(
         `Where oh where **is** my little pony? Lorem…\n`
@@ -325,11 +325,11 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
     `correctly prunes length to default value`,
     content,
     `excerpt
-        excerptAst
-        frontmatter {
-            title
-        }
-        `,
+      excerptAst
+      frontmatter {
+          title
+      }
+      `,
     node => {
       expect(node).toMatchSnapshot()
       expect(node.excerpt.length).toBe(139)
@@ -399,11 +399,11 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
       `correctly prunes length to provided parameter`,
       content,
       `excerpt(pruneLength: 50)
-          excerptAst(pruneLength: 50)
-          frontmatter {
-              title
-          }
-          `,
+        excerptAst(pruneLength: 50)
+        frontmatter {
+            title
+        }
+        `,
       node => {
         expect(node).toMatchSnapshot()
         expect(node.excerpt.length).toBe(46)
@@ -558,7 +558,7 @@ title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
 ---
 
-  My pony likes space on the left and right! `,
+ My pony likes space on the left and right! `,
     `excerpt`,
     node => {
       expect(node.excerpt).toBe(`My pony likes space on the left and right!`)
@@ -916,8 +916,11 @@ title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
 ---
 # first title
+
 some text
+
 ## second title
+
 some other text
 `,
     `tableOfContents
@@ -929,6 +932,7 @@ some other text
       expect(console.warn).toBeCalled()
     }
   )
+
   bootstrapTest(
     `correctly generates table of contents`,
     `---
@@ -950,6 +954,7 @@ final text
       expect(node).toMatchSnapshot()
     }
   )
+
   bootstrapTest(
     `table of contents is generated with correct depth (graphql option)`,
     `---
@@ -957,8 +962,11 @@ title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
 ---
 # first title
+
 some text
+
 ## second title
+
 some other text`,
     `tableOfContents(pathToSlugField: "frontmatter.title", maxDepth: 1)
     frontmatter {
@@ -970,6 +978,7 @@ some other text`,
 </ul>`)
     }
   )
+
   bootstrapTest(
     `table of contents is generated with correct depth (plugin option)`,
     `---
@@ -977,8 +986,11 @@ title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
 ---
 # first title
+
 some text
+
 ## second title
+
 some other text`,
     `tableOfContents(pathToSlugField: "frontmatter.title")
     frontmatter {
@@ -997,6 +1009,7 @@ some other text`,
       },
     }
   )
+
   bootstrapTest(
     `table of contents is generated from given heading onwards`,
     `---
@@ -1004,10 +1017,15 @@ title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
 ---
 # first title
+
 some text
+
 ## second title
+
 some other text
+
 # third title
+
 final text`,
     `tableOfContents(pathToSlugField: "frontmatter.title", heading: "first title")
     frontmatter {
@@ -1020,6 +1038,7 @@ final text`,
     }
   )
 })
+
 describe(`Relative links keep being relative`, () => {
   const assetPrefix = ``
   const basePath = `/prefix`
@@ -1042,8 +1061,33 @@ This is [a reference]
     { additionalParameters: { pathPrefix: pathPrefix, basePath: basePath } }
   )
 })
+
 describe(`Links are correctly prefixed`, () => {
   const assetPrefix = ``
+  const basePath = `/prefix`
+  const pathPrefix = assetPrefix + basePath
+
+  bootstrapTest(
+    `correctly prefixes links`,
+    `
+This is [a link](/path/to/page1).
+
+This is [a reference]
+
+[a reference]: /path/to/page2
+`,
+    `html`,
+    node => {
+      expect(node).toMatchSnapshot()
+      expect(node.html).toMatch(`<a href="/prefix/path/to/page1">`)
+      expect(node.html).toMatch(`<a href="/prefix/path/to/page2">`)
+    },
+    { additionalParameters: { pathPrefix: pathPrefix, basePath: basePath } }
+  )
+})
+
+describe(`Links are correctly prefixed when assetPrefix is used`, () => {
+  const assetPrefix = `https://example.com/assets`
   const basePath = `/prefix`
   const pathPrefix = assetPrefix + basePath
   bootstrapTest(
@@ -1064,28 +1108,7 @@ This is [a reference]
     { additionalParameters: { pathPrefix: pathPrefix, basePath: basePath } }
   )
 })
-describe(`Links are correctly prefixed when assetPrefix is used`, () => {
-  const assetPrefix = `https://example.com/assets`
-  const basePath = `/prefix`
-  const pathPrefix = assetPrefix + basePath
-  bootstrapTest(
-    `correctly prefixes links`,
-    `
-This is [a link](/path/to/page1).
 
-This is [a reference]
-
-  [a reference]: /path/to/page2
-  `,
-    `html`,
-    node => {
-      expect(node).toMatchSnapshot()
-      expect(node.html).toMatch(`<a href="/prefix/path/to/page1">`)
-      expect(node.html).toMatch(`<a href="/prefix/path/to/page2">`)
-    },
-    { additionalParameters: { pathPrefix: pathPrefix, basePath: basePath } }
-  )
-})
 describe(`Code block metas are correctly generated`, () => {
   bootstrapTest(
     `code block with language and meta`,
@@ -1106,11 +1129,13 @@ console.log('hello world')
     }
   )
 })
+
 describe(`Headings are generated correctly from schema`, () => {
   bootstrapTest(
     `returns value`,
     `
 # first title
+
 ## second title
 `,
     `headings {
@@ -1131,6 +1156,7 @@ describe(`Headings are generated correctly from schema`, () => {
       ])
     }
   )
+
   bootstrapTest(
     `returns value with inlineCode`,
     `
@@ -1138,9 +1164,9 @@ describe(`Headings are generated correctly from schema`, () => {
 ## \`second title\`
 `,
     `headings {
-        value
-        depth
-      }`,
+      value
+      depth
+    }`,
     node => {
       expect(node).toMatchSnapshot()
       expect(node.headings).toEqual([
@@ -1155,15 +1181,16 @@ describe(`Headings are generated correctly from schema`, () => {
       ])
     }
   )
+
   bootstrapTest(
     `returns value with mixed text`,
     `
 # An **important** heading with \`inline code\` and text
 `,
     `headings {
-        value
-        depth
-      }`,
+      value
+      depth
+    }`,
     node => {
       expect(node).toMatchSnapshot()
       expect(node.headings).toEqual([
