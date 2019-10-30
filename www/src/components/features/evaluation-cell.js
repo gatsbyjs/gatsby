@@ -1,10 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { colors } from "gatsby-design-tokens"
 import MdInfoOutline from "react-icons/lib/md/info-outline"
-
-const bgDefault = colors.orange[20]
-const bgFeatureAvailability = colors.orange[50]
 
 const renderText = txt => {
   const words = txt.split(` `)
@@ -62,10 +58,16 @@ const renderCell = (text, column) => {
 const getBackground = num => {
   switch (num) {
     case `2`: {
-      return `linear-gradient(90deg, transparent 50%, ${bgDefault} 50%)`
+      return t =>
+        `linear-gradient(90deg, transparent 50%, ${t.colors.orange[20]} 50%)`
     }
     case `1`: {
-      return `linear-gradient(180deg, transparent 50%, ${bgDefault} 50%), linear-gradient(90deg, transparent 50%, ${bgDefault} 50%)`
+      return t =>
+        `linear-gradient(180deg, transparent 50%, ${
+          t.colors.orange[20]
+        } 50%), linear-gradient(90deg, transparent 50%, ${
+          t.colors.orange[20]
+        } 50%)`
     }
     case `3`:
     case `0`:
@@ -89,9 +91,7 @@ const EvaluationCell = ({ num, style }) => (
     sx={{
       ...basicStyling,
       backgroundColor:
-        [`N/A`, `0`, ``].indexOf(num) !== -1
-          ? bgDefault
-          : bgFeatureAvailability,
+        [`N/A`, `0`, ``].indexOf(num) !== -1 ? `orange.20` : `orange.50`,
       backgroundImage: getBackground(num),
       ...(style || {}),
     }}
