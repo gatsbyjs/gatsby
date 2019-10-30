@@ -77,7 +77,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
     height = options.height
     // Recalculate the aspectRatio for the cropped photo
     let targetAspectRatio = width / height
-    if(!!options.fit) {
+    if(options.fit !== undefined) {
       if(options.fit === INSIDE) {
         // If the source image is _wider_ than the crop, preserve the width
         // Otherwise, preserve the height
@@ -326,7 +326,6 @@ async function fluid({ file, args = {}, reporter, cache }) {
     )
   }
 
-  // TODO: Account for `fit` here (this is returned to gatsby-image)
   let presentationWidth, presentationHeight
   if (fixedDimension === `maxWidth`) {
     presentationWidth = Math.min(options.maxWidth, width)
