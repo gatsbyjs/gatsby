@@ -11,50 +11,36 @@ Here are some things to keep in mind when deciding where to contribute to Gatsby
 - [Website changes](#making-changes-to-the-website) that improve either of these are always welcome!
 
 ## Contributing to the blog
+If you'd like to contribute a post to the Gatsby blog, please review the process and guidelines outlined below and submit your
+idea for the post to our [Gatsby blog proposal form](https://airtable.com/shr3449954866i3iF)
 
-Note: Before adding a blog post, ensure you have approval from a member of the Gatsby team. You should [open an issue](https://github.com/gatsbyjs/gatsby/issues/new/choose) or contact [@gatsbyjs on Twitter](https://twitter.com/gatsbyjs) before opening a PR with your blog post. Check out past blog posts for examples of posted content.
+### Blog proposal submission process
+1. Complete and submit the [Gatsby blog proposal form](https://airtable.com/shr3449954866i3iF).
+2. A Gatsby team member will review your proposal and let you know if the proposal has been accepted within the next week or so.
+    - __If the post is accepted:__ A Gatsby team member will work with you on a timeline for submitting and reviewing a draft of your blog post and set a tentative publishing date.
+    - __If the post is not accepted:__ We’ll let you know if there are any alternative offers we can make (e.g. offer to retweet if you publish the piece elsewhere, suggest submitting it as an addition to a Gatsby doc, etc.). We’ll also do our best to explain why your proposal was not accepted and encourage you to revise your proposal based on that feedback and resubmit. Please don’t be discouraged from submitting another post in the future!
 
-To add a new blog post to the gatsbyjs.org blog:
+If you have any questions about the process or your submission, please email [marketing@gatsbyjs.com](mailto:marketing@gatsbyjs.com).
 
-- Clone [the Gatsby repo](https://github.com/gatsbyjs/gatsby/) and navigate to `/www`.
-- Run `yarn` to install all of the website's dependencies. ([Why Yarn?](/contributing/setting-up-your-local-dev-environment#using-yarn))
-- Run `npm run develop` to preview the blog at `http://localhost:8000/blog`.
-- The content for the blog lives in the `/docs/blog` folder. Make additions or modifications here.
-- Add your avatar image to `/docs/blog/avatars`.
-- Add your name to `/docs/blog/author.yaml`.
-- Add a new folder following the pattern `/docs/blog/yyyy-mm-dd-title`. Within this newly created folder, add an `index.md` file.
-- Add `title`, `date`, `author`, `excerpt`, and `tags` to the frontmatter of your `index.md`. You can [view existing tags](/blog/tags/), or [add a new one](https://github.com/gatsbyjs/gatsby/blob/master/www/src/data/tags-docs.js) if you feel your tag merits being its own tag, though we encourage you to use existing tags.
-- If you are cross posting your post, you can add `canonicalLink` for SEO benefits. You can check the other blog posts in `/docs/blog` for examples.
-- If your blog post contains images, add them to your blog post folder and reference them in your post's `index.md`.
-- Ensure any links to gatsbyjs.org are relative links - `/contributing/how-to-contribute/` instead of `https://gatsbyjs.org/contributing/how-to-contribute`.
-- Follow the [Style Guide](/contributing/gatsby-style-guide/#word-choice) to make sure you're using the appropriate wording.
-- Double check your grammar and capitalize correctly.
-- Commit and push to your fork.
-- Create a pull request from your branch.
-  - We recommend using a prefix of `docs`, e.g. `docs/your-change` or `docs-your-change`. ([PR example](https://github.com/gatsbyjs/gatsby/commit/9c21394add7906974dcfd22ad5dc1351a99d7ceb#diff-bf544fce773d8a5381f64c37d48d9f12))
+### Content guidelines for submitting a blog post proposal
+As a Gatsby community member, you have unique insight into the ins and outs of learning Gatsby, building with Gatsby, and contributing to Gatsby’s open source community. Contributing to the Gatsby blog is a great way to share your experiences and insights. Here are some guidelines for what kind of content is and isn’t a good fit for the Gatsby blog.
 
-### Blog post format
+Things we’re looking for in Gatsby blog content:
+- Information to help others overcome challenges you’ve faced while working with Gatsby
+- Stories about how Gatsby helped you overcome different challenges on work and personal projects
+Gatsby case studies
+- Showcasing a tool, fix, or other content you’ve contributed to Gatsby’s open source community
+- Showcasing a tool, fix, or other content someone else has contributed to Gatsby’s open source community
+- Clear and thoughtful explanations of technical details or complex concepts related to React, Graph QL, web and application development, open-source contribution, Gatsby core, and other Gatsby-adjacent subject matter
+- Guidance and resources for learning React, GraphQL, HTML/CSS, web development, best practices, accessibility, SEO, Gatsby, different tool and CMS integrations, and other Gatsby-adjacent subject matter.
+- Other topics that you think would be valuable to people learning about or working with Gatsby
 
-The following format can help you in creating your new blog content. At the top is "frontmatter": a fancy name for metadata in Markdown. The frontmatter for your post should include a title, date, singular author name (for now, we would welcome issues/PRs for this), and one or more tags. Your content will follow after the second set of dashes (`---`).
+Things we’d like to avoid on the Gatsby blog:
+- __Promotional content.__ Please don’t submit content to the Gatsby blog solely for the purpose of promoting a product, yourself, or link-building.
+    - __Here’s what you can do instead:__ If you have a product or project you want to share on the Gatsby blog, focus on practical information, and make sure there’s a clear relationship with Gatsby or Gatsby-adjacent topics. You could write a step by step guide to using your product with Gatsby. You could write a case study highlighting the direct impact Gatsby had on your awesome project and offer helpful tips for other to recreate your success.
+- __Content that doesn’t seem to have a clear benefit for Gatsby users and/or the Gatsby community.__ For example, if you’re writing about a use-case or integration that’s extremely niche or unique to specific conditions that are really uncommon outside of your organization, the Gatsby blog might not be the best place for your content. Likewise, if your blog post doesn’t seem to have any direct relationship with Gatsby (or an interesting indirect relationship with Gatsby), then it may be more appropriate for a personal blog or another community blog.
 
-```md
----
-title: "Your Great Blog Post"
-date: YYYY-MM-DD
-author: Jamie Doe
-excerpt: "Here is a helpful excerpt or brief description of this blog post."
-tags:
-  - awesome
-  - post
----
-
-Your next great blog post awaits!
-
-Include images by creating a folder for your post and including
-Markdown and image files for easy linking.
-
-![awesome example](./image.jpg)
-```
+__Please note__ that these are guidelines, not rules. If you think your blog post belongs on the Gatsby blog, we absolutely encourage you to submit it. While we reserve the right to decide what is and isn’t appropriate for the Gatsby blog, we also value and encourage your creativity and your contributions. 
 
 ## Making changes to the website
 
