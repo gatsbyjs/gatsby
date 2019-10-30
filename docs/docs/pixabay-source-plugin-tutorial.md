@@ -1,5 +1,5 @@
 ---
-title: "Pixabay Image Source Plugin Tutorial"
+title: Pixabay Image Source Plugin Tutorial
 ---
 
 Creating your own source plugin.
@@ -28,7 +28,7 @@ _**NOTE:** if your data is local i.e. on your file system and part of your site'
 
 Your plugin is going to source images from Pixabay. You'll be able to configure your plugin in your site's `gatsby-config.js` file and write GraphQL queries to access your plugin's data.
 
-> **NOTE:** You'll need a Pixabay API key which you can get by [registering for a Pixabay account](https://pixabay.com/en/accounts/register/). Your API key is in the [“Search Images” section of the Pixabay API docs](https://pixabay.com/api/docs/#api_search_images).
+> **NOTE:** You'll need a Pixabay API key which you can get by [registering for a Pixabay account](https://pixabay.com/en/accounts/register/). Your API key is in the [“Search Images“ section of the Pixabay API docs](https://pixabay.com/api/docs/#api_search_images).
 
 ### An example API request
 
@@ -36,7 +36,7 @@ Pixabay's [API documentation](https://pixabay.com/api/docs/#api_search_images) d
 
 `https://pixabay.com/api/?q=yellow+flowers&editors_choice=true&pretty=true&key=<YOUR_API_KEY_HERE>`
 
-Take the above URL and paste it in to a browser to see Pixabay's response to your query. It gives you a list of photos matching the query "yellow flowers" that have received an Editor's Choice award.
+Take the above URL and paste it into a browser to see Pixabay's response to your query. It gives you a list of photos matching the query "yellow flowers" that have received an Editor's Choice award.
 
 > **NOTE:** You should replace `<YOUR_API_KEY_HERE>` with your Pixabay API key.
 
@@ -84,7 +84,7 @@ cd gatsby-source-pixabay
 
 ### Create a `package.json` file
 
-Now create a `package.json` file, this describes your plugin and any third-party code it might depend on. `npm` has a command to create this file for you. Run:
+Now create a `package.json` file, this describes your plugin and any third-party code it might depend on. npm has a command to create this file for you. Run:
 
 ```shell
 npm init --yes
@@ -168,7 +168,7 @@ console.log("Testing my plugin", configOptions)
 
 ### Add the plugin to your site
 
-The skeleton of your plugin is in place which means you can add it to your project and check your progress so far.
+The skeleton of your plugin is in place which means you can now add it to your project and check your progress so far.
 
 Open `gatsby-config.js` from the root directory of your tutorial site, and add the `gatsby-source-pixabay` plugin:
 
@@ -362,9 +362,9 @@ Experiment with different options in your `gatsby-config.js` file to see how tha
 
 ## Publishing a plugin
 
-Don't publish this particular plugin to npm or the Gatsby Plugin Library, because it's just a sample plugin for the tutorial. However, if you've built a local plugin for your project, and want to share it with others, `npm` allows you to publish your plugins. Check out the npm docs on [How to Publish & Update a Package](https://docs.npmjs.com/getting-started/publishing-npm-packages) for more info.
+Don't publish this particular plugin to npm or the Gatsby Plugin Library, because it's just a sample plugin for the tutorial. However, if you've built a local plugin for your project, and want to share it with others, npm allows you to publish your plugins. Check out the npm docs on [How to Publish & Update a Package](https://docs.npmjs.com/getting-started/publishing-npm-packages) for more info.
 
-> **NOTE:** Once you have published your plugin on `npm`, don't forget to edit your plugin's `package.json` file to include info about your plugin. If you'd like to publish a plugin to the [Gatsby Plugin Library](/plugins/) (please do!), please [follow these steps](/contributing/submit-to-plugin-library/).
+> **NOTE:** Once you have published your plugin on npm, don't forget to edit your plugin's `package.json` file to include info about your plugin. If you'd like to publish a plugin to the [Gatsby Plugin Library](/plugins/) (please do!), please [follow these steps](/contributing/submit-to-plugin-library/).
 
 ## Summary
 

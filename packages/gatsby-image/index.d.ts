@@ -30,6 +30,7 @@ interface GatsbyImageProps {
   fixed?: FixedObject | FixedObject[]
   fluid?: FluidObject | FluidObject[]
   fadeIn?: boolean
+  durationFadeIn?: number
   title?: string
   alt?: string
   className?: string | object
@@ -38,11 +39,12 @@ interface GatsbyImageProps {
   style?: object
   imgStyle?: object
   placeholderStyle?: object
+  placeholderClassName?: string
   backgroundColor?: string | boolean
   onLoad?: () => void
-  onStartLoad?: (param: { wasCached: boolean }) => void
   onError?: (event: any) => void
   onClick?: () => void
+  onStartLoad?: (param: { wasCached: boolean }) => void
   Tag?: string
   itemProp?: string
   loading?: `auto` | `lazy` | `eager`

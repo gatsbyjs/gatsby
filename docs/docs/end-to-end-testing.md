@@ -42,7 +42,7 @@ This means your `test:e2e` script would look like this:
 "test:e2e": "START_SERVER_AND_TEST_INSECURE=1 start-server-and-test develop http://localhost:8000 cy:open"
 ```
 
-### Continuous Integration
+## Continuous Integration
 
 If you want to run Cypress in Continuous Integration (CI) you have to use `cypress run` instead of `cypress open`:
 
@@ -70,9 +70,9 @@ To use cypress-axe you have to install `cypress-axe` and [axe-core](https://gith
 npm install --save-dev cypress-axe axe-core @testing-library/cypress
 ```
 
-Then you add the `cypress-axe` and `@testing-library/cypress` commands in `cypress/support/commands.js`:
+Then you add the `cypress-axe` and `@testing-library/cypress` commands in `cypress/support/index.js`:
 
-```js:title=cypress/support/commands.js
+```js:title=cypress/support/index.js
 import "./commands"
 //highlight-start
 import "cypress-axe"

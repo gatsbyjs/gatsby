@@ -56,7 +56,7 @@ Now that you have your project created, let's take a look inside. You will see a
 - **README.md**: Markdown file with instructions for use
 - **gatsby-browser.js**: Gatsby Browser API stuff goes here. Global style calls go here too
 - **gatsby-config.js**: Configuration for your project including meta data and plugins
-- **gatsby-node.js**: Where you tell gatsby to build pages from a template using provided data
+- **gatsby-node.js**: Where you tell Gatsby to build pages from a template using provided data
 - **gatsby-ssr.js**: Gatsby Server Side Rendering APIs go here
 - **package.json**: File which holds custom scripts, dependency information, etc
 

@@ -1,7 +1,7 @@
 // @flow
 
 const semver = require(`semver`)
-const { isCI } = require(`ci-info`)
+const { isCI } = require(`gatsby-core-utils`)
 const signalExit = require(`signal-exit`)
 const reporterActions = require(`./redux/actions`)
 
@@ -17,7 +17,7 @@ if (!process.env.GATSBY_LOGGER) {
   if (
     inkExists &&
     semver.satisfies(process.version, `>=8`) &&
-    !isCI &&
+    !isCI() &&
     typeof jest === `undefined`
   ) {
     process.env.GATSBY_LOGGER = `ink`
@@ -119,6 +119,9 @@ const reporter: Reporter = {
     //  - ansi-colors: see https://github.com/doowb/ansi-colors/blob/8024126c7115a0efb25a9a0e87bc5e29fd66831f/index.js#L5-L7
     if (isNoColor) {
       process.env.FORCE_COLOR = `0`
+      // chalk determines color level at import time. Before we reach this point,
+      // chalk was already imported, so we need to retroactively adjust level
+      chalk.level = 0
     }
   },
   /**
@@ -245,9 +248,8 @@ const reporter: Reporter = {
       panicOnBuild(...args) {
         span.finish()
 
-        reporterActions.endActivity({
+        reporterActions.setActivityErrored({
           id,
-          status: ActivityStatuses.Failed,
         })
 
         return reporter.panicOnBuild(...args)
@@ -363,9 +365,8 @@ const reporter: Reporter = {
       panicOnBuild(...args) {
         span.finish()
 
-        reporterActions.endActivity({
+        reporterActions.setActivityErrored({
           id,
-          status: ActivityStatuses.Failed,
         })
 
         return reporter.panicOnBuild(...args)
