@@ -12,7 +12,7 @@ let imagesFinished = 0
 let bar
 
 const executeJobs = _.throttle(
-  (pluginOptions, boundActionCreators, reportStatus) => {
+  (pluginOptions, boundActionCreators) => {
     toProcess.forEach(job => {
       toProcess.delete(job.args.inputPath)
 
@@ -26,8 +26,8 @@ const executeJobs = _.throttle(
           })
           .catch(job.deferred.reject)
           .finally(() => {
-            if (reportStatus) {
-              job.args.transforms.forEach(() => {
+            if (bar) {
+              job.args.operations.forEach(() => {
                 bar.tick()
               })
             }
@@ -35,8 +35,10 @@ const executeJobs = _.throttle(
             imagesFinished++
 
             if (imagesFinished === imagesToProcess) {
-              bar.done()
-              bar = null
+              if (bar) {
+                bar.done()
+                bar = null
+              }
               imagesToProcess = 0
               imagesFinished = 0
             }
@@ -58,14 +60,14 @@ const executeJobs = _.throttle(
 const scheduleJob = async (
   job,
   boundActionCreators,
-  pluginOptions,
   reporter,
-  reportStatus = true
+  reportStatus = true,
+  pluginOptions
 ) => {
   const isQueued = toProcess.has(job.inputPath)
   let scheduledPromise
 
-  if (imagesToProcess === 0) {
+  if (reportStatus && imagesToProcess === 0) {
     bar = createProgress(`Generating image thumbnails`, reporter)
     bar.start()
   }
@@ -80,7 +82,7 @@ const scheduleJob = async (
   if (isQueued) {
     const registeredJob = toProcess.get(job.inputPath)
     // add the transform to the transforms list
-    const transforms = registeredJob.args.transforms.concat({
+    const operations = registeredJob.args.operations.concat({
       outputPath: job.outputPath,
       transforms: job.args,
     })
@@ -90,7 +92,7 @@ const scheduleJob = async (
       ...registeredJob,
       args: {
         ...registeredJob.args,
-        transforms,
+        operations,
       },
     })
 
@@ -98,11 +100,13 @@ const scheduleJob = async (
     boundActionCreators.setJob(
       {
         id: registeredJob.id,
-        imagesCount: transforms.length,
+        imagesCount: operations.length,
       },
       { name: `gatsby-plugin-sharp` }
     )
-    bar.total++
+    if (bar) {
+      bar.total++
+    }
   } else {
     const jobId = uuidv4()
     const deferred = pDefer()
@@ -114,13 +118,12 @@ const scheduleJob = async (
       args: {
         inputPath: job.inputPath,
         contentDigest: job.contentDigest,
-        transforms: [
+        operations: [
           {
             outputPath: job.outputPath,
             transforms: job.args,
           },
         ],
-        pluginOptions,
       },
       deferred,
     })
@@ -136,7 +139,9 @@ const scheduleJob = async (
     )
   }
   imagesToProcess++
-  bar.total = imagesToProcess
+  if (bar) {
+    bar.total = imagesToProcess
+  }
 
   executeJobs(pluginOptions, boundActionCreators, reportStatus)
 
