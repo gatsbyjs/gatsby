@@ -55,7 +55,7 @@ One thing to remember at this point is that if you want to use similar text (or 
 
 Now we have the localized string Content Types and Content Items created in Kentico Cloud, the next step is to retrieve the content. I'm using the awesome and very popular static site generator [GatsbyJS](/) with [GraphQL](https://graphql.org/), a query language for your API.
 
-_(Another assumption for you... We’re assuming you have GatsbyJS + GraphQL set up for your project. If not, you can find a starting point here, [GatsbyJS sourcing from Kentico Cloud](/docs/sourcing-from-kentico-cloud/).)_
+_(Another assumption for you... We’re assuming you have GatsbyJS + GraphQL set up for your project. If not, you can find a starting point here, [GatsbyJS sourcing from Kentico Cloud](/docs/sourcing-from-kentico-kontent/).)_
 
 With your content items in Kentico Cloud, you should be able to see them when you conduct a GraphQL query.
 
