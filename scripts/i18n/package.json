@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Scripts for gatsby internationalization",
   "scripts": {
-    "create": "env-cmd node ./create.js"
+    "create": "env-cmd node ./create.js",
+    "update-source": "env-cmd node ./update-source.js"
   },
   "author": "Nat Alison",
   "license": "MIT",
