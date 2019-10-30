@@ -147,7 +147,7 @@ If you want to abbreviate a term in your article, write it out fully first, then
 put the abbreviation in parentheses. After that, you may use the abbreviation going for the rest of the article. For example, "In computer science, an
 abstract syntax tree (AST) is ..."
 
-### Use SEO optimized titles
+### Use Searcg Engine Optimization (SEO) optimized titles
 
 This explains how to create a doc that shows up in search engines like Google or Bing.
 
