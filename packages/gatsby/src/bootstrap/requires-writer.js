@@ -1,7 +1,11 @@
 const _ = require(`lodash`)
+const path = require(`path`)
 const fs = require(`fs-extra`)
 const crypto = require(`crypto`)
+const slash = require(`slash`)
 const { store, emitter } = require(`../redux/`)
+const reporter = require(`gatsby-cli/lib/reporter`)
+const { match } = require(`@reach/router/lib/utils`)
 import { joinPath } from "gatsby-core-utils"
 
 let lastHash = null
@@ -19,10 +23,82 @@ const getComponents = pages =>
     .uniqBy(c => c.componentChunkName)
     .value()
 
-const pickMatchPathFields = page => _.pick(page, [`path`, `matchPath`])
+/**
+ * Get all dynamic routes and sort them by most specific at the top
+ * code is based on @reach/router match utility (https://github.com/reach/router/blob/152aff2352bc62cefc932e1b536de9efde6b64a5/src/lib/utils.js#L224-L254)
+ */
+const getMatchPaths = pages => {
+  const createMatchPathEntry = (page, index) => {
+    let score = page.matchPath.replace(/[/][*]?$/, ``).split(`/`).length
+    let wildcard = 0
 
-const getMatchPaths = pages =>
-  pages.filter(page => page.matchPath).map(pickMatchPathFields)
+    if (!page.matchPath.includes(`*`)) {
+      wildcard = 1
+      score += 1
+    }
+
+    return {
+      ...page,
+      index,
+      score,
+      wildcard,
+    }
+  }
+
+  const matchPathPages = []
+  pages.forEach((page, index) => {
+    if (page.matchPath) {
+      matchPathPages.push(createMatchPathEntry(page, index))
+    }
+  })
+
+  // Pages can live in matchPaths, to keep them working without doing another network request
+  // we save them in matchPath. Our sorting will put them above dynamic routes
+  // as we add a static bonus point to static routes
+  // More info in https://github.com/gatsbyjs/gatsby/issues/16097
+  // small speedup: don't bother traversing when no matchPaths found.
+  if (matchPathPages.length) {
+    pages.forEach((page, index) => {
+      const isInsideMatchPath = !!matchPathPages.find(
+        pageWithMatchPath =>
+          !page.matchPath && match(pageWithMatchPath.matchPath, page.path)
+      )
+
+      if (isInsideMatchPath) {
+        matchPathPages.push(
+          createMatchPathEntry(
+            {
+              ...page,
+              matchPath: page.path,
+            },
+            index
+          )
+        )
+      }
+    })
+  }
+
+  return matchPathPages
+    .sort((a, b) => {
+      // Paths with wildcards should appear after those without.
+      const wildcardOrder = b.wildcard - a.wildcard
+      if (wildcardOrder !== 0) {
+        return wildcardOrder
+      }
+
+      // The higher the score, the higher the specificity of our matchPath
+      const order = b.score - a.score
+      if (order !== 0) {
+        return order
+      }
+
+      // if specificity is the same we use the array index
+      return b.index - a.index
+    })
+    .map(({ path, matchPath }) => {
+      return { path, matchPath }
+    })
+}
 
 const createHash = (matchPaths, components) =>
   crypto
@@ -32,6 +108,7 @@ const createHash = (matchPaths, components) =>
 
 // Write out pages information.
 const writeAll = async state => {
+  // console.log(`on requiresWriter progress`)
   const { program } = state
   const pages = [...state.pages.values()]
   const matchPaths = getMatchPaths(pages)
@@ -41,7 +118,8 @@ const writeAll = async state => {
 
   if (newHash === lastHash) {
     // Nothing changed. No need to rewrite files
-    return Promise.resolve()
+    // console.log(`on requiresWriter END1`)
+    return false
   }
 
   lastHash = newHash
@@ -67,12 +145,17 @@ const preferDefault = m => m && m.default || m
 const preferDefault = m => m && m.default || m
 \n`
   asyncRequires += `exports.components = {\n${components
-    .map(
-      c =>
-        `  "${c.componentChunkName}": () => import("${joinPath(
-          c.component
-        )}" /* webpackChunkName: "${c.componentChunkName}" */)`
-    )
+    .map(c => {
+      // we need a relative import path to keep contenthash the same if directory changes
+      const relativeComponentPath = path.relative(
+        path.join(program.directory, `.cache`),
+        c.component
+      )
+
+      return `  "${c.componentChunkName}": () => import("${slash(
+        relativeComponentPath
+      )}" /* webpackChunkName: "${c.componentChunkName}" */)`
+    })
     .join(`,\n`)}
 }\n\n`
 
@@ -84,18 +167,34 @@ const preferDefault = m => m && m.default || m
       .then(() => fs.move(tmp, destination, { overwrite: true }))
   }
 
-  const result = await Promise.all([
+  await Promise.all([
     writeAndMove(`sync-requires.js`, syncRequires),
     writeAndMove(`async-requires.js`, asyncRequires),
     writeAndMove(`match-paths.json`, JSON.stringify(matchPaths, null, 4)),
   ])
 
-  return result
+  return true
 }
 
-const debouncedWriteAll = _.debounce(() => writeAll(store.getState()), 500, {
-  leading: true,
-})
+const debouncedWriteAll = _.debounce(
+  async () => {
+    const activity = reporter.activityTimer(`write out requires`, {
+      id: `requires-writer`,
+    })
+    activity.start()
+    const didRequiresChange = await writeAll(store.getState())
+    if (didRequiresChange) {
+      reporter.pendingActivity({ id: `webpack-develop` })
+    }
+    activity.end()
+  },
+  500,
+  {
+    // using "leading" can cause double `writeAll` call - particularly
+    // when refreshing data using `/__refresh` hook.
+    leading: false,
+  }
+)
 
 /**
  * Start listening to CREATE/DELETE_PAGE events so we can rewrite
@@ -103,18 +202,22 @@ const debouncedWriteAll = _.debounce(() => writeAll(store.getState()), 500, {
  */
 const startListener = () => {
   emitter.on(`CREATE_PAGE`, () => {
+    reporter.pendingActivity({ id: `requires-writer` })
     debouncedWriteAll()
   })
 
   emitter.on(`CREATE_PAGE_END`, () => {
+    reporter.pendingActivity({ id: `requires-writer` })
     debouncedWriteAll()
   })
 
   emitter.on(`DELETE_PAGE`, () => {
+    reporter.pendingActivity({ id: `requires-writer` })
     debouncedWriteAll()
   })
 
   emitter.on(`DELETE_PAGE_BY_PATH`, () => {
+    reporter.pendingActivity({ id: `requires-writer` })
     debouncedWriteAll()
   })
 }

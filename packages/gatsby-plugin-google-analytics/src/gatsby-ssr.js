@@ -78,7 +78,7 @@ export const onRenderBody = (
   if(${
     typeof pluginOptions.respectDNT !== `undefined` &&
     pluginOptions.respectDNT == true
-      ? `!(navigator.doNotTrack == "1" || window.doNotTrack == "1")`
+      ? `!(parseInt(navigator.doNotTrack) === 1 || parseInt(window.doNotTrack) === 1 || parseInt(navigator.msDoNotTrack) === 1 || navigator.doNotTrack === "yes")`
       : `true`
   }) {
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

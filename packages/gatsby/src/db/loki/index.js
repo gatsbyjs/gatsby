@@ -9,6 +9,7 @@ const customComparators = require(`./custom-comparators`)
 // implementation. See `custom-comparators.js` for why.
 loki.Comparators.lt = customComparators.ltHelper
 loki.Comparators.gt = customComparators.gtHelper
+loki.Comparators.aeq = customComparators.aeqHelper
 
 // Loki is a document store with the same semantics as mongo. This
 // means there are no tables or relationships. Just a bunch of
@@ -60,7 +61,7 @@ function ensureNodeCollections(db) {
   })
 }
 
-function startFileDb(saveFile) {
+function startFileDb({ saveFile, lokiDBOptions = {} }) {
   return new Promise((resolve, reject) => {
     const dbOptions = {
       autoload: true,
@@ -71,6 +72,7 @@ function startFileDb(saveFile) {
           resolve()
         }
       },
+      ...lokiDBOptions,
     }
     db = new loki(saveFile, dbOptions)
   })
@@ -93,14 +95,14 @@ async function startInMemory() {
  * the existing state has been loaded (if there was an existing
  * saveFile)
  */
-async function start({ saveFile } = {}) {
+async function start({ saveFile, lokiDBOptions } = {}) {
   if (saveFile && !_.isString(saveFile)) {
     throw new Error(`saveFile must be a path`)
   }
   if (saveFile) {
     const saveDir = path.dirname(saveFile)
     await fs.ensureDir(saveDir)
-    await startFileDb(saveFile)
+    await startFileDb({ saveFile, lokiDBOptions })
   } else {
     await startInMemory()
   }

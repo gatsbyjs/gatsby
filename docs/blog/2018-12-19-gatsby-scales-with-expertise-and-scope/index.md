@@ -16,11 +16,11 @@ In any scenario, this individual of disparate experience and expertise was able 
 
 I myself am even an example of this general scaling idea. I began my career doing UI design, and have since been doing HTML, CSS, and JavaScript for several years now. As my skills have broadened, so too have they improved and scaled by adding Gatsby to my go-to toolchain.
 
-In this post, I want to explain how Gatsby led me into learning React and how your Gatsby project can scale by considering my [personal site](https://www.lekoarts.de/en) and experience, as an example. Gatsby seamlessly scales from basic React usage to complex React patterns, from basic Markdown to full-featured headless CMS — Gatsby scales with your expertise and scope.
+In this post, I want to explain how Gatsby led me into learning React and how your Gatsby project can scale by considering my [personal site](https://www.lekoarts.de/en) and experience, as an example. Gatsby seamlessly scales from basic React usage to complex React patterns, from basic Markdown to full-featured [headless CMS](/docs/headless-cms/) — Gatsby scales with your expertise and scope.
 
 ## The beginnings
 
-When I first discovered Gatsby two years ago, React was already quite popular. I decided to learn it to get more into modern front-end development and to step up my game. Before that I did **static** HTML/CSS/JS websites with the help of SCSS and Gulp. I never used a server-side scripting language (e.g. PHP) or a scripting engine (e.g. Nunjucks). So this was a big step, wasn't it?
+When I first discovered Gatsby two years ago, React was already quite popular. I decided to learn it to get more into modern frontend development and to step up my game. Before that I did **static** HTML/CSS/JS websites with the help of SCSS and Gulp. I never used a server-side scripting language (e.g. PHP) or a scripting engine (e.g. Nunjucks). So this was a big step, wasn't it?
 
 <Pullquote>
 Gatsby offers you a playground to learn React.

@@ -31,6 +31,7 @@ export const TAGS_AND_DOCS = new Map([
   [`data-visualization`, ``],
   [`deployment`, `/docs/deploying-and-hosting/`],
   [`developer-experience`, ``],
+  [`diversity-and-inclusion`, ``],
   [`documentation`, `/docs/`],
   [`documentation-sites`, ``],
   [`drupal`, `/docs/sourcing-from-drupal/`],

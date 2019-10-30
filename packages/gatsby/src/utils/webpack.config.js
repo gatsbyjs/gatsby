@@ -3,7 +3,6 @@ require(`v8-compile-cache`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const dotenv = require(`dotenv`)
-const FriendlyErrorsWebpackPlugin = require(`@pieh/friendly-errors-webpack-plugin`)
 const PnpWebpackPlugin = require(`pnp-webpack-plugin`)
 const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
@@ -205,10 +204,6 @@ module.exports = async (
         configPlugins = configPlugins.concat([
           plugins.hotModuleReplacement(),
           plugins.noEmitOnErrors(),
-
-          new FriendlyErrorsWebpackPlugin({
-            clearConsole: false,
-          }),
         ])
         break
       case `build-javascript`: {
@@ -468,13 +463,34 @@ module.exports = async (
   }
 
   if (stage === `build-javascript`) {
+    const componentsCount = store.getState().components.size
+
     config.optimization = {
       runtimeChunk: {
         name: `webpack-runtime`,
       },
+      // use hashes instead of ids for module identifiers
+      // TODO update to deterministic in webpack 5 (hashed is deprecated)
+      // @see https://webpack.js.org/guides/caching/#module-identifiers
+      moduleIds: `hashed`,
       splitChunks: {
         name: false,
+        chunks: `all`,
         cacheGroups: {
+          default: false,
+          vendors: false,
+          commons: {
+            name: `commons`,
+            chunks: `all`,
+            // if a chunk is used more than half the components count,
+            // we can assume it's pretty global
+            minChunks: componentsCount > 2 ? componentsCount * 0.5 : 2,
+          },
+          react: {
+            name: `commons`,
+            chunks: `all`,
+            test: /[\\/]node_modules[\\/](react|react-dom|scheduler)[\\/]/,
+          },
           // Only create one CSS file to avoid
           // problems with code-split CSS loading in different orders
           // causing inconsistent/non-determanistic styling
@@ -485,6 +501,8 @@ module.exports = async (
             test: /\.(css|scss|sass|less|styl)$/,
             chunks: `all`,
             enforce: true,
+            // this rule trumps all other rules because of the priority.
+            priority: 10,
           },
         },
       },

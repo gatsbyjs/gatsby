@@ -1,5 +1,5 @@
 ---
-title: "Importing Assets Directly Into Files"
+title: Importing Assets Directly into Files
 ---
 
 There are two major ways to import assets, such as images, fonts, and files, into a Gatsby site. The default path is to import the file directly into a Gatsby template, page, or component. The alternative path, which makes sense for some edge cases, is to use the [static folder](/docs/static-folder).
@@ -43,11 +43,20 @@ If you're using SCSS the imports are relative to the entry SCSS file.
 
 Please be advised that this is also a custom feature of Webpack.
 
+<EggheadEmbed
+  lessonLink="https://egghead.io/lessons/gatsby-import-a-local-image-into-a-gatsby-component-with-webpack"
+  lessonTitle="Import a Local Image into a Gatsby Component with webpack"
+/>
+
+### Additional resources
+
+- More on [using an imported font](https://www.gatsbyjs.org/docs/recipes/#adding-a-local-font).
+
 ## Querying for a `File` in GraphQL using gatsby-source-filesystem
 
 You can also import files using GraphQL by querying for them in your data layer, which will trigger copying of those files to the public directory. Querying for the `publicURL` field of `File` nodes will provide URLs you can use in your JavaScript components, pages and templates.
 
-### Examples:
+### Examples
 
 1. Copy all `.pdf` files you have in your data layer to your build directory and return URLs to them:
 

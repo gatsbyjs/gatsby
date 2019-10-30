@@ -13,7 +13,7 @@ executors:
 aliases:
   e2e-executor: &e2e-executor
     docker:
-      - image: cypress/browsers:chrome69
+      - image: cypress/browsers:node10.16.0-chrome76
 
   restore_cache: &restore_cache
     restore_cache:
@@ -103,7 +103,7 @@ jobs:
       - <<: *restore_cache
       - <<: *install_node_modules
       - <<: *persist_cache
-      - run: yarn bootstrap
+      - run: yarn bootstrap -- concurrency=2
       - persist_to_workspace:
           root: packages
           paths:
@@ -159,6 +159,12 @@ jobs:
     steps:
       - e2e-test:
           test_path: integration-tests/gatsby-pipeline
+
+  integration_tests_structured_logging:
+    executor: node
+    steps:
+      - e2e-test:
+          test_path: integration-tests/structured-logging
 
   e2e_tests_path-prefix:
     <<: *e2e-executor
@@ -218,8 +224,8 @@ jobs:
     executor: node
     steps:
       - checkout
-      - run: ./scripts/assert-changed-files.sh "starters/*|themes/gatsby-starter-*|.circleci/*"
-      - run: sh ./scripts/validate-starters.sh "starters/* themes/gatsby-starter-*"
+      - run: ./scripts/assert-changed-files.sh "starters/*|.circleci/*"
+      - run: sh ./scripts/validate-starters.sh "starters/*"
 
   starters_publish:
     executor: node
@@ -231,8 +237,8 @@ jobs:
       - run: yarn markdown
       - run: sudo apt-get update && sudo apt-get install jq # jq is helpful for parsing json
       - run: git config --global user.name "GatsbyJS Bot"
-      - run: git config --global user.email "admin@gatsbyjs.com"
-      - run: sh ./scripts/publish-starters.sh "starters/* themes/gatsby-starter-*"
+      - run: git config --global user.email "core-team@gatsbyjs.com"
+      - run: sh ./scripts/publish-starters.sh "starters/*"
 
   build_www:
     docker:
@@ -241,9 +247,9 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: www_public_dir_1
+          key: v1_www_public_dir
       - restore_cache:
-          key: www_cache_dir_1
+          key: v1_www_cache_dir
       - run:
           command: yarn
           working_directory: ~/project/www
@@ -252,11 +258,11 @@ jobs:
           command: GATSBY_CPU_COUNT=8 yarn build
           working_directory: ~/project/www
       - save_cache:
-          key: www_public_dir_1_{{ epoch }}
+          key: v1_www_public_dir_{{ epoch }}
           paths:
             - ~/project/www/public
       - save_cache:
-          key: www_cache_dir_1_{{ epoch }}
+          key: v1_www_cache_dir_{{ epoch }}
           paths:
             - ~/project/www/.cache
 
@@ -266,7 +272,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: www_public_dir_1
+          key: v1_www_public_dir
       - run:
           command: yarn add netlify-cli
           working_directory: ~/project/www
@@ -319,10 +325,15 @@ workflows:
           requires:
             - lint
             - unit_tests_node8
-      - unit_tests_www
+      - unit_tests_www:
+          requires:
+            - lint
+            - unit_tests_node8
       - integration_tests_long_term_caching:
           <<: *e2e-test-workflow
       - integration_tests_gatsby_pipeline:
+          <<: *e2e-test-workflow
+      - integration_tests_structured_logging:
           <<: *e2e-test-workflow
       - e2e_tests_path-prefix:
           <<: *e2e-test-workflow

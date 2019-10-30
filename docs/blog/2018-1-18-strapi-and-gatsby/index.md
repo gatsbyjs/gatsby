@@ -10,11 +10,11 @@ tags: ["blogs", "cms", "headless-cms", "getting-started"]
 
 ![Showing the idea of using Gatsby with Strapi ](gatsby-strapi.png)
 
-A static website contains Web pages with fixed content. Technically, it is a simple list of HTML files, which displays the same information to every visitor. Unlike dynamic websites, they do not require any back-end programming or database. Publishing a static website is easy: the files are uploaded on a simple Web server or storage provider. The two main advantages of static websites are security and speed: there is no database so it can not be hacked and there is no need to render a page for each request, which makes Web browsing faster.
+A static website contains Web pages with fixed content. Technically, it is a simple list of HTML files, which displays the same information to every visitor. Unlike dynamic websites, they do not require any backend programming or database. Publishing a static website is easy: the files are uploaded on a simple Web server or storage provider. The two main advantages of static websites are security and speed: there is no database so it can not be hacked and there is no need to render a page for each request, which makes Web browsing faster.
 
 To make their creation easier, numerous open-source static websites generators are available: [Jekyll](https://jekyllrb.com/), [Hugo](https://gohugo.io/), [Hexo](https://hexo.io/), etc. Most of the time, the content is managed through static (ideally Markdown) files or a Content API. Then, the generator requests the content, injects it in templates defined by the developer and generates a bunch of HTML files.
 
-Progressive Web Apps (PWA) are web applications, highly based on JavaScript, and are [reliable, fast and engaging](https://developers.google.com/web/progressive-web-apps/). Since they make web browsing much faster and offer a better user experience, PWA have become the default way to build Web interfaces. Thus, many amazing front-end frameworks appeared over the last couple years: Angular, React and more recently, Vue.
+Progressive Web Apps (PWA) are web applications, highly based on JavaScript, and are [reliable, fast and engaging](https://developers.google.com/web/progressive-web-apps/). Since they make web browsing much faster and offer a better user experience, PWA have become the default way to build Web interfaces. Thus, many amazing frontend frameworks appeared over the last couple years: Angular, React and more recently, Vue.
 
 > Gatsby: when static websites meet Progressive Web Apps
 
@@ -32,7 +32,7 @@ Created by [Kyle Mathews](https://twitter.com/kylemathews), the project was offi
 
 ## What is Strapi?
 
-[Strapi](https://strapi.io) is an _open source **Headless CMS Front-End Developers Love**_. It's more than a [Node.js Framework and more than a Headless CMS](https://strapi.io/overview), it saves weeks of API development time, and allows easy long-term content management through a beautiful administration panel _anyone can use_.
+[Strapi](https://strapi.io) is an _open source **Headless CMS Frontend Developers Love**_. It's more than a [Node.js Framework and more than a Headless CMS](https://strapi.io/overview), it saves weeks of API development time, and allows easy long-term content management through a beautiful administration panel _anyone can use_.
 
 ![The Strapi Logo](logo-strapi.png)
 
@@ -52,14 +52,14 @@ Please follow along watching the videos below and reading the text. You can watc
 
 ### Index of Tutorial
 
-1. [Introduction](/blog/2019-03-19-strapi-and-gatsby/#1-introduction)
-2. [Installation](/blog/2019-03-19-strapi-and-gatsby/#2-installation)
-3. [Content Types](/blog/2019-03-19-strapi-and-gatsby/#3-content-types)
-4. [Roles and Permissions](/blog/2019-03-19-strapi-and-gatsby/#4-roles-and-permissions)
-5. [Setting up Gatsby](/blog/2019-03-19-strapi-and-gatsby/#5-setting-up-gatsby)
-6. [Create the Index page view](/blog/2019-03-19-strapi-and-gatsby/#6-create-our-index-page)
-7. [Create the Article page view](/blog/2019-03-19-strapi-and-gatsby/#7-create-the-article-page-view)
-8. [Gatsby Images & the Article page view](/blog/2019-03-19-strapi-and-gatsby/#8-gatsby-images-and-author-page)
+1. [Introduction](#1-introduction)
+2. [Installation](#2-installation)
+3. [Content Types](#3-content-types)
+4. [Roles and Permissions](#4-roles-and-permissions)
+5. [Setting up Gatsby](#5-setting-up-gatsby)
+6. [Create the Index page view](#6-create-our-index-page)
+7. [Create the Article page view](#7-create-the-article-page-view)
+8. [Gatsby Images & the Article page view](#8-gatsby-images-and-author-page)
 
 Note: Final tutorial and code is available at [the GitHub repo for the Strapi and Gatsby tutorial](https://github.com/strapi/strapi-examples/tree/master/gatsby-strapi-tutorial). In this repo, you can download and/or copy/paste the [example content](https://github.com/strapi/strapi-examples/tree/master/gatsby-strapi-tutorial/content-for-tutorial).
 
@@ -67,7 +67,7 @@ Note: Within the content below we provide links that open a running _localhost_ 
 
 ### 1. Introduction
 
-This video series will take you step by step through creating a blog in Gatsby and teach you how to connect it to the open sourced headless CMS - Strapi.
+This video series will take you step by step through creating a blog in Gatsby and teach you how to connect it to the open sourced [headless CMS](/docs/headless-cms/) - Strapi.
 
 <iframe
   width="1206"
@@ -184,7 +184,7 @@ _Important links from Video:_
 
 #### Create a Content Type
 
-Strapi CMS projects are based on a data structure called Content Types (equivalent to models in frameworks and Content Types in Wordpress).
+Strapi CMS projects are based on a data structure called Content Types (equivalent to models in frameworks and Content Types in WordPress).
 
 [Create a Content Type](http://localhost:1337/admin/plugins/content-type-builder/) named `article` with four fields:
 

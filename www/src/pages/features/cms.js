@@ -1,4 +1,5 @@
-import React from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import { graphql } from "gatsby"
 
 import Button from "../../components/button"
@@ -13,7 +14,6 @@ import LegendTable from "../../components/features/legend-table"
 import CompareButton from "../../components/features/compare-button"
 import Breadcrumb from "../../components/docs-breadcrumb"
 import featureComparisonOptions from "../../data/features/comparison-options.json"
-import { space } from "../../utils/presets"
 import useComparisonState from "../../hooks/use-comparison-state"
 
 const FeaturesHeader = () => (
@@ -51,28 +51,30 @@ const CmsFeaturesPage = ({ data, location }) => {
             technologies, choose the technologies to compare and then press
             Compare:
           </p>
-          <div
-            css={{
-              display: `grid`,
-              gridTemplateColumns: `repeat(auto-fit, minmax(75px, 120px))`,
-              gridGap: space[2],
-              paddingBottom: space[10],
-            }}
-          >
-            {featureComparisonOptions.cms.map(({ key: optionKey, display }) => (
-              <CompareButton
-                key={optionKey}
-                optionKey={optionKey}
-                selected={selected[optionKey]}
-                setSelected={setSelected}
-              >
-                {display}
-              </CompareButton>
-            ))}
-            <Button
-              style={{
-                whiteSpace: `pre-wrap`,
+          <div sx={{ pb: 10 }}>
+            <div
+              sx={{
+                display: `grid`,
+                gridTemplateColumns: `repeat(auto-fit, minmax(75px, 1fr))`,
+                gridAutoRows: `1fr`,
+                gridGap: 2,
+                pb: 4,
               }}
+            >
+              {featureComparisonOptions.cms.map(
+                ({ key: optionKey, display }) => (
+                  <CompareButton
+                    key={optionKey}
+                    optionKey={optionKey}
+                    selected={selected[optionKey]}
+                    setSelected={setSelected}
+                  >
+                    {display}
+                  </CompareButton>
+                )
+              )}
+            </div>
+            <Button
               to={
                 hasSelected
                   ? `/features/cms/gatsby-vs-${comparators.join(`-vs-`)}`

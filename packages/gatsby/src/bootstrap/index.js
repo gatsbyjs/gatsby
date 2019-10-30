@@ -12,7 +12,6 @@ const telemetry = require(`gatsby-telemetry`)
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const getBrowserslist = require(`../utils/browserslist`)
-const getLatestAPIs = require(`../utils/get-latest-apis`)
 const { store, emitter } = require(`../redux`)
 const loadPlugins = require(`./load-plugins`)
 const loadThemes = require(`./load-themes`)
@@ -20,7 +19,6 @@ const report = require(`gatsby-cli/lib/reporter`)
 const getConfigFile = require(`./get-config-file`)
 const tracer = require(`opentracing`).globalTracer()
 const preferDefault = require(`./prefer-default`)
-const nodeTracking = require(`../db/node-tracking`)
 // Add `util.promisify` polyfill for old node versions
 require(`util.promisify/shim`)()
 
@@ -49,6 +47,23 @@ module.exports = async (args: BootstrapArgs) => {
   const spanArgs = args.parentSpan ? { childOf: args.parentSpan } : {}
   const bootstrapSpan = tracer.startSpan(`bootstrap`, spanArgs)
 
+  /* Time for a little story...
+   * When running `gatsby develop`, the globally installed gatsby-cli starts
+   * and sets up a Redux store (which is where logs are now stored). When gatsby
+   * finds your project's locally installed gatsby-cli package in node_modules,
+   * it switches over. This instance will have a separate redux store. We need to
+   * ensure that the correct store is used which is why we call setStore
+   * (/packages/gatsby-cli/src/reporter/redux/index.js)
+   *
+   * This function
+   * - copies over the logs from the global gatsby-cli to the local one
+   * - sets the store to the local one (so that further actions dispatched by
+   * the global gatsby-cli are handled by the local one)
+   */
+  if (args.setStore) {
+    args.setStore(store)
+  }
+
   // Start plugin runner which listens to the store
   // and invokes Gatsby API based on actions.
   require(`../redux/plugin-runner`)
@@ -67,14 +82,34 @@ module.exports = async (args: BootstrapArgs) => {
     payload: program,
   })
 
+  let activityForJobs
+
+  emitter.on(`CREATE_JOB`, () => {
+    if (!activityForJobs) {
+      activityForJobs = report.phantomActivity(`Running jobs`)
+      activityForJobs.start()
+    }
+  })
+
+  const onEndJob = () => {
+    if (activityForJobs && store.getState().jobs.active.length === 0) {
+      activityForJobs.end()
+      activityForJobs = null
+    }
+  }
+
+  emitter.on(`END_JOB`, onEndJob)
+
   // Try opening the site's gatsby-config.js file.
   let activity = report.activityTimer(`open and validate gatsby-configs`, {
     parentSpan: bootstrapSpan,
   })
   activity.start()
-  let config = await preferDefault(
-    getConfigFile(program.directory, `gatsby-config`)
+  const { configModule, configFilePath } = await getConfigFile(
+    program.directory,
+    `gatsby-config`
   )
+  let config = preferDefault(configModule)
 
   // The root config cannot be exported as a function, only theme configs
   if (typeof config === `function`) {
@@ -89,8 +124,13 @@ module.exports = async (args: BootstrapArgs) => {
 
   // theme gatsby configs can be functions or objects
   if (config && config.__experimentalThemes) {
-    // TODO: deprecation message for old __experimentalThemes
-    const themes = await loadThemes(config, { useLegacyThemes: true })
+    report.warn(
+      `The gatsby-config key "__experimentalThemes" has been deprecated. Please use the "plugins" key instead.`
+    )
+    const themes = await loadThemes(config, {
+      useLegacyThemes: true,
+      configFilePath,
+    })
     config = themes.config
 
     store.dispatch({
@@ -98,7 +138,10 @@ module.exports = async (args: BootstrapArgs) => {
       payload: themes.themes,
     })
   } else if (config) {
-    const plugins = await loadThemes(config, { useLegacyThemes: false })
+    const plugins = await loadThemes(config, {
+      useLegacyThemes: false,
+      configFilePath,
+    })
     config = plugins.config
   }
 
@@ -115,11 +158,9 @@ module.exports = async (args: BootstrapArgs) => {
 
   activity.end()
 
-  const apis = await getLatestAPIs()
-
   activity = report.activityTimer(`load plugins`, { parentSpan: bootstrapSpan })
   activity.start()
-  const flattenedPlugins = await loadPlugins(config, program.directory, apis)
+  const flattenedPlugins = await loadPlugins(config, program.directory)
   activity.end()
 
   telemetry.decorateEvent(`BUILD_END`, {
@@ -247,11 +288,6 @@ module.exports = async (args: BootstrapArgs) => {
     activity.end()
   }
 
-  // By now, our nodes database has been loaded, so ensure that we
-  // have tracked all inline objects
-  nodeTracking.trackDbNodes()
-
-  // Copy our site files to the root of the site.
   activity = report.activityTimer(`copy gatsby files`, {
     parentSpan: bootstrapSpan,
   })
@@ -285,7 +321,7 @@ module.exports = async (args: BootstrapArgs) => {
 
     const envAPIs = plugin[`${env}APIs`]
 
-    // Always include gatsby-browser.js files if they exists as they're
+    // Always include gatsby-browser.js files if they exist as they're
     // a handy place to include global styles and other global imports.
     try {
       if (env === `browser`) {
@@ -324,13 +360,14 @@ module.exports = async (args: BootstrapArgs) => {
   )
 
   const browserPluginsRequires = browserPlugins
-    .map(
-      plugin =>
-        `{
-      plugin: require('${plugin.resolve}'),
+    .map(plugin => {
+      // we need a relative import path to keep contenthash the same if directory changes
+      const relativePluginPath = path.relative(siteDir, plugin.resolve)
+      return `{
+      plugin: require('${slash(relativePluginPath)}'),
       options: ${JSON.stringify(plugin.options)},
     }`
-    )
+    })
     .join(`,`)
 
   const browserAPIRunner = `module.exports = [${browserPluginsRequires}]\n`
@@ -413,12 +450,16 @@ module.exports = async (args: BootstrapArgs) => {
     parentSpan: bootstrapSpan,
   })
   activity.start()
-  await apiRunnerNode(`createPages`, {
-    graphql: graphqlRunner,
-    traceId: `initial-createPages`,
-    waitForCascadingActions: true,
-    parentSpan: activity.span,
-  })
+  await apiRunnerNode(
+    `createPages`,
+    {
+      graphql: graphqlRunner,
+      traceId: `initial-createPages`,
+      waitForCascadingActions: true,
+      parentSpan: activity.span,
+    },
+    { activity }
+  )
   activity.end()
 
   // A variant on createPages for plugins that want to
@@ -429,12 +470,18 @@ module.exports = async (args: BootstrapArgs) => {
     parentSpan: bootstrapSpan,
   })
   activity.start()
-  await apiRunnerNode(`createPagesStatefully`, {
-    graphql: graphqlRunner,
-    traceId: `initial-createPagesStatefully`,
-    waitForCascadingActions: true,
-    parentSpan: activity.span,
-  })
+  await apiRunnerNode(
+    `createPagesStatefully`,
+    {
+      graphql: graphqlRunner,
+      traceId: `initial-createPagesStatefully`,
+      waitForCascadingActions: true,
+      parentSpan: activity.span,
+    },
+    {
+      activity,
+    }
+  )
   activity.end()
 
   activity = report.activityTimer(`onPreExtractQueries`, {
@@ -452,13 +499,7 @@ module.exports = async (args: BootstrapArgs) => {
   await require(`../schema`).rebuildWithSitePage({ parentSpan: activity.span })
   activity.end()
 
-  // Extract queries
-  activity = report.activityTimer(`extract queries from components`, {
-    parentSpan: bootstrapSpan,
-  })
-  activity.start()
-  await extractQueries({ parentSpan: activity.span })
-  activity.end()
+  await extractQueries({ parentSpan: bootstrapSpan })
 
   // Write out files.
   activity = report.activityTimer(`write out requires`, {

@@ -15,7 +15,7 @@ plugins: [`gatsby-transformer-javascript-static-exports`]
 
 ## Parsing algorithm
 
-The algorithm for uses babylon and traverse (from the babel family of code) to
+The algorithm uses babylon and traverse (from the babel family of code) to
 statically read the data exports.
 
 In a .js file, export a data object to set your metadata variables, like so:

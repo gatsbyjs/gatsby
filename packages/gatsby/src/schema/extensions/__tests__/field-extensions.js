@@ -3,10 +3,9 @@ const { build } = require(`../..`)
 const withResolverContext = require(`../../context`)
 const { buildObjectType } = require(`../../types/type-builders`)
 const { store } = require(`../../../redux`)
+const { actions } = require(`../../../redux/actions`)
 const { dispatch } = store
-const { actions } = require(`../../../redux/actions/restricted`)
 const { createFieldExtension, createTypes } = actions
-const { trackInlineObjectsInRootNode } = require(`../../../db/node-tracking`)
 require(`../../../db/__tests__/fixtures/ensure-loki`)()
 
 const report = require(`gatsby-cli/lib/reporter`)
@@ -31,7 +30,7 @@ describe(`GraphQL field extensions`, () => {
       {
         id: `test1`,
         parent: `test5`,
-        internal: { type: `Test` },
+        internal: { type: `Test`, contentDigest: `0` },
         somedate: `2019-09-01`,
         otherdate: `2019-09-01`,
         nested: {
@@ -42,7 +41,7 @@ describe(`GraphQL field extensions`, () => {
       {
         id: `test2`,
         parent: `test6`,
-        internal: { type: `Test` },
+        internal: { type: `Test`, contentDigest: `0` },
         somedate: `2019-09-13`,
         otherdate: `2019-09-13`,
         nested: {
@@ -52,30 +51,32 @@ describe(`GraphQL field extensions`, () => {
       {
         id: `test3`,
         parent: null,
-        internal: { type: `Test` },
+        internal: { type: `Test`, contentDigest: `0` },
         somedate: `2019-09-26`,
         otherdate: `2019-09-26`,
       },
       {
         id: `test4`,
-        internal: { type: `Test` },
+        internal: { type: `Test`, contentDigest: `0` },
         olleh: `world`,
       },
       {
         id: `test5`,
         children: [`test1`],
-        internal: { type: `AnotherTest` },
+
+        internal: { type: `AnotherTest`, contentDigest: `0` },
         date: `2019-01-01`,
       },
       {
         id: `test6`,
         children: [`test2`],
-        internal: { type: `AnotherTest` },
+
+        internal: { type: `AnotherTest`, contentDigest: `0` },
         date: 0,
       },
       {
         id: `test7`,
-        internal: { type: `NestedTest` },
+        internal: { type: `NestedTest`, contentDigest: `0` },
         top: 78,
         first: {
           next: 26,
@@ -108,10 +109,9 @@ describe(`GraphQL field extensions`, () => {
         },
       },
     ]
-    nodes.forEach(node => {
-      dispatch({ type: `CREATE_NODE`, payload: { ...node } })
-    })
-    nodes.forEach(node => trackInlineObjectsInRootNode(node))
+    nodes.forEach(node =>
+      actions.createNode(node, { name: `test` })(store.dispatch)
+    )
   })
 
   it(`allows creating a custom field extension`, async () => {
@@ -1671,12 +1671,19 @@ const buildSchema = async () => {
 }
 
 const runQuery = async query => {
-  const schema = await buildSchema()
+  await build({})
+  const {
+    schema,
+    schemaCustomization: { composer: schemaComposer },
+  } = store.getState()
   const results = await graphql(
     schema,
     query,
     undefined,
-    withResolverContext({}, schema)
+    withResolverContext({
+      schema,
+      schemaComposer,
+    })
   )
   expect(results.errors).toBeUndefined()
   return results.data

@@ -41,9 +41,9 @@ backend. The client side JS file that shows the modal dialog has nothing to do
 with the PUG file you wrote and eventually became HTML. The client side logic
 only manipulates directly the DOM.
 
-This architecture is fairly similar to a Wordpress site. A Wordpress engine also
+This architecture is fairly similar to a WordPress site. A WordPress engine also
 generates the HTML and serve it to the browser, after which the client side JS
-you wrote kicks in and starts manipulating the DOM. Wordpress’s responses can be
+you wrote kicks in and starts manipulating the DOM. WordPress’s responses can be
 cached, of course, and served to the client; that setup effectively makes it
 another static site generator with a GUI text editor.
 
@@ -154,7 +154,7 @@ installing dependencies, run:
 
 ## An alternative to HTML caching
 
-Now let’s bring these threads together. Let’s say you have a Wordpress site.
+Now let’s bring these threads together. Let’s say you have a WordPress site.
 You’re caching the content, which is nice for performance, but you’re building
 on it now and want to move to a more modern web development experience.
 
@@ -164,16 +164,16 @@ tired of updating it, ssh-ing to the server, doing migrations and doing other
 ops required by such a stack. (There are paid hosting options, of course, but
 that comes with a different set of problems). So I switched to Gatsby.
 
-Another option, if you want to keep Wordpress' Admin UI is to maintain your
+Another option, if you want to keep WordPress' Admin UI is to maintain your
 content, is to separate the backend from the frontend.
 
 Imagine that instead of having [memcached](https://memcached.org/) caching your
 HTML in front of your WordPress site, you trigger a hook each time your database
 changes that will re-generate the frontend using Gatsby’s
-[Wordpress plugin](/packages/gatsby-source-wordpress/). Yes, Gatsby supports
+[WordPress plugin](/packages/gatsby-source-wordpress/). Yes, Gatsby supports
 multiple backend sources to load your content. Instead of storing them inside
 your version control like me, you can just as well load them from your
-Wordpress's MySQL database.
+WordPress's MySQL database.
 
 To conclude, Gatsby will allow us to:
 

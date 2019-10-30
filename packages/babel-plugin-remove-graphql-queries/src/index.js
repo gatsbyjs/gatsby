@@ -3,6 +3,39 @@ const graphql = require(`gatsby/graphql`)
 const murmurhash = require(`./murmur`)
 const nodePath = require(`path`)
 
+class StringInterpolationNotAllowedError extends Error {
+  constructor(interpolationStart, interpolationEnd) {
+    super(
+      `BabelPluginRemoveGraphQLQueries: String interpolations are not allowed in graphql ` +
+        `fragments. Included fragments should be referenced ` +
+        `as \`...MyModule_foo\`.`
+    )
+    this.interpolationStart = JSON.parse(JSON.stringify(interpolationStart))
+    this.interpolationEnd = JSON.parse(JSON.stringify(interpolationEnd))
+    Error.captureStackTrace(this, StringInterpolationNotAllowedError)
+  }
+}
+
+class EmptyGraphQLTagError extends Error {
+  constructor(locationOfGraphqlString) {
+    super(`BabelPluginRemoveGraphQLQueries: Unexpected empty graphql tag.`)
+    this.templateLoc = locationOfGraphqlString
+    Error.captureStackTrace(this, EmptyGraphQLTagError)
+  }
+}
+
+class GraphQLSyntaxError extends Error {
+  constructor(documentText, originalError, locationOfGraphqlString) {
+    super(
+      `BabelPluginRemoveGraphQLQueries: GraphQL syntax error in query:\n\n${documentText}\n\nmessage:\n\n${originalError}`
+    )
+    this.documentText = documentText
+    this.originalError = originalError
+    this.templateLoc = locationOfGraphqlString
+    Error.captureStackTrace(this, GraphQLSyntaxError)
+  }
+}
+
 const isGlobalIdentifier = tag =>
   tag.isIdentifier({ name: `graphql` }) && tag.scope.hasGlobal(`graphql`)
 
@@ -101,10 +134,9 @@ function getGraphQLTag(path) {
   const quasis = path.node.quasi.quasis
 
   if (quasis.length !== 1) {
-    throw new Error(
-      `BabelPluginRemoveGraphQL: String interpolations are not allowed in graphql ` +
-        `fragments. Included fragments should be referenced ` +
-        `as \`...MyModule_foo\`.`
+    throw new StringInterpolationNotAllowedError(
+      quasis[0].loc.end,
+      quasis[1].loc.start
     )
   }
 
@@ -115,13 +147,11 @@ function getGraphQLTag(path) {
     const ast = graphql.parse(text)
 
     if (ast.definitions.length === 0) {
-      throw new Error(`BabelPluginRemoveGraphQL: Unexpected empty graphql tag.`)
+      throw new EmptyGraphQLTagError(quasis[0].loc)
     }
     return { ast, text, hash, isGlobal }
   } catch (err) {
-    throw new Error(
-      `BabelPluginRemoveGraphQLQueries: GraphQL syntax error in query:\n\n${text}\n\nmessage:\n\n${err.message}`
-    )
+    throw new GraphQLSyntaxError(text, err, quasis[0].loc)
   }
 }
 
@@ -375,4 +405,9 @@ export default function({ types: t }) {
   }
 }
 
-export { getGraphQLTag }
+export {
+  getGraphQLTag,
+  StringInterpolationNotAllowedError,
+  EmptyGraphQLTagError,
+  GraphQLSyntaxError,
+}

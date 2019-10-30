@@ -4,13 +4,14 @@ const chalk = require(`chalk`)
 const _ = require(`lodash`)
 const { stripIndent } = require(`common-tags`)
 const report = require(`gatsby-cli/lib/reporter`)
+const { platform } = require(`os`)
 const path = require(`path`)
 const fs = require(`fs`)
 const { trueCasePathSync } = require(`true-case-path`)
 const url = require(`url`)
 const slash = require(`slash`)
 const { hasNodeChanged, getNode } = require(`../../db/nodes`)
-const { trackInlineObjectsInRootNode } = require(`../../db/node-tracking`)
+const sanitizeNode = require(`../../db/sanitize-node`)
 const { store } = require(`..`)
 const fileExistsSync = require(`fs-exists-cached`).sync
 const joiSchemas = require(`../../joi-schemas/joi`)
@@ -18,21 +19,32 @@ const { generateComponentChunkName } = require(`../../utils/js-chunk-names`)
 const { getCommonDir } = require(`../../utils/path`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 const { trackCli } = require(`gatsby-telemetry`)
+const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
 
 const actions = {}
+const isWindows = platform() === `win32`
 
-const findChildrenRecursively = (children = []) => {
-  children = children.concat(
-    ...children.map(child => {
-      const newChildren = getNode(child).children
-      if (_.isArray(newChildren) && newChildren.length > 0) {
-        return findChildrenRecursively(newChildren)
-      } else {
-        return []
-      }
-    })
-  )
+function getRelevantFilePathSegments(filePath) {
+  return filePath.split(`/`).filter(s => s !== ``)
+}
 
+const findChildren = initialChildren => {
+  const children = [...initialChildren]
+  const queue = [...initialChildren]
+  const traversedNodes = new Set()
+
+  while (queue.length > 0) {
+    const currentChild = getNode(queue.pop())
+    if (!currentChild || traversedNodes.has(currentChild.id)) {
+      continue
+    }
+    traversedNodes.add(currentChild.id)
+    const newChildren = currentChild.children
+    if (_.isArray(newChildren) && newChildren.length > 0) {
+      children.push(...newChildren)
+      queue.push(...newChildren)
+    }
+  }
   return children
 }
 
@@ -84,6 +96,7 @@ const pascalCase = _.flow(
 )
 const hasWarnedForPageComponentInvalidContext = new Set()
 const hasWarnedForPageComponentInvalidCasing = new Set()
+const hasErroredBecauseOfNodeValidation = new Set()
 const pageComponentCache = {}
 const fileOkCache = {}
 
@@ -280,6 +293,12 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         trueComponentPath = slash(trueCasePathSync(relativePath, commonDir))
       }
 
+      if (isWindows) {
+        const segments = getRelevantFilePathSegments(page.component)
+        page.component =
+          segments.shift().toUpperCase() + `/` + segments.join(`/`)
+      }
+
       if (trueComponentPath !== page.component) {
         if (!hasWarnedForPageComponentInvalidCasing.has(page.component)) {
           const markers = page.component
@@ -359,6 +378,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       !fileContent.includes(`export default`) &&
       !fileContent.includes(`module.exports`) &&
       !fileContent.includes(`exports.default`) &&
+      !fileContent.includes(`exports["default"]`) &&
+      !fileContent.match(/export \{.* as default.*\}/s) &&
       // this check only applies to js and ts, not mdx
       /\.(jsx?|tsx?)/.test(path.extname(fileName))
     ) {
@@ -481,7 +502,7 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
   // write and then immediately delete temporary files to the file system.
   const deleteDescendantsActions =
     node &&
-    findChildrenRecursively(node.children)
+    findChildren(node.children)
       .map(getNode)
       .map(createDeleteAction)
 
@@ -509,7 +530,7 @@ actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
 
   // Also delete any nodes transformed from these.
   const descendantNodes = _.flatten(
-    nodes.map(n => findChildrenRecursively(getNode(n).children))
+    nodes.map(n => findChildren(getNode(n).children))
   )
 
   const deleteNodesAction = {
@@ -519,6 +540,10 @@ actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
   }
   return deleteNodesAction
 }
+
+// We add a counter to internal to make sure we maintain insertion order for
+// backends that don't do that out of the box
+let NODE_COUNTER = 0
 
 const typeOwners = {}
 /**
@@ -535,7 +560,8 @@ const typeOwners = {}
  * to add your node id, instead use the action creator `createParentChildLink`.
  * @param {Object} node.internal node fields that aren't generally
  * interesting to consumers of node data but are very useful for plugin writers
- * and Gatsby core.
+ * and Gatsby core. Only fields described below are allowed in `internal` object.
+ * Using any type of custom fields will result in validation errors.
  * @param {string} node.internal.mediaType An optional field to indicate to
  * transformer plugins that your node has raw content they can transform.
  * Use either an official media type (we use mime-db as our source
@@ -614,6 +640,9 @@ const createNode = (
     node.internal = {}
   }
 
+  NODE_COUNTER++
+  node.internal.counter = NODE_COUNTER
+
   // Ensure the new node has a children array.
   if (!node.array && !_.isArray(node.children)) {
     node.children = []
@@ -645,9 +674,31 @@ const createNode = (
 
   const result = Joi.validate(node, joiSchemas.nodeSchema)
   if (result.error) {
-    console.log(chalk.bold.red(`The new node didn't pass validation`))
-    console.log(chalk.bold.red(result.error))
-    console.log(node)
+    if (!hasErroredBecauseOfNodeValidation.has(result.error.message)) {
+      const errorObj = {
+        id: `11467`,
+        context: {
+          validationErrorMessage: result.error.message,
+          node,
+        },
+      }
+
+      const possiblyCodeFrame = getNonGatsbyCodeFrame()
+      if (possiblyCodeFrame) {
+        errorObj.context.codeFrame = possiblyCodeFrame.codeFrame
+        errorObj.filePath = possiblyCodeFrame.fileName
+        errorObj.location = {
+          start: {
+            line: possiblyCodeFrame.line,
+            column: possiblyCodeFrame.column,
+          },
+        }
+      }
+
+      report.error(errorObj)
+      hasErroredBecauseOfNodeValidation.add(result.error.message)
+    }
+
     return { type: `VALIDATION_ERROR`, error: true }
   }
 
@@ -672,7 +723,7 @@ const createNode = (
     )
   }
 
-  node = trackInlineObjectsInRootNode(node, true)
+  node = sanitizeNode(node)
 
   const oldNode = getNode(node.id)
 
@@ -727,9 +778,9 @@ const createNode = (
   // Check if the node has already been processed.
   if (oldNode && !hasNodeChanged(node.id, node.internal.contentDigest)) {
     updateNodeAction = {
-      type: `TOUCH_NODE`,
-      plugin,
       ...actionOptions,
+      plugin,
+      type: `TOUCH_NODE`,
       payload: node.id,
     }
   } else {
@@ -738,22 +789,22 @@ const createNode = (
     if (oldNode) {
       const createDeleteAction = node => {
         return {
+          ...actionOptions,
           type: `DELETE_NODE`,
           plugin,
-          ...actionOptions,
           payload: node,
         }
       }
-      deleteActions = findChildrenRecursively(oldNode.children)
+      deleteActions = findChildren(oldNode.children)
         .map(getNode)
         .map(createDeleteAction)
     }
 
     updateNodeAction = {
+      ...actionOptions,
       type: `CREATE_NODE`,
       plugin,
       oldNode,
-      ...actionOptions,
       payload: node,
     }
   }
@@ -905,12 +956,12 @@ actions.createNodeField = (
   // Update node
   node.fields[name] = value
   node.internal.fieldOwners[schemaFieldName] = plugin.name
-  node = trackInlineObjectsInRootNode(node, true)
+  node = sanitizeNode(node)
 
   return {
+    ...actionOptions,
     type: `ADD_FIELD_TO_NODE`,
     plugin,
-    ...actionOptions,
     payload: node,
   }
 }

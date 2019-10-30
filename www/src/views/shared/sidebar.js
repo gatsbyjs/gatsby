@@ -1,48 +1,50 @@
-import React from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import MdFilterList from "react-icons/lib/md/filter-list"
 
-import {
-  colors,
-  fontSizes,
-  lineHeights,
-  space,
-  sizes,
-  mediaQueries,
-} from "../../utils/presets"
+import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 
-const sticky = {
-  position: `sticky`,
-  top: `calc(${sizes.bannerHeight})`,
-  [mediaQueries.lg]: {
-    top: `calc(${sizes.headerHeight} + ${sizes.bannerHeight})`,
-  },
-}
-
-const sidebarContainer = {
-  display: `none`,
-  [mediaQueries.lg]: {
-    display: `block`,
-    flexBasis: `15rem`,
-    minWidth: `15rem`,
-    paddingTop: 0,
-    borderRight: `1px solid ${colors.ui.border.subtle}`,
-    height: `calc(100vh - (${sizes.headerHeight} + ${sizes.bannerHeight}))`,
-  },
+const sticky = t => {
+  return {
+    position: `sticky`,
+    top: `calc(${t.sizes.bannerHeight})`,
+    [mediaQueries.lg]: {
+      top: `calc(${t.sizes.headerHeight} + ${t.sizes.bannerHeight})`,
+    },
+  }
 }
 
 export const SidebarContainer = ({ children, className }) => (
-  <div className={className} css={[sidebarContainer, sticky]}>
+  <div
+    className={className}
+    sx={{
+      display: `none`,
+      [mediaQueries.lg]: {
+        borderColor: `ui.border`,
+        borderRightStyle: `solid`,
+        borderRightWidth: `1px`,
+        display: `block`,
+        flexBasis: t => t.sizes.showcaseSidebarMaxWidth,
+        height: t =>
+          `calc(100vh - (${t.sizes.headerHeight} + ${t.sizes.bannerHeight}))`,
+        minWidth: `showcaseSidebarMaxWidth`,
+        pt: 0,
+      },
+    }}
+    css={sticky}
+  >
     {children}
   </div>
 )
 
 export const SidebarBody = ({ children }) => (
   <div
-    css={{
-      paddingLeft: space[6],
-      height: `calc(100vh - ((${sizes.headerHeight}) + ${sizes.bannerHeight}))`,
+    sx={{
       display: `flex`,
       flexDirection: `column`,
+      height: t =>
+        `calc(100vh - ((${t.sizes.headerHeight}) + ${t.sizes.bannerHeight}))`,
+      paddingLeft: 6,
     }}
   >
     {children}
@@ -51,50 +53,53 @@ export const SidebarBody = ({ children }) => (
 
 export const SidebarHeader = () => (
   <h3
-    css={{
+    sx={{
       margin: 0,
       [mediaQueries.lg]: {
-        fontSize: fontSizes[3],
+        borderBottomStyle: `solid`,
+        borderBottomWidth: `1px`,
+        borderColor: `ui.border`,
+        color: `textMuted`,
         display: `none`,
-        borderBottom: `1px solid ${colors.purple[10]}`,
-        color: colors.text.secondary,
-        fontWeight: `normal`,
         flexShrink: 0,
-        lineHeight: lineHeights.solid,
-        height: sizes.headerHeight,
+        fontSize: 3,
+        fontWeight: `body`,
+        height: `headerHeight`,
+        lineHeight: `solid`,
         margin: 0,
-        paddingLeft: space[6],
-        paddingRight: space[6],
-        paddingTop: space[6],
-        paddingBottom: space[6],
+        paddingBottom: 6,
+        paddingLeft: 6,
+        paddingRight: 6,
+        paddingTop: 6,
       },
     }}
   >
     Filter & Refine
     {` `}
-    <span css={{ marginLeft: `auto`, opacity: 0.5 }}>
+    <span sx={{ ml: `auto`, opacity: 0.5 }}>
       <MdFilterList />
     </span>
   </h3>
 )
 
 export const ContentContainer = ({ children }) => (
-  <div css={{ width: `100%` }}>{children}</div>
+  <div sx={{ width: `100%` }}>{children}</div>
 )
 
 export const ContentHeader = ({ children, cssOverrides = {} }) => (
   <div
-    css={{
+    sx={{
       alignItems: `center`,
-      background: `rgba(255,255,255,0.98)`,
-      borderBottom: `1px solid ${colors.ui.border.subtle}`,
+      backgroundColor: `navigation.background`,
+      borderBottomStyle: `solid`,
+      borderBottomWidth: `1px`,
+      borderColor: `ui.border`,
       display: `flex`,
       flexDirection: `row`,
       flexWrap: `wrap`,
-      height: sizes.headerHeight,
+      height: `headerHeight`,
       justifyContent: `space-between`,
-      paddingLeft: space[6],
-      paddingRight: space[6],
+      px: 6,
       zIndex: 1,
       ...sticky,
       ...cssOverrides,
@@ -106,10 +111,10 @@ export const ContentHeader = ({ children, cssOverrides = {} }) => (
 
 const ResultCount = ({ children }) => (
   <small
-    css={{
-      color: colors.text.secondary,
-      fontWeight: `normal`,
-      fontSize: fontSizes[2],
+    sx={{
+      color: `textMuted`,
+      fontSize: 2,
+      fontWeight: `body`,
     }}
   >
     {children}
@@ -122,14 +127,15 @@ export const ContentTitle = ({
   filters,
   edges,
   label,
-  // todo smooth that out ("Starters" uses "size")
+  // TODO smooth that out ("Starters" uses "size")
   what = `length`,
 }) => (
   <h1
-    css={{
-      fontSize: fontSizes[4],
-      lineHeight: lineHeights.solid,
+    sx={{
+      fontSize: 4,
+      lineHeight: `solid`,
       margin: 0,
+      fontWeight: `bold`,
     }}
   >
     {search.length === 0 ? (

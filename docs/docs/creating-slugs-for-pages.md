@@ -1,5 +1,5 @@
 ---
-title: Creating slugs for pages
+title: Creating Slugs for Pages
 ---
 
 The logic for creating slugs from file names can get tricky, the `gatsby-source-filesystem` plugin ships with a function for creating them.

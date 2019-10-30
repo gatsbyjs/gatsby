@@ -4,7 +4,7 @@ author: Jason Lengstorf
 date: 2018-09-07
 image: images/values-whiteboard.jpg
 showImageInArticle: false
-tags: ["gatsby-inc"]
+tags: ["gatsby-inc", "diversity-and-inclusion"]
 ---
 
 Most of the Gatsby [Inkteam](https://www.gatsbyjs.com/about/) was together in Portland last week for our latest team onsite, which we lovingly refer to as “Gatsby Gatherings”. The team assembles every few months to discuss pressing needs, our company’s direction, and our roadmap.
@@ -89,10 +89,7 @@ At the end of the exercise, we’d extracted 8 shared core values, all of which 
     this week: writing down what kind of company we want to be.{" "}
     <a href="https://t.co/N0SRaJXILS">pic.twitter.com/N0SRaJXILS</a>
   </p>
-  &mdash; Jason Lengstorf (@jlengstorf){" "}
-  <a href="https://twitter.com/jlengstorf/status/1032319257298628608?ref_src=twsrc%5Etfw">
-    August 22, 2018
-  </a>
+  &mdash; Jason Lengstorf (@jlengstorf) <a href="https://twitter.com/jlengstorf/status/1032319257298628608?ref_src=twsrc%5Etfw">August 22, 2018</a>
 </blockquote>
 
 ## What we learned — Gatsby’s core values
@@ -165,10 +162,7 @@ We will never judge, condescend, or exclude anyone. Instead, we will go above an
     students to contribute to, but the whole community goes above and beyond in
     helping students understand the OSS ecosystem generally
   </p>
-  &mdash; Austen Allred (@AustenAllred){" "}
-  <a href="https://twitter.com/AustenAllred/status/1038084753008652289?ref_src=twsrc%5Etfw">
-    September 7, 2018
-  </a>
+  &mdash; Austen Allred (@AustenAllred) <a href="https://twitter.com/AustenAllred/status/1038084753008652289?ref_src=twsrc%5Etfw">September 7, 2018</a>
 </blockquote>
 
 We’re so happy you’re here. 💪💜

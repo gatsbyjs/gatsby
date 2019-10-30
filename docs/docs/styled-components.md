@@ -2,7 +2,7 @@
 title: Styled Components
 ---
 
-In this guide, you will learn setting up a site with the CSS-in-JS library [Styled Components](https://www.styled-components.com/).
+In this guide, you will learn how to set up a site with the CSS-in-JS library [Styled Components](https://www.styled-components.com/).
 
 Styled Components lets you use actual CSS syntax inside your components. Styled Components is a variant on "CSS-in-JS"—which solves many of the problems with traditional CSS.
 
@@ -38,7 +38,7 @@ module.exports = {
 
 Then in your terminal run `gatsby develop` to start the Gatsby development server.
 
-Now let's create a sample Styled Components page at `src/pages/index.js`:
+Now create a sample Styled Components page at `src/pages/index.js`:
 
 ```jsx:title=src/pages/index.js
 import React from "react"
@@ -112,9 +112,9 @@ export default () => (
 )
 ```
 
-### Enabling user stylesheets with a stable class name
+## Enabling user stylesheets with a stable class name
 
-Adding a persistent CSS `className` to your styled components can make it easier for users to take advantage of [User Stylesheets](https://www.viget.com/articles/inline-styles-user-style-sheets-and-accessibility/) for accessibility.
+Adding a persistent CSS `className` to your styled components can make it easier for end users of your website to take advantage of [user stylesheets](https://www.viget.com/articles/inline-styles-user-style-sheets-and-accessibility/) for accessibility.
 
 Here's an example where the class name `container` is added to the DOM along with the Styled Components' dynamically-created class names:
 
@@ -132,4 +132,11 @@ export default ({ children }) => (
 )
 ```
 
-A site user could then write their own CSS styles matching HTML elements with a class name of `.container`, and it wouldn't be affected if the CSS-in-JS output changed.
+An end user of your site could then [write their own CSS styles](https://mediatemple.net/blog/tips/bend-websites-css-will-stylish-stylebot/) matching HTML elements using a class name of `.container`. If your CSS-in-JS style changes, it will not affect the end user's stylesheet.
+
+```css:title=user-stylesheet.css
+.container {
+  margin: 5rem auto;
+  font-size: 1.3rem;
+}
+```

@@ -1,13 +1,14 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { Link } from "gatsby"
 import ChevronRight from "react-icons/lib/md/chevron-right"
 import ChevronLeft from "react-icons/lib/md/chevron-left"
 import getActiveItem from "../utils/sidebar/get-active-item"
 import getActiveItemParents from "../utils/sidebar/get-active-item-parents"
-import { mediaQueries, space, fontSizes } from "../utils/presets"
 
 const Separator = ({ character = <ChevronRight /> }) => (
-  <span style={{ margin: `0px ${space[1]}` }} role="presentation">
+  <span sx={{ my: 0, mx: 1 }} role="presentation">
     {character}
   </span>
 )
@@ -15,13 +16,15 @@ const Separator = ({ character = <ChevronRight /> }) => (
 const BreadcrumbNav = ({ children, mobile = false }) => (
   <nav
     aria-label="breadcrumb"
-    css={{
-      fontSize: fontSizes[1],
-      display: `${mobile ? `inherit` : `none`}`,
-      [mediaQueries.md]: {
-        display: `${mobile ? `none` : `inherit`}`,
-      },
-      marginBottom: space[2],
+    sx={{
+      color: `textMuted`,
+      display: [
+        `${mobile ? `inherit` : `none`}`,
+        null,
+        `${mobile ? `none` : `inherit`}`,
+      ],
+      fontSize: 1,
+      mb: [6, null, 8],
     }}
   >
     {children}
@@ -40,7 +43,7 @@ const Breadcrumb = ({ itemList, location }) => {
   // because the docs intro page isn't generated from markdown
   if (activeItem.title === `Introduction`) {
     return (
-      <>
+      <React.Fragment>
         {/* only the breadcrumb nav of the proper viewport is displayed */}
         <BreadcrumbNav>
           <Link to="/">Home</Link>
@@ -51,12 +54,12 @@ const Breadcrumb = ({ itemList, location }) => {
           <Separator character={<ChevronLeft />} />
           <Link to="/">Home</Link>
         </BreadcrumbNav>
-      </>
+      </React.Fragment>
     )
   }
 
   return (
-    <>
+    <React.Fragment>
       {/* render the default view on desktop sizes with all links displayed */}
       <BreadcrumbNav>
         <Link to="/">Home</Link>
@@ -97,7 +100,7 @@ const Breadcrumb = ({ itemList, location }) => {
           </Link>
         </BreadcrumbNav>
       )}
-    </>
+    </React.Fragment>
   )
 }
 

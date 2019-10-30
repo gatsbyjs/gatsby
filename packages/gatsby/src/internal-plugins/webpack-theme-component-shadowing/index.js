@@ -11,10 +11,11 @@ const pathWithoutExtension = fullPath => {
 module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
   cache = {}
 
-  constructor({ projectRoot, themes }) {
+  constructor({ projectRoot, themes, extensions }) {
     debug(`themes list`, themes.map(({ themeName }) => themeName))
     this.themes = themes
     this.projectRoot = projectRoot
+    this.extensions = extensions
   }
 
   apply(resolver) {
@@ -67,7 +68,7 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
           this.requestPathIsIssuerShadowPath({
             requestPath: request.path,
             issuerPath: request.context.issuer,
-            userSiteDir: path.resolve(`.`),
+            userSiteDir: this.projectRoot,
           })
         ) {
           return resolver.doResolve(
@@ -101,43 +102,42 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
   resolveComponentPath({ matchingTheme: theme, themes: ogThemes, component }) {
     // don't include matching theme in possible shadowing paths
     const themes = ogThemes.filter(({ themeName }) => themeName !== theme)
-    if (!this.cache[`${theme}-${component}`]) {
-      this.cache[`${theme}-${component}`] = [
-        path.join(path.resolve(`.`), `src`, theme),
-      ]
-        .concat(
-          Array.from(themes)
-            .reverse()
-            .map(({ themeDir }) => path.join(themeDir, `src`, theme))
-        )
-        .map(dir => path.join(dir, component))
-        .find(possibleComponentPath => {
-          debug(`possibleComponentPath`, possibleComponentPath)
-          let dir
-          try {
-            // we use fs/path instead of require.resolve to work with
-            // TypeScript and alternate syntaxes
-            dir = fs.readdirSync(path.dirname(possibleComponentPath))
-          } catch (e) {
-            return false
-          }
-          const exists = dir
-            .map(filepath => {
-              const ext = path.extname(filepath)
-              const filenameWithoutExtension = path.basename(filepath, ext)
-              return filenameWithoutExtension
-            })
-            .includes(
-              path.basename(
-                possibleComponentPath,
-                path.extname(possibleComponentPath)
-              )
-            )
-          return exists
-        })
-    }
 
-    return this.cache[`${theme}-${component}`]
+    return [path.join(this.projectRoot, `src`, theme)]
+      .concat(
+        Array.from(themes)
+          .reverse()
+          .map(({ themeDir }) => path.join(themeDir, `src`, theme))
+      )
+      .map(dir => path.join(dir, component))
+      .find(possibleComponentPath => {
+        debug(`possibleComponentPath`, possibleComponentPath)
+        let dir
+        try {
+          // we use fs/path instead of require.resolve to work with
+          // TypeScript and alternate syntaxes
+          dir = fs.readdirSync(path.dirname(possibleComponentPath))
+        } catch (e) {
+          return false
+        }
+        const existsDir = dir.map(filepath => path.basename(filepath))
+        const exists =
+          // has extension, will match styles.css;
+
+          // import Thing from 'whatever.tsx'
+          // extensions: [.js, .tsx]
+          // site/src/whatever.tsx site/src/whatever.js.
+
+          //exact matches
+          existsDir.includes(path.basename(possibleComponentPath)) ||
+          // .js matches
+          // styles.css.js
+          // whatever.tsx.js
+          this.extensions.find(ext =>
+            existsDir.includes(path.basename(possibleComponentPath) + ext)
+          )
+        return exists
+      })
   }
 
   getMatchingThemesForPath(filepath) {
