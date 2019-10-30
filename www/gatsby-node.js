@@ -383,6 +383,12 @@ exports.createPages = ({ graphql, actions, reporter }) => {
     toPath: `/docs/awesome-gatsby-resources/`,
     isPermanent: true,
   })
+
+  createRedirect({
+    fromPath: `/docs/sourcing-from-kentico-cloud/`,
+    toPath: `/docs/sourcing-from-kentico-kontent/`,
+    isPermanent: true,
+  })
   Object.entries(startersRedirects).forEach(([fromSlug, toSlug]) => {
     createRedirect({
       fromPath: `/starters${fromSlug}`,
