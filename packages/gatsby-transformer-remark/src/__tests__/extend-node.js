@@ -1043,6 +1043,7 @@ describe(`Relative links keep being relative`, () => {
   const assetPrefix = ``
   const basePath = `/prefix`
   const pathPrefix = assetPrefix + basePath
+
   bootstrapTest(
     `relative links are not prefixed`,
     `
