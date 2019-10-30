@@ -164,10 +164,17 @@ const modalContent = (palette, color) => {
             </Box>
           </Column>
           <Column bg="white">
-            <Text as="p" fontFamily="monospace" fontWeight="bold" mr={3} mb={4}>
+            <Text
+              as="p"
+              color="grey.80"
+              fontFamily="monospace"
+              fontWeight="bold"
+              mr={3}
+              mb={4}
+            >
               colors.{color}[{colorNumber}] {c.name && c.name}
             </Text>
-            <Text as="span" fontWeight="body" ml="auto">
+            <Text as="span" color="grey.80" fontWeight="body" ml="auto">
               {c.contrast.colorOnWhite.toFixed(2)} /{` `}
               {getA11yLabel(c.a11y)}
             </Text>
@@ -190,7 +197,7 @@ const ColorModal = ({ palette, color, handleModalClose }) => {
   return (
     <>
       <Flex alignItems="baseline" p={{ xxs: 6, md: 8 }}>
-        <Heading mr={4} mt={0}>
+        <Heading color="black" mr={4} mt={0}>
           {palette[color].name}
         </Heading>
         <CloseButton
