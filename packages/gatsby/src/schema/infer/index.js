@@ -1,10 +1,7 @@
 const report = require(`gatsby-cli/lib/reporter`)
 const { ObjectTypeComposer } = require(`graphql-compose`)
-const { getExampleValue } = require(`./example-value`)
-const {
-  addNodeInterface,
-  getNodeInterface,
-} = require(`../types/node-interface`)
+const { buildExampleObject } = require(`./node-descriptor`)
+const { addNodeInterface } = require(`../types/node-interface`)
 const { addInferredFields } = require(`./add-inferred-fields`)
 
 const addInferredTypes = ({
@@ -93,16 +90,10 @@ const addInferredType = ({
     typeComposer.setExtension(`plugin`, nodes[0].internal.owner)
   }
 
-  const exampleValue = getExampleValue({
-    nodes,
+  const exampleValue = buildExampleObject({
+    ...inferenceMetadata[typeName],
     typeName,
     typeConflictReporter,
-    typeInferenceMetadata: inferenceMetadata[typeName],
-    ignoreFields: [
-      ...getNodeInterface({ schemaComposer }).getFieldNames(),
-      `$loki`,
-      `__gatsby_resolved`,
-    ],
   })
 
   addInferredFields({

@@ -1,9 +1,24 @@
 // NOTE: Previously `data-tree-utils-test.js`
 
-const { getExampleValue } = require(`../example-value`)
+const { buildExampleObject, addNodes } = require(`../node-descriptor`)
 const { TypeConflictReporter } = require(`../type-conflict-reporter`)
 
 const INVALID_VALUE = undefined
+
+const getExampleValue = ({
+  nodes,
+  typeName,
+  typeConflictReporter,
+  ignoreFields,
+}) => {
+  const initialMetadata = {
+    typeName,
+    typeConflictReporter,
+    ignoredFields: new Set(ignoreFields),
+  }
+  const inferenceMetadata = addNodes(initialMetadata, nodes)
+  return buildExampleObject(inferenceMetadata)
+}
 
 describe(`Get example value for type inference`, () => {
   const typeConflictReporter = new TypeConflictReporter()

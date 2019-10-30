@@ -50,17 +50,19 @@ async function queryResult(
     addInferredFields,
   } = require(`../../../gatsby/src/schema/infer/add-inferred-fields`)
   const {
-    getExampleValue,
-  } = require(`../../../gatsby/src/schema/infer/example-value`)
+    addNodes,
+    buildExampleObject,
+  } = require(`../../../gatsby/src/schema/infer/node-descriptor`)
 
   const typeName = `MarkdownRemark`
   const sc = createSchemaComposer()
   const tc = sc.createObjectTC(typeName)
   sc.addTypeDefs(typeDefs)
+  const inferenceMetadata = addNodes({ typeName }, nodes)
   addInferredFields({
     schemaComposer: sc,
     typeComposer: tc,
-    exampleValue: getExampleValue({ nodes, typeName }),
+    exampleValue: buildExampleObject(inferenceMetadata),
   })
   tc.addFields(extendNodeTypeFields)
   sc.Query.addFields({

@@ -203,6 +203,8 @@ const addNode = (metadata, object) =>
 const deleteNode = (metadata, object) =>
   updateObjectMetadata(metadata, `del`, object)
 
+const addNodes = (metadata, nodes) => nodes.reduce(addNode, metadata)
+
 const isMixedNumber = ({ float, int }) =>
   float && float.total > 0 && (int && int.total > 0)
 
@@ -341,6 +343,7 @@ const buildExampleObject = ({ fieldMap, typeName, typeConflictReporter }) =>
 
 module.exports = {
   addNode,
+  addNodes,
   deleteNode,
   buildExampleObject,
 }
