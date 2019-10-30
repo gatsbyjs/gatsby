@@ -4,13 +4,9 @@ title: Debugging the Build Process
 
 Gatsby's `build` and `develop` steps run as a Node.js application which you can debug using standard tools for Node.js applications.
 
-In this guide you will learn how to debug some code using:
+In this guide you will learn how to debug some code using various techniques.
 
-- [VS Code debugger (Auto-Config)](#vs-code-debugger-auto-config)
-- [VS Code debugger (Manual-Config)](#vs-code-debugger-manual-config)
-- [Chrome DevTools for Node](#chrome-devtools-for-node)
-
-As an example, use the following code snippet in a `gatsby-node.js` file:
+As an example consider the following code snippet in a `gatsby-node.js` file:
 
 ```js:title=gatsby-node.js
 const { createFilePath } = require("gatsby-source-filesystem")
@@ -39,6 +35,33 @@ TypeError: Cannot read property 'internal' of undefined
   - gatsby-node.js:6 Object.exports.onCreateNode.args [as onCreateNode]
     D:/dev/blog-v2/gatsby-node.js:6:12
 ```
+
+## Debugging with Node.js' built-in console
+
+One of the fastest ways to gain insight into Gatsby's build process is using the `console` functionality [built into Node.js](https://nodejs.org/en/knowledge/getting-started/the-console-module/). This works similar to how you might be used to in the browser.
+
+Adding a `console.log` statement in the sample from above will print the variable into your terminal. There you might notice that `args` contains a lower-cased node variable.
+
+```diff:title=gatsby-node.js
+const { createFilePath } = require("gatsby-source-filesystem")
+
+exports.onCreateNode = args => {
++ console.log(args)
+  const { actions, Node } = args
+  if (Node.internal.type === "MarkdownRemark") {
+    const { createNodeField } = actions
+
+    const value = createFilePath({ node, getNode })
+    createNodeField({
+      name: `slug`,
+      node,
+      value,
+    })
+  }
+}
+```
+
+To read more about Gatsby's build process, check out the differences between [build and runtime](/docs/overview-of-the-gatsby-build-process#build-time-vs-runtime). Generally spoken, Node.js is responsible for building Gatsby pages and therefore its' built-in objects like `console` can be used at build time. At client-side [runtime](/docs/glossary#runtime), the browser's `console.log` API will add messages to the developer tools console.
 
 ## VS Code Debugger (Auto-Config)
 
@@ -140,7 +163,7 @@ Now you can resume code execution by clicking the "resume" icon in the DevTools 
 
 To inspect variables you can hover your mouse over them or go to the `Scope` section in the right-hand pane (either collapse the "Call Stack" section or scroll through it to the bottom).
 
-In the example `Node` is `undefined` and to figure out why, let's go backwards. `Node` is extracted from `args` so examine that by hovering `args`:
+In the example `Node` is `undefined` and to figure out why, hover over `args` where `Node` should be destructured from.
 
 ![Examine variable](./images/chrome-devtools-examine-var.png)
 

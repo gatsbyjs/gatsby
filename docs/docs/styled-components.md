@@ -112,7 +112,7 @@ export default () => (
 )
 ```
 
-### Enabling user stylesheets with a stable class name
+## Enabling user stylesheets with a stable class name
 
 Adding a persistent CSS `className` to your styled components can make it easier for end users of your website to take advantage of [user stylesheets](https://www.viget.com/articles/inline-styles-user-style-sheets-and-accessibility/) for accessibility.
 
