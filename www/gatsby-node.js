@@ -389,6 +389,13 @@ exports.createPages = ({ graphql, actions, reporter }) => {
     toPath: `/docs/sourcing-from-kentico-kontent/`,
     isPermanent: true,
   })
+
+  createRedirect({
+    fromPath: `/docs/using-fragments/`,
+    toPath: `/docs/using-graphql-fragments/`,
+    isPermanent: true,
+  })
+
   Object.entries(startersRedirects).forEach(([fromSlug, toSlug]) => {
     createRedirect({
       fromPath: `/starters${fromSlug}`,
