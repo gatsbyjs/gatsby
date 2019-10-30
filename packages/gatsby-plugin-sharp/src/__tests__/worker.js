@@ -15,10 +15,10 @@ describe(`worker`, () => {
     const job = {
       inputPath: `inputpath/file.jpg`,
       contentDigest: `1234`,
-      transforms: [
+      operations: [
         {
           outputPath: `myoutputpath/1234/file.jpg`,
-          args: {
+          transforms: {
             width: 100,
             height: 100,
           },
@@ -33,10 +33,10 @@ describe(`worker`, () => {
     expect(processFile).toHaveBeenCalledWith(
       job.inputPath,
       job.contentDigest,
-      job.transforms.map(transform => {
+      job.operations.map(operation => {
         return {
-          outputPath: transform.outputPath,
-          args: transform.transforms,
+          outputPath: operation.outputPath,
+          args: operation.transforms,
         }
       }),
       job.pluginOptions
@@ -51,7 +51,7 @@ describe(`worker`, () => {
     const job = {
       inputPath: `inputpath/file.jpg`,
       contentDigest: `1234`,
-      transforms: [
+      operations: [
         {
           outputPath: `myoutputpath/1234/file.jpg`,
           args: {

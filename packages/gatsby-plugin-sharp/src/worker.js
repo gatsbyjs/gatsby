@@ -8,7 +8,7 @@ const { processFile } = require(`./process-file`)
  * @property {string} inputPath the file path to transform
  * @property {string} contentDigest
  * @property {object} pluginOptions
- * @property {{outputPath: string, transforms: TransformArgs[]}} transforms
+ * @property {{outputPath: string, transforms: TransformArgs[]}} operations
  */
 
 /**
@@ -20,7 +20,7 @@ const q = queue((job, callback) => {
     processFile(
       job.inputPath,
       job.contentDigest,
-      job.transforms.map(transform => {
+      job.operations.map(transform => {
         return {
           outputPath: transform.outputPath,
           args: transform.transforms,
