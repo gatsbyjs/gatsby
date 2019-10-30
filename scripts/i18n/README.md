@@ -53,6 +53,8 @@ The script will take this info and:
 - Assign all maintainers as CODEOWNERS and permissions
 - Invite all maintainers to the GatsbyJS GitHub organization
 
+This script should **only** be run by an admin of the GatsbyJS organization.
+
 ### `sync` (TODO)
 
 The `sync` script updates contents of the translation repository based on new changes to the repo. It can be run manually or through a bot.
