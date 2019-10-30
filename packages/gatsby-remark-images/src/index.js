@@ -287,6 +287,9 @@ module.exports = (
       const imageStats = await stats({ file: imageNode, reporter })
       if (imageStats && imageStats.isTransparent) removeBgImage = true
     }
+    if (options.disableBgImage) {
+      removeBgImage = true
+    }
 
     const bgImage = removeBgImage
       ? ``
