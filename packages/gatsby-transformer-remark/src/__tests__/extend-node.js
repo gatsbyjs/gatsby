@@ -418,11 +418,11 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
       `correctly prunes length to provided parameter with truncate`,
       content,
       `excerpt(pruneLength: 50, truncate: true)
-          excerptAst(pruneLength: 50, truncate: true)
-          frontmatter {
-              title
-          }
-          `,
+        excerptAst(pruneLength: 50, truncate: true)
+        frontmatter {
+            title
+        }
+        `,
       node => {
         expect(node).toMatchSnapshot()
         expect(node.excerpt.length).toBe(50)
@@ -940,10 +940,15 @@ title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
 ---
 # first title
+
 some text
+
 ## second title
+
 some other text
+
 # third title
+
 final text
 `,
     `tableOfContents(pathToSlugField: "frontmatter.title")
@@ -1091,6 +1096,7 @@ describe(`Links are correctly prefixed when assetPrefix is used`, () => {
   const assetPrefix = `https://example.com/assets`
   const basePath = `/prefix`
   const pathPrefix = assetPrefix + basePath
+
   bootstrapTest(
     `correctly prefixes links`,
     `
@@ -1162,6 +1168,7 @@ describe(`Headings are generated correctly from schema`, () => {
     `returns value with inlineCode`,
     `
 # first title
+
 ## \`second title\`
 `,
     `headings {
