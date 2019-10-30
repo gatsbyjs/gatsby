@@ -67,7 +67,7 @@ const scheduleJob = async (
   const isQueued = toProcess.has(job.inputPath)
   let scheduledPromise
 
-  if (reportStatus && imagesToProcess === 0) {
+  if (reportStatus && !bar) {
     bar = createProgress(`Generating image thumbnails`, reporter)
     bar.start()
   }
