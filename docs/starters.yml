@@ -4279,3 +4279,25 @@
     - Storybook
     - Jest and React Testing library for snapshots and unit tests.
     - Styled-Components for all your styles.
+- url: https://gatsby-starter-typescript-blog-forms.netlify.com/
+  repo: https://github.com/joerneu/gatsby-starter-typescript-blog-forms
+  description: Gatsby starter for a website in TypeScript with a homepage, blog and forms
+  tags:
+    - Blog
+    - Language:TypeScript
+    - Linting
+    - Markdown
+    - MDX
+    - SEO
+    - Styling:CSS-in-JS
+  features:
+    - TypeScript for type safety, IDE comfort and error checking during development and build time
+    - ESLint and Prettier for safety and consistent code style
+    - Uses the official Gatsby Blog Core theme for data processing
+    - Functional components and React Hooks
+    - SEO component
+    - Minimal styling with React Emotion that can easily be extended
+    - Theming of components and Markdown (MDX) with Emotion Theming
+    - Forms with Formite (React Hooks Form library)
+    - Accessible UI components with Reakit
+    - Very small bundle size
