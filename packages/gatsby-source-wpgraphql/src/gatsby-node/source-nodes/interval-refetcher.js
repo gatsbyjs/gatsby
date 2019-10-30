@@ -2,10 +2,6 @@ const { LAST_COMPLETED_SOURCE_TIME } = require(`../constants`)
 const fetchAndApplyNodeUpdates = require(`./fetch-node-updates`)
 
 const startIntervalRefetcher = (_, helpers, pluginOptions) => {
-  if (process.env.NODE_ENV === `production`) {
-    return
-  }
-
   const { cache } = helpers
 
   const msRefetchInterval = 300
