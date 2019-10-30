@@ -79,7 +79,7 @@ const headingLevels = [...Array(6).keys()].reduce((acc, i) => {
   return acc
 }, {})
 
-module.exports = async (
+module.exports = (
   {
     type,
     basePath,
@@ -417,7 +417,7 @@ module.exports = async (
       truncate,
       excerptSeparator
     ) {
-      // if excerptSeparator in options and excerptSeparator in content then use markdownNode.excerpt.
+      // if excerptSeparator in options and excerptSeparator in content then we will get an excerpt from grayMatter that we can use
       if (excerptSeparator && markdownNode.excerpt !== ``) {
         return markdownNode.excerpt
       }
