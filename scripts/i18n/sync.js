@@ -59,24 +59,24 @@ async function syncTranslationRepo(code) {
   // pull from the source
   shell.exec(`git remote add source ${sourceRepoUrl}`)
   const output = shell.exec(`git pull source master`).stdout
-  if (output.includes("Already up to date.")) {
+  if (output.includes(`Already up to date.`)) {
     logger.info(`We are already up to date with source.`)
     // teardownAndExit()
     return
   }
-  const lines = output.split("\n")
+  const lines = output.split(`\n`)
 
   // Commit all merge conflicts
-  const conflictLines = lines.filter(line => line.startsWith("CONFLICT"))
+  const conflictLines = lines.filter(line => line.startsWith(`CONFLICT`))
   const conflictFiles = conflictLines.map(line =>
-    line.substr(line.lastIndexOf(" ") + 1)
+    line.substr(line.lastIndexOf(` `) + 1)
   )
 
   // FIXME merge all conflicts
 
   // If no conflicts, merge directly into master
   if (conflictFiles.length === 0) {
-    logger.info("No conflicts found. Committing directly to master.")
+    logger.info(`No conflicts found. Committing directly to master.`)
     shell.exec(`git checkout ${defaultBranch}`)
     shell.exec(`git merge ${syncBranch}`)
     shell.exec(`git push origin ${defaultBranch}`)
