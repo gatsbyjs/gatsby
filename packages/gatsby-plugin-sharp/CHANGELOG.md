@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.36](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.35...gatsby-plugin-sharp@2.2.36) (2019-10-29)
+
+### Bug Fixes
+
+- **gatsby-plugin-sharp:** fix "Cannot set property 'multipassCount' of undefined" error ([#19131](https://github.com/gatsbyjs/gatsby/issues/19131)) ([3766dcd](https://github.com/gatsbyjs/gatsby/commit/3766dcd))
+
+## [2.2.35](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.34...gatsby-plugin-sharp@2.2.35) (2019-10-29)
+
+### Bug Fixes
+
+- update minor updates in packages ([#19087](https://github.com/gatsbyjs/gatsby/issues/19087)) ([294a48f](https://github.com/gatsbyjs/gatsby/commit/294a48f))
+
 ## [2.2.34](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.33...gatsby-plugin-sharp@2.2.34) (2019-10-28)
 
 **Note:** Version bump only for package gatsby-plugin-sharp

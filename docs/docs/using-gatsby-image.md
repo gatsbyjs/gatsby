@@ -4,7 +4,7 @@ title: Using Gatsby Image to Prevent Image Bloat
 
 `gatsby-image` is a React component designed to work seamlessly with Gatsby’s GraphQL queries ([`gatsby-image` plugin README](/packages/gatsby-image/)). It combines [Gatsby’s native image processing](https://image-processing.gatsbyjs.org/) capabilities with advanced image loading techniques to easily and completely optimize image loading for your sites. `gatsby-image` uses [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/) to power its image transformations.
 
-> _Warning: gatsby-image is **not** a drop-in replacement for `<img />`. It’s optimized for fixed width/height images and images that stretch the full-width of a container. Some ways you can use `<img />` won’t work with gatsby-image._
+> _Warning: gatsby-image is **not** a drop-in replacement for `<img />`. It’s optimized for fixed width/height images and images that stretch the full width of a container. Some ways you can use `<img />` won’t work with gatsby-image._
 
 [Demo](https://using-gatsby-image.gatsbyjs.org/)
 
@@ -20,16 +20,16 @@ _For more complete API information, check out the [Gatsby Image API](/docs/gatsb
 
 Large, unoptimized images dramatically slow down your site.
 
-But creating optimized images for websites has long been a thorny problem. Ideally you would:
+But creating optimized images for websites has long been a thorny problem. Ideally, you would:
 
 - Resize large images to the size needed by your design
 - Generate multiple smaller images so smartphones and tablets don’t download desktop-sized images
 - Strip all unnecessary metadata and optimize JPEG and PNG compression
 - Efficiently lazy load images to speed initial page load and save bandwidth
 - Use the “blur-up” technique or a “traced placeholder” SVG to show a preview of the image while it loads
-- Hold the image position so your page doesn’t jump while images load
+- Hold the image position so your page doesn’t jump while the images load
 
-Doing this consistently across a site feels like sisyphean labor. You manually optimize your images and then… several images are swapped in at the last minute or a design-tweak shaves 100px of width off your images.
+Doing this consistently across a site feels like Sisyphean labor. You manually optimize your images and then… several images are swapped in at the last minute or a design-tweak shaves 100px of width off your images.
 
 Most solutions involve a lot of manual labor and bookkeeping to ensure every image is optimized.
 
