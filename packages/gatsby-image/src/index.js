@@ -142,7 +142,9 @@ function groupByMedia(imageVariants) {
 
   if (without.length > 1 && process.env.NODE_ENV !== `production`) {
     console.warn(
-      `We've found ${without.length} sources without a media property. They might be ignored by the browser, see: https://www.gatsbyjs.org/packages/gatsby-image/#art-directing-multiple-images`
+      `We've found ${
+        without.length
+      } sources without a media property. They might be ignored by the browser, see: https://www.gatsbyjs.org/packages/gatsby-image/#art-directing-multiple-images`
     )
   }
 
@@ -212,7 +214,7 @@ const noscriptImg = props => {
 
   const sources = generateNoscriptSources(props.imageVariants)
 
-  return `<picture>${sources}<img ${loading}${width}${height}${sizes}${srcSet}${src}${alt}${title}${crossOrigin}${draggable}style="position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:contain;object-position:center"/></picture>`
+  return `<picture>${sources}<img ${loading}${width}${height}${sizes}${srcSet}${src}${alt}${title}${crossOrigin}${draggable}style="position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center"/></picture>`
 }
 
 // Earlier versions of gatsby-image during the 2.x cycle did not wrap
@@ -263,7 +265,7 @@ const Img = React.forwardRef((props, ref) => {
         left: 0,
         width: `100%`,
         height: `100%`,
-        objectFit: `contain`,
+        objectFit: `cover`,
         objectPosition: `center`,
         ...style,
       }}

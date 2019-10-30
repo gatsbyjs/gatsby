@@ -79,7 +79,7 @@ describe(`Production gatsby-image`, () => {
           `left: 0px`,
           `width: 100%`,
           `height: 100%`,
-          `object-fit: contain`,
+          `object-fit: cover`,
         ])
       })
   })
