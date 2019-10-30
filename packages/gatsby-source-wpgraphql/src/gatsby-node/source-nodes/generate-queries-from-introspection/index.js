@@ -1,6 +1,7 @@
 const { dd } = require(`dumper.js`)
 const Query = require(`graphql-query-builder`)
 
+// @todo create function to unmap check here for similar function https://www.gatsbyjs.org/packages/gatsby-source-graphql-universal/
 const {
   // getActionMonitorQuery,
   getAvailablePostTypesQuery,

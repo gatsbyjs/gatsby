@@ -1,7 +1,5 @@
 "use strict";
 
-const url = require(`url`);
-
 const path = require(`path`);
 
 const getTemplates = require(`../utils/get-templates`);
@@ -9,26 +7,28 @@ const getTemplates = require(`../utils/get-templates`);
 module.exports = async ({
   actions,
   graphql
-}, pluginOptions) => {
+}) => {
   const {
     data
   } = await graphql(`
     query ALL_CONTENT_NODES {
-      allContentNode {
+      allWpContent(filter: { link: { ne: null } }) {
         nodes {
-          link
+          path
           id
         }
       }
     }
   `);
   const templates = getTemplates();
-  await Promise.all(data.allContentNode.nodes.map(async node => {
-    const pathname = url.parse(node.link).pathname;
+  await Promise.all(data.allWpContent.nodes.map(async node => {
+    // templates[0] will be replaced with a template hierarchy
+    // this whole create-pages should also be moved to a theme
+    // instead of gatsby-source-wpgraphql
     const template = path.resolve(templates[0]);
     await actions.createPage({
       component: template,
-      path: pathname,
+      path: node.path,
       context: {
         ID: node.id
       }

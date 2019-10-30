@@ -12,6 +12,8 @@ const isWpGatsby = async (_, pluginOptions) =>
 
 const checkPluginRequirements = async (helpers, pluginOptions) => {
   const fetchIsWpGatsby = await isWpGatsby(helpers, pluginOptions)
+  // @todo add separate checks for WPGraphQL and WPGatsby
+  // check headers for JSON
   if (!fetchIsWpGatsby.data || !fetchIsWpGatsby.data.isWpGatsby) {
     console.error(
       `[gatsby-source-wpgraphql] - Couldn't connect to your WordPress site. Make sure your URL is correct and WP-GraphQL and WP-Gatsby are active.`

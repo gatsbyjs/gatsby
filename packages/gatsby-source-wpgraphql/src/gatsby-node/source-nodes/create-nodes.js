@@ -72,8 +72,10 @@ const createGatsbyNodesFromWPGQLContentNodes = async (
         isLast: index === indexOfLastNode,
       }
 
+      // @todo also namespace the id's here
       const nodeId = createNodeId(node.id)
 
+      // @todo allow namespacing types with a plugin option. Default to `Wp`
       const nodeType = contentTypes[node.contentType]
         ? // if this is a post, page or CPT, we want to group it into
           // the WpContent node type to make sharing templates across post types easy

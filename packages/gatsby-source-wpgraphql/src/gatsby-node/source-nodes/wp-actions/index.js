@@ -1,3 +1,4 @@
+const { dd } = require(`dumper.js`)
 const fetchGraphql = require(`../../../utils/fetch-graphql`)
 const { getActionMonitorQuery } = require(`../graphql-queries`)
 const wpActionCREATE = require(`./create`)
@@ -38,11 +39,10 @@ const getWpActions = async (__, { url }, variables) => {
 }
 
 const handleWpActions = async api => {
-  let { cachedNodeIds, helpers } = api
+  let { cachedNodeIds } = api
 
-  helpers.reporter.info(`running ${api.wpAction.actionType}`)
-  
   switch (api.wpAction.actionType) {
+    // @todo case `PREVIEW`: <- link a revision to it's parent post
     case `DELETE`:
       cachedNodeIds = await wpActionDELETE(api)
       break
