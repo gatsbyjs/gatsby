@@ -25,7 +25,12 @@ const startIntervalRefetcher = (_, helpers, pluginOptions) => {
   }
 
   // wait 10 seconds before starting the refetcher
-  setTimeout(refetcher, 10000)
+  setTimeout(() => {
+    helpers.reporter.info(
+      `[gatsby-source-wpgraphql] Watching for WordPress changes`
+    )
+    refetcher()
+  }, 10000)
 }
 
 module.exports = startIntervalRefetcher
