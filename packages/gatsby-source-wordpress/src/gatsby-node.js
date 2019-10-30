@@ -24,6 +24,7 @@ let _includedRoutes
 let _excludedRoutes
 let _normalizer
 let _keepMediaSizes
+let _buildRoutesWithParams
 
 exports.sourceNodes = async (
   {
@@ -51,6 +52,7 @@ exports.sourceNodes = async (
     excludedRoutes = [],
     normalizer,
     keepMediaSizes = false,
+    buildRoutesWithParams = () => [],
   }
 ) => {
   const { createNode, touchNode } = actions
@@ -69,6 +71,7 @@ exports.sourceNodes = async (
   _excludedRoutes = excludedRoutes
   _keepMediaSizes = keepMediaSizes
   _normalizer = normalizer
+  _buildRoutesWithParams = buildRoutesWithParams
 
   let entities = await fetch({
     baseUrl,
@@ -84,6 +87,7 @@ exports.sourceNodes = async (
     _includedRoutes,
     _excludedRoutes,
     _keepMediaSizes,
+    _buildRoutesWithParams,
     typePrefix,
     refactoredEntityTypes,
   })

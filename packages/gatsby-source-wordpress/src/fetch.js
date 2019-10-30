@@ -53,6 +53,7 @@ async function fetch({
   _concurrentRequests,
   _includedRoutes,
   _excludedRoutes,
+  _buildRoutesWithParams,
   typePrefix,
   refactoredEntityTypes,
 }) {
@@ -95,7 +96,7 @@ Mama Route URL: ${url}
   }
 
   // Call the main API Route to discover the all the routes exposed on this API.
-  let allRoutes
+  let allRoutes = null
   try {
     let options = {
       method: `get`,
@@ -136,19 +137,30 @@ Mama Route URL: ${url}
     },
   ]
 
-  if (allRoutes) {
-    let validRoutes = getValidRoutes({
-      allRoutes,
-      url,
-      _verbose,
-      _useACF,
-      _hostingWPCOM,
-      _acfOptionPageIds,
-      _includedRoutes,
-      _excludedRoutes,
-      typePrefix,
-      refactoredEntityTypes,
-    })
+  const typeBuilder = buildRouteType(refactoredEntityTypes)
+  const urlBuilder = urlBuilderFactory(url, _hostingWPCOM)
+  let validRoutes = _buildRoutesWithParams(typeBuilder, pathBuilder, urlBuilder)
+
+  if (allRoutes || validRoutes.length > 0) {
+    const validRoutesPaths = _.uniq(_.compact(validRoutes.map(r => r.pathGlob)))
+    // Routes with params must be excluded as valid routes
+    const excludedRoutes = [..._excludedRoutes, ...validRoutesPaths]
+
+    if (allRoutes) {
+      validRoutes = getValidRoutes({
+        allRoutes,
+        validRoutes,
+        url,
+        _verbose,
+        _useACF,
+        _hostingWPCOM,
+        _acfOptionPageIds,
+        _includedRoutes,
+        excludedRoutes,
+        typePrefix,
+        refactoredEntityTypes,
+      })
+    }
 
     if (_verbose) {
       console.log(
@@ -259,7 +271,7 @@ async function fetchData({
   _accessToken,
   _concurrentRequests,
 }) {
-  const { type, url, optionPageId } = route
+  const { type, url, optionPageId, normalizeCollectionResponse } = route
 
   if (_verbose) {
     console.log(
@@ -274,6 +286,7 @@ async function fetchData({
   }
 
   let routeResponse = await getPages({
+    route,
     url,
     _perPage,
     _auth,
@@ -299,6 +312,8 @@ async function fetchData({
           __type: type,
         }
       })
+
+      routeResponse = normalizeCollectionResponse(routeResponse)
       entities = entities.concat(routeResponse)
     } else {
       routeResponse.__type = type
@@ -371,12 +386,14 @@ async function fetchData({
 /**
  * Get the pages of data
  *
+ * @param {any} route
  * @param {any} url
  * @param {number} [page=1]
  * @returns
  */
 async function getPages(
   {
+    route,
     url,
     _perPage,
     _auth,
@@ -389,6 +406,7 @@ async function getPages(
 ) {
   try {
     let result = []
+    const { queryParams } = route
 
     const getOptions = page => {
       let o = {
@@ -396,6 +414,7 @@ async function getPages(
         url: `${url}?${querystring.stringify({
           per_page: _perPage,
           page: page,
+          ...queryParams,
         })}`,
       }
 
@@ -487,157 +506,55 @@ function checkRouteList(routePath, routeList) {
  */
 function getValidRoutes({
   allRoutes,
+  validRoutes,
   url,
   _verbose,
   _useACF,
   _acfOptionPageIds,
   _hostingWPCOM,
   _includedRoutes,
-  _excludedRoutes,
+  excludedRoutes,
   typePrefix,
   refactoredEntityTypes,
 }) {
-  let validRoutes = []
-
-  if (_useACF) {
-    let defaultAcfNamespace = `acf/v3`
-    // Grab ACF Version from namespaces
-    const acfNamespace = allRoutes.data.namespaces
-      ? allRoutes.data.namespaces.find(namespace => namespace.includes(`acf`))
-      : null
-    const acfRestNamespace = acfNamespace ? acfNamespace : defaultAcfNamespace
-    _includedRoutes.push(`/${acfRestNamespace}/**`)
-
-    if (_verbose)
-      console.log(
-        colorized.out(
-          `Detected ACF to REST namespace: ${acfRestNamespace}.`,
-          colorized.color.Font.FgGreen
-        )
-      )
-    // The OPTIONS ACF API Route is not giving a valid _link so let`s add it manually
-    // and pass ACF option page ID
-    // ACF to REST v3 requires options/options
-    let optionsRoute = acfRestNamespace.includes(`3`)
-      ? `options/options/`
-      : `options/`
-    validRoutes.push({
-      url: `${url}/${acfRestNamespace}/${optionsRoute}`,
-      type: `${typePrefix}acf_options`,
-    })
-    // ACF to REST V2 does not allow ACF Option Page ID specification
-    if (_acfOptionPageIds.length > 0 && acfRestNamespace.includes(`3`)) {
-      _acfOptionPageIds.forEach(function(acfOptionPageId) {
-        validRoutes.push({
-          url: `${url}/acf/v3/options/${acfOptionPageId}`,
-          type: `${typePrefix}acf_options`,
-          optionPageId: acfOptionPageId,
-        })
-      })
-      if (_verbose)
-        console.log(
-          colorized.out(
-            `Added ACF Options route(s).`,
-            colorized.color.Font.FgGreen
-          )
-        )
-    }
-    if (_acfOptionPageIds.length > 0 && _hostingWPCOM) {
-      // TODO : Need to test that out with ACF on Wordpress.com hosted site. Need a premium account on wp.com to install extensions.
-      if (_verbose)
-        console.log(
-          colorized.out(
-            `The ACF options pages is untested under wordpress.com hosting. Please let me know if it works.`,
-            colorized.color.Effect.Blink
-          )
-        )
-    }
-  }
+  const defaultParams = buildDefaultRouteParams(url)
+  const ACFRoutes = buildACFRoutes(
+    url,
+    allRoutes,
+    defaultParams,
+    typePrefix,
+    _includedRoutes,
+    _useACF,
+    _acfOptionPageIds,
+    _verbose,
+    _hostingWPCOM
+  )
+  validRoutes = [...validRoutes, ...ACFRoutes]
 
   for (let key of Object.keys(allRoutes.data.routes)) {
     if (_verbose) console.log(`Route discovered :`, key)
     let route = allRoutes.data.routes[key]
 
     // A valid route exposes its _links (for now)
-    if (route._links) {
-      const entityType = getRawEntityType(key)
+    const routePath = getRoutePath(url, key)
+    const isValid = isValidRoute(
+      routePath,
+      _includedRoutes,
+      excludedRoutes,
+      _verbose
+    )
 
-      // Excluding the "technical" API Routes
-      const excludedTypes = [
-        `/v2/**`,
-        `/v3/**`,
-        `**/1.0`,
-        `**/2.0`,
-        `**/embed`,
-        `**/proxy`,
-        `/`,
-        `/jwt-auth/**`,
-      ]
-
-      const routePath = getRoutePath(url, key)
-
-      const whiteList = _includedRoutes
-      const blackList = [...excludedTypes, ..._excludedRoutes]
-
-      // Check whitelist first
-      const inWhiteList = checkRouteList(routePath, whiteList)
-      // Then blacklist
-      const inBlackList = checkRouteList(routePath, blackList)
-      const validRoute = inWhiteList && !inBlackList
-
-      if (validRoute) {
-        if (_verbose)
-          console.log(
-            colorized.out(
-              `Valid route found. Will try to fetch.`,
-              colorized.color.Font.FgGreen
-            )
-          )
-
-        const manufacturer = getManufacturer(route)
-
-        let rawType = ``
-        if (manufacturer === `wp`) {
-          rawType = `${typePrefix}${entityType}`
-        }
-
-        let validType
-        switch (rawType) {
-          case `${typePrefix}posts`:
-            validType = refactoredEntityTypes.post
-            break
-          case `${typePrefix}pages`:
-            validType = refactoredEntityTypes.page
-            break
-          case `${typePrefix}tags`:
-            validType = refactoredEntityTypes.tag
-            break
-          case `${typePrefix}categories`:
-            validType = refactoredEntityTypes.category
-            break
-          default:
-            validType = `${typePrefix}${manufacturer.replace(
-              /-/g,
-              `_`
-            )}_${entityType.replace(/-/g, `_`)}`
-            break
-        }
-
-        validRoutes.push({
-          url: buildFullUrl(url, key, _hostingWPCOM),
-          type: validType,
-        })
-      } else {
-        if (_verbose) {
-          const invalidType = inBlackList ? `blacklisted` : `not whitelisted`
-          console.log(
-            colorized.out(
-              `Excluded route: ${invalidType}`,
-              colorized.color.Font.FgYellow
-            )
-          )
-        }
-      }
+    if (route._links && isValid) {
+      const routeEntity = buildRoute(
+        route,
+        key,
+        url,
+        defaultParams,
+        refactoredEntityTypes,
+        typePrefix,
+        _hostingWPCOM
+      )
+      validRoutes.push(routeEntity)
     } else {
       if (_verbose)
         console.log(
@@ -650,6 +567,234 @@ function getValidRoutes({
   }
 
   return validRoutes
+}
+
+/**
+ * FIXME: This can go in a subplugin
+ * Especial method for people using ACF plugin
+ *
+ * @param {string} url
+ * @param {any} allRoutes
+ * @param {Object} defaultParams
+ * @param {string} typePrefix
+ * @param {Array<string>} _includedRoutes
+ * @param {string} _useACF
+ * @param {any} _acfOptionPageIds
+ * @param {boolean} _verbose
+ * @returns {Array<string>}
+ */
+function buildACFRoutes(
+  url,
+  allRoutes,
+  defaultParams,
+  typePrefix,
+  _includedRoutes,
+  _useACF,
+  _acfOptionPageIds,
+  _verbose,
+  _hostingWPCOM
+) {
+  const routes = []
+  if (!_useACF) return routes
+
+  const defaultAcfNamespace = `acf/v3`
+  // Grab ACF Version from namespaces
+  const acfNamespace = allRoutes.data.namespaces
+    ? allRoutes.data.namespaces.find(namespace => namespace.includes(`acf`))
+    : null
+  const acfRestNamespace = acfNamespace ? acfNamespace : defaultAcfNamespace
+  _includedRoutes.push(`/${acfRestNamespace}/**`)
+
+  if (_verbose) {
+    console.log(
+      colorized.out(
+        `Detected ACF to REST namespace: ${acfRestNamespace}.`,
+        colorized.color.Font.FgGreen
+      )
+    )
+  }
+
+  // The OPTIONS ACF API Route is not giving a valid _link so let`s add it manually
+  // and pass ACF option page ID
+  // ACF to REST v3 requires options/options
+  let optionsRoute = acfRestNamespace.includes(`3`)
+    ? `options/options/`
+    : `options/`
+  routes.push({
+    ...defaultParams,
+    url: `${url}/${acfRestNamespace}/${optionsRoute}`,
+    type: `${typePrefix}acf_options`,
+  })
+
+  // ACF to REST V2 does not allow ACF Option Page ID specification
+  if (_acfOptionPageIds.length > 0 && acfRestNamespace.includes(`3`)) {
+    _acfOptionPageIds.forEach(function(acfOptionPageId) {
+      routes.push({
+        ...defaultParams,
+        url: `${url}/acf/v3/options/${acfOptionPageId}`,
+        type: `${typePrefix}acf_options`,
+        optionPageId: acfOptionPageId,
+      })
+    })
+    if (_verbose) {
+      console.log(
+        colorized.out(
+          `Added ACF Options route(s).`,
+          colorized.color.Font.FgGreen
+        )
+      )
+    }
+  }
+
+  if (_acfOptionPageIds.length > 0 && _hostingWPCOM) {
+    // TODO : Need to test that out with ACF on Wordpress.com hosted site.
+    // Need a premium account on wp.com to install extensions.
+    if (_verbose) {
+      console.log(
+        colorized.out(
+          `The ACF options pages is untested under wordpress.com hosting. Please let me know if it works.`,
+          colorized.color.Effect.Blink
+        )
+      )
+    }
+  }
+
+  return routes
+}
+
+/**
+ * Remove from the list those routes that are blacklisted
+ * by the user
+ *
+ * @param {any} route
+ * @param {string} key
+ * @param {string} url
+ * @param {Object} defaultParams
+ * @returns {Object}
+ */
+function buildRoute(
+  route,
+  key,
+  url,
+  defaultParams,
+  refactoredEntityTypes,
+  typePrefix,
+  _hostingWPCOM
+) {
+  const entityType = getRawEntityType(key)
+  const manufacturer = getManufacturer(route)
+
+  let rawType = ``
+  if (manufacturer === `wp`) {
+    rawType = `${typePrefix}${entityType}`
+  }
+  const typeBuilder = buildRouteType(refactoredEntityTypes)
+  let validType
+  switch (rawType) {
+    case `${typePrefix}posts`:
+      validType = typeBuilder(`post`)
+      break
+    case `${typePrefix}pages`:
+      validType = typeBuilder(`page`)
+      break
+    case `${typePrefix}tags`:
+      validType = typeBuilder(`tag`)
+      break
+    case `${typePrefix}categories`:
+      validType = typeBuilder(`category`)
+      break
+    default:
+      validType = `${typePrefix}${manufacturer.replace(
+        /-/g,
+        `_`
+      )}_${entityType.replace(/-/g, `_`)}`
+      break
+  }
+
+  return {
+    ...defaultParams,
+    url: buildFullUrl(url, key, _hostingWPCOM),
+    type: validType,
+  }
+}
+
+/**
+ * Build the string for valid route types based on
+ * wordpress Rest API.
+ *
+ * @param {Object} refactoredEntityTypes,
+ */
+function buildRouteType(refactoredEntityTypes) {
+  return entityType => refactoredEntityTypes[entityType]
+}
+
+/**
+ * Params that all routes should have.
+ * These params can be overriden by users when configuring
+ * the plugin.
+ *
+ * normalizeCollectionResponse has a default callback just being
+ * an identity function
+ *
+ * @param {string} url
+ * @returns {Object}
+ */
+function buildDefaultRouteParams(url) {
+  return {
+    queryParams: {},
+    normalizeCollectionResponse: entitiesFromResponse => entitiesFromResponse,
+  }
+}
+
+/**
+ * Remove from the list those routes that are blacklisted
+ * by the user
+ *
+ * @param {string} url
+ * @param {string} key
+ * @param {Array<string>} _includedRoutes
+ * @param {Array<string>} excludedRoutes
+ * @returns {boolean}
+ */
+function isValidRoute(routePath, _includedRoutes, excludedRoutes, _verbose) {
+  // Excluding the "technical" API Routes
+  const excludedTypes = [
+    `/v2/**`,
+    `/v3/**`,
+    `**/1.0`,
+    `**/2.0`,
+    `**/embed`,
+    `**/proxy`,
+    `/`,
+    `/jwt-auth/**`,
+  ]
+  const whiteList = _includedRoutes
+  const blackList = [...excludedTypes, ...excludedRoutes]
+
+  // Check whitelist first
+  const inWhiteList = checkRouteList(routePath, whiteList)
+  // Then blacklist
+  const inBlackList = checkRouteList(routePath, blackList)
+  const validRoute = inWhiteList && !inBlackList
+
+  if (validRoute && _verbose) {
+    console.log(
+      colorized.out(
+        `Valid route found. Will try to fetch.`,
+        colorized.color.Font.FgGreen
+      )
+    )
+  } else if (!validRoute && _verbose) {
+    const invalidType = inBlackList ? `blacklisted` : `not whitelisted`
+    console.log(
+      colorized.out(
+        `Excluded route: ${invalidType}`,
+        colorized.color.Font.FgYellow
+      )
+    )
+  }
+
+  return validRoute
 }
 
 /**
@@ -702,6 +847,28 @@ const buildFullUrl = (baseUrl, fullPath, _hostingWPCOM) => {
     baseUrl = new URL(baseUrl).origin
   }
   return `${baseUrl}${fullPath}`
+}
+
+/**
+ * Use `buildFullUrl` but curried to only pass `path` when is
+ * used by user
+ *
+ * @param {any} baseUrl The base site URL that should be prepended to full path
+ * @param {boolean} _hostingWPCOM Is hosted on wordpress.com
+ */
+const urlBuilderFactory = (baseUrl, _hostingWPCOM) => path =>
+  buildFullUrl(baseUrl, path, _hostingWPCOM)
+
+/**
+ * Helper function to prefix user defined API endpoints
+ * with wordpress namespace and api version
+ *
+ * @param {string} path
+ * @param {string} namespace
+ * @param {version} version
+ */
+function pathBuilder(path, namespace = `wp`, version = `v2`) {
+  return `/${namespace}/${version}/${path}`
 }
 
 /**
