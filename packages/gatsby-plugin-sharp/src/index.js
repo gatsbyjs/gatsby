@@ -317,7 +317,6 @@ async function fluid({ file, args = {}, reporter, cache }) {
   const { width, height, density, format } = metadata
 
   // if no maxWidth is passed, we need to resize the image based on the passed maxHeight
-  // TODO: Account for `fit` here (this affects the fluidSizes object later)
   const fixedDimension =
     options.maxWidth === undefined ? `maxHeight` : `maxWidth`
 
@@ -481,8 +480,6 @@ async function fixed({ file, args = {}, reporter, cache }) {
   // if no width is passed, we need to resize the image based on the passed height
   const fixedDimension = options.width === undefined ? `height` : `width`
 
-  // TODO: account for `fit` here
-
   // Create sizes for different resolutions — we do 1x, 1.5x, and 2x.
   const sizes = []
   sizes.push(options[fixedDimension])
@@ -516,7 +513,6 @@ async function fixed({ file, args = {}, reporter, cache }) {
     }
     // Queue images for processing.
     if (options.width !== undefined && options.height !== undefined) {
-      // TODO: use actual aspect ratio from metadata
       arrrgs.height = Math.round(size * (options.height / options.width))
     }
 
