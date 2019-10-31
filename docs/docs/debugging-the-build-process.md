@@ -29,7 +29,7 @@ exports.onCreateNode = args => {
 
 There is a bug in this code and using it will produce the error below:
 
-```
+```js
 TypeError: Cannot read property 'internal' of undefined
 
   - gatsby-node.js:6 Object.exports.onCreateNode.args [as onCreateNode]
@@ -42,11 +42,11 @@ One of the fastest ways to gain insight into Gatsby's build process is using the
 
 Adding a `console.log` statement in the sample from above will print the variable into your terminal. There you might notice that `args` contains a lower-cased node variable.
 
-```diff:title=gatsby-node.js
+```js:title=gatsby-node.js
 const { createFilePath } = require("gatsby-source-filesystem")
 
 exports.onCreateNode = args => {
-+ console.log(args)
+  console.log(args) // highlight-line
   const { actions, Node } = args
   if (Node.internal.type === "MarkdownRemark") {
     const { createNodeField } = actions
