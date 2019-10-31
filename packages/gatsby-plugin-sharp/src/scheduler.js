@@ -27,9 +27,7 @@ const executeJobs = _.throttle(
           .catch(job.deferred.reject)
           .finally(() => {
             if (bar) {
-              job.args.operations.forEach(() => {
-                bar.tick()
-              })
+              bar.tick(job.args.operations.length)
             }
 
             imagesFinished++
