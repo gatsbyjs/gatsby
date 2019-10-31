@@ -44,6 +44,8 @@ module.exports = {
 
 See below for the complete list of [optional fields](#optional-fields).
 
+Note that this plugin is disabled while running `gatsby develop`. This way, actions are not tracked while you are still developing your project. Once you run `gatsby build` the plugin is enabled. Test it with `gatsby serve`.
+
 ## `<OutboundLink>` component
 
 To make it easy to track clicks on outbound links in Google Analytics,
