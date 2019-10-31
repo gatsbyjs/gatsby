@@ -2,7 +2,7 @@ import * as React from "react"
 import { EventEmitter } from "events"
 import { WindowLocation } from "@reach/router"
 import { createContentDigest } from "gatsby-core-utils"
-import { TemplateTag } from "common-tags";
+import { TemplateTag } from "common-tags"
 
 export {
   default as Link,
@@ -937,13 +937,13 @@ type LogMessageType = (format: string, ...args: any[]) => void
 type LogErrorType = (errorMeta: string | Object, error?: Object) => void
 
 export type PhantomActivityTracker = {
-  start(): () => void,
-  end(): () => void,
-  span: Object,
+  start(): () => void
+  end(): () => void
+  span: Object
 }
 
 export type ActivityTracker = PhantomActivityTracker & {
-  setStatus(status: string): void,
+  setStatus(status: string): void
   panic: LogErrorType
   panicOnBuild: LogErrorType
 }
@@ -955,8 +955,8 @@ export type ProgressActivityTracker = Omit<ActivityTracker, "end"> & {
 }
 
 export type ActivityArgs = {
-  parentSpan?: Object,
-  id?: string;
+  parentSpan?: Object
+  id?: string
 }
 
 export interface Reporter {
@@ -975,8 +975,16 @@ export interface Reporter {
   log: LogMessageType
   completeActivity(id: string, status?: string): void
   activityTimer(name: string, activityArgs?: ActivityArgs): ActivityTracker
-  createProgress(text: string, total?: number, start?: number, activityArgs?: ActivityArgs): ProgressActivityTracker
-  phantomActivity(text: string, activityArgs?: ActivityArgs): PhantomActivityTracker
+  createProgress(
+    text: string,
+    total?: number,
+    start?: number,
+    activityArgs?: ActivityArgs
+  ): ProgressActivityTracker
+  phantomActivity(
+    text: string,
+    activityArgs?: ActivityArgs
+  ): PhantomActivityTracker
 }
 
 export interface Cache {
