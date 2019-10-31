@@ -60,18 +60,28 @@ type Count = Number
 type NodeId = string
 
 type ValueDescriptor = {
-  int?: { total: Count, example: number },
-  float?: { total: Count, example: number },
-  date?: { total: Count, example: string },
-  string?: { total: Count, empty: Count, example: string },
-  boolean?: { total: Count, example: boolean },
-  array?: { total: Count, item: ValueDescriptor },
-  union?: { total: Count, nodes: { [NodeId]: Count } },
-  object?: { total: 0, props: { [string]: ValueDescriptor } },
+  int?: { total: Count, first: NodeId, example: number },
+  float?: { total: Count, first: NodeId, example: number },
+  date?: { total: Count, first: NodeId, example: string },
+  string?: { total: Count, first: NodeId, example: string, empty: Count },
+  boolean?: { total: Count, first: NodeId, example: boolean },
+  array?: { total: Count, first: NodeId, item: ValueDescriptor },
+  listOfUnion?: { total: Count, first: NodeId, nodes: { [NodeId]: Count } },
+  object?: { total: 0, first: NodeId, props: { [string]: ValueDescriptor } },
 }
 ```
+
+### Caveats
+
+* Conflict tracking for arrays is tricky, i.e.: { a: [5, "foo"] } and { a: [5] }, { a: ["foo"] }
+  are represented identically in metadata. To workaround it we additionally track first NodeId:
+  { a: { array: { item: { int: { total: 1, first: `1` }, string: { total: 1, first: `1` } }}
+  { a: { array: { item: { int: { total: 1, first: `1` }, string: { total: 1, first: `2` } }}
+  This way we can produce more useful conflict reports
+  (still rare edge cases possible when reporting may be confusing, i.e. when node is deleted)
 */
 
+const { groupBy } = require(`lodash`)
 const is32BitInteger = require(`./is-32-bit-integer`)
 const { looksLikeADate } = require(`../types/date`)
 
@@ -89,7 +99,10 @@ const getType = (value, key) => {
       if (value instanceof Date) return `date`
       if (value instanceof String) return `string`
       if (Array.isArray(value)) {
-        return key.includes(`___NODE`) ? `union` : `array`
+        if (value.length === 0) {
+          return `null`
+        }
+        return key.includes(`___NODE`) ? `listOfUnion` : `array`
       }
       if (!Object.keys(value).length) return `null`
       return `object`
@@ -99,6 +112,7 @@ const getType = (value, key) => {
 }
 
 const updateValueDescriptor = ({
+  nodeId,
   key,
   value,
   operation = `add`,
@@ -118,11 +132,23 @@ const updateValueDescriptor = ({
   // (when value of a new type is added or an existing type has no more values assigned)
   let dirty = typeInfo.total === 1 || typeInfo.total === 0
 
+  // Keeping track of the first node for this type. Only used for better conflict reporting.
+  // (see Caveats section in the header comments)
+  if (operation === `add`) {
+    typeInfo.first = typeInfo.first || nodeId
+  } else if (operation === `del`) {
+    typeInfo.first =
+      typeInfo.first === nodeId || typeInfo.total === 0
+        ? undefined
+        : typeInfo.first
+  }
+
   switch (typeName) {
     case `object`: {
       const { props = {} } = typeInfo
       Object.keys(value).forEach(key => {
         const [propDescriptor, propDirty] = updateValueDescriptor({
+          nodeId,
           key,
           value: value[key],
           operation,
@@ -137,6 +163,7 @@ const updateValueDescriptor = ({
     case `array`: {
       value.forEach(item => {
         const [itemDescriptor, itemDirty] = updateValueDescriptor({
+          nodeId,
           descriptor: typeInfo.item,
           operation,
           value: item,
@@ -147,7 +174,7 @@ const updateValueDescriptor = ({
       })
       break
     }
-    case `union`: {
+    case `listOfUnion`: {
       const { nodes = {} } = typeInfo
       value.forEach(nodeId => {
         nodes[nodeId] = (nodes[nodeId] || 0) + delta
@@ -166,11 +193,13 @@ const updateValueDescriptor = ({
         const { empty = 0 } = typeInfo
         typeInfo.empty = empty + delta
       }
-      typeInfo.example = typeInfo.example || value
+      typeInfo.example =
+        typeof typeInfo.example !== `undefined` ? typeInfo.example : value
       break
     }
     default:
-      typeInfo.example = typeInfo.example || value
+      typeInfo.example =
+        typeof typeInfo.example !== `undefined` ? typeInfo.example : value
       break
   }
   descriptor[typeName] = typeInfo
@@ -186,6 +215,7 @@ const updateTypeMetadata = (metadata = {}, operation, node) => {
   let structureChanged = false
   nodeFields(node, ignoredFields).forEach(field => {
     const [descriptor, valueStructureChanged] = updateValueDescriptor({
+      nodeId: node.id,
       key: field,
       value: node[field],
       operation,
@@ -233,26 +263,40 @@ const resolveWinnerType = descriptor => {
 }
 
 const prepareConflictExamples = (descriptor, isArrayItem) => {
-  // FIXME: here we convert examples into format of the previous exampleValue
-  //  implementation to make tests pass. It might make sense to change tests instead
   const typeNameMapper = typeName => {
-    if (typeName === `union`) {
-      return `array`
+    if (typeName === `listOfUnion`) {
+      return `[string]`
     }
     return [`float`, `int`].includes(typeName) ? `number` : typeName
   }
-  const candidates = possibleTypes(descriptor)
+  const reportedValueMapper = typeName => {
+    if (typeName === `listOfUnion`) {
+      const { nodes } = descriptor[typeName]
+      return Object.keys(nodes).filter(key => nodes[key] > 0)
+    }
+    return descriptor[typeName].example
+  }
+  const conflictingTypes = possibleTypes(descriptor)
 
   if (isArrayItem) {
-    const reportedType = `[${candidates.map(typeNameMapper).join(`,`)}]`
-    const reportedValue = candidates.map(type => descriptor[type].example)
-    return [{ type: reportedType, value: reportedValue }]
+    // Differentiate conflict examples by node they were first seen in.
+    // See Caveats section in the header of this file
+    const groups = groupBy(
+      conflictingTypes,
+      type => descriptor[type].first || ``
+    )
+    return Object.keys(groups).map(nodeId => {
+      return {
+        type: `[${groups[nodeId].map(typeNameMapper).join(`,`)}]`,
+        value: groups[nodeId].map(reportedValueMapper),
+      }
+    })
   }
 
-  return candidates.map(type => {
+  return conflictingTypes.map(type => {
     return {
       type: typeNameMapper(type),
-      value: descriptor[type].example,
+      value: reportedValueMapper(type),
     }
   })
 }
@@ -301,7 +345,7 @@ const buildExampleValue = ({
       return exampleItemValue === null ? null : [exampleItemValue]
     }
 
-    case `union`: {
+    case `listOfUnion`: {
       const { nodes = {} } = typeInfo
       return Object.keys(nodes).filter(key => nodes[key] > 0)
     }

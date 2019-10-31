@@ -147,6 +147,66 @@ Array [
 ]
 `;
 
+exports[`Type conflicts reports on mixed ___NODE fields 1`] = `
+Array [
+  TypeConflictEntry {
+    "selector": "Conflict_4.related___NODE",
+    "types": Map {
+      "string" => Object {
+        "description": "",
+        "value": "foo",
+      },
+      "[string]" => Object {
+        "description": "",
+        "value": Array [
+          "bar",
+        ],
+      },
+    },
+  },
+]
+`;
+
+exports[`Type conflicts reports on mixed numbers and numeric strings in arrays 1`] = `
+Array [
+  TypeConflictEntry {
+    "selector": "Conflict_6.numeric",
+    "types": Map {
+      "[number]" => Object {
+        "description": "",
+        "value": Array [
+          1,
+        ],
+      },
+      "[string]" => Object {
+        "description": "",
+        "value": Array [
+          "5",
+        ],
+      },
+    },
+  },
+]
+`;
+
+exports[`Type conflicts reports on numbers represented as strings 1`] = `
+Array [
+  TypeConflictEntry {
+    "selector": "Conflict_5.numeric",
+    "types": Map {
+      "number" => Object {
+        "description": "",
+        "value": 1,
+      },
+      "string" => Object {
+        "description": "",
+        "value": "2",
+      },
+    },
+  },
+]
+`;
+
 exports[`Type conflicts reports type conflicts and its origin 1`] = `
 Array [
   TypeConflictEntry {
