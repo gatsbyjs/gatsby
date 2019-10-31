@@ -370,6 +370,9 @@
             - title: Adding Forms
               link: /docs/adding-forms/
               breadcrumbTitle: Forms
+            - title: Adding React Components
+              link: /docs/adding-react-components/
+              breadcrumbTitle: React Components
             - title: Building a Contact Form
               link: /docs/building-a-contact-form/
             - title: Adding a 404 Page

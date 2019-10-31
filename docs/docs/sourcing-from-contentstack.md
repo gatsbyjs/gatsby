@@ -12,7 +12,7 @@ Gatsby, with its powerful UI toolset, serves as the “head” for your websites
 
 _**Note:** This guide uses the `gatsby-source-contentstack` plugin to create a Gatsby-powered site._
 
-## Build a Site with Contenstack and Gatsby
+## Build a site with Contentstack and Gatsby
 
 ### Step 1: Clone the starter repo and install dependencies
 
@@ -91,7 +91,7 @@ export const pageQuery = graphql`
 
 This will display the title of your home page on <http://localhost:8000/home>. Likewise, you can query additional fields in your entry.
 
-## Closing Note
+## Closing note
 
 The above example is meant to demonstrate how to set up a simple Gatsby site that sources content directly from Contentstack. Contentstack has also published a few articles that demonstrate how Contentstack works with Gatsby in their [documentation](https://www.contentstack.com/docs/?utm_source=gatsby&utm_medium=referral&utm_campaign=2019_06_17_sourcing_from_contentstack):
 
