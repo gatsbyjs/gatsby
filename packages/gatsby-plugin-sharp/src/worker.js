@@ -20,10 +20,10 @@ const q = queue((job, callback) => {
     processFile(
       job.inputPath,
       job.contentDigest,
-      job.operations.map(transform => {
+      job.operations.map(operation => {
         return {
-          outputPath: transform.outputPath,
-          args: transform.transforms,
+          outputPath: operation.outputPath,
+          args: operation.transforms,
         }
       }),
       job.pluginOptions

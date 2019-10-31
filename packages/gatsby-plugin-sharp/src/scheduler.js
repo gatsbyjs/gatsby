@@ -17,7 +17,7 @@ const cleanupJob = (job, boundActionCreators) => {
     bar.tick(job.args.operations.length)
   }
 
-  imagesFinished++
+  imagesFinished += job.args.operations.length
 
   if (imagesFinished === imagesToProcess) {
     if (bar) {
