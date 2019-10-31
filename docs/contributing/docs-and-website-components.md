@@ -408,6 +408,26 @@ plugins: [
 ```
 ````
 
+In order to demonstrate how to use code blocks in a doc without your triple backticks being styled and formatted automatically (just like the example above), you can wrap a set of triple backticks in quadruple backticks like this:
+
+`````
+````
+```javascript:title=gatsby-config.js
+// In your gatsby-config.js
+plugins: [
+  {
+    resolve: `gatsby-transformer-remark`,
+    options: {
+      plugins: [
+        `gatsby-remark-prismjs`
+      ],
+    },
+  },
+]
+```
+````
+`````
+
 #### Sample
 
 The above code block is rendered like this:
