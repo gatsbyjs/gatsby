@@ -439,4 +439,4 @@ Tables listing design tokens that are used on the site can be found in the [desi
 
 The [`sx` prop](https://theme-ui.com/sx-prop) from Theme-UI allows you to access theme values to style elements and components, it should be used wherever possible. The prop is "enabled" by adding `theme-ui`'s [JSX pragma](https://theme-ui.com/jsx-pragma) at the top of a `js` file.
 
-It is still okay to directly import tokens, e.g. `mediaQueries` or `colors` directly from `www/src/gatsby-plugin-theme-ui` if it helps your specific use case — for example when global CSS is required, when passing theme values to other libraries or plugins, when authoring complex responsive styles, etc.
+It is still okay to directly import tokens, e.g. `mediaQueries` or `colors` directly from [`www/src/gatsby-plugin-theme-ui`](https://github.com/gatsbyjs/gatsby/blob/master/www/src/gatsby-plugin-theme-ui/index.js) if it helps your specific use case — for example when global CSS is required, when passing theme values to other libraries or plugins, when authoring complex responsive styles, etc.
