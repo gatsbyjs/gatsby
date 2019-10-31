@@ -6,7 +6,7 @@ If you're using a private (typically a corporate) package registry that requires
 
 ## Common errors from misconfigured certificates
 
-If you're seeing errors like `unable to get local issuer certificate` in the console output while trying to install a Gatsby plugin, a misconfigured certificate might be the problem. This occurs particularly with plugins or themes that need to be built as native Node.js modules (eg. `gatsby-plugin-sharp`). It may happen when installing packages from a private registry (via `npm install` or `yarn install`) without an appropriately setup certificate in config.
+If you're seeing errors like `unable to get local issuer certificate` in the console output while trying to install a Gatsby plugin, a misconfigured certificate might be the problem. This occurs particularly with plugins or themes that need to be built as native Node.js modules (e.g. `gatsby-plugin-sharp`). It may happen when installing packages from a private registry (via `npm install` or `yarn install`) without an appropriately setup certificate in config.
 
 ## cafile config option
 

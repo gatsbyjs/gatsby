@@ -157,7 +157,7 @@ function HTML(props) {
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         {props.headComponents}
-        <link rel="shortcut icon" href={favicon} />
+        <link rel="icon" href={favicon} />
         {css}
       </head>
       <body>

@@ -1,5 +1,5 @@
 ---
-title: "Location Data from Props"
+title: Location Data from Props
 ---
 
 ## What is location data
@@ -38,10 +38,10 @@ Through client-side routing in Gatsby you can provide a location object instead 
 <Link to="/somepagecomponent"/>
 
 // but if you want to add some additional state
-<Link to={
+<Link to={{
   pathname: '/somepagecomponent',
   state: {modal: true}
-}>
+}}>
 ```
 
 Then from the receiving component you can conditionally render markup based on the `location` state.

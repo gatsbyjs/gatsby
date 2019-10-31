@@ -19,7 +19,7 @@ size, disability, ethnicity, gender identity and expression, level of
 experience, nationality, personal appearance, race, religion, or sexual identity
 and orientation.
 
-[Read full code of conduct](/contributing/code-of-conduct/)
+[Read the full code of conduct](/contributing/code-of-conduct/)
 
 ## Ways to Contribute
 
@@ -27,8 +27,10 @@ The Gatsby community welcomes contributions. Please refer to the guides below on
 
 - [How to Contribute](/contributing/how-to-contribute/)
 - [How to File an Issue](/contributing/how-to-file-an-issue/)
+- [How to Open a Pull Request](/contributing/how-to-open-a-pull-request/)
 - [Make feature requests with an RFC](/blog/2018-04-06-introducing-gatsby-rfc-process/)
 - [Gatsby Style Guide](/contributing/gatsby-style-guide/)
+- [Gatsby Translations](/contributing/gatsby-docs-translation-guide/)
 
 ## Gatsby news
 
@@ -57,7 +59,7 @@ This event is held on a recurring basis, every Wednesday at 8:30 AM Pacific Stan
 
 Many members of the community use Stack Overflow to ask questions. Read through
 the [existing questions](http://stackoverflow.com/questions/tagged/gatsby)
-tagged with **gatsby** or
+tagged with `gatsby` or
 [ask your own](http://stackoverflow.com/questions/ask?tags=gatsby)!
 
 ### Discord
@@ -70,8 +72,15 @@ useful resources.
 
 Many members of the community also use Hashnode to ask questions and share their tips. Read through
 the [existing questions and posts](https://hashnode.com/n/gatsby)
-tagged with **gatsby** or
+tagged with `gatsby` or
 [ask your own question](https://hashnode.com/create/question) or [share your story](https://hashnode.com/create/story) and add the `gatsby` tag.
+
+### DEV Community
+
+DEV Community is another informative platform to ask questions and share tips as well. Read through
+the [existing questions and posts](https://dev.to/t/gatsby)
+tagged with `gatsby` or
+[ask for help](https://dev.to/new/help). You could also [write your post](https://dev.to/new/gatsby) with the `gatsby` tag.
 
 ## Learn More About Gatsby:
 

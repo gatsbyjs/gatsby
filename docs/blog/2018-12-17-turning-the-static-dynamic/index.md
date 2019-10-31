@@ -121,7 +121,7 @@ fetch("/.netlify/functions/hello")
 
 and watch "Hello World!" pop up in your console. (I added a random number as well to show the endpoint is dynamic) If you are new to React, I highly recommend [reading through the React docs](https://reactjs.org/docs/handling-events.html) to understand where and how to insert event handlers so you can, for example, [respond to a button click](https://reactjs.org/docs/handling-events.html).
 
-The local proxying we are doing is only for local emulation, eg it is actually running from `http://localhost:9000/hello` despite you hitting `/.netlify/functions/hello` in your Gatsby app. When you deploy your site to Netlify (either by [hooking your site up through Git through our Web UI](http://app.netlify.com/), or our l33t new [CLI](https://www.netlify.com/docs/cli/)), that falls away, and your functions -are- hosted on the same URL and "just works". Pretty neat!
+The local proxying we are doing is only for local emulation, e.g. it is actually running from `http://localhost:9000/hello` despite you hitting `/.netlify/functions/hello` in your Gatsby app. When you deploy your site to Netlify (either by [hooking your site up through Git through our Web UI](http://app.netlify.com/), or our l33t new [CLI](https://www.netlify.com/docs/cli/)), that falls away, and your functions -are- hosted on the same URL and "just works". Pretty neat!
 
 ## That's cool, but its not an app
 
@@ -133,7 +133,7 @@ It's a different tier of concern, which makes it hard to write about in the same
 
 ## 5 Steps to add Netlify Identity and Authenticated Pages to Gatsby
 
-1. **Enable Netlify Identity**: Netlify Identity doesn't come enabled by default. You'll have to head to your site admin (eg `https://app.netlify.com/sites/YOUR_AWESOME_SITE/identity`) to turn it on. [Read the docs](https://www.netlify.com/docs/identity/) for further info on what you can do, for example add Facebook or Google social sign-on!
+1. **Enable Netlify Identity**: Netlify Identity doesn't come enabled by default. You'll have to head to your site admin (e.g. `https://app.netlify.com/sites/YOUR_AWESOME_SITE/identity`) to turn it on. [Read the docs](https://www.netlify.com/docs/identity/) for further info on what you can do, for example add Facebook or Google social sign-on!
 2. **Install dependencies**: `npm install netlify-identity-widget gatsby-plugin-create-client-paths`
 3. **Configure Gatsby**: for dynamic-ness!
 

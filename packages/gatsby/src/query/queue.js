@@ -29,8 +29,7 @@ const createDevelopQueue = getRunner => {
   const queueOptions = {
     ...createBaseOptions(),
     priority: (job, cb) => {
-      const activePaths = Array.from(websocketManager.activePaths.values())
-      if (job.id && activePaths.includes(job.id)) {
+      if (job.id && websocketManager.activePaths.has(job.id)) {
         cb(null, 10)
       } else {
         cb(null, 1)
@@ -95,13 +94,21 @@ const pushJob = (queue, job) =>
  * they're all finished processing (or rejects if one or more jobs
  * fail)
  */
-const processBatch = async (queue, jobs) => {
+const processBatch = async (queue, jobs, activity) => {
   let numJobs = jobs.length
   if (numJobs === 0) {
     return Promise.resolve()
   }
-  const runningJobs = jobs.map(job => pushJob(queue, job))
-  return await Promise.all(runningJobs)
+
+  const runningJobs = jobs.map(job =>
+    pushJob(queue, job).then(v => {
+      if (activity.tick) {
+        activity.tick()
+      }
+      return v
+    })
+  )
+  return Promise.all(runningJobs)
 }
 
 module.exports = {

@@ -6,7 +6,7 @@ Gatsby themes introduce a concept called "shadowing". This feature allows users 
 
 A practical use case is when you've installed `gatsby-theme-blog` and want to customize the author `Bio` component to add your own biographical content. Shadowing lets you replace the theme’s original file, `gatsby-theme-blog/src/components/bio.js`, with your own file to make any changes you need.
 
-## Shadowing Example
+## Shadowing example
 
 If you’ve installed `gatsby-theme-blog` you’ll notice that it renders a `Bio` component which is used in the `BlogPost` template. If you’d like to change the `Bio` component you can do so with the shadowing API.
 
@@ -163,9 +163,9 @@ This is a quick and efficient way to customize rendering without needing to worr
 
 ### Applying new props
 
-In some cases components offer prop APIs to change their behavior. With component extending you can import that component and then add your new prop to change it.
+In some cases components offer prop APIs to change their behavior. To extend a component you can import it and then add a new prop.
 
-If `NewsletterCTA` accepts a `variant` prop which changes the look and colors of the call to action, you can use it when you extend the component. Below, `NewsletterCTA` is re-exported and `variant="link"` is added in the shadowed file to override its default value.
+For example, if `NewsletterCTA` accepts a `variant` prop which changes the look and colors of the call to action, you can use it when you extend the component. Below, `NewsletterCTA` is re-exported and `variant="link"` is added in the shadowed file to override its default value.
 
 ```js:title=src/gatsby-theme-blog/components/newsletter/call-to-action.js
 import { NewsletterCTA } from "gatsby-theme-blog/src/components/newsletter"

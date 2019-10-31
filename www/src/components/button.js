@@ -1,5 +1,8 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { Link } from "gatsby"
+
 import { buttonStyles } from "../utils/styles"
 
 const components = {
@@ -14,12 +17,9 @@ const Button = ({
   icon,
   children,
   tag,
-  large,
-  small,
-  tiny,
   secondary,
-  ondark,
   tracking,
+  variant,
   ...rest
 }) => {
   const Tag = components[tag || `link`]
@@ -28,18 +28,6 @@ const Button = ({
     to: !tag ? to : undefined,
     href: tag === `href` ? to : undefined,
     ...rest,
-  }
-
-  const css = {
-    "&&": {
-      ...buttonStyles.default,
-      ...overrideCSS,
-      ...(secondary && buttonStyles.secondary),
-      ...(large && buttonStyles.large),
-      ...(small && buttonStyles.small),
-      ...(tiny && buttonStyles.tiny),
-      ...(ondark && buttonStyles.ondark),
-    },
   }
 
   const trackingOnClick = e => {
@@ -77,9 +65,20 @@ const Button = ({
   }
 
   return (
-    <Tag {...props} onClick={trackingOnClick} css={css}>
+    <Tag
+      {...props}
+      onClick={trackingOnClick}
+      sx={{
+        "&&": {
+          ...buttonStyles().default,
+          ...(secondary && buttonStyles().secondary),
+          variant: `buttons.${variant}`,
+          ...overrideCSS,
+        },
+      }}
+    >
       {children}
-      {icon && <>{icon}</>}
+      {icon && <React.Fragment>{icon}</React.Fragment>}
     </Tag>
   )
 }

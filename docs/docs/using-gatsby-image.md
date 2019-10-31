@@ -4,7 +4,7 @@ title: Using Gatsby Image to Prevent Image Bloat
 
 `gatsby-image` is a React component designed to work seamlessly with Gatsby’s GraphQL queries ([`gatsby-image` plugin README](/packages/gatsby-image/)). It combines [Gatsby’s native image processing](https://image-processing.gatsbyjs.org/) capabilities with advanced image loading techniques to easily and completely optimize image loading for your sites. `gatsby-image` uses [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/) to power its image transformations.
 
-> _Warning: gatsby-image is **not** a drop-in replacement for `<img />`. It’s optimized for fixed width/height images and images that stretch the full-width of a container. Some ways you can use `<img />` won’t work with gatsby-image._
+> _Warning: gatsby-image is **not** a drop-in replacement for `<img />`. It’s optimized for fixed width/height images and images that stretch the full width of a container. Some ways you can use `<img />` won’t work with gatsby-image._
 
 [Demo](https://using-gatsby-image.gatsbyjs.org/)
 
@@ -20,16 +20,16 @@ _For more complete API information, check out the [Gatsby Image API](/docs/gatsb
 
 Large, unoptimized images dramatically slow down your site.
 
-But creating optimized images for websites has long been a thorny problem. Ideally you would:
+But creating optimized images for websites has long been a thorny problem. Ideally, you would:
 
 - Resize large images to the size needed by your design
 - Generate multiple smaller images so smartphones and tablets don’t download desktop-sized images
 - Strip all unnecessary metadata and optimize JPEG and PNG compression
 - Efficiently lazy load images to speed initial page load and save bandwidth
 - Use the “blur-up” technique or a “traced placeholder” SVG to show a preview of the image while it loads
-- Hold the image position so your page doesn’t jump while images load
+- Hold the image position so your page doesn’t jump while the images load
 
-Doing this consistently across a site feels like sisyphean labor. You manually optimize your images and then… several images are swapped in at the last minute or a design-tweak shaves 100px of width off your images.
+Doing this consistently across a site feels like Sisyphean labor. You manually optimize your images and then… several images are swapped in at the last minute or a design-tweak shaves 100px of width off your images.
 
 Most solutions involve a lot of manual labor and bookkeeping to ensure every image is optimized.
 
@@ -37,7 +37,7 @@ This isn’t ideal. Optimized images should be easy and the default.
 
 ## Solution
 
-With Gatsby, we can make the experience of working with images way, way better.
+With Gatsby, you can make the experience of working with images way, way better.
 
 `gatsby-image` is designed to work seamlessly with Gatsby’s native image processing capabilities powered by GraphQL and Sharp. To produce perfect images with minimal effort, you can:
 
@@ -81,14 +81,31 @@ module.exports = {
 
 4. Write a GraphQL query using one of the included [GraphQL “fragments”](/packages/gatsby-image/#fragments) which specify the fields needed by `gatsby-image` to create a responsive, optimized image. This example queries for an image at a path relative to the location specified in the `gatsby-source-filesystem` options using the `GatsbyImageSharpFluid` fragment.
 
-```graphql
-file(relativePath: { eq: "images/default.jpg" }) {
-      childImageSharp {
-        # Specify the image processing specifications right in the query.
-        fluid {
-          ...GatsbyImageSharpFluid
+```jsx:title=src/pages/my-dogs.js
+import React from "react"
+import { useStaticQuery, graphql } from "gatsby" // highlight-line
+import Layout from "../components/layout"
+
+export default () => {
+  // highlight-start
+  const data = useStaticQuery(graphql`
+    query MyQuery {
+      file(relativePath: { eq: "images/corgi.jpg" }) {
+        childImageSharp {
+          # Specify the image processing specifications right in the query.
+          fluid {
+            ...GatsbyImageSharpFluid
+          }
         }
       }
+    }
+  `)
+  // highlight-end
+  return (
+    <Layout>
+      <h1>I love my corgi!</h1>
+    </Layout>
+  )
 }
 ```
 
@@ -99,18 +116,37 @@ file(relativePath: { eq: "images/default.jpg" }) {
 
 5. Import `Img` to display the fragment in JSX. There are additional features available with the `Img` tag as well, such as the `alt` attribute for accessibility.
 
-```jsx
-import Img from "gatsby-image"
+```jsx:title=src/pages/my-dogs.js
+import React from "react"
+import { useStaticQuery, graphql } from "gatsby"
+import Layout from "../components/layout"
+import Img from "gatsby-image" // highlight-line
 
-export default ({ data }) => (
-  <div>
-    <h1>Hello gatsby-image</h1>
-    <Img
-      fluid={data.file.childImageSharp.fluid}
-      alt="Gatsby Docs are awesome"
-    />
-  </div>
-)
+export default () => {
+  const data = useStaticQuery(graphql`
+    query MyQuery {
+      file(relativePath: { eq: "images/corgi.jpg" }) {
+        childImageSharp {
+          # Specify the image processing specifications right in the query.
+          fluid {
+            ...GatsbyImageSharpFluid
+          }
+        }
+      }
+    }
+  `)
+  return (
+    <Layout>
+      <h1>I love my corgi!</h1>
+      // highlight-start
+      <Img
+        fluid={data.file.childImageSharp.fluid}
+        alt="A corgi smiling happily"
+      />
+      // highlight-end
+    </Layout>
+  )
+}
 ```
 
 <EggheadEmbed

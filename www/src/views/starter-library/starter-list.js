@@ -1,13 +1,19 @@
-import React from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import { Link } from "gatsby"
 import LaunchDemoIcon from "react-icons/lib/md/launch"
 import GithubIcon from "react-icons/lib/go/mark-github"
 import MdStar from "react-icons/lib/md/star"
-import { colors, space, fontSizes } from "../../utils/presets"
-import styles from "../shared/styles"
+import {
+  showcaseList,
+  showcaseItem,
+  withTitleHover,
+  shortcutIcon,
+  meta,
+} from "../shared/styles"
 import ThumbnailLink from "../shared/thumbnail"
 import EmptyGridItems from "../shared/empty-grid-items"
-import V2Icon from "../../assets/icons/v2icon.svg"
+import V2Icon from "!raw-loader!../../assets/icons/v2icon.svg"
 import { get } from "lodash-es"
 
 const StartersList = ({ urlState, starters, count, sortRecent }) => {
@@ -31,18 +37,21 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
       >
         <h1>
           No {`${emptyStateReason}`} starters found!
-          <div css={{ color: colors.gatsby }}>
-            <small>
-              Why not write one and
-              {` `}
-              <Link to="/contributing/submit-to-starter-library/">
-                submit it
-              </Link>
-              ? Or learn more
-              {` `}
-              <Link to="/docs/starters">about starters</Link>.
-            </small>
-          </div>
+          <small
+            sx={{
+              color: `textMuted`,
+              display: `block`,
+              fontWeight: `body`,
+              mt: 2,
+            }}
+          >
+            Why not write one and
+            {` `}
+            <Link to="/contributing/submit-to-starter-library/">submit it</Link>
+            ? Or learn more
+            {` `}
+            <Link to="/docs/starters">about starters</Link>.
+          </small>
         </h1>
       </div>
     )
@@ -50,7 +59,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
   if (count) {
     starters = starters.sort(sortingFunction()).slice(0, count)
     return (
-      <div css={{ ...styles.showcaseList }}>
+      <div sx={showcaseList}>
         {starters.map(({ node: starter }) => {
           const {
             description,
@@ -68,9 +77,9 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
             starter.fields && ( // have to filter out null fields from bad data
               <div
                 key={starter.id}
-                css={{
-                  ...styles.showcaseItem,
-                  ...styles.withTitleHover,
+                sx={{
+                  ...showcaseItem,
+                  ...withTitleHover,
                 }}
               >
                 <ThumbnailLink
@@ -78,27 +87,55 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                   image={starter.childScreenshot}
                   title={`${owner}/${name}`}
                 />
-                <div css={{ ...styles.meta }}>
+                <div sx={meta}>
                   <div
                     css={{ display: `flex`, justifyContent: `space-between` }}
                   >
-                    <span css={{ color: colors.text.header }}>{owner} /</span>
+                    <span
+                      sx={{
+                        color: `textMuted`,
+                        fontSize: 0,
+                        textTransform: `uppercase`,
+                        letterSpacing: `tracked`,
+                        fontFamily: `heading`,
+                      }}
+                    >
+                      {owner} /
+                    </span>
                     <span css={{ display: `flex` }}>
                       {gatsbyMajorVersion[0][1] === `2` && (
-                        <img
-                          src={V2Icon}
-                          alt="Gatsby v2"
-                          css={{
-                            marginBottom: 0,
-                            marginRight: space[2],
+                        <span
+                          sx={{
+                            alignItems: `center`,
+                            bg: `muted`,
+                            display: `flex`,
+                            borderRadius: 5,
+                            fontSize: 0,
+                            lineHeight: `solid`,
+                            px: `2px`,
+                            pr: 2,
+                            py: `2px`,
+                            mr: 2,
                           }}
-                        />
+                        >
+                          <span
+                            dangerouslySetInnerHTML={{ __html: V2Icon }}
+                            sx={{
+                              color: `textMuted`,
+                              mb: 0,
+                              mr: 2,
+                              "& svg": { height: 12, width: 12 },
+                            }}
+                          />
+                          {` `}
+                          v2
+                        </span>
                       )}
                       <div
-                        css={{
+                        sx={{
                           alignItems: `center`,
                           display: `inline-flex`,
-                          fontSize: fontSizes[0],
+                          fontSize: 0,
                         }}
                       >
                         <MdStar /> {stars}
@@ -107,25 +144,29 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                   </div>
                   <div>
                     <Link to={`/starters${slug}`}>
-                      <h5 css={{ margin: 0, fontSize: fontSizes[2] }}>
+                      <h5 sx={{ m: 0, fontSize: 2 }}>
                         <strong className="title">{name}</strong>
                       </h5>
                     </Link>
                   </div>
                   <div
-                    css={{
+                    sx={{
+                      color: `text`,
                       textOverflow: `ellipsis`,
                       overflow: `hidden`,
                       whiteSpace: `nowrap`,
-                      marginBottom: space[1],
+                      marginBottom: 4,
                     }}
                   >
                     {description || `No description`}
                   </div>
                   <div
-                    css={{ display: `flex`, justifyContent: `space-between` }}
+                    css={{
+                      display: `flex`,
+                      justifyContent: `space-between`,
+                    }}
                   >
-                    <div css={{ display: `inline-block` }}>
+                    <div sx={{ display: `inline-block`, fontSize: 0 }}>
                       Updated {new Date(lastUpdated).toLocaleDateString()}
                     </div>
                     <span>
@@ -133,8 +174,8 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                         href={`https://github.com/${githubFullName}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        css={{
-                          ...styles.shortcutIcon,
+                        sx={{
+                          ...shortcutIcon,
                           svg: { verticalAlign: `text-top !important` },
                         }}
                       >
@@ -145,8 +186,8 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                         href={demoUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        css={{
-                          ...styles.shortcutIcon,
+                        sx={{
+                          ...shortcutIcon,
                           svg: { verticalAlign: `text-top !important` },
                         }}
                       >
@@ -159,7 +200,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
             )
           )
         })}
-        {starters.length && <EmptyGridItems styles={styles.showcaseItem} />}
+        {starters.length && <EmptyGridItems styles={showcaseItem} />}
       </div>
     )
   }

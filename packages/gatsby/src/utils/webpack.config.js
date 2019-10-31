@@ -3,7 +3,6 @@ require(`v8-compile-cache`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const dotenv = require(`dotenv`)
-const FriendlyErrorsWebpackPlugin = require(`@pieh/friendly-errors-webpack-plugin`)
 const PnpWebpackPlugin = require(`pnp-webpack-plugin`)
 const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
@@ -205,10 +204,6 @@ module.exports = async (
         configPlugins = configPlugins.concat([
           plugins.hotModuleReplacement(),
           plugins.noEmitOnErrors(),
-
-          new FriendlyErrorsWebpackPlugin({
-            clearConsole: false,
-          }),
         ])
         break
       case `build-javascript`: {
@@ -474,6 +469,10 @@ module.exports = async (
       runtimeChunk: {
         name: `webpack-runtime`,
       },
+      // use hashes instead of ids for module identifiers
+      // TODO update to deterministic in webpack 5 (hashed is deprecated)
+      // @see https://webpack.js.org/guides/caching/#module-identifiers
+      moduleIds: `hashed`,
       splitChunks: {
         name: false,
         chunks: `all`,
@@ -502,6 +501,8 @@ module.exports = async (
             test: /\.(css|scss|sass|less|styl)$/,
             chunks: `all`,
             enforce: true,
+            // this rule trumps all other rules because of the priority.
+            priority: 10,
           },
         },
       },
