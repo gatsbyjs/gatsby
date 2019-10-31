@@ -11,6 +11,26 @@ let imagesFinished = 0
 
 let bar
 
+// node 8 doesn't support promise.finally, we extract this function to re-use it inside then & catch
+const cleanupJob = (job, boundActionCreators) => {
+  if (bar) {
+    bar.tick(job.args.operations.length)
+  }
+
+  imagesFinished++
+
+  if (imagesFinished === imagesToProcess) {
+    if (bar) {
+      bar.done()
+      bar = null
+    }
+    imagesToProcess = 0
+    imagesFinished = 0
+  }
+
+  boundActionCreators.endJob({ id: job.id }, { name: `gatsby-plugin-sharp` })
+}
+
 const executeJobs = _.throttle(
   (pluginOptions, boundActionCreators) => {
     toProcess.forEach(job => {
@@ -23,28 +43,11 @@ const executeJobs = _.throttle(
         })
           .then(() => {
             job.deferred.resolve()
+            cleanupJob(job, boundActionCreators)
           })
-          .catch(job.deferred.reject)
-          .finally(() => {
-            if (bar) {
-              bar.tick(job.args.operations.length)
-            }
-
-            imagesFinished++
-
-            if (imagesFinished === imagesToProcess) {
-              if (bar) {
-                bar.done()
-                bar = null
-              }
-              imagesToProcess = 0
-              imagesFinished = 0
-            }
-
-            boundActionCreators.endJob(
-              { id: job.id },
-              { name: `gatsby-plugin-sharp` }
-            )
+          .catch(err => {
+            job.deferred.reject(err)
+            cleanupJob(job, boundActionCreators)
           })
       } catch (err) {
         job.deferred.reject(err)
