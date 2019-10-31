@@ -6926,7 +6926,7 @@ csstype@^2.2.0, csstype@^2.5.7:
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.6.5.tgz#1cd1dff742ebf4d7c991470ae71e12bb6751e034"
   integrity sha512-JsTaiksRsel5n7XwqPAfB0l3TFKdpjW/kgAELf9vrb5adGA7UCPLajKK5s3nFrcFm3Rkyp/Qkgl73ENc1UY3cA==
 
-"csstype@github:rtsao/csstype#c4e709f":
+csstype@rtsao/csstype#c4e709f:
   version "2.6.4"
   resolved "https://codeload.github.com/rtsao/csstype/tar.gz/c4e709f5e047e9cacb721e437f53f0b84d6ada84"
 
@@ -19923,7 +19923,7 @@ supports-hyperlinks@^1.0.1:
     has-flag "^2.0.0"
     supports-color "^5.0.0"
 
-svgo@1.3.0, svgo@^1.0.0, svgo@^1.3.0:
+svgo@1.3.0, svgo@^1.0.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/svgo/-/svgo-1.3.0.tgz#bae51ba95ded9a33a36b7c46ce9c359ae9154313"
   integrity sha512-MLfUA6O+qauLDbym+mMZgtXCGRfIxyQoeH6IKVcFslyODEe/ElJNwr0FohQ3xG4C6HK6bk3KYPPXwHVJk3V5NQ==
