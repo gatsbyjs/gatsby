@@ -10,8 +10,7 @@ import {
   HorizontalScrollerContent,
   HorizontalScrollerItem,
 } from "../shared/horizontal-scroller"
-import { mediaQueries } from "../../gatsby-plugin-theme-ui"
-import { breakpoints } from "gatsby-design-tokens"
+import { breakpoints, mediaQueries } from "../../gatsby-plugin-theme-ui"
 import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
 
 const HomepageBlogPostsRootMobile = styled(HorizontalScroller)`
@@ -121,7 +120,7 @@ class HomepageBlogPosts extends Component {
   }
 
   componentDidMount = () => {
-    this.desktopMediaQuery = window.matchMedia(`(min-width: ${breakpoints.lg}`)
+    this.desktopMediaQuery = window.matchMedia(`(min-width: ${breakpoints[3]}`)
     this.desktopMediaQuery.addListener(this.updateViewPortState)
     this.setState({ desktopViewport: this.desktopMediaQuery.matches })
   }

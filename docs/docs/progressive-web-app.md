@@ -2,7 +2,7 @@
 title: Progressive Web Apps (PWAs)
 ---
 
-## What is a progressive web app?
+## What is a Progressive Web App?
 
 "Progressive web app" (PWA) is both a general term for a new philosophy toward building websites and a specific term with an established set of three explicit, testable, baseline requirements.
 
@@ -28,7 +28,7 @@ PWAs are apps delivered through the web (as opposed to native apps, which are pa
 
 > they're just websites that took all the right vitamins.
 
-## How is a Gatsby site a progressive web app?
+## How is a Gatsby site a Progressive Web App?
 
 Gatsby is designed to provide top-notch performance out of the box. It handles code splitting, code minification, and optimizations like pre-loading in the background, image processing, etc., so that the site you build is highly performant, without any kind of manual tuning. These performance features are a big part of supporting the progressive web app approach.
 
@@ -36,17 +36,17 @@ Then there are the three baseline criteria for a site to qualify as a PWA.
 
 ### It must run under HTTPS
 
-Running your site under HTTPS is a highly recommended security practice, no matter the content of your site. Specifically concerning progressive web apps, running under HTTPS is a criterion for many new browser features that are required for progressive web apps to work.
+Running your site under HTTPS is a highly recommended security practice, no matter the content of your site. Specifically concerning progressive web apps, running under HTTPS is a criterion for many new browser features that are required for Progressive Web Apps to work.
 
 This one's all you!
 
 ### It must include a Web App Manifest
 
-A [web app manifest](https://www.w3.org/TR/appmanifest/) is a JSON file that provides the browser with information about your web app, and makes it possible for users to save to their home screen.
+A [Web App manifest](https://www.w3.org/TR/appmanifest/) is a JSON file that provides the browser with information about your web app, and makes it possible for users to save to their home screen.
 
-It includes information like the web app's `name`, `icons`, `start_url`, `background-color` and [more](https://developers.google.com/web/fundamentals/web-app-manifest/).
+It includes information like the Web App's `name`, `icons`, `start_url`, `background-color` and [more](https://developers.google.com/web/fundamentals/web-app-manifest/).
 
-Gatsby provides a plugin interface to add support for shipping a manifest with your site -- [**gatsby-plugin-manifest**](/packages/gatsby-plugin-manifest).
+Gatsby provides a plugin interface to add support for shipping a manifest with your site -- [gatsby-plugin-manifest](/packages/gatsby-plugin-manifest).
 
 ### It must implement a service worker
 

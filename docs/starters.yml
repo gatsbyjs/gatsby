@@ -3912,7 +3912,7 @@
     - Portfolio
     - Styling:SCSS
   features:
-    - Typescript for type-safe code
+    - TypeScript for type-safe code
     - Source content from WordPress CMS
     - Auto generated Pagination for your WordPress Posts
     - Auto generated Navigation for next and previous post at the end Post
@@ -4052,7 +4052,7 @@
   features:
     - Minumum changes based on default starter template for TypeScript and PWA
     - Added TypeScript support with eslint and tsc check
-    - Support Github Actions CI/CD workflow (beta)
+    - Support GitHub Actions CI/CD workflow (beta)
 - url: https://iceberg-gatsby-multilang.netlify.com/
   repo: https://github.com/diogorodrigues/iceberg-gatsby-multilang
   description: Gatsby multi-language starter. Internationalization / i18n without third party plugins or packages for Posts and Pages. Different URLs dependending on the language. Focused on SEO, PWA, Image Optimization, Styled Components and more. This starter is also integrate with Netlify CMS to manage all pages, posts and images.
@@ -4118,7 +4118,7 @@
     - React Hooks (IntersectionObserver, KeyUp, LocalStorage)
 - url: https://friendly-cray-96d631.netlify.com/
   repo: https://github.com/PABlond/Gatsby-TypeScript-Starter-Blog
-  description: Project boilerplate of a blog app. The starter was built using Gatsby and Typescript.
+  description: Project boilerplate of a blog app. The starter was built using Gatsby and TypeScript.
   tags:
     - Markdown
     - Language:TypeScript
@@ -4279,3 +4279,23 @@
     - Storybook
     - Jest and React Testing library for snapshots and unit tests.
     - Styled-Components for all your styles.
+- url: https://kontent-template-gatsby-landing-page-photon.netlify.com
+  repo: https://github.com/Simply007/kontent-template-gatsby-landing-page-photon
+  description: Kentico Kontent based starter based on Photon starter by HTML5 UP
+  tags:
+    - CMS:Headless
+    - CMS:Kontent
+    - Netlify
+    - Landing Page
+    - HTML5UP
+    - Styling:SCSS
+  features:
+    - Kentico Kontent Caas plafrorm as the data source
+    - Landing page divided by section.
+    - Support for code syntax highlighting
+    - Includes plugins for easy, beautiful typography
+    - Includes React Helmet to allow editing site meta tags
+    - Includes plugins for offline support out of the box
+    - Font awesome
+    - Material Icons
+    - CSS Grid
