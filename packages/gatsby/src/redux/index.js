@@ -9,6 +9,8 @@ const { writeToCache, readFromCache } = require(`./persist`)
 // Create event emitter for actions
 const emitter = mitt()
 
+let pendingTasks = new Map()
+
 // Read old node data from cache.
 const readState = () => {
   try {
@@ -24,9 +26,14 @@ const readState = () => {
         state.nodesByType.get(type).set(node.id, node)
       })
     }
+
     // jsonDataPaths was removed in the per-page-manifest
     // changes. Explicitly delete it here to cover case where user
     // runs gatsby the first time after upgrading.
+
+    // Fetch old tasks (to resume them) and remove from state
+    pendingTasks = state[`tasks`]
+    delete state[`tasks`]
     delete state[`jsonDataPaths`]
     return state
   } catch (e) {
@@ -50,6 +57,11 @@ const configureStore = initialState =>
 
 const store = configureStore(readState())
 
+// Create fresh tasks for pending ones
+pendingTasks.forEach(task => {
+  store.dispatch(`CREATE_TASK`, task)
+})
+
 // Persist state.
 const saveState = () => {
   const state = store.getState()
@@ -60,6 +72,7 @@ const saveState = () => {
     `components`,
     `staticQueryComponents`,
     `webpackCompilationHash`,
+    `tasks`,
   ])
 
   return writeToCache(pickedState)

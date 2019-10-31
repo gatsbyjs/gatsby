@@ -366,6 +366,8 @@ module.exports = async (program: any) => {
   // Start bootstrap process.
   const { graphqlRunner } = await bootstrap(program)
 
+  db.startAutosave()
+
   // Start the createPages hot reloader.
   require(`../bootstrap/page-hot-reloader`)(graphqlRunner)
 
@@ -377,7 +379,7 @@ module.exports = async (program: any) => {
 
   await waitJobsFinished()
   requiresWriter.startListener()
-  db.startAutosave()
+
   queryUtil.startListeningToDevelopQueue()
   queryWatcher.startWatchDeletePage()
 

@@ -9,7 +9,7 @@ const runTask = task => {
   const pluginName = plugin.name
   // TODO: This might want to check package.json to figure out where the entry point is
   const worker = require.resolve(`${pluginName}/worker`)
-  console.log(`worker`, worker)
+  // console.log(`worker`, worker)
   try {
     const workerFn = require(worker)[name]
     Promise.resolve(workerFn(args))
@@ -43,7 +43,7 @@ module.exports = (state = initialState, action) => {
         plugin,
       }
       tasks.set(id, payload)
-      //   process.stdout.write(payload)
+      process.stdout.write(JSON.stringify(payload))
       runTask({
         ...payload,
         deferred,
