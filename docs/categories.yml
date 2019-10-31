@@ -15,6 +15,7 @@ starter:
   - CMS:WordPress
   - CMS:sanity.io
   - CMS:Strapi
+  - CMS:Kontent
   - CMS:Forestry.io
   - CMS:Other
   - Disqus
