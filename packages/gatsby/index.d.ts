@@ -2,6 +2,7 @@ import * as React from "react"
 import { EventEmitter } from "events"
 import { WindowLocation } from "@reach/router"
 import { createContentDigest } from "gatsby-core-utils"
+import { TemplateTag } from "common-tags";
 
 export {
   default as Link,
@@ -932,32 +933,49 @@ export interface Store {
   replaceReducer: Function
 }
 
-type logMessageType = (format: string, ...args: any[]) => void
-type logErrorType = (message: string, error?: Error) => void
+type LogMessageType = (format: string, ...args: any[]) => void
+type LogErrorType = (errorMeta: string | Object, error?: Object) => void
+
+export type PhantomActivityTracker = {
+  start(): () => void,
+  end(): () => void,
+  span: Object,
+}
+
+export type ActivityTracker = PhantomActivityTracker & {
+  setStatus(status: string): void,
+  panic: LogErrorType
+  panicOnBuild: LogErrorType
+}
+
+export type ProgressActivityTracker = Omit<ActivityTracker, "end"> & {
+  tick(increment?: number): void
+  done(): void
+  total: number
+}
+
+export type ActivityArgs = {
+  parentSpan?: Object,
+}
 
 export interface Reporter {
-  stripIndent: Function
+  stripIndent: TemplateTag
   format: object
-  setVerbose(isVerbose: boolean): void
-  setNoColor(isNoColor: boolean): void
-  panic: logErrorType
-  panicOnBuild: logErrorType
-  error: logErrorType
+  setVerbose(isVerbose?: boolean): void
+  setNoColor(isNoColor?: boolean): void
+  panic: LogErrorType
+  panicOnBuild: LogErrorType
+  error: LogErrorType
   uptime(prefix: string): void
-  success: logMessageType
-  verbose: logMessageType
-  info: logMessageType
-  warn: logMessageType
-  log: logMessageType
-  activityTimer(
-    name: string,
-    activityArgs: { parentSpan: object }
-  ): {
-    start: () => void
-    status(status: string): void
-    end: () => void
-    span: object
-  }
+  success: LogMessageType
+  verbose: LogMessageType
+  info: LogMessageType
+  warn: LogMessageType
+  log: LogMessageType
+  completeActivity(id: string, status?: string): void
+  activityTimer(name: string, activityArgs?: ActivityArgs): ActivityTracker
+  createProgress(text: string, total?: number, start?: number, activityArgs?: ActivityArgs): ProgressActivityTracker
+  phantomActivity(text: string, activityArgs?: ActivityArgs): PhantomActivityTracker
 }
 
 export interface Cache {
