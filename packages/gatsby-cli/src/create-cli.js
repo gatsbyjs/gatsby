@@ -326,6 +326,12 @@ module.exports = argv => {
       describe: `Turn off the color in output`,
       global: true,
     })
+    .option(`json`, {
+      describe: `Turn on the JSON logger`,
+      default: false,
+      type: `boolean`,
+      global: true,
+    })
 
   buildLocalCommands(cli, isLocalSite)
 

@@ -71,4 +71,62 @@ describe(`redirects`, () => {
       ])
     })
   })
+
+  it(`prevents duplicate redirects`, () => {
+    function createRedirect(fromPath, toPath) {
+      return {
+        type: `CREATE_REDIRECT`,
+        payload: { fromPath, toPath },
+      }
+    }
+
+    let state = reducer(undefined, createRedirect(`/page`, `/other-page`))
+    state = reducer(state, createRedirect(`/page`, `/other-page`))
+
+    expect(state).toEqual([
+      {
+        fromPath: `/page`,
+        toPath: `/other-page`,
+      },
+    ])
+  })
+
+  it(`allows multiple redirects with same "fromPath" but different options`, () => {
+    function createRedirect(redirect) {
+      return {
+        type: `CREATE_REDIRECT`,
+        payload: redirect,
+      }
+    }
+
+    let state = reducer(
+      undefined,
+      createRedirect({
+        fromPath: `/page`,
+        toPath: `/en/page`,
+        Language: `en`,
+      })
+    )
+    state = reducer(
+      state,
+      createRedirect({
+        fromPath: `/page`,
+        toPath: `/pt/page`,
+        Language: `pt`,
+      })
+    )
+
+    expect(state).toEqual([
+      {
+        fromPath: `/page`,
+        toPath: `/en/page`,
+        Language: `en`,
+      },
+      {
+        fromPath: `/page`,
+        toPath: `/pt/page`,
+        Language: `pt`,
+      },
+    ])
+  })
 })

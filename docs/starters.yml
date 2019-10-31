@@ -2225,14 +2225,13 @@
     - Configuration for Firebase hosting
     - Configuration for Cloud Build deployment
     - Clear documentation to have your site deployed on Firebase behind SSL in no time!
-- url: https://lewis-gatsby-starter-blog.firebaseapp.com
+- url: https://lewis-gatsby-starter-blog.netlify.com/
   repo: https://github.com/lewislbr/lewis-gatsby-starter-blog
   description: A simple custom Gatsby starter template to start a new blog or personal website.
   tags:
     - Blog
     - Styling:CSS-in-JS
     - Markdown
-    - PWA
     - Portfolio
     - SEO
   features:
@@ -3913,7 +3912,7 @@
     - Portfolio
     - Styling:SCSS
   features:
-    - Typescript for type-safe code
+    - TypeScript for type-safe code
     - Source content from WordPress CMS
     - Auto generated Pagination for your WordPress Posts
     - Auto generated Navigation for next and previous post at the end Post
@@ -4053,7 +4052,7 @@
   features:
     - Minumum changes based on default starter template for TypeScript and PWA
     - Added TypeScript support with eslint and tsc check
-    - Support Github Actions CI/CD workflow (beta)
+    - Support GitHub Actions CI/CD workflow (beta)
 - url: https://iceberg-gatsby-multilang.netlify.com/
   repo: https://github.com/diogorodrigues/iceberg-gatsby-multilang
   description: Gatsby multi-language starter. Internationalization / i18n without third party plugins or packages for Posts and Pages. Different URLs dependending on the language. Focused on SEO, PWA, Image Optimization, Styled Components and more. This starter is also integrate with Netlify CMS to manage all pages, posts and images.
@@ -4119,7 +4118,7 @@
     - React Hooks (IntersectionObserver, KeyUp, LocalStorage)
 - url: https://friendly-cray-96d631.netlify.com/
   repo: https://github.com/PABlond/Gatsby-TypeScript-Starter-Blog
-  description: Project boilerplate of a blog app. The starter was built using Gatsby and Typescript.
+  description: Project boilerplate of a blog app. The starter was built using Gatsby and TypeScript.
   tags:
     - Markdown
     - Language:TypeScript
@@ -4187,7 +4186,54 @@
     - NetlifyCMS
     - TypeScript
     - Basic design
+- url: https://gatsby-starter-mdx-website-blog.netlify.com/
+  repo: https://github.com/doakheggeness/gatsby-starter-mdx-website-blog
+  description: Gatsby website and blog starter utilizing MDX for adding components to mdx pages and posts. Incorportates Emotion.
+  tags:
+    - MDX
+    - Blog
+    - Styling:CSS-in-JS
+  features:
+    - Create pages and posts using MDX
+    - Incorporates the CSS-in-JS library Emotion
     - Visual effects
+- url: https://gatsby-starter-zurgbot.netlify.com/
+  repo: https://github.com/zurgbot/gatsby-starter-zurgbot
+  description: The ultimate force of starter awesomeness in the galaxy of Gatsby
+  tags:
+    - Linting
+    - PWA
+    - SEO
+    - Styling:Bulma
+    - Styling:SCSS
+    - Testing
+  features:
+    - Sass (SCSS Flavored) CSS
+    - Bulma CSS Framework
+    - React Helmet <head> Management
+    - React Icons SVG Icon Components (Including Font Awesome and others)
+    - Eslint for JS linting
+    - Prettier for JS formatting
+    - StyleLint for Scss linting and formatting
+    - Jest for a test framework
+    - Enzyme for testing with React
+    - Husky for git hooks, particularlly precommit management
+    - Lint Staged to run commands only on staged files
+- url: https://martin2844.github.io/gatsby-starter-dev-portfolio/
+  repo: https://github.com/martin2844/gatsby-starter-dev-portfolio
+  description: A GatsbyJS minimalistic portfolio site, with a blog and about section
+  tags:
+    - Portfolio
+    - Blog
+    - Markdown
+  features:
+    - createPages API
+    - Responsive
+    - Minimalistic
+    - Blazing fast (LINK)
+    - Graphql queries
+    - Sass
+    - Markdown
 - url: https://wataruoguchi-gatsby-starter-typescript-contentful.netlify.com/
   repo: https://github.com/wataruoguchi/gatsby-starter-typescript-contentful
   description: Simple TypeScript starter with Contentful Integration
@@ -4215,3 +4261,21 @@
     - SEO
     - Dark Mode
     - Google Analytics
+- url: https://gatsby-typescript-storybook-starter.netlify.com/
+  repo: https://github.com/RobertoMSousa/gatsby-typescript-storybook-starter
+  description: A gatsby starter with storybook, tags and eslint
+  tags:
+    - Language:TypeScript
+    - Styling:CSS-in-JS
+    - Storybook
+    - Markdown
+    - Linting
+  features:
+    - Storybook
+    - Simple
+    - TypeScript
+    - Contentful
+    - Prettier & ESlint & StyleLint to format & check the code
+    - Storybook
+    - Jest and React Testing library for snapshots and unit tests.
+    - Styled-Components for all your styles.

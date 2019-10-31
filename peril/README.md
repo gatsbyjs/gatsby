@@ -38,7 +38,7 @@ The Peril instance can also be configured to run events on a schedule.
 
 ### To Develop
 
-```sh
+```shell
 yarn install
 code .
 ```

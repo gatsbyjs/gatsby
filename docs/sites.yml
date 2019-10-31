@@ -245,15 +245,6 @@
   categories:
     - Marketing
     - Technology
-- title: Bottender Docs
-  main_url: "https://bottender.js.org/"
-  url: "https://bottender.js.org/"
-  source_url: "https://github.com/bottenderjs/bottenderjs.github.io"
-  featured: false
-  categories:
-    - Documentation
-    - Web Development
-    - Open Source
 - title: Ghost Documentation
   main_url: https://docs.ghost.org/
   url: https://docs.ghost.org/
@@ -2955,7 +2946,6 @@
 - title: Citywide Holdup
   url: https://citywideholdup.org/
   main_url: https://citywideholdup.org/
-  source_url: https://github.com/killakam3084/citywide-site
   description: >-
     Citywide Holdup is an annual fundraising event held around early November in the city of Austin, TX hosted by the Texas Wranglers benefitting Easter Seals of Central Texas, a non-profit organization that provides exceptional services, education, outreach and advocacy so that people with disabilities can live, learn, work and play in our communities.
   categories:
@@ -3727,7 +3717,6 @@
 - title: Dale Blackburn - Portfolio
   url: https://dakebl.co.uk/
   main_url: https://dakebl.co.uk/
-  source_url: https://github.com/dakebl/dakebl.co.uk
   description: >
     Dale Blackburn's personal website and blog.
   categories:
@@ -4238,7 +4227,6 @@
 - title: Rou Hun Fan's portfolio
   main_url: https://flowen.me
   url: https://flowen.me
-  source_url: https://github.com/flowen/flowen.me/tree/master/2019/v3
   description: >
     Portfolio of creative developer Rou Hun Fan. Built with Gatsby v2 &amp; Greensock drawSVG.
   categories:
@@ -6059,7 +6047,6 @@
 - title: nehalist.io
   main_url: https://nehalist.io
   url: https://nehalist.io
-  source_url: https://github.com/nehalist/nehalist.io
   description: >
     nehalist.io is a blog about software development, technology and all that kind of geeky stuff.
   categories:
@@ -7853,7 +7840,7 @@
   main_url: https://enbonnet.me/
   source_url: https://github.com/enbonnet
   description: >
-    Hola, este es mi sitio personal, estare escribiendo sobre Javascript, Frontend y Tecnologia que utilice en mi dia a dia.
+    Hola, este es mi sitio personal, estare escribiendo sobre JavaScript, Frontend y Tecnologia que utilice en mi dia a dia.
   categories:
     - Portfolio
     - Blog
@@ -8174,14 +8161,119 @@
   built_by: Brent Ingram
   built_by_url: https://www.brentjingram.com/
   featured: false
-
 - title: Veryben
   main_url: https://veryben.com/
   url: https://veryben.com/
   description: >
     be water my friend
-  featured: false
   categories:
     - Blog
   built_by: anikijiang
   built_by_url: https://twitter.com/anikijiang
+  featured: false
+- title: kentarom's portfolio
+  main_url: https://kentarom.com/
+  url: https://kentarom.com/
+  source_url: https://github.com/kentaro-m/portfolio-gatsby
+  description: >
+    The portfolio of kentarom, frontend developer. This site shows recent activities about him.
+  categories:
+    - Portfolio
+    - Technology
+    - Web Development
+  built_by: kentarom
+  built_by_url: https://twitter.com/_kentaro_m
+  featured: false
+- title: MotionThat
+  main_url: "https://motionthat.com.au"
+  url: "https://motionthat.com.au"
+  description: >
+    MotionThat was created to fill a void in Tabletop Product shooting, whereby the need for consistency, repetition and flexibility was required to eliminate the many variables and inaccuracies that slow the filming process down.
+  categories:
+    - Entertainment
+    - Food
+    - Media
+    - Gallery
+  built_by: Handsome Creative
+  built_by_url: https://www.hellohandsome.com.au
+  featured: false
+- title: TEN ALPHAS
+  main_url: "https://tenalphas.com.au"
+  url: "https://tenalphas.com.au"
+  description: >
+    TEN ALPHAS is a content production company based in Sydney and Wollongong, telling stories through moving image and beautiful design.
+  categories:
+    - Media
+    - Entertainment
+    - Video
+  built_by: Handsome Creative
+  built_by_url: https://www.hellohandsome.com.au
+  featured: false
+- title: SalesGP
+  main_url: "https://salesgp.io"
+  url: "https://salesgp.io"
+  description: >
+    SalesGP is a specialist Sales and Operations partner offering expert skill-sets and decades of experience to companies entering the Australia, NZ (ANZ) and South East Asian (SEA) markets.
+  categories:
+    - Business
+    - Marketing
+    - Consulting
+  built_by: Handsome Creative
+  built_by_url: https://www.hellohandsome.com.au
+  featured: false
+- title: Source Separation Systems
+  main_url: "https://sourceseparationsystems.com.au"
+  url: "https://sourceseparationsystems.com.au"
+  description: >
+    Innovative waste diversion products, designed to connect Australians to a more sustainable world.
+  categories:
+    - Business
+  built_by: Handsome Creative
+  built_by_url: https://www.hellohandsome.com.au
+- title: Fuzzy String Matching
+  main_url: https://fuzzy-string-matching.netlify.com
+  url: https://fuzzy-string-matching.netlify.com
+  source_url: https://github.com/jdemieville/fuzzyStringMatching
+  description: >
+    This site is built to assess the performance of various approximate string matching algorithms aka fuzzy string searching.
+  categories:
+    - JavaScript
+    - Learning
+    - Programming
+  built_by: Jennifer Demieville
+  built_by_url: https://demieville-codes.herokuapp.com/portfolio
+  featured: false
+- title: Open Techiz
+  main_url: "https://www.opentechiz.com/"
+  url: "https://www.opentechiz.com/"
+  featured: false
+  description: >
+    An agile software development company in Vietnam, providing wide range service from ecommerce development, mobile development, automation testing and cloud deployment with kubernets
+  categories:
+    - Web Development
+    - Mobile Development
+    - Technology
+  built_by: Open Techiz
+  built_by_url: "https://www.opentechiz.com/"
+- title: Leave Me Alone
+  url: https://leavemealone.app
+  main_url: https://leavemealone.app
+  description: >
+    Leave Me Alone helps you unsubscribe from unwanted emails easily. It's built with Gatsby v2.
+  categories:
+    - Landing Page
+    - Productivity
+  built_by: James Ivings
+  built_by_url: https://squarecat.io
+  featured: false
+- title: Oberion
+  main_url: https://oberion.io
+  url: https://oberion.io
+  description: >
+    Oberion analyzes your gaming library and gives you personal recommendations based on what you play
+  categories:
+    - Entertainment
+    - Media
+  built_by: Thomas Uta
+  built_by_url: https://twitter.com/ThomasJanUta
+  featured: false
