@@ -38,4 +38,4 @@ module.exports = {
 }
 ```
 
-If you want to disable ESLint completely, just create an empty `.eslintrc` file.
+If you want to disable ESLint completely, create an empty `.eslintrc` file.
