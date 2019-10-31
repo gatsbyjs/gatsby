@@ -956,6 +956,7 @@ export type ProgressActivityTracker = Omit<ActivityTracker, "end"> & {
 
 export type ActivityArgs = {
   parentSpan?: Object,
+  id?: string;
 }
 
 export interface Reporter {
