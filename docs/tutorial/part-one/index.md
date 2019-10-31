@@ -20,7 +20,7 @@ When creating a new Gatsby site, you can use the following command structure to 
 gatsby new [SITE_DIRECTORY_NAME] [URL_OF_STARTER_GITHUB_REPO]
 ```
 
-If you omit a URL from the end, Gatsby will automatically generate a site for you based on the [**default starter**](https://github.com/gatsbyjs/gatsby-starter-default). For this section of the tutorial, stick with the “Hello World” site you already created in tutorial part zero.
+If you omit a URL from the end, Gatsby will automatically generate a site for you based on the [**default starter**](https://github.com/gatsbyjs/gatsby-starter-default). For this section of the tutorial, stick with the “Hello World” site you already created in tutorial part zero. You can learn more about [modifying starters](/docs/modifying-a-starter) in the docs.
 
 ### ✋ Open up the code
 
@@ -324,7 +324,7 @@ export default () => (
 )
 ```
 
-After you save the file, you should see the contact page and be able to link between it and the homepage.
+After you save the file, you should see the contact page and be able to follow the link to the homepage.
 
 <video controls="controls" loop="true">
   <source type="video/mp4" src="./10-linking-between-pages.mp4"></source>

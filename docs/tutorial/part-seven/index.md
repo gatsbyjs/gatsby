@@ -52,7 +52,7 @@ This `onCreateNode` function will be called by Gatsby whenever a new node is cre
 Stop and restart the development server. As you do, you'll see quite a few newly
 created nodes get logged to the terminal console.
 
-Use this API to add the slugs for your markdown pages to `MarkdownRemark`
+In the next section, you will use this API to add slugs for your Markdown pages to `MarkdownRemark`
 nodes.
 
 Change your function so it now only logs `MarkdownRemark` nodes.

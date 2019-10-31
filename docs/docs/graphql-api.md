@@ -12,7 +12,7 @@ This doc serves as a reference for GraphQL features built into Gatsby, including
 
 ## Getting started with GraphQL
 
-GraphQL is available in Gatsby without a special install: a schema is automatically inferred and created when you run `gatsby develop` or `gatsby build`. When the site compiles, the data layer can be [explored](/docs/running-queries-with-graphiql/) at: `http://localhost:8000/___graphql`
+GraphQL is available in Gatsby without a special install: a schema is automatically inferred and created when you run `gatsby develop` or `gatsby build`. When the site compiles, the data layer can be [explored](/docs/running-queries-with-graphiql/) at: <http://localhost:8000/___graphql>
 
 ## Sourcing data
 
@@ -225,7 +225,7 @@ For examples, refer to the [query recipes](/docs/recipes/#6-querying-data) and [
 
 Fragments allow you to reuse parts of GraphQL queries. They also allow you to split up complex queries into smaller, easier to understand components.
 
-For more information, check out the docs guide on [using fragments in Gatsby](/docs/using-fragments/).
+For more information, check out the docs guide on [using fragments in Gatsby](/docs/using-graphql-fragments/).
 
 ### List of Gatsby fragments
 
