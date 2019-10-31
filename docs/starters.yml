@@ -4279,3 +4279,23 @@
     - Storybook
     - Jest and React Testing library for snapshots and unit tests.
     - Styled-Components for all your styles.
+- url: https://kontent-template-gatsby-landing-page-photon.netlify.com
+  repo: https://github.com/Simply007/kontent-template-gatsby-landing-page-photon
+  description: Kentico Kontent based starter based on Photon starter by HTML5 UP
+  tags:
+    - CMS:Headless
+    - CMS:Kontent
+    - Netlify
+    - Landing Page
+    - HTML5UP
+    - Styling:SCSS
+  features:
+    - Kentico Kontent Caas plafrorm as the data source
+    - Landing page divided by section.
+    - Support for code syntax highlighting
+    - Includes plugins for easy, beautiful typography
+    - Includes React Helmet to allow editing site meta tags
+    - Includes plugins for offline support out of the box
+    - Font awesome
+    - Material Icons
+    - CSS Grid
