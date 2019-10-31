@@ -26,7 +26,7 @@ How to install or verify Homebrew on your computer:
 ### Mac Users: install Xcode Command Line Tools
 
 1. Open your Terminal.
-1. On a Mac, install Xcode Command line tools by running `xcode-select --install`.
+1. On a Mac, install Xcode Command Line Tools by running `xcode-select --install`.
    1. If that fails, download it [directly from the Apple site](https://developer.apple.com/download/more/), after signing-in with Apple developer account
 1. After being prompted to start the installation, you'll be prompted again to accept a software license for the tools to download.
 
