@@ -40,6 +40,6 @@ module.exports = {
 
 ### Disabling ESLint
 
-Create an empty .eslintrc.js file to disable linting.
+If you want to disable ESLint completely, just create an empty `.eslintrc` file.
 
 When there is no ESLint file Gatsby implicitly adds a barebones ESLint loader. The empty file will disable this behavior as Gatsby assumes once you have an ESLint file you are in charge of linting.
