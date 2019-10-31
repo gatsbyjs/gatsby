@@ -101,7 +101,7 @@ The `<Pullquote />` component is used to call out a quote in the blog. It applie
 The Pull Quote component takes two optional props, and uses the children it wraps to populate its inner content:
 
 - `citation` - the reference of the person or entity that made the quoted statement
-- `narrow` - styles the pull quote by removing the left and right negative margins, keeping it inside the parent container, this prop is not used in the blog to help the quote stand out, but could be used in docs where a quote is relevant to constrain the quote to the width of the doc (without extending into other sections of the layout)
+- `narrow` - styles the pull quote by removing the left and right negative margins, keeping it inside the parent container. This prop is not used in the blog to help the quote stand out, but could be used in docs where it's necessary to keep content from overlapping with other sections of the layout, such as the Table of Contents.
 
 It is used like this:
 
