@@ -245,15 +245,6 @@
   categories:
     - Marketing
     - Technology
-- title: Bottender Docs
-  main_url: "https://bottender.js.org/"
-  url: "https://bottender.js.org/"
-  source_url: "https://github.com/bottenderjs/bottenderjs.github.io"
-  featured: false
-  categories:
-    - Documentation
-    - Web Development
-    - Open Source
 - title: Ghost Documentation
   main_url: https://docs.ghost.org/
   url: https://docs.ghost.org/
@@ -2955,7 +2946,6 @@
 - title: Citywide Holdup
   url: https://citywideholdup.org/
   main_url: https://citywideholdup.org/
-  source_url: https://github.com/killakam3084/citywide-site
   description: >-
     Citywide Holdup is an annual fundraising event held around early November in the city of Austin, TX hosted by the Texas Wranglers benefitting Easter Seals of Central Texas, a non-profit organization that provides exceptional services, education, outreach and advocacy so that people with disabilities can live, learn, work and play in our communities.
   categories:
@@ -3727,7 +3717,6 @@
 - title: Dale Blackburn - Portfolio
   url: https://dakebl.co.uk/
   main_url: https://dakebl.co.uk/
-  source_url: https://github.com/dakebl/dakebl.co.uk
   description: >
     Dale Blackburn's personal website and blog.
   categories:
@@ -4238,7 +4227,6 @@
 - title: Rou Hun Fan's portfolio
   main_url: https://flowen.me
   url: https://flowen.me
-  source_url: https://github.com/flowen/flowen.me/tree/master/2019/v3
   description: >
     Portfolio of creative developer Rou Hun Fan. Built with Gatsby v2 &amp; Greensock drawSVG.
   categories:
@@ -6059,7 +6047,6 @@
 - title: nehalist.io
   main_url: https://nehalist.io
   url: https://nehalist.io
-  source_url: https://github.com/nehalist/nehalist.io
   description: >
     nehalist.io is a blog about software development, technology and all that kind of geeky stuff.
   categories:
