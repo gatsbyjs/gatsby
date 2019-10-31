@@ -1,5 +1,5 @@
 ---
-title: "Quick Start"
+title: Quick Start
 ---
 
 This quick start is intended for intermediate to advanced developers. For a gentler intro to Gatsby, [head to our tutorial](/tutorial/)!

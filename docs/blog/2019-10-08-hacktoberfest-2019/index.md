@@ -27,7 +27,7 @@ You may find these links helpful!
 - [Code of Conduct](https://www.gatsbyjs.org/contributing/code-of-conduct/)
 - [How to Open a Pull Request](https://www.gatsbyjs.org/contributing/how-to-open-a-pull-request/)
 
-PS: When your first PR is merged, you can claim some [free swag from the Gatsby Store](https://www.gatsbyjs.org/docs/contributor-swag/)! 😄
+PS: When your first PR is merged, you can claim some [free swag from the Gatsby Store](https://www.gatsbyjs.org/contributing/contributor-swag/)! 😄
 
 ## Issue areas
 
@@ -62,6 +62,7 @@ Gatsby [plugins](https://www.gatsbyjs.org/docs/creating-plugins/) and [themes](h
 #### Plugins Created During Hacktoberfest
 
 - [gatsby-source-etsy](https://www.npmjs.com/package/gatsby-source-etsy): Source plugin for creative goods shop listings
+- [gatsby-plugin-colorblind-filters](https://www.npmjs.com/package/gatsby-plugin-colorblind-filters): Color blindness simulation for Gatsby sites
 
 ## Gatsby's Hacktoberfest Goals
 

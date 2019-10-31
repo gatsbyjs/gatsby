@@ -38,7 +38,7 @@ The manual process required to make the Harry’s website perform was what they 
 
 Since Gatsby simply serves html files that are hosted on the edge (CDN: Content Delivery Network), this dramatically improves SEO. The developers can focus on other things because Gatsby just takes care of the performance. The team was excited about the image support from Gatsby that is “out-of-the-box.” They didn’t have to write code in-house, which was game changing for a team looking to lead in mobile-optimized shopping.
 
-The Flamingo team also wanted to shake things up with content and image design by providing the fastest, most seamless shopping experience. Gatsby’s image handling helps reduce raw image sizes and speed up page load times, and serves the right resolution image depending on different screen sizes. This gave the front-end developers the ability to go beyond JS to focus on edge hosting and optimization. With a site driven by modern development tools, Gatsby’s out-of-the-box image support is the cherry on top for Flamingo. “We don’t have to write the code ourselves!” said Johnny.
+The Flamingo team also wanted to shake things up with content and image design by providing the fastest, most seamless shopping experience. Gatsby’s image handling helps reduce raw image sizes and speed up page load times, and serves the right resolution image depending on different screen sizes. This gave the frontend developers the ability to go beyond JS to focus on edge hosting and optimization. With a site driven by modern development tools, Gatsby’s out-of-the-box image support is the cherry on top for Flamingo. “We don’t have to write the code ourselves!” said Johnny.
 
 The duo also praised the ease of getting up to speed on Gatsby, which gave them the ability to hire new developers and get them going in only a day. If there was familiarity with React, onboarding was successful and reduced the management of dependencies and servers.
 
@@ -74,6 +74,6 @@ Reflecting on it post-launch, the team says that Gatsby allowed them to focus on
 
 <Pullquote>The team has gotten excited about learning – excited about hosting at the edge and optimizing for performance, because Gatsby makes it easy.</Pullquote>
 
-Front-end engineers are going beyond JS and tools and focusing on edge hosting, the modern web technology stack and optimizing for speed. The team is using this as a blueprint for how they’ll build websites in the future.
+Frontend engineers are going beyond JS and tools and focusing on edge hosting, the modern web technology stack and optimizing for speed. The team is using this as a blueprint for how they’ll build websites in the future.
 
 Gatsby delivered a performance-optimized website for Flamingo, hosted on the edge. It made it easy to onboard new developers and create engaging experiences. It improved the website visitor’s experience with speed and design and it inspired the Flamingo team in a new age of ecommerce design.

@@ -33,7 +33,7 @@ Object {
   },
   "docsUrl": "https://gatsby.dev/issue-how-to",
   "level": "ERROR",
-  "stack": Any<Array>,
+  "stack": null,
   "text": "Error created in Jest",
 }
 `;
@@ -53,13 +53,13 @@ Object {
 
 exports[`report.error handles "structuredError" signature correctly 1`] = `
 Object {
+  "code": "95312",
   "context": Object {
     "ref": "navigator",
   },
   "docsUrl": "https://gatsby.dev/debug-html",
-  "id": "95312",
   "level": "ERROR",
-  "stack": Any<Array>,
+  "stack": null,
   "text": "\\"navigator\\" is not available during server side rendering.",
 }
 `;

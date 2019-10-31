@@ -10,7 +10,7 @@ Object {
     "componentChunkName": "chunk",
     "matchPath": undefined,
     "path": "/mypage/",
-    "webpackCompilationHash": "123",
+    "webpackCompilationHash": "",
   },
 }
 `;
