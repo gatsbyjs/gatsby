@@ -38,7 +38,7 @@ module.exports = {
 
 Then in your terminal run `gatsby develop` to start the Gatsby development server.
 
-Now let's create a sample Styled Components page at `src/pages/index.js`:
+Now create a sample Styled Components page at `src/pages/index.js`:
 
 ```jsx:title=src/pages/index.js
 import React from "react"
@@ -114,24 +114,24 @@ export default () => (
 
 ## Creating Global Styles
 
-Styled-components are primarily used for a single CSS class that is isolated from other components. In some cases, you want to override global styling — for example, the default margins of your `body` element. Styled-components has your back. You can use the `createGlobalStyle` to accomplish this. We advise using `createGlobalStyle` in Layout components, which are shared over multiple pages rather than using it on a single page.
+Styled-components are primarily used for a single CSS class that is isolated from other components. In some cases, you want to override global styling — for example, the default margins of your `body` element. Styled-components has your back. You can use the `createGlobalStyle` to accomplish this. It's advised to use `createGlobalStyle` in [Layout components](/docs/layout-components/), which are shared over multiple pages rather than using it on a single page.
 
 The example below shows how to create a `GlobalStyle` (which is a StyledComponent) for the color purple by importing `createGlobalStyle` from `styled-components`.
 
-```jsx:title=src/pages/index.js
-import { createGlobalStyle } from 'styled-components'
+```jsx:title=src/components/layout.js
+import React from "react"
+import { createGlobalStyle } from "styled-components"
 
 const GlobalStyle = createGlobalStyle`
   body {
-    color: ${props => (props.theme === 'purple' ? 'purple' : 'white')};
+    color: ${props => (props.theme === "purple" ? "purple" : "white")};
   }
 `
-
-// later on in your file
-
-<React.Fragment>
-  <GlobalStyle theme="purple" />
-</React.Fragment>
+export default ({ children }) => (
+  <React.Fragment>
+    <GlobalStyle theme="purple" />
+  </React.Fragment>
+)
 ```
 
 ## Enabling user stylesheets with a stable class name
