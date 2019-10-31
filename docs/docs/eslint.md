@@ -37,3 +37,9 @@ module.exports = {
   extends: `react-app`,
 }
 ```
+
+### Disabling ESLint
+Create an empty .eslintrc.js file to disable linting.
+
+When there is no ESLint file Gatsby implicitly adds a barebones ESLint loader. The empty file will disable this behavior as Gatsby assumes once you have an ESLint file you are in charge of linting.
+
