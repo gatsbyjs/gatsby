@@ -102,9 +102,6 @@ const scheduleJob = async (
       },
       { name: `gatsby-plugin-sharp` }
     )
-    if (bar) {
-      bar.total++
-    }
   } else {
     const jobId = uuidv4()
     const deferred = pDefer()
