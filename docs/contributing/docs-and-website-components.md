@@ -265,6 +265,30 @@ import TableOfContents from "../../www/src/components/docs-table-of-contents"
 
 _You can also refer to [an example of usage of the Table of Contents in the Gatsbyjs.org source code](https://github.com/gatsbyjs/gatsby/blob/1d65ce051967dda5c4a89da920fc34692524e237/www/src/templates/template-docs-markdown.js#L121)_
 
+The Table of Contents component also has some optional configurations that can be set in the frontmatter of a doc's markdown.
+
+In docs where the Table of Contents isn't required and should be disabled, a key in the frontmatter called `disableTableOfContents` can be set to `true` like this:
+
+```md
+---
+title: Glossary
+disableTableOfContents: true
+---
+
+When you're new to Gatsby there can be a lot of words to learn...
+```
+
+In other docs where the Table of Contents is extremely long it can make sense to only show headers from the doc up to a certain level, rather than all subheadings. You can set the `tableOfContentsDepth` key to a number that will limit the subheadings shown in the table of contents to that "depth". If it is set to 2, `<h2>`/`##`, and `<h3>`/`###` headers will be listed, if set to 3, `<h2>`/`##`, `<h3>`/`###`, and `<h4>`/`####` will all be shown. It is set like this:
+
+```md
+---
+title: Glossary
+tableOfContentsDepth: 2
+---
+
+When you're new to Gatsby there can be a lot of words to learn...
+```
+
 #### Sample
 
 The Table of Contents looks like this when rendered (and is also displayed on the right hand side of the page):
