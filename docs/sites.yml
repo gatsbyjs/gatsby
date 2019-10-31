@@ -8279,3 +8279,14 @@
   built_by: James Ivings
   built_by_url: https://squarecat.io
   featured: false
+- title: Oberion
+  main_url: https://oberion.io
+  url: https://oberion.io
+  description: >
+    Oberion analyzes your gaming library and gives you personal recommendations based on what you play
+  categories:
+    - Entertainment
+    - Media
+  built_by: Thomas Uta
+  built_by_url: https://twitter.com/ThomasJanUta
+  featured: false
