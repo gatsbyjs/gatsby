@@ -155,14 +155,18 @@ These fields can be specified in the plugin's `options` as shown in the [How to 
 ### No actions are tracked
 
 #### Check the tracking ID
+
 Make sure you supplied the correct Google Analytics tracking ID. It should look like this: `trackingId: "UA-111111111-1"`
 
 #### Make sure plugin and script are loaded first
+
 The analytics script tag is not properly loaded into the DOM. You can fix this by moving the plugin to the top of your `gatsby-config.js` and into the head of the DOM:
 
 ```javascript
 module.exports = {
-  siteMetadata: { /* your metadata */ },
+  siteMetadata: {
+    /* your metadata */
+  },
   plugins: [
     // Make sure this plugin is first in the array of plugins
     {
@@ -173,7 +177,7 @@ module.exports = {
         // other options
       },
     },
-  ]
+  ],
   // other plugins
 }
 ```
