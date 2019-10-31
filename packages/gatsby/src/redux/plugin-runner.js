@@ -8,6 +8,6 @@ emitter.on(`CREATE_PAGE`, action => {
   apiRunnerNode(
     `onCreatePage`,
     { page, traceId: action.traceId, parentSpan: action.parentSpan },
-    action.plugin.name
+    { pluginSource: action.plugin.name, activity: action.activity }
   )
 })
