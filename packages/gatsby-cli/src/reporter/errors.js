@@ -2,6 +2,47 @@
 
 const PrettyError = require(`pretty-error`)
 const prepareStackTrace = require(`./prepare-stack-trace`)
+const _ = require(`lodash`)
+const { isNodeInternalModulePath } = require(`gatsby-core-utils`)
+
+const packagesToSkip = [`core-js`, `bluebird`, `regenerator-runtime`, `graphql`]
+
+const packagesToSkipTest = new RegExp(
+  `node_modules[\\/](${packagesToSkip.join(`|`)})`
+)
+
+// TO-DO: move this this out of this file (and probably delete this file completely)
+// it's here because it re-implements similar thing as `pretty-error` already does
+const sanitizeStructuredStackTrace = stack => {
+  // first filter out not useful call sites
+  stack = stack.filter(callSite => {
+    if (!callSite.fileName) {
+      return false
+    }
+
+    if (packagesToSkipTest.test(callSite.fileName)) {
+      return false
+    }
+
+    if (callSite.fileName.includes(`asyncToGenerator.js`)) {
+      return false
+    }
+
+    if (isNodeInternalModulePath(callSite.fileName)) {
+      return false
+    }
+
+    return true
+  })
+
+  // then sanitize individual call site objects to make sure we don't
+  // emit objects with extra fields that won't be handled by consumers
+  stack = stack.map(callSite =>
+    _.pick(callSite, [`fileName`, `functionName`, `columnNumber`, `lineNumber`])
+  )
+
+  return stack
+}
 
 function getErrorFormatter() {
   const prettyError = new PrettyError()
@@ -80,4 +121,5 @@ async function createErrorFromString(
 module.exports = {
   createErrorFromString,
   getErrorFormatter,
+  sanitizeStructuredStackTrace,
 }

@@ -36,6 +36,10 @@ class ImageWithIEPolyfill extends Component {
   }
 }
 
+// If you modify these propTypes, please don't forget to update following files as well:
+// https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-image/withIEPolyfill/index.d.ts
+// https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-image/README.md#gatsby-image-props
+// https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/gatsby-image.md#gatsby-image-props
 ImageWithIEPolyfill.propTypes = {
   objectFit: PropTypes.string,
   objectPosition: PropTypes.string,

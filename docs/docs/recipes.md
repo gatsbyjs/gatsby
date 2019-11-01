@@ -94,7 +94,7 @@ export default AboutPage
 ```
 
 3. Run `gatsby develop` to start the development server.
-4. Visit your new page in the browser: `http://localhost:8000/about`
+4. Visit your new page in the browser: <http://localhost:8000/about>
 
 #### Additional resources
 
@@ -253,7 +253,7 @@ export default ({ pageContext: { dog } }) => (
 )
 ```
 
-5. Run `gatsby develop` and navigate to the path of one of the pages you created (like at `http://localhost:8000/Fido`) to see the data you passed it displayed on the page
+5. Run `gatsby develop` and navigate to the path of one of the pages you created (like at <http://localhost:8000/Fido>) to see the data you passed it displayed on the page
 
 #### Additional resources
 
@@ -300,7 +300,7 @@ import "./src/styles/global.css"
 
 #### Additional resources
 
-- More on [adding global styles without a layout component](/global-css/#adding-global-styles-without-a-layout-component)
+- More on [adding global styles without a layout component](/docs/global-css/#adding-global-styles-without-a-layout-component)
 
 ### Using global styles in a layout component
 
@@ -467,6 +467,64 @@ Notice that the file extension is `.module.css` instead of `.css`, which tells G
 
 - More on [Using CSS Modules](/tutorial/part-two/#css-modules)
 - [Live example on Using CSS modules](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-css-modules)
+
+### Using Sass/SCSS
+
+Sass is an extension of CSS that gives you more advanced features like nested rules, variables, mixins, and more.
+
+Sass has 2 syntaxes. The most commonly used syntax is "SCSS", and is a superset of CSS. That means all valid CSS syntax, is valid SCSS syntax. SCSS files use the extension .scss
+
+Sass will compile .scss and .sass files to .css files for you, so you can write your stylesheets with more advanced features.
+
+#### Prerequisites
+
+- A [Gatsby site](/docs/quick-start/).
+
+#### Directions
+
+1. Install the Gatsby plugin [gatsby-plugin-sass](https://www.gatsbyjs.org/packages/gatsby-plugin-sass/) and `node-sass`.
+
+`npm install --save node-sass gatsby-plugin-sass`
+
+2. Include the plugin in your `gatsby-config.js` file.
+
+```javascript:title=gatsby-config.js
+plugins: [`gatsby-plugin-sass`],
+```
+
+3.  Write your stylesheets as `.sass` or `.scss` files and import them. If you don't know how to import styles, take a look at [Styling with CSS](/docs/recipes/#2-styling-with-css)
+
+```css:title=styles.scss
+$font-stack: Helvetica, sans-serif;
+$primary-color: #333;
+
+body {
+  font: 100% $font-stack;
+  color: $primary-color;
+}
+```
+
+```css:title=styles.sass
+$font-stack:    Helvetica, sans-serif
+$primary-color: #333
+
+body
+  font: 100% $font-stack
+  color: $primary-color
+```
+
+```javascript
+import "./styles.scss"
+import "./styles.sass"
+```
+
+_Note: You can use Sass/SCSS files as modules too, like mentioned in the previous recipe about CSS modules, with the difference that instead of .css the extensions have to be .scss or .sass_
+
+#### Additional resources
+
+- [Difference between .sass and .scss](https://responsivedesign.is/articles/difference-between-sass-and-scss/)
+- [Sass guide from the official Sass website](https://sass-lang.com/guide)
+- [A more complete installation tutorial on Sass with some more explanations and more resources](https://www.gatsbyjs.org/docs/sass/)
 
 ### Adding a Local Font
 
@@ -663,7 +721,7 @@ A Gatsby theme abstracts Gatsby configuration (shared functionality, data sourci
 
 ### Creating a new site using a theme starter
 
-Creating a site based on a starter that configures a theme follows the same process as creating a site based on a starter that **doesn't** configure a theme. In this example we'll use the [starter for creating a new site that uses the official Gatsby blog theme](https://github.com/gatsbyjs/gatsby-starter-blog-theme).
+Creating a site based on a starter that configures a theme follows the same process as creating a site based on a starter that **doesn't** configure a theme. In this example you can use the [starter for creating a new site that uses the official Gatsby blog theme](https://github.com/gatsbyjs/gatsby-starter-blog-theme).
 
 #### Prerequisites
 
@@ -825,7 +883,7 @@ path: /my-first-post
 This is my first Gatsby post written in Markdown!
 ```
 
-3. Start up the development server with `gatsby develop`, navigate to the GraphiQL explorer at `http://localhost:8000/___graphql`, and write a query to get all markdown data:
+3. Start up the development server with `gatsby develop`, navigate to the GraphiQL explorer at <http://localhost:8000/___graphql>, and write a query to get all markdown data:
 
 ```graphql
 {
@@ -917,7 +975,7 @@ export const pageQuery = graphql`
 `
 ```
 
-6. Run `gatsby develop` to restart the development server. View your post in the browser: `http://localhost:8000/my-first-post`
+6. Run `gatsby develop` to restart the development server. View your post in the browser: <http://localhost:8000/my-first-post>
 
 #### Additional resources
 
@@ -926,6 +984,264 @@ export const pageQuery = graphql`
 - [Adding Markdown pages](/docs/adding-markdown-pages/)
 - [Guide to creating pages from data programmatically](/docs/programmatically-create-pages-from-data/)
 - [Example repo](https://github.com/gatsbyjs/gatsby/tree/master/examples/recipe-sourcing-markdown) for this recipe
+
+### Sourcing from WordPress
+
+#### Prerequisites
+
+- An existing [Gatsby site](/docs/quick-start/) with a `gatsby-config.js` and `gatsby-node.js` file
+- A WordPress instance, either self-hosted or on Wordpress.com
+
+#### Directions
+
+1. Install the `gatsby-source-wordpress` plugin by running the following command:
+
+```shell
+npm install gatsby-source-wordpress --save
+```
+
+2. Configure the plugin by modifying the `gatsby-config.js` file such that it includes the following:
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  ...
+  plugins: [
+    {
+      resolve: `gatsby-source-wordpress`,
+      options: {
+        // baseUrl will need to be updated with your WordPress source
+        baseUrl: `wpexample.com`,
+        protocol: `https`,
+        // is it hosted on wordpress.com, or self-hosted?
+        hostingWPCOM: false,
+        // does your site use the Advanced Custom Fields Plugin?
+        useACF: false
+      }
+    },
+  ]
+}
+```
+
+> **Note:** Refer to the [`gatsby-source-wordpress` plugin docs](/packages/gatsby-source-wordpress/?=wordpre#how-to-use) to know more about configuring your plugins.
+
+3. Create a template component such as `src/templates/post.js` with the following code in it:
+
+```javascript:title=post.js
+import React, { Component } from "react"
+import { graphql } from "gatsby"
+import PropTypes from "prop-types"
+
+class Post extends Component {
+  render() {
+    const post = this.props.data.wordpressPost
+
+    return (
+      <>
+        <h1>{post.title}</h1>
+        <div dangerouslySetInnerHTML={{ __html: post.content }} />
+      </>
+    )
+  }
+}
+
+Post.propTypes = {
+  data: PropTypes.object.isRequired,
+  edges: PropTypes.array,
+}
+
+export default Post
+
+export const pageQuery = graphql`
+  query($id: String!) {
+    wordpressPost(id: { eq: $id }) {
+      title
+      content
+    }
+  }
+`
+```
+
+4. Create dynamic pages for your WordPress posts by pasting the following sample code in `gatsby-node.js`:
+
+```javascript:title=gatsby-node.js
+const path = require(`path`)
+const slash = require(`slash`)
+
+exports.createPages = async ({ graphql, actions }) => {
+  const { createPage } = actions
+
+  // query content for WordPress posts
+  const result = await graphql(`
+    query {
+      allWordpressPost {
+        edges {
+          node {
+            id
+            slug
+          }
+        }
+      }
+    }
+  `)
+
+  const postTemplate = path.resolve(`./src/templates/post.js`)
+  result.data.allWordpressPost.edges.forEach(edge => {
+    createPage({
+      // `path` will be the url for the page
+      path: edge.node.slug,
+      // specify the component template of your choice
+      component: slash(postTemplate),
+      // In the ^template's GraphQL query, 'id' will be available
+      // as a GraphQL variable to query for this posts's data.
+      context: {
+        id: edge.node.id,
+      },
+    })
+  })
+}
+```
+
+5. Run `gatsby-develop` to see the newly generated pages and navigate through them.
+
+6. Open the `GraphiQL IDE` at `localhost:8000/__graphql` and open the Docs or Explorer to observe the queryable fields for `allWordpressPosts`.
+
+The dynamic pages created above in `gatsby-node.js` have unique paths for navigating to particular posts, using a template component for the posts and a sample GraphQL query to source WordPress post content.
+
+#### Additional resources
+
+- [Getting Started with WordPress and Gatsby](/blog/2019-04-26-how-to-build-a-blog-with-wordpress-and-gatsby-part-1/)
+- More on [Sourcing from WordPress](/docs/sourcing-from-wordpress/)
+- [Live example on Sourcing from WordPress](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-wordpress)
+
+### Sourcing data from Contentful
+
+#### Prerequisites
+
+- A [Gatsby site](/docs/quick-start/)
+- A [Contentful account](https://www.contentful.com/)
+- The [Contentful CLI](https://www.npmjs.com/package/contentful-cli) installed
+
+#### Directions
+
+1. Log in to Contentful with the CLI and follow the steps. It will help you create an account if you don't have one.
+
+```shell
+contentful login
+```
+
+2. Create a new space if you don't already have one. Make sure to save the space ID given to you at the end of the command. If you already have a Contentful space and space ID, you can skip steps 2 and 3.
+
+Note: for new accounts, you can overwrite the default onboarding space. Check to see the [spaces included with your account](https://app.contentful.com/account/profile/space_memberships).
+
+```shell
+contentful space create --name 'Gatsby example'
+```
+
+3. Seed the new space with example blog content using the new space ID returned from the previous command, in place of `<space ID>`.
+
+```shell
+contentful space seed -s '<space ID>' -t blog
+```
+
+For example, with a space ID in place: `contentful space seed -s '22fzx88spbp7' -t blog`
+
+4. Create a new access token for your space. Remember this token, as you will need it in step 6.
+
+```shell
+contentful space accesstoken create -s '<space ID>' --name 'Example token'
+```
+
+5. Install the `gatsby-source-contentful` plugin in your Gatsby site:
+
+```shell
+npm install --save gatsby-source-contentful
+```
+
+6. Edit the file `gatsby-config.js` and add the `gatsby-source-contentful` to the `plugins` array to enable the plugin. You should strongly consider using [environment variables](/docs/environment-variables/) to store your space ID and token for security purposes.
+
+```javascript:title=gatsby-config.js
+plugins: [
+   // add to array along with any other installed plugins
+   // highlight-start
+   {
+
+
+    resolve: `gatsby-source-contentful`,
+    options: {
+      spaceId: `<space ID>`, // or process.env.CONTENTFUL_SPACE_ID
+      accessToken: `<access token>`, // or process.env.CONTENTFUL_TOKEN
+    },
+  },
+  // highlight-end
+],
+```
+
+7. Run `gatsby develop` and make sure the site compiled successfully.
+
+8. Query data with the [GraphiQL editor](/docs/introducing-graphiql/) at <https://localhost:8000/___graphql>. The Contentful plugin adds several new node types to your site, including every content type in your Contentful website. Your example space with a "Blog Post" content type produces a `allContentfulBlogPost` node type in GraphQL.
+
+![the graphql interface, with a sample query outlined below](./images/recipe-sourcing-contentful-graphql.png)
+
+To query for Blog Post titles from Contentful, use the following GraphQL query:
+
+```graphql
+{
+  allContentfulBlogPost {
+    edges {
+      node {
+        title
+      }
+    }
+  }
+}
+```
+
+Contentful nodes also include several metadata fields like `createdAt` or `node_locale`.
+
+9. To show a list of links to the blog posts, create a new file in `/src/pages/blog.js`. This page will display all posts, sorted by updated date.
+
+```jsx:title=src/pages/blog.js
+import React from "react"
+import { graphql, Link } from "gatsby"
+
+const BlogPage = ({ data }) => (
+  <div>
+    <h1>Blog</h1>
+    <ul>
+      {data.allContentfulBlogPost.edges.map(({ node, index }) => (
+        <li key={index}>
+          <Link to={`/blog/${node.slug}`}>{node.title}</Link>
+        </li>
+      ))}
+    </ul>
+  </div>
+)
+
+export default BlogPage
+
+export const query = graphql`
+  {
+    allContentfulBlogPost(sort: { fields: [updatedAt] }) {
+      edges {
+        node {
+          title
+          slug
+        }
+      }
+    }
+  }
+`
+```
+
+To continue building out your Contentful site including post detail pages, check out the rest of the [Gatsby docs](/docs/sourcing-from-contentful/) and additional resources below.
+
+#### Additional resources
+
+- [Building a Site with React and Contentful](/blog/2018-1-25-building-a-site-with-react-and-contentful/)
+- [More on Sourcing from Contentful](/docs/sourcing-from-contentful/)
+- [Contentful source plugin](/packages/gatsby-source-contentful/)
+- [Long-text field types returned as objects](/packages/gatsby-source-contentful/#a-note-about-longtext-fields)
+- [Example repository for this recipe](https://github.com/gatsbyjs/gatsby/tree/master/examples/recipe-sourcing-contentful)
 
 ### Pulling data from an external source and creating pages without GraphQL
 
@@ -988,7 +1304,7 @@ export default ({ pageContext: { allPokemon } }) => (
 ```
 
 3. Run `gatsby develop` to fetch the data, build pages, and start the development server.
-4. View your homepage in a browser: `http://localhost:8000`
+4. View your homepage in a browser: <http://localhost:8000>
 
 #### Additional resources
 
@@ -1028,7 +1344,7 @@ module.exports = {
 }
 ```
 
-3. Start the development server with `gatsby develop`, and open the GraphiQL explorer at `http://localhost:8000/___graphql`. Under the Explorer tab, you should see new node types, such as `allBlockBlock` for Drupal blocks, and one for every content type in your Drupal site. For example, if you have a "Page" content type, it will be available as `allNodePage`. To query all "Page" nodes for their title and body, use a query like:
+3. Start the development server with `gatsby develop`, and open the GraphiQL explorer at <http://localhost:8000/___graphql>. Under the Explorer tab, you should see new node types, such as `allBlockBlock` for Drupal blocks, and one for every content type in your Drupal site. For example, if you have a "Page" content type, it will be available as `allNodePage`. To query all "Page" nodes for their title and body, use a query like:
 
 ```graphql
 {
@@ -1086,7 +1402,7 @@ export const query = graphql`
 }
 ```
 
-5. With the development server running, you can view the new page by visiting `http://localhost:8000/drupal`.
+5. With the development server running, you can view the new page by visiting <http://localhost:8000/drupal>.
 
 #### Additional Resources
 
@@ -1251,7 +1567,7 @@ To limit data, you'll need a Gatsby site with some nodes in the GraphQL data lay
 #### Directions
 
 1. Run `gatsby develop` to start the development server.
-2. Open a tab in your browser at: `http://localhost:8000/___graphql`.
+2. Open a tab in your browser at: <http://localhost:8000/___graphql>.
 3. Add a query in the editor with the following fields on `allSitePage` to start off:
 
 ```graphql
@@ -1311,7 +1627,7 @@ For this recipe, you'll need a Gatsby site with a collection of nodes to sort in
 #### Directions
 
 1. Run `gatsby develop` to start the development server.
-2. Open the GraphiQL explorer in a browser tab at: `http://localhost:8000/___graphql`
+2. Open the GraphiQL explorer in a browser tab at: <http://localhost:8000/___graphql>
 3. Add a query in the editor with the following fields on `allSitePage` to start off:
 
 ```graphql
@@ -1372,7 +1688,7 @@ For this recipe, you'll need a Gatsby site with a collection of nodes to filter 
 #### Directions
 
 1. Run `gatsby develop` to start the development server.
-2. Open the GraphiQL explorer in a browser tab at: `http://localhost:8000/___graphql`
+2. Open the GraphiQL explorer in a browser tab at: <http://localhost:8000/___graphql>
 3. Add a query in the editor using a field prefixed by 'all', like `allMarkdownRemark` (meaning that it will return a list of nodes)
 
 ```graphql
@@ -1432,7 +1748,7 @@ If you would like to run two queries on the same datasource, you can use an alia
 #### Directions
 
 1. Run `gatsby develop` to start the development server.
-2. Open the GraphiQL explorer in a browser tab at: `http://localhost:8000/___graphql`
+2. Open the GraphiQL explorer in a browser tab at: <http://localhost:8000/___graphql>
 3. Add a query in the editor using two fields of the same name like `allFile`
 
 ```graphql
@@ -1562,7 +1878,7 @@ export default () => (
 ```
 
 3. Run `gatsby develop` to start the development server.
-4. View your image in the browser: `http://localhost:8000/`
+4. View your image in the browser: <http://localhost:8000/>
 
 #### Additional resources
 
@@ -1609,7 +1925,7 @@ export default () => (
 ```
 
 3. Run `gatsby develop` to start the development server.
-4. View your image in the browser: `http://localhost:8000/`
+4. View your image in the browser: <http://localhost:8000/>
 
 #### Additional resources
 
@@ -1665,7 +1981,7 @@ return (
 )
 ```
 
-b. using a [GraphQL fragment](/docs/using-fragments/), to query for the necessary fields more tersely
+b. using a [GraphQL fragment](/docs/using-graphql-fragments/), to query for the necessary fields more tersely
 
 ```jsx
 const data = useStaticQuery(graphql`
@@ -1963,7 +2279,7 @@ export const query = graphql`
 `
 ```
 
-3. Restart the development server and open GraphiQL at `http://localhost:8000/___graphql`. Explore the fields available on the `MarkdownRemark` node.
+3. Restart the development server and open GraphiQL at <http://localhost:8000/___graphql>. Explore the fields available on the `MarkdownRemark` node.
 
 #### Additional resources
 
@@ -2040,7 +2356,7 @@ Use [`netlify-cli`](https://www.netlify.com/docs/cli/) to deploy your Gatsby app
 
 4. Choose a custom website name if you want or press enter to receive a random one.
 
-5. Choose your [Team](/docs/teams/).
+5. Choose your [Team](https://www.netlify.com/docs/teams/).
 
 6. Change the deploy path to `public/`
 

@@ -17,7 +17,7 @@ import DarkModeToggle from "../components/dark-mode-toggle"
 // on the baseline of the logo's wordmark
 const navItemTopOffset = `0.4rem`
 // theme-ui values
-const navItemHorizontalSpacing = [1, 1, 1, 2]
+const navItemHorizontalSpacing = [1, null, 2]
 
 const overrideDefaultMdLineHeight = {
   [mediaQueries.md]: {
@@ -51,11 +51,12 @@ const NavItem = ({ linkTo, children }) => (
     <Link
       to={linkTo}
       activeClassName="active"
+      partiallyActive={true}
       sx={{
         ...navItemStyles,
         "&.active": {
           borderBottomColor: `lilac`,
-          color: `lilac`,
+          color: `navigation.linkActive`,
         },
       }}
     >
@@ -142,11 +143,11 @@ const Navigation = ({ pathname }) => {
             display: `flex`,
             flexShrink: 0,
             height: `logo`,
-            mr: [1, 1, 1, 3],
+            mr: [1, null, 3],
             textDecoration: `none`,
             /* chop logo down to just the monogram for small screens */
-            width: [`24px`, `24px`, `24px`, `auto`],
-            overflow: [`hidden`, `hidden`, `hidden`, `visible`],
+            width: [`24px`, null, `auto`],
+            overflow: [`hidden`, null, `visible`],
           }}
           aria-label="Gatsby, Back to homepage"
         >

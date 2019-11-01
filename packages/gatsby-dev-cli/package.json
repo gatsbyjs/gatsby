@@ -1,7 +1,7 @@
 {
   "name": "gatsby-dev-cli",
   "description": "CLI helpers for contributors working on Gatsby",
-  "version": "2.5.32",
+  "version": "2.5.36",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby-dev": "./dist/index.js"
@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.6.3",
-    "chokidar": "^3.2.1",
+    "chokidar": "^3.2.3",
     "configstore": "^5.0.0",
     "del": "^5.1.0",
     "execa": "^2.1.0",
@@ -21,13 +21,13 @@
     "lodash": "^4.17.15",
     "request": "2.88.0",
     "signal-exit": "^3.0.2",
-    "verdaccio": "^4.3.3",
+    "verdaccio": "^4.3.4",
     "yargs": "^8.0.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.6.3",
-    "@babel/core": "^7.6.3",
-    "babel-preset-gatsby-package": "^0.2.8",
+    "@babel/cli": "^7.6.4",
+    "@babel/core": "^7.6.4",
+    "babel-preset-gatsby-package": "^0.2.9",
     "cross-env": "^5.2.1"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli#readme",

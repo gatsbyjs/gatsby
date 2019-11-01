@@ -1,0 +1,49 @@
+{
+  "name": "gatsby-theme-notes",
+  "description": "Gatsby Theme for adding a notes section to your website",
+  "version": "1.0.12",
+  "author": "John Otander",
+  "license": "MIT",
+  "main": "index.js",
+  "keywords": [
+    "gatsby",
+    "gatsby-theme",
+    "gatsby-plugin",
+    "react",
+    "notes",
+    "digital-garden"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-theme-notes"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-theme-notes#readme",
+  "devDependencies": {
+    "gatsby": "^2.17.7",
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0"
+  },
+  "peerDependencies": {
+    "gatsby": "^2.13.13",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  },
+  "dependencies": {
+    "@emotion/core": "^10.0.22",
+    "@mdx-js/mdx": "^1.5.1",
+    "@mdx-js/react": "^1.5.1",
+    "gatsby-core-utils": "^1.0.17",
+    "gatsby-plugin-compile-es6-packages": "^2.1.0",
+    "gatsby-plugin-emotion": "^4.1.13",
+    "gatsby-plugin-mdx": "^1.0.55",
+    "gatsby-plugin-meta-redirect": "^1.1.1",
+    "gatsby-plugin-og-image": "0.0.1",
+    "gatsby-plugin-redirects": "^1.0.0",
+    "gatsby-plugin-theme-ui": "^0.2.43",
+    "gatsby-source-filesystem": "^2.1.35",
+    "is-present": "^1.0.0",
+    "react-feather": "^1.1.6",
+    "theme-ui": "^0.2.46"
+  }
+}

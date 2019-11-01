@@ -2,7 +2,7 @@
 title: Sourcing from Prismic
 ---
 
-In this guide, we'll walk through setting up a site with content management using [Prismic](https://prismic.io/).
+In this guide, you'll set up a site with content management using [Prismic](https://prismic.io/).
 
 Prismic is a hosted, proprietary Headless CMS (SaaS) with a web app for creating and publishing content. It's suitable for marketers, editors, and developers as it has both a "Writing Room" and a fully-fledged API & content backend. Besides the usual advantages of a SaaS CMS (hosting, security, updates), Prismic offers features like custom type builder, scheduling and content versioning, and multi-language support.
 
@@ -10,7 +10,7 @@ Moreover, their [Content Slices](https://prismic.io/feature/dynamic-layout-conte
 
 In addition to written instructions, this guide also includes videos for more complex steps. You can find all of them in a [YouTube playlist](https://www.youtube.com/playlist?list=PLB-cmN3u7PHJCG-phPyiydhHfiosyd0VC).
 
-_Note: This guide uses the Gatsby Hello World starter to provide a very basic understanding of how Prismic can work with your Gatsby site. If you'd like to start with a full blown template, check out [gatsby-starter-prismic](https://github.com/LekoArts/gatsby-starter-prismic). If you're not familiar with Prismic and its functionalities yet, we highly recommend to check out [Prismic's official documentation](https://prismic.io/docs) which also includes user guides and tutorials. This guide assumes that you have basic knowledge of Prismic & Gatsby (See [Gatsby's official tutorial](/tutorial))._
+_Note: This guide uses the Gatsby Hello World starter to provide a very basic understanding of how Prismic can work with your Gatsby site. If you'd like to start with a full blown template, check out [gatsby-starter-prismic](https://github.com/LekoArts/gatsby-starter-prismic). If you're not familiar with Prismic and its functionalities yet, check out [Prismic's official documentation](https://prismic.io/docs) which also includes user guides and tutorials. This guide assumes that you have basic knowledge of Prismic & Gatsby (See [Gatsby's official tutorial](/tutorial))._
 
 ## Setup
 
@@ -79,7 +79,7 @@ module.exports = {
 }
 ```
 
-The best way to create your queries now is to first develop them in _GraphiQL_ at `http://localhost:8000/___graphql` and then paste them into your files. Start the local development server and experiment a bit with the available queries. You should be able to get this query:
+The best way to create your queries now is to first develop them in _GraphiQL_ at <http://localhost:8000/___graphql> and then paste them into your files. Start the local development server and experiment a bit with the available queries. You should be able to get this query:
 
 ![Prismic Index Query](./images/prismic-index-query.jpg)
 
@@ -159,7 +159,7 @@ Earlier you defined an `API_KEY` environment variable for the source plugin. Net
 
 Netlify is able to automatically start builds on pushes to a repository and accepts [webhooks](https://www.netlify.com/docs/webhooks/) to do so. Fortunately, Prismic can [trigger webhook](https://user-guides.prismic.io/webhooks/webhooks) URLs when publishing content. With those features set up, new content will automatically appear on your Netlify site.
 
-Setup your Netlify project and afterwards go to the `Build hooks` setting at `Settings → Build & deploy`. You'll receive a URL of the format `https://api.netlify.com/build_hooks/-randomstring-` after clicking `Add build hook`. On your Prismic project, visit the `Webhooks` setting and insert the copied URL into the respective field. Confirm with `Add this webhook`. Every time you publish a new document, Netlify will re-build your site.
+Setup your Netlify project and afterwards go to the `Build hooks` setting at `Settings → Build & deploy`. You'll receive a URL of the format <https://api.netlify.com/build_hooks/-randomstring-> after clicking `Add build hook`. On your Prismic project, visit the `Webhooks` setting and insert the copied URL into the respective field. Confirm with `Add this webhook`. Every time you publish a new document, Netlify will re-build your site.
 
 ## Adding more features
 
@@ -212,7 +212,7 @@ export const pageQuery = graphql`
 `
 ```
 
-## Wrapping Up
+## Wrapping up
 
 This was an example meant to help you understand how Prismic works with Gatsby. With your newfound knowledge of Prismic (and perhaps even Gatsby), you're now able to:
 

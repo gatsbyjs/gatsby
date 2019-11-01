@@ -20,7 +20,7 @@ Some general things to verify in a pull request are:
 
 - Links ought to be relative instead of absolute when linking to docs (`/docs/some-reference/` instead of `https://www.gatsbyjs.org/docs/some-reference/`)
 - Language ought to be inclusive and accessible
-- Issues and RFCs (if any) that this PR addresses ought to be linked to
+- Issues and Requests for Comments (RFCs) (if any) that this PR addresses ought to be linked to
 
 > 💡 When looking at a PR for the first time, it can help to read up on linked issues or [RFCs](/contributing/rfc-process/) (if there are any) to gain context on what the PR intends to add or fix.
 
@@ -96,7 +96,7 @@ In situations like this, testing the change locally can be very valuable.
 
 > 💡 In case this is the first time you're doing this, you might have to [set up your development environment](/contributing/setting-up-your-local-dev-environment).
 
-Testing out unpublished packages locally can be tricky. We have just the tool to make that easy for you.
+Testing out unpublished packages locally can be tricky. We have just the tool to make that easy.
 
 Say hello to your new best friend, `gatsby-dev-cli`.
 

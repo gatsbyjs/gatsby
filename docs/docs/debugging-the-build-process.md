@@ -1,16 +1,12 @@
 ---
-title: Debugging the build process
+title: Debugging the Build Process
 ---
 
 Gatsby's `build` and `develop` steps run as a Node.js application which you can debug using standard tools for Node.js applications.
 
-In this guide you will learn how to debug some code using:
+In this guide you will learn how to debug some code using various techniques.
 
-- [VS Code debugger (Auto-Config)](#vs-code-debugger-auto-config)
-- [VS Code debugger (Manual-Config)](#vs-code-debugger-manual-config)
-- [Chrome DevTools for Node](#chrome-devtools-for-node)
-
-As an example let's use the following code snippet in a `gatsby-node.js` file:
+As an example consider the following code snippet in a `gatsby-node.js` file:
 
 ```js:title=gatsby-node.js
 const { createFilePath } = require("gatsby-source-filesystem")
@@ -33,12 +29,39 @@ exports.onCreateNode = args => {
 
 There is a bug in this code and using it will produce the error below:
 
-```
+```js
 TypeError: Cannot read property 'internal' of undefined
 
   - gatsby-node.js:6 Object.exports.onCreateNode.args [as onCreateNode]
     D:/dev/blog-v2/gatsby-node.js:6:12
 ```
+
+## Debugging with Node.js' built-in console
+
+One of the fastest ways to gain insight into Gatsby's build process is using the `console` functionality [built into Node.js](https://nodejs.org/en/knowledge/getting-started/the-console-module/). This works similar to how you might be used to in the browser.
+
+Adding a `console.log` statement in the sample from above will print the variable into your terminal. There you might notice that `args` contains a lower-cased node variable.
+
+```js:title=gatsby-node.js
+const { createFilePath } = require("gatsby-source-filesystem")
+
+exports.onCreateNode = args => {
+  console.log(args) // highlight-line
+  const { actions, Node } = args
+  if (Node.internal.type === "MarkdownRemark") {
+    const { createNodeField } = actions
+
+    const value = createFilePath({ node, getNode })
+    createNodeField({
+      name: `slug`,
+      node,
+      value,
+    })
+  }
+}
+```
+
+To read more about Gatsby's build process, check out the differences between [build and runtime](/docs/overview-of-the-gatsby-build-process#build-time-vs-runtime). Generally spoken, Node.js is responsible for building Gatsby pages and therefore its' built-in objects like `console` can be used at build time. At client-side [runtime](/docs/glossary#runtime), the browser's `console.log` API will add messages to the developer tools console.
 
 ## VS Code Debugger (Auto-Config)
 
@@ -124,13 +147,13 @@ You should see Chrome DevTools start and that code execution is paused at the st
 
 Right now you can't see your files in Sources. You need to add those using the "Add folder to workspace" button and pick the directory with the code you want to debug. If you want to debug code in your `gatsby-node.js` or your local plugins, pick your project directory. If you want debug the `gatsby` package you will have to pick the `gatsby` directory inside `node_modules`.
 
-This example has problematic code in your local `gatsby-node.js` file, so let's add the directory containing it to Sources. You should have a directory with your code in the left pane:
+This example has problematic code in your local `gatsby-node.js` file, so add the directory containing it to Sources. You should have a directory with your code in the left pane:
 
 ![Files added to Sources tab](./images/chrome-devtools-files.png)
 
 ### Using DevTools
 
-Let's go ahead and add a breakpoint just before the place that the error is thrown. To add a breakpoint navigate to `gatsby-node.js` and left click on a line number:
+Go ahead and add a breakpoint just before the place that the error is thrown. To add a breakpoint navigate to `gatsby-node.js` and left click on a line number:
 
 ![Added breakpoint](./images/chrome-devtools-new-breakpoint.png)
 
@@ -140,11 +163,11 @@ Now you can resume code execution by clicking the "resume" icon in the DevTools 
 
 To inspect variables you can hover your mouse over them or go to the `Scope` section in the right-hand pane (either collapse the "Call Stack" section or scroll through it to the bottom).
 
-In the example `Node` is `undefined` and to figure out why, let's go backwards. `Node` is extracted from `args` so let's examine that by hovering `args`:
+In the example `Node` is `undefined` and to figure out why, hover over `args` where `Node` should be destructured from.
 
 ![Examine variable](./images/chrome-devtools-examine-var.png)
 
-We can now see the problem - `args` doesn't contain `Node` - it contains `node`. So this small typographic mistake was causing our code to fail. Adjusting our code to use a lowercase `node` fixes the problem and we did that without adding tons of `console.log` output!
+You can now see the problem - `args` doesn't contain `Node` - it contains `node`. So this small typographic mistake was causing your code to fail. Adjusting your code to use a lowercase `node` fixes the problem and you did that without adding tons of `console.log` output!
 
 ### Finishing thoughts on DevTools
 
