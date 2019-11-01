@@ -2,30 +2,44 @@
 title: "Winning Over Content Creators"
 ---
 
-Content creators can be potentially some of the heaviest end-users of your Gatsby projects when they create and manage the content used in your project. If you're a developer, you may find that simply talking to content creators about why _you_ like Gatsby is enough to get them interested. Below are topics a content creator cares about and how Gatsby can improve these areas.
+If you spend much time building marketing and other informational sites, you're probably used to leaving the day-to-day updates and maintenance of the site to content creators. For this reason, content creators are highly influential stakeholders in any decision around changes to content management tools and the frameworks/tech stack that interacts with those tools. The performance advantages of Gatsby and ability to pull content from any source are certainly enough to get them interested, but here are some talking points and resources to help convince them that Gatsby is right for their site.
 
 Some specific things that content creators care about include:
 
-- **Using tools they are familiar with.** The content creator probably has tools and workflows that they are already using, like a CMS. Gatsby could be used to integrate and possibly improve that workflow.
-- **Consistency** Consistency is key for a content creator, so their content matches the related content and branding.
-- **Audience**. Probably the biggest thing the content creator cares about is the audience, for who are they creating content?
-- **Flexible content**. Content creators care about personalizing content based on the audience that is viewing it, and creating multiple kinds of content.
+- **Building efficient and clear workflows** Content creators often have to manage lots of different projects with lots of little deadlines. As a result, they often put a lot of work into establishing easy, repeatable patterns for completing their tasks. This frees up their time and energy for creating better content and meeting strategic goals.
+- **Search engine optimization (SEO)** Content creators want people to be able to find their content! One of the best ways to do this is understanding how content is crawled by search engines and following SEO best practices.
+- **Understanding their audience** Web content is meant to engage visitors, educate them, move them towards certain calls to action, and persuade them that you understand and can meet their specific needs. Understanding your visitors' specific needs and interests is critical to creating engaging content.
+- **Easy site management** Publishing content to a website is generally the last step in any content project. If that step becomes a bottleneck or barrier for content creators who think they're in the home stretch, that can be extremely frustrating. It's even more frustrating if that project is a time-sensitive, last-minute product announcement or other high-stakes update.
 
-## Benefits
+## Basic explanation
 
-Content creators may be curious about topics such as current workflow, new possibilities, flexibility.
+Here’s an example of a basic explanation of Gatsby for content creators:
+
+> Gatsby is a framework for building modern websites and applications. It can pull data into your site from any and all CMSs or other sources you currently use. Gatsby sites have built-in performance optimization and other web best practices, and organizations that have moved their sites to Gatsby have seen significant improvements in organic search traffic and lead conversion.
+
+## Specific Benefits
+
+Content creators may be curious about how common content management systems can fit together with Gatsby, how it impacts user engagement, and how Gatsby's performance advantages can improve the visibility of their content.
 
 ### Use the tools you already know and love
 
-Gatsby can be configured to work with many CMS platforms and databases out of the box, with the ability to create additional source plugins for any other tools: including tools you're already using. If you love using your current CMS, great! Gatsby doesn’t decide your workflow, you do.
+> Gatsby can be configured to work with many CMS platforms and databases out of the box, including the CMS and tools you're already using. If you love using your current CMS and have carefully crafted workflows for your specific needs and tasks, great! Gatsby doesn’t decide your workflow, you do.
 
-### Choose the best tools for your content and audience
+### Better audience engagement and lead conversion
+
+> Site speed and performance has a huge impact on sales and customer engagement. A [recent Akamai study](https://www.akamai.com/uk/en/about/news/press/2017-press/akamai-releases-spring-2017-state-of-online-retail-performance-report.jsp) showed that a 100 millisecond delay in a site’s load time hurt conversion rates by 7%, and 53% of mobile users will leave pages that take more than 3 seconds to load. Gatsby sites are consistently 2-3x faster than similar sites built with different tools, and site owners have seen their [lead generation increase by up to 60% after transitioning to Gatsby](https://www.gatsbyjs.org/blog/2018-11-16-youfit-case-study/).
+
+### Improved search traffic
+
+> Site speed is one of the factors Google uses in its search ranking algorithm, and slow site speeds can have a negative snowball effect on your SEO. Slower sites take longer to be crawled and indexed by search engines, they have higher bounce rates, and lower conversion rates, all of which will hurt your rankings. Gatsby sites have [built-in web and mobile performance optimizations](https://www.gatsbyjs.org/blog/2018-11-07-gatsby-for-apps/#why-gatsby-for-apps). It actually takes more effort to make a Gatsby site perform badly. Learn more about [the impact of page speed on SEO on Moz](https://moz.com/learn/seo/page-speed).
+
+### Choose the best tools for your content and your users
 
 With Gatsby, you can pick whichever tools work best for your site and your content - choose the best CMS, the best e-commerce tool, the best video hosting, and build your own content stack without worrying about unreliable plugins or the politics of software partnerships. Gain full control over how your content gets delivered to your audience.
 
 ## Conclusion
 
-Gatsby offers unparalleled flexibility so you can have the benefits of Gatsby without compromising the efficiency and power of your favorite content tools. Content creators can keep their existing workflows and have plenty of room to grow their site in exciting new ways, empowering them to do what they do best: create captivating content for their audience.
+Gatsby offers unparalleled flexibility so you can have the benefits of Gatsby without compromising the efficiency and power of your preferred content tools. Content creators can keep their existing workflows and have plenty of room to grow their site in exciting new ways, empowering them to do what they do best: create captivating content for their audience.
 
 ## Other resources
 
