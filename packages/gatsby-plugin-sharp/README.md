@@ -60,7 +60,7 @@ plugins: [
 
 ### fixed
 
-Automatically create sizes for different resolutions — we do 1x, 1.5x, and 2x.
+Automatically create sizes for different resolutions — you can do 1x, 1.5x, and 2x.
 
 #### Parameters
 
@@ -213,7 +213,7 @@ the original image, allowing the original image and its colors to partially
 "shine through". _Heads up_: If the original image contains an alpha channel it
 will be [flattened][15] before creating the composite.
 
-This works by adding an alpha channel to the duotone'd image - then we let Sharp
+This works by adding an alpha channel to the duotone'd image - then you let Sharp
 do its magic via
 [`overlayWith`](http://sharp.pixelplumbing.com/en/stable/api-composite/#overlaywith);
 quoting the Sharp documentation:
