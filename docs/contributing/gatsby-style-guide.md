@@ -149,7 +149,7 @@ abstract syntax tree (AST) is ..."
 
 ### Use SEO optimized titles
 
-This explains how to create a doc that shows up in search engines like Google or Bing.
+This explains how to account for Search Engine Optimization (SEO) and create a doc that shows up in search engines like Google or Bing.
 
 When you create the new guide or tutorial under `/docs/`, you’ll either create a file or a folder if there will be images pulled into the doc.
 
