@@ -23,6 +23,10 @@
     {
       "groupName": "patch updates in packages",
       "updateTypes": ["patch"]
+    },
+    {
+      "depTypeList": ["engines"],
+      "enabled": false
     }
   ],
   "timezone": "GMT",

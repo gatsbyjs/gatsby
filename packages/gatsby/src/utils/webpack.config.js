@@ -469,6 +469,10 @@ module.exports = async (
       runtimeChunk: {
         name: `webpack-runtime`,
       },
+      // use hashes instead of ids for module identifiers
+      // TODO update to deterministic in webpack 5 (hashed is deprecated)
+      // @see https://webpack.js.org/guides/caching/#module-identifiers
+      moduleIds: `hashed`,
       splitChunks: {
         name: false,
         chunks: `all`,
@@ -497,6 +501,8 @@ module.exports = async (
             test: /\.(css|scss|sass|less|styl)$/,
             chunks: `all`,
             enforce: true,
+            // this rule trumps all other rules because of the priority.
+            priority: 10,
           },
         },
       },
