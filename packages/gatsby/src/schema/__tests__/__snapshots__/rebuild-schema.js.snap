@@ -1,0 +1,164 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`build and update schema for other types creates derived types 1`] = `
+"input BarFieldsFilterInput {
+  field1: StringQueryOperatorInput
+}"
+`;
+
+exports[`build and update schema for other types creates derived types 2`] = `
+"type BarFields {
+  field1: String
+}"
+`;
+
+exports[`build and update schema for other types creates derived types 3`] = `
+"input BarFilterInput {
+  id: StringQueryOperatorInput
+  parent: NodeFilterInput
+  children: NodeFilterListInput
+  internal: InternalFilterInput
+  fields: BarFieldsFilterInput
+}"
+`;
+
+exports[`build and update schema for other types creates derived types 4`] = `
+"input BarSortInput {
+  fields: [BarFieldsEnum]
+  order: [SortOrderEnum] = [ASC]
+}"
+`;
+
+exports[`build and update schema for other types creates derived types 5`] = `
+"enum BarFieldsEnum {
+  id
+  parent___id
+  parent___parent___id
+  parent___parent___parent___id
+  parent___parent___parent___children
+  parent___parent___children
+  parent___parent___children___id
+  parent___parent___children___children
+  parent___parent___internal___content
+  parent___parent___internal___contentDigest
+  parent___parent___internal___description
+  parent___parent___internal___fieldOwners
+  parent___parent___internal___ignoreType
+  parent___parent___internal___mediaType
+  parent___parent___internal___owner
+  parent___parent___internal___type
+  parent___children
+  parent___children___id
+  parent___children___parent___id
+  parent___children___parent___children
+  parent___children___children
+  parent___children___children___id
+  parent___children___children___children
+  parent___children___internal___content
+  parent___children___internal___contentDigest
+  parent___children___internal___description
+  parent___children___internal___fieldOwners
+  parent___children___internal___ignoreType
+  parent___children___internal___mediaType
+  parent___children___internal___owner
+  parent___children___internal___type
+  parent___internal___content
+  parent___internal___contentDigest
+  parent___internal___description
+  parent___internal___fieldOwners
+  parent___internal___ignoreType
+  parent___internal___mediaType
+  parent___internal___owner
+  parent___internal___type
+  children
+  children___id
+  children___parent___id
+  children___parent___parent___id
+  children___parent___parent___children
+  children___parent___children
+  children___parent___children___id
+  children___parent___children___children
+  children___parent___internal___content
+  children___parent___internal___contentDigest
+  children___parent___internal___description
+  children___parent___internal___fieldOwners
+  children___parent___internal___ignoreType
+  children___parent___internal___mediaType
+  children___parent___internal___owner
+  children___parent___internal___type
+  children___children
+  children___children___id
+  children___children___parent___id
+  children___children___parent___children
+  children___children___children
+  children___children___children___id
+  children___children___children___children
+  children___children___internal___content
+  children___children___internal___contentDigest
+  children___children___internal___description
+  children___children___internal___fieldOwners
+  children___children___internal___ignoreType
+  children___children___internal___mediaType
+  children___children___internal___owner
+  children___children___internal___type
+  children___internal___content
+  children___internal___contentDigest
+  children___internal___description
+  children___internal___fieldOwners
+  children___internal___ignoreType
+  children___internal___mediaType
+  children___internal___owner
+  children___internal___type
+  internal___content
+  internal___contentDigest
+  internal___description
+  internal___fieldOwners
+  internal___ignoreType
+  internal___mediaType
+  internal___owner
+  internal___type
+  fields___field1
+}"
+`;
+
+exports[`build and update schema for other types creates derived types 6`] = `
+"type BarConnection {
+  totalCount: Int!
+  edges: [BarEdge!]!
+  nodes: [Bar!]!
+  pageInfo: PageInfo!
+  distinct(field: BarFieldsEnum!): [String!]!
+  group(skip: Int, limit: Int, field: BarFieldsEnum!): [BarGroupConnection!]!
+}"
+`;
+
+exports[`build and update schema for other types creates derived types 7`] = `
+"type BarEdge {
+  next: Bar
+  node: Bar!
+  previous: Bar
+}"
+`;
+
+exports[`build and update schema for other types creates derived types 8`] = `
+"type BarGroupConnection {
+  totalCount: Int!
+  edges: [BarEdge!]!
+  nodes: [Bar!]!
+  pageInfo: PageInfo!
+  field: String!
+  fieldValue: String
+}"
+`;
+
+exports[`build and update schema for other types creates derived types for nested fields 1`] = `
+"type NestedNestedFooBaz {
+  deep: Boolean
+}"
+`;
+
+exports[`build and update schema for other types creates derived types for nested fields 2`] = `
+"input NestedNestedFooBazFilterInput {
+  deep: BooleanQueryOperatorInput
+}"
+`;

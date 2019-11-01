@@ -77,6 +77,14 @@ const build = async ({ parentSpan }) => {
   span.finish()
 }
 
+const getDirtyTypes = () => {
+  const { inferenceMetadata } = store.getState()
+
+  return Object.keys(inferenceMetadata).filter(
+    type => inferenceMetadata[type].dirty
+  )
+}
+
 const rebuildWithTypes = async ({ typeNames, parentSpan }) => {
   const spanArgs = parentSpan ? { childOf: parentSpan } : {}
   const span = tracer.startSpan(
@@ -125,4 +133,5 @@ module.exports = {
   build,
   rebuildWithSitePage,
   rebuildWithTypes,
+  getDirtyTypes,
 }
