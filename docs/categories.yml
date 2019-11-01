@@ -56,7 +56,6 @@ starter:
   - Styling:Material
   - Styling:PostCSS
   - Styling:SCSS
-  - Styling:Semantic UI
   - Styling:Tailwind
   - Styling:Other
   - Styling:None
