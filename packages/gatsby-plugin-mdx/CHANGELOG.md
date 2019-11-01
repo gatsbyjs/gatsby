@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.55](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.54...gatsby-plugin-mdx@1.0.55) (2019-10-29)
+
+### Bug Fixes
+
+- **gatsby-plugin-mdx:** display better error message for MDX `html` field in development ([#19111](https://github.com/gatsbyjs/gatsby/issues/19111)) ([ef9efb9](https://github.com/gatsbyjs/gatsby/commit/ef9efb9))
+
 ## [1.0.54](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.53...gatsby-plugin-mdx@1.0.54) (2019-10-28)
 
 ### Bug Fixes

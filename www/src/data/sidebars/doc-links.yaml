@@ -129,10 +129,10 @@
             - title: Using Gatsby Without GraphQL
               link: /docs/using-gatsby-without-graphql/
               breadcrumbTitle: Gatsby Without GraphQL
-            - title: Sourcing From the Filesystem
+            - title: Sourcing from the Filesystem
               link: /docs/sourcing-from-the-filesystem/
               breadcrumbTitle: From the Filesystem
-            - title: Sourcing From Databases
+            - title: Sourcing from Databases
               link: /docs/sourcing-from-databases/
               breadcrumbTitle: From Databases
             - title: Sourcing from Hosted Services
@@ -187,7 +187,7 @@
               link: /docs/use-static-query/
               breadcrumbTitle: The useStaticQuery Hook
             - title: Using GraphQL Fragments
-              link: /docs/using-fragments/
+              link: /docs/using-graphql-fragments/
             - title: Creating Slugs for Pages
               link: /docs/creating-slugs-for-pages/
             - title: Creating Pages from Data Programmatically
@@ -239,6 +239,8 @@
           items:
             - title: Starter Library
               link: /starters/
+            - title: Modifying a Starter
+              link: /docs/modifying-a-starter/
             - title: Creating a Starter
               link: /docs/creating-a-starter/
         - title: Themes
@@ -368,6 +370,9 @@
             - title: Adding Forms
               link: /docs/adding-forms/
               breadcrumbTitle: Forms
+            - title: Adding React Components
+              link: /docs/adding-react-components/
+              breadcrumbTitle: React Components
             - title: Building a Contact Form
               link: /docs/building-a-contact-form/
             - title: Adding a 404 Page

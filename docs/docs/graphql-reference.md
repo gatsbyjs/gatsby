@@ -12,7 +12,7 @@ For more information, read about [why Gatsby uses GraphQL](/docs/why-gatsby-uses
 
 ## Basic query
 
-Start with the basics, pulling up the site `title` from your `gatsby-config.js`'s `siteMetaData`. Here the query is on the left and the results are on the right.
+Start with the basics, pulling up the site `title` from your `gatsby-config.js`'s `siteMetadata`. Here the query is on the left and the results are on the right.
 
 <iframe title="A basic query" src="https://711808k40x.sse.codesandbox.io/___graphql?query=%7B%0A%20%20site%20%7B%0A%20%20%20%20siteMetadata%20%7B%0A%20%20%20%20%20%20title%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&explorerIsOpen=false" width="600" height="400"></iframe>
 

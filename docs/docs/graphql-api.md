@@ -225,7 +225,7 @@ For examples, refer to the [query recipes](/docs/recipes/#6-querying-data) and [
 
 Fragments allow you to reuse parts of GraphQL queries. They also allow you to split up complex queries into smaller, easier to understand components.
 
-For more information, check out the docs guide on [using fragments in Gatsby](/docs/using-fragments/).
+For more information, check out the docs guide on [using fragments in Gatsby](/docs/using-graphql-fragments/).
 
 ### List of Gatsby fragments
 

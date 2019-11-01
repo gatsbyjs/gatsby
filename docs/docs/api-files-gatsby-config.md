@@ -100,7 +100,7 @@ module.exports = {
 }
 ```
 
-### Mixed plugins
+#### Mixed plugins
 
 You can add plugins with and without options in the same array. Your site's config file could look like this:
 
