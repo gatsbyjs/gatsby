@@ -37,6 +37,7 @@ const { getPagination } = require(`./types/pagination`)
 const { getSortInput, SORTABLE_ENUM } = require(`./types/sort`)
 const { getFilterInput, SEARCHABLE_ENUM } = require(`./types/filter`)
 const { isGatsbyType, GatsbyGraphQLTypeKind } = require(`./types/type-builders`)
+const { clearDerivedTypes } = require(`./types/derived-types`)
 const { printTypeDefinitions } = require(`./print`)
 
 const buildSchema = async ({
@@ -85,6 +86,10 @@ const rebuildSchemaWithTypes = async ({
     const typeComposer = schemaComposer.has(typeName)
       ? schemaComposer.getOTC(typeName)
       : createInferredTypeComposer({ typeName, schemaComposer })
+
+    // Clear derived TypeComposers and InputTypeComposers.
+    // they will be re-created in this method (unless deleted)
+    clearDerivedTypes({ schemaComposer, typeComposer })
 
     // TODO: handle type deletion
     //  (only for types originally created from inference and having 0 nodes)
@@ -1020,11 +1025,6 @@ const groupChildNodesByType = ({ nodeStore, nodes }) =>
     .value()
 
 const addTypeToRootQuery = ({ schemaComposer, typeComposer }) => {
-  // TODO: We should have an abstraction for keeping and clearing
-  // related TypeComposers and InputTypeComposers.
-  // Also see the comment on the skipped test in `rebuild-schema`.
-  typeComposer.removeInputTypeComposer()
-
   const sortInputTC = getSortInput({
     schemaComposer,
     typeComposer,

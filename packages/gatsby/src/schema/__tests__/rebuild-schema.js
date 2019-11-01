@@ -54,10 +54,10 @@ const secondPage = () => {
 
 const nodes = () => [firstPage()]
 
-describe(`build and update schema`, () => {
+describe(`build and update schema for SitePage`, () => {
   let schema
 
-  beforeAll(async () => {
+  beforeEach(async () => {
     store.dispatch({ type: `DELETE_CACHE` })
     nodes().forEach(node =>
       store.dispatch({ type: `CREATE_NODE`, payload: node })
@@ -111,13 +111,7 @@ describe(`build and update schema`, () => {
     expect(sortFieldsEnum.getValue(`context___key`)).toBeDefined()
   })
 
-  // FIXME: This is not a problem as long as the only use of rebuilding the
-  // schema to add a `context` field to `SitePage`. But it needs to work
-  // if we want to enable on-demand schema regeneration.
-  // This currently does not work because we need to invalidate all FilterInput
-  // composers on nested types as well. Alternatively, use a local cache
-  // in `filter.js` instead of checking `schemaComposer.has()`.
-  it.skip(`updates nested types on rebuild`, async () => {
+  it(`updates nested types on rebuild`, async () => {
     let fields
     let inputFields
 
@@ -125,7 +119,7 @@ describe(`build and update schema`, () => {
     expect(fields.length).toBe(1)
     expect(fields).toEqual([`oldKey`])
     inputFields = Object.keys(
-      schema.getType(`SitePageSitePageFieldsFilterInput`).getFields()
+      schema.getType(`SitePageFieldsFilterInput`).getFields()
     )
     expect(inputFields.length).toBe(1)
     expect(inputFields).toEqual([`oldKey`])
@@ -140,7 +134,7 @@ describe(`build and update schema`, () => {
     expect(fields).toEqual([`oldKey`, `key`])
 
     inputFields = Object.keys(
-      schema.getType(`SitePageSitePageFieldsFilterInput`).getFields()
+      schema.getType(`SitePageFieldsFilterInput`).getFields()
     )
     expect(inputFields.length).toBe(2)
     expect(inputFields).toEqual([`oldKey`, `key`])
