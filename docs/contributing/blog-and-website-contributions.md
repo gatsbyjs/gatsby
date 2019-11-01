@@ -28,7 +28,7 @@ As a Gatsby community member, you have unique insight into the ins and outs of l
 Things we’re looking for in Gatsby blog content:
 - Information to help others overcome challenges you’ve faced while working with Gatsby
 - Stories about how Gatsby helped you overcome different challenges on work and personal projects
-Gatsby case studies
+- Gatsby case studies
 - Showcasing a tool, fix, or other content you’ve contributed to Gatsby’s open source community
 - Showcasing a tool, fix, or other content someone else has contributed to Gatsby’s open source community
 - Clear and thoughtful explanations of technical details or complex concepts related to React, Graph QL, web and application development, open-source contribution, Gatsby core, and other Gatsby-adjacent subject matter
