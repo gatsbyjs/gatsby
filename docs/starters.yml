@@ -4281,6 +4281,19 @@
     - Storybook
     - Jest and React Testing library for snapshots and unit tests.
     - Styled-Components for all your styles.
+- url: https://gatsby-starter-saas-marketing.netlify.com/
+  repo: https://github.com/keegn/gatsby-starter-saas-marketing
+  description: A simple one page marketing site starter for SaaS companies and products
+  tags:
+    - Onepage
+    - Styling:CSS-in-JS
+    - Landing Page
+  features:
+    - Responsive
+    - Netlify ready
+    - Styled-Components
+    - Minimal design and easy to customize
+    - Great for software or product related marketing sites
 - url: https://kontent-template-gatsby-landing-page-photon.netlify.com
   repo: https://github.com/Simply007/kontent-template-gatsby-landing-page-photon
   description: Kentico Kontent based starter based on Photon starter by HTML5 UP
