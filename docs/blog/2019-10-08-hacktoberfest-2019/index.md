@@ -23,7 +23,7 @@ During Hacktoberfest, you're probably looking to contribute to an open source pr
 
 You may find these links helpful!
 
-- [How to Contribute](https://www.gatsbyjs.org/docs/how-to-contribute/)
+- [How to Contribute](https://www.gatsbyjs.org/contributing/how-to-contribute/)
 - [Code of Conduct](https://www.gatsbyjs.org/contributing/code-of-conduct/)
 - [How to Open a Pull Request](https://www.gatsbyjs.org/contributing/how-to-open-a-pull-request/)
 
