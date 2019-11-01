@@ -4291,7 +4291,6 @@
     - MDX
     - PWA
     - SEO
-    - Styling:Semantic UI
   features:
     - Easy starter for documentation-style sites
     - Use SUI React components anywhere in MDX
