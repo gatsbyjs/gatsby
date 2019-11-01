@@ -32,6 +32,3 @@ Gatsby offers unparalleled flexibility so you can have the benefits of Gatsby wi
 - If your content creator is also a marketer, the doc on [winning over marketers](/docs/winning-over-marketers) could also be useful.
 - If you want to read up on how to integrate Gatsby with different CMS platforms, the doc on [headless CMSs](/docs/headless-cms) is a great starting point. Another relevant article is ["Building Sites with Headless CMSs"](/blog/2018-2-3-sites-with-headless-cms/) by Shannon Soper.
 - Further reading could include the two-part blog by Michelle Gienow ["Delicious Simplicity ❤️ Gatsby: Building Happily Ever After"](/blog/2019-06-08-delicious-simplicity-case-study-part-1/) and ["Sharing the Gatsby Love with Content Creators"](/blog/2019-09-18-delicious-simplicity-case-study-part2/) by Linda Watkins.
-
-
-
