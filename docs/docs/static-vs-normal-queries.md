@@ -10,27 +10,15 @@ title: Static vs Normal Queries
 >
 > You can help by making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228).
 
-## How StaticQuery differs from page query
+Static queries differ from the normal Gatsby page queries in a number of ways. One example is that Gatsby is capable of handling queries with variables for pages because of it's awareness of pages while generating them. Doing the same for queries inside of specific components is not yet possible, which is where static queries are used. That means data fetched won't be dynamic (hence the name "static" query).
 
-StaticQuery can do most of the things that page query can, including fragments. The main differences are:
+_For more information on the practical differences in usage between static and normal queries, refer to the guide on [static query](/docs/static-query/#how-staticquery-differs-from-page-query), this guide discusses the differences in how they are handled internally by Gatsby_
 
-- page queries can accept variables (via `pageContext`) but can only be added to _page_ components
-- StaticQuery does not accept variables (hence the name "static"), but can be used in _any_ component, including pages
-- StaticQuery does not work with raw React.createElement calls; please use JSX, e.g. `<StaticQuery />`
-  - _NOTE: you can also use the new `useStaticQuery` hook; more information below_
-- Static Queries don't need to get run for each page.(ie:Just once)
+## The `staticQueryComponents` and `components` redux stores
 
-## useStaticQuery hook
+Gatsby stores the queries from your site in redux stores called `components` and `staticQueryComponents`. This process and a flowchart illustrating it are explained in the [query extraction](/docs/query-extraction/#store-queries-in-redux) guide.
 
-- Gatsby v2.1.0 introduces `useStaticQuery`, a Gatsby feature that allows you to use a React hook to query GraphQL
-- `useStaticQuery` is a hook, contrary to `<StaticQuery />` which is a component
-- Check out [how to query data at build time using `useStaticQuery`](https://www.gatsbyjs.org/docs/use-static-query/)
-
-### staticQueryComponents
-
-Started here because they're referenced in page-query-runner:findIdsWithDataDependencies.
-
-The redux `staticQueryComponents` is a map from component jsonName to StaticQueryObject. E.g
+The redux `staticQueryComponents` is a `Map` from component jsonName to StaticQueryObject. An example entry in that data structure looks like this:
 
 ```javascript
 {
@@ -45,18 +33,12 @@ The redux `staticQueryComponents` is a map from component jsonName to StaticQuer
 }
 ```
 
-The `staticQueryComponents` redux namespace is owned by the `static-query-components.js` reducer with reacts to `REPLACE_STATIC_QUERY` actions.
+In the example above, `blog-2018-07-17-announcing-gatsby-preview-995` is the key, with the object as its value in the `Map`.
 
-It is created in query-watcher. TODO: Check other usages
+The `staticQueryComponents` redux namespace is owned by the `static-query-components.js` reducer which reacts to `REPLACE_STATIC_QUERY` actions. It is created in `query-watcher.js` and is called in [`websocket-manager.js`](https://github.com/gatsbyjs/gatsby/blob/610b5812a815f9ecff422e9087c851cd103c8e7e/packages/gatsby/src/utils/websocket-manager.js#L85) to watch for updates to querys while you are developing, and add new data to your cache when queries change.
 
-TODO: in query-watcher.js/handleQuery, we remove jsonName from dataDependencies. How did it get there? Why is jsonName used here, but for other dependencies, it's a path?
+## Other related internal methods used static queries
 
-### Usages
+The `getQueriesSnapshot` function returns a `Map` with a snapshot of both the `staticQueryComponents` and `components` that holds all queries from Redux to watch.
 
-- [websocket-manager](#TODO). TODO
-- [query-watcher](#TODO).
-
-  - `getQueriesSnapshot` returns map with snapshot of `state.staticQueryComponents`
-  - handleComponentsWithRemovedQueries. For each staticQueryComponent, if passed in queries doesn't include `staticQueryComponent.componentPath`. TODO: Where is StaticQueryComponent created? TODO: Where is queries passed into `handleComponentsWithRemovedQueries`?
-
-  TODO: Finish above
+The `handleComponentsWithRemovedQueries` function removes static queries from Redux when they no longer have a query associated with them, which is derived from any staticQueryComponent which doesn't have a `componentPath` on it.
