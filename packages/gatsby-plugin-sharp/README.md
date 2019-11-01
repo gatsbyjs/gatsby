@@ -24,8 +24,7 @@ of PNGs then it can significantly reduce build times.
 
 ## How to use
 
-```javascript
-// In your gatsby-config.js
+```javascript:title=gatsby-config.js
 plugins: [
   {
     resolve: `gatsby-plugin-sharp`,
