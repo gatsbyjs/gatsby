@@ -37,6 +37,7 @@ module.exports = {
   extends: `react-app`,
 }
 ```
+
 ### Disabling ESLint
 
 Create an empty .eslintrc.js file to disable linting.
