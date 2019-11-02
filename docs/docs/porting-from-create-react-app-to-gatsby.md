@@ -57,7 +57,7 @@ After installation, the key things that need to change are:
 
 The following sections explain the above steps as well as other changes that you might need to make depending on the complexity of your app. A default Create React App project is able to run with just the above steps.
 
-### Project Structure
+### Project structure
 
 To show some of the differences of how your project structure could differ by moving to Gatsby, a default Create React App project looks something like this:
 
@@ -122,6 +122,7 @@ Some common globals that would need to be protected are:
 - `window`
 - `localStorage`
 - `navigator`
+- `document`
 
 Additionally, some packages that depend on globals existing (e.g. `react-router-dom`) may need to be [patched](/docs/debugging-html-builds/#fixing-third-party-modules) or migrated to other packages.
 
@@ -131,11 +132,53 @@ These are only a few examples, though all can be fixed in one of two ways:
 
 ```jsx
 if (typeof window !== `undefined`) {
-  // code using window like window.location...
+  // code that references a browser global
+  window.alert("Woohoo!")
 }
 ```
 
-2. moving references to globals into a `componentDidMount` or `useEffect` hook:
+2. For class components: moving references to browser globals into a `componentDidMount`
+
+```jsx
+
+import React, { Component } from "react"
+
+class MyComponment() extends Component {
+  render() {
+    window.alert("This will break the build")
+
+    return (
+      <div>
+        <p>Component</p>
+      </div>
+    )
+  }
+}
+```
+
+Would be changed into:
+
+```jsx
+
+import React, { Component } from "react"
+
+class MyComponment() extends Component {
+  componentDidMount() {
+    // code that references the browser global
+    window.alert("This won't break the build")
+  }
+
+  render() {
+    return (
+      <div>
+        <p>Component</p>
+      </div>
+    )
+  }
+}
+```
+
+3. For function components: moving references to browser globals into a `useEffect` hook
 
 ```jsx
 import React from "react"
@@ -163,13 +206,19 @@ const Foo = () => {
 export default Foo
 ```
 
+If these browser globals aren't protected correctly, you'll see a webpack error like the one below when building your site:
+
+```
+WebpackError: ReferenceError: window is not defined
+```
+
 For more information about errors encountered during builds, see the doc on [debugging HTML builds](/docs/debugging-html-builds/). For more information about React hooks, check out the [React docs](https://reactjs.org/docs/hooks-effect.html).
 
 ### Routing
 
 There are two possibilities of routes that you can set up: static and client-only. Gatsby automatically turns React components in the pages folder into static routes. This means that a statically rendered page directly corresponds to index.html files in the app's built assets, whereas a client-only route is rendered by the client and configured by the routing setup you define. Both types of pages can [fetch data at runtime](/docs/client-data-fetching/) just like any other React app.
 
-> **Note**: An advantage to having pages in separate files like this is a defined way of [automatically code splitting](/docs/how-code-splitting-works/), whereas Create React App requires you to use the `import()` syntax to assign what elements should be loaded dynamically
+> **Note**: An advantage to having pages in separate files like this is a defined way of [automatically code splitting](/docs/how-code-splitting-works/), whereas Create React App requires you to use the `import()` syntax to assign what elements should be loaded dynamically.
 
 For dynamic routes, you should implement routing with [@reach/router](https://reach.tech/router), which is already included with Gatsby. Dynamic routes can be implemented the same way you would implement a router in Create React App (or any other React application). However, because these routes won't be represented as HTML files in the final build, if you want users to be able to visit the routes directly (like entering the URL in the search bar), you'll need to generate pages in the `gatsby-node.js` file which is demonstrated in the [Building Apps with Gatsby](/docs/building-apps-with-gatsby/) guide.
 
@@ -191,7 +240,7 @@ Gatsby provides a `<Link />` component and a `navigate` function to help you dir
 
 ### Handling state
 
-Because Gatsby rehydrates into a regular React app, state can be handled inside of components in the same way it would in Create React App. If you use a another library for state management and want to wrap your app in some sort of global state the section on [context providers](#context-providers) will be helpful.
+Because Gatsby rehydrates into a regular React app, state can be handled inside of components in the same way it would in Create React App. If you use another library for state management and want to wrap your app in some sort of global state the section on [context providers](#context-providers) will be helpful.
 
 ### Environment Variables
 
