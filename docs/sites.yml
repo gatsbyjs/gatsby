@@ -8150,3 +8150,14 @@
   source_url: https://github.com/IoT-Arduino/Gatsby-MySteps
   built_by: Maruo
   built_by_url: https://twitter.com/DengenT
+- title: Salexa - Estetica Venezolana
+  url: https://peluqueriavenezolana.cl/
+  main_url: https://peluqueriavenezolana.cl/
+  source_url: https://github.com/enbonnet/salexa-front
+  description: >
+    Sitio de una estetica o peluqueria de venezolanos en Chile
+  categories:
+    - Marketing
+    - Business
+  built_by: Ender Bonnet
+  built_by_url: https://enbonnet.me/
