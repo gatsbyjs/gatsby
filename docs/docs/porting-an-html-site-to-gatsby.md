@@ -33,9 +33,9 @@ website-domain
 
 ### Assumptions
 
-The example site uses global CSS files (`style.css` and `normalize.css`); more sophisticated styling structures like [Sass](/docs/sass/) architectures or [CSS-in-JS](/docs/css-in-js/) can be accommodated but will not be covered here.
+The example site uses global CSS files (`style.css` and `normalize.css`); styling structures like [Sass](/docs/sass/) architectures or [CSS-in-JS](/docs/css-in-js/) can be accommodated but will not be covered here.
 
-No [client-side](/docs/glossary#client-side) JavaScript (e.g jQuery etc.) is on the example site. If your site includes client-side JavaScript libraries and functionality, Gatsby may conflict with it if not handled or removed when porting. Learn more about [Debugging HTML Builds](/docs/debugging-html-builds/).
+No [client-side](/docs/glossary#client-side) JavaScript (e.g jQuery etc.) is on the example site. If your site includes client-side JavaScript libraries and functionality, Gatsby may conflict with it at [build](/docs/glossary#build) time if not handled or removed when porting. Learn more about [Debugging HTML Builds](/docs/debugging-html-builds/).
 
 ### Development environment
 
@@ -110,9 +110,9 @@ In the following sections, you'll convert this block of HTML into its equivalent
 
 In the `/static` folder of your new Gatsby project, you can see a `favicon.ico` file, this is the Gatsby favicon! All files within `/static` will be served at the root of the app, you can put yours in there and watch it show up in the browser. The other image file in this example, `person.png`, should also be moved to the `/static` folder for later use.
 
-Gatsby negates the need for CSS `<link>` tags for local CSS. Within the `/src/pages/index.js` file, before the page component is defined, you can add a line for importing each CSS file. Gatsby will then efficiently deliver the CSS with your site.
+Gatsby's bundling system negates the need for manual CSS `<link>` tags for local CSS. Within the `/src/pages/index.js` file, before the page component is defined, you can add a line for importing each CSS file. Gatsby will then efficiently deliver the CSS with your site.
 
-Create a folder at `/src/styles` in the Gatsby project. All the css files for the project can be moved into this new folder. Add an import line for each css file to the Gatsby home page:
+Create a folder at `/src/styles` in the Gatsby project. All the CSS files for the project can be moved into this new folder. Add an `import` line for each CSS file to the Gatsby home page:
 
 ```jsx:title=/gatsby-site/src/pages/index.js
 import React from "react"
@@ -145,7 +145,7 @@ module.exports = {
 }
 ```
 
-Now you can import the `<Helmet>` component to the `index.js` file and place `<header>` & `<main>` elements for the existing HTML. Copy over the contents of the `<head>` tag, You'll no longer need the `<link>` tags for the CSS files. The Gatsby components must have a single root parent in their code structure so one technique is to add a [React Fragment component](https://reactjs.org/docs/fragments.html) around them:
+Now you can import the `<Helmet>` component to the `index.js` file and place `<header>` & `<main>` elements for the existing HTML. Copy over the contents of the `<head>` tag: you'll no longer need the `<link>` tags for the CSS files. The Gatsby components must have a single root parent in their code structure so one technique is to add a [React Fragment component](https://reactjs.org/docs/fragments.html) around them:
 
 ```jsx:title=/src/pages/index.js
 import React from "react"
@@ -230,7 +230,7 @@ The contents of the `<main>` tag can be copied over from `index.html` to your ne
 
 Opening the site in a browser again at `http://localhost:8000`, you should have a visually complete home page! You'll make the links functional next by porting more pages. Before that, this guide will briefly explore how HTML and JavaScript combine as JSX in a Gatsby application.
 
-### HTML and JavaScript
+### HTML from JavaScript
 
 The code for Gatsby pages looks like a hybrid of JavaScript and HTML. The code for each page is typically a JavaScript function describing a block of HTML given a set of inputs, or "props". Gatsby runs each page's JavaScript function during the build process to produce a static HTML file.
 
@@ -460,7 +460,7 @@ With your new Gatsby application taking shape, it's time to integrate it into yo
 
 ### Gatsby build step
 
-You now have a site that mirrors the existing HTML site section. Stop the development server if it's still running; it's time to run the production build! 🎉
+With all of the pages ported over, you now have a site that mirrors the existing HTML site. Stop the development server if it's still running; it's time to run the production build! 🎉
 
 ```shell
 gatsby build
@@ -470,7 +470,7 @@ Once a build is complete, the compiled set of files can be found in `/public`.
 
 ### Hosting the new website
 
-Once built, the contents of the `/public` folder are ready to be hosted at the root (`/`) of a domain. The files can be deployed in exactly the same way that your existing HTML site was deployed. For more deployment options, see the [Deploying and Hosting page](/docs/deploying-and-hosting/).
+Once built, the contents of the `/public` folder are ready to be hosted at the root (`/`) of a domain. The files can be deployed in similar ways to how your existing HTML site may have been deployed. For more deployment options including automation with git and cloud services, see the [Deploying and Hosting page](/docs/deploying-and-hosting/).
 
 If the Gatsby site is to be hosted at a non-root path, e.g. `example.com/blog/`, Gatsby needs to be informed so page and asset links in the built output can be prefixed.
 
@@ -532,11 +532,11 @@ website-domain
 
 ## Next steps
 
-Gatsby can handle images through direct imports to page and component files too! The [asset import documentation](/docs/importing-assets-into-files/) covers this. Once assets are handled through Gatsby, plugins can be used to optimize their processing and delivery.
+Gatsby can handle images through direct imports to page and component files too! The [asset import documentation](/docs/importing-assets-into-files/) covers this. There is also the [Gatsby Image](/docs/gatsby-image/) component for even deeper optimizations. Once assets are handled through Gatsby, plugins can be used to optimize their processing and delivery.
 
 The [building with components doc](/docs/building-with-components/) has information about why Gatsby uses React component architecture and how it fits into a Gatsby application.
 
-[Sourcing content and data](/docs/content-and-data/) is a great next step if you are interested in separating your content from your website code, such as sourcing the site title from `gatsby-config.js` with GraphQL.
+[Sourcing content and data](/docs/content-and-data/) is a great next step if you are interested in separating your content from your website code, such as sourcing the site title from `gatsby-config.js` with GraphQL and writing content in Markdown.
 
 Short guides can be found at the [recipes section](/docs/recipes) for adding functionality such as optimizing and querying local images, adding Markdown support and integrating various modern CSS tools. The [adding website functionality page](/docs/adding-website-functionality/) has longer guides for larger tasks such as making your site accessible, adding authentication, and fetching data with client-side JavaScript.
 
