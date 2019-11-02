@@ -147,7 +147,7 @@ module.exports = {
 
 Now you can import the `<Helmet>` component to the `index.js` file and place `<header>` & `<main>` elements for the existing HTML. Copy over the contents of the `<head>` tag: you'll no longer need the `<link>` tags for the CSS files. The Gatsby components must have a single root parent in their code structure so one technique is to add a [React Fragment component](https://reactjs.org/docs/fragments.html) around them:
 
-```jsx:title=/src/pages/index.js
+```jsx:title=/gatsby-site/src/pages/index.js
 import React from "react"
 import Helmet from "react-helmet" // highlight-line
 
@@ -178,7 +178,7 @@ Gatsby itself provides a number of core building blocks: `<Link>` is one of them
 
 Copy over the `<header>` element contents, changing `<a>` elements to `<Link>` components:
 
-```jsx:title=/src/pages/index.js
+```jsx:title=/gatsby-site/src/pages/index.js
 import React from "react"
 import Helmet from "react-helmet"
 import { Link } from "gatsby" // highlight-line
