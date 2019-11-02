@@ -140,10 +140,11 @@ module.exports = {
         // URLs for thumbnails, or any other media detail.
         // Defaults to false
         keepMediaSizes: false,
-        // use a custom normalizer which is applied before the built-in ones.
-        afterFetchNormalizer: function({ entities }) {
-          return entities
-        },
+        // add/remove wordpress data normalizers
+        // each normalizer is an object with name and normalizer property being a function that accepts
+        // object with entities array and different helpers and configuration settings
+        normalizers: normalizers =>
+          [dropUnusedMediaNormalizer].concat(normalizers),
         // use a custom normalizer which is applied after the built-in ones.
         normalizer: function({ entities }) {
           return entities
@@ -800,6 +801,39 @@ module.exports = {
 
 Next to the entities, the object passed to the custom normalizer function also contains other helpful Gatsby functions
 and also your `wordpress-source-plugin` options from `gatsby-config.js`. To learn more about the passed object see the [source code](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/src/gatsby-node.js).
+
+### Example with modyfing gatsby-source-wordpress normalizers
+
+```javascript
+const dropUnusedMediaNormalizer = {
+  name: "dropUnusedMediaNormalizer",
+  normalizer: function({ entities }) {
+    return entities.filter(e => {
+      if (e.__type === "wordpress__wp_media" && !e.post) {
+        return false
+      }
+      return true
+    })
+  },
+}
+```
+
+Adding this normalizer on top of other/builtin normalizers, so unused media entities are not further processed.
+
+```javascript
+module.exports = {
+  plugins: [
+    {
+      resolve: "gatsby-source-wordpress",
+      options: {
+        // ...
+        normalizers: normalizers =>
+          [dropUnusedMediaNormalizer].concat(normalizers),
+      },
+    },
+  ],
+}
+```
 
 ## Site's `gatsby-node.js` example
 
