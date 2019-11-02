@@ -23,6 +23,7 @@ let _concurrentRequests
 let _includedRoutes
 let _excludedRoutes
 let _normalizer
+let _normalizers
 let _keepMediaSizes
 
 exports.sourceNodes = async (
@@ -93,80 +94,80 @@ exports.sourceNodes = async (
   let wordpressDataNormalizers = [
     // Create fake wordpressId form element who done have any in the database
     {
-      name: "generateFakeWordpressId",
+      name: `generateFakeWordpressId`,
       normalizer: ({ entities }) => normalize.generateFakeWordpressId(entities),
     },
     // Remove ACF key if it's not an object, combine ACF Options
     {
-      name: "normalizeACF",
+      name: `normalizeACF`,
       normalizer: ({ entities }) => normalize.normalizeACF(entities),
     },
     // Combine ACF Option Data entities into one but split by IDs + options
     {
-      name: "combineACF",
+      name: `combineACF`,
       normalizer: ({ entities }) => normalize.combineACF(entities),
     },
     // Creates entities from object collections of entities
     {
-      name: "normalizeEntities",
+      name: `normalizeEntities`,
       normalizer: ({ entities }) => normalize.normalizeEntities(entities),
     },
     // Standardizes ids & cleans keys
     {
-      name: "standardizeKeys",
+      name: `standardizeKeys`,
       normalizer: ({ entities }) => normalize.standardizeKeys(entities),
     },
     // Converts to use only GMT dates
     {
-      name: "standardizeDates",
+      name: `standardizeDates`,
       normalizer: ({ entities }) => normalize.standardizeDates(entities),
     },
     // Lifts all "rendered" fields to top-level.
     {
-      name: "liftRenderedField",
+      name: `liftRenderedField`,
       normalizer: ({ entities }) => normalize.liftRenderedField(entities),
     },
     // Exclude entities of unknown shape
     {
-      name: "excludeUnknownEntities",
+      name: `excludeUnknownEntities`,
       normalizer: ({ entities }) => normalize.excludeUnknownEntities(entities),
     },
     // Creates Gatsby IDs for each entity
     {
-      name: "createGatsbyIds",
+      name: `createGatsbyIds`,
       normalizer: ({ creteNodeId, entities, _siteURL }) =>
         normalize.createGatsbyIds(createNodeId, entities, _siteURL),
     },
     // Creates links between authors and user entities
     {
-      name: "mapAuthorsToUsers",
+      name: `mapAuthorsToUsers`,
       normalizer: ({ entities }) => normalize.mapAuthorsToUsers(entities),
     },
     // Creates links between posts and tags/categories.
     {
-      name: "mapPostsToTagsCategories",
+      name: `mapPostsToTagsCategories`,
       normalizer: ({ entities }) =>
         normalize.mapPostsToTagsCategories(entities),
     },
     // Creates links between tags/categories and taxonomies.
     {
-      name: "mapTagsCategoriesToTaxonomies",
+      name: `mapTagsCategoriesToTaxonomies`,
       normalizer: ({ entities }) =>
         normalize.mapTagsCategoriesToTaxonomies(entities),
     },
     // Normalize menu items
     {
-      name: "normalizeMenuItems",
+      name: `normalizeMenuItems`,
       normalizer: ({ entities }) => normalize.normalizeMenuItems(entities),
     },
     // Creates links from entities to media nodes
     {
-      name: "mapEntitiesToMedia",
+      name: `mapEntitiesToMedia`,
       normalizer: ({ entities }) => normalize.mapEntitiesToMedia(entities),
     },
     // Downloads media files and removes "sizes" data as useless in Gatsby context.
     {
-      name: "downloadMediaFiles",
+      name: `downloadMediaFiles`,
       normalizer: async ({
         entities,
         store,
@@ -194,12 +195,12 @@ exports.sourceNodes = async (
     },
     // Creates links between elements and parent element.
     {
-      name: "mapElementsToParent",
+      name: `mapElementsToParent`,
       normalizer: ({ entities }) => normalize.mapElementsToParent(entities),
     },
     // Search and replace Content Urls
     {
-      name: "searchReplaceContentUrls",
+      name: `searchReplaceContentUrls`,
       normalizer: ({ entities, searchAndReplaceContentUrls }) =>
         normalize.searchReplaceContentUrls({
           entities,
@@ -207,11 +208,11 @@ exports.sourceNodes = async (
         }),
     },
     {
-      name: "mapPolylangTranslations",
+      name: `mapPolylangTranslations`,
       normalizer: ({ entities }) => normalize.mapPolylangTranslations(entities),
     },
     {
-      name: "createUrlPathsFromLinks",
+      name: `createUrlPathsFromLinks`,
       normalizer: ({ entities }) => normalize.createUrlPathsFromLinks(entities),
     },
   ]
@@ -244,14 +245,14 @@ exports.sourceNodes = async (
   // apply custom normalizer
   if (typeof _normalizer === `function`) {
     wordpressDataNormalizers.push({
-      name: "customNormalizer",
+      name: `customNormalizer`,
       normalizer: helpers => _normalizer(helpers),
     })
   }
 
   // creates nodes for each entry
   wordpressDataNormalizers.push({
-    name: "createNodesFromEntities",
+    name: `createNodesFromEntities`,
     normalizer: ({ entities, createNode, createContentDigest }) =>
       normalize.createNodesFromEntities({
         entities,
