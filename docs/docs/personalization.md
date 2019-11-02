@@ -6,7 +6,7 @@ title: Personalization
 
 - Have you ever landed on a website that greeted you by name?
 
-- Did you ever search for a book and realized your suggested results based on your previous purchases?
+- Did you ever search for a book and realize the suggested results were based on your previous purchases?
 
 These are examples of personalization. Personalization adjusts the content of a website, and creates a custom experience for users. With personalization, one website can offer a variety of experiences to different visitors.
 
@@ -14,7 +14,7 @@ These are examples of personalization. Personalization adjusts the content of a 
 
 If you are [creating an e-commerce site](/tutorial/ecommerce-tutorial/), personalization is key in converting your visitors into buyers. Online merchants use personalization as a way to suggest relevant items to a shopper.
 
-Outside of e-commerce, personalization is important for other types of websites, like e-learning. Personalization, if implemented strategically, can help educational sites deliver more targeted learning experiences. For example, if a learner is struggling with the learning the basics of JavaScript, the website can give the learner additional JavaScript practice problems.
+Outside of e-commerce, personalization is important for other types of websites, like e-learning. Personalization, if implemented strategically, can help educational sites deliver more targeted learning experiences. For example, if a learner is struggling with learning the basics of JavaScript, the website can give the learner additional JavaScript practice problems.
 
 ## Using Personalization with Gatsby
 
