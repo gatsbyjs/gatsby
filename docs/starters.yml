@@ -4294,26 +4294,6 @@
     - Styled-Components
     - Minimal design and easy to customize
     - Great for software or product related marketing sites
-- url: https://kontent-template-gatsby-landing-page-photon.netlify.com
-  repo: https://github.com/Simply007/kontent-template-gatsby-landing-page-photon
-  description: Kentico Kontent based starter based on Photon starter by HTML5 UP
-  tags:
-    - CMS:Headless
-    - CMS:Kontent
-    - Netlify
-    - Landing Page
-    - HTML5UP
-    - Styling:SCSS
-  features:
-    - Kentico Kontent Caas plafrorm as the data source
-    - Landing page divided by section.
-    - Support for code syntax highlighting
-    - Includes plugins for easy, beautiful typography
-    - Includes React Helmet to allow editing site meta tags
-    - Includes plugins for offline support out of the box
-    - Font awesome
-    - Material Icons
-    - CSS Grid
 - url: https://gatsby-starter-typescript-blog-forms.netlify.com/
   repo: https://github.com/joerneu/gatsby-starter-typescript-blog-forms
   description: Gatsby starter for a website in TypeScript with a homepage, blog and forms
@@ -4330,9 +4310,9 @@
     - ESLint and Prettier for safety and consistent code style
     - Uses the official Gatsby Blog Core theme for data processing
     - Functional components and React Hooks
-    - SEO component
-    - Minimal styling with React Emotion that can easily be extended
+    - SEO component with React Helmet
+    - Minimal responsive styling with React Emotion that can easily be extended
     - Theming of components and Markdown (MDX) with Emotion Theming
     - Forms with Formite (React Hooks Form library)
-    - Accessible UI components with Reakit
-    - Very small bundle size
+    - Accessible UI components implemented with Reakit and styling based on mini.css
+    - Small bundle size
