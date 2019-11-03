@@ -52,7 +52,7 @@ const PrevAndNext = ({ prev = null, next = null, ...props }) => {
                   marginLeft: t => `-${t.space[4]}`,
                 },
                 display: `inline-flex`,
-                alignItems: `center`
+                alignItems: `center`,
               }}
             >
               <ArrowBackIcon sx={{ verticalAlign: `sub` }} />
@@ -77,7 +77,7 @@ const PrevAndNext = ({ prev = null, next = null, ...props }) => {
                   marginRight: t => `-${t.space[4]}`,
                 },
                 display: `inline-flex`,
-                alignItems: `center`
+                alignItems: `center`,
               }}
             >
               {next.title}
