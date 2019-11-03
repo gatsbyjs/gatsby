@@ -6,5 +6,6 @@ module.exports = {
         url: `http://wpgraphql.local/graphql`,
       },
     },
+    `gatsby-plugin-chakra-ui`,
   ],
 }

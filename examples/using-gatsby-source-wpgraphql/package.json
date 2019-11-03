@@ -9,7 +9,12 @@
     "serve": "gatsby serve"
   },
   "dependencies": {
-    "gatsby": "^2.17.2",
+    "@chakra-ui/core": "^0.4.1",
+    "@emotion/core": "^10.0.22",
+    "@emotion/styled": "^10.0.23",
+    "emotion-theming": "^10.0.19",
+    "gatsby": "2.17.2-dev-1572566228282",
+    "gatsby-plugin-chakra-ui": "^0.1.0",
     "react": "^16.3.2",
     "react-dom": "^16.3.2"
   },
