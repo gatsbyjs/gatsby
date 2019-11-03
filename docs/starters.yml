@@ -4298,7 +4298,7 @@
   repo: https://github.com/jeremylynch/gatsby-strapi-starter
   description: Get started with strapi, bootstrap (reactstrap) and gatsby FAST! 
   tags:
-    - CMS: Strapi
+    - CMS:Strapi
     - Bootstrap
   features:
     - Strapi
