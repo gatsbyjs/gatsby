@@ -314,16 +314,15 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
   )
 
   bootstrapTest(
-    `given MARKDOWN without excerpt separator, falls back to pruneLength where the calculation of length does not count markdown characters`,
+    `given MARKDOWN, pruning is done not counting markdown characters`,
     contentWithoutSeparator,
     `excerpt(pruneLength: 19, format: MARKDOWN)`,
     node => {
       expect(node).toMatchSnapshot()
-      // we want the pruning to ignore markdown chars
+      // we want the pruning to preserve markdown chars and not count them in the length
       expect(node.excerpt.length).toBe(23)
       expect(node.excerpt).toBe(`Where oh where **is**…\n`)
-    },
-    { pluginOptions: { excerpt_separator: `<!-- end -->` } }
+    }
   )
   const content = `---
 title: "my little pony"
