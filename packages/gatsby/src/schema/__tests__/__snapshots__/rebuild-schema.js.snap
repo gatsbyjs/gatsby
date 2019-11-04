@@ -1,35 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`build and update schema for other types creates derived types 1`] = `
-"input BarFieldsFilterInput {
-  field1: StringQueryOperatorInput
-}"
-`;
-
-exports[`build and update schema for other types creates derived types 2`] = `
-"type BarFields {
-  field1: String
-}"
-`;
-
-exports[`build and update schema for other types creates derived types 3`] = `
-"input BarFilterInput {
-  id: StringQueryOperatorInput
-  parent: NodeFilterInput
-  children: NodeFilterListInput
-  internal: InternalFilterInput
-  fields: BarFieldsFilterInput
-}"
-`;
-
-exports[`build and update schema for other types creates derived types 4`] = `
-"input BarSortInput {
-  fields: [BarFieldsEnum]
-  order: [SortOrderEnum] = [ASC]
-}"
-`;
-
-exports[`build and update schema for other types creates derived types 5`] = `
+exports[`build and update schema for other types creates derived types 8`] = `
 "enum BarFieldsEnum {
   id
   parent___id
@@ -118,47 +89,5 @@ exports[`build and update schema for other types creates derived types 5`] = `
   internal___owner
   internal___type
   fields___field1
-}"
-`;
-
-exports[`build and update schema for other types creates derived types 6`] = `
-"type BarConnection {
-  totalCount: Int!
-  edges: [BarEdge!]!
-  nodes: [Bar!]!
-  pageInfo: PageInfo!
-  distinct(field: BarFieldsEnum!): [String!]!
-  group(skip: Int, limit: Int, field: BarFieldsEnum!): [BarGroupConnection!]!
-}"
-`;
-
-exports[`build and update schema for other types creates derived types 7`] = `
-"type BarEdge {
-  next: Bar
-  node: Bar!
-  previous: Bar
-}"
-`;
-
-exports[`build and update schema for other types creates derived types 8`] = `
-"type BarGroupConnection {
-  totalCount: Int!
-  edges: [BarEdge!]!
-  nodes: [Bar!]!
-  pageInfo: PageInfo!
-  field: String!
-  fieldValue: String
-}"
-`;
-
-exports[`build and update schema for other types creates derived types for nested fields 1`] = `
-"type NestedNestedFooBaz {
-  deep: Boolean
-}"
-`;
-
-exports[`build and update schema for other types creates derived types for nested fields 2`] = `
-"input NestedNestedFooBazFilterInput {
-  deep: BooleanQueryOperatorInput
 }"
 `;

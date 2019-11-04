@@ -184,6 +184,16 @@ describe(`build and update schema for other types`, () => {
   const deleteNode = node =>
     store.dispatch({ type: `DELETE_NODE`, payload: node })
 
+  const addNodeField = ({ node, name, value }) => {
+    node.fields = node.fields || {}
+    node.fields[name] = value
+    store.dispatch({
+      type: `ADD_FIELD_TO_NODE`,
+      payload: node,
+      addedField: name,
+    })
+  }
+
   let schema
   let initialPrintedSchema
   let initialTypes
@@ -193,7 +203,7 @@ describe(`build and update schema for other types`, () => {
 
     await build({})
     schema = store.getState().schema
-    initialTypes = Object.keys(schema.getTypeMap())
+    initialTypes = Object.keys(schema.getTypeMap()).sort()
     initialPrintedSchema = printSchema(schema)
   })
 
@@ -227,10 +237,14 @@ describe(`build and update schema for other types`, () => {
       internal: { type: `Foo`, contentDigest: `0` },
       newField: 1,
     }
-    const schemaAdded = await addNodeAndRebuild(node)
-    const fooFields = schemaAdded.getType(`Foo`).getFields()
+    const newSchema = await addNodeAndRebuild(node)
+
+    const fooFields = newSchema.getType(`Foo`).getFields()
     expect(Object.keys(fooFields)).toEqual(initialFooFields.concat(`newField`))
     expect(fooFields.newField.type.name).toEqual(`Int`)
+
+    const types = Object.keys(newSchema.getTypeMap()).sort()
+    expect(types).toEqual(initialTypes)
 
     await expectSymmetricDelete(node)
   })
@@ -246,6 +260,9 @@ describe(`build and update schema for other types`, () => {
     const fooFields = newSchema.getType(`Foo`).getFields()
     expect(Object.keys(fooFields)).toEqual(initialFooFields)
 
+    const types = Object.keys(newSchema.getTypeMap()).sort()
+    expect(types).toEqual(initialTypes)
+
     await expectSymmetricDelete(node)
   })
 
@@ -260,6 +277,16 @@ describe(`build and update schema for other types`, () => {
     const fields = newSchema.getType(`Foo`).getFields()
     expect(fields.numberKey.type.name).toEqual(`Float`)
 
+    const expectRemoved = [`IntQueryOperatorInput`]
+    const expectAdded = [`Float`, `FloatQueryOperatorInput`]
+    const newExpectedTypes = initialTypes
+      .filter(type => !expectRemoved.includes(type))
+      .concat(expectAdded)
+      .sort()
+
+    const types = Object.keys(newSchema.getTypeMap()).sort()
+    expect(types).toEqual(newExpectedTypes)
+
     await expectSymmetricDelete(node)
   })
 
@@ -270,10 +297,18 @@ describe(`build and update schema for other types`, () => {
       numberKey: 1,
     }
     const newSchema = await addNodeAndRebuild(node)
-
     expect(newSchema.getType(`Bar`)).toBeDefined()
-    const fields = Object.keys(newSchema.getType(`Bar`).getFields())
-    expect(fields).toEqual(nodeInterfaceFields.concat(`numberKey`))
+
+    const print = typePrinter(newSchema)
+    expect(print(`Bar`)).toMatchInlineSnapshot(`
+      "type Bar implements Node {
+        id: ID!
+        parent: Node
+        children: [Node!]!
+        internal: Internal!
+        numberKey: Int
+      }"
+    `)
 
     await expectSymmetricDelete(node)
   })
@@ -284,11 +319,34 @@ describe(`build and update schema for other types`, () => {
       internal: { type: `Foo`, contentDigest: `0` },
       fields: {
         bar: { baz: `baz` },
+        baz: [[{ foo: `1` }, { bar: 5 }], [{ foobar: true }]],
       },
     }
     const newSchema = await addNodeAndRebuild(node)
     expect(newSchema.getType(`FooFields`)).toBeDefined()
     expect(newSchema.getType(`FooFieldsBar`)).toBeDefined()
+    expect(newSchema.getType(`FooFieldsBaz`)).toBeDefined()
+
+    const print = typePrinter(newSchema)
+
+    expect(print(`FooFields`)).toMatchInlineSnapshot(`
+      "type FooFields {
+        bar: FooFieldsBar
+        baz: [[FooFieldsBaz]]
+      }"
+    `)
+    expect(print(`FooFieldsBar`)).toMatchInlineSnapshot(`
+      "type FooFieldsBar {
+        baz: String
+      }"
+    `)
+    expect(print(`FooFieldsBaz`)).toMatchInlineSnapshot(`
+      "type FooFieldsBaz {
+        foo: String
+        bar: Int
+        foobar: Boolean
+      }"
+    `)
 
     await expectSymmetricDelete(node)
   })
@@ -303,16 +361,31 @@ describe(`build and update schema for other types`, () => {
     }
     const newSchema = await addNodeAndRebuild(node)
 
-    const types = Object.keys(newSchema.getTypeMap())
-    expect(types).toContain(`NestedNestedFooAnother`)
+    const types = Object.keys(newSchema.getTypeMap()).sort()
+    expect(types).toEqual(
+      initialTypes
+        .concat([`NestedNestedFooAnother`, `NestedNestedFooAnotherFilterInput`])
+        .sort()
+    )
 
-    expect(
-      Object.keys(newSchema.getType(`NestedNestedFoo`).getFields())
-    ).toEqual([`bar`, `another`])
+    const print = typePrinter(newSchema)
 
-    expect(
-      Object.keys(newSchema.getType(`NestedNestedFooAnother`).getFields())
-    ).toEqual([`bar`])
+    expect(print(`NestedNestedFoo`)).toMatchInlineSnapshot(`
+      "type NestedNestedFoo {
+        bar: NestedNestedFooBar
+        another: NestedNestedFooAnother
+      }"
+    `)
+    expect(print(`NestedNestedFooAnother`)).toMatchInlineSnapshot(`
+      "type NestedNestedFooAnother {
+        bar: String
+      }"
+    `)
+    expect(print(`NestedNestedFooAnotherFilterInput`)).toMatchInlineSnapshot(`
+      "input NestedNestedFooAnotherFilterInput {
+        bar: StringQueryOperatorInput
+      }"
+    `)
 
     await expectSymmetricDelete(node)
   })
@@ -324,10 +397,17 @@ describe(`build and update schema for other types`, () => {
       related___NODE: `Foo1`,
     }
     const newSchema = await addNodeAndRebuild(node)
+    const print = typePrinter(newSchema)
 
-    const fields = newSchema.getType(`Bar`).getFields()
-    expect(Object.keys(fields)).toEqual(nodeInterfaceFields.concat(`related`))
-    expect(fields.related.type.name).toEqual(`Foo`)
+    expect(print(`Bar`)).toMatchInlineSnapshot(`
+      "type Bar implements Node {
+        id: ID!
+        parent: Node
+        children: [Node!]!
+        internal: Internal!
+        related: Foo
+      }"
+    `)
 
     await expectSymmetricDelete(node)
   })
@@ -343,6 +423,9 @@ describe(`build and update schema for other types`, () => {
     const fields = newSchema.getType(`Foo`).getFields()
     expect(Object.keys(fields)).toEqual(initialFooFields.concat(`related`))
     expect(fields.related.type.name).toEqual(`Foo`)
+
+    const types = Object.keys(newSchema.getTypeMap()).sort()
+    expect(types).toEqual(initialTypes)
 
     await expectSymmetricDelete(node)
   })
@@ -374,14 +457,59 @@ describe(`build and update schema for other types`, () => {
 
     const print = typePrinter(newSchema)
 
-    expect(print(`BarFieldsFilterInput`)).toMatchSnapshot()
-    expect(print(`BarFields`)).toMatchSnapshot()
-    expect(print(`BarFilterInput`)).toMatchSnapshot()
-    expect(print(`BarSortInput`)).toMatchSnapshot()
+    expect(print(`BarFields`)).toMatchInlineSnapshot(`
+      "type BarFields {
+        field1: String
+      }"
+    `)
+    expect(print(`BarFieldsFilterInput`)).toMatchInlineSnapshot(`
+      "input BarFieldsFilterInput {
+        field1: StringQueryOperatorInput
+      }"
+    `)
+    expect(print(`BarFilterInput`)).toMatchInlineSnapshot(`
+      "input BarFilterInput {
+        id: StringQueryOperatorInput
+        parent: NodeFilterInput
+        children: NodeFilterListInput
+        internal: InternalFilterInput
+        fields: BarFieldsFilterInput
+      }"
+    `)
+    expect(print(`BarSortInput`)).toMatchInlineSnapshot(`
+      "input BarSortInput {
+        fields: [BarFieldsEnum]
+        order: [SortOrderEnum] = [ASC]
+      }"
+    `)
+    expect(print(`BarEdge`)).toMatchInlineSnapshot(`
+      "type BarEdge {
+        next: Bar
+        node: Bar!
+        previous: Bar
+      }"
+    `)
+    expect(print(`BarConnection`)).toMatchInlineSnapshot(`
+      "type BarConnection {
+        totalCount: Int!
+        edges: [BarEdge!]!
+        nodes: [Bar!]!
+        pageInfo: PageInfo!
+        distinct(field: BarFieldsEnum!): [String!]!
+        group(skip: Int, limit: Int, field: BarFieldsEnum!): [BarGroupConnection!]!
+      }"
+    `)
+    expect(print(`BarGroupConnection`)).toMatchInlineSnapshot(`
+      "type BarGroupConnection {
+        totalCount: Int!
+        edges: [BarEdge!]!
+        nodes: [Bar!]!
+        pageInfo: PageInfo!
+        field: String!
+        fieldValue: String
+      }"
+    `)
     expect(print(`BarFieldsEnum`)).toMatchSnapshot()
-    expect(print(`BarConnection`)).toMatchSnapshot()
-    expect(print(`BarEdge`)).toMatchSnapshot()
-    expect(print(`BarGroupConnection`)).toMatchSnapshot()
 
     await expectSymmetricDelete(node)
   })
@@ -405,10 +533,99 @@ describe(`build and update schema for other types`, () => {
     expect(types).toEqual(initialTypes.concat(expectedNewTypes).sort())
 
     const print = typePrinter(newSchema)
-    expect(print(`NestedNestedFooBaz`)).toMatchSnapshot()
-    expect(print(`NestedNestedFooBazFilterInput`)).toMatchSnapshot()
+    expect(print(`NestedNestedFooBaz`)).toMatchInlineSnapshot(`
+      "type NestedNestedFooBaz {
+        deep: Boolean
+      }"
+    `)
+    expect(print(`NestedNestedFooBazFilterInput`)).toMatchInlineSnapshot(`
+      "input NestedNestedFooBazFilterInput {
+        deep: BooleanQueryOperatorInput
+      }"
+    `)
 
     await expectSymmetricDelete(node)
+  })
+
+  it(`creates new fields on ADD_FIELD_TO_NODE`, async () => {
+    const node = createNodes()[1]
+
+    addNodeField({
+      node,
+      name: `added`,
+      value: `foo`,
+    })
+
+    const newSchema = await rebuildTestSchema()
+    const types = Object.keys(newSchema.getTypeMap()).sort()
+    expect(types).toEqual(
+      initialTypes.concat([`NestedFields`, `NestedFieldsFilterInput`]).sort()
+    )
+
+    const print = typePrinter(newSchema)
+    expect(print(`NestedFields`)).toMatchInlineSnapshot(`
+      "type NestedFields {
+        added: String
+      }"
+    `)
+    expect(print(`NestedFieldsFilterInput`)).toMatchInlineSnapshot(`
+      "input NestedFieldsFilterInput {
+        added: StringQueryOperatorInput
+      }"
+    `)
+  })
+
+  it(`creates new nested fields on ADD_FIELD_TO_NODE`, async () => {
+    const node = createNodes()[1]
+
+    addNodeField({
+      node,
+      name: `added`,
+      value: [[{ nested: `str` }, { int: 5 }], [{ bool: true }]],
+    })
+
+    const newSchema = await rebuildTestSchema()
+    const types = Object.keys(newSchema.getTypeMap()).sort()
+    const expectedNewTypes = [
+      `NestedFields`,
+      `NestedFieldsFilterInput`,
+      `NestedFieldsAdded`,
+      `NestedFieldsAddedFilterInput`,
+      `NestedFieldsAddedFilterListInput`,
+    ]
+
+    expect(types).toEqual(initialTypes.concat(expectedNewTypes).sort())
+
+    const print = typePrinter(newSchema)
+    expect(print(`NestedFields`)).toMatchInlineSnapshot(`
+      "type NestedFields {
+        added: [[NestedFieldsAdded]]
+      }"
+    `)
+    expect(print(`NestedFieldsAdded`)).toMatchInlineSnapshot(`
+      "type NestedFieldsAdded {
+        nested: String
+        int: Int
+        bool: Boolean
+      }"
+    `)
+    expect(print(`NestedFieldsFilterInput`)).toMatchInlineSnapshot(`
+      "input NestedFieldsFilterInput {
+        added: NestedFieldsAddedFilterListInput
+      }"
+    `)
+    expect(print(`NestedFieldsAddedFilterListInput`)).toMatchInlineSnapshot(`
+      "input NestedFieldsAddedFilterListInput {
+        elemMatch: NestedFieldsAddedFilterInput
+      }"
+    `)
+    expect(print(`NestedFieldsAddedFilterInput`)).toMatchInlineSnapshot(`
+      "input NestedFieldsAddedFilterInput {
+        nested: StringQueryOperatorInput
+        int: IntQueryOperatorInput
+        bool: BooleanQueryOperatorInput
+      }"
+    `)
   })
 
   it(`should report error when conflicting changes`, async () => {
