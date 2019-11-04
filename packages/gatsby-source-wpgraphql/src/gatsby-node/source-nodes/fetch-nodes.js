@@ -75,7 +75,7 @@ const fetchWPGQLContentNodes = async ({ queries }, helpers, { url }) => {
 const fetchAndCreateAllNodes = async (_, helpers, pluginOptions) => {
   const api = [helpers, pluginOptions]
 
-  const { reporter } = helpers
+  const { reporter, cache } = helpers
 
   let activity
 
@@ -86,6 +86,7 @@ const fetchAndCreateAllNodes = async (_, helpers, pluginOptions) => {
   )
   activity.start()
   const queries = await buildNodeQueriesFromIntrospection(...api)
+  await cache.set(`node-queries`, queries)
   activity.end()
 
   activity = reporter.activityTimer(`[gatsby-source-wpgraphql] fetch content`)
@@ -106,8 +107,6 @@ const fetchAndCreateAllNodes = async (_, helpers, pluginOptions) => {
     },
     ...api
   )
-
-  const { cache } = helpers
 
   // save the node id's so we can touch them on the next build
   // so that we don't have to refetch all nodes
