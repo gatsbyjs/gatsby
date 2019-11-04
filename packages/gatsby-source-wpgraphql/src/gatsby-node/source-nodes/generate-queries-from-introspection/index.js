@@ -1,5 +1,6 @@
 const { dd } = require(`dumper.js`)
-const Query = require(`graphql-query-builder`)
+const recursivelyTransformFields = require(`./recursively-transform-fields`)
+const { buildNodesQueryOnFieldName } = require(`./build-query-on-field-name`)
 
 // @todo create function to unmap check here for similar function https://www.gatsbyjs.org/packages/gatsby-source-graphql-universal/
 const {
@@ -126,69 +127,10 @@ const buildNodeQueriesFromIntrospection = async (helpers, pluginOptions) => {
       const name = connection.nodesTypeName
       const typeInfo = rootFields.find(field => field.type.name === name)
 
-      typeInfo.type.fields = typeInfo.type.fields
-        .filter(field => {
-          const fieldType = field.type || {}
-          const ofType = fieldType.ofType || {}
-          // for now remove relational lists
-          if (fieldType.kind === `LIST` && ofType.kind !== `SCALAR`) {
-            return false
-          }
-
-          if (
-            field.type &&
-            field.type.name &&
-            field.type.name.includes(`Connection`)
-          ) {
-            // and connections
-            return false
-          }
-
-          return true
-        })
-        .map(field => {
-          if (nodeListTypeNames.includes(field.type.name)) {
-            // this is a node from another root node list that we will make a node from
-            // let's just turn this into an ID
-            // to do that we just pull the WPGQL id for now
-            field.type.relationShipField = true
-            field.type.fields = field.type.fields.filter(
-              innerField => innerField.name === `id`
-            )
-          }
-
-          // if (
-          //   field.type &&
-          //   field.type.kind === `LIST` &&
-          //   field.type.ofType &&
-          //   field.type.ofType.name &&
-          //   types.find(type => type.name === field.type.ofType.name)
-          // ) {
-          //   // this is a type that isn't in a root field node list
-          //   // so we need to query it directly instead of creating a node relationship.
-          //   // but we need to grab it's possible fields from the type introspection
-          //   // and add them here since we don't have them
-          //   const type = types.find(type => type.name === field.type.ofType.name)
-          //   console.log(`here it is!`)
-          //   dd(type)
-          // }
-
-          if (field.type.fields) {
-            field.type.field = field.type.fields.map(innerField => {
-              // recurse once. this should be turned into a recursive function that loops down through and replaces any top level node fields with just an id field as many levels deep as we ask for in our query.
-              if (nodeListTypeNames.includes(innerField.type.name)) {
-                innerField.type.relationShipField = true
-                innerField.type.fields = innerField.type.fields.filter(
-                  innerField2 => innerField2.name === `id`
-                )
-              }
-              return field
-            })
-          }
-          return field
-        })
-
-      // dd(typeInfo)
+      typeInfo.type.fields = recursivelyTransformFields({
+        fields: typeInfo.type.fields,
+        nodeListTypeNames,
+      })
 
       accumulator[name] = {
         fieldName: typeInfo.name,
@@ -204,63 +146,19 @@ const buildNodeQueriesFromIntrospection = async (helpers, pluginOptions) => {
 
   // for each root field that returns a list of nodes
   // build a query to fetch those nodes
-  nodeListTypeNames.forEach(typeName => {
+  // nodeListTypeNames.forEach(async typeName => )
+  for (const typeName of nodeListTypeNames) {
     const listType = nodeListTypes[typeName]
 
-    // this builds the gql query
-    let queryField = new Query(listType.rootFieldName, {
-      $variables: true,
+    await helpers.cache.set(
+      `${listType.fieldName}--types-by-single-field-name`,
+      listType
+    )
+
+    const queryString = buildNodesQueryOnFieldName({
+      fields: listType.fields,
+      fieldName: listType.rootFieldName,
     })
-
-    // this adds subfields to our query
-    queryField.find([
-      {
-        pageInfo: [`hasNextPage`, `endCursor`],
-      },
-      {
-        nodes: listType.fields
-          .map(field => {
-            if (field.type && field.type.kind === `UNION`) {
-              return null
-            }
-
-            if (field.type && field.type.fields) {
-              return {
-                [field.name]: field.type.fields
-                  .map(innerField => {
-                    if (innerField.type.kind === `LIST`) {
-                      return null
-                    }
-                    if (innerField.type.relationShipField) {
-                      return {
-                        [innerField.name]: [`id`],
-                      }
-                    }
-                    if (innerField.type.fields) {
-                      return {
-                        [innerField.name]: innerField.type.fields.map(
-                          innerField2 => innerField2.name
-                        ),
-                      }
-                    }
-                    return innerField.name
-                  })
-                  .filter(innerField => !!innerField),
-              }
-            }
-
-            return field.name
-          })
-          .filter(field => !!field),
-      },
-    ])
-
-    const queryString = queryField
-      .toString()
-      // add pagination variables.
-      .replace(`$variables:true`, `first: $first, after: $after`)
-    // can't figure out how to properly do this ^ in graphql-query-builder.
-    // just replacing a placeholder for now.
 
     queries[listType.rootFieldName] = {
       typeInfo: {
@@ -270,7 +168,7 @@ const buildNodeQueriesFromIntrospection = async (helpers, pluginOptions) => {
       },
       queryString,
     }
-  })
+  }
 
   return queries
 }
