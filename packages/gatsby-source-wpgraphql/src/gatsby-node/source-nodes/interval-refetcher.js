@@ -4,7 +4,7 @@ const fetchAndApplyNodeUpdates = require(`./fetch-node-updates`)
 const startIntervalRefetcher = (_, helpers, pluginOptions) => {
   const { cache } = helpers
 
-  const msRefetchInterval = 3000
+  const msRefetchInterval = 300
   const refetcher = async () => {
     const lastCompletedSourceTime = await cache.get(LAST_COMPLETED_SOURCE_TIME)
 
