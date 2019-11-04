@@ -9,7 +9,7 @@ This means that the configuration and functionality isn’t directly written int
 
 <GuideList slug={props.slug} />
 
-### Other resources
+## Other resources
 
 - [Gatsby blog posts on themes](/blog/tags/themes)
 - [Jason Lengstorf and Brent Jackson livestream building a theme](https://www.youtube.com/watch?v=6Z4p-qjnKCQ)
