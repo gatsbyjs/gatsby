@@ -28,8 +28,8 @@ export default ({ data }) => {
 }
 
 export const query = graphql`
-  query index($ID: String!) {
-    wpContent(id: { eq: $ID }) {
+  query index($id: String!) {
+    wpContent(id: { eq: $id }) {
       title
       content
       contentType

@@ -26,7 +26,7 @@ module.exports = async ({ actions, graphql }) => {
         component: template,
         path: node.path,
         context: {
-          ID: node.id,
+          id: node.id,
         },
       })
     })
