@@ -63,6 +63,8 @@ function handleAPIRequest({ event }) {
 }
 
 const navigationRoute = new NavigationRoute(async ({ event }) => {
+  // handle API requests separately to normal navigation requests, so do this
+  // check first
   if (event.request.url.match(/\/.gatsby-plugin-offline:.+/)) {
     return handleAPIRequest({ event })
   }
@@ -98,4 +100,6 @@ const navigationRoute = new NavigationRoute(async ({ event }) => {
 })
 
 workbox.routing.registerRoute(navigationRoute)
+
+// this route is used when performing a non-navigation request (e.g. fetch)
 workbox.routing.registerRoute(/\/.gatsby-plugin-offline:.+/, handleAPIRequest)
