@@ -4,6 +4,10 @@ const pageFields = `
   link
   date
   id
+  excerpt
+  featuredImage {
+    sourceUrl
+  }
 `
 
 const getPageQuery = singleName => `
