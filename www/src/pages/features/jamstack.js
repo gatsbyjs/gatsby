@@ -54,12 +54,14 @@ const JamstackFeaturesPage = ({ data, location }) => {
             technologies, choose the technologies to compare and then press
             Compare:
           </p>
+
           <div
             sx={{
               display: `grid`,
               gridTemplateColumns: `repeat(auto-fit, minmax(75px, 1fr))`,
               gridAutoRows: `1fr`,
               gridGap: 2,
+              pb: 4,
             }}
           >
             {featureComparisonOptions.jamstack.map(
@@ -74,17 +76,16 @@ const JamstackFeaturesPage = ({ data, location }) => {
                 </CompareButton>
               )
             )}
-            <Button
-              overrideCSS={{ whiteSpace: `pre-wrap` }}
-              to={
-                hasSelected
-                  ? `/features/jamstack/gatsby-vs-${comparators.join(`-vs-`)}`
-                  : location.pathname
-              }
-            >
-              Compare with Gatsby
-            </Button>
           </div>
+          <Button
+            to={
+              hasSelected
+                ? `/features/jamstack/gatsby-vs-${comparators.join(`-vs-`)}`
+                : location.pathname
+            }
+          >
+            Compare with Gatsby
+          </Button>
           <EvaluationTable
             options={featureComparisonOptions.jamstack}
             sections={sections}

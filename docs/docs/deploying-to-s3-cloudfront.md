@@ -69,7 +69,7 @@ This command requires `dotenv` first, runs build next, and finally deploys to s3
 
 If you have multiple AWS profiles in your machine, you can deploy by declaring your `AWS_PROFILE` before the deploy script:
 
-```sh
+```shell
 AWS_PROFILE=yourprofilename npm run deploy
 ```
 

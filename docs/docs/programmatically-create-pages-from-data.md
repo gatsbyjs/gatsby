@@ -6,13 +6,13 @@ Gatsby and its ecosystem of plugins provide all kinds of data through a
 GraphQL interface. This guide will show how that data can be used to
 programmatically create pages.
 
-### Prerequisites
+## Prerequisites
 
 Though you can use any data source you'd like, this guide will show how to
 create pages from Markdown files (following after the example introduced in
 [earlier guides](/docs/adding-markdown-pages/)).
 
-### Creating pages
+## Creating pages
 
 The Gatsby Node API provides the
 [`createPages`](/docs/node-apis/#createPages)
@@ -67,7 +67,7 @@ export const query = graphql`
 `
 ```
 
-### Specifying a template
+## Specifying a template
 
 The `createPage` action requires that you specify the `component` template
 that will be used to render the page. Here is an example of what the
@@ -108,7 +108,7 @@ that specific page. As a result, you can provide the `title` and `html` from
 the matching `markdownRemark` record to your component. The `context` values
 are also available as the `pageContext` prop in the template component itself.
 
-### Not just Markdown
+## Not just Markdown
 
 The
 [`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/)
@@ -116,7 +116,7 @@ plugin is just one of a multitude of Gatsby plugins that can provide data
 through the GraphQL interface. Any of that data can be used to
 programmatically create pages.
 
-### Other resources
+## Other resources
 
 - [Example Repository](https://github.com/jbranchaud/gatsby-programmatic-pages)
 - [Using Gatsby without GraphQL](/docs/using-gatsby-without-graphql/)

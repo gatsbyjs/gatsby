@@ -36,7 +36,7 @@ During the [sourceNodes](/docs/node-apis/#sourceNodes) phase, let's say that [ga
 
 There are 3 categories of node fields that we can query.
 
-#### Fields on the created node object. E.g.
+### Fields on the created node object. E.g.
 
 ```graphql
 node {
@@ -47,7 +47,7 @@ node {
 }
 ```
 
-#### Child/Parent. E.g.:
+### Child/Parent. E.g.:
 
 ```graphql
 node {
@@ -58,7 +58,7 @@ node {
 }
 ```
 
-#### fields created by setFieldsOnGraphQLNodeType
+### fields created by setFieldsOnGraphQLNodeType
 
 ```graphql
 node {
