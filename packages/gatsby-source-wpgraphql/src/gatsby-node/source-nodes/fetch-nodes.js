@@ -9,12 +9,17 @@ const {
   buildNodeQueriesFromIntrospection,
 } = require(`./generate-queries-from-introspection`)
 
-const fetchWPGQLContentNodes = async ({ queries }, _, { url }) => {
+const fetchWPGQLContentNodes = async ({ queries }, helpers, { url }) => {
+  const { reporter } = helpers
   const contentNodeGroups = []
 
   for (const [fieldName, queryInfo] of Object.entries(queries)) {
     const { queryString, typeInfo } = queryInfo
 
+    const activity = reporter.activityTimer(
+      `[gatsby-source-wpgraphql] -> fetching all ${typeInfo.pluralName}`
+    )
+    activity.start()
     const allNodesOfContentType = await paginatedWpNodeFetch({
       first: 100,
       after: null,
@@ -23,7 +28,10 @@ const fetchWPGQLContentNodes = async ({ queries }, _, { url }) => {
       nodeTypeName: typeInfo.nodesTypeName,
       url,
       query: queryString,
+      activity,
+      helpers,
     })
+    activity.end()
 
     if (allNodesOfContentType && allNodesOfContentType.length) {
       contentNodeGroups.push({
