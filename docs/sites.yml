@@ -8326,3 +8326,14 @@
   built_by: Jason Di Benedetto
   built_by_url: https://jason.dibenedetto.fyi
   featured: false
+- title: Mieke Frouws
+  url: https://www.miekefrouws.nl
+  main_url: https://www.miekefrouws.nl
+  description: >
+    Mieke Frouws is a freelance primary school theater teacher based in the Netherlands.
+  categories:
+    - Freelance
+    - Education
+  built_by: Laurens Kling
+  built_by_url: https://www.goedideemedia.nl
+  featured: false
