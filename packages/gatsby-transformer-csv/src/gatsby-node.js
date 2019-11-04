@@ -1,13 +1,8 @@
 const Promise = require(`bluebird`)
 const csv = require(`csvtojson`)
 const _ = require(`lodash`)
-const path = require(`path`)
 
-const typeNameFromDir = ({ node }) =>
-  _.upperFirst(_.camelCase(`${path.basename(node.dir)} Csv`))
-
-const typeNameFromFile = ({ node }) =>
-  _.upperFirst(_.camelCase(`${node.name} Csv`))
+const { typeNameFromFile } = require(`./index`)
 
 const convertToJson = (data, options) =>
   new Promise((res, rej) => {
@@ -86,8 +81,5 @@ async function onCreateNode(
 
   return
 }
-
-exports.typeNameFromDir = typeNameFromDir
-exports.typeNameFromFile = typeNameFromFile
 
 exports.onCreateNode = onCreateNode

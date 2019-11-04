@@ -2,11 +2,8 @@ const Promise = require(`bluebird`)
 const json2csv = require(`json2csv`)
 const os = require(`os`)
 
-const {
-  onCreateNode,
-  typeNameFromDir,
-  typeNameFromFile,
-} = require(`../gatsby-node`)
+const { onCreateNode } = require(`../gatsby-node`)
+const { typeNameFromDir, typeNameFromFile } = require(`../index`)
 
 describe(`Process nodes correctly`, () => {
   const node = {
