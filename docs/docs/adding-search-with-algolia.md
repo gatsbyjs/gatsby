@@ -341,7 +341,7 @@ Passing this `indices` array as a prop allows you to reuse the same `Search` com
 
 Note that you fed `algoliasearch` with the same app ID you specified in our `.env` file and used in `src/utils/algolia.js` as well as with your search-only API key to generate a search client which connects to your backend. _Don't paste in your Algolia admin API key here!_ `algoliasearch` only needs to _read_ your indices. Pasting your admin key here would allow others to obtain it once your site is deployed. They could then start messing with your indexed data on Algolia.
 
-## `input.js`
+### `input.js`
 
 ```js:title=src/components/search/input.js
 import React from "react"
@@ -367,7 +367,7 @@ The `Input` component is where the user enters the search string. It is quite sh
 
 Now look at the styled components `SearchIcon`, `Form`, `Input` as well as the ones imported in `index.js`.
 
-## `styles.js`
+### `styles.js`
 
 ```js:title=src/components/search/styles.js
 import React from "react"
@@ -507,7 +507,7 @@ Styles will of course be different from one site to the next so these components
 
 Now you're almost done, two small steps remain. First you need to put together a hit component for every type of result you want to display. In this example, these are blog posts and pages. And second, you need to call your `Search` component somewhere on your site. Here are the hit components.
 
-## `hitComps.js`
+### `hitComps.js`
 
 ```js:title=src/components/search/hitComps.js
 import React, { Fragment } from "react"

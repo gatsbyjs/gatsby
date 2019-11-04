@@ -296,7 +296,7 @@ One of the first things I notice about the blog pictured above is the header. It
 
 ### In the gatsby-config.js file
 
-In the gatsby-config.js file, you can see a piece at the top called `siteMetaData` with a title, description, and author. This is where some basic information is kept about the project for the SEO component, but also for the site name.
+In the gatsby-config.js file, you can see a piece at the top called `siteMetadata` with a title, description, and author. This is where some basic information is kept about the project for the SEO component, but also for the site name.
 
 ```javascript
 // gatsby-config.js

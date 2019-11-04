@@ -22,11 +22,12 @@ Post.propTypes = {
 
 export default Post
 
-export const pageQuery = graphql`
+export const postQuery = graphql`
   query($id: String!) {
     wordpressPost(id: { eq: $id }) {
       title
       content
+    }
     site {
       siteMetadata {
         title

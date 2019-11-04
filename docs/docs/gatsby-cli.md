@@ -207,3 +207,30 @@ For more information, check out the [Gatsby REPL documentation](/docs/gatsby-rep
 ### Disabling colored output
 
 In addition to the explicit `--no-color` option, the CLI respects the presence of the `NO_COLOR` environment variable (see [no-color.org](https://no-color.org/)).
+
+## How to change your default package manager for your next project?
+
+When you use `gatsby new` for the first time to create a new project, you are asked to choose your default package manager between yarn and npm.
+
+```shell
+Which package manager would you like to use ? › - Use arrow-keys. Return to submit.
+❯  yarn
+   npm
+```
+
+Once you’ve made your choice, the CLI won’t ask for your preference again for any subsequent project.
+
+If you want to change this for your next project you have to edit the config file created automatically by the CLI.
+This file is available on your system at: `~/.config/gatsby/config.json`
+
+In it you’re going to see something like this.
+
+```json:title=config.json
+{
+  "cli": {
+    "packageManager": "yarn"
+  }
+}
+```
+
+Edit your `packageManager` value, save and you’re good to go for your next project using `gatsby new`.

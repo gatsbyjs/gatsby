@@ -1,6 +1,6 @@
 # gatsby-source-graphql
 
-Plugin for connecting arbitrary GraphQL APIs to Gatsby GraphQL. Remote schemas are stitched together by adding a type that wraps the remote schema Query type and putting it under field of Gatsby GraphQL Query.
+Plugin for connecting arbitrary GraphQL APIs to Gatsby's GraphQL. Remote schemas are stitched together by declaring an arbitrary type name that wraps the remote schema Query type (`typeName` below), and putting the remote schema under a field of the Gatsby GraphQL query (`fieldName` below).
 
 - [Example website](https://using-gatsby-source-graphql.netlify.com/)
 - [Example website source](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-gatsby-source-graphql)
@@ -11,7 +11,7 @@ Plugin for connecting arbitrary GraphQL APIs to Gatsby GraphQL. Remote schemas a
 
 ## How to use
 
-First, you need a way to pass environment variables to the build process, so secrets and other secured data aren't committed to source control. We recommend using [`dotenv`][dotenv] which will then expose environment variables. [Read more about dotenv and using environment variables here][envvars]. Then we can _use_ these environment variables and configure our plugin.
+If the remote GraphQL API needs authentication, you should pass environment variables to the build process, so credentials aren't committed to source control. We recommend using [`dotenv`][dotenv], which will then expose environment variables. [Read more about dotenv and using environment variables here][envvars]. Then we can _use_ these environment variables via `process.env` and configure our plugin.
 
 ```javascript
 // In your gatsby-config.js
@@ -21,21 +21,21 @@ module.exports = {
     {
       resolve: "gatsby-source-graphql",
       options: {
-        // This type will contain remote schema Query type
+        // Arbitrary name for the remote schema Query type
         typeName: "SWAPI",
-        // This is field under which it's accessible
+        // Field under which the remote schema will be accessible. You'll use this in your Gatsby query
         fieldName: "swapi",
         // Url to query from
         url: "https://api.graphcms.com/simple/v1/swapi",
       },
     },
-    // Passing parameters (passed to apollo-link)
+
+    // Advanced config, passing parameters to apollo-link
     {
       resolve: "gatsby-source-graphql",
       options: {
         typeName: "GitHub",
         fieldName: "github",
-        // Url to query from
         url: "https://api.github.com/graphql",
         // HTTP headers
         headers: {
@@ -46,7 +46,8 @@ module.exports = {
         fetchOptions: {},
       },
     },
-    // Creating arbitrary Apollo Link (for advanced situations)
+
+    // Complex situations: creating arbitrary Apollo Link
     {
       resolve: "gatsby-source-graphql",
       options: {
@@ -71,7 +72,7 @@ module.exports = {
 
 ```graphql
 {
-  # Field name parameter defines how you can access third party api
+  # This is the fieldName you've defined in the config
   swapi {
     allSpecies {
       name
@@ -87,9 +88,9 @@ module.exports = {
 
 ## Schema definitions
 
-By default schema is introspected from the remote schema. Schema is cached in `.cache` in this case and refreshing the schema requires deleting the cache.
+By default, the schema is introspected from the remote schema. The schema is cached in the `.cache` directory, and refreshing the schema requires deleting the cache (e.g. by restarting `gatsby develop`).
 
-To control schema consumption, you can alternatively construct schema definition by passing `createSchema` callback. This way you could, for example, read schema SDL or introspection JSON. When `createSchema` callback is used, schema isn't cached. `createSchema` can return a Promise to GraphQLSchema instance or GraphQLSchema instance.
+To control schema consumption, you can alternatively construct the schema definition by passing a `createSchema` callback. This way you could, for example, read schema SDL or introspection JSON. When the `createSchema` callback is used, the schema isn't cached. `createSchema` can return a GraphQLSchema instance, or a Promise resolving to one.
 
 ```js
 const fs = require("fs")
@@ -140,9 +141,9 @@ module.exports = {
     {
       resolve: "gatsby-source-graphql",
       options: {
-        // This type will contain remote schema Query type
+        // Arbitrary name for the remote schema Query type
         typeName: "SWAPI",
-        // This is field under which it's accessible
+        // Field under which the remote schema will be accessible. You'll use this in your Gatsby query
         fieldName: "swapi",
         // Url to query from
         url: "https://api.graphcms.com/simple/v1/swapi",
