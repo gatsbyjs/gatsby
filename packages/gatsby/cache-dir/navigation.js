@@ -106,7 +106,7 @@ const navigate = (to, options = {}) => {
           navigator.serviceWorker.controller.state === `activated`
         ) {
           navigator.serviceWorker.controller.postMessage({
-            gatsbyApi: `resetWhitelist`,
+            gatsbyApi: `clearPathResources`,
           })
         }
 
