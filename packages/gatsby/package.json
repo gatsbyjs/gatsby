@@ -24,6 +24,7 @@
     "@typescript-eslint/eslint-plugin": "^2.6.0",
     "@typescript-eslint/parser": "^2.6.0",
     "address": "1.1.2",
+    "array.prototype.flatmap": "^1.2.2",
     "autoprefixer": "^9.7.0",
     "axios": "^0.19.0",
     "babel-core": "7.0.0-bridge.0",
