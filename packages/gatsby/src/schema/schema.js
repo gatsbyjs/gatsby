@@ -27,6 +27,7 @@ const {
   addInferredType,
   addInferredTypes,
   createInferredTypeComposer,
+  isEmptyInferredType,
 } = require(`./infer`)
 const { findOne, findManyPaginated } = require(`./resolvers`)
 const {
@@ -91,30 +92,31 @@ const rebuildSchemaWithTypes = async ({
     // they will be re-created in this method (unless deleted)
     clearDerivedTypes({ schemaComposer, typeComposer })
 
-    // TODO: handle type deletion
-    //  (only for types originally created from inference and having 0 nodes)
-
-    const shouldInfer =
-      !typeComposer.hasExtension(`infer`) ||
-      typeComposer.getExtension(`infer`) !== false
-    if (shouldInfer) {
-      addInferredType({
+    if (isEmptyInferredType({ typeComposer, inferenceMetadata })) {
+      deleteType({ schemaComposer, typeComposer })
+    } else {
+      const shouldInfer =
+        !typeComposer.hasExtension(`infer`) ||
+        typeComposer.getExtension(`infer`) !== false
+      if (shouldInfer) {
+        addInferredType({
+          schemaComposer,
+          typeComposer,
+          nodeStore,
+          typeConflictReporter,
+          typeMapping,
+          inferenceMetadata,
+          parentSpan,
+        })
+      }
+      await processTypeComposer({
         schemaComposer,
         typeComposer,
+        fieldExtensions,
         nodeStore,
-        typeConflictReporter,
-        typeMapping,
-        inferenceMetadata,
         parentSpan,
       })
     }
-    await processTypeComposer({
-      schemaComposer,
-      typeComposer,
-      fieldExtensions,
-      nodeStore,
-      parentSpan,
-    })
   }
 
   return schemaComposer.buildSchema()
@@ -244,6 +246,32 @@ const processTypeComposer = async ({
       await addTypeToRootQuery({ schemaComposer, typeComposer, parentSpan })
     }
   }
+}
+
+const deleteType = ({ schemaComposer, typeComposer }) => {
+  const typeName = typeComposer.getTypeName()
+
+  // If there are derived fields for this type - make sure to remove them first
+  const queryTypeComposer = schemaComposer.getOTC(`Query`)
+  const derivedQueryFields = [
+    _.camelCase(`children ${typeName}`),
+    _.camelCase(`child ${typeName}`),
+    _.camelCase(`all ${typeName}`),
+    _.camelCase(typeName),
+  ]
+
+  derivedQueryFields
+    .filter(field => queryTypeComposer.hasField(field))
+    .forEach(field => queryTypeComposer.removeField(field))
+
+  // Workaround against missing graphql-compose method for this
+  // FIXME
+  schemaComposer._schemaMustHaveTypes = schemaComposer._schemaMustHaveTypes.filter(
+    tc => tc.getTypeName() !== typeName
+  )
+
+  // Finally delete the type itself
+  schemaComposer.delete(typeName)
 }
 
 const addTypes = ({ schemaComposer, types, parentSpan }) => {

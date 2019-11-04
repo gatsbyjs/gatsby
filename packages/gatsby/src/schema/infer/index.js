@@ -1,6 +1,6 @@
 const report = require(`gatsby-cli/lib/reporter`)
 const { ObjectTypeComposer } = require(`graphql-compose`)
-const { getExampleObject } = require(`./inference-metadata`)
+const { getExampleObject, isEmpty } = require(`./inference-metadata`)
 const { addNodeInterface } = require(`../types/node-interface`)
 const { addInferredFields } = require(`./add-inferred-fields`)
 
@@ -107,6 +107,10 @@ const addInferredType = ({
   return typeComposer
 }
 
+const isEmptyInferredType = ({ typeComposer, inferenceMetadata }) =>
+  typeComposer.getExtension(`createdFrom`) === `inference` &&
+  isEmpty(inferenceMetadata[typeComposer.getTypeName()])
+
 const createInferredTypeComposer = ({ typeName, schemaComposer }) => {
   const typeComposer = ObjectTypeComposer.create(typeName, schemaComposer)
   addNodeInterface({ schemaComposer, typeComposer })
@@ -127,4 +131,5 @@ module.exports = {
   addInferredType,
   addInferredTypes,
   createInferredTypeComposer,
+  isEmptyInferredType,
 }

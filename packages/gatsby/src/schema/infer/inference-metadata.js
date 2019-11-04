@@ -383,9 +383,15 @@ const getExampleObject = ({ fieldMap, typeName, typeConflictReporter }) =>
     return acc
   }, {})
 
+const isEmpty = ({ fieldMap }) =>
+  Object.keys(fieldMap).every(
+    field => possibleTypes(fieldMap[field]).length === 0
+  )
+
 module.exports = {
   addNode,
   addNodes,
   deleteNode,
+  isEmpty,
   getExampleObject,
 }
