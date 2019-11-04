@@ -217,33 +217,13 @@ by running `npm test -- -u`.
 
 ## Using TypeScript
 
-If you are using TypeScript, you need to make a couple of small changes to your
-config. First install `ts-jest`:
+If you are using TypeScript, you need to make two small changes to your
+config.
 
-```shell
-npm install --save-dev ts-jest
-```
-
-Then update the configuration in `jest.config.js`, like so:
+Update the transform in `jest.config.js`, like so:
 
 ```js:title=jest.config.js
-module.exports = {
-  transform: {
     "^.+\\.[jt]sx?$": "<rootDir>/jest-preprocess.js",
-  },
-  moduleNameMapper: {
-    ".+\\.(css|styl|less|sass|scss)$": "identity-obj-proxy",
-    ".+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
-      "<rootDir>/__mocks__/file-mock.js",
-  },
-  testPathIgnorePatterns: ["node_modules", ".cache", "public"],
-  transformIgnorePatterns: ["node_modules/(?!(gatsby)/)"],
-  globals: {
-    __PATH_PREFIX__: "",
-  },
-  testURL: "http://localhost",
-  setupFiles: ["<rootDir>/loadershim.js"],
-}
 ```
 
 Also update `jest.preprocess.js` with the following babel preset to look like this:
@@ -254,16 +234,7 @@ const babelOptions = {
 }
 ```
 
-The pattern above matches any `.js`, `.jsx`, `.ts` or `.tsx`
-file inside a `__tests__` directory, or any file elsewhere with the extension
-`.test.js`, `.test.jsx`, `.test.ts`, `.test.tsx`, or `.spec.js`, `.spec.jsx`,
-`.spec.ts`, `.spec.tsx`.
-
-Option `moduleFileExtensions` is needed when working with TypeScript.
-The only thing it is doing is telling Jest which file extensions you can
-import in your files without making precise the file extension. By default,
-it works with `js`, `json`, `jsx`, `node` file extensions so you just need
-to add `ts` and `tsx`. You can read more about it in [Jest's documentation](https://jestjs.io/docs/en/configuration.html#modulefileextensions-array-string).
+Once this is changed, you can write your tests in TypeScript using the `.ts` or `.tsx` extensions.
 
 ## Other resources
 
