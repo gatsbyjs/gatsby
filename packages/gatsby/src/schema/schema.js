@@ -248,16 +248,23 @@ const processTypeComposer = async ({
   }
 }
 
+const fieldNames = {
+  query: typeName => _.camelCase(typeName),
+  queryAll: typeName => _.camelCase(`all ${typeName}`),
+  convenienceChild: typeName => _.camelCase(`child ${typeName}`),
+  convenienceChildren: typeName => _.camelCase(`children ${typeName}`),
+}
+
 const deleteType = ({ schemaComposer, typeComposer }) => {
   const typeName = typeComposer.getTypeName()
 
   // If there are derived fields for this type - make sure to remove them first
   const queryTypeComposer = schemaComposer.getOTC(`Query`)
   const derivedQueryFields = [
-    _.camelCase(`children ${typeName}`),
-    _.camelCase(`child ${typeName}`),
-    _.camelCase(`all ${typeName}`),
-    _.camelCase(typeName),
+    fieldNames.query(typeName),
+    fieldNames.queryAll(typeName),
+    fieldNames.convenienceChild(typeName),
+    fieldNames.convenienceChildren(typeName),
   ]
 
   derivedQueryFields
@@ -988,9 +995,9 @@ const addImplicitConvenienceChildrenFields = ({
         !childOfExtension.types.includes(parentTypeName) ||
         !childOfExtension.many === many
       ) {
-        const fieldName = _.camelCase(
-          `${many ? `children` : `child`} ${typeName}`
-        )
+        const fieldName = many
+          ? fieldNames.convenienceChildren(typeName)
+          : fieldNames.convenienceChild(typeName)
         report.warn(
           `On types with the \`@dontInfer\` directive, or with the \`infer\` ` +
             `extension set to \`false\`, automatically adding fields for ` +
@@ -1013,7 +1020,7 @@ const addImplicitConvenienceChildrenFields = ({
 
 const createChildrenField = typeName => {
   return {
-    [_.camelCase(`children ${typeName}`)]: {
+    [fieldNames.convenienceChildren(typeName)]: {
       type: () => [typeName],
       resolve(source, args, context) {
         const { path } = context
@@ -1028,7 +1035,7 @@ const createChildrenField = typeName => {
 
 const createChildField = typeName => {
   return {
-    [_.camelCase(`child ${typeName}`)]: {
+    [fieldNames.convenienceChild(typeName)]: {
       type: () => typeName,
       async resolve(source, args, context) {
         const { path } = context
@@ -1068,8 +1075,8 @@ const addTypeToRootQuery = ({ schemaComposer, typeComposer }) => {
 
   const typeName = typeComposer.getTypeName()
   // not strictly correctly, result is `npmPackage` and `allNpmPackage` from type `NPMPackage`
-  const queryName = _.camelCase(typeName)
-  const queryNamePlural = _.camelCase(`all ${typeName}`)
+  const queryName = fieldNames.query(typeName)
+  const queryNamePlural = fieldNames.queryAll(typeName)
 
   schemaComposer.Query.addFields({
     [queryName]: {
