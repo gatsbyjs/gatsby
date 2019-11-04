@@ -4303,6 +4303,7 @@
     - Linting
     - Markdown
     - MDX
+    - CMS:Netlify
     - SEO
     - Styling:CSS-in-JS
   features:
@@ -4315,4 +4316,5 @@
     - Theming of components and Markdown (MDX) with Emotion Theming
     - Forms with Formite (React Hooks Form library)
     - Accessible UI components implemented with Reakit and styling based on mini.css
+    - Netlify CMS to create and edit blog posts
     - Small bundle size
