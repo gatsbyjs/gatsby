@@ -2,7 +2,11 @@ const Promise = require(`bluebird`)
 const json2csv = require(`json2csv`)
 const os = require(`os`)
 
-const { onCreateNode } = require(`../gatsby-node`)
+const {
+  onCreateNode,
+  typeNameFromDir,
+  typeNameFromFile,
+} = require(`../gatsby-node`)
 
 describe(`Process nodes correctly`, () => {
   const node = {
@@ -74,7 +78,7 @@ describe(`Process nodes correctly`, () => {
     })
   })
 
-  it(`correctly handles the typeName option in the from-filename case`, async () => {
+  it(`correctly handles the typeName option with the provided typeNameFromFile function`, async () => {
     node.name = `theQueryShouldMatch`
     node.content = `letter,number\na,65\nb,42\nc,23`
 
@@ -93,7 +97,7 @@ describe(`Process nodes correctly`, () => {
         createNodeId,
         createContentDigest,
       },
-      { typeName: `from-filename` }
+      { typeName: typeNameFromFile }
     ).then(() => {
       expect(createNode.mock.calls).toMatchSnapshot()
       expect(createParentChildLink.mock.calls).toMatchSnapshot()
@@ -102,7 +106,7 @@ describe(`Process nodes correctly`, () => {
     })
   })
 
-  it(`correctly handles the typeName option in the from-dir case`, async () => {
+  it(`correctly handles the typeName option with the provided typeNameFromDir function`, async () => {
     node.name = `theTypeWontBeThis`
     node.content = `letter,number\na,65\nb,42\nc,23`
     node.dir = `${os.tmpdir()}/foo/` // The type will be FooCsv
@@ -123,7 +127,7 @@ describe(`Process nodes correctly`, () => {
         createNodeId,
         createContentDigest,
       },
-      { typeName: `from-dir` }
+      { typeName: typeNameFromDir }
     ).then(() => {
       expect(createNode.mock.calls).toMatchSnapshot()
       expect(createParentChildLink.mock.calls).toMatchSnapshot()
@@ -132,7 +136,7 @@ describe(`Process nodes correctly`, () => {
     })
   })
 
-  it(`correctly handles the typeName option in the functional case`, async () => {
+  it(`correctly handles the typeName option with a custom function`, async () => {
     node.name = `theTypeWontBeThis`
     node.content = `letter,number\na,65\nb,42\nc,23`
 
@@ -153,6 +157,36 @@ describe(`Process nodes correctly`, () => {
       },
       {
         typeName: ({ node, object }) => `CsvTypeSetByFunction`,
+      }
+    ).then(() => {
+      expect(createNode.mock.calls).toMatchSnapshot()
+      expect(createParentChildLink.mock.calls).toMatchSnapshot()
+      expect(createNode).toHaveBeenCalledTimes(3)
+      expect(createParentChildLink).toHaveBeenCalledTimes(3)
+    })
+  })
+
+  it(`correctly handles the typeName option with a string`, async () => {
+    node.name = `theTypeWontBeThis`
+    node.content = `letter,number\na,65\nb,42\nc,23`
+
+    const createNode = jest.fn()
+    const createParentChildLink = jest.fn()
+    const actions = { createNode, createParentChildLink }
+    const createNodeId = jest.fn()
+    createNodeId.mockReturnValue(`uuid-from-gatsby`)
+    const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
+
+    await onCreateNode(
+      {
+        node,
+        loadNodeContent,
+        actions,
+        createNodeId,
+        createContentDigest,
+      },
+      {
+        typeName: `CsvTypeSetByFunction`,
       }
     ).then(() => {
       expect(createNode.mock.calls).toMatchSnapshot()

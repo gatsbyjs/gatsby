@@ -3,6 +3,12 @@ const csv = require(`csvtojson`)
 const _ = require(`lodash`)
 const path = require(`path`)
 
+const typeNameFromDir = ({ node }) =>
+  _.upperFirst(_.camelCase(`${path.basename(node.dir)} Csv`))
+
+const typeNameFromFile = ({ node }) =>
+  _.upperFirst(_.camelCase(`${node.name} Csv`))
+
 const convertToJson = (data, options) =>
   new Promise((res, rej) => {
     csv(options)
@@ -37,21 +43,10 @@ async function onCreateNode(
   function getType({ node, object }) {
     if (pluginOptions && _.isFunction(typeName)) {
       return pluginOptions.typeName({ node, object })
-    } else if (
-      pluginOptions &&
-      _.isString(typeName) &&
-      typeName === `from-dir`
-    ) {
-      return _.upperFirst(_.camelCase(`${path.basename(node.dir)} Csv`))
-    } else if (
-      pluginOptions &&
-      _.isString(typeName) &&
-      typeName === `from-filename`
-    ) {
-      // be explicit
-      return _.upperFirst(_.camelCase(`${node.name} Csv`))
+    } else if (pluginOptions && _.isString(typeName)) {
+      return _.upperFirst(_.camelCase(typeName))
     } else {
-      return _.upperFirst(_.camelCase(`${node.name} Csv`))
+      return typeNameFromFile({ node })
     }
   }
 
@@ -91,5 +86,8 @@ async function onCreateNode(
 
   return
 }
+
+exports.typeNameFromDir = typeNameFromDir
+exports.typeNameFromFile = typeNameFromFile
 
 exports.onCreateNode = onCreateNode

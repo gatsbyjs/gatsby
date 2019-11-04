@@ -78,51 +78,81 @@ The following three nodes would be created:
 ]
 ```
 
-Alternatively the `typeName` option can be used to modify this behaviour.
+Alternatively the `typeName` plugin option can be used to modify this behaviour.
 
-Its arguments are either `from-filename` (the default), `from-dir` or a function that accepts an argument object of `{ node, object }` which should return the string type name.
+Its arguments are either a string denoting the type name or a function that accepts an argument object of `{ node, object }` which should return the string type name.
 
-For example, if the csvs are in a group of folders, and you wish to create a group per folder with the suffix "Data".
+Two predefined functions are provided.
 
 ```javascript
+const { typeNameFromDir, typeNameFromFile } = require("gatsby-transformer-csv")
+```
+
+`typeNameFromFile` will produce a type per CSV file. When the `typeName` plugin option is undefined, this is the default case. A file name of `letters.csv` will produce a type of `LettersCsv`.
+
+`typeNameFromDir` will produce a type per folder of CSVs. A folder called `things` containing CSVs will return a type of `ThingsCsv`.
+
+As an example of a custom function, if the CSVs are in a group of folders, and you wish to create a group per folder with the suffix "Data". In this case a folder called `things` containing CSVs will return a type of `ThingsData`.
+
+```javascript
+// In your gatsby-config.js
 const _ = require(`lodash`)
 const path = require(`path`)
 
-{
-  resolve: `gatsby-transformer-csv`,
-  options: {
-    typeName: ({node, object}) => _.upperFirst(_.camelCase(`${path.basename(node.dir)} Data`)),
-  },
-},
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-transformer-csv`,
+      options: {
+        typeName: ({ node, object }) =>
+          _.upperFirst(_.camelCase(`${path.basename(node.dir)} Data`)),
+      },
+    },
+  ],
+}
 ```
 
-Or if you simply wanted to have a group per folder with the suffix "Csv", the `from-dir` option would be appropriate.
+The suffix `Csv` is not added when providing your own function.
+
+If you wanted to have a group per folder with the suffix "Csv", the `typeNameFromDir` provided function would be appropriate.
 
 ```javascript
-{
-  resolve: `gatsby-transformer-csv`,
-  options: {
-    typeName: `from-dir`,
-  },
-},
+// In your gatsby-config.js
+const { typeNameFromDir } = require("gatsby-transformer-csv")
+
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-transformer-csv`,
+      options: {
+        typeName: typeNameFromDir,
+      },
+    },
+  ],
+}
 ```
 
 ## Alternate content behaviour
 
-The `nodePerFile` option can either be `false`, which creates a node per line like above, `true`, which creates a node per file, with the key `items` containing the content, or a string which is the key containing the content.
+The `nodePerFile` plugin option can either be `false`, which creates a node per line like above, `true`, which creates a node per file, with the key `items` containing the content, or a string which is the key containing the content.
 
 For example, if there are a series of csv files called `vegetables.csv`, `grains.csv`, the following config would produce the following result.
 
 The config:
 
 ```javascript
-{
-  resolve: `gatsby-transformer-csv`,
-  options: {
-    typeName: () => `Foodstuffs`,
-    nodePerFile: `ingredients`,
-  },
-},
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-transformer-csv`,
+      options: {
+        typeName: () => `Foodstuffs`,
+        nodePerFile: `ingredients`,
+      },
+    },
+  ],
+}
 ```
 
 A query:
