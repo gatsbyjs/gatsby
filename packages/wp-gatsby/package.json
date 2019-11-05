@@ -1,0 +1,27 @@
+{
+  "name": "wp-gatsby",
+  "version": "0.0.1-alpha.1",
+  "description": "A WordPress plugin required for gatsby-source-wordpress v4",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gatsbyjs/gatsby.git"
+  },
+  "keywords": [
+    "Gatsby",
+    "WordPress",
+    "WPGraphQL"
+  ],
+  "author": "Tyler Barnes <tyler@gatsbyjs.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby#readme"
+}
