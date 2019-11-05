@@ -166,16 +166,6 @@ Keep the meaning of the original English source even if it is confusing or has a
 
 Leave text in code blocks untranslated except for comments. You may optionally translate text in strings, but be careful not to translate strings that refer to code!
 
-Example:
-
-```js
-// Example
-import React from "react"
-export default () => (
-  <div style={{ color: `purple`, fontSize: `72px` }}>Hello Gatsby!</div>
-)
-```
-
 ✅ DO:
 
 ```js
@@ -220,12 +210,6 @@ exportar defecto () => (
 
 Translate link text but keep all slugs and hashes in links the same as they are in English.
 
-Example:
-
-```md
-- [Configure your development environment](/tutorial/set-up-your-development-environment)
-```
-
 ✅ OK:
 
 ```md
@@ -244,12 +228,6 @@ If an external link is to an article in a reference like [MDN] or [Wikipedia], a
 
 [mdn]: https://developer.mozilla.org/en-US/
 [wikipedia]: https://en.wikipedia.org/wiki/Main_Page
-
-Example:
-
-```md
-React elements are [immutable](https://en.wikipedia.org/wiki/Immutable_object).
-```
 
 ✅ OK:
 
