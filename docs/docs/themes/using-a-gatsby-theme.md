@@ -22,8 +22,7 @@ Depending on the theme, there may be theme options that can be configured via `g
 
 For example, `gatsby-theme-blog` can take in 4 potential options: `basePath`, `contentPath`, `assetPath`, and `mdx`. These options are also documented in the [theme's README](/packages/gatsby-theme-blog/) file.
 
-```js
-// gatsby-config.js
+```javascript:title=gatsby-config.js
 module.exports = {
   plugins: [
     {
