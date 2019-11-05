@@ -2,7 +2,7 @@
 title: Using a Gatsby Theme
 ---
 
-While you can [get started quickly with a Gatsby theme starter](/docs/themes/getting-started/), you can also install a Gatsby theme directly to an existing Gatsby site. Gatsby themes are plugins, so we [use them just like any other Gatsby plugin](/docs/using-a-plugin-in-your-site/).
+While you can [get started quickly with a Gatsby theme starter](/docs/themes/getting-started/), you can also install a Gatsby theme directly to an existing Gatsby site. Gatsby themes are plugins, so you can [install and use them like any other Gatsby plugin](/docs/using-a-plugin-in-your-site/).
 
 ## Installing a Theme
 
