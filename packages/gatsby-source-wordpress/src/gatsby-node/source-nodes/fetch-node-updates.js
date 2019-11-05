@@ -13,7 +13,7 @@ const fetchAndApplyNodeUpdates = async (
 
   if (!intervalRefetching) {
     activity = reporter.activityTimer(
-      `[gatsby-source-wpgraphql] pull updates since last build`
+      `[gatsby-source-wordpress] pull updates since last build`
     )
     activity.start()
   }

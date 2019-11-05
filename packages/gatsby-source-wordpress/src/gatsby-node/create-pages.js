@@ -19,7 +19,7 @@ export default async ({ actions, graphql }) => {
     data.allWpContent.nodes.map(async node => {
       // templates[0] will be replaced with a template hierarchy
       // this whole create-pages should also be moved to a theme
-      // instead of gatsby-source-wpgraphql
+      // instead of gatsby-source-wordpress
       const template = resolve(templates[0])
 
       await actions.createPage({

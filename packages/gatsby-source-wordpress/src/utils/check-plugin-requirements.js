@@ -15,7 +15,7 @@ const checkPluginRequirements = async (helpers, pluginOptions) => {
 
   if (!fetchIsWpGatsby.data || !fetchIsWpGatsby.data.isWpGatsby) {
     console.error(
-      `[gatsby-source-wpgraphql] - Couldn't connect to WPGatsby, please install it :)`
+      `[gatsby-source-wordpress] - Couldn't connect to WPGatsby, please install it :)`
     )
     process.exit()
   }

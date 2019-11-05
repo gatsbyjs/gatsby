@@ -5,7 +5,7 @@ const wpActionDELETE = async ({ helpers, cachedNodeIds, wpAction }) => {
   const nodeId = createNodeId(wpAction.referencedPostGlobalRelayID)
 
   reporter.info(
-    `[gatsby-source-wpgraphql] deleted ${wpAction.referencedPostSingleName} ${wpAction.referencedPostID}`
+    `[gatsby-source-wordpress] deleted ${wpAction.referencedPostSingleName} ${wpAction.referencedPostID}`
   )
 
   const node = await getNode(nodeId)

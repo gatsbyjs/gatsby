@@ -57,7 +57,7 @@ const wpActionCREATE = async ({
 
   if (intervalRefetching) {
     helpers.reporter.info(
-      `[gatsby-source-wpgraphql] created ${wpAction.referencedPostSingleName} ${wpAction.referencedPostID}`
+      `[gatsby-source-wordpress] created ${wpAction.referencedPostSingleName} ${wpAction.referencedPostID}`
     )
   }
 

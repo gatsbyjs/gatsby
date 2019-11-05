@@ -13,7 +13,7 @@ export const fetchWPGQLContentNodes = async ({ queries }, helpers, { url }) => {
     const { queryString, typeInfo } = queryInfo
 
     const activity = reporter.activityTimer(
-      `[gatsby-source-wpgraphql] -> fetching all ${typeInfo.pluralName}`
+      `[gatsby-source-wordpress] -> fetching all ${typeInfo.pluralName}`
     )
     activity.start()
     const allNodesOfContentType = await paginatedWpNodeFetch({
@@ -78,14 +78,14 @@ export const fetchAndCreateAllNodes = async (_, helpers, pluginOptions) => {
   //
   // Introspect schema and build gql queries
   activity = reporter.activityTimer(
-    `[gatsby-source-wpgraphql] introspect schema`
+    `[gatsby-source-wordpress] introspect schema`
   )
   activity.start()
   const queries = await buildNodeQueriesFromIntrospection(...api)
   await cache.set(`node-queries`, queries)
   activity.end()
 
-  activity = reporter.activityTimer(`[gatsby-source-wpgraphql] fetch content`)
+  activity = reporter.activityTimer(`[gatsby-source-wordpress] fetch content`)
   activity.start()
   const wpgqlNodesByContentType = await fetchWPGQLContentNodes(
     { queries },
@@ -95,7 +95,7 @@ export const fetchAndCreateAllNodes = async (_, helpers, pluginOptions) => {
 
   //
   // Create nodes
-  activity = reporter.activityTimer(`[gatsby-source-wpgraphql] create nodes`)
+  activity = reporter.activityTimer(`[gatsby-source-wordpress] create nodes`)
   activity.start()
   const createdNodeIds = await createGatsbyNodesFromWPGQLContentNodes(
     {

@@ -52,7 +52,7 @@ const wpActionUPDATE = async ({
 
   if (intervalRefetching) {
     helpers.reporter.info(
-      `[gatsby-source-wpgraphql] updated ${wpAction.referencedPostSingleName} ${wpAction.referencedPostID}`
+      `[gatsby-source-wordpress] updated ${wpAction.referencedPostSingleName} ${wpAction.referencedPostID}`
     )
   }
 

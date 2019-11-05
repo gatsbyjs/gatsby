@@ -8,7 +8,7 @@ const fetchGraphql = async ({ url, query, variables = {} }) => {
   })
 
   if (response.status !== 200) {
-    console.error(`[gatsby-source-wpgraphql] Couldn't connect to ${url}`)
+    console.error(`[gatsby-source-wordpress] Couldn't connect to ${url}`)
     process.exit()
   }
 
@@ -16,7 +16,7 @@ const fetchGraphql = async ({ url, query, variables = {} }) => {
 
   if (!contentType.includes(`application/json;`)) {
     console.error(
-      `[gatsby-source-wpgraphql] Unable to connect to WPGraphQL.
+      `[gatsby-source-wordpress] Unable to connect to WPGraphQL.
         Double check that your WordPress URL is correct and WPGraphQL is installed.
         ${url}`
     )
