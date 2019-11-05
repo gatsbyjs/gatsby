@@ -3,7 +3,7 @@ title: Adding App and Website Functionality
 overview: true
 ---
 
-Gatsby empowers developers and creators to make a diverse amount of websites. One may wish to add additional functionality to their site such as search, authentication, forms, comments, and plenty of others.
+Gatsby empowers developers and creators to make many different types of websites. One may wish to add additional functionality to their site such as search, authentication, forms, comments, and plenty of others.
 
 The distinction between apps and websites is blurry, the way Dustin Schau puts it in a [blog post](/blog/2018-10-15-beyond-static-intro/):
 
@@ -14,27 +14,27 @@ The distinction between apps and websites is blurry, the way Dustin Schau puts i
   somehow static because some percentage of its content never or rarely changes.
 </Pullquote>
 
-Gatsby allows you to orchestrate data fetching, tranforming, and usage in pages, but allows you to make the call about how, when, and where, that happens. It allows you to make a site as feature-less or as feature-rich as you want, you aren't restricted to just static sites.
+Gatsby allows you to orchestrate data fetching, transforming, and usage in pages, but it also allows you to make the call about how, when, and where, that happens. It allows you to make a site as feature-less or feature-rich as you want, you aren't restricted to just static sites.
 
 ## How hydration makes apps possible
 
 Even though Gatsby generates static files, Gatsby apps [rehydrate](/docs/glossary#hydration) from static HTML rendered by ReactDOM APIs into an app running client-side JavaScript. The general approach as outlined in the [React Hydration guide](/docs/react-hydration) is as follows:
 
 1. Build and render static HTML, creating content and pages with data injected at build time
-1. Invoke `ReactDOM.hydrate()` method to pick up just where the static HTML was left
-1. Transfer rendering to the React reconciler
+2. Invoke `ReactDOM.hydrate()` method to pick up where the static HTML was left
+3. Transfer rendering to the React reconciler
 
 It's this last phase that bridges the gap between static sites and full-fledged applications. In this phase you can make calls for [dynamic data](/docs/client-data-fetching/), [authenticate users](/docs/building-a-site-with-authentication/), and perform all the app-like functionality you desire because the page is running a React application.
 
 ## Common patterns for Gatsby apps
 
-There are different options for organizing how your pages are created and what they will be responsible for. These patterns can be combined and tweaked for specific use cases like to pull in data at [build time](/docs/glossary#build) for great performance, or call for data at [runtime](/docs/glossary#runtime) for a more dynamic experience.
+There are different options for organizing how your pages are created and what they will be responsible for. These patterns can be combined and tweaked for specific use cases such as pulling in data at [build time](/docs/glossary#build) for great performance, or calling for data at [runtime](/docs/glossary#runtime) for a more dynamic experience.
 
 Because all Gatsby pages are hydrated into React, **any of the following patterns are capable of app-like behavior**. This section is to help explain some higher level patterns for thinking about Gatsby.
 
 ### Static pages
 
-Static files are output by running `gatsby build` from exported components in your `src/pages` folder or from pages created using the [`createPage` API](/docs/node-apis/#createPages), like is shown in this diagram:
+Static files are output by running `gatsby build` from exported components in your `src/pages` folder or from pages created using the [`createPage` API](/docs/node-apis/#createPages), as shown in this diagram:
 
 ![Static Site diagram with pages created from Gatsby automatically and programmatically](./images/simple-static-site.png)
 
@@ -45,7 +45,7 @@ The diagram illustrates the 2 main methods for creating pages in your site:
 
 _**Note**: plugins and themes can also implement the `createPage` API and create pages on your behalf_
 
-By adding exporting a React component from a file at `src/pages/home` Gatsby can automatically create a static page for you. By looping through markdown files in your filesystem you could create pages for all blog posts programmatically. The docs have more informataion about [creating and modifying pages](/docs/creating-and-modifying-pages/).
+When you export a React component from a file in the `src/pages` directory (in this case `src/pages/home.js`) Gatsby will automatically create a static page. By looping through markdown files in your filesystem you can create pages for all blog posts programmatically. The docs have more informataion about [creating and modifying pages](/docs/creating-and-modifying-pages/).
 
 These created pages _could_ run JavaScript once React hydrates them, but they don't need to.
 
@@ -57,22 +57,22 @@ The following diagram shows a similar site to the one in the previous example, b
 
 ![Hybrid Site diagram with pages hitting other services with JavaScript](./images/simple-hybrid-site.png)
 
-Following a pattern like this means you are relying on a backend to remain operational for the features like email signups and blog recommendations, but because the static assets created aren't generated by the server on demand, the content on your site (like your blog posts or home page) will never go down and become unavailable.
+Following a pattern like this means you are relying on a backend to remain operational for features like email signups and blog recommendations, but because the static assets created aren't generated by the server on demand, the content on your site (like your blog posts or home page) will never go down and become unavailable.
 
 ### Client only routes
 
 Using a React based router is also supported by Gatsby. This pattern is often referred to as client only routes, which are routes not reflected in your statically rendered files.
 
-With Gatsby, you can import a router and setup routes to navigate between the same way you would in traditional React apps. The only difference is Gatsby doesn't build those routes into individual pages in the `/public` folder, so to allow users to open a URL directly at a client only route you can use a plugin to create those pages for you which is covered in the [Client Only Routes](/docs/client-only-routes-and-user-authentication/) guide.
+With Gatsby, you can import a router and set up routes for navigation the same way you would in traditional React apps. The only difference is Gatsby doesn't build those routes into individual pages in the `/public` folder. As a result, in order to allow users to access that URL directly, you can use a plugin to create those pages. This is covered in the [Client Only Routes](/docs/client-only-routes-and-user-authentication/) guide.
 
-The following diagram shows how a `<Router />` component can be mounted on a page like one at `src/pages/app`, with `<Route />`'s inside it.
+The following diagram shows how a `<Router />` component can be mounted on a page. In this example, `src/pages/app` references `<Route />`s.
 
 ![Client Only Routes Site diagram with pages setup using a router](./images/simple-client-only-routes.png)
 
-In this illustration, a user page could display specific information about them, and dynamic routes at `/app/tasks/:id` could display specific information for a task of a given id.
+In this illustration, a user page could display specific information about the logged in user, and dynamic routes at `/app/tasks/:id` could display specific information for a task of a given id.
 
 ---
 
-Offering sites with statically rendered assets in as performant a way as possible has always been a core focus of Gatsby, but that is only one side of the coin. In this section of the docs, you will find a showcase of guides and concepts on how to level up your site to include all the app-like features on top of the static base.
+Generating performant sites with statically rendered assets is a core focus of Gatsby, but it's only one side of the coin. In this section of the docs, you will find a showcase of guides and concepts on how to level up your site to include all the app-like features on top of the static base.
 
 <GuideList slug={props.slug} />
