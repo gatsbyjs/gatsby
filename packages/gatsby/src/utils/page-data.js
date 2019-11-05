@@ -28,11 +28,18 @@ const write = async ({ publicDir }, page, result) => {
 /**
  * Returns the corresponding html file path for a page-data.json file
  */
-const getPageDataHtmlPath = pageDataPath =>
-  pageDataPath
+const getPageDataHtmlPath = pageDataPath => {
+  let htmlPath = pageDataPath
     .replace(`/index/`, `/`)
     .replace(`./public/page-data/`, `/`)
     .replace(`/page-data.json`, ``)
+
+  if (!htmlPath.endsWith(`.html`)) {
+    htmlPath = `${htmlPath}/`
+  }
+
+  return htmlPath
+}
 
 /**
  * Finds a list of unused page-data.json files that are leftover from deleted pages
@@ -46,16 +53,13 @@ const getUnusedPageDataPaths = ({ availablePagePaths, directory }) => {
   const allPageDataFiles = glob.sync(`./public/page-data/**/page-data.json`, {
     cwd: directory,
   })
-
   const unusedPageDataFiles = allPageDataFiles.filter(pageDataPath => {
     // string replaces allow us to match page-data paths against public html paths
     const normalizedPageDataPath = getPageDataHtmlPath(pageDataPath)
 
     // if this page-data.json file doesn't have a matching html file,
     // it's not being used
-    const thisPageDataIsUnused =
-      !availablePagePaths.includes(normalizedPageDataPath) &&
-      !availablePagePaths.includes(`${normalizedPageDataPath}/`)
+    const thisPageDataIsUnused = !availablePagePaths.has(normalizedPageDataPath)
 
     return thisPageDataIsUnused
   })
@@ -77,7 +81,7 @@ const getUnusedPageDataPaths = ({ availablePagePaths, directory }) => {
  * @returns {promise|false}
  */
 const deleteUnusedPageData = ({ store, directory }) => {
-  const availablePagePaths = Array.from(store.getState().pages.keys())
+  const availablePagePaths = store.getState().pages
 
   const unusedPageData = getUnusedPageDataPaths({
     availablePagePaths,
