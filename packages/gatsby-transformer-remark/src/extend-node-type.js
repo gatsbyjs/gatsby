@@ -27,13 +27,21 @@ let fileNodes
 let pluginsCacheStr = ``
 let pathPrefixCacheStr = ``
 const astCacheKey = node =>
-  `transformer-remark-markdown-ast-${node.internal.contentDigest}-${pluginsCacheStr}-${pathPrefixCacheStr}`
+  `transformer-remark-markdown-ast-${
+    node.internal.contentDigest
+  }-${pluginsCacheStr}-${pathPrefixCacheStr}`
 const htmlCacheKey = node =>
-  `transformer-remark-markdown-html-${node.internal.contentDigest}-${pluginsCacheStr}-${pathPrefixCacheStr}`
+  `transformer-remark-markdown-html-${
+    node.internal.contentDigest
+  }-${pluginsCacheStr}-${pathPrefixCacheStr}`
 const htmlAstCacheKey = node =>
-  `transformer-remark-markdown-html-ast-${node.internal.contentDigest}-${pluginsCacheStr}-${pathPrefixCacheStr}`
+  `transformer-remark-markdown-html-ast-${
+    node.internal.contentDigest
+  }-${pluginsCacheStr}-${pathPrefixCacheStr}`
 const headingsCacheKey = node =>
-  `transformer-remark-markdown-headings-${node.internal.contentDigest}-${pluginsCacheStr}-${pathPrefixCacheStr}`
+  `transformer-remark-markdown-headings-${
+    node.internal.contentDigest
+  }-${pluginsCacheStr}-${pathPrefixCacheStr}`
 const tableOfContentsCacheKey = (node, appliedTocOptions) =>
   `transformer-remark-markdown-toc-${
     node.internal.contentDigest
@@ -281,7 +289,9 @@ module.exports = (
                 undefined
               ) {
                 console.warn(
-                  `Skipping TableOfContents. Field '${appliedTocOptions.pathToSlugField}' missing from markdown node`
+                  `Skipping TableOfContents. Field '${
+                    appliedTocOptions.pathToSlugField
+                  }' missing from markdown node`
                 )
                 return null
               }
@@ -330,7 +340,9 @@ module.exports = (
     }
 
     async function getHTML(markdownNode) {
-      const cachedHTML = await cache.get(htmlCacheKey(markdownNode))
+      const shouldCache = !!markdownNode && markdownNode.internal
+      const cachedHTML =
+        shouldCache && (await cache.get(htmlCacheKey(markdownNode)))
       if (cachedHTML) {
         return cachedHTML
       } else {
@@ -340,8 +352,11 @@ module.exports = (
           allowDangerousHTML: true,
         })
 
-        // Save new HTML to cache and return
-        cache.set(htmlCacheKey(markdownNode), html)
+        if (shouldCache) {
+          // Save new HTML to cache
+          cache.set(htmlCacheKey(markdownNode), html)
+        }
+
         return html
       }
     }
