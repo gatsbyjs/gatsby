@@ -37,7 +37,7 @@ class ScrollContext extends React.Component {
     const { location } = this.props
     const prevLocation = prevProps.location
 
-    if (location === prevLocation) {
+    if (location.pathname === prevLocation.pathname) {
       return
     }
 
