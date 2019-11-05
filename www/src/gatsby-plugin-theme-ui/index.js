@@ -193,6 +193,10 @@ const col = {
     background: c.white,
     color: c.text.primary,
   },
+  highlightedBox: {
+    background: c.yellow[10],
+    color: c.grey[80],
+  },
   newsletter: {
     background: c.white,
     border: c.grey[10],
@@ -305,6 +309,10 @@ const col = {
       widget: {
         background: darkBackground,
         border: darkBorder,
+        color: c.white,
+      },
+      highlightedBox: {
+        background: c.grey[90],
         color: c.white,
       },
       newsletter: {
