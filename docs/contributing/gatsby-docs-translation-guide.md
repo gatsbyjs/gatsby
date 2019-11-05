@@ -76,6 +76,23 @@ As repo maintainers and members of the Gatsby community, your responsibilities a
 
 As a maintainer, you are welcome to add a contributing doc written in your language to assist with the process. You can find an example in the [gatsby-es repo](https://github.com/gatsbyjs/gatsby-es/blob/master/CONTRIBUTING.MD). Translating [this page](https://github.com/gatsbyjs/gatsby/blob/master/docs/contributing/gatsby-docs-translation-guide.md) and copying it into a `contributing.md` file would be an option as well.
 
+### Keeping translations up-to-date
+
+Periodically, gatsbybot will create pull requests to keep translations repos up-to-date with the original English source. Make sure to review these PRs to ensure that your translation remains accurate.
+
+> Note: the bot doesn't work yet but will come soon. Until then, see the next section to learn how to manually sync your repo.
+
+#### Manually syncing translation repos
+
+If for whatever reason you'd like to manually sync your translation repo, you can do so by running these commands:
+
+```
+git remote add source https://github.com/gatsbyjs/gatsby-i18n-source.git
+git pull source master
+```
+
+Fix all [merge conflicts](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/resolving-a-merge-conflict-using-the-command-line) and create a pull request to finish the merge.
+
 ### Additional tips
 
 #### Set up a style guide and glossary
