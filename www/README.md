@@ -7,7 +7,7 @@ Run locally with:
 - `yarn install`
 - `npm run develop`
 
-See the full contributing instructions at https://www.gatsbyjs.org/contributing/how-to-contribute/.
+See the full contributing instructions at [Gatsby contribute](https://www.gatsbyjs.org/contributing/how-to-contribute/).
 
 ## Environment variables
 
@@ -42,7 +42,7 @@ If there's a problem with the feedback widgets, please open an issue in the repo
 
 ## Running slow build? (Screenshots placeholder)
 
-If you are not working on starter or site showcase, it might be beneficial to use a placeholder image instead of actual screenshots. It will skip downloading screenshots and generating responsive images for all screenshots and replace them with a placeholder image.
+If you are not working on a starter or site showcase, it might be beneficial to use a placeholder image instead of actual screenshots. It will skip downloading screenshots and generating responsive images for all screenshots and replace them with a placeholder image.
 
 Add the following env variable to your `.env.development` file to enable placeholder behaviour:
 
