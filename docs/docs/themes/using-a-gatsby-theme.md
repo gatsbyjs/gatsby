@@ -6,7 +6,7 @@ While you can [get started quickly with a Gatsby theme starter](/docs/themes/get
 
 ## Installing a Theme
 
-Like any Gatsby plugin, Gatsby themes are Node.js packages, so you can install them like other packages in node using npm.
+Like any Gatsby plugin, Gatsby themes are Node.js packages, so you can install them like other published packages in Node using npm or [yarn, including local workspaces](#using-yarn-workspaces).
 
 For example, `gatsby-theme-blog` is the official Gatsby theme for creating a blog.
 
