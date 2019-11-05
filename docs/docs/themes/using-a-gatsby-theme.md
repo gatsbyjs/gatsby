@@ -52,4 +52,4 @@ Public Gatsby themes are published on npm for anyone to use. You can also publis
 
 ## Using Yarn Workspaces
 
-If you would like to work with unpublished themes, consider [setting up Yarn Workspaces for theme development](/blog/2019-05-22-setting-up-yarn-workspaces-for-theme-development/#reach-skip-nav).
+If you would like to work with unpublished themes, consider [setting up Yarn Workspaces for theme development](/blog/2019-05-22-setting-up-yarn-workspaces-for-theme-development/) and [using Yarn](/docs/gatsby-cli/#how-to-change-your-default-package-manager-for-your-next-project) instead of npm.
