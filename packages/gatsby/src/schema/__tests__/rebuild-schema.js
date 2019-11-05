@@ -707,66 +707,19 @@ describe(`build and update schema for other types`, () => {
       date: `2019-09-09`,
       nested: {
         date: `2019-09-09`,
+        nested: {
+          date: `2019-09-09`,
+        },
       },
     }
     const newSchema = await addNodeAndRebuild(node)
+
     const print = typePrinter(newSchema)
-    expect(print(`NewType`)).toMatchInlineSnapshot(`
-      "type NewType implements Node {
-        id: ID!
-        parent: Node
-        children: [Node!]!
-        internal: Internal!
-        date(
-          \\"\\"\\"
-          Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY
-          MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for
-          documentation for different tokens.
-          \\"\\"\\"
-          formatString: String
+    expect(print(`NewType`)).toMatchSnapshot()
+    expect(print(`NewTypeNested`)).toMatchSnapshot()
+    expect(print(`NewTypeNestedNested`)).toMatchSnapshot()
 
-          \\"\\"\\"Returns a string generated with Moment.js' \`fromNow\` function\\"\\"\\"
-          fromNow: Boolean
-
-          \\"\\"\\"
-          Returns the difference between this date and the current time. Defaults to
-          \\"milliseconds\\" but you can also pass in as the measurement \\"years\\",
-          \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
-          \\"\\"\\"
-          difference: String
-
-          \\"\\"\\"Configures the locale Moment.js will use to format the date.\\"\\"\\"
-          locale: String
-        ): Date
-        nested: NewTypeNested
-      }"
-    `)
-
-    expect(print(`NewTypeNested`)).toMatchInlineSnapshot(`
-      "type NewTypeNested {
-        date(
-          \\"\\"\\"
-          Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY
-          MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for
-          documentation for different tokens.
-          \\"\\"\\"
-          formatString: String
-
-          \\"\\"\\"Returns a string generated with Moment.js' \`fromNow\` function\\"\\"\\"
-          fromNow: Boolean
-
-          \\"\\"\\"
-          Returns the difference between this date and the current time. Defaults to
-          \\"milliseconds\\" but you can also pass in as the measurement \\"years\\",
-          \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
-          \\"\\"\\"
-          difference: String
-
-          \\"\\"\\"Configures the locale Moment.js will use to format the date.\\"\\"\\"
-          locale: String
-        ): Date
-      }"
-    `)
+    expectSymmetricDelete(node)
   })
 
   it(`should report error when conflicting changes`, async () => {

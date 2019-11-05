@@ -38,7 +38,10 @@ const { getPagination } = require(`./types/pagination`)
 const { getSortInput, SORTABLE_ENUM } = require(`./types/sort`)
 const { getFilterInput, SEARCHABLE_ENUM } = require(`./types/filter`)
 const { isGatsbyType, GatsbyGraphQLTypeKind } = require(`./types/type-builders`)
-const { clearDerivedTypes, getDerivedTypes } = require(`./types/derived-types`)
+const {
+  clearDerivedTypes,
+  collectDerivedTypeComposers,
+} = require(`./types/derived-types`)
 const { printTypeDefinitions } = require(`./print`)
 
 const buildSchema = async ({
@@ -132,10 +135,10 @@ const rebuildSchemaWithTypes = async ({
       })
     }
 
-    // FIXME: derived types should be recursive
-    const derivedTypeComposers = [...getDerivedTypes({ typeComposer })].map(
-      type => schemaComposer.getAnyTC(type)
-    )
+    const derivedTypeComposers = collectDerivedTypeComposers({
+      schemaComposer,
+      typeComposer,
+    })
 
     await Promise.all(
       [typeComposer, ...derivedTypeComposers].map(typeComposer =>
