@@ -44,7 +44,7 @@ module.exports = {
 }
 ```
 
-To further customize a theme, see [Gatsby theme shadowing](/docs/themes/shadowing/).
+To learn how to further customize a theme, check out the docs on [Gatsby theme shadowing](/docs/themes/shadowing/).
 
 ## Published Themes
 
