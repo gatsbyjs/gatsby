@@ -16,9 +16,9 @@ _For more information on the practical differences in usage between static and n
 
 ## The `staticQueryComponents` and `components` redux stores
 
-Gatsby stores the queries from your site in redux stores called `components` and `staticQueryComponents`. This process and a flowchart illustrating it are explained in the [query extraction](/docs/query-extraction/#store-queries-in-redux) guide.
+Gatsby stores the queries from your site in Redux stores called `components` and `staticQueryComponents`. This process and a flowchart illustrating it are explained in the [query extraction](/docs/query-extraction/#store-queries-in-redux) guide.
 
-The redux `staticQueryComponents` is a `Map` from component jsonName to StaticQueryObject. An example entry in that data structure looks like this:
+The redux `staticQueryComponents` is a `Map` from component `jsonName` to `StaticQueryObject`. An example entry in that data structure looks like this:
 
 ```javascript
 {
