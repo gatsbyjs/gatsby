@@ -10,7 +10,7 @@ Like any Gatsby plugin, Gatsby themes are Node.js packages, so you can install t
 
 For example, `gatsby-theme-blog` is the official Gatsby theme for creating a blog.
 
-To install it, in the root of you site, run
+To install it, run in the root of your site:
 
 ```js
 npm install --save gatsby-theme-blog
