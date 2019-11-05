@@ -24,13 +24,13 @@ Even though Gatsby generates static files, Gatsby apps [rehydrate](/docs/glossar
 1. Invoke `ReactDOM.hydrate()` method to pick up just where the static HTML was left
 1. Transfer rendering to the React reconciler
 
-It's this last phase that bridges the gap between static sites and full-fledged applications. In this phase you can make calls for dynamic data, authenticate users, and perform all the app-like functionality you desire because the page is running a React application.
+It's this last phase that bridges the gap between static sites and full-fledged applications. In this phase you can make calls for [dynamic data](/docs/client-data-fetching/), [authenticate users](/docs/building-a-site-with-authentication/), and perform all the app-like functionality you desire because the page is running a React application.
 
 ## Common patterns for Gatsby apps
 
 There are different options for organizing how your pages are created and what they will be responsible for. These patterns can be combined and tweaked for specific use cases like to pull in data at [build time](/docs/glossary#build) for great performance, or call for data at [runtime](/docs/glossary#runtime) for a more dynamic experience.
 
-Because all Gatsby pages are hydrated into React, **any of the following patterns are capable of app-like behavior**. This section is to help explain how people commonly think about Gatsby.
+Because all Gatsby pages are hydrated into React, **any of the following patterns are capable of app-like behavior**. This section is to help explain some higher level patterns for thinking about Gatsby.
 
 ### Static pages
 
