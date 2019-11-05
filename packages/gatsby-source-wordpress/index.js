@@ -1,1 +1,2 @@
-// no-op-lo-op
+// noop
+"use strict";
