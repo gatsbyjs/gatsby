@@ -8,7 +8,7 @@ Kentico Kontent is a hosted CMS that offers you Content as a Service (CaaS) for 
 
 You can also take advantage of Kentico Kontent's ability to deliver content in multiple languages and create relationships among various content with linked items. However you structure your content in Kentico Kontent, the [source plugin](https://github.com/Kentico/gatsby-source-kontent) will ensure the proper nodes are created for your Gatsby site.
 
-_Note: For this guide, you'll work from scratch from the [Gatsby default starter](https://github.com/gatsbyjs/gatsby-starter-default) to get a feel for how sourcing from Kentico Kontent works._
+_Note: For this guide, you'll work from scratch from the [Gatsby default starter](https://github.com/gatsbyjs/gatsby-starter-default) to get a feel for how sourcing from Kentico Kontent works. If you'd like to look at an example of a complete basic site, have a look at the [Kentico Cloud Gatsby starter site](https://github.com/Kentico/gatsby-starter-kontent), which includes worked examples for querying content._
 
 ## Setup
 
@@ -225,3 +225,4 @@ You've seen how to set up a simple Gatsby site that sources content from Kentico
 
 - See [more about what the Kentico Kontent source plugin can do](https://github.com/Kentico/gatsby-source-kontent#features).
 - Read the [Kentico Kontent documentation](https://docs.kontent.ai/) to see what's possible.
+- Explore the [Kentico Cloud Gatsby starter](https://github.com/Kentico/gatsby-starter-kontent) to see a more complete example.
