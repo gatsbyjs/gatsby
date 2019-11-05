@@ -59,7 +59,9 @@ module.exports = (state = {}, action) => {
     }
 
     case `ADD_CHILD_NODE_TO_PARENT_NODE`: {
-      // TODO
+      // Marking parent type as dirty so that it rebuilds
+      const { type } = action.payload.internal
+      state[type].dirty = true
       return state
     }
 

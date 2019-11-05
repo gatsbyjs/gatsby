@@ -1,5 +1,6 @@
-const { printSchema, printType } = require(`graphql`)
+const { printSchema, printType, lexicographicSortSchema } = require(`graphql`)
 const { store } = require(`../../redux`)
+const { actions } = require(`../../redux/actions`)
 const {
   build,
   rebuildWithSitePage,
@@ -159,6 +160,7 @@ describe(`build and update schema for other types`, () => {
     {
       id: `Foo1`,
       internal: { type: `Foo`, contentDigest: `0` },
+      children: [],
       numberKey: 1,
       stringKey: `5`,
       dateKey: `2018-05-05`,
@@ -166,15 +168,18 @@ describe(`build and update schema for other types`, () => {
     {
       id: `Nested1`,
       internal: { type: `Nested`, contentDigest: `0` },
+      children: [],
       nested: {
         foo: { bar: { baz: `string` } },
       },
     },
   ]
 
-  const nodeInterfaceFields = [`id`, `parent`, `children`, `internal`]
   const initialFooFields = [
-    ...nodeInterfaceFields,
+    `id`,
+    `parent`,
+    `children`,
+    `internal`,
     `numberKey`,
     `stringKey`,
     `dateKey`,
@@ -183,6 +188,9 @@ describe(`build and update schema for other types`, () => {
   const addNode = node => store.dispatch({ type: `CREATE_NODE`, payload: node })
   const deleteNode = node =>
     store.dispatch({ type: `DELETE_NODE`, payload: node })
+
+  const createParentChildLink = ({ parent, child }) =>
+    store.dispatch(actions.createParentChildLink({ parent, child }))
 
   const addNodeField = ({ node, name, value }) => {
     node.fields = node.fields || {}
@@ -204,7 +212,7 @@ describe(`build and update schema for other types`, () => {
     await build({})
     schema = store.getState().schema
     initialTypes = Object.keys(schema.getTypeMap()).sort()
-    initialPrintedSchema = printSchema(schema)
+    initialPrintedSchema = printSchema(lexicographicSortSchema(schema))
   })
 
   const rebuildTestSchema = async () => {
@@ -228,7 +236,8 @@ describe(`build and update schema for other types`, () => {
 
   const expectSymmetricDelete = async node => {
     const newSchema = await deleteNodeAndRebuild(node)
-    expect(printSchema(newSchema)).toEqual(initialPrintedSchema)
+    const printed = printSchema(lexicographicSortSchema(newSchema))
+    expect(printed).toEqual(initialPrintedSchema)
   }
 
   it(`changes type when fields are added or removed`, async () => {
@@ -545,6 +554,69 @@ describe(`build and update schema for other types`, () => {
     `)
 
     await expectSymmetricDelete(node)
+  })
+
+  it(`adds child convenience field on parent type`, async () => {
+    const nodes = [
+      {
+        id: `Bar1`,
+        internal: { type: `Bar`, contentDigest: `0` },
+        parent: `Foo1`,
+        value: 0,
+      },
+      {
+        id: `Baz1`,
+        internal: { type: `Baz`, contentDigest: `0` },
+        parent: `Foo1`,
+        value: 0,
+      },
+    ]
+    const parent = createNodes()[0]
+    nodes.forEach(node => {
+      addNode(node)
+      createParentChildLink({ parent, child: node })
+    })
+    const newSchema = await rebuildTestSchema()
+
+    const fields = newSchema.getType(`Foo`).getFields()
+    const fieldNames = Object.keys(fields).sort()
+    expect(fieldNames).toEqual(
+      initialFooFields.concat(`childBar`, `childBaz`).sort()
+    )
+    expect(String(fields.childBar.type)).toEqual(`Bar`)
+    expect(String(fields.childBaz.type)).toEqual(`Baz`)
+
+    await expectSymmetricDelete(nodes)
+  })
+
+  it(`adds children convenience field on parent type`, async () => {
+    const nodes = [
+      {
+        id: `Bar1`,
+        internal: { type: `Bar`, contentDigest: `0` },
+        parent: `Foo1`,
+        value: 0,
+      },
+      {
+        id: `Bar2`,
+        internal: { type: `Bar`, contentDigest: `0` },
+        parent: `Foo1`,
+        value: 0,
+      },
+    ]
+    const parent = createNodes()[0]
+    nodes.forEach(node => {
+      addNode(node)
+      createParentChildLink({ parent, child: node })
+    })
+    const newSchema = await rebuildTestSchema()
+
+    const fields = newSchema.getType(`Foo`).getFields()
+    const fieldNames = Object.keys(fields).sort()
+    expect(fieldNames).toEqual(initialFooFields.concat(`childrenBar`).sort())
+    expect(String(fields.childrenBar.type)).toEqual(`[Bar]`)
+
+    await expectSymmetricDelete(nodes)
   })
 
   it(`creates new fields on ADD_FIELD_TO_NODE`, async () => {
