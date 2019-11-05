@@ -40,10 +40,12 @@ const onPreRouteUpdate = (location, prevLocation) => {
   }
 }
 
-const onRouteUpdate = (location, prevLocation) => {
+const onRouteUpdate = (location, prevLocation, announceLocation) => {
   if (!maybeRedirect(location.pathname)) {
     apiRunner(`onRouteUpdate`, { location, prevLocation })
-
+    if (announceLocation) {
+      announceLocation()
+    }
     // Temp hack while awaiting https://github.com/reach/router/issues/119
     window.__navigatingToLink = false
   }
@@ -172,7 +174,11 @@ class RouteUpdates extends React.Component {
 
   componentDidUpdate(prevProps, prevState, shouldFireRouteUpdate) {
     if (shouldFireRouteUpdate) {
-      onRouteUpdate(this.props.location, prevProps.location)
+      onRouteUpdate(
+        this.props.location,
+        prevProps.location,
+        this.props.announceLocation
+      )
     }
   }
 

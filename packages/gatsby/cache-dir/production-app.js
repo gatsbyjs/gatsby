@@ -1,5 +1,5 @@
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
-import React from "react"
+import React, { useEffect, useState } from "react"
 import ReactDOM from "react-dom"
 import { Router, navigate, Location, BaseContext } from "@reach/router"
 import { ScrollContext } from "gatsby-react-router-scroll"
@@ -55,13 +55,17 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     </BaseContext.Provider>
   )
 
+  let announceLocation = null
   class LocationHandler extends React.Component {
     render() {
       const { location } = this.props
       return (
         <EnsureResources location={location}>
           {({ pageResources, location }) => (
-            <RouteUpdates location={location}>
+            <RouteUpdates
+              location={location}
+              announceLocation={announceLocation}
+            >
               <ScrollContext
                 location={location}
                 shouldUpdateScroll={shouldUpdateScroll}
@@ -85,11 +89,57 @@ apiRunnerAsync(`onClientEntry`).then(() => {
                   />
                 </Router>
               </ScrollContext>
+              <RouteAnnouncer />
             </RouteUpdates>
           )}
         </EnsureResources>
       )
     }
+  }
+
+  const RouteAnnouncer = () => {
+    const [announcement, setAnnouncement] = useState(``)
+    useEffect(() => {
+      announceLocation = () => {
+        requestAnimationFrame(() => {
+          let pageName = `new page`
+          if (document.title) {
+            pageName = document.title
+          }
+          const pageHeadings = document
+            .getElementById(`gatsby-focus-wrapper`)
+            .getElementsByTagName(`h1`)
+          if (pageHeadings) {
+            pageName = pageHeadings[0].innerHTML
+          }
+          setAnnouncement(`Navigated to ${pageName}`)
+        })
+      }
+      // cleanup
+      return () => {
+        announceLocation = null
+      }
+    })
+    return (
+      <div
+        id="gatsby-announcer"
+        style={{
+          position: `absolute`,
+          width: 1,
+          height: 1,
+          padding: 0,
+          overflow: `hidden`,
+          clip: `rect(0, 0, 0, 0)`,
+          whiteSpace: `nowrap`,
+          border: 0,
+        }}
+        role="status"
+        aria-live="assertive"
+        aria-atomic="true"
+      >
+        {announcement}
+      </div>
+    )
   }
 
   const { pagePath, location: browserLoc } = window
@@ -140,7 +190,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       }
     ).pop()
 
-    let NewRoot = () => WrappedRoot
+    const NewRoot = () => WrappedRoot
 
     const renderer = apiRunner(
       `replaceHydrateFunction`,

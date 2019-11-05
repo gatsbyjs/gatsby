@@ -52,15 +52,19 @@ const RouteHandler = props => (
   </BaseContext.Provider>
 )
 
+let locationListener
 class LocationHandler extends React.Component {
   render() {
-    let { location } = this.props
+    const { location } = this.props
 
     if (!loader.isPageNotFound(location.pathname)) {
       return (
         <EnsureResources location={location}>
           {locationAndPageResources => (
-            <RouteUpdates location={location}>
+            <RouteUpdates
+              location={location}
+              locationListener={locationListener}
+            >
               <ScrollContext
                 location={location}
                 shouldUpdateScroll={shouldUpdateScroll}
@@ -96,7 +100,7 @@ class LocationHandler extends React.Component {
     }
 
     return (
-      <RouteUpdates location={location}>
+      <RouteUpdates location={location} locationListener={locationListener}>
         <Router
           basepath={__BASE_PATH__}
           location={location}
