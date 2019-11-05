@@ -190,6 +190,7 @@ const col = {
     placeholder: c.grey[60],
   },
   widget: {
+    border: c.grey[10],
     background: c.white,
     color: c.text.primary,
   },
