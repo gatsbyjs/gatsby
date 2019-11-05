@@ -29,7 +29,7 @@ function cloneOrUpdateRepo(repoName, repoUrl) {
 }
 
 async function syncTranslationRepo(code) {
-  logger = log4js.getLogger("sync:" + code)
+  logger = log4js.getLogger(`sync:` + code)
   const transRepoName = `${repoBase}-${code}`
   const transRepoUrl = `${host}/${owner}/${transRepoName}`
   cloneOrUpdateRepo(transRepoName, transRepoUrl)
@@ -110,7 +110,7 @@ async function syncTranslationRepo(code) {
       },
       input: {
         repositoryId: repository.id,
-        baseRefName: "master",
+        baseRefName: `master`,
         headRefName: syncBranch,
         title: `Sync with gatsby-i18n-source@${shortHash}`,
         body: ``,
@@ -128,12 +128,13 @@ async function syncTranslationRepo(code) {
   const diff = shell.exec(`git diff ${baseHash}`).stdout
   const chunks = getDiffChunks(diff)
 
-  const comments = chunks.map(chunk => ({
-    path: chunk.path,
-    startLine: chunk.startLine,
-    line: chunk.endsLine,
-    // TODO suggest change to old version
-    body: `
+  const comments = chunks.map(chunk => {
+    return {
+      path: chunk.path,
+      startLine: chunk.startLine,
+      line: chunk.endsLine,
+      // TODO suggest change to old version
+      body: `
 Change in source repo:
 
 \`\`\`diff
@@ -141,7 +142,8 @@ Change in source repo:
 + ${chunk.new}
 \`\`\`
     `,
-  }))
+    }
+  })
 
   // publish the review
   // for each diff block, create a comment detailing the difference in the english version
@@ -160,7 +162,7 @@ Change in source repo:
       },
       input: {
         pullRequestId: pullRequest.id,
-        event: "REQUEST_CHANGES",
+        event: `REQUEST_CHANGES`,
         threads,
       },
     }
