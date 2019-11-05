@@ -827,8 +827,7 @@ module.exports = {
       resolve: "gatsby-source-wordpress",
       options: {
         // ...
-        normalizers: normalizers =>
-          [dropUnusedMediaNormalizer].concat(normalizers),
+        normalizers: normalizers => [dropUnusedMediaNormalizer, ...normalizers],
       },
     },
   ],
