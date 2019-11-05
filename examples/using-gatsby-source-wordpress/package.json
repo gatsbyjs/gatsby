@@ -1,6 +1,6 @@
 {
-  "name": "using-gatsby-source-wpgraphql",
-  "description": "Gatsby example site using gatsby-source-graphql",
+  "name": "using-gatsby-source-wordpress",
+  "description": "Gatsby example site using gatsby-source-wordpress",
   "license": "MIT",
   "scripts": {
     "develop": "gatsby develop",
