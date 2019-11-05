@@ -91,10 +91,10 @@ export const ToggleButtonLabel = styled(`span`)`
   transition: 0.5s;
   white-space: nowrap;
   width: 100%;
-  z-index: 1;
 
   ${mediaQueries.lg} {
     width: auto;
+    z-index: 1;
   }
 `
 
