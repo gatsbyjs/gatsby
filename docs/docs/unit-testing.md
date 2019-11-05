@@ -217,7 +217,7 @@ by running `npm test -- -u`.
 
 ## Using TypeScript
 
-If you are using TypeScript, you need to make two small changes to your
+If you are using TypeScript, you need to make two changes to your
 config.
 
 Update the transform in `jest.config.js`, like so:
