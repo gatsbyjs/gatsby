@@ -91,6 +91,25 @@ There are specific pages about contributing to various parts of the Gatsby ecosy
 
 For the Gatsby blog, it's necessary to run your content idea by the Gatsby team before submitting it. For more information, refer to the page on [blog and website contributions](/contributing/blog-and-website-contributions/), including how to propose an idea and setting up the blog to run locally.
 
+## Follow up with reviews and suggestions
+
+After a PR is sent to the Gatsby GitHub repo, the Gatsby core team and the community may suggest modifications to the changes that your PR introduces.
+
+The Gatsby core and learning teams review and approve every PR that the community sends to make sure that it meets the contribution guidelines of the repo, and to find opportunities for improvement to your PR changes.
+
+These suggestions may also be called "request changes" by the GitHub UI. When a change request is added to your PR, this and the rest of the change requests will appear on the GitHub page for your PR. From this page you can use the suggestions UI to:
+
+- Review the suggested changes using the "View changes" button.
+- [Commit](https://help.github.com/en/articles/incorporating-feedback-in-your-pull-request#applying-suggested-changes) the suggestions.
+- [Discuss suggestions](https://help.github.com/en/articles/about-conversations-on-github) to ask questions about the suggested changes.
+- [Add suggestions to a batch](https://help.github.com/en/articles/incorporating-feedback-in-your-pull-request#applying-suggested-changes) so they can be pushed in a single commit.
+
+For suggestions that may not be resolved using the GitHub UI, remember that you can keep adding related commits to your PR before it is merged and those commits will also be a part of such PR.
+
+After all your questions have been resolved and the requested changes have been committed, you can [mark the conversation as solved](https://help.github.com/en/articles/commenting-on-a-pull-request#resolving-conversations).
+
+This process helps both the Gatsby team and the community to contribute with improvements for your changes before they are merged into the Gatsby GitHub repo.
+
 ## Update your fork with the latest Gatsby changes
 
 The Gatsby GitHub repo is very active, so it's likely you'll need to update your fork with the latest changes to be able to merge in your code. This requires adding Gatsby as an [upstream remote](https://help.github.com/en/articles/configuring-a-remote-for-a-fork):

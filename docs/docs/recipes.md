@@ -1981,7 +1981,7 @@ return (
 )
 ```
 
-b. using a [GraphQL fragment](/docs/using-fragments/), to query for the necessary fields more tersely
+b. using a [GraphQL fragment](/docs/using-graphql-fragments/), to query for the necessary fields more tersely
 
 ```jsx
 const data = useStaticQuery(graphql`

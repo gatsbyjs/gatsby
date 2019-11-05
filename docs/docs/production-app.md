@@ -115,7 +115,7 @@ Before hydration occurs, Gatsby kicks off the loading of resources in the backgr
 
 This occurs in [loader.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/loader.js). The main function here is [getResourcesForPathname()](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/loader.js#L314). Given a path, it will find its page, and import its component module json query results. But to do this, it needs access to that information. This is provided by [async-requires.js](/docs/write-pages/#async-requiresjs) which contains the list of all pages in the site, and all their dataPaths. [fetchPageResourcesMap()](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/loader.js#L33) takes care of requesting that file, which occurs the [first time](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/loader.js#L292) `getResourcesForPathname()` is called.
 
-### window variables
+### `window` variables
 
 Gatsby attaches global state to the `window` object via `window.___somevar` variables so they can be used by plugins (though this is technically unsupported). Here are a few:
 
