@@ -9,6 +9,11 @@ This means that the configuration and functionality isn’t directly written int
 
 <GuideList slug={props.slug} />
 
+## Browse themes
+
+- [Themes in Plugin Library](/plugins/?=gatsby-theme)
+- [Theme Jam Showcase](https://themejam.gatsbyjs.org/showcase)
+
 ## Other resources
 
 - [Gatsby blog posts on themes](/blog/tags/themes)
