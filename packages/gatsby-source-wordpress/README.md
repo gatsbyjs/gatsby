@@ -143,8 +143,7 @@ module.exports = {
         // add/remove wordpress data normalizers
         // each normalizer is an object with name and normalizer property being a function that accepts
         // object with entities array and different helpers and configuration settings
-        normalizers: normalizers =>
-          [dropUnusedMediaNormalizer].concat(normalizers),
+        normalizers: normalizers => [dropUnusedMediaNormalizer, ...normalizers],
         // use a custom normalizer which is applied after the built-in ones.
         normalizer: function({ entities }) {
           return entities
