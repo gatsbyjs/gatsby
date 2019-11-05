@@ -16,7 +16,7 @@ To install it, run in the root of your site:
 npm install --save gatsby-theme-blog
 ```
 
-## Theme Options
+## Theme options
 
 Depending on the theme, there may be theme options that can be configured via `gatsby-config.js`.
 
