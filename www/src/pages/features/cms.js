@@ -51,26 +51,30 @@ const CmsFeaturesPage = ({ data, location }) => {
             technologies, choose the technologies to compare and then press
             Compare:
           </p>
-          <div
-            sx={{
-              display: `grid`,
-              gridTemplateColumns: `repeat(auto-fit, minmax(75px, 120px))`,
-              gridGap: 2,
-              pb: 10,
-            }}
-          >
-            {featureComparisonOptions.cms.map(({ key: optionKey, display }) => (
-              <CompareButton
-                key={optionKey}
-                optionKey={optionKey}
-                selected={selected[optionKey]}
-                setSelected={setSelected}
-              >
-                {display}
-              </CompareButton>
-            ))}
+          <div sx={{ pb: 10 }}>
+            <div
+              sx={{
+                display: `grid`,
+                gridTemplateColumns: `repeat(auto-fit, minmax(75px, 1fr))`,
+                gridAutoRows: `1fr`,
+                gridGap: 2,
+                pb: 4,
+              }}
+            >
+              {featureComparisonOptions.cms.map(
+                ({ key: optionKey, display }) => (
+                  <CompareButton
+                    key={optionKey}
+                    optionKey={optionKey}
+                    selected={selected[optionKey]}
+                    setSelected={setSelected}
+                  >
+                    {display}
+                  </CompareButton>
+                )
+              )}
+            </div>
             <Button
-              overrideCSS={{ whiteSpace: `pre-wrap` }}
               to={
                 hasSelected
                   ? `/features/cms/gatsby-vs-${comparators.join(`-vs-`)}`

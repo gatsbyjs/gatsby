@@ -245,15 +245,6 @@
   categories:
     - Marketing
     - Technology
-- title: Bottender Docs
-  main_url: "https://bottender.js.org/"
-  url: "https://bottender.js.org/"
-  source_url: "https://github.com/bottenderjs/bottenderjs.github.io"
-  featured: false
-  categories:
-    - Documentation
-    - Web Development
-    - Open Source
 - title: Ghost Documentation
   main_url: https://docs.ghost.org/
   url: https://docs.ghost.org/
@@ -2955,7 +2946,6 @@
 - title: Citywide Holdup
   url: https://citywideholdup.org/
   main_url: https://citywideholdup.org/
-  source_url: https://github.com/killakam3084/citywide-site
   description: >-
     Citywide Holdup is an annual fundraising event held around early November in the city of Austin, TX hosted by the Texas Wranglers benefitting Easter Seals of Central Texas, a non-profit organization that provides exceptional services, education, outreach and advocacy so that people with disabilities can live, learn, work and play in our communities.
   categories:
@@ -3727,7 +3717,6 @@
 - title: Dale Blackburn - Portfolio
   url: https://dakebl.co.uk/
   main_url: https://dakebl.co.uk/
-  source_url: https://github.com/dakebl/dakebl.co.uk
   description: >
     Dale Blackburn's personal website and blog.
   categories:
@@ -3837,7 +3826,45 @@
     - Marketing
     - Technology
     - WordPress
-  built_by: Francois Brill
+  built_by: Francois Brill | BIGBrave
+  built_by_url: https://bigbrave.digital
+  featured: false
+- title: 5th Avenue Properties
+  main_url: https://5thavenue.co.za
+  url: https://5thavenue.co.za
+  description: >
+    5th Avenue Properties specializes in the leasing and sales of office space and industrial property. BIGBrave built the website in Gatsby with data from an API server (CRM) for all the property and consultant data, and WordPress for all the website content data and case studies. All forms on the website was also directly integrated into the CRM system to ensure no leads are lost. People cannot stop commenting on the speed of the site and the property search.
+  categories:
+    - Property Consultants
+    - Algolia
+    - Technology
+    - WordPress
+    - API
+  built_by: Russel Povey and Francois Brill | BIGBrave
+  built_by_url: https://bigbrave.digital
+  featured: false
+- title: Intsha Consulting
+  main_url: https://intsha.co.za
+  url: https://intsha.co.za
+  description: >
+    Intsha is a bespoke Human Resources consultancy firm offering expert Recruitment and Talent Management services in today's competitive marketplace. BIGBrave helped Intsha design and develop a bespoke online presense helping them stand out from the crowd.
+  categories:
+    - Consultants
+    - Marketing Website
+    - WordPress
+  built_by: Evan Janovsky | BIGBrave
+  built_by_url: https://bigbrave.digital
+  featured: false
+- title: MHW Law
+  main_url: https://mhwlaw.ca
+  url: https://mhwlaw.ca
+  description: >
+    MHW is a full service law firm that has offered legal representation and advice to clients locally and throughout British Columbia since 1984. BIGBrave helped MHW bring their website into the 21st century by offering the best and latest Gatsby site to help them stand our from the crowd.
+  categories:
+    - Law Firm
+    - Marketing Website
+    - WordPress
+  built_by: Evan Janovsky and Francois Brill | BIGBrave
   built_by_url: https://bigbrave.digital
   featured: false
 - title: KegTracker
@@ -3848,8 +3875,9 @@
   categories:
     - Food
     - Business
+    - Beverages
     - Technology
-  built_by: Francois Brill
+  built_by: Francois Brill | BIGBrave
   built_by_url: https://bigbrave.digital
   featured: false
 - title: Mike Nichols
@@ -4238,7 +4266,6 @@
 - title: Rou Hun Fan's portfolio
   main_url: https://flowen.me
   url: https://flowen.me
-  source_url: https://github.com/flowen/flowen.me/tree/master/2019/v3
   description: >
     Portfolio of creative developer Rou Hun Fan. Built with Gatsby v2 &amp; Greensock drawSVG.
   categories:
@@ -6059,7 +6086,6 @@
 - title: nehalist.io
   main_url: https://nehalist.io
   url: https://nehalist.io
-  source_url: https://github.com/nehalist/nehalist.io
   description: >
     nehalist.io is a blog about software development, technology and all that kind of geeky stuff.
   categories:
@@ -8174,17 +8200,16 @@
   built_by: Brent Ingram
   built_by_url: https://www.brentjingram.com/
   featured: false
-
 - title: Veryben
   main_url: https://veryben.com/
   url: https://veryben.com/
   description: >
     be water my friend
-  featured: false
   categories:
     - Blog
   built_by: anikijiang
   built_by_url: https://twitter.com/anikijiang
+  featured: false
 - title: kentarom's portfolio
   main_url: https://kentarom.com/
   url: https://kentarom.com/
@@ -8256,4 +8281,48 @@
     - Programming
   built_by: Jennifer Demieville
   built_by_url: https://demieville-codes.herokuapp.com/portfolio
+  featured: false
+- title: Open Techiz
+  main_url: "https://www.opentechiz.com/"
+  url: "https://www.opentechiz.com/"
+  featured: false
+  description: >
+    An agile software development company in Vietnam, providing wide range service from ecommerce development, mobile development, automation testing and cloud deployment with kubernets
+  categories:
+    - Web Development
+    - Mobile Development
+    - Technology
+  built_by: Open Techiz
+  built_by_url: "https://www.opentechiz.com/"
+- title: Leave Me Alone
+  url: https://leavemealone.app
+  main_url: https://leavemealone.app
+  description: >
+    Leave Me Alone helps you unsubscribe from unwanted emails easily. It's built with Gatsby v2.
+  categories:
+    - Landing Page
+    - Productivity
+  built_by: James Ivings
+  built_by_url: https://squarecat.io
+  featured: false
+- title: Oberion
+  main_url: https://oberion.io
+  url: https://oberion.io
+  description: >
+    Oberion analyzes your gaming library and gives you personal recommendations based on what you play
+  categories:
+    - Entertainment
+    - Media
+  built_by: Thomas Uta
+  built_by_url: https://twitter.com/ThomasJanUta
+  featured: false
+- title: Lusta Hair
+  url: https://www.lustahair.com
+  main_url: https://www.lustahair.com
+  description: >
+    Luxury 100% Remy Human Hair Toppers. The perfect solution for volume, coverage and style. Online retailer based in Australia.
+  categories:
+    - eCommerce
+  built_by: Jason Di Benedetto
+  built_by_url: https://jason.dibenedetto.fyi
   featured: false

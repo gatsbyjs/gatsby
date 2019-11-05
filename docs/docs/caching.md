@@ -51,4 +51,7 @@ When deploying with Now, follow the instructions in the [Now documentation](http
 
 ---
 
-<sup>1</sup> It's important that you use the combination of `max-age=0` and `must-revalidate` instead of using `no-cache`. This allows the CDN to store copies of the files on the servers closest to your users and only download a new version from the origin server in the event that the files have changed. Using `no-cache`, on the other hand, decreases performance because it forces the CDN to download a new copy of the file from the origin server on every request.
+<sup>1</sup> You can use 'no-cache' instead of 'max-age=0, must-revalidate'. Despite what the name might imply, 'no-cache' permits a cache to serve cached content as long as it validates the cache freshness first. <sup>[2][3] </sup> In either case, clients have to make a round trip to the origin server on each request. However, if you are correctly utilizing ETags or Last-Modified validation you will avoid downloading assets when the cached copy is still valid (e.g. the file hasn't changed on the origin server since it was cached).
+
+[2]: https://tools.ietf.org/html/rfc7234#section-5.2.2.1
+[3]: https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching#no-cache_and_no-store

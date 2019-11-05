@@ -2,7 +2,7 @@ import { rgb as wcag } from "wcag-contrast"
 import hexRgb from "hex-rgb"
 import { normal } from "color-blend"
 
-import theme from "./theme"
+import { colors } from "../../gatsby-plugin-theme-ui"
 
 // adapted from https://github.com/jxnblk/colorable 🙏
 const minimums = {
@@ -78,7 +78,7 @@ export const colorable = function(hex) {
   }
 
   result.a11y = {
-    ...a11y(hex, theme.colors.white),
+    ...a11y(hex, colors.white),
   }
 
   return result

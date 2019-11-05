@@ -105,9 +105,11 @@ module.exports = async (args: BootstrapArgs) => {
     parentSpan: bootstrapSpan,
   })
   activity.start()
-  let config = await preferDefault(
-    getConfigFile(program.directory, `gatsby-config`)
+  const { configModule, configFilePath } = await getConfigFile(
+    program.directory,
+    `gatsby-config`
   )
+  let config = preferDefault(configModule)
 
   // The root config cannot be exported as a function, only theme configs
   if (typeof config === `function`) {
@@ -125,7 +127,10 @@ module.exports = async (args: BootstrapArgs) => {
     report.warn(
       `The gatsby-config key "__experimentalThemes" has been deprecated. Please use the "plugins" key instead.`
     )
-    const themes = await loadThemes(config, { useLegacyThemes: true })
+    const themes = await loadThemes(config, {
+      useLegacyThemes: true,
+      configFilePath,
+    })
     config = themes.config
 
     store.dispatch({
@@ -133,7 +138,10 @@ module.exports = async (args: BootstrapArgs) => {
       payload: themes.themes,
     })
   } else if (config) {
-    const plugins = await loadThemes(config, { useLegacyThemes: false })
+    const plugins = await loadThemes(config, {
+      useLegacyThemes: false,
+      configFilePath,
+    })
     config = plugins.config
   }
 

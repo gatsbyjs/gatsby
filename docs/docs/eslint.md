@@ -37,3 +37,5 @@ module.exports = {
   extends: `react-app`,
 }
 ```
+
+If you want to disable ESLint completely, create an empty `.eslintrc` file.

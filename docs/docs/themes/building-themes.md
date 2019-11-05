@@ -12,7 +12,7 @@ The quickest way to get up and running with a workspace for building themes is t
 To get started, run:
 
 ```shell
-gatsby new my-theme gatsbyjs/gatsby-starter-theme-workspace
+gatsby new gatsby-theme-my-theme gatsbyjs/gatsby-starter-theme-workspace
 ```
 
 This will generate a new project for you. The file tree will look like this:

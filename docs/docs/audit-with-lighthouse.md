@@ -10,7 +10,7 @@ Lighthouse is included in Chrome DevTools. Running its audit -- and then address
 
 If you haven't yet, you need to create a production build of your Gatsby site. The Gatsby development server is optimized for making development fast, but the site that it generates, while closely resembling a production version of the site, isn't as optimized.
 
-### Create a production build
+## Create a production build
 
 1.  Stop the development server (if it's still running) and run:
 
@@ -28,7 +28,7 @@ gatsby serve
 
 Once this starts, you can now view your site at `localhost:9000`.
 
-### Run a Lighthouse audit
+## Run a Lighthouse audit
 
 Now run your first Lighthouse test.
 
