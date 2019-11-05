@@ -24,19 +24,20 @@ of PNGs then it can significantly reduce build times.
 
 ## How to use
 
-```javascript	```javascript:title=gatsby-config.js
+`javascript`javascript:title=gatsby-config.js
 // In your gatsby-config.js
 plugins: [
-  {
-    resolve: `gatsby-plugin-sharp`,
-    options: {
-      useMozJpeg: false,
-      stripMetadata: true,
-      defaultQuality: 75,
-    },
-  },
+{
+resolve: `gatsby-plugin-sharp`,
+options: {
+useMozJpeg: false,
+stripMetadata: true,
+defaultQuality: 75,
+},
+},
 ]
-```
+
+````
 
 ## Methods
 
@@ -165,7 +166,7 @@ allImageSharp {
     }
   }
 }
-```
+````
 
 #### duotone
 
