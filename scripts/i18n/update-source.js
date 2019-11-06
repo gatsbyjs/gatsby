@@ -42,7 +42,7 @@ function cloneOrUpdateRepo(repoName, repoUrl) {
 }
 
 // Copy over contents of origin repo (gatsby) to the source repo (gatsby-source-i18n)
-// FIXME make sure the main repo is updated before we do this
+// TODO make sure the main repo is updated before we do this
 async function updateSourceRepo() {
   if (shell.cd(cacheDir).code !== 0) {
     logger.debug(`Creating ${cacheDir}`)
@@ -61,6 +61,7 @@ async function updateSourceRepo() {
   // Check if there are any changes to commit
   if (shell.exec(`git status --porcelain`).stdout.length) {
     shell.exec(`git add .`)
+    // TODO use the latest hash & commit message as the message here
     if (shell.exec(`git commit -m 'Update from gatsbyjs/gatsby'`).code !== 0) {
       logger.debug(`Git commit failed`)
       process.exit(1)
