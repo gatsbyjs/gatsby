@@ -1,5 +1,6 @@
 const log4js = require(`log4js`)
 const shell = require(`shelljs`)
+const parseDiff = require("parse-diff")
 const { graphql } = require(`@octokit/graphql`)
 let logger = log4js.getLogger(`sync`)
 
@@ -11,10 +12,6 @@ const repoBase = `gatsby`
 const sourceRepo = `gatsby-i18n-source`
 
 const sourceRepoUrl = `${host}/${owner}/${sourceRepo}.git`
-
-function getDiffChunks(diff) {
-  // TODO
-}
 
 function cloneOrUpdateRepo(repoName, repoUrl) {
   if (shell.ls(repoName).code !== 0) {
@@ -32,6 +29,11 @@ async function syncTranslationRepo(code) {
   logger = log4js.getLogger(`sync:` + code)
   const transRepoName = `${repoBase}-${code}`
   const transRepoUrl = `${host}/${owner}/${transRepoName}`
+  if (shell.cd(cacheDir).code !== 0) {
+    logger.debug(`creating ${cacheDir}`)
+    shell.mkdir(cacheDir)
+    shell.cd(cacheDir)
+  }
   cloneOrUpdateRepo(transRepoName, transRepoUrl)
   shell.cd(transRepoName)
 
@@ -41,9 +43,9 @@ async function syncTranslationRepo(code) {
   const shortHash = hash.substr(0, 8)
   const syncBranch = `sync-${shortHash}`
 
-  if (shell.exec(`git checkout ${syncBranch}`).code !== 0) {
-    shell.exec(`git checkout -b ${syncBranch}`)
-  }
+  // if (shell.exec(`git checkout ${syncBranch}`).code !== 0) {
+  //   shell.exec(`git checkout -b ${syncBranch}`)
+  // }
 
   // pull from the source
   shell.exec(`git remote add source ${sourceRepoUrl}`)
@@ -62,35 +64,69 @@ async function syncTranslationRepo(code) {
 
   // If no conflicts, merge directly into master
   // TODO does gatsby-bot have merge permissions?
-  if (conflictFiles.length === 0) {
-    logger.info(`No conflicts found. Committing directly to master.`)
-    shell.exec(`git checkout master`)
-    shell.exec(`git merge ${syncBranch}`)
-    shell.exec(`git push origin master`)
-    process.exit(0)
-  }
+  // if (conflictFiles.length === 0) {
+  //   logger.info(`No conflicts found. Committing directly to master.`)
+  //   shell.exec(`git checkout master`)
+  //   shell.exec(`git merge ${syncBranch}`)
+  //   shell.exec(`git push origin master`)
+  //   process.exit(0)
+  // }
 
-  // reset and pull again, this time taking the source version of updated files
-  shell.exec(`git reset --hard`)
-  shell.exec(`git pull source master --strategy-option theirs`)
-  shell.exec(`git push --set-upstream origin ${syncBranch}`)
+  // Resolve the conflicts by choosing the translated version but adding a marker
+  conflictFiles.forEach(file => {
+    // TODO
+    // resolveConflicts(file)
+  })
+
+  // Do a soft reset and add the resolved conflict files
+  shell.exec("git reset")
+  shell.exec(`git add ${conflictFiles.join(" ")}`)
+  // clean out the rest of the changed files
+  shell.exec("git checkout -- .")
+  shell.exec("git clean -fd")
+  process.exit(0)
+  // Commit the resolved conflicts into a new branch
+  // and push it
 
   // TODO if there is already an existing PR, don't create a new one
 
   // get the repository
-  const { repository } = await graphql(
-    `
-      query($owner: String!, $name: String!) {
-        repository(owner: $owner, name: $name) {
-          id
-        }
-      }
-    `,
-    {
-      owner,
-      name: transRepoName,
-    }
-  )
+  // const { repository } = await graphql(
+  //   `
+  //     query($owner: String!, $name: String!) {
+  //       repository(owner: $owner, name: $name) {
+  //         id
+  //       }
+  //     }
+  //   `,
+  //   {
+  //     owner,
+  //     name: transRepoName,
+  //   }
+  // )
+  shell.exec("git reset --hard")
+
+  // diff conflicting files against source/master on last sync
+  const baseHash = shell
+    .exec(`git merge-base origin/master source/master`)
+    .stdout.replace("\n", "")
+  shell.exec(`git checkout source/master`)
+  const cmd = `git diff ${baseHash} ${conflictFiles.join(" ")}`
+  console.log(cmd)
+  // process.exit(0)
+  const diff = shell.exec(cmd).stdout
+
+  // console.log(diff)
+  const diffFiles = parseDiff(diff)
+
+  // diffFiles.forEach(file => {
+  //   file.chunks.forEach((chunk, i) => {
+  //     console.log("chunk ", i)
+  //     console.log(chunk)
+  //   })
+  // })
+
+  process.exit(0)
 
   // create a new draft PR
   const pullRequest = await graphql(
@@ -119,14 +155,6 @@ async function syncTranslationRepo(code) {
       },
     }
   )
-
-  // diff conflicting files against source/master on last sync
-  const baseHash = shell.exec(`git merge-base origin/master source/master`)
-    .stdout
-  shell.exec(`git checkout source/master`)
-  // TODO only do this for conflict files
-  const diff = shell.exec(`git diff ${baseHash}`).stdout
-  const chunks = getDiffChunks(diff)
 
   const comments = chunks.map(chunk => {
     return {
@@ -167,6 +195,13 @@ Change in source repo:
       },
     }
   )
+
+  // if we successfully publish the PR
+  // pull again, taking the translated version and push to master
+  shell.exec(`git checkout master`)
+  shell.exec(`git pull source master --strategy-option ours`)
+  shell.exec(`git push origin master`)
 }
 
-syncTranslationRepo()
+const [langCode] = process.argv.slice(2)
+syncTranslationRepo(langCode)
