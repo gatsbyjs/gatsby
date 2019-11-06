@@ -36,7 +36,7 @@ cd kentico-kontent-guide
 Next, install the [Kentico Kontent source plugin](https://github.com/Kentico/gatsby-source-kontent):
 
 ```shell
-yarn add @kentico/gatsby-source-kontent
+npm install @kentico/gatsby-source-kontent
 ```
 
 Once that's done, you need to add the plugin to `gatsby-config.js`:
