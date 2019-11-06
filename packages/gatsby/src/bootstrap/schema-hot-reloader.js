@@ -1,16 +1,12 @@
 const { debounce } = require(`lodash`)
-const { emitter, store } = require(`../redux`)
-const { rebuildWithTypes } = require(`../schema`)
+const { emitter } = require(`../redux`)
+const { rebuildWithTypes, getDirtyTypes } = require(`../schema`)
 const report = require(`gatsby-cli/lib/reporter`)
 
 // API_RUNNING_QUEUE_EMPTY could be emitted multiple types
 // in a short period of time, so debounce seems reasonable
 const maybeRebuildSchema = debounce(async () => {
-  const { inferenceMetadata } = store.getState()
-
-  const dirtyTypes = Object.keys(inferenceMetadata).filter(
-    type => inferenceMetadata[type].dirty
-  )
+  const dirtyTypes = getDirtyTypes()
 
   if (!dirtyTypes.length) {
     return
