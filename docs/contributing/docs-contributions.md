@@ -96,7 +96,7 @@ After going through the [development setup instructions](/contributing/setting-u
 
 ## Changing headers
 
-It can be necessary to change a heading within the docs. It's important to note that headers automatically generate links with a corresponding URL that can be deeplinked from elsewhere on the site. When changing a header be sure to point all corresponding links to the new URL.
+It can be necessary to change a heading within the docs. It's important to note that headers automatically generate links with a corresponding URL that can be deep-linked from elsewhere on the site. When changing a header, be sure to point all corresponding links to the new URL. Here are some workflow tips:
 
 - Determine the URL you're looking for. `Changing headers` is linked with a URL ending in `changing-headers`, `Docs renaming instructions` becomes `docs-renaming-instructions`, etc.
 - - Update all instances of the old URL to your new one. [Find and replace](https://code.visualstudio.com/docs/editor/codebasics#_search-across-files) in VS Code can help. Check that the context of the original link reference still makes sense with the new one.
