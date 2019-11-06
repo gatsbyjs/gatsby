@@ -2,6 +2,8 @@ const log4js = require(`log4js`)
 const shell = require(`shelljs`)
 const path = require(`path`)
 
+require(`dotenv`).config()
+
 let logger = log4js.getLogger(`update-source`)
 logger.level = `info`
 
