@@ -501,11 +501,12 @@ Once prefix options have been set, the build must be run with the `--prefix-path
 gatsby build --prefix-paths
 ```
 
-You can also serve the built site locally for review using the `prefix-paths` flag:
+You can also serve the built site locally for review using the `--prefix-paths` flag:
 
 ```shell
 gatsby serve --prefix-paths
 ```
+
 ### New website file structure
 
 Here is the structure of the HTML & non-JavaScript asset files in the Gatsby build output:
