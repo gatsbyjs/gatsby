@@ -1,3 +1,4 @@
+const fs = require(`fs`)
 const log4js = require(`log4js`)
 const shell = require(`shelljs`)
 const parseDiff = require(`parse-diff`)
@@ -14,18 +15,43 @@ const sourceRepo = `gatsby-i18n-source`
 const sourceRepoUrl = `${host}/${owner}/${sourceRepo}.git`
 
 const changeMarker = "?"
-/**
- * Preface each line in content with a marker
- */
-function indentWithMarker(content) {
-  return content
-    .split("\n")
-    .map(line => `${changeMarker} ${line}`)
-    .join("\n")
-}
-
 function resolveConflicts(filePath) {
-  const contents = fs.readFileSync(filePath, "utf-8")
+  const contents = fs.readFileSync(filePath, "utf-8").split("\n")
+  const newContents = []
+
+  let state = "normal"
+  let hasDelLines = false
+
+  for (let line of contents) {
+    switch (state) {
+      case "normal":
+        if (line.startsWith("<<<<<<<")) {
+          state = "del"
+          hasDelLines = false
+        } else {
+          newContents.push(line)
+        }
+        break
+      case "del":
+        if (line.startsWith("=======")) {
+          state = "add"
+        } else {
+          newContents.push(`${changeMarker} ${line}`)
+          hasDelLines = true
+        }
+        break
+      case "add":
+        if (line.startsWith(">>>>>>>")) {
+          // If there were no deleted lines in the conflict, add a temp line
+          if (!hasDelLines) {
+            newContents.push(`${changeMarker} <NEW CONTENT>`)
+          }
+          state = "normal"
+        }
+        break
+    }
+  }
+  fs.writeFileSync(filePath, newContents.join("\n"))
 }
 
 function cloneOrUpdateRepo(repoName, repoUrl) {
@@ -116,8 +142,7 @@ async function syncTranslationRepo(code) {
 
   // Resolve the conflicts by choosing the translated version but adding a marker
   conflictFiles.forEach(file => {
-    // TODO
-    // resolveConflicts(file)
+    resolveConflicts(file)
   })
 
   // Do a soft reset and add the resolved conflict files
