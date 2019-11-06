@@ -53,22 +53,25 @@ async function updateSourceRepo() {
   shell.cd(sourceRepo)
   // Delete old content
   shell.rm(`-rf`, `docs/*`)
-  // Repopulate content
+  // Repopulate content from the monorepo
   pathsToCopy.forEach(p => {
     shell.cp(`-r`, path.join(gatsbyMonorepoPath, p), `docs`)
   })
 
-  // Check if there are any changes to commit
-  if (shell.exec(`git status --porcelain`).stdout.length) {
-    shell.exec(`git add .`)
-    // TODO use the latest hash & commit message as the message here
-    if (shell.exec(`git commit -m 'Update from gatsbyjs/gatsby'`).code !== 0) {
-      logger.debug(`Git commit failed`)
-      process.exit(1)
-    }
-    // Push to source repo
-    shell.exec(`git push origin master`)
+  // exit if there are no changes to commit
+  if (!shell.exec(`git status --porcelain`).stdout.length) {
+    logger.info(`No changes to commit. Exiting...`)
+    process.exit(0)
   }
+
+  shell.exec(`git add .`)
+  // TODO use the latest hash & commit message as the message here
+  if (shell.exec(`git commit -m 'Update from gatsbyjs/gatsby'`).code !== 0) {
+    logger.error(`Failed to commit to ${sourceRepo}`)
+    process.exit(1)
+  }
+  // Push to source repo
+  shell.exec(`git push origin master`)
 }
 
 updateSourceRepo()
