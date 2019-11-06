@@ -13,7 +13,7 @@ const sourceRepo = `gatsby-i18n-source`
 
 const sourceRepoUrl = `${protocol}${process.env.GITHUB_API_TOKEN}@${host}/${owner}/${sourceRepo}.git`
 
-const gatsbyMonorepoPath = path.join(__dirname, "..", "..")
+const gatsbyMonorepoPath = path.join(__dirname, `..`, `..`)
 
 const dirsToCopy = [
   `docs/docs`,
@@ -55,7 +55,7 @@ async function updateSourceRepo() {
   shell.rm(`-rf`, `docs/*`)
   // Repopulate content
   dirsToCopy.forEach(dir => {
-    shell.cp(`-r`, path.join(__dirname, dir), `docs`)
+    shell.cp(`-r`, path.join(gatsbyMonorepoPath, dir), `docs`)
   })
 
   // Check if there are any changes to commit
