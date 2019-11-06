@@ -248,6 +248,8 @@
           items:
             - title: What are Gatsby Themes?
               link: /docs/themes/what-are-gatsby-themes/
+            - title: Getting Started
+              link: /docs/themes/getting-started/
             - title: Using a Gatsby Theme
               link: /docs/themes/using-a-gatsby-theme/
             - title: Using Multiple Gatsby Themes
