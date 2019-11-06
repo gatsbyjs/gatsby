@@ -32,7 +32,7 @@ Object {
     Object {
       "loader": "<PROJECT_ROOT>/packages/gatsby/src/utils/babel-loader.js",
       "options": Object {
-        "compact": true,
+        "compact": false,
         "configFile": true,
         "stage": "develop",
       },

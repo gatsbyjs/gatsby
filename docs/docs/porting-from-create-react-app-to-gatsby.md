@@ -122,6 +122,7 @@ Some common globals that would need to be protected are:
 - `window`
 - `localStorage`
 - `navigator`
+- `document`
 
 Additionally, some packages that depend on globals existing (e.g. `react-router-dom`) may need to be [patched](/docs/debugging-html-builds/#fixing-third-party-modules) or migrated to other packages.
 
@@ -131,11 +132,53 @@ These are only a few examples, though all can be fixed in one of two ways:
 
 ```jsx
 if (typeof window !== `undefined`) {
-  // code using window like window.location...
+  // code that references a browser global
+  window.alert("Woohoo!")
 }
 ```
 
-2. moving references to globals into a `componentDidMount` or `useEffect` hook:
+2. For class components: moving references to browser globals into a `componentDidMount`
+
+```jsx
+
+import React, { Component } from "react"
+
+class MyComponment() extends Component {
+  render() {
+    window.alert("This will break the build")
+
+    return (
+      <div>
+        <p>Component</p>
+      </div>
+    )
+  }
+}
+```
+
+Would be changed into:
+
+```jsx
+
+import React, { Component } from "react"
+
+class MyComponment() extends Component {
+  componentDidMount() {
+    // code that references the browser global
+    window.alert("This won't break the build")
+  }
+
+  render() {
+    return (
+      <div>
+        <p>Component</p>
+      </div>
+    )
+  }
+}
+```
+
+3. For function components: moving references to browser globals into a `useEffect` hook
 
 ```jsx
 import React from "react"
@@ -161,6 +204,12 @@ const Foo = () => {
 }
 
 export default Foo
+```
+
+If these browser globals aren't protected correctly, you'll see a webpack error like the one below when building your site:
+
+```
+WebpackError: ReferenceError: window is not defined
 ```
 
 For more information about errors encountered during builds, see the doc on [debugging HTML builds](/docs/debugging-html-builds/). For more information about React hooks, check out the [React docs](https://reactjs.org/docs/hooks-effect.html).
@@ -193,7 +242,7 @@ Gatsby provides a `<Link />` component and a `navigate` function to help you dir
 
 Because Gatsby rehydrates into a regular React app, state can be handled inside of components in the same way it would in Create React App. If you use another library for state management and want to wrap your app in some sort of global state the section on [context providers](#context-providers) will be helpful.
 
-### Environment Variables
+### Environment variables
 
 Create React App requires you to create environment variables prefixed with `REACT_APP_`. Gatsby instead uses the `GATSBY_` prefix to [make environment variables accessible](/docs/environment-variables) in the browser context.
 

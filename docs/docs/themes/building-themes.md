@@ -12,7 +12,7 @@ The quickest way to get up and running with a workspace for building themes is t
 To get started, run:
 
 ```shell
-gatsby new my-theme gatsbyjs/gatsby-starter-theme-workspace
+gatsby new gatsby-theme-my-theme gatsbyjs/gatsby-starter-theme-workspace
 ```
 
 This will generate a new project for you. The file tree will look like this:
@@ -83,6 +83,10 @@ Inside it you'll find:
 
 - `gatsby-config.js`: Specifies which theme to use and any other one-off configuration a site might need.
 - `/src`: Contains source code such as custom pages or components that might live in a user's site.
+
+## Publishing a Theme
+
+After building your theme, you may want to publish it for the Gatsby community. To do so, please [publish your theme plugin to the plugin library](/contributing/submit-to-plugin-library/#publishing-a-plugin-to-the-library).
 
 ## Further resources
 
