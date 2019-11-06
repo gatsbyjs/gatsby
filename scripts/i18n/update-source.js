@@ -3,10 +3,11 @@ const shell = require(`shelljs`)
 const path = require(`path`)
 
 let logger = log4js.getLogger(`update-source`)
+logger.level = `info`
 
 const protocol = `https://`
 const host = `github.com`
-const cacheDir = path.join(__dirname, `.cache`)
+const cacheDir = `.cache`
 const owner = `gatsbyjs`
 // Repo to be used as basis for translations
 const sourceRepo = `gatsby-i18n-source`
@@ -23,7 +24,6 @@ const pathsToCopy = [
 ]
 
 function cloneOrUpdateRepo(repoName, repoUrl) {
-  shell.cd(cacheDir)
   if (shell.ls(repoName).code !== 0) {
     logger.debug(`Cloning ${repoName}`)
     const { code } = shell.exec(
@@ -50,8 +50,8 @@ async function updateSourceRepo() {
     shell.cd(cacheDir)
   }
   cloneOrUpdateRepo(sourceRepo, sourceRepoUrl)
-  shell.cd(sourceRepo)
   // Delete old content
+  logger.info(`Repopulating content`)
   shell.rm(`-rf`, `docs/*`)
   // Repopulate content from the monorepo
   pathsToCopy.forEach(p => {
