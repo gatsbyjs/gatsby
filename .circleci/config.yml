@@ -240,7 +240,7 @@ jobs:
       - run: git config --global user.email "core-team@gatsbyjs.com"
       - run: sh ./scripts/publish-starters.sh "starters/*"
 
-  sync-i18n-source:
+  update-i18n-source:
     executor: node
     steps:
       - checkout
