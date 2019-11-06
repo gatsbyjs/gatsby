@@ -7,7 +7,7 @@ Run locally with:
 - `yarn install`
 - `npm run develop`
 
-See the full contributing instructions at [Gatsby contribute](https://www.gatsbyjs.org/contributing/how-to-contribute/).
+See the full contributing instructions at https://www.gatsbyjs.org/contributing/how-to-contribute/
 
 ## Environment variables
 
