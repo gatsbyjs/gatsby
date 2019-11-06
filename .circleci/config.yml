@@ -247,9 +247,8 @@ jobs:
       - run: git config --global user.name "GatsbyJS Bot"
       - run: git config --global user.email "core-team@gatsbyjs.com"
       - run: cd ./scripts/i18n
-      - run: npm install
-      - run: cd ../..
-      - run: node ./scripts/i18n update-source.js
+      - run: yarn
+      - run: yarn run update-source
 
   build_www:
     docker:

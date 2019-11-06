@@ -6,14 +6,14 @@ let logger = log4js.getLogger(`update-source`)
 
 const protocol = `https://`
 const host = `github.com`
-const cacheDir = `.cache`
+const cacheDir = path.join(__dirname, `.cache`)
 const owner = `gatsbyjs`
 // Repo to be used as basis for translations
 const sourceRepo = `gatsby-i18n-source`
 
 const sourceRepoUrl = `${protocol}${process.env.GITHUB_API_TOKEN}@${host}/${owner}/${sourceRepo}.git`
 
-const originRepo = process.env.PWD
+const gatsbyMonorepoPath = path.join(__dirname, "..", "..")
 
 const dirsToCopy = [
   `docs/docs`,
@@ -23,10 +23,17 @@ const dirsToCopy = [
 ]
 
 function cloneOrUpdateRepo(repoName, repoUrl) {
-  shell.cd(path.join(originRepo, `..`))
+  shell.cd(cacheDir)
   if (shell.ls(repoName).code !== 0) {
     logger.debug(`Cloning ${repoName}`)
-    shell.exec(`git clone --quiet --depth 1 ${repoUrl} > /dev/null`)
+    const { code } = shell.exec(
+      `git clone --quiet --depth 1 ${repoUrl} > /dev/null`
+    )
+    // If cloning fails for whatever reason, we need to exit immediately
+    // or we might accidentally push to the monorepo
+    if (code !== 0) {
+      process.exit(1)
+    }
   } else {
     // if the repo already exists, pull from it
     shell.cd(repoName)
@@ -35,6 +42,7 @@ function cloneOrUpdateRepo(repoName, repoUrl) {
 }
 
 // Copy over contents of origin repo (gatsby) to the source repo (gatsby-source-i18n)
+// FIXME make sure the main repo is updated before we do this
 async function updateSourceRepo() {
   if (shell.cd(cacheDir).code !== 0) {
     logger.debug(`Creating ${cacheDir}`)
@@ -47,7 +55,7 @@ async function updateSourceRepo() {
   shell.rm(`-rf`, `docs/*`)
   // Repopulate content
   dirsToCopy.forEach(dir => {
-    shell.cp(`-r`, path.join(originRepo, dir), `docs`)
+    shell.cp(`-r`, path.join(__dirname, dir), `docs`)
   })
 
   // Check if there are any changes to commit
@@ -57,9 +65,9 @@ async function updateSourceRepo() {
       logger.debug(`Git commit failed`)
       shell.exit(1)
     }
+    // Push to source repo
+    shell.exec(`git push origin master`)
   }
-  // Push to source repo
-  shell.exec(`git push origin master`)
 }
 
 updateSourceRepo()
