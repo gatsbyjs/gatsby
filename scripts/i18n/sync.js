@@ -33,8 +33,8 @@ function getEndpoints(chunk) {
 
   // TODO there's prooobably a more elegant way to do this
   for (let change of chunk.changes) {
-    if (change.type === "normal") continue
-    else if (change.type === "del") {
+    if (change.type === `normal`) continue
+    else if (change.type === `del`) {
       if (startLine === -1) {
         startLine = endLine = change.ln
       } else {
@@ -188,7 +188,7 @@ async function syncTranslationRepo(code) {
   diffFiles.forEach(file => {
     file.chunks.forEach(chunk => {
       const endpoints = getEndpoints(chunk) // TODO
-      const lines = chunk.changes.map(change => change.content).join("\n")
+      const lines = chunk.changes.map(change => change.content).join(`\n`)
       const body = `
 \`\`\`diff
 ${lines}
