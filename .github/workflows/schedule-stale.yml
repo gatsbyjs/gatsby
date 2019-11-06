@@ -17,7 +17,7 @@ jobs:
           DRY_RUN: true
           STALE_ISSUE_MESSAGE: |
             Hiya!
-            
+
             This issue has gone quiet. Spooky quiet. 👻
 
             We get a lot of issues, so we currently close issues after 30 days of inactivity. It’s been at least 20 days since the last update here.
