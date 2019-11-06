@@ -14,44 +14,44 @@ const sourceRepo = `gatsby-i18n-source`
 
 const sourceRepoUrl = `${host}/${owner}/${sourceRepo}.git`
 
-const changeMarker = "?"
+const changeMarker = `?`
 function resolveConflicts(filePath) {
-  const contents = fs.readFileSync(filePath, "utf-8").split("\n")
+  const contents = fs.readFileSync(filePath, `utf-8`).split(`\n`)
   const newContents = []
 
-  let state = "normal"
+  let state = `normal`
   let hasDelLines = false
 
   for (let line of contents) {
     switch (state) {
-      case "normal":
-        if (line.startsWith("<<<<<<<")) {
-          state = "del"
+      case `normal`:
+        if (line.startsWith(`<<<<<<<`)) {
+          state = `del`
           hasDelLines = false
         } else {
           newContents.push(line)
         }
         break
-      case "del":
-        if (line.startsWith("=======")) {
-          state = "add"
+      case `del`:
+        if (line.startsWith(`=======`)) {
+          state = `add`
         } else {
           newContents.push(`${changeMarker} ${line}`)
           hasDelLines = true
         }
         break
-      case "add":
-        if (line.startsWith(">>>>>>>")) {
+      case `add`:
+        if (line.startsWith(`>>>>>>>`)) {
           // If there were no deleted lines in the conflict, add a temp line
           if (!hasDelLines) {
             newContents.push(`${changeMarker} <NEW CONTENT>`)
           }
-          state = "normal"
+          state = `normal`
         }
         break
     }
   }
-  fs.writeFileSync(filePath, newContents.join("\n"))
+  fs.writeFileSync(filePath, newContents.join(`\n`))
 }
 
 function cloneOrUpdateRepo(repoName, repoUrl) {
