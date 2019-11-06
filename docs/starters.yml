@@ -4314,3 +4314,15 @@
     - Font awesome
     - Material Icons
     - CSS Grid
+- url: https://gatsby-tfs-starter.netlify.com/
+  repo: https://github.com/tiagofsanchez/gatsby-tfs-starter
+  description: A advanced blog starter styled with theme-ui
+  tags: 
+    - theme-ui
+    - post categories
+    - port tags
+  features: 
+    - theme-ui 
+    - Posts in MDX with syntax highlighting via theme-ui
+    - Tags
+    - Categories
