@@ -13,8 +13,8 @@ describe(`gatsby-plugin-typescript`, () => {
   })
 
   describe(`onCreateBabelConfig`, () => {
-    it(`sets the correct babel preset`, () => {
-      const actions = { setBabelPreset: jest.fn() }
+    it(`sets the correct babel preset and plugin`, () => {
+      const actions = { setBabelPreset: jest.fn(), setBabelPlugin: jest.fn() }
       const options = {
         isTSX: true,
         jsxPragma: `jsx`,
@@ -25,6 +25,7 @@ describe(`gatsby-plugin-typescript`, () => {
         name: expect.stringContaining(path.join(`@babel`, `preset-typescript`)),
         options,
       })
+      expect(actions.setBabelPlugin).toHaveBeenCalledTimes(2)
     })
   })
 
