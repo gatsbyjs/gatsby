@@ -34,6 +34,7 @@ function cloneOrUpdateRepo(repoName, repoUrl) {
     if (code !== 0) {
       process.exit(1)
     }
+    shell.cd(repoName)
   } else {
     // if the repo already exists, pull from it
     shell.cd(repoName)
