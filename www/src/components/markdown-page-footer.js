@@ -15,7 +15,7 @@ export default class MarkdownPageFooter extends React.Component {
         <hr sx={{ display: `none` }} />
         {this.props.page && (
           <a
-            sx={{ variant: `links.muted`, mt: 6 }}
+            sx={{ variant: `links.muted`, mt: 9 }}
             href={`https://github.com/gatsbyjs/gatsby/blob/master/${
               this.props.packagePage ? `packages` : `docs`
             }/${this.props.page ? this.props.page.parent.relativePath : ``}`}
