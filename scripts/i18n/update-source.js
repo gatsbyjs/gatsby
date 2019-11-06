@@ -7,7 +7,7 @@ logger.level = `info`
 
 const protocol = `https://`
 const host = `github.com`
-const cacheDir = `.cache`
+const cacheDir = path.join(__dirname, `.cache`)
 const owner = `gatsbyjs`
 // Repo to be used as basis for translations
 const sourceRepo = `gatsby-i18n-source`
