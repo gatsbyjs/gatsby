@@ -110,7 +110,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
             .getElementById(`gatsby-focus-wrapper`)
             .getElementsByTagName(`h1`)
           if (pageHeadings) {
-            pageName = pageHeadings[0].innerHTML
+            pageName = pageHeadings[0].textContent
           }
           setAnnouncement(`Navigated to ${pageName}`)
         })
