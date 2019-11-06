@@ -248,6 +248,8 @@
           items:
             - title: What are Gatsby Themes?
               link: /docs/themes/what-are-gatsby-themes/
+            - title: Getting Started
+              link: /docs/themes/getting-started/
             - title: Using a Gatsby Theme
               link: /docs/themes/using-a-gatsby-theme/
             - title: Using Multiple Gatsby Themes
@@ -370,6 +372,9 @@
             - title: Adding Forms
               link: /docs/adding-forms/
               breadcrumbTitle: Forms
+            - title: Adding React Components
+              link: /docs/adding-react-components/
+              breadcrumbTitle: React Components
             - title: Building a Contact Form
               link: /docs/building-a-contact-form/
             - title: Adding a 404 Page
