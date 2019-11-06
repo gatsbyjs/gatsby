@@ -10,9 +10,9 @@ title: Query Execution
 >
 > You can help by making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228).
 
-## Query Execution
+### Query execution
 
-Query Execution is kicked off by bootstrap by calling [page-query-runner.js runInitialQuerys()](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L29). The main files involved in this step are:
+Query execution is kicked off by bootstrap by calling [page-query-runner.js runInitialQuerys()](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L29). The main files involved in this step are:
 
 - [page-query-runner.js](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby/src/internal-plugins/query-runner/query-queue.js)
 - [query-queue.js](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby/src/internal-plugins/query-runner/query-queue.js)
@@ -93,7 +93,7 @@ All queries whose component path isn't listed in `componentDataDependencies`. In
 
 In `develop` mode, every time a node is created, or is updated (e.g. via editing a markdown file), that node needs to be dynamically added to the [enqueuedDirtyActions](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L61) collection. When your queries are executed, the code will look up all nodes in this collection and map them to pages that depend on them (as described above). These pages' queries must also be executed. In addition, this step also handles dirty `connections` (see [Schema Connections](/docs/schema-connections/)). Connections depend on a node's type. So if a node is dirty, the code marks all connection nodes of that type dirty as well. The code for this step is in [findDirtyIds](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L171). _Note: dirty ids is really talking about dirty paths_.
 
-### Queue Queries for Execution
+#### Queue queries for execution
 
 There is now a list of all pages that need to be executed (linked to their Query information). Gatsby will queue them for execution (for realz this time). A call to [runQueriesForPathnames](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L127) kicks off this step. For each page or static query, Gatsby creates a Query Job that looks something like:
 
@@ -115,7 +115,7 @@ There is now a list of all pages that need to be executed (linked to their Query
 
 This Query Job contains everything it needs to execute the query (and do things like recording dependencies between pages and nodes). It gets pushed onto the queue in [query-queue.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/query-queue.js) and then waits for the queue to empty. Next, this doc will cover how `query-queue` works.
 
-### Query Queue Execution
+#### Query queue execution
 
 [query-queue.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/query-queue.js) creates a [better-queue](https://www.npmjs.com/package/better-queue) queue that offers advanced features like parallel execution, which is handy since queries do not depend on each other so Gatsby can take advantage of this. Every time an item is consumed from the queue, it calls [query-runner.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/query-runner.js) where it can finally execute the query!
 
@@ -129,7 +129,7 @@ Graphql-js will parse the query, and executes the top level query. E.g. `allMark
 
 Finally, a result is returned.
 
-### Save Query results to redux and disk
+#### Save query results to Redux and disk
 
 As queries are consumed from the queue and executed, their results are saved to redux and disk for consumption later on. This involves converting the result to pure JSON, and then saving it to its [dataPath](/docs/behind-the-scenes-terminology/#datapath). Which is relative to `public/static/d`. The data path includes the jsonName and hash. E.g: for the page `/blog/2018-07-17-announcing-gatsby-preview/`, the queries results would be saved to disk as something like:
 
