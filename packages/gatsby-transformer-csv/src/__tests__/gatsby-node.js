@@ -1,9 +1,11 @@
 const Promise = require(`bluebird`)
 const json2csv = require(`json2csv`)
+const os = require(`os`)
 
 const { onCreateNode } = require(`../gatsby-node`)
+const { typeNameFromDir, typeNameFromFile } = require(`../index`)
 
-describe(`Process  nodes correctly`, () => {
+describe(`Process nodes correctly`, () => {
   const node = {
     id: `whatever`,
     parent: null,
@@ -46,7 +48,7 @@ describe(`Process  nodes correctly`, () => {
     })
   })
 
-  it(`correctly handles the options object that is passed to it`, async () => {
+  it(`correctly handles the noheader option`, async () => {
     node.content = `blue,funny\ntrue,yup\nfalse,nope`
 
     const createNode = jest.fn()
@@ -70,6 +72,214 @@ describe(`Process  nodes correctly`, () => {
       expect(createParentChildLink.mock.calls).toMatchSnapshot()
       expect(createNode).toHaveBeenCalledTimes(3)
       expect(createParentChildLink).toHaveBeenCalledTimes(3)
+    })
+  })
+
+  it(`correctly handles the typeName option with the provided typeNameFromFile function`, async () => {
+    node.name = `theQueryShouldMatch`
+    node.content = `letter,number\na,65\nb,42\nc,23`
+
+    const createNode = jest.fn()
+    const createParentChildLink = jest.fn()
+    const actions = { createNode, createParentChildLink }
+    const createNodeId = jest.fn()
+    createNodeId.mockReturnValue(`uuid-from-gatsby`)
+    const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
+
+    await onCreateNode(
+      {
+        node,
+        loadNodeContent,
+        actions,
+        createNodeId,
+        createContentDigest,
+      },
+      { typeName: typeNameFromFile }
+    ).then(() => {
+      expect(createNode.mock.calls).toMatchSnapshot()
+      expect(createParentChildLink.mock.calls).toMatchSnapshot()
+      expect(createNode).toHaveBeenCalledTimes(3)
+      expect(createParentChildLink).toHaveBeenCalledTimes(3)
+    })
+  })
+
+  it(`correctly handles the typeName option with the provided typeNameFromDir function`, async () => {
+    node.name = `theTypeWontBeThis`
+    node.content = `letter,number\na,65\nb,42\nc,23`
+    node.dir = `${os.tmpdir()}/foo/` // The type will be FooCsv
+    node.internal.type = `File`
+
+    const createNode = jest.fn()
+    const createParentChildLink = jest.fn()
+    const actions = { createNode, createParentChildLink }
+    const createNodeId = jest.fn()
+    createNodeId.mockReturnValue(`uuid-from-gatsby`)
+    const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
+
+    await onCreateNode(
+      {
+        node,
+        loadNodeContent,
+        actions,
+        createNodeId,
+        createContentDigest,
+      },
+      { typeName: typeNameFromDir }
+    ).then(() => {
+      expect(createNode.mock.calls).toMatchSnapshot()
+      expect(createParentChildLink.mock.calls).toMatchSnapshot()
+      expect(createNode).toHaveBeenCalledTimes(3)
+      expect(createParentChildLink).toHaveBeenCalledTimes(3)
+    })
+  })
+
+  it(`correctly handles the typeName option with a custom function`, async () => {
+    node.name = `theTypeWontBeThis`
+    node.content = `letter,number\na,65\nb,42\nc,23`
+
+    const createNode = jest.fn()
+    const createParentChildLink = jest.fn()
+    const actions = { createNode, createParentChildLink }
+    const createNodeId = jest.fn()
+    createNodeId.mockReturnValue(`uuid-from-gatsby`)
+    const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
+
+    await onCreateNode(
+      {
+        node,
+        loadNodeContent,
+        actions,
+        createNodeId,
+        createContentDigest,
+      },
+      {
+        typeName: ({ node, object }) => `CsvTypeSetByFunction`,
+      }
+    ).then(() => {
+      expect(createNode.mock.calls).toMatchSnapshot()
+      expect(createParentChildLink.mock.calls).toMatchSnapshot()
+      expect(createNode).toHaveBeenCalledTimes(3)
+      expect(createParentChildLink).toHaveBeenCalledTimes(3)
+    })
+  })
+
+  it(`correctly handles the typeName option with a string`, async () => {
+    node.name = `theTypeWontBeThis`
+    node.content = `letter,number\na,65\nb,42\nc,23`
+
+    const createNode = jest.fn()
+    const createParentChildLink = jest.fn()
+    const actions = { createNode, createParentChildLink }
+    const createNodeId = jest.fn()
+    createNodeId.mockReturnValue(`uuid-from-gatsby`)
+    const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
+
+    await onCreateNode(
+      {
+        node,
+        loadNodeContent,
+        actions,
+        createNodeId,
+        createContentDigest,
+      },
+      {
+        typeName: `CsvTypeSetByFunction`,
+      }
+    ).then(() => {
+      expect(createNode.mock.calls).toMatchSnapshot()
+      expect(createParentChildLink.mock.calls).toMatchSnapshot()
+      expect(createNode).toHaveBeenCalledTimes(3)
+      expect(createParentChildLink).toHaveBeenCalledTimes(3)
+    })
+  })
+
+  it(`correctly handles the nodePerFile option in the false case`, async () => {
+    node.name = `theTypeWillBeThis`
+    node.content = `letter,number\na,65\nb,42\nc,23`
+
+    const createNode = jest.fn()
+    const createParentChildLink = jest.fn()
+    const actions = { createNode, createParentChildLink }
+    const createNodeId = jest.fn()
+    createNodeId.mockReturnValue(`uuid-from-gatsby`)
+    const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
+
+    await onCreateNode(
+      {
+        node,
+        loadNodeContent,
+        actions,
+        createNodeId,
+        createContentDigest,
+      },
+      {
+        nodePerFile: false,
+      }
+    ).then(() => {
+      expect(createNode.mock.calls).toMatchSnapshot()
+      expect(createParentChildLink.mock.calls).toMatchSnapshot()
+      expect(createNode).toHaveBeenCalledTimes(3)
+      expect(createParentChildLink).toHaveBeenCalledTimes(3)
+    })
+  })
+
+  it(`correctly handles the nodePerFile option in the true case`, async () => {
+    node.name = `theTypeWillBeThis`
+    node.content = `letter,number\na,65\nb,42\nc,23`
+
+    const createNode = jest.fn()
+    const createParentChildLink = jest.fn()
+    const actions = { createNode, createParentChildLink }
+    const createNodeId = jest.fn()
+    createNodeId.mockReturnValue(`uuid-from-gatsby`)
+    const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
+
+    await onCreateNode(
+      {
+        node,
+        loadNodeContent,
+        actions,
+        createNodeId,
+        createContentDigest,
+      },
+      {
+        nodePerFile: true,
+      }
+    ).then(() => {
+      expect(createNode.mock.calls).toMatchSnapshot()
+      expect(createParentChildLink.mock.calls).toMatchSnapshot()
+      expect(createNode).toHaveBeenCalledTimes(1)
+      expect(createParentChildLink).toHaveBeenCalledTimes(1)
+    })
+  })
+
+  it(`correctly handles the nodePerFile option in the string case`, async () => {
+    node.name = `theTypeWillBeThis`
+    node.content = `letter,number\na,65\nb,42\nc,23`
+
+    const createNode = jest.fn()
+    const createParentChildLink = jest.fn()
+    const actions = { createNode, createParentChildLink }
+    const createNodeId = jest.fn()
+    createNodeId.mockReturnValue(`uuid-from-gatsby`)
+    const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
+
+    await onCreateNode(
+      {
+        node,
+        loadNodeContent,
+        actions,
+        createNodeId,
+        createContentDigest,
+      },
+      {
+        nodePerFile: `theItems`,
+      }
+    ).then(() => {
+      expect(createNode.mock.calls).toMatchSnapshot()
+      expect(createParentChildLink.mock.calls).toMatchSnapshot()
+      expect(createNode).toHaveBeenCalledTimes(1)
+      expect(createParentChildLink).toHaveBeenCalledTimes(1)
     })
   })
 })

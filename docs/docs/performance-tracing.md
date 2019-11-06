@@ -78,7 +78,7 @@ There are many OpenTracing compatible backends available. Below are examples of 
 
 4.  Once the build is complete, view your tracing information at [http://localhost:16686](http://localhost:16686). On the left menu, select the `build` operation to see your build's root trace.
 
-### local Zipkin with Docker
+### Local Zipkin with Docker
 
 [Zipkin](https://zipkin.io/) is an open source tracing system that can be run locally using Docker.
 
