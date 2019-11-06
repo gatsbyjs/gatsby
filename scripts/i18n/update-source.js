@@ -29,19 +29,22 @@ const pathsToCopy = [
 ]
 
 function cloneOrUpdateRepo(repoName, repoUrl) {
+  logger.info(`Checking if local clone exists`)
   if (shell.ls(repoName).code !== 0) {
-    logger.debug(`Cloning ${repoName}`)
+    logger.info(`No local clone. Cloning ${repoName}`)
     const { code } = shell.exec(
       `git clone --quiet --depth 1 ${repoUrl} --branch ${branch} > /dev/null`
     )
     // If cloning fails for whatever reason, we need to exit immediately
     // or we might accidentally push to the monorepo
     if (code !== 0) {
+      logger.info(`Failed to clone repository. Exiting...`)
       process.exit(1)
     }
     shell.cd(repoName)
     shell.exec(`git checkout ${branch}`)
   } else {
+    logger.info(`Clone exists. Updating`)
     // if the repo already exists, pull from it
     shell.cd(repoName)
     shell.exec(`git fetch`)
@@ -53,10 +56,13 @@ function cloneOrUpdateRepo(repoName, repoUrl) {
 // Copy over contents of origin repo (gatsby) to the source repo (gatsby-source-i18n)
 // TODO make sure the main repo is updated before we do this
 async function updateSourceRepo() {
+  logger.info(`Checking if cache directory exists`)
   if (shell.cd(cacheDir).code !== 0) {
-    logger.debug(`Creating ${cacheDir}`)
+    logger.info(`No cache directory. Creating ${cacheDir}`)
     shell.mkdir(cacheDir)
     shell.cd(cacheDir)
+  } else {
+    logger.info(`Cache directory exists`)
   }
   cloneOrUpdateRepo(sourceRepo, sourceRepoUrl)
   // Delete old content
@@ -68,22 +74,32 @@ async function updateSourceRepo() {
   })
 
   // exit if there are no changes to commit
+  logger.info(`Checking if there are any changes to commit`)
   if (!shell.exec(`git status --porcelain`).stdout.length) {
     logger.info(`No changes to commit. Exiting...`)
     process.exit(0)
   }
 
+  logger.info(`Committing changes`)
   shell.exec(`git add .`)
-  // TODO use the latest hash & commit message as the message here
-  if (
-    shell.exec(`git commit -m 'Update from gatsbyjs/gatsby' > /dev/null`)
-      .code !== 0
-  ) {
+
+  const commitMessage =
+    shell.exec(
+      `git log -1 --pretty="sync with monorepo gatsbyjs/gatsby@%H - %B"`
+    ).stdout || `Update from gatsbyjs/gatsby`
+
+  if (shell.exec(`git commit -m '${commitMessage}' > /dev/null`).code !== 0) {
     logger.error(`Failed to commit to ${sourceRepo}`)
     process.exit(1)
   }
+  logger.info(`Pushing changes to ${sourceRepo}`)
   // Push to source repo
-  shell.exec(`git push origin ${branch}`)
+  if (shell.exec(`git push origin ${branch} > /dev/null`).code !== 0) {
+    logger.info(`Failed to push changes to ${sourceRepo}`)
+    process.exit(1)
+  } else {
+    logger.info(`Pushed changes to ${sourceRepo}`)
+  }
 }
 
 updateSourceRepo()
