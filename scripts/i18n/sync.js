@@ -66,6 +66,26 @@ function cloneOrUpdateRepo(repoName, repoUrl) {
   }
 }
 
+async function getRepository(owner, name) {
+  const { repository } = await graphql(
+    `
+      query($owner: String!, $name: String!) {
+        repository(owner: $owner, name: $name) {
+          id
+        }
+      }
+    `,
+    {
+      headers: {
+        authorization: `token ${process.env.GITHUB_ADMIN_AUTH_TOKEN}`,
+      },
+      owner,
+      name,
+    }
+  )
+  return repository
+}
+
 // Get the actual endpoints of deleted content in the parse-diff chunk
 // FIXME what happens if there's only added content?
 function getEndpoints(chunk) {
@@ -111,9 +131,9 @@ async function syncTranslationRepo(code) {
   const shortHash = hash.substr(0, 8)
   const syncBranch = `sync-${shortHash}`
 
-  // if (shell.exec(`git checkout ${syncBranch}`).code !== 0) {
-  //   shell.exec(`git checkout -b ${syncBranch}`)
-  // }
+  if (shell.exec(`git checkout ${syncBranch}`).code !== 0) {
+    shell.exec(`git checkout -b ${syncBranch}`)
+  }
 
   // pull from the source
   shell.exec(`git remote add source ${sourceRepoUrl}`)
@@ -151,35 +171,23 @@ async function syncTranslationRepo(code) {
   // clean out the rest of the changed files
   shell.exec(`git checkout -- .`)
   shell.exec(`git clean -fd`)
-  process.exit(0)
+  // process.exit(0)
   // Commit the resolved conflicts into a new branch
   // and push it
+  shell.exec(`git commit -m "Annotate content with new translations"`)
+  // shell.exec(`git push -u origin ${syncBranch}`)
 
   // TODO if there is already an existing PR, don't create a new one
 
   // get the repository
-  // const { repository } = await graphql(
-  //   `
-  //     query($owner: String!, $name: String!) {
-  //       repository(owner: $owner, name: $name) {
-  //         id
-  //       }
-  //     }
-  //   `,
-  //   {
-  //     owner,
-  //     name: transRepoName,
-  //   }
-  // )
-  shell.exec(`git reset --hard`)
-
+  const repository = getRepository(owner, transRepoName)
   // diff conflicting files against source/master on last sync
   const baseHash = shell
     .exec(`git merge-base origin/master source/master`)
     .stdout.replace(`\n`, ``)
   shell.exec(`git checkout source/master`)
   const cmd = `git diff ${baseHash} ${conflictFiles.join(` `)}`
-  console.log(cmd)
+  // console.log(cmd)
   // process.exit(0)
   const diff = shell.exec(cmd).stdout
 
@@ -194,6 +202,7 @@ async function syncTranslationRepo(code) {
   // })
 
   process.exit(0)
+  shell.exec(`git reset --hard`)
 
   // create a new draft PR
   const pullRequest = await graphql(
