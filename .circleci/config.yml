@@ -240,6 +240,16 @@ jobs:
       - run: git config --global user.email "core-team@gatsbyjs.com"
       - run: sh ./scripts/publish-starters.sh "starters/*"
 
+  update_i18n_source:
+    executor: node
+    steps:
+      - checkout
+      - run: git config --global user.name "GatsbyJS Bot"
+      - run: git config --global user.email "core-team@gatsbyjs.com"
+      - run: cd ./scripts/i18n
+      - run: yarn
+      - run: yarn run update-source
+
   build_www:
     docker:
       - image: circleci/node:12
@@ -368,6 +378,11 @@ workflows:
           requires:
             - build_www
           context: build_www
+      - update_i18n_source:
+          filters:
+            branches:
+              only:
+                - master
   www_deploy:
     triggers:
       - schedule:

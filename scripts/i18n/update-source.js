@@ -1,17 +1,22 @@
 const log4js = require(`log4js`)
 const shell = require(`shelljs`)
+const path = require(`path`)
 
 let logger = log4js.getLogger(`update-source`)
+logger.level = `info`
 
-const host = `https://github.com`
+const protocol = `https://`
+const host = `github.com`
 const cacheDir = `.cache`
 const owner = `gatsbyjs`
 // Repo to be used as basis for translations
 const sourceRepo = `gatsby-i18n-source`
 
-const sourceRepoUrl = `${host}/${owner}/${sourceRepo}.git`
+const sourceRepoUrl = `${protocol}${process.env.GITHUB_API_TOKEN}@${host}/${owner}/${sourceRepo}.git`
 
-const dirsToCopy = [
+const gatsbyMonorepoPath = path.join(__dirname, `..`, `..`)
+
+const pathsToCopy = [
   `docs/docs`,
   `docs/tutorial`,
   `docs/contributing`,
@@ -20,35 +25,52 @@ const dirsToCopy = [
 
 function cloneOrUpdateRepo(repoName, repoUrl) {
   if (shell.ls(repoName).code !== 0) {
-    logger.debug(`cloning ${repoName}`)
-    shell.exec(`git clone ${repoUrl}`)
+    logger.debug(`Cloning ${repoName}`)
+    const { code } = shell.exec(
+      `git clone --quiet --depth 1 ${repoUrl} > /dev/null`
+    )
+    // If cloning fails for whatever reason, we need to exit immediately
+    // or we might accidentally push to the monorepo
+    if (code !== 0) {
+      process.exit(1)
+    }
   } else {
     // if the repo already exists, pull from it
     shell.cd(repoName)
     shell.exec(`git pull origin master`)
-    shell.cd(`..`)
   }
 }
 
-// Copy over contents of origin repo (gatsby) to source repo (gatsby-source-i18n)
-// FIXME make sure the main repo is updated before we do this
+// Copy over contents of origin repo (gatsby) to the source repo (gatsby-source-i18n)
+// TODO make sure the main repo is updated before we do this
 async function updateSourceRepo() {
   if (shell.cd(cacheDir).code !== 0) {
-    logger.debug(`creating ${cacheDir}`)
+    logger.debug(`Creating ${cacheDir}`)
     shell.mkdir(cacheDir)
     shell.cd(cacheDir)
   }
   cloneOrUpdateRepo(sourceRepo, sourceRepoUrl)
-  shell.cd(sourceRepo)
-  // delete old content
+  // Delete old content
+  logger.info(`Repopulating content`)
   shell.rm(`-rf`, `docs/*`)
-  // repopulate content
-  dirsToCopy.forEach(dir => {
-    shell.cp(`-r`, `../../../../${dir}`, `docs`)
+  // Repopulate content from the monorepo
+  pathsToCopy.forEach(p => {
+    shell.cp(`-r`, path.join(gatsbyMonorepoPath, p), `docs`)
   })
-  shell.exec(`git add *`)
-  shell.exec(`git commit -m 'Update gatsby monorepo'`)
-  // push to source repo
+
+  // exit if there are no changes to commit
+  if (!shell.exec(`git status --porcelain`).stdout.length) {
+    logger.info(`No changes to commit. Exiting...`)
+    process.exit(0)
+  }
+
+  shell.exec(`git add .`)
+  // TODO use the latest hash & commit message as the message here
+  if (shell.exec(`git commit -m 'Update from gatsbyjs/gatsby'`).code !== 0) {
+    logger.error(`Failed to commit to ${sourceRepo}`)
+    process.exit(1)
+  }
+  // Push to source repo
   shell.exec(`git push origin master`)
 }
 
