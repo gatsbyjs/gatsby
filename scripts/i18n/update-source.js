@@ -12,6 +12,9 @@ const owner = `gatsbyjs`
 // Repo to be used as basis for translations
 const sourceRepo = `gatsby-i18n-source`
 
+// const branch = `master`
+const branch = `test-update` // test branch
+
 const sourceRepoUrl = `${protocol}${process.env.GITHUB_API_TOKEN}@${host}/${owner}/${sourceRepo}.git`
 
 const gatsbyMonorepoPath = path.join(__dirname, `..`, `..`)
@@ -35,10 +38,12 @@ function cloneOrUpdateRepo(repoName, repoUrl) {
       process.exit(1)
     }
     shell.cd(repoName)
+    shell.exec(`git checkout ${branch}`)
   } else {
     // if the repo already exists, pull from it
     shell.cd(repoName)
-    shell.exec(`git pull origin master`)
+    shell.exec(`git checkout ${branch}`)
+    shell.exec(`git pull origin ${branch}`)
   }
 }
 
@@ -72,7 +77,7 @@ async function updateSourceRepo() {
     process.exit(1)
   }
   // Push to source repo
-  shell.exec(`git push origin master`)
+  shell.exec(`git push origin ${branch}`)
 }
 
 updateSourceRepo()
