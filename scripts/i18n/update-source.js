@@ -82,11 +82,13 @@ async function updateSourceRepo() {
 
   logger.info(`Committing changes`)
   shell.exec(`git add .`)
-  // TODO use the latest hash & commit message as the message here
-  if (
-    shell.exec(`git commit -m 'Update from gatsbyjs/gatsby' > /dev/null`)
-      .code !== 0
-  ) {
+
+  const commitMessage =
+    shell.exec(
+      `git log -1 --pretty="sync with monorepo gatsbyjs/gatsby@%H - %B"`
+    ).stdout || `Update from gatsbyjs/gatsby`
+
+  if (shell.exec(`git commit -m '${commitMessage}' > /dev/null`).code !== 0) {
     logger.error(`Failed to commit to ${sourceRepo}`)
     process.exit(1)
   }
