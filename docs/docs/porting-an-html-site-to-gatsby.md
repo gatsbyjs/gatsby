@@ -4,6 +4,8 @@ title: Porting an HTML Site to Gatsby
 
 This guide focuses on the parts of Gatsby that are applicable to a static website. For a more comprehensive walk through Gatsby's features check out the [Gatsby tutorial](/tutorial/). By following the example on this page, you will complete the key stages of porting an HTML website to Gatsby and establish your Gatsby development workflow.
 
+**Note:** This guide can also be used to migrate a section of a site, to be served next to existing files. Pay extra attention to the section on [hosting](#hosting-the-new-website) for guidance.
+
 ## Getting Started
 
 Here is the structure of an example static HTML/CSS website that this guide will walk through porting:
@@ -385,7 +387,7 @@ export default () => (
 )
 ```
 
-Have a check that the `Who We Are` link is still working.
+Have a check that the `Who We Are` link is still working. If not, check that the content is wrapped correctly with the `<Layout>` component as shown above.
 
 ### Porting other pages
 
@@ -471,6 +473,8 @@ Once a build is complete, the compiled set of files can be found in `/public`.
 ### Hosting the new website
 
 Once built, the contents of the `/public` folder are ready to be hosted at the root (`/`) of a domain. The files can be deployed in similar ways to how your existing HTML site may have been deployed. For more deployment options including automation with git and cloud services, see the [Deploying and Hosting page](/docs/deploying-and-hosting/).
+
+What about migrating a section of a site? No problem. The Gatsby build output in `/public` can be mixed with existing files.
 
 If the Gatsby site is to be hosted at a non-root path, e.g. `example.com/blog/`, Gatsby needs to be informed so page and asset links in the built output can be prefixed.
 
