@@ -32,7 +32,7 @@ function cloneOrUpdateRepo(repoName, repoUrl) {
   if (shell.ls(repoName).code !== 0) {
     logger.debug(`Cloning ${repoName}`)
     const { code } = shell.exec(
-      `git clone --quiet --depth 1 ${repoUrl} > /dev/null`
+      `git clone --quiet --depth 1 ${repoUrl} --branch ${branch} > /dev/null`
     )
     // If cloning fails for whatever reason, we need to exit immediately
     // or we might accidentally push to the monorepo
@@ -44,6 +44,7 @@ function cloneOrUpdateRepo(repoName, repoUrl) {
   } else {
     // if the repo already exists, pull from it
     shell.cd(repoName)
+    shell.exec(`git fetch`)
     shell.exec(`git checkout ${branch}`)
     shell.exec(`git pull origin ${branch}`)
   }
@@ -74,7 +75,10 @@ async function updateSourceRepo() {
 
   shell.exec(`git add .`)
   // TODO use the latest hash & commit message as the message here
-  if (shell.exec(`git commit -m 'Update from gatsbyjs/gatsby'`).code !== 0) {
+  if (
+    shell.exec(`git commit -m 'Update from gatsbyjs/gatsby' > /dev/null`)
+      .code !== 0
+  ) {
     logger.error(`Failed to commit to ${sourceRepo}`)
     process.exit(1)
   }
