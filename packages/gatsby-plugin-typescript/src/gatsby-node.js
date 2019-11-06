@@ -6,6 +6,9 @@ function onCreateBabelConfig({ actions }, options) {
     options,
   })
   actions.setBabelPlugin({
+    name: require.resolve(`@babel/plugin-proposal-optional-chaining`),
+  })
+  actions.setBabelPlugin({
     name: require.resolve(`@babel/plugin-proposal-nullish-coalescing-operator`),
   })
 }
