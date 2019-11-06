@@ -25,6 +25,33 @@ function cloneOrUpdateRepo(repoName, repoUrl) {
   }
 }
 
+// Get the actual endpoints of deleted content in the parse-diff chunk
+// FIXME what happens if there's only added content?
+function getEndpoints(chunk) {
+  let startLine = -1
+  let endLine = -1
+
+  // TODO there's prooobably a more elegant way to do this
+  for (let change of chunk.changes) {
+    if (change.type === "normal") continue
+    else if (change.type === "del") {
+      if (startLine === -1) {
+        startLine = endLine = change.ln
+      } else {
+        endLine++
+      }
+    } else {
+      // If there were no deleted lines, set both endpoints to the first added line
+      if (startsLine === -1) {
+        startsLine = endsLine = change.ln
+      }
+      break
+    }
+  }
+
+  return { startLine, endLine }
+}
+
 async function syncTranslationRepo(code) {
   logger = log4js.getLogger(`sync:` + code)
   const transRepoName = `${repoBase}-${code}`
@@ -156,22 +183,40 @@ async function syncTranslationRepo(code) {
     }
   )
 
-  const comments = chunks.map(chunk => {
-    return {
-      path: chunk.path,
-      startLine: chunk.startLine,
-      line: chunk.endsLine,
-      // TODO suggest change to old version
-      body: `
-Change in source repo:
+  const threads = []
 
+  diffFiles.forEach(file => {
+    file.chunks.forEach(chunk => {
+      const endpoints = getEndpoints(chunk) // TODO
+      const lines = chunk.changes.map(change => change.content).join("\n")
+      const body = `
 \`\`\`diff
-- ${chunk.old}
-+ ${chunk.new}
+${lines}
 \`\`\`
-    `,
-    }
+`
+      threads.push({
+        path: file.path, // FIXME make sure this works
+        ...endpoints,
+        body,
+      })
+    })
   })
+  //   const threads = chunks.map(chunk => {
+  //     return {
+  //       path: chunk.path,
+  //       startLine: chunk.startLine,
+  //       line: chunk.endsLine,
+  //       // TODO suggest change to old version
+  //       body: `
+  // Change in source repo:
+
+  // \`\`\`diff
+  // - ${chunk.old}
+  // + ${chunk.new}
+  // \`\`\`
+  //     `,
+  //     }
+  //   })
 
   // publish the review
   // for each diff block, create a comment detailing the difference in the english version
