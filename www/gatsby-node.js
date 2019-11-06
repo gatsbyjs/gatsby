@@ -400,6 +400,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
 
   return new Promise((resolve, reject) => {
     const docsTemplate = path.resolve(`src/templates/template-docs-markdown.js`)
+    const apiTemplate = path.resolve(`src/templates/template-api-markdown.js`)
     const blogPostTemplate = path.resolve(`src/templates/template-blog-post.js`)
     const blogListTemplate = path.resolve(`src/templates/template-blog-list.js`)
     const tagTemplate = path.resolve(`src/templates/tags.js`)
@@ -444,6 +445,8 @@ exports.createPages = ({ graphql, actions, reporter }) => {
                 publishedAt
                 issue
                 tags
+                jsdoc
+                apicalls
               }
             }
           }
@@ -768,16 +771,29 @@ exports.createPages = ({ graphql, actions, reporter }) => {
             )
           }
 
-          createPage({
-            path: `${node.fields.slug}`, // required
-            component: slash(
-              node.fields.package ? localPackageTemplate : docsTemplate
-            ),
-            context: {
-              slug: node.fields.slug,
-              ...nextAndPrev,
-            },
-          })
+          if (node.frontmatter.jsdoc) {
+            createPage({
+              path: `${node.fields.slug}`, // required
+              component: slash(apiTemplate),
+              context: {
+                slug: node.fields.slug,
+                jsdoc: node.frontmatter.jsdoc,
+                apicalls: node.frontmatter.apicalls,
+                ...nextAndPrev,
+              },
+            })
+          } else {
+            createPage({
+              path: `${node.fields.slug}`, // required
+              component: slash(
+                node.fields.package ? localPackageTemplate : docsTemplate
+              ),
+              context: {
+                slug: node.fields.slug,
+                ...nextAndPrev,
+              },
+            })
+          }
         }
       })
 
