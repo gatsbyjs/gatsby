@@ -15,7 +15,7 @@ const sourceRepoUrl = `${protocol}${process.env.GITHUB_API_TOKEN}@${host}/${owne
 
 const gatsbyMonorepoPath = path.join(__dirname, `..`, `..`)
 
-const dirsToCopy = [
+const pathsToCopy = [
   `docs/docs`,
   `docs/tutorial`,
   `docs/contributing`,
@@ -54,8 +54,8 @@ async function updateSourceRepo() {
   // Delete old content
   shell.rm(`-rf`, `docs/*`)
   // Repopulate content
-  dirsToCopy.forEach(dir => {
-    shell.cp(`-r`, path.join(gatsbyMonorepoPath, dir), `docs`)
+  pathsToCopy.forEach(p => {
+    shell.cp(`-r`, path.join(gatsbyMonorepoPath, p), `docs`)
   })
 
   // Check if there are any changes to commit
@@ -63,7 +63,7 @@ async function updateSourceRepo() {
     shell.exec(`git add .`)
     if (shell.exec(`git commit -m 'Update from gatsbyjs/gatsby'`).code !== 0) {
       logger.debug(`Git commit failed`)
-      shell.exit(1)
+      process.exit(1)
     }
     // Push to source repo
     shell.exec(`git push origin master`)
