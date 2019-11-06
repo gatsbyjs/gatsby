@@ -1,6 +1,6 @@
 const log4js = require(`log4js`)
 const shell = require(`shelljs`)
-const parseDiff = require("parse-diff")
+const parseDiff = require(`parse-diff`)
 const { graphql } = require(`@octokit/graphql`)
 let logger = log4js.getLogger(`sync`)
 
@@ -79,11 +79,11 @@ async function syncTranslationRepo(code) {
   })
 
   // Do a soft reset and add the resolved conflict files
-  shell.exec("git reset")
-  shell.exec(`git add ${conflictFiles.join(" ")}`)
+  shell.exec(`git reset`)
+  shell.exec(`git add ${conflictFiles.join(` `)}`)
   // clean out the rest of the changed files
-  shell.exec("git checkout -- .")
-  shell.exec("git clean -fd")
+  shell.exec(`git checkout -- .`)
+  shell.exec(`git clean -fd`)
   process.exit(0)
   // Commit the resolved conflicts into a new branch
   // and push it
@@ -104,14 +104,14 @@ async function syncTranslationRepo(code) {
   //     name: transRepoName,
   //   }
   // )
-  shell.exec("git reset --hard")
+  shell.exec(`git reset --hard`)
 
   // diff conflicting files against source/master on last sync
   const baseHash = shell
     .exec(`git merge-base origin/master source/master`)
-    .stdout.replace("\n", "")
+    .stdout.replace(`\n`, ``)
   shell.exec(`git checkout source/master`)
-  const cmd = `git diff ${baseHash} ${conflictFiles.join(" ")}`
+  const cmd = `git diff ${baseHash} ${conflictFiles.join(` `)}`
   console.log(cmd)
   // process.exit(0)
   const diff = shell.exec(cmd).stdout
