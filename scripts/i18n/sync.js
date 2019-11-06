@@ -13,6 +13,21 @@ const sourceRepo = `gatsby-i18n-source`
 
 const sourceRepoUrl = `${host}/${owner}/${sourceRepo}.git`
 
+const changeMarker = "?"
+/**
+ * Preface each line in content with a marker
+ */
+function indentWithMarker(content) {
+  return content
+    .split("\n")
+    .map(line => `${changeMarker} ${line}`)
+    .join("\n")
+}
+
+function resolveConflicts(filePath) {
+  const contents = fs.readFileSync(filePath, "utf-8")
+}
+
 function cloneOrUpdateRepo(repoName, repoUrl) {
   if (shell.ls(repoName).code !== 0) {
     logger.debug(`cloning ${repoName}`)
