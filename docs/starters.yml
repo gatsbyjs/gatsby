@@ -4314,3 +4314,19 @@
     - Font awesome
     - Material Icons
     - CSS Grid
+- url: https://gatsby-tailwind-styled-components-storybook-starter.netlify.com/
+  repo: https://github.com/denvash/gatsby-tailwind-styled-components-storybook-starter
+  description: Tailwind CSS + Styled-Components + Storybook starter for Gatsby
+  tags:
+    - Storybook
+    - Styling:Tailwind
+    - Styling:CSS-in-JS
+    - Styling:PostCSS
+    - Netlify
+  features:
+    - Tailwind CSS v1
+    - Styled-Components v5
+    - Storybook v5
+    - PostCSS
+    - Deploy Storybook
+    - Documentation
