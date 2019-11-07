@@ -1,5 +1,185 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Get example value for type inference Incremental example value building updates example value on node delete 1`] = `
+Object {
+  "anArray": Array [
+    1,
+  ],
+  "context": Object {
+    "nestedObject": Object {
+      "name": "Inner name",
+      "someOtherProperty": 2,
+    },
+  },
+  "date": "2006-07-22T22:39:53.000Z",
+  "frontmatter": Object {
+    "circle": "happy",
+    "draft": false,
+    "title": "The world of slash and adventure1",
+  },
+  "hair": 1,
+  "key-with..unsupported-values": true,
+  "name": "The Mad Max",
+  "nestedArrays": Array [
+    Array [
+      1,
+    ],
+  ],
+  "object": Object {
+    "foo": 1,
+  },
+  "objectsInArray": Array [
+    Object {
+      "baz": "baz",
+      "foo": "foo",
+    },
+  ],
+}
+`;
+
+exports[`Get example value for type inference Incremental example value building updates example value on node delete 2`] = `
+Object {
+  "anArray": Array [
+    1,
+  ],
+  "context": Object {},
+  "date": "2006-07-22T22:39:53.000Z",
+  "hair": 1,
+  "key-with..unsupported-values": true,
+  "name": "The Mad Max",
+  "nestedArrays": Array [
+    Array [
+      1,
+    ],
+  ],
+  "object": Object {
+    "foo": 1,
+  },
+  "objectsInArray": Array [
+    Object {
+      "foo": "foo",
+    },
+  ],
+}
+`;
+
+exports[`Get example value for type inference Incremental example value building updates example value on node delete 3`] = `
+Object {
+  "date": "2006-07-22T22:39:53.000Z",
+  "hair": 1,
+  "key-with..unsupported-values": true,
+  "name": "The Mad Max",
+}
+`;
+
+exports[`Get example value for type inference Incremental example value building updates example value when nodes are added 1`] = `
+Array [
+  Object {
+    "date": "2006-07-22T22:39:53.000Z",
+    "hair": 1,
+    "key-with..unsupported-values": true,
+    "name": "The Mad Max",
+  },
+  Object {
+    "anArray": Array [
+      1,
+    ],
+    "context": Object {},
+    "date": "2006-07-22T22:39:53.000Z",
+    "hair": 1,
+    "key-with..unsupported-values": true,
+    "name": "The Mad Max",
+    "nestedArrays": Array [
+      Array [
+        1,
+      ],
+    ],
+    "object": Object {
+      "foo": 1,
+    },
+    "objectsInArray": Array [
+      Object {
+        "foo": "foo",
+      },
+    ],
+  },
+  Object {
+    "anArray": Array [
+      1,
+    ],
+    "context": Object {
+      "nestedObject": Object {
+        "bar": "bar",
+        "someOtherProperty": 2,
+      },
+    },
+    "date": "2006-07-22T22:39:53.000Z",
+    "frontmatter": Object {
+      "blue": 10010,
+      "date": "2006-07-22T22:39:53.000Z",
+      "title": "The world of slash and adventure1",
+    },
+    "hair": 1,
+    "key-with..unsupported-values": true,
+    "name": "The Mad Max",
+    "nestedArrays": Array [
+      Array [
+        1,
+      ],
+    ],
+    "object": Object {
+      "bar": "bar",
+      "foo": 1,
+    },
+    "objectsInArray": Array [
+      Object {
+        "bar": "bar",
+        "foo": "foo",
+      },
+    ],
+  },
+  Object {
+    "anArray": Array [
+      1,
+    ],
+    "context": Object {
+      "nestedObject": Object {
+        "bar": "bar",
+        "name": "Inner name",
+        "someOtherProperty": 2,
+      },
+    },
+    "date": "2006-07-22T22:39:53.000Z",
+    "frontmatter": Object {
+      "blue": 10010,
+      "circle": "happy",
+      "date": "2006-07-22T22:39:53.000Z",
+      "draft": false,
+      "title": "The world of slash and adventure1",
+    },
+    "hair": 1,
+    "key-with..unsupported-values": true,
+    "name": "The Mad Max",
+    "nestedArrays": Array [
+      Array [
+        1,
+      ],
+    ],
+    "object": Object {
+      "bar": "bar",
+      "foo": 1,
+    },
+    "objectsInArray": Array [
+      Object {
+        "bar": "bar",
+        "baz": "baz",
+        "foo": "foo",
+      },
+    ],
+  },
+]
+`;
+
 exports[`Get example value for type inference build enum values for fields from array on nodes 1`] = `
 Object {
   "anArray": Object {

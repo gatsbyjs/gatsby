@@ -1,6 +1,11 @@
 // NOTE: Previously `data-tree-utils-test.js`
 
-const { getExampleObject, addNodes } = require(`../inference-metadata`)
+const {
+  getExampleObject,
+  addNode,
+  deleteNode,
+  addNodes,
+} = require(`../inference-metadata`)
 const { TypeConflictReporter } = require(`../type-conflict-reporter`)
 
 const INVALID_VALUE = undefined
@@ -699,6 +704,100 @@ describe(`Get example value for type inference`, () => {
         typeConflictReporter,
       })
       expect(example.related___NODE).toEqual(INVALID_VALUE)
+    })
+  })
+
+  describe(`Incremental example value building`, () => {
+    const nodes = [
+      {
+        name: `The Mad Max`,
+        hair: 1,
+        date: `2006-07-22T22:39:53.000Z`,
+        "key-with..unsupported-values": true,
+      },
+      {
+        emptyArray: [undefined, null],
+        anArray: [1, 2, 5, 4],
+        nestedArrays: [[1, 2, 3]],
+        object: { foo: 1 },
+        objectsInArray: [{ foo: `foo` }],
+        context: {
+          nestedObject: null,
+        },
+      },
+      {
+        anArray: [1, 3],
+        object: { bar: `bar` },
+        objectsInArray: [{ foo: `foo` }, { bar: `bar` }],
+        frontmatter: {
+          date: `2006-07-22T22:39:53.000Z`,
+          title: `The world of slash and adventure1`,
+          blue: 10010,
+        },
+        context: {
+          nestedObject: {
+            bar: `bar`,
+            someOtherProperty: 2,
+          },
+        },
+      },
+      {
+        object: {},
+        objectsInArray: [{ baz: `baz` }],
+        frontmatter: {
+          title: `The world of slash and adventure2`,
+          circle: `happy`,
+          draft: false,
+        },
+        context: {
+          nestedObject: {
+            name: `Inner name`,
+            someOtherProperty: 3,
+          },
+        },
+      },
+    ]
+    it(`updates example value when nodes are added`, () => {
+      let inferenceMetadata = {
+        typeName: `IncrementalExampleValue`,
+        typeConflictReporter,
+        ignoredFields: new Set(),
+      }
+
+      const revisions = nodes.map(node => {
+        inferenceMetadata = addNode(inferenceMetadata, node)
+        return getExampleObject(inferenceMetadata)
+      })
+
+      expect(revisions).toMatchSnapshot()
+      expect(typeConflictReporter.getConflicts()).toEqual([])
+    })
+
+    it(`updates example value on node delete`, () => {
+      let inferenceMetadata = {
+        typeName: `IncrementalExampleValue`,
+        typeConflictReporter,
+        ignoredFields: new Set(),
+      }
+      inferenceMetadata = addNodes(inferenceMetadata, nodes)
+      const fullExampleValue = getExampleObject(inferenceMetadata)
+
+      inferenceMetadata = deleteNode(inferenceMetadata, nodes[2])
+      expect(getExampleObject(inferenceMetadata)).toMatchSnapshot()
+
+      inferenceMetadata = deleteNode(inferenceMetadata, nodes[3])
+      expect(getExampleObject(inferenceMetadata)).toMatchSnapshot()
+
+      inferenceMetadata = deleteNode(inferenceMetadata, nodes[1])
+      expect(getExampleObject(inferenceMetadata)).toMatchSnapshot()
+
+      // Re-adding deleted nodes should restore original example value:
+      inferenceMetadata = addNodes(inferenceMetadata, [
+        nodes[2],
+        nodes[3],
+        nodes[1],
+      ])
+      expect(getExampleObject(inferenceMetadata)).toEqual(fullExampleValue)
     })
   })
 })
