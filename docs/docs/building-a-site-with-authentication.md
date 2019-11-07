@@ -2,8 +2,11 @@
 title: Building a Site with Authentication
 ---
 
-With Gatsby, you are able to create restricted areas in your app. For that, you
-must use the concept of [client-only routes](/docs/building-apps-with-gatsby/#client-only-routes).
+With Gatsby, you are able to create restricted areas in your app using [client-only routes](/docs/building-apps-with-gatsby/#client-only-routes).
+
+<!-- include link to overview page diagram once PR is merged -->
+
+As the section from the Adding App and Website functionality overview page shows, client-only routes can be created to route a user between pages using JavaScript as opposed to navigating between different static HTML files on a server. Static HTML files cannot be locked down because a user could guess or type in a URL and navigate straight to the page.
 
 Using the [@reach/router](https://reach.tech/router/) library, which comes
 installed with Gatsby, you can control which component will be loaded when a

@@ -32,6 +32,10 @@ exports.onCreatePage = async ({ page, actions }) => {
 > 💡 Note: There's also a plugin to simplify the creation of client-only routes in your site:
 > [gatsby-plugin-create-client-paths](/packages/gatsby-plugin-create-client-paths/).
 
+The above code (as well as the `gatsby-plugin-create-client-paths` plugin) update pages at build time to add the [`matchPath` parameter](/docs/gatsby-internals-terminology/#matchpath) in the page object to make it so that the configured pages (in this case, everything after `/app`, like `/app/dashboard` or `/app/user`) can be navigated to by Reach Router. This example assumese that you have a page setup at `/app`, like having a file in at `src/pagees/app.js`.
+
+Without this configuration set up, a user that clicks on a link to `<yoursite.com>/app/user` will instead be routed to the static `/app` page instead of the component or page you have set up at `/app/user`, because Reach Router would be unaware of the component to match the path with.
+
 > Tip: For applications with complex routing, you may want to override Gatsby's default scroll behavior with the [shouldUpdateScroll](/docs/browser-apis/#shouldUpdateScroll) Browser API.
 
 Check out the ["simple auth" example site](https://github.com/gatsbyjs/gatsby/blob/master/examples/simple-auth/) for a demo implementing user authentication and restricted client-only routes.
