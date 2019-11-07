@@ -515,6 +515,7 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
 
 /**
  * Batch delete nodes
+ * @private
  * @param {Array} nodes an array of node ids
  * @example
  * deleteNodes([`node1`, `node2`])

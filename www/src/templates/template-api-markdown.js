@@ -52,12 +52,14 @@ const mergeFunctions = (data, context) => {
   const normalized = normalizeGatsbyApiCall(data.nodeAPIs.group)
 
   const docs = data.jsdoc.nodes.reduce((acc, node) => {
-    const doc = node.childrenDocumentationJs.map(def => {
-      if (!context.apicalls) {
-        def.codeLocation.file = node.relativePath
-      }
-      return def
-    })
+    const doc = node.childrenDocumentationJs
+      .filter(def => def.kind !== `typedef`)
+      .map(def => {
+        if (!context.apicalls) {
+          def.codeLocation.file = node.relativePath
+        }
+        return def
+      })
     return acc.concat(doc)
   }, [])
 
