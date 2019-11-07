@@ -36,7 +36,7 @@ function resolveConflicts(filePath) {
         if (line.startsWith(`=======`)) {
           state = `add`
         } else {
-          newContents.push(`${changeMarker} ${line}`)
+          newContents.push(!line.trim() ? line : `${changeMarker} ${line}`)
           hasDelLines = true
         }
         break
@@ -87,7 +87,7 @@ async function getRepository(owner, name) {
 }
 
 // Get the actual endpoints of deleted content in the parse-diff chunk
-// FIXME what happens if there's only added content?
+// FIXME this fails sometimes -- figure out why
 function getEndpoints(chunk) {
   let startLine = -1
   let endLine = -1
@@ -103,8 +103,8 @@ function getEndpoints(chunk) {
       }
     } else {
       // If there were no deleted lines, set both endpoints to the first added line
-      if (startsLine === -1) {
-        startsLine = endsLine = change.ln
+      if (startLine === -1) {
+        startLine = endsLine = change.ln
       }
       break
     }
@@ -171,7 +171,7 @@ async function syncTranslationRepo(code) {
   // clean out the rest of the changed files
   shell.exec(`git checkout -- .`)
   shell.exec(`git clean -fd`)
-  // process.exit(0)
+
   // Commit the resolved conflicts into a new branch
   // and push it
   shell.exec(`git commit -m "Annotate content with new translations"`)
@@ -180,63 +180,54 @@ async function syncTranslationRepo(code) {
   // TODO if there is already an existing PR, don't create a new one
 
   // get the repository
-  const repository = getRepository(owner, transRepoName)
+  const repository = await getRepository(owner, transRepoName)
   // diff conflicting files against source/master on last sync
   const baseHash = shell
     .exec(`git merge-base origin/master source/master`)
     .stdout.replace(`\n`, ``)
   shell.exec(`git checkout source/master`)
   const cmd = `git diff ${baseHash} ${conflictFiles.join(` `)}`
-  // console.log(cmd)
-  // process.exit(0)
   const diff = shell.exec(cmd).stdout
-
-  // console.log(diff)
   const diffFiles = parseDiff(diff)
 
-  // diffFiles.forEach(file => {
-  //   file.chunks.forEach((chunk, i) => {
-  //     console.log("chunk ", i)
-  //     console.log(chunk)
-  //   })
-  // })
-
-  process.exit(0)
-  shell.exec(`git reset --hard`)
+  // shell.exec(`git reset --hard`)
 
   // create a new draft PR
-  const pullRequest = await graphql(
-    `
-      mutation($input: CreatePullRequestInput!) {
-        createPullRequest(input: $input) {
-          pullRequest {
-            id
-          }
-        }
-      }
-    `,
-    {
-      headers: {
-        authorization: `token ${process.env.GITHUB_BOT_AUTH_TOKEN}`,
-        accept: `application/vnd.github.shadow-cat-preview+json`,
-      },
-      input: {
-        repositoryId: repository.id,
-        baseRefName: `master`,
-        headRefName: syncBranch,
-        title: `Sync with gatsby-i18n-source@${shortHash}`,
-        body: ``,
-        maintainerCanModify: true,
-        draft: true,
-      },
-    }
-  )
+  //   const {
+  //     createPullRequest: { pullRequest },
+  //   } = await graphql(
+  //     `
+  //       mutation($input: CreatePullRequestInput!) {
+  //         createPullRequest(input: $input) {
+  //           pullRequest {
+  //             id
+  //           }
+  //         }
+  //       }
+  //     `,
+  //     {
+  //       headers: {
+  //         authorization: `token ${process.env.GITHUB_BOT_AUTH_TOKEN}`,
+  //         accept: `application/vnd.github.shadow-cat-preview+json`,
+  //       },
+  //       input: {
+  //         repositoryId: repository.id,
+  //         baseRefName: `master`,
+  //         headRefName: syncBranch,
+  //         title: `Sync with ${sourceRepo} @ ${shortHash}`,
+  //         body: `
+  // Sync with the source repo. Please update the translations based on updated source content.`,
+  //         maintainerCanModify: true,
+  //         draft: true,
+  //       },
+  //     }
+  //   )
 
   const threads = []
 
   diffFiles.forEach(file => {
     file.chunks.forEach(chunk => {
-      const endpoints = getEndpoints(chunk) // TODO
+      const endpoints = getEndpoints(chunk)
       const lines = chunk.changes.map(change => change.content).join(`\n`)
       const body = `
 \`\`\`diff
@@ -244,28 +235,15 @@ ${lines}
 \`\`\`
 `
       threads.push({
-        path: file.path, // FIXME make sure this works
-        ...endpoints,
+        path: file.to,
         body,
+        startLine: endpoints.startLine,
+        startSide: "RIGHT",
+        line: endpoints.endLine,
+        side: "RIGHT",
       })
     })
   })
-  //   const threads = chunks.map(chunk => {
-  //     return {
-  //       path: chunk.path,
-  //       startLine: chunk.startLine,
-  //       line: chunk.endsLine,
-  //       // TODO suggest change to old version
-  //       body: `
-  // Change in source repo:
-
-  // \`\`\`diff
-  // - ${chunk.old}
-  // + ${chunk.new}
-  // \`\`\`
-  //     `,
-  //     }
-  //   })
 
   // publish the review
   // for each diff block, create a comment detailing the difference in the english version
@@ -281,10 +259,11 @@ ${lines}
     {
       headers: {
         authorization: `token ${process.env.GITHUB_BOT_AUTH_TOKEN}`,
+        accept: "application/vnd.github.comfort-fade-preview+json",
       },
       input: {
         pullRequestId: pullRequest.id,
-        event: `REQUEST_CHANGES`,
+        event: `COMMENT`,
         threads,
       },
     }
@@ -292,9 +271,9 @@ ${lines}
 
   // if we successfully publish the PR
   // pull again, taking the translated version and push to master
-  shell.exec(`git checkout master`)
-  shell.exec(`git pull source master --strategy-option ours`)
-  shell.exec(`git push origin master`)
+  // shell.exec(`git checkout master`)
+  // shell.exec(`git pull source master --strategy-option ours`)
+  // shell.exec(`git push origin master`)
 }
 
 const [langCode] = process.argv.slice(2)
