@@ -231,8 +231,7 @@ module.exports = async (args: BootstrapArgs) => {
   if (oldPluginsHash && pluginsHash !== oldPluginsHash) {
     report.info(report.stripIndent`
       One or more of your plugins have changed since the last time you ran Gatsby. As
-      a precaution, we're deleting your site's cache to ensure there's not any stale
-      data
+      a precaution, we're deleting your site's cache to ensure there's no stale data.
     `)
   }
   const cacheDirectory = `${program.directory}/.cache`
