@@ -989,6 +989,43 @@ describe(`Build schema`, () => {
     })
   })
 
+  it(`allows renaming and merging nested types`, async () => {
+    createTypes(`
+      type Nested implements Node {
+        nested: SomeNewNameForNested
+      }
+
+      type SomeNewNameForNested {
+        foo: String
+      }
+    `)
+    const node = {
+      id: `nested1`,
+      parent: null,
+      children: [],
+      internal: { type: `Nested`, contentDigest: `0` },
+      name: `nested1`,
+      nested: {
+        foo: {
+          bar: `str`,
+          baz: 5,
+        },
+        bar: `str`,
+      },
+    }
+    store.dispatch(actions.createNode(node, { name: `test` }))
+    const schema = await buildSchema()
+    const print = type => printType(schema.getType(type))
+
+    expect(print(`SomeNewNameForNested`)).toMatchInlineSnapshot(`
+      "type SomeNewNameForNested {
+        foo: String
+        bar: String
+      }"
+    `)
+    expect(schema.getType(`NestedNested`)).not.toBeDefined()
+  })
+
   describe(`createResolvers`, () => {
     it(`allows adding resolver to field`, async () => {
       createTypes(`
