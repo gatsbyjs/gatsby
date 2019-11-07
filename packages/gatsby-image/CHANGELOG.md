@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.30](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.29...gatsby-image@2.2.30) (2019-10-28)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.2.29](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.28...gatsby-image@2.2.29) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.2.28](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.27...gatsby-image@2.2.28) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.2.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.26...gatsby-image@2.2.27) (2019-10-10)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.2.26](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.25...gatsby-image@2.2.26) (2019-10-10)
+
+### Bug Fixes
+
+- **gatsby-image:** add itemprop on placeholder images ([#18035](https://github.com/gatsbyjs/gatsby/issues/18035)) ([aa8b2fb](https://github.com/gatsbyjs/gatsby/commit/aa8b2fb)), closes [#17419](https://github.com/gatsbyjs/gatsby/issues/17419)
+
+## [2.2.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.24...gatsby-image@2.2.25) (2019-10-09)
+
+**Note:** Version bump only for package gatsby-image
+
 ## [2.2.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.23...gatsby-image@2.2.24) (2019-10-04)
 
 **Note:** Version bump only for package gatsby-image

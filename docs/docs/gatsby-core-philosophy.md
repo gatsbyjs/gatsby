@@ -97,7 +97,7 @@ If you were designing a user interface, you might move advanced or rarely-used f
 
 Progressive disclosure simplifies the experience for most people without limiting the abilities of more advanced users.
 
-We progressively disclose complexity by making features such as modifying webpack / Babel config, `gatsby-image`, and `gatsby-link` opt-in, simple one-off configuration choices. We avoid all-or-nothing "ejection" scenarios where to add further customization you have to leave the tool behind and manage all complexity (eg, dependencies) yourself.
+We progressively disclose complexity by making features such as modifying webpack / Babel config, `gatsby-image`, and `gatsby-link` opt-in, simple one-off configuration choices. We avoid all-or-nothing "ejection" scenarios where to add further customization you have to leave the tool behind and manage all complexity (e.g. dependencies) yourself.
 
 [Read more here](https://lengstorf.com/progressive-disclosure-of-complexity/).
 
@@ -163,6 +163,6 @@ Some things we do in order to create an inclusive, welcoming community include:
 - Active gratitude
 - [Active mentorship](/contributing/pair-programming/)
 
-We’ve built an active community with hundreds of contributors, and we want to live the example of what a great open source community can be.
+We’ve built an active community with thousands of contributors, and we want to live the example of what a great open source community can be.
 
 [See more here](https://www.youtube.com/watch?v=8ARA7AD4yPs&feature=youtu.be&list=PLz8Iz-Fnk_eQGt4-VFFCXYuYcuKaw4F07)

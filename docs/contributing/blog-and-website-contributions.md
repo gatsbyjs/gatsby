@@ -12,7 +12,7 @@ Here are some things to keep in mind when deciding where to contribute to Gatsby
 
 ## Contributing to the blog
 
-Note: Before adding a blog post, ensure you have approval from a member of the Gatsby team. You can do this by [opening an issue](https://github.com/gatsbyjs/gatsby/issues/new/choose) or contacting [@gatsbyjs on Twitter](https://twitter.com/gatsbyjs).
+Note: Before adding a blog post, ensure you have approval from a member of the Gatsby team. You should [open an issue](https://github.com/gatsbyjs/gatsby/issues/new/choose) or contact [@gatsbyjs on Twitter](https://twitter.com/gatsbyjs) before opening a PR with your blog post. Check out past blog posts for examples of posted content.
 
 To add a new blog post to the gatsbyjs.org blog:
 

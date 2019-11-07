@@ -1,4 +1,4 @@
-const { stripIndent } = require(`common-tags`)
+const { stripIndent, stripIndents } = require(`common-tags`)
 
 const errorMap = {
   "": {
@@ -57,6 +57,80 @@ const errorMap = {
     type: `GRAPHQL`,
     level: `ERROR`,
   },
+  "85910": {
+    text: context =>
+      stripIndents(`
+        Multiple "root" queries found in file: "${context.name}" and "${context.otherName}".
+        Only the first ("${context.otherName}") will be registered.
+
+        Instead of:
+        ${context.beforeCodeFrame}
+
+        Do:
+        ${context.afterCodeFrame}
+      `),
+    type: `GRAPHQL`,
+    level: `ERROR`,
+  },
+  "85911": {
+    text: context =>
+      stripIndent(`
+        There was a problem parsing "${context.filePath}"; any GraphQL
+        fragments or queries in this file were not processed.
+
+        This may indicate a syntax error in the code, or it may be a file type
+        that Gatsby does not know how to parse.
+      `),
+    type: `GRAPHQL`,
+    level: `ERROR`,
+  },
+  "85912": {
+    text: context => `Failed to parse preprocessed file ${context.filePath}`,
+    type: `GRAPHQL`,
+    level: `ERROR`,
+  },
+  "85913": {
+    text: context =>
+      `There was a problem reading the file: ${context.filePath}`,
+    type: `GRAPHQL`,
+    level: `ERROR`,
+  },
+  "85914": {
+    text: context =>
+      `There was a problem reading the file: ${context.filePath}`,
+    type: `GRAPHQL`,
+    level: `ERROR`,
+  },
+  // default parsing error
+  "85915": {
+    text: context =>
+      `There was a problem parsing the GraphQL query in file: ${context.filePath}`,
+    type: `GRAPHQL`,
+    level: `ERROR`,
+  },
+  "85916": {
+    text: context =>
+      `String interpolation is not allowed in graphql tag:\n\n${context.codeFrame}`,
+    type: `GRAPHQL`,
+    level: `ERROR`,
+  },
+  "85917": {
+    text: context =>
+      `Unexpected empty graphql tag${
+        context.codeFrame ? `\n\n${context.codeFrame}` : ``
+      }`,
+    type: `GRAPHQL`,
+    level: `ERROR`,
+  },
+  "85918": {
+    text: context =>
+      stripIndent(`
+        GraphQL syntax error in query:\n\n${context.sourceMessage}${
+        context.codeFrame ? `\n\n${context.codeFrame}` : ``
+      }`),
+    type: `GRAPHQL`,
+    level: `ERROR`,
+  },
   // Config errors
   "10123": {
     text: context =>
@@ -83,6 +157,21 @@ const errorMap = {
       `\nIf you are trying to run a theme directly, use the theme in an example site or starter instead and run that site to test.` +
       `\nIf you are in the root gatsby-config.js for your site, change the export to be an object and not a function as functions` +
       `\nare not supported in the root gatsby-config.`,
+    type: `CONFIG`,
+    level: `ERROR`,
+  },
+  "10226": {
+    text: context =>
+      [
+        `Couldn't find the "${context.themeName}" plugin declared in "${context.configFilePath}".`,
+        context.pathToLocalTheme &&
+          `Tried looking for a local plugin in ${context.pathToLocalTheme}.`,
+        `Tried looking for an installed package in the following paths:\n${context.nodeResolutionPaths
+          .map(potentialLocationPath => ` - ${potentialLocationPath}`)
+          .join(`\n`)}`,
+      ]
+        .filter(Boolean)
+        .join(`\n\n`),
     type: `CONFIG`,
     level: `ERROR`,
   },
@@ -196,6 +285,42 @@ const errorMap = {
         .join(`\n\n`),
     level: `ERROR`,
     docsUrl: `https://www.gatsbyjs.org/docs/actions/#createNode`,
+  },
+  // local SSL certificate errors
+  "11521": {
+    text: () =>
+      `for custom ssl --https, --cert-file, and --key-file must be used together`,
+    level: `ERROR`,
+    docsUrl: `https://www.gatsbyjs.org/docs/local-https/#custom-key-and-certificate-files`,
+  },
+  "11522": {
+    text: () => `Failed to generate dev SSL certificate`,
+    level: `ERROR`,
+    docsUrl: `https://www.gatsbyjs.org/docs/local-https/#setup`,
+  },
+  // cli new command errors
+  "11610": {
+    text: context =>
+      `It looks like you gave wrong argument orders . Try running instead "gatsby new ${context.starter} ${context.rootPath}"`,
+    level: `ERROR`,
+    docsUrl: `https://www.gatsbyjs.org/docs/gatsby-cli/#new`,
+  },
+  "11611": {
+    text: context =>
+      `It looks like you passed a URL to your project name. Try running instead "gatsby new new-gatsby-project ${context.rootPath}"`,
+    level: `ERROR`,
+    docsUrl: `https://www.gatsbyjs.org/docs/gatsby-cli/#new`,
+  },
+  "11612": {
+    text: context =>
+      `Could not create a project in "${context.path}" because it's not a valid path`,
+    level: `ERROR`,
+    docsUrl: `https://www.gatsbyjs.org/docs/gatsby-cli/#new`,
+  },
+  "11613": {
+    text: context => `Directory ${context.rootPath} is already an npm project`,
+    level: `ERROR`,
+    docsUrl: `https://www.gatsbyjs.org/docs/gatsby-cli/#new`,
   },
 }
 

@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.46](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.45...gatsby-source-wordpress@3.1.46) (2019-10-28)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.45](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.44...gatsby-source-wordpress@3.1.45) (2019-10-28)
+
+### Bug Fixes
+
+- update minor updates in packages ([#18875](https://github.com/gatsbyjs/gatsby/issues/18875)) ([b692879](https://github.com/gatsbyjs/gatsby/commit/b692879))
+
+## [3.1.44](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.43...gatsby-source-wordpress@3.1.44) (2019-10-22)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** add undefined check to avoid mapPostsToTagsCategories error ([#18895](https://github.com/gatsbyjs/gatsby/issues/18895)) ([ad646d6](https://github.com/gatsbyjs/gatsby/commit/ad646d6))
+
+## [3.1.43](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.42...gatsby-source-wordpress@3.1.43) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.42](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.41...gatsby-source-wordpress@3.1.42) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.41](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.40...gatsby-source-wordpress@3.1.41) (2019-10-09)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.40](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.39...gatsby-source-wordpress@3.1.40) (2019-10-08)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
 ## [3.1.39](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.38...gatsby-source-wordpress@3.1.39) (2019-10-04)
 
 ### Bug Fixes
@@ -539,7 +571,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- **gatsby-source-wordpress:** improve error logging for wordpress API requests ([#8967](https://github.com/gatsbyjs/gatsby/issues/8967)) ([3bac0c4](https://github.com/gatsbyjs/gatsby/commit/3bac0c4)), closes [#8928](https://github.com/gatsbyjs/gatsby/issues/8928)
+- **gatsby-source-wordpress:** improve error logging for WordPress API requests ([#8967](https://github.com/gatsbyjs/gatsby/issues/8967)) ([3bac0c4](https://github.com/gatsbyjs/gatsby/commit/3bac0c4)), closes [#8928](https://github.com/gatsbyjs/gatsby/issues/8928)
 
 <a name="3.0.3"></a>
 
