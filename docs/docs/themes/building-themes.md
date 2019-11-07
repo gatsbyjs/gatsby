@@ -41,7 +41,7 @@ Yarn workspaces are a great way to set up a project for theme development becaus
 
 For Gatsby theme development, that means you can keep multiple themes and example sites together in a single project, and develop them locally.
 
-> 💡 If you prefer, using `yarn link` or `npm link` are viable alternatives. In general, Gatsby recommends the yarn workspaces approach for building themes, and that's what the starter and this guide will reflect.
+> 💡 If you prefer, you can develop themes as [local plugins](https://www.gatsbyjs.org/docs/creating-a-local-plugin/). Using `yarn link` or `npm link` are also viable alternatives. In general, Gatsby recommends the yarn workspaces approach for building themes, and that's what the starter and this guide will reflect.
 
 > 💡 The starter takes care of all of the configuration for developing a theme using yarn workspaces. If you're interested in more detail on this setup, check out [this blog post](/blog/2019-05-22-setting-up-yarn-workspaces-for-theme-development/).
 
