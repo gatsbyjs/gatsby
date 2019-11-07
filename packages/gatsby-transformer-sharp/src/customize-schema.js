@@ -27,6 +27,7 @@ const {
   ImageFormatType,
   ImageCropFocusType,
   DuotoneGradientType,
+  PotraceTurnPolicyType,
   PotraceType,
   ImageFitType,
 } = require(`./types`)
@@ -567,6 +568,14 @@ module.exports = ({
   })
 
   if (createTypes) {
-    createTypes([imageSharpType])
+    createTypes([
+      ImageFormatType,
+      ImageFitType,
+      ImageCropFocusType,
+      DuotoneGradientType,
+      PotraceTurnPolicyType,
+      PotraceType,
+      imageSharpType,
+    ])
   }
 }
