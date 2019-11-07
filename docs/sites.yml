@@ -8336,18 +8336,6 @@
   built_by: Yoseph Radding
   built_by_url: https://github.com/radding
   featured: false
-- title: Gildform
-  main_url: https://www.gildform.com
-  url: https://www.gildform.com
-  source_url:
-  description: >
-    Gildform is an on demand jewelry manaufacturer, taking 3D models uploaded through the site and converting it to a real piece of jewelry
-  categories:
-    - eCommerce
-    - Manufacturing
-    - Marketing
-  built_by: Yoseph Radding
-  built_by_url: https://github.com/radding
 - title: Really Fast Sites
   url: https://reallyfastsites.com
   main_url: https://reallyfastsites.com
