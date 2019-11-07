@@ -62,6 +62,41 @@ const secondPage = () => {
 }
 
 const nodes = () => [firstPage()]
+const typePrinter = schema => typeName => printType(schema.getType(typeName))
+
+const addNode = node => store.dispatch({ type: `CREATE_NODE`, payload: node })
+const deleteNode = node =>
+  store.dispatch({ type: `DELETE_NODE`, payload: node })
+
+const createParentChildLink = ({ parent, child }) =>
+  store.dispatch(actions.createParentChildLink({ parent, child }))
+
+const addNodeField = ({ node, name, value }) => {
+  node.fields = node.fields || {}
+  node.fields[name] = value
+  store.dispatch({
+    type: `ADD_FIELD_TO_NODE`,
+    payload: node,
+    addedField: name,
+  })
+}
+
+const rebuildTestSchema = async () => {
+  await rebuildWithTypes({ typeNames: getDirtyTypes() })
+  return store.getState().schema
+}
+
+const addNodeAndRebuild = async node => {
+  const nodes = Array.isArray(node) ? node : [node]
+  nodes.forEach(addNode)
+  return await rebuildTestSchema()
+}
+
+const deleteNodeAndRebuild = async node => {
+  const nodes = Array.isArray(node) ? node : [node]
+  nodes.forEach(deleteNode)
+  return await rebuildTestSchema()
+}
 
 describe(`build and update schema for SitePage`, () => {
   let schema
@@ -187,23 +222,6 @@ describe(`build and update schema for other types`, () => {
     `dateKey`,
   ]
 
-  const addNode = node => store.dispatch({ type: `CREATE_NODE`, payload: node })
-  const deleteNode = node =>
-    store.dispatch({ type: `DELETE_NODE`, payload: node })
-
-  const createParentChildLink = ({ parent, child }) =>
-    store.dispatch(actions.createParentChildLink({ parent, child }))
-
-  const addNodeField = ({ node, name, value }) => {
-    node.fields = node.fields || {}
-    node.fields[name] = value
-    store.dispatch({
-      type: `ADD_FIELD_TO_NODE`,
-      payload: node,
-      addedField: name,
-    })
-  }
-
   let schema
   let initialPrintedSchema
   let initialTypes
@@ -216,25 +234,6 @@ describe(`build and update schema for other types`, () => {
     initialTypes = Object.keys(schema.getTypeMap()).sort()
     initialPrintedSchema = printSchema(lexicographicSortSchema(schema))
   })
-
-  const rebuildTestSchema = async () => {
-    await rebuildWithTypes({ typeNames: getDirtyTypes() })
-    return store.getState().schema
-  }
-
-  const typePrinter = schema => typeName => printType(schema.getType(typeName))
-
-  const addNodeAndRebuild = async node => {
-    const nodes = Array.isArray(node) ? node : [node]
-    nodes.forEach(addNode)
-    return await rebuildTestSchema()
-  }
-
-  const deleteNodeAndRebuild = async node => {
-    const nodes = Array.isArray(node) ? node : [node]
-    nodes.forEach(deleteNode)
-    return await rebuildTestSchema()
-  }
 
   const expectSymmetricDelete = async node => {
     const newSchema = await deleteNodeAndRebuild(node)
@@ -771,5 +770,113 @@ describe(`build and update schema for other types`, () => {
       expect(reporter.warn).not.toHaveBeenCalled()
       expect(reporter.log).not.toHaveBeenCalled()
     })
+  })
+})
+
+describe(`compatibility with schema customization API`, () => {
+  let schema
+
+  beforeEach(async () => {
+    store.dispatch({ type: `DELETE_CACHE` })
+
+    store.dispatch(
+      actions.createTypes(`
+        type Foo @infer {
+          foo: Int
+        }
+        type FooFieldsBar @infer {
+          bar: String
+        }
+        type FooFieldsBaz @dontInfer {
+          baz: String
+        }
+        type Bar @dontInfer {
+          bar: String
+        }
+        type Query {
+          foo: Foo
+          bar: Bar
+        }
+      `)
+    )
+    await build({})
+    schema = store.getState().schema
+  })
+
+  it(`should rebuild types marked with @infer and keep explicit schema in place`, async () => {
+    const newSchema = await addNodeAndRebuild({
+      id: `Foo1`,
+      internal: { type: `Foo`, contentDigest: `0` },
+      children: [],
+      foo: `foo`,
+      bar: `bar`,
+      fields: {
+        bar: {
+          bar: 1,
+          foo: `str`,
+        },
+      },
+    })
+
+    const print = typePrinter(newSchema)
+    expect(print(`Foo`)).toMatchInlineSnapshot(`
+      "type Foo {
+        foo: Int
+        bar: String
+        fields: FooFields
+      }"
+    `)
+
+    expect(print(`FooFields`)).toMatchInlineSnapshot(`
+      "type FooFields {
+        bar: FooFieldsBar
+      }"
+    `)
+
+    expect(print(`FooFieldsBar`)).toMatchInlineSnapshot(`
+      "type FooFieldsBar {
+        bar: String
+        foo: String
+      }"
+    `)
+  })
+
+  it(`should not rebuild types marked with @dontInfer`, async () => {
+    const newSchema = await addNodeAndRebuild([
+      {
+        id: `Foo1`,
+        internal: { type: `Foo`, contentDigest: `0` },
+        children: [],
+        bar: `bar`,
+        fields: {
+          baz: {
+            foo: 1,
+            bar: `str`,
+          },
+        },
+      },
+      {
+        id: `Bar1`,
+        internal: { type: `Bar`, contentDigest: `0` },
+        children: [],
+        foo: 5,
+        bar: 5,
+        baz: `str`,
+      },
+    ])
+
+    const print = typePrinter(newSchema)
+
+    expect(print(`FooFieldsBaz`)).toMatchInlineSnapshot(`
+      "type FooFieldsBaz {
+        baz: String
+      }"
+    `)
+
+    expect(print(`Bar`)).toMatchInlineSnapshot(`
+      "type Bar {
+        bar: String
+      }"
+    `)
   })
 })

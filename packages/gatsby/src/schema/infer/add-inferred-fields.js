@@ -362,12 +362,11 @@ const getSimpleFieldConfig = ({
           if (!config.shouldAddFields) return null
 
           const typeName = createTypeName(selector)
-          if (schemaComposer.has(typeName)) {
-            // Type could have been already created via schema customization
-            fieldTypeComposer = schemaComposer.getOTC(typeName)
-          } else {
+
+          // Type for this nested field could have been defined explicitly via schema customization
+          if (!schemaComposer.has(typeName)) {
             fieldTypeComposer = ObjectTypeComposer.create(
-              typeName,
+              createTypeName(selector),
               schemaComposer
             )
             fieldTypeComposer.setExtension(`createdFrom`, `inference`)
@@ -375,11 +374,15 @@ const getSimpleFieldConfig = ({
               `plugin`,
               typeComposer.getExtension(`plugin`)
             )
+          } else {
+            fieldTypeComposer = schemaComposer.getOTC(typeName)
           }
-          addDerivedType({
-            typeComposer,
-            derivedTypeName: typeName,
-          })
+          if (fieldTypeComposer.getExtension(`createdFrom`) === `inference`) {
+            addDerivedType({
+              typeComposer,
+              derivedTypeName: fieldTypeComposer.getTypeName(),
+            })
+          }
         }
 
         // Inference config options are either explicitly defined on a type
