@@ -9,7 +9,7 @@ jobs:
     steps:
       - name: stale
         id: stale
-        uses: gatsbyjs/stale@gatsby-refactoring
+        uses: gatsbyjs/stale@gatsby-repo-test
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DAYS_BEFORE_STALE: 20
