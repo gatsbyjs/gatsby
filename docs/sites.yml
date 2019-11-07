@@ -3835,8 +3835,6 @@
   description: >
     5th Avenue Properties specializes in the leasing and sales of office space and industrial property. BIGBrave built the website in Gatsby with data from an API server (CRM) for all the property and consultant data, and WordPress for all the website content data and case studies. All forms on the website was also directly integrated into the CRM system to ensure no leads are lost. People cannot stop commenting on the speed of the site and the property search.
   categories:
-    - Property Consultants
-    - Algolia
     - Technology
     - WordPress
     - API
@@ -3849,8 +3847,8 @@
   description: >
     Intsha is a bespoke Human Resources consultancy firm offering expert Recruitment and Talent Management services in today's competitive marketplace. BIGBrave helped Intsha design and develop a bespoke online presense helping them stand out from the crowd.
   categories:
-    - Consultants
-    - Marketing Website
+    - Consulting
+    - Marketing
     - WordPress
   built_by: Evan Janovsky | BIGBrave
   built_by_url: https://bigbrave.digital
@@ -3861,8 +3859,8 @@
   description: >
     MHW is a full service law firm that has offered legal representation and advice to clients locally and throughout British Columbia since 1984. BIGBrave helped MHW bring their website into the 21st century by offering the best and latest Gatsby site to help them stand our from the crowd.
   categories:
-    - Law Firm
-    - Marketing Website
+    - Law
+    - Marketing
     - WordPress
   built_by: Evan Janovsky and Francois Brill | BIGBrave
   built_by_url: https://bigbrave.digital
@@ -3875,7 +3873,6 @@
   categories:
     - Food
     - Business
-    - Beverages
     - Technology
   built_by: Francois Brill | BIGBrave
   built_by_url: https://bigbrave.digital
