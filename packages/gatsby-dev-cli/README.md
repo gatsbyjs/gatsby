@@ -6,7 +6,7 @@ Gatsby packages to Gatsby sites that you're testing your changes on.
 
 ## Install
 
-`npm install -g gatsby-dev-cli`
+`yarn global add gatsby-dev-cli`
 
 ## Configuration / First time setup
 
@@ -28,7 +28,7 @@ your project's node_modules folder. A watch task is then created to re-copy any
 modules that might change while you're working on the code, so you can leave
 this program running.
 
-Typically you'll also want to run `npm run watch` in the Gatsby repo to set up
+Typically you'll also want to run `yarn run watch` in the Gatsby repo to set up
 watchers to build Gatsby source code.
 
 **[Demo Video](https://www.youtube.com/watch?v=D0SwX1MSuas)**
