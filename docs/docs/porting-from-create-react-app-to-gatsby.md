@@ -242,7 +242,7 @@ Gatsby provides a `<Link />` component and a `navigate` function to help you dir
 
 Because Gatsby rehydrates into a regular React app, state can be handled inside of components in the same way it would in Create React App. If you use another library for state management and want to wrap your app in some sort of global state the section on [context providers](#context-providers) will be helpful.
 
-### Environment Variables
+### Environment variables
 
 Create React App requires you to create environment variables prefixed with `REACT_APP_`. Gatsby instead uses the `GATSBY_` prefix to [make environment variables accessible](/docs/environment-variables) in the browser context.
 

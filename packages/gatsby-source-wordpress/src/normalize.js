@@ -312,12 +312,19 @@ exports.mapPolylangTranslations = entities =>
   entities.map(entity => {
     if (entity.polylang_translations) {
       entity.polylang_translations___NODE = entity.polylang_translations.map(
-        translation =>
-          entities.find(
+        translation => {
+          const post = entities.find(
             t =>
               t.wordpress_id === translation.wordpress_id &&
               entity.__type === t.__type
-          ).id
+          )
+
+          if (!post) {
+            return null
+          }
+
+          return post.id
+        }
       )
 
       delete entity.polylang_translations
