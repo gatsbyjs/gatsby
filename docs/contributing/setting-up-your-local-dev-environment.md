@@ -27,7 +27,7 @@ Yarn is a package manager for your code, similar to [NPM](https://www.npmjs.com/
 
 ### Fork, clone, and branch the repository
 
-- Fork the [official `gatsbyjs/gatsby` repository](https://github.com/gatsbyjs/gatsby).
+- [Fork](https://help.github.com/en/github/getting-started-with-github/fork-a-repo) the [official `gatsbyjs/gatsby` repository](https://github.com/gatsbyjs/gatsby).
 - Clone your fork: `git clone --depth=1 https://github.com/<your-username>/gatsby.git`
 - Set up repo and install dependencies: `yarn run bootstrap`
 - Make sure tests are passing for you: `yarn test`
