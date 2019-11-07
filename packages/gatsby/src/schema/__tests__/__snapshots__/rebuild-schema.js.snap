@@ -84,6 +84,59 @@ exports[`build and update schema for other types applies automatic extensions to
 }"
 `;
 
+exports[`build and update schema for other types conflict reporting should remove conflicting fields and report about conflict 2`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "There are conflicting field types in your data.
+
+If you have explicitly defined a type for those fields, you can safely ignore this warning message.
+Otherwise, Gatsby will omit those fields from the GraphQL schema.
+
+If you know all field types in advance, the best strategy is to explicitly define them with the \`createTypes\` action, and skip inference with the \`@dontInfer\` directive.
+See https://www.gatsbyjs.org/docs/actions/#createTypes",
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;
+
+exports[`build and update schema for other types conflict reporting should remove conflicting fields and report about conflict 3`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "Foo.numberKey:
+ - type: number
+   value: [33m1[39m
+ - type: string
+   value: [32m'string'[39m",
+    ],
+    Array [
+      "Foo.dateKey:
+ - type: date
+   value: [32m'2018-05-05'[39m
+ - type: object
+   value: { nowItsObject: [33mtrue[39m }",
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;
+
 exports[`build and update schema for other types creates derived types 8`] = `
 "enum BarFieldsEnum {
   id

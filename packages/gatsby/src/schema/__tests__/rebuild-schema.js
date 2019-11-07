@@ -31,6 +31,8 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
   }
 })
 
+const reporter = require(`gatsby-cli/lib/reporter`)
+
 const firstPage = () => {
   return {
     id: `page1`,
@@ -722,7 +724,52 @@ describe(`build and update schema for other types`, () => {
     expectSymmetricDelete(node)
   })
 
-  it(`should report error when conflicting changes`, async () => {
-    // TODO
+  describe(`conflict reporting`, () => {
+    const clearMocks = () => {
+      reporter.warn.mockClear()
+      reporter.log.mockClear()
+    }
+
+    beforeEach(clearMocks)
+
+    const conflictingNode = () => {
+      return {
+        id: `Foo2`,
+        internal: { type: `Foo`, contentDigest: `0` },
+        children: [],
+        numberKey: `string`,
+        dateKey: { nowItsObject: true },
+      }
+    }
+
+    it(`should remove conflicting fields and report about conflict`, async () => {
+      const newSchema = await addNodeAndRebuild(conflictingNode())
+      const print = typePrinter(newSchema)
+
+      expect(print(`Foo`)).toMatchInlineSnapshot(`
+        "type Foo implements Node {
+          id: ID!
+          parent: Node
+          children: [Node!]!
+          internal: Internal!
+          stringKey: String
+        }"
+      `)
+
+      expect(reporter.warn).toMatchSnapshot()
+      expect(reporter.log).toMatchSnapshot()
+    })
+
+    it(`should restore fields when conflicts are resolved`, async () => {
+      await addNodeAndRebuild(conflictingNode())
+      clearMocks()
+
+      const newSchema = await deleteNodeAndRebuild(conflictingNode())
+      const printed = printSchema(lexicographicSortSchema(newSchema))
+      expect(printed).toEqual(initialPrintedSchema)
+
+      expect(reporter.warn).not.toHaveBeenCalled()
+      expect(reporter.log).not.toHaveBeenCalled()
+    })
   })
 })

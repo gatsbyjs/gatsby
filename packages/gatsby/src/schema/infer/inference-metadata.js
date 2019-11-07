@@ -271,8 +271,18 @@ const prepareConflictExamples = (descriptor, isArrayItem) => {
   }
   const reportedValueMapper = typeName => {
     if (typeName === `listOfUnion`) {
-      const { nodes } = descriptor[typeName]
+      const { nodes } = descriptor.listOfUnion
       return Object.keys(nodes).filter(key => nodes[key] > 0)
+    }
+    if (typeName === `object`) {
+      return getExampleObject({ typeName, fieldMap: descriptor.object.props })
+    }
+    if (typeName === `array`) {
+      const itemValue = buildExampleValue({
+        descriptor: descriptor.array.item,
+        isArrayItem: true,
+      })
+      return itemValue === null || itemValue === undefined ? [] : [itemValue]
     }
     return descriptor[typeName].example
   }
@@ -309,7 +319,7 @@ const buildExampleValue = ({
 }) => {
   const [type, conflicts = false] = resolveWinnerType(descriptor)
 
-  if (conflicts) {
+  if (conflicts && typeConflictReporter) {
     typeConflictReporter.addConflict(
       path,
       prepareConflictExamples(descriptor, isArrayItem)

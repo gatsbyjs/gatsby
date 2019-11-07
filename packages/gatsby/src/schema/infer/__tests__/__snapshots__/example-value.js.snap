@@ -147,6 +147,106 @@ Array [
 ]
 `;
 
+exports[`Type conflicts reports mixed scalars and arrays 1`] = `
+Array [
+  TypeConflictEntry {
+    "selector": "Conflict_8.numeric",
+    "types": Map {
+      "number" => Object {
+        "description": "",
+        "value": 1,
+      },
+      "array" => Object {
+        "description": "",
+        "value": Array [
+          1,
+        ],
+      },
+    },
+  },
+  TypeConflictEntry {
+    "selector": "Conflict_8.string",
+    "types": Map {
+      "string" => Object {
+        "description": "",
+        "value": "str",
+      },
+      "array" => Object {
+        "description": "",
+        "value": Array [
+          "str",
+        ],
+      },
+    },
+  },
+  TypeConflictEntry {
+    "selector": "Conflict_8.mixed",
+    "types": Map {
+      "boolean" => Object {
+        "description": "",
+        "value": true,
+      },
+      "array" => Object {
+        "description": "",
+        "value": Array [
+          1,
+        ],
+      },
+    },
+  },
+]
+`;
+
+exports[`Type conflicts reports mixed scalars and objects 1`] = `
+Array [
+  TypeConflictEntry {
+    "selector": "Conflict_7.numeric",
+    "types": Map {
+      "number" => Object {
+        "description": "",
+        "value": 1,
+      },
+      "object" => Object {
+        "description": "",
+        "value": Object {
+          "value": 1,
+        },
+      },
+    },
+  },
+  TypeConflictEntry {
+    "selector": "Conflict_7.string",
+    "types": Map {
+      "string" => Object {
+        "description": "",
+        "value": "str",
+      },
+      "object" => Object {
+        "description": "",
+        "value": Object {
+          "value": "str",
+        },
+      },
+    },
+  },
+  TypeConflictEntry {
+    "selector": "Conflict_7.boolean",
+    "types": Map {
+      "boolean" => Object {
+        "description": "",
+        "value": true,
+      },
+      "object" => Object {
+        "description": "",
+        "value": Object {
+          "value": true,
+        },
+      },
+    },
+  },
+]
+`;
+
 exports[`Type conflicts reports on mixed ___NODE fields 1`] = `
 Array [
   TypeConflictEntry {
