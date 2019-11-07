@@ -239,6 +239,7 @@ describe(`build and update schema for other types`, () => {
     const newSchema = await deleteNodeAndRebuild(node)
     const printed = printSchema(lexicographicSortSchema(newSchema))
     expect(printed).toEqual(initialPrintedSchema)
+    return newSchema
   }
 
   it(`changes type when fields are added or removed`, async () => {
@@ -721,6 +722,38 @@ describe(`build and update schema for other types`, () => {
     expect(print(`NewTypeNestedNested`)).toMatchSnapshot()
 
     expectSymmetricDelete(node)
+  })
+
+  it(`deletes deeply nested fields on child nodes`, async () => {
+    const nodes = createNodes()
+    const child = () => {
+      return {
+        id: `Nested2`,
+        parent: nodes[0].id,
+        internal: { type: `Nested`, contentDigest: `0` },
+        children: [],
+        nested: {
+          foo: { bar: { baz: `string`, test: `test` } },
+        },
+      }
+    }
+    addNode(child())
+    createParentChildLink({ parent: nodes[0], child: child() })
+
+    let schema = await rebuildTestSchema()
+    expect(typePrinter(schema)(`NestedNestedFooBar`)).toMatchInlineSnapshot(`
+      "type NestedNestedFooBar {
+        baz: String
+        test: String
+      }"
+    `)
+
+    schema = await expectSymmetricDelete(child())
+    expect(typePrinter(schema)(`NestedNestedFooBar`)).toMatchInlineSnapshot(`
+      "type NestedNestedFooBar {
+        baz: String
+      }"
+    `)
   })
 
   describe(`conflict reporting`, () => {

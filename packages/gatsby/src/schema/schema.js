@@ -111,15 +111,7 @@ const rebuildSchemaWithTypes = async ({
     if (isEmptyInferredType({ typeComposer, inferenceMetadata })) {
       deleteType({ schemaComposer, typeComposer })
     }
-  }
 
-  // Doing a separate pass for type processing to make sure that all
-  // required types are in the schema composer
-  for (const typeName of typesWithParents) {
-    if (!schemaComposer.has(typeName)) {
-      continue
-    }
-    const typeComposer = schemaComposer.getOTC(typeName)
     const shouldInfer =
       !typeComposer.hasExtension(`infer`) ||
       typeComposer.getExtension(`infer`) !== false
@@ -134,6 +126,16 @@ const rebuildSchemaWithTypes = async ({
         parentSpan,
       })
     }
+  }
+
+  // Doing a separate pass for type processing to make sure that all
+  // required types are in the schema composer and fully inferred
+  // (otherwise `processTypeComposer` of one type can affect old version of some related type)
+  for (const typeName of typesWithParents) {
+    if (!schemaComposer.has(typeName)) {
+      continue
+    }
+    const typeComposer = schemaComposer.getOTC(typeName)
 
     const derivedTypeComposers = collectDerivedTypeComposers({
       schemaComposer,
