@@ -8326,3 +8326,14 @@
   built_by: Jason Di Benedetto
   built_by_url: https://jason.dibenedetto.fyi
   featured: false
+- title: Really Fast Sites
+  url: https://reallyfastsites.com
+  main_url: https://reallyfastsites.com
+  description: >
+    Really Fast Sites showcases websites that have a speed score of 85 or higher on Google's Page Speed Insights for both mobile and desktop, along with some of the platforms and technologies those sites use.
+  categories:
+    - Web Development
+    - Programming
+  built_by: Peter Brady
+  built_by_url: https://www.peterbrady.co.uk
+  featured: false
