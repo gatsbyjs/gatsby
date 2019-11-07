@@ -194,14 +194,14 @@ const Logo = ({ data, location }) => {
               contains everything you need.
             </p>
             <Box
-              bg="yellow.10"
+              bg="highlightedBox.background"
               py={3}
               px={4}
               my={4}
               fontSize={1}
               borderRadius={2}
               maxWidth="30rem"
-              color="grey.80"
+              color="highlightedBox.color"
             >
               Please{` `}
               <a href="https://github.com/gatsbyjs/gatsby/issues">

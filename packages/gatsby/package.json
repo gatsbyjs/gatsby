@@ -1,7 +1,7 @@
 {
   "name": "gatsby",
   "description": "Blazing fast modern site generator for React",
-  "version": "2.17.7",
+  "version": "2.17.10",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "./dist/bin/gatsby.js"
@@ -81,7 +81,7 @@
     "glob": "^7.1.5",
     "got": "8.3.2",
     "graphql": "^14.5.8",
-    "graphql-compose": "^6.3.6",
+    "graphql-compose": "^6.3.7",
     "graphql-playground-middleware-express": "^1.7.12",
     "invariant": "^2.2.4",
     "is-relative": "^1.0.0",

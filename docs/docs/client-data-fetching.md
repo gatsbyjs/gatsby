@@ -173,7 +173,7 @@ class ClientFetchingExample extends Component {
             style={{ width: 300 }}
           />
         </div>
-         {/* highlight-start */}
+        {/* highlight-start */}
         <div>
           {this.state.loading ? (
             <p>Please hold, pupper incoming!</p>
@@ -186,11 +186,13 @@ class ClientFetchingExample extends Component {
             <p>Oh noes, error fetching pupper :(</p>
           )}
         </div>
-       </div> {/* highlight-end */}
+        {/* highlight-end */}
+      </div>
     )
   }
 
-  // This data is fetched at run time on the client. // highlight-start
+  // highlight-start
+  // This data is fetched at run time on the client.
   fetchRicksPupper = () => {
     this.setState({ loading: true })
 
@@ -215,7 +217,8 @@ class ClientFetchingExample extends Component {
         this.setState({ loading: false, error })
       })
   }
-} // highlight-end
+  // highlight-end
+}
 
 export default ClientFetchingExample
 ```
