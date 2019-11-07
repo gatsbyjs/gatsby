@@ -56,6 +56,12 @@ function cloneOrUpdateRepo(repoName, repoUrl) {
 // Copy over contents of origin repo (gatsby) to the source repo (gatsby-source-i18n)
 // TODO make sure the main repo is updated before we do this
 async function updateSourceRepo() {
+  // Get potential commit message early (before we "cd" into sourceRepo clone directory) to use last gatsbyjs/gatsby commit
+  const commitMessage =
+    shell.exec(
+      `git log -1 --pretty="sync with monorepo gatsbyjs/gatsby@%H - %B"`
+    ).stdout || `Update from gatsbyjs/gatsby`
+
   logger.info(`Checking if cache directory exists`)
   if (shell.cd(cacheDir).code !== 0) {
     logger.info(`No cache directory. Creating ${cacheDir}`)
@@ -82,11 +88,6 @@ async function updateSourceRepo() {
 
   logger.info(`Committing changes`)
   shell.exec(`git add .`)
-
-  const commitMessage =
-    shell.exec(
-      `git log -1 --pretty="sync with monorepo gatsbyjs/gatsby@%H - %B"`
-    ).stdout || `Update from gatsbyjs/gatsby`
 
   if (shell.exec(`git commit -m '${commitMessage}' > /dev/null`).code !== 0) {
     logger.error(`Failed to commit to ${sourceRepo}`)
