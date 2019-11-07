@@ -1,9 +1,13 @@
 ---
 title: "Actions"
 disableTableOfContents: true
-jsdoc: "/(gatsby[/]src[/]redux[/]actions[/]public.js)|(gatsby[/]src[/]redux[/]actions[/]restricted.js)$/"
+jsdoc: "/gatsby[/]src[/]redux[/]actions[/](public|restricted)[.]js$/"
 ---
-Gatsby uses [Redux](http://redux.js.org) internally to manage state. When you implement a Gatsby API, you are passed a collection of actions (equivalent to boundActionCreators in redux) which you can use to manipulate state on your site.
+
+import APIReference, {APIContents} from "../../www/src/components/api-reference"
+
+
+Gatsby uses [Redux](http://redux.js.org) internally to manage state. When you implement a Gatsby API, you are passed a collection of actions (equivalent to `boundActionCreators` in Redux) which you can use to manipulate state on your site.
 
 The object `actions` contains the functions and these can be individually extracted by using ES6 object destructuring.
           
@@ -13,3 +17,9 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNodeField } = actions
 }
 ```
+
+## APIs
+<APIContents docs={props.mergedFuncs} />
+
+## Reference
+<APIReference docs={props.mergedFuncs} />

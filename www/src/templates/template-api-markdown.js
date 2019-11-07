@@ -7,7 +7,6 @@ import { MDXRenderer } from "gatsby-plugin-mdx"
 import { mediaQueries } from "../gatsby-plugin-theme-ui"
 
 // API Rendering Stuff
-import APIReference from "../components/api-reference"
 import normalizeGatsbyApiCall from "../utils/normalize-gatsby-api-call"
 import { sortBy } from "lodash-es"
 
@@ -49,7 +48,7 @@ const getDocsData = location => {
   return [urlSegment, itemListLookup[urlSegment]]
 }
 
-const DocsBlock = ({ data, context }) => {
+const mergeFunctions = (data, context) => {
   const normalized = normalizeGatsbyApiCall(data.nodeAPIs.group)
 
   const docs = data.jsdoc.nodes.reduce((acc, node) => {
@@ -71,6 +70,10 @@ const DocsBlock = ({ data, context }) => {
     }
   })
 
+  return mergedFuncs
+}
+
+/*
   return (
     <React.Fragment>
       <h2>APIs</h2>
@@ -85,12 +88,12 @@ const DocsBlock = ({ data, context }) => {
       <APIReference docs={mergedFuncs} />
     </React.Fragment>
   )
-}
+
+*/
 
 function DocsTemplate({ data, location, pageContext }) {
   const { next, prev } = pageContext
   const page = data.mdx
-  console.log(data)
   const [urlSegment, itemList] = getDocsData(location)
   const toc =
     !page.frontmatter.disableTableOfContents && page.tableOfContents.items
@@ -177,8 +180,12 @@ function DocsTemplate({ data, location, pageContext }) {
               }}
             >
               <div>
-                <MDXRenderer slug={page.fields.slug}>{page.body}</MDXRenderer>
-                <DocsBlock data={data} context={pageContext} />
+                <MDXRenderer
+                  slug={page.fields.slug}
+                  mergedFuncs={mergeFunctions(data, pageContext)}
+                >
+                  {page.body}
+                </MDXRenderer>
                 {page.frontmatter.issue && (
                   <a
                     href={page.frontmatter.issue}

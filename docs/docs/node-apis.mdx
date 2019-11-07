@@ -4,6 +4,9 @@ disableTableOfContents: true
 jsdoc: "/api-node-docs[.]js$/"
 apicalls: "NodeAPI"
 ---
+
+import APIReference, {APIContents} from "../../www/src/components/api-reference"
+
 Gatsby gives plugins and site builders many APIs for controlling your site's data in the GraphQL data layer.
             
 ## Async plugins
@@ -28,3 +31,9 @@ If your plugin does not do async work, you can just return directly.
 
 ## Usage
 Implement any of these APIs by exporting them from a file named `gatsby-node.js` in the root of your project.
+
+## APIs
+<APIContents docs={props.mergedFuncs} />
+
+## Reference
+<APIReference docs={props.mergedFuncs} />
