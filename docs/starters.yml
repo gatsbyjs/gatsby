@@ -4318,13 +4318,15 @@
   repo: https://github.com/denvash/gatsby-tailwind-styled-components-storybook-starter
   description: Tailwind CSS + Styled-Components + Storybook starter for Gatsby
   tags:
-    - Tailwind CSS
     - Storybook
-    - Tailwind
-    - Styled-components
-    - CSS in JS
-    - PostCSS
+    - Styling:Tailwind
+    - Styling:CSS-in-JS
+    - Styling:PostCSS
+    - Netlify
   features:
-    - Use Tailwind CSS v1 in Styled-Components v5.
-    - Decouple developing with Storybook v5.
-    - Use the flexibility of PostCSS to extend Tailwind's CSS or write your own CSS. Postcss-Preset-Env is enabled out-of-the box allowing you to write tomorrow's CSS today!
+    - Tailwind CSS v1
+    - Styled-Components v5
+    - Storybook v5
+    - PostCSS
+    - Deploy Storybook
+    - Documentation
