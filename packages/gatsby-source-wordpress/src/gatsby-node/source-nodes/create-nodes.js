@@ -54,10 +54,10 @@ export const createGatsbyNodesFromWPGQLContentNodes = async (
       // create Gatsby ID's from WPGQL ID's
       const previousNodeId =
         previousNode && previousNode.id !== node.id
-          ? createNodeId(previousNode.id)
+          ? previousNode.id
           : null
       const nextNodeId =
-        nextNode && nextNode.id !== node.id ? createNodeId(nextNode.id) : null
+        nextNode && nextNode.id !== node.id ? nextNode.id : null
 
       // create connections to adjacent nodes for pagination
       // @todo move pagination to create-pages.js
@@ -70,15 +70,17 @@ export const createGatsbyNodesFromWPGQLContentNodes = async (
       }
 
       // @todo also namespace the id's here
-      const nodeId = createNodeId(node.id)
+      const nodeId = node.id
 
       // @todo allow namespacing types with a plugin option. Default to `Wp`
-      const nodeType = contentTypes[node.contentType]
-        ? // if this is a post, page or CPT, we want to group it into
-          // the WpContent node type to make sharing templates across post types easy
-          `WpContent`
-        : // otherwise we can namespace the existing type
-          `Wp${node.type}`
+      const nodeType = `Wp${node.type}`
+      // // @todo allow namespacing types with a plugin option. Default to `Wp`
+      // const nodeType = contentTypes[node.contentType]
+      //   ? // if this is a post, page or CPT, we want to group it into
+      //     // the WpContent node type to make sharing templates across post types easy
+      //     `WpContent`
+      //   : // otherwise we can namespace the existing type
+      //     `Wp${node.type}`
 
       await actions.createNode({
         ...node,

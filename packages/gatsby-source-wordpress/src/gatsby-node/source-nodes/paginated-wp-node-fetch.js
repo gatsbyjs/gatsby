@@ -13,9 +13,9 @@ const paginatedWpNodeFetch = async ({
   ...variables
 }) => {
   // skip fetching media items for now
-  if (contentTypePlural === `mediaItems`) {
-    return allContentNodes
-  }
+  // if (contentTypePlural === `mediaItems`) {
+  //   return allContentNodes
+  // }
 
   const paginatedQuery = getPaginatedQuery(query)
 

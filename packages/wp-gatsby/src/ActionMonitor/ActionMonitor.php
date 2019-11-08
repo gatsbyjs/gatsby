@@ -118,17 +118,17 @@ class ActionMonitor
             \update_post_meta(
                 $action_monitor_post,
                 'referenced_post_relay_id',
-                $global_relay_id,
+                $global_relay_id
             );
             \update_post_meta(
                 $action_monitor_post,
                 'referenced_post_single_name',
-                $post_type_object->graphql_single_name,
+                $post_type_object->graphql_single_name
             );
             \update_post_meta(
                 $action_monitor_post,
                 'referenced_post_plural_name',
-                $post_type_object->graphql_plural_name,
+                $post_type_object->graphql_plural_name
             );
         }
     }

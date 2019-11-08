@@ -1,9 +1,11 @@
 import recursivelyTransformFields from "./recursively-transform-fields"
 import { buildNodesQueryOnFieldName } from "./build-query-on-field-name"
-
+import { dd } from "dumper.js"
 // @todo create function to unmap check here for similar function https://www.gatsbyjs.org/packages/gatsby-source-graphql-universal/
 import { getAvailablePostTypesQuery } from "../graphql-queries"
 import fetchGraphql from "../../../utils/fetch-graphql"
+
+const gql = ([string]) => string
 
 export const getAvailableContentTypes = async ({ url }) => {
   const query = getAvailablePostTypesQuery()
@@ -26,14 +28,24 @@ export const buildNodeQueriesFromIntrospection = async (
 ) => {
   const introspection = await fetchGraphql({
     url: pluginOptions.url,
-    query: `
-      {
+    query: gql`
+      query {
         __schema {
           types {
+            kind
             name
-            possibleTypes {
-              kind
+            fields {
               name
+              description
+              type {
+                ofType {
+                  kind
+                  name
+                }
+                kind
+                name
+                description
+              }
             }
           }
           queryType {
@@ -47,7 +59,8 @@ export const buildNodeQueriesFromIntrospection = async (
                   type {
                     name # EditLock
                     kind # OBJECT
-                    ofType { # null
+                    ofType {
+                      # null
                       kind
                       name
                     }
@@ -71,9 +84,102 @@ export const buildNodeQueriesFromIntrospection = async (
             }
           }
         }
+
+        __type(name: "Node") {
+          name
+          kind
+          possibleTypes {
+            name
+            description
+            fields {
+              name
+              description
+              type {
+                ofType {
+                  kind
+                  name
+                }
+                kind
+                name
+                description
+                fields {
+                  name
+                  description
+                  type {
+                    name
+                    description
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     `,
   })
+
+  if (introspection.errors) {
+    introspection.errors.forEach(error => {
+      console.error(error)
+    })
+    process.exit()
+  }
+
+  let typeDefs = []
+
+  introspection.data.__schema.types
+    .filter(type => type.name !== `RootQuery` && type.kind === `OBJECT`)
+    .forEach(type => {
+      // create type definition
+      typeDefs.push(
+        helpers.schema.buildObjectType({
+          name: `Wp${type.name}`,
+          interfaces: [`Node`],
+          fields: type.fields.reduce((acc, { name, ...curr}) => {
+
+            // non null scalar types
+            if (
+              curr.type.kind === `NON_NULL` 
+              && curr.type.ofType.kind === `SCALAR`
+            ) {
+              acc[name] = `${curr.type.ofType.name}!`
+            }
+            
+            // scalar types
+            if (curr.type.kind === `SCALAR`) {
+              acc[name] = curr.type.name
+            }
+
+            // object types should be top level Gatsby nodes
+            // so we link them by id
+            if (curr.type.kind === `OBJECT`) {
+              acc[name] = {
+                type: `Wp${curr.type.name}`,
+                resolve: (source, args, context, info) => {
+                  if (!source[name] || !source[name].id) {
+                    return null
+                  }
+
+                  return context.nodeModel.getNodeById({
+                    id: source[name].id,
+                    type: `Wp${curr.type.name}`
+                  })
+                }
+              }
+            }
+
+            return acc
+          }, {}),
+          extensions: {
+            infer: false
+          }
+        })
+      )
+
+      // create gql query string
+    })
+
+  helpers.actions.createTypes(typeDefs)
 
   // we don't need or can't access these
   const rootQueryFieldNameBlacklist = [
