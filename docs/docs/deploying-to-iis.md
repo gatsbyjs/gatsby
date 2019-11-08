@@ -30,7 +30,6 @@ you have to be careful to copy any changes to `web.config` on your server back t
             </httpProtocol>
         </system.webServer>
     </location>
-    
     <location path="page-data">
         <system.webServer>
         <httpProtocol>
