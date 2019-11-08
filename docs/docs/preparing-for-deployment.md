@@ -52,5 +52,6 @@ If you have a server from one of the following providers, you should read the in
 - [Render](/docs/deploying-to-render)
 - [Surge](/docs/deploying-to-surge)
 - [GitHub Pages](/docs/how-gatsby-works-with-github-pages)
+- [Microsoft Internet Information Server (IIS)](/docs/deploying-to-iis)
 
 If you don't see the hosting you are interested, it's possible to add other hosting providers through [contributions to the docs](/contributing/docs-contributions).
