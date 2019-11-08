@@ -8334,3 +8334,14 @@
   built_by: Peter Brady
   built_by_url: https://www.peterbrady.co.uk
   featured: false
+- title: Salexa - Estetica Venezolana
+  url: https://peluqueriavenezolana.cl/
+  main_url: https://peluqueriavenezolana.cl/
+  source_url: https://github.com/enbonnet/salexa-front
+  description: >
+    Venezuelan beauty and hairdressing salon in Chile
+  categories:
+    - Marketing
+    - Business
+  built_by: Ender Bonnet
+  built_by_url: https://enbonnet.me/
