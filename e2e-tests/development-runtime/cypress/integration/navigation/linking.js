@@ -20,7 +20,7 @@ describe(`navigation`, () => {
   it(`can navigate to and from pages`, () => {
     cy.getTestElement(`page-two`).click()
 
-    cy.getTestElement(`back-button`).click()
+    cy.getTestElement(`back-link`).click()
 
     cy.location(`pathname`).should(`equal`, `/`)
   })
@@ -31,6 +31,14 @@ describe(`navigation`, () => {
       .waitForRouteChange()
 
     cy.go(`back`).waitForRouteChange()
+
+    cy.location(`pathname`).should(`equal`, `/`)
+  })
+
+  it(`can navigate back using navigate`, () => {
+    cy.getTestElement(`page-two`).click()
+
+    cy.getTestElement(`back-button`).click()
 
     cy.location(`pathname`).should(`equal`, `/`)
   })
