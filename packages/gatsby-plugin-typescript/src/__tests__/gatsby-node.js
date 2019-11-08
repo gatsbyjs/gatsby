@@ -26,6 +26,16 @@ describe(`gatsby-plugin-typescript`, () => {
         options,
       })
       expect(actions.setBabelPlugin).toHaveBeenCalledTimes(2)
+      expect(actions.setBabelPlugin).toHaveBeenCalledWith({
+        name: expect.stringContaining(
+          path.join(`@babel`, `plugin-proposal-optional-chaining`)
+        ),
+      })
+      expect(actions.setBabelPlugin).toHaveBeenCalledWith({
+        name: expect.stringContaining(
+          path.join(`@babel`, `plugin-proposal-nullish-coalescing-operator`)
+        ),
+      })
     })
   })
 
