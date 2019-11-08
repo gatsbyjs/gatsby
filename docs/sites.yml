@@ -1,3 +1,19 @@
+- title: Binaria
+  description: >
+    Digital product connecting technics & creativity.
+  main_url: "https://binaria.com/en/"
+  url: "https://binaria.com/en/"
+  featured: true
+  categories:
+    - Web Development
+    - Agency
+    - Technology
+    - App
+    - Featured
+    - Consulting
+    - User Experience
+  built_by: Binaria
+  built_by_url: "https://binaria.com/"
 - title: ReactJS
   main_url: "https://reactjs.org/"
   url: "https://reactjs.org/"
