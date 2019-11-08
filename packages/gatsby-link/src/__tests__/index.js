@@ -221,7 +221,7 @@ describe(`navigate`, () => {
     const to = -1
     getNavigate()(to)
 
-    expect(global.___navigate).toHaveBeenCalledWith(to, undefined)
+    expect(global.___navigate).not.toBeCalled()
   })
 
   it(`respects pathPrefix`, () => {
