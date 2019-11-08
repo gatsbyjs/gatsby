@@ -20,19 +20,19 @@ you have to be careful to copy any changes to `web.config` on your server back t
 ```xml:file=static\web.config
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-	<location path="static">
-		<system.webServer>
-			<httpProtocol>
-				<customHeaders>
-					<remove name="cache-control" />
-					<add name="cache-control" value="cache-control: public, max-age=31536000, immutable" />
-				</customHeaders>
-			</httpProtocol>
-		</system.webServer>
-	</location>
-	
-	<location path="page-data">
-		<system.webServer>
+    <location path="static">
+        <system.webServer>
+            <httpProtocol>
+                <customHeaders>
+                    <remove name="cache-control" />
+                    <add name="cache-control" value="cache-control: public, max-age=31536000, immutable" />
+                </customHeaders>
+            </httpProtocol>
+        </system.webServer>
+    </location>
+    
+    <location path="page-data">
+        <system.webServer>
         <httpProtocol>
             <customHeaders>
                 <remove name="cache-control" />
@@ -40,32 +40,32 @@ you have to be careful to copy any changes to `web.config` on your server back t
             </customHeaders>
         </httpProtocol>
     </system.webServer>
-	</location>
+    </location>
 
     <system.webServer>
         <staticContent>
             <mimeMap fileExtension=".webmanifest" mimeType="application/manifest+json" />
         </staticContent>
-		<rewrite>
-			<outboundRules>
-			  <rule name="AdjustCacheForDontCacheFiles" preCondition="IsDontCacheFile" stopProcessing="true">
-				<match serverVariable="RESPONSE_Cache-Control" pattern=".*" />
-				<action type="Rewrite" value="public, max-age=0, must-revalidate" />
-			  </rule>
-			  <rule name="AdjustCacheForCachePermanentlyFiles" preCondition="IsCachePermanentlyFile" stopProcessing="true">
-				<match serverVariable="RESPONSE_Cache-Control" pattern=".*" />
-				<action type="Rewrite" value="cache-control: public, max-age=31536000, immutable" />
-			  </rule>
-			  <preConditions>
-				<preCondition name="IsDontCacheFile">
-				  <add input="{REQUEST_FILENAME}" pattern="(.*\.html)|(sw\.js)|(app\-data\.json)|(page\-data\.json)" />
-				</preCondition>
-				<preCondition name="IsCachePermanentlyFile">
-				  <add input="{REQUEST_FILENAME}" pattern="(.*\.js)|(.*\.css)" />
-				</preCondition>
-			  </preConditions>
-			</outboundRules>
-		</rewrite>
+        <rewrite>
+            <outboundRules>
+              <rule name="AdjustCacheForDontCacheFiles" preCondition="IsDontCacheFile" stopProcessing="true">
+                <match serverVariable="RESPONSE_Cache-Control" pattern=".*" />
+                <action type="Rewrite" value="public, max-age=0, must-revalidate" />
+              </rule>
+              <rule name="AdjustCacheForCachePermanentlyFiles" preCondition="IsCachePermanentlyFile" stopProcessing="true">
+                <match serverVariable="RESPONSE_Cache-Control" pattern=".*" />
+                <action type="Rewrite" value="cache-control: public, max-age=31536000, immutable" />
+              </rule>
+              <preConditions>
+                <preCondition name="IsDontCacheFile">
+                  <add input="{REQUEST_FILENAME}" pattern="(.*\.html)|(sw\.js)|(app\-data\.json)|(page\-data\.json)" />
+                </preCondition>
+                <preCondition name="IsCachePermanentlyFile">
+                  <add input="{REQUEST_FILENAME}" pattern="(.*\.js)|(.*\.css)" />
+                </preCondition>
+              </preConditions>
+            </outboundRules>
+        </rewrite>
     </system.webServer>
 </configuration>
 ```
