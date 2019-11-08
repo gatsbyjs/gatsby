@@ -1,5 +1,6 @@
 const { joinPath } = require(`gatsby-core-utils`)
 const requiresWriter = require(`../requires-writer`)
+const { match } = require(`@reach/router/lib/utils`)
 
 const now = Date.now()
 
@@ -149,6 +150,10 @@ describe(`requires-writer`, () => {
     it(`should have index pages with higher priority than matchPaths`, async () => {
       const pages = generatePagesState([
         {
+          path: `/another-custom-404`,
+          matchPath: `/*`,
+        },
+        {
           path: `/`,
         },
         {
@@ -166,59 +171,159 @@ describe(`requires-writer`, () => {
       expect(matchPaths).toMatchSnapshot()
     })
 
-    it(`have static pages first and prefer more specific matchPaths`, async () => {
-      const pages = generatePagesState([
-        {
-          path: `/`,
-        },
-        {
-          path: `/custom-404`,
-          matchPath: `/*`,
-        },
-        {
-          path: `/mp4`,
-          matchPath: `/mp1/mp2/mp3/mp4/*`,
-        },
-        {
-          path: `/some-page`,
-        },
-        {
-          path: `/mp1/mp2`,
-        },
-        {
-          path: `/mp1/mp2/hello`,
-        },
-        {
-          path: `/mp1`,
-          matchPath: `/mp1/*`,
-        },
-        {
-          path: `/mp2`,
-          matchPath: `/mp1/mp2/*`,
-        },
-        {
-          path: `/mp3`,
-          matchPath: `/mp1/mp2/mp3/*`,
-        },
-      ])
+    const pagesInput = [
+      {
+        path: `/`,
+      },
+      {
+        path: `/custom-404`,
+        matchPath: `/*`,
+      },
+      {
+        path: `/mp4`,
+        matchPath: `/mp1/mp2/mp3/mp4/*`,
+      },
+      {
+        path: `/some-page`,
+      },
+      {
+        path: `/mp1/mp2`,
+      },
+      {
+        path: `/mp1/with-params`,
+        matchPath: `/mp1/:param`,
+      },
+      {
+        path: `/ap1/ap2`,
+      },
+      {
+        path: `/mp1/mp2/hello`,
+      },
+      {
+        path: `/mp1`,
+        matchPath: `/mp1/*`,
+      },
+      {
+        path: `/mp2`,
+        matchPath: `/mp1/mp2/*`,
+      },
+      {
+        path: `/mp3`,
+        matchPath: `/mp1/mp2/mp3/*`,
+      },
+    ]
+
+    it(`sorts pages based on matchPath/path specificity`, async () => {
+      const pages = generatePagesState(pagesInput)
 
       await requiresWriter.writeAll({
         pages,
         program,
       })
 
-      expect(matchPaths.map(p => p.path)).toEqual([
-        `/mp1/mp2/hello`,
-        `/mp1/mp2`,
-        `/some-page`,
-        `/`,
-        `/mp4`,
-        `/mp3`,
-        `/mp2`,
-        `/mp1`,
-        `/custom-404`,
-      ])
+      expect(matchPaths.map(p => p.matchPath)).toMatchInlineSnapshot(`
+        Array [
+          "/mp1/mp2/mp3/mp4/*",
+          "/mp1/mp2/hello",
+          "/mp1/mp2/mp3/*",
+          "/ap1/ap2",
+          "/mp1/mp2",
+          "/mp1/:param",
+          "/mp1/mp2/*",
+          "/some-page",
+          "/mp1/*",
+          "/",
+          "/*",
+        ]
+      `)
       expect(matchPaths).toMatchSnapshot()
+    })
+
+    it(`page order is deterministic (regardless of page creation order)`, async () => {
+      let pages
+      pages = generatePagesState([...pagesInput].reverse())
+      await requiresWriter.writeAll({
+        pages,
+        program,
+      })
+
+      const matchPathsForInvertedInput = matchPaths
+      pages = generatePagesState(pagesInput)
+      await requiresWriter.writeAll({
+        pages,
+        program,
+      })
+
+      expect(matchPathsForInvertedInput).toEqual(matchPaths)
+    })
+
+    describe(`matching tests (~integration)`, () => {
+      const testScenario = async path => {
+        const pages = generatePagesState([...pagesInput].reverse())
+        await requiresWriter.writeAll({
+          pages,
+          program,
+        })
+
+        const allMatchingPages = matchPaths
+          .map(p => p.matchPath)
+          .filter(p => match(p, path))
+
+        return {
+          allMatchingPages,
+          selectedPage: allMatchingPages[0],
+        }
+      }
+
+      it(`will find static path before dynamic paths`, async () => {
+        const { allMatchingPages, selectedPage } = await testScenario(
+          `/mp1/mp2`
+        )
+
+        expect(allMatchingPages).toMatchInlineSnapshot(`
+          Array [
+            "/mp1/mp2",
+            "/mp1/:param",
+            "/mp1/mp2/*",
+            "/mp1/*",
+            "/*",
+          ]
+        `)
+
+        expect(selectedPage).toMatchInlineSnapshot(`"/mp1/mp2"`)
+      })
+
+      it(`will find path with dynamic paramter before path with wildcard`, async () => {
+        const { allMatchingPages, selectedPage } = await testScenario(
+          `/mp1/test`
+        )
+
+        expect(allMatchingPages).toMatchInlineSnapshot(`
+          Array [
+            "/mp1/:param",
+            "/mp1/*",
+            "/*",
+          ]
+        `)
+
+        expect(selectedPage).toMatchInlineSnapshot(`"/mp1/:param"`)
+      })
+
+      it(`it will find most specific path with wildcard`, async () => {
+        const { allMatchingPages, selectedPage } = await testScenario(
+          `/mp1/mp2/wat`
+        )
+
+        expect(allMatchingPages).toMatchInlineSnapshot(`
+          Array [
+            "/mp1/mp2/*",
+            "/mp1/*",
+            "/*",
+          ]
+        `)
+
+        expect(selectedPage).toMatchInlineSnapshot(`"/mp1/mp2/*"`)
+      })
     })
   })
 })

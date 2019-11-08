@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.55](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.54...gatsby-source-contentful@2.1.55) (2019-11-04)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** fix crash when downloading asset with a file that doesn't have a url ([#19218](https://github.com/gatsbyjs/gatsby/issues/19218)) ([0b57a3c](https://github.com/gatsbyjs/gatsby/commit/0b57a3c))
+
 ## [2.1.54](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.53...gatsby-source-contentful@2.1.54) (2019-10-29)
 
 **Note:** Version bump only for package gatsby-source-contentful
