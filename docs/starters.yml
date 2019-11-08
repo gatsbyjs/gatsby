@@ -4330,3 +4330,14 @@
     - PostCSS
     - Deploy Storybook
     - Documentation
+- url: https://gatsby-tfs-starter.netlify.com/
+  repo: https://github.com/tiagofsanchez/gatsby-tfs-starter
+  description: a gatsby-advanced-starter with theme-ui styling
+  tags:
+    - theme-ui
+    - cat and tags
+    - blog
+    - Netlify
+  features:
+    - React Helmet <head> Management
+    - SVG Icon
