@@ -17,7 +17,7 @@ during `gatsby build`.
 Please note that local settings you make for your web in IIS Manager change the `web.config` file;
 you have to be careful to copy any changes to `web.config` on your server back to the version in your Gatsby `static` folder.
 
-```xml
+```xml:file=static\web.config
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 	<location path="static">
