@@ -8356,3 +8356,17 @@
     - Business
   built_by: Ender Bonnet
   built_by_url: https://enbonnet.me/
+- title: Binaria
+  description: >
+    Digital product connecting technics & creativity.
+  main_url: "https://binaria.com/en/"
+  url: "https://binaria.com/en/"
+  categories:
+    - Web Development
+    - Agency
+    - Technology
+    - App
+    - Consulting
+    - User Experience
+  built_by: Binaria
+  built_by_url: "https://binaria.com/"
