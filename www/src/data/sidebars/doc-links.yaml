@@ -61,6 +61,9 @@
             - title: Deploying to Surge
               link: /docs/deploying-to-surge/
               breadcrumbTitle: Surge
+            - title: Deploying to IIS
+              link: /docs/deploying-to-iis/
+              breadcrumbTitle: IIS
             - title: Adding a Path Prefix
               link: /docs/path-prefix/
             - title: How Gatsby Works with GitHub Pages
