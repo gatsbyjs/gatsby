@@ -7,7 +7,6 @@ const { createSchemaComposer } = require(`./schema-composer`)
 const { buildSchema, rebuildSchemaWithTypes } = require(`./schema`)
 const { builtInFieldExtensions } = require(`./extensions`)
 const { TypeConflictReporter } = require(`./infer/type-conflict-reporter`)
-const apiRunner = require(`../utils/api-runner-node`)
 
 const build = async ({ parentSpan }) => {
   const spanArgs = parentSpan ? { childOf: parentSpan } : {}
@@ -19,11 +18,6 @@ const build = async ({ parentSpan }) => {
       type: `CREATE_FIELD_EXTENSION`,
       payload: { name, extension },
     })
-  })
-
-  await apiRunner(`createSchemaCustomization`, {
-    parentSpan,
-    traceId: `initial-createSchemaCustomization`,
   })
 
   const {
