@@ -4,8 +4,7 @@ import { dd } from "dumper.js"
 // @todo create function to unmap check here for similar function https://www.gatsbyjs.org/packages/gatsby-source-graphql-universal/
 import { getAvailablePostTypesQuery } from "../graphql-queries"
 import fetchGraphql from "../../../utils/fetch-graphql"
-
-const gql = ([string]) => string
+import gql from "../../../utils/gql"
 
 export const getAvailableContentTypes = async ({ url }) => {
   const query = getAvailablePostTypesQuery()
@@ -31,49 +30,31 @@ export const buildNodeQueriesFromIntrospection = async (
     query: gql`
       query {
         __schema {
-          types {
-            kind
-            name
-            fields {
-              name
-              description
-              type {
-                ofType {
-                  kind
-                  name
-                }
-                kind
-                name
-                description
-              }
-            }
-          }
           queryType {
             fields {
-              name # post
+              name
               type {
-                kind # OBJECT
-                name # Post
+                kind
+                name
                 fields {
-                  name # editLock
+                  name
                   type {
-                    name # EditLock
-                    kind # OBJECT
+                    name
+                    kind
                     ofType {
-                      # null
                       kind
                       name
                     }
                     fields {
-                      name #user
+                      name
                       type {
-                        kind # OBJECT
-                        name # User
+                        kind
+                        name
                         fields {
-                          name # id
+                          name
                           type {
-                            name # null
-                            kind # NON_NULL
+                            name
+                            kind
                           }
                         }
                       }
@@ -84,101 +65,9 @@ export const buildNodeQueriesFromIntrospection = async (
             }
           }
         }
-
-        __type(name: "Node") {
-          name
-          kind
-          possibleTypes {
-            name
-            description
-            fields {
-              name
-              description
-              type {
-                ofType {
-                  kind
-                  name
-                }
-                kind
-                name
-                description
-                fields {
-                  name
-                  description
-                  type {
-                    name
-                    description
-                  }
-                }
-              }
-            }
-          }
-        }
       }
     `,
   })
-
-  if (introspection.errors) {
-    introspection.errors.forEach(error => {
-      console.error(error)
-    })
-    process.exit()
-  }
-
-  let typeDefs = []
-
-  introspection.data.__schema.types
-    .filter(type => type.name !== `RootQuery` && type.kind === `OBJECT`)
-    .forEach(type => {
-      // create type definition
-      typeDefs.push(
-        helpers.schema.buildObjectType({
-          name: `Wp${type.name}`,
-          interfaces: [`Node`],
-          fields: type.fields.reduce((acc, { name, ...curr }) => {
-            // non null scalar types
-            if (
-              curr.type.kind === `NON_NULL` &&
-              curr.type.ofType.kind === `SCALAR`
-            ) {
-              acc[name] = `${curr.type.ofType.name}!`
-            }
-
-            // scalar types
-            if (curr.type.kind === `SCALAR`) {
-              acc[name] = curr.type.name
-            }
-
-            // object types should be top level Gatsby nodes
-            // so we link them by id
-            if (curr.type.kind === `OBJECT`) {
-              acc[name] = {
-                type: `Wp${curr.type.name}`,
-                resolve: (source, args, context, info) => {
-                  if (!source[name] || !source[name].id) {
-                    return null
-                  }
-
-                  return context.nodeModel.getNodeById({
-                    id: source[name].id,
-                    type: `Wp${curr.type.name}`,
-                  })
-                },
-              }
-            }
-
-            return acc
-          }, {}),
-          extensions: {
-            infer: false,
-          },
-        })
-      )
-
-      // create gql query string
-    })
-
-  helpers.actions.createTypes(typeDefs)
 
   // we don't need or can't access these
   const rootQueryFieldNameBlacklist = [
@@ -189,7 +78,6 @@ export const buildNodeQueriesFromIntrospection = async (
   ]
 
   const rootFields = introspection.data.__schema.queryType.fields
-  // const types = introspection.data.__schema.types
 
   // first we want to find root query fields that will return lists of nodes
   const rootQueryListConnections = rootFields
@@ -213,16 +101,6 @@ export const buildNodeQueriesFromIntrospection = async (
   const nodeListTypeNames = rootQueryListConnections.map(
     field => field.nodesTypeName
   )
-
-  // const relationshipByIdFieldsShape = [
-  //   {
-  //     name: `id`,
-  //     type: {
-  //       kind: `NON_NULL`,
-  //     },
-  //     alias: `relationshipById`,
-  //   },
-  // ]
 
   // build an object where the root property names are node list types
   // each of those properties contains an object of info about that types fields
@@ -276,29 +154,3 @@ export const buildNodeQueriesFromIntrospection = async (
 
   return queries
 }
-
-// Loop through our rootQueryFieldConnections
-// and pass the fieldname into this function in a recursive loop to get
-// all nodes of each type.
-// const getRootFieldQuery = ({ fieldName, nodeQuery }) => `
-//   query GET_ROOT_FIELD_NODES($first: Int, $after: String) {
-//     ${fieldName}(
-//       first: $first
-//       after: $after
-//     ) {
-//       pageInfo {
-//         hasNextPage
-//         endCursor
-//       }
-//       nodes {
-//         ${nodeQuery} # <-- build this out of nodeListTypes const
-//       }
-//     }
-//   }
-// `
-// Once we build all of these up and create nodes out of them,
-// loop through all WPGQL nodes we've created thus far
-// and make a generic type that holds all WP nodes
-// wpNodes? or wpContent/allWpContent ?
-// add a field called "node__NODE" which just links to appropriate node
-// then add other fields with type information about the node?

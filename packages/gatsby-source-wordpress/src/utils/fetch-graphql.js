@@ -23,7 +23,16 @@ const fetchGraphql = async ({ url, query, variables = {} }) => {
     process.exit()
   }
 
-  return response.json()
+  const json = await response.json()
+
+  if (json.errors) {
+    json.errors.forEach(error => {
+      console.error(error)
+    })
+    process.exit()
+  }
+
+  return json
 }
 
 export default fetchGraphql
