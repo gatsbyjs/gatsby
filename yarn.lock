@@ -3283,16 +3283,15 @@
     string-width "^2.0.0"
     strip-ansi "^3"
 
-"@reach/router@^1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@reach/router/-/router-1.2.1.tgz#34ae3541a5ac44fa7796e5506a5d7274a162be4e"
-  integrity sha512-kTaX08X4g27tzIFQGRukaHmNbtMYDS3LEWIS8+l6OayGIw6Oyo1HIF/JzeuR2FoF9z6oV+x/wJSVSq4v8tcUGQ==
+"@reach/router@^1.3.0-beta.0":
+  version "1.3.0-beta.0"
+  resolved "https://registry.yarnpkg.com/@reach/router/-/router-1.3.0-beta.0.tgz#a5ed9749ac501f6c79d5ac46ab76d6bacfde7622"
+  integrity sha512-ZBNAyh8TXotBNDlwpA2e6HhYQ93sAAds8DHNgMaHm0coXe3l9zf3N3Vx/Yy2kM8w7JfxMCuQwzw97zHR+Q2NRg==
   dependencies:
-    create-react-context "^0.2.1"
+    create-react-context "0.2.1"
     invariant "^2.2.3"
     prop-types "^15.6.1"
     react-lifecycles-compat "^3.0.4"
-    warning "^3.0.0"
 
 "@rtsao/csstype@2.6.5-forked.0":
   version "2.6.5-forked.0"
@@ -6908,9 +6907,10 @@ create-hmac@^1.1.0, create-hmac@^1.1.2, create-hmac@^1.1.4:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-create-react-context@^0.2.1:
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/create-react-context/-/create-react-context-0.2.3.tgz#9ec140a6914a22ef04b8b09b7771de89567cb6f3"
+create-react-context@0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/create-react-context/-/create-react-context-0.2.1.tgz#425a3d96f4b7690c2fbf20aed5aeae2e2007a959"
+  integrity sha512-dmGgrAJ/nKoQRRcoonkqWWM9uxk6ClzCHUDKZ8zGdc4MxDwvLVG8s/gzIXtWET7lTAoFSXkeCQ113L1p3QSFmw==
   dependencies:
     fbjs "^0.8.0"
     gud "^1.0.0"
