@@ -1,6 +1,6 @@
 import PropTypes from "prop-types"
 import React from "react"
-import { Link } from "@reach/router"
+import { Link, navigate as ReachNavigate } from "@reach/router"
 
 import { parsePath } from "./parse-path"
 
@@ -201,7 +201,11 @@ export default React.forwardRef((props, ref) => (
 export const navigate = (to, options) => {
   // @reach/router supports a number for going back
   // or a string for navigation to a path
-  window.___navigate(typeof to === `number` ? to : withPrefix(to), options)
+  if (typeof to === `number`) {
+    ReachNavigate(to, options)
+  } else {
+    window.___navigate(withPrefix(to), options)
+  }
 }
 
 export const push = to => {
