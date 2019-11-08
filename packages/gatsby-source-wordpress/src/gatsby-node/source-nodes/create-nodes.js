@@ -53,9 +53,7 @@ export const createGatsbyNodesFromWPGQLContentNodes = async (
 
       // create Gatsby ID's from WPGQL ID's
       const previousNodeId =
-        previousNode && previousNode.id !== node.id
-          ? previousNode.id
-          : null
+        previousNode && previousNode.id !== node.id ? previousNode.id : null
       const nextNodeId =
         nextNode && nextNode.id !== node.id ? nextNode.id : null
 

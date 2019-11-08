@@ -135,16 +135,15 @@ export const buildNodeQueriesFromIntrospection = async (
         helpers.schema.buildObjectType({
           name: `Wp${type.name}`,
           interfaces: [`Node`],
-          fields: type.fields.reduce((acc, { name, ...curr}) => {
-
+          fields: type.fields.reduce((acc, { name, ...curr }) => {
             // non null scalar types
             if (
-              curr.type.kind === `NON_NULL` 
-              && curr.type.ofType.kind === `SCALAR`
+              curr.type.kind === `NON_NULL` &&
+              curr.type.ofType.kind === `SCALAR`
             ) {
               acc[name] = `${curr.type.ofType.name}!`
             }
-            
+
             // scalar types
             if (curr.type.kind === `SCALAR`) {
               acc[name] = curr.type.name
@@ -162,17 +161,17 @@ export const buildNodeQueriesFromIntrospection = async (
 
                   return context.nodeModel.getNodeById({
                     id: source[name].id,
-                    type: `Wp${curr.type.name}`
+                    type: `Wp${curr.type.name}`,
                   })
-                }
+                },
               }
             }
 
             return acc
           }, {}),
           extensions: {
-            infer: false
-          }
+            infer: false,
+          },
         })
       )
 
