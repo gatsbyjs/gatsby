@@ -56,7 +56,7 @@ type TypeMetadata = {
   dirty?: boolean, // tracks structural changes only
 }
 
-type Count = Number
+type Count = number
 type NodeId = string
 
 type ValueDescriptor = {
