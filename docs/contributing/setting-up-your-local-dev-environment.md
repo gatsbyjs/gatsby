@@ -37,32 +37,34 @@ Yarn is a package manager for your code, similar to [NPM](https://www.npmjs.com/
 
 - See [docs setup instructions](/contributing/docs-contributions#docs-site-setup-instructions) for docs-only changes.
 - Run `yarn run watch` from the root of the repo to watch for changes to packages' source code and compile these changes on-the-fly as you work.
+
   - Note that the watch command can be resource intensive. To limit it to the packages you're working on, add a scope flag, like `yarn run watch --scope={gatsby,gatsby-cli}`.
   - To watch just one package, run `yarn run watch --scope=gatsby`.
-  
+
 ### Gatsby functional changes
 
-- Install [gatsby-cli](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-cli): 
-    - Make sure you have the Gatsby CLI installed with `gatsby -v`, 
-    - if not install globally: `yarn global add gatsby-cli`
+- Install [gatsby-cli](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-cli):
+  - Make sure you have the Gatsby CLI installed with `gatsby -v`,
+  - if not install globally: `yarn global add gatsby-cli`
 - Install [gatsby-dev-cli](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli):
-    - Make sure you have the Gatsby Dev CLI installed with `gatsby-dev -h`
-    - if not install globally: `yarn global add gatsby-dev-cli`
+  - Make sure you have the Gatsby Dev CLI installed with `gatsby-dev -h`
+  - if not install globally: `yarn global add gatsby-dev-cli`
 - Run `yarn install` in each of the sites you're testing.
 - For each of your Gatsby test sites, run the `gatsby-dev` command inside the test site's directory to copy
   the built files from your cloned copy of Gatsby. It'll watch for your changes
   to Gatsby packages and copy them into the site. For more detailed instructions
   see the [gatsby-dev-cli README](https://www.npmjs.com/package/gatsby-dev-cli) and check out the [gatsby-dev-cli demo video](https://www.youtube.com/watch?v=D0SwX1MSuas).
+
   - Note: if you plan to modify packages that are exported from `gatsby` directly, you need to either add those manually to your test sites so that they are listed in `package.json` (e.g. `yarn add gatsby-link`), or specify them explicitly with `gatsby-dev --packages gatsby-link`).
-  
+
 ### Add tests
 
 - Add tests and code for your changes.
 - Once you're done, make sure all tests still pass: `yarn test`.
+
   - To run tests for a single package you can run: `yarn jest <package-name>`.
   - To run a single test file you can run: `yarn jest <file-path>`.
-  
-  
+
 ### Commits and pull requests
 
 - Commit and push to your fork.
@@ -71,4 +73,3 @@ Yarn is a package manager for your code, similar to [NPM](https://www.npmjs.com/
 ### Sync your fork
 
 - You cann add the [Pull Bot](https://github.com/wei/pull) from @wei to your repository to have it in sync with the forked source `gatsbyjs/gatsby` repo
-
