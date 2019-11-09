@@ -6,7 +6,7 @@ With Gatsby, you are able to create restricted areas in your app using [client-o
 
 <!-- include link to overview page diagram once PR is merged -->
 
-As the section from the Adding App and Website functionality overview page shows, client-only routes can be created to route a user between pages using JavaScript as opposed to navigating between different static HTML files on a server. Static HTML files cannot be locked down because a user could guess or type in a URL and navigate straight to the page.
+As the section from the Adding App and Website functionality overview page shows, client-only routes can be created to route a user between pages using a React-based router, as opposed to navigating between different static HTML files on a server. Because static HTML files sit on a file server, you cannot programmatically control access to them with Gatsby (for example: a user could guess or type in a URL and navigate straight to the page).
 
 Using the [@reach/router](https://reach.tech/router/) library, which comes
 installed with Gatsby, you can control which component will be loaded when a

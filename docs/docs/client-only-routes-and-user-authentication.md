@@ -2,15 +2,113 @@
 title: Client-only Routes & User Authentication
 ---
 
-Often you want to create a site with client-only portions that are gated by authentication.
+Often you want to create a site with client-only portions, which allows you to gate them by authentication or load different content based on URL parameters.
+
+## Understanding client-only routes
 
 A classic example would be a site that has a landing page, various marketing pages, a login page, and then an app section for logged-in users. The logged-in section doesn't need to be server rendered as all data will be loaded live from your API after the user logs in. So it makes sense to make this portion of your site client-only.
 
-Gatsby uses [@reach/router](https://reach.tech/router/) under the hood. You should use @reach/router to create client-only routes.
+Client-only routes will exist on the client only and will not correspond to index.html files in an app's built assets. If you'd like site users to be able to visit client routes directly, you need to set up your site to handle those routes appropriately.
 
-These routes will exist on the client only and will not correspond to index.html files in an app's built assets. If you'd like site users to be able to visit client routes directly, you'll need to set up your server to handle those routes appropriately.
+A sample site might be set up like this:
 
-To create client-only routes, add the following code to your site’s `gatsby-node.js` file:
+![Site with a static homepage and client-only routes](./images/client-only-routes.png)
+
+Gatsby converts components in the `pages` folder into static HTML files for the Home page and the App page. A `<Router />` is added to the App page so that the profile and details components can be rendered from the App page, they don't have static assets built for them because they exist only on the client. The profile page can `POST` data about a user back to an API, and the details page can dynamically load data about a user with a specific id from an API.
+
+## Implementing client-only routes
+
+Gatsby uses [@reach/router](https://reach.tech/router/) under the hood, and it is the recommended approach to create client-only routes.
+
+You first need to set up routes on a page created by Gatsby:
+
+```javascript:title=src/pages/app.js
+import React from "react"
+import { Router } from "@reach/router" // highlight-line
+import Layout from "../components/Layout"
+import Profile from "../components/Profile"
+import Details from "../components/Details"
+import Login from "../components/Login"
+import Default from "../components/Default"
+
+const App = () => {
+  return (
+    <Layout>
+      // highlight-start
+      <Router>
+        <Profile path="/app/profile" />
+        <Details path="/app/details" />
+        <Login path="/app/login" />
+        <Default path="/app" />
+      </Router>
+      // highlight-end
+    </Layout>
+  )
+}
+
+export default App
+```
+
+With routes nested under the `<Router />` from Reach Router, it will [render the component from the route that corresponds to the `location`](https://reach.tech/router/api/Router). In the case of the `/app/profile` path, the `Profile` component will be rendered.
+
+### Adjusting routes to account for authenticated users
+
+With [authentication set up](/docs/building-a-site-with-authentication) on your site, you can create a component like a `<PrivateRoute/>` to extend the example above and gate content:
+
+```javascript:title=src/pages.app.js
+import React from "react"
+import { Router } from "@reach/router"
+import Layout from "../components/Layout"
+import Profile from "../components/Profile"
+import Details from "../components/Details"
+import Login from "../components/Login"
+import Default from "../components/Default"
+import PrivateRoute from "../components/PrivateRoute" // highlight-line
+
+const App = () => {
+  return (
+    <Layout>
+      <Router>
+        // highlight-start
+        <PrivateRoute path="/app/profile" component={Profile} />
+        <PrivateRoute path="/app/details" component={Details} />
+        // highlight-end
+        <Login path="/app/login" />
+        <Default path="/app" />
+      </Router>
+    </Layout>
+  )
+}
+
+export default App
+```
+
+The `<PrivateRoute />` component would look something like this one (taken from the [Gatsby Swag Store](https://github.com/gatsbyjs/store.gatsbyjs.org), which implements this behavior):
+
+```jsx:title=PrivateRoute.js
+// import ...
+const PrivateRoute = ({ component: Component, ...rest }) => {
+  if (
+    !isAuthenticated() &&
+    isBrowser &&
+    window.location.pathname !== `/login`
+  ) {
+    // If we’re not logged in, redirect to the home page.
+    navigate(`/app/login`)
+    return null
+  }
+
+  return (
+    <Router>
+      <Component {...rest} />
+    </Router>
+  )
+}
+```
+
+### Configuring pages with `matchPath`
+
+To ensure that client-only routes can be navigated to directly, pages in your site need to have the [`matchPath` parameter](/docs/gatsby-internals-terminology/#matchpath) set. Add the following code to your site’s `gatsby-node.js` file:
 
 ```javascript:title=gatsby-node.js
 // Implement the Gatsby API “onCreatePage”. This is
@@ -18,9 +116,10 @@ To create client-only routes, add the following code to your site’s `gatsby-no
 exports.onCreatePage = async ({ page, actions }) => {
   const { createPage } = actions
 
-  // page.matchPath is a special key that's used for matching pages
-  // only on the client.
+  // Only update the `/app` page.
   if (page.path.match(/^\/app/)) {
+    // page.matchPath is a special key that's used for matching pages
+    // with corresponding routes only on the client.
     page.matchPath = "/app/*"
 
     // Update the page.
@@ -32,10 +131,13 @@ exports.onCreatePage = async ({ page, actions }) => {
 > 💡 Note: There's also a plugin to simplify the creation of client-only routes in your site:
 > [gatsby-plugin-create-client-paths](/packages/gatsby-plugin-create-client-paths/).
 
-The above code (as well as the `gatsby-plugin-create-client-paths` plugin) update pages at build time to add the [`matchPath` parameter](/docs/gatsby-internals-terminology/#matchpath) in the page object to make it so that the configured pages (in this case, everything after `/app`, like `/app/dashboard` or `/app/user`) can be navigated to by Reach Router. This example assumese that you have a page setup at `/app`, like having a file in at `src/pagees/app.js`.
+The above code (as well as the `gatsby-plugin-create-client-paths` plugin) updates the `/app` page at build time to add the `matchPath` parameter in the page object to make it so that the configured pages (in this case, everything after `/app`, like `/app/dashboard` or `/app/user`) can be navigated to by Reach Router.
 
-Without this configuration set up, a user that clicks on a link to `<yoursite.com>/app/user` will instead be routed to the static `/app` page instead of the component or page you have set up at `/app/user`, because Reach Router would be unaware of the component to match the path with.
+Without this configuration set up, a user that clicks on a link to `<yoursite.com>/app/user` will instead be routed to the static `/app` page instead of the component or page you have set up at `/app/user`.
 
 > Tip: For applications with complex routing, you may want to override Gatsby's default scroll behavior with the [shouldUpdateScroll](/docs/browser-apis/#shouldUpdateScroll) Browser API.
 
-Check out the ["simple auth" example site](https://github.com/gatsbyjs/gatsby/blob/master/examples/simple-auth/) for a demo implementing user authentication and restricted client-only routes.
+## Additional resources
+
+- ["simple auth" example site](https://github.com/gatsbyjs/gatsby/blob/master/examples/simple-auth/) - a demo implementing user authentication and restricted client-only routes
+- [Live version of the "simple auth" example](https://simple-auth.netlify.com/)
