@@ -67,9 +67,11 @@ module.exports = async program => {
   let { prefixPaths, port, open, host } = program
   port = typeof port === `string` ? parseInt(port, 10) : port
 
-  const config = await preferDefault(
-    getConfigFile(program.directory, `gatsby-config`)
+  const { configModule } = await getConfigFile(
+    program.directory,
+    `gatsby-config`
   )
+  const config = preferDefault(configModule)
 
   const { pathPrefix: configPathPrefix } = config || {}
 

@@ -235,9 +235,9 @@ The top section lists each tool that we’re using to manage and automated the s
 
 - Each **hexagon** is a question that the framework needs to ask to decide how to move forward
 
-In this process, just like any site, we have a front-end that people see, and a backend that people don’t.
+In this process, just like any site, we have a frontend that people see, and a backend that people don’t.
 
-In this case, the front-end was the process that people went through to order and get their swag.
+In this case, the frontend was the process that people went through to order and get their swag.
 
 And the backend was the systems design, tools, and automation triggers that handled all the requests and process.
 

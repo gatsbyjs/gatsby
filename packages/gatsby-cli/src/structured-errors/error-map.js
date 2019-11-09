@@ -160,6 +160,21 @@ const errorMap = {
     type: `CONFIG`,
     level: `ERROR`,
   },
+  "10226": {
+    text: context =>
+      [
+        `Couldn't find the "${context.themeName}" plugin declared in "${context.configFilePath}".`,
+        context.pathToLocalTheme &&
+          `Tried looking for a local plugin in ${context.pathToLocalTheme}.`,
+        `Tried looking for an installed package in the following paths:\n${context.nodeResolutionPaths
+          .map(potentialLocationPath => ` - ${potentialLocationPath}`)
+          .join(`\n`)}`,
+      ]
+        .filter(Boolean)
+        .join(`\n\n`),
+    type: `CONFIG`,
+    level: `ERROR`,
+  },
   // Plugin errors
   "11321": {
     text: context =>
