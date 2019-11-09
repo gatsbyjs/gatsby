@@ -222,7 +222,7 @@ API.
 You can create a file called `posts-page-layout.js` in `src/components` - this component
 will be rendered as the template for all posts. There's a component,
 `MDXRenderer` which is used by `gatsby-plugin-mdx` that will be used to render any
-programmatically accessed MDX content. 
+programmatically accessed MDX content.
 
 For now, to update imports withing .mdx files, you should re-run your gatsby development environment. Otherwise, it will raise the ReferenceError. To import things dynamically, we will use the `MDXProvider` component and provide all common components we want to use, like `Link`, for example.
 
@@ -232,7 +232,7 @@ added in the next step).
 ```javascript:title=src/components/posts-page-layout.js
 import React from "react"
 import { graphql } from "gatsby"
-import { MDXProvider } from '@mdx-js/react'
+import { MDXProvider } from "@mdx-js/react"
 import { MDXRenderer } from "gatsby-plugin-mdx"
 import { Link } from "gatsby"
 
