@@ -52,8 +52,9 @@ const mergeFunctions = (data, context) => {
   const normalized = normalizeGatsbyApiCall(data.nodeAPIs.group)
 
   const docs = data.jsdoc.nodes.reduce((acc, node) => {
+    console.log(node)
     const doc = node.childrenDocumentationJs
-      .filter(def => def.kind !== `typedef`)
+      .filter(def => def.kind !== `typedef` && def.memberof)
       .map(def => {
         if (!context.apicalls) {
           def.codeLocation.file = node.relativePath
@@ -235,6 +236,7 @@ export const pageQuery = graphql`
       nodes {
         relativePath
         childrenDocumentationJs {
+          memberof
           name
           ...DocumentationFragment
           availableIn

@@ -513,6 +513,7 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
   }
 }
 
+// Marked private here because it was supressed in documentation pages.
 /**
  * Batch delete nodes
  * @private
@@ -547,8 +548,11 @@ actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
 let NODE_COUNTER = 0
 
 const typeOwners = {}
+
+// memberof notation is added so this code can be referenced instead of the wrapper.
 /**
  * Create a new node.
+ * @memberof actions
  * @param {Object} node a node object
  * @param {string} node.id The node's ID. Must be globally unique.
  * @param {string} node.parent The ID of the parent's node. If the node is
