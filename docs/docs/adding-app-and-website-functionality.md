@@ -61,7 +61,7 @@ Following a pattern like this means you are relying on a [backend](/docs/glossar
 
 ### Client only routes
 
-Using a React-based client-side router is also supported by Gatsby. This pattern is often referred to as client only routes, which are routes not reflected in your statically rendered files. Gatsby ships with `@reach/router`, so it is a great option to keep your site from having to ship additional JavaScript with another routing library. 
+Using a React-based client-side router is also supported by Gatsby. This pattern is often referred to as client only routes, which are routes not reflected in your statically rendered files. Gatsby ships with `@reach/router`, so it is a great option to keep your site from having to ship additional JavaScript with another routing library.
 
 With Gatsby, you can import a router and set up routes for navigation the same way you would in traditional React apps. The only difference is Gatsby doesn't build those routes into individual pages in the `/public` folder. As a result, in order to allow users to access that URL directly, you can use a plugin to create those pages. This is covered in the [Client Only Routes](/docs/client-only-routes-and-user-authentication/) guide.
 
