@@ -66,6 +66,12 @@ module.exports = {
   plugins: [
     `gatsby-plugin-theme-ui`,
     {
+      resolve: `gatsby-transformer-gitinfo`,
+      options: {
+        whitelist: /\.md$/i,
+      },
+    },
+    {
       resolve: `gatsby-source-npm-package-search`,
       options: {
         keywords: [`gatsby-plugin`, `gatsby-component`],
