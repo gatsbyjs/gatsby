@@ -213,7 +213,7 @@ function DocsTemplate({ data, location, pageContext }) {
 export default DocsTemplate
 
 export const pageQuery = graphql`
-  query($path: String!, $jsdoc: String, $apicalls: String) {
+  query($path: String!, $jsdoc: [String], $apicalls: String) {
     mdx(fields: { slug: { eq: $path } }) {
       body
       excerpt
@@ -232,7 +232,7 @@ export const pageQuery = graphql`
       }
       ...MarkdownPageFooterMdx
     }
-    jsdoc: allFile(filter: { relativePath: { regex: $jsdoc } }) {
+    jsdoc: allFile(filter: { relativePath: { in: $jsdoc } }) {
       nodes {
         relativePath
         childrenDocumentationJs {
