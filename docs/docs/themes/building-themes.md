@@ -84,6 +84,10 @@ Inside it you'll find:
 - `gatsby-config.js`: Specifies which theme to use and any other one-off configuration a site might need.
 - `/src`: Contains source code such as custom pages or components that might live in a user's site.
 
+## Publishing a Theme
+
+After building your theme, you may want to publish it for the Gatsby community. To do so, please [publish your theme plugin to the plugin library](/contributing/submit-to-plugin-library/#publishing-a-plugin-to-the-library).
+
 ## Further resources
 
 ### Gatsby Theme Authoring (Video course)
