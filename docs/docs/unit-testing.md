@@ -220,7 +220,7 @@ by running `npm test -- -u`.
 If you are using TypeScript, you need to make two changes to your
 config.
 
-Update the transform in `jest.config.js` to run `jest-preprocess` on files in your project's root directory, where `<rootDir>` is replaced with the correct relative path:
+Update the transform in `jest.config.js` to run `jest-preprocess` on files in your project's root directory, where `<rootDir>` is kept intact as a literal string to dynamically pass the relative path to Jest:
 
 ```js:title=jest.config.js
     "^.+\\.[jt]sx?$": "<rootDir>/jest-preprocess.js",
