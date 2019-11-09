@@ -2,6 +2,7 @@
 title: "Node API Helpers"
 disableTableOfContents: true
 jsdoc: ["gatsby/src/utils/api-node-helpers-docs.js"]
+apicalls: "NodeAPIHelpers"
 ---
 
 import APIReference, {APIContents} from "../../www/src/components/api-reference"
@@ -32,4 +33,4 @@ Some APIs provide additional helpers. For example `createPages` provides `graphq
 <APIContents docs={props.mergedFuncs} />
 
 ## Reference
-<APIReference docs={props.mergedFuncs} />
+<APIReference docs={props.mergedFuncs} showTopLevelSignatures={true}/>

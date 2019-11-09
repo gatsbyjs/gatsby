@@ -57,7 +57,17 @@ const mergeFunctions = (data, context) => {
       .filter(def => def.kind !== `typedef` && def.memberof)
       .map(def => {
         if (!context.apicalls) {
+          // When an api call list is not available, the line numbers from jsdoc
+          // might be useful. Just for actions.mdx right now.
           def.codeLocation.file = node.relativePath
+          if (!def.codeLocation.file) {
+            def.codeLocation = null
+          }
+        } else {
+          // API pages having apicalls did not query for this in the page query,
+          // so just remove it instead. Having one that returns nothing supresses
+          // documentation git links completely.
+          def.codeLocation = null
         }
         return def
       })
