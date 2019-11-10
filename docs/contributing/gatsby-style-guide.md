@@ -385,7 +385,7 @@ For words that have multiple spellings, prefer the US English word over British 
 
 ### Use apps that help you edit
 
-Use the [Hemingway App](https://www.hemingwayapp.com/). There’s nothing magical
+Use the [Hemingway App](https://hemingwayapp.com/). There’s nothing magical
 about this tool, but it will automatically detect widely agreed-upon
 style issues:
 
