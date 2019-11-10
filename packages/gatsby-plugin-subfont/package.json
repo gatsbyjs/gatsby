@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-subfont",
-  "version": "1.1.14",
+  "version": "1.1.15",
   "description": "Runs the font delivery optimizing CLI tool subfont on the homepage of your site during the Gatsby build",
   "main": "index.js",
   "scripts": {
@@ -31,7 +31,7 @@
   "devDependencies": {
     "@babel/cli": "^7.7.0",
     "@babel/core": "^7.7.2",
-    "babel-preset-gatsby-package": "^0.2.9",
+    "babel-preset-gatsby-package": "^0.2.10",
     "cross-env": "^5.2.1"
   },
   "engines": {
