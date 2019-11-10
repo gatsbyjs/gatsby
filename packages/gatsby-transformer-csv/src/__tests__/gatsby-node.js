@@ -23,7 +23,10 @@ describe(`Process nodes correctly`, () => {
 
   it(`correctly creates nodes from JSON which is an array of objects`, async () => {
     const fields = [`blue`, `funny`]
-    const data = [{ blue: true, funny: `yup` }, { blue: false, funny: `nope` }]
+    const data = [
+      { blue: true, funny: `yup` },
+      { blue: false, funny: `nope` },
+    ]
     const csv = json2csv({ data: data, fields: fields })
     node.content = csv
 
