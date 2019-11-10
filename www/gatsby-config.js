@@ -94,7 +94,8 @@ module.exports = {
     {
       resolve: `gatsby-transformer-gitinfo`,
       options: {
-        whitelist: /\.md$/i,
+        dir: path.normalize(path.join(__dirname, `../`)),
+        include: /\.mdx?$/i,
       },
     },
     {

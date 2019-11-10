@@ -4,7 +4,6 @@ import React from "react"
 import { Trans } from "@lingui/macro"
 import { graphql } from "gatsby"
 import { MdCreate as EditIcon } from "react-icons/md"
-import moment from "moment"
 
 export default class MarkdownPageFooter extends React.Component {
   constructor() {
@@ -37,17 +36,16 @@ export default class MarkdownPageFooter extends React.Component {
             {this.props.page &&
               this.props.page.parent &&
               this.props.page.parent.fields &&
-              this.props.page.parent.fields.gitDate && (
+              this.props.page.parent.fields.git &&
+              this.props.page.parent.fields.git.log &&
+              this.props.page.parent.fields.git.log.latest &&
+              this.props.page.parent.fields.git.log.latest.date && (
                 <span sx={{ color: `textMuted`, fontSize: 1 }}>
                   Last updated:{` `}
                   <time
-                    dateTime={moment(
-                      this.props.page.parent.fields.gitDate
-                    ).format(`MMMM D, YYYY`)}
+                    dateTime={this.props.page.parent.fields.git.log.latest.date}
                   >
-                    {moment(this.props.page.parent.fields.gitDate).format(
-                      `MMMM D, YYYY`
-                    )}
+                    {this.props.page.parent.fields.git.log.latest.date}
                   </time>
                 </span>
               )}
@@ -64,7 +62,13 @@ export const fragment = graphql`
       ... on File {
         relativePath
         fields {
-          gitDate
+          git {
+            log {
+              latest {
+                date(formatString: "MMMM D, YYYY")
+              }
+            }
+          }
         }
       }
     }
@@ -74,7 +78,13 @@ export const fragment = graphql`
       ... on File {
         relativePath
         fields {
-          gitDate
+          git {
+            log {
+              latest {
+                date(formatString: "MMMM D, YYYY")
+              }
+            }
+          }
         }
       }
     }
