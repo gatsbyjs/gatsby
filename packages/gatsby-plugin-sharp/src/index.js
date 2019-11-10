@@ -212,8 +212,31 @@ async function generateBase64({ file, args, reporter }) {
   return base64output
 }
 
-const generateCacheKey = ({ file, args, fileArgs }) =>
-  `${file.id}${JSON.stringify(args)}${JSON.stringify(fileArgs) || ``}`
+const generateCacheKey = ({ file, args, fileArgs }) => {
+  /**
+   * Explicitly removing specific properties from cache key instead of only
+   * adding the keys we need for caching.
+   * With this approach we prevent caching bugs if new keys are added in the
+   * future.
+   */
+  const fileArgsCache = {
+    ...fileArgs,
+    grayscale: undefined,
+    jpegProgressive: undefined,
+    pngCompressionSpeed: undefined,
+    duotone: undefined,
+    traceSVG: undefined,
+    quality: undefined,
+    toFormat: undefined,
+    toFormatBase64: undefined,
+    background: undefined,
+    sizes: undefined,
+    srcSetBreakpoints: undefined,
+    pathPrefix: undefined,
+  }
+
+  return `${file.id}${JSON.stringify(args)}${JSON.stringify(fileArgsCache)}`
+}
 
 const memoizedBase64 = _.memoize(generateBase64, generateCacheKey)
 
