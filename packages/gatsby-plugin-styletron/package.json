@@ -7,13 +7,13 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.6.3",
-    "styletron-engine-atomic": "^1.4.3",
-    "styletron-react": "^5.2.4"
+    "@babel/runtime": "^7.7.2",
+    "styletron-engine-atomic": "^1.4.4",
+    "styletron-react": "^5.2.5"
   },
   "devDependencies": {
-    "@babel/cli": "^7.6.4",
-    "@babel/core": "^7.6.4",
+    "@babel/cli": "^7.7.0",
+    "@babel/core": "^7.7.2",
     "babel-preset-gatsby-package": "^0.2.9",
     "cross-env": "^5.2.1"
   },

@@ -8,9 +8,9 @@
     "build": "gatsby build"
   },
   "dependencies": {
-    "gatsby": "^2.17.6",
-    "gatsby-theme-blog": "^1.1.11",
-    "gatsby-theme-notes": "^1.0.11",
+    "gatsby": "^2.17.10",
+    "gatsby-theme-blog": "^1.1.16",
+    "gatsby-theme-notes": "^1.0.15",
     "react": "^16.11.0",
     "react-dom": "^16.11.0"
   }
