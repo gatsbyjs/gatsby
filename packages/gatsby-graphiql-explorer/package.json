@@ -28,21 +28,21 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@babel/runtime": "^7.6.3"
+    "@babel/runtime": "^7.7.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.6.4",
-    "@babel/core": "^7.6.4",
-    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/cli": "^7.7.0",
+    "@babel/core": "^7.7.2",
+    "@babel/plugin-proposal-class-properties": "^7.7.0",
     "@babel/plugin-transform-runtime": "^7.6.2",
-    "@babel/preset-env": "^7.6.3",
-    "@babel/preset-react": "^7.6.3",
+    "@babel/preset-env": "^7.7.1",
+    "@babel/preset-react": "^7.7.0",
     "babel-loader": "^8.0.6",
     "babel-preset-gatsby-package": "^0.2.9",
     "cross-env": "^5.2.1",
     "css-loader": "^1.0.1",
     "graphiql": "^0.16.0",
-    "graphiql-code-exporter": "^2.0.5",
+    "graphiql-code-exporter": "^2.0.6",
     "graphiql-explorer": "^0.4.5",
     "html-webpack-plugin": "^3.2.0",
     "npm-run-all": "4.1.5",
@@ -50,7 +50,7 @@
     "react-dom": "^16.11.0",
     "style-loader": "^0.23.1",
     "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.9",
+    "webpack-cli": "^3.3.10",
     "whatwg-fetch": "^3.0.0"
   },
   "engines": {

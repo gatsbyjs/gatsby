@@ -9,13 +9,13 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/babel-preset-gatsby#readme",
   "dependencies": {
-    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/plugin-proposal-class-properties": "^7.7.0",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/plugin-transform-runtime": "^7.6.2",
     "@babel/plugin-transform-spread": "^7.6.2",
-    "@babel/preset-env": "^7.6.3",
-    "@babel/preset-react": "^7.6.3",
-    "@babel/runtime": "^7.6.3",
+    "@babel/preset-env": "^7.7.1",
+    "@babel/preset-react": "^7.7.0",
+    "@babel/runtime": "^7.7.2",
     "babel-plugin-dynamic-import-node": "^1.2.0",
     "babel-plugin-macros": "^2.6.1",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24"
@@ -31,7 +31,7 @@
     "watch": "babel -w src --out-dir . --ignore **/__tests__ --ignore **/utils/path-serializer.js"
   },
   "devDependencies": {
-    "@babel/cli": "^7.6.4",
+    "@babel/cli": "^7.7.0",
     "babel-preset-gatsby-package": "^0.2.9",
     "cross-env": "^5.2.1",
     "slash": "^3.0.0"
