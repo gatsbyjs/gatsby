@@ -4330,3 +4330,14 @@
     - PostCSS
     - Deploy Storybook
     - Documentation
+- url: https://alipiry-gatsby-starter-typescript.netlify.com/
+  repo: https://github.com/alipiry/gatsby-starter-typescript
+  description: The default Gatsby starter with TypeScript
+  tags:
+    - GatsbyJS v2
+    - TypeScript
+    - ESLint
+  features:
+    - Type Checking With TypeScript
+    - Powerfull Linting With ESLint
+
