@@ -808,8 +808,6 @@ describe(`build and update schema for other types`, () => {
 })
 
 describe(`compatibility with schema customization API`, () => {
-  let schema
-
   beforeEach(async () => {
     store.dispatch({ type: `DELETE_CACHE` })
 
@@ -854,7 +852,6 @@ describe(`compatibility with schema customization API`, () => {
       ])
     )
     await build({})
-    schema = store.getState().schema
   })
 
   it(`should rebuild types with inference enabled and keep explicit schema in place`, async () => {
