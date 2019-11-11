@@ -7,6 +7,7 @@ const {
   rebuildWithTypes,
   getDirtyTypes,
 } = require(`..`)
+const { buildObjectType } = require(`../types/type-builders`)
 require(`../../db/__tests__/fixtures/ensure-loki`)()
 
 jest.mock(`gatsby-cli/lib/reporter`, () => {
@@ -813,43 +814,72 @@ describe(`compatibility with schema customization API`, () => {
     store.dispatch({ type: `DELETE_CACHE` })
 
     store.dispatch(
-      actions.createTypes(`
-        type Foo @infer {
-          foo: Int
-        }
-        type FooFieldsBar @infer {
-          bar: String
-        }
-        type FooFieldsBaz @dontInfer {
-          baz: String
-        }
-        type Bar @dontInfer {
-          bar: String
-        }
-        type Query {
-          foo: Foo
-          bar: Bar
-        }
-      `)
+      actions.createTypes([
+        `
+          type Foo @infer {
+            foo: Int
+          }
+          type FooFieldsBar @infer {
+            bar: String
+          }
+          type FooFieldsBaz @dontInfer {
+            baz: String
+          }
+          type Bar @dontInfer {
+            bar: String
+          }
+          type Query {
+            foo: Foo
+            bar: Bar
+          }
+        `,
+        buildObjectType({
+          name: `Baz`,
+          fields: {
+            baz: `Int!`,
+          },
+          extensions: {
+            infer: true,
+          },
+        }),
+        buildObjectType({
+          name: `BarBaz`,
+          fields: {
+            barBaz: `String`,
+          },
+          extensions: {
+            infer: false,
+          },
+        }),
+      ])
     )
     await build({})
     schema = store.getState().schema
   })
 
-  it(`should rebuild types marked with @infer and keep explicit schema in place`, async () => {
-    const newSchema = await addNodeAndRebuild({
-      id: `Foo1`,
-      internal: { type: `Foo`, contentDigest: `0` },
-      children: [],
-      foo: `foo`,
-      bar: `bar`,
-      fields: {
-        bar: {
-          bar: 1,
-          foo: `str`,
+  it(`should rebuild types with inference enabled and keep explicit schema in place`, async () => {
+    const newSchema = await addNodeAndRebuild([
+      {
+        id: `Foo1`,
+        internal: { type: `Foo`, contentDigest: `0` },
+        children: [],
+        foo: `foo`,
+        bar: `bar`,
+        fields: {
+          bar: {
+            bar: 1,
+            foo: `str`,
+          },
         },
       },
-    })
+      {
+        id: `Baz1`,
+        internal: { type: `Baz`, contentDigest: `0` },
+        children: [],
+        baz: `foo`,
+        bar: `bar`,
+      },
+    ])
 
     const print = typePrinter(newSchema)
     expect(print(`Foo`)).toMatchInlineSnapshot(`
@@ -872,9 +902,16 @@ describe(`compatibility with schema customization API`, () => {
         foo: String
       }"
     `)
+
+    expect(print(`Baz`)).toMatchInlineSnapshot(`
+      "type Baz {
+        baz: Int!
+        bar: String
+      }"
+    `)
   })
 
-  it(`should not rebuild types marked with @dontInfer`, async () => {
+  it(`should not rebuild types with inference disabled`, async () => {
     const newSchema = await addNodeAndRebuild([
       {
         id: `Foo1`,
@@ -896,6 +933,13 @@ describe(`compatibility with schema customization API`, () => {
         bar: 5,
         baz: `str`,
       },
+      {
+        id: `BarBaz1`,
+        internal: { type: `BarBaz`, contentDigest: `0` },
+        children: [],
+        baz: `foo`,
+        bar: `bar`,
+      },
     ])
 
     const print = typePrinter(newSchema)
@@ -911,5 +955,19 @@ describe(`compatibility with schema customization API`, () => {
         bar: String
       }"
     `)
+
+    expect(print(`BarBaz`)).toMatchInlineSnapshot(`
+      "type BarBaz {
+        barBaz: String
+      }"
+    `)
+  })
+
+  it(`should not collect inference metadata for types with inference disabled`, async () => {
+    const { inferenceMetadata } = store.getState()
+    const typesToIgnore = Object.keys(inferenceMetadata).filter(
+      type => inferenceMetadata[type].ignored
+    )
+    expect(typesToIgnore).toEqual([`FooFieldsBaz`, `Bar`, `BarBaz`])
   })
 })

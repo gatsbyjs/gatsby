@@ -4,7 +4,6 @@ const {
   isSpecifiedScalarType,
   isIntrospectionType,
   assertValidName,
-  parse,
   GraphQLNonNull,
   GraphQLList,
   GraphQLObjectType,
@@ -38,6 +37,11 @@ const { getPagination } = require(`./types/pagination`)
 const { getSortInput, SORTABLE_ENUM } = require(`./types/sort`)
 const { getFilterInput, SEARCHABLE_ENUM } = require(`./types/filter`)
 const { isGatsbyType, GatsbyGraphQLTypeKind } = require(`./types/type-builders`)
+const {
+  isASTDocument,
+  parseTypeDef,
+  reportParsingError,
+} = require(`./types/type-defs`)
 const {
   clearDerivedTypes,
   collectDerivedTypeComposers,
@@ -333,11 +337,14 @@ const deleteType = ({ schemaComposer, typeComposer }) => {
 const addTypes = ({ schemaComposer, types, parentSpan }) => {
   types.forEach(({ typeOrTypeDef, plugin }) => {
     if (typeof typeOrTypeDef === `string`) {
+      typeOrTypeDef = parseTypeDef(typeOrTypeDef)
+    }
+    if (isASTDocument(typeOrTypeDef)) {
       let parsedTypes
       const createdFrom = `sdl`
       try {
-        parsedTypes = parseTypeDefs({
-          typeDefs: typeOrTypeDef,
+        parsedTypes = parseTypes({
+          doc: typeOrTypeDef,
           plugin,
           createdFrom,
           schemaComposer,
@@ -1249,40 +1256,6 @@ const parseTypes = ({
     }
   })
   return types
-}
-
-const parseTypeDefs = ({
-  typeDefs,
-  plugin,
-  createdFrom,
-  schemaComposer,
-  parentSpan,
-}) => {
-  const doc = parse(typeDefs)
-  return parseTypes({ doc, plugin, createdFrom, schemaComposer, parentSpan })
-}
-
-const reportParsingError = error => {
-  const { message, source, locations } = error
-
-  if (source && locations && locations.length) {
-    const { codeFrameColumns } = require(`@babel/code-frame`)
-
-    const frame = codeFrameColumns(
-      source.body,
-      { start: locations[0] },
-      { linesAbove: 5, linesBelow: 5 }
-    )
-    report.panic(
-      `Encountered an error parsing the provided GraphQL type definitions:\n` +
-        message +
-        `\n\n` +
-        frame +
-        `\n`
-    )
-  } else {
-    throw error
-  }
 }
 
 const stringifyArray = arr =>

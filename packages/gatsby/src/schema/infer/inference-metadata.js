@@ -50,6 +50,7 @@ of fields in the node object (including nested fields)
 
 ```javascript
 type TypeMetadata = {
+  ignored?: boolean,
   ignoredFields?: Set<string>,
   fieldMap?: { [string]: ValueDescriptor },
   typeName?: string,
@@ -210,6 +211,9 @@ const nodeFields = (node, ignoredFields = new Set()) =>
   Object.keys(node).filter(key => !ignoredFields.has(key))
 
 const updateTypeMetadata = (metadata = {}, operation, node) => {
+  if (metadata.ignored) {
+    return metadata
+  }
   const { ignoredFields, fieldMap = {}, dirty = false } = metadata
 
   let structureChanged = false
@@ -226,6 +230,11 @@ const updateTypeMetadata = (metadata = {}, operation, node) => {
   })
   metadata.fieldMap = fieldMap
   metadata.dirty = dirty || structureChanged
+  return metadata
+}
+
+const ignore = (metadata = {}, set = true) => {
+  metadata.ignored = set
   return metadata
 }
 
@@ -402,6 +411,7 @@ module.exports = {
   addNode,
   addNodes,
   deleteNode,
+  ignore,
   isEmpty,
   getExampleObject,
 }

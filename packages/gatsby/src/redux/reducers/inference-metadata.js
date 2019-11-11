@@ -1,21 +1,16 @@
 // Tracking structure of nodes to utilize this metadata for schema inference
 // Type descriptors stay relevant at any point in time making incremental inference trivial
 const { omit } = require(`lodash`)
-const { addNode, deleteNode } = require(`../../schema/infer/inference-metadata`)
+const {
+  addNode,
+  deleteNode,
+  ignore,
+} = require(`../../schema/infer/inference-metadata`)
+const { NodeInterfaceFields } = require(`../../schema/types/node-interface`)
+const { typesWithoutInference } = require(`../../schema/types/type-defs`)
 
-// FIXME: this has to be injected somehow
-/*
-ignoredFields: new Set([
-  ...getNodeInterface({ schemaComposer }).getFieldNames(),
-  `$loki`,
-  `__gatsby_resolved`,
-]),
-*/
 const ignoredFields = new Set([
-  `id`,
-  `parent`,
-  `children`,
-  `internal`,
+  ...NodeInterfaceFields,
   `$loki`,
   `__gatsby_resolved`,
 ])
@@ -24,6 +19,17 @@ module.exports = (state = {}, action) => {
   switch (action.type) {
     case `DELETE_CACHE`:
       return {}
+
+    case `CREATE_TYPES`: {
+      const typeDefs = Array.isArray(action.payload)
+        ? action.payload
+        : [action.payload]
+      const ignoredTypes = typeDefs.reduce(typesWithoutInference, [])
+      ignoredTypes.forEach(type => {
+        state[type] = ignore(state[type])
+      })
+      return state
+    }
 
     case `CREATE_NODE`: {
       const node = action.payload
