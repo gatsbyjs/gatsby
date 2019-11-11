@@ -371,17 +371,20 @@ const buildExampleValue = ({
 
     case `object`: {
       const { props } = typeInfo
-      return Object.keys(props).reduce((acc, prop) => {
+      let hasKeys = false
+      const result = {}
+      Object.keys(props).forEach(prop => {
         const value = buildExampleValue({
-          descriptor: props[prop],
+          descriptor: typeInfo.props[prop],
           typeConflictReporter,
           path: `${path}.${prop}`,
         })
         if (value !== null) {
-          acc[prop] = value
+          hasKeys = true
+          result[prop] = value
         }
-        return acc
       }, {})
+      return hasKeys ? result : null
     }
 
     default:

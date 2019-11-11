@@ -42,7 +42,6 @@ Object {
   "anArray": Array [
     1,
   ],
-  "context": Object {},
   "date": "2006-07-22T22:39:53.000Z",
   "hair": 1,
   "key-with..unsupported-values": true,
@@ -84,7 +83,6 @@ Array [
     "anArray": Array [
       1,
     ],
-    "context": Object {},
     "date": "2006-07-22T22:39:53.000Z",
     "hair": 1,
     "key-with..unsupported-values": true,
