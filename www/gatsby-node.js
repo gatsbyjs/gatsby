@@ -385,6 +385,18 @@ exports.createPages = ({ graphql, actions, reporter }) => {
   })
 
   createRedirect({
+    fromPath: `/docs/building-apps-with-gatsby/`,
+    toPath: `/docs/adding-app-and-website-functionality/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/adding-website-functionality/`,
+    toPath: `/docs/adding-app-and-website-functionality/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
     fromPath: `/docs/using-fragments/`,
     toPath: `/docs/using-graphql-fragments/`,
     isPermanent: true,
