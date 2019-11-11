@@ -1,0 +1,123 @@
+---
+title: 'Gatsby Gazette: The "What happened to October?" Edition'
+date: 2019-11-11
+author: Mike Allanson
+excerpt: "It's November already. But what happened to October? Read more to find out."
+tags:
+  - gazette
+---
+
+October means halloween! For your spooky reading pleasure the blog now has a dark mode. Dim the lights, pull up a ocmfy chair and we can begin.
+
+In September we posted our [Series A funding announcement](https://www.gatsbyjs.org/blog/2019-09-26-announcing-gatsby-15m-series-a-funding-round/), then headed to the UK for Gatsby Days London. Fear not, if you missed all the action you can [catch up by watching the videos](https://www.youtube.com/watch?v=UvO7h_KwgpE&list=PLCU2qJekvcN2f9rgS50xy7-4QBpgwid4G).
+
+![audience at Gatsby Days London](./gatsby-days.jpg)
+
+## Team highlights
+
+On with some features and updates from the team.
+
+First up is something we're calling _structured logging_. We've done some behind the scenes re-working of Gatsby's logging code. Gatsby now keeps an internal list of messages, and can output those messages in different formats. As an example, run `gatsby build --json` to see the your build logs output as JSON instead of the more usual log messages.
+
+In future this will enable things like a Gatsby desktop app. [Have a nose at the PR to see what went into this release](https://github.com/gatsbyjs/gatsby/pull/14973). As a result of this work there are have been a few fixes and enhancements to the standard CLI output.
+
+### Is Gatsby translated yet?
+
+Following on [from an RFC](https://github.com/gatsbyjs/rfcs/pull/42) in September, there are now 10 in-progress translations for Gatsby's documentation. Want to get involved? Check out [the new Gatsby Docs Translation Guide](https://www.gatsbyjs.org/contributing/gatsby-docs-translation-guide/). Thanks to Nat Alison (twitter url here) for driving this project!
+
+translation scripts https://github.com/gatsbyjs/gatsby/pull/18893
+
+### Overview of the Gatsby Build Process
+
+Have you ever wondered what Gatsby _does_ when you run a build? Now there's a new docs page that runs through the details. [Overview of the Gatsby Build Process](https://www.gatsbyjs.org/docs/overview-of-the-gatsby-build-process/) is the place to go. I particularly like [the diagram that explains the different layers of Gatsby](https://www.gatsbyjs.org/docs/overview-of-the-gatsby-build-process/#what-happens-when-you-run-gatsby-build).
+
+### Schema Customization Examples
+
+We're gradually moving official plugins over to use the schema customisation APIs added earlier this year. See [the changes to `gatsby-transformer-sharp` for an example](https://github.com/gatsbyjs/gatsby/pull/18871). If you're interested in getting started with this, there's a little-known plugin that will write out the schema for your inferred data. See https://www.gatsbyjs.org/packages/gatsby-plugin-schema-snapshot/
+
+### Offline plugin
+
+The [offline plugin has been updated to handle more edge cases](https://github.com/gatsbyjs/gatsby/pull/17590). Now the plugin will revert back to the network if a visitor disables JavaScript after the site has already been cached. Thanks to @davidbailey00.
+
+### .org Dark Mode
+
+Have you tried out the superbly stylish dark mode for gatsbyjs.org? Hit the "Activate dark mode" button in the site header to see it in action. You can see the [first PR for this](https://github.com/gatsbyjs/gatsby/pull/18348), along with a series of [follow up PRs to iron out the kinks](https://github.com/gatsbyjs/gatsby/pulls?q=is%3Apr+dark+mode+is%3Aclosed).
+
+### Grab Bag
+
+There are a few more bits and bobs that are also worth mentioning.
+
+Have you been working with Gatsby themes? Under the hood, a theme and a plugin are pretty similar. Until recently, creating a local theme in your `plugins` directory would have caused an error. A recent update fixes this, making the `plugins` directory work for local themes. Maybe you could use this for prototyping or one-off themes. See [PR #15856 for the full lowdown](https://github.com/gatsbyjs/gatsby/pull/15856).
+
+A persistent bug that was first reported back in 2017 [has been squashed](https://github.com/gatsbyjs/gatsby/pull/19009). Good riddance :)
+
+And finally this package. I can't improve on the description so I'm going to copy and paste it right here:
+
+> Ever wanted a package that disables the mouse cursor one day a week so you can test keyboard accessibility as a team? No? Well here you go anyway.
+
+Grab it from https://www.npmjs.com/package/no-mouse-days.
+
+### Gatsby Days videos
+
+If you missed Gatsby days don't worry, you can [watch the entire playlist on YouTube](https://www.youtube.com/watch?v=kuyLCwAMCZo&list=PLCU2qJekvcN2f9rgS50xy7-4QBpgwid4G).
+
+Follow that link to find a plethora of goodies including a keynote from Kyle Mathews, info on building and selling Gatsby themes by Horacio Herrera and advice on writing accessible components from Marcy Sutton.
+
+## Community highlights
+
+Hacktoberfest Hacktoberfest Hacktoberfest. Yes, October means Hacktoberfest. A huge welcome to all our new and returning contributors.
+
+(Put screenshot here) https://github.com/gatsbyjs/gatsby/pulse/monthly
+
+### Your Pull Requests
+
+There are too many to mention individually, but we can take a rocket powered tour through some highlights.
+
+- Wide improvements to all Gatsby's documentation. Bringing docs in-line with the style guide proved to be a popular (and valuable) activity last month.
+- [Improvements to how gatsby-plugin-offline handles custom link tags](https://github.com/gatsbyjs/gatsby/pull/16691) with the `rel=preconnect` attribute
+- A [fix for the `wrapPageElement` API while running `gatsby develop`](https://github.com/gatsbyjs/gatsby/pull/17111)
+- [Performance improvements to querying](https://github.com/gatsbyjs/gatsby/pull/17682), adding a nice speed boost when building larger sites.
+- By the same author [this PR improved Gatsby's type inference](https://github.com/gatsbyjs/gatsby/pull/18008), making it faster and less memory intensive.
+- A [fix for `gatsby-plugin-manifest`](https://github.com/gatsbyjs/gatsby/pull/17426) that ensures manifest links are updated after page navigation.
+- An issue that happened when [creating a resolver using the `context.nodeModel` API was fixed](https://github.com/gatsbyjs/gatsby/pull/18650).
+- [This PR](https://github.com/gatsbyjs/gatsby/pull/16686) reduces the number of files that are changed with each build. This should result in faster deploys on services like Netlify, particularly for larger sites.
+-
+
+* https://github.com/gatsbyjs/gatsby/pull/18533 fix(gatsby-cli): properly update chalk color level
+* https://github.com/gatsbyjs/gatsby/pull/18478 fix(gatsby): Fix matchpath ordering
+* fix(gatsby-plugin-netlify): don't add `/undefined` in generated `_headers` file #18925
+* https://github.com/gatsbyjs/gatsby/pull/18931 chore(docs): explain shadowing a bit more
+* fix(gatsby-cli): handle git commit failures https://github.com/gatsbyjs/gatsby/pull/18839
+* https://github.com/gatsbyjs/gatsby/pull/18916 chore(gatsby-image): Add missing type definitions for GatsbyImageProps
+
+## Site of the Month
+
+The latest site of the month is [IBM's Carbon Design System](https://www.carbondesignsystem.com/). What's it all about?
+
+> Carbon is IBM’s open-source design system for products and experiences. With the IBM Design Language as its foundation, the system consists of working code, design tools and resources, human interface guidelines, and a vibrant community of contributors.
+
+Seems like everyone is building design systems these days - for good reason. There's a lot to like in here - based on guidelines to be open, inclusive, modular, user-based and consistent. Components are availble for vanilla JS, React, Angular, and Vue.
+
+- Design system with lots of well thought out components and clear guidelines
+- Open source
+- Scale!
+
+## Theme of the Month
+
+![screenshot of gatsby-theme-firebase's readme](./gatsby-theme-firebase.png)
+
+[`gatsby-theme-firebase`](https://github.com/epilande/gatsby-theme-firebase) might be the quickest way to add full-featured auth to your site, and it's our theme of the month for this month!
+
+Add the theme, your Firebase credentials and off you go. Want to change anything? Use shadowing to override whichever components you want.
+
+## How to Equip your Marketing Team for Success
+
+Our next webinar is on the 14th November. Web development agency Delicious Simplicity will show how they built a modern, marketing-team-friendly, component-based site with Gatsby and Contentful for Starlight Children's Foundation.
+
+[Sign up for the webinar](https://www.gatsbyjs.com/starlight-webinar/)!
+
+## Thank You and Good Night
+
+That's all for this month.
+
+As usual, if you'd like to hang out with the Gatsby team or have questions about any of this, feel free to tweet to us at twitter.com/gatsbyjs or come hang out at our Discord at gatsby.dev/discord
