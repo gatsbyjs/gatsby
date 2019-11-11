@@ -1,6 +1,7 @@
 const { debounce } = require(`lodash`)
 const { emitter } = require(`../redux`)
 const { rebuildWithTypes, getDirtyTypes } = require(`../schema`)
+const { updateStateAndRunQueries } = require(`../query/query-watcher`)
 const report = require(`gatsby-cli/lib/reporter`)
 
 // API_RUNNING_QUEUE_EMPTY could be emitted multiple types
@@ -17,6 +18,7 @@ const maybeRebuildSchema = debounce(async () => {
   const activity = report.activityTimer(`rebuild schema`)
   activity.start()
   await rebuildWithTypes({ parentSpan: activity, typeNames: dirtyTypes })
+  await updateStateAndRunQueries(false, { parentSpan: activity })
   activity.end()
 }, 1000)
 
