@@ -34,58 +34,31 @@ npm install --save gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
 In `gatsby-config.js`, replace `gatsby-transformer-remark` with `gatsby-plugin-mdx`, along with the following changes:
 
 ```diff:title=gatsby-config.js
-- {
+  {
 -  resolve: `gatsby-transformer-remark`,
--  options: {
--    plugins: [
--      {
--        resolve: `gatsby-remark-images`,
--        options: {
--          maxWidth: 590,
--        },
--      },
--      {
--        resolve: `gatsby-remark-responsive-iframe`,
--        options: {
--          wrapperStyle: `margin-bottom: 1.0725rem`,
--        },
--      },
--      `gatsby-remark-prismjs`,
--      `gatsby-remark-copy-linked-files`,
--      `gatsby-remark-smartypants`,
--    ],
--  },
-- },
-
-+ {
 +  resolve: `gatsby-plugin-mdx`,
-+  options: {
+   options: {
 +    extensions: [`.mdx`, `.md`],
+-    plugins: [
 +    gatsbyRemarkPlugins: [
-+      {
-+        resolve: `gatsby-remark-images`,
-+        options: {
-+          maxWidth: 590,
-+        },
-+      },
-+      {
-+        resolve: `gatsby-remark-responsive-iframe`,
-+        options: {
-+          wrapperStyle: `margin-bottom: 1.0725rem`,
-+        },
-+      },
-+      {
-+        resolve: `gatsby-remark-prismjs`,
-+      },
-+      {
-+        resolve: `gatsby-remark-copy-linked-files`,
-+      },
-+      {
-+        resolve: `gatsby-remark-smartypants`,
-+      },
-+    ],
-+  },
-+ },
+       {
+         resolve: `gatsby-remark-images`,
+         options: {
+           maxWidth: 590,
+         },
+       },
+       {
+         resolve: `gatsby-remark-responsive-iframe`,
+         options: {
+           wrapperStyle: `margin-bottom: 1.0725rem`,
+         },
+       },
+       `gatsby-remark-prismjs`,
+       `gatsby-remark-copy-linked-files`,
+       `gatsby-remark-smartypants`,
+     ],
+   },
+  },
 ```
 
 Then, add some options to `gatsby-plugin-feed`. This will allow the the RSS feed of the site to parse MDX.
