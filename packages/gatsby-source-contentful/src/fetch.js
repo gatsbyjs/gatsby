@@ -40,10 +40,10 @@ module.exports = async ({ syncToken, reporter, pluginConfig }) => {
     if (e.code === `ENOTFOUND`) {
       details = `You seem to be offline`
     } else if (e.code === `SELF_SIGNED_CERT_IN_CHAIN`) {
-      details = `Your self signed certificate for SSL communication is failing. 
-                If you are in development environment you might add NODE_TLS_REJECT_UNAUTHORIZED=0 in your .env file.
-                Ref. https://stackoverflow.com/questions/45088006/nodejs-error-self-signed-certificate-in-certificate-chain
-                `
+      reporter.panic(
+        `Your self signed certificate for SSL communication is failing.`,
+        e
+      )
     } else if (e.response) {
       if (e.response.status === 404) {
         // host and space used to generate url
