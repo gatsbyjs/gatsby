@@ -221,10 +221,8 @@ const generateCacheKey = ({ file, args, fileArgs }) => {
    */
   const fileArgsCache = {
     ...fileArgs,
-    grayscale: undefined,
     jpegProgressive: undefined,
     pngCompressionSpeed: undefined,
-    duotone: undefined,
     traceSVG: undefined,
     quality: undefined,
     toFormat: undefined,
