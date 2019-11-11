@@ -23,7 +23,7 @@ You can also see the [full changes in PR #18929](https://github.com/gatsbyjs/gat
 
 ### Step 1
 
-Install [gatsby-plugin-mdx](https://www.gatsbyjs.org/packages/gatsby-plugin-mdx/), the official plugin for using MDX with Gatsby. Also, install `@mdx-js/mdx` and `@mdx-js/react`.
+Install [gatsby-plugin-mdx](/packages/gatsby-plugin-mdx/), the official plugin for using MDX with Gatsby. Also, install `@mdx-js/mdx` and `@mdx-js/react`.
 
 ```
 npm install --save gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
@@ -234,5 +234,5 @@ If you're interested in spinning up a new personal blog with MDX, I've prepared 
 
 ## Further Reading
 
-1. [Gatsby Reference Guide on MDX](https://www.gatsbyjs.org/docs/mdx/)
+1. [Gatsby Reference Guide on MDX](/docs/mdx/)
 2. [MDX Gatsby Documentation](https://mdxjs.com/getting-started/gatsby)
