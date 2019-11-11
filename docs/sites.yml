@@ -8381,6 +8381,16 @@
     - User Experience
   built_by: Binaria
   built_by_url: "https://binaria.com/"
+- title: Wealthsimple
+  url: "https://www.wealthsimple.com/"
+  main_url: "https://www.wealthsimple.com/en-us/"
+  description: >
+    The simple way to grow your money like the world's most sophisticated investors. Zero-maintenance portfolios, expert advisors and low fees.
+  categories:
+    - App
+    - Business
+    - Finance
+  featured: false
 - title: To Be Created
   description: >
     tbc is a London based styling agency that champions a modernised minimal aesthetic for both personal clients and brands.
