@@ -8,6 +8,7 @@ const OptimizeCssAssetsPlugin = require(`optimize-css-assets-webpack-plugin`)
 const isWsl = require(`is-wsl`)
 
 const GatsbyWebpackStatsExtractor = require(`./gatsby-webpack-stats-extractor`)
+const GatsbyWebpackEslintConfigReload = require(`./gatsby-webpack-eslint-config-reload`)
 
 const builtinPlugins = require(`./webpack-plugins`)
 const eslintConfig = require(`./eslint-config`)
@@ -622,6 +623,9 @@ module.exports = async ({
   plugins.moment = () => plugins.ignore(/^\.\/locale$/, /moment$/)
 
   plugins.extractStats = options => new GatsbyWebpackStatsExtractor(options)
+
+  plugins.reloadESLintConfig = options =>
+    new GatsbyWebpackEslintConfigReload(options)
 
   return {
     loaders,
