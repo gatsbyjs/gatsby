@@ -4334,9 +4334,9 @@
   repo: https://github.com/alipiry/gatsby-starter-typescript
   description: The default Gatsby starter with TypeScript
   tags:
-    - GatsbyJS v2
-    - TypeScript
-    - ESLint
+    - Language:TypeScript
+    - Linting
+    - Netlify
   features:
     - Type Checking With TypeScript
     - Powerfull Linting With ESLint
