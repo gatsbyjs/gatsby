@@ -17,7 +17,8 @@ With MDX, you can import React components and declare them alongside regular mar
 
 ## Adding MDX to Gatsby Starter Blog
 
-It can be a big tricky to add MDX to an existing blog. The following 5 steps will cover how to install and configure MDX to [Gatsby's blog starter](https://github.com/gatsbyjs/gatsby-starter-blog/tree/8852c1e51651b902f19706ff2ca9f60dabc25709), which as of today does not have MDX pre-installed.
+
+It can be a big tricky to add MDX to an existing blog. The following 5 steps will cover how to install and configure MDX to [Gatsby's blog starter](https://github.com/gatsbyjs/gatsby-starter-blog/tree/master), which as of [today's version](https://github.com/gatsbyjs/gatsby-starter-blog/tree/8852c1e51651b902f19706ff2ca9f60dabc25709), does not have MDX pre-installed.
 
 You can also see the [full changes in PR #18929](https://github.com/gatsbyjs/gatsby/pull/18928/files) for an overview of the changes you have to make to get MDX working.
 
@@ -34,58 +35,31 @@ npm install --save gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
 In `gatsby-config.js`, replace `gatsby-transformer-remark` with `gatsby-plugin-mdx`, along with the following changes:
 
 ```diff:title=gatsby-config.js
-- {
+  {
 -  resolve: `gatsby-transformer-remark`,
--  options: {
--    plugins: [
--      {
--        resolve: `gatsby-remark-images`,
--        options: {
--          maxWidth: 590,
--        },
--      },
--      {
--        resolve: `gatsby-remark-responsive-iframe`,
--        options: {
--          wrapperStyle: `margin-bottom: 1.0725rem`,
--        },
--      },
--      `gatsby-remark-prismjs`,
--      `gatsby-remark-copy-linked-files`,
--      `gatsby-remark-smartypants`,
--    ],
--  },
-- },
-
-+ {
 +  resolve: `gatsby-plugin-mdx`,
-+  options: {
+   options: {
 +    extensions: [`.mdx`, `.md`],
+-    plugins: [
 +    gatsbyRemarkPlugins: [
-+      {
-+        resolve: `gatsby-remark-images`,
-+        options: {
-+          maxWidth: 590,
-+        },
-+      },
-+      {
-+        resolve: `gatsby-remark-responsive-iframe`,
-+        options: {
-+          wrapperStyle: `margin-bottom: 1.0725rem`,
-+        },
-+      },
-+      {
-+        resolve: `gatsby-remark-prismjs`,
-+      },
-+      {
-+        resolve: `gatsby-remark-copy-linked-files`,
-+      },
-+      {
-+        resolve: `gatsby-remark-smartypants`,
-+      },
-+    ],
-+  },
-+ },
+       {
+         resolve: `gatsby-remark-images`,
+         options: {
+           maxWidth: 590,
+         },
+       },
+       {
+         resolve: `gatsby-remark-responsive-iframe`,
+         options: {
+           wrapperStyle: `margin-bottom: 1.0725rem`,
+         },
+       },
+       `gatsby-remark-prismjs`,
+       `gatsby-remark-copy-linked-files`,
+       `gatsby-remark-smartypants`,
+     ],
+   },
+  },
 ```
 
 Then, add some options to `gatsby-plugin-feed`. This will allow the the RSS feed of the site to parse MDX.
