@@ -2,7 +2,7 @@
 title: Creating a Source Plugin
 ---
 
-Source plugins are essentially out of the box integrations between Gatsby and various third-party systems. 
+Source plugins are essentially out of the box integrations between Gatsby and various third-party systems.
 
 These systems can be CMSs like Contentful or Wordpress, other cloud services like Lever and Strava, or your local filesystem -- literally anything that has an API. Currently, Gatsby has [over 300 source plugins](/plugins/?=gatsby-source).
 
@@ -12,7 +12,7 @@ Once a source plugin brings data into Gatsby's system, it can be transformed fur
 
 At a high-level, a source plugin:
 
-- Ensure local data is synced with its source and 100% accurate. 
+- Ensure local data is synced with its source and 100% accurate.
 - Create nodes with accurate media types, human meaningful types, and accurate
   contentDigests.
 - Link nodes & create relationships between them
@@ -22,7 +22,7 @@ At a high-level, a source plugin:
 
 A source plugin is a normal NPM package. It has a package.json with optional
 dependencies as well as a `gatsby-node.js` where you implement Gatsby's Node.js
-APIs. 
+APIs.
 
 Gatsby's minimum supported Node.js version is Node 8 and as it's common to want to use more modern Node.js and JavaScript syntax, many plugins write code in a
 source directory and compile the code. All plugins maintained in the Gatsby repo
@@ -147,8 +147,8 @@ When creating fields linking to an array of nodes, if the array of IDs are all o
 #### Further specification
 
 See
-  [_Node Link_](/docs/api-specification/) in the API specification concepts
-  section for more info.
+[_Node Link_](/docs/api-specification/) in the API specification concepts
+section for more info.
 
 ### Improve plugin developer experience by enabling faster sync
 
@@ -157,4 +157,4 @@ One tip to improve the development experience of using a plugin is to reduce the
 - **Add event-based sync**. Some data sources keep event logs and are able to return a list of objects modified since a given time. If you're building a source plugin, you can store
   the last time you fetched data using
   [`setPluginStatus`](/docs/actions/#setPluginStatus) and then only sync down nodes that have been modified since that time. [gatsby-source-contentful](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful) is an example of a source plugin that does this.
-- **Proactively fetch updates**. One challenge when developing locally is that a developer might make modifications in a remote data source, like a CMS, and then want to see how it looks in the local environment. Typically they will have to restart the `gatsby develop` server to see changes. This can be avoided if your source plugin knows to proactively fetch updates from the remote server. For example,`gatsby-source-sanity` ([source](https://github.com/sanity-io/gatsby-source-sanity)), listens to changes to Sanity content when `watchMode` is enabled and pulls them into the Gatsby develop server. 
+- **Proactively fetch updates**. One challenge when developing locally is that a developer might make modifications in a remote data source, like a CMS, and then want to see how it looks in the local environment. Typically they will have to restart the `gatsby develop` server to see changes. This can be avoided if your source plugin knows to proactively fetch updates from the remote server. For example,`gatsby-source-sanity` ([source](https://github.com/sanity-io/gatsby-source-sanity)), listens to changes to Sanity content when `watchMode` is enabled and pulls them into the Gatsby develop server.
