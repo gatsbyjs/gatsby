@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "gatsby-core-utils": "^1.0.17",
+    "gatsby-core-utils": "^1.0.18",
     "puppeteer": "0.13.0",
     "tar": "^4.4.13"
   },
