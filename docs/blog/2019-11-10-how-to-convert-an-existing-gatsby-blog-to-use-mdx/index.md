@@ -17,7 +17,6 @@ With MDX, you can import React components and declare them alongside regular mar
 
 ## Adding MDX to Gatsby Starter Blog
 
-It can be a big tricky to add MDX to an existing blog. The following 5 steps will cover how to install and configure MDX to [Gatsby's blog starter](https://github.com/gatsbyjs/gatsby-starter-blog/tree/master), which as of today does not have MDX pre-installed.
 
 It can be a big tricky to add MDX to an existing blog. The following 5 steps will cover how to install and configure MDX to [Gatsby's blog starter](https://github.com/gatsbyjs/gatsby-starter-blog/tree/master), which as of [today's version](https://github.com/gatsbyjs/gatsby-starter-blog/tree/8852c1e51651b902f19706ff2ca9f60dabc25709), does not have MDX pre-installed.
 
