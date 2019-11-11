@@ -1,5 +1,6 @@
 const { parse, Kind: GraphQLASTNodeKind } = require(`graphql`)
 const { isGatsbyType } = require(`./type-builders`)
+const { inferExtensionName, dontInferExtensionName } = require(`../extensions`)
 const report = require(`gatsby-cli/lib/reporter`)
 
 const isASTDocument = typeOrTypeDef =>
@@ -57,7 +58,7 @@ const typesWithoutInference = (typeNames = [], typeOrTypeDef) => {
       if (!def.directives) return
 
       def.directives.forEach(directive => {
-        if (directive.name.value === `dontInfer` && def.name.value) {
+        if (directive.name.value === dontInferExtensionName && def.name.value) {
           typeNames.push(def.name.value)
         }
       })
@@ -66,7 +67,11 @@ const typesWithoutInference = (typeNames = [], typeOrTypeDef) => {
   }
   if (isGatsbyType(typeOrTypeDef) && typeOrTypeDef.config) {
     const { extensions = {}, name } = typeOrTypeDef.config
-    if (name && (extensions.dontInfer || extensions.infer === false)) {
+    if (
+      name &&
+      (extensions[dontInferExtensionName] ||
+        extensions[inferExtensionName] === false)
+    ) {
       typeNames.push(name)
     }
   }
