@@ -220,7 +220,7 @@ by running `npm test -- -u`.
 If you are using TypeScript, you need to make two changes to your
 config.
 
-Update the transform in `jest.config.js` to run `jest-preprocess` on files in your project's root directory. 
+Update the transform in `jest.config.js` to run `jest-preprocess` on files in your project's root directory.
 
 **Note:** `<rootDir>` is replaced by Jest with the root directory of the project. Don't change it.
 
