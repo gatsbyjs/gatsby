@@ -10442,10 +10442,10 @@ googleapis-common@^3.1.0:
     url-template "^2.0.8"
     uuid "^3.3.2"
 
-googleapis@^44.0.0:
-  version "44.0.0"
-  resolved "https://registry.yarnpkg.com/googleapis/-/googleapis-44.0.0.tgz#e78dc5dee734225a82136616c536fa97d4e2d12f"
-  integrity sha512-xfToYX/Z7zkGJnMjA2FTRZGqc3W+3WjU7KH6jh6+GvQBxEofZjEcfDmy+h+yZKeky7mWBT35LdRr1MM2jXYnyA==
+googleapis@^45.0.0:
+  version "45.0.0"
+  resolved "https://registry.yarnpkg.com/googleapis/-/googleapis-45.0.0.tgz#27917682f1eee9502164384ceacdc08a17ba9ffb"
+  integrity sha512-v5+4Cw+MnG3z9FRNTdOCcOWBvzhp0zcbapI3D1E1ndykIRA7tE8oflSBRyyVpX6BDhRGSqNu2lU8G15Fe+Ih4g==
   dependencies:
     google-auth-library "^5.2.0"
     googleapis-common "^3.1.0"
@@ -10697,24 +10697,24 @@ gud@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/gud/-/gud-1.0.0.tgz#a489581b17e6a70beca9abe3ae57de7a499852c0"
 
-guess-ga@^0.4.11:
-  version "0.4.11"
-  resolved "https://registry.yarnpkg.com/guess-ga/-/guess-ga-0.4.11.tgz#cc74f4f4141528d1d4815304c46ec2b57504846c"
-  integrity sha512-60pSHXF1XebrFJZnDSwP+5qEUrLCiUHpcq5CvGUCNsfx5HdarIdFi+j4N3JaNFH8AyOmsgS2k6iu8Ib9/lgmkQ==
+guess-ga@^0.4.12:
+  version "0.4.12"
+  resolved "https://registry.yarnpkg.com/guess-ga/-/guess-ga-0.4.12.tgz#0695d4e1162301ac70d605fefece304da6a3088d"
+  integrity sha512-+G2ezp175mooyrr9oV9WJDykf4vq4O4RuOSsg/fO20fCe94Zwn/n0EGCOuDpLguV4aA7JIUD1DvfvzQ8z3fmJw==
   dependencies:
-    googleapis "^44.0.0"
+    googleapis "^45.0.0"
 
-guess-webpack@~0.4.11:
-  version "0.4.11"
-  resolved "https://registry.yarnpkg.com/guess-webpack/-/guess-webpack-0.4.11.tgz#a6d5e6b8ff3dcf9a51e54d4248bbaaa675680cbe"
-  integrity sha512-DbrytcAgSUK8mm46QYQ6T8yvXOQL3Gv2T7j5bJIwbhKkTOBWtZRRcKSiStzf7wiB14tnsJHV3+uzd5sL71aoDQ==
+guess-webpack@~0.4.12:
+  version "0.4.12"
+  resolved "https://registry.yarnpkg.com/guess-webpack/-/guess-webpack-0.4.12.tgz#6f2fdf0d566d64a1732352f0278d94e707e5b307"
+  integrity sha512-mMyKju3tQgUXI+NFlMu9K2AowfTQ+Gu5Dta3wB4kCkZZZKFPC4Kgr21ToNPCHMaPdWMLuics7AZoYI4T6/F/lQ==
   dependencies:
     chalk "^2.4.2"
     copy-webpack-plugin "^5.0.0"
     flat-cache "^2.0.0"
     google-oauth2-node "0.0.3"
-    googleapis "^44.0.0"
-    guess-ga "^0.4.11"
+    googleapis "^45.0.0"
+    guess-ga "^0.4.12"
     lodash.template "^4.4.0"
     rollup "^1.0.0"
     rollup-plugin-hypothetical "^2.1.0"
