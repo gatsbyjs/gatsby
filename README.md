@@ -17,9 +17,6 @@
   Gatsby is a free and open source framework based on React that helps developers build blazing fast websites and apps
 </p>
 <p align="center">
-  <a href="https://github.com/gatsbyjs/gatsby/blob/master/LICENSE">
-    <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="Gatsby is released under the MIT license." />
-  </a>
   <a href="https://circleci.com/gh/gatsbyjs/gatsby">
     <img src="https://circleci.com/gh/gatsbyjs/gatsby.svg?style=shield" alt="Current CircleCI build status." />
   </a>
