@@ -61,6 +61,38 @@ const matchPathRouter = (matchPaths, options) => (req, res, next) => {
   return next()
 }
 
+const readRedirects = async program => {
+  const filePath = path.join(program.directory, `.cache`, `redirects.json`)
+  let rawJSON = `[]`
+  try {
+    rawJSON = await fs.readFile(filePath)
+  } catch (error) {
+    report.warn(error)
+    report.warn(
+      `Could not read ${chalk.bold(`redirects.json`)} from the .cache directory`
+    )
+  }
+  const listOfRedirects = JSON.parse(rawJSON)
+
+  // Return object mapping old -> new
+  // e.g. { old: { toPath: 'new', isPermanent: false }}
+  return listOfRedirects.reduce(function(result, item, index, array) {
+    const { fromPath, toPath, isPermanent } = item
+    result[fromPath] = { toPath, isPermanent }
+    return result
+  }, {})
+}
+
+const redirectRouter = (redirects, options) => (req, res, next) => {
+  const { url } = req
+  const redirect = redirects[url]
+  if (!redirect) return next()
+
+  const { toPath, isPermanent } = redirect
+  const statusCode = isPermanent ? 301 : 302
+  return res.redirect(statusCode, toPath)
+}
+
 module.exports = async program => {
   telemetry.trackCli(`SERVE_START`)
   telemetry.startBackgroundUpdate()
@@ -86,8 +118,13 @@ module.exports = async program => {
 
   router.use(compression())
   router.use(express.static(`public`))
+
   const matchPaths = await readMatchPaths(program)
   router.use(matchPathRouter(matchPaths, { root }))
+
+  const redirects = await readRedirects(program)
+  router.use(redirectRouter(redirects, { root }))
+
   router.use((req, res, next) => {
     if (req.accepts(`html`)) {
       return res.status(404).sendFile(`404.html`, { root })
