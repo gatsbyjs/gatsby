@@ -4343,9 +4343,9 @@
     - CMS:Netlify
     - Styling:PostCSS
   features:
-    - Support Tag
+    - Support tags
     - Easily change the theme color
     - Post thumbnails in the homepage
     - Built with PostCSS
-    - Made for image-centeric portfolios
+    - Made for image-centric portfolios
     - Based on London for Gatsby
