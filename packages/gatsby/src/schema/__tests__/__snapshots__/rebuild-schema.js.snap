@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`build and update schema for other types applies automatic extensions to inferred fields 1`] = `
+exports[`build and update individual types applies automatic extensions to inferred fields 1`] = `
 "type NewType implements Node {
   id: ID!
   parent: Node
@@ -31,7 +31,7 @@ exports[`build and update schema for other types applies automatic extensions to
 }"
 `;
 
-exports[`build and update schema for other types applies automatic extensions to inferred fields 2`] = `
+exports[`build and update individual types applies automatic extensions to inferred fields 2`] = `
 "type NewTypeNested {
   date(
     \\"\\"\\"
@@ -58,7 +58,7 @@ exports[`build and update schema for other types applies automatic extensions to
 }"
 `;
 
-exports[`build and update schema for other types applies automatic extensions to inferred fields 3`] = `
+exports[`build and update individual types applies automatic extensions to inferred fields 3`] = `
 "type NewTypeNestedNested {
   date(
     \\"\\"\\"
@@ -84,7 +84,7 @@ exports[`build and update schema for other types applies automatic extensions to
 }"
 `;
 
-exports[`build and update schema for other types conflict reporting should remove conflicting fields and report about conflict 2`] = `
+exports[`build and update individual types conflict reporting should remove conflicting fields and report about conflict 2`] = `
 [MockFunction] {
   "calls": Array [
     Array [
@@ -106,7 +106,7 @@ See https://www.gatsbyjs.org/docs/actions/#createTypes",
 }
 `;
 
-exports[`build and update schema for other types conflict reporting should remove conflicting fields and report about conflict 3`] = `
+exports[`build and update individual types conflict reporting should remove conflicting fields and report about conflict 3`] = `
 [MockFunction] {
   "calls": Array [
     Array [
@@ -137,7 +137,7 @@ exports[`build and update schema for other types conflict reporting should remov
 }
 `;
 
-exports[`build and update schema for other types creates derived types 8`] = `
+exports[`build and update individual types creates derived types 8`] = `
 "enum BarFieldsEnum {
   id
   parent___id
