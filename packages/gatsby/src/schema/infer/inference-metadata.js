@@ -243,10 +243,10 @@ const deleteNode = (metadata, node) => updateTypeMetadata(metadata, `del`, node)
 const addNodes = (metadata, nodes) => nodes.reduce(addNode, metadata)
 
 const isMixedNumber = ({ float, int }) =>
-  float && float.total > 0 && (int && int.total > 0)
+  float && float.total > 0 && int && int.total > 0
 
 const isMixOfDateAndString = ({ date, string }) =>
-  date && date.total > 0 && (string && string.total > 0)
+  date && date.total > 0 && string && string.total > 0
 
 const hasOnlyEmptyStrings = ({ string }) =>
   string && string.empty === string.total

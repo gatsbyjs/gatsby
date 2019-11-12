@@ -915,7 +915,10 @@ describe(`Type conflicts`, () => {
   })
 
   it(`reports on mixed numbers and numeric strings in arrays`, () => {
-    const nodes = [{ id: `1`, numeric: [1, 2] }, { id: `2`, numeric: [4, `5`] }]
+    const nodes = [
+      { id: `1`, numeric: [1, 2] },
+      { id: `2`, numeric: [4, `5`] },
+    ]
 
     const conflicts = getExampleValueConflicts({
       nodes,
