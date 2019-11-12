@@ -13,7 +13,7 @@ export const PRODUCT_METAFIELD = `ProductMetafield`
 export const VARIANT_PRESENTMENT_PRICE = `VariantPresentmentPrice`
 export const SHOP_POLICY = `ShopPolicy`
 export const PAGE = `Page`
-export const SHOP = `Shop`
+export const SHOP = `shop`
 export const CONTENT = `content`
 
 export const NODE_TO_ENDPOINT_MAPPING = {
