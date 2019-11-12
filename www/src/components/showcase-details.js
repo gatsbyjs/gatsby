@@ -201,9 +201,10 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
             >
               <div
                 sx={{
-                  margin: `25px 25px 0 0`,
+                  mt: 6,
+                  mr: 6,
                   [mediaQueries.md]: {
-                    margin: `25px`,
+                    m: 6,
                   },
                 }}
               >
@@ -264,9 +265,10 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
             >
               <div
                 sx={{
-                  margin: `25px 0 0 25px`,
+                  mt: 6,
+                  ml: 6,
                   [mediaQueries.md]: {
-                    margin: `25px`,
+                    m: 6,
                   },
                 }}
               >
