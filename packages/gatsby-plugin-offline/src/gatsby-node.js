@@ -150,7 +150,7 @@ exports.onPostBuild = (
     skipWaiting: true,
     clientsClaim: true,
   }
-  
+
   const combinedOptions = _.merge(options, workboxConfig)
 
   const idbKeyvalFile = `idb-keyval-iife.min.js`
