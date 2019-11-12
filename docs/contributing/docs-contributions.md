@@ -95,6 +95,13 @@ After going through the [development setup instructions](/contributing/setting-u
 - View the changes in your browser at `http://localhost:8000`.
 - Commit your changes and [submit a pull request](/contributing/how-to-open-a-pull-request/)!
 
+## Changing headers
+
+It can be necessary to change a heading within the docs. It's important to note that headers automatically generate links with a corresponding URL that can be deep-linked from elsewhere on the site. When changing a header, be sure to point all corresponding links to the new URL. Here are some workflow tips:
+
+- Determine the URL you're looking for. `Changing headers` is linked with a URL ending in `changing-headers`, `Docs renaming instructions` becomes `docs-renaming-instructions`, etc.
+- Update all instances of the old URL to your new one. [Find and replace](https://code.visualstudio.com/docs/editor/codebasics#_search-across-files) in VS Code can help. Check that the context of the original link reference still makes sense with the new one.
+
 ## Docs renaming instructions
 
 Sometimes it makes sense to move or rename a file as part of docs restructuring or for content clarification. While we recommend keeping URLs consistent as often as possible, here are some tips to minimize errors and keep the docs in a good state:

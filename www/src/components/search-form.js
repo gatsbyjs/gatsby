@@ -406,7 +406,11 @@ class SearchForm extends Component {
             position: `relative`,
             width: [`100%`, `100%`, `100%`, focussed ? `14rem` : 24, `100%`],
             transition: t =>
-              `width ${t.transition.speed.default} ${t.transition.curve.default}, padding ${t.transition.speed.default} ${t.transition.curve.default}`,
+              `width ${t.transition.speed.default} ${
+                t.transition.curve.default
+              }, padding ${t.transition.speed.default} ${
+                t.transition.curve.default
+              }`,
           }}
         >
           <input
@@ -423,7 +427,11 @@ class SearchForm extends Component {
               pl: [7, null, null, focussed ? 7 : 24, 7],
               width: [`100%`, null, null, focussed ? `14rem` : 24, `100%`],
               transition: t =>
-                `width ${t.transition.speed.default} ${t.transition.curve.default}, padding ${t.transition.speed.default} ${t.transition.curve.default}`,
+                `width ${t.transition.speed.default} ${
+                  t.transition.curve.default
+                }, padding ${t.transition.speed.default} ${
+                  t.transition.curve.default
+                }`,
             }}
             type="search"
             placeholder={`Search gatsbyjs.org`}

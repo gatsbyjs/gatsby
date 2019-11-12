@@ -27,6 +27,7 @@ const {
   ImageFormatType,
   ImageCropFocusType,
   DuotoneGradientType,
+  PotraceTurnPolicyType,
   PotraceType,
   ImageFitType,
 } = require(`./types`)
@@ -146,6 +147,15 @@ const fixedNodeType = ({
         defaultValue: false,
       },
       quality: {
+        type: GraphQLInt,
+      },
+      jpegQuality: {
+        type: GraphQLInt,
+      },
+      pngQuality: {
+        type: GraphQLInt,
+      },
+      webpQuality: {
         type: GraphQLInt,
       },
       toFormat: {
@@ -296,6 +306,15 @@ const fluidNodeType = ({
       quality: {
         type: GraphQLInt,
       },
+      jpegQuality: {
+        type: GraphQLInt,
+      },
+      pngQuality: {
+        type: GraphQLInt,
+      },
+      webpQuality: {
+        type: GraphQLInt,
+      },
       toFormat: {
         type: ImageFormatType,
         defaultValue: ``,
@@ -400,7 +419,9 @@ const createFields = ({
         const dimensions = imageSize.sync(
           toArray(fs.readFileSync(details.absolutePath))
         )
-        const imageName = `${details.name}-${image.internal.contentDigest}${details.ext}`
+        const imageName = `${details.name}-${image.internal.contentDigest}${
+          details.ext
+        }`
         const publicPath = path.join(
           process.cwd(),
           `public`,
@@ -412,7 +433,9 @@ const createFields = ({
           fsExtra.copy(details.absolutePath, publicPath, err => {
             if (err) {
               console.error(
-                `error copying file from ${details.absolutePath} to ${publicPath}`,
+                `error copying file from ${
+                  details.absolutePath
+                } to ${publicPath}`,
                 err
               )
             }
@@ -454,6 +477,15 @@ const createFields = ({
           type: GraphQLInt,
         },
         quality: {
+          type: GraphQLInt,
+        },
+        jpegQuality: {
+          type: GraphQLInt,
+        },
+        pngQuality: {
+          type: GraphQLInt,
+        },
+        webpQuality: {
           type: GraphQLInt,
         },
         jpegProgressive: {
@@ -567,6 +599,14 @@ module.exports = ({
   })
 
   if (createTypes) {
-    createTypes([imageSharpType])
+    createTypes([
+      ImageFormatType,
+      ImageFitType,
+      ImageCropFocusType,
+      DuotoneGradientType,
+      PotraceTurnPolicyType,
+      PotraceType,
+      imageSharpType,
+    ])
   }
 }

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.1.16...gatsby-theme-blog@1.1.17) (2019-11-10)
+
+### Bug Fixes
+
+- **gatsby-theme-blog:** fix avatar squishing on mobile ([#19172](https://github.com/gatsbyjs/gatsby/issues/19172)) ([#19236](https://github.com/gatsbyjs/gatsby/issues/19236)) ([77d25da](https://github.com/gatsbyjs/gatsby/commit/77d25da))
+
 ## [1.1.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.1.15...gatsby-theme-blog@1.1.16) (2019-11-06)
 
 **Note:** Version bump only for package gatsby-theme-blog

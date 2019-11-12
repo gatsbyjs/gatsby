@@ -70,7 +70,11 @@ const addInferredFieldsImpl = ({
         .map(field => `\`${field.unsanitizedKey}\``)
         .join(`, `)
       report.warn(
-        `Multiple node fields resolve to the same GraphQL field \`${prefix}.${field.key}\` - [${possibleFieldsNames}]. Gatsby will use \`${field.unsanitizedKey}\`.`
+        `Multiple node fields resolve to the same GraphQL field \`${prefix}.${
+          field.key
+        }\` - [${possibleFieldsNames}]. Gatsby will use \`${
+          field.unsanitizedKey
+        }\`.`
       )
       selectedField = field
     } else {
@@ -350,15 +354,22 @@ const getSimpleFieldConfig = ({
           // "addDefaultResolvers: true" only makes sense for
           // pre-existing types.
           if (!config.shouldAddFields) return null
-          fieldTypeComposer = ObjectTypeComposer.create(
-            createTypeName(selector),
-            schemaComposer
-          )
-          fieldTypeComposer.setExtension(`createdFrom`, `inference`)
-          fieldTypeComposer.setExtension(
-            `plugin`,
-            typeComposer.getExtension(`plugin`)
-          )
+
+          const typeName = createTypeName(selector)
+          if (schemaComposer.has(typeName)) {
+            // Type could have been already created via schema customization
+            fieldTypeComposer = schemaComposer.getOTC(typeName)
+          } else {
+            fieldTypeComposer = ObjectTypeComposer.create(
+              typeName,
+              schemaComposer
+            )
+            fieldTypeComposer.setExtension(`createdFrom`, `inference`)
+            fieldTypeComposer.setExtension(
+              `plugin`,
+              typeComposer.getExtension(`plugin`)
+            )
+          }
         }
 
         // Inference config options are either explicitly defined on a type

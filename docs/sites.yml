@@ -8334,3 +8334,72 @@
   built_by: Peter Brady
   built_by_url: https://www.peterbrady.co.uk
   featured: false
+- title: Mieke Frouws
+  url: https://www.miekefrouws.nl
+  main_url: https://www.miekefrouws.nl
+  description: >
+    Mieke Frouws is a freelance primary school theater teacher based in the Netherlands.
+  categories:
+    - Freelance
+    - Education
+  built_by: Laurens Kling
+  built_by_url: https://www.goedideemedia.nl
+  featured: false
+- title: The Fabulous Lifestyles 不藏私旅行煮藝
+  url: https://thefabulouslifestyles.com/
+  main_url: https://thefabulouslifestyles.com/
+  description: >
+    The Fabulous Lifestyles features content about travel and food. It offers practical travel advice that covers trip planning, logistics, and reviews on destination, resort & hotel...etc. Besides travelling, there are step-by-step homemade gourmet recipes that will appeal to everyone's taste buds.
+  categories:
+    - Blog
+    - Food
+    - Travel
+  built_by: Kevin C Chen
+  built_by_url: https://www.linkedin.com/in/kevincychen/
+- title: Salexa - Estetica Venezolana
+  url: https://peluqueriavenezolana.cl/
+  main_url: https://peluqueriavenezolana.cl/
+  source_url: https://github.com/enbonnet/salexa-front
+  description: >
+    Venezuelan beauty and hairdressing salon in Chile
+  categories:
+    - Marketing
+    - Business
+  built_by: Ender Bonnet
+  built_by_url: https://enbonnet.me/
+- title: Binaria
+  description: >
+    Digital product connecting technics & creativity.
+  main_url: "https://binaria.com/en/"
+  url: "https://binaria.com/en/"
+  categories:
+    - Web Development
+    - Agency
+    - Technology
+    - App
+    - Consulting
+    - User Experience
+  built_by: Binaria
+  built_by_url: "https://binaria.com/"
+- title: Wealthsimple
+  url: "https://www.wealthsimple.com/"
+  main_url: "https://www.wealthsimple.com/en-us/"
+  description: >
+    The simple way to grow your money like the world's most sophisticated investors. Zero-maintenance portfolios, expert advisors and low fees.
+  categories:
+    - App
+    - Business
+    - Finance
+  featured: false
+- title: To Be Created
+  description: >
+    tbc is a London based styling agency that champions a modernised minimal aesthetic for both personal clients and brands.
+  main_url: "https://to-be-created.com"
+  url: "https://to-be-created.com"
+  categories:
+    - Web Development
+    - Agency
+    - Portfolio
+    - Freelance
+  built_by: Sam Goddard
+  built_by_url: "https://samgoddard.dev/"
