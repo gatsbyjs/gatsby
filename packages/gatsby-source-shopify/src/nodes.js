@@ -12,6 +12,8 @@ import {
   PRODUCT_OPTION,
   PRODUCT_VARIANT,
   PRODUCT_METAFIELD,
+  VARIANT_PRESENTMENT_PRICE,
+  SHOP,
   SHOP_POLICY,
   PAGE,
 } from "./constants"
@@ -157,6 +159,11 @@ export const ProductVariantNode = imageArgs =>
 
     return node
   })
+
+export const VariantPresentmentPriceNode = () =>
+  createNodeFactory(VARIANT_PRESENTMENT_PRICE)
+
+export const ShopNode = createNodeFactory(SHOP)
 
 export const ShopPolicyNode = createNodeFactory(SHOP_POLICY)
 

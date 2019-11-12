@@ -189,6 +189,16 @@ export const PRODUCTS_QUERY = `
                   title
                   weight
                   weightUnit
+                  presentmentPrices(first: 10) {
+                    edges {
+                      node {
+                        price {
+                          amount
+                          currencyCode
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -220,6 +230,17 @@ export const SHOP_POLICIES_QUERY = `
         id
         title
         url
+      }
+    }
+  }
+`
+
+export const SHOP_QUERY = `
+  query GetShop {
+    shop {
+      name
+      paymentSettings {
+        enabledPresentmentCurrencies
       }
     }
   }

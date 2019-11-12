@@ -5,6 +5,7 @@ import { printGraphQLError, queryAll, queryOnce } from "./lib"
 import { createClient } from "./create-client"
 
 import {
+  ShopNode,
   ArticleNode,
   BlogNode,
   CollectionNode,
@@ -13,6 +14,7 @@ import {
   ProductOptionNode,
   ProductVariantNode,
   ProductMetafieldNode,
+  VariantPresentmentPriceNode,
   ShopPolicyNode,
   PageNode,
 } from "./nodes"
@@ -28,6 +30,7 @@ import {
   PAGE,
 } from "./constants"
 import {
+  SHOP_QUERY,
   ARTICLES_QUERY,
   BLOGS_QUERY,
   COLLECTIONS_QUERY,
@@ -85,9 +88,13 @@ export const sourceNodes = async (
         createNodes(COLLECTION, COLLECTIONS_QUERY, CollectionNode, args),
         createNodes(PRODUCT, PRODUCTS_QUERY, ProductNode, args, async x => {
           if (x.variants)
-            await forEach(x.variants.edges, async edge =>
-              createNode(await ProductVariantNode(imageArgs)(edge.node))
-            )
+            await forEach(x.variants.edges, async edge => {
+              await forEach(edge.node.presentmentPrices.edges, async edge =>
+                createNode(await VariantPresentmentPriceNode()(edge.node))
+              )
+
+              return createNode(await ProductVariantNode(imageArgs)(edge.node))
+            })
 
           if (x.metafields)
             await forEach(x.metafields.edges, async edge =>
@@ -99,6 +106,7 @@ export const sourceNodes = async (
               createNode(await ProductOptionNode(imageArgs)(option))
             )
         }),
+        createShop(args),
         createShopPolicies(args),
       ])
     }
@@ -159,6 +167,21 @@ const createNodes = async (
 }
 
 /**
+ * Fetch and create nodes for shop.
+ */
+const createShop = async ({ client, createNode, formatMsg, verbose }) => {
+  // Message printed when fetching is complete.
+  const msg = formatMsg(`fetched and processed ${SHOP} node`)
+
+  if (verbose) console.time(msg)
+  const { shop } = await queryOnce(client, SHOP_QUERY)
+
+  createNode(ShopNode(shop))
+
+  if (verbose) console.timeEnd(msg)
+}
+
+/**
  * Fetch and create nodes for shop policies.
  */
 const createShopPolicies = async ({
@@ -175,7 +198,10 @@ const createShopPolicies = async ({
   Object.entries(policies)
     .filter(([_, policy]) => Boolean(policy))
     .forEach(
-      pipe(([type, policy]) => ShopPolicyNode(policy, { type }), createNode)
+      pipe(
+        ([type, policy]) => ShopPolicyNode(policy, { type }),
+        createNode
+      )
     )
   if (verbose) console.timeEnd(msg)
 }
