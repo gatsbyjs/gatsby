@@ -293,10 +293,10 @@ After parsing a YAML file into data and configuring Gatsby to produce pages with
     - gatsby-node.js
 ```
 
-Running `gatsby develop` in the terminal and opening a browser window to `http://localhost:8000/page1` you'll see a page with content that was sourced from a YAML file used to generate your site.
+Running `gatsby develop` in the terminal and opening a browser window to <http://localhost:8000/page1> you'll see a page with content that was sourced from a YAML file used to generate your site.
 
 To make this work on your existing Gatsby site, you would need to:
 
-- Copy over the `gatsby-node.js` file contents: https://github.com/gatsbyjs/gatsby/examples/using-gatsby-with-json-yaml/gatsby-node.js
-- Create a basic template: https://github.com/gatsbyjs/gatsby/examples/using-gatsby-with-json-yaml/src/templates/basicTemplate.js
-- And grab the YAML file: https://github.com/gatsbyjs/gatsby/examples/using-gatsby-with-json-yaml/content/index.yaml
+- Copy over the `gatsby-node.js` file contents: https://github.com/gatsbyjs/gatsby/blob/master/examples/using-gatsby-with-json-yaml/gatsby-node.js
+- Create a basic template: https://github.com/gatsbyjs/gatsby/blob/master/examples/using-gatsby-with-json-yaml/src/templates/basicTemplate.js
+- And grab the YAML file: https://github.com/gatsbyjs/gatsby/blob/master/examples/using-gatsby-with-json-yaml/content/index.yaml

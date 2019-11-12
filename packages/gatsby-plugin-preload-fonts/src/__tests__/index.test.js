@@ -73,15 +73,18 @@ describe(`prepare`, () => {
 
     fetchRoutes.mockImplementationOnce(() => [`/foo`, `/bar`, `/baz`])
     mockPageRequests({
-      [`/foo`]: [createMockRequest(`/path/to/font.otf`)],
+      [`/foo`]: [
+        createMockRequest(`/path/to/font.otf`),
+        createMockRequest(`https://foo.bar/path/to/font.otf`),
+      ],
       [`/bar`]: [
         createMockRequest(`/path/to/another.ttf`),
-        createMockRequest(`/path/to/a/font.woff`),
+        createMockRequest(`https://foo.bar/path/to/a/font.woff`),
       ],
       [`/baz`]: [
         createMockRequest(`/another/font.woff2`),
         createMockRequest(`/some/external/font.ttf`),
-        createMockRequest(`/another/font.ttf`),
+        createMockRequest(`https://foo.bar/another/font.ttf`),
       ],
     })
 

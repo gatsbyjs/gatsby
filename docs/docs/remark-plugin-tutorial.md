@@ -1,5 +1,5 @@
 ---
-title: "Remark Plugin Tutorial"
+title: Remark Plugin Tutorial
 ---
 
 [`gatsby-transformer-remark`](/packages/gatsby-transformer-remark) empowers developers to translate Markdown into HTML to be consumed via Gatsby's GraphQL API. Blogs and other content based sites can highly benefit from functionality enabled with this plugin. With this plugin, authors of content for the site don't need to worry about how the site is written or structured but can rather focus on writing engaging posts and content!
@@ -170,7 +170,7 @@ When modifying nodes, you'll want to walk the tree and then implement new functi
 
 A node module to help with is [unist-util-visit](https://github.com/syntax-tree/unist-util-visit), a walker for `unist` nodes. For reference, Unist (Unified Syntax Tree) is a standard for Markdown syntax trees and parsers that include well known parsers in the Gatsby world like Remark and MDX.
 
-As an example from `unist-util-visit`'s README file, it allows for an easy interface to visit particular nodes based on a particular type:
+As an example from `unist-util-visit`'s README file, it allows for an interface to visit particular nodes based on a particular type:
 
 ```js
 var remark = require("remark")

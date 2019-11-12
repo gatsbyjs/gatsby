@@ -1,35 +1,39 @@
-import React from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import Link from "gatsby-link"
-import styled from "@emotion/styled"
 
-import { colors, mediaQueries } from "../utils/presets"
-
-const LinkList = styled.ul`
-  margin: 0;
-  display: flex;
-  flex-wrap: wrap;
-  list-style: none;
-  * + * {
-    border-left: 1px solid ${colors.ui.border.subtle};
-  }
-`
-const Li = styled.li`
-  padding: 3px 12px;
-  ${mediaQueries.md} {
-    padding: 0px 6px;
-  }
-  margin: 0;
-`
+import { mediaQueries } from "../gatsby-plugin-theme-ui"
 
 const HorizontalNavList = ({ items = [], slug }) => (
   <nav>
-    <LinkList>
+    <ul
+      sx={{
+        m: 0,
+        display: `flex`,
+        flexWrap: `wrap`,
+        listStyle: `none`,
+        "& * + *": {
+          borderLeftStyle: `solid`,
+          borderLeftWidth: `1px`,
+          borderColor: `ui.border`,
+        },
+      }}
+    >
       {items.map(item => (
-        <Li key={item}>
+        <li
+          sx={{
+            m: 0,
+            padding: `3px 12px`,
+            [mediaQueries.md]: {
+              padding: `0px 6px`,
+            },
+          }}
+          key={item}
+        >
           <Link to={`${slug.slice(0, -1)}#${item.toLowerCase()}`}>{item}</Link>
-        </Li>
+        </li>
       ))}
-    </LinkList>
+    </ul>
   </nav>
 )
 

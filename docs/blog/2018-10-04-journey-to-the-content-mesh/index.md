@@ -13,7 +13,7 @@ Over time, the feature landscape broadened -- key areas like search, analytics, 
 
 ## Modularizing the CMS
 
-Today, a website team running an e-commerce site can store product inventory in [Shopify](https://www.shopify.com/), product listings in [Salsify](https://www.salsify.com/) and reviews in [Bazaarvoice](https://www.bazaarvoice.com/). A team running a paywalled content site can create stories in [Wordpress](https://wordpress.org/), store video in [JWPlayer](https://www.jwplayer.com/), user data in [Auth0](https://auth0.com/), and subscription data in [Recurly](https://recurly.com/).
+Today, a website team running an e-commerce site can store product inventory in [Shopify](https://www.shopify.com/), product listings in [Salsify](https://www.salsify.com/) and reviews in [Bazaarvoice](https://www.bazaarvoice.com/). A team running a paywalled content site can create stories in [WordPress](https://wordpress.org/), store video in [JWPlayer](https://www.jwplayer.com/), user data in [Auth0](https://auth0.com/), and subscription data in [Recurly](https://recurly.com/).
 
 When website teams want to add search, they can turn to [Algolia](https://www.algolia.com/); for payments, [Stripe](http://stripe.com); for analytics, [Segment](https://segment.com/); for A/B testing, [Optimizely](https://www.optimizely.com/); for personalization, [Evergage](https://www.evergage.com/).
 
@@ -53,7 +53,7 @@ Change is being spurred by the confluence of three revolutions in how we create 
 
 These technological changes have made modern web technology both _essential_ for creating fresh, novel, and engaging digital experiences, and _more accessible_ for the enterprise.
 
-Each change primarily affects a different stakeholder --- marketing, development/IT, and the end-user, respectively.
+Each change primarily affects a different stakeholder --- marketing, development/IT, and the end user, respectively.
 
 The key challenge is that without a content mesh, integrating these systems together is a lot of work. Forrester titled one of their [report sections](https://www.tangomodem.com/wp-content/uploads/2017/09/the-rise-of-the-headless-cms.pdf): "Warning: Headless Content Management Is For Do-It-Yourself Shops." But _with_ a content mesh, all of these systems can be brought together in a unified, low-cost, low-defect whole.
 

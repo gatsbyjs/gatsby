@@ -193,6 +193,11 @@ exports.createPages = ({ graphql, actions, reporter }) => {
     toPath: `/docs/sourcing-from-netlify-cms/`,
     isPermanent: true,
   })
+  createRedirect({
+    fromPath: `/docs/sourcing-from-saas-services/`,
+    toPath: `/docs/sourcing-from-hosted-services/`,
+    isPermanent: true,
+  })
 
   createRedirect({
     fromPath: `/starter-showcase/`, // Moved "Starter Showcase" index page from /starter-showcase to /starters
@@ -352,6 +357,48 @@ exports.createPages = ({ graphql, actions, reporter }) => {
   createRedirect({
     fromPath: `/docs/hosting-on-netlify/`,
     toPath: `/docs/deploying-to-netlify/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/querying-with-graphql/`,
+    toPath: `/docs/graphql-concepts/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/introducing-graphiql/`,
+    toPath: `/docs/running-queries-with-graphiql/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/life-and-times-of-a-gatsby-build/`,
+    toPath: `/docs/overview-of-the-gatsby-build-process/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/awesome-gatsby/`,
+    toPath: `/docs/awesome-gatsby-resources/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/building-apps-with-gatsby/`,
+    toPath: `/docs/adding-app-and-website-functionality/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/adding-website-functionality/`,
+    toPath: `/docs/adding-app-and-website-functionality/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/using-fragments/`,
+    toPath: `/docs/using-graphql-fragments/`,
     isPermanent: true,
   })
 

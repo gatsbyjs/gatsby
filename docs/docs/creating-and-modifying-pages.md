@@ -1,5 +1,5 @@
 ---
-title: "Creating and Modifying Pages"
+title: Creating and Modifying Pages
 ---
 
 Gatsby makes it easy to programmatically control your pages.
@@ -12,7 +12,7 @@ Pages can be created in three ways:
 - Plugins can also implement `createPages` and create pages for you
 
 You can also implement the API [`onCreatePage`](/docs/node-apis/#onCreatePage)
-to modify pages created in core or plugins or to create [client-only routes](/docs/building-apps-with-gatsby/).
+to modify pages created in core or plugins or to create [client-only routes](/docs/client-only-routes-and-user-authentication/).
 
 ## Debugging help
 
@@ -169,3 +169,7 @@ export default Page
 ```
 
 Page context is serialized before being passed to pages: This means it can't be used to pass functions into components.
+
+## Creating Client-only routes
+
+In specific cases, you might want to create a site with client-only portions that are gated by authentication. For more on how to achieve this, refer to [client-only routes & user authentication](https://www.gatsbyjs.org/docs/client-only-routes-and-user-authentication/).

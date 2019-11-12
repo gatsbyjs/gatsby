@@ -1,5 +1,4 @@
 const path = require(`path`)
-const git = require(`git-rev-sync`)
 require(`dotenv`).config({
   path: `.env.${process.env.NODE_ENV}`,
 })
@@ -65,6 +64,7 @@ module.exports = {
     "Mdx.frontmatter.author": `AuthorYaml`,
   },
   plugins: [
+    `gatsby-plugin-theme-ui`,
     {
       resolve: `gatsby-source-npm-package-search`,
       options: {
@@ -175,7 +175,23 @@ module.exports = {
             },
           },
           `gatsby-remark-autolink-headers`,
-          `gatsby-remark-prismjs`,
+          {
+            resolve: `gatsby-remark-prismjs`,
+            options: {
+              aliases: {
+                dosini: `ini`,
+                env: `bash`,
+                es6: `js`,
+                flowchart: `none`,
+                gitignore: `none`,
+                gql: `graphql`,
+                htaccess: `apacheconf`,
+                mdx: `markdown`,
+                ml: `fsharp`,
+                styl: `stylus`,
+              },
+            },
+          },
           `gatsby-remark-copy-linked-files`,
           `gatsby-remark-smartypants`,
         ],
@@ -301,16 +317,6 @@ module.exports = {
       resolve: `gatsby-transformer-screenshot`,
       options: {
         nodeTypes: [`StartersYaml`],
-      },
-    },
-    {
-      resolve: `gatsby-plugin-sentry`,
-      options: {
-        dsn: `https://2904ad31b1744c688ae19b627f51a5de@sentry.io/1471074`,
-        release: git.long(),
-        environment: process.env.NODE_ENV,
-        enabled: (() =>
-          [`production`, `stage`].indexOf(process.env.NODE_ENV) !== -1)(),
       },
     },
     // `gatsby-plugin-subfont`,

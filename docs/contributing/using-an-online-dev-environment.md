@@ -48,7 +48,7 @@ In this mode you see the list of file changes on the left and can navigate throu
 
 If you want to run another example you can open a terminal or use an existing one and run the following commands:
 
-```sh
+```shell
 yarn install
 gatsby-dev --set-path-to-repo ../..
 gatsby-dev

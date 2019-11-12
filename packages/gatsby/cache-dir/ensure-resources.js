@@ -21,7 +21,9 @@ class EnsureResources extends React.Component {
       }
     }
 
-    return null
+    return {
+      location: { ...location },
+    }
   }
 
   loadResources(rawPath) {

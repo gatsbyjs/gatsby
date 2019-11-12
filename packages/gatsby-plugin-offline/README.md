@@ -45,11 +45,13 @@ In `gatsby-plugin-offline` 3.x, the following options are available:
     {
       resolve: `gatsby-plugin-offline`,
       options: {
-        appendScript: `src/custom-sw-code.js`,
+        appendScript: require.resolve(`src/custom-sw-code.js`),
       },
     },
   ]
   ```
+
+  <br />
 
   ```javascript:title=src/custom-sw-code.js
   // show a notification after 15 seconds (the notification
@@ -64,6 +66,8 @@ In `gatsby-plugin-offline` 3.x, the following options are available:
   })
   workbox.routing.registerRoute(customRoute)
   ```
+
+- `debug` specifies whether Workbox should show debugging output in the browser console at runtime. When undefined, defaults to showing debug messages on `localhost` only.
 
 - `workboxConfig` allows you to override the default Workbox options - see [Overriding Workbox configuration](#overriding-workbox-configuration). For example:
 

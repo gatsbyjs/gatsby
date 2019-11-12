@@ -1,9 +1,6 @@
-import React from "react"
-import { colors, space } from "../../utils/presets"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import MdInfoOutline from "react-icons/lib/md/info-outline"
-
-const bgDefault = colors.orange[20]
-const bgFeatureAvailability = colors.orange[50]
 
 const renderText = txt => {
   const words = txt.split(` `)
@@ -13,9 +10,9 @@ const renderText = txt => {
       {` `}
       {`${words[words.length - 1]} `}
       <MdInfoOutline
-        css={{
-          height: space[3],
-          marginBottom: space[1],
+        sx={{
+          height: t => t.space[3],
+          mb: 1,
           verticalAlign: `baseline`,
         }}
         alt={`Info Icon`}
@@ -28,20 +25,20 @@ const renderCell = (text, column) => {
   if (column === 0) {
     return (
       <div
-        css={{
-          verticalAlign: `middle`,
-          textAlign: `left`,
+        sx={{
           display: `inline-block`,
-          marginLeft: `auto`,
-          marginRight: `auto`,
+          mx: `auto`,
+          textAlign: `left`,
+          verticalAlign: `middle`,
         }}
       >
         <button
-          css={{
+          sx={{
             background: `none`,
             border: 0,
+            color: `text`,
             cursor: `inherit`,
-            padding: 0,
+            p: 0,
             textAlign: `left`,
           }}
           onClick={e => {
@@ -61,10 +58,12 @@ const renderCell = (text, column) => {
 const getBackground = num => {
   switch (num) {
     case `2`: {
-      return `linear-gradient(90deg, transparent 50%, ${bgDefault} 50%)`
+      return t =>
+        `linear-gradient(90deg, transparent 50%, ${t.colors.orange[20]} 50%)`
     }
     case `1`: {
-      return `linear-gradient(180deg, transparent 50%, ${bgDefault} 50%), linear-gradient(90deg, transparent 50%, ${bgDefault} 50%)`
+      return t =>
+        `linear-gradient(180deg, transparent 50%, ${t.colors.orange[20]} 50%), linear-gradient(90deg, transparent 50%, ${t.colors.orange[20]} 50%)`
     }
     case `3`:
     case `0`:
@@ -77,20 +76,18 @@ const getBackground = num => {
 }
 
 const basicStyling = {
-  height: space[5],
-  width: space[5],
+  height: t => t.space[5],
+  width: t => t.space[5],
   borderRadius: `50%`,
   margin: `0 auto`,
 }
 
 const EvaluationCell = ({ num, style }) => (
   <div
-    css={{
+    sx={{
       ...basicStyling,
       backgroundColor:
-        [`N/A`, `0`, ``].indexOf(num) !== -1
-          ? bgDefault
-          : bgFeatureAvailability,
+        [`N/A`, `0`, ``].indexOf(num) !== -1 ? `orange.20` : `orange.50`,
       backgroundImage: getBackground(num),
       ...(style || {}),
     }}

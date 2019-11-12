@@ -289,4 +289,4 @@ If you haven't already started using [Sanity.io](https://www.sanity.io) as your 
 
 For a quick start with the combo, the peeps at Sanity put up a great starting point at [Combo Example: Company Website](https://github.com/sanity-io/example-company-website-gatsby-sanity-combo)
 
-If you have any questions or want to geek out about all things React hit me up on twitter [@cpt_silverfox](https://twitter.com/cpt_silverfox)
+If you have any questions or want to geek out about all things React hit me up on Twitter [@cpt_silverfox](https://twitter.com/cpt_silverfox)

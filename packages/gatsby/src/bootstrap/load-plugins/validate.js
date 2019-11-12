@@ -4,6 +4,7 @@ const stringSimiliarity = require(`string-similarity`)
 const { version: gatsbyVersion } = require(`gatsby/package.json`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 const resolveModuleExports = require(`../resolve-module-exports`)
+const getLatestAPIs = require(`../../utils/get-latest-apis`)
 
 const getGatsbyUpgradeVersion = entries =>
   entries.reduce((version, entry) => {
@@ -98,23 +99,29 @@ const getErrorContext = (badExports, exportType, currentAPIs, latestAPIs) => {
   }
 }
 
-const handleBadExports = ({ currentAPIs, latestAPIs, badExports }) => {
-  // Output error messages for all bad exports
-  _.toPairs(badExports).forEach(badItem => {
-    const [exportType, entries] = badItem
-    if (entries.length > 0) {
-      const context = getErrorContext(
-        entries,
-        exportType,
-        currentAPIs,
-        latestAPIs
-      )
-      reporter.error({
-        id: `11329`,
-        context,
-      })
-    }
-  })
+const handleBadExports = async ({ currentAPIs, badExports }) => {
+  const hasBadExports = Object.keys(badExports).find(
+    api => badExports[api].length > 0
+  )
+  if (hasBadExports) {
+    const latestAPIs = await getLatestAPIs()
+    // Output error messages for all bad exports
+    _.toPairs(badExports).forEach(badItem => {
+      const [exportType, entries] = badItem
+      if (entries.length > 0) {
+        const context = getErrorContext(
+          entries,
+          exportType,
+          currentAPIs,
+          latestAPIs
+        )
+        reporter.error({
+          id: `11329`,
+          context,
+        })
+      }
+    })
+  }
 }
 
 /**
