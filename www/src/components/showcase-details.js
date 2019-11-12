@@ -7,7 +7,7 @@ import url from "url"
 import Img from "gatsby-image"
 import qs from "qs"
 
-import { space, mediaQueries } from "../gatsby-plugin-theme-ui"
+import { mediaQueries } from "../gatsby-plugin-theme-ui"
 import Layout from "../components/layout"
 import ShareMenu from "../components/share-menu"
 import Button from "../components/button"
@@ -39,22 +39,12 @@ const styles = {
     borderRadius: 1,
     boxShadow: `overlay`,
   },
-  prevNextPermalinkLabel: {
-    color: `textMuted`,
-    fontFamily: `header`,
-    fontWeight: `body`,
-  },
-  prevNextPermalinkImage: {
-    mb: 0,
+  prevNextContainer: {
     mt: 6,
-  },
-  prevNextPermalinkTitle: {
-    color: `gatsby`,
-    display: `block`,
-    position: `relative`,
-  },
-  prevNextPermalinkContainer: {
-    width: `50%`,
+    mr: 6,
+    [mediaQueries.md]: {
+      m: 6,
+    },
   },
   truncate: {
     whiteSpace: `nowrap`,
@@ -62,27 +52,6 @@ const styles = {
     textOverflow: `ellipsis`,
     display: `block`,
     width: `100%`,
-  },
-  prevNextPermalinkArrow: {
-    color: `lilac`,
-    mr: 4,
-    verticalAlign: `sub`,
-    position: `absolute`,
-    left: `-${space[6]}`,
-    top: `50%`,
-    transform: `translateY(-50%)`,
-  },
-  prevNextPermalinkMeta: {
-    mr: 8,
-    display: `flex`,
-    flexDirection: `row`,
-    justifyContent: `flex-end`,
-  },
-  prevNextPermalinkMetaInner: {
-    flexBasis: 540,
-    flexGrow: 0,
-    flexShrink: 1,
-    minWidth: 0,
   },
 }
 
@@ -199,15 +168,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 },
               }}
             >
-              <div
-                sx={{
-                  mt: 6,
-                  mr: 6,
-                  [mediaQueries.md]: {
-                    m: 6,
-                  },
-                }}
-              >
+              <div sx={styles.prevNextContainer}>
                 <Img
                   key={nextSite.id}
                   sx={styles.prevNextImage}
@@ -263,15 +224,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 },
               }}
             >
-              <div
-                sx={{
-                  mt: 6,
-                  ml: 6,
-                  [mediaQueries.md]: {
-                    m: 6,
-                  },
-                }}
-              >
+              <div sx={{ ...styles.prevNextContainer, mr: 0, ml: 6 }}>
                 <Img
                   key={previousSite.id}
                   sx={styles.prevNextImage}
