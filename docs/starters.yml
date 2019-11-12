@@ -4330,6 +4330,25 @@
     - PostCSS
     - Deploy Storybook
     - Documentation
+- url: https://gatsby-lam.vaporwavy.io
+  repo: https://github.com/vaporwavy/gatsby-london-after-midnight
+  description: A custom, image-centric theme for Gatsby. Advanced from the Gatsby starter London.
+  tags:
+    - Blog
+    - Portfolio
+    - Gallery
+    - SEO
+    - Markdown
+    - HTML5UP
+    - CMS:Netlify
+    - Styling:PostCSS
+  features:
+    - Support tags
+    - Easily change the theme color
+    - Post thumbnails in the homepage
+    - Built with PostCSS
+    - Made for image-centric portfolios
+    - Based on London for Gatsby
 - url: https://alipiry-gatsby-starter-typescript.netlify.com/
   repo: https://github.com/alipiry/gatsby-starter-typescript
   description: The default Gatsby starter with TypeScript

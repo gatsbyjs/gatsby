@@ -236,3 +236,9 @@ export const pageQuery = graphql`
   }
 `
 ```
+
+> Note: For now, this only works [if the `.mdx` file exporting the query is placed in
+> `src/pages`](https://github.com/ChristopherBiscardi/gatsby-mdx/issues/187#issuecomment-437161966).
+> Exporting GraphQL queries from `.mdx` files that are used for programmatic page creation in
+> `gatsby-node.js` via `actions.createPage` [is not currently
+> supported](https://github.com/ChristopherBiscardi/gatsby-mdx/issues/187#issuecomment-489005677).
