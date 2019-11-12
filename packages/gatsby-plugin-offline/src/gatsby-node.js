@@ -151,10 +151,7 @@ exports.onPostBuild = (
     clientsClaim: true,
   }
 
-  const combinedOptions = {
-    ...options,
-    ...workboxConfig,
-  }
+  const combinedOptions = _.merge(options, workboxConfig)
 
   const idbKeyvalFile = `idb-keyval-iife.min.js`
   const idbKeyvalSource = require.resolve(`idb-keyval/dist/${idbKeyvalFile}`)
