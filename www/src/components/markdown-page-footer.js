@@ -36,16 +36,13 @@ export default class MarkdownPageFooter extends React.Component {
             {this.props.page &&
               this.props.page.parent &&
               this.props.page.parent.fields &&
-              this.props.page.parent.fields.git &&
-              this.props.page.parent.fields.git.log &&
-              this.props.page.parent.fields.git.log.latest &&
-              this.props.page.parent.fields.git.log.latest.date && (
+              this.props.page.parent.fields.gitLogLatestDate && (
                 <span sx={{ color: `textMuted`, fontSize: 1 }}>
                   Last updated:{` `}
                   <time
-                    dateTime={this.props.page.parent.fields.git.log.latest.date}
+                    dateTime={this.props.page.parent.fields.gitLogLatestDate}
                   >
-                    {this.props.page.parent.fields.git.log.latest.date}
+                    {this.props.page.parent.fields.gitLogLatestDate}
                   </time>
                 </span>
               )}
@@ -62,13 +59,7 @@ export const fragment = graphql`
       ... on File {
         relativePath
         fields {
-          git {
-            log {
-              latest {
-                date(formatString: "MMMM D, YYYY")
-              }
-            }
-          }
+          gitLogLatestDate(formatString: "MMMM D, YYYY")
         }
       }
     }
@@ -78,13 +69,7 @@ export const fragment = graphql`
       ... on File {
         relativePath
         fields {
-          git {
-            log {
-              latest {
-                date(formatString: "MMMM D, YYYY")
-              }
-            }
-          }
+          gitLogLatestDate(formatString: "MMMM D, YYYY")
         }
       }
     }
