@@ -30,6 +30,7 @@ const Bio = () => {
             mr: 2,
             mb: 0,
             width: 48,
+            minWidth: 48,
             borderRadius: 99999,
           })}
         />
@@ -39,6 +40,7 @@ const Bio = () => {
             mr: 2,
             mb: 0,
             width: 48,
+            minWidth: 48,
             borderRadius: 99999,
           })}
           role="presentation"

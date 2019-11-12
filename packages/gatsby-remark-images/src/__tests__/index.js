@@ -622,3 +622,33 @@ describe(`disableBgImageOnAlpha`, () => {
     expect(node.value).toMatchSnapshot()
   })
 })
+
+describe(`disableBgImage`, () => {
+  it(`does not disable background image when disableBgImage === false`, async () => {
+    const imagePath = `images/my-image.jpeg`
+    const content = `![some alt](./${imagePath} "some title")`
+
+    const nodes = await plugin(createPluginOptions(content, imagePath), {
+      disableBgImage: false,
+    })
+    expect(nodes.length).toBe(1)
+
+    const node = nodes.pop()
+    expect(node.type).toBe(`html`)
+    expect(node.value).toMatchSnapshot()
+  })
+
+  it(`disables background image when disableBgImage === true`, async () => {
+    const imagePath = `images/my-image.jpeg`
+    const content = `![some alt](./${imagePath} "some title")`
+
+    const nodes = await plugin(createPluginOptions(content, imagePath), {
+      disableBgImage: true,
+    })
+    expect(nodes.length).toBe(1)
+
+    const node = nodes.pop()
+    expect(node.type).toBe(`html`)
+    expect(node.value).toMatchSnapshot()
+  })
+})

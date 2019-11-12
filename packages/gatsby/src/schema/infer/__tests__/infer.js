@@ -49,7 +49,10 @@ const makeNodes = () => [
     hair: 1,
     date: `1012-11-01`,
     anArray: [1, 2, 3, 4],
-    aNestedArray: [[1, 2, 3, 4], [5, 6, 7, 8]],
+    aNestedArray: [
+      [1, 2, 3, 4],
+      [5, 6, 7, 8],
+    ],
     anObjectArray: [
       { aString: `some string`, aNumber: 2, aBoolean: true },
       { aString: `some string`, aNumber: 2, anArray: [1, 2] },
