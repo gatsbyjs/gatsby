@@ -6,7 +6,7 @@ const _ = require(`lodash`)
 const path = require(`path`)
 const os = require(`os`)
 const watch = require(`./watch`)
-
+const { getVersionInfo } = require(`./utils/version`)
 const argv = require(`yargs`)
   .usage(`Usage: gatsby-dev [options]`)
   .alias(`q`, `quiet`)
@@ -36,7 +36,18 @@ You typically only need to configure this once.`
   .array(`packages`)
   .describe(`packages`, `Explicitly specify packages to copy`)
   .help(`h`)
-  .alias(`h`, `help`).argv
+  .alias(`h`, `help`)
+  .nargs(`v`, 0)
+  .alias(`v`, `version`)
+  .describe(
+    `v`,
+    `Show the version of the Gatsby DEV CLI and the Gatsby package in the current project`
+  ).argv
+
+if (argv.version) {
+  console.log(getVersionInfo())
+  process.exit()
+}
 
 const conf = new Configstore(pkg.name)
 
