@@ -13,8 +13,8 @@ describe(`gatsby-plugin-typescript`, () => {
   })
 
   describe(`onCreateBabelConfig`, () => {
-    it(`sets the correct babel preset`, () => {
-      const actions = { setBabelPreset: jest.fn() }
+    it(`sets the correct babel preset and plugin`, () => {
+      const actions = { setBabelPreset: jest.fn(), setBabelPlugin: jest.fn() }
       const options = {
         isTSX: true,
         jsxPragma: `jsx`,
@@ -24,6 +24,17 @@ describe(`gatsby-plugin-typescript`, () => {
       expect(actions.setBabelPreset).toHaveBeenCalledWith({
         name: expect.stringContaining(path.join(`@babel`, `preset-typescript`)),
         options,
+      })
+      expect(actions.setBabelPlugin).toHaveBeenCalledTimes(2)
+      expect(actions.setBabelPlugin).toHaveBeenCalledWith({
+        name: expect.stringContaining(
+          path.join(`@babel`, `plugin-proposal-optional-chaining`)
+        ),
+      })
+      expect(actions.setBabelPlugin).toHaveBeenCalledWith({
+        name: expect.stringContaining(
+          path.join(`@babel`, `plugin-proposal-nullish-coalescing-operator`)
+        ),
       })
     })
   })
