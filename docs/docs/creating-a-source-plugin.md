@@ -12,11 +12,11 @@ Once a source plugin brings data into Gatsby's system, it can be transformed fur
 
 At a high-level, a source plugin:
 
-- Ensure local data is synced with its source and 100% accurate.
-- Create nodes with accurate media types, human meaningful types, and accurate
+- Ensures local data is synced with its source and is 100% accurate.
+- Creates nodes with accurate media types, human meaningful types, and accurate
   contentDigests.
-- Link nodes & create relationships between them
-- Let Gatsby know when nodes are finished sourcing so it can move on to processing them.
+- Links nodes & creates relationships between them.
+- Lets Gatsby know when nodes are finished sourcing so it can move on to processing them.
 
 ## What does the code look like?
 
