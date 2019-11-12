@@ -8392,3 +8392,25 @@
     - WordPress
   built_by: Pixelmatters
   built_by_url: "https://pixelmatters.com/"
+- title: Wealthsimple
+  url: "https://www.wealthsimple.com/"
+  main_url: "https://www.wealthsimple.com/en-us/"
+  description: >
+    The simple way to grow your money like the world's most sophisticated investors. Zero-maintenance portfolios, expert advisors and low fees.
+  categories:
+    - App
+    - Business
+    - Finance
+  featured: false
+- title: To Be Created
+  description: >
+    tbc is a London based styling agency that champions a modernised minimal aesthetic for both personal clients and brands.
+  main_url: "https://to-be-created.com"
+  url: "https://to-be-created.com"
+  categories:
+    - Web Development
+    - Agency
+    - Portfolio
+    - Freelance
+  built_by: Sam Goddard
+  built_by_url: "https://samgoddard.dev/"

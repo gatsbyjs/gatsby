@@ -90,10 +90,7 @@ actions.deletePage = (page: PageInput) => {
   }
 }
 
-const pascalCase = _.flow(
-  _.camelCase,
-  _.upperFirst
-)
+const pascalCase = _.flow(_.camelCase, _.upperFirst)
 const hasWarnedForPageComponentInvalidContext = new Set()
 const hasWarnedForPageComponentInvalidCasing = new Set()
 const hasErroredBecauseOfNodeValidation = new Set()
@@ -362,8 +359,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   // Only run validation once during builds.
   if (
     !internalPage.component.includes(`/.cache/`) &&
-    (process.env.NODE_ENV === `production` &&
-      !fileOkCache[internalPage.component])
+    process.env.NODE_ENV === `production` &&
+    !fileOkCache[internalPage.component]
   ) {
     const fileName = internalPage.component
     const fileContent = fs.readFileSync(fileName, `utf-8`)

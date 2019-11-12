@@ -348,8 +348,8 @@
             - title: Debugging Async Lifecycles
               link: /docs/debugging-async-lifecycles/
               breadcrumbTitle: Async Lifecycles
-        - title: Adding Website Functionality
-          link: /docs/adding-website-functionality/
+        - title: Adding App and Website Functionality
+          link: /docs/adding-app-and-website-functionality/
           items:
             - title: Linking Between Pages
               link: /docs/linking-between-pages/
@@ -540,6 +540,8 @@
           link: /docs/building-with-components/
         - title: Lifecycle APIs
           link: /docs/gatsby-lifecycle-apis/
+        - title: React Rehydration
+          link: /docs/react-rehydration
         - title: PRPL Pattern
           link: /docs/prpl-pattern/
         - title: GraphQL Concepts
