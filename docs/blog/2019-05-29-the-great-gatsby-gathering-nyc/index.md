@@ -7,7 +7,7 @@ tags:
   - gatsby-inc
 ---
 
-"You belong here" is a core tenet of both Gatsby, the open source project, and Gatsby, the enterprise. Involving the developer community in this adventure to the front end far horizon has been our prime directive ever since launch. In the past four years we have worked alongside a constellation of 1,900+ contributors helping to build Gatsbyjs and created a robust library of useful plugins. All along, Gatsby’s competitive advantage has been the strength of its community and ecosystem: we came this far this fast thanks to users who rolled up their sleeves and pitched in.
+"You belong here" is a core tenet of both Gatsby, the open source project, and Gatsby, the enterprise. Involving the developer community in this adventure to the frontend far horizon has been our prime directive ever since launch. In the past four years we have worked alongside a constellation of 1,900+ contributors helping to build Gatsbyjs and created a robust library of useful plugins. All along, Gatsby’s competitive advantage has been the strength of its community and ecosystem: we came this far this fast thanks to users who rolled up their sleeves and pitched in.
 
 Gatsby Days is one of our ways to say thank you. ([Another is tasty swag for contributors)](https://www.gatsbyjs.org/contributing/contributor-swag/). This series of single-day conferences aims to connect the Gatsby community with Gatsby’s creators, core team and most of all each other. Our first event was held in San Francisco this past December, and our second Gatsby Days gathering just took place in New York on May 6th.
 

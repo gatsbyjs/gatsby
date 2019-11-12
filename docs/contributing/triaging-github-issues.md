@@ -6,7 +6,7 @@ title: Triaging GitHub Issues
 
 On the Gatsby core team, we've found patterns that help us effectively triage incoming GitHub issues, provide answers to the community's questions, identify bugs, and provide contribution opportunities. Triaging issues is a great way to contribute to the Gatsby community and share your knowledge, without necessarily requiring a lot of deep context about the way the Gatsby codebase works.
 
-We want to share these patterns with the broader community, so that if you're interesting in helping us triage, you're able to do so more effectively!
+We want to share these patterns with the broader community, so that if you're interested in helping us triage, you're able to do so more effectively!
 
 In this document we’ll answer common questions, list guidelines and illustrate a decision tree.
 

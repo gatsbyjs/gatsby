@@ -3,6 +3,57 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.8.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.8...gatsby-cli@2.8.9) (2019-11-10)
+
+### Bug Fixes
+
+- **gatsby-cli:** Clean up on unmount in the ink logger ([#19312](https://github.com/gatsbyjs/gatsby/issues/19312)) ([d2fdae0](https://github.com/gatsbyjs/gatsby/commit/d2fdae0))
+
+## [2.8.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.7...gatsby-cli@2.8.8) (2019-10-29)
+
+### Features
+
+- **gatsby:** enable local themes ([#15856](https://github.com/gatsbyjs/gatsby/issues/15856)) ([bd85555](https://github.com/gatsbyjs/gatsby/commit/bd85555))
+
+## [2.8.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.6...gatsby-cli@2.8.7) (2019-10-28)
+
+### Features
+
+- **gatsby-core-utils:** Add isCI and getCIName ([#19039](https://github.com/gatsbyjs/gatsby/issues/19039)) ([d97bee6](https://github.com/gatsbyjs/gatsby/commit/d97bee6))
+
+## [2.8.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.5...gatsby-cli@2.8.6) (2019-10-28)
+
+### Bug Fixes
+
+- **gatsby-cli:** handle git commit failures ([#18839](https://github.com/gatsbyjs/gatsby/issues/18839)) ([8762cb3](https://github.com/gatsbyjs/gatsby/commit/8762cb3))
+- update minor updates in packages ([#18875](https://github.com/gatsbyjs/gatsby/issues/18875)) ([b692879](https://github.com/gatsbyjs/gatsby/commit/b692879))
+
+### Features
+
+- **gatsby-cli:** Add command-line argument for logger ([#18818](https://github.com/gatsbyjs/gatsby/issues/18818)) ([5cb95b5](https://github.com/gatsbyjs/gatsby/commit/5cb95b5))
+
+## [2.8.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.4...gatsby-cli@2.8.5) (2019-10-23)
+
+### Features
+
+- **gatsby:** Ensure status is set to Failed for thrown errors or panicOnBuild in plugins ([#18887](https://github.com/gatsbyjs/gatsby/issues/18887)) ([d7950e1](https://github.com/gatsbyjs/gatsby/commit/d7950e1))
+
+## [2.8.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.3...gatsby-cli@2.8.4) (2019-10-22)
+
+### Bug Fixes
+
+- **gatsby-cli:** properly update chalk color level ([#18533](https://github.com/gatsbyjs/gatsby/issues/18533)) ([800d40c](https://github.com/gatsbyjs/gatsby/commit/800d40c))
+
+## [2.8.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.2...gatsby-cli@2.8.3) (2019-10-18)
+
+### Bug Fixes
+
+- **gatsby-cli:** re-add reporter.\_setStage as no-op function ([#18797](https://github.com/gatsbyjs/gatsby/issues/18797)) ([22f3da7](https://github.com/gatsbyjs/gatsby/commit/22f3da7))
+
+## [2.8.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.1...gatsby-cli@2.8.2) (2019-10-17)
+
+**Note:** Version bump only for package gatsby-cli
+
 ## [2.8.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.0...gatsby-cli@2.8.1) (2019-10-14)
 
 ### Bug Fixes

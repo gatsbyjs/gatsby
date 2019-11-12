@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.18...gatsby-plugin-offline@3.0.19) (2019-11-10)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+## [3.0.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.17...gatsby-plugin-offline@3.0.18) (2019-11-04)
+
+### Bug Fixes
+
+- **gatsby-plugin-offline:** Improve reliability of JS detection ([#18760](https://github.com/gatsbyjs/gatsby/issues/18760)) ([ae6eab3](https://github.com/gatsbyjs/gatsby/commit/ae6eab3))
+
+## [3.0.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.16...gatsby-plugin-offline@3.0.17) (2019-10-28)
+
+### Bug Fixes
+
+- update minor updates in packages ([#18875](https://github.com/gatsbyjs/gatsby/issues/18875)) ([b692879](https://github.com/gatsbyjs/gatsby/commit/b692879))
+
 ## [3.0.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.15...gatsby-plugin-offline@3.0.16) (2019-10-14)
 
 **Note:** Version bump only for package gatsby-plugin-offline

@@ -1,7 +1,7 @@
 const uuidv4 = require(`uuid/v4`)
 const EventStorage = require(`./event-storage`)
 const { cleanPaths } = require(`./error-helpers`)
-const ci = require(`./ci`)
+const { isCI, getCIName } = require(`gatsby-core-utils`)
 const os = require(`os`)
 const { join, sep } = require(`path`)
 const isDocker = require(`is-docker`)
@@ -208,7 +208,7 @@ module.exports = class AnalyticsTracker {
     }
     let enabled = this.store.getConfig(`telemetry.enabled`)
     if (enabled === undefined || enabled === null) {
-      if (!ci.isCI()) {
+      if (!isCI()) {
         showAnalyticsNotification()
       }
       enabled = true
@@ -229,8 +229,8 @@ module.exports = class AnalyticsTracker {
       release: os.release(),
       cpus: (cpus && cpus.length > 0 && cpus[0].model) || undefined,
       arch: os.arch(),
-      ci: ci.isCI(),
-      ciName: ci.getCIName(),
+      ci: isCI(),
+      ciName: getCIName(),
       docker: isDocker(),
     }
     this.osInfo = osInfo
