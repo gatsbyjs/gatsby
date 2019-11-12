@@ -32,7 +32,7 @@ const styles = {
     width: 125,
   },
   prevNextLinkSiteTitle: {
-    color: `gatsby`,
+    color: `link.color`,
     fontWeight: `bold`,
   },
   prevNextImage: {
