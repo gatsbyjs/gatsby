@@ -73,6 +73,7 @@ const textareaStyles = {
   mb: 4,
   lh: `1.25rem`,
   padding: `0.5rem 0.75rem`,
+  overflowY: scroll,
 }
 
 const FeedbackForm = ({
