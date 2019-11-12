@@ -677,6 +677,229 @@ describe(`build and update individual types`, () => {
   })
 })
 
+describe(`rebuilds node types having existing relations`, () => {
+  let schema
+  let i
+
+  const setup = async nodes => {
+    i = 0
+    store.dispatch({ type: `DELETE_CACHE` })
+    nodes.forEach(addNode)
+
+    await build({})
+    schema = store.getState().schema
+  }
+
+  const rebuild = async nodes => {
+    i++
+    nodes.forEach(node => {
+      node.id = `${node.id}${i}`
+    })
+    schema = await addNodeAndRebuild(nodes)
+    return schema
+  }
+
+  it(`rebuilds simple acyclic relations`, async () => {
+    const nodes = (...ids) =>
+      [
+        {
+          id: `Foo1`,
+          internal: { type: `Foo`, contentDigest: `0` },
+          children: [],
+          foo: `string`,
+        },
+        {
+          id: `Bar1`,
+          internal: { type: `Bar`, contentDigest: `0` },
+          children: [],
+          bar: 5,
+        },
+        {
+          id: `Baz1`,
+          internal: { type: `Baz`, contentDigest: `0` },
+          children: [],
+          baz: 7,
+          bar___NODE: `Bar1`,
+        },
+      ].filter(node => !ids.length || ids.includes(node.id))
+
+    await setup(nodes())
+    await expect(rebuild(nodes(`Baz1`))).resolves.toBeDefined()
+    await expect(rebuild(nodes(`Bar1`))).resolves.toBeDefined()
+    await expect(rebuild(nodes(`Foo1`))).resolves.toBeDefined()
+    await expect(rebuild(nodes(`Foo1`, `Bar1`))).resolves.toBeDefined()
+    await expect(rebuild(nodes(`Bar1`, `Foo1`))).resolves.toBeDefined()
+    await expect(rebuild(nodes(`Baz1`, `Foo1`))).resolves.toBeDefined()
+
+    const print = typePrinter(schema)
+    expect(print(`Foo`)).toMatchInlineSnapshot(`
+      "type Foo implements Node {
+        id: ID!
+        parent: Node
+        children: [Node!]!
+        internal: Internal!
+        foo: String
+      }"
+    `)
+    expect(print(`Bar`)).toMatchInlineSnapshot(`
+      "type Bar implements Node {
+        id: ID!
+        parent: Node
+        children: [Node!]!
+        internal: Internal!
+        bar: Int
+      }"
+    `)
+    expect(print(`Baz`)).toMatchInlineSnapshot(`
+      "type Baz implements Node {
+        id: ID!
+        parent: Node
+        children: [Node!]!
+        internal: Internal!
+        baz: Int
+        bar: Bar
+      }"
+    `)
+  })
+
+  it(`rebuilds self-cyclic relations`, async () => {
+    const nodes = (...ids) =>
+      [
+        {
+          id: `Foo1`,
+          internal: { type: `Foo`, contentDigest: `0` },
+          children: [],
+          foo___NODE: `Foo2`,
+        },
+        {
+          id: `Foo2`,
+          internal: { type: `Foo`, contentDigest: `0` },
+          children: [],
+        },
+      ].filter(node => !ids.length || ids.includes(node.id))
+
+    await setup(nodes())
+    await expect(rebuild(nodes(`Foo1`))).resolves.toBeDefined()
+    await expect(rebuild(nodes(`Foo2`))).resolves.toBeDefined()
+    await expect(rebuild(nodes(`Foo1`, `Foo2`))).resolves.toBeDefined()
+
+    const print = typePrinter(schema)
+    expect(print(`Foo`)).toMatchInlineSnapshot(`
+      "type Foo implements Node {
+        id: ID!
+        parent: Node
+        children: [Node!]!
+        internal: Internal!
+        foo: Foo
+      }"
+    `)
+  })
+
+  it(`rebuilds bi-directional relations`, async () => {
+    const nodes = (...ids) =>
+      [
+        {
+          id: `Foo1`,
+          internal: { type: `Foo`, contentDigest: `0` },
+          children: [],
+          bar___NODE: `Bar1`,
+        },
+        {
+          id: `Bar1`,
+          internal: { type: `Bar`, contentDigest: `0` },
+          children: [],
+          foo___NODE: `Foo1`,
+        },
+      ].filter(node => !ids.length || ids.includes(node.id))
+
+    await setup(nodes())
+    await expect(rebuild(nodes(`Foo1`))).resolves.toBeDefined()
+    await expect(rebuild(nodes(`Bar1`))).resolves.toBeDefined()
+    await expect(rebuild(nodes(`Foo1`, `Bar1`))).resolves.toBeDefined()
+
+    const print = typePrinter(schema)
+    expect(print(`Foo`)).toMatchInlineSnapshot(`
+      "type Foo implements Node {
+        id: ID!
+        parent: Node
+        children: [Node!]!
+        internal: Internal!
+        bar: Bar
+      }"
+    `)
+    expect(print(`Bar`)).toMatchInlineSnapshot(`
+      "type Bar implements Node {
+        id: ID!
+        parent: Node
+        children: [Node!]!
+        internal: Internal!
+        foo: Foo
+      }"
+    `)
+  })
+
+  it(`rebuilds cyclic relations`, async () => {
+    const nodes = (...ids) =>
+      [
+        {
+          id: `Foo1`,
+          internal: { type: `Foo`, contentDigest: `0` },
+          children: [],
+          bar___NODE: `Bar1`,
+        },
+        {
+          id: `Bar1`,
+          internal: { type: `Bar`, contentDigest: `0` },
+          children: [],
+          baz___NODE: `Baz1`,
+        },
+        {
+          id: `Baz1`,
+          internal: { type: `Baz`, contentDigest: `0` },
+          children: [],
+          foo___NODE: `Foo1`,
+        },
+      ].filter(node => !ids.length || ids.includes(node.id))
+
+    await setup(nodes())
+    await expect(rebuild(nodes(`Foo1`))).resolves.toBeDefined()
+    await expect(rebuild(nodes(`Bar1`))).resolves.toBeDefined()
+    await expect(rebuild(nodes(`Baz1`))).resolves.toBeDefined()
+    await expect(rebuild(nodes(`Foo1`, `Bar1`))).resolves.toBeDefined()
+    await expect(rebuild(nodes(`Bar1`, `Foo1`))).resolves.toBeDefined()
+    await expect(rebuild(nodes(`Baz1`, `Foo1`))).resolves.toBeDefined()
+
+    const print = typePrinter(schema)
+    expect(print(`Foo`)).toMatchInlineSnapshot(`
+      "type Foo implements Node {
+        id: ID!
+        parent: Node
+        children: [Node!]!
+        internal: Internal!
+        bar: Bar
+      }"
+    `)
+    expect(print(`Bar`)).toMatchInlineSnapshot(`
+      "type Bar implements Node {
+        id: ID!
+        parent: Node
+        children: [Node!]!
+        internal: Internal!
+        baz: Baz
+      }"
+    `)
+    expect(print(`Baz`)).toMatchInlineSnapshot(`
+      "type Baz implements Node {
+        id: ID!
+        parent: Node
+        children: [Node!]!
+        internal: Internal!
+        foo: Foo
+      }"
+    `)
+  })
+})
+
 describe(`compatibility with schema customization API`, () => {
   beforeEach(async () => {
     store.dispatch({ type: `DELETE_CACHE` })
