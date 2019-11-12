@@ -9,14 +9,6 @@ const { isDate } = require(`../types/date`)
 const { addDerivedType } = require(`../types/derived-types`)
 const is32BitInteger = require(`./is-32-bit-integer`)
 
-const clearInferredFields = ({ typeComposer }) => {
-  typeComposer.getFieldNames().forEach(name => {
-    if (typeComposer.getFieldExtension(name, `createdFrom`) === `inference`) {
-      typeComposer.removeField(name)
-    }
-  })
-}
-
 const addInferredFields = ({
   schemaComposer,
   typeComposer,
@@ -25,7 +17,6 @@ const addInferredFields = ({
   typeMapping,
   parentSpan,
 }) => {
-  clearInferredFields({ typeComposer })
   const config = getInferenceConfig({
     typeComposer,
     defaults: {

@@ -4,7 +4,7 @@ const tracer = require(`opentracing`).globalTracer()
 const { store } = require(`../redux`)
 const nodeStore = require(`../db/nodes`)
 const { createSchemaComposer } = require(`./schema-composer`)
-const { buildSchema, rebuildSchemaWithTypes } = require(`./schema`)
+const { buildSchema, rebuildSchemaWithSitePage } = require(`./schema`)
 const { builtInFieldExtensions } = require(`./extensions`)
 const { TypeConflictReporter } = require(`./infer/type-conflict-reporter`)
 
@@ -71,15 +71,7 @@ const build = async ({ parentSpan }) => {
   span.finish()
 }
 
-const getDirtyTypes = () => {
-  const { inferenceMetadata } = store.getState()
-
-  return Object.keys(inferenceMetadata).filter(
-    type => inferenceMetadata[type].dirty
-  )
-}
-
-const rebuildWithTypes = async ({ typeNames, parentSpan }) => {
+const rebuildWithSitePage = async ({ parentSpan }) => {
   const spanArgs = parentSpan ? { childOf: parentSpan } : {}
   const span = tracer.startSpan(
     `rebuild schema with SitePage context`,
@@ -94,14 +86,13 @@ const rebuildWithTypes = async ({ typeNames, parentSpan }) => {
 
   const typeConflictReporter = new TypeConflictReporter()
 
-  const schema = await rebuildSchemaWithTypes({
+  const schema = await rebuildSchemaWithSitePage({
     schemaComposer,
     nodeStore,
     fieldExtensions,
     typeMapping,
     typeConflictReporter,
     inferenceMetadata,
-    typeNames,
     parentSpan,
   })
 
@@ -119,13 +110,8 @@ const rebuildWithTypes = async ({ typeNames, parentSpan }) => {
   span.finish()
 }
 
-const rebuildWithSitePage = async ({ parentSpan }) => {
-  await rebuildWithTypes({ parentSpan, typeNames: [`SitePage`] })
-}
-
 module.exports = {
   build,
+  rebuild: build,
   rebuildWithSitePage,
-  rebuildWithTypes,
-  getDirtyTypes,
 }

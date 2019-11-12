@@ -22,12 +22,7 @@ const {
 const apiRunner = require(`../utils/api-runner-node`)
 const report = require(`gatsby-cli/lib/reporter`)
 const { addNodeInterfaceFields } = require(`./types/node-interface`)
-const {
-  addInferredType,
-  addInferredTypes,
-  createInferredTypeComposer,
-  isEmptyInferredType,
-} = require(`./infer`)
+const { addInferredType, addInferredTypes } = require(`./infer`)
 const { findOne, findManyPaginated } = require(`./resolvers`)
 const {
   processFieldExtensions,
@@ -42,10 +37,7 @@ const {
   parseTypeDef,
   reportParsingError,
 } = require(`./types/type-defs`)
-const {
-  clearDerivedTypes,
-  collectDerivedTypeComposers,
-} = require(`./types/derived-types`)
+const { clearDerivedTypes } = require(`./types/derived-types`)
 const { printTypeDefinitions } = require(`./print`)
 
 const buildSchema = async ({
@@ -78,93 +70,48 @@ const buildSchema = async ({
   return schema
 }
 
-const rebuildSchemaWithTypes = async ({
+const rebuildSchemaWithSitePage = async ({
   schemaComposer,
   nodeStore,
   typeMapping,
   fieldExtensions,
   typeConflictReporter,
-  parentSpan,
-  typeNames,
   inferenceMetadata,
+  parentSpan,
 }) => {
-  // Types may have implicit child-parent relations.
-  // Parents have special fields/arguments based on child structure
-  // and must always rebuild together with children.
-  const typesWithParents = collectImplicitParents({
-    schemaComposer,
-    typeNames: new Set(typeNames),
-  })
+  const typeComposer = schemaComposer.getOTC(`SitePage`)
 
-  for (const typeName of typesWithParents) {
-    // If the type doesn't have a composer - create a new one
-    // (assuming inference is the only possible source of new types for rebuild)
-    const typeComposer = schemaComposer.has(typeName)
-      ? schemaComposer.getOTC(typeName)
-      : createInferredTypeComposer({ typeName, schemaComposer })
+  // Clear derived types and fields
+  // they will be re-created in processTypeComposer later
+  clearDerivedTypes({ schemaComposer, typeComposer })
 
-    // Clear derived types and fields
-    // they will be re-created in processTypeComposer later
-    clearDerivedTypes({ schemaComposer, typeComposer })
-    removeTypeFromRootQuery({ schemaComposer, typeComposer })
-
-    // FIXME: clear implicit child fields of the type itself vs its parents
-    //   (make it a full counterpart of addImplicitConvenienceChildrenFields)
-    clearImplicitConvenienceFieldsOnParents({ schemaComposer, typeComposer })
-
-    if (isEmptyInferredType({ typeComposer, inferenceMetadata })) {
-      deleteType({ schemaComposer, typeComposer })
-    }
-
-    const shouldInfer =
-      !typeComposer.hasExtension(`infer`) ||
-      typeComposer.getExtension(`infer`) !== false
-    if (shouldInfer) {
-      addInferredType({
-        schemaComposer,
-        typeComposer,
-        nodeStore,
-        typeConflictReporter,
-        typeMapping,
-        inferenceMetadata,
-        parentSpan,
-      })
-    }
-  }
-
-  // Doing a separate pass for type processing to make sure that all
-  // required types are in the schema composer and fully inferred
-  // (otherwise `processTypeComposer` of one type can affect old version of some related type)
-  for (const typeName of typesWithParents) {
-    if (!schemaComposer.has(typeName)) {
-      continue
-    }
-    const typeComposer = schemaComposer.getOTC(typeName)
-
-    const derivedTypeComposers = collectDerivedTypeComposers({
+  const shouldInfer =
+    !typeComposer.hasExtension(`infer`) ||
+    typeComposer.getExtension(`infer`) !== false
+  if (shouldInfer) {
+    addInferredType({
       schemaComposer,
       typeComposer,
+      nodeStore,
+      typeConflictReporter,
+      typeMapping,
+      inferenceMetadata,
+      parentSpan,
     })
-
-    await Promise.all(
-      [typeComposer, ...derivedTypeComposers].map(typeComposer =>
-        processTypeComposer({
-          schemaComposer,
-          typeComposer,
-          fieldExtensions,
-          nodeStore,
-          parentSpan,
-        })
-      )
-    )
   }
-
+  await processTypeComposer({
+    schemaComposer,
+    typeComposer,
+    fieldExtensions,
+    nodeStore,
+    parentSpan,
+  })
   return schemaComposer.buildSchema()
 }
 
 module.exports = {
   buildSchema,
-  rebuildSchemaWithTypes,
+  rebuildSchemaWithSitePage,
 }
 
 const updateSchemaComposer = async ({
@@ -293,45 +240,6 @@ const fieldNames = {
   queryAll: typeName => _.camelCase(`all ${typeName}`),
   convenienceChild: typeName => _.camelCase(`child ${typeName}`),
   convenienceChildren: typeName => _.camelCase(`children ${typeName}`),
-}
-
-const deleteTypeFields = ({ typeComposer, fieldNames }) => {
-  fieldNames
-    .filter(field => typeComposer.hasField(field))
-    .forEach(field => typeComposer.removeField(field))
-}
-
-const clearImplicitConvenienceFieldsOnParents = ({
-  schemaComposer,
-  typeComposer,
-}) => {
-  const typeName = typeComposer.getTypeName()
-  const types = typeComposer.getExtension(`implicitChildOf`) || new Set()
-
-  for (const parentTypeName of types) {
-    if (schemaComposer.has(parentTypeName)) {
-      deleteTypeFields({
-        typeComposer: schemaComposer.getOTC(parentTypeName),
-        fieldNames: [
-          fieldNames.convenienceChild(typeName),
-          fieldNames.convenienceChildren(typeName),
-        ],
-      })
-    }
-  }
-}
-
-const deleteType = ({ schemaComposer, typeComposer }) => {
-  const typeName = typeComposer.getTypeName()
-
-  // Workaround against missing graphql-compose method for this
-  // FIXME
-  schemaComposer._schemaMustHaveTypes = schemaComposer._schemaMustHaveTypes.filter(
-    tc => tc.getTypeName() !== typeName
-  )
-
-  // Finally delete the type itself
-  schemaComposer.delete(typeName)
 }
 
 const addTypes = ({ schemaComposer, types, parentSpan }) => {
@@ -1071,48 +979,6 @@ const addImplicitConvenienceChildrenFields = ({
     } else {
       typeComposer.addFields(createChildField(typeName))
     }
-
-    // Track implicit parents of this type
-    // (need this to remove related fields when deleting a type)
-    const childTypeComposer = schemaComposer.getAnyTC(typeName)
-    const implicitChildOf =
-      childTypeComposer.getExtension(`implicitChildOf`) || new Set()
-    childTypeComposer.setExtension(
-      `implicitChildOf`,
-      implicitChildOf.add(typeComposer.getTypeName())
-    )
-  })
-}
-
-const collectImplicitParents = ({
-  schemaComposer,
-  typeNames = new Set(),
-  visitedTypes = new Set(),
-}) => {
-  if (!typeNames.size) {
-    return visitedTypes
-  }
-
-  const parentTypeNames = new Set()
-  for (const typeName of typeNames) {
-    visitedTypes.add(typeName)
-    if (!schemaComposer.has(typeName)) {
-      continue
-    }
-    const typeComposer = schemaComposer.getAnyTC(typeName)
-    const implcitChildOf =
-      typeComposer.getExtension(`implicitChildOf`) || new Set()
-
-    for (const parentTypeName of implcitChildOf) {
-      if (!visitedTypes.has(parentTypeName)) {
-        parentTypeNames.add(parentTypeName)
-      }
-    }
-  }
-  return collectImplicitParents({
-    schemaComposer,
-    typeNames: parentTypeNames,
-    visitedTypes,
   })
 }
 
@@ -1197,20 +1063,6 @@ const addTypeToRootQuery = ({ schemaComposer, typeComposer }) => {
       resolve: findManyPaginated(typeName),
     },
   }).makeFieldNonNull(queryNamePlural)
-}
-
-const removeTypeFromRootQuery = ({ schemaComposer, typeComposer }) => {
-  const typeName = typeComposer.getTypeName()
-  const queryName = fieldNames.query(typeName)
-  const queryNamePlural = fieldNames.queryAll(typeName)
-
-  // If there are derived fields for this type - make sure to remove them first
-  const queryTypeComposer = schemaComposer.getOTC(`Query`)
-
-  deleteTypeFields({
-    typeComposer: queryTypeComposer,
-    fieldNames: [queryName, queryNamePlural],
-  })
 }
 
 const parseTypes = ({

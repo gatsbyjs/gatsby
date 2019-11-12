@@ -1,8 +1,16 @@
 const { debounce } = require(`lodash`)
-const { emitter } = require(`../redux`)
-const { rebuildWithTypes, getDirtyTypes } = require(`../schema`)
+const { emitter, store } = require(`../redux`)
+const { rebuild } = require(`../schema`)
 const { updateStateAndRunQueries } = require(`../query/query-watcher`)
 const report = require(`gatsby-cli/lib/reporter`)
+
+const getDirtyTypes = () => {
+  const { inferenceMetadata } = store.getState()
+
+  return Object.keys(inferenceMetadata).filter(
+    type => inferenceMetadata[type].dirty
+  )
+}
 
 // API_RUNNING_QUEUE_EMPTY could be emitted multiple types
 // in a short period of time, so debounce seems reasonable
@@ -13,11 +21,9 @@ const maybeRebuildSchema = debounce(async () => {
     return
   }
 
-  report.info(`pending type changes: ${dirtyTypes.join(`, `)}`)
-
   const activity = report.activityTimer(`rebuild schema`)
   activity.start()
-  await rebuildWithTypes({ parentSpan: activity, typeNames: dirtyTypes })
+  await rebuild({ parentSpan: activity })
   await updateStateAndRunQueries(false, { parentSpan: activity })
   activity.end()
 }, 1000)
