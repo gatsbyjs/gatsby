@@ -90,9 +90,8 @@ Which will result in the following directory tree:
 user-site
 └── src
     └── gatsby-theme-blog
-        └── components
-            └── tokens
-                  └──index.js // highlight-line
+        └── gatsby-plugin-theme-ui
+            └──index.js // highlight-line
 ```
 
 ## Any source file is shadowable

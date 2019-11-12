@@ -185,7 +185,7 @@ const {
   DEFAULT_DEPRECATION_REASON,
 } = require(`graphql`)
 const { printBlockString } = require(`graphql/language/blockString`)
-const { flatMap } = require(`graphql/polyfills/flatMap`)
+const flatMap = require(`array.prototype.flatmap`)
 
 const printScalarType = tc => {
   const type = tc.getType()
