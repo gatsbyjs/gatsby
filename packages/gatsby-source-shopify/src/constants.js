@@ -17,7 +17,6 @@ export const SHOP = `Shop`
 export const CONTENT = `content`
 
 export const NODE_TO_ENDPOINT_MAPPING = {
-  [SHOP]: `shop`,
   [ARTICLE]: `articles`,
   [BLOG]: `blogs`,
   [COLLECTION]: `collections`,

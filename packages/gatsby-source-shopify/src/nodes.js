@@ -163,8 +163,6 @@ export const ProductVariantNode = imageArgs =>
 export const VariantPresentmentPriceNode = () =>
   createNodeFactory(VARIANT_PRESENTMENT_PRICE)
 
-export const ShopNode = createNodeFactory(SHOP)
-
 export const ShopPolicyNode = createNodeFactory(SHOP_POLICY)
 
 export const PageNode = createNodeFactory(PAGE)

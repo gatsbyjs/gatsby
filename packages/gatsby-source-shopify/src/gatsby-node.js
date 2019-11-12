@@ -5,7 +5,6 @@ import { printGraphQLError, queryAll, queryOnce } from "./lib"
 import { createClient } from "./create-client"
 
 import {
-  ShopNode,
   ArticleNode,
   BlogNode,
   CollectionNode,
@@ -30,7 +29,6 @@ import {
   PAGE,
 } from "./constants"
 import {
-  SHOP_QUERY,
   ARTICLES_QUERY,
   BLOGS_QUERY,
   COLLECTIONS_QUERY,
@@ -106,7 +104,6 @@ export const sourceNodes = async (
               createNode(await ProductOptionNode(imageArgs)(option))
             )
         }),
-        createShop(args),
         createShopPolicies(args),
       ])
     }
@@ -163,21 +160,6 @@ const createNodes = async (
       await f(entity)
     }
   )
-  if (verbose) console.timeEnd(msg)
-}
-
-/**
- * Fetch and create nodes for shop.
- */
-const createShop = async ({ client, createNode, formatMsg, verbose }) => {
-  // Message printed when fetching is complete.
-  const msg = formatMsg(`fetched and processed ${SHOP} node`)
-
-  if (verbose) console.time(msg)
-  const { shop } = await queryOnce(client, SHOP_QUERY)
-
-  createNode(ShopNode(shop))
-
   if (verbose) console.timeEnd(msg)
 }
 
