@@ -29,7 +29,7 @@ const styles = {
   prevNextLink: {
     color: `lilac`,
     fontFamily: `header`,
-    width: 125,
+    px: [6, null, null, 0],
   },
   prevNextLinkSiteTitle: {
     color: `link.color`,
@@ -38,20 +38,6 @@ const styles = {
   prevNextImage: {
     borderRadius: 1,
     boxShadow: `overlay`,
-  },
-  prevNextContainer: {
-    mt: 6,
-    mr: 6,
-    [mediaQueries.md]: {
-      m: 6,
-    },
-  },
-  truncate: {
-    whiteSpace: `nowrap`,
-    overflow: `hidden`,
-    textOverflow: `ellipsis`,
-    display: `block`,
-    width: `100%`,
   },
 }
 
@@ -160,38 +146,44 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 isModal: true,
                 filters,
               }}
-              css={{
+              sx={{
                 order: 2,
+                m: 6,
+                mt: 0,
                 position: `relative`,
+                display: `flex`,
                 [mediaQueries.md]: {
+                  mt: 6,
+                  display: `block`,
                   top: `110px`,
                 },
               }}
             >
-              <div sx={styles.prevNextContainer}>
-                <Img
-                  key={nextSite.id}
-                  sx={styles.prevNextImage}
-                  backgroundColor
-                  fixed={{
-                    srcSet: ``,
-                    src:
-                      nextSite.childScreenshot.screenshotFile.childImageSharp
-                        .resize.src,
-                    width: 100,
-                    height: 100,
-                  }}
-                  alt=""
-                />
-              </div>
+              <Img
+                key={nextSite.id}
+                sx={styles.prevNextImage}
+                backgroundColor
+                fixed={{
+                  srcSet: ``,
+                  src:
+                    nextSite.childScreenshot.screenshotFile.childImageSharp
+                      .resize.src,
+                  width: 100,
+                  height: 100,
+                }}
+                imgStyle={{
+                  margin: 0,
+                }}
+                alt=""
+              />
               <div
                 sx={{
                   ...styles.prevNextLink,
                   [mediaQueries.md]: {
                     position: `absolute`,
-                    top: 280,
+                    top: 240,
                     width: 300,
-                    transform: `translateX(-75px) rotate(90deg)`,
+                    transform: `translateX(-80px) rotate(90deg)`,
                   },
                 }}
               >
@@ -215,40 +207,46 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 isModal: true,
                 filters,
               }}
-              css={{
+              sx={{
                 order: 1,
                 position: `relative`,
+                width: `100%`,
+                m: 6,
+                display: `flex`,
                 [mediaQueries.md]: {
+                  display: `block`,
                   order: 0,
                   top: `110px`,
+                  width: `auto`,
                 },
               }}
             >
-              <div sx={{ ...styles.prevNextContainer, mr: 0, ml: 6 }}>
-                <Img
-                  key={previousSite.id}
-                  sx={styles.prevNextImage}
-                  backgroundColor
-                  fixed={{
-                    srcSet: ``,
-                    src:
-                      previousSite.childScreenshot.screenshotFile
-                        .childImageSharp.resize.src,
-                    width: 100,
-                    height: 100,
-                  }}
-                  alt=""
-                />
-              </div>
+              <Img
+                key={previousSite.id}
+                sx={styles.prevNextImage}
+                backgroundColor
+                fixed={{
+                  srcSet: ``,
+                  src:
+                    previousSite.childScreenshot.screenshotFile.childImageSharp
+                      .resize.src,
+                  width: 100,
+                  height: 100,
+                }}
+                imgStyle={{
+                  margin: 0,
+                }}
+                alt=""
+              />
               <div
                 sx={{
                   ...styles.prevNextLink,
-                  textAlign: `right`,
                   [mediaQueries.md]: {
+                    textAlign: `right`,
                     position: `absolute`,
-                    top: 280,
+                    top: 240,
                     width: 300,
-                    transform: `translateX(-75px) rotate(-90deg)`,
+                    transform: `translateX(-80px) rotate(-90deg)`,
                   },
                 }}
               >
@@ -404,11 +402,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 }}
               >
                 <p>{data.sitesYaml.description}</p>
-                <div
-                  sx={{
-                    display: `flex`,
-                  }}
-                >
+                <div sx={{ display: `flex` }}>
                   <div sx={{ color: `textMuted`, pr: 5 }}>Categories</div>
                   <div>
                     {categories.map((c, i) => (
