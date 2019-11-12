@@ -276,7 +276,7 @@ There are so many ways to add styles to your website; Gatsby supports almost eve
 
 1. Create a global CSS file as `src/styles/global.css` and paste the following into the file:
 
-```css:title=src/styles/styles/global.css
+```css:title=src/styles/global.css
 html {
   background-color: lavenderblush;
 }
