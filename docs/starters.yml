@@ -4359,3 +4359,14 @@
   features:
     - Type Checking With TypeScript
     - Powerfull Linting With ESLint
+- url: https://gatsby-tfs-starter.netlify.com/
+  repo: https://github.com/tiagofsanchez/gatsby-tfs-starter
+  description: a gatsby-advanced-starter with theme-ui styling
+  tags:
+    - RSS
+    - SEO
+    - Blog
+    - MDX
+  features:
+    - React Helmet <head> Management
+    - SVG Icon    
