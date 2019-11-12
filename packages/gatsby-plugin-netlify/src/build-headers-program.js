@@ -280,7 +280,9 @@ const applyCachingHeaders = (
   const cachingHeaders = {}
 
   files.forEach(file => {
-    cachingHeaders[`/` + file] = [IMMUTABLE_CACHING_HEADER]
+    if (typeof file === `string`) {
+      cachingHeaders[`/` + file] = [IMMUTABLE_CACHING_HEADER]
+    }
   })
 
   return defaultMerge(headers, cachingHeaders, CACHING_HEADERS)

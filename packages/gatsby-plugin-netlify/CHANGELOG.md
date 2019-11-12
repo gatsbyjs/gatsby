@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@2.1.23...gatsby-plugin-netlify@2.1.24) (2019-11-10)
+
+**Note:** Version bump only for package gatsby-plugin-netlify
+
+## [2.1.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@2.1.22...gatsby-plugin-netlify@2.1.23) (2019-10-28)
+
+### Bug Fixes
+
+- **gatsby-plugin-netlify:** don't add `/undefined` in generated `_headers` file ([#18925](https://github.com/gatsbyjs/gatsby/issues/18925)) ([d83a5a2](https://github.com/gatsbyjs/gatsby/commit/d83a5a2))
+
+## [2.1.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@2.1.21...gatsby-plugin-netlify@2.1.22) (2019-10-16)
+
+### Bug Fixes
+
+- **gatsby-plugin-netlify:** cast `status` to string ([#18726](https://github.com/gatsbyjs/gatsby/issues/18726)) ([3c8623c](https://github.com/gatsbyjs/gatsby/commit/3c8623c))
+
+## [2.1.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@2.1.20...gatsby-plugin-netlify@2.1.21) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-plugin-netlify
+
 ## [2.1.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@2.1.19...gatsby-plugin-netlify@2.1.20) (2019-10-14)
 
 **Note:** Version bump only for package gatsby-plugin-netlify

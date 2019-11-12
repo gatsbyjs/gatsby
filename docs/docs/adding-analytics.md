@@ -1,5 +1,5 @@
 ---
-title: Adding analytics
+title: Adding Analytics
 ---
 
 ## Why use analytics?

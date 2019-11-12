@@ -325,7 +325,7 @@ module.exports = async ({
           loaders.js({
             ...options,
             configFile: true,
-            compact: true,
+            compact: PRODUCTION,
           }),
         ],
       }
@@ -459,7 +459,10 @@ module.exports = async ({
         loaders.css({ ...options, importLoaders: 1 }),
         loaders.postcss({ browsers }),
       ]
-      if (!isSSR) use.unshift(loaders.miniCssExtract({ hmr: !options.modules }))
+      if (!isSSR)
+        use.unshift(
+          loaders.miniCssExtract({ hmr: !PRODUCTION && !options.modules })
+        )
 
       return {
         use,

@@ -10,7 +10,7 @@ JavaScript, being a dynamic and loosely-typed language, is especially prone to d
 
 Gatsby ships with a built-in [ESLint](https://eslint.org) setup. For _most_ users, our built-in ESlint setup is all you need. If you know however that you'd like to customize your ESlint config e.g. your company has their own custom ESlint setup, this shows how this can be done.
 
-We'll replicate (mostly) the [ESLint config Gatsby ships with](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/eslint-config.js) so you can then add additional presets, plugins, and rules.
+You'll replicate (mostly) the [ESLint config Gatsby ships with](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/eslint-config.js) so you can then add additional presets, plugins, and rules.
 
 ```shell
 
@@ -18,7 +18,7 @@ We'll replicate (mostly) the [ESLint config Gatsby ships with](https://github.co
 npm install --save-dev eslint-config-react-app
 ```
 
-Now that we have our packages installed, create a new file at the root of the site named `.eslintrc.js` using the command below.
+Now that your packages have been installed, create a new file at the root of the site named `.eslintrc.js` using the command below.
 
 ```shell
 # Create a config file for ESLint
@@ -37,3 +37,7 @@ module.exports = {
   extends: `react-app`,
 }
 ```
+
+Note: If you provide a custom `.eslintrc.js` file, Gatsby gives you full control about the ESLint configuration. This means that it will disable the built-in `eslint-loader` and you need to enable it yourself. One way to do so is to use the Community plugin [`gatsby-eslint-plugin`](/packages/gatsby-plugin-eslint/).
+
+If you want to disable ESLint completely, create an empty `.eslintrc` file.

@@ -97,6 +97,15 @@ describe(`NodeModel`, () => {
         })
       })
 
+      it(`creates page dependency when called with context`, () => {
+        nodeModel.withContext({ path: `/` }).getNodeById({ id: `person2` })
+        expect(createPageDependency).toHaveBeenCalledTimes(1)
+        expect(createPageDependency).toHaveBeenCalledWith({
+          path: `/`,
+          nodeId: `person2`,
+        })
+      })
+
       it(`returns null when no id provided`, () => {
         expect(nodeModel.getNodeById()).toBeNull()
         expect(nodeModel.getNodeById({})).toBeNull()
@@ -171,6 +180,21 @@ describe(`NodeModel`, () => {
         })
       })
 
+      it(`creates page dependencies when called with context`, () => {
+        nodeModel
+          .withContext({ path: `/` })
+          .getNodesByIds({ ids: [`person3`, `post3`] })
+        expect(createPageDependency).toHaveBeenCalledTimes(2)
+        expect(createPageDependency).toHaveBeenCalledWith({
+          path: `/`,
+          nodeId: `person3`,
+        })
+        expect(createPageDependency).toHaveBeenCalledWith({
+          path: `/`,
+          nodeId: `post3`,
+        })
+      })
+
       it(`returns empty array when no ids provided`, () => {
         expect(nodeModel.getNodesByIds()).toEqual([])
         expect(nodeModel.getNodesByIds({})).toEqual([])
@@ -221,6 +245,18 @@ describe(`NodeModel`, () => {
       it(`creates page dependencies`, () => {
         nodeModel.getAllNodes({}, { path: `/` })
         expect(createPageDependency).toHaveBeenCalledTimes(9)
+      })
+
+      it(`creates page dependencies when called with context and connection type`, () => {
+        nodeModel
+          .withContext({ path: `/` })
+          .getAllNodes({ type: `Post` }, { connectionType: `Post` })
+        expect(createPageDependency).toHaveBeenCalledTimes(1)
+      })
+
+      it(`does not create page dependencies when called with context without connection type`, () => {
+        nodeModel.withContext({ path: `/` }).getAllNodes()
+        expect(createPageDependency).toHaveBeenCalledTimes(0)
       })
 
       it(`returns empty array when no nodes of type found`, () => {
@@ -274,6 +310,24 @@ describe(`NodeModel`, () => {
         const query = { filter: { frontmatter: { published: { eq: false } } } }
         const firstOnly = false
         await nodeModel.runQuery({ query, firstOnly, type }, { path: `/` })
+        expect(createPageDependency).toHaveBeenCalledTimes(2)
+        expect(createPageDependency).toHaveBeenCalledWith({
+          path: `/`,
+          nodeId: `post1`,
+        })
+        expect(createPageDependency).toHaveBeenCalledWith({
+          path: `/`,
+          nodeId: `post3`,
+        })
+      })
+
+      it(`creates page dependencies when called with context`, async () => {
+        const type = `Post`
+        const query = { filter: { frontmatter: { published: { eq: false } } } }
+        const firstOnly = false
+        await nodeModel
+          .withContext({ path: `/` })
+          .runQuery({ query, firstOnly, type })
         expect(createPageDependency).toHaveBeenCalledTimes(2)
         expect(createPageDependency).toHaveBeenCalledWith({
           path: `/`,
