@@ -71,7 +71,7 @@ describe(`Dev loader`, () => {
         pagePath: `/mypage`,
         payload: defaultPayload,
       }
-      expect(await devLoader.loadPageDataJson(`/mypage`)).toEqual(expectation)
+      expect(await devLoader.loadPageDataJson(`/mypage/`)).toEqual(expectation)
       expect(devLoader.pageDataDb.get(`/mypage`)).toEqual(expectation)
       expect(xhrCount).toBe(1)
     })
@@ -86,7 +86,7 @@ describe(`Dev loader`, () => {
         pagePath: `/mypage`,
         payload: defaultPayload,
       }
-      expect(await devLoader.loadPageDataJson(`/mypage`)).toEqual(expectation)
+      expect(await devLoader.loadPageDataJson(`/mypage/`)).toEqual(expectation)
       expect(devLoader.pageDataDb.get(`/mypage`)).toEqual(expectation)
       expect(xhrCount).toBe(1)
     })
@@ -102,7 +102,7 @@ describe(`Dev loader`, () => {
         pagePath: `/mypage`,
         payload,
       }
-      expect(await devLoader.loadPageDataJson(`/mypage`)).toEqual(expectation)
+      expect(await devLoader.loadPageDataJson(`/mypage/`)).toEqual(expectation)
       expect(devLoader.pageDataDb.get(`/mypage`)).toEqual(expectation)
       expect(xhrCount).toBe(1)
     })
@@ -120,7 +120,7 @@ describe(`Dev loader`, () => {
         notFound: true,
         payload,
       }
-      expect(await devLoader.loadPageDataJson(`/unknown-page`)).toEqual(
+      expect(await devLoader.loadPageDataJson(`/unknown-page/`)).toEqual(
         expectation
       )
       expect(devLoader.pageDataDb.get(`/unknown-page`)).toEqual(expectation)
@@ -140,7 +140,7 @@ describe(`Dev loader`, () => {
         notFound: true,
         payload,
       }
-      expect(await devLoader.loadPageDataJson(`/unknown-page`)).toEqual(
+      expect(await devLoader.loadPageDataJson(`/unknown-page/`)).toEqual(
         expectation
       )
       expect(devLoader.pageDataDb.get(`/unknown-page`)).toEqual(expectation)
@@ -160,7 +160,7 @@ describe(`Dev loader`, () => {
         notFound: true,
         payload,
       }
-      expect(await devLoader.loadPageDataJson(`/unknown-page`)).toEqual(
+      expect(await devLoader.loadPageDataJson(`/unknown-page/`)).toEqual(
         expectation
       )
       expect(devLoader.pageDataDb.get(`/unknown-page`)).toEqual(expectation)
@@ -181,7 +181,7 @@ describe(`Dev loader`, () => {
         notFound: true,
         payload,
       }
-      expect(await devLoader.loadPageDataJson(`/unknown-page`)).toEqual(
+      expect(await devLoader.loadPageDataJson(`/unknown-page/`)).toEqual(
         expectation
       )
 
@@ -202,7 +202,7 @@ describe(`Dev loader`, () => {
         status: `error`,
         pagePath: `/error-page`,
       }
-      expect(await devLoader.loadPageDataJson(`/error-page`)).toEqual(
+      expect(await devLoader.loadPageDataJson(`/error-page/`)).toEqual(
         expectation
       )
       expect(devLoader.pageDataDb.get(`/error-page`)).toEqual(expectation)
@@ -219,7 +219,7 @@ describe(`Dev loader`, () => {
         retries: 3,
         pagePath: `/blocked-page`,
       }
-      expect(await devLoader.loadPageDataJson(`/blocked-page`)).toEqual(
+      expect(await devLoader.loadPageDataJson(`/blocked-page/`)).toEqual(
         expectation
       )
       expect(devLoader.pageDataDb.get(`/blocked-page`)).toEqual(expectation)
@@ -248,7 +248,7 @@ describe(`Dev loader`, () => {
         pagePath: `/blocked-page`,
         payload,
       }
-      expect(await devLoader.loadPageDataJson(`/blocked-page`)).toEqual(
+      expect(await devLoader.loadPageDataJson(`/blocked-page/`)).toEqual(
         expectation
       )
       expect(devLoader.pageDataDb.get(`/blocked-page`)).toEqual(expectation)
@@ -260,8 +260,8 @@ describe(`Dev loader`, () => {
 
       mockPageData(`/mypage`, 200, defaultPayload, true)
 
-      const expectation = await devLoader.loadPageDataJson(`/mypage`)
-      expect(await devLoader.loadPageDataJson(`/mypage`)).toBe(expectation)
+      const expectation = await devLoader.loadPageDataJson(`/mypage/`)
+      expect(await devLoader.loadPageDataJson(`/mypage/`)).toBe(expectation)
       expect(xhrCount).toBe(1)
     })
   })
