@@ -13,7 +13,6 @@ import {
   PRODUCT_VARIANT,
   PRODUCT_METAFIELD,
   VARIANT_PRESENTMENT_PRICE,
-  SHOP,
   SHOP_POLICY,
   PAGE,
 } from "./constants"
