@@ -71,7 +71,7 @@ const textareaStyles = {
   height: `5.5rem`,
   mt: 1,
   mb: 4,
-  overflowY: scroll,
+  overflowY: `scroll`,
 }
 
 const FeedbackForm = ({
