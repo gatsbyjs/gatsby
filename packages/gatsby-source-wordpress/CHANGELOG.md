@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.47](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.46...gatsby-source-wordpress@3.1.47) (2019-11-10)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** Cannot read property of undefined error with polylang ([#19331](https://github.com/gatsbyjs/gatsby/issues/19331)) ([bd48b21](https://github.com/gatsbyjs/gatsby/commit/bd48b21)), closes [gatsbyjs#19285](https://github.com/gatsbyjs/issues/19285)
+
 ## [3.1.46](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.45...gatsby-source-wordpress@3.1.46) (2019-10-28)
 
 **Note:** Version bump only for package gatsby-source-wordpress
