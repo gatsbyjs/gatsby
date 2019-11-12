@@ -592,7 +592,7 @@ describe(`build and update individual types`, () => {
     expect(print(`NewTypeNested`)).toMatchSnapshot()
     expect(print(`NewTypeNestedNested`)).toMatchSnapshot()
 
-    expectSymmetricDelete(node)
+    await expectSymmetricDelete(node)
   })
 
   it(`deletes deeply nested fields on child nodes`, async () => {
