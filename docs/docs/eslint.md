@@ -38,4 +38,6 @@ module.exports = {
 }
 ```
 
+Note: If you provide a custom `.eslintrc.js` file, Gatsby gives you full control about the ESLint configuration. This means that it will disable the built-in `eslint-loader` and you need to enable it yourself. One way to do so is to use the Community plugin [`gatsby-eslint-plugin`](/packages/gatsby-plugin-eslint/).
+
 If you want to disable ESLint completely, create an empty `.eslintrc` file.
