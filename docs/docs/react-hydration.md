@@ -1,5 +1,5 @@
 ---
-title: Understanding React Rehydration
+title: Understanding React Hydration
 ---
 
 One of the central ideas of Gatsby is that HTML content is statically generated using React DOM server-side APIs. Another key feature is that this static HTML content can then be _enhanced_ with client-side JavaScript via React hydration, which allows for [app-like features](/docs/adding-app-and-website-functionality/) in Gatsby sites.
