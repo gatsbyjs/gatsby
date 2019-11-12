@@ -330,7 +330,7 @@ module.exports = (
     }
 
     async function getHTML(markdownNode) {
-      const shouldCache = !!markdownNode && markdownNode.internal
+      const shouldCache = markdownNode && markdownNode.internal
       const cachedHTML =
         shouldCache && (await cache.get(htmlCacheKey(markdownNode)))
       if (cachedHTML) {
