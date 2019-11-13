@@ -8481,3 +8481,13 @@
     - Business
     - Human Resources
   featured: false
+- title: Pix4D
+  url: https://www.pix4d.com
+  main_url: https://www.pix4d.com
+  description: >
+    A unique suite of photogrammetry software for drone mapping. Capture images with our app, process on desktop or cloud and create maps and 3D models.
+  categories:
+    - Business
+    - Productivity
+    - Technology
+  featured: false
