@@ -1,5 +1,5 @@
 ---
-title: "Gatsby Starters"
+title: Gatsby Starters
 ---
 
 The Gatsby CLI tool lets you install **starters**, which are boilerplate Gatsby sites maintained by the community and intended for jump-starting development quickly.
@@ -67,6 +67,10 @@ Official starters are maintained by Gatsby.
 | [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default)         | [Demo](https://gatsby-starter-default-demo.netlify.com/)     | Appropriate for most use cases | General Gatsby site          |
 | [gatsby-starter-blog](https://github.com/gatsbyjs/gatsby-starter-blog)               | [Demo](https://gatsby-starter-blog-demo.netlify.com/)        | Create a basic blog            | Blog post pages and listings |
 | [gatsby-starter-hello-world](https://github.com/gatsbyjs/gatsby-starter-hello-world) | [Demo](https://gatsby-starter-hello-world-demo.netlify.com/) | Learn Gatsby                   | Gatsby bare essentials       |
+
+## Modifying starters
+
+Learn [how to modify a starter](/docs/modifying-a-starter/) in the Gatsby docs. You can use official and community starters out of the box but you may want to customize their style and functionality.
 
 ## Making starters
 

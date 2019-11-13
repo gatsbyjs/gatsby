@@ -86,9 +86,15 @@ const createInitialGitCommit = async (rootPath, starterUrl) => {
   await spawn(`git add -A`, { cwd: rootPath })
   // use execSync instead of spawn to handle git clients using
   // pgp signatures (with password)
-  execSync(`git commit -m "Initial commit from gatsby: (${starterUrl})"`, {
-    cwd: rootPath,
-  })
+  try {
+    execSync(`git commit -m "Initial commit from gatsby: (${starterUrl})"`, {
+      cwd: rootPath,
+    })
+  } catch {
+    // Remove git support if intial commit fails
+    report.info(`Initial git commit failed - removing git support\n`)
+    fs.removeSync(sysPath.join(rootPath, `.git`))
+  }
 }
 
 // Executes `npm install` or `yarn install` in rootPath.
@@ -160,9 +166,13 @@ const clone = async (hostInfo: any, rootPath: string) => {
 
   report.info(`Creating new site from git: ${url}`)
 
-  const args = [`clone`, ...branch, url, rootPath, `--single-branch`].filter(
-    arg => Boolean(arg)
-  )
+  const args = [
+    `clone`,
+    ...branch,
+    url,
+    rootPath,
+    `--single-branch`,
+  ].filter(arg => Boolean(arg))
 
   await spawnWithArgs(`git`, args)
 
@@ -226,6 +236,15 @@ const getPaths = async (starterPath: string, rootPath: string) => {
 
 type InitOptions = {
   rootPath?: string,
+}
+
+const successMessage = path => {
+  report.info(`
+Your new Gatsby site has been successfully bootstrapped. Start developing it by running:
+
+  cd ${path}
+  gatsby develop
+`)
 }
 
 /**
@@ -299,5 +318,6 @@ module.exports = async (starter: string, options: InitOptions = {}) => {
   })
   if (hostedInfo) await clone(hostedInfo, rootPath)
   else await copy(starterPath, rootPath)
+  successMessage(rootPath)
   trackCli(`NEW_PROJECT_END`)
 }

@@ -7,6 +7,8 @@ const {
   parse,
   GraphQLNonNull,
   GraphQLList,
+  GraphQLObjectType,
+  GraphQLInterfaceType,
 } = require(`graphql`)
 const {
   ObjectTypeComposer,
@@ -15,6 +17,7 @@ const {
   InputTypeComposer,
   ScalarTypeComposer,
   EnumTypeComposer,
+  defineFieldMapToConfig,
 } = require(`graphql-compose`)
 
 const apiRunner = require(`../utils/api-runner-node`)
@@ -108,14 +111,14 @@ const updateSchemaComposer = async ({
   typeConflictReporter,
   parentSpan,
 }) => {
-  let activity = report.activityTimer(`Add explicit types`, {
+  let activity = report.phantomActivity(`Add explicit types`, {
     parentSpan: parentSpan,
   })
   activity.start()
   await addTypes({ schemaComposer, parentSpan: activity.span, types })
   activity.end()
 
-  activity = report.activityTimer(`Add inferred types`, {
+  activity = report.phantomActivity(`Add inferred types`, {
     parentSpan: parentSpan,
   })
   activity.start()
@@ -128,7 +131,7 @@ const updateSchemaComposer = async ({
   })
   activity.end()
 
-  activity = report.activityTimer(`Processing types`, {
+  activity = report.phantomActivity(`Processing types`, {
     parentSpan: parentSpan,
   })
   activity.start()
@@ -140,6 +143,10 @@ const updateSchemaComposer = async ({
   await addSetFieldsOnGraphQLNodeTypeFields({
     schemaComposer,
     nodeStore,
+    parentSpan: activity.span,
+  })
+  await addConvenienceChildrenFields({
+    schemaComposer,
     parentSpan: activity.span,
   })
   await Promise.all(
@@ -154,10 +161,6 @@ const updateSchemaComposer = async ({
     )
   )
   checkQueryableInterfaces({ schemaComposer, parentSpan: activity.span })
-  await addConvenienceChildrenFields({
-    schemaComposer,
-    parentSpan: activity.span,
-  })
   await addThirdPartySchemas({
     schemaComposer,
     thirdPartySchemas,
@@ -315,11 +318,30 @@ const mergeTypes = ({
     plugin.name === `default-site-plugin` ||
     plugin.name === typeOwner
   ) {
-    typeComposer.merge(type)
+    if (type instanceof ObjectTypeComposer) {
+      mergeFields({ typeComposer, fields: type.getFields() })
+      type.getInterfaces().forEach(iface => typeComposer.addInterface(iface))
+    } else if (type instanceof InterfaceTypeComposer) {
+      mergeFields({ typeComposer, fields: type.getFields() })
+    } else if (type instanceof GraphQLObjectType) {
+      mergeFields({
+        typeComposer,
+        fields: defineFieldMapToConfig(type.getFields()),
+      })
+      type.getInterfaces().forEach(iface => typeComposer.addInterface(iface))
+    } else if (type instanceof GraphQLInterfaceType) {
+      mergeFields({
+        typeComposer,
+        fields: defineFieldMapToConfig(type.getFields()),
+      })
+    }
+
     if (isNamedTypeComposer(type)) {
       typeComposer.extendExtensions(type.getExtensions())
     }
+
     addExtensions({ schemaComposer, typeComposer, plugin, createdFrom })
+
     return true
   } else {
     report.warn(
@@ -1160,3 +1182,12 @@ const checkQueryableInterfaces = ({ schemaComposer }) => {
     )
   }
 }
+
+const mergeFields = ({ typeComposer, fields }) =>
+  Object.entries(fields).forEach(([fieldName, fieldConfig]) => {
+    if (typeComposer.hasField(fieldName)) {
+      typeComposer.extendField(fieldName, fieldConfig)
+    } else {
+      typeComposer.setField(fieldName, fieldConfig)
+    }
+  })

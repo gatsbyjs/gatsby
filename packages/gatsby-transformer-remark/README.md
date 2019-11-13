@@ -242,7 +242,7 @@ If that is the case, you can set `truncate` option on `excerpt` field, like:
 
 ### Excerpts for HTML embedded in Markdown files
 
-If your Markdown file contains HTML `except` will not return a value.
+If your Markdown file contains HTML, `excerpt` will not return a value.
 
 In that case, you can set an `excerpt_separator` in the `gatsby-config.js` file:
 

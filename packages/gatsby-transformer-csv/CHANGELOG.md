@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-csv@2.1.16...gatsby-transformer-csv@2.1.17) (2019-11-10)
+
+**Note:** Version bump only for package gatsby-transformer-csv
+
+## [2.1.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-csv@2.1.15...gatsby-transformer-csv@2.1.16) (2019-11-04)
+
+### Features
+
+- **gatsby-transformer-csv:** support customizing node type names ([#18104](https://github.com/gatsbyjs/gatsby/issues/18104)) ([fc3572a](https://github.com/gatsbyjs/gatsby/commit/fc3572a))
+
+## [2.1.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-csv@2.1.14...gatsby-transformer-csv@2.1.15) (2019-10-28)
+
+### Bug Fixes
+
+- update minor updates in packages ([#18875](https://github.com/gatsbyjs/gatsby/issues/18875)) ([b692879](https://github.com/gatsbyjs/gatsby/commit/b692879))
+
+## [2.1.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-csv@2.1.13...gatsby-transformer-csv@2.1.14) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-transformer-csv
+
+## [2.1.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-csv@2.1.12...gatsby-transformer-csv@2.1.13) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-transformer-csv
+
 ## [2.1.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-csv@2.1.11...gatsby-transformer-csv@2.1.12) (2019-10-09)
 
 **Note:** Version bump only for package gatsby-transformer-csv

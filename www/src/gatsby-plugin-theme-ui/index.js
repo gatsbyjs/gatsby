@@ -47,7 +47,7 @@ const lineHeightsTokens = {
   heading: lh.dense,
 }
 
-const darkBackground = `#111014` // meh
+const darkBackground = `#131217` // meh
 const darkBorder = c.grey[90]
 // const darkBackground = c.purple[90]
 // const darkBorder = c.purple[80]
@@ -190,8 +190,13 @@ const col = {
     placeholder: c.grey[60],
   },
   widget: {
+    border: c.grey[10],
     background: c.white,
     color: c.text.primary,
+  },
+  highlightedBox: {
+    background: c.yellow[10],
+    color: c.grey[80],
   },
   newsletter: {
     background: c.white,
@@ -211,8 +216,8 @@ const col = {
   modes: {
     dark: {
       background: darkBackground,
-      text: c.grey[20],
-      heading: c.white,
+      text: c.grey[30],
+      heading: c.whiteFade[80],
       textMuted: c.grey[40],
       banner: hex2rgba(c.purple[90], 0.975),
       muted: c.grey[90],
@@ -305,6 +310,10 @@ const col = {
       widget: {
         background: darkBackground,
         border: darkBorder,
+        color: c.white,
+      },
+      highlightedBox: {
+        background: c.grey[90],
         color: c.white,
       },
       newsletter: {

@@ -63,9 +63,9 @@ module.exports = {
 
 ## Replace the content of the bio
 
-When using Gatsby themes, you can take advantage of something called component shadowing.
+When using Gatsby themes, you can take advantage of something called component shadowing. This allows you to override the default component included in the theme with a custom one you've created.
 
-The Gatsby blog theme package has a component that contains the content of the site author's biography. The file path to that component (in the blog theme package, not your site) is `gatsby-theme-blog/src/components/bio-content.js`.
+The Gatsby blog theme package has a component that contains the content of the site author's biography. The file path to that component (in the blog theme package, not your site) is `gatsby-theme-blog/src/components/bio-content.js`. You can find this path by looking through the theme in your site's `node_modules/gatsby-theme-blog` directory.
 
 If you look at the file tree of your site, you'll see it looks like this:
 
@@ -87,7 +87,7 @@ my-blog
 └── package.json
 ```
 
-In the `src` directory of the site, there's a `gatsby-theme-blog` directory. Any file placed in that directory that corresponds to a file in the blog theme will completely shadow the theme.
+In the `src` directory of the site, there's a `gatsby-theme-blog` directory. Any file placed in that directory with a path that matches the path of a file in the blog theme directory will completely shadow the theme.
 
 > 💡 The name of the directory (here `gatsby-theme-blog`) must exactly mirror the name of the published theme package, which in this case is [`gatsby-theme-blog`](https://www.npmjs.com/package/gatsby-theme-blog).
 
@@ -145,24 +145,24 @@ Open up `/src/gatsby-theme-blog/gatsby-plugin-theme-ui/colors.js`, and uncomment
 
 ```javascript:title=colors.js
 {/* highlight-start */}
-const blue60 = "#007acc"
-const blue30 = "#66E0FF"
-const blueGray = "#282c35"
+const darkBlue = `#007acc`
+const lightBlue = `#66E0FF`
+const blueGray = `#282c35`
 {/* highlight-end */}
 
-export default merge({}, defaultThemeColors, {
+export default merge(defaultThemeColors, {
   {/* highlight-start */}
-    text: blueGray,
-    primary: blue60,
-    heading: blueGray,
-    modes: {
-      dark: {
-        background: blueGray,
-        primary: blue30,
-        highlight: blue60,
-      },
+  text: blueGray,
+  primary: darkBlue,
+  heading: blueGray,
+  modes: {
+    dark: {
+      background: blueGray,
+      primary: lightBlue,
+      highlight: lightBlue,
     },
-   {/* highlight-end */}
+  },
+  {/* highlight-end */}
 })
 ```
 
@@ -172,7 +172,7 @@ Now, instead of a purple theme, you have a blue theme instead:
 
 In this file, you're pulling in the default color theme (imported as `defaultThemeColors` here), and overriding certain color keys.
 
-To see what other theme colors you can customize, check out the `colors.js` file in the official blog theme (`gatsby-theme-blog/src/gatsby-plugin-theme-ui/colors.js`)
+To see what other theme colors you can customize, check out the `colors.js` file in the official blog theme (`node_modules/gatsby-theme-blog/src/gatsby-plugin-theme-ui/colors.js`)
 
 ## Wrapping up
 

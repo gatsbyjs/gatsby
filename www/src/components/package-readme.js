@@ -33,7 +33,7 @@ const PackageReadMe = props => {
             display: `flex`,
             flexWrap: `wrap`,
             justifyContent: `space-between`,
-            pb: 9,
+            pb: 6,
             "&&:hover": {
               color: `inherit`,
             },

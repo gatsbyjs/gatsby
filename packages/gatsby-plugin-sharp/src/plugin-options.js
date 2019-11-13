@@ -11,6 +11,9 @@ const pluginDefaults = {
 
 const generalArgs = {
   quality: 50,
+  jpegQuality: null,
+  pngQuality: null,
+  webpQuality: null,
   jpegProgressive: true,
   pngCompressionLevel: 9,
   // default is 4 (https://github.com/kornelski/pngquant/blob/4219956d5e080be7905b5581314d913d20896934/rust/bin.rs#L61)

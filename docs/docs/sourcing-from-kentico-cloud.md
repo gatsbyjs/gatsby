@@ -68,9 +68,9 @@ And that's enough for you to be able to access content from Kentico Cloud in you
 gatsby develop
 ```
 
-To see all the content that's available from Kentico Cloud, you can test out GraphQL queries in GraphiQL at `http://localhost:8000/___graphql`. Nodes from Kentico Cloud will be prefixed with `kenticoCloud` (for single nodes) or `allKenticoCloud` (for all examples of a given type). Then each node has `Item` or `Type`, depending on what it is, and lastly you can add the codename of a specific type you are looking for. Feel free to explore the responses in GraphiQL.
+To see all the content that's available from Kentico Cloud, you can test out GraphQL queries in GraphiQL at <http://localhost:8000/___graphql>. Nodes from Kentico Cloud will be prefixed with `kenticoCloud` (for single nodes) or `allKenticoCloud` (for all examples of a given type). Then each node has `Item` or `Type`, depending on what it is, and lastly you can add the codename of a specific type you are looking for. Feel free to explore the responses in GraphiQL.
 
-To see how to put that data into your site, first go to `http://localhost:8000/`. Notice that the default title for the site is "Gatsby Default Starter". You can change that by pulling the title for your site from Kentico Cloud.
+To see how to put that data into your site, first go to <http://localhost:8000/>. Notice that the default title for the site is "Gatsby Default Starter". You can change that by pulling the title for your site from Kentico Cloud.
 
 The title here is generated in the layout from the site metadata. By default, the Kentico Cloud Sample Project has a single item named "Home" that is the only item of the Home type. So you can change the layout component to query the metadata of that item and then use that data to populate your title.
 
@@ -95,7 +95,7 @@ const Layout = ({ children }) => (
 ...
 ```
 
-If you look at `http://localhost:8000/`, you'll notice the title is now "Dancing Goat–Freshest coffee on the block!". You can easily change this title in Kentico Cloud to whatever you want and rerun `gatsby develop` to rebuild the site ([see below about automatic builds](#continuous-deployment)).
+If you look at <http://localhost:8000/>, you'll notice the title is now "Dancing Goat–Freshest coffee on the block!". You can easily change this title in Kentico Cloud to whatever you want and rerun `gatsby develop` to rebuild the site ([see below about automatic builds](#continuous-deployment)).
 
 So you've seen how to add content to existing pages in Gatsby using Kentico Cloud. Next, you will start creating new pages of your own.
 
@@ -205,7 +205,7 @@ export const query = graphql`
 `
 ```
 
-When you rerun `gatsby develop`, you'll be able to see each article as a page with content pulled from Kentico Cloud. To see a list of all pages, visit `http://localhost:8000/asdf` (or any other url that generates a 404).
+When you rerun `gatsby develop`, you'll be able to see each article as a page with content pulled from Kentico Cloud. To see a list of all pages, visit <http://localhost:8000/asdf> (or any other url that generates a 404).
 
 The body copy for this article comes from a rich text element in Kentico Cloud. Links and inline linked items (e.g., embedded videos) are not resolved by default for rich text elements. If you want to resolve them, you can use the [embedded JS SDK resolution](https://github.com/Kentico/gatsby-source-kentico-cloud#embedded-js-sdk-resolution) or query the required data in structured form for resolution and create your own React components for [inline content items](https://github.com/Kentico/gatsby-source-kentico-cloud#content-items-in-rich-text-elements), [links](https://github.com/Kentico/gatsby-source-kentico-cloud#links-in-rich-text-elements), and [images](https://github.com/Kentico/gatsby-source-kentico-cloud#images-in-rich-text-elements).
 

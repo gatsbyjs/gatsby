@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { mediaQueries } from "gatsby-design-tokens"
 
 import EvaluationCell from "./evaluation-cell"
 
@@ -30,10 +29,7 @@ const LegendTable = () => {
       textAlign: `center`,
       padding: 3,
       borderLeft: `1px solid ${t.colors.ui.border}`,
-      borderBottom: `1px solid ${t.colors.ui.border}`,
-      [mediaQueries.sm]: {
-        borderBottom: 0,
-      },
+      borderBottom: [`1px solid ${t.colors.ui.border}`, null, 0],
     }
   }
 
@@ -80,10 +76,7 @@ const LegendTable = () => {
           border: t => `1px solid ${t.colors.ui.border}`,
           borderLeft: 0,
           fontFamily: `heading`,
-          display: `none`,
-          [mediaQueries.sm]: {
-            display: `table`,
-          },
+          display: [`none`, null, `table`],
         }}
       >
         <div css={{ display: `table-row` }}>{balls}</div>
@@ -91,13 +84,10 @@ const LegendTable = () => {
       </div>
       <div
         sx={{
-          display: `table`,
+          display: [`table`, null, `none`],
           border: t => `1px solid ${t.colors.ui.border}`,
           borderLeft: 0,
           fontFamily: `heading`,
-          [mediaQueries.sm]: {
-            display: `none`,
-          },
         }}
       >
         {[0, 1, 2, 3, 4].map(i => (

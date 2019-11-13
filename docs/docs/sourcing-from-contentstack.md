@@ -12,7 +12,7 @@ Gatsby, with its powerful UI toolset, serves as the “head” for your websites
 
 _**Note:** This guide uses the `gatsby-source-contentstack` plugin to create a Gatsby-powered site._
 
-## Build a Site with Contenstack and Gatsby
+## Build a site with Contentstack and Gatsby
 
 ### Step 1: Clone the starter repo and install dependencies
 
@@ -34,7 +34,7 @@ CONTENTSTACK_ENVIRONMENT='development' # or production, staging, etc.
 
 These will be pulled into the `gatsby-config.js` file under the `gatsby-source-contentstack` plugin.
 
-_**Note:** if you wish to preview the pages of your gatsby site from within the Contentstack entry editor, ensure base URLs are set for each environment and language._
+_**Note:** if you wish to preview the pages of your Gatsby site from within the Contentstack entry editor, ensure base URLs are set for each environment and language._
 
 ### Step 3: Create and publish content
 
@@ -51,7 +51,7 @@ Navigate to your root directory and run the following command:
 
 `gatsby develop`
 
-After running this, you will be able to view your site at `http://localhost:8000/`. You can run the GraphiQL IDE at `http://localhost:8000/___graphql`. The GraphiQL IDE will help you explore the app's data, including the Contentstack APIs.
+After running this, you will be able to view your site at <http://localhost:8000/>. You can run the GraphiQL IDE at <http://localhost:8000/___graphql>. The GraphiQL IDE will help you explore the app's data, including the Contentstack APIs.
 
 Now, you will able to query Contentstack data. Try the query below to get the 'Home' content type data:
 
@@ -89,11 +89,11 @@ export const pageQuery = graphql`
 `
 ```
 
-This will display the title of your home page on `http://localhost:8000/home`. Likewise, you can query additional fields in your entry.
+This will display the title of your home page on <http://localhost:8000/home>. Likewise, you can query additional fields in your entry.
 
-## Closing Note
+## Closing note
 
-The above example is meant to show you how easy it is to set up a simple Gatsby site that sources content directly from Contentstack. Contentstack has also published a few articles that demonstrate how Contentstack works with Gatsby in their [documentation](https://www.contentstack.com/docs/?utm_source=gatsby&utm_medium=referral&utm_campaign=2019_06_17_sourcing_from_contentstack):
+The above example is meant to demonstrate how to set up a simple Gatsby site that sources content directly from Contentstack. Contentstack has also published a few articles that demonstrate how Contentstack works with Gatsby in their [documentation](https://www.contentstack.com/docs/?utm_source=gatsby&utm_medium=referral&utm_campaign=2019_06_17_sourcing_from_contentstack):
 
 - [Getting started with Contentstack and Gatsby](https://www.contentstack.com/docs/example-apps/build-a-sample-website-using-gatsby-and-contentstack?utm_source=gatsby&utm_medium=referral&utm_campaign=2019_06_17_sourcing_from_contentstack)
 - [Build an example website using Gatsby and Contentstack](https://www.contentstack.com/blog/announcements/best-content-management-platform-2019-siia-codie-award?utm_source=prnewswire&utm_medium=referral&utm_campaign=2019_06_18_best_cms_codie_award)
