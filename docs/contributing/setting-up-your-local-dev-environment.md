@@ -27,12 +27,13 @@ Yarn is a package manager for your code, similar to [NPM](https://www.npmjs.com/
 - Set up repo and install dependencies: `yarn run bootstrap`
 - Make sure tests are passing for you: `yarn test`
 - Create a topic branch: `git checkout -b topics/new-feature-name`
-- See [docs setup instructions](/contributing/docs-contributions#docs-site-setup-instructions) below for docs-only changes.
+- See [docs setup instructions](/contributing/docs-contributions#docs-site-setup-instructions) for docs-only changes.
 - Run `yarn run watch` from the root of the repo to watch for changes to packages' source code and compile these changes on-the-fly as you work.
   - Note that the watch command can be resource intensive. To limit it to the packages you're working on, add a scope flag, like `yarn run watch --scope={gatsby,gatsby-cli}`.
   - To watch just one package, run `yarn run watch --scope=gatsby`.
 - Install [gatsby-dev-cli](https://www.npmjs.com/package/gatsby-dev-cli) globally: `yarn global add gatsby-dev-cli`
 - Run `yarn install` in each of the sites you're testing.
+- Make sure you have the Gatsby CLI installed with `gatsby -v`, if not run `yarn global add gatsby-cli`
 - For each of your Gatsby test sites, run the `gatsby-dev` command inside the test site's directory to copy
   the built files from your cloned copy of Gatsby. It'll watch for your changes
   to Gatsby packages and copy them into the site. For more detailed instructions

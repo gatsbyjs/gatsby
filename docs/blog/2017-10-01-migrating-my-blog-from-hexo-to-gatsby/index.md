@@ -397,27 +397,29 @@ Let's remedy that. Import the `Link` component and swap it for the simple
 `<a>` tag that was in there before:
 
 ```jsx
-import React from 'react';
-import { Link } from 'gatsby';
+import React from "react"
+import { Link } from "gatsby"
 
 export default class BlogIndex extends React.Component {
   render() {
     // Handle graphql errors
     if (this.props.errors && this.props.errors.length) {
       this.props.errors.forEach(({ message }) => {
-        console.error(`BlogIndex render errr: ${message}`);
-      });
-      return <h1>Errors found: Check the console for details</h1>;
+        console.error(`BlogIndex render errr: ${message}`)
+      })
+      return <h1>Errors found: Check the console for details</h1>
     }
 
     return (
       <div>
         <h2>Some things I wrote</h2>
         {this.props.data.allMarkdownRemark.edges.map(({ node }, i) => (
-          <Link to={/* ??? */} key={i}>{node.frontmatter.title}</Link>
+          <Link to={/* ??? */} key={i}>
+            {node.frontmatter.title}
+          </Link>
         ))}
       </div>
-    );
+    )
   }
 }
 ```

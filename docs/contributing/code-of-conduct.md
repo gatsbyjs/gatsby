@@ -28,7 +28,7 @@ Examples of unacceptable behavior by participants include:
 
 Project maintainers are responsible for clarifying the standards of acceptable behavior and are expected to take appropriate and fair corrective action in response to any instances of unacceptable behavior.
 
-Project maintainers have the right and responsibility to remove, edit, or reject comments, commits, code, wiki edits, issues, and other contributions that are not aligned with this code of conduct, or to ban temporarily or permanently any contributor for other behaviors that they deem inappropriate, threatening, offensive, or harmful.
+Project maintainers have the right and responsibility to remove, edit, or reject comments, commits, code, wiki edits, issues, and other contributions that are not aligned with this code of conduct, or to ban temporarily or permanently any contributor for other behaviors that they deem inappropriate, divisive, threatening, offensive, or harmful.
 
 ## Scope
 
@@ -39,6 +39,8 @@ This Code of Conduct applies both within project spaces and in public spaces whe
 Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting the project team at [conduct@gatsbyjs.com](mailto:conduct@gatsbyjs.com). All complaints will be reviewed and investigated and will result in a response that is deemed necessary and appropriate to the circumstances. The project team is obligated to maintain confidentiality with regard to the reporter of an incident. Further details of specific enforcement policies may be posted separately.
 
 Project maintainers who do not follow or enforce the Code of Conduct in good faith may face temporary or permanent repercussions as determined by other members of the project's leadership.
+
+When faced with repeated bad faith comments or harassment after an earnest attempt to mediate an issue, the Gatsby team reserves the right to remove someone from the GitHub repository and/or block them on social media. This decision will always be made with consensus from more than one team member.
 
 ## Attribution
 
