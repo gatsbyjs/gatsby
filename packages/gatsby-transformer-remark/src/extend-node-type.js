@@ -601,12 +601,12 @@ module.exports = (
       tableOfContents: {
         type: `String`,
         args: {
-          // TODO set default value to false in next major release
+          // TODO:(v3) set default value to false
           absolute: {
             type: `Boolean`,
             defaultValue: true,
           },
-          // TODO set default value to empty string in next major release
+          // TODO:(v3) set default value to empty string
           pathToSlugField: {
             type: `String`,
             defaultValue: `fields.slug`,
