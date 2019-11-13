@@ -34,6 +34,9 @@
             - title: Preparing a Site for Deployment
               link: /docs/preparing-for-deployment/
               breadcrumbTitle: Preparing for Deployment
+            - title: Deploying to Netlify
+              link: /docs/deploying-to-netlify/
+              breadcrumbTitle: Netlify
             - title: Deploying to AWS Amplify
               link: /docs/deploying-to-aws-amplify/
               breadcrumbTitle: AWS Amplify
@@ -52,9 +55,6 @@
             - title: Deploying to GitLab Pages
               link: /docs/deploying-to-gitlab-pages/
               breadcrumbTitle: GitLab Pages
-            - title: Deploying to Netlify
-              link: /docs/deploying-to-netlify/
-              breadcrumbTitle: Netlify
             - title: Deploying to Render
               link: /docs/deploying-to-render/
               breadcrumbTitle: Render
