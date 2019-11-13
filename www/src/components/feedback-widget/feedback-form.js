@@ -127,7 +127,7 @@ const FeedbackForm = ({
       <TextareaLabel className={`textarea ${submitting ? `disabled` : ``}`}>
         Your comments <span>(optional):</span>
         <textarea
-          sx={{ ...textareaStyles }}
+          sx={textareaStyles}
           value={comment}
           onChange={handleCommentChange}
           disabled={submitting}
