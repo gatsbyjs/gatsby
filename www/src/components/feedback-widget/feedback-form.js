@@ -73,7 +73,7 @@ const textareaStyles = {
   mb: 4,
   px: 3,
   py: 2,
-  lineHeight: `dense`,
+  lineHeight: `default`,
   overflowY: `scroll`,
 }
 
