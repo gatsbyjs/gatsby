@@ -530,10 +530,15 @@ actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
     nodes.map(n => findChildren(getNode(n).children))
   )
 
+  const nodeIds = [...nodes, ...descendantNodes]
+
   const deleteNodesAction = {
     type: `DELETE_NODES`,
     plugin,
-    payload: [...nodes, ...descendantNodes],
+    // Payload contains node IDs but inference-metadata requires
+    // full node instances to update
+    payload: nodeIds,
+    fullNodes: nodeIds.map(getNode),
   }
   return deleteNodesAction
 }

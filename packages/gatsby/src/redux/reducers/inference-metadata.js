@@ -73,7 +73,11 @@ module.exports = (state = {}, action) => {
 
     // Deprecated, will be removed in Gatsby v3.
     case `DELETE_NODES`: {
-      // TODO
+      const { fullNodes } = action
+      fullNodes.forEach(node => {
+        const { type } = node.internal
+        state[type] = deleteNode(state[type] || { ignoredFields }, node)
+      })
       return state
     }
 
