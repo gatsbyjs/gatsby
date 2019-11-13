@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.8.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.9...gatsby-cli@2.8.10) (2019-11-13)
+
+### Bug Fixes
+
+- **gatsby-cli:** remove \$ for better copy paste ([#19390](https://github.com/gatsbyjs/gatsby/issues/19390)) ([976f6c8](https://github.com/gatsbyjs/gatsby/commit/976f6c8))
+
 ## [2.8.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.8...gatsby-cli@2.8.9) (2019-11-10)
 
 ### Bug Fixes

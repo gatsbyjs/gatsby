@@ -8458,6 +8458,20 @@
     - Freelance
   built_by: Sam Goddard
   built_by_url: "https://samgoddard.dev/"
+- title: Kosmos Platform
+  main_url: https://kosmosplatform.com
+  url: https://kosmosplatform.com
+  description: >
+    Explore the Kosmos - A new world is here, where every clinician now has the ability to improve cardiothoracic and abdominal assessment, in just a few minutes.
+  categories:
+    - Marketing
+    - Science
+    - Video
+    - Landing Page
+    - Healthcare
+    - Technology
+  built_by: Bryce Benson via Turnstyle Studio
+  built_by_url: https://github.com/brycebenson
 - title: B-Engaged
   url: https://b-engaged.se/
   main_url: https://b-engaged.se/
@@ -8501,5 +8515,13 @@
   categories: 
     - Agency
     - Design
-
-
+- title: Pix4D
+  url: https://www.pix4d.com
+  main_url: https://www.pix4d.com
+  description: >
+    A unique suite of photogrammetry software for drone mapping. Capture images with our app, process on desktop or cloud and create maps and 3D models.
+  categories:
+    - Business
+    - Productivity
+    - Technology
+  featured: false
