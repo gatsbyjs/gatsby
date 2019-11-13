@@ -10,9 +10,9 @@ There are three ways you can use Tailwind with Gatsby:
 
 1. Standard: Use PostCSS to generate Tailwind classes, then you can apply those classes using `className`.
 2. CSS-in-JS: Integrate Tailwind classes into Styled Components.
-3. Sass/SCSS: Use [gatsby-plugin-sass](https://www.gatsbyjs.org/packages/gatsby-plugin-sass/) to support Tailwind classes in your Sass/SCSS files.
+3. SCSS: Use [gatsby-plugin-sass](/packages/gatsby-plugin-sass) to support Tailwind classes in your SCSS files.
 
-You have to install and configure Tailwind for all of these methods, so this guide will walk through that step first, then you can follow the instructions for PostCSS, CSS-in-JS or Sass/SCSS.
+You have to install and configure Tailwind for all of these methods, so this guide will walk through that step first, then you can follow the instructions for PostCSS, CSS-in-JS or SCSS.
 
 ## Installing and configuring Tailwind
 
@@ -36,7 +36,7 @@ npx tailwind init
 
 ### Option #1: PostCSS
 
-1.  Install the Gatsby PostCSS plugin [**gatsby-plugin-postcss**](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-postcss).
+1.  Install the Gatsby PostCSS plugin [**gatsby-plugin-postcss**](/packages/gatsby-plugin-postcss).
 
 ```shell
 npm install --save gatsby-plugin-postcss
@@ -70,7 +70,7 @@ These steps assume you have a CSS-in-JS library already installed, and the examp
 
 1. Install Tailwind Babel Macro
 
-**Note**: `tailwind.macro` isn't currently compatible with Tailwind 1.0.0+. However, a compatible beta is available at `tailwind.macro@next`. Feel free to either use the beta or revert to Tailwind CSS 0.7.4.
+**Note**: `tailwind.macro` isn't currently compatible with Tailwind 1.0.0+. However, a compatible beta is available at `tailwind.macro@next`. Feel free to either use the beta or revert to Tailwind 0.7.4.
 
 **Option 1**: Install `tailwind.macro@next` and use Tailwind 1.0.0+
 
@@ -106,22 +106,15 @@ const Button = tw.button`
 `
 ```
 
-### Option #3: Sass/SCSS
+### Option #3: SCSS
 
-1.  Install the Gatsby Sass plugin [**gatsby-plugin-sass**](https://www.gatsbyjs.org/packages/gatsby-plugin-sass/) and `node-sass`.
+1. Install the Gatsby SCSS plugin [**gatsby-plugin-sass**](/packages/gatsby-plugin-sass) and `node-sass`.
 
 ```shell
 npm install --save node-sass gatsby-plugin-sass
 ```
 
-_The default Sass implementation wil lbe `node-sass`, but can be changed. Alternatively you can switch to the Dart implementation `sass`:_
-
-```shell
-npm install --save-dev sass
-npm install --save gatsby-plugin-sass
-```
-
-2. To be able to use Tailwind classes in your Sass/SCSS files, add the `tailwindcss` package into the `postCSSPlugins` parameter in your `gatsby-config.js`. If you want to use the Dart implementation of Sass, you will need to add the `implementation` parameter.
+2. To be able to use Tailwind classes in your SCSS files, add the `tailwindcss` package into the `postCSSPlugins` parameter in your `gatsby-config.js`.
 
 ```javascript:title=gatsby-config.js
 plugins: [
@@ -130,9 +123,8 @@ plugins: [
     options: {
       postCssPlugins: [
         require("tailwindcss"),
-        // require("./tailwind.config.js"), // Optional: Load custom Tailwind CSS configuration
+        require("./tailwind.config.js"), // Optional: Load custom Tailwind CSS configuration
       ],
-      // implementation: require("sass"), // Alternatively you can use another Sass implementation
     },
   },
 ],
