@@ -1,6 +1,17 @@
 import React from "react"
 import PropTypes from "prop-types"
-import { createFunctionWithTimeout } from "./utils"
+
+const createFunctionWithTimeout = (callback, opt_timeout = 1000) => {
+  let called = false
+  const raceCallback = () => {
+    if (!called) {
+      called = true
+      callback()
+    }
+  }
+  setTimeout(raceCallback, opt_timeout)
+  return raceCallback
+}
 
 function OutboundLink(props) {
   return (
@@ -56,15 +67,9 @@ OutboundLink.propTypes = {
 
 /**
  * This allows the user to create custom events within their Gatsby projects.
- * @param {string} category Required - The object that was interacted with (e.g.video)
- * @param {string} action Required - Type of interaction (e.g. 'play')
- * @param {string} label Optional - Useful for categorizing events (e.g. 'Spring Campaign')
- * @param {integer} value Optional - Numeric value associated with the event. (e.g. A product ID)
- * @param {bool} nonInteraction Optional - If a hit is considered non-interactive.
- * @param {string} transport Optional - How the events will be sent. The options are 'beacon', 'xhr', or 'image'.
- * @param {func} hitCallback Optional - Function that gets called as soon as the hit has been successfully sent.
  *
- * @link https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#events
+ * @param {import('gatsby-plugin-google-analytics').CustomEventArgs} args
+ * @see https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#events
  */
 function trackCustomEvent({
   category,
@@ -74,23 +79,22 @@ function trackCustomEvent({
   nonInteraction = true,
   transport,
   hitCallback,
+  callbackTimeout = 1000,
 }) {
   if (typeof window !== `undefined` && window.ga) {
-    let trackingEventOptions = {
+    const trackingEventOptions = {
       eventCategory: category,
       eventAction: action,
       eventLabel: label,
       eventValue: value,
       nonInteraction: nonInteraction,
-    }
-
-    if (transport) {
-      trackingEventOptions[`transport`] = transport
+      transport,
     }
 
     if (hitCallback && typeof hitCallback === `function`) {
-      trackingEventOptions[`hitCallback`] = createFunctionWithTimeout(
-        hitCallback
+      trackingEventOptions.hitCallback = createFunctionWithTimeout(
+        hitCallback,
+        callbackTimeout
       )
     }
 
