@@ -8403,3 +8403,12 @@
     - Freelance
   built_by: Sam Goddard
   built_by_url: "https://samgoddard.dev/"
+- title: B-Engaged
+  url: https://b-engaged.se/
+  main_url: https://b-engaged.se/
+  description: >
+    B-Engaged gives a clear picture of the organization and helps you implement the measures that makes difference for the employees. The results of our employee surveys are easily transformed into concrete improvement measures using AI technology.
+  categories:
+    - Business
+    - Human Resources
+  featured: false
