@@ -108,6 +108,18 @@ If you wanted to shadow a CSS file in `gatsby-theme-awesome-css` that's found at
 
 The theme's `bio.css` file would then be replaced with your new CSS file.
 
+## File extensions can be overridden
+
+As long as the theme author imports components/files without the file extension, users are able to shadow these with other types of files. For example the theme author created a TypeScript file at `src/components/bio.tsx` and uses it in another file:
+
+```js:title=src/components/header.js
+import Bio from "./bio"
+
+/* Rest of the code */
+```
+
+You'll be able to shadow the Bio file by creating e.g. a JavaScript file at `src/gatsby-theme-blog/components/bio.js` as the file extension wasn't used in the import.
+
 ## Extending shadowed files
 
 In addition to overriding files, you can _extend_ shadowable files.
