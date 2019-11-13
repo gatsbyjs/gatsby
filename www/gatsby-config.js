@@ -305,7 +305,14 @@ module.exports = {
         ],
       },
     },
-    `gatsby-plugin-netlify`,
+    {
+      resolve: `gatsby-plugin-netlify`,
+      options: {
+        headers: {
+          "/*": [`Referrer-Policy: strict-origin-when-cross-origin`],
+        },
+      },
+    },
     `gatsby-plugin-netlify-cache`,
     {
       resolve: `gatsby-plugin-mailchimp`,
