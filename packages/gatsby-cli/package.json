@@ -13,7 +13,7 @@
     "@babel/code-frame": "^7.5.5",
     "@babel/runtime": "^7.7.2",
     "@hapi/joi": "^15.1.1",
-    "better-opn": "^0.1.4",
+    "better-opn": "^1.0.0",
     "bluebird": "^3.7.1",
     "chalk": "^2.4.2",
     "clipboardy": "^2.1.0",
