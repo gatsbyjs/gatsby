@@ -5,6 +5,12 @@ function onCreateBabelConfig({ actions }, options) {
     name: require.resolve(`@babel/preset-typescript`),
     options,
   })
+  actions.setBabelPlugin({
+    name: require.resolve(`@babel/plugin-proposal-optional-chaining`),
+  })
+  actions.setBabelPlugin({
+    name: require.resolve(`@babel/plugin-proposal-nullish-coalescing-operator`),
+  })
 }
 
 function onCreateWebpackConfig({ actions, loaders }) {
