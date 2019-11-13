@@ -8381,13 +8381,13 @@
     - Business
   built_by: Ender Bonnet
   built_by_url: https://enbonnet.me/
-- title: Akshay Thakur's Portfolio	
-  main_url: https://akshaythakur.me	
-  url: https://akshaythakur.me	
-  categories:	
-    - Portfolio	
-    - Web Development	
-  built_by: Akshay Thakur	
+- title: Akshay Thakur's Portfolio
+  main_url: https://akshaythakur.me
+  url: https://akshaythakur.me
+  categories:
+    - Portfolio
+    - Web Development
+  built_by: Akshay Thakur
   built_by_url: https://akshaythakur.me
 - title: Binaria
   description: >
@@ -8486,7 +8486,7 @@
   main_url: https://rollbar.com/
   description: >
     Rollbar automates error monitoring and triaging, so developers can fix errors that matter within minutes, and build software quickly and painlessly.
-  categories: 
+  categories:
     - Programming
     - Web Development
   featured: false
@@ -8512,7 +8512,7 @@
   main_url: https://www.firstborn.com/
   description: >
     We shape modern brands for a connected future.
-  categories: 
+  categories:
     - Agency
     - Design
 - title: Pix4D
