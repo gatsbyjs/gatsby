@@ -1,11 +1,15 @@
 const React = require(`react`)
 
+let hot
+if (process.env.NODE_ENV === `development`) {
+    hot = require(`react-hot-loader/root`).hot
+}
+
 const preferDefault = m => (m && m.default) || m
 let Layout
 try {
   Layout = preferDefault(require(GATSBY_LAYOUT_COMPONENT_PATH))
-  if (process.env.NODE_ENV === `development`) {
-    const { hot } = require(`react-hot-loader/root`)
+  if (hot) {
     Layout = hot(Layout)
   }
 } catch (e) {
