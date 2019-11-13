@@ -390,3 +390,4 @@ onClick = () => {
 ## Additional resources
 
 - [Authentication tutorial for client-only routes](/tutorial/authentication-tutorial/)
+- [`gatsby-plugin-catch-links`](https://www.gatsbyjs.org/packages/gatsby-plugin-catch-links/) to automatically intercept local links in Markdown files for `gatsby-link` like behavior
