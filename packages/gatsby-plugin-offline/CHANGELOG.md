@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.19...gatsby-plugin-offline@3.0.20) (2019-11-13)
+
+### Features
+
+- **gatsby-plugin-offline:** Merge workboxConfig and default o… ([#19437](https://github.com/gatsbyjs/gatsby/issues/19437)) ([8791329](https://github.com/gatsbyjs/gatsby/commit/8791329))
+
 ## [3.0.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.18...gatsby-plugin-offline@3.0.19) (2019-11-10)
 
 **Note:** Version bump only for package gatsby-plugin-offline
