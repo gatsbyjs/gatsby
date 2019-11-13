@@ -8324,6 +8324,19 @@
   built_by: Jason Di Benedetto
   built_by_url: https://jason.dibenedetto.fyi
   featured: false
+- title: Yoseph.tech
+  main_url: https://www.yoseph.tech
+  url: https://www.yoseph.tech/compilers
+  source_url: https://github.com/radding/yoseph.tech_gatsby
+  description: >
+    Yoseph.tech is a personal blog centered around technology and software engineering
+  categories:
+    - Technology
+    - Web Development
+    - Open Source
+  built_by: Yoseph Radding
+  built_by_url: https://github.com/radding
+  featured: false
 - title: Really Fast Sites
   url: https://reallyfastsites.com
   main_url: https://reallyfastsites.com
