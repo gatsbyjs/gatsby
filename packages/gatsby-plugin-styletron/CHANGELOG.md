@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@4.1.17...gatsby-plugin-styletron@4.1.18) (2019-11-10)
+
+**Note:** Version bump only for package gatsby-plugin-styletron
+
 ## [4.1.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@4.1.16...gatsby-plugin-styletron@4.1.17) (2019-10-28)
 
 ### Bug Fixes

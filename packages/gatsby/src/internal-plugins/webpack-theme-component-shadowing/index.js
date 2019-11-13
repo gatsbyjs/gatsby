@@ -12,7 +12,10 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
   cache = {}
 
   constructor({ projectRoot, themes, extensions }) {
-    debug(`themes list`, themes.map(({ themeName }) => themeName))
+    debug(
+      `themes list`,
+      themes.map(({ themeName }) => themeName)
+    )
     this.themes = themes
     this.projectRoot = projectRoot
     this.extensions = extensions

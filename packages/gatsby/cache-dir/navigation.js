@@ -141,7 +141,7 @@ function shouldUpdateScroll(prevRouterProps, { location }) {
     if (oldPathname === pathname) {
       // Scroll to element if it exists, if it doesn't, or no hash is provided,
       // scroll to top.
-      return hash ? hash.slice(1) : [0, 0]
+      return hash ? decodeURI(hash.slice(1)) : [0, 0]
     }
   }
   return true
