@@ -1,6 +1,6 @@
 /**
  * The problem: after GraphQL schema rebuilds, eslint loader keeps validating against
- * an old schema.
+ * the old schema.
  *
  * This plugin replaces options of eslint-plugin-graphql during develop
  */

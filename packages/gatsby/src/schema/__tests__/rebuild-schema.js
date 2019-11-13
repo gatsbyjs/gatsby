@@ -734,6 +734,8 @@ describe(`rebuilds node types having existing relations`, () => {
   const rebuild = async nodes => {
     i++
     nodes.forEach(node => {
+      // Adding new field to enforce type structure change
+      node[`field${i}`] = i
       node.id = `${node.id}${i}`
     })
     schema = await addNodeAndRebuild(nodes)
@@ -772,35 +774,11 @@ describe(`rebuilds node types having existing relations`, () => {
     await expect(rebuild(nodes(`Bar1`, `Foo1`))).resolves.toBeDefined()
     await expect(rebuild(nodes(`Baz1`, `Foo1`))).resolves.toBeDefined()
 
+    // Make sure types were actually rebuilt (having all those field1, field2, etc)
     const print = typePrinter(schema)
-    expect(print(`Foo`)).toMatchInlineSnapshot(`
-      "type Foo implements Node {
-        id: ID!
-        parent: Node
-        children: [Node!]!
-        internal: Internal!
-        foo: String
-      }"
-    `)
-    expect(print(`Bar`)).toMatchInlineSnapshot(`
-      "type Bar implements Node {
-        id: ID!
-        parent: Node
-        children: [Node!]!
-        internal: Internal!
-        bar: Int
-      }"
-    `)
-    expect(print(`Baz`)).toMatchInlineSnapshot(`
-      "type Baz implements Node {
-        id: ID!
-        parent: Node
-        children: [Node!]!
-        internal: Internal!
-        baz: Int
-        bar: Bar
-      }"
-    `)
+    expect(print(`Foo`)).toMatchSnapshot()
+    expect(print(`Bar`)).toMatchSnapshot()
+    expect(print(`Baz`)).toMatchSnapshot()
   })
 
   it(`rebuilds self-cyclic relations`, async () => {
@@ -825,15 +803,7 @@ describe(`rebuilds node types having existing relations`, () => {
     await expect(rebuild(nodes(`Foo1`, `Foo2`))).resolves.toBeDefined()
 
     const print = typePrinter(schema)
-    expect(print(`Foo`)).toMatchInlineSnapshot(`
-      "type Foo implements Node {
-        id: ID!
-        parent: Node
-        children: [Node!]!
-        internal: Internal!
-        foo: Foo
-      }"
-    `)
+    expect(print(`Foo`)).toMatchSnapshot()
   })
 
   it(`rebuilds bi-directional relations`, async () => {
@@ -859,24 +829,8 @@ describe(`rebuilds node types having existing relations`, () => {
     await expect(rebuild(nodes(`Foo1`, `Bar1`))).resolves.toBeDefined()
 
     const print = typePrinter(schema)
-    expect(print(`Foo`)).toMatchInlineSnapshot(`
-      "type Foo implements Node {
-        id: ID!
-        parent: Node
-        children: [Node!]!
-        internal: Internal!
-        bar: Bar
-      }"
-    `)
-    expect(print(`Bar`)).toMatchInlineSnapshot(`
-      "type Bar implements Node {
-        id: ID!
-        parent: Node
-        children: [Node!]!
-        internal: Internal!
-        foo: Foo
-      }"
-    `)
+    expect(print(`Foo`)).toMatchSnapshot()
+    expect(print(`Bar`)).toMatchSnapshot()
   })
 
   it(`rebuilds cyclic relations`, async () => {
@@ -910,34 +864,11 @@ describe(`rebuilds node types having existing relations`, () => {
     await expect(rebuild(nodes(`Bar1`, `Foo1`))).resolves.toBeDefined()
     await expect(rebuild(nodes(`Baz1`, `Foo1`))).resolves.toBeDefined()
 
+    // Make sure types were actually rebuilt (having all those field1, field2, etc)
     const print = typePrinter(schema)
-    expect(print(`Foo`)).toMatchInlineSnapshot(`
-      "type Foo implements Node {
-        id: ID!
-        parent: Node
-        children: [Node!]!
-        internal: Internal!
-        bar: Bar
-      }"
-    `)
-    expect(print(`Bar`)).toMatchInlineSnapshot(`
-      "type Bar implements Node {
-        id: ID!
-        parent: Node
-        children: [Node!]!
-        internal: Internal!
-        baz: Baz
-      }"
-    `)
-    expect(print(`Baz`)).toMatchInlineSnapshot(`
-      "type Baz implements Node {
-        id: ID!
-        parent: Node
-        children: [Node!]!
-        internal: Internal!
-        foo: Foo
-      }"
-    `)
+    expect(print(`Foo`)).toMatchSnapshot()
+    expect(print(`Bar`)).toMatchSnapshot()
+    expect(print(`Baz`)).toMatchSnapshot()
   })
 })
 

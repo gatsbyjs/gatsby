@@ -228,3 +228,119 @@ exports[`build and update individual types creates derived types 8`] = `
   fields___field1
 }"
 `;
+
+exports[`rebuilds node types having existing relations rebuilds bi-directional relations 1`] = `
+"type Foo implements Node {
+  id: ID!
+  parent: Node
+  children: [Node!]!
+  internal: Internal!
+  bar: Bar
+  field1: Int
+  field3: Int
+}"
+`;
+
+exports[`rebuilds node types having existing relations rebuilds bi-directional relations 2`] = `
+"type Bar implements Node {
+  id: ID!
+  parent: Node
+  children: [Node!]!
+  internal: Internal!
+  foo: Foo
+  field2: Int
+  field3: Int
+}"
+`;
+
+exports[`rebuilds node types having existing relations rebuilds cyclic relations 1`] = `
+"type Foo implements Node {
+  id: ID!
+  parent: Node
+  children: [Node!]!
+  internal: Internal!
+  bar: Bar
+  field1: Int
+  field4: Int
+  field5: Int
+  field6: Int
+}"
+`;
+
+exports[`rebuilds node types having existing relations rebuilds cyclic relations 2`] = `
+"type Bar implements Node {
+  id: ID!
+  parent: Node
+  children: [Node!]!
+  internal: Internal!
+  baz: Baz
+  field2: Int
+  field4: Int
+  field5: Int
+}"
+`;
+
+exports[`rebuilds node types having existing relations rebuilds cyclic relations 3`] = `
+"type Baz implements Node {
+  id: ID!
+  parent: Node
+  children: [Node!]!
+  internal: Internal!
+  foo: Foo
+  field3: Int
+  field6: Int
+}"
+`;
+
+exports[`rebuilds node types having existing relations rebuilds self-cyclic relations 1`] = `
+"type Foo implements Node {
+  id: ID!
+  parent: Node
+  children: [Node!]!
+  internal: Internal!
+  foo: Foo
+  field1: Int
+  field2: Int
+  field3: Int
+}"
+`;
+
+exports[`rebuilds node types having existing relations rebuilds simple acyclic relations 1`] = `
+"type Foo implements Node {
+  id: ID!
+  parent: Node
+  children: [Node!]!
+  internal: Internal!
+  foo: String
+  field3: Int
+  field4: Int
+  field5: Int
+  field6: Int
+}"
+`;
+
+exports[`rebuilds node types having existing relations rebuilds simple acyclic relations 2`] = `
+"type Bar implements Node {
+  id: ID!
+  parent: Node
+  children: [Node!]!
+  internal: Internal!
+  bar: Int
+  field2: Int
+  field4: Int
+  field5: Int
+}"
+`;
+
+exports[`rebuilds node types having existing relations rebuilds simple acyclic relations 3`] = `
+"type Baz implements Node {
+  id: ID!
+  parent: Node
+  children: [Node!]!
+  internal: Internal!
+  baz: Int
+  bar: Bar
+  field1: Int
+  field6: Int
+}"
+`;

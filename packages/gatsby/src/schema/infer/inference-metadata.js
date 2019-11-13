@@ -190,7 +190,6 @@ const updateValueDescriptor = ({
       break
     }
     case `string`: {
-      // FIXME: need this to satisfy pre-refactoring tests
       if (value === ``) {
         const { empty = 0 } = typeInfo
         typeInfo.empty = empty + delta
@@ -346,8 +345,6 @@ const buildExampleValue = ({
 
     case `date`:
     case `string`: {
-      // FIXME: Remove this and fix tests (this was mostly done for compatibility
-      //  with the previous exampleValue implementation and to make all tests pass)
       if (isMixOfDateAndString(descriptor)) {
         return hasOnlyEmptyStrings(descriptor) ? `1978-09-26` : `String`
       }
