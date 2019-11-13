@@ -8381,6 +8381,27 @@
     - User Experience
   built_by: Binaria
   built_by_url: "https://binaria.com/"
+- title: Century 21 Financial
+  url: https://century21financial.co.nz/
+  main_url: https://century21financial.co.nz/
+  description: Website for Century 21's mortgage broker and insurance broker business in New Zealand.
+  categories:
+    - Real Estate
+    - Finance
+    - Business
+  built_by: Shannon Smith
+  built_by_url: https://www.powerboard.co.nz/clients
+  featured: false
+- title: Base Backpackers
+  url: https://www.stayatbase.com/
+  main_url: https://www.stayatbase.com/
+  description: Base Backpackers is one of Australasia's biggest youth adventure tourism brands. They are super stoked to have one of the fastest websites in the tourism industry.
+  categories:
+    - Travel
+    - Business
+  built_by: Shannon Smith
+  built_by_url: https://www.powerboard.co.nz/clients
+  featured: false
 - title: Wealthsimple
   url: "https://www.wealthsimple.com/"
   main_url: "https://www.wealthsimple.com/en-us/"
