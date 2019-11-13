@@ -50,6 +50,7 @@ of fields in the node object (including nested fields)
 
 ```javascript
 type TypeMetadata = {
+  total?: number,
   ignored?: boolean,
   ignoredFields?: Set<string>,
   fieldMap?: { [string]: ValueDescriptor },
@@ -211,6 +212,7 @@ const nodeFields = (node, ignoredFields = new Set()) =>
   Object.keys(node).filter(key => !ignoredFields.has(key))
 
 const updateTypeMetadata = (metadata = {}, operation, node) => {
+  metadata.total = (metadata.total || 0) + (operation === `add` ? 1 : -1)
   if (metadata.ignored) {
     return metadata
   }
@@ -235,6 +237,7 @@ const updateTypeMetadata = (metadata = {}, operation, node) => {
 
 const ignore = (metadata = {}, set = true) => {
   metadata.ignored = set
+  metadata.fieldMap = {}
   return metadata
 }
 
@@ -392,7 +395,7 @@ const buildExampleValue = ({
   }
 }
 
-const getExampleObject = ({ fieldMap, typeName, typeConflictReporter }) =>
+const getExampleObject = ({ fieldMap = {}, typeName, typeConflictReporter }) =>
   Object.keys(fieldMap).reduce((acc, key) => {
     const value = buildExampleValue({
       path: `${typeName}.${key}`,
@@ -410,11 +413,15 @@ const isEmpty = ({ fieldMap }) =>
     field => possibleTypes(fieldMap[field]).length === 0
   )
 
+// Even empty type may still have nodes
+const hasNodes = typeMetadata => typeMetadata.total > 0
+
 module.exports = {
   addNode,
   addNodes,
   deleteNode,
   ignore,
   isEmpty,
+  hasNodes,
   getExampleObject,
 }
