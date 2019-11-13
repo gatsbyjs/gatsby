@@ -49,6 +49,15 @@ const GatsbyReporter = {
    * reporter.panicOnBuild(`text`, new Error('something'))
    */
   panicOnBuild: true,
+
+  /**
+   * Note that this method only works if the --verbose option has
+   * been passed to the CLI
+   * @type {GatsbyReporterFn}
+   * @example
+   * reporter.verbose(`text`)
+   */
+  verbose: true,
 };
 
 /** */

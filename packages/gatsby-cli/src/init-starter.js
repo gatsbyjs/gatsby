@@ -166,9 +166,13 @@ const clone = async (hostInfo: any, rootPath: string) => {
 
   report.info(`Creating new site from git: ${url}`)
 
-  const args = [`clone`, ...branch, url, rootPath, `--single-branch`].filter(
-    arg => Boolean(arg)
-  )
+  const args = [
+    `clone`,
+    ...branch,
+    url,
+    rootPath,
+    `--single-branch`,
+  ].filter(arg => Boolean(arg))
 
   await spawnWithArgs(`git`, args)
 
@@ -237,8 +241,9 @@ type InitOptions = {
 const successMessage = path => {
   report.info(`
 Your new Gatsby site has been successfully bootstrapped. Start developing it by running:
-  $ cd ${path}
-  $ gatsby develop
+
+  cd ${path}
+  gatsby develop
 `)
 }
 

@@ -108,7 +108,7 @@ function resolvePlugin(pluginName, rootDir) {
   }
 }
 
-module.exports = (config = {}, rootDir = null) => {
+const loadPlugins = (config = {}, rootDir = null) => {
   // Instantiate plugins.
   const plugins = []
 
@@ -240,4 +240,9 @@ module.exports = (config = {}, rootDir = null) => {
   )
 
   return plugins
+}
+
+module.exports = {
+  loadPlugins,
+  resolvePlugin,
 }

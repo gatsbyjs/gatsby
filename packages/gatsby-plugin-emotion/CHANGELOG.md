@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-emotion@4.1.13...gatsby-plugin-emotion@4.1.14) (2019-11-10)
+
+**Note:** Version bump only for package gatsby-plugin-emotion
+
 ## [4.1.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-emotion@4.1.12...gatsby-plugin-emotion@4.1.13) (2019-10-28)
 
 ### Bug Fixes
