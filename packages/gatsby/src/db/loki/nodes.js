@@ -376,7 +376,7 @@ function reducer(state = new Map(), action) {
     }
 
     case `DELETE_NODES`: {
-      deleteNodes(action.payload)
+      deleteNodes(action.fullNodes)
       return null
     }
 
