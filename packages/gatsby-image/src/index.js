@@ -411,6 +411,7 @@ class Image extends React.Component {
       alt: !this.state.isVisible ? alt : ``,
       style: imagePlaceholderStyle,
       className: placeholderClassName,
+      itemProp,
     }
 
     if (fluid) {
@@ -651,6 +652,10 @@ const fluidObject = PropTypes.shape({
   media: PropTypes.string,
 })
 
+// If you modify these propTypes, please don't forget to update following files as well:
+// https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-image/index.d.ts
+// https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-image/README.md#gatsby-image-props
+// https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/gatsby-image.md#gatsby-image-props
 Image.propTypes = {
   resolutions: fixedObject,
   sizes: fluidObject,

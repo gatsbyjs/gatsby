@@ -1,18 +1,18 @@
 {
   "name": "gatsby-plugin-preact",
   "description": "A Gatsby plugin which replaces React with Preact",
-  "version": "3.1.10",
+  "version": "3.1.20",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.6.0"
+    "@babel/runtime": "^7.7.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.6.0",
-    "@babel/core": "^7.6.0",
-    "babel-preset-gatsby-package": "^0.2.4",
+    "@babel/cli": "^7.7.0",
+    "@babel/core": "^7.7.2",
+    "babel-preset-gatsby-package": "^0.2.10",
     "cross-env": "^5.2.1"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-preact#readme",
@@ -25,7 +25,7 @@
   "main": "index.js",
   "peerDependencies": {
     "gatsby": "^2.0.0",
-    "preact": "^10.0.0-beta.1"
+    "preact": "^10.0.0"
   },
   "repository": {
     "type": "git",

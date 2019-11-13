@@ -97,24 +97,25 @@ I highly recommend using the breakpoint syntax and reading the [documentation](h
 So far, so normal you'd say. But I had a cool idea to solve my problem of positioning shapes around my theme entries which I collect in a `.yaml` file (see the [source file](https://github.com/LekoArts/gatsby-themes/blob/master/www/data/themes.yaml)). Just define the shapes in the respective theme entry! YAML is a great format for that as it makes it possible (together with the Gatsby transformer) to create arrays and array of objects. The shapes entry looks like this:
 
 ```yaml
-shapes: [
-  {
-    type: "circle",
-    color: "green",
-    size: ["200px", "300px"],
-    xOffset: ["-140px", "-120px"],
-    yOffset: ["-70px"],
-    opacity: 0.5,
-  },
-  {
-    type: "donut",
-    color: "teal",
-    size: ["25px", "100px"],
-    xOffset: ["50px"],
-    yOffset: ["-60px"],
-    opacity: 1,
-  },
-]
+shapes:
+  [
+    {
+      type: "circle",
+      color: "green",
+      size: ["200px", "300px"],
+      xOffset: ["-140px", "-120px"],
+      yOffset: ["-70px"],
+      opacity: 0.5,
+    },
+    {
+      type: "donut",
+      color: "teal",
+      size: ["25px", "100px"],
+      xOffset: ["50px"],
+      yOffset: ["-60px"],
+      opacity: 1,
+    },
+  ]
 ```
 
 These are all the information that my shape components need to render the desired output. I didn't use _left_ and _right_ here as the shapes should always face the outside (on the inside it could overlap the text). As you can see the array / breakpoint notation for position and size was used — I think that's just cool 😎

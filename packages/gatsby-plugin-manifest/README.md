@@ -238,7 +238,7 @@ module.exports = {
 
 #### Disable favicon
 
-Excludes `<link rel="shortcut icon" href="/favicon.png" />` link tag to html output. You can set `include_favicon` plugin option to `false` to opt-out of this behavior.
+Excludes `<link rel="icon" href="/favicon.png" />` link tag to html output. You can set `include_favicon` plugin option to `false` to opt-out of this behavior.
 
 ```js
 // in gatsby-config.js
@@ -441,7 +441,7 @@ To fix this, you'll need to update all Gatsby plugins in the current project tha
 
 To update these packages, run:
 
-```sh
+```shell
 npm install gatsby-plugin-sharp gatsby-plugin-manifest gatsby-remark-images-contentful gatsby-source-contentful gatsby-transformer-sharp gatsby-transformer-sqip
 ```
 

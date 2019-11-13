@@ -3,6 +3,60 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.29](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.0.28...gatsby-page-utils@0.0.29) (2019-11-10)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+## [0.0.28](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.0.27...gatsby-page-utils@0.0.28) (2019-10-28)
+
+### Bug Fixes
+
+- update minor updates in packages ([#18875](https://github.com/gatsbyjs/gatsby/issues/18875)) ([b692879](https://github.com/gatsbyjs/gatsby/commit/b692879))
+- update minor updates in packages ([#19080](https://github.com/gatsbyjs/gatsby/issues/19080)) ([95e908e](https://github.com/gatsbyjs/gatsby/commit/95e908e))
+
+## [0.0.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.0.26...gatsby-page-utils@0.0.27) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+## [0.0.26](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.0.25...gatsby-page-utils@0.0.26) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+## [0.0.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.0.24...gatsby-page-utils@0.0.25) (2019-10-09)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+## [0.0.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.0.23...gatsby-page-utils@0.0.24) (2019-10-04)
+
+### Bug Fixes
+
+- update dependency bluebird to ^3.7.0 ([#18029](https://github.com/gatsbyjs/gatsby/issues/18029)) ([bd235a8](https://github.com/gatsbyjs/gatsby/commit/bd235a8))
+- update dependency chokidar to v3.2.1 ([#18009](https://github.com/gatsbyjs/gatsby/issues/18009)) ([4df0306](https://github.com/gatsbyjs/gatsby/commit/4df0306))
+
+## [0.0.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.0.21...gatsby-page-utils@0.0.23) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+## [0.0.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.0.21...gatsby-page-utils@0.0.22) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+## [0.0.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.0.20...gatsby-page-utils@0.0.21) (2019-09-20)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+## [0.0.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.0.19...gatsby-page-utils@0.0.20) (2019-09-20)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+## [0.0.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.0.18...gatsby-page-utils@0.0.19) (2019-09-18)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+## [0.0.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.0.17...gatsby-page-utils@0.0.18) (2019-09-18)
+
+**Note:** Version bump only for package gatsby-page-utils
+
 ## [0.0.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.0.16...gatsby-page-utils@0.0.17) (2019-09-09)
 
 **Note:** Version bump only for package gatsby-page-utils

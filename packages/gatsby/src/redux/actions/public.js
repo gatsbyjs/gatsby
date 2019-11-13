@@ -90,10 +90,7 @@ actions.deletePage = (page: PageInput) => {
   }
 }
 
-const pascalCase = _.flow(
-  _.camelCase,
-  _.upperFirst
-)
+const pascalCase = _.flow(_.camelCase, _.upperFirst)
 const hasWarnedForPageComponentInvalidContext = new Set()
 const hasWarnedForPageComponentInvalidCasing = new Set()
 const hasErroredBecauseOfNodeValidation = new Set()
@@ -362,8 +359,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   // Only run validation once during builds.
   if (
     !internalPage.component.includes(`/.cache/`) &&
-    (process.env.NODE_ENV === `production` &&
-      !fileOkCache[internalPage.component])
+    process.env.NODE_ENV === `production` &&
+    !fileOkCache[internalPage.component]
   ) {
     const fileName = internalPage.component
     const fileContent = fs.readFileSync(fileName, `utf-8`)
@@ -379,6 +376,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       !fileContent.includes(`module.exports`) &&
       !fileContent.includes(`exports.default`) &&
       !fileContent.includes(`exports["default"]`) &&
+      !fileContent.match(/export \{.* as default.*\}/s) &&
       // this check only applies to js and ts, not mdx
       /\.(jsx?|tsx?)/.test(path.extname(fileName))
     ) {
@@ -777,9 +775,9 @@ const createNode = (
   // Check if the node has already been processed.
   if (oldNode && !hasNodeChanged(node.id, node.internal.contentDigest)) {
     updateNodeAction = {
-      type: `TOUCH_NODE`,
-      plugin,
       ...actionOptions,
+      plugin,
+      type: `TOUCH_NODE`,
       payload: node.id,
     }
   } else {
@@ -788,9 +786,9 @@ const createNode = (
     if (oldNode) {
       const createDeleteAction = node => {
         return {
+          ...actionOptions,
           type: `DELETE_NODE`,
           plugin,
-          ...actionOptions,
           payload: node,
         }
       }
@@ -800,10 +798,10 @@ const createNode = (
     }
 
     updateNodeAction = {
+      ...actionOptions,
       type: `CREATE_NODE`,
       plugin,
       oldNode,
-      ...actionOptions,
       payload: node,
     }
   }
@@ -958,9 +956,9 @@ actions.createNodeField = (
   node = sanitizeNode(node)
 
   return {
+    ...actionOptions,
     type: `ADD_FIELD_TO_NODE`,
     plugin,
-    ...actionOptions,
     payload: node,
   }
 }

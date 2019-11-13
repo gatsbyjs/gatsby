@@ -1,19 +1,21 @@
-import React, { Component } from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
+import { Component } from "react"
 import MdArrowDownward from "react-icons/lib/md/arrow-downward"
 import Fuse from "fuse.js"
 
-import styles from "../shared/styles"
+import { loadMoreButton } from "../shared/styles"
 import ShowcaseList from "./showcase-list"
 import Filters from "./filters"
 import SearchIcon from "../../components/search-icon"
 import Button from "../../components/button"
 import FooterLinks from "../../components/shared/footer-links"
-import { colors, space } from "../../utils/presets"
 import {
   ContentHeader,
   ContentTitle,
   ContentContainer,
 } from "../shared/sidebar"
+import { themedInput } from "../../utils/styles"
 
 const OPEN_SOURCE_CATEGORY = `Open Source`
 
@@ -129,28 +131,17 @@ class FilteredShowcase extends Component {
               items={items}
               edges={data.allSitesYaml.edges}
             />
-            <div css={{ marginLeft: `auto` }}>
-              <label css={{ position: `relative` }}>
+            <div sx={{ ml: `auto` }}>
+              <label css={{ display: `block`, position: `relative` }}>
                 <input
-                  css={{ ...styles.searchInput }}
+                  sx={{ ...themedInput, pl: 7 }}
                   type="search"
                   value={this.state.search}
                   onChange={e => this.setState({ search: e.target.value })}
                   placeholder="Search sites"
                   aria-label="Search sites"
                 />
-                <SearchIcon
-                  overrideCSS={{
-                    fill: colors.lilac,
-                    position: `absolute`,
-                    left: `5px`,
-                    top: `50%`,
-                    width: space[4],
-                    height: space[4],
-                    pointerEvents: `none`,
-                    transform: `translateY(-50%)`,
-                  }}
-                />
+                <SearchIcon />
               </label>
             </div>
           </ContentHeader>
@@ -164,8 +155,9 @@ class FilteredShowcase extends Component {
 
           {this.state.sitesToShow < items.length && (
             <Button
+              variant="large"
               tag="button"
-              overrideCSS={styles.loadMoreButton}
+              overrideCSS={loadMoreButton}
               onClick={() => {
                 this.setState({
                   sitesToShow: this.state.sitesToShow + 15,

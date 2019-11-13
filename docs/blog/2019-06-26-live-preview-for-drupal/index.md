@@ -9,7 +9,7 @@ tags:
   - tutorials
 ---
 
-It's the dream: a CMS with rich content modelling capabilities combined with a [modern frontend](/blog/2018-10-11-rise-of-modern-web-development/) with features like declarative, reusable UIs, modern Javascript, hot reloading, versioning and so on.
+It's the dream: a CMS with rich content modelling capabilities combined with a [modern frontend](/blog/2018-10-11-rise-of-modern-web-development/) with features like declarative, reusable UIs, modern JavaScript, hot reloading, versioning and so on.
 
 Two types of people will be excited about this article.
 

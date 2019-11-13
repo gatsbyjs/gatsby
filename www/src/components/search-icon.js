@@ -1,20 +1,24 @@
-import React from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import PropTypes from "prop-types"
+import MdSearch from "react-icons/lib/md/search"
 
-const SearchIcon = ({ overrideCSS }) => (
-  <svg
-    viewBox="0 0 40 40"
-    xmlns="http://www.w3.org/2000/svg"
-    fill="currentColor"
+const SearchIcon = ({ focussed }) => (
+  <MdSearch
     focusable="false"
     aria-hidden="true"
-    css={{ ...overrideCSS }}
-  >
-    {/* Based on the 'search' icon in https://github.com/ionic-team/ionicons */}
-    <g>
-      <path d="m34.8 30.2c0.3 0.3 0.3 0.8 0 1.1l-3.4 3.5c-0.1 0.1-0.4 0.2-0.6 0.2s-0.4-0.1-0.6-0.2l-6.5-6.8c-2 1.2-4.1 1.8-6.3 1.8-6.8 0-12.4-5.5-12.4-12.4s5.6-12.4 12.4-12.4 12.4 5.5 12.4 12.4c0 2.1-0.6 4.2-1.7 6.1z m-17.4-20.4c-4.1 0-7.6 3.4-7.6 7.6s3.5 7.6 7.6 7.6 7.5-3.4 7.5-7.6-3.3-7.6-7.5-7.6z" />
-    </g>
-  </svg>
+    sx={{
+      width: t => t.space[5],
+      height: t => t.space[5],
+      position: `absolute`,
+      left: `0.5rem`,
+      top: `50%`,
+      pointerEvents: `none`,
+      transform: `translateY(-50%)`,
+      fill: t =>
+        focussed ? t.colors.themedInput.iconFocus : t.colors.themedInput.icon,
+    }}
+  />
 )
 
 SearchIcon.propTypes = {

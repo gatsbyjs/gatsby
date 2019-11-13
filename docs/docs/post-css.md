@@ -4,13 +4,15 @@ title: PostCSS
 
 PostCSS transforms extended syntaxes and features into modern, browser-friendly CSS. This guide will show you how to get started with Gatsby and PostCSS.
 
-## Installing and Configuring PostCSS
+## Installing and configuring PostCSS
 
-This guide assumes that you have a Gatsby project set up. If you need to set up a project, head to the [**Quick Start guide**](/docs/quick-start/), then come back.
+This guide assumes that you have a Gatsby project set up. If you need to set up a project, head to the [quick start guide](/docs/quick-start/), then come back.
 
-1.  Install the Gatsby plugin [**gatsby-plugin-postcss**](/packages/gatsby-plugin-postcss/).
+1.  Install the Gatsby plugin [gatsby-plugin-postcss](/packages/gatsby-plugin-postcss/).
 
-`npm install --save gatsby-plugin-postcss`
+```shell
+npm install --save gatsby-plugin-postcss
+```
 
 2.  Include the plugin in your `gatsby-config.js` file.
 
@@ -38,7 +40,7 @@ plugins: [`gatsby-plugin-postcss`],
 import "./styles.css"
 ```
 
-### With CSS Modules
+### With CSS modules
 
 Using CSS modules requires no additional configuration. Simply prepend `.module` to the extension. For example: `App.css -> App.module.css`. Any file with the module extension will use CSS modules.
 

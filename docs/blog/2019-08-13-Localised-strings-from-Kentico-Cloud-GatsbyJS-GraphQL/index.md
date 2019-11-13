@@ -22,7 +22,7 @@ The flexibility of Kentico Cloud means there are many ways to achieve the same g
 
 ## Identify your language
 
-Our first step is to determine how we are going to identify cultures or languages from the front end of the site. As Kentico Cloud is purely a content hub, there’s not the same set of localization web parts and widgets that you might get from a product like Kentico EMS. We need an alternative to pick up that culture code.
+Our first step is to determine how we are going to identify cultures or languages from the frontend of the site. As Kentico Cloud is purely a content hub, there’s not the same set of localization web parts and widgets that you might get from a product like Kentico EMS. We need an alternative to pick up that culture code.
 
 There are a few options here. You could be using a simple language switcher control on your site or application. Or, it might be as simple as deriving it from the URL e.g. _www.mysite.com/en-gb/about-us_ or _www.mysite.com/about-us?lang=en-gb_.
 

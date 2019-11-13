@@ -42,7 +42,7 @@ exports.createPages = async (
       return
     }
 
-    // escape backslaches for windows
+    // escape backslashes for windows
     const resolvedDirectory = resolve(directory)
     files.forEach(file => {
       if (extname(file) === `.js` || extname(file) === `.jsx`) {

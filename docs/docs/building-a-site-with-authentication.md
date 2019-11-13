@@ -1,9 +1,9 @@
 ---
-title: Building a site with authentication
+title: Building a Site with Authentication
 ---
 
 With Gatsby, you are able to create restricted areas in your app. For that, you
-must use the concept of [client-only routes](/docs/building-apps-with-gatsby/#client-only-routes).
+must use the concept of [client-only routes](/docs/client-only-routes-and-user-authentication/).
 
 Using the [@reach/router](https://reach.tech/router/) library, which comes
 installed with Gatsby, you can control which component will be loaded when a
