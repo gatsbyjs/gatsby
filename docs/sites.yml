@@ -8395,6 +8395,14 @@
     - User Experience
   built_by: Binaria
   built_by_url: "https://binaria.com/"
+- title: Akshay Thakur's Portfolio
+  main_url: https://akshaythakur.me
+  url: https://akshaythakur.me
+  categories:
+    - Portfolio
+    - Web Development
+  built_by: Akshay Thakur
+  built_by_url: https://akshaythakur.me
 - title: Quema Labs
   url: https://quemalabs.com/
   main_url: https://quemalabs.com/
