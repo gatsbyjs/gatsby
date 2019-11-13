@@ -130,6 +130,7 @@ module.exports = async (args: BootstrapArgs) => {
     const themes = await loadThemes(config, {
       useLegacyThemes: true,
       configFilePath,
+      rootDir: program.directory,
     })
     config = themes.config
 
@@ -141,6 +142,7 @@ module.exports = async (args: BootstrapArgs) => {
     const plugins = await loadThemes(config, {
       useLegacyThemes: false,
       configFilePath,
+      rootDir: program.directory,
     })
     config = plugins.config
   }
