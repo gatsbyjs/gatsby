@@ -71,6 +71,9 @@ const textareaStyles = {
   height: `5.5rem`,
   mt: 1,
   mb: 4,
+  px: 3,
+  py: 2,
+  lineHeight: `default`,
   overflowY: `scroll`,
 }
 
@@ -124,7 +127,7 @@ const FeedbackForm = ({
       <TextareaLabel className={`textarea ${submitting ? `disabled` : ``}`}>
         Your comments <span>(optional):</span>
         <textarea
-          sx={{ ...textareaStyles, mb: 4 }}
+          sx={textareaStyles}
           value={comment}
           onChange={handleCommentChange}
           disabled={submitting}
