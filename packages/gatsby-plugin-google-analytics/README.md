@@ -44,6 +44,8 @@ module.exports = {
 
 See below for the complete list of [optional fields](#optional-fields).
 
+Note that this plugin is disabled while running `gatsby develop`. This way, actions are not tracked while you are still developing your project. Once you run `gatsby build` the plugin is enabled. Test it with `gatsby serve`.
+
 ## `<OutboundLink>` component
 
 To make it easy to track clicks on outbound links in Google Analytics,
@@ -147,3 +149,36 @@ This plugin also supports several optional General fields documented in [Google 
 - `transport`: string
 
 These fields can be specified in the plugin's `options` as shown in the [How to use](#how-to-use) section.
+
+## Troubleshooting
+
+### No actions are tracked
+
+#### Check the tracking ID
+
+Make sure you supplied the correct Google Analytics tracking ID. It should look like this: `trackingId: "UA-111111111-1"`
+
+#### Make sure plugin and script are loaded first
+
+The analytics script tag is not properly loaded into the DOM. You can fix this by moving the plugin to the top of your `gatsby-config.js` and into the head of the DOM:
+
+```javascript
+module.exports = {
+  siteMetadata: {
+    /* your metadata */
+  },
+  plugins: [
+    // Make sure this plugin is first in the array of plugins
+    {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        trackingId: "UA-111111111-1",
+        // this option places the tracking script into the head of the DOM
+        head: true,
+        // other options
+      },
+    },
+  ],
+  // other plugins
+}
+```

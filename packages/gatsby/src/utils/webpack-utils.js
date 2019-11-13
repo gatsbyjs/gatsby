@@ -325,7 +325,7 @@ module.exports = async ({
           loaders.js({
             ...options,
             configFile: true,
-            compact: true,
+            compact: PRODUCTION,
           }),
         ],
       }

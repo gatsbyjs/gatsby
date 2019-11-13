@@ -248,6 +248,8 @@
           items:
             - title: What are Gatsby Themes?
               link: /docs/themes/what-are-gatsby-themes/
+            - title: Getting Started
+              link: /docs/themes/getting-started/
             - title: Using a Gatsby Theme
               link: /docs/themes/using-a-gatsby-theme/
             - title: Using Multiple Gatsby Themes
@@ -346,8 +348,8 @@
             - title: Debugging Async Lifecycles
               link: /docs/debugging-async-lifecycles/
               breadcrumbTitle: Async Lifecycles
-        - title: Adding Website Functionality
-          link: /docs/adding-website-functionality/
+        - title: Adding App and Website Functionality
+          link: /docs/adding-app-and-website-functionality/
           items:
             - title: Linking Between Pages
               link: /docs/linking-between-pages/
@@ -370,6 +372,9 @@
             - title: Adding Forms
               link: /docs/adding-forms/
               breadcrumbTitle: Forms
+            - title: Adding React Components
+              link: /docs/adding-react-components/
+              breadcrumbTitle: React Components
             - title: Building a Contact Form
               link: /docs/building-a-contact-form/
             - title: Adding a 404 Page
@@ -535,6 +540,8 @@
           link: /docs/building-with-components/
         - title: Lifecycle APIs
           link: /docs/gatsby-lifecycle-apis/
+        - title: React Hydration
+          link: /docs/react-hydration
         - title: PRPL Pattern
           link: /docs/prpl-pattern/
         - title: GraphQL Concepts
@@ -619,6 +626,8 @@
               link: /docs/winning-over-executives/
             - title: Clients*
               link: /docs/winning-over-clients/
+            - title: Content Creators
+              link: /docs/winning-over-content-creators/
         - title: Spreading Gatsby In Different Types of Organizations
           link: /docs/different-organization-types/
           breadcrumbTitle: Spreading Gatsby

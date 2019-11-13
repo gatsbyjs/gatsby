@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Process  nodes correctly correctly creates nodes from JSON which is an array of objects 1`] = `
+exports[`Process nodes correctly correctly creates nodes from JSON which is an array of objects 1`] = `
 Array [
   Array [
     Object {
@@ -31,7 +31,7 @@ Array [
 ]
 `;
 
-exports[`Process  nodes correctly correctly creates nodes from JSON which is an array of objects 2`] = `
+exports[`Process nodes correctly correctly creates nodes from JSON which is an array of objects 2`] = `
 Array [
   Array [
     Object {
@@ -94,7 +94,310 @@ false,\\"nope\\"",
 ]
 `;
 
-exports[`Process  nodes correctly correctly handles the options object that is passed to it 1`] = `
+exports[`Process nodes correctly correctly handles the nodePerFile option in the false case 1`] = `
+Array [
+  Array [
+    Object {
+      "children": Array [],
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "contentDigest",
+        "type": "TheTypeWillBeThisCsv",
+      },
+      "letter": "a",
+      "number": "65",
+      "parent": "whatever",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "contentDigest",
+        "type": "TheTypeWillBeThisCsv",
+      },
+      "letter": "b",
+      "number": "42",
+      "parent": "whatever",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "contentDigest",
+        "type": "TheTypeWillBeThisCsv",
+      },
+      "letter": "c",
+      "number": "23",
+      "parent": "whatever",
+    },
+  ],
+]
+`;
+
+exports[`Process nodes correctly correctly handles the nodePerFile option in the false case 2`] = `
+Array [
+  Array [
+    Object {
+      "child": Object {
+        "children": Array [],
+        "id": "uuid-from-gatsby",
+        "internal": Object {
+          "contentDigest": "contentDigest",
+          "type": "TheTypeWillBeThisCsv",
+        },
+        "letter": "a",
+        "number": "65",
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "letter,number
+a,65
+b,42
+c,23",
+        "dir": "<TEMP_DIR>/foo/",
+        "extension": "csv",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/csv",
+          "type": "File",
+        },
+        "name": "theTypeWillBeThis",
+        "parent": null,
+      },
+    },
+  ],
+  Array [
+    Object {
+      "child": Object {
+        "children": Array [],
+        "id": "uuid-from-gatsby",
+        "internal": Object {
+          "contentDigest": "contentDigest",
+          "type": "TheTypeWillBeThisCsv",
+        },
+        "letter": "b",
+        "number": "42",
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "letter,number
+a,65
+b,42
+c,23",
+        "dir": "<TEMP_DIR>/foo/",
+        "extension": "csv",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/csv",
+          "type": "File",
+        },
+        "name": "theTypeWillBeThis",
+        "parent": null,
+      },
+    },
+  ],
+  Array [
+    Object {
+      "child": Object {
+        "children": Array [],
+        "id": "uuid-from-gatsby",
+        "internal": Object {
+          "contentDigest": "contentDigest",
+          "type": "TheTypeWillBeThisCsv",
+        },
+        "letter": "c",
+        "number": "23",
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "letter,number
+a,65
+b,42
+c,23",
+        "dir": "<TEMP_DIR>/foo/",
+        "extension": "csv",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/csv",
+          "type": "File",
+        },
+        "name": "theTypeWillBeThis",
+        "parent": null,
+      },
+    },
+  ],
+]
+`;
+
+exports[`Process nodes correctly correctly handles the nodePerFile option in the string case 1`] = `
+Array [
+  Array [
+    Object {
+      "children": Array [],
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "contentDigest",
+        "type": "TheTypeWillBeThisCsv",
+      },
+      "parent": "whatever",
+      "theItems": Array [
+        Object {
+          "letter": "a",
+          "number": "65",
+        },
+        Object {
+          "letter": "b",
+          "number": "42",
+        },
+        Object {
+          "letter": "c",
+          "number": "23",
+        },
+      ],
+    },
+  ],
+]
+`;
+
+exports[`Process nodes correctly correctly handles the nodePerFile option in the string case 2`] = `
+Array [
+  Array [
+    Object {
+      "child": Object {
+        "children": Array [],
+        "id": "uuid-from-gatsby",
+        "internal": Object {
+          "contentDigest": "contentDigest",
+          "type": "TheTypeWillBeThisCsv",
+        },
+        "parent": "whatever",
+        "theItems": Array [
+          Object {
+            "letter": "a",
+            "number": "65",
+          },
+          Object {
+            "letter": "b",
+            "number": "42",
+          },
+          Object {
+            "letter": "c",
+            "number": "23",
+          },
+        ],
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "letter,number
+a,65
+b,42
+c,23",
+        "dir": "<TEMP_DIR>/foo/",
+        "extension": "csv",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/csv",
+          "type": "File",
+        },
+        "name": "theTypeWillBeThis",
+        "parent": null,
+      },
+    },
+  ],
+]
+`;
+
+exports[`Process nodes correctly correctly handles the nodePerFile option in the true case 1`] = `
+Array [
+  Array [
+    Object {
+      "children": Array [],
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "contentDigest",
+        "type": "TheTypeWillBeThisCsv",
+      },
+      "items": Array [
+        Object {
+          "letter": "a",
+          "number": "65",
+        },
+        Object {
+          "letter": "b",
+          "number": "42",
+        },
+        Object {
+          "letter": "c",
+          "number": "23",
+        },
+      ],
+      "parent": "whatever",
+    },
+  ],
+]
+`;
+
+exports[`Process nodes correctly correctly handles the nodePerFile option in the true case 2`] = `
+Array [
+  Array [
+    Object {
+      "child": Object {
+        "children": Array [],
+        "id": "uuid-from-gatsby",
+        "internal": Object {
+          "contentDigest": "contentDigest",
+          "type": "TheTypeWillBeThisCsv",
+        },
+        "items": Array [
+          Object {
+            "letter": "a",
+            "number": "65",
+          },
+          Object {
+            "letter": "b",
+            "number": "42",
+          },
+          Object {
+            "letter": "c",
+            "number": "23",
+          },
+        ],
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "letter,number
+a,65
+b,42
+c,23",
+        "dir": "<TEMP_DIR>/foo/",
+        "extension": "csv",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/csv",
+          "type": "File",
+        },
+        "name": "theTypeWillBeThis",
+        "parent": null,
+      },
+    },
+  ],
+]
+`;
+
+exports[`Process nodes correctly correctly handles the noheader option 1`] = `
 Array [
   Array [
     Object {
@@ -138,7 +441,7 @@ Array [
 ]
 `;
 
-exports[`Process  nodes correctly correctly handles the options object that is passed to it 2`] = `
+exports[`Process nodes correctly correctly handles the noheader option 2`] = `
 Array [
   Array [
     Object {
@@ -223,6 +526,580 @@ false,nope",
           "mediaType": "text/csv",
         },
         "name": "test",
+        "parent": null,
+      },
+    },
+  ],
+]
+`;
+
+exports[`Process nodes correctly correctly handles the typeName option with a custom function 1`] = `
+Array [
+  Array [
+    Object {
+      "children": Array [],
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "contentDigest",
+        "type": "CsvTypeSetByFunction",
+      },
+      "letter": "a",
+      "number": "65",
+      "parent": "whatever",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "contentDigest",
+        "type": "CsvTypeSetByFunction",
+      },
+      "letter": "b",
+      "number": "42",
+      "parent": "whatever",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "contentDigest",
+        "type": "CsvTypeSetByFunction",
+      },
+      "letter": "c",
+      "number": "23",
+      "parent": "whatever",
+    },
+  ],
+]
+`;
+
+exports[`Process nodes correctly correctly handles the typeName option with a custom function 2`] = `
+Array [
+  Array [
+    Object {
+      "child": Object {
+        "children": Array [],
+        "id": "uuid-from-gatsby",
+        "internal": Object {
+          "contentDigest": "contentDigest",
+          "type": "CsvTypeSetByFunction",
+        },
+        "letter": "a",
+        "number": "65",
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "letter,number
+a,65
+b,42
+c,23",
+        "dir": "<TEMP_DIR>/foo/",
+        "extension": "csv",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/csv",
+          "type": "File",
+        },
+        "name": "theTypeWontBeThis",
+        "parent": null,
+      },
+    },
+  ],
+  Array [
+    Object {
+      "child": Object {
+        "children": Array [],
+        "id": "uuid-from-gatsby",
+        "internal": Object {
+          "contentDigest": "contentDigest",
+          "type": "CsvTypeSetByFunction",
+        },
+        "letter": "b",
+        "number": "42",
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "letter,number
+a,65
+b,42
+c,23",
+        "dir": "<TEMP_DIR>/foo/",
+        "extension": "csv",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/csv",
+          "type": "File",
+        },
+        "name": "theTypeWontBeThis",
+        "parent": null,
+      },
+    },
+  ],
+  Array [
+    Object {
+      "child": Object {
+        "children": Array [],
+        "id": "uuid-from-gatsby",
+        "internal": Object {
+          "contentDigest": "contentDigest",
+          "type": "CsvTypeSetByFunction",
+        },
+        "letter": "c",
+        "number": "23",
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "letter,number
+a,65
+b,42
+c,23",
+        "dir": "<TEMP_DIR>/foo/",
+        "extension": "csv",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/csv",
+          "type": "File",
+        },
+        "name": "theTypeWontBeThis",
+        "parent": null,
+      },
+    },
+  ],
+]
+`;
+
+exports[`Process nodes correctly correctly handles the typeName option with a string 1`] = `
+Array [
+  Array [
+    Object {
+      "children": Array [],
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "contentDigest",
+        "type": "CsvTypeSetByFunction",
+      },
+      "letter": "a",
+      "number": "65",
+      "parent": "whatever",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "contentDigest",
+        "type": "CsvTypeSetByFunction",
+      },
+      "letter": "b",
+      "number": "42",
+      "parent": "whatever",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "contentDigest",
+        "type": "CsvTypeSetByFunction",
+      },
+      "letter": "c",
+      "number": "23",
+      "parent": "whatever",
+    },
+  ],
+]
+`;
+
+exports[`Process nodes correctly correctly handles the typeName option with a string 2`] = `
+Array [
+  Array [
+    Object {
+      "child": Object {
+        "children": Array [],
+        "id": "uuid-from-gatsby",
+        "internal": Object {
+          "contentDigest": "contentDigest",
+          "type": "CsvTypeSetByFunction",
+        },
+        "letter": "a",
+        "number": "65",
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "letter,number
+a,65
+b,42
+c,23",
+        "dir": "<TEMP_DIR>/foo/",
+        "extension": "csv",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/csv",
+          "type": "File",
+        },
+        "name": "theTypeWontBeThis",
+        "parent": null,
+      },
+    },
+  ],
+  Array [
+    Object {
+      "child": Object {
+        "children": Array [],
+        "id": "uuid-from-gatsby",
+        "internal": Object {
+          "contentDigest": "contentDigest",
+          "type": "CsvTypeSetByFunction",
+        },
+        "letter": "b",
+        "number": "42",
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "letter,number
+a,65
+b,42
+c,23",
+        "dir": "<TEMP_DIR>/foo/",
+        "extension": "csv",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/csv",
+          "type": "File",
+        },
+        "name": "theTypeWontBeThis",
+        "parent": null,
+      },
+    },
+  ],
+  Array [
+    Object {
+      "child": Object {
+        "children": Array [],
+        "id": "uuid-from-gatsby",
+        "internal": Object {
+          "contentDigest": "contentDigest",
+          "type": "CsvTypeSetByFunction",
+        },
+        "letter": "c",
+        "number": "23",
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "letter,number
+a,65
+b,42
+c,23",
+        "dir": "<TEMP_DIR>/foo/",
+        "extension": "csv",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/csv",
+          "type": "File",
+        },
+        "name": "theTypeWontBeThis",
+        "parent": null,
+      },
+    },
+  ],
+]
+`;
+
+exports[`Process nodes correctly correctly handles the typeName option with the provided typeNameFromDir function 1`] = `
+Array [
+  Array [
+    Object {
+      "children": Array [],
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "contentDigest",
+        "type": "FooCsv",
+      },
+      "letter": "a",
+      "number": "65",
+      "parent": "whatever",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "contentDigest",
+        "type": "FooCsv",
+      },
+      "letter": "b",
+      "number": "42",
+      "parent": "whatever",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "contentDigest",
+        "type": "FooCsv",
+      },
+      "letter": "c",
+      "number": "23",
+      "parent": "whatever",
+    },
+  ],
+]
+`;
+
+exports[`Process nodes correctly correctly handles the typeName option with the provided typeNameFromDir function 2`] = `
+Array [
+  Array [
+    Object {
+      "child": Object {
+        "children": Array [],
+        "id": "uuid-from-gatsby",
+        "internal": Object {
+          "contentDigest": "contentDigest",
+          "type": "FooCsv",
+        },
+        "letter": "a",
+        "number": "65",
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "letter,number
+a,65
+b,42
+c,23",
+        "dir": "<TEMP_DIR>/foo/",
+        "extension": "csv",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/csv",
+          "type": "File",
+        },
+        "name": "theTypeWontBeThis",
+        "parent": null,
+      },
+    },
+  ],
+  Array [
+    Object {
+      "child": Object {
+        "children": Array [],
+        "id": "uuid-from-gatsby",
+        "internal": Object {
+          "contentDigest": "contentDigest",
+          "type": "FooCsv",
+        },
+        "letter": "b",
+        "number": "42",
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "letter,number
+a,65
+b,42
+c,23",
+        "dir": "<TEMP_DIR>/foo/",
+        "extension": "csv",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/csv",
+          "type": "File",
+        },
+        "name": "theTypeWontBeThis",
+        "parent": null,
+      },
+    },
+  ],
+  Array [
+    Object {
+      "child": Object {
+        "children": Array [],
+        "id": "uuid-from-gatsby",
+        "internal": Object {
+          "contentDigest": "contentDigest",
+          "type": "FooCsv",
+        },
+        "letter": "c",
+        "number": "23",
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "letter,number
+a,65
+b,42
+c,23",
+        "dir": "<TEMP_DIR>/foo/",
+        "extension": "csv",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/csv",
+          "type": "File",
+        },
+        "name": "theTypeWontBeThis",
+        "parent": null,
+      },
+    },
+  ],
+]
+`;
+
+exports[`Process nodes correctly correctly handles the typeName option with the provided typeNameFromFile function 1`] = `
+Array [
+  Array [
+    Object {
+      "children": Array [],
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "contentDigest",
+        "type": "TheQueryShouldMatchCsv",
+      },
+      "letter": "a",
+      "number": "65",
+      "parent": "whatever",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "contentDigest",
+        "type": "TheQueryShouldMatchCsv",
+      },
+      "letter": "b",
+      "number": "42",
+      "parent": "whatever",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "contentDigest",
+        "type": "TheQueryShouldMatchCsv",
+      },
+      "letter": "c",
+      "number": "23",
+      "parent": "whatever",
+    },
+  ],
+]
+`;
+
+exports[`Process nodes correctly correctly handles the typeName option with the provided typeNameFromFile function 2`] = `
+Array [
+  Array [
+    Object {
+      "child": Object {
+        "children": Array [],
+        "id": "uuid-from-gatsby",
+        "internal": Object {
+          "contentDigest": "contentDigest",
+          "type": "TheQueryShouldMatchCsv",
+        },
+        "letter": "a",
+        "number": "65",
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "letter,number
+a,65
+b,42
+c,23",
+        "extension": "csv",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/csv",
+        },
+        "name": "theQueryShouldMatch",
+        "parent": null,
+      },
+    },
+  ],
+  Array [
+    Object {
+      "child": Object {
+        "children": Array [],
+        "id": "uuid-from-gatsby",
+        "internal": Object {
+          "contentDigest": "contentDigest",
+          "type": "TheQueryShouldMatchCsv",
+        },
+        "letter": "b",
+        "number": "42",
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "letter,number
+a,65
+b,42
+c,23",
+        "extension": "csv",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/csv",
+        },
+        "name": "theQueryShouldMatch",
+        "parent": null,
+      },
+    },
+  ],
+  Array [
+    Object {
+      "child": Object {
+        "children": Array [],
+        "id": "uuid-from-gatsby",
+        "internal": Object {
+          "contentDigest": "contentDigest",
+          "type": "TheQueryShouldMatchCsv",
+        },
+        "letter": "c",
+        "number": "23",
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "letter,number
+a,65
+b,42
+c,23",
+        "extension": "csv",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/csv",
+        },
+        "name": "theQueryShouldMatch",
         "parent": null,
       },
     },

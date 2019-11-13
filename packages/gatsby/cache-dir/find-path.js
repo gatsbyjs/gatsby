@@ -6,9 +6,9 @@ const pathCache = new Map()
 let matchPaths = []
 
 const trimPathname = rawPathname => {
-  let pathname = decodeURIComponent(rawPathname)
+  const pathname = decodeURIComponent(rawPathname)
   // Remove the pathPrefix from the pathname.
-  let trimmedPathname = stripPrefix(pathname, __BASE_PATH__)
+  const trimmedPathname = stripPrefix(pathname, __BASE_PATH__)
     // Remove any hashfragment
     .split(`#`)[0]
     // Remove search query

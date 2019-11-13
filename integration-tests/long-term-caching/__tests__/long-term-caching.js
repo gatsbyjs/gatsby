@@ -15,17 +15,19 @@ const getDirFilesWalk = async dir => {
   const dirFiles = await readdir(dir)
 
   const additionalFiles = [].concat(
-    ...(await Promise.all(
-      dirFiles.map(async file => {
-        const filePath = `${dir}/${file}`
-        const fileStat = await stat(filePath)
+    ...(
+      await Promise.all(
+        dirFiles.map(async file => {
+          const filePath = `${dir}/${file}`
+          const fileStat = await stat(filePath)
 
-        if (fileStat.isDirectory()) {
-          return await getDirFilesWalk(filePath)
-        }
-        return undefined
-      })
-    )).filter(Boolean)
+          if (fileStat.isDirectory()) {
+            return await getDirFilesWalk(filePath)
+          }
+          return undefined
+        })
+      )
+    ).filter(Boolean)
   )
 
   return [...dirFiles, ...additionalFiles]
