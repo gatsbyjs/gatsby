@@ -10,7 +10,6 @@ export const PRODUCT = `Product`
 export const PRODUCT_OPTION = `ProductOption`
 export const PRODUCT_VARIANT = `ProductVariant`
 export const PRODUCT_METAFIELD = `ProductMetafield`
-export const VARIANT_PRESENTMENT_PRICE = `VariantPresentmentPrice`
 export const SHOP_POLICY = `ShopPolicy`
 export const PAGE = `Page`
 export const SHOP = `shop`
