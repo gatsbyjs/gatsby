@@ -7572,6 +7572,7 @@
   categories:
     - Nonprofit
     - Community
+    - eCommerce
   built_by: Little & Big
   built_by_url: "https://www.littleandbig.com.au/"
   featured: false
@@ -8323,6 +8324,19 @@
   built_by: Jason Di Benedetto
   built_by_url: https://jason.dibenedetto.fyi
   featured: false
+- title: Yoseph.tech
+  main_url: https://www.yoseph.tech
+  url: https://www.yoseph.tech/compilers
+  source_url: https://github.com/radding/yoseph.tech_gatsby
+  description: >
+    Yoseph.tech is a personal blog centered around technology and software engineering
+  categories:
+    - Technology
+    - Web Development
+    - Open Source
+  built_by: Yoseph Radding
+  built_by_url: https://github.com/radding
+  featured: false
 - title: Really Fast Sites
   url: https://reallyfastsites.com
   main_url: https://reallyfastsites.com
@@ -8381,6 +8395,47 @@
     - User Experience
   built_by: Binaria
   built_by_url: "https://binaria.com/"
+- title: Akshay Thakur's Portfolio
+  main_url: https://akshaythakur.me
+  url: https://akshaythakur.me
+  categories:
+    - Portfolio
+    - Web Development
+  built_by: Akshay Thakur
+  built_by_url: https://akshaythakur.me
+- title: Quema Labs
+  url: https://quemalabs.com/
+  main_url: https://quemalabs.com/
+  description: >
+    WordPress themes for these moedern times
+  categories:
+    - Blog
+    - Web Development
+    - WordPress
+    - Portfolio
+  built_by: Nico Andrade
+  built_by_url: https://nicoandrade.com/
+- title: Century 21 Financial
+  url: https://century21financial.co.nz/
+  main_url: https://century21financial.co.nz/
+  description: Website for Century 21's mortgage broker and insurance broker business in New Zealand.
+  categories:
+    - Real Estate
+    - Finance
+    - Business
+  built_by: Shannon Smith
+  built_by_url: https://www.powerboard.co.nz/clients
+  featured: false
+- title: Base Backpackers
+  url: https://www.stayatbase.com/
+  main_url: https://www.stayatbase.com/
+  description: Base Backpackers is one of Australasia's biggest youth adventure tourism brands. They are super stoked to have one of the fastest websites in the tourism industry.
+  categories:
+    - Travel
+    - Business
+  built_by: Shannon Smith
+  built_by_url: https://www.powerboard.co.nz/clients
+  featured: false
 - title: Wealthsimple
   url: "https://www.wealthsimple.com/"
   main_url: "https://www.wealthsimple.com/en-us/"
@@ -8403,3 +8458,36 @@
     - Freelance
   built_by: Sam Goddard
   built_by_url: "https://samgoddard.dev/"
+- title: Kosmos Platform
+  main_url: https://kosmosplatform.com
+  url: https://kosmosplatform.com
+  description: >
+    Explore the Kosmos - A new world is here, where every clinician now has the ability to improve cardiothoracic and abdominal assessment, in just a few minutes.
+  categories:
+    - Marketing
+    - Science
+    - Video
+    - Landing Page
+    - Healthcare
+    - Technology
+  built_by: Bryce Benson via Turnstyle Studio
+  built_by_url: https://github.com/brycebenson
+- title: B-Engaged
+  url: https://b-engaged.se/
+  main_url: https://b-engaged.se/
+  description: >
+    B-Engaged gives a clear picture of the organization and helps you implement the measures that makes difference for the employees. The results of our employee surveys are easily transformed into concrete improvement measures using AI technology.
+  categories:
+    - Business
+    - Human Resources
+  featured: false
+- title: Pix4D
+  url: https://www.pix4d.com
+  main_url: https://www.pix4d.com
+  description: >
+    A unique suite of photogrammetry software for drone mapping. Capture images with our app, process on desktop or cloud and create maps and 3D models.
+  categories:
+    - Business
+    - Productivity
+    - Technology
+  featured: false
