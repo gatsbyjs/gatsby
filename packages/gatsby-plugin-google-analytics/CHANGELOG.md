@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.26](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.1.25...gatsby-plugin-google-analytics@2.1.26) (2019-11-13)
+
+### Features
+
+- **gatsby-plugin-google-analytics:** add custom event helper ([#17612](https://github.com/gatsbyjs/gatsby/issues/17612)) ([4e431f3](https://github.com/gatsbyjs/gatsby/commit/4e431f3))
+
 ## [2.1.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.1.24...gatsby-plugin-google-analytics@2.1.25) (2019-11-10)
 
 **Note:** Version bump only for package gatsby-plugin-google-analytics

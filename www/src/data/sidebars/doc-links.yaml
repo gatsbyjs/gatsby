@@ -540,8 +540,8 @@
           link: /docs/building-with-components/
         - title: Lifecycle APIs
           link: /docs/gatsby-lifecycle-apis/
-        - title: React Rehydration
-          link: /docs/react-rehydration
+        - title: React Hydration
+          link: /docs/react-hydration
         - title: PRPL Pattern
           link: /docs/prpl-pattern/
         - title: GraphQL Concepts

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@2.1.22...gatsby-remark-images-contentful@2.1.23) (2019-11-13)
+
+### Features
+
+- **gatsby-remark-images-contentful:** add native lazy loading support to contentful images ([#18883](https://github.com/gatsbyjs/gatsby/issues/18883)) ([0fc9534](https://github.com/gatsbyjs/gatsby/commit/0fc9534))
+
 ## [2.1.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@2.1.21...gatsby-remark-images-contentful@2.1.22) (2019-11-10)
 
 **Note:** Version bump only for package gatsby-remark-images-contentful
