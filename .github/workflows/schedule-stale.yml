@@ -15,6 +15,7 @@ jobs:
           DAYS_BEFORE_STALE: 20
           DAYS_BEFORE_CLOSE: 10
           DRY_RUN: true
+          OPERATIONS_PER_RUN: 5000
           STALE_ISSUE_MESSAGE: |
             Hiya!
 
@@ -36,13 +37,9 @@ jobs:
           EXEMPT_ISSUE_LABELS: |
             not stale
             important
-            Epic
             good first issue
-            help wanted
-            Hacktoberfest
             no triage
             status: confirmed
-            type: feature or enhancement
       - name: Post slack report
         uses: pullreminders/slack-action@v1.0.7
         env:
