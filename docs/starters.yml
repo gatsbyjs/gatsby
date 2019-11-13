@@ -4330,6 +4330,17 @@
     - PostCSS
     - Deploy Storybook
     - Documentation
+- url: https://gatsby-tfs-starter.netlify.com/
+  repo: https://github.com/tiagofsanchez/gatsby-tfs-starter
+  description: a gatsby-advanced-starter with theme-ui styling
+  tags:
+    - RSS
+    - SEO
+    - Blog
+    - MDX
+  features:
+    - React Helmet <head> Management
+    - SVG Icon
 - url: https://gatsby-lam.vaporwavy.io
   repo: https://github.com/vaporwavy/gatsby-london-after-midnight
   description: A custom, image-centric theme for Gatsby. Advanced from the Gatsby starter London.
