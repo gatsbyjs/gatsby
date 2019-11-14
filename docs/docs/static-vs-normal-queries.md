@@ -51,7 +51,7 @@ Babel traverses all of your source code looking for queries during query extract
 
 Code specific for querying with GraphQL is no longer relevant and can be swapped out.
 
-A query written in a component like this:
+A static query written in a component with the `useStaticQuery` hook like this:
 
 ```jsx
 import { useStaticQuery, graphql } from "gatsby"
@@ -65,9 +65,9 @@ export () => {
       }
   `)
   return (
-    <div>
+    <h1>
         {data.siteMetadata.site.title}
-    </div>
+    </h1>
   )
 }
 ```
@@ -91,11 +91,37 @@ export () => {
 + const data = dataJson
 
   return (
-    <div>
+    <h1>
         {data.siteMetadata.site.title}
-    </div>
-)
+    </h1>
+  )
 }
 ```
 
-Gatsby will remove unnecessary imports for `useStaticQuery` and `graphql` from Gatsby along with the string containing the query as well.
+A page query would be updated in a similar fashion. Alhough the exact specifics of what has to change are different, the idea is the same:
+
+```diff
+- import { graphql } from "gatsby"
++ import dataJson from `/d/<hash>.json`
+
+- export const query = graphql`
+-   query HomePageQuery {
+-     site {
+-       siteMetadata {
+-         description
+-       }
+-     }
+-   }
+- `
+
+- export ({ data }) => {
++ export ({ data = dataJson }) => {
+    return (
+      <h1>
+          {data.siteMetadata.site.title}
+      </h1>
+    )
+  }
+```
+
+Gatsby will remove unnecessary imports like `useStaticQuery` and `graphql` from your pages along with the strings containing queries as well.
