@@ -25,7 +25,7 @@ You can also see the [full changes in PR #18929](https://github.com/gatsbyjs/gat
 
 Install [gatsby-plugin-mdx](/packages/gatsby-plugin-mdx/), the official plugin for using MDX with Gatsby. Also, install `@mdx-js/mdx` and `@mdx-js/react`.
 
-```
+```bash
 npm install --save gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
 ```
 
