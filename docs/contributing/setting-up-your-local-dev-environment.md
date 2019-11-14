@@ -45,7 +45,7 @@ Yarn is a package manager for your code, similar to [NPM](https://www.npmjs.com/
 
 - Install [gatsby-cli](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-cli):
   - Make sure you have the Gatsby CLI installed with `gatsby -v`,
-  - if not install globally: `yarn global add gatsby-cli`
+  - if not, install globally: `yarn global add gatsby-cli`
 - Install [gatsby-dev-cli](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli):
   - Make sure you have the Gatsby Dev CLI installed with `gatsby-dev -h`
   - if not install globally: `yarn global add gatsby-dev-cli`
