@@ -460,8 +460,8 @@ const isEmpty = ({ fieldMap }) =>
 const hasNodes = typeMetadata => typeMetadata.total > 0
 
 const haveEqualFields = (
-  { fieldMap = {} },
-  { fieldMap: otherFieldMap = {} }
+  { fieldMap = {} } = {},
+  { fieldMap: otherFieldMap = {} } = {}
 ) => {
   const fields = mergeObjectKeys(fieldMap, otherFieldMap)
   return fields.every(field =>
