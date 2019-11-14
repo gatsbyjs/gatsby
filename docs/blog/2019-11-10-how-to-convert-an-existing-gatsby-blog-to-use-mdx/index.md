@@ -13,7 +13,7 @@ tags:
 
 MDX is a file format that lets you add JSX to Markdown files via a `.mdx` file! It was started by and is maintained by Gatsby's [John Otander](https://github.com/johno) and the [open source community on Github](https://github.com/mdx-js/mdx).
 
-With MDX, you can import React components and declare them alongside regular markdown syntax. This is useful to display specific component examples alongside the actual code, complex interactive components like charts, and reusable components across multiple pages like sign-up forms.
+With MDX, you can import React components and declare them alongside regular markdown syntax with JSX. This is useful to display specific component examples alongside the actual code, complex interactive components like charts, reusable components across multiple pages like sign-up forms, and more!
 
 ## Adding MDX to Gatsby Starter Blog
 
