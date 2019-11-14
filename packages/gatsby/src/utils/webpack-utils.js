@@ -8,7 +8,7 @@ const OptimizeCssAssetsPlugin = require(`optimize-css-assets-webpack-plugin`)
 const isWsl = require(`is-wsl`)
 
 const GatsbyWebpackStatsExtractor = require(`./gatsby-webpack-stats-extractor`)
-const GatsbyWebpackEslintConfigReload = require(`./gatsby-webpack-eslint-config-reload`)
+const GatsbyWebpackEslintGraphqlSchemaReload = require(`./gatsby-webpack-eslint-graphql-schema-reload-plugin`)
 
 const builtinPlugins = require(`./webpack-plugins`)
 const eslintConfig = require(`./eslint-config`)
@@ -624,8 +624,8 @@ module.exports = async ({
 
   plugins.extractStats = options => new GatsbyWebpackStatsExtractor(options)
 
-  plugins.reloadESLintConfig = options =>
-    new GatsbyWebpackEslintConfigReload(options)
+  plugins.eslintGraphqlSchemaReload = options =>
+    new GatsbyWebpackEslintGraphqlSchemaReload(options)
 
   return {
     loaders,

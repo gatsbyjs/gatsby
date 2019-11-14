@@ -13,11 +13,11 @@ const isEslintRule = rule => {
   return options && typeof options.useEslintrc !== `undefined`
 }
 
-class GatsbyWebpackEslintConfigReload {
+class GatsbyWebpackEslintGraphqlSchemaReload {
   schema = null
 
   constructor(options) {
-    this.plugin = { name: `GatsbyWebpackEslintConfigReload` }
+    this.plugin = { name: `GatsbyWebpackEslintGraphqlSchemaReload` }
     this.options = options || {}
   }
 
@@ -49,4 +49,4 @@ class GatsbyWebpackEslintConfigReload {
   }
 }
 
-module.exports = GatsbyWebpackEslintConfigReload
+module.exports = GatsbyWebpackEslintGraphqlSchemaReload
