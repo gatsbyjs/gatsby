@@ -51,7 +51,7 @@ exports.sourceNodes = ({ actions }) => {
       memberof: String
       scope: String
       access: String
-      optiona: Boolean
+      optional: Boolean
       readonly: Boolean
       abstract: Boolean
       generator: Boolean
