@@ -608,6 +608,9 @@ async function fluid({ file, args = {}, reporter, cache }) {
 
   let maxWidth
   let maxHeight
+  if (!options.aspectRatio) {
+    options.aspectRatio = presentationWidth / presentationHeight
+  }
   if (options.maxHeight || options.maxWidth) {
     maxWidth = options.maxWidth
       ? `${options.maxWidth}px`
