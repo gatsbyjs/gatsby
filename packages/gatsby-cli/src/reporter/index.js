@@ -100,7 +100,7 @@ const reporter: Reporter = {
   format: chalk,
   /**
    * Toggle verbosity.
-   * @param {boolean} [isVerbose=true]
+   * @param {boolean} [_isVerbose=true]
    */
   setVerbose: (_isVerbose = true) => {
     isVerbose = _isVerbose
@@ -215,7 +215,7 @@ const reporter: Reporter = {
 
   /**
    * Time an activity.
-   * @param {string} name - Name of activity.
+   * @param {string} text - Name of activity.
    * @param {ActivityArgs} activityArgs - optional object with tracer parentSpan
    * @returns {ActivityTracker} The activity tracker.
    */
@@ -286,7 +286,7 @@ const reporter: Reporter = {
    * are visible to the user. So this function can be used to create a _hidden_ activity
    * that while not displayed in the CLI, still triggers a change in process status.
    *
-   * @param {string} name - Name of activity.
+   * @param {string} text - Name of activity.
    * @param {ActivityArgs} activityArgs - optional object with tracer parentSpan
    * @returns {ActivityTracker} The activity tracker.
    */
@@ -324,7 +324,7 @@ const reporter: Reporter = {
 
   /**
    * Create a progress bar for an activity
-   * @param {string} name - Name of activity.
+   * @param {string} text - Name of activity.
    * @param {number} total - Total items to be processed.
    * @param {number} start - Start count to show.
    * @param {ActivityArgs} activityArgs - optional object with tracer parentSpan
