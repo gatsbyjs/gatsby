@@ -1,10 +1,12 @@
 // NOTE: Previously `data-tree-utils-test.js`
+const _ = require(`lodash`)
 
 const {
   getExampleObject,
   addNode,
   deleteNode,
   addNodes,
+  haveEqualFields,
 } = require(`../inference-metadata`)
 const { TypeConflictReporter } = require(`../type-conflict-reporter`)
 
@@ -1020,5 +1022,151 @@ describe(`Type conflicts`, () => {
       typeName: `Conflict_1`,
     })
     expect(conflicts).toMatchSnapshot()
+  })
+})
+
+describe(`Type change detection`, () => {
+  let initialMetadata
+
+  const nodes = () => [
+    { foo: `foo` },
+    { object: { foo: `foo`, bar: `bar` } },
+    { list: [`item`], bar: `bar` },
+    { listOfObjects: [{ foo: `foo`, bar: `bar` }] },
+    { union___NODE: `foo` },
+    { listOfUnion___NODE: [`foo`] },
+  ]
+
+  const addOne = (node, metadata = initialMetadata) =>
+    addNode(_.cloneDeep(metadata), node)
+  const deleteOne = (node, metadata = initialMetadata) =>
+    deleteNode(_.cloneDeep(metadata), node)
+
+  beforeEach(() => {
+    initialMetadata = addNodes({}, nodes())
+    initialMetadata.dirty = false
+  })
+
+  it(`detects on a field add`, () => {
+    const metadata = addOne({ added: `added` })
+    expect(metadata.dirty).toEqual(true)
+    expect(haveEqualFields(metadata, initialMetadata)).toEqual(false)
+  })
+
+  it(`detects on a field delete`, () => {
+    const metadata = deleteOne(nodes()[0])
+    expect(metadata.dirty).toEqual(true)
+    expect(haveEqualFields(metadata, initialMetadata)).toEqual(false)
+  })
+
+  it(`does not detect when structure doesn't change`, () => {
+    let metadata = addOne({ foo: `bar` })
+    expect(metadata.dirty).toEqual(false)
+    expect(haveEqualFields(metadata, initialMetadata)).toEqual(true)
+
+    metadata = deleteOne({ foo: `bar` }, metadata)
+    expect(metadata.dirty).toEqual(false)
+    expect(haveEqualFields(metadata, initialMetadata)).toEqual(true)
+  })
+
+  it(`detects on a nested field add`, () => {
+    const metadata = addOne({ object: { added: `added` } })
+    expect(metadata.dirty).toEqual(true)
+    expect(haveEqualFields(metadata, initialMetadata)).toEqual(false)
+  })
+
+  it(`detects on a nested field delete`, () => {
+    const metadata = deleteOne({ object: { bar: `bar` } })
+    expect(metadata.dirty).toEqual(true)
+    expect(haveEqualFields(metadata, initialMetadata)).toEqual(false)
+  })
+
+  it(`does not detect when a nested object structure doesn't change`, () => {
+    let metadata = addOne({ object: { bar: `baz` } })
+    expect(metadata.dirty).toEqual(false)
+    expect(haveEqualFields(metadata, initialMetadata)).toEqual(true)
+
+    metadata = deleteOne({ object: { bar: `baz` } }, metadata)
+    expect(metadata.dirty).toEqual(false)
+    expect(haveEqualFields(metadata, initialMetadata)).toEqual(true)
+  })
+
+  it(`does not detect on a new list item`, () => {
+    const metadata = addOne({ list: [`item2`] })
+    expect(metadata.dirty).toEqual(false)
+    expect(haveEqualFields(metadata, initialMetadata)).toEqual(true)
+  })
+
+  it(`detects on list getting empty`, () => {
+    const metadata = deleteOne({ list: [`item`] })
+    expect(metadata.dirty).toEqual(true)
+    expect(haveEqualFields(metadata, initialMetadata)).toEqual(false)
+  })
+
+  it(`detects on field add to nested object within the list`, () => {
+    const metadata = addOne({ listOfObjects: [{ added: `added` }] })
+    expect(metadata.dirty).toEqual(true)
+    expect(haveEqualFields(metadata, initialMetadata)).toEqual(false)
+  })
+
+  it(`detects on field delete from the nested object within the list`, () => {
+    const metadata = deleteOne({ listOfObjects: [{ bar: `bar` }] })
+    expect(metadata.dirty).toEqual(true)
+    expect(haveEqualFields(metadata, initialMetadata)).toEqual(false)
+  })
+
+  it(`does not detect when structure of the nested object doesn't change`, () => {
+    let metadata = addOne({ listOfObjects: [{ bar: `bar` }] })
+    expect(metadata.dirty).toEqual(false)
+    expect(haveEqualFields(metadata, initialMetadata)).toEqual(true)
+
+    metadata = deleteOne({ listOfObjects: [{ bar: `bar` }] }, metadata)
+    expect(metadata.dirty).toEqual(false)
+    expect(haveEqualFields(metadata, initialMetadata)).toEqual(true)
+  })
+
+  // TODO
+  it.skip(`detects on any change of the union field`, () => {
+    // We do not know a type of the node being added hence consider and
+    // add/delete to such fields as mutations
+    let metadata = addOne({ union___NODE: `added` })
+    expect(metadata.dirty).toEqual(true)
+    expect(haveEqualFields(metadata, initialMetadata)).toEqual(true)
+    metadata.dirty = false
+
+    metadata = deleteOne({ union___NODE: `added` }, metadata)
+    expect(metadata.dirty).toEqual(true)
+    expect(haveEqualFields(metadata, initialMetadata)).toEqual(true)
+  })
+
+  it.skip(`does not detect when the same node added to the union field`, () => {
+    const metadata = addOne({ union___NODE: `foo` })
+    expect(metadata.dirty).toEqual(false)
+    expect(haveEqualFields(metadata, initialMetadata)).toEqual(true)
+  })
+
+  it(`detects on any change of the listOfUnion field`, () => {
+    let metadata = addOne({ listOfUnion___NODE: [`added`] })
+    expect(metadata.dirty).toEqual(true)
+    expect(haveEqualFields(metadata, initialMetadata)).toEqual(true)
+    metadata.dirty = false
+
+    metadata = deleteOne({ listOfUnion___NODE: [`added`] }, metadata)
+    expect(metadata.dirty).toEqual(true)
+    expect(haveEqualFields(metadata, initialMetadata)).toEqual(true)
+  })
+
+  it(`does not detect when the same node added to the listOfUnion field`, () => {
+    const metadata = addOne({ listOfUnion___NODE: [`foo`] })
+    expect(metadata.dirty).toEqual(false)
+    expect(haveEqualFields(metadata, initialMetadata)).toEqual(true)
+  })
+
+  it(`does not detect on symmetric add/delete`, () => {
+    let metadata
+    metadata = addOne({ added: `added` })
+    metadata = deleteOne({ added: `added` }, metadata)
+    expect(metadata.dirty).toEqual(true)
+    expect(haveEqualFields(metadata, initialMetadata)).toEqual(true)
   })
 })

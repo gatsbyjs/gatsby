@@ -83,7 +83,7 @@ type ValueDescriptor = {
   (still rare edge cases possible when reporting may be confusing, i.e. when node is deleted)
 */
 
-const { groupBy } = require(`lodash`)
+const { groupBy, isEqual } = require(`lodash`)
 const is32BitInteger = require(`./is-32-bit-integer`)
 const { looksLikeADate } = require(`../types/date`)
 
@@ -132,7 +132,8 @@ const updateValueDescriptor = ({
 
   // Keeping track of structural changes
   // (when value of a new type is added or an existing type has no more values assigned)
-  let dirty = typeInfo.total === 1 || typeInfo.total === 0
+  let dirty =
+    typeInfo.total === 0 || (operation === `add` && typeInfo.total === 1)
 
   // Keeping track of the first node for this type. Only used for better conflict reporting.
   // (see Caveats section in the header comments)
@@ -207,6 +208,51 @@ const updateValueDescriptor = ({
   return [descriptor, dirty]
 }
 
+const mergeObjectKeys = (obj, other) => {
+  const props = Object.keys(obj)
+  const otherProps = Object.keys(other)
+  return [...new Set(props.concat(otherProps))]
+}
+
+const descriptorsAreEqual = (descriptor, otherDescriptor) => {
+  const types = possibleTypes(descriptor)
+  const otherTypes = possibleTypes(otherDescriptor)
+
+  // Empty are equal
+  if (types.length === 0 && otherTypes.length === 0) {
+    return true
+  }
+  // Conflicting and non-matching types are not equal
+  // TODO: consider descriptors with equal conflicts as equal?
+  if (types.length > 1 || otherTypes.length > 1 || types[0] !== otherTypes[0]) {
+    return false
+  }
+  switch (types[0]) {
+    case `array`:
+      return descriptorsAreEqual(
+        descriptor.array.item,
+        otherDescriptor.array.item
+      )
+    case `object`: {
+      const props = mergeObjectKeys(
+        descriptor.object.props,
+        otherDescriptor.object.props
+      )
+      return props.every(prop =>
+        descriptorsAreEqual(
+          descriptor.object.props[prop],
+          otherDescriptor.object.props[prop]
+        )
+      )
+    }
+    case `listOfUnion`: {
+      return isEqual(descriptor.nodes, otherDescriptor.nodes)
+    }
+    default:
+      return true
+  }
+}
+
 const nodeFields = (node, ignoredFields = new Set()) =>
   Object.keys(node).filter(key => !ignoredFields.has(key))
 
@@ -253,7 +299,7 @@ const isMixOfDateAndString = ({ date, string }) =>
 const hasOnlyEmptyStrings = ({ string }) =>
   string && string.empty === string.total
 
-const possibleTypes = descriptor =>
+const possibleTypes = (descriptor = {}) =>
   Object.keys(descriptor).filter(type => descriptor[type].total > 0)
 
 const resolveWinnerType = descriptor => {
@@ -413,6 +459,16 @@ const isEmpty = ({ fieldMap }) =>
 // Even empty type may still have nodes
 const hasNodes = typeMetadata => typeMetadata.total > 0
 
+const haveEqualFields = (
+  { fieldMap = {} },
+  { fieldMap: otherFieldMap = {} }
+) => {
+  const fields = mergeObjectKeys(fieldMap, otherFieldMap)
+  return fields.every(field =>
+    descriptorsAreEqual(fieldMap[field], otherFieldMap[field])
+  )
+}
+
 module.exports = {
   addNode,
   addNodes,
@@ -420,5 +476,6 @@ module.exports = {
   ignore,
   isEmpty,
   hasNodes,
+  haveEqualFields,
   getExampleObject,
 }
