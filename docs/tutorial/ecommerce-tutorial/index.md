@@ -102,6 +102,18 @@ You have 2 keys in both test mode and production mode:
 
 While testing, you must use the key(s) that include _test_. For production code, you will need to use the live keys. As the names imply, your publishable key may be included in code that you share publicly (for example, on the frontend, and in GitHub), whereas your secret key should not be shared with anyone or committed to any public repo. It’s important to restrict access to this secret key because anyone who has it could potentially read or send requests from your Stripe account and see information about charges or purchases or even refund customers.
 
+### Enabling the "Checkout client-only integration" for your Stripe account
+
+Through this tutorial you will be using the "Checkout client-only integration" from Stripe. To use this integration you need to activate it on the corresponding [Checkout settings](https://dashboard.stripe.com/account/checkout/settings) from your Stripe Dashboard.
+
+![Stripe control to enable the Checkout client-side only integration highlighted](stripe-checkout-clientside-functionality.png)
+
+> 💡 This change will also modify the interface that Stripe provides to administer your products: keep this in mind in case you have previously used this tool. If you have never used the product administrator, you don't need to worry.
+
+Additionally, you need to set a name for your Stripe account on your [Account settings](https://dashboard.stripe.com/account) to use this integration.
+
+To learn more about this integration you may use the [Stripe docs](https://stripe.com/docs/payments/checkout#configure).
+
 ## Examples
 
 You can find an implementation of these examples [on GitHub](https://github.com/thorsten-stripe/ecommerce-gatsby-tutorial).
@@ -112,9 +124,9 @@ If you're selling a simple product, like an eBook for example, you can create a 
 
 #### Create a product and SKU
 
-For Stripe Checkout to work without any backend component, you need to create a product listing in the Stripe Dashboard. This is required for Stripe to validate that the request coming from the frontend is legitimate and to charge the right amount for the selected product/SKU. To set this up, simply follow the steps in the [Stripe docs](https://stripe.com/docs/payments/checkout#configure).
+To sell your products, first you need to create them on Stripe using the [Stripe Dashboard](https://dashboard.stripe.com/products) or the [Stripe API](https://stripe.com/docs/api/products/create). This is required for Stripe to validate that the request coming from the frontend is legitimate and to charge the right amount for the selected product/SKU. Stripe requires every SKU used with Stripe Checkout to have a name: be sure to add one to all of your SKUs.
 
-Note: You will need to create both test and live product SKUs in the Stripe admin. Make sure you toggle to 'Viewing test data' and then create your products for local development.
+You will need to create both test and live product SKUs in the Stripe Dashboard. Make sure you toggle to "Viewing test data" and then create your products for local development.
 
 #### Create a checkout component that loads StripeJS and redirects to the checkout
 
@@ -282,7 +294,7 @@ module.exports = {
 }
 ```
 
-To retrieve your SKUs from your Stripe account you will need to provide your secret API key. This key needs to kept secret and must never be shared on the frontend or on GitHub. Therefore you need to set an environment variable to store the secret key. You can read more about the usage of env variables in Gatsby [here](https://www.gatsbyjs.org/docs/environment-variables/).
+To retrieve your SKUs from your Stripe account you will need to provide your secret API key. This key needs to be kept secret and must never be shared on the frontend or on GitHub. Therefore you need to set an environment variable to store the secret key. You can read more about the usage of env variables in the [Gatsby docs](/docs/environment-variables/).
 
 In the root directory of your project add a `.env.development` file:
 
