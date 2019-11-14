@@ -25,7 +25,7 @@ class GatsbyWebpackEslintGraphqlSchemaReload {
     compiler.options.module.rules.find(isEslintRule).use[0].options
 
   apply(compiler) {
-    compiler.hooks.compile.tap(this.plugin, stats => {
+    compiler.hooks.compile.tap(this.plugin.name, () => {
       const { schema, program } = store.getState()
 
       if (!this.schema) {
