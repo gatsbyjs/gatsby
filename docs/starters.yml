@@ -4370,3 +4370,16 @@
   features:
     - Type Checking With TypeScript
     - Powerfull Linting With ESLint
+- url: https://gatsby-typescript-tailwind.netlify.com/
+  repo: https://github.com/impulse/gatsby-typescript-tailwind
+  description: Gatsby starter with TypeScript and Tailwind CSS
+  tags:
+    - Language:TypeScript
+    - Styling:Tailwind
+    - Styling:PostCSS
+    - Netlify
+  features:
+    - Simple
+    - TSLint
+    - Tailwind CSS v1
+    - PostCSS + PurgeCSS
