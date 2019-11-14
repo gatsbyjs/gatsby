@@ -455,7 +455,7 @@ import React, { Component } from 'react'
 import { graphql, StaticQuery } from 'gatsby'
 import SkuCard from './SkuCard' // highlight-line
 
-const conatinerStyles = {
+const containerStyles = {
   display: 'flex',
   flexDirection: 'row',
   flexWrap: 'wrap',
@@ -498,7 +498,7 @@ class Skus extends Component {
           }
         `}
         render={({ skus }) => (
-          <div style={conatinerStyles}>
+          <div style={containerStyles}>
             {skus.edges.map(({ node: sku }) => (
               <SkuCard key={sku.id} sku={sku} stripe={this.state.stripe} /> {/* highlight-line */}
             ))}
