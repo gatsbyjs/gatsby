@@ -225,7 +225,7 @@ The `redirectToCheckout()` function validates your checkout request and either r
   }
 ```
 
-The `render()` function applies our styles to the button and binds the `redirectToCheckout()` function to the button's onclick event.
+The `render()` function applies your styles to the button and binds the `redirectToCheckout()` function to the button's onclick event.
 
 #### Importing the checkout component into the homepage
 
@@ -467,7 +467,7 @@ import React, { Component } from 'react'
 import { graphql, StaticQuery } from 'gatsby'
 import SkuCard from './SkuCard' // highlight-line
 
-const conatinerStyles = {
+const containerStyles = {
   display: 'flex',
   flexDirection: 'row',
   flexWrap: 'wrap',
@@ -510,7 +510,7 @@ class Skus extends Component {
           }
         `}
         render={({ skus }) => (
-          <div style={conatinerStyles}>
+          <div style={containerStyles}>
             {skus.edges.map(({ node: sku }) => (
               <SkuCard key={sku.id} sku={sku} stripe={this.state.stripe} /> {/* highlight-line */}
             ))}

@@ -24,12 +24,12 @@ const PullquoteRoot = styled(`blockquote`)`
 
   ${mediaQueries.lg} {
     line-height: ${p => p.theme.lineHeights.loose};
-    margin: ${p => p.theme.space[8]} -3.5rem;
+    margin: ${p => p.theme.space[8]} ${p => (p.narrow ? 0 : `-3.5rem`)};
     padding: 2.8rem 3.5rem;
     text-indent: 1.8rem;
 
     p > & {
-      margin: ${p => p.theme.space[8]} -3.5rem;
+      margin: ${p => p.theme.space[8]} ${p => (p.narrow ? 0 : `-3.5rem`)};
     }
   }
 `
@@ -160,12 +160,12 @@ const Star = styled(`span`)`
 const variants = [`A`, `B`, `C`]
 let instancesCounter = -1
 
-const Pullquote = ({ citation, children }) => {
+const Pullquote = ({ citation, narrow = false, children }) => {
   instancesCounter += 1
   const className = `variant${variants[instancesCounter % variants.length]}`
 
   return (
-    <PullquoteRoot className={className}>
+    <PullquoteRoot narrow={narrow} className={className}>
       {children}
       {citation && <Citation>&mdash; {citation}</Citation>}
       <QuotationMark
@@ -182,6 +182,7 @@ const Pullquote = ({ citation, children }) => {
 
 Pullquote.propTypes = {
   children: PropTypes.node.isRequired,
+  narrow: PropTypes.bool,
 }
 
 export default Pullquote

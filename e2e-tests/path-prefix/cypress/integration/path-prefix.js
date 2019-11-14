@@ -44,5 +44,14 @@ describe(`Production pathPrefix`, () => {
 
       cy.location(`pathname`).should(`eq`, withTrailingSlash(pathPrefix))
     })
+
+    it(`can navigate to the blogtest page that contains the blog prefix`, () => {
+      cy.getTestElement(`page-blogtest-link`).click()
+
+      cy.location(`pathname`).should(
+        `eq`,
+        withTrailingSlash(`${pathPrefix}/blogtest`)
+      )
+    })
   })
 })

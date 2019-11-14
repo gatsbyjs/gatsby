@@ -1,0 +1,25 @@
+[
+  {
+    "name": "community",
+    "pages": ["code-of-conduct"]
+  },
+  {
+    "name": "tutorial",
+    "pages": [
+      "index",
+      "part-zero",
+      "part-one",
+      "part-two",
+      "part-three",
+      "part-four",
+      "part-five",
+      "part-six",
+      "part-seven",
+      "part-eight"
+    ]
+  },
+  {
+    "name": "docs",
+    "pages": ["index", "quick-start", "recipes", "glossary", "gatsby-cli"]
+  }
+]

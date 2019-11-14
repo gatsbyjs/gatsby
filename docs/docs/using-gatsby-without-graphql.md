@@ -6,7 +6,7 @@ Most examples in the Gatsby docs and on the web at large focus on leveraging sou
 
 > Note: For our purposes here, “unstructured data” means data “handled outside of Gatsby’s data layer” (we’re using the data directly, and not transforming the data into Gatsby nodes).
 
-## The approach: Fetch data and use Gatsby's `createPages` API
+## The approach: fetch data and use Gatsby's `createPages` API
 
 > _Note_: This example is drawn from an example repo built specifically to model how to use this "unstructured data" approach. [View the full repo on GitHub](https://github.com/jlengstorf/gatsby-with-unstructured-data).
 

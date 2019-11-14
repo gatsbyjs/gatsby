@@ -7,8 +7,7 @@ const imageminMozjpeg = require(`imagemin-mozjpeg`)
 const imageminPngquant = require(`imagemin-pngquant`)
 const imageminWebp = require(`imagemin-webp`)
 const _ = require(`lodash`)
-const crypto = require(`crypto`)
-const { cpuCoreCount } = require(`gatsby-core-utils`)
+const { cpuCoreCount, createContentDigest } = require(`gatsby-core-utils`)
 const got = require(`got`)
 
 // Try to enable the use of SIMD instructions. Seems to provide a smallish
@@ -34,6 +33,9 @@ const argsWhitelist = [
   `toFormat`,
   `pngCompressionLevel`,
   `quality`,
+  `jpegQuality`,
+  `pngQuality`,
+  `webpQuality`,
   `jpegProgressive`,
   `grayscale`,
   `rotate`,
@@ -51,6 +53,9 @@ const argsWhitelist = [
  * @property {string} toFormat
  * @property {number} pngCompressionLevel
  * @property {number} quality
+ * @property {number} jpegQuality
+ * @property {number} pngQuality
+ * @property {number} webpQuality
  * @property {boolean} jpegProgressive
  * @property {boolean} grayscale
  * @property {number} rotate
@@ -145,7 +150,7 @@ exports.processFile = (file, contentDigest, transforms, options = {}) => {
         force: args.toFormat === `png`,
       })
       .webp({
-        quality: args.quality,
+        quality: args.webpQuality || args.quality,
         force: args.toFormat === `webp`,
       })
       .tiff({
@@ -156,7 +161,7 @@ exports.processFile = (file, contentDigest, transforms, options = {}) => {
     // jpeg
     if (!options.useMozJpeg) {
       clonedPipeline = clonedPipeline.jpeg({
-        quality: args.quality,
+        quality: args.jpegQuality || args.quality,
         progressive: args.jpegProgressive,
         force: args.toFormat === `jpg`,
       })
@@ -211,8 +216,8 @@ const compressPng = (pipeline, outputPath, options) =>
       .buffer(sharpBuffer, {
         plugins: [
           imageminPngquant({
-            quality: `${options.quality}-${Math.min(
-              options.quality + 25,
+            quality: `${options.pngQuality || options.quality}-${Math.min(
+              (options.pngQuality || options.quality) + 25,
               100
             )}`, // e.g. 40-65
             speed: options.pngCompressionSpeed
@@ -231,7 +236,7 @@ const compressJpg = (pipeline, outputPath, options) =>
       .buffer(sharpBuffer, {
         plugins: [
           imageminMozjpeg({
-            quality: options.quality,
+            quality: options.jpegQuality || options.quality,
             progressive: options.jpegProgressive,
           }),
         ],
@@ -243,7 +248,9 @@ const compressWebP = (pipeline, outputPath, options) =>
   pipeline.toBuffer().then(sharpBuffer =>
     imagemin
       .buffer(sharpBuffer, {
-        plugins: [imageminWebp({ quality: options.quality })],
+        plugins: [
+          imageminWebp({ quality: options.webpQuality || options.quality }),
+        ],
       })
       .then(imageminBuffer => fs.writeFile(outputPath, imageminBuffer))
   )
@@ -261,10 +268,7 @@ exports.createArgsDigest = args => {
     return argsWhitelist.includes(key)
   })
 
-  const argsDigest = crypto
-    .createHash(`md5`)
-    .update(JSON.stringify(sortKeys(filtered)))
-    .digest(`hex`)
+  const argsDigest = createContentDigest(sortKeys(filtered))
 
   const argsDigestShort = argsDigest.substr(argsDigest.length - 5)
 
