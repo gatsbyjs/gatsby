@@ -1,4 +1,4 @@
 exports.getVersionInfo = () => {
   const { version: devCliVersion } = require(`../../package.json`)
-  return `Gatsby DEV CLI version: ${devCliVersion}`
+  return `Gatsby Dev CLI version: ${devCliVersion}`
 }

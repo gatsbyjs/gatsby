@@ -39,10 +39,7 @@ You typically only need to configure this once.`
   .alias(`h`, `help`)
   .nargs(`v`, 0)
   .alias(`v`, `version`)
-  .describe(
-    `v`,
-    `Show the version of the Gatsby DEV CLI and the Gatsby package in the current project`
-  ).argv
+  .describe(`v`, `Print the currently installed version of Gatsby Dev CLI`).argv
 
 if (argv.version) {
   console.log(getVersionInfo())
