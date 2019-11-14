@@ -21,7 +21,7 @@ Gatsby Cloud features include:
 - **CMS Integrations**—with [plugins available for 389 content management systems and APIs](https://www.gatsbyjs.org/plugins/?=gatsby-source), Gatsby offers unrivaled CMS-compatibility in the market.
 - **Builds and Reports (Private Beta)**—a new CI/CD solution for Gatsby that will dramatically speed up your Gatsby builds and give you feedback on site performance—with Lighthouse—and common Gatsby errors. [Signup for the private beta](https://www.gatsbyjs.com/builds-beta/) to be one of the first to access Builds and Reports!
 
-We want Gatsby Cloud to be used by everyone. And [our pricing structure includes a free tier](https://www.gatsbyjs.com/pricing/) designed to comfortably support personal and small sites. We’re excited to see how the Gatsby community adopts and grows with our new services.
+We want Gatsby Cloud to be used by everyone. [Our pricing structure includes a free tier](https://www.gatsbyjs.com/pricing/) designed to comfortably support personal and small sites. We’re excited to see how the Gatsby community adopts and grows with our new services.
 
 ### Quotes from early customers
 
