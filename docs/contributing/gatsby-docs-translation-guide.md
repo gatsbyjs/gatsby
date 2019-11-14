@@ -44,6 +44,7 @@ The first step for starting a new translation is to check what exists. So far, t
 - [Russian](https://github.com/gatsbyjs/gatsby-ru)
 - [Turkish](https://github.com/gatsbyjs/gatsby-tr)
 - [Simplified Chinese](https://github.com/gatsbyjs/gatsby-zh-Hans)
+- [Traditional Chinese](https://github.com/gatsbyjs/gatsby-zh-Hant)
 
 > Note: Once a new translation repository is created, feel free to add it here in a PR!
 
