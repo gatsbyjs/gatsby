@@ -6,9 +6,9 @@ import { StarOrnament, QuotationMarkOrnament } from "../../assets/ornaments"
 import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 
 const PullquoteRoot = styled(`blockquote`)`
-  border: 1px solid #ebddf2;
+  border: 1px solid ${p => p.theme.colors.pullquote.borderColor};
   border-radius: ${p => p.theme.radii[2]}px;
-  color: ${p => p.theme.colors.gatsby};
+  color: ${p => p.theme.colors.pullquote.color};
   font-family: ${p => p.theme.fonts.heading};
   font-size: ${p => p.theme.fontSizes[3]};
   font-weight: bold;
