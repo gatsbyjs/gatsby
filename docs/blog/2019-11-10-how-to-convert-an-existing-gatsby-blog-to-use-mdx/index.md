@@ -172,6 +172,7 @@ In `src/templates/blog-post.js`, replace `markdownRemark` with `mdx` in the `ren
 ```
 
 Also replace `markdownRemark` with `mdx` in the GraphQL query.
+
 ```diff:title=src/templates/blog-post.js
 # line 93
 - markdownRemark(fields: { slug: { eq: $slug } }) {
