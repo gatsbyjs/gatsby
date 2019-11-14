@@ -226,7 +226,6 @@ const generateCacheKey = ({ file, args, fileArgs }) => {
     traceSVG: undefined,
     quality: undefined,
     toFormat: undefined,
-    toFormatBase64: undefined,
     background: undefined,
     sizes: undefined,
     srcSetBreakpoints: undefined,
