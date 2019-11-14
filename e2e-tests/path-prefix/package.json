@@ -22,7 +22,7 @@
   "scripts": {
     "prebuild": "del-cli -f assets && make-dir assets/blog",
     "build": "gatsby build --prefix-paths",
-    "postbuild": "cpy --cwd=./public --parents **/* ../assets/blog",
+    "postbuild": "cpy --cwd=./public --parents '**/*' '../assets/blog'",
     "develop": "gatsby develop",
     "format": "prettier --write '**/*.js'",
     "test": "cross-env CYPRESS_SUPPORT=y npm run build && npm run start-server-and-test",
