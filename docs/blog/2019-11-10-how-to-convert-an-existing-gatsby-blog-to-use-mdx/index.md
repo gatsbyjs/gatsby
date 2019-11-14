@@ -121,17 +121,23 @@ Then, add some options to `gatsby-plugin-feed`. This will allow the the RSS feed
 
 ### Step 3
 
-In `gatsby-node.js`, change `allMarkdownRemark` to `allMdx` and `MarkdownRemark` to `Mdx`.
+In `gatsby-node.js`, replace `allMarkdownRemark` with `allMdx`.
 
 ```diff:title=gatsby-node.js
 # line 11
 - allMarkdownRemark(
 + allMdx(
+```
 
+```diff:title=gatsby-node.js
 # line 35
 - const posts = result.data.allMarkdownRemark.edges
 + const posts = result.data.allMdx.edges
+```
 
+Next, replace `MarkdownRemark` with `Mdx`.
+
+```diff:title=gatsby-node.js
 # line 56
 - if (node.internal.type === `MarkdownRemark`) {
 + if (node.internal.type === `Mdx`) {
@@ -139,13 +145,17 @@ In `gatsby-node.js`, change `allMarkdownRemark` to `allMdx` and `MarkdownRemark`
 
 ### Step 4
 
-In `src/pages/index.js`, replace `allMarkdownRemark` with `allMdx` in both the `render()` method and also the GraphQL query.
+In `src/pages/index.js`, replace `allMarkdownRemark` with `allMdx` in the `render()` method.
 
 ```diff:title=src/pages/index.js
 # line 13
 - const posts = data.allMarkdownRemark.edges
 + const posts = data.allMdx.edges
+```
 
+Also replace `allMarkdownRemark` with `allMdx` in the GraphQL query.
+
+```diff:title=src/pages/index.js
 # line 59
 - allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
 + allMdx(sort: { fields: [frontmatter___date], order: DESC }) {
@@ -153,27 +163,42 @@ In `src/pages/index.js`, replace `allMarkdownRemark` with `allMdx` in both the `
 
 ### Step 5
 
-In `src/templates/blog-post.js`, add an import statement for `MDXRenderer` from `gatsby-plugin-mdx` and replace `markdownRemark` with `mdx` in both the `render()` method and also the GraphQL query. Also, we'll be using `body` instead of `html` in our GraphQL query.
+In `src/templates/blog-post.js`, replace `markdownRemark` with `mdx` in the `render()` method.
+
+```diff:title=src/templates/blog-post.js
+# line 11
+- const post = this.props.data.markdownRemark
++ const post = this.props.data.mdx
+```
+
+Also replace `markdownRemark` with `mdx` in the GraphQL query.
+```diff:title=src/templates/blog-post.js
+# line 93
+- markdownRemark(fields: { slug: { eq: $slug } }) {
++ mdx(fields: { slug: { eq: $slug } }) {
+```
+
+Add an import statement for `MDXRenderer` from `gatsby-plugin-mdx`.
 
 ```diff:title=src/templates/blog-post.js
 # line 3
 + import { MDXRenderer } from "gatsby-plugin-mdx"
+```
 
-# line 11
-- const post = this.props.data.markdownRemark
-+ const post = this.props.data.mdx
+We'll be using `body` instead of `html` in our GraphQL query.
 
-# line 41
-- <section dangerouslySetInnerHTML={{ __html: post.html }} />
-+ <MDXRenderer>{post.body}</MDXRenderer>
-
-# line 93
-- markdownRemark(fields: { slug: { eq: $slug } }) {
-+ mdx(fields: { slug: { eq: $slug } }) {
-
+```diff:title=src/templates/blog-post.js
 # line 96
 - html
 + body
+```
+
+Now we can replace the `<section>` element with the `dangerouslySetInnerHTML` attribute and instead use `<MDXRenderer>` with `post.body`.
+
+```diff:title=src/templates/blog-post.js
+# line 41
+- <section dangerouslySetInnerHTML={{ __html: post.html }} />
++ <MDXRenderer>{post.body}</MDXRenderer>
 ```
 
 And... that's it! After these changes, a Gatsby blog should be able to use MDX files to render JSX with markdown! To test, add a `.mdx` file to `content/blog/` and check if the JSX renders.
