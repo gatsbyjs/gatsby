@@ -4281,6 +4281,26 @@
     - Storybook
     - Jest and React Testing library for snapshots and unit tests.
     - Styled-Components for all your styles.
+- url: https://semantic-ui-docs-gatsby.netlify.com/
+  repo: https://github.com/whoisryosuke/semantic-ui-docs-gatsby
+  description: Documentation starter using Semantic UI and MDX
+  tags:
+    - Documentation
+    - Linting
+    - Markdown
+    - MDX
+    - PWA
+    - SEO
+  features:
+    - Easy starter for documentation-style sites
+    - Use SUI React components anywhere in MDX
+    - SASS/LESS support
+    - Live code component
+    - Customizable sidebar
+    - Offline-ready
+    - Responsive design
+    - Nodemon for restarting dev server on changes
+    - Webpack aliasing for components, assets, etc
 - url: https://gatsby-starter-saas-marketing.netlify.com/
   repo: https://github.com/keegn/gatsby-starter-saas-marketing
   description: A simple one page marketing site starter for SaaS companies and products
