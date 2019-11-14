@@ -123,7 +123,7 @@ describe(`build and update individual types`, () => {
 
     const fooFields = newSchema.getType(`Foo`).getFields()
     expect(Object.keys(fooFields)).toEqual(initialFooFields.concat(`newField`))
-    expect(fooFields.newField.type.name).toEqual(`Int`)
+    expect(String(fooFields.newField.type)).toEqual(`Int`)
 
     const types = Object.keys(newSchema.getTypeMap()).sort()
     expect(types).toEqual(initialTypes)
@@ -157,7 +157,7 @@ describe(`build and update individual types`, () => {
     const newSchema = await addNodeAndRebuild(node)
 
     const fields = newSchema.getType(`Foo`).getFields()
-    expect(fields.numberKey.type.name).toEqual(`Float`)
+    expect(String(fields.numberKey.type)).toEqual(`Float`)
 
     const expectRemoved = [`IntQueryOperatorInput`]
     const expectAdded = [`Float`, `FloatQueryOperatorInput`]
@@ -304,12 +304,61 @@ describe(`build and update individual types`, () => {
 
     const fields = newSchema.getType(`Foo`).getFields()
     expect(Object.keys(fields)).toEqual(initialFooFields.concat(`related`))
-    expect(fields.related.type.name).toEqual(`Foo`)
+    expect(String(fields.related.type)).toEqual(`Foo`)
 
     const types = Object.keys(newSchema.getTypeMap()).sort()
     expect(types).toEqual(initialTypes)
 
     await expectSymmetricDelete(node)
+  })
+
+  it(`changes ___NODE relations (defined as array) from object type to union and back`, async () => {
+    const node = {
+      id: `Bar1`,
+      internal: { type: `Bar`, contentDigest: `0` },
+      related___NODE: [`Foo1`],
+    }
+    let newSchema = await addNodeAndRebuild(node)
+    let field = newSchema.getType(`Bar`).getFields().related
+    expect(String(field.type)).toEqual(`[Foo]`)
+
+    const node2 = {
+      id: `Bar2`,
+      internal: { type: `Bar`, contentDigest: `0` },
+      related___NODE: [`Nested1`],
+    }
+    newSchema = await addNodeAndRebuild(node2)
+    field = newSchema.getType(`Bar`).getFields().related
+    expect(String(field.type)).toEqual(`[FooNestedUnion]`)
+
+    newSchema = await deleteNodeAndRebuild(node2)
+    field = newSchema.getType(`Bar`).getFields().related
+    expect(String(field.type)).toEqual(`[Foo]`)
+  })
+
+  it(`doesn't change ___NODE relations (defined as string)`, async () => {
+    // FIXME: this behavior seems a bit inconsistent, we should possibly reconsider it
+    const node = {
+      id: `Bar1`,
+      internal: { type: `Bar`, contentDigest: `0` },
+      related___NODE: `Foo1`,
+    }
+    let newSchema = await addNodeAndRebuild(node)
+    let field = newSchema.getType(`Bar`).getFields().related
+    expect(String(field.type)).toEqual(`Foo`)
+
+    const node2 = {
+      id: `Bar2`,
+      internal: { type: `Bar`, contentDigest: `0` },
+      related___NODE: `Nested1`,
+    }
+    newSchema = await addNodeAndRebuild(node2)
+    field = newSchema.getType(`Bar`).getFields().related
+    expect(String(field.type)).toEqual(`Foo`)
+
+    newSchema = await deleteNodeAndRebuild(node)
+    field = newSchema.getType(`Bar`).getFields().related
+    expect(String(field.type)).toEqual(`Foo`)
   })
 
   it(`creates derived types`, async () => {
