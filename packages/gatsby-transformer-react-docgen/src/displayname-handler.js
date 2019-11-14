@@ -118,4 +118,5 @@ export function createDisplayNameHandler(
   }
 }
 
-export default createDisplayNameHandler(``)
+module.exports = createDisplayNameHandler(``)
+module.exports.createDisplayNameHandler = createDisplayNameHandler

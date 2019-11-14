@@ -11,7 +11,7 @@ let isLiteral = str => /^('|"|true|false|\d+)/.test(str.trim())
 /**
  * Remove doclets from string
  */
-export const cleanDoclets = desc => {
+const cleanDoclets = desc => {
   desc = desc || ``
   let idx = desc.search(DOCLET_PATTERN)
   return (idx === -1 ? desc : desc.substr(0, idx)).trim()
@@ -42,7 +42,7 @@ const getDoclets = str => {
  *
  * @param  {ComponentMetadata|PropMetadata} obj
  */
-export const parseDoclets = obj => {
+const parseDoclets = obj => {
   let desc = obj.description || ``
   return getDoclets(desc) || Object.create(null)
 }
@@ -84,7 +84,7 @@ function parseType(type) {
  * @param  {Object} props     Object Hash of the prop metadata
  * @param  {String} propName
  */
-export const applyPropDoclets = prop => {
+const applyPropDoclets = prop => {
   prop.doclets.forEach(({ tag, value }) => {
     // the @type doclet to provide a prop type
     // Also allows enums (oneOf) if string literals are provided
@@ -133,3 +133,5 @@ export const applyPropDoclets = prop => {
 
   return prop
 }
+
+module.exports = { cleanDoclets, parseDoclets, applyPropDoclets }

@@ -1,18 +1,18 @@
-import { handlers, parse, resolver } from "react-docgen"
-import { ERROR_MISSING_DEFINITION } from "react-docgen/dist/parse"
-import { codeFrameColumns } from "@babel/code-frame"
-import { createDisplayNameHandler } from "./displayname-handler"
-import { applyPropDoclets, cleanDoclets, parseDoclets } from "./doclets"
+const { handlers: h, parse, resolver } = require(`react-docgen`)
+const { ERROR_MISSING_DEFINITION } = require(`react-docgen/dist/parse`)
+const { codeFrameColumns } = require(`@babel/code-frame`)
+const { createDisplayNameHandler } = require(`./displayname-handler`)
+const { applyPropDoclets, cleanDoclets, parseDoclets } = require(`./doclets`)
 
 const defaultHandlers = [
-  handlers.propTypeHandler,
-  handlers.propTypeCompositionHandler,
-  handlers.propDocBlockHandler,
-  handlers.flowTypeHandler,
-  handlers.defaultPropsHandler,
-  handlers.componentDocblockHandler,
-  handlers.componentMethodsHandler,
-  handlers.componentMethodsJsDocHandler,
+  h.propTypeHandler,
+  h.propTypeCompositionHandler,
+  h.propDocBlockHandler,
+  h.flowTypeHandler,
+  h.defaultPropsHandler,
+  h.componentDocblockHandler,
+  h.componentMethodsHandler,
+  h.componentMethodsJsDocHandler,
 ]
 
 let fileCount = 0
@@ -21,7 +21,9 @@ let fileCount = 0
  * Wrap handlers to pass in additional arguments such as the File node
  */
 function makeHandlers(node, handlers) {
-  handlers = (handlers || []).map(h => (...args) => h(...args, node))
+  handlers = (handlers || []).map(handler => (...args) =>
+    handler(...args, node)
+  )
   return [
     createDisplayNameHandler(
       node.absolutePath || `/UnknownComponent${++fileCount}`
@@ -30,7 +32,7 @@ function makeHandlers(node, handlers) {
   ]
 }
 
-export default function parseMetadata(content, node, options) {
+module.exports = function parseMetadata(content, node, options) {
   let components = []
   const { handlers, resolver: userResolver, ...parseOptions } = options || {}
   try {
