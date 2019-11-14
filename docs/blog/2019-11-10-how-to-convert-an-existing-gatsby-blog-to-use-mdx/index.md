@@ -178,7 +178,7 @@ In `src/templates/blog-post.js`, add an import statement for `MDXRenderer` from 
 
 And... that's it! After these changes, a Gatsby blog should be able to use MDX files to render JSX with markdown! To test, add a `.mdx` file to `content/blog/` and check if the JSX renders.
 
-For example, the following code should render a test button.
+For example, the following code should render a test button. Navigate to `localhost:8000/blog/example/` and you should see a clickable button in your blog post!
 
 ````mdx:title=content/blog/example.mdx
 ---
