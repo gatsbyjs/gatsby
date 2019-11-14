@@ -19,13 +19,18 @@ import {
   zIndices as z,
 } from "gatsby-design-tokens"
 
-let breakpointsTokens = []
-for (let b in bp) {
+const breakpointsTokens = []
+for (const b in bp) {
   breakpointsTokens.push(bp[b])
 }
 
-let fontsTokens = {}
-for (let fontFamily in f) {
+// remove the first breakpoint, `xxs: 0`
+// this made sense for styled-system and using an object
+// to define breakpoints, but not here
+breakpointsTokens.splice(0, 1)
+
+const fontsTokens = {}
+for (const fontFamily in f) {
   fontsTokens[fontFamily] = f[fontFamily].join(`, `)
 }
 // https://theme-ui.com/theme-spec#typography
@@ -42,7 +47,7 @@ const lineHeightsTokens = {
   heading: lh.dense,
 }
 
-const darkBackground = `#111014` // meh
+const darkBackground = `#131217` // meh
 const darkBorder = c.grey[90]
 // const darkBackground = c.purple[90]
 // const darkBorder = c.purple[80]
@@ -100,11 +105,11 @@ const col = {
     comment: `#527713`,
     tag: `#137886`,
     regex: `#dc0437`,
+    remove: c.red[70],
+    add: c.green[80],
     // unchanged
     border: `#faede5`,
     text: `#866c5b`,
-    remove: `#e45c5c`,
-    add: `#4a9c59`,
     punctuation: `#53450e`,
     cssString: `#a2466c`,
     invisibles: `#e0d7d1`,
@@ -185,8 +190,13 @@ const col = {
     placeholder: c.grey[60],
   },
   widget: {
+    border: c.grey[10],
     background: c.white,
     color: c.text.primary,
+  },
+  highlightedBox: {
+    background: c.yellow[10],
+    color: c.grey[80],
   },
   newsletter: {
     background: c.white,
@@ -203,12 +213,16 @@ const col = {
     secondaryText: c.purple[50],
     secondaryBorder: c.purple[40],
   },
+  pullquote: {
+    color: c.purple[60],
+    borderColor: c.purple[20],
+  },
   modes: {
     dark: {
       background: darkBackground,
-      text: c.grey[20],
-      heading: c.white,
-      textMuted: c.grey[50],
+      text: c.grey[30],
+      heading: c.whiteFade[80],
+      textMuted: c.grey[40],
       banner: hex2rgba(c.purple[90], 0.975),
       muted: c.grey[90],
       icon: {
@@ -251,7 +265,7 @@ const col = {
         keyword: c.magenta[30],
         punctuation: c.whiteFade[70],
         regex: `#d88489`,
-        remove: c.red[60],
+        remove: c.red[40],
         selector: c.orange[30],
         tag: c.teal[60],
         text: c.grey[30],
@@ -302,6 +316,10 @@ const col = {
         border: darkBorder,
         color: c.white,
       },
+      highlightedBox: {
+        background: c.grey[90],
+        color: c.white,
+      },
       newsletter: {
         background: darkBackground,
         border: darkBorder,
@@ -317,6 +335,10 @@ const col = {
         secondaryBg: `transparent`,
         secondaryText: c.purple[40],
         secondaryBorder: c.purple[40],
+      },
+      pullquote: {
+        color: c.purple[10],
+        borderColor: c.purple[90],
       },
     },
   },
@@ -365,7 +387,9 @@ export const zIndices = z
 const config = {
   // this enables the color modes feature
   // and is used as the name for the top-level colors object
-  initialColorMode: `light`,
+  initialColorModeName: `light`,
+  // `prefers-color-scheme: dark` media query
+  useColorSchemeMediaQuery: true,
   // borders: borders,
   breakpoints: breakpointsTokens,
   colors: col,
@@ -391,6 +415,22 @@ const config = {
       fontSize: 2,
       py: 2,
       px: 3,
+    },
+  },
+  links: {
+    muted: {
+      fontSize: 1,
+      lineHeight: `solid`,
+      py: 3,
+      "&&": {
+        border: 0,
+        color: `textMuted`,
+        display: `flex`,
+        fontWeight: `body`,
+      },
+      "&&:hover": {
+        color: `link.hoverColor`,
+      },
     },
   },
 }

@@ -44,13 +44,14 @@ function prepareDescriptionNode(node, markdownStr, name, helpers) {
 
 exports.sourceNodes = ({ actions }) => {
   const { createTypes } = actions
-  const typeDefs = `
+  const typeDefs = /* GraphQL */ `
     type DocumentationJs implements Node {
       name: String
       kind: String
       memberof: String
       scope: String
       access: String
+      optional: Boolean
       readonly: Boolean
       abstract: Boolean
       generator: Boolean
@@ -65,6 +66,10 @@ exports.sourceNodes = ({ actions }) => {
       lends: String
       type: DoctrineType
       default: JSON
+      description: DocumentationJSComponentDescription
+        @link(from: description___NODE)
+      deprecated: DocumentationJSComponentDescription
+        @link(from: deprecated___NODE)
       augments: [DocumentationJs] @link(from: "augments___NODE")
       examples: [DocumentationJsExample]
       implements: [DocumentationJs] @link(from: "implements___NODE")
