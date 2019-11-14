@@ -48,7 +48,7 @@ Yarn is a package manager for your code, similar to [NPM](https://www.npmjs.com/
   - if not, install globally: `yarn global add gatsby-cli`
 - Install [gatsby-dev-cli](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli):
   - Make sure you have the Gatsby Dev CLI installed with `gatsby-dev -h`
-  - if not install globally: `yarn global add gatsby-dev-cli`
+  - if not, install globally: `yarn global add gatsby-dev-cli`
 - Run `yarn install` in each of the sites you're testing.
 - For each of your Gatsby test sites, run the `gatsby-dev` command inside the test site's directory to copy
   the built files from your cloned copy of Gatsby. It'll watch for your changes
