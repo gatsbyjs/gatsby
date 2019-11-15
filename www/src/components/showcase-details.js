@@ -281,15 +281,11 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 <title>{`${data.sitesYaml.title}: Showcase`}</title>
                 <meta
                   property="og:image"
-                  content={`https://www.gatsbyjs.org${
-                    screenshotFile.resize.src
-                  }`}
+                  content={`https://www.gatsbyjs.org${screenshotFile.resize.src}`}
                 />
                 <meta
                   name="twitter:image"
-                  content={`https://www.gatsbyjs.org${
-                    screenshotFile.resize.src
-                  }`}
+                  content={`https://www.gatsbyjs.org${screenshotFile.resize.src}`}
                 />
                 <meta name="twitter:card" content="summary_large_image" />
                 <meta
@@ -386,9 +382,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                       Visit site
                     </Button>
                     <ShareMenu
-                      image={`https://www.gatsbyjs.org${
-                        screenshotFile.resize.src
-                      }`}
+                      image={`https://www.gatsbyjs.org${screenshotFile.resize.src}`}
                       title={data.sitesYaml.title}
                       url={data.sitesYaml.main_url}
                     />
