@@ -12,7 +12,7 @@
     "bluebird": "^3.7.1",
     "boxen": "^3.2.0",
     "configstore": "^5.0.0",
-    "envinfo": "^5.12.1",
+    "envinfo": "^7.4.0",
     "fs-extra": "^8.1.0",
     "gatsby-core-utils": "^1.0.18",
     "git-up": "4.0.1",
