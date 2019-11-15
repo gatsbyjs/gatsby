@@ -1,5 +1,6 @@
 orbs:
   win: circleci/windows@1.0.0
+  slack: circleci/slack@3.4.1
 
 executors:
   node:
@@ -35,7 +36,7 @@ aliases:
 
   attach_to_bootstrap: &attach_to_bootstrap
     attach_workspace:
-      at: packages
+      at: ./
 
   ignore_master: &ignore_master
     filters:
@@ -52,12 +53,10 @@ aliases:
 
   test_template: &test_template
     steps:
-      - checkout
-      - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
-      - <<: *restore_cache
-      - <<: *install_node_modules
-      - <<: *persist_cache
       - <<: *attach_to_bootstrap
+      - <<: *install_node_modules
+      - run: yarn list react
+      - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
       - run: yarn jest -w 1 --ci
       - run: GATSBY_DB_NODES=loki yarn jest -w 1 --ci
 
@@ -73,6 +72,18 @@ aliases:
       - unit_tests_node8
 
 commands:
+  notify-status:
+    parameters:
+      condition:
+        type: boolean
+        default: false
+    steps:
+      - when:
+          condition: << parameters.condition >>
+          steps:
+            - slack/status:
+              channel: eng-react-integration-status
+
   e2e-test:
     parameters:
       trigger_pattern:
@@ -84,12 +95,12 @@ commands:
         type: string
         default: "" # if unset, e2e-test.sh specifies the command
     steps:
-      - checkout
-      - run: ./scripts/assert-changed-files.sh "<< parameters.trigger_pattern >>|<< parameters.test_path >>/*"
-      - <<: *restore_cache
-      - <<: *install_node_modules
-      - <<: *persist_cache
       - <<: *attach_to_bootstrap
+      # In case of failure, add these steps again. Cache probably got deleted
+      #- <<: *restore_cache
+      #- <<: *install_node_modules
+      #- <<: *persist_cache
+      - run: ./scripts/assert-changed-files.sh "<< parameters.trigger_pattern >>|<< parameters.test_path >>/*"
       - run: ./scripts/e2e-test.sh "<< parameters.test_path >>" "<< parameters.test_command >>"
 
 version: 2.1
@@ -105,7 +116,7 @@ jobs:
       - <<: *persist_cache
       - run: yarn bootstrap -- concurrency=2
       - persist_to_workspace:
-          root: packages
+          root: ./
           paths:
             - "*"
 
@@ -113,10 +124,7 @@ jobs:
     executor: node
     parallelism: 2
     steps:
-      - checkout
-      - <<: *restore_cache
-      - <<: *install_node_modules
-      - <<: *persist_cache
+      - <<: *attach_to_bootstrap
       - run: yarn lint:code
       - run: yarn lint:other
       - run: yarn check-repo-fields
@@ -177,28 +185,46 @@ jobs:
 
   e2e_tests_gatsby-image:
     <<: *e2e-executor
+    parameters:
+      postStatus:
+        type: boolean
+        default: false
     environment:
       CYPRESS_PROJECT_ID: ave32k
       CYPRESS_RECORD_KEY: fb3cb6e0-a0f9-48b2-aa9a-95e8ef150a85
     steps:
       - e2e-test:
           test_path: e2e-tests/gatsby-image
+      - notify-status:
+          condition: << parameters.postStatus >>
 
   e2e_tests_development_runtime:
     <<: *e2e-executor
+    parameters:
+      postStatus:
+        type: boolean
+        default: false
     environment:
       CYPRESS_PROJECT_ID: s3j3qj
       CYPRESS_RECORD_KEY: 3904ca0c-bc98-47d9-8371-b68c5e81fb9b
     steps:
       - e2e-test:
           test_path: e2e-tests/development-runtime
+      - notify-status:
+          condition: << parameters.postStatus >>
 
   e2e_tests_production_runtime:
     <<: *e2e-executor
+    parameters:
+      postStatus:
+        type: boolean
+        default: false
     steps:
       - e2e-test:
           test_path: e2e-tests/production-runtime
           test_command: CYPRESS_PROJECT_ID=is8aoq CYPRESS_RECORD_KEY=cb4708d2-1578-4665-9a07-c59f8db28d91 yarn test && CYPRESS_PROJECT_ID=htpvkv CYPRESS_RECORD_KEY=0d734841-c613-41d2-86e5-df0b5968f93f yarn test:offline
+      - notify-status:
+          condition: << parameters.postStatus >>
 
   themes_e2e_tests_development_runtime:
     <<: *e2e-executor
@@ -230,10 +256,7 @@ jobs:
   starters_publish:
     executor: node
     steps:
-      - checkout
-      - <<: *restore_cache
-      - <<: *install_node_modules
-      - <<: *persist_cache
+      - <<: *attach_to_bootstrap
       - run: yarn markdown
       - run: sudo apt-get update && sudo apt-get install jq # jq is helpful for parsing json
       - run: git config --global user.name "GatsbyJS Bot"
@@ -315,8 +338,74 @@ jobs:
           name: "Run Tests"
           command: yarn test
 
+  bootstrap-with-experimental-react:
+    executor: node
+    parameters:
+      version:
+        type: string
+        default: "next"
+    steps:
+      - checkout
+      - run:
+          name: "Update React to prerelease"
+          command: "REACT_CHANNEL=<< parameters.version >> node ./scripts/upgrade-react"
+      - run: yarn install
+      - run: yarn bootstrap -- concurrency=2
+      - run: yarn list react
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - "*"
+
 workflows:
   version: 2
+  nightly-react-next:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - bootstrap-with-experimental-react:
+          version: "next"
+      - e2e_tests_gatsby-image:
+          postStatus: true
+          requires:
+            - bootstrap-with-experimental-react
+      - e2e_tests_development_runtime:
+          postStatus: true
+          requires:
+            - bootstrap-with-experimental-react
+      - e2e_tests_production_runtime:
+          postStatus: true
+          requires:
+            - bootstrap-with-experimental-react
+  nightly-react-experimental:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - bootstrap-with-experimental-react:
+          version: "experimental"
+      - e2e_tests_gatsby-image:
+          postStatus: true
+          requires:
+            - bootstrap-with-experimental-react
+      - e2e_tests_development_runtime:
+          postStatus: true
+          requires:
+            - bootstrap-with-experimental-react
+      - e2e_tests_production_runtime:
+          postStatus: true
+          requires:
+            - bootstrap-with-experimental-react
+
   build-test:
     jobs:
       - windows_unit_tests
