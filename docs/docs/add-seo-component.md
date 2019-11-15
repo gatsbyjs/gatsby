@@ -63,10 +63,7 @@ Now define the query and place it in the StaticQuery (you can also save the quer
 
 ```jsx:title=src/components/SEO.js
 const SEO = ({ title, description, image, pathname, article }) => (
-  <StaticQuery
-    query={query}
-    render={}
-  />
+  <StaticQuery query={query} render={} />
 )
 
 export default SEO
@@ -84,7 +81,7 @@ const query = graphql`
       }
     }
   }
-`;
+`
 ```
 
 The next step is to destructure the data from the query and to create an object that checks if the props were used — if not the default values are utilized. The name aliasing comes in handy here: It avoids name collisions.

@@ -4281,6 +4281,26 @@
     - Storybook
     - Jest and React Testing library for snapshots and unit tests.
     - Styled-Components for all your styles.
+- url: https://semantic-ui-docs-gatsby.netlify.com/
+  repo: https://github.com/whoisryosuke/semantic-ui-docs-gatsby
+  description: Documentation starter using Semantic UI and MDX
+  tags:
+    - Documentation
+    - Linting
+    - Markdown
+    - MDX
+    - PWA
+    - SEO
+  features:
+    - Easy starter for documentation-style sites
+    - Use SUI React components anywhere in MDX
+    - SASS/LESS support
+    - Live code component
+    - Customizable sidebar
+    - Offline-ready
+    - Responsive design
+    - Nodemon for restarting dev server on changes
+    - Webpack aliasing for components, assets, etc
 - url: https://gatsby-starter-saas-marketing.netlify.com/
   repo: https://github.com/keegn/gatsby-starter-saas-marketing
   description: A simple one page marketing site starter for SaaS companies and products
@@ -4338,3 +4358,72 @@
     - Accessible UI components implemented with Reakit and styling based on mini.css
     - Netlify CMS to create and edit blog posts
     - Small bundle size
+- url: https://gatsby-tailwind-styled-components-storybook-starter.netlify.com/
+  repo: https://github.com/denvash/gatsby-tailwind-styled-components-storybook-starter
+  description: Tailwind CSS + Styled-Components + Storybook starter for Gatsby
+  tags:
+    - Storybook
+    - Styling:Tailwind
+    - Styling:CSS-in-JS
+    - Styling:PostCSS
+    - Netlify
+  features:
+    - Tailwind CSS v1
+    - Styled-Components v5
+    - Storybook v5
+    - PostCSS
+    - Deploy Storybook
+    - Documentation
+- url: https://gatsby-tfs-starter.netlify.com/
+  repo: https://github.com/tiagofsanchez/gatsby-tfs-starter
+  description: a gatsby-advanced-starter with theme-ui styling
+  tags:
+    - RSS
+    - SEO
+    - Blog
+    - MDX
+  features:
+    - React Helmet <head> Management
+    - SVG Icon
+- url: https://gatsby-lam.vaporwavy.io
+  repo: https://github.com/vaporwavy/gatsby-london-after-midnight
+  description: A custom, image-centric theme for Gatsby. Advanced from the Gatsby starter London.
+  tags:
+    - Blog
+    - Portfolio
+    - Gallery
+    - SEO
+    - Markdown
+    - HTML5UP
+    - CMS:Netlify
+    - Styling:PostCSS
+  features:
+    - Support tags
+    - Easily change the theme color
+    - Post thumbnails in the homepage
+    - Built with PostCSS
+    - Made for image-centric portfolios
+    - Based on London for Gatsby
+- url: https://alipiry-gatsby-starter-typescript.netlify.com/
+  repo: https://github.com/alipiry/gatsby-starter-typescript
+  description: The default Gatsby starter with TypeScript
+  tags:
+    - Language:TypeScript
+    - Linting
+    - Netlify
+  features:
+    - Type Checking With TypeScript
+    - Powerfull Linting With ESLint
+- url: https://gatsby-typescript-tailwind.netlify.com/
+  repo: https://github.com/impulse/gatsby-typescript-tailwind
+  description: Gatsby starter with TypeScript and Tailwind CSS
+  tags:
+    - Language:TypeScript
+    - Styling:Tailwind
+    - Styling:PostCSS
+    - Netlify
+  features:
+    - Simple
+    - TSLint
+    - Tailwind CSS v1
+    - PostCSS + PurgeCSS

@@ -4,7 +4,7 @@ const { store } = require(`../../redux`)
 const nodeAPIs = require(`../../utils/api-node-docs`)
 const browserAPIs = require(`../../utils/api-browser-docs`)
 const ssrAPIs = require(`../../../cache-dir/api-ssr-docs`)
-const loadPlugins = require(`./load`)
+const { loadPlugins } = require(`./load`)
 const {
   collatePluginAPIs,
   handleBadExports,
