@@ -37,7 +37,7 @@ exports.onCreatePage = async ({ page, actions }) => {
 
 Check out the ["simple auth" example site](https://github.com/gatsbyjs/gatsby/blob/master/examples/simple-auth/) for a demo implementing user authentication and restricted client-only routes.
 
-### Configuring A Server To Handle Client Side Routes
+## Configuring A Server To Handle Client Side Routes
 As explained earlier, in order to access client side routes directly (on a page refresh or accessing a bookmarked page) your static site server will need to be configuired. 
 
 While there are many different static servers you can work with, a typical way to handle accessing client side routes directly is to watch for requests that match the client side routes and return the appropriate file that is responsible for rendering that page. 
