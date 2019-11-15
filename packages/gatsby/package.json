@@ -43,7 +43,7 @@
     "chokidar": "3.3.0",
     "common-tags": "^1.8.0",
     "compression": "^1.7.4",
-    "convert-hrtime": "^2.0.0",
+    "convert-hrtime": "^3.0.0",
     "copyfiles": "^2.1.1",
     "core-js": "^2.6.10",
     "cors": "^2.8.5",
