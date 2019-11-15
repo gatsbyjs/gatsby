@@ -42,7 +42,8 @@ module.exports = class EventStorage {
     this.store = new Store(baseDir)
     this.verbose = isTruthy(process.env.GATSBY_TELEMETRY_VERBOSE)
     this.debugEvents = isTruthy(process.env.GATSBY_TELEMETRY_DEBUG)
-    this.disabled = isTruthy(process.env.GATSBY_TELEMETRY_DISABLED) || isTruthy(process.env.DO_NOT_TRACK)
+    this.disabled = isTruthy(process.env.GATSBY_TELEMETRY_DISABLED) ||
+     isTruthy(process.env.DO_NOT_TRACK)
   }
 
   isTrackingDisabled() {
