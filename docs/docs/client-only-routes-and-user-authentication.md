@@ -9,6 +9,7 @@ A classic example would be a site that has a landing page, various marketing pag
 Gatsby uses [@reach/router](https://reach.tech/router/) under the hood. You should use @reach/router to create client-only routes.
 
 These routes will exist on the client only and will not correspond to index.html files in an app's built assets. If you'd like site users to be able to visit client routes directly, you'll need to set up your server to handle those routes appropriately.
+> see explanation below
 
 To create client-only routes, add the following code to your site’s `gatsby-node.js` file:
 
@@ -35,3 +36,13 @@ exports.onCreatePage = async ({ page, actions }) => {
 > Tip: For applications with complex routing, you may want to override Gatsby's default scroll behavior with the [shouldUpdateScroll](/docs/browser-apis/#shouldUpdateScroll) Browser API.
 
 Check out the ["simple auth" example site](https://github.com/gatsbyjs/gatsby/blob/master/examples/simple-auth/) for a demo implementing user authentication and restricted client-only routes.
+
+### Configuring A Server To Handle Client Side Routes
+As explained earlier, in order to access client side routes directly (on a page refresh or accessing a bookmarked page) your static site server will need to be configuired. 
+
+While there are many different static servers you can work with, a typical way to handle accessing client side routes directly is to watch for requests that match the client side routes and return the appropriate file that is responsible for rendering that page. 
+
+For example the client side route `/app/:id` could make a server request to `/app/why-gatsby-is-awesome` during a page refresh. The server would not be able to respond correctly since there is no document in its file system for `/app/why-gatsby-is-awesome.html` or `/app/why-gatsby-is-awesome/index.html`. 
+
+The server should be configured to respond with `/app/index.html` which has all the react code to subsequently render the client sided routes correctly. Keep in mind this __translation__ or ___path rewrite___ should return http __200__ and not a __301__
+
