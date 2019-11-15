@@ -44,7 +44,7 @@
     "common-tags": "^1.8.0",
     "compression": "^1.7.4",
     "convert-hrtime": "^2.0.0",
-    "copyfiles": "^1.2.0",
+    "copyfiles": "^2.1.1",
     "core-js": "^2.6.10",
     "cors": "^2.8.5",
     "css-loader": "^1.0.1",
