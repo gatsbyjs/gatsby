@@ -419,9 +419,8 @@ module.exports = async (args: BootstrapArgs) => {
     parentSpan: bootstrapSpan,
   })
   activity.start()
-  await apiRunnerNode(`createSchemaCustomization`, {
+  await require(`../utils/create-schema-customization`)({
     parentSpan: bootstrapSpan,
-    traceId: `initial-createSchemaCustomization`,
   })
   activity.end()
 
