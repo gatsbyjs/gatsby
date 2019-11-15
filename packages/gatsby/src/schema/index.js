@@ -12,24 +12,21 @@ const build = async ({ parentSpan }) => {
   const spanArgs = parentSpan ? { childOf: parentSpan } : {}
   const span = tracer.startSpan(`build schema`, spanArgs)
 
-  Object.keys(builtInFieldExtensions).forEach(name => {
-    const extension = builtInFieldExtensions[name]
-    store.dispatch({
-      type: `CREATE_FIELD_EXTENSION`,
-      payload: { name, extension },
-    })
-  })
-
   const {
     schemaCustomization: {
       thirdPartySchemas,
       types,
-      fieldExtensions,
+      fieldExtensions: customFieldExtensions,
       printConfig,
     },
     inferenceMetadata,
     config: { mapping: typeMapping },
   } = store.getState()
+
+  const fieldExtensions = {
+    ...customFieldExtensions,
+    ...builtInFieldExtensions,
+  }
 
   const typeConflictReporter = new TypeConflictReporter()
 
