@@ -14,10 +14,10 @@ let bar
 // node 8 doesn't support promise.finally, we extract this function to re-use it inside then & catch
 const cleanupJob = (job, boundActionCreators) => {
   if (bar) {
-    bar.tick(job.args.operations.length)
+    bar.tick(job.task.args.operations.length)
   }
 
-  imagesFinished += job.args.operations.length
+  imagesFinished += job.task.args.operations.length
 
   if (imagesFinished === imagesToProcess) {
     if (bar) {
@@ -34,13 +34,12 @@ const cleanupJob = (job, boundActionCreators) => {
 const executeJobs = _.throttle(
   (pluginOptions, boundActionCreators) => {
     toProcess.forEach(job => {
-      toProcess.delete(job.args.inputPath)
+      const { task } = job
+      toProcess.delete(task.inputPaths[0])
 
       try {
-        worker({
-          ...job.args,
-          pluginOptions,
-        })
+        worker
+          .IMAGE_PROCESSING(task.inputPaths, task.outputDir, task.args)
           .then(() => {
             job.deferred.resolve()
             cleanupJob(job, boundActionCreators)
@@ -51,6 +50,7 @@ const executeJobs = _.throttle(
           })
       } catch (err) {
         job.deferred.reject(err)
+        cleanupJob(job, boundActionCreators)
       }
     })
   },
@@ -83,17 +83,21 @@ const scheduleJob = async (
   if (isQueued) {
     const registeredJob = toProcess.get(job.inputPath)
     // add the transform to the transforms list
-    const operations = registeredJob.args.operations.concat({
+    const operations = registeredJob.task.args.operations.concat({
       outputPath: job.outputPath,
       transforms: job.args,
     })
+
     scheduledPromise = registeredJob.deferred.promise
 
     toProcess.set(job.inputPath, {
       ...registeredJob,
-      args: {
-        ...registeredJob.args,
-        operations,
+      task: {
+        ...registeredJob.task,
+        args: {
+          ...registeredJob.task.args,
+          operations,
+        },
       },
     })
 
@@ -110,18 +114,22 @@ const scheduleJob = async (
     const deferred = pDefer()
     scheduledPromise = deferred.promise
 
-    // Save a job in our queue
+    // make our job compliant with new job spec
     toProcess.set(job.inputPath, {
       id: jobId,
-      args: {
-        inputPath: job.inputPath,
-        contentDigest: job.contentDigest,
-        operations: [
-          {
-            outputPath: job.outputPath,
-            transforms: job.args,
-          },
-        ],
+      task: {
+        inputPaths: [job.inputPath],
+        outputDir: job.outputDir,
+        args: {
+          contentDigest: job.contentDigest,
+          pluginOptions,
+          operations: [
+            {
+              outputPath: job.outputPath,
+              transforms: job.args,
+            },
+          ],
+        },
       },
       deferred,
     })

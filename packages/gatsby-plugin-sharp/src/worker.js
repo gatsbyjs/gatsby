@@ -1,3 +1,4 @@
+const path = require(`path`)
 const queue = require(`async/queue`)
 const { processFile } = require(`./process-file`)
 
@@ -5,28 +6,27 @@ const { processFile } = require(`./process-file`)
 
 /**
  * @typedef WorkerInput
- * @property {string} inputPath the file path to transform
  * @property {string} contentDigest
- * @property {object} pluginOptions
  * @property {{outputPath: string, transforms: TransformArgs[]}} operations
+ * @property {object} pluginOptions
  */
 
 /**
  * the queue concurrency is 1 as we only want to transform 1 file at a time.
  * @param {(job: WorkerInput, callback: Function) => undefined} task
  */
-const q = queue((job, callback) => {
+const q = queue(({ inputPaths, outputDir, args }, callback) => {
   Promise.all(
     processFile(
-      job.inputPath,
-      job.contentDigest,
-      job.operations.map(operation => {
+      inputPaths[0],
+      args.contentDigest,
+      args.operations.map(operation => {
         return {
-          outputPath: operation.outputPath,
+          outputPath: path.join(outputDir, operation.outputPath),
           args: operation.transforms,
         }
       }),
-      job.pluginOptions
+      args.pluginOptions
     )
   )
     .then(() => callback())
@@ -34,11 +34,14 @@ const q = queue((job, callback) => {
 }, 1)
 
 /**
- * @param {WorkerInput} job
+ *
+ * @param {string[]} inputPaths the file paths to transform
+ * @param {string} outputDir the directory to save to
+ * @param {WorkerInput} args
  */
-module.exports = job =>
+exports.IMAGE_PROCESSING = async (inputPaths, outputDir, args) =>
   new Promise((resolve, reject) => {
-    q.push(job, function(err) {
+    q.push({ inputPaths, outputDir, args }, function(err) {
       if (err) {
         return reject(err)
       }

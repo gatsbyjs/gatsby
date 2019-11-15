@@ -10,7 +10,11 @@ jest.mock(`fs`, () => {
   }
 })
 
-jest.mock(`../worker`, () => jest.fn())
+jest.mock(`../worker`, () => {
+  return {
+    IMAGE_PROCESSING: jest.fn(),
+  }
+})
 jest.mock(`../utils`, () => {
   return {
     createProgress: jest.fn(),
@@ -25,7 +29,7 @@ describe(`scheduler`, () => {
 
   it(`should schedule an image processing job`, async () => {
     const { createProgress } = require(`../utils`)
-    const workerMock = require(`../worker`)
+    const workerMock = require(`../worker`).IMAGE_PROCESSING
     workerMock.mockReturnValue(Promise.resolve())
 
     const { scheduleJob } = require(`../scheduler`)
@@ -36,6 +40,7 @@ describe(`scheduler`, () => {
     const job = {
       inputPath: `/test-image[new].jpg`,
       outputPath: `/1234/test-image[new].jpg`,
+      outputDir: `/public/static/`,
       args: {
         width: `100`,
       },
@@ -44,9 +49,8 @@ describe(`scheduler`, () => {
     await scheduleJob(job, boundActionCreators, {}, false, `value`)
 
     expect(createProgress).not.toHaveBeenCalled()
-    expect(workerMock).toHaveBeenCalledWith({
+    expect(workerMock).toHaveBeenCalledWith([job.inputPath], job.outputDir, {
       contentDigest: job.contentDigest,
-      inputPath: job.inputPath,
       operations: [
         {
           outputPath: job.outputPath,
@@ -67,7 +71,7 @@ describe(`scheduler`, () => {
       tick: barTick,
       done: barEnd,
     })
-    const workerMock = require(`../worker`)
+    const workerMock = require(`../worker`).IMAGE_PROCESSING
     workerMock.mockReturnValue(Promise.resolve())
 
     const { scheduleJob } = require(`../scheduler`)
@@ -78,6 +82,7 @@ describe(`scheduler`, () => {
     const job = {
       inputPath: `/test-image[new].jpg`,
       outputPath: `/1234/test-image[new].jpg`,
+      outputDir: `/public/static/`,
       args: {
         width: `100`,
       },
@@ -92,7 +97,7 @@ describe(`scheduler`, () => {
   })
 
   it(`should fail the job when transform failed`, async () => {
-    const workerMock = require(`../worker`)
+    const workerMock = require(`../worker`).IMAGE_PROCESSING
     workerMock.mockReturnValue(Promise.reject(`failed transform`))
     const { scheduleJob } = require(`../scheduler`)
     const boundActionCreators = {
@@ -106,6 +111,7 @@ describe(`scheduler`, () => {
         {
           inputPath: `/test-image.jpg`,
           outputPath: `/1234/test-image.jpg`,
+          outputDir: `/public/static/`,
           args: {},
         },
         boundActionCreators,
@@ -118,7 +124,7 @@ describe(`scheduler`, () => {
   })
 
   it(`should schedule two operations when inputPath is the same`, async () => {
-    const workerMock = require(`../worker`)
+    const workerMock = require(`../worker`).IMAGE_PROCESSING
     workerMock.mockReturnValue(Promise.resolve())
 
     const throttledFn = jest
@@ -141,6 +147,7 @@ describe(`scheduler`, () => {
     const job1 = {
       inputPath: `/test-image.jpg`,
       outputPath: `/1234/test-image.jpg`,
+      outputDir: `/public/static/`,
       args: {
         width: `100`,
       },
@@ -151,6 +158,7 @@ describe(`scheduler`, () => {
     const job2 = {
       inputPath: `/test-image.jpg`,
       outputPath: `/1234/test-image-2.jpg`,
+      outputDir: `/public/static/`,
       args: {
         width: `200`,
       },
@@ -165,6 +173,8 @@ describe(`scheduler`, () => {
     expect(boundActionCreators.endJob).toHaveBeenCalledTimes(1)
     expect(workerMock).toHaveBeenCalledTimes(1)
     expect(workerMock).toHaveBeenCalledWith(
+      [job1.inputPath],
+      job1.outputDir,
       expect.objectContaining({
         operations: [
           {
@@ -183,7 +193,7 @@ describe(`scheduler`, () => {
   it(`Shouldn't schedule a job when outputFile already exists`, async () => {
     const fs = require(`fs`)
     fs.existsSync.mockReturnValue(true)
-    const workerMock = require(`../worker`)
+    const workerMock = require(`../worker`).IMAGE_PROCESSING
     const { scheduleJob } = require(`../scheduler`)
     const boundActionCreators = {
       createJob: jest.fn(),
@@ -192,6 +202,7 @@ describe(`scheduler`, () => {
     await scheduleJob(
       {
         inputPath: `/test-image.jpg`,
+        outputDir: `/public/static/`,
         outputPath: `/1234/test-image.jpg`,
         args: {},
       },

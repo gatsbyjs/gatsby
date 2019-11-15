@@ -1,6 +1,7 @@
 jest.mock(`../process-file`)
 
-const worker = require(`../worker`)
+const path = require(`path`)
+const worker = require(`../worker`).IMAGE_PROCESSING
 const { processFile } = require(`../process-file`)
 
 describe(`worker`, () => {
@@ -14,6 +15,7 @@ describe(`worker`, () => {
     )
     const job = {
       inputPath: `inputpath/file.jpg`,
+      outputDir: `/public/static/`,
       contentDigest: `1234`,
       operations: [
         {
@@ -27,7 +29,11 @@ describe(`worker`, () => {
       pluginOptions: {},
     }
 
-    await worker(job)
+    await worker([job.inputPath], job.outputDir, {
+      pluginOptions: job.pluginOptions,
+      contentDigest: job.contentDigest,
+      operations: job.operations,
+    })
 
     expect(processFile).toHaveBeenCalledTimes(1)
     expect(processFile).toHaveBeenCalledWith(
@@ -35,7 +41,7 @@ describe(`worker`, () => {
       job.contentDigest,
       job.operations.map(operation => {
         return {
-          outputPath: operation.outputPath,
+          outputPath: path.join(job.outputDir, operation.outputPath),
           args: operation.transforms,
         }
       }),
@@ -50,6 +56,7 @@ describe(`worker`, () => {
 
     const job = {
       inputPath: `inputpath/file.jpg`,
+      outputDir: `/public/static/`,
       contentDigest: `1234`,
       operations: [
         {
@@ -65,7 +72,11 @@ describe(`worker`, () => {
 
     expect.assertions(1)
     try {
-      await worker(job)
+      await worker([job.inputPath], job.outputDir, {
+        pluginOptions: job.pluginOptions,
+        contentDigest: job.contentDigest,
+        operations: job.operations,
+      })
     } catch (err) {
       expect(err.message).toEqual(`transform failed`)
     }
