@@ -37,12 +37,19 @@ exports.onCreatePage = async ({ page, actions }) => {
 
 Check out the ["simple auth" example site](https://github.com/gatsbyjs/gatsby/blob/master/examples/simple-auth/) for a demo implementing user authentication and restricted client-only routes.
 
-## Configuring A Server To Handle Client Side Routes
-As explained earlier, in order to access client side routes directly (on a page refresh or accessing a bookmarked page) your static site server will need to be configuired. 
+## Configuring a Server to Handle Client Side Routes
 
-While there are many different static servers you can work with, a typical way to handle accessing client side routes directly is to watch for requests that match the client side routes and return the appropriate file that is responsible for rendering that page. 
+As explained earlier, to access client-side routes from a server request, the server will need configuration.
 
-For example the client side route `/app/:id` could make a server request to `/app/why-gatsby-is-awesome` during a page refresh. The server would not be able to respond correctly since there is no document in its file system for `/app/why-gatsby-is-awesome.html` or `/app/why-gatsby-is-awesome/index.html`. 
+For example, the client-side route `/app/:id` could make a server request to `/app/why-gatsby-is-awesome` during a page refresh. 
 
-The server should be configured to respond with `/app/index.html` which has all the react code to subsequently render the client sided routes correctly. Keep in mind this __translation__ or ___path rewrite___ should return http __200__ and not a __301__
+The server would not be able to complete this request as `why-gatsby-is-awesome` is a client-side route. It does not have a corresponding HTML file on the server. The file found at `/app/index.html` on the server contains all the code to handle the page paths after `/app`. 
+
+A pattern to follow, agnostic of server technology, is to watch for these specific routes and return the appropriate HTML file.
+
+In the previous example, when making a GET request to `/app/why-gatsby-is-awesome`, The server should respond with `/app/index.html`. It is important to note that the response code should be a __200__ and not a __301__ . The response is not a redirect.
+
+The client is completely unaware of any changes and receives the file it is expecting. 
+
+
 
