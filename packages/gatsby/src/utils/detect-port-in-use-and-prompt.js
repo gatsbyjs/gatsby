@@ -1,23 +1,25 @@
 const detectPort = require(`detect-port`)
 const report = require(`gatsby-cli/lib/reporter`)
+const prompts = require(`prompts`)
 
-const readlinePort = (port, rlInterface) => {
-  const question = `Something is already running at port ${port} \nWould you like to run the app at another port instead? [Y/n] `
-  return new Promise(resolve => {
-    rlInterface.question(question, answer => {
-      resolve(answer.length === 0 || answer.match(/^yes|y$/i))
-    })
-  })
-}
-
-const detectPortInUseAndPrompt = async (port, rlInterface) => {
+const detectPortInUseAndPrompt = async port => {
   let foundPort = port
   const detectedPort = await detectPort(port).catch(err => report.panic(err))
   if (port !== detectedPort) {
-    if (await readlinePort(port, rlInterface)) {
+    report.log(`\nSomething is already running at port ${port}`)
+    const response = await prompts({
+      type: `confirm`,
+      name: `newPort`,
+      message: `Would you like to run the app at another port instead?`,
+      initial: true,
+    })
+    if (response.newPort) {
       foundPort = detectedPort
+    } else {
+      throw new Error(`USER_REJECTED`)
     }
   }
+
   return foundPort
 }
 

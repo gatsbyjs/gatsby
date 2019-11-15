@@ -176,12 +176,12 @@ async function generateBase64({ file, args, reporter }) {
       force: args.toFormat === `png`,
     })
     .jpeg({
-      quality: options.quality,
+      quality: options.jpegQuality || options.quality,
       progressive: options.jpegProgressive,
       force: args.toFormat === `jpg`,
     })
     .webp({
-      quality: options.quality,
+      quality: options.webpQuality || options.quality,
       force: args.toFormat === `webp`,
     })
 
@@ -232,7 +232,7 @@ const cachifiedProcess = async ({ cache, ...arg }, genKey, processFn) => {
 
 async function base64(arg) {
   if (arg.cache) {
-    // Not all tranformer plugins are going to provide cache
+    // Not all transformer plugins are going to provide cache
     return await cachifiedProcess(arg, generateCacheKey, generateBase64)
   }
 
@@ -241,7 +241,7 @@ async function base64(arg) {
 
 async function traceSVG(args) {
   if (args.cache) {
-    // Not all tranformer plugins are going to provide cache
+    // Not all transformer plugins are going to provide cache
     return await cachifiedProcess(args, generateCacheKey, notMemoizedtraceSVG)
   }
   return await memoizedTraceSVG(args)
@@ -259,6 +259,24 @@ async function getTracedSVG({ file, options, cache, reporter }) {
     return tracedSVG
   }
   return undefined
+}
+
+async function stats({ file, reporter }) {
+  let imgStats
+  try {
+    imgStats = await sharp(file.absolutePath).stats()
+  } catch (err) {
+    reportError(
+      `Failed to get stats for image ${file.absolutePath}`,
+      err,
+      reporter
+    )
+    return null
+  }
+
+  return {
+    isTransparent: !imgStats.isOpaque,
+  }
 }
 
 async function fluid({ file, args = {}, reporter, cache }) {
@@ -572,3 +590,4 @@ exports.resolutions = fixed
 exports.fluid = fluid
 exports.fixed = fixed
 exports.getImageSize = getImageSize
+exports.stats = stats

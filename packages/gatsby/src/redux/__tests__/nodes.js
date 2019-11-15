@@ -29,8 +29,12 @@ describe(`Create and update nodes`, () => {
       }
     )(dispatch)
     const action = dispatch.mock.calls[0][0]
-    expect(action).toMatchSnapshot()
-    expect(nodeReducer(undefined, action)).toMatchSnapshot()
+    expect(action).toMatchSnapshot({
+      payload: { internal: { counter: expect.any(Number) } },
+    })
+    expect(fromMapToObject(nodeReducer(undefined, action))).toMatchSnapshot({
+      hi: { internal: { counter: expect.any(Number) } },
+    })
   })
 
   it(`allows updating nodes`, () => {
@@ -143,7 +147,9 @@ describe(`Create and update nodes`, () => {
     )
 
     state = nodeReducer(state, addFieldAction)
-    expect(state).toMatchSnapshot()
+    expect(fromMapToObject(state)).toMatchSnapshot({
+      hi: { internal: { counter: expect.any(Number) } },
+    })
   })
 
   it(`throws error if a field is updated by a plugin not its owner`, () => {
@@ -189,7 +195,9 @@ describe(`Create and update nodes`, () => {
         }
       )
     }
-    expect(callActionCreator).toThrowErrorMatchingSnapshot()
+    expect(callActionCreator).toThrowError(
+      `A plugin tried to update a node field that it doesn't own`
+    )
   })
 
   it(`throws error if a node is created by a plugin not its owner`, () => {
@@ -227,7 +235,9 @@ describe(`Create and update nodes`, () => {
       )(dispatch)
     }
 
-    expect(callActionCreator).toThrowErrorMatchingSnapshot()
+    expect(callActionCreator).toThrowError(
+      `The plugin "pluginB" created a node of a type owned by another plugin.`
+    )
   })
 
   it(`throws error if a node sets a value on "fields"`, () => {
@@ -252,6 +262,17 @@ describe(`Create and update nodes`, () => {
       )(dispatch)
     }
 
-    expect(callActionCreator).toThrowErrorMatchingSnapshot()
+    expect(callActionCreator).toThrowError(
+      `Plugins creating nodes can not set data on the reserved field "fields"
+      as this is reserved for plugins which wish to extend your nodes.`
+    )
   })
 })
+
+const fromMapToObject = map => {
+  const obj = {}
+  Array.from(map.entries()).forEach(([key, value]) => {
+    obj[key] = value
+  })
+  return obj
+}

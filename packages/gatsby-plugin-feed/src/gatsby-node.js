@@ -44,6 +44,12 @@ exports.onPreBootstrap = async function onPreBootstrap(
           warnMessage(`feeds option`, `the internal RSS feed creation`)
         )
       )
+    } else if (normalized.feeds.some(feed => typeof feed.title !== `string`)) {
+      reporter.warn(
+        reporter.stripIndent(
+          warnMessage(`title in a feed`, `the default feed title`)
+        )
+      )
     } else if (
       normalized.feeds.some(feed => typeof feed.serialize !== `function`)
     ) {
@@ -77,7 +83,7 @@ exports.onPostBuild = async ({ graphql }, pluginOptions) => {
 
   const baseQuery = await runQuery(graphql, options.query)
 
-  for (let feed of options.feeds) {
+  for (let { ...feed } of options.feeds) {
     if (feed.query) {
       feed.query = await runQuery(graphql, feed.query).then(result =>
         merge({}, baseQuery, result)

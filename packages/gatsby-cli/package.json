@@ -1,7 +1,7 @@
 {
   "name": "gatsby-cli",
   "description": "Gatsby command-line interface for creating new sites and running Gatsby commands",
-  "version": "2.7.40",
+  "version": "2.8.10",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "lib/index.js"
@@ -11,23 +11,23 @@
   },
   "dependencies": {
     "@babel/code-frame": "^7.5.5",
-    "@babel/runtime": "^7.5.5",
+    "@babel/runtime": "^7.7.2",
     "@hapi/joi": "^15.1.1",
-    "better-opn": "^0.1.4",
-    "bluebird": "^3.5.5",
+    "better-opn": "^1.0.0",
+    "bluebird": "^3.7.1",
     "chalk": "^2.4.2",
-    "ci-info": "^2.0.0",
     "clipboardy": "^2.1.0",
     "common-tags": "^1.8.0",
     "configstore": "^5.0.0",
-    "convert-hrtime": "^2.0.0",
-    "core-js": "^2.6.9",
-    "envinfo": "^5.12.1",
-    "execa": "^0.11.0",
+    "convert-hrtime": "^3.0.0",
+    "core-js": "^2.6.10",
+    "envinfo": "^7.4.0",
+    "execa": "^3.3.0",
     "fs-exists-cached": "^1.0.0",
     "fs-extra": "^8.1.0",
-    "gatsby-telemetry": "^1.1.19",
-    "hosted-git-info": "^3.0.0",
+    "gatsby-core-utils": "^1.0.18",
+    "gatsby-telemetry": "^1.1.36",
+    "hosted-git-info": "^3.0.2",
     "is-valid-path": "^0.1.1",
     "lodash": "^4.17.15",
     "meant": "^1.0.1",
@@ -36,30 +36,33 @@
     "opentracing": "^0.14.4",
     "pretty-error": "^2.1.1",
     "progress": "^2.0.3",
-    "prompts": "^2.2.1",
-    "react": "^16.9.0",
+    "prompts": "^2.3.0",
+    "react": "^16.11.0",
+    "redux": "^4.0.4",
     "resolve-cwd": "^2.0.0",
     "semver": "^6.3.0",
+    "signal-exit": "^3.0.2",
     "source-map": "0.7.3",
     "stack-trace": "^0.0.10",
     "strip-ansi": "^5.2.0",
     "update-notifier": "^2.5.0",
     "uuid": "3.3.3",
     "yargs": "^12.0.5",
-    "yurnalist": "^1.0.5"
+    "yurnalist": "^1.1.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.5.5",
-    "@babel/core": "^7.5.5",
-    "babel-preset-gatsby-package": "^0.2.3",
-    "cross-env": "^5.2.0"
+    "@babel/cli": "^7.7.0",
+    "@babel/core": "^7.7.2",
+    "babel-preset-gatsby-package": "^0.2.10",
+    "cross-env": "^5.2.1"
   },
   "optionalDependencies": {
-    "ink": "^2.3.0",
+    "ink": "^2.5.0",
     "ink-spinner": "^3.0.1"
   },
   "files": [
-    "lib"
+    "lib",
+    "scripts"
   ],
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli#readme",
   "keywords": [
@@ -75,7 +78,8 @@
   "scripts": {
     "build": "babel src --out-dir lib --ignore \"**/__tests__\"",
     "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir lib --ignore \"**/__tests__\""
+    "watch": "babel -w src --out-dir lib --ignore \"**/__tests__\"",
+    "postinstall": "node scripts/postinstall.js"
   },
   "yargs": {
     "boolean-negation": false

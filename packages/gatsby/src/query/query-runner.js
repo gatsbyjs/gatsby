@@ -1,12 +1,10 @@
 // @flow
 
-import { graphql as graphqlFunction } from "graphql"
 const fs = require(`fs-extra`)
 const report = require(`gatsby-cli/lib/reporter`)
 
 const path = require(`path`)
 const { store } = require(`../redux`)
-const withResolverContext = require(`../schema/context`)
 const { formatErrorDetails } = require(`./utils`)
 const { boundActionCreators } = require(`../redux/actions`)
 const pageDataUtil = require(`../utils/page-data`)
@@ -23,22 +21,10 @@ type QueryJob = {
 }
 
 // Run query
-module.exports = async (queryJob: QueryJob) => {
-  const {
-    schema,
-    schemaCustomization,
-    program,
-    webpackCompilationHash,
-  } = store.getState()
+module.exports = async (graphqlRunner, queryJob: QueryJob) => {
+  const { program } = store.getState()
 
-  const graphql = (query, context) =>
-    graphqlFunction(
-      schema,
-      query,
-      context,
-      withResolverContext(context, schema, schemaCustomization.context),
-      context
-    )
+  const graphql = (query, context) => graphqlRunner.query(query, context)
 
   // Run query
   let result
@@ -101,12 +87,7 @@ ${formatErrorDetails(errorDetails)}`)
       const publicDir = path.join(program.directory, `public`)
       const { pages } = store.getState()
       const page = pages.get(queryJob.id)
-      await pageDataUtil.write(
-        { publicDir },
-        page,
-        result,
-        webpackCompilationHash
-      )
+      await pageDataUtil.write({ publicDir }, page, result)
     } else {
       // The babel plugin is hard-coded to load static queries from
       // public/static/d/

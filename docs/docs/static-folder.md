@@ -1,5 +1,5 @@
 ---
-title: Using the Static folder
+title: Using the Static Folder
 ---
 
 In general, every website needs assets: images, stylesheets, scripts, etc. When using Gatsby, we recommend
@@ -24,17 +24,22 @@ render() {
   // Note: this is an escape hatch and should be used sparingly!
   // Normally we recommend using `import` for getting asset URLs
   // as described in the “Importing Assets Directly Into Files” page.
-  return <img src={'logo.png'} alt="Logo" />;
+  return <img src={'/logo.png'} alt="Logo" />;
 }
 ```
+
+<EggheadEmbed
+  lessonLink="https://egghead.io/lessons/gatsby-use-a-local-image-from-the-static-folder-in-a-gatsby-component"
+  lessonTitle="Use a local image from the static folder in a Gatsby component"
+/>
 
 ### Downsides
 
 Keep in mind the downsides of this approach:
 
-- None of the files in `static` folder be post-processed or minified.
+- None of the files in the `static` folder will be post-processed or minified.
 - Missing files will not be called at compilation time, and will cause 404 errors for your users.
-- Result filenames won’t include content hashes so you’ll need to add query arguments or rename them every time they change.
+- Result filenames won’t include content hashes, so you’ll need to add query arguments or rename them every time they change.
 
 ## When to use the `static` folder
 

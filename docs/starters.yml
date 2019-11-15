@@ -179,13 +179,15 @@
     - A basic blog, with posts under src/pages/blog
     - A few basic components (Navigation, Layout, Link wrapper around gatsby-link))
     - Based on gatsby-starter-gatsbytheme
-- url: https://xiaoxinghu.github.io/gatsby-orga/
-  repo: https://github.com/xiaoxinghu/gatsby-orga
-  description: n/a
+- url: https://orgapp.github.io/gatsby-starter-orga/
+  repo: https://github.com/orgapp/gatsby-starter-orga
+  description: Want to use org-mode instead of markdown? This is for you.
   tags:
     - Blog
   features:
-    - Parses org-mode files with Orga.
+    - Use org-mode files as source.
+    - Generate post pages, can be configured to be file-based or section-based.
+    - Generate posts index pages.
 - url: http://2column-portfolio.surge.sh/
   repo: https://github.com/praagyajoshi/gatsby-starter-2column-portfolio
   description: n/a
@@ -248,7 +250,7 @@
     - Styling:Bootstrap
     - CMS:Netlify
   features:
-    - Very similar to gatsby-starter-netlify-cms, slightly more configurable (eg set site-title in gatsby-config) with Bootstrap/Bootswatch instead of bulma
+    - Very similar to gatsby-starter-netlify-cms, slightly more configurable (e.g. set site-title in gatsby-config) with Bootstrap/Bootswatch instead of bulma
 - url: https://gatstrap.netlify.com/
   repo: https://github.com/jaxx2104/gatsby-starter-bootstrap
   description: n/a
@@ -838,12 +840,12 @@
   description: Gatsby starter using WordPress as the content source.
   tags:
     - Styling:CSS-in-JS
-    - CMS:Wordpress
+    - CMS:WordPress
   features:
     - All the features from gatsby-advanced-starter, plus
     - Leverages the WordPress plugin for Gatsby for data
     - Configured to work with WordPress Advanced Custom Fields
-    - Auto generated Navigation for your Wordpress Pages
+    - Auto generated Navigation for your WordPress Pages
     - Minimal UI and Styling — made to customize.
     - Styled Components
 - url: https://www.concisejavascript.org/
@@ -921,6 +923,7 @@
     - PWA
     - Disqus
     - SEO
+    - MDX
     - Styling:CSS-in-JS
   features:
     - Blog post listing with previews (image + summary) for each blog post
@@ -960,7 +963,7 @@
     - i18n with rtl text
     - Stateless components using Recompose
     - Font changes depending on the chosen language
-    - SEO (meta tags, openGraph, structured data, twitter and more...)
+    - SEO (meta tags, openGraph, structured data, Twitter and more...)
 - url: https://gatsby-starter-mate.netlify.com
   repo: https://github.com/EmaSuriano/gatsby-starter-mate
   description: A portfolio starter for Gatsby integrated with Contentful CMS.
@@ -1204,11 +1207,13 @@
     - Ready to deploy to GitHub Pages
     - Automatic RSS generation
     - Automatic Sitemap generation
-- url: https://gatsby-starter-kentico-cloud.netlify.com/
-  repo: https://github.com/Kentico/gatsby-starter-kentico-cloud
-  description: Gatsby starter site with Kentico Cloud
+- url: https://gatsby-starter-kontent.netlify.com
+  repo: https://github.com/Kentico/gatsby-starter-kontent
+  description: Gatsby starter site with Kentico Kontent
   tags:
     - CMS:Headless
+    - CMS:Kontent
+    - Netlify
   features:
     - Gatsby v2 support
     - Content item <-> content type relationships
@@ -1423,7 +1428,7 @@
     - Language:TypeScript
     - Blog
   features:
-    - Typescrip & TSLint
+    - TypeScript & TSLint
     - No Styling (No Typography.js)
     - Minimal settings based on official starter blog
 - url: https://gatsby-serif.netlify.com/
@@ -1947,7 +1952,7 @@
   repo: https://github.com/pablovila/gatsby-starter-wordpress-community
   description: Starter using gatsby-source-wordpress to display posts and pages from a WordPress site
   tags:
-    - CMS:Wordpress
+    - CMS:WordPress
     - Styling:Bulma
     - Blog
     - Pagination
@@ -2222,14 +2227,13 @@
     - Configuration for Firebase hosting
     - Configuration for Cloud Build deployment
     - Clear documentation to have your site deployed on Firebase behind SSL in no time!
-- url: https://lewis-gatsby-starter-blog.firebaseapp.com
+- url: https://lewis-gatsby-starter-blog.netlify.com/
   repo: https://github.com/lewislbr/lewis-gatsby-starter-blog
   description: A simple custom Gatsby starter template to start a new blog or personal website.
   tags:
     - Blog
     - Styling:CSS-in-JS
     - Markdown
-    - PWA
     - Portfolio
     - SEO
   features:
@@ -2400,7 +2404,6 @@
     - Styled components in favor of inline styles
     - Transition Link for nice page transitions
     - Type definitions from GraphQL schema (with code generation)
-    - Type definitions from grapql schema (with code generation)
 - url: https://gatsby-starter-sass.netlify.com/
   repo: https://github.com/colbyfayock/gatsby-starter-sass
   description: A Gatsby starter with Sass and no assumptions!
@@ -2932,7 +2935,7 @@
   features:
     - Fully Responsive
     - Styling with SCSS
-    - Very similar to gatsby-starter-netlify-cms, slightly more configurable (eg set site-title in gatsby-config) with Bootstrap/Bootswatch instead of bulma
+    - Very similar to gatsby-starter-netlify-cms, slightly more configurable (e.g. set site-title in gatsby-config) with Bootstrap/Bootswatch instead of bulma
     - LocalizedLink - built-in link component handling route generation
 - url: https://gatsby-kea-starter.netlify.com/
   repo: https://github.com/benjamin-glitsos/gatsby-kea-starter
@@ -2999,7 +3002,7 @@
     - Minimal
 - url: https://gatsby-typescript-starter-default.netlify.com/
   repo: https://github.com/RobertoMSousa/gatsby-typescript-starter-default
-  description: Simple gatsby starter using typescript and eslint instead of outdated tslint.
+  description: Simple gatsby starter using TypeScript and eslint instead of outdated tslint.
   tags:
     - Language:TypeScript
     - SEO
@@ -3123,7 +3126,7 @@
     - A contact form protected by Google Recaptcha
     - Can be deployed with one click
     - Functional components with Recompose React Hooks! ready to migrate to React hooks!
-    - Fetches your Github pinned projects with most stars (You could customize this if you wish)
+    - Fetches your GitHub pinned projects with most stars (You could customize this if you wish)
 - url: https://github.com/smakosh/gatsby-airtable-starter
   repo: https://github.com/smakosh/gatsby-airtable-starter
   description: Gatsby Airtable starter
@@ -3478,25 +3481,6 @@
     - Includes plugins for easy, beautiful typography
     - Includes React Helmet to allow editing site meta tags
     - Includes plugins for offline support out of the box
-- url: https://advancedblog.netlify.com/
-  repo: https://github.com/Bvlktech/AdvancedBlog
-  description: Advanced Blog Starter for GatsbyJS
-  tags:
-    - CMS:Netlify
-    - Styling:CSS-in-JS
-    - Blog
-    - SEO
-  features:
-    - A simple landing page with blog functionality built with Netlify CMS
-    - Create Blog posts from Netlify CMS
-    - Basic directory organization
-    - Uses Styled-Components for styling
-    - Blazing fast loading times thanks to pre-rendered HTML and automatic chunk loading of JS files
-    - Uses gatbsy-image with Netlify-CMS preview support
-    - Separate components for everything
-    - Netlify deploy configuration
-    - Perfect score on Lighthouse for SEO, Accessibility and Performance and PWA!
-    - ..and more
 - url: https://www.attejuvonen.fi
   repo: https://github.com/baobabKoodaa/blog
   description: Blog with all the Bells and Whistles
@@ -3562,7 +3546,7 @@
     - Mobile Screen support
     - Out of the box support with Contentful CMS for articles.
     - Toggleable Light and Dark Mode
-    - Profile image with links to your github and twitter.
+    - Profile image with links to your GitHub and Twitter.
 - url: https://prist.marguerite.io/
   repo: https://github.com/margueriteroth/gatsby-prismic-starter-prist
   description: A light-themed starter powered by Gatsby v2 and Prismic to showcase portfolios and blogs.
@@ -3678,15 +3662,6 @@
     - Beautiful "postcard" view for photos with fullscreen toggle.
     - Both views are responsive with minimal whitespace and polished UX.
     - Many performance optimizations for image delivery (both by Gatsby & way beyond what Gatsby can do).
-- url: https://ghs.ksmorano.com/
-  repo: https://github.com/ksmorano/gatsby-hasura-starter
-  description: A boilerplate for a Gatsby app paired with a Hasura project as the backend.
-  tags:
-    - Hasura
-    - Styling:Bulma
-  features:
-    - Demonstrates both query and mutation from the linked Hasura project.
-    - Uses apollo react hooks for query and mutation.
 - url: https://gatsby-typescript-scss-starter.netlify.com/
   repo: https://github.com/GrantBartlett/gatsby-typescript-starter
   description: A simple starter project using TypeScript and SCSS
@@ -3697,6 +3672,17 @@
   features:
     - Pages and components are classes.
     - A skeleton SCSS project added with prefixing
+- url: https://portfolio-by-mohan.netlify.com/
+  repo: https://github.com/mohanmonu777/gatsby_starter_portfolio
+  description: An Official Starter for Gatsby Tech Blog Theme
+  tags:
+    - SEO
+    - Blog
+  features:
+    - Styling using Styled-Components
+    - Search using ElasticLunr
+    - Theme by gatsby-tech-blog-theme
+    - Deployed in Netlify
 - url: https://brevifolia-gatsby-forestry.netlify.com/
   repo: https://github.com/kendallstrautman/brevifolia-gatsby-forestry
   description: A minimal starter blog built with Gatsby & Forestry CMS
@@ -3712,3 +3698,708 @@
     - Configured to work automatically with Forestry CMS
     - Customizable 'info' page
     - Simple layout & scss architecture, easily extensible
+- url: https://gatsby-firebase-starter.netlify.com/
+  repo: https://github.com/ovidiumihaibelciug/gatsby-firebase-starter
+  description: Starter / Project Boilerplate for Authentication and creating Dynamic pages from collections with Firebase and Gatsby.js
+  tags:
+    - Firebase
+    - SEO
+    - Styling:SCSS
+    - Authentication
+    - PWA
+  features:
+    - Authentication with Firebase
+    - Programmatically create pages from a firestore collection
+    - Protected Routes with Authorization
+    - Email verification
+    - Includes React Helmet to allow editing site meta tags
+    - Includes plugins for offline support out of the box
+- url: https://gatsby-typescript-minimal.netlify.com/
+  repo: https://github.com/benbarber/gatsby-typescript-minimal
+  description: A minimal, bare-bones TypeScript starter for Gatsby
+  tags:
+    - Language:TypeScript
+    - Styling:CSS-in-JS
+    - SEO
+  features:
+    - Bare-bones starter
+    - TypeScript
+    - TSLint
+    - Prettier
+    - Styled Components
+    - Sitemap Generation
+    - Google Analytics
+- url: https://agility-gatsby-starter.netlify.com
+  repo: https://github.com/agility/agility-gatsby-starter
+  description: Get started with Gatsby and Agility CMS using a minimal blog.
+  tags:
+    - CMS:Other
+    - Blog
+    - SEO
+  features:
+    - A bare-bones starter Blog to get you off and running with Agility CMS and Gatsby.
+- url: https://gatsby-starter-dot.netlify.com/
+  repo: https://github.com/chronisp/gatsby-starter
+  description: Gatsby Starter for creating portfolio & blog.
+  tags:
+    - Blog
+    - CMS:Headless
+    - CMS:Contentful
+    - Netlify
+    - Portfolio
+    - Redux
+    - SEO
+    - Styling:Material
+  features:
+    - Extensible & responsive design using Material UI (palette, typography & breakpoints configuration)
+    - Blog integration with Contentful CMS (GraphQL queries)
+    - Redux (connect actions & props easily using custom HOF)
+    - Support for Netlify deployment
+    - SEO
+    - Prettier code styling
+- url: https://johnjkerr.github.io/gatsby-creative/
+  repo: https://github.com/JohnJKerr/gatsby-creative
+  description: Gatsby implementation of the Start Bootstrap Creative template
+  tags:
+    - Gallery
+    - Portfolio
+    - Styling:Bootstrap
+    - Styling:SCSS
+  features:
+    - Start Bootstrap Creative template converted to React/Gatsby
+    - React Scrollspy used to track page position
+    - React Bootstrap used to create modal portfolio carousel
+    - GitHub Actions deployment to GitHub Pages demonstrated
+- url: https://bonneville.netlify.com/
+  repo: https://github.com/bagseye/bonneville
+  description: A starter blog template for Gatsby
+  tags:
+    - Blog
+    - SEO
+  features:
+    - Extensible & responsive design
+    - Blog integration
+    - SEO
+- url: https://gatsby-starter-i18next-sanity.netlify.com/en
+  repo: https://github.com/johannesspohr/gatsby-starter-i18next-sanity
+  description: A basic starter which integrates translations with i18next and localized sanity input.
+  tags:
+    - i18n
+    - CMS:sanity.io
+  features:
+    - Showcases advanced i18n techniques with i18next and sanity.io
+    - Correct URLs for the languages (language in the path, translated slugs)
+    - Multilanguage content from sanity
+    - Snippets translation
+    - Optimized bundle size (don't ship all translations at once)
+    - Alternate links to other languages
+    - Sitemap with language information
+    - Localized 404 pages
+- url: https://gatsby-skeleton.netlify.com/
+  repo: https://github.com/msallent/gatsby-skeleton
+  description: Gatsby starter with TypeScript and all sort of linting
+  tags:
+    - Language:TypeScript
+    - Styling:CSS-in-JS
+    - SEO
+  features:
+    - TypeScript
+    - Styled-Components
+    - ESLint
+    - Prettier
+    - Stylelint
+    - SEO
+- url: https://nehalem.netlify.com/
+  repo: https://github.com/nehalist/gatsby-starter-nehalem
+  description: A starter for the Gatsby Nehalem Theme
+  tags:
+    - Blog
+    - Language:TypeScript
+    - Markdown
+    - Search
+    - SEO
+  features:
+    - Fully responsive
+    - Highly optimized (Lighthouse score ~400)
+    - SEO optimized (with open graph, Twitter Card, JSON-LD, RSS and sitemap)
+    - Syntax highlighting
+    - Search functionality
+    - Multi navigations
+    - Static pages
+    - Fully typed with TypeScript
+    - Tagging
+    - Theming
+    - Customizable
+- url: https://gatsby-starter-headless-wp.netlify.com
+  repo: https://github.com/crock/gatsby-starter-headless-wordpress
+  description: A starter Gatsby site to quickly implement a site for headless WordPress
+  tags:
+    - Blog
+    - CMS:Headless
+    - CMS:WordPress
+  features:
+    - New Header
+    - Responsive
+    - Sidebar that displays recent blog posts
+- url: https://gatsby-advanced-blog-starter.netlify.com
+  repo: https://github.com/aman29271/gatsby-advanced-blog-starter
+  description: A pre-built Gatsby Starter Tech-blog
+  tags:
+    - Blog
+    - Markdown
+  features:
+    - Highly Optimised
+    - Image optimised with blur-up effect
+    - Responsive
+    - Code  highlighting
+    - tagging
+    - Sass compiled
+- url: https://anubhavsrivastava.github.io/gatsby-starter-casual
+  repo: https://github.com/anubhavsrivastava/gatsby-starter-casual
+  description: Multi page starter based on the Casual site template by startbootstrap for portfolio
+  tags:
+    - Onepage
+    - Styling:SCSS
+    - PWA
+  features:
+    - Designed by startbootstrap
+    - Fully Responsive
+    - Styling with SCSS
+    - Offline support
+    - Web App Manifest
+- url: https://gatsby-starter-ts-hello-world.netlify.com
+  repo: https://github.com/hdorgeval/gatsby-starter-ts-hello-world
+  description: TypeScript version of official hello world
+  tags:
+    - Language:TypeScript
+  features:
+    - TypeScript
+    - ESLint
+    - Type checking
+    - no boilerplate
+    - Great for advanced users
+    - VSCode ready
+- url: https://grommet-file.netlify.com/
+  repo: https://github.com/metinsenturk/gatsby-starter-grommet-file
+  description: Grommet-File is made with Grommet V2 and a blog starter
+  tags:
+    - Blog
+    - Markdown
+    - SEO
+    - Portfolio
+    - Styling:Grommet
+  features:
+    - Responsive Design
+    - Pagination
+    - Page creation
+    - Content is Markdown files
+    - Google Analytics
+    - Grommet V2 User Interface
+    - Support for RSS feed
+    - SEO friendly
+    - Mobile and responsive
+    - Sitemap & Robots.txt generation
+    - Optimized images with gatsby-image
+- url: https://gatsby-wordpress-typescript-scss-blog.netlify.com/
+  repo: https://github.com/sagar7993/gatsby-wordpress-typescript-scss-blog
+  description: A Gatsby starter template for a WordPress blog, built using TypeScript, SCSS and Ant Design
+  tags:
+    - Blog
+    - CMS:WordPress
+    - CMS:Headless
+    - Language:TypeScript
+    - Pagination
+    - PWA
+    - SEO
+    - Portfolio
+    - Styling:SCSS
+  features:
+    - TypeScript for type-safe code
+    - Source content from WordPress CMS
+    - Auto generated Pagination for your WordPress Posts
+    - Auto generated Navigation for next and previous post at the end Post
+    - Auto generated pages for tags and categories sourced from WordPress
+    - SCSS stylesheets
+    - PWA with offline support
+    - Ant Design for UI components and theming
+    - Jest and Enzyme Testing framework support for snapshots and unit tests.
+    - Responsive Design
+    - Google Analytics
+    - Comments using Staticman
+    - Images within WordPress post/page content downloaded to static folder and transformed to webp format during build
+    - Social widgets
+    - Instagram feed of any profile (no API token needed)
+    - Pinterest pin-it button on hovering on images (no API token needed)
+    - Twitter timeline and follow button (no API token needed)
+    - Facebook timeline and like button (no API token needed)
+    - SEO friendly
+    - Web app manifest
+    - Mobile optimized and responsive
+    - Sitemap.xml & Robots.txt generation
+    - Optimized images with gatsby-image
+    - Git pre-commit and pre-push hooks using Husky
+    - TSLint formatting
+    - Highly optimized with excellent lighthouse audit score
+- url: https://gatsby-starter-typescript-deluxe.netlify.com/
+  repo: https://github.com/gojutin/gatsby-starter-typescript-deluxe
+  description: A Gatsby starter with TypeScript, Storybook, Styled Components, Framer Motion, Jest, and more.
+  tags:
+    - Language:TypeScript
+    - Styling:CSS-in-JS
+    - Storybook
+    - SEO
+    - Linting
+    - Testing
+  features:
+    - TypeScript for type-safe code.
+    - Styled-Components for all your styles.
+    - Framer Motion for awesome animations.
+    - gatsby-image and gatsby-transformer-sharp for optimized images.
+    - gatsby-plugin-manifest + SEO component for an SEO-friendly PWA.
+    - Storybook with add-ons for showing off your awesome components.
+    - Jest and React Testing library for snapshots and unit tests.
+    - ESLint (with TSLint and Prettier) to make your code look its best.
+    - React Axe and React A11y for accessibility so that your site is awesome for everyone.
+- url: https://gatsby-markdown-blog-starter.netlify.com/
+  repo: https://github.com/ammarjabakji/gatsby-markdown-blog-starter
+  description: GatsbyJS v2 starter for creating a markdown blog. Based on Gatsby Advanced Starter.
+  tags:
+    - Blog
+    - Markdown
+    - SEO
+    - PWA
+  features:
+    - Gatsby v2 support
+    - Responsive Design
+    - Pagination
+    - Content is Markdown files
+    - Google Analytics
+    - Support for RSS feed
+    - SEO friendly
+    - Sitemap & Robots.txt generation
+    - Sass support
+    - Css Modules support
+    - Web App Manifest
+    - Offline support
+    - htaccess support
+    - Typography.js
+    - Integration with Social Media
+- url: https://blogerist.netlify.com
+  repo: https://github.com/bvlktech/blogerist
+  description: Starter blog built with GatsbyJS
+  tags:
+    - Blog
+    - Markdown
+    - SEO
+    - PWA
+  features:
+    - A simple landing page with blog functionality built with Netlify CMS
+    - Create Blog posts from Netlify CMS
+    - Uses SCSS for styling
+    - Blazing fast loading times thanks to pre-rendered HTML and automatic chunk loading of JS files
+    - Uses gatbsy-image with Netlify-CMS preview support
+    - Separate components for everything
+    - Netlify deploy configuration
+    - Netlify forms functionality
+    - Discus commenting added to each blog post
+    - Perfect score on Lighthouse for SEO, Accessibility and Performance
+    - ..and more
+- url: https://gatsby-starter-bloomer-db0aaf.netlify.com
+  repo: https://github.com/zlutfi/gatsby-starter-bloomer
+  description: Barebones starter website with Bloomer React components for Bulma.
+  tags:
+    - PWA
+    - Styling:Bulma
+    - Styling:SCSS
+  features:
+    - Bloomer React Commponents
+    - Bulma CSS Framework
+    - Uses SCSS for styling
+    - Font Awesome Support
+    - Progressive Web App
+- url: https://gatsby-starter-mdbreact.netlify.com
+  repo: https://github.com/zlutfi/gatsby-starter-mdbreact
+  description: Barebones starter website with Material Design Bootstrap React components.
+  tags:
+    - PWA
+    - Styling:Bootstrap
+    - Styling:Material
+    - Styling:SCSS
+  features:
+    - MDBReact React Commponents
+    - Bootstrap CSS Framework with Material Design Bootstrap styling
+    - Uses SCSS for styling
+    - Font Awesome Support
+    - Progressive Web App
+- url: https://gatsby-starter-monolith.netlify.com
+  repo: https://github.com/danspratling/gatsby-starter-monolith
+  description: A Gatsby Starter designed to work with monolith. Monolith is a workspace starter which provides a good base to begin a medium-large (multisite) project
+  tags:
+    - Language:TypeScript
+    - Storybook
+    - Styling:CSS-in-JS
+  features:
+    - A minimal site with the option to add loads of functionality
+    - Based on the Monolith repo to provide an easy starting point for large projects https://github.com/danspratling/monolith
+    - Uses Theme-UI to handle theming and styling
+    - Uses TypeScript to encourage good coding
+    - Uses Storybook to encourage visual testing
+    - This site is set up with all 3 of the above working together. This makes it really easy to jump in and start a project while still having very few restrictions
+- url: https://gatsby-starter-ts-pwa.netlify.com/
+  repo: https://github.com/markselby9/gatsby-starter-typescript-pwa
+  description: The default Gatsby starter fork with TypeScript and PWA support added
+  tags:
+    - Language:TypeScript
+    - PWA
+  features:
+    - Minumum changes based on default starter template for TypeScript and PWA
+    - Added TypeScript support with eslint and tsc check
+    - Support GitHub Actions CI/CD workflow (beta)
+- url: https://iceberg-gatsby-multilang.netlify.com/
+  repo: https://github.com/diogorodrigues/iceberg-gatsby-multilang
+  description: Gatsby multi-language starter. Internationalization / i18n without third party plugins or packages for Posts and Pages. Different URLs dependending on the language. Focused on SEO, PWA, Image Optimization, Styled Components and more. This starter is also integrate with Netlify CMS to manage all pages, posts and images.
+  tags:
+    - Blog
+    - CMS:Headless
+    - CMS:Netlify
+    - i18n
+    - Netlify
+    - Markdown
+    - Pagination
+    - PWA
+    - SEO
+    - Styling:CSS-in-JS
+  features:
+    - Translations by using GraphQL, hooks and context API
+    - Content in markdown for pages and posts in different languages
+    - General translations for any content
+    - Creation of menu by using translations and GraphQL
+    - Netlify CMS to manage all pages, posts and images
+    - Styled Components to styles
+    - All important seetings for speedy and optimized images
+    - Blog Posts list with pagination
+    - Focus on SEO
+    - PWA
+- url: https://flexible-gatsby.netlify.com/
+  repo: https://github.com/wangonya/flexible-gatsby
+  description: A simple and clean theme for Gatsby
+  tags:
+    - Blog
+    - Markdown
+  features:
+    - Google Analytics
+    - Simple design
+    - Markdown support
+- url: https://gatsby-starter-leaflet.netlify.com/
+  repo: https://github.com/colbyfayock/gatsby-starter-leaflet
+  description: A Gatsby starter with Leafet!
+  tags:
+    - Landing Page
+    - Linting
+    - Styling:SCSS
+    - Testing
+  features:
+    - Simply landing page to get started with Leaflet
+    - Includes Leaflet and React Leaflet
+    - Starts with some basic Sass stylesheets for styling
+    - Linting and testing preconfigured
+- url: https://gatsby-starter-luke.netlify.com/
+  repo: https://github.com/lukethacoder/luke-gatsby-starter
+  description: An opinionated starter using TypeScript, styled-components (emotion flavoured), React Hooks & react-spring. Built as a BYOS (bring your own source) so you can get up and running with whatever data you choose.
+  tags:
+    - Language:TypeScript
+    - Transitions
+    - Styling:CSS-in-JS
+    - Linting
+  features:
+    - TypeScript
+    - react-spring animations
+    - BYOS (bring your own source)
+    - Emotion for styling components
+    - Minimal Design
+    - React Hooks (IntersectionObserver, KeyUp, LocalStorage)
+- url: https://friendly-cray-96d631.netlify.com/
+  repo: https://github.com/PABlond/Gatsby-TypeScript-Starter-Blog
+  description: Project boilerplate of a blog app. The starter was built using Gatsby and TypeScript.
+  tags:
+    - Markdown
+    - Language:TypeScript
+    - SEO
+    - PWA
+    - Styling:SCSS
+  features:
+    - A complete responsive theme built wiss Scss
+    - Easy editable posts in Markdown files
+    - SEO component
+    - Optimized with Google Lighthouse
+- url: https://gatsby-starter-material-album.netlify.com
+  repo: https://github.com/JoeTrubenstein/gatsby-starter-material-album
+  description: A simple portfolio starter based on the Material UI Album Layout
+  tags:
+    - Gallery
+    - Portfolio
+    - Styling:Material
+  features:
+    - Pagination
+    - Material UI
+    - Exif Data Parsing
+- url: https://peaceful-ptolemy-d7beb4.netlify.com
+  repo: https://github.com/TRamos5/gatsby-contentful-starter
+  description: A starter template for an awesome static blog utilizing Contentful as a CMS and deployed to Netlify.
+  tags:
+    - CMS:Contentful
+    - CMS:Headless
+    - Blog
+    - Netlify
+    - Markdown
+    - Styling:CSS-in-JS
+  features:
+    - Netlify integration with pre built contact form
+    - "CMS: Contentful integration with placeholders included"
+    - Mobile friendly responsive design made to be customized or leave as is
+    - Separate components for everything
+    - ...and more
+- url: https://gatsby-tailwind-emotion-starter-demo.netlify.com/
+  repo: https://github.com/pauloelias/gatsby-tailwind-emotion-starter
+  description: Gatsby starter using the latest Tailwind CSS and Emotion.
+  tags:
+    - Styling:Tailwind
+    - Styling:CSS-in-JS
+    - Styling:PostCSS
+  features:
+    - Tailwind CSS for rapid development
+    - Emotion with `tailwind.macro` for flexible styled components
+    - PostCSS configured out-of-the-box for when you need to write your own CSS
+    - postcss-preset-env to write tomorrow's CSS today
+    - Bare bones starter to help you hit the ground running
+- url: https://gatsby-starter-grayscale-promo.netlify.com/
+  repo: https://github.com/awesome1888/gatsby-starter-grayscale-promo
+  description: one-page promo site
+  tags:
+    - Language:TypeScript
+    - Styling:CSS-in-JS
+    - Linting
+    - Markdown
+    - Onepage
+    - CMS:Netlify
+    - Landing Page
+  features:
+    - Styled-Components
+    - NetlifyCMS
+    - TypeScript
+    - Basic design
+- url: https://gatsby-starter-mdx-website-blog.netlify.com/
+  repo: https://github.com/doakheggeness/gatsby-starter-mdx-website-blog
+  description: Gatsby website and blog starter utilizing MDX for adding components to mdx pages and posts. Incorportates Emotion.
+  tags:
+    - MDX
+    - Blog
+    - Styling:CSS-in-JS
+  features:
+    - Create pages and posts using MDX
+    - Incorporates the CSS-in-JS library Emotion
+    - Visual effects
+- url: https://gatsby-starter-zurgbot.netlify.com/
+  repo: https://github.com/zurgbot/gatsby-starter-zurgbot
+  description: The ultimate force of starter awesomeness in the galaxy of Gatsby
+  tags:
+    - Linting
+    - PWA
+    - SEO
+    - Styling:Bulma
+    - Styling:SCSS
+    - Testing
+  features:
+    - Sass (SCSS Flavored) CSS
+    - Bulma CSS Framework
+    - React Helmet <head> Management
+    - React Icons SVG Icon Components (Including Font Awesome and others)
+    - Eslint for JS linting
+    - Prettier for JS formatting
+    - StyleLint for Scss linting and formatting
+    - Jest for a test framework
+    - Enzyme for testing with React
+    - Husky for git hooks, particularlly precommit management
+    - Lint Staged to run commands only on staged files
+- url: https://martin2844.github.io/gatsby-starter-dev-portfolio/
+  repo: https://github.com/martin2844/gatsby-starter-dev-portfolio
+  description: A GatsbyJS minimalistic portfolio site, with a blog and about section
+  tags:
+    - Portfolio
+    - Blog
+    - Markdown
+  features:
+    - createPages API
+    - Responsive
+    - Minimalistic
+    - Blazing fast (LINK)
+    - Graphql queries
+    - Sass
+    - Markdown
+- url: https://wataruoguchi-gatsby-starter-typescript-contentful.netlify.com/
+  repo: https://github.com/wataruoguchi/gatsby-starter-typescript-contentful
+  description: Simple TypeScript starter with Contentful Integration
+  tags:
+    - Language:TypeScript
+    - CMS:Contentful
+    - Netlify
+    - Blog
+  features:
+    - Simple
+    - TypeScript
+    - Contentful
+    - Supports Contentful Rich Text
+    - Prettier & ESlint & StyleLint to format & check the code
+    - Husky & lint-staged to automate checking
+- url: https://gatsby-starter-point.netlify.com/
+  repo: https://github.com/teaware/gatsby-starter-point
+  description: A humble Gatsby starter for blog
+  tags:
+    - Blog
+    - Markdown
+    - Netlify
+  features:
+    - SASS
+    - SEO
+    - Dark Mode
+    - Google Analytics
+- url: https://gatsby-typescript-storybook-starter.netlify.com/
+  repo: https://github.com/RobertoMSousa/gatsby-typescript-storybook-starter
+  description: A gatsby starter with storybook, tags and eslint
+  tags:
+    - Language:TypeScript
+    - Styling:CSS-in-JS
+    - Storybook
+    - Markdown
+    - Linting
+  features:
+    - Storybook
+    - Simple
+    - TypeScript
+    - Contentful
+    - Prettier & ESlint & StyleLint to format & check the code
+    - Storybook
+    - Jest and React Testing library for snapshots and unit tests.
+    - Styled-Components for all your styles.
+- url: https://semantic-ui-docs-gatsby.netlify.com/
+  repo: https://github.com/whoisryosuke/semantic-ui-docs-gatsby
+  description: Documentation starter using Semantic UI and MDX
+  tags:
+    - Documentation
+    - Linting
+    - Markdown
+    - MDX
+    - PWA
+    - SEO
+  features:
+    - Easy starter for documentation-style sites
+    - Use SUI React components anywhere in MDX
+    - SASS/LESS support
+    - Live code component
+    - Customizable sidebar
+    - Offline-ready
+    - Responsive design
+    - Nodemon for restarting dev server on changes
+    - Webpack aliasing for components, assets, etc
+- url: https://gatsby-starter-saas-marketing.netlify.com/
+  repo: https://github.com/keegn/gatsby-starter-saas-marketing
+  description: A simple one page marketing site starter for SaaS companies and products
+  tags:
+    - Onepage
+    - Styling:CSS-in-JS
+    - Landing Page
+  features:
+    - Responsive
+    - Netlify ready
+    - Styled-Components
+    - Minimal design and easy to customize
+    - Great for software or product related marketing sites
+- url: https://kontent-template-gatsby-landing-page-photon.netlify.com
+  repo: https://github.com/Simply007/kontent-template-gatsby-landing-page-photon
+  description: Kentico Kontent based starter based on Photon starter by HTML5 UP
+  tags:
+    - CMS:Headless
+    - CMS:Kontent
+    - Netlify
+    - Landing Page
+    - HTML5UP
+    - Styling:SCSS
+  features:
+    - Kentico Kontent Caas plafrorm as the data source
+    - Landing page divided by section.
+    - Support for code syntax highlighting
+    - Includes plugins for easy, beautiful typography
+    - Includes React Helmet to allow editing site meta tags
+    - Includes plugins for offline support out of the box
+    - Font awesome
+    - Material Icons
+    - CSS Grid
+- url: https://gatsby-tailwind-styled-components-storybook-starter.netlify.com/
+  repo: https://github.com/denvash/gatsby-tailwind-styled-components-storybook-starter
+  description: Tailwind CSS + Styled-Components + Storybook starter for Gatsby
+  tags:
+    - Storybook
+    - Styling:Tailwind
+    - Styling:CSS-in-JS
+    - Styling:PostCSS
+    - Netlify
+  features:
+    - Tailwind CSS v1
+    - Styled-Components v5
+    - Storybook v5
+    - PostCSS
+    - Deploy Storybook
+    - Documentation
+- url: https://gatsby-tfs-starter.netlify.com/
+  repo: https://github.com/tiagofsanchez/gatsby-tfs-starter
+  description: a gatsby-advanced-starter with theme-ui styling
+  tags:
+    - RSS
+    - SEO
+    - Blog
+    - MDX
+  features:
+    - React Helmet <head> Management
+    - SVG Icon
+- url: https://gatsby-lam.vaporwavy.io
+  repo: https://github.com/vaporwavy/gatsby-london-after-midnight
+  description: A custom, image-centric theme for Gatsby. Advanced from the Gatsby starter London.
+  tags:
+    - Blog
+    - Portfolio
+    - Gallery
+    - SEO
+    - Markdown
+    - HTML5UP
+    - CMS:Netlify
+    - Styling:PostCSS
+  features:
+    - Support tags
+    - Easily change the theme color
+    - Post thumbnails in the homepage
+    - Built with PostCSS
+    - Made for image-centric portfolios
+    - Based on London for Gatsby
+- url: https://alipiry-gatsby-starter-typescript.netlify.com/
+  repo: https://github.com/alipiry/gatsby-starter-typescript
+  description: The default Gatsby starter with TypeScript
+  tags:
+    - Language:TypeScript
+    - Linting
+    - Netlify
+  features:
+    - Type Checking With TypeScript
+    - Powerfull Linting With ESLint
+- url: https://gatsby-typescript-tailwind.netlify.com/
+  repo: https://github.com/impulse/gatsby-typescript-tailwind
+  description: Gatsby starter with TypeScript and Tailwind CSS
+  tags:
+    - Language:TypeScript
+    - Styling:Tailwind
+    - Styling:PostCSS
+    - Netlify
+  features:
+    - Simple
+    - TSLint
+    - Tailwind CSS v1
+    - PostCSS + PurgeCSS

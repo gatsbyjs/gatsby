@@ -6,7 +6,7 @@ const _ = require(`lodash`)
 const path = require(`path`)
 const os = require(`os`)
 const watch = require(`./watch`)
-
+const { getVersionInfo } = require(`./utils/version`)
 const argv = require(`yargs`)
   .usage(`Usage: gatsby-dev [options]`)
   .alias(`q`, `quiet`)
@@ -36,7 +36,15 @@ You typically only need to configure this once.`
   .array(`packages`)
   .describe(`packages`, `Explicitly specify packages to copy`)
   .help(`h`)
-  .alias(`h`, `help`).argv
+  .alias(`h`, `help`)
+  .nargs(`v`, 0)
+  .alias(`v`, `version`)
+  .describe(`v`, `Print the currently installed version of Gatsby Dev CLI`).argv
+
+if (argv.version) {
+  console.log(getVersionInfo())
+  process.exit()
+}
 
 const conf = new Configstore(pkg.name)
 
@@ -77,7 +85,7 @@ gatsby-dev --set-path-to-repo /path/to/my/cloned/version/gatsby
 const monoRepoPackages = fs.readdirSync(path.join(gatsbyLocation, `packages`))
 
 const localPkg = JSON.parse(fs.readFileSync(`package.json`))
-// intersect dependencies with monoRepoPackags to get list of packages that are used
+// intersect dependencies with monoRepoPackages to get list of packages that are used
 let localPackages = _.intersection(
   monoRepoPackages,
   Object.keys(_.merge({}, localPkg.dependencies, localPkg.devDependencies))

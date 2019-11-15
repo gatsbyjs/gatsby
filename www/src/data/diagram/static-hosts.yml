@@ -1,7 +1,7 @@
-- title: AWS Amplify
-  url: /docs/deploying-to-aws-amplify
 - title: Netlify
   url: /docs/deploying-to-netlify
+- title: AWS Amplify
+  url: /docs/deploying-to-aws-amplify
 - title: GitHub Pages
   url: /docs/how-gatsby-works-with-github-pages/
 - title: Surge.sh

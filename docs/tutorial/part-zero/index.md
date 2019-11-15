@@ -26,7 +26,7 @@ How to install or verify Homebrew on your computer:
 ### Mac Users: install Xcode Command Line Tools
 
 1. Open your Terminal.
-1. On a Mac, install Xcode Command line tools by running `xcode-select --install`.
+1. On a Mac, install Xcode Command Line Tools by running `xcode-select --install`.
    1. If that fails, download it [directly from the Apple site](https://developer.apple.com/download/more/), after signing-in with Apple developer account
 1. After being prompted to start the installation, you'll be prompted again to accept a software license for the tools to download.
 
@@ -68,6 +68,8 @@ The Gatsby CLI tool lets you quickly create new Gatsby-powered sites and run com
 
 The Gatsby CLI is available via npm and should be installed globally by running `npm install -g gatsby-cli`.
 
+_**Note**: when you install Gatsby and run it for the first time, you'll see a short message notifying you about anonymous usage data that is being collected for Gatsby commands, you can read more about how that data is pulled out and used in the [telemetry doc](/docs/telemetry)._
+
 To see the commands available, run `gatsby --help`.
 
 ![Check gatsby commands in terminal](05-gatsby-help.png)
@@ -84,7 +86,7 @@ Now you are ready to use the Gatsby CLI tool to create your first Gatsby site. U
 4.  Run `gatsby develop`.
 
 <video controls="controls" autoplay="true" loop="true">
-  <source type="video/mp4" src="./03-create-site.mp4"></source>
+  <source type="video/mp4" src="./03-create-site.mp4" />
   <p>Sorry! You browser doesn't support this video.</p>
 </video>
 
@@ -126,11 +128,9 @@ You’ll be able to visit the site locally at [**_http://localhost:8000_**](http
 
 A code editor is a program designed specifically for editing computer code. There are many great ones out there.
 
-> If you haven't worked with a code editor before, we recommend [**VS Code**](https://code.visualstudio.com/), simply because the screenshots used throughout the tutorial were taken in VS Code, and therefore may look more similar to your screen.
-
 ### Download VS Code
 
-Gatsby documentation sometimes includes screenshots of code editors; these screenshots show the VS Code editor, so if you don't have a preferred code editor yet, using VS Code will make sure that your screen looks just like the screenshots in the tutorial and docs. If you choose to use VS Code, visit the [VS Code site](https://code.visualstudio.com/#alt-downloads) and download the version appropriate for your platform.
+Gatsby documentation sometimes includes screenshots that were taken in VS Code, so if you don't have a preferred code editor yet, using VS Code will make sure that your screen looks just like the screenshots in the tutorial and docs. If you choose to use VS Code, visit the [VS Code site](https://code.visualstudio.com/#alt-downloads) and download the version appropriate for your platform.
 
 ### Install the Prettier plugin
 
@@ -159,7 +159,7 @@ Now, move on to [**getting to know Gatsby building blocks**](/tutorial/part-one/
 
 ## References
 
-## Overview of core technologies
+### Overview of core technologies
 
 It’s not necessary to be an expert with these already — if you’re not, don’t worry! You’ll pick up a lot through the course of this tutorial series. These are some of the main web technologies you’ll use when building a Gatsby site:
 
@@ -169,15 +169,15 @@ It’s not necessary to be an expert with these already — if you’re not, don
 - **React**: A code library (built with JavaScript) for building user interfaces. It’s the framework that Gatsby uses to build pages and structure content.
 - **GraphQL**: A query language that allows you to pull data into your website. It’s the interface that Gatsby uses for managing site data.
 
-## What is a website?
+### What is a website?
 
 For a comprehensive introduction to what a website is--including an intro to HTML and CSS--check out “[**Building your first web page**](https://learn.shayhowe.com/html-css/building-your-first-web-page/)”. It’s a great place to start learning about the web. For a more hands-on introduction to [**HTML**](https://www.codecademy.com/learn/learn-html), [**CSS**](https://www.codecademy.com/learn/learn-css), and [**JavaScript**](https://www.codecademy.com/learn/introduction-to-javascript), check out the tutorials from Codecademy. [**React**](https://reactjs.org/tutorial/tutorial.html) and [**GraphQL**](http://graphql.org/graphql-js/) also have their own introductory tutorials.
 
-## Learn more about the command line
+### Learn more about the command line
 
 For a great introduction to using the command line, check out [**Codecademy’s Command Line tutorial**](https://www.codecademy.com/courses/learn-the-command-line/lessons/navigation/exercises/your-first-command) for Mac and Linux users, and [**this tutorial**](https://www.computerhope.com/issues/chusedos.htm) for Windows users. Even if you are a Windows user, the first page of the Codecademy tutorial is a valuable read. It explains what the command line is, not just how to interface with it.
 
-## Learn more about npm
+### Learn more about npm
 
 npm is a JavaScript package manager. A package is a module of code that you can choose to include in your projects. If you just downloaded and installed Node.js, npm was installed with it!
 
@@ -189,6 +189,6 @@ npm has three distinct components: the npm website, the npm registry, and the np
 
 > 💡 Check out npm’s introduction, “[**What is npm?**](https://docs.npmjs.com/getting-started/what-is-npm)”.
 
-## Learn more about Git
+### Learn more about Git
 
 You will not need to know Git to complete this tutorial, but it is a very useful tool. If you are interested in learning more about version control, Git, and GitHub, check out GitHub's [Git Handbook](https://guides.github.com/introduction/git-handbook/).

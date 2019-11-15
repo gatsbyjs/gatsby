@@ -3,6 +3,114 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.19...gatsby-plugin-offline@3.0.20) (2019-11-13)
+
+### Features
+
+- **gatsby-plugin-offline:** Merge workboxConfig and default o… ([#19437](https://github.com/gatsbyjs/gatsby/issues/19437)) ([8791329](https://github.com/gatsbyjs/gatsby/commit/8791329))
+
+## [3.0.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.18...gatsby-plugin-offline@3.0.19) (2019-11-10)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+## [3.0.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.17...gatsby-plugin-offline@3.0.18) (2019-11-04)
+
+### Bug Fixes
+
+- **gatsby-plugin-offline:** Improve reliability of JS detection ([#18760](https://github.com/gatsbyjs/gatsby/issues/18760)) ([ae6eab3](https://github.com/gatsbyjs/gatsby/commit/ae6eab3))
+
+## [3.0.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.16...gatsby-plugin-offline@3.0.17) (2019-10-28)
+
+### Bug Fixes
+
+- update minor updates in packages ([#18875](https://github.com/gatsbyjs/gatsby/issues/18875)) ([b692879](https://github.com/gatsbyjs/gatsby/commit/b692879))
+
+## [3.0.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.15...gatsby-plugin-offline@3.0.16) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+## [3.0.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.14...gatsby-plugin-offline@3.0.15) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+## [3.0.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.13...gatsby-plugin-offline@3.0.14) (2019-10-10)
+
+### Features
+
+- **gatsby-plugin-offline:** Allow configuring Workbox debug m… ([#18123](https://github.com/gatsbyjs/gatsby/issues/18123)) ([3c18b9f](https://github.com/gatsbyjs/gatsby/commit/3c18b9f))
+
+## [3.0.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.12...gatsby-plugin-offline@3.0.13) (2019-10-09)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+## [3.0.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.11...gatsby-plugin-offline@3.0.12) (2019-10-08)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+## [3.0.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.9...gatsby-plugin-offline@3.0.11) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+## [3.0.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.9...gatsby-plugin-offline@3.0.10) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+## [3.0.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.8...gatsby-plugin-offline@3.0.9) (2019-09-25)
+
+### Bug Fixes
+
+- **gatsby-plugin-offline:** skip prefetching all resources ([#16691](https://github.com/gatsbyjs/gatsby/issues/16691)) ([e688b0c](https://github.com/gatsbyjs/gatsby/commit/e688b0c))
+
+## [3.0.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.7...gatsby-plugin-offline@3.0.8) (2019-09-20)
+
+### Features
+
+- **gatsby-plugin-offline:** "Magic" JS detection to make sites function correctly when JS is disabled retroactively ([#17590](https://github.com/gatsbyjs/gatsby/issues/17590)) ([e451815](https://github.com/gatsbyjs/gatsby/commit/e451815))
+
+## [3.0.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.6...gatsby-plugin-offline@3.0.7) (2019-09-16)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+## [3.0.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.5...gatsby-plugin-offline@3.0.6) (2019-09-09)
+
+### Bug Fixes
+
+- **gatsby-plugin-offline:** use base path instead of path prefix ([#17446](https://github.com/gatsbyjs/gatsby/issues/17446)) ([71437d6](https://github.com/gatsbyjs/gatsby/commit/71437d6))
+
+## [3.0.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.4...gatsby-plugin-offline@3.0.5) (2019-09-09)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+## [3.0.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.3...gatsby-plugin-offline@3.0.4) (2019-09-09)
+
+### Bug Fixes
+
+- **gatsby-plugin-offline:** set path resources on route update to ensure initial page is cached ([#17408](https://github.com/gatsbyjs/gatsby/issues/17408)) ([556c4cf](https://github.com/gatsbyjs/gatsby/commit/556c4cf))
+
+## [3.0.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.2...gatsby-plugin-offline@3.0.3) (2019-09-05)
+
+### Bug Fixes
+
+- **gatsby-plugin-offline:** prevent caching invalid relative paths ([#17406](https://github.com/gatsbyjs/gatsby/issues/17406)) ([19ee175](https://github.com/gatsbyjs/gatsby/commit/19ee175))
+
+## [3.0.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.1...gatsby-plugin-offline@3.0.2) (2019-09-04)
+
+### Features
+
+- **gatsby-plugin-offline:** Allow precaching custom pages ([#16877](https://github.com/gatsbyjs/gatsby/issues/16877)) ([12b5f75](https://github.com/gatsbyjs/gatsby/commit/12b5f75))
+
+## [3.0.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.0...gatsby-plugin-offline@3.0.1) (2019-09-01)
+
+### Bug Fixes
+
+- update minor updates in packages except react, babel and eslint ([#17254](https://github.com/gatsbyjs/gatsby/issues/17254)) ([252d867](https://github.com/gatsbyjs/gatsby/commit/252d867))
+
+# [3.0.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@2.2.10...gatsby-plugin-offline@3.0.0) (2019-08-30)
+
+### Features
+
+- **gatsby-plugin-offline:** Allow appending custom scripts ([#11626](https://github.com/gatsbyjs/gatsby/issues/11626)) ([275344e](https://github.com/gatsbyjs/gatsby/commit/275344e))
+
 ## [2.2.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@2.2.9...gatsby-plugin-offline@2.2.10) (2019-08-23)
 
 **Note:** Version bump only for package gatsby-plugin-offline

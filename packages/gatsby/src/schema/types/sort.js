@@ -7,6 +7,12 @@ const {
   GraphQLList,
 } = require(`graphql`)
 
+const SORTABLE_ENUM = {
+  SORTABLE: `SORTABLE`,
+  NOT_SORTABLE: `NON_SORTABLE`,
+  DEPRECATED_SORTABLE: `DERPECATED_SORTABLE`,
+}
+
 const getSortOrderEnum = ({ schemaComposer }) =>
   schemaComposer.getOrCreateETC(`SortOrderEnum`, etc => {
     etc.setFields({
@@ -20,7 +26,11 @@ const getFieldsEnum = ({ schemaComposer, typeComposer, inputTypeComposer }) => {
   const fieldsEnumTypeComposer = schemaComposer.getOrCreateETC(
     `${typeName}FieldsEnum`
   )
-  const fields = convert(inputTypeComposer.getFields())
+  const fields = convert(
+    schemaComposer,
+    typeComposer,
+    inputTypeComposer.getFields()
+  )
   fieldsEnumTypeComposer.setFields(fields)
   return fieldsEnumTypeComposer
 }
@@ -34,6 +44,7 @@ const getSortInput = ({ schemaComposer, typeComposer }) => {
     inputTypeComposer,
   })
   const typeName = typeComposer.getTypeName()
+  // console.log(fieldsEnumTC.getType().getValues())
 
   return schemaComposer.getOrCreateITC(`${typeName}SortInput`, itc => {
     itc.addFields({
@@ -43,16 +54,34 @@ const getSortInput = ({ schemaComposer, typeComposer }) => {
   })
 }
 
-module.exports = { getSortInput, getFieldsEnum, getSortOrderEnum }
+module.exports = {
+  getSortInput,
+  getFieldsEnum,
+  getSortOrderEnum,
+  SORTABLE_ENUM,
+}
 
 const MAX_SORT_DEPTH = 3
 const SORT_FIELD_DELIMITER = `___`
 
-const convert = (fields, prefix = null, depth = 0) => {
+const convert = (
+  schemaComposer,
+  typeComposer,
+  fields,
+  prefix = null,
+  depth = 0,
+  deprecationReason
+) => {
   const sortFields = {}
 
   Object.keys(fields).forEach(fieldName => {
     const fieldConfig = fields[fieldName]
+    const sortable = typeComposer.getFieldExtension(fieldName, `sortable`)
+    if (sortable === SORTABLE_ENUM.NOT_SORTABLE) {
+      return
+    } else if (sortable === SORTABLE_ENUM.DEPRECATED_SORTABLE) {
+      deprecationReason = `Sorting on fields that need arguments to resolve is deprecated.`
+    }
     const sortKey = prefix ? `${prefix}.${fieldName}` : fieldName
     const sortKeyFieldName = sortKey.split(`.`).join(SORT_FIELD_DELIMITER)
 
@@ -60,18 +89,33 @@ const convert = (fields, prefix = null, depth = 0) => {
     if (getNullableType(fieldConfig.type) instanceof GraphQLList) {
       sortFields[sortKeyFieldName] = {
         value: sortKey,
+        deprecationReason,
       }
     }
 
     const type = getNamedType(fieldConfig.type)
     if (type instanceof GraphQLInputObjectType) {
       if (depth < MAX_SORT_DEPTH) {
-        Object.assign(sortFields, convert(type.getFields(), sortKey, depth + 1))
+        const typeComposer = schemaComposer.getAnyTC(
+          type.name.replace(/Input$/, ``)
+        )
+        Object.assign(
+          sortFields,
+          convert(
+            schemaComposer,
+            typeComposer,
+            type.getFields(),
+            sortKey,
+            depth + 1,
+            deprecationReason
+          )
+        )
       }
     } else {
       // GraphQLScalarType || GraphQLEnumType
       sortFields[sortKeyFieldName] = {
         value: sortKey,
+        deprecationReason,
       }
     }
   })

@@ -5,6 +5,7 @@ const nodeStore = require(`../../../db/nodes`)
 const path = require(`path`)
 const slash = require(`slash`)
 const { store } = require(`../../../redux`)
+const { actions } = require(`../../../redux/actions`)
 const { buildSchema } = require(`../../schema`)
 const { createSchemaComposer } = require(`../../schema-composer`)
 const { buildObjectType } = require(`../../types/type-builders`)
@@ -25,6 +26,12 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
         end: jest.fn(),
       }
     },
+    phantomActivity: () => {
+      return {
+        start: jest.fn(),
+        end: jest.fn(),
+      }
+    },
   }
 })
 const report = require(`gatsby-cli/lib/reporter`)
@@ -34,7 +41,7 @@ afterEach(() => {
 
 const makeNodes = () => [
   {
-    id: `foo`,
+    id: `1`,
     internal: { type: `Test` },
     name: `The Mad Max`,
     type: `Test`,
@@ -42,7 +49,10 @@ const makeNodes = () => [
     hair: 1,
     date: `1012-11-01`,
     anArray: [1, 2, 3, 4],
-    aNestedArray: [[1, 2, 3, 4], [5, 6, 7, 8]],
+    aNestedArray: [
+      [1, 2, 3, 4],
+      [5, 6, 7, 8],
+    ],
     anObjectArray: [
       { aString: `some string`, aNumber: 2, aBoolean: true },
       { aString: `some string`, aNumber: 2, anArray: [1, 2] },
@@ -75,7 +85,7 @@ const makeNodes = () => [
     },
   },
   {
-    id: `boo`,
+    id: `2`,
     internal: { type: `Test` },
     name: `The Mad Wax`,
     type: `Test`,
@@ -101,9 +111,12 @@ describe(`GraphQL type inference`, () => {
 
   const buildTestSchema = async (nodes, buildSchemaArgs, typeDefs) => {
     store.dispatch({ type: `DELETE_CACHE` })
-    nodes.forEach(node =>
-      store.dispatch({ type: `CREATE_NODE`, payload: node })
-    )
+    nodes.forEach(node => {
+      if (!node.internal.contentDigest) {
+        node.internal.contentDigest = `0`
+      }
+      actions.createNode(node, { name: `test` })(store.dispatch)
+    })
 
     const { builtInFieldExtensions } = require(`../../extensions`)
     Object.keys(builtInFieldExtensions).forEach(name => {
@@ -125,7 +138,7 @@ describe(`GraphQL type inference`, () => {
       typeConflictReporter,
       ...(buildSchemaArgs || {}),
     })
-    return schema
+    return { schema, schemaComposer }
   }
 
   const getQueryResult = async (
@@ -135,7 +148,11 @@ describe(`GraphQL type inference`, () => {
     extraquery = ``,
     typeDefs
   ) => {
-    const schema = await buildTestSchema(nodes, buildSchemaArgs, typeDefs)
+    const { schema, schemaComposer } = await buildTestSchema(
+      nodes,
+      buildSchemaArgs,
+      typeDefs
+    )
     store.dispatch({ type: `SET_SCHEMA`, payload: schema })
     return graphql(
       schema,
@@ -151,12 +168,12 @@ describe(`GraphQL type inference`, () => {
       }
       `,
       undefined,
-      withResolverContext({ path: `/` }, schema)
+      withResolverContext({ schema, schemaComposer, context: { path: `/` } })
     )
   }
 
   const getInferredFields = async (nodes, buildSchemaArgs) => {
-    const schema = await buildTestSchema(nodes, buildSchemaArgs)
+    const { schema } = await buildTestSchema(nodes, buildSchemaArgs)
     return schema.getType(`Test`).getFields()
   }
 
@@ -502,7 +519,7 @@ describe(`GraphQL type inference`, () => {
         },
       },
     ]
-    const schema = await buildTestSchema(nodes)
+    const { schema, schemaComposer } = await buildTestSchema(nodes)
     store.dispatch({ type: `SET_SCHEMA`, payload: schema })
     const result = await graphql(
       schema,
@@ -523,7 +540,7 @@ describe(`GraphQL type inference`, () => {
         }
       `,
       undefined,
-      withResolverContext({ path: `/` }, schema)
+      withResolverContext({ schema, schemaComposer, context: { path: `/` } })
     )
 
     expect(result).toMatchSnapshot()
@@ -1081,7 +1098,7 @@ Object {
             id: `2`,
           },
         ].concat(getLinkedNodes())
-        const schema = await buildTestSchema(nodes)
+        const { schema } = await buildTestSchema(nodes)
         const fields = schema.getType(`Test`).getFields()
         const otherFields = schema.getType(`OtherType`).getFields()
 
@@ -1112,7 +1129,7 @@ Object {
             id: `2`,
           },
         ].concat(getLinkedNodes())
-        const schema = await buildTestSchema(nodes)
+        const { schema } = await buildTestSchema(nodes)
         const fields = schema.getType(`Test`).getFields()
         const otherFields = schema.getType(`OtherType`).getFields()
 

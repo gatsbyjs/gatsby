@@ -283,16 +283,17 @@ class Image extends React.Component {
     // already in the browser cache so it's cheap to just show directly.
     this.seenBefore = isBrowser && inImageCache(props)
 
-    this.addNoScript = !(props.critical && !props.fadeIn)
+    this.isCritical = props.loading === `eager` || props.critical
+
+    this.addNoScript = !(this.isCritical && !props.fadeIn)
     this.useIOSupport =
       !hasNativeLazyLoadSupport &&
       hasIOSupport &&
-      !props.critical &&
+      !this.isCritical &&
       !this.seenBefore
 
     const isVisible =
-      props.critical ||
-      props.loading == `eager` ||
+      this.isCritical ||
       (isBrowser && (hasNativeLazyLoadSupport || !this.useIOSupport))
 
     this.state = {
@@ -311,7 +312,7 @@ class Image extends React.Component {
     if (this.state.isVisible && typeof this.props.onStartLoad === `function`) {
       this.props.onStartLoad({ wasCached: inImageCache(this.props) })
     }
-    if (this.props.critical) {
+    if (this.isCritical) {
       const img = this.imageRef.current
       if (img && img.complete) {
         this.handleImageLoaded()
@@ -410,6 +411,7 @@ class Image extends React.Component {
       alt: !this.state.isVisible ? alt : ``,
       style: imagePlaceholderStyle,
       className: placeholderClassName,
+      itemProp,
     }
 
     if (fluid) {
@@ -650,6 +652,10 @@ const fluidObject = PropTypes.shape({
   media: PropTypes.string,
 })
 
+// If you modify these propTypes, please don't forget to update following files as well:
+// https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-image/index.d.ts
+// https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-image/README.md#gatsby-image-props
+// https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/gatsby-image.md#gatsby-image-props
 Image.propTypes = {
   resolutions: fixedObject,
   sizes: fluidObject,

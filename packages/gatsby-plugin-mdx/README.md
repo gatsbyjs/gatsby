@@ -43,13 +43,13 @@ MDX seeks to make writing with Markdown and JSX simpler while being more express
 
 Install with npm:
 
-```sh
+```shell
 npm install --save gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
 ```
 
 Install with yarn:
 
-```sh
+```shell
 yarn add gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
 ```
 
@@ -73,13 +73,37 @@ module.exports = {
 }
 ```
 
-By default, this configuration will allow you to create pages
+By default, this configuration will allow you to automatically create pages
 with `.mdx` files in `src/pages` and will process any Gatsby nodes
 with Markdown media types into MDX content.
 
 Note that gatsby-plugin-mdx requires gatsby-source-filesystem to be present
 and configured to process local markdown files in order to
 generate the resulting Gatsby nodes.
+
+To automatically create pages with `.mdx` from other sources, you also need
+to configure gatsby-plugin-page-creator.
+
+```js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `posts`,
+        path: `${__dirname}/src/posts/`,
+      },
+    },
+    {
+      resolve: "gatsby-plugin-page-creator",
+      options: {
+        path: `${__dirname}/src/posts`,
+      },
+    },
+    `gatsby-plugin-mdx`,
+  ],
+}
+```
 
 ### Configuration
 
@@ -140,6 +164,12 @@ module.exports = {
       options: {
         name: `posts`,
         path: `${__dirname}/src/posts/`,
+      },
+    },
+    {
+      resolve: "gatsby-plugin-page-creator",
+      options: {
+        path: `${__dirname}/src/posts`,
       },
     },
     {
@@ -214,6 +244,12 @@ module.exports = {
       options: {
         name: `posts`,
         path: `${__dirname}/src/posts/`,
+      },
+    },
+    {
+      resolve: "gatsby-plugin-page-creator",
+      options: {
+        path: `${__dirname}/src/posts`,
       },
     },
   ],
@@ -304,9 +340,7 @@ module.exports = {
 }
 ```
 
-###### Note:
-
-Using a string reference is currently not supported for `gatsbyRemarkPlugins`. (A PR would be accepted for this)
+Using a string reference is also supported for `gatsbyRemarkPlugins`.
 
 ```js
 gatsbyRemarkPlugins: [`gatsby-remark-images`]
@@ -438,7 +472,7 @@ The following components can be customized with the MDXProvider:
 | `em`            | [Emphasis](https://github.com/syntax-tree/mdast#emphasis)            | `_emphasis_`                                        |
 | `strong`        | [Strong](https://github.com/syntax-tree/mdast#strong)                | `**strong**`                                        |
 | `delete`        | [Delete](https://github.com/syntax-tree/mdast#delete)                | `~~strikethrough~~`                                 |
-| `code`          | [InlineCode](https://github.com/syntax-tree/mdast#inlinecode)        |                                                     |
+| `inlineCode`    | [InlineCode](https://github.com/syntax-tree/mdast#inlinecode)        |                                                     |
 | `hr`            | [Break](https://github.com/syntax-tree/mdast#break)                  | `---`                                               |
 | `a`             | [Link](https://github.com/syntax-tree/mdast#link)                    | `<https://mdxjs.com>` or `[MDX](https://mdxjs.com)` |
 | `img`           | [Image](https://github.com/syntax-tree/mdast#image)                  | `![alt](https://mdx-logo.now.sh)`                   |
@@ -447,6 +481,9 @@ It's important to define the `components` you pass in in a stable way
 so that the references don't change if you want to be able to navigate
 to a hash. That's why we defined `components` outside of any render
 functions in these examples.
+
+You can also expose any custom component to every mdx file using
+`MDXProvider`. See [Shortcodes](#shortcodes)
 
 ##### Related
 

@@ -2,6 +2,47 @@
 
 const PrettyError = require(`pretty-error`)
 const prepareStackTrace = require(`./prepare-stack-trace`)
+const _ = require(`lodash`)
+const { isNodeInternalModulePath } = require(`gatsby-core-utils`)
+
+const packagesToSkip = [`core-js`, `bluebird`, `regenerator-runtime`, `graphql`]
+
+const packagesToSkipTest = new RegExp(
+  `node_modules[\\/](${packagesToSkip.join(`|`)})`
+)
+
+// TO-DO: move this this out of this file (and probably delete this file completely)
+// it's here because it re-implements similar thing as `pretty-error` already does
+const sanitizeStructuredStackTrace = stack => {
+  // first filter out not useful call sites
+  stack = stack.filter(callSite => {
+    if (!callSite.fileName) {
+      return false
+    }
+
+    if (packagesToSkipTest.test(callSite.fileName)) {
+      return false
+    }
+
+    if (callSite.fileName.includes(`asyncToGenerator.js`)) {
+      return false
+    }
+
+    if (isNodeInternalModulePath(callSite.fileName)) {
+      return false
+    }
+
+    return true
+  })
+
+  // then sanitize individual call site objects to make sure we don't
+  // emit objects with extra fields that won't be handled by consumers
+  stack = stack.map(callSite =>
+    _.pick(callSite, [`fileName`, `functionName`, `columnNumber`, `lineNumber`])
+  )
+
+  return stack
+}
 
 function getErrorFormatter() {
   const prettyError = new PrettyError()
@@ -53,8 +94,12 @@ function getErrorFormatter() {
  * Convert a stringified webpack compilation error back into
  * an Error instance so it can be formatted properly
  * @param {string} errorStr
+ * @param {string} sourceMapFile
  */
-function createErrorFromString(errorStr: string = ``, sourceMapFile: string) {
+async function createErrorFromString(
+  errorStr: string = ``,
+  sourceMapFile: string
+) {
   let [message, ...rest] = errorStr.split(/\r\n|[\n\r]/g)
   // pull the message from the first line then remove the `Error:` prefix
   // FIXME: when https://github.com/AriaMinaei/pretty-error/pull/49 is merged
@@ -67,7 +112,7 @@ function createErrorFromString(errorStr: string = ``, sourceMapFile: string) {
 
   error.name = `WebpackError`
   try {
-    if (sourceMapFile) prepareStackTrace(error, sourceMapFile)
+    if (sourceMapFile) await prepareStackTrace(error, sourceMapFile)
   } catch (err) {
     // don't shadow a real error because of a parsing issue
   }
@@ -77,4 +122,5 @@ function createErrorFromString(errorStr: string = ``, sourceMapFile: string) {
 module.exports = {
   createErrorFromString,
   getErrorFormatter,
+  sanitizeStructuredStackTrace,
 }

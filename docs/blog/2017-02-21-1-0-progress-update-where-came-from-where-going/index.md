@@ -6,7 +6,7 @@ image: "ui-and-code.png"
 draft: true
 ---
 
-Imagine for a moment the perfect website framework. One that produced really
+Imagine for a moment the perfect website framework. One that produces really
 fast sites by default, that let you use the latest web tools and browser
 features without complicated setup, and that helped your team stay coordinated
 as you develop, ship, and maintain sites.

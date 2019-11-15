@@ -3,6 +3,94 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.2.26...gatsby-plugin-manifest@2.2.27) (2019-11-10)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.2.26](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.2.25...gatsby-plugin-manifest@2.2.26) (2019-10-29)
+
+### Bug Fixes
+
+- update minor updates in packages ([#19087](https://github.com/gatsbyjs/gatsby/issues/19087)) ([294a48f](https://github.com/gatsbyjs/gatsby/commit/294a48f))
+
+## [2.2.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.2.24...gatsby-plugin-manifest@2.2.25) (2019-10-28)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.2.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.2.23...gatsby-plugin-manifest@2.2.24) (2019-10-28)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.2.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.2.22...gatsby-plugin-manifest@2.2.23) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.2.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.2.21...gatsby-plugin-manifest@2.2.22) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.2.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.2.20...gatsby-plugin-manifest@2.2.21) (2019-10-09)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.2.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.2.18...gatsby-plugin-manifest@2.2.20) (2019-09-26)
+
+### Bug Fixes
+
+- update dependency sharp to ^0.23.1 ([#17904](https://github.com/gatsbyjs/gatsby/issues/17904)) ([f19ad3c](https://github.com/gatsbyjs/gatsby/commit/f19ad3c))
+
+### Features
+
+- **gatsby-plugin-manifest:** Update manifest on navigation ([#17426](https://github.com/gatsbyjs/gatsby/issues/17426)) ([f88a9e2](https://github.com/gatsbyjs/gatsby/commit/f88a9e2)), closes [#13471](https://github.com/gatsbyjs/gatsby/issues/13471)
+
+## [2.2.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.2.18...gatsby-plugin-manifest@2.2.19) (2019-09-26)
+
+### Bug Fixes
+
+- update dependency sharp to ^0.23.1 ([#17904](https://github.com/gatsbyjs/gatsby/issues/17904)) ([f19ad3c](https://github.com/gatsbyjs/gatsby/commit/f19ad3c))
+
+### Features
+
+- **gatsby-plugin-manifest:** Update manifest on navigation ([#17426](https://github.com/gatsbyjs/gatsby/issues/17426)) ([f88a9e2](https://github.com/gatsbyjs/gatsby/commit/f88a9e2)), closes [#13471](https://github.com/gatsbyjs/gatsby/issues/13471)
+
+## [2.2.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.2.17...gatsby-plugin-manifest@2.2.18) (2019-09-20)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.2.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.2.16...gatsby-plugin-manifest@2.2.17) (2019-09-18)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.2.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.2.15...gatsby-plugin-manifest@2.2.16) (2019-09-09)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.2.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.2.14...gatsby-plugin-manifest@2.2.15) (2019-09-09)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.2.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.2.13...gatsby-plugin-manifest@2.2.14) (2019-09-05)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.2.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.2.12...gatsby-plugin-manifest@2.2.13) (2019-09-01)
+
+### Bug Fixes
+
+- update minor updates in packages except react, babel and eslint ([#17254](https://github.com/gatsbyjs/gatsby/issues/17254)) ([252d867](https://github.com/gatsbyjs/gatsby/commit/252d867))
+
+## [2.2.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.2.11...gatsby-plugin-manifest@2.2.12) (2019-08-30)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.2.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.2.10...gatsby-plugin-manifest@2.2.11) (2019-08-30)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.2.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.2.9...gatsby-plugin-manifest@2.2.10) (2019-08-29)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
 ## [2.2.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.2.8...gatsby-plugin-manifest@2.2.9) (2019-08-23)
 
 **Note:** Version bump only for package gatsby-plugin-manifest
@@ -175,7 +263,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- **gatsby-plugin-manifest:** don't output `theme-color` meta tag if it's not defiened ([#10069](https://github.com/gatsbyjs/gatsby/issues/10069)) ([7802470](https://github.com/gatsbyjs/gatsby/commit/7802470))
+- **gatsby-plugin-manifest:** don't output `theme-color` meta tag if it's not defined ([#10069](https://github.com/gatsbyjs/gatsby/issues/10069)) ([7802470](https://github.com/gatsbyjs/gatsby/commit/7802470))
 
 <a name="2.0.9"></a>
 

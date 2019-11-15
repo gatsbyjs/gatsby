@@ -1,3 +1,6 @@
+const { SORTABLE_ENUM } = require(`./sort`)
+const { SEARCHABLE_ENUM } = require(`./filter`)
+
 const getOrCreateNodeInterface = schemaComposer => {
   // TODO: why is `mediaType` on Internal? Applies only to File!?
   // `fieldOwners` is an object
@@ -27,6 +30,11 @@ const getOrCreateNodeInterface = schemaComposer => {
           const { path } = context
           return context.nodeModel.getNodeById({ id: source.parent }, { path })
         },
+        extensions: {
+          searchable: SEARCHABLE_ENUM.SEARCHABLE,
+          sortable: SORTABLE_ENUM.SORTABLE,
+          needsResolve: true,
+        },
       },
       children: {
         type: `[Node!]!`,
@@ -36,6 +44,11 @@ const getOrCreateNodeInterface = schemaComposer => {
             { ids: source.children },
             { path }
           )
+        },
+        extensions: {
+          searchable: SEARCHABLE_ENUM.SEARCHABLE,
+          sortable: SORTABLE_ENUM.SORTABLE,
+          needsResolve: true,
         },
       },
       internal: internalTC.getTypeNonNull(),

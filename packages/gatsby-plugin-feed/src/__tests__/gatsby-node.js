@@ -47,6 +47,25 @@ describe(`Test plugin feed`, async () => {
       )
     })
 
+    it(`warns when individual feed does not have title`, async () => {
+      const options = {
+        feeds: [
+          {
+            output: `rss.xml`,
+            query: `{}`,
+            serialize: () => {},
+          },
+        ],
+      }
+
+      const [reporter] = await setup(options)
+
+      expect(reporter.warn).toHaveBeenCalledTimes(1)
+      expect(reporter.warn).toHaveBeenCalledWith(
+        expect.stringContaining(`title`)
+      )
+    })
+
     it(`warns when individual feed does not have serialize function`, async () => {
       const options = {
         feeds: [
@@ -73,7 +92,6 @@ describe(`Test plugin feed`, async () => {
             {
               // output is missing
               query: `{}`,
-              title: `my feed`,
             },
           ],
         },
@@ -82,16 +100,6 @@ describe(`Test plugin feed`, async () => {
             {
               output: `rss.xml`,
               // query is missing
-              title: `my feed`,
-            },
-          ],
-        },
-        {
-          feeds: [
-            {
-              output: `rss.xml`,
-              query: `{}`,
-              // title is missing
             },
           ],
         },

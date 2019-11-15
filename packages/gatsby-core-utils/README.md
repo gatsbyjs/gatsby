@@ -4,7 +4,7 @@ A list of utilities used in multiple gatsby packages.
 
 ## Usage
 
-```sh
+```shell
 npm install --save gatsby-core-utils
 ```
 
@@ -61,5 +61,32 @@ const { joinPath } = require("gatsby-core-utils")
 const BASEPATH = "/mybase/"
 const pathname = "./gatsby/is/awesome"
 const url = joinPath(BASEPATH, pathname)
+// ...
+```
+
+### isCI
+
+A utility that enhances `isCI` from 'ci-info` with support for ZEIT's Now and Heroku detection
+
+```js
+const { isCI } = require("gatsby-core-utils")
+
+if (isCI()) {
+  // execute CI-specific code
+}
+// ...
+```
+
+### getCIName
+
+A utility that returns the name of the current CI environment if available, `null` otherwise
+
+```js
+const { getCIName } = require("gatsby-core-utils")
+
+const CI_NAME = getCIName()
+console.log({ CI_NAME })
+// {CI_NAME: null}, or
+// {CI_NAME: "ZEIT Now"}
 // ...
 ```

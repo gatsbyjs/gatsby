@@ -18,7 +18,7 @@ _Have another more specific idea? You may want to check out our vibrant collecti
 
     Use the Gatsby CLI to create a new site, specifying the default starter.
 
-    ```sh
+    ```shell
     # create a new Gatsby site using the default starter
     gatsby new my-default-starter https://github.com/gatsbyjs/gatsby-starter-default
     ```
@@ -27,7 +27,7 @@ _Have another more specific idea? You may want to check out our vibrant collecti
 
     Navigate into your new site’s directory and start it up.
 
-    ```sh
+    ```shell
     cd my-default-starter/
     gatsby develop
     ```

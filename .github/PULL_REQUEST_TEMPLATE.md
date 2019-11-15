@@ -3,6 +3,11 @@
   ask in this Pull Request and a Gatsby maintainer will be happy to help :)
 -->
 
+<!--
+  Is this a blog post? Check out the docs at https://www.gatsbyjs.org/contributing/blog-and-website-contributions/, and please mention if the blog post is pre-approved
+  by someone from Gatsby.
+-->
+
 ## Description
 
 <!-- Write a brief description of the changes introduced by this PR -->

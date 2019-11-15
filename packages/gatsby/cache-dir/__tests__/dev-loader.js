@@ -7,7 +7,7 @@ jest.mock(`../emitter`)
 jest.mock(`../socketIo`, () => {
   return {
     default: jest.fn(),
-    getPageData: jest.fn(),
+    getPageData: jest.fn().mockResolvedValue(),
   }
 })
 
@@ -42,7 +42,6 @@ describe(`Dev loader`, () => {
 
     const defaultPayload = {
       path: `/mypage/`,
-      webpackCompilationHash: `1234`,
     }
 
     // replace the real XHR object with the mock XHR object before each test
@@ -231,7 +230,6 @@ describe(`Dev loader`, () => {
       const devLoader = new DevLoader(null, [])
       const payload = {
         path: `/blocked-page/`,
-        webpackCompilationHash: `1234`,
       }
 
       let xhrCount = 0
@@ -275,7 +273,29 @@ describe(`Dev loader`, () => {
       }
     }
 
-    beforeEach(() => emitter.emit.mockReset())
+    let originalPathPrefix
+
+    beforeEach(() => {
+      originalPathPrefix = global.__PATH_PREFIX__
+      global.__PATH_PREFIX__ = ``
+      mock.setup()
+      mock.get(`/page-data/app-data.json`, (req, res) =>
+        res
+          .status(200)
+          .header(`content-type`, `application/json`)
+          .body(
+            JSON.stringify({
+              webpackCompilationHash: `123`,
+            })
+          )
+      )
+      emitter.emit.mockReset()
+    })
+
+    afterEach(() => {
+      global.__PATH_PREFIX__ = originalPathPrefix
+      mock.teardown()
+    })
 
     it(`should be successful when component can be loaded`, async () => {
       const syncRequires = createSyncRequires({
@@ -285,7 +305,6 @@ describe(`Dev loader`, () => {
       const pageData = {
         path: `/mypage/`,
         componentChunkName: `chunk`,
-        webpackCompilationHash: `123`,
         result: {
           pageContext: `something something`,
         },
@@ -313,95 +332,6 @@ describe(`Dev loader`, () => {
       })
     })
 
-    it(`should load page path first before falling back to matchPath`, async () => {
-      const syncRequires = createSyncRequires({
-        chunk: () => `instance`,
-      })
-      const prodLoader = new DevLoader(syncRequires, [
-        {
-          matchPath: `/app/*`,
-          path: `/app`,
-        },
-      ])
-      const pageData = {
-        path: `/app/login/`,
-        componentChunkName: `chunk`,
-        webpackCompilationHash: `123`,
-        result: {
-          pageContext: `something something`,
-        },
-      }
-
-      prodLoader.loadPageDataJson = jest.fn(() =>
-        Promise.resolve({
-          payload: pageData,
-          status: `success`,
-        })
-      )
-
-      const expectation = await prodLoader.loadPage(`/app/login/`)
-      expect(expectation).toMatchSnapshot()
-      expect(Object.keys(expectation)).toEqual([`component`, `json`, `page`])
-      expect(prodLoader.pageDb.get(`/app/login`)).toEqual(
-        expect.objectContaining({
-          payload: expectation,
-          status: `success`,
-        })
-      )
-    })
-
-    it(`should load matchPath pageData if current page returns notFound`, async () => {
-      const syncRequires = createSyncRequires({
-        chunk: () => `instance`,
-      })
-      const pageData = {
-        path: `/app/`,
-        componentChunkName: `chunk`,
-        webpackCompilationHash: `123`,
-        result: {
-          pageContext: `something something`,
-        },
-      }
-      const prodLoader = new DevLoader(syncRequires, [
-        {
-          matchPath: `/app/*`,
-          path: `/app`,
-        },
-      ])
-
-      prodLoader.loadPageDataJson = jest
-        .fn()
-        .mockImplementationOnce(() =>
-          Promise.resolve({
-            notFound: true,
-          })
-        )
-        .mockImplementationOnce(() =>
-          Promise.resolve({
-            payload: pageData,
-            status: `success`,
-          })
-        )
-
-      const expectation = await prodLoader.loadPage(`/app/mypage/`)
-      expect(expectation).toMatchSnapshot()
-      expect(Object.keys(expectation)).toEqual([`component`, `json`, `page`])
-      expect(prodLoader.pageDb.has(`/app/mypage`)).toBe(true)
-      expect(prodLoader.pageDb.has(`/app`)).toBe(true)
-      expect(prodLoader.pageDb.get(`/app/mypage`)).toEqual(
-        expect.objectContaining({
-          payload: expectation,
-          status: `success`,
-        })
-      )
-      expect(prodLoader.loadPageDataJson).toHaveBeenCalledTimes(2)
-      expect(emitter.emit).toHaveBeenCalledTimes(1)
-      expect(emitter.emit).toHaveBeenCalledWith(`onPostLoadPageResources`, {
-        page: expectation,
-        pageResources: expectation,
-      })
-    })
-
     it(`should set not found on finalResult`, async () => {
       const syncRequires = createSyncRequires({
         chunk: `instance`,
@@ -410,7 +340,6 @@ describe(`Dev loader`, () => {
       const pageData = {
         path: `/mypage/`,
         componentChunkName: `chunk`,
-        webpackCompilationHash: `123`,
       }
       devLoader.loadPageDataJson = jest.fn(() =>
         Promise.resolve({
@@ -438,7 +367,6 @@ describe(`Dev loader`, () => {
       const pageData = {
         path: `/mypage/`,
         componentChunkName: `chunk`,
-        webpackCompilationHash: `123`,
       }
       devLoader.loadPageDataJson = jest.fn(() =>
         Promise.resolve({
@@ -461,7 +389,6 @@ describe(`Dev loader`, () => {
       const pageData = {
         path: `/mypage/`,
         componentChunkName: `chunk`,
-        webpackCompilationHash: `123`,
       }
       devLoader.loadPageDataJson = jest.fn(() =>
         Promise.resolve({

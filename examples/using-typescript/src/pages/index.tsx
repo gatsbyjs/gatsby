@@ -24,7 +24,7 @@ export const pageQuery = graphql`
   }
 `
 
-export default class IndexPage extends React.Component<IndexPageProps, {}> {
+export default class IndexPage extends React.Component<IndexPageProps> {
   readonly hello = `Hello`
   public render() {
     const { siteName } = this.props.data.site.siteMetadata

@@ -30,7 +30,7 @@ const NavLinkPropTypes = {
 }
 
 // Set up IntersectionObserver
-const handleIntersection = (el, cb) => {
+const createIntersectionObserver = (el, cb) => {
   const io = new window.IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (el === entry.target) {
@@ -46,6 +46,7 @@ const handleIntersection = (el, cb) => {
   })
   // Add element to the observer
   io.observe(el)
+  return { instance: io, el }
 }
 
 class GatsbyLink extends React.Component {
@@ -77,6 +78,16 @@ class GatsbyLink extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    if (!this.io) {
+      return
+    }
+    const { instance, el } = this.io
+
+    instance.unobserve(el)
+    instance.disconnect()
+  }
+
   handleRef(ref) {
     if (this.props.innerRef && this.props.innerRef.hasOwnProperty(`current`)) {
       this.props.innerRef.current = ref
@@ -86,7 +97,7 @@ class GatsbyLink extends React.Component {
 
     if (this.state.IOSupported && ref) {
       // If IO supported and element reference found, setup Observer functionality
-      handleIntersection(ref, () => {
+      this.io = createIntersectionObserver(ref, () => {
         ___loader.enqueue(parsePath(this.props.to).pathname)
       })
     }

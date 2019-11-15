@@ -103,6 +103,9 @@ exports.checkDepsChanges = async ({
     }
   }
 
+  if (!monorepoPKGjson.dependencies) monorepoPKGjson.dependencies = {}
+  if (!localPKGjson.dependencies) localPKGjson.dependencies = {}
+
   const areDepsEqual = _.isEqual(
     monorepoPKGjson.dependencies,
     localPKGjson.dependencies

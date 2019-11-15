@@ -1,6 +1,6 @@
 # gatsby-plugin-fullstory
 
-Fullstory is a analytics service for recording customer visits. This plugin adds the tracking code.
+Fullstory is an analytics service for recording customer visits. This plugin adds the tracking code.
 
 ## Install
 

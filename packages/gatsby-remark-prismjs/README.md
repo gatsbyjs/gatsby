@@ -40,9 +40,9 @@ plugins: [
             // bash highlighter.
             aliases: {},
             // This toggles the display of line numbers globally alongside the code.
-            // To use it, add the following line in src/layouts/index.js
+            // To use it, add the following line in gatsby-browser.js
             // right after importing the prism color scheme:
-            //  `require("prismjs/plugins/line-numbers/prism-line-numbers.css");`
+            //  require("prismjs/plugins/line-numbers/prism-line-numbers.css")
             // Defaults to false.
             // If you wish to only show line numbers on certain code blocks,
             // leave false and use the {numberLines: true} syntax below
@@ -372,7 +372,7 @@ plugins: [
 To show fancy prompts next to shell commands (only triggers on `bash`), either set `prompt.global` to `true` in `gatsby-config.js`,
 or pass at least one of `{outputLines: <range>}`, `{promptUser: <user>}`, or `{promptHost: <host>}` to a snippet
 
-By default, every line gets a prompt appended to the start, this behaviour can be changed by specififying `{outputLines: <range>}`
+By default, every line gets a prompt appended to the start, this behaviour can be changed by specifying `{outputLines: <range>}`
 to the language.
 
 ````
