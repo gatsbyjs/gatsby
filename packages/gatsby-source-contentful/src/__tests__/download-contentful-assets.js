@@ -77,4 +77,59 @@ describe.only(`downloadContentfulAssets`, () => {
       )
     })
   })
+
+  it(`should try downloading all assets when batching`, async () => {
+    const cache = {
+      get: jest.fn(() => Promise.resolve(null)),
+      set: jest.fn(() => Promise.resolve(null)),
+    }
+
+    await downloadContentfulAssets({
+      actions: { touchNode: jest.fn() },
+      getNodes: () =>
+        Array.from({ length: 100 }).fill({
+          internal: {
+            owner: `gatsby-source-contentful`,
+            type: `ContentfulAsset`,
+          },
+          file: {
+            url: `//images.ctfassets.net/testing/us-image.jpeg`,
+          },
+        }),
+      cache,
+    })
+
+    expect(cache.get).toHaveBeenCalledTimes(100)
+    expect(cache.set).toHaveBeenCalledTimes(100)
+  })
+
+  it(`should correctly batch downloading assets`, async () => {
+    const originalPromiseAll = global.Promise.all
+
+    const cache = {
+      get: jest.fn(() => Promise.resolve(null)),
+      set: jest.fn(() => Promise.resolve(null)),
+    }
+
+    global.Promise.all = jest.fn()
+
+    await downloadContentfulAssets({
+      actions: { touchNode: jest.fn() },
+      getNodes: () =>
+        Array.from({ length: 90 }).fill({
+          internal: {
+            owner: `gatsby-source-contentful`,
+            type: `ContentfulAsset`,
+          },
+          file: {
+            url: `//images.ctfassets.net/testing/us-image.jpeg`,
+          },
+        }),
+      cache,
+    })
+
+    expect(global.Promise.all).toHaveBeenCalledTimes(4)
+
+    global.Promise.all = originalPromiseAll
+  })
 })
