@@ -67,9 +67,9 @@ exports.sourceNodes = ({ actions }) => {
       type: DoctrineType
       default: JSON
       description: DocumentationJSComponentDescription
-        @link(from: description___NODE)
+        @link(from: "description___NODE")
       deprecated: DocumentationJSComponentDescription
-        @link(from: deprecated___NODE)
+        @link(from: "deprecated___NODE")
       augments: [DocumentationJs] @link(from: "augments___NODE")
       examples: [DocumentationJsExample]
       implements: [DocumentationJs] @link(from: "implements___NODE")
