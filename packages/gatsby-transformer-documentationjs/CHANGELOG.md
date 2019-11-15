@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.1.18...gatsby-transformer-documentationjs@4.1.19) (2019-11-15)
+
+### Bug Fixes
+
+- **gatsby-transformer-documentationjs:** Add missing quotes around field names ([0c2eab0](https://github.com/gatsbyjs/gatsby/commit/0c2eab0))
+
 ## [4.1.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.1.17...gatsby-transformer-documentationjs@4.1.18) (2019-11-15)
 
 ### Bug Fixes
