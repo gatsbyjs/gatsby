@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.17.14](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.17.13...gatsby@2.17.14) (2019-11-15)
+
+### Bug Fixes
+
+- update dependency babel-plugin-dynamic-import-node to v2 ([#19535](https://github.com/gatsbyjs/gatsby/issues/19535)) ([500ebf6](https://github.com/gatsbyjs/gatsby/commit/500ebf6))
+- update dependency convert-hrtime to v3 ([#19530](https://github.com/gatsbyjs/gatsby/issues/19530)) ([1a5ddc5](https://github.com/gatsbyjs/gatsby/commit/1a5ddc5))
+- update dependency copyfiles to v2 ([#19531](https://github.com/gatsbyjs/gatsby/issues/19531)) ([1f9a2b5](https://github.com/gatsbyjs/gatsby/commit/1f9a2b5))
+
 ## [2.17.13](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.17.12...gatsby@2.17.13) (2019-11-13)
 
 ### Bug Fixes

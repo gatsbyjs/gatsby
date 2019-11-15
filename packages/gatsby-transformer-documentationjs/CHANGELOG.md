@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.1.17...gatsby-transformer-documentationjs@4.1.18) (2019-11-15)
+
+### Bug Fixes
+
+- ensure all docjs elements are typed ([#19510](https://github.com/gatsbyjs/gatsby/issues/19510)) ([ab8adbc](https://github.com/gatsbyjs/gatsby/commit/ab8adbc))
+
 ## [4.1.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.1.16...gatsby-transformer-documentationjs@4.1.17) (2019-11-10)
 
 **Note:** Version bump only for package gatsby-transformer-documentationjs

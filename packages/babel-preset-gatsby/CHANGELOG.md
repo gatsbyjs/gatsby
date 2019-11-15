@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.22](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.2.21...babel-preset-gatsby@0.2.22) (2019-11-15)
+
+### Bug Fixes
+
+- update dependency babel-plugin-dynamic-import-node to v2 ([#19535](https://github.com/gatsbyjs/gatsby/issues/19535)) ([500ebf6](https://github.com/gatsbyjs/gatsby/commit/500ebf6))
+
 ## [0.2.21](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.2.20...babel-preset-gatsby@0.2.21) (2019-11-10)
 
 **Note:** Version bump only for package babel-preset-gatsby
