@@ -89,7 +89,7 @@
     "react-typography": "^1.0.0-alpha.4",
     "rehype-react": "^3.1.0",
     "remove-markdown": "^0.3.0",
-    "slash": "^1.0.0",
+    "slash": "^3.0.0",
     "slugify": "^1.3.6",
     "styled-system": "^5.1.2",
     "theme-ui": "^0.2.46",
