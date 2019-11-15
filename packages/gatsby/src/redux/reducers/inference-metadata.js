@@ -32,8 +32,11 @@ module.exports = (state = {}, action) => {
     }
 
     case `CREATE_NODE`: {
-      const node = action.payload
+      const { payload: node, oldNode } = action
       const { type } = node.internal
+      if (oldNode) {
+        state[type] = deleteNode(state[type] || { ignoredFields }, oldNode)
+      }
       state[type] = addNode(state[type] || { ignoredFields }, node)
       return state
     }

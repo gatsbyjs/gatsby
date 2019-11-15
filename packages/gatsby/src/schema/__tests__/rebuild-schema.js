@@ -30,6 +30,8 @@ const reporter = require(`gatsby-cli/lib/reporter`)
 const typePrinter = schema => typeName => printType(schema.getType(typeName))
 
 const addNode = node => store.dispatch({ type: `CREATE_NODE`, payload: node })
+const updateNode = (node, oldNode) =>
+  store.dispatch({ type: `CREATE_NODE`, payload: node, oldNode })
 const deleteNode = node =>
   store.dispatch({ type: `DELETE_NODE`, payload: node })
 
@@ -713,6 +715,27 @@ describe(`build and update individual types`, () => {
     expect(typePrinter(schema)(`NestedNestedFooBar`)).toMatchInlineSnapshot(`
       "type NestedNestedFooBar {
         baz: String
+      }"
+    `)
+  })
+
+  it(`works with node updates`, async () => {
+    const node = {
+      id: `Foo1`,
+      internal: { type: `Foo`, contentDigest: `0` },
+      children: [],
+      test: `test`,
+    }
+    const oldNode = createNodes()[0]
+    updateNode(node, oldNode)
+    const schema = await rebuildTestSchema()
+    expect(typePrinter(schema)(`Foo`)).toMatchInlineSnapshot(`
+      "type Foo implements Node {
+        id: ID!
+        parent: Node
+        children: [Node!]!
+        internal: Internal!
+        test: String
       }"
     `)
   })
