@@ -8,25 +8,26 @@ const { buildSchema, rebuildSchemaWithSitePage } = require(`./schema`)
 const { builtInFieldExtensions } = require(`./extensions`)
 const { TypeConflictReporter } = require(`./infer/type-conflict-reporter`)
 
+const getAllFieldExtensions = () => {
+  const {
+    schemaCustomization: { fieldExtensions: customFieldExtensions },
+  } = store.getState()
+
+  return {
+    ...customFieldExtensions,
+    ...builtInFieldExtensions,
+  }
+}
+
 const build = async ({ parentSpan }) => {
   const spanArgs = parentSpan ? { childOf: parentSpan } : {}
   const span = tracer.startSpan(`build schema`, spanArgs)
 
   const {
-    schemaCustomization: {
-      thirdPartySchemas,
-      types,
-      fieldExtensions: customFieldExtensions,
-      printConfig,
-    },
+    schemaCustomization: { thirdPartySchemas, types, printConfig },
     inferenceMetadata,
     config: { mapping: typeMapping },
   } = store.getState()
-
-  const fieldExtensions = {
-    ...customFieldExtensions,
-    ...builtInFieldExtensions,
-  }
 
   const typeConflictReporter = new TypeConflictReporter()
 
@@ -40,6 +41,7 @@ const build = async ({ parentSpan }) => {
     ),
   ]
 
+  const fieldExtensions = getAllFieldExtensions()
   const schemaComposer = createSchemaComposer({ fieldExtensions })
   const schema = await buildSchema({
     schemaComposer,
@@ -76,7 +78,7 @@ const rebuildWithSitePage = async ({ parentSpan }) => {
   )
 
   const {
-    schemaCustomization: { composer: schemaComposer, fieldExtensions },
+    schemaCustomization: { composer: schemaComposer },
     config: { mapping: typeMapping },
     inferenceMetadata,
   } = store.getState()
@@ -86,7 +88,7 @@ const rebuildWithSitePage = async ({ parentSpan }) => {
   const schema = await rebuildSchemaWithSitePage({
     schemaComposer,
     nodeStore,
-    fieldExtensions,
+    fieldExtensions: getAllFieldExtensions(),
     typeMapping,
     typeConflictReporter,
     inferenceMetadata,
