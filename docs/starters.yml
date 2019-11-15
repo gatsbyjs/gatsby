@@ -4334,6 +4334,30 @@
     - Font awesome
     - Material Icons
     - CSS Grid
+- url: https://gatsby-starter-typescript-blog-forms.netlify.com/
+  repo: https://github.com/joerneu/gatsby-starter-typescript-blog-forms
+  description: Gatsby starter for a website in TypeScript with a homepage, blog and forms
+  tags:
+    - Blog
+    - Language:TypeScript
+    - Linting
+    - Markdown
+    - MDX
+    - CMS:Netlify
+    - SEO
+    - Styling:CSS-in-JS
+  features:
+    - TypeScript for type safety, IDE comfort and error checking during development and build time
+    - ESLint and Prettier for safety and consistent code style
+    - Uses the official Gatsby Blog Core theme for data processing
+    - Functional components and React Hooks
+    - SEO component with React Helmet
+    - Minimal responsive styling with React Emotion that can easily be extended
+    - Theming of components and Markdown (MDX) with Emotion Theming
+    - Forms with Formite (React Hooks Form library)
+    - Accessible UI components implemented with Reakit and styling based on mini.css
+    - Netlify CMS to create and edit blog posts
+    - Small bundle size
 - url: https://gatsby-tailwind-styled-components-storybook-starter.netlify.com/
   repo: https://github.com/denvash/gatsby-tailwind-styled-components-storybook-starter
   description: Tailwind CSS + Styled-Components + Storybook starter for Gatsby
