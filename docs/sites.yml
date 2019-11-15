@@ -8548,3 +8548,17 @@
   built_by: Corey Ward
   built_by_url: "http://www.coreyward.me/"
   featured: false
+- title: Anurag Hazra's Portfolio
+  url: https://anuraghazra.github.io/
+  main_url: https://anuraghazra.github.io/
+  source_url: https://github.com/anuraghazra/anuraghazra.github.io
+  description: >
+    Anurag Hazra's portfolio & personal blog, Creative FrontEnd web developer from india.
+  categories:
+    - Portfolio
+    - Blog
+    - Open Source
+    - JavaScript
+  built_by: Anurag Hazra
+  built_by_url: "https://github.com/anuraghazra"
+  featured: false
