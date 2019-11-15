@@ -317,7 +317,7 @@ async function startServer(program) {
   )
 
   chokidar.watch(watchGlobs).on(`change`, async () => {
-    await createIndexHtml()
+    await createIndexHtml({ activity: indexHTMLActivity })
     socket.to(`clients`).emit(`reload`)
   })
 
