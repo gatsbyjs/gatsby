@@ -36,9 +36,11 @@ exports.sourceNodes = async (
 
       if (!hit.readme) {
         try {
-          hit.readme = (await got.get(
-            url.resolve(`https://unpkg.com/`, `/${hit.objectID}/README.md`)
-          )).body
+          hit.readme = (
+            await got.get(
+              url.resolve(`https://unpkg.com/`, `/${hit.objectID}/README.md`)
+            )
+          ).body
         } catch (err) {
           // carry-on
         }

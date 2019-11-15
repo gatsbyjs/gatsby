@@ -60,7 +60,6 @@ author: Jay Gatsby
 ---
 
 <h1>{props.pageContext.frontmatter.title}</h1>
-
 <span>{props.pageContext.frontmatter.author}</span>
 
 (Blog post content, components, etc.)
