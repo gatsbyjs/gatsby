@@ -173,6 +173,6 @@ export default class IndexPage extends React.Component {
 }
 ```
 
-This form isn't doing anything besides showing the user information that they just entered. At this point, you may want to move this form to a component, send the form state to a backend server, or add robust validation. You can also use fantastic React form libraries like [Formik](https://github.com/jaredpalmer/formik) or [Final Form](https://github.com/final-form/react-final-form) to speed up your development process.
+This form isn't doing anything besides showing the user information that they just entered. At this point, you may want to move this form to a component, send the form state to a backend server, or add robust validation. You can also use fantastic React form libraries like [Formik](https://github.com/jaredpalmer/formik) or [Final Form](https://final-form.org/react/) to speed up your development process.
 
 All of this is possible and more by leveraging the power of Gatsby and the React ecosystem!
