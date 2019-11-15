@@ -53,10 +53,6 @@ aliases:
 
   test_template: &test_template
     steps:
-      # In case of failure, add these steps again. Cache probably got deleted
-      #- <<: *restore_cache
-      #- <<: *install_node_modules
-      #- <<: *persist_cache
       - <<: *attach_to_bootstrap
       - <<: *install_node_modules
       - run: yarn list react
@@ -100,6 +96,10 @@ commands:
         default: "" # if unset, e2e-test.sh specifies the command
     steps:
       - <<: *attach_to_bootstrap
+      # In case of failure, add these steps again. Cache probably got deleted
+      #- <<: *restore_cache
+      #- <<: *install_node_modules
+      #- <<: *persist_cache
       - run: ./scripts/assert-changed-files.sh "<< parameters.trigger_pattern >>|<< parameters.test_path >>/*"
       - run: ./scripts/e2e-test.sh "<< parameters.test_path >>" "<< parameters.test_command >>"
 
