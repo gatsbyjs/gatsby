@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.37](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.36...gatsby-source-filesystem@2.1.37) (2019-11-15)
+
+### Bug Fixes
+
+- update dependency pretty-bytes to v5 ([#19485](https://github.com/gatsbyjs/gatsby/issues/19485)) ([29735ea](https://github.com/gatsbyjs/gatsby/commit/29735ea))
+
 ## [2.1.36](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.35...gatsby-source-filesystem@2.1.36) (2019-11-10)
 
 **Note:** Version bump only for package gatsby-source-filesystem
