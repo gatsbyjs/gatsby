@@ -6,8 +6,8 @@ const worker = require(`./worker`)
 const { createProgress } = require(`./utils`)
 
 const toProcess = new Map()
-let imagesToProcess = 0
-let imagesFinished = 0
+let pendingImagesCounter = 0
+let completedImagesCounter = 0
 
 let bar
 
@@ -17,15 +17,15 @@ const cleanupJob = (job, boundActionCreators) => {
     bar.tick(job.task.args.operations.length)
   }
 
-  imagesFinished += job.task.args.operations.length
+  completedImagesCounter += job.task.args.operations.length
 
-  if (imagesFinished === imagesToProcess) {
+  if (completedImagesCounter === pendingImagesCounter) {
     if (bar) {
       bar.done()
       bar = null
     }
-    imagesToProcess = 0
-    imagesFinished = 0
+    pendingImagesCounter = 0
+    completedImagesCounter = 0
   }
 
   boundActionCreators.endJob({ id: job.id }, { name: `gatsby-plugin-sharp` })
@@ -74,6 +74,7 @@ const scheduleJob = async (
   }
 
   // Check if the output file already exists so we don't redo work.
+  // TODO: Remove this when jobs api is stable, it will have a better check
   if (existsSync(job.outputPath)) {
     return Promise.resolve()
   }
@@ -144,9 +145,9 @@ const scheduleJob = async (
       { name: `gatsby-plugin-sharp` }
     )
   }
-  imagesToProcess++
+  pendingImagesCounter++
   if (bar) {
-    bar.total = imagesToProcess
+    bar.total = pendingImagesCounter
   }
 
   executeJobs(pluginOptions, boundActionCreators, reportStatus)
