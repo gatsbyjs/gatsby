@@ -1,6 +1,6 @@
 {
   "name": "gatsby-theme-blog-core",
-  "version": "1.0.20",
+  "version": "1.0.21",
   "main": "index.js",
   "author": "christopherbiscardi <chris@christopherbiscardi.com> (@chrisbiscardi)",
   "license": "MIT",
@@ -19,7 +19,7 @@
   "dependencies": {
     "@mdx-js/mdx": "^1.5.1",
     "gatsby-plugin-mdx": "^1.0.56",
-    "gatsby-plugin-sharp": "^2.2.39",
+    "gatsby-plugin-sharp": "^2.3.0",
     "gatsby-remark-copy-linked-files": "^2.1.30",
     "gatsby-remark-images": "^3.1.31",
     "gatsby-remark-smartypants": "^2.1.16",
