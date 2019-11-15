@@ -8535,3 +8535,16 @@
     - Design
     - Technology
   featured: false
+- title: Figma Config
+  url: https://config.figma.com/
+  main_url: https://config.figma.com/
+  description: A one-day conference where Figma users come together to learn from each other.
+  categories:
+    - Conference
+    - Design
+    - Event
+    - Community
+    - Learning
+  built_by: Corey Ward
+  built_by_url: "http://www.coreyward.me/"
+  featured: false

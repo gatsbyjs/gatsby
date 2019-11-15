@@ -44,8 +44,8 @@ const Banner = () => (
   >
     <InnerContainer>
       <Content>
-        {`New! Create a site in 5 mins with `}
-        <OutboundLink href="https://www.gatsbyjs.com/">
+        {`New! Create a site in 5 minutes with `}
+        <OutboundLink href="https://www.gatsbyjs.com/cloud">
           Gatsby Cloud!
         </OutboundLink>
       </Content>
