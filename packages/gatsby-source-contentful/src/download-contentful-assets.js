@@ -1,6 +1,8 @@
 const ProgressBar = require(`progress`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
+const BATCH_SIZE = 50
+
 const bar = new ProgressBar(
   `Downloading Contentful Assets [:bar] :current/:total :elapsed secs :percent`,
   {
@@ -104,12 +106,10 @@ const downloadContentfulAssets = async gatsbyFunctions => {
     gatsbyFunctions
   )
 
-  const batchSize = 25
-
-  const batchesNum = Math.ceil(contentfulAssetNodes.length / batchSize)
+  const batchesNum = Math.ceil(contentfulAssetNodes.length / BATCH_SIZE)
 
   const batches = Array.from({ length: batchesNum }, (_, index) =>
-    contentfulAssetNodes.slice(index * batchSize, (index + 1) * batchSize)
+    contentfulAssetNodes.slice(index * BATCH_SIZE, (index + 1) * BATCH_SIZE)
   )
 
   await batches.reduce(async (prevPromise, batch) => {
@@ -119,3 +119,4 @@ const downloadContentfulAssets = async gatsbyFunctions => {
   }, Promise.resolve())
 }
 exports.downloadContentfulAssets = downloadContentfulAssets
+exports.BATCH_SIZE = BATCH_SIZE

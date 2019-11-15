@@ -1,4 +1,7 @@
-const { downloadContentfulAssets } = require(`../download-contentful-assets`)
+const {
+  BATCH_SIZE,
+  downloadContentfulAssets,
+} = require(`../download-contentful-assets`)
 
 jest.mock(
   `progress`,
@@ -116,7 +119,7 @@ describe.only(`downloadContentfulAssets`, () => {
     await downloadContentfulAssets({
       actions: { touchNode: jest.fn() },
       getNodes: () =>
-        Array.from({ length: 90 }).fill({
+        Array.from({ length: BATCH_SIZE * 2 + 10 }).fill({
           internal: {
             owner: `gatsby-source-contentful`,
             type: `ContentfulAsset`,
@@ -128,7 +131,7 @@ describe.only(`downloadContentfulAssets`, () => {
       cache,
     })
 
-    expect(global.Promise.all).toHaveBeenCalledTimes(4)
+    expect(global.Promise.all).toHaveBeenCalledTimes(3)
 
     global.Promise.all = originalPromiseAll
   })
