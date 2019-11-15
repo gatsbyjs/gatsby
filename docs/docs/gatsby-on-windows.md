@@ -2,6 +2,40 @@
 title: Gatsby on Windows
 ---
 
+## Installing Nodejs (incl. npm, git etc.) on Windows via Chocolatey 
+
+Many of the scripts you will encounter will require you to use NodeJS and NPM on a Windows development environment; unfortunately this doesn't come as standard on Windows.
+
+A reliable way of installing all of these separate resources is to install Chocolatey https://chocolatey.org/
+Chocolatey is a package manager for Windows which helps install a lot of the software/dependencies listed in later tutourials and online. 
+
+Head on over to https://chocolatey.org/install to install the latest version for your windows environment.
+
+Installation instructions can be found for various tools on https://chocolatey.org/docs/installation
+
+Once installed, head on over to your Windows PowerShell (Admin) version to install Nodejs and git.
+
+```powershell
+
+choco install nodejs.install
+choco install git.install
+
+``` 
+
+NPM is bundled in with nodejs and so does not need to be separately installed.
+
+## Optional Code Editor : VSCode
+
+Assuming you want to use VSCode as an editor, you can do this also via Chocolatey using the following command:
+
+```powershell
+
+choco install vscode
+
+```
+
+Your dev environment should now be able to execute the majority of scripts in the rest of the tutourial.
+
 ## Setting up your environment for building native Node.js modules.
 
 Many Gatsby plugins and themes require building native Node.js modules, e.g.
