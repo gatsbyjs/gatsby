@@ -83,27 +83,24 @@ const App = () => {
 export default App
 ```
 
-The `<PrivateRoute />` component would look something like this one (taken from the [Gatsby Swag Store](https://github.com/gatsbyjs/store.gatsbyjs.org), which implements this behavior):
+The `<PrivateRoute />` component would look something like this one (taken from the [Authentication Tutorial](/tutorial/authentication-tutorial/#controlling-private-routes), which implements this behavior):
 
 ```jsx:title=PrivateRoute.js
 // import ...
-const PrivateRoute = ({ component: Component, ...rest }) => {
-  if (
-    !isAuthenticated() &&
-    isBrowser &&
-    window.location.pathname !== `/login`
-  ) {
-    // If we’re not logged in, redirect to the home page.
-    navigate(`/app/login`)
+import React, { Component } from "react"
+import { navigate } from "gatsby"
+import { isLoggedIn } from "../services/auth"
+
+const PrivateRoute = ({ component: Component, location, ...rest }) => {
+  if (!isLoggedIn() && location.pathname !== `/app/login`) {
+    navigate("/app/login")
     return null
   }
 
-  return (
-    <Router>
-      <Component {...rest} />
-    </Router>
-  )
+  return <Component {...rest} />
 }
+
+export default PrivateRoute
 ```
 
 ### Configuring pages with `matchPath`
@@ -133,11 +130,11 @@ exports.onCreatePage = async ({ page, actions }) => {
 
 The above code (as well as the `gatsby-plugin-create-client-paths` plugin) updates the `/app` page at build time to add the `matchPath` parameter in the page object to make it so that the configured pages (in this case, everything after `/app`, like `/app/dashboard` or `/app/user`) can be navigated to by Reach Router.
 
-Without this configuration set up, a user that clicks on a link to `<yoursite.com>/app/user` will instead be routed to the static `/app` page instead of the component or page you have set up at `/app/user`.
+_Without_ this configuration set up, a user that clicks on a link to `<yoursite.com>/app/user` will instead be routed to the static `/app` page instead of the component or page you have set up at `/app/user`.
 
 > Tip: For applications with complex routing, you may want to override Gatsby's default scroll behavior with the [shouldUpdateScroll](/docs/browser-apis/#shouldUpdateScroll) Browser API.
 
 ## Additional resources
 
-- ["simple auth" example site](https://github.com/gatsbyjs/gatsby/blob/master/examples/simple-auth/) - a demo implementing user authentication and restricted client-only routes
+- [Gatsby repo "simple auth" example](https://github.com/gatsbyjs/gatsby/blob/master/examples/simple-auth/) - a demo implementing user authentication and restricted client-only routes
 - [Live version of the "simple auth" example](https://simple-auth.netlify.com/)
