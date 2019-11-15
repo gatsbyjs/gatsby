@@ -413,8 +413,7 @@ While you could achieve a similar effect with plain CSS media queries, `gatsby-i
 | `fluid`                | `object` / `array`  | Data returned from the `fluid` query. When prop is an array it has to be combined with `media` keys, allows for art directing `fluid` images. |
 | `fadeIn`               | `bool`              | Defaults to fading in the image on load                                                                                                       |
 | `durationFadeIn`       | `number`            | fading duration is set up to 500ms by default                                                                                                 |
-| `title`                | `string`            | Passed to the `img` element                                                                                                                   |
-| `onClick`              | `func`              | Passed to the `img` element                                                                                                                   |
+| `title`                | `string`            | Passed to the `img` element                                                                                                                   |  |
 | `alt`                  | `string`            | Passed to the `img` element. Defaults to an empty string `alt=""`                                                                             |
 | `crossOrigin`          | `string`            | Passed to the `img` element                                                                                                                   |
 | `className`            | `string` / `object` | Passed to the wrapper element. Object is needed to support Glamor's css prop                                                                  |

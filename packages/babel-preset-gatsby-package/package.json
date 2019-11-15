@@ -1,6 +1,6 @@
 {
   "name": "babel-preset-gatsby-package",
-  "version": "0.2.10",
+  "version": "0.2.11",
   "author": "Philipp Spiess <hello@philippspiess.com>",
   "repository": {
     "type": "git",
@@ -16,7 +16,7 @@
     "@babel/preset-env": "^7.7.1",
     "@babel/preset-flow": "^7.0.0",
     "@babel/preset-react": "^7.7.0",
-    "babel-plugin-dynamic-import-node": "^1.2.0",
+    "babel-plugin-dynamic-import-node": "^2.3.0",
     "core-js": "^2.6.10"
   },
   "license": "MIT",

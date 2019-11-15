@@ -5,7 +5,12 @@ import { ThemeProvider } from "theme-ui"
 import theme from "../../../src/gatsby-plugin-theme-ui"
 import Banner from "../banner"
 
-const matchers = [`Watch now`, `Register now`, `Gatsby Preview`]
+const matchers = [
+  `Watch now`,
+  `Register now`,
+  `Gatsby Preview`,
+  `Gatsby Cloud!`,
+]
 
 const getElement = utils => utils.getByText(text => matchers.includes(text))
 

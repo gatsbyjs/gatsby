@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.33](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.32...gatsby-image@2.2.33) (2019-11-15)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.2.32](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.31...gatsby-image@2.2.32) (2019-11-13)
+
+### Bug Fixes
+
+- **gatsby-image:** Remove onClick prop ([#19458](https://github.com/gatsbyjs/gatsby/issues/19458)) ([0da6dbb](https://github.com/gatsbyjs/gatsby/commit/0da6dbb))
+
 ## [2.2.31](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.30...gatsby-image@2.2.31) (2019-11-10)
 
 **Note:** Version bump only for package gatsby-image

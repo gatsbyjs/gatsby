@@ -16,6 +16,10 @@ See the [library of official and community starters](/starters/)
 
 See the [library of official and community plugins](/plugins/)
 
+## Themes
+
+See the [unofficial list of themes](https://gatsbytemplates.io/)
+
 ## Tools
 
 - [Develop & Build GatsbyJS static sites within Docker](https://github.com/aripalo/gatsby-docker/)
