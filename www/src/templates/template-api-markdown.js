@@ -52,7 +52,6 @@ const mergeFunctions = (data, context) => {
   const normalized = normalizeGatsbyApiCall(data.nodeAPIs.group)
 
   const docs = data.jsdoc.nodes.reduce((acc, node) => {
-    console.log(node)
     const doc = node.childrenDocumentationJs
       .filter(def => def.kind !== `typedef` && def.memberof)
       .map(def => {
@@ -85,24 +84,6 @@ const mergeFunctions = (data, context) => {
 
   return mergedFuncs
 }
-
-/*
-  return (
-    <React.Fragment>
-      <h2>APIs</h2>
-      <ul>
-        {funcs.map(node => (
-          <li key={`function list ${node.name}`}>
-            <a href={`#${node.name}`}>{node.name}</a>
-          </li>
-        ))}
-      </ul>
-      <h2>Reference</h2>
-      <APIReference docs={mergedFuncs} />
-    </React.Fragment>
-  )
-
-*/
 
 function DocsTemplate({ data, location, pageContext }) {
   const { next, prev } = pageContext
