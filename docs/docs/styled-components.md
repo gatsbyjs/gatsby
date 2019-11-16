@@ -150,7 +150,7 @@ const Section = styled.section`
 `
 
 export default ({ children }) => (
-  <Section className={`container`}>{children}</Section>
+  <Section className="container">{children}</Section>
 )
 ```
 
