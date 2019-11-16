@@ -85,7 +85,7 @@ module.exports = async program => {
   app.use(telemetry.expressMiddleware(`SERVE`))
 
   router.use(compression())
-  router.use(express.static(`public`))
+  router.use(express.static(`public`, { redirect: false }))
   const matchPaths = await readMatchPaths(program)
   router.use(matchPathRouter(matchPaths, { root }))
   router.use((req, res, next) => {
