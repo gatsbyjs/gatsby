@@ -7,7 +7,8 @@ const generatePathToOutput = outputPath => {
   let outputFileName = outputPath.replace(/^(\/|\\)/, ``) // Remove leading slashes for webpack-dev-server
 
   if (!/\.(html?)$/i.test(outputFileName)) {
-    outputFileName = outputFileName + `.html`
+    outputFileName =
+      outputFileName + `${outputFileName.endsWith(`/`) ? `index` : ``}.html`
   }
 
   return path.join(process.cwd(), `public`, outputFileName)
