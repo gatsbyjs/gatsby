@@ -36,6 +36,21 @@ describe(`Scroll behaviour`, () => {
       expect(win.scrollY).to.eq(0, 0)
     })
 
+    // reset to index page
+    cy.getTestElement(`index-link`)
+      .click()
+      .waitForRouteChange()
+  })
+
+  it(`test navigate function`, () => {
+    cy.visit(`/`).waitForRouteChange()
+
+    cy.getTestElement(`long-page`)
+      .click()
+      .waitForRouteChange()
+
+    cy.scrollTo(`bottom`)
+
     // test same behaviour for navigate(-1)
     cy.scrollTo(`bottom`)
 
@@ -50,6 +65,9 @@ describe(`Scroll behaviour`, () => {
     cy.getTestElement(`back-button`)
       .click()
       .waitForRouteChange()
+
+    // @TODO find out why back-button produces very inconsistent scroll behavior in cypress
+    cy.wait(1500)
 
     cy.window().then(win => {
       expect(win.scrollY).not.to.eq(0, 0)
