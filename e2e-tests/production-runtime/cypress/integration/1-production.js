@@ -20,7 +20,7 @@ describe(`Production build tests`, () => {
     })
   }
 
-  it(`should navigate back after a reload`, () => {
+  it(`should navigate back using browser api after a reload`, () => {
     cy.getTestElement(`page2`).click()
 
     cy.waitForRouteChange()
@@ -30,6 +30,25 @@ describe(`Production build tests`, () => {
     cy.reload()
       .waitForRouteChange()
       .go(`back`)
+
+    cy.waitForRouteChange()
+      .getTestElement(`page2`)
+      .should(`exist`)
+      .location(`pathname`)
+      .should(`equal`, `/`)
+  })
+
+  it(`should navigate back using navigate function after a reload`, () => {
+    cy.getTestElement(`page2`).click()
+
+    cy.waitForRouteChange()
+      .location(`pathname`)
+      .should(`equal`, `/page-2/`)
+
+    cy.reload()
+      .waitForRouteChange()
+      .getTestElement(`back-button-page-2`)
+      .click()
 
     cy.waitForRouteChange()
       .getTestElement(`page2`)
@@ -69,7 +88,7 @@ describe(`Production build tests`, () => {
       .should(`exist`)
   })
 
-  it(`should navigate back after a 404 from a direct link entry`, () => {
+  it(`should navigate back using browser api after a 404 from a direct link entry`, () => {
     cy.visit(`/`).waitForRouteChange()
 
     cy.visit(`/non-existent-page/`, {
@@ -78,6 +97,21 @@ describe(`Production build tests`, () => {
 
     cy.waitForRouteChange()
       .go(`back`)
+      .waitForRouteChange()
+      .getTestElement(`index-link`)
+      .should(`exist`)
+  })
+
+  it(`should navigate back using navigate function after a 404 from a direct link entry`, () => {
+    cy.visit(`/`).waitForRouteChange()
+
+    cy.visit(`/non-existent-page/`, {
+      failOnStatusCode: false,
+    })
+
+    cy.waitForRouteChange()
+      .getTestElement(`back-button-not-found`)
+      .click()
       .waitForRouteChange()
       .getTestElement(`index-link`)
       .should(`exist`)

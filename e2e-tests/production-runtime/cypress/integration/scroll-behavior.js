@@ -36,6 +36,25 @@ describe(`Scroll behaviour`, () => {
       expect(win.scrollY).to.eq(0, 0)
     })
 
+    // test same behaviour for navigate(-1)
+    cy.scrollTo(`bottom`)
+
+    // waiting a bit to store scroll position again
+    cy.wait(500)
+
+    cy.getTestElement(`below-the-fold`)
+      .click()
+      .waitForRouteChange()
+
+    // expect navigate behaves the same as browser API
+    cy.getTestElement(`back-button`)
+      .click()
+      .waitForRouteChange()
+
+    cy.window().then(win => {
+      expect(win.scrollY).not.to.eq(0, 0)
+    })
+
     // reset to index page
     cy.getTestElement(`index-link`)
       .click()

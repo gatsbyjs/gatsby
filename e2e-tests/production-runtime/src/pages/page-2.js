@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'gatsby'
+import { Link, navigate } from 'gatsby'
 
 import Layout from '../components/layout'
 import InstrumentPage from '../utils/instrument-page'
@@ -19,6 +19,11 @@ const SecondPage = () => (
         <Link to="/page-3/" data-testid="404">
           To non-existent page
         </Link>
+      </li>
+      <li>
+        <button data-testid="back-button-page-2" onClick={() => navigate(-1)}>
+          back
+        </button>
       </li>
     </ul>
   </Layout>

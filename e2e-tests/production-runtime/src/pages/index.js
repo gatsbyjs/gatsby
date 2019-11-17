@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'gatsby'
+import { Link, navigate } from 'gatsby'
 
 import Bio from '../components/bio'
 import Layout from '../components/layout'
@@ -60,6 +60,11 @@ const IndexPage = ({ pageContext }) => (
         <Link to="/안녕" data-testid="page-with-unicode-path">
           Go to page with unicode path
         </Link>
+      </li>
+      <li>
+        <button data-testid="back-button" onClick={() => navigate(-1)}>
+          back
+        </button>
       </li>
     </ul>
   </Layout>

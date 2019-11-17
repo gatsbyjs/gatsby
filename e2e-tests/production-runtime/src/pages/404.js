@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'gatsby'
+import { Link, navigate } from 'gatsby'
 
 import Layout from '../components/layout'
 
@@ -11,6 +11,9 @@ const NotFoundPage = () => (
     <Link to="/" data-testid="index">
       Go to Index
     </Link>
+    <button data-testid="back-button-not-found" onClick={() => navigate(-1)}>
+      back
+    </button>
   </Layout>
 )
 
