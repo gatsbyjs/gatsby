@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'gatsby'
+import { Link, navigate } from 'gatsby'
 
 import Layout from '../components/layout'
 
@@ -10,6 +10,9 @@ const SecondPage = () => (
     <Link data-testid="index-link" to="/">
       Go back to the homepage
     </Link>
+    <button data-testid="back-button-page-2" onClick={() => navigate(-1)}>
+      back
+    </button>
   </Layout>
 )
 

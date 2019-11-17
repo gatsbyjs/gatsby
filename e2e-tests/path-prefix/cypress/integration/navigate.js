@@ -15,10 +15,19 @@ describe(`navigate`, () => {
       .should(`eq`, withTrailingSlash(`${pathPrefix}/page-2`))
   })
 
-  it(`can navigate back after using`, () => {
+  it(`can navigate back using link after using`, () => {
     cy.getTestElement(`page-2-button-link`)
       .click()
       .getTestElement(`index-link`)
+      .click()
+      .location(`pathname`)
+      .should(`eq`, withTrailingSlash(pathPrefix))
+  })
+
+  it(`can navigate back using navigate function after using`, () => {
+    cy.getTestElement(`page-2-button-link`)
+      .click()
+      .getTestElement(`back-button-page-2`)
       .click()
       .location(`pathname`)
       .should(`eq`, withTrailingSlash(pathPrefix))
