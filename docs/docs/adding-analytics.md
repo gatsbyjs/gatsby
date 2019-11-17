@@ -9,6 +9,8 @@ Once you have your site live you will start wanting to get an idea of how many v
 - What pages are most popular?
 - Where do my visitors come from?
 - When do people visit my site?
+- How can I improve my website's speed?
+- What marketing tactics drive the most traffic to my website?
 
 Google Analytics provides a way to collect this data and perform analytics on it answering the above questions among many others. The platform is free for 10 million hits per month per Tracking ID. There are other analytics options--see the "Other Gatsby analytics plugins" section at the bottom of this doc for ideas.
 
