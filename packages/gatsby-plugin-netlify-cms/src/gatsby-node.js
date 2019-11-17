@@ -6,6 +6,8 @@ import HtmlWebpackExcludeAssetsPlugin from "html-webpack-exclude-assets-plugin"
 import MiniCssExtractPlugin from "mini-css-extract-plugin"
 // TODO: swap back when https://github.com/geowarin/friendly-errors-webpack-plugin/pull/86 lands
 import FriendlyErrorsPlugin from "@pieh/friendly-errors-webpack-plugin"
+import CopyPlugin from "copy-webpack-plugin"
+import HtmlWebpackTagsPlugin from "html-webpack-tags-plugin"
 
 // Deep mapping function for plain objects and arrays. Allows any value,
 // including an object or array, to be transformed.
@@ -108,13 +110,42 @@ exports.onCreateWebpackConfig = (
   const gatsbyConfig = getConfig()
   const { program } = store.getState()
   const publicPathClean = trim(publicPath, `/`)
+
+  const externals = [
+    {
+      name: `react`,
+      global: `React`,
+      tag: `https://unpkg.com/react@16/umd/react.production.min.js`,
+    },
+    {
+      name: `react-dom`,
+      global: `ReactDOM`,
+      tag: `https://unpkg.com/react-dom@16/umd/react-dom.production.min.js`,
+    },
+    {
+      name: `netlify-cms-app`,
+      global: `NetlifyCmsApp`,
+      assetDir: `dist`,
+      tag: `netlify-cms-app.js`,
+    },
+  ]
+
+  if (enableIdentityWidget) {
+    externals.unshift({
+      name: `netlify-identity-widget`,
+      global: `netlifyIdentity`,
+      assetDir: `build`,
+      tag: `netlify-identity-widget.js`,
+    })
+  }
+
   const config = {
     ...gatsbyConfig,
     entry: {
       cms: [
-        manualInit && `${__dirname}/cms-manual-init.js`,
-        `${__dirname}/cms.js`,
-        enableIdentityWidget && `${__dirname}/cms-identity.js`,
+        manualInit && path.join(__dirname, `cms-manual-init.js`),
+        path.join(__dirname, `cms.js`),
+        enableIdentityWidget && path.join(__dirname, `cms-identity.js`),
       ]
         .concat(modulePath)
         .filter(p => p),
@@ -178,6 +209,27 @@ exports.onCreateWebpackConfig = (
         __PATH__PREFIX__: pathPrefix,
         CMS_PUBLIC_PATH: JSON.stringify(publicPath),
       }),
+
+      new CopyPlugin(
+        externals
+          .filter(({ assetDir }) => assetDir)
+          .map(({ name, assetDir }) => [
+            {
+              from: path.join(`node_modules`, name, assetDir, `${name}.js`),
+              to: `${name}.js`,
+            },
+            {
+              from: path.join(`node_modules`, name, assetDir, `${name}.js`),
+              to: `${name}.js.map`,
+            },
+          ])
+          .flat()
+      ),
+
+      new HtmlWebpackTagsPlugin({
+        tags: externals.map(({ tag }) => tag),
+        append: false,
+      }),
     ].filter(p => p),
 
     // Remove common chunks style optimizations from Gatsby's default
@@ -189,6 +241,11 @@ exports.onCreateWebpackConfig = (
       minimizer: stage === `develop` ? [] : gatsbyConfig.optimization.minimizer,
     },
     devtool: stage === `develop` ? `cheap-module-source-map` : `source-map`,
+    externals: externals.map(({ name, global }) => {
+      return {
+        [name]: global,
+      }
+    }),
   }
 
   if (customizeWebpackConfig) {
