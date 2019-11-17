@@ -66,7 +66,7 @@ Getform is a form backend platform which offers also a free-plan for handling fo
 </form>
 ```
 
-Once you've made the changes, you can head over to your contact page and then start receiving submissions to the form. You can add multiple email addresses to receive email notifications for the forms created, as well as manipulate the data using Zapier and Webhooks options that are offered. You can find more info on the registration process and form setup [on their website](https://getform.io/) and find code examples (AJAX, reCAPTCHA etc) on their [Codepen](https://codepen.io/getform).
+Once you've made the changes, you can head over to your contact page and then start receiving submissions to the form. You can add multiple email addresses to receive email notifications for the forms created, as well as manipulate the data using Zapier and Webhooks options that are offered. You can find more info on the registration process and form setup on the [Getform website](https://getform.io/) and find code examples (AJAX, reCAPTCHA etc) on their [Codepen](https://codepen.io/getform).
 
 
 ### Netlify
