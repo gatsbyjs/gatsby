@@ -92,7 +92,7 @@ exports.onCreateDevServer = ({ app, store }, { publicPath = `admin` }) => {
 }
 
 exports.onCreateWebpackConfig = (
-  { store, stage, getConfig, plugins, pathPrefix, loaders, rules },
+  { store, stage, getConfig, plugins, pathPrefix, loaders, rules, actions },
   {
     modulePath,
     customizeWebpackConfig,
@@ -259,6 +259,22 @@ exports.onCreateWebpackConfig = (
       plugins,
     })
   }
+
+  // force code splitting for netlify-identity-widget
+  actions.setWebpackConfig({
+    optimization: {
+      splitChunks: {
+        cacheGroups: {
+          "netlify-identity-widget": {
+            test: /[\\/]node_modules[\\/](netlify-identity-widget)[\\/]/,
+            name: `netlify-identity-widget`,
+            chunks: `all`,
+            enforce: true,
+          },
+        },
+      },
+    },
+  })
 
   return new Promise((resolve, reject) => {
     if (stage === `develop`) {
