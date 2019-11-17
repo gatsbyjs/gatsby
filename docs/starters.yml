@@ -4427,3 +4427,16 @@
     - TSLint
     - Tailwind CSS v1
     - PostCSS + PurgeCSS
+- url: https://gatsby-starter-blog-tailwindcss-demo.netlify.com/
+  repo: https://github.com/andrezzoid/gatsby-starter-blog-tailwindcss
+  description: Gatsby blog starter with TailwindCSS
+  tags:
+    - Blog
+    - SEO
+    - Markdown
+    - Styling:Tailwind
+    - Styling:PostCSS
+  features:
+    - Based on the official Gatsby starter blog
+    - Uses TailwindCSS
+    - Uses PostCSS
