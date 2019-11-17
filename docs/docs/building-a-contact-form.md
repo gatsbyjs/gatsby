@@ -43,6 +43,32 @@ Each method detailed below will start with the following contact form:
 
 ## Form submission options in Gatsby
 
+### Getform
+
+Getform is a form backend platform which offers also a free-plan for handling form submissions on static sites. In order to begin receiving form submissions from your Gatsby site, you must first create a form on the platform directing the http POST method to the Getform, by placing the `name` attributes for the fields you want to make visible. (name, email, message etc.)
+
+```jsx:title=src/pages/contact.js
+<form method="post" action="https://getform.io/{your-unique-getform-endpoint}">
+  ...
+  <label>
+    Email
+    <input type="email" name="email" />
+  </label>
+  <label>
+    Name
+    <input type="text" name="name" />
+  </label>
+  <label>
+    Message
+    <input type="text" name="message" />
+  </label>
+  ...
+</form>
+```
+
+Once you've made the changes, you can head over to your contact page and then start receiving submissions to the form. You can add multiple email addresses to receive email notifications for the forms created, as well as manipulate the data using Zapier and Webhooks options that are offered. You can find more info on the registration process and form setup [on their website](https://getform.io/) and find code examples (AJAX, reCAPTCHA etc) on their [Codepen](https://codepen.io/getform).
+
+
 ### Netlify
 
 If you're hosting your site with Netlify, you gain access to their excellent [form handling feature](https://www.netlify.com/docs/form-handling/).
