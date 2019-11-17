@@ -8548,3 +8548,13 @@
   built_by: Corey Ward
   built_by_url: "http://www.coreyward.me/"
   featured: false
+- title: Nordic Microfinance Initiative
+  url: "https://www.nmimicro.no/"
+  main_url: "https://www.nmimicro.no/"
+  description: Nordic Microfinance Initiative's (NMI) vision is to contribute to the empowerment of poor people in developing countries and to the creation of jobs and wealth on a sustainable basis.
+  featured: false
+  categories:
+    - Finance
+    - Business
+  built_by: Othermachines
+  built_by_url: "https://othermachines.com"
