@@ -459,6 +459,8 @@ workflows:
       - starters_validate:
           <<: *ignore_master
       - starters_publish:
+          requires:
+            - bootstrap
           filters:
             branches:
               only:
