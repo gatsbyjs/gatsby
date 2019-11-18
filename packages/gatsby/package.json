@@ -121,7 +121,7 @@
     "shallow-compare": "^1.2.2",
     "sift": "^5.1.0",
     "signal-exit": "^3.0.2",
-    "slash": "^3.0.0",
+    "slugify": "^1.3.6",
     "socket.io": "^2.3.0",
     "stack-trace": "^0.0.10",
     "string-similarity": "^1.2.2",

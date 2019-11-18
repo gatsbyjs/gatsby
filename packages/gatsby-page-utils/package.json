@@ -24,10 +24,10 @@
     "bluebird": "^3.7.1",
     "chokidar": "3.3.0",
     "fs-exists-cached": "^1.0.0",
+    "gatsby-core-utils": "^1.0.19",
     "glob": "^7.1.6",
     "lodash": "^4.17.15",
-    "micromatch": "^3.1.10",
-    "slash": "^3.0.0"
+    "micromatch": "^3.1.10"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.0",
