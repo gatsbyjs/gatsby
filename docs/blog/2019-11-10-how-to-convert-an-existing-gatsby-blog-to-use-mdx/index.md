@@ -155,7 +155,7 @@ Now we can replace the `<section>` element with the `dangerouslySetInnerHTML` at
 + <MDXRenderer>{post.body}</MDXRenderer>
 ```
 
-And... that's it! After these changes, a Gatsby blog should be able to use MDX files to render JSX with markdown! To test, add a `.mdx` file to `[your-blog]/content/blog/` and check if the JSX renders.
+And... that's it! After these changes, a Gatsby blog should be able to use MDX files to render JSX with markdown! To test, add a `.mdx` file to `[your-blog]/content/blog/` and check if JSX renders. 
 
 For example, the following code should render a test button. Navigate to `localhost:8000/blog/example/` and you should see a clickable button in your blog post!
 
