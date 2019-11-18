@@ -65,6 +65,40 @@ In `gatsby-config.js`, replace `gatsby-transformer-remark` with `gatsby-plugin-m
   },
 ```
 
+For reference, here's the full configuration for `gatsby-plugin-mdx`.
+
+```js:title=gatsby-config.js
+{
+  resolve: `gatsby-plugin-mdx`,
+  options: {
+    extensions: [".mdx", ".md"],
+    gatsbyRemarkPlugins: [
+      {
+        resolve: `gatsby-remark-images`,
+        options: {
+          maxWidth: 590,
+        },
+      },
+      {
+        resolve: `gatsby-remark-responsive-iframe`,
+        options: {
+          wrapperStyle: `margin-bottom: 1.0725rem`,
+        },
+      },
+      {
+        resolve: `gatsby-remark-vscode`,
+      },
+      {
+        resolve: `gatsby-remark-copy-linked-files`,
+      },
+      {
+        resolve: `gatsby-remark-smartypants`,
+      },
+    ],
+  },
+},
+```
+
 Then, replace `gatsby-plugin-feed` with `gatsby-plugin-feed-mdx`. This will allow the the RSS feed of the site to parse MDX.
 
 ```diff:title=gatsby-config.js
