@@ -4,7 +4,7 @@ title: Gatsby on Windows
 
 ## Installing Nodejs (incl. npm, git etc.) on Windows via Chocolatey 
 
-Many of the scripts you will encounter will require you to use NodeJS and NPM on a Windows development environment; unfortunately this doesn't come as standard on Windows.
+Many of the scripts you will encounter will require you to use Node.js and npm on a Windows development environment; unfortunately this doesn't come as standard on Windows.
 
 A reliable way of installing all of these separate resources is to install Chocolatey https://chocolatey.org/
 Chocolatey is a package manager for Windows which helps install a lot of the software/dependencies listed in later tutourials and online. 
