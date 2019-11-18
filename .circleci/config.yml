@@ -445,7 +445,6 @@ workflows:
             - unit_tests_node8
       - windows_unit_tests:
           requires:
-            - unit_tests_node8
             - lint
       - unit_tests_www:
           requires:
