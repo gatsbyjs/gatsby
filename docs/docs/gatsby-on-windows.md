@@ -28,7 +28,7 @@ NPM is bundled in with nodejs and so does not need to be separately installed.
 
 Assuming you want to use VSCode as an editor, you can do this also via Chocolatey using the following command:
 
-```powershell
+```shell
 
 choco install vscode
 
