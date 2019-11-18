@@ -34,12 +34,6 @@ aliases:
       paths:
         - ~/.cache
 
-  attach_to_bootstrap: &attach_to_bootstrap
-    steps:
-      - checkout
-      - attach_workspace:
-          at: ./
-
   ignore_master: &ignore_master
     filters:
       branches:
@@ -55,7 +49,7 @@ aliases:
 
   test_template: &test_template
     steps:
-      - <<: *attach_to_bootstrap
+      - attach_to_bootstrap
       # rebuild packages instead of installing
       - run: npm rebuild
       - run: yarn list react
@@ -75,6 +69,16 @@ aliases:
       - unit_tests_node8
 
 commands:
+  attach_to_bootstrap:
+    parameters:
+      at:
+        type: string
+        default: "./"
+    steps:
+      - checkout
+      - attach_workspace:
+          at: << parameters.at >>
+
   notify-status:
     parameters:
       condition:
@@ -98,7 +102,7 @@ commands:
         type: string
         default: "" # if unset, e2e-test.sh specifies the command
     steps:
-      - <<: *attach_to_bootstrap
+      - attach_to_bootstrap
       # In case of failure, add these steps again. Cache probably got deleted
       #- <<: *restore_cache
       #- <<: *install_node_modules
@@ -129,13 +133,14 @@ jobs:
       - persist_to_workspace:
           root: ./
           paths:
-            - "*"
+            - "packages/*"
+            - "node_modules/*"
 
   lint:
     executor: node
     parallelism: 2
     steps:
-      - <<: *attach_to_bootstrap
+      - attach_to_bootstrap
       - run: yarn lint:code
       - run: yarn lint:other
       - run: yarn check-repo-fields
@@ -267,7 +272,7 @@ jobs:
   starters_publish:
     executor: node
     steps:
-      - <<: *attach_to_bootstrap
+      - attach_to_bootstrap
       - run: yarn markdown
       - run: sudo apt-get update && sudo apt-get install jq # jq is helpful for parsing json
       - run: git config --global user.name "GatsbyJS Bot"
@@ -366,7 +371,8 @@ jobs:
       - persist_to_workspace:
           root: ./
           paths:
-            - "*"
+            - "packages/*"
+            - "node_modules/*"
 
 workflows:
   version: 2
