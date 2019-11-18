@@ -290,9 +290,9 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: v1_www_public_dir
+          key: v2_www_public_dir
       - restore_cache:
-          key: v1_www_cache_dir
+          key: v2_www_cache_dir
       - run:
           command: yarn
           working_directory: ~/project/www
@@ -301,11 +301,11 @@ jobs:
           command: GATSBY_CPU_COUNT=8 yarn build
           working_directory: ~/project/www
       - save_cache:
-          key: v1_www_public_dir_{{ epoch }}
+          key: v2_www_public_dir_{{ epoch }}
           paths:
             - ~/project/www/public
       - save_cache:
-          key: v1_www_cache_dir_{{ epoch }}
+          key: v2_www_cache_dir_{{ epoch }}
           paths:
             - ~/project/www/.cache
 
@@ -315,7 +315,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: v1_www_public_dir
+          key: v2_www_public_dir
       - run:
           command: yarn add netlify-cli
           working_directory: ~/project/www
