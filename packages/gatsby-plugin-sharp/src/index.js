@@ -1,6 +1,5 @@
 const sharp = require(`./safe-sharp`)
 
-const { existsSync } = require(`fs`)
 const imageSize = require(`probe-image-size`)
 
 const _ = require(`lodash`)
@@ -109,7 +108,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
   // Check if the output file already exists so we don't redo work.
   // TODO: Remove this when jobs api is stable, it will have a better check
   const outputFile = path.join(job.outputDir, job.outputPath)
-  if (!existsSync(outputFile)) {
+  if (!fs.existsSync(outputFile)) {
     // schedule job immediately - this will be changed when image processing on demand is implemented
     finishedPromise = scheduleJob(
       job,
@@ -121,7 +120,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
 
   return {
     src: prefixedSrc,
-    absolutePath: path.join(outputDir, outputFilePath),
+    absolutePath: outputFile,
     width,
     height,
     aspectRatio,
