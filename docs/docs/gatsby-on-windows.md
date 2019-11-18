@@ -15,7 +15,7 @@ Installation instructions can be found for various tools on https://chocolatey.o
 
 Once installed, head on over to your Windows PowerShell (Admin) version to install Node.js and Git.
 
-```powershell
+```shell
 
 choco install nodejs.install
 choco install git.install
