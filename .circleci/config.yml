@@ -54,6 +54,8 @@ aliases:
   test_template: &test_template
     steps:
       - <<: *attach_to_bootstrap
+      # rebuild packages instead of installing
+      - run: npm rebuild
       - run: yarn list react
       - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
       - run: yarn jest -w 1 --ci
