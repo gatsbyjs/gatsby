@@ -1,141 +1,88 @@
 const _ = require(`lodash`)
 const { existsSync } = require(`fs`)
 const uuidv4 = require(`uuid/v4`)
-const pDefer = require(`p-defer`)
-const worker = require(`./worker`)
+const queue = require(`async/queue`)
+const { processFile } = require(`./process-file`)
 const { createProgress } = require(`./utils`)
 
-const toProcess = new Map()
-let pendingImagesCounter = 0
-let completedImagesCounter = 0
+const toProcess = {}
+let totalJobs = 0
+const q = queue((task, callback) => {
+  task(callback)
+}, 1)
 
 let bar
-
-// node 8 doesn't support promise.finally, we extract this function to re-use it inside then & catch
-const cleanupJob = (job, boundActionCreators) => {
+// when the queue is empty we stop the progressbar
+q.drain = () => {
   if (bar) {
-    bar.tick(job.task.args.operations.length)
+    bar.done()
   }
-
-  completedImagesCounter += job.task.args.operations.length
-
-  if (completedImagesCounter === pendingImagesCounter) {
-    if (bar) {
-      bar.done()
-      bar = null
-    }
-    pendingImagesCounter = 0
-    completedImagesCounter = 0
-  }
-
-  boundActionCreators.endJob({ id: job.id }, { name: `gatsby-plugin-sharp` })
+  totalJobs = 0
 }
 
-const executeJobs = _.throttle(
-  (pluginOptions, boundActionCreators) => {
-    toProcess.forEach(job => {
-      const { task } = job
-      toProcess.delete(task.inputPaths[0])
+const getFileKey = filePath => filePath.replace(/\./g, `%2E`)
 
-      try {
-        worker
-          .IMAGE_PROCESSING(task.inputPaths, task.outputDir, task.args)
-          .then(() => {
-            job.deferred.resolve()
-            cleanupJob(job, boundActionCreators)
-          })
-          .catch(err => {
-            job.deferred.reject(err)
-            cleanupJob(job, boundActionCreators)
-          })
-      } catch (err) {
-        job.deferred.reject(err)
-        cleanupJob(job, boundActionCreators)
-      }
-    })
-  },
-  1000,
-  { leading: false }
-)
+const setJobToProcess = (toProcess, job, deferred) => {
+  const inputFileKey = getFileKey(job.inputPath)
+  const outputFileKey = getFileKey(job.outputPath)
+  const jobPath = `["${inputFileKey}"].["${outputFileKey}"]`
+
+  // Check if the job has already been queued. If it has, there's nothing
+  // to do, return.
+  if (_.has(toProcess, jobPath)) {
+    return { existingPromise: _.get(toProcess, `${jobPath}.deferred.promise`) }
+  }
+
+  // Check if the output file already exists so we don't redo work.
+  if (existsSync(job.outputPath)) {
+    return { existingPromise: Promise.resolve(job) }
+  }
+
+  let isQueued = false
+  if (toProcess[inputFileKey]) {
+    isQueued = true
+  }
+
+  _.set(toProcess, jobPath, {
+    job: job,
+    deferred,
+  })
+
+  return { isQueued }
+}
 
 const scheduleJob = async (
   job,
   boundActionCreators,
+  pluginOptions,
   reporter,
-  reportStatus = true,
-  pluginOptions
+  reportStatus = true
 ) => {
-  const isQueued = toProcess.has(job.inputPath)
-  let scheduledPromise
+  // deferred naming comes from https://developer.mozilla.org/en-US/docs/Mozilla/JavaScript_code_modules/Promise.jsm/Deferred
+  let deferred = {}
+  deferred.promise = new Promise((resolve, reject) => {
+    deferred.resolve = resolve
+    deferred.reject = reject
+  })
 
-  if (reportStatus && !bar) {
+  const { existingPromise, isQueued } = setJobToProcess(
+    toProcess,
+    job,
+    deferred
+  )
+  if (existingPromise) {
+    return existingPromise
+  }
+
+  if (totalJobs === 0) {
     bar = createProgress(`Generating image thumbnails`, reporter)
     bar.start()
   }
+  totalJobs += 1
 
-  // Check if the output file already exists so we don't redo work.
-  // TODO: Remove this when jobs api is stable, it will have a better check
-  if (existsSync(job.outputPath)) {
-    return Promise.resolve()
-  }
-
-  // if an input image is already queued we add it to a transforms queue
-  // doing different manipulations in parallel makes sharp faster.
-  if (isQueued) {
-    const registeredJob = toProcess.get(job.inputPath)
-    // add the transform to the transforms list
-    const operations = registeredJob.task.args.operations.concat({
-      outputPath: job.outputPath,
-      transforms: job.args,
-    })
-
-    scheduledPromise = registeredJob.deferred.promise
-
-    toProcess.set(job.inputPath, {
-      ...registeredJob,
-      task: {
-        ...registeredJob.task,
-        args: {
-          ...registeredJob.task.args,
-          operations,
-        },
-      },
-    })
-
-    // update the job
-    boundActionCreators.setJob(
-      {
-        id: registeredJob.id,
-        imagesCount: operations.length,
-      },
-      { name: `gatsby-plugin-sharp` }
-    )
-  } else {
+  if (!isQueued) {
+    // Create image job
     const jobId = uuidv4()
-    const deferred = pDefer()
-    scheduledPromise = deferred.promise
-
-    // make our job compliant with new job spec
-    toProcess.set(job.inputPath, {
-      id: jobId,
-      task: {
-        inputPaths: [job.inputPath],
-        outputDir: job.outputDir,
-        args: {
-          contentDigest: job.contentDigest,
-          pluginOptions,
-          operations: [
-            {
-              outputPath: job.outputPath,
-              transforms: job.args,
-            },
-          ],
-        },
-      },
-      deferred,
-    })
-
-    // create the job so gatsby waits for completion
     boundActionCreators.createJob(
       {
         id: jobId,
@@ -144,15 +91,98 @@ const scheduleJob = async (
       },
       { name: `gatsby-plugin-sharp` }
     )
-  }
-  pendingImagesCounter++
-  if (bar) {
-    bar.total = pendingImagesCounter
+
+    q.push(cb => {
+      runJobs(
+        jobId,
+        getFileKey(job.inputPath),
+        boundActionCreators,
+        pluginOptions,
+        reportStatus,
+        cb
+      )
+    })
   }
 
-  executeJobs(pluginOptions, boundActionCreators, reportStatus)
-
-  return scheduledPromise
+  return deferred.promise
 }
 
-export { scheduleJob }
+function runJobs(
+  jobId,
+  inputFileKey,
+  boundActionCreators,
+  pluginOptions,
+  reportStatus,
+  cb
+) {
+  const jobs = _.values(toProcess[inputFileKey])
+  const findDeferred = job => jobs.find(j => j.job === job).deferred
+  const { job } = jobs[0]
+
+  // Delete the input key from the toProcess list so more jobs can be queued.
+  delete toProcess[inputFileKey]
+
+  // Update job info
+  boundActionCreators.setJob(
+    {
+      id: jobId,
+      imagesCount: jobs.length,
+    },
+    { name: `gatsby-plugin-sharp` }
+  )
+
+  // We're now processing the file's jobs.
+  let imagesFinished = 0
+
+  bar.total = totalJobs
+
+  try {
+    const promises = processFile(
+      job.inputPath,
+      job.contentDigest,
+      jobs.map(job => job.job),
+      pluginOptions
+    ).map(promise =>
+      promise
+        .then(job => {
+          findDeferred(job).resolve()
+        })
+        .catch(err => {
+          findDeferred(job).reject({
+            err,
+            message: `Failed to process image ${job.inputPath}`,
+          })
+        })
+        .then(() => {
+          imagesFinished += 1
+
+          // only show progress on build
+          if (reportStatus) {
+            bar.tick()
+          }
+
+          boundActionCreators.setJob(
+            {
+              id: jobId,
+              imagesFinished,
+            },
+            { name: `gatsby-plugin-sharp` }
+          )
+        })
+    )
+
+    Promise.all(promises).then(() => {
+      boundActionCreators.endJob({ id: jobId }, { name: `gatsby-plugin-sharp` })
+      cb()
+    })
+  } catch (err) {
+    jobs.forEach(({ deferred }) => {
+      deferred.reject({
+        err,
+        message: err.message,
+      })
+    })
+  }
+}
+
+export { scheduleJob, setJobToProcess }
