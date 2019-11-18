@@ -13,7 +13,7 @@ Head on over to https://chocolatey.org/install to install the latest version for
 
 Installation instructions can be found for various tools on https://chocolatey.org/docs/installation
 
-Once installed, head on over to your Windows PowerShell (Admin) version to install Nodejs and git.
+Once installed, head on over to your Windows PowerShell (Admin) version to install Node.js and Git.
 
 ```powershell
 
