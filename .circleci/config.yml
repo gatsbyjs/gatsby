@@ -35,8 +35,10 @@ aliases:
         - ~/.cache
 
   attach_to_bootstrap: &attach_to_bootstrap
-    attach_workspace:
-      at: ./
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ./
 
   ignore_master: &ignore_master
     filters:
@@ -119,7 +121,8 @@ jobs:
       - persist_to_workspace:
           root: ./
           paths:
-            - "*"
+            - "packages/*"
+            - "node_modules/*"
       - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*"
       - run: yarn bootstrap -- concurrency=2
       # Persist the workspace again with all packages already built
