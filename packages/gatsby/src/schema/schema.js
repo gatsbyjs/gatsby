@@ -184,11 +184,7 @@ const processTypeComposer = async ({
       fieldExtensions,
       parentSpan,
     })
-    await determineSearchableFields({
-      schemaComposer,
-      typeComposer,
-      parentSpan,
-    })
+
     if (typeComposer.hasInterface(`Node`)) {
       await addNodeInterfaceFields({ schemaComposer, typeComposer, parentSpan })
       await addImplicitConvenienceChildrenFields({
@@ -197,6 +193,14 @@ const processTypeComposer = async ({
         nodeStore,
         parentSpan,
       })
+    }
+    await determineSearchableFields({
+      schemaComposer,
+      typeComposer,
+      parentSpan,
+    })
+
+    if (typeComposer.hasInterface(`Node`)) {
       await addTypeToRootQuery({ schemaComposer, typeComposer, parentSpan })
     }
   } else if (typeComposer instanceof InterfaceTypeComposer) {
