@@ -3,7 +3,7 @@
 const { graphql } = require(`graphql`)
 const nodeStore = require(`../../../db/nodes`)
 const path = require(`path`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 const { store } = require(`../../../redux`)
 const { actions } = require(`../../../redux/actions`)
 const { buildSchema } = require(`../../schema`)
