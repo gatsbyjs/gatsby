@@ -2,7 +2,7 @@
 let fs = require(`fs`)
 let workboxBuild = require(`workbox-build`)
 const path = require(`path`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 const glob = require(`glob`)
 const _ = require(`lodash`)
 

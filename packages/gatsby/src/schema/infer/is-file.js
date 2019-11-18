@@ -1,5 +1,5 @@
 const path = require(`path`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 const mime = require(`mime`)
 const isRelative = require(`is-relative`)
 const isRelativeUrl = require(`is-relative-url`)
