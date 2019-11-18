@@ -50,9 +50,7 @@ module.exports = async ({ webhookBody = {}, parentSpan } = {}) => {
   )
 
   // Garbage collect stale data nodes
-  const touchedNodes = Object.keys(state.nodesTouched)
-  const staleNodes = Array.from(getNodes()).filter(node => {
-    // Find the root node.
+  const staleNodes = getNodes().filter(node => {
     let rootNode = node
     let whileCount = 0
     while (
@@ -70,7 +68,7 @@ module.exports = async ({ webhookBody = {}, parentSpan } = {}) => {
       }
     }
 
-    return !_.includes(touchedNodes, rootNode.id)
+    return !state.nodesTouched.has(rootNode.id)
   })
 
   if (staleNodes.length > 0) {
