@@ -1,4 +1,3 @@
-const _ = require(`lodash`)
 const report = require(`gatsby-cli/lib/reporter`)
 
 const apiRunner = require(`./api-runner-node`)
@@ -12,23 +11,19 @@ const { deleteNode } = boundActionCreators
  * may create nodes, but which have not actually created any nodes.
  */
 function discoverPluginsWithoutNodes(storeState) {
-  // Discover which plugins implement APIs which may create nodes
-  const nodeCreationPlugins = storeState.flattenedPlugins
+  // Find out which plugins own already created nodes
+  const nodeOwnerSet = new Set([`default-site-plugin`])
+  getNodes().forEach(node => nodeOwnerSet.add(node.internal.owner))
+
+  return storeState.flattenedPlugins
     .filter(
       plugin =>
+        // "Can generate nodes"
         plugin.nodeAPIs.includes(`sourceNodes`) &&
-        plugin.name !== `default-site-plugin`
+        // "Has not generated nodes"
+        !nodeOwnerSet.has(plugin.name)
     )
     .map(plugin => plugin.name)
-
-  // Find out which plugins own already created nodes
-  const nodeOwners = _.uniq(
-    Array.from(getNodes()).reduce((acc, node) => {
-      acc.push(node.internal.owner)
-      return acc
-    }, [])
-  )
-  return _.difference(nodeCreationPlugins, nodeOwners)
 }
 
 module.exports = async ({ webhookBody = {}, parentSpan } = {}) => {
