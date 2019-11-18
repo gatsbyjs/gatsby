@@ -54,7 +54,6 @@ aliases:
   test_template: &test_template
     steps:
       - <<: *attach_to_bootstrap
-      - <<: *install_node_modules
       - run: yarn list react
       - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
       - run: yarn jest -w 1 --ci
@@ -415,7 +414,6 @@ workflows:
 
   build-test:
     jobs:
-      - windows_unit_tests
       - bootstrap
       - lint:
           requires:
@@ -434,6 +432,10 @@ workflows:
           requires:
             - lint
             - unit_tests_node8
+      - windows_unit_tests:
+          requires:
+            - unit_tests_node8
+            - lint
       - unit_tests_www:
           requires:
             - lint
