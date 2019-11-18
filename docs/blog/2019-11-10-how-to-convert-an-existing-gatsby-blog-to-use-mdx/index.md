@@ -19,7 +19,11 @@ With MDX, you can import React components and declare them alongside regular mar
 
 It can be a big tricky to add MDX to an existing blog. The following 5 steps will cover how to install and configure MDX to work with [Gatsby's blog starter](https://github.com/gatsbyjs/gatsby-starter-blog/tree/master), which as of [today's version](https://github.com/gatsbyjs/gatsby-starter-blog/tree/8852c1e51651b902f19706ff2ca9f60dabc25709), does not have MDX pre-installed.
 
-You can also see the [full changes in PR #19580](https://github.com/gatsbyjs/gatsby/pull/19580/files) for an overview of the changes you have to make to get MDX working.
+You can also see the [full changes in PR #19580](https://github.com/gatsbyjs/gatsby/pull/19580/files) for an overview of the changes you have to make to get MDX working. As stated above, this introduces changes to [Gatsby's blog starter](https://github.com/gatsbyjs/gatsby-starter-blog/tree/master), which you can install with Gatsby CLI.
+
+```bash
+gatsby new my-blog-starter https://github.com/gatsbyjs/gatsby-starter-blog
+```
 
 ### Step 1
 
@@ -151,7 +155,7 @@ Now we can replace the `<section>` element with the `dangerouslySetInnerHTML` at
 + <MDXRenderer>{post.body}</MDXRenderer>
 ```
 
-And... that's it! After these changes, a Gatsby blog should be able to use MDX files to render JSX with markdown! To test, add a `.mdx` file to `content/blog/` and check if the JSX renders.
+And... that's it! After these changes, a Gatsby blog should be able to use MDX files to render JSX with markdown! To test, add a `.mdx` file to `[your-blog]/content/blog/` and check if the JSX renders.
 
 For example, the following code should render a test button. Navigate to `localhost:8000/blog/example/` and you should see a clickable button in your blog post!
 
