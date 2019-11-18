@@ -37,6 +37,9 @@ function getNodesByTypeReducer() {
   return nodesReducer
 }
 
+/**
+ * @property exports.nodesTouched Set<string>
+ */
 module.exports = {
   program: require(`./program`),
   nodes: getNodesReducer(),

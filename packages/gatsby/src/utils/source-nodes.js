@@ -68,8 +68,7 @@ module.exports = async ({ webhookBody = {}, parentSpan } = {}) => {
       }
     }
 
-    // `nodesTouched[id]` will be `true` if touched, `undefined` otherwise
-    return !state.nodesTouched[rootNode.id]
+    return !state.nodesTouched.has(rootNode.id)
   })
 
   if (staleNodes.length > 0) {
