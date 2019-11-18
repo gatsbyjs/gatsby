@@ -19,14 +19,14 @@ With MDX, you can import React components and declare them alongside regular mar
 
 It can be a big tricky to add MDX to an existing blog. The following 5 steps will cover how to install and configure MDX to work with [Gatsby's blog starter](https://github.com/gatsbyjs/gatsby-starter-blog/tree/master), which as of [today's version](https://github.com/gatsbyjs/gatsby-starter-blog/tree/8852c1e51651b902f19706ff2ca9f60dabc25709), does not have MDX pre-installed.
 
-You can also see the [full changes in PR #18929](https://github.com/gatsbyjs/gatsby/pull/18928/files) for an overview of the changes you have to make to get MDX working.
+You can also see the [full changes in PR #19580](https://github.com/gatsbyjs/gatsby/pull/19580/files) for an overview of the changes you have to make to get MDX working.
 
 ### Step 1
 
-Install [gatsby-plugin-mdx](/packages/gatsby-plugin-mdx/), the official plugin for using MDX with Gatsby. Also, install `@mdx-js/mdx` and `@mdx-js/react`.
+Install [gatsby-plugin-mdx](/packages/gatsby-plugin-mdx/), the official plugin for using MDX with Gatsby. Also install `gatsby-plugin-feed-mdx` for our RSS feeds. Finally, install `@mdx-js/mdx` and `@mdx-js/react`.
 
 ```bash
-npm install --save gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
+npm install --save gatsby-plugin-mdx gatsby-plugin-feed-mdx @mdx-js/mdx @mdx-js/react
 ```
 
 ### Step 2
@@ -61,62 +61,11 @@ In `gatsby-config.js`, replace `gatsby-transformer-remark` with `gatsby-plugin-m
   },
 ```
 
-Then, add some options to `gatsby-plugin-feed`. This will allow the the RSS feed of the site to parse MDX.
+Then, replace `gatsby-plugin-feed` with `gatsby-plugin-feed-mdx`. This will allow the the RSS feed of the site to parse MDX.
 
 ```diff:title=gatsby-config.js
 - `gatsby-plugin-feed`,
-
-+ {
-+   resolve: `gatsby-plugin-feed`,
-+   options: {
-+     query: `
-+       {
-+         site {
-+           siteMetadata {
-+             title
-+             description
-+             siteUrl
-+           }
-+         }
-+       }
-+     `,
-+     feeds: [
-+       {
-+         serialize: ({ query: { site, allMdx } }) =>
-+           allMdx.edges.map(edge =>
-+             Object.assign({}, edge.node.frontmatter, {
-+               description: edge.node.excerpt,
-+               data: edge.node.frontmatter.date,
-+               url: site.siteMetadata.siteUrl + edge.node.fields.slug,
-+               guid: site.siteMetadata.siteUrl + edge.node.fields.slug,
-+               custom_elements: [{ "content:encoded": edge.node.body }],
-+             })
-+           ),
-+         query: `
-+         {
-+           allMdx(
-+             limit: 1000,
-+             sort: { order: DESC, fields: [frontmatter___date] },
-+           ) {
-+             edges {
-+               node {
-+                 fields { slug }
-+                 frontmatter {
-+                   title
-+                   date
-+                 }
-+                 body
-+               }
-+             }
-+           }
-+         }
-+         `,
-+         output: `/rss.xml`,
-+         title: `Gatsby RSS feed`,
-+       },
-+     ],
-+   },
-+ },
++ `gatsby-plugin-feed-mdx`
 ```
 
 ### Step 3
