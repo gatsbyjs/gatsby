@@ -110,10 +110,14 @@ jobs:
     executor: node
     steps:
       - checkout
-      - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*"
       - <<: *restore_cache
       - <<: *install_node_modules
       - <<: *persist_cache
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - "*"
+      - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*"
       - run: yarn bootstrap -- concurrency=2
       - persist_to_workspace:
           root: ./
