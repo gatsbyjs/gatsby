@@ -557,7 +557,7 @@ async function resolveRecursive(
   fieldsToResolve
 ) {
   const gqlFields = getFields(schema, type, node)
-  let resolvedFields = {}
+  const resolvedFields = {}
   for (const fieldName of Object.keys(fieldsToResolve)) {
     const fieldToResolve = fieldsToResolve[fieldName]
     const queryField = queryFields[fieldName]
@@ -667,7 +667,7 @@ const determineResolvableFields = (
     const gqlField = gqlFields[fieldName]
     const gqlFieldType = getNamedType(gqlField.type)
     const typeComposer = schemaComposer.getAnyTC(type.name)
-    let possibleTCs = [
+    const possibleTCs = [
       typeComposer,
       ...nodeTypeNames.map(name => schemaComposer.getAnyTC(name)),
     ]
