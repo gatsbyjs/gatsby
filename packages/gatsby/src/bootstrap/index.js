@@ -3,6 +3,7 @@
 const _ = require(`lodash`)
 const slash = require(`slash`)
 const fs = require(`fs-extra`)
+const nfs = require(`fs`)
 const md5File = require(`md5-file/promise`)
 const crypto = require(`crypto`)
 const del = require(`del`)
@@ -296,13 +297,30 @@ module.exports = async (args: BootstrapArgs) => {
   const srcDir = `${__dirname}/../../cache-dir`
   const siteDir = cacheDirectory
   const tryRequire = `${__dirname}/../utils/test-require-error.js`
+  const cacheDirectoryPaths = []
+  const collectCacheDirectoryPaths = (src, dest) => {
+    cacheDirectoryPaths.push(dest)
+    return true
+  }
   try {
     await fs.copy(srcDir, siteDir, {
       clobber: true,
+      filter: collectCacheDirectoryPaths,
     })
     await fs.copy(tryRequire, `${siteDir}/test-require-error.js`, {
       clobber: true,
+      filter: collectCacheDirectoryPaths,
     })
+    // Ensure cacheDirectory to be writable even when srcDir is not
+    for (const cacheDirectoryPath of cacheDirectoryPaths) {
+      try {
+        nfs.accessSync(cacheDirectoryPath, nfs.constants.W_OK)
+      } catch (err) {
+        const stat = nfs.statSync(cacheDirectoryPath)
+        const mode = stat.mode | nfs.constants.S_IWUSR
+        nfs.chmodSync(cacheDirectoryPath, mode)
+      }
+    }
     await fs.ensureDirSync(`${cacheDirectory}/json`)
 
     // Ensure .cache/fragments exists and is empty. We want fragments to be
