@@ -110,11 +110,18 @@ jobs:
     executor: node
     steps:
       - checkout
-      - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*"
       - <<: *restore_cache
       - <<: *install_node_modules
       - <<: *persist_cache
+      # persist our git checkout and node_modules as the next step (assert-changed-files) might exit this step
+      # when no files have changed (master). We still need to have these files for jobs like lint & unit_tests_node8
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - "*"
+      - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*"
       - run: yarn bootstrap -- concurrency=2
+      # Persist the workspace again with all packages already built
       - persist_to_workspace:
           root: ./
           paths:

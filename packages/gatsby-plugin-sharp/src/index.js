@@ -53,16 +53,15 @@ function queueImageResizing({ file, args = {}, reporter }) {
 
   const argsDigestShort = createArgsDigest(options)
   const imgSrc = `/${file.name}.${options.toFormat}`
-  const outputDir = path.join(
+  const dirPath = path.join(
     process.cwd(),
     `public`,
     `static`,
-    file.internal.contentDigest
+    file.internal.contentDigest,
+    argsDigestShort
   )
-  const outputFilePath = path.join(argsDigestShort, imgSrc)
-
-  // make sure outputDir is created
-  fs.ensureDirSync(path.join(outputDir, argsDigestShort))
+  const filePath = path.join(dirPath, imgSrc)
+  fs.ensureDirSync(dirPath)
 
   let width
   let height
@@ -103,8 +102,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
     args: options,
     inputPath: file.absolutePath,
     contentDigest: file.internal.contentDigest,
-    outputDir,
-    outputPath: outputFilePath,
+    outputPath: filePath,
   }
 
   queue.set(prefixedSrc, job)
@@ -121,7 +119,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
 
   return {
     src: prefixedSrc,
-    absolutePath: path.join(outputDir, outputFilePath),
+    absolutePath: filePath,
     width,
     height,
     aspectRatio,
