@@ -48,7 +48,7 @@ Add the following env variable to your `.env.development` file to enable placeho
 GATSBY_SCREENSHOT_PLACEHOLDER=true
 ```
 
-For more information checkout [`gatsby-transformer-screenshot` docs](http://www.gatsbyjs.org/packages/gatsby-transformer-screenshot#placeholder-image).
+For more information checkout [`gatsby-transformer-screenshot` docs](https://www.gatsbyjs.org/packages/gatsby-transformer-screenshot#placeholder-image).
 
 ## `theme-ui`, CSS authoring, and dark mode
 
