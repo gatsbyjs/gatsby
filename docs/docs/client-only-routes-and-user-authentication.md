@@ -9,6 +9,7 @@ A classic example would be a site that has a landing page, various marketing pag
 Gatsby uses [@reach/router](https://reach.tech/router/) under the hood. You should use @reach/router to create client-only routes.
 
 These routes will exist on the client only and will not correspond to index.html files in an app's built assets. If you'd like site users to be able to visit client routes directly, you'll need to set up your server to handle those routes appropriately.
+
 > see explanation below
 
 To create client-only routes, add the following code to your site’s `gatsby-node.js` file:
@@ -41,15 +42,12 @@ Check out the ["simple auth" example site](https://github.com/gatsbyjs/gatsby/bl
 
 As explained earlier, to access client-side routes from a server request, the server will need configuration.
 
-For example, the client-side route `/app/:id` could make a server request to `/app/why-gatsby-is-awesome` during a page refresh. 
+For example, the client-side route `/app/:id` could make a server request to `/app/why-gatsby-is-awesome` during a page refresh.
 
-The server would not be able to complete this request as `why-gatsby-is-awesome` is a client-side route. It does not have a corresponding HTML file on the server. The file found at `/app/index.html` on the server contains all the code to handle the page paths after `/app`. 
+The server would not be able to complete this request as `why-gatsby-is-awesome` is a client-side route. It does not have a corresponding HTML file on the server. The file found at `/app/index.html` on the server contains all the code to handle the page paths after `/app`.
 
 A pattern to follow, agnostic of server technology, is to watch for these specific routes and return the appropriate HTML file.
 
-In the previous example, when making a GET request to `/app/why-gatsby-is-awesome`, The server should respond with `/app/index.html`. It is important to note that the response code should be a __200__ and not a __301__ . The response is not a redirect.
+In the previous example, when making a GET request to `/app/why-gatsby-is-awesome`, The server should respond with `/app/index.html`. It is important to note that the response code should be a **200** and not a **301** . The response is not a redirect.
 
-The client is completely unaware of any changes and receives the file it is expecting. 
-
-
-
+The client is completely unaware of any changes and receives the file it is expecting.
