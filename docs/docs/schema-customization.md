@@ -415,7 +415,7 @@ To add an extension to a field you can either use a directive in SDL, or the
 `extensions` property when using Gatsby Type Builders:
 
 ```js:title=gatsby-node.js
-exports.createSchemaCustomization = ({ action, schema }) => {
+exports.createSchemaCustomization = ({ actions, schema }) => {
   const { createTypes } = actions
   const typeDefs = [
     "type MarkdownRemark implements Node { frontmatter: Frontmatter }",
