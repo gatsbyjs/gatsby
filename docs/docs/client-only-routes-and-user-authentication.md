@@ -14,13 +14,13 @@ A sample site might be set up like this:
 
 ![Site with a static homepage and client-only routes](./images/client-only-routes.png)
 
-Gatsby converts components in the `pages` folder into static HTML files for the Home page and the App page. A `<Router />` is added to the App page so that the profile and details components can be rendered from the App page, they don't have static assets built for them because they exist only on the client. The profile page can `POST` data about a user back to an API, and the details page can dynamically load data about a user with a specific id from an API.
+Gatsby converts components in the `pages` folder into static HTML files for the Home page and the App page. A `<Router />` is added to the App page so that the profile and details components can be rendered from the App page; they don't have static assets built for them because they exist only on the client. The profile page can `POST` data about a user back to an API, and the details page can dynamically load data about a user with a specific id from an API.
 
 ## Implementing client-only routes
 
 Gatsby uses [@reach/router](https://reach.tech/router/) under the hood, and it is the recommended approach to create client-only routes.
 
-You first need to set up routes on a page created by Gatsby:
+You first need to set up routes on a page that is built by Gatsby:
 
 ```javascript:title=src/pages/app.js
 import React from "react"
@@ -55,7 +55,7 @@ With routes nested under the `<Router />` from Reach Router, it will [render the
 
 With [authentication set up](/docs/building-a-site-with-authentication) on your site, you can create a component like a `<PrivateRoute/>` to extend the example above and gate content:
 
-```javascript:title=src/pages.app.js
+```javascript:title=src/pages/app.js
 import React from "react"
 import { Router } from "@reach/router"
 import Layout from "../components/Layout"
@@ -85,7 +85,7 @@ export default App
 
 The `<PrivateRoute />` component would look something like this one (taken from the [Authentication Tutorial](/tutorial/authentication-tutorial/#controlling-private-routes), which implements this behavior):
 
-```jsx:title=PrivateRoute.js
+```jsx:title=src/components/PrivateRoute.js
 // import ...
 import React, { Component } from "react"
 import { navigate } from "gatsby"
@@ -105,7 +105,7 @@ export default PrivateRoute
 
 ### Configuring pages with `matchPath`
 
-To ensure that client-only routes can be navigated to directly, pages in your site need to have the [`matchPath` parameter](/docs/gatsby-internals-terminology/#matchpath) set. Add the following code to your site’s `gatsby-node.js` file:
+To ensure that users can navigate to client-only routes directly, pages in your site need to have the [`matchPath` parameter](/docs/gatsby-internals-terminology/#matchpath) set. Add the following code to your site’s `gatsby-node.js` file:
 
 ```javascript:title=gatsby-node.js
 // Implement the Gatsby API “onCreatePage”. This is
@@ -138,3 +138,4 @@ _Without_ this configuration set up, a user that clicks on a link to `<yoursite.
 
 - [Gatsby repo "simple auth" example](https://github.com/gatsbyjs/gatsby/blob/master/examples/simple-auth/) - a demo implementing user authentication and restricted client-only routes
 - [Live version of the "simple auth" example](https://simple-auth.netlify.com/)
+- [The Gatsby store](https://github.com/gatsbyjs/store.gatsbyjs.org) which also implements an authenticated flow
