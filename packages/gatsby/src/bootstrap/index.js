@@ -169,6 +169,10 @@ module.exports = async (args: BootstrapArgs) => {
     plugins: flattenedPlugins.map(p => `${p.name}@${p.version}`),
   })
 
+  telemetry.decorateEvent(`DEVELOP_STOP`, {
+    plugins: flattenedPlugins.map(p => `${p.name}@${p.version}`),
+  })
+
   // onPreInit
   activity = report.activityTimer(`onPreInit`, {
     parentSpan: bootstrapSpan,
