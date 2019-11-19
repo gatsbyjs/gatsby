@@ -71,6 +71,49 @@ aliases:
       - lint
       - unit_tests_node8
 
+  e2e_tests_production_runtime_alias: &e2e_tests_production_runtime_alias
+    <<: *e2e-executor
+    parameters:
+      postStatus:
+        type: boolean
+        default: false
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/production-runtime
+          test_command: CYPRESS_PROJECT_ID=is8aoq CYPRESS_RECORD_KEY=cb4708d2-1578-4665-9a07-c59f8db28d91 yarn test && CYPRESS_PROJECT_ID=htpvkv CYPRESS_RECORD_KEY=0d734841-c613-41d2-86e5-df0b5968f93f yarn test:offline
+      - notify-status:
+          condition: << parameters.postStatus >>
+
+  e2e_tests_development_runtime_alias: &e2e_tests_development_runtime_alias
+    <<: *e2e-executor
+    parameters:
+      postStatus:
+        type: boolean
+        default: false
+    environment:
+      CYPRESS_PROJECT_ID: s3j3qj
+      CYPRESS_RECORD_KEY: 3904ca0c-bc98-47d9-8371-b68c5e81fb9b
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/development-runtime
+      - notify-status:
+          condition: << parameters.postStatus >>
+
+  e2e_tests_gatsby-image_alias: &e2e_tests_gatsby-image_alias
+    <<: *e2e-executor
+    parameters:
+      postStatus:
+        type: boolean
+        default: false
+    environment:
+      CYPRESS_PROJECT_ID: ave32k
+      CYPRESS_RECORD_KEY: fb3cb6e0-a0f9-48b2-aa9a-95e8ef150a85
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/gatsby-image
+      - notify-status:
+          condition: << parameters.postStatus >>
+
 commands:
   notify-status:
     parameters:
@@ -191,47 +234,31 @@ jobs:
           test_path: e2e-tests/path-prefix
 
   e2e_tests_gatsby-image:
-    <<: *e2e-executor
-    parameters:
-      postStatus:
-        type: boolean
-        default: false
-    environment:
-      CYPRESS_PROJECT_ID: ave32k
-      CYPRESS_RECORD_KEY: fb3cb6e0-a0f9-48b2-aa9a-95e8ef150a85
-    steps:
-      - e2e-test:
-          test_path: e2e-tests/gatsby-image
-      - notify-status:
-          condition: << parameters.postStatus >>
+    <<: *e2e_tests_gatsby-image_alias
+
+  e2e_tests_gatsby-image_with_experimental_react:
+    <<: *e2e_tests_gatsby-image_alias
+
+  e2e_tests_gatsby-image_with_next_react:
+    <<: *e2e_tests_gatsby-image_alias
 
   e2e_tests_development_runtime:
-    <<: *e2e-executor
-    parameters:
-      postStatus:
-        type: boolean
-        default: false
-    environment:
-      CYPRESS_PROJECT_ID: s3j3qj
-      CYPRESS_RECORD_KEY: 3904ca0c-bc98-47d9-8371-b68c5e81fb9b
-    steps:
-      - e2e-test:
-          test_path: e2e-tests/development-runtime
-      - notify-status:
-          condition: << parameters.postStatus >>
+    <<: *e2e_tests_development_runtime_alias
+
+  e2e_tests_development_runtime_with_experimental_react:
+    <<: *e2e_tests_development_runtime_alias
+
+  e2e_tests_development_runtime_with_next_react:
+    <<: *e2e_tests_development_runtime_alias
 
   e2e_tests_production_runtime:
-    <<: *e2e-executor
-    parameters:
-      postStatus:
-        type: boolean
-        default: false
-    steps:
-      - e2e-test:
-          test_path: e2e-tests/production-runtime
-          test_command: CYPRESS_PROJECT_ID=is8aoq CYPRESS_RECORD_KEY=cb4708d2-1578-4665-9a07-c59f8db28d91 yarn test && CYPRESS_PROJECT_ID=htpvkv CYPRESS_RECORD_KEY=0d734841-c613-41d2-86e5-df0b5968f93f yarn test:offline
-      - notify-status:
-          condition: << parameters.postStatus >>
+    <<: *e2e_tests_production_runtime_alias
+
+  e2e_tests_production_runtime_with_experimental_react:
+    <<: *e2e_tests_production_runtime_alias
+
+  e2e_tests_production_runtime_with_next_react:
+    <<: *e2e_tests_production_runtime_alias
 
   themes_e2e_tests_development_runtime:
     <<: *e2e-executor
@@ -377,15 +404,15 @@ workflows:
     jobs:
       - bootstrap-with-experimental-react:
           version: "next"
-      - e2e_tests_gatsby-image:
+      - e2e_tests_gatsby-image_with_next_react:
           postStatus: true
           requires:
             - bootstrap-with-experimental-react
-      - e2e_tests_development_runtime:
+      - e2e_tests_development_runtime_with_next_react:
           postStatus: true
           requires:
             - bootstrap-with-experimental-react
-      - e2e_tests_production_runtime:
+      - e2e_tests_production_runtime_with_next_react:
           postStatus: true
           requires:
             - bootstrap-with-experimental-react
@@ -400,15 +427,15 @@ workflows:
     jobs:
       - bootstrap-with-experimental-react:
           version: "experimental"
-      - e2e_tests_gatsby-image:
+      - e2e_tests_gatsby-image_with_experimental_react:
           postStatus: true
           requires:
             - bootstrap-with-experimental-react
-      - e2e_tests_development_runtime:
+      - e2e_tests_development_runtime_with_experimental_react:
           postStatus: true
           requires:
             - bootstrap-with-experimental-react
-      - e2e_tests_production_runtime:
+      - e2e_tests_production_runtime_with_experimental_react:
           postStatus: true
           requires:
             - bootstrap-with-experimental-react
