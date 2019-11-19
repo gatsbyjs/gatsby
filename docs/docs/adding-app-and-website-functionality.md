@@ -83,7 +83,7 @@ One main distinction explained in the diagrams in the section on [common pattern
 
 ### Page and route creation
 
-In a React app, creating pages requires setting up a router. Gatsby instead handles some pieces of routing on your behalf; you can create a page by putting an exported component inside the pages directory. Gatsby will generate a page with a fixed URL based on the filename of the component. You can still import a router and setup routes yourself though.
+In a React app, creating pages requires setting up a router. Gatsby instead handles some pieces of routing on your behalf; you can create a page by putting an exported component inside the pages directory. Gatsby will generate a page with a fixed URL based on the filename of the component. You can still import a router and set up routes yourself though.
 
 > _To compare Gatsby with other Jamstack tools like Next.js and Jekyll, check out the [feature comparison](/features/jamstack/) page._
 

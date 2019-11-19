@@ -8,7 +8,7 @@ Often you want to create a site with client-only portions, which allows you to g
 
 A classic example would be a site that has a landing page, various marketing pages, a login page, and then an app section for logged-in users. The logged-in section doesn't need to be server rendered as all data will be loaded live from your API after the user logs in. So it makes sense to make this portion of your site client-only.
 
-Client-only routes will exist on the client only and will not correspond to index.html files in an app's built assets. If you'd like site users to be able to visit client routes directly, you need to set up your site to handle those routes appropriately.
+Client-only routes will exist on the client only and will not correspond to `index.html` files in an app's built assets. If you'd like site users to be able to visit client routes directly, you need to [set up your site to handle those routes](#handling-client-only-routes-with-gatsby) appropriately. Or, if you have control over the configuration of the file server yourself (instead of using another static file host like Netlify), you can [set up the server](#configuring-and-handling-client-only-routes-on-a-server) to handle these routes.
 
 A sample site might be set up like this:
 
@@ -16,7 +16,7 @@ A sample site might be set up like this:
 
 Gatsby converts components in the `pages` folder into static HTML files for the Home page and the App page. A `<Router />` is added to the App page so that the profile and details components can be rendered from the App page; they don't have static assets built for them because they exist only on the client. The profile page can `POST` data about a user back to an API, and the details page can dynamically load data about a user with a specific id from an API.
 
-## Implementing client-only routes
+## Handling client-only routes with Gatsby
 
 Gatsby uses [@reach/router](https://reach.tech/router/) under the hood, and it is the recommended approach to create client-only routes.
 
@@ -134,19 +134,25 @@ _Without_ this configuration set up, a user that clicks on a link to `<yoursite.
 
 > Tip: For applications with complex routing, you may want to override Gatsby's default scroll behavior with the [shouldUpdateScroll](/docs/browser-apis/#shouldUpdateScroll) Browser API.
 
-## Configuring a Server to Handle Client Side Routes
+## Configuring and handling client-only routes on a server
 
-As explained earlier, to access client-side routes from a server request, the server will need configuration.
+If you are hosting on your own server, you can opt to configure the server to handle client-only routes instead of using the `matchPath` method already explained.
 
-For example, the client-side route `/app/:id` could make a server request to `/app/why-gatsby-is-awesome` during a page refresh.
+Consider the following router and route to serve as an example:
 
-The server would not be able to complete this request as `why-gatsby-is-awesome` is a client-side route. It does not have a corresponding HTML file on the server. The file found at `/app/index.html` on the server contains all the code to handle the page paths after `/app`.
+```jsx:title=src/pages/app.js
+<Router>
+  <Route path="/app/why-gatsby-is-awesome" />
+</Router>
+```
+
+In this example with a router and a single route for `/app/why-gatsby-is-awesome/`, the server would not be able to complete this request as `why-gatsby-is-awesome` is a client-side route. It does not have a corresponding HTML file on the server. The file found at `/app/index.html` on the server contains all the code to handle the page paths after `/app`.
 
 A pattern to follow, agnostic of server technology, is to watch for these specific routes and return the appropriate HTML file.
 
-In the previous example, when making a GET request to `/app/why-gatsby-is-awesome`, The server should respond with `/app/index.html`. It is important to note that the response code should be a **200** and not a **301** . The response is not a redirect.
+In this example, when making a `GET` request to `/app/why-gatsby-is-awesome`, the server should respond with `/app/index.html` and let the client handle the rendering of the route with the matching path. It is important to note that the response code should be a **200** (an OK) and not a **301** (a redirect).
 
-The client is completely unaware of any changes and receives the file it is expecting.
+One result of this method is that the client is completely unaware of the logic on the server, decoupling it from Gatsby.
 
 ## Additional resources
 
