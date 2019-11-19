@@ -16,6 +16,11 @@ jest.mock(`gatsby-plugin-sharp`, () => {
       })
     },
     traceSVG: mockTraceSVG,
+    stats() {
+      return Promise.resolve({
+        isTransparent: true,
+      })
+    },
   }
 })
 
@@ -585,5 +590,35 @@ describe(`markdownCaptions`, () => {
     const node = nodes.pop()
     const $ = cheerio.load(node.value)
     expect($(`figcaption`).length).toBe(0)
+  })
+})
+
+describe(`disableBgImageOnAlpha`, () => {
+  it(`does not disable background image on transparent images when disableBgImageOnAlpha === false`, async () => {
+    const imagePath = `images/my-image.jpeg`
+    const content = `![some alt](./${imagePath} "some title")`
+
+    const nodes = await plugin(createPluginOptions(content, imagePath), {
+      disableBgImageOnAlpha: false,
+    })
+    expect(nodes.length).toBe(1)
+
+    const node = nodes.pop()
+    expect(node.type).toBe(`html`)
+    expect(node.value).toMatchSnapshot()
+  })
+
+  it(`disables background image on transparent images when disableBgImageOnAlpha === true`, async () => {
+    const imagePath = `images/my-image.jpeg`
+    const content = `![some alt](./${imagePath} "some title")`
+
+    const nodes = await plugin(createPluginOptions(content, imagePath), {
+      disableBgImageOnAlpha: true,
+    })
+    expect(nodes.length).toBe(1)
+
+    const node = nodes.pop()
+    expect(node.type).toBe(`html`)
+    expect(node.value).toMatchSnapshot()
   })
 })

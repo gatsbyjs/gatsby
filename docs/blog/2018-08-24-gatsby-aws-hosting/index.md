@@ -19,19 +19,19 @@ Using the Amplify console, you can now easily deploy your application to AWS wit
 
 First, we'll want to create a new Gatsby project. If you don't already have Gatsby installed, install it:
 
-```sh
+```shell
 npm install --global gatsby-cli
 ```
 
 Next, we'll create a new Gatsby site:
 
-```sh
+```shell
 gatsby new my-gatsby-site
 ```
 
 Finally, change into the new site directory:
 
-```sh
+```shell
 cd my-gatsby-site
 ```
 
@@ -41,7 +41,7 @@ Now that we have our Gatsby site up & running, let's add hosting & make the site
 
 To do so, create a new GitHub repo & push the project to the repo.
 
-```sh
+```shell
 git init
 
 git remote add origin git@github.com:<username>/<projectname>.git
@@ -103,7 +103,7 @@ with this:
 
 Save the file & push the changes to your master branch:
 
-```sh
+```shell
 git add .
 
 git commit -m 'updated heading'

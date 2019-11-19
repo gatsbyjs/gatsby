@@ -15,13 +15,13 @@ A Gatsby theme for creating a blog.
 
 This will generate a new site that pre-configures use of the blog theme.
 
-```sh
+```shell
 gatsby new my-themed-blog https://github.com/gatsbyjs/gatsby-starter-blog-theme
 ```
 
 ### Manually add to your site
 
-```sh
+```shell
 npm install --save gatsby-theme-blog
 ```
 

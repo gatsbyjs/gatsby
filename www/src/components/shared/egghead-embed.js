@@ -9,6 +9,7 @@ const EggheadEmbed = ({ lessonLink, lessonTitle }) => (
       height={348}
       src={`${lessonLink}/embed`}
       title={`Video: ${lessonTitle}`}
+      allowFullScreen
     />
 
     <p>

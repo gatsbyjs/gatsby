@@ -1,5 +1,63 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`disableBgImageOnAlpha disables background image on transparent images when disableBgImageOnAlpha === true 1`] = `
+"<span
+      class=\\"gatsby-resp-image-wrapper\\"
+      style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\"
+    >
+      <a
+    class=\\"gatsby-resp-image-link\\"
+    href=\\"not-a-real-dir/images/my-image.jpeg\\"
+    style=\\"display: block\\"
+    target=\\"_blank\\"
+    rel=\\"noopener\\"
+  >
+    <span
+    class=\\"gatsby-resp-image-background-image\\"
+    style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; display: block;\\"
+  ></span>
+  <img
+        class=\\"gatsby-resp-image-image\\"
+        alt=\\"some alt\\"
+        title=\\"some title\\"
+        src=\\"not-a-real-dir/images/my-image.jpeg\\"
+        srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
+        sizes=\\"(max-width: 650px) 100vw, 650px\\"
+        loading=\\"lazy\\"
+      />
+  </a>
+    </span>"
+`;
+
+exports[`disableBgImageOnAlpha does not disable background image on transparent images when disableBgImageOnAlpha === false 1`] = `
+"<span
+      class=\\"gatsby-resp-image-wrapper\\"
+      style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\"
+    >
+      <a
+    class=\\"gatsby-resp-image-link\\"
+    href=\\"not-a-real-dir/images/my-image.jpeg\\"
+    style=\\"display: block\\"
+    target=\\"_blank\\"
+    rel=\\"noopener\\"
+  >
+    <span
+    class=\\"gatsby-resp-image-background-image\\"
+    style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw'); background-size: cover; display: block;\\"
+  ></span>
+  <img
+        class=\\"gatsby-resp-image-image\\"
+        alt=\\"some alt\\"
+        title=\\"some title\\"
+        src=\\"not-a-real-dir/images/my-image.jpeg\\"
+        srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
+        sizes=\\"(max-width: 650px) 100vw, 650px\\"
+        loading=\\"lazy\\"
+      />
+  </a>
+    </span>"
+`;
+
 exports[`it handles goofy nesting properly 1`] = `
 "<span
       class=\\"gatsby-resp-image-wrapper\\"

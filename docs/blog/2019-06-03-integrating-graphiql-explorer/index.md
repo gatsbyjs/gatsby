@@ -8,6 +8,8 @@ tags:
   - developer-experience
 ---
 
+[_Updated September 19th 2019_](#update-september-19th-2019)
+
 Gatsby's data layer is powered by [GraphQL](https://graphql.org/). This means that if you are building a Gatsby site, you will almost certainly use GraphQL to take advantage of Gatsby's rich plugin ecosystem that extends this schema with data from _anywhere_. A popular tool for exploring your GraphQL schema is [GraphiQL](https://github.com/graphql/graphiql) — which is a graphical, interactive, in-browser GraphQL development environment. It serves as an interactive playground where you can compose, test, and see the live results of your queries. If you haven't seen or used GraphiQL, it looks something like this:
 
 <figure>
@@ -74,4 +76,35 @@ There are opportunities for further improvements for Gatsby users. Few things we
 
 - evaluating accessibility of GraphiQL interface and addressing found issues,
 - adding [support for using GraphQL fragments provided by Gatsby plugins](https://github.com/gatsbyjs/gatsby/issues/14371),
-- adding [code snippet generation for common workflows](https://github.com/gatsbyjs/gatsby/issues/14476) (using another awesome OneGraph's GraphiQL addon - [`graphiql-code-exporter`](https://github.com/OneGraph/graphiql-code-exporter)).
+- ~~adding [code snippet generation for common workflows](https://github.com/gatsbyjs/gatsby/issues/14476) (using another awesome OneGraph's GraphiQL addon - [`graphiql-code-exporter`](https://github.com/OneGraph/graphiql-code-exporter)).~~ [Check update!](#update-september-19th-2019)
+
+## Update (September 19th 2019)
+
+Code snippet generation (mentioned in [Future work section](#future-work)) was added in `gatsby@2.15.3`! Huge thanks to [Dan Kirkham](https://twitter.com/herecydev) who integrated `graphiql-code-exporter` into Gatsby's GraphiQL IDE!
+
+Snippets we currently support are:
+
+- Page templates
+- Components using static queries (both `<StaticQuery>` and `useStaticQuery` variants)
+
+Using those snippets allows users to quickly scaffold new pages and components that use queries created in GraphiQL IDE.
+
+Usual flow would look like this:
+
+1. compose your query in GraphiQL,
+2. click "Code Exporter" button in GraphiQL's toolbar,
+3. select type of snippet
+4. click "copy" button (or manually select generated code snippet and copy it),
+5. paste copied snippet into new file in your code editor and save it.
+
+Now you have working page or component that uses your query!
+
+<figure>
+  <video controls="controls" autoplay="false">
+    <source type="video/mp4" src="./graphiql-exporter-demo.mp4" />
+    <p>Your browser does not support the video element.</p>
+  </video>
+  <figcaption>Demo of scaffolding new page with GraphiQL Code Exporter</figcaption>
+</figure>
+
+Interested in checking how Dan did this? Check his [Pull request](https://github.com/gatsbyjs/gatsby/pull/17120)!

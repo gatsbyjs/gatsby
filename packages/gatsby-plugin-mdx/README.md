@@ -43,13 +43,13 @@ MDX seeks to make writing with Markdown and JSX simpler while being more express
 
 Install with npm:
 
-```sh
+```shell
 npm install --save gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
 ```
 
 Install with yarn:
 
-```sh
+```shell
 yarn add gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
 ```
 

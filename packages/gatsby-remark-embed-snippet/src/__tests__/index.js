@@ -20,12 +20,10 @@ describe(`gatsby-remark-embed-snippet`, () => {
     fs.readFileSync.mockReturnValue(`const foo = "bar";`)
   })
 
-  it(`should error if missing required config options`, () => {
+  it(`should not error if missing optional config options`, () => {
     const markdownAST = remark.parse(`\`embed:hello-world.js\``)
 
-    expect(() => plugin({ markdownAST })).toThrow(
-      `Required option "directory" not specified`
-    )
+    expect(() => plugin({ markdownAST })).toMatchSnapshot()
   })
 
   it(`should error if the specified directory does not exist`, () => {
@@ -35,16 +33,6 @@ describe(`gatsby-remark-embed-snippet`, () => {
 
     expect(() => plugin({ markdownAST }, { directory: `invalid` })).toThrow(
       `Invalid directory specified "invalid"`
-    )
-  })
-
-  it(`should error if an invalid file path is specified`, () => {
-    fs.existsSync.mockImplementation(path => path !== `examples/hello-world.js`)
-
-    const markdownAST = remark.parse(`\`embed:hello-world.js\``)
-
-    expect(() => plugin({ markdownAST }, { directory: `examples` })).toThrow(
-      `Invalid snippet specified; no such file "examples/hello-world.js"`
     )
   })
 

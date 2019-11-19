@@ -37,15 +37,12 @@ const flattenPlugins = plugins => {
   return flattened
 }
 
-module.exports = async (config = {}, rootDir = null, latestAPIs = {}) => {
-  const apis = {
-    currentAPIs: getAPI({
-      browser: browserAPIs,
-      node: nodeAPIs,
-      ssr: ssrAPIs,
-    }),
-    latestAPIs,
-  }
+module.exports = async (config = {}, rootDir = null) => {
+  const currentAPIs = getAPI({
+    browser: browserAPIs,
+    node: nodeAPIs,
+    ssr: ssrAPIs,
+  })
   // Collate internal plugins, site config plugins, site default plugins
   const plugins = loadPlugins(config, rootDir)
 
@@ -54,12 +51,12 @@ module.exports = async (config = {}, rootDir = null, latestAPIs = {}) => {
 
   // Work out which plugins use which APIs, including those which are not
   // valid Gatsby APIs, aka 'badExports'
-  const x = collatePluginAPIs({ ...apis, flattenedPlugins })
+  const x = collatePluginAPIs({ currentAPIs, flattenedPlugins })
   flattenedPlugins = x.flattenedPlugins
   const badExports = x.badExports
 
   // Show errors for any non-Gatsby APIs exported from plugins
-  handleBadExports({ ...apis, badExports })
+  await handleBadExports({ currentAPIs, badExports })
 
   // Show errors when ReplaceRenderer has been implemented multiple times
   flattenedPlugins = handleMultipleReplaceRenderers({

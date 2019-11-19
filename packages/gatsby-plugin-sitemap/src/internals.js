@@ -31,7 +31,6 @@ export const runQuery = (handler, query, excludes, pathPrefix) =>
     // siteUrl Validation
     if (
       !r.data.site.siteMetadata.siteUrl ||
-      r.data.site.siteMetadata.siteUrl == null ||
       r.data.site.siteMetadata.siteUrl.trim().length == 0
     ) {
       throw new Error(

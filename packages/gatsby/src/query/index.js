@@ -2,22 +2,23 @@
 
 const _ = require(`lodash`)
 const Queue = require(`better-queue`)
-const convertHrtime = require(`convert-hrtime`)
-const { store, emitter } = require(`../redux`)
+// const convertHrtime = require(`convert-hrtime`)
+const { store, emitter, readState } = require(`../redux`)
 const { boundActionCreators } = require(`../redux/actions`)
+const report = require(`gatsby-cli/lib/reporter`)
 const queryQueue = require(`./queue`)
 const GraphQLRunner = require(`./graphql-runner`)
+const pageDataUtil = require(`../utils/page-data`)
 
-let seenIdsWithoutDataDependencies = []
+const seenIdsWithoutDataDependencies = new Set()
 let queuedDirtyActions = []
+let newPageKeys = []
 const extractedQueryIds = new Set()
 
 // Remove pages from seenIdsWithoutDataDependencies when they're deleted
 // so their query will be run again if they're created again.
 emitter.on(`DELETE_PAGE`, action => {
-  seenIdsWithoutDataDependencies = seenIdsWithoutDataDependencies.filter(
-    p => p !== action.payload.path
-  )
+  seenIdsWithoutDataDependencies.delete(action.payload.path)
 })
 
 emitter.on(`CREATE_NODE`, action => {
@@ -38,54 +39,66 @@ const popExtractedQueries = () => {
 }
 
 const findIdsWithoutDataDependencies = state => {
-  const allTrackedIds = _.uniq(
-    _.flatten(
-      _.concat(
-        _.values(state.componentDataDependencies.nodes),
-        _.values(state.componentDataDependencies.connections)
-      )
-    )
+  const allTrackedIds = new Set()
+  const boundAddToTrackedIds = allTrackedIds.add.bind(allTrackedIds)
+  state.componentDataDependencies.nodes.forEach(dependenciesOnNode => {
+    dependenciesOnNode.forEach(boundAddToTrackedIds)
+  })
+  state.componentDataDependencies.connections.forEach(
+    dependenciesOnConnection => {
+      dependenciesOnConnection.forEach(boundAddToTrackedIds)
+    }
   )
 
   // Get list of paths not already tracked and run the queries for these
   // paths.
-  const notTrackedIds = _.difference(
+  const notTrackedIds = new Set(
     [
       ...Array.from(state.pages.values(), p => p.path),
       ...[...state.staticQueryComponents.values()].map(c => c.id),
-    ],
-    [...allTrackedIds, ...seenIdsWithoutDataDependencies]
+    ].filter(
+      x => !allTrackedIds.has(x) && !seenIdsWithoutDataDependencies.has(x)
+    )
   )
 
   // Add new IDs to our seen array so we don't keep trying to run queries for them.
   // Pages without queries can't be tracked.
-  seenIdsWithoutDataDependencies = _.uniq([
-    ...notTrackedIds,
-    ...seenIdsWithoutDataDependencies,
-  ])
+  for (const notTrackedId of notTrackedIds) {
+    seenIdsWithoutDataDependencies.add(notTrackedId)
+  }
 
   return notTrackedIds
 }
 
 const popNodeQueries = state => {
   const actions = _.uniq(queuedDirtyActions, a => a.payload.id)
-  const uniqDirties = _.uniq(
-    actions.reduce((dirtyIds, action) => {
-      const node = action.payload
+  const uniqDirties = actions.reduce((dirtyIds, action) => {
+    const node = action.payload
 
-      if (!node || !node.id || !node.internal.type) return dirtyIds
+    if (!node || !node.id || !node.internal.type) return dirtyIds
 
-      // Find components that depend on this node so are now dirty.
-      dirtyIds = dirtyIds.concat(state.componentDataDependencies.nodes[node.id])
+    // Find components that depend on this node so are now dirty.
+    if (state.componentDataDependencies.nodes.has(node.id)) {
+      state.componentDataDependencies.nodes.get(node.id).forEach(n => {
+        if (n) {
+          dirtyIds.add(n)
+        }
+      })
+    }
 
-      // Find connections that depend on this node so are now invalid.
-      dirtyIds = dirtyIds.concat(
-        state.componentDataDependencies.connections[node.internal.type]
-      )
+    // Find connections that depend on this node so are now invalid.
+    if (state.componentDataDependencies.connections.has(node.internal.type)) {
+      state.componentDataDependencies.connections
+        .get(node.internal.type)
+        .forEach(n => {
+          if (n) {
+            dirtyIds.add(n)
+          }
+        })
+    }
 
-      return _.compact(dirtyIds)
-    }, [])
-  )
+    return dirtyIds
+  }, new Set())
   queuedDirtyActions = []
   return uniqDirties
 }
@@ -137,32 +150,32 @@ const calcInitialDirtyQueryIds = state => {
 /**
  * groups queryIds by whether they are static or page queries.
  */
-const groupQueryIds = queryIds => {
+const groupQueryIds = async queryIds => {
+  const incrementalBuild =
+    process.env.GATSBY_INCREMENTAL_BUILD === `true` || false
   const grouped = _.groupBy(queryIds, p =>
     p.slice(0, 4) === `sq--` ? `static` : `page`
   )
+
+  if (incrementalBuild) {
+    if (!newPageKeys.length) {
+      newPageKeys = await pageDataUtil.getNewPageKeys(
+        store.getState(),
+        readState()
+      )
+    }
+    grouped.page = newPageKeys
+  }
+
   return {
     staticQueryIds: grouped.static || [],
     pageQueryIds: grouped.page || [],
   }
 }
 
-const reportStats = (queue, activity) => {
-  const startQueries = process.hrtime()
-  queue.on(`task_finish`, () => {
-    const stats = queue.getStats()
-    activity.setStatus(
-      `${stats.total}/${stats.peak} ${(
-        stats.total / convertHrtime(process.hrtime(startQueries)).seconds
-      ).toFixed(2)} queries/second`
-    )
-  })
-}
-
 const processQueries = async (queryJobs, activity) => {
   const queue = queryQueue.createBuildQueue()
-  reportStats(queue, activity)
-  await queryQueue.processBatch(queue, queryJobs)
+  await queryQueue.processBatch(queue, queryJobs, activity)
 }
 
 const createStaticQueryJob = (state, queryId) => {
@@ -177,12 +190,93 @@ const createStaticQueryJob = (state, queryId) => {
   }
 }
 
+/**
+ * Creates activity object which:
+ *  - creates actual progress activity if there are any queries that need to be run
+ *  - creates activity-like object that just cancels pending activity if there are no queries to run
+ */
+const createQueryRunningActivity = (queryJobsCount, parentSpan) => {
+  if (queryJobsCount) {
+    const activity = report.createProgress(`run queries`, queryJobsCount, 0, {
+      id: `query-running`,
+      parentSpan,
+    })
+    activity.start()
+    return activity
+  } else {
+    return {
+      done: () => {
+        report.completeActivity(`query-running`)
+      },
+      tick: () => {},
+    }
+  }
+}
+
 const processStaticQueries = async (queryIds, { state, activity }) => {
   state = state || store.getState()
   await processQueries(
     queryIds.map(id => createStaticQueryJob(state, id)),
     activity
   )
+}
+
+const processPageQueries = async (queryIds, { state, activity }) => {
+  state = state || store.getState()
+  // Make sure we filter out pages that don't exist. An example is
+  // /dev-404-page/, whose SitePage node is created via
+  // `internal-data-bridge`, but the actual page object is only
+  // created during `gatsby develop`.
+  const pages = _.filter(queryIds.map(id => state.pages.get(id)))
+  await processQueries(
+    pages.map(page => createPageQueryJob(state, page)),
+    activity
+  )
+}
+
+const getInitialQueryProcessors = async ({ parentSpan } = {}) => {
+  const state = store.getState()
+  const queryIds = calcInitialDirtyQueryIds(state)
+  const { staticQueryIds, pageQueryIds } = await groupQueryIds(queryIds)
+
+  const queryjobsCount =
+    _.filter(pageQueryIds.map(id => state.pages.get(id))).length +
+    staticQueryIds.length
+
+  let activity = null
+  let processedQueuesCount = 0
+  const createProcessor = (fn, queryIds) => async () => {
+    if (!activity) {
+      activity = createQueryRunningActivity(queryjobsCount, parentSpan)
+    }
+
+    await fn(queryIds, { state, activity })
+
+    processedQueuesCount++
+    // if both page and static queries are done, finish activity
+    if (processedQueuesCount === 2) {
+      activity.done()
+    }
+  }
+
+  return {
+    processStaticQueries: createProcessor(processStaticQueries, staticQueryIds),
+    processPageQueries: createProcessor(processPageQueries, pageQueryIds),
+    pageQueryIds,
+  }
+}
+
+const initialProcessQueries = async ({ parentSpan } = {}) => {
+  const {
+    pageQueryIds,
+    processPageQueries,
+    processStaticQueries,
+  } = await getInitialQueryProcessors({ parentSpan })
+
+  await processStaticQueries()
+  await processPageQueries()
+
+  return { pageQueryIds }
 }
 
 const createPageQueryJob = (state, page) => {
@@ -201,19 +295,6 @@ const createPageQueryJob = (state, page) => {
   }
 }
 
-const processPageQueries = async (queryIds, { state, activity }) => {
-  state = state || store.getState()
-  // Make sure we filter out pages that don't exist. An example is
-  // /dev-404-page/, whose SitePage node is created via
-  // `internal-data-bridge`, but the actual page object is only
-  // created during `gatsby develop`.
-  const pages = _.filter(queryIds.map(id => state.pages.get(id)))
-  await processQueries(
-    pages.map(page => createPageQueryJob(state, page)),
-    activity
-  )
-}
-
 /////////////////////////////////////////////////////////////////////
 // Listener for gatsby develop
 
@@ -224,10 +305,10 @@ let listenerQueue
  * Run any dirty queries. See `calcQueries` for what constitutes a
  * dirty query
  */
-const runQueuedQueries = () => {
+const runQueuedQueries = async () => {
   if (listenerQueue) {
     const state = store.getState()
-    const { staticQueryIds, pageQueryIds } = groupQueryIds(
+    const { staticQueryIds, pageQueryIds } = await groupQueryIds(
       calcDirtyQueryIds(state)
     )
     const pages = _.filter(pageQueryIds.map(id => state.pages.get(id)))
@@ -250,7 +331,8 @@ const runQueuedQueries = () => {
  *
  * For what constitutes a dirty query, see `calcQueries`
  */
-const startListeningToDevelopQueue = () => {
+
+const startListeningToDevelopQueue = async () => {
   // We use a queue to process batches of queries so that they are
   // processed consecutively
   let graphqlRunner = null
@@ -260,14 +342,25 @@ const startListeningToDevelopQueue = () => {
     }
     return graphqlRunner
   })
-  listenerQueue = new Queue((queryJobs, callback) =>
-    queryQueue
-      .processBatch(developQueue, queryJobs)
-      .then(() => callback(null))
-      .catch(callback)
-  )
+  listenerQueue = new Queue((queryJobs, callback) => {
+    const activity = createQueryRunningActivity(queryJobs.length)
 
-  emitter.on(`API_RUNNING_QUEUE_EMPTY`, runQueuedQueries)
+    const onFinish = (...arg) => {
+      activity.done()
+      return callback(...arg)
+    }
+
+    return queryQueue
+      .processBatch(developQueue, queryJobs, activity)
+      .then(() => onFinish(null))
+      .catch(onFinish)
+  })
+
+  emitter.on(`API_RUNNING_START`, () => {
+    report.pendingActivity({ id: `query-running` })
+  })
+
+  emitter.on(`API_RUNNING_QUEUE_EMPTY`, await runQueuedQueries)
   ;[
     `DELETE_CACHE`,
     `CREATE_NODE`,
@@ -309,9 +402,11 @@ const enqueueExtractedPageComponent = componentPath => {
 
 module.exports = {
   calcInitialDirtyQueryIds,
-  groupQueryIds,
-  processStaticQueries,
   processPageQueries,
+  processStaticQueries,
+  groupQueryIds,
+  initialProcessQueries,
+  getInitialQueryProcessors,
   startListeningToDevelopQueue,
   runQueuedQueries,
   enqueueExtractedQueryId,

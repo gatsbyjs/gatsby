@@ -1,5 +1,5 @@
 ---
-title: Building an e-commerce site
+title: Building an E-commerce Site
 ---
 
 This is a stub. Help our community expand it.

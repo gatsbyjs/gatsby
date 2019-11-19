@@ -15,7 +15,7 @@ Quickly get started using the Gatsby blog theme, and notes theme, together! This
 
     Use the Gatsby CLI to create a new site, specifying this theme starter.
 
-    ```sh
+    ```shell
     # create a new Gatsby site using this theme starter
     gatsby new my-themed-site https://github.com/gatsbyjs/gatsby-starter-theme
     ```
@@ -24,7 +24,7 @@ Quickly get started using the Gatsby blog theme, and notes theme, together! This
 
     Navigate into your new site’s directory and start it up.
 
-    ```sh
+    ```shell
     cd my-themed-site/
     gatsby develop
     ```

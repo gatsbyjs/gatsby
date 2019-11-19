@@ -9,14 +9,13 @@ const apiRunnerNode = require(`../utils/api-runner-node`)
 const { copyStaticDirs } = require(`../utils/get-static-dir`)
 const { initTracer, stopTracer } = require(`../utils/tracer`)
 const db = require(`../db`)
-const tracer = require(`opentracing`).globalTracer()
 const signalExit = require(`signal-exit`)
 const telemetry = require(`gatsby-telemetry`)
 const { store, emitter, readState } = require(`../redux`)
 const queryUtil = require(`../query`)
 const pageDataUtil = require(`../utils/page-data`)
 const WorkerPool = require(`../utils/worker/pool`)
-const handleWebpackError = require(`../utils/webpack-error-parser`)
+const { structureWebpackErrors } = require(`../utils/webpack-error-utils`)
 
 type BuildArgs = {
   directory: string,
@@ -43,13 +42,15 @@ module.exports = async function build(program: BuildArgs) {
   const incrementalBuild =
     process.env.GATSBY_INCREMENTAL_BUILD === `true` || false
   initTracer(program.openTracingConfigFile)
+  const buildActivity = report.phantomActivity(`build`)
+  buildActivity.start()
 
   telemetry.trackCli(`BUILD_START`)
-  signalExit(() => {
-    telemetry.trackCli(`BUILD_END`)
+  signalExit(exitCode => {
+    telemetry.trackCli(`BUILD_END`, { exitCode })
   })
 
-  const buildSpan = tracer.startSpan(`build`)
+  const buildSpan = buildActivity.span
   buildSpan.setTag(`directory`, program.directory)
 
   const { graphqlRunner } = await bootstrap({
@@ -57,18 +58,15 @@ module.exports = async function build(program: BuildArgs) {
     parentSpan: buildSpan,
   })
 
-  const queryIds = queryUtil.calcInitialDirtyQueryIds(store.getState())
-  const { staticQueryIds, pageQueryIds } = queryUtil.groupQueryIds(queryIds)
-
-  let activity = report.activityTimer(`run static queries`, {
+  const {
+    pageQueryIds,
+    processPageQueries,
+    processStaticQueries,
+  } = await queryUtil.getInitialQueryProcessors({
     parentSpan: buildSpan,
   })
-  activity.start()
-  await queryUtil.processStaticQueries(staticQueryIds, {
-    activity,
-    state: store.getState(),
-  })
-  activity.end()
+
+  await processStaticQueries()
 
   await apiRunnerNode(`onPreBuild`, {
     graphql: graphqlRunner,
@@ -79,7 +77,7 @@ module.exports = async function build(program: BuildArgs) {
   // an equivalent static directory within public.
   copyStaticDirs()
 
-  activity = report.activityTimer(
+  let activity = report.activityTimer(
     `Building production JavaScript and CSS bundles`,
     { parentSpan: buildSpan }
   )
@@ -87,7 +85,7 @@ module.exports = async function build(program: BuildArgs) {
   const stats = await buildProductionBundle(program, {
     parentSpan: activity.span,
   }).catch(err => {
-    report.panic(handleWebpackError(`build-javascript`, err))
+    activity.panic(structureWebpackErrors(`build-javascript`, err))
   })
   activity.end()
 
@@ -113,6 +111,7 @@ module.exports = async function build(program: BuildArgs) {
       [...store.getState().pages.keys()],
       pageQueryIds
     )
+
     await pageDataUtil.updateCompilationHashes(
       { publicDir, workerPool },
       cleanPagePaths,
@@ -121,28 +120,7 @@ module.exports = async function build(program: BuildArgs) {
     activity.end()
   }
 
-  let newPageKeys = []
-  if (incrementalBuild) {
-    activity = report.activityTimer(`Comparing previous data set`)
-    activity.start()
-    newPageKeys = await pageDataUtil.getNewPageKeys(
-      store.getState(),
-      readState()
-    )
-    activity.end()
-  }
-
-  activity = report.activityTimer(`run page queries`, {
-    parentSpan: buildSpan,
-  })
-  activity.start()
-  await queryUtil.processPageQueries(
-    incrementalBuild ? newPageKeys : pageQueryIds,
-    {
-      activity,
-    }
-  )
-  activity.end()
+  await processPageQueries()
 
   require(`../redux/actions`).boundActionCreators.setProgramStatus(
     `BOOTSTRAP_QUERY_RUNNING_FINISHED`
@@ -152,32 +130,47 @@ module.exports = async function build(program: BuildArgs) {
   activity = report.activityTimer(`Building static HTML for pages`, {
     parentSpan: buildSpan,
   })
+  const pagePaths = incrementalBuild
+    ? [...pageQueryIds]
+    : [...store.getState().pages.keys()]
+  activity = report.createProgress(
+    `Building static HTML for pages`,
+    pagePaths.length,
+    0,
+    {
+      parentSpan: buildSpan,
+    }
+  )
   activity.start()
   try {
     await buildHTML.buildPages({
       program,
       stage: `build-html`,
-      pagePaths: incrementalBuild
-        ? newPageKeys
-        : [...store.getState().pages.keys()],
+      pagePaths,
       activity,
       workerPool,
     })
   } catch (err) {
     let id = `95313` // TODO: verify error IDs exist
-    if (err.message === `ReferenceError: window is not defined`) {
-      id = `95312`
+    const context = {
+      errorPath: err.context && err.context.path,
     }
 
-    report.panic({
+    const match = err.message.match(
+      /ReferenceError: (window|document|localStorage|navigator|alert|location) is not defined/i
+    )
+    if (match && match[1]) {
+      id = `95312`
+      context.ref = match[1]
+    }
+
+    activity.panic({
       id,
+      context,
       error: err,
-      context: {
-        errorPath: err.context && err.context.path,
-      },
     })
   }
-  activity.end()
+  activity.done()
 
   let deletedPageKeys = []
   if (incrementalBuild) {
@@ -208,9 +201,9 @@ module.exports = async function build(program: BuildArgs) {
   buildSpan.finish()
   await stopTracer()
   workerPool.end()
-
+  buildActivity.end()
   if (incrementalBuild && process.argv.indexOf(`--log-pages`) > -1) {
-    console.log(`incrementalBuildPages:${newPageKeys.join(`|`)}`)
+    console.log(`incrementalBuildPages:${pageQueryIds.join(`|`)}`)
     console.log(`incrementalBuildDeletedPages:${deletedPageKeys.join(`|`)}`)
   }
 }

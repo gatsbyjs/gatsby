@@ -46,7 +46,7 @@ async function runTest() {
 
   for (let i = 0; i < rounds; i++) {
     // process.stdout.write(`Round ${i + 1}: `)
-    await executeBootstrap(i)
+    await executeBootstrap()
   }
 
   let averageSum = [0, 0]

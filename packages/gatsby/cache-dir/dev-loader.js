@@ -1,5 +1,5 @@
 import { BaseLoader } from "./loader"
-import { cleanPath } from "./find-path"
+import { findPath } from "./find-path"
 
 class DevLoader extends BaseLoader {
   constructor(syncRequires, matchPaths) {
@@ -9,11 +9,12 @@ class DevLoader extends BaseLoader {
   }
 
   loadPage(pagePath) {
-    const realPath = cleanPath(pagePath)
-    return super.loadPage(realPath).then(result => {
-      require(`./socketIo`).getPageData(realPath)
-      return result
-    })
+    const realPath = findPath(pagePath)
+    return super.loadPage(realPath).then(result =>
+      require(`./socketIo`)
+        .getPageData(realPath)
+        .then(() => result)
+    )
   }
 
   loadPageDataJson(rawPath) {

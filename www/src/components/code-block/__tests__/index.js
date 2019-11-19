@@ -1,13 +1,17 @@
 import React from "react"
 import { render } from "@testing-library/react"
+import { ThemeProvider } from "theme-ui"
 
+import theme from "../../../../src/gatsby-plugin-theme-ui"
 import CodeBlock from ".."
 
 describe(`basic functionality`, () => {
   describe(`copy`, () => {
     it(`renders a copy button`, () => {
       const { queryByText } = render(
-        <CodeBlock language="jsx">{`var a = 'b'`}</CodeBlock>
+        <ThemeProvider theme={theme}>
+          <CodeBlock language="jsx">{`var a = 'b'`}</CodeBlock>
+        </ThemeProvider>
       )
 
       expect(queryByText(`copy`)).toBeDefined()
@@ -36,7 +40,11 @@ describe(`basic functionality`, () => {
         )
       }
     `.trim()
-      instance = render(<CodeBlock language="jsx">{text}</CodeBlock>)
+      instance = render(
+        <ThemeProvider theme={theme}>
+          <CodeBlock language="jsx">{text}</CodeBlock>
+        </ThemeProvider>
+      )
     })
 
     it(`hides lines appropriately`, () => {

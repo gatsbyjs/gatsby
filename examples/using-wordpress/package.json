@@ -1,7 +1,7 @@
 {
   "name": "gatsby-example-using-wordpress",
   "private": true,
-  "description": "Gatsby example site using the Wordpress source plugin",
+  "description": "Gatsby example site using the WordPress source plugin",
   "version": "1.0.0-beta.6",
   "author": "Sebastien Fichot <fichot.sebastien@gmail.com>",
   "dependencies": {

@@ -15,13 +15,13 @@ A Gatsby theme for creating a blog child theme. It includes all of the data stru
 
 This will generate a new site that pre-configures use of the blog core theme.
 
-```sh
+```shell
 gatsby new my-themed-blog https://github.com/gatsbyjs/gatsby-starter-blog-theme-core
 ```
 
 ### Manually add to your site
 
-```sh
+```shell
 npm install --save gatsby-theme-blog-core
 ```
 

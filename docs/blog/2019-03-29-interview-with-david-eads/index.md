@@ -118,7 +118,7 @@ For translation, pulling from Google Sheets is really powerful.
 
 **Sam:** Ooh, that's some really slick i18n (internationalization).
 
-**David:** This workflow isn't perfect, but it's better than the alternatives I've found. I am, however, excited to think about replacing parts of this with a full-blown headless CMS.
+**David:** This workflow isn't perfect, but it's better than the alternatives I've found. I am, however, excited to think about replacing parts of this with a full-blown [headless CMS](/docs/headless-cms/).
 
 **Sam:** My take is actually slightly different -- I think one really cool thing about what you're doing is that you've basically turned Google Sheets into a CMS.
 
