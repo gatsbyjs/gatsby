@@ -165,8 +165,13 @@ module.exports = async (args: BootstrapArgs) => {
   const flattenedPlugins = await loadPlugins(config, program.directory)
   activity.end()
 
+  const pluginsStr = flattenedPlugins.map(p => `${p.name}@${p.version}`)
   telemetry.decorateEvent(`BUILD_END`, {
-    plugins: flattenedPlugins.map(p => `${p.name}@${p.version}`),
+    plugins: pluginsStr,
+  })
+
+  telemetry.decorateEvent(`DEVELOP_STOP`, {
+    plugins: pluginsStr,
   })
 
   // onPreInit
