@@ -233,7 +233,7 @@ jobs:
       - notify-status:
           condition: << parameters.postStatus >>
 
-  e2e_tests_production_runtime-in-normal-mode:
+  e2e_tests_production_runtime:
     <<: *e2e_tests_production_runtime_alias
 
   e2e_tests_production_runtime-with-experimental-react:
@@ -459,7 +459,7 @@ workflows:
           <<: *e2e-test-workflow
       - e2e_tests_development_runtime:
           <<: *e2e-test-workflow
-      - e2e_tests_production_runtime-in-normal-mode:
+      - e2e_tests_production_runtime:
           <<: *e2e-test-workflow
       - themes_e2e_tests_production_runtime:
           <<: *e2e-test-workflow
