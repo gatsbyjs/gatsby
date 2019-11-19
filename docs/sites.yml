@@ -8548,6 +8548,12 @@
   built_by: Corey Ward
   built_by_url: "http://www.coreyward.me/"
   featured: false
+- title: VeganWorks
+  url: https://veganworks.com/
+  main_url: https://veganworks.com/
+  description: We make delicious vegan snack boxes.
+  categories:
+    - Food
 - title: codesundar
   url: https://codesundar.com
   main_url: https://codesundar.com
