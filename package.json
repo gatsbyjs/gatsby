@@ -45,7 +45,7 @@
   },
   "engines": {
     "yarn": "^1.17.3",
-    "node": ">=6.11.5"
+    "node": ">=8.0.0"
   },
   "eslintIgnore": [
     "interfaces",

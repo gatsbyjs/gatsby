@@ -110,11 +110,18 @@ jobs:
     executor: node
     steps:
       - checkout
-      - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*"
       - <<: *restore_cache
       - <<: *install_node_modules
       - <<: *persist_cache
+      # persist our git checkout and node_modules as the next step (assert-changed-files) might exit this step
+      # when no files have changed (master). We still need to have these files for jobs like lint & unit_tests_node8
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - "*"
+      - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*"
       - run: yarn bootstrap -- concurrency=2
+      # Persist the workspace again with all packages already built
       - persist_to_workspace:
           root: ./
           paths:
@@ -283,9 +290,9 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: v1_www_public_dir
+          key: v2_www_public_dir
       - restore_cache:
-          key: v1_www_cache_dir
+          key: v2_www_cache_dir
       - run:
           command: yarn
           working_directory: ~/project/www
@@ -294,11 +301,11 @@ jobs:
           command: GATSBY_CPU_COUNT=8 yarn build
           working_directory: ~/project/www
       - save_cache:
-          key: v1_www_public_dir_{{ epoch }}
+          key: v2_www_public_dir_{{ epoch }}
           paths:
             - ~/project/www/public
       - save_cache:
-          key: v1_www_cache_dir_{{ epoch }}
+          key: v2_www_cache_dir_{{ epoch }}
           paths:
             - ~/project/www/.cache
 
@@ -308,7 +315,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: v1_www_public_dir
+          key: v2_www_public_dir
       - run:
           command: yarn add netlify-cli
           working_directory: ~/project/www
@@ -452,6 +459,8 @@ workflows:
       - starters_validate:
           <<: *ignore_master
       - starters_publish:
+          requires:
+            - bootstrap
           filters:
             branches:
               only:

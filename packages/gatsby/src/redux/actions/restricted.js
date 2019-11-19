@@ -1,6 +1,7 @@
 // @flow
 const { camelCase } = require(`lodash`)
 const report = require(`gatsby-cli/lib/reporter`)
+const { parseTypeDef } = require(`../../schema/types/type-defs`)
 
 import type { Plugin } from "./types"
 
@@ -187,7 +188,9 @@ actions.createTypes = (
     type: `CREATE_TYPES`,
     plugin,
     traceId,
-    payload: types,
+    payload: Array.isArray(types)
+      ? types.map(parseTypeDef)
+      : parseTypeDef(types),
   }
 }
 

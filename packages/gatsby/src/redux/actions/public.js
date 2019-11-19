@@ -9,7 +9,7 @@ const path = require(`path`)
 const fs = require(`fs`)
 const { trueCasePathSync } = require(`true-case-path`)
 const url = require(`url`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 const { hasNodeChanged, getNode } = require(`../../db/nodes`)
 const sanitizeNode = require(`../../db/sanitize-node`)
 const { store } = require(`..`)
@@ -24,8 +24,11 @@ const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
 const actions = {}
 const isWindows = platform() === `win32`
 
-function getRelevantFilePathSegments(filePath) {
-  return filePath.split(`/`).filter(s => s !== ``)
+const ensureWindowsDriveIsUppercase = filePath => {
+  const segments = filePath.split(`:`).filter(s => s !== ``)
+  return segments.length > 0
+    ? segments.shift().toUpperCase() + `:` + segments.join(`:`)
+    : filePath
 }
 
 const findChildren = initialChildren => {
@@ -291,9 +294,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       }
 
       if (isWindows) {
-        const segments = getRelevantFilePathSegments(page.component)
-        page.component =
-          segments.shift().toUpperCase() + `/` + segments.join(`/`)
+        page.component = ensureWindowsDriveIsUppercase(page.component)
       }
 
       if (trueComponentPath !== page.component) {
@@ -530,10 +531,15 @@ actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
     nodes.map(n => findChildren(getNode(n).children))
   )
 
+  const nodeIds = [...nodes, ...descendantNodes]
+
   const deleteNodesAction = {
     type: `DELETE_NODES`,
     plugin,
-    payload: [...nodes, ...descendantNodes],
+    // Payload contains node IDs but inference-metadata and loki reducers require
+    // full node instances
+    payload: nodeIds,
+    fullNodes: nodeIds.map(getNode),
   }
   return deleteNodesAction
 }
@@ -960,6 +966,7 @@ actions.createNodeField = (
     type: `ADD_FIELD_TO_NODE`,
     plugin,
     payload: node,
+    addedField: name,
   }
 }
 
