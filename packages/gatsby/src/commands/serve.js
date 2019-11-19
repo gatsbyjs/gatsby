@@ -85,9 +85,18 @@ module.exports = async program => {
   app.use(telemetry.expressMiddleware(`SERVE`))
 
   router.use(compression())
-  router.use(express.static(`public`, { extensions: [`index.html`] }))
+  router.use(express.static(`public`, { redirect: false }))
   const matchPaths = await readMatchPaths(program)
   router.use(matchPathRouter(matchPaths, { root }))
+  router.use((req, res, next) => {
+    if (!/.+\..+$/g.test(req.url) && req.url.slice(-1) !== `/`) {
+      res.sendFile(req.url + `/index.html`, {
+        root,
+      })
+    } else {
+      next()
+    }
+  })
   router.use((req, res, next) => {
     if (req.accepts(`html`)) {
       return res.status(404).sendFile(`404.html`, { root })
