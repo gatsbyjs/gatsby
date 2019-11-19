@@ -41,7 +41,7 @@ module.exports = async ({ syncToken, reporter, pluginConfig }) => {
       details = `You seem to be offline`
     } else if (e.code === `SELF_SIGNED_CERT_IN_CHAIN`) {
       reporter.panic(
-        `Your self signed certificate for SSL communication is failing.`,
+        `We couldn't make a secure connection to your contentful space. Please check if you have any self-signed SSL certificates installed.`,
         e
       )
     } else if (e.response) {
