@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.3.1...gatsby-plugin-sharp@2.3.2) (2019-11-18)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.3.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.3.0...gatsby-plugin-sharp@2.3.1) (2019-11-18)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+# [2.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.39...gatsby-plugin-sharp@2.3.0) (2019-11-15)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.2.39](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.38...gatsby-plugin-sharp@2.2.39) (2019-11-15)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.2.38](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.37...gatsby-plugin-sharp@2.2.38) (2019-11-13)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.2.37](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.36...gatsby-plugin-sharp@2.2.37) (2019-11-10)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
 ## [2.2.36](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.35...gatsby-plugin-sharp@2.2.36) (2019-10-29)
 
 ### Bug Fixes

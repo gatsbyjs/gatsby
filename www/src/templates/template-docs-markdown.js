@@ -27,9 +27,7 @@ const containerStyles = {
   //
   // could be much cleaner/clearer, please feel free to improve 🙏
   maxWidth: t =>
-    `calc(${t.sizes.mainContentWidth.withSidebar} + ${t.sizes.tocWidth} + ${
-      t.space[9]
-    } + ${t.space[9]} + ${t.space[9]})`,
+    `calc(${t.sizes.mainContentWidth.withSidebar} + ${t.sizes.tocWidth} + ${t.space[9]} + ${t.space[9]} + ${t.space[9]})`,
   px: 9,
 }
 
@@ -107,13 +105,9 @@ function DocsTemplate({ data, location, pageContext: { next, prev } }) {
                     maxWidth: `tocWidth`,
                     position: `sticky`,
                     top: t =>
-                      `calc(${t.sizes.headerHeight} + ${
-                        t.sizes.bannerHeight
-                      } + ${t.space[9]})`,
+                      `calc(${t.sizes.headerHeight} + ${t.sizes.bannerHeight} + ${t.space[9]})`,
                     maxHeight: t =>
-                      `calc(100vh - ${t.sizes.headerHeight} - ${
-                        t.sizes.bannerHeight
-                      } - ${t.space[9]} - ${t.space[9]})`,
+                      `calc(100vh - ${t.sizes.headerHeight} - ${t.sizes.bannerHeight} - ${t.space[9]} - ${t.space[9]})`,
                     overflow: `auto`,
                   },
                 }}

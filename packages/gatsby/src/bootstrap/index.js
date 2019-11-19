@@ -1,7 +1,7 @@
 /* @flow */
 
 const _ = require(`lodash`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 const fs = require(`fs-extra`)
 const md5File = require(`md5-file/promise`)
 const crypto = require(`crypto`)
@@ -130,6 +130,7 @@ module.exports = async (args: BootstrapArgs) => {
     const themes = await loadThemes(config, {
       useLegacyThemes: true,
       configFilePath,
+      rootDir: program.directory,
     })
     config = themes.config
 
@@ -141,6 +142,7 @@ module.exports = async (args: BootstrapArgs) => {
     const plugins = await loadThemes(config, {
       useLegacyThemes: false,
       configFilePath,
+      rootDir: program.directory,
     })
     config = plugins.config
   }
@@ -231,8 +233,7 @@ module.exports = async (args: BootstrapArgs) => {
   if (oldPluginsHash && pluginsHash !== oldPluginsHash) {
     report.info(report.stripIndent`
       One or more of your plugins have changed since the last time you ran Gatsby. As
-      a precaution, we're deleting your site's cache to ensure there's not any stale
-      data
+      a precaution, we're deleting your site's cache to ensure there's no stale data.
     `)
   }
   const cacheDirectory = `${program.directory}/.cache`
@@ -410,6 +411,16 @@ module.exports = async (args: BootstrapArgs) => {
   activity.start()
   await apiRunnerNode(`onPreBootstrap`, {
     parentSpan: activity.span,
+  })
+  activity.end()
+
+  // Prepare static schema types
+  activity = report.activityTimer(`createSchemaCustomization`, {
+    parentSpan: bootstrapSpan,
+  })
+  activity.start()
+  await require(`../utils/create-schema-customization`)({
+    parentSpan: bootstrapSpan,
   })
   activity.end()
 

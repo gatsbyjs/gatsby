@@ -113,7 +113,10 @@ describe(`Create and update nodes`, () => {
     const action = dispatch.mock.calls[0][0]
 
     let state = nodeTouchedReducer(undefined, action)
-    expect(state[`hi`]).toBe(true)
+
+    expect(state instanceof Set).toBe(true)
+
+    expect(state.has(`hi`)).toBe(true)
   })
 
   it(`allows adding fields to nodes`, () => {

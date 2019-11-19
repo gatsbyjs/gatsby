@@ -457,3 +457,13 @@
   for_hire: true
   hiring: false
   portfolio: true
+- name: Epic Awesome
+  type: agency
+  image: images/epic-awesome.jpg
+  description: >-
+    We help startups and small business to grow their business. We provide business and tech consulting alongside web and mobile development.
+  location: Brazil and Sweden
+  website: "https://epicawesome.se/"
+  for_hire: true
+  hiring: false
+  portfolio: true

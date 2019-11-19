@@ -43,7 +43,6 @@ interface GatsbyImageProps {
   backgroundColor?: string | boolean
   onLoad?: () => void
   onError?: (event: any) => void
-  onClick?: () => void
   onStartLoad?: (param: { wasCached: boolean }) => void
   Tag?: string
   itemProp?: string

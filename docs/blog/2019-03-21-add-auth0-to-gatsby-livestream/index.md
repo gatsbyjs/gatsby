@@ -43,7 +43,7 @@ The code we built is [available on GitHub](https://github.com/jlengstorf/gatsby-
 
 ## Additional links and resources
 
-- [Building Apps With Gatsby](/docs/building-apps-with-gatsby/)
+- [Adding App Functionality with Gatsby](/docs/adding-app-and-website-functionality/)
 - [Auth0](https://auth0.com/)
 - [Simple auth example in Gatsby](https://github.com/gatsbyjs/gatsby/blob/master/examples/simple-auth/)
 - [Source code for the Gatsby store](https://github.com/gatsbyjs/store.gatsbyjs.org), which uses Auth0 to authenticate users
