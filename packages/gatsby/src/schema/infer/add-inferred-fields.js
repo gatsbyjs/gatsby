@@ -6,6 +6,7 @@ const report = require(`gatsby-cli/lib/reporter`)
 
 const { isFile } = require(`./is-file`)
 const { isDate } = require(`../types/date`)
+const { addDerivedType } = require(`../types/derived-types`)
 const is32BitInteger = require(`./is-32-bit-integer`)
 
 const addInferredFields = ({
@@ -365,6 +366,10 @@ const getSimpleFieldConfig = ({
               `plugin`,
               typeComposer.getExtension(`plugin`)
             )
+            addDerivedType({
+              typeComposer,
+              derivedTypeName: fieldTypeComposer.getTypeName(),
+            })
           }
         }
 

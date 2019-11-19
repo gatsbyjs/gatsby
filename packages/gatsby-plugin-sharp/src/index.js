@@ -40,10 +40,6 @@ exports.setBoundActionCreators = actions => {
   boundActionCreators = actions
 }
 
-// We set the queue to a Map instead of an array to easily search in onCreateDevServer Api hook
-const queue = new Map()
-exports.queue = queue
-
 function queueImageResizing({ file, args = {}, reporter }) {
   const pluginOptions = getPluginOptions()
   const options = healOptions(pluginOptions, args, file.extension)
@@ -53,15 +49,16 @@ function queueImageResizing({ file, args = {}, reporter }) {
 
   const argsDigestShort = createArgsDigest(options)
   const imgSrc = `/${file.name}.${options.toFormat}`
-  const dirPath = path.join(
+  const outputDir = path.join(
     process.cwd(),
     `public`,
     `static`,
-    file.internal.contentDigest,
-    argsDigestShort
+    file.internal.contentDigest
   )
-  const filePath = path.join(dirPath, imgSrc)
-  fs.ensureDirSync(dirPath)
+  const outputFilePath = path.join(argsDigestShort, imgSrc)
+
+  // make sure outputDir is created
+  fs.ensureDirSync(path.join(outputDir, argsDigestShort))
 
   let width
   let height
@@ -102,24 +99,28 @@ function queueImageResizing({ file, args = {}, reporter }) {
     args: options,
     inputPath: file.absolutePath,
     contentDigest: file.internal.contentDigest,
-    outputPath: filePath,
+    outputDir,
+    outputPath: outputFilePath,
   }
 
-  queue.set(prefixedSrc, job)
+  let finishedPromise = Promise.resolve()
 
-  // schedule job immediately - this will be changed when image processing on demand is implemented
-  const finishedPromise = scheduleJob(
-    job,
-    boundActionCreators,
-    pluginOptions,
-    reporter
-  ).then(() => {
-    queue.delete(prefixedSrc)
-  })
+  // Check if the output file already exists so we don't redo work.
+  // TODO: Remove this when jobs api is stable, it will have a better check
+  const outputFile = path.join(job.outputDir, job.outputPath)
+  if (!fs.existsSync(outputFile)) {
+    // schedule job immediately - this will be changed when image processing on demand is implemented
+    finishedPromise = scheduleJob(
+      job,
+      boundActionCreators,
+      pluginOptions,
+      reporter
+    )
+  }
 
   return {
     src: prefixedSrc,
-    absolutePath: filePath,
+    absolutePath: outputFile,
     width,
     height,
     aspectRatio,

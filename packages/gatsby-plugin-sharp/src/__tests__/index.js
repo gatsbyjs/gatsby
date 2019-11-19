@@ -1,6 +1,6 @@
 const path = require(`path`)
-const fs = require(`fs-extra`)
 const sharp = require(`sharp`)
+const fs = require(`fs-extra`)
 jest.mock(`../scheduler`)
 
 jest.mock(`async/queue`, () => () => {
@@ -10,6 +10,7 @@ jest.mock(`async/queue`, () => () => {
 })
 
 fs.ensureDirSync = jest.fn()
+fs.existsSync = jest.fn().mockReturnValue(false)
 
 const {
   base64,
@@ -101,6 +102,21 @@ describe(`gatsby-plugin-sharp`, () => {
       await result.finishedPromise
 
       expect(scheduleJob).toMatchSnapshot()
+    })
+
+    it(`Shouldn't schedule a job when outputFile already exists`, async () => {
+      scheduleJob.mockClear()
+      fs.existsSync.mockReturnValue(true)
+
+      const result = queueImageResizing({
+        file: getFileObject(path.join(__dirname, `images/144-density.png`)),
+        args: { width: 3 },
+      })
+
+      await result.finishedPromise
+
+      expect(fs.existsSync).toHaveBeenCalledWith(result.absolutePath)
+      expect(scheduleJob).not.toHaveBeenCalled()
     })
   })
 

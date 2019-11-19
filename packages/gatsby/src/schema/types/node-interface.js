@@ -1,6 +1,8 @@
 const { SORTABLE_ENUM } = require(`./sort`)
 const { SEARCHABLE_ENUM } = require(`./filter`)
 
+const NodeInterfaceFields = [`id`, `parent`, `children`, `internal`]
+
 const getOrCreateNodeInterface = schemaComposer => {
   // TODO: why is `mediaType` on Internal? Applies only to File!?
   // `fieldOwners` is an object
@@ -82,4 +84,5 @@ module.exports = {
   addNodeInterface,
   addNodeInterfaceFields,
   getNodeInterface,
+  NodeInterfaceFields,
 }

@@ -8561,6 +8561,24 @@
     - JavaScript
   built_by: Anurag Hazra
   built_by_url: "https://github.com/anuraghazra"
+- title: VeganWorks
+  url: https://veganworks.com/
+  main_url: https://veganworks.com/
+  description: We make delicious vegan snack boxes.
+  categories:
+    - Food
+- title: codesundar
+  url: https://codesundar.com
+  main_url: https://codesundar.com
+  description: >
+    Learn PhoneGap, Ionic, Flutter
+  categories:
+    - Education
+    - Technology
+    - Web Development
+    - Blog
+  built_by: codesundar
+  built_by_url: https://codesundar.com
   featured: false
 - title: Nordic Microfinance Initiative
   url: "https://www.nmimicro.no/"
@@ -8572,3 +8590,27 @@
     - Business
   built_by: Othermachines
   built_by_url: "https://othermachines.com"
+- title: Subscribe Pro Documentation
+  url: https://docs.subscribepro.com/
+  main_url: https://docs.subscribepro.com/
+  description: >
+    Subscribe Pro is a subscription commerce solution that enables brands to quickly add subscription commerce models such as box, subscribe-and-save, autoship and similar to their existing eCommerce websites.
+  categories:
+    - Documentation
+    - eCommerce
+    - API
+    - Technology
+    - Web Development
+  built_by: Subscribe Pro
+  built_by_url: https://www.subscribepro.com/
+- title: Software.com
+  main_url: https://www.software.com
+  url: https://www.software.com
+  description: Our data platform helps developers learn from their data, increase productivity, and code smarter.
+  categories:
+    - Data
+    - Productivity
+    - Programming
+  built_by: Brett Stevens, Joshua Cheng, Geoff Stevens
+  built_by_url: https://github.com/swdotcom/
+  featured: false
