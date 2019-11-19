@@ -8554,6 +8554,18 @@
   description: We make delicious vegan snack boxes.
   categories:
     - Food
+- title: codesundar
+  url: https://codesundar.com
+  main_url: https://codesundar.com
+  description: >
+    Learn PhoneGap, Ionic, Flutter
+  categories:
+    - Education
+    - Technology
+    - Web Development
+    - Blog
+  built_by: codesundar
+  built_by_url: https://codesundar.com
   featured: false
 - title: Nordic Microfinance Initiative
   url: "https://www.nmimicro.no/"
