@@ -4299,7 +4299,7 @@
   description: Get started with strapi, bootstrap (reactstrap) and gatsby FAST!
   tags:
     - CMS:Strapi
-    - Bootstrap
+    - Styling:Bootstrap
   features:
     - Strapi
     - Bootstrap
