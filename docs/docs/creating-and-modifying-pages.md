@@ -156,6 +156,8 @@ exports.onCreatePage = ({ page, actions }) => {
 }
 ```
 
+Note that because Gatsby core automatically turns components in `src/pages` into pages, if you want to pass custom context you'll need to specify a different directory.
+
 On your pages and templates, you can access your context via the prop `pageContext` like this:
 
 ```jsx
