@@ -103,7 +103,7 @@ export default ({ children, title, ...props }) => {
           css={css({
             display: `flex`,
             justifyContent: `space-between`,
-            alignItems: `baseline`,
+            alignItems: `center`,
             mb: 4,
           })}
         >
