@@ -8571,4 +8571,14 @@
     - Web Development
   built_by: Subscribe Pro
   built_by_url: https://www.subscribepro.com/
+- title: Software.com
+  main_url: https://www.software.com
+  url: https://www.software.com
+  description: Our data platform helps developers learn from their data, increase productivity, and code smarter.
+  categories:
+    - Data
+    - Productivity
+    - Programming
+  built_by: Brett Stevens, Joshua Cheng, Geoff Stevens
+  built_by_url: https://github.com/swdotcom/
   featured: false

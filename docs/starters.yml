@@ -4314,6 +4314,16 @@
     - Styled-Components
     - Minimal design and easy to customize
     - Great for software or product related marketing sites
+- url: https://gatsby-strapi-starter.netlify.com/
+  repo: https://github.com/jeremylynch/gatsby-strapi-starter
+  description: Get started with strapi, bootstrap (reactstrap) and gatsby FAST!
+  tags:
+    - CMS:Strapi
+    - Styling:Bootstrap
+  features:
+    - Strapi
+    - Bootstrap
+    - Reactstrap
 - url: https://kontent-template-gatsby-landing-page-photon.netlify.com
   repo: https://github.com/Simply007/kontent-template-gatsby-landing-page-photon
   description: Kentico Kontent based starter based on Photon starter by HTML5 UP
