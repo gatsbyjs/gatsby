@@ -8558,6 +8558,19 @@
     - Business
   built_by: Othermachines
   built_by_url: "https://othermachines.com"
+- title: Subscribe Pro Documentation
+  url: https://docs.subscribepro.com/
+  main_url: https://docs.subscribepro.com/
+  description: >
+    Subscribe Pro is a subscription commerce solution that enables brands to quickly add subscription commerce models such as box, subscribe-and-save, autoship and similar to their existing eCommerce websites.
+  categories:
+    - Documentation
+    - eCommerce
+    - API
+    - Technology
+    - Web Development
+  built_by: Subscribe Pro
+  built_by_url: https://www.subscribepro.com/
 - title: Software.com
   main_url: https://www.software.com
   url: https://www.software.com
