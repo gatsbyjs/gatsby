@@ -4,7 +4,6 @@ const {
   getRemoteFileExtension,
   getRemoteFileName,
   createProgress,
-  slash,
 } = require(`../utils`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 const progress = require(`progress`)
@@ -60,23 +59,5 @@ describe(`createProgress`, () => {
     expect(bar).toHaveProperty(`tick`, expect.any(Function))
     expect(bar).toHaveProperty(`done`, expect.any(Function))
     expect(bar).toHaveProperty(`total`)
-  })
-})
-
-describe(`slash path`, () => {
-  it(`can correctly slash path`, () => {
-    ;[
-      [`foo\\bar`, `foo/bar`],
-      [`foo/bar`, `foo/bar`],
-      [`foo\\中文`, `foo/中文`],
-      [`foo/中文`, `foo/中文`],
-    ].forEach(([path, expectRes]) => {
-      expect(slash(path)).toBe(expectRes)
-    })
-  })
-
-  it(`does not modify extended length paths`, () => {
-    const extended = `\\\\?\\some\\path`
-    expect(slash(extended)).toBe(extended)
   })
 })

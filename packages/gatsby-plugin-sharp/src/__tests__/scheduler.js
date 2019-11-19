@@ -4,12 +4,6 @@ jest.mock(`lodash`, () => {
   }
 })
 
-jest.mock(`fs`, () => {
-  return {
-    existsSync: jest.fn().mockReturnValue(false),
-  }
-})
-
 jest.mock(`../worker`, () => {
   return {
     IMAGE_PROCESSING: jest.fn(),
@@ -188,30 +182,5 @@ describe(`scheduler`, () => {
         ],
       })
     )
-  })
-
-  it(`Shouldn't schedule a job when outputFile already exists`, async () => {
-    const fs = require(`fs`)
-    fs.existsSync.mockReturnValue(true)
-    const workerMock = require(`../worker`).IMAGE_PROCESSING
-    const { scheduleJob } = require(`../scheduler`)
-    const boundActionCreators = {
-      createJob: jest.fn(),
-    }
-
-    await scheduleJob(
-      {
-        inputPath: `/test-image.jpg`,
-        outputDir: `/public/static/`,
-        outputPath: `/1234/test-image.jpg`,
-        args: {},
-      },
-      boundActionCreators,
-      {},
-      false
-    )
-
-    expect(boundActionCreators.createJob).not.toHaveBeenCalled()
-    expect(workerMock).not.toHaveBeenCalled()
   })
 })
