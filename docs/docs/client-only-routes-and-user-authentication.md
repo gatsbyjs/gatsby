@@ -134,6 +134,20 @@ _Without_ this configuration set up, a user that clicks on a link to `<yoursite.
 
 > Tip: For applications with complex routing, you may want to override Gatsby's default scroll behavior with the [shouldUpdateScroll](/docs/browser-apis/#shouldUpdateScroll) Browser API.
 
+## Configuring a Server to Handle Client Side Routes
+
+As explained earlier, to access client-side routes from a server request, the server will need configuration.
+
+For example, the client-side route `/app/:id` could make a server request to `/app/why-gatsby-is-awesome` during a page refresh.
+
+The server would not be able to complete this request as `why-gatsby-is-awesome` is a client-side route. It does not have a corresponding HTML file on the server. The file found at `/app/index.html` on the server contains all the code to handle the page paths after `/app`.
+
+A pattern to follow, agnostic of server technology, is to watch for these specific routes and return the appropriate HTML file.
+
+In the previous example, when making a GET request to `/app/why-gatsby-is-awesome`, The server should respond with `/app/index.html`. It is important to note that the response code should be a **200** and not a **301** . The response is not a redirect.
+
+The client is completely unaware of any changes and receives the file it is expecting.
+
 ## Additional resources
 
 - [Gatsby repo "simple auth" example](https://github.com/gatsbyjs/gatsby/blob/master/examples/simple-auth/) - a demo implementing user authentication and restricted client-only routes

@@ -6,6 +6,7 @@ const report = require(`gatsby-cli/lib/reporter`)
 
 const { isFile } = require(`./is-file`)
 const { isDate } = require(`../types/date`)
+const { addDerivedType } = require(`../types/derived-types`)
 const is32BitInteger = require(`./is-32-bit-integer`)
 
 const addInferredFields = ({
@@ -70,7 +71,11 @@ const addInferredFieldsImpl = ({
         .map(field => `\`${field.unsanitizedKey}\``)
         .join(`, `)
       report.warn(
-        `Multiple node fields resolve to the same GraphQL field \`${prefix}.${field.key}\` - [${possibleFieldsNames}]. Gatsby will use \`${field.unsanitizedKey}\`.`
+        `Multiple node fields resolve to the same GraphQL field \`${prefix}.${
+          field.key
+        }\` - [${possibleFieldsNames}]. Gatsby will use \`${
+          field.unsanitizedKey
+        }\`.`
       )
       selectedField = field
     } else {
@@ -365,6 +370,10 @@ const getSimpleFieldConfig = ({
               `plugin`,
               typeComposer.getExtension(`plugin`)
             )
+            addDerivedType({
+              typeComposer,
+              derivedTypeName: fieldTypeComposer.getTypeName(),
+            })
           }
         }
 

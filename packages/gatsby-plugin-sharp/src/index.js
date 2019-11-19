@@ -40,10 +40,6 @@ exports.setBoundActionCreators = actions => {
   boundActionCreators = actions
 }
 
-// We set the queue to a Map instead of an array to easily search in onCreateDevServer Api hook
-const queue = new Map()
-exports.queue = queue
-
 function queueImageResizing({ file, args = {}, reporter }) {
   const pluginOptions = getPluginOptions()
   const options = healOptions(pluginOptions, args, file.extension)
@@ -107,21 +103,24 @@ function queueImageResizing({ file, args = {}, reporter }) {
     outputPath: outputFilePath,
   }
 
-  queue.set(prefixedSrc, job)
+  let finishedPromise = Promise.resolve()
 
-  // schedule job immediately - this will be changed when image processing on demand is implemented
-  const finishedPromise = scheduleJob(
-    job,
-    boundActionCreators,
-    pluginOptions,
-    reporter
-  ).then(() => {
-    queue.delete(prefixedSrc)
-  })
+  // Check if the output file already exists so we don't redo work.
+  // TODO: Remove this when jobs api is stable, it will have a better check
+  const outputFile = path.join(job.outputDir, job.outputPath)
+  if (!fs.existsSync(outputFile)) {
+    // schedule job immediately - this will be changed when image processing on demand is implemented
+    finishedPromise = scheduleJob(
+      job,
+      boundActionCreators,
+      pluginOptions,
+      reporter
+    )
+  }
 
   return {
     src: prefixedSrc,
-    absolutePath: path.join(outputDir, outputFilePath),
+    absolutePath: outputFile,
     width,
     height,
     aspectRatio,
@@ -318,7 +317,9 @@ async function fluid({ file, args = {}, reporter, cache }) {
 
   if (options[fixedDimension] < 1) {
     throw new Error(
-      `${fixedDimension} has to be a positive int larger than zero (> 0), now it's ${options[fixedDimension]}`
+      `${fixedDimension} has to be a positive int larger than zero (> 0), now it's ${
+        options[fixedDimension]
+      }`
     )
   }
 
@@ -488,9 +489,13 @@ async function fixed({ file, args = {}, reporter, cache }) {
     filteredSizes.push(dimensions[fixedDimension])
     console.warn(
       `
-                 The requested ${fixedDimension} "${options[fixedDimension]}px" for a resolutions field for
+                 The requested ${fixedDimension} "${
+        options[fixedDimension]
+      }px" for a resolutions field for
                  the file ${file.absolutePath}
-                 was larger than the actual image ${fixedDimension} of ${dimensions[fixedDimension]}px!
+                 was larger than the actual image ${fixedDimension} of ${
+        dimensions[fixedDimension]
+      }px!
                  If possible, replace the current image with a larger one.
                  `
     )
