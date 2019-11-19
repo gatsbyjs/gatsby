@@ -71,6 +71,19 @@ aliases:
       - lint
       - unit_tests_node8
 
+  e2e_tests_production_runtime_alias: &e2e_tests_production_runtime_alias
+    <<: *e2e-executor
+    parameters:
+      postStatus:
+        type: boolean
+        default: false
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/production-runtime
+          test_command: CYPRESS_PROJECT_ID=is8aoq CYPRESS_RECORD_KEY=cb4708d2-1578-4665-9a07-c59f8db28d91 yarn test && CYPRESS_PROJECT_ID=htpvkv CYPRESS_RECORD_KEY=0d734841-c613-41d2-86e5-df0b5968f93f yarn test:offline
+      - notify-status:
+          condition: << parameters.postStatus >>
+
 commands:
   notify-status:
     parameters:
@@ -221,17 +234,10 @@ jobs:
           condition: << parameters.postStatus >>
 
   e2e_tests_production_runtime:
-    <<: *e2e-executor
-    parameters:
-      postStatus:
-        type: boolean
-        default: false
-    steps:
-      - e2e-test:
-          test_path: e2e-tests/production-runtime
-          test_command: CYPRESS_PROJECT_ID=is8aoq CYPRESS_RECORD_KEY=cb4708d2-1578-4665-9a07-c59f8db28d91 yarn test && CYPRESS_PROJECT_ID=htpvkv CYPRESS_RECORD_KEY=0d734841-c613-41d2-86e5-df0b5968f93f yarn test:offline
-      - notify-status:
-          condition: << parameters.postStatus >>
+    <<: *e2e_tests_production_runtime_alias
+
+  e2e_tests_production_runtime-with-experimental-react:
+    <<: *e2e_tests_production_runtime_alias
 
   themes_e2e_tests_development_runtime:
     <<: *e2e-executor
@@ -385,7 +391,7 @@ workflows:
           postStatus: true
           requires:
             - bootstrap-with-experimental-react
-      - e2e_tests_production_runtime:
+      - e2e_tests_production_runtime-with-experimental-react:
           postStatus: true
           requires:
             - bootstrap-with-experimental-react
