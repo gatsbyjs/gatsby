@@ -1864,7 +1864,7 @@
     - Web app manifest
 - url: https://gatsby.magicsoup.io/
   repo: https://github.com/magicsoup-io/gatsby-starter-magicsoup
-  description: A production ready gatsby starter using magicsoup.io
+  description: A production ready Gatsby starter using magicsoup.io
   tags:
     - SEO
     - Markdown
@@ -2086,7 +2086,7 @@
     - Typings for scss files are automatically generated
     - Responsiveness from the beginning through easy breakpoint configuration
     - Enforce the DRY principle, no hardcoded and repeated `margin`, `font-size`, `color`, `box-shadow`, `border-radius` ... properties anymore
-    - Docker ready - you can run gatsby dev mode on your machine environment or with docker-compose
+    - Docker ready - you can run Gatsby dev mode on your machine environment or with docker-compose
 - url: https://prismic-i18n.lekoarts.de/
   repo: https://github.com/LekoArts/gatsby-starter-prismic-i18n
   description: Based on gatsby-starter-prismic with Internationalization (i18n) support.
@@ -2506,7 +2506,7 @@
     - Benefits section
     - Email signup form
     - Easily configurable
-    - Includes standard gatsby starter features
+    - Includes standard Gatsby starter features
 - url: https://anubhavsrivastava.github.io/gatsby-starter-aerial
   repo: https://github.com/anubhavsrivastava/gatsby-starter-aerial
   description: Single page starter based on the Aerial site template by HTML5 up, suitable for one page personal page.
@@ -3002,7 +3002,7 @@
     - Minimal
 - url: https://gatsby-typescript-starter-default.netlify.com/
   repo: https://github.com/RobertoMSousa/gatsby-typescript-starter-default
-  description: Simple gatsby starter using TypeScript and eslint instead of outdated tslint.
+  description: Simple Gatsby starter using TypeScript and eslint instead of outdated tslint.
   tags:
     - Language:TypeScript
     - SEO
@@ -3388,7 +3388,7 @@
     - Eslint and Stylelint to enforce code style
 - url: http://demo.nagui.me
   repo: https://github.com/kimnagui/gatsby-starter-nagui
-  description: A gatsby starter that full responsive blog.
+  description: A Gatsby starter that full responsive blog.
   tags:
     - Blog
     - AWS
@@ -3581,7 +3581,7 @@
     - CSS based sidebar
     - CSS based Modals
     - Content is fetched from JSON Files
-    - Only one extra plugin from default gatsby starter
+    - Only one extra plugin from default Gatsby starter
 - url: https://gatsby-starter-profile-site.netlify.com/
   repo: https://github.com/Mr404Found/gatsby-starter-profile-site
   description: A minimal and clean starter build with gatsby.
@@ -4265,7 +4265,7 @@
     - Google Analytics
 - url: https://gatsby-typescript-storybook-starter.netlify.com/
   repo: https://github.com/RobertoMSousa/gatsby-typescript-storybook-starter
-  description: A gatsby starter with storybook, tags and eslint
+  description: A Gatsby starter with storybook, tags and eslint
   tags:
     - Language:TypeScript
     - Styling:CSS-in-JS
@@ -4333,7 +4333,7 @@
     - Husky & lint-staged to automate checking
 - url: https://gatsby-strapi-starter.netlify.com/
   repo: https://github.com/jeremylynch/gatsby-strapi-starter
-  description: Get started with strapi, bootstrap (reactstrap) and gatsby FAST!
+  description: Get started with Strapi, Bootstrap (reactstrap) and Gatsby FAST!
   tags:
     - CMS:Strapi
     - Styling:Bootstrap
