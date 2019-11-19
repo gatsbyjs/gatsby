@@ -1,5 +1,5 @@
 const _ = require(`lodash`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 const fs = require(`fs`)
 const path = require(`path`)
 const crypto = require(`crypto`)

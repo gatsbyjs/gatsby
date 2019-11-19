@@ -385,6 +385,12 @@ exports.createPages = ({ graphql, actions, reporter }) => {
   })
 
   createRedirect({
+    fromPath: `/docs/sourcing-from-kentico-cloud/`,
+    toPath: `/docs/sourcing-from-kentico-kontent/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
     fromPath: `/docs/building-apps-with-gatsby/`,
     toPath: `/docs/adding-app-and-website-functionality/`,
     isPermanent: true,
