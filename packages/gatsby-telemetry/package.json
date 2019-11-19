@@ -10,7 +10,7 @@
     "@babel/code-frame": "^7.5.5",
     "@babel/runtime": "^7.7.2",
     "bluebird": "^3.7.1",
-    "boxen": "^3.2.0",
+    "boxen": "^4.1.0",
     "configstore": "^5.0.0",
     "envinfo": "^7.4.0",
     "fs-extra": "^8.1.0",
