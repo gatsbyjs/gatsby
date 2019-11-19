@@ -76,6 +76,7 @@ describe(`build-node-connections`, () => {
       nodeStore,
       types: [],
       thirdPartySchemas: [],
+      inferenceMetadata: store.getState().inferenceMetadata,
     })
     store.dispatch({ type: `SET_SCHEMA`, payload: schema })
 

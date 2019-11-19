@@ -43,6 +43,7 @@ const buildTestSchema = async nodes => {
     nodeStore,
     types: [],
     thirdPartySchemas: [],
+    inferenceMetadata: store.getState().inferenceMetadata,
   })
   return { schema, schemaComposer }
 }
