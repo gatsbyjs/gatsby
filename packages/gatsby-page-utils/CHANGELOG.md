@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.31](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.0.30...gatsby-page-utils@0.0.31) (2019-11-18)
+
+### Bug Fixes
+
+- **gatsby:** Handle special characters in windows paths ([#19600](https://github.com/gatsbyjs/gatsby/issues/19600)) ([9929cf0](https://github.com/gatsbyjs/gatsby/commit/9929cf0))
+
 ## [0.0.30](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.0.29...gatsby-page-utils@0.0.30) (2019-11-15)
 
 **Note:** Version bump only for package gatsby-page-utils
