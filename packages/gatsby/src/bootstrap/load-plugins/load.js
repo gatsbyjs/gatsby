@@ -22,7 +22,7 @@ function createFileContentHash(root, globPattern) {
 }
 
 /**
- * Make sure key is unique to plugin options. E.g there could
+ * Make sure key is unique to plugin options. E.g. there could
  * be multiple source-filesystem plugins, with different names
  * (docs, blogs).
  * @param {*} name Name of the plugin
