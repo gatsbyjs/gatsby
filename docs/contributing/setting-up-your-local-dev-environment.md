@@ -72,4 +72,11 @@ Yarn is a package manager for your code, similar to [NPM](https://www.npmjs.com/
 
 ### Sync your fork
 
+#### Terminal with git
+
+- Github Help Page [Syncing a fork](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/syncing-a-fork)
+- Github Help Page [Merging an upstream repository into your fork](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/merging-an-upstream-repository-into-your-fork)
+
+#### Pull app
+
 - You cann add the [Pull Bot](https://github.com/wei/pull) from @wei to your repository to have it in sync with the forked source `gatsbyjs/gatsby` repo
