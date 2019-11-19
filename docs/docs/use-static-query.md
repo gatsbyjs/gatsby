@@ -60,6 +60,7 @@ export const useSiteMetadata = () => {
       query SiteMetaData {
         site {
           siteMetadata {
+            title
             siteUrl
             headline
             description

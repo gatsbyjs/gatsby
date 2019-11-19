@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-twitter@2.1.13...gatsby-plugin-twitter@2.1.14) (2019-11-15)
+
+**Note:** Version bump only for package gatsby-plugin-twitter
+
 ## [2.1.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-twitter@2.1.12...gatsby-plugin-twitter@2.1.13) (2019-11-10)
 
 **Note:** Version bump only for package gatsby-plugin-twitter

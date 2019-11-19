@@ -1,6 +1,6 @@
 const Promise = require(`bluebird`)
 const chokidar = require(`chokidar`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 
 module.exports = async (path, glob, onNewFile, onRemovedFile) =>
   new Promise((resolve, reject) => {

@@ -86,6 +86,7 @@ describe(`build-node-types`, () => {
       types: [],
       typeConflictReporter,
       thirdPartySchemas: [],
+      inferenceMetadata: store.getState().inferenceMetadata,
     })
     store.dispatch({ type: `SET_SCHEMA`, payload: schema })
 

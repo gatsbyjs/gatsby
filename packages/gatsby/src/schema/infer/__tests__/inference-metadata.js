@@ -1,9 +1,43 @@
 // NOTE: Previously `data-tree-utils-test.js`
+const _ = require(`lodash`)
 
-const { getExampleValue } = require(`../example-value`)
+const {
+  getExampleObject,
+  addNode,
+  deleteNode,
+  addNodes,
+  haveEqualFields,
+} = require(`../inference-metadata`)
 const { TypeConflictReporter } = require(`../type-conflict-reporter`)
 
 const INVALID_VALUE = undefined
+
+const getExampleValue = ({
+  nodes,
+  typeName,
+  typeConflictReporter,
+  ignoreFields,
+}) => {
+  const initialMetadata = {
+    typeName,
+    typeConflictReporter,
+    ignoredFields: new Set(ignoreFields),
+  }
+  const inferenceMetadata = addNodes(initialMetadata, nodes)
+  return getExampleObject(inferenceMetadata)
+}
+
+const getExampleValueWithoutConflicts = args => {
+  const value = getExampleValue(args)
+  expect(args.typeConflictReporter.getConflicts()).toEqual([])
+  return value
+}
+
+const getExampleValueConflicts = args => {
+  const typeConflictReporter = new TypeConflictReporter()
+  getExampleValue({ ...args, typeConflictReporter })
+  return typeConflictReporter.getConflicts()
+}
 
 describe(`Get example value for type inference`, () => {
   const typeConflictReporter = new TypeConflictReporter()
@@ -99,23 +133,25 @@ describe(`Get example value for type inference`, () => {
   ]
 
   it(`builds field examples from an array of nodes`, () => {
-    expect(getExampleValue({ nodes, typeConflictReporter })).toMatchSnapshot()
+    expect(
+      getExampleValueWithoutConflicts({ nodes, typeConflictReporter })
+    ).toMatchSnapshot()
   })
 
   it(`skips null fields`, () => {
     expect(
-      getExampleValue({ nodes, typeConflictReporter }).iAmNull
+      getExampleValueWithoutConflicts({ nodes, typeConflictReporter }).iAmNull
     ).not.toBeDefined()
   })
 
   it(`skips fields with key set to empty string`, () => {
     expect(
-      getExampleValue({ nodes, typeConflictReporter })[``]
+      getExampleValueWithoutConflicts({ nodes, typeConflictReporter })[``]
     ).not.toBeDefined()
   })
 
   it(`should not mutate the nodes`, () => {
-    getExampleValue({ nodes, typeConflictReporter })
+    getExampleValueWithoutConflicts({ nodes, typeConflictReporter })
     expect(nodes[0].context.nestedObject).toBeNull()
     expect(nodes[1].context.nestedObject.someOtherProperty).toEqual(1)
     expect(nodes[2].context.nestedObject.someOtherProperty).toEqual(2)
@@ -124,13 +160,16 @@ describe(`Get example value for type inference`, () => {
 
   it(`skips empty or sparse arrays`, () => {
     expect(
-      getExampleValue({ nodes, typeConflictReporter }).emptyArray
+      getExampleValueWithoutConflicts({ nodes, typeConflictReporter })
+        .emptyArray
     ).not.toBeDefined()
-    expect(getExampleValue({ nodes, typeConflictReporter }).hair).toBeDefined()
+    expect(
+      getExampleValueWithoutConflicts({ nodes, typeConflictReporter }).hair
+    ).toBeDefined()
   })
 
   it(`skips ignoredFields at the top level`, () => {
-    const example = getExampleValue({
+    const example = getExampleValueWithoutConflicts({
       nodes,
       typeConflictReporter,
       ignoreFields: [`name`, `anArray`],
@@ -153,7 +192,10 @@ describe(`Get example value for type inference`, () => {
     addInferredFields({
       schemaComposer: sc,
       typeComposer: tc,
-      exampleValue: getExampleValue({ nodes, typeConflictReporter }),
+      exampleValue: getExampleValueWithoutConflicts({
+        nodes,
+        typeConflictReporter,
+      }),
     })
 
     const fields = getFieldsEnum({
@@ -188,13 +230,13 @@ describe(`Get example value for type inference`, () => {
   })
 
   it(`doesn't confuse empty fields for polymorphic ones`, () => {
-    let example = getExampleValue({
+    let example = getExampleValueWithoutConflicts({
       nodes: [{ foo: { bar: 1 } }, { foo: null }, { foo: { field: 1 } }],
       typeConflictReporter,
     })
     expect(example.foo).toEqual({ field: 1, bar: 1 })
 
-    example = getExampleValue({
+    example = getExampleValueWithoutConflicts({
       nodes: [
         { foo: [{ bar: 1 }] },
         { foo: null },
@@ -207,14 +249,14 @@ describe(`Get example value for type inference`, () => {
 
   it(`skips unsupported types`, () => {
     // Skips functions
-    let example = getExampleValue({
+    let example = getExampleValueWithoutConflicts({
       nodes: [{ foo: () => {} }],
       typeConflictReporter,
     })
     expect(example.foo).not.toBeDefined()
 
     // Skips array of functions
-    example = getExampleValue({
+    example = getExampleValueWithoutConflicts({
       nodes: [{ foo: [() => {}] }],
       typeConflictReporter,
     })
@@ -225,13 +267,13 @@ describe(`Get example value for type inference`, () => {
     let example
 
     // nodes starting with 32-bit integer ("big" ints are float)
-    example = getExampleValue({
+    example = getExampleValueWithoutConflicts({
       nodes: [{ number: 5 }, { number: 2.5 }],
       typeConflictReporter,
     })
     expect(example.number).toBeDefined()
     expect(example.number).toEqual(2.5)
-    example = getExampleValue({
+    example = getExampleValueWithoutConflicts({
       nodes: [{ number: 5 }, { number: 3000000000 }],
       typeConflictReporter,
     })
@@ -239,7 +281,7 @@ describe(`Get example value for type inference`, () => {
     expect(example.number).toEqual(3000000000)
 
     // with node not containing number field
-    example = getExampleValue({
+    example = getExampleValueWithoutConflicts({
       nodes: [{ number: 5 }, {}, { number: 2.5 }],
       typeConflictReporter,
     })
@@ -247,13 +289,13 @@ describe(`Get example value for type inference`, () => {
     expect(example.number).toEqual(2.5)
 
     // nodes starting with float ("big" ints are float)
-    example = getExampleValue({
+    example = getExampleValueWithoutConflicts({
       nodes: [{ number: 2.5 }, { number: 5 }],
       typeConflictReporter,
     })
     expect(example.number).toBeDefined()
     expect(example.number).toEqual(2.5)
-    example = getExampleValue({
+    example = getExampleValueWithoutConflicts({
       nodes: [{ number: 3000000000 }, { number: 5 }],
       typeConflictReporter,
     })
@@ -261,7 +303,7 @@ describe(`Get example value for type inference`, () => {
     expect(example.number).toEqual(3000000000)
 
     // array of numbers - starting with float
-    example = getExampleValue({
+    example = getExampleValueWithoutConflicts({
       nodes: [{ numbers: [2.5, 5] }],
       typeConflictReporter,
     })
@@ -269,7 +311,7 @@ describe(`Get example value for type inference`, () => {
     expect(Array.isArray(example.numbers)).toBe(true)
     expect(example.numbers.length).toBe(1)
     expect(example.numbers[0]).toBe(2.5)
-    example = getExampleValue({
+    example = getExampleValueWithoutConflicts({
       nodes: [{ numbers: [3000000000, 5] }],
       typeConflictReporter,
     })
@@ -279,7 +321,7 @@ describe(`Get example value for type inference`, () => {
     expect(example.numbers[0]).toBe(3000000000)
 
     // array of numbers - starting with 32-bit integer
-    example = getExampleValue({
+    example = getExampleValueWithoutConflicts({
       nodes: [{ numbers: [5, 2.5] }],
       typeConflictReporter,
     })
@@ -287,7 +329,7 @@ describe(`Get example value for type inference`, () => {
     expect(Array.isArray(example.numbers)).toBe(true)
     expect(example.numbers.length).toBe(1)
     expect(example.numbers[0]).toBe(2.5)
-    example = getExampleValue({
+    example = getExampleValueWithoutConflicts({
       nodes: [{ numbers: [5, 3000000000] }],
       typeConflictReporter,
     })
@@ -315,22 +357,22 @@ describe(`Get example value for type inference`, () => {
       typeConflictReporter,
     })
     expect(example).toMatchInlineSnapshot(`
-Object {
-  "bar": Object {
-    "key1": 2,
-    "key2": "string2",
-  },
-  "foo": Object {
-    "key1": 1,
-    "key2": "string",
-  },
-}
-`)
+      Object {
+        "bar": Object {
+          "key1": 2,
+          "key2": "string2",
+        },
+        "foo": Object {
+          "key1": 1,
+          "key2": "string",
+        },
+      }
+    `)
   })
 
   describe(`handles mix of date strings and date objects`, () => {
     it(`infers mixed string and object dates as Date`, () => {
-      let example = getExampleValue({
+      let example = getExampleValueWithoutConflicts({
         nodes: [
           { date: new Date(`2017-12-01T14:59:45.600Z`) },
           { date: `2017-01-12T18:13:38.326Z` },
@@ -340,7 +382,7 @@ Object {
       })
       expect(example.date).toMatchInlineSnapshot(`"1978-09-26"`)
 
-      example = getExampleValue({
+      example = getExampleValueWithoutConflicts({
         nodes: [
           { date: `2017-01-12T18:13:38.326Z` },
           { date: new Date(`2017-12-01T14:59:45.600Z`) },
@@ -350,7 +392,7 @@ Object {
       })
       expect(example.date).toMatchInlineSnapshot(`"1978-09-26"`)
 
-      example = getExampleValue({
+      example = getExampleValueWithoutConflicts({
         nodes: [
           { date: `` },
           { date: `2017-01-12T18:13:38.326Z` },
@@ -362,7 +404,7 @@ Object {
     })
 
     it(`infers mixed date objects and non-date strings as string`, () => {
-      let example = getExampleValue({
+      let example = getExampleValueWithoutConflicts({
         nodes: [
           { date: new Date(`2017-12-01T14:59:45.600Z`) },
           { date: `This is not a date!!!!!!` },
@@ -372,7 +414,7 @@ Object {
       })
       expect(example.date).toEqual(`String`)
 
-      example = getExampleValue({
+      example = getExampleValueWithoutConflicts({
         nodes: [
           { date: `This is not a date!!!!!!` },
           { date: new Date(`2017-12-01T14:59:45.600Z`) },
@@ -382,7 +424,7 @@ Object {
       })
       expect(example.date).toEqual(`String`)
 
-      example = getExampleValue({
+      example = getExampleValueWithoutConflicts({
         nodes: [
           { date: `` },
           { date: `This is not a date!!!!!!` },
@@ -394,7 +436,7 @@ Object {
     })
 
     it(`infers arrays with mix of date strings and date objects as dates`, () => {
-      let example = getExampleValue({
+      let example = getExampleValueWithoutConflicts({
         nodes: [
           { dates: [new Date(`2017-12-01T14:59:45.600Z`)] },
           { dates: [`2017-01-12T18:13:38.326Z`] },
@@ -403,12 +445,12 @@ Object {
         typeConflictReporter,
       })
       expect(example.dates).toMatchInlineSnapshot(`
-Array [
-  "1978-09-26",
-]
-`)
+        Array [
+          "1978-09-26",
+        ]
+      `)
 
-      example = getExampleValue({
+      example = getExampleValueWithoutConflicts({
         nodes: [
           { dates: [`2017-01-12T18:13:38.326Z`] },
           { dates: [``] },
@@ -417,12 +459,12 @@ Array [
         typeConflictReporter,
       })
       expect(example.dates).toMatchInlineSnapshot(`
-Array [
-  "1978-09-26",
-]
-`)
+        Array [
+          "1978-09-26",
+        ]
+      `)
 
-      example = getExampleValue({
+      example = getExampleValueWithoutConflicts({
         nodes: [
           { dates: [``] },
           { dates: [new Date(`2017-12-01T14:59:45.600Z`)] },
@@ -431,14 +473,14 @@ Array [
         typeConflictReporter,
       })
       expect(example.dates).toMatchInlineSnapshot(`
-Array [
-  "1978-09-26",
-]
-`)
+        Array [
+          "1978-09-26",
+        ]
+      `)
     })
 
     it(`infers arrays of mixed date objects and non-date strings as strings`, () => {
-      let example = getExampleValue({
+      let example = getExampleValueWithoutConflicts({
         nodes: [
           { dates: [new Date(`2017-12-01T14:59:45.600Z`)] },
           { dates: [`This is not a date!!!!!!`] },
@@ -448,7 +490,7 @@ Array [
       })
       expect(example.dates).toEqual([`String`])
 
-      example = getExampleValue({
+      example = getExampleValueWithoutConflicts({
         nodes: [
           { dates: [`This is not a date!!!!!!`] },
           { dates: [new Date(`2017-12-01T14:59:45.600Z`)] },
@@ -458,7 +500,7 @@ Array [
       })
       expect(example.dates).toEqual([`String`])
 
-      example = getExampleValue({
+      example = getExampleValueWithoutConflicts({
         nodes: [
           { dates: [``] },
           { dates: [new Date(`2017-12-01T14:59:45.600Z`)] },
@@ -470,7 +512,7 @@ Array [
     })
 
     it(`infers single array of mixed date objects and date strings as date`, () => {
-      let example = getExampleValue({
+      let example = getExampleValueWithoutConflicts({
         nodes: [
           {
             dates: [
@@ -483,12 +525,12 @@ Array [
         typeConflictReporter,
       })
       expect(example.dates).toMatchInlineSnapshot(`
-Array [
-  "1978-09-26",
-]
-`)
+        Array [
+          "1978-09-26",
+        ]
+      `)
 
-      example = getExampleValue({
+      example = getExampleValueWithoutConflicts({
         nodes: [
           {
             dates: [
@@ -501,12 +543,12 @@ Array [
         typeConflictReporter,
       })
       expect(example.dates).toMatchInlineSnapshot(`
-Array [
-  "1978-09-26",
-]
-`)
+        Array [
+          "1978-09-26",
+        ]
+      `)
 
-      example = getExampleValue({
+      example = getExampleValueWithoutConflicts({
         nodes: [
           {
             dates: [
@@ -519,14 +561,14 @@ Array [
         typeConflictReporter,
       })
       expect(example.dates).toMatchInlineSnapshot(`
-Array [
-  "1978-09-26",
-]
-`)
+        Array [
+          "1978-09-26",
+        ]
+      `)
     })
 
     it(`infers arrays of mixed date objects and non-date strings as strings`, () => {
-      let example = getExampleValue({
+      let example = getExampleValueWithoutConflicts({
         nodes: [
           {
             dates: [
@@ -540,7 +582,7 @@ Array [
       })
       expect(example.dates).toEqual([`String`])
 
-      example = getExampleValue({
+      example = getExampleValueWithoutConflicts({
         nodes: [
           {
             dates: [
@@ -556,7 +598,7 @@ Array [
     })
 
     it(`infers variadic arrays of mix of dates and date strings as date`, () => {
-      const example = getExampleValue({
+      const example = getExampleValueWithoutConflicts({
         nodes: [
           {
             dates: [
@@ -571,14 +613,14 @@ Array [
         typeConflictReporter,
       })
       expect(example.dates).toMatchInlineSnapshot(`
-Array [
-  "1978-09-26",
-]
-`)
+        Array [
+          "1978-09-26",
+        ]
+      `)
     })
 
     it(`infers variadic arrays of mix of dates and non-date strings as string`, () => {
-      let example = getExampleValue({
+      let example = getExampleValueWithoutConflicts({
         nodes: [
           {
             dates: [
@@ -594,7 +636,7 @@ Array [
       })
       expect(example.dates).toEqual([`String`])
 
-      example = getExampleValue({
+      example = getExampleValueWithoutConflicts({
         nodes: [
           {
             dates: [
@@ -610,7 +652,7 @@ Array [
       expect(example.dates).toEqual([`String`])
 
       // should be valid - separate arrays of both unique types and mixed types (string is not a date) #2
-      example = getExampleValue({
+      example = getExampleValueWithoutConflicts({
         nodes: [
           {
             dates: [
@@ -627,11 +669,143 @@ Array [
       expect(example.dates).toEqual([`String`])
     })
   })
+
+  describe(`Handles ___NODE foreign-key convenience relations`, () => {
+    it(`infers single related node id as a simple string`, () => {
+      const example = getExampleValueWithoutConflicts({
+        nodes: [
+          { related___NODE: `foo` },
+          { related___NODE: `bar` },
+          { related___NODE: `baz` },
+        ],
+        typeConflictReporter,
+      })
+      expect(example.related___NODE).toBe(`foo`)
+    })
+
+    it(`aggregates array of related node ids`, () => {
+      const example = getExampleValueWithoutConflicts({
+        nodes: [
+          { related___NODE: [`foo`] },
+          { related___NODE: [`bar`] },
+          { related___NODE: [`foo`, `baz`] },
+        ],
+        typeConflictReporter,
+      })
+      expect(example.related___NODE).toEqual([`foo`, `bar`, `baz`])
+    })
+
+    it(`skips nullish values and empty arrays/objects`, () => {
+      const example = getExampleValueWithoutConflicts({
+        nodes: [
+          { related___NODE: [] },
+          { related___NODE: {} },
+          { related___NODE: null },
+          { related___NODE: undefined },
+        ],
+        typeConflictReporter,
+      })
+      expect(example.related___NODE).toEqual(INVALID_VALUE)
+    })
+  })
+
+  describe(`Incremental example value building`, () => {
+    const nodes = [
+      {
+        name: `The Mad Max`,
+        hair: 1,
+        date: `2006-07-22T22:39:53.000Z`,
+        "key-with..unsupported-values": true,
+      },
+      {
+        emptyArray: [undefined, null],
+        anArray: [1, 2, 5, 4],
+        nestedArrays: [[1, 2, 3]],
+        object: { foo: 1 },
+        objectsInArray: [{ foo: `foo` }],
+        context: {
+          nestedObject: null,
+        },
+      },
+      {
+        anArray: [1, 3],
+        object: { bar: `bar` },
+        objectsInArray: [{ foo: `foo` }, { bar: `bar` }],
+        frontmatter: {
+          date: `2006-07-22T22:39:53.000Z`,
+          title: `The world of slash and adventure1`,
+          blue: 10010,
+        },
+        context: {
+          nestedObject: {
+            bar: `bar`,
+            someOtherProperty: 2,
+          },
+        },
+      },
+      {
+        object: {},
+        objectsInArray: [{ baz: `baz` }],
+        frontmatter: {
+          title: `The world of slash and adventure2`,
+          circle: `happy`,
+          draft: false,
+        },
+        context: {
+          nestedObject: {
+            name: `Inner name`,
+            someOtherProperty: 3,
+          },
+        },
+      },
+    ]
+    it(`updates example value when nodes are added`, () => {
+      let inferenceMetadata = {
+        typeName: `IncrementalExampleValue`,
+        typeConflictReporter,
+        ignoredFields: new Set(),
+      }
+
+      const revisions = nodes.map(node => {
+        inferenceMetadata = addNode(inferenceMetadata, node)
+        return getExampleObject(inferenceMetadata)
+      })
+
+      expect(revisions).toMatchSnapshot()
+      expect(typeConflictReporter.getConflicts()).toEqual([])
+    })
+
+    it(`updates example value on node delete`, () => {
+      let inferenceMetadata = {
+        typeName: `IncrementalExampleValue`,
+        typeConflictReporter,
+        ignoredFields: new Set(),
+      }
+      inferenceMetadata = addNodes(inferenceMetadata, nodes)
+      const fullExampleValue = getExampleObject(inferenceMetadata)
+
+      inferenceMetadata = deleteNode(inferenceMetadata, nodes[2])
+      expect(getExampleObject(inferenceMetadata)).toMatchSnapshot()
+
+      inferenceMetadata = deleteNode(inferenceMetadata, nodes[3])
+      expect(getExampleObject(inferenceMetadata)).toMatchSnapshot()
+
+      inferenceMetadata = deleteNode(inferenceMetadata, nodes[1])
+      expect(getExampleObject(inferenceMetadata)).toMatchSnapshot()
+
+      // Re-adding deleted nodes should restore original example value:
+      inferenceMetadata = addNodes(inferenceMetadata, [
+        nodes[2],
+        nodes[3],
+        nodes[1],
+      ])
+      expect(getExampleObject(inferenceMetadata)).toEqual(fullExampleValue)
+    })
+  })
 })
 
 describe(`Type conflicts`, () => {
   it(`Doesn't report conflicts if there are none`, () => {
-    const typeConflictReporter = new TypeConflictReporter()
     const nodes = [
       {
         id: `id1`,
@@ -649,14 +823,15 @@ describe(`Type conflicts`, () => {
       },
     ]
 
-    getExampleValue({ nodes, typeName: `NoConflict`, typeConflictReporter })
+    const conflicts = getExampleValueConflicts({
+      nodes,
+      typeName: `NoConflict`,
+    })
 
-    expect(typeConflictReporter.getConflicts()).toEqual([])
+    expect(conflicts).toEqual([])
   })
 
   it(`reports type conflicts and its origin`, () => {
-    const typeConflictReporter = new TypeConflictReporter()
-
     const nodes = [
       {
         id: `id1`,
@@ -674,9 +849,12 @@ describe(`Type conflicts`, () => {
       },
     ]
 
-    getExampleValue({ nodes, typeName: `Conflict_1`, typeConflictReporter })
+    const conflicts = getExampleValueConflicts({
+      nodes,
+      typeName: `Conflict_1`,
+    })
 
-    expect(typeConflictReporter.getConflicts()).toMatchSnapshot()
+    expect(conflicts).toMatchSnapshot()
   })
 
   it(`reports conflict when array has mixed types and its origin`, () => {
@@ -686,15 +864,14 @@ describe(`Type conflicts`, () => {
         arrayOfMixedType: [`string1`, 5, `string2`, true],
       },
     ]
-    const typeConflictReporter = new TypeConflictReporter()
-
-    getExampleValue({ nodes, typeName: `Conflict_2`, typeConflictReporter })
-    expect(typeConflictReporter.getConflicts()).toMatchSnapshot()
+    const conflicts = getExampleValueConflicts({
+      nodes,
+      typeName: `Conflict_2`,
+    })
+    expect(conflicts).toMatchSnapshot()
   })
 
   it(`doesn't report ignored fields`, () => {
-    const typeConflictReporter = new TypeConflictReporter()
-
     const nodes = [
       {
         id: `id1`,
@@ -708,20 +885,127 @@ describe(`Type conflicts`, () => {
       },
     ]
 
-    getExampleValue({
+    const conflicts = getExampleValueConflicts({
       nodes,
       typeName: `Conflict_3`,
-      typeConflictReporter,
       ignoreFields: [`stringOrNumber`],
     })
 
-    expect(typeConflictReporter.getConflicts()).toMatchSnapshot()
+    expect(conflicts).toMatchSnapshot()
+  })
+
+  it(`reports on mixed ___NODE fields`, () => {
+    const nodes = [{ related___NODE: `foo` }, { related___NODE: [`bar`] }]
+
+    const conflicts = getExampleValueConflicts({
+      nodes,
+      typeName: `Conflict_4`,
+    })
+
+    expect(conflicts).toMatchSnapshot()
+  })
+
+  it(`reports on numbers represented as strings`, () => {
+    const nodes = [{ numeric: 1 }, { numeric: `2` }]
+
+    const conflicts = getExampleValueConflicts({
+      nodes,
+      typeName: `Conflict_5`,
+    })
+
+    expect(conflicts).toMatchSnapshot()
+  })
+
+  it(`reports on mixed numbers and numeric strings in arrays`, () => {
+    const nodes = [
+      { id: `1`, numeric: [1, 2] },
+      { id: `2`, numeric: [4, `5`] },
+    ]
+
+    const conflicts = getExampleValueConflicts({
+      nodes,
+      typeName: `Conflict_6`,
+    })
+
+    expect(conflicts).toMatchSnapshot()
+  })
+
+  it(`reports mixed scalars and objects`, () => {
+    const nodes = [
+      { id: `1`, numeric: 1, string: `str`, boolean: true },
+      {
+        id: `2`,
+        numeric: { value: 1 },
+        string: { value: `str` },
+        boolean: { value: true },
+      },
+    ]
+
+    const conflicts = getExampleValueConflicts({
+      nodes,
+      typeName: `Conflict_7`,
+    })
+
+    expect(conflicts).toMatchSnapshot()
+  })
+
+  it(`reports mixed scalars and arrays`, () => {
+    const nodes = [
+      { id: `1`, numeric: 1, string: `str`, mixed: true },
+      {
+        id: `2`,
+        numeric: [1],
+        string: [`str`],
+        mixed: [1],
+      },
+    ]
+
+    const conflicts = getExampleValueConflicts({
+      nodes,
+      typeName: `Conflict_8`,
+    })
+
+    expect(conflicts).toMatchSnapshot()
+  })
+
+  it(`doesn't report conflicts with null`, () => {
+    const nodes = [
+      { id: `1`, scalar: 1, obj: { value: 1 }, arr: [1] },
+      { id: `2`, scalar: null, obj: null, arr: null },
+    ]
+    const conflicts = getExampleValueConflicts({
+      nodes,
+      typeName: `Conflict_9`,
+    })
+    expect(conflicts).toEqual([])
+  })
+
+  it(`doesn't report conflicts with empty arrays`, () => {
+    const nodes = [
+      { id: `1`, scalar: 1, obj: { value: 1 }, arr: [1] },
+      { id: `2`, scalar: [], obj: [], arr: [] },
+    ]
+    const conflicts = getExampleValueConflicts({
+      nodes,
+      typeName: `Conflict_10`,
+    })
+    expect(conflicts).toEqual([])
+  })
+
+  it(`doesn't report conflicts with empty objects`, () => {
+    const nodes = [
+      { id: `1`, scalar: 1, obj: { value: 1 }, arr: [1] },
+      { id: `2`, scalar: {}, obj: {}, arr: {} },
+    ]
+    const conflicts = getExampleValueConflicts({
+      nodes,
+      typeName: `Conflict_10`,
+    })
+    expect(conflicts).toEqual([])
   })
 
   // We removed this warning to not confuse people
   it.skip(`reports date and string conflicts`, () => {
-    const typeConflictReporter = new TypeConflictReporter()
-
     const nodes = [
       {
         id: `id1`,
@@ -733,8 +1017,156 @@ describe(`Type conflicts`, () => {
       },
     ]
 
-    getExampleValue({ nodes, typeName: `Conflict_1`, typeConflictReporter })
+    const conflicts = getExampleValueConflicts({
+      nodes,
+      typeName: `Conflict_1`,
+    })
+    expect(conflicts).toMatchSnapshot()
+  })
+})
 
-    expect(typeConflictReporter.getConflicts()).toMatchSnapshot()
+describe(`Type change detection`, () => {
+  let initialMetadata
+
+  const nodes = () => [
+    { foo: `foo` },
+    { object: { foo: `foo`, bar: `bar` } },
+    { list: [`item`], bar: `bar` },
+    { listOfObjects: [{ foo: `foo`, bar: `bar` }] },
+    { union___NODE: `foo` },
+    { listOfUnion___NODE: [`foo`] },
+  ]
+
+  const addOne = (node, metadata = initialMetadata) =>
+    addNode(_.cloneDeep(metadata), node)
+  const deleteOne = (node, metadata = initialMetadata) =>
+    deleteNode(_.cloneDeep(metadata), node)
+
+  beforeEach(() => {
+    initialMetadata = addNodes({}, nodes())
+    initialMetadata.dirty = false
+  })
+
+  it(`detects on a field add`, () => {
+    const metadata = addOne({ added: `added` })
+    expect(metadata.dirty).toEqual(true)
+    expect(haveEqualFields(metadata, initialMetadata)).toEqual(false)
+  })
+
+  it(`detects on a field delete`, () => {
+    const metadata = deleteOne(nodes()[0])
+    expect(metadata.dirty).toEqual(true)
+    expect(haveEqualFields(metadata, initialMetadata)).toEqual(false)
+  })
+
+  it(`does not detect when structure doesn't change`, () => {
+    let metadata = addOne({ foo: `bar` })
+    expect(metadata.dirty).toEqual(false)
+    expect(haveEqualFields(metadata, initialMetadata)).toEqual(true)
+
+    metadata = deleteOne({ foo: `bar` }, metadata)
+    expect(metadata.dirty).toEqual(false)
+    expect(haveEqualFields(metadata, initialMetadata)).toEqual(true)
+  })
+
+  it(`detects on a nested field add`, () => {
+    const metadata = addOne({ object: { added: `added` } })
+    expect(metadata.dirty).toEqual(true)
+    expect(haveEqualFields(metadata, initialMetadata)).toEqual(false)
+  })
+
+  it(`detects on a nested field delete`, () => {
+    const metadata = deleteOne({ object: { bar: `bar` } })
+    expect(metadata.dirty).toEqual(true)
+    expect(haveEqualFields(metadata, initialMetadata)).toEqual(false)
+  })
+
+  it(`does not detect when a nested object structure doesn't change`, () => {
+    let metadata = addOne({ object: { bar: `baz` } })
+    expect(metadata.dirty).toEqual(false)
+    expect(haveEqualFields(metadata, initialMetadata)).toEqual(true)
+
+    metadata = deleteOne({ object: { bar: `baz` } }, metadata)
+    expect(metadata.dirty).toEqual(false)
+    expect(haveEqualFields(metadata, initialMetadata)).toEqual(true)
+  })
+
+  it(`does not detect on a new list item`, () => {
+    const metadata = addOne({ list: [`item2`] })
+    expect(metadata.dirty).toEqual(false)
+    expect(haveEqualFields(metadata, initialMetadata)).toEqual(true)
+  })
+
+  it(`detects on list getting empty`, () => {
+    const metadata = deleteOne({ list: [`item`] })
+    expect(metadata.dirty).toEqual(true)
+    expect(haveEqualFields(metadata, initialMetadata)).toEqual(false)
+  })
+
+  it(`detects on field add to nested object within the list`, () => {
+    const metadata = addOne({ listOfObjects: [{ added: `added` }] })
+    expect(metadata.dirty).toEqual(true)
+    expect(haveEqualFields(metadata, initialMetadata)).toEqual(false)
+  })
+
+  it(`detects on field delete from the nested object within the list`, () => {
+    const metadata = deleteOne({ listOfObjects: [{ bar: `bar` }] })
+    expect(metadata.dirty).toEqual(true)
+    expect(haveEqualFields(metadata, initialMetadata)).toEqual(false)
+  })
+
+  it(`does not detect when structure of the nested object doesn't change`, () => {
+    let metadata = addOne({ listOfObjects: [{ bar: `bar` }] })
+    expect(metadata.dirty).toEqual(false)
+    expect(haveEqualFields(metadata, initialMetadata)).toEqual(true)
+
+    metadata = deleteOne({ listOfObjects: [{ bar: `bar` }] }, metadata)
+    expect(metadata.dirty).toEqual(false)
+    expect(haveEqualFields(metadata, initialMetadata)).toEqual(true)
+  })
+
+  // TODO
+  it.skip(`detects on any change of the union field`, () => {
+    // We do not know a type of the node being added hence consider and
+    // add/delete to such fields as mutations
+    let metadata = addOne({ union___NODE: `added` })
+    expect(metadata.dirty).toEqual(true)
+    expect(haveEqualFields(metadata, initialMetadata)).toEqual(true)
+    metadata.dirty = false
+
+    metadata = deleteOne({ union___NODE: `added` }, metadata)
+    expect(metadata.dirty).toEqual(true)
+    expect(haveEqualFields(metadata, initialMetadata)).toEqual(true)
+  })
+
+  it.skip(`does not detect when the same node added to the union field`, () => {
+    const metadata = addOne({ union___NODE: `foo` })
+    expect(metadata.dirty).toEqual(false)
+    expect(haveEqualFields(metadata, initialMetadata)).toEqual(true)
+  })
+
+  it(`detects on any change of the listOfUnion field`, () => {
+    let metadata = addOne({ listOfUnion___NODE: [`added`] })
+    expect(metadata.dirty).toEqual(true)
+    expect(haveEqualFields(metadata, initialMetadata)).toEqual(true)
+    metadata.dirty = false
+
+    metadata = deleteOne({ listOfUnion___NODE: [`added`] }, metadata)
+    expect(metadata.dirty).toEqual(true)
+    expect(haveEqualFields(metadata, initialMetadata)).toEqual(true)
+  })
+
+  it(`does not detect when the same node added to the listOfUnion field`, () => {
+    const metadata = addOne({ listOfUnion___NODE: [`foo`] })
+    expect(metadata.dirty).toEqual(false)
+    expect(haveEqualFields(metadata, initialMetadata)).toEqual(true)
+  })
+
+  it(`does not detect on symmetric add/delete`, () => {
+    let metadata
+    metadata = addOne({ added: `added` })
+    metadata = deleteOne({ added: `added` }, metadata)
+    expect(metadata.dirty).toEqual(true)
+    expect(haveEqualFields(metadata, initialMetadata)).toEqual(true)
   })
 })

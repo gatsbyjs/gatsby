@@ -3,7 +3,6 @@ import { jsx } from "theme-ui"
 import React, { Fragment } from "react"
 import MdShare from "react-icons/lib/md/share"
 import FaPinterestP from "react-icons/lib/fa/pinterest-p"
-import FaGooglePlus from "react-icons/lib/fa/google-plus"
 import FaLinkedin from "react-icons/lib/fa/linkedin"
 import FaFacebook from "react-icons/lib/fa/facebook"
 import FaTwitter from "react-icons/lib/fa/twitter"
@@ -145,14 +144,6 @@ class ShareMenu extends React.Component {
               title="Share on Facebook"
             >
               <FaFacebook />
-            </ShareMenuItem>
-            <ShareMenuItem
-              href={`https://plus.google.com/share${objectToParams({
-                url: url,
-              })}`}
-              title="Share on Google Plus"
-            >
-              <FaGooglePlus />
             </ShareMenuItem>
             <ShareMenuItem
               href={`https://twitter.com/share${objectToParams({

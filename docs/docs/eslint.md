@@ -38,6 +38,10 @@ module.exports = {
 }
 ```
 
-Note: If you provide a custom `.eslintrc.js` file, Gatsby gives you full control about the ESLint configuration. This means that it will disable the built-in `eslint-loader` and you need to enable it yourself. One way to do so is to use the Community plugin [`gatsby-eslint-plugin`](/packages/gatsby-plugin-eslint/).
+### Disabling ESLint
 
-If you want to disable ESLint completely, create an empty `.eslintrc` file.
+Create an empty .eslintrc.js file at the root of your project to disable linting.
+
+When there is no ESLint file Gatsby implicitly adds a barebones ESLint loader. The empty file will disable this behavior as Gatsby assumes once you have an ESLint file you are in charge of linting.
+
+Note: If you provide a custom `.eslintrc.js` file, Gatsby gives you full control about the ESLint configuration. This means that it will disable the built-in `eslint-loader` and you need to enable it yourself. One way to do so is to use the Community plugin [`gatsby-eslint-plugin`](/packages/gatsby-plugin-eslint/).

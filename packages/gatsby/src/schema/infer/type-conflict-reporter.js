@@ -39,23 +39,30 @@ const formatValue = value => {
     })
   }
 
-  let wasElipsisLast = false
-  const usedTypes = []
   const output = []
 
-  value.forEach(item => {
-    const type = typeOf(item)
-    if (usedTypes.indexOf(type) !== -1) {
-      if (!wasElipsisLast) {
-        output.push(`...`)
-        wasElipsisLast = true
+  if (value.length === 1) {
+    // For arrays usually a single conflicting item is exposed vs. the whole array
+    output.push(`...`)
+    output.push(formatValue(value[0]))
+    output.push(`...`)
+  } else {
+    let wasElipsisLast = false
+    const usedTypes = []
+    value.forEach(item => {
+      const type = typeOf(item)
+      if (usedTypes.indexOf(type) !== -1) {
+        if (!wasElipsisLast) {
+          output.push(`...`)
+          wasElipsisLast = true
+        }
+      } else {
+        output.push(formatValue(item))
+        wasElipsisLast = false
+        usedTypes.push(type)
       }
-    } else {
-      output.push(formatValue(item))
-      wasElipsisLast = false
-      usedTypes.push(type)
-    }
-  })
+    })
+  }
 
   return `[ ${output.join(`, `)} ]`
 }
