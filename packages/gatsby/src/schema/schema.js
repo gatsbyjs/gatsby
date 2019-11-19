@@ -4,7 +4,6 @@ const {
   isSpecifiedScalarType,
   isIntrospectionType,
   assertValidName,
-  parse,
   GraphQLNonNull,
   GraphQLList,
   GraphQLObjectType,
@@ -33,6 +32,12 @@ const { getPagination } = require(`./types/pagination`)
 const { getSortInput, SORTABLE_ENUM } = require(`./types/sort`)
 const { getFilterInput, SEARCHABLE_ENUM } = require(`./types/filter`)
 const { isGatsbyType, GatsbyGraphQLTypeKind } = require(`./types/type-builders`)
+const {
+  isASTDocument,
+  parseTypeDef,
+  reportParsingError,
+} = require(`./types/type-defs`)
+const { clearDerivedTypes } = require(`./types/derived-types`)
 const { printTypeDefinitions } = require(`./print`)
 
 const buildSchema = async ({
@@ -44,6 +49,7 @@ const buildSchema = async ({
   thirdPartySchemas,
   printConfig,
   typeConflictReporter,
+  inferenceMetadata,
   parentSpan,
 }) => {
   await updateSchemaComposer({
@@ -55,6 +61,7 @@ const buildSchema = async ({
     thirdPartySchemas,
     printConfig,
     typeConflictReporter,
+    inferenceMetadata,
     parentSpan,
   })
   // const { printSchema } = require(`graphql`)
@@ -69,9 +76,15 @@ const rebuildSchemaWithSitePage = async ({
   typeMapping,
   fieldExtensions,
   typeConflictReporter,
+  inferenceMetadata,
   parentSpan,
 }) => {
   const typeComposer = schemaComposer.getOTC(`SitePage`)
+
+  // Clear derived types and fields
+  // they will be re-created in processTypeComposer later
+  clearDerivedTypes({ schemaComposer, typeComposer })
+
   const shouldInfer =
     !typeComposer.hasExtension(`infer`) ||
     typeComposer.getExtension(`infer`) !== false
@@ -82,6 +95,7 @@ const rebuildSchemaWithSitePage = async ({
       nodeStore,
       typeConflictReporter,
       typeMapping,
+      inferenceMetadata,
       parentSpan,
     })
   }
@@ -109,6 +123,7 @@ const updateSchemaComposer = async ({
   thirdPartySchemas,
   printConfig,
   typeConflictReporter,
+  inferenceMetadata,
   parentSpan,
 }) => {
   let activity = report.phantomActivity(`Add explicit types`, {
@@ -127,6 +142,7 @@ const updateSchemaComposer = async ({
     nodeStore,
     typeConflictReporter,
     typeMapping,
+    inferenceMetadata,
     parentSpan: activity.span,
   })
   activity.end()
@@ -223,14 +239,24 @@ const processTypeComposer = async ({
   }
 }
 
+const fieldNames = {
+  query: typeName => _.camelCase(typeName),
+  queryAll: typeName => _.camelCase(`all ${typeName}`),
+  convenienceChild: typeName => _.camelCase(`child ${typeName}`),
+  convenienceChildren: typeName => _.camelCase(`children ${typeName}`),
+}
+
 const addTypes = ({ schemaComposer, types, parentSpan }) => {
   types.forEach(({ typeOrTypeDef, plugin }) => {
     if (typeof typeOrTypeDef === `string`) {
+      typeOrTypeDef = parseTypeDef(typeOrTypeDef)
+    }
+    if (isASTDocument(typeOrTypeDef)) {
       let parsedTypes
       const createdFrom = `sdl`
       try {
-        parsedTypes = parseTypeDefs({
-          typeDefs: typeOrTypeDef,
+        parsedTypes = parseTypes({
+          doc: typeOrTypeDef,
           plugin,
           createdFrom,
           schemaComposer,
@@ -937,9 +963,9 @@ const addImplicitConvenienceChildrenFields = ({
         !childOfExtension.types.includes(parentTypeName) ||
         !childOfExtension.many === many
       ) {
-        const fieldName = _.camelCase(
-          `${many ? `children` : `child`} ${typeName}`
-        )
+        const fieldName = many
+          ? fieldNames.convenienceChildren(typeName)
+          : fieldNames.convenienceChild(typeName)
         report.warn(
           `On types with the \`@dontInfer\` directive, or with the \`infer\` ` +
             `extension set to \`false\`, automatically adding fields for ` +
@@ -962,7 +988,7 @@ const addImplicitConvenienceChildrenFields = ({
 
 const createChildrenField = typeName => {
   return {
-    [_.camelCase(`children ${typeName}`)]: {
+    [fieldNames.convenienceChildren(typeName)]: {
       type: () => [typeName],
       resolve(source, args, context) {
         const { path } = context
@@ -977,7 +1003,7 @@ const createChildrenField = typeName => {
 
 const createChildField = typeName => {
   return {
-    [_.camelCase(`child ${typeName}`)]: {
+    [fieldNames.convenienceChild(typeName)]: {
       type: () => typeName,
       async resolve(source, args, context) {
         const { path } = context
@@ -997,16 +1023,13 @@ const createChildField = typeName => {
 
 const groupChildNodesByType = ({ nodeStore, nodes }) =>
   _(nodes)
-    .flatMap(node => (node.children || []).map(nodeStore.getNode))
+    .flatMap(node =>
+      (node.children || []).map(nodeStore.getNode).filter(Boolean)
+    )
     .groupBy(node => (node.internal ? node.internal.type : undefined))
     .value()
 
 const addTypeToRootQuery = ({ schemaComposer, typeComposer }) => {
-  // TODO: We should have an abstraction for keeping and clearing
-  // related TypeComposers and InputTypeComposers.
-  // Also see the comment on the skipped test in `rebuild-schema`.
-  typeComposer.removeInputTypeComposer()
-
   const sortInputTC = getSortInput({
     schemaComposer,
     typeComposer,
@@ -1022,8 +1045,8 @@ const addTypeToRootQuery = ({ schemaComposer, typeComposer }) => {
 
   const typeName = typeComposer.getTypeName()
   // not strictly correctly, result is `npmPackage` and `allNpmPackage` from type `NPMPackage`
-  const queryName = _.camelCase(typeName)
-  const queryNamePlural = _.camelCase(`all ${typeName}`)
+  const queryName = fieldNames.query(typeName)
+  const queryNamePlural = fieldNames.queryAll(typeName)
 
   schemaComposer.Query.addFields({
     [queryName]: {
@@ -1089,40 +1112,6 @@ const parseTypes = ({
     }
   })
   return types
-}
-
-const parseTypeDefs = ({
-  typeDefs,
-  plugin,
-  createdFrom,
-  schemaComposer,
-  parentSpan,
-}) => {
-  const doc = parse(typeDefs)
-  return parseTypes({ doc, plugin, createdFrom, schemaComposer, parentSpan })
-}
-
-const reportParsingError = error => {
-  const { message, source, locations } = error
-
-  if (source && locations && locations.length) {
-    const { codeFrameColumns } = require(`@babel/code-frame`)
-
-    const frame = codeFrameColumns(
-      source.body,
-      { start: locations[0] },
-      { linesAbove: 5, linesBelow: 5 }
-    )
-    report.panic(
-      `Encountered an error parsing the provided GraphQL type definitions:\n` +
-        message +
-        `\n\n` +
-        frame +
-        `\n`
-    )
-  } else {
-    throw error
-  }
 }
 
 const stringifyArray = arr =>

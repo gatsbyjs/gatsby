@@ -531,10 +531,15 @@ actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
     nodes.map(n => findChildren(getNode(n).children))
   )
 
+  const nodeIds = [...nodes, ...descendantNodes]
+
   const deleteNodesAction = {
     type: `DELETE_NODES`,
     plugin,
-    payload: [...nodes, ...descendantNodes],
+    // Payload contains node IDs but inference-metadata and loki reducers require
+    // full node instances
+    payload: nodeIds,
+    fullNodes: nodeIds.map(getNode),
   }
   return deleteNodesAction
 }
@@ -961,6 +966,7 @@ actions.createNodeField = (
     type: `ADD_FIELD_TO_NODE`,
     plugin,
     payload: node,
+    addedField: name,
   }
 }
 

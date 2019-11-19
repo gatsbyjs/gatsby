@@ -265,3 +265,5 @@ exports.startWatchDeletePage = () => {
     }
   })
 }
+
+exports.updateStateAndRunQueries = updateStateAndRunQueries

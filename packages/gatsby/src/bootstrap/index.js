@@ -414,6 +414,16 @@ module.exports = async (args: BootstrapArgs) => {
   })
   activity.end()
 
+  // Prepare static schema types
+  activity = report.activityTimer(`createSchemaCustomization`, {
+    parentSpan: bootstrapSpan,
+  })
+  activity.start()
+  await require(`../utils/create-schema-customization`)({
+    parentSpan: bootstrapSpan,
+  })
+  activity.end()
+
   // Source nodes
   activity = report.activityTimer(`source and transform nodes`, {
     parentSpan: bootstrapSpan,
