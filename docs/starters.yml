@@ -4314,6 +4314,23 @@
     - Styled-Components
     - Minimal design and easy to customize
     - Great for software or product related marketing sites
+- url: https://react-landnig-page.netlify.com/
+  repo: https://github.com/zilahir/react-landing-page
+  description: Landing page with GraphCMS
+  tags:
+    - Redux
+    - Styling:SCSS
+    - Styling:CSS-in-JS
+    - Netlify
+  features:
+    - Team section
+    - Clients section
+    - Map
+    - Netlify ready
+    - Styled-Components
+    - Good for app showcase for startups
+    - Prettier & ESlint & StyleLint to format & check the code
+    - Husky & lint-staged to automate checking
 - url: https://gatsby-strapi-starter.netlify.com/
   repo: https://github.com/jeremylynch/gatsby-strapi-starter
   description: Get started with strapi, bootstrap (reactstrap) and gatsby FAST!
