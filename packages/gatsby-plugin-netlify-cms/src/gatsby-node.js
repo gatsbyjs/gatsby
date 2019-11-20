@@ -211,19 +211,21 @@ exports.onCreateWebpackConfig = (
       }),
 
       new CopyPlugin(
-        externals
-          .filter(({ assetDir }) => assetDir)
-          .map(({ name, assetDir }) => [
-            {
-              from: path.join(`node_modules`, name, assetDir, `${name}.js`),
-              to: `${name}.js`,
-            },
-            {
-              from: path.join(`node_modules`, name, assetDir, `${name}.js`),
-              to: `${name}.js.map`,
-            },
-          ])
-          .flat()
+        [].concat.apply(
+          [],
+          externals
+            .filter(({ assetDir }) => assetDir)
+            .map(({ name, assetDir }) => [
+              {
+                from: path.join(`node_modules`, name, assetDir, `${name}.js`),
+                to: `${name}.js`,
+              },
+              {
+                from: path.join(`node_modules`, name, assetDir, `${name}.js`),
+                to: `${name}.js.map`,
+              },
+            ])
+        )
       ),
 
       new HtmlWebpackTagsPlugin({
