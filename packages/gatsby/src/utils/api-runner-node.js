@@ -270,27 +270,7 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
       traceId: args.traceId,
     }
 
-    // Generate IDs for api runs. Most IDs we generate from the args
-    // but some API calls can have very large argument objects so we
-    // have special ways of generating IDs for those to avoid stringifying
-    // large objects.
-    let id
-    if (api === `setFieldsOnGraphQLNodeType`) {
-      id = `${api}${apiRunInstance.startTime}${args.type.name}${args.traceId}`
-    } else if (api === `onCreateNode`) {
-      id = `${api}${apiRunInstance.startTime}${args.node.internal.contentDigest}${args.traceId}`
-    } else if (api === `preprocessSource`) {
-      id = `${api}${apiRunInstance.startTime}${args.filename}${args.traceId}`
-    } else if (api === `onCreatePage`) {
-      id = `${api}${apiRunInstance.startTime}${args.page.path}${args.traceId}`
-    } else {
-      // When tracing is turned on, the `args` object will have a
-      // `parentSpan` field that can be quite large. So we omit it
-      // before calling stringify
-      const argsJson = JSON.stringify(_.omit(args, `parentSpan`))
-      id = `${api}|${apiRunInstance.startTime}|${apiRunInstance.traceId}|${argsJson}`
-    }
-    apiRunInstance.id = id
+    apiRunInstance.id = getApiId(api, apiRunInstance, args)
 
     if (args.waitForCascadingActions) {
       waitingForCasacadeToFinish.push(apiRunInstance)
@@ -392,3 +372,27 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
       return
     })
   })
+
+function getApiId(api, apiRunInstance, args) {
+  // Generate IDs for api runs. Most IDs we generate from the args
+  // but some API calls can have very large argument objects so we
+  // have special ways of generating IDs for those to avoid stringifying
+  // large objects.
+  if (api === `setFieldsOnGraphQLNodeType`) {
+    return `${api}${apiRunInstance.startTime}${args.type.name}${args.traceId}`
+  }
+  if (api === `onCreateNode`) {
+    return `${api}${apiRunInstance.startTime}${args.node.internal.contentDigest}${args.traceId}`
+  }
+  if (api === `preprocessSource`) {
+    return `${api}${apiRunInstance.startTime}${args.filename}${args.traceId}`
+  }
+  if (api === `onCreatePage`) {
+    return `${api}${apiRunInstance.startTime}${args.page.path}${args.traceId}`
+  }
+  // When tracing is turned on, the `args` object will have a
+  // `parentSpan` field that can be quite large. So we omit it
+  // before calling stringify
+  const argsJson = JSON.stringify(_.omit(args, `parentSpan`))
+  return `${api}|${apiRunInstance.startTime}|${apiRunInstance.traceId}|${argsJson}`
+}
