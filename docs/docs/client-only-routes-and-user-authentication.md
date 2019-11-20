@@ -136,7 +136,7 @@ _Without_ this configuration set up, a user that clicks on a link to `<yoursite.
 
 ## Configuring and handling client-only routes on a server
 
-If you are hosting on your own server, you can opt to configure the server to handle client-only routes instead of using the `matchPath` method already explained.
+If you are hosting on your own server, you can opt to configure the server to handle client-only routes instead of using the `matchPath` method explained above.
 
 Consider the following router and route to serve as an example:
 
