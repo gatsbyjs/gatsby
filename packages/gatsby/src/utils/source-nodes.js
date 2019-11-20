@@ -6,8 +6,6 @@ const { getNode, getNodes } = require(`../db/nodes`)
 const { boundActionCreators } = require(`../redux/actions`)
 const { deleteNode } = boundActionCreators
 
-const lockAPIRunningEvents = apiRunner.lockAPIRunningEvents
-
 /**
  * Finds the name of all plugins which implement Gatsby APIs that
  * may create nodes, but which have not actually created any nodes.
@@ -78,26 +76,23 @@ function deleteStaleNodes(state, nodes) {
   }
 }
 
-module.exports = async ({ webhookBody = {}, parentSpan } = {}) => {
-  const apiRunningTransactionFinish = lockAPIRunningEvents()
+module.exports = async ({ webhookBody = {}, parentSpan } = {}) =>
+  apiRunner.transaction(async () => {
+    store.dispatch({
+      type: `CLEAR_TOUCHED_NODES`,
+    })
 
-  store.dispatch({
-    type: `CLEAR_TOUCHED_NODES`,
+    await apiRunner(`sourceNodes`, {
+      traceId: `initial-sourceNodes`,
+      waitForCascadingActions: true,
+      parentSpan,
+      webhookBody,
+    })
+
+    const state = store.getState()
+    const nodes = getNodes()
+
+    warnForPluginsWithoutNodes(state, nodes)
+
+    deleteStaleNodes(state, nodes)
   })
-
-  await apiRunner(`sourceNodes`, {
-    traceId: `initial-sourceNodes`,
-    waitForCascadingActions: true,
-    parentSpan,
-    webhookBody,
-  })
-
-  const state = store.getState()
-  const nodes = getNodes()
-
-  warnForPluginsWithoutNodes(state, nodes)
-
-  deleteStaleNodes(state, nodes)
-
-  apiRunningTransactionFinish()
-}

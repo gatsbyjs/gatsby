@@ -239,6 +239,12 @@ let apisRunningById = new Map()
 let apisRunningByTraceId = new Map()
 let waitingForCasacadeToFinish = []
 
+const maybeEmitEmptyQueueEvent = () => {
+  if (apisRunningById.size === 0 && apisRunningEventLocks === 0) {
+    emitter.emit(`API_RUNNING_QUEUE_EMPTY`)
+  }
+}
+
 module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
   new Promise(resolve => {
     const { parentSpan } = args
@@ -362,9 +368,7 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
       const currentCount = apisRunningByTraceId.get(apiRunInstance.traceId)
       apisRunningByTraceId.set(apiRunInstance.traceId, currentCount - 1)
 
-      if (apisRunningById.size === 0 && apisRunningEventLocks === 0) {
-        emitter.emit(`API_RUNNING_QUEUE_EMPTY`)
-      }
+      maybeEmitEmptyQueueEvent()
 
       // Filter empty results
       apiRunInstance.results = results.filter(result => !_.isEmpty(result))
@@ -394,14 +398,19 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
     })
   })
 
-module.exports.lockAPIRunningEvents = () => {
+/**
+ * Will execute callback and prevent emitting `API_RUNNING_QUEUE_EMPTY` event
+ * until passed function is completed
+ * @param {Function} callback
+ */
+module.exports.transaction = async callback => {
   apisRunningEventLocks++
 
-  return () => {
-    apisRunningEventLocks--
+  const ret = await callback()
 
-    if (apisRunningById.size === 0 && apisRunningEventLocks === 0) {
-      emitter.emit(`API_RUNNING_QUEUE_EMPTY`)
-    }
-  }
+  apisRunningEventLocks--
+
+  maybeEmitEmptyQueueEvent()
+
+  return ret
 }
