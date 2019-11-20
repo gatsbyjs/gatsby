@@ -4,7 +4,7 @@ Many examples in the Gatsby docs focus on using source plugins to pull data into
 
 This example loads data from the [PokéAPI](https://www.pokeapi.co/)’s REST endpoints, then creates pages (and nested pages) using [Gatsby’s `createPages` API](https://www.gatsbyjs.org/docs/node-apis/#createPages).
 
-You might also be interested in this [blog post on unstructured data](https://www.gatsbyjs.org/blog/2018-10-25-using-gatsby-without-graphql/#an-example-of-creating-pages-using-unstructured-data-from-a-remote-api), or the relevant [docs page](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/using-gatsby-without-graphql.md).
+You might also be interested in this [blog post on unstructured data](https://www.gatsbyjs.org/blog/2018-10-25-using-gatsby-without-graphql/#an-example-of-creating-pages-using-unstructured-data-from-a-remote-api), or the relevant [docs page](https://www.gatsbyjs.org/docs/using-gatsby-without-graphql/).
 
 ## What would this look like using Gatsby's GraphQL integration layer?
 
