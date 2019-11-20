@@ -207,4 +207,14 @@ actions.pageQueryRun = (
   }
 }
 
+/**
+ * Clear list of nodes that were touched or created
+ * @private
+ */
+actions.clearTouchedNodes = () => {
+  return {
+    type: `CLEAR_TOUCHED_NODES`,
+  }
+}
+
 module.exports = { actions }

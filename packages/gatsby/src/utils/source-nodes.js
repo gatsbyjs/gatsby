@@ -4,7 +4,7 @@ const apiRunner = require(`./api-runner-node`)
 const { store } = require(`../redux`)
 const { getNode, getNodes } = require(`../db/nodes`)
 const { boundActionCreators } = require(`../redux/actions`)
-const { deleteNode } = boundActionCreators
+const { deleteNode, clearTouchedNodes } = boundActionCreators
 
 /**
  * Finds the name of all plugins which implement Gatsby APIs that
@@ -78,9 +78,7 @@ function deleteStaleNodes(state, nodes) {
 
 module.exports = async ({ webhookBody = {}, parentSpan } = {}) =>
   apiRunner.transaction(async () => {
-    store.dispatch({
-      type: `CLEAR_TOUCHED_NODES`,
-    })
+    clearTouchedNodes()
 
     await apiRunner(`sourceNodes`, {
       traceId: `initial-sourceNodes`,
