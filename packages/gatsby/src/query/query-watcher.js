@@ -172,9 +172,7 @@ const clearInactiveComponents = () => {
   components.forEach(component => {
     if (!activeTemplates.has(component.componentPath)) {
       debug(
-        `${
-          component.componentPath
-        } component was removed because it isn't used by any page`
+        `${component.componentPath} component was removed because it isn't used by any page`
       )
       store.dispatch({
         type: `REMOVE_TEMPLATE_COMPONENT`,

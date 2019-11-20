@@ -1315,7 +1315,10 @@ describe(`GraphQL field extensions`, () => {
       const expected = {
         nestedTest: {
           fromNextLevel: 26,
-          fromBottomLevel: [[`lorem`, `ipsum`], [`dolor`, `sit`]],
+          fromBottomLevel: [
+            [`lorem`, `ipsum`],
+            [`dolor`, `sit`],
+          ],
         },
       }
       expect(results).toEqual(expected)

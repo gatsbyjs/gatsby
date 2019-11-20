@@ -54,7 +54,10 @@ describe(`Get example value for type inference`, () => {
       "key-with..unsupported-values": true,
       emptyArray: [],
       anArray: [1, 2, 3, 4],
-      nestedArrays: [[1, 2, 3], [4, 5, 6]],
+      nestedArrays: [
+        [1, 2, 3],
+        [4, 5, 6],
+      ],
       objectsInArray: [{ field1: true }, { field2: 1 }],
       frontmatter: {
         date: `2006-07-22T22:39:53.000Z`,
@@ -914,7 +917,10 @@ describe(`Type conflicts`, () => {
   })
 
   it(`reports on mixed numbers and numeric strings in arrays`, () => {
-    const nodes = [{ id: `1`, numeric: [1, 2] }, { id: `2`, numeric: [4, `5`] }]
+    const nodes = [
+      { id: `1`, numeric: [1, 2] },
+      { id: `2`, numeric: [4, `5`] },
+    ]
 
     const conflicts = getExampleValueConflicts({
       nodes,

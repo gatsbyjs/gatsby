@@ -71,11 +71,7 @@ const addInferredFieldsImpl = ({
         .map(field => `\`${field.unsanitizedKey}\``)
         .join(`, `)
       report.warn(
-        `Multiple node fields resolve to the same GraphQL field \`${prefix}.${
-          field.key
-        }\` - [${possibleFieldsNames}]. Gatsby will use \`${
-          field.unsanitizedKey
-        }\`.`
+        `Multiple node fields resolve to the same GraphQL field \`${prefix}.${field.key}\` - [${possibleFieldsNames}]. Gatsby will use \`${field.unsanitizedKey}\`.`
       )
       selectedField = field
     } else {
