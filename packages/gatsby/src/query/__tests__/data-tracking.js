@@ -129,17 +129,25 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
     return jest.fn(actualQueryRunner)
   })
 
-  jest.doMock(`../../utils/api-runner-node`, () => apiName => {
-    if (mockAPIs[apiName]) {
-      return mockAPIs[apiName](
-        {
-          actions: doubleBoundActionCreators,
-          createContentDigest: require(`gatsby-core-utils`).createContentDigest,
-        },
-        pluginOptions
-      )
+  jest.doMock(`../../utils/api-runner-node`, () => {
+    const fn = apiName => {
+      if (mockAPIs[apiName]) {
+        return mockAPIs[apiName](
+          {
+            actions: doubleBoundActionCreators,
+            createContentDigest: require(`gatsby-core-utils`)
+              .createContentDigest,
+          },
+          pluginOptions
+        )
+      }
+      return undefined
     }
-    return undefined
+
+    const actualAPIRunner = jest.requireActual(`../../utils/api-runner-node`)
+    fn.transaction = actualAPIRunner.transaction
+
+    return fn
   })
 
   const queryUtil = require(`../`)
