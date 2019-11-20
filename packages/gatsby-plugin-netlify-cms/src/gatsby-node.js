@@ -268,18 +268,21 @@ exports.onCreateWebpackConfig = (
 
   actions.setWebpackConfig({
     // force code splitting for netlify-identity-widget
-    optimization: {
-      splitChunks: {
-        cacheGroups: {
-          "netlify-identity-widget": {
-            test: /[\\/]node_modules[\\/](netlify-identity-widget)[\\/]/,
-            name: `netlify-identity-widget`,
-            chunks: `all`,
-            enforce: true,
+    optimization:
+      stage === `develop`
+        ? {}
+        : {
+            splitChunks: {
+              cacheGroups: {
+                "netlify-identity-widget": {
+                  test: /[\\/]node_modules[\\/](netlify-identity-widget)[\\/]/,
+                  name: `netlify-identity-widget`,
+                  chunks: `all`,
+                  enforce: true,
+                },
+              },
+            },
           },
-        },
-      },
-    },
     // ignore netlify-identity-widget when not enabled
     plugins: enableIdentityWidget
       ? []
