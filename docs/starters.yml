@@ -4475,7 +4475,7 @@
     - SEO
     - Markdown
     - Styling:Other
-    - Styling:CSS-In-JS
+    - Styling:CSS-in-JS
   features:
     - Less starting boilerplate than the Gatsby default starter
     - Layout.css includes checklist of initial design system decisions to make
