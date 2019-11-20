@@ -39,7 +39,7 @@ During the migration project, we ran into a series of unknowns that we hadn’t 
 - Build times
   - The amount of content and assets were more than a usual Gatsby build. This caused our builds to time out in Netlify, our host.
   - To resolve this, we started using a Jenkins build process which does the build, then pushes the build to Netlify. Since caching is still available on Jenkins, the build times have improved.
-  - More recently, we are working on leveraging [Gatsby Preview](/preview/) which allows us to see changes _immediately_ on a preview site as well as the Gatsby Builds feature which cuts down our build times dramatically.
+  - More recently, we are working on leveraging [Gatsby Preview](https://www.gatsbyjs.com/preview/) which allows us to see changes _immediately_ on a preview site as well as the Gatsby Builds feature which cuts down our build times dramatically.
 - Image processing
   - Processing images was one of the build processes that increased the build time. Consequently, many published images caused the build to be longer than expected. We worked on reducing and unpublishing older content and redirecting it to new, fresh content.
 - Body field processing.
@@ -59,7 +59,7 @@ Ultimately, the decision to convert Mediacurrent.com to a Gatsby front-end was a
 - No wait time to apply Drupal module updates. The Gatsby front-end and Drupal back-end are completely decoupled.
 - Simplified decoupled architecture with no middle-men.
 - Front-end design updates can be deployed without concern for impact on back-end logic.
-- [Gatsby Preview](/preview/) allows us to view content updates in real-time prior to publishing to production.
+- [Gatsby Preview](https://www.gatsbyjs.com/preview/) allows us to view content updates in real-time prior to publishing to production.
 - Build times are now much improved using Gatsby’s new Build feature (in beta). We are seeing builds come in at 4-8 minutes on average compared to Jekyll which took up to 15 minutes to compile. We also know that incremental builds are coming soon and will provide substantial improvements.
 
 To learn more about Mediacurrent’s work with Gatsby, check out Ben Robertson’s [Gatsby Accessibility Starter](/starters/benjamingrobertson/gatsby-starter-accessibility/) and these additional resources:
