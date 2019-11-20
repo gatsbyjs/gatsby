@@ -167,6 +167,11 @@ exports.createPages = ({ graphql, actions, reporter }) => {
     isPermanent: true,
   })
   createRedirect({
+    fromPath: `/contributing/submit-to-creator-showcase/`,
+    toPath: `/showcase/`,
+    isPermanent: true,
+  })
+  createRedirect({
     fromPath: `/docs/submit-to-starter-library/`,
     toPath: `/contributing/submit-to-starter-library/`,
     isPermanent: true,
@@ -433,9 +438,6 @@ exports.createPages = ({ graphql, actions, reporter }) => {
     const showcaseTemplate = path.resolve(
       `src/templates/template-showcase-details.js`
     )
-    const creatorPageTemplate = path.resolve(
-      `src/templates/template-creator-details.js`
-    )
     const featureComparisonPageTemplate = path.resolve(
       `src/templates/template-feature-comparison.js`
     )
@@ -467,15 +469,6 @@ exports.createPages = ({ graphql, actions, reporter }) => {
           }
         }
         allAuthorYaml {
-          edges {
-            node {
-              fields {
-                slug
-              }
-            }
-          }
-        }
-        allCreatorsYaml {
           edges {
             node {
               fields {
@@ -656,18 +649,6 @@ exports.createPages = ({ graphql, actions, reporter }) => {
         createPage({
           path: `${edge.node.fields.slug}`,
           component: slash(contributorPageTemplate),
-          context: {
-            slug: edge.node.fields.slug,
-          },
-        })
-      })
-
-      result.data.allCreatorsYaml.edges.forEach(edge => {
-        if (!edge.node.fields) return
-        if (!edge.node.fields.slug) return
-        createPage({
-          path: `${edge.node.fields.slug}`,
-          component: slash(creatorPageTemplate),
           context: {
             slug: edge.node.fields.slug,
           },
@@ -1083,7 +1064,6 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
     })}`
     createNodeField({ node, name: `slug`, value: slug })
   }
-  // end Creator pages
   return null
 }
 
