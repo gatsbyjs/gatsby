@@ -303,75 +303,94 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
       }
     }
 
-    Promise.mapSeries(implementingPlugins, plugin => {
-      if (stopQueuedApiRuns) {
-        return null
-      }
-
-      let pluginName =
-        plugin.name === `default-site-plugin` ? `gatsby-node.js` : plugin.name
-
-      return new Promise(resolve => {
-        resolve(runAPI(plugin, api, { ...args, parentSpan: apiSpan }, activity))
-      }).catch(err => {
-        decorateEvent(`BUILD_PANIC`, {
-          pluginName: `${plugin.name}@${plugin.version}`,
-        })
-
-        let localReporter = getLocalReporter(activity, reporter)
-
-        localReporter.panicOnBuild({
-          id: `11321`,
-          context: {
-            pluginName,
-            api,
-            message: err instanceof Error ? err.message : err,
-          },
-          error: err instanceof Error ? err : undefined,
-        })
-
-        return null
-      })
-    }).then(results => {
-      if (onAPIRunComplete) {
-        onAPIRunComplete()
-      }
-      // Remove runner instance
-      apisRunningById.delete(apiRunInstance.id)
-      const currentCount = apisRunningByTraceId.get(apiRunInstance.traceId)
-      apisRunningByTraceId.set(apiRunInstance.traceId, currentCount - 1)
-
-      if (apisRunningById.size === 0) {
-        emitter.emit(`API_RUNNING_QUEUE_EMPTY`)
-      }
-
-      // Filter empty results
-      apiRunInstance.results = results.filter(result => !_.isEmpty(result))
-
-      // Filter out empty responses and return if the
-      // api caller isn't waiting for cascading actions to finish.
-      if (!args.waitForCascadingActions) {
-        apiSpan.finish()
-        resolve(apiRunInstance.results)
-      }
-
-      // Check if any of our waiters are done.
-      waitingForCasacadeToFinish = waitingForCasacadeToFinish.filter(
-        instance => {
-          // If none of its trace IDs are running, it's done.
-          const apisByTraceIdCount = apisRunningByTraceId.get(instance.traceId)
-          if (apisByTraceIdCount === 0) {
-            instance.span.finish()
-            instance.resolve(instance.results)
-            return false
-          } else {
-            return true
-          }
-        }
+    Promise.mapSeries(implementingPlugins, plugin =>
+      runPlugin(api, plugin, args, stopQueuedApiRuns, activity, apiSpan)
+    ).then(results =>
+      afterPlugin(
+        apiRunInstance,
+        args,
+        onAPIRunComplete,
+        apiSpan,
+        results,
+        resolve
       )
-      return
-    })
+    )
   })
+
+function runPlugin(api, plugin, args, stopQueuedApiRuns, activity, apiSpan) {
+  if (stopQueuedApiRuns) {
+    return null
+  }
+
+  let pluginName =
+    plugin.name === `default-site-plugin` ? `gatsby-node.js` : plugin.name
+
+  return new Promise(resolve => {
+    resolve(runAPI(plugin, api, { ...args, parentSpan: apiSpan }, activity))
+  }).catch(err => {
+    decorateEvent(`BUILD_PANIC`, {
+      pluginName: `${plugin.name}@${plugin.version}`,
+    })
+
+    let localReporter = getLocalReporter(activity, reporter)
+
+    localReporter.panicOnBuild({
+      id: `11321`,
+      context: {
+        pluginName,
+        api,
+        message: err instanceof Error ? err.message : err,
+      },
+      error: err instanceof Error ? err : undefined,
+    })
+
+    return null
+  })
+}
+
+function afterPlugin(
+  apiRunInstance,
+  args,
+  onAPIRunComplete,
+  apiSpan,
+  results,
+  resolve
+) {
+  if (onAPIRunComplete) {
+    onAPIRunComplete()
+  }
+  // Remove runner instance
+  apisRunningById.delete(apiRunInstance.id)
+  const currentCount = apisRunningByTraceId.get(apiRunInstance.traceId)
+  apisRunningByTraceId.set(apiRunInstance.traceId, currentCount - 1)
+
+  if (apisRunningById.size === 0) {
+    emitter.emit(`API_RUNNING_QUEUE_EMPTY`)
+  }
+
+  // Filter empty results
+  apiRunInstance.results = results.filter(result => !_.isEmpty(result))
+
+  // Filter out empty responses and return if the
+  // api caller isn't waiting for cascading actions to finish.
+  if (!args.waitForCascadingActions) {
+    apiSpan.finish()
+    resolve(apiRunInstance.results)
+  }
+
+  // Check if any of our waiters are done.
+  waitingForCasacadeToFinish = waitingForCasacadeToFinish.filter(instance => {
+    // If none of its trace IDs are running, it's done.
+    const apisByTraceIdCount = apisRunningByTraceId.get(instance.traceId)
+    if (apisByTraceIdCount === 0) {
+      instance.span.finish()
+      instance.resolve(instance.results)
+      return false
+    } else {
+      return true
+    }
+  })
+}
 
 function getApiId(api, apiRunInstance, args) {
   // Generate IDs for api runs. Most IDs we generate from the args
