@@ -1,7 +1,7 @@
 {
   "presets": [
     ["babel-preset-gatsby-package", {
-      "nodeVersion": "6.0"
+      "nodeVersion": "8.0"
     }]
   ]
 }
