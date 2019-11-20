@@ -115,18 +115,21 @@ exports.onCreateWebpackConfig = (
     {
       name: `react`,
       global: `React`,
-      tag: `https://unpkg.com/react@16/umd/react.production.min.js`,
+      assetDir: `umd`,
+      assetName: `react.production.min.js`,
     },
     {
       name: `react-dom`,
       global: `ReactDOM`,
-      tag: `https://unpkg.com/react-dom@16/umd/react-dom.production.min.js`,
+      assetDir: `umd`,
+      assetName: `react-dom.production.min.js`,
     },
     {
       name: `netlify-cms-app`,
       global: `NetlifyCmsApp`,
       assetDir: `dist`,
-      tag: `netlify-cms-app.js`,
+      assetName: `netlify-cms-app.js`,
+      sourceMap: `netlify-cms-app.js.map`,
     },
   ]
 
@@ -135,7 +138,8 @@ exports.onCreateWebpackConfig = (
       name: `netlify-identity-widget`,
       global: `netlifyIdentity`,
       assetDir: `build`,
-      tag: `netlify-identity-widget.js`,
+      assetName: `netlify-identity-widget.js`,
+      sourceMap: `netlify-identity-widget.js.map`,
     })
   }
 
@@ -213,23 +217,23 @@ exports.onCreateWebpackConfig = (
       new CopyPlugin(
         [].concat.apply(
           [],
-          externals
-            .filter(({ assetDir }) => assetDir)
-            .map(({ name, assetDir }) => [
+          externals.map(({ name, assetName, sourceMap, assetDir }) =>
+            [
               {
-                from: path.join(`node_modules`, name, assetDir, `${name}.js`),
-                to: `${name}.js`,
+                from: path.join(`node_modules`, name, assetDir, assetName),
+                to: assetName,
               },
-              {
-                from: path.join(`node_modules`, name, assetDir, `${name}.js`),
-                to: `${name}.js.map`,
+              sourceMap && {
+                from: path.join(`node_modules`, name, assetDir, sourceMap),
+                to: sourceMap,
               },
-            ])
+            ].filter(item => item)
+          )
         )
       ),
 
       new HtmlWebpackTagsPlugin({
-        tags: externals.map(({ tag }) => tag),
+        tags: externals.map(({ assetName }) => assetName),
         append: false,
       }),
     ].filter(p => p),
