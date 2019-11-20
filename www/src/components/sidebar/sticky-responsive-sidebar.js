@@ -30,8 +30,6 @@ class StickyResponsiveSidebar extends Component {
     const iconOffset = open ? 5 : -5
     const menuOpacity = open ? 1 : 0
 
-    const sidebarType = pathname.split(`/`)[1]
-
     return (
       <Fragment>
         <div
