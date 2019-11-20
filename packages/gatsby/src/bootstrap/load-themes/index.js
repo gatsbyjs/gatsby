@@ -62,7 +62,7 @@ const resolveTheme = async (
   // if theme is a function, call it with the themeConfig
   let themeConfig = theme
   if (_.isFunction(theme)) {
-    themeConfig = theme(themeSpec.options || {})
+    themeConfig = await theme(themeSpec.options || {})
   }
   return { themeName, themeConfig, themeSpec, themeDir, configFilePath }
 }
