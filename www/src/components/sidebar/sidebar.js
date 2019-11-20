@@ -232,9 +232,7 @@ class SidebarBody extends Component {
             display: `block`,
             overflowY: `auto`,
             transition: t =>
-              `opacity ${t.transition.speed.slow} ${
-                t.transition.curve.default
-              }`,
+              `opacity ${t.transition.speed.slow} ${t.transition.curve.default}`,
             zIndex: 10,
             borderRightWidth: `1px`,
             borderRightStyle: `solid`,
