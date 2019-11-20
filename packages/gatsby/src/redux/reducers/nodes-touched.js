@@ -8,6 +8,9 @@ module.exports = (state = new Set(), action) => {
       state.add(action.payload)
       return state
 
+    case `CLEAR_TOUCHED_NODES`:
+      return new Set()
+
     default:
       return state
   }

@@ -471,6 +471,12 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
   // Always get node from the store, as the node we get as an arg
   // might already have been deleted.
   const node = getNode(id)
+
+  if (!node) {
+    // if node doesn't exist, this is no-op
+    return []
+  }
+
   if (plugin) {
     const pluginName = plugin.name
 

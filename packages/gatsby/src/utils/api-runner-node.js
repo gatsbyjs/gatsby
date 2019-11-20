@@ -234,6 +234,7 @@ const runAPI = (plugin, api, args, activity) => {
   return null
 }
 
+let apisRunningEventLocks = 0
 let apisRunningById = new Map()
 let apisRunningByTraceId = new Map()
 let waitingForCasacadeToFinish = []
@@ -361,7 +362,7 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
       const currentCount = apisRunningByTraceId.get(apiRunInstance.traceId)
       apisRunningByTraceId.set(apiRunInstance.traceId, currentCount - 1)
 
-      if (apisRunningById.size === 0) {
+      if (apisRunningById.size === 0 && apisRunningEventLocks === 0) {
         emitter.emit(`API_RUNNING_QUEUE_EMPTY`)
       }
 
@@ -392,3 +393,15 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
       return
     })
   })
+
+module.exports.lockAPIRunningEvents = () => {
+  apisRunningEventLocks++
+
+  return () => {
+    apisRunningEventLocks--
+
+    if (apisRunningById.size === 0 && apisRunningEventLocks === 0) {
+      emitter.emit(`API_RUNNING_QUEUE_EMPTY`)
+    }
+  }
+}
