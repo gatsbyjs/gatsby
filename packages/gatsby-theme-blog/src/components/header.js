@@ -19,11 +19,11 @@ const Title = ({ children, location }) => {
       >
         <Styled.a
           as={Link}
-          css={{
+          css={css({
             color: `inherit`,
             boxShadow: `none`,
             textDecoration: `none`,
-          }}
+          })}
           to={`/`}
         >
           {children}
@@ -61,10 +61,10 @@ const checkedIcon = (
     width="16"
     height="16"
     role="presentation"
-    css={{
+    css={css({
       pointerEvents: `none`,
       margin: 4,
-    }}
+    })}
   />
 )
 
@@ -75,10 +75,10 @@ const uncheckedIcon = (
     width="16"
     height="16"
     role="presentation"
-    css={{
+    css={css({
       pointerEvents: `none`,
       margin: 4,
-    }}
+    })}
   />
 )
 
