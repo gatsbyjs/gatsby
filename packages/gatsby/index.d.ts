@@ -2,7 +2,6 @@ import * as React from "react"
 import { EventEmitter } from "events"
 import { WindowLocation } from "@reach/router"
 import { createContentDigest } from "gatsby-core-utils"
-import { TemplateTag } from "common-tags"
 
 export {
   default as Link,
@@ -933,16 +932,13 @@ export interface Store {
   replaceReducer: Function
 }
 
-type LogMessageType = (format: string, ...args: any[]) => void
+type LogMessageType = (format: string) => void
 type LogErrorType = (errorMeta: string | Object, error?: Object) => void
 
-export type PhantomActivityTracker = {
+export type ActivityTracker = {
   start(): () => void
   end(): () => void
   span: Object
-}
-
-export type ActivityTracker = PhantomActivityTracker & {
   setStatus(status: string): void
   panic: LogErrorType
   panicOnBuild: LogErrorType
@@ -960,7 +956,7 @@ export type ActivityArgs = {
 }
 
 export interface Reporter {
-  stripIndent: TemplateTag
+  stripIndent: (input: string) => string
   format: object
   setVerbose(isVerbose?: boolean): void
   setNoColor(isNoColor?: boolean): void
@@ -973,7 +969,6 @@ export interface Reporter {
   info: LogMessageType
   warn: LogMessageType
   log: LogMessageType
-  completeActivity(id: string, status?: string): void
   activityTimer(name: string, activityArgs?: ActivityArgs): ActivityTracker
   createProgress(
     text: string,
@@ -981,10 +976,6 @@ export interface Reporter {
     start?: number,
     activityArgs?: ActivityArgs
   ): ProgressActivityTracker
-  phantomActivity(
-    text: string,
-    activityArgs?: ActivityArgs
-  ): PhantomActivityTracker
 }
 
 export interface Cache {
