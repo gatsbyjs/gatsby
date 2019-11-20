@@ -78,6 +78,11 @@ function deleteStaleNodes(state, nodes) {
 
 module.exports = async ({ webhookBody = {}, parentSpan } = {}) =>
   apiRunner.transaction(async () => {
+    // This has potential to trigger multiple `API_RUNNING_QUEUE_EMPTY` events
+    // one guaranteed from `sourceNodes` run and potentially multiple ones for
+    // deleting stale nodes. We wrap this inside `transaction` to ensure
+    // we emit single `API_RUNNING_QUEUE_EMPTY` event when everything is done.
+
     clearTouchedNodes()
 
     await apiRunner(`sourceNodes`, {
