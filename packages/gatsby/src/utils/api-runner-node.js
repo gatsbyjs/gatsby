@@ -1,4 +1,4 @@
-const Promise = require(`bluebird`)
+const BlueBirdPromise = require(`bluebird`)
 const _ = require(`lodash`)
 const chalk = require(`chalk`)
 const { bindActionCreators } = require(`redux`)
@@ -204,7 +204,7 @@ const runAPI = async (plugin, api, args, activity) => {
     // If the plugin is using a callback use that otherwise
     // expect a Promise to be returned.
     if (gatsbyNode[api].length === 3) {
-      return Promise.fromCallback(callback => {
+      return BlueBirdPromise.fromCallback(callback => {
         const cb = (err, val) => {
           pluginSpan.finish()
           callback(err, val)
@@ -301,7 +301,7 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
       }
     }
 
-    Promise.mapSeries(implementingPlugins, plugin =>
+    BlueBirdPromise.mapSeries(implementingPlugins, plugin =>
       runPlugin(api, plugin, args, stopQueuedApiRuns, activity, apiSpan)
     ).then(results =>
       afterPlugin(
