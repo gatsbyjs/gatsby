@@ -32,3 +32,6 @@ coverage
 
 # forestry files
 .forestry/**/*
+
+# TypeScript example since it uses another eslint config
+examples/using-typescript/**
