@@ -3,7 +3,7 @@
 const { graphql } = require(`graphql`)
 const nodeStore = require(`../../../db/nodes`)
 const path = require(`path`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 const { store } = require(`../../../redux`)
 const { actions } = require(`../../../redux/actions`)
 const { buildSchema } = require(`../../schema`)
@@ -126,7 +126,10 @@ describe(`GraphQL type inference`, () => {
         payload: { name, extension },
       })
     })
-    const { fieldExtensions } = store.getState().schemaCustomization
+    const {
+      schemaCustomization: { fieldExtensions },
+      inferenceMetadata,
+    } = store.getState()
     const schemaComposer = createSchemaComposer({ fieldExtensions })
     const schema = await buildSchema({
       schemaComposer,
@@ -136,6 +139,7 @@ describe(`GraphQL type inference`, () => {
       thirdPartySchemas: [],
       typeMapping: [],
       typeConflictReporter,
+      inferenceMetadata,
       ...(buildSchemaArgs || {}),
     })
     return { schema, schemaComposer }
