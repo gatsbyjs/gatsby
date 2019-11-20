@@ -56,7 +56,7 @@ If you have a GraphQL-based API, you **may not need to build an integration at a
 
 If you have questions while building your Gatsby integrations, try reading other supporting documentation such as the [general plugin authoring guide](/docs/creating-plugins/) and [source plugin tutorial](/docs/pixabay-source-plugin-tutorial/).
 
-If you still have questions, please [raise an issue on GitHub](https://github.com/gatsbyjs/gatsby/issues), ask a question in [Discord chat](https://discord.gg/0ZcbPKXt5bVoxkfV), or reach out to our Head of Developer Relations [Jason Lengstorf](/contributors/jason-lengstorf/) at developer-relations@gatsbyjs.com.
+If you still have questions, please [raise an issue on GitHub](https://github.com/gatsbyjs/gatsby/issues), ask a question in [Discord chat](https://gatsby.dev/discord), or reach out to our team at [developer-relations@gatsbyjs.com](mailto:developer-relations@gatsbyjs.com).
 
 ### Step Two: Launching Your Gatsby Integration
 

@@ -12,7 +12,6 @@ const pageDataUtil = require(`../utils/page-data`)
 
 const seenIdsWithoutDataDependencies = new Set()
 let queuedDirtyActions = []
-let newPageKeys = []
 const extractedQueryIds = new Set()
 
 // Remove pages from seenIdsWithoutDataDependencies when they're deleted
@@ -158,12 +157,10 @@ const groupQueryIds = async queryIds => {
   )
 
   if (incrementalBuild) {
-    if (!newPageKeys.length) {
-      newPageKeys = await pageDataUtil.getNewPageKeys(
-        store.getState(),
-        readState()
-      )
-    }
+    const newPageKeys = await pageDataUtil.getNewPageKeys(
+      store.getState(),
+      readState()
+    )
     grouped.page = newPageKeys
   }
 

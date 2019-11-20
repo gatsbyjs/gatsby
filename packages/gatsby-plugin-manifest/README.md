@@ -238,7 +238,7 @@ module.exports = {
 
 #### Disable favicon
 
-Excludes `<link rel="shortcut icon" href="/favicon.png" />` link tag to html output. You can set `include_favicon` plugin option to `false` to opt-out of this behavior.
+Excludes `<link rel="icon" href="/favicon.png" />` link tag to html output. You can set `include_favicon` plugin option to `false` to opt-out of this behavior.
 
 ```js
 // in gatsby-config.js

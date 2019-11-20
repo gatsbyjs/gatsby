@@ -1,5 +1,4 @@
 /* @flow */
-const { difference } = require(`lodash`)
 const path = require(`path`)
 const report = require(`gatsby-cli/lib/reporter`)
 const buildHTML = require(`./build-html`)
@@ -13,9 +12,10 @@ const signalExit = require(`signal-exit`)
 const telemetry = require(`gatsby-telemetry`)
 const { store, emitter, readState } = require(`../redux`)
 const queryUtil = require(`../query`)
-const pageDataUtil = require(`../utils/page-data`)
+const appDataUtil = require(`../utils/app-data`)
 const WorkerPool = require(`../utils/worker/pool`)
 const { structureWebpackErrors } = require(`../utils/webpack-error-utils`)
+const pageDataUtil = require(`../utils/page-data`)
 
 type BuildArgs = {
   directory: string,
@@ -59,7 +59,6 @@ module.exports = async function build(program: BuildArgs) {
   })
 
   const {
-    pageQueryIds,
     processPageQueries,
     processStaticQueries,
   } = await queryUtil.getInitialQueryProcessors({
@@ -92,7 +91,10 @@ module.exports = async function build(program: BuildArgs) {
   const workerPool = WorkerPool.create()
 
   const webpackCompilationHash = stats.hash
-  if (webpackCompilationHash !== store.getState().webpackCompilationHash) {
+  if (
+    webpackCompilationHash !== store.getState().webpackCompilationHash ||
+    !appDataUtil.exists(publicDir)
+  ) {
     store.dispatch({
       type: `SET_WEBPACK_COMPILATION_HASH`,
       payload: webpackCompilationHash,
@@ -103,20 +105,8 @@ module.exports = async function build(program: BuildArgs) {
     })
     activity.start()
 
-    // We need to update all page-data.json files with the new
-    // compilation hash. As a performance optimization however, we
-    // don't update the files for `pageQueryIds` (dirty queries),
-    // since they'll be written after query execution.
-    const cleanPagePaths = difference(
-      [...store.getState().pages.keys()],
-      pageQueryIds
-    )
+    await appDataUtil.write(publicDir, webpackCompilationHash)
 
-    await pageDataUtil.updateCompilationHashes(
-      { publicDir, workerPool },
-      cleanPagePaths,
-      webpackCompilationHash
-    )
     activity.end()
   }
 
@@ -131,7 +121,7 @@ module.exports = async function build(program: BuildArgs) {
     parentSpan: buildSpan,
   })
   const pagePaths = incrementalBuild
-    ? [...pageQueryIds]
+    ? await pageDataUtil.getNewPageKeys(store.getState(), readState())
     : [...store.getState().pages.keys()]
   activity = report.createProgress(
     `Building static HTML for pages`,
@@ -203,7 +193,7 @@ module.exports = async function build(program: BuildArgs) {
   workerPool.end()
   buildActivity.end()
   if (incrementalBuild && process.argv.indexOf(`--log-pages`) > -1) {
-    console.log(`incrementalBuildPages:${pageQueryIds.join(`|`)}`)
+    console.log(`incrementalBuildPages:${pagePaths.join(`|`)}`)
     console.log(`incrementalBuildDeletedPages:${deletedPageKeys.join(`|`)}`)
   }
 }

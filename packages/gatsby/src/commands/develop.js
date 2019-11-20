@@ -30,9 +30,10 @@ const WorkerPool = require(`../utils/worker/pool`)
 
 const withResolverContext = require(`../schema/context`)
 const sourceNodes = require(`../utils/source-nodes`)
+const createSchemaCustomization = require(`../utils/create-schema-customization`)
 const websocketManager = require(`../utils/websocket-manager`)
 const getSslCert = require(`../utils/get-ssl-cert`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 const { initTracer } = require(`../utils/tracer`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const db = require(`../db`)
@@ -187,6 +188,20 @@ async function startServer(program) {
    * If no GATSBY_REFRESH_TOKEN env var is available, then no Authorization header is required
    **/
   const REFRESH_ENDPOINT = `/__refresh`
+  const refresh = async req => {
+    let activity = report.activityTimer(`createSchemaCustomization`, {})
+    activity.start()
+    await createSchemaCustomization({
+      refresh: true,
+    })
+    activity.end()
+    activity = report.activityTimer(`Refreshing source data`, {})
+    activity.start()
+    await sourceNodes({
+      webhookBody: req.body,
+    })
+    activity.end()
+  }
   app.use(REFRESH_ENDPOINT, express.json())
   app.post(REFRESH_ENDPOINT, (req, res) => {
     const enableRefresh = process.env.ENABLE_GATSBY_REFRESH_ENDPOINT
@@ -195,13 +210,7 @@ async function startServer(program) {
       !refreshToken || req.headers.authorization === refreshToken
 
     if (enableRefresh && authorizedRefresh) {
-      const activity = report.activityTimer(`Refreshing source data`, {})
-      activity.start()
-      sourceNodes({
-        webhookBody: req.body,
-      }).then(() => {
-        activity.end()
-      })
+      refresh(req)
     }
     res.end()
   })
@@ -317,7 +326,7 @@ async function startServer(program) {
   )
 
   chokidar.watch(watchGlobs).on(`change`, async () => {
-    await createIndexHtml()
+    await createIndexHtml({ activity: indexHTMLActivity })
     socket.to(`clients`).emit(`reload`)
   })
 
@@ -353,10 +362,15 @@ module.exports = async (program: any) => {
 
   // Check if https is enabled, then create or get SSL cert.
   // Certs are named after `name` inside the project's package.json.
-  // Scoped names are converted from @npm/package-name to npm--package-name
+  // Scoped names are converted from @npm/package-name to npm--package-name.
+  // If the name is unavailable, generate one using the current working dir.
   if (program.https) {
+    const name = program.sitePackageJson.name
+      ? program.sitePackageJson.name.replace(`@`, ``).replace(`/`, `--`)
+      : process.cwd().replace(/[^A-Za-z0-9]/g, `-`)
+
     program.ssl = await getSslCert({
-      name: program.sitePackageJson.name.replace(`@`, ``).replace(`/`, `--`),
+      name,
       certFile: program[`cert-file`],
       keyFile: program[`key-file`],
       directory: program.directory,
@@ -368,6 +382,9 @@ module.exports = async (program: any) => {
 
   // Start the createPages hot reloader.
   require(`../bootstrap/page-hot-reloader`)(graphqlRunner)
+
+  // Start the schema hot reloader.
+  require(`../bootstrap/schema-hot-reloader`)()
 
   await queryUtil.initialProcessQueries()
 
@@ -586,15 +603,14 @@ module.exports = async (program: any) => {
     if (webpackActivity) {
       reportWebpackWarnings(stats)
 
-      if (isSuccessful) {
-        webpackActivity.end()
-      } else {
+      if (!isSuccessful) {
         const errors = structureWebpackErrors(
           `develop`,
           stats.compilation.errors
         )
         webpackActivity.panicOnBuild(errors)
       }
+      webpackActivity.end()
       webpackActivity = null
     }
 

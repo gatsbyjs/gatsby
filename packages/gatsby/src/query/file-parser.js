@@ -2,6 +2,7 @@
 const fs = require(`fs-extra`)
 const crypto = require(`crypto`)
 const _ = require(`lodash`)
+const slugify = require(`slugify`)
 
 // Traverse is a es6 module...
 import traverse from "@babel/traverse"
@@ -26,8 +27,12 @@ import { locInGraphQlToLocInFile } from "./error-parser"
  */
 const generateQueryName = ({ def, hash, file }) => {
   if (!def.name || !def.name.value) {
+    const slugified = slugify(file, {
+      replacement: ` `,
+      lower: false,
+    })
     def.name = {
-      value: `${_.camelCase(file)}${hash}`,
+      value: `${_.camelCase(slugified)}${hash}`,
       kind: `Name`,
     }
   }
