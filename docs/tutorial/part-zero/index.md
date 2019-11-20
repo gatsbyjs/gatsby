@@ -166,7 +166,7 @@ It’s not necessary to be an expert with these already — if you’re not, don
 - **HTML**: A markup language that every web browser is able to understand. It stands for HyperText Markup Language. HTML gives your web content a universal informational structure, defining things like headings, paragraphs, and more.
 - **CSS**: A presentational language used to style the appearance of your web content (fonts, colors, layout, etc). It stands for Cascading Style Sheets.
 - **JavaScript**: A programming language that helps us make the web dynamic and interactive.
-- **React**: A code library (built with JavaScript) for building user interfaces. It’s the framework that Gatsby uses to build pages and structure content.
+- **React**: A JavaScript library for building user interfaces. It’s the library that Gatsby uses to build pages and structure content.
 - **GraphQL**: A query language that allows you to pull data into your website. It’s the interface that Gatsby uses for managing site data.
 
 ### What is a website?
