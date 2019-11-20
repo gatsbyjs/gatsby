@@ -260,8 +260,8 @@ exports.onCreateWebpackConfig = (
     })
   }
 
-  // force code splitting for netlify-identity-widget
   actions.setWebpackConfig({
+    // force code splitting for netlify-identity-widget
     optimization: {
       splitChunks: {
         cacheGroups: {
@@ -274,6 +274,14 @@ exports.onCreateWebpackConfig = (
         },
       },
     },
+    // ignore netlify-identity-widget when not enabled
+    plugins: enableIdentityWidget
+      ? []
+      : [
+          new webpack.IgnorePlugin({
+            resourceRegExp: /^netlify-identity-widget$/,
+          }),
+        ],
   })
 
   return new Promise((resolve, reject) => {
