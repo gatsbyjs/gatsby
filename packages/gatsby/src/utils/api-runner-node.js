@@ -410,6 +410,9 @@ module.exports.transaction = async callback => {
 
   apisRunningEventLocks--
 
+  // This will emit API_RUNNING_QUEUE_EMPTY event even if we didn't
+  // run any APIs inside callback. Not ideal, but in most cases transaction
+  // will run at least one API, so event won't be false positive.
   maybeEmitEmptyQueueEvent()
 
   return ret
