@@ -221,12 +221,12 @@ const runAPI = async (plugin, api, args, activity) => {
           throw e
         }
       })
-    } else {
-      const result = await gatsbyNode[api](...apiCallArgs)
-      pluginSpan.finish()
-      apiFinished = true
-      return result
     }
+
+    const result = await gatsbyNode[api](...apiCallArgs)
+    pluginSpan.finish()
+    apiFinished = true
+    return result
   }
 
   return null
