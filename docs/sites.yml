@@ -8624,3 +8624,13 @@
     - eCommerce
     - SEO
     - Business
+- title: ToolsDB
+  main_url: https://toolsdb.dev
+  url: https://toolsdb.dev
+  description: List of tools for better software development.
+  featured: false
+  categories:
+    - Technology
+    - Web Development
+    - Programming
+    - Productivity
