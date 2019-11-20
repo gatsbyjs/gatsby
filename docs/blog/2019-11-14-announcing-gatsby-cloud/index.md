@@ -51,7 +51,7 @@ Gatsby provides the building blocks for a modern web site:
 - **Load Data From Anywhere**. Gatsby pulls in data from any data source, whether it's Markdown files, a headless CMS like Contentful or WordPress, or a REST or GraphQL API. Use source plugins to load your data, then develop using Gatsby's uniform GraphQL interface.
 - **SEO**. Unlike React client-side apps, Gatsby serves HTML files and is fully crawlable by search engines and social networks.
 - **Security**. Traditional CMS applications expose APIs and services—many outside of your control. All of these are at risk of attack and require continuous maintenance and patching. Gatsby sites are static files served by a CDN talking to isolated API microservices & 3rd party APIs, leaving you with a much-reduced attack surface.
-- **Performance Is Baked In**. Ace your performance audits by default. Gatsby automates code-splitting, image optimization, inlining critical styles, lazy-loading, and prefetching resources, and more to ensure your site is fast—no manual tuning required
+- **Performance Is Baked In**. Ace your performance audits by default. Gatsby automates code-splitting, image optimization, inlining critical styles, lazy-loading, and prefetching resources, and more to ensure your site is fast—no manual tuning required.
 - **Host at Scale for Pennies**. Gatsby sites don't require servers, so you can host your entire site on a CDN for a fraction of the cost of a server-rendered site. Many Gatsby sites can be hosted for free on services like GitHub Pages and Netlify.
 
 Gatsby meets the needs of the modern web and has become wildly popular with hundreds of thousands of users.
