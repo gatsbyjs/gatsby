@@ -1,6 +1,6 @@
 ---
 title: "How to convert an existing Gatsby blog to use MDX"
-date: 2019-11-10
+date: 2019-11-21
 author: Thomas Wang
 excerpt: "It can be a big tricky to add MDX to an existing blog. This blog post covers how to install and configure MDX to Gatsby's blog starter"
 tags:
@@ -85,15 +85,9 @@ For reference, here's the full configuration for `gatsby-plugin-mdx`.
           wrapperStyle: `margin-bottom: 1.0725rem`,
         },
       },
-      {
-        resolve: `gatsby-remark-vscode`,
-      },
-      {
-        resolve: `gatsby-remark-copy-linked-files`,
-      },
-      {
-        resolve: `gatsby-remark-smartypants`,
-      },
+      `gatsby-remark-prismjs`,
+      `gatsby-remark-copy-linked-files`,
+      `gatsby-remark-smartypants`,
     ],
   },
 },
