@@ -76,7 +76,7 @@ describe(`createSchemaNode`, () => {
 })
 
 describe(`createHttpLink`, () => {
-  it(`used passed in fetch if provided`, async () => {
+  it(`use passed in fetch if provided`, async () => {
     const api = getInternalGatsbyAPI()
     const mockFetch = jest.fn()
     await sourceNodes(api, {
