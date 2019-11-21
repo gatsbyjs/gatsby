@@ -3,6 +3,7 @@ const path = require(`path`)
 
 // Polyfill Node's `Module.createRequireFromPath` if not present (added in Node v10.12.0)
 module.exports =
+  Module.createRequire ||
   Module.createRequireFromPath ||
   function(filename) {
     const mod = new Module(filename, null)
