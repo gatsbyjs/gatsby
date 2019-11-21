@@ -2,6 +2,10 @@
 title: Routing
 ---
 
+Part of what makes Gatsby sites so fast is that a lot of the work is done at build time and the running site is using mostly [static content](/docs/adding-app-and-website-functionality/#static-pages). Specifically, each page is its own HTML file that's generated at build time. During that process, Gatsby creates paths to access those files, handling routing for you. Navigating in a Gatsby app requires understanding what those paths are and how they're generated.
+
+Alternatively, your application may include functionality that cannot be handled at build time or through [rehydration](/docs/adding-app-and-website-functionality/#how-hydration-makes-apps-possible). This includes things like authentication, transactions, or form submission. To handle those pages, you can make use of [client-only routes](/docs/client-only-routes-and-user-authentication) using `@reach/router` which is built into Gatsby.
+
 ## Creating routes
 
 Gatsby makes it easy to programmatically control your pages. Pages can be created in three ways:
@@ -12,6 +16,40 @@ Gatsby makes it easy to programmatically control your pages. Pages can be create
 - Plugins can also implement `createPages` and create pages for you
 
 See the [Creating and Modifying Pages](/docs/creating-and-modifying-pages) for more detail.
+
+When Gatsby creates pages it automatically generates a path to access them. This path will differ depending on how the page was defined.
+
+### Pages defined in `src/pages`
+
+Each `.js` file inside `src/pages` will generate its own page in your Gatsby site. The path for those pages matches the file structure it's found in.
+
+For example, `contact.js` will be found at `yoursite.com/contact`. And `home.js` will be found at `yoursite.com/home`. This works at whatever level the file is created. If `home.js` is moved to a directory called `information`, located inside `src/pages`, the page will now be found at `yoursite.com/information/contact`.
+
+The exception to this rule is any file named `index.js`. Files with this name are matched to the root directory they're found in. That means `index.js` in the root `src/pages` directory is accessed via `yoursite.com`. However, if there is an `index.js` inside the `information` directory, it is found at `yoursite.com/information`.
+
+Note that if no `index.js` file exists in a particular directory that root page does not exist, and attempts to navigate to it will land you on a [404 page](/docs/add-404-page/). For example, `yoursite.com/information/contact` may exist, but that does not guaruntee `yoursite.com/information` exists.
+
+### Pages created with `createPages` hook
+
+Another way to create pages is in your `gatsby-node.js` file using the `createPages` hook. When pages are defined this way the path is explicitly set. For example:
+
+```js:title=gatsby-node.js
+createPage({
+  path: "/routing",
+  component: routing,
+  context: {},
+})
+```
+
+## Conflicting Routes
+
+Since there are multiple ways to create a page, someone may accidentally create multiple pages that are meant to be accessed by the same path. When this happens, Gatsby will show a warning at build time, but the site will still build successfully. In this situation, the page that was built last will be accessible and any other conflicting pages will not be.
+
+## Nested Routes
+
+If your goal is to define paths that are multiple levels deep, that can be done directly when creating pages as mentioned [above](#creating-routes).
+
+Alternatively, if you want to create pages that will display different subcomponents depending on the URL path, Gatsby handles that at the page level using [layouts](/docs/layout-components/).
 
 ## Linking between routes
 
