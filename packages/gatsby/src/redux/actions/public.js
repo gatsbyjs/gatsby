@@ -786,6 +786,10 @@ const createNode = (
     actionOptions.parentSpan.setTag(`nodeType`, node.id)
   }
 
+  if (actionOptions.traceId === `initial-sourceNodesStatefully`) {
+    node.internal.isCreatedByStatefulSourceNodes = true
+  }
+
   let deleteActions
   let updateNodeAction
   // Check if the node has already been processed.

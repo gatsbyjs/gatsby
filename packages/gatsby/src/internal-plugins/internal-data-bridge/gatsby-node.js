@@ -4,7 +4,6 @@ const systemPath = require(`path`)
 const _ = require(`lodash`)
 
 const { emitter } = require(`../../redux`)
-const { boundActionCreators } = require(`../../redux/actions`)
 const { getNode } = require(`../../db/nodes`)
 
 function transformPackageJson(json) {
@@ -41,15 +40,17 @@ function transformPackageJson(json) {
 
 const createPageId = path => `SitePage ${path}`
 
-exports.sourceNodes = ({ createContentDigest, actions, store }) => {
-  const { createNode } = actions
+exports.sourceNodesStatefully = ({ createContentDigest, actions, store }) => {
+  const { createNode, deleteNode } = actions
   const state = store.getState()
   const { program } = state
   const { flattenedPlugins } = state
 
   // Add our default development page since we know it's going to
   // exist and we need a node to exist so its query works :-)
-  const page = { path: `/dev-404-page/` }
+  const page = {
+    path: `/dev-404-page/`,
+  }
   createNode({
     ...page,
     id: createPageId(page.path),
@@ -84,7 +85,9 @@ exports.sourceNodes = ({ createContentDigest, actions, store }) => {
 
   const createGatsbyConfigNode = (config = {}) => {
     // Delete plugins from the config as we add plugins above.
-    const configCopy = { ...config }
+    const configCopy = {
+      ...config,
+    }
     delete configCopy.plugins
     const node = {
       siteMetadata: {
@@ -127,33 +130,36 @@ exports.sourceNodes = ({ createContentDigest, actions, store }) => {
       }
     }
   })
-}
 
-exports.onCreatePage = ({ createContentDigest, page, actions }) => {
-  const { createNode } = actions
-  // eslint-disable-next-line
-  const { updatedAt, ...pageWithoutUpdated } = page
+  emitter.on(`CREATE_PAGE`, action => {
+    const page = action.payload
 
-  // Add page.
-  createNode({
-    ...pageWithoutUpdated,
-    id: createPageId(page.path),
-    parent: null,
-    children: [],
-    internal: {
-      type: `SitePage`,
-      contentDigest: createContentDigest(pageWithoutUpdated),
-      description:
-        page.pluginCreatorId === `Plugin default-site-plugin`
-          ? `Your site's "gatsby-node.js"`
-          : page.pluginCreatorId,
-    },
+    // eslint-disable-next-line
+    const { updatedAt, ...pageWithoutUpdated } = page
+
+    // Add page.
+    createNode({
+      ...pageWithoutUpdated,
+      id: createPageId(page.path),
+      parent: null,
+      children: [],
+      internal: {
+        type: `SitePage`,
+        contentDigest: createContentDigest(pageWithoutUpdated),
+        description:
+          page.pluginCreatorId === `Plugin default-site-plugin`
+            ? `Your site's "gatsby-node.js"`
+            : page.pluginCreatorId,
+      },
+    })
+  })
+
+  // Listen for DELETE_PAGE and delete page nodes.
+  emitter.on(`DELETE_PAGE`, action => {
+    const nodeId = createPageId(action.payload.path)
+    const node = getNode(nodeId)
+    deleteNode({
+      node,
+    })
   })
 }
-
-// Listen for DELETE_PAGE and delete page nodes.
-emitter.on(`DELETE_PAGE`, action => {
-  const nodeId = createPageId(action.payload.path)
-  const node = getNode(nodeId)
-  boundActionCreators.deleteNode({ node })
-})

@@ -19,10 +19,12 @@ function discoverPluginsWithoutNodes(storeState, nodes) {
     .filter(
       plugin =>
         // "Can generate nodes"
-        plugin.nodeAPIs.includes(`sourceNodes`) &&
+        (plugin.nodeAPIs.includes(`sourceNodes`) ||
+          plugin.nodeAPIs.includes(`sourceNodesStatefully`)) &&
         // "Has not generated nodes"
         !nodeOwnerSet.has(plugin.name)
     )
+
     .map(plugin => plugin.name)
 }
 
@@ -42,7 +44,7 @@ function warnForPluginsWithoutNodes(state, nodes) {
 /**
  * Return the set of nodes for which its root node has not been touched
  */
-function getStaleNodes(state, nodes) {
+function getStaleNodes(state, nodes, firstRun = false) {
   return nodes.filter(node => {
     let rootNode = node
     let whileCount = 0
@@ -61,34 +63,28 @@ function getStaleNodes(state, nodes) {
       }
     }
 
+    if (!firstRun && rootNode.internal.isCreatedByStatefulSourceNodes) {
+      // If this is not first run, don't mark nodes created by sourceNodesStatefully
+      // as stale
+      return false
+    }
+
     return !state.nodesTouched.has(rootNode.id)
   })
 }
 
-let firstRun = true
-
 /**
  * Find all stale nodes and delete them
  */
-function deleteStaleNodes(state, nodes) {
-  const staleNodes = getStaleNodes(state, nodes)
+function deleteStaleNodes(state, nodes, firstRun) {
+  const staleNodes = getStaleNodes(state, nodes, firstRun)
 
   if (staleNodes.length > 0) {
-    staleNodes.forEach(node => {
-      if (!firstRun && node.internal.type === `SitePage`) {
-        // This is a HACK!
-        // SitePage nodes are created in stateful way
-        // but we don't have sourceNodesStatefully to support
-        // it properly. So instead we avoid deleting them
-        // on non-first calls.
-        return
-      }
-      deleteNode({ node })
-    })
+    staleNodes.forEach(node => deleteNode({ node }))
   }
 }
 
-module.exports = async ({ webhookBody = {}, parentSpan } = {}) =>
+module.exports = async ({ webhookBody = {}, parentSpan, firstRun } = {}) =>
   apiRunner.transaction(async () => {
     // This has potential to trigger multiple `API_RUNNING_QUEUE_EMPTY` events
     // one guaranteed from `sourceNodes` run and potentially multiple ones for
@@ -96,6 +92,14 @@ module.exports = async ({ webhookBody = {}, parentSpan } = {}) =>
     // we emit single `API_RUNNING_QUEUE_EMPTY` event when everything is done.
 
     clearTouchedNodes()
+
+    if (firstRun) {
+      await apiRunner(`sourceNodesStatefully`, {
+        traceId: `initial-sourceNodesStatefully`,
+        waitForCascadingActions: true,
+        parentSpan,
+      })
+    }
 
     await apiRunner(`sourceNodes`, {
       traceId: `initial-sourceNodes`,
@@ -109,7 +113,5 @@ module.exports = async ({ webhookBody = {}, parentSpan } = {}) =>
 
     warnForPluginsWithoutNodes(state, nodes)
 
-    deleteStaleNodes(state, nodes)
-
-    firstRun = false
+    deleteStaleNodes(state, nodes, firstRun)
   })

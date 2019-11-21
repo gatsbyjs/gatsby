@@ -119,6 +119,11 @@ exports.createPagesStatefully = true
 exports.sourceNodes = true
 
 /**
+ * Same same as sourceNodes, but different
+ */
+exports.sourceNodesStatefully = true
+
+/**
  * Called when a new node is created. Plugins wishing to extend or
  * transform nodes created by other plugins should implement this API.
  *

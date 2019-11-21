@@ -199,6 +199,8 @@ async function startServer(program) {
     activity.start()
     await sourceNodes({
       webhookBody: req.body,
+      parentSpan: activity.span,
+      firstRun: false,
     })
     activity.end()
   }
