@@ -1,4 +1,12 @@
 const path = require(`path`)
+require(`../../db/__tests__/fixtures/ensure-loki`)()
+const { getNodes } = require(`../../db/nodes`)
+
+const getNodeCount = () => getNodes().length
+const getNodeIds = () =>
+  getNodes()
+    .map(node => node.id)
+    .sort()
 
 let mockAPIs = {}
 jest.doMock(`../../utils/api-runner-node`, () => {
@@ -92,31 +100,23 @@ describe(`garbage collect stale nodes`, () => {
 
   describe(`garbage collection works on first sourceNodes`, () => {
     it(`preserve nothing if nothing is re-created`, async () => {
-      const { nodes } = store.getState()
-
       // assert pre-conditions
-      expect(nodes.size).toEqual(3)
-      expect(new Set(nodes.keys())).toEqual(
-        new Set([`node-1`, `node-1-1`, `node-2`])
-      )
+      expect(getNodeCount()).toEqual(3)
+      expect(getNodeIds()).toEqual([`node-1`, `node-1-1`, `node-2`])
 
       await run({
         sourceNodes: () => {},
       })
 
       // Recreated 0 nodes, we should have no nodes
-      expect(nodes.size).toEqual(0)
-      expect(new Set(nodes.keys())).toEqual(new Set([]))
+      expect(getNodeCount()).toEqual(0)
+      expect(getNodeIds()).toEqual([])
     })
 
     it(`preserve single leaf node that is re-created`, async () => {
-      const { nodes } = store.getState()
-
       // assert pre-conditions
-      expect(nodes.size).toEqual(3)
-      expect(new Set(nodes.keys())).toEqual(
-        new Set([`node-1`, `node-1-1`, `node-2`])
-      )
+      expect(getNodeCount()).toEqual(3)
+      expect(getNodeIds()).toEqual([`node-1`, `node-1-1`, `node-2`])
 
       await run({
         sourceNodes: ({ actions }) => {
@@ -128,18 +128,14 @@ describe(`garbage collect stale nodes`, () => {
       })
 
       // Recreated 1 node unchanged - we should keep that node and all of its descendents
-      expect(nodes.size).toEqual(1)
-      expect(new Set(nodes.keys())).toEqual(new Set([`node-2`]))
+      expect(getNodeCount()).toEqual(1)
+      expect(getNodeIds()).toEqual([`node-2`])
     })
 
     it(`preserve single leaf node that is touched`, async () => {
-      const { nodes } = store.getState()
-
       // assert pre-conditions
-      expect(nodes.size).toEqual(3)
-      expect(new Set(nodes.keys())).toEqual(
-        new Set([`node-1`, `node-1-1`, `node-2`])
-      )
+      expect(getNodeCount()).toEqual(3)
+      expect(getNodeIds()).toEqual([`node-1`, `node-1-1`, `node-2`])
 
       await run({
         sourceNodes: ({ actions }) => {
@@ -150,18 +146,14 @@ describe(`garbage collect stale nodes`, () => {
       })
 
       // Touched 1 node - we should keep that node and all of its descendents
-      expect(nodes.size).toEqual(1)
-      expect(new Set(nodes.keys())).toEqual(new Set([`node-2`]))
+      expect(getNodeCount()).toEqual(1)
+      expect(getNodeIds()).toEqual([`node-2`])
     })
 
     it(`preserve single parent node that is re-created (and its descedents)`, async () => {
-      const { nodes } = store.getState()
-
       // assert pre-conditions
-      expect(nodes.size).toEqual(3)
-      expect(new Set(nodes.keys())).toEqual(
-        new Set([`node-1`, `node-1-1`, `node-2`])
-      )
+      expect(getNodeCount()).toEqual(3)
+      expect(getNodeIds()).toEqual([`node-1`, `node-1-1`, `node-2`])
 
       await run({
         sourceNodes: ({ actions }) => {
@@ -173,18 +165,14 @@ describe(`garbage collect stale nodes`, () => {
       })
 
       // Recreated 1 node unchanged - we should keep that node and all of its descendents
-      expect(nodes.size).toEqual(2)
-      expect(new Set(nodes.keys())).toEqual(new Set([`node-1`, `node-1-1`]))
+      expect(getNodeCount()).toEqual(2)
+      expect(getNodeIds()).toEqual([`node-1`, `node-1-1`])
     })
 
     it(`preserve single parent node that is touched (and its descedents)`, async () => {
-      const { nodes } = store.getState()
-
       // assert pre-conditions
-      expect(nodes.size).toEqual(3)
-      expect(new Set(nodes.keys())).toEqual(
-        new Set([`node-1`, `node-1-1`, `node-2`])
-      )
+      expect(getNodeCount()).toEqual(3)
+      expect(getNodeIds()).toEqual([`node-1`, `node-1-1`, `node-2`])
 
       await run({
         sourceNodes: ({ actions }) => {
@@ -195,19 +183,15 @@ describe(`garbage collect stale nodes`, () => {
       })
 
       // Recreated 1 node unchanged - we should keep that node and all of its descendents
-      expect(nodes.size).toEqual(2)
-      expect(new Set(nodes.keys())).toEqual(new Set([`node-1`, `node-1-1`]))
+      expect(getNodeCount()).toEqual(2)
+      expect(getNodeIds()).toEqual([`node-1`, `node-1-1`])
     })
   })
 
   it(`garbage collection works on subsequent sourceNodes calls`, async () => {
-    const { nodes } = store.getState()
-
     // assert pre-conditions
-    expect(nodes.size).toEqual(3)
-    expect(new Set(nodes.keys())).toEqual(
-      new Set([`node-1`, `node-1-1`, `node-2`])
-    )
+    expect(getNodeCount()).toEqual(3)
+    expect(getNodeIds()).toEqual([`node-1`, `node-1-1`, `node-2`])
 
     const { refresh, sourceNodesFn } = await run({
       sourceNodes: ({ actions }) => {
@@ -219,8 +203,8 @@ describe(`garbage collect stale nodes`, () => {
 
     // make sure intermediate state as one we expect
     expect(sourceNodesFn).toBeCalledTimes(1)
-    expect(nodes.size).toEqual(2)
-    expect(new Set(nodes.keys())).toEqual(new Set([`node-1`, `node-1-1`]))
+    expect(getNodeCount()).toEqual(2)
+    expect(getNodeIds()).toEqual([`node-1`, `node-1-1`])
 
     // trigger second `souceNodes` run
     await refresh({
@@ -234,8 +218,8 @@ describe(`garbage collect stale nodes`, () => {
 
     expect(sourceNodesFn).toBeCalledTimes(2)
     // we should only get nodes created in last `sourceNodes` call
-    expect(nodes.size).toEqual(1)
-    expect(new Set(nodes.keys())).toEqual(new Set([`node-3`]))
+    expect(getNodeCount()).toEqual(1)
+    expect(getNodeIds()).toEqual([`node-3`])
   })
 
   describe(`SitePage`, () => {
@@ -250,8 +234,6 @@ describe(`garbage collect stale nodes`, () => {
     })
 
     it(`Preserve SitePage nodes even if they are not created in sourceNodes lifecycle`, async () => {
-      const { nodes } = store.getState()
-
       const { refresh, sourceNodesFn } = await run({
         sourceNodes: () => {},
       })
@@ -264,8 +246,8 @@ describe(`garbage collect stale nodes`, () => {
       })
 
       expect(sourceNodesFn).toBeCalledTimes(1)
-      expect(nodes.size).toEqual(1)
-      expect(Array.from(nodes.values())).toEqual(
+      expect(getNodeCount()).toEqual(1)
+      expect(getNodes()).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
             path: `/path-A/`,
@@ -284,7 +266,7 @@ describe(`garbage collect stale nodes`, () => {
       await refresh()
 
       expect(sourceNodesFn).toBeCalledTimes(2)
-      expect(Array.from(nodes.values())).toEqual(
+      expect(getNodes()).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
             path: `/path-A/`,
@@ -306,7 +288,7 @@ describe(`garbage collect stale nodes`, () => {
       await refresh()
 
       expect(sourceNodesFn).toBeCalledTimes(3)
-      expect(Array.from(nodes.values())).toEqual(
+      expect(getNodes()).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
             path: `/path-A/`,
