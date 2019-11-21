@@ -47,6 +47,19 @@ module.exports = {
       },
     },
 
+    // Advanced config, using a custom fetch function
+    {
+      resolve: "gatsby-source-graphql",
+      options: {
+        typeName: "GitHub",
+        fieldName: "github",
+        url: "https://api.github.com/graphql",
+        // A `fetch`-compatible API to use when making requests.
+        fetch: (uri, options = {}) =>
+          fetch(uri, { ...options, headers: sign(options.headers) }),
+      },
+    },
+
     // Complex situations: creating arbitrary Apollo Link
     {
       resolve: "gatsby-source-graphql",
@@ -54,14 +67,15 @@ module.exports = {
         typeName: "GitHub",
         fieldName: "github",
         // Create Apollo Link manually. Can return a Promise.
-        createLink: (pluginOptions) => {
+        createLink: pluginOptions => {
           return createHttpLink({
-            uri: 'https://api.github.com/graphql',
+            uri: "https://api.github.com/graphql",
             headers: {
-              'Authorization': `Bearer ${process.env.GITHUB_TOKEN}`,
+              Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
             },
             fetch,
           })
+        },
       },
     },
   ],
