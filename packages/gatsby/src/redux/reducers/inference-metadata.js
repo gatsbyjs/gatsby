@@ -17,8 +17,8 @@ const ignoredFields = new Set([
 
 module.exports = (state = {}, action) => {
   switch (action.type) {
-    case `DELETE_CACHE`:
-      return {}
+    // case `DELETE_CACHE`:
+    //   return {}
 
     case `CREATE_TYPES`: {
       const typeDefs = Array.isArray(action.payload)
