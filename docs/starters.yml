@@ -1,3 +1,15 @@
+- url: https://gatsby-theme-sky-lite.netlify.com
+  repo: https://github.com/vim-labs/gatsby-theme-sky-lite-starter
+  description: A lightweight GatsbyJS starter with Material-UI and MDX Markdown support.
+  tags:
+    - Blog
+    - Styling:Material
+  features:
+    - Lightweight
+    - Markdown
+    - MDX
+    - MaterialUI Components
+    - React Icons
 - url: https://authenticaysh.netlify.com/
   repo: https://github.com/ben-siewert/gatsby-starter-auth-aws-amplify
   description: Full-featured Auth with AWS Amplify & AWS Cognito
