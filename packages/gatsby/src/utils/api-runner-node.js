@@ -18,7 +18,7 @@ const {
 const { emitter, store } = require(`../redux`)
 const getPublicPath = require(`./get-public-path`)
 const { getNonGatsbyCodeFrameFormatted } = require(`./stack-trace-utils`)
-const { decorateEvent } = require(`gatsby-telemetry`)
+const { trackBuildError, decorateEvent } = require(`gatsby-telemetry`)
 
 // Bind action creators per plugin so we can auto-add
 // metadata to actions they create.
@@ -210,7 +210,16 @@ const runAPI = async (plugin, api, args, activity) => {
           if (err) reject(err)
           else resolve(val)
         }
-        gatsbyNode[api](...apiCallArgs, cb)
+
+        try {
+          gatsbyNode[api](...apiCallArgs, cb)
+        } catch (e) {
+          trackBuildError(api, {
+            error: e,
+            pluginName: `${plugin.name}@${plugin.version}`,
+          })
+          throw e
+        }
       })
     }
 
