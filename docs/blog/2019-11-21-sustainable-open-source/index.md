@@ -38,7 +38,7 @@ Open source is key infrastructure: for comparison, imagine if the lead mechanic 
 
 Inconsistent or sparse funding isn&#39;t just bad for project _maintainers_. It&#39;s also bad for the _project_ community, because inconsistent funding means inconsistent maintenance. Over time, this is costly to the community as bugs pile up or feature gaps grow, causing user frustration and necessitating workarounds and occasional replacement by the next &quot;new thing&quot;.
 
-[As Devon Zuegel at GitHub put it:](https://github.blog/2019-01-17-lets-talk-about-open-source-sustainability/) &quot;[Open source] is everywhere, yet it lacks financial and personnel resources. Developers and companies benefit from a vibrant OSS ecosystem, but they lack proportionate incentive to contribute time and money to creating and maintaining projects.&quot;
+[As Devon Zuegel at GitHub put it:](https://github.blog/2019-01-17-lets-talk-about-open-source-sustainability/) &quot;[Open source] is everywhere, yet it lacks financial and personnel resources. Developers and companies benefit from a vibrant OSS ecosystem, but they lack proportional incentives to contribute time and money to creating and maintaining projects.&quot;
 
 ###Thriving open-source communities open opportunities
 
