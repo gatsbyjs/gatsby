@@ -231,12 +231,13 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) => {
   let resolve
   let promise = new Promise(res => (resolve = res)) // This is guaranteed to assign to `resolve` in sync
 
-  const { parentSpan } = args
+  const { parentSpan, traceId, traceTags, waitForCascadingActions } = args
+
   const apiSpanArgs = parentSpan ? { childOf: parentSpan } : {}
   const apiSpan = tracer.startSpan(`run-api`, apiSpanArgs)
 
   apiSpan.setTag(`api`, api)
-  _.forEach(args.traceTags, (value, key) => {
+  _.forEach(traceTags, (value, key) => {
     apiSpan.setTag(key, value)
   })
 
@@ -255,10 +256,10 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) => {
     api,
     resolve,
     span: apiSpan,
-    traceId: args.traceId,
+    traceId,
   }
 
-  if (args.waitForCascadingActions) {
+  if (waitForCascadingActions) {
     waitingForCasacadeToFinish.push(apiRunInstance)
   }
 
@@ -322,7 +323,7 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) => {
 
   // Filter out empty responses and return if the
   // api caller isn't waiting for cascading actions to finish.
-  if (!args.waitForCascadingActions) {
+  if (!waitForCascadingActions) {
     apiSpan.finish()
     resolve(apiRunInstance.results)
   }
