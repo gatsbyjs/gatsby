@@ -1,4 +1,3 @@
-const BlueBirdPromise = require(`bluebird`)
 const _ = require(`lodash`)
 const chalk = require(`chalk`)
 const { bindActionCreators } = require(`redux`)
@@ -295,18 +294,23 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) => {
     }
   }
 
-  BlueBirdPromise.mapSeries(implementingPlugins, plugin =>
-    runPlugin(api, plugin, args, stopQueuedApiRuns, activity, apiSpan)
-  ).then(results =>
-    afterPlugin(
-      apiRunInstance,
+  let results = []
+  for (const plugin of implementingPlugins) {
+    if (stopQueuedApiRuns) {
+      break
+    }
+    let result = await runPlugin(
+      api,
+      plugin,
       args,
-      onAPIRunComplete,
-      apiSpan,
-      results,
-      resolve
+      stopQueuedApiRuns,
+      activity,
+      apiSpan
     )
-  )
+    results.push(result)
+  }
+
+  afterPlugin(apiRunInstance, args, onAPIRunComplete, apiSpan, results, resolve)
 
   return promise
 }
