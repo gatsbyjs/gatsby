@@ -85,7 +85,7 @@ class Index extends React.Component {
           {` `}
           exposes Sharp
           {`'`}s{` `}
-          <a href="http://sharp.dimens.io/en/stable/api-operation/#rotate">
+          <a href="http://sharp.pixelplumbing.com/en/stable/api-operation/#rotate">
             <code>rotate</code>
           </a>
           {` `}.
@@ -114,7 +114,7 @@ class Index extends React.Component {
         >
           We also expose all of Sharp
           {`'`}s{` `}
-          <a href="http://sharp.dimens.io/en/stable/api-resize/#crop">
+          <a href="http://sharp.pixelplumbing.com/en/stable/api-resize/#crop">
             <code>crop</code>
           </a>
           {` `}
@@ -140,9 +140,7 @@ class Index extends React.Component {
           <li style={styles.column25}>
             <img
               src={cropBottomLeft.src}
-              alt={`File ${
-                cropBottomLeft.originalName
-              } cropped to the bottom left`}
+              alt={`File ${cropBottomLeft.originalName} cropped to the bottom left`}
             />
             <p>
               <small>
@@ -316,7 +314,7 @@ class Index extends React.Component {
         </p>
         <p>
           Automatically create images for different resolutions — we do 1x,
-          1.5x, 2x, and 3x.
+          1.5x, and 2x.
           {` `}
         </p>
 
@@ -327,7 +325,7 @@ class Index extends React.Component {
           {` `}
           uses Sharp
           {`'`}s{` `}
-          <a href="http://sharp.dimens.io/en/stable/api-colour/#greyscale">
+          <a href="http://sharp.pixelplumbing.com/en/stable/api-colour/#greyscale">
             <code>greyscale</code>
           </a>
           {` `}

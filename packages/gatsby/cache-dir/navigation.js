@@ -18,7 +18,7 @@ function maybeRedirect(pathname) {
 
   if (redirect != null) {
     if (process.env.NODE_ENV !== `production`) {
-      const pageResources = loader.getResourcesForPathnameSync(pathname)
+      const pageResources = loader.loadPageSync(pathname)
 
       if (pageResources != null) {
         console.error(
@@ -81,7 +81,39 @@ const navigate = (to, options = {}) => {
     })
   }, 1000)
 
-  loader.getResourcesForPathname(pathname).then(pageResources => {
+  loader.loadPage(pathname).then(pageResources => {
+    // If no page resources, then refresh the page
+    // Do this, rather than simply `window.location.reload()`, so that
+    // pressing the back/forward buttons work - otherwise when pressing
+    // back, the browser will just change the URL and expect JS to handle
+    // the change, which won't always work since it might not be a Gatsby
+    // page.
+    if (!pageResources || pageResources.status === `error`) {
+      window.history.replaceState({}, ``, location.href)
+      window.location = pathname
+    }
+    // If the loaded page has a different compilation hash to the
+    // window, then a rebuild has occurred on the server. Reload.
+    if (process.env.NODE_ENV === `production` && pageResources) {
+      if (
+        pageResources.page.webpackCompilationHash !==
+        window.___webpackCompilationHash
+      ) {
+        // Purge plugin-offline cache
+        if (
+          `serviceWorker` in navigator &&
+          navigator.serviceWorker.controller !== null &&
+          navigator.serviceWorker.controller.state === `activated`
+        ) {
+          navigator.serviceWorker.controller.postMessage({
+            gatsbyApi: `clearPathResources`,
+          })
+        }
+
+        console.log(`Site has changed on server. Reloading browser`)
+        window.location = pathname
+      }
+    }
     reachNavigate(to, options)
     clearTimeout(timeoutId)
   })
@@ -97,7 +129,9 @@ function shouldUpdateScroll(prevRouterProps, { location }) {
     getSavedScrollPosition: args => this._stateStorage.read(args),
   })
   if (results.length > 0) {
-    return results[0]
+    // Use the latest registered shouldUpdateScroll result, this allows users to override plugin's configuration
+    // @see https://github.com/gatsbyjs/gatsby/issues/12038
+    return results[results.length - 1]
   }
 
   if (prevRouterProps) {
@@ -107,7 +141,7 @@ function shouldUpdateScroll(prevRouterProps, { location }) {
     if (oldPathname === pathname) {
       // Scroll to element if it exists, if it doesn't, or no hash is provided,
       // scroll to top.
-      return hash ? hash.slice(1) : [0, 0]
+      return hash ? decodeURI(hash.slice(1)) : [0, 0]
     }
   }
   return true
@@ -117,7 +151,6 @@ function init() {
   // Temp hack while awaiting https://github.com/reach/router/issues/119
   window.__navigatingToLink = false
 
-  window.___loader = loader
   window.___push = to => navigate(to, { replace: false })
   window.___replace = to => navigate(to, { replace: true })
   window.___navigate = (to, options) => navigate(to, options)

@@ -77,7 +77,7 @@ The only work I had to do on the content migration was to reformat the
 [frontmatter](https://gohugo.io/content-management/front-matter/). In Hugo, I
 used TOML, whereas `gatsby-transformer-remark` works only with YAML for the
 moment. Luckily, I still had the Hugo CLI on my system so could make use of its
-[build-in conversion tool](https://gohugo.io/commands/hugo_convert_toyaml/). The
+[built-in conversion tool](https://gohugo.io/commands/hugo_convert_toyaml/). The
 only issue I had was that sometimes titles were longer than 1 line and were not
 parse-able, so I just had to cut some words out where problematic.
 
@@ -98,9 +98,10 @@ gives examples. In sum, I created a `gatsby-node.js` file which exports
 This might sound way more complicated than what it is:
 
 ```jsx
-exports.createPages = ({ graphql, boundActionCreators }) => {
-  const { createPage } = boundActionCreators
-  graphql(`
+exports.createPages = async ({ graphql, actions }) => {
+  const { createPage } = actions
+
+  const result = await graphql(`
     {
       allMarkdownRemark {
         edges {
@@ -114,10 +115,10 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
         }
       }
     }
-  `).then(result => {
-    const posts = result.data.allMarkdownRemark.edges
-    // Create content programmatically here
-  })
+  `)
+
+  const posts = result.data.allMarkdownRemark.edges
+  // Create content programmatically here
 }
 ```
 
@@ -238,9 +239,9 @@ const createPostPages = require(`./gatsby-actions/createPostPages`)
 const createPaginatedPostsPages = require(`./gatsby-actions/createPaginatedPostsPages`)
 const createTagPages = require(`./gatsby-actions/createTagPages`)
 
-exports.createPages = ({ graphql, boundActionCreators }) => {
-  const { createPage } = boundActionCreators
-  graphql(`
+exports.createPages = async ({ graphql, actions }) => {
+  const { createPage } = actions
+  const result = await graphql(`
     {
       allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
         edges {
@@ -254,12 +255,12 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
         }
       }
     }
-  `).then(result => {
-    const posts = result.data.allMarkdownRemark.edges
-    createPostPages(createPage, posts)
-    createPaginatedPostsPages(createPage, posts)
-    createTagPages(createPage, posts)
-  })
+  `
+
+  const posts = result.data.allMarkdownRemark.edges
+  createPostPages(createPage, posts)
+  createPaginatedPostsPages(createPage, posts)
+  createTagPages(createPage, posts)
 }
 ```
 

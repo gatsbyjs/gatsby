@@ -12,6 +12,7 @@ For more information on how to customize the Babel configuration of your Gatsby 
 - [`@babel/plugin-syntax-dynamic-import`](https://babeljs.io/docs/en/babel-plugin-syntax-dynamic-import)
 - [`@babel/plugin-transform-runtime`](https://babeljs.io/docs/en/babel-plugin-transform-runtime#docsNav)
 - [`babel-plugin-macros`](https://github.com/kentcdodds/babel-plugin-macros)
+- [`babel-plugin-transform-react-remove-prop-types`](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types)
 
 ## Usage
 

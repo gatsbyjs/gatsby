@@ -16,8 +16,8 @@ class FourOhFour extends React.Component {
           <Link to="/">
             <p>Go Back</p>
           </Link>
-          <FooterLinks />
         </Container>
+        <FooterLinks />
       </Layout>
     )
   }

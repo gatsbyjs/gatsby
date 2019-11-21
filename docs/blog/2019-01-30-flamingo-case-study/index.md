@@ -4,7 +4,8 @@ date: 2019-01-30
 author: Linda Watkins
 tags:
   - ecommerce
-  - case study
+  - case-studies
+  - marketing
 image: "./images/flamingo.png"
 showImageInArticle: true
 ---
@@ -27,27 +28,27 @@ With that in mind, they also needed it to tick off some major development points
 
 If the team didn’t find a solution to meet these needs, they’d have to build it themselves and being responsible for performance optimizations, build processes, image optimizations, and edge hosting would have taken them easily another year to build. That definitely was NOT an option as they only had a few months to build and deploy the new Flamingo site.
 
-<pullquote>We wanted to focus on performance at the beginning of the project, having it baked in. It’s easier than trying to make an already built website perform later.</pullquote>
+<Pullquote>We wanted to focus on performance at the beginning of the project, having it baked in. It’s easier than trying to make an already built website perform later.</Pullquote>
 
 ## Going Gatsby
 
 The manual process required to make the Harry’s website perform was what they were looking to improve for the Flamingo site. And Gatsby made building a high-performing website easy because it leverages modern website tools and is built with performance already an integral part of the technology.
 
-<pullquote>As an ecommerce site, performance (SEO and conversion) is super important and Gatsby takes care of this for us.</pullquote>
+<Pullquote>As an ecommerce site, performance (SEO and conversion) is super important and Gatsby takes care of this for us.</Pullquote>
 
 Since Gatsby simply serves html files that are hosted on the edge (CDN: Content Delivery Network), this dramatically improves SEO. The developers can focus on other things because Gatsby just takes care of the performance. The team was excited about the image support from Gatsby that is “out-of-the-box.” They didn’t have to write code in-house, which was game changing for a team looking to lead in mobile-optimized shopping.
 
-The Flamingo team also wanted to shake things up with content and image design by providing the fastest, most seamless shopping experience. Gatsby’s image handling helps reduce raw image sizes and speed up page load times, and serves the right resolution image depending on different screen sizes. This gave the front-end developers the ability to go beyond JS to focus on edge hosting and optimization. With a site driven by modern development tools, Gatsby’s out-of-the-box image support is the cherry on top for Flamingo. “We don’t have to write the code ourselves!” said Johnny.
+The Flamingo team also wanted to shake things up with content and image design by providing the fastest, most seamless shopping experience. Gatsby’s image handling helps reduce raw image sizes and speed up page load times, and serves the right resolution image depending on different screen sizes. This gave the frontend developers the ability to go beyond JS to focus on edge hosting and optimization. With a site driven by modern development tools, Gatsby’s out-of-the-box image support is the cherry on top for Flamingo. “We don’t have to write the code ourselves!” said Johnny.
 
 The duo also praised the ease of getting up to speed on Gatsby, which gave them the ability to hire new developers and get them going in only a day. If there was familiarity with React, onboarding was successful and reduced the management of dependencies and servers.
 
-<pullquote>We were able to allow newer teammates to be part of the on-call for the launch because Gatsby made it so easy to maintain.</pullquote>
+<Pullquote>We were able to allow newer teammates to be part of the on-call for the launch because Gatsby made it so easy to maintain.</Pullquote>
 
 ## No server. No problem.
 
 The Flamingo launch was big, and they had a lot of press coverage lined up to support it. They had a lot of marketing investment and press coverage lined up to support it. But the first day of the launch, there was not a worry about the site going down.
 
-<pullquote>We didn’t have to manage a server – all the traffic was going to the CDN so there was less surface area for things to go wrong.</pullquote>
+<Pullquote>We didn’t have to manage a server – all the traffic was going to the CDN so there was less surface area for things to go wrong.</Pullquote>
 
 And since the site was compiled by Gatsby ahead of time, it was all ready to go and hosted on the CDN before a web visitor even typed in the URL or did a search. “Instead of us hosting a web server, Gatsby builds the site ahead of time and stores it on the CDN. We don’t need to compute anything when the customers come to the website,” Tim explained. “We've had thousands of concurrent users on the site at once with no scaling concerns and zero performance impact.”
 
@@ -71,8 +72,8 @@ Harry’s had a website that was working, but the web team knew it could do bett
 
 Reflecting on it post-launch, the team says that Gatsby allowed them to focus on what they weren’t able to in the past – building a beautiful site that was inherently fast. But there’s been a surprise added value of Gatsby - the enthusiasm it has generated for the development team to push and learn.
 
-<pullquote>The team has gotten excited about learning – excited about hosting at the edge and optimizing for performance, because Gatsby makes it easy.</pullquote>
+<Pullquote>The team has gotten excited about learning – excited about hosting at the edge and optimizing for performance, because Gatsby makes it easy.</Pullquote>
 
-Front-end engineers are going beyond JS and tools and focusing on edge hosting, the modern web technology stack and optimizing for speed. The team is using this as a blueprint for how they’ll build websites in the future.
+Frontend engineers are going beyond JS and tools and focusing on edge hosting, the modern web technology stack and optimizing for speed. The team is using this as a blueprint for how they’ll build websites in the future.
 
 Gatsby delivered a performance-optimized website for Flamingo, hosted on the edge. It made it easy to onboard new developers and create engaging experiences. It improved the website visitor’s experience with speed and design and it inspired the Flamingo team in a new age of ecommerce design.

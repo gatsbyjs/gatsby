@@ -3,10 +3,12 @@ title: Styling
 overview: true
 ---
 
-There are so many ways to add styles to your website -- and Gatsby supports almost every possible option, through official and community plugins. (_If there isn’t a plugin yet for your favorite option, consider [contributing one](/docs/creating-plugins/)!_)
+There are many ways to style your website. They can roughly be grouped into three styling approaches:
 
-In this section you'll find guides on different styling methods supported by Gatsby plugins.
+- [**Global CSS Files**](/docs/global-css/): the traditional way to style a website. CSS rules are declared globally and styles are applied depending on specificity and inheritance.
+- [**Modular Stylesheets**](/docs/css-modules): CSS rules are written traditionally but consumed with JavaScript and scoped locally to avoid unintended side-effects elsewhere. Works out-of-the-box with Gatsby.
+- [**CSS-in-JS**](/docs/css-in-js/): locally-scoped CSS written and consumed in JavaScript, enabling the easier use of dynamic styling and other features. Requires the use of third-party libraries.
 
-Gatsby doesn't prescribe or dictate any single styling approach. Choose what works best for you!
+Gatsby doesn't have an opinion about which styling approach you choose. Almost every possible option is supported through official and community plugins. _(If there isn’t a plugin yet for your favorite option, consider [contributing](/docs/creating-plugins) one!)_
 
-[[guidelist]]
+<GuideList slug={props.slug} />

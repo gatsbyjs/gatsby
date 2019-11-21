@@ -25,12 +25,14 @@ describe(`assetPrefix`, () => {
   })
 
   describe(`gatsby-plugin-manifest`, () => {
-    it(`prefixes manifest`, () => {
-      assetPrefixMatcher(cy.get(`head link[rel="manifest"]`))
+    it(`doesn’t prefix manifest`, () => {
+      cy.get(`head link[rel="manifest"]`)
+        .should(`have.attr`, `href`)
+        .and(`not.matches`, assetPrefixExpression)
     })
 
-    it(`prefixes shortcut icon`, () => {
-      assetPrefixMatcher(cy.get(`head link[rel="shortcut icon"]`))
+    it(`prefixes icon`, () => {
+      assetPrefixMatcher(cy.get(`head link[rel="icon"]`))
     })
 
     it(`prefixes manifest icons`, () => {

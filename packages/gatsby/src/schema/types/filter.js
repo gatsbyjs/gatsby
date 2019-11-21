@@ -6,18 +6,29 @@ const {
   GraphQLList,
   isSpecifiedScalarType,
 } = require(`graphql`)
+const { addDerivedType } = require(`./derived-types`)
 const { InputTypeComposer } = require(`graphql-compose`)
 const { GraphQLJSON } = require(`graphql-compose`)
 const { GraphQLDate } = require(`./date`)
 
+const SEARCHABLE_ENUM = {
+  SEARCHABLE: `SEARCHABLE`,
+  NOT_SEARCHABLE: `NON_SEARCHABLE`,
+  DEPRECATED_SEARCHABLE: `DERPECATED_SEARCHABLE`,
+}
+
 const convert = ({
   schemaComposer,
+  typeComposer,
   inputTypeComposer,
   filterInputComposer,
+  deprecationReason,
 }) => {
   const inputTypeName = inputTypeComposer
     .getTypeName()
     .replace(/Input$/, `FilterInput`)
+
+  addDerivedType({ typeComposer, derivedTypeName: inputTypeName })
 
   let convertedITC
   if (filterInputComposer) {
@@ -41,13 +52,27 @@ const convert = ({
   fieldNames.forEach(fieldName => {
     const fieldConfig = inputTypeComposer.getFieldConfig(fieldName)
     const type = getNamedType(fieldConfig.type)
+    const searchable = typeComposer.getFieldExtension(fieldName, `searchable`)
+
+    if (searchable === SEARCHABLE_ENUM.NOT_SEARCHABLE) {
+      return
+    } else if (searchable === SEARCHABLE_ENUM.DEPRECATED_SEARCHABLE) {
+      deprecationReason = `Filtering on fields that need arguments to resolve is deprecated.`
+    }
 
     if (type instanceof GraphQLInputObjectType) {
+      // Input type composers has names `FooInput`, get the type associated
+      // with it
+      const typeComposer = schemaComposer.getAnyTC(
+        type.name.replace(/Input$/, ``)
+      )
       const itc = new InputTypeComposer(type, schemaComposer)
 
       const operatorsInputTC = convert({
         schemaComposer,
+        typeComposer,
         inputTypeComposer: itc,
+        deprecationReason,
       })
 
       // TODO: array of arrays?
@@ -67,6 +92,10 @@ const convert = ({
       if (operatorFields) {
         convertedFields[fieldName] = operatorFields
       }
+    }
+
+    if (convertedFields[fieldName]) {
+      convertedFields[fieldName].deprecationReason = deprecationReason
     }
   })
 
@@ -120,6 +149,7 @@ const getFilterInput = ({ schemaComposer, typeComposer }) => {
 
   const filterInputTC = convert({
     schemaComposer,
+    typeComposer,
     inputTypeComposer,
     filterInputComposer,
   })
@@ -127,7 +157,7 @@ const getFilterInput = ({ schemaComposer, typeComposer }) => {
   return removeEmptyFields({ schemaComposer, inputTypeComposer: filterInputTC })
 }
 
-module.exports = { getFilterInput }
+module.exports = { getFilterInput, SEARCHABLE_ENUM }
 
 const EQ = `eq`
 const NE = `ne`

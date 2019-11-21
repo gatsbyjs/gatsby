@@ -47,6 +47,9 @@ plugins: [
 - `width` (int, default: 400)
 - `height` (int)
 - `quality` (int, default: 50)
+- `jpegQuality` (int)
+- `pngQuality` (int)
+- `webpQuality` (int)
 - `jpegProgressive` (bool, default: true)
 - `pngCompressionLevel` (int, default: 9)
 - `base64`(bool, default: false)
@@ -60,14 +63,16 @@ plugins: [
 
 ### fixed
 
-Automatically create sizes for different resolutions — we do 1x, 1.5x, 2x, and
-3x.
+Automatically create sizes for different resolutions — we do 1x, 1.5x, and 2x.
 
 #### Parameters
 
 - `width` (int, default: 400)
 - `height` (int)
 - `quality` (int, default: 50)
+- `jpegQuality` (int)
+- `pngQuality` (int)
+- `webpQuality` (int)
 
 #### Returns
 
@@ -81,8 +86,8 @@ Automatically create sizes for different resolutions — we do 1x, 1.5x, 2x, and
 ### fluid
 
 Create fluid sizes (in width) for the image. If the max width of the container for the
-rendered markdown file is 800px, the sizes would then be: 200, 400, 800, 1200,
-1600, 2400 – enough to provide close to the optimal image size for every device
+rendered markdown file is 800px, the sizes would then be: 200px, 400px, 800px, 1200px,
+1600px – enough to provide close to the optimal image size for every device
 size / screen resolution.
 
 If you want more control over which sizes are output you can use the `srcSetBreakpoints`
@@ -107,6 +112,9 @@ fit strategies `CONTAIN` and `FILL` will not work when `cropFocus` is assigned t
 - `maxWidth` (int, default: 800)
 - `maxHeight` (int)
 - `quality` (int, default: 50)
+- `jpegQuality` (int)
+- `pngQuality` (int)
+- `webpQuality` (int)
 - `srcSetBreakpoints` (array of int, default: [])
 - `fit` (string, default: '[sharp.fit.cover][6]')
 - `background` (string, default: 'rgba(0,0,0,1)')
@@ -216,7 +224,7 @@ will be [flattened][15] before creating the composite.
 
 This works by adding an alpha channel to the duotone'd image - then we let Sharp
 do its magic via
-[`overlayWith`](http://sharp.dimens.io/en/stable/api-composite/#overlaywith);
+[`overlayWith`](http://sharp.pixelplumbing.com/en/stable/api-composite/#overlaywith);
 quoting the Sharp documentation:
 
 > If the overlay image contains an alpha channel then composition with
@@ -325,7 +333,7 @@ To fix this, you'll need to update all Gatsby plugins in the current project tha
 
 To update these packages, run:
 
-```sh
+```shell
 npm install gatsby-plugin-sharp gatsby-plugin-manifest gatsby-remark-images-contentful gatsby-source-contentful gatsby-transformer-sharp gatsby-transformer-sqip
 ```
 
@@ -336,16 +344,16 @@ If updating these doesn't fix the issue, your project probably uses other plugin
 [3]: https://ines.io/blog/dynamic-duotone-svg-jade
 [4]: https://en.wikipedia.org/wiki/Relative_luminance
 [5]: https://github.com/nagelflorian/react-duotone
-[6]: http://sharp.dimens.io/en/stable/api-resize/#crop
-[7]: http://sharp.dimens.io/en/stable/api-operation/#rotate
-[8]: http://sharp.dimens.io/en/stable/api-colour/#greyscale
+[6]: http://sharp.pixelplumbing.com/en/stable/api-resize/#crop
+[7]: http://sharp.pixelplumbing.com/en/stable/api-operation/#rotate
+[8]: http://sharp.pixelplumbing.com/en/stable/api-colour/#greyscale
 [9]: https://github.com/gatsbyjs/gatsby/issues/2435
 [10]: https://codepen.io/tigt/post/optimizing-svgs-in-data-uris
 [11]: https://github.com/tooolbox/node-potrace
 [12]: https://github.com/svg/svgo
 [13]: https://github.com/tooolbox/node-potrace#parameters
 [14]: https://github.com/oliver-moran/jimp
-[15]: http://sharp.dimens.io/en/stable/api-operation/#flatten
+[15]: http://sharp.pixelplumbing.com/en/stable/api-operation/#flatten
 [16]: https://github.com/mozilla/mozjpeg
 [17]: https://www.sno.phy.queensu.ca/~phil/exiftool/
 [18]: https://www.npmjs.com/package/color

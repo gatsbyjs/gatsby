@@ -7,6 +7,8 @@ tags:
   - contentful
   - react
   - netlify
+  - case-studies
+  - gatsby-for-teams
 ---
 
 In October of 2018, we realized that our ​[marketing website](https://www.housecallpro.com/)​ needed some serious love to meet our standards for a scalable and effective digital front door. At the time, the site was being served from a legacy Ruby on Rails server hosted on AWS. The loading time for each page took several seconds on desktop, and was really hurting on mobile, where our analytics and current trends were showing an ever increasing share of use. The development process was not efficient, involving an engineer to create an HTML template in Ruby for each new page to be rendered and served by Rails. This process was not sustainable and would not aid in our goal to radically increase our useful content to capture a wider audience of potential customers.
@@ -52,7 +54,7 @@ With Gatsby, we can generate several hundred pages for all of the industries tha
 
 By providing data in the form of a JSON object, we can parse and iterate over each industry in which to generate a new page. Whether this JSON data comes from a file, or a CMS via an API call, or our own database, Gatsby provides the flexibility to build in any way we need.
 
-This has dramatically decreased developer time and rocketed the speed of page creation. We went from building several pages a week using front-end developers, to building out dozens of pages a day with professional content creators.
+This has dramatically decreased developer time and rocketed the speed of page creation. We went from building several pages a week using frontend developers, to building out dozens of pages a day with professional content creators.
 
 Below is an example of one of our live industry pages (in this case Heating/Air
 Conditioning). Each industry page follows the same template, and content authors can build out new industries, complete with whatever copy, icons, images, and animations they need to allow each to stand out as its own work of art.

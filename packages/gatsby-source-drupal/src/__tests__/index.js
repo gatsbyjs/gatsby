@@ -21,6 +21,7 @@ jest.mock(`gatsby-source-filesystem`, () => {
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
 const { sourceNodes } = require(`../gatsby-node`)
+const { handleWebhookUpdate } = require(`../utils`)
 
 describe(`gatsby-source-drupal`, () => {
   const nodes = {}
@@ -28,6 +29,9 @@ describe(`gatsby-source-drupal`, () => {
   const baseUrl = `http://fixture`
   const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
   const { objectContaining } = expect
+  const actions = {
+    createNode: jest.fn(node => (nodes[node.id] = node)),
+  }
 
   const activity = {
     start: jest.fn(),
@@ -36,18 +40,18 @@ describe(`gatsby-source-drupal`, () => {
   const reporter = {
     info: jest.fn(),
     activityTimer: jest.fn(() => activity),
+    log: jest.fn(),
+  }
+
+  const args = {
+    createNodeId,
+    createContentDigest,
+    actions,
+    reporter,
+    getNode: id => nodes[id],
   }
 
   beforeAll(async () => {
-    const args = {
-      createNodeId,
-      createContentDigest,
-      actions: {
-        createNode: jest.fn(node => (nodes[node.id] = node)),
-      },
-      reporter,
-    }
-
     await sourceNodes(args, { baseUrl })
   })
 
@@ -118,7 +122,7 @@ describe(`gatsby-source-drupal`, () => {
 
   it(`Creates back references`, () => {
     expect(
-      nodes[createNodeId(`file-1`)].relationships[`node--article___NODE`]
+      nodes[createNodeId(`file-1`)].relationships[`node__article___NODE`]
     ).toEqual(
       expect.arrayContaining([
         createNodeId(`article-2`),
@@ -126,7 +130,7 @@ describe(`gatsby-source-drupal`, () => {
       ])
     )
     expect(
-      nodes[createNodeId(`tag-1`)].relationships[`node--article___NODE`]
+      nodes[createNodeId(`tag-1`)].relationships[`node__article___NODE`]
     ).toEqual(
       expect.arrayContaining([
         createNodeId(`article-1`),
@@ -134,7 +138,7 @@ describe(`gatsby-source-drupal`, () => {
       ])
     )
     expect(
-      nodes[createNodeId(`tag-2`)].relationships[`node--article___NODE`]
+      nodes[createNodeId(`tag-2`)].relationships[`node__article___NODE`]
     ).toEqual(expect.arrayContaining([createNodeId(`article-1`)]))
   })
 
@@ -150,6 +154,99 @@ describe(`gatsby-source-drupal`, () => {
           url,
         })
       )
+    })
+  })
+
+  describe(`Update webhook`, () => {
+    describe(`Update content`, () => {
+      describe(`Before update`, () => {
+        it(`Attributes`, () => {
+          expect(nodes[createNodeId(`article-3`)].title).toBe(`Article #3`)
+        })
+        it(`Relationships`, () => {
+          expect(nodes[createNodeId(`article-3`)].relationships).toEqual({
+            field_main_image___NODE: createNodeId(`file-1`),
+            field_tags___NODE: [createNodeId(`tag-1`)],
+          })
+        })
+        it(`Back references`, () => {
+          expect(
+            nodes[createNodeId(`file-1`)].relationships[`node__article___NODE`]
+          ).toContain(createNodeId(`article-3`))
+          expect(
+            nodes[createNodeId(`tag-1`)].relationships[`node__article___NODE`]
+          ).toContain(createNodeId(`article-3`))
+          expect(
+            nodes[createNodeId(`tag-2`)].relationships[`node__article___NODE`]
+          ).not.toContain(createNodeId(`article-3`))
+        })
+      })
+
+      describe(`After update`, () => {
+        beforeAll(async () => {
+          const nodeToUpdate = require(`./fixtures/webhook-update.json`).data
+
+          await handleWebhookUpdate({
+            nodeToUpdate,
+            ...args,
+          })
+        })
+        it(`Attributes`, () => {
+          expect(nodes[createNodeId(`article-3`)].title).toBe(
+            `Article #3 - Updated`
+          )
+        })
+        it(`Relationships`, () => {
+          // removed `field_main_image`, changed `field_tags`
+          expect(nodes[createNodeId(`article-3`)].relationships).toEqual({
+            field_tags___NODE: [createNodeId(`tag-2`)],
+          })
+        })
+        it(`Back references`, () => {
+          // removed `field_main_image`, `file-1` no longer has back reference to `article-3`
+          expect(
+            nodes[createNodeId(`file-1`)].relationships[`node__article___NODE`]
+          ).not.toContain(createNodeId(`article-3`))
+          // changed `field_tags`, `tag-1` no longer has back reference to `article-3`
+          expect(
+            nodes[createNodeId(`tag-1`)].relationships[`node__article___NODE`]
+          ).not.toContain(createNodeId(`article-3`))
+          // changed `field_tags`, `tag-2` now has back reference to `article-3`
+          expect(
+            nodes[createNodeId(`tag-2`)].relationships[`node__article___NODE`]
+          ).toContain(createNodeId(`article-3`))
+        })
+      })
+    })
+
+    describe(`Insert content`, () => {
+      it(`Node doesn't exist before webhook`, () => {
+        expect(nodes[createNodeId(`article-4`)]).not.toBeDefined()
+        expect(
+          nodes[createNodeId(`tag-1`)].relationships[`node__article___NODE`]
+        ).not.toContain(createNodeId(`article-4`))
+      })
+
+      describe(`After insert`, () => {
+        beforeAll(async () => {
+          const nodeToUpdate = require(`./fixtures/webhook-insert.json`).data
+
+          await handleWebhookUpdate({
+            nodeToUpdate,
+            ...args,
+          })
+        })
+        it(`Creates node`, () => {
+          expect(nodes[createNodeId(`article-4`)]).toBeDefined()
+          expect(nodes[createNodeId(`article-4`)].title).toBe(`Article #4`)
+        })
+
+        it(`Adds back references to referenced nodes`, () => {
+          expect(
+            nodes[createNodeId(`tag-1`)].relationships[`node__article___NODE`]
+          ).toContain(createNodeId(`article-4`))
+        })
+      })
     })
   })
 })

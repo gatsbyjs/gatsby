@@ -25,6 +25,7 @@
   },
   "globals": {
     "before": true,
+    "after": true,
     "spyOn": true,
     "__PATH_PREFIX__": true,
     "__BASE_PATH__": true,

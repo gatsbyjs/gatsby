@@ -3,7 +3,6 @@ title: New Schema Customization API - Available in Gatsby 2.2.0
 date: 2019-03-19
 author: Mikhail Novikov
 tags:
-  - schema
   - graphql
 ---
 
@@ -122,7 +121,19 @@ As next steps, we will work on adding more convenient tooling to "freeze" your s
 
 We strongly believe that these new APIs are the foundation of an evolutionary leap of the Gatsby GraphQL API. These changes make the GraphQL API more stable, more robust, and more easily customizable. They will enable further customization and use cases, like [theming](/blog/2018-11-11-introducing-gatsby-themes/) and more still that we haven't even envisioned yet. We truly can't wait to see the great things you build and how you use these new APIs and improvements powered by Gatsby and its improved GraphQL layer. We got some very enthusiastic feedback about this feature and we are happy to have it released.
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Wow, this is huge, and could potentially solve most of the issues users are currently experiencing integrating any CMS with <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a>! Great work guys, can&#39;t wait to do some tests with our source plugin! 🏆 <a href="https://t.co/REcehYiU8V">https://t.co/REcehYiU8V</a></p>&mdash; DatoCMS (@datocms) <a href="https://twitter.com/datocms/status/1103896814351048704?ref_src=twsrc%5Etfw">March 8, 2019</a></blockquote>
+<blockquote class="twitter-tweet" data-lang="en">
+  <p lang="en" dir="ltr">
+    Wow, this is huge, and could potentially solve most of the issues users are
+    currently experiencing integrating any CMS with{" "}
+    <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a>!
+    Great work guys, can&#39;t wait to do some tests with our source plugin! 🏆{" "}
+    <a href="https://t.co/REcehYiU8V">https://t.co/REcehYiU8V</a>
+  </p>
+  &mdash; DatoCMS (@datocms){" "}
+  <a href="https://twitter.com/datocms/status/1103896814351048704?ref_src=twsrc%5Etfw">
+    March 8, 2019
+  </a>
+</blockquote>
 
 ## Additional Resources
 

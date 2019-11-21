@@ -4,7 +4,6 @@ date: 2019-02-07
 author: Daniel Lemay
 tags:
   - react
-  - react hooks
 image: "./images/hooks-diff.jpg"
 showImageInArticle: true
 canonicalLink: "https://www.dslemay.com/blog/2019/02/06/pragmatic-lessons-from-converting-to-react-hooks"
@@ -95,7 +94,7 @@ An extra benefit of `useState` is the ability to reference the current state wit
 
 ## Structuring Hooks in Gatsby
 
-Currently I am structuring all my custom hooks in a top level folder so that other components can import them from a central location. Pulling the React dependencies out of Gatsby in version 2 allows for using Hooks immediately. To begin using Hooks today, update React and React-DOM to 16.8.0. There are considerations to take with the `useEffect Hook`. If it references the window object, you need to check that window is defined to avoid Gatsby build errors. These effects would normally live in `componentDidMount` where the component hydrates in the DOM. Hooks are called in the build process. The Gatsby docs have great resources for [debugging HTML builds](docs/debugging-html-builds/) if you encounter this issue.
+Currently I am structuring all my custom hooks in a top level folder so that other components can import them from a central location. Pulling the React dependencies out of Gatsby in version 2 allows for using Hooks immediately. To begin using Hooks today, update React and React-DOM to 16.8.0. There are considerations to take with the `useEffect Hook`. If it references the window object, you need to check that window is defined to avoid Gatsby build errors. These effects would normally live in `componentDidMount` where the component hydrates in the DOM. Hooks are called in the build process. The Gatsby docs have great resources for [debugging HTML builds](/docs/debugging-html-builds/) if you encounter this issue.
 
 ```javascript
 function useMediaQuery() {

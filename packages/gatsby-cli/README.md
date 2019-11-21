@@ -2,16 +2,16 @@
 
 The Gatsby command line interface (CLI). It is used to perform common functionality, such as creating a Gatsby application based on a starter, spinning up a hot-reloading local development server, and more!
 
-Let's you create new Gatsby apps using
-[Gatsby starters](https://www.gatsbyjs.org/docs/gatsby-starters/).
+Lets you create new Gatsby apps using
+[Gatsby starters](https://www.gatsbyjs.org/docs/gatsby-starters/). It also lets you run commands on sites. The tool runs code from the `gatsby` package installed locally.
 
-The Gatsby CLI (`gatsby-cli`) is packaged as an executable that can be used globally--in fact, this was previously how we recommended using the CLI.
+The Gatsby CLI (`gatsby-cli`) is packaged as an executable that can be used globally. The Gatsby CLI is available via [npm](https://www.npmjs.com/) and should be installed globally by running `npm install -g gatsby-cli` to use it locally.
 
-However, global installs of the Gatsby CLI can sometimes lead to subtle bugs in behavior and functionality if the version of the globally installed executable does not match the version of Gatsby in your application. To avoid this, we highly recommend using the `package.json` script variant of these commands, typically exposed _for you_ with most starters.
+Run `gatsby --help` for full help.
 
-For example, if we want to make the [`gatsby develop`](#develop) command available in our application, we would open up `package.json` and add a script like so:
+You can also use the `package.json` script variant of these commands, typically exposed _for you_ with most [starters](/docs/starters/). For example, if we want to make the [`gatsby develop`](#develop) command available in our application, we would open up `package.json` and add a script like so:
 
-```json:title
+```json:title=package.json
 {
   "scripts": {
     "develop": "gatsby develop"
@@ -19,22 +19,57 @@ For example, if we want to make the [`gatsby develop`](#develop) command availab
 }
 ```
 
-We can now use the `develop` script tied to our app's version of Gatsby, rather than a globally installed version. This script can be invoked by using the name of the script, e.g. `npm run develop` in this case. Feel free to [read more about NPM scripts](https://docs.npmjs.com/misc/scripts) if you're interested!
+## CLI Commands
 
-## How to use
-
-The Gatsby CLI is available via [npm](https://www.npmjs.com/) and should be installed globally by running `npm install -g gatsby-cli` to use it locally.
-
-Run `gatsby --help` for full help.
-
-## Commands
+1. [new](#new)
+2. [develop](#develop)
+3. [build](#build)
+4. [serve](#serve)
+5. [clean](#clean)
+6. [plugin](#plugin)
+7. [info](#info)
+8. [repl](#repl)
 
 ### `new`
 
-`gatsby new gatsby-site`
+```
+gatsby new [<site-name> [<starter-url>]]
+```
 
-See the [Gatsby starters docs](https://www.gatsbyjs.org/docs/gatsby-starters/)
-for more.
+| Argument    | Description                                                                                                                                                                                                     |
+| ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| site-name   | Your Gatsby site name, which is also used to create the project directory.                                                                                                                                      |
+| starter-url | A Gatsby starter URL or local file path. Defaults to [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default); see the [Gatsby starters](/docs/gatsby-starters/) docs for more information. |
+
+> Note: The `site-name` should only consist of letters and numbers. If you specify a `.`, `./` or a `<space>` in the name, `gatsby new` will throw an error.
+
+#### Examples
+
+- Create a Gatsby site named `my-awesome-site`, using the [default starter](https://github.com/gatsbyjs/gatsby-starter-default):
+
+```bash
+gatsby new my-awesome-site
+```
+
+- Create a Gatsby site named `my-awesome-blog-site`, using [gatsby-starter-blog](https://www.gatsbyjs.org/starters/gatsbyjs/gatsby-starter-blog/):
+
+```bash
+gatsby new my-awesome-blog-site https://github.com/gatsbyjs/gatsby-starter-blog
+```
+
+- If you leave out both of the arguments, the CLI will run an interactive shell asking for these inputs:
+
+```bash
+gatsby new
+? What is your project called? › my-gatsby-project
+? What starter would you like to use? › - Use arrow-keys. Return to submit.
+❯  gatsby-starter-default
+   gatsby-starter-hello-world
+   gatsby-starter-blog
+   (Use a different starter)
+```
+
+See the [Gatsby starters docs](https://www.gatsbyjs.org/docs/gatsby-starters/) for more details.
 
 ### `develop`
 
@@ -64,6 +99,7 @@ At the root of a Gatsby app run `gatsby build` to do a production build of a sit
 |       `--prefix-paths`       | Build site with link paths prefixed (set pathPrefix in your config)                                        | `false` |
 |        `--no-uglify`         | Build site without uglifying JS bundles (for debugging)                                                    | `false` |
 | `--open-tracing-config-file` | Tracer configuration file (OpenTracing compatible). See https://www.gatsbyjs.org/docs/performance-tracing/ |         |
+| `--no-color`, `--no-colors`  | Disables colored terminal output                                                                           | `false` |
 
 ### `serve`
 
@@ -86,6 +122,16 @@ At the root of a Gatsby app run `gatsby clean` to wipe out the cache (`.cache` f
 - GraphQL error, e.g. this GraphQL resource _should_ be present but is not
 - Dependency issues, e.g. invalid version, cryptic errors in console, etc.
 - Plugin issues, e.g. developing a local plugin and changes don't seem to be taking effect
+
+### `plugin`
+
+Run commands pertaining to gatsby plugins.
+
+#### `docs`
+
+`gatsby plugin docs`
+
+Directs you to documentation about using and creating plugins.
 
 ### `info`
 

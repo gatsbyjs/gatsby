@@ -1,35 +1,60 @@
 ---
-title: Getting Started
+title: Getting Started with Gatsby Themes
 ---
 
-Scaffolding out a project that uses themes requires you to use a starter that's implemented with theming.
+The quickest way to get started using a Gatsby theme is to use a starter that's configured to use the theme.
+
+For example, `gatsby-starter-blog-theme` is a theme starter for the `gatsby-theme-blog` package.
+
+A **regular Gatsby starter** creates a new Gatsby site that is preconfigured for a particular use case. The resulting site effectively forks off the starter — after it’s created, the site maintains no connection to the starter.
+
+A **Gatsby theme starter** creates a new Gatsby site that installs and configures one or more Gatsby themes. When a starter installs a theme, it maintains the connection to that theme as a standalone npm package.
+
+Installing the Gatsby blog theme starter is the same process as a regular Gatsby starter:
 
 ```shell
 gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog-theme
 ```
 
-When you use a starter that's built with a theme, you will see that you're initially presented with a lighter weight `gatsby-config.js`. The goal with most themes is to allow you to get up and running with something like a blog in seconds. Now you can focus on writing and gradually introduce changes and customizations only if you want to.
+## What does a theme starter do?
 
-For example, a theme-based starter for a blog might do the following:
+The starter for the official Gatsby blog theme does the following:
 
-## 1. Install the Theme and Configure It
+### 1. The starter installs the theme and configures it
 
-```js:title=gatsby-config.js
+When you use a starter that's built with a theme, you will often see that you're initially presented with a lighter weight `gatsby-config.js`. Themes start doing their magic when installed via the `plugins` array:
+
+```javascript:title=gatsby-config.js
 module.exports = {
-  themes: [
+  plugins: [
     {
       resolve: "gatsby-theme-blog",
-      options: {
-        postsPerPage: 5,
-      },
+      options: {},
     },
   ],
+  // Customize your site metadata:
+  siteMetadata: {
+    title: "My Blog Title",
+    author: "My Name",
+    description: "My site description...",
+    siteUrl: "https://www.gatsbyjs.org/",
+    social: [
+      {
+        name: "twitter",
+        url: "https://twitter.com/gatsbyjs",
+      },
+      {
+        name: "github",
+        url: "https://github.com/gatsbyjs",
+      },
+    ],
+  },
 }
 ```
 
-## 2. Scaffold Out an Example Post
+### 2. The starter scaffolds out example blog posts.
 
-```md:title=src/posts/hello-world.md
+```md:title=/content/posts/hello-world.mdx
 ---
 title: Hello, world!
 path: /hello-world
@@ -38,13 +63,10 @@ path: /hello-world
 I'm an example post!
 ```
 
-## 3. Scaffold Out the Home Page
+Once you've made some edits, run `gatsby develop` to start a development server and view your changes in a browser.
 
-```md:title=src/pages/index.md
-# Home page!
-```
+## Updating a theme
 
-## Updating a Theme
+To pull in the latest updates of your theme you can update the `gatsby-theme-blog` version in your site's `package.json`.
 
-In order to update the theme to pull in the latest updates you can update the `gatsby-theme-blog` version in your `package.json`.
-You can do this by running the install again: `npm install --save gatsby-theme-NAME`.
+You can do this by running the install of the theme package again: `npm install --save gatsby-theme-blog`.

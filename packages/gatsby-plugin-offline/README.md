@@ -19,20 +19,117 @@ in the service worker.
 plugins: [`gatsby-plugin-offline`]
 ```
 
-## Overriding options
+## Available options
 
-When adding this plugin to your `gatsby-config.js`, you can pass in options to
-override the default [Workbox](https://developers.google.com/web/tools/workbox/modules/workbox-build) config.
+In `gatsby-plugin-offline` 3.x, the following options are available:
 
-The default config is as follows. Warning: you can break the offline support by
-changing these options, so tread carefully.
+- `precachePages` lets you specify pages whose resources should be precached by the service worker, using an array of globs. For example:
+
+  ```javascript:title=gatsby-config.js
+  plugins: [
+    {
+      resolve: `gatsby-plugin-offline`,
+      options: {
+        precachePages: [`/about-us/`, `/projects/*`],
+      },
+    },
+  ]
+  ```
+
+  Note: while essential resources of specified pages will be precached, such as JavaScript and CSS, non-essential resources such as fonts and images will not be included. Instead, these will be cached at runtime when a user visits a given page that includes these resources.
+
+- `appendScript` lets you specify a file to be appended at the end of the generated service worker (`sw.js`). For example:
+
+  ```javascript:title=gatsby-config.js
+  plugins: [
+    {
+      resolve: `gatsby-plugin-offline`,
+      options: {
+        appendScript: require.resolve(`src/custom-sw-code.js`),
+      },
+    },
+  ]
+  ```
+
+  <br />
+
+  ```javascript:title=src/custom-sw-code.js
+  // show a notification after 15 seconds (the notification
+  // permission must be granted first)
+  setTimeout(() => {
+    self.registration.showNotification("Hello, world!")
+  }, 15000)
+
+  // register a custom navigation route
+  const customRoute = new workbox.routing.NavigationRoute(({ event }) => {
+    // ...
+  })
+  workbox.routing.registerRoute(customRoute)
+  ```
+
+- `debug` specifies whether Workbox should show debugging output in the browser console at runtime. When undefined, defaults to showing debug messages on `localhost` only.
+
+- `workboxConfig` allows you to override the default Workbox options - see [Overriding Workbox configuration](#overriding-workbox-configuration). For example:
+
+  ```javascript:title=gatsby-config.js
+  plugins: [
+    {
+      resolve: `gatsby-plugin-offline`,
+      options: {
+        workboxConfig: {
+          importWorkboxFrom: `cdn`,
+        },
+      },
+    },
+  ]
+  ```
+
+## Upgrading from 2.x
+
+To upgrade from 2.x to 3.x, move any existing options into the `workboxConfig` option. If you haven't specified any options, you have nothing to do.
+
+For example, here is a 2.x config:
+
+```javascript
+plugins: [
+  {
+    resolve: `gatsby-plugin-offline`,
+    options: {
+      importWorkboxFrom: `cdn`,
+    },
+  },
+]
+```
+
+Here is the equivalent 3.x config:
+
+```javascript
+plugins: [
+  {
+    resolve: `gatsby-plugin-offline`,
+    options: {
+      workboxConfig: {
+        importWorkboxFrom: `cdn`,
+      },
+    },
+  },
+]
+```
+
+In version 3, Workbox is also upgraded to version 4 so you may need to update your `workboxConfig` if any of those changes apply to you. Please see the [docs on Google Developers](https://developers.google.com/web/tools/workbox/guides/migrations/migrate-from-v3) for more information.
+
+## Overriding Workbox configuration
+
+When adding this plugin to your `gatsby-config.js`, you can use the option `workboxConfig` to override the default Workbox config. To see the full list of options, see [this article on Google Developers](https://developers.google.com/web/tools/workbox/modules/workbox-build#full_generatesw_config).
+
+The default `workboxConfig` is as follows. Note that some of these options are configured automatically, e.g. `globPatterns`. If you're not sure about what all of these options mean, it's best to leave them as-is - otherwise, you may end up causing errors on your site, causing old files to be remain cached, or even breaking offline support.
 
 ```javascript
 const options = {
   importWorkboxFrom: `local`,
   globDirectory: rootDir,
   globPatterns,
-  modifyUrlPrefix: {
+  modifyURLPrefix: {
     // If `pathPrefix` is configured by user, we should replace
     // the default prefix with `pathPrefix`.
     "/": `${pathPrefix}/`,
@@ -40,23 +137,28 @@ const options = {
   cacheId: `gatsby-plugin-offline`,
   // Don't cache-bust JS or CSS files, and anything in the static directory,
   // since these files have unique URLs and their contents will never change
-  dontCacheBustUrlsMatching: /(\.js$|\.css$|static\/)/,
+  dontCacheBustURLsMatching: /(\.js$|\.css$|static\/)/,
   runtimeCaching: [
     {
       // Use cacheFirst since these don't need to be revalidated (same RegExp
       // and same reason as above)
       urlPattern: /(\.js$|\.css$|static\/)/,
-      handler: `cacheFirst`,
+      handler: `CacheFirst`,
+    },
+    {
+      // page-data.json files are not content hashed
+      urlPattern: /^https?:.*\page-data\/.*\/page-data\.json/,
+      handler: `NetworkFirst`,
     },
     {
       // Add runtime caching of various other page resources
       urlPattern: /^https?:.*\.(png|jpg|jpeg|webp|svg|gif|tiff|js|woff|woff2|json|css)$/,
-      handler: `staleWhileRevalidate`,
+      handler: `StaleWhileRevalidate`,
     },
     {
       // Google Fonts CSS (doesn't end in .css so we need to specify it)
       urlPattern: /^https?:\/\/fonts\.googleapis\.com\/css/,
-      handler: `staleWhileRevalidate`,
+      handler: `StaleWhileRevalidate`,
     },
   ],
   skipWaiting: true,
@@ -100,3 +202,7 @@ curl https://www.yourdomain.tld
 ```
 
 Alternatively you can have a look at the `/public/index.html` file in your project folder.
+
+### App shell and server logs
+
+Server logs (like from [Netlify analytics](https://www.netlify.com/products/analytics/)) may show a large number of pageviews to a route like `/offline-plugin-app-shell-fallback/index.html`, this is a result of `gatsby-plugin-offline` adding an [app shell](https://developers.google.com/web/fundamentals/architecture/app-shell) to the page. The app shell is a minimal amount of user interface that can be cached offline for reliable performance loading on repeat visits. The shell can be loaded from the cache, and the content of the site loaded into the shell by the service worker.

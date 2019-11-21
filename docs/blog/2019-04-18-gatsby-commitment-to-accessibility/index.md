@@ -5,8 +5,7 @@ author: Marcy Sutton
 excerpt: "To demonstrate our commitment to accessibility, we’ve published an Accessibility Statement on Gatsbyjs.org with product information and resources as well as contact information. We encourage everyone integrating and building with Gatsby to join us in this initiative to make the web more accessible to all!"
 tags:
   - accessibility
-  - javascript
-  - CMS
+  - cms
   - hosting
 ---
 

@@ -7,7 +7,7 @@ tags: ["cms", "drupal"]
 
 ## Why use Drupal + Gatsby together?
 
-Kyle Mathews is presenting on “Gatsby + Drupal” at [Decoupled Drupal Days NYC](https://2018.decoupleddays.com/session/decoupled-drupal-gatsby) this Saturday; for those who can’t make it to his presentation, we wanted to give you a sneak peak of what it will be about.
+Kyle Mathews is presenting on “Gatsby + Drupal” at [Decoupled Drupal Days NYC](https://2018.decoupleddays.com/session/decoupled-drupal-gatsby) this Saturday; for those who can’t make it to his presentation, we wanted to give you a sneak peek of what it will be about.
 
 (Hint: it’s about how nicely Gatsby and Drupal work together!)
 
@@ -17,7 +17,7 @@ Take a look at the source code of [the official Gatsby + Drupal example site](ht
 
 [A delicious Gatsby + Drupal site](https://using-drupal.gatsbyjs.org/)
 
-Using Drupal as a headless CMS with Gatsby is a great way to get an enterprise-quality CMS for free, paired with a great modern development experience and all the benefits of the JAMstack, like performance, scalability, and security.
+Using Drupal as a [headless CMS](/docs/headless-cms/) with Gatsby is a great way to get an enterprise-quality CMS for free, paired with a great modern development experience and all the benefits of the JAMstack, like performance, scalability, and security.
 
 It only takes a few steps to use Gatsby with Drupal as a headless CMS (also known as decoupled Drupal).
 
@@ -56,4 +56,4 @@ Using Gatsby together with Drupal offers a powerful, full-featured, open-source,
 - Read [a Drupal agency’s introduction to Gatsby](https://www.mediacurrent.com/what-is-gatsby.js/)
 - Watch [Kyle Mathews’ presentation on Gatsby + Drupal](https://2017.badcamp.net/session/coding-development/beginner/headless-drupal-building-blazing-fast-websites-reactgatsbyjs)
 - Get started with Robert Ngo’s [Decoupling Drupal with Gatsby tutorial](https://evolvingweb.ca/blog/decoupling-drupal-gatsby) and watch his [Evolving Web 2018 Drupal conference presentation](https://www.youtube.com/watch?v=s5kUJRGDz6I).
-- [Get expert help](https://www.gatsbyjs.com/support/#contact-us)
+- [Get in touch with the team](https://www.gatsbyjs.com/contact-us)

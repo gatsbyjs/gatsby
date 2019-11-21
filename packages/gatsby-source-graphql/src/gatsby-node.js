@@ -1,5 +1,5 @@
 const uuidv4 = require(`uuid/v4`)
-const { buildSchema, printSchema } = require(`graphql`)
+const { buildSchema, printSchema } = require(`gatsby/graphql`)
 const {
   makeRemoteExecutableSchema,
   transformSchema,
@@ -19,7 +19,7 @@ exports.sourceNodes = async (
   { actions, createNodeId, cache, createContentDigest },
   options
 ) => {
-  const { addThirdPartySchema, createPageDependency, createNode } = actions
+  const { addThirdPartySchema, createNode } = actions
   const {
     url,
     typeName,
@@ -89,7 +89,10 @@ exports.sourceNodes = async (
   createNode(node)
 
   const resolver = (parent, args, context) => {
-    createPageDependency({ path: context.path, nodeId: nodeId })
+    context.nodeModel.createPageDependency({
+      path: context.path,
+      nodeId: nodeId,
+    })
     return {}
   }
 

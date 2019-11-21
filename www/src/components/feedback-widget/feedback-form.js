@@ -1,7 +1,10 @@
-import React, { Fragment } from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
+import { Fragment } from "react"
 import styled from "@emotion/styled"
 import WidgetWrapper from "./widget-wrapper"
-import { SubmitButton, CloseButton, focusStyle } from "./buttons"
+import { SubmitButton, CloseButton } from "./buttons"
+import { themedInput, themedInputFocus } from "../../utils/styles"
 import { Actions, Title, ScreenReaderText } from "./styled-elements"
 import RatingOption from "./rating-option"
 import MdSentimentDissatisfied from "react-icons/lib/md/sentiment-dissatisfied"
@@ -10,48 +13,52 @@ import MdSentimentVerySatisfied from "react-icons/lib/md/sentiment-very-satisfie
 import MdSend from "react-icons/lib/md/send"
 import MdRefresh from "react-icons/lib/md/refresh"
 
-import { colors, fontSizes, radii, space } from "../../utils/presets"
-
 const Form = styled(`form`)`
   margin-bottom: 0;
 `
 
 const Fieldset = styled(`fieldset`)`
   border: 0;
-  margin: 0 0 ${space[4]};
+  margin: 0 0 ${p => p.theme.space[4]};
   padding: 0;
 `
 
 const Legend = styled(`legend`)`
   display: inline-block;
-  font-size: ${fontSizes[1]};
-  margin-bottom: ${space[4]};
-  padding: 0 ${space[2]};
+  font-size: ${p => p.theme.fontSizes[1]};
+  margin-bottom: ${p => p.theme.space[4]};
+  padding: 0 ${p => p.theme.space[2]};
   text-align: center;
 `
 
-const Rating = styled(`div`)`
-  align-content: stretch;
-  border: 1px solid ${colors.lilac};
-  border-radius: ${radii[3]}px;
-  display: flex;
-  flex: 1 1 auto;
-  justify-content: stretch;
-  overflow: hidden;
-  transition: 0.5s;
-  width: 99.99%;
+const Rating = ({ children }) => (
+  <div
+    sx={{
+      ...themedInput,
+      px: 0,
+      alignContent: `stretch`,
+      display: `flex`,
+      flex: `1 1 auto`,
+      justifyContent: `stretch`,
+      overflow: `hidden`,
+      transition: `0.5s`,
+      width: `99.99%`,
 
-  &:focus-within {
-    ${focusStyle}
-  }
+      "&:focus-within": {
+        ...themedInputFocus,
+      },
 
-  [disabled] & {
-    opacity: 0.5;
-  }
-`
+      "[disabled] &": {
+        opacity: `0.5`,
+      },
+    }}
+  >
+    {children}
+  </div>
+)
 
 const TextareaLabel = styled(`label`)`
-  font-size: ${fontSizes[1]};
+  font-size: ${p => p.theme.fontSizes[1]};
   font-weight: bold;
 
   span {
@@ -59,26 +66,16 @@ const TextareaLabel = styled(`label`)`
   }
 `
 
-const Textarea = styled(`textarea`)`
-  border: 1px solid ${colors.gray.light};
-  border-radius: ${radii[2]}px;
-  display: block;
-  font-weight: normal;
-  height: 5.5rem;
-  margin: ${space[1]} 0 ${space[4]};
-  padding: ${space[1]} ${space[2]};
-  transition: 0.5s;
-  width: 100%;
-
-  &:focus {
-    ${focusStyle}
-  }
-
-  &:disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
-  }
-`
+const textareaStyles = {
+  ...themedInput,
+  height: `5.5rem`,
+  mt: 1,
+  mb: 4,
+  px: 3,
+  py: 2,
+  lineHeight: `default`,
+  overflowY: `scroll`,
+}
 
 const FeedbackForm = ({
   handleSubmit,
@@ -129,7 +126,8 @@ const FeedbackForm = ({
       </Fieldset>
       <TextareaLabel className={`textarea ${submitting ? `disabled` : ``}`}>
         Your comments <span>(optional):</span>
-        <Textarea
+        <textarea
+          sx={textareaStyles}
           value={comment}
           onChange={handleCommentChange}
           disabled={submitting}

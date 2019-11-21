@@ -1,7 +1,14 @@
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
 exports.onCreateNode = async (
-  { actions: { createNode }, node, createContentDigest, store, cache },
+  {
+    actions: { createNode },
+    node,
+    createContentDigest,
+    store,
+    cache,
+    reporter,
+  },
   { filter, nodeName = `localFile` }
 ) => {
   // asdf
@@ -13,6 +20,7 @@ exports.onCreateNode = async (
       cache,
       createNode,
       createNodeId: createContentDigest,
+      reporter,
     })
 
     if (fileNode) {

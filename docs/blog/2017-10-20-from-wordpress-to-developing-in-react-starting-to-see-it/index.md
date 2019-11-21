@@ -2,7 +2,7 @@
 title: From WordPress to Developing in React — Starting to See It
 date: 2017-10-20
 author: "Benjamin Read"
-tags: ["React", "getting-started", "wordpress"]
+tags: ["react", "getting-started", "wordpress"]
 ---
 
 As a frontend designer I've always prided myself on being a HTML and CSS

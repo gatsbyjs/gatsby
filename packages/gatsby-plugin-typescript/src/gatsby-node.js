@@ -2,8 +2,17 @@ const resolvableExtensions = () => [`.ts`, `.tsx`]
 
 function onCreateBabelConfig({ actions }, options) {
   actions.setBabelPreset({
-    name: `@babel/preset-typescript`,
+    name: require.resolve(`@babel/preset-typescript`),
     options,
+  })
+  actions.setBabelPlugin({
+    name: require.resolve(`@babel/plugin-proposal-optional-chaining`),
+  })
+  actions.setBabelPlugin({
+    name: require.resolve(`@babel/plugin-proposal-nullish-coalescing-operator`),
+  })
+  actions.setBabelPlugin({
+    name: require.resolve(`@babel/plugin-proposal-numeric-separator`),
   })
 }
 

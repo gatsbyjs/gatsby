@@ -25,25 +25,23 @@ By default plugin will try to use Layout component located in `src/layouts/index
 
 ```js
 module.exports = {
-    plugins: [
-      `gatsby-plugin-layout`
-    ]
-];
+  plugins: [`gatsby-plugin-layout`],
+}
 ```
 
 If you prefer to keep layout in different place, you can use `component` option:
 
 ```js
 module.exports = {
-    plugins: [
-        {
-            resolve: `gatsby-plugin-layout`,
-            options: {
-                component: require.resolve(`./relative/path/to/layout/component`)
-            }
-        }
-    ]
-];
+  plugins: [
+    {
+      resolve: `gatsby-plugin-layout`,
+      options: {
+        component: require.resolve(`./relative/path/to/layout/component`),
+      },
+    },
+  ],
+}
 ```
 
 Once the plugin is added, you don't need to manually wrap your pages with the Layout component. The plugin does this automatically.
