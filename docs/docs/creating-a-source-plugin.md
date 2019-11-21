@@ -16,7 +16,7 @@ At a high-level, a source plugin:
 - Creates nodes with accurate media types, human meaningful types, and accurate
   contentDigests.
 - Links nodes & creates relationships between them.
-- Lets Gatsby know when nodes are finished sourcing so it can move on to processing them.
+- Lets Gatsby knows when nodes are finished sourcing so it can move on to processing them.
 
 ## What does the code look like?
 
@@ -104,7 +104,7 @@ There are two ways of adding node relationships in Gatsby: (1) transformations (
 
 #### Option 1: transformation relationships
 
-An example of a transformation relationship is the `gatsby-transformer-remark` plugin, which transforms a parent `File` node's markdown string into a `MarkdownRemark` node. The Remark transformer plugin adds its newly created child node as a child of the parent node using the action [`createParentChildLink`](/docs/actions/#createParentChildLink). Transformation relationships are used when a new node is _completely_ derived from a single parent node. E.g. the markdown node is derived from the parent `File` node and wouldn't ever exist if the parent `File` node hadn't been created.
+An example of a transformation relationship is the `gatsby-transformer-remark` plugin, which transforms a parent `File` node's markdown string into a `MarkdownRemark` node. The Remark transformer plugin adds its newly created child node as a child of the parent node using the action [`createParentChildLink`](/docs/actions/#createParentChildLink). Transformation relationships are used when a new node is _completely_ derived from a single parent node. E.g. the markdown node is derived from the parent `File` node and wouldn't even exist if the parent `File` node hadn't been created.
 
 Because all children nodes are derived from their parent, when a parent node is deleted or changed, Gatsby deletes all of the child nodes (and their child nodes, and so on) with the expectation that they'll be recreated again by transformer plugins. This is done to ensure there are no nodes left over that were derived from older versions of data but shouldn't exist any longer.
 
