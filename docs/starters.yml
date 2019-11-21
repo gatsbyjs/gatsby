@@ -1023,7 +1023,6 @@
   repo: https://github.com/cosmicjs/gatsby-starter
   description: Simple Gatsby starter connected to the Cosmic JS headless CMS for easy content management
   tags:
-    - Cosmic JS
     - CMS:Cosmic JS
     - CMS:Headless
   features:
