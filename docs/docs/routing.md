@@ -27,7 +27,7 @@ For example, `contact.js` will be found at `yoursite.com/contact`. And `home.js`
 
 The exception to this rule is any file named `index.js`. Files with this name are matched to the root directory they're found in. That means `index.js` in the root `src/pages` directory is accessed via `yoursite.com`. However, if there is an `index.js` inside the `information` directory, it is found at `yoursite.com/information`.
 
-Note that if no `index.js` file exists in a particular directory that root page does not exist, and attempts to navigate to it will land you on a [404 page](/docs/add-404-page/). For example, `yoursite.com/information/contact` may exist, but that does not guaruntee `yoursite.com/information` exists.
+Note that if no `index.js` file exists in a particular directory that root page does not exist, and attempts to navigate to it will land you on a [404 page](/docs/add-404-page/). For example, `yoursite.com/information/contact` may exist, but that does not guarantee `yoursite.com/information` exists.
 
 ### Pages created with `createPages` hook
 
