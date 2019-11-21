@@ -42,7 +42,7 @@ Inconsistent or sparse funding isn&#39;t just bad for project _maintainers_. It&
 
 ###Thriving open-source communities open opportunities
 
-One of the lessons we&#39;ve learned from recent economic growth is that for most people, their economic future is tied to their country of residence. The level of economic development and well-being in one&#39;s country of residence strongly influences one&#39;s baseline standard of living, as well as the ups and downs.
+One of the lessons we&#39;ve learned from recent economic growth is that for most people, their economic future is tied to their country of residence. The level of economic development and well-being in one&#39;s country of residence strongly influences their baseline standard of living, as well as positive or negative changes to it. 
 
 This is also true for developers when choosing a development community—developers with expertise in communities with healthy, growing usage have better economic prospects than developers with expertise in less well-maintained, shrinking communities. For example, a React developer in 2016 generally had more career prospects than a Perl developer.
 
