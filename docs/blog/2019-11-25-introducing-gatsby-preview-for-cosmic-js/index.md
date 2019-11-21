@@ -16,13 +16,13 @@ We’re excited to announce the official release of Gatsby Preview for [Cosmic J
 2. Select the [Cosmic JS-powered Gatsby Blog](https://www.cosmicjs.com/apps/gatsby-blog)
 3. You will then be asked for your GitHub and Cosmic JS authentication, so make sure you have both accounts set up ([sign up for Cosmic JS here](https://app.cosmicjs.com/signup)).
 4. After onboarding, go to any Post in your Cosmic JS Bucket and find the big, beautiful, purple button to preview your content.
-![](https://paper-attachments.dropbox.com/s_62F6FDE0E04C32C8A10436B6324D1DB39F407BD935492EDF6D64B038700C233A_1573060793871_gatsby-preview.jpg)
+![](./cosmic-js-gatsby-preview-screenshot.jpeg)
 
 
 #### What happens?
 After clicking the “Open Preview” button, a new tab will open to instantly show you what this content looks like for this specific version on your Gatsby website. This simple one-click preview will greatly enhance your content team’s content-creation workflow.
 
-![](https://paper-attachments.dropbox.com/s_62F6FDE0E04C32C8A10436B6324D1DB39F407BD935492EDF6D64B038700C233A_1574200974869_gatsby-preview.gif)
+![](./cosmic-js-gatsby-preview-screenshot.gif)
 
 
 
