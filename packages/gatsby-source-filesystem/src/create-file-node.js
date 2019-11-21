@@ -1,11 +1,10 @@
-const { slash } = require(`./utils`)
 const path = require(`path`)
 const fs = require(`fs-extra`)
 const mime = require(`mime`)
 const prettyBytes = require(`pretty-bytes`)
 
 const md5File = require(`bluebird`).promisify(require(`md5-file`))
-const { createContentDigest } = require(`gatsby-core-utils`)
+const { createContentDigest, slash } = require(`gatsby-core-utils`)
 
 exports.createFileNode = async (
   pathToFile,
@@ -18,9 +17,8 @@ exports.createFileNode = async (
     ...parsedSlashed,
     absolutePath: slashed,
     // Useful for limiting graphql query with certain parent directory
-    relativeDirectory: path.relative(
-      pluginOptions.path || process.cwd(),
-      parsedSlashed.dir
+    relativeDirectory: slash(
+      path.relative(pluginOptions.path || process.cwd(), parsedSlashed.dir)
     ),
   }
 

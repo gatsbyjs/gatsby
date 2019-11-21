@@ -4,6 +4,22 @@ const extendNodeType = require(`../extend-node-type`)
 const { createContentDigest } = require(`gatsby-core-utils`)
 const { typeDefs } = require(`../create-schema-customization`)
 
+jest.mock(`gatsby-cli/lib/reporter`, () => {
+  return {
+    log: jest.fn(),
+    info: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+    activityTimer: () => {
+      return {
+        start: jest.fn(),
+        setStatus: jest.fn(),
+        end: jest.fn(),
+      }
+    },
+  }
+})
+
 // given a set of nodes and a query, return the result of the query
 async function queryResult(
   nodes,
@@ -34,17 +50,19 @@ async function queryResult(
     addInferredFields,
   } = require(`../../../gatsby/src/schema/infer/add-inferred-fields`)
   const {
-    getExampleValue,
-  } = require(`../../../gatsby/src/schema/infer/example-value`)
+    addNodes,
+    getExampleObject,
+  } = require(`../../../gatsby/src/schema/infer/inference-metadata`)
 
   const typeName = `MarkdownRemark`
   const sc = createSchemaComposer()
   const tc = sc.createObjectTC(typeName)
   sc.addTypeDefs(typeDefs)
+  const inferenceMetadata = addNodes({ typeName }, nodes)
   addInferredFields({
     schemaComposer: sc,
     typeComposer: tc,
-    exampleValue: getExampleValue({ nodes, typeName }),
+    exampleValue: getExampleObject(inferenceMetadata),
   })
   tc.addFields(extendNodeTypeFields)
   sc.Query.addFields({
@@ -89,6 +107,10 @@ const bootstrapTest = (
         additionalParameters,
         pluginOptions,
       }).then(result => {
+        if (result.errors) {
+          done.fail(result.errors)
+        }
+
         try {
           test(result.data.listNode[0])
           done()
@@ -134,7 +156,7 @@ Where oh where is my little pony?`,
       `,
     node => {
       expect(node).toMatchSnapshot()
-      expect(node.excerpt).toMatch(`Where oh where is my little pony?`)
+      expect(node.excerpt).toBe(`Where oh where is my little pony?`)
       expect(node.excerptAst).toMatchObject({
         children: [
           {
@@ -169,7 +191,7 @@ date: "2017-09-18T23:19:51.246Z"
       `,
     node => {
       expect(node).toMatchSnapshot()
-      expect(node.excerpt).toMatch(``)
+      expect(node.excerpt).toBe(``)
       expect(node.excerptAst).toMatchObject({
         children: [],
         data: { quirksMode: false },
@@ -198,7 +220,7 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
       `,
     node => {
       expect(node).toMatchSnapshot()
-      expect(node.excerpt).toMatch(`Where oh where is my little pony?`)
+      expect(node.excerpt).toBe(`Where oh where is my little pony?`)
       expect(node.excerptAst).toMatchObject({
         children: [
           {
@@ -241,7 +263,7 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
     `excerpt(format: PLAIN)`,
     node => {
       expect(node).toMatchSnapshot()
-      expect(node.excerpt).toMatch(`Where oh where is my little pony?`)
+      expect(node.excerpt).toBe(`Where oh where is my little pony?`)
     },
     { pluginOptions: { excerpt_separator: `<!-- end -->` } }
   )
@@ -252,8 +274,8 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
     `excerpt(format: HTML)`,
     node => {
       expect(node).toMatchSnapshot()
-      expect(node.excerpt).toMatch(
-        `<p>Where oh where <strong>is</strong> my little pony?</p>`
+      expect(node.excerpt).toBe(
+        `<p>Where oh where <strong>is</strong> my little pony?</p>\n`
       )
     },
     { pluginOptions: { excerpt_separator: `<!-- end -->` } }
@@ -265,7 +287,7 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
     `excerpt(format: MARKDOWN)`,
     node => {
       expect(node).toMatchSnapshot()
-      expect(node.excerpt).toMatch(`Where oh where **is** my little pony?`)
+      expect(node.excerpt).toBe(`Where oh where **is** my little pony?\n`)
     },
     { pluginOptions: { excerpt_separator: `<!-- end -->` } }
   )
@@ -332,6 +354,65 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
     }
   )
 
+  describe(`when plugins options has a excerpt_separator defined`, () => {
+    bootstrapTest(
+      `correctly prunes length to default value`,
+      content,
+      `excerpt
+        excerptAst
+        frontmatter {
+            title
+        }
+        `,
+      node => {
+        expect(node).toMatchSnapshot()
+        expect(node.excerpt.length).toBe(139)
+        expect(node.excerptAst.children.length).toBe(1)
+        expect(node.excerptAst.children[0].children.length).toBe(1)
+        expect(node.excerptAst.children[0].children[0].value.length).toBe(139)
+      },
+      { pluginOptions: { excerpt_separator: `<!-- end -->` } }
+    )
+
+    bootstrapTest(
+      `correctly prunes length to provided parameter`,
+      content,
+      `excerpt(pruneLength: 50)
+        excerptAst(pruneLength: 50)
+        frontmatter {
+            title
+        }
+        `,
+      node => {
+        expect(node).toMatchSnapshot()
+        expect(node.excerpt.length).toBe(46)
+        expect(node.excerptAst.children.length).toBe(1)
+        expect(node.excerptAst.children[0].children.length).toBe(1)
+        expect(node.excerptAst.children[0].children[0].value.length).toBe(46)
+      },
+      { pluginOptions: { excerpt_separator: `<!-- end -->` } }
+    )
+
+    bootstrapTest(
+      `correctly prunes length to provided parameter with truncate`,
+      content,
+      `excerpt(pruneLength: 50, truncate: true)
+        excerptAst(pruneLength: 50, truncate: true)
+        frontmatter {
+            title
+        }
+        `,
+      node => {
+        expect(node).toMatchSnapshot()
+        expect(node.excerpt.length).toBe(50)
+        expect(node.excerptAst.children.length).toBe(1)
+        expect(node.excerptAst.children[0].children.length).toBe(1)
+        expect(node.excerptAst.children[0].children[0].value.length).toBe(50)
+      },
+      { pluginOptions: { excerpt_separator: `<!-- end -->` } }
+    )
+  })
+
   bootstrapTest(
     `given an html format, it correctly maps nested markdown to html`,
     `---
@@ -348,7 +429,7 @@ Where oh [*where*](nick.com) **_is_** ![that pony](pony.png)?`,
       `,
     node => {
       expect(node).toMatchSnapshot()
-      expect(node.excerpt).toMatch(
+      expect(node.excerpt).toBe(
         `<p>Where oh <a href="nick.com"><em>where</em></a> <strong><em>is</em></strong> <img src="pony.png" alt="that pony">?</p>`
       )
       expect(node.excerptAst).toMatchObject({
@@ -444,7 +525,7 @@ Where oh [*where*](nick.com) **_is_** ![that pony](pony.png)?`,
       }
       `,
     node => {
-      expect(node.excerpt).toMatch(`Where oh where is that pony?`)
+      expect(node.excerpt).toBe(`Where oh where is that pony?`)
     },
     {}
   )
@@ -459,7 +540,7 @@ date: "2017-09-18T23:19:51.246Z"
  My pony likes space on the left and right! `,
     `excerpt`,
     node => {
-      expect(node.excerpt).toMatch(`My pony likes space on the left and right!`)
+      expect(node.excerpt).toBe(`My pony likes space on the left and right!`)
     },
     {}
   )
@@ -476,7 +557,7 @@ My pony is little.
 Little is my pony.`,
     `excerpt`,
     node => {
-      expect(node.excerpt).toMatch(`My pony is little. Little is my pony.`)
+      expect(node.excerpt).toBe(`My pony is little. Little is my pony.`)
     },
     {}
   )
@@ -495,7 +576,7 @@ date: "2017-09-18T23:19:51.246Z"
 It's pony time.`,
     `excerpt`,
     node => {
-      expect(node.excerpt).toMatch(
+      expect(node.excerpt).toBe(
         `Ponies: The Definitive Guide What time is it? It's pony time.`
       )
     },
@@ -514,7 +595,7 @@ date: "2017-09-18T23:19:51.246Z"
 | My Little Pony | Me, Duh  |`,
     `excerpt`,
     node => {
-      expect(node.excerpt).toMatch(`Pony Owner My Little Pony Me, Duh`)
+      expect(node.excerpt).toBe(`Pony Owner My Little Pony Me, Duh`)
     },
     {}
   )
@@ -531,7 +612,7 @@ don't fix it.`,
     // ^ Explicit syntax for trailing spaces to not get accidentally trimmed.
     `excerpt`,
     node => {
-      expect(node.excerpt).toMatch(`If my pony ain't broke, don't fix it.`)
+      expect(node.excerpt).toBe(`If my pony ain't broke, don't fix it.`)
     },
     {}
   )
@@ -550,7 +631,7 @@ date: "2017-09-18T23:19:51.246Z"
 Pony express had nothing on my little pony.`,
     `excerpt`,
     node => {
-      expect(node.excerpt).toMatch(
+      expect(node.excerpt).toBe(
         `Pony express Pony express had nothing on my little pony.`
       )
     },
@@ -573,7 +654,7 @@ Where is my <code>pony</code> named leo?`,
       `,
     node => {
       expect(node).toMatchSnapshot()
-      expect(node.excerpt).toMatch(
+      expect(node.excerpt).toBe(
         `<p>Where is my <code>pony</code> named leo?</p>`
       )
       expect(node.excerptAst).toMatchObject({
@@ -628,7 +709,7 @@ Where oh where is that pony? Is he in the stable or down by the stream?`,
       `,
     node => {
       expect(node).toMatchSnapshot()
-      expect(node.excerpt).toMatch(
+      expect(node.excerpt).toBe(
         `<p>Where oh where is that pony? Is he in the stable…</p>`
       )
       expect(node.excerptAst).toMatchObject({
@@ -671,8 +752,8 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet v
     `,
     node => {
       expect(node).toMatchSnapshot()
-      expect(node.excerpt).toMatch(
-        `<p>Where oh where is that <em>pony</em>? Is he in the stable or by the stream?</p>`
+      expect(node.excerpt).toBe(
+        `<p>Where oh where is that <em>pony</em>? Is he in the stable or by the stream?</p>\n`
       )
       expect(node.excerptAst).toMatchObject({
         children: [
@@ -744,6 +825,27 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
     }
   )
 
+  bootstrapTest(
+    `correctly generate timeToRead for CJK`,
+    `React 使创建交互式 UI 变得轻而易举。为你应用的每一个状态设计简洁的视图，当数据改变时 React 能有效地更新并正确地渲染组件。
+以声明式编写 UI，可以让你的代码更加可靠，且方便调试。
+创建拥有各自状态的组件，再由这些组件构成更加复杂的 UI。
+组件逻辑使用 JavaScript 编写而非模版，因此你可以轻松地在应用中传递数据，并使得状态与 DOM 分离。
+
+React は、インタラクティブなユーザーインターフェイスの作成にともなう苦痛を取り除きます。アプリケーションの各状態に対応するシンプルな View を設計するだけで、React はデータの変更を検知し、関連するコンポーネントだけを効率的に更新、描画します。
+宣言的な View を用いてアプリケーションを構築することで、コードはより見通しが立ちやすく、デバッグのしやすいものになります。
+自分自身の状態を管理するカプセル化されたコンポーネントをまず作成し、これらを組み合わせることで複雑なユーザーインターフェイスを構築します。
+コンポーネントのロジックは、Template ではなく JavaScript そのもので書くことができるので、様々なデータをアプリケーション内で簡単に取り回すことができ、かつ DOM に状態を持たせないようにすることができます。
+
+    React는 상호작용이 많은 UI를 만들 때 생기는 어려움을 줄여줍니다. 애플리케이션의 각 상태에 대한 간단한 뷰만 설계하세요. 그럼 React는 데이터가 변경됨에 따라 적절한 컴포넌트만 효율적으로 갱신하고 렌더링합니다.선언형 뷰는 코드를 예측 가능하고 디버그하기 쉽게 만들어 줍니다.
+`,
+    `timeToRead`,
+    node => {
+      expect(node).toMatchSnapshot()
+      expect(node.timeToRead).toEqual(2)
+    }
+  )
+
   const content = `---
 title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
@@ -807,7 +909,6 @@ some other text
     node => {
       expect(node).toMatchSnapshot()
       expect(console.warn).toBeCalled()
-      expect(node.tableOfContents).toBe(null)
     }
   )
 
@@ -1005,9 +1106,9 @@ console.log('hello world')
     `htmlAst`,
     node => {
       expect(node).toMatchSnapshot()
-      expect(node.htmlAst.children[0].children[0].properties.className).toEqual(
-        [`language-js`]
-      )
+      expect(
+        node.htmlAst.children[0].children[0].properties.className
+      ).toEqual([`language-js`])
       expect(node.htmlAst.children[0].children[0].properties.dataMeta).toEqual(
         `foo bar`
       )

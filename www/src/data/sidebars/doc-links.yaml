@@ -13,7 +13,7 @@
     - title: Starter Library
       link: /starters/
     - title: Awesome Gatsby Resources
-      link: /docs/awesome-gatsby/
+      link: /docs/awesome-gatsby-resources/
     - title: Reference Guides
       link: /docs/guides/
       items:
@@ -26,18 +26,23 @@
               link: /docs/gatsby-on-windows/
             - title: Gatsby on Linux
               link: /docs/gatsby-on-linux/
+            - title: Configuring CA Certificates
+              link: /docs/configuring-ca-certificates/
         - title: Deploying & Hosting
           link: /docs/deploying-and-hosting/
           items:
             - title: Preparing a Site for Deployment
               link: /docs/preparing-for-deployment/
               breadcrumbTitle: Preparing for Deployment
+            - title: Deploying to Netlify
+              link: /docs/deploying-to-netlify/
+              breadcrumbTitle: Netlify
             - title: Deploying to AWS Amplify
               link: /docs/deploying-to-aws-amplify/
               breadcrumbTitle: AWS Amplify
-            - title: Deploying to S3 and CloudFront
+            - title: Deploying to S3 & CloudFront
               link: /docs/deploying-to-s3-cloudfront/
-              breadcrumbTitle: S3 and CloudFront
+              breadcrumbTitle: S3 & CloudFront
             - title: Deploying to Aerobatic
               link: /docs/deploying-to-aerobatic/
               breadcrumbTitle: Aerobatic
@@ -50,15 +55,15 @@
             - title: Deploying to GitLab Pages
               link: /docs/deploying-to-gitlab-pages/
               breadcrumbTitle: GitLab Pages
-            - title: Hosting on Netlify
-              link: /docs/hosting-on-netlify/
-              breadcrumbTitle: Netlify
             - title: Deploying to Render
               link: /docs/deploying-to-render/
               breadcrumbTitle: Render
             - title: Deploying to Surge
               link: /docs/deploying-to-surge/
               breadcrumbTitle: Surge
+            - title: Deploying to IIS
+              link: /docs/deploying-to-iis/
+              breadcrumbTitle: IIS
             - title: Adding a Path Prefix
               link: /docs/path-prefix/
             - title: How Gatsby Works with GitHub Pages
@@ -66,6 +71,8 @@
               breadcrumbTitle: GitHub Pages
             - title: Multi-Core Builds
               link: /docs/multi-core-builds/
+            - title: Asset Prefix
+              link: /docs/asset-prefix/
         - title: Custom Configuration
           link: /docs/customization/
           items:
@@ -89,44 +96,51 @@
               breadcrumbTitle: ESLint
             - title: Proxying API Requests
               link: /docs/api-proxy/
-        - title: Images, Files, and Video
+        - title: Images, Files & Video
           link: /docs/images-and-files/
           items:
-            - title: Importing Assets Directly Into Files
+            - title: Importing Assets Directly into Files
               link: /docs/importing-assets-into-files/
-              breadcrumbTitle: Importing Assets Into Files
+              breadcrumbTitle: Importing Assets into Files
             - title: Using the Static Folder
               link: /docs/static-folder/
+              breadcrumbTitle: Static Folder
             - title: Using gatsby-image
               link: /docs/using-gatsby-image/
             - title: Working with Images in Gatsby
               link: /docs/working-with-images/
-            - title: Preoptimizing your Images
+              breadcrumbTitle: Images in Gatsby
+            - title: Preoptimizing Your Images
               link: /docs/preoptimizing-images/
-            - title: Working With Video
+              breadcrumbTitle: Preoptimizing Images
+            - title: Working with Video
               link: /docs/working-with-video/
+              breadcrumbTitle: Videos in Gatsby
             - title: Importing Media Content
               link: /docs/importing-media-content/
             - title: Working with GIFs
               link: /docs/working-with-gifs/
+              breadcrumbTitle: GIFs in Gatsby
             - title: Working with Images in Markdown
               link: /docs/working-with-images-in-markdown/
               breadcrumbTitle: Images in Markdown
-        - title: Sourcing Content and Data
+            - title: Preprocessing External Images
+              link: /docs/preprocessing-external-images/
+        - title: Sourcing Content & Data
           link: /docs/content-and-data/
           items:
             - title: Using Gatsby Without GraphQL
               link: /docs/using-gatsby-without-graphql/
               breadcrumbTitle: Gatsby Without GraphQL
-            - title: Sourcing From the Filesystem
+            - title: Sourcing from the Filesystem
               link: /docs/sourcing-from-the-filesystem/
               breadcrumbTitle: From the Filesystem
-            - title: Sourcing From Databases
+            - title: Sourcing from Databases
               link: /docs/sourcing-from-databases/
               breadcrumbTitle: From Databases
-            - title: Sourcing from SaaS Services*
-              link: /docs/sourcing-from-saas-services/
-              breadcrumbTitle: From SaaS Services
+            - title: Sourcing from Hosted Services
+              link: /docs/sourcing-from-hosted-services/
+              breadcrumbTitle: From Hosted Services
             - title: Sourcing from Private APIs
               link: /docs/sourcing-from-private-apis/
               breadcrumbTitle: From Private APIs
@@ -152,17 +166,20 @@
                 - title: Sourcing from Drupal
                   link: /docs/sourcing-from-drupal/
                   breadcrumbTitle: Drupal
+            - title: Sourcing Content from JSON or YAML
+              link: /docs/sourcing-content-from-json-or-yaml/
+              breadcrumbTitle: JSON or YAML
         - title: Querying Your Data with GraphQL
           link: /docs/graphql/
           breadcrumbTitle: Querying with GraphQL
           items:
             - title: Why Gatsby Uses GraphQL
               link: /docs/why-gatsby-uses-graphql/
-            - title: Understanding GraphQL Syntax
+            - title: GraphQL Query Options Reference
               link: /docs/graphql-reference/
-            - title: Introducing GraphiQL
-              link: /docs/introducing-graphiql/
-            - title: Creating and Modifying Pages
+            - title: Running Queries with the GraphiQL UI
+              link: /docs/running-queries-with-graphiql/
+            - title: Creating & Modifying Pages
               link: /docs/creating-and-modifying-pages/
             - title: Querying Data in Pages with GraphQL
               link: /docs/page-query/
@@ -173,7 +190,7 @@
               link: /docs/use-static-query/
               breadcrumbTitle: The useStaticQuery Hook
             - title: Using GraphQL Fragments
-              link: /docs/using-fragments/
+              link: /docs/using-graphql-fragments/
             - title: Creating Slugs for Pages
               link: /docs/creating-slugs-for-pages/
             - title: Creating Pages from Data Programmatically
@@ -184,6 +201,8 @@
               link: /docs/adding-markdown-pages/
             - title: Adding a List of Markdown Blog Posts
               link: /docs/adding-a-list-of-markdown-blog-posts/
+            - title: Using GraphQL Playground
+              link: /docs/using-graphql-playground/
         - title: Plugins
           link: /docs/plugins/
           items:
@@ -223,6 +242,8 @@
           items:
             - title: Starter Library
               link: /starters/
+            - title: Modifying a Starter
+              link: /docs/modifying-a-starter/
             - title: Creating a Starter
               link: /docs/creating-a-starter/
         - title: Themes
@@ -230,10 +251,14 @@
           items:
             - title: What are Gatsby Themes?
               link: /docs/themes/what-are-gatsby-themes/
+            - title: Getting Started
+              link: /docs/themes/getting-started/
             - title: Using a Gatsby Theme
               link: /docs/themes/using-a-gatsby-theme/
             - title: Using Multiple Gatsby Themes
               link: /docs/themes/using-multiple-gatsby-themes/
+            - title: Shadowing
+              link: /docs/themes/shadowing/
             - title: Building Themes
               link: /docs/themes/building-themes/
             - title: Converting a Starter
@@ -259,7 +284,7 @@
                   link: /docs/emotion/
                 - title: Styled-Components
                   link: /docs/styled-components/
-            - title: CSS Libraries and Frameworks
+            - title: CSS Libraries & Frameworks
               link: /docs/css-libraries-and-frameworks/
               items:
                 - title: Typography.js
@@ -326,8 +351,8 @@
             - title: Debugging Async Lifecycles
               link: /docs/debugging-async-lifecycles/
               breadcrumbTitle: Async Lifecycles
-        - title: Adding Website Functionality
-          link: /docs/adding-website-functionality/
+        - title: Adding App and Website Functionality
+          link: /docs/adding-app-and-website-functionality/
           items:
             - title: Linking Between Pages
               link: /docs/linking-between-pages/
@@ -350,6 +375,9 @@
             - title: Adding Forms
               link: /docs/adding-forms/
               breadcrumbTitle: Forms
+            - title: Adding React Components
+              link: /docs/adding-react-components/
+              breadcrumbTitle: React Components
             - title: Building a Contact Form
               link: /docs/building-a-contact-form/
             - title: Adding a 404 Page
@@ -358,7 +386,7 @@
             - title: Adding an SEO Component
               link: /docs/add-seo-component/
               breadcrumbTitle: SEO Component
-            - title: Adding Tags and Categories to Blog Posts
+            - title: Adding Tags & Categories to Blog Posts
               link: /docs/adding-tags-and-categories-to-blog-posts/
               breadcrumbTitle: Blog Tags and Categories
             - title: Adding Pagination
@@ -379,26 +407,33 @@
                 - title: Adding Page Transitions with gatsby-plugin-transition-link
                   link: /docs/adding-page-transitions-with-plugin-transition-link/
                   breadcrumbTitle: gatsby-plugin-transition-link
-                - title: Adding Page Transitions with gatsby-plugin-page-transitions*
-                  link: /docs/adding-page-transitions-with-plugin-page-transitions/
-                  breadcrumbTitle: gatsby-plugin-page-transitions
             - title: Making Your Site Accessible
               link: /docs/making-your-site-accessible/
             - title: Routing
               link: /docs/routing/
               items:
-                - title: "@reach/router and Gatsby*"
+                - title: "@reach/router and Gatsby"
                   link: /docs/reach-router-and-gatsby/
                 - title: Linking and Prefetching with Gatsby*
                   link: /docs/linking-and-prefetching-with-gatsby/
+                - title: Location Data from Props
+                  link: /docs/location-data-from-props/
                 - title: Centralizing Your Site's Navigation
                   link: /docs/centralizing-your-sites-navigation/
                 - title: Rendering Sidebar Navigation Dynamically*
                   link: /docs/rendering-sidebar-navigation-dynamically/
+                - title: Client-only Routes & User Authentication
+                  link: /docs/client-only-routes-and-user-authentication/
+                  breadcrumbTitle: Client Routes & User Auth
             - title: Client Data Fetching
               link: /docs/client-data-fetching/
             - title: Using Client-Side Only Packages
-              link: /docs/using-client-side-only-packages
+              link: /docs/using-client-side-only-packages/
+            - title: Building an E-commerce Site
+              link: /docs/building-an-e-commerce-site/
+              items:
+                - title: Building an E-commerce Site with Shopify
+                  link: /docs/building-an-ecommerce-site-with-shopify/
         - title: Improving Performance
           link: /docs/performance/
           items:
@@ -424,7 +459,9 @@
             - title: Optimizing Site Performance with Guess.js
               link: /docs/optimizing-site-performance-with-guessjs/
               breadcrumbTitle: Guess.js
-        - title: Localization and Internationalization with Gatsby
+            - title: Scaling Issues
+              link: /docs/scaling-issues/
+        - title: Localization & Internationalization with Gatsby
           link: /docs/localization-i18n/
           breadcrumbTitle: Localization
           items:
@@ -448,16 +485,29 @@
           link: /docs/gatsby-image/
         - title: Gatsby Config
           link: /docs/gatsby-config/
-        - title: Gatsby Node APIs
-          link: /docs/node-apis/
-        - title: Gatsby Node Helpers
-          link: /docs/node-api-helpers/
         - title: Gatsby Browser APIs
           link: /docs/browser-apis/
         - title: Gatsby SSR APIs
           link: /docs/ssr-apis/
+        - title: API Files
+          link: /docs/api-files/
+          items:
+            - title: gatsby-config.js
+              link: /docs/api-files-gatsby-config/
+            - title: gatsby-browser.js
+              link: /docs/api-files-gatsby-browser/
+            - title: gatsby-node.js
+              link: /docs/api-files-gatsby-node/
+            - title: gatsby-ssr.js
+              link: /docs/api-files-gatsby-ssr/
         - title: Actions
           link: /docs/actions/
+        - title: GraphQL API
+          link: /docs/graphql-api/
+        - title: Gatsby Node APIs
+          link: /docs/node-apis/
+        - title: Gatsby Node Helpers
+          link: /docs/node-api-helpers/
         - title: Node Model
           link: /docs/node-model/
         - title: Node Interface
@@ -477,6 +527,9 @@
           link: /docs/migrating-from-v1-to-v2/
         - title: Migrating from v0 to v1
           link: /docs/migrating-from-v0-to-v1/
+        - title: Upgrade for Minor or Patch Releases
+          link: /docs/upgrade-gatsby-and-dependencies/
+          breadcrumbTitle: Minor or Patch Releases
     - title: Conceptual Guide
       link: /docs/conceptual-guide/
       items:
@@ -484,16 +537,18 @@
           link: /docs/gatsby-core-philosophy/
         - title: Gatsby Project Structure
           link: /docs/gatsby-project-structure/
-        - title: Life and Times of a Gatsby Build*
-          link: /docs/life-and-times-of-a-gatsby-build/
+        - title: Overview of the Gatsby Build Process
+          link: /docs/overview-of-the-gatsby-build-process/
         - title: Building with Components
           link: /docs/building-with-components/
         - title: Lifecycle APIs
           link: /docs/gatsby-lifecycle-apis/
+        - title: React Hydration
+          link: /docs/react-hydration
         - title: PRPL Pattern
           link: /docs/prpl-pattern/
-        - title: Querying Data with GraphQL
-          link: /docs/querying-with-graphql/
+        - title: GraphQL Concepts
+          link: /docs/graphql-concepts/
         - title: Security in Gatsby*
           link: /docs/security-in-gatsby/
         - title: Theme Shadowing
@@ -535,7 +590,7 @@
               link: /docs/static-vs-normal-queries/
         - title: Write out Pages
           link: /docs/write-pages/
-        - title: Webpack and SSR
+        - title: Webpack & SSR
           link: /docs/webpack-and-ssr/
           items:
             - title: Building the JavaScript App
@@ -574,6 +629,8 @@
               link: /docs/winning-over-executives/
             - title: Clients*
               link: /docs/winning-over-clients/
+            - title: Content Creators
+              link: /docs/winning-over-content-creators/
         - title: Spreading Gatsby In Different Types of Organizations
           link: /docs/different-organization-types/
           breadcrumbTitle: Spreading Gatsby
@@ -624,7 +681,7 @@
     - title: Partnering With Gatsby
       link: /docs/partnering-with-gatsby/
       items:
-        - title: Integrating and Partnering For Vendors
+        - title: Integrating & Partnering For Vendors
           link: /docs/gatsby-vendor-partnership/
         - title: Agency Partnership Program
           link: /docs/gatsby-agency-partnership/
@@ -634,5 +691,7 @@
       link: /docs/cheat-sheet/
     - title: Glossary
       link: /docs/glossary/
+    - title: Gatsby Telemetry
+      link: /docs/telemetry/
     - title: Gatsby REPL
       link: /docs/gatsby-repl/

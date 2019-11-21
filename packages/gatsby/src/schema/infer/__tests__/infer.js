@@ -2,20 +2,46 @@
 
 const { graphql } = require(`graphql`)
 const nodeStore = require(`../../../db/nodes`)
-const { LocalNodeModel } = require(`../../node-model`)
 const path = require(`path`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 const { store } = require(`../../../redux`)
-const createPageDependency = require(`../../../redux/actions/add-page-dependency`)
+const { actions } = require(`../../../redux/actions`)
 const { buildSchema } = require(`../../schema`)
 const { createSchemaComposer } = require(`../../schema-composer`)
 const { buildObjectType } = require(`../../types/type-builders`)
 const { TypeConflictReporter } = require(`../type-conflict-reporter`)
+const withResolverContext = require(`../../context`)
 require(`../../../db/__tests__/fixtures/ensure-loki`)()
+
+jest.mock(`gatsby-cli/lib/reporter`, () => {
+  return {
+    log: jest.fn(),
+    info: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+    activityTimer: () => {
+      return {
+        start: jest.fn(),
+        setStatus: jest.fn(),
+        end: jest.fn(),
+      }
+    },
+    phantomActivity: () => {
+      return {
+        start: jest.fn(),
+        end: jest.fn(),
+      }
+    },
+  }
+})
+const report = require(`gatsby-cli/lib/reporter`)
+afterEach(() => {
+  report.error.mockClear()
+})
 
 const makeNodes = () => [
   {
-    id: `foo`,
+    id: `1`,
     internal: { type: `Test` },
     name: `The Mad Max`,
     type: `Test`,
@@ -23,7 +49,10 @@ const makeNodes = () => [
     hair: 1,
     date: `1012-11-01`,
     anArray: [1, 2, 3, 4],
-    aNestedArray: [[1, 2, 3, 4], [5, 6, 7, 8]],
+    aNestedArray: [
+      [1, 2, 3, 4],
+      [5, 6, 7, 8],
+    ],
     anObjectArray: [
       { aString: `some string`, aNumber: 2, aBoolean: true },
       { aString: `some string`, aNumber: 2, anArray: [1, 2] },
@@ -56,7 +85,7 @@ const makeNodes = () => [
     },
   },
   {
-    id: `boo`,
+    id: `2`,
     internal: { type: `Test` },
     name: `The Mad Wax`,
     type: `Test`,
@@ -82,9 +111,12 @@ describe(`GraphQL type inference`, () => {
 
   const buildTestSchema = async (nodes, buildSchemaArgs, typeDefs) => {
     store.dispatch({ type: `DELETE_CACHE` })
-    nodes.forEach(node =>
-      store.dispatch({ type: `CREATE_NODE`, payload: node })
-    )
+    nodes.forEach(node => {
+      if (!node.internal.contentDigest) {
+        node.internal.contentDigest = `0`
+      }
+      actions.createNode(node, { name: `test` })(store.dispatch)
+    })
 
     const { builtInFieldExtensions } = require(`../../extensions`)
     Object.keys(builtInFieldExtensions).forEach(name => {
@@ -94,7 +126,10 @@ describe(`GraphQL type inference`, () => {
         payload: { name, extension },
       })
     })
-    const { fieldExtensions } = store.getState().schemaCustomization
+    const {
+      schemaCustomization: { fieldExtensions },
+      inferenceMetadata,
+    } = store.getState()
     const schemaComposer = createSchemaComposer({ fieldExtensions })
     const schema = await buildSchema({
       schemaComposer,
@@ -104,9 +139,10 @@ describe(`GraphQL type inference`, () => {
       thirdPartySchemas: [],
       typeMapping: [],
       typeConflictReporter,
+      inferenceMetadata,
       ...(buildSchemaArgs || {}),
     })
-    return schema
+    return { schema, schemaComposer }
   }
 
   const getQueryResult = async (
@@ -116,7 +152,11 @@ describe(`GraphQL type inference`, () => {
     extraquery = ``,
     typeDefs
   ) => {
-    const schema = await buildTestSchema(nodes, buildSchemaArgs, typeDefs)
+    const { schema, schemaComposer } = await buildTestSchema(
+      nodes,
+      buildSchemaArgs,
+      typeDefs
+    )
     store.dispatch({ type: `SET_SCHEMA`, payload: schema })
     return graphql(
       schema,
@@ -132,19 +172,12 @@ describe(`GraphQL type inference`, () => {
       }
       `,
       undefined,
-      {
-        path: `/`,
-        nodeModel: new LocalNodeModel({
-          schema,
-          nodeStore,
-          createPageDependency,
-        }),
-      }
+      withResolverContext({ schema, schemaComposer, context: { path: `/` } })
     )
   }
 
   const getInferredFields = async (nodes, buildSchemaArgs) => {
-    const schema = await buildTestSchema(nodes, buildSchemaArgs)
+    const { schema } = await buildTestSchema(nodes, buildSchemaArgs)
     return schema.getType(`Test`).getFields()
   }
 
@@ -490,7 +523,7 @@ describe(`GraphQL type inference`, () => {
         },
       },
     ]
-    const schema = await buildTestSchema(nodes)
+    const { schema, schemaComposer } = await buildTestSchema(nodes)
     store.dispatch({ type: `SET_SCHEMA`, payload: schema })
     const result = await graphql(
       schema,
@@ -511,14 +544,7 @@ describe(`GraphQL type inference`, () => {
         }
       `,
       undefined,
-      {
-        path: `/`,
-        nodeModel: new LocalNodeModel({
-          schema,
-          nodeStore,
-          createPageDependency,
-        }),
-      }
+      withResolverContext({ schema, schemaComposer, context: { path: `/` } })
     )
 
     expect(result).toMatchSnapshot()
@@ -1076,7 +1102,7 @@ Object {
             id: `2`,
           },
         ].concat(getLinkedNodes())
-        const schema = await buildTestSchema(nodes)
+        const { schema } = await buildTestSchema(nodes)
         const fields = schema.getType(`Test`).getFields()
         const otherFields = schema.getType(`OtherType`).getFields()
 
@@ -1107,7 +1133,7 @@ Object {
             id: `2`,
           },
         ].concat(getLinkedNodes())
-        const schema = await buildTestSchema(nodes)
+        const { schema } = await buildTestSchema(nodes)
         const fields = schema.getType(`Test`).getFields()
         const otherFields = schema.getType(`OtherType`).getFields()
 

@@ -15,7 +15,9 @@ Gatsby is **great** from a multititude of perspectives. Our community is **great
 As such--this post focuses on just a single element of what makes Gatsby great: performance. To prime the discussion, let's consider [this post on the `webdev` subreddit on Reddit](https://www.reddit.com/r/webdev/comments/9z5dsr/how_does_reactjs_have_such_a_fast_website/?st=jtqbllhm&sh=60148ea7).
 
 <Pullquote citation="reddit/r/webdev">
-Genuine question, every page is loaded immediately [sic] on click. Seriously never seen such a quick website before. Any insight as to how they're able to achieve this?
+  Genuine question, every page is loaded immediately [sic] on click. Seriously
+  never seen such a quick website before. Any insight as to how they're able to
+  achieve this?
 </Pullquote>
 
 Fun fact--that website in question is [reactjs.org](https://reactjs.org) which, as you may or may not know, is an application built with and powered by Gatsby 💪
@@ -105,9 +107,9 @@ To begin describing why build-time SSR is so appealing, let's first take a look 
 - Creating a bucket/location to host static content (like S3, Google Cloud Storage, etc.)
 - Setting up a [Domain Name System (DNS)](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_is_a_domain_name) to make your content reachable via a pretty URL, e.g. gatsbyjs.org
 - Routing the CDN layer in front of your static content
-- Set up a Continuous Integration (CI) environment so we can build and deploy code to production with minimal impact to end-users
+- Set up a Continuous Integration (CI) environment so we can build and deploy code to production with minimal impact to end users
 
-... and, that's it! We're done as far as setup goes! We can use _whatever_ stack you prefer here. Netlify? [You bet.](https://www.gatsbyjs.org/docs/hosting-on-netlify) More a fan of AWS? [Of course.](https://www.gatsbyjs.org/docs/deploying-to-aws-amplify/) Heroku? [Yup.](https://www.gatsbyjs.org/docs/deploying-to-heroku/) You get the idea. Gatsby can be deployed anywhere easily and cheaply.
+... and, that's it! We're done as far as setup goes! We can use _whatever_ stack you prefer here. Netlify? [You bet.](https://www.gatsbyjs.org/docs/deploying-to-netlify) More a fan of AWS? [Of course.](https://www.gatsbyjs.org/docs/deploying-to-aws-amplify/) Heroku? [Yup.](https://www.gatsbyjs.org/docs/deploying-to-heroku/) You get the idea. Gatsby can be deployed anywhere easily and cheaply.
 
 We now have an infrastructure setup so that we _can_ release our web application. What's a release look like?
 
@@ -323,7 +325,7 @@ _Want to dive deeper? Much of this is encapsulated in our internal [Webpack conf
 
 ## Modern APIs in Gatsby
 
-Gatsby uses modern browser APIs to both maximize performance and user experience--which oftentimes go hand in hand!--only loading assets when they are necessary and likely to be requested. Specifically, the following APIs are crucial to the end-user experience in Gatsby:
+Gatsby uses modern browser APIs to both maximize performance and user experience--which oftentimes go hand in hand!--only loading assets when they are necessary and likely to be requested. Specifically, the following APIs are crucial to the end user experience in Gatsby:
 
 1. `IntersectionObserver` - an API to conditionally perform some action when an element enters the viewport/view
 1. `link rel="prefetch"` - an API to prefetch resources in the background when the browser is idle
@@ -337,7 +339,12 @@ If you've ever browsed a Gatsby application, you've probably noticed that links 
 
 _Curious what an `IntersectionObserver` can do? Check out the following example. Emoji are used when an element is entering/leaving the viewport._
 
-<iframe src="https://codesandbox.io/embed/l70jj9p58m?fontsize=14" title="Intersection Observer Example" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
+<iframe
+  src="https://codesandbox.io/embed/l70jj9p58m?fontsize=14"
+  title="Intersection Observer Example"
+  style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
+  sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"
+/>
 
 #### `gatsby-link` and `link rel="prefetch"`
 

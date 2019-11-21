@@ -3,6 +3,76 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sitemap@2.2.20...gatsby-plugin-sitemap@2.2.21) (2019-11-15)
+
+**Note:** Version bump only for package gatsby-plugin-sitemap
+
+## [2.2.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sitemap@2.2.19...gatsby-plugin-sitemap@2.2.20) (2019-11-10)
+
+**Note:** Version bump only for package gatsby-plugin-sitemap
+
+## [2.2.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sitemap@2.2.18...gatsby-plugin-sitemap@2.2.19) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-plugin-sitemap
+
+## [2.2.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sitemap@2.2.17...gatsby-plugin-sitemap@2.2.18) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-plugin-sitemap
+
+## [2.2.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sitemap@2.2.16...gatsby-plugin-sitemap@2.2.17) (2019-10-09)
+
+**Note:** Version bump only for package gatsby-plugin-sitemap
+
+## [2.2.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sitemap@2.2.14...gatsby-plugin-sitemap@2.2.16) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-plugin-sitemap
+
+## [2.2.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sitemap@2.2.14...gatsby-plugin-sitemap@2.2.15) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-plugin-sitemap
+
+## [2.2.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sitemap@2.2.13...gatsby-plugin-sitemap@2.2.14) (2019-09-20)
+
+**Note:** Version bump only for package gatsby-plugin-sitemap
+
+## [2.2.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sitemap@2.2.12...gatsby-plugin-sitemap@2.2.13) (2019-09-18)
+
+### Bug Fixes
+
+- **gatsby-plugin-sitemap:** Removed redundant check for siteUrl ([#17683](https://github.com/gatsbyjs/gatsby/issues/17683)) ([1c4dc65](https://github.com/gatsbyjs/gatsby/commit/1c4dc65))
+
+## [2.2.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sitemap@2.2.11...gatsby-plugin-sitemap@2.2.12) (2019-09-09)
+
+**Note:** Version bump only for package gatsby-plugin-sitemap
+
+## [2.2.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sitemap@2.2.10...gatsby-plugin-sitemap@2.2.11) (2019-09-09)
+
+**Note:** Version bump only for package gatsby-plugin-sitemap
+
+## [2.2.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sitemap@2.2.9...gatsby-plugin-sitemap@2.2.10) (2019-09-01)
+
+### Bug Fixes
+
+- update minor updates in packages except react, babel and eslint ([#17254](https://github.com/gatsbyjs/gatsby/issues/17254)) ([252d867](https://github.com/gatsbyjs/gatsby/commit/252d867))
+
+## [2.2.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sitemap@2.2.8...gatsby-plugin-sitemap@2.2.9) (2019-08-23)
+
+**Note:** Version bump only for package gatsby-plugin-sitemap
+
+## [2.2.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sitemap@2.2.7...gatsby-plugin-sitemap@2.2.8) (2019-08-22)
+
+**Note:** Version bump only for package gatsby-plugin-sitemap
+
+## [2.2.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sitemap@2.2.6...gatsby-plugin-sitemap@2.2.7) (2019-08-20)
+
+**Note:** Version bump only for package gatsby-plugin-sitemap
+
+## [2.2.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sitemap@2.2.5...gatsby-plugin-sitemap@2.2.6) (2019-08-09)
+
+### Features
+
+- **gatsby-plugin-sitemap:** add siteUrl validation ([#16329](https://github.com/gatsbyjs/gatsby/issues/16329)) ([9f3d71d](https://github.com/gatsbyjs/gatsby/commit/9f3d71d))
+
 ## [2.2.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sitemap@2.2.4...gatsby-plugin-sitemap@2.2.5) (2019-08-01)
 
 **Note:** Version bump only for package gatsby-plugin-sitemap

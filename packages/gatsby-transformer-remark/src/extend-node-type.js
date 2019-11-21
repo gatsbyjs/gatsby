@@ -27,21 +27,13 @@ let fileNodes
 let pluginsCacheStr = ``
 let pathPrefixCacheStr = ``
 const astCacheKey = node =>
-  `transformer-remark-markdown-ast-${
-    node.internal.contentDigest
-  }-${pluginsCacheStr}-${pathPrefixCacheStr}`
+  `transformer-remark-markdown-ast-${node.internal.contentDigest}-${pluginsCacheStr}-${pathPrefixCacheStr}`
 const htmlCacheKey = node =>
-  `transformer-remark-markdown-html-${
-    node.internal.contentDigest
-  }-${pluginsCacheStr}-${pathPrefixCacheStr}`
+  `transformer-remark-markdown-html-${node.internal.contentDigest}-${pluginsCacheStr}-${pathPrefixCacheStr}`
 const htmlAstCacheKey = node =>
-  `transformer-remark-markdown-html-ast-${
-    node.internal.contentDigest
-  }-${pluginsCacheStr}-${pathPrefixCacheStr}`
+  `transformer-remark-markdown-html-ast-${node.internal.contentDigest}-${pluginsCacheStr}-${pathPrefixCacheStr}`
 const headingsCacheKey = node =>
-  `transformer-remark-markdown-headings-${
-    node.internal.contentDigest
-  }-${pluginsCacheStr}-${pathPrefixCacheStr}`
+  `transformer-remark-markdown-headings-${node.internal.contentDigest}-${pluginsCacheStr}-${pathPrefixCacheStr}`
 const tableOfContentsCacheKey = (node, appliedTocOptions) =>
   `transformer-remark-markdown-toc-${
     node.internal.contentDigest
@@ -189,6 +181,10 @@ module.exports = (
               reporter,
               cache: getCache(plugin.name),
               getCache,
+              compiler: {
+                parseString: remark.parse.bind(remark),
+                generateHTML: getHTML,
+              },
               ...rest,
             },
             plugin.pluginOptions
@@ -229,6 +225,10 @@ module.exports = (
               reporter,
               cache: getCache(plugin.name),
               getCache,
+              compiler: {
+                parseString: remark.parse.bind(remark),
+                generateHTML: getHTML,
+              },
               ...rest,
             },
             plugin.pluginOptions
@@ -281,9 +281,7 @@ module.exports = (
                 undefined
               ) {
                 console.warn(
-                  `Skipping TableOfContents. Field '${
-                    appliedTocOptions.pathToSlugField
-                  }' missing from markdown node`
+                  `Skipping TableOfContents. Field '${appliedTocOptions.pathToSlugField}' missing from markdown node`
                 )
                 return null
               }
@@ -296,7 +294,9 @@ module.exports = (
                 .replace(/\/\//g, `/`)
             }
             if (node.children) {
-              node.children = node.children.map(node => addSlugToUrl(node))
+              node.children = node.children
+                .map(node => addSlugToUrl(node))
+                .filter(Boolean)
             }
 
             return node
@@ -330,7 +330,9 @@ module.exports = (
     }
 
     async function getHTML(markdownNode) {
-      const cachedHTML = await cache.get(htmlCacheKey(markdownNode))
+      const shouldCache = markdownNode && markdownNode.internal
+      const cachedHTML =
+        shouldCache && (await cache.get(htmlCacheKey(markdownNode)))
       if (cachedHTML) {
         return cachedHTML
       } else {
@@ -340,8 +342,11 @@ module.exports = (
           allowDangerousHTML: true,
         })
 
-        // Save new HTML to cache and return
-        cache.set(htmlCacheKey(markdownNode), html)
+        if (shouldCache) {
+          // Save new HTML to cache
+          cache.set(htmlCacheKey(markdownNode), html)
+        }
+
         return html
       }
     }
@@ -351,7 +356,7 @@ module.exports = (
       { pruneLength, truncate, excerptSeparator }
     ) {
       const fullAST = await getHTMLAst(markdownNode)
-      if (excerptSeparator) {
+      if (excerptSeparator && markdownNode.excerpt !== ``) {
         return cloneTreeUntil(
           fullAST,
           ({ nextNode }) =>
@@ -457,7 +462,7 @@ module.exports = (
 
         const excerptText = excerptNodes.join(``).trim()
 
-        if (excerptSeparator) {
+        if (excerptSeparator && !isBeforeSeparator) {
           return excerptText
         }
         if (!truncate) {
@@ -584,7 +589,10 @@ module.exports = (
             let timeToRead = 0
             const pureText = sanitizeHTML(html, { allowTags: [] })
             const avgWPM = 265
-            const wordCount = _.words(pureText).length
+            const wordCount =
+              _.words(pureText).length +
+              _.words(pureText, /[\p{sc=Katakana}\p{sc=Hiragana}\p{sc=Han}]/gu)
+                .length
             timeToRead = Math.round(wordCount / avgWPM)
             if (timeToRead === 0) {
               timeToRead = 1

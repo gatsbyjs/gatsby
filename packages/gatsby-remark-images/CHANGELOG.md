@@ -3,6 +3,125 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.32](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.31...gatsby-remark-images@3.1.32) (2019-11-18)
+
+### Bug Fixes
+
+- **gatsby:** Handle special characters in windows paths ([#19600](https://github.com/gatsbyjs/gatsby/issues/19600)) ([9929cf0](https://github.com/gatsbyjs/gatsby/commit/9929cf0))
+
+## [3.1.31](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.30...gatsby-remark-images@3.1.31) (2019-11-15)
+
+**Note:** Version bump only for package gatsby-remark-images
+
+## [3.1.30](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.29...gatsby-remark-images@3.1.30) (2019-11-10)
+
+**Note:** Version bump only for package gatsby-remark-images
+
+## [3.1.29](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.28...gatsby-remark-images@3.1.29) (2019-11-04)
+
+### Features
+
+- **gatsby-remark-images:** add disableBgImage option ([#19152](https://github.com/gatsbyjs/gatsby/issues/19152)) ([d3d9020](https://github.com/gatsbyjs/gatsby/commit/d3d9020))
+
+## [3.1.28](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.27...gatsby-remark-images@3.1.28) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-remark-images
+
+## [3.1.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.26...gatsby-remark-images@3.1.27) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-remark-images
+
+## [3.1.26](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.25...gatsby-remark-images@3.1.26) (2019-10-09)
+
+**Note:** Version bump only for package gatsby-remark-images
+
+## [3.1.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.23...gatsby-remark-images@3.1.25) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-remark-images
+
+## [3.1.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.23...gatsby-remark-images@3.1.24) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-remark-images
+
+## [3.1.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.22...gatsby-remark-images@3.1.23) (2019-09-20)
+
+**Note:** Version bump only for package gatsby-remark-images
+
+## [3.1.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.21...gatsby-remark-images@3.1.22) (2019-09-13)
+
+### Features
+
+- **gatsby-remark-images:** Add flag to suppress css background-image to prevent FOUB ([#17154](https://github.com/gatsbyjs/gatsby/issues/17154)) ([125fd01](https://github.com/gatsbyjs/gatsby/commit/125fd01))
+
+## [3.1.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.20...gatsby-remark-images@3.1.21) (2019-09-09)
+
+**Note:** Version bump only for package gatsby-remark-images
+
+## [3.1.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.19...gatsby-remark-images@3.1.20) (2019-09-01)
+
+### Bug Fixes
+
+- update minor updates in packages except react, babel and eslint ([#17254](https://github.com/gatsbyjs/gatsby/issues/17254)) ([252d867](https://github.com/gatsbyjs/gatsby/commit/252d867))
+
+## [3.1.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.18...gatsby-remark-images@3.1.19) (2019-08-25)
+
+**Note:** Version bump only for package gatsby-remark-images
+
+## [3.1.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.17...gatsby-remark-images@3.1.18) (2019-08-24)
+
+### Bug Fixes
+
+- update dependency is-relative-url to v3 ([#17038](https://github.com/gatsbyjs/gatsby/issues/17038)) ([ff9ae84](https://github.com/gatsbyjs/gatsby/commit/ff9ae84))
+- update dependency slash to v3 ([#17019](https://github.com/gatsbyjs/gatsby/issues/17019)) ([c81f45c](https://github.com/gatsbyjs/gatsby/commit/c81f45c))
+
+## [3.1.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.16...gatsby-remark-images@3.1.17) (2019-08-23)
+
+**Note:** Version bump only for package gatsby-remark-images
+
+## [3.1.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.15...gatsby-remark-images@3.1.16) (2019-08-22)
+
+**Note:** Version bump only for package gatsby-remark-images
+
+## [3.1.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.14...gatsby-remark-images@3.1.15) (2019-08-22)
+
+**Note:** Version bump only for package gatsby-remark-images
+
+## [3.1.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.13...gatsby-remark-images@3.1.14) (2019-08-21)
+
+### Bug Fixes
+
+- update dependency cheerio to ^1.0.0-rc.3 ([#16831](https://github.com/gatsbyjs/gatsby/issues/16831)) ([55bee35](https://github.com/gatsbyjs/gatsby/commit/55bee35))
+
+## [3.1.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.12...gatsby-remark-images@3.1.13) (2019-08-20)
+
+**Note:** Version bump only for package gatsby-remark-images
+
+## [3.1.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.11...gatsby-remark-images@3.1.12) (2019-08-16)
+
+**Note:** Version bump only for package gatsby-remark-images
+
+## [3.1.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.10...gatsby-remark-images@3.1.11) (2019-08-13)
+
+### Features
+
+- **gatsby-remark-images:** Add markdownCaptions option ([#16574](https://github.com/gatsbyjs/gatsby/issues/16574)) ([a72cbaf](https://github.com/gatsbyjs/gatsby/commit/a72cbaf))
+
+## [3.1.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.9...gatsby-remark-images@3.1.10) (2019-08-11)
+
+### Features
+
+- **gatsby-remark-images:** Add support for native lazy loading ([#16448](https://github.com/gatsbyjs/gatsby/issues/16448)) ([47d8032](https://github.com/gatsbyjs/gatsby/commit/47d8032))
+
+## [3.1.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.8...gatsby-remark-images@3.1.9) (2019-08-11)
+
+### Bug Fixes
+
+- **gatsby-remark-images:** Allow alt to be returned as caption ([#16518](https://github.com/gatsbyjs/gatsby/issues/16518)) ([f09e82f](https://github.com/gatsbyjs/gatsby/commit/f09e82f))
+
+## [3.1.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.7...gatsby-remark-images@3.1.8) (2019-08-08)
+
+**Note:** Version bump only for package gatsby-remark-images
+
 ## [3.1.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.6...gatsby-remark-images@3.1.7) (2019-07-20)
 
 **Note:** Version bump only for package gatsby-remark-images

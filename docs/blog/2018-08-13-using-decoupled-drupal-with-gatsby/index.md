@@ -17,7 +17,7 @@ Take a look at the source code of [the official Gatsby + Drupal example site](ht
 
 [A delicious Gatsby + Drupal site](https://using-drupal.gatsbyjs.org/)
 
-Using Drupal as a headless CMS with Gatsby is a great way to get an enterprise-quality CMS for free, paired with a great modern development experience and all the benefits of the JAMstack, like performance, scalability, and security.
+Using Drupal as a [headless CMS](/docs/headless-cms/) with Gatsby is a great way to get an enterprise-quality CMS for free, paired with a great modern development experience and all the benefits of the JAMstack, like performance, scalability, and security.
 
 It only takes a few steps to use Gatsby with Drupal as a headless CMS (also known as decoupled Drupal).
 

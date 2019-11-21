@@ -257,14 +257,14 @@ describe(`anchor target attribute looks like _self if`, () => {
   })
 })
 
-describe(`navigation is routed through gatsby if the destination href`, () => {
+describe(`navigation is routed through Gatsby if the destination href`, () => {
   // We're going to manually set up the event listener here
   let hrefHandler
   let eventDestroyer
 
   beforeAll(() => {
     hrefHandler = jest.fn()
-    eventDestroyer = catchLinks.default(window, hrefHandler)
+    eventDestroyer = catchLinks.default(window, {}, hrefHandler)
   })
 
   afterAll(() => {
@@ -364,7 +364,7 @@ describe(`navigation is routed through browser if resources have failed and the 
 
   beforeAll(() => {
     hrefHandler = jest.fn()
-    eventDestroyer = catchLinks.default(window, hrefHandler)
+    eventDestroyer = catchLinks.default(window, {}, hrefHandler)
     global.___failedResources = true
   })
 
@@ -408,7 +408,7 @@ describe(`pathPrefix is handled if catched link to ${pathPrefix}/article navigat
 
   beforeAll(() => {
     hrefHandler = jest.fn()
-    eventDestroyer = catchLinks.default(window, hrefHandler)
+    eventDestroyer = catchLinks.default(window, {}, hrefHandler)
   })
 
   afterAll(() => {

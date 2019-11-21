@@ -80,7 +80,7 @@ the config.
 
 ```js
 module.exports = {
-  __experimentalThemes: [
+  plugins: [
     {
       resolve: "gatsby-theme-blog",
       options: {},
@@ -96,7 +96,7 @@ theme's gatsby-config as a function that returns an object.
 
 ```js
 module.exports = {
-  __experimentalThemes: [
+  plugins: [
     {
       resolve: "gatsby-theme-blog",
       options: {

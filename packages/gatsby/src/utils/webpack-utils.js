@@ -8,6 +8,7 @@ const OptimizeCssAssetsPlugin = require(`optimize-css-assets-webpack-plugin`)
 const isWsl = require(`is-wsl`)
 
 const GatsbyWebpackStatsExtractor = require(`./gatsby-webpack-stats-extractor`)
+const GatsbyWebpackEslintGraphqlSchemaReload = require(`./gatsby-webpack-eslint-graphql-schema-reload-plugin`)
 
 const builtinPlugins = require(`./webpack-plugins`)
 const eslintConfig = require(`./eslint-config`)
@@ -305,9 +306,7 @@ module.exports = async ({
    * and packages that depend on `gatsby`
    */
   {
-    let js = (
-      { modulesThatUseGatsby, ...options } = { modulesThatUseGatsby: [] }
-    ) => {
+    let js = ({ modulesThatUseGatsby = [], ...options } = {}) => {
       return {
         test: /\.(js|mjs|jsx)$/,
         include: modulePath => {
@@ -327,7 +326,7 @@ module.exports = async ({
           loaders.js({
             ...options,
             configFile: true,
-            compact: true,
+            compact: PRODUCTION,
           }),
         ],
       }
@@ -342,9 +341,7 @@ module.exports = async ({
    * Excludes modules that use Gatsby since the `rules.js` already transpiles those
    */
   {
-    let dependencies = (
-      { modulesThatUseGatsby } = { modulesThatUseGatsby: [] }
-    ) => {
+    let dependencies = ({ modulesThatUseGatsby = [] } = {}) => {
       const jsOptions = {
         babelrc: false,
         configFile: false,
@@ -463,7 +460,10 @@ module.exports = async ({
         loaders.css({ ...options, importLoaders: 1 }),
         loaders.postcss({ browsers }),
       ]
-      if (!isSSR) use.unshift(loaders.miniCssExtract({ hmr: !options.modules }))
+      if (!isSSR)
+        use.unshift(
+          loaders.miniCssExtract({ hmr: !PRODUCTION && !options.modules })
+        )
 
       return {
         use,
@@ -623,6 +623,9 @@ module.exports = async ({
   plugins.moment = () => plugins.ignore(/^\.\/locale$/, /moment$/)
 
   plugins.extractStats = options => new GatsbyWebpackStatsExtractor(options)
+
+  plugins.eslintGraphqlSchemaReload = options =>
+    new GatsbyWebpackEslintGraphqlSchemaReload(options)
 
   return {
     loaders,

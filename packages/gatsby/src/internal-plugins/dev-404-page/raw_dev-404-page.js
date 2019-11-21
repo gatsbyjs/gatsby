@@ -92,9 +92,7 @@ class Dev404Page extends React.Component {
             <h2>
               Pages (
               {this.state.pagePaths.length != this.state.initPagePaths.length
-                ? `${this.state.pagePaths.length}/${
-                    this.state.initPagePaths.length
-                  }`
+                ? `${this.state.pagePaths.length}/${this.state.initPagePaths.length}`
                 : this.state.initPagePaths.length}
               )
             </h2>
@@ -106,7 +104,7 @@ class Dev404Page extends React.Component {
                   type="text"
                   id="search"
                   placeholder="Search pages..."
-                  value={this.state.pageSearchTerm}
+                  value={this.state.pagePathSearchTerms}
                   onChange={this.handleSearchTermChange}
                 />
               </label>

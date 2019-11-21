@@ -103,6 +103,9 @@ exports.checkDepsChanges = async ({
     }
   }
 
+  if (!monorepoPKGjson.dependencies) monorepoPKGjson.dependencies = {}
+  if (!localPKGjson.dependencies) localPKGjson.dependencies = {}
+
   const areDepsEqual = _.isEqual(
     monorepoPKGjson.dependencies,
     localPKGjson.dependencies
@@ -147,9 +150,7 @@ exports.checkDepsChanges = async ({
           // changes - they will be covered
           if (!monoRepoPackages.includes(key)) {
             acc.push(
-              ` - '${key}' changed version from ${
-                localPKGjson.dependencies[key]
-              } to ${monorepoPKGjson.dependencies[key]}`
+              ` - '${key}' changed version from ${localPKGjson.dependencies[key]} to ${monorepoPKGjson.dependencies[key]}`
             )
             needPublishing = true
           }

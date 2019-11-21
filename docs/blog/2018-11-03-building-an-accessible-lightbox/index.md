@@ -12,19 +12,19 @@ In this tutorial you're going to cover the steps to creating a simple, custom, a
 
 If you don't have Gatsby installed, open up your terminal and type in:
 
-```terminal
+```shell
 $ npm install --global gatsby-cli
 ```
 
 Then, still in your Terminal, head over to a folder you'd want to get started in and type in:
 
-```terminal
+```shell
 $ gatsby new GatsbyLightbox https://github.com/gatsbyjs/gatsby-starter-default
 ```
 
 Once it's done scaffolding the starter application, type in:
 
-```terminal
+```shell
 $ cd GatsbyLightbox
 $ yarn develop
 ```
@@ -127,7 +127,7 @@ By now, you should have all the images displaying on the home page and doing a f
 
 For styling, you're going to be using [styled-components](https://www.styled-components.com/). To get it configured with Gatsby, run the following inside your terminal in your application:
 
-```terminal
+```shell
 $ yarn add gatsby-plugin-styled-components styled-components babel-plugin-styled-components
 ```
 
@@ -192,7 +192,7 @@ For the sake of accessibility, you'll be using [Dialog](https://ui.reach.tech/di
 
 Go ahead and install all the dependencies:
 
-```terminal
+```shell
 $ yarn add @reach/dialog
 ```
 

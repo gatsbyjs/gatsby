@@ -167,6 +167,11 @@ exports.createPages = ({ graphql, actions, reporter }) => {
     isPermanent: true,
   })
   createRedirect({
+    fromPath: `/contributing/submit-to-creator-showcase/`,
+    toPath: `/showcase/`,
+    isPermanent: true,
+  })
+  createRedirect({
     fromPath: `/docs/submit-to-starter-library/`,
     toPath: `/contributing/submit-to-starter-library/`,
     isPermanent: true,
@@ -191,6 +196,11 @@ exports.createPages = ({ graphql, actions, reporter }) => {
   createRedirect({
     fromPath: `/docs/netlify-cms/`,
     toPath: `/docs/sourcing-from-netlify-cms/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/sourcing-from-saas-services/`,
+    toPath: `/docs/sourcing-from-hosted-services/`,
     isPermanent: true,
   })
 
@@ -349,6 +359,60 @@ exports.createPages = ({ graphql, actions, reporter }) => {
     isPermanent: true,
   })
 
+  createRedirect({
+    fromPath: `/docs/hosting-on-netlify/`,
+    toPath: `/docs/deploying-to-netlify/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/querying-with-graphql/`,
+    toPath: `/docs/graphql-concepts/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/introducing-graphiql/`,
+    toPath: `/docs/running-queries-with-graphiql/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/life-and-times-of-a-gatsby-build/`,
+    toPath: `/docs/overview-of-the-gatsby-build-process/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/awesome-gatsby/`,
+    toPath: `/docs/awesome-gatsby-resources/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/sourcing-from-kentico-cloud/`,
+    toPath: `/docs/sourcing-from-kentico-kontent/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/building-apps-with-gatsby/`,
+    toPath: `/docs/adding-app-and-website-functionality/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/adding-website-functionality/`,
+    toPath: `/docs/adding-app-and-website-functionality/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/using-fragments/`,
+    toPath: `/docs/using-graphql-fragments/`,
+    isPermanent: true,
+  })
+
   Object.entries(startersRedirects).forEach(([fromSlug, toSlug]) => {
     createRedirect({
       fromPath: `/starters${fromSlug}`,
@@ -373,9 +437,6 @@ exports.createPages = ({ graphql, actions, reporter }) => {
     )
     const showcaseTemplate = path.resolve(
       `src/templates/template-showcase-details.js`
-    )
-    const creatorPageTemplate = path.resolve(
-      `src/templates/template-creator-details.js`
     )
     const featureComparisonPageTemplate = path.resolve(
       `src/templates/template-feature-comparison.js`
@@ -408,15 +469,6 @@ exports.createPages = ({ graphql, actions, reporter }) => {
           }
         }
         allAuthorYaml {
-          edges {
-            node {
-              fields {
-                slug
-              }
-            }
-          }
-        }
-        allCreatorsYaml {
           edges {
             node {
               fields {
@@ -567,9 +619,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
           return null
         } else if (!_.get(edge, `node.fields.hasScreenshot`)) {
           reporter.warn(
-            `Starter showcase entry "${
-              edge.node.repo
-            }" seems offline. Skipping.`
+            `Starter showcase entry "${edge.node.repo}" seems offline. Skipping.`
           )
           return null
         } else {
@@ -603,26 +653,12 @@ exports.createPages = ({ graphql, actions, reporter }) => {
         })
       })
 
-      result.data.allCreatorsYaml.edges.forEach(edge => {
-        if (!edge.node.fields) return
-        if (!edge.node.fields.slug) return
-        createPage({
-          path: `${edge.node.fields.slug}`,
-          component: slash(creatorPageTemplate),
-          context: {
-            slug: edge.node.fields.slug,
-          },
-        })
-      })
-
       result.data.allSitesYaml.edges.forEach(edge => {
         if (!edge.node.fields) return
         if (!edge.node.fields.slug) return
         if (!edge.node.fields.hasScreenshot) {
           reporter.warn(
-            `Site showcase entry "${
-              edge.node.main_url
-            }" seems offline. Skipping.`
+            `Site showcase entry "${edge.node.main_url}" seems offline. Skipping.`
           )
           return
         }
@@ -1014,9 +1050,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
 
     if (!validTypes[node.type]) {
       throw new Error(
-        `Creators must have a type of “individual”, “agency”, or “company”, but invalid type “${
-          node.type
-        }” was provided for ${node.name}.`
+        `Creators must have a type of “individual”, “agency”, or “company”, but invalid type “${node.type}” was provided for ${node.name}.`
       )
     }
     slug = `/creators/${validTypes[node.type]}/${slugify(node.name, {
@@ -1024,7 +1058,6 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
     })}`
     createNodeField({ node, name: `slug`, value: slug })
   }
-  // end Creator pages
   return null
 }
 

@@ -1,25 +1,27 @@
 {
   "name": "gatsby-plugin-offline",
   "description": "Gatsby plugin which sets up a site to be able to run offline",
-  "version": "2.2.4",
+  "version": "3.0.22",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.0.0",
-    "cheerio": "^1.0.0-rc.2",
-    "idb-keyval": "^3.1.0",
-    "lodash": "^4.17.14",
-    "slash": "^3.0.0",
-    "workbox-build": "^3.6.3"
+    "@babel/runtime": "^7.7.2",
+    "cheerio": "^1.0.0-rc.3",
+    "gatsby-core-utils": "^1.0.20",
+    "glob": "^7.1.6",
+    "idb-keyval": "^3.2.0",
+    "lodash": "^4.17.15",
+    "workbox-build": "^4.3.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0",
-    "@babel/core": "^7.0.0",
-    "babel-preset-gatsby-package": "^0.2.2",
+    "@babel/cli": "^7.7.0",
+    "@babel/core": "^7.7.2",
+    "babel-preset-gatsby-package": "^0.2.11",
     "cpx": "^1.5.0",
-    "cross-env": "^5.1.4"
+    "cross-env": "^5.2.1",
+    "rewire": "^4.0.1"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline#readme",
   "keywords": [
@@ -32,7 +34,7 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": "^2.0.100"
+    "gatsby": "^2.4.0"
   },
   "repository": {
     "type": "git",

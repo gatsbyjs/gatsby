@@ -5,21 +5,45 @@ const {
   GraphQLInterfaceType,
   GraphQLUnionType,
   GraphQLBoolean,
+  printType,
 } = require(`graphql`)
 const { SchemaComposer } = require(`graphql-compose`)
 jest.mock(`../../utils/api-runner-node`)
 const { store } = require(`../../redux`)
+const { actions } = require(`../../redux/actions`)
 const { build } = require(`..`)
 const {
   buildObjectType,
   buildUnionType,
   buildInterfaceType,
 } = require(`../types/type-builders`)
+const withResolverContext = require(`../context`)
 require(`../../db/__tests__/fixtures/ensure-loki`)()
 
 const nodes = require(`./fixtures/node-model`)
 
-jest.mock(`gatsby-cli/lib/reporter`)
+jest.mock(`gatsby-cli/lib/reporter`, () => {
+  return {
+    log: jest.fn(),
+    info: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+    activityTimer: () => {
+      return {
+        start: jest.fn(),
+        setStatus: jest.fn(),
+        end: jest.fn(),
+      }
+    },
+    phantomActivity: () => {
+      return {
+        start: jest.fn(),
+        end: jest.fn(),
+      }
+    },
+  }
+})
+
 const report = require(`gatsby-cli/lib/reporter`)
 afterEach(() => report.warn.mockClear())
 
@@ -31,7 +55,10 @@ describe(`Build schema`, () => {
   beforeEach(async () => {
     store.dispatch({ type: `DELETE_CACHE` })
     nodes.forEach(node =>
-      store.dispatch({ type: `CREATE_NODE`, payload: { ...node } })
+      actions.createNode(
+        { ...node, internal: { ...node.internal } },
+        { name: `test` }
+      )(store.dispatch)
     )
   })
 
@@ -788,6 +815,33 @@ describe(`Build schema`, () => {
       )
     })
 
+    it(`extends fieldconfigs when merging types`, async () => {
+      createTypes(
+        buildObjectType({
+          name: `Mdx`,
+          interfaces: [`Node`],
+          fields: {
+            body: {
+              type: `String`,
+              resolve: () => `Mdx!`,
+            },
+          },
+        })
+      )
+      createTypes(`
+        type Mdx implements Node {
+          body: String!
+        }
+      `)
+
+      const schema = await buildSchema()
+      const fields = schema.getType(`Mdx`).getFields()
+
+      expect(fields.body.type.toString()).toBe(`String!`)
+      expect(typeof fields.body.resolve).toBe(`function`)
+      expect(fields.body.resolve()).toBe(`Mdx!`)
+    })
+
     it(`displays error message for reserved Node interface`, () => {
       const typeDefs = [
         `interface Node { foo: Boolean }`,
@@ -883,6 +937,93 @@ describe(`Build schema`, () => {
       expect(nestedFields[`date`].type.toString()).toEqual(`Date`)
       expect(nestedFields[`newField`].type.toString()).toEqual(`String`)
     })
+
+    it(`allows modifying deeply nested inferred types`, async () => {
+      createTypes(`
+        type Nested implements Node @infer {
+          name: String
+        }
+
+        type NestedNestedFoo {
+          bar: Int
+        }
+      `)
+      const node = {
+        id: `nested1`,
+        parent: null,
+        children: [],
+        internal: { type: `Nested`, contentDigest: `0` },
+        name: `nested1`,
+        nested: {
+          foo: {
+            bar: `str`,
+            baz: 5,
+          },
+        },
+      }
+      store.dispatch(actions.createNode(node, { name: `test` }))
+      const schema = await buildSchema()
+      const print = type => printType(schema.getType(type))
+
+      expect(print(`Nested`)).toMatchInlineSnapshot(`
+        "type Nested implements Node {
+          name: String
+          nested: NestedNested
+          id: ID!
+          parent: Node
+          children: [Node!]!
+          internal: Internal!
+        }"
+      `)
+      expect(print(`NestedNested`)).toMatchInlineSnapshot(`
+        "type NestedNested {
+          foo: NestedNestedFoo
+        }"
+      `)
+      expect(print(`NestedNestedFoo`)).toMatchInlineSnapshot(`
+        "type NestedNestedFoo {
+          bar: Int
+          baz: Int
+        }"
+      `)
+    })
+  })
+
+  it(`allows renaming and merging nested types`, async () => {
+    createTypes(`
+      type Nested implements Node {
+        nested: SomeNewNameForNested
+      }
+
+      type SomeNewNameForNested {
+        foo: String
+      }
+    `)
+    const node = {
+      id: `nested1`,
+      parent: null,
+      children: [],
+      internal: { type: `Nested`, contentDigest: `0` },
+      name: `nested1`,
+      nested: {
+        foo: {
+          bar: `str`,
+          baz: 5,
+        },
+        bar: `str`,
+      },
+    }
+    store.dispatch(actions.createNode(node, { name: `test` }))
+    const schema = await buildSchema()
+    const print = type => printType(schema.getType(type))
+
+    expect(print(`SomeNewNameForNested`)).toMatchInlineSnapshot(`
+      "type SomeNewNameForNested {
+        foo: String
+        bar: String
+      }"
+    `)
+    expect(schema.getType(`NestedNested`)).not.toBeDefined()
   })
 
   describe(`createResolvers`, () => {
@@ -913,7 +1054,7 @@ describe(`Build schema`, () => {
         fields[`name`].resolve(
           { name: `Mikhail` },
           { withHello: true },
-          {},
+          withResolverContext({}, schema),
           {
             fieldName: `name`,
           }
@@ -923,7 +1064,7 @@ describe(`Build schema`, () => {
         fields[`name`].resolve(
           { name: `Mikhail` },
           { withHello: false },
-          {},
+          withResolverContext({}, schema),
           {
             fieldName: `name`,
           }
@@ -959,7 +1100,7 @@ describe(`Build schema`, () => {
         fields[`name`].resolve(
           { name: `Mikhail` },
           { withHello: true },
-          {},
+          withResolverContext({}, schema),
           {
             fieldName: `name`,
           }
@@ -969,7 +1110,7 @@ describe(`Build schema`, () => {
         fields[`name`].resolve(
           { name: `Mikhail` },
           { withHello: false },
-          {},
+          withResolverContext({}, schema),
           {
             fieldName: `name`,
           }
@@ -1105,7 +1246,7 @@ describe(`Build schema`, () => {
         await fields[`date`].resolve(
           { date: new Date(2019, 10, 10) },
           { formatString: `YYYY` },
-          {},
+          withResolverContext({}, schema),
           {
             fieldName: `date`,
           }
@@ -1115,7 +1256,7 @@ describe(`Build schema`, () => {
         await fields[`date`].resolve(
           { date: new Date(2010, 10, 10) },
           { formatString: `YYYY` },
-          {},
+          withResolverContext({}, schema),
           {
             fieldName: `date`,
           }

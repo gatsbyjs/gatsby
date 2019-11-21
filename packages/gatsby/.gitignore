@@ -30,5 +30,8 @@ decls
 dist
 
 # built files
-cache-dir/commonjs/
 apis.json
+cache-dir/commonjs/
+
+# cached files
+/latest-apis.json

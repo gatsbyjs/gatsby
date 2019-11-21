@@ -57,8 +57,13 @@ async function checkCache(cache, icon, srcIcon, srcIconDigest, callback) {
   }
 }
 
-exports.onPostBootstrap = async ({ reporter }, { localize, ...manifest }) => {
-  const activity = reporter.activityTimer(`Build manifest and related icons`)
+exports.onPostBootstrap = async (
+  { reporter, parentSpan },
+  { localize, ...manifest }
+) => {
+  const activity = reporter.activityTimer(`Build manifest and related icons`, {
+    parentSpan,
+  })
   activity.start()
 
   let cache = new Map()
@@ -79,20 +84,26 @@ exports.onPostBootstrap = async ({ reporter }, { localize, ...manifest }) => {
           cacheModeOverride = { cache_busting_mode: `name` }
         }
 
-        return makeManifest(cache, reporter, {
-          ...manifest,
-          ...locale,
-          ...cacheModeOverride,
-        })
+        return makeManifest(
+          cache,
+          reporter,
+          {
+            ...manifest,
+            ...locale,
+            ...cacheModeOverride,
+          },
+          true
+        )
       })
     )
   }
   activity.end()
 }
 
-const makeManifest = async (cache, reporter, pluginOptions) => {
+const makeManifest = async (cache, reporter, pluginOptions, shouldLocalize) => {
   const { icon, ...manifest } = pluginOptions
-  const suffix = pluginOptions.lang ? `_${pluginOptions.lang}` : ``
+  const suffix =
+    shouldLocalize && pluginOptions.lang ? `_${pluginOptions.lang}` : ``
 
   // Delete options we won't pass to the manifest.webmanifest.
   delete manifest.plugins
@@ -190,4 +201,15 @@ const makeManifest = async (cache, reporter, pluginOptions) => {
     path.join(`public`, `manifest${suffix}.webmanifest`),
     JSON.stringify(manifest)
   )
+}
+
+exports.onCreateWebpackConfig = ({ actions, plugins }, pluginOptions) => {
+  actions.setWebpackConfig({
+    plugins: [
+      plugins.define({
+        __MANIFEST_PLUGIN_HAS_LOCALISATION__:
+          pluginOptions.localize && pluginOptions.localize.length,
+      }),
+    ],
+  })
 }

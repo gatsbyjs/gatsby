@@ -68,4 +68,12 @@ describe(`bootstrap`, () => {
     await sleep()
     expect(runQueuedQueries).toBeCalledWith(path)
   })
+
+  it(`will queue query when page context is changed`, async () => {
+    const service = getService({ isInBootstrap: false })
+    service.send({ type: `PAGE_CONTEXT_MODIFIED`, path: `/a/test.md` })
+    // there is setTimeout in action handler for `CONTEXT_CHANGES`
+    await sleep()
+    expect(enqueueExtractedQueryId).toBeCalledWith(`/a/test.md`)
+  })
 })

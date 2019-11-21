@@ -15,6 +15,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
+        // The property ID; the tracking code won't be generated without it
         trackingId: "YOUR_GOOGLE_ANALYTICS_TRACKING_ID",
         // Defines where to place the tracking script - `true` in the head and `false` in the body
         head: false,
@@ -43,6 +44,8 @@ module.exports = {
 ```
 
 See below for the complete list of [optional fields](#optional-fields).
+
+Note that this plugin is disabled while running `gatsby develop`. This way, actions are not tracked while you are still developing your project. Once you run `gatsby build` the plugin is enabled. Test it with `gatsby serve`.
 
 ## `<OutboundLink>` component
 
@@ -74,7 +77,7 @@ Here you place your Google Analytics tracking id.
 
 ### `head`
 
-Where do you want to place the GA script? By putting `head` to `true`, it will be placed in the "<head>" of your website. By setting it to `false`, it will be placed in the "<body>". The default value resolves to `false`.
+Where do you want to place the GA script? By putting `head` to `true`, it will be placed in the "&lt;head&gt;" of your website. By setting it to `false`, it will be placed in the "&lt;body&gt;". The default value resolves to `false`.
 
 ### `anonymize`
 
@@ -147,3 +150,88 @@ This plugin also supports several optional General fields documented in [Google 
 - `transport`: string
 
 These fields can be specified in the plugin's `options` as shown in the [How to use](#how-to-use) section.
+
+## TrackCustomEvent Function
+
+To allow custom events to be tracked, the plugin exposes a function to include in your project.
+
+To use it, import the package and call the event within your components and business logic.
+
+```jsx
+import React
+import { trackCustomEvent } from 'gatsby-plugin-google-analytics'
+
+export default () => {
+  <div>
+    <button
+      onClick={e => {
+        // To stop the page reloading
+        e.preventDefault()
+        // Lets track that custom click
+        trackCustomEvent({
+          // string - required - The object that was interacted with (e.g.video)
+          category: "Special Button",
+          // string - required - Type of interaction (e.g. 'play')
+          action: "Click",
+          // string - optional - Useful for categorizing events (e.g. 'Spring Campaign')
+          label: "Gatsby Plugin Example Campaign",
+          // number - optional - Numeric value associated with the event. (e.g. A product ID)
+          value: 43
+        })
+        //... Other logic here
+      }}
+    >
+      Tap that!
+    </button>
+  </div>
+}
+```
+
+### All Fields Options
+
+- `category`: string - required
+- `action`: string - required
+- `label`: string
+- `value`: integer
+- `nonInteraction`: bool
+- `transport`: string
+- `hitCallback`: function
+
+For more information see the [Google Analytics](https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#events) documentation.
+
+#### hitCallback
+
+A timeout is included by default incase the Analytics library fails to load. For more information see [Google Analytics - Handling Timeouts](https://developers.google.com/analytics/devguides/collection/analyticsjs/sending-hits#handling_timeouts)
+
+## Troubleshooting
+
+### No actions are tracked
+
+#### Check the tracking ID
+
+Make sure you supplied the correct Google Analytics tracking ID. It should look like this: `trackingId: "UA-111111111-1"`
+
+#### Make sure plugin and script are loaded first
+
+The analytics script tag is not properly loaded into the DOM. You can fix this by moving the plugin to the top of your `gatsby-config.js` and into the head of the DOM:
+
+```javascript
+module.exports = {
+  siteMetadata: {
+    /* your metadata */
+  },
+  plugins: [
+    // Make sure this plugin is first in the array of plugins
+    {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        trackingId: "UA-111111111-1",
+        // this option places the tracking script into the head of the DOM
+        head: true,
+        // other options
+      },
+    },
+  ],
+  // other plugins
+}
+```

@@ -15,7 +15,7 @@ By the end of this tutorial, you’ll have done the following:
 
 This tutorial assumes you already have a Gatsby project up and running as well as images you'd like to render on your page. To set up a Gatsby site, check out the [main tutorial](/tutorial/) or the [quick start](/docs/quick-start/).
 
-In this tutorial you'll learn how to set up `gatsby-image`, a React component that optimizes responsive images using GraphQL and Gatsby's data later. You'll be informed of a number of ways to use `gatsby-image` and some gotchas.
+In this tutorial you'll learn how to set up `gatsby-image`, a React component that optimizes responsive images using GraphQL and Gatsby's data layer. You'll be informed of a number of ways to use `gatsby-image` and some gotchas.
 
 > _Note: this tutorial uses examples of static content stored in YAML files, but similar methods can be used for Markdown files._
 
@@ -63,7 +63,7 @@ npm install gatsby-source-filesystem
 plugins: [
   `gatsby-transformer-sharp`,
   `gatsby-plugin-sharp`,
-  { resolve: `gatsby-source-filesystem`, options: { path: `./src/data/` },
+  { resolve: `gatsby-source-filesystem`, options: { path: `./src/data/` } },
 ]
 ```
 
@@ -249,7 +249,7 @@ Instead of a query constant and data that references the result like in the firs
 
 The last use case you may come across is how to handle a situation where you have multiple queries in the same file/page.
 
-This example is attempting to query for all the data in `speaking.yaml` and the direct file query in our first example. In order to do this you want to use aliasing in GraphQL.
+This example is attempting to query for all the data in `speaking.yaml` and the direct file query in the first example. In order to do this you want to use aliasing in GraphQL.
 
 The first thing to know is that an alias is assigning a name to a query. The second thing to know is that aliases are optional, but they can make your life easier! Below is an example.
 
@@ -273,17 +273,21 @@ talks: allSpeakingYaml {
 When you do that, you’ve changed the reference to the query object available in your JSX code. While it was previously referenced as this:
 
 ```jsx
-{data.allSpeakingYaml.edges.map(({ node }) => (
-   <Img fluid={node.image.childImageSharp.fluid} alt={node.alt}/>
-))
+{
+  data.allSpeakingYaml.edges.map(({ node }) => (
+    <Img fluid={node.image.childImageSharp.fluid} alt={node.alt} />
+  ))
+}
 ```
 
 Giving it an alias does not add a level of complexity to the response object, it just replaces it. So you end up with the same structure, referenced like this (note the alias `talks` in place of the longer `allSpeakingYaml`):
 
 ```jsx
-{data.talks.edges.map(({ node }) => (
-    <Img fluid={node.image.childImageSharp.fluid} alt={node.alt}/>
-))
+{
+  data.talks.edges.map(({ node }) => (
+    <Img fluid={node.image.childImageSharp.fluid} alt={node.alt} />
+  ))
+}
 ```
 
 The top-level object name of `data` is implicit. This is important because when you conduct multiple queries as part of a single component, Gatsby still passes the entire result to the component.
@@ -291,7 +295,7 @@ The top-level object name of `data` is implicit. This is important because when 
 Here's an example of data flowing into a component:
 
 ```jsx
-const SpeakingPage = ({ data}) => {})
+const SpeakingPage = ({ data }) => {}
 ```
 
 Everything else gets referenced from that top-level return name.
@@ -326,9 +330,11 @@ With that understanding, you can combine two queries referencing images and use 
 Notice that this example uses aliasing for one query and not the other. This is allowed; there is no requirement that all your queries use aliasing. In this case, the JSX would look like this to access the `speaking.yaml` content.
 
 ```jsx
-{data.allSpeakingYaml.edges.map(({ node }) => (
-     <Img fluid={node.image.childImageSharp.fluid} alt={node.alt}/>
-))
+{
+  data.allSpeakingYaml.edges.map(({ node }) => (
+    <Img fluid={node.image.childImageSharp.fluid} alt={node.alt} />
+  ))
+}
 ```
 
 And then like this to access the image using the alias name `banner`.
@@ -355,7 +361,7 @@ Now for errors to watch out for. If you change your image processing from `fixed
 
 ![In image cache error message.](./ErrorMessage.png)
 
-Despite its appearance, solving this doesn't actually require flushing any kind of cache. In reality, it has to do with incompatible references. You likely triggered it because you changed the query to process the image as `fluid` but the JSX key was still set to `fixed`, or visa versa.
+Despite its appearance, solving this doesn't actually require flushing any kind of cache. In reality, it has to do with incompatible references. You likely triggered it because you changed the query to process the image as `fluid` but the JSX key was still set to `fixed`, or vice versa.
 
 ## The end
 

@@ -4,8 +4,12 @@ exports.DEFAULT_OPTIONS = {
   backgroundColor: `white`,
   linkImagesToOriginal: true,
   showCaptions: false,
+  markdownCaptions: false,
   withWebp: false,
   tracedSVG: false,
+  loading: `lazy`,
+  disableBgImageOnAlpha: false,
+  disableBgImage: false,
 }
 
 exports.imageClass = `gatsby-resp-image-image`

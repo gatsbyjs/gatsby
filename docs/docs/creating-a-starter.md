@@ -27,13 +27,13 @@ Let's expand upon these items to prepare you for creating a winning starter.
 
 ## Open source and available from a stable URL
 
-The Gatsby CLI allows users to install a new site with a starter using the command `gatsby new <starter-url>`. For this to work, your starter needs to be available to download. The easiest way to accomplish this is to host your starter on GitHub or GitLab and use the publicly available repo URL, such as:
+The Gatsby CLI allows users to install a new site with a starter using the command `gatsby new <site-name> <starter-url>`. For this to work, your starter needs to be available to download. The easiest way to accomplish this is to host your starter on GitHub or GitLab and use the publicly available repo URL, such as:
 
-`gatsby new https://github.com/gatsbyjs/gatsby-starter-blog`
+`gatsby new my-app https://github.com/gatsbyjs/gatsby-starter-blog`
 
 Although the official starters live in the Gatsby repo, community members can offer their own starters from their own repos. Here's an example of installing a community starter:
 
-`gatsby new https://github.com/netlify-templates/gatsby-starter-netlify-cms`
+`gatsby new my-app https://github.com/netlify-templates/gatsby-starter-netlify-cms`
 
 ## Configurable
 

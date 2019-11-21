@@ -3,7 +3,6 @@ const _ = require(`lodash`)
 const report = require(`gatsby-cli/lib/reporter`)
 const typeOf = require(`type-of`)
 const util = require(`util`)
-const { findRootNodeAncestor } = require(`../../db/node-tracking`)
 
 export type TypeConflictExample = {
   value: mixed,
@@ -22,9 +21,10 @@ const isNodeWithDescription = node =>
 
 const findNodeDescription = obj => {
   if (obj) {
-    const node = findRootNodeAncestor(obj, isNodeWithDescription)
-    if (isNodeWithDescription(node)) {
-      return node.internal.description
+    // TODO: Maybe get this back
+    // const node = findRootNodeAncestor(obj, isNodeWithDescription)
+    if (isNodeWithDescription(obj)) {
+      return obj.internal.description
     }
   }
   return ``
@@ -39,23 +39,30 @@ const formatValue = value => {
     })
   }
 
-  let wasElipsisLast = false
-  const usedTypes = []
   const output = []
 
-  value.forEach(item => {
-    const type = typeOf(item)
-    if (usedTypes.indexOf(type) !== -1) {
-      if (!wasElipsisLast) {
-        output.push(`...`)
-        wasElipsisLast = true
+  if (value.length === 1) {
+    // For arrays usually a single conflicting item is exposed vs. the whole array
+    output.push(`...`)
+    output.push(formatValue(value[0]))
+    output.push(`...`)
+  } else {
+    let wasElipsisLast = false
+    const usedTypes = []
+    value.forEach(item => {
+      const type = typeOf(item)
+      if (usedTypes.includes(type)) {
+        if (!wasElipsisLast) {
+          output.push(`...`)
+          wasElipsisLast = true
+        }
+      } else {
+        output.push(formatValue(item))
+        wasElipsisLast = false
+        usedTypes.push(type)
       }
-    } else {
-      output.push(formatValue(item))
-      wasElipsisLast = false
-      usedTypes.push(type)
-    }
-  })
+    })
+  }
 
   return `[ ${output.join(`, `)} ]`
 }

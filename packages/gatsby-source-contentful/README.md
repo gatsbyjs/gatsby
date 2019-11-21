@@ -94,7 +94,7 @@ graphql`
           ...GatsbyContentfulFluid_withWebp
         }
 
-        # Query for locally stored file(eg An image) - `File` node
+        # Query for locally stored file(e.g. An image) - `File` node
         localFile {
           # Where the asset is downloaded into cache, don't use this
           absolutePath
@@ -146,7 +146,7 @@ You can pass in any other options available in the [contentful.js SDK](https://g
 
 **`localeFilter`** [function][optional] [default: `() => true`]
 
-Possibility to limit how many locales/nodes are created in graphQL. This can limit the memory usage by reducing the amout of nodes created. Useful if you have a large space in contentful and only want to get the data from one selected locale.
+Possibility to limit how many locales/nodes are created in graphQL. This can limit the memory usage by reducing the amount of nodes created. Useful if you have a large space in contentful and only want to get the data from one selected locale.
 
 For example, to filter locales on only germany `localeFilter: locale => locale.code === 'de-DE'`
 
@@ -155,6 +155,10 @@ List of locales and their codes can be found in Contentful app -> Settings -> Lo
 **`forceFullSync`** [boolean][optional] [default: `false`]
 
 Prevents the use of sync tokens when accessing the Contentful API.
+
+**`proxy`** [object][optional] [default: `undefined`]
+
+Axios proxy configuration. See the [axios request config documentation](https://github.com/mzabriskie/axios#request-config) for further information about the supported values.
 
 ## Notes on Contentful Content Models
 

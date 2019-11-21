@@ -1,5 +1,5 @@
 const moment = require(`moment`)
-const { GraphQLScalarType, Kind, defaultFieldResolver } = require(`graphql`)
+const { GraphQLScalarType, Kind } = require(`graphql`)
 const { oneLine } = require(`common-tags`)
 
 const ISO_8601_FORMAT = [
@@ -210,12 +210,11 @@ const formatDate = ({
   return normalizedDate
 }
 
-const getDateResolver = (defaults, prevFieldConfig) => {
-  const resolver = prevFieldConfig.resolve || defaultFieldResolver
-  const { locale, formatString, fromNow, difference } = defaults
+const getDateResolver = (options = {}, fieldConfig) => {
+  const { locale, formatString, fromNow, difference } = options
   return {
     args: {
-      ...prevFieldConfig.args,
+      ...fieldConfig.args,
       formatString: {
         type: `String`,
         description: oneLine`
@@ -248,7 +247,12 @@ const getDateResolver = (defaults, prevFieldConfig) => {
       },
     },
     async resolve(source, args, context, info) {
-      const date = await resolver(source, args, context, info)
+      const resolver = fieldConfig.resolve || context.defaultFieldResolver
+      const date = await resolver(source, args, context, {
+        ...info,
+        from: options.from || info.from,
+        fromNode: options.from ? options.fromNode : info.fromNode,
+      })
       if (date == null) return null
 
       return Array.isArray(date)

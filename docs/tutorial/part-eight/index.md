@@ -1,5 +1,5 @@
 ---
-title: Preparing a site to go live
+title: Preparing a Site to Go Live
 typora-copy-images-to: ./
 disableTableOfContents: true
 ---
@@ -14,7 +14,7 @@ Wow! You've come a long way! You've learned how to:
 - use GraphQL to query data for pages
 - programmatically create pages from your data
 
-In this final section, we're going to walk through some common steps for preparing a site to go live by introducing a powerful site diagnostic tool called [Lighthouse](https://developers.google.com/web/tools/lighthouse/). Along the way, we'll introduce a few more plugins you'll often want to use in your Gatsby sites.
+In this final section, you're going to walk through some common steps for preparing a site to go live by introducing a powerful site diagnostic tool called [Lighthouse](https://developers.google.com/web/tools/lighthouse/). Along the way, we'll introduce a few more plugins you'll often want to use in your Gatsby sites.
 
 ## Audit with Lighthouse
 
@@ -24,7 +24,7 @@ Quoting from the [Lighthouse website](https://developers.google.com/web/tools/li
 
 Lighthouse is included in Chrome DevTools. Running its audit -- and then addressing the errors it finds and implementing the improvements it suggests -- is a great way to prepare your site to go live. It helps give you confidence that your site is as fast and accessible as possible.
 
-Let's try it out!
+Try it out!
 
 First, you need to create a production build of your Gatsby site. The Gatsby development server is optimized for making development fast; But the site that it generates, while closely resembling a production version of the site, isn't as optimized.
 
@@ -60,11 +60,11 @@ Now you're going to run your first Lighthouse test.
 
 ![Lighthouse audit results](./lighthouse-audit-results.png)
 
-As you can see, Gatsby's performance is excellent out of the box but we're missing some things for PWA, Accessibility, Best Practices, and SEO that will improve your scores (and in the process make your site much more friendly to visitors and search engines).
+As you can see, Gatsby's performance is excellent out of the box but you're missing some things for PWA, Accessibility, Best Practices, and SEO that will improve your scores (and in the process make your site much more friendly to visitors and search engines).
 
 ## Add a manifest file
 
-Looks like we have a pretty lackluster score in the "Progressive Web App" category. Let's address that.
+Looks like you have a pretty lackluster score in the "Progressive Web App" category. Let's address that.
 
 But first, what exactly _are_ PWAs?
 
@@ -172,10 +172,17 @@ Gatsby's [react helmet plugin](/packages/gatsby-plugin-react-helmet/) provides d
 npm install --save gatsby-plugin-react-helmet react-helmet
 ```
 
-2.  Add the plugin to the `plugins` array in your `gatsby-config.js` file.
+2.  Make sure you have a `description` and an `author` configured inside your `siteMetadata` object. Also, add the `gatsby-plugin-react-helmet` plugin to the `plugins` array in your `gatsby-config.js` file.
 
 ```javascript:title=gatsby-config.js
-{
+module.exports = {
+  siteMetadata: {
+    title: `Pandas Eating Lots`,
+    // highlight-start
+    description: `A simple description about pandas eating lots...`,
+    author: `gatsbyjs`,
+    // highlight-end
+  },
   plugins: [
     {
       resolve: `gatsby-plugin-manifest`,
@@ -194,35 +201,141 @@ npm install --save gatsby-plugin-react-helmet react-helmet
     `gatsby-plugin-offline`,
     // highlight-next-line
     `gatsby-plugin-react-helmet`,
-  ]
+  ],
 }
 ```
 
-3.  Use `React Helmet` in your pages:
+3. In the `src/components` directory, create a file called `seo.js` and add the following:
 
-```jsx
+```jsx:title=src/components/seo.js
 import React from "react"
-import { Helmet } from "react-helmet"
+import PropTypes from "prop-types"
+import Helmet from "react-helmet"
+import { useStaticQuery, graphql } from "gatsby"
 
-class Application extends React.Component {
-  render() {
-    return (
-      <div className="application">
-        {/* highlight-start */}
-        <Helmet>
-          <meta charSet="utf-8" />
-          <title>My Title</title>
-          <link rel="canonical" href="http://mysite.com/example" />
-        </Helmet>
-        ...
-        {/* highlight-end */}
-      </div>
-    )
-  }
+function SEO({ description, lang, meta, title }) {
+  const { site } = useStaticQuery(
+    graphql`
+      query {
+        site {
+          siteMetadata {
+            title
+            description
+            author
+          }
+        }
+      }
+    `
+  )
+
+  const metaDescription = description || site.siteMetadata.description
+
+  return (
+    <Helmet
+      htmlAttributes={{
+        lang,
+      }}
+      title={title}
+      titleTemplate={`%s | ${site.siteMetadata.title}`}
+      meta={[
+        {
+          name: `description`,
+          content: metaDescription,
+        },
+        {
+          property: `og:title`,
+          content: title,
+        },
+        {
+          property: `og:description`,
+          content: metaDescription,
+        },
+        {
+          property: `og:type`,
+          content: `website`,
+        },
+        {
+          name: `twitter:card`,
+          content: `summary`,
+        },
+        {
+          name: `twitter:creator`,
+          content: site.siteMetadata.author,
+        },
+        {
+          name: `twitter:title`,
+          content: title,
+        },
+        {
+          name: `twitter:description`,
+          content: metaDescription,
+        },
+      ].concat(meta)}
+    />
+  )
 }
+
+SEO.defaultProps = {
+  lang: `en`,
+  meta: [],
+  description: ``,
+}
+
+SEO.propTypes = {
+  description: PropTypes.string,
+  lang: PropTypes.string,
+  meta: PropTypes.arrayOf(PropTypes.object),
+  title: PropTypes.string.isRequired,
+}
+
+export default SEO
 ```
 
-> 💡 The above example is from the [React Helmet docs](https://github.com/nfl/react-helmet#example). Check those out for more!
+The above code sets up defaults for your most common metadata tags and provides you an `<SEO>` component to work with in the rest of your project. Pretty cool, right?
+
+4.  Now, you can use the `<SEO>` component in your templates and pages and pass props to it. For example, add it to your `blog-post.js` template like so:
+
+```jsx:title=src/templates/blog-post.js
+import React from "react"
+import { graphql } from "gatsby"
+import Layout from "../components/layout"
+// highlight-next-line
+import SEO from "../components/seo"
+
+export default ({ data }) => {
+  const post = data.markdownRemark
+  return (
+    <Layout>
+      // highlight-start
+      <SEO title={post.frontmatter.title} description={post.excerpt} />
+      // highlight-end
+      <div>
+        <h1>{post.frontmatter.title}</h1>
+        <div dangerouslySetInnerHTML={{ __html: post.html }} />
+      </div>
+    </Layout>
+  )
+}
+
+export const query = graphql`
+  query($slug: String!) {
+    markdownRemark(fields: { slug: { eq: $slug } }) {
+      html
+      frontmatter {
+        title
+      }
+      // highlight-next-line
+      excerpt
+    }
+  }
+`
+```
+
+The above example is based off the [Gatsby Starter Blog](/starters/gatsbyjs/gatsby-starter-blog/). By passing props to the `<SEO>` component, you can dynamically change the metadata for a post. In this case, the blog post `title` and `excerpt` (if it exists in the blog post markdown file) will be used instead of the default `siteMetadata` properties in your `gatsby-config.js` file.
+
+Now, if you run the Lighthouse audit again as laid out above, you should get close to--if not a perfect-- 100 score!
+
+> 💡 For further reading and examples, check out [Adding an SEO Component](/docs/add-seo-component/) and the [React Helmet docs](https://github.com/nfl/react-helmet#example)!
 
 ## Keep making it better
 
@@ -234,7 +347,7 @@ Lighthouse is a great tool for site improvements and learning -- Continue lookin
 
 ### Official Documentation
 
-- [Official Documentation](https://www.gatsbyjs.org/docs/): View our Official Documentation for _[Quick Start](https://www.gatsbyjs.org/docs/)_, _[Detailed Guides](https://www.gatsbyjs.org/docs/preparing-your-environment/)_, _[API References](https://www.gatsbyjs.org/docs/gatsby-link/)_, and much more.
+- [Official Documentation](https://www.gatsbyjs.org/docs/): View our Official Documentation for _[Quick Start](https://www.gatsbyjs.org/docs/quick-start/)_, _[Detailed Guides](https://www.gatsbyjs.org/docs/preparing-your-environment/)_, _[API References](https://www.gatsbyjs.org/docs/gatsby-link/)_, and much more.
 
 ### Official Plugins
 

@@ -1,5 +1,5 @@
 ---
-title: "Gatsby Starters"
+title: Gatsby Starters
 ---
 
 The Gatsby CLI tool lets you install **starters**, which are boilerplate Gatsby sites maintained by the community and intended for jump-starting development quickly.
@@ -44,6 +44,20 @@ If you don't specify a custom starter, your site will be created from the [defau
 
 > **Note:** If you work for an Enterprise-level company where you are unable to pull from public GitHub repositories, you can still set up Gatsby. Check out the [docs to learn more](/docs/setting-up-gatsby-without-gatsby-new/).
 
+### Using a local starter
+
+Another option is to supply a path (relative or absolute) to a local folder containing a starter:
+
+```shell
+gatsby new [SITE_DIRECTORY] [LOCAL_PATH_TO_STARTER]
+```
+
+Here is an example assuming a starter exists on the path `./Code/my-local-starter`:
+
+```shell
+gatsby new blog ./Code/my-local-starter
+```
+
 ## Official starters
 
 Official starters are maintained by Gatsby.
@@ -53,6 +67,10 @@ Official starters are maintained by Gatsby.
 | [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default)         | [Demo](https://gatsby-starter-default-demo.netlify.com/)     | Appropriate for most use cases | General Gatsby site          |
 | [gatsby-starter-blog](https://github.com/gatsbyjs/gatsby-starter-blog)               | [Demo](https://gatsby-starter-blog-demo.netlify.com/)        | Create a basic blog            | Blog post pages and listings |
 | [gatsby-starter-hello-world](https://github.com/gatsbyjs/gatsby-starter-hello-world) | [Demo](https://gatsby-starter-hello-world-demo.netlify.com/) | Learn Gatsby                   | Gatsby bare essentials       |
+
+## Modifying starters
+
+Learn [how to modify a starter](/docs/modifying-a-starter/) in the Gatsby docs. You can use official and community starters out of the box but you may want to customize their style and functionality.
 
 ## Making starters
 

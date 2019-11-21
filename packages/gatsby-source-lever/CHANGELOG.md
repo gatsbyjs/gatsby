@@ -3,6 +3,78 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-lever@2.1.18...gatsby-source-lever@2.1.19) (2019-11-15)
+
+**Note:** Version bump only for package gatsby-source-lever
+
+## [2.1.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-lever@2.1.17...gatsby-source-lever@2.1.18) (2019-11-10)
+
+**Note:** Version bump only for package gatsby-source-lever
+
+## [2.1.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-lever@2.1.16...gatsby-source-lever@2.1.17) (2019-10-28)
+
+### Bug Fixes
+
+- update minor updates in packages ([#18875](https://github.com/gatsbyjs/gatsby/issues/18875)) ([b692879](https://github.com/gatsbyjs/gatsby/commit/b692879))
+
+## [2.1.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-lever@2.1.15...gatsby-source-lever@2.1.16) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-source-lever
+
+## [2.1.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-lever@2.1.14...gatsby-source-lever@2.1.15) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-source-lever
+
+## [2.1.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-lever@2.1.13...gatsby-source-lever@2.1.14) (2019-10-09)
+
+**Note:** Version bump only for package gatsby-source-lever
+
+## [2.1.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-lever@2.1.12...gatsby-source-lever@2.1.13) (2019-10-04)
+
+### Bug Fixes
+
+- update dependency bluebird to ^3.7.0 ([#18029](https://github.com/gatsbyjs/gatsby/issues/18029)) ([bd235a8](https://github.com/gatsbyjs/gatsby/commit/bd235a8))
+
+## [2.1.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-lever@2.1.10...gatsby-source-lever@2.1.12) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-source-lever
+
+## [2.1.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-lever@2.1.10...gatsby-source-lever@2.1.11) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-source-lever
+
+## [2.1.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-lever@2.1.9...gatsby-source-lever@2.1.10) (2019-09-20)
+
+**Note:** Version bump only for package gatsby-source-lever
+
+## [2.1.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-lever@2.1.8...gatsby-source-lever@2.1.9) (2019-09-09)
+
+**Note:** Version bump only for package gatsby-source-lever
+
+## [2.1.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-lever@2.1.7...gatsby-source-lever@2.1.8) (2019-09-01)
+
+### Bug Fixes
+
+- update minor updates in packages except react, babel and eslint ([#17254](https://github.com/gatsbyjs/gatsby/issues/17254)) ([252d867](https://github.com/gatsbyjs/gatsby/commit/252d867))
+
+## [2.1.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-lever@2.1.6...gatsby-source-lever@2.1.7) (2019-08-23)
+
+**Note:** Version bump only for package gatsby-source-lever
+
+## [2.1.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-lever@2.1.5...gatsby-source-lever@2.1.6) (2019-08-22)
+
+**Note:** Version bump only for package gatsby-source-lever
+
+## [2.1.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-lever@2.1.4...gatsby-source-lever@2.1.5) (2019-08-21)
+
+### Bug Fixes
+
+- update dependency bluebird to ^3.5.5 ([#16825](https://github.com/gatsbyjs/gatsby/issues/16825)) ([ec0be83](https://github.com/gatsbyjs/gatsby/commit/ec0be83))
+
+## [2.1.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-lever@2.1.3...gatsby-source-lever@2.1.4) (2019-08-20)
+
+**Note:** Version bump only for package gatsby-source-lever
+
 ## [2.1.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-lever@2.1.2...gatsby-source-lever@2.1.3) (2019-07-13)
 
 **Note:** Version bump only for package gatsby-source-lever

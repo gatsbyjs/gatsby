@@ -39,13 +39,12 @@ Themes](/blog/2018-11-11-introducing-gatsby-themes/).
 
 We introduced one major change to composition after the initial release to
 support child themes. A child theme is a theme that also uses the
-`__experimentalThemes` `gatsby-config` key. This change brought the full power
-of `gatsby-config` to theming as `__experimentalThemes` was until this change
-the only key not allowed in a theme.
+`plugins` `gatsby-config` key – a change that brought the full power
+of `gatsby-config` to theming.
 
 ```js:title="a child theme's gatsby-config.js"
 module.exports = {
-  __experimentalThemes: [`gatsby-theme-blog-core`],
+  plugins: [`gatsby-theme-blog-core`],
 }
 ```
 

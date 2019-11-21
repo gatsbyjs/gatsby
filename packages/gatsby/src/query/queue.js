@@ -1,7 +1,9 @@
 const Queue = require(`better-queue`)
+const { store } = require(`../redux`)
 const FastMemoryStore = require(`../query/better-queue-custom-store`)
 const queryRunner = require(`../query/query-runner`)
 const websocketManager = require(`../utils/websocket-manager`)
+const GraphQLRunner = require(`./graphql-runner`)
 
 const createBaseOptions = () => {
   return {
@@ -11,14 +13,15 @@ const createBaseOptions = () => {
 }
 
 const createBuildQueue = () => {
+  const graphqlRunner = new GraphQLRunner(store)
   const handler = (queryJob, callback) =>
-    queryRunner(queryJob)
+    queryRunner(graphqlRunner, queryJob)
       .then(result => callback(null, result))
       .catch(callback)
   return new Queue(handler, createBaseOptions())
 }
 
-const createDevelopQueue = () => {
+const createDevelopQueue = getRunner => {
   let queue
   const processing = new Set()
   const waiting = new Map()
@@ -26,8 +29,7 @@ const createDevelopQueue = () => {
   const queueOptions = {
     ...createBaseOptions(),
     priority: (job, cb) => {
-      const activePaths = Array.from(websocketManager.activePaths.values())
-      if (job.id && activePaths.includes(job.id)) {
+      if (job.id && websocketManager.activePaths.has(job.id)) {
         cb(null, 10)
       } else {
         cb(null, 1)
@@ -50,7 +52,7 @@ const createDevelopQueue = () => {
   }
 
   const handler = (queryJob, callback) => {
-    queryRunner(queryJob).then(
+    queryRunner(getRunner(), queryJob).then(
       result => {
         if (queryJob.isPage) {
           websocketManager.emitPageData({
@@ -92,13 +94,21 @@ const pushJob = (queue, job) =>
  * they're all finished processing (or rejects if one or more jobs
  * fail)
  */
-const processBatch = async (queue, jobs) => {
+const processBatch = async (queue, jobs, activity) => {
   let numJobs = jobs.length
   if (numJobs === 0) {
     return Promise.resolve()
   }
-  const runningJobs = jobs.map(job => pushJob(queue, job))
-  return await Promise.all(runningJobs)
+
+  const runningJobs = jobs.map(job =>
+    pushJob(queue, job).then(v => {
+      if (activity.tick) {
+        activity.tick()
+      }
+      return v
+    })
+  )
+  return Promise.all(runningJobs)
 }
 
 module.exports = {

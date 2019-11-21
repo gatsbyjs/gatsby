@@ -31,11 +31,11 @@ To generate static files in the simplest way, write
 gatsby build
 ```
 
-Then in the `Public` directory will be files to copy to the server.
+Then in the `public` directory will be files to copy to the server.
 
-## Adding a Path Prefix
+## Adding a path prefix
 
-If you want to specific Path Prefix, for example `example.com/blog/` instead of `example.com/` read [Adding a Path Prefix](/docs/path-prefix)
+If you want a specific Path Prefix, for example `example.com/blog/` instead of `example.com/` read [adding a path prefix](/docs/path-prefix)
 
 ## Specific deploy
 
@@ -48,9 +48,10 @@ If you have a server from one of the following providers, you should read the in
 - [Heroku](/docs/deploying-to-heroku)
 - [ZEIT Now](/docs/deploying-to-zeit-now)
 - [GitLab Pages](/docs/deploying-to-gitlab-pages)
-- [Netlify](/docs/hosting-on-netlify)
+- [Netlify](/docs/deploying-to-netlify)
 - [Render](/docs/deploying-to-render)
 - [Surge](/docs/deploying-to-surge)
 - [GitHub Pages](/docs/how-gatsby-works-with-github-pages)
+- [Microsoft Internet Information Server (IIS)](/docs/deploying-to-iis)
 
 If you don't see the hosting you are interested, it's possible to add other hosting providers through [contributions to the docs](/contributing/docs-contributions).

@@ -9,18 +9,14 @@ const BackgroundColor = ({ data, location }) => (
   <Layout
     location={location}
     image={data.coverImage.localFile.childImageSharp.fluid}
-    imageTitle={`“${data.coverImage.title}” by ${
-      data.coverImage.credit
-    } (via unsplash.com)`}
+    imageTitle={`“${data.coverImage.title}” by ${data.coverImage.credit} (via unsplash.com)`}
     imageBackgroundColor="#F0C450"
   >
     <PageTitle>Background Color</PageTitle>
     <FloatingImage
       imageMobile={data.floatingImageMobile.localFile.childImageSharp.fixed}
       imageDesktop={data.floatingImage.localFile.childImageSharp.fixed}
-      title={`“${data.floatingImage.title}” by ${
-        data.floatingImage.credit
-      } (via unsplash.com)`}
+      title={`“${data.floatingImage.title}” by ${data.floatingImage.credit} (via unsplash.com)`}
       backgroundColor="#DB3225"
     />
     <p>
@@ -39,9 +35,7 @@ const BackgroundColor = ({ data, location }) => (
     <Img
       fluid={data.fullWidthImage.localFile.childImageSharp.fluid}
       backgroundColor="#F9D6CE"
-      title={`“${data.fullWidthImage.title}” by ${
-        data.fullWidthImage.credit
-      } (via unsplash.com)`}
+      title={`“${data.fullWidthImage.title}” by ${data.fullWidthImage.credit} (via unsplash.com)`}
     />
   </Layout>
 )

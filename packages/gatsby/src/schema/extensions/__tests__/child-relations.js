@@ -4,7 +4,7 @@ const withResolverContext = require(`../../context`)
 const { buildObjectType } = require(`../../types/type-builders`)
 const { store } = require(`../../../redux`)
 const { dispatch } = store
-const { actions } = require(`../../../redux/actions/restricted`)
+const { actions } = require(`../../../redux/actions`)
 const { createTypes } = actions
 require(`../../../db/__tests__/fixtures/ensure-loki`)()
 
@@ -12,6 +12,13 @@ const report = require(`gatsby-cli/lib/reporter`)
 report.error = jest.fn()
 report.panic = jest.fn()
 report.warn = jest.fn()
+report.activityTimer = jest.fn(() => {
+  return {
+    start: jest.fn(),
+    setStatus: jest.fn(),
+    end: jest.fn(),
+  }
+})
 afterEach(() => {
   report.error.mockClear()
   report.panic.mockClear()
@@ -58,7 +65,7 @@ describe(`Define parent-child relationships with field extensions`, () => {
           type: `Child`,
           contentDigest: `Child1`,
         },
-        parent: [`parent1`],
+        parent: `parent1`,
         children: [],
         name: `Child 1`,
       },
@@ -68,7 +75,7 @@ describe(`Define parent-child relationships with field extensions`, () => {
           type: `Child`,
           contentDigest: `Child2`,
         },
-        parent: [`parent2`],
+        parent: `parent2`,
         children: [],
         name: `Child 2`,
       },
@@ -78,7 +85,7 @@ describe(`Define parent-child relationships with field extensions`, () => {
           type: `AnotherChild`,
           contentDigest: `AnotherChild1`,
         },
-        parent: [`parent1`],
+        parent: `parent1`,
         children: [],
         name: `Another Child 1`,
       },
@@ -88,13 +95,14 @@ describe(`Define parent-child relationships with field extensions`, () => {
           type: `AnotherChild`,
           contentDigest: `AnotherChild2`,
         },
-        parent: [`parent1`],
+        parent: `parent1`,
         children: [],
         name: `Another Child 2`,
       },
     ]
     nodes.forEach(node => {
-      dispatch({ type: `CREATE_NODE`, payload: { ...node } })
+      node.internal.contentDigest = `0`
+      actions.createNode(node, { name: `test` })(store.dispatch)
     })
   })
 
@@ -115,7 +123,7 @@ describe(`Define parent-child relationships with field extensions`, () => {
         }
       `)
     )
-    const schema = await buildSchema()
+    const { schema } = await buildSchema()
     const parentFields = schema.getType(`Parent`).getFields()
     expect(parentFields.childChild).toBeDefined()
     expect(parentFields.childChild.resolve).toBeDefined()
@@ -144,7 +152,7 @@ describe(`Define parent-child relationships with field extensions`, () => {
         }
       `)
     )
-    const schema = await buildSchema()
+    const { schema } = await buildSchema()
     const parentFields = schema.getType(`Parent`).getFields()
     expect(parentFields.childChild).toBeUndefined()
     expect(parentFields.childAnotherChild).toBeUndefined()
@@ -160,16 +168,20 @@ describe(`Define parent-child relationships with field extensions`, () => {
         type Child implements Node {
           id: ID!
         }
+        type AnotherChild implements Node @childOf(types: ["Parent"], many: true) {
+          id: ID!
+        }
       `)
     )
     await buildSchema()
+    expect(report.warn).toBeCalledTimes(1)
     expect(report.warn).toBeCalledWith(
-      `On types with the \`@dontInfer\` directive, or with the \`infer\` ` +
+      `The type \`Parent\` does not explicitly define the field \`childChild\`.\n` +
+        `On types with the \`@dontInfer\` directive, or with the \`infer\` ` +
         `extension set to \`false\`, automatically adding fields for ` +
         `children types is deprecated.\n` +
         `In Gatsby v3, only children fields explicitly set with the ` +
-        `\`childOf\` extension will be added.\n` +
-        `For example, in Gatsby v3, \`Parent\` will not get a \`childChild\` field.`
+        `\`childOf\` extension will be added.\n`
     )
   })
 
@@ -190,7 +202,7 @@ describe(`Define parent-child relationships with field extensions`, () => {
         }
       `)
     )
-    const schema = await buildSchema()
+    const { schema } = await buildSchema()
     const parentFields = schema.getType(`Parent`).getFields()
     expect(parentFields.childrenChild).toBeDefined()
     expect(parentFields.childrenChild.resolve).toBeDefined()
@@ -407,7 +419,7 @@ describe(`Define parent-child relationships with field extensions`, () => {
         }
       `)
     )
-    const schema = await buildSchema()
+    const { schema } = await buildSchema()
     const parentFields = schema.getType(`Parent`).getFields()
     expect(parentFields.childChild).toBeDefined()
     expect(parentFields.childChild.resolve).toBeDefined()
@@ -860,20 +872,50 @@ describe(`Define parent-child relationships with field extensions`, () => {
     )
     await expect(buildSchema()).resolves.toEqual(expect.any(Object))
   })
+
+  it(`adds root field arguments for searchable child fields (when there are no data nodes)`, async () => {
+    dispatch(
+      createTypes(`
+        type Parent implements Node {
+          id: ID!
+        }
+        type ChildWithoutSourceNodes implements Node @childOf(types: ["Parent"]) {
+          name: String
+        }
+      `)
+    )
+    const { schema } = await buildSchema()
+    const expectedArg = schema
+      .getType(`Query`)
+      .getFields()
+      .parent.args.find(arg => arg.name === `childChildWithoutSourceNodes`)
+    const expectedArgType = schema.getType(`ChildWithoutSourceNodesFilterInput`)
+
+    expect(expectedArg).toBeDefined()
+    expect(expectedArgType).toBeDefined()
+    expect(expectedArg.type).toStrictEqual(expectedArgType)
+  })
 })
 
 const buildSchema = async () => {
   await build({})
-  return store.getState().schema
+  const {
+    schemaCustomization: { composer: schemaComposer },
+    schema,
+  } = store.getState()
+  return { schema, schemaComposer }
 }
 
 const runQuery = async query => {
-  const schema = await buildSchema()
+  const { schema, schemaComposer } = await buildSchema()
   const results = await graphql(
     schema,
     query,
     undefined,
-    withResolverContext({}, schema)
+    withResolverContext({
+      schema,
+      schemaComposer,
+    })
   )
   expect(results.errors).toBeUndefined()
   return results.data
