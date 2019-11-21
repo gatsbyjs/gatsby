@@ -65,6 +65,8 @@ function getStaleNodes(state, nodes) {
   })
 }
 
+let firstRun = true
+
 /**
  * Find all stale nodes and delete them
  */
@@ -72,7 +74,17 @@ function deleteStaleNodes(state, nodes) {
   const staleNodes = getStaleNodes(state, nodes)
 
   if (staleNodes.length > 0) {
-    staleNodes.forEach(node => deleteNode({ node }))
+    staleNodes.forEach(node => {
+      if (!firstRun && node.internal.type === `SitePage`) {
+        // This is a HACK!
+        // SitePage nodes are created in stateful way
+        // but we don't have sourceNodesStatefully to support
+        // it properly. So instead we avoid deleting them
+        // on non-first calls.
+        return
+      }
+      deleteNode({ node })
+    })
   }
 }
 
@@ -98,4 +110,6 @@ module.exports = async ({ webhookBody = {}, parentSpan } = {}) =>
     warnForPluginsWithoutNodes(state, nodes)
 
     deleteStaleNodes(state, nodes)
+
+    firstRun = false
   })
