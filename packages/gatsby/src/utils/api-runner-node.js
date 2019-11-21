@@ -223,7 +223,7 @@ const runAPI = async (plugin, api, args, activity) => {
   return null
 }
 
-let apisRunningById = new Map()
+let apiRunnersActive = 0
 let apisRunningByTraceId = new Map()
 let waitingForCasacadeToFinish = []
 
@@ -267,11 +267,11 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) => {
     waitingForCasacadeToFinish.push(apiRunInstance)
   }
 
-  if (apisRunningById.size === 0) {
+  if (apiRunnersActive === 0) {
     emitter.emit(`API_RUNNING_START`)
   }
+  ++apiRunnersActive
 
-  apisRunningById.set(apiRunInstance.id, apiRunInstance)
   if (apisRunningByTraceId.has(apiRunInstance.traceId)) {
     const currentCount = apisRunningByTraceId.get(apiRunInstance.traceId)
     apisRunningByTraceId.set(apiRunInstance.traceId, currentCount + 1)
@@ -358,11 +358,11 @@ function afterPlugin(
     onAPIRunComplete()
   }
   // Remove runner instance
-  apisRunningById.delete(apiRunInstance.id)
   const currentCount = apisRunningByTraceId.get(apiRunInstance.traceId)
   apisRunningByTraceId.set(apiRunInstance.traceId, currentCount - 1)
 
-  if (apisRunningById.size === 0) {
+  --apiRunnersActive
+  if (apiRunnersActive === 0) {
     emitter.emit(`API_RUNNING_QUEUE_EMPTY`)
   }
 
