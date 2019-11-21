@@ -20,6 +20,7 @@ const { getCommonDir } = require(`../../utils/path`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 const { trackCli } = require(`gatsby-telemetry`)
 const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
+const shadowCreatePagePath = require(`../../internal-plugins/webpack-theme-component-shadowing/create-page`)
 
 const actions = {}
 const isWindows = platform() === `win32`
@@ -224,6 +225,11 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       // For test
       return `A component must be set when creating a page`
     }
+  }
+
+  const pageComponentPath = shadowCreatePagePath(page.component)
+  if (pageComponentPath) {
+    page.component = pageComponentPath
   }
 
   // Don't check if the component exists during tests as we use a lot of fake
@@ -531,10 +537,15 @@ actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
     nodes.map(n => findChildren(getNode(n).children))
   )
 
+  const nodeIds = [...nodes, ...descendantNodes]
+
   const deleteNodesAction = {
     type: `DELETE_NODES`,
     plugin,
-    payload: [...nodes, ...descendantNodes],
+    // Payload contains node IDs but inference-metadata and loki reducers require
+    // full node instances
+    payload: nodeIds,
+    fullNodes: nodeIds.map(getNode),
   }
   return deleteNodesAction
 }
@@ -961,6 +972,7 @@ actions.createNodeField = (
     type: `ADD_FIELD_TO_NODE`,
     plugin,
     payload: node,
+    addedField: name,
   }
 }
 

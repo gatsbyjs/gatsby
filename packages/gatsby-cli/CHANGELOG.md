@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.8.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.12...gatsby-cli@2.8.13) (2019-11-20)
+
+### Bug Fixes
+
+- update dependency update-notifier to v3 ([#19613](https://github.com/gatsbyjs/gatsby/issues/19613)) ([80af751](https://github.com/gatsbyjs/gatsby/commit/80af751))
+- **gatsby-cli:** only emit endActivity events for activity tha… ([#19617](https://github.com/gatsbyjs/gatsby/issues/19617)) ([79bd29b](https://github.com/gatsbyjs/gatsby/commit/79bd29b))
+
 ## [2.8.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.11...gatsby-cli@2.8.12) (2019-11-18)
 
 **Note:** Version bump only for package gatsby-cli
