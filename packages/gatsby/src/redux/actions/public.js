@@ -480,7 +480,7 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
   if (plugin) {
     const pluginName = plugin.name
 
-    if (node && typeOwners[node.internal.type] !== pluginName)
+    if (typeOwners[node.internal.type] !== pluginName)
       throw new Error(stripIndent`
           The plugin "${pluginName}" deleted a node of a type owned by another plugin.
 
@@ -510,11 +510,9 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
 
   // It's possible the file node was never created as sometimes tools will
   // write and then immediately delete temporary files to the file system.
-  const deleteDescendantsActions =
-    node &&
-    findChildren(node.children)
-      .map(getNode)
-      .map(createDeleteAction)
+  const deleteDescendantsActions = findChildren(node.children)
+    .map(getNode)
+    .map(createDeleteAction)
 
   if (deleteDescendantsActions && deleteDescendantsActions.length) {
     return [...deleteDescendantsActions, deleteAction]
