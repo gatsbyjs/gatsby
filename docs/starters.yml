@@ -4479,6 +4479,17 @@
     - Based on the official Gatsby starter blog
     - Uses TailwindCSS
     - Uses PostCSS
+- url: https://gastby-starter-zeevo.netlify.com/
+  repo: https://github.com/zeevosec/gatsby-starter-zeevo
+  description: Yet another Blog starter with a different style
+  tags:
+    - Blog
+    - Markdown
+    - SEO
+  features:
+    - Extendable
+    - Feature filters
+    - Performant
 - url: https://gatsby-theme-phoenix-demo.netlify.com
   repo: https://github.com/arshad/gatsby-theme-phoenix
   description: A personal blogging and portfolio theme for Gatsby with great typography and dark mode.
