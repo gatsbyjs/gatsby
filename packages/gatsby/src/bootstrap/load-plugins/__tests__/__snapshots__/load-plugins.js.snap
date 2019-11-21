@@ -35,8 +35,7 @@ Array [
     "id": "",
     "name": "internal-data-bridge",
     "nodeAPIs": Array [
-      "sourceNodes",
-      "onCreatePage",
+      "sourceNodesStatefully",
     ],
     "pluginOptions": Object {
       "plugins": Array [],
@@ -219,8 +218,7 @@ Array [
     "id": "",
     "name": "internal-data-bridge",
     "nodeAPIs": Array [
-      "sourceNodes",
-      "onCreatePage",
+      "sourceNodesStatefully",
     ],
     "pluginOptions": Object {
       "plugins": Array [],
@@ -431,8 +429,7 @@ Array [
     "id": "",
     "name": "internal-data-bridge",
     "nodeAPIs": Array [
-      "sourceNodes",
-      "onCreatePage",
+      "sourceNodesStatefully",
     ],
     "pluginOptions": Object {
       "plugins": Array [],
