@@ -305,50 +305,6 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) => {
     results.push(result)
   }
 
-  afterPlugin(apiRunInstance, args, onAPIRunComplete, apiSpan, results, resolve)
-
-  return promise
-}
-
-function runPlugin(api, plugin, args, stopQueuedApiRuns, activity, apiSpan) {
-  if (stopQueuedApiRuns) {
-    return null
-  }
-
-  let pluginName =
-    plugin.name === `default-site-plugin` ? `gatsby-node.js` : plugin.name
-
-  return new Promise(resolve => {
-    resolve(runAPI(plugin, api, { ...args, parentSpan: apiSpan }, activity))
-  }).catch(err => {
-    decorateEvent(`BUILD_PANIC`, {
-      pluginName: `${plugin.name}@${plugin.version}`,
-    })
-
-    let localReporter = getLocalReporter(activity, reporter)
-
-    localReporter.panicOnBuild({
-      id: `11321`,
-      context: {
-        pluginName,
-        api,
-        message: err instanceof Error ? err.message : err,
-      },
-      error: err instanceof Error ? err : undefined,
-    })
-
-    return null
-  })
-}
-
-function afterPlugin(
-  apiRunInstance,
-  args,
-  onAPIRunComplete,
-  apiSpan,
-  results,
-  resolve
-) {
   if (onAPIRunComplete) {
     onAPIRunComplete()
   }
@@ -382,5 +338,37 @@ function afterPlugin(
     } else {
       return true
     }
+  })
+
+  // This promise will resolve with the results for all the plugin calls for this particular api call.
+  // If args.waitForCascadingActions is true, it will wait for all concurrent calls with the same api to resolve.
+  // If args.waitForCascadingActions is false, it should be resolved by the time the code reaches here
+  return promise
+}
+
+function runPlugin(api, plugin, args, stopQueuedApiRuns, activity, apiSpan) {
+  let pluginName =
+    plugin.name === `default-site-plugin` ? `gatsby-node.js` : plugin.name
+
+  return new Promise(resolve => {
+    resolve(runAPI(plugin, api, { ...args, parentSpan: apiSpan }, activity))
+  }).catch(err => {
+    decorateEvent(`BUILD_PANIC`, {
+      pluginName: `${plugin.name}@${plugin.version}`,
+    })
+
+    let localReporter = getLocalReporter(activity, reporter)
+
+    localReporter.panicOnBuild({
+      id: `11321`,
+      context: {
+        pluginName,
+        api,
+        message: err instanceof Error ? err.message : err,
+      },
+      error: err instanceof Error ? err : undefined,
+    })
+
+    return null
   })
 }
