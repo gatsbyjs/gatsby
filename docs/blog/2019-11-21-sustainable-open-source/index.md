@@ -9,7 +9,7 @@ tags:
   - community
 ---
 
-Thriving countries are built on a system of public infrastructure -- from rule of law to transportation to healthcare to education. When governments underprovide these, citizens&#39; quality of life suffers.
+Thriving countries are built on a system of public infrastructure -- from rule of law and transportation to healthcare and education. When governments underprovide these, citizens&#39; quality of life suffers.
 
 As open source communities grow, they are dependent on maintainers to provide bugfixes, features, and architectural changes. When maintainers underprovide these, the technology often falls behind the times and community members&#39; careers, and quality of life, suffer.
 
