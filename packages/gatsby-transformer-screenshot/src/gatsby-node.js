@@ -16,13 +16,19 @@ const screenshotQueue = new Queue(
 )
 
 exports.onPreBootstrap = (
-  { store, cache, actions, createNodeId, getNodes, createContentDigest },
+  {
+    store,
+    cache,
+    actions,
+    createNodeId,
+    getNodesByType,
+    createContentDigest,
+    reporter,
+  },
   pluginOptions
 ) => {
   const { createNode, touchNode } = actions
-  const screenshotNodes = getNodes().filter(
-    n => n.internal.type === `Screenshot`
-  )
+  const screenshotNodes = getNodesByType(`Screenshot`)
 
   if (screenshotNodes.length === 0) {
     return null
@@ -46,7 +52,9 @@ exports.onPreBootstrap = (
         cache,
         createNode,
         createNodeId,
+        parentNodeId: n.id,
         createContentDigest,
+        reporter,
       })
     } else {
       // Screenshot hasn't yet expired, touch the image node
@@ -92,6 +100,7 @@ exports.onCreateNode = async (
           createNode,
           createNodeId,
           createContentDigest,
+          parentNodeId: node.id,
         })
         .on(`finish`, r => {
           resolve(r)
@@ -117,7 +126,9 @@ const createScreenshotNode = async ({
   cache,
   createNode,
   createNodeId,
+  parentNodeId,
   createContentDigest,
+  reporter,
 }) => {
   try {
     let fileNode, expires
@@ -137,6 +148,8 @@ const createScreenshotNode = async ({
         cache,
         createNode,
         createNodeId,
+        parentNodeId,
+        reporter,
       })
       expires = screenshotResponse.data.expires
 

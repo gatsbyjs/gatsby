@@ -1,11 +1,10 @@
-const slash = require(`slash`)
 const path = require(`path`)
 const fs = require(`fs-extra`)
 const mime = require(`mime`)
 const prettyBytes = require(`pretty-bytes`)
 
 const md5File = require(`bluebird`).promisify(require(`md5-file`))
-const crypto = require(`crypto`)
+const { createContentDigest, slash } = require(`gatsby-core-utils`)
 
 exports.createFileNode = async (
   pathToFile,
@@ -18,21 +17,18 @@ exports.createFileNode = async (
     ...parsedSlashed,
     absolutePath: slashed,
     // Useful for limiting graphql query with certain parent directory
-    relativeDirectory: path.relative(
-      pluginOptions.path || process.cwd(),
-      parsedSlashed.dir
+    relativeDirectory: slash(
+      path.relative(pluginOptions.path || process.cwd(), parsedSlashed.dir)
     ),
   }
 
   const stats = await fs.stat(slashedFile.absolutePath)
   let internal
   if (stats.isDirectory()) {
-    const contentDigest = crypto
-      .createHash(`md5`)
-      .update(
-        JSON.stringify({ stats: stats, absolutePath: slashedFile.absolutePath })
-      )
-      .digest(`hex`)
+    const contentDigest = createContentDigest({
+      stats: stats,
+      absolutePath: slashedFile.absolutePath,
+    })
     internal = {
       contentDigest,
       type: `Directory`,
@@ -57,9 +53,9 @@ exports.createFileNode = async (
       // useful information.
       id: createNodeId(pathToFile),
       children: [],
-      parent: `___SOURCE___`,
+      parent: null,
       internal,
-      sourceInstanceName: pluginOptions.name || `__PROGRAMATTIC__`,
+      sourceInstanceName: pluginOptions.name || `__PROGRAMMATIC__`,
       absolutePath: slashedFile.absolutePath,
       relativePath: slash(
         path.relative(

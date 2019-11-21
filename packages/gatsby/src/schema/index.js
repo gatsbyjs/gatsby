@@ -1,38 +1,116 @@
 /* @flow */
-const _ = require(`lodash`)
-const { GraphQLSchema, GraphQLObjectType } = require(`graphql`)
-const { mergeSchemas } = require(`graphql-tools`)
 
-const buildNodeTypes = require(`./build-node-types`)
-const buildNodeConnections = require(`./build-node-connections`)
+const tracer = require(`opentracing`).globalTracer()
 const { store } = require(`../redux`)
-const invariant = require(`invariant`)
+const nodeStore = require(`../db/nodes`)
+const { createSchemaComposer } = require(`./schema-composer`)
+const { buildSchema, rebuildSchemaWithSitePage } = require(`./schema`)
+const { builtInFieldExtensions } = require(`./extensions`)
+const { TypeConflictReporter } = require(`./infer/type-conflict-reporter`)
 
-module.exports = async ({ parentSpan }) => {
-  const typesGQL = await buildNodeTypes({ parentSpan })
-  const connections = buildNodeConnections(_.values(typesGQL))
+const getAllFieldExtensions = () => {
+  const {
+    schemaCustomization: { fieldExtensions: customFieldExtensions },
+  } = store.getState()
 
-  // Pull off just the graphql node from each type object.
-  const nodes = _.mapValues(typesGQL, `node`)
+  return {
+    ...customFieldExtensions,
+    ...builtInFieldExtensions,
+  }
+}
 
-  invariant(!_.isEmpty(nodes), `There are no available GQL nodes`)
-  invariant(!_.isEmpty(connections), `There are no available GQL connections`)
+const build = async ({ parentSpan }) => {
+  const spanArgs = parentSpan ? { childOf: parentSpan } : {}
+  const span = tracer.startSpan(`build schema`, spanArgs)
 
-  const thirdPartySchemas = store.getState().thirdPartySchemas || []
+  const {
+    schemaCustomization: { thirdPartySchemas, types, printConfig },
+    inferenceMetadata,
+    config: { mapping: typeMapping },
+  } = store.getState()
 
-  const gatsbySchema = new GraphQLSchema({
-    query: new GraphQLObjectType({
-      name: `RootQueryType`,
-      fields: { ...connections, ...nodes },
-    }),
+  const typeConflictReporter = new TypeConflictReporter()
+
+  // Ensure that user-defined types are processed last
+  const sortedTypes = [
+    ...types.filter(
+      type => type.plugin && type.plugin.name !== `default-site-plugin`
+    ),
+    ...types.filter(
+      type => !type.plugin || type.plugin.name === `default-site-plugin`
+    ),
+  ]
+
+  const fieldExtensions = getAllFieldExtensions()
+  const schemaComposer = createSchemaComposer({ fieldExtensions })
+  const schema = await buildSchema({
+    schemaComposer,
+    nodeStore,
+    types: sortedTypes,
+    fieldExtensions,
+    thirdPartySchemas,
+    typeMapping,
+    printConfig,
+    typeConflictReporter,
+    inferenceMetadata,
+    parentSpan,
   })
 
-  const schema = mergeSchemas({
-    schemas: [gatsbySchema, ...thirdPartySchemas],
-  })
+  typeConflictReporter.printConflicts()
 
+  store.dispatch({
+    type: `SET_SCHEMA_COMPOSER`,
+    payload: schemaComposer,
+  })
   store.dispatch({
     type: `SET_SCHEMA`,
     payload: schema,
   })
+
+  span.finish()
+}
+
+const rebuildWithSitePage = async ({ parentSpan }) => {
+  const spanArgs = parentSpan ? { childOf: parentSpan } : {}
+  const span = tracer.startSpan(
+    `rebuild schema with SitePage context`,
+    spanArgs
+  )
+
+  const {
+    schemaCustomization: { composer: schemaComposer },
+    config: { mapping: typeMapping },
+    inferenceMetadata,
+  } = store.getState()
+
+  const typeConflictReporter = new TypeConflictReporter()
+
+  const schema = await rebuildSchemaWithSitePage({
+    schemaComposer,
+    nodeStore,
+    fieldExtensions: getAllFieldExtensions(),
+    typeMapping,
+    typeConflictReporter,
+    inferenceMetadata,
+    parentSpan,
+  })
+
+  typeConflictReporter.printConflicts()
+
+  store.dispatch({
+    type: `SET_SCHEMA_COMPOSER`,
+    payload: schemaComposer,
+  })
+  store.dispatch({
+    type: `SET_SCHEMA`,
+    payload: schema,
+  })
+
+  span.finish()
+}
+
+module.exports = {
+  build,
+  rebuild: build,
+  rebuildWithSitePage,
 }

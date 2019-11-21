@@ -1,144 +1,131 @@
-import React from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import { Link } from "gatsby"
-import { css } from "react-emotion"
-import SvgDefs from "../assets/svg-defs"
+
 import {
   BlogIcon,
   DocsIcon,
   TutorialIcon,
   PluginsIcon,
   ShowcaseIcon,
-} from "../assets/mobile-nav-icons"
-import presets, { colors } from "../utils/presets"
+} from "../assets/icons"
+import { mediaQueries } from "../gatsby-plugin-theme-ui"
 import { svgStyles } from "../utils/styles"
-import typography, { rhythm, scale, options } from "../utils/typography"
 
-const getNavItemStyles = ({ isPartiallyCurrent }) =>
-  isPartiallyCurrent
-    ? {
-        className: css({
-          ...styles.link.default,
-          ...styles.link.active,
-          ...styles.svg.active,
-        }),
-      }
-    : {
-        className: css({
-          ...styles.link.default,
-          ...styles.svg.default,
-        }),
-      }
+const getProps = ({ isPartiallyCurrent }) => {
+  return {
+    ...(isPartiallyCurrent
+      ? {
+          "data-active": true,
+        }
+      : {}),
+  }
+}
 
 const MobileNavItem = ({ linkTo, label, icon }) => (
-  <Link to={linkTo} getProps={getNavItemStyles}>
+  <Link
+    sx={{
+      ...styles.link.default,
+      ...styles.svg.default,
+      "&[data-active]": {
+        ...styles.link.active,
+        ...styles.svg.active,
+      },
+    }}
+    getProps={getProps}
+    to={linkTo}
+  >
     <span dangerouslySetInnerHTML={{ __html: icon }} />
     <div>{label}</div>
   </Link>
 )
 
 const MobileNavigation = () => (
-  <React.Fragment>
-    <span
-      css={{
-        position: `absolute`,
-        width: 1,
-        height: 1,
-        padding: 0,
-        overflow: `hidden`,
-        clip: `rect(0,0,0,0)`,
-        whiteSpace: `nowrap`,
-        border: 0,
-      }}
-    >
-      <SvgDefs />
-    </span>
-    <div
-      css={{
-        position: `fixed`,
-        display: `flex`,
-        justifyContent: `space-around`,
-        bottom: 0,
-        left: 0,
-        right: 0,
-        zIndex: 1,
-        borderTop: `1px solid ${colors.ui.border}`,
-        background: colors.ui.whisper,
-        height: presets.headerHeight,
-        fontFamily: typography.options.headerFontFamily.join(`,`),
-        paddingBottom: `env(safe-area-inset-bottom)`,
-        [presets.Tablet]: {
-          display: `none`,
-        },
-      }}
-    >
-      <MobileNavItem linkTo="/docs/" label="Docs" icon={DocsIcon} />
-      <MobileNavItem linkTo="/tutorial/" label="Tutorial" icon={TutorialIcon} />
-      <MobileNavItem linkTo="/plugins/" label="Plugins" icon={PluginsIcon} />
-      <MobileNavItem linkTo="/blog/" label="Blog" icon={BlogIcon} />
-      <MobileNavItem linkTo="/showcase/" label="Showcase" icon={ShowcaseIcon} />
-    </div>
-  </React.Fragment>
+  <div
+    sx={{
+      alignItems: `center`,
+      bg: `navigation.background`,
+      borderColor: `ui.border`,
+      borderTopStyle: `solid`,
+      borderTopWidth: `1px`,
+      bottom: 0,
+      display: `flex`,
+      fontFamily: `header`,
+      justifyContent: `space-around`,
+      left: 0,
+      paddingBottom: `env(safe-area-inset-bottom)`,
+      position: `fixed`,
+      right: 0,
+      zIndex: `navigation`,
+      [mediaQueries.md]: {
+        display: `none`,
+      },
+    }}
+  >
+    <MobileNavItem linkTo="/docs/" label="Docs" icon={DocsIcon} />
+    <MobileNavItem linkTo="/tutorial/" label="Tutorials" icon={TutorialIcon} />
+    <MobileNavItem linkTo="/plugins/" label="Plugins" icon={PluginsIcon} />
+    <MobileNavItem linkTo="/blog/" label="Blog" icon={BlogIcon} />
+    <MobileNavItem linkTo="/showcase/" label="Showcase" icon={ShowcaseIcon} />
+  </div>
 )
 
 export default MobileNavigation
 
-const svgActive = {
-  ...svgStyles.active,
-}
-
 const styles = {
   svg: {
     default: {
-      "& .svg-stroke": {
-        strokeMiterlimit: 10,
-        strokeWidth: 1.4173,
-      },
-      "& .svg-stroke-accent": { stroke: colors.lavender },
-      "& .svg-stroke-lilac": { stroke: colors.lavender },
-      "& .svg-fill-lilac": { fill: colors.lavender },
-      "& .svg-fill-gatsby": { fill: colors.lavender },
-      "& .svg-fill-brightest": { fill: `#fff` },
-      "& .svg-fill-accent": { fill: colors.lavender },
-      "& .svg-stroke-gatsby": { stroke: colors.lavender },
-      "& .svg-fill-gradient-accent-white-top": { fill: `transparent` },
-      "& .svg-fill-gradient-accent-white-45deg": { fill: `transparent` },
-      "& .svg-fill-gradient-accent-white-bottom": { fill: `#fff` },
-      "& .svg-fill-gradient-purple": { fill: colors.lavender },
-      "& .svg-stroke-gradient-purple": { stroke: colors.lavender },
-      "& .svg-fill-wisteria": { fill: `transparent` },
-      "&:hover": { ...svgActive },
+      ...svgStyles().stroke,
+      ...svgStyles().default,
+      "&:hover": { ...svgStyles().active },
     },
-    active: svgActive,
+    active: svgStyles().active,
   },
   link: {
     default: {
-      color: colors.lavender,
-      borderRadius: presets.radius,
-      fontSize: scale(-1 / 2).fontSize,
-      flexShrink: 0,
-      lineHeight: 1,
-      width: 64,
-      padding: `${rhythm(options.blockMarginBottom / 4)} ${rhythm(
-        options.blockMarginBottom / 4
-      )} 0`,
-      textDecoration: `none`,
+      alignItems: `center`,
+      borderRadius: 1,
+      color: `navigation.linkDefault`,
+      display: `flex`,
+      flexDirection: `column`,
+      flexShrink: 1,
+      fontSize: 1,
+      lineHeight: `solid`,
+      justifyContent: `center`,
+      position: `relative`,
       textAlign: `center`,
+      textDecoration: `none`,
+      width: `headerHeight`,
+      height: `headerHeight`,
       "& svg": {
         display: `block`,
         height: 32,
-        margin: `0 auto`,
+        mb: 1,
+        mt: 0,
+        mx: `auto`,
         "& path, & line, & polygon": {
-          transition: `all ${presets.animation.speedDefault} ${
-            presets.animation.curveDefault
-          }`,
+          transition: t =>
+            `all ${t.transition.speed.default} ${t.transition.curve.default}`,
         },
+      },
+      ":hover": {
+        color: `navigation.linkHover`,
       },
     },
     active: {
-      "&&": {
-        color: colors.gatsby,
-        fontWeight: `bold`,
-        // WebkitFontSmoothing: `antialiased`,
+      color: `navigation.linkActive`,
+      fontWeight: `bold`,
+      "&:before": {
+        bg: `navigation.linkActive`,
+        content: `" "`,
+        height: `2px`,
+        width: `90%`,
+        position: `absolute`,
+        borderBottomLeftRadius: 1,
+        borderBottomRightRadius: 1,
+        left: `50%`,
+        top: `-1px`,
+        transform: `translateX(-50%)`,
       },
     },
   },

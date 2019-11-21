@@ -1,111 +1,97 @@
-import React from "react"
-import presets, { colors } from "../../utils/presets"
-import { rhythm, options } from "../../utils/typography"
-import sharedStyles from "../shared/styles"
-import ShareMenu from "../../components/share-menu"
-import MdLaunch from "react-icons/lib/md/launch"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
+import MdLink from "react-icons/lib/md/link"
 import MdStar from "react-icons/lib/md/star"
+
+import { mediaQueries } from "../../gatsby-plugin-theme-ui"
+import ShareMenu from "../../components/share-menu"
+import Button from "../../components/button"
 
 const Meta = ({ starter, repoName, imageSharp, demo }) => (
   <div
-    css={{
-      fontFamily: options.headerFontFamily.join(`,`),
-      color: colors.gray.dark,
+    sx={{
       display: `flex`,
-      flexWrap: `wrap`,
-      width: `100%`,
-      minWidth: `320px`,
       flexDirection: `column-reverse`,
-      padding: sharedStyles.gutter,
-      paddingTop: 0,
-      [presets.Phablet]: {
+      flexWrap: `wrap`,
+      fontFamily: `header`,
+      minWidth: `320px`,
+      p: 6,
+      pt: 0,
+      width: `100%`,
+      [mediaQueries.sm]: {
         flexDirection: `row`,
         flexWrap: `nowrap`,
-        paddingBottom: 0,
+        pb: 0,
       },
-      [presets.Desktop]: {
-        padding: sharedStyles.gutterDesktop,
-        paddingTop: 0,
-        paddingBottom: 0,
+      [mediaQueries.lg]: {
+        px: 8,
+        py: 0,
       },
     }}
   >
     <div
-      css={{
-        marginTop: rhythm(3 / 4),
-        paddingRight: 15,
+      sx={{
         display: `flex`,
+        flexShrink: 0,
         flexWrap: `wrap`,
         justifyContent: `space-between`,
-        flexShrink: 0,
-        [presets.Phablet]: {
+        mt: 6,
+        [mediaQueries.sm]: {
+          pr: 4,
           justifyContent: `flex-start`,
         },
       }}
     >
       <div>
         <span
-          css={{
-            color: colors.accent,
-            paddingRight: 10,
+          sx={{
+            alignItems: `center`,
+            color: `textMuted`,
+            display: `inline-flex`,
+            [mediaQueries.sm]: { pr: 5 },
           }}
         >
-          <MdStar style={{ verticalAlign: `sub` }} />
+          <MdStar />
           {` `}
-          <span css={{ color: colors.gray.light }}>{starter.stars}</span>
+          <span sx={{ color: `text`, pl: 1 }}>{starter.stars}</span>
         </span>
       </div>
 
-      <div>
-        <span
-          css={{
-            color: colors.gray.calm,
-            fontFamily: options.headerFontFamily.join(`,`),
-            paddingRight: 8,
-          }}
-        >
-          Updated
-        </span>
-        {showDate(starter.lastUpdated)}
-      </div>
+      <div>Updated {showDate(starter.lastUpdated)}</div>
     </div>
 
     <div
-      css={{
-        marginTop: rhythm(3 / 4),
-        marginRight: 15,
+      sx={{
+        borderBottom: t => `1px solid ${t.colors.ui.border}`,
         display: `flex`,
-        flexWrap: `nowrap`,
         flexGrow: 1,
-        justifyContent: `space-between`,
-        borderBottom: `1px solid ${colors.ui.light}`,
-        paddingBottom: rhythm(2 / 4),
-        [presets.Phablet]: {
+        flexWrap: `nowrap`,
+        mt: 6,
+        pb: 3,
+        [mediaQueries.sm]: {
           borderBottom: 0,
         },
       }}
     >
       <div
-        css={{
-          paddingRight: 15,
-          paddingBottom: 15,
+        sx={{
+          pr: 4,
+          pb: 4,
           whiteSpace: `nowrap`,
           overflow: `hidden`,
           textOverflow: `ellipsis`,
         }}
       >
-        <span css={{ color: colors.gray.light }}>{`By  `}</span>
+        By{` `}
         <a
-          css={{
+          sx={{
             "&&": {
-              boxShadow: `none`,
               borderBottom: 0,
-              color: colors.lilac,
+              color: `lilac`,
               cursor: `pointer`,
-              fontFamily: options.headerFontFamily.join(`,`),
+              fontFamily: `header`,
               "&:hover": {
-                background: `transparent`,
-                color: colors.gatsby,
+                color: `gatsby`,
               },
             },
           }}
@@ -122,42 +108,30 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
           zIndex: 1,
         }}
       >
-        <a
-          href={demo}
-          css={{
-            border: 0,
-            borderRadius: presets.radius,
-            color: colors.accent,
-            fontFamily: options.headerFontFamily.join(`,`),
-            fontWeight: `bold`,
-            marginRight: rhythm(1.5 / 4),
-            padding: `${rhythm(1 / 6)} ${rhythm(2 / 3)}`, // @todo same as site showcase but wrong for some reason
-            textDecoration: `none`,
-            WebkitFontSmoothing: `antialiased`,
-            "&&": {
-              backgroundColor: colors.accent,
-              borderBottom: `none`,
-              boxShadow: `none`,
-              color: colors.gatsby,
-              "&:hover": {
-                backgroundColor: colors.accent,
-              },
-            },
+        <div
+          sx={{
+            position: `absolute`,
+            right: 0,
+            top: 0,
+            left: `auto`,
+            zIndex: 1,
+            display: `flex`,
           }}
         >
-          <MdLaunch
-            style={{
-              verticalAlign: `sub`,
-            }}
+          <Button
+            tag="href"
+            to={demo}
+            overrideCSS={{ mr: 2 }}
+            icon={<MdLink />}
+          >
+            Visit demo
+          </Button>
+          <ShareMenu
+            url={`https://github.com/${starter.githubFullName}`}
+            title={`Check out ${repoName} on the @gatsbyjs Starter Showcase!`}
+            image={imageSharp.childImageSharp.resize.src}
           />
-          {` Visit demo `}
-        </a>
-        <ShareMenu
-          url={`https://github.com/${starter.githubFullName}`}
-          title={`Check out ${repoName} on the @Gatsby Starter Showcase!`}
-          image={imageSharp.childImageSharp.resize.src}
-          theme={`accent`}
-        />
+        </div>
       </div>
     </div>
   </div>

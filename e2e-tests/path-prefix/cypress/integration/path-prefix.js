@@ -1,11 +1,10 @@
-/* global cy */
 const { pathPrefix } = require(`../../gatsby-config`)
 
 const withTrailingSlash = url => `${url}/`
 
 describe(`Production pathPrefix`, () => {
   beforeEach(() => {
-    cy.visit(`/`).waitForAPI(`onRouteUpdate`)
+    cy.visit(`/`).waitForRouteChange()
   })
 
   it(`returns 200 on base route`, () => {
@@ -37,13 +36,21 @@ describe(`Production pathPrefix`, () => {
     })
 
     it(`can go back`, () => {
-      cy.getTestElement(`page-2-link`).click()
+      cy.getTestElement(`page-2-link`)
+        .click()
+        .waitForRouteChange()
+        .go(`back`)
+        .waitForRouteChange()
 
-      cy.go(`back`)
+      cy.location(`pathname`).should(`eq`, withTrailingSlash(pathPrefix))
+    })
 
-      cy.location(`pathname`, { timeout: 10000 }).should(
+    it(`can navigate to the blogtest page that contains the blog prefix`, () => {
+      cy.getTestElement(`page-blogtest-link`).click()
+
+      cy.location(`pathname`).should(
         `eq`,
-        withTrailingSlash(pathPrefix)
+        withTrailingSlash(`${pathPrefix}/blogtest`)
       )
     })
   })

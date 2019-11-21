@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`totally vague one 1`] = `
+Object {
+  "context": Object {
+    "sourceMessage": "foo bar",
+  },
+  "filePath": "test.js",
+  "id": "85901",
+  "location": Object {
+    "start": Object {
+      "column": 10,
+      "line": 5,
+    },
+  },
+}
+`;
+
+exports[`vague one 1`] = `
+Object {
+  "context": Object {
+    "message": "- Unknown field 'fdnjkgd' on type 'SiteSiteMetadata'.",
+  },
+  "filePath": "test.js",
+  "id": "85907",
+  "location": Object {
+    "start": Object {
+      "column": 10,
+      "line": 5,
+    },
+  },
+}
+`;

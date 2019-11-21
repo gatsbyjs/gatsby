@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`index.js <OutboundLink /> matches basic snapshot 1`] = `
+<div>
+  <a>
+    link
+  </a>
+</div>
+`;
+
+exports[`index.js <OutboundLink /> matches snapshot with additional props set 1`] = `
+<div>
+  <a
+    class="link-class"
+    href="https://www.google.com"
+    rel="noopener noreferrer"
+    target="_blank"
+  >
+    link
+  </a>
+</div>
+`;
+
+exports[`index.js <OutboundLink /> matches snapshot with href set 1`] = `
+<div>
+  <a
+    href="https://www.google.com"
+  >
+    link
+  </a>
+</div>
+`;

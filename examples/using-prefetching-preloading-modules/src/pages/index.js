@@ -1,5 +1,5 @@
 import React from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import styled from "styled-components"
 import DynamicComponent from "../components/DynamicComponent"
 import "./style.css"
@@ -20,12 +20,12 @@ const Wrapper = styled.section`
 class IndexPage extends React.Component {
   handleClick = () => {
     console.log(`Sync-Click!`)
-    import(/* webpackChunkName: "async-alert", webpackPrefetch: true */ `../utils/async-alert`).then(
-      module => {
-        const asyncAlert = module.default
-        asyncAlert(`Async-Click!`)
-      }
-    )
+    import(
+      /* webpackChunkName: "async-alert", webpackPrefetch: true */ `../utils/async-alert`
+    ).then(module => {
+      const asyncAlert = module.default
+      asyncAlert(`Async-Click!`)
+    })
   }
 
   render() {

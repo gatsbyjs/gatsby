@@ -13,7 +13,7 @@ Everything related to webpack, loaders, Babel, React should work nearly
 identically under v1 of Gatsby compared to v0 so this part of the migration is
 super easy.
 
-```bash
+```shell
 mkdir src
 git mv pages src
 git mv components src
@@ -168,7 +168,7 @@ module.exports = {
 ### Create slugs for markdown files
 
 It's handy to store the pathname or "slug" for each markdown page with the
-markdown data. This let's you query the slug from multiple places.
+markdown data. This lets you query the slug from multiple places.
 
 Here's how you do that.
 
@@ -196,7 +196,7 @@ exports.onCreateNode = ({ node, boundActionCreators, getNode }) => {
 }
 ```
 
-Now we can create pages for each markdown file using our slug. In the same
+Now you can create pages for each markdown file using our slug. In the same
 `gatsby-node.js` file add:
 
 ```javascript
@@ -206,7 +206,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
   return new Promise((resolve, reject) => {
     const pages = []
     const blogPost = path.resolve("src/templates/blog-post.js")
-    // Query for all markdown "nodes" and for the slug we previously created.
+    // Query for all markdown "nodes" and for the slug you previously created.
     resolve(
       graphql(
         `
@@ -246,12 +246,10 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
 }
 ```
 
-So we've now generated the pathname or slug for each markdown page as well as
-told Gatsby about these pages. You'll notice above that we reference a blog post
-template file when creating the pages. We haven't created that yet so let's do
-it.
-
-In your `src` directory, create a templates directory and add `blog-post.js`.
+You've now generated the pathname or slug for each markdown page as well as told
+Gatsby about these pages. You'll notice above that you reference a blog post
+template file when creating the pages. You haven't created that template file yet,
+so in your `src` directory, create a templates directory and add `blog-post.js`.
 
 This is a normal React.js component with a special Gatsby twist—a GraphQL query
 specifying the data needs of the component. As a start, make the component look
@@ -297,7 +295,7 @@ but in the meantime, check out http://graphql.org/ and play around on Gatsby's
 built-in GraphQL IDE (Graph*i*QL) which can be reached when you start the
 development server.
 
-At this point you should have working markdown pages when you run `gatsby develop`! Now start gradually adding back what you had in your wrapper component
+At this point you should have working markdown pages when you run `npm run develop`! Now start gradually adding back what you had in your wrapper component
 adding HTML elements, styles, and extending the GraphQL query as needed.
 
 Repeat this process for other wrapper components you were using.

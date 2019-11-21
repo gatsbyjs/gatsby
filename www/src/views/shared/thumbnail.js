@@ -1,11 +1,15 @@
-import React from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import { Link, graphql } from "gatsby"
 import Img from "gatsby-image"
 
-import styles from "./styles"
-import presets from "../../utils/presets"
+import {
+  screenshot as screenshotStyles,
+  screenshotHover,
+  withTitleHover,
+} from "./styles"
 
-const ThumbnailLink = ({ slug, image, title, children }) => {
+const ThumbnailLink = ({ slug, image, title, children, state }) => {
   let screenshot = false
 
   // site showcase
@@ -19,18 +23,19 @@ const ThumbnailLink = ({ slug, image, title, children }) => {
   return (
     <Link
       to={slug}
-      state={{ isModal: true }}
-      css={{
-        ...styles.withTitleHover,
+      state={{ isModal: true, ...state }}
+      sx={{
+        ...withTitleHover,
+        lineHeight: `dense`,
+        fontFamily: `header`,
         "&&": {
           borderBottom: `none`,
-          boxShadow: `none`,
-          transition: `all ${presets.animation.speedDefault} ${
-            presets.animation.curveDefault
-          }`,
-          "&:hover": { ...styles.screenshotHover },
+          color: `heading`,
+          transition: t =>
+            `all ${t.transition.speed.default} ${t.transition.curve.default}`,
+          "&:hover": screenshotHover,
           "&:hover ~ .meta > .featured-site": {
-            transform: `translateY(-3px)`,
+            transform: t => `translateY(-${t.space[1]})`,
           },
         },
       }}
@@ -39,17 +44,10 @@ const ThumbnailLink = ({ slug, image, title, children }) => {
         <Img
           fluid={screenshot}
           alt={`Screenshot of ${title}`}
-          css={{ ...styles.screenshot }}
+          sx={screenshotStyles}
         />
       ) : (
-        <div
-          css={{
-            width: 320,
-            backgroundColor: `#d999e7`,
-          }}
-        >
-          missing
-        </div>
+        <div sx={{ width: 320, bg: `grey.10` }}>missing</div>
       )}
       {children}
     </Link>

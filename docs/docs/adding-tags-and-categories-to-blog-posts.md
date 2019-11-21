@@ -27,7 +27,7 @@ title: "A Trip To the Zoo"
 I went to the zoo today. It was terrible.
 ```
 
-Fields can be strings, numbers, or arrays. Since a post can usually have many tags, it makes sense to define it as an array. Here we add our new tags field:
+Fields can be strings, numbers, or arrays. Since a post can usually have many tags, it makes sense to define it as an array. Here you add your new tags field:
 
 ```md
 ---
@@ -42,35 +42,28 @@ If `gatsby develop` is running, restart it so Gatsby can pick up the new fields.
 
 ## Write a query to get all tags for your posts
 
-Now these fields are available in the data layer. To use field data, query it using `graphql`. All fields are available to query inside `frontmatter`
+Now, these fields are available in the data layer. To use field data, query it using `graphql`. All fields are available to query inside `frontmatter`
 
-Try running in Graph<em>i</em>QL (`localhost:8000/___graphql`) the following query
+Try running the following query in Graph<em>i</em>QL (`localhost:8000/___graphql`):
 
 ```graphql
 {
-  allMarkdownRemark(
-    sort: { order: DESC, fields: [frontmatter___date] }
-    limit: 1000
-  ) {
-    edges {
-      node {
-        frontmatter {
-          path
-          tags
-        }
-      }
+  allMarkdownRemark {
+    group(field: frontmatter___tags) {
+      tag: fieldValue
+      totalCount
     }
   }
 }
 ```
 
-The resulting data includes the `path` and `tags` frontmatter for each post, which is all the data we'll need to create pages for each tag which contain a list of posts under that tag. Let's make the tag page template now:
+The above query groups posts by `tags`, and returns each `tag` with the number of posts as `totalCount`. As an addition, you could extract some post data in each group if you need to. To keep this tutorial small, you're only using the tag name in your tag pages. Make the tag page template now:
 
 ## Make a tags page template (for `/tags/{tag}`)
 
-If you followed the tutorial for [Adding Markdown Pages](/docs/adding-markdown-pages/), then this process should sound familiar: we'll make a tag page template, then use it in `createPages` in `gatsby-node.js` to generate individual pages for the tags in our posts.
+If you followed the tutorial for [Adding Markdown Pages](/docs/adding-markdown-pages/), then this process should sound familiar: Make a tag page template, then use it in `createPages` in `gatsby-node.js` to generate individual pages for the tags in your posts.
 
-First, we'll add a tags template at `src/templates/tags.js`:
+First, you'll add a tags template at `src/templates/tags.js`:
 
 ```jsx:title=src/templates/tags.js
 import React from "react"
@@ -91,17 +84,18 @@ const Tags = ({ pageContext, data }) => {
       <h1>{tagHeader}</h1>
       <ul>
         {edges.map(({ node }) => {
-          const { path, title } = node.frontmatter
+          const { slug } = node.fields
+          const { title } = node.frontmatter
           return (
-            <li key={path}>
-              <Link to={path}>{title}</Link>
+            <li key={slug}>
+              <Link to={slug}>{title}</Link>
             </li>
           )
         })}
       </ul>
       {/*
               This links to a page that does not yet exist.
-              We'll come back to it!
+              You'll come back to it!
             */}
       <Link to="/tags">All tags</Link>
     </div>
@@ -109,7 +103,7 @@ const Tags = ({ pageContext, data }) => {
 }
 
 Tags.propTypes = {
-  pathContext: PropTypes.shape({
+  pageContext: PropTypes.shape({
     tag: PropTypes.string.isRequired,
   }),
   data: PropTypes.shape({
@@ -119,8 +113,10 @@ Tags.propTypes = {
         PropTypes.shape({
           node: PropTypes.shape({
             frontmatter: PropTypes.shape({
-              path: PropTypes.string.isRequired,
               title: PropTypes.string.isRequired,
+            }),
+            fields: PropTypes.shape({
+              slug: PropTypes.string.isRequired,
             }),
           }),
         }).isRequired
@@ -141,9 +137,11 @@ export const pageQuery = graphql`
       totalCount
       edges {
         node {
+          fields {
+            slug
+          }
           frontmatter {
             title
-            path
           }
         }
       }
@@ -156,69 +154,70 @@ export const pageQuery = graphql`
 
 ## Modify `gatsby-node.js` to render pages using that template
 
-Now we've got a template. Great! I'll assume you followed the tutorial for [Adding Markdown Pages](/docs/adding-markdown-pages/) and provide a sample `createPages` that generates post pages as well as tag pages. In the site's `gatsby-node.js` file, include `lodash` (`const _ = require('lodash')`) and then make sure your [`createPages`](/docs/node-apis/#createPages) looks something like this:
+Now you've got a template. Great! Assuming you followed the tutorial for [Adding Markdown Pages](/docs/adding-markdown-pages/) and provide a sample `createPages` that generates post pages as well as tag pages. In the site's `gatsby-node.js` file, include `lodash` (`const _ = require('lodash')`) and then make sure your [`createPages`](/docs/node-apis/#createPages) looks something like this:
 
 ```js:title=gatsby-node.js
 const path = require("path")
 const _ = require("lodash")
 
-exports.createPages = ({ actions, graphql }) => {
+exports.createPages = async ({ actions, graphql, reporter }) => {
   const { createPage } = actions
 
   const blogPostTemplate = path.resolve("src/templates/blog.js")
   const tagTemplate = path.resolve("src/templates/tags.js")
 
-  return graphql(`
+  const result = await graphql(`
     {
-      allMarkdownRemark(
+      postsRemark: allMarkdownRemark(
         sort: { order: DESC, fields: [frontmatter___date] }
         limit: 2000
       ) {
         edges {
           node {
+            fields {
+              slug
+            }
             frontmatter {
-              path
               tags
             }
           }
         }
       }
-    }
-  `).then(result => {
-    if (result.errors) {
-      return Promise.reject(result.errors)
-    }
-
-    const posts = result.data.allMarkdownRemark.edges
-
-    // Create post detail pages
-    posts.forEach(({ node }) => {
-      createPage({
-        path: node.frontmatter.path,
-        component: blogPostTemplate,
-      })
-    })
-
-    // Tag pages:
-    let tags = []
-    // Iterate through each post, putting all found tags into `tags`
-    _.each(posts, edge => {
-      if (_.get(edge, "node.frontmatter.tags")) {
-        tags = tags.concat(edge.node.frontmatter.tags)
+      tagsGroup: allMarkdownRemark(limit: 2000) {
+        group(field: frontmatter___tags) {
+          fieldValue
+        }
       }
-    })
-    // Eliminate duplicate tags
-    tags = _.uniq(tags)
+    }
+  `)
 
-    // Make tag pages
-    tags.forEach(tag => {
-      createPage({
-        path: `/tags/${_.kebabCase(tag)}/`,
-        component: tagTemplate,
-        context: {
-          tag,
-        },
-      })
+  // handle errors
+  if (result.errors) {
+    reporter.panicOnBuild(`Error while running GraphQL query.`)
+    return
+  }
+
+  const posts = result.data.postsRemark.edges
+
+  // Create post detail pages
+  posts.forEach(({ node }) => {
+    createPage({
+      path: node.fields.slug,
+      component: blogPostTemplate,
+    })
+  })
+
+  // Extract tag data from query
+  const tags = result.data.tagsGroup.group
+
+  // Make tag pages
+  tags.forEach(tag => {
+    createPage({
+      path: `/tags/${_.kebabCase(tag.fieldValue)}/`,
+      component: tagTemplate,
+      context: {
+        tag: tag.fieldValue,
+      },
     })
   })
 }
@@ -226,12 +225,13 @@ exports.createPages = ({ actions, graphql }) => {
 
 Some notes:
 
-- Our graphql query only looks for data we need to generate these pages. Anything else can be queried again later (and, if you notice, we do this above in the tags template for the post title).
-- While making the tag pages, note that we pass `tag` through in the `context`. This is the value that gets used in the `TagPage` query to limit our search to only posts tagged with the tag in the URL.
+- Your GraphQL query only looks for data you need to generate these pages. Anything else can be queried again later (and, if you notice, you do this above in the tags template for the post title).
+- You have referenced two `allMarkdownRemark` fields in your query. To avoid naming collisions you must [alias](/docs/graphql-reference/#aliasing) one of them. You alias both to make your code more human-readable.
+- While making the tag pages, note that you pass `tag.name` through in the `context`. This is the value that gets used in the `TagPage` query to limit your search to only posts tagged with the tag in the URL.
 
 ## Make a tags index page (`/tags`) that renders a list of all tags
 
-Our `/tags` page will simply list out all tags, followed by the number of posts with that tag:
+Your `/tags` page will simply list out all tags, followed by the number of posts with that tag. You can get the data with the first query you wrote earlier, that groups posts by tags:
 
 ```jsx:title=src/pages/tags.js
 import React from "react"
@@ -241,7 +241,7 @@ import PropTypes from "prop-types"
 import kebabCase from "lodash/kebabCase"
 
 // Components
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import { Link, graphql } from "gatsby"
 
 const TagsPage = ({
@@ -296,10 +296,7 @@ export const pageQuery = graphql`
         title
       }
     }
-    allMarkdownRemark(
-      limit: 2000
-      filter: { frontmatter: { published: { ne: false } } }
-    ) {
+    allMarkdownRemark(limit: 2000) {
       group(field: frontmatter___tags) {
         fieldValue
         totalCount

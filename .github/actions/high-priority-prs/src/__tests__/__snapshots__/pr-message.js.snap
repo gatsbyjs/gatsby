@@ -1,0 +1,98 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Creates a correctly formatted Slack message 1`] = `
+Array [
+  Object {
+    "text": Object {
+      "text": "Hi, this is your friendly PR BOT with the latest report on which PRs most need help",
+      "type": "mrkdwn",
+    },
+    "type": "section",
+  },
+  Object {
+    "type": "divider",
+  },
+  Object {
+    "text": Object {
+      "text": "[9] *_PRs with no responses from maintainers_*",
+      "type": "mrkdwn",
+    },
+    "type": "section",
+  },
+  Object {
+    "text": Object {
+      "text": "1. *<https://github.com/gatsbyjs/gatsby/pull/12761|[WIP]: chore(*): publish es versions of browser packages>* — _created_ 3 months ago — _updated_ 3 months ago 
+2. *<https://github.com/gatsbyjs/gatsby/pull/14216|[WIP] feat(schema): Node interfaces>* — _created_ 15 days ago — _updated_ 19 days ago 
+3. *<https://github.com/gatsbyjs/gatsby/pull/13502|fix(gatsby-plugin-offline): Change navigation handler logic>* — _created_ about 2 months ago — _updated_ 9 days ago 
+4. *<https://github.com/gatsbyjs/gatsby/pull/14372|remove slash>* — _created_ 8 days ago — _updated_ 8 days ago 
+5. *<https://github.com/gatsbyjs/gatsby/pull/14443|fix(gatsby): Make requests not send credentials.>* — _created_ 6 days ago — _updated_ 6 days ago 
+6. *<https://github.com/gatsbyjs/gatsby/pull/14483|remove access control headers>* — _created_ 4 days ago — _updated_ 4 days ago 
+7. *<https://github.com/gatsbyjs/gatsby/pull/14516|chore(showcase): add interplanetarygatsby.com>* — _created_ 2 days ago — _updated_ 2 days ago 
+8. *<https://github.com/gatsbyjs/gatsby/pull/14527|update testing-react-components.md>* — _created_ 1 day ago — _updated_ 1 day ago 
+9. *<https://github.com/gatsbyjs/gatsby/pull/14532|feat(showcase): add carine roitfeld site>* — _created_ 1 day ago — _updated_ 1 day ago 
+",
+      "type": "mrkdwn",
+    },
+    "type": "section",
+  },
+  Object {
+    "type": "divider",
+  },
+  Object {
+    "text": Object {
+      "text": "[12] *_PRs with new commits awaiting review_*",
+      "type": "mrkdwn",
+    },
+    "type": "section",
+  },
+  Object {
+    "text": Object {
+      "text": "1. *<https://github.com/gatsbyjs/gatsby/pull/11528|fix(gatsby-remark-images): remove clickable whitespace around image when linking>* — _created_ 4 months ago — _updated_ 3 months ago — commented: <@dustin>
+2. *<https://github.com/gatsbyjs/gatsby/pull/13985|feat(gatsby): add prefetchPathname to programmatically prefetch (#8122)>* — _created_ 24 days ago — _updated_ 22 days ago — commented: <@Ward> and <@pieh>
+3. *<https://github.com/gatsbyjs/gatsby/pull/12516|feat(publish): clear built files before building package and packing>* — _created_ 3 months ago — _updated_ 16 days ago — commented: <@pieh> and <@dustin>
+4. *<https://github.com/gatsbyjs/gatsby/pull/14253|Support {#custom-id} header syntax in gatsby-remark-autolink-headers>* — _created_ 14 days ago — _updated_ 13 days ago — commented: <@dustin>
+5. *<https://github.com/gatsbyjs/gatsby/pull/13450|feat(gatsby-cli): Add a plugin authoring help in gatsby-cli>* — _created_ about 2 months ago — _updated_ 9 days ago — commented: <@shannonsoper>, <@marcysutton> and <@dustin>
+6. *<https://github.com/gatsbyjs/gatsby/pull/14051|feat(gatsby-page-utils): extract logic for watching a directory from gatsby-page-creator so can reuse for custom page creation>* — _created_ 21 days ago — _updated_ 9 days ago — commented: <@kylemathews> and <@pieh>
+7. *<https://github.com/gatsbyjs/gatsby/pull/14402|fix(gatsby-source-mongodb): fix mapping function signature>* — _created_ 7 days ago — _updated_ 5 days ago — commented: <@m-allanson>
+8. *<https://github.com/gatsbyjs/gatsby/pull/14379|feat(gatsby-remark-images): add option to use alt text as caption fallback>* — _created_ 8 days ago — _updated_ 5 days ago — commented: <@m-allanson>
+9. *<https://github.com/gatsbyjs/gatsby/pull/14359|Per page manifest>* — _created_ 9 days ago — _updated_ 3 days ago — commented: <@dustin> and <@kylemathews>
+10. *<https://github.com/gatsbyjs/gatsby/pull/14276|WIP: gatsby blog theme>* — _created_ 13 days ago — _updated_ 2 days ago — commented: <@biscarch> and <@Ward>
+11. *<https://github.com/gatsbyjs/gatsby/pull/14505|Made the upgrade guide easier to read>* — _created_ 2 days ago — _updated_ 1 day ago — commented: <@m-allanson>
+12. *<https://github.com/gatsbyjs/gatsby/pull/13851|Improve docs for setting up a Gatsby application that pulls content from Markdown files>* — _created_ about 1 month ago — _updated_ 1 day ago — commented: <@freiksenet> and <@marcysutton>
+",
+      "type": "mrkdwn",
+    },
+    "type": "section",
+  },
+  Object {
+    "type": "divider",
+  },
+  Object {
+    "text": Object {
+      "text": "[13] *_PRs that were updated more than 30 days ago_*",
+      "type": "mrkdwn",
+    },
+    "type": "section",
+  },
+  Object {
+    "text": Object {
+      "text": "1. *<https://github.com/gatsbyjs/gatsby/pull/10540|support all of chokidar's path options for source-filesystem>* — _created_ 6 months ago — _updated_ 6 months ago — commented: <@pieh>
+2. *<https://github.com/gatsbyjs/gatsby/pull/11500|[WIP] Plugin Starter>* — _created_ 4 months ago — _updated_ 4 months ago — commented: <@jlengstorf>, <@shannonsoper>, <@kylemathews> and <@pieh>
+3. *<https://github.com/gatsbyjs/gatsby/pull/11528|fix(gatsby-remark-images): remove clickable whitespace around image when linking>* — _created_ 4 months ago — _updated_ 3 months ago — commented: <@dustin>
+4. *<https://github.com/gatsbyjs/gatsby/pull/12761|[WIP]: chore(*): publish es versions of browser packages>* — _created_ 3 months ago — _updated_ 3 months ago 
+5. *<https://github.com/gatsbyjs/gatsby/pull/8092|Add assets to entries sorted according to their dep graph.>* — _created_ 9 months ago — _updated_ about 2 months ago — commented: <@m-allanson>, <@kylemathews>, <@pieh> and <@dustin>
+6. *<https://github.com/gatsbyjs/gatsby/pull/13393|feat(gatsby-transformer-sharp): add inside and outside fit options>* — _created_ about 2 months ago — _updated_ about 2 months ago — commented: <@pieh> and <@dustin>
+7. *<https://github.com/gatsbyjs/gatsby/pull/13241|chore(gatsby): add ie polyfill to webpack entry>* — _created_ about 2 months ago — _updated_ about 2 months ago — commented: <@Ward>
+8. *<https://github.com/gatsbyjs/gatsby/pull/11947|Add resolvePaths, get webpack instance to recognize react and es6 syntax>* — _created_ 3 months ago — _updated_ about 1 month ago — commented: <@Ward>
+9. *<https://github.com/gatsbyjs/gatsby/pull/13184|fix(react-hooks-support): Changed the gatsby browser entry to not bre…>* — _created_ about 2 months ago — _updated_ about 1 month ago — commented: <@Ward> and <@dustin>
+10. *<https://github.com/gatsbyjs/gatsby/pull/10335|Add support for queryParams in gatsby-source-wordpress>* — _created_ 6 months ago — _updated_ about 1 month ago — commented: <@pieh>
+11. *<https://github.com/gatsbyjs/gatsby/pull/11965|fix(gatsby-plugin-offline): Redesign plugin architecture [draft]>* — _created_ 3 months ago — _updated_ about 1 month ago — commented: <@Ward> and <@David>
+12. *<https://github.com/gatsbyjs/gatsby/pull/11145|chore(*): add directory details to the package.json of all packages>* — _created_ 5 months ago — _updated_ about 1 month ago — commented: <@Ward>, <@m-allanson>, <@dustin>, <@Sid> and <@kylemathews>
+13. *<https://github.com/gatsbyjs/gatsby/pull/13616|[feedback-widget] feat: lazy load feedback widget component>* — _created_ about 1 month ago — _updated_ about 1 month ago — commented: <@kylemathews>, <@pieh>, <@Ward> and <@marcysutton>
+",
+      "type": "mrkdwn",
+    },
+    "type": "section",
+  },
+]
+`;

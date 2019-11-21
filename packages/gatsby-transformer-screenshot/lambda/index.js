@@ -1,6 +1,6 @@
 const setup = require(`./starter-kit/setup`)
 
-const crypto = require(`crypto`)
+const { createContentDigest } = require(`gatsby-core-utils`)
 
 const AWS = require(`aws-sdk`)
 const s3 = new AWS.S3({
@@ -26,9 +26,11 @@ exports.handler = async (event, context, callback) => {
   const width = request.width || 1024
   const height = request.height || 768
 
+  const fullPage = request.fullPage || false
+
   const browser = await setup.getBrowser()
   exports
-    .run(browser, url, width, height)
+    .run(browser, url, width, height, fullPage)
     .then(result => {
       callback(null, proxyResponse(result))
     })
@@ -37,13 +39,13 @@ exports.handler = async (event, context, callback) => {
     })
 }
 
-exports.run = async (browser, url, width, height) => {
+exports.run = async (browser, url, width, height, fullPage) => {
   console.log(`Invoked: ${url} (${width}x${height})`)
 
   if (!process.env.S3_BUCKET) {
     throw new Error(
       `Provide the S3 bucket to use by adding an S3_BUCKET` +
-        ` environment variable to this Lambda's configuration`
+      ` environment variable to this Lambda's configuration`
     )
   }
 
@@ -53,16 +55,12 @@ exports.run = async (browser, url, width, height) => {
     throw new Error(`invalid bucket ${process.env.S3_BUCKET}`)
   }
 
-  const keyBase = `${url}-(${width},${height})`
-  const digest = crypto
-    .createHash(`md5`)
-    .update(keyBase)
-    .digest(`hex`)
-  const key = `${digest}.png`
+  const contentDigest = createContentDigest({ url, width, height })
+  const key = `${contentDigest}.png`
 
   const screenshotUrl = `https://s3-${region}.amazonaws.com/${
     process.env.S3_BUCKET
-  }/${key}`
+    }/${key}`
 
   const metadata = await s3HeadObject(key)
 
@@ -86,9 +84,9 @@ exports.run = async (browser, url, width, height) => {
   await page.setViewport({ width, height, deviceScaleFactor: 2 })
   await page.goto(url, { waitUntil: [`load`, `networkidle0`] })
   // wait for full-size images to fade in
-  await page.waitFor(1000);
+  await page.waitFor(1000)
 
-  const screenshot = await page.screenshot()
+  const screenshot = await page.screenshot({ fullPage })
   const up = await s3PutObject(key, screenshot)
 
   await page.close()

@@ -1,7 +1,8 @@
 ---
 title: Announcing new Gatsby Company
-date: "2018-05-24"
+date: 2018-05-24
 author: "Kyle Mathews"
+tags: ["gatsby-inc"]
 ---
 
 Together with my co-founder, [Sam Bhagwat](https://twitter.com/calcsam), I’m thrilled to announce the formation of [Gatsby Inc.](https://www.gatsbyjs.com/) Based on the open source project Gatsby I founded, Gatsby the company will make feature-rich and blazing-fast websites easier to build and run.
@@ -115,11 +116,11 @@ I posted my plans on GitHub and with help from 100s of developers in the communi
 
 After spending fall 2016, and most of 2017 consulting with companies around Gatsby and interacting with 100s of developers in the open source world, I started feeling confident that it was time to create a company devoted to bringing the full vision of Gatsby to fruition. My longtime best friend and Gatsby core contributor Sam Bhagwat and I started chatting about forming this startup to bring Gatsby to the world.
 
-We were lucky to find some great investors, led by [Dan Scholnick of Trinity Ventures](http://www.trinityventures.com/team/dan-scholnick/), who shared our vision for new cloud-native website infrastructure and has extensive experience investing in and working with open source & cloud infrastructure startups like New Relic, Docker, Meteor, InfluxData and more, to back us with $3.8M in seed funding.
+We were lucky to find some great investors, led by [Dan Scholnick of Trinity Ventures](http://www.trinityventures.com/team/dan-scholnick/), who shared our vision for new cloud-native website infrastructure and has extensive experience investing in and working with open source & cloud infrastructure startups like New Relic, Docker, Meteor, InfluxData and more, to back us with \$3.8M in seed funding.
 
 I want to emphasize that this new startup doesn’t signal any move away from open source. I’ve been heavily involved in open source communities since I started programming 12 years ago and strongly believe it’s the best way to build software. We will be building cloud services for Gatsby but Gatsby itself will remain 100% open source as will most of what we intend to do. What the investment and company will enable is a much larger amount of effort towards improving Gatsby core and its surrounding ecosystem. Several core contributors have already joined to work full-time on Gatsby. We’ve been able to work with upstreams to make targeted improvements that benefit not just Gatsby but the whole frontend ecosystem. And as our company grows, we’ll be able to proportionally increase our investment in open source.
 
-Gatsby, the company, is just getting off the ground, but, since the open source project is widely used, we wanted to talk about it now vs. keeping it a secret. If you’re a company exploring building some of your websites with React and headless CMSs, we would love to talk with you. If you are an engineer interested in helping us build the the future of web development, we’d love to talk with you as well.
+Gatsby, the company, is just getting off the ground, but, since the open source project is widely used, we wanted to talk about it now vs. keeping it a secret. If you’re a company exploring building some of your websites with React and headless CMSs, we would love to talk with you. If you are an engineer interested in helping us build the future of web development, we’d love to talk with you as well.
 
 It’s been an amazing journey so far. Wish Sam and I and our new colleagues luck on this new adventure.
 

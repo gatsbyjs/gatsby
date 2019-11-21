@@ -1,13 +1,11 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React, { Fragment } from "react"
 import MdShare from "react-icons/lib/md/share"
 import FaPinterestP from "react-icons/lib/fa/pinterest-p"
-import FaGooglePlus from "react-icons/lib/fa/google-plus"
 import FaLinkedin from "react-icons/lib/fa/linkedin"
 import FaFacebook from "react-icons/lib/fa/facebook"
 import FaTwitter from "react-icons/lib/fa/twitter"
-
-import presets, { colors } from "../utils/presets"
-import { rhythm } from "../utils/typography"
 
 const objectToParams = object =>
   `?` +
@@ -16,6 +14,31 @@ const objectToParams = object =>
     .map(key => `${key}=${encodeURIComponent(object[key])}`)
     .join(`&`)
 
+const ShareMenuItem = ({ href, title, children }) => (
+  <a
+    target="_blank"
+    rel="noopener noreferrer"
+    sx={{
+      width: 36,
+      height: 36,
+      mb: 2,
+      "&&": {
+        bg: `button.primaryBg`,
+        border: 0,
+        borderRadius: 2,
+        color: `button.primaryText`,
+        display: `flex`,
+        alignItems: `center`,
+        justifyContent: `center`,
+      },
+    }}
+    href={href}
+    title={title}
+  >
+    {children}
+  </a>
+)
+
 class ShareMenu extends React.Component {
   constructor(props) {
     super(props)
@@ -23,6 +46,36 @@ class ShareMenu extends React.Component {
       open: false,
     }
     this.shareMenu = this.shareMenu.bind(this)
+    this.clickOutsideShareMenu = this.clickOutsideShareMenu.bind(this)
+    this.setShareBtnRef = this.setShareBtnRef.bind(this)
+    this.setShareMenuRef = this.setShareMenuRef.bind(this)
+  }
+
+  componentDidMount() {
+    document.addEventListener(`mousedown`, this.clickOutsideShareMenu)
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener(`mousedown`, this.clickOutsideShareMenu)
+  }
+
+  setShareBtnRef(node) {
+    this.shareBtnref = node
+  }
+
+  setShareMenuRef(node) {
+    this.shareMenuRef = node
+  }
+
+  clickOutsideShareMenu(event) {
+    const { open } = this.state
+    if (
+      open &&
+      !this.shareBtnref.contains(event.target) &&
+      !this.shareMenuRef.contains(event.target)
+    ) {
+      this.shareMenu()
+    }
   }
 
   shareMenu() {
@@ -33,19 +86,23 @@ class ShareMenu extends React.Component {
   }
 
   render() {
-    const { url, title, image, theme = `gatsby` } = this.props
+    const { url, title, image, className } = this.props
     const { open } = this.state
     return (
       <Fragment>
         <button
           onClick={this.shareMenu}
-          css={{
-            background: styles[theme].background,
+          sx={{
+            bg: `button.primaryBg`,
             border: 0,
-            borderRadius: presets.radius,
-            color: styles[theme].textColor,
+            borderRadius: 2,
+            color: `button.primaryText`,
             cursor: `pointer`,
+            height: 36,
+            width: 36,
           }}
+          className={className}
+          ref={this.setShareBtnRef}
         >
           <MdShare />
         </button>
@@ -57,22 +114,19 @@ class ShareMenu extends React.Component {
               left: `auto`,
               right: 0,
             }}
+            ref={this.setShareMenuRef}
           >
-            <a
-              {...linkAttrs}
-              css={{ ...styles.shareMenuListItem[theme] }}
+            <ShareMenuItem
               href={`https://pinterest.com/pin/create/button/${objectToParams({
                 url: url,
                 media: image,
                 description: title,
               })}`}
-              title="Share on Pinterest'"
+              title="Share on Pinterest"
             >
               <FaPinterestP />
-            </a>
-            <a
-              {...linkAttrs}
-              css={{ ...styles.shareMenuListItem[theme] }}
+            </ShareMenuItem>
+            <ShareMenuItem
               href={`https://www.linkedin.com/shareArticle${objectToParams({
                 mini: `true`,
                 url: url,
@@ -81,10 +135,8 @@ class ShareMenu extends React.Component {
               title="Share on LinkedIn"
             >
               <FaLinkedin />
-            </a>
-            <a
-              {...linkAttrs}
-              css={{ ...styles.shareMenuListItem[theme] }}
+            </ShareMenuItem>
+            <ShareMenuItem
               href={`https://www.facebook.com/sharer.php${objectToParams({
                 u: url,
                 t: title,
@@ -92,20 +144,8 @@ class ShareMenu extends React.Component {
               title="Share on Facebook"
             >
               <FaFacebook />
-            </a>
-            <a
-              {...linkAttrs}
-              css={{ ...styles.shareMenuListItem[theme] }}
-              href={`https://plus.google.com/share${objectToParams({
-                url: url,
-              })}`}
-              title="Share on Google Plus"
-            >
-              <FaGooglePlus />
-            </a>
-            <a
-              {...linkAttrs}
-              css={{ ...styles.shareMenuListItem[theme] }}
+            </ShareMenuItem>
+            <ShareMenuItem
               href={`https://twitter.com/share${objectToParams({
                 url: url,
                 text: title,
@@ -113,7 +153,7 @@ class ShareMenu extends React.Component {
               title="Share on Twitter"
             >
               <FaTwitter />
-            </a>
+            </ShareMenuItem>
           </div>
         )}
       </Fragment>
@@ -122,57 +162,3 @@ class ShareMenu extends React.Component {
 }
 
 export default ShareMenu
-
-const styles = {
-  gatsby: {
-    background: colors.gatsby,
-    textColor: `white`,
-  },
-  accent: {
-    background: colors.accent,
-    textColor: colors.gatsby,
-  },
-  shareMenuListItem: {
-    gatsby: {
-      width: 32,
-      height: 32,
-      marginBottom: rhythm(1.5 / 4),
-      "&&": {
-        background: colors.gatsby,
-        border: 0,
-        borderRadius: presets.radius,
-        boxShadow: `none`,
-        color: `#fff`,
-        display: `flex`,
-        alignItems: `center`,
-        justifyContent: `center`,
-        "&:hover": {
-          background: colors.gatsby,
-        },
-      },
-    },
-    accent: {
-      width: 32,
-      height: 32,
-      marginBottom: rhythm(1.5 / 4),
-      "&&": {
-        background: colors.accent,
-        border: 0,
-        borderRadius: presets.radius,
-        boxShadow: `none`,
-        color: colors.gatsby,
-        display: `flex`,
-        alignItems: `center`,
-        justifyContent: `center`,
-        "&:hover": {
-          background: colors.accent,
-        },
-      },
-    },
-  },
-}
-
-const linkAttrs = {
-  target: `_blank`,
-  rel: `noopener noreferrer`,
-}

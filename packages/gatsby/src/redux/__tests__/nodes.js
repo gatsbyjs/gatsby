@@ -1,17 +1,19 @@
 const { actions } = require(`../actions`)
-const { store, getNode } = require(`../index`)
 const nodeReducer = require(`../reducers/nodes`)
 const nodeTouchedReducer = require(`../reducers/nodes-touched`)
 
+jest.mock(`../../db/nodes`)
+jest.mock(`../nodes`)
+
+const dispatch = jest.fn()
+
 describe(`Create and update nodes`, () => {
   beforeEach(() => {
-    store.dispatch({
-      type: `DELETE_CACHE`,
-    })
+    dispatch.mockClear()
   })
 
   it(`allows creating nodes`, () => {
-    const action = actions.createNode(
+    actions.createNode(
       {
         id: `hi`,
         children: [],
@@ -25,343 +27,17 @@ describe(`Create and update nodes`, () => {
       {
         name: `tests`,
       }
-    )
-    expect(action).toMatchSnapshot()
-    expect(nodeReducer(undefined, action)).toMatchSnapshot()
+    )(dispatch)
+    const action = dispatch.mock.calls[0][0]
+    expect(action).toMatchSnapshot({
+      payload: { internal: { counter: expect.any(Number) } },
+    })
+    expect(fromMapToObject(nodeReducer(undefined, action))).toMatchSnapshot({
+      hi: { internal: { counter: expect.any(Number) } },
+    })
   })
 
   it(`allows updating nodes`, () => {
-    const action = actions.createNode(
-      {
-        id: `hi`,
-        children: [],
-        parent: `test`,
-        internal: {
-          contentDigest: `hasdfljds`,
-          type: `Test`,
-        },
-        pickle: true,
-        deep: {
-          array: [
-            0,
-            1,
-            {
-              boom: true,
-            },
-          ],
-        },
-      },
-      {
-        name: `tests`,
-      }
-    )
-    const updateAction = actions.createNode(
-      {
-        id: `hi`,
-        children: [],
-        parent: `test`,
-        internal: {
-          contentDigest: `hasdfljds`,
-          type: `Test`,
-        },
-        pickle: false,
-        deep: {
-          array: [1, 2],
-        },
-        deep2: {
-          boom: `foo`,
-        },
-      },
-      {
-        name: `tests`,
-      }
-    )
-    let state = nodeReducer(undefined, action)
-    state = nodeReducer(state, updateAction)
-    expect(state.get(`hi`).pickle).toEqual(false)
-    expect(state.get(`hi`).deep.array[0]).toEqual(1)
-    expect(state.get(`hi`).deep2.boom).toEqual(`foo`)
-  })
-
-  it(`deletes previously transformed children nodes when the parent node is updated`, () => {
-    store.dispatch(
-      actions.createNode(
-        {
-          id: `hi`,
-          children: [],
-          parent: null,
-          internal: {
-            contentDigest: `hasdfljds`,
-            type: `Test`,
-          },
-        },
-        {
-          name: `tests`,
-        }
-      )
-    )
-
-    store.dispatch(
-      actions.createNode(
-        {
-          id: `hi-1`,
-          children: [],
-          parent: `hi`,
-          internal: {
-            contentDigest: `hasdfljds-1`,
-            type: `Test-1`,
-          },
-        },
-        {
-          name: `tests`,
-        }
-      )
-    )
-
-    store.dispatch(
-      actions.createParentChildLink(
-        {
-          parent: store.getState().nodes.get(`hi`),
-          child: store.getState().nodes.get(`hi-1`),
-        },
-        {
-          name: `tests`,
-        }
-      )
-    )
-
-    store.dispatch(
-      actions.createNode(
-        {
-          id: `hi-1-1`,
-          children: [],
-          parent: `hi-1`,
-          internal: {
-            contentDigest: `hasdfljds-1-1`,
-            type: `Test-1-1`,
-          },
-        },
-        {
-          name: `tests`,
-        }
-      )
-    )
-
-    store.dispatch(
-      actions.createParentChildLink(
-        {
-          parent: store.getState().nodes.get(`hi-1`),
-          child: store.getState().nodes.get(`hi-1-1`),
-        },
-        {
-          name: `tests`,
-        }
-      )
-    )
-
-    store.dispatch(
-      actions.createNode(
-        {
-          id: `hi`,
-          children: [],
-          parent: `test`,
-          internal: {
-            contentDigest: `hasdfljds2`,
-            type: `Test`,
-          },
-        },
-        {
-          name: `tests`,
-        }
-      )
-    )
-    expect(store.getState().nodes.size).toEqual(1)
-  })
-
-  it(`deletes previously transformed children nodes when the parent node is deleted`, () => {
-    store.dispatch(
-      actions.createNode(
-        {
-          id: `hi`,
-          children: [],
-          parent: `test`,
-          internal: {
-            contentDigest: `hasdfljds`,
-            type: `Test`,
-          },
-        },
-        {
-          name: `tests`,
-        }
-      )
-    )
-    store.dispatch(
-      actions.createNode(
-        {
-          id: `hi2`,
-          children: [],
-          parent: `test`,
-          internal: {
-            contentDigest: `hasdfljds`,
-            type: `Test`,
-          },
-        },
-        {
-          name: `tests`,
-        }
-      )
-    )
-    store.dispatch(
-      actions.createNode(
-        {
-          id: `hi-1`,
-          children: [],
-          parent: `hi`,
-          internal: {
-            contentDigest: `hasdfljds-1`,
-            type: `Test-1`,
-          },
-        },
-        {
-          name: `tests`,
-        }
-      )
-    )
-    store.dispatch(
-      actions.createParentChildLink(
-        {
-          parent: store.getState().nodes.get(`hi`),
-          child: getNode(`hi-1`),
-        },
-        {
-          name: `tests`,
-        }
-      )
-    )
-    store.dispatch(
-      actions.createNode(
-        {
-          id: `hi-1-1`,
-          children: [],
-          parent: `hi-1`,
-          internal: {
-            contentDigest: `hasdfljds-1-1`,
-            type: `Test-1-1`,
-          },
-        },
-        {
-          name: `tests`,
-        }
-      )
-    )
-    store.dispatch(
-      actions.createParentChildLink(
-        {
-          parent: getNode(`hi-1`),
-          child: getNode(`hi-1-1`),
-        },
-        {
-          name: `tests`,
-        }
-      )
-    )
-
-    store.dispatch(
-      actions.deleteNode(
-        {
-          node: getNode(`hi`),
-        },
-        {
-          name: `tests`,
-        }
-      )
-    )
-    expect(store.getState().nodes.size).toEqual(1)
-  })
-
-  it(`deletes previously transformed children nodes when parent nodes are deleted`, () => {
-    store.dispatch(
-      actions.createNode(
-        {
-          id: `hi`,
-          children: [],
-          parent: `test`,
-          internal: {
-            contentDigest: `hasdfljds`,
-            type: `Test`,
-          },
-        },
-        {
-          name: `tests`,
-        }
-      )
-    )
-    store.dispatch(
-      actions.createNode(
-        {
-          id: `hi-1`,
-          children: [],
-          parent: `hi`,
-          internal: {
-            contentDigest: `hasdfljds-1`,
-            type: `Test-1`,
-          },
-        },
-        {
-          name: `tests`,
-        }
-      )
-    )
-    store.dispatch(
-      actions.createParentChildLink(
-        {
-          parent: getNode(`hi`),
-          child: getNode(`hi-1`),
-        },
-        {
-          name: `tests`,
-        }
-      )
-    )
-    store.dispatch(
-      actions.createNode(
-        {
-          id: `hi-1-1`,
-          children: [],
-          parent: `hi-1`,
-          internal: {
-            contentDigest: `hasdfljds-1-1`,
-            type: `Test-1-1`,
-          },
-        },
-        {
-          name: `tests`,
-        }
-      )
-    )
-    store.dispatch(
-      actions.createParentChildLink(
-        {
-          parent: getNode(`hi-1`),
-          child: getNode(`hi-1-1`),
-        },
-        {
-          name: `tests`,
-        }
-      )
-    )
-    store.dispatch(
-      actions.deleteNode(
-        { node: getNode(`hi`) },
-        {
-          name: `tests`,
-        }
-      )
-    )
-    expect(store.getState().nodes.size).toEqual(0)
-  })
-
-  it(`allows deleting nodes`, () => {
     actions.createNode(
       {
         id: `hi`,
@@ -385,49 +61,41 @@ describe(`Create and update nodes`, () => {
       {
         name: `tests`,
       }
-    )
-    actions.deleteNode({
-      node: getNode(`hi`),
-    })
-    expect(getNode(`hi`)).toBeUndefined()
-  })
+    )(dispatch)
+    const action = dispatch.mock.calls[0][0]
 
-  it(`warns when using old deleteNode signature `, () => {
-    console.warn = jest.fn()
-    store.dispatch(
-      actions.createNode(
-        {
-          id: `hi`,
-          children: [],
-          parent: `test`,
-          internal: {
-            contentDigest: `hasdfljds`,
-            type: `Test`,
-          },
+    actions.createNode(
+      {
+        id: `hi`,
+        children: [],
+        parent: `test`,
+        internal: {
+          contentDigest: `hasdfljds`,
+          type: `Test`,
         },
-        {
-          name: `tests`,
-        }
-      )
-    )
-
-    expect(getNode(`hi`)).toMatchSnapshot()
-    store.dispatch(
-      actions.deleteNode(`hi`, getNode(`hi`), {
+        pickle: false,
+        deep: {
+          array: [1, 2],
+        },
+        deep2: {
+          boom: `foo`,
+        },
+      },
+      {
         name: `tests`,
-      })
-    )
+      }
+    )(dispatch)
+    const updateAction = dispatch.mock.calls[1][0]
 
-    expect(getNode(`hi`)).toBeUndefined()
-
-    const deprecationNotice = `Calling "deleteNode" with a nodeId is deprecated. Please pass an object containing a full node instead: deleteNode({ node })`
-    expect(console.warn).toHaveBeenCalledWith(deprecationNotice)
-
-    console.warn.mockRestore()
+    let state = nodeReducer(undefined, action)
+    state = nodeReducer(state, updateAction)
+    expect(state.get(`hi`).pickle).toEqual(false)
+    expect(state.get(`hi`).deep.array[0]).toEqual(1)
+    expect(state.get(`hi`).deep2.boom).toEqual(`foo`)
   })
 
   it(`nodes that are added are also "touched"`, () => {
-    const action = actions.createNode(
+    actions.createNode(
       {
         id: `hi`,
         children: [],
@@ -441,13 +109,18 @@ describe(`Create and update nodes`, () => {
       {
         name: `tests`,
       }
-    )
+    )(dispatch)
+    const action = dispatch.mock.calls[0][0]
+
     let state = nodeTouchedReducer(undefined, action)
-    expect(state[`hi`]).toBe(true)
+
+    expect(state instanceof Set).toBe(true)
+
+    expect(state.has(`hi`)).toBe(true)
   })
 
   it(`allows adding fields to nodes`, () => {
-    const action = actions.createNode(
+    actions.createNode(
       {
         id: `hi`,
         children: [],
@@ -461,7 +134,8 @@ describe(`Create and update nodes`, () => {
       {
         name: `tests`,
       }
-    )
+    )(dispatch)
+    const action = dispatch.mock.calls[0][0]
     let state = nodeReducer(undefined, action)
 
     const addFieldAction = actions.createNodeField(
@@ -474,12 +148,15 @@ describe(`Create and update nodes`, () => {
         name: `test`,
       }
     )
+
     state = nodeReducer(state, addFieldAction)
-    expect(state).toMatchSnapshot()
+    expect(fromMapToObject(state)).toMatchSnapshot({
+      hi: { internal: { counter: expect.any(Number) } },
+    })
   })
 
   it(`throws error if a field is updated by a plugin not its owner`, () => {
-    const action = actions.createNode(
+    actions.createNode(
       {
         id: `hi`,
         children: [],
@@ -493,7 +170,8 @@ describe(`Create and update nodes`, () => {
       {
         name: `tests`,
       }
-    )
+    )(dispatch)
+    const action = dispatch.mock.calls[0][0]
     let state = nodeReducer(undefined, action)
 
     const addFieldAction = actions.createNodeField(
@@ -520,7 +198,9 @@ describe(`Create and update nodes`, () => {
         }
       )
     }
-    expect(callActionCreator).toThrowErrorMatchingSnapshot()
+    expect(callActionCreator).toThrowError(
+      `A plugin tried to update a node field that it doesn't own`
+    )
   })
 
   it(`throws error if a node is created by a plugin not its owner`, () => {
@@ -538,7 +218,7 @@ describe(`Create and update nodes`, () => {
       {
         name: `pluginA`,
       }
-    )
+    )(dispatch)
 
     function callActionCreator() {
       actions.createNode(
@@ -555,10 +235,12 @@ describe(`Create and update nodes`, () => {
         {
           name: `pluginB`,
         }
-      )
+      )(dispatch)
     }
 
-    expect(callActionCreator).toThrowErrorMatchingSnapshot()
+    expect(callActionCreator).toThrowError(
+      `The plugin "pluginB" created a node of a type owned by another plugin.`
+    )
   })
 
   it(`throws error if a node sets a value on "fields"`, () => {
@@ -580,16 +262,20 @@ describe(`Create and update nodes`, () => {
         {
           name: `pluginA`,
         }
-      )
+      )(dispatch)
     }
 
-    expect(callActionCreator).toThrowErrorMatchingSnapshot()
-  })
-
-  it(`does not crash when delete node is called on undefined`, () => {
-    actions.deleteNode(undefined, {
-      name: `tests`,
-    })
-    expect(store.getState().nodes.size).toEqual(0)
+    expect(callActionCreator).toThrowError(
+      `Plugins creating nodes can not set data on the reserved field "fields"
+      as this is reserved for plugins which wish to extend your nodes.`
+    )
   })
 })
+
+const fromMapToObject = map => {
+  const obj = {}
+  Array.from(map.entries()).forEach(([key, value]) => {
+    obj[key] = value
+  })
+  return obj
+}

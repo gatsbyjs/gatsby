@@ -2,7 +2,7 @@
 title: Uptick in docs contributions for Gatsby Hacktoberfest
 date: 2018-10-12
 author: Shannon Soper
-tags: ["documentation", "hacktoberfest"]
+tags: ["documentation", "hacktoberfest", "open-source"]
 ---
 
 ## Hacktoberfest docs explosion!
@@ -33,7 +33,7 @@ Here is a summary of the “docs decision tree,” a tool we’ll use to make de
 
 A doc qualifies to be in the .org site if it:
 
-1.  Deals with a piece of Gatsby-maintained software (e.g. pertains to code in the [Gatsby OSS repository](www.github.com/gatsbyjs/gatsby)), a core dependency of the code in the Gatsby OSS repo, or a third-party software that works well with Gatsby and is in high demand
+1.  Deals with a piece of Gatsby-maintained software (e.g. pertains to code in the [Gatsby OSS repository](https://www.github.com/gatsbyjs/gatsby)), a core dependency of the code in the Gatsby OSS repo, or a third-party software that works well with Gatsby and is in high demand
 
 > **Yes** --> Belongs in the docs (to make sure we don’t have to maintain docs about core dependencies and third-party software, we will focus on linking to their docs as much as possible)
 

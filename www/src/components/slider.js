@@ -1,37 +1,22 @@
-import React from "react"
-import { keyframes } from "react-emotion"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
+import { keyframes } from "@emotion/core"
 
 export default ({ items, color }) => (
-  <div
+  <span
     css={{
-      display: `inline`,
-      textIndent: `8px`,
-
       "& span": {
-        animation: `${topToBottom} 10s linear infinite 0s`,
+        animation: `${topToBottom} 5s linear infinite 0s`,
         opacity: 0,
-        position: `absolute`,
-
-        ":nth-child(2)": {
-          animationDelay: `2.5s`,
-        },
-
-        ":nth-child(3)": {
-          animationDelay: `5s`,
-        },
-
-        ":nth-child(4)": {
-          animationDelay: `7.5s`,
-        },
       },
     }}
   >
     {items.map(item => (
-      <span key={item} css={{ color }}>
+      <span key={item} sx={{ color: color }}>
         {item}
       </span>
     ))}
-  </div>
+  </span>
 )
 
 const topToBottom = keyframes({
@@ -40,21 +25,17 @@ const topToBottom = keyframes({
   },
   "6%": {
     opacity: 0,
-    transform: `translateY(-30px)`,
   },
-  "10%": {
+  "21%": {
     opacity: 1,
-    transform: `translateY(0px)`,
   },
-  "25%": {
+  "69%": {
     opacity: 1,
-    transform: `translateY(0px)`,
   },
-  "29%": {
+  "84%": {
     opacity: 0,
-    transform: `translateY(30px)`,
   },
-  "80%": {
+  "90%": {
     opacity: 0,
   },
   "100%": {

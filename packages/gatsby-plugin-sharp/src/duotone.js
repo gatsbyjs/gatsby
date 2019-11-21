@@ -1,4 +1,4 @@
-const sharp = require(`sharp`)
+const sharp = require(`./safe-sharp`)
 
 module.exports = async function duotone(duotone, format, pipeline) {
   const duotoneGradient = createDuotoneGradient(
@@ -108,9 +108,13 @@ async function overlayDuotone(
     .toBuffer()
 
   return await originalImage
-    .overlayWith(duotoneWithTransparency, {
-      raw: { width: info.width, height: info.height, channels: 4 },
-    })
+    .composite([
+      {
+        input: duotoneWithTransparency,
+        blend: `over`,
+        raw: { width: info.width, height: info.height, channels: 4 },
+      },
+    ])
     .toBuffer({ resolveWithObject: true })
     .then(({ data, info }) =>
       sharp(data, {

@@ -2,13 +2,17 @@
 const webpack = require(`webpack`)
 const webpackConfig = require(`../utils/webpack.config`)
 
-module.exports = async program => {
+const { reportWebpackWarnings } = require(`../utils/webpack-error-utils`)
+
+module.exports = async (program, { parentSpan }) => {
   const { directory } = program
 
   const compilerConfig = await webpackConfig(
     program,
     directory,
-    `build-javascript`
+    `build-javascript`,
+    null,
+    { parentSpan }
   )
 
   return new Promise((resolve, reject) => {
@@ -18,13 +22,14 @@ module.exports = async program => {
         return
       }
 
-      const jsonStats = stats.toJson()
-      if (jsonStats.errors && jsonStats.errors.length > 0) {
-        reject(jsonStats.errors)
+      reportWebpackWarnings(stats)
+
+      if (stats.hasErrors()) {
+        reject(stats.compilation.errors)
         return
       }
 
-      resolve()
+      resolve(stats)
     })
   })
 }

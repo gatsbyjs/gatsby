@@ -1,0 +1,3 @@
+__fixtures__
+__snapshots__
+*.test.js

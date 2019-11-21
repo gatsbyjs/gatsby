@@ -1,54 +1,48 @@
-import React, { Fragment } from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
+import React from "react"
 
 import Item from "./item"
 import { Title, TitleButton, SplitButton } from "./section-title"
-import { colors } from "../../utils/presets"
-
-const paddingLeft = level => (level === 0 ? level + 1 * 40 : level + 1 * 20)
 
 const ItemWithSubitems = ({
+  itemRef,
   activeItemLink,
   createLink,
   isExpanded,
   isParentOfActiveItem,
   item,
-  level,
   location,
   onLinkClick,
   onSectionTitleClick,
   uid,
+  disableAccordions,
 }) => {
-  const SectionTitleComponent = item.disableAccordions ? Title : TitleButton
+  const SectionTitleComponent = disableAccordions ? Title : TitleButton
   const isActive = item.link === activeItemLink.link
 
-  return (
-    <Fragment>
-      {item.link ? (
-        <SplitButton
-          createLink={createLink}
-          isActive={isActive}
-          isExpanded={isExpanded}
-          isParentOfActiveItem={isParentOfActiveItem}
-          item={item}
-          level={level}
-          location={location}
-          onLinkClick={onLinkClick}
-          onSectionTitleClick={onSectionTitleClick}
-          uid={uid}
-        />
-      ) : (
-        <SectionTitleComponent
-          isActive={isActive}
-          isExpanded={isExpanded}
-          isParentOfActiveItem={isParentOfActiveItem}
-          item={item}
-          level={level}
-          onSectionTitleClick={onSectionTitleClick}
-          title={item.title}
-          uid={uid}
-        />
-      )}
-    </Fragment>
+  return item.link ? (
+    <SplitButton
+      itemRef={itemRef}
+      createLink={createLink}
+      isActive={isActive}
+      isExpanded={isExpanded}
+      isParentOfActiveItem={isParentOfActiveItem}
+      item={item}
+      location={location}
+      onLinkClick={onLinkClick}
+      onSectionTitleClick={onSectionTitleClick}
+      uid={uid}
+    />
+  ) : (
+    <SectionTitleComponent
+      isActive={isActive}
+      isExpanded={isExpanded}
+      isParentOfActiveItem={isParentOfActiveItem}
+      item={item}
+      onSectionTitleClick={onSectionTitleClick}
+      uid={uid}
+    />
   )
 }
 
@@ -75,30 +69,63 @@ class Accordion extends React.Component {
 
   render() {
     const {
+      itemRef,
       activeItemLink,
       activeItemParents,
       createLink,
       isActive,
       isParentOfActiveItem,
       item,
-      level,
       location,
       onLinkClick,
       onSectionTitleClick,
       openSectionHash,
+      isSingle,
+      disableAccordions,
     } = this.props
     const uid = `item_` + this.state.uid
-    const isExpanded = openSectionHash[item.title] || item.disableAccordions
+    const isExpanded = openSectionHash[item.title] || disableAccordions
 
     return (
       <li
-        css={{
-          background:
-            isExpanded && isActive && level > 0 ? colors.ui.light : false,
+        sx={{
+          bg:
+            (isParentOfActiveItem && item.level === 0) ||
+            (isActive && item.level === 0)
+              ? `sidebar.activeSectionBackground`
+              : false,
           position: `relative`,
+          transition: t =>
+            `all ${t.transition.speed.fast} ${t.transition.curve.default}`,
+          mt: t =>
+            item.level === 0 && disableAccordions && !isSingle
+              ? `${t.space[4]} !important`
+              : false,
+          ...(item.level === 0 &&
+            !isSingle && {
+              "::before": {
+                content: `" "`,
+                position: `absolute`,
+                borderTopWidth: `1px`,
+                borderTopStyle: `solid`,
+                borderColor: `ui.border`,
+                left: t =>
+                  (isParentOfActiveItem && isExpanded) ||
+                  (isActive && isExpanded)
+                    ? 0
+                    : t.space[6],
+                right: 0,
+                top: 0,
+              },
+              ":after": {
+                top: `auto`,
+                bottom: -1,
+              },
+            }),
         }}
       >
         <ItemWithSubitems
+          itemRef={itemRef}
           activeItemLink={activeItemLink}
           activeItemParents={activeItemParents}
           createLink={createLink}
@@ -106,21 +133,30 @@ class Accordion extends React.Component {
           isExpanded={isExpanded}
           isParentOfActiveItem={isParentOfActiveItem}
           item={item}
-          level={level}
           location={location}
           onLinkClick={onLinkClick}
           onSectionTitleClick={onSectionTitleClick}
           uid={uid}
+          disableAccordions={disableAccordions}
         />
         <ul
           id={uid}
-          css={{
-            ...styles.ul,
+          sx={{
             display: isExpanded ? `block` : `none`,
-            paddingBottom: level === 0 && isExpanded ? 40 : false,
-            "& li": {
-              paddingLeft: paddingLeft(level),
-            },
+            listStyle: `none`,
+            margin: 0,
+            position: `relative`,
+            ...(item.ui === `steps` && {
+              "&:after": {
+                backgroundColor: `ui.border`,
+                bottom: 0,
+                content: `''`,
+                left: 27,
+                position: `absolute`,
+                top: 0,
+                width: 1,
+              },
+            }),
           }}
         >
           {item.items.map(subitem => (
@@ -130,17 +166,11 @@ class Accordion extends React.Component {
               createLink={createLink}
               item={subitem}
               key={subitem.title}
-              level={level + 1}
               location={location}
               onLinkClick={onLinkClick}
               isExpanded={isExpanded}
               onSectionTitleClick={onSectionTitleClick}
               openSectionHash={openSectionHash}
-              styles={{
-                ...(item.ui === `steps` && {
-                  ...styles.ulStepsUI,
-                }),
-              }}
               ui={item.ui}
             />
           ))}
@@ -151,34 +181,3 @@ class Accordion extends React.Component {
 }
 
 export default Accordion
-
-const styles = {
-  ul: {
-    listStyle: `none`,
-    margin: 0,
-    position: `relative`,
-    "& li": {
-      marginBottom: 0,
-    },
-  },
-  ulStepsUI: {
-    "&:after": {
-      background: colors.ui.bright,
-      bottom: `1.5rem`,
-      content: `''`,
-      left: 0,
-      position: `absolute`,
-      top: `1.5rem`,
-      width: 1,
-    },
-    "&:before": {
-      borderLeft: `1px dashed ${colors.ui.bright}`,
-      bottom: 0,
-      content: `''`,
-      height: `100%`,
-      left: 0,
-      position: `absolute`,
-      width: 0,
-    },
-  },
-}

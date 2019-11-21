@@ -9,6 +9,10 @@ The two top priorities of the API are a) enable a broad and robust plugin
 ecosystem and b) on top of that a broad and robust theme ecosystem (themes are
 on the back burner btw until after v1 comes out).
 
+## Prerequisites
+
+If you’re not familiar with Gatsby’s lifecycle, see the overview [Gatsby Lifecycle APIs](/docs/gatsby-lifecycle-apis/).
+
 ## Plugins
 
 Plugins can extend Gatsby in many ways:
@@ -44,21 +48,21 @@ highlighting to code blocks.
 Transformer plugins are decoupled from source plugins. Transformer plugins look
 at the media type of new nodes created by source plugins to decide if they can
 transform it or not. Which means that a markdown transformer plugin can
-transform markdown from any source without any other configuration e.g. from
+transform markdown from any source without any other configuration e.g. from a
 file, a code comment, or external service like Trello which supports markdown
 in some of its data fields.
 
 See
 [the full list of (official only for now — adding support for community plugins later) plugins](/docs/plugins/).
 
-# API
+## API
 
-## Concepts
+### Concepts
 
 - _Page_ — a site page with a pathname, a template component, and optional
-  graphql query.
+  GraphQL query.
 - _Page Component_ — React.js component that renders a page and can optionally
-  specify a graphql query
+  specify a GraphQL query
 - _Component extensions_ — extensions that are resolvable as components. `.js`
   and `.jsx` are supported by core. But plugins can add support for other
   compile-to-js languages.
@@ -72,7 +76,9 @@ See
   inferred. Parent/child links from nodes and their transformed derivative nodes
   are first class links.
 
-## Operators
+_More definitions and terms are defined in the [Glossary](/docs/glossary/)_
+
+### Operators
 
 - _Create_ — make a new thing
 - _Get_ — get an existing thing
@@ -80,7 +86,7 @@ See
 - _Replace_ — replace an existing thing
 - _Set_ — merge into an existing thing
 
-## Extension APIs
+### Extension APIs
 
 Gatsby has multiple processes. The most prominent is the "bootstrap" process. It
 has several subprocesses. One tricky part to their design is that they run both
@@ -94,10 +100,10 @@ load site config -> load plugins -> source nodes -> transform nodes -> create
 graphql schema -> create pages -> compile component queries -> run queries ->
 fin
 
-Once the initial bootstrap is finished, we start `webpack-dev-server` and an express server for serving files for the development server, and for a production build, we start building the CSS then JavaScript then HTML with webpack.
+Once the initial bootstrap is finished, a `webpack-dev-server` and express server are started for serving files for the development workflow with live updates. For a production build, Gatsby skips the development server and instead builds the CSS, then JavaScript, then static HTML with webpack.
 
 During these processes there are various extension points where plugins can
-intervene. All major processes have a `onPre` and `onPost` e.g. `onPreBootstrap`
+intervene. All major processes have an `onPre` and `onPost` e.g. `onPreBootstrap`
 and `onPostBootstrap` or `onPreBuild` or `onPostBuild`. During bootstrap,
 plugins can respond at various stages to APIs like `onCreatePages`,
 `onCreateBabelConfig`, and `onSourceNodes`.
@@ -105,7 +111,7 @@ plugins can respond at various stages to APIs like `onCreatePages`,
 At each extension point, Gatsby identifies the plugins which implement the API
 and calls them in serial following their order in the site's `gatsby-config.js`.
 
-In addition to extension APIs in node, plugins can also implement extension APIs
+In addition to extension APIs in a node, plugins can also implement extension APIs
 in the server rendering process and the browser e.g. `onClientEntry` or
 `onRouteUpdate`
 
