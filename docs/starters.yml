@@ -4467,3 +4467,20 @@
     - Based on the official Gatsby starter blog
     - Uses TailwindCSS
     - Uses PostCSS
+- url: https://gatsby-theme-phoenix-demo.netlify.com
+  repo: https://github.com/arshad/gatsby-theme-phoenix
+  description: A personal blogging and portfolio theme for Gatsby with great typography and dark mode.
+  tags:
+    - Blog
+    - Portfolio
+    - SEO
+    - MDX
+    - Styling:Tailwind
+    - Styling:PostCSS
+  features:
+    - MDX - Posts, Pages and Projects
+    - Tags/Categories
+    - Dark mode
+    - Customizable with Tailwind CSS
+    - Code highlighting with Prism
+    - RSS feed
