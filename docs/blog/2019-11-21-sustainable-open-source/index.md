@@ -25,7 +25,7 @@ One increasingly prominent answer is for founding organizations -- companies fou
 Founding organizations have a responsibility to their projects and communities: to keep them thriving and on the cutting edge. We believe that to fulfill that responsibility, founding orgs must be able to create a successful business model and then make proportional investments in open source as they grow.
 </Pullquote>
 
-And when founding organizations aren&#39;t able to build strong businesses, or then fail to invest adequately, and the project starts falling behind the times, the community should hold founding orgs accountable.
+And when founding organizations aren&#39;t able to build strong businesses, or then fail to invest adequately, and the project starts falling behind the times, the community should hold them accountable.
 
 ###Open source has a sustainability problem
 
