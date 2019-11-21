@@ -281,16 +281,17 @@ shortcode), you can pass it to the
 // src/components/layout.js
 import React from "react"
 import { MDXProvider } from "@mdx-js/react"
+import { Link } from "gatsby"
 import { YouTube, Twitter, TomatoBox } from "./ui"
 
-const shortcodes = { YouTube, Twitter, TomatoBox }
+const shortcodes = { Link, YouTube, Twitter, TomatoBox }
 
 export default ({ children }) => (
   <MDXProvider components={shortcodes}>{children}</MDXProvider>
 )
 ```
 
-Then, in any MDX file, you can render `YouTube`, `Twitter`, and `TomatoBox` without
+Then, in any MDX file, you can navigate using `Link` and render `YouTube`, `Twitter`, and `TomatoBox` components without
 an import.
 
 ```mdx
