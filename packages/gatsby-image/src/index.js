@@ -239,7 +239,6 @@ const Img = React.forwardRef((props, ref) => {
     style,
     onLoad,
     onError,
-    onClick,
     loading,
     draggable,
     ...otherProps
@@ -253,7 +252,6 @@ const Img = React.forwardRef((props, ref) => {
       {...otherProps}
       onLoad={onLoad}
       onError={onError}
-      onClick={onClick}
       ref={ref}
       loading={loading}
       draggable={draggable}
@@ -274,7 +272,6 @@ const Img = React.forwardRef((props, ref) => {
 Img.propTypes = {
   style: PropTypes.object,
   onError: PropTypes.func,
-  onClick: PropTypes.func,
   onLoad: PropTypes.func,
 }
 
@@ -492,7 +489,6 @@ class Image extends React.Component {
                 ref={this.imageRef}
                 onLoad={this.handleImageLoaded}
                 onError={this.props.onError}
-                onClick={this.props.onClick}
                 itemProp={itemProp}
                 loading={loading}
                 draggable={draggable}
@@ -593,7 +589,6 @@ class Image extends React.Component {
                 ref={this.imageRef}
                 onLoad={this.handleImageLoaded}
                 onError={this.props.onError}
-                onClick={this.props.onClick}
                 itemProp={itemProp}
                 loading={loading}
                 draggable={draggable}
@@ -680,7 +675,6 @@ Image.propTypes = {
   backgroundColor: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   onLoad: PropTypes.func,
   onError: PropTypes.func,
-  onClick: PropTypes.func,
   onStartLoad: PropTypes.func,
   Tag: PropTypes.string,
   itemProp: PropTypes.string,

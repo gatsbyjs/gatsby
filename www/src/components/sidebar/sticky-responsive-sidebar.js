@@ -1,14 +1,11 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { Component } from "react"
+import { Component, Fragment } from "react"
 
 import Sidebar from "./sidebar"
 import ScrollSyncSidebar from "./scroll-sync-sidebar"
 import ChevronSvg from "./chevron-svg"
 import { mediaQueries } from "../../gatsby-plugin-theme-ui"
-import ScrollPositionProvider, {
-  ScrollPositionConsumer,
-} from "./scrollbar-position-provider"
 
 class StickyResponsiveSidebar extends Component {
   constructor(props) {
@@ -27,19 +24,14 @@ class StickyResponsiveSidebar extends Component {
 
   render() {
     const { open } = this.state
-    const {
-      enableScrollSync,
-      location: { pathname },
-    } = this.props
+    const { enableScrollSync } = this.props
     const SidebarComponent = enableScrollSync ? ScrollSyncSidebar : Sidebar
 
     const iconOffset = open ? 5 : -5
     const menuOpacity = open ? 1 : 0
 
-    const sidebarType = pathname.split(`/`)[1]
-
     return (
-      <ScrollPositionProvider>
+      <Fragment>
         <div
           sx={{
             border: 0,
@@ -84,16 +76,10 @@ class StickyResponsiveSidebar extends Component {
               },
             }}
           >
-            <ScrollPositionConsumer>
-              {({ positions, onPositionChange }) => (
-                <SidebarComponent
-                  position={positions[sidebarType]}
-                  onPositionChange={onPositionChange}
-                  closeSidebar={this._closeSidebar}
-                  {...this.props}
-                />
-              )}
-            </ScrollPositionConsumer>
+            <SidebarComponent
+              closeSidebar={this._closeSidebar}
+              {...this.props}
+            />
           </div>
         </div>
         <div
@@ -150,7 +136,7 @@ class StickyResponsiveSidebar extends Component {
             />
           </div>
         </div>
-      </ScrollPositionProvider>
+      </Fragment>
     )
   }
 }

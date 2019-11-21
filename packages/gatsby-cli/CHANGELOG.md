@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.8.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.12...gatsby-cli@2.8.13) (2019-11-20)
+
+### Bug Fixes
+
+- update dependency update-notifier to v3 ([#19613](https://github.com/gatsbyjs/gatsby/issues/19613)) ([80af751](https://github.com/gatsbyjs/gatsby/commit/80af751))
+- **gatsby-cli:** only emit endActivity events for activity tha… ([#19617](https://github.com/gatsbyjs/gatsby/issues/19617)) ([79bd29b](https://github.com/gatsbyjs/gatsby/commit/79bd29b))
+
+## [2.8.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.11...gatsby-cli@2.8.12) (2019-11-18)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.8.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.10...gatsby-cli@2.8.11) (2019-11-15)
+
+### Bug Fixes
+
+- update dependency better-opn to v1 ([#19483](https://github.com/gatsbyjs/gatsby/issues/19483)) ([10a8f65](https://github.com/gatsbyjs/gatsby/commit/10a8f65))
+- update dependency convert-hrtime to v3 ([#19530](https://github.com/gatsbyjs/gatsby/issues/19530)) ([1a5ddc5](https://github.com/gatsbyjs/gatsby/commit/1a5ddc5))
+- update dependency envinfo to v7 ([#19537](https://github.com/gatsbyjs/gatsby/issues/19537)) ([265371d](https://github.com/gatsbyjs/gatsby/commit/265371d))
+- update dependency execa to v3 ([#19532](https://github.com/gatsbyjs/gatsby/issues/19532)) ([ae50422](https://github.com/gatsbyjs/gatsby/commit/ae50422))
+
+## [2.8.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.9...gatsby-cli@2.8.10) (2019-11-13)
+
+### Bug Fixes
+
+- **gatsby-cli:** remove \$ for better copy paste ([#19390](https://github.com/gatsbyjs/gatsby/issues/19390)) ([976f6c8](https://github.com/gatsbyjs/gatsby/commit/976f6c8))
+
+## [2.8.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.8...gatsby-cli@2.8.9) (2019-11-10)
+
+### Bug Fixes
+
+- **gatsby-cli:** Clean up on unmount in the ink logger ([#19312](https://github.com/gatsbyjs/gatsby/issues/19312)) ([d2fdae0](https://github.com/gatsbyjs/gatsby/commit/d2fdae0))
+
 ## [2.8.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.7...gatsby-cli@2.8.8) (2019-10-29)
 
 ### Features

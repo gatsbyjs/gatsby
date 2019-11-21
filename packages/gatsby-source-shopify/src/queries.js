@@ -189,6 +189,16 @@ export const PRODUCTS_QUERY = `
                   title
                   weight
                   weightUnit
+                  presentmentPrices(first: 250) {
+                    edges {
+                      node {
+                        price {
+                          amount
+                          currencyCode
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }

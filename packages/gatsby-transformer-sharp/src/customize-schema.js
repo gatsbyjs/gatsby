@@ -27,6 +27,7 @@ const {
   ImageFormatType,
   ImageCropFocusType,
   DuotoneGradientType,
+  PotraceTurnPolicyType,
   PotraceType,
   ImageFitType,
 } = require(`./types`)
@@ -146,6 +147,15 @@ const fixedNodeType = ({
         defaultValue: false,
       },
       quality: {
+        type: GraphQLInt,
+      },
+      jpegQuality: {
+        type: GraphQLInt,
+      },
+      pngQuality: {
+        type: GraphQLInt,
+      },
+      webpQuality: {
         type: GraphQLInt,
       },
       toFormat: {
@@ -294,6 +304,15 @@ const fluidNodeType = ({
         defaultValue: false,
       },
       quality: {
+        type: GraphQLInt,
+      },
+      jpegQuality: {
+        type: GraphQLInt,
+      },
+      pngQuality: {
+        type: GraphQLInt,
+      },
+      webpQuality: {
         type: GraphQLInt,
       },
       toFormat: {
@@ -456,6 +475,15 @@ const createFields = ({
         quality: {
           type: GraphQLInt,
         },
+        jpegQuality: {
+          type: GraphQLInt,
+        },
+        pngQuality: {
+          type: GraphQLInt,
+        },
+        webpQuality: {
+          type: GraphQLInt,
+        },
         jpegProgressive: {
           type: GraphQLBoolean,
           defaultValue: true,
@@ -567,6 +595,14 @@ module.exports = ({
   })
 
   if (createTypes) {
-    createTypes([imageSharpType])
+    createTypes([
+      ImageFormatType,
+      ImageFitType,
+      ImageCropFocusType,
+      DuotoneGradientType,
+      PotraceTurnPolicyType,
+      PotraceType,
+      imageSharpType,
+    ])
   }
 }

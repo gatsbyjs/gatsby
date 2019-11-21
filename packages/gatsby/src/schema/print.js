@@ -185,7 +185,7 @@ const {
   DEFAULT_DEPRECATION_REASON,
 } = require(`graphql`)
 const { printBlockString } = require(`graphql/language/blockString`)
-const flatMap = require(`array.prototype.flatmap`)
+const _ = require(`lodash`)
 
 const printScalarType = tc => {
   const type = tc.getType()
@@ -378,7 +378,7 @@ const printDescription = (def, indentation = ``, firstInBlock = true) => {
 
 const descriptionLines = (description, maxLen) => {
   const rawLines = description.split(`\n`)
-  return flatMap(rawLines, line => {
+  return _.flatMap(rawLines, line => {
     if (line.length < maxLen + 5) {
       return line
     }
