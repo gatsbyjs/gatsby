@@ -20,6 +20,7 @@ const { getCommonDir } = require(`../../utils/path`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 const { trackCli } = require(`gatsby-telemetry`)
 const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
+const shadowCreatePagePath = require(`../../internal-plugins/webpack-theme-component-shadowing/create-page`)
 
 const actions = {}
 const isWindows = platform() === `win32`
@@ -224,6 +225,11 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       // For test
       return `A component must be set when creating a page`
     }
+  }
+
+  const pageComponentPath = shadowCreatePagePath(page.component)
+  if (pageComponentPath) {
+    page.component = pageComponentPath
   }
 
   // Don't check if the component exists during tests as we use a lot of fake
