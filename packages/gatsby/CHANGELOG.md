@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.18.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.1...gatsby@2.18.2) (2019-11-22)
+
+### Bug Fixes
+
+- **gatsby:** Clean up third party schema customizations to avoid schema rebuilding failure ([#19712](https://github.com/gatsbyjs/gatsby/issues/19712)) ([b703ab1](https://github.com/gatsbyjs/gatsby/commit/b703ab1))
+- **gatsby:** Fix createRequireFromPath deprecation warning ([#19677](https://github.com/gatsbyjs/gatsby/issues/19677)) ([78a7858](https://github.com/gatsbyjs/gatsby/commit/78a7858))
+- **gatsby:** Improve warning message about implicit child fields ([#19657](https://github.com/gatsbyjs/gatsby/issues/19657)) ([3501267](https://github.com/gatsbyjs/gatsby/commit/3501267))
+
+### Performance Improvements
+
+- **gatsby:** perf problem for match-page search in large sites ([#19691](https://github.com/gatsbyjs/gatsby/issues/19691)) ([58b89fa](https://github.com/gatsbyjs/gatsby/commit/58b89fa)), closes [#19512](https://github.com/gatsbyjs/gatsby/issues/19512)
+
 ## [2.18.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.0...gatsby@2.18.1) (2019-11-20)
 
 ### Bug Fixes
