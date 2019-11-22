@@ -696,9 +696,44 @@ const addThirdPartySchemas = ({
   })
 }
 
+const resetOverriddenThirdPartyTypeFields = ({ typeComposer }) => {
+  // The problem: createResolvers API mutates third party schema instance.
+  //   For example it can add a new field referencing a type from our main schema
+  //   Then if we rebuild the schema this old type instance will sneak into
+  //   the new schema and produce the famous error:
+  //   "Schema must contain uniquely named types but contains multiple types named X"
+  // This function only affects schema rebuilding pathway.
+  //   It cleans up artifacts created by the `createResolvers` API of the previous build
+  //   so that we return the third party schema to its initial state (hence can safely re-add)
+  // TODO: the right way to fix this would be not to mutate the third party schema in
+  //   the first place. But unfortunately mutation happens in the `graphql-compose`
+  //   and we don't have an easy way to avoid it without major rework
+  typeComposer.getFieldNames().forEach(fieldName => {
+    const createdFrom = typeComposer.getFieldExtension(fieldName, `createdFrom`)
+    if (createdFrom === `createResolvers`) {
+      typeComposer.removeField(fieldName)
+      return
+    }
+    const config = typeComposer.getFieldExtension(
+      fieldName,
+      `originalFieldConfig`
+    )
+    if (config) {
+      typeComposer.removeField(fieldName)
+      typeComposer.addFields({
+        [fieldName]: config,
+      })
+    }
+  })
+}
+
 const processThirdPartyTypeFields = ({ typeComposer, schemaQueryType }) => {
+  resetOverriddenThirdPartyTypeFields({ typeComposer })
+
   // Fix for types that refer to Query. Thanks Relay Classic!
   typeComposer.getFieldNames().forEach(fieldName => {
+    // Remove customization that we could have added via `createResolvers`
+    // to make it work with schema rebuilding
     const field = typeComposer.getField(fieldName)
     const fieldType = field.type.toString()
     if (fieldType.replace(/[[\]!]/g, ``) === schemaQueryType.name) {
@@ -754,6 +789,15 @@ const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
                 })
               }
               tc.extendField(fieldName, newConfig)
+
+              // See resetOverriddenThirdPartyTypeFields for explanation
+              if (tc.getExtension(`createdFrom`) === `thirdPartySchema`) {
+                tc.setFieldExtension(
+                  fieldName,
+                  `originalFieldConfig`,
+                  originalFieldConfig
+                )
+              }
             } else if (fieldTypeName) {
               report.warn(
                 `\`createResolvers\` passed resolvers for field ` +
@@ -763,7 +807,11 @@ const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
               )
             }
           } else {
-            tc.addFields({ [fieldName]: fieldConfig })
+            tc.addFields({
+              [fieldName]: fieldConfig,
+            })
+            // See resetOverriddenThirdPartyTypeFields for explanation
+            tc.setFieldExtension(fieldName, `createdFrom`, `createResolvers`)
           }
         })
       } else {
