@@ -4529,3 +4529,20 @@
     - Left, Right and no sidebar templates
     - Font awesome icons
     - HTML5UP Design
+- url: http://tina-starter-grande.netlify.com/
+  repo: https://github.com/tinacms/tina-starter-grande
+  description: Feature rich Gatsby starter with full TinaCMS integration
+  tags:
+    - Blog
+    - Markdown
+    - SEO
+    - Netlify
+    - Pagination
+    - CMS:Other
+    - Styling:CSS-in-JS
+  features:
+    - Fully integrated with TinaCMS for easy editing
+    - Blocks based page & form builder
+    - Styled Components
+    - Code syntax highlighting
+    - Light/Dark mode
