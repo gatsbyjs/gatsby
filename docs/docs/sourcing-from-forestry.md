@@ -29,7 +29,7 @@ git remote set-url origin <your-github-repo-link>
 git push -u origin master
 ```
 
-Now that your repository is on GitHub, follow the [Forestry.io get started guide](https://forestry.io/docs/quickstart/setup-site/) on Forestry.io to connect the repository to Forestry. You have to allow Forestry access to your GitHub account to make this work. A pop-up window will automatically open when you select your GitHub repo in the Forestry site setup. Once the site is connected, go to the site settings on the Forestry dashboard. In the Admin Path setting, enter "/admin". This will create a static html file for the Forestry CMS login page at the path: /admin.
+Now that your repository is on GitHub, follow the [Forestry.io get started guide](https://forestry.io/docs/quickstart/setup-site/) on Forestry.io to connect the repository to Forestry. You have to allow Forestry access to your GitHub account to make this work. A pop-up window will automatically open when you select your GitHub repo in the Forestry site setup. Once the site is connected, go to the site settings on the Forestry dashboard. In the Admin Path setting, enter "/static/admin" and click "Deploy Admin". This will create a static html file for the Forestry CMS login page at the path: /admin.
 
 Once Forestry is connected with your GitHub Gatsby site repository, pull Forestry's changes.
 
@@ -37,7 +37,7 @@ Once Forestry is connected with your GitHub Gatsby site repository, pull Forestr
 git pull
 ```
 
-This will add a `.forestry` directory in your project root with the `settings.yml` file. This file allows you to configure your CMS settings including adding content collections. You should also see a new `/admin` directory that contains `index.html`. Create a directory named `static` in your root directory. Move the `/admin` directory into the new `/static` directory. _Important_: The `/admin` directory must be located inside of `/static`. Do not name this directory anything else.
+This will add a `.forestry` directory in your project root with the `settings.yml` file. This file allows you to configure your CMS settings including adding content collections. You should also see a new `/static/admin` directory that contains `index.html`. _Important_: The `/admin` directory must be located inside of `/static`. Do not rename this directory.
 
 ### Settings Configuration
 
@@ -47,7 +47,7 @@ Open `.forestry/settings.yml`. You will see the following default configuration 
 ---
 new_page_extension: md
 auto_deploy: false
-admin_path: /admin
+admin_path: /static/admin
 webhook_url:
 sections:
 upload_dir: uploads
@@ -79,13 +79,7 @@ Open `package.json` and add the following to scripts:
 
 ```json:title=package.json
 "scripts": {
-  "build": "gatsby build",
-  "forestry:preview": "gatsby develop -p 8080 -H 0.0.0.0",
-  "develop": "gatsby develop",
-  "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
-  "start": "npm run develop",
-  "serve": "gatsby serve",
-  "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing \""
+  "forestry:preview": "gatsby develop -p 8080 -H 0.0.0.0"
 },
 ```
 
@@ -120,13 +114,13 @@ fields:
       required: true
 ```
 
-Next, link the frontmatter collection in `.forestry/settings.yml`.
+Next, link the frontmatter collection in `.forestry/settings.yml`. This adds a template in the Forestry dashboard that allows you to add new Blog posts with the configured fields in the CMS.
 
 ```yml:title=.forestry/settings.yml
 ---
 new_page_extension: md
 auto_deploy: false
-admin_path: /admin
+admin_path: /static/admin
 webhook_url:
 sections:
 upload_dir: static/uploads
@@ -151,9 +145,7 @@ sections:
   - blog
 ```
 
-Then in your terminal run `gatsby develop` to start the Gatsby development server. Once the server is running, it will print the address to open for viewing. It's typically `localhost:8000`. Now navigate to `/admin` - so if your site is at `localhost:8000`, go to `localhost:8000/admin`.
-
-You should now be viewing your Forestry login page. Login to view your dashboard. If you don't have a user yet, create one on the Forestry Dashboard. This will allow you to login on the Gatsby site admin login page. On the left side of your dashboard you will see "Posts". If you click on it you can add a new post. When you save your post, Forestry will push the change directly to your GitHub repo.
+Because Forestry's `admin.html` file is in the `/static` directory, this page will only be available once your Gatsby site is built. Deploy your site to Netlify and you can see your Forestry dashboard.
 
 ### Deploying to Netlify
 
@@ -163,8 +155,10 @@ automatically, just select your GitHub repo and go with the default options. Onc
 GitHub repo to Netlify, deployment will begin. Note that the first deployment could take a few
 minutes since a lot of things aren't cached yet. Subsequent deploys will be faster.
 
-Once deployment is complete you'll be able to view your live site, which should look the same as it
-did locally.
+Once deployment is complete you'll be able to access your Forestry dashboard from your live site.
+Navigate to your site's Forestry admin by going to &lt;your-site&gt;/admin.
+
+You should now be viewing your Forestry login page. Login to view your dashboard. If you don't have a user yet, create one on the Forestry Dashboard. This will allow you to login on the Gatsby site admin login page. On the left side of your dashboard you will see "Posts". If you click on it you can add a new post. When you save your post, Forestry will push the change directly to your GitHub repo.
 
 ### Making Changes
 
