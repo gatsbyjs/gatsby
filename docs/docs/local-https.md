@@ -110,15 +110,25 @@ If you need to use a custom https setup, you can pass the `--https`, `--key-file
 - `--key-file` [relative/absolute path to ssl key file]
 - `--ca-file` [relative/absolute path to ssl certificate authority file]
 
-See the example command:
+See the example commands below:
 
-```shell
-# Using relative paths
-$ gatsby develop --https --key-file ../relative/path/to/key.key --cert-file ../relative/path/to/cert.crt --ca-file ../relative/path/to/ca.crt
+* Using `npm run develop`
+  ```shell
+  # Using relative paths
+  $ npm run develop -- --https --key-file ../relative/path/to/key.key --cert-file ../relative/path/to/cert.crt --ca-file ../relative/path/to/ca.crt
 
-# Or using absolute paths
-$ gatsby develop --https --key-file /absolute/path/to/key.key --cert-file /absolute/path/to/cert.crt --ca-file /absolute/path/to/ca.crt
-```
+  # Or using absolute paths
+  $ npm run develop -- --https --key-file /absolute/path/to/key.key --cert-file /absolute/path/to/cert.crt --ca-file /absolute/path/to/ca.crt
+  ```
+
+* Alternatively, you can run the development server using the gatsby cli
+  ```shell
+  # Using relative paths
+  $ gatsby develop --https --key-file ../relative/path/to/key.key --cert-file ../relative/path/to/cert.crt --ca-file ../relative/path/to/ca.crt
+
+  # Or using absolute paths
+  $ gatsby develop --https --key-file /absolute/path/to/key.key --cert-file /absolute/path/to/cert.crt --ca-file /absolute/path/to/ca.crt
+  ```
 
 Usage of the `--ca-file` flag is only required if your certificate is signed by a certificate authority.
 
