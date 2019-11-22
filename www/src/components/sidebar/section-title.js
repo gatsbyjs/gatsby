@@ -80,6 +80,7 @@ const TitleButton = ({
 )
 
 const SplitButton = ({
+  itemRef,
   createLink,
   isActive,
   isExpanded,
@@ -91,6 +92,7 @@ const SplitButton = ({
   uid,
 }) => (
   <span
+    ref={itemRef}
     css={{
       alignItems: `flex-end`,
       display: `flex`,
