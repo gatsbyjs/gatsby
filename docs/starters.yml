@@ -4507,3 +4507,25 @@
     - Customizable with Tailwind CSS
     - Code highlighting with Prism
     - RSS feed
+- url: https://gatsby-starter-landed.netlify.com/
+  repo: https://github.com/vasrush/gatsby-starter-landed
+  description: A Gatsby theme based on Landed template by HTML5UP
+  tags:
+    - HTML5UP
+    - Landing Page
+    - Portfolio
+    - Linting
+    - Styling:SCSS
+    - Transitions
+    - SEO
+  features:
+    - Includes sections to easily create landing pages
+    - React Helmet <head> Management
+    - Easily update menus & submenus in gatsby-config file
+    - Integrates react-scroll and react-reveal for transitions
+    - ESLint and Prettier for safety and consistent code style
+    - Offline-ready
+    - Responsive design
+    - Left, Right and no sidebar templates
+    - Font awesome icons
+    - HTML5UP Design
