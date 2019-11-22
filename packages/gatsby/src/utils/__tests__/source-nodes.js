@@ -1,6 +1,6 @@
-const path = require(`path`)
 require(`../../db/__tests__/fixtures/ensure-loki`)()
 const { getNodes } = require(`../../db/nodes`)
+const { store } = require(`../../redux`)
 
 const getNodeCount = () => getNodes().length
 const getNodeIds = () =>
@@ -10,13 +10,31 @@ const getNodeIds = () =>
 
 let mockAPIs = {}
 jest.doMock(`../../utils/api-runner-node`, () => {
-  const fn = (apiName, args = {}) => {
+  const fn = (apiName, apiRunArgs = {}) => {
+    const { boundActionCreators } = require(`../../redux/actions`)
+    const doubleBoundActionCreators = Object.keys(boundActionCreators).reduce(
+      (acc, actionName) => {
+        acc[actionName] = (...args) =>
+          boundActionCreators[actionName](
+            ...args,
+            {
+              name: `gatsby-source-test`,
+              version: `1.0.0`,
+            },
+            apiRunArgs
+          )
+        return acc
+      },
+      {}
+    )
+
     if (mockAPIs[apiName]) {
       return mockAPIs[apiName](
         {
           actions: doubleBoundActionCreators,
           createContentDigest: require(`gatsby-core-utils`).createContentDigest,
-          ...args,
+          store,
+          ...apiRunArgs,
         },
         pluginOptions
       )
@@ -30,25 +48,12 @@ jest.doMock(`../../utils/api-runner-node`, () => {
   return fn
 })
 
-const { boundActionCreators } = require(`../../redux/actions`)
-const doubleBoundActionCreators = Object.keys(boundActionCreators).reduce(
-  (acc, actionName) => {
-    acc[actionName] = (...args) =>
-      boundActionCreators[actionName](...args, {
-        name: `gatsby-source-test`,
-        version: `1.0.0`,
-      })
-    return acc
-  },
-  {}
-)
-
-const { store } = require(`../../redux`)
 require(`../../redux/plugin-runner`)
 
 let pluginOptions = {}
 
-const resetNodes = ({ actions }) => {
+// custom API to have access to actions
+mockAPIs[`resetNodes`] = ({ actions }) => {
   actions.createNode({
     id: `node-1`,
     children: [`node-1-1`],
@@ -67,15 +72,16 @@ const resetNodes = ({ actions }) => {
   })
 }
 
-const run = async ({ sourceNodes }) => {
+const run = async ({ sourceNodes, sourceNodesStatefully }) => {
   mockAPIs[`sourceNodes`] = sourceNodes
+  mockAPIs[`sourceNodesStatefully`] = sourceNodesStatefully
 
   let sourceNodesFn
   jest.isolateModules(async () => {
     sourceNodesFn = jest.fn(require(`../source-nodes`))
   })
 
-  await sourceNodesFn()
+  await sourceNodesFn({ firstRun: true })
 
   return {
     refresh: async ({ sourceNodes } = {}) => {
@@ -83,19 +89,20 @@ const run = async ({ sourceNodes }) => {
         mockAPIs[`sourceNodes`] = sourceNodes
       }
 
-      await sourceNodesFn()
+      await sourceNodesFn({ firstRun: false })
     },
     sourceNodesFn,
   }
 }
 
 describe(`garbage collect stale nodes`, () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     store.dispatch({
       type: `DELETE_CACHE`,
     })
 
-    resetNodes({ actions: doubleBoundActionCreators })
+    const apiRunner = require(`../../utils/api-runner-node`)
+    await apiRunner(`resetNodes`)
   })
 
   describe(`garbage collection works on first sourceNodes`, () => {
@@ -222,79 +229,99 @@ describe(`garbage collect stale nodes`, () => {
     expect(getNodeIds()).toEqual([`node-3`])
   })
 
-  describe(`SitePage`, () => {
-    beforeAll(() => {
-      const {
-        onCreatePage,
-      } = require(`../../internal-plugins/internal-data-bridge/gatsby-node`)
-      mockAPIs[`onCreatePage`] = onCreatePage
-    })
-    afterAll(() => {
-      mockAPIs[`onCreatePage`] = undefined
+  describe(`sourceNodesStatefully`, () => {
+    // add stale stateful node to assert it's being garbage collected on first source-nodes run
+    beforeEach(async () => {
+      store.dispatch({
+        type: `DELETE_CACHE`,
+      })
+
+      store.dispatch({
+        type: `CREATE_NODE`,
+        payload: {
+          id: `stateful-stale`,
+          children: [],
+          internal: {
+            type: `Stateful`,
+            contentDigest: `0`,
+            isCreatedByStatefulSourceNodes: true,
+          },
+        },
+      })
     })
 
-    it(`Preserve SitePage nodes even if they are not created in sourceNodes lifecycle`, async () => {
+    it(`Preserve nodes created statefully even if they are not created in sourceNodes lifecycle`, async () => {
+      // baseline - look for stale node that should be garbage collected in next source-nodes run
+      expect(getNodeCount()).toEqual(1)
+      expect(getNodeIds()).toEqual([`stateful-stale`])
+
+      let unsynchronizedUpdateAddNode, unsynchronizedUpdateDeleteNode
       const { refresh, sourceNodesFn } = await run({
         sourceNodes: () => {},
+        sourceNodesStatefully: ({ actions }) => {
+          actions.createNode({
+            id: `stateful-1`,
+            internal: {
+              type: `Stateful`,
+              contentDigest: `0`,
+            },
+          })
+          const node2 = {
+            id: `stateful-2`,
+            internal: {
+              type: `Stateful`,
+              contentDigest: `0`,
+            },
+          }
+          actions.createNode(node2)
+
+          unsynchronizedUpdateAddNode = () => {
+            actions.createNode({
+              id: `stateful-3`,
+              internal: {
+                type: `Stateful`,
+                contentDigest: `0`,
+              },
+            })
+          }
+          unsynchronizedUpdateDeleteNode = () => {
+            actions.deleteNode({
+              node: node2,
+            })
+          }
+        },
       })
 
       expect(sourceNodesFn).toBeCalledTimes(1)
+      expect(getNodeCount()).toEqual(2)
+      // we don't have `stateful-stale` node anymore
+      expect(getNodeIds()).toEqual([`stateful-1`, `stateful-2`])
 
-      doubleBoundActionCreators.createPage({
-        path: `/path-A/`,
-        component: path.resolve(`./fixtures/template-component.js`),
-      })
+      // call unsychronized update #1
+      unsynchronizedUpdateAddNode()
+      expect(getNodeCount()).toEqual(3)
+      expect(getNodeIds()).toEqual([`stateful-1`, `stateful-2`, `stateful-3`])
 
-      expect(sourceNodesFn).toBeCalledTimes(1)
-      expect(getNodeCount()).toEqual(1)
-      expect(getNodes()).toEqual(
-        expect.arrayContaining([
-          expect.objectContaining({
-            path: `/path-A/`,
-          }),
-        ])
-      )
-
-      // add new page
-      doubleBoundActionCreators.createPage({
-        path: `/path-B/`,
-        component: path.resolve(`./fixtures/template-component.js`),
-      })
-
-      // call sourceNodes - sourceNodes will not create SitePage,
-      // so we are checking if SitePage nodes are preserved
+      // call sourceNodes - sourceNodes will not create Stateful nodes,
+      // so we are checking if Stateful nodes are preserved
       await refresh()
 
       expect(sourceNodesFn).toBeCalledTimes(2)
-      expect(getNodes()).toEqual(
-        expect.arrayContaining([
-          expect.objectContaining({
-            path: `/path-A/`,
-          }),
-          expect.objectContaining({
-            path: `/path-B/`,
-          }),
-        ])
-      )
+      expect(getNodeCount()).toEqual(3)
+      expect(getNodeIds()).toEqual([`stateful-1`, `stateful-2`, `stateful-3`])
 
-      // remove 1 page
-      doubleBoundActionCreators.deletePage({
-        path: `/path-B/`,
-        component: path.resolve(`./fixtures/template-component.js`),
-      })
+      // call unsychronized update #2
+      unsynchronizedUpdateDeleteNode()
+      expect(getNodeCount()).toEqual(2)
+      expect(getNodeIds()).toEqual([`stateful-1`, `stateful-3`])
 
-      // call sourceNodes - sourceNodes will not create SitePage,
-      // so we are checking if SitePage nodes are preserved
+      // call sourceNodes - sourceNodes will not create Stateful nodes,
+      // so we are checking if Stateful nodes are preserved
       await refresh()
 
       expect(sourceNodesFn).toBeCalledTimes(3)
-      expect(getNodes()).toEqual(
-        expect.arrayContaining([
-          expect.objectContaining({
-            path: `/path-A/`,
-          }),
-        ])
-      )
+      expect(getNodeCount()).toEqual(2)
+      expect(getNodeIds()).toEqual([`stateful-1`, `stateful-3`])
     })
   })
 })
