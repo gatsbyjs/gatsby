@@ -19,7 +19,7 @@ Here’s the reason I’m writing this blogpost. We are making the [Cloud Quicks
 ## How are we making Gatsby Cloud better over time?
 
 ### We’re learning about users
-We watched 8 React developers who hadn’t ever heard of Gatsby before as they created an account on Gatsby Cloud. We took careful notes, implemented new designs, and ran the usability tests _again_. 
+We watched 8 React developers who had never heard of Gatsby before create an account on Gatsby Cloud. We took careful notes, implemented new designs, and ran the usability tests _again_. 
 
 Here’s a few screenshots from earlier designs with some notes summarizing major feedback from users.
 
