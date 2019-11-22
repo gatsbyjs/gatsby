@@ -1,6 +1,8 @@
 const fs = require(`fs`)
 const v8 = require(`v8`)
 
+const db = require(`gatsby/dist/db`)
+
 exports.sourceNodes = ({ actions }) => {
   const { createNode } = actions
   createNode({
@@ -17,7 +19,11 @@ exports.onPreBootstrap = ({ store }) => {
   fs.writeFileSync(`./on_pre_bootstrap`, v8.serialize(state.nodes))
 }
 
-exports.onPostBuild = ({ store }) => {
+exports.onPostBootstrap = async ({ store }) => {
   const state = store.getState()
-  fs.writeFileSync(`./on_post_build`, v8.serialize(state.nodes))
+  fs.writeFileSync(`./on_post_bootstrap`, v8.serialize(state.nodes))
+  await db.saveState()
+  process.exit()
 }
+// Placeholder comment for invalidation// Placeholder comment for invalidation// Placeholder comment for invalidation
+// Placeholder comment for invalidation// Placeholder comment for invalidation// Placeholder comment for invalidation// Placeholder comment for invalidation// Placeholder comment for invalidation// Placeholder comment for invalidation
