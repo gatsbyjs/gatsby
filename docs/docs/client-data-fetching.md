@@ -1,14 +1,18 @@
 ---
-title: Client Data Fetching
+title: Build Time and Client-side Data Fetching
 ---
 
-## Context
+This guide touches on how to fetch data at both [_build time_](/docs/glossary#build) and [_runtime_](/docs/glossary#runtime). It uses the [`gatsby-source-graphql`](/packages/gatsby-source-graphql/) plugin to fetch data at build time on the Node.js server that Gatsby runs when you run `gatsby build`, and the [`axios`](https://github.com/axios/axios) package to fetch different data on the [client-side](/docs/glossary#client-side) when the page loads in the browser.
 
-This article touches on how to fetch data at both _build time_ and _run time_. It uses the plugin [`gatsby-source-graphql`](/packages/gatsby-source-graphql/) to fetch data at [build time](/docs/glossary#build) on the server, while it uses the [`axios`](https://github.com/axios/axios) package to fetch different data on the [client-side](/docs/glossary#client-side) when the page loads.
+## The benefits of the hybrid nature of Gatsby apps
 
-When this article mentions [hydration](/docs/glossary#hydration), it means that Gatsby (through React.js) builds static files to render server-side. When Gatsby's script bundle downloads and executes in the browser, it preserves the HTML markup built by Gatsby and turns the site into a full React web application that can manipulate the [DOM](/docs/glossary#dom). The result of this process creates fast loading pages and a nice user experience.
+Because Gatsby is capable of generating content at build time as well as making calls to external services at runtime, you can make [hybrid pages](/docs/adding-app-and-website-functionality/#hybrid-app-pages) that take advantage of the benefits of static content as well as dynamic content. You can gather data ahead of time while the site builds so that when a user loads your page the data is already ready. Then, for data that is of a more dynamic nature, you can request data from another service like an API.
 
-Compiling pages at [build-time](/docs/glossary#build) is useful when your website content won't change often, or when triggering a build process to recompile works fine. However, some websites with more dynamic needs require a [client-side](/docs/glossary#client-side) [runtime](/docs/glossary#runtime) to handle constantly changing content after the page loads, like a chat widget or an email client web application.
+When this guide mentions [hydration](/docs/glossary#hydration), it means that Gatsby (through React.js) builds static files to render server-side. When Gatsby's script bundle downloads and executes in the browser, it preserves the HTML markup built by Gatsby and turns the site into a full React web application that can manipulate the [DOM](/docs/glossary#dom). The result of this process creates fast loading pages and a nice user experience.
+
+> To understand how statically generated content can turn into a React app, refer to the [Understanding React Hydration guide](/docs/react-hydration)
+
+Compiling pages at build time is useful when your website content won't change often, or when triggering a build process to recompile works fine. However, some websites with more dynamic needs require a [client-side](/docs/glossary#client-side) runtime to handle constantly changing content after the page loads, like a chat widget, user upvotes, or an email client web application.
 
 ## Combining build-time and client run-time data
 
