@@ -17,7 +17,7 @@ jest.mock(`devcert`, () => {
   }
 })
 
-const certificateFor = require(`devcert`)
+const { certificateFor } = require(`devcert`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 const getSslCert = require(`../get-ssl-cert`)
 
