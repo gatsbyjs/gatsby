@@ -36,6 +36,7 @@ Things we’re looking for in Gatsby blog content:
 - Other topics that you think would be valuable to people learning about or working with Gatsby
 
 Things we’d like to avoid on the Gatsby blog:
+- __Docs content.__ Some content is better found in the Gatsby docs guides and tutorials, as it can be found in a section for related content and not buried under pages of other paginated blog posts.
 - __Promotional content.__ Please don’t submit content to the Gatsby blog solely for the purpose of promoting a product, yourself, or link-building.
     - __Here’s what you can do instead:__ If you have a product or project you want to share on the Gatsby blog, focus on practical information, and make sure there’s a clear relationship with Gatsby or Gatsby-adjacent topics. You could write a step by step guide to using your product with Gatsby. You could write a case study highlighting the direct impact Gatsby had on your awesome project and offer helpful tips for other to recreate your success.
 - __Content that doesn’t seem to have a clear benefit for Gatsby users and/or the Gatsby community.__ For example, if you’re writing about a use-case or integration that’s extremely niche or unique to specific conditions that are really uncommon outside of your organization, the Gatsby blog might not be the best place for your content. Likewise, if your blog post doesn’t seem to have any direct relationship with Gatsby (or an interesting indirect relationship with Gatsby), then it may be more appropriate for a personal blog or another community blog.
