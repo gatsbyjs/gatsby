@@ -23,7 +23,13 @@ We watched 8 React developers who hadn’t ever heard of Gatsby before as they c
 
 Here’s a few screenshots from earlier designs with some notes summarizing major feedback from users.
 
+### Earliest version
+Here's the earliest version we shipped.
+
 ![A screenshot of an earlier onboarding design](first-phase.png)
+
+### Next phase
+Here's a screenshot of a Figma prototype we tested based on feedback on the first version.
 
 ![A screenshot of a prototype that we tested next](middle-option.png)
 
