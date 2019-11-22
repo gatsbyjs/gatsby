@@ -13,7 +13,7 @@ const _ = require(`lodash`)
 const { fluid, stats, traceSVG } = require(`gatsby-plugin-sharp`)
 const Promise = require(`bluebird`)
 const cheerio = require(`cheerio`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 const chalk = require(`chalk`)
 
 // If the image is relative (not hosted elsewhere)
@@ -286,6 +286,9 @@ module.exports = (
     if (options.disableBgImageOnAlpha) {
       const imageStats = await stats({ file: imageNode, reporter })
       if (imageStats && imageStats.isTransparent) removeBgImage = true
+    }
+    if (options.disableBgImage) {
+      removeBgImage = true
     }
 
     const bgImage = removeBgImage

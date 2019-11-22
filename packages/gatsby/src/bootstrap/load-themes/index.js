@@ -5,13 +5,15 @@ const _ = require(`lodash`)
 const debug = require(`debug`)(`gatsby:load-themes`)
 const preferDefault = require(`../prefer-default`)
 const getConfigFile = require(`../get-config-file`)
+const { resolvePlugin } = require(`../load-plugins/load`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 
 // get the gatsby-config file for a theme
 const resolveTheme = async (
   themeSpec,
   configFileThatDeclaredTheme,
-  isMainConfig = false
+  isMainConfig = false,
+  rootDir
 ) => {
   const themeName = themeSpec.resolve || themeSpec
   let themeDir
@@ -25,12 +27,13 @@ const resolveTheme = async (
     // local themes nested in other themes is potential source of problems:
     // because those are not hosted by npm, there is potential for multiple
     // local themes with same name that do different things and name being
-    // main identifier that gatsby uses right now, it's safer not to support it for now.
+    // main identifier that Gatsby uses right now, it's safer not to support it for now.
     if (isMainConfig) {
       pathToLocalTheme = path.join(path.resolve(`.`), `plugins`, themeName)
       // is a local plugin OR it doesn't exist
       try {
-        themeDir = path.dirname(require.resolve(pathToLocalTheme))
+        const { resolve } = resolvePlugin(themeName, rootDir)
+        themeDir = resolve
       } catch (localErr) {
         // catch shouldn't be empty :shrug:
       }
@@ -73,20 +76,20 @@ const resolveTheme = async (
 // off track and creating their own set of themes
 const processTheme = (
   { themeName, themeConfig, themeSpec, themeDir, configFilePath },
-  { useLegacyThemes }
+  { useLegacyThemes, rootDir }
 ) => {
   const themesList = useLegacyThemes
     ? themeConfig && themeConfig.__experimentalThemes
     : themeConfig && themeConfig.plugins
-  // gatsby themes don't have to specify a gatsby-config.js (they might only use gatsby-node, etc)
+  // Gatsby themes don't have to specify a gatsby-config.js (they might only use gatsby-node, etc)
   // in this case they're technically plugins, but we should support it anyway
   // because we can't guarantee which files theme creators create first
   if (themeConfig && themesList) {
     // for every parent theme a theme defines, resolve the parent's
     // gatsby config and return it in order [parentA, parentB, child]
     return Promise.mapSeries(themesList, async spec => {
-      const themeObj = await resolveTheme(spec, configFilePath)
-      return processTheme(themeObj, { useLegacyThemes })
+      const themeObj = await resolveTheme(spec, configFilePath, false, rootDir)
+      return processTheme(themeObj, { useLegacyThemes, rootDir })
     }).then(arr =>
       arr.concat([{ themeName, themeConfig, themeSpec, themeDir }])
     )
@@ -98,13 +101,18 @@ const processTheme = (
 
 module.exports = async (
   config,
-  { useLegacyThemes = false, configFilePath }
+  { useLegacyThemes = false, configFilePath, rootDir }
 ) => {
   const themesA = await Promise.mapSeries(
     useLegacyThemes ? config.__experimentalThemes || [] : config.plugins || [],
     async themeSpec => {
-      const themeObj = await resolveTheme(themeSpec, configFilePath, true)
-      return processTheme(themeObj, { useLegacyThemes })
+      const themeObj = await resolveTheme(
+        themeSpec,
+        configFilePath,
+        true,
+        rootDir
+      )
+      return processTheme(themeObj, { useLegacyThemes, rootDir })
     }
   ).then(arr => _.flattenDeep(arr))
 

@@ -1,5 +1,5 @@
 const _ = require(`lodash`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 const fs = require(`fs`)
 const path = require(`path`)
 const crypto = require(`crypto`)
@@ -22,7 +22,7 @@ function createFileContentHash(root, globPattern) {
 }
 
 /**
- * Make sure key is unique to plugin options. E.g there could
+ * Make sure key is unique to plugin options. E.g. there could
  * be multiple source-filesystem plugins, with different names
  * (docs, blogs).
  * @param {*} name Name of the plugin
@@ -108,7 +108,7 @@ function resolvePlugin(pluginName, rootDir) {
   }
 }
 
-module.exports = (config = {}, rootDir = null) => {
+const loadPlugins = (config = {}, rootDir = null) => {
   // Instantiate plugins.
   const plugins = []
 
@@ -240,4 +240,9 @@ module.exports = (config = {}, rootDir = null) => {
   )
 
   return plugins
+}
+
+module.exports = {
+  loadPlugins,
+  resolvePlugin,
 }

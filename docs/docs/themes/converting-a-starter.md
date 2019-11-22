@@ -90,3 +90,7 @@ Once you've published, you can install the theme in your starter.
 ```shell
 npm install --save gatsby-theme-NAME
 ```
+
+## Walkthrough
+
+- [Jason Lengstorf converts an existing Gatsby site to a theme](https://www.youtube.com/watch?v=NkW06HK9-aY)

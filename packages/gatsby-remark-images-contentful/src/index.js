@@ -4,6 +4,7 @@ const axios = require(`axios`)
 const _ = require(`lodash`)
 const Promise = require(`bluebird`)
 const cheerio = require(`cheerio`)
+const chalk = require(`chalk`)
 const { buildResponsiveSizes } = require(`./utils`)
 
 // If the image is hosted on contentful
@@ -34,6 +35,7 @@ module.exports = async (
     showCaptions: false,
     pathPrefix,
     withWebp: false,
+    loading: `lazy`,
   }
 
   // This will only work for markdown syntax image tags
@@ -97,6 +99,18 @@ module.exports = async (
     const fileNameNoExt = fileName.replace(/\.[^/.]+$/, ``)
     const defaultAlt = fileNameNoExt.replace(/[^A-Z0-9]/gi, ` `)
 
+    const loading = options.loading
+
+    if (![`lazy`, `eager`, `auto`].includes(loading)) {
+      reporter.warn(
+        reporter.stripIndent(`
+        ${chalk.bold(loading)} is an invalid value for the ${chalk.bold(
+          `loading`
+        )} option. Please pass one of "lazy", "eager" or "auto".
+      `)
+      )
+    }
+
     // Create our base image tag
     let imageTag = `
       <img
@@ -109,6 +123,7 @@ module.exports = async (
         src="${fallbackSrc}"
         srcset="${srcSet}"
         sizes="${responsiveSizesResult.sizes}"
+        loading="${loading}"
       />
    `.trim()
 
@@ -133,6 +148,7 @@ module.exports = async (
             alt="${node.alt ? node.alt : defaultAlt}"
             title="${node.title ? node.title : ``}"
             src="${fallbackSrc}"
+            loading="${loading}"
           />
         </picture>
       `.trim()

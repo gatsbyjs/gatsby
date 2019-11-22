@@ -58,7 +58,7 @@ function findLastTextNode(node, textNode) {
   }
   if (node.children) {
     node.children.forEach(child => {
-      const laterTextNode = findLastTextNode(child)
+      const laterTextNode = findLastTextNode(child, textNode)
       if (laterTextNode !== textNode) {
         textNode = laterTextNode
       }
