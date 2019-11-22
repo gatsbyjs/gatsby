@@ -47,7 +47,7 @@ Connecting with a GitHub organization is the most confusing step, for several re
 We’re currently shipping some more improvements to the GitHub integration that I’ll blog about in a separate post soon!
 
 ## What created friction for people onboarding onto Gatsby Cloud?
-Choosing a CMS was confusing to four of the eight testers. None of them had an opinion on which CMS to choose. We learned from this that an MDX starter would avoid requiring users to choose a CMS. 
+Choosing a CMS was confusing for four of the eight testers. None of them had an opinion on which CMS to choose. We learned from this that an MDX starter would avoid requiring users to choose a CMS. 
 
 ## What creates value for people onboarding onto Gatsby Cloud?
 There were some good things about onboarding, and we want those good things to persist and grow, if possible.
@@ -79,5 +79,4 @@ Hearing your feedback helps us make Gatsby better. Sign up to tell me about your
 It’d also be valuable to hear which CMSs and/or other data sources you’d like to see integrations and starters for! [Take this survey to let us know](insert link)
 
  
-
 
