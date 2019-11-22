@@ -188,7 +188,9 @@ const Navigation = ({ pathname }) => {
                 listStyle: `none`,
                 m: 0,
                 maskImage: t =>
-                  `linear-gradient(to right, transparent, white ${t.space[1]}, white 98%, transparent)`,
+                  `linear-gradient(to right, transparent, white ${
+                    t.space[1]
+                  }, white 98%, transparent)`,
                 overflowX: `auto`,
               },
             }}

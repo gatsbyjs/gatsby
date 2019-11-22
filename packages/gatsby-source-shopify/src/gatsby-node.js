@@ -175,7 +175,10 @@ const createShopPolicies = async ({
   Object.entries(policies)
     .filter(([_, policy]) => Boolean(policy))
     .forEach(
-      pipe(([type, policy]) => ShopPolicyNode(policy, { type }), createNode)
+      pipe(
+        ([type, policy]) => ShopPolicyNode(policy, { type }),
+        createNode
+      )
     )
   if (verbose) console.timeEnd(msg)
 }

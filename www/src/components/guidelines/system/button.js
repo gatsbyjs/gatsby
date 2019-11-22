@@ -7,7 +7,10 @@ import Box from "./box"
 
 const buttonPropTypes = { ...propTypes.border, ...propTypes.typography }
 
-const styleProps = compose(border, typography)
+const styleProps = compose(
+  border,
+  typography
+)
 
 const Button = styled(Box)(
   props => {
