@@ -3,7 +3,6 @@ import { jsx } from "theme-ui"
 import React from "react"
 import { navigate, PageRenderer } from "gatsby"
 import mousetrap from "mousetrap"
-import loadable from "@loadable/component"
 import MdClose from "react-icons/lib/md/close"
 
 import { Global } from "@emotion/core"
@@ -24,10 +23,9 @@ import PageWithSidebar from "../components/page-with-sidebar"
 import SiteMetadata from "../components/site-metadata"
 import SkipNavLink from "../components/skip-nav-link"
 import "../assets/fonts/futura"
+import LazyModal from "./modal"
 
 let windowWidth
-
-const LazyModal = loadable(() => import(`react-modal`))
 
 class DefaultLayout extends React.Component {
   constructor() {
@@ -39,19 +37,8 @@ class DefaultLayout extends React.Component {
     navigate(this.props.modalBackgroundPath)
   }
 
-  // Since we use Modal.setAppElement(), we need to load Modal manually
-  loadModal() {
-    if (!LazyModal.setAppElement) {
-      LazyModal.load().then(() => {
-        LazyModal.setAppElement(`#___gatsby`)
-      })
-    }
-  }
-
   componentDidMount() {
     if (this.props.isModal && window.innerWidth > 750) {
-      this.loadModal()
-
       mousetrap.bind(`left`, this.props.modalPrevious)
       mousetrap.bind(`right`, this.props.modalNext)
       mousetrap.bind(`spacebar`, this.props.modalNext)
