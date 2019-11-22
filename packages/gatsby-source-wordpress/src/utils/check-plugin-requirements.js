@@ -8,17 +8,14 @@ const isWpGatsby = async (_, pluginOptions) =>
           isWpGatsby
         }
       `,
+    errorMap: {
+      from: `Cannot query field "isWpGatsby" on type "RootQuery".`,
+      to: `WPGatsby is not active in your WordPress installation. Please install it.`,
+    },
   })
 
 const checkPluginRequirements = async (helpers, pluginOptions) => {
-  const fetchIsWpGatsby = await isWpGatsby(helpers, pluginOptions)
-
-  if (!fetchIsWpGatsby.data || !fetchIsWpGatsby.data.isWpGatsby) {
-    console.error(
-      `[gatsby-source-wordpress] - Couldn't connect to WPGatsby, please install it :)`
-    )
-    process.exit()
-  }
+  await isWpGatsby(helpers, pluginOptions)
 }
 
 export default checkPluginRequirements
