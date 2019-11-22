@@ -1,3 +1,15 @@
+- url: https://gatsby-theme-sky-lite.netlify.com
+  repo: https://github.com/vim-labs/gatsby-theme-sky-lite-starter
+  description: A lightweight GatsbyJS starter with Material-UI and MDX Markdown support.
+  tags:
+    - Blog
+    - Styling:Material
+  features:
+    - Lightweight
+    - Markdown
+    - MDX
+    - MaterialUI Components
+    - React Icons
 - url: https://authenticaysh.netlify.com/
   repo: https://github.com/ben-siewert/gatsby-starter-auth-aws-amplify
   description: Full-featured Auth with AWS Amplify & AWS Cognito
@@ -4467,3 +4479,31 @@
     - Based on the official Gatsby starter blog
     - Uses TailwindCSS
     - Uses PostCSS
+- url: https://gastby-starter-zeevo.netlify.com/
+  repo: https://github.com/zeevosec/gatsby-starter-zeevo
+  description: Yet another Blog starter with a different style
+  tags:
+    - Blog
+    - Markdown
+    - SEO
+  features:
+    - Extendable
+    - Feature filters
+    - Performant
+- url: https://gatsby-theme-phoenix-demo.netlify.com
+  repo: https://github.com/arshad/gatsby-theme-phoenix
+  description: A personal blogging and portfolio theme for Gatsby with great typography and dark mode.
+  tags:
+    - Blog
+    - Portfolio
+    - SEO
+    - MDX
+    - Styling:Tailwind
+    - Styling:PostCSS
+  features:
+    - MDX - Posts, Pages and Projects
+    - Tags/Categories
+    - Dark mode
+    - Customizable with Tailwind CSS
+    - Code highlighting with Prism
+    - RSS feed

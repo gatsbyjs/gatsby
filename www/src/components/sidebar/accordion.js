@@ -6,6 +6,7 @@ import Item from "./item"
 import { Title, TitleButton, SplitButton } from "./section-title"
 
 const ItemWithSubitems = ({
+  itemRef,
   activeItemLink,
   createLink,
   isExpanded,
@@ -22,6 +23,7 @@ const ItemWithSubitems = ({
 
   return item.link ? (
     <SplitButton
+      itemRef={itemRef}
       createLink={createLink}
       isActive={isActive}
       isExpanded={isExpanded}
@@ -67,6 +69,7 @@ class Accordion extends React.Component {
 
   render() {
     const {
+      itemRef,
       activeItemLink,
       activeItemParents,
       createLink,
@@ -122,6 +125,7 @@ class Accordion extends React.Component {
         }}
       >
         <ItemWithSubitems
+          itemRef={itemRef}
           activeItemLink={activeItemLink}
           activeItemParents={activeItemParents}
           createLink={createLink}

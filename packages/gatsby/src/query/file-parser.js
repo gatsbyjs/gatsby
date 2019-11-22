@@ -365,7 +365,7 @@ export default class FileParser {
       return null
     }
 
-    if (text.indexOf(`graphql`) === -1) return null
+    if (!text.includes(`graphql`)) return null
     const hash = crypto
       .createHash(`md5`)
       .update(file)
