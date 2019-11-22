@@ -118,6 +118,23 @@ describe(`gatsby-plugin-sharp`, () => {
       expect(fs.existsSync).toHaveBeenCalledWith(result.absolutePath)
       expect(scheduleJob).not.toHaveBeenCalled()
     })
+
+    it(`Shouldn't schedule a job when outputFile already running`, async () => {
+      scheduleJob.mockClear()
+
+      const result = queueImageResizing({
+        file: getFileObject(path.join(__dirname, `images/144-density.png`)),
+        args: { width: 3 },
+      })
+      queueImageResizing({
+        file: getFileObject(path.join(__dirname, `images/144-density.png`)),
+        args: { width: 3 },
+      })
+
+      await result.finishedPromise
+
+      expect(scheduleJob).toHaveBeenCalledTimes(1)
+    })
   })
 
   describe(`fluid`, () => {
