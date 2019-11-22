@@ -8634,3 +8634,14 @@
     - Web Development
     - Programming
     - Productivity
+- title: Eastman Strings
+  url: https://www.eastmanstrings.com
+  main_url: https://www.eastmanstrings.com
+  description: >
+    Site was built using GatsbyJS, Cosmic CMS, and Netlify.
+  categories:
+    - Business
+    - Music
+  built_by: Tekhaus
+  built_by_url: https://www.tekha.us
+  featured: false
