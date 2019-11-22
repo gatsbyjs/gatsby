@@ -61,4 +61,8 @@ You can also use standard `<a>` links, but you won't get the benefit of prefetch
 
 If you don't want all of your content available on the public web, Gatsby lets you create [client-only routes](/docs/client-only-routes-and-user-authentication) that live behind an authentication gate.
 
+## Performance and Prefetching
+
+In order to improve performance, Gatsby looks for links that appear on the current page to perform prefetching. Before a user has even clicked on a link, Gatsby has started to fetch the page it points to. [More on prefetching](/docs/how-code-splitting-works/#prefetching-chunks)
+
 <GuideList slug={props.slug} />
