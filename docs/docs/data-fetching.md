@@ -18,9 +18,9 @@ Compiling pages at build time is useful when your website content won't change o
 
 Because a Gatsby site [hydrates](/docs/glossary#hydration) into a React app after loading statically, Gatsby is not just for static sites. You can also fetch data dynamically on the client-side as needed, like you would with any other React app.
 
-To illustrate this, check out a small example site that uses both Gatsby's data layer at build-time and data on the client at run-time. This example is based loosely on Jason Lengstorf's [Gatsby with Apollo](https://github.com/jlengstorf/gatsby-with-apollo) example. You'll be fetching character data for Rick (of Rick and Morty) and a random pupper image.
+To illustrate this, check out a small example site that uses both Gatsby's data layer at build-time and data on the client at run-time. It fetches content from GitHub's API at build time and then
 
-> Note: Check out the [full example here](https://github.com/amberleyromo/gatsby-client-data-fetching), if helpful.
+> Note: Check out the [full example here](https://github.com/gatsbyjs/gatsby/examples/data-fetching).
 
 ### 1. Create a Gatsby page component
 
