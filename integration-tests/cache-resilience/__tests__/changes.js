@@ -36,7 +36,6 @@ const compareState = (oldState, newState) => {
     deletions = deletions.filter(deletion => deletion.id !== id)
   })
 
-  console.log(changes)
   return {
     additions: reduceArrayToObject(additions),
     deletions: reduceArrayToObject(deletions),
@@ -125,3 +124,7 @@ describe(`compareState`, () => {
     `)
   })
 })
+
+module.exports = {
+  compareState,
+}

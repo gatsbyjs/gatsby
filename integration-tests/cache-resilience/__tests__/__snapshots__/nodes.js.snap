@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Cache is invalidated when a plugin is updated 1`] = `
+exports[`Cache Nodes are deleted when owner plugin changes 1`] = `
 Map {
   "SitePage /dev-404-page/" => Object {
     "children": Array [],
@@ -19,7 +19,6 @@ Map {
     "children": Array [],
     "id": "d48d1c52-fe48-53cb-8f08-aa4b47dde5a5",
     "internal": Object {
-      "contentDigest": "6d5d91a8bbe54b3216b4e6d5792cb69e",
       "counter": 2,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -48,14 +47,12 @@ Map {
     },
     "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/dev-404-page",
     "ssrAPIs": Array [],
-    "version": "1.0.0",
   },
   "1fc32581-893a-55e8-8927-bcd667e2b700" => Object {
     "browserAPIs": Array [],
     "children": Array [],
     "id": "1fc32581-893a-55e8-8927-bcd667e2b700",
     "internal": Object {
-      "contentDigest": "81e6fca45d08ee9a65095fc6963e2510",
       "counter": 3,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -84,14 +81,12 @@ Map {
     },
     "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/load-babel-config",
     "ssrAPIs": Array [],
-    "version": "1.0.0",
   },
   "a5079d69-ba80-53dc-82f9-0f440bd5448c" => Object {
     "browserAPIs": Array [],
     "children": Array [],
     "id": "a5079d69-ba80-53dc-82f9-0f440bd5448c",
     "internal": Object {
-      "contentDigest": "03662ddd419d97b408f73867f425492a",
       "counter": 4,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -121,14 +116,12 @@ Map {
     },
     "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/internal-data-bridge",
     "ssrAPIs": Array [],
-    "version": "1.0.0",
   },
   "f795702c-a3b8-5a88-88ee-5d06019d44fa" => Object {
     "browserAPIs": Array [],
     "children": Array [],
     "id": "f795702c-a3b8-5a88-88ee-5d06019d44fa",
     "internal": Object {
-      "contentDigest": "c1ba27bb2fc295feba822dbe731733ab",
       "counter": 5,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -157,14 +150,12 @@ Map {
     },
     "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/prod-404",
     "ssrAPIs": Array [],
-    "version": "1.0.0",
   },
   "6f4b2fa9-66b5-5205-a03f-140005a2cfe5" => Object {
     "browserAPIs": Array [],
     "children": Array [],
     "id": "6f4b2fa9-66b5-5205-a03f-140005a2cfe5",
     "internal": Object {
-      "contentDigest": "f979c7b3cbdb5413ef341fbebd9ffc89",
       "counter": 6,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -193,15 +184,41 @@ Map {
     },
     "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/webpack-theme-component-shadowing",
     "ssrAPIs": Array [],
-    "version": "1.0.0",
+  },
+  "04b300f8-40b1-51d3-9a79-3474d5bf24e0" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "04b300f8-40b1-51d3-9a79-3474d5bf24e0",
+    "internal": Object {
+      "counter": 7,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-x",
+    "nodeAPIs": Array [
+      "sourceNodes",
+    ],
+    "packageJson": Object {
+      "bundledDependecies": Array [],
+      "dependencies": Array [],
+      "devDependencies": Array [],
+      "optionalDependecies": Array [],
+      "peerDependencies": Array [],
+    },
+    "parent": null,
+    "pluginFilepath": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/plugins/gatsby-plugin-x",
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/plugins/gatsby-plugin-x",
+    "ssrAPIs": Array [],
   },
   "437b6151-504d-51ee-b0bc-3447e87f9856" => Object {
     "browserAPIs": Array [],
     "children": Array [],
     "id": "437b6151-504d-51ee-b0bc-3447e87f9856",
     "internal": Object {
-      "contentDigest": "5cf81da9bb8559faee055e1db7756a44",
-      "counter": 7,
+      "counter": 8,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -286,15 +303,13 @@ Map {
     },
     "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
-    "version": "2.1.31",
   },
   "cc7735e2-c2d3-5246-aa7d-80becac49c63" => Object {
     "browserAPIs": Array [],
     "children": Array [],
     "id": "cc7735e2-c2d3-5246-aa7d-80becac49c63",
     "internal": Object {
-      "contentDigest": "9bb9152709cdff3da7beeca523aa9f25",
-      "counter": 8,
+      "counter": 9,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -379,15 +394,13 @@ Map {
     },
     "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
-    "version": "2.1.31",
   },
   "ab5821ea-a83b-5db5-8c12-c907ae29a10d" => Object {
     "browserAPIs": Array [],
     "children": Array [],
     "id": "ab5821ea-a83b-5db5-8c12-c907ae29a10d",
     "internal": Object {
-      "contentDigest": "bac168d84f88c0159f6aa1430c6bd099",
-      "counter": 9,
+      "counter": 10,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -472,15 +485,13 @@ Map {
     },
     "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
-    "version": "2.1.31",
   },
   "1ed0b446-2f83-5083-9f9d-c0aa65d6ae86" => Object {
     "browserAPIs": Array [],
     "children": Array [],
     "id": "1ed0b446-2f83-5083-9f9d-c0aa65d6ae86",
     "internal": Object {
-      "contentDigest": "5ba4cfe3ac5ca99aab907f120ecfa63d",
-      "counter": 10,
+      "counter": 11,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -565,15 +576,13 @@ Map {
     },
     "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
-    "version": "2.1.31",
   },
   "c32a230d-0d46-5579-bfb1-e7d8b78170dc" => Object {
     "browserAPIs": Array [],
     "children": Array [],
     "id": "c32a230d-0d46-5579-bfb1-e7d8b78170dc",
     "internal": Object {
-      "contentDigest": "855783c852539605ce7766dc0151844d",
-      "counter": 11,
+      "counter": 12,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -658,21 +667,109 @@ Map {
     },
     "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
-    "version": "2.1.31",
+  },
+  "55a76f83-22dd-5eb6-bd32-8c73a097e8c0" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "55a76f83-22dd-5eb6-bd32-8c73a097e8c0",
+    "internal": Object {
+      "counter": 13,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "packageJson": Object {
+      "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+      "bundledDependecies": Array [],
+      "dependencies": Array [
+        Object {
+          "name": "@babel/runtime",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "bluebird",
+          "version": "^3.7.1",
+        },
+        Object {
+          "name": "fs-exists-cached",
+          "version": "^1.0.0",
+        },
+        Object {
+          "name": "gatsby-page-utils",
+          "version": "^0.0.31",
+        },
+        Object {
+          "name": "glob",
+          "version": "^7.1.6",
+        },
+        Object {
+          "name": "lodash",
+          "version": "^4.17.15",
+        },
+        Object {
+          "name": "micromatch",
+          "version": "^3.1.10",
+        },
+      ],
+      "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
+      "devDependencies": Array [
+        Object {
+          "name": "@babel/cli",
+          "version": "^7.7.0",
+        },
+        Object {
+          "name": "@babel/core",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "babel-preset-gatsby-package",
+          "version": "^0.2.11",
+        },
+        Object {
+          "name": "cross-env",
+          "version": "^5.2.1",
+        },
+      ],
+      "keywords": Array [
+        "gatsby",
+        "gatsby-plugin",
+      ],
+      "license": "MIT",
+      "main": "index.js",
+      "name": "gatsby-plugin-page-creator",
+      "optionalDependecies": Array [],
+      "peerDependencies": Array [
+        Object {
+          "name": "gatsby",
+          "version": "^2.0.0",
+        },
+      ],
+      "version": "2.1.31",
+    },
+    "parent": null,
+    "pluginFilepath": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/plugins/gatsby-plugin-x/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
   },
   "7374ebf2-d961-52ee-92a2-c25e7cb387a9" => Object {
     "browserAPIs": Array [],
     "children": Array [],
     "id": "7374ebf2-d961-52ee-92a2-c25e7cb387a9",
     "internal": Object {
-      "contentDigest": "5d782ff63da8dadbd1604fa8f5623c01",
-      "counter": 12,
+      "counter": 14,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
     "name": "default-site-plugin",
     "nodeAPIs": Array [
-      "sourceNodes",
       "onPreBootstrap",
       "onPostBootstrap",
     ],
@@ -731,15 +828,13 @@ Map {
     },
     "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience",
     "ssrAPIs": Array [],
-    "version": "3d4204302c882e8657fb0d5ac7145fed",
   },
   "aac9adb8-13bf-5a63-bb97-98fa6f1551c6" => Object {
     "browserAPIs": Array [],
     "children": Array [],
     "id": "aac9adb8-13bf-5a63-bb97-98fa6f1551c6",
     "internal": Object {
-      "contentDigest": "c2a6fe901cbc06cb70c7781a0255b660",
-      "counter": 13,
+      "counter": 15,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -824,16 +919,13 @@ Map {
     },
     "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
-    "version": "2.1.31",
   },
   "Site" => Object {
-    "buildTime": "2019-11-22T14:55:50.908Z",
     "children": Array [],
     "host": undefined,
     "id": "Site",
     "internal": Object {
-      "contentDigest": "5f2ddc1eb0e5d2874c6c9ab31c5f1b64",
-      "counter": 14,
+      "counter": 16,
       "owner": "internal-data-bridge",
       "type": "Site",
     },
@@ -848,9 +940,9 @@ Map {
     "id": "TEST_NODE",
     "internal": Object {
       "contentDigest": "0",
-      "counter": 15,
-      "owner": "default-site-plugin",
-      "type": "Test",
+      "counter": 17,
+      "owner": "gatsby-plugin-x",
+      "type": "X",
     },
     "parent": null,
   },
@@ -863,7 +955,7 @@ Map {
     "id": "SitePage /",
     "internal": Object {
       "contentDigest": "ea67288d2271ffd56ee868f599d81187",
-      "counter": 16,
+      "counter": 18,
       "description": "437b6151-504d-51ee-b0bc-3447e87f9856",
       "owner": "internal-data-bridge",
       "type": "SitePage",
@@ -879,7 +971,7 @@ Map {
 }
 `;
 
-exports[`Cache is invalidated when a plugin is updated 2`] = `
+exports[`Cache Nodes are deleted when owner plugin changes 2`] = `
 Map {
   "SitePage /dev-404-page/" => Object {
     "children": Array [],
@@ -898,7 +990,6 @@ Map {
     "children": Array [],
     "id": "d48d1c52-fe48-53cb-8f08-aa4b47dde5a5",
     "internal": Object {
-      "contentDigest": "6d5d91a8bbe54b3216b4e6d5792cb69e",
       "counter": 2,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -927,14 +1018,12 @@ Map {
     },
     "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/dev-404-page",
     "ssrAPIs": Array [],
-    "version": "1.0.0",
   },
   "1fc32581-893a-55e8-8927-bcd667e2b700" => Object {
     "browserAPIs": Array [],
     "children": Array [],
     "id": "1fc32581-893a-55e8-8927-bcd667e2b700",
     "internal": Object {
-      "contentDigest": "81e6fca45d08ee9a65095fc6963e2510",
       "counter": 3,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -963,14 +1052,12 @@ Map {
     },
     "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/load-babel-config",
     "ssrAPIs": Array [],
-    "version": "1.0.0",
   },
   "a5079d69-ba80-53dc-82f9-0f440bd5448c" => Object {
     "browserAPIs": Array [],
     "children": Array [],
     "id": "a5079d69-ba80-53dc-82f9-0f440bd5448c",
     "internal": Object {
-      "contentDigest": "03662ddd419d97b408f73867f425492a",
       "counter": 4,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -1000,14 +1087,12 @@ Map {
     },
     "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/internal-data-bridge",
     "ssrAPIs": Array [],
-    "version": "1.0.0",
   },
   "f795702c-a3b8-5a88-88ee-5d06019d44fa" => Object {
     "browserAPIs": Array [],
     "children": Array [],
     "id": "f795702c-a3b8-5a88-88ee-5d06019d44fa",
     "internal": Object {
-      "contentDigest": "c1ba27bb2fc295feba822dbe731733ab",
       "counter": 5,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -1036,14 +1121,12 @@ Map {
     },
     "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/prod-404",
     "ssrAPIs": Array [],
-    "version": "1.0.0",
   },
   "6f4b2fa9-66b5-5205-a03f-140005a2cfe5" => Object {
     "browserAPIs": Array [],
     "children": Array [],
     "id": "6f4b2fa9-66b5-5205-a03f-140005a2cfe5",
     "internal": Object {
-      "contentDigest": "f979c7b3cbdb5413ef341fbebd9ffc89",
       "counter": 6,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -1072,15 +1155,41 @@ Map {
     },
     "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/webpack-theme-component-shadowing",
     "ssrAPIs": Array [],
-    "version": "1.0.0",
+  },
+  "04b300f8-40b1-51d3-9a79-3474d5bf24e0" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "04b300f8-40b1-51d3-9a79-3474d5bf24e0",
+    "internal": Object {
+      "counter": 7,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-x",
+    "nodeAPIs": Array [
+      "sourceNodes",
+    ],
+    "packageJson": Object {
+      "bundledDependecies": Array [],
+      "dependencies": Array [],
+      "devDependencies": Array [],
+      "optionalDependecies": Array [],
+      "peerDependencies": Array [],
+    },
+    "parent": null,
+    "pluginFilepath": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/plugins/gatsby-plugin-x",
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/plugins/gatsby-plugin-x",
+    "ssrAPIs": Array [],
   },
   "437b6151-504d-51ee-b0bc-3447e87f9856" => Object {
     "browserAPIs": Array [],
     "children": Array [],
     "id": "437b6151-504d-51ee-b0bc-3447e87f9856",
     "internal": Object {
-      "contentDigest": "5cf81da9bb8559faee055e1db7756a44",
-      "counter": 7,
+      "counter": 8,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1165,15 +1274,13 @@ Map {
     },
     "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
-    "version": "2.1.31",
   },
   "cc7735e2-c2d3-5246-aa7d-80becac49c63" => Object {
     "browserAPIs": Array [],
     "children": Array [],
     "id": "cc7735e2-c2d3-5246-aa7d-80becac49c63",
     "internal": Object {
-      "contentDigest": "9bb9152709cdff3da7beeca523aa9f25",
-      "counter": 8,
+      "counter": 9,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1258,15 +1365,13 @@ Map {
     },
     "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
-    "version": "2.1.31",
   },
   "ab5821ea-a83b-5db5-8c12-c907ae29a10d" => Object {
     "browserAPIs": Array [],
     "children": Array [],
     "id": "ab5821ea-a83b-5db5-8c12-c907ae29a10d",
     "internal": Object {
-      "contentDigest": "bac168d84f88c0159f6aa1430c6bd099",
-      "counter": 9,
+      "counter": 10,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1351,15 +1456,13 @@ Map {
     },
     "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
-    "version": "2.1.31",
   },
   "1ed0b446-2f83-5083-9f9d-c0aa65d6ae86" => Object {
     "browserAPIs": Array [],
     "children": Array [],
     "id": "1ed0b446-2f83-5083-9f9d-c0aa65d6ae86",
     "internal": Object {
-      "contentDigest": "5ba4cfe3ac5ca99aab907f120ecfa63d",
-      "counter": 10,
+      "counter": 11,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1444,15 +1547,13 @@ Map {
     },
     "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
-    "version": "2.1.31",
   },
   "c32a230d-0d46-5579-bfb1-e7d8b78170dc" => Object {
     "browserAPIs": Array [],
     "children": Array [],
     "id": "c32a230d-0d46-5579-bfb1-e7d8b78170dc",
     "internal": Object {
-      "contentDigest": "855783c852539605ce7766dc0151844d",
-      "counter": 11,
+      "counter": 12,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1537,21 +1638,109 @@ Map {
     },
     "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
-    "version": "2.1.31",
+  },
+  "55a76f83-22dd-5eb6-bd32-8c73a097e8c0" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "55a76f83-22dd-5eb6-bd32-8c73a097e8c0",
+    "internal": Object {
+      "counter": 13,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "packageJson": Object {
+      "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+      "bundledDependecies": Array [],
+      "dependencies": Array [
+        Object {
+          "name": "@babel/runtime",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "bluebird",
+          "version": "^3.7.1",
+        },
+        Object {
+          "name": "fs-exists-cached",
+          "version": "^1.0.0",
+        },
+        Object {
+          "name": "gatsby-page-utils",
+          "version": "^0.0.31",
+        },
+        Object {
+          "name": "glob",
+          "version": "^7.1.6",
+        },
+        Object {
+          "name": "lodash",
+          "version": "^4.17.15",
+        },
+        Object {
+          "name": "micromatch",
+          "version": "^3.1.10",
+        },
+      ],
+      "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
+      "devDependencies": Array [
+        Object {
+          "name": "@babel/cli",
+          "version": "^7.7.0",
+        },
+        Object {
+          "name": "@babel/core",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "babel-preset-gatsby-package",
+          "version": "^0.2.11",
+        },
+        Object {
+          "name": "cross-env",
+          "version": "^5.2.1",
+        },
+      ],
+      "keywords": Array [
+        "gatsby",
+        "gatsby-plugin",
+      ],
+      "license": "MIT",
+      "main": "index.js",
+      "name": "gatsby-plugin-page-creator",
+      "optionalDependecies": Array [],
+      "peerDependencies": Array [
+        Object {
+          "name": "gatsby",
+          "version": "^2.0.0",
+        },
+      ],
+      "version": "2.1.31",
+    },
+    "parent": null,
+    "pluginFilepath": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/plugins/gatsby-plugin-x/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
   },
   "7374ebf2-d961-52ee-92a2-c25e7cb387a9" => Object {
     "browserAPIs": Array [],
     "children": Array [],
     "id": "7374ebf2-d961-52ee-92a2-c25e7cb387a9",
     "internal": Object {
-      "contentDigest": "5d782ff63da8dadbd1604fa8f5623c01",
-      "counter": 12,
+      "counter": 14,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
     "name": "default-site-plugin",
     "nodeAPIs": Array [
-      "sourceNodes",
       "onPreBootstrap",
       "onPostBootstrap",
     ],
@@ -1610,15 +1799,13 @@ Map {
     },
     "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience",
     "ssrAPIs": Array [],
-    "version": "3d4204302c882e8657fb0d5ac7145fed",
   },
   "aac9adb8-13bf-5a63-bb97-98fa6f1551c6" => Object {
     "browserAPIs": Array [],
     "children": Array [],
     "id": "aac9adb8-13bf-5a63-bb97-98fa6f1551c6",
     "internal": Object {
-      "contentDigest": "c2a6fe901cbc06cb70c7781a0255b660",
-      "counter": 13,
+      "counter": 15,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1703,16 +1890,13 @@ Map {
     },
     "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
-    "version": "2.1.31",
   },
   "Site" => Object {
-    "buildTime": "2019-11-22T14:55:50.908Z",
     "children": Array [],
     "host": undefined,
     "id": "Site",
     "internal": Object {
-      "contentDigest": "5f2ddc1eb0e5d2874c6c9ab31c5f1b64",
-      "counter": 14,
+      "counter": 16,
       "owner": "internal-data-bridge",
       "type": "Site",
     },
@@ -1731,7 +1915,7 @@ Map {
     "id": "SitePage /",
     "internal": Object {
       "contentDigest": "ea67288d2271ffd56ee868f599d81187",
-      "counter": 16,
+      "counter": 18,
       "description": "437b6151-504d-51ee-b0bc-3447e87f9856",
       "owner": "internal-data-bridge",
       "type": "SitePage",
