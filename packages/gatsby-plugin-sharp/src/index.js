@@ -120,7 +120,11 @@ function queueImageResizing({ file, args = {}, reporter }) {
       boundActionCreators,
       pluginOptions,
       reporter
-    )
+    ).then(res => {
+      cachedOutputFiles.delete(outputFile)
+
+      return res
+    })
 
     cachedOutputFiles.set(outputFile, finishedPromise)
   }

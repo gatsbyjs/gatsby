@@ -10,6 +10,7 @@ jest.mock(`async/queue`, () => () => {
 })
 
 const { scheduleJob } = require(`../scheduler`)
+scheduleJob.mockReturnValue(Promise.resolve())
 fs.ensureDirSync = jest.fn()
 fs.existsSync = jest.fn().mockReturnValue(false)
 let isolatedQueueImageResizing
