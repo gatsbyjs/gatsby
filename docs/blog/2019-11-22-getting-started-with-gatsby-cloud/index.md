@@ -70,7 +70,7 @@ Here is a screenshot of the current onboarding experience and a brief overview o
 ## Planned improvements to Gatsby Cloud
 We’ve shipped a ton of improvements already, and have a few more that are in progress as we speak!
 - Adding an MDX starter
-- Clarifying the step in which users add a github organization because using a starter vs using an existing Gatsby site require different flows
+- Clarifying the step in which users add a GitHub organization because using a starter vs using an existing Gatsby site require different flows
 - Prioritizing the status of production builds in the product interface to make sure people can debug their most important branch
 
 ## Feedback
