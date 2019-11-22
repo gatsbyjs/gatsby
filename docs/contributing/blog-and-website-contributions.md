@@ -31,7 +31,7 @@ Things we’re looking for in Gatsby blog content:
 - Gatsby case studies
 - Showcasing a tool, fix, or other content you or someone else have contributed to Gatsby’s open source community
 - Showcasing a tool, fix, or other content someone else has contributed to Gatsby’s open source community
-- Clear and thoughtful explanations of technical details or complex concepts related to React, Graph QL, web and application development, open-source contribution, Gatsby core, and other Gatsby-adjacent subject matter
+- Clear and thoughtful explanations of technical details or complex concepts related to React, GraphQL, web and application development, open-source contribution, Gatsby core, and other Gatsby-adjacent subject matter
 - Guidance and resources for learning React, GraphQL, HTML/CSS, web development, best practices, accessibility, SEO, Gatsby, different tool and CMS integrations, and other Gatsby-adjacent subject matter.
 - Other topics that you think would be valuable to people learning about or working with Gatsby
 
