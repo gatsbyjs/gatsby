@@ -414,6 +414,11 @@ class Image extends React.Component {
       itemProp,
     }
 
+    if (this.props.onClick)
+      throw new Error(
+        `'onClick' event handlers are not allowed for accessibility reasons.`
+      )
+
     if (fluid) {
       const imageVariants = fluid
       const image = imageVariants[0]
