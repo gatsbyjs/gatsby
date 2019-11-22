@@ -11,21 +11,25 @@ Here are some things to keep in mind when deciding where to contribute to Gatsby
 - [Website changes](#making-changes-to-the-website) that improve either of these are always welcome!
 
 ## Contributing to the blog
+
 If you'd like to contribute a post to the Gatsby blog, please review the process and guidelines outlined below and submit your
 idea for the post to our [Gatsby blog proposal form](https://airtable.com/shr3449954866i3iF)
 
 ### Blog proposal submission process
+
 1. Complete and submit the [Gatsby blog proposal form](https://airtable.com/shr3449954866i3iF).
 2. A Gatsby team member will review your proposal and let you know if the proposal has been accepted within the next week or so.
-    - __If the post is accepted:__ A Gatsby team member will work with you on a timeline for submitting and reviewing a draft of your blog post and set a tentative publishing date.
-    - __If the post is not accepted:__ We’ll let you know if there are any alternative offers we can make (e.g. offer to retweet if you publish the piece elsewhere, suggest submitting it as an addition to a Gatsby doc, etc.). We’ll also do our best to explain why your proposal was not accepted and encourage you to revise your proposal based on that feedback and resubmit. Please don’t be discouraged from submitting another post in the future!
+   - **If the post is accepted:** A Gatsby team member will work with you on a timeline for submitting and reviewing a draft of your blog post and set a tentative publishing date.
+   - **If the post is not accepted:** We’ll let you know if there are any alternative offers we can make (e.g. offer to retweet if you publish the piece elsewhere, suggest submitting it as an addition to a Gatsby doc, etc.). We’ll also do our best to explain why your proposal was not accepted and encourage you to revise your proposal based on that feedback and resubmit. Please don’t be discouraged from submitting another post in the future!
 
 If you have any questions about the process or your submission, please email [marketing@gatsbyjs.com](mailto:marketing@gatsbyjs.com).
 
 ### Content guidelines for submitting a blog post proposal
+
 As a Gatsby community member, you have unique insight into the ins and outs of learning Gatsby, building with Gatsby, and contributing to Gatsby’s open source community. Contributing to the Gatsby blog is a great way to share your experiences and insights. Here are some guidelines for what kind of content is and isn’t a good fit for the Gatsby blog.
 
 Things we’re looking for in Gatsby blog content:
+
 - Information to help others overcome challenges you’ve faced while working with Gatsby
 - Stories about how Gatsby helped you overcome different challenges on work and personal projects
 - Gatsby case studies
@@ -36,12 +40,13 @@ Things we’re looking for in Gatsby blog content:
 - Other topics that you think would be valuable to people learning about or working with Gatsby
 
 Things we’d like to avoid on the Gatsby blog:
-- __Docs content.__ Some content is better found in the Gatsby docs guides and tutorials, as it can be found in a section for related content and not buried under pages of other paginated blog posts.
-- __Promotional content.__ Please don’t submit content to the Gatsby blog solely for the purpose of promoting a product, yourself, or link-building.
-    - __Here’s what you can do instead:__ If you have a product or project you want to share on the Gatsby blog, focus on practical information, and make sure there’s a clear relationship with Gatsby or Gatsby-adjacent topics. You could write a step by step guide to using your product with Gatsby. You could write a case study highlighting the direct impact Gatsby had on your awesome project and offer helpful tips for other to recreate your success.
-- __Content that doesn’t seem to have a clear benefit for Gatsby users and/or the Gatsby community.__ For example, if you’re writing about a use-case or integration that’s extremely niche or unique to specific conditions that are really uncommon outside of your organization, the Gatsby blog might not be the best place for your content. Likewise, if your blog post doesn’t seem to have any direct relationship with Gatsby (or an interesting indirect relationship with Gatsby), then it may be more appropriate for a personal blog or another community blog.
 
-__Please note__ that these are guidelines, not rules. If you think your blog post belongs on the Gatsby blog, we absolutely encourage you to submit it. While we reserve the right to decide what is and isn’t appropriate for the Gatsby blog, we also value and encourage your creativity and your contributions. 
+- **Docs content.** Some content is better found in the Gatsby docs guides and tutorials, as it can be found in a section for related content and not buried under pages of other paginated blog posts.
+- **Promotional content.** Please don’t submit content to the Gatsby blog solely for the purpose of promoting a product, yourself, or link-building.
+  - **Here’s what you can do instead:** If you have a product or project you want to share on the Gatsby blog, focus on practical information, and make sure there’s a clear relationship with Gatsby or Gatsby-adjacent topics. You could write a step by step guide to using your product with Gatsby. You could write a case study highlighting the direct impact Gatsby had on your awesome project and offer helpful tips for other to recreate your success.
+- **Content that doesn’t seem to have a clear benefit for Gatsby users and/or the Gatsby community.** For example, if you’re writing about a use-case or integration that’s extremely niche or unique to specific conditions that are really uncommon outside of your organization, the Gatsby blog might not be the best place for your content. Likewise, if your blog post doesn’t seem to have any direct relationship with Gatsby (or an interesting indirect relationship with Gatsby), then it may be more appropriate for a personal blog or another community blog.
+
+**Please note** that these are guidelines, not rules. If you think your blog post belongs on the Gatsby blog, we absolutely encourage you to submit it. While we reserve the right to decide what is and isn’t appropriate for the Gatsby blog, we also value and encourage your creativity and your contributions.
 
 ## Making changes to the website
 
