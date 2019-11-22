@@ -1,6 +1,6 @@
 import fetch from "isomorphic-fetch"
 
-const fetchGraphql = async ({ url, query, variables = {} }) => {
+const fetchGraphql = async ({ url, query, errorMap, variables = {} }) => {
   const response = await fetch(url, {
     method: `POST`,
     headers: { "Content-Type": `application/json` },
@@ -27,7 +27,18 @@ const fetchGraphql = async ({ url, query, variables = {} }) => {
 
   if (json.errors) {
     json.errors.forEach(error => {
-      console.error(error)
+      if (
+        errorMap &&
+        errorMap.from &&
+        errorMap.to &&
+        error.message === errorMap.from
+      ) {
+        return console.error(`[gatsby-source-wordpress] ${errorMap.to}`)
+      }
+
+      return console.error(
+        `[gatsby-source-wordpress] ${error.message} (${error.category})`
+      )
     })
     process.exit()
   }
