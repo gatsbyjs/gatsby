@@ -9,8 +9,13 @@ jest.mock(`async/queue`, () => () => {
   }
 })
 
+const { scheduleJob } = require(`../scheduler`)
 fs.ensureDirSync = jest.fn()
 fs.existsSync = jest.fn().mockReturnValue(false)
+let isolatedQueueImageResizing
+jest.isolateModules(() => {
+  isolatedQueueImageResizing = require(`../index`).queueImageResizing
+})
 
 const {
   base64,
@@ -20,8 +25,6 @@ const {
   getImageSize,
   stats,
 } = require(`../`)
-const { scheduleJob } = require(`../scheduler`)
-scheduleJob.mockResolvedValue(Promise.resolve())
 
 jest.mock(`gatsby-cli/lib/reporter`, () => {
   return {
@@ -56,6 +59,12 @@ describe(`gatsby-plugin-sharp`, () => {
   }
 
   describe(`queueImageResizing`, () => {
+    beforeEach(() => {
+      scheduleJob.mockClear()
+      fs.existsSync.mockReset()
+      fs.existsSync.mockReturnValue(false)
+    })
+
     it(`should round height when auto-calculated`, () => {
       // Resize 144-density.png (281x136) with a 3px width
       const result = queueImageResizing({
@@ -93,7 +102,6 @@ describe(`gatsby-plugin-sharp`, () => {
 
     // re-enable when image processing on demand is implemented
     it.skip(`should process immediately when asked`, async () => {
-      scheduleJob.mockClear()
       const result = queueImageResizing({
         file: getFileObject(path.join(__dirname, `images/144-density.png`)),
         args: { width: 3 },
@@ -105,7 +113,6 @@ describe(`gatsby-plugin-sharp`, () => {
     })
 
     it(`Shouldn't schedule a job when outputFile already exists`, async () => {
-      scheduleJob.mockClear()
       fs.existsSync.mockReturnValue(true)
 
       const result = queueImageResizing({
@@ -119,16 +126,14 @@ describe(`gatsby-plugin-sharp`, () => {
       expect(scheduleJob).not.toHaveBeenCalled()
     })
 
-    it(`Shouldn't schedule a job when outputFile already running`, async () => {
-      scheduleJob.mockClear()
-
-      const result = queueImageResizing({
+    it(`Shouldn't schedule a job when with same outputFile is already being queued`, async () => {
+      const result = isolatedQueueImageResizing({
         file: getFileObject(path.join(__dirname, `images/144-density.png`)),
-        args: { width: 3 },
+        args: { width: 5 },
       })
-      queueImageResizing({
+      isolatedQueueImageResizing({
         file: getFileObject(path.join(__dirname, `images/144-density.png`)),
-        args: { width: 3 },
+        args: { width: 5 },
       })
 
       await result.finishedPromise
