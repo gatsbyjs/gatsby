@@ -145,18 +145,7 @@ sections:
   - blog
 ```
 
-Because Forestry's `admin.html` file is in the `/static` directory, this page will only be available once your Gatsby site is built. Deploy your site to Netlify and you can see your Forestry dashboard.
-
-### Deploying to Netlify
-
-Now you can publish your Gatsby site straight from GitHub to Netlify from the [create site
-page](https://app.netlify.com/start) - the proper build command for Gatsby will be provided
-automatically, just select your GitHub repo and go with the default options. Once you connect your
-GitHub repo to Netlify, deployment will begin. Note that the first deployment could take a few
-minutes since a lot of things aren't cached yet. Subsequent deploys will be faster.
-
-Once deployment is complete you'll be able to access your Forestry dashboard from your live site.
-Navigate to your site's Forestry admin by going to &lt;your-site&gt;/admin.
+Because Forestry's `admin.html` file is in the `/static` directory, this page will only be available once your Gatsby site is built. Run `gatsby build && gatsby serve`. Once the server is running, it will print the address to open for viewing. It's typically localhost:8000. Now navigate to /admin - so if your site is at localhost:8000, go to localhost:8000/admin.
 
 You should now be viewing your Forestry login page. Login to view your dashboard. If you don't have a user yet, create one on the Forestry Dashboard. This will allow you to login on the Gatsby site admin login page. On the left side of your dashboard you will see "Posts". If you click on it you can add a new post. When you save your post, Forestry will push the change directly to your GitHub repo.
 
