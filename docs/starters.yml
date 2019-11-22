@@ -1492,7 +1492,7 @@
     - Styling with styled-components
     - Responsive Design, optimized for Mobile devices
 - url: https://vigilant-leakey-a4f8cd.netlify.com/
-  repo: https://github.com/BoyWithSilverWings/gatsby-blog-starter
+  repo: https://github.com/agneym/gatsby-blog-starter
   description: Minimal Blog Starter Template with Styled Components.
   tags:
     - Markdown
@@ -1571,7 +1571,7 @@
     - react-testing-library
     - styled-components
 - url: https://hardcore-darwin-d7328f.netlify.com/
-  repo: https://github.com/BoyWithSilverWings/gatsby-careers-page
+  repo: https://github.com/agneym/gatsby-careers-page
   description: A Careers Page for startups using Gatsby
   tags:
     - Markdown
