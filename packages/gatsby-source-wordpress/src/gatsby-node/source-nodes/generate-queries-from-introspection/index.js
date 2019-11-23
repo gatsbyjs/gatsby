@@ -28,30 +28,60 @@ export const buildNodeQueriesFromIntrospection = async (
   const introspection = await fetchGraphql({
     url: pluginOptions.url,
     query: gql`
-      query {
+      {
         __schema {
           queryType {
             fields {
               name
+              args {
+                type {
+                  kind
+                }
+              }
               type {
                 kind
                 name
                 fields {
                   name
+                  args {
+                    type {
+                      kind
+                    }
+                  }
                   type {
                     name
                     kind
                     ofType {
                       kind
                       name
+                      fields {
+                        name
+                      }
                     }
                     fields {
                       name
+                      args {
+                        type {
+                          kind
+                        }
+                      }
                       type {
                         kind
                         name
+                        ofType {
+                          kind
+                          name
+                          fields {
+                            name
+                          }
+                        }
                         fields {
                           name
+                          args {
+                            type {
+                              kind
+                            }
+                          }
                           type {
                             name
                             kind
