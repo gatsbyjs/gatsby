@@ -5,6 +5,7 @@
   "version": "0.0.1",
   "scripts": {
     "develop": "gatsby develop",
+    "develop-clean": "gatsby clean && gatsby develop",
     "build": "gatsby build",
     "start": "npm run develop",
     "serve": "gatsby serve"
