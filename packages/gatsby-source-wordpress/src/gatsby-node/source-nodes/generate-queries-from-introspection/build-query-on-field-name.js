@@ -3,7 +3,8 @@ import { dd } from "dumper.js"
 const transformField = field => {
   if (
     field.args.length &&
-    // remove fields that have required args, as they'll cause build errors
+    // remove fields that have required args. They'll cause query errors if ommitted
+    //  and we can't determine how to use those args programatically.
     field.args.find(arg => arg && arg.type && arg.type.kind === `NON_NULL`)
   ) {
     return null
@@ -32,7 +33,7 @@ const transformField = field => {
       [field.name]: field.type.fields
         // time to recurse!
         .map(transformField)
-        // remove null fields
+        // remove null fields that we omitted above
         .filter(f => !!f),
     }
   }
