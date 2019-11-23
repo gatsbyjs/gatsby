@@ -16,5 +16,4 @@ React is one of the foundational building blocks of Gatsby. Gatsby bundles React
 
 ### Learn more about React
 
-* [React](https://reactjs.org/) Official web site
-
+- [React](https://reactjs.org/) Official web site
