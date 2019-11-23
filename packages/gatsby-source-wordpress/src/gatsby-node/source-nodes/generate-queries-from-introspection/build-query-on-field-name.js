@@ -1,32 +1,39 @@
 import Query from "graphql-query-builder"
-
+import { dd } from "dumper.js"
 const transformField = field => {
+  if (
+    field.args.length &&
+    // remove fields that have required args, as they'll cause build errors
+    field.args.find(arg => arg && arg.type && arg.type.kind === `NON_NULL`)
+  ) {
+    return null
+  }
+
+  // temp remove unions
   if (field.type && field.type.kind === `UNION`) {
     return null
   }
 
+  // temp remove lists
+  if (field.type.kind === `LIST`) {
+    return null
+  }
+
+  // just pull the id for fields that are connections to other nodes
+  if (field.type.relationShipField) {
+    return {
+      [field.name]: [`id`],
+    }
+  }
+
+  // if this field has fields,
   if (field.type && field.type.fields) {
     return {
       [field.name]: field.type.fields
-        .map(innerField => {
-          if (innerField.type.kind === `LIST`) {
-            return null
-          }
-          if (innerField.type.relationShipField) {
-            return {
-              [innerField.name]: [`id`],
-            }
-          }
-          if (innerField.type.fields) {
-            return {
-              [innerField.name]: innerField.type.fields.map(
-                innerField2 => innerField2.name
-              ),
-            }
-          }
-          return innerField.name
-        })
-        .filter(innerField => !!innerField),
+        // time to recurse!
+        .map(transformField)
+        // remove null fields
+        .filter(f => !!f),
     }
   }
 
