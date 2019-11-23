@@ -26,9 +26,7 @@ const EventsRoute = props => (
         </h1>
         <p>
           Interested in connecting with the Gatsby community in person? Take a
-          look at the events below to see community organized Gatsby events,
-          places the Gatsby team members are speaking, and conferences that
-          Gatsby is sponsoring. We hope to see you at these events soon!
+          look at the list below to see community-organized Gatsby events.
         </p>
         <p>
           Want to see your event featured here?

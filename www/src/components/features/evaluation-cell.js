@@ -63,11 +63,7 @@ const getBackground = num => {
     }
     case `1`: {
       return t =>
-        `linear-gradient(180deg, transparent 50%, ${
-          t.colors.orange[20]
-        } 50%), linear-gradient(90deg, transparent 50%, ${
-          t.colors.orange[20]
-        } 50%)`
+        `linear-gradient(180deg, transparent 50%, ${t.colors.orange[20]} 50%), linear-gradient(90deg, transparent 50%, ${t.colors.orange[20]} 50%)`
     }
     case `3`:
     case `0`:

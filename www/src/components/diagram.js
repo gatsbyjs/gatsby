@@ -268,13 +268,7 @@ const Diagram = () => (
               backgroundColor: `purple.70`,
               backgroundSize: t => `${t.sizes[10]} ${t.sizes[10]}`,
               backgroundImage: t =>
-                `linear-gradient(45deg, ${
-                  t.colors.purple[80]
-                } 25%, transparent 25%, transparent 50%, ${
-                  t.colors.purple[80]
-                } 50%, ${
-                  t.colors.purple[80]
-                } 75%, transparent 75%, transparent)`,
+                `linear-gradient(45deg, ${t.colors.purple[80]} 25%, transparent 25%, transparent 50%, ${t.colors.purple[80]} 50%, ${t.colors.purple[80]} 75%, transparent 75%, transparent)`,
               py: 0,
             }}
           >

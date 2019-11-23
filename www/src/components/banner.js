@@ -9,9 +9,7 @@ const InnerContainer = styled(`div`)`
   height: ${p => p.theme.sizes.bannerHeight};
   overflow-x: auto;
   mask-image: ${props =>
-    `linear-gradient(to right, transparent, ${props.theme.colors.purple[90]} ${
-      props.theme.space[6]
-    }, ${props.theme.colors.purple[90]} 96%, transparent)`};
+    `linear-gradient(to right, transparent, ${props.theme.colors.purple[90]} ${props.theme.space[6]}, ${props.theme.colors.purple[90]} 96%, transparent)`};
 `
 
 const Content = styled(`div`)`
@@ -46,9 +44,9 @@ const Banner = () => (
   >
     <InnerContainer>
       <Content>
-        {`Using Gatsby for your clients or team? Start 14-day free trial of `}
-        <OutboundLink href="https://www.gatsbyjs.com/preview">
-          Gatsby Preview
+        {`New! Create a site in 5 minutes with `}
+        <OutboundLink href="https://www.gatsbyjs.com/cloud">
+          Gatsby Cloud!
         </OutboundLink>
       </Content>
     </InnerContainer>
