@@ -49,6 +49,9 @@
             - title: Deploying to Heroku
               link: /docs/deploying-to-heroku/
               breadcrumbTitle: Heroku
+            - title: Deploying to Dokku
+              link: /docs/deploying-to-dokku/
+              breadcrumbTitle: Dokku
             - title: Deploying to ZEIT Now
               link: /docs/deploying-to-zeit-now/
               breadcrumbTitle: ZEIT Now
