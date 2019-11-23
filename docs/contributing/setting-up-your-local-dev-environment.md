@@ -72,7 +72,5 @@ Yarn is a package manager for your code, similar to [NPM](https://www.npmjs.com/
 
 ### Sync your fork
 
-#### Terminal with git
-
 - GitHub Help Page [Syncing a fork](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/syncing-a-fork)
 - GitHub Help Page [Merging an upstream repository into your fork](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/merging-an-upstream-repository-into-your-fork)
