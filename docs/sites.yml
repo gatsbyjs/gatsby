@@ -8645,3 +8645,13 @@
   built_by: Tekhaus
   built_by_url: https://www.tekha.us
   featured: false
+- title: Whipstitch Webwork
+  url: https://www.whipstitchwebwork.com
+  main_url: https://www.whipstitchwebwork.com
+  description: >
+    Websites for smart people.
+  categories:
+    - Agency
+    - Web Development
+  built_by: Matthew Russell
+  featured: false
