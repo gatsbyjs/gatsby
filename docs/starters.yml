@@ -1492,7 +1492,7 @@
     - Styling with styled-components
     - Responsive Design, optimized for Mobile devices
 - url: https://vigilant-leakey-a4f8cd.netlify.com/
-  repo: https://github.com/BoyWithSilverWings/gatsby-blog-starter
+  repo: https://github.com/agneym/gatsby-blog-starter
   description: Minimal Blog Starter Template with Styled Components.
   tags:
     - Markdown
@@ -1571,7 +1571,7 @@
     - react-testing-library
     - styled-components
 - url: https://hardcore-darwin-d7328f.netlify.com/
-  repo: https://github.com/BoyWithSilverWings/gatsby-careers-page
+  repo: https://github.com/agneym/gatsby-careers-page
   description: A Careers Page for startups using Gatsby
   tags:
     - Markdown
@@ -4507,3 +4507,42 @@
     - Customizable with Tailwind CSS
     - Code highlighting with Prism
     - RSS feed
+- url: https://gatsby-starter-landed.netlify.com/
+  repo: https://github.com/vasrush/gatsby-starter-landed
+  description: A Gatsby theme based on Landed template by HTML5UP
+  tags:
+    - HTML5UP
+    - Landing Page
+    - Portfolio
+    - Linting
+    - Styling:SCSS
+    - Transitions
+    - SEO
+  features:
+    - Includes sections to easily create landing pages
+    - React Helmet <head> Management
+    - Easily update menus & submenus in gatsby-config file
+    - Integrates react-scroll and react-reveal for transitions
+    - ESLint and Prettier for safety and consistent code style
+    - Offline-ready
+    - Responsive design
+    - Left, Right and no sidebar templates
+    - Font awesome icons
+    - HTML5UP Design
+- url: http://tina-starter-grande.netlify.com/
+  repo: https://github.com/tinacms/tina-starter-grande
+  description: Feature rich Gatsby starter with full TinaCMS integration
+  tags:
+    - Blog
+    - Markdown
+    - SEO
+    - Netlify
+    - Pagination
+    - CMS:Other
+    - Styling:CSS-in-JS
+  features:
+    - Fully integrated with TinaCMS for easy editing
+    - Blocks based page & form builder
+    - Styled Components
+    - Code syntax highlighting
+    - Light/Dark mode
