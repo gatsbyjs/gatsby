@@ -20,7 +20,7 @@ We’re excited to announce the official release of Gatsby Preview for [Cosmic J
 
 
 #### What happens?
-After clicking the “Open Preview” button, a new tab will open to instantly show you what this content looks like for this specific version on your Gatsby website. This simple one-click preview will greatly enhance your content team’s content-creation workflow.
+After clicking the “Open Preview” button, a new tab will open to instantly show you what the content looks like for this specific version on your Gatsby website. This simple one-click preview will greatly enhance your content team’s content-creation workflow.
 
 ![](./cosmic-js-gatsby-preview-screenshot.gif)
 
@@ -35,7 +35,7 @@ Both Gatsby and Cosmic JS believe deeply in providing developers the best develo
 Gatsby Preview solves this problem by providing a simple button for content creators to experience an instant preview of content directly in the CMS dashboard. Gatsby preview with the [Cosmic JS headless CMS](https://www.cosmicjs.com/headless-cms), is a further extension to empower non-technical content creators to preview content quickly and easily, giving teams faster content marketing velocity.
 
 #### What’s next?
-We’re excited to continue to work closely with the Gatsby team to help create more value-added integrations between both services. It’s our goal to continue to provide technical and non-technical team members the best tools to be successful.
+We’re excited to continue to work closely with the Gatsby team to help create more value-added integrations between both services. It’s our goal to continue to provide the full spectrum of team members the best tools to be successful.
 
 Our users have been very helpful with letting us know ways to improve the Cosmic JS + Gatsby stack combo. So if you have any suggestions on ways we can improve, please let us know in the [Cosmic JS Slack channel](https://cosmicslack.herokuapp.com/) or on [our Twitter](https://twitter.com/cosmic_js).
 
