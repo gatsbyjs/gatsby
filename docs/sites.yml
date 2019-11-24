@@ -8645,3 +8645,18 @@
   built_by: Tekhaus
   built_by_url: https://www.tekha.us
   featured: false
+- title: Lesley Lai
+  main_url: http://lesleylai.info/
+  url: http://lesleylai.info/projects/en
+  source_url: https://github.com/LesleyLai/blog
+  description: >
+    lesleylai.info is the personal website of Lesley Lai, where he talks mainly about C++ and Computer Graphics.
+  categories:
+    - Blog
+    - Open Source
+    - Portfolio
+    - Programming
+    - Technology
+  built_by: Lesley Lai
+  built_by_url: https://github.com/LesleyLai
+  featured: false
