@@ -119,7 +119,20 @@ exports.createPagesStatefully = true
 exports.sourceNodes = true
 
 /**
- * Same same as sourceNodes, but different
+ * Like `sourceNodes` but for plugins who want to manage creating and removing
+ * nodes themselves in response to events *not* managed by Gatsby.
+ * Plugins implementing `sourceNodes` will get called on data refreshes to
+ * sync data layer. `sourceNodesStatefully` will not.
+ *
+ * An example of a plugin that uses this extension point is the internal plugin
+ * [internal-data-bridge](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby/src/internal-plugins/internal-data-bridge/gatsby-node.js)
+ * which creates SitePage nodes for each page. It sets up event listeners to update or delete node data
+ * in real time without waiting for Gatsby to trigger `sourceNodes`.
+ *
+ * This extension point should be used over `sourceNodes` if you setup any real-time
+ * listeners/subscriptions for data updates.
+ *
+ * @gatsbyVersion 2.X.Y
  */
 exports.sourceNodesStatefully = true
 
