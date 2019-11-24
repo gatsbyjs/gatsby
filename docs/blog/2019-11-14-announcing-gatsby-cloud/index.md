@@ -63,7 +63,8 @@ In our many conversations with Gatsby users & customers over the years, there ar
 1. **Starting complex projects. **People love the flexibility of being able to bring your own backends, but choosing the right backends and configuring everything can be difficult.
 2. **Consistent & reliable workflows.** Delivering great websites requires collaboration between many stakeholders. People keep telling us about friction in workflows on their Gatsby projects compared to traditional CMSs.
 3. **Fast builds. **Gatsby sites have a build process to deploy new changes, and people wish incremental builds were faster. Ideally, there'd be no builds at all as they're confusing for non-technical collaborators who are used to seeing their changes go live immediately when they save with traditional CMSs.
-   Today's launch of Gatsby Cloud addresses these concerns and lays the foundation for many exciting things to come.
+
+Today's launch of Gatsby Cloud addresses these concerns and lays the foundation for many exciting things to come.
 
 ## Cloud quickstart wizard
 
