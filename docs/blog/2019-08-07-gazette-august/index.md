@@ -23,7 +23,7 @@ The past few weeks has been all about what we're calling the Snow Leopard releas
 
 First, an aside.
 
-[Snow Leopard](https://en.wikipedia.org/wiki/Mac_OS_X_Snow_Leopard) was the seventh major release of macOS. Unlike those of previous versions, the goals of Snow Leopard were improved performance, greater efficiency and the reduction of its overall memory footprint. Addition of new end-user features was not a primary consideration: its name signified its goal to be a refinement of the previous OS X version, Leopard.
+[Snow Leopard](https://en.wikipedia.org/wiki/Mac_OS_X_Snow_Leopard) was the seventh major release of macOS. Unlike those of previous versions, the goals of Snow Leopard were improved performance, greater efficiency and the reduction of its overall memory footprint. Addition of new end user features was not a primary consideration: its name signified its goal to be a refinement of the previous OS X version, Leopard.
 
 Similarly, earlier last month, we felt like we needed to take some time to slow down and clean up Gatsby after some of the big features that we've shipped recently: notably ([themes](https://www.gatsbyjs.org/blog/2019-07-03-announcing-stable-release-gatsby-themes/) and [per page manifest](https://www.gatsbyjs.org/blog/2019-06-12-performance-improvements-for-large-sites/)). Our goal was to take a step back, move a bit more slowly, and improve the overall code base, add tests, and overall ensure our house is in good order for more improvements in the future.
 

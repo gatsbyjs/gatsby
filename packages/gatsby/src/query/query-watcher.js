@@ -12,7 +12,7 @@ const _ = require(`lodash`)
 const chokidar = require(`chokidar`)
 
 const path = require(`path`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 
 const { store, emitter } = require(`../redux/`)
 const { boundActionCreators } = require(`../redux/actions`)
@@ -70,7 +70,7 @@ const handleQuery = (
     if (
       isNewQuery ||
       oldQuery.hash !== query.hash ||
-      oldQuery.text !== query.text
+      oldQuery.query !== query.text
     ) {
       boundActionCreators.replaceStaticQuery({
         name: query.name,
@@ -237,6 +237,7 @@ const watch = async rootDir => {
       ...packagePaths,
     ])
     .on(`change`, path => {
+      report.pendingActivity({ id: `query-extraction` })
       debounceCompile()
     })
 
@@ -264,3 +265,5 @@ exports.startWatchDeletePage = () => {
     }
   })
 }
+
+exports.updateStateAndRunQueries = updateStateAndRunQueries

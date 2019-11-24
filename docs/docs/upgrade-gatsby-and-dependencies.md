@@ -6,7 +6,7 @@ To keep up with the latest bug fixes, security patches, and minor releases from 
 
 ## Semantic versioning
 
-As many other packages, Gatsby uses [semantic versioning](https://semver.org/) to tag new versions and indicate what kind of changes are introduced in every new release.
+Like many other packages, Gatsby uses [semantic versioning](https://semver.org/) to tag new versions and indicate what kind of changes are introduced in every new release.
 
 This guide is meant to teach you how to upgrade Gatsby for minor or patch releases. For major changes you can refer to the [Release and Migrations](/docs/releases-and-migration/) reference guide overview for the corresponding guide to upgrade.
 
@@ -99,7 +99,7 @@ Then add the corresponding script to your package.json file:
 }
 ```
 
-And finally run the recently added command:
+And finally, run the recently added command:
 
 ```shell
 npm run upgrade-interactive
@@ -109,7 +109,7 @@ npm run upgrade-interactive
 
 Aside from some specific cases, such as [Gatsby's dropping of support for Node 6](/blog/2019-06-18-dropping-support-for-node-6/), upgrading for minor or patch releases should not require you to make changes to your code. It is recommended to run your suite of tests (in case you have one) after upgrading Gatsby or its dependencies.
 
-In case you get stuck in dependencies conflicts, you can use the [npm-force-resolutinos package](https://www.npmjs.com/package/npm-force-resolutions?activeTab=readme) on npm.
+In case you get stuck in dependencies conflicts, you can use the [npm-force-resolutions package](https://www.npmjs.com/package/npm-force-resolutions?activeTab=readme) on npm.
 
 ## Related content
 

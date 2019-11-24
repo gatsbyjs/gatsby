@@ -14,7 +14,7 @@ Gatsby uses the PR process to review and test changes before they’re added to 
 
 When someone wants to contribute to Gatsby, they open a request to _pull_ their code into the repo. Depending on the type of change, PRs are categorized into:
 
-- [Documentation](#documentation)
+- [Documentation](#documentation-prs)
 - [Code](#code-changes)
 - [Starters or Site Showcase](#starters-or-site-showcase)
 - [Blog posts](#blog-posts)
@@ -91,13 +91,32 @@ There are specific pages about contributing to various parts of the Gatsby ecosy
 
 For the Gatsby blog, it's necessary to run your content idea by the Gatsby team before submitting it. For more information, refer to the page on [blog and website contributions](/contributing/blog-and-website-contributions/), including how to propose an idea and setting up the blog to run locally.
 
+## Follow up with reviews and suggestions
+
+After a PR is sent to the Gatsby GitHub repo, the Gatsby core team and the community may suggest modifications to the changes that your PR introduces.
+
+The Gatsby core and learning teams review and approve every PR that the community sends to make sure that it meets the contribution guidelines of the repo, and to find opportunities for improvement to your PR changes.
+
+These suggestions may also be called "request changes" by the GitHub UI. When a change request is added to your PR, this and the rest of the change requests will appear on the GitHub page for your PR. From this page you can use the suggestions UI to:
+
+- Review the suggested changes using the "View changes" button.
+- [Commit](https://help.github.com/en/articles/incorporating-feedback-in-your-pull-request#applying-suggested-changes) the suggestions.
+- [Discuss suggestions](https://help.github.com/en/articles/about-conversations-on-github) to ask questions about the suggested changes.
+- [Add suggestions to a batch](https://help.github.com/en/articles/incorporating-feedback-in-your-pull-request#applying-suggested-changes) so they can be pushed in a single commit.
+
+For suggestions that may not be resolved using the GitHub UI, remember that you can keep adding related commits to your PR before it is merged and those commits will also be a part of such PR.
+
+After all your questions have been resolved and the requested changes have been committed, you can [mark the conversation as solved](https://help.github.com/en/articles/commenting-on-a-pull-request#resolving-conversations).
+
+This process helps both the Gatsby team and the community to contribute with improvements for your changes before they are merged into the Gatsby GitHub repo.
+
 ## Update your fork with the latest Gatsby changes
 
 The Gatsby GitHub repo is very active, so it's likely you'll need to update your fork with the latest changes to be able to merge in your code. This requires adding Gatsby as an [upstream remote](https://help.github.com/en/articles/configuring-a-remote-for-a-fork):
 
 - Set Gatsby's repo URL as a remote source. The name of the remote is arbitrary; this example uses `upstream`.
   ```shell
-  git remote set-url upstream git@github.com:gatsbyjs/gatsby.git
+  git remote add upstream git@github.com:gatsbyjs/gatsby.git
   ```
   - _Note: this syntax [uses SSH and keys: you can also use `https`](https://help.github.com/en/articles/which-remote-url-should-i-use) and your username/password._
 - You can verify the remote name and URL at any time:
@@ -110,7 +129,7 @@ The Gatsby GitHub repo is very active, so it's likely you'll need to update your
   ```
 - [In the branch](https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging) you want to update, merge any changes from Gatsby into your fork:
   ```shell
-  git merge upstream master
+  git merge upstream/master
   ```
   - If there are any [merge conflicts](https://help.github.com/en/articles/resolving-a-merge-conflict-on-github), you'll want to address those to get a clean merge.
 - Once your branch is in good working order, push the changes to your fork:
@@ -120,7 +139,7 @@ The Gatsby GitHub repo is very active, so it's likely you'll need to update your
 
 For more information on working with upstream repos, [visit the GitHub docs](https://help.github.com/en/articles/configuring-a-remote-for-a-fork).
 
-_**Note:** as a member of the Gatsby repo, you can also clone it directly instead of forking and push your changes to [feature branches](https://git-scm.com/book/en/v1/Git-Branching-Branching-Workflows)._
+_**Note:** as a member of the Gatsby repo, you can also clone it directly (instead of forking and using an upstream remote workflow). You can then push changes to [feature branches](https://git-scm.com/book/en/v1/Git-Branching-Branching-Workflows) to open PRs._
 
 ## Additional resources
 
@@ -132,3 +151,4 @@ _**Note:** as a member of the Gatsby repo, you can also clone it directly instea
 - [Feature Branching and Workflows](https://git-scm.com/book/en/v1/Git-Branching-Branching-Workflows)
 - [Resolving merge conflicts](https://help.github.com/en/articles/resolving-a-merge-conflict-on-github)
 - [Managing Pull Requests](/contributing/managing-pull-requests/) on the Gatsby core team
+- [Guide on Markdown Syntax](/docs/mdx/markdown-syntax/)

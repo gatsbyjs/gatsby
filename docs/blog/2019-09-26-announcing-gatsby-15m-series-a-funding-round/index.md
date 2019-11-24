@@ -2,6 +2,7 @@
 title: "Announcing Gatsby’s $15M Series A Funding Round"
 date: 2019-09-26
 author: "Kyle Mathews"
+excerpt: "I’m incredibly excited to announce that Gatsby has raised a $15M Series A funding round, led by CRV, to drive the reinvention of website…"
 tags: ["gatsby-inc"]
 ---
 

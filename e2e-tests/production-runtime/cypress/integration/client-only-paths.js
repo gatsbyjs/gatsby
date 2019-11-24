@@ -30,18 +30,61 @@ describe(`Client only paths`, () => {
       marker: `static-sibling`,
       label: `Static route that is a sibling to client only path`,
     },
+    {
+      path: `/app`,
+      marker: `app-index-1`,
+      label: `Prioritize static page over matchPath page with wildcard (static page created before matchPath page)`,
+    },
+    {
+      path: `/app2`,
+      marker: `app-index-2`,
+      label: `Prioritize static page over matchPath page with wildcard (static page created after matchPath page)`,
+    },
+    {
+      path: `/app/foo`,
+      marker: `app-wildcard-1`,
+      label: `Can navigate to matchPath page with wildcard #1`,
+    },
+    {
+      path: `/app2/foo`,
+      marker: `app-wildcard-2`,
+      label: `Can navigate to matchPath page with wildcard #2`,
+    },
+    {
+      path: `/event/2019/10/26/test-event`,
+      marker: `static-event-1`,
+      label: `Prioritize static page over matchPath page with named parameters (static page created before matchPath page)`,
+    },
+    {
+      path: `/event/2019/10/28/test-event`,
+      marker: `static-event-2`,
+      label: `Prioritize static page over matchPath page with named parameters (static page created after matchPath page)`,
+    },
+    {
+      path: `/event/2019/10/27/test-event`,
+      marker: `dynamic-event`,
+      label: `Prioritize matchPath page with named parameters over matchPath page with wildcard`,
+    },
+    {
+      path: `/event/2019/10/foo`,
+      marker: `dynamic-and-wildcard`,
+      label: `Can navigate to matchPath page with mix of named parameters and wildcard`,
+    },
   ]
 
   describe(`work on first load`, () => {
-    routes.forEach(({ path, marker, label }) => {
+    routes.forEach(({ path, marker, label, skipTestingExactLocation }) => {
       it(label, () => {
         cy.visit(path).waitForRouteChange()
         cy.getTestElement(`dom-marker`).contains(marker)
 
-        // Skipping these at the moment because behaviour is inconsistent
-        // https://github.com/gatsbyjs/gatsby/issues/16533
-        if (marker !== `index` && marker !== `static-sibling`)
-          cy.url().should(`eq`, Cypress.config().baseUrl + path)
+        // `serve-static` (used by `gatsby serve`) is doing some redirects when
+        // navigating to static pages to always include trailing slash.
+        // We want to pass this check if trailing slash is added.
+        cy.url().should(
+          `match`,
+          new RegExp(`^${Cypress.config().baseUrl + path}/?$`)
+        )
       })
     })
   })

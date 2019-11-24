@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import range from "range"
 
@@ -9,7 +11,6 @@ import { getA11yLabel, getTextColor } from "../../../utils/guidelines/color"
 import { copyColumnGutter, CopyColumn } from "../containers"
 import palette from "../../../utils/guidelines/extend-palette-info"
 import { Box, Flex } from "../system"
-import theme from "../../../utils/guidelines/theme"
 
 // Color swatches
 const swatchWidth = 40
@@ -17,17 +18,16 @@ const swatchStyle = {
   flexGrow: 0,
   flexShrink: 0,
   height: swatchWidth,
-  marginBottom: theme.space[1],
-  marginTop: theme.space[1],
-  marginRight: theme.space[2],
+  my: 1,
+  mr: 2,
   position: `relative`,
   textAlign: `center`,
   width: swatchWidth,
 }
 const colorNumber = {
   ...swatchStyle,
-  color: theme.colors.grey[50],
-  fontSize: theme.fontSizes[1],
+  color: `grey.50`,
+  fontSize: 1,
   transform: `rotate(-45deg)`,
 }
 
@@ -81,26 +81,27 @@ const Palette = ({ color, handler }) => {
           onClick={e => {
             handler(e, node)
           }}
-          css={{
+          sx={{
+            background: `transparent`,
             border: 0,
             cursor: `pointer`,
             WebkitAppearance: `none`,
             "&&:hover span, &&:focus span": {
-              borderColor: theme.colors.link.hoverBorder,
-              color: theme.colors.gatsby,
+              borderColor: `link.hoverBorder`,
+              color: `link.hoverColor`,
             },
           }}
         >
           <SectionSubheading
             as="span"
-            fontFamily="header"
-            fontWeight={0}
+            fontFamily="heading"
+            fontWeight="body"
             mt={0}
             mb={0}
             fontSize={4}
             color="link.color"
-            css={{
-              borderBottom: `1px solid ${theme.colors.link.border}`,
+            sx={{
+              borderBottom: t => `1px solid ${t.colors.link.border}`,
             }}
             title={`Open “${name}” color modal`}
           >
@@ -121,23 +122,23 @@ const Palette = ({ color, handler }) => {
 }
 
 const Overview = ({ handler }) => (
-  <>
+  <React.Fragment>
     <Flex>
       <CopyColumn />
       <Box
         alignItems={{ lg: `flex-end` }}
         display={{ xxs: `none`, lg: `flex` }}
       >
-        <div css={colorNumber}>90</div>
-        <div css={colorNumber}>80</div>
-        <div css={colorNumber}>70</div>
-        <div css={colorNumber}>60</div>
-        <div css={colorNumber}>50</div>
-        <div css={colorNumber}>40</div>
-        <div css={colorNumber}>30</div>
-        <div css={colorNumber}>20</div>
-        <div css={colorNumber}>10</div>
-        <div css={colorNumber}>5</div>
+        <div sx={colorNumber}>90</div>
+        <div sx={colorNumber}>80</div>
+        <div sx={colorNumber}>70</div>
+        <div sx={colorNumber}>60</div>
+        <div sx={colorNumber}>50</div>
+        <div sx={colorNumber}>40</div>
+        <div sx={colorNumber}>30</div>
+        <div sx={colorNumber}>20</div>
+        <div sx={colorNumber}>10</div>
+        <div sx={colorNumber}>5</div>
       </Box>
     </Flex>
     <Box display={{ lg: `flex` }}>
@@ -166,7 +167,7 @@ const Overview = ({ handler }) => (
         <Palette color="whiteFade" handler={handler} /> */}
       </Box>
     </Box>
-  </>
+  </React.Fragment>
 )
 
 export default Overview

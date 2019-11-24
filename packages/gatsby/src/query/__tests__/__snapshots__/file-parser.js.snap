@@ -1433,6 +1433,130 @@ query {
     ],
     "kind": "Document",
   },
+  "ж-ä-!@#$%^&*()_-=+:;'\\"?,~\`.js" => Object {
+    "definitions": Array [
+      Object {
+        "directives": Array [],
+        "hash": 1646962495,
+        "isHook": true,
+        "isStaticQuery": true,
+        "kind": "OperationDefinition",
+        "loc": Object {
+          "end": 13,
+          "start": 0,
+        },
+        "name": Object {
+          "kind": "Name",
+          "value": "zhADollarpercentandJs1646962495",
+        },
+        "operation": "query",
+        "selectionSet": Object {
+          "kind": "SelectionSet",
+          "loc": Object {
+            "end": 13,
+            "start": 6,
+          },
+          "selections": Array [
+            Object {
+              "alias": undefined,
+              "arguments": Array [],
+              "directives": Array [],
+              "kind": "Field",
+              "loc": Object {
+                "end": 11,
+                "start": 8,
+              },
+              "name": Object {
+                "kind": "Name",
+                "loc": Object {
+                  "end": 11,
+                  "start": 8,
+                },
+                "value": "foo",
+              },
+              "selectionSet": undefined,
+            },
+          ],
+        },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 51,
+            "line": 3,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 38,
+            "line": 3,
+          },
+        },
+        "text": "query { foo }",
+        "variableDefinitions": Array [],
+      },
+    ],
+    "kind": "Document",
+  },
+  "static-ж-ä-!@#$%^&*()_-=+:;'\\"?,~\`.js" => Object {
+    "definitions": Array [
+      Object {
+        "directives": Array [],
+        "hash": 1646962495,
+        "isHook": false,
+        "isStaticQuery": true,
+        "kind": "OperationDefinition",
+        "loc": Object {
+          "end": 13,
+          "start": 0,
+        },
+        "name": Object {
+          "kind": "Name",
+          "value": "staticZhADollarpercentandJs1646962495",
+        },
+        "operation": "query",
+        "selectionSet": Object {
+          "kind": "SelectionSet",
+          "loc": Object {
+            "end": 13,
+            "start": 6,
+          },
+          "selections": Array [
+            Object {
+              "alias": undefined,
+              "arguments": Array [],
+              "directives": Array [],
+              "kind": "Field",
+              "loc": Object {
+                "end": 11,
+                "start": 8,
+              },
+              "name": Object {
+                "kind": "Name",
+                "loc": Object {
+                  "end": 11,
+                  "start": 8,
+                },
+                "value": "foo",
+              },
+              "selectionSet": undefined,
+            },
+          ],
+        },
+        "templateLoc": SourceLocation {
+          "end": Position {
+            "column": 32,
+            "line": 4,
+          },
+          "filename": true,
+          "start": Position {
+            "column": 19,
+            "line": 4,
+          },
+        },
+        "text": "query { foo }",
+        "variableDefinitions": Array [],
+      },
+    ],
+    "kind": "Document",
+  },
 }
 `;
 

@@ -1,11 +1,11 @@
-module.exports = (state = {}, action) => {
+module.exports = (state = new Set(), action) => {
   switch (action.type) {
     case `CREATE_NODE`:
-      state[action.payload.id] = true
+      state.add(action.payload.id)
       return state
 
     case `TOUCH_NODE`:
-      state[action.payload] = true
+      state.add(action.payload)
       return state
 
     default:

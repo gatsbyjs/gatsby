@@ -1,13 +1,12 @@
-import React from "react"
-import { fontSizes, fonts } from "../utils/presets"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 
 const FuturaParagraph = ({ children }) => (
   <p
-    css={{
-      fontFamily: fonts.header,
-      marginBottom: 0,
-      fontSize: fontSizes[3],
-      WebkitFontSmoothing: `antialiased`,
+    sx={{
+      fontFamily: `header`,
+      fontSize: 3,
+      mb: 0,
     }}
   >
     {children}

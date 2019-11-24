@@ -166,7 +166,7 @@ export const pageQuery = graphql`
 //highlight-end
 ```
 
-Save these changes and look at localhost:8000 to see your new homepage with list of sorted blog posts!
+Save these changes and look at localhost:8000 to see your new homepage with a list of sorted blog posts!
 
 ![WordPress home after query](/images/wordpress-source-plugin-home.jpg)
 
@@ -223,7 +223,7 @@ Before you can create the blog posts, however, you need to specify a template to
 
 In your `src` directory, create a directory called `templates` and in the newly created `templates` folder, create a filed named `blog-post.js`. In that new file, paste the following:
 
-```jsx:title=src/tempates/blog-post.js
+```jsx:title=src/templates/blog-post.js
 import React from "react"
 import Layout from "../components/layout"
 import { graphql } from "gatsby"

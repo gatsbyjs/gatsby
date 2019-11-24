@@ -1,4 +1,5 @@
-import React from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import { graphql } from "gatsby"
 
 import Button from "../../components/button"
@@ -13,12 +14,11 @@ import LegendTable from "../../components/features/legend-table"
 import CompareButton from "../../components/features/compare-button"
 import Breadcrumb from "../../components/docs-breadcrumb"
 import featureComparisonOptions from "../../data/features/comparison-options.json"
-import { space } from "../../utils/presets"
 import useComparisonState from "../../hooks/use-comparison-state"
 
 const FeaturesHeader = () => (
   <section>
-    <h1 id="introduction" style={{ marginTop: 0 }}>
+    <h1 id="introduction" sx={{ mt: 0 }}>
       JAMstack
     </h1>
     <p>Compare popular JAMstack technologies on this page.</p>
@@ -54,12 +54,14 @@ const JamstackFeaturesPage = ({ data, location }) => {
             technologies, choose the technologies to compare and then press
             Compare:
           </p>
+
           <div
-            css={{
+            sx={{
               display: `grid`,
               gridTemplateColumns: `repeat(auto-fit, minmax(75px, 1fr))`,
               gridAutoRows: `1fr`,
-              gridGap: space[2],
+              gridGap: 2,
+              pb: 4,
             }}
           >
             {featureComparisonOptions.jamstack.map(
@@ -74,19 +76,16 @@ const JamstackFeaturesPage = ({ data, location }) => {
                 </CompareButton>
               )
             )}
-            <Button
-              style={{
-                whiteSpace: `pre-wrap`,
-              }}
-              to={
-                hasSelected
-                  ? `/features/jamstack/gatsby-vs-${comparators.join(`-vs-`)}`
-                  : location.pathname
-              }
-            >
-              Compare with Gatsby
-            </Button>
           </div>
+          <Button
+            to={
+              hasSelected
+                ? `/features/jamstack/gatsby-vs-${comparators.join(`-vs-`)}`
+                : location.pathname
+            }
+          >
+            Compare with Gatsby
+          </Button>
           <EvaluationTable
             options={featureComparisonOptions.jamstack}
             sections={sections}

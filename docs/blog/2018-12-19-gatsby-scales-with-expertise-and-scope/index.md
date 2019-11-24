@@ -20,7 +20,7 @@ In this post, I want to explain how Gatsby led me into learning React and how yo
 
 ## The beginnings
 
-When I first discovered Gatsby two years ago, React was already quite popular. I decided to learn it to get more into modern front-end development and to step up my game. Before that I did **static** HTML/CSS/JS websites with the help of SCSS and Gulp. I never used a server-side scripting language (e.g. PHP) or a scripting engine (e.g. Nunjucks). So this was a big step, wasn't it?
+When I first discovered Gatsby two years ago, React was already quite popular. I decided to learn it to get more into modern frontend development and to step up my game. Before that I did **static** HTML/CSS/JS websites with the help of SCSS and Gulp. I never used a server-side scripting language (e.g. PHP) or a scripting engine (e.g. Nunjucks). So this was a big step, wasn't it?
 
 <Pullquote>
 Gatsby offers you a playground to learn React.
