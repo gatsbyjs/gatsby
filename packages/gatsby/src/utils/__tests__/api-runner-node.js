@@ -32,6 +32,8 @@ describe(`API_RUNNING_QUEUE_EMPTY`, () => {
       await apiRunner.transaction(async () => {
         await apiRunner(`test-1`)
         await apiRunner(`test-2`)
+        // we are still in transaction, so we shouldn't emit event yet
+        expect(apiRunningQueueEmpty).toBeCalledTimes(0)
         done = true
       })
 
