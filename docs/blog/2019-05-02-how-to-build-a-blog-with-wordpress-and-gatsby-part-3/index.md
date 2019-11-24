@@ -1,5 +1,5 @@
 ---
-title: "How To Build A Blog with Wordpress and Gatsby.js - Part 3"
+title: "How To Build A Blog with WordPress and Gatsby.js - Part 3"
 date: 2019-05-02
 author: Tim Smith
 excerpt: "In the third part of this series about WordPress and Gatsby.js, you will be creating pages using templates and components using data from WordPress."
@@ -296,7 +296,7 @@ One of the first things I notice about the blog pictured above is the header. It
 
 ### In the gatsby-config.js file
 
-In the gatsby-config.js file, you can see a piece at the top called `siteMetaData` with a title, description, and author. This is where some basic information is kept about the project for the SEO component, but also for the site name.
+In the gatsby-config.js file, you can see a piece at the top called `siteMetadata` with a title, description, and author. This is where some basic information is kept about the project for the SEO component, but also for the site name.
 
 ```javascript
 // gatsby-config.js

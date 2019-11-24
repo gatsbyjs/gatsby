@@ -1,5 +1,5 @@
 ---
-title: "Writing documentation with Docz"
+title: "Writing Documentation with Docz"
 ---
 
 Writing good documentation is important for your project maintainers (and for your future self). [Docz](https://www.docz.site) is a very nice documentation generator. It enables you to write interactive documentation for your React components with very little effort.

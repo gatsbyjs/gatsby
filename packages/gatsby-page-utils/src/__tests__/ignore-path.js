@@ -15,7 +15,7 @@ describe(`ignore-path`, () => {
       { path: `dir/blog.jsx` },
       { path: `dir/post.ts` },
       { path: `other.js` },
-      // example page or directory without the preprended extension
+      // example page or directory without the prepended extension
       { path: `example.js` },
       { path: `example/file.tsx` },
       { path: `dir/example.jsx` },

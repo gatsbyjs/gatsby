@@ -55,9 +55,9 @@ With all of the possible Gatsby integrations, it might help to spin up a Docker 
 
 > Do you have a setup not listed here? Let us know by adding it to this file and opening a PR.
 
-### Docker, Wordpress and Gatsby
+### Docker, WordPress and Gatsby
 
-To install Wordpress to use with Gatsby, this `docker-compose.yml` file will come in handy:
+To install WordPress to use with Gatsby, this `docker-compose.yml` file will come in handy:
 
 ```
 version: '2'
@@ -109,9 +109,9 @@ services:
        - /sessions
 ```
 
-Use the above file contents when following the Docker Wordpress install instructions: https://docs.docker.com/compose/wordpress/
+Use the above file contents when following the Docker WordPress install instructions: https://docs.docker.com/compose/wordpress/
 
-Using Docker Compose, you can start and stop a Wordpress instance and integrate it with the [Gatsby Wordpress source plugin](/docs/sourcing-from-wordpress/).
+Using Docker Compose, you can start and stop a WordPress instance and integrate it with the [Gatsby WordPress source plugin](/docs/sourcing-from-wordpress/).
 
 ## Development tools
 
@@ -121,4 +121,4 @@ Check [Debugging the build process](/docs/debugging-the-build-process/) page to 
 
 ## Feedback
 
-At any point during the contributing process, the Gatsby Core team would love to help! We hold a weekly [Core Maintainer's meeting](/contributing/community#core-maintainers-meeting) where you can share your creation(s) and receive advice and feedback directly from the team!
+At any point during the contributing process the Gatsby team would love to help! For help with a specific problem you can [open an issue on GitHub](/contributing/how-to-file-an-issue/). Or drop in to [our Discord server](https://gatsby.dev/discord) for general community discussion and support.

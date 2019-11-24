@@ -7,7 +7,7 @@ const {
   RenameTypes,
 } = require(`graphql-tools`)
 const { createHttpLink } = require(`apollo-link-http`)
-const fetch = require(`node-fetch`)
+const nodeFetch = require(`node-fetch`)
 const invariant = require(`invariant`)
 
 const {
@@ -25,6 +25,7 @@ exports.sourceNodes = async (
     typeName,
     fieldName,
     headers = {},
+    fetch = nodeFetch,
     fetchOptions = {},
     createLink,
     createSchema,

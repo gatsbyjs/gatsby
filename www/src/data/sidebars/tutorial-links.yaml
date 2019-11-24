@@ -22,7 +22,7 @@
           link: /tutorial/part-zero/#set-up-a-code-editor
         - title: Overview of core technologies
           link: /tutorial/part-zero/#overview-of-core-technologies
-    - title: 1. Get to know Gatsby building blocks
+    - title: 1. Get to Know Gatsby Building Blocks
       link: /tutorial/part-one/
       ui: steps
       items:
@@ -36,13 +36,13 @@
           link: /tutorial/part-one/#linking-between-pages
         - title: Deploying a Gatsby site
           link: /tutorial/part-one/#deploying-a-gatsby-site
-    - title: 2. Introduction to styling in Gatsby
+    - title: 2. Introduction to Styling in Gatsby
       link: /tutorial/part-two/
       ui: steps
       items:
         - title: Using global styles
           link: /tutorial/part-two/#using-global-styles
-        - title: Creating global styles with standard css files
+        - title: Creating global styles with standard CSS files
           link: /tutorial/part-two/#creating-global-styles-with-standard-css-files
         - title: Using component-scoped CSS
           link: /tutorial/part-two/#using-component-scoped-css
@@ -50,7 +50,7 @@
           link: /tutorial/part-two/#css-modules
         - title: Styling using CSS-in-JS
           link: /tutorial/part-two/#css-in-js
-    - title: 3. Creating nested layout components
+    - title: 3. Creating Nested Layout Components
       link: /tutorial/part-three/
       ui: steps
       items:
@@ -70,7 +70,7 @@
           link: /tutorial/part-four/#how-gatsbys-data-layer-uses-graphql-to-pull-data-into-components
         - title: Your first GraphQL query
           link: /tutorial/part-four/#your-first-graphql-query
-    - title: 5. Source plugins and rendering queried data
+    - title: 5. Source Plugins and Rendering Queried Data
       link: /tutorial/part-five/
       ui: steps
       items:
@@ -80,7 +80,7 @@
           link: /tutorial/part-five/#source-plugins
         - title: Build a page with a GraphQL query
           link: /tutorial/part-five/#build-a-page-with-a-graphql-query
-    - title: 6. Transformer plugins
+    - title: 6. Transformer Plugins
       link: /tutorial/part-six/
       ui: steps
       items:
@@ -88,7 +88,7 @@
           link: /tutorial/part-six/#transformer-plugins
         - title: Create a list of our site's markdown files
           link: /tutorial/part-six/#create-a-list-of-your-sites-markdown-files-in-srcpagesindexjs
-    - title: 7. Programmatically create pages from data
+    - title: 7. Programmatically Create Pages from Data
       link: /tutorial/part-seven/
       ui: steps
       items:
@@ -96,7 +96,7 @@
           link: /tutorial/part-seven/#creating-slugs-for-pages
         - title: Creating pages
           link: /tutorial/part-seven/#creating-pages
-    - title: 8. Preparing a site to go live
+    - title: 8. Preparing a Site to Go Live
       link: /tutorial/part-eight/
       ui: steps
       items:
@@ -110,7 +110,7 @@
           link: /tutorial/part-eight/#add-page-metadata
         - title: Keep making it better
           link: /tutorial/part-eight/#keep-making-it-better
-    - title: Theme tutorials
+    - title: Theme Tutorials
       link: /tutorial/theme-tutorials/
       items:
         - title: Using a Theme

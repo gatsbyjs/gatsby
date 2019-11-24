@@ -132,7 +132,7 @@ You should search for the plugins that you use in the [plugin library](/plugins)
 
 ### Remove or refactor layout components
 
-[Gatsby's layout components (`src/layouts/index.js`) are gone now.](https://www.gatsbyjs.org/blog/2018-06-08-life-after-layouts/). The "top level component" is now the page itself. If the layout of your site looks broken, this is likely the reason why.
+[Gatsby's layout components (`src/layouts/index.js`) are gone now](https://www.gatsbyjs.org/blog/2018-06-08-life-after-layouts/). The "top level component" is now the page itself. If the layout of your site looks broken, this is likely the reason why.
 
 There are some implications to this change:
 
@@ -622,7 +622,7 @@ Here's an example querying an image:
 
 ### Use `Query` in place of `RootQueryType`
 
-We changed the The GraphQL root type from `RootQueryType` to `Query`. This is only likely to impact you if you have top-level fragments in your GraphQL queries:
+We changed the GraphQL root type from `RootQueryType` to `Query`. This is only likely to impact you if you have top-level fragments in your GraphQL queries:
 
 ```diff
   query Blog {

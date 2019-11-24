@@ -30,9 +30,10 @@ const WorkerPool = require(`../utils/worker/pool`)
 
 const withResolverContext = require(`../schema/context`)
 const sourceNodes = require(`../utils/source-nodes`)
+const createSchemaCustomization = require(`../utils/create-schema-customization`)
 const websocketManager = require(`../utils/websocket-manager`)
 const getSslCert = require(`../utils/get-ssl-cert`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 const { initTracer } = require(`../utils/tracer`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const db = require(`../db`)
@@ -41,6 +42,10 @@ const onExit = require(`signal-exit`)
 const queryUtil = require(`../query`)
 const queryWatcher = require(`../query/query-watcher`)
 const requiresWriter = require(`../bootstrap/requires-writer`)
+const {
+  reportWebpackWarnings,
+  structureWebpackErrors,
+} = require(`../utils/webpack-error-utils`)
 
 // const isInteractive = process.stdout.isTTY
 
@@ -67,7 +72,9 @@ const waitJobsFinished = () =>
     onEndJob()
   })
 
-async function startServer(program, { activity }) {
+async function startServer(program) {
+  const indexHTMLActivity = report.phantomActivity(`building index.html`, {})
+  indexHTMLActivity.start()
   const directory = program.directory
   const directoryPath = withBasePath(directory)
   const workerPool = WorkerPool.create()
@@ -96,14 +103,23 @@ async function startServer(program, { activity }) {
     }
   }
 
-  await createIndexHtml({ activity })
+  await createIndexHtml({ activity: indexHTMLActivity })
+
+  indexHTMLActivity.end()
+
+  // report.stateUpdate(`webpack`, `IN_PROGRESS`)
+
+  const webpackActivity = report.activityTimer(`Building development bundle`, {
+    id: `webpack-develop`,
+  })
+  webpackActivity.start()
 
   const devConfig = await webpackConfig(
     program,
     directory,
     `develop`,
     program.port,
-    { parentSpan: activity.span }
+    { parentSpan: webpackActivity.span }
   )
 
   const compiler = webpack(devConfig)
@@ -172,6 +188,20 @@ async function startServer(program, { activity }) {
    * If no GATSBY_REFRESH_TOKEN env var is available, then no Authorization header is required
    **/
   const REFRESH_ENDPOINT = `/__refresh`
+  const refresh = async req => {
+    let activity = report.activityTimer(`createSchemaCustomization`, {})
+    activity.start()
+    await createSchemaCustomization({
+      refresh: true,
+    })
+    activity.end()
+    activity = report.activityTimer(`Refreshing source data`, {})
+    activity.start()
+    await sourceNodes({
+      webhookBody: req.body,
+    })
+    activity.end()
+  }
   app.use(REFRESH_ENDPOINT, express.json())
   app.post(REFRESH_ENDPOINT, (req, res) => {
     const enableRefresh = process.env.ENABLE_GATSBY_REFRESH_ENDPOINT
@@ -180,10 +210,7 @@ async function startServer(program, { activity }) {
       !refreshToken || req.headers.authorization === refreshToken
 
     if (enableRefresh && authorizedRefresh) {
-      console.log(`Refreshing source data`)
-      sourceNodes({
-        webhookBody: req.body,
-      })
+      refresh(req)
     }
     res.end()
   })
@@ -201,7 +228,7 @@ async function startServer(program, { activity }) {
 
   app.use(
     require(`webpack-dev-middleware`)(compiler, {
-      logLevel: `trace`,
+      logLevel: `silent`,
       publicPath: devConfig.output.publicPath,
       stats: `errors-only`,
     })
@@ -299,15 +326,16 @@ async function startServer(program, { activity }) {
   )
 
   chokidar.watch(watchGlobs).on(`change`, async () => {
-    await createIndexHtml()
+    await createIndexHtml({ activity: indexHTMLActivity })
     socket.to(`clients`).emit(`reload`)
   })
 
-  return [compiler, listener]
+  return { compiler, listener, webpackActivity }
 }
 
 module.exports = async (program: any) => {
   initTracer(program.openTracingConfigFile)
+  report.pendingActivity({ id: `webpack-develop` })
   telemetry.trackCli(`DEVELOP_START`)
   telemetry.startBackgroundUpdate()
 
@@ -334,10 +362,15 @@ module.exports = async (program: any) => {
 
   // Check if https is enabled, then create or get SSL cert.
   // Certs are named after `name` inside the project's package.json.
-  // Scoped names are converted from @npm/package-name to npm--package-name
+  // Scoped names are converted from @npm/package-name to npm--package-name.
+  // If the name is unavailable, generate one using the current working dir.
   if (program.https) {
+    const name = program.sitePackageJson.name
+      ? program.sitePackageJson.name.replace(`@`, ``).replace(`/`, `--`)
+      : process.cwd().replace(/[^A-Za-z0-9]/g, `-`)
+
     program.ssl = await getSslCert({
-      name: program.sitePackageJson.name.replace(`@`, ``).replace(`/`, `--`),
+      name,
       certFile: program[`cert-file`],
       keyFile: program[`key-file`],
       directory: program.directory,
@@ -350,21 +383,10 @@ module.exports = async (program: any) => {
   // Start the createPages hot reloader.
   require(`../bootstrap/page-hot-reloader`)(graphqlRunner)
 
-  const queryIds = queryUtil.calcInitialDirtyQueryIds(store.getState())
-  const { staticQueryIds, pageQueryIds } = queryUtil.groupQueryIds(queryIds)
+  // Start the schema hot reloader.
+  require(`../bootstrap/schema-hot-reloader`)()
 
-  let activity = report.activityTimer(`run static queries`)
-  activity.start()
-  await queryUtil.processStaticQueries(staticQueryIds, {
-    activity,
-    state: store.getState(),
-  })
-  activity.end()
-
-  activity = report.activityTimer(`run page queries`)
-  activity.start()
-  await queryUtil.processPageQueries(pageQueryIds, { activity })
-  activity.end()
+  await queryUtil.initialProcessQueries()
 
   require(`../redux/actions`).boundActionCreators.setProgramStatus(
     `BOOTSTRAP_QUERY_RUNNING_FINISHED`
@@ -376,10 +398,7 @@ module.exports = async (program: any) => {
   queryUtil.startListeningToDevelopQueue()
   queryWatcher.startWatchDeletePage()
 
-  activity = report.activityTimer(`start webpack server`)
-  activity.start()
-  const [compiler] = await startServer(program, { activity })
-  activity.end()
+  let { compiler, webpackActivity } = await startServer(program)
 
   function prepareUrls(protocol, host, port) {
     const formatUrl = hostname =>
@@ -440,13 +459,7 @@ module.exports = async (program: any) => {
   }
 
   function printInstructions(appName, urls, useYarn) {
-    report._setStage({
-      stage: `DevelopBootstrapFinished`,
-      context: {
-        url: urls.localUrlForBrowser,
-        appName,
-      },
-    })
+    console.log()
     console.log(`You can now view ${chalk.bold(appName)} in the browser.`)
     console.log()
 
@@ -513,8 +526,8 @@ module.exports = async (program: any) => {
       .sync(`{,!(node_modules|public)/**/}*.js`, { nodir: true })
       .forEach(file => {
         const fileText = fs.readFileSync(file)
-        const matchingApis = deprecatedApis.filter(
-          api => fileText.indexOf(api) !== -1
+        const matchingApis = deprecatedApis.filter(api =>
+          fileText.includes(api)
         )
         matchingApis.forEach(api => deprecatedLocations[api].push(file))
       })
@@ -536,10 +549,30 @@ module.exports = async (program: any) => {
       }
     })
   }
+
+  // compiler.hooks.invalid.tap(`log compiling`, function(...args) {
+  //   console.log(`set invalid`, args, this)
+  // })
+
+  compiler.hooks.watchRun.tapAsync(`log compiling`, function(args, done) {
+    if (webpackActivity) {
+      webpackActivity.end()
+    }
+    webpackActivity = report.activityTimer(`Re-building development bundle`, {
+      id: `webpack-develop`,
+    })
+    webpackActivity.start()
+
+    done()
+  })
+
   let isFirstCompile = true
   // "done" event fires when Webpack has finished recompiling the bundle.
   // Whether or not you have warnings or errors, you will get this event.
-  compiler.hooks.done.tapAsync(`print getsby instructions`, (stats, done) => {
+  compiler.hooks.done.tapAsync(`print gatsby instructions`, function(
+    stats,
+    done
+  ) {
     // We have switched off the default Webpack output in WebpackDevServer
     // options so we are going to "massage" the warnings and errors and present
     // them in a readable focused way.
@@ -550,6 +583,7 @@ module.exports = async (program: any) => {
       program.port
     )
     const isSuccessful = !messages.errors.length
+
     if (isSuccessful && isFirstCompile) {
       printInstructions(program.sitePackageJson.name, urls, program.useYarn)
       printDeprecationWarnings()
@@ -565,6 +599,20 @@ module.exports = async (program: any) => {
     }
 
     isFirstCompile = false
+
+    if (webpackActivity) {
+      reportWebpackWarnings(stats)
+
+      if (!isSuccessful) {
+        const errors = structureWebpackErrors(
+          `develop`,
+          stats.compilation.errors
+        )
+        webpackActivity.panicOnBuild(errors)
+      }
+      webpackActivity.end()
+      webpackActivity = null
+    }
 
     done()
   })

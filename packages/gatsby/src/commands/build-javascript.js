@@ -2,6 +2,8 @@
 const webpack = require(`webpack`)
 const webpackConfig = require(`../utils/webpack.config`)
 
+const { reportWebpackWarnings } = require(`../utils/webpack-error-utils`)
+
 module.exports = async (program, { parentSpan }) => {
   const { directory } = program
 
@@ -19,6 +21,8 @@ module.exports = async (program, { parentSpan }) => {
         reject(err)
         return
       }
+
+      reportWebpackWarnings(stats)
 
       if (stats.hasErrors()) {
         reject(stats.compilation.errors)

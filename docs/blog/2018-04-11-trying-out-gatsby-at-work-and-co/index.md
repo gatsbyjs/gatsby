@@ -209,7 +209,7 @@ Here, we’re configuring Contentful to expose a preview link for every `Content
 
 #### Building staging URLs
 
-Backing up a second, let’s review why we selected the preview URLs `mystagingurl.com/en/123` and `mystagingurl.com/cn/123`. Our staging environment — like all of our environments — already has all of the pages deployed at their actual paths (eg `/en/my-parent/my-parent`), so why can’t we just point editors there?
+Backing up a second, let’s review why we selected the preview URLs `mystagingurl.com/en/123` and `mystagingurl.com/cn/123`. Our staging environment — like all of our environments — already has all of the pages deployed at their actual paths (e.g. `/en/my-parent/my-parent`), so why can’t we just point editors there?
 
 Here’s why: Contentful’s Content Preview dashboard doesn’t give you that kind of flexibility. To get around this, we opted to build special paths just for the staging environment. Here’s how we set it up in `gatsby-node.js`:
 

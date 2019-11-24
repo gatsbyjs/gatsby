@@ -1,9 +1,7 @@
-import React from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 
 import EvaluationCell from "./evaluation-cell"
-import { colors, mediaQueries, fonts } from "../../utils/presets"
-
-const legendBorderColor = colors.ui.border.subtle
 
 const LegendTable = () => {
   const legendBallStyle = {
@@ -13,59 +11,60 @@ const LegendTable = () => {
     display: `inline-block`,
   }
 
-  const legendBallCellStyle = {
-    display: `table-cell`,
-    verticalAlign: `middle`,
-    textAlign: `center`,
-    padding: 10,
-    borderLeft: `1px solid ${legendBorderColor}`,
-    borderBottom: `1px solid ${legendBorderColor}`,
+  const legendBallCellStyle = t => {
+    return {
+      display: `table-cell`,
+      verticalAlign: `middle`,
+      textAlign: `center`,
+      padding: 3,
+      borderLeft: `1px solid ${t.colors.ui.border}`,
+      borderBottom: `1px solid ${t.colors.ui.border}`,
+    }
   }
 
-  const legendExplanationCellStyle = {
-    display: `table-cell`,
-    verticalAlign: `middle`,
-    textAlign: `center`,
-    padding: 10,
-    borderLeft: `1px solid ${legendBorderColor}`,
-    borderBottom: `1px solid ${legendBorderColor}`,
-    [mediaQueries.sm]: {
-      borderBottom: 0,
-    },
+  const legendExplanationCellStyle = t => {
+    return {
+      display: `table-cell`,
+      verticalAlign: `middle`,
+      textAlign: `center`,
+      padding: 3,
+      borderLeft: `1px solid ${t.colors.ui.border}`,
+      borderBottom: [`1px solid ${t.colors.ui.border}`, null, 0],
+    }
   }
 
   const balls = [
-    <div css={legendBallCellStyle} key={`${legendBallCellStyle}-1`}>
+    <div sx={legendBallCellStyle} key={`${legendBallCellStyle}-1`}>
       <h4 style={{ margin: 0 }}>Icon</h4>
     </div>,
-    <div css={legendBallCellStyle} key={`${legendBallCellStyle}-2`}>
+    <div sx={legendBallCellStyle} key={`${legendBallCellStyle}-2`}>
       <EvaluationCell num="3" style={legendBallStyle} />
     </div>,
-    <div css={legendBallCellStyle} key={`${legendBallCellStyle}-3`}>
+    <div sx={legendBallCellStyle} key={`${legendBallCellStyle}-3`}>
       <EvaluationCell num="2" style={legendBallStyle} />
     </div>,
-    <div css={legendBallCellStyle} key={`${legendBallCellStyle}-4`}>
+    <div sx={legendBallCellStyle} key={`${legendBallCellStyle}-4`}>
       <EvaluationCell num="1" style={legendBallStyle} />
     </div>,
-    <div css={legendBallCellStyle} key={`${legendBallCellStyle}-5`}>
+    <div sx={legendBallCellStyle} key={`${legendBallCellStyle}-5`}>
       <EvaluationCell num="0" style={legendBallStyle} />
     </div>,
   ]
 
   const legendText = [
-    <div css={legendExplanationCellStyle} key={`legendExplanationCell-1`}>
-      <h5 style={{ margin: 0 }}>Feature Availability</h5>
+    <div sx={legendExplanationCellStyle} key={`legendExplanationCell-1`}>
+      <h5 sx={{ m: 0 }}>Feature Availability</h5>
     </div>,
-    <div css={legendExplanationCellStyle} key={`legendExplanationCell-2`}>
+    <div sx={legendExplanationCellStyle} key={`legendExplanationCell-2`}>
       Excellent (fully available)
     </div>,
-    <div css={legendExplanationCellStyle} key={`legendExplanationCell-3`}>
+    <div sx={legendExplanationCellStyle} key={`legendExplanationCell-3`}>
       Good (partially available, e.g. plugins)
     </div>,
-    <div css={legendExplanationCellStyle} key={`legendExplanationCell-4`}>
+    <div sx={legendExplanationCellStyle} key={`legendExplanationCell-4`}>
       Fair (needs customization or limited)
     </div>,
-    <div css={legendExplanationCellStyle} key={`legendExplanationCell-5`}>
+    <div sx={legendExplanationCellStyle} key={`legendExplanationCell-5`}>
       Poor (not possible)
     </div>,
   ]
@@ -73,28 +72,22 @@ const LegendTable = () => {
   return (
     <div>
       <div
-        css={{
-          border: `1px solid ${legendBorderColor}`,
+        sx={{
+          border: t => `1px solid ${t.colors.ui.border}`,
           borderLeft: 0,
-          fontFamily: fonts.header,
-          display: `none`,
-          [mediaQueries.sm]: {
-            display: `table`,
-          },
+          fontFamily: `heading`,
+          display: [`none`, null, `table`],
         }}
       >
         <div css={{ display: `table-row` }}>{balls}</div>
         <div css={{ display: `table-row` }}>{legendText}</div>
       </div>
       <div
-        css={{
-          display: `table`,
-          border: `1px solid ${legendBorderColor}`,
+        sx={{
+          display: [`table`, null, `none`],
+          border: t => `1px solid ${t.colors.ui.border}`,
           borderLeft: 0,
-          fontFamily: fonts.header,
-          [mediaQueries.sm]: {
-            display: `none`,
-          },
+          fontFamily: `heading`,
         }}
       >
         {[0, 1, 2, 3, 4].map(i => (

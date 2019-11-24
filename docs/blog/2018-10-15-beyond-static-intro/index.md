@@ -43,6 +43,8 @@ One of the central ideas of Gatsby is that we statically generate our HTML conte
 1. Invoke [ReactDOM.hydrate method][hydrate] to pick up just where we left our static HTML
 1. Transfer rendering to the [React reconciler][reconciler]
 
+_This process is spelled out in more detail in the ["Understanding React Rehydration" guide](/docs/react-rehydration)_
+
 It's this last phase that bridges the gap between static sites and full-fledged applications. In this phase you can make data calls, authenticate users, and perform all the app-like functionality you desire.
 
 It's really that easy.
