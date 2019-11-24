@@ -8648,6 +8648,7 @@
 - title: talkoverflow
   main_url: https://talkoverflow.com
   url: https://talkoverflow.com
+  description: Blog on software engineering built with Gatsby themes and theme-ui
   categories:
     - Blog
     - Web Development
