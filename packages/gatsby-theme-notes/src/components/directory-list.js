@@ -19,8 +19,8 @@ export default ({ directories }) =>
                 alignItems: `center`,
               }}
             >
-              <Folder style={{ marginRight: `10px` }} />
-              <span>{key}</span>
+              <Folder style={{ marginRight: `5px` }} />
+              <span style={{ marginRight: `15px` }}>{key}</span>
             </Box>
           </Styled.a>
         ))}
