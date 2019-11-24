@@ -4546,3 +4546,20 @@
     - Styled Components
     - Code syntax highlighting
     - Light/Dark mode
+- url: https://amelie-blog.netlify.com/
+  repo: https://github.com/tobyau/gatsby-starter-amelie
+  description: A minimal and mobile friendly blog template
+  tags:
+    - Blog
+    - Media
+    - SEO
+    - Netlify
+    - Styling:CSS-in-JS
+    - Documentation
+    - Featured
+    - Travel
+    - Markdown
+  features:
+    - Responsive design
+    - Customizable content through markdown files
+    - SEO component with React Helmet
