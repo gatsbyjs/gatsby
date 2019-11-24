@@ -251,13 +251,17 @@ ${e}`
         async resolve(mdxNode) {
           const { mdast } = await processMDX({ node: mdxNode })
           const { words } = await getCounts({ mdast })
-          let timeToRead = 0
+          const { timeToRead } = pluginOptions
           const avgWPM = 265
-          timeToRead = Math.round(words / avgWPM)
-          if (timeToRead === 0) {
-            timeToRead = 1
-          }
-          return timeToRead
+          const timeToReadInMinutes = Math.max(
+            1,
+            Math.round(
+              _.isFunction(timeToRead)
+                ? timeToRead(words, mdxNode)
+                : words / avgWPM
+            )
+          )
+          return timeToReadInMinutes
         },
       },
       wordCount: {
