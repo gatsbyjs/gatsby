@@ -20,7 +20,14 @@ const { getCommonDir } = require(`../../utils/path`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 const { trackCli } = require(`gatsby-telemetry`)
 const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
-const shadowCreatePagePath = require(`../../internal-plugins/webpack-theme-component-shadowing/create-page`)
+
+/**
+ * Memoize function used to pick shadowed page components to avoid expensive I/O.
+ *
+ */
+const shadowCreatePagePath = _.memoize(
+  require(`../../internal-plugins/webpack-theme-component-shadowing/create-page`)
+)
 
 const actions = {}
 const isWindows = platform() === `win32`
