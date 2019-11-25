@@ -1,6 +1,6 @@
 ---
 title: Making it easier to start with Gatsby Cloud for free
-date: 2019-11-2
+date: 2019-11-25
 author: Shannon Soper
 tags: ["ux", "cloud", "cms"]
 ---
@@ -38,7 +38,7 @@ Here's a screenshot of a Figma prototype we tested based on feedback on the firs
 
 ### We’re prioritizing what we build according to user needs
 
-From this process of testing prototypes, implementing changes, and testing again, we could answer these questions:
+From this process of testing prototypes, implementing changes, and testing again, we answered these questions:
 
 - What blocks people from onboarding onto Gatsby Cloud?
 - What creates friction for people onboarding onto Gatsby Cloud?
@@ -52,12 +52,13 @@ We’re currently shipping some more improvements to the GitHub integration that
 
 ## What created friction for people onboarding onto Gatsby Cloud?
 
-Choosing a CMS was confusing for four of the eight testers. None of them had an opinion on which CMS to choose. We learned from this that an MDX starter would avoid requiring users to choose a CMS.
+Choosing a CMS was confusing for four of the eight testers. None of them had an opinion on which CMS to choose. Rather than force developers to integrate a CMS they aren't already using, we realized we should offer an alternative. We're creating an alternative starter where all content lives in the repository, alongside their code. We've opted for MDX, a powerful combination of Markdown and JSX.
 
 ## What creates value for people onboarding onto Gatsby Cloud?
 
-There were some good things about onboarding, and we want those good things to persist and grow, if possible.
-Choosing a starter was fun, and 3 of the users wanted more details about the starters. On starter cards, we added a link to their github repos or /starters/ page on .org
+Users found value in some aspects of our early onboarding designs and we wanted those good things to persist and grow, if possible.
+
+For example, choosing a starter was fun, and 3 of the users wanted more details about the starters. On starter cards, we added a link to their github repos or /starters/ page on .org
 
 ### Product, design, and engineering are doing something about the feedback
 
