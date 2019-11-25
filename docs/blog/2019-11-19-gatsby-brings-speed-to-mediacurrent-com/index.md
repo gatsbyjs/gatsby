@@ -64,7 +64,7 @@ Ultimately, the decision to convert Mediacurrent.com to a Gatsby front-end was a
 - [Gatsby Preview](https://www.gatsbyjs.com/preview/) allows us to view content updates in real-time prior to publishing to production.
 - Build times are now much improved using Gatsby’s new Build feature (in beta). We are seeing builds come in at 4-8 minutes on average compared to Jekyll which took up to 15 minutes to compile. We also know that incremental builds are coming soon and will provide substantial improvements.
 
-To learn more about Mediacurrent’s work with Gatsby, check out Ben Robertson’s [Gatsby Accessibility Starter](/starters/benjamingrobertson/gatsby-starter-accessibility/) and these additional resources:
+We've written a bit more about our work with Gatsby elsewhere -- if you're curious, you can check out Ben Robertson’s [Gatsby Accessibility Starter](/starters/benjamingrobertson/gatsby-starter-accessibility/) and these additional resources:
 
 - [Digital Display With Decoupled Drupal 8 & Gatsby](/blog/2019-07-09-digital-display-drupal-gatsby/) - City of Sandy Springs Case Study
 - [Move Fast, Don’t Break Things: Trends in Modern Web Dev with Mediacurrent](https://youtu.be/QiocnDGnKfs) - Gatsby Days presentation by Ben Robertson
