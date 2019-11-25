@@ -7432,7 +7432,7 @@
     - Landing Page
     - Productivity
     - Technology
-  built_by: Vandre Leal
+  built_by: Vandré Leal
   built_by_url: https://vandreleal.github.io
   featured: false
 - title: tiaan.dev
@@ -8654,4 +8654,16 @@
     - Agency
     - Web Development
   built_by: Matthew Russell
+  featured: false
+- title: Vandré Leal
+  main_url: https://vandreleal.github.io
+  url: https://vandreleal.github.io
+  source_url: https://github.com/vandreleal/vandreleal.github.io
+  description: >
+    Portfolio of Vandré Leal.
+  categories:
+    - Portfolio
+    - Web Development
+  built_by: Vandré Leal
+  built_by_url: https://vandreleal.github.io
   featured: false
