@@ -4571,3 +4571,16 @@
     - Linting
   features:
     - Starter for Chronoblog Gatsby Theme
+- url: https://gatsby-eth-dapp-starter.netlify.com
+  repo: https://github.com/robsecord/gatsby-eth-dapp-starter
+  description: Gatsby Starter for Ethereum Dapps using Web3 with Multiple Account Management Integrations
+  tags:
+    - Client-side App
+    - Netlify
+    - Authentication
+  features:
+    - Ethereum Web3 Authentication - Multiple Integrations
+    - ConsenSys Rimble UI Integration
+    - Styled Components
+    - Coinbase, Fortmatic, Metamask, WalletConnect, and more
+    - dFuse Blockchain Streaming and Notifications
