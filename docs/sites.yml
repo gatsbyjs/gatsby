@@ -8645,6 +8645,21 @@
   built_by: Tekhaus
   built_by_url: https://www.tekha.us
   featured: false
+- title: Lesley Lai
+  main_url: https://lesleylai.info
+  url: https://lesleylai.info
+  source_url: https://github.com/LesleyLai/blog
+  description: >
+    lesleylai.info is the personal website of Lesley Lai, where he talks mainly about C++ and Computer Graphics.
+  categories:
+    - Blog
+    - Open Source
+    - Portfolio
+    - Programming
+    - Technology
+  built_by: Lesley Lai
+  built_by_url: https://github.com/LesleyLai
+  featured: false
 - title: Whipstitch Webwork
   url: https://www.whipstitchwebwork.com
   main_url: https://www.whipstitchwebwork.com
