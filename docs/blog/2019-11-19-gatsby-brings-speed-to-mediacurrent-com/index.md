@@ -8,7 +8,9 @@ tags:
   - case-studies
 ---
 
-Back in 2016 we were planning the latest [Mediacurrent.com](https://www.mediacurrent.com) site redesign and were intrigued by the decoupled approach which was gaining popularity in the Drupal community. We liked the idea of breaking apart the front-end and backend so that we could have more flexibility in how we executed redesigns (i.e. redesigns would not be tied to the Drupal upgrade lifecycle). As you’ll discover, our journey to decoupling Drupal began with Jekyll and now pivots to Gatsby. We believe that Gatsby is a superior solution that can work for many organizations looking to leverage a fast, secure React-based front-end for their website. Come along on our journey to find out how we did it.
+Back in 2016 we were planning the latest [Mediacurrent.com](https://www.mediacurrent.com) site redesign and were intrigued by the decoupled approach which was gaining popularity in the Drupal community. We liked the idea of breaking apart the front-end and backend so that we could have more flexibility in how we executed redesigns (i.e. redesigns would not be tied to the Drupal upgrade lifecycle). 
+
+We started this journey with Jekyll, but quickly switched to Gatsby. We're excited to have found the organizational agility we were looking for and now believe that Gatsby is a superior solution that can work for many organizations looking to leverage a fast, secure React-based front-end for their website. 
 
 ## Finding a Front End Framework
 
