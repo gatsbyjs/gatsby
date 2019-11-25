@@ -88,4 +88,4 @@ We’ve shipped a ton of improvements already, and have a few more that are in p
 
 Hearing your feedback helps us make Gatsby better. Sign up to tell me about your experience with Gatsby Cloud by [booking time on my calendar!](https://calendly.com/shannon-soper/gatsby-cloud-usability)
 
-It’d also be valuable to hear which CMSs and/or other data sources you’d like to see integrations and starters for! [Take this survey to let us know](insert link)
+It’d also be valuable to hear which CMSs and/or other data sources you’d like to see integrations and starters for! [Take this survey to let us know](https://twitter.com/shannonb_ux/status/1199077543694893056).
