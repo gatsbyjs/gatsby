@@ -442,6 +442,8 @@
               breadcrumbTitle: Supporting PWAs
             - title: Caching
               link: /docs/caching/
+            - title: Security in Gatsby
+              link: /docs/security-in-gatsby
             - title: Using Local HTTPS
               link: /docs/local-https/
             - title: Auditing with Lighthouse
