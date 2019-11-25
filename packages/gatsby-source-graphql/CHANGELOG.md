@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-graphql@2.1.23...gatsby-source-graphql@2.1.24) (2019-11-22)
+
+### Features
+
+- **gatsby-source-graphql:** Allow override fetch ([#19630](https://github.com/gatsbyjs/gatsby/issues/19630)) ([2867fb2](https://github.com/gatsbyjs/gatsby/commit/2867fb2))
+
 ## [2.1.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-graphql@2.1.22...gatsby-source-graphql@2.1.23) (2019-11-15)
 
 **Note:** Version bump only for package gatsby-source-graphql

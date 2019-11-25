@@ -113,6 +113,7 @@
     "develop": "cross-env GATSBY_GRAPHQL_IDE=playground gatsby develop",
     "start": "npm run develop",
     "serve": "gatsby serve",
+    "clean": "gatsby clean",
     "test": "jest",
     "scrapeStarters": "cd src/data/StarterShowcase && node scraper.js",
     "stylelint": "stylelint './src/**/*.js'",

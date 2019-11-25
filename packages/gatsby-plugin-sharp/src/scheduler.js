@@ -60,9 +60,9 @@ const executeJobs = _.throttle(
 const scheduleJob = async (
   job,
   boundActionCreators,
+  pluginOptions,
   reporter,
-  reportStatus = true,
-  pluginOptions
+  reportStatus = true
 ) => {
   const isQueued = toProcess.has(job.inputPath)
   let scheduledPromise

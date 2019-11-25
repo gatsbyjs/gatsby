@@ -27,7 +27,7 @@ const resolveTheme = async (
     // local themes nested in other themes is potential source of problems:
     // because those are not hosted by npm, there is potential for multiple
     // local themes with same name that do different things and name being
-    // main identifier that gatsby uses right now, it's safer not to support it for now.
+    // main identifier that Gatsby uses right now, it's safer not to support it for now.
     if (isMainConfig) {
       pathToLocalTheme = path.join(path.resolve(`.`), `plugins`, themeName)
       // is a local plugin OR it doesn't exist
@@ -81,7 +81,7 @@ const processTheme = (
   const themesList = useLegacyThemes
     ? themeConfig && themeConfig.__experimentalThemes
     : themeConfig && themeConfig.plugins
-  // gatsby themes don't have to specify a gatsby-config.js (they might only use gatsby-node, etc)
+  // Gatsby themes don't have to specify a gatsby-config.js (they might only use gatsby-node, etc)
   // in this case they're technically plugins, but we should support it anyway
   // because we can't guarantee which files theme creators create first
   if (themeConfig && themesList) {
