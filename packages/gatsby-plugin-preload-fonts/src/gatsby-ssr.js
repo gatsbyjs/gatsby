@@ -19,11 +19,13 @@ exports.onRenderBody = (
   { crossOrigin = `anonymous` } = {}
 ) => {
   const cache = loadCache()
-  if (!cache.assets[pathname]) return
+
+  const pathnameWithSlash = pathname.endsWith(`/`) ? pathname : `${pathname}/`
+  if (!cache.assets[pathnameWithSlash]) return
 
   const props = getLinkProps({ crossOrigin, pathname })
 
-  const assets = Object.keys(cache.assets[pathname])
+  const assets = Object.keys(cache.assets[pathnameWithSlash])
 
   setHeadComponents(
     assets.map(href => {
