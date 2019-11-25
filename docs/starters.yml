@@ -4479,6 +4479,18 @@
     - Based on the official Gatsby starter blog
     - Uses TailwindCSS
     - Uses PostCSS
+- url: https://gatsby-minimalist-starter.netlify.com/
+  repo: https://github.com/dylanesque/Gatsby-Minimalist-Starter
+  description: A minimalist, general-purpose Gatsby starter
+  tags:
+    - SEO
+    - Markdown
+    - Styling:CSS-in-JS
+  features:
+    - Less starting boilerplate than the Gatsby default starter
+    - Layout.css includes checklist of initial design system decisions to make
+    - Uses Emotion
+    - Uses CSS-In-JS
 - url: https://gastby-starter-zeevo.netlify.com/
   repo: https://github.com/zeevosec/gatsby-starter-zeevo
   description: Yet another Blog starter with a different style
