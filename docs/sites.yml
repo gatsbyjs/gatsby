@@ -1,3 +1,15 @@
+- title: OwlyPixel Blog
+  main_url: https://owlypixel.com
+  url: https://owlypixel.com
+  description: >
+    Notes and tutorials on coding, web development, design and other stuff.
+  categories:
+    - Web development 
+    - Blog
+    - Education
+  built_by: Owlypixel
+  built_by_url: https://twitter.com/owlypixel
+  featured: false
 - title: ReactJS
   main_url: "https://reactjs.org/"
   url: "https://reactjs.org/"
