@@ -1839,6 +1839,55 @@ Fragments can be nested inside other fragments, and multiple fragments can be us
 - [Gatsby image fragments](/docs/gatsby-image/#image-query-fragments)
 - [Example repo with co-located data](https://github.com/gatsbyjs/gatsby/tree/master/examples/gatsbygram)
 
+### Querying data client-side with `fetch`
+
+Data doesn't only have to be queried at build time and remain solely static. You can query data at runtime the same way you can fetch data in a regular React app.
+
+#### Directions
+
+1. In a file with a React component defined, like a page in `src/pages`, or a layout component, import hooks for `useState` and `useEffect`.
+
+```jsx
+import React, { useState, useEffect } from "react"
+```
+
+2. Inside the component, wrap a function to fetch data in a `useEffect` hook so it will retrieve data when the component mounts. `await` a result from the `fetch` API, and set that data into a variable with `useState`.
+
+```jsx:title
+import React, { useState, useEffect } from "react"
+
+const IndexPage = () => {
+  // highlight-start
+  const [starsCount, setStarsCount] = useState(0)
+  useEffect(() => {
+    const fetchData = async () => {
+      // get data from GitHub api
+      const result = await fetch(`https://api.github.com/repos/gatsbyjs/gatsby`)
+      // parse JSON from request
+      const data = await result.json()
+      // set data for the number of stars
+      setStarsCount(data.stargazers_count)
+    }
+    fetchData()
+  }, [])
+  // highlight-end
+
+  return (
+    <section>
+      <p>Runtime Data: Star count for the Gatsby repo {starsCount}</p> //
+      highlight-line
+    </section>
+  )
+}
+
+export default IndexPage
+```
+
+#### Additional resources
+
+- Guide on [client-data fetching](/docs/data-fetching/)
+- Live [example site](https://gatsby-data-fetching.netlify.com/) using this example
+
 ## 7. Working with images
 
 ### Import an image into a component with webpack

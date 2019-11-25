@@ -1,237 +1,169 @@
 ---
-title: Build Time and Client-side Data Fetching
+title: Build Time and Client Runtime Data Fetching
 ---
 
-This guide touches on how to fetch data at both [_build time_](/docs/glossary#build) and [_runtime_](/docs/glossary#runtime). It uses the [`gatsby-source-graphql`](/packages/gatsby-source-graphql/) plugin to fetch data at build time on the Node.js server that Gatsby runs when you run `gatsby build`, and the [`axios`](https://github.com/axios/axios) package to fetch different data on the [client-side](/docs/glossary#client-side) when the page loads in the browser.
+import ClientDataExample from "../../www/src/components/client-data-example.js"
+
+This guide demonstrates how to fetch data at both [_build time_](/docs/glossary#build) and [_runtime_](/docs/glossary#runtime) in Gatsby.
 
 ## The benefits of the hybrid nature of Gatsby apps
 
-Because Gatsby is capable of generating content at build time as well as making calls to external services at runtime, you can make [hybrid pages](/docs/adding-app-and-website-functionality/#hybrid-app-pages) that take advantage of the benefits of static content as well as dynamic content. You can gather data ahead of time while the site builds so that when a user loads your page the data is already ready. Then, for data that is of a more dynamic nature, you can request data from another service like an API.
+Because Gatsby is capable of generating content at build time as well as making calls to external services at runtime, you can make [hybrid pages](/docs/adding-app-and-website-functionality/#hybrid-app-pages) that take advantage of the benefits of static content as well as dynamic content. You can gather data ahead of time while the site builds so that when a user loads your page the data is already available. Then, for data that is of a more dynamic nature, you can request data from another service like an API with `fetch` or a library like `axios`.
 
-When this guide mentions [hydration](/docs/glossary#hydration), it means that Gatsby (through React.js) builds static files to render server-side. When Gatsby's script bundle downloads and executes in the browser, it preserves the HTML markup built by Gatsby and turns the site into a full React web application that can manipulate the [DOM](/docs/glossary#dom). The result of this process creates fast loading pages and a nice user experience.
+This combination of static/dynamic is possible through React [hydration](/docs/glossary#hydration), which means that Gatsby (through React.js) builds static files to render server-side. When Gatsby's script bundle downloads and executes in the browser, it preserves the HTML markup built by Gatsby and turns the site into a full React web application that can manipulate the [DOM](/docs/glossary#dom). The result of this process creates fast loading pages and a nice user experience.
 
 > To understand how statically generated content can turn into a React app, refer to the [Understanding React Hydration guide](/docs/react-hydration)
 
 Compiling pages at build time is useful when your website content won't change often, or when triggering a build process to recompile works fine. However, some websites with more dynamic needs require a [client-side](/docs/glossary#client-side) runtime to handle constantly changing content after the page loads, like a chat widget, user upvotes, or an email client web application.
 
-## Combining build-time and client run-time data
+## Combining build time and client runtime data
 
-Because a Gatsby site [hydrates](/docs/glossary#hydration) into a React app after loading statically, Gatsby is not just for static sites. You can also fetch data dynamically on the client-side as needed, like you would with any other React app.
+To illustrate this combination of build time and runtime data, this guide uses code from a [small example site](https://gatsby-data-fetching.netlify.com). It uses the [`gatsby-source-graphql`](/packages/gatsby-source-graphql/) plugin to fetch data from the GitHub API at build time for static content like the name and url to a repository, and the [`fetch` API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) to retrieve more dynamic data from the GitHub API on the [client-side](/docs/glossary#client-side) like star counts when the page loads in the browser.
 
-To illustrate this, check out a small example site that uses both Gatsby's data layer at build-time and data on the client at run-time. It fetches content from GitHub's API at build time and then
+> Check out the code from the [full example here](https://github.com/gatsbyjs/gatsby/tree/master/examples/data-fetching).
 
-> Note: Check out the [full example here](https://github.com/gatsbyjs/gatsby/examples/data-fetching).
+### Fetching data at build time
 
-### 1. Create a Gatsby page component
+For fetching data at build time, you can create an integration with a third-party system by sourcing data in your `gatsby-node` file and creating nodes for the GraphQL layer that become queryable in pages. This is the same method that source plugins implement to [source data](/docs/content-and-data/) while the site builds. You can read about that process in the [Creating a Source Plugin guide](/docs/creating-a-source-plugin/).
 
-No data yet. Just the basic React page that you'll be populating.
+> This process of fetching data at build time and creating pages from the data is [covered in more depth in the tutorial](/tutorial/part-five/) as well as the docs for [creatiing pages from data programmatically](/docs/programmatically-create-pages-from-data/).
 
-```jsx:title=index.js
-import React, { Component } from "react"
-import { graphql } from "gatsby"
+#### Source data to be queried at build time
 
-class ClientFetchingExample extends Component {
-  render() {
-    return (
-      <div style={{ textAlign: "center", width: "600px", margin: "50px auto" }}>
-        <h1>Image of Rick</h1>
-        <p>This will come from a build time query</p>
+The simplest way to source data is to take advantage of an existing source plugin. To install the `gatsby-source-graphql`:
 
-        <h2>Image of Rick's pupper</h2>
-        <p>This will come from a request on the client</p>
-      </div>
-    )
-  }
-}
-
-export default ClientFetchingExample
+```shell
+npm install --save gatsby-source-graphql
 ```
 
-### 2. Query for character info at build time
-
-To query for Rick's character info and image, you'll use the `gatsby-source-graphql` plugin. This will allow you to query the Rick and Morty API using Gatsby queries.
-
-> Note: To learn more about using [`gatsby-source-graphql`](/packages/gatsby-source-graphql/), or about [Gatsby's GraphQL data layer](/docs/graphql/), check out their respective docs. The purpose of including it here is only for comparison.
+Then, add the plugin to your `gatsby-config`:
 
 ```javascript:title=gatsby-config.js
 module.exports = {
   plugins: [
     {
-      resolve: "gatsby-source-graphql",
+      resolve: `gatsby-source-graphql`,
       options: {
-        typeName: "RMAPI",
-        fieldName: "rickAndMorty",
-        url: "https://rickandmortyapi-gql.now.sh/",
+        typeName: `GitHub`,
+        fieldName: `github`,
+        url: `https://api.github.com/graphql`,
+        headers: {
+          Authorization: `Bearer your-github-token`,
+        },
       },
     },
   ],
 }
 ```
 
-Now you can add the query to your `index.js` page:
+> Because the GitHub GraphQL API requires you to be authenticated to make requests, you need to create a token that you would replace in the header for Authorization that says "your-github-token". You can [secure your key using environment variables](/docs/environment-variables/) if you're pushing code to a public repository.
 
-```jsx:title=index.js
-import React, { Component } from "react"
-import { graphql } from "gatsby"
+Source plugins take advantage of the [`sourceNodes` API](/docs/node-apis/#sourceNodes) and the [`createNode` action](/docs/actions/#createNode) provided by Gatsby to make your data queryable during the build process.
 
-// highlight-start
-// This query is executed at build time by Gatsby.
-export const GatsbyQuery = graphql`
-  {
-    rickAndMorty {
-      character(id: 1) {
-        name
-        image
+#### Writing a query to gather the static data needed for a page
+
+With the source plugin installed and added to your config, you can write a [static query](/docs/use-static-query/) that will pull the data from GraphQL API and will retrieve the necessary data while building the site.
+
+```jsx:title=src/pages/index.js
+import React from "react"
+import { graphql, useStaticQuery } from "gatsby" // highlight-line
+
+const IndexPage = () => {
+  // highlight-start
+  const gatsbyRepoData = useStaticQuery(graphql`
+    query {
+      github {
+        repository(name: "gatsby", owner: "gatsbyjs") {
+          id
+          nameWithOwner
+          url
+        }
       }
     }
-  }
-`
-// highlight-end
+  `)
+  // highlight-end
 
-class ClientFetchingExample extends Component {
-  render() {
-    // highlight-start
-    const {
-      rickAndMorty: { character },
-    } = this.props.data
-    // highlight-end
-
-    return (
-      <div style={{ textAlign: "center", width: "600px", margin: "50px auto" }}>
-        // highlight-start
-        <h1>{character.name} With His Pupper</h1>
-        <p>Rick & Morty API data loads at build time.</p>
-        <div>
-          <img
-            src={character.image}
-            alt={character.name}
-            style={{ width: 300 }}
-          />
-        </div>
-        // highlight-end
-        <h2>Image of Rick's pupper</h2>
-        <p>This will come from a request on the client</p>
-      </div>
-    )
-  }
+  return (
+    <section>
+      <p>
+        Build Time Data: Gatsby repo{` `}
+        <a href="gatsbyRepoData.github.repository.nameWithOwner.url">
+          {gatsbyRepoData.github.repository.nameWithOwner} // highlight-line
+        </a>
+      </p>
+    </section>
+  )
 }
 
-export default ClientFetchingExample
+export default IndexPage
 ```
 
-### 3. Fetch pupper info and image data on the client
+### Fetching data at runtime
 
-Now you'll finish out by fetching pupper info from the [Dog CEO Dog API](https://dog.ceo/dog-api/). (You'll fetch a random pupper. Rick isn't picky.)
+For fetching data at runtime, you can use any method to retrieve data that you would use in a regular React app.
 
-```jsx:title=index.js
-import React, { Component } from "react"
-import { graphql } from "gatsby"
-import axios from "axios" // highlight-line
+#### Retrieving data with the `fetch` API
 
-// This query is executed at build time by Gatsby.
-export const GatsbyQuery = graphql`
-  {
-    rickAndMorty {
-      character(id: 1) {
-        name
-        image
+The `fetch` API is a modern implementation of the older, well-supported `XMLHttpRequest`.
+
+With the `useState` and `useEffect` hooks from React, you can query for the data once when the page loads, and save the data returned to a variable called `starsCount`. Every time the page is refreshed, `fetch` will go to the GitHub API to retrieve the most up-to-date version of the data.
+
+```jsx:title=src/pages/index.js
+import React, { useState, useEffect } from "react" // highlight-line
+import { graphql, useStaticQuery } from "gatsby"
+
+const IndexPage = () => {
+  const gatsbyRepoData = useStaticQuery(graphql`
+    query {
+      github {
+        repository(name: "gatsby", owner: "gatsbyjs") {
+          id
+          nameWithOwner
+          url
+        }
       }
     }
-  }
-`
-
-class ClientFetchingExample extends Component {
+  `)
   // highlight-start
-  state = {
-    loading: false,
-    error: false,
-    pupper: {
-      img: "",
-      breed: "",
-    },
-  }
+  const [starsCount, setStarsCount] = useState(0)
+  useEffect(() => {
+    const fetchData = async () => {
+      // get data from GitHub api
+      const result = await fetch(`https://api.github.com/repos/gatsbyjs/gatsby`)
+      // parse JSON from request
+      const resultData = await result.json()
+      // set data for the number of stars
+      setStarsCount(resultData.stargazers_count)
+    }
+    fetchData()
+  }, [])
   // highlight-end
 
-  // highlight-start
-  componentDidMount() {
-    this.fetchRicksPupper()
-  }
-  // highlight-end
-
-  render() {
-    const {
-      rickAndMorty: { character },
-    } = this.props.data
-
-    const { img, breed } = this.state.pupper // highlight-line
-
-    return (
-      <div style={{ textAlign: "center", width: "600px", margin: "50px auto" }}>
-        <h1>{character.name} With His Pupper</h1>
-        <p>Rick & Morty API data loads at build time.</p>
-        <p>Dog API data loads at run time.</p> // highlight-line
-        <div>
-          <img
-            src={character.image}
-            alt={character.name}
-            style={{ width: 300 }}
-          />
-        </div>
-        {/* highlight-start */}
-        <div>
-          {this.state.loading ? (
-            <p>Please hold, pupper incoming!</p>
-          ) : img && breed ? (
-            <>
-              <h2>{`${breed} pupper!`}</h2>
-              <img src={img} alt={`cute random `} style={{ maxWidth: 300 }} />
-            </>
-          ) : (
-            <p>Oh noes, error fetching pupper :(</p>
-          )}
-        </div>
-        {/* highlight-end */}
-      </div>
-    )
-  }
-
-  // highlight-start
-  // This data is fetched at run time on the client.
-  fetchRicksPupper = () => {
-    this.setState({ loading: true })
-
-    axios
-      .get(`https://dog.ceo/api/breeds/image/random`)
-      .then(pupper => {
-        const {
-          data: { message: img },
-        } = pupper
-        const breed = img.split("/")[4]
-
-        this.setState({
-          loading: false,
-          pupper: {
-            ...this.state.pupper,
-            img,
-            breed,
-          },
-        })
-      })
-      .catch(error => {
-        this.setState({ loading: false, error })
-      })
-  }
-  // highlight-end
+  return (
+    <section>
+      <p>
+        Build Time Data: Gatsby repo{` `}
+        <a href="gatsbyRepoData.github.repository.nameWithOwner.url">
+          {gatsbyRepoData.github.repository.nameWithOwner}
+        </a>
+      </p>
+      <p>Runtime Data: Star count for the Gatsby repo {starsCount}</p> // highlight-line
+    </section>
+  )
 }
 
-export default ClientFetchingExample
+export default IndexPage
 ```
 
-That's it -- an example of querying for data at build time using the Gatsby GraphQL data layer and dynamically requesting data on the client at run time.
+Here's an example of what this runtime example being used on this page (which is also a Gatsby app)!
+
+<ClientDataExample />
 
 ## Other resources
 
 You may be interested to check out other projects (both used in production and proof of concepts) that illustrate this usage:
 
-- [Gatsby store](https://github.com/gatsbyjs/store.gatsbyjs.org)
-- [Gatsby mail](https://github.com/DSchau/gatsby-mail)
+- [Live example](https://gatsby-data-fetching.netlify.com) of the code used in this guide
+- [Gatsby store](https://github.com/gatsbyjs/store.gatsbyjs.org): with static product pages at build time and client-side interactions for ecommerce features
+- [Gatsby mail](https://github.com/DSchau/gatsby-mail): a client-side email application
+- [Example repo fetching data using Apollo](https://github.com/jlengstorf/gatsby-with-apollo)

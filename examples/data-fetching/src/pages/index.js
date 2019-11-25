@@ -53,7 +53,7 @@ const IndexPage = () => {
       </p>
       <p>
         Gatsby repo:{` `}
-        <a href="gatsbyRepoData.github.repository.nameWithOwner.url">
+        <a href={gatsbyRepoData.github.repository.url}>
           {gatsbyRepoData.github.repository.nameWithOwner}
         </a>
       </p>

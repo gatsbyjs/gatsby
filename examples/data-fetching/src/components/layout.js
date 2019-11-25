@@ -36,9 +36,10 @@ const Layout = ({ children }) => {
       >
         <main>{children}</main>
         <footer>
-          © {new Date().getFullYear()}, Built with
-          {` `}
-          <a href="https://www.gatsbyjs.org">Gatsby</a>
+          See the code on{` `}
+          <a href="https://github.com/gatsbyjs/gatsby/tree/master/examples/data-fetching">
+            GitHub
+          </a>
         </footer>
       </div>
     </>
