@@ -56,6 +56,7 @@ type TypeMetadata = {
   fieldMap?: { [string]: ValueDescriptor },
   typeName?: string,
   dirty?: boolean, // tracks structural changes only
+  disabled?: boolean,
 }
 
 type Count = number
@@ -256,7 +257,10 @@ const descriptorsAreEqual = (descriptor, otherDescriptor) => {
 const nodeFields = (node, ignoredFields = new Set()) =>
   Object.keys(node).filter(key => !ignoredFields.has(key))
 
-const updateTypeMetadata = (metadata = {}, operation, node) => {
+const updateTypeMetadata = (metadata = initialMetadata(), operation, node) => {
+  if (metadata.disabled) {
+    return metadata
+  }
   metadata.total = (metadata.total || 0) + (operation === `add` ? 1 : -1)
   if (metadata.ignored) {
     return metadata
@@ -280,15 +284,21 @@ const updateTypeMetadata = (metadata = {}, operation, node) => {
   return metadata
 }
 
-const ignore = (metadata = {}, set = true) => {
+const ignore = (metadata = initialMetadata(), set = true) => {
   metadata.ignored = set
   metadata.fieldMap = {}
   return metadata
 }
 
+const disable = (metadata = initialMetadata(), set = true) => {
+  metadata.disabled = set
+  return metadata
+}
+
 const addNode = (metadata, node) => updateTypeMetadata(metadata, `add`, node)
 const deleteNode = (metadata, node) => updateTypeMetadata(metadata, `del`, node)
-const addNodes = (metadata, nodes) => nodes.reduce(addNode, metadata)
+const addNodes = (metadata = initialMetadata(), nodes) =>
+  nodes.reduce(addNode, metadata)
 
 const isMixedNumber = ({ float, int }) =>
   float && float.total > 0 && int && int.total > 0
@@ -469,13 +479,28 @@ const haveEqualFields = (
   )
 }
 
+const initialMetadata = state => {
+  return {
+    typeName: undefined,
+    disabled: false,
+    ignored: false,
+    dirty: false,
+    total: 0,
+    ignoredFields: undefined,
+    fieldMap: {},
+    ...state,
+  }
+}
+
 module.exports = {
   addNode,
   addNodes,
   deleteNode,
   ignore,
+  disable,
   isEmpty,
   hasNodes,
   haveEqualFields,
   getExampleObject,
+  initialMetadata,
 }

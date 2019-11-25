@@ -111,6 +111,7 @@ describe(`GraphQL type inference`, () => {
 
   const buildTestSchema = async (nodes, buildSchemaArgs, typeDefs) => {
     store.dispatch({ type: `DELETE_CACHE` })
+    store.dispatch({ type: `START_INCREMENTAL_INFERENCE` })
     nodes.forEach(node => {
       if (!node.internal.contentDigest) {
         node.internal.contentDigest = `0`
