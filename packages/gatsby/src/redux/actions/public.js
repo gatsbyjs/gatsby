@@ -427,7 +427,11 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 
   if (store.getState().pages.has(alternateSlashPath)) {
     report.warn(
-      `Attempting to create page "${page.path}", but page "${alternateSlashPath}" already exists. This could lead to non-deterministic routing behavior`
+      chalk.bold.yellow(`Non-deterministic routing danger: `) +
+        `Attempting to create page: "${page.path}", but page "${alternateSlashPath}" already exists\n` +
+        chalk.bold.yellow(
+          `This could lead to non-deterministic routing behavior`
+        )
     )
   }
 

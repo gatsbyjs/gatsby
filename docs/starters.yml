@@ -4546,3 +4546,16 @@
     - Styled Components
     - Code syntax highlighting
     - Light/Dark mode
+- url: https://chronoblog.netlify.com
+  repo: https://github.com/Ganevru/gatsby-starter-chronoblog
+  description: Chronoblog is a Gatsby js theme specifically designed to create a personal website. The main idea of ​​Chronoblog is to allow you not only to write a personal blog but also to keep a record of everything important that you have done.
+  tags:
+    - Blog
+    - Portfolio
+    - MDX
+    - Markdown
+    - SEO
+    - Styling:CSS-in-JS
+    - Linting
+  features:
+    - Starter for Chronoblog Gatsby Theme
