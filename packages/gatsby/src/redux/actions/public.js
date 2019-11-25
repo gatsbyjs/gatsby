@@ -23,7 +23,9 @@ const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
 
 /**
  * Memoize function used to pick shadowed page components to avoid expensive I/O.
- *
+ * Ideally, we should invalidate memoized values if there are any FS operations
+ * on files that are in shadowing chain, but webpack currently doesn't handle
+ * shadowing changes during develop session, so no invalidation is not a deal breaker.
  */
 const shadowCreatePagePath = _.memoize(
   require(`../../internal-plugins/webpack-theme-component-shadowing/create-page`)
