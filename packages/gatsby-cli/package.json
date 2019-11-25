@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@babel/code-frame": "^7.5.5",
-    "@babel/runtime": "^7.7.2",
+    "@babel/runtime": "^7.7.4",
     "@hapi/joi": "^15.1.1",
     "better-opn": "^1.0.0",
     "bluebird": "^3.7.1",
@@ -21,8 +21,8 @@
     "configstore": "^5.0.0",
     "convert-hrtime": "^3.0.0",
     "core-js": "^2.6.10",
-    "envinfo": "^7.4.0",
-    "execa": "^3.3.0",
+    "envinfo": "^7.5.0",
+    "execa": "^3.4.0",
     "fs-exists-cached": "^1.0.0",
     "fs-extra": "^8.1.0",
     "gatsby-core-utils": "^1.0.20",
@@ -37,7 +37,7 @@
     "pretty-error": "^2.1.1",
     "progress": "^2.0.3",
     "prompts": "^2.3.0",
-    "react": "^16.11.0",
+    "react": "^16.12.0",
     "redux": "^4.0.4",
     "resolve-cwd": "^2.0.0",
     "semver": "^6.3.0",
@@ -51,8 +51,8 @@
     "yurnalist": "^1.1.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.7.0",
-    "@babel/core": "^7.7.2",
+    "@babel/cli": "^7.7.4",
+    "@babel/core": "^7.7.4",
     "babel-preset-gatsby-package": "^0.2.11",
     "cross-env": "^5.2.1"
   },
