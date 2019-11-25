@@ -8667,3 +8667,13 @@
   built_by: Vandré Leal
   built_by_url: https://vandreleal.github.io
   featured: false
+- title: talkoverflow
+  main_url: https://talkoverflow.com
+  url: https://talkoverflow.com
+  description: Blog on software engineering built with Gatsby themes and theme-ui
+  categories:
+    - Blog
+    - Web Development
+    - Technology
+  built_by: Patryk Jeziorowski
+  built_by_url: https://twitter.com/pjeziorowski
