@@ -16,12 +16,12 @@
     "webpack": "^4.41.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.7.0",
-    "@babel/core": "^7.7.2",
+    "@babel/cli": "^7.7.4",
+    "@babel/core": "^7.7.4",
     "babel-preset-gatsby-package": "^0.2.11",
     "cross-env": "^5.2.1",
-    "react": "^16.11.0",
-    "react-dom": "^16.11.0"
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify-cms#readme",
   "keywords": [
