@@ -69,4 +69,4 @@ We've written a bit more about our work with Gatsby elsewhere -- if you're curio
 - [Digital Display With Decoupled Drupal 8 & Gatsby](/blog/2019-07-09-digital-display-drupal-gatsby/) - City of Sandy Springs Case Study
 - [Move Fast, Don’t Break Things: Trends in Modern Web Dev with Mediacurrent](https://youtu.be/QiocnDGnKfs) - Gatsby Days presentation by Ben Robertson
 - [Maximizing the Potential of Component-Driven Drupal Development with Gatsby](/blog/2019-06-28-component-driven-drupal-development/) - Blog post
-- [Gatsby for Agencies and Teams: Better, Faster, Smarter](/gatsby-for-agencies/?_ga=2.75802454.258677743.1570125231-898453189.1565876794) - Webinar
+- [Gatsby for Agencies and Teams: Better, Faster, Smarter](https://www.gatsbyjs.com/gatsby-for-agencies/) - Webinar
