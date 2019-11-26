@@ -4563,13 +4563,7 @@
   description: A minimal and mobile friendly blog template
   tags:
     - Blog
-    - Media
     - SEO
-    - Netlify
-    - Styling:CSS-in-JS
-    - Documentation
-    - Featured
-    - Travel
     - Markdown
   features:
     - Responsive design
