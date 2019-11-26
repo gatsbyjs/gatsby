@@ -238,7 +238,11 @@ let apisRunningById = new Map()
 let apisRunningByTraceId = new Map()
 let waitingForCasacadeToFinish = []
 
-module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
+module.exports = async (
+  api,
+  args = {},
+  { pluginSource, activity, subsetOfPlugins } = {}
+) =>
   new Promise(resolve => {
     const { parentSpan } = args
     const apiSpanArgs = parentSpan ? { childOf: parentSpan } : {}
@@ -256,8 +260,12 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
     // call an action which will trigger the same API being called.
     // `onCreatePage` is the only example right now. In these cases, we should
     // avoid calling the originating plugin again.
+
     const implementingPlugins = plugins.filter(
-      plugin => plugin.nodeAPIs.includes(api) && plugin.name !== pluginSource
+      plugin =>
+        plugin.nodeAPIs.includes(api) &&
+        plugin.name !== pluginSource &&
+        (!subsetOfPlugins || subsetOfPlugins.includes(plugin.name))
     )
 
     const apiRunInstance = {

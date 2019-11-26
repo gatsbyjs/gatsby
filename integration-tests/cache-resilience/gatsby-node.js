@@ -3,25 +3,18 @@ const v8 = require(`v8`)
 
 const db = require(`gatsby/dist/db`)
 
-// exports.sourceNodes = ({ actions }) => {
-//   const { createNode } = actions
-//   createNode({
-//     id: `TEST_NODE`,
-//     internal: {
-//       type: `Test`,
-//       contentDigest: `0`,
-//     },
-//   })
-// }
-
 exports.onPreBootstrap = ({ store }) => {
   const state = store.getState()
-  fs.writeFileSync(`./on_pre_bootstrap`, v8.serialize(state.nodes))
+  fs.writeFileSync(`./on_pre_bootstrap.state`, v8.serialize(state.nodes))
 }
 
 exports.onPostBootstrap = async ({ store }) => {
   const state = store.getState()
-  fs.writeFileSync(`./on_post_bootstrap`, v8.serialize(state.nodes))
+  fs.writeFileSync(`./on_post_bootstrap.state`, v8.serialize(state.nodes))
+
   await db.saveState()
-  process.exit()
+
+  if (process.env.EXIT_ON_POST_BOOTSTRAP) {
+    process.exit()
+  }
 }

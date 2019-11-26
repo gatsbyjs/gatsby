@@ -1,0 +1,5 @@
+plugins/**/gatsby-node.js
+
+# temporary test artifacts
+on_pre_bootstrap.state
+on_post_bootstrap.state

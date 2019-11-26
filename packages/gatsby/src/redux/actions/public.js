@@ -819,24 +819,42 @@ const createNode = (
   }
 }
 
-actions.createNode = (...args) => dispatch => {
-  const actions = createNode(...args)
+actions.createNode = (node2, plugin, actionOptions) => dispatch => {
+  const actions = createNode(node2, plugin, actionOptions)
   dispatch(actions)
   const createNodeAction = (Array.isArray(actions) ? actions : [actions]).find(
-    action => action.type === `CREATE_NODE`
+    action =>
+      action.type === `CREATE_NODE` ||
+      (action.type === `TOUCH_NODE` && actionOptions.firstRun)
   )
 
   if (!createNodeAction) {
     return undefined
   }
 
-  const { payload: node, traceId, parentSpan } = createNodeAction
-  return apiRunnerNode(`onCreateNode`, {
-    node,
-    traceId,
-    parentSpan,
-    traceTags: { nodeId: node.id, nodeType: node.internal.type },
-  })
+  let node
+  if (createNodeAction.type === `CREATE_NODE`) {
+    node = createNodeAction.payload
+  } else if (createNodeAction.type === `TOUCH_NODE`) {
+    node = getNode(createNodeAction.payload)
+  }
+
+  const { traceId, parentSpan } = createNodeAction
+  return apiRunnerNode(
+    `onCreateNode`,
+    {
+      node,
+      traceId,
+      parentSpan,
+      traceTags: { nodeId: node.id, nodeType: node.internal.type },
+    },
+    {
+      subsetOfPlugins:
+        createNodeAction.type === `TOUCH_NODE`
+          ? actionOptions.changes || null
+          : null,
+    }
+  )
 }
 
 /**

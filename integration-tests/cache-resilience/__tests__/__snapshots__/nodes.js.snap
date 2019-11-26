@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Cache Nodes are deleted when owner plugin changes 1`] = `
+exports[`Cache Redux Nodes sanity checks 1`] = `
 Map {
   "SitePage /dev-404-page/" => Object {
     "children": Array [],
@@ -41,11 +41,11 @@ Map {
       "version": "1.0.0",
     },
     "parent": null,
-    "pluginFilepath": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/dev-404-page",
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/dev-404-page",
     "pluginOptions": Object {
       "plugins": Array [],
     },
-    "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/dev-404-page",
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/dev-404-page",
     "ssrAPIs": Array [],
   },
   "1fc32581-893a-55e8-8927-bcd667e2b700" => Object {
@@ -75,11 +75,11 @@ Map {
       "version": "1.0.0",
     },
     "parent": null,
-    "pluginFilepath": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/load-babel-config",
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/load-babel-config",
     "pluginOptions": Object {
       "plugins": Array [],
     },
-    "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/load-babel-config",
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/load-babel-config",
     "ssrAPIs": Array [],
   },
   "a5079d69-ba80-53dc-82f9-0f440bd5448c" => Object {
@@ -110,11 +110,11 @@ Map {
       "version": "1.0.0",
     },
     "parent": null,
-    "pluginFilepath": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/internal-data-bridge",
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/internal-data-bridge",
     "pluginOptions": Object {
       "plugins": Array [],
     },
-    "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/internal-data-bridge",
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/internal-data-bridge",
     "ssrAPIs": Array [],
   },
   "f795702c-a3b8-5a88-88ee-5d06019d44fa" => Object {
@@ -144,11 +144,11 @@ Map {
       "version": "1.0.0",
     },
     "parent": null,
-    "pluginFilepath": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/prod-404",
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/prod-404",
     "pluginOptions": Object {
       "plugins": Array [],
     },
-    "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/prod-404",
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/prod-404",
     "ssrAPIs": Array [],
   },
   "6f4b2fa9-66b5-5205-a03f-140005a2cfe5" => Object {
@@ -178,23 +178,23 @@ Map {
       "version": "1.0.0",
     },
     "parent": null,
-    "pluginFilepath": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/webpack-theme-component-shadowing",
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/webpack-theme-component-shadowing",
     "pluginOptions": Object {
       "plugins": Array [],
     },
-    "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/webpack-theme-component-shadowing",
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/webpack-theme-component-shadowing",
     "ssrAPIs": Array [],
   },
-  "04b300f8-40b1-51d3-9a79-3474d5bf24e0" => Object {
+  "3eaaf673-5a13-5784-894a-47b357425e05" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "04b300f8-40b1-51d3-9a79-3474d5bf24e0",
+    "id": "3eaaf673-5a13-5784-894a-47b357425e05",
     "internal": Object {
       "counter": 7,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
-    "name": "gatsby-plugin-x",
+    "name": "gatsby-plugin-stable",
     "nodeAPIs": Array [
       "sourceNodes",
     ],
@@ -206,472 +206,157 @@ Map {
       "peerDependencies": Array [],
     },
     "parent": null,
-    "pluginFilepath": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/plugins/gatsby-plugin-x",
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-plugin-stable",
     "pluginOptions": Object {
       "plugins": Array [],
     },
-    "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/plugins/gatsby-plugin-x",
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-plugin-stable",
     "ssrAPIs": Array [],
   },
-  "437b6151-504d-51ee-b0bc-3447e87f9856" => Object {
+  "dc1f3dc9-7d73-533d-a090-787d5281f836" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "437b6151-504d-51ee-b0bc-3447e87f9856",
+    "id": "dc1f3dc9-7d73-533d-a090-787d5281f836",
     "internal": Object {
       "counter": 8,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
-    "name": "gatsby-plugin-page-creator",
+    "name": "gatsby-plugin-independent-node",
     "nodeAPIs": Array [
-      "createPagesStatefully",
+      "sourceNodes",
     ],
     "packageJson": Object {
-      "author": "Kyle Mathews <mathews.kyle@gmail.com>",
       "bundledDependecies": Array [],
-      "dependencies": Array [
-        Object {
-          "name": "@babel/runtime",
-          "version": "^7.7.2",
-        },
-        Object {
-          "name": "bluebird",
-          "version": "^3.7.1",
-        },
-        Object {
-          "name": "fs-exists-cached",
-          "version": "^1.0.0",
-        },
-        Object {
-          "name": "gatsby-page-utils",
-          "version": "^0.0.31",
-        },
-        Object {
-          "name": "glob",
-          "version": "^7.1.6",
-        },
-        Object {
-          "name": "lodash",
-          "version": "^4.17.15",
-        },
-        Object {
-          "name": "micromatch",
-          "version": "^3.1.10",
-        },
-      ],
-      "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
-      "devDependencies": Array [
-        Object {
-          "name": "@babel/cli",
-          "version": "^7.7.0",
-        },
-        Object {
-          "name": "@babel/core",
-          "version": "^7.7.2",
-        },
-        Object {
-          "name": "babel-preset-gatsby-package",
-          "version": "^0.2.11",
-        },
-        Object {
-          "name": "cross-env",
-          "version": "^5.2.1",
-        },
-      ],
-      "keywords": Array [
-        "gatsby",
-        "gatsby-plugin",
-      ],
-      "license": "MIT",
-      "main": "index.js",
-      "name": "gatsby-plugin-page-creator",
+      "dependencies": Array [],
+      "devDependencies": Array [],
       "optionalDependecies": Array [],
-      "peerDependencies": Array [
-        Object {
-          "name": "gatsby",
-          "version": "^2.0.0",
-        },
-      ],
-      "version": "2.1.31",
+      "peerDependencies": Array [],
     },
     "parent": null,
-    "pluginFilepath": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-plugin-independent-node",
     "pluginOptions": Object {
-      "path": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/dev-404-page/src/pages",
-      "pathCheck": false,
       "plugins": Array [],
     },
-    "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-plugin-independent-node",
     "ssrAPIs": Array [],
   },
-  "cc7735e2-c2d3-5246-aa7d-80becac49c63" => Object {
+  "5b30a597-1b08-5eb5-b475-340a5c87ad06" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "cc7735e2-c2d3-5246-aa7d-80becac49c63",
+    "id": "5b30a597-1b08-5eb5-b475-340a5c87ad06",
     "internal": Object {
       "counter": 9,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
-    "name": "gatsby-plugin-page-creator",
+    "name": "gatsby-source-parent-change",
     "nodeAPIs": Array [
-      "createPagesStatefully",
+      "sourceNodes",
     ],
     "packageJson": Object {
-      "author": "Kyle Mathews <mathews.kyle@gmail.com>",
       "bundledDependecies": Array [],
-      "dependencies": Array [
-        Object {
-          "name": "@babel/runtime",
-          "version": "^7.7.2",
-        },
-        Object {
-          "name": "bluebird",
-          "version": "^3.7.1",
-        },
-        Object {
-          "name": "fs-exists-cached",
-          "version": "^1.0.0",
-        },
-        Object {
-          "name": "gatsby-page-utils",
-          "version": "^0.0.31",
-        },
-        Object {
-          "name": "glob",
-          "version": "^7.1.6",
-        },
-        Object {
-          "name": "lodash",
-          "version": "^4.17.15",
-        },
-        Object {
-          "name": "micromatch",
-          "version": "^3.1.10",
-        },
-      ],
-      "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
-      "devDependencies": Array [
-        Object {
-          "name": "@babel/cli",
-          "version": "^7.7.0",
-        },
-        Object {
-          "name": "@babel/core",
-          "version": "^7.7.2",
-        },
-        Object {
-          "name": "babel-preset-gatsby-package",
-          "version": "^0.2.11",
-        },
-        Object {
-          "name": "cross-env",
-          "version": "^5.2.1",
-        },
-      ],
-      "keywords": Array [
-        "gatsby",
-        "gatsby-plugin",
-      ],
-      "license": "MIT",
-      "main": "index.js",
-      "name": "gatsby-plugin-page-creator",
+      "dependencies": Array [],
+      "devDependencies": Array [],
       "optionalDependecies": Array [],
-      "peerDependencies": Array [
-        Object {
-          "name": "gatsby",
-          "version": "^2.0.0",
-        },
-      ],
-      "version": "2.1.31",
+      "peerDependencies": Array [],
     },
     "parent": null,
-    "pluginFilepath": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-parent-change",
     "pluginOptions": Object {
-      "path": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/load-babel-config/src/pages",
-      "pathCheck": false,
       "plugins": Array [],
     },
-    "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-parent-change",
     "ssrAPIs": Array [],
   },
-  "ab5821ea-a83b-5db5-8c12-c907ae29a10d" => Object {
+  "684f3e1c-cb9e-5123-87b1-609e60d5fa87" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "ab5821ea-a83b-5db5-8c12-c907ae29a10d",
+    "id": "684f3e1c-cb9e-5123-87b1-609e60d5fa87",
     "internal": Object {
       "counter": 10,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
-    "name": "gatsby-plugin-page-creator",
+    "name": "gatsby-transformer-parent-change",
     "nodeAPIs": Array [
-      "createPagesStatefully",
+      "onCreateNode",
     ],
     "packageJson": Object {
-      "author": "Kyle Mathews <mathews.kyle@gmail.com>",
       "bundledDependecies": Array [],
-      "dependencies": Array [
-        Object {
-          "name": "@babel/runtime",
-          "version": "^7.7.2",
-        },
-        Object {
-          "name": "bluebird",
-          "version": "^3.7.1",
-        },
-        Object {
-          "name": "fs-exists-cached",
-          "version": "^1.0.0",
-        },
-        Object {
-          "name": "gatsby-page-utils",
-          "version": "^0.0.31",
-        },
-        Object {
-          "name": "glob",
-          "version": "^7.1.6",
-        },
-        Object {
-          "name": "lodash",
-          "version": "^4.17.15",
-        },
-        Object {
-          "name": "micromatch",
-          "version": "^3.1.10",
-        },
-      ],
-      "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
-      "devDependencies": Array [
-        Object {
-          "name": "@babel/cli",
-          "version": "^7.7.0",
-        },
-        Object {
-          "name": "@babel/core",
-          "version": "^7.7.2",
-        },
-        Object {
-          "name": "babel-preset-gatsby-package",
-          "version": "^0.2.11",
-        },
-        Object {
-          "name": "cross-env",
-          "version": "^5.2.1",
-        },
-      ],
-      "keywords": Array [
-        "gatsby",
-        "gatsby-plugin",
-      ],
-      "license": "MIT",
-      "main": "index.js",
-      "name": "gatsby-plugin-page-creator",
+      "dependencies": Array [],
+      "devDependencies": Array [],
       "optionalDependecies": Array [],
-      "peerDependencies": Array [
-        Object {
-          "name": "gatsby",
-          "version": "^2.0.0",
-        },
-      ],
-      "version": "2.1.31",
+      "peerDependencies": Array [],
     },
     "parent": null,
-    "pluginFilepath": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-transformer-parent-change",
     "pluginOptions": Object {
-      "path": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/internal-data-bridge/src/pages",
-      "pathCheck": false,
       "plugins": Array [],
     },
-    "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-transformer-parent-change",
     "ssrAPIs": Array [],
   },
-  "1ed0b446-2f83-5083-9f9d-c0aa65d6ae86" => Object {
+  "aabee054-3c12-5ff1-a6e2-f8de945501ef" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "1ed0b446-2f83-5083-9f9d-c0aa65d6ae86",
+    "id": "aabee054-3c12-5ff1-a6e2-f8de945501ef",
     "internal": Object {
       "counter": 11,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
-    "name": "gatsby-plugin-page-creator",
+    "name": "gatsby-source-child-change",
     "nodeAPIs": Array [
-      "createPagesStatefully",
+      "sourceNodes",
     ],
     "packageJson": Object {
-      "author": "Kyle Mathews <mathews.kyle@gmail.com>",
       "bundledDependecies": Array [],
-      "dependencies": Array [
-        Object {
-          "name": "@babel/runtime",
-          "version": "^7.7.2",
-        },
-        Object {
-          "name": "bluebird",
-          "version": "^3.7.1",
-        },
-        Object {
-          "name": "fs-exists-cached",
-          "version": "^1.0.0",
-        },
-        Object {
-          "name": "gatsby-page-utils",
-          "version": "^0.0.31",
-        },
-        Object {
-          "name": "glob",
-          "version": "^7.1.6",
-        },
-        Object {
-          "name": "lodash",
-          "version": "^4.17.15",
-        },
-        Object {
-          "name": "micromatch",
-          "version": "^3.1.10",
-        },
-      ],
-      "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
-      "devDependencies": Array [
-        Object {
-          "name": "@babel/cli",
-          "version": "^7.7.0",
-        },
-        Object {
-          "name": "@babel/core",
-          "version": "^7.7.2",
-        },
-        Object {
-          "name": "babel-preset-gatsby-package",
-          "version": "^0.2.11",
-        },
-        Object {
-          "name": "cross-env",
-          "version": "^5.2.1",
-        },
-      ],
-      "keywords": Array [
-        "gatsby",
-        "gatsby-plugin",
-      ],
-      "license": "MIT",
-      "main": "index.js",
-      "name": "gatsby-plugin-page-creator",
+      "dependencies": Array [],
+      "devDependencies": Array [],
       "optionalDependecies": Array [],
-      "peerDependencies": Array [
-        Object {
-          "name": "gatsby",
-          "version": "^2.0.0",
-        },
-      ],
-      "version": "2.1.31",
+      "peerDependencies": Array [],
     },
     "parent": null,
-    "pluginFilepath": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-child-change",
     "pluginOptions": Object {
-      "path": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/prod-404/src/pages",
-      "pathCheck": false,
       "plugins": Array [],
     },
-    "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-child-change",
     "ssrAPIs": Array [],
   },
-  "c32a230d-0d46-5579-bfb1-e7d8b78170dc" => Object {
+  "2bf51669-f85f-59be-94db-6056fd4b04a3" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "c32a230d-0d46-5579-bfb1-e7d8b78170dc",
+    "id": "2bf51669-f85f-59be-94db-6056fd4b04a3",
     "internal": Object {
       "counter": 12,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
-    "name": "gatsby-plugin-page-creator",
+    "name": "gatsby-transformer-child-change",
     "nodeAPIs": Array [
-      "createPagesStatefully",
+      "onCreateNode",
     ],
     "packageJson": Object {
-      "author": "Kyle Mathews <mathews.kyle@gmail.com>",
       "bundledDependecies": Array [],
-      "dependencies": Array [
-        Object {
-          "name": "@babel/runtime",
-          "version": "^7.7.2",
-        },
-        Object {
-          "name": "bluebird",
-          "version": "^3.7.1",
-        },
-        Object {
-          "name": "fs-exists-cached",
-          "version": "^1.0.0",
-        },
-        Object {
-          "name": "gatsby-page-utils",
-          "version": "^0.0.31",
-        },
-        Object {
-          "name": "glob",
-          "version": "^7.1.6",
-        },
-        Object {
-          "name": "lodash",
-          "version": "^4.17.15",
-        },
-        Object {
-          "name": "micromatch",
-          "version": "^3.1.10",
-        },
-      ],
-      "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
-      "devDependencies": Array [
-        Object {
-          "name": "@babel/cli",
-          "version": "^7.7.0",
-        },
-        Object {
-          "name": "@babel/core",
-          "version": "^7.7.2",
-        },
-        Object {
-          "name": "babel-preset-gatsby-package",
-          "version": "^0.2.11",
-        },
-        Object {
-          "name": "cross-env",
-          "version": "^5.2.1",
-        },
-      ],
-      "keywords": Array [
-        "gatsby",
-        "gatsby-plugin",
-      ],
-      "license": "MIT",
-      "main": "index.js",
-      "name": "gatsby-plugin-page-creator",
+      "dependencies": Array [],
+      "devDependencies": Array [],
       "optionalDependecies": Array [],
-      "peerDependencies": Array [
-        Object {
-          "name": "gatsby",
-          "version": "^2.0.0",
-        },
-      ],
-      "version": "2.1.31",
+      "peerDependencies": Array [],
     },
     "parent": null,
-    "pluginFilepath": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-transformer-child-change",
     "pluginOptions": Object {
-      "path": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/webpack-theme-component-shadowing/src/pages",
-      "pathCheck": false,
       "plugins": Array [],
     },
-    "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-transformer-child-change",
     "ssrAPIs": Array [],
   },
-  "55a76f83-22dd-5eb6-bd32-8c73a097e8c0" => Object {
+  "c9535749-a52b-5c49-8671-11a311b98993" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "55a76f83-22dd-5eb6-bd32-8c73a097e8c0",
+    "id": "c9535749-a52b-5c49-8671-11a311b98993",
     "internal": Object {
       "counter": 13,
       "owner": "internal-data-bridge",
@@ -750,89 +435,110 @@ Map {
       "version": "2.1.31",
     },
     "parent": null,
-    "pluginFilepath": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
     "pluginOptions": Object {
-      "path": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/plugins/gatsby-plugin-x/src/pages",
+      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/dev-404-page/src/pages",
       "pathCheck": false,
       "plugins": Array [],
     },
-    "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "7374ebf2-d961-52ee-92a2-c25e7cb387a9" => Object {
+  "aed25515-e1f7-5760-8f34-6461454230de" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "7374ebf2-d961-52ee-92a2-c25e7cb387a9",
+    "id": "aed25515-e1f7-5760-8f34-6461454230de",
     "internal": Object {
       "counter": 14,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
-    "name": "default-site-plugin",
+    "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
-      "onPreBootstrap",
-      "onPostBootstrap",
+      "createPagesStatefully",
     ],
     "packageJson": Object {
+      "author": "Kyle Mathews <mathews.kyle@gmail.com>",
       "bundledDependecies": Array [],
       "dependencies": Array [
         Object {
-          "name": "gatsby",
-          "version": "^2.16.0",
+          "name": "@babel/runtime",
+          "version": "^7.7.2",
         },
         Object {
-          "name": "gray-percentage",
-          "version": "^2.0.0",
+          "name": "bluebird",
+          "version": "^3.7.1",
         },
         Object {
-          "name": "react",
-          "version": "^16.8.0",
+          "name": "fs-exists-cached",
+          "version": "^1.0.0",
         },
         Object {
-          "name": "react-dom",
-          "version": "^16.8.0",
+          "name": "gatsby-page-utils",
+          "version": "^0.0.31",
+        },
+        Object {
+          "name": "glob",
+          "version": "^7.1.6",
+        },
+        Object {
+          "name": "lodash",
+          "version": "^4.17.15",
+        },
+        Object {
+          "name": "micromatch",
+          "version": "^3.1.10",
         },
       ],
-      "description": "cache resilience tests",
+      "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
       "devDependencies": Array [
         Object {
-          "name": "babel-plugin-dynamic-import-node-sync",
-          "version": "^2.0.1",
+          "name": "@babel/cli",
+          "version": "^7.7.0",
         },
         Object {
-          "name": "jest",
-          "version": "^24.0.0",
+          "name": "@babel/core",
+          "version": "^7.7.2",
         },
         Object {
-          "name": "jest-cli",
-          "version": "^24.0.0",
+          "name": "babel-preset-gatsby-package",
+          "version": "^0.2.11",
         },
         Object {
-          "name": "joi",
-          "version": "^14.3.1",
-        },
-        Object {
-          "name": "node-fetch",
-          "version": "^2.6.0",
+          "name": "cross-env",
+          "version": "^5.2.1",
         },
       ],
+      "keywords": Array [
+        "gatsby",
+        "gatsby-plugin",
+      ],
       "license": "MIT",
-      "name": "cache-resilience-tests",
+      "main": "index.js",
+      "name": "gatsby-plugin-page-creator",
       "optionalDependecies": Array [],
-      "peerDependencies": Array [],
+      "peerDependencies": Array [
+        Object {
+          "name": "gatsby",
+          "version": "^2.0.0",
+        },
+      ],
+      "version": "2.1.31",
     },
     "parent": null,
-    "pluginFilepath": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience",
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
     "pluginOptions": Object {
+      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/load-babel-config/src/pages",
+      "pathCheck": false,
       "plugins": Array [],
     },
-    "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience",
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "aac9adb8-13bf-5a63-bb97-98fa6f1551c6" => Object {
+  "7775d111-885f-58c6-aa94-47ad7d6d5408" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "aac9adb8-13bf-5a63-bb97-98fa6f1551c6",
+    "id": "7775d111-885f-58c6-aa94-47ad7d6d5408",
     "internal": Object {
       "counter": 15,
       "owner": "internal-data-bridge",
@@ -911,13 +617,903 @@ Map {
       "version": "2.1.31",
     },
     "parent": null,
-    "pluginFilepath": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
     "pluginOptions": Object {
-      "path": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/src/pages",
+      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/internal-data-bridge/src/pages",
       "pathCheck": false,
       "plugins": Array [],
     },
-    "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
+  "e419ee70-6845-577a-9caf-98198596750c" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "e419ee70-6845-577a-9caf-98198596750c",
+    "internal": Object {
+      "counter": 16,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "packageJson": Object {
+      "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+      "bundledDependecies": Array [],
+      "dependencies": Array [
+        Object {
+          "name": "@babel/runtime",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "bluebird",
+          "version": "^3.7.1",
+        },
+        Object {
+          "name": "fs-exists-cached",
+          "version": "^1.0.0",
+        },
+        Object {
+          "name": "gatsby-page-utils",
+          "version": "^0.0.31",
+        },
+        Object {
+          "name": "glob",
+          "version": "^7.1.6",
+        },
+        Object {
+          "name": "lodash",
+          "version": "^4.17.15",
+        },
+        Object {
+          "name": "micromatch",
+          "version": "^3.1.10",
+        },
+      ],
+      "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
+      "devDependencies": Array [
+        Object {
+          "name": "@babel/cli",
+          "version": "^7.7.0",
+        },
+        Object {
+          "name": "@babel/core",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "babel-preset-gatsby-package",
+          "version": "^0.2.11",
+        },
+        Object {
+          "name": "cross-env",
+          "version": "^5.2.1",
+        },
+      ],
+      "keywords": Array [
+        "gatsby",
+        "gatsby-plugin",
+      ],
+      "license": "MIT",
+      "main": "index.js",
+      "name": "gatsby-plugin-page-creator",
+      "optionalDependecies": Array [],
+      "peerDependencies": Array [
+        Object {
+          "name": "gatsby",
+          "version": "^2.0.0",
+        },
+      ],
+      "version": "2.1.31",
+    },
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/prod-404/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
+  "b0cf71bb-65db-5a23-b472-51114a941295" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "b0cf71bb-65db-5a23-b472-51114a941295",
+    "internal": Object {
+      "counter": 17,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "packageJson": Object {
+      "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+      "bundledDependecies": Array [],
+      "dependencies": Array [
+        Object {
+          "name": "@babel/runtime",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "bluebird",
+          "version": "^3.7.1",
+        },
+        Object {
+          "name": "fs-exists-cached",
+          "version": "^1.0.0",
+        },
+        Object {
+          "name": "gatsby-page-utils",
+          "version": "^0.0.31",
+        },
+        Object {
+          "name": "glob",
+          "version": "^7.1.6",
+        },
+        Object {
+          "name": "lodash",
+          "version": "^4.17.15",
+        },
+        Object {
+          "name": "micromatch",
+          "version": "^3.1.10",
+        },
+      ],
+      "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
+      "devDependencies": Array [
+        Object {
+          "name": "@babel/cli",
+          "version": "^7.7.0",
+        },
+        Object {
+          "name": "@babel/core",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "babel-preset-gatsby-package",
+          "version": "^0.2.11",
+        },
+        Object {
+          "name": "cross-env",
+          "version": "^5.2.1",
+        },
+      ],
+      "keywords": Array [
+        "gatsby",
+        "gatsby-plugin",
+      ],
+      "license": "MIT",
+      "main": "index.js",
+      "name": "gatsby-plugin-page-creator",
+      "optionalDependecies": Array [],
+      "peerDependencies": Array [
+        Object {
+          "name": "gatsby",
+          "version": "^2.0.0",
+        },
+      ],
+      "version": "2.1.31",
+    },
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/webpack-theme-component-shadowing/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
+  "0b5d5612-63e0-5fc9-881c-02623175bd8a" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "0b5d5612-63e0-5fc9-881c-02623175bd8a",
+    "internal": Object {
+      "counter": 18,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "packageJson": Object {
+      "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+      "bundledDependecies": Array [],
+      "dependencies": Array [
+        Object {
+          "name": "@babel/runtime",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "bluebird",
+          "version": "^3.7.1",
+        },
+        Object {
+          "name": "fs-exists-cached",
+          "version": "^1.0.0",
+        },
+        Object {
+          "name": "gatsby-page-utils",
+          "version": "^0.0.31",
+        },
+        Object {
+          "name": "glob",
+          "version": "^7.1.6",
+        },
+        Object {
+          "name": "lodash",
+          "version": "^4.17.15",
+        },
+        Object {
+          "name": "micromatch",
+          "version": "^3.1.10",
+        },
+      ],
+      "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
+      "devDependencies": Array [
+        Object {
+          "name": "@babel/cli",
+          "version": "^7.7.0",
+        },
+        Object {
+          "name": "@babel/core",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "babel-preset-gatsby-package",
+          "version": "^0.2.11",
+        },
+        Object {
+          "name": "cross-env",
+          "version": "^5.2.1",
+        },
+      ],
+      "keywords": Array [
+        "gatsby",
+        "gatsby-plugin",
+      ],
+      "license": "MIT",
+      "main": "index.js",
+      "name": "gatsby-plugin-page-creator",
+      "optionalDependecies": Array [],
+      "peerDependencies": Array [
+        Object {
+          "name": "gatsby",
+          "version": "^2.0.0",
+        },
+      ],
+      "version": "2.1.31",
+    },
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-plugin-stable/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
+  "d35f263a-d648-5dac-a47f-79af5021d792" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "d35f263a-d648-5dac-a47f-79af5021d792",
+    "internal": Object {
+      "counter": 19,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "packageJson": Object {
+      "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+      "bundledDependecies": Array [],
+      "dependencies": Array [
+        Object {
+          "name": "@babel/runtime",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "bluebird",
+          "version": "^3.7.1",
+        },
+        Object {
+          "name": "fs-exists-cached",
+          "version": "^1.0.0",
+        },
+        Object {
+          "name": "gatsby-page-utils",
+          "version": "^0.0.31",
+        },
+        Object {
+          "name": "glob",
+          "version": "^7.1.6",
+        },
+        Object {
+          "name": "lodash",
+          "version": "^4.17.15",
+        },
+        Object {
+          "name": "micromatch",
+          "version": "^3.1.10",
+        },
+      ],
+      "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
+      "devDependencies": Array [
+        Object {
+          "name": "@babel/cli",
+          "version": "^7.7.0",
+        },
+        Object {
+          "name": "@babel/core",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "babel-preset-gatsby-package",
+          "version": "^0.2.11",
+        },
+        Object {
+          "name": "cross-env",
+          "version": "^5.2.1",
+        },
+      ],
+      "keywords": Array [
+        "gatsby",
+        "gatsby-plugin",
+      ],
+      "license": "MIT",
+      "main": "index.js",
+      "name": "gatsby-plugin-page-creator",
+      "optionalDependecies": Array [],
+      "peerDependencies": Array [
+        Object {
+          "name": "gatsby",
+          "version": "^2.0.0",
+        },
+      ],
+      "version": "2.1.31",
+    },
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-plugin-independent-node/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
+  "c144a03e-fb15-59b6-a2b2-f6fea8872008" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "c144a03e-fb15-59b6-a2b2-f6fea8872008",
+    "internal": Object {
+      "counter": 20,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "packageJson": Object {
+      "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+      "bundledDependecies": Array [],
+      "dependencies": Array [
+        Object {
+          "name": "@babel/runtime",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "bluebird",
+          "version": "^3.7.1",
+        },
+        Object {
+          "name": "fs-exists-cached",
+          "version": "^1.0.0",
+        },
+        Object {
+          "name": "gatsby-page-utils",
+          "version": "^0.0.31",
+        },
+        Object {
+          "name": "glob",
+          "version": "^7.1.6",
+        },
+        Object {
+          "name": "lodash",
+          "version": "^4.17.15",
+        },
+        Object {
+          "name": "micromatch",
+          "version": "^3.1.10",
+        },
+      ],
+      "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
+      "devDependencies": Array [
+        Object {
+          "name": "@babel/cli",
+          "version": "^7.7.0",
+        },
+        Object {
+          "name": "@babel/core",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "babel-preset-gatsby-package",
+          "version": "^0.2.11",
+        },
+        Object {
+          "name": "cross-env",
+          "version": "^5.2.1",
+        },
+      ],
+      "keywords": Array [
+        "gatsby",
+        "gatsby-plugin",
+      ],
+      "license": "MIT",
+      "main": "index.js",
+      "name": "gatsby-plugin-page-creator",
+      "optionalDependecies": Array [],
+      "peerDependencies": Array [
+        Object {
+          "name": "gatsby",
+          "version": "^2.0.0",
+        },
+      ],
+      "version": "2.1.31",
+    },
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-parent-change/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
+  "ce2a4ef1-edef-51e3-8cb9-ae2bb5c87d1b" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "ce2a4ef1-edef-51e3-8cb9-ae2bb5c87d1b",
+    "internal": Object {
+      "counter": 21,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "packageJson": Object {
+      "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+      "bundledDependecies": Array [],
+      "dependencies": Array [
+        Object {
+          "name": "@babel/runtime",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "bluebird",
+          "version": "^3.7.1",
+        },
+        Object {
+          "name": "fs-exists-cached",
+          "version": "^1.0.0",
+        },
+        Object {
+          "name": "gatsby-page-utils",
+          "version": "^0.0.31",
+        },
+        Object {
+          "name": "glob",
+          "version": "^7.1.6",
+        },
+        Object {
+          "name": "lodash",
+          "version": "^4.17.15",
+        },
+        Object {
+          "name": "micromatch",
+          "version": "^3.1.10",
+        },
+      ],
+      "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
+      "devDependencies": Array [
+        Object {
+          "name": "@babel/cli",
+          "version": "^7.7.0",
+        },
+        Object {
+          "name": "@babel/core",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "babel-preset-gatsby-package",
+          "version": "^0.2.11",
+        },
+        Object {
+          "name": "cross-env",
+          "version": "^5.2.1",
+        },
+      ],
+      "keywords": Array [
+        "gatsby",
+        "gatsby-plugin",
+      ],
+      "license": "MIT",
+      "main": "index.js",
+      "name": "gatsby-plugin-page-creator",
+      "optionalDependecies": Array [],
+      "peerDependencies": Array [
+        Object {
+          "name": "gatsby",
+          "version": "^2.0.0",
+        },
+      ],
+      "version": "2.1.31",
+    },
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-transformer-parent-change/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
+  "bb099152-8599-57dc-9a81-2f13ca83a8be" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "bb099152-8599-57dc-9a81-2f13ca83a8be",
+    "internal": Object {
+      "counter": 22,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "packageJson": Object {
+      "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+      "bundledDependecies": Array [],
+      "dependencies": Array [
+        Object {
+          "name": "@babel/runtime",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "bluebird",
+          "version": "^3.7.1",
+        },
+        Object {
+          "name": "fs-exists-cached",
+          "version": "^1.0.0",
+        },
+        Object {
+          "name": "gatsby-page-utils",
+          "version": "^0.0.31",
+        },
+        Object {
+          "name": "glob",
+          "version": "^7.1.6",
+        },
+        Object {
+          "name": "lodash",
+          "version": "^4.17.15",
+        },
+        Object {
+          "name": "micromatch",
+          "version": "^3.1.10",
+        },
+      ],
+      "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
+      "devDependencies": Array [
+        Object {
+          "name": "@babel/cli",
+          "version": "^7.7.0",
+        },
+        Object {
+          "name": "@babel/core",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "babel-preset-gatsby-package",
+          "version": "^0.2.11",
+        },
+        Object {
+          "name": "cross-env",
+          "version": "^5.2.1",
+        },
+      ],
+      "keywords": Array [
+        "gatsby",
+        "gatsby-plugin",
+      ],
+      "license": "MIT",
+      "main": "index.js",
+      "name": "gatsby-plugin-page-creator",
+      "optionalDependecies": Array [],
+      "peerDependencies": Array [
+        Object {
+          "name": "gatsby",
+          "version": "^2.0.0",
+        },
+      ],
+      "version": "2.1.31",
+    },
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-child-change/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
+  "7e0c6e91-4f9e-517b-aa9d-8349cc0a5e2a" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "7e0c6e91-4f9e-517b-aa9d-8349cc0a5e2a",
+    "internal": Object {
+      "counter": 23,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "packageJson": Object {
+      "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+      "bundledDependecies": Array [],
+      "dependencies": Array [
+        Object {
+          "name": "@babel/runtime",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "bluebird",
+          "version": "^3.7.1",
+        },
+        Object {
+          "name": "fs-exists-cached",
+          "version": "^1.0.0",
+        },
+        Object {
+          "name": "gatsby-page-utils",
+          "version": "^0.0.31",
+        },
+        Object {
+          "name": "glob",
+          "version": "^7.1.6",
+        },
+        Object {
+          "name": "lodash",
+          "version": "^4.17.15",
+        },
+        Object {
+          "name": "micromatch",
+          "version": "^3.1.10",
+        },
+      ],
+      "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
+      "devDependencies": Array [
+        Object {
+          "name": "@babel/cli",
+          "version": "^7.7.0",
+        },
+        Object {
+          "name": "@babel/core",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "babel-preset-gatsby-package",
+          "version": "^0.2.11",
+        },
+        Object {
+          "name": "cross-env",
+          "version": "^5.2.1",
+        },
+      ],
+      "keywords": Array [
+        "gatsby",
+        "gatsby-plugin",
+      ],
+      "license": "MIT",
+      "main": "index.js",
+      "name": "gatsby-plugin-page-creator",
+      "optionalDependecies": Array [],
+      "peerDependencies": Array [
+        Object {
+          "name": "gatsby",
+          "version": "^2.0.0",
+        },
+      ],
+      "version": "2.1.31",
+    },
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-transformer-child-change/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
+  "7374ebf2-d961-52ee-92a2-c25e7cb387a9" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "7374ebf2-d961-52ee-92a2-c25e7cb387a9",
+    "internal": Object {
+      "counter": 24,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "default-site-plugin",
+    "nodeAPIs": Array [
+      "onPreBootstrap",
+      "onPostBootstrap",
+      "onCreateNode",
+    ],
+    "packageJson": Object {
+      "bundledDependecies": Array [],
+      "dependencies": Array [
+        Object {
+          "name": "gatsby",
+          "version": "^2.16.0",
+        },
+        Object {
+          "name": "gray-percentage",
+          "version": "^2.0.0",
+        },
+        Object {
+          "name": "react",
+          "version": "^16.8.0",
+        },
+        Object {
+          "name": "react-dom",
+          "version": "^16.8.0",
+        },
+      ],
+      "description": "cache resilience tests",
+      "devDependencies": Array [
+        Object {
+          "name": "babel-plugin-dynamic-import-node-sync",
+          "version": "^2.0.1",
+        },
+        Object {
+          "name": "jest",
+          "version": "^24.0.0",
+        },
+        Object {
+          "name": "jest-cli",
+          "version": "^24.0.0",
+        },
+        Object {
+          "name": "joi",
+          "version": "^14.3.1",
+        },
+        Object {
+          "name": "node-fetch",
+          "version": "^2.6.0",
+        },
+      ],
+      "license": "MIT",
+      "name": "cache-resilience-tests",
+      "optionalDependecies": Array [],
+      "peerDependencies": Array [],
+    },
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience",
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience",
+    "ssrAPIs": Array [],
+  },
+  "0e693aa4-31a8-55c5-8fd7-02832e1aff3f" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "0e693aa4-31a8-55c5-8fd7-02832e1aff3f",
+    "internal": Object {
+      "counter": 25,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "packageJson": Object {
+      "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+      "bundledDependecies": Array [],
+      "dependencies": Array [
+        Object {
+          "name": "@babel/runtime",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "bluebird",
+          "version": "^3.7.1",
+        },
+        Object {
+          "name": "fs-exists-cached",
+          "version": "^1.0.0",
+        },
+        Object {
+          "name": "gatsby-page-utils",
+          "version": "^0.0.31",
+        },
+        Object {
+          "name": "glob",
+          "version": "^7.1.6",
+        },
+        Object {
+          "name": "lodash",
+          "version": "^4.17.15",
+        },
+        Object {
+          "name": "micromatch",
+          "version": "^3.1.10",
+        },
+      ],
+      "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
+      "devDependencies": Array [
+        Object {
+          "name": "@babel/cli",
+          "version": "^7.7.0",
+        },
+        Object {
+          "name": "@babel/core",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "babel-preset-gatsby-package",
+          "version": "^0.2.11",
+        },
+        Object {
+          "name": "cross-env",
+          "version": "^5.2.1",
+        },
+      ],
+      "keywords": Array [
+        "gatsby",
+        "gatsby-plugin",
+      ],
+      "license": "MIT",
+      "main": "index.js",
+      "name": "gatsby-plugin-page-creator",
+      "optionalDependecies": Array [],
+      "peerDependencies": Array [
+        Object {
+          "name": "gatsby",
+          "version": "^2.0.0",
+        },
+      ],
+      "version": "2.1.31",
+    },
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
   "Site" => Object {
@@ -925,7 +1521,7 @@ Map {
     "host": undefined,
     "id": "Site",
     "internal": Object {
-      "counter": 16,
+      "counter": 26,
       "owner": "internal-data-bridge",
       "type": "Site",
     },
@@ -935,28 +1531,94 @@ Map {
     "port": undefined,
     "siteMetadata": Object {},
   },
-  "TEST_NODE" => Object {
+  "STABLE_NODE_1" => Object {
     "children": Array [],
-    "id": "TEST_NODE",
+    "foo": "bar",
+    "id": "STABLE_NODE_1",
     "internal": Object {
       "contentDigest": "0",
-      "counter": 17,
-      "owner": "gatsby-plugin-x",
-      "type": "X",
+      "counter": 27,
+      "owner": "gatsby-plugin-stable",
+      "type": "IndependentStable",
     },
     "parent": null,
   },
+  "INDEPENDENT_NODE_1" => Object {
+    "children": Array [],
+    "foo": "bar",
+    "id": "INDEPENDENT_NODE_1",
+    "internal": Object {
+      "contentDigest": "0",
+      "counter": 28,
+      "owner": "gatsby-plugin-independent-node",
+      "type": "IndependentChanging",
+    },
+    "parent": null,
+  },
+  "parent_parentChange" => Object {
+    "children": Array [
+      "4886e795-4b87-5964-b308-112031bdaf88",
+    ],
+    "foo": "run-1",
+    "id": "parent_parentChange",
+    "internal": Object {
+      "contentDigest": "aede568d9b5cf8ae620c06a9fa57f456",
+      "counter": 29,
+      "owner": "gatsby-source-parent-change",
+      "type": "Parent_ParentChange",
+    },
+    "parent": null,
+  },
+  "4886e795-4b87-5964-b308-112031bdaf88" => Object {
+    "bar": undefined,
+    "children": Array [],
+    "foo": "run-1",
+    "id": "4886e795-4b87-5964-b308-112031bdaf88",
+    "internal": Object {
+      "contentDigest": "96dd125d43f25f0bba42a7b4b7ba4885",
+      "counter": 30,
+      "owner": "gatsby-transformer-parent-change",
+      "type": "ChildOfParent_ParentChange",
+    },
+    "parent": "parent_parentChange",
+  },
+  "parent_childChange" => Object {
+    "children": Array [
+      "358f53bc-3eef-5881-a226-042304a159e3",
+    ],
+    "foo": "run-1",
+    "id": "parent_childChange",
+    "internal": Object {
+      "contentDigest": "265623643e8806ecc810413fcf1ccefa",
+      "counter": 31,
+      "owner": "gatsby-source-child-change",
+      "type": "Parent_ChildChange",
+    },
+    "parent": null,
+  },
+  "358f53bc-3eef-5881-a226-042304a159e3" => Object {
+    "children": Array [],
+    "foo": "bar",
+    "id": "358f53bc-3eef-5881-a226-042304a159e3",
+    "internal": Object {
+      "contentDigest": "8072e58493504423579431f250d1846a",
+      "counter": 32,
+      "owner": "gatsby-transformer-child-change",
+      "type": "ChildOfParent_ChildChange",
+    },
+    "parent": "parent_childChange",
+  },
   "SitePage /" => Object {
     "children": Array [],
-    "component": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/src/pages/index.js",
+    "component": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/src/pages/index.js",
     "componentChunkName": "component---src-pages-index-js",
-    "componentPath": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/src/pages/index.js",
+    "componentPath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/src/pages/index.js",
     "context": Object {},
     "id": "SitePage /",
     "internal": Object {
-      "contentDigest": "ea67288d2271ffd56ee868f599d81187",
-      "counter": 18,
-      "description": "437b6151-504d-51ee-b0bc-3447e87f9856",
+      "contentDigest": "c5fa7d67d7b6095c8133348eb329bd52",
+      "counter": 33,
+      "description": "c9535749-a52b-5c49-8671-11a311b98993",
       "owner": "internal-data-bridge",
       "type": "SitePage",
     },
@@ -965,13 +1627,13 @@ Map {
     "matchPath": undefined,
     "parent": null,
     "path": "/",
-    "pluginCreatorId": "437b6151-504d-51ee-b0bc-3447e87f9856",
-    "pluginCreator___NODE": "437b6151-504d-51ee-b0bc-3447e87f9856",
+    "pluginCreatorId": "c9535749-a52b-5c49-8671-11a311b98993",
+    "pluginCreator___NODE": "c9535749-a52b-5c49-8671-11a311b98993",
   },
 }
 `;
 
-exports[`Cache Nodes are deleted when owner plugin changes 2`] = `
+exports[`Cache Redux Nodes sanity checks 2`] = `
 Map {
   "SitePage /dev-404-page/" => Object {
     "children": Array [],
@@ -1012,11 +1674,11 @@ Map {
       "version": "1.0.0",
     },
     "parent": null,
-    "pluginFilepath": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/dev-404-page",
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/dev-404-page",
     "pluginOptions": Object {
       "plugins": Array [],
     },
-    "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/dev-404-page",
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/dev-404-page",
     "ssrAPIs": Array [],
   },
   "1fc32581-893a-55e8-8927-bcd667e2b700" => Object {
@@ -1046,11 +1708,11 @@ Map {
       "version": "1.0.0",
     },
     "parent": null,
-    "pluginFilepath": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/load-babel-config",
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/load-babel-config",
     "pluginOptions": Object {
       "plugins": Array [],
     },
-    "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/load-babel-config",
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/load-babel-config",
     "ssrAPIs": Array [],
   },
   "a5079d69-ba80-53dc-82f9-0f440bd5448c" => Object {
@@ -1081,11 +1743,11 @@ Map {
       "version": "1.0.0",
     },
     "parent": null,
-    "pluginFilepath": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/internal-data-bridge",
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/internal-data-bridge",
     "pluginOptions": Object {
       "plugins": Array [],
     },
-    "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/internal-data-bridge",
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/internal-data-bridge",
     "ssrAPIs": Array [],
   },
   "f795702c-a3b8-5a88-88ee-5d06019d44fa" => Object {
@@ -1115,11 +1777,11 @@ Map {
       "version": "1.0.0",
     },
     "parent": null,
-    "pluginFilepath": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/prod-404",
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/prod-404",
     "pluginOptions": Object {
       "plugins": Array [],
     },
-    "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/prod-404",
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/prod-404",
     "ssrAPIs": Array [],
   },
   "6f4b2fa9-66b5-5205-a03f-140005a2cfe5" => Object {
@@ -1149,23 +1811,23 @@ Map {
       "version": "1.0.0",
     },
     "parent": null,
-    "pluginFilepath": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/webpack-theme-component-shadowing",
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/webpack-theme-component-shadowing",
     "pluginOptions": Object {
       "plugins": Array [],
     },
-    "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/webpack-theme-component-shadowing",
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/webpack-theme-component-shadowing",
     "ssrAPIs": Array [],
   },
-  "04b300f8-40b1-51d3-9a79-3474d5bf24e0" => Object {
+  "3eaaf673-5a13-5784-894a-47b357425e05" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "04b300f8-40b1-51d3-9a79-3474d5bf24e0",
+    "id": "3eaaf673-5a13-5784-894a-47b357425e05",
     "internal": Object {
       "counter": 7,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
-    "name": "gatsby-plugin-x",
+    "name": "gatsby-plugin-stable",
     "nodeAPIs": Array [
       "sourceNodes",
     ],
@@ -1177,472 +1839,157 @@ Map {
       "peerDependencies": Array [],
     },
     "parent": null,
-    "pluginFilepath": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/plugins/gatsby-plugin-x",
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-plugin-stable",
     "pluginOptions": Object {
       "plugins": Array [],
     },
-    "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/plugins/gatsby-plugin-x",
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-plugin-stable",
     "ssrAPIs": Array [],
   },
-  "437b6151-504d-51ee-b0bc-3447e87f9856" => Object {
+  "dc1f3dc9-7d73-533d-a090-787d5281f836" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "437b6151-504d-51ee-b0bc-3447e87f9856",
+    "id": "dc1f3dc9-7d73-533d-a090-787d5281f836",
     "internal": Object {
       "counter": 8,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
-    "name": "gatsby-plugin-page-creator",
+    "name": "gatsby-plugin-independent-node",
     "nodeAPIs": Array [
-      "createPagesStatefully",
+      "sourceNodes",
     ],
     "packageJson": Object {
-      "author": "Kyle Mathews <mathews.kyle@gmail.com>",
       "bundledDependecies": Array [],
-      "dependencies": Array [
-        Object {
-          "name": "@babel/runtime",
-          "version": "^7.7.2",
-        },
-        Object {
-          "name": "bluebird",
-          "version": "^3.7.1",
-        },
-        Object {
-          "name": "fs-exists-cached",
-          "version": "^1.0.0",
-        },
-        Object {
-          "name": "gatsby-page-utils",
-          "version": "^0.0.31",
-        },
-        Object {
-          "name": "glob",
-          "version": "^7.1.6",
-        },
-        Object {
-          "name": "lodash",
-          "version": "^4.17.15",
-        },
-        Object {
-          "name": "micromatch",
-          "version": "^3.1.10",
-        },
-      ],
-      "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
-      "devDependencies": Array [
-        Object {
-          "name": "@babel/cli",
-          "version": "^7.7.0",
-        },
-        Object {
-          "name": "@babel/core",
-          "version": "^7.7.2",
-        },
-        Object {
-          "name": "babel-preset-gatsby-package",
-          "version": "^0.2.11",
-        },
-        Object {
-          "name": "cross-env",
-          "version": "^5.2.1",
-        },
-      ],
-      "keywords": Array [
-        "gatsby",
-        "gatsby-plugin",
-      ],
-      "license": "MIT",
-      "main": "index.js",
-      "name": "gatsby-plugin-page-creator",
+      "dependencies": Array [],
+      "devDependencies": Array [],
       "optionalDependecies": Array [],
-      "peerDependencies": Array [
-        Object {
-          "name": "gatsby",
-          "version": "^2.0.0",
-        },
-      ],
-      "version": "2.1.31",
+      "peerDependencies": Array [],
     },
     "parent": null,
-    "pluginFilepath": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-plugin-independent-node",
     "pluginOptions": Object {
-      "path": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/dev-404-page/src/pages",
-      "pathCheck": false,
       "plugins": Array [],
     },
-    "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-plugin-independent-node",
     "ssrAPIs": Array [],
   },
-  "cc7735e2-c2d3-5246-aa7d-80becac49c63" => Object {
+  "5b30a597-1b08-5eb5-b475-340a5c87ad06" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "cc7735e2-c2d3-5246-aa7d-80becac49c63",
+    "id": "5b30a597-1b08-5eb5-b475-340a5c87ad06",
     "internal": Object {
       "counter": 9,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
-    "name": "gatsby-plugin-page-creator",
+    "name": "gatsby-source-parent-change",
     "nodeAPIs": Array [
-      "createPagesStatefully",
+      "sourceNodes",
     ],
     "packageJson": Object {
-      "author": "Kyle Mathews <mathews.kyle@gmail.com>",
       "bundledDependecies": Array [],
-      "dependencies": Array [
-        Object {
-          "name": "@babel/runtime",
-          "version": "^7.7.2",
-        },
-        Object {
-          "name": "bluebird",
-          "version": "^3.7.1",
-        },
-        Object {
-          "name": "fs-exists-cached",
-          "version": "^1.0.0",
-        },
-        Object {
-          "name": "gatsby-page-utils",
-          "version": "^0.0.31",
-        },
-        Object {
-          "name": "glob",
-          "version": "^7.1.6",
-        },
-        Object {
-          "name": "lodash",
-          "version": "^4.17.15",
-        },
-        Object {
-          "name": "micromatch",
-          "version": "^3.1.10",
-        },
-      ],
-      "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
-      "devDependencies": Array [
-        Object {
-          "name": "@babel/cli",
-          "version": "^7.7.0",
-        },
-        Object {
-          "name": "@babel/core",
-          "version": "^7.7.2",
-        },
-        Object {
-          "name": "babel-preset-gatsby-package",
-          "version": "^0.2.11",
-        },
-        Object {
-          "name": "cross-env",
-          "version": "^5.2.1",
-        },
-      ],
-      "keywords": Array [
-        "gatsby",
-        "gatsby-plugin",
-      ],
-      "license": "MIT",
-      "main": "index.js",
-      "name": "gatsby-plugin-page-creator",
+      "dependencies": Array [],
+      "devDependencies": Array [],
       "optionalDependecies": Array [],
-      "peerDependencies": Array [
-        Object {
-          "name": "gatsby",
-          "version": "^2.0.0",
-        },
-      ],
-      "version": "2.1.31",
+      "peerDependencies": Array [],
     },
     "parent": null,
-    "pluginFilepath": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-parent-change",
     "pluginOptions": Object {
-      "path": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/load-babel-config/src/pages",
-      "pathCheck": false,
       "plugins": Array [],
     },
-    "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-parent-change",
     "ssrAPIs": Array [],
   },
-  "ab5821ea-a83b-5db5-8c12-c907ae29a10d" => Object {
+  "684f3e1c-cb9e-5123-87b1-609e60d5fa87" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "ab5821ea-a83b-5db5-8c12-c907ae29a10d",
+    "id": "684f3e1c-cb9e-5123-87b1-609e60d5fa87",
     "internal": Object {
       "counter": 10,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
-    "name": "gatsby-plugin-page-creator",
+    "name": "gatsby-transformer-parent-change",
     "nodeAPIs": Array [
-      "createPagesStatefully",
+      "onCreateNode",
     ],
     "packageJson": Object {
-      "author": "Kyle Mathews <mathews.kyle@gmail.com>",
       "bundledDependecies": Array [],
-      "dependencies": Array [
-        Object {
-          "name": "@babel/runtime",
-          "version": "^7.7.2",
-        },
-        Object {
-          "name": "bluebird",
-          "version": "^3.7.1",
-        },
-        Object {
-          "name": "fs-exists-cached",
-          "version": "^1.0.0",
-        },
-        Object {
-          "name": "gatsby-page-utils",
-          "version": "^0.0.31",
-        },
-        Object {
-          "name": "glob",
-          "version": "^7.1.6",
-        },
-        Object {
-          "name": "lodash",
-          "version": "^4.17.15",
-        },
-        Object {
-          "name": "micromatch",
-          "version": "^3.1.10",
-        },
-      ],
-      "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
-      "devDependencies": Array [
-        Object {
-          "name": "@babel/cli",
-          "version": "^7.7.0",
-        },
-        Object {
-          "name": "@babel/core",
-          "version": "^7.7.2",
-        },
-        Object {
-          "name": "babel-preset-gatsby-package",
-          "version": "^0.2.11",
-        },
-        Object {
-          "name": "cross-env",
-          "version": "^5.2.1",
-        },
-      ],
-      "keywords": Array [
-        "gatsby",
-        "gatsby-plugin",
-      ],
-      "license": "MIT",
-      "main": "index.js",
-      "name": "gatsby-plugin-page-creator",
+      "dependencies": Array [],
+      "devDependencies": Array [],
       "optionalDependecies": Array [],
-      "peerDependencies": Array [
-        Object {
-          "name": "gatsby",
-          "version": "^2.0.0",
-        },
-      ],
-      "version": "2.1.31",
+      "peerDependencies": Array [],
     },
     "parent": null,
-    "pluginFilepath": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-transformer-parent-change",
     "pluginOptions": Object {
-      "path": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/internal-data-bridge/src/pages",
-      "pathCheck": false,
       "plugins": Array [],
     },
-    "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-transformer-parent-change",
     "ssrAPIs": Array [],
   },
-  "1ed0b446-2f83-5083-9f9d-c0aa65d6ae86" => Object {
+  "aabee054-3c12-5ff1-a6e2-f8de945501ef" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "1ed0b446-2f83-5083-9f9d-c0aa65d6ae86",
+    "id": "aabee054-3c12-5ff1-a6e2-f8de945501ef",
     "internal": Object {
       "counter": 11,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
-    "name": "gatsby-plugin-page-creator",
+    "name": "gatsby-source-child-change",
     "nodeAPIs": Array [
-      "createPagesStatefully",
+      "sourceNodes",
     ],
     "packageJson": Object {
-      "author": "Kyle Mathews <mathews.kyle@gmail.com>",
       "bundledDependecies": Array [],
-      "dependencies": Array [
-        Object {
-          "name": "@babel/runtime",
-          "version": "^7.7.2",
-        },
-        Object {
-          "name": "bluebird",
-          "version": "^3.7.1",
-        },
-        Object {
-          "name": "fs-exists-cached",
-          "version": "^1.0.0",
-        },
-        Object {
-          "name": "gatsby-page-utils",
-          "version": "^0.0.31",
-        },
-        Object {
-          "name": "glob",
-          "version": "^7.1.6",
-        },
-        Object {
-          "name": "lodash",
-          "version": "^4.17.15",
-        },
-        Object {
-          "name": "micromatch",
-          "version": "^3.1.10",
-        },
-      ],
-      "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
-      "devDependencies": Array [
-        Object {
-          "name": "@babel/cli",
-          "version": "^7.7.0",
-        },
-        Object {
-          "name": "@babel/core",
-          "version": "^7.7.2",
-        },
-        Object {
-          "name": "babel-preset-gatsby-package",
-          "version": "^0.2.11",
-        },
-        Object {
-          "name": "cross-env",
-          "version": "^5.2.1",
-        },
-      ],
-      "keywords": Array [
-        "gatsby",
-        "gatsby-plugin",
-      ],
-      "license": "MIT",
-      "main": "index.js",
-      "name": "gatsby-plugin-page-creator",
+      "dependencies": Array [],
+      "devDependencies": Array [],
       "optionalDependecies": Array [],
-      "peerDependencies": Array [
-        Object {
-          "name": "gatsby",
-          "version": "^2.0.0",
-        },
-      ],
-      "version": "2.1.31",
+      "peerDependencies": Array [],
     },
     "parent": null,
-    "pluginFilepath": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-child-change",
     "pluginOptions": Object {
-      "path": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/prod-404/src/pages",
-      "pathCheck": false,
       "plugins": Array [],
     },
-    "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-child-change",
     "ssrAPIs": Array [],
   },
-  "c32a230d-0d46-5579-bfb1-e7d8b78170dc" => Object {
+  "2bf51669-f85f-59be-94db-6056fd4b04a3" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "c32a230d-0d46-5579-bfb1-e7d8b78170dc",
+    "id": "2bf51669-f85f-59be-94db-6056fd4b04a3",
     "internal": Object {
       "counter": 12,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
-    "name": "gatsby-plugin-page-creator",
+    "name": "gatsby-transformer-child-change",
     "nodeAPIs": Array [
-      "createPagesStatefully",
+      "onCreateNode",
     ],
     "packageJson": Object {
-      "author": "Kyle Mathews <mathews.kyle@gmail.com>",
       "bundledDependecies": Array [],
-      "dependencies": Array [
-        Object {
-          "name": "@babel/runtime",
-          "version": "^7.7.2",
-        },
-        Object {
-          "name": "bluebird",
-          "version": "^3.7.1",
-        },
-        Object {
-          "name": "fs-exists-cached",
-          "version": "^1.0.0",
-        },
-        Object {
-          "name": "gatsby-page-utils",
-          "version": "^0.0.31",
-        },
-        Object {
-          "name": "glob",
-          "version": "^7.1.6",
-        },
-        Object {
-          "name": "lodash",
-          "version": "^4.17.15",
-        },
-        Object {
-          "name": "micromatch",
-          "version": "^3.1.10",
-        },
-      ],
-      "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
-      "devDependencies": Array [
-        Object {
-          "name": "@babel/cli",
-          "version": "^7.7.0",
-        },
-        Object {
-          "name": "@babel/core",
-          "version": "^7.7.2",
-        },
-        Object {
-          "name": "babel-preset-gatsby-package",
-          "version": "^0.2.11",
-        },
-        Object {
-          "name": "cross-env",
-          "version": "^5.2.1",
-        },
-      ],
-      "keywords": Array [
-        "gatsby",
-        "gatsby-plugin",
-      ],
-      "license": "MIT",
-      "main": "index.js",
-      "name": "gatsby-plugin-page-creator",
+      "dependencies": Array [],
+      "devDependencies": Array [],
       "optionalDependecies": Array [],
-      "peerDependencies": Array [
-        Object {
-          "name": "gatsby",
-          "version": "^2.0.0",
-        },
-      ],
-      "version": "2.1.31",
+      "peerDependencies": Array [],
     },
     "parent": null,
-    "pluginFilepath": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-transformer-child-change",
     "pluginOptions": Object {
-      "path": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/webpack-theme-component-shadowing/src/pages",
-      "pathCheck": false,
       "plugins": Array [],
     },
-    "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-transformer-child-change",
     "ssrAPIs": Array [],
   },
-  "55a76f83-22dd-5eb6-bd32-8c73a097e8c0" => Object {
+  "c9535749-a52b-5c49-8671-11a311b98993" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "55a76f83-22dd-5eb6-bd32-8c73a097e8c0",
+    "id": "c9535749-a52b-5c49-8671-11a311b98993",
     "internal": Object {
       "counter": 13,
       "owner": "internal-data-bridge",
@@ -1721,89 +2068,110 @@ Map {
       "version": "2.1.31",
     },
     "parent": null,
-    "pluginFilepath": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
     "pluginOptions": Object {
-      "path": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/plugins/gatsby-plugin-x/src/pages",
+      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/dev-404-page/src/pages",
       "pathCheck": false,
       "plugins": Array [],
     },
-    "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "7374ebf2-d961-52ee-92a2-c25e7cb387a9" => Object {
+  "aed25515-e1f7-5760-8f34-6461454230de" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "7374ebf2-d961-52ee-92a2-c25e7cb387a9",
+    "id": "aed25515-e1f7-5760-8f34-6461454230de",
     "internal": Object {
       "counter": 14,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
-    "name": "default-site-plugin",
+    "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
-      "onPreBootstrap",
-      "onPostBootstrap",
+      "createPagesStatefully",
     ],
     "packageJson": Object {
+      "author": "Kyle Mathews <mathews.kyle@gmail.com>",
       "bundledDependecies": Array [],
       "dependencies": Array [
         Object {
-          "name": "gatsby",
-          "version": "^2.16.0",
+          "name": "@babel/runtime",
+          "version": "^7.7.2",
         },
         Object {
-          "name": "gray-percentage",
-          "version": "^2.0.0",
+          "name": "bluebird",
+          "version": "^3.7.1",
         },
         Object {
-          "name": "react",
-          "version": "^16.8.0",
+          "name": "fs-exists-cached",
+          "version": "^1.0.0",
         },
         Object {
-          "name": "react-dom",
-          "version": "^16.8.0",
+          "name": "gatsby-page-utils",
+          "version": "^0.0.31",
+        },
+        Object {
+          "name": "glob",
+          "version": "^7.1.6",
+        },
+        Object {
+          "name": "lodash",
+          "version": "^4.17.15",
+        },
+        Object {
+          "name": "micromatch",
+          "version": "^3.1.10",
         },
       ],
-      "description": "cache resilience tests",
+      "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
       "devDependencies": Array [
         Object {
-          "name": "babel-plugin-dynamic-import-node-sync",
-          "version": "^2.0.1",
+          "name": "@babel/cli",
+          "version": "^7.7.0",
         },
         Object {
-          "name": "jest",
-          "version": "^24.0.0",
+          "name": "@babel/core",
+          "version": "^7.7.2",
         },
         Object {
-          "name": "jest-cli",
-          "version": "^24.0.0",
+          "name": "babel-preset-gatsby-package",
+          "version": "^0.2.11",
         },
         Object {
-          "name": "joi",
-          "version": "^14.3.1",
-        },
-        Object {
-          "name": "node-fetch",
-          "version": "^2.6.0",
+          "name": "cross-env",
+          "version": "^5.2.1",
         },
       ],
+      "keywords": Array [
+        "gatsby",
+        "gatsby-plugin",
+      ],
       "license": "MIT",
-      "name": "cache-resilience-tests",
+      "main": "index.js",
+      "name": "gatsby-plugin-page-creator",
       "optionalDependecies": Array [],
-      "peerDependencies": Array [],
+      "peerDependencies": Array [
+        Object {
+          "name": "gatsby",
+          "version": "^2.0.0",
+        },
+      ],
+      "version": "2.1.31",
     },
     "parent": null,
-    "pluginFilepath": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience",
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
     "pluginOptions": Object {
+      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/load-babel-config/src/pages",
+      "pathCheck": false,
       "plugins": Array [],
     },
-    "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience",
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "aac9adb8-13bf-5a63-bb97-98fa6f1551c6" => Object {
+  "7775d111-885f-58c6-aa94-47ad7d6d5408" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "aac9adb8-13bf-5a63-bb97-98fa6f1551c6",
+    "id": "7775d111-885f-58c6-aa94-47ad7d6d5408",
     "internal": Object {
       "counter": 15,
       "owner": "internal-data-bridge",
@@ -1882,13 +2250,903 @@ Map {
       "version": "2.1.31",
     },
     "parent": null,
-    "pluginFilepath": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
     "pluginOptions": Object {
-      "path": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/src/pages",
+      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/internal-data-bridge/src/pages",
       "pathCheck": false,
       "plugins": Array [],
     },
-    "resolve": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
+  "e419ee70-6845-577a-9caf-98198596750c" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "e419ee70-6845-577a-9caf-98198596750c",
+    "internal": Object {
+      "counter": 16,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "packageJson": Object {
+      "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+      "bundledDependecies": Array [],
+      "dependencies": Array [
+        Object {
+          "name": "@babel/runtime",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "bluebird",
+          "version": "^3.7.1",
+        },
+        Object {
+          "name": "fs-exists-cached",
+          "version": "^1.0.0",
+        },
+        Object {
+          "name": "gatsby-page-utils",
+          "version": "^0.0.31",
+        },
+        Object {
+          "name": "glob",
+          "version": "^7.1.6",
+        },
+        Object {
+          "name": "lodash",
+          "version": "^4.17.15",
+        },
+        Object {
+          "name": "micromatch",
+          "version": "^3.1.10",
+        },
+      ],
+      "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
+      "devDependencies": Array [
+        Object {
+          "name": "@babel/cli",
+          "version": "^7.7.0",
+        },
+        Object {
+          "name": "@babel/core",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "babel-preset-gatsby-package",
+          "version": "^0.2.11",
+        },
+        Object {
+          "name": "cross-env",
+          "version": "^5.2.1",
+        },
+      ],
+      "keywords": Array [
+        "gatsby",
+        "gatsby-plugin",
+      ],
+      "license": "MIT",
+      "main": "index.js",
+      "name": "gatsby-plugin-page-creator",
+      "optionalDependecies": Array [],
+      "peerDependencies": Array [
+        Object {
+          "name": "gatsby",
+          "version": "^2.0.0",
+        },
+      ],
+      "version": "2.1.31",
+    },
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/prod-404/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
+  "b0cf71bb-65db-5a23-b472-51114a941295" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "b0cf71bb-65db-5a23-b472-51114a941295",
+    "internal": Object {
+      "counter": 17,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "packageJson": Object {
+      "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+      "bundledDependecies": Array [],
+      "dependencies": Array [
+        Object {
+          "name": "@babel/runtime",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "bluebird",
+          "version": "^3.7.1",
+        },
+        Object {
+          "name": "fs-exists-cached",
+          "version": "^1.0.0",
+        },
+        Object {
+          "name": "gatsby-page-utils",
+          "version": "^0.0.31",
+        },
+        Object {
+          "name": "glob",
+          "version": "^7.1.6",
+        },
+        Object {
+          "name": "lodash",
+          "version": "^4.17.15",
+        },
+        Object {
+          "name": "micromatch",
+          "version": "^3.1.10",
+        },
+      ],
+      "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
+      "devDependencies": Array [
+        Object {
+          "name": "@babel/cli",
+          "version": "^7.7.0",
+        },
+        Object {
+          "name": "@babel/core",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "babel-preset-gatsby-package",
+          "version": "^0.2.11",
+        },
+        Object {
+          "name": "cross-env",
+          "version": "^5.2.1",
+        },
+      ],
+      "keywords": Array [
+        "gatsby",
+        "gatsby-plugin",
+      ],
+      "license": "MIT",
+      "main": "index.js",
+      "name": "gatsby-plugin-page-creator",
+      "optionalDependecies": Array [],
+      "peerDependencies": Array [
+        Object {
+          "name": "gatsby",
+          "version": "^2.0.0",
+        },
+      ],
+      "version": "2.1.31",
+    },
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/webpack-theme-component-shadowing/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
+  "0b5d5612-63e0-5fc9-881c-02623175bd8a" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "0b5d5612-63e0-5fc9-881c-02623175bd8a",
+    "internal": Object {
+      "counter": 18,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "packageJson": Object {
+      "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+      "bundledDependecies": Array [],
+      "dependencies": Array [
+        Object {
+          "name": "@babel/runtime",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "bluebird",
+          "version": "^3.7.1",
+        },
+        Object {
+          "name": "fs-exists-cached",
+          "version": "^1.0.0",
+        },
+        Object {
+          "name": "gatsby-page-utils",
+          "version": "^0.0.31",
+        },
+        Object {
+          "name": "glob",
+          "version": "^7.1.6",
+        },
+        Object {
+          "name": "lodash",
+          "version": "^4.17.15",
+        },
+        Object {
+          "name": "micromatch",
+          "version": "^3.1.10",
+        },
+      ],
+      "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
+      "devDependencies": Array [
+        Object {
+          "name": "@babel/cli",
+          "version": "^7.7.0",
+        },
+        Object {
+          "name": "@babel/core",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "babel-preset-gatsby-package",
+          "version": "^0.2.11",
+        },
+        Object {
+          "name": "cross-env",
+          "version": "^5.2.1",
+        },
+      ],
+      "keywords": Array [
+        "gatsby",
+        "gatsby-plugin",
+      ],
+      "license": "MIT",
+      "main": "index.js",
+      "name": "gatsby-plugin-page-creator",
+      "optionalDependecies": Array [],
+      "peerDependencies": Array [
+        Object {
+          "name": "gatsby",
+          "version": "^2.0.0",
+        },
+      ],
+      "version": "2.1.31",
+    },
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-plugin-stable/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
+  "d35f263a-d648-5dac-a47f-79af5021d792" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "d35f263a-d648-5dac-a47f-79af5021d792",
+    "internal": Object {
+      "counter": 19,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "packageJson": Object {
+      "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+      "bundledDependecies": Array [],
+      "dependencies": Array [
+        Object {
+          "name": "@babel/runtime",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "bluebird",
+          "version": "^3.7.1",
+        },
+        Object {
+          "name": "fs-exists-cached",
+          "version": "^1.0.0",
+        },
+        Object {
+          "name": "gatsby-page-utils",
+          "version": "^0.0.31",
+        },
+        Object {
+          "name": "glob",
+          "version": "^7.1.6",
+        },
+        Object {
+          "name": "lodash",
+          "version": "^4.17.15",
+        },
+        Object {
+          "name": "micromatch",
+          "version": "^3.1.10",
+        },
+      ],
+      "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
+      "devDependencies": Array [
+        Object {
+          "name": "@babel/cli",
+          "version": "^7.7.0",
+        },
+        Object {
+          "name": "@babel/core",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "babel-preset-gatsby-package",
+          "version": "^0.2.11",
+        },
+        Object {
+          "name": "cross-env",
+          "version": "^5.2.1",
+        },
+      ],
+      "keywords": Array [
+        "gatsby",
+        "gatsby-plugin",
+      ],
+      "license": "MIT",
+      "main": "index.js",
+      "name": "gatsby-plugin-page-creator",
+      "optionalDependecies": Array [],
+      "peerDependencies": Array [
+        Object {
+          "name": "gatsby",
+          "version": "^2.0.0",
+        },
+      ],
+      "version": "2.1.31",
+    },
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-plugin-independent-node/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
+  "c144a03e-fb15-59b6-a2b2-f6fea8872008" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "c144a03e-fb15-59b6-a2b2-f6fea8872008",
+    "internal": Object {
+      "counter": 20,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "packageJson": Object {
+      "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+      "bundledDependecies": Array [],
+      "dependencies": Array [
+        Object {
+          "name": "@babel/runtime",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "bluebird",
+          "version": "^3.7.1",
+        },
+        Object {
+          "name": "fs-exists-cached",
+          "version": "^1.0.0",
+        },
+        Object {
+          "name": "gatsby-page-utils",
+          "version": "^0.0.31",
+        },
+        Object {
+          "name": "glob",
+          "version": "^7.1.6",
+        },
+        Object {
+          "name": "lodash",
+          "version": "^4.17.15",
+        },
+        Object {
+          "name": "micromatch",
+          "version": "^3.1.10",
+        },
+      ],
+      "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
+      "devDependencies": Array [
+        Object {
+          "name": "@babel/cli",
+          "version": "^7.7.0",
+        },
+        Object {
+          "name": "@babel/core",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "babel-preset-gatsby-package",
+          "version": "^0.2.11",
+        },
+        Object {
+          "name": "cross-env",
+          "version": "^5.2.1",
+        },
+      ],
+      "keywords": Array [
+        "gatsby",
+        "gatsby-plugin",
+      ],
+      "license": "MIT",
+      "main": "index.js",
+      "name": "gatsby-plugin-page-creator",
+      "optionalDependecies": Array [],
+      "peerDependencies": Array [
+        Object {
+          "name": "gatsby",
+          "version": "^2.0.0",
+        },
+      ],
+      "version": "2.1.31",
+    },
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-parent-change/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
+  "ce2a4ef1-edef-51e3-8cb9-ae2bb5c87d1b" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "ce2a4ef1-edef-51e3-8cb9-ae2bb5c87d1b",
+    "internal": Object {
+      "counter": 21,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "packageJson": Object {
+      "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+      "bundledDependecies": Array [],
+      "dependencies": Array [
+        Object {
+          "name": "@babel/runtime",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "bluebird",
+          "version": "^3.7.1",
+        },
+        Object {
+          "name": "fs-exists-cached",
+          "version": "^1.0.0",
+        },
+        Object {
+          "name": "gatsby-page-utils",
+          "version": "^0.0.31",
+        },
+        Object {
+          "name": "glob",
+          "version": "^7.1.6",
+        },
+        Object {
+          "name": "lodash",
+          "version": "^4.17.15",
+        },
+        Object {
+          "name": "micromatch",
+          "version": "^3.1.10",
+        },
+      ],
+      "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
+      "devDependencies": Array [
+        Object {
+          "name": "@babel/cli",
+          "version": "^7.7.0",
+        },
+        Object {
+          "name": "@babel/core",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "babel-preset-gatsby-package",
+          "version": "^0.2.11",
+        },
+        Object {
+          "name": "cross-env",
+          "version": "^5.2.1",
+        },
+      ],
+      "keywords": Array [
+        "gatsby",
+        "gatsby-plugin",
+      ],
+      "license": "MIT",
+      "main": "index.js",
+      "name": "gatsby-plugin-page-creator",
+      "optionalDependecies": Array [],
+      "peerDependencies": Array [
+        Object {
+          "name": "gatsby",
+          "version": "^2.0.0",
+        },
+      ],
+      "version": "2.1.31",
+    },
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-transformer-parent-change/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
+  "bb099152-8599-57dc-9a81-2f13ca83a8be" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "bb099152-8599-57dc-9a81-2f13ca83a8be",
+    "internal": Object {
+      "counter": 22,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "packageJson": Object {
+      "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+      "bundledDependecies": Array [],
+      "dependencies": Array [
+        Object {
+          "name": "@babel/runtime",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "bluebird",
+          "version": "^3.7.1",
+        },
+        Object {
+          "name": "fs-exists-cached",
+          "version": "^1.0.0",
+        },
+        Object {
+          "name": "gatsby-page-utils",
+          "version": "^0.0.31",
+        },
+        Object {
+          "name": "glob",
+          "version": "^7.1.6",
+        },
+        Object {
+          "name": "lodash",
+          "version": "^4.17.15",
+        },
+        Object {
+          "name": "micromatch",
+          "version": "^3.1.10",
+        },
+      ],
+      "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
+      "devDependencies": Array [
+        Object {
+          "name": "@babel/cli",
+          "version": "^7.7.0",
+        },
+        Object {
+          "name": "@babel/core",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "babel-preset-gatsby-package",
+          "version": "^0.2.11",
+        },
+        Object {
+          "name": "cross-env",
+          "version": "^5.2.1",
+        },
+      ],
+      "keywords": Array [
+        "gatsby",
+        "gatsby-plugin",
+      ],
+      "license": "MIT",
+      "main": "index.js",
+      "name": "gatsby-plugin-page-creator",
+      "optionalDependecies": Array [],
+      "peerDependencies": Array [
+        Object {
+          "name": "gatsby",
+          "version": "^2.0.0",
+        },
+      ],
+      "version": "2.1.31",
+    },
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-child-change/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
+  "7e0c6e91-4f9e-517b-aa9d-8349cc0a5e2a" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "7e0c6e91-4f9e-517b-aa9d-8349cc0a5e2a",
+    "internal": Object {
+      "counter": 23,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "packageJson": Object {
+      "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+      "bundledDependecies": Array [],
+      "dependencies": Array [
+        Object {
+          "name": "@babel/runtime",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "bluebird",
+          "version": "^3.7.1",
+        },
+        Object {
+          "name": "fs-exists-cached",
+          "version": "^1.0.0",
+        },
+        Object {
+          "name": "gatsby-page-utils",
+          "version": "^0.0.31",
+        },
+        Object {
+          "name": "glob",
+          "version": "^7.1.6",
+        },
+        Object {
+          "name": "lodash",
+          "version": "^4.17.15",
+        },
+        Object {
+          "name": "micromatch",
+          "version": "^3.1.10",
+        },
+      ],
+      "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
+      "devDependencies": Array [
+        Object {
+          "name": "@babel/cli",
+          "version": "^7.7.0",
+        },
+        Object {
+          "name": "@babel/core",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "babel-preset-gatsby-package",
+          "version": "^0.2.11",
+        },
+        Object {
+          "name": "cross-env",
+          "version": "^5.2.1",
+        },
+      ],
+      "keywords": Array [
+        "gatsby",
+        "gatsby-plugin",
+      ],
+      "license": "MIT",
+      "main": "index.js",
+      "name": "gatsby-plugin-page-creator",
+      "optionalDependecies": Array [],
+      "peerDependencies": Array [
+        Object {
+          "name": "gatsby",
+          "version": "^2.0.0",
+        },
+      ],
+      "version": "2.1.31",
+    },
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-transformer-child-change/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
+  "7374ebf2-d961-52ee-92a2-c25e7cb387a9" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "7374ebf2-d961-52ee-92a2-c25e7cb387a9",
+    "internal": Object {
+      "counter": 24,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "default-site-plugin",
+    "nodeAPIs": Array [
+      "onPreBootstrap",
+      "onPostBootstrap",
+      "onCreateNode",
+    ],
+    "packageJson": Object {
+      "bundledDependecies": Array [],
+      "dependencies": Array [
+        Object {
+          "name": "gatsby",
+          "version": "^2.16.0",
+        },
+        Object {
+          "name": "gray-percentage",
+          "version": "^2.0.0",
+        },
+        Object {
+          "name": "react",
+          "version": "^16.8.0",
+        },
+        Object {
+          "name": "react-dom",
+          "version": "^16.8.0",
+        },
+      ],
+      "description": "cache resilience tests",
+      "devDependencies": Array [
+        Object {
+          "name": "babel-plugin-dynamic-import-node-sync",
+          "version": "^2.0.1",
+        },
+        Object {
+          "name": "jest",
+          "version": "^24.0.0",
+        },
+        Object {
+          "name": "jest-cli",
+          "version": "^24.0.0",
+        },
+        Object {
+          "name": "joi",
+          "version": "^14.3.1",
+        },
+        Object {
+          "name": "node-fetch",
+          "version": "^2.6.0",
+        },
+      ],
+      "license": "MIT",
+      "name": "cache-resilience-tests",
+      "optionalDependecies": Array [],
+      "peerDependencies": Array [],
+    },
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience",
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience",
+    "ssrAPIs": Array [],
+  },
+  "0e693aa4-31a8-55c5-8fd7-02832e1aff3f" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "0e693aa4-31a8-55c5-8fd7-02832e1aff3f",
+    "internal": Object {
+      "counter": 25,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "packageJson": Object {
+      "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+      "bundledDependecies": Array [],
+      "dependencies": Array [
+        Object {
+          "name": "@babel/runtime",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "bluebird",
+          "version": "^3.7.1",
+        },
+        Object {
+          "name": "fs-exists-cached",
+          "version": "^1.0.0",
+        },
+        Object {
+          "name": "gatsby-page-utils",
+          "version": "^0.0.31",
+        },
+        Object {
+          "name": "glob",
+          "version": "^7.1.6",
+        },
+        Object {
+          "name": "lodash",
+          "version": "^4.17.15",
+        },
+        Object {
+          "name": "micromatch",
+          "version": "^3.1.10",
+        },
+      ],
+      "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
+      "devDependencies": Array [
+        Object {
+          "name": "@babel/cli",
+          "version": "^7.7.0",
+        },
+        Object {
+          "name": "@babel/core",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "babel-preset-gatsby-package",
+          "version": "^0.2.11",
+        },
+        Object {
+          "name": "cross-env",
+          "version": "^5.2.1",
+        },
+      ],
+      "keywords": Array [
+        "gatsby",
+        "gatsby-plugin",
+      ],
+      "license": "MIT",
+      "main": "index.js",
+      "name": "gatsby-plugin-page-creator",
+      "optionalDependecies": Array [],
+      "peerDependencies": Array [
+        Object {
+          "name": "gatsby",
+          "version": "^2.0.0",
+        },
+      ],
+      "version": "2.1.31",
+    },
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
   "Site" => Object {
@@ -1896,7 +3154,7 @@ Map {
     "host": undefined,
     "id": "Site",
     "internal": Object {
-      "counter": 16,
+      "counter": 26,
       "owner": "internal-data-bridge",
       "type": "Site",
     },
@@ -1906,17 +3164,41 @@ Map {
     "port": undefined,
     "siteMetadata": Object {},
   },
+  "STABLE_NODE_1" => Object {
+    "children": Array [],
+    "foo": "bar",
+    "id": "STABLE_NODE_1",
+    "internal": Object {
+      "contentDigest": "0",
+      "counter": 27,
+      "owner": "gatsby-plugin-stable",
+      "type": "IndependentStable",
+    },
+    "parent": null,
+  },
+  "parent_childChange" => Object {
+    "children": Array [],
+    "foo": "run-1",
+    "id": "parent_childChange",
+    "internal": Object {
+      "contentDigest": "265623643e8806ecc810413fcf1ccefa",
+      "counter": 31,
+      "owner": "gatsby-source-child-change",
+      "type": "Parent_ChildChange",
+    },
+    "parent": null,
+  },
   "SitePage /" => Object {
     "children": Array [],
-    "component": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/src/pages/index.js",
+    "component": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/src/pages/index.js",
     "componentChunkName": "component---src-pages-index-js",
-    "componentPath": "/Users/sidharthachatterjee/Code/gatsby/integration-tests/cache-resilience/src/pages/index.js",
+    "componentPath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/src/pages/index.js",
     "context": Object {},
     "id": "SitePage /",
     "internal": Object {
-      "contentDigest": "ea67288d2271ffd56ee868f599d81187",
-      "counter": 18,
-      "description": "437b6151-504d-51ee-b0bc-3447e87f9856",
+      "contentDigest": "c5fa7d67d7b6095c8133348eb329bd52",
+      "counter": 33,
+      "description": "c9535749-a52b-5c49-8671-11a311b98993",
       "owner": "internal-data-bridge",
       "type": "SitePage",
     },
@@ -1925,8 +3207,1641 @@ Map {
     "matchPath": undefined,
     "parent": null,
     "path": "/",
-    "pluginCreatorId": "437b6151-504d-51ee-b0bc-3447e87f9856",
-    "pluginCreator___NODE": "437b6151-504d-51ee-b0bc-3447e87f9856",
+    "pluginCreatorId": "c9535749-a52b-5c49-8671-11a311b98993",
+    "pluginCreator___NODE": "c9535749-a52b-5c49-8671-11a311b98993",
+  },
+}
+`;
+
+exports[`Cache Redux Nodes sanity checks 3`] = `
+Map {
+  "SitePage /dev-404-page/" => Object {
+    "children": Array [],
+    "id": "SitePage /dev-404-page/",
+    "internal": Object {
+      "contentDigest": "f91d29e10ba680b413138cf9ed86e655",
+      "counter": 1,
+      "owner": "internal-data-bridge",
+      "type": "SitePage",
+    },
+    "parent": null,
+    "path": "/dev-404-page/",
+  },
+  "d48d1c52-fe48-53cb-8f08-aa4b47dde5a5" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "d48d1c52-fe48-53cb-8f08-aa4b47dde5a5",
+    "internal": Object {
+      "counter": 2,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "dev-404-page",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "packageJson": Object {
+      "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+      "bundledDependecies": Array [],
+      "dependencies": Array [],
+      "description": "Internal plugin to add a 404 page in development with helpful information",
+      "devDependencies": Array [],
+      "license": "MIT",
+      "main": "index.js",
+      "name": "dev-404-page",
+      "optionalDependecies": Array [],
+      "peerDependencies": Array [],
+      "version": "1.0.0",
+    },
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/dev-404-page",
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/dev-404-page",
+    "ssrAPIs": Array [],
+  },
+  "1fc32581-893a-55e8-8927-bcd667e2b700" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "1fc32581-893a-55e8-8927-bcd667e2b700",
+    "internal": Object {
+      "counter": 3,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "load-babel-config",
+    "nodeAPIs": Array [
+      "onPreBootstrap",
+    ],
+    "packageJson": Object {
+      "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+      "bundledDependecies": Array [],
+      "dependencies": Array [],
+      "description": "Internal plugin that handles loading Babel configs",
+      "devDependencies": Array [],
+      "license": "MIT",
+      "main": "index.js",
+      "name": "load-babel-config",
+      "optionalDependecies": Array [],
+      "peerDependencies": Array [],
+      "version": "1.0.0",
+    },
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/load-babel-config",
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/load-babel-config",
+    "ssrAPIs": Array [],
+  },
+  "a5079d69-ba80-53dc-82f9-0f440bd5448c" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "a5079d69-ba80-53dc-82f9-0f440bd5448c",
+    "internal": Object {
+      "counter": 4,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "internal-data-bridge",
+    "nodeAPIs": Array [
+      "sourceNodes",
+      "onCreatePage",
+    ],
+    "packageJson": Object {
+      "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+      "bundledDependecies": Array [],
+      "dependencies": Array [],
+      "description": "An internal Gatsby plugin which creates data nodes from internal data",
+      "devDependencies": Array [],
+      "license": "MIT",
+      "main": "index.js",
+      "name": "internal-data-bridge",
+      "optionalDependecies": Array [],
+      "peerDependencies": Array [],
+      "version": "1.0.0",
+    },
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/internal-data-bridge",
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/internal-data-bridge",
+    "ssrAPIs": Array [],
+  },
+  "f795702c-a3b8-5a88-88ee-5d06019d44fa" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "f795702c-a3b8-5a88-88ee-5d06019d44fa",
+    "internal": Object {
+      "counter": 5,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "prod-404",
+    "nodeAPIs": Array [
+      "onCreatePage",
+    ],
+    "packageJson": Object {
+      "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+      "bundledDependecies": Array [],
+      "dependencies": Array [],
+      "description": "Internal plugin to detect various flavors of 404 pages and ensure there's a 404.html path created as well to ensure compatibility with static hosts",
+      "devDependencies": Array [],
+      "license": "MIT",
+      "main": "index.js",
+      "name": "prod-404",
+      "optionalDependecies": Array [],
+      "peerDependencies": Array [],
+      "version": "1.0.0",
+    },
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/prod-404",
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/prod-404",
+    "ssrAPIs": Array [],
+  },
+  "6f4b2fa9-66b5-5205-a03f-140005a2cfe5" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "6f4b2fa9-66b5-5205-a03f-140005a2cfe5",
+    "internal": Object {
+      "counter": 6,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "webpack-theme-component-shadowing",
+    "nodeAPIs": Array [
+      "onCreateWebpackConfig",
+    ],
+    "packageJson": Object {
+      "author": "Chris Biscardi <chris@christopherbiscardi.com>",
+      "bundledDependecies": Array [],
+      "dependencies": Array [],
+      "description": "An internal Gatsby plugin which handles configuring webpack to ensure theme components fall back from the user's site to theme modules.",
+      "devDependencies": Array [],
+      "license": "MIT",
+      "main": "index.js",
+      "name": "webpack-theme-component-shadowing",
+      "optionalDependecies": Array [],
+      "peerDependencies": Array [],
+      "version": "1.0.0",
+    },
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/webpack-theme-component-shadowing",
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/webpack-theme-component-shadowing",
+    "ssrAPIs": Array [],
+  },
+  "3eaaf673-5a13-5784-894a-47b357425e05" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "3eaaf673-5a13-5784-894a-47b357425e05",
+    "internal": Object {
+      "counter": 7,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-stable",
+    "nodeAPIs": Array [
+      "sourceNodes",
+    ],
+    "packageJson": Object {
+      "bundledDependecies": Array [],
+      "dependencies": Array [],
+      "devDependencies": Array [],
+      "optionalDependecies": Array [],
+      "peerDependencies": Array [],
+    },
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-plugin-stable",
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-plugin-stable",
+    "ssrAPIs": Array [],
+  },
+  "dc1f3dc9-7d73-533d-a090-787d5281f836" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "dc1f3dc9-7d73-533d-a090-787d5281f836",
+    "internal": Object {
+      "counter": 8,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-independent-node",
+    "nodeAPIs": Array [
+      "sourceNodes",
+    ],
+    "packageJson": Object {
+      "bundledDependecies": Array [],
+      "dependencies": Array [],
+      "devDependencies": Array [],
+      "optionalDependecies": Array [],
+      "peerDependencies": Array [],
+    },
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-plugin-independent-node",
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-plugin-independent-node",
+    "ssrAPIs": Array [],
+  },
+  "5b30a597-1b08-5eb5-b475-340a5c87ad06" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "5b30a597-1b08-5eb5-b475-340a5c87ad06",
+    "internal": Object {
+      "counter": 9,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-source-parent-change",
+    "nodeAPIs": Array [
+      "sourceNodes",
+    ],
+    "packageJson": Object {
+      "bundledDependecies": Array [],
+      "dependencies": Array [],
+      "devDependencies": Array [],
+      "optionalDependecies": Array [],
+      "peerDependencies": Array [],
+    },
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-parent-change",
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-parent-change",
+    "ssrAPIs": Array [],
+  },
+  "684f3e1c-cb9e-5123-87b1-609e60d5fa87" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "684f3e1c-cb9e-5123-87b1-609e60d5fa87",
+    "internal": Object {
+      "counter": 10,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-transformer-parent-change",
+    "nodeAPIs": Array [
+      "onCreateNode",
+    ],
+    "packageJson": Object {
+      "bundledDependecies": Array [],
+      "dependencies": Array [],
+      "devDependencies": Array [],
+      "optionalDependecies": Array [],
+      "peerDependencies": Array [],
+    },
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-transformer-parent-change",
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-transformer-parent-change",
+    "ssrAPIs": Array [],
+  },
+  "aabee054-3c12-5ff1-a6e2-f8de945501ef" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "aabee054-3c12-5ff1-a6e2-f8de945501ef",
+    "internal": Object {
+      "counter": 11,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-source-child-change",
+    "nodeAPIs": Array [
+      "sourceNodes",
+    ],
+    "packageJson": Object {
+      "bundledDependecies": Array [],
+      "dependencies": Array [],
+      "devDependencies": Array [],
+      "optionalDependecies": Array [],
+      "peerDependencies": Array [],
+    },
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-child-change",
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-child-change",
+    "ssrAPIs": Array [],
+  },
+  "2bf51669-f85f-59be-94db-6056fd4b04a3" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "2bf51669-f85f-59be-94db-6056fd4b04a3",
+    "internal": Object {
+      "counter": 12,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-transformer-child-change",
+    "nodeAPIs": Array [
+      "onCreateNode",
+    ],
+    "packageJson": Object {
+      "bundledDependecies": Array [],
+      "dependencies": Array [],
+      "devDependencies": Array [],
+      "optionalDependecies": Array [],
+      "peerDependencies": Array [],
+    },
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-transformer-child-change",
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-transformer-child-change",
+    "ssrAPIs": Array [],
+  },
+  "c9535749-a52b-5c49-8671-11a311b98993" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "c9535749-a52b-5c49-8671-11a311b98993",
+    "internal": Object {
+      "counter": 13,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "packageJson": Object {
+      "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+      "bundledDependecies": Array [],
+      "dependencies": Array [
+        Object {
+          "name": "@babel/runtime",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "bluebird",
+          "version": "^3.7.1",
+        },
+        Object {
+          "name": "fs-exists-cached",
+          "version": "^1.0.0",
+        },
+        Object {
+          "name": "gatsby-page-utils",
+          "version": "^0.0.31",
+        },
+        Object {
+          "name": "glob",
+          "version": "^7.1.6",
+        },
+        Object {
+          "name": "lodash",
+          "version": "^4.17.15",
+        },
+        Object {
+          "name": "micromatch",
+          "version": "^3.1.10",
+        },
+      ],
+      "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
+      "devDependencies": Array [
+        Object {
+          "name": "@babel/cli",
+          "version": "^7.7.0",
+        },
+        Object {
+          "name": "@babel/core",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "babel-preset-gatsby-package",
+          "version": "^0.2.11",
+        },
+        Object {
+          "name": "cross-env",
+          "version": "^5.2.1",
+        },
+      ],
+      "keywords": Array [
+        "gatsby",
+        "gatsby-plugin",
+      ],
+      "license": "MIT",
+      "main": "index.js",
+      "name": "gatsby-plugin-page-creator",
+      "optionalDependecies": Array [],
+      "peerDependencies": Array [
+        Object {
+          "name": "gatsby",
+          "version": "^2.0.0",
+        },
+      ],
+      "version": "2.1.31",
+    },
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/dev-404-page/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
+  "aed25515-e1f7-5760-8f34-6461454230de" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "aed25515-e1f7-5760-8f34-6461454230de",
+    "internal": Object {
+      "counter": 14,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "packageJson": Object {
+      "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+      "bundledDependecies": Array [],
+      "dependencies": Array [
+        Object {
+          "name": "@babel/runtime",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "bluebird",
+          "version": "^3.7.1",
+        },
+        Object {
+          "name": "fs-exists-cached",
+          "version": "^1.0.0",
+        },
+        Object {
+          "name": "gatsby-page-utils",
+          "version": "^0.0.31",
+        },
+        Object {
+          "name": "glob",
+          "version": "^7.1.6",
+        },
+        Object {
+          "name": "lodash",
+          "version": "^4.17.15",
+        },
+        Object {
+          "name": "micromatch",
+          "version": "^3.1.10",
+        },
+      ],
+      "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
+      "devDependencies": Array [
+        Object {
+          "name": "@babel/cli",
+          "version": "^7.7.0",
+        },
+        Object {
+          "name": "@babel/core",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "babel-preset-gatsby-package",
+          "version": "^0.2.11",
+        },
+        Object {
+          "name": "cross-env",
+          "version": "^5.2.1",
+        },
+      ],
+      "keywords": Array [
+        "gatsby",
+        "gatsby-plugin",
+      ],
+      "license": "MIT",
+      "main": "index.js",
+      "name": "gatsby-plugin-page-creator",
+      "optionalDependecies": Array [],
+      "peerDependencies": Array [
+        Object {
+          "name": "gatsby",
+          "version": "^2.0.0",
+        },
+      ],
+      "version": "2.1.31",
+    },
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/load-babel-config/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
+  "7775d111-885f-58c6-aa94-47ad7d6d5408" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "7775d111-885f-58c6-aa94-47ad7d6d5408",
+    "internal": Object {
+      "counter": 15,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "packageJson": Object {
+      "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+      "bundledDependecies": Array [],
+      "dependencies": Array [
+        Object {
+          "name": "@babel/runtime",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "bluebird",
+          "version": "^3.7.1",
+        },
+        Object {
+          "name": "fs-exists-cached",
+          "version": "^1.0.0",
+        },
+        Object {
+          "name": "gatsby-page-utils",
+          "version": "^0.0.31",
+        },
+        Object {
+          "name": "glob",
+          "version": "^7.1.6",
+        },
+        Object {
+          "name": "lodash",
+          "version": "^4.17.15",
+        },
+        Object {
+          "name": "micromatch",
+          "version": "^3.1.10",
+        },
+      ],
+      "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
+      "devDependencies": Array [
+        Object {
+          "name": "@babel/cli",
+          "version": "^7.7.0",
+        },
+        Object {
+          "name": "@babel/core",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "babel-preset-gatsby-package",
+          "version": "^0.2.11",
+        },
+        Object {
+          "name": "cross-env",
+          "version": "^5.2.1",
+        },
+      ],
+      "keywords": Array [
+        "gatsby",
+        "gatsby-plugin",
+      ],
+      "license": "MIT",
+      "main": "index.js",
+      "name": "gatsby-plugin-page-creator",
+      "optionalDependecies": Array [],
+      "peerDependencies": Array [
+        Object {
+          "name": "gatsby",
+          "version": "^2.0.0",
+        },
+      ],
+      "version": "2.1.31",
+    },
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/internal-data-bridge/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
+  "e419ee70-6845-577a-9caf-98198596750c" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "e419ee70-6845-577a-9caf-98198596750c",
+    "internal": Object {
+      "counter": 16,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "packageJson": Object {
+      "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+      "bundledDependecies": Array [],
+      "dependencies": Array [
+        Object {
+          "name": "@babel/runtime",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "bluebird",
+          "version": "^3.7.1",
+        },
+        Object {
+          "name": "fs-exists-cached",
+          "version": "^1.0.0",
+        },
+        Object {
+          "name": "gatsby-page-utils",
+          "version": "^0.0.31",
+        },
+        Object {
+          "name": "glob",
+          "version": "^7.1.6",
+        },
+        Object {
+          "name": "lodash",
+          "version": "^4.17.15",
+        },
+        Object {
+          "name": "micromatch",
+          "version": "^3.1.10",
+        },
+      ],
+      "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
+      "devDependencies": Array [
+        Object {
+          "name": "@babel/cli",
+          "version": "^7.7.0",
+        },
+        Object {
+          "name": "@babel/core",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "babel-preset-gatsby-package",
+          "version": "^0.2.11",
+        },
+        Object {
+          "name": "cross-env",
+          "version": "^5.2.1",
+        },
+      ],
+      "keywords": Array [
+        "gatsby",
+        "gatsby-plugin",
+      ],
+      "license": "MIT",
+      "main": "index.js",
+      "name": "gatsby-plugin-page-creator",
+      "optionalDependecies": Array [],
+      "peerDependencies": Array [
+        Object {
+          "name": "gatsby",
+          "version": "^2.0.0",
+        },
+      ],
+      "version": "2.1.31",
+    },
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/prod-404/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
+  "b0cf71bb-65db-5a23-b472-51114a941295" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "b0cf71bb-65db-5a23-b472-51114a941295",
+    "internal": Object {
+      "counter": 17,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "packageJson": Object {
+      "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+      "bundledDependecies": Array [],
+      "dependencies": Array [
+        Object {
+          "name": "@babel/runtime",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "bluebird",
+          "version": "^3.7.1",
+        },
+        Object {
+          "name": "fs-exists-cached",
+          "version": "^1.0.0",
+        },
+        Object {
+          "name": "gatsby-page-utils",
+          "version": "^0.0.31",
+        },
+        Object {
+          "name": "glob",
+          "version": "^7.1.6",
+        },
+        Object {
+          "name": "lodash",
+          "version": "^4.17.15",
+        },
+        Object {
+          "name": "micromatch",
+          "version": "^3.1.10",
+        },
+      ],
+      "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
+      "devDependencies": Array [
+        Object {
+          "name": "@babel/cli",
+          "version": "^7.7.0",
+        },
+        Object {
+          "name": "@babel/core",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "babel-preset-gatsby-package",
+          "version": "^0.2.11",
+        },
+        Object {
+          "name": "cross-env",
+          "version": "^5.2.1",
+        },
+      ],
+      "keywords": Array [
+        "gatsby",
+        "gatsby-plugin",
+      ],
+      "license": "MIT",
+      "main": "index.js",
+      "name": "gatsby-plugin-page-creator",
+      "optionalDependecies": Array [],
+      "peerDependencies": Array [
+        Object {
+          "name": "gatsby",
+          "version": "^2.0.0",
+        },
+      ],
+      "version": "2.1.31",
+    },
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby/dist/internal-plugins/webpack-theme-component-shadowing/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
+  "0b5d5612-63e0-5fc9-881c-02623175bd8a" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "0b5d5612-63e0-5fc9-881c-02623175bd8a",
+    "internal": Object {
+      "counter": 18,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "packageJson": Object {
+      "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+      "bundledDependecies": Array [],
+      "dependencies": Array [
+        Object {
+          "name": "@babel/runtime",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "bluebird",
+          "version": "^3.7.1",
+        },
+        Object {
+          "name": "fs-exists-cached",
+          "version": "^1.0.0",
+        },
+        Object {
+          "name": "gatsby-page-utils",
+          "version": "^0.0.31",
+        },
+        Object {
+          "name": "glob",
+          "version": "^7.1.6",
+        },
+        Object {
+          "name": "lodash",
+          "version": "^4.17.15",
+        },
+        Object {
+          "name": "micromatch",
+          "version": "^3.1.10",
+        },
+      ],
+      "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
+      "devDependencies": Array [
+        Object {
+          "name": "@babel/cli",
+          "version": "^7.7.0",
+        },
+        Object {
+          "name": "@babel/core",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "babel-preset-gatsby-package",
+          "version": "^0.2.11",
+        },
+        Object {
+          "name": "cross-env",
+          "version": "^5.2.1",
+        },
+      ],
+      "keywords": Array [
+        "gatsby",
+        "gatsby-plugin",
+      ],
+      "license": "MIT",
+      "main": "index.js",
+      "name": "gatsby-plugin-page-creator",
+      "optionalDependecies": Array [],
+      "peerDependencies": Array [
+        Object {
+          "name": "gatsby",
+          "version": "^2.0.0",
+        },
+      ],
+      "version": "2.1.31",
+    },
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-plugin-stable/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
+  "d35f263a-d648-5dac-a47f-79af5021d792" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "d35f263a-d648-5dac-a47f-79af5021d792",
+    "internal": Object {
+      "counter": 19,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "packageJson": Object {
+      "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+      "bundledDependecies": Array [],
+      "dependencies": Array [
+        Object {
+          "name": "@babel/runtime",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "bluebird",
+          "version": "^3.7.1",
+        },
+        Object {
+          "name": "fs-exists-cached",
+          "version": "^1.0.0",
+        },
+        Object {
+          "name": "gatsby-page-utils",
+          "version": "^0.0.31",
+        },
+        Object {
+          "name": "glob",
+          "version": "^7.1.6",
+        },
+        Object {
+          "name": "lodash",
+          "version": "^4.17.15",
+        },
+        Object {
+          "name": "micromatch",
+          "version": "^3.1.10",
+        },
+      ],
+      "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
+      "devDependencies": Array [
+        Object {
+          "name": "@babel/cli",
+          "version": "^7.7.0",
+        },
+        Object {
+          "name": "@babel/core",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "babel-preset-gatsby-package",
+          "version": "^0.2.11",
+        },
+        Object {
+          "name": "cross-env",
+          "version": "^5.2.1",
+        },
+      ],
+      "keywords": Array [
+        "gatsby",
+        "gatsby-plugin",
+      ],
+      "license": "MIT",
+      "main": "index.js",
+      "name": "gatsby-plugin-page-creator",
+      "optionalDependecies": Array [],
+      "peerDependencies": Array [
+        Object {
+          "name": "gatsby",
+          "version": "^2.0.0",
+        },
+      ],
+      "version": "2.1.31",
+    },
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-plugin-independent-node/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
+  "c144a03e-fb15-59b6-a2b2-f6fea8872008" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "c144a03e-fb15-59b6-a2b2-f6fea8872008",
+    "internal": Object {
+      "counter": 20,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "packageJson": Object {
+      "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+      "bundledDependecies": Array [],
+      "dependencies": Array [
+        Object {
+          "name": "@babel/runtime",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "bluebird",
+          "version": "^3.7.1",
+        },
+        Object {
+          "name": "fs-exists-cached",
+          "version": "^1.0.0",
+        },
+        Object {
+          "name": "gatsby-page-utils",
+          "version": "^0.0.31",
+        },
+        Object {
+          "name": "glob",
+          "version": "^7.1.6",
+        },
+        Object {
+          "name": "lodash",
+          "version": "^4.17.15",
+        },
+        Object {
+          "name": "micromatch",
+          "version": "^3.1.10",
+        },
+      ],
+      "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
+      "devDependencies": Array [
+        Object {
+          "name": "@babel/cli",
+          "version": "^7.7.0",
+        },
+        Object {
+          "name": "@babel/core",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "babel-preset-gatsby-package",
+          "version": "^0.2.11",
+        },
+        Object {
+          "name": "cross-env",
+          "version": "^5.2.1",
+        },
+      ],
+      "keywords": Array [
+        "gatsby",
+        "gatsby-plugin",
+      ],
+      "license": "MIT",
+      "main": "index.js",
+      "name": "gatsby-plugin-page-creator",
+      "optionalDependecies": Array [],
+      "peerDependencies": Array [
+        Object {
+          "name": "gatsby",
+          "version": "^2.0.0",
+        },
+      ],
+      "version": "2.1.31",
+    },
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-parent-change/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
+  "ce2a4ef1-edef-51e3-8cb9-ae2bb5c87d1b" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "ce2a4ef1-edef-51e3-8cb9-ae2bb5c87d1b",
+    "internal": Object {
+      "counter": 21,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "packageJson": Object {
+      "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+      "bundledDependecies": Array [],
+      "dependencies": Array [
+        Object {
+          "name": "@babel/runtime",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "bluebird",
+          "version": "^3.7.1",
+        },
+        Object {
+          "name": "fs-exists-cached",
+          "version": "^1.0.0",
+        },
+        Object {
+          "name": "gatsby-page-utils",
+          "version": "^0.0.31",
+        },
+        Object {
+          "name": "glob",
+          "version": "^7.1.6",
+        },
+        Object {
+          "name": "lodash",
+          "version": "^4.17.15",
+        },
+        Object {
+          "name": "micromatch",
+          "version": "^3.1.10",
+        },
+      ],
+      "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
+      "devDependencies": Array [
+        Object {
+          "name": "@babel/cli",
+          "version": "^7.7.0",
+        },
+        Object {
+          "name": "@babel/core",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "babel-preset-gatsby-package",
+          "version": "^0.2.11",
+        },
+        Object {
+          "name": "cross-env",
+          "version": "^5.2.1",
+        },
+      ],
+      "keywords": Array [
+        "gatsby",
+        "gatsby-plugin",
+      ],
+      "license": "MIT",
+      "main": "index.js",
+      "name": "gatsby-plugin-page-creator",
+      "optionalDependecies": Array [],
+      "peerDependencies": Array [
+        Object {
+          "name": "gatsby",
+          "version": "^2.0.0",
+        },
+      ],
+      "version": "2.1.31",
+    },
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-transformer-parent-change/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
+  "bb099152-8599-57dc-9a81-2f13ca83a8be" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "bb099152-8599-57dc-9a81-2f13ca83a8be",
+    "internal": Object {
+      "counter": 22,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "packageJson": Object {
+      "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+      "bundledDependecies": Array [],
+      "dependencies": Array [
+        Object {
+          "name": "@babel/runtime",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "bluebird",
+          "version": "^3.7.1",
+        },
+        Object {
+          "name": "fs-exists-cached",
+          "version": "^1.0.0",
+        },
+        Object {
+          "name": "gatsby-page-utils",
+          "version": "^0.0.31",
+        },
+        Object {
+          "name": "glob",
+          "version": "^7.1.6",
+        },
+        Object {
+          "name": "lodash",
+          "version": "^4.17.15",
+        },
+        Object {
+          "name": "micromatch",
+          "version": "^3.1.10",
+        },
+      ],
+      "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
+      "devDependencies": Array [
+        Object {
+          "name": "@babel/cli",
+          "version": "^7.7.0",
+        },
+        Object {
+          "name": "@babel/core",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "babel-preset-gatsby-package",
+          "version": "^0.2.11",
+        },
+        Object {
+          "name": "cross-env",
+          "version": "^5.2.1",
+        },
+      ],
+      "keywords": Array [
+        "gatsby",
+        "gatsby-plugin",
+      ],
+      "license": "MIT",
+      "main": "index.js",
+      "name": "gatsby-plugin-page-creator",
+      "optionalDependecies": Array [],
+      "peerDependencies": Array [
+        Object {
+          "name": "gatsby",
+          "version": "^2.0.0",
+        },
+      ],
+      "version": "2.1.31",
+    },
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-child-change/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
+  "7e0c6e91-4f9e-517b-aa9d-8349cc0a5e2a" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "7e0c6e91-4f9e-517b-aa9d-8349cc0a5e2a",
+    "internal": Object {
+      "counter": 23,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "packageJson": Object {
+      "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+      "bundledDependecies": Array [],
+      "dependencies": Array [
+        Object {
+          "name": "@babel/runtime",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "bluebird",
+          "version": "^3.7.1",
+        },
+        Object {
+          "name": "fs-exists-cached",
+          "version": "^1.0.0",
+        },
+        Object {
+          "name": "gatsby-page-utils",
+          "version": "^0.0.31",
+        },
+        Object {
+          "name": "glob",
+          "version": "^7.1.6",
+        },
+        Object {
+          "name": "lodash",
+          "version": "^4.17.15",
+        },
+        Object {
+          "name": "micromatch",
+          "version": "^3.1.10",
+        },
+      ],
+      "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
+      "devDependencies": Array [
+        Object {
+          "name": "@babel/cli",
+          "version": "^7.7.0",
+        },
+        Object {
+          "name": "@babel/core",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "babel-preset-gatsby-package",
+          "version": "^0.2.11",
+        },
+        Object {
+          "name": "cross-env",
+          "version": "^5.2.1",
+        },
+      ],
+      "keywords": Array [
+        "gatsby",
+        "gatsby-plugin",
+      ],
+      "license": "MIT",
+      "main": "index.js",
+      "name": "gatsby-plugin-page-creator",
+      "optionalDependecies": Array [],
+      "peerDependencies": Array [
+        Object {
+          "name": "gatsby",
+          "version": "^2.0.0",
+        },
+      ],
+      "version": "2.1.31",
+    },
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-transformer-child-change/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
+  "7374ebf2-d961-52ee-92a2-c25e7cb387a9" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "7374ebf2-d961-52ee-92a2-c25e7cb387a9",
+    "internal": Object {
+      "counter": 24,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "default-site-plugin",
+    "nodeAPIs": Array [
+      "onPreBootstrap",
+      "onPostBootstrap",
+      "onCreateNode",
+    ],
+    "packageJson": Object {
+      "bundledDependecies": Array [],
+      "dependencies": Array [
+        Object {
+          "name": "gatsby",
+          "version": "^2.16.0",
+        },
+        Object {
+          "name": "gray-percentage",
+          "version": "^2.0.0",
+        },
+        Object {
+          "name": "react",
+          "version": "^16.8.0",
+        },
+        Object {
+          "name": "react-dom",
+          "version": "^16.8.0",
+        },
+      ],
+      "description": "cache resilience tests",
+      "devDependencies": Array [
+        Object {
+          "name": "babel-plugin-dynamic-import-node-sync",
+          "version": "^2.0.1",
+        },
+        Object {
+          "name": "jest",
+          "version": "^24.0.0",
+        },
+        Object {
+          "name": "jest-cli",
+          "version": "^24.0.0",
+        },
+        Object {
+          "name": "joi",
+          "version": "^14.3.1",
+        },
+        Object {
+          "name": "node-fetch",
+          "version": "^2.6.0",
+        },
+      ],
+      "license": "MIT",
+      "name": "cache-resilience-tests",
+      "optionalDependecies": Array [],
+      "peerDependencies": Array [],
+    },
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience",
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience",
+    "ssrAPIs": Array [],
+  },
+  "0e693aa4-31a8-55c5-8fd7-02832e1aff3f" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "0e693aa4-31a8-55c5-8fd7-02832e1aff3f",
+    "internal": Object {
+      "counter": 25,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "packageJson": Object {
+      "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+      "bundledDependecies": Array [],
+      "dependencies": Array [
+        Object {
+          "name": "@babel/runtime",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "bluebird",
+          "version": "^3.7.1",
+        },
+        Object {
+          "name": "fs-exists-cached",
+          "version": "^1.0.0",
+        },
+        Object {
+          "name": "gatsby-page-utils",
+          "version": "^0.0.31",
+        },
+        Object {
+          "name": "glob",
+          "version": "^7.1.6",
+        },
+        Object {
+          "name": "lodash",
+          "version": "^4.17.15",
+        },
+        Object {
+          "name": "micromatch",
+          "version": "^3.1.10",
+        },
+      ],
+      "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
+      "devDependencies": Array [
+        Object {
+          "name": "@babel/cli",
+          "version": "^7.7.0",
+        },
+        Object {
+          "name": "@babel/core",
+          "version": "^7.7.2",
+        },
+        Object {
+          "name": "babel-preset-gatsby-package",
+          "version": "^0.2.11",
+        },
+        Object {
+          "name": "cross-env",
+          "version": "^5.2.1",
+        },
+      ],
+      "keywords": Array [
+        "gatsby",
+        "gatsby-plugin",
+      ],
+      "license": "MIT",
+      "main": "index.js",
+      "name": "gatsby-plugin-page-creator",
+      "optionalDependecies": Array [],
+      "peerDependencies": Array [
+        Object {
+          "name": "gatsby",
+          "version": "^2.0.0",
+        },
+      ],
+      "version": "2.1.31",
+    },
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
+  "Site" => Object {
+    "children": Array [],
+    "host": undefined,
+    "id": "Site",
+    "internal": Object {
+      "counter": 26,
+      "owner": "internal-data-bridge",
+      "type": "Site",
+    },
+    "parent": null,
+    "pathPrefix": "",
+    "polyfill": true,
+    "port": undefined,
+    "siteMetadata": Object {},
+  },
+  "STABLE_NODE_1" => Object {
+    "children": Array [],
+    "foo": "bar",
+    "id": "STABLE_NODE_1",
+    "internal": Object {
+      "contentDigest": "0",
+      "counter": 27,
+      "owner": "gatsby-plugin-stable",
+      "type": "IndependentStable",
+    },
+    "parent": null,
+  },
+  "parent_childChange" => Object {
+    "children": Array [
+      "358f53bc-3eef-5881-a226-042304a159e3",
+    ],
+    "foo": "run-1",
+    "id": "parent_childChange",
+    "internal": Object {
+      "contentDigest": "265623643e8806ecc810413fcf1ccefa",
+      "counter": 31,
+      "owner": "gatsby-source-child-change",
+      "type": "Parent_ChildChange",
+    },
+    "parent": null,
+  },
+  "INDEPENDENT_NODE_1" => Object {
+    "children": Array [],
+    "foo": "baz",
+    "id": "INDEPENDENT_NODE_1",
+    "internal": Object {
+      "contentDigest": "0",
+      "counter": 28,
+      "owner": "gatsby-plugin-independent-node",
+      "type": "IndependentChanging",
+    },
+    "parent": null,
+  },
+  "parent_parentChange" => Object {
+    "bar": "run-2",
+    "children": Array [
+      "4886e795-4b87-5964-b308-112031bdaf88",
+    ],
+    "id": "parent_parentChange",
+    "internal": Object {
+      "contentDigest": "5d9d1ac97e627eff9946d1473a70bb19",
+      "counter": 29,
+      "owner": "gatsby-source-parent-change",
+      "type": "Parent_ParentChange",
+    },
+    "parent": null,
+  },
+  "4886e795-4b87-5964-b308-112031bdaf88" => Object {
+    "bar": "run-2",
+    "children": Array [],
+    "foo": undefined,
+    "id": "4886e795-4b87-5964-b308-112031bdaf88",
+    "internal": Object {
+      "contentDigest": "51f401f9d5b7fb4fd7c93dc1d0a30ae7",
+      "counter": 30,
+      "owner": "gatsby-transformer-parent-change",
+      "type": "ChildOfParent_ParentChange",
+    },
+    "parent": "parent_parentChange",
+  },
+  "358f53bc-3eef-5881-a226-042304a159e3" => Object {
+    "children": Array [],
+    "foo": "baz",
+    "id": "358f53bc-3eef-5881-a226-042304a159e3",
+    "internal": Object {
+      "contentDigest": "3f488c5264ccc0164818775b3ad38e52",
+      "counter": 32,
+      "owner": "gatsby-transformer-child-change",
+      "type": "ChildOfParent_ChildChange",
+    },
+    "parent": "parent_childChange",
+  },
+  "SitePage /" => Object {
+    "children": Array [],
+    "component": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/src/pages/index.js",
+    "componentChunkName": "component---src-pages-index-js",
+    "componentPath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/src/pages/index.js",
+    "context": Object {},
+    "id": "SitePage /",
+    "internal": Object {
+      "contentDigest": "c5fa7d67d7b6095c8133348eb329bd52",
+      "counter": 33,
+      "description": "c9535749-a52b-5c49-8671-11a311b98993",
+      "owner": "internal-data-bridge",
+      "type": "SitePage",
+    },
+    "internalComponentName": "ComponentIndex",
+    "isCreatedByStatefulCreatePages": true,
+    "matchPath": undefined,
+    "parent": null,
+    "path": "/",
+    "pluginCreatorId": "c9535749-a52b-5c49-8671-11a311b98993",
+    "pluginCreator___NODE": "c9535749-a52b-5c49-8671-11a311b98993",
   },
 }
 `;
