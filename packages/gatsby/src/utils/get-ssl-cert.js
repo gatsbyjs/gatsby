@@ -52,8 +52,8 @@ module.exports = async ({ name, certFile, keyFile, caFile, directory }) => {
     }
     const getDevCert = require(`devcert`).certificateFor
     const { caPath, key, cert } = await getDevCert(name, {
-      returnCa: true,
-      installCertutil: true,
+      getCaPath: true,
+      skipCertutilInstall: true,
       ui: {
         getWindowsEncryptionPassword: async () => {
           report.info(
