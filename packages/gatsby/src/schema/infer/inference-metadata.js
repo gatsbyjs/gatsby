@@ -166,12 +166,13 @@ const _updateValueDescriptor = (
   // Keeping track of the first node for this type. Only used for better conflict reporting.
   // (see Caveats section in the header comments)
   if (operation === `add`) {
-    typeInfo.first = typeInfo.first || nodeId
+    if (!typeInfo.first) {
+      typeInfo.first = nodeId
+    }
   } else if (operation === `del`) {
-    typeInfo.first =
-      typeInfo.first === nodeId || typeInfo.total === 0
-        ? undefined
-        : typeInfo.first
+    if (typeInfo.first === nodeId || typeInfo.total === 0) {
+      typeInfo.first = undefined
+    }
   }
 
   switch (typeName) {
