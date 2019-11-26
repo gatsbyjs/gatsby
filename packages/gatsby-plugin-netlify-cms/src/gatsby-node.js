@@ -147,7 +147,6 @@ exports.onCreateWebpackConfig = (
     ...gatsbyConfig,
     entry: {
       cms: [
-        manualInit && path.join(__dirname, `cms-manual-init.js`),
         path.join(__dirname, `cms.js`),
         enableIdentityWidget && path.join(__dirname, `cms-identity.js`),
       ]
@@ -235,6 +234,10 @@ exports.onCreateWebpackConfig = (
       new HtmlWebpackTagsPlugin({
         tags: externals.map(({ assetName }) => assetName),
         append: false,
+      }),
+
+      new webpack.DefinePlugin({
+        CMS_MANUAL_INIT: JSON.stringify(manualInit),
       }),
     ].filter(p => p),
 
