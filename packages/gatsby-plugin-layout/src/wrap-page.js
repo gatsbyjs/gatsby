@@ -5,7 +5,7 @@ let Layout
 try {
   Layout = preferDefault(require(GATSBY_LAYOUT_COMPONENT_PATH))
 } catch (e) {
-  if (e.toString().indexOf(`Error: Cannot find module`) !== -1) {
+  if (e.toString().includes(`Error: Cannot find module`)) {
     throw new Error(
       `Couldn't find layout component at "${GATSBY_LAYOUT_COMPONENT_PATH}.\n\n` +
         `Please create layout component in that location or specify path to layout component in gatsby-config.js`
