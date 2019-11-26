@@ -22,8 +22,8 @@ const sanitiseNode = value => {
   return value
 }
 
-const getSubStateByPlugins = (state, pluginNamesArray) => {
-  return _.mapValues(state, stateShard => {
+const getSubStateByPlugins = (state, pluginNamesArray) =>
+  _.mapValues(state, stateShard => {
     const filteredMap = new Map()
 
     stateShard.forEach(node => {
@@ -34,7 +34,6 @@ const getSubStateByPlugins = (state, pluginNamesArray) => {
 
     return filteredMap
   })
-}
 
 const loadState = path => {
   const state = v8.deserialize(fs.readFileSync(path))
