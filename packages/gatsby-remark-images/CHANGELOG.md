@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.34](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.33...gatsby-remark-images@3.1.34) (2019-11-26)
+
+**Note:** Version bump only for package gatsby-remark-images
+
+## [3.1.33](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.32...gatsby-remark-images@3.1.33) (2019-11-22)
+
+**Note:** Version bump only for package gatsby-remark-images
+
+## [3.1.32](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.31...gatsby-remark-images@3.1.32) (2019-11-18)
+
+### Bug Fixes
+
+- **gatsby:** Handle special characters in windows paths ([#19600](https://github.com/gatsbyjs/gatsby/issues/19600)) ([9929cf0](https://github.com/gatsbyjs/gatsby/commit/9929cf0))
+
+## [3.1.31](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.30...gatsby-remark-images@3.1.31) (2019-11-15)
+
+**Note:** Version bump only for package gatsby-remark-images
+
+## [3.1.30](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.29...gatsby-remark-images@3.1.30) (2019-11-10)
+
+**Note:** Version bump only for package gatsby-remark-images
+
 ## [3.1.29](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.28...gatsby-remark-images@3.1.29) (2019-11-04)
 
 ### Features

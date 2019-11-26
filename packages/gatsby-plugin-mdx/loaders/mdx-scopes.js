@@ -1,6 +1,6 @@
 const fs = require(`fs`)
 const path = require(`path`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 const loaderUtils = require(`loader-utils`)
 const { MDX_SCOPES_LOCATION } = require(`../constants`)
 

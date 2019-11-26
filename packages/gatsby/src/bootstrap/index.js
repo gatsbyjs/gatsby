@@ -1,7 +1,7 @@
 /* @flow */
 
 const _ = require(`lodash`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 const fs = require(`fs-extra`)
 const md5File = require(`md5-file/promise`)
 const crypto = require(`crypto`)
@@ -130,6 +130,7 @@ module.exports = async (args: BootstrapArgs) => {
     const themes = await loadThemes(config, {
       useLegacyThemes: true,
       configFilePath,
+      rootDir: program.directory,
     })
     config = themes.config
 
@@ -141,6 +142,7 @@ module.exports = async (args: BootstrapArgs) => {
     const plugins = await loadThemes(config, {
       useLegacyThemes: false,
       configFilePath,
+      rootDir: program.directory,
     })
     config = plugins.config
   }
@@ -163,8 +165,13 @@ module.exports = async (args: BootstrapArgs) => {
   const flattenedPlugins = await loadPlugins(config, program.directory)
   activity.end()
 
+  const pluginsStr = flattenedPlugins.map(p => `${p.name}@${p.version}`)
   telemetry.decorateEvent(`BUILD_END`, {
-    plugins: flattenedPlugins.map(p => `${p.name}@${p.version}`),
+    plugins: pluginsStr,
+  })
+
+  telemetry.decorateEvent(`DEVELOP_STOP`, {
+    plugins: pluginsStr,
   })
 
   // onPreInit
@@ -409,6 +416,16 @@ module.exports = async (args: BootstrapArgs) => {
   activity.start()
   await apiRunnerNode(`onPreBootstrap`, {
     parentSpan: activity.span,
+  })
+  activity.end()
+
+  // Prepare static schema types
+  activity = report.activityTimer(`createSchemaCustomization`, {
+    parentSpan: bootstrapSpan,
+  })
+  activity.start()
+  await require(`../utils/create-schema-customization`)({
+    parentSpan: bootstrapSpan,
   })
   activity.end()
 

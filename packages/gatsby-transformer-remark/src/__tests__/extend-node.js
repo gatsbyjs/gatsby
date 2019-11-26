@@ -50,17 +50,19 @@ async function queryResult(
     addInferredFields,
   } = require(`../../../gatsby/src/schema/infer/add-inferred-fields`)
   const {
-    getExampleValue,
-  } = require(`../../../gatsby/src/schema/infer/example-value`)
+    addNodes,
+    getExampleObject,
+  } = require(`../../../gatsby/src/schema/infer/inference-metadata`)
 
   const typeName = `MarkdownRemark`
   const sc = createSchemaComposer()
   const tc = sc.createObjectTC(typeName)
   sc.addTypeDefs(typeDefs)
+  const inferenceMetadata = addNodes({ typeName }, nodes)
   addInferredFields({
     schemaComposer: sc,
     typeComposer: tc,
-    exampleValue: getExampleValue({ nodes, typeName }),
+    exampleValue: getExampleObject(inferenceMetadata),
   })
   tc.addFields(extendNodeTypeFields)
   sc.Query.addFields({
@@ -1104,9 +1106,9 @@ console.log('hello world')
     `htmlAst`,
     node => {
       expect(node).toMatchSnapshot()
-      expect(node.htmlAst.children[0].children[0].properties.className).toEqual(
-        [`language-js`]
-      )
+      expect(
+        node.htmlAst.children[0].children[0].properties.className
+      ).toEqual([`language-js`])
       expect(node.htmlAst.children[0].children[0].properties.dataMeta).toEqual(
         `foo bar`
       )

@@ -360,7 +360,10 @@ export class ProdLoader extends BaseLoader {
 
   doPrefetch(pagePath) {
     const pageDataUrl = createPageDataUrl(pagePath)
-    return prefetchHelper(pageDataUrl)
+    return prefetchHelper(pageDataUrl, {
+      crossOrigin: `anonymous`,
+      as: `fetch`,
+    })
       .then(() =>
         // This was just prefetched, so will return a response from
         // the cache instead of making another request to the server

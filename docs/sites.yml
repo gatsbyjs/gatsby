@@ -4514,8 +4514,8 @@
   categories:
     - Directory
     - eCommerce
-  built_by: Pilon
-  built_by_url: https://pilon.io/
+  built_by: Subscribe Pro
+  built_by_url: https://www.subscribepro.com/
   featured: false
 - title: Ouracademy
   main_url: https://our-academy.org/
@@ -7432,7 +7432,7 @@
     - Landing Page
     - Productivity
     - Technology
-  built_by: Vandre Leal
+  built_by: Vandré Leal
   built_by_url: https://vandreleal.github.io
   featured: false
 - title: tiaan.dev
@@ -7572,6 +7572,7 @@
   categories:
     - Nonprofit
     - Community
+    - eCommerce
   built_by: Little & Big
   built_by_url: "https://www.littleandbig.com.au/"
   featured: false
@@ -8323,6 +8324,19 @@
   built_by: Jason Di Benedetto
   built_by_url: https://jason.dibenedetto.fyi
   featured: false
+- title: Yoseph.tech
+  main_url: https://www.yoseph.tech
+  url: https://www.yoseph.tech/compilers
+  source_url: https://github.com/radding/yoseph.tech_gatsby
+  description: >
+    Yoseph.tech is a personal blog centered around technology and software engineering
+  categories:
+    - Technology
+    - Web Development
+    - Open Source
+  built_by: Yoseph Radding
+  built_by_url: https://github.com/radding
+  featured: false
 - title: Really Fast Sites
   url: https://reallyfastsites.com
   main_url: https://reallyfastsites.com
@@ -8334,3 +8348,372 @@
   built_by: Peter Brady
   built_by_url: https://www.peterbrady.co.uk
   featured: false
+- title: Mieke Frouws
+  url: https://www.miekefrouws.nl
+  main_url: https://www.miekefrouws.nl
+  description: >
+    Mieke Frouws is a freelance primary school theater teacher based in the Netherlands.
+  categories:
+    - Freelance
+    - Education
+  built_by: Laurens Kling
+  built_by_url: https://www.goedideemedia.nl
+  featured: false
+- title: The Fabulous Lifestyles 不藏私旅行煮藝
+  url: https://thefabulouslifestyles.com/
+  main_url: https://thefabulouslifestyles.com/
+  description: >
+    The Fabulous Lifestyles features content about travel and food. It offers practical travel advice that covers trip planning, logistics, and reviews on destination, resort & hotel...etc. Besides travelling, there are step-by-step homemade gourmet recipes that will appeal to everyone's taste buds.
+  categories:
+    - Blog
+    - Food
+    - Travel
+  built_by: Kevin C Chen
+  built_by_url: https://www.linkedin.com/in/kevincychen/
+- title: Salexa - Estetica Venezolana
+  url: https://peluqueriavenezolana.cl/
+  main_url: https://peluqueriavenezolana.cl/
+  source_url: https://github.com/enbonnet/salexa-front
+  description: >
+    Venezuelan beauty and hairdressing salon in Chile
+  categories:
+    - Marketing
+    - Business
+  built_by: Ender Bonnet
+  built_by_url: https://enbonnet.me/
+- title: Akshay Thakur's Portfolio
+  main_url: https://akshaythakur.me
+  url: https://akshaythakur.me
+  categories:
+    - Portfolio
+    - Web Development
+  built_by: Akshay Thakur
+  built_by_url: https://akshaythakur.me
+- title: Binaria
+  description: >
+    Digital product connecting technics & creativity.
+  main_url: "https://binaria.com/en/"
+  url: "https://binaria.com/en/"
+  categories:
+    - Web Development
+    - Agency
+    - Technology
+    - App
+    - Consulting
+    - User Experience
+  built_by: Binaria
+  built_by_url: "https://binaria.com/"
+- title: Quema Labs
+  url: https://quemalabs.com/
+  main_url: https://quemalabs.com/
+  description: >
+    WordPress themes for these moedern times
+  categories:
+    - Blog
+    - Web Development
+    - WordPress
+    - Portfolio
+  built_by: Nico Andrade
+  built_by_url: https://nicoandrade.com/
+- title: Century 21 Financial
+  url: https://century21financial.co.nz/
+  main_url: https://century21financial.co.nz/
+  description: Website for Century 21's mortgage broker and insurance broker business in New Zealand.
+  categories:
+    - Real Estate
+    - Finance
+    - Business
+  built_by: Shannon Smith
+  built_by_url: https://www.powerboard.co.nz/clients
+  featured: false
+- title: Base Backpackers
+  url: https://www.stayatbase.com/
+  main_url: https://www.stayatbase.com/
+  description: Base Backpackers is one of Australasia's biggest youth adventure tourism brands. They are super stoked to have one of the fastest websites in the tourism industry.
+  categories:
+    - Travel
+    - Business
+  built_by: Shannon Smith
+  built_by_url: https://www.powerboard.co.nz/clients
+  featured: false
+- title: Wealthsimple
+  url: "https://www.wealthsimple.com/"
+  main_url: "https://www.wealthsimple.com/en-us/"
+  description: >
+    The simple way to grow your money like the world's most sophisticated investors. Zero-maintenance portfolios, expert advisors and low fees.
+  categories:
+    - App
+    - Business
+    - Finance
+  featured: false
+- title: To Be Created
+  description: >
+    tbc is a London based styling agency that champions a modernised minimal aesthetic for both personal clients and brands.
+  main_url: "https://to-be-created.com"
+  url: "https://to-be-created.com"
+  categories:
+    - Web Development
+    - Agency
+    - Portfolio
+    - Freelance
+  built_by: Sam Goddard
+  built_by_url: "https://samgoddard.dev/"
+- title: Kosmos Platform
+  main_url: https://kosmosplatform.com
+  url: https://kosmosplatform.com
+  description: >
+    Explore the Kosmos - A new world is here, where every clinician now has the ability to improve cardiothoracic and abdominal assessment, in just a few minutes.
+  categories:
+    - Marketing
+    - Science
+    - Video
+    - Landing Page
+    - Healthcare
+    - Technology
+  built_by: Bryce Benson via Turnstyle Studio
+  built_by_url: https://github.com/brycebenson
+- title: B-Engaged
+  url: https://b-engaged.se/
+  main_url: https://b-engaged.se/
+  description: >
+    B-Engaged gives a clear picture of the organization and helps you implement the measures that makes difference for the employees. The results of our employee surveys are easily transformed into concrete improvement measures using AI technology.
+  categories:
+    - Business
+    - Human Resources
+  featured: false
+- title: Rollbar
+  url: https://rollbar.com/
+  main_url: https://rollbar.com/
+  description: >
+    Rollbar automates error monitoring and triaging, so developers can fix errors that matter within minutes, and build software quickly and painlessly.
+  categories:
+    - Programming
+    - Web Development
+  featured: false
+- title: EQX
+  url: https://digitalexperience.equinox.com/
+  main_url: https://digitalexperience.equinox.com/
+  description: >
+    The Equinox app, personalized to unlock your full potential.
+  categories:
+    - Sports
+    - App
+  featured: false
+- title: WagWalking
+  url: https://wagwalking.com/
+  main_url: https://wagwalking.com/
+  description: >
+    Paws on the move
+  categories:
+    - App
+  featured: false
+- title: FirstBorn
+  url: https://www.firstborn.com/
+  main_url: https://www.firstborn.com/
+  description: >
+    We shape modern brands for a connected future.
+  categories:
+    - Agency
+    - Design
+- title: Pix4D
+  url: https://www.pix4d.com
+  main_url: https://www.pix4d.com
+  description: >
+    A unique suite of photogrammetry software for drone mapping. Capture images with our app, process on desktop or cloud and create maps and 3D models.
+  categories:
+    - Business
+    - Productivity
+    - Technology
+  featured: false
+- title: Bakken & Bæck
+  url: https://bakkenbaeck.com
+  main_url: https://bakkenbaeck.com
+  description: >
+    We’re Bakken & Bæck, a digital studio based in Oslo, Bonn and Amsterdam. Ambitious companies call us when they need an experienced team that can transform interesting ideas into powerful products.
+  categories:
+    - Agency
+    - Design
+    - Technology
+  featured: false
+- title: Figma Config
+  url: https://config.figma.com/
+  main_url: https://config.figma.com/
+  description: A one-day conference where Figma users come together to learn from each other.
+  categories:
+    - Conference
+    - Design
+    - Event
+    - Community
+    - Learning
+  built_by: Corey Ward
+  built_by_url: "http://www.coreyward.me/"
+  featured: false
+- title: Anurag Hazra's Portfolio
+  url: https://anuraghazra.github.io/
+  main_url: https://anuraghazra.github.io/
+  source_url: https://github.com/anuraghazra/anuraghazra.github.io
+  description: >
+    Anurag Hazra's portfolio & personal blog, Creative FrontEnd web developer from india.
+  categories:
+    - Portfolio
+    - Blog
+    - Open Source
+    - JavaScript
+  built_by: Anurag Hazra
+  built_by_url: "https://github.com/anuraghazra"
+- title: VeganWorks
+  url: https://veganworks.com/
+  main_url: https://veganworks.com/
+  description: We make delicious vegan snack boxes.
+  categories:
+    - Food
+- title: codesundar
+  url: https://codesundar.com
+  main_url: https://codesundar.com
+  description: >
+    Learn PhoneGap, Ionic, Flutter
+  categories:
+    - Education
+    - Technology
+    - Web Development
+    - Blog
+  built_by: codesundar
+  built_by_url: https://codesundar.com
+  featured: false
+- title: Nordic Microfinance Initiative
+  url: "https://www.nmimicro.no/"
+  main_url: "https://www.nmimicro.no/"
+  description: Nordic Microfinance Initiative's (NMI) vision is to contribute to the empowerment of poor people in developing countries and to the creation of jobs and wealth on a sustainable basis.
+  featured: false
+  categories:
+    - Finance
+    - Business
+  built_by: Othermachines
+  built_by_url: "https://othermachines.com"
+- title: Subscribe Pro Documentation
+  url: https://docs.subscribepro.com/
+  main_url: https://docs.subscribepro.com/
+  description: >
+    Subscribe Pro is a subscription commerce solution that enables brands to quickly add subscription commerce models such as box, subscribe-and-save, autoship and similar to their existing eCommerce websites.
+  categories:
+    - Documentation
+    - eCommerce
+    - API
+    - Technology
+    - Web Development
+  built_by: Subscribe Pro
+  built_by_url: https://www.subscribepro.com/
+- title: Software.com
+  main_url: https://www.software.com
+  url: https://www.software.com
+  description: Our data platform helps developers learn from their data, increase productivity, and code smarter.
+  categories:
+    - Data
+    - Productivity
+    - Programming
+  built_by: Brett Stevens, Joshua Cheng, Geoff Stevens
+  built_by_url: https://github.com/swdotcom/
+  featured: false
+- title: WTL Studio Website Builder
+  main_url: "https://wtlstudio.com/"
+  url: "https://wtlstudio.com/"
+  description: >
+    Cloud-based, SEO focused website builder - helping local businesses and startups reach audiences faster.
+  featured: false
+  categories:
+    - eCommerce
+    - SEO
+    - Business
+- title: ToolsDB
+  main_url: https://toolsdb.dev
+  url: https://toolsdb.dev
+  description: List of tools for better software development.
+  featured: false
+  categories:
+    - Technology
+    - Web Development
+    - Programming
+    - Productivity
+- title: Eastman Strings
+  url: https://www.eastmanstrings.com
+  main_url: https://www.eastmanstrings.com
+  description: >
+    Site was built using GatsbyJS, Cosmic CMS, and Netlify.
+  categories:
+    - Business
+    - Music
+  built_by: Tekhaus
+  built_by_url: https://www.tekha.us
+  featured: false
+- title: Lesley Lai
+  main_url: https://lesleylai.info
+  url: https://lesleylai.info
+  source_url: https://github.com/LesleyLai/blog
+  description: >
+    lesleylai.info is the personal website of Lesley Lai, where he talks mainly about C++ and Computer Graphics.
+  categories:
+    - Blog
+    - Open Source
+    - Portfolio
+    - Programming
+    - Technology
+  built_by: Lesley Lai
+  built_by_url: https://github.com/LesleyLai
+  featured: false
+- title: Whipstitch Webwork
+  url: https://www.whipstitchwebwork.com
+  main_url: https://www.whipstitchwebwork.com
+  description: >
+    Websites for smart people.
+  categories:
+    - Agency
+    - Web Development
+  built_by: Matthew Russell
+  featured: false
+- title: Vandré Leal
+  main_url: https://vandreleal.github.io
+  url: https://vandreleal.github.io
+  source_url: https://github.com/vandreleal/vandreleal.github.io
+  description: >
+    Portfolio of Vandré Leal.
+  categories:
+    - Portfolio
+    - Web Development
+  built_by: Vandré Leal
+  built_by_url: https://vandreleal.github.io
+  featured: false
+- title: Tarokenlog
+  url: https://taroken.dev/
+  main_url: https://taroken.dev/
+  description: >
+    Blog and Gallery
+  categories:
+    - Blog
+    - Portfolio
+    - Web Development
+    - Photography
+  built_by: Kentaro Koga
+  built_by_url: https://twitter.com/kentaro_koga
+  featured: false
+- title: OwlyPixel Blog
+  main_url: https://owlypixel.com
+  url: https://owlypixel.com
+  description: >
+    Notes and tutorials on coding, web development, design and other stuff.
+  categories:
+    - Web Development
+    - Blog
+    - Education
+  built_by: Owlypixel
+  built_by_url: https://twitter.com/owlypixel
+  featured: false
+- title: talkoverflow
+  main_url: https://talkoverflow.com
+  url: https://talkoverflow.com
+  description: Blog on software engineering built with Gatsby themes and theme-ui
+  categories:
+    - Blog
+    - Web Development
+    - Technology
+  built_by: Patryk Jeziorowski
+  built_by_url: https://twitter.com/pjeziorowski
