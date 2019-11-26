@@ -526,8 +526,8 @@ module.exports = async (program: any) => {
       .sync(`{,!(node_modules|public)/**/}*.js`, { nodir: true })
       .forEach(file => {
         const fileText = fs.readFileSync(file)
-        const matchingApis = deprecatedApis.filter(
-          api => fileText.indexOf(api) !== -1
+        const matchingApis = deprecatedApis.filter(api =>
+          fileText.includes(api)
         )
         matchingApis.forEach(api => deprecatedLocations[api].push(file))
       })
