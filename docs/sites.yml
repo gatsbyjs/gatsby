@@ -8717,3 +8717,21 @@
     - Technology
   built_by: Patryk Jeziorowski
   built_by_url: https://twitter.com/pjeziorowski
+- title: HISTORYTalks
+  main_url: https://www.history-talks.com/
+  url: https://www.history-talks.com/
+  description: Built using Gatsby, JSS and Contentful
+  categories:
+    - Conference
+    - Media
+  built_by: A+E Networks
+  built_by_url: https://www.aenetworks.com/
+- title: HISTORYCon
+  main_url: https://www.historycon.com/
+  url: https://www.historycon.com/
+  description: Built using Gatsby, JSS and Contentful
+  categories:
+    - Conference
+    - Media
+  built_by: A+E Networks
+  built_by_url: https://www.aenetworks.com/
