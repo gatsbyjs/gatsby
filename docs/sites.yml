@@ -7640,6 +7640,22 @@
   built_by: Peter Hironaka
   built_by_url: "https://peterhironaka.com"
   featured: false
+- title: Up Your A11y
+  url: https://www.upyoura11y.com/
+  main_url: https://www.upyoura11y.com/
+  source_url: https://www.upyoura11y.com/
+  description: >
+    A web accessibility toolkit with a React focus, Up Your A11y is a resource for front-end developers to find useful information on how to make your sites more accessible. The topics covered have a React bias, but the principles in each apply to all web development, so please don't be put off if you don't work with React specifically!
+  categories:
+    - Accessibility
+    - Blog
+    - Programming
+    - JavaScript
+    - User Experience
+    - Web Development
+  built_by: Suzanne Aitchison
+  built_by_url: https://twitter.com/s_aitchison
+  featured: false
 - title: Roman Kravets
   description: >
     Portfolio of Roman Kravets. Web Developer, HTML & CSS Coder.
