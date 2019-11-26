@@ -16,7 +16,6 @@
     "@babel/polyfill": "^7.7.0",
     "@babel/runtime": "^7.7.4",
     "@babel/traverse": "^7.7.4",
-    "@gatsbyjs/relay-compiler": "2.0.0-printer-fix.4",
     "@hapi/joi": "^15.1.1",
     "@mikaelkristiansson/domready": "^1.0.9",
     "@pieh/friendly-errors-webpack-plugin": "1.7.0-chalk-2",
