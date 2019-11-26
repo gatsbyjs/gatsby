@@ -8682,6 +8682,18 @@
   built_by: Vandré Leal
   built_by_url: https://vandreleal.github.io
   featured: false
+- title: OwlyPixel Blog
+  main_url: https://owlypixel.com
+  url: https://owlypixel.com
+  description: >
+    Notes and tutorials on coding, web development, design and other stuff.
+  categories:
+    - Web Development
+    - Blog
+    - Education
+  built_by: Owlypixel
+  built_by_url: https://twitter.com/owlypixel
+  featured: false
 - title: talkoverflow
   main_url: https://talkoverflow.com
   url: https://talkoverflow.com
