@@ -4472,14 +4472,6 @@
   description: Gatsby starter with a responsive barebones header and footer layout
   tags:
     - Styling:CSS-in-JS
-    - Blog
-    - Client-side App
-    - Documentation
-    - eCommerce
-    - Landing Page
-    - Portfolio
-    - Presentation
-    - Storybook
   features:
     - Navbar and footer components with only minimal CSS that make responsiveness works
     - Works in any device screen
