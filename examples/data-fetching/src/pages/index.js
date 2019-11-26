@@ -25,14 +25,7 @@ const IndexPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       // get data from GitHub api
-      const result = await fetch(
-        `https://api.github.com/repos/gatsbyjs/gatsby`,
-        {
-          headers: {
-            Authorization: `Bearer ${process.env.GATSBY_GITHUB_TOKEN}`,
-          },
-        }
-      )
+      const result = await fetch(`https://api.github.com/repos/gatsbyjs/gatsby`)
       // parse JSON from request
       const resultData = await result.json()
       // set data for the number of stars
