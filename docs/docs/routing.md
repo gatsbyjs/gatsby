@@ -2,7 +2,7 @@
 title: Routing
 ---
 
-Part of what makes Gatsby sites so fast is that a lot of the work is done at build time and the running site is using mostly [static content](/docs/adding-app-and-website-functionality/#static-pages). Specifically, each page is its own HTML file that's generated at build time. During that process, Gatsby creates paths to access those files, handling routing for you. Navigating in a Gatsby app requires an understanding of what those paths are and how they're generated.
+Part of what makes Gatsby sites so fast is that a lot of the work is done at build time and the running site is using mostly [static content](/docs/adding-app-and-website-functionality/#static-pages). During that process, Gatsby creates paths to access that content, handling routing for you. Navigating in a Gatsby app requires an understanding of what those paths are and how they're generated.
 
 Alternatively, your application may include functionality that cannot be handled at build time or through [rehydration](/docs/adding-app-and-website-functionality/#how-hydration-makes-apps-possible). This includes things like authentication or retrieving dynamic content. To handle those pages, you can make use of [client-only routes](/docs/client-only-routes-and-user-authentication) using [`@reach/router`](/docs/reach-router-and-gatsby/) which is built into Gatsby.
 
@@ -53,13 +53,13 @@ Alternatively, if you want to create pages that will display different subcompon
 
 ## Linking between routes
 
-You can use `gatsby-link` to link to these routes -- this will provide almost-instantaneous page transitions via prefetching. [More on Gatsby Link](/docs/gatsby-link/).
+In order to link between pages, you can use [`gatsby-link`](/docs/gatsby-link/). Using `gatsby-link` gives you built in [performance benefits](#performance-and-prefetching).
 
-You can also use standard `<a>` links, but you won't get the benefit of prefetching in this case.
+Alternatively, you can navigate between pages using standard `<a>` tags, but you won't get the benefit of prefetching in this case.
 
 ## Creating authentication-gated links
 
-If you don't want all of your content available on the public web, Gatsby lets you create [client-only routes](/docs/client-only-routes-and-user-authentication) that live behind an authentication gate.
+For pages dealing with sensitive information, or other dynamic behavior, you may want to handle that information server-side. Gatsby lets you create [client-only routes](/docs/client-only-routes-and-user-authentication) that live behind an authentication gate, ensuring that the information is only available to authorized users.
 
 ## Performance and Prefetching
 
