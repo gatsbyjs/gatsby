@@ -11,7 +11,7 @@ Among the many lauded benefits of using Gatsby (and other static app frameworks)
 
 There are indeed whole classes of security vulnerabilities that are eliminated by using Gatsby for web development; but there are still other vulnerabilities that are shared and some that are created. As a Gatsby developer, you need to make sure you are aware of these possible vulnerabilities and how to remedy them.
 
-This post will act as an introduction to get you familiar with these concepts in Gatsby.
+This post will act as an introduction to familiarize yourself with these concepts in Gatsby.
 
 ## Defining Terms
 
