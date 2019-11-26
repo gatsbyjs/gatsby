@@ -9,9 +9,9 @@ const _ = require(`lodash`)
 const sanitizeNode = (data, isNode = true, path = new Set()) => {
   const isPlainObject = _.isPlainObject(data)
 
-  path.add(data)
-
   if (isPlainObject || _.isArray(data)) {
+    path.add(data)
+
     const returnData = isPlainObject ? {} : []
     let anyFieldChanged = false
     _.each(data, (o, key) => {
