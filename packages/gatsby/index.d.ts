@@ -932,32 +932,50 @@ export interface Store {
   replaceReducer: Function
 }
 
-type logMessageType = (format: string, ...args: any[]) => void
-type logErrorType = (message: string, error?: Error) => void
+type LogMessageType = (format: string) => void
+type LogErrorType = (errorMeta: string | Object, error?: Object) => void
+
+export type ActivityTracker = {
+  start(): () => void
+  end(): () => void
+  span: Object
+  setStatus(status: string): void
+  panic: LogErrorType
+  panicOnBuild: LogErrorType
+}
+
+export type ProgressActivityTracker = Omit<ActivityTracker, "end"> & {
+  tick(increment?: number): void
+  done(): void
+  total: number
+}
+
+export type ActivityArgs = {
+  parentSpan?: Object
+  id?: string
+}
 
 export interface Reporter {
-  stripIndent: Function
+  stripIndent: (input: string) => string
   format: object
-  setVerbose(isVerbose: boolean): void
-  setNoColor(isNoColor: boolean): void
-  panic: logErrorType
-  panicOnBuild: logErrorType
-  error: logErrorType
+  setVerbose(isVerbose?: boolean): void
+  setNoColor(isNoColor?: boolean): void
+  panic: LogErrorType
+  panicOnBuild: LogErrorType
+  error: LogErrorType
   uptime(prefix: string): void
-  success: logMessageType
-  verbose: logMessageType
-  info: logMessageType
-  warn: logMessageType
-  log: logMessageType
-  activityTimer(
-    name: string,
-    activityArgs: { parentSpan: object }
-  ): {
-    start: () => void
-    status(status: string): void
-    end: () => void
-    span: object
-  }
+  success: LogMessageType
+  verbose: LogMessageType
+  info: LogMessageType
+  warn: LogMessageType
+  log: LogMessageType
+  activityTimer(name: string, activityArgs?: ActivityArgs): ActivityTracker
+  createProgress(
+    text: string,
+    total?: number,
+    start?: number,
+    activityArgs?: ActivityArgs
+  ): ProgressActivityTracker
 }
 
 export interface Cache {

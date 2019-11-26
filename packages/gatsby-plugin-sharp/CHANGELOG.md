@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.3.2...gatsby-plugin-sharp@2.3.3) (2019-11-25)
+
+### Bug Fixes
+
+- **gatsby-plugin-sharp:** fix progressbar & caching layer ([#19717](https://github.com/gatsbyjs/gatsby/issues/19717)) ([7f9d5bb](https://github.com/gatsbyjs/gatsby/commit/7f9d5bb))
+
 ## [2.3.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.3.1...gatsby-plugin-sharp@2.3.2) (2019-11-18)
 
 **Note:** Version bump only for package gatsby-plugin-sharp
