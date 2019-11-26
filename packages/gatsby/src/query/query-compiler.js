@@ -119,8 +119,9 @@ export const parseQueries = async ({
   let modulesThatUseGatsby = await getGatsbyDependents()
 
   // Exclude unused themes.
-  modulesThatUseGatsby = modulesThatUseGatsby.filter(module =>
-    /gatsby-theme/.test(module.name) ? additional.includes(module.path) : true
+  modulesThatUseGatsby = modulesThatUseGatsby.filter(
+    module =>
+      !/gatsby-theme/.test(module.name) || additional.includes(module.path)
   )
 
   let files = [
