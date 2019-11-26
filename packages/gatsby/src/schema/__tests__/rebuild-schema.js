@@ -1,9 +1,19 @@
-const { printSchema, printType, lexicographicSortSchema } = require(`graphql`)
+const {
+  graphql,
+  printSchema,
+  printType,
+  lexicographicSortSchema,
+  GraphQLObjectType,
+  GraphQLString,
+  GraphQLSchema,
+} = require(`graphql`)
 const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
 const { build, rebuild } = require(`..`)
 const { buildObjectType } = require(`../types/type-builders`)
 require(`../../db/__tests__/fixtures/ensure-loki`)()
+
+jest.mock(`../../utils/api-runner-node`)
 
 jest.mock(`gatsby-cli/lib/reporter`, () => {
   return {
@@ -63,6 +73,32 @@ const deleteNodeAndRebuild = async node => {
   const nodes = Array.isArray(node) ? node : [node]
   nodes.forEach(deleteNode)
   return await rebuildTestSchema()
+}
+
+const createExternalSchema = () => {
+  const query = new GraphQLObjectType({
+    name: `Query`,
+    fields: {
+      external: {
+        type: new GraphQLObjectType({
+          name: `ExternalType`,
+          fields: {
+            externalFoo: {
+              type: GraphQLString,
+              resolve: parentValue =>
+                `${parentValue}.ExternalType.externalFoo.defaultResolver`,
+            },
+          },
+        }),
+        resolve: () => `Query.external`,
+      },
+      external2: {
+        type: GraphQLString,
+        resolve: () => `Query.external2`,
+      },
+    },
+  })
+  return new GraphQLSchema({ query })
 }
 
 describe(`build and update individual types`, () => {
@@ -944,7 +980,7 @@ describe(`rebuilds node types having existing relations`, () => {
   })
 })
 
-describe(`compatibility with schema customization API`, () => {
+describe(`compatibility with createTypes`, () => {
   beforeEach(async () => {
     store.dispatch({ type: `DELETE_CACHE` })
 
@@ -1118,3 +1154,137 @@ describe(`compatibility with schema customization API`, () => {
     expect(typesToIgnore).toEqual([`FooFieldsBaz`, `Bar`, `BarBaz`])
   })
 })
+
+describe(`Compatibility with addThirdPartySchema`, () => {
+  const createNodes = () => [
+    {
+      id: `Foo1`,
+      internal: { type: `Foo`, contentDigest: `0` },
+      children: [],
+      field: `5`,
+    },
+  ]
+
+  beforeEach(async () => {
+    store.dispatch({ type: `DELETE_CACHE` })
+    store.dispatch(
+      actions.addThirdPartySchema({ schema: createExternalSchema() })
+    )
+    mockCreateResolvers({
+      ExternalType: {
+        foo: {
+          type: `Foo`,
+          args: { fooArg: { type: `String` } },
+          resolve(value, args) {
+            return {
+              field: args.fooArg,
+            }
+          },
+        },
+        externalFoo: {
+          args: { injectedFooArg: { type: `String` } },
+          resolve(value, args, context, info) {
+            const original = info.originalResolver(value, args, context, info)
+            return args.injectedFooArg + `(${original})`
+          },
+        },
+      },
+    })
+    createNodes().forEach(addNode)
+    await build({})
+  })
+
+  it(`rebuilds after third party schema is extended with createResolvers`, async () => {
+    const newSchema = await rebuildTestSchema()
+
+    const print = typePrinter(newSchema)
+    expect(print(`Query`)).toMatchInlineSnapshot(`
+      "type Query {
+        foo(id: StringQueryOperatorInput, parent: NodeFilterInput, children: NodeFilterListInput, internal: InternalFilterInput, field: StringQueryOperatorInput): Foo
+        allFoo(filter: FooFilterInput, sort: FooSortInput, skip: Int, limit: Int): FooConnection!
+        external: ExternalType
+        external2: String
+      }"
+    `)
+    expect(print(`ExternalType`)).toMatchInlineSnapshot(`
+      "type ExternalType {
+        externalFoo(injectedFooArg: String): String
+        foo(fooArg: String): Foo
+      }"
+    `)
+
+    // Expect resolvers to be overridden by createResolvers
+    const query = `
+    {
+      external {
+        externalFoo(injectedFooArg: "wrapDefaultResolver")
+        foo(fooArg: "overriddenField") {
+          field
+        }
+      }
+      external2
+    }
+    `
+    const result = await graphql(newSchema, query)
+    expect(result).toEqual({
+      data: {
+        external: {
+          externalFoo: `wrapDefaultResolver(Query.external.ExternalType.externalFoo.defaultResolver)`,
+          foo: {
+            field: `overriddenField`,
+          },
+        },
+        external2: `Query.external2`,
+      },
+    })
+  })
+
+  it(`rebuilds with new resolvers set via createResolvers`, async () => {
+    mockCreateResolvers({
+      ExternalType: {
+        externalFoo: {
+          resolve(value, args, context, info) {
+            const original = info.originalResolver(value, args, context, info)
+            return `newResolver(${original})`
+          },
+        },
+      },
+    })
+
+    const newSchema = await rebuildTestSchema()
+    const print = typePrinter(newSchema)
+
+    expect(print(`ExternalType`)).toMatchInlineSnapshot(`
+      "type ExternalType {
+        externalFoo: String
+      }"
+    `)
+    const query = `
+    {
+      external {
+        externalFoo
+      }
+      external2
+    }
+    `
+    const result = await graphql(newSchema, query)
+    expect(result).toEqual({
+      data: {
+        external: {
+          externalFoo: `newResolver(Query.external.ExternalType.externalFoo.defaultResolver)`,
+        },
+        external2: `Query.external2`,
+      },
+    })
+  })
+})
+
+const mockCreateResolvers = resolvers => {
+  const apiRunnerNode = require(`../../utils/api-runner-node`)
+  apiRunnerNode.mockImplementation((api, { createResolvers }) => {
+    if (api === `createResolvers`) {
+      return createResolvers(resolvers)
+    }
+    return []
+  })
+}
