@@ -40,6 +40,9 @@ const fetchGraphql = async ({ url, query, errorMap, variables = {} }) => {
         `[gatsby-source-wordpress] ${error.message} (${error.category})`
       )
     })
+
+    console.error(`[gatsby-source-wordpress] GraphQL vars:`, variables)
+    console.error(`[gatsby-source-wordpress] GraphQL query: ${query}`)
     process.exit()
   }
 
