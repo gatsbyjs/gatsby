@@ -17,7 +17,7 @@ async function onCreateNode(
   const extensions = `xls|xlsx|xlsm|xlsb|xml|xlw|xlc|csv|txt|dif|sylk|slk|prn|ods|fods|uos|dbf|wks|123|wq1|qpw|htm|html`.split(
     `|`
   )
-  if (extensions.indexOf((node.extension || ``).toLowerCase()) == -1) {
+  if (!extensions.includes((node.extension || ``).toLowerCase())) {
     return
   }
   // Load binary string
