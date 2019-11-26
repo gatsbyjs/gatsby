@@ -15,8 +15,9 @@ const sourceNodes = async (helpers, pluginOptions) => {
 
   const lastCompletedSourceTime = await cache.get(LAST_COMPLETED_SOURCE_TIME)
 
-  // If this is an uncached build, pull everything from WPGQL
-  // or our initial build to fetch and cache everything didn't complete
+  // If this is an uncached build,
+  // or our initial build to fetch and cache everything didn't complete,
+  // pull everything from WPGQL
   if (!lastCompletedSourceTime) {
     await fetchAndCreateAllNodes({}, ...api)
   }
