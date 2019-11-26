@@ -47,7 +47,7 @@ Since there are multiple ways to create a page, different plugins, themes, or se
 
 ## Nested Routes
 
-If your goal is to define paths that are multiple levels deep, that can be done directly when creating pages as mentioned in above section [Creating routes](#creating-routes).
+If your goal is to define paths that are multiple levels deep, that can be done directly when creating pages as mentioned in [Creating routes](#creating-routes).
 
 Alternatively, if you want to create pages that will display different subcomponents depending on the URL path, Gatsby handles that at the page level using [layouts](/docs/layout-components/).
 
