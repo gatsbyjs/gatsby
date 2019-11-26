@@ -12,7 +12,20 @@ if (!CMS_MANUAL_INIT) {
   )
 }
 
-/**
- * The stylesheet output from the modules at `modulePath` will be at `cms.css`.
- */
-CMS.registerPreviewStyle(`cms.css`)
+// eslint-disable-next-line no-undef
+if (PRODUCTION) {
+  /**
+   * The stylesheet output from the modules at `modulePath` will be at `cms.css`.
+   */
+  CMS.registerPreviewStyle(`cms.css`)
+} else {
+  /**
+   * In development styles are injected dynamically via the style-loader plugin
+   */
+  window.addEventListener(`DOMContentLoaded`, event => {
+    const list = document.querySelectorAll(`link[rel='stylesheet']`)
+    list.forEach(({ href }) => {
+      CMS.registerPreviewStyle(href)
+    })
+  })
+}

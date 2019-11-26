@@ -49,19 +49,6 @@ function replaceRule(value) {
     return null
   }
 
-  // Manually swap `style-loader` for `MiniCssExtractPlugin.loader`.
-  // `style-loader` is only used in development, and doesn't allow us to pass
-  // the `styles` entry css path to Netlify CMS.
-  if (
-    typeof value.loader === `string` &&
-    value.loader.includes(`style-loader`)
-  ) {
-    return {
-      ...value,
-      loader: MiniCssExtractPlugin.loader,
-    }
-  }
-
   return value
 }
 
@@ -187,9 +174,10 @@ exports.onCreateWebpackConfig = (
 
       // Use a simple filename with no hash so we can access from source by
       // path.
-      new MiniCssExtractPlugin({
-        filename: `[name].css`,
-      }),
+      stage !== `develop` &&
+        new MiniCssExtractPlugin({
+          filename: `[name].css`,
+        }),
 
       // Auto generate CMS index.html page.
       new HtmlWebpackPlugin({
@@ -238,6 +226,7 @@ exports.onCreateWebpackConfig = (
 
       new webpack.DefinePlugin({
         CMS_MANUAL_INIT: JSON.stringify(manualInit),
+        PRODUCTION: JSON.stringify(stage !== `develop`),
       }),
     ].filter(p => p),
 
