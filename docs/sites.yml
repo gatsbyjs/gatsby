@@ -8667,3 +8667,17 @@
   built_by: Vandré Leal
   built_by_url: https://vandreleal.github.io
   featured: false
+- title: Tarokenlog
+  url: https://taroken.dev/
+  main_url: https://taroken.dev/
+  description: >
+    Blog and Gallery
+  categories:
+    - Blog
+    - Portfolio
+    - Web Development
+    - Gallery
+    - Photography
+  built_by: Kentaro Koga
+  built_by_url: https://twitter.com/kentaro_koga
+  featured: false
