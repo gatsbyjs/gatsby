@@ -17,9 +17,9 @@ plugins: [
     resolve: `gatsby-source-medium`,
     options: {
       username: `username/publication`
-    },
-  },
-]
+    }
+  }
+];
 ```
 
 ### Options
@@ -27,7 +27,6 @@ plugins: [
 #### Username
 
 Remember that if you are fetching a user, prepend your username with `@`.
-
 
 ## How to query
 
