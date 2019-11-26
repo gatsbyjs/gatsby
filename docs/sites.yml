@@ -8751,3 +8751,13 @@
     - Media
   built_by: A+E Networks
   built_by_url: https://www.aenetworks.com/
+- title: FOO Carte Restaurant
+  main_url: https://foo-carte.netlify.com/
+  url: https://foo-carte.netlify.com/
+  description: Gatsby and GraphQL restaurant website with menu data consuming from Contentful CMS.
+  categories:
+    - Business
+    - Food
+  built_by: Gino Lin
+  built_by_url: https://github.com/lgnov
+  featured: false
