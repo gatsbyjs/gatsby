@@ -4567,6 +4567,17 @@
     - Styled Components
     - Code syntax highlighting
     - Light/Dark mode
+- url: https://amelie-blog.netlify.com/
+  repo: https://github.com/tobyau/gatsby-starter-amelie
+  description: A minimal and mobile friendly blog template
+  tags:
+    - Blog
+    - SEO
+    - Markdown
+  features:
+    - Responsive design
+    - Customizable content through markdown files
+    - SEO component with React Helmet
 - url: https://chronoblog.netlify.com
   repo: https://github.com/Ganevru/gatsby-starter-chronoblog
   description: Chronoblog is a Gatsby js theme specifically designed to create a personal website. The main idea of ​​Chronoblog is to allow you not only to write a personal blog but also to keep a record of everything important that you have done.
