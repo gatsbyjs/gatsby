@@ -12,6 +12,27 @@ const absoluteOrDirectory = (directory, filePath) => {
   return path.join(directory, filePath)
 }
 
+const getWindowsEncryptionPassword = async () => {
+  report.info(
+    [
+      `A password is required to access the secure certificate authority key`,
+      `used for signing certificates.`,
+      ``,
+      `If this is the first time this has run, then this is to set the password`,
+      `for future use.  If any new certificates are signed later, you will need`,
+      `to use this same password.`,
+      ``,
+    ].join(`\n`)
+  )
+  const results = await prompts({
+    type: `password`,
+    name: `value`,
+    message: `Please enter the CA password`,
+    validate: input => input.length > 0 || `You must enter a password.`,
+  })
+  return results.value
+}
+
 module.exports = async ({ name, certFile, keyFile, caFile, directory }) => {
   // check that cert file and key file are both true or both false, if they are both
   // false, it defaults to the automatic ssl
@@ -55,26 +76,7 @@ module.exports = async ({ name, certFile, keyFile, caFile, directory }) => {
       getCaPath: true,
       skipCertutilInstall: true,
       ui: {
-        getWindowsEncryptionPassword: async () => {
-          report.info(
-            [
-              `A password is required to access the secure certificate authority key`,
-              `used for signing certificates.`,
-              ``,
-              `If this is the first time this has run, then this is to set the password`,
-              `for future use.  If any new certificates are signed later, you will need`,
-              `to use this same password.`,
-              ``,
-            ].join(`\n`)
-          )
-          const results = await prompts({
-            type: `password`,
-            name: `value`,
-            message: `Please enter the CA password`,
-            validate: input => input.length > 0 || `You must enter a password.`,
-          })
-          return results.value
-        },
+        getWindowsEncryptionPassword,
       },
     })
     if (caPath) process.env.NODE_EXTRA_CA_CERTS = caPath
