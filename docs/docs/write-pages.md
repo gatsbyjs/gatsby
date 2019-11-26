@@ -2,6 +2,16 @@
 title: Write Out Pages
 ---
 
+> This documentation isn't up to date with the latest version of Gatsby.
+>
+> Outdated areas are:
+>
+> - `data.json` should be replaced with `page-data.json`
+> - remove mentions of `pages.json`
+> - describe `match-paths.json`
+>
+> You can help by making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228).
+
 This is one of the last bootstrap stages before we hand off to webpack to perform code optimization and code splitting. Webpack builds a web bundle. It has no knowledge of Gatsby's core code. Instead, it operates only on files in the `.cache` directory. It also doesn't have access to all the Redux information that was built up during bootstrap. So instead, we create dynamic JavaScript and JSON files that are dependent on by the webpack application in the `.cache` directory (see [Building the JavaScript App](/docs/production-app/)).
 
 You can think of this step as taking all the data that was generated during bootstrap and saving it to disk for consumption by webpack.
@@ -47,7 +57,7 @@ The dynamic files that are created are (all under the `.cache` directory).
 - [async-requires.js](#async-requiresjs)
 - [data.json](#datajson)
 
-### pages.json
+## pages.json
 
 This is a collection of page objects, created from redux `pages` namespace. For each page it includes the
 
@@ -73,7 +83,7 @@ e.g
 
 `pages.json` is generated for `gatsby develop` purposes only. In `npm run build`, we use [data.json](/docs/write-pages/#datajson) (below) which includes the pages info plus more.
 
-### sync-requires.js
+## sync-requires.js
 
 This is a dynamically generated JavaScript file that exports `components`. It is an object created by iterating over the `components` redux namespace. The keys are the [componentChunkName](/docs/behind-the-scenes-terminology/#componentchunkname) (e.g. `component---src-blog-2-js`), and the values are expressions that require the component. E.g. `/home/site/src/blog/2.js`. The file will look something like this:
 
@@ -86,7 +96,7 @@ exports.components = {
 
 It is used during [static-entry.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js) so that it can map componentChunkNames to their component implementations. Whereas the [production-app.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/production-app.js) must use `async-requires.js` (below) since it performs [code splitting](/docs/how-code-splitting-works/).
 
-### async-requires.js
+## async-requires.js
 
 ---
 
@@ -110,7 +120,7 @@ exports.data = () => import("/home/site/.cache/data.json")
 
 Remember, `sync-requires.js` is used during [Page HTML Generation](/docs/html-generation/). And `async-requires.js` is used by [Building the JavaScript App](/docs/production-app/).
 
-### data.json
+## data.json
 
 This is a generated json file. It contains the entire `pages.json` contents ([as above](/docs/write-pages/#pagesjson)), and the entire redux `jsonDataPaths` which was created at the end of the [Query Execution](/docs/query-execution/#save-query-results-to-redux-and-disk) stage. So, it looks like:
 

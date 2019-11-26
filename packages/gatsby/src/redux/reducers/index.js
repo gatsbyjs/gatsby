@@ -37,6 +37,9 @@ function getNodesByTypeReducer() {
   return nodesReducer
 }
 
+/**
+ * @property exports.nodesTouched Set<string>
+ */
 module.exports = {
   program: require(`./program`),
   nodes: getNodesReducer(),
@@ -59,4 +62,6 @@ module.exports = {
   babelrc: require(`./babelrc`),
   schemaCustomization: require(`./schema-customization`),
   themes: require(`./themes`),
+  logs: require(`gatsby-cli/lib/reporter/redux/reducer`),
+  inferenceMetadata: require(`./inference-metadata`),
 }

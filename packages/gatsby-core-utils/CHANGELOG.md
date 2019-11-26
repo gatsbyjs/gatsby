@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.0.20...gatsby-core-utils@1.0.21) (2019-11-26)
+
+**Note:** Version bump only for package gatsby-core-utils
+
+## [1.0.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.0.19...gatsby-core-utils@1.0.20) (2019-11-18)
+
+### Bug Fixes
+
+- **gatsby:** Handle special characters in windows paths ([#19600](https://github.com/gatsbyjs/gatsby/issues/19600)) ([9929cf0](https://github.com/gatsbyjs/gatsby/commit/9929cf0))
+
+## [1.0.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.0.18...gatsby-core-utils@1.0.19) (2019-11-15)
+
+**Note:** Version bump only for package gatsby-core-utils
+
+## [1.0.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.0.17...gatsby-core-utils@1.0.18) (2019-11-10)
+
+**Note:** Version bump only for package gatsby-core-utils
+
+## [1.0.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.0.16...gatsby-core-utils@1.0.17) (2019-10-28)
+
+### Features
+
+- **gatsby-core-utils:** Add isCI and getCIName ([#19039](https://github.com/gatsbyjs/gatsby/issues/19039)) ([d97bee6](https://github.com/gatsbyjs/gatsby/commit/d97bee6))
+
+## [1.0.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.0.15...gatsby-core-utils@1.0.16) (2019-10-28)
+
+**Note:** Version bump only for package gatsby-core-utils
+
+## [1.0.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.0.14...gatsby-core-utils@1.0.15) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-core-utils
+
+## [1.0.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.0.13...gatsby-core-utils@1.0.14) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-core-utils
+
+## [1.0.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.0.12...gatsby-core-utils@1.0.13) (2019-10-09)
+
+**Note:** Version bump only for package gatsby-core-utils
+
 ## [1.0.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.0.10...gatsby-core-utils@1.0.12) (2019-09-26)
 
 **Note:** Version bump only for package gatsby-core-utils

@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { Component } from "react"
-import PropTypes from "prop-types"
 import { navigate } from "gatsby"
 
 import { space } from "../gatsby-plugin-theme-ui"
@@ -106,9 +105,7 @@ const algoliaStyles = t => css`
   }
 
   .algolia-autocomplete .algolia-docsearch-suggestion--highlight {
-    background-color: ${
-      t.colors.search.suggestionHighlightBackground
-    } !important;
+    background-color: ${t.colors.search.suggestionHighlightBackground} !important;
     box-shadow: 0 !important;
     color: ${t.colors.search.suggestionHighlightColor} !important;
   }
@@ -378,28 +375,19 @@ class SearchForm extends Component {
   }
   render() {
     const { focussed } = this.state
-    const { offsetVertical } = this.props
     return (
       <form
         sx={{
           alignItems: `flex-end`,
           justifyContent: `flex-end`,
           display: `flex`,
-          flex: [
-            `1 0 auto`,
-            `1 0 auto`,
-            `1 0 auto`,
-            `1 0 auto`,
-            `0 0 auto`,
-            `1 0 auto`,
-          ],
+          flex: [`1 1 auto`, null, `1 0 auto`, null, `0 0 auto`, `1 0 auto`],
           flexDirection: `row`,
           mb: 0,
-          mx: [3, 3, 3, 3, 4],
+          mx: [3, null, null, 4],
           position: `relative`,
-          // minWidth: [null, null, null, null, null, `12rem`],
-          // maxWidth: [`100%`, `100%`, `100%`, `100%`, null, `24rem`],
-          mt: offsetVertical ? offsetVertical : false,
+          // minWidth: [null, null, null, null, `12rem`],
+          // maxWidth: [`100%`, `100%`, `100%`, null, `24rem`],
           "& .algolia-autocomplete": {
             width: `100%`,
             display: `block !important`,
@@ -414,14 +402,7 @@ class SearchForm extends Component {
         <label
           sx={{
             position: `relative`,
-            width: [
-              `100%`,
-              `100%`,
-              `100%`,
-              `100%`,
-              focussed ? `14rem` : 24,
-              `100%`,
-            ],
+            width: [`100%`, `100%`, `100%`, focussed ? `14rem` : 24, `100%`],
             transition: t =>
               `width ${t.transition.speed.default} ${t.transition.curve.default}, padding ${t.transition.speed.default} ${t.transition.curve.default}`,
           }}
@@ -432,21 +413,13 @@ class SearchForm extends Component {
               ...themedInput,
               bg: [
                 `themedInput.background`,
-                `themedInput.background`,
-                `themedInput.background`,
-                `themedInput.background`,
+                null,
+                null,
                 focussed ? `themedInput.background` : `transparent`,
                 `themedInput.background`,
               ],
-              pl: [7, 7, 7, 7, focussed ? 7 : 24, 7],
-              width: [
-                `100%`,
-                `100%`,
-                `100%`,
-                `100%`,
-                focussed ? `14rem` : 24,
-                `100%`,
-              ],
+              pl: [7, null, null, focussed ? 7 : 24, 7],
+              width: [`100%`, null, null, focussed ? `14rem` : 24, `100%`],
               transition: t =>
                 `width ${t.transition.speed.default} ${t.transition.curve.default}, padding ${t.transition.speed.default} ${t.transition.curve.default}`,
             }}
@@ -466,7 +439,5 @@ class SearchForm extends Component {
     )
   }
 }
-SearchForm.propTypes = {
-  offsetVertical: PropTypes.string,
-}
+
 export default SearchForm

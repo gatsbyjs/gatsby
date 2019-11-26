@@ -1,17 +1,17 @@
 ---
-title: Unit testing
+title: Unit Testing
 ---
 
 Unit testing is a great way to protect against errors in your code before you
 deploy it. While Gatsby does not include support for unit testing out of the
-box, it only takes a few steps to get up and running. However there are a few
+box, it only takes a few steps to get up and running. However, there are a few
 features of the Gatsby build process that mean the standard Jest setup doesn't
 quite work. This guide shows you how to set it up.
 
 ## Setting up your environment
 
 The most popular testing framework for React is [Jest](https://jestjs.io/),
-which was created by Facebook. While Jest is a general purpose JavaScript unit
+which was created by Facebook. While Jest is a general-purpose JavaScript unit
 testing framework, it has lots of features that make it work particularly well
 with React.
 
@@ -20,7 +20,7 @@ concepts should be the same or very similar for your site._
 
 ### 1. Installing dependencies
 
-First you need to install Jest and some more required packages. We install babel-jest and babel-preset-gatsby to ensure that the babel preset(s) that are used match what are used internally for your Gatsby site.
+First, you need to install Jest and some more required packages. Install babel-jest and babel-preset-gatsby to ensure that the babel preset(s) that are used match what are used internally for your Gatsby site.
 
 ```shell
 npm install --save-dev jest babel-jest react-test-renderer babel-preset-gatsby identity-obj-proxy
@@ -50,7 +50,7 @@ module.exports = {
 }
 ```
 
-Let's go over the content of this configuration file:
+Go over the content of this configuration file:
 
 - The `transform` section tells Jest that all `js` or `jsx` files need to be
   transformed using a `jest-preprocess.js` file in the project root. Go ahead and
@@ -66,12 +66,12 @@ module.exports = require("babel-jest").createTransformer(babelOptions)
 ```
 
 - The next option is `moduleNameMapper`. This
-  section works a bit like webpack rules, and tells Jest how to handle imports.
+  section works a bit like webpack rules and tells Jest how to handle imports.
   You are mainly concerned here with mocking static file imports, which Jest can't
   handle. A mock is a dummy module that is used instead of the real module inside
   tests. It is good when you have something that you can't or don't want to test.
   You can mock anything, and here you are mocking assets rather than code. For
-  stylesheets you need to use the package `identity-obj-proxy`. For all other assets
+  stylesheets you need to use the package `identity-obj-proxy`. For all other assets,
   you need to use a manual mock called `file-mock.js`. You need to create this yourself.
   The convention is to create a directory called `__mocks__` in the root directory
   for this. Note the pair of double underscores in the name.
@@ -83,7 +83,7 @@ module.exports = "test-file-stub"
 - The next config setting is `testPathIgnorePatterns`. You are telling Jest to ignore
   any tests in the `node_modules` or `.cache` directories.
 
-- The next option is very important, and is different from what you'll find in other
+- The next option is very important and is different from what you'll find in other
   Jest guides. The reason that you need `transformIgnorePatterns` is because Gatsby
   includes un-transpiled ES6 code. By default Jest doesn't try to transform code
   inside `node_modules`, so you will get an error like this:
@@ -121,7 +121,7 @@ global.___loader = {
 
 #### Mocking `gatsby`
 
-Finally it's a good idea to mock the `gatsby` module itself. This may not be
+Finally, it's a good idea to mock the `gatsby` module itself. This may not be
 needed at first, but will make things a lot easier if you want to test
 components that use `Link` or GraphQL.
 
@@ -165,7 +165,7 @@ start with a simple snapshot test to check that everything is working.
 First, create the test file. You can either put these in a `__tests__`
 directory, or put them elsewhere (usually next to the component itself), with
 the extension `.spec.js` or `.test.js`. The decision comes down to your own
-preference. In this guide, we will use the `__tests__` folder convention. Let's create a test for our header component, so create a `header.js` file in `src/components/__tests__/`:
+preference. In this guide, you will use the `__tests__` folder convention. To test the header component, create a `header.js` file in `src/components/__tests__/`:
 
 ```js:title=src/components/__tests__/header.js
 import React from "react"
@@ -184,7 +184,7 @@ describe("Header", () => {
 ```
 
 This is a very simple snapshot test, which uses `react-test-renderer` to render
-the component, and then generates a snapshot of it on first run. It then
+the component, and then generates a snapshot of it on the first run. It then
 compares future snapshots against this, which means you can quickly check for
 regressions. Visit [the Jest docs](https://jestjs.io/docs/en/getting-started) to
 learn more about other tests that you can write.
@@ -193,7 +193,7 @@ learn more about other tests that you can write.
 
 If you look inside `package.json` you will probably find that there is already a
 script for `test`, which just outputs an error message. Change this to use the
-`jest` executable that we now have available, like so:
+`jest` executable that you now have available, like so:
 
 ```json:title=package.json
   "scripts": {
@@ -259,7 +259,7 @@ file inside a `__tests__` directory, or any file elsewhere with the extension
 Option `moduleFileExtensions` is needed when working with TypeScript.
 The only thing it is doing is telling Jest which file extensions you can
 import in your files without making precise the file extension. By default,
-it works with `js`, `json`, `jsx`, `node` file extensions so we just need
+it works with `js`, `json`, `jsx`, `node` file extensions so you just need
 to add `ts` and `tsx`. You can read more about it in [Jest's documentation](https://jestjs.io/docs/en/configuration.html#modulefileextensions-array-string).
 
 ## Other resources

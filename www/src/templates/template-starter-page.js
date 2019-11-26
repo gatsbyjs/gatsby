@@ -1,8 +1,9 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
 
-import { mediaQueries } from "../gatsby-plugin-theme-ui"
 import Layout from "../components/layout"
 import StarterHeader from "../views/starter/header"
 import StarterMeta from "../views/starter/meta"
@@ -94,12 +95,9 @@ class StarterTemplate extends React.Component {
             </Helmet>
             <StarterHeader stub={starterShowcase.stub} />
             <div
-              css={{
+              sx={{
                 display: `flex`,
-                flexDirection: `column-reverse`,
-                [mediaQueries.sm]: {
-                  flexDirection: `column`,
-                },
+                flexDirection: [`column-reverse`, `column`],
               }}
             >
               <StarterMeta

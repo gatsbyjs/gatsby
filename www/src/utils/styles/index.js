@@ -7,7 +7,6 @@ import {
   radii,
   fontSizes,
   fontWeights,
-  lineHeights,
   fonts,
 } from "../../gatsby-plugin-theme-ui"
 
@@ -97,22 +96,6 @@ export const svgStyles = t => {
       "& .svg-fill-light.svg-fill-transparent": { fill: `icon.lightActive` },
     },
   }
-}
-
-// This is an exceptionally bad name
-export const linkStyles = {
-  fontSize: fontSizes[1],
-  lineHeight: lineHeights.solid,
-  padding: `${space[3]} 0`,
-  "&&": {
-    border: 0,
-    color: colors.textMuted,
-    display: `flex`,
-    fontWeight: fontWeights.body,
-  },
-  "&&:hover": {
-    color: colors.gatsby,
-  },
 }
 
 // form elements

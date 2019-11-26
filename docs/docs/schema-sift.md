@@ -2,9 +2,11 @@
 title: Querying with Sift
 ---
 
-> This documentation isn't up to date with latest
-> [schema customization changes](/docs/schema-customization). Help Gatsby by
-> making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228)!
+> This documentation isn't up to date with the latest version of Gatsby.
+>
+> The [schema customization](/docs/schema-customization) and [node materialisation](https://github.com/gatsbyjs/gatsby/pull/16091) features have both made changes to this part of Gatsby.
+>
+> You can help by making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228).
 
 ## Summary
 

@@ -1,5 +1,5 @@
 ---
-title: Working With Video
+title: Working with Video
 ---
 
 - [Sourcing video from a host](#sourcing-video-from-a-host)
@@ -23,7 +23,8 @@ If you would like more control over how YouTube (or similar) videos are embedded
 
 In this reusable sample component, you could include props for video data like URL or title, any necessary markup for styling purposes, and the common `iframe` embed code:
 
-```js:title=components/video.js
+```jsx:title=src/components/video.js
+import React from "react"
 const Video = ({ videoSrcURL, videoTitle, ...props }) => (
   <div className="video">
     <iframe
@@ -37,6 +38,7 @@ const Video = ({ videoSrcURL, videoTitle, ...props }) => (
     />
   </div>
 )
+export default Video
 ```
 
 You would then include this component in a template or page with a video source URL and title passed in as props. The data for video URLs and titles can be sourced in multiple ways, such as importing JSON or [querying data from Markdown with GraphQL](#querying-data-from-markdown-with-graphql). You can also hard-code video data for something fun, like a custom 404 page with an Easter egg YouTube video:
@@ -68,7 +70,7 @@ export default NotFoundPage
 
 ## Querying video data from Markdown with GraphQL
 
-If a Markdown page or post has a featured video, you might want to include a video URL and title in [its frontmatter](/docs/adding-markdown-pages#note-on-creating-markdown-files). That makes it easy to pass those values into our custom component:
+If a Markdown page or post has a featured video, you might want to include a video URL and title in [its frontmatter](/docs/adding-markdown-pages#note-on-creating-markdown-files). This allows you to pass those values into your custom component:
 
 ```markdown:title=my-first-post.md
 ---
@@ -91,7 +93,7 @@ import Video from "../components/video"
 export default function VlogTemplate({
   data, // this prop will be injected by the GraphQL query below.
 }) {
-  const { markdownRemark } = data // data.markdownRemark holds our post data
+  const { markdownRemark } = data // data.markdownRemark holds your post data
   const { frontmatter, html } = markdownRemark
   return (
     <div className="blog-post-container">
@@ -173,7 +175,7 @@ export default () => (
 
 Even though there are two `<source>` elements, only one video will be displayed, first `mp4` if it is supported, then `.ogg`.
 
-**Note**: this requires importing a video in the format of the type specified, i.e. adding a `<source>` element with `type=video/ogg` would also need a file import with a format of `.ogg`. Alternatively, you can specify a URL to where a video is remotely hosted as the `src` instead of importing a local file.
+**Note**: This requires importing a video in the format of the type specified, i.e. adding a `<source>` element with `type=video/ogg` would also need a file import with a format of `.ogg`. Alternatively, you can specify a URL to where a video is remotely hosted as the `src` instead of importing a local file.
 
 [See an example repository using `<video>` elements](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-video/)
 
@@ -207,6 +209,6 @@ export default () => (
 
 The kind attribute can be of a variety of different types including `captions`, `subtitles`, and `descriptions`, among others. The `srcLang` defines English as the language used in the captions in the example, and the captions file imported is used as the source. You can read about the specific attributes of a [`<track>` on MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/track).
 
-**Note**: the filepath to import the captions in the above code snippet includes the `file-loader!` prefix, which helps webpack import the `.vtt` caption file.
+**Note**: The filepath to import the captions in the above code snippet includes the `file-loader!` prefix, which helps webpack import the `.vtt` caption file.
 
 Check out the accessible [HTML5 video player from PayPal](https://github.com/paypal/accessible-html5-video-player#react-version) for an example compatible with Gatsby and React.

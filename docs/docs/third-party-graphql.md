@@ -1,5 +1,5 @@
 ---
-title: "Using third-party GraphQL APIs"
+title: Using Third-party GraphQL APIs
 ---
 
 Gatsby v2 introduces a simple way to integrate any GraphQL API into Gatsby's GraphQL. You can integrate both third-party APIs, like GitHub's, APIs of services like GraphCMS or your custom GraphQL API.
@@ -95,7 +95,7 @@ exports.createPages = async ({ actions, graphql }) => {
 
 ## Further reading
 
-- [graphql-source-graphql docs](/packages/gatsby-source-graphql)
+- [gatsby-source-graphql docs](/packages/gatsby-source-graphql)
 - [Example with GitHub API](https://github.com/freiksenet/gatsby-github-displayer)
 - [Example with GraphCMS](https://github.com/freiksenet/gatsby-graphcms)
 - [Example with Hasura](https://github.com/hasura/graphql-engine/tree/master/community/sample-apps/gatsby-postgres-graphql)

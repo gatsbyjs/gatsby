@@ -410,21 +410,41 @@ class ContextualNodeModel {
     })
   }
 
-  getNodeById(...args) {
-    return this.nodeModel.getNodeById(...args)
+  _getFullDependencies(pageDependencies) {
+    return {
+      path: this.context.path,
+      ...(pageDependencies || {}),
+    }
   }
 
-  getNodesByIds(...args) {
-    return this.nodeModel.getNodesByIds(...args)
+  getNodeById(args, pageDependencies) {
+    return this.nodeModel.getNodeById(
+      args,
+      this._getFullDependencies(pageDependencies)
+    )
   }
 
-  getAllNodes(...args) {
-    return this.nodeModel.getAllNodes(...args)
+  getNodesByIds(args, pageDependencies) {
+    return this.nodeModel.getNodesByIds(
+      args,
+      this._getFullDependencies(pageDependencies)
+    )
   }
 
-  runQuery(...args) {
-    return this.nodeModel.runQuery(...args)
+  getAllNodes(args, pageDependencies) {
+    const fullDependencies = pageDependencies
+      ? this._getFullDependencies(pageDependencies)
+      : null
+    return this.nodeModel.getAllNodes(args, fullDependencies)
   }
+
+  runQuery(args, pageDependencies) {
+    return this.nodeModel.runQuery(
+      args,
+      this._getFullDependencies(pageDependencies)
+    )
+  }
+
   prepareNodes(...args) {
     return this.nodeModel.prepareNodes(...args)
   }
@@ -446,12 +466,10 @@ class ContextualNodeModel {
   }
 
   trackPageDependencies(result, pageDependencies) {
-    const fullDependencies = {
-      path: this.context.path,
-      ...(pageDependencies || {}),
-    }
-
-    return this.nodeModel.trackPageDependencies(result, fullDependencies)
+    return this.nodeModel.trackPageDependencies(
+      result,
+      this._getFullDependencies(pageDependencies)
+    )
   }
 }
 
@@ -539,7 +557,7 @@ async function resolveRecursive(
   fieldsToResolve
 ) {
   const gqlFields = getFields(schema, type, node)
-  let resolvedFields = {}
+  const resolvedFields = {}
   for (const fieldName of Object.keys(fieldsToResolve)) {
     const fieldToResolve = fieldsToResolve[fieldName]
     const queryField = queryFields[fieldName]
@@ -649,7 +667,7 @@ const determineResolvableFields = (
     const gqlField = gqlFields[fieldName]
     const gqlFieldType = getNamedType(gqlField.type)
     const typeComposer = schemaComposer.getAnyTC(type.name)
-    let possibleTCs = [
+    const possibleTCs = [
       typeComposer,
       ...nodeTypeNames.map(name => schemaComposer.getAnyTC(name)),
     ]

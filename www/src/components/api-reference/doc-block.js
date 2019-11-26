@@ -16,7 +16,6 @@ import {
 import ReturnBlock from "./returns"
 import { Header, LinkBox } from "./utils"
 import { scale } from "../../utils/typography"
-import { linkStyles } from "../../utils/styles"
 import GithubIcon from "react-icons/lib/go/mark-github"
 
 const Optional = styled(`span`)`
@@ -52,7 +51,7 @@ const APILink = ({ definition, relativeFilePath }) => {
     return (
       <a
         sx={{
-          ...linkStyles,
+          variant: `links.muted`,
           display: `inline-flex !important`,
         }}
         href={`https://github.com/gatsbyjs/gatsby/blob/${process.env.COMMIT_SHA}/packages/${relativeFilePath}#L${definition.codeLocation.start.line}-L${definition.codeLocation.end.line}`}
@@ -72,7 +71,7 @@ const APILink = ({ definition, relativeFilePath }) => {
     return (
       <a
         sx={{
-          ...linkStyles,
+          variant: `links.muted`,
           display: `inline-flex !important`,
         }}
         href={`https://github.com/gatsbyjs/gatsby/blob/${process.env.COMMIT_SHA}/packages/${definition.codeLocation.file}#L${definition.codeLocation.start.line}-L${definition.codeLocation.end.line}`}
@@ -92,7 +91,7 @@ const APILink = ({ definition, relativeFilePath }) => {
     return (
       <div
         sx={{
-          ...linkStyles,
+          variant: `links.muted`,
           "&&:hover": {
             color: `textMuted`,
           },
@@ -129,9 +128,8 @@ const AvailableIn = ({ definition }) => {
           <a
             key={api}
             href={`/docs/node-apis/#${api}`}
-            css={linkStyles}
             sx={{
-              ...linkStyles,
+              variant: `links.muted`,
               display: `inline-block`,
               ml: 2,
             }}

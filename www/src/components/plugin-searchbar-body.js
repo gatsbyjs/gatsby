@@ -82,7 +82,7 @@ const searchBoxStyles = t => css`
 
     :active,
     :focus {
-      /* box-shadow: 0 0 0 2px ${t.colors.themedInput.focusBoxShadow}; */
+      box-shadow: 0 0 0 2px ${t.colors.themedInput.focusBoxShadow};
       background: ${t.colors.themedInput.backgroundFocus};
     }
 
@@ -195,14 +195,7 @@ const searchBoxStyles = t => css`
 class Search extends Component {
   render() {
     return (
-      <div
-        sx={{
-          pb: 11,
-          [mediaQueries.md]: {
-            pb: 0,
-          },
-        }}
-      >
+      <div sx={{ pb: [11, null, null, 0] }}>
         <div
           sx={{
             borderBottomWidth: `1px`,

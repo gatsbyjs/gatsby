@@ -3,6 +3,122 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.8.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.13...gatsby-cli@2.8.14) (2019-11-26)
+
+### Bug Fixes
+
+- **gatsby:** Remove relay compiler & use our own ([#19665](https://github.com/gatsbyjs/gatsby/issues/19665)) ([bda9f1f](https://github.com/gatsbyjs/gatsby/commit/bda9f1f))
+
+## [2.8.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.12...gatsby-cli@2.8.13) (2019-11-20)
+
+### Bug Fixes
+
+- update dependency update-notifier to v3 ([#19613](https://github.com/gatsbyjs/gatsby/issues/19613)) ([80af751](https://github.com/gatsbyjs/gatsby/commit/80af751))
+- **gatsby-cli:** only emit endActivity events for activity tha… ([#19617](https://github.com/gatsbyjs/gatsby/issues/19617)) ([79bd29b](https://github.com/gatsbyjs/gatsby/commit/79bd29b))
+
+## [2.8.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.11...gatsby-cli@2.8.12) (2019-11-18)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.8.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.10...gatsby-cli@2.8.11) (2019-11-15)
+
+### Bug Fixes
+
+- update dependency better-opn to v1 ([#19483](https://github.com/gatsbyjs/gatsby/issues/19483)) ([10a8f65](https://github.com/gatsbyjs/gatsby/commit/10a8f65))
+- update dependency convert-hrtime to v3 ([#19530](https://github.com/gatsbyjs/gatsby/issues/19530)) ([1a5ddc5](https://github.com/gatsbyjs/gatsby/commit/1a5ddc5))
+- update dependency envinfo to v7 ([#19537](https://github.com/gatsbyjs/gatsby/issues/19537)) ([265371d](https://github.com/gatsbyjs/gatsby/commit/265371d))
+- update dependency execa to v3 ([#19532](https://github.com/gatsbyjs/gatsby/issues/19532)) ([ae50422](https://github.com/gatsbyjs/gatsby/commit/ae50422))
+
+## [2.8.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.9...gatsby-cli@2.8.10) (2019-11-13)
+
+### Bug Fixes
+
+- **gatsby-cli:** remove \$ for better copy paste ([#19390](https://github.com/gatsbyjs/gatsby/issues/19390)) ([976f6c8](https://github.com/gatsbyjs/gatsby/commit/976f6c8))
+
+## [2.8.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.8...gatsby-cli@2.8.9) (2019-11-10)
+
+### Bug Fixes
+
+- **gatsby-cli:** Clean up on unmount in the ink logger ([#19312](https://github.com/gatsbyjs/gatsby/issues/19312)) ([d2fdae0](https://github.com/gatsbyjs/gatsby/commit/d2fdae0))
+
+## [2.8.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.7...gatsby-cli@2.8.8) (2019-10-29)
+
+### Features
+
+- **gatsby:** enable local themes ([#15856](https://github.com/gatsbyjs/gatsby/issues/15856)) ([bd85555](https://github.com/gatsbyjs/gatsby/commit/bd85555))
+
+## [2.8.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.6...gatsby-cli@2.8.7) (2019-10-28)
+
+### Features
+
+- **gatsby-core-utils:** Add isCI and getCIName ([#19039](https://github.com/gatsbyjs/gatsby/issues/19039)) ([d97bee6](https://github.com/gatsbyjs/gatsby/commit/d97bee6))
+
+## [2.8.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.5...gatsby-cli@2.8.6) (2019-10-28)
+
+### Bug Fixes
+
+- **gatsby-cli:** handle git commit failures ([#18839](https://github.com/gatsbyjs/gatsby/issues/18839)) ([8762cb3](https://github.com/gatsbyjs/gatsby/commit/8762cb3))
+- update minor updates in packages ([#18875](https://github.com/gatsbyjs/gatsby/issues/18875)) ([b692879](https://github.com/gatsbyjs/gatsby/commit/b692879))
+
+### Features
+
+- **gatsby-cli:** Add command-line argument for logger ([#18818](https://github.com/gatsbyjs/gatsby/issues/18818)) ([5cb95b5](https://github.com/gatsbyjs/gatsby/commit/5cb95b5))
+
+## [2.8.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.4...gatsby-cli@2.8.5) (2019-10-23)
+
+### Features
+
+- **gatsby:** Ensure status is set to Failed for thrown errors or panicOnBuild in plugins ([#18887](https://github.com/gatsbyjs/gatsby/issues/18887)) ([d7950e1](https://github.com/gatsbyjs/gatsby/commit/d7950e1))
+
+## [2.8.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.3...gatsby-cli@2.8.4) (2019-10-22)
+
+### Bug Fixes
+
+- **gatsby-cli:** properly update chalk color level ([#18533](https://github.com/gatsbyjs/gatsby/issues/18533)) ([800d40c](https://github.com/gatsbyjs/gatsby/commit/800d40c))
+
+## [2.8.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.2...gatsby-cli@2.8.3) (2019-10-18)
+
+### Bug Fixes
+
+- **gatsby-cli:** re-add reporter.\_setStage as no-op function ([#18797](https://github.com/gatsbyjs/gatsby/issues/18797)) ([22f3da7](https://github.com/gatsbyjs/gatsby/commit/22f3da7))
+
+## [2.8.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.1...gatsby-cli@2.8.2) (2019-10-17)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.8.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.0...gatsby-cli@2.8.1) (2019-10-14)
+
+### Bug Fixes
+
+- **gatsby-cli:** work around react-redux hidden dependency on react-dom ([#18607](https://github.com/gatsbyjs/gatsby/issues/18607)) ([01a8354](https://github.com/gatsbyjs/gatsby/commit/01a8354))
+- update dependency core-js to ^2.6.10 ([#18569](https://github.com/gatsbyjs/gatsby/issues/18569)) ([7a20eb7](https://github.com/gatsbyjs/gatsby/commit/7a20eb7))
+- update dependency react-redux to ^7.1.1 ([#18592](https://github.com/gatsbyjs/gatsby/issues/18592)) ([e7da47e](https://github.com/gatsbyjs/gatsby/commit/e7da47e))
+
+### Features
+
+- **gatsby-cli:** Add instructions after new ([#18332](https://github.com/gatsbyjs/gatsby/issues/18332)) ([a1dffac](https://github.com/gatsbyjs/gatsby/commit/a1dffac))
+
+# [2.8.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.59...gatsby-cli@2.8.0) (2019-10-14)
+
+### Features
+
+- **gatsby:** structured logging ([#14973](https://github.com/gatsbyjs/gatsby/issues/14973)) ([eafb8c6](https://github.com/gatsbyjs/gatsby/commit/eafb8c6))
+
+## [2.7.59](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.58...gatsby-cli@2.7.59) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.7.58](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.57...gatsby-cli@2.7.58) (2019-10-10)
+
+### Bug Fixes
+
+- fixed warning componentWillUpdate has been renamed ([#18026](https://github.com/gatsbyjs/gatsby/issues/18026)) ([53473cc](https://github.com/gatsbyjs/gatsby/commit/53473cc)), closes [#17994](https://github.com/gatsbyjs/gatsby/issues/17994)
+- update dependency execa to ^2.1.0 ([#18369](https://github.com/gatsbyjs/gatsby/issues/18369)) ([e05096e](https://github.com/gatsbyjs/gatsby/commit/e05096e))
+
+## [2.7.57](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.56...gatsby-cli@2.7.57) (2019-10-09)
+
+**Note:** Version bump only for package gatsby-cli
+
 ## [2.7.56](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.7.55...gatsby-cli@2.7.56) (2019-10-08)
 
 ### Bug Fixes

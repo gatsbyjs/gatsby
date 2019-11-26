@@ -22,7 +22,7 @@ The flexibility of Kentico Cloud means there are many ways to achieve the same g
 
 ## Identify your language
 
-Our first step is to determine how we are going to identify cultures or languages from the front end of the site. As Kentico Cloud is purely a content hub, there’s not the same set of localization web parts and widgets that you might get from a product like Kentico EMS. We need an alternative to pick up that culture code.
+Our first step is to determine how we are going to identify cultures or languages from the frontend of the site. As Kentico Cloud is purely a content hub, there’s not the same set of localization web parts and widgets that you might get from a product like Kentico EMS. We need an alternative to pick up that culture code.
 
 There are a few options here. You could be using a simple language switcher control on your site or application. Or, it might be as simple as deriving it from the URL e.g. _www.mysite.com/en-gb/about-us_ or _www.mysite.com/about-us?lang=en-gb_.
 
@@ -55,7 +55,7 @@ One thing to remember at this point is that if you want to use similar text (or 
 
 Now we have the localized string Content Types and Content Items created in Kentico Cloud, the next step is to retrieve the content. I'm using the awesome and very popular static site generator [GatsbyJS](/) with [GraphQL](https://graphql.org/), a query language for your API.
 
-_(Another assumption for you... We’re assuming you have GatsbyJS + GraphQL set up for your project. If not, you can find a starting point here, [GatsbyJS sourcing from Kentico Cloud](/docs/sourcing-from-kentico-cloud/).)_
+_(Another assumption for you... We’re assuming you have GatsbyJS + GraphQL set up for your project. If not, you can find a starting point here, [GatsbyJS sourcing from Kentico Cloud](/docs/sourcing-from-kentico-kontent/).)_
 
 With your content items in Kentico Cloud, you should be able to see them when you conduct a GraphQL query.
 

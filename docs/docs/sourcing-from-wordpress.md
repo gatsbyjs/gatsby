@@ -122,7 +122,7 @@ When you restart your server with the `gatsby develop` command, you'll be able t
 
 In the GraphiQL IDE at [localhost:8000/\_\_graphql](http://localhost:8000/__graphql) you should now see queryable fields for `allWordpressPosts` in the docs or explorer sidebar.
 
-## Wrapping Up
+## Wrapping up
 
 This was a very basic example meant to help you understand how you can fetch data from WordPress and use it with Gatsby. As
 the guide mentioned already, if you got stuck, you can have a look at

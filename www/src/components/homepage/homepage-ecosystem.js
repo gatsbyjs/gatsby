@@ -186,7 +186,9 @@ const HomepageEcosystem = ({ featuredItems }) => (
       <Section
         title="External Resources"
         description="A curated list of interesting Gatsby community projects and learning resources like podcasts and tutorials."
-        links={[{ label: `Browse Resources`, to: `/docs/awesome-gatsby/` }]}
+        links={[
+          { label: `Browse Resources`, to: `/docs/awesome-gatsby-resources/` },
+        ]}
       />
     </Sections>
     <SubTitle>Some of our recent favorites</SubTitle>

@@ -3,7 +3,7 @@
 const { graphql } = require(`graphql`)
 const nodeStore = require(`../../../db/nodes`)
 const path = require(`path`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 const { store } = require(`../../../redux`)
 const { actions } = require(`../../../redux/actions`)
 const { buildSchema } = require(`../../schema`)
@@ -26,6 +26,12 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
         end: jest.fn(),
       }
     },
+    phantomActivity: () => {
+      return {
+        start: jest.fn(),
+        end: jest.fn(),
+      }
+    },
   }
 })
 const report = require(`gatsby-cli/lib/reporter`)
@@ -43,7 +49,10 @@ const makeNodes = () => [
     hair: 1,
     date: `1012-11-01`,
     anArray: [1, 2, 3, 4],
-    aNestedArray: [[1, 2, 3, 4], [5, 6, 7, 8]],
+    aNestedArray: [
+      [1, 2, 3, 4],
+      [5, 6, 7, 8],
+    ],
     anObjectArray: [
       { aString: `some string`, aNumber: 2, aBoolean: true },
       { aString: `some string`, aNumber: 2, anArray: [1, 2] },
@@ -117,7 +126,10 @@ describe(`GraphQL type inference`, () => {
         payload: { name, extension },
       })
     })
-    const { fieldExtensions } = store.getState().schemaCustomization
+    const {
+      schemaCustomization: { fieldExtensions },
+      inferenceMetadata,
+    } = store.getState()
     const schemaComposer = createSchemaComposer({ fieldExtensions })
     const schema = await buildSchema({
       schemaComposer,
@@ -127,6 +139,7 @@ describe(`GraphQL type inference`, () => {
       thirdPartySchemas: [],
       typeMapping: [],
       typeConflictReporter,
+      inferenceMetadata,
       ...(buildSchemaArgs || {}),
     })
     return { schema, schemaComposer }

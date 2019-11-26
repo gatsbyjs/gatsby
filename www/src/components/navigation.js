@@ -17,14 +17,23 @@ import DarkModeToggle from "../components/dark-mode-toggle"
 // on the baseline of the logo's wordmark
 const navItemTopOffset = `0.4rem`
 // theme-ui values
-const navItemHorizontalSpacing = 2
+const navItemHorizontalSpacing = [1, null, 2]
+
+const overrideDefaultMdLineHeight = {
+  [mediaQueries.md]: {
+    lineHeight: t => t.sizes.headerHeight,
+  },
+}
 
 const navItemStyles = {
   borderBottom: `2px solid transparent`,
   color: `navigation.linkDefault`,
   display: `block`,
   fontSize: 3,
-  lineHeight: t => `calc(${t.sizes.headerHeight} - ${navItemTopOffset})`,
+  lineHeight: t => t.sizes.headerHeight,
+  [mediaQueries.md]: {
+    lineHeight: t => `calc(${t.sizes.headerHeight} - ${navItemTopOffset})`,
+  },
   position: `relative`,
   textDecoration: `none`,
   zIndex: 1,
@@ -42,11 +51,12 @@ const NavItem = ({ linkTo, children }) => (
     <Link
       to={linkTo}
       activeClassName="active"
+      partiallyActive={true}
       sx={{
         ...navItemStyles,
         "&.active": {
           borderBottomColor: `lilac`,
-          color: `lilac`,
+          color: `navigation.linkActive`,
         },
       }}
     >
@@ -61,6 +71,7 @@ const SocialNavItem = ({ href, title, children }) => (
     title={title}
     sx={{
       ...navItemStyles,
+      ...overrideDefaultMdLineHeight,
       color: `navigation.socialLink`,
       px: navItemHorizontalSpacing,
     }}
@@ -131,8 +142,12 @@ const Navigation = ({ pathname }) => {
             color: `inherit`,
             display: `flex`,
             flexShrink: 0,
-            mr: 3,
+            height: `logo`,
+            mr: [1, null, 3],
             textDecoration: `none`,
+            /* chop logo down to just the monogram for small screens */
+            width: [`24px`, null, `auto`],
+            overflow: [`hidden`, null, `visible`],
           }}
           aria-label="Gatsby, Back to homepage"
         >
@@ -140,6 +155,8 @@ const Navigation = ({ pathname }) => {
             src={colorMode === `light` ? logo : logoInverted}
             sx={{
               height: `logo`,
+              width: `auto`,
+              maxWidth: `none`,
               m: 0,
             }}
             alt="Gatsby Logo"
@@ -171,9 +188,7 @@ const Navigation = ({ pathname }) => {
                 listStyle: `none`,
                 m: 0,
                 maskImage: t =>
-                  `linear-gradient(to right, transparent, white ${
-                    t.space[1]
-                  }, white 98%, transparent)`,
+                  `linear-gradient(to right, transparent, white ${t.space[1]}, white 98%, transparent)`,
                 overflowX: `auto`,
               },
             }}
@@ -223,8 +238,9 @@ const Navigation = ({ pathname }) => {
           <div
             sx={{
               ...navItemStyles,
+              ...overrideDefaultMdLineHeight,
               color: `navigation.socialLink`,
-              ml: 2,
+              ml: navItemHorizontalSpacing,
               "&:hover": {
                 color: `navigation.linkHover`,
               },

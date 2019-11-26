@@ -4,12 +4,7 @@ import React from "react"
 import { Link } from "gatsby"
 import MdLoop from "react-icons/lib/md/loop"
 
-import {
-  fontSizes,
-  radii,
-  transition,
-  mediaQueries,
-} from "gatsby-design-tokens"
+import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 
 // Components for building sections used in the model
 const LayerContentWrapper = ({ index, children }) => (
@@ -39,16 +34,13 @@ const LayerContentWrapper = ({ index, children }) => (
 const ExampleWrapper = ({ children }) => (
   <div
     sx={{
-      borderRadius: 3,
+      borderRadius: 2,
       overflow: `auto`,
     }}
   >
     {children}
   </div>
 )
-
-// prettier-ignore
-const transitionProperty = `${transition.speed.default} ${transition.curve.default}`
 
 const CodeWrapper = ({
   title,
@@ -66,12 +58,12 @@ const CodeWrapper = ({
           display: `flex`,
           alignItems: `center`,
           justifyContent: `space-between`,
-          borderTopRightRadius: radii[3],
-          borderTopLeftRadius: radii[3],
+          borderTopRightRadius: 2,
+          borderTopLeftRadius: 2,
         }}
         className="gatsby-code-title"
       >
-        <div css={{ fontSize: fontSizes[0] }}>{title}</div>
+        <div sx={{ fontSize: 0 }}>{title}</div>
         {rotateButton && (
           <button
             sx={{
@@ -82,7 +74,8 @@ const CodeWrapper = ({
               color: `grey.60`,
               cursor: `pointer`,
               p: 2,
-              transition: transitionProperty,
+              transition: t =>
+                `${t.transition.speed.default} ${t.transition.curve.default}`,
               borderRadius: 2,
               whiteSpace: `nowrap`,
               ":focus, :hover, :active": {
@@ -296,31 +289,28 @@ const AppLayerContent = ({ index }) => (
   <LayerContentWrapper key={`content-wrapper${index}`} index={index}>
     <ExampleWrapper>
       <div
-        css={{
+        sx={{
+          border: t => `1px solid ${t.colors.ui.border}`,
+          borderRadius: 2,
           display: `flex`,
           flexDirection: `column`,
           height: `100%`,
+          background: `ui.background`,
         }}
       >
         <div
           sx={{
-            padding: 2,
-            backgroundColor: `grey.10`,
-            borderTopRightRadius: radii[2],
-            borderTopLeftRadius: radii[2],
-            border: t => `1px solid ${t.colors.ui.border.subtle}`,
+            p: 3,
+            borderBottom: t => `1px solid ${t.colors.ui.border}`,
           }}
         >
           Home
         </div>
         <div
           sx={{
-            p: 2,
-            borderBottomRightRadius: radii[2],
-            borderBottomLeftRadius: radii[2],
-            backgroundColor: `white`,
-            border: t => `1px solid ${t.colors.ui.border.subtle}`,
+            p: 3,
             height: `100%`,
+            background: `ui.background`,
           }}
         >
           Gatsby tips

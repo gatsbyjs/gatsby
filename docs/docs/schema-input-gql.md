@@ -2,9 +2,14 @@
 title: Inferring Input Filters
 ---
 
-> This documentation isn't up to date with latest
-> [schema customization changes](/docs/schema-customization). Help Gatsby by
-> making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228)!
+> This documentation isn't up to date with the latest [schema customization changes](/docs/schema-customization).
+>
+> Outdated areas are:
+>
+> - `inferObjectStructureFromNodes` does not exist anymore
+> - input fields are generated differently. Gatsby previously inferred values one by one, now graphql-compose handles this
+>
+> You can help by making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228).
 
 ## Input Filters vs gqlType
 

@@ -10,6 +10,13 @@ import { mediaQueries } from "../gatsby-plugin-theme-ui"
 // https://codepen.io/aaroniker/pen/KGpXZo
 
 const IconWrapper = styled.button`
+  /*
+    both padding and appearance are here to help
+    Mobile Safari rendering correctly, at least on
+    older iOS versions — tested on iOS 12.4.2 / iPhone 5s
+  */
+  padding: 0;
+  appearance: none;
   align-items: center;
   background: transparent;
   border-radius: 5px;
@@ -129,7 +136,6 @@ function DarkModeToggle() {
     <IconWrapper
       isDark={isDark}
       onClick={toggleColorMode}
-      data-a11y="false"
       aria-label={isDark ? `Activate light mode` : `Activate dark mode`}
       title={isDark ? `Activate light mode` : `Activate dark mode`}
     >
