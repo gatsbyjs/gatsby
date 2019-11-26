@@ -116,7 +116,13 @@ export const parseQueries = async ({
   // inside <searched_directory>/node_modules.
   const pathRegex = `/{${filesRegex},!(node_modules)/**/${filesRegex}}`
 
-  const modulesThatUseGatsby = await getGatsbyDependents()
+  let modulesThatUseGatsby = await getGatsbyDependents()
+
+  // Exclude unused themes.
+  modulesThatUseGatsby = modulesThatUseGatsby.filter(module =>
+    /gatsby-theme/.test(module.name)
+      ? this.additional.includes(module.path)
+      : true
 
   let files = [
     path.join(base, `src`),
