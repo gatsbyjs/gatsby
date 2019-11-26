@@ -54,6 +54,13 @@ const Title = ({ children, location }) => {
   }
 }
 
+const iconCss = [
+  css({
+    pointerEvents: `none`,
+  }),
+  { margin: 4 }, // Explicitly leave margin out of theme-ui, this positioning should not change based on theme
+]
+
 const checkedIcon = (
   <img
     alt="moon indicating dark mode"
@@ -61,10 +68,7 @@ const checkedIcon = (
     width="16"
     height="16"
     role="presentation"
-    css={css({
-      pointerEvents: `none`,
-      margin: 4,
-    })}
+    css={iconCss}
   />
 )
 
@@ -75,10 +79,7 @@ const uncheckedIcon = (
     width="16"
     height="16"
     role="presentation"
-    css={css({
-      pointerEvents: `none`,
-      margin: 4,
-    })}
+    css={iconCss}
   />
 )
 
