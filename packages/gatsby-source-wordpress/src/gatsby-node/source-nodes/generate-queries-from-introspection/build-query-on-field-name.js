@@ -1,6 +1,10 @@
 import Query from "graphql-query-builder"
 import { dd } from "dumper.js"
 const transformField = field => {
+  if (!field) {
+    return null
+  }
+
   if (
     field.args.length &&
     // remove fields that have required args. They'll cause query errors if ommitted
@@ -10,7 +14,8 @@ const transformField = field => {
     return null
   }
 
-  // temp remove unions
+  // temp remove unions. graphql-query-builder doesn't seem to support them
+  // probably need to do something custom instead of using that package
   if (field.type && field.type.kind === `UNION`) {
     return null
   }
