@@ -1,5 +1,6 @@
 // @flow
 
+const fs = require(`fs-extra`)
 import { print, visit, getLocation } from "graphql"
 import { codeFrameColumns } from "@babel/code-frame"
 const levenshtein = require(`fast-levenshtein`)
@@ -233,6 +234,13 @@ export function unknownFragmentError({
     .filter(f => f.score < 10)
     .sort((a, b) => a.score > b.score)[0]?.fragment
 
+  let text
+  try {
+    text = fs.readFileSync(filePath, { encoding: `utf-8` })
+  } catch {
+    text = definition.text
+  }
+
   return {
     id: `85908`,
     filePath,
@@ -240,7 +248,7 @@ export function unknownFragmentError({
       fragmentName: name,
       closestFragment,
       codeFrame: codeFrameColumns(
-        definition.text,
+        text,
         {
           start: locInGraphQlToLocInFile(
             definition.templateLoc,

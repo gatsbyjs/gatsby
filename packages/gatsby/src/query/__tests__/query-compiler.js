@@ -632,8 +632,14 @@ describe(`actual compiling`, () => {
           "filePath": "mockFile",
           "id": "85901",
           "location": Object {
-            "column": 16,
-            "line": 4,
+            "end": Object {
+              "column": 16,
+              "line": 4,
+            },
+            "start": Object {
+              "column": 16,
+              "line": 4,
+            },
           },
         },
       ]
@@ -791,8 +797,14 @@ describe(`actual compiling`, () => {
           "filePath": "mockFile",
           "id": "85901",
           "location": Object {
-            "column": 16,
-            "line": 3,
+            "end": Object {
+              "column": 16,
+              "line": 3,
+            },
+            "start": Object {
+              "column": 16,
+              "line": 3,
+            },
           },
         },
       ]

@@ -367,12 +367,16 @@ const processDefinitions = ({
             error: formattedMessage,
           })
         )
+        const location = locInGraphQlToLocInFile(
+          originalDefinition.templateLoc,
+          error.locations[0]
+        )
         addError(
           errorParser({
-            location: locInGraphQlToLocInFile(
-              originalDefinition.templateLoc,
-              error.locations[0]
-            ),
+            location: {
+              start: location,
+              end: location,
+            },
             message,
             filePath,
           })
