@@ -111,6 +111,7 @@ By default the tableOfContents is using the field `slug` to generate absolute UR
       node {
         html
         tableOfContents(
+          absolute: true
           pathToSlugField: "frontmatter.path"
           heading: "only show toc from this heading onwards"
           maxDepth: 2
