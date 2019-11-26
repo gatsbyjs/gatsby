@@ -103,7 +103,7 @@ export default ({ children, title, ...props }) => {
           css={css({
             display: `flex`,
             justifyContent: `space-between`,
-            alignItems: `baseline`,
+            alignItems: `center`,
             mb: 4,
           })}
         >
@@ -111,9 +111,6 @@ export default ({ children, title, ...props }) => {
           {children}
           <Switch
             aria-label="Toggle dark mode"
-            css={css({
-              bg: `black`,
-            })}
             checkedIcon={checkedIcon}
             uncheckedIcon={uncheckedIcon}
             checked={isDark}

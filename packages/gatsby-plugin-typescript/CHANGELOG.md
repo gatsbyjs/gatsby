@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typescript@2.1.18...gatsby-plugin-typescript@2.1.19) (2019-11-20)
+
+### Features
+
+- **gatsby-plugin-typescript:** add support for numeric separa… ([#19610](https://github.com/gatsbyjs/gatsby/issues/19610)) ([2921221](https://github.com/gatsbyjs/gatsby/commit/2921221))
+
 ## [2.1.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typescript@2.1.17...gatsby-plugin-typescript@2.1.18) (2019-11-15)
 
 **Note:** Version bump only for package gatsby-plugin-typescript

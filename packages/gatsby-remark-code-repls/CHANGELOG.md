@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@3.0.18...gatsby-remark-code-repls@3.0.19) (2019-11-20)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
 ## [3.0.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@3.0.17...gatsby-remark-code-repls@3.0.18) (2019-11-15)
 
 **Note:** Version bump only for package gatsby-remark-code-repls
