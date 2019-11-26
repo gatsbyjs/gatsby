@@ -120,9 +120,8 @@ export const parseQueries = async ({
 
   // Exclude unused themes.
   modulesThatUseGatsby = modulesThatUseGatsby.filter(module =>
-    /gatsby-theme/.test(module.name)
-      ? this.additional.includes(module.path)
-      : true
+    /gatsby-theme/.test(module.name) ? additional.includes(module.path) : true
+  )
 
   let files = [
     path.join(base, `src`),
