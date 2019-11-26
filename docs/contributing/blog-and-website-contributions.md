@@ -30,7 +30,7 @@ As a Gatsby community member, you have a unique insight into the ins and outs of
 
 Things we’re looking for in Gatsby blog content:
 
-- Information to help others overcome the challenges you’ve faced while working with Gatsby
+- Information to help others overcome challenges you’ve faced while working with Gatsby
 - Stories about how Gatsby helped you overcome different challenges on work and personal projects
 - Gatsby case studies
 - Showcasing a tool, fix, or other content you or someone else have contributed to Gatsby’s open source community
