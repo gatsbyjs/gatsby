@@ -57,7 +57,7 @@ raw content of the file and its _media type_.
 [A **media type**](https://en.wikipedia.org/wiki/Media_type) (also **MIME type**
 and **content type**) is an official way to identify the format of
 files/content that is transmitted on the internet, e.g. over HTTP or through
-email. You might be familiar with many media types such as
+email. You might be familiar with other media types such as
 `application/javascript`, `application/pdf`, `audio/mpeg`, `text/html`,
 `text/plain`, `image/jpeg`, etc.
 
@@ -92,7 +92,7 @@ not boilerplate.
 
 ## Gotcha: don't forget to return!
 
-After your plugin is finished sourcing nodes, it should either return a Promise or use the callback (3rd parameter) to report back to Gatsby when `sourceNodes` is fully executed. If a Promise or callback isn't returned, Gatsby will continue on in the build process, before nodes are finished being created. Without the necessary return your nodes might not end up in the generated schema at compilation time, or the process will hang while waiting for an indication that it's finished.
+After your plugin is finished sourcing nodes, it should either return a Promise or use the callback (3rd parameter) to report back to Gatsby when `sourceNodes` is fully executed. If a Promise or callback isn't returned, Gatsby will continue on in the build process, before nodes are finished being created. Without the necessary return statement your nodes might not end up in the generated schema at compilation time, or the process will hang while waiting for an indication that it's finished.
 
 ## Advanced
 
