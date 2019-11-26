@@ -10,6 +10,8 @@
     "@babel/runtime": "^7.6.3",
     "apollo-link": "1.2.13",
     "apollo-link-http": "^1.5.16",
+    "axios": "^0.19.0",
+    "axios-rate-limit": "^1.2.1",
     "graphql-query-builder": "^1.0.7",
     "graphql-tools": "^3.1.1",
     "invariant": "^2.2.4",
