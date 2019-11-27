@@ -87,7 +87,7 @@ const EvaluationCell = ({ num, style }) => (
     sx={{
       ...basicStyling,
       backgroundColor:
-        [`N/A`, `0`, ``].indexOf(num) !== -1 ? `orange.20` : `orange.50`,
+        [`N/A`, `0`, ``].includes(num) ? `orange.20` : `orange.50`,
       backgroundImage: getBackground(num),
       ...(style || {}),
     }}
