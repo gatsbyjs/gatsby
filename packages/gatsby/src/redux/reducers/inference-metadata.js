@@ -16,12 +16,14 @@ const StepsEnum = {
   incrementalBuild: `incrementalBuild`,
 }
 
-const initialState = {
-  step: StepsEnum.initialBuild, // `initialBuild` | `incrementalBuild`
-  typeMap: {},
+const initialState = () => {
+  return {
+    step: StepsEnum.initialBuild, // `initialBuild` | `incrementalBuild`
+    typeMap: {},
+  }
 }
 
-module.exports = (state = initialState, action) => {
+module.exports = (state = initialState(), action) => {
   switch (action.type) {
     case `CREATE_NODE`:
     case `DELETE_NODE`:
@@ -47,6 +49,10 @@ module.exports = (state = initialState, action) => {
       }
     }
 
+    case `DELETE_CACHE`: {
+      return initialState()
+    }
+
     default: {
       state.typeMap = incrementalReducer(state.typeMap, action)
       return state
@@ -66,9 +72,6 @@ const initialTypeMetadata = () => {
 
 const incrementalReducer = (state = {}, action) => {
   switch (action.type) {
-    case `DELETE_CACHE`:
-      return {}
-
     case `CREATE_TYPES`: {
       const typeDefs = Array.isArray(action.payload)
         ? action.payload
