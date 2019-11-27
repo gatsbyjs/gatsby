@@ -40,6 +40,7 @@ createPage({
   context: {},
 })
 ```
+For more information on this action, visit the [`createPage` API documentation](/docs/actions/#createPage).
 
 ## Conflicting Routes
 
