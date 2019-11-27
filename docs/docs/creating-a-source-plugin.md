@@ -13,16 +13,16 @@ Once a source plugin brings data into Gatsby's system, it can be transformed fur
 At a high-level, a source plugin:
 
 - Ensures local data is synced with its source and is 100% accurate.
-- Creates nodes with accurate media types, human meaningful types, and accurate
-  contentDigests.
+- Creates [nodes](/docs/node-interface/) with accurate media types, human-readable types, and accurate
+  [contentDigests](/docs/node-interface/#contentdigest).
 - Links nodes & creates relationships between them.
 - Lets Gatsby know when nodes are finished sourcing so it can move on to processing them.
 
 ## What does the code look like?
 
-A source plugin is a normal NPM package. It has a package.json with optional
-dependencies as well as a `gatsby-node.js` where you implement Gatsby's Node.js
-APIs.
+A source plugin is a regular NPM package. It has a `package.json` file with optional
+dependencies as well as a [`gatsby-node.js`](/docs/api-files-gatsby-node) file where you implement Gatsby's [Node
+APIs](/docs/node-apis/). Read more about [Files Gatsby Looks for in a Plugin](/docs/files-gatsby-looks-for-in-a-plugin/).
 
 Gatsby's minimum supported Node.js version is Node 8 and as it's common to want to use more modern Node.js and JavaScript syntax, many plugins write code in a
 source directory and compile the code. All plugins maintained in the Gatsby repo
@@ -55,30 +55,30 @@ Each node created by the filesystem source plugin includes the
 raw content of the file and its _media type_.
 
 [A **media type**](https://en.wikipedia.org/wiki/Media_type) (also **MIME type**
-and **content type**) are an official way to identify the format of
-files/content that is transmitted on the internet e.g. over HTTP or through
-email. You're probably familiar with many media types such as
+and **content type**) is an official way to identify the format of
+files/content that is transmitted on the internet, e.g. over HTTP or through
+email. You might be familiar with other media types such as
 `application/javascript`, `application/pdf`, `audio/mpeg`, `text/html`,
 `text/plain`, `image/jpeg`, etc.
 
 Each source plugin is responsible for setting the media type for the nodes they
 create. This way, source and transformer plugins can work together easily.
 
-This is not a required field -- if it's not provided, Gatsby will infer the type from data that is sent -- but it's the way for source plugins to indicate to
+This is not a required field -- if it's not provided, Gatsby will [infer](/docs/glossary#inference) the type from data that is sent -- but it's the way for source plugins to indicate to
 transformers that there is "raw" data that can still be further processed. It
-allows plugins to remain small and focused. Source plugins don't have to have
-opinions on how to transform their data. They can just set the `mediaType` and
-push that responsibility to transformer plugins.
+also allows plugins to remain small and focused. Source plugins don't have to have
+opinions on how to transform their data: they can set the `mediaType` and
+push that responsibility to transformer plugins, instead.
 
-For example, it's quite common for services to allow you to add content as
-markdown. If you pull that markdown into Gatsby and create a new node, what
-then? How would a user of your source plugin convert that markdown into HTML
-they can use in their site? Luckily you don't have to do anything. Just create a
-node for the markdown content and set its mediaType as `text/markdown` and the
-various Gatsby markdown transformer plugins will see your node and transform it
+For example, it's common for services to allow you to add content in
+Markdown format. If you pull that Markdown into Gatsby and create a new node, what
+then? How would a user of your source plugin convert that Markdown into HTML
+they can use in their site? You would create a
+node for the Markdown content and set its `mediaType` as `text/markdown` and the
+various Gatsby Markdown transformer plugins would see your node and transform it
 into HTML.
 
-This loose coupling between the data source and the transformer plugins allow Gatsby site builders to quickly assemble complex data transformation pipelines with
+This loose coupling between the data source and the transformer plugins allow Gatsby site builders to assemble complex data transformation pipelines with
 little work on their (and your (the source plugin author)) part.
 
 ## Getting helper functions
@@ -92,7 +92,7 @@ not boilerplate.
 
 ## Gotcha: don't forget to return!
 
-After your plugin is finished sourcing nodes, it should either return a promise or use the callback (3rd parameter) to report back to Gatsby when `sourceNodes` is fully executed. If a promise or callback isn't returned, Gatsby will continue on in the build process, before nodes are finished being created. Your nodes might not end up in the generated schema at compilation, or the process will hang while waiting for an indication that it's finished.
+After your plugin is finished sourcing nodes, it should either return a Promise or use the callback (3rd parameter) to report back to Gatsby when `sourceNodes` is fully executed. If a Promise or callback isn't returned, Gatsby will continue on in the build process, before nodes are finished being created. Without the necessary return statement your nodes might not end up in the generated schema at compilation time, or the process will hang while waiting for an indication that it's finished.
 
 ## Advanced
 
@@ -147,14 +147,14 @@ When creating fields linking to an array of nodes, if the array of IDs are all o
 #### Further specification
 
 See
-[_Node Link_](/docs/api-specification/) in the API specification concepts
+[_Node Link_](/docs/api-specification/) in the API Specification concepts
 section for more info.
 
 ### Improve plugin developer experience by enabling faster sync
 
-One tip to improve the development experience of using a plugin is to reduce the time it takes to sync between Gatsby and the data source. There are two tips for doing this:
+One tip to improve the development experience of using a plugin is to reduce the time it takes to sync between Gatsby and the data source. There are two approaches for doing this:
 
 - **Add event-based sync**. Some data sources keep event logs and are able to return a list of objects modified since a given time. If you're building a source plugin, you can store
   the last time you fetched data using
   [`setPluginStatus`](/docs/actions/#setPluginStatus) and then only sync down nodes that have been modified since that time. [gatsby-source-contentful](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful) is an example of a source plugin that does this.
-- **Proactively fetch updates**. One challenge when developing locally is that a developer might make modifications in a remote data source, like a CMS, and then want to see how it looks in the local environment. Typically they will have to restart the `gatsby develop` server to see changes. This can be avoided if your source plugin knows to proactively fetch updates from the remote server. For example,`gatsby-source-sanity` ([source](https://github.com/sanity-io/gatsby-source-sanity)), listens to changes to Sanity content when `watchMode` is enabled and pulls them into the Gatsby develop server.
+- **Proactively fetch updates**. One challenge when developing locally is that a developer might make modifications in a remote data source, like a CMS, and then want to see how it looks in the local environment. Typically they will have to restart the `gatsby develop` server to see changes. This can be avoided if your source plugin knows to proactively fetch updates from the remote server. For example,[gatsby-source-sanity](https://github.com/sanity-io/gatsby-source-sanity), listens to changes to Sanity content when `watchMode` is enabled and pulls them into the Gatsby develop server.
