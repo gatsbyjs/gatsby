@@ -31,8 +31,8 @@ const fetchGraphql = async ({ url, query, errorMap, variables = {} }) => {
     json.errors.forEach(error => {
       if (error.debugMessage) {
         console.error(`[gatsby-source-wordpress] Error category: ${error.category}
-  ${error.message}
-  ${error.debugMessage}`)
+${error.message}
+${error.debugMessage}`)
       }
 
       if (
