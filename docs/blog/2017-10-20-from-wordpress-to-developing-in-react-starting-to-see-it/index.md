@@ -138,7 +138,7 @@ recently.
 
 Be warned: the tutorial isn’t quite finished yet, you might be better off
 starting with
-[one of the starter kits already available](/docs/gatsby-starters/),
+[one of the starter kits already available](/starters/),
 so that you get `react-helmet` and active links implemented, the 2 things I had
 to learn independently.
 
