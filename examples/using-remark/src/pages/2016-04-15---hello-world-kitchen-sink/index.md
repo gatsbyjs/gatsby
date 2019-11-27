@@ -30,9 +30,9 @@ The examples on this page cover the basic Markdown syntax and are adapted from
 ---
 
 This is intended as a quick reference and showcase. For more complete info, see
-[John Gruber's original spec](http://daringfireball.net/projects/markdown/) and
+[John Gruber's original spec](http://daringfireball.net/projects/markdown) and
 the
-[GitHub-flavored Markdown info page](http://github.github.com/github-flavored-markdown/).
+[GitHub-flavored Markdown info page](http://github.github.com/github-flavored-markdown).
 
 ##### Table of Contents
 

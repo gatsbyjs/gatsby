@@ -14,7 +14,7 @@ issue: https://github.com/gatsbyjs/gatsby/issues/XXXX
 
 This is a stub. Help our community expand it.
 
-Please use the [Gatsby Style Guide](/contributing/gatsby-style-guide/) to ensure your
+Please use the [Gatsby Style Guide](/contributing/gatsby-style-guide) to ensure your
 pull request gets accepted.
 ```
 
@@ -23,11 +23,11 @@ If you have any questions about titles or other details related to creating stub
 ## Community Pair Programming Sessions
 
 If you create a stub or see an existing one on the Gatsby.js site and feel interested in filling out the content, check out the Gatsby.js
-[Pair Programming program](/contributing/pair-programming/). We would love to work with you in your open source contributing journey!
+[Pair Programming program](/contributing/pair-programming). We would love to work with you in your open source contributing journey!
 
 ## Converting a Stub to a Doc
 
 To change a stub into a living-breathing document, remove the `issue` entry from a stub's frontmatter (a fancy name for Markdown metadata) and replace the boilerplate content with
-your wonderful prose and code. Save the file, commit to GitHub, open a PR, get feedback. Learn more in our page on [docs contributions](/contributing/docs-contributions/).
+your wonderful prose and code. Save the file, commit to GitHub, open a PR, get feedback. Learn more in our page on [docs contributions](/contributing/docs-contributions).
 
-If you wish to see any of the available stubs, head over to the current [Stub List](/contributing/stub-list/).
+If you wish to see any of the available stubs, head over to the current [Stub List](/contributing/stub-list).

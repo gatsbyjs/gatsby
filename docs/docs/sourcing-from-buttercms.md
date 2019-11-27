@@ -4,7 +4,7 @@ title: Sourcing from ButterCMS
 
 ## Overview
 
-In this guide you'll be setting up a CMS powered Gatsby site that uses [ButterCMS](https://buttercms.com/) as its content management system.
+In this guide you'll be setting up a CMS powered Gatsby site that uses [ButterCMS](https://buttercms.com) as its content management system.
 
 To complete this tutorial, you'll need your own ButterCMS auth token which you can [get free here](https://buttercms.com/#signup).
 
@@ -85,7 +85,7 @@ Your host platform needs to be notified so that Gatsby can create fresh pages fr
 
 ### Image transformation
 
-ButterCMS has integrated with a rich image transformation API called Filestack. This allows you to modify your uploaded images in dozens of ways. Everything from resizing, cropping, effects, filters, applying watermarks and more. Check out Filestack [full documentation](https://www.filestack.com/docs/) for more detail.
+ButterCMS has integrated with a rich image transformation API called Filestack. This allows you to modify your uploaded images in dozens of ways. Everything from resizing, cropping, effects, filters, applying watermarks and more. Check out Filestack [full documentation](https://www.filestack.com/docs) for more detail.
 
 After you upload an image to ButterCMS, it's stored on your CDN. To create a thumbnail, here's an example:
 
@@ -93,11 +93,11 @@ Original URL = https://cdn.buttercms.com/zjypya5tRny63LqhHQrv
 
 Thumbnail URL = https://fs.buttercms.com/resize=width:200,height:200/zjypya5tRny63LqhHQrv
 
-Resizing is just one of the many different transformations you can do to your images. Refer to the [Filestack docs](https://www.filestack.com/docs/) for full details.
+Resizing is just one of the many different transformations you can do to your images. Refer to the [Filestack docs](https://www.filestack.com/docs) for full details.
 
 ### Localization
 
-ButterCMS has full support for localization of your content. Locale names and keys are completely customizable and there's no limit to the number of locales you can have. View their [API Reference](https://buttercms.com/docs/api/) to learn how to query by locale.
+ButterCMS has full support for localization of your content. Locale names and keys are completely customizable and there's no limit to the number of locales you can have. View their [API Reference](https://buttercms.com/docs/api) to learn how to query by locale.
 
 ![locales](https://buttercms.com/static/images/docs/guides/Localization.png)
 
@@ -107,7 +107,7 @@ ButterCMS has full support for localization of your content. Locale names and ke
 
 #### Introduction
 
-Quickly launch a new marketing site or add [CMS-powered pages](https://buttercms.com/gatsbyjs-cms/) to your existing site using Pages.
+Quickly launch a new marketing site or add [CMS-powered pages](https://buttercms.com/gatsbyjs-cms) to your existing site using Pages.
 
 Adding a CMS-powered page to your app involves three easy steps:
 
@@ -707,7 +707,7 @@ export default Faq
 
 ### Introduction
 
-Butter CMS is also a great feat if you want to spin up a blog, it's pretty easy as they provide a [blog engine](https://buttercms.com/gatsbyjs-blog-engine/) that helps you manage content in one place. Gatsby then pulls down the data at build time and create static pages off that data.
+Butter CMS is also a great feat if you want to spin up a blog, it's pretty easy as they provide a [blog engine](https://buttercms.com/gatsbyjs-blog-engine) that helps you manage content in one place. Gatsby then pulls down the data at build time and create static pages off that data.
 
 ### Blog home page
 
@@ -969,7 +969,7 @@ exports.createPages = async ({ graphql, actions }) => {
 ### Categories, tags, and authors
 
 Use Butter's APIs for categories, tags, and authors to feature and filter content on your blog.
-See their [API reference](https://buttercms.com/docs/api/) for more information about these objects:
+See their [API reference](https://buttercms.com/docs/api) for more information about these objects:
 
 ### Easy as Butter
 
@@ -978,4 +978,4 @@ This was an example meant to help you understand how ButterCMS works with Gatsby
 - Create a ButterCMS repository and set it up together with the Gatsby plugin
 - Query data from ButterCMS for single pages, multiple pages, blog posts, and custom content fields
 
-If you got stuck, you can compare your code to the [gatsby-starter-buttercms](https://github.com/ButterCMS/gatsby-starter-buttercms). To learn more about ButterCMS, check out their [blog](https://buttercms.com/blog/). Their latest updates can be found on [buttercms.com](https://buttercms.com/blog/category/new-to-butter/).
+If you got stuck, you can compare your code to the [gatsby-starter-buttercms](https://github.com/ButterCMS/gatsby-starter-buttercms). To learn more about ButterCMS, check out their [blog](https://buttercms.com/blog). Their latest updates can be found on [buttercms.com](https://buttercms.com/blog/category/new-to-butter).

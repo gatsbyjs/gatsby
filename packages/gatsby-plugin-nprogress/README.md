@@ -1,6 +1,6 @@
 # gatsby-plugin-nprogress
 
-Automatically shows the [nprogress](http://ricostacruz.com/nprogress/) indicator
+Automatically shows the [nprogress](http://ricostacruz.com/nprogress) indicator
 when a page is delayed in loading (which Gatsby considers as one second after
 clicking on a link).
 

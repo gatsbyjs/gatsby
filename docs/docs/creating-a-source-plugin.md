@@ -147,7 +147,7 @@ When creating fields linking to an array of nodes, if the array of IDs are all o
 #### Further specification
 
 See
-[_Node Link_](/docs/api-specification/) in the API specification concepts
+[_Node Link_](/docs/api-specification) in the API specification concepts
 section for more info.
 
 ### Improve plugin developer experience by enabling faster sync

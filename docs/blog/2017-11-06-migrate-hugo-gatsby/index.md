@@ -21,10 +21,10 @@ and reusable.
 - Content migration
 - Programmatic page creation in Gatsby
 - Manage styles with
-  [`Typography.js`](http://kyleamathews.github.io/typography.js/)
+  [`Typography.js`](http://kyleamathews.github.io/typography.js)
 - Automatic pagination
 - Tag pages
-- Add an admin panel with [NetlifyCMS](https://www.netlifycms.org/)
+- Add an admin panel with [NetlifyCMS](https://www.netlifycms.org)
 
 This article will highlight lessons learned from the process, with the aim to
 provide high-level guidelines about patterns which can be applied in migrations
@@ -32,7 +32,7 @@ from other static site generators to Gatsby.
 
 ### Background before you start
 
-[Hugo](https://gohugo.io/) is a super fast, convenient and well-supported tool
+[Hugo](https://gohugo.io) is a super fast, convenient and well-supported tool
 for working with static sites. I think today it's still more mature and closer
 to classical CMS comparing to Gatsby workflows.
 
@@ -46,7 +46,7 @@ single-page-application point of view.
 Gatsby might feel a bit more "raw"—there are starters and typography.js, but not
 so many ready made solutions in the conventional sense. Probably the closest
 marketplace for themes compared to others is
-[gatsbythemes](https://gatsbythemes.com/) which is a young project.
+[gatsbythemes](https://gatsbythemes.com) which is a young project.
 
 If you have landed at this article researching which tool is better for your
 job, take a look at
@@ -74,10 +74,10 @@ previous blog and the current version. Both Hugo and Gatsby work well when
 markdown files are stored at a `content/post` folder.
 
 The only work I had to do on the content migration was to reformat the
-[frontmatter](https://gohugo.io/content-management/front-matter/). In Hugo, I
+[frontmatter](https://gohugo.io/content-management/front-matter). In Hugo, I
 used TOML, whereas `gatsby-transformer-remark` works only with YAML for the
 moment. Luckily, I still had the Hugo CLI on my system so could make use of its
-[built-in conversion tool](https://gohugo.io/commands/hugo_convert_toyaml/). The
+[built-in conversion tool](https://gohugo.io/commands/hugo_convert_toyaml). The
 only issue I had was that sometimes titles were longer than 1 line and were not
 parse-able, so I just had to cut some words out where problematic.
 
@@ -88,12 +88,12 @@ programmatic creation of pages explained in the next section.
 ### Programmatic page creation
 
 This is the official
-[documentation](/docs/creating-and-modifying-pages/),
+[documentation](/docs/creating-and-modifying-pages),
 plus there is a
 [tutorial](/tutorial/part-four/#data-in-gatsby), which
 gives examples. In sum, I created a `gatsby-node.js` file which exports
 `createPages` method using the `createPage` action from
-[`boundActionCreators`](/docs/actions/).
+[`boundActionCreators`](/docs/actions).
 
 This might sound way more complicated than what it is:
 
@@ -165,7 +165,7 @@ Now that the system displays the content, it's time to style it. I decided to go
 for the
 [`typography.js` route](/tutorial/part-two/#typographyjs).
 The approach is well documented and you can also see
-[previews of the themes online](http://kyleamathews.github.io/typography.js/).
+[previews of the themes online](http://kyleamathews.github.io/typography.js).
 
 Steps were:
 
@@ -224,7 +224,7 @@ give an impression I have a lot of content :)
 
 As usual, a good starting point was searching for example implementations
 available in
-[`examples`](https://github.com/gatsbyjs/gatsby/tree/master/examples/) and the
+[`examples`](https://github.com/gatsbyjs/gatsby/tree/master/examples) and the
 issue queue. There, in the issue queue, is a gem
 [epic about plugins wishlist](https://github.com/gatsbyjs/gatsby/issues/1199)
 where I found the discussion leading to
@@ -475,7 +475,7 @@ Interesting part is that NetlifyCMS creates the pull request on my behalf with a
 given state of the branch. I could continue working on the content of the post
 when I'm offline (in an airplane) and push to the branch later when I'm back
 online to trigger a new
-[preview from Netlify](https://www.netlify.com/blog/2016/07/20/introducing-deploy-previews-in-netlify/).
+[preview from Netlify](https://www.netlify.com/blog/2016/07/20/introducing-deploy-previews-in-netlify).
 Only when I decide to, I merge latest changes for styles and PWA tweaks back to
 the post preview branch to see whole picture and approve the post, merging it to
 the main branch.

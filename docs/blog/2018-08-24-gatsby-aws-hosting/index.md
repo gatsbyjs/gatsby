@@ -9,7 +9,7 @@ canonicalLink: "https://aws-amplify.github.io/amplify-js/media/hosting_guide"
 
 ![Publishing Your Next Gatsby Site to AWS With AWS Amplify](images/gatsbyaws.jpeg)
 
-In this post, we'll walk through how to host & publish your next Gatsby site to AWS using [AWS Amplify](https://aws-amplify.github.io/).
+In this post, we'll walk through how to host & publish your next Gatsby site to AWS using [AWS Amplify](https://aws-amplify.github.io).
 
 AWS Amplify is a combination of client library, CLI toolchain, UI components & CI / CD hosting platform. Amplify allows developers to get up & running with full-stack cloud-powered applications with features like authentication, GraphQL, storage, REST APIs, analytics, Lambda functions, hosting & more.
 
@@ -125,6 +125,6 @@ Now that you've gotten the hang of working with the Amplify Console, what are so
 
 If you're interested in adding authentication to your Gatsby app, check out [this](https://github.com/dabit3/gatsby-auth-starter-aws-amplify) Gatsby Auth Starter I published.
 
-If you're interested in adding new features to your Gatsby app (like authentication or a GraphQL API), check out the [Amplify CLI & Amplify Client libraries](https://aws-amplify.github.io/).
+If you're interested in adding new features to your Gatsby app (like authentication or a GraphQL API), check out the [Amplify CLI & Amplify Client libraries](https://aws-amplify.github.io).
 
 You may also be interested in working with multiple environments or teams. If so, check out [the documentation](https://aws-amplify.github.io/docs/cli/multienv?sdk=js) on how to get up & running with teams or have a look at [this post](https://read.acloud.guru/multiple-serverless-environments-with-aws-amplify-344759e1be08) that I wrote.

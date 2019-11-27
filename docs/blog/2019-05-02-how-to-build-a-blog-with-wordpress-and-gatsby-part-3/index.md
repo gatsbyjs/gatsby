@@ -26,7 +26,7 @@ As you'll recall from the last post, you should create a page template before ad
 touch ./src/templates/Page.js
 ```
 
-Just like with the blog post template, you can probably just use a [stateless functional component](https://www.iamtimsmith.com/blog/class-components-vs-stateless-functional-components/) for this. Like before, you won't cover how to create a component in this article, but you can read about [creating a React.js component here](https://www.iamtimsmith.com/blog/how-to-create-a-component/).
+Just like with the blog post template, you can probably just use a [stateless functional component](https://www.iamtimsmith.com/blog/class-components-vs-stateless-functional-components) for this. Like before, you won't cover how to create a component in this article, but you can read about [creating a React.js component here](https://www.iamtimsmith.com/blog/how-to-create-a-component).
 
 I will go ahead and start off with a generic template again and then fill it out later with the appropriate data. The code below will get a simple template created for us to use for pages for now:
 
@@ -171,7 +171,7 @@ Now if you visit the about page at [http://localhost:8000/about](http://localhos
 
 Gatsby provides some awesome out-of-the-box routing. Anything you create in the `/pages` directory will automatically create a route for you. For instance, if you were to create a file called `gatsby-is-awesome.js`, Gatsby.js would see that and create a route called http://localhost:8000/gatsby-is-awesome.
 
-You can also see that the starter default comes with a few pages already in the `/pages` directory. The index page is what will show when a user visits [http://localhost:8000/](http://localhost:8000/). There is also a file called page-2.js which is just a simple page to show how linking works. Finally, there is a 404.js available which is the 404 page that shows when your Gatsby site is live.
+You can also see that the starter default comes with a few pages already in the `/pages` directory. The index page is what will show when a user visits [http://localhost:8000/](http://localhost:8000). There is also a file called page-2.js which is just a simple page to show how linking works. Finally, there is a 404.js available which is the 404 page that shows when your Gatsby site is live.
 
 Since you want your blog to show up on the homepage, you can edit the file called `index.js` to do this. Let's take a look at this file before you make any changes:
 

@@ -9,11 +9,11 @@ tags:
   - contest
 ---
 
-To celebrate the [stable release of Gatsby Themes](/blog/2019-07-03-announcing-stable-release-gatsby-themes/), we launched the Gatsby Theme Jam contest. To enter the contest, create your own Gatsby Theme and submit it to the [Theme Jam website](https://themejam.gatsbyjs.org/) by July 31st, 2019. Everyone who enters the contest will get a limited-edition Gatsby Theme Jam mug or t-shirt, and **two winners will be selected to win a trip to the Gatsby Days event of their choosing**.
+To celebrate the [stable release of Gatsby Themes](/blog/2019-07-03-announcing-stable-release-gatsby-themes), we launched the Gatsby Theme Jam contest. To enter the contest, create your own Gatsby Theme and submit it to the [Theme Jam website](https://themejam.gatsbyjs.org) by July 31st, 2019. Everyone who enters the contest will get a limited-edition Gatsby Theme Jam mug or t-shirt, and **two winners will be selected to win a trip to the Gatsby Days event of their choosing**.
 
 ## What are Gatsby Themes?
 
-Gatsby Themes are pre-built, installable packages for setting up a site’s default styling, components, plugins, and overall configuration that can be reused across multiple Gatsby sites. They’re a great way to simplify the early steps of configuring a new site; and, when it’s time to update your site’s styling or functionality, you only have to edit your theme or swap it out entirely with another compatible theme. You can find a more detailed explanation in the [Themes section of Gatsby’s documentation](/docs/themes/).
+Gatsby Themes are pre-built, installable packages for setting up a site’s default styling, components, plugins, and overall configuration that can be reused across multiple Gatsby sites. They’re a great way to simplify the early steps of configuring a new site; and, when it’s time to update your site’s styling or functionality, you only have to edit your theme or swap it out entirely with another compatible theme. You can find a more detailed explanation in the [Themes section of Gatsby’s documentation](/docs/themes).
 
 If you’d like to see an example, check out Gatsby’s official [blog theme](https://github.com/gatsbyjs/gatsby/tree/master/themes/gatsby-theme-blog) or [notes theme](https://github.com/gatsbyjs/gatsby/tree/master/themes/gatsby-theme-notes).
 
@@ -23,7 +23,7 @@ If you’re planning to build a theme for the contest, you may want to start wit
 
 Here are some resources with detailed instructions on how to build a Gatsby theme:
 
-- [“Building Themes” - Gatsby Documentation](/docs/themes/building-themes/)
+- [“Building Themes” - Gatsby Documentation](/docs/themes/building-themes)
 - [“Gatsby Theme Authoring” - free course on Egghead.io](https://egghead.io/courses/gatsby-theme-authoring)
 - [“Building your first Gatsby theme (with Emma Wedekind)” - Learn with Jason](https://www.youtube.com/watch?v=W2uTfay3doo)
 

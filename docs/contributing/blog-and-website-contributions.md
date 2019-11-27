@@ -7,7 +7,7 @@ We wholeheartedly welcome contributions to the Gatsby blog and website!
 Here are some things to keep in mind when deciding where to contribute to Gatsby:
 
 - [Blog posts](#contributing-to-the-blog) work best for case studies and time-sensitive storytelling (see the [blog post format](#blog-post-format)).
-- [Docs](/contributing/docs-contributions/) are continually relevant and discoverable learning materials that go beyond any one case study or situation.
+- [Docs](/contributing/docs-contributions) are continually relevant and discoverable learning materials that go beyond any one case study or situation.
 - [Website changes](#making-changes-to-the-website) that improve either of these are always welcome!
 
 ## Contributing to the blog
@@ -52,12 +52,12 @@ Things we’d like to avoid on the Gatsby blog:
 
 If you want to make changes, improvements, or add new functionality to the website, you don't have to set up the full Gatsby repo to contribute. You can spin up your own instance of the Gatsby website with these steps:
 
-- Clone [the Gatsby repo](https://github.com/gatsbyjs/gatsby/) and navigate to `/www`
+- Clone [the Gatsby repo](https://github.com/gatsbyjs/gatsby) and navigate to `/www`
 - Run `yarn` to install all of the website's dependencies.
 - Run `npm run develop` to preview the site at `http://localhost:8000/`.
 
-> Note: If you are experiencing issues on a Linux machine, run `sudo apt install libvips-dev`, to install a native dependency. You can also reference [Gatsby guide on Linux](/docs/gatsby-on-linux/) for other Linux-specific requirements.
+> Note: If you are experiencing issues on a Linux machine, run `sudo apt install libvips-dev`, to install a native dependency. You can also reference [Gatsby guide on Linux](/docs/gatsby-on-linux) for other Linux-specific requirements.
 
 Now you can make and preview your changes before raising a pull request!
 
-For full repo setup instructions, visit the [code contributions](/contributing/code-contributions/) page.
+For full repo setup instructions, visit the [code contributions](/contributing/code-contributions) page.

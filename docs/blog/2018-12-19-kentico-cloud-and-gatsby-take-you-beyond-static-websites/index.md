@@ -19,7 +19,7 @@ The great presentation by Callum MacDonald explained basic Gatsby features and p
 
 ## Why static site?
 
-One of the websites in our company stack is [Kentico Advantage](http://bit.ly/2T0ynXJ). It is a content-oriented website where we provide our customers with our own methodology on how to build amazing and successful websites with traditional CMS. The website was originally also built on top of a traditional CMS until we switched to MVC during this year. We did that to be able to use a [headless CMS](/docs/headless-cms/) as content storage and drop all the pieces that required maintenance like the database server. The business logic was in the MVC layer and we hosted the frontend on Microsoft Azure.
+One of the websites in our company stack is [Kentico Advantage](http://bit.ly/2T0ynXJ). It is a content-oriented website where we provide our customers with our own methodology on how to build amazing and successful websites with traditional CMS. The website was originally also built on top of a traditional CMS until we switched to MVC during this year. We did that to be able to use a [headless CMS](/docs/headless-cms) as content storage and drop all the pieces that required maintenance like the database server. The business logic was in the MVC layer and we hosted the frontend on Microsoft Azure.
 
 So why did I decide to make Kentico Advantage a static site? A key aspect was performance. We wanted to enable our clients to access the site while being on-site with their customers, using mobile devices and a slow internet connection. I personally wanted the source code to be as little as possible, in a language that everyone would understand. I won't be the only developer on the project for eternity and we tend to have more frontend developers in-house these days. And obviously I did not want to spend months on it. With Gatsby we were fine on all those counts. I was not familiar with React all that much before, but having the site content-oriented and well structured, the implementation was a piece of cake. Saving money on server costs was a nice side-effect, but more on that later.
 
@@ -57,7 +57,7 @@ Whenever I code with a new framework or plugin, I like to take inspiration from 
 
 ## Generating pages from dynamic content
 
-Almost every website has a set of content items that use the same template. It can be news articles, a list of offices, or products and other similar items. For these cases, [Gatsby allows us to programmatically generate](/tutorial/part-seven/) these pages using their content and a template. This is so cool as I was able to create the whole website using just three files representing static pages, two templates of dynamic pages and this simple piece of code using GraphQL and data from Kentico Cloud:
+Almost every website has a set of content items that use the same template. It can be news articles, a list of offices, or products and other similar items. For these cases, [Gatsby allows us to programmatically generate](/tutorial/part-seven) these pages using their content and a template. This is so cool as I was able to create the whole website using just three files representing static pages, two templates of dynamic pages and this simple piece of code using GraphQL and data from Kentico Cloud:
 
 ```jsx
 graphql(`

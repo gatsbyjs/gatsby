@@ -12,9 +12,9 @@ tags: ["gatsby", "graphql", "kentico-cloud", "kentico"]
 
 Every website or application tends to have text elements which are typically static and rarely change – think of the items in your header or footer (e.g. copyright text). For many sites, the temptation is to simply hard code this into the master template or templates. However, when you throw multilingual websites or shared templates into the mix, this swiftly becomes a bad idea. Handing the editors the ability to content manage these items becomes a necessity.
 
-If you're familiar with content management systems like [Kentico EMS](https://www.kentico.com/), then you will have come across the term [Resource Strings or localized Strings](https://docs.kentico.com/k12sp/multilingual-websites/setting-up-a-multilingual-user-interface/working-with-resource-strings). These localized strings replace the static text across your site and are a combination of a 'key' and 'value' pairing. The CMS consumes the 'key' to retrieve the 'value' of your chosen culture or language as and when required. The use of these localized strings gives editors the additional content management control required.
+If you're familiar with content management systems like [Kentico EMS](https://www.kentico.com), then you will have come across the term [Resource Strings or localized Strings](https://docs.kentico.com/k12sp/multilingual-websites/setting-up-a-multilingual-user-interface/working-with-resource-strings). These localized strings replace the static text across your site and are a combination of a 'key' and 'value' pairing. The CMS consumes the 'key' to retrieve the 'value' of your chosen culture or language as and when required. The use of these localized strings gives editors the additional content management control required.
 
-Most CMS offer methods for handling these localized strings. However, with “headless”, API-first CMS, there’s no out-of-the-box feature and a best practice has to be established. I'm going to use [Kentico Cloud](https://kenticocloud.com/), a CaaS ([Content as a Service](https://en.wikipedia.org/wiki/Content_as_a_service)) platform which focuses on a content-first approach, providing you the ability to create, manage and distribute content without worrying about how and where it will be displayed. If you need to know more about Kentico Cloud and how to get started with it, you can catch up on the product through my previous post, [Getting started with Kentico Cloud](https://www.ileshmistry.com/getting-started-with-kentico-cloud/).
+Most CMS offer methods for handling these localized strings. However, with “headless”, API-first CMS, there’s no out-of-the-box feature and a best practice has to be established. I'm going to use [Kentico Cloud](https://kenticocloud.com), a CaaS ([Content as a Service](https://en.wikipedia.org/wiki/Content_as_a_service)) platform which focuses on a content-first approach, providing you the ability to create, manage and distribute content without worrying about how and where it will be displayed. If you need to know more about Kentico Cloud and how to get started with it, you can catch up on the product through my previous post, [Getting started with Kentico Cloud](https://www.ileshmistry.com/getting-started-with-kentico-cloud).
 
 _Disclaimer – Languages only apply to certain Kentico Cloud plans. For the approach in this article, I’m assuming cultures have been enabled in your selected subscription plan!_
 
@@ -53,9 +53,9 @@ One thing to remember at this point is that if you want to use similar text (or 
 
 ## Using GatsbyJS and GraphQL to retrieve the localized content
 
-Now we have the localized string Content Types and Content Items created in Kentico Cloud, the next step is to retrieve the content. I'm using the awesome and very popular static site generator [GatsbyJS](/) with [GraphQL](https://graphql.org/), a query language for your API.
+Now we have the localized string Content Types and Content Items created in Kentico Cloud, the next step is to retrieve the content. I'm using the awesome and very popular static site generator [GatsbyJS]() with [GraphQL](https://graphql.org), a query language for your API.
 
-_(Another assumption for you... We’re assuming you have GatsbyJS + GraphQL set up for your project. If not, you can find a starting point here, [GatsbyJS sourcing from Kentico Cloud](/docs/sourcing-from-kentico-kontent/).)_
+_(Another assumption for you... We’re assuming you have GatsbyJS + GraphQL set up for your project. If not, you can find a starting point here, [GatsbyJS sourcing from Kentico Cloud](/docs/sourcing-from-kentico-kontent).)_
 
 With your content items in Kentico Cloud, you should be able to see them when you conduct a GraphQL query.
 

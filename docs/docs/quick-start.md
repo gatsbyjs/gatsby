@@ -2,7 +2,7 @@
 title: Quick Start
 ---
 
-This quick start is intended for intermediate to advanced developers. For a gentler intro to Gatsby, [head to our tutorial](/tutorial/)!
+This quick start is intended for intermediate to advanced developers. For a gentler intro to Gatsby, [head to our tutorial](/tutorial)!
 
 ## Use the Gatsby CLI
 
@@ -63,4 +63,4 @@ To see detailed documentation for the CLI commands, run `gatsby --help` in the t
 
 For specific commands, run `gatsby COMMAND_NAME --help` e.g. `gatsby new --help`.
 
-For more information on the Gatsby CLI, visit the [CLI reference](/docs/gatsby-cli/) section of the docs.
+For more information on the Gatsby CLI, visit the [CLI reference](/docs/gatsby-cli) section of the docs.

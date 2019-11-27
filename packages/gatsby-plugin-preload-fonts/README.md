@@ -91,7 +91,7 @@ module.exports = {
         crossOrigin: `use-credentials`,
         // OR
         crossOrigin: pathname =>
-          pathname.match(/^\/elevated/) ? `use-credentials` : `anonymous`,
+          pathname.match(/^\/elevated) ? `use-credentials` : `anonymous`,
       },
     },
   ],

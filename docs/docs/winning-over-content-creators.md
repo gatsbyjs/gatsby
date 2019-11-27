@@ -27,7 +27,7 @@ Content creators may be curious about how common content management systems can 
 
 ### Better audience engagement and lead conversion
 
-> Site speed and performance has a huge impact on sales and customer engagement. A [recent Akamai study](https://www.akamai.com/uk/en/about/news/press/2017-press/akamai-releases-spring-2017-state-of-online-retail-performance-report.jsp) showed that a 100 millisecond delay in a site’s load time hurt conversion rates by 7%, and 53% of mobile users will leave pages that take more than 3 seconds to load. Gatsby sites are consistently 2-3x faster than similar sites built with different tools, and site owners have seen their [lead generation increase by up to 60% after transitioning to Gatsby](https://www.gatsbyjs.org/blog/2018-11-16-youfit-case-study/).
+> Site speed and performance has a huge impact on sales and customer engagement. A [recent Akamai study](https://www.akamai.com/uk/en/about/news/press/2017-press/akamai-releases-spring-2017-state-of-online-retail-performance-report.jsp) showed that a 100 millisecond delay in a site’s load time hurt conversion rates by 7%, and 53% of mobile users will leave pages that take more than 3 seconds to load. Gatsby sites are consistently 2-3x faster than similar sites built with different tools, and site owners have seen their [lead generation increase by up to 60% after transitioning to Gatsby](https://www.gatsbyjs.org/blog/2018-11-16-youfit-case-study).
 
 ### Improved search traffic
 
@@ -44,5 +44,5 @@ Gatsby offers unparalleled flexibility so you can have the benefits of Gatsby wi
 ## Other resources
 
 - If your content creator is also a marketer, the doc on [winning over marketers](/docs/winning-over-marketers) could also be useful.
-- If you want to read up on how to integrate Gatsby with different CMS platforms, the doc on [headless CMSs](/docs/headless-cms) is a great starting point. Another relevant article is ["Building Sites with Headless CMSs"](/blog/2018-2-3-sites-with-headless-cms/) by Shannon Soper.
-- Further reading could include the two-part blog by Michelle Gienow ["Delicious Simplicity ❤️ Gatsby: Building Happily Ever After"](/blog/2019-06-08-delicious-simplicity-case-study-part-1/) and ["Sharing the Gatsby Love with Content Creators"](/blog/2019-09-18-delicious-simplicity-case-study-part2/) by Linda Watkins.
+- If you want to read up on how to integrate Gatsby with different CMS platforms, the doc on [headless CMSs](/docs/headless-cms) is a great starting point. Another relevant article is ["Building Sites with Headless CMSs"](/blog/2018-2-3-sites-with-headless-cms) by Shannon Soper.
+- Further reading could include the two-part blog by Michelle Gienow ["Delicious Simplicity ❤️ Gatsby: Building Happily Ever After"](/blog/2019-06-08-delicious-simplicity-case-study-part-1) and ["Sharing the Gatsby Love with Content Creators"](/blog/2019-09-18-delicious-simplicity-case-study-part2) by Linda Watkins.

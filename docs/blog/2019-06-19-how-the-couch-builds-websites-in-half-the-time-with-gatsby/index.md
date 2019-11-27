@@ -17,7 +17,7 @@ We recently spoke with Kevin Green, Co-founder and Lead Engineer at [The Couch](
 
 ## About The Couch
 
-The Couch is a team of three designers and one developer that specializes in e-commerce projects for clients like [Clare](https://www.clare.com) and [Dims](https://www.dimshome.com). Kevin, The Couch’s developer and technical co-founder, is passionate about the headless ecosystem and the way it enables him to select the perfect tools for each project. One of Kevin’s favorite tools has been [Gatsby](/) because it makes it so easy to combine data from a variety of headless services into his projects.
+The Couch is a team of three designers and one developer that specializes in e-commerce projects for clients like [Clare](https://www.clare.com) and [Dims](https://www.dimshome.com). Kevin, The Couch’s developer and technical co-founder, is passionate about the headless ecosystem and the way it enables him to select the perfect tools for each project. One of Kevin’s favorite tools has been [Gatsby]() because it makes it so easy to combine data from a variety of headless services into his projects.
 
 <Pullquote>
 I like to deliver the best possible solution for a client’s needs and Gatsby is a tool that is tried-and-true for me.
@@ -43,7 +43,7 @@ After years of building projects with traditional tools like Docker and WordPres
 From my perspective, Gatsby is an invaluable tool.
 </Pullquote>
 
-By embracing Gatsby and headless services, Kevin can now more easily adjust his tools to each project’s needs. To manage Prima’s content, Kevin opted for [Sanity](https://www.sanity.io), a [headless CMS](/docs/headless-cms/) which can be connected to a Gatsby site using the [gatsby-source-sanity](/packages/gatsby-source-sanity/) plugin. Prima’s e-commerce functionality is powered by [Shopify](https://www.shopify.com) (integrated with Gatsby using the [gatsby-source-shopify](/packages/gatsby-source-shopify/) plugin). Kevin credits the ease of pulling data from headless services like these into Gatsby with the bulk of his new development speed:
+By embracing Gatsby and headless services, Kevin can now more easily adjust his tools to each project’s needs. To manage Prima’s content, Kevin opted for [Sanity](https://www.sanity.io), a [headless CMS](/docs/headless-cms) which can be connected to a Gatsby site using the [gatsby-source-sanity](/packages/gatsby-source-sanity) plugin. Prima’s e-commerce functionality is powered by [Shopify](https://www.shopify.com) (integrated with Gatsby using the [gatsby-source-shopify](/packages/gatsby-source-shopify) plugin). Kevin credits the ease of pulling data from headless services like these into Gatsby with the bulk of his new development speed:
 
 <Pullquote>
 I’ve set up Contentful, Prismic and Sanity in so many ways that I can now set up the whole backend and data architecture in a day...It’s a testament to those tools and how powerful they’re becoming.
@@ -69,4 +69,4 @@ After initially launching with its educational content only, Prima’s product l
 It’s less a conversation about the tools; it’s about whether they do the best job they possibly can for the client. And in the case of Gatsby, it’s continued to do that for me. The sites that we build are fast by default, rendered statically, and don’t cost our clients a lot of money; it’s hard for me to go any other route.
 </Pullquote>
 
-To discover if Gatsby is right for your next project, [learn more here](/).
+To discover if Gatsby is right for your next project, [learn more here]().

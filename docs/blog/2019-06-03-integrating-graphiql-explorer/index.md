@@ -10,7 +10,7 @@ tags:
 
 [_Updated September 19th 2019_](#update-september-19th-2019)
 
-Gatsby's data layer is powered by [GraphQL](https://graphql.org/). This means that if you are building a Gatsby site, you will almost certainly use GraphQL to take advantage of Gatsby's rich plugin ecosystem that extends this schema with data from _anywhere_. A popular tool for exploring your GraphQL schema is [GraphiQL](https://github.com/graphql/graphiql) — which is a graphical, interactive, in-browser GraphQL development environment. It serves as an interactive playground where you can compose, test, and see the live results of your queries. If you haven't seen or used GraphiQL, it looks something like this:
+Gatsby's data layer is powered by [GraphQL](https://graphql.org). This means that if you are building a Gatsby site, you will almost certainly use GraphQL to take advantage of Gatsby's rich plugin ecosystem that extends this schema with data from _anywhere_. A popular tool for exploring your GraphQL schema is [GraphiQL](https://github.com/graphql/graphiql) — which is a graphical, interactive, in-browser GraphQL development environment. It serves as an interactive playground where you can compose, test, and see the live results of your queries. If you haven't seen or used GraphiQL, it looks something like this:
 
 <figure>
   <video controls="controls" autoplay="false">
@@ -24,7 +24,7 @@ Gatsby's data layer is powered by [GraphQL](https://graphql.org/). This means th
 
 [`graphiql-explorer`](https://github.com/OneGraph/graphiql-explorer) is a plugin for GraphiQL that adds a new technique to explore and build GraphQL queries. It adds a graphical representation of available fields and inputs that can be used in queries. It also allows constructing full queries by clicking through available fields and inputs without the repetitive process of typing these queries out by hand!
 
-GraphiQL Explorer was built by the team at [OneGraph](https://www.onegraph.com/) (OneGraph is a single GraphQL endpoint through which you can bring in data from dozens of services like Salesforce, Stripe, Spotify, GitHub, and more). Check out the ["Build a Podcast Mashup App Using OneGraph and Gatsby — Learn With Jason](https://www.youtube.com/watch?v=10jeoEWy-8g&list=PLz8Iz-Fnk_eTpvd49Sa77NiF8Uqq5Iykx&index=25&t=0s) recording to learn more about OneGraph and how to use it with Gatsby.
+GraphiQL Explorer was built by the team at [OneGraph](https://www.onegraph.com) (OneGraph is a single GraphQL endpoint through which you can bring in data from dozens of services like Salesforce, Stripe, Spotify, GitHub, and more). Check out the ["Build a Podcast Mashup App Using OneGraph and Gatsby — Learn With Jason](https://www.youtube.com/watch?v=10jeoEWy-8g&list=PLz8Iz-Fnk_eTpvd49Sa77NiF8Uqq5Iykx&index=25&t=0s) recording to learn more about OneGraph and how to use it with Gatsby.
 
 ## Why use GraphiQL Explorer?
 

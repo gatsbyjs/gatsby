@@ -1,6 +1,6 @@
 # gatsby-remark-graphviz
 
-Processes [graphviz](https://www.graphviz.org/) (`dot` and `circo`) code blocks in your markdown files and replaces them with the rendered SVG using [viz.js](https://github.com/mdaines/viz.js/)
+Processes [graphviz](https://www.graphviz.org) (`dot` and `circo`) code blocks in your markdown files and replaces them with the rendered SVG using [viz.js](https://github.com/mdaines/viz.js)
 
 ![demo gif](/packages/gatsby-remark-graphviz/demo.gif)
 

@@ -10,9 +10,9 @@ Sass will compile `.sass` and `.scss` files to `.css` files for you, so you can 
 
 ## Installing and configuring Sass
 
-This guide assumes that you have a Gatsby project set up. If you need to set up a project, head to the [**Quick Start guide**](/docs/quick-start/), then come back.
+This guide assumes that you have a Gatsby project set up. If you need to set up a project, head to the [**Quick Start guide**](/docs/quick-start), then come back.
 
-1.  Install the Gatsby plugin [**gatsby-plugin-sass**](/packages/gatsby-plugin-sass/) and `node-sass`, a required peer dependency as of v2.0.0.
+1.  Install the Gatsby plugin [**gatsby-plugin-sass**](/packages/gatsby-plugin-sass) and `node-sass`, a required peer dependency as of v2.0.0.
 
 `npm install --save node-sass gatsby-plugin-sass`
 
@@ -52,6 +52,6 @@ import "./styles.sass"
 
 ## Other resources
 
-- [Introduction to Sass](https://designmodo.com/introduction-sass/)
+- [Introduction to Sass](https://designmodo.com/introduction-sass)
 - [Sass documentation](https://sass-lang.com/documentation)
 - [Gatsby starters that use Sass](/starters/?c=Styling%3ASCSS)

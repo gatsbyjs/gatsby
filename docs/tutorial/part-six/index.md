@@ -4,7 +4,7 @@ typora-copy-images-to: ./
 disableTableOfContents: true
 ---
 
-> This tutorial is part of a series about Gatsby’s data layer. Make sure you’ve gone through [part 4](/tutorial/part-four/) and [part 5](/tutorial/part-five/) before continuing here.
+> This tutorial is part of a series about Gatsby’s data layer. Make sure you’ve gone through [part 4](/tutorial/part-four) and [part 5](/tutorial/part-five) before continuing here.
 
 ## What's in this tutorial?
 
@@ -205,7 +205,7 @@ this and the sort order should be fixed.
 Try opening GraphiQL and playing with different sort options. You can sort the
 `allFile` connection along with other connections.
 
-For more documentation on our query operators, explore our [GraphQL reference guide.](/docs/graphql-reference/)
+For more documentation on our query operators, explore our [GraphQL reference guide.](/docs/graphql-reference)
 
 ## Challenge
 
@@ -221,4 +221,4 @@ next learn how to _programmatically_ create pages from _data_. Gatsby is _not_
 limited to making pages from files like many static site generators. Gatsby lets
 you use GraphQL to query your _data_ and _map_ the query results to _pages_—all at build
 time. This is a really powerful idea. You'll be exploring its implications and
-ways to use it in the next tutorial, where you'll learn how to [programmatically create pages from data](/tutorial/part-seven/).
+ways to use it in the next tutorial, where you'll learn how to [programmatically create pages from data](/tutorial/part-seven).

@@ -13,13 +13,13 @@ There was one problem though. Once I finally got around to adding transitions to
 
 TransitionLink is a simple way of declaring a page transition via props on a Link component. For both entering and exiting pages you can specify a number of timing values, pass state, and add a trigger a function.
 
-TransitionLink is compatible with declarative react animation libraries like [react-pose](https://popmotion.io/pose/) and [react-spring](https://react-spring.surge.sh/). It's also compatible with imperative animation libraries like [gsap](https://greensock.com) and [anime.js](http://animejs.com/)
+TransitionLink is compatible with declarative react animation libraries like [react-pose](https://popmotion.io/pose) and [react-spring](https://react-spring.surge.sh). It's also compatible with imperative animation libraries like [gsap](https://greensock.com) and [anime.js](http://animejs.com)
 
-Check it out [in use](https://gatsby-plugin-transition-link.netlify.com/).
+Check it out [in use](https://gatsby-plugin-transition-link.netlify.com).
 
 ## The story
 
-I've always wanted to create one of those beautiful [awwwards](https://www.awwwards.com/) sites you're probably familiar with. Because it quickly becomes complex to manage what a transition should look like to and from specific sets of pages, I've often settled on using a simple fade transition between all pages. It's complicated and time consuming to set up page transitions and that's always been a major disappointment for me.
+I've always wanted to create one of those beautiful [awwwards](https://www.awwwards.com) sites you're probably familiar with. Because it quickly becomes complex to manage what a transition should look like to and from specific sets of pages, I've often settled on using a simple fade transition between all pages. It's complicated and time consuming to set up page transitions and that's always been a major disappointment for me.
 
 I wanted a flexible way to specify when and where a page transition should happen, and only when coming from or going to other specific pages, and I wanted it to be easy to manage that. I wanted the freedom to build anything I could dream up without spending a few hundred hours in the process!
 
@@ -51,7 +51,7 @@ Because I know you might not be as obsessed with creating beautiful page transit
 </AniLink>
 ```
 
-[Read more about AniLink at the docs](https://transitionlink.tylerbarnes.ca/docs/anilink/)
+[Read more about AniLink at the docs](https://transitionlink.tylerbarnes.ca/docs/anilink)
 
 ### Build your own transitions
 
@@ -126,7 +126,7 @@ Here's an example of a more complicated TransitionLink using [gsap](https://gree
 </TransitionLink>
 ```
 
-The animation code for `this.createRipple` would be a bit much to copy here but you can check it out on the [TransitionLink GitHub](https://github.com/TylerBarnes/gatsby-plugin-transition-link/blob/master/src/AniLink/PaintDrip.js). If you'd like you can also try it out with AniLink's paintDrip transition (check the [AniLink docs](https://transitionlink.tylerbarnes.ca/docs/anilink/) for usage).
+The animation code for `this.createRipple` would be a bit much to copy here but you can check it out on the [TransitionLink GitHub](https://github.com/TylerBarnes/gatsby-plugin-transition-link/blob/master/src/AniLink/PaintDrip.js). If you'd like you can also try it out with AniLink's paintDrip transition (check the [AniLink docs](https://transitionlink.tylerbarnes.ca/docs/anilink) for usage).
 
 As you can see, TransitionLink offers quite a wide variety of control for page transitions! You're able to set the length, delay, state, and a trigger function for both entering and exiting pages, allowing you to use both declarative and imperative animations and as many transitions as you need.
 

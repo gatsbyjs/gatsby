@@ -2,11 +2,11 @@
 title: Sourcing from Agility CMS
 ---
 
-This guide takes you through the steps involved in setting up a Gatsby site that fetches content from [Agility CMS](https://agilitycms.com/).
+This guide takes you through the steps involved in setting up a Gatsby site that fetches content from [Agility CMS](https://agilitycms.com).
 
 ## What is Agility CMS? What makes it different?
 
-[Agility CMS](https://agilitycms.com/) is a headless Content Management System (CMS) that lets you define your custom content types and relationships. This is called Content Architecture, and you can reuse this content for your websites and apps.
+[Agility CMS](https://agilitycms.com) is a headless Content Management System (CMS) that lets you define your custom content types and relationships. This is called Content Architecture, and you can reuse this content for your websites and apps.
 
 In addition, Agility CMS provides a page routing API, which allows you to offload control of the sitemap to the content editors.
 

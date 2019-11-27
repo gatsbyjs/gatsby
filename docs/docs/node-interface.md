@@ -58,12 +58,12 @@ Optional field exposing the raw content for this node that transformer plugins c
 ## Source plugins
 
 New nodes are added to Gatsby by "source" plugins. A common one that many Gatsby
-sites use is the [Filesystem source plugin](/packages/gatsby-source-filesystem/)
+sites use is the [Filesystem source plugin](/packages/gatsby-source-filesystem)
 which turns files on disk into File nodes.
 
 Other source plugins pull data from external APIs such as the
-[Drupal](/packages/gatsby-source-drupal/) and
-[Hacker News](/packages/gatsby-source-hacker-news/)
+[Drupal](/packages/gatsby-source-drupal) and
+[Hacker News](/packages/gatsby-source-hacker-news)
 
 ## Transformer plugins
 
@@ -75,10 +75,10 @@ Nodes created by transformer plugins are set as "children" of their "parent"
 nodes.
 
 - The
-  [Remark (Markdown library) transformer plugin](/packages/gatsby-transformer-remark/)
+  [Remark (Markdown library) transformer plugin](/packages/gatsby-transformer-remark)
   looks for new nodes that are created with a `mediaType` of `text/markdown` and
   then transforms these nodes into `MarkdownRemark` nodes with an `html` field.
-- The [YAML transformer plugin](/packages/gatsby-transformer-yaml/) looks for
+- The [YAML transformer plugin](/packages/gatsby-transformer-yaml) looks for
   new nodes with a media type of `text/yaml` (e.g. a `.yaml` file) and creates
   new YAML child node(s) by parsing the YAML source into JavaScript objects.
 
@@ -89,4 +89,4 @@ GraphQL schema which you can then query from your site's components.
 
 ## Node Creation
 
-To learn more about how nodes are created and linked together, check out the [Node Creation](/docs/node-creation/) documentation in the "Behind the Scenes" section.
+To learn more about how nodes are created and linked together, check out the [Node Creation](/docs/node-creation) documentation in the "Behind the Scenes" section.

@@ -2,7 +2,7 @@
 title: Performance Tracing
 ---
 
-Gatsby allows a build to be traced, enabling you to find which plugins or parts of the build are taking the longest. The trace information can be viewed in any [OpenTracing](http://opentracing.io/) compatible tool such as [Jaeger](https://www.jaegertracing.io/). You can also use Zipkin compatible tools such as [Zipkin](https://zipkin.io/) or [Honeycomb](https://www.honeycomb.io/).
+Gatsby allows a build to be traced, enabling you to find which plugins or parts of the build are taking the longest. The trace information can be viewed in any [OpenTracing](http://opentracing.io) compatible tool such as [Jaeger](https://www.jaegertracing.io). You can also use Zipkin compatible tools such as [Zipkin](https://zipkin.io) or [Honeycomb](https://www.honeycomb.io).
 
 - [Running Gatsby with tracing turned on](/docs/performance-tracing/#running-gatsby-with-tracing-turned-on)
 - [Tracing backend examples](/docs/performance-tracing/#tracing-backend-examples)
@@ -39,7 +39,7 @@ There are many OpenTracing compatible backends available. Below are examples of 
 
 ### local Jaeger with Docker
 
-[Jaeger](https://www.jaegertracing.io/) is an open source tracing system that can be run locally using Docker.
+[Jaeger](https://www.jaegertracing.io) is an open source tracing system that can be run locally using Docker.
 
 1.  Add [jaeger-client](https://www.npmjs.com/package/jaeger-client) to your site:
 
@@ -68,7 +68,7 @@ There are many OpenTracing compatible backends available. Below are examples of 
         jaegertracing/all-in-one:1.8
     ```
 
-    See [Jaeger getting started](https://www.jaegertracing.io/docs/1.8/getting-started/) for more information.
+    See [Jaeger getting started](https://www.jaegertracing.io/docs/1.8/getting-started) for more information.
 
 3.  Start Gatsby `build` or `develop` with `--open-tracing-config-file` pointing at the Jaeger configuration file. An example file is provided in the Gatsby project under [node_modules/gatsby/dist/utils/tracer/jaeger-local.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/tracer/jaeger-local.js) that will send tracing spans to your local Docker instance over HTTP. E.g
 
@@ -80,7 +80,7 @@ There are many OpenTracing compatible backends available. Below are examples of 
 
 ### Local Zipkin with Docker
 
-[Zipkin](https://zipkin.io/) is an open source tracing system that can be run locally using Docker.
+[Zipkin](https://zipkin.io) is an open source tracing system that can be run locally using Docker.
 
 1.  Add following dependencies to your site's `package.json`
 

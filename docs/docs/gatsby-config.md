@@ -55,7 +55,7 @@ module.exports = {
 }
 ```
 
-See more about [Plugins](/docs/plugins/) for more on utilizing plugins, and to see available official and community plugins.
+See more about [Plugins](/docs/plugins) for more on utilizing plugins, and to see available official and community plugins.
 
 ## pathPrefix
 
@@ -67,7 +67,7 @@ module.exports = {
 }
 ```
 
-See more about [Adding a Path Prefix](/docs/path-prefix/).
+See more about [Adding a Path Prefix](/docs/path-prefix).
 
 ## Polyfill
 
@@ -117,7 +117,7 @@ module.exports = {
 }
 ```
 
-You may need to install the appropriate file transformer (in this case [YAML](/packages/gatsby-transformer-yaml/)) and set up [gatsby-source-filesystem](/packages/gatsby-source-filesystem/) properly for Gatsby to pick up the mapping files. This applies to other file types later mentioned in this segment as well.
+You may need to install the appropriate file transformer (in this case [YAML](/packages/gatsby-transformer-yaml)) and set up [gatsby-source-filesystem](/packages/gatsby-source-filesystem) properly for Gatsby to pick up the mapping files. This applies to other file types later mentioned in this segment as well.
 
 Gatsby then uses this mapping when creating the GraphQL schema to enable you to query data from both sources:
 
@@ -253,12 +253,12 @@ Setting the proxy config option will tell the develop server to proxy any unknow
 module.exports = {
   proxy: {
     prefix: "/api",
-    url: "http://examplesite.com/api/",
+    url: "http://examplesite.com/api",
   },
 }
 ```
 
-See more about [Proxying API Requests in Develop](/docs/api-proxy/).
+See more about [Proxying API Requests in Develop](/docs/api-proxy).
 
 ## Advanced proxying with `developMiddleware`
 

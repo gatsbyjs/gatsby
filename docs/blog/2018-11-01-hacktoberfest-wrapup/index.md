@@ -75,7 +75,7 @@ To split our time more efficiently, we [created codeowner teams](/blog/2018-10-1
 
 #### ➡️ We're hiring another Open Source Maintainer!
 
-We knew this was an area of need that will continue to grow (which is great!) This role will focus on helping us improve Gatsby core, the Gatsby ecosystem, and support the community 🎉 Check out the [full job spec](https://www.gatsbyjs.com/careers/open-source-maintainer/) for more details.
+We knew this was an area of need that will continue to grow (which is great!) This role will focus on helping us improve Gatsby core, the Gatsby ecosystem, and support the community 🎉 Check out the [full job spec](https://www.gatsbyjs.com/careers/open-source-maintainer) for more details.
 
 ### We experienced an influx of minor, peripheral PRs
 
@@ -98,5 +98,5 @@ We had a great time and learned a lot from this year's Hacktoberfest! Thanks to 
 
 Check out other posts from this year's Gatsby Hacktoberfest:
 
-- [Hacktoberfest kickoff](/blog/2018-10-09-hacktoberfest-kickoff/)
-- [Uptick in docs contributions for Gatsby Hacktoberfest](/blog/2018-10-12-uptick-docs-contributions-hacktoberfest/)
+- [Hacktoberfest kickoff](/blog/2018-10-09-hacktoberfest-kickoff)
+- [Uptick in docs contributions for Gatsby Hacktoberfest](/blog/2018-10-12-uptick-docs-contributions-hacktoberfest)

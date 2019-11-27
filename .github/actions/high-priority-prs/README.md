@@ -13,7 +13,7 @@ This is an experimental effort to help with identifying the PRs that most need r
 
 The goal is make sure every contributor has a great experience and to prevent valuable PRs from going stale.
 
-Ported from @KyleAMathews gatsby-pr-bot. [Read more about it on Kyle's blog](https://www.bricolage.io/bulding-a-slack-bot-to-help-handle-large-numbers-of-prs/)
+Ported from @KyleAMathews gatsby-pr-bot. [Read more about it on Kyle's blog](https://www.bricolage.io/bulding-a-slack-bot-to-help-handle-large-numbers-of-prs)
 
 ## How it works
 

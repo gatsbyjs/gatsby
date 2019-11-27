@@ -8,7 +8,7 @@ tags: ["gatsby-inc"]
 
 If you're a Gatsby community member, you may have noticed something: we write _a lot_.
 
-Community members are often surprised by the comprehensiveness of our [documentation](/docs/). We publish new articles on this blog multiple times per week, from both the core team and the community.
+Community members are often surprised by the comprehensiveness of our [documentation](/docs). We publish new articles on this blog multiple times per week, from both the core team and the community.
 
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">The <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> docs are some of the best I&#39;ve ever read. Super clear setup instructions, especially Step 0 for those new to dev. Too many other frameworks assume dev environment setup experience, so it&#39;s nice to see the Gatsby team be better here.</p>&mdash; Matt Convente (@mattconvente) <a href="https://twitter.com/mattconvente/status/1099706762897342465?ref_src=twsrc%5Etfw">February 24, 2019</a></blockquote>
 
@@ -18,8 +18,8 @@ Writing is core to the success we've enjoyed so far, and it's core to our strate
 
 ## Principle 1: We write
 
-Some Inkteam members who have been regularly writing (speaking, appearing on podcasts, streaming): [Jason](/contributors/jason-lengstorf/), [Marcy](https://egghead.io/podcasts/heading-gatsby-s-learning-experience-and-bridging-gaps-with-marcy-sutton), [Amberley](/contributors/amberley-romo/), [Linda](/contributors/linda-watkins/), [Dustin](/contributors/dustin-schau/), [Shannon](/contributors/shannon-soper/), [Jim](/contributors/jim-ettig/), [Marisa](/contributors/marisa-morby/), [Preston](/contributors/preston-so/), [Mikhail](/contributors/mikhail-novikov/), [Sid](/contributors/sidhartha-chatterjee/), [Andrew](https://www.gatsbyjs.com/gatsby-days-preview-andrew/), [Mike](/contributors/mike-allanson/), [John](/docs/mdx/), [me](/contributors/sam-bhagwat/), and
-[Kyle](/contributors/kyle-mathews/),
+Some Inkteam members who have been regularly writing (speaking, appearing on podcasts, streaming): [Jason](/contributors/jason-lengstorf), [Marcy](https://egghead.io/podcasts/heading-gatsby-s-learning-experience-and-bridging-gaps-with-marcy-sutton), [Amberley](/contributors/amberley-romo), [Linda](/contributors/linda-watkins), [Dustin](/contributors/dustin-schau), [Shannon](/contributors/shannon-soper), [Jim](/contributors/jim-ettig), [Marisa](/contributors/marisa-morby), [Preston](/contributors/preston-so), [Mikhail](/contributors/mikhail-novikov), [Sid](/contributors/sidhartha-chatterjee), [Andrew](https://www.gatsbyjs.com/gatsby-days-preview-andrew), [Mike](/contributors/mike-allanson), [John](/docs/mdx), [me](/contributors/sam-bhagwat), and
+[Kyle](/contributors/kyle-mathews),
 
 And it's not just the Inkteam. The documentation, while curated by the Inkteam, has largely been authored by enthusiastic community members, along with about half of our blog posts.
 
@@ -40,9 +40,9 @@ You can do almost anything you want with Gatsby, you just have to:
 
 Roughly speaking, there are two sides of content at Gatsby — marketing content which focuses on (1), and learning content which focuses on (2).
 
-An example of (1) might be Linda's [How To Talk About Gatsby To Your Clients and Team](/blog/2019-03-07-sell-gatsby-to-clients/).
+An example of (1) might be Linda's [How To Talk About Gatsby To Your Clients and Team](/blog/2019-03-07-sell-gatsby-to-clients).
 
-An example of (2) might be Jason's [Learn With Jason](https://www.youtube.com/playlist?list=PLz8Iz-Fnk_eTpvd49Sa77NiF8Uqq5Iykx) series or really anything in the [docs](/docs/).
+An example of (2) might be Jason's [Learn With Jason](https://www.youtube.com/playlist?list=PLz8Iz-Fnk_eTpvd49Sa77NiF8Uqq5Iykx) series or really anything in the [docs](/docs).
 
 There's tons of overlap - _why_ points to _how_, and _how_ points to _why_. You could argue we've spent more time on (2) than (1), but the reality is that _we've only scratched the surface of what's possible_.
 
@@ -68,7 +68,7 @@ It's essential to our mission, though, because in order to become the default ch
 
 _"Gatsby can't do X"_ gets rebutted by _"Here's a case study of Gatsby doing X"_.
 
-(For more background on this concept, read about ["economies of scope"](https://www.ribbonfarm.com/2012/10/15/economies-of-scale-economies-of-scope/) or think about companies that have flourished by providing access to literally everything their customers needed — the 1897 Sears Roebuck catalogue had around 73K items; today, Amazon (the "Everything Store") has [100s of millions of items](https://wpengine.com/reduce-reuse-refresh/).)
+(For more background on this concept, read about ["economies of scope"](https://www.ribbonfarm.com/2012/10/15/economies-of-scale-economies-of-scope) or think about companies that have flourished by providing access to literally everything their customers needed — the 1897 Sears Roebuck catalogue had around 73K items; today, Amazon (the "Everything Store") has [100s of millions of items](https://wpengine.com/reduce-reuse-refresh).)
 
 The challenge, is of course _how do we write all of that content?_
 
@@ -94,7 +94,7 @@ On the one hand, there is _so much left to write_. On the other hand, because we
 
 In the docs, things are structured hierarchically, so usually content is mostly adjacent to related content on the left sidebar.
 
-But outside the docs, that's far from the case. We have blog posts, [using-\* example sites / guides](https://github.com/gatsbyjs/gatsby/tree/master/examples), [starters](/starters/), conference talks, podcast appearances, tweets, and whatever Gatsby community members dream up and publish!
+But outside the docs, that's far from the case. We have blog posts, [using-\* example sites / guides](https://github.com/gatsbyjs/gatsby/tree/master/examples), [starters](/starters), conference talks, podcast appearances, tweets, and whatever Gatsby community members dream up and publish!
 
 **It's a constant challenge to organize these in ways that are useful and obvious for the end user**. We're always attacking this in five or ten different ways -- discoverability via search, cross-linking, hierarchy, navbars and breadcrumbs, turning conference talks into blog posts and blog posts into docs.
 
@@ -106,7 +106,7 @@ Building sites with Gatsby is the way of the future. Our goal is to let people d
 
 We want everyone to build and keep building, read and keep reading.
 
-We want everyone to understand [the depths of Gatsby](/docs/behind-the-scenes/), to hunger and thirst for knowledge, to tell all of their friends and coworkers and significant other all the cool things they are learning and doing with Gatsby until those folks check it out too.
+We want everyone to understand [the depths of Gatsby](/docs/behind-the-scenes), to hunger and thirst for knowledge, to tell all of their friends and coworkers and significant other all the cool things they are learning and doing with Gatsby until those folks check it out too.
 
 We want folks who build their site with Gatsby; to build a plugin. We want folks who write documentation; to want to contribute code.
 

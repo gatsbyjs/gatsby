@@ -6,14 +6,14 @@ tags: ["getting-started", "wordpress"]
 ---
 
 _This post was originally published on
-[my blog](https://amberley.blog/2018-01-18-getting-started-with-gatsby-wordpress/)
+[my blog](https://amberley.blog/2018-01-18-getting-started-with-gatsby-wordpress)
 on January 18, 2018._
 
 Earlier this week I began rebuilding my blog using GatsbyJS + WordPress. As I familiarized with Gatsby, I found myself flipping through a million tabs, and I thought it might be useful to summarize concepts and to aggregate links I found helpful.
 
 I recently decided to tackle a redo of my blog. I wanted to do something different and I've been hearing a lot about GatsbyJS. A static site generator for React that I can easily pull my existing WordPress data for? Sold. I'll try it.
 
-I generated a new site using the [default starter](https://github.com/gatsbyjs/gatsby-starter-default) and read through what it gave me. Assuming you have the [Gatsby CLI](/docs/) installed, run:
+I generated a new site using the [default starter](https://github.com/gatsbyjs/gatsby-starter-default) and read through what it gave me. Assuming you have the [Gatsby CLI](/docs) installed, run:
 
 `gatsby new gatsby-example-site`
 
@@ -32,35 +32,35 @@ module.exports = {
 }
 ```
 
-See the [docs page on gatsby-config.js](/docs/gatsby-config/) for more.
+See the [docs page on gatsby-config.js](/docs/gatsby-config) for more.
 
 For the curious:
 
-- `gatsby-plugin-react-helmet` is a plugin the starter includes. It's a [document head manager for React](/packages/gatsby-plugin-react-helmet/).
+- `gatsby-plugin-react-helmet` is a plugin the starter includes. It's a [document head manager for React](/packages/gatsby-plugin-react-helmet).
 
 ## gatsby-node.js
 
-We can make use of any of [Gatsby's node APIs](/docs/node-apis/) by exporting a function with the name of that API from this file.
+We can make use of any of [Gatsby's node APIs](/docs/node-apis) by exporting a function with the name of that API from this file.
 
 For my purposes, the only one I have interacted with so far to get up and running is the [`createPages`](/docs/node-apis/#createPages) API. This gets called after our data has been fetched and is available to use to dynamically build out our static pages. More on this later.
 
 ## gatsby-browser.js
 
-Same as above, we can make use of any of [Gatsby's browser APIs](/docs/browser-apis/) by exporting them from this file.
+Same as above, we can make use of any of [Gatsby's browser APIs](/docs/browser-apis) by exporting them from this file.
 
-I haven't needed to make use of any of these yet, but they provide a hook into [client runtime operations](/docs/gatsby-lifecycle-apis/) — for example, replacing the router component, as seen in [this example](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-redux/gatsby-browser.js#L7).
+I haven't needed to make use of any of these yet, but they provide a hook into [client runtime operations](/docs/gatsby-lifecycle-apis) — for example, replacing the router component, as seen in [this example](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-redux/gatsby-browser.js#L7).
 
 ## Plugin: gatsby-source-wordpress
 
 Having familiarized with the basic structure, my next step was getting my data successfully pulling from WordPress. There's a plugin for that. [`gatsby-source-wordpress`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress) is Gatsby's plugin for sourcing data from WordPress sites using the WordPress JSON REST API.
 
-(Fun fact: the WordPress REST API is already [included starting with WordPress 4.7](http://v2.wp-api.org/) — no longer requires installing a WordPress plugin. I didn't actually know that, not having used the WordPress REST API for anything before).
+(Fun fact: the WordPress REST API is already [included starting with WordPress 4.7](http://v2.wp-api.org) — no longer requires installing a WordPress plugin. I didn't actually know that, not having used the WordPress REST API for anything before).
 
 I started by reviewing the [code for the plugin's demo site](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-wordpress).
 
 ## Configure the plugin to pull your data
 
-In `gatsby-config.js`, add your configuration options, including your WordPress site's baseUrl, protocol, whether it's hosted on [wordpress.com](http://wordpress.com/) or self-hosted, and whether it makes use of the Advanced Custom Fields (ACF) plugin.
+In `gatsby-config.js`, add your configuration options, including your WordPress site's baseUrl, protocol, whether it's hosted on [wordpress.com](http://wordpress.com) or self-hosted, and whether it makes use of the Advanced Custom Fields (ACF) plugin.
 
 ```javascript
 module.exports = {
@@ -113,7 +113,7 @@ _.each(result.data.allWordpressPost.edges, edge => {
 })
 ```
 
-The [docs define a Gatsby page](/docs/api-specification/#concepts) as "a site page with a pathname, a template component, and optional graphql query and layout component." See the docs on the [createPage bound action creator](/docs/actions/#createPage) and [guide on creating and modifying pages for more detail](/docs/creating-and-modifying-pages/).
+The [docs define a Gatsby page](/docs/api-specification/#concepts) as "a site page with a pathname, a template component, and optional graphql query and layout component." See the docs on the [createPage bound action creator](/docs/actions/#createPage) and [guide on creating and modifying pages for more detail](/docs/creating-and-modifying-pages).
 
 ## ... Take a step back to "templates"
 
@@ -127,7 +127,7 @@ So a template is a page component that we can use to programmatically create pag
 
 > Page Component — React.js component that renders a page and can optionally specify a layout component and a graphql query. ([Source](/docs/api-specification/#concepts)).
 
-React components living in `src/pages` automatically become pages. The file name of a page maps to its site path. My site in its current state only has one good example of this — `src/pages/index.js` maps to [amberley.blog](https://amberley.blog/). If I had an 'about' page, it would live at `src/pages/about.js`, and map to [amberley.blog/about](https://amberley.blog/about). (Since that doesn't exist, it will actually end up hitting the only other page currently defined in my site, which is `src/pages/404.js` — ([read about 404 pages](/docs/add-404-page/)).
+React components living in `src/pages` automatically become pages. The file name of a page maps to its site path. My site in its current state only has one good example of this — `src/pages/index.js` maps to [amberley.blog](https://amberley.blog). If I had an 'about' page, it would live at `src/pages/about.js`, and map to [amberley.blog/about](https://amberley.blog/about). (Since that doesn't exist, it will actually end up hitting the only other page currently defined in my site, which is `src/pages/404.js` — ([read about 404 pages](/docs/add-404-page)).
 
 If you include the "optional GraphQL query" noted above, the result of that query is automatically passed to the component on a `data` prop (`this.props.data`). ([Read more on GraphQL queries](/docs/querying-with-graphql/#what-does-a-graphql-query-look-like)).
 
@@ -138,7 +138,7 @@ While this isn't a tutorial -- more a guided walkthrough of me familiarizing and
 ## Sidenotes
 
 1.  You [don't need to know GraphQL](https://github.com/gatsbyjs/gatsby/issues/1172#issuecomment-308634739) to get started with Gatsby. I didn't. It's been a good introduction.
-2.  Gatsby makes heavy use of [plugins](/docs/plugins/) — both official and community — for a lot of things, from one that implements [Google Analytics](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics), to one that adds [GitHub's accessibility error scanner](https://github.com/alampros/gatsby-plugin-accessibilityjs) to all pages.
+2.  Gatsby makes heavy use of [plugins](/docs/plugins) — both official and community — for a lot of things, from one that implements [Google Analytics](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics), to one that adds [GitHub's accessibility error scanner](https://github.com/alampros/gatsby-plugin-accessibilityjs) to all pages.
 3.  Read through some of the source code. I particularly enjoyed reading through [the bootstrap process](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/bootstrap/index.js). (It's beautifully commented).
-4.  Gatsby.js is a static Progressive Web App (PWA) generator, but to be PWA friendly (at least according to the [Lighthouse PWA audit](https://developers.google.com/web/tools/lighthouse/)), look into two plugins: `gatsby-plugin-manifest` and `gatsby-plugin-offline`.
+4.  Gatsby.js is a static Progressive Web App (PWA) generator, but to be PWA friendly (at least according to the [Lighthouse PWA audit](https://developers.google.com/web/tools/lighthouse)), look into two plugins: `gatsby-plugin-manifest` and `gatsby-plugin-offline`.
 5.  I did end up [deploying with Netlify](/docs/deploying-to-netlify), and I'm super happy with it. (A [previous post](/blog/2017-12-06-gatsby-plus-contentful-plus-netlify/#solution-netlify--gatsby) discussed Netlify a bit more, if you're interested).

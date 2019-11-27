@@ -2,7 +2,7 @@
 title: Migrating from v1 to v2
 ---
 
-Looking for the v1 docs? [Find them here](https://v1.gatsbyjs.org/).
+Looking for the v1 docs? [Find them here](https://v1.gatsbyjs.org).
 
 > This document is a work in progress. Have you run into something that's not covered here? [Add your changes on GitHub](https://github.com/gatsbyjs/gatsby/edit/master/docs/docs/migrating-from-v1-to-v2.md)!
 
@@ -16,9 +16,9 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
 
 This documentation page covers the _how_ of migrating from v1 to v2. Various blog posts cover the _why_:
 
-- [v2 Overview](/blog/2018-09-17-gatsby-v2/) by Kyle Mathews
-- [Improving accessibility](/blog/2018-09-27-reach-router/) by Amberley Romo
-- [Keeping Gatsby sites blazing fast](/blog/2018-10-03-gatsby-perf/) by Dustin Schau
+- [v2 Overview](/blog/2018-09-17-gatsby-v2) by Kyle Mathews
+- [Improving accessibility](/blog/2018-09-27-reach-router) by Amberley Romo
+- [Keeping Gatsby sites blazing fast](/blog/2018-10-03-gatsby-perf) by Dustin Schau
 
 ## What we'll cover
 
@@ -120,7 +120,7 @@ npm i react react-dom
 
 ### Install plugins' peer dependencies
 
-Some plugins had dependencies that were also made `peerDependencies`. For example, if you use [`gatsby-plugin-typography`](/packages/gatsby-plugin-typography/), you now need to install:
+Some plugins had dependencies that were also made `peerDependencies`. For example, if you use [`gatsby-plugin-typography`](/packages/gatsby-plugin-typography), you now need to install:
 
 ```shell
 npm i typography react-typography
@@ -132,12 +132,12 @@ You should search for the plugins that you use in the [plugin library](/plugins)
 
 ### Remove or refactor layout components
 
-[Gatsby's layout components (`src/layouts/index.js`) are gone now](https://www.gatsbyjs.org/blog/2018-06-08-life-after-layouts/). The "top level component" is now the page itself. If the layout of your site looks broken, this is likely the reason why.
+[Gatsby's layout components (`src/layouts/index.js`) are gone now](https://www.gatsbyjs.org/blog/2018-06-08-life-after-layouts). The "top level component" is now the page itself. If the layout of your site looks broken, this is likely the reason why.
 
 There are some implications to this change:
 
 - Rendering different layouts for different pages is different. Use the standard React inheritance model. Gatsby no longer maintains, or needs to maintain, separate behavior for handling layouts.
-- Because the "top level component" changes between each page, React will rerender all children. This means that shared components previously in a Gatsby v1 layout-- like navigations-- will unmount and remount. This will break CSS transitions or React state within those shared components. If your use case requires layout component to not unmount use [`gatsby-plugin-layout`](/packages/gatsby-plugin-layout/).
+- Because the "top level component" changes between each page, React will rerender all children. This means that shared components previously in a Gatsby v1 layout-- like navigations-- will unmount and remount. This will break CSS transitions or React state within those shared components. If your use case requires layout component to not unmount use [`gatsby-plugin-layout`](/packages/gatsby-plugin-layout).
 
 - To learn more about the decision behind this removal, read the [RFC for removing the special layout component](https://github.com/gatsbyjs/rfcs/blob/master/text/0002-remove-special-layout-components.md).
 
@@ -209,7 +209,7 @@ export default props => (
 
 #### 5. Change query to use `StaticQuery`
 
-If you were using the `data` prop in your Gatsby v1 layout, you now need to use Gatsby v2’s [StaticQuery feature](/docs/static-query/). This is because a layout is now a normal component.
+If you were using the `data` prop in your Gatsby v1 layout, you now need to use Gatsby v2’s [StaticQuery feature](/docs/static-query). This is because a layout is now a normal component.
 
 Replacing a layout's query with `StaticQuery`:
 
@@ -332,7 +332,7 @@ Use [`gatsby-plugin-postcss`](https://github.com/gatsbyjs/gatsby/tree/master/pac
 
 `npm install --save gatsby-plugin-postcss postcss-import postcss-cssnext postcss-browser-reporter postcss-reporter`
 
-**NOTE**: `postcss-cssnext` is [deprecated](https://moox.io/blog/deprecating-cssnext/) and it is better to use `postcss-preset-env`.
+**NOTE**: `postcss-cssnext` is [deprecated](https://moox.io/blog/deprecating-cssnext) and it is better to use `postcss-preset-env`.
 
 #### 2. Include `gatsby-plugin-postcss` in your `gatsby-config.js` file
 
@@ -360,7 +360,7 @@ module.exports = () => ({
 
 ### Migrate from React Router to @reach/router
 
-We switched our router from [React Router v4](https://reacttraining.com/react-router/) to [@reach/router](https://reach.tech/router) as @reach/router is smaller and has 1st class support for accessibility.
+We switched our router from [React Router v4](https://reacttraining.com/react-router) to [@reach/router](https://reach.tech/router) as @reach/router is smaller and has 1st class support for accessibility.
 
 The founder of React Router, [Ryan Florence](https://twitter.com/ryanflorence) is also the founder of @reach/router.
 
@@ -460,7 +460,7 @@ exports.onCreatePage = async ({ page, actions }) => {
 
   // page.matchPath is a special key that's used for matching pages
   // only on the client.
-  if (page.path.match(/^\/app/)) {
+  if (page.path.match(/^\/app)) {
 -    page.matchPath = "/app/:path"
 +    page.matchPath = "/app/*"
 
@@ -642,7 +642,7 @@ We changed the GraphQL root type from `RootQueryType` to `Query`. This is only l
 
 ### Typography.js Plugin Config Changes
 
-If you use [`gatsby-plugin-typography`](/packages/gatsby-plugin-typography/), you now need to explicitly export `scale` and `rhythm` as named exports from your typography config module.
+If you use [`gatsby-plugin-typography`](/packages/gatsby-plugin-typography), you now need to explicitly export `scale` and `rhythm` as named exports from your typography config module.
 
 ```diff:title=src/utils/typography.js
 - const typography = new Typography();
@@ -748,7 +748,7 @@ plugins: [
 
 ### Update Jest configuration
 
-If you were using Jest with Gatsby V1, you will need to make some updates to your configuration when upgrading to Gatsby V2. You can view the complete details of setting up your test environment on the [Unit Testing](/docs/unit-testing/) page of the docs.
+If you were using Jest with Gatsby V1, you will need to make some updates to your configuration when upgrading to Gatsby V2. You can view the complete details of setting up your test environment on the [Unit Testing](/docs/unit-testing) page of the docs.
 
 ### gatsby-image's `outerWrapperClassName` was removed
 
@@ -998,7 +998,7 @@ The signature for using createRemoteFileNode changed in v2, it now expects a new
 
 The node `internal` object isn't meant for adding node data. While Gatsby v1 allows this behaviour we now validate against it for v2. Node data should be added as fields on the top-level node object.
 
-[Check the Node interface docs](https://www.gatsbyjs.org/docs/node-interface/) for allowed fields.
+[Check the Node interface docs](https://www.gatsbyjs.org/docs/node-interface) for allowed fields.
 
 ### Import `graphql` types from `gatsby/graphql`
 
@@ -1021,7 +1021,7 @@ Here's a brief section on starting a new project with Gatsby v2 instead of upgra
 
 _Start from scratch:_ If you're a _start from scratch_ kind of person, you can install Gatsby and React like this: `npm install gatsby react react-dom`
 
-_Tutorial:_ If you'd like a step-by-step guide, [follow the tutorial](/tutorial/) to get started with Gatsby v2.
+_Tutorial:_ If you'd like a step-by-step guide, [follow the tutorial](/tutorial) to get started with Gatsby v2.
 
 _Starters:_ If you'd rather use one of the official starters, install your favourite one with the Gatsby CLI.
 

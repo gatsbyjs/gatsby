@@ -192,7 +192,7 @@ export interface GatsbyNode {
    * for programmatically manipulating pages created by other plugins e.g.
    * if you want paths without trailing slashes.
    *
-   * See the guide [Creating and Modifying Pages](https://www.gatsbyjs.org/docs/creating-and-modifying-pages/)
+   * See the guide [Creating and Modifying Pages](https://www.gatsbyjs.org/docs/creating-and-modifying-pages)
    * for more on this API.
    */
   onCreatePage?(
@@ -343,7 +343,7 @@ export interface GatsbyNode {
    *   In resolver functions themselves, it is recommended to access the final
    *   built schema from `info.schema`.
    * * Gatsby's data layer, including all internal query capabilities, is
-   *   exposed on [`context.nodeModel`](/docs/node-model/). The node store can be
+   *   exposed on [`context.nodeModel`](/docs/node-model). The node store can be
    *   queried directly with `getAllNodes`, `getNodeById` and `getNodesByIds`,
    *   while more advanced queries can be composed with `runQuery`. Note that
    *   `runQuery` will call field resolvers before querying, so e.g. foreign-key

@@ -10,9 +10,9 @@ In this tutorial you'll create your own source plugin. Your plugin will source d
 
 ## What is a source plugin?
 
-Source plugins "source" data from remote or local locations into what Gatsby calls [nodes](/docs/node-interface/).
+Source plugins "source" data from remote or local locations into what Gatsby calls [nodes](/docs/node-interface).
 
-For more background on source plugins, check out [Gatsby's source plugin documentation](/docs/creating-a-source-plugin/)
+For more background on source plugins, check out [Gatsby's source plugin documentation](/docs/creating-a-source-plugin)
 
 ## Why create a source plugin?
 
@@ -20,7 +20,7 @@ Source plugins convert data from any source into a format that can be processed 
 
 If you can't find a plugin for your data source you can create your own.
 
-_**NOTE:** if your data is local i.e. on your file system and part of your site's repo, then you generally don't want to create a new source plugin. Instead you want to use [gatsby-source-filesystem](/packages/gatsby-source-filesystem/) which handles reading and watching files for you. You can then use [transformer plugins](/plugins/?=gatsby-transformer) like [gatsby-transformer-yaml](/packages/gatsby-transformer-yaml/) to make queryable data from files._
+_**NOTE:** if your data is local i.e. on your file system and part of your site's repo, then you generally don't want to create a new source plugin. Instead you want to use [gatsby-source-filesystem](/packages/gatsby-source-filesystem) which handles reading and watching files for you. You can then use [transformer plugins](/plugins/?=gatsby-transformer) like [gatsby-transformer-yaml](/packages/gatsby-transformer-yaml) to make queryable data from files._
 
 ## How to create a source plugin
 
@@ -28,7 +28,7 @@ _**NOTE:** if your data is local i.e. on your file system and part of your site'
 
 Your plugin is going to source images from Pixabay. You'll be able to configure your plugin in your site's `gatsby-config.js` file and write GraphQL queries to access your plugin's data.
 
-> **NOTE:** You'll need a Pixabay API key which you can get by [registering for a Pixabay account](https://pixabay.com/en/accounts/register/). Your API key is in the [“Search Images“ section of the Pixabay API docs](https://pixabay.com/api/docs/#api_search_images).
+> **NOTE:** You'll need a Pixabay API key which you can get by [registering for a Pixabay account](https://pixabay.com/en/accounts/register). Your API key is in the [“Search Images“ section of the Pixabay API docs](https://pixabay.com/api/docs/#api_search_images).
 
 ### An example API request
 
@@ -364,7 +364,7 @@ Experiment with different options in your `gatsby-config.js` file to see how tha
 
 Don't publish this particular plugin to npm or the Gatsby Plugin Library, because it's just a sample plugin for the tutorial. However, if you've built a local plugin for your project, and want to share it with others, npm allows you to publish your plugins. Check out the npm docs on [How to Publish & Update a Package](https://docs.npmjs.com/getting-started/publishing-npm-packages) for more info.
 
-> **NOTE:** Once you have published your plugin on npm, don't forget to edit your plugin's `package.json` file to include info about your plugin. If you'd like to publish a plugin to the [Gatsby Plugin Library](/plugins/) (please do!), please [follow these steps](/contributing/submit-to-plugin-library/).
+> **NOTE:** Once you have published your plugin on npm, don't forget to edit your plugin's `package.json` file to include info about your plugin. If you'd like to publish a plugin to the [Gatsby Plugin Library](/plugins) (please do!), please [follow these steps](/contributing/submit-to-plugin-library).
 
 ## Summary
 
@@ -383,10 +383,10 @@ Your plugin has been adapted from Jason Lengstorf's [gatsby-source-pixabay plugi
 
 Try adding new features to your plugin, for example - download images from Pixabay, improve error handling, add documentation or automated tests.
 
-Check out Gatsby's docs on [plugin authoring](/docs/creating-plugins/) and [creating a source plugin](/docs/creating-a-source-plugin/).
+Check out Gatsby's docs on [plugin authoring](/docs/creating-plugins) and [creating a source plugin](/docs/creating-a-source-plugin).
 
 ### A note on JavaScript versions
 
 In this tutorial you've written code in a version of JavaScript that's compatible with Node.js version 6 and above.
 
-Jason's version of [the plugin](https://github.com/jlengstorf/gatsby-source-pixabay/blob/master/src/gatsby-node.js) uses newer JavaScript features with [babel](https://babeljs.io/) to provide compatibility for older versions of Node. Compare your code with Jason's to see how newer JavaScript features allow for more succinct code.
+Jason's version of [the plugin](https://github.com/jlengstorf/gatsby-source-pixabay/blob/master/src/gatsby-node.js) uses newer JavaScript features with [babel](https://babeljs.io) to provide compatibility for older versions of Node. Compare your code with Jason's to see how newer JavaScript features allow for more succinct code.

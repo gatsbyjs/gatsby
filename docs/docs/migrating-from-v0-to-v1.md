@@ -37,10 +37,10 @@ dropped in react-router v4 in favor of the `exact` prop.
 import Link from 'gatsby-link'
 
 // Equivalent to react-router's <Link>
-<Link to="/page-2/">Page 2</Link>
+<Link to="/page-2">Page 2</Link>
 
 // Equivalent to react-router's <NavLink>
-<Link to="/page-2/" activeClassName="selected">Page 2</Link>
+<Link to="/page-2" activeClassName="selected">Page 2</Link>
 
 // `exact` prop replaces <IndexLink> from react-router v3
 <Link to="/" exact>Home</Link>
@@ -114,7 +114,7 @@ blog would want to create a post page for every markdown file. But it also might
 want to create tag pages for each tag linking to the posts using that tag. See
 [this issue on programmatic routes](https://github.com/gatsbyjs/gatsby/issues/421)
 and this
-[blog post introducing work on v1](https://www.bricolage.io/gatsby-open-source-work/)
+[blog post introducing work on v1](https://www.bricolage.io/gatsby-open-source-work)
 for more background on this change.
 
 Here's an example of migrating a markdown wrapper to Gatsby v1.

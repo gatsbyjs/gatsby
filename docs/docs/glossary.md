@@ -16,7 +16,7 @@ slug={props.slug}
 
 ### AST
 
-Abstract Syntax Tree: A tree representation of the source code that is found during a [compilation](#compiler) step between two languages. For example, [gatsby-transformer-remark](/packages/gatsby-transformer-remark/) will create an AST from [Markdown](#markdown) to describe a Markdown document in a tree structure using the [Remark](#remark) parser.
+Abstract Syntax Tree: A tree representation of the source code that is found during a [compilation](#compiler) step between two languages. For example, [gatsby-transformer-remark](/packages/gatsby-transformer-remark) will create an AST from [Markdown](#markdown) to describe a Markdown document in a tree structure using the [Remark](#remark) parser.
 
 ### API
 
@@ -24,7 +24,7 @@ Application Programming Interface: A method for one application to communicate w
 
 ### Accessibility
 
-The inclusive practice of removing barriers that prevent interaction with, or access to websites, by people with disabilities. When sites are correctly designed, developed and edited for accessibility, generally all users have equal access to information and functionality. Read about [Gatsby's Commitment to Accessibility](/blog/2019-04-18-gatsby-commitment-to-accessibility/).
+The inclusive practice of removing barriers that prevent interaction with, or access to websites, by people with disabilities. When sites are correctly designed, developed and edited for accessibility, generally all users have equal access to information and functionality. Read about [Gatsby's Commitment to Accessibility](/blog/2019-04-18-gatsby-commitment-to-accessibility).
 
 ## B
 
@@ -50,11 +50,11 @@ A storage of information locally that might be used again, so computations and l
 
 Command Line Interface: An application that runs on your computer through the [command line](#command-line) and interacted with your keyboard.
 
-Gatsby has two command line interfaces. One, [`gatsby`](/docs/gatsby-cli/), for day-to-day development with Gatsby and another, [`gatsby-dev`](/contributing/setting-up-your-local-dev-environment/#gatsby-repo-install-instructions), for those who contribute to the Gatsby project.
+Gatsby has two command line interfaces. One, [`gatsby`](/docs/gatsby-cli), for day-to-day development with Gatsby and another, [`gatsby-dev`](/contributing/setting-up-your-local-dev-environment/#gatsby-repo-install-instructions), for those who contribute to the Gatsby project.
 
 ### Client-side
 
-Client-side refers to operations that are performed by the user's browser in a [client–server relationship](https://en.wikipedia.org/wiki/Client%E2%80%93server_model) in a computer network. In Gatsby, this is important when [working with packages](/docs/using-client-side-only-packages/) that rely on objects in the [browser DOM](#dom), such as `window` or `navigator`. See also: [server-side](#server-side), [frontend](#frontend), and [backend](#backend).
+Client-side refers to operations that are performed by the user's browser in a [client–server relationship](https://en.wikipedia.org/wiki/Client%E2%80%93server_model) in a computer network. In Gatsby, this is important when [working with packages](/docs/using-client-side-only-packages) that rely on objects in the [browser DOM](#dom), such as `window` or `navigator`. See also: [server-side](#server-side), [frontend](#frontend), and [backend](#backend).
 
 ### CMS
 
@@ -80,7 +80,7 @@ The configuration file, `gatsby-config.js` tells Gatsby information about your w
 
 ### CSS
 
-[CSS](https://developer.mozilla.org/en-US/docs/Web/CSS) stands for Cascading Style Sheets, and it's a major part of the Web Platform with [HTML](#html) and [JavaScript](#javascript). CSS is a language for styling webpages designed to be highly backwards-compatible. As new features are rolled out to end users, [CSS parsers](https://www.html5rocks.com/en/tutorials/internals/howbrowserswork/#CSS_parsing) can safely ignore unsupported features and enhance with the properties they do support. CSS accomplishes this with its _cascading_ design, fundamental to styling with new techniques like [CSS Grid](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/CSS_Grid_and_Progressive_Enhancement) while providing fallbacks for older browsers. Gatsby supports multiple [approaches to styling](/docs/styling/), including regular CSS files, CSS modules, and CSS-in-JS.
+[CSS](https://developer.mozilla.org/en-US/docs/Web/CSS) stands for Cascading Style Sheets, and it's a major part of the Web Platform with [HTML](#html) and [JavaScript](#javascript). CSS is a language for styling webpages designed to be highly backwards-compatible. As new features are rolled out to end users, [CSS parsers](https://www.html5rocks.com/en/tutorials/internals/howbrowserswork/#CSS_parsing) can safely ignore unsupported features and enhance with the properties they do support. CSS accomplishes this with its _cascading_ design, fundamental to styling with new techniques like [CSS Grid](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/CSS_Grid_and_Progressive_Enhancement) while providing fallbacks for older browsers. Gatsby supports multiple [approaches to styling](/docs/styling), including regular CSS files, CSS modules, and CSS-in-JS.
 
 ## D
 
@@ -94,7 +94,7 @@ A database is a structured collection of data or content. Often a [CMS](#cms) wi
 
 ### Decoupled
 
-Decoupling describes the separation of different concerns. With [Gatsby](#gatsby) this most commonly means decoupling the [frontend](#frontend) from the [backend](#backend), like with [Decoupled Drupal](https://dri.es/how-to-decouple-drupal-in-2019) or [Headless WordPress](https://www.smashingmagazine.com/2018/10/headless-wordpress-decoupled/).
+Decoupling describes the separation of different concerns. With [Gatsby](#gatsby) this most commonly means decoupling the [frontend](#frontend) from the [backend](#backend), like with [Decoupled Drupal](https://dri.es/how-to-decouple-drupal-in-2019) or [Headless WordPress](https://www.smashingmagazine.com/2018/10/headless-wordpress-decoupled).
 
 ### Deploy
 
@@ -122,7 +122,7 @@ Gatsby supports two environments by default, the [development environment](#deve
 
 ### Environment Variables
 
-[Environment Variables](/docs/environment-variables/) allow you to customize the behavior of your app depending on its [environment](#environment). For instance, you may wish to get content from a staging CMS during development and connect to your production CMS when you [build](#build) your site. With environment variables you can set a different URL for each environment.
+[Environment Variables](/docs/environment-variables) allow you to customize the behavior of your app depending on its [environment](#environment). For instance, you may wish to get content from a staging CMS during development and connect to your production CMS when you [build](#build) your site. With environment variables you can set a different URL for each environment.
 
 ## F
 
@@ -132,7 +132,7 @@ The way files are organized. With Gatsby, it means having files in the same plac
 
 ### Frontend
 
-The [public-facing](#public) interface for your website or app, delivered using web technologies: HTML, CSS, and JavaScript. For more insight into how the Web Platform brings these technologies together, check out this article on [How Browsers Work](https://www.html5rocks.com/en/tutorials/internals/howbrowserswork/).
+The [public-facing](#public) interface for your website or app, delivered using web technologies: HTML, CSS, and JavaScript. For more insight into how the Web Platform brings these technologies together, check out this article on [How Browsers Work](https://www.html5rocks.com/en/tutorials/internals/howbrowserswork).
 
 ## G
 
@@ -142,7 +142,7 @@ Gatsby is a modern website framework that builds performance into every website 
 
 ### GraphQL
 
-A [query](#query) language that allows you to pull data into your website or app. It’s the [interface that Gatsby uses](/docs/graphql/) for managing site data.
+A [query](#query) language that allows you to pull data into your website or app. It’s the [interface that Gatsby uses](/docs/graphql) for managing site data.
 
 ## H
 
@@ -156,7 +156,7 @@ A [CMS](#cms) that only handles the [backend](#backend) content management inste
 
 ### Hosting
 
-A hosting provider keeps a copy of your website or app and makes it accessible to [the public](#public). [Common hosting providers for Gatsby](/docs/deploying-and-hosting/) projects include Netlify, AWS, S3, Surge, Heroku, and more.
+A hosting provider keeps a copy of your website or app and makes it accessible to [the public](#public). [Common hosting providers for Gatsby](/docs/deploying-and-hosting) projects include Netlify, AWS, S3, Surge, Heroku, and more.
 
 ### Hot module replacement
 
@@ -188,7 +188,7 @@ JSX is an extension to JavaScript that allows developers to write HTML and custo
 
 ### Linting
 
-Linting is the process of running a program that will analyze code for potential errors. The Gatsby project uses [prettier](https://prettier.io/) to identify and fix common style issues. Another example of a linter commonly used in React projects is [eslint-jsx-plugin-a11y](https://github.com/evcohen/eslint-plugin-jsx-a11y), which checks for common [accessibility](#accessibility) issues in development.
+Linting is the process of running a program that will analyze code for potential errors. The Gatsby project uses [prettier](https://prettier.io) to identify and fix common style issues. Another example of a linter commonly used in React projects is [eslint-jsx-plugin-a11y](https://github.com/evcohen/eslint-plugin-jsx-a11y), which checks for common [accessibility](#accessibility) issues in development.
 
 ## M
 
@@ -208,7 +208,7 @@ A way of writing HTML content with plain text, using special characters to denot
 
 ### Node
 
-Gatsby uses [data nodes](/docs/node-interface/) to represent a single piece of data. A [data source](#data-source) will create multiple nodes.
+Gatsby uses [data nodes](/docs/node-interface) to represent a single piece of data. A [data source](#data-source) will create multiple nodes.
 
 ### Node.js
 
@@ -230,7 +230,7 @@ This also often refers to [components](#component) that live in `/src/pages/` an
 
 ### Plugin
 
-Additional code that adds functionality to Gatsby that wasn't included out-of-the-box. Common [Gatsby plugins](/plugins/) include [source](#source-plugins) and [transformer](#transformer) plugins for pulling in and manipulating data, respectively.
+Additional code that adds functionality to Gatsby that wasn't included out-of-the-box. Common [Gatsby plugins](/plugins) include [source](#source-plugins) and [transformer](#transformer) plugins for pulling in and manipulating data, respectively.
 
 ### Production Environment
 
@@ -294,7 +294,7 @@ A [plugin](#plugin) that adds additional [data sources](#data-source) to Gatsby 
 
 ### Starter
 
-A pre-configured Gatsby project that can be used as a starting point for your project. They can be discovered using the [Gatsby Starter Library](/starters/) and installed using the [Gatsby CLI](/docs/starters/).
+A pre-configured Gatsby project that can be used as a starting point for your project. They can be discovered using the [Gatsby Starter Library](/starters) and installed using the [Gatsby CLI](/docs/starters).
 
 ### Static
 
@@ -310,7 +310,7 @@ A [component](#component) that is [programmatically](#programmatically) turned i
 
 ### Theme
 
-A Gatsby theme is like a WordPress theme that is composable (with other themes), extendable (with more logic), and replaceable ([shadowing](/blog/2019-04-29-component-shadowing/)). Gatsby themes can have any facet of a Gatsby app packaged inside of them, and can also offer any number of knobs to turn features on or off.
+A Gatsby theme is like a WordPress theme that is composable (with other themes), extendable (with more logic), and replaceable ([shadowing](/blog/2019-04-29-component-shadowing)). Gatsby themes can have any facet of a Gatsby app packaged inside of them, and can also offer any number of knobs to turn features on or off.
 
 ### Transformer
 

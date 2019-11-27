@@ -39,12 +39,12 @@ to over-engineer simple websites. Not to mention that building a development
 environment alone is the biggest requirement when starting from scratch.
 Therefore another option needed to be explored.
 
-[WordPress](https://wordpress.org/) would be the fastest solution to build a
+[WordPress](https://wordpress.org) would be the fastest solution to build a
 website but I wanted to be able to rapidly prototype on customs themes.
 Unfortunately, understanding the architecture to develop themes on this stack
 would require additional time. Not to mention I dislike PHP (#sorryNotSorry 😅)
-therefore this option was a clear loser. I tried [Hugo](https://gohugo.io/) and
-[Jekyll](https://jekyllrb.com/). They gave me the right mix of speed and
+therefore this option was a clear loser. I tried [Hugo](https://gohugo.io) and
+[Jekyll](https://jekyllrb.com). They gave me the right mix of speed and
 control. But their templating languages were unappealing as long term options.
 
 When I stumbled onto Gatsby, I found the golden goose. I already worked with
@@ -56,7 +56,7 @@ world for enhanced interactive features.
 
 Once settled on Gatsby, I started working on my personal website. Within 2
 hours I wanted to prototype with different design elements because I found
-inspiration from [html5up](https://html5up.net/) templates. However I did not
+inspiration from [html5up](https://html5up.net) templates. However I did not
 want to discard my work so far.
 
 I decided to make a new directory to store my outdated work, like a true digital

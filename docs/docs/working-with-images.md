@@ -2,9 +2,9 @@
 title: Working with Images in Gatsby
 ---
 
-Optimizing images is a challenge on any website. To utilize best practices for performance across devices, you need multiple sizes and resolutions of each image. Luckily, Gatsby has several useful [plugins](/docs/plugins/) that work together to do that for images on [page components](/docs/building-with-components/#page-components).
+Optimizing images is a challenge on any website. To utilize best practices for performance across devices, you need multiple sizes and resolutions of each image. Luckily, Gatsby has several useful [plugins](/docs/plugins) that work together to do that for images on [page components](/docs/building-with-components/#page-components).
 
-The recommended approach is to use [GraphQL queries](/docs/querying-with-graphql/) to get images of the optimal size or resolution, then, display them with the [`gatsby-image`](/packages/gatsby-image/) component.
+The recommended approach is to use [GraphQL queries](/docs/querying-with-graphql) to get images of the optimal size or resolution, then, display them with the [`gatsby-image`](/packages/gatsby-image) component.
 
 ## Query images with GraphQL
 
@@ -12,9 +12,9 @@ Querying images with GraphQL allows you to access the image's data as well as pe
 
 You'll need a few plugins for this:
 
-- [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/) plugin allows you to [query files with GraphQL](/docs/querying-with-graphql/#images)
+- [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem) plugin allows you to [query files with GraphQL](/docs/querying-with-graphql/#images)
 - [`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp) powers the connections between Sharp and Gatsby Plugins
-- [`gatsby-transformer-sharp`](/packages/gatsby-transformer-sharp/) allows you to create multiples images of the right sizes and resolutions with a query
+- [`gatsby-transformer-sharp`](/packages/gatsby-transformer-sharp) allows you to create multiples images of the right sizes and resolutions with a query
 
 If the final image is of a fixed size, optimization relies on having multiple resolutions of the image. If it is responsive, that is it stretches to fill a container or page, optimization relies on having different sizes of the same image. See the [Gatsby Image documentation for more information](/packages/gatsby-image/#two-types-of-responsive-images).
 
@@ -38,14 +38,14 @@ export const query = graphql`
 
 ## Optimizing images with gatsby-image
 
-[`gatsby-image`](/packages/gatsby-image/) is a plugin that automatically creates React components for optimized images that:
+[`gatsby-image`](/packages/gatsby-image) is a plugin that automatically creates React components for optimized images that:
 
 > - Loads the optimal size of image for each device size and screen resolution
 > - Holds the image position while loading so your page doesn't jump around as images load
 > - Uses the "blur-up" effect i.e. it loads a tiny version of the image to show while the full image is loading
 > - Alternatively provides a "traced placeholder" SVG of the image
 > - Lazy loads images, which reduces bandwidth and speeds the initial load time
-> - Uses [WebP](https://developers.google.com/speed/webp/) images, if browser supports the format
+> - Uses [WebP](https://developers.google.com/speed/webp) images, if browser supports the format
 
 Here is an image component that uses the query from the previous example:
 
@@ -93,8 +93,8 @@ export const query = graphql`
 
 ### Additional resources
 
-- [Gatsby Image API docs](/docs/gatsby-image/)
+- [Gatsby Image API docs](/docs/gatsby-image)
 - [Using gatsby-image with Gatsby](https://egghead.io/playlists/using-gatsby-image-with-gatsby-ea85129e), free egghead.io playlist
-- [gatsby-image plugin README file](/packages/gatsby-image/)
-- [gatsby-plugin-sharp README file](/packages/gatsby-plugin-sharp/)
-- [gatsby-transformer-sharp README file](/packages/gatsby-transformer-sharp/)
+- [gatsby-image plugin README file](/packages/gatsby-image)
+- [gatsby-plugin-sharp README file](/packages/gatsby-plugin-sharp)
+- [gatsby-transformer-sharp README file](/packages/gatsby-transformer-sharp)

@@ -32,7 +32,7 @@ _Utilize developers to prototype faster_
 
 In order to do user testing, usually user researchers work with designers to construct pixel perfect prototypes of various options, either static or clickable. Constructing and iterating on these artifacts can take days or weeks.
 
-Gatsby makes another option possible. Some Gatsby users report [setting up a production site](/blog/2018-01-18-how-boston-gov-used-gatsby-to-be-selected-as-an-amazon-hq2-candidate-city/) with live UI that is building and deploying in under an hour.
+Gatsby makes another option possible. Some Gatsby users report [setting up a production site](/blog/2018-01-18-how-boston-gov-used-gatsby-to-be-selected-as-an-amazon-hq2-candidate-city) with live UI that is building and deploying in under an hour.
 
 Especially if your organization already uses a React or HTML-based component library, your team may consider bringing in a developer to construct live wireframe-level prototypes. This may enable you to accelerate the user research process, start the development process with a working prototype rather than from scratch, and ultimately let you arrive at a better version of your site.
 

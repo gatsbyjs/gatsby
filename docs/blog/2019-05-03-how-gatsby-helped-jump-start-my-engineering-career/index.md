@@ -25,7 +25,7 @@ After leaving, personally I had no idea what I wanted to do, but I had to find s
 
 So I searched React, and saw repos that were getting updated frequently, and saw Gatsby. The README and description doesn’t look anything like it does now -- it was just "build a static site with React and GraphQL"
 
-I dug a bit, and saw [Kyle’s clone of Instagram](https://gatsbygram.gatsbyjs.org/), and I was like "holy shit it's fast". At the time, it was mind-blowingly fast.
+I dug a bit, and saw [Kyle’s clone of Instagram](https://gatsbygram.gatsbyjs.org), and I was like "holy shit it's fast". At the time, it was mind-blowingly fast.
 
 I learned a lot of basic JavaScript functionality from [reading the Gatsbygram code](https://github.com/gatsbyjs/gatsby/tree/master/examples/gatsbygram) -- map, for each, and so on. I would open up an issue when I got stuck, which in retrospect I’m shocked Kyle responded to all my questions.
 

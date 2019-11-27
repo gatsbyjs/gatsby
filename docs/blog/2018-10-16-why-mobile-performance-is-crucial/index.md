@@ -7,9 +7,9 @@ tags: ["content-mesh"]
 
 _This is Part 4 of a series. Part 1 is_ [The Journey to a Content Mesh](/blog/2018-10-04-journey-to-the-content-mesh)_; Part 2 is_ [Unbundling of the CMS](/blog/2018-10-10-unbundling-of-the-cms)_; Part 3 is_ [The Rise of Modern Web Development](/blog/2018-10-11-rise-of-modern-web-development).
 
-Mobile traffic now makes up over half of all site visits, and more than half of mobile site visits are abandoned if a page takes [over 3 seconds to load](https://www.thinkwithgoogle.com/data-gallery/detail/mobile-site-abandonment-three-second-load/).
+Mobile traffic now makes up over half of all site visits, and more than half of mobile site visits are abandoned if a page takes [over 3 seconds to load](https://www.thinkwithgoogle.com/data-gallery/detail/mobile-site-abandonment-three-second-load).
 
-With the Fortune 500 spending millions of marketing dollars on marketing initiatives aimed at driving traffic to their site, the business impact of bouncing visitors is clear -- [every 100ms of latency costs 1% of sales.](https://www.digitalrealty.com/blog/the-cost-of-latency/)
+With the Fortune 500 spending millions of marketing dollars on marketing initiatives aimed at driving traffic to their site, the business impact of bouncing visitors is clear -- [every 100ms of latency costs 1% of sales.](https://www.digitalrealty.com/blog/the-cost-of-latency)
 
 Unfortunately, in practice, great performance is surprisingly hard to achieve -- average page load times _haven’t improved_ over several years of increasing connection speed.
 
@@ -58,7 +58,7 @@ Why is that?
 
 Connection speeds for mobile device have increased, while Moore's Law has made devices faster. However, these speed dividends have been eaten up by two things.
 
-First, **[heavier page weights](https://www.keycdn.com/support/the-growth-of-web-page-size/)**.
+First, **[heavier page weights](https://www.keycdn.com/support/the-growth-of-web-page-size)**.
 
 This has generally driven by increased page complexity driven by increased user expectations.
 
@@ -81,7 +81,7 @@ In the last 2-3 years, there’s been growing attention to the crisis of mobile 
 
 - In January 2018, Google announced that [it would use mobile page speed](https://webmasters.googleblog.com/2018/01/using-page-speed-in-mobile-search.html) as a ranking for mobile SEO. In July 2018, those changes took effect.
 
-- Movements such as [Progressive Web Apps](https://developers.google.com/web/progressive-web-apps/) and the [JAMstack](https://jamstack.org/) have brought attention to site performance as a first-order goal.
+- Movements such as [Progressive Web Apps](https://developers.google.com/web/progressive-web-apps) and the [JAMstack](https://jamstack.org) have brought attention to site performance as a first-order goal.
 
 _Performant_ is the new _responsive_.
 
@@ -134,7 +134,7 @@ Caching a traditional CMS website is another possibility -- though this often cr
 
 But if delivery optimization is _hard_, payload optimization can be _near impossible_ to deliver within time and budget for many agencies and enterprises.
 
-Comprehensive checklists [weigh in at around 40 items](https://www.smashingmagazine.com/2019/01/front-end-performance-checklist-2019-pdf-pages/), including points like route-based code splitting, HTTP/2 asset serving, background prefetching, lazy-loading non-critical assets, service workers, dead code elimination, and server-side rendering. Each of these points is technically feasible but quite rare.
+Comprehensive checklists [weigh in at around 40 items](https://www.smashingmagazine.com/2019/01/front-end-performance-checklist-2019-pdf-pages), including points like route-based code splitting, HTTP/2 asset serving, background prefetching, lazy-loading non-critical assets, service workers, dead code elimination, and server-side rendering. Each of these points is technically feasible but quite rare.
 
 Among the many implementation challenges are:
 
@@ -148,7 +148,7 @@ Among the many implementation challenges are:
 
 ## Performance should be solved at the framework level
 
-Web performance is critical for retaining and engaging users, especially on mobile. If [every 100ms of latency costs 1% of sales](https://www.digitalrealty.com/blog/the-cost-of-latency/), reducing average page load times from 5 seconds to 1-2 seconds could generate 30-40% more sales.
+Web performance is critical for retaining and engaging users, especially on mobile. If [every 100ms of latency costs 1% of sales](https://www.digitalrealty.com/blog/the-cost-of-latency), reducing average page load times from 5 seconds to 1-2 seconds could generate 30-40% more sales.
 
 But just because performance is the _right_ thing doesn’t make it the _easy_ thing. Implementing performance optimizations on a _per-site basis_ is often _difficult_ and _costly_.
 

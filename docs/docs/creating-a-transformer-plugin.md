@@ -6,7 +6,7 @@ There are two types of plugins that work within Gatsby's data system, "source"
 and "transformer" plugins.
 
 - **Source** plugins "source" data from remote or local locations into what
-  Gatsby calls [nodes](/docs/node-interface/).
+  Gatsby calls [nodes](/docs/node-interface).
 - **Transformer** plugins "transform" data provided by source plugins into new
   nodes and/or node fields.
 

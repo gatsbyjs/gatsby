@@ -9,7 +9,7 @@ excerpt: A five minute starter for Gatsby and Contentful
 
 ![Gatsby+Contentful](gatsby_contentful.png)
 
-_This blog post was originally posted on the [Contentful Docs](https://www.contentful.com/r/knowledgebase/gatsbyjs-and-contentful-in-five-minutes/)_
+_This blog post was originally posted on the [Contentful Docs](https://www.contentful.com/r/knowledgebase/gatsbyjs-and-contentful-in-five-minutes)_
 
 Working with React and having an emphasis on speedy performance, GatsbyJS is a promising static site generator that allows you to connect your projects to a variety of APIs and data sources; including Contentful’s content infrastructure.
 
@@ -28,7 +28,7 @@ Here’s an overview of what’s involved:
 
 ###Getting started
 
-This guide assumes that you have [GatsbyJS installed](/docs/) and, optionally, a [GitHub account](https://github.com/join). You will also need a free Contentful account - [creating one](https://www.contentful.com/sign-up/) only takes a moment.
+This guide assumes that you have [GatsbyJS installed](/docs) and, optionally, a [GitHub account](https://github.com/join). You will also need a free Contentful account - [creating one](https://www.contentful.com/sign-up) only takes a moment.
 
 Start by using this with the Gatsby CLI:
 
@@ -50,7 +50,7 @@ npm install
 
 ###Create a new space to store content
 
-[A Space within Contentful](https://www.contentful.com/r/knowledgebase/spaces-and-organizations/) serves as a storage area for content that will be used in your website and can be configured to serve specific purposes. Content is described and stored using a data model which we call content types; these are entirely configurable.
+[A Space within Contentful](https://www.contentful.com/r/knowledgebase/spaces-and-organizations) serves as a storage area for content that will be used in your website and can be configured to serve specific purposes. Content is described and stored using a data model which we call content types; these are entirely configurable.
 
 Create a new empty space by opening the sidebar menu and adding a Space. Give the space an apt name and click "Create" to go ahead with making it.
 
@@ -60,9 +60,9 @@ Create a new empty space by opening the sidebar menu and adding a Space. Give th
 
 Before getting to the exciting part of setting up your website, you first need to generate three access tokens to get your Contentful-powered website up and running by fetching data from the API.
 
-- [Content Management API](https://www.contentful.com/developers/docs/references/content-management-api/)
-- [Content Delivery API](https://www.contentful.com/developers/docs/references/content-delivery-api/)
-- [Content Preview API](https://www.contentful.com/developers/docs/references/content-preview-api/)
+- [Content Management API](https://www.contentful.com/developers/docs/references/content-management-api)
+- [Content Delivery API](https://www.contentful.com/developers/docs/references/content-delivery-api)
+- [Content Preview API](https://www.contentful.com/developers/docs/references/content-preview-api)
 
 Head over to your Space Settings dropdown menu and navigate to the APIs section. From there, navigate to the tab for the API token you would like to generate.
 
@@ -96,17 +96,17 @@ After that, it writes the credentials you provided into a file named .contentful
 }
 ```
 
-Using the credentials in the .contentful.json file, [content can now be imported](https://www.contentful.com/developers/docs/tutorials/general/import-and-export/) into your space to being displayed on your website via our API.
+Using the credentials in the .contentful.json file, [content can now be imported](https://www.contentful.com/developers/docs/tutorials/general/import-and-export) into your space to being displayed on your website via our API.
 
 ###It’s ready, let’s publish
 
-Time to check out your new website - preview changes in a local environment by running your project using the npm run dev command. This uses the [Contentful Preview API](https://www.contentful.com/developers/docs/references/content-preview-api/) to show unpublished content as if they were already published - perfect for a development or staging environment.
+Time to check out your new website - preview changes in a local environment by running your project using the npm run dev command. This uses the [Contentful Preview API](https://www.contentful.com/developers/docs/references/content-preview-api) to show unpublished content as if they were already published - perfect for a development or staging environment.
 
 If you like what you see, use the npm run build command to start a static production build of your near-ready website and put it on a static host of your choice. After that, the npm run deploy command allows you to publish what you have on the production build onto GitHub Pages.
 
 ###Deployment
 
-Your static files can then be deployed on a variety of platforms of your choice, like [BitBalloon](https://www.bitballoon.com/) and [GitHub Pages](https://pages.github.com/). Take your pick. Contentful gives you infrastructure for the content in your stack, that matches your modular and agile way of working with platform independence and by serving as a layer in your stack.
+Your static files can then be deployed on a variety of platforms of your choice, like [BitBalloon](https://www.bitballoon.com) and [GitHub Pages](https://pages.github.com). Take your pick. Contentful gives you infrastructure for the content in your stack, that matches your modular and agile way of working with platform independence and by serving as a layer in your stack.
 
 Contentful ensures your website and its users can access your content quickly and reliably. Your content is just an API call away.
 
@@ -116,6 +116,6 @@ Contentful ensures your website and its users can access your content quickly an
 
 That’s a quick overview of how to get your website up and running from scratch using Contentful and GatsbyJS.
 
-Contentful's platform offers speed, flexibility, and ease of integration with your code, supporting any stack you use with SDKs for common languages like [JavaScript](https://www.contentful.com/developers/docs/javascript/sdks/), [Python](https://www.contentful.com/developers/docs/python/sdks/), and [PHP](https://www.contentful.com/developers/docs/php/sdks/). Unlike a CMS, Contentful provides you with separation between content and presentation, allowing you to focus on developing your website and leave content delivery to Contentful.
+Contentful's platform offers speed, flexibility, and ease of integration with your code, supporting any stack you use with SDKs for common languages like [JavaScript](https://www.contentful.com/developers/docs/javascript/sdks), [Python](https://www.contentful.com/developers/docs/python/sdks), and [PHP](https://www.contentful.com/developers/docs/php/sdks). Unlike a CMS, Contentful provides you with separation between content and presentation, allowing you to focus on developing your website and leave content delivery to Contentful.
 
-If you're curious to learn more about Contentful, you can check out the Contentful [Developer Center](https://www.contentful.com/developers/docs/) to learn more on how the technology works, or head over to the [Guides and tutorials](https://www.contentful.com/guides/) section.
+If you're curious to learn more about Contentful, you can check out the Contentful [Developer Center](https://www.contentful.com/developers/docs) to learn more on how the technology works, or head over to the [Guides and tutorials](https://www.contentful.com/guides) section.

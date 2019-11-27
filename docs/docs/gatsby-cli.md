@@ -5,15 +5,15 @@ tableOfContentsDepth: 2
 
 The Gatsby command line tool (CLI) is the main entry point for getting up and running with a Gatsby application and for using functionality including like running a development server and building out your Gatsby application for deployment.
 
-_We provide similar documentation available with the gatsby-cli [README](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-cli/README.md), and our [cheat sheet](/docs/cheat-sheet/) has all the top CLI commands ready to print out._
+_We provide similar documentation available with the gatsby-cli [README](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-cli/README.md), and our [cheat sheet](/docs/cheat-sheet) has all the top CLI commands ready to print out._
 
 ## How to use gatsby-cli
 
-The Gatsby CLI (`gatsby-cli`) is packaged as an executable that can be used globally. The Gatsby CLI is available via [npm](https://www.npmjs.com/) and should be installed globally by running `npm install -g gatsby-cli` to use it locally.
+The Gatsby CLI (`gatsby-cli`) is packaged as an executable that can be used globally. The Gatsby CLI is available via [npm](https://www.npmjs.com) and should be installed globally by running `npm install -g gatsby-cli` to use it locally.
 
 Run `gatsby --help` for full help.
 
-You can also use the `package.json` script variant of these commands, typically exposed _for you_ with most [starters](/docs/starters/). For example, if you want to make the [`gatsby develop`](#develop) command available in your application, open up `package.json` and add a script like so:
+You can also use the `package.json` script variant of these commands, typically exposed _for you_ with most [starters](/docs/starters). For example, if you want to make the [`gatsby develop`](#develop) command available in your application, open up `package.json` and add a script like so:
 
 ```json:title=package.json
 {
@@ -33,10 +33,10 @@ gatsby new [<site-name> [<starter-url>]]
 
 #### Arguments
 
-| Argument    | Description                                                                                                                                                                                                     |
-| ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| site-name   | Your Gatsby site name, which is also used to create a project directory.                                                                                                                                        |
-| starter-url | A Gatsby starter URL or local file path. Defaults to [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default); see the [Gatsby starters](/docs/gatsby-starters/) docs for more information. |
+| Argument    | Description                                                                                                                                                                                                    |
+| ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| site-name   | Your Gatsby site name, which is also used to create a project directory.                                                                                                                                       |
+| starter-url | A Gatsby starter URL or local file path. Defaults to [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default); see the [Gatsby starters](/docs/gatsby-starters) docs for more information. |
 
 > Note: The `site-name` should only consist of letters and numbers. If you specify a `.`, `./` or a `<space>` in the name, `gatsby new` will throw an error.
 
@@ -48,7 +48,7 @@ gatsby new [<site-name> [<starter-url>]]
 gatsby new my-awesome-site
 ```
 
-- Create a Gatsby site named `my-awesome-blog-site`, using [gatsby-starter-blog](https://www.gatsbyjs.org/starters/gatsbyjs/gatsby-starter-blog/):
+- Create a Gatsby site named `my-awesome-blog-site`, using [gatsby-starter-blog](https://www.gatsbyjs.org/starters/gatsbyjs/gatsby-starter-blog):
 
 ```shell
 gatsby new my-awesome-blog-site https://github.com/gatsbyjs/gatsby-starter-blog
@@ -66,7 +66,7 @@ gatsby new
    (Use a different starter)
 ```
 
-See the [Gatsby starters docs](https://www.gatsbyjs.org/docs/gatsby-starters/) for more details.
+See the [Gatsby starters docs](https://www.gatsbyjs.org/docs/gatsby-starters) for more details.
 
 ### `develop`
 
@@ -83,7 +83,7 @@ Once you've installed a Gatsby site, go to the root directory of your project an
 | `-o`, `--open`  | Open the site in your (default) browser for you |
 | `-S`, `--https` | Use HTTPS                                       |
 
-Follow the [Local HTTPS guide](/docs/local-https/)
+Follow the [Local HTTPS guide](/docs/local-https)
 to find out how you can set up an HTTPS development server using Gatsby.
 
 #### Preview changes on other devices
@@ -113,12 +113,12 @@ At the root of a Gatsby site, compile your application and make it ready for dep
 
 #### Options
 
-|            Option            | Description                                                                                               |
-| :--------------------------: | --------------------------------------------------------------------------------------------------------- |
-|       `--prefix-paths`       | Build site with link paths prefixed (set pathPrefix in your config)                                       |
-|        `--no-uglify`         | Build site without uglifying JS bundles (for debugging)                                                   |
-| `--open-tracing-config-file` | Tracer configuration file (OpenTracing compatible). See [Performance Tracing](/docs/performance-tracing/) |
-| `--no-color`, `--no-colors`  | Disables colored terminal output                                                                          |
+|            Option            | Description                                                                                              |
+| :--------------------------: | -------------------------------------------------------------------------------------------------------- |
+|       `--prefix-paths`       | Build site with link paths prefixed (set pathPrefix in your config)                                      |
+|        `--no-uglify`         | Build site without uglifying JS bundles (for debugging)                                                  |
+| `--open-tracing-config-file` | Tracer configuration file (OpenTracing compatible). See [Performance Tracing](/docs/performance-tracing) |
+| `--no-color`, `--no-colors`  | Disables colored terminal output                                                                         |
 
 In addition to these build options, there are some optional [build environment variables](/docs/environment-variables/#build-variables) for more advanced configurations that can adjust how a build runs. For example, setting `CI=true` as an environment variable will tailor output for [dumb terminals](https://en.wikipedia.org/wiki/Computer_terminal#Dumb_terminals).
 
@@ -200,13 +200,13 @@ You can type in a command, such as one of these:
 
 `staticQueries`
 
-When combined with the [GraphQL explorer](/docs/introducing-graphiql/), these REPL commands could be very helpful for understanding your Gatsby site's data.
+When combined with the [GraphQL explorer](/docs/introducing-graphiql), these REPL commands could be very helpful for understanding your Gatsby site's data.
 
-For more information, check out the [Gatsby REPL documentation](/docs/gatsby-repl/).
+For more information, check out the [Gatsby REPL documentation](/docs/gatsby-repl).
 
 ### Disabling colored output
 
-In addition to the explicit `--no-color` option, the CLI respects the presence of the `NO_COLOR` environment variable (see [no-color.org](https://no-color.org/)).
+In addition to the explicit `--no-color` option, the CLI respects the presence of the `NO_COLOR` environment variable (see [no-color.org](https://no-color.org)).
 
 ## How to change your default package manager for your next project?
 

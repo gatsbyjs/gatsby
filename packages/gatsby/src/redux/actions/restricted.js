@@ -42,8 +42,8 @@ import type GatsbyGraphQLType from "../../schema/types/type-builders"
  * @param {string | GraphQLOutputType | GatsbyGraphQLType | string[] | GraphQLOutputType[] | GatsbyGraphQLType[]} types Type definitions
  *
  * Type definitions can be provided either as
- * [`graphql-js` types](https://graphql.org/graphql-js/), in
- * [GraphQL schema definition language (SDL)](https://graphql.org/learn/)
+ * [`graphql-js` types](https://graphql.org/graphql-js), in
+ * [GraphQL schema definition language (SDL)](https://graphql.org/learn)
  * or using Gatsby Type Builders available on the `schema` API argument.
  *
  * Things to note:

@@ -9,7 +9,7 @@ tags:
   - tutorials
 ---
 
-It's the dream: a CMS with rich content modelling capabilities combined with a [modern frontend](/blog/2018-10-11-rise-of-modern-web-development/) with features like declarative, reusable UIs, modern JavaScript, hot reloading, versioning and so on.
+It's the dream: a CMS with rich content modelling capabilities combined with a [modern frontend](/blog/2018-10-11-rise-of-modern-web-development) with features like declarative, reusable UIs, modern JavaScript, hot reloading, versioning and so on.
 
 Two types of people will be excited about this article.
 
@@ -17,13 +17,13 @@ Two types of people will be excited about this article.
 
 2. A content focused client who wants their site to be cutting edge, but doesn't want to leave their comfortable workflow that allows them to rapidly toggle between content changes and the visual impact of those changes on the website.
 
-As Sam Bhagwat wrote [when announcing Gatsby Preview](/blog/2018-07-17-announcing-gatsby-preview/):
+As Sam Bhagwat wrote [when announcing Gatsby Preview](/blog/2018-07-17-announcing-gatsby-preview):
 
 > Content teams are creators. And creators, as Bret Victor put it, “need an immediate connection to what they’re making.”
 
 > When a copywriter edits a headline in their CMS, they shouldn’t have to imagine what their change looks like in context. They should see it—immediately.
 
-At [Third and Grove](https://www.thirdandgrove.com/), we've been working on a preview module for Drupal to be used with Gatsby Cloud.
+At [Third and Grove](https://www.thirdandgrove.com), we've been working on a preview module for Drupal to be used with Gatsby Cloud.
 
 **Today, we're excited to announce that we're beta launching live preview with Drupal and Gatsby!**
 
@@ -39,7 +39,7 @@ Here's how it works:
 
 ### Step 1: Sign Up for Gatsby Preview Beta
 
-You will need to sign up for a Gatsby Preview account, so this is a meta beta. You can sign up for a [Gatsby Preview 14 day trial here](https://www.gatsbyjs.com/preview/?_ga=2.156650491.1704520703.1561474285-32798346.1550767689) and get more information on the [Gatsby blog](/blog/2019-03-22-introducing-gatsby-preview-beta/).
+You will need to sign up for a Gatsby Preview account, so this is a meta beta. You can sign up for a [Gatsby Preview 14 day trial here](https://www.gatsbyjs.com/preview/?_ga=2.156650491.1704520703.1561474285-32798346.1550767689) and get more information on the [Gatsby blog](/blog/2019-03-22-introducing-gatsby-preview-beta).
 
 ### Step 2: Install Gatsby Source Drupal
 
@@ -74,7 +74,7 @@ You can see above how fast this feedback loop is -- and we're working on making 
 
 ## Conclusion
 
-As you're testing out Gatsby Preview + Drupal and using it for company or client projects, please [let the Gatsby team know](https://www.gatsbyjs.com/contact-us/) if you experience any issues.
+As you're testing out Gatsby Preview + Drupal and using it for company or client projects, please [let the Gatsby team know](https://www.gatsbyjs.com/contact-us) if you experience any issues.
 
 Drupal-based agencies and companies who want to improve client outcomes, site performance, and UI/UX, while modernizing their engineering stack and increasing engineering team satisfaction have a powerful new tool in their toolkit.
 

@@ -3,11 +3,11 @@ title: "Using gatsby-remark-copy-linked-files"
 excerpt: "Using gatsby-remark-copy-linked-files."
 date: "2017-11-13T10:19:45.267Z"
 draft: false
-path: "/using-gatsby-remark-copy-linked-files/"
+path: "/using-gatsby-remark-copy-linked-files"
 ---
 
 Plugin documentation:
-[gatsby-remark-copy-linked-files](https://www.gatsbyjs.org/packages/gatsby-remark-copy-linked-files/)--_"Copies
+[gatsby-remark-copy-linked-files](https://www.gatsbyjs.org/packages/gatsby-remark-copy-linked-files)--_"Copies
 local files linked to/from markdown to your `public` folder."_
 
 HTML small test (see the
@@ -47,7 +47,7 @@ ontologically it exists only in the imagination, and Marx claims it was offside.
 And whereas in most professions these would be considerable drawbacks, in
 chartered accountancy, they're a positive boon. Image #2 should be floating
 `right`. We're not cheap--here's a HTML href
-<a href="http://example.com/">example.com</a> on top!
+<a href="http://example.com">example.com</a> on top!
 
 **Paragraph tags with Markdown content** with two HTML images inline, running
 across multiple lines: ![inline image](./alex-holyoake-340782.jpg)

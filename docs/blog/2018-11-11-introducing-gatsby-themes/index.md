@@ -44,7 +44,7 @@ and have no easy way of updating when changes are made
 upstream. There's another approach to boilerplate that has become
 popular in recent years that fixes some problems with the boilerplate
 approach such as updating with upstream. One such project is
-[`create-react-app`](https://facebook.github.io/create-react-app/). In
+[`create-react-app`](https://facebook.github.io/create-react-app). In
 the Gatsby world, you can improve on starters similarly with themes.
 
 ### Truly Reusable Themes in Gatsby

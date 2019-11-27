@@ -27,7 +27,7 @@ gatsby new my-blog-starter https://github.com/gatsbyjs/gatsby-starter-blog
 
 ### Step 1
 
-Install [gatsby-plugin-mdx](/packages/gatsby-plugin-mdx/), the official plugin for using MDX with Gatsby. Also install `gatsby-plugin-feed-mdx` for our RSS feeds. Finally, install `@mdx-js/mdx` and `@mdx-js/react`.
+Install [gatsby-plugin-mdx](/packages/gatsby-plugin-mdx), the official plugin for using MDX with Gatsby. Also install `gatsby-plugin-feed-mdx` for our RSS feeds. Finally, install `@mdx-js/mdx` and `@mdx-js/react`.
 
 ```bash
 npm install --save gatsby-plugin-mdx gatsby-plugin-feed-mdx @mdx-js/mdx @mdx-js/react
@@ -211,7 +211,7 @@ This is a post showing MDX in action. This starter now comes with MDX out-of-the
 
 ## MDX
 
-MDX lets you write JSX embedded inside markdown, perfect for technical blogs. MDX works with Gatsby through [gatsby-plugin-mdx](https://www.gatsbyjs.org/packages/gatsby-plugin-mdx/). You can learn more about it in the Gatsby docs: [Getting Started with MDX](https://www.gatsbyjs.org/docs/mdx/getting-started/).
+MDX lets you write JSX embedded inside markdown, perfect for technical blogs. MDX works with Gatsby through [gatsby-plugin-mdx](https://www.gatsbyjs.org/packages/gatsby-plugin-mdx). You can learn more about it in the Gatsby docs: [Getting Started with MDX](https://www.gatsbyjs.org/docs/mdx/getting-started).
 ````
 
 ![example post mdx](./screenshot.png)
@@ -220,5 +220,5 @@ If you're interested in spinning up a new personal blog with MDX, I've prepared 
 
 ## Further Reading
 
-1. [Gatsby Reference Guide on MDX](/docs/mdx/)
+1. [Gatsby Reference Guide on MDX](/docs/mdx)
 2. [MDX Gatsby Documentation](https://mdxjs.com/getting-started/gatsby)

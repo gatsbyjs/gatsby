@@ -43,7 +43,7 @@ Completing the above step means that you've "sourced" the Markdown files from th
 
 ## Transform Markdown to HTML and frontmatter to data using `gatsby-transformer-remark`
 
-You'll use the plugin [`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/) to recognize files which are Markdown and read their content. The plugin will convert the frontmatter metadata part of your Markdown files as `frontmatter` and the content part as HTML.
+You'll use the plugin [`gatsby-transformer-remark`](/packages/gatsby-transformer-remark) to recognize files which are Markdown and read their content. The plugin will convert the frontmatter metadata part of your Markdown files as `frontmatter` and the content part as HTML.
 
 ### Install transformer plugin
 
@@ -131,13 +131,13 @@ Two things are important in the file above:
 
 1.  A GraphQL query is made in the second half of the file to get the Markdown data. Gatsby has automagically given you all the Markdown metadata and HTML in this query's result.
 
-    **Note: To learn more about GraphQL, consider this [excellent resource](https://www.howtographql.com/)**
+    **Note: To learn more about GraphQL, consider this [excellent resource](https://www.howtographql.com)**
 
-2.  The result of the query is injected by Gatsby into the `Template` component as `data`. `markdownRemark` is the property that you'll find has all the details of the Markdown file. You can use that to construct a template for your blog post view. Since it's a React component, you could style it with any of the [recommended styling systems](/docs/styling/) in Gatsby.
+2.  The result of the query is injected by Gatsby into the `Template` component as `data`. `markdownRemark` is the property that you'll find has all the details of the Markdown file. You can use that to construct a template for your blog post view. Since it's a React component, you could style it with any of the [recommended styling systems](/docs/styling) in Gatsby.
 
 ### Create static pages using Gatsby’s Node.js `createPage` API
 
-Gatsby exposes a powerful Node.js API, which allows for functionality such as creating dynamic pages. This API is available in the `gatsby-node.js` file in the root directory of your project, at the same level as `gatsby-config.js`. Each export found in this file will be run by Gatsby, as detailed in its [Node API specification](/docs/node-apis/). However, you should only care about one particular API in this instance, `createPages`.
+Gatsby exposes a powerful Node.js API, which allows for functionality such as creating dynamic pages. This API is available in the `gatsby-node.js` file in the root directory of your project, at the same level as `gatsby-config.js`. Each export found in this file will be run by Gatsby, as detailed in its [Node API specification](/docs/node-apis). However, you should only care about one particular API in this instance, `createPages`.
 
 Use the `graphql` to query Markdown file data as below. Next, use the `createPage` action creator to create a page for each of the Markdown files using the `blogTemplate.js` you created in the previous step.
 

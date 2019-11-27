@@ -6,7 +6,7 @@ tags:
   - "react"
 ---
 
-You often feel the unsettling flash of a bright phone screen while relaxing in a dimly lit room. This is alleviated by introducing a "dark mode" which switches background and foreground colors to reduce eye strain. I decided to add this to my boutique web agency [Laccadive IO's](https://laccadive.io/) new Gatsby-based site.
+You often feel the unsettling flash of a bright phone screen while relaxing in a dimly lit room. This is alleviated by introducing a "dark mode" which switches background and foreground colors to reduce eye strain. I decided to add this to my boutique web agency [Laccadive IO's](https://laccadive.io) new Gatsby-based site.
 
 <Pullquote citation="Heydon Pickering">
   One of the few types of alternative theme that adds real value to users is a

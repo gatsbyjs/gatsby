@@ -4141,24 +4141,24 @@ Our first beta!!! 🎉
 
 API changes:
 
-[Action creators](https://www.gatsbyjs.org/docs/bound-action-creators/):
+[Action creators](https://www.gatsbyjs.org/docs/bound-action-creators):
 
 - `upsertPage` is now `createPage`
 - `addFieldToNode` is now `createNodeField`
 - `deletePageByPath` is now `deletePage`
 - `addNodeToParent` is now `createParentChildLink`
 
-[gatsby-browser.js APIs](https://www.gatsbyjs.org/docs/browser-apis/):
+[gatsby-browser.js APIs](https://www.gatsbyjs.org/docs/browser-apis):
 
 - `clientEntry` is now `onClientEntry`
 
-[gatsby-node.js APIs](https://www.gatsbyjs.org/docs/node-apis/):
+[gatsby-node.js APIs](https://www.gatsbyjs.org/docs/node-apis):
 
 - `onNodeCreate` is now `onCreateNode`
 - `onUpsertPage` is now `onCreatePage`
 - `extendNodeType` is now `setFieldsOnGraphQLNodeType`
 
-[gatsby-ssr.js APIs](https://www.gatsbyjs.org/docs/ssr-apis/):
+[gatsby-ssr.js APIs](https://www.gatsbyjs.org/docs/ssr-apis):
 
 - `modifyHeadComponents` and `modifyPostBodyComponents` were removed in favor of
   a new API

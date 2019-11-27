@@ -14,7 +14,7 @@ In this guide you'll create a complete project capable of querying data from a G
 
 ### Start Mesh
 
-Gentics Mesh is a self-hosted CMS. You can run it for example via [Docker](https://www.docker.com/), which you will need [installed](https://docs.docker.com/v17.09/engine/installation/) to run the following command, setting up a Gentics server in a container on your computer:
+Gentics Mesh is a self-hosted CMS. You can run it for example via [Docker](https://www.docker.com), which you will need [installed](https://docs.docker.com/v17.09/engine/installation) to run the following command, setting up a Gentics server in a container on your computer:
 
 ```shell
 docker run -p 8080:8080 -d gentics/mesh-demo
@@ -129,7 +129,7 @@ Again, if everything is working properly, you should see a successful response i
 }
 ```
 
-You can read more about how to use the GraphQL API in the [Gentics Mesh docs](https://getmesh.io/docs/graphql/).
+You can read more about how to use the GraphQL API in the [Gentics Mesh docs](https://getmesh.io/docs/graphql).
 
 ### Getting content on the page
 
@@ -195,4 +195,4 @@ Hopefully you've seen how easy it is to start working with Gentics Mesh and Gats
 There is a lot more to learn on how Gentics Mesh API can help you build your site.
 One big advantage of Mesh is that you can use a tree structure for your contents. This allows for easy path generation of contents. Combined with Gatsby this allows you to quickly add different kinds of pages to your site. The template for each site can be selected by the schema (e.g. vehicle → vehiclePage, category → catgoryPage.)
 
-This workflow is also explained hands-on in [this in-depth guide](https://getmesh.io/blog/gentics-mesh-gatsby/) which shows how to build a basic vehicle inventory with Gatsby.
+This workflow is also explained hands-on in [this in-depth guide](https://getmesh.io/blog/gentics-mesh-gatsby) which shows how to build a basic vehicle inventory with Gatsby.

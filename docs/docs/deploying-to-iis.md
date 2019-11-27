@@ -6,7 +6,7 @@ Deploying to Microsoft IIS is mostly copy &amp; paste.
 After `gatsby build` copy the contents of the `public` folder into the `wwwroot` folder of your IIS web.
 
 One important and sometimes overlooked aspect is to configure caching correctly.
-The following configuration will give you a good starting point in line with Gatsby's [suggested approach to caching](/docs/caching/).
+The following configuration will give you a good starting point in line with Gatsby's [suggested approach to caching](/docs/caching).
 
 Install the [IIS URL Rewrite](https://www.iis.net/downloads/microsoft/url-rewrite) module if it's not already there.
 It's required to define the `outboundRules` in the `web.config` given below.

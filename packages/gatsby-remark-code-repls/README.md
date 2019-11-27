@@ -6,9 +6,9 @@ be stored along side of, and revisioned with, your website content.
 
 It currently supports:
 
-- [Babel](https://babeljs.io/repl/)
-- [Codepen](https://codepen.io/)
-- [CodeSandbox](https://codesandbox.io/)
+- [Babel](https://babeljs.io/repl)
+- [Codepen](https://codepen.io)
+- [CodeSandbox](https://codesandbox.io)
 - [Ramda](http://ramdajs.com/repl)
 
 This plug-in was created to solve a couple of problems the React team has faced
@@ -101,7 +101,7 @@ import "./index.css"
 
 Codepen links point to Gatsby pages (also created by this plug-in) that redirect
 using the
-[Codepen prefill API](https://blog.codepen.io/documentation/api/prefill/) to
+[Codepen prefill API](https://blog.codepen.io/documentation/api/prefill) to
 create a working, runnable demo with the linked example code.
 
 Babel and CodeSandbox links use the

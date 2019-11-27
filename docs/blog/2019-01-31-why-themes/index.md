@@ -19,7 +19,7 @@ Abstractions are why programming works. Abstractions allow a developer to expres
 
 For example, every developer needs to write files to a disk — so the hardware and software industry has responded by spending an incredible amount of money and time to make writing data to disk is easy, fast, and reliable.
 
-Developers say Gatsby is "easy to use". Why? Because we’ve put 1000s of hours towards designing, creating, and documenting thoughtful abstractions with our APIs and plugin system. People have responded by creating [100s of new plugins over the last 1.5 years](/plugins/).
+Developers say Gatsby is "easy to use". Why? Because we’ve put 1000s of hours towards designing, creating, and documenting thoughtful abstractions with our APIs and plugin system. People have responded by creating [100s of new plugins over the last 1.5 years](/plugins).
 
 Good systems for creating abstractions help people collaborate on shared solutions to common problems. A community can pool together their combined understanding to create a better solution than any one person would make. So with Gatsby, when someone wants to [add google analytics](/packages/gatsby-plugin-google-analytics/?=google), [pull data from a CMS](/packages/gatsby-source-contentful/?=contentful), [optimize their images](/packages/gatsby-image/?=gatsby-image), etc. — instead of researching and experimenting to implement their own solution — they just install a plugin worked on and used by 10s of thousands of fellow web developers.
 
@@ -29,13 +29,13 @@ Good APIs and systems for creating and sharing abstractions allow individuals, t
 
 Gatsby is uniquely valuable because our APIs, plugin system, and ecosystem design are uniquely good at enabling the creation and sharing of abstractions.
 
-A great example of this is a little-understood reason for Gatsby’s popularity: Gatsby’s data layer has the highly novel feature of enabling people to build and share data processing primitives that automatically work together and are exposed and controlled through a consistent GraphQL API. In most other frameworks, you’d need to build much of this yourself in a one-off, brittle fashion. Gatsby’s data layer enables simple snapping together of data sourcing and transformation primitives enabling the [content mesh](/blog/2018-10-18-creating-compelling-content-experiences/). This saves a ton of time and greatly contributes to Gatsby’s power and ease of use.
+A great example of this is a little-understood reason for Gatsby’s popularity: Gatsby’s data layer has the highly novel feature of enabling people to build and share data processing primitives that automatically work together and are exposed and controlled through a consistent GraphQL API. In most other frameworks, you’d need to build much of this yourself in a one-off, brittle fashion. Gatsby’s data layer enables simple snapping together of data sourcing and transformation primitives enabling the [content mesh](/blog/2018-10-18-creating-compelling-content-experiences). This saves a ton of time and greatly contributes to Gatsby’s power and ease of use.
 
 The weakness of our abstractions to date, however, is that plugins are all at the same level of abstraction — meaning plugins can’t compose other plugins — which means there’s no way to ship a group of plugins and configuration designed to solve more complex requirements (e.g. a blog which needs Markdown processing, pagination, RSS feed, manifest, etc.).
 
 The level of a given abstraction should be matched to the granularity of a developer’s intent. Many developers _do_ want fine-grained control over how they build their sites. They’re happy to dig into how Gatsby’s data layer works, learn GraphQL, play around with plugins, etc., especially if Gatsby is a tool they’ll be using extensively to build many types of sites. But for many people, they just want a blog and are frustrated that Gatsby requires jumping through extra hoops to get there.
 
-Plugins have been a very successful lower-level abstraction for Gatsby. Themes is our new higher-level abstraction on the [ladder of website abstractions](http://worrydream.com/LadderOfAbstraction/) that will enable a new wave of innovation and usage as people use the abstraction to develop website "products" based on Gatsby they can open source or sell.
+Plugins have been a very successful lower-level abstraction for Gatsby. Themes is our new higher-level abstraction on the [ladder of website abstractions](http://worrydream.com/LadderOfAbstraction) that will enable a new wave of innovation and usage as people use the abstraction to develop website "products" based on Gatsby they can open source or sell.
 
 ## Who are themes for?
 

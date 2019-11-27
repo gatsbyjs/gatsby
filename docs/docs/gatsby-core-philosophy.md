@@ -61,7 +61,7 @@ We believe that with the right building blocks, and an integrated content mesh s
 
 When a copywriter edits a headline in their CMS, a designer draws a button in their illustration app, or a developer adds an if statement in their text editor, they shouldn’t have to imagine what their change looks like in context. They should see it -- immediately.
 
-[Read more here](/blog/2017-10-16-making-website-building-fun/).
+[Read more here](/blog/2017-10-16-making-website-building-fun).
 
 ### Build a better web
 
@@ -99,7 +99,7 @@ Progressive disclosure simplifies the experience for most people without limitin
 
 We progressively disclose complexity by making features such as modifying webpack / Babel config, `gatsby-image`, and `gatsby-link` opt-in, simple one-off configuration choices. We avoid all-or-nothing "ejection" scenarios where to add further customization you have to leave the tool behind and manage all complexity (e.g. dependencies) yourself.
 
-[Read more here](https://lengstorf.com/progressive-disclosure-of-complexity/).
+[Read more here](https://lengstorf.com/progressive-disclosure-of-complexity).
 
 ## Gatsby's community philosophy
 
@@ -111,7 +111,7 @@ Two of Gatsby’s core strengths are its community and ecosystem.
 
 We’re convinced that the right path forward is to continue working in the open with both trust and support of our community.
 
-Anyone can [open an issue](/contributing/how-to-file-an-issue/) and ask a question, and we'll respond. Anyone can submit a pull request, and we'll give honest feedback on it. Anyone can [submit an RFC](/contributing/rfc-process/) to make a major change to Gatsby. And when we want to do this, we'll submit an RFC as a proposal.
+Anyone can [open an issue](/contributing/how-to-file-an-issue) and ask a question, and we'll respond. Anyone can submit a pull request, and we'll give honest feedback on it. Anyone can [submit an RFC](/contributing/rfc-process) to make a major change to Gatsby. And when we want to do this, we'll submit an RFC as a proposal.
 
 Many of Gatsby's key features emerged from conversation between contributors. If you plumb through Gatsby's old issues, you'll see discussion of many of the core ideas that led to Gatsby -- from our plugin system to performance optimizations and so on.
 
@@ -155,13 +155,13 @@ To accomplish this, we follow a guiding core value: you belong here.
 
 Some things we do in order to create an inclusive, welcoming community include:
 
-- An enforced [Code of conduct](/contributing/code-of-conduct/)
-- [Commitment to accessibility](/blog/2019-04-18-gatsby-commitment-to-accessibility/)
+- An enforced [Code of conduct](/contributing/code-of-conduct)
+- [Commitment to accessibility](/blog/2019-04-18-gatsby-commitment-to-accessibility)
 - [Extensive docs](/docs)
 - Friendlier robots
 - Implicit trust
 - Active gratitude
-- [Active mentorship](/contributing/pair-programming/)
+- [Active mentorship](/contributing/pair-programming)
 
 We’ve built an active community with thousands of contributors, and we want to live the example of what a great open source community can be.
 

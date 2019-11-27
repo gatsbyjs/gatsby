@@ -31,7 +31,7 @@ We started the project with two key requirements:
 
 #### 1. CMS-powered content
 
-As a content-heavy site, the project would need a CMS. Our choice here was [Contentful](https://www.contentful.com/), a tool we’d used successfully on a few other products. We set up three Contentful spaces — for development, QA, and production/staging — with scripts to copy models and content between spaces as needed.
+As a content-heavy site, the project would need a CMS. Our choice here was [Contentful](https://www.contentful.com), a tool we’d used successfully on a few other products. We set up three Contentful spaces — for development, QA, and production/staging — with scripts to copy models and content between spaces as needed.
 
 #### 2. Static site generation
 
@@ -107,7 +107,7 @@ This got the job done in our case, and we augmented the approach by creating a `
 
 ### Netlify
 
-While we were getting familiar with our Gatsby/Contentful setup, we also needed to figure out how to build and deploy our work. We found several articles advocating for a Gatsby-Contentful-[Netlify](https://www.netlify.com/) stack, and learned it could support a workflow like this one:
+While we were getting familiar with our Gatsby/Contentful setup, we also needed to figure out how to build and deploy our work. We found several articles advocating for a Gatsby-Contentful-[Netlify](https://www.netlify.com) stack, and learned it could support a workflow like this one:
 
 ![our Netlify setup](./netlify.png)
 
@@ -193,7 +193,7 @@ We use Contentful’s Preview API, which `gatsby-source-contentful` [supports](h
 
 #### Generating preview links
 
-Contentful’s [Content Preview](https://www.contentful.com/r/knowledgebase/setup-content-preview/) feature allows developers to expose preview links in the sidebar, so editors can easily move between editing an entry and previewing its content on a staging environment.
+Contentful’s [Content Preview](https://www.contentful.com/r/knowledgebase/setup-content-preview) feature allows developers to expose preview links in the sidebar, so editors can easily move between editing an entry and previewing its content on a staging environment.
 
 Here’s how preview links look in action:
 

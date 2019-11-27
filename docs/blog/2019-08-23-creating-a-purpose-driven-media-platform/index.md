@@ -12,7 +12,7 @@ tags:
 canonicalLink: https://clearleft.com/casestudies/change-incorporated
 ---
 
-[Change Incorporated](https://uk.changeincorporated.com/) is a new, purpose-driven media company owned by [VICE](https://www.vice.com). The new channel aims to create measurable social change from the inside out for some of the biggest social issues affecting VICE's audience.
+[Change Incorporated](https://uk.changeincorporated.com) is a new, purpose-driven media company owned by [VICE](https://www.vice.com). The new channel aims to create measurable social change from the inside out for some of the biggest social issues affecting VICE's audience.
 
 The Change Incorporated team needed a minimum viable product within a very aggressive time frame. It was a tough challenge, one that would ultimately result in a fully-functioning publishing platform and a fully articulated design vision.
 
@@ -40,11 +40,11 @@ The platform is receiving a nationwide digital and out of home (OOH) campaign to
 
 ### Taking a pause to improve pace
 
-Change Incorporated had a well-defined brief including a list of their desired features. Some of this was new territory for [Clearleft](https://clearleft.com) from a technical perspective – we don’t typically do backend website builds so we enlisted a tech partner [Nearform](https://www.nearform.com/) to support us in delivering the project.
+Change Incorporated had a well-defined brief including a list of their desired features. Some of this was new territory for [Clearleft](https://clearleft.com) from a technical perspective – we don’t typically do backend website builds so we enlisted a tech partner [Nearform](https://www.nearform.com) to support us in delivering the project.
 
 We proposed a headless Content Management System (CMS) with server-side rendering. Nearform helped validate this and proposed a static site renderer. We based the project on the JAMstack architecture: an approach based on client-side JavaScript, reusable APIs and prebuilt Markup.
 
-Compared to more traditional approaches, we found that JAMstack offered faster site performance, improved security, more cost-effective hosting, a quicker and more focused developer experience, and more practical scalability. The key tools we used to build the site were [Contentful](https://www.contentful.com/) (as a [headless CMS](/docs/headless-cms/)) and the React-based web framework [Gatsby](/), with GraphQL to build the pages. The impressive performance benefits Gatsby brought us were immediately evident. These technologies were great to work with and fitted really well into our skillset.
+Compared to more traditional approaches, we found that JAMstack offered faster site performance, improved security, more cost-effective hosting, a quicker and more focused developer experience, and more practical scalability. The key tools we used to build the site were [Contentful](https://www.contentful.com) (as a [headless CMS](/docs/headless-cms)) and the React-based web framework [Gatsby](), with GraphQL to build the pages. The impressive performance benefits Gatsby brought us were immediately evident. These technologies were great to work with and fitted really well into our skillset.
 
 From the start, this was an incredibly ambitious project. Building a publishing platform from scratch is not as common a task as you might think. We took a breath at the start of the project to ask ourselves: What effort could we make now that would save us time in the long run, but at the same time deliver something really harmonious? Given the short time frame, how could we work smarter? How could we maximise our efficiency without cutting corners?
 
@@ -72,7 +72,7 @@ We designed for a minimum and a maximum viewport width, set a typographic scale 
 
 ## Running streams concurrently
 
-In order to meet our deadline, we kicked off all streams of work on day one. The excellent [Abstract](https://www.abstract.com/) version control tool for Sketch was our centralised design resource. With two visual designers and a handful of developers on the project at any time, this tool was invaluable for keeping everybody’s files up to date. Abstract also neatly handled commenting and some light design critique, and the change tracking proved immensely beneficial for the developers. Our systematic approach enabled us to deliver a full component library and the design language was pushed much further than we thought possible in the time available.
+In order to meet our deadline, we kicked off all streams of work on day one. The excellent [Abstract](https://www.abstract.com) version control tool for Sketch was our centralised design resource. With two visual designers and a handful of developers on the project at any time, this tool was invaluable for keeping everybody’s files up to date. Abstract also neatly handled commenting and some light design critique, and the change tracking proved immensely beneficial for the developers. Our systematic approach enabled us to deliver a full component library and the design language was pushed much further than we thought possible in the time available.
 
 The tight deadlines forced us to begin development almost immediately. The challenge we faced was how to develop without specs, wireframes, or a complete information architecture. What we decided to do was start with the skeleton of a component library and a simplified app, so that we could iterate on both as the design progressed. Each iteration was focused on critical features and functionality.
 
@@ -96,7 +96,7 @@ VICE has always had a revolutionary spirit, so we are going to focus that effort
 
 This involved an extraordinary commitment to the deadline. We were leading a team of three developers, coordinating efforts and multiple stakeholders, while also juggling content going in while development was ongoing. We also had to train the client team on the brand new CMS alongside the other work. We successfully portioned off work-streams into a component, apps and devops backlog, and managed these different disciplines simultaneously.
 
-This allowed us to hit the crucial MVP date for [changeincorporated.com](https://uk.changeincorporated.com/) and be up and running and ready to show key stakeholders. The feedback from investors was incredibly positive and the deliverables far surpassed the expectations considering the ambition and deadline.
+This allowed us to hit the crucial MVP date for [changeincorporated.com](https://uk.changeincorporated.com) and be up and running and ready to show key stakeholders. The feedback from investors was incredibly positive and the deliverables far surpassed the expectations considering the ambition and deadline.
 
 ---
 

@@ -12,7 +12,7 @@ title: Write Out Pages
 >
 > You can help by making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228).
 
-This is one of the last bootstrap stages before we hand off to webpack to perform code optimization and code splitting. Webpack builds a web bundle. It has no knowledge of Gatsby's core code. Instead, it operates only on files in the `.cache` directory. It also doesn't have access to all the Redux information that was built up during bootstrap. So instead, we create dynamic JavaScript and JSON files that are dependent on by the webpack application in the `.cache` directory (see [Building the JavaScript App](/docs/production-app/)).
+This is one of the last bootstrap stages before we hand off to webpack to perform code optimization and code splitting. Webpack builds a web bundle. It has no knowledge of Gatsby's core code. Instead, it operates only on files in the `.cache` directory. It also doesn't have access to all the Redux information that was built up during bootstrap. So instead, we create dynamic JavaScript and JSON files that are dependent on by the webpack application in the `.cache` directory (see [Building the JavaScript App](/docs/production-app)).
 
 You can think of this step as taking all the data that was generated during bootstrap and saving it to disk for consumption by webpack.
 
@@ -30,7 +30,7 @@ digraph {
   writePages [ label = "pages-writer.js:writePages()" ];
 
   subgraph cluster_cache {
-    label = "site/.cache/";
+    label = "site/.cache";
     pagesJson [ label = "pages.json", shape = cylinder ];
     syncRequires [ label = "sync-requires.js", shape = cylinder ];
     asyncRequires [ label = "async-requires.js", shape = cylinder ];
@@ -94,13 +94,13 @@ exports.components = {
 }
 ```
 
-It is used during [static-entry.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js) so that it can map componentChunkNames to their component implementations. Whereas the [production-app.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/production-app.js) must use `async-requires.js` (below) since it performs [code splitting](/docs/how-code-splitting-works/).
+It is used during [static-entry.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js) so that it can map componentChunkNames to their component implementations. Whereas the [production-app.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/production-app.js) must use `async-requires.js` (below) since it performs [code splitting](/docs/how-code-splitting-works).
 
 ## async-requires.js
 
 ---
 
-`async-requires.js` is very similar to `sync-requires.js`, in that it is a dynamically generated JavaScript file. The difference is that it is written to be used for code splitting via webpack. So, instead of using `require` with the component's path, it uses `import` and adds a `webpackChunkName` hint so that we can eventually link the componentChunkName to its resulting file (more info in [Code Splitting](/docs/how-code-splitting-works/) docs). `components` is a function, so that it can be lazily initialized.
+`async-requires.js` is very similar to `sync-requires.js`, in that it is a dynamically generated JavaScript file. The difference is that it is written to be used for code splitting via webpack. So, instead of using `require` with the component's path, it uses `import` and adds a `webpackChunkName` hint so that we can eventually link the componentChunkName to its resulting file (more info in [Code Splitting](/docs/how-code-splitting-works) docs). `components` is a function, so that it can be lazily initialized.
 
 `async-requires.js` also exports a `data` function that imports `data.json` ([see below](/docs/write-pages/#datajson))
 
@@ -118,7 +118,7 @@ exports.components = {
 exports.data = () => import("/home/site/.cache/data.json")
 ```
 
-Remember, `sync-requires.js` is used during [Page HTML Generation](/docs/html-generation/). And `async-requires.js` is used by [Building the JavaScript App](/docs/production-app/).
+Remember, `sync-requires.js` is used during [Page HTML Generation](/docs/html-generation). And `async-requires.js` is used by [Building the JavaScript App](/docs/production-app).
 
 ## data.json
 
@@ -144,9 +144,9 @@ This is a generated json file. It contains the entire `pages.json` contents ([as
 
 `data.json` is used in two places. First, it's lazily imported by `async-requires.js` (above), which in turn is used by `production-app` to [load json results](/docs/production-app/#load-page-resources) for a page.
 
-It is also used by [Page HTML Generation](/docs/html-generation/) in two ways:
+It is also used by [Page HTML Generation](/docs/html-generation) in two ways:
 
 1. `static-entry.js` produces a `page-renderer.js` webpack bundle that generates the HTML for a path. It requires `data.json` and uses the `pages` to lookup the page for the page.
 2. To get the `jsonName` from the page object, and uses it to construct a resource path for the actual json result by looking it up in `data.json.dataPaths[jsonName]`.
 
-Now that we've written out page data, we can start on the [Webpack section](/docs/webpack-and-ssr/).
+Now that we've written out page data, we can start on the [Webpack section](/docs/webpack-and-ssr).

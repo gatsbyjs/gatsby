@@ -13,7 +13,7 @@ We’re excited to announce the official release of Gatsby Preview for [Cosmic J
 
 ## Getting Started
 
-1. First go to the [Gatsby Getting Started Page](https://www.gatsbyjs.com/get-started/) and follow the links for Cosmic JS.
+1. First go to the [Gatsby Getting Started Page](https://www.gatsbyjs.com/get-started) and follow the links for Cosmic JS.
 2. Select the [Cosmic JS-powered Gatsby Blog](https://www.cosmicjs.com/apps/gatsby-blog)
 3. You will then be asked for your GitHub and Cosmic JS authentication, so make sure you have both accounts set up ([sign up for Cosmic JS here](https://app.cosmicjs.com/signup)).
 4. After onboarding, go to any Post in your Cosmic JS Bucket and find the big, beautiful, purple button to preview your content.
@@ -39,7 +39,7 @@ Gatsby Preview solves this problem by providing a simple button for content crea
 
 We’re excited to continue to work closely with the Gatsby team to help create more value-added integrations between both services. It’s our goal to continue to provide the full spectrum of team members the best tools to be successful.
 
-Our users have been very helpful with letting us know ways to improve the Cosmic JS + Gatsby stack combo. So if you have any suggestions on ways we can improve, please let us know in the [Cosmic JS Slack channel](https://cosmicslack.herokuapp.com/) or on [our Twitter](https://twitter.com/cosmic_js).
+Our users have been very helpful with letting us know ways to improve the Cosmic JS + Gatsby stack combo. So if you have any suggestions on ways we can improve, please let us know in the [Cosmic JS Slack channel](https://cosmicslack.herokuapp.com) or on [our Twitter](https://twitter.com/cosmic_js).
 
 Happy building!
 

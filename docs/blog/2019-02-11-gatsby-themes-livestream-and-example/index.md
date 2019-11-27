@@ -11,7 +11,7 @@ tags:
 
 One of the most exciting things we’re working on at Gatsby right now is themes.
 
-You can find more details in [the announcement post](/blog/2018-11-11-introducing-gatsby-themes/) and [why we think themes are important](/blog/2019-01-31-why-themes/), but the short version is this:
+You can find more details in [the announcement post](/blog/2018-11-11-introducing-gatsby-themes) and [why we think themes are important](/blog/2019-01-31-why-themes), but the short version is this:
 
 **Gatsby themes allow you to focus only on the parts of the site and app building process that you _need to care about_ by abstracting the rest away into a package.**
 
@@ -44,11 +44,11 @@ The code we built is [available on GitHub](https://github.com/jlengstorf/livestr
 
 ### Additional Links and Resources
 
-- Post: [Introducing Gatsby Themes](/blog/2018-11-11-introducing-gatsby-themes/)
-- Post: [Why Themes](/blog/2019-01-31-why-themes/)
-- [`gatsby-plugin-page-creator`](/packages/gatsby-plugin-page-creator/)
+- Post: [Introducing Gatsby Themes](/blog/2018-11-11-introducing-gatsby-themes)
+- Post: [Why Themes](/blog/2019-01-31-why-themes)
+- [`gatsby-plugin-page-creator`](/packages/gatsby-plugin-page-creator)
 - [`gatsby-mdx` getting started docs](https://gatsby-mdx.netlify.com/getting-started)
-- [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/)
+- [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem)
 - [John Otander on Twitter](https://twitter.com/4lpine)
 - [Jason Lengstorf on Twitter](https://twitter.com/jlengstorf)
 

@@ -106,7 +106,7 @@ in a terminal to see if n is installed on your system. If it's installed, you ca
 
 ### Installing from nodejs.org
 
-If you aren't using any of the previously listed installation methods, you can [download a Node.js installer directly from nodejs.org](https://nodejs.org/en/).
+If you aren't using any of the previously listed installation methods, you can [download a Node.js installer directly from nodejs.org](https://nodejs.org/en).
 
 Gatsby's recommended way to install Node.js is by using Homebrew. Refer to the previous [Homebrew section of this document](#using-homebrew) for more info.
 

@@ -14,7 +14,7 @@ creating websites with functionality that our clients require, whilst maximising
 their budget.
 
 We're also bracing ourselves for what we’re anticipating to be the stormfront of
-[Gutenberg](https://wordpress.org/plugins/gutenberg/)
+[Gutenberg](https://wordpress.org/plugins/gutenberg)
 for our WordPress projects. Once it's included in the WordPress Core, writing
 components in JavaScript for the Gutenberg editor will be necessary for every
 developer on a project.
@@ -88,7 +88,7 @@ Beautiful.
 ## GraphQL: SQL-like data queries
 
 One thing I particularly love about Gatsby.js is its inclusion of
-[GraphQL](http://graphql.org/). Like SQL, you
+[GraphQL](http://graphql.org). Like SQL, you
 use GraphQL to query your data, whether from the WordPress API, Contentful or
 Markdown, and extract a dataset to display in your template.
 
@@ -130,7 +130,7 @@ focus on context without having to grok SCSS again, reducing mental friction.
 
 ## My Project
 
-Following the [tutorial on Gatsbyjs](/tutorial/) I built
+Following the [tutorial on Gatsbyjs](/tutorial) I built
 up my project from scratch, breaking things profusely at first, but it honestly
 didn’t take long to gain confidence enough so that I launched my first site at
 [https://freebabylon5.com](https://freebabylon5.com)
@@ -138,7 +138,7 @@ recently.
 
 Be warned: the tutorial isn’t quite finished yet, you might be better off
 starting with
-[one of the starter kits already available](/starters/),
+[one of the starter kits already available](/starters),
 so that you get `react-helmet` and active links implemented, the 2 things I had
 to learn independently.
 
@@ -164,7 +164,7 @@ hacked.
 
 Using GatsbyJS with its “Bring Your Own Data” strategy makes perfect sense, and
 we’re about to start building our first Gatsby client site using the plugin
-[`gatsby-source-wordpress`](/packages/gatsby-source-wordpress/)
+[`gatsby-source-wordpress`](/packages/gatsby-source-wordpress)
 to pull in our data and build a totally secure website with some pretty
 impressive gains on loading time. We’ll also sleep better at night knowing
 insecurities in WordPress are no longer putting our clients at risk.

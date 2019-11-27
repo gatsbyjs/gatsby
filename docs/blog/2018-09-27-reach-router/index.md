@@ -5,7 +5,7 @@ author: Amberley Romo
 tags: ["v2", "accessibility", "client-side-routing"]
 ---
 
-We recently announced the [second major release of Gatsby](/blog/2018-09-17-gatsby-v2/) 🚀. One change we want to highlight is the switch to using [@reach/router](https://reach.tech/router) to improve the accessibility of routing in Gatsby sites. What is @reach/router, and what are the benefits of undertaking the switch?
+We recently announced the [second major release of Gatsby](/blog/2018-09-17-gatsby-v2) 🚀. One change we want to highlight is the switch to using [@reach/router](https://reach.tech/router) to improve the accessibility of routing in Gatsby sites. What is @reach/router, and what are the benefits of undertaking the switch?
 
 ## What is @reach/router?
 
@@ -17,7 +17,7 @@ We recently announced the [second major release of Gatsby](/blog/2018-09-17-gats
 
 ## How does it support accessibility?
 
-When you visit a Gatsby site, a static, server-rendered HTML page is loaded first, and then the JavaScript to hydrate the site into a web app is loaded. From there, internal routing is handled with the [Gatsby Link component](/docs/gatsby-link/), which wraps [@reach/router’s Link component](https://reach.tech/router/api/Link).
+When you visit a Gatsby site, a static, server-rendered HTML page is loaded first, and then the JavaScript to hydrate the site into a web app is loaded. From there, internal routing is handled with the [Gatsby Link component](/docs/gatsby-link), which wraps [@reach/router’s Link component](https://reach.tech/router/api/Link).
 
 Web apps rerender in the client -- without making a request to the server to fetch new HTML -- resulting in a faster, more seamless user experience. These performance benefits, however, can create a broken experience for users who rely on assistive technology like screen readers.
 
@@ -108,8 +108,8 @@ We look forward to continuing to work actively with Ryan!
 Related Gatsby docs:
 
 - [V2 Migration Guide](/docs/migrating-from-v1-to-v2/#migrate-from-react-router-to-reachrouter)
-- [Gatsby Link API reference](/docs/gatsby-link/)
-- [V2 announcement blog post](/blog/2018-09-17-gatsby-v2/)
+- [Gatsby Link API reference](/docs/gatsby-link)
+- [V2 announcement blog post](/blog/2018-09-17-gatsby-v2)
 - [Making your site accessible](/docs/making-your-site-accessible)
 
 External references:

@@ -22,7 +22,7 @@ Some general things to verify in a pull request are:
 - Language ought to be inclusive and accessible
 - Issues and Requests for Comments (RFCs) (if any) that this PR addresses ought to be linked to
 
-> 💡 When looking at a PR for the first time, it can help to read up on linked issues or [RFCs](/contributing/rfc-process/) (if there are any) to gain context on what the PR intends to add or fix.
+> 💡 When looking at a PR for the first time, it can help to read up on linked issues or [RFCs](/contributing/rfc-process) (if there are any) to gain context on what the PR intends to add or fix.
 
 ### Type Specific Guidelines
 
@@ -32,16 +32,16 @@ Let's go over them below.
 
 #### Documentation
 
-We typically look for the following in [PRs that add documentation](/contributing/docs-contributions/):
+We typically look for the following in [PRs that add documentation](/contributing/docs-contributions):
 
 - Correctness — whether the added documentation is technically correct
-- Style — whether the written language follows our [style guide](/contributing/gatsby-style-guide/)
+- Style — whether the written language follows our [style guide](/contributing/gatsby-style-guide)
 - Headings – whether the heading levels in a doc start with h2 (`##` in Markdown) and grow in order, establishing an accessible content hierarchy
-- Type & Format – whether docs and learning materials align with our recommendations and [docs templates](/contributing/docs-templates/)
+- Type & Format – whether docs and learning materials align with our recommendations and [docs templates](/contributing/docs-templates)
 
 #### Code
 
-For [PRs that add code](/contributing/code-contributions/) (whether a feature or fix), we look for the following:
+For [PRs that add code](/contributing/code-contributions) (whether a feature or fix), we look for the following:
 
 - Correctness — whether the code does what we think it does
 - Tests — when fixing a bug or adding a new feature, it can be very valuable to add tests. While we do merge some small PRs without them, more often than not, it's good to have tests asserting behavior. This can be a combination of unit tests for the specific package, snapshot tests, and end to end tests. The goal here is to ensure that something that is being fixed or added _remains_ fixed or working the way we expect it to. Good tests ensure this.
@@ -62,9 +62,9 @@ For PRs that add a site or a starter to the showcase, we ought to check:
 For PRs that add a blog post, we ought to check:
 
 - Correctness — whether the added documentation is technically correct
-- Style — whether the written language follows our [style guide](/contributing/gatsby-style-guide/)
+- Style — whether the written language follows our [style guide](/contributing/gatsby-style-guide)
 - Subject matter — blog posts should not be purely promotional, spammy, or inappropriate. An author should check with a member of the Gatsby team that their post is appropriate for the blog before creating their PR.
-- Time Sensitivity — blog posts are more time dependent than docs, especially since they get buried after more posts are published. If something is continually relevant and more of a general how-to, it should probably go in the [Reference Guides](/docs/guides/) section of the docs.
+- Time Sensitivity — blog posts are more time dependent than docs, especially since they get buried after more posts are published. If something is continually relevant and more of a general how-to, it should probably go in the [Reference Guides](/docs/guides) section of the docs.
 
 ## Automated Checks
 
@@ -135,7 +135,7 @@ These are bad PR titles because they are generic, don't communicate the change p
 - Be _kind_. We're stronger every day because of our community, so compassion is important. We want all contributors to feel welcome.
 - Make suggestions using [GitHub's suggestions feature](https://help.github.com/en/articles/commenting-on-a-pull-request#adding-line-comments-to-a-pull-request) if possible. This makes accepting your suggestions easier for the author.
 - Link to examples when necessary
-- Try not to [bikeshed](http://bikeshed.com/) too much
+- Try not to [bikeshed](http://bikeshed.com) too much
 - Note when a suggestion is optional (as opposed to required)
 - Be objective and limit nitpicks (a few are fine if they add value or improve code readability)
 - Don't suggest and expect changes out of scope which are best addressed in a separate PR
@@ -146,7 +146,7 @@ These are bad PR titles because they are generic, don't communicate the change p
 
 If you're a member of the [gatsbyjs](http://github.com/gatsbyjs) organization on GitHub, you can review a PR.
 
-> 💡 Not a member yet? Want to [get involved in contributing](/contributing/how-to-contribute/) to open source projects? Make your first contribution and you'll be invited automatically!
+> 💡 Not a member yet? Want to [get involved in contributing](/contributing/how-to-contribute) to open source projects? Make your first contribution and you'll be invited automatically!
 
 ### Who can approve a PR?
 

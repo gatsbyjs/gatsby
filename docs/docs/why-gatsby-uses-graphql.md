@@ -213,14 +213,14 @@ Using `data/products.json` as an example, by using GraphQL we’re able to solve
   lessonTitle="Make Data Queryable in GraphQL With Gatsby"
 />
 
-In order to load the product and image data into GraphQL, you need to add a few [Gatsby plugins](/plugins/). Namely, you need plugins to:
+In order to load the product and image data into GraphQL, you need to add a few [Gatsby plugins](/plugins). Namely, you need plugins to:
 
-- Load the JSON file into Gatsby’s internal data store, which can be queried using GraphQL ([`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/))
-- Convert JSON files into a format you can query with GraphQL ([`gatsby-transformer-json`](/packages/gatsby-transformer-json/))
-- Optimize images ([`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp/))
-- Add data about optimized images to Gatsby’s data store ([`gatsby-transformer-sharp`](/packages/gatsby-transformer-sharp/))
+- Load the JSON file into Gatsby’s internal data store, which can be queried using GraphQL ([`gatsby-source-filesystem`](/packages/gatsby-source-filesystem))
+- Convert JSON files into a format you can query with GraphQL ([`gatsby-transformer-json`](/packages/gatsby-transformer-json))
+- Optimize images ([`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp))
+- Add data about optimized images to Gatsby’s data store ([`gatsby-transformer-sharp`](/packages/gatsby-transformer-sharp))
 
-In addition to the plugins, we’ll use [`gatsby-image`](/packages/gatsby-image/) to display the optimized images with lazy loading.
+In addition to the plugins, we’ll use [`gatsby-image`](/packages/gatsby-image) to display the optimized images with lazy loading.
 
 Install these packages using the command line:
 

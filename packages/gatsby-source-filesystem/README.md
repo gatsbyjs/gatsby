@@ -129,7 +129,7 @@ createFilePath({
 
 #### Example usage
 
-The following is taken from [Gatsby Tutorial, Part Seven](https://www.gatsbyjs.org/tutorial/part-seven/) and is used to create URL slugs for markdown pages.
+The following is taken from [Gatsby Tutorial, Part Seven](https://www.gatsbyjs.org/tutorial/part-seven) and is used to create URL slugs for markdown pages.
 
 ```javascript
 const { createFilePath } = require(`gatsby-source-filesystem`)
@@ -239,7 +239,7 @@ exports.downloadMediaFiles = ({
 }
 ```
 
-The file node can then be queried using GraphQL. See an example of this in the [gatsby-source-wordpress README](/packages/gatsby-source-wordpress/#image-processing) where downloaded images are queried using [gatsby-transformer-sharp](/packages/gatsby-transformer-sharp/) to use in the component [gatsby-image](/packages/gatsby-image/).
+The file node can then be queried using GraphQL. See an example of this in the [gatsby-source-wordpress README](/packages/gatsby-source-wordpress/#image-processing) where downloaded images are queried using [gatsby-transformer-sharp](/packages/gatsby-transformer-sharp) to use in the component [gatsby-image](/packages/gatsby-image).
 
 #### Retrieving the remote file name and extension
 

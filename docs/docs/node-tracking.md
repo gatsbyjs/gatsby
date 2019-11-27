@@ -53,7 +53,7 @@ In the above example, `nodeA` has parent `id1`. So `findRootNodeAncestor({ blog:
 
 ## Why/Where?
 
-Where is node-tracking used? First up, nodes are tracked in 2 places. Firstly, in [createNode](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/actions.js#L539), every time a node is created, we link all its sub objects to the new NodeID. Nodes are also tracked whenever they are resolved in [run-sift](/docs/schema-sift/#3-resolve-inner-query-fields-on-all-nodes). This is necessary because [custom plugin fields](/docs/schema-input-gql/#inferring-input-filters-from-plugin-fields/) might return new objects that weren't created when the node was initially made.
+Where is node-tracking used? First up, nodes are tracked in 2 places. Firstly, in [createNode](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/actions.js#L539), every time a node is created, we link all its sub objects to the new NodeID. Nodes are also tracked whenever they are resolved in [run-sift](/docs/schema-sift/#3-resolve-inner-query-fields-on-all-nodes). This is necessary because [custom plugin fields](/docs/schema-input-gql/#inferring-input-filters-from-plugin-fields) might return new objects that weren't created when the node was initially made.
 
 Now, where do we use this information? In 2 places.
 

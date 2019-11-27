@@ -1,6 +1,6 @@
 # babel-preset-gatsby-package
 
-This [Babel](https://babeljs.io/) preset is used for our internal packages. If you're looking for the preset a **Gatsby Site** can use, please refer to [babel-preset-gatsby](https://github.com/gatsbyjs/gatsby/blob/master/packages/babel-preset-gatsby/README.md) instead.
+This [Babel](https://babeljs.io) preset is used for our internal packages. If you're looking for the preset a **Gatsby Site** can use, please refer to [babel-preset-gatsby](https://github.com/gatsbyjs/gatsby/blob/master/packages/babel-preset-gatsby/README.md) instead.
 
 ## Packages
 

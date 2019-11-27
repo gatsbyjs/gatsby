@@ -18,7 +18,7 @@ tags:
 
 Located north of Atlanta, Sandy Springs is a city built on creative thinking and determination. They captured a bold vision for a unified platform to bring together new and existing information systems.
 
-To achieve their goals, the Sandy Springs communications team partnered with Mediacurrent. Together they built a new Drupal and Gatsby decoupled platform architecture to power both the [City Springs website](https://citysprings.com/) and its digital signage network.
+To achieve their goals, the Sandy Springs communications team partnered with Mediacurrent. Together they built a new Drupal and Gatsby decoupled platform architecture to power both the [City Springs website](https://citysprings.com) and its digital signage network.
 
 ## The Challenge
 
@@ -36,7 +36,7 @@ On the back end, a [Drupal 8](https://www.drupal.org/8) foundation manages conte
 
 ## The Decoupled Dream Team
 
-[Gatsby](/), is instrumental to the decoupled infrastructure. The static site generator creates flat HTML, CSS, and JS files that post anywhere and load in the browser quickly. The JSON API Drupal module exposes feeds of data from the decoupled Drupal CMS to Gatsby.
+[Gatsby](), is instrumental to the decoupled infrastructure. The static site generator creates flat HTML, CSS, and JS files that post anywhere and load in the browser quickly. The JSON API Drupal module exposes feeds of data from the decoupled Drupal CMS to Gatsby.
 In this build, Netlify deploys Gatsby. It functions to expose an API and rebuild the site as needed. When a user enters content into Drupal and promotes it to CitySprings.com, it triggers a custom Netlify build hook that tells Netlify to re-query the JSON API for new or changed data.
 
 ## Trends in Modern Web Development

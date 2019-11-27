@@ -91,7 +91,7 @@ You will want to make Gatsby, React, and ReactDom peer dependencies in the _them
 
 > MDX is markdown for the component era. It lets you write JSX embedded inside markdown. That's a great combination because it allows you to use markdown's often terse syntax (such as # heading) for the little things and JSX for more advanced components.
 
-Read more about Gatsby+MDX [here.](https://gatsby-mdx.netlify.com/)
+Read more about Gatsby+MDX [here.](https://gatsby-mdx.netlify.com)
 
 In your _theme_ directory, add src/pages/index.mdx
 
@@ -107,7 +107,7 @@ Next, you will want to add gatsby-plugin-page-creator
 
 In the future, Gatsby will automatically handle adding the page-creator plugin.
 
-Read more about the page-creator plugin [here.](/packages/gatsby-plugin-page-creator/)
+Read more about the page-creator plugin [here.](/packages/gatsby-plugin-page-creator)
 
 Next, you will want to create your _gatsby-config.js_ file under your _theme_ directory. Make sure to include 'gatsby-plugin-mdx' and 'gatsby-plugin-page-creator.'
 

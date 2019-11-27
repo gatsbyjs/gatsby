@@ -2,11 +2,11 @@
 title: Gatsby Image API
 ---
 
-Part of what makes Gatsby sites so fast is its recommended approach to handling images. `gatsby-image` is a React component designed to work seamlessly with Gatsby’s [native image processing](https://image-processing.gatsbyjs.org/) capabilities powered by GraphQL and [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/) to easily and completely optimize image loading for your sites.
+Part of what makes Gatsby sites so fast is its recommended approach to handling images. `gatsby-image` is a React component designed to work seamlessly with Gatsby’s [native image processing](https://image-processing.gatsbyjs.org) capabilities powered by GraphQL and [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp) to easily and completely optimize image loading for your sites.
 
-> _Note: gatsby-image is **not** a drop-in replacement for `<img />`. It’s optimized for responsive fixed width/height images and images that stretch the full-width of a container. There are also other ways to [work with images](/docs/images-and-files/) in Gatsby that don't require GraphQL._
+> _Note: gatsby-image is **not** a drop-in replacement for `<img />`. It’s optimized for responsive fixed width/height images and images that stretch the full-width of a container. There are also other ways to [work with images](/docs/images-and-files) in Gatsby that don't require GraphQL._
 
-Demo: [https://using-gatsby-image.gatsbyjs.org/](https://using-gatsby-image.gatsbyjs.org/)
+Demo: [https://using-gatsby-image.gatsbyjs.org/](https://using-gatsby-image.gatsbyjs.org)
 
 ## In this doc
 
@@ -21,7 +21,7 @@ Demo: [https://using-gatsby-image.gatsbyjs.org/](https://using-gatsby-image.gats
 
 ## Setting up Gatsby Image
 
-To start working with Gatsby Image, install the `gatsby-image` package along with necessary plugins `gatsby-transformer-sharp` and `gatsby-plugin-sharp`. Reference the packages in your `gatsby-config.js` file. You can also provide additional options to [`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp/) in your config file.
+To start working with Gatsby Image, install the `gatsby-image` package along with necessary plugins `gatsby-transformer-sharp` and `gatsby-plugin-sharp`. Reference the packages in your `gatsby-config.js` file. You can also provide additional options to [`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp) in your config file.
 
 A common way to source images is to install and use `gatsby-source-filesystem` to connect your local files, but other source plugins can be used as well, such as `gatsby-source-contentful`, `gatsby-source-datocms` and `gatsby-source-sanity`.
 
@@ -44,13 +44,13 @@ module.exports = {
 }
 ```
 
-_For in-depth install instructions, check out the docs on [Using Gatsby Image](/docs/using-gatsby-image/)._
+_For in-depth install instructions, check out the docs on [Using Gatsby Image](/docs/using-gatsby-image)._
 
 ### Gatsby image starts with a query
 
-To feed file data in to Gatsby Image, set up a [GraphQL query](/docs/graphql-reference/) and either pass it into a component as props or write it directly in the component. One technique is to leverage the [`useStaticQuery`](/docs/use-static-query/) hook.
+To feed file data in to Gatsby Image, set up a [GraphQL query](/docs/graphql-reference) and either pass it into a component as props or write it directly in the component. One technique is to leverage the [`useStaticQuery`](/docs/use-static-query) hook.
 
-Common GraphQL queries for sourcing images include `file` from [gatsby-source-filesystem](/packages/gatsby-source-filesystem/), and both `imageSharp` and `allImageSharp` from [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/), but ultimately the options available to you will depend on your content sources.
+Common GraphQL queries for sourcing images include `file` from [gatsby-source-filesystem](/packages/gatsby-source-filesystem), and both `imageSharp` and `allImageSharp` from [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp), but ultimately the options available to you will depend on your content sources.
 
 > Note: you can also use [GraphQL aliases](/docs/graphql-reference/#aliasing) for querying multiple images of the same type.
 
@@ -314,15 +314,15 @@ GraphQL includes a concept called "query fragments", which are a part of a query
 
 #### About `noBase64`
 
-If you don't want to use the [blur-up effect](https://using-gatsby-image.gatsbyjs.org/blur-up/), choose the fragment with `noBase64` at the end.
+If you don't want to use the [blur-up effect](https://using-gatsby-image.gatsbyjs.org/blur-up), choose the fragment with `noBase64` at the end.
 
 #### About `tracedSVG`
 
-If you want to use the [traced placeholder SVGs](https://using-gatsby-image.gatsbyjs.org/traced-svg/), choose the fragment with `tracedSVG` at the end.
+If you want to use the [traced placeholder SVGs](https://using-gatsby-image.gatsbyjs.org/traced-svg), choose the fragment with `tracedSVG` at the end.
 
 #### About `withWebP`
 
-If you want to automatically use [WebP images](https://developers.google.com/speed/webp/) when the browser supports the file format, use the `withWebp` fragments. If the browser doesn't support WebP, `gatsby-image` will fall back to the default image format.
+If you want to automatically use [WebP images](https://developers.google.com/speed/webp) when the browser supports the file format, use the `withWebp` fragments. If the browser doesn't support WebP, `gatsby-image` will fall back to the default image format.
 
 Here's an example of using a non-default fragment from `gatsby-transformer-sharp`. Be sure to pick one that matches your desired image type (_fixed_ or _fluid_):
 
@@ -337,11 +337,11 @@ file(relativePath: { eq: "images/default.jpg" }) {
 }
 ```
 
-For more info on how these options work, check out the Gatsby Image demo: [https://using-gatsby-image.gatsbyjs.org/](https://using-gatsby-image.gatsbyjs.org/)
+For more info on how these options work, check out the Gatsby Image demo: [https://using-gatsby-image.gatsbyjs.org/](https://using-gatsby-image.gatsbyjs.org)
 
 #### Additional plugin fragments
 
-Additionally, plugins supporting `gatsby-image` currently include [gatsby-source-contentful](/packages/gatsby-source-contentful/), [gatsby-source-datocms](https://github.com/datocms/gatsby-source-datocms) and [gatsby-source-sanity](https://github.com/sanity-io/gatsby-source-sanity). See the [gatsby-image](/packages/gatsby-image/#fragments) README for more details.
+Additionally, plugins supporting `gatsby-image` currently include [gatsby-source-contentful](/packages/gatsby-source-contentful), [gatsby-source-datocms](https://github.com/datocms/gatsby-source-datocms) and [gatsby-source-sanity](https://github.com/sanity-io/gatsby-source-sanity). See the [gatsby-image](/packages/gatsby-image/#fragments) README for more details.
 
 ## Gatsby-image props
 

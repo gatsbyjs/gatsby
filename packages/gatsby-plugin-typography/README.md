@@ -1,8 +1,8 @@
 # gatsby-plugin-typography
 
-A Gatsby plugin for utilizing the [Typography](https://kyleamathews.github.io/typography.js/) library with minimal configuration.
+A Gatsby plugin for utilizing the [Typography](https://kyleamathews.github.io/typography.js) library with minimal configuration.
 
-See it in action in the [Tutorial](https://www.gatsbyjs.org/tutorial/part-three/)
+See it in action in the [Tutorial](https://www.gatsbyjs.org/tutorial/part-three)
 ([source](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typography))
 
 ## Install

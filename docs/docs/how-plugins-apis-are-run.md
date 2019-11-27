@@ -22,7 +22,7 @@ Early in the bootstrap phase, you [load all the configured plugins](https://gith
 - **id**: String concatenation of 'Plugin ' and the name of the plugin. E.g. `Plugin query-runner`
 - **name**: The name of the plugin. E.g. `query-runner`
 - **version**: The version as per the package.json. Or if it is a site plugin, one is generated from the file's hash
-- **pluginOptions**: Plugin options as specified in [gatsby-config.js](/docs/gatsby-config/)
+- **pluginOptions**: Plugin options as specified in [gatsby-config.js](/docs/gatsby-config)
 - **nodeAPIs**: A list of node APIs that this plugin implements. E.g. `[ 'sourceNodes', ...]`
 - **browserAPIs**: List of browser APIs that this plugin implements
 - **ssrAPIs**: List of SSR APIs that this plugin implements
@@ -50,7 +50,7 @@ Next, filter all `flattenedPlugins` down to those that implement the API you're 
 
 ## Injected arguments
 
-API implementations are passed a variety of useful [actions](/docs/actions/) and other interesting functions/objects. These arguments are [created](https://github.com/gatsbyjs/gatsby/blob/8029c6647ab38792bb0a7c135ab4b98ae70a2627/packages/gatsby/src/utils/api-runner-node.js#L94) each time a plugin is run for an API, which allows us to rebind actions with default information.
+API implementations are passed a variety of useful [actions](/docs/actions) and other interesting functions/objects. These arguments are [created](https://github.com/gatsbyjs/gatsby/blob/8029c6647ab38792bb0a7c135ab4b98ae70a2627/packages/gatsby/src/utils/api-runner-node.js#L94) each time a plugin is run for an API, which allows us to rebind actions with default information.
 
 All actions take 3 arguments:
 
@@ -58,7 +58,7 @@ All actions take 3 arguments:
 2.  The plugin that is calling this action. E.g. `createNode` uses this to assign the owner of the new node
 3.  An object with misc action options:
     - **traceId**: [See below](#using-traceid-to-await-downstream-api-calls)
-    - **parentSpan**: opentracing span (see [tracing docs](/docs/performance-tracing/))
+    - **parentSpan**: opentracing span (see [tracing docs](/docs/performance-tracing))
 
 Passing the plugin and action options on every single action call would be extremely painful for plugin/site authors. Since you know the plugin, traceId and parentSpan when you're running your API, you can rebind injected actions so these arguments are already provided. This is done in the [doubleBind](https://github.com/gatsbyjs/gatsby/blob/8029c6647ab38792bb0a7c135ab4b98ae70a2627/packages/gatsby/src/utils/api-runner-node.js#L14) step.
 

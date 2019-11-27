@@ -7,11 +7,11 @@ showImageInArticle: false
 tags: ["gatsby-inc", "diversity-and-inclusion"]
 ---
 
-Most of the Gatsby [Inkteam](https://www.gatsbyjs.com/about/) was together in Portland last week for our latest team onsite, which we lovingly refer to as “Gatsby Gatherings”. The team assembles every few months to discuss pressing needs, our company’s direction, and our roadmap.
+Most of the Gatsby [Inkteam](https://www.gatsbyjs.com/about) was together in Portland last week for our latest team onsite, which we lovingly refer to as “Gatsby Gatherings”. The team assembles every few months to discuss pressing needs, our company’s direction, and our roadmap.
 
-This was our third Gathering, and it marked the first time when we weren’t in the midst of a major push (our first Gathering was centered around understanding how the Inkteam would actually function; the second around [officially launching the company](/blog/2018-05-24-launching-new-gatsby-company/)).
+This was our third Gathering, and it marked the first time when we weren’t in the midst of a major push (our first Gathering was centered around understanding how the Inkteam would actually function; the second around [officially launching the company](/blog/2018-05-24-launching-new-gatsby-company)).
 
-But this time, with [the v2 release candidate launching last Tuesday](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/CHANGELOG.md#200-rc0-2018-08-21) and [Gatsby Preview in alpha](/blog/2018-07-17-announcing-gatsby-preview/), we had a chance to step back from immediate needs and start looking at the bigger picture: **what does Gatsby Inc. stand for? What are our goals and values?**
+But this time, with [the v2 release candidate launching last Tuesday](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/CHANGELOG.md#200-rc0-2018-08-21) and [Gatsby Preview in alpha](/blog/2018-07-17-announcing-gatsby-preview), we had a chance to step back from immediate needs and start looking at the bigger picture: **what does Gatsby Inc. stand for? What are our goals and values?**
 
 This has been a _huge_ `TODO` on our list since the very beginning, so we spent a full day thinking through this, writing down our ideas, and discussing what kind of company we want to be.
 
@@ -152,7 +152,7 @@ While we need to stick to our roadmap and make steady progress toward our compan
 
 Open source doesn’t have the best reputation for being friendly and welcoming, and that makes us sad. **Everyone belongs in open source, and Gatsby is dedicated to making you feel welcome.**
 
-We will never judge, condescend, or exclude anyone. Instead, we will go above and beyond to support the community, through [pair programming](https://gatsby.dev/pairing), offering [free swag for contributors](https://gatsby.dev/swag), giving control to the community by [auto-inviting all contributors to the Gatsby GitHub org](https://github.com/gatsbyjs/gatsby/pull/7699#issuecomment-416665803), an open and inclusive [code of conduct](/contributing/code-of-conduct/), and other means that empower and embrace the incredible community that makes Gatsby possible.
+We will never judge, condescend, or exclude anyone. Instead, we will go above and beyond to support the community, through [pair programming](https://gatsby.dev/pairing), offering [free swag for contributors](https://gatsby.dev/swag), giving control to the community by [auto-inviting all contributors to the Gatsby GitHub org](https://github.com/gatsbyjs/gatsby/pull/7699#issuecomment-416665803), an open and inclusive [code of conduct](/contributing/code-of-conduct), and other means that empower and embrace the incredible community that makes Gatsby possible.
 
 <blockquote class="twitter-tweet" data-lang="en">
   <p lang="en" dir="ltr">

@@ -8,7 +8,7 @@ tags:
   - theme-ui
 ---
 
-If you’re looking into using [Theme UI](https://theme-ui.com/) , you’ll come across some (potentially) unfamiliar looking syntax:
+If you’re looking into using [Theme UI](https://theme-ui.com) , you’ll come across some (potentially) unfamiliar looking syntax:
 
 ```javascript
 /** @jsx jsx */
@@ -83,6 +83,6 @@ Using a custom JSX pragma is useful when you want to customize the transform pro
 
 ## Further reading
 
-- [WTF is JSX](https://jasonformat.com/wtf-is-jsx/)
+- [WTF is JSX](https://jasonformat.com/wtf-is-jsx)
 - [JSX Pragma doc](https://theme-ui.com/jsx-pragma) in Theme UI documentation.
 - [JSX Represents Objects](https://reactjs.org/docs/introducing-jsx.html#jsx-represents-objects) in React.js documentation.

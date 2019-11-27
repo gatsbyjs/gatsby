@@ -23,7 +23,7 @@ Gatsby has many benefits that give developers the freedom to build great website
 
 ### Site speed
 
-> Gatsby was built with performance in mind from its inception, and Gatsby sites are consistently 2-3x faster than similar sites built with other tools – pages load in milliseconds rather than seconds. Gatsby's automated performance optimizations include pre-fetching resources, code splitting, statically generating HTML, and Google's [PRPL Pattern](/docs/prpl-pattern/). If you want to take a deeper dive into Gatsby's performance features, check out [Web Performance 101 – also, why is Gatsby so fast?](/blog/2017-09-13-why-is-gatsby-so-fast/).
+> Gatsby was built with performance in mind from its inception, and Gatsby sites are consistently 2-3x faster than similar sites built with other tools – pages load in milliseconds rather than seconds. Gatsby's automated performance optimizations include pre-fetching resources, code splitting, statically generating HTML, and Google's [PRPL Pattern](/docs/prpl-pattern). If you want to take a deeper dive into Gatsby's performance features, check out [Web Performance 101 – also, why is Gatsby so fast?](/blog/2017-09-13-why-is-gatsby-so-fast).
 
 ### Modern web tools
 
@@ -31,7 +31,7 @@ Gatsby has many benefits that give developers the freedom to build great website
 
 ### Plugins and features
 
-> Just about every feature you could want for building a state-of-the-art website or web app is available through Gatsby. If the feature isn't already built in, there's an extensive library of available plugins. There's a list of features, their availability, and comparisons with other site building options available on the [Features page](/features/). The complete list of currently available plugins can be found on the [Plugins page](/plugins/).
+> Just about every feature you could want for building a state-of-the-art website or web app is available through Gatsby. If the feature isn't already built in, there's an extensive library of available plugins. There's a list of features, their availability, and comparisons with other site building options available on the [Features page](/features). The complete list of currently available plugins can be found on the [Plugins page](/plugins).
 
 ### Community and documentation
 
@@ -47,11 +47,11 @@ You may find that many of your developer friends and colleagues have some questi
 
 ### Our site uses a lot of dynamic content and components. Isn't Gatsby a static site generator?
 
-> It is, but there's more to it. Gatsby statically generates HTML content using React DOM and server-side APIs – it's an important part of how Gatsby delivers exceptional speed and better security. However, this static HTML content can then be enhanced with client-side JavaScript via React hydration. You can learn more about this in Dustin Schau's blog post [Beyond Static: Building Dynamic apps with Gatsby](/blog/2018-10-15-beyond-static-intro/).
+> It is, but there's more to it. Gatsby statically generates HTML content using React DOM and server-side APIs – it's an important part of how Gatsby delivers exceptional speed and better security. However, this static HTML content can then be enhanced with client-side JavaScript via React hydration. You can learn more about this in Dustin Schau's blog post [Beyond Static: Building Dynamic apps with Gatsby](/blog/2018-10-15-beyond-static-intro).
 
 ### Do I have to learn GraphQL to use Gatsby?
 
-> GraphQL is used to pull the content from all your different sources into Gatsby in a consistent, unified way. You don't have to use GraphQL to do this, but learning GraphQL will equip you to create new integrations more easily (and it may not be as challenging as you think). Amberly Romo digs into some of the pros and cons in her post on [Using Gatsby without GraphQL](/blog/2018-10-25-using-gatsby-without-graphql/).
+> GraphQL is used to pull the content from all your different sources into Gatsby in a consistent, unified way. You don't have to use GraphQL to do this, but learning GraphQL will equip you to create new integrations more easily (and it may not be as challenging as you think). Amberly Romo digs into some of the pros and cons in her post on [Using Gatsby without GraphQL](/blog/2018-10-25-using-gatsby-without-graphql).
 
 ### Our content team needs to be able to make site updates, but they're not super technical. Are they going to be able to work with a Gatsby site?
 
@@ -61,11 +61,11 @@ You may find that many of your developer friends and colleagues have some questi
 
 Sometimes the most effective way to get a developer's attention is to show them examples of real sites and dev teams using Gatsby. Here are some case studies you might want to share:
 
-- [Delicious Simplicity <3 Gatsby: Building Happily Ever After](/blog/2019-06-08-delicious-simplicity-case-study-part-1/)
-- [Beyond Static: Haptic Media Uses Gatsby to Build a Dynamic Web App](/blog/2019-02-05-hapticmedia-case-study/)
+- [Delicious Simplicity <3 Gatsby: Building Happily Ever After](/blog/2019-06-08-delicious-simplicity-case-study-part-1)
+- [Beyond Static: Haptic Media Uses Gatsby to Build a Dynamic Web App](/blog/2019-02-05-hapticmedia-case-study)
 - [IBM Uses Gatsby to Manage Enterprise-Level Content](/blog/2018-12-17-ibm-case-study/#big-company-big-website)
 
-For even more examples of Gatsby sites, [check out the Showcase](/showcase/)
+For even more examples of Gatsby sites, [check out the Showcase](/showcase)
 
 ## Conclusion
 

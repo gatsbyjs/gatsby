@@ -2,9 +2,9 @@
 title: Preprocessing External Images
 ---
 
-Gatsby allows powerful image processing features using the [`Sharp`](https://github.com/lovell/sharp/) library to automatically process images to be performant, with features like lazy-loading. That said, this only works if the image is a `File` node in the GraphQL layer.
+Gatsby allows powerful image processing features using the [`Sharp`](https://github.com/lovell/sharp) library to automatically process images to be performant, with features like lazy-loading. That said, this only works if the image is a `File` node in the GraphQL layer.
 
-If you want the same functionality for files that are remotely hosted online and not located in your Git repo, [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/) has an API called `createRemoteFileNode` to solve this.
+If you want the same functionality for files that are remotely hosted online and not located in your Git repo, [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem) has an API called `createRemoteFileNode` to solve this.
 
 This guide will show you how to use the `createRemoteFileNode` process and get the same benefits of gatsby-transformer-sharp with externally sourced images.
 
@@ -32,7 +32,7 @@ By default, this is a string value as you haven't told Gatsby yet how to interpr
 
 In your `gatsby-node.js` file, you can do some processing to create file nodes for the custom `featuredImgUrl` Frontmatter field.
 
-As you may not want to require all blog posts to have a featured image, you can define some GraphQL types with Gatsby's [Schema Customization API](/docs/schema-customization/) to provide flexibility and control with your queries. Explicitly defining these types allows you to return `null` when a blog post does not contain a featured image in its frontmatter data. Even if there are no blog posts with these data fields, the type will still exist in the schema and can be used in your code.
+As you may not want to require all blog posts to have a featured image, you can define some GraphQL types with Gatsby's [Schema Customization API](/docs/schema-customization) to provide flexibility and control with your queries. Explicitly defining these types allows you to return `null` when a blog post does not contain a featured image in its frontmatter data. Even if there are no blog posts with these data fields, the type will still exist in the schema and can be used in your code.
 
 ```js:title=gatsby-node.js
 const { createRemoteFileNode } = require("gatsby-source-filesystem")
@@ -113,7 +113,7 @@ query {
 
 ![Screenshot of GraphiQL with above query inserted](images/remote-file-node-graphiql-preview.png)
 
-You can then use `gatsby-transformer-sharp` to fill in the query for a fixed image here. For more information on transforming images using parameters and fragments, check out the [Gatsby Image API docs](/docs/gatsby-image/).
+You can then use `gatsby-transformer-sharp` to fill in the query for a fixed image here. For more information on transforming images using parameters and fragments, check out the [Gatsby Image API docs](/docs/gatsby-image).
 
 ```graphql
 query {
@@ -131,7 +131,7 @@ query {
 }
 ```
 
-And finally, you can update the template for this blog post to include a featured image node. Note the alt text still comes from the post frontmatter. This template is based on the one in the [Programmatically create pages from data](/tutorial/part-seven/) section of the Gatsby Tutorial.
+And finally, you can update the template for this blog post to include a featured image node. Note the alt text still comes from the post frontmatter. This template is based on the one in the [Programmatically create pages from data](/tutorial/part-seven) section of the Gatsby Tutorial.
 
 ```jsx
 import React from "react"

@@ -5,21 +5,21 @@ author: "Mikhail Novikov"
 tags: ["graphql", "plugins", "content-mesh", "releases"]
 ---
 
-When Gatsby was started 3.5 years ago, [GraphQL](https://www.graphql.com/) was still an internal project at Facebook and had yet to be open sourced.
+When Gatsby was started 3.5 years ago, [GraphQL](https://www.graphql.com) was still an internal project at Facebook and had yet to be open sourced.
 
-Since being open sourced, GraphQL's usage has exploded and [1000s of companies use it to power critical apps and websites](https://www.graphql.com/case-studies/).
+Since being open sourced, GraphQL's usage has exploded and [1000s of companies use it to power critical apps and websites](https://www.graphql.com/case-studies).
 
 Gatsby's vision is to be the integration layer for modern websites gluing together data and code into highly performant websites and apps. GraphQL is integral to this vision.
 
 Gatsby v1 shipped last year with a plugin-powered data layer that let you easily pull data from any source using GraphQL. At the time, there was still very few public GraphQL schemas so we built a system that let plugins transform data from REST APIs into a GraphQL schema.
 
-But in the last year, a lot has changed. More and more services are shipping with native GraphQL APIs. CMSs like [GraphCMS](https://graphcms.com/), [AppSync](https://aws.amazon.com/appsync/), and [TakeShape](https://www.takeshape.io/) all have launched GraphQL APIs. [Contentful](https://www.contentful.com/) is launching a [native GraphQL API as well soon](https://www.contentful.com/blog/2018/07/04/graphql-abstract-syntax-tree-new-schema/).
+But in the last year, a lot has changed. More and more services are shipping with native GraphQL APIs. CMSs like [GraphCMS](https://graphcms.com), [AppSync](https://aws.amazon.com/appsync), and [TakeShape](https://www.takeshape.io) all have launched GraphQL APIs. [Contentful](https://www.contentful.com) is launching a [native GraphQL API as well soon](https://www.contentful.com/blog/2018/07/04/graphql-abstract-syntax-tree-new-schema).
 
 Watching the spread of GraphQL has all been incredibly exciting to watch and a fulfillment of our vision for the future of the web where sites easily stitch together data from many sources.
 
 But unfortunately, these new GraphQL APIs have been awkward to use inside Gatsby as you first had to wrap the API inside a Gatsby source plugin before you could query the data from your components.
 
-To fix this, [Gatsby 2.0](/blog/2018-09-17-gatsby-v2/) adds experimental support for schema stitching of external GraphQL APIs to its internal schema. Schema stitching allows merging multiple GraphQL schemas together, which greatly simplifies working with third-party GraphQL APIs. Along with low-level support for stitching in general, we are shipping an official [gatsby-source-graphql](/packages/gatsby-source-graphql/) plugin, which enables connecting to an arbitrary GraphQL API with just a few lines of configuration!
+To fix this, [Gatsby 2.0](/blog/2018-09-17-gatsby-v2) adds experimental support for schema stitching of external GraphQL APIs to its internal schema. Schema stitching allows merging multiple GraphQL schemas together, which greatly simplifies working with third-party GraphQL APIs. Along with low-level support for stitching in general, we are shipping an official [gatsby-source-graphql](/packages/gatsby-source-graphql) plugin, which enables connecting to an arbitrary GraphQL API with just a few lines of configuration!
 
 # Getting started
 
@@ -84,4 +84,4 @@ The actual stitching happens on the Gatsby level. There is a new action, [`addTh
 
 # Conclusions
 
-`gatsby-source-graphql` is part of [Gatsby's 2.0 release](/blog/2018-09-17-gatsby-v2/). Try it out now! [Check out the docs](/docs/third-party-graphql) or [a sample project using GitHub's GraphQL API](https://github.com/freiksenet/gatsby-github-displayer).
+`gatsby-source-graphql` is part of [Gatsby's 2.0 release](/blog/2018-09-17-gatsby-v2). Try it out now! [Check out the docs](/docs/third-party-graphql) or [a sample project using GitHub's GraphQL API](https://github.com/freiksenet/gatsby-github-displayer).

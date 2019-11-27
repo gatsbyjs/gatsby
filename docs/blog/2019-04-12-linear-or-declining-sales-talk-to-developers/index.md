@@ -88,7 +88,7 @@ Some questions to ask others in your organization:
 
 There are a multitude of things happening every day that you need to be on top of -- because if you’re not, then poor performance is going to bite you sooner than later.
 
-With the rise of new technology evolving at breakneck speeds, new devices rolling out every day, and new emerging markets springing up overnight, [50% of all site visits today are on mobile devices](https://www.gatsbyjs.org/blog/2018-10-16-why-mobile-performance-is-crucial/). And when your users are out and about, their network connection fluctuates, performance suffers, and many of them bounce. (When’s the last time a website loaded fast on your phone when you were out and about?)
+With the rise of new technology evolving at breakneck speeds, new devices rolling out every day, and new emerging markets springing up overnight, [50% of all site visits today are on mobile devices](https://www.gatsbyjs.org/blog/2018-10-16-why-mobile-performance-is-crucial). And when your users are out and about, their network connection fluctuates, performance suffers, and many of them bounce. (When’s the last time a website loaded fast on your phone when you were out and about?)
 
 If these assumptions are true then I hope the following will help you bridge the divide.
 

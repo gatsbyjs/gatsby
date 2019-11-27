@@ -5,7 +5,7 @@ author: "Kyle Mathews"
 tags: ["gatsby-inc"]
 ---
 
-Together with my co-founder, [Sam Bhagwat](https://twitter.com/calcsam), I’m thrilled to announce the formation of [Gatsby Inc.](https://www.gatsbyjs.com/) Based on the open source project Gatsby I founded, Gatsby the company will make feature-rich and blazing-fast websites easier to build and run.
+Together with my co-founder, [Sam Bhagwat](https://twitter.com/calcsam), I’m thrilled to announce the formation of [Gatsby Inc.](https://www.gatsbyjs.com) Based on the open source project Gatsby I founded, Gatsby the company will make feature-rich and blazing-fast websites easier to build and run.
 
 First of all, if you haven’t used Gatsby yet, what is it? Gatsby:
 
@@ -17,7 +17,7 @@ First of all, if you haven’t used Gatsby yet, what is it? Gatsby:
 
 Gatsby is used by tens of thousands of developers and organizations and is downloaded nearly ½ million times per month.
 
-Follow our [getting started instructions](/docs/) to try out Gatsby in less than 5 minutes!
+Follow our [getting started instructions](/docs) to try out Gatsby in less than 5 minutes!
 
 I’ll get to the new company in a bit, but first, let me tell the story of how Gatsby came to be.
 
@@ -39,7 +39,7 @@ During my years building Drupal sites, I’d occasionally cast envious eyes at a
 
 ### Backbone.js/Node.js/NPM
 
-Then, in late 2010, the initial version of Backbone.js was released. I started playing with it and got super excited because things finally clicked for me: this was how to build rich, real-time JavaScript apps. The next year, I started my first full-time software development job at [Pantheon.io](https://pantheon.io/) and had a fantastic time building the Pantheon dashboard with Backbone.js to support Drupal & WordPress developers. I attended Backbone.js meetups and the first few Backbone.js conferences. Developer excitement online and at meetups was palpable. We could all feel that the world of web applications was starting to change dramatically.
+Then, in late 2010, the initial version of Backbone.js was released. I started playing with it and got super excited because things finally clicked for me: this was how to build rich, real-time JavaScript apps. The next year, I started my first full-time software development job at [Pantheon.io](https://pantheon.io) and had a fantastic time building the Pantheon dashboard with Backbone.js to support Drupal & WordPress developers. I attended Backbone.js meetups and the first few Backbone.js conferences. Developer excitement online and at meetups was palpable. We could all feel that the world of web applications was starting to change dramatically.
 
 Node.js, then only a couple of years old, was gaining traction fast. For the first time, NPM enabled the easy sharing of JavaScript libraries. Consequently, the number of libraries exploded. With a server runtime and ecosystem developing around JS, more and more web development tools started being written in JavaScript.
 
@@ -63,13 +63,13 @@ Early in 2014, I left Pantheon to explore new opportunities. I dove deeper into 
 
 A friend and I decided to work on a startup idea using React to build data-driven landing pages for sales reps.
 
-During this time, I read two articles that had an enormous impact on me—“[The Log: What every software engineer should know about real-time data's unifying abstraction](https://engineering.linkedin.com/distributed-systems/log-what-every-software-engineer-should-know-about-real-time-datas-unifying)” and “[Turning the database inside-out with Apache Samza](https://www.confluent.io/blog/turning-the-database-inside-out-with-apache-samza/).” Databases and distributed systems finally clicked for me, and I obsessed over how to implement event sourcing for my startup. The latter article’s elegant critique of caching as an inevitable source of bugs and complexity and its suggestion to use materialized views generated through event sourcing sunk deep.
+During this time, I read two articles that had an enormous impact on me—“[The Log: What every software engineer should know about real-time data's unifying abstraction](https://engineering.linkedin.com/distributed-systems/log-what-every-software-engineer-should-know-about-real-time-datas-unifying)” and “[Turning the database inside-out with Apache Samza](https://www.confluent.io/blog/turning-the-database-inside-out-with-apache-samza).” Databases and distributed systems finally clicked for me, and I obsessed over how to implement event sourcing for my startup. The latter article’s elegant critique of caching as an inevitable source of bugs and complexity and its suggestion to use materialized views generated through event sourcing sunk deep.
 
 The traditional batch processing mode of computing—which reached its pinnacle with Hadoop—was taking heavy criticism as more and more applications demanded real-time data processing. The era of Big Data had arrived as the volume of data rolling through systems reached stratospheric levels at large numbers of companies. Kafka and stream processing frameworks like Spark were getting lots of attention.
 
 ### Designing and launching the initial version of Gatsby
 
-Meanwhile, I was having lots of fun in my startup optimizing my landing pages. I added server side rendering and a number of other really fun performance tweaks while poring over reports from [webpagetest.org](http://www.webpagetest.org/). Universal JavaScript had arrived and was amazing.
+Meanwhile, I was having lots of fun in my startup optimizing my landing pages. I added server side rendering and a number of other really fun performance tweaks while poring over reports from [webpagetest.org](http://www.webpagetest.org). Universal JavaScript had arrived and was amazing.
 
 We reached the point where we needed a website for the startup and after having focused on web apps for so long, all of the solutions in the content website world felt out of date.
 
@@ -116,7 +116,7 @@ I posted my plans on GitHub and with help from 100s of developers in the communi
 
 After spending fall 2016, and most of 2017 consulting with companies around Gatsby and interacting with 100s of developers in the open source world, I started feeling confident that it was time to create a company devoted to bringing the full vision of Gatsby to fruition. My longtime best friend and Gatsby core contributor Sam Bhagwat and I started chatting about forming this startup to bring Gatsby to the world.
 
-We were lucky to find some great investors, led by [Dan Scholnick of Trinity Ventures](http://www.trinityventures.com/team/dan-scholnick/), who shared our vision for new cloud-native website infrastructure and has extensive experience investing in and working with open source & cloud infrastructure startups like New Relic, Docker, Meteor, InfluxData and more, to back us with \$3.8M in seed funding.
+We were lucky to find some great investors, led by [Dan Scholnick of Trinity Ventures](http://www.trinityventures.com/team/dan-scholnick), who shared our vision for new cloud-native website infrastructure and has extensive experience investing in and working with open source & cloud infrastructure startups like New Relic, Docker, Meteor, InfluxData and more, to back us with \$3.8M in seed funding.
 
 I want to emphasize that this new startup doesn’t signal any move away from open source. I’ve been heavily involved in open source communities since I started programming 12 years ago and strongly believe it’s the best way to build software. We will be building cloud services for Gatsby but Gatsby itself will remain 100% open source as will most of what we intend to do. What the investment and company will enable is a much larger amount of effort towards improving Gatsby core and its surrounding ecosystem. Several core contributors have already joined to work full-time on Gatsby. We’ve been able to work with upstreams to make targeted improvements that benefit not just Gatsby but the whole frontend ecosystem. And as our company grows, we’ll be able to proportionally increase our investment in open source.
 
@@ -126,8 +126,8 @@ It’s been an amazing journey so far. Wish Sam and I and our new colleagues luc
 
 ### Learn more about Gatsby
 
-- [From the New Stack "GatsbyJS, the Open Source React-Based SSG, Creates Company to Evolve Cloud-Native Website Builds"](https://thenewstack.io/gatsbyjs-the-open-source-react-based-ssg-creates-company-to-evolve-cloud-native-website-builds/)
+- [From the New Stack "GatsbyJS, the Open Source React-Based SSG, Creates Company to Evolve Cloud-Native Website Builds"](https://thenewstack.io/gatsbyjs-the-open-source-react-based-ssg-creates-company-to-evolve-cloud-native-website-builds)
 - [gatsbyjs.com](https://www.gatsbyjs.com)
-- [gatsbyjs.org](/)
+- [gatsbyjs.org]()
 
 _Also participating in Gatsby's funding round: Fathom Ventures, Robin Vasan, Mulesoft founder Ross Mason & the Pantheon founding team (Zack Rosen, Josh Koenig, Matt Cheney and David Strauss)._

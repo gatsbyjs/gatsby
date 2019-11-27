@@ -1,6 +1,6 @@
 # gatsby-cypress
 
-This package provides additional [Cypress](https://cypress.io/) commands for [testing Gatsby websites](/docs/end-to-end-testing/).
+This package provides additional [Cypress](https://cypress.io) commands for [testing Gatsby websites](/docs/end-to-end-testing).
 
 > **NOTE:** This package is _not_ required to use Gatsby and Cypress together. It only exists to add extra commands for convenience.
 

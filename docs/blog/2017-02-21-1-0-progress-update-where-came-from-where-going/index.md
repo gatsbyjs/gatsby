@@ -41,7 +41,7 @@ GitHub (by far the most stars on GitHub for a project of its type), been joined
 by **122 contributors**, and **downloaded 130,000** times!
 
 In mid-2016, I decided to
-[work full-time on Gatsby](https://www.bricolage.io/gatsby-open-source-work/)
+[work full-time on Gatsby](https://www.bricolage.io/gatsby-open-source-work)
 and started researching and prototyping ideas that are now coming together as
 Gatsby 1.0.
 
@@ -57,9 +57,9 @@ including blogs, marketing sites, documentation sites, and e-commerce.
 It wraps three of the most popular web app tools into a cohesive website
 framework:
 
-- [React](https://facebook.github.io/react/) from Facebook for building UIs
-- [Webpack](https://webpack.js.org/) for bundling JavaScript and CSS
-- [GraphQL](http://graphql.org/) from Facebook for declarative data queries
+- [React](https://facebook.github.io/react) from Facebook for building UIs
+- [Webpack](https://webpack.js.org) for bundling JavaScript and CSS
+- [GraphQL](http://graphql.org) from Facebook for declarative data queries
 
 While designing Gatsby, I wanted a synthesis of two of my favorite developer
 experiences. The simplicity of building sites with markdown and static site
@@ -110,9 +110,9 @@ paradigms feel almost easy with React.
 
 The internet runs on Open Source CMSs—primarily WordPress and Drupal. I spent
 most of college building Drupal websites and writing
-[open-source Drupal modules](https://www.bricolage.io/first-beta-release-drupal-native-mailinglist-module/).
+[open-source Drupal modules](https://www.bricolage.io/first-beta-release-drupal-native-mailinglist-module).
 My first startup job was at [Pantheon](https://pantheon.io)—where I helped
-[design and build developer tools](https://www.bricolage.io/new-beginnings/) for
+[design and build developer tools](https://www.bricolage.io/new-beginnings) for
 teams building Drupal & WordPress sites.
 
 These open source CMSs are _extraordinary tools and have remarkably dynamic
@@ -182,7 +182,7 @@ _same Gatsby codebase_.
 The marketing pages of their site are built using markdown and React components
 along with a modern css-in-js library
 [Glamor](https://github.com/threepointone/glamor) for styling. The SaaS portion
-uses [Redux](http://redux.js.org/) to communicate with their Django API.
+uses [Redux](http://redux.js.org) to communicate with their Django API.
 
 The marketing portion of the site loads quickly with minimal JavaScript. When a
 potential customer goes to sign-up for the app, there's no _awkward jump from
@@ -204,7 +204,7 @@ Gatsby 1.0 will be adding plugin and theme support.
 The plugin system will let you hook into lifecycle APIs from events during the
 bootstrap and build processes and in the browser.
 
-There are a [number of official Gatsby plugins](/docs/plugins/) already
+There are a [number of official Gatsby plugins](/docs/plugins) already
 built—all distributed as separate NPM packages. It'll be easy to create your own
 plugins for internal projects and as open source projects published on NPM.
 
@@ -212,9 +212,9 @@ Plugins can:
 
 - add support for webpack loaders such as Sass, Less
 - add drop-in support for lightweight React-compatible frameworks
-  [Preact](https://preactjs.com/) and [Inferno](https://infernojs.org/)
+  [Preact](https://preactjs.com) and [Inferno](https://infernojs.org)
 - add a sitemap or RSS feed
-- add [Google Analytics](/packages/gatsby-plugin-google-analytics/)
+- add [Google Analytics](/packages/gatsby-plugin-google-analytics)
 - ...and many more!
 
 Plugins also drive the new GraphQL data processing layer.
@@ -259,7 +259,7 @@ pre-fetch page data meaning even very complex, data-heavy pages load almost
 instantly.
 
 This pattern of _colocating_ your queries next to your views is copied from the
-[Relay data framework from Facebook](https://facebook.github.io/relay/).
+[Relay data framework from Facebook](https://facebook.github.io/relay).
 Colocation makes it easy to fully understand your views as everything necessary
 for that view is fully described there.
 
@@ -321,22 +321,22 @@ data format and source and potential way of processing its data will be an npm
 install away.
 
 So far I've focused on building out the markdown ecosystem. So there are plugins
-to [parse markdown](/packages/gatsby-parser-remark/) and process it in a variety
+to [parse markdown](/packages/gatsby-parser-remark) and process it in a variety
 of ways (including
-[adding syntax highlighting with PrismJS](/packages/gatsby-typegen-remark-prismjs/)
+[adding syntax highlighting with PrismJS](/packages/gatsby-typegen-remark-prismjs)
 and
-[resizing images referenced in markdown files](/packages/gatsby-typegen-remark-images/)
+[resizing images referenced in markdown files](/packages/gatsby-typegen-remark-images)
 so they're mobile ready). I've also added parsers for
-[YAML](/packages/gatsby-parser-yaml/), [JSON](/packages/gatsby-parser-json/),
-and [images](/packages/gatsby-parser-sharp/).
+[YAML](/packages/gatsby-parser-yaml), [JSON](/packages/gatsby-parser-json),
+and [images](/packages/gatsby-parser-sharp).
 
 These plugins are easy to write (somewhat similar to webpack loaders) so I
 expect to see the list of plugins grow rapidly.
 
 The GraphQL layer can also connect to external data sources like databases,
 APIs, or 3rd party services e.g. the various hosted CMSs such as
-[Contentful](https://www.contentful.com/) and
-[DataCMS](https://www.datocms.com/).
+[Contentful](https://www.contentful.com) and
+[DataCMS](https://www.datocms.com).
 
 ## Getting started with Gatsby 1.0
 

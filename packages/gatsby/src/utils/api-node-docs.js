@@ -141,7 +141,7 @@ exports.onCreateNode = true
  * There is a mechanism in Gatsby to prevent calling onCreatePage for pages
  * created by the same gatsby-node.js to avoid infinite loops/callback.
  *
- * See the guide [Creating and Modifying Pages](/docs/creating-and-modifying-pages/)
+ * See the guide [Creating and Modifying Pages](/docs/creating-and-modifying-pages)
  * for more on this API.
  */
 exports.onCreatePage = true
@@ -163,10 +163,10 @@ exports.onCreatePage = true
  *
  * Many transformer plugins use this to add fields that take arguments.
  *
- * * [`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/)
+ * * [`gatsby-transformer-remark`](/packages/gatsby-transformer-remark)
  * adds an "excerpt" field where the user when writing their query can specify
  * how many characters to prune the markdown source to.
- * * [`gatsby-transformer-sharp`](/packages/gatsby-transformer-sharp/) exposes
+ * * [`gatsby-transformer-sharp`](/packages/gatsby-transformer-sharp) exposes
  * many image transformation options as GraphQL fields.
  *
  * @param {object} $0
@@ -267,7 +267,7 @@ exports.createSchemaCustomization = true
  *   In resolver functions themselves, it is recommended to access the final
  *   built schema from `info.schema`.
  * * Gatsby's data layer, including all internal query capabilities, is
- *   exposed on [`context.nodeModel`](/docs/node-model/). The node store can be
+ *   exposed on [`context.nodeModel`](/docs/node-model). The node store can be
  *   queried directly with `getAllNodes`, `getNodeById` and `getNodesByIds`,
  *   while more advanced queries can be composed with `runQuery`. Note that
  *   `runQuery` will call field resolvers before querying, so e.g. foreign-key

@@ -108,7 +108,7 @@ You should see your global styles taking effect across your site:
 
 ### Importing CSS files into components
 
-It is also possible to break up your CSS styles into separate files so that team members can work independently while still using traditional CSS. You can then [import files directly](/docs/importing-assets-into-files/) into pages, templates, or components:
+It is also possible to break up your CSS styles into separate files so that team members can work independently while still using traditional CSS. You can then [import files directly](/docs/importing-assets-into-files) into pages, templates, or components:
 
 ```css:title=menu.css
 .menu {
@@ -122,7 +122,7 @@ It is also possible to break up your CSS styles into separate files so that team
 import "css/menu.css"
 ```
 
-This approach can simplify integration of CSS or [Sass](/packages/gatsby-plugin-sass/) styles into your Gatsby site by allowing team members to write and consume more traditional, class-based CSS. However, there are [trade-offs](#limitations) that must be considered with regards to web performance and the lack of dead code elimination.
+This approach can simplify integration of CSS or [Sass](/packages/gatsby-plugin-sass) styles into your Gatsby site by allowing team members to write and consume more traditional, class-based CSS. However, there are [trade-offs](#limitations) that must be considered with regards to web performance and the lack of dead code elimination.
 
 ### Adding classes to components
 
@@ -142,4 +142,4 @@ Since `class` is a reserved word in JavaScript, you'll have to use the `classNam
 
 The biggest problem with global CSS files is the risk of name conflicts and side effects like unintended inheritance.
 
-CSS methodologies like BEM can help solve this, but a more modern solution is to write locally-scoped CSS using [CSS Modules](/docs/css-modules/) or [CSS-in-JS](/docs/css-in-js/).
+CSS methodologies like BEM can help solve this, but a more modern solution is to write locally-scoped CSS using [CSS Modules](/docs/css-modules) or [CSS-in-JS](/docs/css-in-js).

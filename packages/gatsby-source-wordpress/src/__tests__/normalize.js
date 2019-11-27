@@ -77,7 +77,7 @@ describe(`Process WordPress data`, () => {
       expect(entities).toMatchSnapshot()
     })
 
-    // Some WordPress plugins (like https://wordpress.org/plugins/relative-url/)
+    // Some WordPress plugins (like https://wordpress.org/plugins/relative-url)
     // convert URLS to relative links
     it(`should work if links are already relative`, () => {
       const link = `/packages/gatsby-source-wordpress/`

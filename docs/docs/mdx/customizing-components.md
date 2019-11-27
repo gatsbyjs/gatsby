@@ -65,4 +65,4 @@ that Markdown creates. It uses
 
 ## Related
 
-- [MDX components](https://mdxjs.com/getting-started/)
+- [MDX components](https://mdxjs.com/getting-started)

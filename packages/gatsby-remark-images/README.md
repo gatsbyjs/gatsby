@@ -79,7 +79,7 @@ This plugin will support the following formats:
 - JPEG
 - PNG
 
-Since [Sharp][5] is used for image processing, this plugin will not support GIFs or SVGs. If you would like to render these file types with the image markdown syntax, use the [gatsby-remark-copy-linked-files](https://www.gatsbyjs.org/packages/gatsby-remark-copy-linked-files/) plugin. Do note with this it will load in the images, but won't use the features of [Sharp][5] such as the elastic container or the blur-up enhancements.
+Since [Sharp][5] is used for image processing, this plugin will not support GIFs or SVGs. If you would like to render these file types with the image markdown syntax, use the [gatsby-remark-copy-linked-files](https://www.gatsbyjs.org/packages/gatsby-remark-copy-linked-files) plugin. Do note with this it will load in the images, but won't use the features of [Sharp][5] such as the elastic container or the blur-up enhancements.
 
 [1]: https://jmperezperez.com/medium-image-progressive-loading-placeholder/
 [2]: https://code.facebook.com/posts/991252547593574/the-technology-behind-preview-photos/

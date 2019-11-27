@@ -17,5 +17,5 @@ This means that the configuration and functionality isn’t directly written int
 
 ## Other resources
 
-- [Gatsby theme tutorials](/tutorial/theme-tutorials/)
+- [Gatsby theme tutorials](/tutorial/theme-tutorials)
 - [Gatsby blog posts on themes](/blog/tags/themes)

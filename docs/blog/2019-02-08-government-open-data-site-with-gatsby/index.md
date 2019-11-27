@@ -9,15 +9,15 @@ tags:
 canonicalLink: https://revenuedata.doi.gov/blog/homepage-revamp-part-two/
 ---
 
-_This post was originally published at [Open data design at the U.S. Department of the Interior](https://revenuedata.doi.gov/blog/)._
+_This post was originally published at [Open data design at the U.S. Department of the Interior](https://revenuedata.doi.gov/blog)._
 
-A few months ago, our small team at the Office of Natural Resources Revenue (ONRR) decided we needed to refactor our [open-data website](https://revenuedata.doi.gov/). We knew we were in for a massive undertaking, as the site was originally built with the static-site generator [Jekyll](https://jekyllrb.com/), with significant custom coding to furnish bespoke features, automate data updates, and compile and deploy the site with [18F's](https://18f.gsa.gov/) fantastic static-site hosting service, [Federalist](https://federalist.18f.gov/).
+A few months ago, our small team at the Office of Natural Resources Revenue (ONRR) decided we needed to refactor our [open-data website](https://revenuedata.doi.gov). We knew we were in for a massive undertaking, as the site was originally built with the static-site generator [Jekyll](https://jekyllrb.com), with significant custom coding to furnish bespoke features, automate data updates, and compile and deploy the site with [18F's](https://18f.gsa.gov) fantastic static-site hosting service, [Federalist](https://federalist.18f.gov).
 
-As covered in our [first post in this series](https://revenuedata.doi.gov/blog/homepage-revamp/), we were simultaneously scoping a redesign of our homepage. Rebuilding the homepage would allow us to test some of our assumptions about how to address obstacles in our existing workflow.
+As covered in our [first post in this series](https://revenuedata.doi.gov/blog/homepage-revamp), we were simultaneously scoping a redesign of our homepage. Rebuilding the homepage would allow us to test some of our assumptions about how to address obstacles in our existing workflow.
 
 ## Transition obstacles
 
-When our team was hired to [transition the site from 18F](https://18f.gsa.gov/2018/05/01/lessons-from-an-18f-product-transition/) in late 2017, one issue emerged as an immediate concern. Our team was issued Windows 7 laptops (thankfully, we've since received Windows 10 machines), and we had a problem: the site's codebase wasn't particularly cross-platform friendly. Jekyll is built with Ruby; the former isn't officially supported on Windows, and the latter doesn't ship with Windows (as it does with macOS). To complicate matters further, the script to perform the most routine content management on the site – update the production, revenue, and disbursements data – assumed macOS/Linux output paths (forward slashes). The script broke on Windows.
+When our team was hired to [transition the site from 18F](https://18f.gsa.gov/2018/05/01/lessons-from-an-18f-product-transition) in late 2017, one issue emerged as an immediate concern. Our team was issued Windows 7 laptops (thankfully, we've since received Windows 10 machines), and we had a problem: the site's codebase wasn't particularly cross-platform friendly. Jekyll is built with Ruby; the former isn't officially supported on Windows, and the latter doesn't ship with Windows (as it does with macOS). To complicate matters further, the script to perform the most routine content management on the site – update the production, revenue, and disbursements data – assumed macOS/Linux output paths (forward slashes). The script broke on Windows.
 
 Of course, we could have refactored just the data-update script, but what we really needed was a way for multiple team members to update the data from their government-issued computers (with limited admin rights). We wanted to create a workflow that would solve some of our biggest content management problems:
 
@@ -37,7 +37,7 @@ We knew we'd have to segment our transition to Gatsby into our [Agile workflow](
 
 > Refactoring is lots of small changes, none of which change the observable part of the software, but all of which change its internal structure. Usually (you refactor) because you want to make some new feature, and the current internal structure doesn't fit very well for that new feature. So you change the structure to make the new feature easy to fit in, all the time refactoring and not breaking anything, and then you can put it in.
 
-We'd transitioned some of our site already: we migrated our [explore data page](https://revenuedata.doi.gov/explore/), which was a heavy lift that proved we could support both workflows simultaneously (the page serves as the data-heavy fulcrum of the site). But in that transition, we'd left the data-update process largely the same.
+We'd transitioned some of our site already: we migrated our [explore data page](https://revenuedata.doi.gov/explore), which was a heavy lift that proved we could support both workflows simultaneously (the page serves as the data-heavy fulcrum of the site). But in that transition, we'd left the data-update process largely the same.
 
 The homepage presented an exciting opportunity, as the redesign would feature monthly data for the first time on the site. Up until that point, we'd published only annual data. The addition of monthly data meant we needed a way to quickly and easily update the data. It became even more important that other team members – besides just our developer – could update the data.
 
@@ -51,7 +51,7 @@ In addition to being open source, there are five main reasons we used Gatsby to 
 
 1. Gatsby is a cross-platform ecosystem out of the box.
 
-1. [GraphQL](https://graphql.org/) allows us to query the data from a canonical source, instead of regenerating the data into multiple files to fit a particular context.
+1. [GraphQL](https://graphql.org) allows us to query the data from a canonical source, instead of regenerating the data into multiple files to fit a particular context.
 
 1. Anyone on our team can update the data. Team members need only Excel and GitHub to update the data, and we have one source of truth to maintain for each dataset.
 
@@ -65,7 +65,7 @@ We'll look at each of these in the context of our homepage redesign.
 
 As mentioned above, our most significant challenge transitioning the codebase from 18F to ONRR was operating system compatibility. We were asking a lot of our IT group, who had to vet our tech stack to ensure it met security requirements. It was a time consuming process that, even when we were granted administrative privileges, still left us with dependency errors and a parallel data-update workflow using separate machines.
 
-Gatsby combines multiple frontend tools into one, and the packages are managed with [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/), so the scope of our IT requests is limited to widely used package managers. From what we can tell so far, running Gatsby is nearly identical regardless of the operating system you're using. As we'll describe in the next section, we were able to build a data-update workflow that we could support using our government-issued computers.
+Gatsby combines multiple frontend tools into one, and the packages are managed with [npm](https://www.npmjs.com) or [yarn](https://yarnpkg.com), so the scope of our IT requests is limited to widely used package managers. From what we can tell so far, running Gatsby is nearly identical regardless of the operating system you're using. As we'll describe in the next section, we were able to build a data-update workflow that we could support using our government-issued computers.
 
 ### GraphQL
 
@@ -73,7 +73,7 @@ GraphQL has been a game changer for us. Our open data is largely comprised of fl
 
 Where before our data-update scripts would generate multiple `.yml` files – structured for the specific context in which the data would appear – we can now query the data with GraphQL and reference it in whatever context we need. Importantly, we maintain just one canonical data file and structure our query to fetch what we need.
 
-We use the [`gatsby-transformer-excel` plugin](/packages/gatsby-transformer-excel/) to parse our Excel data and convert it into `JSON` arrays accessible to both GraphQL and [D3.js](https://d3js.org/), our data visualization library.
+We use the [`gatsby-transformer-excel` plugin](/packages/gatsby-transformer-excel) to parse our Excel data and convert it into `JSON` arrays accessible to both GraphQL and [D3.js](https://d3js.org), our data visualization library.
 
 Here's a sample GraphQL query from the homepage to fetch revenue data:
 
@@ -180,7 +180,7 @@ Fortunately, Gatsby provides a hook into the entire lifecycle of its build proce
 
 #### Gatsby prefetch error
 
-Developers tout Gatsby's speed, and [prefetching](/docs/how-code-splitting-works/) page assets is integral to Gatsby's performance advantages. However, Gatsby isn't aware of our deployment structure, which results in an error when a page loads in the production environment.
+Developers tout Gatsby's speed, and [prefetching](/docs/how-code-splitting-works) page assets is integral to Gatsby's performance advantages. However, Gatsby isn't aware of our deployment structure, which results in an error when a page loads in the production environment.
 
 Basically, the Jekyll part of the site deploys to a directory that isn't known to Gatsby at build time. Consequently, Gatsby creates a `pages.json` object that contains the wrong locations for files. To deal with this, we use another feature of Gatsby's client API, [`onClientEntry`](/docs/browser-apis/#onClientEntry). Using `gatsby-browser.js`, we override `pages.json` by passing the correct assets to Gatsby ([full code here](https://github.com/ONRR/doi-extractives-data/blob/d355ba54a08a4a36a23e4f3d4a06bbca517cee5f/gatsby-browser.js)).
 
@@ -208,7 +208,7 @@ exports.onClientEntry = () => {
 
 #### Federalist preview URL
 
-As mentioned above, we use [Federalist](https://federalist.18f.gov/) to build and deploy the site. Federalist builds out every branch in our GitHub repository, so we can preview the changes before we merge them.
+As mentioned above, we use [Federalist](https://federalist.18f.gov) to build and deploy the site. Federalist builds out every branch in our GitHub repository, so we can preview the changes before we merge them.
 
 We encountered an issue with the Federalist preview URLs and relative links and assets. Gatsby solves this by using a `pathPrefix` variable in `gatsby-config.js` and a custom component named `Link`.
 

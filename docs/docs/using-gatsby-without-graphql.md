@@ -85,7 +85,7 @@ Using Gatsby's data layer provides the following benefits:
 - Improves performance by removing data bloat — GraphQL is a big part of why Gatsby is so fast as it enables lazy-loading the exact data in the exact form each view needs
 - Enables you to take advantage of hot reloading when developing; For example, in this post's example "Pokémon" site, if you wanted to add a "see other pokémon" section to the pokémon detail view, you would need to change your `gatsby-node.js` to pass all pokémon to the page, and restart the dev server. In contrast, when using queries, you can add a query and it will hot reload.
 
-> Learn more about [GraphQL in Gatsby](/docs/querying-with-graphql/).
+> Learn more about [GraphQL in Gatsby](/docs/querying-with-graphql).
 
 Working outside of the data layer also means foregoing the optimizations provided by transformer plugins, like:
 
@@ -99,10 +99,10 @@ Another difficulty added when working with unstructured data is that your data f
 
 If you're building a small site, one efficient way to build it is to pull in unstructured data as outlined in this guide, using `createPages` API, and then if the site becomes more complex later on, you move on to building more complex sites, or you'd like to transform your data, follow these steps:
 
-1.  Check out the [Plugin Library](/plugins/) to see if the source plugins and/or transformer plugins you'd like to use already exist
-2.  If they don't exist, read the [Plugin Authoring](/docs/creating-plugins/) guide and consider building your own!
+1.  Check out the [Plugin Library](/plugins) to see if the source plugins and/or transformer plugins you'd like to use already exist
+2.  If they don't exist, read the [Plugin Authoring](/docs/creating-plugins) guide and consider building your own!
 
 ## Further reading
 
-- Amberley Romo's guide to [using Gatsby without GraphQL](/blog/2018-10-25-using-gatsby-without-graphql/)
-- [Why Gatsby Uses GraphQL](/docs/why-gatsby-uses-graphql/)
+- Amberley Romo's guide to [using Gatsby without GraphQL](/blog/2018-10-25-using-gatsby-without-graphql)
+- [Why Gatsby Uses GraphQL](/docs/why-gatsby-uses-graphql)

@@ -24,7 +24,7 @@ Sites built with Gatsby have experienced major sales and engagement benefits as 
 
 ### Better lead generation and customer engagement
 
-> Site speed and performance has a huge impact on sales and customer engagement. A [recent Akamai study](https://www.akamai.com/uk/en/about/news/press/2017-press/akamai-releases-spring-2017-state-of-online-retail-performance-report.jsp) showed that a 100 millisecond delay in a site's load time hurt conversion rates by 7%, and 53% of mobile users will leave pages that take more than 3 seconds to load. Gatsby sites are consistently 2-3x faster than similar sites built with different tools, and site owners have seen their [lead generation increase by up to 60% after transitioning to Gatsby](/blog/2018-11-16-youfit-case-study/).
+> Site speed and performance has a huge impact on sales and customer engagement. A [recent Akamai study](https://www.akamai.com/uk/en/about/news/press/2017-press/akamai-releases-spring-2017-state-of-online-retail-performance-report.jsp) showed that a 100 millisecond delay in a site's load time hurt conversion rates by 7%, and 53% of mobile users will leave pages that take more than 3 seconds to load. Gatsby sites are consistently 2-3x faster than similar sites built with different tools, and site owners have seen their [lead generation increase by up to 60% after transitioning to Gatsby](/blog/2018-11-16-youfit-case-study).
 
 ### Improved search traffic
 
@@ -40,18 +40,18 @@ Sites built with Gatsby have experienced major sales and engagement benefits as 
 
 ### Keep your applications ahead of the curve
 
-> Gatsby is one of the technologies at the forefront of a new approach to web and application development known as the [JAMStack](https://jamstack.org/). The JAMStack represents a shift away from the limitations of CMS-centered sites and failure points of server-side code towards faster, light-weight, modular site construction. The JAMStack approach and Gatsby have been rapidly gaining popularity in the last few years with no sign of slowing down. (Check out [Gatsby and JAMStack on Google Trends](https://trends.google.com/trends/explore?date=today%205-y&geo=US&q=jamstack,gatsby%20js).) For companies that want to be leaders in technology trends and that want to differentiate themselves on important factors like site performance, this is a prime window of opportunity. Learn how you can [partner with Gatsby](/docs/partnering-with-gatsby/).
+> Gatsby is one of the technologies at the forefront of a new approach to web and application development known as the [JAMStack](https://jamstack.org). The JAMStack represents a shift away from the limitations of CMS-centered sites and failure points of server-side code towards faster, light-weight, modular site construction. The JAMStack approach and Gatsby have been rapidly gaining popularity in the last few years with no sign of slowing down. (Check out [Gatsby and JAMStack on Google Trends](https://trends.google.com/trends/explore?date=today%205-y&geo=US&q=jamstack,gatsby%20js).) For companies that want to be leaders in technology trends and that want to differentiate themselves on important factors like site performance, this is a prime window of opportunity. Learn how you can [partner with Gatsby](/docs/partnering-with-gatsby).
 
 ## Case studies
 
 Case studies are a great way to help executives see Gatsby's potential and gain more practical insight into its benefits. Here are some case studies you might want to share:
 
-- [Youfit uses Gatsby to increase lead generation by 60%](/blog/2018-11-16-youfit-case-study/)
+- [Youfit uses Gatsby to increase lead generation by 60%](/blog/2018-11-16-youfit-case-study)
 - [IBM Uses Gatsby to Manage Enterprise-Level Content](/blog/2018-12-17-ibm-case-study/#big-company-big-website)
-- [Gatsby Fuels Content and Sales in Design+Code Rebuild](/blog/2019-03-15-design-code-blog-post/)
-- [Growing Housecall Pro by 973% with Gatsby](/blog/2019-05-02-growing-housecall-pro-by-973-percent/)
+- [Gatsby Fuels Content and Sales in Design+Code Rebuild](/blog/2019-03-15-design-code-blog-post)
+- [Growing Housecall Pro by 973% with Gatsby](/blog/2019-05-02-growing-housecall-pro-by-973-percent)
 
-For even more examples of Gatsby sites, [check out the Showcase](/showcase/)
+For even more examples of Gatsby sites, [check out the Showcase](/showcase)
 
 ## Conclusion
 

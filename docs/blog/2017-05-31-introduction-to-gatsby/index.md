@@ -10,7 +10,7 @@ publishedAt: css-irl.info
 
 In case you haven’t heard about it, Gatsby is the latest hot thing in static site generators. While many static site generators (SSGs) use templating languages like Handlebars or Mustache, Gatsby uses React, helping contribute to its “blazing fast” claim.
 
-Having never used an SSG before (although I’ve read about them), and with very limited experience with React, what better way to dip my toe into the water than using Gatsby to publish my brand new blog [CSS {In Real Life}](https://css-irl.info/)?
+Having never used an SSG before (although I’ve read about them), and with very limited experience with React, what better way to dip my toe into the water than using Gatsby to publish my brand new blog [CSS {In Real Life}](https://css-irl.info)?
 
 ### Getting started
 
@@ -38,7 +38,7 @@ I write my blog posts in markdown files, but you could configure Gatsby to work 
 
 ### Deployment
 
-After you’ve run the build command, Gatsby allows near-instantaneous deployment through [Surge](https://surge.sh/), [Netlify](https://www.netlify.com/) and others. I set up my hosting with Netlify – run `gatsby deploy`, set up a Netlify account and you’re good to go. You can then configure Netlify to auto-deploy whenever you push to a repository. Netlify provides a simpler and more helpful experience than other hosting providers I’ve used, with helpful documentation, taking all the stress away from launching a site!
+After you’ve run the build command, Gatsby allows near-instantaneous deployment through [Surge](https://surge.sh), [Netlify](https://www.netlify.com) and others. I set up my hosting with Netlify – run `gatsby deploy`, set up a Netlify account and you’re good to go. You can then configure Netlify to auto-deploy whenever you push to a repository. Netlify provides a simpler and more helpful experience than other hosting providers I’ve used, with helpful documentation, taking all the stress away from launching a site!
 
 ### In conclusion
 

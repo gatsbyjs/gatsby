@@ -5,7 +5,7 @@ author: Shannon Soper
 tags: ["documentation", "releases"]
 ---
 
-We recently finished the first phase of the [Site Showcase](/showcase/), which is a searchable, filterable library of sites built with Gatsby!
+We recently finished the first phase of the [Site Showcase](/showcase), which is a searchable, filterable library of sites built with Gatsby!
 
 We're starting the second phase soon and would love your help! For a list of tasks that need to be done, see [Issue #5927](https://github.com/gatsbyjs/gatsby/issues/5927).
 
@@ -17,7 +17,7 @@ The Site Showcase was developed by Cassie Beckley ([@ThatOtherPerson](https://gi
 
 ## Submitting your site
 
-If you've built a site with Gatsby and would like it to appear in the Site Showcase, please [submit your site](https://www.gatsbyjs.org/contributing/site-showcase-submissions/).
+If you've built a site with Gatsby and would like it to appear in the Site Showcase, please [submit your site](https://www.gatsbyjs.org/contributing/site-showcase-submissions).
 
 ## Why build a site showcase?
 

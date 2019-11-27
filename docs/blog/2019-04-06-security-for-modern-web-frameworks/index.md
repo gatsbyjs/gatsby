@@ -46,7 +46,7 @@ When you ship **everything** to the browser, the user can access **everything**.
 
 In the server-side world the solution is to...well there is not really a problem to begin with because all the secrets and private content is secured on a server. The client browser never needs to directly access them. The server fetches content from the API or database, and sends back only the content the client is authorized to access.
 
-How do you secure secrets in the client-side world, if all the content and code is being shipped to the client browser? An answer can be found with the "[JAMstack](https://jamstack.org/)". Hopefully you are all fairly familiar with this concept given you are building "JAMstack" sites using Gatsby. For the uninitiated: you use HTML/CSS ([M]arkup) to build your site, [J]avaScript to make it dynamic, and [A]PIs to provide content and features. All of this is done from the client-side.
+How do you secure secrets in the client-side world, if all the content and code is being shipped to the client browser? An answer can be found with the "[JAMstack](https://jamstack.org)". Hopefully you are all fairly familiar with this concept given you are building "JAMstack" sites using Gatsby. For the uninitiated: you use HTML/CSS ([M]arkup) to build your site, [J]avaScript to make it dynamic, and [A]PIs to provide content and features. All of this is done from the client-side.
 
 The biggest security struggle with client-side sites is securing those APIs. Most APIs require an API key or another kind of authentication. Simply adding those secrets to the code only further obfuscates access to the same content. It does nothing to actually secure that content.
 
@@ -59,17 +59,17 @@ What's the solution? Well there are several problems to solve.
 - **Dynamic** - any content that is updated more than once in a 5 minute interval and needs to be accessible to all users of the site.
 - **Static** - any content that changes less than once in a given 5 minute interval.
 
-NOTE: 5 minutes is somewhat arbitrary. 5 minutes is used because anything changed **less often** generally just means rebuilding and deploying your site with an automated CI/CD pipeline. Build times make anything changed **more often** tricky. This build time problem is a core tenant of [Gatsby](https://www.gatsbyjs.com/) and future features (like [incremental builds](https://github.com/gatsbyjs/gatsby/issues/5002)) that will speed up build times significantly.
+NOTE: 5 minutes is somewhat arbitrary. 5 minutes is used because anything changed **less often** generally just means rebuilding and deploying your site with an automated CI/CD pipeline. Build times make anything changed **more often** tricky. This build time problem is a core tenant of [Gatsby](https://www.gatsbyjs.com) and future features (like [incremental builds](https://github.com/gatsbyjs/gatsby/issues/5002)) that will speed up build times significantly.
 
 So, you could have private-static content, private-dynamic content, public-static content, and public-dynamic content. You also need to be aware of whether you are securing the ability to read or write content. Without further delay, in order of difficulty...
 
 ### Public Static Content
 
-This is by far the most common and simplest content to secure. This makes up the content of your marketing site, public blog, etc. In a Gatsby site, this content can be added statically via HTML or dynamically at build time via a [source plugin](/docs/creating-a-source-plugin/). Whatever source platform you use, whether it be a GitHub repository or a [headless CMS](/docs/headless-cms/), that platform is charged with securing your content from unauthorized reads and writes.
+This is by far the most common and simplest content to secure. This makes up the content of your marketing site, public blog, etc. In a Gatsby site, this content can be added statically via HTML or dynamically at build time via a [source plugin](/docs/creating-a-source-plugin). Whatever source platform you use, whether it be a GitHub repository or a [headless CMS](/docs/headless-cms), that platform is charged with securing your content from unauthorized reads and writes.
 
-If you are using a [headless CMS](/docs/headless-cms/), the static content is fetched at build time and Gatsby will need an API key to do so. For example, [gatsby-source-contentful](/packages/gatsby-source-contentful/?=contentful) requires an `accessToken`. While this is a 'read-only' token, exposing it in your code would mean anyone with access to your code repository could take your structured data and use it any way they want.
+If you are using a [headless CMS](/docs/headless-cms), the static content is fetched at build time and Gatsby will need an API key to do so. For example, [gatsby-source-contentful](/packages/gatsby-source-contentful/?=contentful) requires an `accessToken`. While this is a 'read-only' token, exposing it in your code would mean anyone with access to your code repository could take your structured data and use it any way they want.
 
-Fortunately, this is an easy fix using [environment variables](/docs/environment-variables/). This means not committing your `accessToken` to the git repository where many can possibly access it. Instead it is stored securely on the build server and your Contentful config reads like this:
+Fortunately, this is an easy fix using [environment variables](/docs/environment-variables). This means not committing your `accessToken` to the git repository where many can possibly access it. Instead it is stored securely on the build server and your Contentful config reads like this:
 
 ```js:title=gatsby-config.js
 {
@@ -136,7 +136,7 @@ Now go make awesome Gatsby sites that are completely secure! For more informatio
 
 - **General web-app security**: The [OWASP Top Ten](https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project) is a list of top website security vulnerabilities. The [Open Web Application Security Project](https://www.owasp.org/index.php/Main_Page) is a excellent resource for security.
 
-* **Shared Security**: The article "[Security for Static Websites](https://blog.sqreen.com/static-websites-security/)" covers shared security issues well and includes complete solutions.
+* **Shared Security**: The article "[Security for Static Websites](https://blog.sqreen.com/static-websites-security)" covers shared security issues well and includes complete solutions.
 
 - **Secure APIs**: For information on securing all APIs (authenticated or not) checkout the [Rest Secutiry Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/REST_Security_Cheat_Sheet.md) from OWASP.
 

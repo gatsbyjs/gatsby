@@ -11,7 +11,7 @@ Recently, 36 Gatsby users completed an open card sort to help make our docs here
 
 ### Raw & beautified data
 
-I ran this card sort through [OptimalSort](https://www.optimalworkshop.com/), a software that moderates the card sort and presents the data in usable forms. If you’re curious to see the full results, you can [view the data](https://www.optimalworkshop.com/optimalsort/x87kpp82/5x34psa3-0/shared-results/fa8b66knb66qyhwh5l8j38bd273vkkm7), including raw data as well as things like a similarity matrix and a [dendrogram](https://support.optimalworkshop.com/en/articles/2626862-interpret-the-optimalsort-dendrograms-for-open-and-hybrid-card-sorts).
+I ran this card sort through [OptimalSort](https://www.optimalworkshop.com), a software that moderates the card sort and presents the data in usable forms. If you’re curious to see the full results, you can [view the data](https://www.optimalworkshop.com/optimalsort/x87kpp82/5x34psa3-0/shared-results/fa8b66knb66qyhwh5l8j38bd273vkkm7), including raw data as well as things like a similarity matrix and a [dendrogram](https://support.optimalworkshop.com/en/articles/2626862-interpret-the-optimalsort-dendrograms-for-open-and-hybrid-card-sorts).
 
 ## How did participants categorize the docs?
 

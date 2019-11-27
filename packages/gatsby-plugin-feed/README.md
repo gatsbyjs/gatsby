@@ -80,7 +80,7 @@ Each feed must include `output`, `query`, and `title`. Additionally, it is stron
 
 All additional options are passed through to the [`rss`][rss] utility. For more info on those additional options, [explore the `itemOptions` section of the `rss` package](https://www.npmjs.com/package/rss#itemoptions).
 
-Check out an example of [how you could implement](https://www.gatsbyjs.org/docs/adding-an-rss-feed/) to your own site, with a custom `serialize` function, and additional functionality.
+Check out an example of [how you could implement](https://www.gatsbyjs.org/docs/adding-an-rss-feed) to your own site, with a custom `serialize` function, and additional functionality.
 
 _NOTE: This plugin only generates the `xml` file(s) when run in `production` mode! To test your feed, run: `gatsby build && gatsby serve`._
 

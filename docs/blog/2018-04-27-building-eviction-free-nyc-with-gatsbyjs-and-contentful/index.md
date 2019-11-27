@@ -8,7 +8,7 @@ canonicalLink: https://medium.com/@JustFixNYC/building-eviction-free-nyc-with-ga
 publishedAt: "JustFixNYC"
 ---
 
-On March 29th, we launched [Eviction Free NYC](http://www.evictionfreenyc.org/) with the [Right to Counsel Coalition](https://www.righttocounselnyc.org/) as part of a campaign to educate tenants living in affordable housing on their legal rights and how to navigate the daunting process of receiving an eviction notice.
+On March 29th, we launched [Eviction Free NYC](http://www.evictionfreenyc.org) with the [Right to Counsel Coalition](https://www.righttocounselnyc.org) as part of a campaign to educate tenants living in affordable housing on their legal rights and how to navigate the daunting process of receiving an eviction notice.
 
 In order to build this new resource we applied a [human-centered design process](https://medium.com/@JustFixNYC/co-designing-eviction-free-nyc-b54570c69153) followed by specialized technical scoping in order to determine what was best for our users and build something for this unique context. **That process led us to using GatsbyJS, Contentful, and Netlify!** Below, we've written up how we mapped design to dev, approached different stakeholders, and utilized Gatsby's great flexibility & plugin library.
 
@@ -20,7 +20,7 @@ _Journey mapping for a tenant organizing process!_
 We started this process with a pretty strong sense of our average user’s
 technical capacity and degree of comfort in using a website or app. For the past
 3 years, we’ve been collecting user insights from the [JustFix.nyc Tenant
-Web-App](https://www.justfix.nyc/) and other resources. As you might imagine,
+Web-App](https://www.justfix.nyc) and other resources. As you might imagine,
 the majority of our users are coming from mobile devices (**over 95% of
 low-income Americans now have a device that connects to the Internet**) and
 usually do not have a very fast connection to the Internet. We learned from
@@ -41,7 +41,7 @@ possible.
 
 #### **Our solution: GatsbyJS**
 
-We knew that we would build the site in [React](https://reactjs.org/).
+We knew that we would build the site in [React](https://reactjs.org).
 Developers can build websites quickly and reliably through its modular
 architecture and extensive system of third-party components. React’s simple
 component-based philosophy creates code and structure that just _makes sense_,
@@ -80,11 +80,11 @@ perfect fit for a number of reasons:
 
 #### **Using Contentful**
 
-[Contentful](https://www.contentful.com/) is a “headless” [Content Management
+[Contentful](https://www.contentful.com) is a “headless” [Content Management
 System](https://en.wikipedia.org/wiki/Content_management_system), or CMS.
 Traditional CMS platforms, like WordPress or Drupal, allow authors and editors
 to easily create websites and publish content such as text articles, image, or
-video embeds. A [headless CMS](/docs/headless-cms/) takes those publishing features (and the easy admin
+video embeds. A [headless CMS](/docs/headless-cms) takes those publishing features (and the easy admin
 tools that come with them) and additionally gives you total flexibility as to
 how the website itself is constructed.
 
@@ -162,7 +162,7 @@ type, you can simply drag-n-drop things in Contentful!
 
 From there, we had to teach GatsbyJS how to properly render each page based on
 pathway. We did this by implementing the `createPages` function in the [Gatsby
-Node API](/docs/node-apis/). For each Housing Court Page
+Node API](/docs/node-apis). For each Housing Court Page
 (also per language!), Gatsby creates 6 different pages based on the pathways.
 While our solution had to account for some [limitations in
 GraphQL](https://github.com/facebook/graphql/issues/414), everything wound up
@@ -175,14 +175,14 @@ how all this works!
 #### **Wrapping everything up: using Netlify**
 
 When it came time to deploy, we were very excited to try out a new hosting
-platform called [Netlify](https://www.netlify.com/) that we’d been hearing a lot
+platform called [Netlify](https://www.netlify.com) that we’d been hearing a lot
 about. It has a great free tier and is perfect for hosting static sites. We
 simply linked Netlify to a branch in the Eviction Free NYC GitHub repo and it
 compiles and deploys the site with each push. It simplifies HTTPS certificate
 generation and even includes a system for deploying AWS Lambda functions, which
 we used to ship a small Twilio integration for the site's “Save to Phone”
 feature. _(note: we’re actually still using the original
-_[Serverless](https://serverless.com/)_ solution, but this code is in the repo
+_[Serverless](https://serverless.com)_ solution, but this code is in the repo
 as a to-do)_
 
 The best feature of Netlify is its ability to utilize build hooks. This allows
@@ -204,7 +204,7 @@ development and refinement. **It’s already been used by over 1,000 people in t
 past few weeks!** We’re really excited for this site to grow and develop as
 tenants take advantage of this historic new right.
 
-**Footnote: Our code for [evictionfreenyc.org](http://www.evictionfreenyc.org/) is
+**Footnote: Our code for [evictionfreenyc.org](http://www.evictionfreenyc.org) is
 open source! [Click
 here](https://github.com/JustFixNYC/eviction-free-nyc) to view the code on
 github.**

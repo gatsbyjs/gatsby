@@ -6,4 +6,4 @@ There are several aspects of Gatsby that create interesting potential playbooks 
 
 <GuideList slug={props.slug} />
 
-The Gatsby blog has a [section on agencies](/blog/tags/agencies/) with additional stories and tips.
+The Gatsby blog has a [section on agencies](/blog/tags/agencies) with additional stories and tips.

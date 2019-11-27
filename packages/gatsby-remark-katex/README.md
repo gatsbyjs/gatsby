@@ -1,7 +1,7 @@
 # gatsby-remark-katex
 
 [gatsby-remark-katex][1] adds math equation support to gatsby using
-[remark-math][2] and [katex][3]. Live example at [using-remark.gatsbyjs.org/katex/](https://using-remark.gatsbyjs.org/katex/).
+[remark-math][2] and [katex][3]. Live example at [using-remark.gatsbyjs.org/katex/](https://using-remark.gatsbyjs.org/katex).
 
 ## Install
 

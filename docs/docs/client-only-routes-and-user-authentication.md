@@ -18,7 +18,7 @@ Gatsby converts components in the `pages` folder into static HTML files for the 
 
 ## Handling client-only routes with Gatsby
 
-Gatsby uses [@reach/router](https://reach.tech/router/) under the hood, and it is the recommended approach to create client-only routes.
+Gatsby uses [@reach/router](https://reach.tech/router) under the hood, and it is the recommended approach to create client-only routes.
 
 You first need to set up routes on a page that is built by Gatsby:
 
@@ -114,7 +114,7 @@ exports.onCreatePage = async ({ page, actions }) => {
   const { createPage } = actions
 
   // Only update the `/app` page.
-  if (page.path.match(/^\/app/)) {
+  if (page.path.match(/^\/app)) {
     // page.matchPath is a special key that's used for matching pages
     // with corresponding routes only on the client.
     page.matchPath = "/app/*"
@@ -126,7 +126,7 @@ exports.onCreatePage = async ({ page, actions }) => {
 ```
 
 > 💡 Note: There's also a plugin to simplify the creation of client-only routes in your site:
-> [gatsby-plugin-create-client-paths](/packages/gatsby-plugin-create-client-paths/).
+> [gatsby-plugin-create-client-paths](/packages/gatsby-plugin-create-client-paths).
 
 The above code (as well as the `gatsby-plugin-create-client-paths` plugin) updates the `/app` page at build time to add the `matchPath` parameter in the page object to make it so that the configured pages (in this case, everything after `/app`, like `/app/dashboard` or `/app/user`) can be navigated to by Reach Router.
 
@@ -156,6 +156,6 @@ One result of this method is that the client is completely unaware of the logic 
 
 ## Additional resources
 
-- [Gatsby repo "simple auth" example](https://github.com/gatsbyjs/gatsby/blob/master/examples/simple-auth/) - a demo implementing user authentication and restricted client-only routes
-- [Live version of the "simple auth" example](https://simple-auth.netlify.com/)
+- [Gatsby repo "simple auth" example](https://github.com/gatsbyjs/gatsby/blob/master/examples/simple-auth) - a demo implementing user authentication and restricted client-only routes
+- [Live version of the "simple auth" example](https://simple-auth.netlify.com)
 - [The Gatsby store](https://github.com/gatsbyjs/store.gatsbyjs.org) which also implements an authenticated flow

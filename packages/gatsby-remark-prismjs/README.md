@@ -1,7 +1,7 @@
 # gatsby-remark-prismjs
 
 Adds syntax highlighting to code blocks in markdown files using
-[PrismJS](http://prismjs.com/).
+[PrismJS](http://prismjs.com).
 
 ## Install
 
@@ -388,7 +388,7 @@ unless explicitly overridden by the `promptUser` and `promptHost` options in the
 
 ### Line hiding
 
-As well as highlighting lines, it's possible to _hide_ lines from the rendered output. Often this is handy when using `gatsby-remark-prismjs` along with [`gatsby-remark-embed-snippet`](https://www.gatsbyjs.org/packages/gatsby-remark-embed-snippet/).
+As well as highlighting lines, it's possible to _hide_ lines from the rendered output. Often this is handy when using `gatsby-remark-prismjs` along with [`gatsby-remark-embed-snippet`](https://www.gatsbyjs.org/packages/gatsby-remark-embed-snippet).
 
 As with highlighting lines, you can control which lines to hide by adding directives as comments in your source code.
 
@@ -399,7 +399,7 @@ The available directives are:
 - `hide-start` hides the lines until the matching `hide-end`;
 - `hide-range{1, 4-6}` will hide the next line, and the fourth, fifth and sixth lines.
 
-The hide-line directives will always be hidden too. Check out [the using-remark example site](https://using-remark.gatsbyjs.org/embed-snippets/) to see how this looks on a live site.
+The hide-line directives will always be hidden too. Check out [the using-remark example site](https://using-remark.gatsbyjs.org/embed-snippets) to see how this looks on a live site.
 
 ### Inline code blocks
 
@@ -485,7 +485,7 @@ it would result in the following when a match is found:
 ### Line highlighting
 
 Please note that we do _not_ use PrismJS's
-[line highlighting plugin](http://prismjs.com/plugins/line-highlight/). Here's
+[line highlighting plugin](http://prismjs.com/plugins/line-highlight). Here's
 why:
 
 - [PrismJS plugins][3] assume you're running things client side, but we are

@@ -5,7 +5,7 @@ These are end to end tests triggered via a CI job. You can run these tests local
 ## Adding a new e2e test
 
 - Create a folder `e2e-tests/name-of-the-test`
-- Copy structure from an existing test, e.g. [_e2e-tests/path-prefix_](./path-prefix/)
+- Copy structure from an existing test, e.g. [_e2e-tests/path-prefix_](./path-prefix)
 - Add your tests in `e2e-tests/name-of-the-test/cypress/integration/your-test-here.js`
 
 ## Running the Tests

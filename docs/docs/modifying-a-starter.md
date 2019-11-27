@@ -2,17 +2,17 @@
 title: Modifying a Starter
 ---
 
-While a Gatsby [starter](/docs/starters/) is a working website out of the box, chances are you'll want to modify your starter at some point. Building on top of a starter reduces the amount of boilerplate code you need to write yourself. You're therefore able to write your own content, functionality, and styling faster.
+While a Gatsby [starter](/docs/starters) is a working website out of the box, chances are you'll want to modify your starter at some point. Building on top of a starter reduces the amount of boilerplate code you need to write yourself. You're therefore able to write your own content, functionality, and styling faster.
 
 ## Prerequisites
 
-What you need to know will depend on the starter you choose and the data or functionality you'd like to modify. Even if you choose _not_ to modify the starter's components, you may still want to update text, use data from an external source, and modify the style (CSS) of the site. To do this, you'll write some [Markdown](/docs/mdx/markdown-syntax/) and [JSON](https://www.digitalocean.com/community/tutorials/an-introduction-to-json).
+What you need to know will depend on the starter you choose and the data or functionality you'd like to modify. Even if you choose _not_ to modify the starter's components, you may still want to update text, use data from an external source, and modify the style (CSS) of the site. To do this, you'll write some [Markdown](/docs/mdx/markdown-syntax) and [JSON](https://www.digitalocean.com/community/tutorials/an-introduction-to-json).
 
-To modify the functionality of a starter, you'll want a basic understanding of [JSX](/docs/glossary#jsx) syntax for updating components and making new ones. You'll also want some knowledge of [GraphQL](/docs/graphql-concepts/) for querying your data. Start with these and add to your skills as you continue to add functionality to your starter.
+To modify the functionality of a starter, you'll want a basic understanding of [JSX](/docs/glossary#jsx) syntax for updating components and making new ones. You'll also want some knowledge of [GraphQL](/docs/graphql-concepts) for querying your data. Start with these and add to your skills as you continue to add functionality to your starter.
 
 ## Choosing a starter
 
-To choose a starter, first consider the functionality you need. Are you building an e-commerce site? A blog? Do you already know what data sources you'll want to use? Find a starter that fulfills your requirements by using the searchbar and filters in the [Gatsby Starter Library](/starters/).
+To choose a starter, first consider the functionality you need. Are you building an e-commerce site? A blog? Do you already know what data sources you'll want to use? Find a starter that fulfills your requirements by using the searchbar and filters in the [Gatsby Starter Library](/starters).
 
 If you're not sure what to choose or want only the most essential functionality, try customizing either [`gatsby-starter-blog`](https://github.com/gatsbyjs/gatsby-starter-blog) (if you're primarily using this site as a blog) or [`gatsby-starter-default`](https://github.com/gatsbyjs/gatsby-starter-default). These official starters are maintained by Gatsby and are great options, particularly for your first Gatsby site.
 
@@ -23,12 +23,12 @@ Taking the default Gatsby starter as an example, dedicate some time to looking t
 ![Default starter file structure in VS Code](./images/default-files-zoom.png)
 
 - `src/pages`: a directory for page components to live, with at least one [index.js file (example)](https://github.com/gatsbyjs/gatsby-starter-hello-world/blob/master/src/pages/index.js).
-- `gatsby-config.js`: a space to add configurable data and plugins. Among the [API files](/docs/api-files/), `gatsby-config.js` is the one you're most likely to need to modify. See [Gatsby Config](/docs/gatsby-config/) for more information.
+- `gatsby-config.js`: a space to add configurable data and plugins. Among the [API files](/docs/api-files), `gatsby-config.js` is the one you're most likely to need to modify. See [Gatsby Config](/docs/gatsby-config) for more information.
 - `package.json`: the "command center" for Gatsby dependencies and scripts. Find an example in the [default starter's package.json](https://github.com/gatsbyjs/gatsby-starter-default/blob/master/package.json) file.
 - `README.md`: this should include instructions for how to install and configure the starter, a list of its features or structure, and helpful tips. If you plan to share the source code for your site with other people, you can replace this information with documentation for your specific project.
-- `static`: a directory for static assets, such as a `favicon.ico` file. You can add whatever static files you need in here and they'll be copied to the `public` folder. If you're not sure which files belong here, check out the [Reference Guide to the static folder](/docs/static-folder/).
+- `static`: a directory for static assets, such as a `favicon.ico` file. You can add whatever static files you need in here and they'll be copied to the `public` folder. If you're not sure which files belong here, check out the [Reference Guide to the static folder](/docs/static-folder).
 
-If you'd like to read descriptions of all of these files, as well as the other files that make up a Gatsby site, check out the [Gatsby project structure](/docs/gatsby-project-structure/) documentation.
+If you'd like to read descriptions of all of these files, as well as the other files that make up a Gatsby site, check out the [Gatsby project structure](/docs/gatsby-project-structure) documentation.
 
 ## Adding content
 
@@ -58,11 +58,11 @@ const SpeakingPage = () => (
 export default SpeakingPage
 ```
 
-At this point, you can navigate to `localhost:8000/speaking` in your browser to view this page! You can also [add pages from Markdown](/docs/adding-markdown-pages/) or [source data from a content management system](/docs/headless-cms/) (CMS) like WordPress. You may even choose a specific starter _because_ it's built to work well with a certain CMS. Try explicitly searching the [Gatsby Starter Library](/starters/) for your preferred system. Once there, check out the category filter. You'll see several options prefixed with "CMS:". Choose the option(s) that best fit your goals for the project.
+At this point, you can navigate to `localhost:8000/speaking` in your browser to view this page! You can also [add pages from Markdown](/docs/adding-markdown-pages) or [source data from a content management system](/docs/headless-cms) (CMS) like WordPress. You may even choose a specific starter _because_ it's built to work well with a certain CMS. Try explicitly searching the [Gatsby Starter Library](/starters) for your preferred system. Once there, check out the category filter. You'll see several options prefixed with "CMS:". Choose the option(s) that best fit your goals for the project.
 
 ## Querying data
 
-Being able to query your own data will provide an added level of customization and control over your site. By default, Gatsby does this using [GraphQL](/docs/graphql-reference/). Note the `siteMetadata` in the default starter's `gatsby-config.js`:
+Being able to query your own data will provide an added level of customization and control over your site. By default, Gatsby does this using [GraphQL](/docs/graphql-reference). Note the `siteMetadata` in the default starter's `gatsby-config.js`:
 
 ```javascript:title=gatsby-config.js
 module.exports = {
@@ -204,7 +204,7 @@ Header.defaultProps = {
 export default Header
 ```
 
-Try adding a property to `siteMetadata`, querying for it, and displaying the data on a page of your site. The Gatsby docs have a great introduction to [querying your data with GraphQL](/docs/graphql/).
+Try adding a property to `siteMetadata`, querying for it, and displaying the data on a page of your site. The Gatsby docs have a great introduction to [querying your data with GraphQL](/docs/graphql).
 
 ## Customizing styles
 
@@ -235,9 +235,9 @@ const IndexPage = () => (
 export default IndexPage
 ```
 
-Here, some inline styles are being applied to a `<div>` element. This option will work but may become difficult to manage over time as your styles become more complex. You may wish to use another of several available [styling methods](/docs/styling/). Gatsby doesn’t have an opinion about which styling approach you choose.
+Here, some inline styles are being applied to a `<div>` element. This option will work but may become difficult to manage over time as your styles become more complex. You may wish to use another of several available [styling methods](/docs/styling). Gatsby doesn’t have an opinion about which styling approach you choose.
 
-You may even choose a specific starter _because_ of its approach to styling. Search the [Gatsby Starter Library](/starters/) using category filters prefixed with "Styling:" and choose the option(s) that best fit your project.
+You may even choose a specific starter _because_ of its approach to styling. Search the [Gatsby Starter Library](/starters) using category filters prefixed with "Styling:" and choose the option(s) that best fit your project.
 
 ![Starter Library with Styling:SCSS filter selected](./images/starter-library-scss-filter.png)
 

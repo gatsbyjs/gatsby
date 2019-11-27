@@ -23,7 +23,7 @@ A variety of components have been written to help with formatting code and conte
 
 ### Guide List
 
-The `<GuideList />` is a component that renders an h2 heading and a list of links to child docs nested below the current doc in the site's information architecture. It is often used on overview pages like the [Headless CMS](/docs/headless-cms/) guide where many other pages are nested below it to show what a docs section contains.
+The `<GuideList />` is a component that renders an h2 heading and a list of links to child docs nested below the current doc in the site's information architecture. It is often used on overview pages like the [Headless CMS](/docs/headless-cms) guide where many other pages are nested below it to show what a docs section contains.
 
 #### Usage
 
@@ -51,7 +51,7 @@ When rendered in a page, the Guide List looks like this:
 
 <GuideList slug="/docs/headless-cms/" />
 
-_This example has the prop `slug="/docs/headless-cms/"` set, and can be seen on the doc for [Headless CMS](/docs/headless-cms/)_
+_This example has the prop `slug="/docs/headless-cms/"` set, and can be seen on the doc for [Headless CMS](/docs/headless-cms)_
 
 ---
 
@@ -168,7 +168,7 @@ When used, it looks like this:
 
 ### Horizontal Navigation List
 
-The `<HorizontalNavList />` was made for the [Glossary](/docs/glossary/), and renders a list of links to alphabetical subheadings on the page in a horizontal format. Because of its specific use case, it isn't made globally available but can be imported if needed on other pages.
+The `<HorizontalNavList />` was made for the [Glossary](/docs/glossary), and renders a list of links to alphabetical subheadings on the page in a horizontal format. Because of its specific use case, it isn't made globally available but can be imported if needed on other pages.
 
 #### Usage
 
@@ -177,7 +177,7 @@ The Horizontal Nav List component takes two props:
 - `slug` - which is provided in the props of the page by default
 - `items` - an array of strings for items to render and wrap with a `<Link />` to subheadings
 
-The docs on Gatsbyjs.org use the [gatsby-remark-autolink-headers](/packages/gatsby-remark-autolink-headers/) plugin to automatically apply hover links to heading tags across docs pages. Because it automatically creates links to subheadings on pages like the glossary, the Horizontal Nav List can supply matching links (like `"guide-list"` which would align with the automatically created link at `/docs/docs-and-website-components#guide-list`).
+The docs on Gatsbyjs.org use the [gatsby-remark-autolink-headers](/packages/gatsby-remark-autolink-headers) plugin to automatically apply hover links to heading tags across docs pages. Because it automatically creates links to subheadings on pages like the glossary, the Horizontal Nav List can supply matching links (like `"guide-list"` which would align with the automatically created link at `/docs/docs-and-website-components#guide-list`).
 
 <!-- prettier-ignore -->
 ```markdown
@@ -379,7 +379,7 @@ page={{
 
 ## Writing content in Markdown
 
-New docs and blog posts are added to the [docs](https://github.com/gatsbyjs/gatsby/tree/master/docs/) folder inside the Gatsby repository. They are stored as `.md` (Markdown) or `.mdx` (MDX) files and can be written using Markdown, or using inline JSX thanks to MDX. Writing in Markdown will output tags that are styled according to [Gatsby's design guidelines](/guidelines/color/).
+New docs and blog posts are added to the [docs](https://github.com/gatsbyjs/gatsby/tree/master/docs) folder inside the Gatsby repository. They are stored as `.md` (Markdown) or `.mdx` (MDX) files and can be written using Markdown, or using inline JSX thanks to MDX. Writing in Markdown will output tags that are styled according to [Gatsby's design guidelines](/guidelines/color).
 
 You can read more about writing in Markdown in the [Markdown syntax guide](/docs/mdx/markdown-syntax).
 
@@ -451,13 +451,13 @@ Line numbers and line highlighting can be added to code blocks as well, and is e
 
 ## Styling components on Gatsbyjs.org with Theme-UI
 
-Styles on the site are applied using [Theme-UI](https://theme-ui.com/), which allows for theming across the site based on design tokens (also called variables).
+Styles on the site are applied using [Theme-UI](https://theme-ui.com), which allows for theming across the site based on design tokens (also called variables).
 
 ### Design tokens
 
 Design tokens are used to consolidate the number of colors and style attributes that are applied to components throughout the site. By limiting the styles that can be applied, the site stays consistent with the guidelines for color, typography, spacing, etc.
 
-Tables listing design tokens that are used on the site can be found in the [design guidelines](/guidelines/design-tokens/).
+Tables listing design tokens that are used on the site can be found in the [design guidelines](/guidelines/design-tokens).
 
 ### The `sx` prop
 

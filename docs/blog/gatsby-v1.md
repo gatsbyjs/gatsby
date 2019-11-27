@@ -42,11 +42,11 @@ In the last year, Gatsby community and usage have exploded. Milestones reached:
 
 ## Cool sites built with Gatsby
 
-- Segment [relaunched their blog on Gatsby](https://segment.com/blog/)
+- Segment [relaunched their blog on Gatsby](https://segment.com/blog)
 - The life insurance startup Fabric built their
-  [marketing site _and_ web app using Gatsby](https://meetfabric.com/)
+  [marketing site _and_ web app using Gatsby](https://meetfabric.com)
 - JavaScript consultancy
-  [Formidable built their website on Gatsby](https://formidable.com/)
+  [Formidable built their website on Gatsby](https://formidable.com)
 
 ![screenshots of above sites](images/site-screenshots.png)
 
@@ -83,7 +83,7 @@ more questions kept coming up.
 v1 heads out to sea delivering components to ports far and wide_
 
 The first building block for answering to these questions was a
-[plugin system](/docs/plugins/).
+[plugin system](/docs/plugins).
 
 WordPress & Jekyll are both great examples of open source communities with
 robust plugins ecosystems.
@@ -92,7 +92,7 @@ Plugins help accelerate developing websites as you can build on what others have
 done and help collaborate with others on basic building blocks
 
 Gatsby's plugin system lets you hook into
-[Gatsby's lifecycle APIs](/docs/gatsby-lifecycle-apis/) everywhere from events
+[Gatsby's lifecycle APIs](/docs/gatsby-lifecycle-apis) everywhere from events
 during the bootstrap and build processes and in the browser.
 
 There are already many
@@ -104,9 +104,9 @@ Plugins can:
 
 - add support for webpack loaders such as Sass, Less
 - add drop-in support for lightweight React-compatible frameworks
-  [Preact](https://preactjs.com/) and [Inferno](https://infernojs.org/)
+  [Preact](https://preactjs.com) and [Inferno](https://infernojs.org)
 - add a sitemap or RSS feed
-- add [Google Analytics](/packages/gatsby-plugin-google-analytics/)
+- add [Google Analytics](/packages/gatsby-plugin-google-analytics)
 - ...and much more!
 
 ## GraphQL-based data processing layer
@@ -140,7 +140,7 @@ pre-fetch page data meaning even very complex, data-heavy pages load almost
 instantly.
 
 This pattern of _colocating_ your queries next to your views is copied from the
-[Relay data framework from Facebook](https://facebook.github.io/relay/).
+[Relay data framework from Facebook](https://facebook.github.io/relay).
 Colocation makes it easy to fully understand your views as everything necessary
 for that view is fully defined there.
 
@@ -202,21 +202,21 @@ data source and potential ways of transforming its data will be an `npm install`
 away.
 
 For the markdown ecosystem there's already a robust set of plugins including
-[adding syntax highlighting with PrismJS](/packages/gatsby-remark-prismjs/) and
-[resizing images referenced in markdown files](/packages/gatsby-remark-images/)
+[adding syntax highlighting with PrismJS](/packages/gatsby-remark-prismjs) and
+[resizing images referenced in markdown files](/packages/gatsby-remark-images)
 so they're mobile ready.
 
 There's also source plugins written for
-[Contentful](/packages/gatsby-source-contentful/),
-[WordPress](/packages/gatsby-source-wordpress/),
-[Drupal](/packages/gatsby-source-drupal/),
-[Hacker News](/packages/gatsby-source-hacker-news/) (really 😛), and more as
+[Contentful](/packages/gatsby-source-contentful),
+[WordPress](/packages/gatsby-source-wordpress),
+[Drupal](/packages/gatsby-source-drupal),
+[Hacker News](/packages/gatsby-source-hacker-news) (really 😛), and more as
 well as transformer plugins for
-[markdown](/packages/gatsby-transformer-remark/),
-[JSON](/packages/gatsby-transformer-json/),
-[YAML](/packages/gatsby-transformer-yaml/),
-[JSDoc](/packages/gatsby-transformer-documentationjs/), React prop-types, and
-[images](/packages/gatsby-plugin-sharp/). We're collecting a list of additional
+[markdown](/packages/gatsby-transformer-remark),
+[JSON](/packages/gatsby-transformer-json),
+[YAML](/packages/gatsby-transformer-yaml),
+[JSDoc](/packages/gatsby-transformer-documentationjs), React prop-types, and
+[images](/packages/gatsby-plugin-sharp). We're collecting a list of additional
 source/transformer plugins that'd be useful to have over at
 https://github.com/gatsbyjs/gatsby/issues/1199
 
@@ -234,7 +234,7 @@ Smartphones with decent specs (as good or better than the Moto G4), a great
 browser, but _without_ a reliable internet connection.
 
 Gatsby uses modern web performance ideas (e.g. the
-[PRPL Pattern](/docs/prpl-pattern/)) developed by the Google Chrome Developer
+[PRPL Pattern](/docs/prpl-pattern)) developed by the Google Chrome Developer
 Relations team and others to help websites work well on modern browsers with
 unreliable networks.
 
@@ -293,7 +293,7 @@ _same Gatsby codebase_.
 The marketing pages of their site are built using markdown and React components
 along with a modern css-in-js library
 [Glamor](https://github.com/threepointone/glamor) for styling. The SaaS portion
-uses [Redux](http://redux.js.org/) to communicate with their Django API.
+uses [Redux](http://redux.js.org) to communicate with their Django API.
 
 The marketing portion of the site loads quickly with minimal JavaScript. When a
 potential customer goes to sign-up for the app, there's no _awkward jump from

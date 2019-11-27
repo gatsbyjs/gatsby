@@ -2,7 +2,7 @@
 title: Babel
 ---
 
-Gatsby uses the phenomenal project [Babel](https://babeljs.io/) to enable
+Gatsby uses the phenomenal project [Babel](https://babeljs.io) to enable
 support for writing modern JavaScript — while still supporting older browsers.
 
 ## How to specify which browsers to support
@@ -15,7 +15,7 @@ Polyfills are also automatically added — no more shipping code which mysteriou
 breaks on older browsers!
 
 If you only target newer browsers, see the [Browser
-Support](/docs/browser-support/) docs page for how to instruct Gatsby on which
+Support](/docs/browser-support) docs page for how to instruct Gatsby on which
 browsers you support and then Babel will start compiling for only these
 browsers.
 

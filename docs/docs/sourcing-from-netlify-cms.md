@@ -107,7 +107,7 @@ to see them in the locally served site.
 We can resolve all of the above handily by pushing our test site to GitHub and deploying it to
 Netlify. First, initialize your Gatsby project as a Git repo, and push it up to GitHub. If you need
 help on this part, check out GitHub's
-[guide](https://help.github.com/articles/adding-an-existing-project-to-github-using-the-command-line/).
+[guide](https://help.github.com/articles/adding-an-existing-project-to-github-using-the-command-line).
 
 ### Deploying to Netlify
 
@@ -182,7 +182,7 @@ Let's fix that.
 ## Processing Netlify CMS output with Gatsby
 
 Gatsby can be configured to process Markdown by following the [Adding Markdown
-Pages](/docs/adding-markdown-pages/) guide in the docs. Our `config.yml`
+Pages](/docs/adding-markdown-pages) guide in the docs. Our `config.yml`
 file for Netlify CMS is set up to use the same fields used in the guide, so you can follow the
 instructions to the letter and should work fine. **Note:** When configuring the
 `gatsby-source-filesystem` plugin in the Adding Markdown Pages Guide, the path to your markdown

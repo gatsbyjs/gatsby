@@ -74,7 +74,7 @@ A primary driver of SEO is the content contained on your website and the way it 
 
 Also, in early 2018, Google announced that a [website’s performance would also be a factor in page ranking](https://webmasters.googleblog.com/2018/01/using-page-speed-in-mobile-search.html), which took effect in July that year.
 
-Recently Google has released a tool called [web.dev](https://web.dev/) to allow people to audit their site to see how well the site meets Google’s expectations for modern web practices. How well Gatsby sites score using this tool has been a bit of a proof in the pudding on this subject. This site (https://www.littleandbig.com.au/) has been built in Gatsby, you’re welcome to weigh up a site against it in comparison.
+Recently Google has released a tool called [web.dev](https://web.dev) to allow people to audit their site to see how well the site meets Google’s expectations for modern web practices. How well Gatsby sites score using this tool has been a bit of a proof in the pudding on this subject. This site (https://www.littleandbig.com.au) has been built in Gatsby, you’re welcome to weigh up a site against it in comparison.
 
 ![Little and Big Website Performance](./images/littleandbig-site-performance.jpg)
 
@@ -84,7 +84,7 @@ Many websites are optimized to capture leads. Alas, some less artfully than othe
 
 There is overwhelming evidence to support the fact that your website’s load time has an impact on a visitor to your site becoming a lead.
 
-Every second counts. Mobile websites that take [more than 3 seconds to load have a 53% bounce rate](https://www.thinkwithgoogle.com/marketing-resources/data-measurement/mobile-page-speed-new-industry-benchmarks/) (53% of visitors to a particular website navigate away from the site after viewing only one page). In the E-Commerce domain, some estimates say you lose up to [1% in revenue for every 100ms delay](https://www.section.io/blog/page-load-time-bounce-rate/) in page load time.
+Every second counts. Mobile websites that take [more than 3 seconds to load have a 53% bounce rate](https://www.thinkwithgoogle.com/marketing-resources/data-measurement/mobile-page-speed-new-industry-benchmarks) (53% of visitors to a particular website navigate away from the site after viewing only one page). In the E-Commerce domain, some estimates say you lose up to [1% in revenue for every 100ms delay](https://www.section.io/blog/page-load-time-bounce-rate) in page load time.
 
 ### Developer Experience and User Experience
 
@@ -101,7 +101,7 @@ Gatsby is a sound technological investment, it’s as future-proof as web techno
 - At its core, it’s built on top of React, just about the most popular modern JavaScript language / library / framework (explaining React is probably worthy of its own blog post!), which was built and is maintained by Facebook.
 - Makes use of GraphQL to wrangle all your data sources.
 - Only loads the critical HTML, CSS, data, and JavaScript so your site loads as fast as possible (this is called code and data splitting).
-- Follows Google's [PRPL](https://developers.google.com/web/fundamentals/performance/prpl-pattern/) (Push, Render, Pre-cache, Lazy-load) architectural pattern which aims to boost your website's performance, especially on mobile devices.
+- Follows Google's [PRPL](https://developers.google.com/web/fundamentals/performance/prpl-pattern) (Push, Render, Pre-cache, Lazy-load) architectural pattern which aims to boost your website's performance, especially on mobile devices.
 
 ## The Limitations
 

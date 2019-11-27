@@ -142,7 +142,7 @@ CMS.init({
 (_optional_, type: `boolean`, default: `true`)
 
 `enableIdentityWidget` is `true` by default, allowing [Netlify
-Identity](https://www.netlify.com/docs/identity/) to be used without
+Identity](https://www.netlify.com/docs/identity) to be used without
 configuration, but you may need to disable it in some cases, such as when using
 a Netlify CMS backend that conflicts. This is currently known to be the case
 when using the GitLab backend, but only when using implicit OAuth.

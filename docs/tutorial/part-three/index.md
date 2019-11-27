@@ -22,17 +22,17 @@ You’re probably familiar with the idea of plugins. Many software systems suppo
 
 Community members (like you!) can contribute plugins (small amounts of JavaScript code) that others can then use when building Gatsby sites.
 
-> There are already hundreds of plugins! Explore the Gatsby [Plugin Library](/plugins/).
+> There are already hundreds of plugins! Explore the Gatsby [Plugin Library](/plugins).
 
 Our goal with plugins is to make them straightforward to install and use. You will likely be using plugins in almost every Gatsby site you build. While working through the rest of the tutorial you’ll have many opportunities to practice installing and using plugins.
 
 For an initial introduction to using plugins, we'll install and implement the Gatsby plugin for Typography.js.
 
-[Typography.js](https://kyleamathews.github.io/typography.js/) is a JavaScript library which generates global base styles for your site's typography. The library has a [corresponding Gatsby plugin](/packages/gatsby-plugin-typography/) to streamline using it in a Gatsby site.
+[Typography.js](https://kyleamathews.github.io/typography.js) is a JavaScript library which generates global base styles for your site's typography. The library has a [corresponding Gatsby plugin](/packages/gatsby-plugin-typography) to streamline using it in a Gatsby site.
 
 ### ✋ Create a new Gatsby site
 
-As we mentioned in [part two](/tutorial/part-two/), at this point it's probably a good idea to close the terminal window(s) and project files from previous parts of the tutorial, to keep things clean on your desktop. Then open a new terminal window and run the following commands to create a new Gatsby site in a directory called `tutorial-part-three` and then move to this new directory:
+As we mentioned in [part two](/tutorial/part-two), at this point it's probably a good idea to close the terminal window(s) and project files from previous parts of the tutorial, to keep things clean on your desktop. Then open a new terminal window and run the following commands to create a new Gatsby site in a directory called `tutorial-part-three` and then move to this new directory:
 
 ```shell
 gatsby new tutorial-part-three https://github.com/gatsbyjs/gatsby-starter-hello-world
@@ -68,7 +68,7 @@ module.exports = {
 
 The `gatsby-config.js` is another special file that Gatsby will automatically recognize. This is where you add plugins and other site configuration.
 
-> Check out the [doc on gatsby-config.js](/docs/gatsby-config/) to read more, if you wish.
+> Check out the [doc on gatsby-config.js](/docs/gatsby-config) to read more, if you wish.
 
 3. Typography.js needs a configuration file. Create a new directory called `utils` in the `src` directory. Then add a new file called `typography.js` to `utils` and copy the following into the file:
 
@@ -278,4 +278,4 @@ _Challenge:_ With your new "layout component" powers, trying adding headers, foo
 
 ## What's coming next?
 
-Continue on to [part four of the tutorial](/tutorial/part-four/) where you'll start learning about Gatsby's data layer and programmatically creating pages!
+Continue on to [part four of the tutorial](/tutorial/part-four) where you'll start learning about Gatsby's data layer and programmatically creating pages!

@@ -23,8 +23,8 @@ Our error messages aren't always helpful; sometimes they are even absent! They d
 We did a thorough search of other CLIs and style guides to learn what we're doing well and where we might be falling short. Here are resources that informed our knowledge of problems that Gatsby CLI has and possible ways to solve those problems:
 
 - [Evaluation of other CLI tools](https://github.com/gatsbyjs/gatsby/issues/12951)
-- [Nielsen Norman Group 10 usability heuristics](https://www.nngroup.com/articles/ten-usability-heuristics/)
-- [Nielsen Norman Group error message design](https://www.nngroup.com/articles/error-message-guidelines/)
+- [Nielsen Norman Group 10 usability heuristics](https://www.nngroup.com/articles/ten-usability-heuristics)
+- [Nielsen Norman Group error message design](https://www.nngroup.com/articles/error-message-guidelines)
 - [Heroku CLI style guide](https://devcenter.heroku.com/articles/cli-style-guide)
 - [12 Factor CLI Apps](https://medium.com/@jdxcode/12-factor-cli-apps-dd3c227a0e46)
 - [User journey through the Gatsby CLI](https://whimsical.co/2PxMcRGE63bwk1Ayc3emAB) (informed by usability interviews and the Gatsby core team’s observations of what issues are most common regarding the CLI)

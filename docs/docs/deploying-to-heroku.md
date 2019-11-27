@@ -38,11 +38,11 @@ Heroku will automatically detect and run the `build` script from your `package.j
 
 Finally, add a `static.json` file in the root of your project to define the directory where your static assets will be. You can check all the options for this file in the [heroku-buildpack-static](https://github.com/heroku/heroku-buildpack-static#configuration) configuration.
 
-The following configuration will give you a good start point in line with Gatsby's [suggested approach to caching](/docs/caching/).
+The following configuration will give you a good start point in line with Gatsby's [suggested approach to caching](/docs/caching).
 
 ```json:title=static.json
 {
-  "root": "public/",
+  "root": "public",
   "headers": {
     "/**": {
       "Cache-Control": "public, max-age=0, must-revalidate"

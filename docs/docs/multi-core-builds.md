@@ -2,7 +2,7 @@
 title: Multi-core Builds
 ---
 
-Gatsby now performs the static HTML generation phase of the overall [Page HTML Generation](/docs/html-generation/) process using multi-core parallel pools of workers. This helps speed up builds by distributing build generation tasks across multiple cores on your machine.
+Gatsby now performs the static HTML generation phase of the overall [Page HTML Generation](/docs/html-generation) process using multi-core parallel pools of workers. This helps speed up builds by distributing build generation tasks across multiple cores on your machine.
 
 By default, Gatsby creates a pool of workers equal to the number of physical cores on your machine. See [build-html.js](/docs/html-generation/#build-htmljs).
 

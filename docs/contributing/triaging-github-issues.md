@@ -61,7 +61,7 @@ Labeling helps group issues into manageable sets and also improves searchability
 
 It's nice to update labels as the state of an issue changes or if the type of an issue changes, for example if a question becomes a feature request. This means labels are transient in nature and subject to being updated as progress is made on addressing issues.
 
-Check out [the docs on issue labeling for more info](/contributing/how-to-label-an-issue/)
+Check out [the docs on issue labeling for more info](/contributing/how-to-label-an-issue)
 
 ### Resolution flowchart
 
@@ -87,7 +87,7 @@ When a feature or pattern is not documented, it may be nice to make a demo to ad
 
 > How do I reproduce a bug?
 
-Every bug report should provide details on how to reproduce the bug. This is so important that there's [dedicated documentation on how to create good bug reproductions](/contributing/how-to-make-a-reproducible-test-case/). Encourage issue authors to describe exactly how to reproduce a bug.
+Every bug report should provide details on how to reproduce the bug. This is so important that there's [dedicated documentation on how to create good bug reproductions](/contributing/how-to-make-a-reproducible-test-case). Encourage issue authors to describe exactly how to reproduce a bug.
 
 > How much time do I spend on an issue?
 

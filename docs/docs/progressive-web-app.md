@@ -6,7 +6,7 @@ title: Progressive Web Apps (PWAs)
 
 "Progressive web app" (PWA) is both a general term for a new philosophy toward building websites and a specific term with an established set of three explicit, testable, baseline requirements.
 
-As a general term, the PWA approach is characterized by striving to satisfy the [following set of attributes](https://infrequently.org/2015/06/progressive-apps-escaping-tabs-without-losing-our-soul/):
+As a general term, the PWA approach is characterized by striving to satisfy the [following set of attributes](https://infrequently.org/2015/06/progressive-apps-escaping-tabs-without-losing-our-soul):
 
 1.  Responsive
 2.  Connectivity independent
@@ -18,13 +18,13 @@ As a general term, the PWA approach is characterized by striving to satisfy the 
 8.  Installable
 9.  Linkable
 
-As a specific term, websites can be tested against the following [three baseline criteria](https://infrequently.org/2016/09/what-exactly-makes-something-a-progressive-web-app/) to qualify as a PWA:
+As a specific term, websites can be tested against the following [three baseline criteria](https://infrequently.org/2016/09/what-exactly-makes-something-a-progressive-web-app) to qualify as a PWA:
 
 1.  It must run under HTTPS.
 2.  It must include a Web App Manifest.
 3.  It must implement a service worker.
 
-PWAs are apps delivered through the web (as opposed to native apps, which are packaged and deployed through stores). As Alex Russell, who together with Frances Berriman [coined the term PWA](https://infrequently.org/2015/06/progressive-apps-escaping-tabs-without-losing-our-soul/), said:
+PWAs are apps delivered through the web (as opposed to native apps, which are packaged and deployed through stores). As Alex Russell, who together with Frances Berriman [coined the term PWA](https://infrequently.org/2015/06/progressive-apps-escaping-tabs-without-losing-our-soul), said:
 
 > they're just websites that took all the right vitamins.
 
@@ -42,15 +42,15 @@ This one's all you!
 
 ### It must include a Web App Manifest
 
-A [Web App manifest](https://www.w3.org/TR/appmanifest/) is a JSON file that provides the browser with information about your web app, and makes it possible for users to save to their home screen.
+A [Web App manifest](https://www.w3.org/TR/appmanifest) is a JSON file that provides the browser with information about your web app, and makes it possible for users to save to their home screen.
 
-It includes information like the Web App's `name`, `icons`, `start_url`, `background-color` and [more](https://developers.google.com/web/fundamentals/web-app-manifest/).
+It includes information like the Web App's `name`, `icons`, `start_url`, `background-color` and [more](https://developers.google.com/web/fundamentals/web-app-manifest).
 
 Gatsby provides a plugin interface to add support for shipping a manifest with your site -- [gatsby-plugin-manifest](/packages/gatsby-plugin-manifest).
 
 ### It must implement a service worker
 
-A [service worker](https://developers.google.com/web/fundamentals/primers/service-workers/) provides support for an offline experience for your site, and makes your site more resilient to bad network connections.
+A [service worker](https://developers.google.com/web/fundamentals/primers/service-workers) provides support for an offline experience for your site, and makes your site more resilient to bad network connections.
 
 It's a script that runs separately in the background, supporting features like push notifications and background sync.
 

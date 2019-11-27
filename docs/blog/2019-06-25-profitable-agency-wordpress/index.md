@@ -57,7 +57,7 @@ I even collected an affiliate fee from the server host. Again, if site maintenan
 
 After the event, my client no longer needed the membership and ecommerce features. And they weren't enthusiastic about paying me for ongoing support. So, instead of haggling over a price, or handing over the project and losing their business forever, I turned the WordPress project into a static site that I host on Netlify.
 
-The hosting cost? [Zero dollars and zero cents.](https://www.netlify.com/pricing/)
+The hosting cost? [Zero dollars and zero cents.](https://www.netlify.com/pricing)
 
 That project opened my eyes. The client had a low traffic website, and they barely used the membership and ecommerce functionality I added. Yet, I signed them up with my favorite WordPress host, with pricing that started at \$115 a month, not including the cost of premium plugins. The next time I had a similar project, which was earlier this year, I grabbed Netlify from the beginning.
 
@@ -65,7 +65,7 @@ The cheaper hosting for static sites, like the ones Gatsby can produce, can be a
 
 I'm old enough to remember using Movable Type and sneering at WordPress. I worked at Vibe Magazine and didn't choose WordPress as our CMS because at the time it couldn't handle our requirement for multiple authors. However, Movable Type eventually ceded their #1 position to WordPress, in large part due to hosting costs. Hosting for a PHP CMS like WordPress was cheaper and simpler than finding a home for the Perl-powered Movable Type.
 
-Static sites in general, and Gatsby in particular will win because the cost of getting started, and keeping going is so low. And as a bonus, static site hosting truly is more secure and simpler to use. It's rare that a new way of doing things ticks the boxes of FAST, GOOD, and CHEAP with no compromise. But that perfectly describes [the hosting options for Gatsby](/docs/deploying-and-hosting/).
+Static sites in general, and Gatsby in particular will win because the cost of getting started, and keeping going is so low. And as a bonus, static site hosting truly is more secure and simpler to use. It's rare that a new way of doing things ticks the boxes of FAST, GOOD, and CHEAP with no compromise. But that perfectly describes [the hosting options for Gatsby](/docs/deploying-and-hosting).
 
 ## Break-Fix happens less, and is solved faster
 
@@ -99,7 +99,7 @@ Recently, premium plugin companies have discovered that the value of their softw
 
 Again, the Gatsby ecosystem is different. Like hosting, the standard pricing for third-party website services is a generous free tier.
 
-There are a dozen [Gatsby-friendly form builders](/docs/building-a-contact-form) with unlimited trials and free tiers. And if you create a form handler yourself, using a React library for forms, plus [Amazon API Gateway / Lambda / SES](https://aws.amazon.com/blogs/architecture/create-dynamic-contact-forms-for-s3-static-websites-using-aws-lambda-amazon-api-gateway-and-amazon-ses/), then your client can handle half a million submissions a month for under \$5.
+There are a dozen [Gatsby-friendly form builders](/docs/building-a-contact-form) with unlimited trials and free tiers. And if you create a form handler yourself, using a React library for forms, plus [Amazon API Gateway / Lambda / SES](https://aws.amazon.com/blogs/architecture/create-dynamic-contact-forms-for-s3-static-websites-using-aws-lambda-amazon-api-gateway-and-amazon-ses), then your client can handle half a million submissions a month for under \$5.
 
 That's amazing!
 

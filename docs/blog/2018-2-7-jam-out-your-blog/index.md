@@ -17,7 +17,7 @@ I’m willing to assume that many readers have been here before and are currentl
 
 My goal here is to share a tool set helps bring order to my freelance chaos. I'll be walking through a workflow that's ideal for personal blogs and hand-off projects where some sort of a CMS is in scope.
 
-I'll also be referencing a wonderful article written by Josh Weaver, [Gatsby + Contentful + Netlify (and Algolia)](/blog/2017-12-06-gatsby-plus-contentful-plus-netlify/). Josh’s article spoke to my goals and frustrations perfectly and inspired me to share this alternative approach.
+I'll also be referencing a wonderful article written by Josh Weaver, [Gatsby + Contentful + Netlify (and Algolia)](/blog/2017-12-06-gatsby-plus-contentful-plus-netlify). Josh’s article spoke to my goals and frustrations perfectly and inspired me to share this alternative approach.
 
 _**Let’s get into it.**_
 
@@ -37,7 +37,7 @@ _**Let’s get into it.**_
 - **NO WordPress** - similarly, I don’t want to deal with updates, themes, hacks...etc
 - **Continuous Deployment** - the site needs to always be up and running and current
 
-For the sake of brevity, let's infer that speed, development experience, scalability and lack of WordPress will be handled by Gatsby and the JAMstack. If you’re unfamiliar, take a look at [http://jamstack.org/](http://jamstack.org/).
+For the sake of brevity, let's infer that speed, development experience, scalability and lack of WordPress will be handled by Gatsby and the JAMstack. If you’re unfamiliar, take a look at [http://jamstack.org/](http://jamstack.org).
 
 ## CMS-Induced Headaches
 
@@ -68,7 +68,7 @@ To spare you the details, I spent a few hours comparing my GraphQL queries to th
 
 ## Managing Content Via GitHub: Enter Prose.io
 
-Prose was originally created for editing markdown files on GitHub by the people at [Development Seed](https://developmentseed.org/).
+Prose was originally created for editing markdown files on GitHub by the people at [Development Seed](https://developmentseed.org).
 
 ### Here is a summary:
 
@@ -85,7 +85,7 @@ So, a service that works on top of GitHub where I, or anyone with a GitHub accou
 
 1.  Set up a repository for the website.
 2.  Share access to the repo with anyone on your team.
-3.  Log in via [Prose.io](http://prose.io/).
+3.  Log in via [Prose.io](http://prose.io).
 4.  Select your website's repo from the Prose interface.
 5.  Done. You can edit existing posts, preview posts, and commit any changes directly within the interface.
     set up a repository for the website
@@ -100,7 +100,7 @@ I should also mention that Prose is an open source project that is available for
 
 ## Get Lean and Get on Netlify
 
-Let’s summarize where we are and why [Netlify](https://www.netlify.com/) will take care of the rest.
+Let’s summarize where we are and why [Netlify](https://www.netlify.com) will take care of the rest.
 
 ```[ ] Lean - simplify the tools and services use to a bare minimum
 [ ] Inexpensive Hosting - again, to maximize value and keep personal costs down
@@ -120,7 +120,7 @@ Let’s summarize where we are and why [Netlify](https://www.netlify.com/) will 
 [x] NO WordPress - similarly, I don’t want to deal with updates, themes, hacks...etc
 ```
 
-When it comes to continuous deployment and inexpensive hosting, using Netlify is, as Josh mentions “ a no brainer.”  Check out [Netlify’s features here](https://www.netlify.com/features/) for a more in-depth look.
+When it comes to continuous deployment and inexpensive hosting, using Netlify is, as Josh mentions “ a no brainer.”  Check out [Netlify’s features here](https://www.netlify.com/features) for a more in-depth look.
 
 With streamlining in mind, a workflow doesn’t get any leaner than working within the confines of GitHub and Netlify. Think about the magic:
 

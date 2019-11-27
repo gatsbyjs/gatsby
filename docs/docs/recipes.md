@@ -12,7 +12,7 @@ tableOfContentsDepth: 2
 - System/version requirements
 - Everything necessary to set up the task
 - Including setting up accounts at other sites, like Netlify
-- See [docs templates](/docs/docs-templates/) for formatting tips
+- See [docs templates](/docs/docs-templates) for formatting tips
 
 ### Directions
 Step-by-step directions. Each step should be repeatable and to-the-point. Anything not critical to the task should be omitted.
@@ -26,10 +26,10 @@ A live example may not be possible depending on the nature of the recipe, in whi
 - Plugin READMEs
 - etc.
 
-See [docs templates](/docs/docs-templates/) in the contributing docs for more help.
+See [docs templates](/docs/docs-templates) in the contributing docs for more help.
 -->
 
-Craving a happy medium between [full-length tutorials](/tutorial/) and crawling the [docs](/docs/)? Here's a cookbook of guiding recipes on how to build things, Gatsby style.
+Craving a happy medium between [full-length tutorials](/tutorial) and crawling the [docs](/docs)? Here's a cookbook of guiding recipes on how to build things, Gatsby style.
 
 ## 1. Pages and Layouts
 
@@ -61,9 +61,9 @@ Some notable files and their definitions:
 
 #### Additional resources
 
-- For a tour of all the common folders and files, read the docs on [Gatsby's Project Structure](/docs/gatsby-project-structure/)
+- For a tour of all the common folders and files, read the docs on [Gatsby's Project Structure](/docs/gatsby-project-structure)
 - For common commands, check out the [Gatsby CLI docs](/docs/gatsby-cli)
-- Check out the [Gatsby Cheat Sheet](/docs/cheat-sheet/) for downloadable info at a glance
+- Check out the [Gatsby Cheat Sheet](/docs/cheat-sheet) for downloadable info at a glance
 
 ### Creating pages automatically
 
@@ -98,7 +98,7 @@ export default AboutPage
 
 #### Additional resources
 
-- [Creating and modifying pages](/docs/creating-and-modifying-pages/)
+- [Creating and modifying pages](/docs/creating-and-modifying-pages)
 
 ### Linking between pages
 
@@ -108,7 +108,7 @@ Routing in Gatsby relies on the `<Link />` component.
 
 - A Gatsby site with two page components: `index.js` and `contact.js`
 - The Gatsby `<Link />` component
-- The [Gatsby CLI](/docs/gatsby-cli/) to run `gatsby develop`
+- The [Gatsby CLI](/docs/gatsby-cli) to run `gatsby develop`
 
 #### Directions
 
@@ -128,7 +128,7 @@ export default () => (
 
 2. Run `gatsby develop` and navigate to the index page. You should have a link that takes you to the contact page when clicked!
 
-> **Note**: Gatsby's `<Link />` component is a wrapper around [`@reach/router`'s Link component](https://reach.tech/router/api/Link). For more information about Gatsby's `<Link />` component, consult the [API reference for `<Link />`](/docs/gatsby-link/).
+> **Note**: Gatsby's `<Link />` component is a wrapper around [`@reach/router`'s Link component](https://reach.tech/router/api/Link). For more information about Gatsby's `<Link />` component, consult the [API reference for `<Link />`](/docs/gatsby-link).
 
 ### Creating a layout component
 
@@ -169,7 +169,7 @@ export default () => (
 #### Additional resources
 
 - Create a layout component in [tutorial part three](/tutorial/part-three/#your-first-layout-component)
-- Styling with [Layout Components](/docs/layout-components/)
+- Styling with [Layout Components](/docs/layout-components)
 
 ### Creating pages programmatically with createPage
 
@@ -257,8 +257,8 @@ export default ({ pageContext: { dog } }) => (
 
 #### Additional resources
 
-- Tutorial section on [programmatically creating pages from data](/tutorial/part-seven/)
-- Reference guide on [using Gatsby without GraphQL](/docs/using-gatsby-without-graphql/)
+- Tutorial section on [programmatically creating pages from data](/tutorial/part-seven)
+- Reference guide on [using Gatsby without GraphQL](/docs/using-gatsby-without-graphql)
 - [Example repo](https://github.com/gatsbyjs/gatsby/tree/master/examples/recipe-createPage) for this recipe
 
 ## 2. Styling with CSS
@@ -269,7 +269,7 @@ There are so many ways to add styles to your website; Gatsby supports almost eve
 
 #### Prerequisites
 
-- An existing [Gatsby site](/docs/quick-start/) with an index page component
+- An existing [Gatsby site](/docs/quick-start) with an index page component
 - A `gatsby-browser.js` file
 
 #### Directions
@@ -306,7 +306,7 @@ import "./src/styles/global.css"
 
 #### Prerequisites
 
-- A [Gatsby site](/docs/quick-start/) with an index page component
+- A [Gatsby site](/docs/quick-start) with an index page component
 
 #### Directions
 
@@ -344,15 +344,15 @@ export default () => <Layout>Hello world!</Layout>
 
 #### Additional resources
 
-- [Standard Styling with Global CSS Files](/docs/global-css/)
+- [Standard Styling with Global CSS Files](/docs/global-css)
 - [More about layout components](/tutorial/part-three)
 
 ### Using Styled Components
 
 #### Prerequisites
 
-- A [Gatsby site](/docs/quick-start/) with an index page component
-- [gatsby-plugin-styled-components, styled-components, and babel-plugin-styled-components](/packages/gatsby-plugin-styled-components/) installed in `package.json`
+- A [Gatsby site](/docs/quick-start) with an index page component
+- [gatsby-plugin-styled-components, styled-components, and babel-plugin-styled-components](/packages/gatsby-plugin-styled-components) installed in `package.json`
 
 #### Directions
 
@@ -422,14 +422,14 @@ export default () => (
 
 #### Additional resources
 
-- [More on Using Styled Components](/docs/styled-components/)
+- [More on Using Styled Components](/docs/styled-components)
 - [Egghead lesson](https://egghead.io/lessons/gatsby-style-gatsby-sites-with-styled-components)
 
 ### Using CSS Modules
 
 #### Prerequisites
 
-- An existing [Gatsby site](/docs/quick-start/) with an index page component
+- An existing [Gatsby site](/docs/quick-start) with an index page component
 
 #### Directions
 
@@ -478,11 +478,11 @@ Sass will compile .scss and .sass files to .css files for you, so you can write 
 
 #### Prerequisites
 
-- A [Gatsby site](/docs/quick-start/).
+- A [Gatsby site](/docs/quick-start).
 
 #### Directions
 
-1. Install the Gatsby plugin [gatsby-plugin-sass](https://www.gatsbyjs.org/packages/gatsby-plugin-sass/) and `node-sass`.
+1. Install the Gatsby plugin [gatsby-plugin-sass](https://www.gatsbyjs.org/packages/gatsby-plugin-sass) and `node-sass`.
 
 `npm install --save node-sass gatsby-plugin-sass`
 
@@ -522,15 +522,15 @@ _Note: You can use Sass/SCSS files as modules too, like mentioned in the previou
 
 #### Additional resources
 
-- [Difference between .sass and .scss](https://responsivedesign.is/articles/difference-between-sass-and-scss/)
+- [Difference between .sass and .scss](https://responsivedesign.is/articles/difference-between-sass-and-scss)
 - [Sass guide from the official Sass website](https://sass-lang.com/guide)
-- [A more complete installation tutorial on Sass with some more explanations and more resources](https://www.gatsbyjs.org/docs/sass/)
+- [A more complete installation tutorial on Sass with some more explanations and more resources](https://www.gatsbyjs.org/docs/sass)
 
 ### Adding a Local Font
 
 #### Prerequisites
 
-- A [Gatsby site](/docs/quick-start/)
+- A [Gatsby site](/docs/quick-start)
 - A font file: `.woff2`, `.ttf`, etc.
 
 #### Directions
@@ -564,7 +564,7 @@ If fonts are not updating following steps above, make sure to replace the existi
 
 #### Additional resources
 
-- More on [importing assets into files](/docs/importing-assets-into-files/)
+- More on [importing assets into files](/docs/importing-assets-into-files)
 
 ### Using Emotion
 
@@ -576,7 +576,7 @@ If fonts are not updating following steps above, make sure to replace the existi
 
 #### Directions
 
-1. Install the [Gatsby Emotion plugin](/packages/gatsby-plugin-emotion/) and Emotion packages.
+1. Install the [Gatsby Emotion plugin](/packages/gatsby-plugin-emotion) and Emotion packages.
 
 ```shell
 npm install --save gatsby-plugin-emotion @emotion/core @emotion/styled
@@ -635,18 +635,18 @@ export default () => (
 
 #### Additional resources
 
-- [Using Emotion in Gatsby](/docs/emotion/)
+- [Using Emotion in Gatsby](/docs/emotion)
 - [Emotion website](https://emotion.sh)
 - [Getting started with Emotion and Gatsby](https://egghead.io/lessons/gatsby-getting-started-with-emotion-and-gatsby)
 
 ### Using Google Fonts
 
-Hosting your own [Google Fonts](https://fonts.google.com/) locally within a project means they won't have to be fetched over the network when your site loads, increasing your site's speed index by up to ~300 milliseconds on desktop and 1+ seconds on 3G. It's also recommended to limit custom font usage to only the essential for performance.
+Hosting your own [Google Fonts](https://fonts.google.com) locally within a project means they won't have to be fetched over the network when your site loads, increasing your site's speed index by up to ~300 milliseconds on desktop and 1+ seconds on 3G. It's also recommended to limit custom font usage to only the essential for performance.
 
 #### Prerequisites
 
 - A [Gatsby site](/docs/quick-start)
-- The [Gatsby CLI](/docs/gatsby-cli/) installed
+- The [Gatsby CLI](/docs/gatsby-cli) installed
 - Choosing a font package from [the typefaces project](https://github.com/KyleAMathews/typefaces)
 
 #### Directions
@@ -673,13 +673,13 @@ _NOTE: So for the above example, the relevant CSS declaration would be `font-fam
 
 #### Additional resources
 
-- [Typography.js](/docs/typography-js/) - Another option for using Google fonts on a Gatsby site
+- [Typography.js](/docs/typography-js) - Another option for using Google fonts on a Gatsby site
 - [The Typefaces Project Docs](https://github.com/KyleAMathews/typefaces/blob/master/README.md)
-- [Live example on Kyle Mathews' blog](https://www.bricolage.io/typefaces-easiest-way-to-self-host-fonts/)
+- [Live example on Kyle Mathews' blog](https://www.bricolage.io/typefaces-easiest-way-to-self-host-fonts)
 
 ## 3. Working with starters
 
-[Starters](/docs/starters/) are boilerplate Gatsby sites maintained officially, or by the community.
+[Starters](/docs/starters) are boilerplate Gatsby sites maintained officially, or by the community.
 
 ### Using a starter
 
@@ -708,7 +708,7 @@ gatsby develop
 
 #### Additional resources
 
-- Follow a [more detailed guide](/docs/starters/) on using Gatsby starters.
+- Follow a [more detailed guide](/docs/starters) on using Gatsby starters.
 - Learn how to use the [Gatsby CLI](/docs/gatsby-cli) tool to use starters in [tutorial part one](/tutorial/part-one/#using-gatsby-starters)
 - Browse the [Starter Library](/starters/?v=2)
 - Check out Gatsby's [official default starter](https://github.com/gatsbyjs/gatsby-starter-default)
@@ -775,7 +775,7 @@ yarn workspace example develop
 
 #### Additional resources
 
-- Follow a [more detailed guide](/docs/themes/building-themes/) on using the Gatsby theme workspace starter.
+- Follow a [more detailed guide](/docs/themes/building-themes) on using the Gatsby theme workspace starter.
 - Learn how to build your own theme in the [Gatsby Theme Authoring video course on Egghead](https://egghead.io/courses/gatsby-theme-authoring), or in the [video course's complementary written tutorial companion](/tutorial/building-a-theme).
 
 ## 5. Sourcing data
@@ -784,7 +784,7 @@ Data sourcing in Gatsby is plugin-driven; Source plugins fetch data from their s
 
 ### Adding data to GraphQL
 
-Gatsby's [GraphQL data layer](/docs/querying-with-graphql/) uses nodes to model chunks of data. Gatsby source plugins add source nodes that you can query for, but you can also create source nodes yourself. To add custom data to the GraphQL data layer yourself, Gatsby provides methods you can leverage.
+Gatsby's [GraphQL data layer](/docs/querying-with-graphql) uses nodes to model chunks of data. Gatsby source plugins add source nodes that you can query for, but you can also create source nodes yourself. To add custom data to the GraphQL data layer yourself, Gatsby provides methods you can leverage.
 
 This recipe shows you how to add custom data using `createNode()`.
 
@@ -836,7 +836,7 @@ query MyPokemonQuery {
 
 - Walk through an example using the `gatsby-source-filesystem` plugin in [tutorial part five](/tutorial/part-five/#source-plugins)
 - Search available source plugins in the [Gatsby library](/plugins/?=source)
-- Understand source plugins by building one in the [Pixabay source plugin tutorial](/docs/pixabay-source-plugin-tutorial/)
+- Understand source plugins by building one in the [Pixabay source plugin tutorial](/docs/pixabay-source-plugin-tutorial)
 - The createNode function [documentation](/docs/actions/#createNode)
 
 ### Sourcing Markdown data for blog posts and pages with GraphQL
@@ -979,17 +979,17 @@ export const pageQuery = graphql`
 
 #### Additional resources
 
-- [Tutorial: Programmatically create pages from data](/tutorial/part-seven/)
-- [Creating and modifying pages](/docs/creating-and-modifying-pages/)
-- [Adding Markdown pages](/docs/adding-markdown-pages/)
-- [Guide to creating pages from data programmatically](/docs/programmatically-create-pages-from-data/)
+- [Tutorial: Programmatically create pages from data](/tutorial/part-seven)
+- [Creating and modifying pages](/docs/creating-and-modifying-pages)
+- [Adding Markdown pages](/docs/adding-markdown-pages)
+- [Guide to creating pages from data programmatically](/docs/programmatically-create-pages-from-data)
 - [Example repo](https://github.com/gatsbyjs/gatsby/tree/master/examples/recipe-sourcing-markdown) for this recipe
 
 ### Sourcing from WordPress
 
 #### Prerequisites
 
-- An existing [Gatsby site](/docs/quick-start/) with a `gatsby-config.js` and `gatsby-node.js` file
+- An existing [Gatsby site](/docs/quick-start) with a `gatsby-config.js` and `gatsby-node.js` file
 - A WordPress instance, either self-hosted or on Wordpress.com
 
 #### Directions
@@ -1109,16 +1109,16 @@ The dynamic pages created above in `gatsby-node.js` have unique paths for naviga
 
 #### Additional resources
 
-- [Getting Started with WordPress and Gatsby](/blog/2019-04-26-how-to-build-a-blog-with-wordpress-and-gatsby-part-1/)
-- More on [Sourcing from WordPress](/docs/sourcing-from-wordpress/)
+- [Getting Started with WordPress and Gatsby](/blog/2019-04-26-how-to-build-a-blog-with-wordpress-and-gatsby-part-1)
+- More on [Sourcing from WordPress](/docs/sourcing-from-wordpress)
 - [Live example on Sourcing from WordPress](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-wordpress)
 
 ### Sourcing data from Contentful
 
 #### Prerequisites
 
-- A [Gatsby site](/docs/quick-start/)
-- A [Contentful account](https://www.contentful.com/)
+- A [Gatsby site](/docs/quick-start)
+- A [Contentful account](https://www.contentful.com)
 - The [Contentful CLI](https://www.npmjs.com/package/contentful-cli) installed
 
 #### Directions
@@ -1157,7 +1157,7 @@ contentful space accesstoken create -s '<space ID>' --name 'Example token'
 npm install --save gatsby-source-contentful
 ```
 
-6. Edit the file `gatsby-config.js` and add the `gatsby-source-contentful` to the `plugins` array to enable the plugin. You should strongly consider using [environment variables](/docs/environment-variables/) to store your space ID and token for security purposes.
+6. Edit the file `gatsby-config.js` and add the `gatsby-source-contentful` to the `plugins` array to enable the plugin. You should strongly consider using [environment variables](/docs/environment-variables) to store your space ID and token for security purposes.
 
 ```javascript:title=gatsby-config.js
 plugins: [
@@ -1178,7 +1178,7 @@ plugins: [
 
 7. Run `gatsby develop` and make sure the site compiled successfully.
 
-8. Query data with the [GraphiQL editor](/docs/introducing-graphiql/) at <https://localhost:8000/___graphql>. The Contentful plugin adds several new node types to your site, including every content type in your Contentful website. Your example space with a "Blog Post" content type produces a `allContentfulBlogPost` node type in GraphQL.
+8. Query data with the [GraphiQL editor](/docs/introducing-graphiql) at <https://localhost:8000/___graphql>. The Contentful plugin adds several new node types to your site, including every content type in your Contentful website. Your example space with a "Blog Post" content type produces a `allContentfulBlogPost` node type in GraphQL.
 
 ![the graphql interface, with a sample query outlined below](./images/recipe-sourcing-contentful-graphql.png)
 
@@ -1233,21 +1233,21 @@ export const query = graphql`
 `
 ```
 
-To continue building out your Contentful site including post detail pages, check out the rest of the [Gatsby docs](/docs/sourcing-from-contentful/) and additional resources below.
+To continue building out your Contentful site including post detail pages, check out the rest of the [Gatsby docs](/docs/sourcing-from-contentful) and additional resources below.
 
 #### Additional resources
 
-- [Building a Site with React and Contentful](/blog/2018-1-25-building-a-site-with-react-and-contentful/)
-- [More on Sourcing from Contentful](/docs/sourcing-from-contentful/)
-- [Contentful source plugin](/packages/gatsby-source-contentful/)
+- [Building a Site with React and Contentful](/blog/2018-1-25-building-a-site-with-react-and-contentful)
+- [More on Sourcing from Contentful](/docs/sourcing-from-contentful)
+- [Contentful source plugin](/packages/gatsby-source-contentful)
 - [Long-text field types returned as objects](/packages/gatsby-source-contentful/#a-note-about-longtext-fields)
 - [Example repository for this recipe](https://github.com/gatsbyjs/gatsby/tree/master/examples/recipe-sourcing-contentful)
 
 ### Pulling data from an external source and creating pages without GraphQL
 
-You don't have to use the GraphQL data layer to include data in pages, [though there are reasons why you should consider GraphQL](/docs/why-gatsby-uses-graphql/). You can use the node `createPages` API to pull unstructured data directly into Gatsby sites rather than through GraphQL and source plugins.
+You don't have to use the GraphQL data layer to include data in pages, [though there are reasons why you should consider GraphQL](/docs/why-gatsby-uses-graphql). You can use the node `createPages` API to pull unstructured data directly into Gatsby sites rather than through GraphQL and source plugins.
 
-In this recipe, you'll create dynamic pages from data fetched from the [PokéAPI’s REST endpoints](https://www.pokeapi.co/). The [full example](https://github.com/jlengstorf/gatsby-with-unstructured-data/) can be found on GitHub.
+In this recipe, you'll create dynamic pages from data fetched from the [PokéAPI’s REST endpoints](https://www.pokeapi.co). The [full example](https://github.com/jlengstorf/gatsby-with-unstructured-data) can be found on GitHub.
 
 #### Prerequisites
 
@@ -1308,9 +1308,9 @@ export default ({ pageContext: { allPokemon } }) => (
 
 #### Additional resources
 
-- [Full Pokemon data repo](https://github.com/jlengstorf/gatsby-with-unstructured-data/)
-- More on using unstructured data in [Using Gatsby without GraphQL](/docs/using-gatsby-without-graphql/)
-- When and how to [query data with GraphQL](/docs/querying-with-graphql/) for more complex Gatsby sites
+- [Full Pokemon data repo](https://github.com/jlengstorf/gatsby-with-unstructured-data)
+- More on using unstructured data in [Using Gatsby without GraphQL](/docs/using-gatsby-without-graphql)
+- When and how to [query data with GraphQL](/docs/querying-with-graphql) for more complex Gatsby sites
 
 ### Sourcing content from Drupal
 
@@ -1406,9 +1406,9 @@ export const query = graphql`
 
 #### Additional Resources
 
-- [Using Decoupled Drupal with Gatsby](/blog/2018-08-13-using-decoupled-drupal-with-gatsby/)
+- [Using Decoupled Drupal with Gatsby](/blog/2018-08-13-using-decoupled-drupal-with-gatsby)
 - [More on sourcing from Drupal](/docs/sourcing-from-drupal)
-- [Tutorial: Programmatically create pages from data](/tutorial/part-seven/)
+- [Tutorial: Programmatically create pages from data](/tutorial/part-seven)
 
 ## 6. Querying data
 
@@ -1458,13 +1458,13 @@ export default IndexPage
 
 #### Additional resources
 
-- [GraphQL and Gatsby](/docs/graphql/): understanding the expected shape of your data
-- [More on querying data in pages with GraphQL](/docs/page-query/)
+- [GraphQL and Gatsby](/docs/graphql): understanding the expected shape of your data
+- [More on querying data in pages with GraphQL](/docs/page-query)
 - [MDN on Tagged Template Literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) like the ones used in GraphQL
 
 ### Querying data with the StaticQuery Component
 
-`StaticQuery` is a component for retrieving data from Gatsby's data layer in [non-page components](/docs/static-query/), such as a header, navigation, or any other child component.
+`StaticQuery` is a component for retrieving data from Gatsby's data layer in [non-page components](/docs/static-query), such as a header, navigation, or any other child component.
 
 #### Directions
 
@@ -1549,20 +1549,20 @@ export default NonPageComponent
 
 #### Additional resources
 
-- [More on Static Query for querying data in components](/docs/static-query/)
+- [More on Static Query for querying data in components](/docs/static-query)
 - [The difference between a static query and a page query](/docs/static-query/#how-staticquery-differs-from-page-query)
-- [More on the useStaticQuery hook](/docs/use-static-query/)
-- [Visualize your data with GraphiQL](/docs/introducing-graphiql/)
+- [More on the useStaticQuery hook](/docs/use-static-query)
+- [Visualize your data with GraphiQL](/docs/introducing-graphiql)
 
 ### Limiting with GraphQL
 
-When querying for data with GraphQL, you can limit the number of results returned with a specific number. This is helpful if you only need a few pieces of data or need to [paginate data](/docs/adding-pagination/).
+When querying for data with GraphQL, you can limit the number of results returned with a specific number. This is helpful if you only need a few pieces of data or need to [paginate data](/docs/adding-pagination).
 
 To limit data, you'll need a Gatsby site with some nodes in the GraphQL data layer. All sites have some nodes like `allSitePage` and `sitePage` created automatically: more can be added by installing source plugins like `gatsby-source-filesystem` in `gatsby-config.js`.
 
 #### Prerequisites
 
-- A [Gatsby site](/docs/quick-start/)
+- A [Gatsby site](/docs/quick-start)
 
 #### Directions
 
@@ -1602,7 +1602,7 @@ To limit data, you'll need a Gatsby site with some nodes in the GraphQL data lay
 
 #### Additional resources
 
-- Learn about [nodes in Gatsby's GraphQL data API](/docs/node-interface/)
+- Learn about [nodes in Gatsby's GraphQL data API](/docs/node-interface)
 - [Gatsby GraphQL reference for limiting](/docs/graphql-reference/#limit)
 - Live example:
 
@@ -1664,7 +1664,7 @@ For this recipe, you'll need a Gatsby site with a collection of nodes to sort in
 #### Additional resources
 
 - [Gatsby GraphQL reference for sorting](/docs/graphql-reference/#sort)
-- Learn about [nodes in Gatsby's GraphQL data API](/docs/node-interface/)
+- Learn about [nodes in Gatsby's GraphQL data API](/docs/node-interface)
 - Live example:
 
 <iframe
@@ -1729,7 +1729,7 @@ For this recipe, you'll need a Gatsby site with a collection of nodes to filter 
 
 - [Gatsby GraphQL reference for filtering](/docs/graphql-reference/#filter)
 - [Complete list of possible operators](/docs/graphql-reference/#complete-list-of-possible-operators)
-- Learn about [nodes in Gatsby's GraphQL data API](/docs/node-interface/)
+- Learn about [nodes in Gatsby's GraphQL data API](/docs/node-interface)
 - Live example:
 
 <iframe
@@ -1865,7 +1865,7 @@ import React from "react"
 import FiestaImg from "../assets/fiesta.jpg" // highlight-line
 ```
 
-2. In `index.js`, add an `<img>` tag with the `src` as the name of the import you used from webpack (in this case `FiestaImg`), and add an `alt` attribute [describing the image](https://webaim.org/techniques/alttext/):
+2. In `index.js`, add an `<img>` tag with the `src` as the name of the import you used from webpack (in this case `FiestaImg`), and add an `alt` attribute [describing the image](https://webaim.org/techniques/alttext):
 
 ```jsx:title=src/pages/index.js
 import React from "react"
@@ -1883,7 +1883,7 @@ export default () => (
 #### Additional resources
 
 - [Example repo importing an image with webpack](https://github.com/gatsbyjs/gatsby/tree/master/examples/recipe-webpack-image)
-- [More on all image techniques in Gatsby](/docs/images-and-files/)
+- [More on all image techniques in Gatsby](/docs/images-and-files)
 
 ### Reference an image from the `static` folder
 
@@ -1914,7 +1914,7 @@ This is an **escape route** for [specific use cases](/docs/static-folder/#when-t
 │       └── fiesta.jpg
 ```
 
-2. In `index.js`, add an `<img>` tag with the `src` as the relative path of the file from the `static` folder, and add an `alt` attribute [describing the image](https://webaim.org/techniques/alttext/):
+2. In `index.js`, add an `<img>` tag with the `src` as the relative path of the file from the `static` folder, and add an `alt` attribute [describing the image](https://webaim.org/techniques/alttext):
 
 ```jsx:title=src/pages/index.js
 import React from "react"
@@ -1930,8 +1930,8 @@ export default () => (
 #### Additional resources
 
 - [Example repo referencing an image from the static folder](https://github.com/gatsbyjs/gatsby/tree/master/examples/recipe-static-image)
-- [Using the Static Folder](/docs/static-folder/)
-- [More on all image techniques in Gatsby](/docs/images-and-files/)
+- [Using the Static Folder](/docs/static-folder)
+- [More on all image techniques in Gatsby](/docs/images-and-files)
 
 ### Optimizing and querying local images with gatsby-image
 
@@ -1957,7 +1957,7 @@ import Img from "gatsby-image" // to take image data and render it
 
 Choose any of the following options or a combination of them.
 
-a. a single image queried by its file [path](/docs/content-and-data/) (Example: `images/corgi.jpg`)
+a. a single image queried by its file [path](/docs/content-and-data) (Example: `images/corgi.jpg`)
 
 ```jsx
 const data = useStaticQuery(graphql`
@@ -1981,7 +1981,7 @@ return (
 )
 ```
 
-b. using a [GraphQL fragment](/docs/using-graphql-fragments/), to query for the necessary fields more tersely
+b. using a [GraphQL fragment](/docs/using-graphql-fragments), to query for the necessary fields more tersely
 
 ```jsx
 const data = useStaticQuery(graphql`
@@ -2129,23 +2129,23 @@ return (
 #### Additional resources
 
 - [Example repository illustrating these examples](https://github.com/gatsbyjs/gatsby/tree/master/examples/recipes-gatsby-image)
-- [Gatsby Image API](/docs/gatsby-image/)
+- [Gatsby Image API](/docs/gatsby-image)
 - [Using Gatsby Image](/docs/using-gatsby-image)
-- [More on working with images in Gatsby](/docs/working-with-images/)
+- [More on working with images in Gatsby](/docs/working-with-images)
 - [Free egghead.io videos explaining these steps](https://egghead.io/playlists/using-gatsby-image-with-gatsby-ea85129e)
 
 ### Optimizing and querying images in post frontmatter with gatsby-image
 
 For use cases like a featured image in a blog post, you can _still_ use `gatsby-image`. The `Img` component needs processed image data, which can come from a local (or remote) file, including from a URL in the frontmatter of a `.md` or `.mdx` file.
 
-To inline images in markdown (using the `![]()` syntax), consider using a plugin like [`gatsby-remark-images`](/packages/gatsby-remark-images/)
+To inline images in markdown (using the `![]()` syntax), consider using a plugin like [`gatsby-remark-images`](/packages/gatsby-remark-images)
 
 #### Prerequisites
 
 - The `gatsby-image`, `gatsby-transformer-sharp`, and `gatsby-plugin-sharp` packages installed and added to the plugins array in `gatsby-config`
 - [Images sourced](/packages/gatsby-image/#install) in your `gatsby-config` using a plugin like `gatsby-source-filesystem`
 - Markdown files sourced in your `gatsby-config` with image URLs in frontmatter
-- [Pages created](/docs/creating-and-modifying-pages/) from Markdown using [`createPages`](https://www.gatsbyjs.org/docs/node-apis/#createPages)
+- [Pages created](/docs/creating-and-modifying-pages) from Markdown using [`createPages`](https://www.gatsbyjs.org/docs/node-apis/#createPages)
 
 #### Directions
 
@@ -2182,7 +2182,7 @@ exports.createPages = async ({ graphql, actions }) => {
 }
 ```
 
-3. Now, import `Img` from `gatsby-image`, and `graphql` from `gatsby` into the template component, write a [pageQuery](/docs/page-query/) to get image data based on the passed in `slug` and pass that data to the `<Img />` component:
+3. Now, import `Img` from `gatsby-image`, and `graphql` from `gatsby` into the template component, write a [pageQuery](/docs/page-query) to get image data based on the passed in `slug` and pass that data to the `<Img />` component:
 
 ```jsx:title=markdown-layout.jsx
 import React from "react"
@@ -2227,9 +2227,9 @@ export const pageQuery = graphql`
 
 - [Example repository using this recipe](https://github.com/gatsbyjs/gatsby/tree/master/examples/recipes-gatsby-image)
 - [Featured images with frontmatter](/docs/working-with-images-in-markdown/#featured-images-with-frontmatter-metadata)
-- [Gatsby Image API](/docs/gatsby-image/)
+- [Gatsby Image API](/docs/gatsby-image)
 - [Using Gatsby Image](/docs/using-gatsby-image)
-- [More on working with images in Gatsby](/docs/working-with-images/)
+- [More on working with images in Gatsby](/docs/working-with-images)
 
 ## 8. Transforming data
 
@@ -2332,13 +2332,13 @@ gatsby build && gatsby serve
 #### Additional resources
 
 - Walk through building and deploying an example site in [tutorial part one](/tutorial/part-one/#deploying-a-gatsby-site)
-- Learn about [performance optimization](/docs/performance/)
-- Read about [other deployment related topics](/docs/preparing-for-deployment/)
-- Check out the [deployment docs](/docs/deploying-and-hosting/) for specific hosting platforms and how to deploy to them
+- Learn about [performance optimization](/docs/performance)
+- Read about [other deployment related topics](/docs/preparing-for-deployment)
+- Check out the [deployment docs](/docs/deploying-and-hosting) for specific hosting platforms and how to deploy to them
 
 ### Deploying to Netlify
 
-Use [`netlify-cli`](https://www.netlify.com/docs/cli/) to deploy your Gatsby application without leaving the command-line interface.
+Use [`netlify-cli`](https://www.netlify.com/docs/cli) to deploy your Gatsby application without leaving the command-line interface.
 
 #### Prerequisites
 
@@ -2356,7 +2356,7 @@ Use [`netlify-cli`](https://www.netlify.com/docs/cli/) to deploy your Gatsby app
 
 4. Choose a custom website name if you want or press enter to receive a random one.
 
-5. Choose your [Team](https://www.netlify.com/docs/teams/).
+5. Choose your [Team](https://www.netlify.com/docs/teams).
 
 6. Change the deploy path to `public/`
 
@@ -2388,4 +2388,4 @@ Use [Now CLI](https://zeit.co/download) to deploy your Gatsby application withou
 
 #### Additional resources
 
-- [Deploying to ZEIT Now](/docs/deploying-to-zeit-now/)
+- [Deploying to ZEIT Now](/docs/deploying-to-zeit-now)

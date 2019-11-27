@@ -5,15 +5,15 @@ author: Shannon Soper
 tags: ["ux", "user-testing", "cutting-edge-experiences"]
 ---
 
-Our current [gatsbyjs.org](/) homepage is getting a bit long in the tooth -- our incredible designer @fk built it out a year and a half ago, but a lot has changed and we're getting ready to update it.
+Our current [gatsbyjs.org]() homepage is getting a bit long in the tooth -- our incredible designer @fk built it out a year and a half ago, but a lot has changed and we're getting ready to update it.
 
-We sent out a [messaging survey](/blog/2019-03-05-dot-org-messaging-survey/) a few weeks ago to hear how the community was thinking about Gatsby. Based on the results of that survey, we put together some [lo-fi prototypes of the homepage](https://www.figma.com/proto/UH2Qb3IeF8Hvg6csIW3mcqFc/Gatsbyjs.org-mobile-homepage-prototype?node-id=22%3A329&viewport=-227%2C349%2C0.39312&scaling=scale-down).
+We sent out a [messaging survey](/blog/2019-03-05-dot-org-messaging-survey) a few weeks ago to hear how the community was thinking about Gatsby. Based on the results of that survey, we put together some [lo-fi prototypes of the homepage](https://www.figma.com/proto/UH2Qb3IeF8Hvg6csIW3mcqFc/Gatsbyjs.org-mobile-homepage-prototype?node-id=22%3A329&viewport=-227%2C349%2C0.39312&scaling=scale-down).
 
 After creating the prototypes, it was time to find people to test those prototypes, a process that's called usability testing.
 
 ## Stats on usability testers
 
-We found some testers through [userinterviews.com](https://www.userinterviews.com/), and here are the important facts about them:
+We found some testers through [userinterviews.com](https://www.userinterviews.com), and here are the important facts about them:
 
 - 6 testers
 - All of them know React

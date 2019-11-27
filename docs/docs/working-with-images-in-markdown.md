@@ -8,11 +8,11 @@ When building Gatsby sites composed primarily of Markdown pages or posts, insert
 
 In sites like a blog, you may want to include a featured image that appears at the top of a page. One way to do this is to grab the image filename from a frontmatter field and then transform it with `gatsby-plugin-sharp` in a GraphQL query.
 
-This solution assumes you already have programmatically generated pages from Markdown with renderers like `gatsby-transformer-remark` or `gatsby-plugin-mdx`. If not, take a read through up to [Part 7 of the Gatsby Tutorial](/tutorial/part-seven/). This will build upon the tutorial and as such, `gatsby-transformer-remark` will be used for this example.
+This solution assumes you already have programmatically generated pages from Markdown with renderers like `gatsby-transformer-remark` or `gatsby-plugin-mdx`. If not, take a read through up to [Part 7 of the Gatsby Tutorial](/tutorial/part-seven). This will build upon the tutorial and as such, `gatsby-transformer-remark` will be used for this example.
 
-> Note: This can be done similarly using [MDX](/docs/mdx/) as well. Instead of the `markdownRemark` nodes in GraphQL, `Mdx` can be swapped in and should work.
+> Note: This can be done similarly using [MDX](/docs/mdx) as well. Instead of the `markdownRemark` nodes in GraphQL, `Mdx` can be swapped in and should work.
 
-To start out, download the plugins for Gatsby-image as mentioned in [Using gatsby-image](/docs/using-gatsby-image/).
+To start out, download the plugins for Gatsby-image as mentioned in [Using gatsby-image](/docs/using-gatsby-image).
 
 ```shell
 npm install --save gatsby-image gatsby-transformer-sharp gatsby-plugin-sharp

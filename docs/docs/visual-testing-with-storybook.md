@@ -7,7 +7,7 @@ Knowing your components look as intended in every permutation is not only a grea
 1. know what components are available to them in a given project and
 2. what props those components accept and what all of the states of that component are.
 
-As your project grows over time having this information available will be invaluable. This is the function of the [Storybook](https://storybook.js.org/) library. Storybook is a UI development environment for your UI components. With it, you can visualize different states of your UI components and develop them interactively.
+As your project grows over time having this information available will be invaluable. This is the function of the [Storybook](https://storybook.js.org) library. Storybook is a UI development environment for your UI components. With it, you can visualize different states of your UI components and develop them interactively.
 
 ## Setting up your environment
 
@@ -36,7 +36,7 @@ import { action } from "@storybook/addon-actions"
 
 // automatically import all files ending in *.stories.js
 // highlight-next-line
-configure(require.context("../src", true, /\.stories\.js$/), module)
+configure(require.context("../src", true, /\.stories\.js$), module)
 
 // highlight-start
 // Gatsby's Link overrides:
@@ -67,7 +67,7 @@ Create a new file called `webpack.config.js` in the `.storybook` folder created 
 ```js:title=.storybook/webpack.config.js
 module.exports = ({ config }) => {
   // Transpile Gatsby module because Gatsby includes un-transpiled ES6 code.
-  config.module.rules[0].exclude = [/node_modules\/(?!(gatsby)\/)/]
+  config.module.rules[0].exclude = [/node_modules\/(?!(gatsby)\)/]
 
   // use installed babel-loader which is v8.0-beta (which is meant to work with @babel/core@7)
   config.module.rules[0].use[0].loader = require.resolve("babel-loader")
@@ -92,7 +92,7 @@ module.exports = ({ config }) => {
 }
 ```
 
-> Note that if you're using a [StaticQuery](/docs/static-query/) in your components, `babel-plugin-remove-graphql-queries` is required to render them in Storybook. This is because the queries are run at build time in Gatsby, and will not have been run when rendering the components directly.
+> Note that if you're using a [StaticQuery](/docs/static-query) in your components, `babel-plugin-remove-graphql-queries` is required to render them in Storybook. This is because the queries are run at build time in Gatsby, and will not have been run when rendering the components directly.
 
 > When using TypeScript, add this rule:
 
@@ -123,7 +123,7 @@ return config
 ```js:title=.storybook/webpack.config.js
 module.exports = (baseConfig, env, defaultConfig) => {
   // Transpile Gatsby module because Gatsby includes un-transpiled ES6 code.
-  defaultConfig.module.rules[0].exclude = [/node_modules\/(?!(gatsby)\/)/]
+  defaultConfig.module.rules[0].exclude = [/node_modules\/(?!(gatsby)\)/]
 
   // use installed babel-loader which is v8.0-beta (which is meant to work with @babel/core@7)
   defaultConfig.module.rules[0].use[0].loader = require.resolve("babel-loader")
@@ -191,5 +191,5 @@ This is a very simple story without much going on, but honestly, nothing else re
 ## Other resources
 
 - For more information on Storybook, visit
-  [the Storybook site](https://storybook.js.org/).
+  [the Storybook site](https://storybook.js.org).
 - Get started with a [Jest and Storybook starter](https://github.com/Mathspy/gatsby-storybook-jest-starter)

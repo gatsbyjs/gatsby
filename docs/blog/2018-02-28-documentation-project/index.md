@@ -15,7 +15,7 @@ People really like Gatsby docs and Gatsby. In fact, we’ve talked about trackin
 
 ## How much do people like the docs? :D
 
-In my interviews with over 60 Gatsby users, I asked “What do you like about Gatsby?”. Documentation comes out as one of the clear winners, as you can see in this list of the top ten things interviewees like, courtesy of [Unbird.com](https://unbird.com/#/) analytics:
+In my interviews with over 60 Gatsby users, I asked “What do you like about Gatsby?”. Documentation comes out as one of the clear winners, as you can see in this list of the top ten things interviewees like, courtesy of [Unbird.com](https://unbird.com/#) analytics:
 
 ![Unbird.com analytics screenshot](unbird-gatsby-likes.png)
 

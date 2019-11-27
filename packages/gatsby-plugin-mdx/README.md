@@ -1,7 +1,7 @@
 ![Logo](./img/gatsby-mdx.png)
 
 > gatsby-plugin-mdx is the official integration for using [MDX](https://mdxjs.com)
-> with [Gatsby](https://www.gatsbyjs.org/).
+> with [Gatsby](https://www.gatsbyjs.org).
 
 # What’s MDX?
 
@@ -18,7 +18,7 @@ MDX seeks to make writing with Markdown and JSX simpler while being more express
 
 ### Read more about MDX
 
-- [📚 Gatsby guide](https://www.gatsbyjs.org/docs/mdx/)
+- [📚 Gatsby guide](https://www.gatsbyjs.org/docs/mdx)
 - [📣 Language](https://mdxjs.com)
 - [👩‍🔬 Specification](https://github.com/mdx-js/specification)
 
@@ -275,7 +275,7 @@ Here's a color picker!
 
 If you want to allow usage of a component from anywhere (often referred to as a
 shortcode), you can pass it to the
-[MDXProvider](https://www.gatsbyjs.org/docs/mdx/customizing-components/).
+[MDXProvider](https://www.gatsbyjs.org/docs/mdx/customizing-components).
 
 ```js
 // src/components/layout.js

@@ -46,7 +46,7 @@ GraphQL can be used to query for information contained in the `siteMetadata` obj
 
 Navigate to <http://localhost:8000/___graphql> in your browser to view the GraphiQL editor, which enables you to test GraphQL queries on the underlying APIs. Using the documentation explorer you can view the current GraphQL schema for your project, which is an invaluable resource during development.
 
-Examining the available types in GraphQL you will notice that you can query `site`. This GraphQL type further returns the `siteMetadata` which needs to be accessed to create the dynamic navigation. At this point, it is useful if you know a little GraphQL in order to extract the menu links. If you are unfamiliar with GraphQL, there is some excellent documentation available at GraphQL's official website found [here](https://graphql.org/learn/) that you can use to brush up on your skills! The query below will return the menu links.
+Examining the available types in GraphQL you will notice that you can query `site`. This GraphQL type further returns the `siteMetadata` which needs to be accessed to create the dynamic navigation. At this point, it is useful if you know a little GraphQL in order to extract the menu links. If you are unfamiliar with GraphQL, there is some excellent documentation available at GraphQL's official website found [here](https://graphql.org/learn) that you can use to brush up on your skills! The query below will return the menu links.
 
 ```graphql
 query SiteQuery {
@@ -273,5 +273,5 @@ If you have made it this far, good job! You can now add new site links to your w
 
 Be sure to check out more documentation for further in-depth examples and guides on achieving tasks using Gatsby.
 
-- [Authentication in Gatsby](/tutorial/authentication-tutorial/)
-- [E-commerce in Gatsby](/tutorial/ecommerce-tutorial/)
+- [Authentication in Gatsby](/tutorial/authentication-tutorial)
+- [E-commerce in Gatsby](/tutorial/ecommerce-tutorial)

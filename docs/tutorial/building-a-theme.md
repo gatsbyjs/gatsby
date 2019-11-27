@@ -98,7 +98,7 @@ yarn workspace site add gatsby react react-dom gatsby-theme-events@*
 - When you run `yarn workspace site`, it's as if you were running that command while in the `/site` directory. The dependencies will be added to `site`, even though you're not in the `site` directory.
 - You're installing `gatsby-theme-events@*`, because you need the workspace to reference the unpublished `gatsby-theme-events` theme.
 
-> 💡 For more details on using yarn workspaces, you might be interested to check out Gatsby's [blog post on setting up yarn workspaces](/blog/2019-05-22-setting-up-yarn-workspaces-for-theme-development/).
+> 💡 For more details on using yarn workspaces, you might be interested to check out Gatsby's [blog post on setting up yarn workspaces](/blog/2019-05-22-setting-up-yarn-workspaces-for-theme-development).
 
 You should now see the following dependencies in your `site/package.json`:
 
@@ -634,7 +634,7 @@ To test that the root path (`"/"`) and individual event pages are building succe
 yarn workspace gatsby-theme-events develop
 ```
 
-You should see the placeholder `events.js` component at [localhost:8000](http://localhost:8000/).
+You should see the placeholder `events.js` component at [localhost:8000](http://localhost:8000).
 
 If you hit [http://localhost:8000/404](http://localhost:8000/404) (for example -- or any route that doesn't exist) you should see a listing of event pages, all building with the placeholder `event.js` component.
 
@@ -766,7 +766,7 @@ const EventsTemplate = () => {
 export default EventsTemplate
 ```
 
-To test that it's working, open up [localhost:8000](http://localhost:8000/) again. You should see the "Gatsby Events Theme" header from `<Layout>` component, and the stringified event data from the `<EventList>` component.
+To test that it's working, open up [localhost:8000](http://localhost:8000) again. You should see the "Gatsby Events Theme" header from `<Layout>` component, and the stringified event data from the `<EventList>` component.
 
 ![The root path view, with a header of "Gatsby Events Theme", and stringified JSON event data](./images/building-a-theme-events-page-data.png)
 
@@ -811,7 +811,7 @@ export default EventList
   - The date of the event
   - The location of the event
 
-Checking [localhost:8000](http://localhost:8000/) again, you should see the new markup:
+Checking [localhost:8000](http://localhost:8000) again, you should see the new markup:
 
 ![The events page, shown with markup defined](./images/building-a-theme-events-page-markup.png)
 
@@ -1089,7 +1089,7 @@ However, you don't have any event data in the site. Copy the `events.yml` file f
 
 ![Running the site, the basepath is now `/events`](./images/building-a-theme-changed-basepath.png)
 
-The events listing page will now be accessible at [http://localhost:8000/events](http://localhost:8000/events). Hitting [the root path](http://localhost:8000/) will return a 404.
+The events listing page will now be accessible at [http://localhost:8000/events](http://localhost:8000/events). Hitting [the root path](http://localhost:8000) will return a 404.
 
 ## Make themes extendable with gatsby-plugin-theme-ui
 
@@ -1202,13 +1202,13 @@ export const theme = {
 export default theme
 ```
 
-`gatsby-plugin-theme-ui` uses [Theme UI](https://theme-ui.com/), which is part of a [System UI network of tools](https://system-ui.com/), all of which follow the [System UI theme specification](https://system-ui.com/theme/).
+`gatsby-plugin-theme-ui` uses [Theme UI](https://theme-ui.com), which is part of a [System UI network of tools](https://system-ui.com), all of which follow the [System UI theme specification](https://system-ui.com/theme).
 
 ## Use and override a theme with component shadowing
 
 To use the theme you've defined, you'll need to use component shadowing to override the default theme in `gatsby-plugin-theme-ui`.
 
-> 💡 "Component shadowing" is a mechanism to override default provided by a Gatsby theme. To dig deeper on component shadowing, check out [this blog post on the subject](/blog/2019-04-29-component-shadowing/).
+> 💡 "Component shadowing" is a mechanism to override default provided by a Gatsby theme. To dig deeper on component shadowing, check out [this blog post on the subject](/blog/2019-04-29-component-shadowing).
 
 You'll use component shadowing to activate the custom theme defined in the previous step.
 
@@ -1545,7 +1545,7 @@ Congratulations! You've set up, built, and customized your first Gatsby theme!
 
 ### Further reading
 
-- Check out the [Gatsby themes docs](/docs/themes/) to keep learning.
+- Check out the [Gatsby themes docs](/docs/themes) to keep learning.
 - Have an idea for a theme you'd like to build? Get a headstart on a local theme development workspace using the [Theme Workspace starter](https://github.com/gatsbyjs/gatsby/tree/master/themes/gatsby-starter-theme-workspace).
 - Have you built a Gatsby starter before? Perhaps [convert that starter to a theme](/docs/themes/converting-a-starter).
 

@@ -6,19 +6,19 @@ tags: ["gatsby-for-apps"]
 excerpt: Gatsby is great for not only static sites but also traditional web applications. You can add authentication and serverless functionality and get up and running incredibly quickly with Netlify - here's how.
 ---
 
-[In a recent Reactiflux interview](https://www.reactiflux.com/transcripts/gatsby-team/), the Gatsby team was asked this question:
+[In a recent Reactiflux interview](https://www.reactiflux.com/transcripts/gatsby-team), the Gatsby team was asked this question:
 
 > Q: What is one thing that Gatsby is capable of doing that might surprise some people? — ctlee
 
 > A: Gatsby can be used to build fully dynamic sites, which surprises some people because of it’s label as a “static site generator”. It’s fully equipped to be a powerful alternative to create-react-app and other similar solutions with the addition of easy pre-rendering and perf baked in. — biscarch
 
-Even though Dustin [recently wrote about Gatsby for Apps](/blog/2018-11-07-gatsby-for-apps/) and open sourced his [Gatsby Mail](https://gatsby-mail.netlify.com/) demo, I do still find people constantly having to explain that Gatsby is "not just for sites".
+Even though Dustin [recently wrote about Gatsby for Apps](/blog/2018-11-07-gatsby-for-apps) and open sourced his [Gatsby Mail](https://gatsby-mail.netlify.com) demo, I do still find people constantly having to explain that Gatsby is "not just for sites".
 
 Today I'd like to show you how you can incrementally add functionality to a Gatsby static site with Netlify Functions, and then add authentication with Netlify Identity to begin a proper Gatsby app.
 
 ## Static-Dynamic is a spectrum
 
-Why would you use something like Gatsby over Jekyll or Hugo or one of the [hundreds of Static Site Generators](https://www.staticgen.com/) out there? [There are many reasons](/blog/2018-2-27-why-i-upgraded-my-website-to-gatsbyjs-from-jekyll/), but one of the unique selling points is how Gatsby helps you build ["Static Progressive Web Apps"](/docs/progressive-web-app/#progressive-web-app) with React.
+Why would you use something like Gatsby over Jekyll or Hugo or one of the [hundreds of Static Site Generators](https://www.staticgen.com) out there? [There are many reasons](/blog/2018-2-27-why-i-upgraded-my-website-to-gatsbyjs-from-jekyll), but one of the unique selling points is how Gatsby helps you build ["Static Progressive Web Apps"](/docs/progressive-web-app/#progressive-web-app) with React.
 
 [Gatsby's ability to rehydrate](/docs/production-app/#dom-hydration) (what a delicious word!) the DOM means you can do incredibly dynamic things with JavaScript and React that would be much harder with legacy SSG's.
 
@@ -68,7 +68,7 @@ When deploying to Netlify, `gatsby build` must be run before `netlify-lambda bui
   publish = "public"
 ```
 
-For more info or configuration options (e.g. in different branches and build environments), check [the Netlify.toml reference](https://www.netlify.com/docs/netlify-toml-reference/).
+For more info or configuration options (e.g. in different branches and build environments), check [the Netlify.toml reference](https://www.netlify.com/docs/netlify-toml-reference).
 
 **NOTE:** the `command` specified in `netlify.toml` overrides the build command specified in your site's Netlify UI Build settings.
 
@@ -121,11 +121,11 @@ fetch("/.netlify/functions/hello")
 
 and watch "Hello World!" pop up in your console. (I added a random number as well to show the endpoint is dynamic) If you are new to React, I highly recommend [reading through the React docs](https://reactjs.org/docs/handling-events.html) to understand where and how to insert event handlers so you can, for example, [respond to a button click](https://reactjs.org/docs/handling-events.html).
 
-The local proxying we are doing is only for local emulation, e.g. it is actually running from `http://localhost:9000/hello` despite you hitting `/.netlify/functions/hello` in your Gatsby app. When you deploy your site to Netlify (either by [hooking your site up through Git through our Web UI](http://app.netlify.com/), or our l33t new [CLI](https://www.netlify.com/docs/cli/)), that falls away, and your functions -are- hosted on the same URL and "just works". Pretty neat!
+The local proxying we are doing is only for local emulation, e.g. it is actually running from `http://localhost:9000/hello` despite you hitting `/.netlify/functions/hello` in your Gatsby app. When you deploy your site to Netlify (either by [hooking your site up through Git through our Web UI](http://app.netlify.com), or our l33t new [CLI](https://www.netlify.com/docs/cli)), that falls away, and your functions -are- hosted on the same URL and "just works". Pretty neat!
 
 ## That's cool, but its not an app
 
-So, yes, your site can now be more dynamic than any static site. It can hit any database or API. It runs rings around CORS (by the way, you can also use [Netlify Redirects](https://www.netlify.com/docs/redirects/) for that). But its not an _app_ app. Yet!
+So, yes, your site can now be more dynamic than any static site. It can hit any database or API. It runs rings around CORS (by the way, you can also use [Netlify Redirects](https://www.netlify.com/docs/redirects) for that). But its not an _app_ app. Yet!
 
 The key thing about web apps (and, let's face it, the key thing users really pay for) is they all have some concept of `user`, and that brings with it all manner of complication from security to state management to [role-based access control](https://www.netlify.com/docs/visitor-access-control/#role-based-access-controls-with-jwt-tokens). Entire routes need to be guarded by authentication, and sensitive content shielded from Gatsby's static generation. Sometimes there are things you -don't- want Google's spiders to see!
 
@@ -133,7 +133,7 @@ It's a different tier of concern, which makes it hard to write about in the same
 
 ## 5 Steps to add Netlify Identity and Authenticated Pages to Gatsby
 
-1. **Enable Netlify Identity**: Netlify Identity doesn't come enabled by default. You'll have to head to your site admin (e.g. `https://app.netlify.com/sites/YOUR_AWESOME_SITE/identity`) to turn it on. [Read the docs](https://www.netlify.com/docs/identity/) for further info on what you can do, for example add Facebook or Google social sign-on!
+1. **Enable Netlify Identity**: Netlify Identity doesn't come enabled by default. You'll have to head to your site admin (e.g. `https://app.netlify.com/sites/YOUR_AWESOME_SITE/identity`) to turn it on. [Read the docs](https://www.netlify.com/docs/identity) for further info on what you can do, for example add Facebook or Google social sign-on!
 2. **Install dependencies**: `npm install netlify-identity-widget gatsby-plugin-create-client-paths`
 3. **Configure Gatsby**: for dynamic-ness!
 
@@ -335,7 +335,7 @@ Phew that was a lot! but you should have a solid starting point for your app :)
 
 Just like [every magic act has a pledge, a turn, and a prestige](<https://en.wikipedia.org/wiki/The_Prestige_(film)>), I have one last tidbit for you. [Nothing on the client-side is safe](https://stackoverflow.com/questions/50277192/react-security-concerns-restricted-pages-in-app), and although you can send along Netlify Identity user id's to your Netlify Function endpoints for authenticated access from your Gatsby App (for example in the body of a POST request), you'll never be truly sure if that flow is secure either from malicious users or snooping.
 
-The best way to do authenticated actions inside serverless functions is to do it from inside the context of the function itself. Fortunately, [Netlify Identity and Functions work seamlessly together](https://www.netlify.com/docs/functions/#identity-and-functions). All you have to do is to send along the user's [JWT](https://jwt.io/) when hitting your endpoint:
+The best way to do authenticated actions inside serverless functions is to do it from inside the context of the function itself. Fortunately, [Netlify Identity and Functions work seamlessly together](https://www.netlify.com/docs/functions/#identity-and-functions). All you have to do is to send along the user's [JWT](https://jwt.io) when hitting your endpoint:
 
 ```js
 // in your gatsby app
@@ -346,7 +346,7 @@ fetch("/.netlify/functions/auth-hello", {
     "Content-Type": "application/json",
     Authorization: "Bearer " + user.token.access_token, // like this
   },
-}).then(/* etc */)
+}).then(/* etc *)
 ```
 
 And then inside a Lambda function, you can now access the `user` object:

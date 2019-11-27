@@ -57,4 +57,4 @@ const IndexPage = () => {
 }
 ```
 
-Check more documentation and examples at [styletron.org](https://www.styletron.org/).
+Check more documentation and examples at [styletron.org](https://www.styletron.org).

@@ -16,9 +16,9 @@ canonicalLink: https://www.iamtimsmith.com/blog/how-to-build-a-blog-with-wordpre
 
 Ever wondered how to use Gatsby.js with WordPress? This post will cover everything you need to know about getting WordPress ready for a Gatsby site.
 
-In a [previous post](https://www.iamtimsmith.com/blog/using-wordpress-with-react/), I spoke about using React.js to build a frontend for a WordPress site. I talked about a simple setup to do this, but also mentioned some drawbacks to doing this.
+In a [previous post](https://www.iamtimsmith.com/blog/using-wordpress-with-react), I spoke about using React.js to build a frontend for a WordPress site. I talked about a simple setup to do this, but also mentioned some drawbacks to doing this.
 
-One such drawback is the difficulties faced when trying to rank for SEO, because search engine crawlers have a hard time indexing information being loaded into React. I mentioned briefly that there are ways around this and one of these ways is [Gatsby.js](https://www.gatsbyjs.org/).
+One such drawback is the difficulties faced when trying to rank for SEO, because search engine crawlers have a hard time indexing information being loaded into React. I mentioned briefly that there are ways around this and one of these ways is [Gatsby.js](https://www.gatsbyjs.org).
 
 In this series of blog posts, I'll be talking about how to build a Gatsby.js site with a WordPress backend. The aim of the setup is to allow non-developer users to make changes on their website while allowing developers to use a fast, modern, and enjoyable tool to build with.
 
@@ -69,7 +69,7 @@ Now let's get down to business...
 
 ## Setting up WordPress
 
-This article assumes you have at least a rudimentary knowledge of WordPress. If you've never used it, you can check out [my quick guide to setting up a WordPress site](https://www.iamtimsmith.com/blog/how-to-build-website-in-less-than-10-minutes/).
+This article assumes you have at least a rudimentary knowledge of WordPress. If you've never used it, you can check out [my quick guide to setting up a WordPress site](https://www.iamtimsmith.com/blog/how-to-build-website-in-less-than-10-minutes).
 
 ## A bit about WordPress as a CMS
 
@@ -85,7 +85,7 @@ I also like to use WordPress at a subdomain such as `admin.example.com` so it is
 
 Since you are not worried about how the site looks in WordPress, the theme you use doesn't necessarily matter. The only two files you really need in the theme are the `style.css` file to tell WordPress the information about your theme and the `functions.php` file so you can create menus, create custom content types, create default Advanced Custom Fields, etc. Later on, you can add more files to the theme for page templates, but that's totally optional.
 
-When building WordPress sites I generally stick with the [Underscores](https://underscores.me/) theme, so I will use that as the starter today since it already has a lot of stuff set up out-of-the-box.
+When building WordPress sites I generally stick with the [Underscores](https://underscores.me) theme, so I will use that as the starter today since it already has a lot of stuff set up out-of-the-box.
 
 ## The WordPress Plugins
 
@@ -93,7 +93,7 @@ I know I was on my soap box earlier about using a bunch of plugins, and generall
 
 ### Advanced Custom Fields
 
-The first plugin I'd like to mention is [Advanced Custom Fields](https://www.advancedcustomfields.com/), or ACF for short. This is perhaps one of my favorite plugins of all time since it allows you to create custom fields for any post type or page. You can override defaults. You can create any number of fields for the user ranging from What You See Is What You Get (or WYSIWYG) editors and date pickers (free) to galleries and repeater fields (pro). With this tool, you can truly customize the site to be exactly what your client needs.
+The first plugin I'd like to mention is [Advanced Custom Fields](https://www.advancedcustomfields.com), or ACF for short. This is perhaps one of my favorite plugins of all time since it allows you to create custom fields for any post type or page. You can override defaults. You can create any number of fields for the user ranging from What You See Is What You Get (or WYSIWYG) editors and date pickers (free) to galleries and repeater fields (pro). With this tool, you can truly customize the site to be exactly what your client needs.
 
 ### ACF to REST API
 

@@ -2,7 +2,7 @@
 title: Sourcing from Contentstack
 ---
 
-This guide walks you through the steps involved in setting up a Gatsby site that fetches content from [Contentstack](https://www.contentstack.com/), a popular headless (or API-first) CMS.
+This guide walks you through the steps involved in setting up a Gatsby site that fetches content from [Contentstack](https://www.contentstack.com), a popular headless (or API-first) CMS.
 
 ## Why use Contentstack with Gatsby?
 

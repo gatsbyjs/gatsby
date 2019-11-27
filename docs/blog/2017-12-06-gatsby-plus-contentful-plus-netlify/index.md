@@ -44,7 +44,7 @@ down into code.
 
 I know it’s bad to make assumptions, but I’m going to assume that if you’re here
 and reading this, you at least know a little about the perks of static sites and
-the JAMstack. If not, check out [https://jamstack.org/](https://jamstack.org/)
+the JAMstack. If not, check out [https://jamstack.org/](https://jamstack.org)
 for a quick breakdown on why web development is, for lack of a better phrase,
 “going back to the basics.”
 
@@ -67,7 +67,7 @@ make content changes or add a markdown file then fire off a site rebuild
 command, and finally redeploy. Even though static site generators have solved
 this in many clever ways, I feel Gatsby solves this problem in a particularly
 elegant fashion via it’s GraphQL data layer (more on that later) and its vast
-ecosystem of data [source plugins](/docs/plugins/).
+ecosystem of data [source plugins](/docs/plugins).
 
 Before I jump into the topic of content and “data”, I want to briefly say that
 building a static site template with React-based architecture and hot module
@@ -88,29 +88,29 @@ experience couldn’t rely on creating a file and committing changes to a Git
 repo.
 
 > Sidebar: There is
-> [Gatsby-Source-WordPress](/packages/gatsby-source-wordpress/)
+> [Gatsby-Source-WordPress](/packages/gatsby-source-wordpress)
 > plugin that pulls in content via a WordPress API. However, to me, this was not
 > appealing because I was trying to avoid hosting a traditional CMS entirely.
 
 # Solution: Contentful + Gatsby
 
-Contentful is a hosted [headless CMS](/docs/headless-cms/) with a fantastic user experience. It’s
+Contentful is a hosted [headless CMS](/docs/headless-cms) with a fantastic user experience. It’s
 similar to having a backend like WordPress, but you are fully responsible for
 the frontend layer. The beauty of Contentful is threefold.
 
 - Intuitive and attractive UI
 - Simple content modeling
-- [Free tier](https://www.contentful.com/pricing/)
+- [Free tier](https://www.contentful.com/pricing)
 
 Dealing with the backend of Contentful is refreshing and the content modeling
 really leads the pack when compared to other headless content management
 systems. It doesn’t feel like something that just gets the job done, it’s
 actually really nice to use. They also just pushed some
-[great new changes](https://www.contentful.com/blog/2017/11/28/work-smarter-with-our-new-search-features/)
+[great new changes](https://www.contentful.com/blog/2017/11/28/work-smarter-with-our-new-search-features)
 that made it even easier to search and filter our articles on the backend.
 
 Contentful also happens to offer a
-[generous free tier](https://www.contentful.com/pricing/) with useful features
+[generous free tier](https://www.contentful.com/pricing) with useful features
 for a small company or a few projects. At the time of this writing, you get a
 few spaces (think projects), ten thousand content records, and five users that
 can be admins, editors or authors of content. All they ask in return is that you
@@ -132,7 +132,7 @@ for grabbing content as well, but how you deal with actually pulling it into
 your React components/pages with GraphQL is beautiful.
 
 After you install the `gatsby-source-contentful`
-[plugin](/packages/gatsby-source-contentful/) with NPM
+[plugin](/packages/gatsby-source-contentful) with NPM
 and add your Contentful API credentials to the gatsby-config file, the fun
 begins.
 
@@ -166,7 +166,7 @@ features. I haven’t heard any complaints from my co-workers.
 Another “problem” with static sites is the lack of out-of-the-box site search.
 Most search implementations occur between the server and the database. As a doc
 site, users typically expect solid search functionality. There are a few
-frontend only JavaScript search libraries (like [lunr.js](https://lunrjs.com/))
+frontend only JavaScript search libraries (like [lunr.js](https://lunrjs.com))
 that take a search query and parse a pre-built JSON index of your content.
 
 I could have created this index by tying into the `onPostBuild` Gatsby API. This
@@ -208,7 +208,7 @@ their Node.js client.
 It wasn’t pretty, but it worked.
 
 I ended up coupling this indexing method with
-[React InstantSearch](https://community.algolia.com/react-instantsearch/). This
+[React InstantSearch](https://community.algolia.com/react-instantsearch). This
 is Algolia’s official React component library for utilizing with their service.
 The final product was a search input with highlighted suggested results that
 allowed the user to click one of those results and be taken directly to a parent
@@ -222,7 +222,7 @@ emails about quota usage, and I was sure I wasn’t even coming close to actual
 usage limits.
 
 This was ironically about the same time I discovered
-[DocSearch](https://community.algolia.com/docsearch/) by Algolia. So as any good
+[DocSearch](https://community.algolia.com/docsearch) by Algolia. So as any good
 developer would do, I scrapped all my hard work and just signed up for
 DocSearch. Long story short is that they crawl your site every 24 hours,
 updating the index for you. You include a script tag that ties their API to your
@@ -267,7 +267,7 @@ Plugging any static site into the Netlify workflow is a no brainer, but after I
 found Gatsby, I knew there was no other option for me. These two pair so well
 together!
 
-Netlify recently changed [their pricing](https://www.netlify.com/pricing/) to
+Netlify recently changed [their pricing](https://www.netlify.com/pricing) to
 improve what was already an awesome hosting per dollar value. I can’t get
 through this section without a bullet list of why Netlify is so fantastic.
 
@@ -277,7 +277,7 @@ through this section without a bullet list of why Netlify is so fantastic.
 - Support for custom domains
 - Atomic deploys
 - A crazy-cool, integrated build engine
-- [And a lot more....](https://www.netlify.com/features/)
+- [And a lot more....](https://www.netlify.com/features)
 - Did I mention you get all this for FREE?
 
 <div style="width:100%;height:0;padding-bottom:55%;position:relative;"><iframe src="https://giphy.com/embed/vMnuZGHJfFSTe" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/vMnuZGHJfFSTe">via GIPHY</a></p>

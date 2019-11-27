@@ -4,7 +4,7 @@ title: "Adding a Custom Webpack Config"
 
 _Before creating custom webpack configuration, check to see if there's a Gatsby
 plugin already built that handles your use case in the
-[plugins section](/docs/plugins/). If there's not yet one and your use case is a
+[plugins section](/docs/plugins). If there's not yet one and your use case is a
 general one, it is highly encouraged you to contribute back your plugin to the
 Gatsby Plugin Library so it's available to others (including your future self)._
 
@@ -32,9 +32,9 @@ Check
 for the source.
 
 There are many plugins in the Gatsby repo using this API to look to for examples
-e.g. [Sass](/packages/gatsby-plugin-sass/),
-[TypeScript](/packages/gatsby-plugin-typescript/),
-[Glamor](/packages/gatsby-plugin-glamor/), and many more!
+e.g. [Sass](/packages/gatsby-plugin-sass),
+[TypeScript](/packages/gatsby-plugin-typescript),
+[Glamor](/packages/gatsby-plugin-glamor), and many more!
 
 ## Examples
 
@@ -90,7 +90,7 @@ exports.onCreateWebpackConfig = ({ stage, actions }) => {
 }
 ```
 
-You can always find more information on _resolve_ and other options in the official [Webpack docs](https://webpack.js.org/concepts/).
+You can always find more information on _resolve_ and other options in the official [Webpack docs](https://webpack.js.org/concepts).
 
 ### Modifying the Babel loader
 
@@ -103,7 +103,7 @@ exports.onCreateWebpackConfig = ({ actions, loaders, getConfig }) => {
   config.module.rules = [
     // Omit the default rule where test === '\.jsx?$'
     ...config.module.rules.filter(
-      rule => String(rule.test) !== String(/\.jsx?$/)
+      rule => String(rule.test) !== String(/\.jsx?$)
     ),
 
     // Recreate it with custom exclude filter

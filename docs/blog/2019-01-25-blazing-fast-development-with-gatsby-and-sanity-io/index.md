@@ -9,7 +9,7 @@ showImageInArticle: true
 
 Sanity.io is a content management system with real-time at its very core. We built the React.js [editing environment](https://github.com/sanity-io/sanity) as a real-time React.js app so you can collaborate on the same documents without locking. It connects to our document store through real-time APIs. Naturally, we've been looking for frontend frameworks that can reflect changes in real-time as well. Problem was, we didn't know of a reasonable way to accomplish this for everyday needs.
 
-Then we came across [Gatsby Preview](/blog/2018-07-17-announcing-gatsby-preview/), a general way to get real-time previews that doesn't involve custom code! When combining Sanity with Gatsby, we get the best of both worlds: A fully dynamic development experience where code and content is instantly reflected in preview.
+Then we came across [Gatsby Preview](/blog/2018-07-17-announcing-gatsby-preview), a general way to get real-time previews that doesn't involve custom code! When combining Sanity with Gatsby, we get the best of both worlds: A fully dynamic development experience where code and content is instantly reflected in preview.
 
 In January 2019 we shipped our new [Sanity Gatsby Source](https://github.com/sanity-io/gatsby-source-sanity) Plugin that uses the Sanity APIs to rebuild instantly as content changes. When developing this means a group of people can freely work together on both content models, UI design and the content itself. In real-time. Without rebuilds. This feels both a bit futuristic and pretty great. In the process we also to also make the static production builds themselves as fast as possible.
 
@@ -27,7 +27,7 @@ Add the source plugin to your Gatsby project:
 npm install --save gatsby-source-sanity
 ```
 
-The source plugin gives you a comprehensive GraphQL API in Gatsby for your structured content from Sanity. We strongly recommend using the [GraphiQL explorer](/docs/running-queries-with-graphiql/) to test queries and familiarize yourself with the schema documentation. It's super useful!
+The source plugin gives you a comprehensive GraphQL API in Gatsby for your structured content from Sanity. We strongly recommend using the [GraphiQL explorer](/docs/running-queries-with-graphiql) to test queries and familiarize yourself with the schema documentation. It's super useful!
 
 Once you have installed the plugin, add this configuration to `gatsby-config.js`:
 

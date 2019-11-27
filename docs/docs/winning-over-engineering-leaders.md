@@ -21,15 +21,15 @@ Here's an example of a basic explanation of Gatsby for engineering leaders and m
 
 ## Specific benefits
 
-Gatsby has many benefits that will appeal to engineering leaders and help them meet their goals. Some specific talking points are listed below. (A lot of these benefits are also covered in Preston So's article [Enterprise Gatsby: How to Reduce Your Digital Total Cost of Ownership (TCO) with Gatsby](/blog/2019-05-15-enterprise-gatsby-how-to-reduce-your-digital-total-cost-of-ownership-with-gatsby/), which is definitely worth sending to your engineering leaders.)
+Gatsby has many benefits that will appeal to engineering leaders and help them meet their goals. Some specific talking points are listed below. (A lot of these benefits are also covered in Preston So's article [Enterprise Gatsby: How to Reduce Your Digital Total Cost of Ownership (TCO) with Gatsby](/blog/2019-05-15-enterprise-gatsby-how-to-reduce-your-digital-total-cost-of-ownership-with-gatsby), which is definitely worth sending to your engineering leaders.)
 
 ### Performance
 
-> From its inception, Gatsby was built to optimize performance. Gatsby sites are consistently 2-3x faster than similar sites built with other tools, with pages loading in milliseconds rather than seconds. Gatsby's automated performance optimizations include pre-fetching resources, code splitting, progressive image loading, statically generating HTML, and Google's [PRPL Pattern](/docs/prpl-pattern/). If you want to take a deeper dive into Gatsby's performance features, check out Kyle Mathews's article, [Web Performance 101 – also, why is Gatsby so fast?](/blog/2017-09-13-why-is-gatsby-so-fast/) or Dustin Schau's article, [Behind the Scenes: What makes Gatsby Great](/blog/2019-04-02-behind-the-scenes-what-makes-gatsby-great/).
+> From its inception, Gatsby was built to optimize performance. Gatsby sites are consistently 2-3x faster than similar sites built with other tools, with pages loading in milliseconds rather than seconds. Gatsby's automated performance optimizations include pre-fetching resources, code splitting, progressive image loading, statically generating HTML, and Google's [PRPL Pattern](/docs/prpl-pattern). If you want to take a deeper dive into Gatsby's performance features, check out Kyle Mathews's article, [Web Performance 101 – also, why is Gatsby so fast?](/blog/2017-09-13-why-is-gatsby-so-fast) or Dustin Schau's article, [Behind the Scenes: What makes Gatsby Great](/blog/2019-04-02-behind-the-scenes-what-makes-gatsby-great).
 
 ### Security
 
-> Gatsby is a modern site generator that outputs static HTML pages at build time. That means you don't need a database or content management system running on your public servers, both of which are common sources of security breaches. Static content is much easier to secure. This does not, by any means, eliminate _all_ security vulnerabilities for Gatsby sites, but they will be significantly reduced. Learn more about Gatsby security in Alex Moon's article on [Security for Modern Web Frameworks](/blog/2019-04-06-security-for-modern-web-frameworks/) and the Docs page on [Answering IT & Security Questions](/docs/answering-it-security/).
+> Gatsby is a modern site generator that outputs static HTML pages at build time. That means you don't need a database or content management system running on your public servers, both of which are common sources of security breaches. Static content is much easier to secure. This does not, by any means, eliminate _all_ security vulnerabilities for Gatsby sites, but they will be significantly reduced. Learn more about Gatsby security in Alex Moon's article on [Security for Modern Web Frameworks](/blog/2019-04-06-security-for-modern-web-frameworks) and the Docs page on [Answering IT & Security Questions](/docs/answering-it-security).
 
 ### Scalability
 
@@ -37,7 +37,7 @@ Gatsby has many benefits that will appeal to engineering leaders and help them m
 
 ### Lower costs
 
-> CDN hosting for static sites is much, _much_ less expensive than traditional hosting costs. Read more about this here: [Enterprise Gatsby: How to Reduce Your Digital Total Cost of Ownership (TCO) with Gatsby](/blog/2019-05-15-enterprise-gatsby-how-to-reduce-your-digital-total-cost-of-ownership-with-gatsby/). You'll also save money on team resources as your developers will spend much less time working on performance optimization and configuring integrations. Many managers have also found it easier and less expensive to recruit for Gatsby projects because they don't require specialized CMS skills or the advanced expertise needed to handle complex tooling and development environments.
+> CDN hosting for static sites is much, _much_ less expensive than traditional hosting costs. Read more about this here: [Enterprise Gatsby: How to Reduce Your Digital Total Cost of Ownership (TCO) with Gatsby](/blog/2019-05-15-enterprise-gatsby-how-to-reduce-your-digital-total-cost-of-ownership-with-gatsby). You'll also save money on team resources as your developers will spend much less time working on performance optimization and configuring integrations. Many managers have also found it easier and less expensive to recruit for Gatsby projects because they don't require specialized CMS skills or the advanced expertise needed to handle complex tooling and development environments.
 
 ### Improved development process
 
@@ -49,11 +49,11 @@ You may find that your engineering leaders and managers have some concerns about
 
 ### Support for open source software is often unreliable and relatively few projects offer long-term viability. How is Gatsby different?
 
-> Gatsby has an extremely active and communicative community with over 2,000 contributors and tens of thousands of developers building Gatsby sites. The process for filing issues and [contributing to Gatsby](/contributing/) is well-documented. [Gatsby's extensive documentation](/docs/) also includes various guides, tutorials, plugin and starter libraries, troubleshooting, and additional resources. Last but not least, the Gatsby open source project is supported by [Gatsby, Inc](https://www.gatsbyjs.com/). whose team is committed, full-time, to developing and maintaining Gatsby. Gatsby, Inc. also offers support services, training, and partnership opportunities.
+> Gatsby has an extremely active and communicative community with over 2,000 contributors and tens of thousands of developers building Gatsby sites. The process for filing issues and [contributing to Gatsby](/contributing) is well-documented. [Gatsby's extensive documentation](/docs) also includes various guides, tutorials, plugin and starter libraries, troubleshooting, and additional resources. Last but not least, the Gatsby open source project is supported by [Gatsby, Inc](https://www.gatsbyjs.com). whose team is committed, full-time, to developing and maintaining Gatsby. Gatsby, Inc. also offers support services, training, and partnership opportunities.
 
 ### Our site uses a lot of dynamic content and components. Didn't you say Gatsby creates static sites?
 
-> Yes, but there's more to it. Gatsby statically generates HTML content using React DOM and server-side APIs – it's an important part of how Gatsby delivers exceptional speed and better security. However, this static HTML content can then be enhanced with client-side JavaScript via React hydration. You can learn more about this in Dustin Schau's blog post [Beyond Static: Building Dynamic apps with Gatsby](/blog/2018-10-15-beyond-static-intro/).
+> Yes, but there's more to it. Gatsby statically generates HTML content using React DOM and server-side APIs – it's an important part of how Gatsby delivers exceptional speed and better security. However, this static HTML content can then be enhanced with client-side JavaScript via React hydration. You can learn more about this in Dustin Schau's blog post [Beyond Static: Building Dynamic apps with Gatsby](/blog/2018-10-15-beyond-static-intro).
 
 ### Our content team and other less-technical members of my organization need to be able to make site updates. Are they going to be able to work with a Gatsby site?
 
@@ -63,12 +63,12 @@ You may find that your engineering leaders and managers have some concerns about
 
 Case studies are an excellent way to build an engineering leader's confidence in Gatsby's capabilities. Here are some case studies you might want to share:
 
-- [Beyond Static: Haptic Media Uses Gatsby to Build a Dynamic Web App](/blog/2019-02-05-hapticmedia-case-study/)
+- [Beyond Static: Haptic Media Uses Gatsby to Build a Dynamic Web App](/blog/2019-02-05-hapticmedia-case-study)
 - [IBM Uses Gatsby to Manage Enterprise-Level Content](/blog/2018-12-17-ibm-case-study/#big-company-big-website)
-- [How we're migrating a government open data site to Gatsby](/blog/2019-02-08-government-open-data-site-with-gatsby/)
+- [How we're migrating a government open data site to Gatsby](/blog/2019-02-08-government-open-data-site-with-gatsby)
 
-For examples of Gatsby sites, [check out the Showcase](/showcase/).
+For examples of Gatsby sites, [check out the Showcase](/showcase).
 
 ## Conclusion
 
-When you're trying to win over a stakeholder, your first instinct may be to focus completely on Gatsby's benefits. However, when you're speaking to engineering leaders and managers, it's important to be positive while still being honest about Gatsby's limitations. Setting expectations before they go out to do their own research will help them focus on finding solutions rather than faults. There is ample proof that Gatsby works well for many websites - don't be afraid to help your engineering leaders dig into pros and cons. (And it doesn't hurt to get a few of their team members on your side. Check out the [Winning Over Developers](/docs/winning-over-developers/) page for more on that subject.)
+When you're trying to win over a stakeholder, your first instinct may be to focus completely on Gatsby's benefits. However, when you're speaking to engineering leaders and managers, it's important to be positive while still being honest about Gatsby's limitations. Setting expectations before they go out to do their own research will help them focus on finding solutions rather than faults. There is ample proof that Gatsby works well for many websites - don't be afraid to help your engineering leaders dig into pros and cons. (And it doesn't hurt to get a few of their team members on your side. Check out the [Winning Over Developers](/docs/winning-over-developers) page for more on that subject.)

@@ -166,7 +166,7 @@ const GatsbyNodeHelpers = {
   /**
    * Collection of functions used to programmatically modify Gatsby’s internal state.
    *
-   * See [`actions`](/docs/actions/) reference.
+   * See [`actions`](/docs/actions) reference.
    * @type {Actions}
    * @deprecated Will be removed in gatsby 3.0. Use [actions](#actions)
    * instead.
@@ -176,7 +176,7 @@ const GatsbyNodeHelpers = {
   /**
    * Collection of functions used to programmatically modify Gatsby’s internal state.
    *
-   * See [`actions`](/docs/actions/) reference.
+   * See [`actions`](/docs/actions) reference.
    * @type {Actions}
    */
   actions: true,
@@ -263,7 +263,7 @@ const GatsbyNodeHelpers = {
    * This should be used instead of `getNode` in graphql resolvers to enable
    * tracking dependencies for query results. If it's not used Gatsby will
    * not rerun query if node changes leading to stale query results. See
-   * [Page -> Node Dependency Tracking](/docs/page-node-dependencies/)
+   * [Page -> Node Dependency Tracking](/docs/page-node-dependencies)
    * for more details.
    * @param {string} ID id of the node.
    * @param {string} path of the node.
@@ -298,7 +298,7 @@ const GatsbyNodeHelpers = {
   /**
    * Use to prefix resources URLs. `pathPrefix` will be either empty string or
    * path that starts with slash and doesn't end with slash. Check
-   * [Adding a Path Prefix](https://www.gatsbyjs.org/docs/path-prefix/)
+   * [Adding a Path Prefix](https://www.gatsbyjs.org/docs/path-prefix)
    * page for details about path prefixing.
    * @type {string}
    */

@@ -21,7 +21,7 @@ In the component where you need it, load the package via CDN using a [`<script /
 To embed your script, you can:
 
 - Include it in a custom component as needed using [`react-helmet`](https://github.com/nfl/react-helmet).
-- Add the script tag directly in your base HTML using Gatsby's [html.js](/docs/custom-html/)
+- Add the script tag directly in your base HTML using Gatsby's [html.js](/docs/custom-html)
 
 You should then follow React's guidelines for [Integrating with DOM Manipulation Plugins](https://reactjs.org/docs/integrating-with-other-libraries.html#integrating-with-dom-manipulation-plugins), using the methods available in the [React Component Lifecycle](https://reactjs.org/docs/react-component.html#the-component-lifecycle) to interact with the library you're using.
 
@@ -107,6 +107,6 @@ const MyPage = () => {
 }
 ```
 
-> **Note:** There are other potential workarounds than those listed here. If you've had success with another method, check out the [contributing docs](/contributing/docs-contributions/) and add yours!
+> **Note:** There are other potential workarounds than those listed here. If you've had success with another method, check out the [contributing docs](/contributing/docs-contributions) and add yours!
 
-If all else fails, you may also want to check out the documentation on [Debugging HTML Builds](/docs/debugging-html-builds/).
+If all else fails, you may also want to check out the documentation on [Debugging HTML Builds](/docs/debugging-html-builds).

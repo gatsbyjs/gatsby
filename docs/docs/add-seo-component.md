@@ -4,7 +4,7 @@ title: "Adding an SEO Component"
 
 Every site on the web has basic _meta-tags_ like the title, favicon or description of the page in their `<head>` element. This information gets displayed in the browser and is used when someone shares your website, e.g. on Twitter. You can give your users and these websites additional data to embed your website with more data — and that's where this guide for a SEO component comes in. At the end you'll have a component you can place in your layout file and have rich previews for other clients, smartphone users, and search engines.
 
-_Note: This component will use StaticQuery. If you're unfamiliar with that, have a look at the [StaticQuery documentation](/docs/static-query/). You also have to have `react-helmet` installed for which you can have a look at [this document](/docs/add-page-metadata)._
+_Note: This component will use StaticQuery. If you're unfamiliar with that, have a look at the [StaticQuery documentation](/docs/static-query). You also have to have `react-helmet` installed for which you can have a look at [this document](/docs/add-page-metadata)._
 
 ## gatsby-config.js
 
@@ -213,7 +213,7 @@ const query = graphql`
 
 ## Examples
 
-You could also put the Facebook and Twitter meta-tags into their own components, add custom favicons you placed in your `static` folder, and add [schema.org](https://schema.org/) data (Google will use that for their [Structured Data](https://developers.google.com/search/docs/guides/intro-structured-data)). To see how that works you can have a look at these two examples:
+You could also put the Facebook and Twitter meta-tags into their own components, add custom favicons you placed in your `static` folder, and add [schema.org](https://schema.org) data (Google will use that for their [Structured Data](https://developers.google.com/search/docs/guides/intro-structured-data)). To see how that works you can have a look at these two examples:
 
 - [marisamorby.com](https://github.com/marisamorby/marisamorby.com/blob/master/packages/gatsby-theme-blog-sanity/src/components/seo.js)
 - [gatsby-starter-prismic](https://github.com/LeKoArts/gatsby-starter-prismic/blob/master/src/components/SEO/SEO.jsx)

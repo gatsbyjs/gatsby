@@ -10,7 +10,7 @@ quite work. This guide shows you how to set it up.
 
 ## Setting up your environment
 
-The most popular testing framework for React is [Jest](https://jestjs.io/),
+The most popular testing framework for React is [Jest](https://jestjs.io),
 which was created by Facebook. While Jest is a general-purpose JavaScript unit
 testing framework, it has lots of features that make it work particularly well
 with React.
@@ -41,7 +41,7 @@ module.exports = {
     ".+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": `<rootDir>/__mocks__/file-mock.js`,
   },
   testPathIgnorePatterns: [`node_modules`, `.cache`, `public`],
-  transformIgnorePatterns: [`node_modules/(?!(gatsby)/)`],
+  transformIgnorePatterns: [`node_modules/(?!(gatsby))`],
   globals: {
     __PATH_PREFIX__: ``,
   },
@@ -232,7 +232,7 @@ module.exports = {
     "^.+\\.tsx?$": "ts-jest",
     "^.+\\.jsx?$": "<rootDir>/jest-preprocess.js",
   },
-  testRegex: "(/__tests__/.*|(\\.|/)(test|spec))\\.([tj]sx?)$",
+  testRegex: "(/__tests__/.*|(\\.|)(test|spec))\\.([tj]sx?)$",
   moduleNameMapper: {
     ".+\\.(css|styl|less|sass|scss)$": "identity-obj-proxy",
     ".+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
@@ -240,7 +240,7 @@ module.exports = {
   },
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
   testPathIgnorePatterns: ["node_modules", ".cache", "public"],
-  transformIgnorePatterns: ["node_modules/(?!(gatsby)/)"],
+  transformIgnorePatterns: ["node_modules/(?!(gatsby))"],
   globals: {
     __PATH_PREFIX__: "",
   },

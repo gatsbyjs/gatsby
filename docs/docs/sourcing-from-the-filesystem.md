@@ -6,9 +6,9 @@ This guide will walk you through sourcing data from the filesystem.
 
 ## Setup
 
-This guide assumes that you have a Gatsby project set up. If you need to set up a project, please reference the [Quick Start Guide](/docs/quick-start/).
+This guide assumes that you have a Gatsby project set up. If you need to set up a project, please reference the [Quick Start Guide](/docs/quick-start).
 
-It will also be useful if you are familiar with [GraphiQL](/docs/introducing-graphiql/), a tool that helps you structure your queries correctly.
+It will also be useful if you are familiar with [GraphiQL](/docs/introducing-graphiql), a tool that helps you structure your queries correctly.
 
 ## Using `gatsby-source-filesystem`
 
@@ -73,4 +73,4 @@ Once files have been sourced, various "transformer" plugins in the Gatsby ecosys
 
 ## Further reference and examples
 
-For further reference, you may be interested in checking out the `gatsby-source-filesystem` [package README](/packages/gatsby-source-filesystem/), and various official and community [starters that use the plugin](/starters/?d=gatsby-source-filesystem).
+For further reference, you may be interested in checking out the `gatsby-source-filesystem` [package README](/packages/gatsby-source-filesystem), and various official and community [starters that use the plugin](/starters/?d=gatsby-source-filesystem).

@@ -30,11 +30,11 @@ Please reach out if there are other topics you'd like to hear about!
 Windows
 
 - [Narrator](https://support.microsoft.com/en-us/help/22798/windows-10-complete-guide-to-narrator) (made by Microsoft, pre-installed)
-- [NVDA](https://www.nvaccess.org/about-nvda/) (most popular free solution)
+- [NVDA](https://www.nvaccess.org/about-nvda) (most popular free solution)
 
 OSX
 
-- [VoiceOver](https://help.apple.com/voiceover/mac/10.15/) (made by Apple, pre-installed)
+- [VoiceOver](https://help.apple.com/voiceover/mac/10.15) (made by Apple, pre-installed)
 
 iOS
 
@@ -48,7 +48,7 @@ Android
 
 When working on a11y at a previous company, I worked closely with a team at Microsoft. They recommended that I only test Internet Explorer with NVDA and Edge with Narrator. This notion of technology pairings is important for testing since some combinations do not play well together and some combinations aren't widely used.
 
-Below are pairings in order of usage (omitting paid screen readers) according to a September 2019 [survey](https://webaim.org/projects/screenreadersurvey8/) of screen reader users:
+Below are pairings in order of usage (omitting paid screen readers) according to a September 2019 [survey](https://webaim.org/projects/screenreadersurvey8) of screen reader users:
 
 - NVDA & Firefox
 - NVDA & Chrome

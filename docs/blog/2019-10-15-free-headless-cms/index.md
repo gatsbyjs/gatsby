@@ -8,7 +8,7 @@ tags: ["cms"]
 
 So, you have a very big idea. But very little money. You [purchased a domain name](https://twitter.com/gatsbyjs/status/1169991336801525761), and now that great idea needs a proper website.
 
-You decide you want to build your site with Gatsby and one of several [free hosting providers](/docs/deploying-and-hosting/), but you also need a [headless CMS](/docs/headless-cms/) that can start small and grow over time.
+You decide you want to build your site with Gatsby and one of several [free hosting providers](/docs/deploying-and-hosting), but you also need a [headless CMS](/docs/headless-cms) that can start small and grow over time.
 
 How do you know which headless CMS is right for your site? In this post, we’ll walk through important decisions to consider and weigh the pros and cons of three headless CMS options.
 
@@ -44,11 +44,11 @@ Cheap hosting is easy to find - providers like Bluehost and Amazon Lightsail off
 
 If your website needed all-in-one WordPress, then these cheap, shared hosting packages wouldn’t be enough to handle a website that expects any sort of traffic. However, you’re just using headless WordPress, and all that you ask from the software is to organize your content, and send it to a frontend framework like Gatsby.
 
-So, as long as the host is reputable, and the service is secure, you can buy the most cost-friendly hosting available. See Gatsby’s guide on getting started with [over a dozen headless CMS’s](https://www.gatsbyjs.org/docs/headless-cms/)
+So, as long as the host is reputable, and the service is secure, you can buy the most cost-friendly hosting available. See Gatsby’s guide on getting started with [over a dozen headless CMS’s](https://www.gatsbyjs.org/docs/headless-cms)
 
 ## Option #2. Netlify CMS
 
-Netlify created a free headless CMS modeled after open source projects like WordPress and Drupal, so JAMstack sites would have options beyond SaaS CMS’s. [Netlify CMS](https://www.netlifycms.org/) cleverly uses cloud git services like GitHub and GitLab as the backend for your content, and claims to work with almost any static site generator, including Gatsby.
+Netlify created a free headless CMS modeled after open source projects like WordPress and Drupal, so JAMstack sites would have options beyond SaaS CMS’s. [Netlify CMS](https://www.netlifycms.org) cleverly uses cloud git services like GitHub and GitLab as the backend for your content, and claims to work with almost any static site generator, including Gatsby.
 
 ### How “free” is it?
 
@@ -56,7 +56,7 @@ Because Netlify CMS is tied to third party authentication and git services, it�
 
 ## Option #3. Headless Ghost
 
-Ghost is a Node-based, robust CMS that recently [added features](https://ghost.org/blog/jamstack/) to make the software easier to use within a headless CMS architecture. Ghost is used by Apple, Sky News, DuckDuckGo, Mozilla, Square, and CloudFlare - so you’ll be in good company if you choose it.
+Ghost is a Node-based, robust CMS that recently [added features](https://ghost.org/blog/jamstack) to make the software easier to use within a headless CMS architecture. Ghost is used by Apple, Sky News, DuckDuckGo, Mozilla, Square, and CloudFlare - so you’ll be in good company if you choose it.
 
 ### How “free” is it?
 

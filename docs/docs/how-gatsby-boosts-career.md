@@ -12,8 +12,8 @@ As you ship Gatsby sites and get [other developers](/docs/winning-over-developer
 
 In general, great engineering career opportunities often lie in developing expertise in new, rapidly emerging systems and technologies -- there are fewer established domain experts in these fields, room to carve out a personal brand as an expert, and an ever-growing demand for expertise.
 
-For an inspiring story on how Gatsby has already transformed someone's career, read our [interview with Ahmed Alahmady](/blog/2019-05-03-how-gatsby-helped-jump-start-my-engineering-career/) on the Gatsby blog.
+For an inspiring story on how Gatsby has already transformed someone's career, read our [interview with Ahmed Alahmady](/blog/2019-05-03-how-gatsby-helped-jump-start-my-engineering-career) on the Gatsby blog.
 
 --
 
-**Note:** do you have more ideas on how Gatsby can boost your career? We welcome contributions to this page. Find out [how to contribute](/contributing/docs-contributions/).
+**Note:** do you have more ideas on how Gatsby can boost your career? We welcome contributions to this page. Find out [how to contribute](/contributing/docs-contributions).

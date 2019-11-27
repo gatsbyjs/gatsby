@@ -100,7 +100,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   //
   // - The url matches a client side route (page.matchPath)
   // - it's a 404 page
-  // - it's the offline plugin shell (/offline-plugin-app-shell-fallback/)
+  // - it's the offline plugin shell (/offline-plugin-app-shell-fallback)
   if (
     pagePath &&
     __BASE_PATH__ + pagePath !== browserLoc.pathname &&

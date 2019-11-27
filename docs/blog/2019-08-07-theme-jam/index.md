@@ -9,13 +9,13 @@ tags:
   - community
 ---
 
-At the beginning of July, [Brent Jackson](https://twitter.com/jxnblk) joined _Learn With Jason_ to show [how to use `theme-ui`](https://youtu.be/6Z4p-qjnKCQ?list=PLz8Iz-Fnk_eTpvd49Sa77NiF8Uqq5Iykx). During the show, we announced the stable launch of [Gatsby themes](/docs/themes/) and kicked off the [Theme Jam](https://themejam.gatsbyjs.org), a celebration of our incredible community of creators.
+At the beginning of July, [Brent Jackson](https://twitter.com/jxnblk) joined _Learn With Jason_ to show [how to use `theme-ui`](https://youtu.be/6Z4p-qjnKCQ?list=PLz8Iz-Fnk_eTpvd49Sa77NiF8Uqq5Iykx). During the show, we announced the stable launch of [Gatsby themes](/docs/themes) and kicked off the [Theme Jam](https://themejam.gatsbyjs.org), a celebration of our incredible community of creators.
 
 ## What is the Theme Jam?
 
 ![Theme Jam illustration by Maggie Appleton.](images/theme-jam.png)
 
-In a nutshell, the Theme Jam was a way for Gatsby to give back to its community: everyone who published a theme and submitted it to the Theme Jam will receive exclusive swag designed by [Maggie Appleton](https://maggieappleton.com/). Two creators who published themes our team reviewed as exemplary are getting an all-expenses paid trip to [Gatsby Days](https://www.gatsbyjs.com/resources/gatsby-days/). (For more details, see the [rules](https://themejam.gatsbyjs.org/rules).)
+In a nutshell, the Theme Jam was a way for Gatsby to give back to its community: everyone who published a theme and submitted it to the Theme Jam will receive exclusive swag designed by [Maggie Appleton](https://maggieappleton.com). Two creators who published themes our team reviewed as exemplary are getting an all-expenses paid trip to [Gatsby Days](https://www.gatsbyjs.com/resources/gatsby-days). (For more details, see the [rules](https://themejam.gatsbyjs.org/rules).)
 
 ## How were entries reviewed?
 
@@ -29,8 +29,8 @@ On top of that, submissions were code reviewed for documentation, the ability to
 
 Several parts of the judging could be done automatically, so we set up an ugly-but-effective [automated test](https://github.com/jlengstorf/theme-jam-tester) that would:
 
-1. Run a [webpagetest.org](https://webpagetest.org/) audit on the demo site
-2. Run a [Lighthouse](https://developers.google.com/web/tools/lighthouse/) audit on the demo site
+1. Run a [webpagetest.org](https://webpagetest.org) audit on the demo site
+2. Run a [Lighthouse](https://developers.google.com/web/tools/lighthouse) audit on the demo site
 3. Check for required fields and keywords in `package.json` (shout out to [unpkg.com](https://unpkg.com) for making this easy)
 
 To pass the automated review, a theme must:
@@ -47,7 +47,7 @@ Every theme that cleared the automated review was manually reviewed by [Jackson]
 
 Amberley did a manual accessibility audit. Nearly all of the themes we reviewed have a few accessibility issues, so we will be opening issues with feedback and suggestions to improve that.
 
-We also looked for coding best practices, ease of [shadowing](/blog/2019-04-29-component-shadowing/)/extending the theme, documentation in the README, and overall creativity/ambitiousness of the project.
+We also looked for coding best practices, ease of [shadowing](/blog/2019-04-29-component-shadowing)/extending the theme, documentation in the README, and overall creativity/ambitiousness of the project.
 
 ## Highlighting Exemplary Creators
 
@@ -63,17 +63,17 @@ Two of the themes we received stood out especially. As we reviewed, we all took 
 
 ![Demo of the Simplecast Gatsby theme.](images/gatsby-theme-simplecast.gif)
 
-Vojtěch combined data sourcing from [Simplecast](https://simplecast.com/)’s API, beautiful design, and an explorable UX to create this powerful theme for podcasters.
+Vojtěch combined data sourcing from [Simplecast](https://simplecast.com)’s API, beautiful design, and an explorable UX to create this powerful theme for podcasters.
 
-**Check out the theme: [source code](https://github.com/vojtaholik/gatsby-theme-simplecast) · [demo](https://gatsby-theme-simplecast.netlify.com/)**
+**Check out the theme: [source code](https://github.com/vojtaholik/gatsby-theme-simplecast) · [demo](https://gatsby-theme-simplecast.netlify.com)**
 
 ### Allan’s Prismic-Powered Legal Pages Theme
 
 ![Screenshot of the Gatsby Prismic Legals theme.](images/gatsby-theme-legals-prismic-mockup.jpg)
 
-Allan turned something boring (required legal pages) into something beautiful by pulling common legal pages — such as a “terms & conditions” page — from [Prismic](https://prismic.io/) and putting them into a gorgeous UI. This theme highlights theme composability: combine this theme with others to quickly add required legal pages to any Gatsby site!
+Allan turned something boring (required legal pages) into something beautiful by pulling common legal pages — such as a “terms & conditions” page — from [Prismic](https://prismic.io) and putting them into a gorgeous UI. This theme highlights theme composability: combine this theme with others to quickly add required legal pages to any Gatsby site!
 
-**Check out the theme: [source code](https://github.com/littleplusbig/gatsby-theme-legals-prismic) · [demo](https://gatsby-theme-legals.netlify.com/)**
+**Check out the theme: [source code](https://github.com/littleplusbig/gatsby-theme-legals-prismic) · [demo](https://gatsby-theme-legals.netlify.com)**
 
 ## Thanks to the Entire Community
 
@@ -87,6 +87,6 @@ Just because the Theme Jam is over, it doesn’t mean we’re not super excited 
 
 If you’d like to start building themes, here are a few resources:
 
-- [Gatsby theme official docs](/docs/themes/)
+- [Gatsby theme official docs](/docs/themes)
 - [Official egghead course on Gatsby themes](https://egghead.io/courses/gatsby-theme-authoring)
 - [Converting part of an existing website to Gatsby themes](https://www.youtube.com/watch?v=ciGFxNamooI&list=PLz8Iz-Fnk_eTpvd49Sa77NiF8Uqq5Iykx&index=4)

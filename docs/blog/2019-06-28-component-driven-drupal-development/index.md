@@ -9,7 +9,7 @@ tags:
   - agencies
 ---
 
-In our recent webinar, [Gatsby for Agencies and Teams: Better, Faster, Smarter](https://www.gatsbyjs.com/gatsby-for-agencies/), Ben Robertson talked with us about adopting Gatsby at Mediacurrent and how it transformed their development process. Ben is a frontend developer at Mediacurrent where he has established frontend development best practices and led Drupal development projects.
+In our recent webinar, [Gatsby for Agencies and Teams: Better, Faster, Smarter](https://www.gatsbyjs.com/gatsby-for-agencies), Ben Robertson talked with us about adopting Gatsby at Mediacurrent and how it transformed their development process. Ben is a frontend developer at Mediacurrent where he has established frontend development best practices and led Drupal development projects.
 
 ## About Mediacurrent
 
@@ -70,4 +70,4 @@ As Ben and the Mediacurrent wrap up their first successful Gatsby project, they�
 
 Everyone is looking forward to new growth and bright future with Gatsby.
 
-To learn more about Mediacurrent’s work with Gatsby, check out Ben’s Gatsby Days presentation -- [Move Fast, Don’t Break Things: Trends in Modern Web Dev with Mediacurrent](https://youtu.be/QiocnDGnKfs), or read about one of Mediacurrent's client projects in ["Digital Display With Decoupled Drupal 8 & Gatsby"](/blog/2019-07-09-digital-display-drupal-gatsby/).
+To learn more about Mediacurrent’s work with Gatsby, check out Ben’s Gatsby Days presentation -- [Move Fast, Don’t Break Things: Trends in Modern Web Dev with Mediacurrent](https://youtu.be/QiocnDGnKfs), or read about one of Mediacurrent's client projects in ["Digital Display With Decoupled Drupal 8 & Gatsby"](/blog/2019-07-09-digital-display-drupal-gatsby).

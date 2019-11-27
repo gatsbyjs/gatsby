@@ -70,7 +70,7 @@ const SiteNavigation = () => (
       Home
     </Link>
     <Link
-      to="/about/"
+      to="/about"
       {/* highlight-next-line */}
       activeStyle={{ color: "red" }}
     >
@@ -106,7 +106,7 @@ import { Link } from "gatsby"
 
 const Header = <>
   <Link
-    to="/articles/"
+    to="/articles"
     activeStyle={{ color: "red" }}
     {/* highlight-next-line */}
     partiallyActive={true}
@@ -169,7 +169,7 @@ import { Link } from "gatsby"
 
 const AreYouSureLink = () => (
   <Link
-    to="/confirmation/"
+    to="/confirmation"
     {/* highlight-next-line */}
     replace
   >
@@ -210,7 +210,7 @@ const Form = () => (
 
       // TODO: do something with form values
       // highlight-next-line
-      navigate("/form-submitted/")
+      navigate("/form-submitted")
     }}
   >
     {/* (skip form inputs for brevity) */}
@@ -235,7 +235,7 @@ const Form = () => (
       const formValues = getFormValues()
 
       navigate(
-        "/form-submitted/",
+        "/form-submitted",
         // highlight-start
         {
           state: { formValues },
@@ -264,7 +264,7 @@ const Form = () => (
 
       // TODO: do something with form values
       navigate(
-        "/form-submitted/",
+        "/form-submitted",
         // highlight-next-line
         { replace: true }
       )
@@ -278,7 +278,7 @@ const Form = () => (
 ## Add the path prefix to paths using `withPrefix`
 
 It is common to host sites in a sub-directory of a site. Gatsby lets you [set
-the path prefix for your site](/docs/path-prefix/). After doing so, Gatsby's `<Link>` component will automatically handle constructing the correct URL in development and production.
+the path prefix for your site](/docs/path-prefix). After doing so, Gatsby's `<Link>` component will automatically handle constructing the correct URL in development and production.
 
 For pathnames you construct manually, there's a helper function, `withPrefix` that prepends your path prefix in production (but doesn't during development where paths don't need prefixed).
 
@@ -321,7 +321,7 @@ const Link = ({ children, to, activeClassName, partiallyActive, ...other }) => {
   // Tailor the following test to your environment.
   // This example assumes that any internal link (intended for Gatsby)
   // will start with exactly one slash, and that anything else is external.
-  const internal = /^\/(?!\/)/.test(to)
+  const internal = /^\/(?!\)/.test(to)
 
   // Use Gatsby Link for internal links, and <a> for others
   if (internal) {
@@ -389,5 +389,5 @@ onClick = () => {
 
 ## Additional resources
 
-- [Authentication tutorial for client-only routes](/tutorial/authentication-tutorial/)
-- [`gatsby-plugin-catch-links`](https://www.gatsbyjs.org/packages/gatsby-plugin-catch-links/) to automatically intercept local links in Markdown files for `gatsby-link` like behavior
+- [Authentication tutorial for client-only routes](/tutorial/authentication-tutorial)
+- [`gatsby-plugin-catch-links`](https://www.gatsbyjs.org/packages/gatsby-plugin-catch-links) to automatically intercept local links in Markdown files for `gatsby-link` like behavior

@@ -9,7 +9,7 @@ tags:
 
 ## What this article is about:
 
-Recently, I gave a talk with this same title at Gatsby Days in the San Francisco Bay area ([watch and listen to the talk here](https://www.gatsbyjs.com/gatsby-days-uxresearch-shannon/). This article reviews the following:
+Recently, I gave a talk with this same title at Gatsby Days in the San Francisco Bay area ([watch and listen to the talk here](https://www.gatsbyjs.com/gatsby-days-uxresearch-shannon). This article reviews the following:
 
 - Why do UX research on your website?
 - How to do high-impact, low-effort research
@@ -47,7 +47,7 @@ Focusing on the biggest risks to your product’s success involves mitigating pr
 
 ## Mitigate product risks
 
-UX research focuses on mitigating product risks, while other departments focus on mitigating market risks. Product risk is the possibility that the system or software might fail to satisfy or fulfill some reasonable expectation of the customer, user, or stakeholder. [Risk-based testing](http://tryqa.com/what-is-risk-based-testing/) involves testing the functionality which has the highest impact and probability of failure.
+UX research focuses on mitigating product risks, while other departments focus on mitigating market risks. Product risk is the possibility that the system or software might fail to satisfy or fulfill some reasonable expectation of the customer, user, or stakeholder. [Risk-based testing](http://tryqa.com/what-is-risk-based-testing) involves testing the functionality which has the highest impact and probability of failure.
 
 An example of risk-based testing at Gatsby:
 

@@ -17,4 +17,4 @@ To avoid copy-pasting and reuse components instead you can use **component-shari
 
 --
 
-**Note:** do you have additional ideas on sharing components across websites? We welcome contributions to the Gatsby docs. Find out [how to contribute](/contributing/docs-contributions/).
+**Note:** do you have additional ideas on sharing components across websites? We welcome contributions to the Gatsby docs. Find out [how to contribute](/contributing/docs-contributions).

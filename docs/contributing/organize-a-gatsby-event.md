@@ -14,11 +14,11 @@ A community-organized Gatsby event can be a local meetup, a small conference, a 
 
 There are several ways Gatsby can support your event:
 
-- Promote event on the [Gatsbyjs.org Events Page](/contributing/events/)
+- Promote event on the [Gatsbyjs.org Events Page](/contributing/events)
 - Promote event via [Gatsby’s Twitter account](https://twitter.com/gatsbyjs)
 - \$300 off event expenses (food, supplies, space rental, etc.)
-- Free Gatsby stickers from the [Gatsby Swag Store](https://store.gatsbyjs.org/)
-- 20% off swag in the [Gatsby Swag Store](https://store.gatsbyjs.org/) for your attendees
+- Free Gatsby stickers from the [Gatsby Swag Store](https://store.gatsbyjs.org)
+- 20% off swag in the [Gatsby Swag Store](https://store.gatsbyjs.org) for your attendees
 
 ### A note on shipping
 
@@ -30,7 +30,7 @@ We support US and international Gatsby events, but it’s not uncommon to run in
 - The event must have at least one Gatsby-focused presentation or discussion.
 - Please announce Gatsby as a sponsor for the event and/or list us on the event as a sponsor.
 - If you’re requesting the \$300 reimbursement, then you must submit a receipt or receipts for event-related expenses.
-- The event must be in harmony with the [Gatsby Code of Conduct](/contributing/code-of-conduct/) and follow the [Gatsby brand guidelines](/guidelines/logo/)
+- The event must be in harmony with the [Gatsby Code of Conduct](/contributing/code-of-conduct) and follow the [Gatsby brand guidelines](/guidelines/logo)
 
 ## How do you qualify for Gatsby support?
 
@@ -43,4 +43,4 @@ If you have any questions, please send them to events@gatsbyjs.com.
 
 ## Related Links
 
-- [Gatsby's Community Events](/contributing/events/)
+- [Gatsby's Community Events](/contributing/events)

@@ -122,7 +122,7 @@ Turns out that managing and scaling traditional monolithic LAMP stack
 applications is usually a time-consuming task, to say the least.
 
 You might decide to take the easy route and host your blog on a WordPress
-specialized hosting service like [WP Engine](https://wpengine.com/), which will
+specialized hosting service like [WP Engine](https://wpengine.com), which will
 take care of all things related to security and scaling for you. But then you
 better be prepared to set aside \$29 each month, which is what their cheapest
 plan costs.
@@ -142,7 +142,7 @@ or you have at least come across a site that was built with one, even if you
 didn't realize it. Up until recently, they have been mostly used for
 documentation sites of open source projects, because they are very cheap to make
 and because you can host them for free on
-[GitHub Pages](https://pages.github.com/).
+[GitHub Pages](https://pages.github.com).
 
 For those very same reasons, developers also often use them to create their own
 personal blogs and portfolio sites, which only makes sense right? After all, if
@@ -197,12 +197,12 @@ thought of that and created Gatsby.js.
 A little disclaimer: I absolutely love React, so, when I first learned that
 there were some emerging Static Site Generators who leveraged only React and
 Webpack, I knew that I had to try at least one of them for the new upcoming blog
-I was planning to build. These projects were [Gatsby.js ](http://gatsbyjs.org/)
-and [Phenomic](https://phenomic.io/), and both were still quite young back then,
+I was planning to build. These projects were [Gatsby.js ](http://gatsbyjs.org)
+and [Phenomic](https://phenomic.io), and both were still quite young back then,
 neither of them having reached the 1.0 release yet.
 
 Ironically I chose Phenomic, mainly because I liked what the guys from
-[Serverless.com ](http://serverless.com/)had done with their website at that
+[Serverless.com ](http://serverless.com)had done with their website at that
 time -- built using Phenomic.
 
 So, I went ahead and built my blog using Phenomic. Overall, I thought it was a
@@ -211,7 +211,7 @@ Hot Reloading out of the box, which translated into a very pleasant frontend
 development experience.
 
 However, at the end of the day, Phenomic was just another old-school Static Site
-Generator like [Jekyll](https://jekyllrb.com/) or [Hugo](https://gohugo.io/), in
+Generator like [Jekyll](https://jekyllrb.com) or [Hugo](https://gohugo.io), in
 the sense that the only data it could handle was Markdown files.
 
 For a simple developer blog, Phenomic might have been enough, but it was
@@ -229,7 +229,7 @@ But then Gatsby.js hit the 1.0 release, and everything changed...
 ## Meeting Gatsby.js
 
 My first contact with the 1.0 release of Gatsby.js was thanks to the Facebook
-team behind the [React](http://reactjs.org/) documentation site. They decided to
+team behind the [React](http://reactjs.org) documentation site. They decided to
 migrate their legacy Jekyll site to a completely new site built with Gatsby 1.0.
 I, as the good React fanboy that I am, jumped at the first chance I had to
 submit a PR to help fix a couple of bugs on the site, and was even given the
@@ -271,7 +271,7 @@ its entries via an HTTP endpoint, as well as setting up webhooks that can be
 triggered when those entries are created, updated or deleted. Fortunately, most
 popular CMSs nowadays already support those features, either natively or by
 installing plugins (i.e.
-[WordPress REST API](https://wordpress.org/plugins/rest-api/)).
+[WordPress REST API](https://wordpress.org/plugins/rest-api)).
 
 Personally, however, I found the idea of maintaining a CMS server and a database
 just for my simple blog not very appealing. Yes, our decoupled architecture
@@ -315,7 +315,7 @@ plugin that the Gatsby community created.
 
 The only key remaining decision I had to make was where to host my new blog,
 which really wasn't a very difficult decision to make.
-[Netlify](https://www.netlify.com/) is by far the best option out there when it
+[Netlify](https://www.netlify.com) is by far the best option out there when it
 comes to hosting static sites, providing you with an amazing Continuous
 Deployment infrastructure to generate and deploy static sites on demand, which
 incidentally is perfect for this kind of architecture.

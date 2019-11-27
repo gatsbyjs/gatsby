@@ -9,7 +9,7 @@ tags: ["ghost", "wordpress"]
 
 In this post, I will talk about static site generators -- how they have evolved
 and why I switched from a [Ghost](https://ghost.org) powered site to
-[Gatsby.js](/), a modern static site generator.
+[Gatsby.js](), a modern static site generator.
 
 ## Static site generators as we know them
 
@@ -58,7 +58,7 @@ eventually manipulate that HTML again on the browser (and CSS assets too).
 
 ## Enter the new world order
 
-I [started experimenting](https://kostasbariotis.com/hands-on-react-js/) with
+I [started experimenting](https://kostasbariotis.com/hands-on-react-js) with
 React two years ago. It came with so many features out of the box that no one
 ever has seen except the guys working internally on Facebook’s codebase. But the
 thing that stood out immediately was the way which React was handling the DOM,
@@ -98,7 +98,7 @@ There is the need for a strong abstraction that will…
   content to the user.
 
 Thankfully, there are a few projects that took the initiative on this:
-[Gatsby.js](/), [Phenomic](https://phenomic.io), and
+[Gatsby.js](), [Phenomic](https://phenomic.io), and
 [nextein](https://nextein.now.sh).
 
 At the time that I started following them, early 2017, all of them were in a
@@ -111,7 +111,7 @@ user experience and keeping my old routes and paths so I don’t have weird 404s
 Gatsby came with client side routing out of the box and an extensive API that
 you can use to generate your content exactly like you need. And once Gatsby.js
 hit major version 1, I started using it and the result...you can
-[look at it](https://kostasbariotis.com/)!
+[look at it](https://kostasbariotis.com)!
 
 ## What exactly am I looking at?
 
@@ -167,10 +167,10 @@ that comes with a different set of problems). So I switched to Gatsby.
 Another option, if you want to keep WordPress' Admin UI is to maintain your
 content, is to separate the backend from the frontend.
 
-Imagine that instead of having [memcached](https://memcached.org/) caching your
+Imagine that instead of having [memcached](https://memcached.org) caching your
 HTML in front of your WordPress site, you trigger a hook each time your database
 changes that will re-generate the frontend using Gatsby’s
-[WordPress plugin](/packages/gatsby-source-wordpress/). Yes, Gatsby supports
+[WordPress plugin](/packages/gatsby-source-wordpress). Yes, Gatsby supports
 multiple backend sources to load your content. Instead of storing them inside
 your version control like me, you can just as well load them from your
 WordPress's MySQL database.

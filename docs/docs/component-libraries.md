@@ -4,13 +4,13 @@ title: Creating Component Libraries
 
 Component libraries are often used in component-based UI systems like React and Vue. They are typically versioned repositories of components.
 
-IBM's [Carbon Design System](http://carbondesignsystem.com/) and Palantir's [Blueprint](https://blueprintjs.com/) are both good examples.
+IBM's [Carbon Design System](http://carbondesignsystem.com) and Palantir's [Blueprint](https://blueprintjs.com) are both good examples.
 
 ## Why component libraries
 
 There are several rationales for creating component libraries.
 
-- **Create unified design**. In large web properties and web apps, the look and feel can diverge across different sections maintained by different teams. Component libraries are often used to implement a [design system](https://www.designsystems.com/).
+- **Create unified design**. In large web properties and web apps, the look and feel can diverge across different sections maintained by different teams. Component libraries are often used to implement a [design system](https://www.designsystems.com).
 - **Avoid reinventing the wheel**. Component libraries include common elements like carousels or dropdowns to avoid the need for individual teams to reimplement these components.
 
 ## Tooling & team setups

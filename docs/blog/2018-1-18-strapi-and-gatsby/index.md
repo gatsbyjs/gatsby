@@ -12,9 +12,9 @@ tags: ["blogs", "cms", "headless-cms", "getting-started"]
 
 A static website contains Web pages with fixed content. Technically, it is a simple list of HTML files, which displays the same information to every visitor. Unlike dynamic websites, they do not require any backend programming or database. Publishing a static website is easy: the files are uploaded on a simple Web server or storage provider. The two main advantages of static websites are security and speed: there is no database so it can not be hacked and there is no need to render a page for each request, which makes Web browsing faster.
 
-To make their creation easier, numerous open-source static websites generators are available: [Jekyll](https://jekyllrb.com/), [Hugo](https://gohugo.io/), [Hexo](https://hexo.io/), etc. Most of the time, the content is managed through static (ideally Markdown) files or a Content API. Then, the generator requests the content, injects it in templates defined by the developer and generates a bunch of HTML files.
+To make their creation easier, numerous open-source static websites generators are available: [Jekyll](https://jekyllrb.com), [Hugo](https://gohugo.io), [Hexo](https://hexo.io), etc. Most of the time, the content is managed through static (ideally Markdown) files or a Content API. Then, the generator requests the content, injects it in templates defined by the developer and generates a bunch of HTML files.
 
-Progressive Web Apps (PWA) are web applications, highly based on JavaScript, and are [reliable, fast and engaging](https://developers.google.com/web/progressive-web-apps/). Since they make web browsing much faster and offer a better user experience, PWA have become the default way to build Web interfaces. Thus, many amazing frontend frameworks appeared over the last couple years: Angular, React and more recently, Vue.
+Progressive Web Apps (PWA) are web applications, highly based on JavaScript, and are [reliable, fast and engaging](https://developers.google.com/web/progressive-web-apps). Since they make web browsing much faster and offer a better user experience, PWA have become the default way to build Web interfaces. Thus, many amazing frontend frameworks appeared over the last couple years: Angular, React and more recently, Vue.
 
 > Gatsby: when static websites meet Progressive Web Apps
 
@@ -22,13 +22,13 @@ Both static websites and PWAs have strong advantages which make us crave for a w
 
 ## What is Gatsby?
 
-[Gatsby](/) is a _blazing-fast **website framework** for React_. It allows developers to build React based websites within minutes. Whether you want to develop a blog or a corporate website, Gatsby will fill your needs.
+[Gatsby]() is a _blazing-fast **website framework** for React_. It allows developers to build React based websites within minutes. Whether you want to develop a blog or a corporate website, Gatsby will fill your needs.
 
 ![The Gatsby Logo](logo-gatsby.jpg)
 
-Because it is based on React, the website pages are never reloaded which makes the generated website super fast. A large set of plugins is available allowing developers to save time coding. For example, plugins exist to get data from any source (Markdown files, CMS, etc.). Gatsby is strongly based on the ["node" interface](/docs/node-interface/), which is the center of Gatsby's data system.
+Because it is based on React, the website pages are never reloaded which makes the generated website super fast. A large set of plugins is available allowing developers to save time coding. For example, plugins exist to get data from any source (Markdown files, CMS, etc.). Gatsby is strongly based on the ["node" interface](/docs/node-interface), which is the center of Gatsby's data system.
 
-Created by [Kyle Mathews](https://twitter.com/kylemathews), the project was officially [released in July 2017](/blog/gatsby-v1/). (As of February 2019, [Gatsby is in Gatsby v2](https://github.com/gatsbyjs/gatsby/blob/master/README.md) and is now [used by many companies and for hundreds of websites](/showcase/).
+Created by [Kyle Mathews](https://twitter.com/kylemathews), the project was officially [released in July 2017](/blog/gatsby-v1). (As of February 2019, [Gatsby is in Gatsby v2](https://github.com/gatsbyjs/gatsby/blob/master/README.md) and is now [used by many companies and for hundreds of websites](/showcase).
 
 ## What is Strapi?
 
@@ -67,7 +67,7 @@ Note: Within the content below we provide links that open a running _localhost_ 
 
 ### 1. Introduction
 
-This video series will take you step by step through creating a blog in Gatsby and teach you how to connect it to the open sourced [headless CMS](/docs/headless-cms/) - Strapi.
+This video series will take you step by step through creating a blog in Gatsby and teach you how to connect it to the open sourced [headless CMS](/docs/headless-cms) - Strapi.
 
 <iframe
   width="1206"
@@ -81,10 +81,10 @@ This video series will take you step by step through creating a blog in Gatsby a
 
 _Important links from Video:_
 
-- [Strapi Official Website](https://strapi.io/)
-- [Gatsby JS Official Website](/)
+- [Strapi Official Website](https://strapi.io)
+- [Gatsby JS Official Website]()
 - [Gatsby JS Starters](/starters/?v=2)
-- [Gatsby JS Default Starter Demo](https://gatsby-starter-default-demo.netlify.com/)
+- [Gatsby JS Default Starter Demo](https://gatsby-starter-default-demo.netlify.com)
 
 ### 2. Installation
 
@@ -100,7 +100,7 @@ _Important links from Video:_
 
 _Important links from Video:_
 
-- [Node 10 Installation](https://nodejs.org/en/)
+- [Node 10 Installation](https://nodejs.org/en)
 - [Strapi Installation Documentation](https://strapi.io/documentation/3.x.x/getting-started/quick-start.html)
 
 #### Strapi CMS Setup
@@ -111,7 +111,7 @@ To make the magic happen, let's create a Strapi headless CMS and add some conten
 
 ##### Install Strapi
 
-_Requirements: please make sure [Node 10](https://nodejs.org/en/download/) (or higher) is installed and running on your machine._
+_Requirements: please make sure [Node 10](https://nodejs.org/en/download) (or higher) is installed and running on your machine._
 
 Install Strapi using npm:
 
@@ -186,7 +186,7 @@ _Important links from Video:_
 
 Strapi CMS projects are based on a data structure called Content Types (equivalent to models in frameworks and Content Types in WordPress).
 
-[Create a Content Type](http://localhost:1337/admin/plugins/content-type-builder/) named `article` with four fields:
+[Create a Content Type](http://localhost:1337/admin/plugins/content-type-builder) named `article` with four fields:
 
 - `title` (type `string`)
 - `content` (type `text`)
@@ -248,8 +248,8 @@ Great job, our API is ready! We can start developing the static website.
 
 _Important links from Video:_
 
-- [Official Gatsby Documentation](/docs/)
-- [Gatsby PWA support](/packages/gatsby-plugin-offline/)
+- [Official Gatsby Documentation](/docs)
+- [Gatsby PWA support](/packages/gatsby-plugin-offline)
 
 #### Install Gatsby
 
@@ -289,7 +289,7 @@ When you manage a static website, your data can come from different sources: Mar
 
 Gatsby understands this pretty well. So its creators decided to build a specific and independent layer: the data layer. This entire system is strongly powered by [GraphQL](http://graphql.org).
 
-To connect Gatsby to a new source of data, you have to [develop a new source plugin](/docs/creating-a-source-plugin/). Fortunately, [several source plugins already exist](/docs/plugins), so one of them should fill your needs.
+To connect Gatsby to a new source of data, you have to [develop a new source plugin](/docs/creating-a-source-plugin). Fortunately, [several source plugins already exist](/docs/plugins), so one of them should fill your needs.
 
 In this example, we are using Strapi. Obviously, we are going to need a source plugin for Strapi APIs. Good news: [we built it for you](https://github.com/strapi/gatsby-source-strapi)!
 
@@ -631,8 +631,8 @@ From now on, you should be able to visit the detail page by clicking on URLs dis
 
 _Important links from Video:_
 
-- [Gatsby Image Plugin](/packages/gatsby-image/)
-- [Gatsby Image Demo](https://using-gatsby-image.gatsbyjs.org/)
+- [Gatsby Image Plugin](/packages/gatsby-image)
+- [Gatsby Image Demo](https://using-gatsby-image.gatsbyjs.org)
 - [Gatsby Code examples for Image Plugin](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-gatsby-image/src/pages)
 
 #### Author view
@@ -782,7 +782,7 @@ Since the content is managed by Strapi, the authors can write articles through a
 
 Feel free to continue this project to discover both Gatsby and Strapi advantages. Here are some features you can add: list of authors, article's categories, and comment system with the Strapi API or Disqus. You can also create other types of websites (e-commerce shop, corporate website, etc.).
 
-When your project is achieved, you will probably want to deploy it. The static website generated by Gatsby can [easily be published on storage providers](/docs/deploying-and-hosting/): Netlify, S3/Cloudfront, GitHub Pages, GitLab Pages, Heroku, etc. The Strapi API is a headless CMS, so it can be hosted on Heroku or any Linux instance that has Node.js installed.
+When your project is achieved, you will probably want to deploy it. The static website generated by Gatsby can [easily be published on storage providers](/docs/deploying-and-hosting): Netlify, S3/Cloudfront, GitHub Pages, GitLab Pages, Heroku, etc. The Strapi API is a headless CMS, so it can be hosted on Heroku or any Linux instance that has Node.js installed.
 
 The [code source of this tutorial is available on GitHub](https://github.com/strapi/strapi-examples/tree/master/gatsby-strapi-tutorial). To see it live, clone the repository, run `npm run setup`, start the Strapi server (`cd cms && strapi start`) and the Gatsby server (`cd blog && gatsby develop`).
 

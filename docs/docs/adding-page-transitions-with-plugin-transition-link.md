@@ -6,7 +6,7 @@ This guide will cover how to use `gatsby-plugin-transition-link` to animate tran
 
 ## Overview
 
-The `TransitionLink` component provides a way of describing a page transition via props on a Link component. It works with many animation libraries, like [react-pose](https://popmotion.io/pose/), [gsap](https://greensock.com/), [animejs](https://animejs.com/), and many others.
+The `TransitionLink` component provides a way of describing a page transition via props on a Link component. It works with many animation libraries, like [react-pose](https://popmotion.io/pose), [gsap](https://greensock.com), [animejs](https://animejs.com), and many others.
 
 Note that currently, as the plugin is based on link navigation, transitions when navigating with the browser buttons are not supported.
 
@@ -38,7 +38,7 @@ import TransitionLink from "gatsby-plugin-transition-link"
 
 ## Predefined transitions
 
-You can use the `AniLink` component to add page transitions without having to define your own custom transitions. It's a wrapper around `TransitionLink` that provides 4 predefined transitions: `fade`, `swipe`, `cover`, and `paintDrip`. You can preview them at [this demo site](https://gatsby-plugin-transition-link.netlify.com/).
+You can use the `AniLink` component to add page transitions without having to define your own custom transitions. It's a wrapper around `TransitionLink` that provides 4 predefined transitions: `fade`, `swipe`, `cover`, and `paintDrip`. You can preview them at [this demo site](https://gatsby-plugin-transition-link.netlify.com).
 
 To use AniLink, you will need to install the `gsap` animation library:
 
@@ -60,7 +60,7 @@ Finally, make sure you provide your desired animation's name as a blank prop to 
 </AniLink>
 ```
 
-Options like transition duration, direction, and more are customizable with props. See [the documentation of AniLink](https://transitionlink.tylerbarnes.ca/docs/anilink/) for more details.
+Options like transition duration, direction, and more are customizable with props. See [the documentation of AniLink](https://transitionlink.tylerbarnes.ca/docs/anilink) for more details.
 
 ## Custom transitions
 
@@ -69,11 +69,11 @@ You have two main methods of creating page transitions:
 1. Use the `trigger` function defined in your `exit`/`entry` prop. More details in the '[Using the `trigger` function](#using-the-trigger-function)' subsection.
 2. Use the props passed by `TransitionLink` to define your transitions. More details in the '[Using passed props](#using-passed-props)' subsection.
 
-Additionally, you can specify a number of props and options on the `TransitionLink` component, like `length`, `delay`, and more. For more options and details, see [the documentation of TransitionLink](https://transitionlink.tylerbarnes.ca/docs/transitionlink/). For further examples of usage, visit the [plugin's GitHub repository.](https://github.com/TylerBarnes/gatsby-plugin-transition-link)
+Additionally, you can specify a number of props and options on the `TransitionLink` component, like `length`, `delay`, and more. For more options and details, see [the documentation of TransitionLink](https://transitionlink.tylerbarnes.ca/docs/transitionlink). For further examples of usage, visit the [plugin's GitHub repository.](https://github.com/TylerBarnes/gatsby-plugin-transition-link)
 
 ### Using the trigger function
 
-You can specify a `trigger` function that will handle the animation. This is useful for _imperative_ animation libraries like [animejs](https://animejs.com/) or [GSAP](https://greensock.com/gsap) that specify animations with function calls.
+You can specify a `trigger` function that will handle the animation. This is useful for _imperative_ animation libraries like [animejs](https://animejs.com) or [GSAP](https://greensock.com/gsap) that specify animations with function calls.
 
 ```javascript
 <TransitionLink
@@ -106,7 +106,7 @@ const PageOrTemplate = ({ children, transitionStatus, entry, exit }) => {
 }
 ```
 
-You can combine these props with a _declarative_ state-based animation libraries like [react-pose](https://popmotion.io/pose/) or [react-spring](http://react-spring.surge.sh/) to specify transitions for exiting and entering a page.
+You can combine these props with a _declarative_ state-based animation libraries like [react-pose](https://popmotion.io/pose) or [react-spring](http://react-spring.surge.sh) to specify transitions for exiting and entering a page.
 
 If you want to access these props in one of your components instead of a page/template, you should wrap your component in the `TransitionState` component. This component takes a function that will have access to the same props as above, which you can then use in your component.
 
@@ -158,12 +158,12 @@ import { TransitionPortal } from "gatsby-plugin-transition-link"
 </TransitionPortal>
 ```
 
-As always, check out [the `TransitionPortal` docs](https://transitionlink.tylerbarnes.ca/docs/transitionportal/) for more information about `TransitionPortal`.
+As always, check out [the `TransitionPortal` docs](https://transitionlink.tylerbarnes.ca/docs/transitionportal) for more information about `TransitionPortal`.
 
 ## Further reading
 
-- [Official documentation](https://transitionlink.tylerbarnes.ca/docs/)
+- [Official documentation](https://transitionlink.tylerbarnes.ca/docs)
 - [Source code for plugin](https://github.com/TylerBarnes/gatsby-plugin-transition-link)
-- [Demo site](https://gatsby-plugin-transition-link.netlify.com/)
-- [Blog post: 'Per-Link Gatsby page transitions with TransitionLink'](/blog/2018-12-04-per-link-gatsby-page-transitions-with-transitionlink/)
+- [Demo site](https://gatsby-plugin-transition-link.netlify.com)
+- [Blog post: 'Per-Link Gatsby page transitions with TransitionLink'](/blog/2018-12-04-per-link-gatsby-page-transitions-with-transitionlink)
 - [Using transition-link with react-spring](https://github.com/TylerBarnes/gatsby-plugin-transition-link/issues/34)

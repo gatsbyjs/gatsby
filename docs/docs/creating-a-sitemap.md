@@ -8,9 +8,9 @@ An [XML sitemap](https://support.google.com/webmasters/answer/156184?hl=en) list
 
 Think of it as a map for your website. It shows what all of the pages are on your website.
 
-## Using [gatsby-plugin-sitemap](/packages/gatsby-plugin-sitemap/)
+## Using [gatsby-plugin-sitemap](/packages/gatsby-plugin-sitemap)
 
-To generate an XML sitemap, you will use the [`gatsby-plugin-sitemap`](/packages/gatsby-plugin-sitemap/) package.
+To generate an XML sitemap, you will use the [`gatsby-plugin-sitemap`](/packages/gatsby-plugin-sitemap) package.
 
 Install the package by running the following command:
 `npm install --save gatsby-plugin-sitemap`
@@ -38,4 +38,4 @@ Additional modification steps are available in the [`gatsby-plugin-sitemap` docu
 
 ## More information
 
-- Also check out a post on [gatsby-plugin-advanced-sitemap](/blog/2019-05-07-advanced-sitemap-plugin-for-seo/) from the Gatsby blog
+- Also check out a post on [gatsby-plugin-advanced-sitemap](/blog/2019-05-07-advanced-sitemap-plugin-for-seo) from the Gatsby blog

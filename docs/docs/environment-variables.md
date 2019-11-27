@@ -24,7 +24,7 @@ If you want to define other environments then you'll need to do a little more wo
 All of the Project and OS Env Vars are only directly available at build time, or
 when Node.Js is running. They aren't immediately available at run time of the client code; they
 need to be actively captured and embedded into our client-side JavaScript.
-This is achieved during the build using Webpack's [DefinePlugin](https://webpack.js.org/plugins/define-plugin/).
+This is achieved during the build using Webpack's [DefinePlugin](https://webpack.js.org/plugins/define-plugin).
 
 Once the environment variables have been embedded into the client-side code, they are accessible from the
 global variable `process.env`.
@@ -92,7 +92,7 @@ GATSBY_API_URL=https://example.com/api
 API_KEY=927349872349798
 ```
 
-Note: since Gatsby uses the [Webpack DefinePlugin](https://webpack.js.org/plugins/define-plugin/) to make the environment variables available at runtime, they cannot be destructured from `process.env`; instead, they have to be fully referenced.
+Note: since Gatsby uses the [Webpack DefinePlugin](https://webpack.js.org/plugins/define-plugin) to make the environment variables available at runtime, they cannot be destructured from `process.env`; instead, they have to be fully referenced.
 `GATSBY_API_URL` will be available to your site (Client-side and server-side) as `process.env.GATSBY_API_URL`.:
 
 ```jsx
@@ -144,7 +144,7 @@ Gatsby uses additional environment variables in the build step to fine-tune the 
 
 For example, you can set `CI=true` as an environment variable to allow Gatsby's build script to tailor the terminal output to an automated deployment environment. Some CI/CD tooling may already set this environment variable. This is useful for limiting the verbosity of the build output for [dumb terminals](https://en.wikipedia.org/wiki/Computer_terminal#Dumb_terminals), such as terminal in progress animations.
 
-Gatsby detects an optimal level of parallelism for the render phase of `gatsby build` based on the reported number of physical CPUs. For builds that are run in virtual environments, you may need to adjust the number of worker parallelism with the `GATSBY_CPU_COUNT` environment variable. See [Multi-core builds](https://www.gatsbyjs.org/docs/multi-core-builds/).
+Gatsby detects an optimal level of parallelism for the render phase of `gatsby build` based on the reported number of physical CPUs. For builds that are run in virtual environments, you may need to adjust the number of worker parallelism with the `GATSBY_CPU_COUNT` environment variable. See [Multi-core builds](https://www.gatsbyjs.org/docs/multi-core-builds).
 
 ## Additional Environments (Staging, Test, etc)
 

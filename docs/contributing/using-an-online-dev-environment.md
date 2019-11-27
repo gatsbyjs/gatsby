@@ -2,7 +2,7 @@
 title: Using Gitpod, an Online Dev Environment
 ---
 
-This page outlines how to use Gitpod, a free online dev environment, to contribute to Gatsby core and its ecosystem. For instructions on setting up a dev environment locally, visit the [local set-up](/contributing/setting-up-your-local-dev-environment/) page.
+This page outlines how to use Gitpod, a free online dev environment, to contribute to Gatsby core and its ecosystem. For instructions on setting up a dev environment locally, visit the [local set-up](/contributing/setting-up-your-local-dev-environment) page.
 
 ## About Gitpod
 

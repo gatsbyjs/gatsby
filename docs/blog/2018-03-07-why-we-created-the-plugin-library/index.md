@@ -5,13 +5,13 @@ author: Shannon Soper
 tags: ["plugins", "documentation"]
 ---
 
-Earlier this week, we launched a [Plugin Library](/plugins/) on Gatsbyjs.org and are excited for you to use it! This article explains how UX research drove the design of this library and the accompanying [Plugin Authoring](/docs/creating-plugins/) doc.
+Earlier this week, we launched a [Plugin Library](/plugins) on Gatsbyjs.org and are excited for you to use it! This article explains how UX research drove the design of this library and the accompanying [Plugin Authoring](/docs/creating-plugins) doc.
 
 ![Plugin tweet](plugin-tweet.png)
 
 ## Why build a plugin / package library
 
-From October 2017 to February 2018, I conducted over 60 interviews with Gatsby users, and plugin discoverability and plugin authoring appeared as top pain points (see [blog post on the Gatsby UX research program](/blog/2017-12-20-introducing-the-gatsby-ux-research-program/) for a full list of pain points).
+From October 2017 to February 2018, I conducted over 60 interviews with Gatsby users, and plugin discoverability and plugin authoring appeared as top pain points (see [blog post on the Gatsby UX research program](/blog/2017-12-20-introducing-the-gatsby-ux-research-program) for a full list of pain points).
 
 ## Jobs to be done
 
@@ -32,15 +32,15 @@ With the empathy map and the interviews as our guide, we learned that most peopl
 
 Next, we analyzed over 10 admirable and/or popular plugin libraries to draw from their strengths and learn from their weaknesses. Examples, in no particular order, include:
 
-- [VIM Awesome](https://vimawesome.com/)
-- [Best of JS](https://bestof.js.org/)
-- [Sketch extension library](https://sketchapp.com/extensions/)
+- [VIM Awesome](https://vimawesome.com)
+- [Best of JS](https://bestof.js.org)
+- [Sketch extension library](https://sketchapp.com/extensions)
 - [Chrome plugin library](https://chrome.google.com/webstore/detail/plugins/mmcblfncjaclajmegihojiekebofjcen?hl=en)
 - [Microsoft Visual Studio Code Extensions](https://marketplace.visualstudio.com/VSCode)
-- [WordPress Plugins](https://wordpress.org/plugins/)
-- [Npms.io](https://npms.io/)
+- [WordPress Plugins](https://wordpress.org/plugins)
+- [Npms.io](https://npms.io)
 - [Yarnpkg.com](https://yarnpkg.com/en/packages)
-- [Apple App store](https://www.apple.com/ios/app-store/)
+- [Apple App store](https://www.apple.com/ios/app-store)
 - [Google Play store](https://play.google.com/store/apps/top)
 
 ### The goods 👍
@@ -78,7 +78,7 @@ Here are some ways you can help make the Gatsby plugin ecosystem great:
 
 - Share feedback on the plugin library on [GitHub Issue #4394](https://github.com/gatsbyjs/gatsby/issues/4394).
 - If you created a plugin and it's not showing up in the library, double check that the package has "gatsby-plugin" in its keywords.
-- Create plugins (or publish ones you've already built)! If you're interested, the [Plugin Authoring](/docs/creating-plugins/) page can help.
+- Create plugins (or publish ones you've already built)! If you're interested, the [Plugin Authoring](/docs/creating-plugins) page can help.
 - [Contact me](https://twitter.com/shannonb_ux/status/938551014956732418) here if you have feedback that differs from or provides deeper insight into one of the pain points this article mentions.
 - Follow us on [Twitter](https://twitter.com/gatsbyjs).
 

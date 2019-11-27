@@ -59,7 +59,7 @@ plugins: [
 
 This plugin will fire a new event called `gatsby-route-change` whenever a route is changed in your Gatsby application. To record this in Google Tag Manager, we will need to add a trigger to the desired tag to listen for the event:
 
-1. Visit the [Google Tag Manager console](https://tagmanager.google.com/) and click on the workspace for your site.
+1. Visit the [Google Tag Manager console](https://tagmanager.google.com) and click on the workspace for your site.
 2. Navigate to the desired tag using the 'Tags' tab of the menu on the right hand side.
 3. Under "Triggering", click the pencil icon, then the "+" button to add a new trigger.
 4. In the "Choose a trigger" window, click on the "+" button again.

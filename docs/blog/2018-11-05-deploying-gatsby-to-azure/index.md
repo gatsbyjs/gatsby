@@ -19,16 +19,16 @@ To complete this tutorial you will need the following tools:
 
 ### Prerequisites Installation
 
-Install Node from the [Node website](https://nodejs.org/en/) and check it's installed by checking the version from your terminal.
+Install Node from the [Node website](https://nodejs.org/en) and check it's installed by checking the version from your terminal.
 
 ```bash
 $ node -v
 $ v10.9.0
 ```
 
-Install VS Code from the [VS Code website](https://code.visualstudio.com/).
+Install VS Code from the [VS Code website](https://code.visualstudio.com).
 
-Next, we can install the important part! [Gatsby](https://gatsbyjs.org/) from your terminal, run:
+Next, we can install the important part! [Gatsby](https://gatsbyjs.org) from your terminal, run:
 
 ```bash
 $ npm install --global gatsby-cli
@@ -74,7 +74,7 @@ You should now see your blog in the flesh!
 
 Microsoft Azure is a cloud hosting provider which offers a wide range of tools and services. Today you are going to use Azure Storage to host our static Gatsby blog.
 
-> If you don't have an Azure account, [sign up today](https://azure.microsoft.com/en-us/free/) for a free 30 day account with \$200 in Azure credits.
+> If you don't have an Azure account, [sign up today](https://azure.microsoft.com/en-us/free) for a free 30 day account with \$200 in Azure credits.
 
 > Note: You will need to verify your identity with a credit card, but will not be charged unless you begin to use paid service and exceed the free allowance. The cost per GB for storage is in the region of £0.04 so it should last a while.
 
@@ -87,7 +87,7 @@ As part of this tutorial you will:
 
 ### Create the Azure Storage Account
 
-Login to the [Azure Web Portal](https://azure.microsoft.com/en-gb/features/azure-portal/) and select `+ Create a Resource`, find and select `Storage Account` in the list.
+Login to the [Azure Web Portal](https://azure.microsoft.com/en-gb/features/azure-portal) and select `+ Create a Resource`, find and select `Storage Account` in the list.
 
 Fill in the form by selecting your subscription, creating a new resource group if you don't have one and giving your storage account a name and region. Your form should look something like this.
 

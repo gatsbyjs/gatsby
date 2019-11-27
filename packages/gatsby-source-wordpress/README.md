@@ -2,11 +2,11 @@
 
 Source plugin for pulling data into [Gatsby](https://github.com/gatsbyjs) from
 WordPress sites using the
-[WordPress REST API](https://developer.wordpress.org/rest-api/reference/).
+[WordPress REST API](https://developer.wordpress.org/rest-api/reference).
 
 An example site for this plugin is available.
 
-- [Demo](https://using-wordpress.gatsbyjs.org/)
+- [Demo](https://using-wordpress.gatsbyjs.org)
 - [Example site source code](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-wordpress)
 
 ## Features
@@ -24,7 +24,7 @@ This module currently pulls the following entities from WordPress:
 - [x] All entities are supported (posts, pages, tags, categories, media, types,
       users, statuses, taxonomies, site metadata, ...)
 - [x] Any new entity should be pulled as long as the IDs are correct.
-- [x] [ACF Entities (Advanced Custom Fields)](https://www.advancedcustomfields.com/)
+- [x] [ACF Entities (Advanced Custom Fields)](https://www.advancedcustomfields.com)
 - [x] Custom Post Types (any type you could have registered and enabled in the REST API)
 - [x] Post Meta (any meta fields you could have registered and enabled in the REST API)
 
@@ -94,7 +94,7 @@ module.exports = {
           wpcom_user: "gatsbyjswpexample@gmail.com",
           wpcom_pass: process.env.WORDPRESS_PASSWORD,
 
-          // If you use "JWT Authentication for WP REST API" (https://wordpress.org/plugins/jwt-authentication-for-wp-rest-api/)
+          // If you use "JWT Authentication for WP REST API" (https://wordpress.org/plugins/jwt-authentication-for-wp-rest-api)
           // or (https://github.com/jonathan-dejong/simple-jwt-authentication) requires jwt_base_path, path can be found in WordPress wp-api.
           // plugin, you can specify user and password to obtain access token and use authenticated requests against WordPress REST API.
           jwt_user: process.env.JWT_USER,
@@ -160,7 +160,7 @@ plugins.
       custom post in the plugin settings for this to work. It's set to "false"
       by default.)
 
-- [x] [ACF](https://www.advancedcustomfields.com/) The option `useACF: true`
+- [x] [ACF](https://www.advancedcustomfields.com) The option `useACF: true`
       must be activated in your site's `gatsby-config.js`.
 
   - You must have the plugin
@@ -169,14 +169,14 @@ plugins.
   - Will pull the `acf: { ... }` fields's contents from any entity which has it
     attached (pages, posts, medias, ... you choose from in WordPress backend
     while creating a Group of Fields).
-  - [ACF Pro](https://www.advancedcustomfields.com/pro/) same as ACF :
+  - [ACF Pro](https://www.advancedcustomfields.com/pro) same as ACF :
   - Will work with
-    [Flexible content](https://www.advancedcustomfields.com/resources/flexible-content/)
+    [Flexible content](https://www.advancedcustomfields.com/resources/flexible-content)
     and premium stuff like that (repeater, gallery, ...).
   - Will pull the content attached to the
-    [options page](https://www.advancedcustomfields.com/add-ons/options-page/).
+    [options page](https://www.advancedcustomfields.com/add-ons/options-page).
 
-- [x] [WP-API-MENUS](https://wordpress.org/plugins/wp-api-menus/) which gives
+- [x] [WP-API-MENUS](https://wordpress.org/plugins/wp-api-menus) which gives
       you the menus and menu locations endpoint.
 
 - [x] [WPML-REST-API](https://github.com/shawnhooper/wpml-rest-api) which adds
@@ -185,7 +185,7 @@ plugins.
 - [x] [wp-rest-polylang](https://github.com/maru3l/wp-rest-polylang) which adds
       the current locale and available translations to all post types translated with Polylang.
 
-- [x] [Yoast](https://yoast.com/wordpress/plugins/seo/)
+- [x] [Yoast](https://yoast.com/wordpress/plugins/seo)
   - You must have the plugin [wp-api-yoast-meta](https://github.com/maru3l/wp-api-yoast-meta) installed in WordPress.
   - Will pull the `yoast_meta: { ... }` field's contents in entity.
   - Work with Yoast premium :
@@ -197,7 +197,7 @@ plugins.
 
 Set `hostingWPCOM: true`.
 
-You will need to provide an [API Key](https://en.support.wordpress.com/api-keys/).
+You will need to provide an [API Key](https://en.support.wordpress.com/api-keys).
 
 Note : The WordPress.com API does not have all of the features of the WordPress.org API, specifically with respect to pagination. See ~TypeError - Cannot read property 'id' of undefined with WordPress.com~ in the troubleshooting section for more.
 
@@ -207,13 +207,13 @@ Business and eCommerce plans will run the WordPress.org version, so it is recomm
 
 ## Test your WordPress API
 
-Before you run your first query, ensure the WordPress JSON API is working correctly by visiting /wp-json at your WordPress install. The result should be similar to the [WordPress demo API](https://demo.wp-api.org/wp-json/).
+Before you run your first query, ensure the WordPress JSON API is working correctly by visiting /wp-json at your WordPress install. The result should be similar to the [WordPress demo API](https://demo.wp-api.org/wp-json).
 
 If you see a page on your site, rather than the JSON output, check if your permalink settings are set to “Plain”. After changing this to any of the other settings, the JSON API should be accessible.
 
 ## Fetching Data: WordPress REST API Route Selection
 
-By default `gatsby-source-wordpress` plugin will fetch data from all endpoints provided by introspection `/wp-json` response. To customize the routes fetched, two configuration options are available: `includeRoutes` for whitelisting and `excludeRoutes` for blacklisting. Both options expect an array of glob patterns. Glob matching is done by [minimatch](https://github.com/isaacs/minimatch). To test your glob patterns, [use this tool](http://pthrasher.github.io/minimatch-test/). You can inspect discovered routes by using `verboseOutput: true` configuration option.
+By default `gatsby-source-wordpress` plugin will fetch data from all endpoints provided by introspection `/wp-json` response. To customize the routes fetched, two configuration options are available: `includeRoutes` for whitelisting and `excludeRoutes` for blacklisting. Both options expect an array of glob patterns. Glob matching is done by [minimatch](https://github.com/isaacs/minimatch). To test your glob patterns, [use this tool](http://pthrasher.github.io/minimatch-test). You can inspect discovered routes by using `verboseOutput: true` configuration option.
 
 If an endpoint is whitelisted and not blacklisted, it will be fetched. Otherwise, it will be ignored.
 
@@ -744,7 +744,7 @@ Full example:
 
 To learn more about image processing check
 
-- documentation of [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/),
+- documentation of [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp),
 - source code of [image processing example
   site](https://github.com/gatsbyjs/gatsby/tree/master/examples/image-processing).
 
@@ -908,7 +908,7 @@ If you have custom post types or metadata that are not showing up within the sch
 
 ACF returns `false` in cases where there is no data to be returned. This can cause conflicting data types in GraphQL and often leads to the error: `GraphQL Error Unknown field {field} on type {type}`.
 
-To solve this, you can use the [acf/format_value filter](https://www.advancedcustomfields.com/resources/acf-format_value/). There are 2 possible ways to use this:
+To solve this, you can use the [acf/format_value filter](https://www.advancedcustomfields.com/resources/acf-format_value). There are 2 possible ways to use this:
 
 - `acf/format_value` – filter for every field
 - `acf/format_value/type={$field_type}` – filter for a specific field based on it’s type

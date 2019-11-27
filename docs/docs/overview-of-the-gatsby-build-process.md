@@ -29,7 +29,7 @@ To gain a greater understanding of what happens when you run either command, it 
 
 ### Understanding `gatsby develop` (runtime)
 
-Using `gatsby develop` runs a server in the background, enabling useful features like live reloading and Gatsby’s [data explorer](/docs/running-queries-with-graphiql/).
+Using `gatsby develop` runs a server in the background, enabling useful features like live reloading and Gatsby’s [data explorer](/docs/running-queries-with-graphiql).
 
 `gatsby develop` is optimized for rapid feedback and extra debugging information. The output of running `gatsby develop` in a fresh install of the Gatsby default starter looks like this:
 
@@ -161,7 +161,7 @@ To see the code where many of these processes are happening, refer to the code a
 
 A Node.js server process powers things behind the scenes when you run the `gatsby build` command. The process of converting assets and pages into HTML that can be rendered in a browser by a [server-side](/docs/glossary#server-side) language like Node.js is referred to as server-side rendering, or SSR. Since Gatsby builds everything ahead of time, this creates an entire site with all of the data your pages need at once. When the site is deployed, it doesn't need to run with server-side processes because everything has been gathered up and compiled by Gatsby.
 
-**Note**: because Gatsby sites run as full React applications in the browser, you can still [fetch data](/docs/client-data-fetching/) from other sources at [runtime](/docs/glossary#runtime) like you would in a typical React app.
+**Note**: because Gatsby sites run as full React applications in the browser, you can still [fetch data](/docs/client-data-fetching) from other sources at [runtime](/docs/glossary#runtime) like you would in a typical React app.
 
 The following model demonstrates what is happening in different "layers" of Gatsby as content and data are gathered up and made available for your static assets.
 
@@ -195,7 +195,7 @@ The `gatsby-config.js` file for the site and any installed themes are opened, en
 
 2. `load plugins`
 
-Plugins installed and included in the config of your site and your site's themes are [loaded](/docs/how-plugins-apis-are-run/). Gatsby uses Redux for state management internally and stores info like the version, name, and what APIs are used by each plugin.
+Plugins installed and included in the config of your site and your site's themes are [loaded](/docs/how-plugins-apis-are-run). Gatsby uses Redux for state management internally and stores info like the version, name, and what APIs are used by each plugin.
 
 3. `onPreInit`
 
@@ -207,7 +207,7 @@ The only different step between develop and build, the HTML and CSS from previou
 
 5. `initialize cache`
 
-Check if new dependencies have been installed in the `package.json`; if the versions of installed plugins have changed; or if the `gatsby-config.js` or the `gatsby-node.js` files have changed. Plugins can [interact with the cache](/docs/build-caching/).
+Check if new dependencies have been installed in the `package.json`; if the versions of installed plugins have changed; or if the `gatsby-config.js` or the `gatsby-node.js` files have changed. Plugins can [interact with the cache](/docs/build-caching).
 
 6. `copy gatsby files`
 
@@ -241,7 +241,7 @@ Imports the composed GraphQL schema and builds it.
 
 13. `createPages`
 
-Calls the [`createPages` API](/docs/node-apis/#createPages) for your site and all plugins implementing it, like when you [create pages programatically](/docs/programmatically-create-pages-from-data/) in your `gatsby-node.js`.
+Calls the [`createPages` API](/docs/node-apis/#createPages) for your site and all plugins implementing it, like when you [create pages programatically](/docs/programmatically-create-pages-from-data) in your `gatsby-node.js`.
 
 Plugins can handle the [`onCreatePage` event](/docs/node-apis/#onCreatePage) at this point for use cases like manipulating the path of pages.
 
@@ -301,12 +301,12 @@ Page queries that were queued up earlier from query extraction are run so the da
 
 6. `Building static HTML for pages`
 
-With everything ready for the HTML pages in place, HTML is compiled and written out to files so it can be served up statically. Since HTML is being produced in a Node.js server context, [references to browser APIs like `window` can break the build](/docs/debugging-html-builds/) and must be conditionally applied.
+With everything ready for the HTML pages in place, HTML is compiled and written out to files so it can be served up statically. Since HTML is being produced in a Node.js server context, [references to browser APIs like `window` can break the build](/docs/debugging-html-builds) and must be conditionally applied.
 
 ## What do you get from a successful build?
 
 When a Gatsby build is successfully completed, everything you need to deploy your site ends up in the `public` folder at the root of the site. The build includes minified files, transformed images, JSON files with information and data for each page, static HTML for each page, and more.
 
-The final build is just static files so it can now be [deployed](/docs/deploying-and-hosting/).
+The final build is just static files so it can now be [deployed](/docs/deploying-and-hosting).
 
 You can run `gatsby serve` to test the output from compilation. If you make any new changes to the source code that you want to preview, you will have to rebuild the site and run `gatsby serve` again.

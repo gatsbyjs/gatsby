@@ -52,7 +52,7 @@ Depending on what your enterprise looks like, there can be different strategies 
 
 **Execute a simple proof of concept.** Actually having built something with Gatsby often changes the conversation — it becomes less of an abstract concept to others, and more of a concrete possible choice. Choosing a small project and building it with Gatsby can go a long way towards socializing Gatsby in your organization.
 
-**Use the language of executives and managers.** Executives have different goals and objectives than developers. Read about the [Executive persona](/docs/winning-over-executives/) to see how to explain Gatsby in a way that executives find attractive.
+**Use the language of executives and managers.** Executives have different goals and objectives than developers. Read about the [Executive persona](/docs/winning-over-executives) to see how to explain Gatsby in a way that executives find attractive.
 
 One key strategy can be to align yourself to organization-wide “digital transformation” initiatives, especially if your company is in an industry that is being changed by the Internet (such as retail, travel, consumer goods, content, or hospitality).
 
@@ -72,6 +72,6 @@ Because technology choices are more sticky in the enterprise, driving adoption o
 
 The benefits your company will derive, such as performance and the ability to rapidly iterate on its consumer-facing web presence and digital footprint, will provide significant benefits in the marketplace. Your company will be more likely to thrive _because of the work you did_.
 
-Typically, individuals who guide and lead a shift to Gatsby are seen as forward-thinking and as agents of change, which can be [very beneficial for their careers within the company](/docs/how-gatsby-boosts-career/). In addition, as the Gatsby rollout gains steam and proceeds through the company, they are prime candidates to spearhead the effort.
+Typically, individuals who guide and lead a shift to Gatsby are seen as forward-thinking and as agents of change, which can be [very beneficial for their careers within the company](/docs/how-gatsby-boosts-career). In addition, as the Gatsby rollout gains steam and proceeds through the company, they are prime candidates to spearhead the effort.
 
 For more, see [blog posts on Gatsby in the enterprise](/blog/tags/enterprise).

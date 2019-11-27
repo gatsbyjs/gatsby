@@ -64,7 +64,7 @@ This contains the small [webpack-runtime](https://webpack.js.org/concepts/manife
 
 ##### component---[name]-[contenthash].js
 
-This is a separate bundle for each page. The mechanics for how these are split off from the main production app are covered in [Code Splitting](/docs/how-code-splitting-works/).
+This is a separate bundle for each page. The mechanics for how these are split off from the main production app are covered in [Code Splitting](/docs/how-code-splitting-works).
 
 ## production-app.js
 
@@ -93,9 +93,9 @@ Then, the app, webpack-runtime, component, and data json bundles are loaded via 
 
 ### onClientEntry (api-runner-browser)
 
-The first thing your app does is run the [onClientEntry](/docs/browser-apis/#onClientEntry) browser API. This allows plugins to perform any operations before you hit the rest of the page loading logic. For example [gatsby-plugin-glamor](/packages/gatsby-plugin-glamor/) will call rehydrate.
+The first thing your app does is run the [onClientEntry](/docs/browser-apis/#onClientEntry) browser API. This allows plugins to perform any operations before you hit the rest of the page loading logic. For example [gatsby-plugin-glamor](/packages/gatsby-plugin-glamor) will call rehydrate.
 
-It's worth noting that the browser API runner is completely different to `api-runner-node` which is explained in [How APIs/Plugins Are Run](/docs/how-plugins-apis-are-run/). `api-runner-node` runs in Node.js and has to deal with complex server based execution paths. Whereas running APIs on the browser is simply a matter of iterating through the site's registered browser plugins and running them one after the other (see [api-runner-browser.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/api-runner-browser.js#L9)).
+It's worth noting that the browser API runner is completely different to `api-runner-node` which is explained in [How APIs/Plugins Are Run](/docs/how-plugins-apis-are-run). `api-runner-node` runs in Node.js and has to deal with complex server based execution paths. Whereas running APIs on the browser is simply a matter of iterating through the site's registered browser plugins and running them one after the other (see [api-runner-browser.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/api-runner-browser.js#L9)).
 
 One thing to note is that it gets the list of plugins from `./cache/api-runner-browser-plugins.js`, which is generated [early in bootstrap](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/bootstrap/index.js#L338).
 

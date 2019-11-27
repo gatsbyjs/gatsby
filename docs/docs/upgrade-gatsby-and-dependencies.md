@@ -6,9 +6,9 @@ To keep up with the latest bug fixes, security patches, and minor releases from 
 
 ## Semantic versioning
 
-Like many other packages, Gatsby uses [semantic versioning](https://semver.org/) to tag new versions and indicate what kind of changes are introduced in every new release.
+Like many other packages, Gatsby uses [semantic versioning](https://semver.org) to tag new versions and indicate what kind of changes are introduced in every new release.
 
-This guide is meant to teach you how to upgrade Gatsby for minor or patch releases. For major changes you can refer to the [Release and Migrations](/docs/releases-and-migration/) reference guide overview for the corresponding guide to upgrade.
+This guide is meant to teach you how to upgrade Gatsby for minor or patch releases. For major changes you can refer to the [Release and Migrations](/docs/releases-and-migration) reference guide overview for the corresponding guide to upgrade.
 
 ## Why you should upgrade Gatsby and its dependencies
 
@@ -51,7 +51,7 @@ If you only want to update **for patch releases**, you can add a tilde (`~`) bef
 }
 ```
 
-For major updates follow up with the corresponding guide from the [Release and Migrations](/docs/releases-and-migration/) reference guide overview.
+For major updates follow up with the corresponding guide from the [Release and Migrations](/docs/releases-and-migration) reference guide overview.
 
 If you are updating Gatsby, you'll likely also need to update Gatsby related plugins, you can identify them by their names starting with `gatsby-`. This only applies to plugins managed in the [gatsbyjs/gatsby](https://github.com/gatsbyjs/gatsby) repo; for community plugins check beforehand if there is a new version available for upgrading.
 
@@ -79,7 +79,7 @@ You can specify the version you want to install or upgrade to, in the following 
 - An annotated version with `*`,`^`,`~` to indicate that you want the latest major, minor or patch release respectively.
 - Use an `x` instead of a number to indicate that you want the latest major (`x`), minor (`<major>.x`) or patch release (`<major>.<minor>.x`). For example, to install the latest patch release for a given major and minor version: `npm install package-name@2.1.x --save`
 
-For major upgrades, remember to follow up with the corresponding guide from the [Release and Migrations](/docs/releases-and-migration/) reference guide overview.
+For major upgrades, remember to follow up with the corresponding guide from the [Release and Migrations](/docs/releases-and-migration) reference guide overview.
 
 ## Upgrade Interactively
 
@@ -107,7 +107,7 @@ npm run upgrade-interactive
 
 ## Troubleshooting
 
-Aside from some specific cases, such as [Gatsby's dropping of support for Node 6](/blog/2019-06-18-dropping-support-for-node-6/), upgrading for minor or patch releases should not require you to make changes to your code. It is recommended to run your suite of tests (in case you have one) after upgrading Gatsby or its dependencies.
+Aside from some specific cases, such as [Gatsby's dropping of support for Node 6](/blog/2019-06-18-dropping-support-for-node-6), upgrading for minor or patch releases should not require you to make changes to your code. It is recommended to run your suite of tests (in case you have one) after upgrading Gatsby or its dependencies.
 
 In case you get stuck in dependencies conflicts, you can use the [npm-force-resolutions package](https://www.npmjs.com/package/npm-force-resolutions?activeTab=readme) on npm.
 
@@ -115,5 +115,5 @@ In case you get stuck in dependencies conflicts, you can use the [npm-force-reso
 
 Check out these related guides for major upgrades of Gatsby:
 
-- [Migrating from v1 to v2](/docs/migrating-from-v1-to-v2/)
-- [Migrating from v0 to v1](/docs/migrating-from-v0-to-v1/)
+- [Migrating from v1 to v2](/docs/migrating-from-v1-to-v2)
+- [Migrating from v0 to v1](/docs/migrating-from-v0-to-v1)

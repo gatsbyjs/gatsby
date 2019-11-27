@@ -4,7 +4,7 @@ title: Typography.js
 
 ## Using Typography.js in Gatsby
 
-Typography.js is a JavaScript library that allows you to explore the typographic design of your website and define beautiful custom and pre-existing typographic themes. It enables you to change the font on your website with ease. Typography.js currently maintains over 30 themes for you to use. You can also create your own custom font themes if no available themes fit your requirements. To use Typography in your project, you will be installing a [Gatsby plugin](https://www.gatsbyjs.org/packages/gatsby-plugin-typography/) and specifying a configuration object for Typography.
+Typography.js is a JavaScript library that allows you to explore the typographic design of your website and define beautiful custom and pre-existing typographic themes. It enables you to change the font on your website with ease. Typography.js currently maintains over 30 themes for you to use. You can also create your own custom font themes if no available themes fit your requirements. To use Typography in your project, you will be installing a [Gatsby plugin](https://www.gatsbyjs.org/packages/gatsby-plugin-typography) and specifying a configuration object for Typography.
 
 ## Installing the Typography plugin
 
@@ -64,7 +64,7 @@ If you're installing Typography.js into an existing Gatsby project you've starte
 
 Font sizes of all elements in Typography.js grow and shrink in relation to the `baseFontSize` defined above. Try playing around with this value and see the visual difference it can make to your website.
 
-To find or create a new typography theme, you can visit [Typography.js](https://kyleamathews.github.io/typography.js/) to see a list of options.
+To find or create a new typography theme, you can visit [Typography.js](https://kyleamathews.github.io/typography.js) to see a list of options.
 
 ## Installing Typography themes
 
@@ -96,4 +96,4 @@ After completing the above steps, you can start the development server using the
 
 **Note**: If your fonts remains unchanged, remove all `font-family` calls in your CSS and check again.
 
-To find more themes to install, check out the official [Typography.js](https://kyleamathews.github.io/typography.js/) website.
+To find more themes to install, check out the official [Typography.js](https://kyleamathews.github.io/typography.js) website.

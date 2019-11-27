@@ -111,7 +111,7 @@ const pageComponentCache = {}
 const fileOkCache = {}
 
 /**
- * Create a page. See [the guide on creating and modifying pages](/docs/creating-and-modifying-pages/)
+ * Create a page. See [the guide on creating and modifying pages](/docs/creating-and-modifying-pages)
  * for detailed documentation about creating pages.
  * @param {Object} page a page object
  * @param {string} page.path Any valid URL. Must start with a forward slash
@@ -1165,7 +1165,7 @@ actions.setBabelPreset = (config: Object, plugin?: ?Plugin = null) => {
 /**
  * Create a "job". This is a long-running process that are generally
  * started as side-effects to GraphQL queries.
- * [`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp/) uses this for
+ * [`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp) uses this for
  * example.
  *
  * Gatsby doesn't finish its bootstrap until all jobs are ended.
@@ -1248,8 +1248,8 @@ const maybeAddPathPrefix = (path, pathPrefix) => {
  * Create a redirect from one page to another. Server redirects don't work out
  * of the box. You must have a plugin setup to integrate the redirect data with
  * your hosting technology e.g. the [Netlify
- * plugin](/packages/gatsby-plugin-netlify/), or the [Amazon S3
- * plugin](/packages/gatsby-plugin-s3/).
+ * plugin](/packages/gatsby-plugin-netlify), or the [Amazon S3
+ * plugin](/packages/gatsby-plugin-s3).
  *
  * @param {Object} redirect Redirect data
  * @param {string} redirect.fromPath Any valid URL. Must start with a forward slash

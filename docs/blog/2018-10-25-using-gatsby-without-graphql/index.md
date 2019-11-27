@@ -28,7 +28,7 @@ Most examples in the Gatsby docs and on the web at large focus on leveraging sou
   </figcaption>
 </figure>
 
-> _[Source plugins](/docs/creating-a-source-plugin/)_ “source” data from remote or local locations into Gatsby nodes, which are then queryable within your Gatsby site using GraphQL. _[Gatsby nodes](/docs/node-interface/)_ are the center of Gatsby’s data handling layer.
+> _[Source plugins](/docs/creating-a-source-plugin)_ “source” data from remote or local locations into Gatsby nodes, which are then queryable within your Gatsby site using GraphQL. _[Gatsby nodes](/docs/node-interface)_ are the center of Gatsby’s data handling layer.
 
 We're calling this the **"content mesh"** — the infrastructure layer for a decoupled website. ([Sam Bhagwat](https://twitter.com/calcsam) introduced and explored this concept in his recent five-part series, [The Journey to a Content Mesh](/blog/2018-10-04-journey-to-the-content-mesh)).
 
@@ -40,7 +40,7 @@ We're calling this the **"content mesh"** — the infrastructure layer for a dec
 
 We'll take a look at a (very serious) example of how this works. In the example, we'll:
 
-1. Load data from the [PokéAPI’s](https://pokeapi.co/) REST endpoints
+1. Load data from the [PokéAPI’s](https://pokeapi.co) REST endpoints
 2. Create pages (and nested pages) from this data
 
 That's it!
@@ -67,7 +67,7 @@ That's it!
 
 ### Breaking down the example
 
-> Note: This walkthrough assumes you have working knowledge of Gatsby fundamentals. If you're not (yet!) familiar with Gatsby, you may want to take a look at our [Quick Start doc](/docs/) first.
+> Note: This walkthrough assumes you have working knowledge of Gatsby fundamentals. If you're not (yet!) familiar with Gatsby, you may want to take a look at our [Quick Start doc](/docs) first.
 
 #### 1. Use Gatsby's `createPages` API.
 
@@ -233,7 +233,7 @@ Using Gatsby's data layer provides the following benefits:
 - Improves performance by removing data bloat — GraphQL enables you to select only the data you need, not whatever an API returns
 - Enables you to take advantage of hot reloading when developing; For example, in this post's example "Pokémon" site, if you wanted to add a "see other pokémon" section to the pokémon detail view, you would need to change your `gatsby-node.js` to pass all pokémon to to the page, and restart the dev server. In contrast, when using queries, you can add a query and it will hot reload.
 
-> Learn more about [GraphQL in Gatsby](/docs/querying-with-graphql/).
+> Learn more about [GraphQL in Gatsby](/docs/querying-with-graphql).
 
 Working outside of the data layer also means foregoing the optimizations provided by transformer plugins, like:
 

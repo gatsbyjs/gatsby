@@ -4,7 +4,7 @@ Plugin for creating screenshots of website URLs using an AWS Lambda
 Function. This plugin looks for `SitesYaml` nodes with a `url`
 property, and creates `Screenshot` child nodes with a `screenshotFile` field.
 
-[Live demo](https://thatotherperson.github.io/gatsby-screenshot-demo/)
+[Live demo](https://thatotherperson.github.io/gatsby-screenshot-demo)
 ([source](https://github.com/ThatOtherPerson/gatsby-screenshot-demo))
 
 Data should be in a yaml file named `sites.yml` and look like:

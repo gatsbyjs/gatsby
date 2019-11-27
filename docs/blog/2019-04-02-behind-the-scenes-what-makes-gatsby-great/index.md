@@ -34,7 +34,7 @@ Let's dive deep.
 
 ## Server-side rendering (SSR) at **build time**
 
-The mental model many hold for Gatsby is that of the static-site generator. This is accurate (with a caveat that it's excellent for [web applications, too](/blog/2018-11-07-gatsby-for-apps/)). Gatsby _excels_ at producing optimized static content (HTML, CSS, JavaScript, images, etc.) that can be deployed _anywhere_ for pennies. Gatsby produces optimized static content by invoking server-side APIs at **build time**. But, but... you say--"Gatsby is _just_ a static site generator, it's not server-side rendered!" Let's put down the pitchforks--let me explain!
+The mental model many hold for Gatsby is that of the static-site generator. This is accurate (with a caveat that it's excellent for [web applications, too](/blog/2018-11-07-gatsby-for-apps)). Gatsby _excels_ at producing optimized static content (HTML, CSS, JavaScript, images, etc.) that can be deployed _anywhere_ for pennies. Gatsby produces optimized static content by invoking server-side APIs at **build time**. But, but... you say--"Gatsby is _just_ a static site generator, it's not server-side rendered!" Let's put down the pitchforks--let me explain!
 
 Server-side rendering at build time merely means that we invoke the same server-side APIs invoked by a traditional server-side rendered application. We render a React component to optimized, pre-rendered HTML. If we first consider a React component, e.g.
 
@@ -103,13 +103,13 @@ This is the central idea of server-side rendering. Gatsby uses server-side APIs 
 To begin describing why build-time SSR is so appealing, let's first take a look at what a deploy and release looks like if we don't require a server. What's required for a typical set-up for deploying static content (which Gatsby produces)? It looks something like:
 
 - Creating a [Content Delivery Network](https://developer.mozilla.org/en-US/docs/Glossary/CDN) to route your content _as close as possible_ to where your users are requesting it
-  - This is often called "on the edge" and Gatsby can and should be deployed on the edge--[it reduces latency and improves page-load times](https://www.cloudflare.com/learning/cdn/glossary/edge-server/)
+  - This is often called "on the edge" and Gatsby can and should be deployed on the edge--[it reduces latency and improves page-load times](https://www.cloudflare.com/learning/cdn/glossary/edge-server)
 - Creating a bucket/location to host static content (like S3, Google Cloud Storage, etc.)
 - Setting up a [Domain Name System (DNS)](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_is_a_domain_name) to make your content reachable via a pretty URL, e.g. gatsbyjs.org
 - Routing the CDN layer in front of your static content
 - Set up a Continuous Integration (CI) environment so we can build and deploy code to production with minimal impact to end users
 
-... and, that's it! We're done as far as setup goes! We can use _whatever_ stack you prefer here. Netlify? [You bet.](https://www.gatsbyjs.org/docs/deploying-to-netlify) More a fan of AWS? [Of course.](https://www.gatsbyjs.org/docs/deploying-to-aws-amplify/) Heroku? [Yup.](https://www.gatsbyjs.org/docs/deploying-to-heroku/) You get the idea. Gatsby can be deployed anywhere easily and cheaply.
+... and, that's it! We're done as far as setup goes! We can use _whatever_ stack you prefer here. Netlify? [You bet.](https://www.gatsbyjs.org/docs/deploying-to-netlify) More a fan of AWS? [Of course.](https://www.gatsbyjs.org/docs/deploying-to-aws-amplify) Heroku? [Yup.](https://www.gatsbyjs.org/docs/deploying-to-heroku) You get the idea. Gatsby can be deployed anywhere easily and cheaply.
 
 We now have an infrastructure setup so that we _can_ release our web application. What's a release look like?
 
@@ -119,7 +119,7 @@ gatsby build
 
 and then copying the result of `gatsby build` (the `public` folder) to your static content host of choice.
 
-That's it. What if your site goes viral and receives hundreds of thousands of requests? You get charged in **terrabytes** of data with most CDNs, and that cost is quite literally [pennies](https://aws.amazon.com/cloudfront/pricing/). Deploying a new version of your app? Fire off a deploy and your users will have the new version available the instant the build process completes.
+That's it. What if your site goes viral and receives hundreds of thousands of requests? You get charged in **terrabytes** of data with most CDNs, and that cost is quite literally [pennies](https://aws.amazon.com/cloudfront/pricing). Deploying a new version of your app? Fire off a deploy and your users will have the new version available the instant the build process completes.
 
 Let's contrast this approach with setting up and deploying a purely server-side rendered application.
 
@@ -132,11 +132,11 @@ First: perform the **same** steps in setting up a static content host. Oh and we
 Next:
 
 - Set up and provision several [virtual machines (VM)](https://en.wikipedia.org/wiki/Virtual_machine) to run instance(s) of our server-side app
-  - Traditional examples are something like [EC2](https://aws.amazon.com/ec2/)
+  - Traditional examples are something like [EC2](https://aws.amazon.com/ec2)
 - Configure the VM to be able to run Node.js code
-  - Consider using [Docker](https://www.docker.com/) to ensure you have a consistent Node.js environment
+  - Consider using [Docker](https://www.docker.com) to ensure you have a consistent Node.js environment
 - Set up auto-scaling to ensure we can accommodate and fall-over based upon heavy load or error states
-  - Consider using [Kubernetes](https://kubernetes.io/), [Rancher](https://rancher.com/), etc.
+  - Consider using [Kubernetes](https://kubernetes.io), [Rancher](https://rancher.com), etc.
 
 Does this sound like something that sparks joy? ✨Oh--let's talk about the deploy process, too.
 
@@ -359,7 +359,7 @@ The `Link` component exported by `gatsby` ships with an `IntersectionObserver`. 
 
 These two techniques, used together, create an experience that makes navigating around a Gatsby application feel seamless and incredibly fast. Gatsby's use of modern APIs (particularly `IntersectionObserver`) optimistically, idly prefetch resources. Then, when we have a reasonable assurance that the user is _likely_ to need the resource(s) (on a mouse enter), we make a **strong** request for the actual resources. More often than not--the `prefetch` has _already_ made the resources available, in the background 🤯
 
-_Fun fact: there's work to make this even smarter, powered by [Google Analytics and GuessJS](/packages/gatsby-plugin-guess-js/). This will idly prefetch pages likely to be navigated by the user based on the current route. We're actually [testing it](https://github.com/gatsbyjs/gatsby/pull/12351) on gatsbyjs.org **right now**._
+_Fun fact: there's work to make this even smarter, powered by [Google Analytics and GuessJS](/packages/gatsby-plugin-guess-js). This will idly prefetch pages likely to be navigated by the user based on the current route. We're actually [testing it](https://github.com/gatsbyjs/gatsby/pull/12351) on gatsbyjs.org **right now**._
 
 But, but... you exclaim! What about progressive enhancement? What about mobile? What about devices that are data constrained? You better believe we've got 'em all handled.
 
@@ -391,7 +391,7 @@ See the [code implementing this functionality here](https://github.com/gatsbyjs/
 
 ### `srcset` powering Responsive Images
 
-Whew. It's been quite a ride. Finally, I'd like to discuss one of my favorite Gatsby components, specifically [`gatsby-image`](/packages/gatsby-image/). This component _also_ registers an `IntersectionObserver`, and uses it in an interesting, performance-focused manner. Let's get to it.
+Whew. It's been quite a ride. Finally, I'd like to discuss one of my favorite Gatsby components, specifically [`gatsby-image`](/packages/gatsby-image). This component _also_ registers an `IntersectionObserver`, and uses it in an interesting, performance-focused manner. Let's get to it.
 
 #### `gatsby-image`
 

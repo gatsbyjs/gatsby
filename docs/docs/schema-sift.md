@@ -110,7 +110,7 @@ After `resolveRecursive` has finished, we will have "realized" all the query fie
 
 ### 4. Track newly realized fields
 
-Since new fields on the node may have been created in this process, we call `trackInlineObjectsInRootNode()` to track these new objects. See [Node Tracking](/docs/node-tracking/) docs for more.
+Since new fields on the node may have been created in this process, we call `trackInlineObjectsInRootNode()` to track these new objects. See [Node Tracking](/docs/node-tracking) docs for more.
 
 ### 5. Run sift query on all nodes
 
@@ -120,7 +120,7 @@ In the case that `connection === true` (argument passed to run-sift), then inste
 
 ### 6. Create Page dependency if required
 
-Assuming we find a node (or multiple if `connection` === true), we finish off by recording the page that initiated the query (in the `path` field) depends on the found node. More on this in [Page -> Node Dependencies](/docs/page-node-dependencies/).
+Assuming we find a node (or multiple if `connection` === true), we finish off by recording the page that initiated the query (in the `path` field) depends on the found node. More on this in [Page -> Node Dependencies](/docs/page-node-dependencies).
 
 ## Note about plugin resolver side effects
 

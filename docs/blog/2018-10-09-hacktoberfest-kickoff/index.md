@@ -42,7 +42,7 @@ Our Hacktoberfest goals are:
 1. To provide a range of issues with a clearly defined scope, with minimal background knowledge needed outside of the issue description.
 2. To make contributing to Gatsby as welcoming, friendly, and accessible as we can -- especially to first-time contributors.
 
-Plus, if you’ve never contributed to Gatsby before, after your very first PR is merged, you can redeem some [free Gatsby swag](/contributing/contributor-swag/)! (_Note: Not Hacktoberfest related. We do this always!_)
+Plus, if you’ve never contributed to Gatsby before, after your very first PR is merged, you can redeem some [free Gatsby swag](/contributing/contributor-swag)! (_Note: Not Hacktoberfest related. We do this always!_)
 
 <blockquote class="twitter-tweet" data-lang="en">
   <p lang="en" dir="ltr">

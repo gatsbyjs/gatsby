@@ -2,7 +2,7 @@
 title: Sourcing from WordPress
 ---
 
-This guide will walk you through the process of using [Gatsby](/) with [WordPress Rest Api](https://developer.wordpress.org/rest-api/reference/).
+This guide will walk you through the process of using [Gatsby]() with [WordPress Rest Api](https://developer.wordpress.org/rest-api/reference).
 
 WordPress is a free and open-source content management system (CMS). Let's say you have a site built with WordPress and you want to pull the existing data into your static Gatsby site. You can do that with [gatsby-source-wordpress](/packages/gatsby-source-wordpress/?=wordpress). Let's begin!
 
@@ -39,7 +39,7 @@ npm install gatsby-source-wordpress
 
 ### Configuring the plugin
 
-In `gatsby-config.js`, add your configuration options, including your WordPress site's baseUrl, protocol, whether it's hosted on [wordpress.com](http://wordpress.com/) or self-hosted, and whether it makes use of the Advanced Custom Fields (ACF) plugin.
+In `gatsby-config.js`, add your configuration options, including your WordPress site's baseUrl, protocol, whether it's hosted on [wordpress.com](http://wordpress.com) or self-hosted, and whether it makes use of the Advanced Custom Fields (ACF) plugin.
 
 ```javascript:title=gatsby-config.js
 module.exports = {
@@ -72,7 +72,7 @@ The `createPages` API exposes the `graphql` function:
 
 > The GraphQL function allows us to run arbitrary queries against the local WordPress GraphQL schema... like the site has a built-in database constructed from the fetched data that you can run queries against. ([Source](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-wordpress/gatsby-node.js#L15))
 
-You can use the [`gatsby-node.js`](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-wordpress/gatsby-node.js) from the plugin demo to get started. For the purpose of this guide, the code to construct posts works out of the box. It queries your local WordPress GraphQL schema for all Posts, [iterates through each Post node](/docs/programmatically-create-pages-from-data/) and constructs a static page for each, [based on the defined template](/docs/layout-components/).
+You can use the [`gatsby-node.js`](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-wordpress/gatsby-node.js) from the plugin demo to get started. For the purpose of this guide, the code to construct posts works out of the box. It queries your local WordPress GraphQL schema for all Posts, [iterates through each Post node](/docs/programmatically-create-pages-from-data) and constructs a static page for each, [based on the defined template](/docs/layout-components).
 
 For example, find an excerpt of the demo `gatsby-node.js` below.
 
@@ -131,7 +131,7 @@ created to support this guide.
 
 ## Other resources
 
-- [Blog post on which this guide is based on](/blog/2018-01-22-getting-started-gatsby-and-wordpress/)
+- [Blog post on which this guide is based on](/blog/2018-01-22-getting-started-gatsby-and-wordpress)
 - [Watch + Learn video tutorials](http://watch-learn.com/series/gatsbyjs-wordpress)
-- [Another blog post on using Gatsby with WordPress](https://indigotree.co.uk/how-use-wordpress-headless-cms/)
-- More [Gatsby blog posts about using Gatsby + WordPress](/blog/tags/wordpress/)
+- [Another blog post on using Gatsby with WordPress](https://indigotree.co.uk/how-use-wordpress-headless-cms)
+- More [Gatsby blog posts about using Gatsby + WordPress](/blog/tags/wordpress)

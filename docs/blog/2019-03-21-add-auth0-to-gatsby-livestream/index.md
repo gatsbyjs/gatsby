@@ -15,7 +15,7 @@ A common challenge when building apps is setting up authentication. If our apps 
 
 ## Authentication in Gatsby
 
-We regularly get questions about how to add authentication to Gatsby, and while we have [simple examples](https://github.com/gatsbyjs/gatsby/blob/master/examples/simple-auth/) that wouldn’t help in a production app and [the more complex logic of our store](https://github.com/gatsbyjs/store.gatsbyjs.org), we don’t have a straightforward, “here’s how to add authentication for a user account page in Gatsby” example.
+We regularly get questions about how to add authentication to Gatsby, and while we have [simple examples](https://github.com/gatsbyjs/gatsby/blob/master/examples/simple-auth) that wouldn’t help in a production app and [the more complex logic of our store](https://github.com/gatsbyjs/store.gatsbyjs.org), we don’t have a straightforward, “here’s how to add authentication for a user account page in Gatsby” example.
 
 On a recent livestream, [Ado Kukic](https://twitter.com/KukicAdo) helped me create an example for setting up auth for a Gatsby account page.
 
@@ -43,9 +43,9 @@ The code we built is [available on GitHub](https://github.com/jlengstorf/gatsby-
 
 ## Additional links and resources
 
-- [Adding App Functionality with Gatsby](/docs/adding-app-and-website-functionality/)
-- [Auth0](https://auth0.com/)
-- [Simple auth example in Gatsby](https://github.com/gatsbyjs/gatsby/blob/master/examples/simple-auth/)
+- [Adding App Functionality with Gatsby](/docs/adding-app-and-website-functionality)
+- [Auth0](https://auth0.com)
+- [Simple auth example in Gatsby](https://github.com/gatsbyjs/gatsby/blob/master/examples/simple-auth)
 - [Source code for the Gatsby store](https://github.com/gatsbyjs/store.gatsbyjs.org), which uses Auth0 to authenticate users
 - [Source code for the Gatsby store API](https://github.com/gatsbyjs/api.gatsbyjs.org), which uses Auth0 to authenticate requests
 - [Docs for the `wrapRootElement` API](/docs/browser-apis/#wrapRootElement)

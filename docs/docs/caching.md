@@ -44,7 +44,7 @@ How you setup your caching depends on how you host your site. We encourage peopl
 
 The following plugins have been created:
 
-- [gatsby-plugin-netlify](/packages/gatsby-plugin-netlify/)
+- [gatsby-plugin-netlify](/packages/gatsby-plugin-netlify)
 - [gatsby-plugin-s3](https://github.com/jariz/gatsby-plugin-s3)
 
 When deploying with Now, follow the instructions in the [Now documentation](https://zeit.co/guides/deploying-gatsby-with-now#bonus:-cache-your-gatsby-assets).

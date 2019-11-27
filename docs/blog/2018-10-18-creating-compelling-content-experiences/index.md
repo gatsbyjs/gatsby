@@ -11,7 +11,7 @@ In the last three sections, we’ve described the different facets of how to cre
 
 While these trends target different stakeholders, they’re deeply interrelated. That’s because to adopt a new architecture in one area, you often need to adopt new technologies in the other two.
 
-With users after user writing headlines like "[Gatsby + Contentful + Netlify (and Algolia)](/blog/2017-12-06-gatsby-plus-contentful-plus-netlify/)" -- grouping a React-based website framework, a headless CMS, a static host + CDN, and a search provider -- it’s clear these these technologies are meant to be used together.
+With users after user writing headlines like "[Gatsby + Contentful + Netlify (and Algolia)](/blog/2017-12-06-gatsby-plus-contentful-plus-netlify)" -- grouping a React-based website framework, a headless CMS, a static host + CDN, and a search provider -- it’s clear these these technologies are meant to be used together.
 
 Website teams moving to this space have to plan four steps -- one for each category, plus integration.
 
@@ -53,7 +53,7 @@ Often, to ensure a fast site, you'll need both.
 
 To do delivery optimization, you'll need to pick a JAMStack site generator like Hugo or Gatsby.
 
-To do payload optimization, your team will need to implement a [long performance checklist](https://www.smashingmagazine.com/2019/01/front-end-performance-checklist-2019-pdf-pages/), or pick a framework such as Gatsby that [performs payload optimization](/features/#legend) out of the box.
+To do payload optimization, your team will need to implement a [long performance checklist](https://www.smashingmagazine.com/2019/01/front-end-performance-checklist-2019-pdf-pages), or pick a framework such as Gatsby that [performs payload optimization](/features/#legend) out of the box.
 
 ### Fourth, choose your content mesh
 
@@ -63,7 +63,7 @@ The challenge for website teams is: how to achieve this without a lot of costly,
 
 The answer: choose a content mesh. A content mesh:
 
-- pulls in data from your [headless CMS](/docs/headless-cms/) systems
+- pulls in data from your [headless CMS](/docs/headless-cms) systems
 
 - enables you to develop in your preferred UI library while providing website tooling
 

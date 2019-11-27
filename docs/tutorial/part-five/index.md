@@ -4,7 +4,7 @@ typora-copy-images-to: ./
 disableTableOfContents: true
 ---
 
-> This tutorial is part of a series about Gatsby’s data layer. Make sure you’ve gone through [part 4](/tutorial/part-four/) before continuing here.
+> This tutorial is part of a series about Gatsby’s data layer. Make sure you’ve gone through [part 4](/tutorial/part-four) before continuing here.
 
 ## What's in this tutorial?
 
@@ -39,7 +39,7 @@ Data in Gatsby sites can come from anywhere: APIs, databases, CMSs, local files,
 
 Source plugins fetch data from their source. E.g. the filesystem source plugin knows how to fetch data from the file system. The WordPress plugin knows how to fetch data from the WordPress API.
 
-Add [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/) and explore how it works.
+Add [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem) and explore how it works.
 
 First, install the plugin at the root of the project:
 
@@ -215,4 +215,4 @@ And now visit [http://localhost:8000/my-files](http://localhost:8000/my-files)�
 
 ## What's coming next?
 
-Now you've learned how source plugins bring data _into_ Gatsby’s data system. In the next tutorial, you'll learn how transformer plugins _transform_ the raw content brought by source plugins. The combination of source plugins and transformer plugins can handle all data sourcing and data transformation you might need when building a Gatsby site. Learn about transformer plugins in [part six of the tutorial](/tutorial/part-six/).
+Now you've learned how source plugins bring data _into_ Gatsby’s data system. In the next tutorial, you'll learn how transformer plugins _transform_ the raw content brought by source plugins. The combination of source plugins and transformer plugins can handle all data sourcing and data transformation you might need when building a Gatsby site. Learn about transformer plugins in [part six of the tutorial](/tutorial/part-six).

@@ -6,9 +6,9 @@ excerpt: "I'm excited to announce that we're launching our commercial platform, 
 tags: ["gatsby-inc"]
 ---
 
-We're excited to announce the launch of [Gatsby Cloud](https://www.gatsbyjs.com/): a commercial platform of stable, trusted tools that enable web creators to build better websites.
+We're excited to announce the launch of [Gatsby Cloud](https://www.gatsbyjs.com): a commercial platform of stable, trusted tools that enable web creators to build better websites.
 
-Gatsby Cloud enhances our [content mesh platform](https://www.gatsbyjs.org/blog/2018-10-04-journey-to-the-content-mesh/) with interoperable, out-of-the-box solutions to launch websites faster, and drive business success.
+Gatsby Cloud enhances our [content mesh platform](https://www.gatsbyjs.org/blog/2018-10-04-journey-to-the-content-mesh) with interoperable, out-of-the-box solutions to launch websites faster, and drive business success.
 
 This is a significant step forward for our diverse and thriving open-source community, and we're really proud of it.
 
@@ -19,19 +19,19 @@ Gatsby Cloud features include:
 - **Cloud Quickstart** that empowers new and non-technical users to create projects in minutes with a CMS, sample content, and connected Gatsby starter.
 - **Real-time Preview** to simplify content creation and collaboration. Preview offers a private playground for developers, designers, marketers, and content creators. You can view changes to your site immediately and in context.
 - **CMS Integrations**—with [plugins available for 389 content management systems and APIs](https://www.gatsbyjs.org/plugins/?=gatsby-source), Gatsby offers unrivaled CMS-compatibility in the market.
-- **Builds and Reports (Private Beta)**—a new CI/CD solution for Gatsby that will dramatically speed up your Gatsby builds and give you feedback on site performance—with Lighthouse—and common Gatsby errors. [Signup for the private beta](https://www.gatsbyjs.com/builds-beta/) to be one of the first to access Builds and Reports!
+- **Builds and Reports (Private Beta)**—a new CI/CD solution for Gatsby that will dramatically speed up your Gatsby builds and give you feedback on site performance—with Lighthouse—and common Gatsby errors. [Signup for the private beta](https://www.gatsbyjs.com/builds-beta) to be one of the first to access Builds and Reports!
 
-We want Gatsby Cloud to be used by everyone. [Our pricing structure includes a free tier](https://www.gatsbyjs.com/pricing/) designed to comfortably support personal and small sites. We're excited to see how the Gatsby community adopts and grows with our new services.
+We want Gatsby Cloud to be used by everyone. [Our pricing structure includes a free tier](https://www.gatsbyjs.com/pricing) designed to comfortably support personal and small sites. We're excited to see how the Gatsby community adopts and grows with our new services.
 
 ### Quotes from early customers
 
-Jay Hostan, a senior product developer at global coffeehouse chain [Costa Coffee](https://www.costacoffee.com/), told us:
+Jay Hostan, a senior product developer at global coffeehouse chain [Costa Coffee](https://www.costacoffee.com), told us:
 
 <Pullquote>
 Deciding to use Gatsby Preview as a paid feature of Gatsby Cloud was a no brainer and has added a lot of value to our workflow. Before, we were building staging pipelines by hand. Preview allows our team to see content changes immediately, creating a tighter feedback loop so we can launch faster. It's enabled us to shift a lot of our focus to strategic projects and feature development.
 </Pullquote>
 
-Brian Webster, co-founder of the graphic and web design firm [Delicious Simplicity](https://www.delicious-simplicity.com/) with several clients on Gatsby Cloud said:
+Brian Webster, co-founder of the graphic and web design firm [Delicious Simplicity](https://www.delicious-simplicity.com) with several clients on Gatsby Cloud said:
 
 <Pullquote>
 I love how Gatsby makes it possible to harness the power of React components, headless CMS architecture, and that it's a much more delightful workflow for developers. Now that we can use Gatsby Cloud features like Preview, our content-creator clients get an equally powerful yet simple workflow.
@@ -70,7 +70,7 @@ Today's launch of Gatsby Cloud addresses these concerns and lays the foundation 
 
 People love the flexibility and power of Gatsby but also wish for preconfigured starters to base projects on.
 
-You can now head to [gatsbyjs.com](https://www.gatsbyjs.com/) and within minutes, create a new project with a CMS, sample content, and connected Gatsby starter.
+You can now head to [gatsbyjs.com](https://www.gatsbyjs.com) and within minutes, create a new project with a CMS, sample content, and connected Gatsby starter.
 
 ![Screenshot showing Gatsby Starters to start projects on Gatsby Cloud for portfolios, blogs, and e-commerce sites](./cloud-quickstart.png)
 
@@ -99,8 +99,8 @@ I explicitly designed Gatsby so the build process could be decomposed and run ma
 
 We will have lots more to say about our distributed cloud build service as we approach its launch. We've been working towards this goal for years, and we're very excited to share it with you.
 
-In the meantime, we invite you to [sign up for the beta to get early access](https://gatsbyjs.com/builds-beta/) and help us test and refine the service!
+In the meantime, we invite you to [sign up for the beta to get early access](https://gatsbyjs.com/builds-beta) and help us test and refine the service!
 
 ## Try out Gatsby Cloud today!
 
-Go to [gatsbyjs.com](https://www.gatsbyjs.com/) to start using Gatsby Cloud today!
+Go to [gatsbyjs.com](https://www.gatsbyjs.com) to start using Gatsby Cloud today!

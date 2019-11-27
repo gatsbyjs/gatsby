@@ -10,7 +10,7 @@ programmatically create pages.
 
 Though you can use any data source you'd like, this guide will show how to
 create pages from Markdown files (following after the example introduced in
-[earlier guides](/docs/adding-markdown-pages/)).
+[earlier guides](/docs/adding-markdown-pages)).
 
 ## Creating pages
 
@@ -111,7 +111,7 @@ are also available as the `pageContext` prop in the template component itself.
 ## Not just Markdown
 
 The
-[`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/)
+[`gatsby-transformer-remark`](/packages/gatsby-transformer-remark)
 plugin is just one of a multitude of Gatsby plugins that can provide data
 through the GraphQL interface. Any of that data can be used to
 programmatically create pages.
@@ -119,5 +119,5 @@ programmatically create pages.
 ## Other resources
 
 - [Example Repository](https://github.com/jbranchaud/gatsby-programmatic-pages)
-- [Using Gatsby without GraphQL](/docs/using-gatsby-without-graphql/)
+- [Using Gatsby without GraphQL](/docs/using-gatsby-without-graphql)
 - [CodeSandbox example creating pages from 3rd party data](https://codesandbox.io/s/b84oz)

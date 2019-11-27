@@ -4,7 +4,7 @@ title: Client Data Fetching
 
 ## Context
 
-This article touches on how to fetch data at both _build time_ and _run time_. It uses the plugin [`gatsby-source-graphql`](/packages/gatsby-source-graphql/) to fetch data at [build time](/docs/glossary#build) on the server, while it uses the [`axios`](https://github.com/axios/axios) package to fetch different data on the [client-side](/docs/glossary#client-side) when the page loads.
+This article touches on how to fetch data at both _build time_ and _run time_. It uses the plugin [`gatsby-source-graphql`](/packages/gatsby-source-graphql) to fetch data at [build time](/docs/glossary#build) on the server, while it uses the [`axios`](https://github.com/axios/axios) package to fetch different data on the [client-side](/docs/glossary#client-side) when the page loads.
 
 When this article mentions [hydration](/docs/glossary#hydration), it means that Gatsby (through React.js) builds static files to render server-side. When Gatsby's script bundle downloads and executes in the browser, it preserves the HTML markup built by Gatsby and turns the site into a full React web application that can manipulate the [DOM](/docs/glossary#dom). The result of this process creates fast loading pages and a nice user experience.
 
@@ -47,7 +47,7 @@ export default ClientFetchingExample
 
 To query for Rick's character info and image, you'll use the `gatsby-source-graphql` plugin. This will allow you to query the Rick and Morty API using Gatsby queries.
 
-> Note: To learn more about using [`gatsby-source-graphql`](/packages/gatsby-source-graphql/), or about [Gatsby's GraphQL data layer](/docs/graphql/), check out their respective docs. The purpose of including it here is only for comparison.
+> Note: To learn more about using [`gatsby-source-graphql`](/packages/gatsby-source-graphql), or about [Gatsby's GraphQL data layer](/docs/graphql), check out their respective docs. The purpose of including it here is only for comparison.
 
 ```javascript:title=gatsby-config.js
 module.exports = {
@@ -57,7 +57,7 @@ module.exports = {
       options: {
         typeName: "RMAPI",
         fieldName: "rickAndMorty",
-        url: "https://rickandmortyapi-gql.now.sh/",
+        url: "https://rickandmortyapi-gql.now.sh",
       },
     },
   ],
@@ -117,7 +117,7 @@ export default ClientFetchingExample
 
 ### 3. Fetch pupper info and image data on the client
 
-Now you'll finish out by fetching pupper info from the [Dog CEO Dog API](https://dog.ceo/dog-api/). (You'll fetch a random pupper. Rick isn't picky.)
+Now you'll finish out by fetching pupper info from the [Dog CEO Dog API](https://dog.ceo/dog-api). (You'll fetch a random pupper. Rick isn't picky.)
 
 ```jsx:title=index.js
 import React, { Component } from "react"

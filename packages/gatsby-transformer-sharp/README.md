@@ -5,7 +5,7 @@ Creates `ImageSharp` nodes from image types that are supported by the
 fields in their GraphQL types for processing your images in a variety of ways
 including resizing, cropping, and creating responsive images.
 
-[Live demo](https://image-processing.gatsbyjs.org/)
+[Live demo](https://image-processing.gatsbyjs.org)
 ([source](https://github.com/gatsbyjs/gatsby/tree/master/examples/image-processing))
 
 ## Install
@@ -23,7 +23,7 @@ module.exports = {
 
 Please note that you must have a source plugin (which brings in images) installed in your project. Otherwise, no `ImageSharp` nodes can be created for your files. Examples would be [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem) or source plugins for (headless) CMSs like [`gatsby-source-wordpress`](/packages/gatsby-source-wordpress).
 
-**Note**: An exception to this is when using [`gatsby-source-contentful`](/packages/gatsby-source-contentful/), as the source plugin and the assets are not [downloaded to the local filesystem](https://www.gatsbyjs.org/packages/gatsby-source-contentful/#download-assets-for-static-distribution). By default, the `gatsby-source-contentful` plugin creates a `ContentfulAsset` node for every image with links to Contentful’s CDN, therefore it is not necessary to use `gatsby-transformer-sharp` together with `gatsby-source-contentful`.
+**Note**: An exception to this is when using [`gatsby-source-contentful`](/packages/gatsby-source-contentful), as the source plugin and the assets are not [downloaded to the local filesystem](https://www.gatsbyjs.org/packages/gatsby-source-contentful/#download-assets-for-static-distribution). By default, the `gatsby-source-contentful` plugin creates a `ContentfulAsset` node for every image with links to Contentful’s CDN, therefore it is not necessary to use `gatsby-transformer-sharp` together with `gatsby-source-contentful`.
 
 ## Parsing algorithm
 

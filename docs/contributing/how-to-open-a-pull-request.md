@@ -23,11 +23,11 @@ Recommendations for different kinds of contributions will follow in this guide a
 
 ## Things to know before opening a PR
 
-We typically recommend [opening an issue](/contributing/how-to-file-an-issue/) before a pull request if there isn't already an issue for the problem you'd like to solve. This helps facilitate a discussion before deciding on an implementation.
+We typically recommend [opening an issue](/contributing/how-to-file-an-issue) before a pull request if there isn't already an issue for the problem you'd like to solve. This helps facilitate a discussion before deciding on an implementation.
 
 For some changes, such as typo fixes or broken links, it may be appropriate to open a small PR by itself. This is somewhat subjective so if you have any questions, [feel free to ask us](/contributing/how-to-contribute/#not-sure-how-to-start-contributing).
 
-The Gatsby core team uses a triaging process outlined in [Managing Pull Requests](/contributing/managing-pull-requests/), if you're interested in learning more about how that works.
+The Gatsby core team uses a triaging process outlined in [Managing Pull Requests](/contributing/managing-pull-requests), if you're interested in learning more about how that works.
 
 ## Opening PRs in Gatsby
 
@@ -38,7 +38,7 @@ Some PRs can be done completely from the [GitHub UI](https://help.github.com/en/
 To test changes locally against the Gatsby [site and project files](https://github.com/gatsbyjs/gatsby), you can fork the repo and install parts of it to run on your local machine.
 
 - [Fork and clone the Gatsby repo](/contributing/setting-up-your-local-dev-environment/#gatsby-repo-install-instructions).
-- Install [yarn](https://yarnpkg.com/) to pull in dependencies and build the project.
+- Install [yarn](https://yarnpkg.com) to pull in dependencies and build the project.
 - Follow the instructions for the part of the project you want to change. (See specific sections below.)
 - [Create a branch in Git](https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging) to isolate your changes:
 
@@ -51,7 +51,7 @@ To test changes locally against the Gatsby [site and project files](https://gith
   ```shell
   git add .
   ```
-  - Using a visual tool like [GitHub Desktop](https://desktop.github.com/) or [GitX](https://rowanj.github.io/gitx/) can help for choosing which files and lines to commit.
+  - Using a visual tool like [GitHub Desktop](https://desktop.github.com) or [GitX](https://rowanj.github.io/gitx) can help for choosing which files and lines to commit.
 - Committing code will run the automated linter using [Prettier](https://prettier.io). To run the linter manually, run an npm script in the project's base directory:
   ```shell
   npm run format
@@ -74,22 +74,22 @@ Additional docs PR steps:
 
 - For docs-only changes, consider using `git checkout -b docs/some-change` or `git checkout -b docs-some-change`, as this will short circuit the CI process and only run linting tasks.
 
-Further instructions can be found on the [docs contributions](/contributing/docs-contributions/) page.
+Further instructions can be found on the [docs contributions](/contributing/docs-contributions) page.
 
 ### Code changes
 
-Instructions for making changes to the Gatsby source code, tests, internals, APIs, packages, and more can be found in the contributing docs on [setting up your local dev environment](/contributing/setting-up-your-local-dev-environment/). There are also additional details on the [Code contributions](/contributing/code-contributions/) page.
+Instructions for making changes to the Gatsby source code, tests, internals, APIs, packages, and more can be found in the contributing docs on [setting up your local dev environment](/contributing/setting-up-your-local-dev-environment). There are also additional details on the [Code contributions](/contributing/code-contributions) page.
 
 ### Starters or Site Showcase
 
 There are specific pages about contributing to various parts of the Gatsby ecosystem:
 
-- [Showcase submissions](/contributing/site-showcase-submissions/)
-- [Starter library](/contributing/submit-to-starter-library/)
+- [Showcase submissions](/contributing/site-showcase-submissions)
+- [Starter library](/contributing/submit-to-starter-library)
 
 ### Blog posts
 
-For the Gatsby blog, it's necessary to run your content idea by the Gatsby team before submitting it. For more information, refer to the page on [blog and website contributions](/contributing/blog-and-website-contributions/), including how to propose an idea and setting up the blog to run locally.
+For the Gatsby blog, it's necessary to run your content idea by the Gatsby team before submitting it. For more information, refer to the page on [blog and website contributions](/contributing/blog-and-website-contributions), including how to propose an idea and setting up the blog to run locally.
 
 ## Follow up with reviews and suggestions
 
@@ -143,12 +143,12 @@ _**Note:** as a member of the Gatsby repo, you can also clone it directly (inste
 
 ## Additional resources
 
-- CSS Tricks: [How to Contribute to an Open Source Project](https://css-tricks.com/how-to-contribute-to-an-open-source-project/)
+- CSS Tricks: [How to Contribute to an Open Source Project](https://css-tricks.com/how-to-contribute-to-an-open-source-project)
 - [Creating a pull request](https://help.github.com/en/articles/creating-a-pull-request) from GitHub
 - [Configuring a remote for a fork](https://help.github.com/en/articles/configuring-a-remote-for-a-fork)
 - [Which remote URL should I use?](https://help.github.com/en/articles/which-remote-url-should-i-use)
 - [Git Branching and Merging](https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging)
 - [Feature Branching and Workflows](https://git-scm.com/book/en/v1/Git-Branching-Branching-Workflows)
 - [Resolving merge conflicts](https://help.github.com/en/articles/resolving-a-merge-conflict-on-github)
-- [Managing Pull Requests](/contributing/managing-pull-requests/) on the Gatsby core team
-- [Guide on Markdown Syntax](/docs/mdx/markdown-syntax/)
+- [Managing Pull Requests](/contributing/managing-pull-requests) on the Gatsby core team
+- [Guide on Markdown Syntax](/docs/mdx/markdown-syntax)

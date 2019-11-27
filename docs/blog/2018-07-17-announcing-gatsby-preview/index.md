@@ -5,9 +5,9 @@ author: "Sam Bhagwat"
 tags: ["contentful", "gatsby-preview", "gatsby-cloud", "gatsby-inc"]
 ---
 
-Today we’re excited to announce our first commercial offering, a hosted Gatsby preview service for teams, with [Contentful](https://www.contentful.com/) as our initial integration.
+Today we’re excited to announce our first commercial offering, a hosted Gatsby preview service for teams, with [Contentful](https://www.contentful.com) as our initial integration.
 
-Since [launching Gatsby Inc.](/blog/2018-05-24-launching-new-gatsby-company/), we’ve loved hearing the increasing excitement from developers as more and more of you try out Gatsby and get hooked on the ability to easily create compelling, performant web experiences.
+Since [launching Gatsby Inc.](/blog/2018-05-24-launching-new-gatsby-company), we’ve loved hearing the increasing excitement from developers as more and more of you try out Gatsby and get hooked on the ability to easily create compelling, performant web experiences.
 
 With modern JavaScript, React’s component model, and Progressive Web App features built in, Gatsby is a compelling alternative to traditional CMS site building, while still allowing content teams to use mature CMS content workflows.
 
@@ -23,7 +23,7 @@ That’s why today, we’re excited to launch a hosted preview service for teams
 
 With Gatsby Preview, once teams connect their GitHub repositories and CMS to our service, we’ll provide a live URL where content creators can see their changes _in context_. Curious how the new paragraph header would play with the graphic to the left or the footer below? Take a look _before_ you hit publish and your changes go live.
 
-While we continue development on this product, we’re releasing it today in an invite-only alpha. To [apply to use the service, fill out this form](https://www.gatsbyjs.com/preview/) and we’ll be in touch. There will be no charge for the service while it’s in alpha.
+While we continue development on this product, we’re releasing it today in an invite-only alpha. To [apply to use the service, fill out this form](https://www.gatsbyjs.com/preview) and we’ll be in touch. There will be no charge for the service while it’s in alpha.
 
 Over the next few months, we’ll be adding integration with other CMSs like Drupal, WordPress, and other hosted CMSs like Contentful, as well as moving Preview into general availability.
 

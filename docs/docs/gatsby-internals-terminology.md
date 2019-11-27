@@ -37,7 +37,7 @@ The publicly accessible path in the web URL to access the page in question. E.g
 
 `/blog/2018-07-17-announcing-gatsby-preview/`.
 
-It is created when the page object is created (see [Page Creation](/docs/page-creation/))
+It is created when the page object is created (see [Page Creation](/docs/page-creation))
 
 ### Redux `pages` namespace
 
@@ -57,7 +57,7 @@ The logical name for the page's query json result. The name is constructed durin
 
 `blog-2018-07-17-announcing-gatsby-preview-995`
 
-The actual json file is written to disk after [Query Execution](/docs/query-execution/#save-query-results-to-redux-and-disk/).
+The actual json file is written to disk after [Query Execution](/docs/query-execution/#save-query-results-to-redux-and-disk).
 
 ### component
 
@@ -83,7 +83,7 @@ Mapping from `component` (path on disk) to its [Page object](#page-object). It i
 }
 ```
 
-Query starts off as empty, but is set during the extractQueries phase by [query-watcher/handleQuery](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/query-watcher.js#L68), once the query has compiled by relay (see [Query Extraction](/docs/query-extraction/)).
+Query starts off as empty, but is set during the extractQueries phase by [query-watcher/handleQuery](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/query-watcher.js#L68), once the query has compiled by relay (see [Query Extraction](/docs/query-extraction)).
 
 ### componentChunkName
 
@@ -95,7 +95,7 @@ is
 
 `component---src-blog-2-js`
 
-This is used extensively throughout Gatsby, but especially during [Code Splitting](/docs/how-code-splitting-works/).
+This is used extensively throughout Gatsby, but especially during [Code Splitting](/docs/how-code-splitting-works).
 
 ### internalComponentName
 
@@ -147,7 +147,7 @@ This is the actual result of the GraphQL query that was run for the page `/blog/
       "html": "<p>Today we....",
       "timeToRead": 2,
       "fields": {
-        "slug": "/blog/2018-07-17-announcing-gatsby-preview/"
+        "slug": "/blog/2018-07-17-announcing-gatsby-preview"
       },
       "frontmatter": {
         "title": "Announcing Gatsby Preview",
@@ -158,7 +158,7 @@ This is the actual result of the GraphQL query that was run for the page `/blog/
     }
   },
   "pageContext": {
-    "slug": "/blog/2018-07-17-announcing-gatsby-preview/",
+    "slug": "/blog/2018-07-17-announcing-gatsby-preview",
     "prev": {
       ...
     },
@@ -193,8 +193,8 @@ export const pageQuery = graphql`
 
 ### /.cache/async-requires.js
 
-See [Write Out Pages](/docs/write-pages/).
+See [Write Out Pages](/docs/write-pages).
 
 ### .cache/data.json
 
-See [Write Out Pages](/docs/write-pages/).
+See [Write Out Pages](/docs/write-pages).

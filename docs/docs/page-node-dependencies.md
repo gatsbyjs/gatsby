@@ -19,7 +19,7 @@ Recording of Page -> Node dependencies are handled by the [createPageDependency]
 
 Passing `nodeId` tells Gatsby that the page depends specifically on this node. So, if the node is changed, then the page's query needs to be re-executed.
 
-`connection` is a Type string. E.g. `MarkdownRemark`, or `File`. Calling `createPageDependency` with a page path and a `connection` tells Gatsby that this page depends on all nodes of this type. Therefore if any node of this type changes (e.g. a change to a markdown node), then this page must be rebuilt. This variant is only called from [run-sift.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/run-sift.js#L264) when a query such as `allFile`, or `allMarkdownRemark` is run. See [Schema Connections](/docs/schema-connections/) for more info.
+`connection` is a Type string. E.g. `MarkdownRemark`, or `File`. Calling `createPageDependency` with a page path and a `connection` tells Gatsby that this page depends on all nodes of this type. Therefore if any node of this type changes (e.g. a change to a markdown node), then this page must be rebuilt. This variant is only called from [run-sift.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/run-sift.js#L264) when a query such as `allFile`, or `allMarkdownRemark` is run. See [Schema Connections](/docs/schema-connections) for more info.
 
 ## How dependencies are stored
 
@@ -62,7 +62,7 @@ Page -> Node dependencies are tracked via the `componentDataDependencies` redux 
 
 ## How dependency information is used
 
-Page -> Node dependencies are used entirely during query execution to figure out which nodes are "dirty", and therefore which page's queries need to be re-executed. This occurs in `page-query-runner.js` in the [findIdsWithoutDataDependencies](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L89) and [findDirtyIds](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L171) functions. This is described in greater detail in the [Query Execution](/docs/query-execution/) docs.
+Page -> Node dependencies are used entirely during query execution to figure out which nodes are "dirty", and therefore which page's queries need to be re-executed. This occurs in `page-query-runner.js` in the [findIdsWithoutDataDependencies](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L89) and [findDirtyIds](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L171) functions. This is described in greater detail in the [Query Execution](/docs/query-execution) docs.
 
 ## Other forms
 

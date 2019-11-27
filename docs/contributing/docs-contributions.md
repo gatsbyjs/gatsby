@@ -4,7 +4,7 @@ title: Docs Contributions
 
 Gatsby, unsurprisingly, uses Gatsby for its documentation website. Thank you in advance and cheers for contributing to Gatsby documentation! As of February 2019, over 800 people have contributed. It's people like you that make this community great!
 
-> _When deciding where to contribute to Gatsby (docs or [blog](/contributing/blog-and-website-contributions/)?), check out the [docs templates](/contributing/docs-templates/) page._
+> _When deciding where to contribute to Gatsby (docs or [blog](/contributing/blog-and-website-contributions)?), check out the [docs templates](/contributing/docs-templates) page._
 
 ## Top priorities
 
@@ -31,24 +31,24 @@ Keep in mind that some links in here are already correct because they work on ga
 
 Docs with frontmatter metadata at the top including a `title` will automatically receive an `<h1>` heading in the rendered page, and it should be the only one. Additional headings in docs content should start with `<h2>`, denoted by `##` in Markdown.
 
-For the purposes of an accessible document outline, content headings should go in order from h2-h4 (`####`) until all levels have been established. This will ensure the Gatsby docs have a content hierarchy that works well for users of assistive technology. Read more about the importance of [headings and semantic structure in HTML](https://webaim.org/techniques/semanticstructure/).
+For the purposes of an accessible document outline, content headings should go in order from h2-h4 (`####`) until all levels have been established. This will ensure the Gatsby docs have a content hierarchy that works well for users of assistive technology. Read more about the importance of [headings and semantic structure in HTML](https://webaim.org/techniques/semanticstructure).
 
 ## Modifying Markdown files
 
-> 💡 New to writing Markdown? Check out the Gatsby [guide on Markdown Syntax](/docs/mdx/markdown-syntax/)!
+> 💡 New to writing Markdown? Check out the Gatsby [guide on Markdown Syntax](/docs/mdx/markdown-syntax)!
 
 1. If you want to add/modify any Gatsby documentation, go to the
    [docs folder](https://github.com/gatsbyjs/gatsby/tree/master/docs) or [contributing folder](https://github.com/gatsbyjs/gatsby/tree/master/docs/contributing) on GitHub and
    use the file editor to edit and then preview your changes.
 2. Before committing the change and raising a PR in the UI, you need to make sure the PR meets the docs contribution criteria:
-   - Follow the standards outlined in the [Gatsby Style Guide](/contributing/gatsby-style-guide/).
+   - Follow the standards outlined in the [Gatsby Style Guide](/contributing/gatsby-style-guide).
    - If your PR did not come from an issue written by the core team, please add a comment to your PR that explains why it should be included in the docs, according to the [Docs Decision Tree](/blog/2018-10-12-uptick-docs-contributions-hacktoberfest/#docs-decision-tree-and-examples).
      > Note: If your issue and/or PR doesn't meet the above contribution criteria, it may receive a comment reminding you to do so. If, after two weeks, these updates haven't been made, your issue and/or PR may be closed, which helps us triage issues and PRs efficiently. You can request that it be reopened if and when you are ready to make the updates required.
 3. GitHub then allows you to commit the change and raise a PR right in the UI. This is the _easiest_ way you can contribute to the project!
 
 ### Converting a document from a stub
 
-If you wrote a new document that was [previously a stub](/contributing/how-to-write-a-stub/), there are two things you need to update.
+If you wrote a new document that was [previously a stub](/contributing/how-to-write-a-stub), there are two things you need to update.
 
 1. Remove the frontmatter that links to the issue
 
@@ -82,7 +82,7 @@ If you wrote a new document that was [previously a stub](/contributing/how-to-wr
 
 ## Docs site setup instructions
 
-After going through the [development setup instructions](/contributing/setting-up-your-local-dev-environment/), there are a few additional things that are helpful to know when setting up the [Gatsby.js docs site](/docs/), which mostly lives in the [www](https://github.com/gatsbyjs/gatsby/tree/master/www) and [docs](https://github.com/gatsbyjs/gatsby/tree/master/docs) directories. There are also some [examples](https://github.com/gatsbyjs/gatsby/tree/master/examples) in the repo that are referenced in docs.
+After going through the [development setup instructions](/contributing/setting-up-your-local-dev-environment), there are a few additional things that are helpful to know when setting up the [Gatsby.js docs site](/docs), which mostly lives in the [www](https://github.com/gatsbyjs/gatsby/tree/master/www) and [docs](https://github.com/gatsbyjs/gatsby/tree/master/docs) directories. There are also some [examples](https://github.com/gatsbyjs/gatsby/tree/master/examples) in the repo that are referenced in docs.
 
 - [Fork and clone the Gatsby repo](/contributing/setting-up-your-local-dev-environment/#gatsby-repo-install-instructions).
 - For docs-only changes, consider using `git checkout -b docs/some-change` or `git checkout -b docs-some-change`, as this will short circuit the CI process and only run linting tasks.
@@ -93,7 +93,7 @@ After going through the [development setup instructions](/contributing/setting-u
 - Start a build of `www` with `gatsby develop`.
 - Edit Markdown files in the [docs](https://github.com/gatsbyjs/gatsby/tree/master/docs) and [contributing](https://github.com/gatsbyjs/gatsby/tree/master/docs/contributing) folders, as well as the [YAML sidebar files](https://github.com/gatsbyjs/gatsby/tree/master/www/src/data/sidebars).
 - View the changes in your browser at `http://localhost:8000`.
-- Commit your changes and [submit a pull request](/contributing/how-to-open-a-pull-request/)!
+- Commit your changes and [submit a pull request](/contributing/how-to-open-a-pull-request)!
 
 ## Changing headers
 
@@ -106,7 +106,7 @@ It can be necessary to change a heading within the docs. It's important to note 
 
 Sometimes it makes sense to move or rename a file as part of docs restructuring or for content clarification. While we recommend keeping URLs consistent as often as possible, here are some tips to minimize errors and keep the docs in a good state:
 
-- Run proposed structure changes by the Gatsby docs team in [a GitHub issue](/contributing/how-to-file-an-issue/) to ensure your change is accepted.
+- Run proposed structure changes by the Gatsby docs team in [a GitHub issue](/contributing/how-to-file-an-issue) to ensure your change is accepted.
 - Update all instances of the old URL to your new one. [Find and replace](https://code.visualstudio.com/docs/editor/codebasics#_search-across-files) in VS Code can help. Check that the context of the original link reference still makes sense with the new one.
 - For SEO purposes, add a redirect to the `createPages` function in [`www/gatsby-node.js`](https://github.com/gatsbyjs/gatsby/tree/master/www/gatsby-node.js). Here's an example:
 
@@ -120,12 +120,12 @@ createRedirect({
 
 ## Claim your swag
 
-After your first code contribution to the Gatsby repo (including documentation) you become eligible for a free shirt or pair of socks. See the [swag page](/contributing/contributor-swag/) for more details!
+After your first code contribution to the Gatsby repo (including documentation) you become eligible for a free shirt or pair of socks. See the [swag page](/contributing/contributor-swag) for more details!
 
 ## Want more?
 
 Check out our additional pages on docs contributions:
 
-- [Gatsby Style Guide](/contributing/gatsby-style-guide/)
-- [Docs Templates](/contributing/docs-templates/)
-- [How to Write a Stub](/contributing/how-to-write-a-stub/)
+- [Gatsby Style Guide](/contributing/gatsby-style-guide)
+- [Docs Templates](/contributing/docs-templates)
+- [How to Write a Stub](/contributing/how-to-write-a-stub)

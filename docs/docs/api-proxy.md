@@ -4,7 +4,7 @@ title: Proxying API Requests in Development
 
 ## Resources
 
-If you’re not familiar with Gatsby’s lifecycle, see the overview [Gatsby Lifecycle APIs](/docs/gatsby-lifecycle-apis/).
+If you’re not familiar with Gatsby’s lifecycle, see the overview [Gatsby Lifecycle APIs](/docs/gatsby-lifecycle-apis).
 
 ## Proxying API requests in development
 
@@ -33,7 +33,7 @@ the right place in production.
 ## Advanced proxying
 
 Sometimes you need more granular/flexible access to the development server.
-Gatsby exposes the [Express.js](https://expressjs.com/) development server to your site's `gatsby-config.js` where you
+Gatsby exposes the [Express.js](https://expressjs.com) development server to your site's `gatsby-config.js` where you
 can add Express middleware as needed.
 
 ```javascript:title=gatsby-config.js
@@ -42,11 +42,11 @@ var proxy = require("http-proxy-middleware")
 module.exports = {
   developMiddleware: app => {
     app.use(
-      "/.netlify/functions/",
+      "/.netlify/functions",
       proxy({
         target: "http://localhost:9000",
         pathRewrite: {
-          "/.netlify/functions/": "",
+          "/.netlify/functions": "",
         },
       })
     )
@@ -65,12 +65,12 @@ var proxy = require("http-proxy-middleware")
 module.exports = {
   developMiddleware: app => {
     app.use(
-      "/.netlify/functions/",
+      "/.netlify/functions",
       proxy({
         target: "http://localhost:9000",
         secure: false, // Do not reject self-signed certificates.
         pathRewrite: {
-          "/.netlify/functions/": "",
+          "/.netlify/functions": "",
         },
       })
     )

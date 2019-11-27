@@ -11,7 +11,7 @@ VS Code is a truly great choice for your code editing needs. In this article, I'
 
 ![Lots of Available Options](./images/color-wall.jpeg)
 
-I know that there are as many choices for IDE editors and personal preferences as there are JS frameworks in existence (hint LOTS). I am not going to debate those here, this article will focus on [VS Code](https://code.visualstudio.com/). It's the editor I use and find it amazing for the JavaScript and web development ecosystem. I was a long time holdout using Sublime Text, but once I gave VS Code a try I switched over within a day and haven't looked back.
+I know that there are as many choices for IDE editors and personal preferences as there are JS frameworks in existence (hint LOTS). I am not going to debate those here, this article will focus on [VS Code](https://code.visualstudio.com). It's the editor I use and find it amazing for the JavaScript and web development ecosystem. I was a long time holdout using Sublime Text, but once I gave VS Code a try I switched over within a day and haven't looked back.
 
 ## Enough Talk, Let's get Started
 
@@ -25,7 +25,7 @@ OK, not quite, if you browse the list you will notice there are _A LOT_. I'm goi
 
 ### 🚨 Code linting and Formatting 🚨
 
-The main [Gatsby GitHub repo](https://github.com/gatsbyjs/gatsby) has configuration files in place already for [ESLint](https://eslint.org/) and [Prettier](https://prettier.io/). VS Code has extensions for both of these, which makes development really easy.
+The main [Gatsby GitHub repo](https://github.com/gatsbyjs/gatsby) has configuration files in place already for [ESLint](https://eslint.org) and [Prettier](https://prettier.io). VS Code has extensions for both of these, which makes development really easy.
 
 To get started, go to the Extensions View and [search](https://code.visualstudio.com/docs/editor/extension-gallery#_browse-for-extensions) for these plugins and press the green Install button for each. You may have to restart for the Extensions to take effect.
 
@@ -78,7 +78,7 @@ _NOTE_: You most likely will want to add the `.vscode` folder to your `.gitignor
 
 In this article we have learned some of the basics about configuring and using VS Code for development on the Gatsby project. That being said, the Extensions and configuration discussed here can be applied to _any_ modern JavaScript web project that **may or may not use** Gatsby.
 
-You may want to browse through the [VS Code Updates page](https://code.visualstudio.com/updates/) to see some of the recent features added. You'll notice they publish major updates monthly. It seems they are listening to the user community and continually adding features to the Editor and improvements to the user experience.
+You may want to browse through the [VS Code Updates page](https://code.visualstudio.com/updates) to see some of the recent features added. You'll notice they publish major updates monthly. It seems they are listening to the user community and continually adding features to the Editor and improvements to the user experience.
 
 A great way to contribute is to browse the [open issues on GitHub](https://github.com/gatsbyjs/gatsby/issues), and find some that look interesting! Armed with some of the techniques I've shown here today, authoring these fixes, features, and more will be a breeze thanks to some of the great features of VS Code.
 

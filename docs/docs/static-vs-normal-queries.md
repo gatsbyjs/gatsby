@@ -37,7 +37,7 @@ The `staticQueryComponents` Redux namespace watches for updates to queries while
 
 ## Replacing queries with JSON imports
 
-With the final build, there isn't a GraphQL server running to query for data. Gatsby has already [extracted](/docs/query-extraction/) and [run](/docs/query-execution/) the queries, [storing](/docs/query-execution/#save-query-results-to-redux-and-disk) them in files based on hashes in `/public/static/d/<hash>.json`. It can now remove code for GraphQL queries, because the data is already available.
+With the final build, there isn't a GraphQL server running to query for data. Gatsby has already [extracted](/docs/query-extraction) and [run](/docs/query-execution) the queries, [storing](/docs/query-execution/#save-query-results-to-redux-and-disk) them in files based on hashes in `/public/static/d/<hash>.json`. It can now remove code for GraphQL queries, because the data is already available.
 
 ### Distinguishing between static and normal queries
 

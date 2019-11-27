@@ -36,7 +36,7 @@ A custom script in your `package.json` makes it easier to build your site and mo
 
 ### Deploying to a path on GitHub pages
 
-For sites deployed at a path like `username.github.io/reponame/`, the `--prefix-paths` flag is used because your website will end up inside a folder like `username.github.io/reponame/`. You'll need to add your `/reponame` [path prefix](/docs/path-prefix/) as an option to `gatsby-config.js`:
+For sites deployed at a path like `username.github.io/reponame/`, the `--prefix-paths` flag is used because your website will end up inside a folder like `username.github.io/reponame/`. You'll need to add your `/reponame` [path prefix](/docs/path-prefix) as an option to `gatsby-config.js`:
 
 ```js:title=gatsby-config.js
 module.exports = {
@@ -74,7 +74,7 @@ After running `npm run deploy` you should see your website at `username.github.i
 
 ### Deploying to the root subdomain and using a custom domain
 
-If you use a [custom domain](https://help.github.com/articles/using-a-custom-domain-with-github-pages/), don't add a `pathPrefix` as it will break navigation on your site. Path prefixing is only necessary when the site is _not_ at the root of the domain like with repository sites.
+If you use a [custom domain](https://help.github.com/articles/using-a-custom-domain-with-github-pages), don't add a `pathPrefix` as it will break navigation on your site. Path prefixing is only necessary when the site is _not_ at the root of the domain like with repository sites.
 
 **Note**: Don't forget to add your [CNAME](https://help.github.com/articles/troubleshooting-custom-domains/#github-repository-setup-errors) file to the `static` directory.
 

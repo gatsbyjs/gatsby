@@ -6,7 +6,7 @@ Gatsby's `graphql` tag enables page components to retrieve data via a GraphQL qu
 
 In this guide, you will learn [how to use the `graphql` tag](/docs/page-query#add-the-graphql-query) in your pages, as well as go a little deeper into [how the `graphql` tag works](/docs/page-query#how-does-the-graphql-tag-work).
 
-If you’re curious, you can also read more about [why Gatsby uses GraphQL](/docs/why-gatsby-uses-graphql/).
+If you’re curious, you can also read more about [why Gatsby uses GraphQL](/docs/why-gatsby-uses-graphql).
 
 ## How to use the `graphql` tag in pages
 
@@ -76,7 +76,7 @@ const HomePage = () => {
 
 The first part of writing the GraphQL query is including the operation (in this case "`query`") along with a name.
 
-From [browsing GraphiQL](/tutorial/part-five/#introducing-graphiql/), you'll find that one of the fields that you can query on is `site`, which in turn has its own `siteMetadata` fields that correspond to the data provided in `gatsby-config.js`.
+From [browsing GraphiQL](/tutorial/part-five/#introducing-graphiql), you'll find that one of the fields that you can query on is `site`, which in turn has its own `siteMetadata` fields that correspond to the data provided in `gatsby-config.js`.
 
 Putting this together, the completed query looks like:
 
@@ -139,9 +139,9 @@ During the Gatsby build process, GraphQL queries are pulled out of the original 
 ### The longer answer
 
 The longer answer is a little more involved: Gatsby borrows a technique from
-[Relay](https://facebook.github.io/relay/) that converts your source code into an [abstract syntax tree (AST)](https://en.wikipedia.org/wiki/Abstract_syntax_tree) during the build step. [`file-parser.js`](https://github.com/gatsbyjs/gatsby/blob/5078f03027c868554111f48fbd5d685c403a9fdd/packages/gatsby/src/query/file-parser.js) and [`query-compiler.js`](https://github.com/gatsbyjs/gatsby/blob/5078f03027c868554111f48fbd5d685c403a9fdd/packages/gatsby/src/query/query-compiler.js) pick out your `graphql`-tagged templates and effectively remove them from the original source code.
+[Relay](https://facebook.github.io/relay) that converts your source code into an [abstract syntax tree (AST)](https://en.wikipedia.org/wiki/Abstract_syntax_tree) during the build step. [`file-parser.js`](https://github.com/gatsbyjs/gatsby/blob/5078f03027c868554111f48fbd5d685c403a9fdd/packages/gatsby/src/query/file-parser.js) and [`query-compiler.js`](https://github.com/gatsbyjs/gatsby/blob/5078f03027c868554111f48fbd5d685c403a9fdd/packages/gatsby/src/query/query-compiler.js) pick out your `graphql`-tagged templates and effectively remove them from the original source code.
 
-_More information about [how queries work](/docs/query-behind-the-scenes/) is included in the Gatsby Internals section of the docs._
+_More information about [how queries work](/docs/query-behind-the-scenes) is included in the Gatsby Internals section of the docs._
 
 This means that the `graphql` tag isn’t executed the way that JavaScript code is typically handled. For example, you cannot use [expression interpolation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#Expression_interpolation) with Gatsby's `graphql` tag. However, it's possible to pass variables into page queries with the `context` object [when creating pages](/docs/creating-and-modifying-pages).
 
@@ -162,7 +162,7 @@ export const query = graphql`
 `
 ```
 
-The `MdxBlogPost` query will return an MDX node in a site where `gatsby-plugin-mdx` is installed and `.mdx` files have been [sourced](/docs/content-and-data/) with `gatsby-source-filesystem`, so long as it matches the argument passed in for a `title` equaling (`eq`) the string `"Using a Theme"`.
+The `MdxBlogPost` query will return an MDX node in a site where `gatsby-plugin-mdx` is installed and `.mdx` files have been [sourced](/docs/content-and-data) with `gatsby-source-filesystem`, so long as it matches the argument passed in for a `title` equaling (`eq`) the string `"Using a Theme"`.
 
 In addition to hardcoding an argument directly into the page query, you can pass in a variable. The query can be changed to include a variable like this:
 
@@ -192,4 +192,4 @@ posts.forEach(({ node }, index) => {
 })
 ```
 
-For more information, check out the docs on [creating pages programmatically](/docs/programmatically-create-pages-from-data/).
+For more information, check out the docs on [creating pages programmatically](/docs/programmatically-create-pages-from-data).

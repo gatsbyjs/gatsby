@@ -18,7 +18,7 @@ curl https://www.gatsbyjs.org/docs/seo
 
 ## Speed boost
 
-Gatsby's many built-in performance optimizations, such as rendering to static files, progressive image loading, and the [PRPL pattern](/docs/prpl-pattern/)—all help your site be lightning-fast by default.
+Gatsby's many built-in performance optimizations, such as rendering to static files, progressive image loading, and the [PRPL pattern](/docs/prpl-pattern)—all help your site be lightning-fast by default.
 
 Starting in January 2018, Google [rewards faster sites with a bump in search rankings](https://searchengineland.com/google-speed-update-page-speed-will-become-ranking-factor-mobile-search-289904).
 
@@ -26,7 +26,7 @@ Starting in January 2018, Google [rewards faster sites with a bump in search ran
 
 Adding metadata to pages, such as page title and description, helps search engines understand your content and when to show your pages in search results.
 
-A common way to add metadata to pages is to add [react-helmet](https://github.com/nfl/react-helmet) components (together with the [Gatsby React Helmet plugin](/packages/gatsby-plugin-react-helmet) for SSR support) to your page components. Here's a [guide on how to add an SEO component](https://www.gatsbyjs.org/docs/add-seo-component/) to your Gatsby app.
+A common way to add metadata to pages is to add [react-helmet](https://github.com/nfl/react-helmet) components (together with the [Gatsby React Helmet plugin](/packages/gatsby-plugin-react-helmet) for SSR support) to your page components. Here's a [guide on how to add an SEO component](https://www.gatsbyjs.org/docs/add-seo-component) to your Gatsby app.
 
 Some examples using react-helmet:
 
@@ -60,4 +60,4 @@ When using structured data, you'll need to test during development and the [Stru
 
 ## Additional resources
 
-You might also be interested in [blog posts about SEO in Gatsby](/blog/tags/seo/).
+You might also be interested in [blog posts about SEO in Gatsby](/blog/tags/seo).

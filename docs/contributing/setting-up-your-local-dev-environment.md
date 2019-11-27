@@ -2,14 +2,14 @@
 title: Setting Up Your Local Dev Environment
 ---
 
-This page outlines how to get set up to contribute to Gatsby core and its ecosystem. For instructions on working with docs, visit the [docs contributions](/contributing/docs-contributions/) page. For blog and website setup instructions, visit the [blog and website contributions](/contributing/blog-and-website-contributions/) page.
+This page outlines how to get set up to contribute to Gatsby core and its ecosystem. For instructions on working with docs, visit the [docs contributions](/contributing/docs-contributions) page. For blog and website setup instructions, visit the [blog and website contributions](/contributing/blog-and-website-contributions) page.
 
 > Gatsby uses a "monorepo" pattern to manage its many dependencies and relies on
-> [Lerna](https://lerna.js.org/) and [Yarn](https://yarnpkg.com/en/) to configure the repository for both active development and documentation infrastructure changes.
+> [Lerna](https://lerna.js.org) and [Yarn](https://yarnpkg.com/en) to configure the repository for both active development and documentation infrastructure changes.
 
 ## Using Yarn
 
-Yarn is a package manager for your code, similar to [NPM](https://www.npmjs.com/). While NPM is used to develop Gatsby sites with the CLI, contributing to the Gatsby repo requires Yarn for the following reason: we use Yarn's [workspaces](https://yarnpkg.com/lang/en/docs/workspaces/) feature that comes really handy for monorepos. It allows us to install dependencies from multiple `package.json` files in sub-folders, enabling a faster and lighter installation process.
+Yarn is a package manager for your code, similar to [NPM](https://www.npmjs.com). While NPM is used to develop Gatsby sites with the CLI, contributing to the Gatsby repo requires Yarn for the following reason: we use Yarn's [workspaces](https://yarnpkg.com/lang/en/docs/workspaces) feature that comes really handy for monorepos. It allows us to install dependencies from multiple `package.json` files in sub-folders, enabling a faster and lighter installation process.
 
 ```json:title=package.json
 {

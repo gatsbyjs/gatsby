@@ -11,7 +11,7 @@ Since October 1st -- the start of Hacktoberfest -- the Gatsby OSS community has 
 
 A big thanks to every contributor who jumped in to help Gatsby docs keep becoming more polished, comprehensive, and clear. In fact, many of the PR’s fixed problems we hadn’t even created issues for yet! And we’re increasing the number of `hacktoberfest` + `documentation` labeled issues to account for the surge of helpful contributions. A special thanks to [@amberleyromo](https://github.com/amberleyromo), [@jlengstorf](https://github.com/jlengstorf), [@DSchau](https://github.com/DSchau), and [@pieh](https://github.com/pieh) for their hard work giving feedback and merging PR’s!
 
-Read more on how to participate in Gatsby Hacktoberfest in our [Hacktoberfest kickoff post](/blog/2018-10-09-hacktoberfest-kickoff/)
+Read more on how to participate in Gatsby Hacktoberfest in our [Hacktoberfest kickoff post](/blog/2018-10-09-hacktoberfest-kickoff)
 
 ## With great contributions comes great responsibility
 
@@ -111,6 +111,6 @@ Names for guides, tutorial sections, and sub-headings in the .org site should:
 
 ## Thanks and keep Hacktoberfesting with Gatsby
 
-It’s been incredible to see how many hard-working contributors have gotten PR’s merged with us so far! Don't forget to check out [how to participate in Gatsby Hacktoberfest!](/blog/2018-10-09-hacktoberfest-kickoff/)
+It’s been incredible to see how many hard-working contributors have gotten PR’s merged with us so far! Don't forget to check out [how to participate in Gatsby Hacktoberfest!](/blog/2018-10-09-hacktoberfest-kickoff)
 
 And don’t forget to also read the [Docs Decision Tree RFC](https://github.com/gatsbyjs/rfcs/pull/14) and leave your comments before October 31st, when the commenting period will be closed.

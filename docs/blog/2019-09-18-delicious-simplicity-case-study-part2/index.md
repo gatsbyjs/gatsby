@@ -9,9 +9,9 @@ tags:
   - case-studies
 ---
 
-_In [Part One](/blog/2019-06-08-delicious-simplicity-case-study-part-1/) of this two-part post, we met Brian Webster, founder of the LA-based design and development agency Delicious Simplicity. Brian described his search for a “happily ever after” solution to free his team from traditional CMS monoliths like WordPress and Drupal, and how he came to love Gatsby. So much so, in fact, that the agency refactored all their current projects to run on Gatsby._
+_In [Part One](/blog/2019-06-08-delicious-simplicity-case-study-part-1) of this two-part post, we met Brian Webster, founder of the LA-based design and development agency Delicious Simplicity. Brian described his search for a “happily ever after” solution to free his team from traditional CMS monoliths like WordPress and Drupal, and how he came to love Gatsby. So much so, in fact, that the agency refactored all their current projects to run on Gatsby._
 
-_Then came the opportunity to build a brand new Gatsby-from-scratch project, adding in the content management capability of Gatsby’s newest superpower: [Gatsby Preview](https://www.gatsbyjs.com/preview/)._
+_Then came the opportunity to build a brand new Gatsby-from-scratch project, adding in the content management capability of Gatsby’s newest superpower: [Gatsby Preview](https://www.gatsbyjs.com/preview)._
 
 <Pullquote>
 Now up and running on Gatsby, the Delicious Simplicity team was ready to take on a bigger challenge.
@@ -19,7 +19,7 @@ Now up and running on Gatsby, the Delicious Simplicity team was ready to take on
 
 The opportunity arrived in the form of Evie Magazine, a startup online-only lifestyle publication aimed at women. Evie’s editors planned a vibrant and dynamic content stream, meaning they would be adding to and updating the site constantly. To do this seamlessly on the browser side -- i.e., not interrupting user experience -- yet easily on the editorial side, they needed a way to preview changes live in the browser before deploying. Preferably one that did not involve spinning up a local server in the CLI. They were content creators, not coders, after all, and so expected the preview capability of a traditional CMS.
 
-Fortunately, [Gatsby Preview](https://www.gatsbyjs.com/preview) had just become available in beta. Preview [integrates with Contentful](https://www.gatsbyjs.com/docs/contentful/getting-started/) and other select [headless CMS's](/docs/headless-cms/) to allow users the fast and seamless benefits Gatsby brings, only now with the convenience of a live URL for viewing content changes instantly. “I saw right away that Gatsby Preview was the perfect match,” says Brian Webster, agency founder.
+Fortunately, [Gatsby Preview](https://www.gatsbyjs.com/preview) had just become available in beta. Preview [integrates with Contentful](https://www.gatsbyjs.com/docs/contentful/getting-started) and other select [headless CMS's](/docs/headless-cms) to allow users the fast and seamless benefits Gatsby brings, only now with the convenience of a live URL for viewing content changes instantly. “I saw right away that Gatsby Preview was the perfect match,” says Brian Webster, agency founder.
 
 This means that in Gatsby Preview you’re not just previewing the article you are writing in draft stage, as happens in a traditional CMS. Instead, you are able to preview the entire site before actually deploying the new content. This gave Evie’s editors the ability to draft multiple new articles that will completely rearrange the website. “They can seamlessly preview how the landing page will look, how the new content changes the different verticals, and where it shows up in other places around the site,” he says. Suddenly they had complete confidence in their deploys - they knew exactly what it was going to look like when it went live. No guesswork.
 

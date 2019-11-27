@@ -2,7 +2,7 @@
 title: Making a Site with User Authentication
 ---
 
-Sometimes, you need to create a site with gated content, restricted to only authenticated users. Using Gatsby, you may achieve this using the concept of [client-only routes](/docs/client-only-routes-and-user-authentication/), to define which pages a user can view only after logging in.
+Sometimes, you need to create a site with gated content, restricted to only authenticated users. Using Gatsby, you may achieve this using the concept of [client-only routes](/docs/client-only-routes-and-user-authentication), to define which pages a user can view only after logging in.
 
 ## Prerequisites
 
@@ -121,11 +121,11 @@ export const logout = callback => {
 }
 ```
 
-_The guide on [adding authentication](/docs/building-a-site-with-authentication/) contains more information about the flow for connecting Gatsby to an external service._
+_The guide on [adding authentication](/docs/building-a-site-with-authentication) contains more information about the flow for connecting Gatsby to an external service._
 
 ## Creating client-only routes
 
-At the beginning of this tutorial, you created a "hello world" Gatsby site, which includes the `@reach/router` library. Now, using the [@reach/router](https://reach.tech/router/) library, you can create routes available only to logged-in users. This library is used by Gatsby under the hood, so you don't even have to install it.
+At the beginning of this tutorial, you created a "hello world" Gatsby site, which includes the `@reach/router` library. Now, using the [@reach/router](https://reach.tech/router) library, you can create routes available only to logged-in users. This library is used by Gatsby under the hood, so you don't even have to install it.
 
 First, create `gatsby-node.js` in root directory of your project. You will define that any route that starts with `/app/` is part of your restricted content and the page will be created on demand:
 
@@ -137,7 +137,7 @@ exports.onCreatePage = async ({ page, actions }) => {
 
   // page.matchPath is a special key that's used for matching pages
   // only on the client.
-  if (page.path.match(/^\/app/)) {
+  if (page.path.match(/^\/app)) {
     page.matchPath = "/app/*"
 
     // Update the page.
@@ -409,7 +409,7 @@ If you want to learn more about using production-ready auth solutions, these lin
 - [Gatsby repo simple auth example](https://github.com/gatsbyjs/gatsby/tree/master/examples/simple-auth)
 - [A Gatsby email _application_](https://github.com/DSchau/gatsby-mail), using React Context API to handle authentication
 - [The Gatsby store for swag and other Gatsby goodies](https://github.com/gatsbyjs/store.gatsbyjs.org)
-- [Building a blog with Gatsby, React and Webtask.io!](https://auth0.com/blog/building-a-blog-with-gatsby-react-and-webtask/)
+- [Building a blog with Gatsby, React and Webtask.io!](https://auth0.com/blog/building-a-blog-with-gatsby-react-and-webtask)
 - [JAMstack PWA — Let’s Build a Polling App. with Gatsby.js, Firebase, and Styled-components Pt. 2](https://medium.com/@UnicornAgency/jamstack-pwa-lets-build-a-polling-app-with-gatsby-js-firebase-and-styled-components-pt-2-9044534ea6bc)
 - [JAMstack Hackathon Starter - Authenticated Gatsby app starter with Netlify Identity](/starters/sw-yx/jamstack-hackathon-starter)
 - [Learn With Jason Livestream: How to use Netlify Identity and Netlify Functions (with Shawn Wang)](https://www.youtube.com/watch?v=vrSoLMmQ46k&feature=youtu.be)

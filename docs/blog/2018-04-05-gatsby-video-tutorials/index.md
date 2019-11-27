@@ -8,7 +8,7 @@ excerpt: Video Tutorials for using Gatsby and Contentful
 tags: [contentful]
 ---
 
-_This blog post was originally posted on the [Contentful Blog](https://www.contentful.com/blog/2018/02/28/contentful-gatsby-video-tutorials/)_
+_This blog post was originally posted on the [Contentful Blog](https://www.contentful.com/blog/2018/02/28/contentful-gatsby-video-tutorials)_
 
 Contentful developer and Gatsby contributor Khaled Garbaya has released a [4-part video series](https://www.youtube.com/watch?v=Ek4o40w1tH4&list=PL8KiuH6vpACV-F7jXribe4YveGBhBeG9A) to help you build a “blazing fast” website with Gatsby and Contentful. The series begins by transforming the Gatsby’s getting started example to a Contentful-powered site. From there, each video walks you through a new aspect of production, from automating deployment with CircleCI to integrating the Contentful webhooks feature.
 

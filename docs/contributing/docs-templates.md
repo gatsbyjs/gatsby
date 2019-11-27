@@ -31,7 +31,7 @@ Each guide article should explain exactly one concept and that concept should be
 
 ### Near-perfect example of a reference guide
 
-[Linking Between Pages](/docs/linking-between-pages/)
+[Linking Between Pages](/docs/linking-between-pages)
 
 ### What if I want to include multiple tasks and concepts in a reference guide?
 
@@ -53,7 +53,7 @@ If you find yourself wanting to teach the reader how to accomplish a series of r
 
 Guide topics should be chosen based on these priorities:
 
-1.  [Stub articles](/contributing/stub-list/) (docs that already exist on the site but don't have content in them yet)
+1.  [Stub articles](/contributing/stub-list) (docs that already exist on the site but don't have content in them yet)
 2.  Articles with the [help wanted and type:documentation](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22+label%3A%22type%3A+documentation%22) labels on GitHub
 3.  Articles related to improving [key learning workflows](https://github.com/gatsbyjs/gatsby/issues/13708)
 4.  Articles listed in the "Backlog" or "To prioritize" sections of the [Learning / Devrel Roadmap](https://github.com/gatsbyjs/gatsby/projects/10) on GitHub
@@ -125,7 +125,7 @@ If there are other resources you think readers would benefit from or next steps 
 
 ### Near-perfect example of a guide overview
 
-[Deploying and Hosting](/docs/deploying-and-hosting/)
+[Deploying and Hosting](/docs/deploying-and-hosting)
 
 ### What should a reference guide overview be about?
 
@@ -139,7 +139,7 @@ Ideally, a guide overview fits above the fold on a desktop computer screen. This
 
 Guide overview articles are essentially new parent categories that help organize all the reference guides. Here’s how to decide if you should create a new reference guide overview:
 
-1.  [Stub articles](/contributing/stub-list/) (docs that already exist on the site but don't have content in them yet)
+1.  [Stub articles](/contributing/stub-list) (docs that already exist on the site but don't have content in them yet)
 2.  Article sections with the [help wanted and type:documentation](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22+label%3A%22type%3A+documentation%22) labels on GitHub
 3.  Article sections related to improving [key learning workflows](https://github.com/gatsbyjs/gatsby/issues/13708), like "e-commerce"
 4.  Article sections listed in the "Backlog" or "To prioritize" sections of the [Learning / Devrel Roadmap](https://github.com/gatsbyjs/gatsby/projects/10) on GitHub
@@ -179,7 +179,7 @@ Assume the reader has basic programming knowledge such as the command line, code
 
 ## Recipes
 
-[Docs Recipes](/docs/recipes/) should act as discoverable, concise instructions for completing common Gatsby tasks without having to navigate elsewhere. They live on the [Recipes page](/docs/recipes/) in the docs, the source of which can be found in [`docs/docs/recipes.md`](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/recipes.md) in the GitHub repo.
+[Docs Recipes](/docs/recipes) should act as discoverable, concise instructions for completing common Gatsby tasks without having to navigate elsewhere. They live on the [Recipes page](/docs/recipes) in the docs, the source of which can be found in [`docs/docs/recipes.md`](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/recipes.md) in the GitHub repo.
 
 A recipe should list requirements and include a few short instructions to complete a task. It should omit boilerplate and list only directly related, actionable instructions inline. Recipes are smaller units than tutorials, each limited to a single feature or task. Multiple recipes could be linked from a reference guide or tutorial, however the content should be consolidated in the Recipes section for discoverability. If a recipe is recorded as a video, it should be less than five or ten minutes long.
 
@@ -295,7 +295,7 @@ In contrast to recipes and reference guides, tutorials are step-by-step instruct
 
 ### Near perfect example of a tutorial
 
-[Main Gatsby tutorial](https://www.gatsbyjs.org/tutorial/)
+[Main Gatsby tutorial](https://www.gatsbyjs.org/tutorial)
 
 ### What should a tutorial be about?
 
@@ -312,7 +312,7 @@ Topics should be chosen based on these priorities:
 
 ## Length of a tutorial
 
-If a tutorial is longer than 3 8.5x11” pages or has more than about 5 headers and you’re finding yourself creating a Table of Contents at the top, it will probably be easier to read and easier for readers to complete if you turn it into a multi-page tutorial, like the [main Gatsby tutorial](https://www.gatsbyjs.org/tutorial/).
+If a tutorial is longer than 3 8.5x11” pages or has more than about 5 headers and you’re finding yourself creating a Table of Contents at the top, it will probably be easier to read and easier for readers to complete if you turn it into a multi-page tutorial, like the [main Gatsby tutorial](https://www.gatsbyjs.org/tutorial).
 
 If you have a tutorial that falls into this category, it is likely a big enough project that you’ll benefit from the feedback process provided by creating an [RFC (Request for Comments) document](https://github.com/gatsbyjs/rfcs).
 
@@ -392,7 +392,7 @@ them at the bottom in an "Other Resources" section. You can also mention here an
 
 ### Near-perfect example of a plugin README
 
-[`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/)
+[`gatsby-source-filesystem`](/packages/gatsby-source-filesystem)
 
 ```markdown
 ## Description

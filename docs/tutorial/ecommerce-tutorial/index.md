@@ -32,7 +32,7 @@ You can see the working demo hosted here: https://gatsby-ecommerce-stripe.netlif
 
 ## Prerequisites
 
-- Since this is a more advanced tutorial, building a site with Gatsby before will likely make this tutorial less time-consuming ([see the main tutorial here](/tutorial/))
+- Since this is a more advanced tutorial, building a site with Gatsby before will likely make this tutorial less time-consuming ([see the main tutorial here](/tutorial))
 - Stripe account: [register for an account here](https://dashboard.stripe.com/register)
 
 ### How does Gatsby work with Stripe?
@@ -41,7 +41,7 @@ Stripe is a payment processing service that allows you to securely collect and p
 
 There are alternatives to Stripe, like Square and Braintree, and their setup is very similar to Stripe.
 
-Stripe offers a [hosted checkout](https://stripe.com/docs/payments/checkout) that doesn't require any backend component. You can configure products, SKUs, and subscription plans in the [Stripe Dashboard](https://stripe.com/docs/payments/checkout#configure). If you're selling a single product or subscription (like an eBook) you can hardcode the product's SKU ID in your Gatsby side. If you're selling multiple products, you can use the [Stripe source plugin](https://www.gatsbyjs.org/packages/gatsby-source-stripe/) to retrieve all SKUs at build time. If you want your Gatsby site to automatically update, you can use the Stripe webhook event to [trigger a redeploy](https://www.netlify.com/docs/webhooks/) when a new product or SKU is added.
+Stripe offers a [hosted checkout](https://stripe.com/docs/payments/checkout) that doesn't require any backend component. You can configure products, SKUs, and subscription plans in the [Stripe Dashboard](https://stripe.com/docs/payments/checkout#configure). If you're selling a single product or subscription (like an eBook) you can hardcode the product's SKU ID in your Gatsby side. If you're selling multiple products, you can use the [Stripe source plugin](https://www.gatsbyjs.org/packages/gatsby-source-stripe) to retrieve all SKUs at build time. If you want your Gatsby site to automatically update, you can use the Stripe webhook event to [trigger a redeploy](https://www.netlify.com/docs/webhooks) when a new product or SKU is added.
 
 # Setting up a Gatsby site
 
@@ -73,9 +73,9 @@ module.exports = {
 
 ### See your site hot reload in the browser!
 
-Run `npm run develop` in the terminal, which starts a development server and reloads changes you make to your site so you can preview them in the browser. Open up your browser to [localhost:8000](http://localhost:8000/) and you should see a default homepage.
+Run `npm run develop` in the terminal, which starts a development server and reloads changes you make to your site so you can preview them in the browser. Open up your browser to [localhost:8000](http://localhost:8000) and you should see a default homepage.
 
-> **NOTE**: If you have already started your Gatsby development server using `npm run develop`, you will need to restart the server by pressing CTRL + C in the terminal where the command was run and running `npm run develop` again to see changes in your `gatsby-config.js` reflected on [localhost:8000](http://localhost:8000/)
+> **NOTE**: If you have already started your Gatsby development server using `npm run develop`, you will need to restart the server by pressing CTRL + C in the terminal where the command was run and running `npm run develop` again to see changes in your `gatsby-config.js` reflected on [localhost:8000](http://localhost:8000)
 
 ### How does the StripeJS plugin work?
 
@@ -258,15 +258,15 @@ const IndexPage = () => (
 export default IndexPage
 ```
 
-If you go back to [localhost:8000](http://localhost:8000/) in your browser and you have `npm run develop` running, you should now see a big, enticing "BUY MY BOOK" button. C'mon and give it a click!
+If you go back to [localhost:8000](http://localhost:8000) in your browser and you have `npm run develop` running, you should now see a big, enticing "BUY MY BOOK" button. C'mon and give it a click!
 
 ### Advanced: Import SKUs via source plugin
 
-Instead of hardcoding the SKU IDs, you can use the [gatsby-source-stripe plugin](https://www.gatsbyjs.org/packages/gatsby-source-stripe/) to retrieve your SKUs at build time.
+Instead of hardcoding the SKU IDs, you can use the [gatsby-source-stripe plugin](https://www.gatsbyjs.org/packages/gatsby-source-stripe) to retrieve your SKUs at build time.
 
 #### Add the Stripe source plugin
 
-Add the [gatsby-source-stripe plugin](https://www.gatsbyjs.org/packages/gatsby-source-stripe/) which you can use to pull in the SKUs from your Stripe account.
+Add the [gatsby-source-stripe plugin](https://www.gatsbyjs.org/packages/gatsby-source-stripe) which you can use to pull in the SKUs from your Stripe account.
 
 ```shell
 npm install gatsby-source-stripe
@@ -294,7 +294,7 @@ module.exports = {
 }
 ```
 
-To retrieve your SKUs from your Stripe account you will need to provide your secret API key. This key needs to be kept secret and must never be shared on the frontend or on GitHub. Therefore you need to set an environment variable to store the secret key. You can read more about the usage of env variables in the [Gatsby docs](/docs/environment-variables/).
+To retrieve your SKUs from your Stripe account you will need to provide your secret API key. This key needs to be kept secret and must never be shared on the frontend or on GitHub. Therefore you need to set an environment variable to store the secret key. You can read more about the usage of env variables in the [Gatsby docs](/docs/environment-variables).
 
 In the root directory of your project add a `.env.development` file:
 

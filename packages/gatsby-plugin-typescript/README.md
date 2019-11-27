@@ -65,7 +65,7 @@ compiler is not involved, the following applies:
 > and import x, {y} from "z".
 >
 > Does not support baseUrl.
-> Workaround: use [gatsby-plugin-root-import](https://www.gatsbyjs.org/packages/gatsby-plugin-root-import/)
+> Workaround: use [gatsby-plugin-root-import](https://www.gatsbyjs.org/packages/gatsby-plugin-root-import)
 > and configure it to point the baseUrl value (also set baseUrl option in tsconfig.json file).
 
 https://babeljs.io/docs/en/babel-plugin-transform-typescript.html

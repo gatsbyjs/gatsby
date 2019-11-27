@@ -4,13 +4,13 @@ title: Building a Contact Form
 
 This guide covers how to create a contact form in a Gatsby site, along with an overview of some strategies for handling form data that has been submitted.
 
-Gatsby is built on top of React. So anything that is possible with a React form is possible in Gatsby. Additional details about how to add forms to gatsby can be found in the [Adding Forms](/docs/adding-forms/) section.
+Gatsby is built on top of React. So anything that is possible with a React form is possible in Gatsby. Additional details about how to add forms to gatsby can be found in the [Adding Forms](/docs/adding-forms) section.
 
 ## Creating an Accessible Form
 
 Faulty forms are a common barrier to a website's accessibility, and can be especially problematic if you use a keyboard and screen reader to navigate the web. Forms should be clearly and intuitively organized into groups of related information, and each form field should be identified with a proper label.
 
-More information on creating accessible forms can be found in [WebAIM's article](https://webaim.org/techniques/forms/) on the subject.
+More information on creating accessible forms can be found in [WebAIM's article](https://webaim.org/techniques/forms) on the subject.
 
 ## Sending Form Data
 
@@ -45,7 +45,7 @@ Each method detailed below will start with the following contact form:
 
 ### Netlify
 
-If you're hosting your site with Netlify, you gain access to their excellent [form handling feature](https://www.netlify.com/docs/form-handling/).
+If you're hosting your site with Netlify, you gain access to their excellent [form handling feature](https://www.netlify.com/docs/form-handling).
 
 Setting this up only involves adding a few form attributes:
 
@@ -58,7 +58,7 @@ Setting this up only involves adding a few form attributes:
 
 Now, all submissions to your form will appear in the Forms tab of your site dashboard. By adding the form attribute `netlify-honeypot="bot-field"` and a corresponding hidden input, Netlify will know to quietly reject any spam submissions you may receive.
 
-More information on Netlify Forms can be found [on their website](https://www.netlify.com/docs/form-handling/).
+More information on Netlify Forms can be found [on their website](https://www.netlify.com/docs/form-handling).
 
 ### Formspree
 
@@ -77,7 +77,7 @@ In order to begin leveraging Formspree's features, you must add a form action di
 </form>
 ```
 
-Once you've made the changes you can submit your own form for the first time and register using the email Formspree will send you, and all subsequent form submissions will be sent to your email address. You can find more information on the registration process or setup [on their website](https://formspree.io/).
+Once you've made the changes you can submit your own form for the first time and register using the email Formspree will send you, and all subsequent form submissions will be sent to your email address. You can find more information on the registration process or setup [on their website](https://formspree.io).
 
 All forms set up in this way come with reCAPTCHA by default, but you can also enable Honeypot spam filtering by adding a hidden input element with the `name="_gotcha"` field.
 
@@ -89,7 +89,7 @@ Because the input is hidden, Formspree will know that only a bot could have made
 
 ### Run your own server
 
-If your form data requires a significant amount of business logic to handle, creating your own service might make the most sense. The most popular solution to this is writing an HTTP server - this can be done in many languages including PHP, Ruby, GoLang, or in our case Node.js with [Express](https://expressjs.com/).
+If your form data requires a significant amount of business logic to handle, creating your own service might make the most sense. The most popular solution to this is writing an HTTP server - this can be done in many languages including PHP, Ruby, GoLang, or in our case Node.js with [Express](https://expressjs.com).
 
 An initial implementation of a server using express, body-parser, and nodemailer may look like this:
 

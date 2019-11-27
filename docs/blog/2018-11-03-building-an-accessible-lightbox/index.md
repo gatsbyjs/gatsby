@@ -6,7 +6,7 @@ tags: ["cutting-edge-experiences", "gatsby-image", "accessibility"]
 canonicalLink: "https://416serg.me/building-a-custom-accessible-image-lightbox-in-gatsbyjs"
 ---
 
-In this tutorial you're going to cover the steps to creating a simple, custom, accessible image lightbox inside a [GatsbyJS](/) application. You can check out the finished example on [GitHub](https://github.com/416serg/GatsbyLightbox) ([Demo](https://gatsbylightboxv2.416serg.me/)) or continue reading to dive right into the magic.
+In this tutorial you're going to cover the steps to creating a simple, custom, accessible image lightbox inside a [GatsbyJS]() application. You can check out the finished example on [GitHub](https://github.com/416serg/GatsbyLightbox) ([Demo](https://gatsbylightboxv2.416serg.me)) or continue reading to dive right into the magic.
 
 ## Getting started
 
@@ -125,7 +125,7 @@ By now, you should have all the images displaying on the home page and doing a f
 
 ### Styled Components
 
-For styling, you're going to be using [styled-components](https://www.styled-components.com/). To get it configured with Gatsby, run the following inside your terminal in your application:
+For styling, you're going to be using [styled-components](https://www.styled-components.com). To get it configured with Gatsby, run the following inside your terminal in your application:
 
 ```shell
 $ yarn add gatsby-plugin-styled-components styled-components babel-plugin-styled-components

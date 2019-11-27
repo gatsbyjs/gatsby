@@ -11,7 +11,7 @@ on the back burner btw until after v1 comes out).
 
 ## Prerequisites
 
-If you’re not familiar with Gatsby’s lifecycle, see the overview [Gatsby Lifecycle APIs](/docs/gatsby-lifecycle-apis/).
+If you’re not familiar with Gatsby’s lifecycle, see the overview [Gatsby Lifecycle APIs](/docs/gatsby-lifecycle-apis).
 
 ## Plugins
 
@@ -29,7 +29,7 @@ Plugins can extend Gatsby in many ways:
   sitemap, RSS feed)
 
 A single plugin can use multiple APIs to accomplish its purpose. E.g. the plugin
-for the CSS-in-JS library [Glamor](/packages/gatsby-plugin-glamor/):
+for the CSS-in-JS library [Glamor](/packages/gatsby-plugin-glamor):
 
 1.  modifies the webpack config to add its plugin
 2.  adds a Babel plugin to replace React's default createElement
@@ -37,12 +37,12 @@ for the CSS-in-JS library [Glamor](/packages/gatsby-plugin-glamor/):
     page and inline the CSS in the `<head>` of that HTML page.
 
 Plugins can also depend on other plugins. [The Sharp
-plugin](/packages/gatsby-plugin-sharp/) exposes a number of high-level APIs for
+plugin](/packages/gatsby-plugin-sharp) exposes a number of high-level APIs for
 transforming images that several other Gatsby image plugins depend on.
-[gatsby-transformer-remark](/packages/gatsby-transformer-remark/) does basic
+[gatsby-transformer-remark](/packages/gatsby-transformer-remark) does basic
 markdown->html transformation but exposes an API to allow other plugins to
 intervene in the conversion process e.g.
-[gatsby-remark-prismjs](/packages/gatsby-remark-prismjs/) which adds
+[gatsby-remark-prismjs](/packages/gatsby-remark-prismjs) which adds
 highlighting to code blocks.
 
 Transformer plugins are decoupled from source plugins. Transformer plugins look
@@ -53,7 +53,7 @@ file, a code comment, or external service like Trello which supports markdown
 in some of its data fields.
 
 See
-[the full list of (official only for now — adding support for community plugins later) plugins](/docs/plugins/).
+[the full list of (official only for now — adding support for community plugins later) plugins](/docs/plugins).
 
 ## API
 
@@ -76,7 +76,7 @@ See
   inferred. Parent/child links from nodes and their transformed derivative nodes
   are first class links.
 
-_More definitions and terms are defined in the [Glossary](/docs/glossary/)_
+_More definitions and terms are defined in the [Glossary](/docs/glossary)_
 
 ### Operators
 

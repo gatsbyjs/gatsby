@@ -180,5 +180,5 @@ module.exports = {
 
 ## Other resources
 
-- For more information on Docz visit [the Docz site](https://docz.site/) and in particular the [Gatsby theme documentation](https://www.docz.site/docs/gatsby-theme)
+- For more information on Docz visit [the Docz site](https://docz.site) and in particular the [Gatsby theme documentation](https://www.docz.site/docs/gatsby-theme)
 - Check out the official [Docz starter](https://github.com/pedronauck/gatsby-starter-docz)

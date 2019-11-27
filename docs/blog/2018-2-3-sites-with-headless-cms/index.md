@@ -17,7 +17,7 @@ Despite the advantages of this scenario, there are also some disadvantages which
 
 ### Slower load times AND expensive
 
-Most traditional CMSs can't run on [edge servers](https://www.cloudflare.com/learning/cdn/glossary/edge-server/) (servers running CDNs). This results in slower load times the farther away you live from the servers. For example, people often observe that US websites run slowly in Australia. This is not imaginary; when someone in Australia accesses a US site built with a traditional CMS, it has to be sent from far-away servers.
+Most traditional CMSs can't run on [edge servers](https://www.cloudflare.com/learning/cdn/glossary/edge-server) (servers running CDNs). This results in slower load times the farther away you live from the servers. For example, people often observe that US websites run slowly in Australia. This is not imaginary; when someone in Australia accesses a US site built with a traditional CMS, it has to be sent from far-away servers.
 
 ### Hard to adapt content to new formats
 
@@ -66,7 +66,7 @@ In all of these cases, a headless CMS is an excellent solution for you.
 
 ## Which headless CMS should I choose?
 
-Whether or not you’re convinced that a headless CMS is a good idea, the next step would be to try some out for yourself. I found this handy site with a [list of headless CMSs to keep an eye on](https://headlesscms.org/about/).
+Whether or not you’re convinced that a headless CMS is a good idea, the next step would be to try some out for yourself. I found this handy site with a [list of headless CMSs to keep an eye on](https://headlesscms.org/about).
 
 And here’s what I learned from testing several popular CMSs for five minutes each. (Background: I’m a writer and content editor who knows just enough about developing to get myself into major trouble :)
 
@@ -80,7 +80,7 @@ I've read that [ButterCMS](https://buttercms.com) is particularly good for blogs
 
 ### Contentful
 
-I already built this site http://watson.surge.sh/ with Contentful and talk about that experience [here](/blog/2018-1-25-building-a-site-with-react-and-contentful/). Another thing I like about Contentful, which I didn't mention in the other article, is how smooth it is to toggle between content models (categories of content types). Their recent product update says you can add images inline in chunks of text, which makes the editing experience feel more like using a WYSIWYG. This seems like it would make things easy on the editing side, although I haven't explored if this would affect image presentation.
+I already built this site http://watson.surge.sh/ with Contentful and talk about that experience [here](/blog/2018-1-25-building-a-site-with-react-and-contentful). Another thing I like about Contentful, which I didn't mention in the other article, is how smooth it is to toggle between content models (categories of content types). Their recent product update says you can add images inline in chunks of text, which makes the editing experience feel more like using a WYSIWYG. This seems like it would make things easy on the editing side, although I haven't explored if this would affect image presentation.
 
 ### CloudCMS
 

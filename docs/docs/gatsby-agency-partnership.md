@@ -17,6 +17,6 @@ Depending on the amount of websites you build with Gatsby, the partner program w
 
 **Step 1**: Build a client (or agency) website with Gatsby.
 
-**Step 2**: Submit your Gatsby client or agency website to the [Site Showcase](/showcase/).
+**Step 2**: Submit your Gatsby client or agency website to the [Site Showcase](/showcase).
 
 **Step 3**: Fill out [this form](/blog/2018-08-01-partner-program/#partner-application-form) to let us know you’re interested in learning more about future developments to Gatsby’s Partner Program.

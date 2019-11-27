@@ -17,19 +17,19 @@ On this page:
 
 This page includes details specific to the Gatsby core and ecosystem codebase.
 
-To start setting up the Gatsby repo on your machine using git, Yarn and Gatsby-CLI, check out the page on [setting up your local dev environment](/contributing/setting-up-your-local-dev-environment/).
+To start setting up the Gatsby repo on your machine using git, Yarn and Gatsby-CLI, check out the page on [setting up your local dev environment](/contributing/setting-up-your-local-dev-environment).
 
-Alternatively, you can skip the local setup and [use an online dev environment](/contributing/using-an-online-dev-environment/).
+Alternatively, you can skip the local setup and [use an online dev environment](/contributing/using-an-online-dev-environment).
 
-To contribute to the blog or Gatsbyjs.org website, check out the setup steps on the [blog and website contributions](/contributing/blog-and-website-contributions/) page. For instructions on contributing to the docs, visit the [docs contributions page](/contributing/docs-contributions/).
+To contribute to the blog or Gatsbyjs.org website, check out the setup steps on the [blog and website contributions](/contributing/blog-and-website-contributions) page. For instructions on contributing to the docs, visit the [docs contributions page](/contributing/docs-contributions).
 
 ## Creating your own plugins and loaders
 
-If you create a loader or plugin, we would love for you to open source it and put it on npm. For more information on creating custom plugins, please see the documentation for [plugins](/docs/plugins/) and the [API specification](/docs/api-specification/).
+If you create a loader or plugin, we would love for you to open source it and put it on npm. For more information on creating custom plugins, please see the documentation for [plugins](/docs/plugins) and the [API specification](/docs/api-specification).
 
 ## Making changes to the starter library
 
-Note: You don't need to follow these steps to submit to the starter library. This is only necessary if you'd like to contribute to the functionality of the starter library. To submit a starter, [follow these steps instead](/contributing/submit-to-starter-library/).
+Note: You don't need to follow these steps to submit to the starter library. This is only necessary if you'd like to contribute to the functionality of the starter library. To submit a starter, [follow these steps instead](/contributing/submit-to-starter-library).
 
 To develop on the starter library, you'll need to supply a GitHub personal access token.
 
@@ -111,14 +111,14 @@ services:
 
 Use the above file contents when following the Docker WordPress install instructions: https://docs.docker.com/compose/wordpress/
 
-Using Docker Compose, you can start and stop a WordPress instance and integrate it with the [Gatsby WordPress source plugin](/docs/sourcing-from-wordpress/).
+Using Docker Compose, you can start and stop a WordPress instance and integrate it with the [Gatsby WordPress source plugin](/docs/sourcing-from-wordpress).
 
 ## Development tools
 
 ### Debugging the build process
 
-Check [Debugging the build process](/docs/debugging-the-build-process/) page to learn how to debug Gatsby.
+Check [Debugging the build process](/docs/debugging-the-build-process) page to learn how to debug Gatsby.
 
 ## Feedback
 
-At any point during the contributing process the Gatsby team would love to help! For help with a specific problem you can [open an issue on GitHub](/contributing/how-to-file-an-issue/). Or drop in to [our Discord server](https://gatsby.dev/discord) for general community discussion and support.
+At any point during the contributing process the Gatsby team would love to help! For help with a specific problem you can [open an issue on GitHub](/contributing/how-to-file-an-issue). Or drop in to [our Discord server](https://gatsby.dev/discord) for general community discussion and support.

@@ -6,11 +6,11 @@ tags:
   - case-studies
 ---
 
-When [Design+Code](https://designcode.io/) needed to rebuild their website to focus on more robust content and meeting increased sales targets, they started with what they knew - React. As a teaching resource for building real, live apps they were already familiar with React. As experts in the courses they offer, they reached for Gatsby. This combination would provide the leading-edge experience they gained by designing with Gatsby, while customer experience was elevated from visit to sales.
+When [Design+Code](https://designcode.io) needed to rebuild their website to focus on more robust content and meeting increased sales targets, they started with what they knew - React. As a teaching resource for building real, live apps they were already familiar with React. As experts in the courses they offer, they reached for Gatsby. This combination would provide the leading-edge experience they gained by designing with Gatsby, while customer experience was elevated from visit to sales.
 
 ![](./images/dc-homepage.png)
 
-Design+Code started in 2015 when Meng To began with a digital book on designing iOS apps and Sketch. With Swift, Design+Code taught how to build the real iOS app from the app itself. This would serve as the foundation for future Design+Code courses – teaching how to build real, live apps, but in a compelling and design-focused way. The Design+Code React course has become their most popular course by far, and teaches how to build a production website (designcode.io) for designers and beginners. It goes from basic React concepts all the way to adding content with Contentful, to deployment and accepting payments. There have been some beautiful sites from students who've taken the course (such as [Cyfa](https://cyfa.io/)).
+Design+Code started in 2015 when Meng To began with a digital book on designing iOS apps and Sketch. With Swift, Design+Code taught how to build the real iOS app from the app itself. This would serve as the foundation for future Design+Code courses – teaching how to build real, live apps, but in a compelling and design-focused way. The Design+Code React course has become their most popular course by far, and teaches how to build a production website (designcode.io) for designers and beginners. It goes from basic React concepts all the way to adding content with Contentful, to deployment and accepting payments. There have been some beautiful sites from students who've taken the course (such as [Cyfa](https://cyfa.io)).
 
 #### Example of a student-built website, Cyfa
 
@@ -44,4 +44,4 @@ The launch was a success and landed [Design+Code at #1 on Product Hunt](https://
 
 Gatsby ignited their Search Engine Optimization (SEO) with Lighthouse scores of SEO at 100, Best Practices at 93, and Performance at 97 out of 100. The site is far out-performing its predecessor and has become the content-driven, sales machine that was anticipated.
 
-Try out [Gatsby](/) to see how it can do the same for you.
+Try out [Gatsby]() to see how it can do the same for you.

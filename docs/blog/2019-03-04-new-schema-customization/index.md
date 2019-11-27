@@ -7,7 +7,7 @@ tags: ["graphql", "releases"]
 
 Today we are releasing a preview of a new core Gatsby API - Schema Customization. It gives Gatsby users much better control over the inferred schema, solving many common issues that people have had with their data sources. In addition to adding the new API, we rewrote big chunks of schema generation code from scratch. This gives us a great long-term foundation that will let us make Gatsby GraphQL better in the future.
 
-I would like to thank our community member [Stefan Probst](https://github.com/stefanprobst), who not only did lots of initial groundwork on the refactoring, but also helped immensely with the follow-up work there. We are really happy to have such a great community and super grateful to Stefan for all his hard work. I'd also like to thank [Pavel Chertorogov](https://github.com/nodkz/), the author of the [graphql-compose](https://graphql-compose.github.io/) library that we used, who's been super responsive to our bug reports and feature requests.
+I would like to thank our community member [Stefan Probst](https://github.com/stefanprobst), who not only did lots of initial groundwork on the refactoring, but also helped immensely with the follow-up work there. We are really happy to have such a great community and super grateful to Stefan for all his hard work. I'd also like to thank [Pavel Chertorogov](https://github.com/nodkz), the author of the [graphql-compose](https://graphql-compose.github.io) library that we used, who's been super responsive to our bug reports and feature requests.
 
 As it's a huge feature and big parts of the code are affected, we are releasing it as an alpha preview. You can try it by adding `gatsby@schema-customization` as a dependency for your Gatsby site.
 
@@ -29,8 +29,8 @@ On the other hand, we wanted to reevaluate our approach to schemas in general. I
 
 There are two main additions to the API:
 
-1. A `createTypes` action that allows one to add, extend or fix the types by passing their type definition using [Graphql SDL](https://graphql.org/learn/schema/).
-1. A `createResolvers` [Gatsby Node API](/docs/node-apis/) that can add or override resolvers on any types and fields in the schema. It can also add new fields with such resolvers.
+1. A `createTypes` action that allows one to add, extend or fix the types by passing their type definition using [Graphql SDL](https://graphql.org/learn/schema).
+1. A `createResolvers` [Gatsby Node API](/docs/node-apis) that can add or override resolvers on any types and fields in the schema. It can also add new fields with such resolvers.
 
 Why the two APIs? `createTypes` primary purpose is to _fix_ the definition for an automatically generated Node type. Often one is totally happy with the default resolvers that Gatsby provides and the only issue is that inference can change based on data changes.
 
@@ -275,7 +275,7 @@ const Foo = graphql.GraphQLObjectType({
 
 After all types are collected into the type registry, the registry can be converted to a normal GraphQL schema. Other common features include being able to generate types like input objects and filter from the types held in the type registry.
 
-We didn't want to implement a type registry and all the related parts ourselves. Thankfully, there is a library just for that - [graphql-compose](https://graphql-compose.github.io/). We opted to use it and it saved us lots of time. I really recommend this library to anyone, especially if you plan to generate types.
+We didn't want to implement a type registry and all the related parts ourselves. Thankfully, there is a library just for that - [graphql-compose](https://graphql-compose.github.io). We opted to use it and it saved us lots of time. I really recommend this library to anyone, especially if you plan to generate types.
 
 ```js
 // global schema composer

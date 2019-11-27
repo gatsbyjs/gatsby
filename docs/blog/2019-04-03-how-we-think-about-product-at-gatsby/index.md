@@ -9,9 +9,9 @@ tags:
 
 As a company grows, it will eventually start offering products or services to the community it’s trying to serve. It’s an exciting time filled with near constant changes. At Gatsby, we realized that this meant we needed to have a better understanding and core philosophy around the products we create.
 
-So, we blocked out our schedules and met for 3 days over [Zoom](https://zoom.us/), with people calling in from different parts of the USA, Germany, and England to read, workshop, and talk about product.
+So, we blocked out our schedules and met for 3 days over [Zoom](https://zoom.us), with people calling in from different parts of the USA, Germany, and England to read, workshop, and talk about product.
 
-On the call, we read excerpts from Marty Cagan’s [_Inspired: How to Create Tech Products Customers Love_](https://svpg.com/inspired-how-to-create-products-customers-love/). We’re using a lot of his advice to help create a product organization and product management framework at Gatsby.
+On the call, we read excerpts from Marty Cagan’s [_Inspired: How to Create Tech Products Customers Love_](https://svpg.com/inspired-how-to-create-products-customers-love). We’re using a lot of his advice to help create a product organization and product management framework at Gatsby.
 
 ## What is a product and what are Gatsby products?
 

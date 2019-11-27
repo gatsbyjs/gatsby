@@ -46,7 +46,7 @@ If you're using this plugin together with [`gatsby-plugin-offline`](https://www.
 this plugin should be listed _before_ the offline plugin so that it can cache
 the created `manifest.webmanifest`.
 
-For more information on configuring your web app [see here](https://developers.google.com/web/fundamentals/web-app-manifest/).
+For more information on configuring your web app [see here](https://developers.google.com/web/fundamentals/web-app-manifest).
 
 ### Configure icons and their generations - **Required**
 
@@ -132,7 +132,7 @@ icons: [
 ], // Add or remove icon sizes as desired
 ```
 
-In the manual mode, you are responsible for defining the entire web app manifest and providing the defined icons in the [static](https://www.gatsbyjs.org/docs/static-folder/) folder. Only icons you provide will be available. There is no automatic resizing done for you.
+In the manual mode, you are responsible for defining the entire web app manifest and providing the defined icons in the [static](https://www.gatsbyjs.org/docs/static-folder) folder. Only icons you provide will be available. There is no automatic resizing done for you.
 
 ### Feature configuration - **Optional**
 

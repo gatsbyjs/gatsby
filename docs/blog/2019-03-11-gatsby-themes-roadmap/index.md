@@ -35,7 +35,7 @@ plugin itself, resulting in `[...themeA.plugins, themeA, ...themeB.plugins, them
 any plugin it includes.
 
 For more on this, read [Introducing Gatsby
-Themes](/blog/2018-11-11-introducing-gatsby-themes/).
+Themes](/blog/2018-11-11-introducing-gatsby-themes).
 
 We introduced one major change to composition after the initial release to
 support child themes. A child theme is a theme that also uses the
@@ -91,7 +91,7 @@ React components. At any given point in the tree that is your site, you have a
 React component (or set of components) responsible for handling the rendering of
 some props. This could be low level like a `Text` or `Heading` component, higher
 level compositions [like `Media`
-objects](http://www.stubbornella.org/content/2010/06/25/the-media-object-saves-hundreds-of-lines-of-code/),
+objects](http://www.stubbornella.org/content/2010/06/25/the-media-object-saves-hundreds-of-lines-of-code),
 the `Navigation` component, or even a full page layout. Component shadowing
 allows you to find the place a component is defined in a theme, such as
 `gatsby-theme-blog/src/author.js`, and replace it by creating a file in your
@@ -101,7 +101,7 @@ In fact, any file that is processed by webpack can be shadowed.
 
 To learn more about child themes and component shadowing, [read this themes
 update blog
-post](/blog/2019-01-29-themes-update-child-theming-and-component-shadowing/).
+post](/blog/2019-01-29-themes-update-child-theming-and-component-shadowing).
 
 ## Improving Documentation
 
@@ -141,7 +141,7 @@ core community `BlogPost` type with multi-author support. It would be
 immediately compatible with any theme that used the `BlogPost` type.
 
 If you're following closely you may have already seen [a blog post by Mikhail
-Novikov](/blog/2019-03-04-new-schema-customization/) on
+Novikov](/blog/2019-03-04-new-schema-customization) on
 the new schema customization APIs: `createTypes` and `createResolvers`. These
 are the primitives we are using to build data abstractions to use with themes.
 We're still experimenting and doing research here so I won't show any code

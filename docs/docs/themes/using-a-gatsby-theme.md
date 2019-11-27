@@ -2,7 +2,7 @@
 title: Using a Gatsby Theme
 ---
 
-While you can [get started quickly with a Gatsby theme starter](/docs/themes/getting-started/), you can also install a Gatsby theme directly to an existing Gatsby site. Gatsby themes are plugins, so you can [install and use them like any other Gatsby plugin](/docs/using-a-plugin-in-your-site/).
+While you can [get started quickly with a Gatsby theme starter](/docs/themes/getting-started), you can also install a Gatsby theme directly to an existing Gatsby site. Gatsby themes are plugins, so you can [install and use them like any other Gatsby plugin](/docs/using-a-plugin-in-your-site).
 
 ## Installing a Theme
 
@@ -20,7 +20,7 @@ npm install --save gatsby-theme-blog
 
 Depending on the theme, there may be theme options that can be configured via `gatsby-config.js`.
 
-For example, `gatsby-theme-blog` can take in 4 potential options: `basePath`, `contentPath`, `assetPath`, and `mdx`. These options are also documented in the [theme's README](/packages/gatsby-theme-blog/) file.
+For example, `gatsby-theme-blog` can take in 4 potential options: `basePath`, `contentPath`, `assetPath`, and `mdx`. These options are also documented in the [theme's README](/packages/gatsby-theme-blog) file.
 
 ```javascript:title=gatsby-config.js
 module.exports = {
@@ -44,7 +44,7 @@ module.exports = {
 }
 ```
 
-To learn how to further customize a theme, check out the docs on [Gatsby theme shadowing](/docs/themes/shadowing/).
+To learn how to further customize a theme, check out the docs on [Gatsby theme shadowing](/docs/themes/shadowing).
 
 ## Published Themes
 
@@ -52,4 +52,4 @@ Public Gatsby themes are published on npm for anyone to use. You can also publis
 
 ## Using Yarn Workspaces
 
-If you would like to work with unpublished themes, consider [setting up Yarn Workspaces for theme development](/blog/2019-05-22-setting-up-yarn-workspaces-for-theme-development/) and [using Yarn](/docs/gatsby-cli/#how-to-change-your-default-package-manager-for-your-next-project) instead of npm.
+If you would like to work with unpublished themes, consider [setting up Yarn Workspaces for theme development](/blog/2019-05-22-setting-up-yarn-workspaces-for-theme-development) and [using Yarn](/docs/gatsby-cli/#how-to-change-your-default-package-manager-for-your-next-project) instead of npm.

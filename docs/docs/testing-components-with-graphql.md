@@ -16,7 +16,7 @@ page you'll need to provide the equivalent data to the component. Luckily
 there's a simple way to get the data you need.
 
 First you should make sure you have read
-[the unit testing guide](/docs/unit-testing/) and set up your project as
+[the unit testing guide](/docs/unit-testing) and set up your project as
 described. This guide is based on the same blog starter project. You will be
 writing a simple snapshot test for the index page.
 

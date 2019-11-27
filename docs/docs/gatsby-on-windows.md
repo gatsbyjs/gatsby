@@ -5,7 +5,7 @@ title: Gatsby on Windows
 ## Setting up your environment for building native Node.js modules.
 
 Many Gatsby plugins and themes require building native Node.js modules, e.g.
-[Sharp (a common Gatsby dependency used for image processing)](/packages/gatsby-plugin-sharp/).
+[Sharp (a common Gatsby dependency used for image processing)](/packages/gatsby-plugin-sharp).
 To do so, you need a functional build environment (Python and Visual C++ Build
 Tools).
 
@@ -30,7 +30,7 @@ This might be your problem if, after running `npm install` on a Gatsby site, you
 see compilation errors such as `node-gyp` or `sharp` or `binding.gyp not found`.
 
 If you suspect this is your problem, download the
-[Visual Studio Community 2015 Package](https://www.visualstudio.com/vs/older-downloads/) (also available from this [direct download link](https://go.microsoft.com/fwlink/?LinkId=532606&clcid=0x409))
+[Visual Studio Community 2015 Package](https://www.visualstudio.com/vs/older-downloads) (also available from this [direct download link](https://go.microsoft.com/fwlink/?LinkId=532606&clcid=0x409))
 and install only the part of the package that interests us : `Programming languages > Visual C++ > Common tools for Visual Studio 2015`. Be sure to
 download the 2015 version of VS Community. For Visual Studio 2017, see instructions below. You can uncheck everything else. You don't need to install the full
 VS2015 Express on your system and this won't mess up your existing VS201x
@@ -48,7 +48,7 @@ npm cache clean -f
 npm install
 ```
 
-For Visual Studio 2017, download [Visual Studio Community 2017](https://visualstudio.microsoft.com/vs/community/) and install the Desktop development with C++ workflow. You can uncheck everything else.
+For Visual Studio 2017, download [Visual Studio Community 2017](https://visualstudio.microsoft.com/vs/community) and install the Desktop development with C++ workflow. You can uncheck everything else.
 
 ![Desktop development with C++ workflow](https://i.imgur.com/dPknorD.png)
 
@@ -89,4 +89,4 @@ Sharp uses a C library, libvips. If you are having issues while installing Sharp
 
 If the installation of dependencies or developing on Windows in general gives you headaches, Windows 10 provides a great alternative: [Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/about). It lets you run most command-line tools, utilities, and applications in a GNU/Linux environment directly on Windows, unmodified, without the overhead of a virtual machine. In the above scenario you would download e.g. Ubuntu, open the terminal, [install Node](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions), and run `sudo apt-get install build-essential` in the terminal — and the compilation works way more reliable. Please note that you have to delete any existing `node_modules` folder in your project and re-install the dependencies in your WSL environment.
 
-You can also visit [Gatsby on Linux](/docs/gatsby-on-linux/) to learn more.
+You can also visit [Gatsby on Linux](/docs/gatsby-on-linux) to learn more.

@@ -26,4 +26,4 @@ The Impossible Foods team raved that their new architecture enables their conten
 
 ## Learn More About Gatsby and Ecommerce
 
-To watch the full case study, including a presentation from Gatsby’s co-founder Kyle Mathews on why Gatsby is a smart choice for ecommerce sites, register here: [Impossible Foods Webinar](https://www.gatsbyjs.com/impossible-foods-webinar/).
+To watch the full case study, including a presentation from Gatsby’s co-founder Kyle Mathews on why Gatsby is a smart choice for ecommerce sites, register here: [Impossible Foods Webinar](https://www.gatsbyjs.com/impossible-foods-webinar).

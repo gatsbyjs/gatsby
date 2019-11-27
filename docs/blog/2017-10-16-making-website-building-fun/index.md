@@ -9,7 +9,7 @@ tags: ["web-building-blocks", "gatsby-image", "react", "graphql", "plugins"]
 I still remember the first non-trivial React component I built in 2014—not long
 after I started using React seriously.
 
-I decided to port to React [headroom.js](http://wicky.nillia.ms/headroom.js/)—a
+I decided to port to React [headroom.js](http://wicky.nillia.ms/headroom.js)—a
 JavaScript library that shows & hides headers as you scroll up & down a site.
 
 After a day or two of working through the niceties of writing a React component
@@ -156,7 +156,7 @@ point-of-view and problem complexity collapses.
 
 The right building blocks allows us to directly manipulate the parts of the
 problem that we actually care about. They create
-[an immediate connection](http://blog.ezyang.com/2012/02/transcript-of-inventing-on-principleb/)
+[an immediate connection](http://blog.ezyang.com/2012/02/transcript-of-inventing-on-principleb)
 between our thoughts and the visible outputs.
 
 With the right building blocks, creating is fun! It's play! With bad building
@@ -188,7 +188,7 @@ sophisticated component model like React provides.
 ## Another case study: gatsby-image
 
 I recently introduced a new Gatsby/React component called
-[gatsby-image](/packages/gatsby-image/).
+[gatsby-image](/packages/gatsby-image).
 
 It has some nice tricks that you'd expect from a modern image component. It uses
 the new
@@ -290,7 +290,7 @@ becomes fun again.
 
 The goal of Gatsby is to make it easy to build incredibly fast websites. Right
 now, that's far too hard to do and
-[most sites fail at it](/blog/2017-09-13-why-is-gatsby-so-fast/).
+[most sites fail at it](/blog/2017-09-13-why-is-gatsby-so-fast).
 
 We’ll make website building fun by creating higher-level components and design
 tools that allow us to more easily express our intent.
@@ -300,7 +300,7 @@ re-examine basic building blocks of the web like `<img>` and improve their
 design through **seamless integration of data processing and React components**.
 
 We live at an extraordinary time. We work on the largest platform that has ever
-existed. Tools like [Babel](https://babeljs.io/) let us easily experiment with
+existed. Tools like [Babel](https://babeljs.io) let us easily experiment with
 new syntax.
 [CSS-in-JS](https://medium.com/seek-blog/a-unified-styling-language-d0c208de2660)
 enables entirely new ways of thinking about styles and theming. Browser vendors

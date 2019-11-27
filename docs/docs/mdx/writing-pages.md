@@ -28,7 +28,7 @@ date: 2019-01-29
 # Hello, world!
 ```
 
-Which can then be [queried with GraphQL](/docs/graphql-concepts/):
+Which can then be [queried with GraphQL](/docs/graphql-concepts):
 
 ```graphql
 query {
@@ -48,7 +48,7 @@ query {
 
 > **Note:** To query `MDX` content, it must be included in the node system using a
 > source like the `gatsby-source-filesystem` plugin first. Instructions for sourcing
-> content from somewhere like your `/src/pages` directory can be found on the [plugin's README](/packages/gatsby-source-filesystem/).
+> content from somewhere like your `/src/pages` directory can be found on the [plugin's README](/packages/gatsby-source-filesystem).
 
 Frontmatter is also available in `props.pageContext.frontmatter` and
 can be accessed in blocks of JSX in your MDX document:

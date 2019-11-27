@@ -4,7 +4,7 @@ date: 2018-05-31
 author: "Shannon Soper"
 ---
 
-In April and May, we hosted 2-day Gatsby workshops in both San Francisco and NYC and want to share what we learned and resources you can use to host your own Gatsby workshops. A big thank you to all the developers who came to these workshops, and another big thank you to Ryan Florence for organizing the workshop logistics; check out his company's website at [workshop.me](https://workshop.me/). Ryan has been an awesome supporter of Gatsby and a longtime fan, so yes, the workshop.me site is built on Gatsby :).
+In April and May, we hosted 2-day Gatsby workshops in both San Francisco and NYC and want to share what we learned and resources you can use to host your own Gatsby workshops. A big thank you to all the developers who came to these workshops, and another big thank you to Ryan Florence for organizing the workshop logistics; check out his company's website at [workshop.me](https://workshop.me). Ryan has been an awesome supporter of Gatsby and a longtime fan, so yes, the workshop.me site is built on Gatsby :).
 
 We will keep improving these workshops and hope you'll help us do that! Share your ideas and report how these workshops go for you in the [Open source repo](https://github.com/gatsbyjs/gatsby) through issues and PRs (if you ran into problems with the workshops and/or have ideas of how to improve them) or [Twitter](https://twitter.com/gatsbyjs) if you want to share an upcoming workshops you're running.
 
@@ -26,11 +26,11 @@ And that's just one page of notes (there were many more). The biggest takeaways 
 
 # New tutorials!
 
-People are interested in tutorials that go beyond the basic [Tutorial](/tutorial/), so we created three new tutorials:
+People are interested in tutorials that go beyond the basic [Tutorial](/tutorial), so we created three new tutorials:
 
-- [WordPress Source Plugin Tutorial](/tutorial/wordpress-source-plugin-tutorial/)
-- [Adding Images to a WordPress Site](/tutorial/wordpress-image-tutorial/)
-- [Creating a Source Plugin](/docs/creating-a-source-plugin/)
+- [WordPress Source Plugin Tutorial](/tutorial/wordpress-source-plugin-tutorial)
+- [Adding Images to a WordPress Site](/tutorial/wordpress-image-tutorial)
+- [Creating a Source Plugin](/docs/creating-a-source-plugin)
 
 ## Why you might want to host a workshop
 
@@ -55,7 +55,7 @@ We hope these workshop materials help you share Gatsby at work, meetups, and whe
 
 # How you can contribute
 
-If you'd like to contribute to making workshops and tutorials more awesome, here are a few of the many issues we created in the [Documentation Project](https://github.com/gatsbyjs/gatsby/projects/3) as a result of what we learned in the workshops; contributions welcome! (Note: we used the main [tutorials](/tutorial/) in the workshops, so edits and improvements to the tutorials also improve the workshop)
+If you'd like to contribute to making workshops and tutorials more awesome, here are a few of the many issues we created in the [Documentation Project](https://github.com/gatsbyjs/gatsby/projects/3) as a result of what we learned in the workshops; contributions welcome! (Note: we used the main [tutorials](/tutorial) in the workshops, so edits and improvements to the tutorials also improve the workshop)
 
 - _Good first issue_: [Emphasize file names](https://github.com/gatsbyjs/gatsby/issues/5608) with (bold, italics, headers, or some other way) when people copy and paste code, because it’s easy to miss _where_ you’re supposed to paste it with the current format
 - _Good first issue_: Make it clear in tutorial part 0 and workshops that all instructions are built assuming that you have installed [VS Code and Prettier](https://github.com/gatsbyjs/gatsby/issues/5610) because those work well with React

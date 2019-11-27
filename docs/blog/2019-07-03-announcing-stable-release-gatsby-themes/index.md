@@ -67,10 +67,10 @@ Over the course of the experimental life of themes we were often asked what them
 
 The official themes are built with an opinionated approach that we've abstracted into a library called Theme UI. Theme UI encapsulates some of the best practices we've discovered while working on themes over the last few months and we hope you'll find it useful when building your own themes as well as working with the official themes.
 
-[Read more](/blog/2019-07-03-customizing-styles-in-gatsby-themes-with-theme-ui/) about how to take advantage of the official themes and Theme UI.
+[Read more](/blog/2019-07-03-customizing-styles-in-gatsby-themes-with-theme-ui) about how to take advantage of the official themes and Theme UI.
 
 # What's next?
 
 In the future we'll work to make these features more accessible through tooling. Shadowing in particular is one area in which we are already experimenting with Gatsby CLI and GUI additions to display and eject shadowable components. While today you will have to rely on a theme's documentation, this additional tooling will make it easier to work with unfamiliar themes in the future.
 
-[Check out the docs](https://www.gatsbyjs.org/docs/themes/) to get started!
+[Check out the docs](https://www.gatsbyjs.org/docs/themes) to get started!

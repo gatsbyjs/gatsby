@@ -70,7 +70,7 @@ Happy to report that we have this very data which helps us make an informed deci
 
 ![Percentage of Node 6 users vs. Gatsby versions](./images/node-6-usage.png)
 
-Relying upon this data, we feel confident that while this is a theoretical breaking change it will impact a very small percentage of real-world users and use-cases. If you are impacted by this breaking change, we have put together a [handy upgrade guide](https://gatsby.dev/upgrading-node-js). Upgrading from Node 6 is inherently valuable _outside_ of a Gatsby context as it has reached its ["End of Life (EOL)"](https://nodejs.org/en/about/releases/) from the Node foundation and will no longer receive critical security fixes and bug fixes.
+Relying upon this data, we feel confident that while this is a theoretical breaking change it will impact a very small percentage of real-world users and use-cases. If you are impacted by this breaking change, we have put together a [handy upgrade guide](https://gatsby.dev/upgrading-node-js). Upgrading from Node 6 is inherently valuable _outside_ of a Gatsby context as it has reached its ["End of Life (EOL)"](https://nodejs.org/en/about/releases) from the Node foundation and will no longer receive critical security fixes and bug fixes.
 
 Finally, if you're interested, I'll now go into some technical detail as to _how_ we're actually making this breaking change.
 

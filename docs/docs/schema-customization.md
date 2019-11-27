@@ -18,7 +18,7 @@ The following guide walks through some examples to showcase the API.
 > sites, and anyone interested in customizing Gatsby's schema generation.
 > As such, the guide assumes that you're somewhat familiar with GraphQL types
 > and with using Gatsby's Node APIs. For a higher level approach to using
-> Gatsby with GraphQL, refer to the [API reference](/docs/graphql-api/).
+> Gatsby with GraphQL, refer to the [API reference](/docs/graphql-api).
 
 ## Explicitly defining data types
 
@@ -853,7 +853,7 @@ exports.createResolvers = ({ createResolvers }) => {
 
 When creating custom field resolvers, it is important to ensure that Gatsby
 knows about the data a page depends on for hot reloading to work properly. When
-you retrieve nodes from the store with [`context.nodeModel`](/docs/node-model/) methods,
+you retrieve nodes from the store with [`context.nodeModel`](/docs/node-model) methods,
 it is usually not necessary to do anything manually, because Gatsby will register
 dependencies for the query results automatically. The exception is `getAllNodes`
 which will _not_ register data dependencies by default. This is because

@@ -8,7 +8,7 @@ If you're a fluent speaker of a language other than English and you're intereste
 
 ## The general process
 
-Each translation has its own repository in the [gatsbyjs](https://github.com/gatsbyjs/) organization on GitHub, with designated codeowners to review and approve changes. Each repo will include all pages needing translations (with some prioritized over others), and a bot to notify of changes in the main repo to keep everything up-to-date.
+Each translation has its own repository in the [gatsbyjs](https://github.com/gatsbyjs) organization on GitHub, with designated codeowners to review and approve changes. Each repo will include all pages needing translations (with some prioritized over others), and a bot to notify of changes in the main repo to keep everything up-to-date.
 
 This doc will outline how to request a new language repository with its own team, what decisions each team can make, and suggestions for how you can work together.
 
@@ -20,9 +20,9 @@ The Gatsby learning team is in charge of determining priorities for which docs s
 
 ### Use English as the source
 
-The [gatsbyjs.org](https://gatsbyjs.org) website is written first in English and should be considered the source material for all translations (as opposed to starting from another translation). When a repository is created, it will provide a copy of the docs to be translated which you can then update through [pull requests](/contributing/how-to-open-a-pull-request/) against them in the relevant language.
+The [gatsbyjs.org](https://gatsbyjs.org) website is written first in English and should be considered the source material for all translations (as opposed to starting from another translation). When a repository is created, it will provide a copy of the docs to be translated which you can then update through [pull requests](/contributing/how-to-open-a-pull-request) against them in the relevant language.
 
-Changes to the meaning of a text or code example should be done in the main [English repo](https://github.com/gatsbyjs/gatsby/), and then translated afterwards to keep the content aligned across languages.
+Changes to the meaning of a text or code example should be done in the main [English repo](https://github.com/gatsbyjs/gatsby), and then translated afterwards to keep the content aligned across languages.
 
 ## Process for starting a new translation
 
@@ -63,7 +63,7 @@ Once a language repository is created and someone on the Gatsby team has assigne
 
 Maintainers of a translation are expected to review translations for quality, friendly and encouraging tone of voice, and technical accuracy. These qualities should be considered in every pull request regardless of who it comes from; contributions should be encouraged from anyone in the community, not just maintainers.
 
-> ⚠️ Note: All contributors are expected to follow the [Gatsby Code of Conduct](/contributing/code-of-conduct/) and work professionally with fellow contributors. For issues with conduct, if you are unable to work things out amicably amongst yourselves (perhaps after filing a public issue or having a discussion on Discord), you can contact the Gatsby team at [conduct@gatsbyjs.com](mailto:conduct@gatsbyjs.com) with details about the situation.
+> ⚠️ Note: All contributors are expected to follow the [Gatsby Code of Conduct](/contributing/code-of-conduct) and work professionally with fellow contributors. For issues with conduct, if you are unable to work things out amicably amongst yourselves (perhaps after filing a public issue or having a discussion on Discord), you can contact the Gatsby team at [conduct@gatsbyjs.com](mailto:conduct@gatsbyjs.com) with details about the situation.
 
 ### Code review process
 
@@ -130,7 +130,7 @@ If you're finding it hard to find people to help translate, spread the word abou
 
 ### When a maintainer or contributor will be removed
 
-Consistent with the [Code of Conduct](/docs/code-of-conduct/) the Gatsby team reserves the right to remove a maintainer (or contributor) from the Gatsby organization if necessary. Some reasons for being removed include spammy comments, closing PRs or issues without action or productive dialogue,or generally harmful or abusive behavior inconsistent with Gatsby's policies.
+Consistent with the [Code of Conduct](/docs/code-of-conduct) the Gatsby team reserves the right to remove a maintainer (or contributor) from the Gatsby organization if necessary. Some reasons for being removed include spammy comments, closing PRs or issues without action or productive dialogue,or generally harmful or abusive behavior inconsistent with Gatsby's policies.
 
 ### Template responses for closing PRs
 
@@ -168,13 +168,13 @@ Thanks again, and we look forward to seeing more PRs from you in the future! �
 
 ## Style guide for translations
 
-Each language translation may have some specific ways it differs from the advice Gatsby provides for writing in English, such as the use of "you" as the pronoun or the Oxford comma. Each translation group should decide on conventions and stick with them for consistency, documenting those decisions in the repo's [style guide](https://github.com/gatsbyjs/gatsby-i18n-source/blob/master/style-guide.md) file to set contributors up for success. Use the [English style guide](/contributing/gatsby-style-guide/) as a reference as a reference to determine the equivalent rules in your language.
+Each language translation may have some specific ways it differs from the advice Gatsby provides for writing in English, such as the use of "you" as the pronoun or the Oxford comma. Each translation group should decide on conventions and stick with them for consistency, documenting those decisions in the repo's [style guide](https://github.com/gatsbyjs/gatsby-i18n-source/blob/master/style-guide.md) file to set contributors up for success. Use the [English style guide](/contributing/gatsby-style-guide) as a reference as a reference to determine the equivalent rules in your language.
 
-Guidelines that remain firm no matter the language stem from the goals and values of Gatsby as a project: to provide a **friendly community for Gatsby learners of all skill and experience levels** that's also **safe and welcoming to contributors**. Translated docs and learning materials should [maintain these values](/blog/2019-04-19-gatsby-why-we-write/) with **high-quality spelling and grammar**, accurate information, similar structure and purpose. For any questions about guidelines, feel free to [get in touch](/contributing/how-to-contribute/#not-sure-how-to-start-contributing) with the Gatsby team.
+Guidelines that remain firm no matter the language stem from the goals and values of Gatsby as a project: to provide a **friendly community for Gatsby learners of all skill and experience levels** that's also **safe and welcoming to contributors**. Translated docs and learning materials should [maintain these values](/blog/2019-04-19-gatsby-why-we-write) with **high-quality spelling and grammar**, accurate information, similar structure and purpose. For any questions about guidelines, feel free to [get in touch](/contributing/how-to-contribute/#not-sure-how-to-start-contributing) with the Gatsby team.
 
 ### Glossary
 
-The style guide has a [glossary section](https://github.com/gatsbyjs/gatsby-i18n-source/blob/master/style-guide.md#glossary) that you can use to fill in common translations. Look at the English [Glossary](/docs/glossary/) for a list of terms that are useful to have translations for.
+The style guide has a [glossary section](https://github.com/gatsbyjs/gatsby-i18n-source/blob/master/style-guide.md#glossary) that you can use to fill in common translations. Look at the English [Glossary](/docs/glossary) for a list of terms that are useful to have translations for.
 
 ### Universal style guide
 

@@ -40,7 +40,7 @@ In this example, a CSS module is imported and declared as a JavaScript object ca
 
 ### Enabling user stylesheets with a stable class name
 
-Adding a persistent CSS `className` to your JSX markup along with your CSS Modules code can make it easier for users to take advantage of [User Stylesheets](https://www.viget.com/articles/inline-styles-user-style-sheets-and-accessibility/) for accessibility.
+Adding a persistent CSS `className` to your JSX markup along with your CSS Modules code can make it easier for users to take advantage of [User Stylesheets](https://www.viget.com/articles/inline-styles-user-style-sheets-and-accessibility) for accessibility.
 
 Here's an example where the class name `container` is added to the DOM along with the module's dynamically-created class names:
 

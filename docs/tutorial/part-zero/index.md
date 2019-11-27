@@ -10,11 +10,11 @@ Before you start building your first Gatsby site, you’ll need to familiarize y
 
 The command line is a text-based interface used to run commands on your computer. You’ll also often see it referred to as the terminal. In this tutorial, we’ll use both interchangeably. It’s a lot like using the Finder on a Mac or Explorer on Windows. Finder and Explorer are examples of graphical user interfaces (GUI). The command line is a powerful, text-based way to interact with your computer.
 
-Take a moment to locate and open up the command line interface (CLI) for your computer. Depending on which operating system you are using, see [**instructions for Mac**](http://www.macworld.co.uk/feature/mac-software/how-use-terminal-on-mac-3608274/), [**instructions for Windows**](https://www.quora.com/How-do-I-open-terminal-in-windows) or [**instructions for Linux**](https://www.howtogeek.com/140679/beginner-geek-how-to-start-using-the-linux-terminal/).
+Take a moment to locate and open up the command line interface (CLI) for your computer. Depending on which operating system you are using, see [**instructions for Mac**](http://www.macworld.co.uk/feature/mac-software/how-use-terminal-on-mac-3608274), [**instructions for Windows**](https://www.quora.com/How-do-I-open-terminal-in-windows) or [**instructions for Linux**](https://www.howtogeek.com/140679/beginner-geek-how-to-start-using-the-linux-terminal).
 
 ## Install Homebrew for Node.js
 
-To install Gatsby and Node.js, it is recommended to use [Homebrew](https://brew.sh/). A little set-up in the beginning can save you from some headaches later on!
+To install Gatsby and Node.js, it is recommended to use [Homebrew](https://brew.sh). A little set-up in the beginning can save you from some headaches later on!
 
 How to install or verify Homebrew on your computer:
 
@@ -27,7 +27,7 @@ How to install or verify Homebrew on your computer:
 
 1. Open your Terminal.
 1. On a Mac, install Xcode Command Line Tools by running `xcode-select --install`.
-   1. If that fails, download it [directly from the Apple site](https://developer.apple.com/download/more/), after signing-in with Apple developer account
+   1. If that fails, download it [directly from the Apple site](https://developer.apple.com/download/more), after signing-in with Apple developer account
 1. After being prompted to start the installation, you'll be prompted again to accept a software license for the tools to download.
 
 ## ⌚ Install Node.js and npm
@@ -114,13 +114,13 @@ gatsby develop
 
 ### View your site locally
 
-Open up a new tab in your browser and navigate to [**http://localhost:8000**](http://localhost:8000/).
+Open up a new tab in your browser and navigate to [**http://localhost:8000**](http://localhost:8000).
 
 ![Check homepage](04-home-page.png)
 
 Congrats! This is the beginning of your very first Gatsby site! 🎉
 
-You’ll be able to visit the site locally at [**_http://localhost:8000_**](http://localhost:8000/) for as long as your development server is running. That’s the process you started by running the `gatsby develop` command. To stop running that process (or to “stop running the development server”), go back to your terminal window, hold down the “control” key, and then hit “c” (ctrl-c). To start it again, run `gatsby develop` again!
+You’ll be able to visit the site locally at [**_http://localhost:8000_**](http://localhost:8000) for as long as your development server is running. That’s the process you started by running the `gatsby develop` command. To stop running that process (or to “stop running the development server”), go back to your terminal window, hold down the “control” key, and then hit “c” (ctrl-c). To start it again, run `gatsby develop` again!
 
 **Note:** If you are using VM setup like `vagrant` and/or would like to listen on your local IP address, run `gatsby develop -- --host=0.0.0.0`. Now, the development server listens on both 'localhost' and your local IP.
 
@@ -155,7 +155,7 @@ To summarize, in this section you:
 - Downloaded a code editor
 - Installed a code formatter called Prettier
 
-Now, move on to [**getting to know Gatsby building blocks**](/tutorial/part-one/).
+Now, move on to [**getting to know Gatsby building blocks**](/tutorial/part-one).
 
 ## References
 
@@ -171,7 +171,7 @@ It’s not necessary to be an expert with these already — if you’re not, don
 
 ### What is a website?
 
-For a comprehensive introduction to what a website is--including an intro to HTML and CSS--check out “[**Building your first web page**](https://learn.shayhowe.com/html-css/building-your-first-web-page/)”. It’s a great place to start learning about the web. For a more hands-on introduction to [**HTML**](https://www.codecademy.com/learn/learn-html), [**CSS**](https://www.codecademy.com/learn/learn-css), and [**JavaScript**](https://www.codecademy.com/learn/introduction-to-javascript), check out the tutorials from Codecademy. [**React**](https://reactjs.org/tutorial/tutorial.html) and [**GraphQL**](http://graphql.org/graphql-js/) also have their own introductory tutorials.
+For a comprehensive introduction to what a website is--including an intro to HTML and CSS--check out “[**Building your first web page**](https://learn.shayhowe.com/html-css/building-your-first-web-page)”. It’s a great place to start learning about the web. For a more hands-on introduction to [**HTML**](https://www.codecademy.com/learn/learn-html), [**CSS**](https://www.codecademy.com/learn/learn-css), and [**JavaScript**](https://www.codecademy.com/learn/introduction-to-javascript), check out the tutorials from Codecademy. [**React**](https://reactjs.org/tutorial/tutorial.html) and [**GraphQL**](http://graphql.org/graphql-js) also have their own introductory tutorials.
 
 ### Learn more about the command line
 
@@ -191,4 +191,4 @@ npm has three distinct components: the npm website, the npm registry, and the np
 
 ### Learn more about Git
 
-You will not need to know Git to complete this tutorial, but it is a very useful tool. If you are interested in learning more about version control, Git, and GitHub, check out GitHub's [Git Handbook](https://guides.github.com/introduction/git-handbook/).
+You will not need to know Git to complete this tutorial, but it is a very useful tool. If you are interested in learning more about version control, Git, and GitHub, check out GitHub's [Git Handbook](https://guides.github.com/introduction/git-handbook).

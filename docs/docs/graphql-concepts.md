@@ -6,7 +6,7 @@ import LayerModel from "../../www/src/components/layer-model"
 
 There are many options for loading data into React components. One of the most
 popular and powerful of these is a technology called
-[GraphQL](http://graphql.org/).
+[GraphQL](http://graphql.org).
 
 GraphQL was invented at Facebook to help product engineers _pull_ needed data into
 React components.
@@ -17,7 +17,7 @@ the data you want in your component and then that data is given
 to you.
 
 Gatsby uses GraphQL to enable [page and StaticQuery
-components](/docs/building-with-components/) to declare what data they and their
+components](/docs/building-with-components) to declare what data they and their
 sub-components need. Then, Gatsby makes that data available in
 the browser when needed by your components.
 
@@ -27,7 +27,7 @@ Data from any number of sources is made queryable in one unified layer, a key pa
 
 ## Why is GraphQL so cool?
 
-For a more in-depth look, read [why Gatsby uses GraphQL](/docs/why-gatsby-uses-graphql/).
+For a more in-depth look, read [why Gatsby uses GraphQL](/docs/why-gatsby-uses-graphql).
 
 - Eliminate frontend data boilerplate — no need to worry about requesting & waiting for data. Just ask for the data you need with a GraphQL query and it'll show up when you need it
 - Push frontend complexity into queries — many data transformations can be done at _build-time_ within your GraphQL queries
@@ -88,7 +88,7 @@ The result of the query is automatically inserted into your React component
 on the `data` prop. GraphQL and Gatsby let you ask for data and then
 immediately start using it.
 
-**Note:** To run GraphQL queries in non-page components you'll need to use [Gatsby's Static Query feature](/docs/static-query/).
+**Note:** To run GraphQL queries in non-page components you'll need to use [Gatsby's Static Query feature](/docs/static-query).
 
 ### Understanding the parts of a query
 
@@ -118,12 +118,12 @@ When starting out with GraphQL, we recommend the following two tutorials:
 - https://www.howtographql.com/
 - http://graphql.org/learn/
 
-[The official Gatsby tutorial](/tutorial/part-four/) also includes an introduction to using GraphQL specifically with Gatsby.
+[The official Gatsby tutorial](/tutorial/part-four) also includes an introduction to using GraphQL specifically with Gatsby.
 
 ## How do GraphQL and Gatsby work together?
 
 One of the great things about GraphQL is how flexible it is. People use GraphQL
-with [many different programming languages](http://graphql.org/code/) and for web and native apps.
+with [many different programming languages](http://graphql.org/code) and for web and native apps.
 
 Most people run GraphQL on a server to respond live to requests for
 data from clients. You define a schema (a schema is a formal way of describing
@@ -182,7 +182,7 @@ See the full list of formatting options by viewing our [GraphQL reference page](
 
 ### Markdown
 
-Gatsby has _transformer_ plugins which can transform data from one form to another. A common example is markdown. If you install [`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/), then in your queries, you can specify if you want the transformed HTML version instead of markdown:
+Gatsby has _transformer_ plugins which can transform data from one form to another. A common example is markdown. If you install [`gatsby-transformer-remark`](/packages/gatsby-transformer-remark), then in your queries, you can specify if you want the transformed HTML version instead of markdown:
 
 ```graphql
 markdownRemark {
@@ -192,9 +192,9 @@ markdownRemark {
 
 ### Images
 
-Gatsby has rich support for processing images. Responsive images are a big part of the modern web and typically involve creating 5+ sized thumbnails per photo. With Gatsby's [`gatsby-transformer-sharp`](/packages/gatsby-transformer-sharp/), you can _query_ your images for responsive versions. The query automatically creates all the needed responsive thumbnails and returns `src` and `srcSet` fields to add to your image element.
+Gatsby has rich support for processing images. Responsive images are a big part of the modern web and typically involve creating 5+ sized thumbnails per photo. With Gatsby's [`gatsby-transformer-sharp`](/packages/gatsby-transformer-sharp), you can _query_ your images for responsive versions. The query automatically creates all the needed responsive thumbnails and returns `src` and `srcSet` fields to add to your image element.
 
-Combined with a special Gatsby image component, [gatsby-image](/packages/gatsby-image/), you have a very powerful set of primitives for building sites with images.
+Combined with a special Gatsby image component, [gatsby-image](/packages/gatsby-image), you have a very powerful set of primitives for building sites with images.
 
 This is what a component using `gatsby-image` looks like:
 
@@ -227,7 +227,7 @@ export const query = graphql`
 
 See also the following blog posts:
 
-- [Making Website Building Fun](/blog/2017-10-16-making-website-building-fun/)
+- [Making Website Building Fun](/blog/2017-10-16-making-website-building-fun)
 - [Image Optimization Made Easy with Gatsby.js](https://medium.com/@kyle.robert.gill/ridiculously-easy-image-optimization-with-gatsby-js-59d48e15db6e)
 
 ## Advanced
@@ -363,7 +363,7 @@ export const query = graphql`
 
 ## Further reading
 
-- [Why Gatsby Uses GraphQL](/docs/why-gatsby-uses-graphql/)
+- [Why Gatsby Uses GraphQL](/docs/why-gatsby-uses-graphql)
 - [The Anatomy of a GraphQL Query](https://blog.apollographql.com/the-anatomy-of-a-graphql-query-6dffa9e9e747)
 
 ### Getting started with GraphQL
@@ -375,6 +375,6 @@ export const query = graphql`
 
 ### Advanced readings on GraphQL
 
-- [GraphQL specification](https://facebook.github.io/graphql/October2016/)
+- [GraphQL specification](https://facebook.github.io/graphql/October2016)
 - [Interfaces and Unions](https://medium.com/the-graphqlhub/graphql-tour-interfaces-and-unions-7dd5be35de0d)
 - [Relay Compiler (which Gatsby uses to process queries)](https://facebook.github.io/relay/docs/en/compiler-architecture.html)

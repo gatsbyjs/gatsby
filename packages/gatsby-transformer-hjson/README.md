@@ -1,6 +1,6 @@
 # gatsby-transformer-hjson
 
-Parses raw [HJSON](https://hjson.org/) strings into JavaScript objects e.g. from
+Parses raw [HJSON](https://hjson.org) strings into JavaScript objects e.g. from
 HJSON files. Supports arrays of objects and single objects.
 
 ## Install

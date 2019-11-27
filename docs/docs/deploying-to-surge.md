@@ -4,7 +4,7 @@ title: Deploying to Surge
 
 In this guide, you will learn how to deploy your Gatsby site to Surge.
 
-[Surge](https://surge.sh/) is a cloud platform for hosting static websites, which is extremely simple to use but offers customization options for those who need them.
+[Surge](https://surge.sh) is a cloud platform for hosting static websites, which is extremely simple to use but offers customization options for those who need them.
 
 Their generous free tier permits unlimited publishing, using custom domains, and basic SSL, with more features available through the professional plan.
 
@@ -50,9 +50,9 @@ To ensure future deploys are sent to the same location, you can store the domain
 echo my-cool-domain.surge.sh > CNAME
 ```
 
-Consult the [Surge Docs](https://surge.sh/help/) for information about how to customize your deployment further. Remember that each time you redeploy your site, you will need to rerun `gatsby build` first.
+Consult the [Surge Docs](https://surge.sh/help) for information about how to customize your deployment further. Remember that each time you redeploy your site, you will need to rerun `gatsby build` first.
 
 ## References:
 
-- [Surge Documentation](https://surge.sh/help/)
+- [Surge Documentation](https://surge.sh/help)
 - [Deploying to a Custom Domain](https://surge.sh/help/adding-a-custom-domain)

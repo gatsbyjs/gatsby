@@ -167,7 +167,7 @@ More people leads to more complexity, and processes exist to improve communicati
 
 We made things more repeatable by creating internal documentation, and sharing it with the rest of the team. Since tasks like ordering new swag and reordering previous items would require someone to actually make the call or send the email, we set up templates that anyone could use.
 
-We also documented all of our swag and invoicing in [Airtable](https://airtable.com/), so that it was easy to see what had been done and anyone on the team could get a snapshot of the current and past swag orders.
+We also documented all of our swag and invoicing in [Airtable](https://airtable.com), so that it was easy to see what had been done and anyone on the team could get a snapshot of the current and past swag orders.
 
 By limiting the amount of tasks a person had to do and documenting those processes well, it meant that _anyone_ could read the process and complete the tasks.
 
@@ -220,7 +220,7 @@ Since we were going with an “automation first” framework, we had a lot to co
 
 - How robust is the tool, is it easily breakable?
 
-Eventually, by working backwards from the end, we created a full process and recorded it using [Whimsical](https://whimsical.co/). You can see our flow chart [here](https://whimsical.co/HrgMvcBZxyyWxcPPAUzPXf)!
+Eventually, by working backwards from the end, we created a full process and recorded it using [Whimsical](https://whimsical.co). You can see our flow chart [here](https://whimsical.co/HrgMvcBZxyyWxcPPAUzPXf)!
 
 ![Flow chart with the step by step swag process](images/1_tzPNjNB2Lf0w_7mu21JDTQ.png)
 _Flow chart with the step by step swag process_
@@ -251,7 +251,7 @@ _So Gatsby contributors see this:_
 
 _And this is what’s happening in the background:_
 
-- [Third party distribution](https://corp-couture.com/) so no one at Gatsby has to be responsible for packing and shipping
+- [Third party distribution](https://corp-couture.com) so no one at Gatsby has to be responsible for packing and shipping
 
 - Third party email monitoring and customer service if people have problems or questions about their swag
 
@@ -297,6 +297,6 @@ And this:
   </a>
 </blockquote>
 
-Dogs and cats in Gatsby swag? Yes please. I’ll have another. Find out how you can [#buildwithgatsby](https://twitter.com/search?src=typd&q=%23buildwithgatsby) on [Twitter](https://twitter.com/gatsbyjs) or on our [site](https://www.gatsbyjs.com/)!
+Dogs and cats in Gatsby swag? Yes please. I’ll have another. Find out how you can [#buildwithgatsby](https://twitter.com/search?src=typd&q=%23buildwithgatsby) on [Twitter](https://twitter.com/gatsbyjs) or on our [site](https://www.gatsbyjs.com)!
 
-You can also read about how we built out the store [here](/blog/2018-08-09-swag-store/)!
+You can also read about how we built out the store [here](/blog/2018-08-09-swag-store)!

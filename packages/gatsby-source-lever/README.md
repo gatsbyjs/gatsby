@@ -1,7 +1,7 @@
 # gatsby-source-lever
 
 Source plugin for pulling data into [Gatsby](https://github.com/gatsbyjs) from
-[Lever.co](https://www.lever.co/).
+[Lever.co](https://www.lever.co).
 
 ## Wish list
 

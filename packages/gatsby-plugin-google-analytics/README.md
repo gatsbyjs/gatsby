@@ -61,7 +61,7 @@ import { OutboundLink } from 'gatsby-plugin-google-analytics'
 export default () => {
   <div>
     <OutboundLink
-      href="https://www.gatsbyjs.org/packages/gatsby-plugin-google-analytics/"
+      href="https://www.gatsbyjs.org/packages/gatsby-plugin-google-analytics"
     >
       Visit the Google Analytics plugin page!
     </OutboundLink>
@@ -109,7 +109,7 @@ If you need to exclude any path from the tracking system, you can add it (one or
 
 ### `pageTransitionDelay`
 
-If your site uses any custom transitions on route update (e.g. [`gatsby-plugin-transition-link`](https://www.gatsbyjs.org/blog/2018-12-04-per-link-gatsby-page-transitions-with-transitionlink/)), then you can delay processing the page view event until the new page is mounted.
+If your site uses any custom transitions on route update (e.g. [`gatsby-plugin-transition-link`](https://www.gatsbyjs.org/blog/2018-12-04-per-link-gatsby-page-transitions-with-transitionlink)), then you can delay processing the page view event until the new page is mounted.
 
 ### `optimizeId`
 

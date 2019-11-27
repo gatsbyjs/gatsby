@@ -2,11 +2,11 @@
 title: Using Gatsby Image to Prevent Image Bloat
 ---
 
-`gatsby-image` is a React component designed to work seamlessly with Gatsby’s GraphQL queries ([`gatsby-image` plugin README](/packages/gatsby-image/)). It combines [Gatsby’s native image processing](https://image-processing.gatsbyjs.org/) capabilities with advanced image loading techniques to easily and completely optimize image loading for your sites. `gatsby-image` uses [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/) to power its image transformations.
+`gatsby-image` is a React component designed to work seamlessly with Gatsby’s GraphQL queries ([`gatsby-image` plugin README](/packages/gatsby-image)). It combines [Gatsby’s native image processing](https://image-processing.gatsbyjs.org) capabilities with advanced image loading techniques to easily and completely optimize image loading for your sites. `gatsby-image` uses [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp) to power its image transformations.
 
 > _Warning: gatsby-image is **not** a drop-in replacement for `<img />`. It’s optimized for fixed width/height images and images that stretch the full width of a container. Some ways you can use `<img />` won’t work with gatsby-image._
 
-[Demo](https://using-gatsby-image.gatsbyjs.org/)
+[Demo](https://using-gatsby-image.gatsbyjs.org)
 
 `gatsby-image` includes the tricks you’d expect from a modern image component. It:
 
@@ -14,7 +14,7 @@ title: Using Gatsby Image to Prevent Image Bloat
 - holds an image’s position so your page doesn’t jump around as images load
 - makes it easy to add a placeholder—either a gray background or a blurry version of the image.
 
-_For more complete API information, check out the [Gatsby Image API](/docs/gatsby-image/) docs._
+_For more complete API information, check out the [Gatsby Image API](/docs/gatsby-image) docs._
 
 ## Problem
 
@@ -160,10 +160,10 @@ So this is all very nice and it’s far better to be able to use this from npm v
 
 ### Additional resources
 
-- [Gatsby Image API docs](/docs/gatsby-image/)
-- [gatsby-image plugin README file](/packages/gatsby-image/)
+- [Gatsby Image API docs](/docs/gatsby-image)
+- [gatsby-image plugin README file](/packages/gatsby-image)
 - [Source code for an example site using gatsby-image](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-gatsby-image)
-- [Blog articles about gatsby-image](/blog/tags/gatsby-image/)
+- [Blog articles about gatsby-image](/blog/tags/gatsby-image)
 - [Starters that use gatsby-image](/starters/?d=gatsby-image&v=2)
 - [Other image plugins](/plugins/?=image)
 - ["Ridiculously easy image optimization with gatsby-image" by Kyle Gill](https://medium.com/@kyle.robert.gill/ridiculously-easy-image-optimization-with-gatsby-js-59d48e15db6e)

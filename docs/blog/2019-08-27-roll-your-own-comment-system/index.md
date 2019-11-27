@@ -9,7 +9,7 @@ tags:
 canonicalLink: https://www.taniarascia.com/add-comments-to-static-site/
 ---
 
-A while ago, I [migrated my site from WordPress to Gatsby](/blog/2019-03-21-migrating-from-wordpress-to-gatsby/), a static site generator that runs on JavaScript/React. Gatsby [recommends Disqus](/docs/adding-comments/) as a possible option for comments, and I briefly migrated all my comments over to it...until I looked at my site on a browser window without adblocker installed. I could see dozens of scripts injected into the site and even worse - truly egregious buzzfeed-esque ads embedded between all the comments. I decided it immediately had to go.
+A while ago, I [migrated my site from WordPress to Gatsby](/blog/2019-03-21-migrating-from-wordpress-to-gatsby), a static site generator that runs on JavaScript/React. Gatsby [recommends Disqus](/docs/adding-comments) as a possible option for comments, and I briefly migrated all my comments over to it...until I looked at my site on a browser window without adblocker installed. I could see dozens of scripts injected into the site and even worse - truly egregious buzzfeed-esque ads embedded between all the comments. I decided it immediately had to go.
 
 I had no comments for a bit, but I felt like I had no idea what the reception of my articles was without having any place for people to leave comments. Occasionally people will leave useful critiques or tips on tutorials that can help future visitors as well, so I wanted to try adding something very simple back in.
 
@@ -37,7 +37,7 @@ If you've also struggled with this and wondered if there could be an easier way,
 
 ## Introduction
 
-This guide will _not_ be a full, guided walkthrough - however, all the steps to create this are documented from start to finish in [Create and Deploy a Node.js, Express, & PostgreSQL REST API to Heroku](https://www.taniarascia.com/node-express-postgresql-heroku/). The comments API is a Node + Express server connected to a Postgres instance hosted for free on the hobby tier of Heroku (Hopefully I don't go over the 10,000 row limit any time soon). A combination of that article and what I've documented here can get you all the way to having your own comment system.
+This guide will _not_ be a full, guided walkthrough - however, all the steps to create this are documented from start to finish in [Create and Deploy a Node.js, Express, & PostgreSQL REST API to Heroku](https://www.taniarascia.com/node-express-postgresql-heroku). The comments API is a Node + Express server connected to a Postgres instance hosted for free on the hobby tier of Heroku (Hopefully I don't go over the 10,000 row limit any time soon). A combination of that article and what I've documented here can get you all the way to having your own comment system.
 
 > Note: Comments overall aren't a big deal to me, so I don't care if I'm just running some little hobby API I created, or if it goes down for any reason. I think it should be pretty solid, but obviously if your needs are more professional than mine, you should go ahead and buy Disqus or something.
 
@@ -79,7 +79,7 @@ You could probably get more fancy with it and add website, email, upvotes and ot
 
 ## API
 
-In [Create and Deploy a Node.js, Express, & PostgreSQL REST API](https://www.taniarascia.com/node-express-postgresql-heroku/), I document how to set up an Express server and make a Postgres pool connection.
+In [Create and Deploy a Node.js, Express, & PostgreSQL REST API](https://www.taniarascia.com/node-express-postgresql-heroku), I document how to set up an Express server and make a Postgres pool connection.
 
 The aforementioned article goes much deeper into production level concerns of a Node.js server, such as error handling, validation, and brute force rate limiting.
 
@@ -381,7 +381,7 @@ const showSuccess = () =>
   )
 ```
 
-The comment form only consists of name and comment in my case, as I decided to go the [Sivers](https://sivers.org/) route and only allow comment replies by yours truly on the site.
+The comment form only consists of name and comment in my case, as I decided to go the [Sivers](https://sivers.org) route and only allow comment replies by yours truly on the site.
 
 ```jsx:title=components/comments.js
 const commentForm = () => (
@@ -469,4 +469,4 @@ You'll probably also want to add in some anti-spam moderation system, like addin
 
 I hope this helps out someone who wants a simple, free system for their own personal site. I like reinventing the wheel and making things from scratch. It's fun, and I learn a lot.
 
-For more information on building contact forms with Gatsby, check out the [docs reference guides](/docs/building-a-contact-form/).
+For more information on building contact forms with Gatsby, check out the [docs reference guides](/docs/building-a-contact-form).

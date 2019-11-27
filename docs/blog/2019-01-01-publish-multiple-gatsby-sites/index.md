@@ -22,14 +22,14 @@ The same goes for those who have worked as part of a large company/team. Brandin
 
 A monorepo is an architectural design pattern that allows us to maintain several packages within a single repo. This reduces the complexity when dealing with packages that share in-house and third-party dependencies.
 
-Think of monorepos like a well-organised supermarket. Each aisle contains a particular kind of food, making it easy to navigate and find the item of food you want. Supermarkets also contain a variety of different foods so you don’t need to go to a series of specific shops to find your gluten-free, dairy-free banoffee pie (which is very much a [thing](https://glutenfreecuppatea.co.uk/2016/02/14/recipe-healthy-banoffee-pie-gluten-free-vegan-refined-sugar-free-dairy-free/)).
+Think of monorepos like a well-organised supermarket. Each aisle contains a particular kind of food, making it easy to navigate and find the item of food you want. Supermarkets also contain a variety of different foods so you don’t need to go to a series of specific shops to find your gluten-free, dairy-free banoffee pie (which is very much a [thing](https://glutenfreecuppatea.co.uk/2016/02/14/recipe-healthy-banoffee-pie-gluten-free-vegan-refined-sugar-free-dairy-free)).
 
 With monorepos the code is split into specific packages (aisles). Meaning you can easily navigate the project to find the component or module you want to work on. It also means not needing to maintain separate repos when making changes that affect multiple parts of your stack (the single shop).
 
 Everything is accessible from a single place, while still being organised enough to navigate painlessly.
 Enough with the theory, let’s move on to the tutorial, which is split into 2 sections: development and deployment.
 
-*Development* — We’ll configure an existing application, built with [Gatsby](/), into a monorepo. I won’t delve too much into its implementation details because it’s beyond the scope of this article. We’ll attend the lavish party that the great Gatsby throws for us and we won’t ask why or how they did it.
+*Development* — We’ll configure an existing application, built with [Gatsby](), into a monorepo. I won’t delve too much into its implementation details because it’s beyond the scope of this article. We’ll attend the lavish party that the great Gatsby throws for us and we won’t ask why or how they did it.
 
 Another tool we’ll use is [Lerna](https://github.com/lerna/lerna), which will manage the dependencies of our project. Lerna will also allow us to link packages together which we’ll use to share components.
 
@@ -51,7 +51,7 @@ Let’s begin! Navigate to an empty folder in the terminal and clone the repo by
 
 and navigate into the the `lerna-monorepo-starter` directory.
 
-Go to your GitHub account and create a new repo, this’ll be the repo that you push the site to so that Travis can run the pipeline. For those who need a refresher on how to [create a new repo](https://help.github.com/articles/creating-a-new-repository/). You may have to run `git remote remove origin` so you can point the code to your newly created repo.
+Go to your GitHub account and create a new repo, this’ll be the repo that you push the site to so that Travis can run the pipeline. For those who need a refresher on how to [create a new repo](https://help.github.com/articles/creating-a-new-repository). You may have to run `git remote remove origin` so you can point the code to your newly created repo.
 
 Run the code that GitHub outputs when creating a new repo:
 
@@ -369,7 +369,7 @@ Let’s take a second to reflect on where we are right now. We’ve managed to s
 
 There are two parts to this section, our Continuous Integration (CI) pipeline and the site’s deployment. Our CI pipeline will be used to automate a series of checks to ensure our tests pass and our build compiles. If either of these, or any part of the pipeline, fails then our site won’t deploy. The second part is how we deal with a successful build, and that’s deployment! If everything passes, our site will deploy using Now, where it will be hosted for the world to see on the interwebs.
 
-To use Travis we’ll first need to create an account and add the GitHub repo we’ve been pushing to. And like with every other tool we’ve used, the best way to get started with Travis is by reading [Travis’ getting started page](https://docs.travis-ci.com/user/getting-started/). The getting started page also runs through adding your GitHub repo which can be done via the main page. Click the ‘+’ and on your profile page click ‘Manage repositories in GitHub’. Choose the repo that you’ve been using and you should be set up.
+To use Travis we’ll first need to create an account and add the GitHub repo we’ve been pushing to. And like with every other tool we’ve used, the best way to get started with Travis is by reading [Travis’ getting started page](https://docs.travis-ci.com/user/getting-started). The getting started page also runs through adding your GitHub repo which can be done via the main page. Click the ‘+’ and on your profile page click ‘Manage repositories in GitHub’. Choose the repo that you’ve been using and you should be set up.
 
 Once you’ve done this we’ll create our `.travis.yml` which outlines the steps our CI pipeline will take when preparing for deployment. Travis won’t recognise any application that doesn’t have a `.travis.yml`, so we’ll create a basic one. Once we push code that contains a `.travis.yml` file, the CI pipeline will start running on every subsequent push.
 

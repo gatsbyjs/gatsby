@@ -14,7 +14,7 @@ Google Analytics provides a way to collect this data and perform analytics on it
 
 ## Setting up Google Analytics
 
-The first step is to set up a Google Analytics account. You can do that [here](https://analytics.google.com/) by signing in with your Google Account.
+The first step is to set up a Google Analytics account. You can do that [here](https://analytics.google.com) by signing in with your Google Account.
 
 Google also has a [get started page](https://support.google.com/analytics/answer/1008015?hl=en) for reference.
 
@@ -50,9 +50,9 @@ module.exports = {
 }
 ```
 
-> Note: Read more about [gatsby-config.js](/docs/gatsby-config/)
+> Note: Read more about [gatsby-config.js](/docs/gatsby-config)
 
-Full documentation for the plugin can be found [here](/packages/gatsby-plugin-google-analytics/).
+Full documentation for the plugin can be found [here](/packages/gatsby-plugin-google-analytics).
 
 There are a number of extra configuration options--both with the Gatsby plugin and also in your Google Analytics account--so you can tailor things to meet your website's needs.
 
@@ -60,12 +60,12 @@ Once this is configured you can deploy your site to test! If you navigate to the
 
 ## Other Gatsby analytics plugins
 
-- [Google Tag Manager](/packages/gatsby-plugin-google-tagmanager/)
-- [Google Analytics gtag.js](/packages/gatsby-plugin-gtag/)
+- [Google Tag Manager](/packages/gatsby-plugin-google-tagmanager)
+- [Google Analytics gtag.js](/packages/gatsby-plugin-gtag)
 - [Segment](/packages/gatsby-plugin-segment-js)
 - [Amplitude Analytics](/packages/gatsby-plugin-amplitude-analytics)
-- [Fathom](/packages/gatsby-plugin-fathom/)
-- [Baidu](/packages/gatsby-plugin-baidu-analytics/)
-- [Matomo (formerly Piwik)](/packages/gatsby-plugin-matomo/)
+- [Fathom](/packages/gatsby-plugin-fathom)
+- [Baidu](/packages/gatsby-plugin-baidu-analytics)
+- [Matomo (formerly Piwik)](/packages/gatsby-plugin-matomo)
 - [Simple Analytics](/packages/gatsby-plugin-simple-analytics)
-- [Parse.ly Analytics](/packages/gatsby-plugin-parsely-analytics/)
+- [Parse.ly Analytics](/packages/gatsby-plugin-parsely-analytics)

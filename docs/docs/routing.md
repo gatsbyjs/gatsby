@@ -15,7 +15,7 @@ See the [Creating and Modifying Pages](/docs/creating-and-modifying-pages) for m
 
 ## Linking between routes
 
-You can use `gatsby-link` to link to these routes -- this will provide almost-instantaneous page transitions via prefetching. [More on Gatsby Link](/docs/gatsby-link/).
+You can use `gatsby-link` to link to these routes -- this will provide almost-instantaneous page transitions via prefetching. [More on Gatsby Link](/docs/gatsby-link).
 
 You can also use standard `<a>` links, but you won't get the benefit of prefetching in this case.
 

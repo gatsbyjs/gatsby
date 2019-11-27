@@ -2,7 +2,7 @@
 title: Sourcing from Kentico Kontent
 ---
 
-In this guide, you'll go through how to quickly source content for your Gatsby site from [Kentico Kontent](https://kontent.ai/).
+In this guide, you'll go through how to quickly source content for your Gatsby site from [Kentico Kontent](https://kontent.ai).
 
 Kentico Kontent is a hosted CMS that offers you Content as a Service (CaaS) for all your content needs. Using CaaS ensures that your content will be future-proof and reusable, so you can add a mobile app that uses the same content as your Gatsby site without worrying about how it will fit. Kentico Kontent offers CaaS with an easy-to-use editing interface and excellent collaboration features, so all your work on content can happen in one place without requiring technical help for each user.
 
@@ -213,16 +213,16 @@ Now you know how to create pages programmatically and pull their content from Ke
 
 ### Continuous deployment
 
-To keep your site static but always up to date with the latest content from Kentico Kontent, it helps to set up automatic deployment whenever your published content changes. Here, you can see how to set that up using [Netlify](https://www.netlify.com/docs/continuous-deployment/), but the principle is similar using other services like [Travis CI](https://travis-ci.org/), as with another [site sourced from Kentico Kontent](https://github.com/Kentico/kentico.github.io/wiki/How-the-automatic-deployment-works).
+To keep your site static but always up to date with the latest content from Kentico Kontent, it helps to set up automatic deployment whenever your published content changes. Here, you can see how to set that up using [Netlify](https://www.netlify.com/docs/continuous-deployment), but the principle is similar using other services like [Travis CI](https://travis-ci.org), as with another [site sourced from Kentico Kontent](https://github.com/Kentico/kentico.github.io/wiki/How-the-automatic-deployment-works).
 
 For simple automatic deployment from Netlify, first store your site's source code in a Git provider such as GitHub. Then log in to Netlify (e.g., through the same Git provider), create a new site from Git, and choose your site's source code. Netlify should automatically detect that you're using Gatsby and include the `gatsby build` command. If so, go ahead and deploy your site. Your site will now automatically build whenever you push changes to the source code in the Git repository.
 
-Now that your site's up and running, you need to set up automatic builds when published content in Kentico Kontent changes. First, in Netlify [create a new build hook](https://docs.netlify.com/configure-builds/build-hooks/) with a name like "Change in Kentico Kontent content" and copy the URL. Then go to Kentico Kontent. Under _Project settings_, choose _Webhooks_ and create a new webhook. Give it a name like "Netlify build" and paste the URL into the _URL address_ field. And that's it. Now whenever published content changes ([see what actions call a webhook](https://docs.kontent.ai/tutorials/develop-apps/integrate/using-webhooks-for-automatic-updates#a-when-webhooks-are-called)), your webhook will trigger a build in Netlify to ensure your static content is updated to the latest version.
+Now that your site's up and running, you need to set up automatic builds when published content in Kentico Kontent changes. First, in Netlify [create a new build hook](https://docs.netlify.com/configure-builds/build-hooks) with a name like "Change in Kentico Kontent content" and copy the URL. Then go to Kentico Kontent. Under _Project settings_, choose _Webhooks_ and create a new webhook. Give it a name like "Netlify build" and paste the URL into the _URL address_ field. And that's it. Now whenever published content changes ([see what actions call a webhook](https://docs.kontent.ai/tutorials/develop-apps/integrate/using-webhooks-for-automatic-updates#a-when-webhooks-are-called)), your webhook will trigger a build in Netlify to ensure your static content is updated to the latest version.
 
 ## What's next?
 
 You've seen how to set up a simple Gatsby site that sources content from Kentico Kontent and is automatically redeployed on any change to the content. Kentico Kontent is capable of creating many other kinds of relationships, including taxonomies for categorization, multiple languages, and linking items together. Want to do more?
 
 - See [more about what the Kentico Kontent source plugin can do](https://github.com/Kentico/gatsby-source-kontent#features).
-- Read the [Kentico Kontent documentation](https://docs.kontent.ai/) to see what's possible.
+- Read the [Kentico Kontent documentation](https://docs.kontent.ai) to see what's possible.
 - Explore the [Kentico Cloud Gatsby starter](https://github.com/Kentico/gatsby-starter-kontent) to see a more complete example.

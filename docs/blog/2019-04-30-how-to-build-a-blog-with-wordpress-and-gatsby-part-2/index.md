@@ -16,7 +16,7 @@ canonicalLink: https://www.iamtimsmith.com/blog/how-to-build-a-blog-with-wordpre
 
 In the last post, I covered setting up [WordPress for use with Gatsby](/blog/2019-04-26-how-to-build-a-blog-with-wordpress-and-gatsby-part-1). Today I will cover how to pull the data from WordPress into Gatsby and build pages.
 
-I have set up a WordPress site for you to use with the plugins mentioned in the last post as well as some dummy content to use. If you're curious, my favorite lorem generator is [Fillerama](http://fillerama.io/) which offers random content from Futurama, Monty Python, Star Wars, and more. This is where the content came from.
+I have set up a WordPress site for you to use with the plugins mentioned in the last post as well as some dummy content to use. If you're curious, my favorite lorem generator is [Fillerama](http://fillerama.io) which offers random content from Futurama, Monty Python, Star Wars, and more. This is where the content came from.
 
 <figure>
   <video autoplay muted loop width="400">
@@ -139,7 +139,7 @@ The site provides a navbar with a link going back to the homepage. There is also
 
 ## Adding Gatsby.js plugins
 
-Now that you know what's already installed and what it looks like to start, you can add the stuff you need to use WordPress with your site. Fortunately, Gatsby has a page on their site where you can [see what plugins are available](/plugins/). You will be adding the following plugins to your site: [Gatsby-Source-WordPress](/packages/gatsby-source-wordpress/) and [Gatsby-Plugin-Sitemap](/packages/gatsby-plugin-sitemap/).
+Now that you know what's already installed and what it looks like to start, you can add the stuff you need to use WordPress with your site. Fortunately, Gatsby has a page on their site where you can [see what plugins are available](/plugins). You will be adding the following plugins to your site: [Gatsby-Source-WordPress](/packages/gatsby-source-wordpress) and [Gatsby-Plugin-Sitemap](/packages/gatsby-plugin-sitemap).
 
 To do this, you can use this code in the terminal:
 
@@ -246,7 +246,7 @@ If you look inside the `src/` folder, you can see directories for components, im
 mkdir ./src/templates && touch ./src/templates/BlogPost.js
 ```
 
-Unless there is some special functionality needed for blog posts, you can just [use a stateless functional component](https://www.iamtimsmith.com/blog/class-components-vs-stateless-functional-components/). I won't go over components in this post, but if you need a refresher, you can [read up on components here](https://www.iamtimsmith.com/blog/how-to-create-a-component/).
+Unless there is some special functionality needed for blog posts, you can just [use a stateless functional component](https://www.iamtimsmith.com/blog/class-components-vs-stateless-functional-components). I won't go over components in this post, but if you need a refresher, you can [read up on components here](https://www.iamtimsmith.com/blog/how-to-create-a-component).
 
 Below is the code I'm using for the template starter. This is just to make sure things are working after you finish setting up your `gatsby-node.js` logic. Once you know the page is being created, you will update the template to display correctly.
 

@@ -56,4 +56,4 @@ To achieve that, we perform our code release in 2 steps. The first step builds t
 
 Our migration is not complete yet as we're working hard on supporting all the markets we are present in, but we are confident in the fact that there are no blockers in using Gatsby. Some issues are still in our way but the team at Gatsby is working hard on solving them, and there are workarounds for all of them.
 
-Are you interested in helping us solve our next challenges with Gatsby? Visit our [careers page](https://careers.danielwellington.com/) and join our evergrowing team in Stockholm!
+Are you interested in helping us solve our next challenges with Gatsby? Visit our [careers page](https://careers.danielwellington.com) and join our evergrowing team in Stockholm!

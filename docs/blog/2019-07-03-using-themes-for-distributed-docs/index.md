@@ -41,7 +41,7 @@ Since Gatsby Remark plugins allow us to look at the Markdown AST of our pages at
 
 ## Sharing components and more
 
-Using [MDX](/docs/mdx/), we’re able to write rich documentation by including React components within a Markdown document. Since `gatsby-plugin-mdx` uses Remark under the hood, all of the Remark plugin features that were mentioned in the last section still apply.
+Using [MDX](/docs/mdx), we’re able to write rich documentation by including React components within a Markdown document. Since `gatsby-plugin-mdx` uses Remark under the hood, all of the Remark plugin features that were mentioned in the last section still apply.
 
 ![Rendering components in MDX](./images/mdx-components.png)
 
@@ -59,4 +59,4 @@ Lastly, MDX introduces the concept of composing pages from shared chunks of cont
 
 The requirements for our docs website infrastructure at Apollo are challenging, but Gatsby Themes, MDX, and a healthy plugin ecosystem give us all the tools we need to deliver a rich, consistent experience across a variety of subjects. This toolset enables us to ship features quickly using familiar technology, and have a great time doing it.
 
-To learn more about our journey with Themes, check out the webinar ["Making Gatsby Even Greater With Themes — Better, Faster, Flexible-er"](https://www.gatsbyjs.com/gatsby-themes/). If you’re interested in how our themes are implemented, [view the source on GitHub](https://github.com/apollographql/gatsby-theme-apollo/tree/master/packages/gatsby-theme-apollo-docs).
+To learn more about our journey with Themes, check out the webinar ["Making Gatsby Even Greater With Themes — Better, Faster, Flexible-er"](https://www.gatsbyjs.com/gatsby-themes). If you’re interested in how our themes are implemented, [view the source on GitHub](https://github.com/apollographql/gatsby-theme-apollo/tree/master/packages/gatsby-theme-apollo-docs).

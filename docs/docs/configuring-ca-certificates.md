@@ -10,7 +10,7 @@ If you're seeing errors like `unable to get local issuer certificate` in the con
 
 ## cafile config option
 
-Both [npm](https://docs.npmjs.com/misc/config#cafile) and [yarn](https://yarnpkg.com/lang/en/docs/cli/config/), support a `cafile` config option. You'll have to add `cafile` as the key, and set the path to your certificate as the value.
+Both [npm](https://docs.npmjs.com/misc/config#cafile) and [yarn](https://yarnpkg.com/lang/en/docs/cli/config), support a `cafile` config option. You'll have to add `cafile` as the key, and set the path to your certificate as the value.
 
 ### Using npm to set cafile
 

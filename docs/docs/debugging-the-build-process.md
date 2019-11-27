@@ -38,7 +38,7 @@ TypeError: Cannot read property 'internal' of undefined
 
 ## Debugging with Node.js' built-in console
 
-One of the fastest ways to gain insight into Gatsby's build process is using the `console` functionality [built into Node.js](https://nodejs.org/en/knowledge/getting-started/the-console-module/). This works similar to how you might be used to in the browser.
+One of the fastest ways to gain insight into Gatsby's build process is using the `console` functionality [built into Node.js](https://nodejs.org/en/knowledge/getting-started/the-console-module). This works similar to how you might be used to in the browser.
 
 Adding a `console.log` statement in the sample from above will print the variable into your terminal. There you might notice that `args` contains a lower-cased node variable.
 
@@ -179,5 +179,5 @@ You can successfully debug your code using Chrome DevTools but using it isn't re
 
 ## Additional resources
 
-- [Debugging - Getting Started | Node.js](https://nodejs.org/en/docs/guides/debugging-getting-started/)
+- [Debugging - Getting Started | Node.js](https://nodejs.org/en/docs/guides/debugging-getting-started)
 - [Debugging with Node.js - Paul Irish talk at Node Summit 2017](https://www.youtube.com/watch?v=Xb_0awoShR8)

@@ -9,15 +9,15 @@ tags:
   - community
 ---
 
-It’s a packed week for the Gatsby team this week, with triple duty at conferences on both sides of the United States and in Europe! This year, members of the Gatsby team will be in attendance at [DrupalCon Seattle](https://events.drupal.org/seattle2019), [JAMstack Conf NYC](https://jamstackconf.com/nyc/), and [JSHeroes](https://jsheroes.io/), ready to answer your questions in workshops and sessions throughout the week, as well as in the exhibit hall at DrupalCon.
+It’s a packed week for the Gatsby team this week, with triple duty at conferences on both sides of the United States and in Europe! This year, members of the Gatsby team will be in attendance at [DrupalCon Seattle](https://events.drupal.org/seattle2019), [JAMstack Conf NYC](https://jamstackconf.com/nyc), and [JSHeroes](https://jsheroes.io), ready to answer your questions in workshops and sessions throughout the week, as well as in the exhibit hall at DrupalCon.
 
-DrupalCon Seattle, the annual conference for [Drupal](https://www.drupal.org/) developers, agencies, businesses, and users in North America, is getting underway today in the beautiful Pacific Northwest. Best of all, we’ll have plenty of shirts and swag to show your Gatsby spirit. Meanwhile, at JAMstack Conf NYC, the [JAMstack](https://www.jamstack.org/) conference sponsored by Netlify in the Big Apple, and JSHeroes, in Cluj-Napoca later this week, we’re excited to present and to answer your Gatsby questions.
+DrupalCon Seattle, the annual conference for [Drupal](https://www.drupal.org) developers, agencies, businesses, and users in North America, is getting underway today in the beautiful Pacific Northwest. Best of all, we’ll have plenty of shirts and swag to show your Gatsby spirit. Meanwhile, at JAMstack Conf NYC, the [JAMstack](https://www.jamstack.org) conference sponsored by Netlify in the Big Apple, and JSHeroes, in Cluj-Napoca later this week, we’re excited to present and to answer your Gatsby questions.
 
 Here are just a few of the things members of the Gatsby team will be getting up to this week in Seattle, New York City, and Cluj-Napoca.
 
 ## Amberley Romo at JAMstack Conf NYC
 
-If you aren’t able to catch Gatsby at DrupalCon Seattle this year, and if you happen to be traveling along the East Coast, be sure to catch **[Amberley Romo](https://twitter.com/amber1ey)**, Software Engineer at Gatsby, at [JAMstack Conf NYC](https://jamstackconf.com/nyc/), where she’ll be presenting a session entitled “What’s Your JAM(stack)?” at 3:30pm on Tuesday, April 9th.
+If you aren’t able to catch Gatsby at DrupalCon Seattle this year, and if you happen to be traveling along the East Coast, be sure to catch **[Amberley Romo](https://twitter.com/amber1ey)**, Software Engineer at Gatsby, at [JAMstack Conf NYC](https://jamstackconf.com/nyc), where she’ll be presenting a session entitled “What’s Your JAM(stack)?” at 3:30pm on Tuesday, April 9th.
 
 "Shifting from a monolithic CMS approach to a JAMstack setup comes with an abundance of choice. On the other hand, all that choice can come with indecision paralysis. Where’s a dev to start?" asks Amberley in her abstract. "Thankfully, there’s a thriving ecosystem of frameworks offering varying flexibility and structure, different approaches to performance and delivery, etc. We’ll talk about some ways to evaluate available tools, using Gatsby as an example."
 

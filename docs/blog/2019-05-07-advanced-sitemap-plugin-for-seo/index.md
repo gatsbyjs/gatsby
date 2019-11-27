@@ -10,11 +10,11 @@ tags:
   - headless-cms
 ---
 
-In recent months, I’ve been working on projects for [Ghost](https://ghost.org/) with a JAMstack approach and using the Gatsby framework to build websites. It’s been an exciting journey that began when we rebuilt our [docs](https://docs.ghost.org/) site from the ground up – now we’re migrating all of our sites to use the same technology.
+In recent months, I’ve been working on projects for [Ghost](https://ghost.org) with a JAMstack approach and using the Gatsby framework to build websites. It’s been an exciting journey that began when we rebuilt our [docs](https://docs.ghost.org) site from the ground up – now we’re migrating all of our sites to use the same technology.
 
 It’s been a pleasure working with this stack and getting to grips with a modern website generator like Gatsby. At Ghost, we have a small team of engineers, designers and marketers who collaborate on projects like this to ensure the end result hits the mark.
 
-Some of the things I worked on were implementing performance enhancements and SEO best practices to ensure our new docs site ranked well in the search engines. This included pulling in custom meta data and structured data via the Ghost API (which we are using as a [headless CMS](/docs/headless-cms/)), and implementing XML sitemaps.
+Some of the things I worked on were implementing performance enhancements and SEO best practices to ensure our new docs site ranked well in the search engines. This included pulling in custom meta data and structured data via the Ghost API (which we are using as a [headless CMS](/docs/headless-cms)), and implementing XML sitemaps.
 
 I wanted to recreate the default advanced sitemap structure that we use for all Ghost publications on Gatsby, and since it’s an open source project, I was able to go ahead and build a [plugin](/packages/gatsby-plugin-advanced-sitemap/?=sitemap) which is now available for anyone to use!
 

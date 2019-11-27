@@ -7,7 +7,7 @@ tags:
   - themes
 ---
 
-[Component Shadowing](/blog/2019-04-29-component-shadowing/)
+[Component Shadowing](/blog/2019-04-29-component-shadowing)
 provides a powerful API for customizing the rendering of components
 and even entire pages. For example, changing the logo might involve
 shadowing that component by creating your custom implementation

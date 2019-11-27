@@ -50,7 +50,7 @@ The locale allows us to make changes to spelling (for example, "colour" vs.
 
 At doopoll we speak multiple languages, but just like design, development, and
 copywriting, translation requires time and skill to get it right. That's why we
-work with our awesome friends at [Applingua](https://applingua.com/) who handle
+work with our awesome friends at [Applingua](https://applingua.com) who handle
 all of our translation, and push new strings straight to our Git Repo 🙌.
 
 There are other options out there. You can even crowd source your translations!
@@ -64,10 +64,10 @@ a different language.
 There are a few React i18n packages out there. We considered
 [react-intl](https://github.com/yahoo/react-intl) and the community
 [Gatsby plugin](https://www.npmjs.com/package/gatsby-plugin-i18n). However, we
-opted for [react-i18next](https://github.com/i18next/react-i18next/) because we
+opted for [react-i18next](https://github.com/i18next/react-i18next) because we
 use a version of i18next in our core Meteor app, and our translators are
 familiar with the system.
-[It's well documented too](https://react.i18next.com/).
+[It's well documented too](https://react.i18next.com).
 
 We also wanted to use a non-specific Gatsby solution so we can use a similar
 implementation in other projects.

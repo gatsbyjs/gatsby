@@ -22,7 +22,7 @@ to Gatsby for our company site. A decision we don’t regret. Here’s why.
 As mentioned we already built our company website using static site generators
 early on. Last year, we finally made the switch from our good old custom PHP
 application with little to no logic, which served us for about two years, to
-[Wintersmith](http://wintersmith.io/). At that time this was one of the leading
+[Wintersmith](http://wintersmith.io). At that time this was one of the leading
 static site generators based on Node.js. Since most of our applications at that
 time were already JavaScript based it seemed to be the perfect fit. The fact
 that our company was undergoing a complete rebranding in terms of our corporate
@@ -45,15 +45,15 @@ deep knowledge of React we started looking for an alternative based on that hot
 new thing.
 
 The first thing that caught our attention was
-[Next.js](https://github.com/zeit/next.js/), as seemingly everyone going for a
+[Next.js](https://github.com/zeit/next.js), as seemingly everyone going for a
 server-side rendered React app was using it. After some days hacking on our app
 we encountered some issues, especially when it came to frontend rendering. We
-chose [prismic.io](https://prismic.io/) for our backend system which served all
+chose [prismic.io](https://prismic.io) for our backend system which served all
 the content. Although this felt right at first but, as all of us are developers,
 working around the constraints of it just didn’t feel right.
 
 Luckily at that time Gatsby version 1.0
-[just got released](/blog/gatsby-v1/) and we decided to
+[just got released](/blog/gatsby-v1) and we decided to
 give it a try during one of our so-called Hackdays. We instantly fell in love
 with the simplicity of the system. Our first approach was to just use all the
 components which we already had created for Next.js and backed it by simple JSON
@@ -74,7 +74,7 @@ even
 Make sure to check it out if you’re interested in a similar solution.
 
 The only thing left was to actually rebuild and deploy our site once a new blog
-post gets released on Medium. We chose [IFTTT](https://ifttt.com/) for this
+post gets released on Medium. We chose [IFTTT](https://ifttt.com) for this
 task, mainly because of its simplicity. Every time IFTTT picks up a newly
 published blog post it triggers a GitLab CI pipeline using a webhook, which then
 rebuilds and deploys our application onto our Docker Cloud infrastructure.
@@ -82,7 +82,7 @@ rebuilds and deploys our application onto our Docker Cloud infrastructure.
 The result of our work using Gatsby is an outstanding
 [Google PageSpeed score](https://developers.google.com/speed/pagespeed/insights/?url=https://smartive.ch&tab=desktop)
 thanks to the built-in code splitting and cache handling mechanisms. If you’re
-interested in how [smartive.ch](https://smartive.ch/) is built you can have a
+interested in how [smartive.ch](https://smartive.ch) is built you can have a
 look at our code [on GitHub](https://github.com/smartive/smartive.ch).
 
 We are really looking forward to build other cool stuff for our customers using

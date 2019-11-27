@@ -220,6 +220,6 @@ The maximum size of your previews really depend on your current html payload siz
 - For frequent previews like article teasers or image gallery thumbnails I’d recommend 15-25 shapes
 - For header and hero images you may go up to 50-200 shapes
 
-**Generally:** Keep it as small as possible and test the impact of your image previews via [webpagetest.org](https://www.webpagetest.org/) on a 3G connection.
+**Generally:** Keep it as small as possible and test the impact of your image previews via [webpagetest.org](https://www.webpagetest.org) on a 3G connection.
 
 You may use my research repository for more detailed insights on how much the configuration can affect your payload size: https://axe312ger.github.io/embedded-svg-loading-impact-research/

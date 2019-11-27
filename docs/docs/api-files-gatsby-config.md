@@ -121,4 +121,4 @@ module.exports = {
 
 ## Additional configuration options
 
-There are several more configuration options available for `gatsby-config.js`. You can find a list of every option in the [Gatsby Configuration API](/docs/gatsby-config/) page.
+There are several more configuration options available for `gatsby-config.js`. You can find a list of every option in the [Gatsby Configuration API](/docs/gatsby-config) page.

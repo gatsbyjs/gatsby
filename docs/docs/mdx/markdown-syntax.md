@@ -32,7 +32,7 @@ Here's how those tags render in HTML:
 - each heading gets converted to their HTML equivalent
   - i.e. `# heading 1` is `<h1>heading 1</h1>`
 - Correct usage of each heading should follow the
-  [accessibility guidelines](https://www.w3.org/WAI/tutorials/page-structure/headings/) set by the World Wide Web Consortium (W3C)
+  [accessibility guidelines](https://www.w3.org/WAI/tutorials/page-structure/headings) set by the World Wide Web Consortium (W3C)
   _Note: in the [Gatsby docs](/contributing/docs-contributions#headings), h1s are already included from `title` entries in frontmatter metadata, and contributions in Markdown should begin with h2._
 
 ## Emphasized text
@@ -104,7 +104,7 @@ Links in Markdown use this format. URLs can be relative or remote:
 
 Example of a link rendering in HTML:
 
-[Gatsby site](https://www.gatsbyjs.org/)
+[Gatsby site](https://www.gatsbyjs.org)
 
 ### Image with alt text
 
@@ -114,7 +114,7 @@ Example of a link rendering in HTML:
 
 ### Image without alt text
 
-This pattern is appropriate for [decorative or repetitive images](https://www.w3.org/WAI/tutorials/images/decision-tree/):
+This pattern is appropriate for [decorative or repetitive images](https://www.w3.org/WAI/tutorials/images/decision-tree):
 
 ```
 ![](path-to-image)

@@ -5,7 +5,7 @@ overview: true
 
 Gatsby empowers developers and creators to make many different types of websites. One may wish to add additional functionality to their site such as search, authentication, forms, comments, and plenty of others.
 
-The distinction between apps and websites is blurry, the way Dustin Schau puts it in a [blog post](/blog/2018-10-15-beyond-static-intro/):
+The distinction between apps and websites is blurry, the way Dustin Schau puts it in a [blog post](/blog/2018-10-15-beyond-static-intro):
 
 <Pullquote citation="Dustin Schau" narrow={true}>
   I contend that the line between these two concepts is extremely blurry. There
@@ -24,7 +24,7 @@ Even though Gatsby generates static files, Gatsby apps [rehydrate](/docs/glossar
 2. Invoke `ReactDOM.hydrate()` method to pick up where the static HTML was left
 3. Transfer rendering to the React reconciler
 
-It's this last phase that bridges the gap between static sites and full-fledged applications. In this phase you can make calls for [dynamic data](/docs/client-data-fetching/), [authenticate users](/docs/building-a-site-with-authentication/), and perform all the app-like functionality you desire because the page is running a React application.
+It's this last phase that bridges the gap between static sites and full-fledged applications. In this phase you can make calls for [dynamic data](/docs/client-data-fetching), [authenticate users](/docs/building-a-site-with-authentication), and perform all the app-like functionality you desire because the page is running a React application.
 
 ## Common patterns for Gatsby apps
 
@@ -45,7 +45,7 @@ The diagram illustrates the 2 main methods for creating pages in your site:
 
 _**Note**: plugins and themes can also implement the `createPage` API and create pages on your behalf_
 
-When you export a React component from a file in the `src/pages` directory (in this case `src/pages/home.js` for `/home`) Gatsby will automatically create a static page. By looping through Markdown files in your filesystem you can create pages for all blog posts programmatically. The docs have more information about [creating and modifying pages](/docs/creating-and-modifying-pages/).
+When you export a React component from a file in the `src/pages` directory (in this case `src/pages/home.js` for `/home`) Gatsby will automatically create a static page. By looping through Markdown files in your filesystem you can create pages for all blog posts programmatically. The docs have more information about [creating and modifying pages](/docs/creating-and-modifying-pages).
 
 These created pages _could_ run JavaScript once React hydrates them, but they don't need to.
 
@@ -63,7 +63,7 @@ Following a pattern like this means you are relying on a [backend](/docs/glossar
 
 Using a React-based client-side router is also supported by Gatsby. This pattern is often referred to as client only routes, which are routes not reflected in your statically rendered files. Gatsby ships with `@reach/router`, so it is a great option to keep your site from having to ship additional JavaScript with another routing library.
 
-With Gatsby, you can import a router and set up routes for navigation the same way you would in traditional React apps. The only difference is Gatsby doesn't build those routes into individual pages in the `/public` folder. As a result, in order to allow users to access that URL directly, you can use a plugin to create those pages. This is covered in the [Client Only Routes](/docs/client-only-routes-and-user-authentication/) guide.
+With Gatsby, you can import a router and set up routes for navigation the same way you would in traditional React apps. The only difference is Gatsby doesn't build those routes into individual pages in the `/public` folder. As a result, in order to allow users to access that URL directly, you can use a plugin to create those pages. This is covered in the [Client Only Routes](/docs/client-only-routes-and-user-authentication) guide.
 
 The following diagram shows how a `<Router />` component can be mounted on a page. In this example, `src/pages/app` references `<Route />`s.
 
@@ -75,7 +75,7 @@ In this illustration, a client-rendered user page could display specific informa
 
 There is a bit of a paradigm shift to overcome in understanding how a Gatsby app is different from an app created with a tool like Create React App.
 
-> _A site built with Create React App can actually be [ported to Gatsby](/docs/porting-from-create-react-app-to-gatsby/)._
+> _A site built with Create React App can actually be [ported to Gatsby](/docs/porting-from-create-react-app-to-gatsby)._
 
 ### The global `App.js` component
 
@@ -85,7 +85,7 @@ One main distinction explained in the diagrams in the section on [common pattern
 
 In a React app, creating pages requires setting up a router. Gatsby instead handles some pieces of routing on your behalf; you can create a page by putting an exported component inside the pages directory. Gatsby will generate a page with a fixed URL based on the filename of the component. You can still import a router and set up routes yourself though.
 
-> _To compare Gatsby with other Jamstack tools like Next.js and Jekyll, check out the [feature comparison](/features/jamstack/) page._
+> _To compare Gatsby with other Jamstack tools like Next.js and Jekyll, check out the [feature comparison](/features/jamstack) page._
 
 ---
 

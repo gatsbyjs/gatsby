@@ -12,9 +12,9 @@ tags:
 
 _This blog post was originally posted on [LekoArts' Blog](https://www.lekoarts.de/en/blog/how-i-used-theme-ui-to-build-my-gatsby-themes-library)_
 
-Building [themes](https://www.gatsbyjs.org/blog/2019-07-03-announcing-stable-release-gatsby-themes/) for Gatsby is fun and a great way to share projects with the open source community. In the past I mainly created starters which I added to the [starter library](https://www.gatsbyjs.org/starters/?v=2) on Gatsbyjs.org and called it a day. While working on my first starter to theme conversion I realized that I don't have a great overview or marketing site for my starters — I wanted to change that for my upcoming themes! Hence I created [themes.lekoarts.de](https://themes.lekoarts.de). It currently shows my available themes and their respective links to GitHub and demo website. Moreover I plan to send out a newsletter every month so be sure to subscribe :)
+Building [themes](https://www.gatsbyjs.org/blog/2019-07-03-announcing-stable-release-gatsby-themes) for Gatsby is fun and a great way to share projects with the open source community. In the past I mainly created starters which I added to the [starter library](https://www.gatsbyjs.org/starters/?v=2) on Gatsbyjs.org and called it a day. While working on my first starter to theme conversion I realized that I don't have a great overview or marketing site for my starters — I wanted to change that for my upcoming themes! Hence I created [themes.lekoarts.de](https://themes.lekoarts.de). It currently shows my available themes and their respective links to GitHub and demo website. Moreover I plan to send out a newsletter every month so be sure to subscribe :)
 
-With this blogpost I want to describe the process of creating my Gatsby themes library website with [Theme UI](https://theme-ui.com/). I won't go too deep into technical details so please don't expect this to be a tutorial.
+With this blogpost I want to describe the process of creating my Gatsby themes library website with [Theme UI](https://theme-ui.com). I won't go too deep into technical details so please don't expect this to be a tutorial.
 
 ## Design
 
@@ -25,7 +25,7 @@ Nearly every time before I start coding a project I start with the design in Fig
 <figcaption>Inspirational screenshots</figcaption>
 </figure>
 
-I really liked the prominent and actionable hero section of the [Refactoring UI website](https://refactoringui.com/), the shapes and colors from the other designs. Speaking of Refactoring UI, for the design (and later for coding) I used the TailwindCSS colors and styles.
+I really liked the prominent and actionable hero section of the [Refactoring UI website](https://refactoringui.com), the shapes and colors from the other designs. Speaking of Refactoring UI, for the design (and later for coding) I used the TailwindCSS colors and styles.
 
 The design you see live on the website now is pretty much the design I created in Figma — which speaks to the ease of use of a Figma (+ Tailwind styles) => Theme UI (+ Tailwind preset) workflow!
 
@@ -40,7 +40,7 @@ As mentioned I also wanted a rad hero section, nothing boring but also not somet
 
 The website lives inside the [www](https://github.com/LekoArts/gatsby-themes/tree/master/www) folder of the monorepo and thus is already setup to be used with TypeScript. You can have a look at the source code to see how it's done (as going through the complete code would be a bit boring...).
 
-I want to focus on [Theme UI](https://theme-ui.com/) and explain how I used it on this landing page, especially the breakpoints syntax, variants, and Tailwind preset. These are truly game changers for me!
+I want to focus on [Theme UI](https://theme-ui.com) and explain how I used it on this landing page, especially the breakpoints syntax, variants, and Tailwind preset. These are truly game changers for me!
 
 To get started I installed the preset and put it into my shadowed theme config (see [official documentation](https://theme-ui.com/presets) on that). Then I had to override the colors e.g. the primary and secondary color. For that I took a look into my Figma design:
 

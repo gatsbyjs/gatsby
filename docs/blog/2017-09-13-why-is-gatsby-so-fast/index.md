@@ -8,7 +8,7 @@ typora-copy-images-to: ./
 tags: ["performance", "mobile", "pwa"]
 ---
 
-_I gave this talk last weekend at [ReactNext](http://react-next.com/) in Tel
+_I gave this talk last weekend at [ReactNext](http://react-next.com) in Tel
 Aviv. I spoke on the basics of measuring and improving web performance and how
 Gatsby is designed so sites built with it are always very very fast._
 
@@ -244,7 +244,7 @@ lightning fast.
 
 As I was prepping for my talk, Tom Dale of Ember, conveniently made similar
 points in
-[his great blog post](https://tomdale.net/2017/09/compilers-are-the-new-frameworks/).
+[his great blog post](https://tomdale.net/2017/09/compilers-are-the-new-frameworks).
 
 ![reactnext-gatsby-performance.069](reactnext-gatsby-performance.069.png)
 

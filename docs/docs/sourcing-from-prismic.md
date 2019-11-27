@@ -2,7 +2,7 @@
 title: Sourcing from Prismic
 ---
 
-In this guide, you'll set up a site with content management using [Prismic](https://prismic.io/).
+In this guide, you'll set up a site with content management using [Prismic](https://prismic.io).
 
 Prismic is a hosted, proprietary Headless CMS (SaaS) with a web app for creating and publishing content. It's suitable for marketers, editors, and developers as it has both a "Writing Room" and a fully-fledged API & content backend. Besides the usual advantages of a SaaS CMS (hosting, security, updates), Prismic offers features like custom type builder, scheduling and content versioning, and multi-language support.
 
@@ -16,7 +16,7 @@ _Note: This guide uses the Gatsby Hello World starter to provide a very basic un
 
 ### Prismic
 
-Before initializing your Gatsby project you should sign up for an account on [Prismic.io](https://prismic.io/). The free plan is a perfect fit for personal or smaller projects. Create a new blank repository to get to the content overview of your repository.
+Before initializing your Gatsby project you should sign up for an account on [Prismic.io](https://prismic.io). The free plan is a perfect fit for personal or smaller projects. Create a new blank repository to get to the content overview of your repository.
 
 Create your first custom type (Repeatable Type) with the name `Post` and add some fields to it. Choose rational names for the `API ID` input while configuring a field because these names will appear in your queries. You should always add the `uid` field in order to have a unique identifier (e.g. for filtering). Then switch to the content overview and create a new document with your `Post` type. Fill out the fields and publish the item.
 
@@ -157,7 +157,7 @@ export const pageQuery = graphql`
 
 Earlier you defined an `API_KEY` environment variable for the source plugin. Netlify can set [build environment variables](https://www.netlify.com/docs/continuous-deployment/#build-environment-variables), too. Go to your site and enter the `API_KEY` variable under `Settings → Build & deploy`. This way the source plugin gets the access token passed on the build.
 
-Netlify is able to automatically start builds on pushes to a repository and accepts [webhooks](https://www.netlify.com/docs/webhooks/) to do so. Fortunately, Prismic can [trigger webhook](https://user-guides.prismic.io/webhooks/webhooks) URLs when publishing content. With those features set up, new content will automatically appear on your Netlify site.
+Netlify is able to automatically start builds on pushes to a repository and accepts [webhooks](https://www.netlify.com/docs/webhooks) to do so. Fortunately, Prismic can [trigger webhook](https://user-guides.prismic.io/webhooks/webhooks) URLs when publishing content. With those features set up, new content will automatically appear on your Netlify site.
 
 Setup your Netlify project and afterwards go to the `Build hooks` setting at `Settings → Build & deploy`. You'll receive a URL of the format <https://api.netlify.com/build_hooks/-randomstring-> after clicking `Add build hook`. On your Prismic project, visit the `Webhooks` setting and insert the copied URL into the respective field. Confirm with `Add this webhook`. Every time you publish a new document, Netlify will re-build your site.
 

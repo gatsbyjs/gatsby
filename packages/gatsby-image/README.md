@@ -4,10 +4,10 @@ Speedy, optimized images without the work.
 
 `gatsby-image` is a React component specially designed to work seamlessly with
 Gatsby's GraphQL queries. It combines
-[Gatsby's native image processing](https://image-processing.gatsbyjs.org/)
+[Gatsby's native image processing](https://image-processing.gatsbyjs.org)
 capabilities with advanced image loading techniques to easily and completely
 optimize image loading for your sites. `gatsby-image` uses
-[gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/)
+[gatsby-plugin-sharp](/packages/gatsby-plugin-sharp)
 to power its image transformations.
 
 _Note: gatsby-image is **not** a drop-in replacement for `<img />`. It's
@@ -82,7 +82,7 @@ effect as well as lazy loading of images further down the screen.
 
 `npm install --save gatsby-image`
 
-Depending on the gatsby starter you used, you may need to include [gatsby-transformer-sharp](/packages/gatsby-transformer-sharp/) and [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/) as well, and make sure they are installed and included in your gatsby-config.
+Depending on the gatsby starter you used, you may need to include [gatsby-transformer-sharp](/packages/gatsby-transformer-sharp) and [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp) as well, and make sure they are installed and included in your gatsby-config.
 
 ```bash
 npm install --save gatsby-transformer-sharp gatsby-plugin-sharp
@@ -145,7 +145,7 @@ export const query = graphql`
 `
 ```
 
-For other explanations of how to get started with gatsby-image, see this blog post by community member Kyle Gill [Image Optimization Made Easy with Gatsby.js](https://medium.com/@kyle.robert.gill/ridiculously-easy-image-optimization-with-gatsby-js-59d48e15db6e), this post by Hunter Chang (which also includes some details about changes to gatsby-image for Gatsby v2): [An Intro To Gatsby Image V2](https://codebushi.com/using-gatsby-image/), or [this free playlist on egghead.io](https://egghead.io/playlists/using-gatsby-image-with-gatsby-ea85129e) with examples for using `gatsby-image`.
+For other explanations of how to get started with gatsby-image, see this blog post by community member Kyle Gill [Image Optimization Made Easy with Gatsby.js](https://medium.com/@kyle.robert.gill/ridiculously-easy-image-optimization-with-gatsby-js-59d48e15db6e), this post by Hunter Chang (which also includes some details about changes to gatsby-image for Gatsby v2): [An Intro To Gatsby Image V2](https://codebushi.com/using-gatsby-image), or [this free playlist on egghead.io](https://egghead.io/playlists/using-gatsby-image-with-gatsby-ea85129e) with examples for using `gatsby-image`.
 
 ## Polyfilling object-fit/object-position for IE
 
@@ -206,8 +206,8 @@ Note,
 you can not currently use these fragments in the GraphiQL IDE.
 
 Plugins supporting `gatsby-image` currently include
-[gatsby-transformer-sharp](/packages/gatsby-transformer-sharp/),
-[gatsby-source-contentful](/packages/gatsby-source-contentful/), [gatsby-source-datocms](https://github.com/datocms/gatsby-source-datocms) and [gatsby-source-sanity](https://github.com/sanity-io/gatsby-source-sanity).
+[gatsby-transformer-sharp](/packages/gatsby-transformer-sharp),
+[gatsby-source-contentful](/packages/gatsby-source-contentful), [gatsby-source-datocms](https://github.com/datocms/gatsby-source-datocms) and [gatsby-source-sanity](https://github.com/sanity-io/gatsby-source-sanity).
 
 Their fragments are:
 
@@ -253,7 +253,7 @@ Their fragments are:
 - `GatsbySanityImageFluid`
 - `GatsbySanityImageFluid_noBase64`
 
-_Links to source code for fragment fields of official Gatsby plugins can be found in the [Gatsby GraphQL API](/docs/graphql-api/)_
+_Links to source code for fragment fields of official Gatsby plugins can be found in the [Gatsby GraphQL API](/docs/graphql-api)_
 
 If you don't want to use the blur-up effect, choose the fragment with `noBase64`
 at the end. If you want to use the traced placeholder SVGs, choose the fragment

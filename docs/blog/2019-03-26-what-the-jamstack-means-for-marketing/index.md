@@ -20,7 +20,7 @@ It got me excited about the future because I've been in marketing for the best p
 
 ## What is the JAMstack?
 
-JAM stands for **J**avaScript, **A**PIs, and **M**arkup. If you're interested in learning more about the technical details you can [check out JAMStack.org](https://jamstack.org/), watch ["The Rise of the JAMStack" on Youtube](https://www.youtube.com/watch?v=uWTMEDEPw8c) and [read about the history of JAMstack](https://snipcart.com/blog/jamstack).
+JAM stands for **J**avaScript, **A**PIs, and **M**arkup. If you're interested in learning more about the technical details you can [check out JAMStack.org](https://jamstack.org), watch ["The Rise of the JAMStack" on Youtube](https://www.youtube.com/watch?v=uWTMEDEPw8c) and [read about the history of JAMstack](https://snipcart.com/blog/jamstack).
 
 In terms of what this means to you as a marketer – it's essentially a modern way to build a website that is static instead of dynamic. This provides you with some very important business benefits: speed, security, stability and scalability. I didn't intend for them all to begin with the letter S, but here we are!
 
@@ -40,7 +40,7 @@ Thanks to progression with modern browsers, static site generators, APIs and con
 **Going back to the benefits:** better performance, higher security, cheaper to scale & a better experience. These aren't just developer benefits, they apply directly to the marketing team too. Better performance means better site engagement and improved SEO. Higher security means less chance of not hitting your stretch goal next June because the site got hacked. Cheaper to scale means there will be less roadblocks in your way when you want to add that Shopify store or when a big campaign sends 1M visitors to the site. Better experience — who wouldn't want that?
 
 **The rise of static sites**
-Static site generators like Gatsby play a huge part in making all of this possible, and there are lots of [exciting new tools](https://www.staticgen.com/) appearing that support the future of publishing on the JAMstack. Static site generators work by pulling content from APIs and running a build task in the background to generate your site. So when your visitors arrive, they’re met with blazing-fast load times, and your security and SEO is taken care of.
+Static site generators like Gatsby play a huge part in making all of this possible, and there are lots of [exciting new tools](https://www.staticgen.com) appearing that support the future of publishing on the JAMstack. Static site generators work by pulling content from APIs and running a build task in the background to generate your site. So when your visitors arrive, they’re met with blazing-fast load times, and your security and SEO is taken care of.
 
 ## Enter the headless CMS
 
@@ -70,11 +70,11 @@ Ditching the concept of the plugin and opting for a JAMstack site which is "just
 
 ![Ghost Documentation](./images/ghostdocs.png)
 
-The site launch that I worked on was for [Ghost Docs](https://docs.ghost.org/). Previously the documentation for Ghost was spread out over several domains, making it difficult to navigate. When it comes to SEO, the docs.ghost.org subdomain had a lot of issues with versioned duplicate content and hundreds of URLs were being excluded:
+The site launch that I worked on was for [Ghost Docs](https://docs.ghost.org). Previously the documentation for Ghost was spread out over several domains, making it difficult to navigate. When it comes to SEO, the docs.ghost.org subdomain had a lot of issues with versioned duplicate content and hundreds of URLs were being excluded:
 
 ![Ghost Docs SEO](./images/ghostdocsseo.png)
 
-The project to rebuild this site from the ground up gave us an opportunity to completely turn this around. The smart people that I am fortunate enough to work with decided to use it as an opportunity to put [Ghost on the JAMstack](https://blog.ghost.org/jamstack/). There was also a complete design overhaul, while I worked on restructuring and rewriting lots of the content and improving the meta data across the whole site.
+The project to rebuild this site from the ground up gave us an opportunity to completely turn this around. The smart people that I am fortunate enough to work with decided to use it as an opportunity to put [Ghost on the JAMstack](https://blog.ghost.org/jamstack). There was also a complete design overhaul, while I worked on restructuring and rewriting lots of the content and improving the meta data across the whole site.
 
 The end result scores incredibly positive site performance reports:
 
@@ -102,11 +102,11 @@ As always, there is still work to do to ensure the site ranks well for the most 
 
 **Here's the stack we're using:**
 
-- [Ghost](https://ghost.org/) delivering content via the API
-- A frontend built in React with [Gatsby](https://gatsbyjs.org/) (our static site generator of choice)
-- Deployed with [Netlifly](https://netlify.com/) (really nifty content delivery network)
-- [Algolia](https://algolia.com/) powering the search functionality
-- [Zapier](https://zapier.com/) to automate community feedback into Slack for content improvements
+- [Ghost](https://ghost.org) delivering content via the API
+- A frontend built in React with [Gatsby](https://gatsbyjs.org) (our static site generator of choice)
+- Deployed with [Netlifly](https://netlify.com) (really nifty content delivery network)
+- [Algolia](https://algolia.com) powering the search functionality
+- [Zapier](https://zapier.com) to automate community feedback into Slack for content improvements
 
 We have also built and contributed an [advanced sitemap plugin](/packages/gatsby-plugin-advanced-sitemap/?=sitemap) which automatically builds a sitemap for any Gatsby project.
 
@@ -130,7 +130,7 @@ I've already covered some of the benefits of opting to use JAMstack instead of a
 
 **The "downsides":**
 
-- Even if using a [headless CMS](/docs/headless-cms/), there may still be parts of the site that exist entirely in code. So you'll need to get comfortable with editing content and meta data in more than one place.
+- Even if using a [headless CMS](/docs/headless-cms), there may still be parts of the site that exist entirely in code. So you'll need to get comfortable with editing content and meta data in more than one place.
 - Shipping new marketing material might take a little longer compared to relying on well known methods (depends on your stack and your team, though).
 - New tech means you might stumble upon some exciting new bugs or issues that can take a while to resolve.
 

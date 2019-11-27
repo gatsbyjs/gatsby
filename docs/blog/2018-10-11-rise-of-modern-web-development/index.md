@@ -62,7 +62,7 @@ While React and Angular were originally created as web _app_ solutions, with the
 
 _Source_: [React](https://trends.builtwith.com/javascript/React), [Angular](https://trends.builtwith.com/framework/Angular) (builtwith.com)
 
-Headless & decoupled setups allow a modern frontend to be placed over a 2000s-era [ASP.NET](http://www.dnnsoftware.com/)/[J2EE](https://www.adobe.com/marketing/experience-manager.html)/[C#](https://www.sitecore.com/)/[PHP](https://wordpress.com/) CMS and present a fresh user experience — without sacrificing the powerful content management workflows that established these CMS platforms as industry leaders in the first place.
+Headless & decoupled setups allow a modern frontend to be placed over a 2000s-era [ASP.NET](http://www.dnnsoftware.com)/[J2EE](https://www.adobe.com/marketing/experience-manager.html)/[C#](https://www.sitecore.com)/[PHP](https://wordpress.com) CMS and present a fresh user experience — without sacrificing the powerful content management workflows that established these CMS platforms as industry leaders in the first place.
 
 And the evidence? Increasingly, award-winning websites such as the leading "corporate" website winners of the 2018 Webby awards, are powered by modern frontend JavaScript frameworks.
 
@@ -84,4 +84,4 @@ Modern web development frameworks like React and Angular are the latest step tra
 
 In the next blog post, [Why Mobile Performance is Crucial](/blog/2018-10-16-why-mobile-performance-is-crucial), we’ll move on to the final piece of the changing content landscape puzzle.
 
-We'll discuss how growing smartphone usage both in the US and globally has made mobile performance crucial -- as well as suddenly easier to optimize in the [headless CMS](/docs/headless-cms/) world. We’ll also explore two modern, complementary trends for improving web performance and how website teams can get the best of both out of the box.
+We'll discuss how growing smartphone usage both in the US and globally has made mobile performance crucial -- as well as suddenly easier to optimize in the [headless CMS](/docs/headless-cms) world. We’ll also explore two modern, complementary trends for improving web performance and how website teams can get the best of both out of the box.

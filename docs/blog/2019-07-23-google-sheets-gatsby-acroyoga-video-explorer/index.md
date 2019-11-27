@@ -20,11 +20,11 @@ I've long found it challenging to find just the right video to work on. Sometime
 
 My requirements for this Acroyoga videos site is that it be simple to add data to, load fast on mobile, and be generally intuitive to use. For this reason, I'm using Gatsby (and of course, React) and the Google Sheets API for this site. This simple stack will allow me to build a fast loading application that consumes data from a Google Sheet.
 
-As such, this article will show how I built this site. I'll show only the code samples that are Gatsby and Google Sheets specific but you can see all of the code in this repo: [https://github.com/kpennell/acrotagsgatsbyblog](https://github.com/kpennell/acrotagsgatsbyblog). Finally, if you want to check out the demo app, that can be found here: [https://acrotagsgatsbyblog.netlify.com](https://acrotagsgatsbyblog.netlify.com/).
+As such, this article will show how I built this site. I'll show only the code samples that are Gatsby and Google Sheets specific but you can see all of the code in this repo: [https://github.com/kpennell/acrotagsgatsbyblog](https://github.com/kpennell/acrotagsgatsbyblog). Finally, if you want to check out the demo app, that can be found here: [https://acrotagsgatsbyblog.netlify.com](https://acrotagsgatsbyblog.netlify.com).
 
 ## Creating a Basic Gatsby Setup with Material-UI
 
-Gatsby's docs have a wide variety of [Gatsby starters](/starters/?v=2), each with different features and advantages. I opted to use a starter I built for [another Gatsby tutorial I wrote](https://appendto.com/2019/04/build-fast-and-elegant-sites-with-gatsby-netlifycms-and-material-ui/). My starter has a simple file structure and is setup to use Material-UI (which I'll use heavily for building this interface). There are a couple ways to use Material-UI in Gatsby but I found the [gatsby-plugin-material-ui](/packages/gatsby-plugin-material-ui/) plugin route the easiest. Unless you have a very specific use case, save yourself the rabbit hole, install the plugin, and setup the theme within `gatsby-config.js` like so:
+Gatsby's docs have a wide variety of [Gatsby starters](/starters/?v=2), each with different features and advantages. I opted to use a starter I built for [another Gatsby tutorial I wrote](https://appendto.com/2019/04/build-fast-and-elegant-sites-with-gatsby-netlifycms-and-material-ui). My starter has a simple file structure and is setup to use Material-UI (which I'll use heavily for building this interface). There are a couple ways to use Material-UI in Gatsby but I found the [gatsby-plugin-material-ui](/packages/gatsby-plugin-material-ui) plugin route the easiest. Unless you have a very specific use case, save yourself the rabbit hole, install the plugin, and setup the theme within `gatsby-config.js` like so:
 
 ```javascript
 module.exports = {
@@ -50,7 +50,7 @@ module.exports = {
 
 ## My Google Sheet Dataset and How to Access it
 
-Google sheets are pretty amazing if you think about it. While they might never be able to handle the millions of rows that Excel can, you can share and collaborate on them. There's tons of add-ons, macros, and scripts you can use to extend the default functionality. Finally, you can consume the data from a Google Sheet using [a fairly well-documented API](https://developers.google.com/sheets/api/). My Acroyoga videos data can be publicly accessed [here](https://docs.google.com/spreadsheets/d/1Qyn6530gveP7wnLHswBH0a_6ndTbWE65hvMWY17313Y/edit?usp=sharing). Here's what my row headers look like and several of my rows:
+Google sheets are pretty amazing if you think about it. While they might never be able to handle the millions of rows that Excel can, you can share and collaborate on them. There's tons of add-ons, macros, and scripts you can use to extend the default functionality. Finally, you can consume the data from a Google Sheet using [a fairly well-documented API](https://developers.google.com/sheets/api). My Acroyoga videos data can be publicly accessed [here](https://docs.google.com/spreadsheets/d/1Qyn6530gveP7wnLHswBH0a_6ndTbWE65hvMWY17313Y/edit?usp=sharing). Here's what my row headers look like and several of my rows:
 
 ![Google Sheets UI](./images/word-image.png)
 
@@ -328,13 +328,13 @@ After I created the necessary pages and components for my instructor, tag, and v
 
 A big reason why I (and many others) love Gatsby is its speed. After using heavy client-side rendered sites, Gatsby sites feel more modern and fast. It's nice to be able to explore content almost as fast as you can think. It's also nice not having to mess with server setup (vs. the simplicity of cloud storage).
 
-But something about my new Acroyoga video site felt sluggish. I tried it on my older Android phone over 4g and, sure, it was ok, but not great. I next ran my demo site through [Google's PageSpeed insights](https://developers.google.com/speed/pagespeed/insights/) and [GTmetrix](https://gtmetrix.com/) tests. My fears were confirmed. The site was good but not great. PageSpeed Insights gave it to me straight, the images were hurting me:
+But something about my new Acroyoga video site felt sluggish. I tried it on my older Android phone over 4g and, sure, it was ok, but not great. I next ran my demo site through [Google's PageSpeed insights](https://developers.google.com/speed/pagespeed/insights) and [GTmetrix](https://gtmetrix.com) tests. My fears were confirmed. The site was good but not great. PageSpeed Insights gave it to me straight, the images were hurting me:
 
 ![Lighthouse Showing Need for Properly Sized Images](./images/word-image-3.png)
 
-This was such a clear and easy 'aha!' moment. I hadn't optimized my images and was missing out on one of the best parts of Gatsby: [gatsby-image](/packages/gatsby-image/). Gatsby image gives Gatsby users a whole bunch of built-in image optimizations. Images will be properly optimized (so you're not loading image sizes you don't need to) and the images will load a small blurred version first before loading the complete image. This makes for much faster page loads and a better user experience.
+This was such a clear and easy 'aha!' moment. I hadn't optimized my images and was missing out on one of the best parts of Gatsby: [gatsby-image](/packages/gatsby-image). Gatsby image gives Gatsby users a whole bunch of built-in image optimizations. Images will be properly optimized (so you're not loading image sizes you don't need to) and the images will load a small blurred version first before loading the complete image. This makes for much faster page loads and a better user experience.
 
-I dug into my normal gatsby-image workflow but I quickly hit a snag. My previous use of Gatsby-image had been for local images whilst I was now trying to use remote images (cloud storage image links). Thankfully, with just a bit more searching, I found the right plugin to solve this: [gatsby-plugin-remote-images](/packages/gatsby-plugin-remote-images/).
+I dug into my normal gatsby-image workflow but I quickly hit a snag. My previous use of Gatsby-image had been for local images whilst I was now trying to use remote images (cloud storage image links). Thankfully, with just a bit more searching, I found the right plugin to solve this: [gatsby-plugin-remote-images](/packages/gatsby-plugin-remote-images).
 
 Gatsby-plugin-remote-images fetches image URL links (e.g. http://super-image.png) and prepares them in a way that gatsby-image can use them. To make my cards load faster, I'd need to optimize both the video thumbnail as well as the small instructor image. It makes no sense at all to load a 300+ pixel image of an instructor when all you really need are maybe 40 pixels max.
 

@@ -17,7 +17,7 @@ tags: ["gatsby-inc"]
 
 ## Introduction
 
-Last year, several contributors to Gatsby.js [created a startup company](/blog/2018-05-24-launching-new-gatsby-company/), Gatsby Inc, to make feature-rich and blazing-fast websites easier to build and run.
+Last year, several contributors to Gatsby.js [created a startup company](/blog/2018-05-24-launching-new-gatsby-company), Gatsby Inc, to make feature-rich and blazing-fast websites easier to build and run.
 
 **At Gatsby Inc, we’re trying to build an _organization_ (the Gatsby Inkteam) that can execute on the Gatsby product roadmap and vision**. Our philosophy around recruiting and hiring, as well as team-building, in the product / engineering org is designed to achieve this goal.
 
@@ -47,7 +47,7 @@ One of Gatsby's goals is to provider users all the benefits of modern web out of
 
 Having GraphQL experts as we flesh out the Gatsby’s GraphQL integration via "schema stitching" 3rd-party-applications, and as our users continue to use GraphQL on a daily basis, is crucial.
 
-The same is true of accessibility, CSS-in-JS, and the CMS as we recreate CMS functionality in the [content mesh](/blog/2018-10-04-journey-to-the-content-mesh/).
+The same is true of accessibility, CSS-in-JS, and the CMS as we recreate CMS functionality in the [content mesh](/blog/2018-10-04-journey-to-the-content-mesh).
 
 Several Gatsby Inkteam members have deep expertise on these topics, which is extremely helpful.
 

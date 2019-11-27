@@ -108,7 +108,7 @@ This script is now finished and you can execute it in your shell with this comma
 > node src/scripts/import.js mysqlite.db
 ```
 
-To have comments on your site you can use a service like [Disqus](https://disqus.com/). Disqus has an import process that uses a [custom XML import format](https://help.disqus.com/developer/custom-xml-import-format) based on the WXR (WordPress eXtended RSS) schema. So the process would be the same. Create a script named `src/scripts/export_comments.js` to query the database and, in this case, write a single file containing all the comments of your old site:
+To have comments on your site you can use a service like [Disqus](https://disqus.com). Disqus has an import process that uses a [custom XML import format](https://help.disqus.com/developer/custom-xml-import-format) based on the WXR (WordPress eXtended RSS) schema. So the process would be the same. Create a script named `src/scripts/export_comments.js` to query the database and, in this case, write a single file containing all the comments of your old site:
 
 ```javascript
 const Database = require("better-sqlite3")
@@ -210,6 +210,6 @@ function slugify(string) {
 }
 ```
 
-Run `node src/scripts/export_comments.js ../mysqlite.db > comments.xml` and that's it. This will generate a **comments.xml** file that you can [import into disqus](https://import.disqus.com/). Just remember to change the **yourSite** variable in the script, and it will link each comment to the correct post in your new blog using the slug used in the posts import.
+Run `node src/scripts/export_comments.js ../mysqlite.db > comments.xml` and that's it. This will generate a **comments.xml** file that you can [import into disqus](https://import.disqus.com). Just remember to change the **yourSite** variable in the script, and it will link each comment to the correct post in your new blog using the slug used in the posts import.
 
 You now have all the posts and all comments ready to be used on your Gatsby blog. You can see a working example here: https://github.com/jackbravo/joaquin.axai.mx.

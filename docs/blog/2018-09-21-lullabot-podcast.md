@@ -4,7 +4,7 @@ author: Linda Watkins
 date: 2018-09-21
 ---
 
-[Lullabot](https://www.lullabot.com/) is a strategy, UX design, and development agency based internationally. They’ve worked with clients like Syfy, the NYU School of Medicine, and WWE and recently interviewed Gatsby’s founder, Kyle Mathews, [on the Lullabot podcast](https://www.lullabot.com/podcasts/drupalizeme-podcast/gatsbyjs-with-creator-kyle-mathews) to discuss...what else? Gatsby!
+[Lullabot](https://www.lullabot.com) is a strategy, UX design, and development agency based internationally. They’ve worked with clients like Syfy, the NYU School of Medicine, and WWE and recently interviewed Gatsby’s founder, Kyle Mathews, [on the Lullabot podcast](https://www.lullabot.com/podcasts/drupalizeme-podcast/gatsbyjs-with-creator-kyle-mathews) to discuss...what else? Gatsby!
 
 On this podcast episode, Kyle walks through what problems he was trying to solve when starting Gatsby and the steps developers take to get Gatsby up and running. Here’s a few tidbits from the interview:
 

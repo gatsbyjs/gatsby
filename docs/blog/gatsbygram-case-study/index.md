@@ -31,20 +31,20 @@ abstractions, tools, and client capabilities of the React.js world.
 
 ### Gatsby is fast
 
-[Gatsby automatically optimizes your site for the modern web](/docs/prpl-pattern/).
+[Gatsby automatically optimizes your site for the modern web](/docs/prpl-pattern).
 You provide pages and Gatsby stitches them together so they load as fast as
 possible.
 
 As proof of this, Gatsbygram loads _2-3x faster_ than the real Instagram site.
 
 I tested Gatsbygram and Instagram on
-[webpagetest.org](https://www.webpagetest.org/) using a simulated 3G network and
+[webpagetest.org](https://www.webpagetest.org) using a simulated 3G network and
 a Moto G4 smartphone—a budget Android typical of many lower-end phones used
 today. The median
 [speed index](https://sites.google.com/a/webpagetest.org/docs/using-webpagetest/metrics/speed-index)
-score for [Gatsbygram](http://www.webpagetest.org/result/170310_XP_11AS/) was
+score for [Gatsbygram](http://www.webpagetest.org/result/170310_XP_11AS) was
 3151 vs. 8251 for
-[Instagram](http://www.webpagetest.org/result/170310_PC_11AZ/).
+[Instagram](http://www.webpagetest.org/result/170310_PC_11AZ).
 
 ![gatsbygram vs. instagram filmstrip](gatsbygram-instagram.png)_Filmstrip of
 Gatsbygram (top) and Instagram (bottom) loading on webpagetest.org_
@@ -63,8 +63,8 @@ The difference in Time to Interactivity (TTI) (measure of how long before the
 user can actually interact with the page e.g. click on a link) between the sites
 is just as dramatic. Gatsbygram's TTI is 6.1s vs 14.1s for Instagram.
 
-- [Gatsbygram's webpagetest results](http://www.webpagetest.org/result/170310_XP_11AS/)
-- [Instagram's webpagetest results](http://www.webpagetest.org/result/170310_PC_11AZ/)
+- [Gatsbygram's webpagetest results](http://www.webpagetest.org/result/170310_XP_11AS)
+- [Instagram's webpagetest results](http://www.webpagetest.org/result/170310_PC_11AZ)
 
 ### Gatsby is built for the next billion internet users
 
@@ -77,7 +77,7 @@ Smartphones with decent specs (as good or better than the Moto G4), a great
 browser, but _without_ a reliable internet connection.
 
 Gatsby uses modern web performance ideas (e.g.
-[PRPL](https://developers.google.com/web/fundamentals/performance/prpl-pattern/))
+[PRPL](https://developers.google.com/web/fundamentals/performance/prpl-pattern))
 developed by the Google Chrome Developer Relations team and others to help
 websites work well on modern browsers with unreliable networks.
 
@@ -111,7 +111,7 @@ optimized production builds and an innovative _declarative_ asset pipeline.
 
 For Gatsbygram, Gatsby generates over _1000_ image thumbnails for responsive
 images without _any_ custom scripting by leveraging the Gatsby image processing
-plugin [gatsby-transformer-sharp](/packages/gatsby-transformer-sharp/).
+plugin [gatsby-transformer-sharp](/packages/gatsby-transformer-sharp).
 
 Stop wasting time and build something!
 
@@ -362,7 +362,7 @@ site doesn't require a page reload. Gatsby _pre-caches_ code and data needed for
 other pages so that clicking on a link loads the next page instantly.
 
 All the setup for this is handled behind the scenes. Gatsby uses
-[@reach/router](https://reach.tech/router/) under the hood but
+[@reach/router](https://reach.tech/router) under the hood but
 generates all the configuration for you.
 
 Normally page resources are pre-cached with a service worker. But as several
@@ -376,7 +376,7 @@ Gatsby has always had a rich set of lifecycle APIs to allow you to hook into
 various events during development, building, and in the client.
 
 Gatsby 1.0 adds new APIs and also adds a
-[new plugin architecture](/docs/plugins/). So functionality can now be extracted
+[new plugin architecture](/docs/plugins). So functionality can now be extracted
 from sites and made reusable. Most of the new functionality in Gatsby 1.0 is
 powered by plugins.
 
@@ -518,7 +518,7 @@ error-prone bookkeeping. Typography.js (by definition) generates only global
 styles so its styles are included on every page. Glamor includes some
 [clever server-rendering optimizations](https://github.com/threepointone/glamor/blob/master/docs/server.md)
 which I've implemented in the
-[Gatsby Glamor plugin](/packages/gatsby-plugin-glamor/) where it automatically
+[Gatsby Glamor plugin](/packages/gatsby-plugin-glamor) where it automatically
 extracts out the CSS used _in components on the page being server rendered_ and
 automatically inlines those styles in the generated HTML page.
 

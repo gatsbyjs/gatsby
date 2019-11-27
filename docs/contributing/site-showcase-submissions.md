@@ -2,13 +2,13 @@
 title: Submit to Site Showcase
 ---
 
-Want to submit a site to the [Site Showcase](/showcase/)? Follow these instructions.
+Want to submit a site to the [Site Showcase](/showcase)? Follow these instructions.
 
 ## Steps
 
 There are three major steps:
 
-1.  If this is your first contribution to the Gatsby open source repo, follow the [Contribution guidelines](/contributing/code-contributions/).
+1.  If this is your first contribution to the Gatsby open source repo, follow the [Contribution guidelines](/contributing/code-contributions).
 
 2.  If there is a chance that someone else could have already submitted the site, please make sure no one else has already submitted it by searching existing PRs: https://github.com/gatsbyjs/gatsby/pulls
 
@@ -79,7 +79,7 @@ Categories currently include both _type of site_ (structure) and the _content of
 
 #### Content of site
 
-A few notes on site content: a common question is this: "aren't all Gatsby sites technically in the "web development" category?" Well, no because this category means the _content_ of the site has to be about web development, like [ReactJS](https://reactjs.org/). Also, the difference between technology and web development is like this. [Cardiogram](https://cardiogr.am/) is technology, while [ReactJS](https://reactjs.org/) is web development.
+A few notes on site content: a common question is this: "aren't all Gatsby sites technically in the "web development" category?" Well, no because this category means the _content_ of the site has to be about web development, like [ReactJS](https://reactjs.org). Also, the difference between technology and web development is like this. [Cardiogram](https://cardiogr.am) is technology, while [ReactJS](https://reactjs.org) is web development.
 
 - Agency
 - Education

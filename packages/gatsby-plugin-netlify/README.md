@@ -1,7 +1,7 @@
 # gatsby-plugin-netlify
 
 Automatically generates a `_headers` file and a `_redirects` file at the root of the public folder to configure
-[HTTP headers](https://www.netlify.com/docs/headers-and-basic-auth/) and [redirects](https://www.netlify.com/docs/redirects/) on Netlify.
+[HTTP headers](https://www.netlify.com/docs/headers-and-basic-auth) and [redirects](https://www.netlify.com/docs/redirects) on Netlify.
 
 By default, the plugin will add some basic security headers. You can easily add or replace headers through the plugin config.
 
@@ -42,7 +42,7 @@ plugins: [
 ### Headers
 
 The headers object represents a JS version of the
-[Netlify `_headers` file format](https://www.netlify.com/docs/headers-and-basic-auth/).
+[Netlify `_headers` file format](https://www.netlify.com/docs/headers-and-basic-auth).
 You should pass in a object with string keys (representing the paths) and an
 array of strings for each header.
 

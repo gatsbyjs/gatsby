@@ -10,13 +10,13 @@ Think of it as a syndicated distribution channel for your site's content.
 
 ## Install
 
-To generate an RSS feed, you can use the [`gatsby-plugin-feed`](/packages/gatsby-plugin-feed/) package. To install this package, run the following command:
+To generate an RSS feed, you can use the [`gatsby-plugin-feed`](/packages/gatsby-plugin-feed) package. To install this package, run the following command:
 
 ```shell
 npm install --save gatsby-plugin-feed
 ```
 
-## How to use [gatsby-plugin-feed](/packages/gatsby-plugin-feed/)
+## How to use [gatsby-plugin-feed](/packages/gatsby-plugin-feed)
 
 Once installation is complete, you can now add this plugin to your site's config file, like so:
 
@@ -134,7 +134,7 @@ By default, feed is referenced in every page. You can customize this behavior by
 
 To see your feed in action, run `gatsby build && gatsby serve` and you can then inspect the content and URLs in your RSS file at <http://localhost:9000/rss.xml>.
 
-> NOTE: if your blog has custom permalinks, such as links with or without dates in them, you may need to [customize `gatsby-node.js`](https://github.com/gatsbyjs/gatsby-starter-blog/blob/master/gatsby-node.js#L57) to output the correct URLs in your RSS feed. [Get in touch with us](/contributing/how-to-contribute/) if you need any help!
+> NOTE: if your blog has custom permalinks, such as links with or without dates in them, you may need to [customize `gatsby-node.js`](https://github.com/gatsbyjs/gatsby-starter-blog/blob/master/gatsby-node.js#L57) to output the correct URLs in your RSS feed. [Get in touch with us](/contributing/how-to-contribute) if you need any help!
 
 ## Syntax for iTunes RSS blocks
 
@@ -182,7 +182,7 @@ module.exports = {
 
 ## Happy blogging!
 
-With the [Gatsby feed plugin](/packages/gatsby-plugin-feed/), you can share your writing easily with people subscribed through RSS readers like Feedly or RSS Feed Reader. Now that your feed is set up, you won't really have to think about it; publish a new post, and your RSS feed will automatically update with your Gatsby build. Voilà!
+With the [Gatsby feed plugin](/packages/gatsby-plugin-feed), you can share your writing easily with people subscribed through RSS readers like Feedly or RSS Feed Reader. Now that your feed is set up, you won't really have to think about it; publish a new post, and your RSS feed will automatically update with your Gatsby build. Voilà!
 
 ## More resources
 

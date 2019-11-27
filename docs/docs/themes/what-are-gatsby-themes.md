@@ -12,7 +12,7 @@ If you've ever created a Gatsby site completely from scratch, you know that ther
 
 ### Gatsby starters
 
-One existing way to quickly create Gatsby sites with similar functionality is to use "[Gatsby starters](/docs/starters/)". Starters are essentially Gatsby sites with pre-configured functionality for a particular purpose. You download an entire Gatsby site, pre-built for a particular purpose (e.g. blogging, portfolio site, etc) and customize from there.
+One existing way to quickly create Gatsby sites with similar functionality is to use "[Gatsby starters](/docs/starters)". Starters are essentially Gatsby sites with pre-configured functionality for a particular purpose. You download an entire Gatsby site, pre-built for a particular purpose (e.g. blogging, portfolio site, etc) and customize from there.
 
 These traditional starters take a first step toward reducing the level of effort involved in creating a new Gatsby site. However, there are two main problems with traditional starters:
 
@@ -48,19 +48,19 @@ Themes solve the problems that traditional starters experience:
 
 - [Using a Gatsby Theme](/docs/themes/using-a-gatsby-theme)
 - [Using Multiple Gatsby Themes](/docs/themes/using-multiple-gatsby-themes)
-- [Shadowing](/docs/themes/shadowing/)
+- [Shadowing](/docs/themes/shadowing)
 - [Building Themes](/docs/themes/building-themes)
-- [Converting a Starter](/docs/themes/converting-a-starter/)
-- [Theme Composition](/docs/themes/theme-composition/)
-- [Conventions](/docs/themes/conventions/)
+- [Converting a Starter](/docs/themes/converting-a-starter)
+- [Theme Composition](/docs/themes/theme-composition)
+- [Conventions](/docs/themes/conventions)
 
 ## Related blog posts
 
 For additional context, check out blog posts published during the development of themes:
 
-- [Why Themes?](/blog/2019-01-31-why-themes/)
-- [Themes Roadmap](/blog/2019-03-11-gatsby-themes-roadmap/)
-- [Getting Started with Gatsby Themes and MDX](/blog/2019-02-26-getting-started-with-gatsby-themes/)
-- [Watch Us Build a Theme Live](/blog/2019-02-11-gatsby-themes-livestream-and-example/)
-- [Introducing Gatsby Themes by Chris Biscardi at Gatsby Days](https://www.gatsbyjs.com/gatsby-days-themes-chris/)
+- [Why Themes?](/blog/2019-01-31-why-themes)
+- [Themes Roadmap](/blog/2019-03-11-gatsby-themes-roadmap)
+- [Getting Started with Gatsby Themes and MDX](/blog/2019-02-26-getting-started-with-gatsby-themes)
+- [Watch Us Build a Theme Live](/blog/2019-02-11-gatsby-themes-livestream-and-example)
+- [Introducing Gatsby Themes by Chris Biscardi at Gatsby Days](https://www.gatsbyjs.com/gatsby-days-themes-chris)
 - [See all blog posts on themes](/blog/tags/themes)

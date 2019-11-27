@@ -7,8 +7,8 @@ tags: ["jekyll", "markdown", "getting-started", "deployment"]
 
 ## A bit of history
 
-Some years ago I created my [blog](https://blog.singuerinc.com/) with
-[Jekyll](https://jekyllrb.com/) and it has been working well ever since.
+Some years ago I created my [blog](https://blog.singuerinc.com) with
+[Jekyll](https://jekyllrb.com) and it has been working well ever since.
 
 I have never been a huge fan of Ruby, but because of requirements or convenience
 I’ve built apps with it (Rails / Sinatra / Jekyll / etc).
@@ -23,10 +23,10 @@ mostly develop with Node). I tried to develop my blog inside a Docker container,
 but this was extremely slow.
 
 Some weeks ago, one of my colleagues at work told me about
-[Gatsby](/) Since I was already learning
-[React](https://reactjs.org/) and had started looking at
-[GraphQL](http://graphql.org/) (after attending a talk at
-[Nordic.js](http://nordicjs.com/))—I was very interested in giving it a try.
+[Gatsby]() Since I was already learning
+[React](https://reactjs.org) and had started looking at
+[GraphQL](http://graphql.org) (after attending a talk at
+[Nordic.js](http://nordicjs.com))—I was very interested in giving it a try.
 
 ## Migrating from Jekyll to Gatsby
 
@@ -51,7 +51,7 @@ plugins: ["gatsby-transformer-remark"]
 ### Theme
 
 My blog is clean and simple, I don't need too much CSS. Instead of bloating my
-blog with a theme I added [Tachyons](http://tachyons.io/). I managed to
+blog with a theme I added [Tachyons](http://tachyons.io). I managed to
 replicate 99% of my previous theme with classes from Tachyons. Something that I
 would like to do better is to remove the parts of Tachyons that I’m not using.
 
@@ -116,9 +116,9 @@ exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
 
 ### Deploy
 
-I used to deploy to [GitLab Pages](https://about.gitlab.com/features/pages/),
+I used to deploy to [GitLab Pages](https://about.gitlab.com/features/pages),
 but I noticed that from time to time it’d go down, so I’m now testing
-[Netlify](https://www.netlify.com/) which has almost the same CI workflow:
+[Netlify](https://www.netlify.com) which has almost the same CI workflow:
 
 ![Migrating from Jekyll to Gatsby](diagram-ci.svg)
 
@@ -129,7 +129,7 @@ Some key points:
 - Node instead of Ruby
 - Much faster development workflow e.g. hot reload out of the box
 - I can query the data I need and transform it before using it. (I'm looking
-  into the [`gatsby-plugin-feed`](/packages/gatsby-plugin-feed/) to recreate the
+  into the [`gatsby-plugin-feed`](/packages/gatsby-plugin-feed) to recreate the
   Atom Feed)
 - React and GraphQL for free with Gatsby
 - Since I am confident with the Node ecosystem I'm able to contribute: [First
@@ -143,7 +143,7 @@ completely changed. For me it is a whole new experience—easier, and faster.
 
 I wanted to move the blog to Node a long time ago and it is finally there!
 
-Next is to convert [my portfolio](https://www.singuerinc.com/) (also built with Jekyll).
+Next is to convert [my portfolio](https://www.singuerinc.com) (also built with Jekyll).
 
 ## Show me the code
 

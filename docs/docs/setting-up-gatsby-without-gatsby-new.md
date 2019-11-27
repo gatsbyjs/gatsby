@@ -12,7 +12,7 @@ To get started with Gatsby, you’ll need to make sure you have the following so
 1. [npm CLI](/tutorial/part-zero/#familiarize-with-npm)
 1. [Gatsby CLI](/tutorial/part-zero/#install-the-gatsby-cli)
 
-For step-by-step installation instructions and detailed explanations of the required software, head on over to the [Gatsby tutorial](/tutorial/part-zero/).
+For step-by-step installation instructions and detailed explanations of the required software, head on over to the [Gatsby tutorial](/tutorial/part-zero).
 
 After your developer environment is set up, you'll want to set up a new project folder.
 

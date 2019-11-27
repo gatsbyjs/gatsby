@@ -175,7 +175,7 @@ export default () => {
 ## Breaking changes
 
 Since themes will typically be installed by an end user from npm, it's
-important to follow [semantic versioning](https://semver.org/), commonly
+important to follow [semantic versioning](https://semver.org), commonly
 referred to as semver.
 
 This will allow your users to quickly discern how a dependency update might

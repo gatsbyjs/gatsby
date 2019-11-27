@@ -6,7 +6,7 @@ title: Porting from Create React App to Gatsby
 
 Create React App is an officially supported [CLI](/docs/glossary/#cli) tool from Facebook to set up React apps, without having to deal with complicated configurations. It provides a default setup for tools like webpack and Babel that are useful in a modern development pipeline.
 
-Gatsby is similar in that it can also help you set up an application and removes much of the configuration headache. However, Gatsby offers some additional advantages like performance optimizations with static rendering and a thriving ecosystem of plugins. Gatsby and Create React App even share nearly identical webpack and Babel configurations which makes porting less cumbersome. React's own [docs](https://reactjs.org/) run on Gatsby, and React even [recommends Gatsby](https://github.com/facebook/create-react-app#popular-alternatives) to users of Create React App!
+Gatsby is similar in that it can also help you set up an application and removes much of the configuration headache. However, Gatsby offers some additional advantages like performance optimizations with static rendering and a thriving ecosystem of plugins. Gatsby and Create React App even share nearly identical webpack and Babel configurations which makes porting less cumbersome. React's own [docs](https://reactjs.org) run on Gatsby, and React even [recommends Gatsby](https://github.com/facebook/create-react-app#popular-alternatives) to users of Create React App!
 
 ---
 
@@ -19,9 +19,9 @@ _Both_ Create React App and Gatsby use React and allow users to build apps more 
 Gatsby enables some useful performance optimizations for you, by default. Route-based code splitting and pre-loading of the _next_ resources make your application lightning fast, without any additional effort! Further still, the following optimizations and techniques are also available to you:
 
 - `gatsby-link` uses an [intersection observer to preload linked pages](/blog/2019-04-02-behind-the-scenes-what-makes-gatsby-great/#intersectionobserver) when they appear in the viewport, making them feel like they load _instantly_
-- `gatsby-image` will create optimized versions of your images in different sizes, loading a smaller, optimized version of an image and replacing it with a higher resolution version when loading has finished. It also uses an intersection observer to cheaply lazy load images. Check out [the demo](https://using-gatsby-image.gatsbyjs.org/) to see for yourself
+- `gatsby-image` will create optimized versions of your images in different sizes, loading a smaller, optimized version of an image and replacing it with a higher resolution version when loading has finished. It also uses an intersection observer to cheaply lazy load images. Check out [the demo](https://using-gatsby-image.gatsbyjs.org) to see for yourself
 
-These features and more work together to make your Gatsby site fast by default. If you'd like a deep dive on these and other performance optimizations, check out [this blog post](/blog/2019-04-02-behind-the-scenes-what-makes-gatsby-great/)
+These features and more work together to make your Gatsby site fast by default. If you'd like a deep dive on these and other performance optimizations, check out [this blog post](/blog/2019-04-02-behind-the-scenes-what-makes-gatsby-great)
 
 ### Expansive ecosystem
 
@@ -29,11 +29,11 @@ Gatsby still works with all the `react` packages running in a Create React App p
 
 ### Unified GraphQL data layer
 
-Plugins can also pull in data from any number of sources like APIs, CMSs, or the filesystem. That data is combined into a unified data layer that you can [query with GraphQL](/docs/querying-with-graphql/) throughout your app.
+Plugins can also pull in data from any number of sources like APIs, CMSs, or the filesystem. That data is combined into a unified data layer that you can [query with GraphQL](/docs/querying-with-graphql) throughout your app.
 
-This data layer simplifies the process of pulling data from different sources and providing them in your pages and components. This combination of data from different sources stitched together in a modern workflow is referred to as [the content mesh](/blog/2018-10-04-journey-to-the-content-mesh/).
+This data layer simplifies the process of pulling data from different sources and providing them in your pages and components. This combination of data from different sources stitched together in a modern workflow is referred to as [the content mesh](/blog/2018-10-04-journey-to-the-content-mesh).
 
-> **Note**: GraphQL isn't required for managing data in a Gatsby app. Feel free to look over the guide on [using Gatsby without GraphQL](/docs/using-gatsby-without-graphql/) as well
+> **Note**: GraphQL isn't required for managing data in a Gatsby app. Feel free to look over the guide on [using Gatsby without GraphQL](/docs/using-gatsby-without-graphql) as well
 
 ---
 
@@ -101,7 +101,7 @@ Whereas a default Gatsby project will look something like this (files that are d
   └── yarn.lock
 ```
 
-The structure of a [Gatsby project](/docs/gatsby-project-structure/) adds some additional configuration files to hook into specific Gatsby APIs for the [browser](/docs/browser-apis/) and for [server-side rendering](/docs/ssr-apis/), though much of the project structure is similar enough to feel comfortable quickly.
+The structure of a [Gatsby project](/docs/gatsby-project-structure) adds some additional configuration files to hook into specific Gatsby APIs for the [browser](/docs/browser-apis) and for [server-side rendering](/docs/ssr-apis), though much of the project structure is similar enough to feel comfortable quickly.
 
 An important difference to note is the `/pages` folder in the Gatsby project structure where components will automatically be turned into static pages by Gatsby. This is discussed more in the [routing](#routing) section below.
 
@@ -115,7 +115,7 @@ Understanding the distinction between the client (or browser) and server will he
 
 _Check out Dustin Schau's [blog post about Gatsby internals](/blog/2019-04-02-behind-the-scenes-what-makes-gatsby-great/#server-side-rendering-ssr-at-build-time) that explains the technical aspects of the build process in greater detail_
 
-The `gatsby build` command also won't be able to use browser APIs, so some code that relies on browser DOM APIs and globals will cause your build to break if it isn't protected. Learn more about [using client-side only packages](/docs/using-client-side-only-packages/).
+The `gatsby build` command also won't be able to use browser APIs, so some code that relies on browser DOM APIs and globals will cause your build to break if it isn't protected. Learn more about [using client-side only packages](/docs/using-client-side-only-packages).
 
 Some common globals that would need to be protected are:
 
@@ -212,15 +212,15 @@ If these browser globals aren't protected correctly, you'll see a webpack error 
 WebpackError: ReferenceError: window is not defined
 ```
 
-For more information about errors encountered during builds, see the doc on [debugging HTML builds](/docs/debugging-html-builds/). For more information about React hooks, check out the [React docs](https://reactjs.org/docs/hooks-effect.html).
+For more information about errors encountered during builds, see the doc on [debugging HTML builds](/docs/debugging-html-builds). For more information about React hooks, check out the [React docs](https://reactjs.org/docs/hooks-effect.html).
 
 ### Routing
 
-There are two possibilities of routes that you can set up: static and client-only. Gatsby automatically turns React components in the pages folder into static routes. This means that a statically rendered page directly corresponds to index.html files in the app's built assets, whereas a client-only route is rendered by the client and configured by the routing setup you define. Both types of pages can [fetch data at runtime](/docs/client-data-fetching/) just like any other React app.
+There are two possibilities of routes that you can set up: static and client-only. Gatsby automatically turns React components in the pages folder into static routes. This means that a statically rendered page directly corresponds to index.html files in the app's built assets, whereas a client-only route is rendered by the client and configured by the routing setup you define. Both types of pages can [fetch data at runtime](/docs/client-data-fetching) just like any other React app.
 
-> **Note**: An advantage to having pages in separate files like this is a defined way of [automatically code splitting](/docs/how-code-splitting-works/), whereas Create React App requires you to use the `import()` syntax to assign what elements should be loaded dynamically.
+> **Note**: An advantage to having pages in separate files like this is a defined way of [automatically code splitting](/docs/how-code-splitting-works), whereas Create React App requires you to use the `import()` syntax to assign what elements should be loaded dynamically.
 
-For dynamic routes, you should implement routing with [@reach/router](https://reach.tech/router), which is already included with Gatsby. Dynamic routes can be implemented the same way you would implement a router in Create React App (or any other React application). However, because these routes won't be represented as HTML files in the final build, if you want users to be able to visit the routes directly (like entering the URL in the search bar), you'll need to generate pages in the `gatsby-node.js` file which is demonstrated in the [Building Apps with Gatsby](/docs/adding-app-and-website-functionality/) guide.
+For dynamic routes, you should implement routing with [@reach/router](https://reach.tech/router), which is already included with Gatsby. Dynamic routes can be implemented the same way you would implement a router in Create React App (or any other React application). However, because these routes won't be represented as HTML files in the final build, if you want users to be able to visit the routes directly (like entering the URL in the search bar), you'll need to generate pages in the `gatsby-node.js` file which is demonstrated in the [Building Apps with Gatsby](/docs/adding-app-and-website-functionality) guide.
 
 ```jsx
 import React from "react"
@@ -228,7 +228,7 @@ import { Router } from "@reach/router"
 
 const App = () => (
   <Router>
-    <Route path="/user/" component={Users} />
+    <Route path="/user" component={Users} />
     <Route path="/user/:id" component={UserDetails} />
   </Router>
 )
@@ -236,7 +236,7 @@ const App = () => (
 export default App
 ```
 
-Gatsby provides a `<Link />` component and a `navigate` function to help you direct users through pages on your site. You can read about how to use each in the [`gatsby-link` doc](/docs/gatsby-link/).
+Gatsby provides a `<Link />` component and a `navigate` function to help you direct users through pages on your site. You can read about how to use each in the [`gatsby-link` doc](/docs/gatsby-link).
 
 ### Handling state
 
@@ -262,7 +262,7 @@ In terms of levels of abstraction, Gatsby allows you to move up or down to tap i
 
 #### webpack
 
-Create React App will require you to eject or rely on another workaround to edit the webpack configuration. Gatsby allows [custom configuration of webpack](/docs/add-custom-webpack-config/) via the `gatsby-node.js` file.
+Create React App will require you to eject or rely on another workaround to edit the webpack configuration. Gatsby allows [custom configuration of webpack](/docs/add-custom-webpack-config) via the `gatsby-node.js` file.
 
 #### Context providers
 

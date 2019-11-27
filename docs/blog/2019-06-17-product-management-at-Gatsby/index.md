@@ -13,11 +13,11 @@ The first is “waterfall” development where information is generated at the �
 
 Alternatively, there is the “agile” approach that focuses on small teams making fast decisions and moving quickly.
 
-At Gatsby, we want to ensure we’re aligned around business objectives set at the company level, while also bringing research, design, and engineering into the product development process early so that everyone has the context they need to succeed. We also want to encourage everyone at Gatsby to experiment, make mistakes, and [tinker with ideas](https://breakingsmart.com/en/season-1/tinkering-versus-goals/).
+At Gatsby, we want to ensure we’re aligned around business objectives set at the company level, while also bringing research, design, and engineering into the product development process early so that everyone has the context they need to succeed. We also want to encourage everyone at Gatsby to experiment, make mistakes, and [tinker with ideas](https://breakingsmart.com/en/season-1/tinkering-versus-goals).
 
 ## What is the product manager responsible for?
 
-Ultimately the product manager is responsible for “evaluating opportunities and determining what gets built and delivered to customers” (Marty Cagan, [Inspired: How to Create Tech Product Customers Love](https://svpg.com/inspired-how-to-create-products-customers-love/)).
+Ultimately the product manager is responsible for “evaluating opportunities and determining what gets built and delivered to customers” (Marty Cagan, [Inspired: How to Create Tech Product Customers Love](https://svpg.com/inspired-how-to-create-products-customers-love)).
 
 The best way to do that is by **creating a prioritized backlog of ideas that are worth building, prioritizing that work, and collecting customer feedback for action**.
 
@@ -61,7 +61,7 @@ At Gatsby, we wanted to make sure we had a way to look at work from a macro to m
 
 ### Wardley mapping
 
-We use [Wardley mapping](https://www.cio.co.uk/it-strategy/introduction-wardley-value-chain-mapping-3604565/) to think through the strategic value of a product and give us a high level picture of where we want to go. Wardley maps are like topographical maps for your business or product. You’re able to see the current landscape and map out where your product currently is, as well as plot how it will evolve over time as the business and product landscape changes.
+We use [Wardley mapping](https://www.cio.co.uk/it-strategy/introduction-wardley-value-chain-mapping-3604565) to think through the strategic value of a product and give us a high level picture of where we want to go. Wardley maps are like topographical maps for your business or product. You’re able to see the current landscape and map out where your product currently is, as well as plot how it will evolve over time as the business and product landscape changes.
 
 We’ve had working sessions where we will complete Wardley maps as a team around product ideas, or existing products that we are interested in evolving. Wardley maps help us create shared context with our product, design, and engineering teams so that we understand where we currently are and where we’re trying to go with the product.
 
@@ -73,7 +73,7 @@ Acceptance criteria listed in the intent maps helps explain what we are going to
 
 ### Objectives and Key Results
 
-Objectives and Key Results (OKRs) are specific metrics or outcomes we want to see within the next 1 - 2 quarters. We use OKRs to stay focused on what we’re trying to achieve in the short term. Our OKRs are typically very metric driven, so that it's easy to know whether or not we've achieved our goal. You can read more about OKRs at Gatsby [here](https://www.gatsbyjs.org/blog/2019-04-03-how-we-think-about-product-at-gatsby/).
+Objectives and Key Results (OKRs) are specific metrics or outcomes we want to see within the next 1 - 2 quarters. We use OKRs to stay focused on what we’re trying to achieve in the short term. Our OKRs are typically very metric driven, so that it's easy to know whether or not we've achieved our goal. You can read more about OKRs at Gatsby [here](https://www.gatsbyjs.org/blog/2019-04-03-how-we-think-about-product-at-gatsby).
 
 ## How we’ll get product feedback
 

@@ -13,7 +13,7 @@ We shipped today Gatsby's first beta for 1.0! Gatsby is a modern blazing-fast
 static site generator for React.js.
 
 Ten months and one day ago
-[I announced I was now working full-time on Gatsby](https://www.bricolage.io/gatsby-open-source-work/)
+[I announced I was now working full-time on Gatsby](https://www.bricolage.io/gatsby-open-source-work)
 followed a month later by posting
 [an issue kickstarting the rewrite of Gatsby for a 1.0 release](https://github.com/gatsbyjs/gatsby/issues/419)
 
@@ -58,23 +58,23 @@ individuals and companies.
 
 ### Companies who sponsored time working on Gatsby v1.
 
-- [Thinkmill](https://www.thinkmill.com.au/)
-- [Expo](https://expo.io/)
-- [Sourcegraph](https://about.sourcegraph.com/)
+- [Thinkmill](https://www.thinkmill.com.au)
+- [Expo](https://expo.io)
+- [Sourcegraph](https://about.sourcegraph.com)
 - [Segment](https://segment.com)
-- [Meetfabric](https://meetfabric.com/)
-- [X-Team](https://x-team.com/)
-- [Contentful](https://www.contentful.com/)
+- [Meetfabric](https://meetfabric.com)
+- [X-Team](https://x-team.com)
+- [Contentful](https://www.contentful.com)
 
 ### Our open source hosting/testing infrastructure providers
 
 It'd be impossible to write open source code without the generous support of
 these infrastructure providers.
 
-- [Netlify](https://www.netlify.com/) _Awesome static site continuous delivery &
+- [Netlify](https://www.netlify.com) _Awesome static site continuous delivery &
   hosting_
 - [Travis CI](https://travis-ci.org) _Test runner in the cloud_
-- [Appveyor](https://www.appveyor.com/) _Windows test runner in the cloud_
+- [Appveyor](https://www.appveyor.com) _Windows test runner in the cloud_
 
 ## Changelog since 1.0.0-alpha.20
 

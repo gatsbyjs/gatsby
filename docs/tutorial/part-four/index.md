@@ -19,7 +19,7 @@ You’ve also explored styling components using CSS Modules.
 In the next four parts of the tutorial (including this one), you'll be diving into the Gatsby data layer, which is a powerful feature of Gatsby that lets you easily build sites from Markdown, WordPress, headless CMSs, and other data sources of all flavors.
 
 **NOTE:** Gatsby’s data layer is powered by GraphQL. For an in-depth tutorial on
-GraphQL, we recommend [How to GraphQL](https://www.howtographql.com/).
+GraphQL, we recommend [How to GraphQL](https://www.howtographql.com).
 
 ## Data in Gatsby
 
@@ -57,20 +57,20 @@ directly into your components**—in the shape and form you want.
 
 Absolutely not! You can use the node `createPages` API to pull unstructured data into Gatsby pages directly, rather than through the GraphQL data layer. This is a great choice for small sites, while GraphQL and source plugins can help save time with more complex sites.
 
-See the [Using Gatsby without GraphQL](/docs/using-gatsby-without-graphql/) guide to learn how to pull data into your Gatsby site using the node `createPages` API and to see an example site!
+See the [Using Gatsby without GraphQL](/docs/using-gatsby-without-graphql) guide to learn how to pull data into your Gatsby site using the node `createPages` API and to see an example site!
 
 ### When do I use unstructured data vs GraphQL?
 
 If you're building a small site, one efficient way to build it is to pull in unstructured data as outlined in this guide, using `createPages` API, and then if the site becomes more complex later on, you move on to building more complex sites, or you'd like to transform your data, follow these steps:
 
-1.  Check out the [Plugin Library](/plugins/) to see if the source plugins and/or transformer plugins you'd like to use already exist
-2.  If they don't exist, read the [Plugin Authoring](/docs/creating-plugins/) guide and consider building your own!
+1.  Check out the [Plugin Library](/plugins) to see if the source plugins and/or transformer plugins you'd like to use already exist
+2.  If they don't exist, read the [Plugin Authoring](/docs/creating-plugins) guide and consider building your own!
 
 ### How Gatsby's data layer uses GraphQL to pull data into components
 
 There are many options for loading data into React components. One of the most
 popular and powerful of these is a technology called
-[GraphQL](http://graphql.org/).
+[GraphQL](http://graphql.org).
 
 GraphQL was invented at Facebook to help product engineers _pull_ needed data into
 components.
@@ -94,7 +94,7 @@ cd tutorial-part-four
 ```
 
 Then install some other needed dependencies at the root of the project. You'll use the Typography theme
-"Kirkham", and you'll try out a CSS-in-JS library, ["Emotion"](https://emotion.sh/):
+"Kirkham", and you'll try out a CSS-in-JS library, ["Emotion"](https://emotion.sh):
 
 ```shell
 npm install --save gatsby-plugin-typography typography react-typography typography-theme-kirkham gatsby-plugin-emotion @emotion/core
@@ -292,8 +292,8 @@ Page queries live outside of the component definition -- by convention at the en
 
 ### Use a StaticQuery
 
-[StaticQuery](/docs/static-query/) is a new API introduced in Gatsby v2 that allows non-page components (like your `layout.js` component), to retrieve data via GraphQL queries.
-Let's use its newly introduced hook version — [`useStaticQuery`](/docs/use-static-query/).
+[StaticQuery](/docs/static-query) is a new API introduced in Gatsby v2 that allows non-page components (like your `layout.js` component), to retrieve data via GraphQL queries.
+Let's use its newly introduced hook version — [`useStaticQuery`](/docs/use-static-query).
 
 Go ahead and make some changes to your `src/components/layout.js` file to use the `useStaticQuery` hook and a `{data.site.siteMetadata.title}` reference that uses this data. When you are done, your file will look like this:
 
@@ -361,12 +361,12 @@ Another success! 🎉
 Why use two different queries here? These examples were quick introductions to
 the query types, how they are formatted, and where they can be used. For now,
 keep in mind that only pages can make page queries. Non-page components, such as
-Layout, can use StaticQuery. [Part 7](/tutorial/part-seven/) of the tutorial explains these in greater
+Layout, can use StaticQuery. [Part 7](/tutorial/part-seven) of the tutorial explains these in greater
 depth.
 
 But let's restore the real title.
 
-One of the core principles of Gatsby is that _creators need an immediate connection to what they're creating_ ([hat tip to Bret Victor](http://blog.ezyang.com/2012/02/transcript-of-inventing-on-principle/)). In other words, when you make any change to code you should immediately see the effect of that change. You manipulate an input of Gatsby and you see the new output showing up on the screen.
+One of the core principles of Gatsby is that _creators need an immediate connection to what they're creating_ ([hat tip to Bret Victor](http://blog.ezyang.com/2012/02/transcript-of-inventing-on-principle)). In other words, when you make any change to code you should immediately see the effect of that change. You manipulate an input of Gatsby and you see the new output showing up on the screen.
 
 So almost everywhere, changes you make will immediately take effect. Edit the `gatsby-config.js` file again, this time changing the `title` back to "Pandas Eating Lots". The change should show up very quickly in your site pages.
 
@@ -375,5 +375,5 @@ So almost everywhere, changes you make will immediately take effect. Edit the `g
 ## What's coming next?
 
 Next, you'll be learning about how to pull data into your Gatsby site using
-GraphQL with source plugins in [part five](/tutorial/part-five/) of the
+GraphQL with source plugins in [part five](/tutorial/part-five) of the
 tutorial.

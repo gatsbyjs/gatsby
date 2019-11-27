@@ -45,7 +45,7 @@ By using `StaticQuery`, you can colocate a component with its data. It is no lon
 
 ### useStaticQuery
 
-There's also a React hooks version of StaticQuery: check out the documentation on [`useStaticQuery`](/docs/use-static-query/)
+There's also a React hooks version of StaticQuery: check out the documentation on [`useStaticQuery`](/docs/use-static-query)
 
 ### Typechecking
 

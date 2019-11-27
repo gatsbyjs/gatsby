@@ -12,9 +12,9 @@ tags:
   - diversity-and-inclusion
 ---
 
-In June 2019, I conducted 5 user testing sessions for accessibility research with [Fable Tech Labs](https://www.makeitfable.com/), a Toronto-based start-up that’s “making it easier for digital teams to engage people with disabilities in product development.”
+In June 2019, I conducted 5 user testing sessions for accessibility research with [Fable Tech Labs](https://www.makeitfable.com), a Toronto-based start-up that’s “making it easier for digital teams to engage people with disabilities in product development.”
 
-The goal of this initiative was to gather feedback from users with disabilities on a [set of prototypes](https://marcysutton.com/prototype-testing-accessible-clientside-routing/) with navigation techniques for JavaScript web apps. There are [multiple variations recommended in the industry](#prior-art) for accessible, client-rendered page changes, yet very little user research on those methods. Therefore, we wanted to find out **which techniques are the most ergonomic and intuitive to users with disabilities**, and **if any of the techniques presented barriers** detracting from their browsing experience.
+The goal of this initiative was to gather feedback from users with disabilities on a [set of prototypes](https://marcysutton.com/prototype-testing-accessible-clientside-routing) with navigation techniques for JavaScript web apps. There are [multiple variations recommended in the industry](#prior-art) for accessible, client-rendered page changes, yet very little user research on those methods. Therefore, we wanted to find out **which techniques are the most ergonomic and intuitive to users with disabilities**, and **if any of the techniques presented barriers** detracting from their browsing experience.
 
 With this data, we can make better recommendations for accessible client-rendered websites in general and at the JavaScript framework level. By adjusting Gatsby’s implementation of client-side routing–currently leveraging [@reach/router](https://github.com/reach/router) for React.js–to better support a range of people with disabilities, we can improve access for users and also potentially influence accessible UI patterns in other frameworks. Eventually (we hope), this work could encourage new browser APIs through web standards: “paving the accessible cowpaths” with solutions based in user research.
 
@@ -48,7 +48,7 @@ Some of the commonly recommended solutions include (references at the end of thi
 - Turn on focus outlines for keyboard and screen reader users while suppressing them for the mouse using [CSS :focus-visible and polyfill](https://github.com/WICG/focus-visible) or the [What Input](https://github.com/ten1seven/what-input) library.
 - Any combination of the above
 
-In Gatsby–which uses React.js for rendering–we’re currently setting focus to an element wrapping the entire application with a [custom implementation of @reach/router](/blog/2018-09-27-reach-router/). But similar to some of the [Reach demos](https://reach.tech/router), page content isn’t announced consistently in Safari and Voiceover or NVDA and Firefox–two critical combinations for users of assistive technology. We’re actively working to improve this automatic accessibility support as we explore more component- and research-driven solutions.
+In Gatsby–which uses React.js for rendering–we’re currently setting focus to an element wrapping the entire application with a [custom implementation of @reach/router](/blog/2018-09-27-reach-router). But similar to some of the [Reach demos](https://reach.tech/router), page content isn’t announced consistently in Safari and Voiceover or NVDA and Firefox–two critical combinations for users of assistive technology. We’re actively working to improve this automatic accessibility support as we explore more component- and research-driven solutions.
 
 By user testing a few variations of known routing techniques, we gained some valuable insight into how Gatsby and React can better support people with disabilities. We also uncovered some tips for improving usability of client-rendered apps in general, which we’ll cover below.
 
@@ -56,7 +56,7 @@ By user testing a few variations of known routing techniques, we gained some val
 
 We worked with [Fable Tech Labs](https://makeitfable.com) to conduct this research and found it to be a very productive process. I connected with Fable’s lead frontend developer Perry Trinier at the CSUN accessibility conference in early 2019. Fable’s generous offer to pair with us on this initiative has been wonderful, and we’re grateful for the opportunity to see this through.
 
-The experience of testing with people with disabilities and the results that followed felt very important, and something product teams should seek out regularly. We’d highly recommend this process for anyone working on digital experiences; particularly if you can test prototypes to adapt to the findings early and often in design & development. User testing for accessibility can provide game-changing detail that you’ll be eternally grateful to have uncovered. Addressing accessibility issues sooner than later is both a [smart business investment](https://www.w3.org/WAI/business-case/) and can make your project more [inclusive](https://www.microsoft.com/design/inclusive/) from the start!
+The experience of testing with people with disabilities and the results that followed felt very important, and something product teams should seek out regularly. We’d highly recommend this process for anyone working on digital experiences; particularly if you can test prototypes to adapt to the findings early and often in design & development. User testing for accessibility can provide game-changing detail that you’ll be eternally grateful to have uncovered. Addressing accessibility issues sooner than later is both a [smart business investment](https://www.w3.org/WAI/business-case) and can make your project more [inclusive](https://www.microsoft.com/design/inclusive) from the start!
 
 ### Testing methodology
 
@@ -86,7 +86,7 @@ The [prototypes for these tests](https://marcysutton.com/prototype-testing-acces
 - [Example 4](https://marcy.codes/prototypes/routing/example-4.html): Focus changed to an element wrapping the newly changed content
 - [Example 5](https://marcy.codes/prototypes/routing/example-5.html): Focus changed to a wrapper element at 100% width, rather than side-by-side (added during testing session #3 on zooming/magnification)
 
-These prototypes used [Doggo Ipsum](https://doggoipsum.com/) for placeholder text, which made for some fun testing experiences. "Cuuuuuute long bois" was my personal favorite, captured in testing screenshots. :)
+These prototypes used [Doggo Ipsum](https://doggoipsum.com) for placeholder text, which made for some fun testing experiences. "Cuuuuuute long bois" was my personal favorite, captured in testing screenshots. :)
 
 ## Testing results
 
@@ -94,7 +94,7 @@ Each tester had different needs and highlighted varied concerns, with some proto
 
 The prototypes were developed primarily for the desktop browsing experience, but through testing it became clear that responsive design plays a role in producing streamlined, barrier-free user interfaces, particularly for users of screen magnification. Horizontal scrolling, while unavoidable in a lot of cases, can be reduced through media queries and flexible layouts. These layout variations can also affect interaction design (i.e. focus moving down instead of across).
 
-These tests were a good reminder that accessibility goes beyond support for screen readers, which make up a limited percentage of user needs. Support for screen magnification in web apps, for example, is very important to support a larger population of users with low vision. There are also [more disabilities](https://www.who.int/topics/disabilities/en/) to consider than we were able to accommodate with this series: conducting more tests with diverse users would only improve the outcome of any recommended solutions.
+These tests were a good reminder that accessibility goes beyond support for screen readers, which make up a limited percentage of user needs. Support for screen magnification in web apps, for example, is very important to support a larger population of users with low vision. There are also [more disabilities](https://www.who.int/topics/disabilities/en) to consider than we were able to accommodate with this series: conducting more tests with diverse users would only improve the outcome of any recommended solutions.
 
 ### Takeaways from screen reader users
 
@@ -112,13 +112,13 @@ A big motivation to test with screen reader users was to confirm whether the rec
 
 **Putting `aria-current` on links to indicate which one is active helps** in applications. We made a note to try using `aria-label` instead of `aria-labelledby` on section elements to minimize duplicate announcements in NVDA and JAWS (when the section is labelledby a heading).
 
-**Add a heading to each major section of the UI**, like navigation, **even if [visually hidden](https://a11yproject.com/posts/how-to-hide-content/)**–as many screen reader users don’t navigate by landmarks but do navigate by headings.
+**Add a heading to each major section of the UI**, like navigation, **even if [visually hidden](https://a11yproject.com/posts/how-to-hide-content)**–as many screen reader users don’t navigate by landmarks but do navigate by headings.
 
 The conclusion for these tests from one screen reader user when asked if they could recall any good examples of focus management was that “no one is doing this well.” We can do better!
 
 ### Takeaways from users relying on screen magnification
 
-Users with low vision magnify the screen and zoom into pages to see them better: screen magnification at the OS level, screen magnifying assistive technology like [ZoomText](https://www.zoomtext.com/), browser zoom, and more. In this user test, the participant found **visible focus outlines to be helpful** for orienting oneself in the application.
+Users with low vision magnify the screen and zoom into pages to see them better: screen magnification at the OS level, screen magnifying assistive technology like [ZoomText](https://www.zoomtext.com), browser zoom, and more. In this user test, the participant found **visible focus outlines to be helpful** for orienting oneself in the application.
 
 For sighted magnification users, our **first couple of prototypes were quite useless as they relied on screen reader announcements**, which were inapplicable in this scenario (the same would apply to a UI pattern like the proposed [“toast”](https://github.com/jackbsteinberg/std-toast) element). Despite having developed with accessibility in mind–including visible focus outlines–the **prototypes pretty much fell apart when zoomed way in** on a Samsung Note 9 phone with the Chrome browser.
 
@@ -161,7 +161,7 @@ At this point, we were strongly considering moving to a component-based approach
 
 The switch control test was one of the only ones we couldn’t observe, likely because the switch device’s on-screen keyboard was stripped out by Zoom. But we heard from the tester that **focus management seemed to draw their eye to new content the best**. The **visible focus indicators were useful**, though they added that focus **outlines on inoperable elements can be confusing**. Yet another plug for a focusable skip link control!
 
-The tester also mentioned that **navigating to the bottom of a screen required tilting of the head which was hard on their neck with an [integrated headmouse](http://www.orin.com/access/headmouse/)**. Drop-down menus were another nemesis–likely the many ones that only operate with the mouse and drive us all mad when they close without reaching the items no matter what we do ( “equal opportunity inaccessibility”).
+The tester also mentioned that **navigating to the bottom of a screen required tilting of the head which was hard on their neck with an [integrated headmouse](http://www.orin.com/access/headmouse)**. Drop-down menus were another nemesis–likely the many ones that only operate with the mouse and drive us all mad when they close without reaching the items no matter what we do ( “equal opportunity inaccessibility”).
 
 ## Recommendations: finding common ground
 
@@ -177,7 +177,7 @@ Part of the challenge with this work is what might be ideal for one user with a 
 
 ### Updating our approach in Gatsby and React
 
-To make this proposal a reality, Gatsby could look for an interactive skip link component with a given `className`, `id` attribute, or `ref`, and focus it when pages change through navigation as a result of user action. The automatic wrapper focus behavior that shipped with Gatsby’s implementation of `@reach/router` would act as a fallback in the absence of such a component. Another idea is for Gatsby or React to adopt an algorithm to look for the first heading in a content area and dynamically inject a skip link next to it – similar to a [permalinked header](https://www.gatsbyjs.org/packages/gatsby-remark-autolink-headers/) but providing a skip action to take the user back somewhere.
+To make this proposal a reality, Gatsby could look for an interactive skip link component with a given `className`, `id` attribute, or `ref`, and focus it when pages change through navigation as a result of user action. The automatic wrapper focus behavior that shipped with Gatsby’s implementation of `@reach/router` would act as a fallback in the absence of such a component. Another idea is for Gatsby or React to adopt an algorithm to look for the first heading in a content area and dynamically inject a skip link next to it – similar to a [permalinked header](https://www.gatsbyjs.org/packages/gatsby-remark-autolink-headers) but providing a skip action to take the user back somewhere.
 
 The most accessible and best performing pattern will likely be an opt-in component where the developer can specify where the control should go in the DOM and how it should be labeled. But it’s worth pointing out that if a solution can be handled automatically, it would have a wider impact amongst developers who aren't prioritizing accessibility.
 

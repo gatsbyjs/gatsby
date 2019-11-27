@@ -4,7 +4,7 @@ typora-copy-images-to: ./
 disableTableOfContents: true
 ---
 
-> This tutorial is part of a series about Gatsby’s data layer. Make sure you’ve gone through [part 4](/tutorial/part-four/), [part 5](/tutorial/part-five/), and [part 6](/tutorial/part-six/) before continuing here.
+> This tutorial is part of a series about Gatsby’s data layer. Make sure you’ve gone through [part 4](/tutorial/part-four), [part 5](/tutorial/part-five), and [part 6](/tutorial/part-six) before continuing here.
 
 ## What's in this tutorial?
 
@@ -440,6 +440,6 @@ Now that you've built a Gatsby site, where do you go next?
 
 - Share your Gatsby site on Twitter and see what other people have created by searching for #gatsbytutorial! Make sure to mention @gatsbyjs in your Tweet and include the hashtag #gatsbytutorial :)
 - You could take a look at some [example sites](https://github.com/gatsbyjs/gatsby/tree/master/examples#gatsby-example-websites)
-- Explore more [plugins](/docs/plugins/)
-- See what [other people are building with Gatsby](/showcase/)
-- Check out the documentation on [Gatsby's APIs](/docs/api-specification/), [nodes](/docs/node-interface/), or [GraphQL](/docs/graphql-reference/)
+- Explore more [plugins](/docs/plugins)
+- See what [other people are building with Gatsby](/showcase)
+- Check out the documentation on [Gatsby's APIs](/docs/api-specification), [nodes](/docs/node-interface), or [GraphQL](/docs/graphql-reference)

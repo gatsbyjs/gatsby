@@ -4,7 +4,7 @@ This is the configuration repo for Peril on the GatsbyJS org. There’s a [setti
 
 ## tl;dr for this repo
 
-Peril is Danger running on a web-server and this repo is the configuration for that. Currently the dangerfiles in [rules](rules/) run on every issue and pull request for all GatsbyJS Repos.
+Peril is Danger running on a web-server and this repo is the configuration for that. Currently the dangerfiles in [rules](rules) run on every issue and pull request for all GatsbyJS Repos.
 
 ## How it works
 
@@ -13,7 +13,7 @@ Peril is Danger running on a web-server and this repo is the configuration for t
 Here are links to the relevant tools, docs, and apps we’re using:
 
 - [Peril](https://github.com/danger/peril)
-- [Danger JS](http://danger.systems/js/)
+- [Danger JS](http://danger.systems/js)
 - [Peril for Orgs](https://github.com/danger/peril/blob/master/docs/setup_for_org.md)
 - [Peril on the GatsbyJS Heroku team](https://dashboard.heroku.com/apps/gatsby-peril)
 

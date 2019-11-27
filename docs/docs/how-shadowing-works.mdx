@@ -6,10 +6,10 @@ Shadowing is a powerful feature that allows theme users to override components,
 objects, and anything else in a theme's `src` directory.
 
 > **Note** This is a technical deep dive into how Shadowing works. If you'd
-> like to learn about what Shadowing is, see the [What is Component Shadowing?](/blog/2019-04-29-component-shadowing/)
+> like to learn about what Shadowing is, see the [What is Component Shadowing?](/blog/2019-04-29-component-shadowing)
 > blog post.
 
-Shadowing works by using a [webpack resolver plugin](https://webpack.js.org/api/resolvers/)
+Shadowing works by using a [webpack resolver plugin](https://webpack.js.org/api/resolvers)
 that maps themes in a `gatsby-config.js` to possible shadowed files. This gets
 especially mind melty because themes can add parent themes to a configuration so you
 need to be able to walk the composition of themes to determine the "last shadow"
@@ -338,7 +338,7 @@ export default props => (
 )
 ```
 
-[Learn more about extending components](/blog/2019-07-02-extending-components/)
+[Learn more about extending components](/blog/2019-07-02-extending-components)
 
 This is the first case we'll handle when attempting to resolve the file.
 

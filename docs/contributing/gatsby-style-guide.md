@@ -25,14 +25,14 @@ Before you begin writing, make sure to read the rest of this style guide.
 Docs can cover a broad range of topics. Please see the following
 examples:
 
-- [Reference guides](/docs/add-404-page/)
-- [Reference guide overviews](/docs/styling/)
-- [Recipes](/docs/recipes/)
-- [Tutorials](/tutorial/part-one/)
-- [Plugin README](/packages/gatsby-source-filesystem/)
+- [Reference guides](/docs/add-404-page)
+- [Reference guide overviews](/docs/styling)
+- [Recipes](/docs/recipes)
+- [Tutorials](/tutorial/part-one)
+- [Plugin README](/packages/gatsby-source-filesystem)
 - [Starter README](https://github.com/gatsbyjs/gatsby-starter-default)
 
-Please see the [Docs templates](/contributing/docs-templates/) for guidelines on how to format the above kinds of documents.
+Please see the [Docs templates](/contributing/docs-templates) for guidelines on how to format the above kinds of documents.
 
 ## Writing process
 
@@ -121,12 +121,12 @@ Concise writing communicates the bare minimum without redundancy. Strive to make
 
 ### Use clear hyperlinks
 
-Hyperlinks should contain the clearest words to indicate where the link will lead you. [The use of the title attribute on hyperlinks should be avoided for accessibility reasons](https://developer.paciellogroup.com/blog/2012/01/html5-accessibility-chops-title-attribute-use-and-abuse/).
+Hyperlinks should contain the clearest words to indicate where the link will lead you. [The use of the title attribute on hyperlinks should be avoided for accessibility reasons](https://developer.paciellogroup.com/blog/2012/01/html5-accessibility-chops-title-attribute-use-and-abuse).
 
 ```markdown
 <!-- Good -->
 
-[Gatsby's docs](https://www.gatsbyjs.org/docs/)
+[Gatsby's docs](https://www.gatsbyjs.org/docs)
 
 <!-- Bad -->
 
@@ -213,7 +213,7 @@ Use the following as reference when creating and editing docs:
   If the images aren’t already hosted somewhere else on the web, you’ll need to put them online yourself.
   A good way to do this is to commit them to a GitHub repository of your own, then push them to GitHub.
   Then you can right click the image and copy its image source. And don't forget image alt text for accessibility!
-  For help with crafting efficient screen reader text, refer to the [W3C's alt decision tree](https://www.w3.org/WAI/tutorials/images/decision-tree/).
+  For help with crafting efficient screen reader text, refer to the [W3C's alt decision tree](https://www.w3.org/WAI/tutorials/images/decision-tree).
 - [header formatting](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#headers). Avoid using H1 header; that is reserved for the title of each document.
 
 #### Code formatting: Type tab
@@ -385,7 +385,7 @@ For words that have multiple spellings, prefer the US English word over British 
 
 ### Use apps that help you edit
 
-Use the [Hemingway App](https://hemingwayapp.com/). There’s nothing magical
+Use the [Hemingway App](https://hemingwayapp.com). There’s nothing magical
 about this tool, but it will automatically detect widely agreed-upon
 style issues:
 

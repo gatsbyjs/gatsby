@@ -190,7 +190,7 @@ In `gatsby-node.js`:
 exports.onCreatePage = ({ page, actions }) => {
   const { createPage } = actions
 
-  if (page.path.match(/special-page/)) {
+  if (page.path.match(/special-page)) {
     page.context.layout = "special"
     createPage(page)
   }

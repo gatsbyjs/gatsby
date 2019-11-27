@@ -6,7 +6,7 @@ tags:
   - graphql
 ---
 
-Two weeks ago, we announced our plans for a [new schema customization API](/blog/2019-03-04-new-schema-customization/). Today we are making this set of new APIs and enhancements available to all in `gatsby`@`2.2.0`.
+Two weeks ago, we announced our plans for a [new schema customization API](/blog/2019-03-04-new-schema-customization). Today we are making this set of new APIs and enhancements available to all in `gatsby`@`2.2.0`.
 
 First, install the latest and greatest version of `gatsby`, like so:
 
@@ -63,9 +63,9 @@ createResolvers({
 
 ## The Type Builder API
 
-While `createTypes` accepts GraphQL types as a [Schema Definition Language (SDL)](https://graphql.org/learn/schema/) string, we've also added an option to use `graphql-js` types so that users could create types with resolvers. However, `graphql-js` is somewhat verbose and it can be hard to refer to types that don't yet exist or don't exist in a current scope. Therefore, we decided to add another programmatic API that combines brevity of SDL with flexibility of `graphql-js`.
+While `createTypes` accepts GraphQL types as a [Schema Definition Language (SDL)](https://graphql.org/learn/schema) string, we've also added an option to use `graphql-js` types so that users could create types with resolvers. However, `graphql-js` is somewhat verbose and it can be hard to refer to types that don't yet exist or don't exist in a current scope. Therefore, we decided to add another programmatic API that combines brevity of SDL with flexibility of `graphql-js`.
 
-We refer to this API as the _Type Builder API_. It is available in the `schema` field of the arguments object passed to [Gatsby Node APIs](/docs/node-apis/).
+We refer to this API as the _Type Builder API_. It is available in the `schema` field of the arguments object passed to [Gatsby Node APIs](/docs/node-apis).
 
 ```js:title=gatsby-node.js
 exports.sourceNodes = ({ actions, schema }) => {
@@ -119,7 +119,7 @@ Another change relates to inference. Previously, ordering of the Nodes in your d
 
 As next steps, we will work on adding more convenient tooling to "freeze" your schema type definitions, so that you can quickly start using this feature. We will also be working on improving API docs for this.
 
-We strongly believe that these new APIs are the foundation of an evolutionary leap of the Gatsby GraphQL API. These changes make the GraphQL API more stable, more robust, and more easily customizable. They will enable further customization and use cases, like [theming](/blog/2018-11-11-introducing-gatsby-themes/) and more still that we haven't even envisioned yet. We truly can't wait to see the great things you build and how you use these new APIs and improvements powered by Gatsby and its improved GraphQL layer. We got some very enthusiastic feedback about this feature and we are happy to have it released.
+We strongly believe that these new APIs are the foundation of an evolutionary leap of the Gatsby GraphQL API. These changes make the GraphQL API more stable, more robust, and more easily customizable. They will enable further customization and use cases, like [theming](/blog/2018-11-11-introducing-gatsby-themes) and more still that we haven't even envisioned yet. We truly can't wait to see the great things you build and how you use these new APIs and improvements powered by Gatsby and its improved GraphQL layer. We got some very enthusiastic feedback about this feature and we are happy to have it released.
 
 <blockquote class="twitter-tweet" data-lang="en">
   <p lang="en" dir="ltr">

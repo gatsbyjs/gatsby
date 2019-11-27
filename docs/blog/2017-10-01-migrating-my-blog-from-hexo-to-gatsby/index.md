@@ -8,7 +8,7 @@ tags: ["getting-started", "markdown"]
 ---
 
 _This article was originally posted on
-[my blog (original link)](https://blog.iansinnott.com/migrating-a-blog-to-gatsby-part-2-of-gatsby-migration/).
+[my blog (original link)](https://blog.iansinnott.com/migrating-a-blog-to-gatsby-part-2-of-gatsby-migration).
 I'm reposting here in the hopes that it helps more people get started with
 Gatsby!_
 
@@ -37,7 +37,7 @@ Let's jump in.
 
 **NOTE:** If you _don't_ already have a blog or want to create one from scratch
 there's a
-[tutorial for exactly that right here](/blog/2017-07-19-creating-a-blog-with-gatsby/).
+[tutorial for exactly that right here](/blog/2017-07-19-creating-a-blog-with-gatsby).
 
 Let's move some files around. Gatsby gives you a good amount of flexibility when
 it comes to file structure, but for consistency with the docs I'm going to use
