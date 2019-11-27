@@ -1,22 +1,43 @@
-import { dd } from "dumper.js"
+import { dd, dump } from "dumper.js"
 
-const filterField = field => {
+const filterField = ({ field, parentField, nodeListTypeNames }) => {
   const fieldType = field.type || {}
   const ofType = fieldType.ofType || {}
 
-  if (fieldType.kind === `LIST` && ofType.kind !== `SCALAR`) {
-    // for now remove relational lists
+  const gatsbyNodeExists = nodeListTypeNames.find(type => type === ofType.name)
+
+  if (
+    fieldType.kind === `LIST` &&
+    ofType.kind !== `SCALAR` &&
+    !gatsbyNodeExists
+  ) {
+    // for now remove relational lists unless we've already created Gatsby nodes from this type
+    // @todo possibly make nodes out of these fields by fetching the node from the connection field. Not sure if this will work yet or not
     return false
   }
 
   if (fieldType.kind === `UNION`) {
+    // @todo our query builder wont allow us to use fragments. Need to do something custom instead of using graphql-query-builder, or fork it and add support
     return false
   }
 
+  // if this is a connection field
   if (fieldType.name && fieldType.name.includes(`Connection`)) {
-    // dd(field)
-    // and connections
-    return false
+    // get the list of nodes on this field
+    const nodesSubField = fieldType.fields.find(field => field.name === `nodes`)
+
+    // remove this field if there are no nodes to get
+    if (!nodesSubField) {
+      return false
+    }
+
+    // check if we will have Gatsby nodes of this type
+    const connectionIsAGatsbyNode =
+      nodesSubField &&
+      nodeListTypeNames.find(type => type === nodesSubField.type.ofType.name)
+
+    // remove connections that aren't to Gatsby nodes
+    return !connectionIsAGatsbyNode
   }
 
   return true
@@ -50,7 +71,13 @@ const transformField = ({ field, nodeListTypeNames }) => {
   // }
   else if (fieldType.fields) {
     fieldType.fields = fieldType.fields
-      .filter(filterField)
+      .filter(innerField =>
+        filterField({
+          field: innerField,
+          parentField: field,
+          nodeListTypeNames,
+        })
+      )
       .filter(f => !!f)
       .map(field => transformField({ field, nodeListTypeNames }))
   }
@@ -108,12 +135,20 @@ const transformField = ({ field, nodeListTypeNames }) => {
   return field
 }
 
-const recursivelyTransformFields = ({ fields, nodeListTypeNames }) =>
+const recursivelyTransformFields = ({ field, fields, nodeListTypeNames }) =>
   fields
     ? fields
-        .filter(filterField)
+        .filter(innerField =>
+          filterField({
+            field: innerField,
+            parentField: field,
+            nodeListTypeNames,
+          })
+        )
         .filter(f => !!f)
-        .map(field => transformField({ field, nodeListTypeNames }))
+        .map(innerField =>
+          transformField({ field: innerField, nodeListTypeNames })
+        )
     : null
 
 export default recursivelyTransformFields

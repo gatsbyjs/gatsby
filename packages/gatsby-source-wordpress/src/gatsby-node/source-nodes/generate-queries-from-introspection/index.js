@@ -140,6 +140,7 @@ export const buildNodeQueriesFromIntrospection = async (
       const typeInfo = rootFields.find(field => field.type.name === name)
 
       typeInfo.type.fields = recursivelyTransformFields({
+        field: typeInfo,
         fields: typeInfo.type.fields,
         nodeListTypeNames,
       })
