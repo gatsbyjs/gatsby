@@ -7,6 +7,7 @@
     "develop": "gatsby develop",
     "develop-clean": "gatsby clean && gatsby develop",
     "build": "gatsby build",
+    "clean-build": "gatsby clean && gatsby build",
     "start": "npm run develop",
     "serve": "gatsby serve"
   },
