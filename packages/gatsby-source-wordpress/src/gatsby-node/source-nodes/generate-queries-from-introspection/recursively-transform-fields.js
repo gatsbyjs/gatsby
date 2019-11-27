@@ -1,8 +1,14 @@
 import { dd, dump } from "dumper.js"
 
+const fieldBlacklist = [`postTypeInfo`]
+
 const filterField = ({ field, parentField, nodeListTypeNames }) => {
   const fieldType = field.type || {}
   const ofType = fieldType.ofType || {}
+
+  if (fieldBlacklist.includes(field.name)) {
+    return false
+  }
 
   const gatsbyNodeExists = nodeListTypeNames.find(type => type === ofType.name)
 
