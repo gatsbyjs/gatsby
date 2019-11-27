@@ -7640,6 +7640,22 @@
   built_by: Peter Hironaka
   built_by_url: "https://peterhironaka.com"
   featured: false
+- title: Up Your A11y
+  url: https://www.upyoura11y.com/
+  main_url: https://www.upyoura11y.com/
+  source_url: https://www.upyoura11y.com/
+  description: >
+    A web accessibility toolkit with a React focus, Up Your A11y is a resource for front-end developers to find useful information on how to make your sites more accessible. The topics covered have a React bias, but the principles in each apply to all web development, so please don't be put off if you don't work with React specifically!
+  categories:
+    - Accessibility
+    - Blog
+    - Programming
+    - JavaScript
+    - User Experience
+    - Web Development
+  built_by: Suzanne Aitchison
+  built_by_url: https://twitter.com/s_aitchison
+  featured: false
 - title: Roman Kravets
   description: >
     Portfolio of Roman Kravets. Web Developer, HTML & CSS Coder.
@@ -8645,6 +8661,21 @@
   built_by: Tekhaus
   built_by_url: https://www.tekha.us
   featured: false
+- title: Lesley Lai
+  main_url: https://lesleylai.info
+  url: https://lesleylai.info
+  source_url: https://github.com/LesleyLai/blog
+  description: >
+    lesleylai.info is the personal website of Lesley Lai, where he talks mainly about C++ and Computer Graphics.
+  categories:
+    - Blog
+    - Open Source
+    - Portfolio
+    - Programming
+    - Technology
+  built_by: Lesley Lai
+  built_by_url: https://github.com/LesleyLai
+  featured: false
 - title: Whipstitch Webwork
   url: https://www.whipstitchwebwork.com
   main_url: https://www.whipstitchwebwork.com
@@ -8667,3 +8698,56 @@
   built_by: Vandré Leal
   built_by_url: https://vandreleal.github.io
   featured: false
+- title: Tarokenlog
+  url: https://taroken.dev/
+  main_url: https://taroken.dev/
+  description: >
+    Blog and Gallery
+  categories:
+    - Blog
+    - Portfolio
+    - Web Development
+    - Photography
+  built_by: Kentaro Koga
+  built_by_url: https://twitter.com/kentaro_koga
+  featured: false
+- title: OwlyPixel Blog
+  main_url: https://owlypixel.com
+  url: https://owlypixel.com
+  description: >
+    Notes and tutorials on coding, web development, design and other stuff.
+  categories:
+    - Web Development
+    - Blog
+    - Education
+  built_by: Owlypixel
+  built_by_url: https://twitter.com/owlypixel
+  featured: false
+- title: talkoverflow
+  main_url: https://talkoverflow.com
+  url: https://talkoverflow.com
+  description: Blog on software engineering built with Gatsby themes and theme-ui
+  categories:
+    - Blog
+    - Web Development
+    - Technology
+  built_by: Patryk Jeziorowski
+  built_by_url: https://twitter.com/pjeziorowski
+- title: HISTORYTalks
+  main_url: https://www.history-talks.com/
+  url: https://www.history-talks.com/
+  description: Built using Gatsby, JSS and Contentful
+  categories:
+    - Conference
+    - Media
+  built_by: A+E Networks
+  built_by_url: https://www.aenetworks.com/
+- title: HISTORYCon
+  main_url: https://www.historycon.com/
+  url: https://www.historycon.com/
+  description: Built using Gatsby, JSS and Contentful
+  categories:
+    - Conference
+    - Media
+  built_by: A+E Networks
+  built_by_url: https://www.aenetworks.com/

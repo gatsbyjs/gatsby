@@ -28,7 +28,7 @@ date: 2019-01-29
 # Hello, world!
 ```
 
-Which can then be [queried with GraphQL](/docs/querying-with-graphql/):
+Which can then be [queried with GraphQL](/docs/graphql-concepts/):
 
 ```graphql
 query {
