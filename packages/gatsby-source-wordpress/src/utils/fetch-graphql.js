@@ -29,9 +29,15 @@ const fetchGraphql = async ({ url, query, errorMap, variables = {} }) => {
   if (json.errors) {
     json.errors.forEach(error => {
       if (error.debugMessage) {
-        console.error(`[gatsby-source-wordpress] Error category: ${error.category}
+        console.error(`[gatsby-source-wordpress] Error category: ${
+          error.category
+        }
 ${error.message}
-${error.debugMessage}`)
+${
+  error.debugMessage
+    ? error.debugMessage
+    : `If you haven't already, try enabling GRAPHQL_DEBUG in wp-config.php for more detailed error messages`
+}`)
       }
 
       if (
@@ -50,10 +56,18 @@ ${error.debugMessage}`)
       }
     })
 
-    console.error(`[gatsby-source-wordpress] GraphQL vars:`, variables)
+    if (Object.keys(variables).length) {
+      console.error(`[gatsby-source-wordpress] GraphQL vars:`, variables)
+    }
+
     console.error(`[gatsby-source-wordpress] GraphQL query: ${query}`)
 
-    if (!json) {
+    if (json.data) {
+      console.error(`[gatsby-source-wordpress] GraphQL data:`)
+      console.log(json.data)
+    }
+
+    if (!json.data) {
       process.exit()
     }
   }
