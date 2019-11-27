@@ -31,7 +31,7 @@ Note that if no `index.js` file exists in a particular directory that root page 
 
 ### Pages created with `createPage` action
 
-Another way to create pages is in your `gatsby-node.js` file using the `createPages` hook. When pages are defined this way the path is explicitly set. For example:
+Another way to create pages is in your `gatsby-node.js` file using the `createPage` action, a JavaScript function. When pages are defined this way, the path is explicitly set. For example:
 
 ```js:title=gatsby-node.js
 createPage({
