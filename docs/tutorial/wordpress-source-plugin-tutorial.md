@@ -294,7 +294,7 @@ exports.createPages = ({ graphql, actions }) => {
 }
 ```
 
-You will need to stop and start your environment again using `gatsby develop`. When you do, you will not see a change on the index page of the site, but if you navigate to a 404 page, like [http://localhost:8000/asdf](http://localhost:8001/asdf), you should see the two sample posts created and be able to click on them to go to the sample posts:
+You will need to stop and start your environment again using `gatsby develop`. When you do, you will not see a change on the index page of the site, but if you navigate to a 404 page, like [http://localhost:8000/asdf](http://localhost:8000/asdf), you should see the two sample posts created and be able to click on them to go to the sample posts:
 
 ![Sample post links](/images/wordpress-source-plugin-sample-post-links.gif)
 
