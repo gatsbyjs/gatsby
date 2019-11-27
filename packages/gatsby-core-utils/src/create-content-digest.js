@@ -10,6 +10,7 @@ const createContentDigest = input => {
     .createHash(`md5`)
     .update(content)
     .digest(`hex`)
+    .toString()
 }
 
 module.exports = createContentDigest
