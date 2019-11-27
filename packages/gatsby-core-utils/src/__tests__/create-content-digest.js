@@ -64,27 +64,4 @@ describe(`Create content digest`, () => {
 
     expect(createContentDigest(input)).not.toEqual(createContentDigest(input2))
   })
-
-  it(`should threat arrays as deterministic when set`, () => {
-    const input = {
-      id: `12345`,
-      args: {
-        arg1: `test`,
-        arg2: `test2`,
-        arg3: [2, 1],
-      },
-    }
-    const input2 = {
-      args: {
-        arg3: [1, 2],
-        arg2: `test2`,
-        arg1: `test`,
-      },
-      id: `12345`,
-    }
-
-    expect(createContentDigest(input, { sortArrays: true })).toEqual(
-      createContentDigest(input2, { sortArrays: true })
-    )
-  })
 })

@@ -1,6 +1,6 @@
 const objectHash = require(`node-object-hash`)
 
-const objectHasher = objectHash({
+const hasher = objectHash({
   coerce: false,
   alg: `md5`,
   enc: `hex`,
@@ -11,22 +11,10 @@ const objectHasher = objectHash({
     set: false,
   },
 })
-const ObjectHasherWithArraySorting = objectHash({
-  coerce: false,
-  alg: `md5`,
-  enc: `hex`,
-  sort: true,
-})
 
 /**
  * @type {import('../index').createContentDigest}
  */
-const createContentDigest = (input, options = {}) => {
-  const hasher = options.sortArrays
-    ? ObjectHasherWithArraySorting
-    : objectHasher
-
-  return hasher.hash(input)
-}
+const createContentDigest = input => hasher.hash(input)
 
 module.exports = createContentDigest

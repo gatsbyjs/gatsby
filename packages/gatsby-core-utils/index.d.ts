@@ -2,13 +2,9 @@
  * Encrypts an input using md5 hash of hexadecimal digest.
  *
  * @param {*} input The input to encrypt
- * @param {{ sortArrays: boolean }} options Options for contentDigest generation
  * @return {string} The content digest
  */
-export declare function createContentDigest(
-  input: any,
-  options?: { sortArrays?: boolean }
-): string
+export declare function createContentDigest(input: any): string
 
 /**
  * Joins all given path segments and converts
