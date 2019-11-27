@@ -50,7 +50,7 @@ Since there are multiple ways to create a page, different plugins, themes, or se
 
 If your goal is to define paths that are multiple levels deep, such as `/portfolio/art/item1`, that can be done directly when creating pages as mentioned in [Creating routes](#creating-routes).
 
-Alternatively, if you want to create pages that will display different subcomponents depending on the URL path, Gatsby handles that at the page level using [layouts](/docs/layout-components/).
+Alternatively, if you want to create pages that will display different subcomponents depending on the URL path (such as a specific sidebar widget), Gatsby can handle that at the page level using [layouts](/docs/layout-components/).
 
 ## Linking between routes
 
