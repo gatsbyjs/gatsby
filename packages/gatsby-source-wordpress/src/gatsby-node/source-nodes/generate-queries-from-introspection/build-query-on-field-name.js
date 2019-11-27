@@ -1,5 +1,5 @@
 import Query from "graphql-query-builder"
-import { dd } from "dumper.js"
+
 const transformField = field => {
   if (!field) {
     return null
@@ -74,8 +74,6 @@ export const buildNodesQueryOnFieldName = ({ fields, fieldName }) => {
 export const buildNodeQueryOnFieldName = ({ fields, fieldName }) => {
   // this builds the gql query
   let queryField = new Query(fieldName)
-  console.log(fieldName)
-  console.log(fields)
 
   const queryFields = fields.map(transformField).filter(field => !!field)
 
