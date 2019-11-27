@@ -8,7 +8,7 @@ describe(`Create content digest`, () => {
 
     expect(typeof contentDigest).toEqual(`string`)
     expect(contentDigest).toMatchInlineSnapshot(
-      `"b37e16c620c055cf8207b999e3270e9b"`
+      `"41e0e061ebde15ed7474b047b2a962c5"`
     )
   })
 
@@ -19,7 +19,72 @@ describe(`Create content digest`, () => {
 
     expect(typeof contentDigest).toEqual(`string`)
     expect(contentDigest).toMatchInlineSnapshot(
-      `"d2ce28b9a7fd7e4407e2b0fd499b7fe4"`
+      `"db1aa405ee004296a31f04620bbb8e28"`
+    )
+  })
+
+  it(`returns a deterministic hash from an object`, () => {
+    const input = {
+      id: `12345`,
+      args: {
+        arg1: `test`,
+        arg2: `test2`,
+        arg3: [1, 2],
+      },
+    }
+    const input2 = {
+      args: {
+        arg2: `test2`,
+        arg1: `test`,
+        arg3: [1, 2],
+      },
+      id: `12345`,
+    }
+
+    expect(createContentDigest(input)).toEqual(createContentDigest(input2))
+  })
+
+  it(`shouldn't threat arrays as deterministic by default`, () => {
+    const input = {
+      id: `12345`,
+      args: {
+        arg1: `test`,
+        arg2: `test2`,
+        arg3: [2, 1],
+      },
+    }
+    const input2 = {
+      args: {
+        arg2: `test2`,
+        arg1: `test`,
+        arg3: [1, 2],
+      },
+      id: `12345`,
+    }
+
+    expect(createContentDigest(input)).not.toEqual(createContentDigest(input2))
+  })
+
+  it(`should threat arrays as deterministic when set`, () => {
+    const input = {
+      id: `12345`,
+      args: {
+        arg1: `test`,
+        arg2: `test2`,
+        arg3: [2, 1],
+      },
+    }
+    const input2 = {
+      args: {
+        arg3: [1, 2],
+        arg2: `test2`,
+        arg1: `test`,
+      },
+      id: `12345`,
+    }
+
+    expect(createContentDigest(input, { sortArrays: true })).toEqual(
+      createContentDigest(input2, { sortArrays: true })
     )
   })
 })

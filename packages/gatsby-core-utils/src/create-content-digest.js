@@ -1,16 +1,32 @@
-const crypto = require(`crypto`)
+const objectHash = require(`node-object-hash`)
+
+const objectHasher = objectHash({
+  coerce: false,
+  alg: `md5`,
+  enc: `hex`,
+  sort: {
+    map: true,
+    object: true,
+    array: false,
+    set: false,
+  },
+})
+const ObjectHasherWithArraySorting = objectHash({
+  coerce: false,
+  alg: `md5`,
+  enc: `hex`,
+  sort: true,
+})
 
 /**
  * @type {import('../index').createContentDigest}
  */
-const createContentDigest = input => {
-  const content = typeof input !== `string` ? JSON.stringify(input) : input
+const createContentDigest = (input, options = {}) => {
+  const hasher = options.sortArrays
+    ? ObjectHasherWithArraySorting
+    : objectHasher
 
-  return crypto
-    .createHash(`md5`)
-    .update(content)
-    .digest(`hex`)
-    .toString()
+  return hasher.hash(input)
 }
 
 module.exports = createContentDigest
