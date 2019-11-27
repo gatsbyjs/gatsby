@@ -64,6 +64,6 @@ For pages dealing with sensitive information, or other dynamic behavior, you may
 
 ## Performance and Prefetching
 
-In order to improve performance, Gatsby looks for links that appear on the current page to perform prefetching. Before a user has even clicked on a link, Gatsby has started to fetch the page it points to. [More on prefetching](/docs/how-code-splitting-works/#prefetching-chunks)
+In order to improve performance, Gatsby looks for links that appear on the current page to perform prefetching. Before a user has even clicked on a link, Gatsby has started to fetch the page it points to. [Learn more about prefetching](/docs/how-code-splitting-works/#prefetching-chunks).
 
 <GuideList slug={props.slug} />
