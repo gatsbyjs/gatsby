@@ -1,12 +1,11 @@
 import { dd, dump } from "dumper.js"
-
-const fieldBlacklist = [`postTypeInfo`]
+import { FIELD_BLACKLIST } from "../../constants"
 
 const filterField = ({ field, parentField, nodeListTypeNames }) => {
   const fieldType = field.type || {}
   const ofType = fieldType.ofType || {}
 
-  if (fieldBlacklist.includes(field.name)) {
+  if (FIELD_BLACKLIST.includes(field.name)) {
     return false
   }
 

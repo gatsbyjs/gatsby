@@ -5,6 +5,7 @@ import { dd } from "dumper.js"
 import { getAvailablePostTypesQuery } from "../graphql-queries"
 import fetchGraphql from "../../../utils/fetch-graphql"
 import gql from "../../../utils/gql"
+import { FIELD_BLACKLIST } from "../../constants"
 
 export const getAvailableContentTypes = async ({ url }) => {
   const query = getAvailablePostTypesQuery()
@@ -99,14 +100,6 @@ export const buildNodeQueriesFromIntrospection = async (
     `,
   })
 
-  // we don't need or can't access these
-  const rootQueryFieldNameBlacklist = [
-    `revisions`,
-    `themes`,
-    `userRoles`,
-    `actionMonitorActions`,
-  ]
-
   const rootFields = introspection.data.__schema.queryType.fields
 
   // first we want to find root query fields that will return lists of nodes
@@ -115,7 +108,7 @@ export const buildNodeQueriesFromIntrospection = async (
       field =>
         field.type.kind === `OBJECT` &&
         field.type.name.includes(`RootQueryTo`) &&
-        !rootQueryFieldNameBlacklist.includes(field.name)
+        !FIELD_BLACKLIST.includes(field.name)
     )
     .map(field => {
       return {
