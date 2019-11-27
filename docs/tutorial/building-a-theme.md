@@ -1551,7 +1551,7 @@ Congratulations! You've set up, built, and customized your first Gatsby theme!
 
 ### Livestreams
 
-- [Jason Lengstorf and Brent Jackson livestream building a theme](https://youtube.com/watch?v=6Z4p-qjnKCQ)
-- [Jason Lengstorf and Emma Wedekind livestream building a theme](https://youtube.com/watch?v=W2uTfay3doo)
-- [Jason Lengstorf and Henry Zhu livestream building a theme](https://youtube.com/watch?v=z4ETLpujcqo)
-- [Jason Lengstorf and John Otander livestream building a theme](https://youtube.com/watch?v=PS2784YfPpw)
+- [Jason Lengstorf and Brent Jackson livestream building a theme](https://youtu.be/6Z4p-qjnKCQ)
+- [Jason Lengstorf and Emma Wedekind livestream building a theme](https://youtu.be/W2uTfay3doo)
+- [Jason Lengstorf and Henry Zhu livestream building a theme](https://youtu.be/z4ETLpujcqo)
+- [Jason Lengstorf and John Otander livestream building a theme](https://youtu.be/PS2784YfPpw)

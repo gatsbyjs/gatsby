@@ -93,4 +93,4 @@ npm install --save gatsby-theme-NAME
 
 ## Walkthrough
 
-- [Jason Lengstorf converts an existing Gatsby site to a theme](https://youtube.com/watch?v=NkW06HK9-aY)
+- [Jason Lengstorf converts an existing Gatsby site to a theme](https://youtu.be/NkW06HK9-aY)

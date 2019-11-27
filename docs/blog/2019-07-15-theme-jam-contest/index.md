@@ -25,7 +25,7 @@ Here are some resources with detailed instructions on how to build a Gatsby them
 
 - [“Building Themes” - Gatsby Documentation](/docs/themes/building-themes)
 - [“Gatsby Theme Authoring” - free course on Egghead.io](https://egghead.io/courses/gatsby-theme-authoring)
-- [“Building your first Gatsby theme (with Emma Wedekind)” - Learn with Jason](https://youtube.com/watch?v=W2uTfay3doo)
+- [“Building your first Gatsby theme (with Emma Wedekind)” - Learn with Jason](https://youtu.be/W2uTfay3doo)
 
 ## How to enter the Theme Jam Contest
 

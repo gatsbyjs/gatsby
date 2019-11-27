@@ -41,7 +41,7 @@ In this build, Netlify deploys Gatsby. It functions to expose an API and rebuild
 
 ## Trends in Modern Web Development
 
-In this [video presentation](https://youtube.com/watch?time_continue=3&v=QiocnDGnKfs) from Gatsby Days Bay Area, Mediacurrent developer Ben Robertson explains the advantages Sandy Springs has realized by leveraging Gatsby:
+In this [video presentation](https://youtu.be/QiocnDGnKfs?time_continue=3) from Gatsby Days Bay Area, Mediacurrent developer Ben Robertson explains the advantages Sandy Springs has realized by leveraging Gatsby:
 
 - **Stable**: With full control over the markup, the site build is fast.
 - **Scalable**: Gatsby makes it easier for the client to add additional sites in the future.

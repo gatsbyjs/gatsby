@@ -76,7 +76,7 @@ Jason has basically been living his life on livestream since the past month. He'
 
 My favourite of the past few ones was [Advanced GraphQL techniques in Gatsby](https://www.twitch.tv/videos/462874512) with [Mikhail Novikov](https://twitter.com/freiksenet).
 
-In case that isn't your jam, there's also [Gatsby + WordPress](https://youtube.com/watch?v=DH7I1xRrbxs), [building an RSS feed-powered podcast site](https://youtube.com/watch?v=0hGlvyuQiKQ), [composing and styling Gatsby themes](https://youtube.com/watch?v=6Z4p-qjnKCQ), [Microfrontends](https://youtube.com/watch?v=0Ta-awtLZTs) and even a [livestream on livestreaming](https://youtube.com/watch?v=rgTugjTDYaE)! How _meta_!
+In case that isn't your jam, there's also [Gatsby + WordPress](https://youtu.be/DH7I1xRrbxs), [building an RSS feed-powered podcast site](https://youtu.be/0hGlvyuQiKQ), [composing and styling Gatsby themes](https://youtu.be/6Z4p-qjnKCQ), [Microfrontends](https://youtu.be/0Ta-awtLZTs) and even a [livestream on livestreaming](https://youtu.be/rgTugjTDYaE)! How _meta_!
 
 Here's a convenient [playlist](https://youtube.com/playlist?list=PLz8Iz-Fnk_eTpvd49Sa77NiF8Uqq5Iykx) if you want to binge watch these.
 

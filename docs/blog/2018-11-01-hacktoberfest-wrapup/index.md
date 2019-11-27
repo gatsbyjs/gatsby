@@ -9,7 +9,7 @@ Just like that, Gatsby Hacktoberfest is over! Or, "Hacktoverfest"? 😂 (Thanks 
 
 ## Planning for Hacktoberfest
 
-Honestly, it snuck up on us a bit. We realized October had arrived and immediately started planning. We kicked it off with a Hacktoberfest Issue Writing Party (which we actually [livestreamed](https://youtube.com/watch?v=CzQB2kRiHdg&t=2270s)).
+Honestly, it snuck up on us a bit. We realized October had arrived and immediately started planning. We kicked it off with a Hacktoberfest Issue Writing Party (which we actually [livestreamed](https://youtu.be/CzQB2kRiHdg?t=2270s)).
 
 We defined and started tackling our overall goals for Hacktoberfest:
 

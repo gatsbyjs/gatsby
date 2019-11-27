@@ -40,7 +40,7 @@ Skip over a number of results. In this query `skip` is used to omit the first 3 
 
 ## Filter
 
-In this query `filter` and the `ne` (not equals) operator is used to show only results that have a title. You can find a good video tutorial on this [here](https://youtube.com/watch?v=Lg1bom99uGM).
+In this query `filter` and the `ne` (not equals) operator is used to show only results that have a title. You can find a good video tutorial on this [here](https://youtu.be/Lg1bom99uGM).
 
 <iframe title="Using a filter" src="https://711808k40x.sse.codesandbox.io/___graphql?query=%7B%0A%20%20allMarkdownRemark(%0A%20%20%20%20filter%3A%20%7B%0A%20%20%20%20%20%20frontmatter%3A%20%7Btitle%3A%20%7Bne%3A%20%22%22%7D%7D%0A%20%20%20%20%7D%0A%20%20)%20%7B%0A%20%20%20%20totalCount%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20frontmatter%20%7B%0A%20%20%20%20%20%20%20%20%20%20title%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&explorerIsOpen=false" width="600" height="400"></iframe>
 

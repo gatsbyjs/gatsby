@@ -40,11 +40,11 @@ By the numbers we've seen:
   layer. [Check them out!](/tutorial)
 - Level Up Tutorials is working on a new Gatsby video tutorial series! It's
   fantastic!
-  [Check out the first 7 tutorials on YouTube!](https://youtube.com/watch?v=b2H7fWhQcdE&list=PLLnpHn493BHHfoINKLELxDch3uJlSapxg).
+  [Check out the first 7 tutorials on YouTube!](https://youtu.be/b2H7fWhQcdE?list=PLLnpHn493BHHfoINKLELxDch3uJlSapxg).
   Scott Tolinski also recorded two other videos on Gatsby, his
-  ["first look" at Gatsby](https://youtube.com/watch?v=CSemYFzHAtU) shortly
+  ["first look" at Gatsby](https://youtu.be/CSemYFzHAtU) shortly
   after its 1.0 release as well as a
-  [recording of him moving his personal site to Gatsby](https://youtube.com/watch?v=xqaThBnesfY).
+  [recording of him moving his personal site to Gatsby](https://youtu.be/xqaThBnesfY).
 - [Giraffe Academy launched a new Gatsby tutorial series](https://youtube.com/playlist?list=PLLAZ4kZ9dFpMXuwazIt4mWtTuqOHdjRlk)!
   13 tutorials so far covering everything from setting up Gatsby on your
   computer to building with React components to working with different types of

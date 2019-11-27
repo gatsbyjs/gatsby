@@ -155,7 +155,7 @@ We're working on fixing this soon.
 We hope you enjoy using `useStaticQuery` in your Gatsby apps. Happy building!
 
 [use-static-query]: /docs/use-static-query/
-[use-static-query-livestream]: https://youtube.com/watch?v=asrdFuAxPaU&list=PLz8Iz-Fnk_eTpvd49Sa77NiF8Uqq5Iykx
+[use-static-query-livestream]: https://youtu.be/asrdFuAxPaU?list=PLz8Iz-Fnk_eTpvd49Sa77NiF8Uqq5Iykx
 [sidhartha-twitter]: https://twitter.com/chatsidhartha
 [rules-of-hooks]: https://reactjs.org/docs/hooks-rules.html
 [hooks-intro]: https://reactjs.org/docs/hooks-intro.html

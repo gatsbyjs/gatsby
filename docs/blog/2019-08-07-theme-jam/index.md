@@ -89,4 +89,4 @@ If you’d like to start building themes, here are a few resources:
 
 - [Gatsby theme official docs](/docs/themes)
 - [Official egghead course on Gatsby themes](https://egghead.io/courses/gatsby-theme-authoring)
-- [Converting part of an existing website to Gatsby themes](https://youtube.com/watch?v=ciGFxNamooI&list=PLz8Iz-Fnk_eTpvd49Sa77NiF8Uqq5Iykx&index=4)
+- [Converting part of an existing website to Gatsby themes](https://youtu.be/ciGFxNamooI?list=PLz8Iz-Fnk_eTpvd49Sa77NiF8Uqq5Iykx&index=4)

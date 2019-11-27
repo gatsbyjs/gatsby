@@ -28,7 +28,7 @@ something new and get something up and running that was more than just my usual
 WordPress theme. I was on the verge of rebuilding my portfolio site until a
 certain [Scott Tolinski](https://youtube.com/user/LevelUpTuts) released a
 video on
-[GatsbyJS](https://youtube.com/watch?v=b2H7fWhQcdE&feature=youtu.be).
+[GatsbyJS](https://youtu.be/b2H7fWhQcdE).
 
 [GatsbyJS]() is a static site generator, similar to Jekyll, however it is
 written using [React](https://reactjs.org) and allows you to write your pages

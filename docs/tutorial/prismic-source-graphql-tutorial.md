@@ -345,7 +345,7 @@ After following this tutorial you have a minimalist blog that uses a Prismic rep
 
 If you want to go further, here are some more advanced things you can do using Prismic:
 
-- Rendering [slice components](https://youtube.com/watch?v=N85Tw06e29Q) for modular page building.
+- Rendering [slice components](https://youtu.be/N85Tw06e29Q) for modular page building.
 - Using [webhooks](https://user-guides.prismic.io/webhooks/webhooks) as a trigger to rebuild your site.
 - Using a [helper function](https://prismic.io/docs/reactjs/getting-started/prismic-gatsby#27_0-using-the-html-serializer) to change links inside rich text fields to Link components.
 

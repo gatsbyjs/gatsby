@@ -12,7 +12,7 @@ tags: ["themes", "content-mesh"]
 > Gatsby
 > Themes](/blog/2018-11-11-introducing-gatsby-themes)
 > for a written introduction and [my Gatsby Days
-> talk](https://youtube.com/watch?v=wX84vXBpMR8) for a more audio/visual
+> talk](https://youtu.be/wX84vXBpMR8) for a more audio/visual
 > approach.
 
 # Child Theming
