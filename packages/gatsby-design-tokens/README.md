@@ -33,7 +33,7 @@ yarn add gatsby-design-tokens
 
 ## Usage
 
-Find a work-in-progress list of design tokens in the design tokens documentation at [gatsbyjs.org/guidelines/design-tokens](https://www.gatsbyjs.org/guidelines/design-tokens).
+Find a work-in-progress list of design tokens in the design tokens documentation at [gatsbyjs.org/guidelines/design-tokens](https://gatsbyjs.org/guidelines/design-tokens).
 
 ```js
 import {

@@ -289,7 +289,7 @@ const GatsbyNodeHelpers = {
   /**
    * Set of utilities that allow adding more detailed tracing for plugins.
    * Check
-   * [Performance tracing](https://www.gatsbyjs.org/docs/performance-tracing)
+   * [Performance tracing](https://gatsbyjs.org/docs/performance-tracing)
    * page for more details.
    * @type {GatsbyTracing}
    */
@@ -298,7 +298,7 @@ const GatsbyNodeHelpers = {
   /**
    * Use to prefix resources URLs. `pathPrefix` will be either empty string or
    * path that starts with slash and doesn't end with slash. Check
-   * [Adding a Path Prefix](https://www.gatsbyjs.org/docs/path-prefix)
+   * [Adding a Path Prefix](https://gatsbyjs.org/docs/path-prefix)
    * page for details about path prefixing.
    * @type {string}
    */

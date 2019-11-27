@@ -100,14 +100,14 @@ You can validate the `_headers` config through the
 
 ### Redirects
 
-You can create redirects using the [`createRedirect`](https://www.gatsbyjs.org/docs/actions/#createRedirect) action.
+You can create redirects using the [`createRedirect`](https://gatsbyjs.org/docs/actions/#createRedirect) action.
 
 In addition to the options provided by the Gatsby API, you can pass these options specific to this plugin:
 
-| Attribute    | Description                                                                                                                                                                                                                                                                                                                                                                                                      |
-| ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `force`      | Overrides existing content in the path. This is particularly useful for domain alias redirects. See [the Netlify documentation for this option](https://www.netlify.com/docs/redirects/#structured-configuration).                                                                                                                                                                                               |
-| `statusCode` | Overrides the HTTP status code which is set to `302` by default or `301` when [`isPermanent`](https://www.gatsbyjs.org/docs/actions/#createRedirect) is `true`. Since Netlify supports custom status codes, you can set one here. For example, `200` for rewrites, or `404` for a custom error page. See [the Netlify documentation for this option](https://www.netlify.com/docs/redirects/#http-status-codes). |
+| Attribute    | Description                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `force`      | Overrides existing content in the path. This is particularly useful for domain alias redirects. See [the Netlify documentation for this option](https://www.netlify.com/docs/redirects/#structured-configuration).                                                                                                                                                                                           |
+| `statusCode` | Overrides the HTTP status code which is set to `302` by default or `301` when [`isPermanent`](https://gatsbyjs.org/docs/actions/#createRedirect) is `true`. Since Netlify supports custom status codes, you can set one here. For example, `200` for rewrites, or `404` for a custom error page. See [the Netlify documentation for this option](https://www.netlify.com/docs/redirects/#http-status-codes). |
 
 An example:
 
@@ -132,4 +132,4 @@ You can also create a `_redirects` file in the `static` folder for the same effe
 You can validate the `_redirects` config through the
 [Netlify playground app](https://play.netlify.com/redirects).
 
-Redirect rules are automatically added for [client only paths](https://www.gatsbyjs.org/docs/client-only-routes-and-user-authentication). If those rules are conflicting with custom rules or if you want to have more control over them you can disable them in [configuration](#configuration) by setting `generateMatchPathRewrites` to `false`.
+Redirect rules are automatically added for [client only paths](https://gatsbyjs.org/docs/client-only-routes-and-user-authentication). If those rules are conflicting with custom rules or if you want to have more control over them you can disable them in [configuration](#configuration) by setting `generateMatchPathRewrites` to `false`.

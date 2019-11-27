@@ -10,7 +10,7 @@ const { downloadContentfulAssets } = require(`./download-contentful-assets`)
 
 const conflictFieldPrefix = `contentful`
 
-// restrictedNodeFields from here https://www.gatsbyjs.org/docs/node-interface/
+// restrictedNodeFields from here https://gatsbyjs.org/docs/node-interface/
 const restrictedNodeFields = [
   `children`,
   `contentful_id`,

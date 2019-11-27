@@ -79,7 +79,7 @@ var proxy = require("http-proxy-middleware")
 
 module.exports = {
   // for avoiding CORS while developing Netlify Functions locally
-  // read more: https://www.gatsbyjs.org/docs/api-proxy/#advanced-proxying
+  // read more: https://gatsbyjs.org/docs/api-proxy/#advanced-proxying
   developMiddleware: app => {
     app.use(
       "/.netlify/functions/",
@@ -390,5 +390,5 @@ export function handler(event, context, callback) {
 It's 5 steps each to turn your static Gatsby sites into dynamic, authenticated, fully serverless apps with Netlify's free tools. This makes Gatsby a perfect tool for your next app. If you're at a hackathon, short on time, or just like to see a full working demo, check any of the following links.
 
 - **Code:** https://github.com/sw-yx/jamstack-hackathon-starter
-- **Starter:** https://www.gatsbyjs.org/starters/jamstack-hackathon-starter
-- **Live Demo:** https://jamstack-hackathon-starter.netlify.com/
+- **Starter:** https://gatsbyjs.org/starters/jamstack-hackathon-starter
+- **Live Demo:** https://jamstack-hackathon-starter.netlify.com

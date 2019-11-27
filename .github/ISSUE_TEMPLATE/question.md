@@ -7,8 +7,8 @@ about: Usage question or discussion about Gatsby.
   To make it easier for us to help you, please include as much useful information as possible.
 
   Useful Links:
-  - Documentation: https://www.gatsbyjs.org/docs/
-  - Contributing: https://www.gatsbyjs.org/contributing/
+  - Documentation: https://gatsbyjs.org/docs
+  - Contributing: https://gatsbyjs.org/contributing
 
   Gatsby has several community support channels, try asking your question on:
 

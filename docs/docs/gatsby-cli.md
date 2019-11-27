@@ -48,7 +48,7 @@ gatsby new [<site-name> [<starter-url>]]
 gatsby new my-awesome-site
 ```
 
-- Create a Gatsby site named `my-awesome-blog-site`, using [gatsby-starter-blog](https://www.gatsbyjs.org/starters/gatsbyjs/gatsby-starter-blog):
+- Create a Gatsby site named `my-awesome-blog-site`, using [gatsby-starter-blog](https://gatsbyjs.org/starters/gatsbyjs/gatsby-starter-blog):
 
 ```shell
 gatsby new my-awesome-blog-site https://github.com/gatsbyjs/gatsby-starter-blog
@@ -66,7 +66,7 @@ gatsby new
    (Use a different starter)
 ```
 
-See the [Gatsby starters docs](https://www.gatsbyjs.org/docs/gatsby-starters) for more details.
+See the [Gatsby starters docs](https://gatsbyjs.org/docs/gatsby-starters) for more details.
 
 ### `develop`
 

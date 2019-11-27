@@ -1,14 +1,14 @@
 /**
  * Configure your Gatsby site with this file.
  *
- * See: https://www.gatsbyjs.org/docs/gatsby-config/
+ * See: https://gatsbyjs.org/docs/gatsby-config/
  */
 
 module.exports = {
   siteMetadata: {
     title: `GatsbyJS`,
     details: {
-      url: `https://www.gatsbyjs.org`,
+      url: `https://gatsbyjs.org`,
       description: `Blazing fast modern site generator for React`,
     },
     social: {

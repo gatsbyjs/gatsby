@@ -11,15 +11,15 @@ We recently interviewed authors of popular Gatsby plugins; here's what we learne
 
 We interviewed 6 authors of and/or contributors to popular plugins:
 
-- [Espen Hovlandsdal](https://github.com/rexxars), who helps maintain and work on [`gatsby-source-sanity`](https://www.gatsbyjs.org/packages/gatsby-source-sanity)
-- [Orestis Ioannou](https://github.com/oorestisime), who created [`gatsby-source-instagram`](https://www.gatsbyjs.org/packages/gatsby-source-instagram/?=gatsby-source-instagram), [`gatsby-source-dropbox`](https://www.gatsbyjs.org/packages/gatsby-source-dropbox/?=gatsby-source-dropbox), [`gatsby-remark-rehype-images`](https://www.gatsbyjs.org/packages/gatsby-remark-rehype-images/?=gatsby-remark-reh), [`gatsby-source-marvel`](https://www.gatsbyjs.org/packages/gatsby-source-marvel/?=gatsby-source-marvel), and has worked on [`gatsby-source-pilon`](https://www.gatsbyjs.org/packages/gatsby-source-pilon/?=gatsby-source-pilo)
-- [Jacob Bolda](https://github.com/jbolda), who created [`gatsby-source-airtable`](https://www.gatsbyjs.org/packages/gatsby-source-airtable/?=airtable)
-- [Tyler Barnes](https://github.com/TylerBarnes), who created [`gatsby-plugin-transition-link`](https://www.gatsbyjs.org/packages/gatsby-plugin-transition-link/?=transition-link) and is working on an alternative WordPress source plugin
+- [Espen Hovlandsdal](https://github.com/rexxars), who helps maintain and work on [`gatsby-source-sanity`](https://gatsbyjs.org/packages/gatsby-source-sanity)
+- [Orestis Ioannou](https://github.com/oorestisime), who created [`gatsby-source-instagram`](https://gatsbyjs.org/packages/gatsby-source-instagram/?=gatsby-source-instagram), [`gatsby-source-dropbox`](https://gatsbyjs.org/packages/gatsby-source-dropbox/?=gatsby-source-dropbox), [`gatsby-remark-rehype-images`](https://gatsbyjs.org/packages/gatsby-remark-rehype-images/?=gatsby-remark-reh), [`gatsby-source-marvel`](https://gatsbyjs.org/packages/gatsby-source-marvel/?=gatsby-source-marvel), and has worked on [`gatsby-source-pilon`](https://gatsbyjs.org/packages/gatsby-source-pilon/?=gatsby-source-pilo)
+- [Jacob Bolda](https://github.com/jbolda), who created [`gatsby-source-airtable`](https://gatsbyjs.org/packages/gatsby-source-airtable/?=airtable)
+- [Tyler Barnes](https://github.com/TylerBarnes), who created [`gatsby-plugin-transition-link`](https://gatsbyjs.org/packages/gatsby-plugin-transition-link/?=transition-link) and is working on an alternative WordPress source plugin
 - [Christopher Biscardi](https://github.com/ChristopherBiscardi), who created [`gatsby-mdx`](https://github.com/ChristopherBiscardi/gatsby-mdx)
 - [Mike Allanson](https://github.com/m-allanson), who built proprietary plugins to pull data from a custom CMS for the [The State of European Tech 2018](http://2018.stateofeuropeantech.com) and
   [The State of European Tech 2017](http://2017.stateofeuropeantech.com) sites
-- [Michal Piechowiak](https://github.com/pieh), who contributed to the [`gatsby-source-wordpress`](https://www.gatsbyjs.org/packages/gatsby-source-wordpress/?=gatsby-source-wordpress) plugin
-- [Ali Mahmoud](https://github.com/babbins) who is well-acquainted with the challenges and joys of maintaining the [`gatsby-plugin-pointer-events`](https://www.gatsbyjs.org/packages/gatsby-plugin-pointer-events/?=gatsby-plugin-pointer) plugin, which was created by [Tim Brown](https://github.com/brimtown)
+- [Michal Piechowiak](https://github.com/pieh), who contributed to the [`gatsby-source-wordpress`](https://gatsbyjs.org/packages/gatsby-source-wordpress/?=gatsby-source-wordpress) plugin
+- [Ali Mahmoud](https://github.com/babbins) who is well-acquainted with the challenges and joys of maintaining the [`gatsby-plugin-pointer-events`](https://gatsbyjs.org/packages/gatsby-plugin-pointer-events/?=gatsby-plugin-pointer) plugin, which was created by [Tim Brown](https://github.com/brimtown)
 
 Thanks to all for taking the time to give thoughtful interviews!
 
@@ -74,8 +74,8 @@ Examples of things that are confusing:
 
 It'd be great to get help with any of the following:
 
-- Use [schema customization](https://www.gatsbyjs.org/blog/2019-03-04-new-schema-customization) since this solves one of the biggest complaints of plugin authors!
-- Add your tips and tricks to the [maintaining a plugin docs page](https://www.gatsbyjs.org/docs/maintaining-a-plugin)
+- Use [schema customization](https://gatsbyjs.org/blog/2019-03-04-new-schema-customization) since this solves one of the biggest complaints of plugin authors!
+- Add your tips and tricks to the [maintaining a plugin docs page](https://gatsbyjs.org/docs/maintaining-a-plugin)
 
 * Comment on this issue: [Gatsby CLI to add scaffolding for source plugin creation #13376](https://github.com/gatsbyjs/gatsby/issues/13376)
 * Comment on this issue: [Invite new Gatsby users to learn more about plugin authoring via CLI #13377](https://github.com/gatsbyjs/gatsby/issues/13377)

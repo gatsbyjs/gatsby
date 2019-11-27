@@ -459,7 +459,7 @@ please open an issue. Until then, the nodes will not be implemented to lessen
 the chances of someone accidentally making private information publicly
 available.
 
-[gatsby]: https://www.gatsbyjs.org/
+[gatsby]: https://gatsbyjs.org/
 [shopify]: https://www.shopify.com/
 [shopify-storefront-api]: https://help.shopify.com/api/custom-storefronts/storefront-api
 [graphql-inline-fragments]: http://graphql.org/learn/queries/#inline-fragments

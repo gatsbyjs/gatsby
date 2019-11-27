@@ -1,19 +1,19 @@
 import { Node, Store, Cache } from "gatsby"
 
 /**
- * @see https://www.gatsbyjs.org/packages/gatsby-source-filesystem/?=files#createfilepath
+ * @see https://gatsbyjs.org/packages/gatsby-source-filesystem/?=files#createfilepath
  */
 export function createFilePath(args: CreateFilePathArgs): string
 
 /**
- * @see https://www.gatsbyjs.org/packages/gatsby-source-filesystem/?=files#createremotefilenode
+ * @see https://gatsbyjs.org/packages/gatsby-source-filesystem/?=files#createremotefilenode
  */
 export function createRemoteFileNode(
   args: CreateRemoteFileNodeArgs
 ): Promise<FileSystemNode>
 
 /**
- * @see https://www.gatsbyjs.org/packages/gatsby-source-filesystem/?=files#createfilenodefrombuffer
+ * @see https://gatsbyjs.org/packages/gatsby-source-filesystem/?=files#createfilenodefrombuffer
  */
 export function createFileNodeFromBuffer(
   args: CreateFileNodeFromBufferArgs
@@ -101,7 +101,7 @@ export interface FileSystemConfig {
 }
 
 /**
- * @see https://www.gatsbyjs.org/packages/gatsby-source-filesystem/?=filesy#options
+ * @see https://gatsbyjs.org/packages/gatsby-source-filesystem/?=filesy#options
  */
 interface FileSystemOptions {
   name: string

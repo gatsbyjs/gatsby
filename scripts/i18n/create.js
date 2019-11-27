@@ -111,7 +111,7 @@ Please refer to the [Translation Progress Issue](${transRepo.url}/issues/1) to s
 Useful Links:
 
 * [Style Guide](/style-guide.md)
-* [Gatsby Translation Guide](https://www.gatsbyjs.org/contributing/gatsby-docs-translation-guide)
+* [Gatsby Translation Guide](https://gatsbyjs.org/contributing/gatsby-docs-translation-guide)
 * [Gatsby Discord](https://gatsby.dev/discord)
 
 (Feel free to translate this document and add any content you feel would be useful to contributors).
@@ -277,7 +277,7 @@ If you are not already a member of the [gatsbyjs GitHub organization](https://gi
 
 You're free to use the [Gatsby Discord](https://gatsby.dev/discord) to discuss translations. Ask a moderator to create a channel for you in the \`#translations\` channel.
 
-Finally, make sure to check out the [maintainer responsibilities](https://www.gatsbyjs.org/contributing/gatsby-docs-translation-guide/#maintainer-responsibilities) and review your duties as a maintainer.
+Finally, make sure to check out the [maintainer responsibilities](https://gatsbyjs.org/contributing/gatsby-docs-translation-guide/#maintainer-responsibilities) and review your duties as a maintainer.
 
 Feel free to reach out to the Gatsby team if you need any help!
 

@@ -42,7 +42,7 @@ module.exports = {
 }
 ```
 
-If you're using this plugin together with [`gatsby-plugin-offline`](https://www.gatsbyjs.org/packages/gatsby-plugin-offline) (recommended),
+If you're using this plugin together with [`gatsby-plugin-offline`](https://gatsbyjs.org/packages/gatsby-plugin-offline) (recommended),
 this plugin should be listed _before_ the offline plugin so that it can cache
 the created `manifest.webmanifest`.
 
@@ -132,7 +132,7 @@ icons: [
 ], // Add or remove icon sizes as desired
 ```
 
-In the manual mode, you are responsible for defining the entire web app manifest and providing the defined icons in the [static](https://www.gatsbyjs.org/docs/static-folder) folder. Only icons you provide will be available. There is no automatic resizing done for you.
+In the manual mode, you are responsible for defining the entire web app manifest and providing the defined icons in the [static](https://gatsbyjs.org/docs/static-folder) folder. Only icons you provide will be available. There is no automatic resizing done for you.
 
 ### Feature configuration - **Optional**
 

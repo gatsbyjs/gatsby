@@ -55,7 +55,7 @@ if (process.env.AIRTABLE_API_KEY) {
 module.exports = {
   siteMetadata: {
     title: `GatsbyJS`,
-    siteUrl: `https://www.gatsbyjs.org`,
+    siteUrl: `https://gatsbyjs.org`,
     description: `Blazing fast modern site generator for React`,
     twitter: `@gatsbyjs`,
   },

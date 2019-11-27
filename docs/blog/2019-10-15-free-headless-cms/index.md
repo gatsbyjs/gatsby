@@ -44,7 +44,7 @@ Cheap hosting is easy to find - providers like Bluehost and Amazon Lightsail off
 
 If your website needed all-in-one WordPress, then these cheap, shared hosting packages wouldn’t be enough to handle a website that expects any sort of traffic. However, you’re just using headless WordPress, and all that you ask from the software is to organize your content, and send it to a frontend framework like Gatsby.
 
-So, as long as the host is reputable, and the service is secure, you can buy the most cost-friendly hosting available. See Gatsby’s guide on getting started with [over a dozen headless CMS’s](https://www.gatsbyjs.org/docs/headless-cms)
+So, as long as the host is reputable, and the service is secure, you can buy the most cost-friendly hosting available. See Gatsby’s guide on getting started with [over a dozen headless CMS’s](https://gatsbyjs.org/docs/headless-cms)
 
 ## Option #2. Netlify CMS
 

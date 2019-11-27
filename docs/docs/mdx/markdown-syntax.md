@@ -104,7 +104,7 @@ Links in Markdown use this format. URLs can be relative or remote:
 
 Example of a link rendering in HTML:
 
-[Gatsby site](https://www.gatsbyjs.org)
+[Gatsby site](https://gatsbyjs.org)
 
 ### Image with alt text
 

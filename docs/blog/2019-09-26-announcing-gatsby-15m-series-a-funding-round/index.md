@@ -8,7 +8,7 @@ tags: ["gatsby-inc"]
 
 I’m incredibly excited to announce that Gatsby has raised a \$15M Series A funding round, led by [CRV](https://www.crv.com), to drive the reinvention of website development.
 
-Gatsby is a free and open-source web framework based on React that helps developers build blazing fast websites and apps. Hundreds of thousands of developers have adopted Gatsby since it was open sourced four years ago. Our [content mesh platform](https://www.gatsbyjs.org/blog/2018-10-04-journey-to-the-content-mesh) is used by thousands of companies around the world, including IBM, PayPal, Harry's, and digital agencies that use Gatsby to create web properties for Fortune 500 clients.
+Gatsby is a free and open-source web framework based on React that helps developers build blazing fast websites and apps. Hundreds of thousands of developers have adopted Gatsby since it was open sourced four years ago. Our [content mesh platform](https://gatsbyjs.org/blog/2018-10-04-journey-to-the-content-mesh) is used by thousands of companies around the world, including IBM, PayPal, Harry's, and digital agencies that use Gatsby to create web properties for Fortune 500 clients.
 
 ## Why the excitement and growth?
 
@@ -18,7 +18,7 @@ With Gatsby, we’re reinventing website technology so people can create sites t
 
 Gatsby strips away much of the complexity that plagues website development. Teams tell us that they can build stunning sites 3-5x faster with Gatsby—and have a lot more fun in the process.
 
-The web is an incredible medium. Anyone, anywhere can produce a site and ship their ideas to the world. [Individuals, teams, and organizations are turning to Gatsby to create web sites and apps that stand out](https://www.gatsbyjs.org/blog/tags/case-studies)[.](https://www.gatsbyjs.org/blog/tags/case-studies)
+The web is an incredible medium. Anyone, anywhere can produce a site and ship their ideas to the world. [Individuals, teams, and organizations are turning to Gatsby to create web sites and apps that stand out](https://gatsbyjs.org/blog/tags/case-studies)[.](https://gatsbyjs.org/blog/tags/case-studies)
 
 ## From the CMS to the content mesh
 
@@ -28,9 +28,9 @@ The web is now migrating to a decoupled architecture where specialized modular s
 
 Instead of a monolithic CMS powering everything, Gatsby ties together specialized services with a modern development experience and optimized website delivery.
 
-This [content mesh](https://www.gatsbyjs.org/blog/2018-10-04-journey-to-the-content-mesh) empowers developers while preserving content creators’ workflows. It gives developers access to great cloud services without the pain of manual integration.
+This [content mesh](https://gatsbyjs.org/blog/2018-10-04-journey-to-the-content-mesh) empowers developers while preserving content creators’ workflows. It gives developers access to great cloud services without the pain of manual integration.
 
-Web developers from dozens of web CMS communities like WordPress and [Drupal](https://www.gatsbyjs.org/blog/2019-06-26-live-preview-for-drupal) are going “headless” and using Gatsby as the presentation layer for their CMS.
+Web developers from dozens of web CMS communities like WordPress and [Drupal](https://gatsbyjs.org/blog/2019-06-26-live-preview-for-drupal) are going “headless” and using Gatsby as the presentation layer for their CMS.
 
 We’re forming partnerships with these communities to create seamless integrations between their solutions and Gatsby.
 

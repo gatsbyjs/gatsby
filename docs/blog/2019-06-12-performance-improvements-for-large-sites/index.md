@@ -31,7 +31,7 @@ When a user clicks a link to another page, Gatsby first looks up the manifest fo
 
 This works great for small sites, but as a Gatsby application grows, so too does the size of the page manifest. The bigger the manifest gets the more data the browser has to download before any UI navigation can occur leading to slowdowns in important metrics like Time to Interactive (TTI).
 
-Even after the manifest had been loaded, the manifest had to be searched for the matching path. This was necessary since pages can be declared with a [matchPath](https://www.gatsbyjs.org/docs/gatsby-internals-terminology/#matchpath) (a Regular Expression used to match client-only paths). Huge manifest files resulted in perceptable lag when clicking links too!
+Even after the manifest had been loaded, the manifest had to be searched for the matching path. This was necessary since pages can be declared with a [matchPath](https://gatsbyjs.org/docs/gatsby-internals-terminology/#matchpath) (a Regular Expression used to match client-only paths). Huge manifest files resulted in perceptable lag when clicking links too!
 
 ## Solution: Eliminate the monolithic pages manifest!
 
@@ -45,7 +45,7 @@ This is very similar to each entry in the pages manifest. The major difference b
 
 Now, when a page navigation occurs, Gatsby makes a request directly to the server for the `page-data.json`, instead of checking the global manifest (which doesn't exist anymore).
 
-Below is a [webpagetest.org](https://www.webpagetest.org) comparison of [gatsbyjs.org](https://www.gatsbyjs.org) (which has about 2,500 pages) [before](https://www.webpagetest.org/result/190530_4Y_26c37e9fa44cdeef1617d2861ee6927e) and [after](https://www.webpagetest.org/result/190530_7J_5f0c238b0658ed9de9aa7ed30b5538e6) the change. As you can see, the _First Interactive_ has been reduced by 432% (5.011 seconds saved), and almost all other metrics have improved as well.
+Below is a [webpagetest.org](https://www.webpagetest.org) comparison of [gatsbyjs.org](https://gatsbyjs.org) (which has about 2,500 pages) [before](https://www.webpagetest.org/result/190530_4Y_26c37e9fa44cdeef1617d2861ee6927e) and [after](https://www.webpagetest.org/result/190530_7J_5f0c238b0658ed9de9aa7ed30b5538e6) the change. As you can see, the _First Interactive_ has been reduced by 432% (5.011 seconds saved), and almost all other metrics have improved as well.
 
 <figure>
   <img alt="Webpagetest.org performance comparison" src="./comparison.png" />

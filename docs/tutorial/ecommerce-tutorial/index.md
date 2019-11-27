@@ -41,7 +41,7 @@ Stripe is a payment processing service that allows you to securely collect and p
 
 There are alternatives to Stripe, like Square and Braintree, and their setup is very similar to Stripe.
 
-Stripe offers a [hosted checkout](https://stripe.com/docs/payments/checkout) that doesn't require any backend component. You can configure products, SKUs, and subscription plans in the [Stripe Dashboard](https://stripe.com/docs/payments/checkout#configure). If you're selling a single product or subscription (like an eBook) you can hardcode the product's SKU ID in your Gatsby side. If you're selling multiple products, you can use the [Stripe source plugin](https://www.gatsbyjs.org/packages/gatsby-source-stripe) to retrieve all SKUs at build time. If you want your Gatsby site to automatically update, you can use the Stripe webhook event to [trigger a redeploy](https://www.netlify.com/docs/webhooks) when a new product or SKU is added.
+Stripe offers a [hosted checkout](https://stripe.com/docs/payments/checkout) that doesn't require any backend component. You can configure products, SKUs, and subscription plans in the [Stripe Dashboard](https://stripe.com/docs/payments/checkout#configure). If you're selling a single product or subscription (like an eBook) you can hardcode the product's SKU ID in your Gatsby side. If you're selling multiple products, you can use the [Stripe source plugin](https://gatsbyjs.org/packages/gatsby-source-stripe) to retrieve all SKUs at build time. If you want your Gatsby site to automatically update, you can use the Stripe webhook event to [trigger a redeploy](https://www.netlify.com/docs/webhooks) when a new product or SKU is added.
 
 # Setting up a Gatsby site
 
@@ -87,7 +87,7 @@ Stripe provides a JavaScript library the allows you to securely redirect your cu
 
 to the end of the `<body>` tag across all of your pages. This helps facilitate Stripe's [fraud detection](https://stripe.com/docs/stripe-js/reference#including-stripejs).
 
-If you want to further customise the checkout process or pull Stripe data into your site, check out [Gatsby's plugin library for more Stripe plugins](https://www.gatsbyjs.org/plugins/?=stripe).
+If you want to further customise the checkout process or pull Stripe data into your site, check out [Gatsby's plugin library for more Stripe plugins](https://gatsbyjs.org/plugins/?=stripe).
 
 ### Getting your Stripe test keys
 
@@ -262,11 +262,11 @@ If you go back to [localhost:8000](http://localhost:8000) in your browser and yo
 
 ### Advanced: Import SKUs via source plugin
 
-Instead of hardcoding the SKU IDs, you can use the [gatsby-source-stripe plugin](https://www.gatsbyjs.org/packages/gatsby-source-stripe) to retrieve your SKUs at build time.
+Instead of hardcoding the SKU IDs, you can use the [gatsby-source-stripe plugin](https://gatsbyjs.org/packages/gatsby-source-stripe) to retrieve your SKUs at build time.
 
 #### Add the Stripe source plugin
 
-Add the [gatsby-source-stripe plugin](https://www.gatsbyjs.org/packages/gatsby-source-stripe) which you can use to pull in the SKUs from your Stripe account.
+Add the [gatsby-source-stripe plugin](https://gatsbyjs.org/packages/gatsby-source-stripe) which you can use to pull in the SKUs from your Stripe account.
 
 ```shell
 npm install gatsby-source-stripe

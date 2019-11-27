@@ -35,7 +35,7 @@ There are multiple ways to update your version of Node.js depending on how you o
 
 This is the recommended way to install a newer version of Node.
 
-You will have homebrew installed on your computer if you [followed part zero of the Gatsby tutorial](https://www.gatsbyjs.org/tutorial/part-zero/#-install-nodejs-and-npm). Homebrew is a program that allows you to install specific versions of Node.js (and other software).
+You will have homebrew installed on your computer if you [followed part zero of the Gatsby tutorial](https://gatsbyjs.org/tutorial/part-zero/#-install-nodejs-and-npm). Homebrew is a program that allows you to install specific versions of Node.js (and other software).
 
 To update from Node.js 6 to Node.js 8 using Homebrew, open a terminal and run the following commands:
 

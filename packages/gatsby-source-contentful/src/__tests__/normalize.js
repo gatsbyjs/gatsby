@@ -11,7 +11,7 @@ let entryList
 let resolvable
 let foreignReferenceMap
 const conflictFieldPrefix = `contentful_test`
-// restrictedNodeFields from here https://www.gatsbyjs.org/docs/node-interface/
+// restrictedNodeFields from here https://gatsbyjs.org/docs/node-interface/
 const restrictedNodeFields = [
   `id`,
   `children`,

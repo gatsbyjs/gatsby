@@ -153,5 +153,5 @@ However, this is but a start and a path of continual, gradual improvement. We ar
 
 ## Helpful links
 
-- [createTypes Documentation](https://www.gatsbyjs.org/docs/actions/#createTypes)
+- [createTypes Documentation](https://gatsbyjs.org/docs/actions/#createTypes)
 - [Umbrella issue for schema customization bug reports](https://github.com/gatsbyjs/gatsby/issues/12272)

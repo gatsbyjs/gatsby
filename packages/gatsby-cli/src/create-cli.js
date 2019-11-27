@@ -127,19 +127,19 @@ function buildLocalCommands(cli, isLocalSite) {
         .option(`S`, {
           alias: `https`,
           type: `boolean`,
-          describe: `Use HTTPS. See https://www.gatsbyjs.org/docs/local-https/ as a guide`,
+          describe: `Use HTTPS. See https://gatsbyjs.org/docs/local-https/ as a guide`,
         })
         .option(`c`, {
           alias: `cert-file`,
           type: `string`,
           default: ``,
-          describe: `Custom HTTPS cert file (relative path; also required: --https, --key-file). See https://www.gatsbyjs.org/docs/local-https/`,
+          describe: `Custom HTTPS cert file (relative path; also required: --https, --key-file). See https://gatsbyjs.org/docs/local-https/`,
         })
         .option(`k`, {
           alias: `key-file`,
           type: `string`,
           default: ``,
-          describe: `Custom HTTPS key file (relative path; also required: --https, --cert-file). See https://www.gatsbyjs.org/docs/local-https/`,
+          describe: `Custom HTTPS key file (relative path; also required: --https, --cert-file). See https://gatsbyjs.org/docs/local-https/`,
         })
         .option(`open-tracing-config-file`, {
           type: `string`,
@@ -262,7 +262,7 @@ function buildLocalCommands(cli, isLocalSite) {
 
   cli.command({
     command: `repl`,
-    desc: `Get a node repl with context of Gatsby environment, see (https://www.gatsbyjs.org/docs/gatsby-repl)`,
+    desc: `Get a node repl with context of Gatsby environment, see (https://gatsbyjs.org/docs/gatsby-repl)`,
     handler: getCommandHandler(`repl`, (args, cmd) => {
       process.env.NODE_ENV = process.env.NODE_ENV || `development`
       return cmd(args)
@@ -366,21 +366,21 @@ module.exports = argv => {
           handler: handlerP(() =>
             console.log(`
 Using a plugin:
-- What is a Plugin? (https://www.gatsbyjs.org/docs/what-is-a-plugin)
-- Using a Plugin in Your Site (https://www.gatsbyjs.org/docs/using-a-plugin-in-your-site)
-- What You Don't Need Plugins For (https://www.gatsbyjs.org/docs/what-you-dont-need-plugins-for)
-- Loading Plugins from Your Local Plugins Folder (https://www.gatsbyjs.org/docs/loading-plugins-from-your-local-plugins-folder)
-- Plugin Library (https://www.gatsbyjs.org/plugins)
+- What is a Plugin? (https://gatsbyjs.org/docs/what-is-a-plugin)
+- Using a Plugin in Your Site (https://gatsbyjs.org/docs/using-a-plugin-in-your-site)
+- What You Don't Need Plugins For (https://gatsbyjs.org/docs/what-you-dont-need-plugins-for)
+- Loading Plugins from Your Local Plugins Folder (https://gatsbyjs.org/docs/loading-plugins-from-your-local-plugins-folder)
+- Plugin Library (https://gatsbyjs.org/plugins)
 
 Creating a plugin:
-- Naming a Plugin (https://www.gatsbyjs.org/docs/naming-a-plugin)
-- Files Gatsby Looks for in a Plugin (https://www.gatsbyjs.org/docs/files-gatsby-looks-for-in-a-plugin)
-- Creating a Local Plugin (https://www.gatsbyjs.org/docs/creating-a-local-plugin)
-- Creating a Source Plugin (https://www.gatsbyjs.org/docs/creating-a-source-plugin)
-- Creating a Transformer Plugin (https://www.gatsbyjs.org/docs/creating-a-transformer-plugin)
-- Submit to Plugin Library (https://www.gatsbyjs.org/contributing/submit-to-plugin-library)
-- Pixabay Source Plugin Tutorial (https://www.gatsbyjs.org/docs/pixabay-source-plugin-tutorial)
-- Maintaining a Plugin (https://www.gatsbyjs.org/docs/maintaining-a-plugin)
+- Naming a Plugin (https://gatsbyjs.org/docs/naming-a-plugin)
+- Files Gatsby Looks for in a Plugin (https://gatsbyjs.org/docs/files-gatsby-looks-for-in-a-plugin)
+- Creating a Local Plugin (https://gatsbyjs.org/docs/creating-a-local-plugin)
+- Creating a Source Plugin (https://gatsbyjs.org/docs/creating-a-source-plugin)
+- Creating a Transformer Plugin (https://gatsbyjs.org/docs/creating-a-transformer-plugin)
+- Submit to Plugin Library (https://gatsbyjs.org/contributing/submit-to-plugin-library)
+- Pixabay Source Plugin Tutorial (https://gatsbyjs.org/docs/pixabay-source-plugin-tutorial)
+- Maintaining a Plugin (https://gatsbyjs.org/docs/maintaining-a-plugin)
 - Join Discord #plugin-authoring channel to ask questions! (https://gatsby.dev/discord)
           `)
           ),

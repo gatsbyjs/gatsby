@@ -34,7 +34,7 @@ watchers to build Gatsby source code.
 **[Demo Video](https://youtu.be/D0SwX1MSuas)**
 
 More detailed instruction for setting up your Gatsby development environment can
-be found [here](https://www.gatsbyjs.org/contributing/how-to-contribute).
+be found [here](https://gatsbyjs.org/contributing/how-to-contribute).
 
 ### Other commands
 

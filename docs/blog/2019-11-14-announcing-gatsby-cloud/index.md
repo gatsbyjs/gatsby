@@ -8,7 +8,7 @@ tags: ["gatsby-inc"]
 
 We're excited to announce the launch of [Gatsby Cloud](https://www.gatsbyjs.com): a commercial platform of stable, trusted tools that enable web creators to build better websites.
 
-Gatsby Cloud enhances our [content mesh platform](https://www.gatsbyjs.org/blog/2018-10-04-journey-to-the-content-mesh) with interoperable, out-of-the-box solutions to launch websites faster, and drive business success.
+Gatsby Cloud enhances our [content mesh platform](https://gatsbyjs.org/blog/2018-10-04-journey-to-the-content-mesh) with interoperable, out-of-the-box solutions to launch websites faster, and drive business success.
 
 This is a significant step forward for our diverse and thriving open-source community, and we're really proud of it.
 
@@ -18,7 +18,7 @@ Gatsby Cloud features include:
 
 - **Cloud Quickstart** that empowers new and non-technical users to create projects in minutes with a CMS, sample content, and connected Gatsby starter.
 - **Real-time Preview** to simplify content creation and collaboration. Preview offers a private playground for developers, designers, marketers, and content creators. You can view changes to your site immediately and in context.
-- **CMS Integrations**—with [plugins available for 389 content management systems and APIs](https://www.gatsbyjs.org/plugins/?=gatsby-source), Gatsby offers unrivaled CMS-compatibility in the market.
+- **CMS Integrations**—with [plugins available for 389 content management systems and APIs](https://gatsbyjs.org/plugins/?=gatsby-source), Gatsby offers unrivaled CMS-compatibility in the market.
 - **Builds and Reports (Private Beta)**—a new CI/CD solution for Gatsby that will dramatically speed up your Gatsby builds and give you feedback on site performance—with Lighthouse—and common Gatsby errors. [Signup for the private beta](https://www.gatsbyjs.com/builds-beta) to be one of the first to access Builds and Reports!
 
 We want Gatsby Cloud to be used by everyone. [Our pricing structure includes a free tier](https://www.gatsbyjs.com/pricing) designed to comfortably support personal and small sites. We're excited to see how the Gatsby community adopts and grows with our new services.

@@ -139,7 +139,7 @@ Gatsby projects have a config file at `/gatsby-config.js` where site metadata an
 /**
  * Configure your Gatsby site with this file.
  *
- * See: https://www.gatsbyjs.org/docs/gatsby-config/
+ * See: https://gatsbyjs.org/docs/gatsby-config/
  */
 
 module.exports = {
@@ -484,7 +484,7 @@ If the Gatsby site is to be hosted at a non-root path, e.g. `example.com/blog/`,
 /**
  * Configure your Gatsby site with this file.
  *
- * See: https://www.gatsbyjs.org/docs/gatsby-config/
+ * See: https://gatsbyjs.org/docs/gatsby-config/
  */
 
 module.exports = {

@@ -388,7 +388,7 @@ unless explicitly overridden by the `promptUser` and `promptHost` options in the
 
 ### Line hiding
 
-As well as highlighting lines, it's possible to _hide_ lines from the rendered output. Often this is handy when using `gatsby-remark-prismjs` along with [`gatsby-remark-embed-snippet`](https://www.gatsbyjs.org/packages/gatsby-remark-embed-snippet).
+As well as highlighting lines, it's possible to _hide_ lines from the rendered output. Often this is handy when using `gatsby-remark-prismjs` along with [`gatsby-remark-embed-snippet`](https://gatsbyjs.org/packages/gatsby-remark-embed-snippet).
 
 As with highlighting lines, you can control which lines to hide by adding directives as comments in your source code.
 

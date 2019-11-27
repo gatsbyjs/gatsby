@@ -73,7 +73,7 @@ Acceptance criteria listed in the intent maps helps explain what we are going to
 
 ### Objectives and Key Results
 
-Objectives and Key Results (OKRs) are specific metrics or outcomes we want to see within the next 1 - 2 quarters. We use OKRs to stay focused on what we’re trying to achieve in the short term. Our OKRs are typically very metric driven, so that it's easy to know whether or not we've achieved our goal. You can read more about OKRs at Gatsby [here](https://www.gatsbyjs.org/blog/2019-04-03-how-we-think-about-product-at-gatsby).
+Objectives and Key Results (OKRs) are specific metrics or outcomes we want to see within the next 1 - 2 quarters. We use OKRs to stay focused on what we’re trying to achieve in the short term. Our OKRs are typically very metric driven, so that it's easy to know whether or not we've achieved our goal. You can read more about OKRs at Gatsby [here](https://gatsbyjs.org/blog/2019-04-03-how-we-think-about-product-at-gatsby).
 
 ## How we’ll get product feedback
 

@@ -39,7 +39,7 @@ The following parts of `options` are passed down to Remark as options:
 The details of the Remark options above could be found in [`remark-parse`'s documentation](https://github.com/remarkjs/remark/tree/master/packages/remark-parse#processoruseparse-options)
 
 A full explanation of how to use markdown in Gatsby can be found here:
-[Creating a Blog with Gatsby](https://www.gatsbyjs.org/blog/2017-07-19-creating-a-blog-with-gatsby)
+[Creating a Blog with Gatsby](https://gatsbyjs.org/blog/2017-07-19-creating-a-blog-with-gatsby)
 
 There are many Gatsby Remark plugins which you can install to customize how Markdown is processed. Many of them are demoed at https://using-remark.gatsbyjs.org/. See also the [source code for using-remark](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-remark).
 

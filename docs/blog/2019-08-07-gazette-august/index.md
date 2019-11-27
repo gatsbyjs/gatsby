@@ -25,7 +25,7 @@ First, an aside.
 
 [Snow Leopard](https://en.wikipedia.org/wiki/Mac_OS_X_Snow_Leopard) was the seventh major release of macOS. Unlike those of previous versions, the goals of Snow Leopard were improved performance, greater efficiency and the reduction of its overall memory footprint. Addition of new end user features was not a primary consideration: its name signified its goal to be a refinement of the previous OS X version, Leopard.
 
-Similarly, earlier last month, we felt like we needed to take some time to slow down and clean up Gatsby after some of the big features that we've shipped recently: notably ([themes](https://www.gatsbyjs.org/blog/2019-07-03-announcing-stable-release-gatsby-themes) and [per page manifest](https://www.gatsbyjs.org/blog/2019-06-12-performance-improvements-for-large-sites)). Our goal was to take a step back, move a bit more slowly, and improve the overall code base, add tests, and overall ensure our house is in good order for more improvements in the future.
+Similarly, earlier last month, we felt like we needed to take some time to slow down and clean up Gatsby after some of the big features that we've shipped recently: notably ([themes](https://gatsbyjs.org/blog/2019-07-03-announcing-stable-release-gatsby-themes) and [per page manifest](https://gatsbyjs.org/blog/2019-06-12-performance-improvements-for-large-sites)). Our goal was to take a step back, move a bit more slowly, and improve the overall code base, add tests, and overall ensure our house is in good order for more improvements in the future.
 
 We feel this went quite well, so we intend to keep doing this fairly regularly to keep Gatsby stable and ensure you have painless upgrades. Our goal is to always enable the experience [Brian Holt](https://twitter.com/holtbt) depicts below, specifically painless upgrades and all the while delivering real value and fixes in every version of Gatsby.
 
@@ -35,7 +35,7 @@ Check out the [project](https://github.com/gatsbyjs/gatsby/projects/13) on GitHu
 
 ### WPGraphQL for Advanced Custom Fields
 
-[WPGraphQL for Advanced Custom Fields](https://www.wpgraphql.com/acf) is a WordPress plugin that enables you to use [`gatsby-source-graphql`](https://www.gatsbyjs.org/packages/gatsby-source-graphql) for your complex WordPress sites that use the hugely popular [Advanced Custom Fields](https://www.advancedcustomfields.com) plugin.
+[WPGraphQL for Advanced Custom Fields](https://www.wpgraphql.com/acf) is a WordPress plugin that enables you to use [`gatsby-source-graphql`](https://gatsbyjs.org/packages/gatsby-source-graphql) for your complex WordPress sites that use the hugely popular [Advanced Custom Fields](https://www.advancedcustomfields.com) plugin.
 
 The author of WPGraphQL, [Jason Bahl](https://twitter.com/jasonbahl) recently joined our team and open sourced WPGraphQL for Advanced Custom Fields which was previously a paid plugin.
 

@@ -31,7 +31,7 @@ const EventsRoute = props => (
         <p>
           Want to see your event featured here?
           {` `}
-          <a href="https://www.gatsbyjs.org/contributing/organize-a-gatsby-event/">
+          <a href="https://gatsbyjs.org/contributing/organize-a-gatsby-event/">
             Learn more about submitting your event for Gatsby support
           </a>
           {`. `}

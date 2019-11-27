@@ -32,13 +32,13 @@ Organic web traffic is not the only impressive statistic that Gatsby has helped 
 
 High quality, timely, and varied content delivered on a site with speed and beautiful design is a sure fire way to drive a continuing increase in prospective customers. Even though switching to a common framework that the whole team knew sped up the page creation process, it still took developer time to create pages that were similar to each other.
 
-The dream was to give content creators the power to make these pages themselves without developer intervention. Based on ​[this blog post​](https://www.gatsbyjs.org/blog/2017-12-06-gatsby-plus-contentful-plus-netlify) on the Gatsby site, we integrated Contentful, and deployed via Netlify. Contentful is a headless content management system (CMS) in which content can be ingested over an API. This led us down the path of a generic page builder.
+The dream was to give content creators the power to make these pages themselves without developer intervention. Based on ​[this blog post​](https://gatsbyjs.org/blog/2017-12-06-gatsby-plus-contentful-plus-netlify) on the Gatsby site, we integrated Contentful, and deployed via Netlify. Contentful is a headless content management system (CMS) in which content can be ingested over an API. This led us down the path of a generic page builder.
 
 Developers would make common components that content creators could piece together like lego blocks to make their own webpages. Now, an unlimited number of informational pages can be built by our content team to give the power to our potential customers to make an informed decision about our product.
 
 You can see an example here of composable components from the viewpoint of a content creator in Contentful (left), and the final view of the page they see (right), based simply on entering a basic set of information.
 
-Each component in Contentful lines up to a React component in the project, and with easy [previewing​](https://www.gatsbyjs.org/blog/2019-03-22-introducing-gatsby-preview-beta) upon adding data, content creators can get instant feedback.
+Each component in Contentful lines up to a React component in the project, and with easy [previewing​](https://gatsbyjs.org/blog/2019-03-22-introducing-gatsby-preview-beta) upon adding data, content creators can get instant feedback.
 
 ![Housecall Pro Contentful Preview](./images/contentful-preview.png)
 

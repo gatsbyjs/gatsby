@@ -7356,7 +7356,7 @@
               {
                 "commit": {
                   "authoredDate": "2019-06-03T02:42:32Z",
-                  "message": "Made the doc easier to read\n\n- Moved a lot of sentences into active voice\r\n- Removed unnecessary words and sentences\r\n- Fixed some grammatical errors\r\n- Removed potentially confusing emojis as a literary device\r\n- Split up some long sentences into shorter ones\r\n- Added a link to https://www.gatsbyjs.org/blog/2018-06-08-life-after-layouts/ in the layouts section to help people move from Gatsby's layout behavior in v1\r\n- Capitalized instances of \"Babel\" that were lowercase"
+                  "message": "Made the doc easier to read\n\n- Moved a lot of sentences into active voice\r\n- Removed unnecessary words and sentences\r\n- Fixed some grammatical errors\r\n- Removed potentially confusing emojis as a literary device\r\n- Split up some long sentences into shorter ones\r\n- Added a link to https://gatsbyjs.org/blog/2018-06-08-life-after-layouts/ in the layouts section to help people move from Gatsby's layout behavior in v1\r\n- Capitalized instances of \"Babel\" that were lowercase"
                 }
               },
               {

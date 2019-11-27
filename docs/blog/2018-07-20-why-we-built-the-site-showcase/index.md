@@ -17,7 +17,7 @@ The Site Showcase was developed by Cassie Beckley ([@ThatOtherPerson](https://gi
 
 ## Submitting your site
 
-If you've built a site with Gatsby and would like it to appear in the Site Showcase, please [submit your site](https://www.gatsbyjs.org/contributing/site-showcase-submissions).
+If you've built a site with Gatsby and would like it to appear in the Site Showcase, please [submit your site](https://gatsbyjs.org/contributing/site-showcase-submissions).
 
 ## Why build a site showcase?
 

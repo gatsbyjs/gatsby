@@ -482,7 +482,7 @@ Sass will compile .scss and .sass files to .css files for you, so you can write 
 
 #### Directions
 
-1. Install the Gatsby plugin [gatsby-plugin-sass](https://www.gatsbyjs.org/packages/gatsby-plugin-sass) and `node-sass`.
+1. Install the Gatsby plugin [gatsby-plugin-sass](https://gatsbyjs.org/packages/gatsby-plugin-sass) and `node-sass`.
 
 `npm install --save node-sass gatsby-plugin-sass`
 
@@ -524,7 +524,7 @@ _Note: You can use Sass/SCSS files as modules too, like mentioned in the previou
 
 - [Difference between .sass and .scss](https://responsivedesign.is/articles/difference-between-sass-and-scss)
 - [Sass guide from the official Sass website](https://sass-lang.com/guide)
-- [A more complete installation tutorial on Sass with some more explanations and more resources](https://www.gatsbyjs.org/docs/sass)
+- [A more complete installation tutorial on Sass with some more explanations and more resources](https://gatsbyjs.org/docs/sass)
 
 ### Adding a Local Font
 
@@ -2145,7 +2145,7 @@ To inline images in markdown (using the `![]()` syntax), consider using a plugin
 - The `gatsby-image`, `gatsby-transformer-sharp`, and `gatsby-plugin-sharp` packages installed and added to the plugins array in `gatsby-config`
 - [Images sourced](/packages/gatsby-image/#install) in your `gatsby-config` using a plugin like `gatsby-source-filesystem`
 - Markdown files sourced in your `gatsby-config` with image URLs in frontmatter
-- [Pages created](/docs/creating-and-modifying-pages) from Markdown using [`createPages`](https://www.gatsbyjs.org/docs/node-apis/#createPages)
+- [Pages created](/docs/creating-and-modifying-pages) from Markdown using [`createPages`](https://gatsbyjs.org/docs/node-apis/#createPages)
 
 #### Directions
 

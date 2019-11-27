@@ -10,7 +10,7 @@ const Footer = ({ socialLinks }) => (
   >
     © {new Date().getFullYear()}, Powered by
     {` `}
-    <a href="https://www.gatsbyjs.org">Gatsby</a>
+    <a href="https://gatsbyjs.org">Gatsby</a>
     {` `}&bull;{` `}
     {socialLinks.map((platform, i, arr) => (
       <Fragment key={platform.url}>

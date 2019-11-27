@@ -109,7 +109,7 @@ To begin describing why build-time SSR is so appealing, let's first take a look 
 - Routing the CDN layer in front of your static content
 - Set up a Continuous Integration (CI) environment so we can build and deploy code to production with minimal impact to end users
 
-... and, that's it! We're done as far as setup goes! We can use _whatever_ stack you prefer here. Netlify? [You bet.](https://www.gatsbyjs.org/docs/deploying-to-netlify) More a fan of AWS? [Of course.](https://www.gatsbyjs.org/docs/deploying-to-aws-amplify) Heroku? [Yup.](https://www.gatsbyjs.org/docs/deploying-to-heroku) You get the idea. Gatsby can be deployed anywhere easily and cheaply.
+... and, that's it! We're done as far as setup goes! We can use _whatever_ stack you prefer here. Netlify? [You bet.](https://gatsbyjs.org/docs/deploying-to-netlify) More a fan of AWS? [Of course.](https://gatsbyjs.org/docs/deploying-to-aws-amplify) Heroku? [Yup.](https://gatsbyjs.org/docs/deploying-to-heroku) You get the idea. Gatsby can be deployed anywhere easily and cheaply.
 
 We now have an infrastructure setup so that we _can_ release our web application. What's a release look like?
 
@@ -309,7 +309,7 @@ To tie it all together, the build process produces a `contact/index.html` file c
           <footer>
             ©
             <!-- -->2019<!-- -->, Built with<!-- -->
-            <a href="https://www.gatsbyjs.org">Gatsby</a>
+            <a href="https://gatsbyjs.org">Gatsby</a>
           </footer>
         </div>
         <!-- highlight-end -->

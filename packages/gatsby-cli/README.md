@@ -3,7 +3,7 @@
 The Gatsby command line interface (CLI). It is used to perform common functionality, such as creating a Gatsby application based on a starter, spinning up a hot-reloading local development server, and more!
 
 Lets you create new Gatsby apps using
-[Gatsby starters](https://www.gatsbyjs.org/docs/gatsby-starters). It also lets you run commands on sites. The tool runs code from the `gatsby` package installed locally.
+[Gatsby starters](https://gatsbyjs.org/docs/gatsby-starters). It also lets you run commands on sites. The tool runs code from the `gatsby` package installed locally.
 
 The Gatsby CLI (`gatsby-cli`) is packaged as an executable that can be used globally. The Gatsby CLI is available via [npm](https://www.npmjs.com) and should be installed globally by running `npm install -g gatsby-cli` to use it locally.
 
@@ -51,7 +51,7 @@ gatsby new [<site-name> [<starter-url>]]
 gatsby new my-awesome-site
 ```
 
-- Create a Gatsby site named `my-awesome-blog-site`, using [gatsby-starter-blog](https://www.gatsbyjs.org/starters/gatsbyjs/gatsby-starter-blog):
+- Create a Gatsby site named `my-awesome-blog-site`, using [gatsby-starter-blog](https://gatsbyjs.org/starters/gatsbyjs/gatsby-starter-blog):
 
 ```bash
 gatsby new my-awesome-blog-site https://github.com/gatsbyjs/gatsby-starter-blog
@@ -69,7 +69,7 @@ gatsby new
    (Use a different starter)
 ```
 
-See the [Gatsby starters docs](https://www.gatsbyjs.org/docs/gatsby-starters) for more details.
+See the [Gatsby starters docs](https://gatsbyjs.org/docs/gatsby-starters) for more details.
 
 ### `develop`
 
@@ -85,7 +85,7 @@ development server.
 | `-o`, `--open`  | Open the site in your (default) browser for you |             |
 | `-S`, `--https` | Use HTTPS                                       |             |
 
-Follow the [Local HTTPS guide](https://www.gatsbyjs.org/docs/local-https)
+Follow the [Local HTTPS guide](https://gatsbyjs.org/docs/local-https)
 to find out how you can set up an HTTPS development server using Gatsby.
 
 ### `build`
@@ -94,12 +94,12 @@ At the root of a Gatsby app run `gatsby build` to do a production build of a sit
 
 #### Options
 
-|            Option            | Description                                                                                                | Default |
-| :--------------------------: | ---------------------------------------------------------------------------------------------------------- | :-----: |
-|       `--prefix-paths`       | Build site with link paths prefixed (set pathPrefix in your config)                                        | `false` |
-|        `--no-uglify`         | Build site without uglifying JS bundles (for debugging)                                                    | `false` |
-| `--open-tracing-config-file` | Tracer configuration file (OpenTracing compatible). See https://www.gatsbyjs.org/docs/performance-tracing/ |         |
-| `--no-color`, `--no-colors`  | Disables colored terminal output                                                                           | `false` |
+|            Option            | Description                                                                                            | Default |
+| :--------------------------: | ------------------------------------------------------------------------------------------------------ | :-----: |
+|       `--prefix-paths`       | Build site with link paths prefixed (set pathPrefix in your config)                                    | `false` |
+|        `--no-uglify`         | Build site without uglifying JS bundles (for debugging)                                                | `false` |
+| `--open-tracing-config-file` | Tracer configuration file (OpenTracing compatible). See https://gatsbyjs.org/docs/performance-tracing/ |         |
+| `--no-color`, `--no-colors`  | Disables colored terminal output                                                                       | `false` |
 
 ### `serve`
 

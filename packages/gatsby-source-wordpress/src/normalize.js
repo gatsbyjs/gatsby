@@ -5,7 +5,7 @@ const { URL } = require(`url`)
 
 const colorized = require(`./output-color`)
 const conflictFieldPrefix = `wordpress_`
-// restrictedNodeFields from here https://www.gatsbyjs.org/docs/node-interface/
+// restrictedNodeFields from here https://gatsbyjs.org/docs/node-interface/
 const restrictedNodeFields = [`id`, `children`, `parent`, `fields`, `internal`]
 
 /**

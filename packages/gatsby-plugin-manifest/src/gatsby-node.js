@@ -8,7 +8,7 @@ sharp.simd(true)
 
 // Handle Sharp's concurrency based on the Gatsby CPU count
 // See: http://sharp.pixelplumbing.com/en/stable/api-utility/#concurrency
-// See: https://www.gatsbyjs.org/docs/multi-core-builds/
+// See: https://gatsbyjs.org/docs/multi-core-builds/
 sharp.concurrency(cpuCoreCount())
 
 async function generateIcon(icon, srcIcon) {

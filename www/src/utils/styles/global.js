@@ -3,7 +3,7 @@ import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 const prismToken = t => {
   return {
     // PrismJS syntax highlighting token styles
-    // https://www.gatsbyjs.org/packages/gatsby-remark-prismjs/
+    // https://gatsbyjs.org/packages/gatsby-remark-prismjs/
     ".token": {
       display: `inline`,
     },
@@ -321,7 +321,7 @@ export const globalStyles = t => {
       overflow: `hidden`,
     },
     // gatsby-remark-code-titles styles
-    // https://www.gatsbyjs.org/packages/gatsby-remark-code-titles/
+    // https://gatsbyjs.org/packages/gatsby-remark-code-titles/
     ".gatsby-code-title": {
       background: t.colors.code.background,
       borderBottom: `1px solid ${t.colors.code.border}`,

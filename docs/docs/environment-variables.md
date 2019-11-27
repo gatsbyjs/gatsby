@@ -144,7 +144,7 @@ Gatsby uses additional environment variables in the build step to fine-tune the 
 
 For example, you can set `CI=true` as an environment variable to allow Gatsby's build script to tailor the terminal output to an automated deployment environment. Some CI/CD tooling may already set this environment variable. This is useful for limiting the verbosity of the build output for [dumb terminals](https://en.wikipedia.org/wiki/Computer_terminal#Dumb_terminals), such as terminal in progress animations.
 
-Gatsby detects an optimal level of parallelism for the render phase of `gatsby build` based on the reported number of physical CPUs. For builds that are run in virtual environments, you may need to adjust the number of worker parallelism with the `GATSBY_CPU_COUNT` environment variable. See [Multi-core builds](https://www.gatsbyjs.org/docs/multi-core-builds).
+Gatsby detects an optimal level of parallelism for the render phase of `gatsby build` based on the reported number of physical CPUs. For builds that are run in virtual environments, you may need to adjust the number of worker parallelism with the `GATSBY_CPU_COUNT` environment variable. See [Multi-core builds](https://gatsbyjs.org/docs/multi-core-builds).
 
 ## Additional Environments (Staging, Test, etc)
 

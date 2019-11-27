@@ -21,7 +21,7 @@ It’s a work in progress for us and the larger ecosystem; however, Gatsby’s c
 
 For any questions, you are welcome to contact Gatsby Head of Learning [Marcy Sutton](mailto:marcy@gatsbyjs.com).
 
-Gatsby Accessibility Statement: https://www.gatsbyjs.org/accessibility-statement/
+Gatsby Accessibility Statement: https://gatsbyjs.org/accessibility-statement
 
 ## Accessibility Resources
 

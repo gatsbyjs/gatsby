@@ -4,7 +4,7 @@ title: Typography.js
 
 ## Using Typography.js in Gatsby
 
-Typography.js is a JavaScript library that allows you to explore the typographic design of your website and define beautiful custom and pre-existing typographic themes. It enables you to change the font on your website with ease. Typography.js currently maintains over 30 themes for you to use. You can also create your own custom font themes if no available themes fit your requirements. To use Typography in your project, you will be installing a [Gatsby plugin](https://www.gatsbyjs.org/packages/gatsby-plugin-typography) and specifying a configuration object for Typography.
+Typography.js is a JavaScript library that allows you to explore the typographic design of your website and define beautiful custom and pre-existing typographic themes. It enables you to change the font on your website with ease. Typography.js currently maintains over 30 themes for you to use. You can also create your own custom font themes if no available themes fit your requirements. To use Typography in your project, you will be installing a [Gatsby plugin](https://gatsbyjs.org/packages/gatsby-plugin-typography) and specifying a configuration object for Typography.
 
 ## Installing the Typography plugin
 
@@ -32,7 +32,7 @@ module.exports = {
 `gatsby-plugin-typography` takes two options for you to specify:
 
 - **pathToConfigModule** (string): The path to the file where you export your Typography configuration.
-- **omitGoogleFont** (boolean, `default: false`): By default, Typography includes a helper that makes a request to Google Font's CDN for fonts you need. You may want to use your own fonts, either by injecting fonts or using a CDN of your choosing. By setting `omitGoogleFont: true`, `gatsby-plugin-typography` will skip adding the font helper. Instead, you will have to include the appropriate fonts yourself - see [Adding a Local Font](https://www.gatsbyjs.org/docs/recipes/#adding-a-local-font)
+- **omitGoogleFont** (boolean, `default: false`): By default, Typography includes a helper that makes a request to Google Font's CDN for fonts you need. You may want to use your own fonts, either by injecting fonts or using a CDN of your choosing. By setting `omitGoogleFont: true`, `gatsby-plugin-typography` will skip adding the font helper. Instead, you will have to include the appropriate fonts yourself - see [Adding a Local Font](https://gatsbyjs.org/docs/recipes/#adding-a-local-font)
 
 ## Creating the Typography configuration
 

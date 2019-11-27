@@ -126,11 +126,11 @@ Hyperlinks should contain the clearest words to indicate where the link will lea
 ```markdown
 <!-- Good -->
 
-[Gatsby's docs](https://www.gatsbyjs.org/docs)
+[Gatsby's docs](https://gatsbyjs.org/docs)
 
 <!-- Bad -->
 
-[here](https://www.gatsbyjs.org/docs/ "Gatsby's docs")
+[here](https://gatsbyjs.org/docs/ "Gatsby's docs")
 ```
 
 In tutorials that are meant for beginners, use as few hyperlinks as possible to minimize distractions. In docs, it's ok to include as many hyperlinks as necessary to provide relevant and interesting information and resources.
@@ -280,7 +280,7 @@ You may also choose to include line highlighting in your code snippets, using th
 module.exports = {
 	siteMetadata: {
 		title: `GatsbyJS`, // highlight-line
-		siteUrl: `https://www.gatsbyjs.org`,
+		siteUrl: `https://gatsbyjs.org`,
 	},
 }
 ```
@@ -290,7 +290,7 @@ module.exports = {
 module.exports = {
   siteMetadata: {
     title: `GatsbyJS`, // highlight-line
-    siteUrl: `https://www.gatsbyjs.org`,
+    siteUrl: `https://gatsbyjs.org`,
   },
 }
 ```
@@ -303,7 +303,7 @@ module.exports = {
 	siteMetadata: {
 		title: `GatsbyJS`,
 		// highlight-next-line
-		siteUrl: `https://www.gatsbyjs.org`,
+		siteUrl: `https://gatsbyjs.org`,
 	},
 }
 ```
@@ -314,7 +314,7 @@ module.exports = {
   siteMetadata: {
     title: `GatsbyJS`,
     // highlight-next-line
-    siteUrl: `https://www.gatsbyjs.org`,
+    siteUrl: `https://gatsbyjs.org`,
   },
 }
 ```
@@ -327,7 +327,7 @@ module.exports = {
 	// highlight-start
 	siteMetadata: {
 		title: `GatsbyJS`,
-		siteUrl: `https://www.gatsbyjs.org`,
+		siteUrl: `https://gatsbyjs.org`,
 	},
 	// highlight-end
 }
@@ -339,7 +339,7 @@ module.exports = {
   // highlight-start
   siteMetadata: {
     title: `GatsbyJS`,
-    siteUrl: `https://www.gatsbyjs.org`,
+    siteUrl: `https://gatsbyjs.org`,
   },
   // highlight-end
 }

@@ -73,4 +73,4 @@ The official themes are built with an opinionated approach that we've abstracted
 
 In the future we'll work to make these features more accessible through tooling. Shadowing in particular is one area in which we are already experimenting with Gatsby CLI and GUI additions to display and eject shadowable components. While today you will have to rely on a theme's documentation, this additional tooling will make it easier to work with unfamiliar themes in the future.
 
-[Check out the docs](https://www.gatsbyjs.org/docs/themes) to get started!
+[Check out the docs](https://gatsbyjs.org/docs/themes) to get started!

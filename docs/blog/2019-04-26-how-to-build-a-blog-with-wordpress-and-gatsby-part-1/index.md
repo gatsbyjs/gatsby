@@ -18,7 +18,7 @@ Ever wondered how to use Gatsby.js with WordPress? This post will cover everythi
 
 In a [previous post](https://www.iamtimsmith.com/blog/using-wordpress-with-react), I spoke about using React.js to build a frontend for a WordPress site. I talked about a simple setup to do this, but also mentioned some drawbacks to doing this.
 
-One such drawback is the difficulties faced when trying to rank for SEO, because search engine crawlers have a hard time indexing information being loaded into React. I mentioned briefly that there are ways around this and one of these ways is [Gatsby.js](https://www.gatsbyjs.org).
+One such drawback is the difficulties faced when trying to rank for SEO, because search engine crawlers have a hard time indexing information being loaded into React. I mentioned briefly that there are ways around this and one of these ways is [Gatsby.js](https://gatsbyjs.org).
 
 In this series of blog posts, I'll be talking about how to build a Gatsby.js site with a WordPress backend. The aim of the setup is to allow non-developer users to make changes on their website while allowing developers to use a fast, modern, and enjoyable tool to build with.
 

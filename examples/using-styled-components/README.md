@@ -8,4 +8,4 @@ Example site that demonstrates how to build Gatsby sites with
 ## References
 
 - [Official styled-components site](https://www.styled-components.com)
-- [gatsby-plugin-styled-components](https://www.gatsbyjs.org/packages/gatsby-plugin-styled-components)
+- [gatsby-plugin-styled-components](https://gatsbyjs.org/packages/gatsby-plugin-styled-components)

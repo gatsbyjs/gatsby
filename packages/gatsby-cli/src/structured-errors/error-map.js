@@ -205,7 +205,7 @@ const errorMap = {
         context.pageObject,
         null,
         4
-      )}\n\nSee the documentation for the "createPage" action — https://www.gatsbyjs.org/docs/actions/#createPage`,
+      )}\n\nSee the documentation for the "createPage" action — https://gatsbyjs.org/docs/actions/#createPage`,
     level: `ERROR`,
   },
   "11323": {
@@ -216,12 +216,12 @@ const errorMap = {
         context.pageObject,
         null,
         4
-      )}\n\nSee the documentation for the "createPage" action — https://www.gatsbyjs.org/docs/actions/#createPage`,
+      )}\n\nSee the documentation for the "createPage" action — https://gatsbyjs.org/docs/actions/#createPage`,
     level: `ERROR`,
   },
   "11324": {
     text: context =>
-      `${context.message}\n\nSee the documentation for the "createPage" action — https://www.gatsbyjs.org/docs/actions/#createPage`,
+      `${context.message}\n\nSee the documentation for the "createPage" action — https://gatsbyjs.org/docs/actions/#createPage`,
     level: `ERROR`,
   },
   "11325": {
@@ -234,7 +234,7 @@ const errorMap = {
         context.pageObject,
         null,
         4
-      )}\n\nSee the documentation for the "createPage" action — https://www.gatsbyjs.org/docs/actions/#createPage`,
+      )}\n\nSee the documentation for the "createPage" action — https://gatsbyjs.org/docs/actions/#createPage`,
     level: `ERROR`,
   },
   "11326": {
@@ -249,7 +249,7 @@ const errorMap = {
         context.pageObject,
         null,
         4
-      )}\n\nSee the documentation for the "createPage" action — https://www.gatsbyjs.org/docs/actions/#createPage`,
+      )}\n\nSee the documentation for the "createPage" action — https://gatsbyjs.org/docs/actions/#createPage`,
     level: `ERROR`,
   },
   "11327": {
@@ -269,7 +269,7 @@ const errorMap = {
         stripIndent(`
           Your plugins must export known APIs from their gatsby-${context.exportType}.js.
 
-          See https://www.gatsbyjs.org/docs/${context.exportType}-apis/ for the list of Gatsby ${context.exportType} APIs.
+          See https://gatsbyjs.org/docs/${context.exportType}-apis/ for the list of Gatsby ${context.exportType} APIs.
         `),
       ]
         .concat([``].concat(context.errors))
@@ -299,43 +299,43 @@ const errorMap = {
         .filter(Boolean)
         .join(`\n\n`),
     level: `ERROR`,
-    docsUrl: `https://www.gatsbyjs.org/docs/actions/#createNode`,
+    docsUrl: `https://gatsbyjs.org/docs/actions/#createNode`,
   },
   // local SSL certificate errors
   "11521": {
     text: () =>
       `for custom ssl --https, --cert-file, and --key-file must be used together`,
     level: `ERROR`,
-    docsUrl: `https://www.gatsbyjs.org/docs/local-https/#custom-key-and-certificate-files`,
+    docsUrl: `https://gatsbyjs.org/docs/local-https/#custom-key-and-certificate-files`,
   },
   "11522": {
     text: () => `Failed to generate dev SSL certificate`,
     level: `ERROR`,
-    docsUrl: `https://www.gatsbyjs.org/docs/local-https/#setup`,
+    docsUrl: `https://gatsbyjs.org/docs/local-https/#setup`,
   },
   // cli new command errors
   "11610": {
     text: context =>
       `It looks like you gave wrong argument orders . Try running instead "gatsby new ${context.starter} ${context.rootPath}"`,
     level: `ERROR`,
-    docsUrl: `https://www.gatsbyjs.org/docs/gatsby-cli/#new`,
+    docsUrl: `https://gatsbyjs.org/docs/gatsby-cli/#new`,
   },
   "11611": {
     text: context =>
       `It looks like you passed a URL to your project name. Try running instead "gatsby new new-gatsby-project ${context.rootPath}"`,
     level: `ERROR`,
-    docsUrl: `https://www.gatsbyjs.org/docs/gatsby-cli/#new`,
+    docsUrl: `https://gatsbyjs.org/docs/gatsby-cli/#new`,
   },
   "11612": {
     text: context =>
       `Could not create a project in "${context.path}" because it's not a valid path`,
     level: `ERROR`,
-    docsUrl: `https://www.gatsbyjs.org/docs/gatsby-cli/#new`,
+    docsUrl: `https://gatsbyjs.org/docs/gatsby-cli/#new`,
   },
   "11613": {
     text: context => `Directory ${context.rootPath} is already an npm project`,
     level: `ERROR`,
-    docsUrl: `https://www.gatsbyjs.org/docs/gatsby-cli/#new`,
+    docsUrl: `https://gatsbyjs.org/docs/gatsby-cli/#new`,
   },
 }
 

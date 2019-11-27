@@ -4124,9 +4124,9 @@ Our first beta!!! 🎉
 - Add new plugin for extracting JSDocs information from JavaScript files using
   documentation.js #1053 @kyleamathews
 - Add new API spec (rough draft) @kyleamathews
-  https://www.gatsbyjs.org/docs/api-specification/
+  https://gatsbyjs.org/docs/api-specification/
 - Add new API reference pages @kyleamathews e.g.
-  https://www.gatsbyjs.org/docs/node-apis/
+  https://gatsbyjs.org/docs/node-apis/
 - Add "duotone" image processing option to gatsby-plugin-sharp #1047 @fk
 - Add example site for image processing @fk
   https://image-processing.gatsbyjs.org/
@@ -4137,32 +4137,32 @@ Our first beta!!! 🎉
 
 ### Changed
 
-#### Grand big API renaming based on our new API spec https://www.gatsbyjs.org/docs/api-specification/
+#### Grand big API renaming based on our new API spec https://gatsbyjs.org/docs/api-specification/
 
 API changes:
 
-[Action creators](https://www.gatsbyjs.org/docs/bound-action-creators):
+[Action creators](https://gatsbyjs.org/docs/bound-action-creators):
 
 - `upsertPage` is now `createPage`
 - `addFieldToNode` is now `createNodeField`
 - `deletePageByPath` is now `deletePage`
 - `addNodeToParent` is now `createParentChildLink`
 
-[gatsby-browser.js APIs](https://www.gatsbyjs.org/docs/browser-apis):
+[gatsby-browser.js APIs](https://gatsbyjs.org/docs/browser-apis):
 
 - `clientEntry` is now `onClientEntry`
 
-[gatsby-node.js APIs](https://www.gatsbyjs.org/docs/node-apis):
+[gatsby-node.js APIs](https://gatsbyjs.org/docs/node-apis):
 
 - `onNodeCreate` is now `onCreateNode`
 - `onUpsertPage` is now `onCreatePage`
 - `extendNodeType` is now `setFieldsOnGraphQLNodeType`
 
-[gatsby-ssr.js APIs](https://www.gatsbyjs.org/docs/ssr-apis):
+[gatsby-ssr.js APIs](https://gatsbyjs.org/docs/ssr-apis):
 
 - `modifyHeadComponents` and `modifyPostBodyComponents` were removed in favor of
   a new API
-  [`onRenderBody`](https://www.gatsbyjs.org/docs/ssr-apis/#onRenderBody).
+  [`onRenderBody`](https://gatsbyjs.org/docs/ssr-apis#onRenderBody).
 - `replaceServerBodyRender` is now `replaceRenderer`
 
 ### Fixed

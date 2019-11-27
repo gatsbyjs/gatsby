@@ -194,7 +194,7 @@ const handleMultipleReplaceRenderers = ({ flattenedPlugins }) => {
       reporter.warn(`replaceRenderer API found in these plugins:`)
       reporter.warn(rendererPlugins.join(`, `))
       reporter.warn(
-        `This might be an error, see: https://www.gatsbyjs.org/docs/debugging-replace-renderer-api/`
+        `This might be an error, see: https://gatsbyjs.org/docs/debugging-replace-renderer-api`
       )
     } else {
       console.log(``)
@@ -204,7 +204,7 @@ const handleMultipleReplaceRenderers = ({ flattenedPlugins }) => {
       reporter.error(rendererPlugins.join(`, `))
       reporter.error(`This will break your build`)
       reporter.error(
-        `See: https://www.gatsbyjs.org/docs/debugging-replace-renderer-api/`
+        `See: https://gatsbyjs.org/docs/debugging-replace-renderer-api`
       )
       if (process.env.NODE_ENV === `production`) process.exit(1)
     }
