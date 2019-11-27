@@ -125,6 +125,12 @@ const rebuildWithSitePage = async ({ parentSpan }) => {
   )
   await buildInferenceMetadata({ types: [`SitePage`] })
 
+  // Disabling incremental inference for SitePage after the initial build
+  // as it has a significant performance cost for zero benefits.
+  // The only benefit is that schema rebuilds when SitePage.context structure changes.
+  // (one can just restart `develop` in this case)
+  store.dispatch({ type: `DISABLE_TYPE_INFERENCE`, payload: [`SitePage`] })
+
   const {
     schemaCustomization: { composer: schemaComposer },
     config: { mapping: typeMapping },
