@@ -6716,6 +6716,15 @@
     - Documentation
   built_by: Yves Wang
   built_by_url: https://antdsite.yvescoding.org
+- title: AntV
+  main_url: https://antv.vision
+  url: https://antv.vision
+  description: >-
+    AntV is a new generation of data visualization technique from Ant Financial
+  categories:
+    - Documentation
+  built_by: afc163
+  built_by_url: https://github.com/afc163
 - title: Fourpost
   url: https://www.fourpost.com
   main_url: https://www.fourpost.com
