@@ -106,7 +106,7 @@ async function createErrorFromString(
 
   message = message.replace(/^(Error:)/, ``)
 
-  let error = new Error(message)
+  const error = new Error(message)
 
   error.stack = [message, rest.join(`\n`)].join(`\n`)
 
