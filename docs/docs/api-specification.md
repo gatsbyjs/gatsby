@@ -118,6 +118,6 @@ in the server rendering process and the browser e.g. `onClientEntry` or
 The three main inspirations for this API and spec are React.js' API specifically
 [@leebyron's email on the React API](https://gist.github.com/vjeux/f2b015d230cc1ab18ed1df30550495ed),
 this talk
-["How to Design a Good API and Why it Matters" by Joshua Bloch](https://www.youtube.com/watch?v=heh4OeB9A-c&app=desktop)
+["How to Design a Good API and Why it Matters" by Joshua Bloch](https://youtube.com/watch?v=heh4OeB9A-c&app=desktop)
 who designed many parts of Java, and [Hapi.js](https://hapijs.com/api)' plugin
 design.

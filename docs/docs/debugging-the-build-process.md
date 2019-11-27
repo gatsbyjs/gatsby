@@ -180,4 +180,4 @@ You can successfully debug your code using Chrome DevTools but using it isn't re
 ## Additional resources
 
 - [Debugging - Getting Started | Node.js](https://nodejs.org/en/docs/guides/debugging-getting-started)
-- [Debugging with Node.js - Paul Irish talk at Node Summit 2017](https://www.youtube.com/watch?v=Xb_0awoShR8)
+- [Debugging with Node.js - Paul Irish talk at Node Summit 2017](https://youtube.com/watch?v=Xb_0awoShR8)

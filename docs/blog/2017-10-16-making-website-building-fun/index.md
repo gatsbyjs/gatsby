@@ -130,7 +130,7 @@ that still don't feel very complex while there are relatively small projects
 that are mired in complexity.
 
 Alan Kay told a great story in his recent talk
-[The Power of Simplicity](https://www.youtube.com/watch?v=NdSD07U5uBs) (story
+[The Power of Simplicity](https://youtube.com/watch?v=NdSD07U5uBs) (story
 starts at 5:45) about the history of modeling planet orbits in our solar system.
 
 ![Cassini model of planet motion](Cassini_apparent.jpg)

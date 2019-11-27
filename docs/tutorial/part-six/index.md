@@ -37,7 +37,7 @@ Pandas are really sweet.
 
 Here's a video of a panda eating sweets.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/4n0xNbfJLR8" frameborder="0" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://youtube.com/embed/4n0xNbfJLR8" frameborder="0" allowfullscreen></iframe>
 ```
 
 Once you save the file, look at `/my-files/` again—the new markdown file is in
@@ -185,7 +185,7 @@ date: "2017-08-21"
 Do Pandas eat bananas? Check out this short video that shows that yes! pandas do
 seem to really enjoy bananas!
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/4SZl1r2O_bY" frameborder="0" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://youtube.com/embed/4SZl1r2O_bY" frameborder="0" allowfullscreen></iframe>
 ```
 
 ![two-posts](two-posts.png)

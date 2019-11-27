@@ -26,9 +26,9 @@ When someone mentions static site generation, many people think of
 noticed it would allow me to build a blog quite easily. I was eager to learn
 something new and get something up and running that was more than just my usual
 WordPress theme. I was on the verge of rebuilding my portfolio site until a
-certain [Scott Tolinski](https://www.youtube.com/user/LevelUpTuts) released a
+certain [Scott Tolinski](https://youtube.com/user/LevelUpTuts) released a
 video on
-[GatsbyJS](https://www.youtube.com/watch?v=b2H7fWhQcdE&feature=youtu.be).
+[GatsbyJS](https://youtube.com/watch?v=b2H7fWhQcdE&feature=youtu.be).
 
 [GatsbyJS]() is a static site generator, similar to Jekyll, however it is
 written using [React](https://reactjs.org) and allows you to write your pages

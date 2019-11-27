@@ -29,7 +29,7 @@ We also expect the following from pair programming participants:
 - If you're new to contributing to open source we recommend following the ["Setting Up Your Local Dev Environment" guide](https://www.gatsbyjs.org/contributing/setting-up-your-local-dev-environment) before your session.
 - All participants are expected to adhere to [Gatsby’s code of conduct](/contributing/code-of-conduct)
 - We will ask if it’s okay to record our session; you are _not_ required to let us record
-- If the session is recorded, we may post the recording on [Gatsby’s YouTube channel](https://www.youtube.com/channel/UCjnp770qk7ujOq8Q9wiC82w)
+- If the session is recorded, we may post the recording on [Gatsby’s YouTube channel](https://youtube.com/channel/UCjnp770qk7ujOq8Q9wiC82w)
 
 ## How to sign up
 

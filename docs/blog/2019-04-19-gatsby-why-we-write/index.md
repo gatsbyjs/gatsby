@@ -42,7 +42,7 @@ Roughly speaking, there are two sides of content at Gatsby — marketing content
 
 An example of (1) might be Linda's [How To Talk About Gatsby To Your Clients and Team](/blog/2019-03-07-sell-gatsby-to-clients).
 
-An example of (2) might be Jason's [Learn With Jason](https://www.youtube.com/playlist?list=PLz8Iz-Fnk_eTpvd49Sa77NiF8Uqq5Iykx) series or really anything in the [docs](/docs).
+An example of (2) might be Jason's [Learn With Jason](https://youtube.com/playlist?list=PLz8Iz-Fnk_eTpvd49Sa77NiF8Uqq5Iykx) series or really anything in the [docs](/docs).
 
 There's tons of overlap - _why_ points to _how_, and _how_ points to _why_. You could argue we've spent more time on (2) than (1), but the reality is that _we've only scratched the surface of what's possible_.
 

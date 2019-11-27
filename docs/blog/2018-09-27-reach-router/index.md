@@ -28,7 +28,7 @@ The video below demonstrates this challenge (Video by [Rob DeLuca](https://twitt
 <iframe
   width="560"
   height="315"
-  src="https://www.youtube.com/embed/NKTdNv8JpuM?rel=0"
+  src="https://youtube.com/embed/NKTdNv8JpuM?rel=0"
   frameborder="0"
   allow="autoplay; encrypted-media"
   allowfullscreen

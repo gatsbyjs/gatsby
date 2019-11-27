@@ -8,7 +8,7 @@ Prismic is a hosted, proprietary Headless CMS (SaaS) with a web app for creating
 
 Moreover, their [Content Slices](https://prismic.io/feature/dynamic-layout-content-components) feature enables you to build dynamic layouts by defining reusable custom components and placing them on your landing page, case studies, or in your blog posts. Fortunately, you can use those in Gatsby to realize features like PrismJS highlighting or using `gatsby-image`. [This starter](https://github.com/LekoArts/gatsby-starter-prismic) shows you how to do just that!
 
-In addition to written instructions, this guide also includes videos for more complex steps. You can find all of them in a [YouTube playlist](https://www.youtube.com/playlist?list=PLB-cmN3u7PHJCG-phPyiydhHfiosyd0VC).
+In addition to written instructions, this guide also includes videos for more complex steps. You can find all of them in a [YouTube playlist](https://youtube.com/playlist?list=PLB-cmN3u7PHJCG-phPyiydhHfiosyd0VC).
 
 _Note: This guide uses the Gatsby Hello World starter to provide a very basic understanding of how Prismic can work with your Gatsby site. If you'd like to start with a full blown template, check out [gatsby-starter-prismic](https://github.com/LekoArts/gatsby-starter-prismic). If you're not familiar with Prismic and its functionalities yet, check out [Prismic's official documentation](https://prismic.io/docs) which also includes user guides and tutorials. This guide assumes that you have basic knowledge of Prismic & Gatsby (See [Gatsby's official tutorial](/tutorial))._
 

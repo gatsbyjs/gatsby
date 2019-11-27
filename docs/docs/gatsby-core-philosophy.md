@@ -23,7 +23,7 @@ We believe that in 5 or 10 years, we'll look back at many of these blocks like w
 
 Using abstractions like React components, `gatsby-image`, and `gatsby-link`, we've begun to craft this higher-level language. But we're just getting started. Gatsby is a playground for discovering new building blocks for the web.
 
-To [quote Alan Kay](https://www.youtube.com/watch?v=NdSD07U5uBs):
+To [quote Alan Kay](https://youtube.com/watch?v=NdSD07U5uBs):
 
 > “You get simplicity by finding slightly more sophisticated building blocks“.
 
@@ -165,4 +165,4 @@ Some things we do in order to create an inclusive, welcoming community include:
 
 We’ve built an active community with thousands of contributors, and we want to live the example of what a great open source community can be.
 
-[See more here](https://www.youtube.com/watch?v=8ARA7AD4yPs&feature=youtu.be&list=PLz8Iz-Fnk_eQGt4-VFFCXYuYcuKaw4F07)
+[See more here](https://youtube.com/watch?v=8ARA7AD4yPs&feature=youtu.be&list=PLz8Iz-Fnk_eQGt4-VFFCXYuYcuKaw4F07)

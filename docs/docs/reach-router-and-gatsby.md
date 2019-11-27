@@ -23,4 +23,4 @@ Besides using the [`<Link />` API](https://www.gatsbyjs.org/docs/gatsby-link) fo
 ## Other resources
 
 - [Reach Router docs](https://reach.tech/router)
-- [Video about using @reach/router in a standalone project (not Gatsby)](https://www.youtube.com/watch?v=J1vsBrSUptA).
+- [Video about using @reach/router in a standalone project (not Gatsby)](https://youtube.com/watch?v=J1vsBrSUptA).

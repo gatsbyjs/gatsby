@@ -186,4 +186,4 @@ With the [Gatsby feed plugin](/packages/gatsby-plugin-feed), you can share your 
 
 ## More resources
 
-[Jason Lengstorf and Amberley Romo livestream building an RSS feed powered podcast site](https://www.youtube.com/watch?v=0hGlvyuQiKQ).
+[Jason Lengstorf and Amberley Romo livestream building an RSS feed powered podcast site](https://youtube.com/watch?v=0hGlvyuQiKQ).

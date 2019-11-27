@@ -62,7 +62,7 @@ easy React's component model made it to build complex apps and wanted that same
 model for building websites.
 
 In a week of intense coding, I prototyped the first version of Gatsby
-([see my talk at React conf to hear more of the story](https://www.youtube.com/watch?v=RFkNRKL6ZoE))
+([see my talk at React conf to hear more of the story](https://youtube.com/watch?v=RFkNRKL6ZoE))
 and open sourced this 2 years ago.
 
 1000s of sites and 10,000 stars later, it seems clear that tools for building

@@ -18,7 +18,7 @@ Gatsby pitches as a “Blazing-fast static site generator for React”. So if I 
 > **What-stack?** JAM stands for JavaScript, API, Markup. There are lots of benefits to this type of site, but the one I’m interested in is that your CMS is detached from your site - no hefty WordPress build for your tiny blog site.
 > [You can read more on the JAMstack website](https://jamstack.org).
 
-I found Gatsby a real pleasure. You can find tutorials on their site for setup and once you see the code it’s fairly simple. I can personally recommend [Scott Tolinski’s series - available on Youtube](https://www.youtube.com/watch?v=b2H7fWhQcdE&list=PLLnpHn493BHHfoINKLELxDch3uJlSapxg). Gatsby nicely wraps up React and React Router with a nice folder structure, webkit, ES6, Sass support and - importantly - GraphQL.
+I found Gatsby a real pleasure. You can find tutorials on their site for setup and once you see the code it’s fairly simple. I can personally recommend [Scott Tolinski’s series - available on Youtube](https://youtube.com/watch?v=b2H7fWhQcdE&list=PLLnpHn493BHHfoINKLELxDch3uJlSapxg). Gatsby nicely wraps up React and React Router with a nice folder structure, webkit, ES6, Sass support and - importantly - GraphQL.
 
 > **What-QL?** GraphQL is a query language for APIs. Where in the WordPress Days I’d have to get the whole post just to display the title, with GraphQL I can tell the API to give me just the title.
 > [Their site is pretty handy too](http://graphql.org).

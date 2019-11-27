@@ -25,12 +25,12 @@ On a recent livestream, [Ado Kukic](https://twitter.com/KukicAdo) helped me crea
   type="text/html"
   width="720"
   height="405"
-  src="https://www.youtube.com/embed/j-vuF2PYHmU?list=PLz8Iz-Fnk_eTpvd49Sa77NiF8Uqq5Iykx"
+  src="https://youtube.com/embed/j-vuF2PYHmU?list=PLz8Iz-Fnk_eTpvd49Sa77NiF8Uqq5Iykx"
   frameborder="0"
   allowfullscreen
 />
 
-**This is part of the [Learn With Jason series](https://www.youtube.com/playlist?list=PLz8Iz-Fnk_eTpvd49Sa77NiF8Uqq5Iykx), which [streams live on Twitch][twitch] every Thursday at 9 am Pacific.**
+**This is part of the [Learn With Jason series](https://youtube.com/playlist?list=PLz8Iz-Fnk_eTpvd49Sa77NiF8Uqq5Iykx), which [streams live on Twitch][twitch] every Thursday at 9 am Pacific.**
 
 On the stream, we covered:
 
