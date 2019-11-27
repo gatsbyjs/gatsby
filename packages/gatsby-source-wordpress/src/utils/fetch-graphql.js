@@ -3,7 +3,7 @@ import axios from "axios"
 import rateLimit from "axios-rate-limit"
 
 const http = rateLimit(axios.create(), {
-  maxRPS: 1,
+  maxRPS: 50,
 })
 
 const fetchGraphql = async ({ url, query, errorMap, variables = {} }) => {
