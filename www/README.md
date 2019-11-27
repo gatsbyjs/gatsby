@@ -27,7 +27,7 @@ To develop on the starter library, you'll need to supply a GitHub personal acces
 GITHUB_API_TOKEN=YOUR_TOKEN_HERE
 ```
 
-_Note:_ for `gatsby build` you need also a `.env.production` file with the `GITHUB_API_TOKEN`
+_Note:_ For `gatsby build` to be able to run you also need a `.env.production` file with the same contents
 
 ### Enabling guess.js
 
