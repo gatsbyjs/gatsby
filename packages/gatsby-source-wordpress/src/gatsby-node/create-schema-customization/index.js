@@ -25,15 +25,34 @@ export default async (helpers, pluginOptions) => {
               }
             }
           }
+
+          mutationType {
+            fields {
+              type {
+                name
+              }
+            }
+          }
         }
       }
     `,
   })
   let typeDefs = []
 
+  const mutationTypes = introspection.data.__schema.mutationType.fields.map(
+    field => field.type.name
+  )
+
   // for now just pull object types, we'll need other types soon though
   introspection.data.__schema.types
-    .filter(type => type.name !== `RootQuery` && type.kind === `OBJECT`)
+    .filter(
+      type =>
+        type.name !== `RootQuery` &&
+        type.kind === `OBJECT` &&
+        // don't create mutation or connection types! we don't need them
+        !mutationTypes.includes(type.name) &&
+        !type.name.includes(`Connection`)
+    )
     .forEach(type => {
       // create type definition
       typeDefs.push(
@@ -41,6 +60,20 @@ export default async (helpers, pluginOptions) => {
           name: `Wp${type.name}`,
           interfaces: [`Node`],
           fields: type.fields.reduce((acc, { name, ...curr }) => {
+            // skip mutations
+            if (mutationTypes.includes(curr.type.name)) {
+              return acc
+            }
+
+            // skip connection types?
+            if (
+              curr.type &&
+              curr.type.name &&
+              curr.type.name.includes(`Connection`)
+            ) {
+              return acc
+            }
+
             // non null scalar types
             if (
               curr.type.kind === `NON_NULL` &&
@@ -60,7 +93,7 @@ export default async (helpers, pluginOptions) => {
               acc[name] = {
                 type: `Wp${curr.type.name}`,
                 resolve: (source, args, context, info) => {
-                  if (!source[name] || !source[name].id) {
+                  if (!source[name] || (source[name] && !source[name].id)) {
                     return null
                   }
 
