@@ -28,6 +28,15 @@ const fetchGraphql = async ({ url, query, errorMap, variables = {} }) => {
 
   if (json.errors) {
     json.errors.forEach(error => {
+      if (
+        errorMap &&
+        errorMap.from &&
+        errorMap.to &&
+        error.message === errorMap.from
+      ) {
+        return console.error(`[gatsby-source-wordpress] ${errorMap.to}`)
+      }
+
       if (error.debugMessage) {
         console.error(`[gatsby-source-wordpress] Error category: ${
           error.category
@@ -38,15 +47,6 @@ ${
     ? error.debugMessage
     : `If you haven't already, try enabling GRAPHQL_DEBUG in wp-config.php for more detailed error messages`
 }`)
-      }
-
-      if (
-        errorMap &&
-        errorMap.from &&
-        errorMap.to &&
-        error.message === errorMap.from
-      ) {
-        return console.error(`[gatsby-source-wordpress] ${errorMap.to}`)
       }
 
       if (!error.debugMessage) {
