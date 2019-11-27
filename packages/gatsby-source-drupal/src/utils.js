@@ -37,7 +37,7 @@ const handleReferences = (node, { getNode, createNodeId }) => {
       } else {
         const referencedNodeId = createNodeId(v.data.id)
         if (getNode(referencedNodeId)) {
-          relationships[nodeFieldName] = referencedNodeId
+          relationships[nodeFieldName] = [referencedNodeId]
           referencedNodes.push(referencedNodeId)
         }
         // If there's meta on the field and it's not an existing/internal one
