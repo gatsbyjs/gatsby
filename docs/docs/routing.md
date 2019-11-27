@@ -29,7 +29,7 @@ The exception to this rule is any file named `index.js`. Files with this name ar
 
 Note that if no `index.js` file exists in a particular directory that root page does not exist, and attempts to navigate to it will land you on a [404 page](/docs/add-404-page/). For example, `yoursite.com/information/contact` may exist, but that does not guarantee `yoursite.com/information` exists.
 
-### Pages created with `createPages` hook
+### Pages created with `createPage` action
 
 Another way to create pages is in your `gatsby-node.js` file using the `createPages` hook. When pages are defined this way the path is explicitly set. For example:
 
