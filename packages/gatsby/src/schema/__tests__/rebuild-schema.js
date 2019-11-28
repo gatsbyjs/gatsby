@@ -1148,8 +1148,8 @@ describe(`compatibility with createTypes`, () => {
 
   it(`should not collect inference metadata for types with inference disabled`, async () => {
     const { inferenceMetadata } = store.getState()
-    const typesToIgnore = Object.keys(inferenceMetadata).filter(
-      type => inferenceMetadata[type].ignored
+    const typesToIgnore = Object.keys(inferenceMetadata.typeMap).filter(
+      type => inferenceMetadata.typeMap[type].ignored
     )
     expect(typesToIgnore).toEqual([`FooFieldsBaz`, `Bar`, `BarBaz`])
   })
