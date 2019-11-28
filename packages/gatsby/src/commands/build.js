@@ -11,11 +11,12 @@ const { initTracer, stopTracer } = require(`../utils/tracer`)
 const db = require(`../db`)
 const signalExit = require(`signal-exit`)
 const telemetry = require(`gatsby-telemetry`)
-const { store, emitter } = require(`../redux`)
+const { store } = require(`../redux`)
 const queryUtil = require(`../query`)
 const appDataUtil = require(`../utils/app-data`)
 const WorkerPool = require(`../utils/worker/pool`)
 const { structureWebpackErrors } = require(`../utils/webpack-error-utils`)
+const { waitUntilAllJobsComplete } = require(`../utils/jobs-manager`)
 
 type BuildArgs = {
   directory: string,
@@ -24,18 +25,6 @@ type BuildArgs = {
   noUglify: boolean,
   openTracingConfigFile: string,
 }
-
-const waitJobsFinished = () =>
-  new Promise((resolve, reject) => {
-    const onEndJob = () => {
-      if (store.getState().jobs.active.length === 0) {
-        resolve()
-        emitter.off(`END_JOB`, onEndJob)
-      }
-    }
-    emitter.on(`END_JOB`, onEndJob)
-    onEndJob()
-  })
 
 module.exports = async function build(program: BuildArgs) {
   const publicDir = path.join(program.directory, `public`)
@@ -114,7 +103,7 @@ module.exports = async function build(program: BuildArgs) {
     `BOOTSTRAP_QUERY_RUNNING_FINISHED`
   )
 
-  await waitJobsFinished()
+  await waitUntilAllJobsComplete()
 
   await db.saveState()
   const pagePaths = [...store.getState().pages.keys()]

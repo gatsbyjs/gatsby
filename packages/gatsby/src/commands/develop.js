@@ -15,7 +15,7 @@ const got = require(`got`)
 const webpack = require(`webpack`)
 const webpackConfig = require(`../utils/webpack.config`)
 const bootstrap = require(`../bootstrap`)
-const { store, emitter } = require(`../redux`)
+const { store } = require(`../redux`)
 const { syncStaticDir } = require(`../utils/get-static-dir`)
 const buildHTML = require(`./build-html`)
 const { withBasePath } = require(`../utils/path`)
@@ -46,6 +46,7 @@ const {
   reportWebpackWarnings,
   structureWebpackErrors,
 } = require(`../utils/webpack-error-utils`)
+const { waitUntilAllJobsComplete } = require(`../utils/jobs-manager`)
 
 // const isInteractive = process.stdout.isTTY
 
@@ -59,18 +60,6 @@ setTimeout(() => {
 onExit(() => {
   telemetry.trackCli(`DEVELOP_STOP`)
 })
-
-const waitJobsFinished = () =>
-  new Promise((resolve, reject) => {
-    const onEndJob = () => {
-      if (store.getState().jobs.active.length === 0) {
-        resolve()
-        emitter.off(`END_JOB`, onEndJob)
-      }
-    }
-    emitter.on(`END_JOB`, onEndJob)
-    onEndJob()
-  })
 
 async function startServer(program) {
   const indexHTMLActivity = report.phantomActivity(`building index.html`, {})
@@ -392,7 +381,7 @@ module.exports = async (program: any) => {
     `BOOTSTRAP_QUERY_RUNNING_FINISHED`
   )
 
-  await waitJobsFinished()
+  await waitUntilAllJobsComplete()
   requiresWriter.startListener()
   db.startAutosave()
   queryUtil.startListeningToDevelopQueue()
@@ -417,9 +406,9 @@ module.exports = async (program: any) => {
       })
 
     const isUnspecifiedHost = host === `0.0.0.0` || host === `::`
-    let prettyHost = host,
-      lanUrlForConfig,
-      lanUrlForTerminal
+    let prettyHost = host
+    let lanUrlForConfig
+    let lanUrlForTerminal
     if (isUnspecifiedHost) {
       prettyHost = `localhost`
 

@@ -2,6 +2,13 @@ const uuid = require(`uuid/v4`)
 const hasha = require(`hasha`)
 const pDefer = require(`p-defer`)
 const { createContentDigest } = require(`gatsby-core-utils`)
+const reporter = require(`gatsby-cli/lib/reporter`)
+
+let activityForJobs
+let activeJobs = 0
+
+/** @type {Map<string, {id: string, deferred: pDefer.DeferredPromise}>} */
+const jobsInProcess = new Map()
 
 /**
  * @param {string} path
@@ -29,9 +36,10 @@ const createFileHash = path => hasha.fromFile(path, { algorithm: `sha1` })
  */
 
 /**
- * @type {Map<string, {id: string, deferred: pDefer.DeferredPromise}>}
+ * @deprecated
+ * TODO: Remove for Gatsby v3 (compatibility mode)
  */
-const jobsInProcess = new Map()
+exports.jobsInProcess = jobsInProcess
 
 /**
  *
@@ -82,11 +90,25 @@ exports.enqueueJob = async ({ name, inputPaths, outputDir, args, plugin }) => {
     return jobsInProcess.get(job.contentDigest).deferred.promise
   }
 
+  // Bump active jobs
+  activeJobs++
+  if (!activityForJobs) {
+    activityForJobs = reporter.phantomActivity(`Running jobs`)
+    activityForJobs.start()
+  }
+
   // TODO: check cache folder for already stored jobs
   const deferred = pDefer()
   jobsInProcess.set(job.contentDigest, {
     id: job.id,
     deferred,
+  })
+
+  deferred.promise = deferred.promise.finally(() => {
+    if (--activeJobs === 0) {
+      activityForJobs.end()
+      activityForJobs = null
+    }
   })
 
   runJob(job, deferred)
