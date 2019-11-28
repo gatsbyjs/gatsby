@@ -16,6 +16,7 @@ const sanitiseNode = value => {
     value.internal.contentDigest &&
     value.internal.type === `SitePlugin`
   ) {
+    delete value.packageJson
     delete value.internal.contentDigest
     delete value.version
   }
@@ -225,6 +226,10 @@ describe(`Cache`, () => {
           preBootstrapStateFromSecondRun
         )
 
+        expect(postBootstrapStateFromFirstRun).toEqual(
+          preBootstrapStateFromSecondRun
+        )
+
         expect(postCacheInvalidationDiff).toMatchInlineSnapshot(`
           Object {
             "additions": Object {},
@@ -232,10 +237,6 @@ describe(`Cache`, () => {
             "deletions": Object {},
           }
         `)
-
-        expect(postCacheInvalidationDiff.additions_length).toEqual(0)
-        expect(postCacheInvalidationDiff.changes_length).toEqual(0)
-        expect(postCacheInvalidationDiff.deletions_length).toEqual(0)
 
         expect(
           compareState(
@@ -245,11 +246,8 @@ describe(`Cache`, () => {
         ).toMatchInlineSnapshot(`
           Object {
             "additions": Object {},
-            "additions_length": 0,
             "changes": Object {},
-            "changes_length": 0,
             "deletions": Object {},
-            "deletions_length": 0,
           }
         `)
       })
@@ -567,8 +565,6 @@ describe(`Cache`, () => {
     describe(`Fields`, () => {
       it.todo(`are deleted and recreated when owner plugin changes`, () => {})
     })
-
-    describe(`Inference Metadata`, () => {})
   })
   describe(`Disk`, () => {})
 })
