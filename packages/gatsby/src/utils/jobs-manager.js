@@ -53,6 +53,13 @@ const runJob = (job, deferred) => {
   }, 100)
 }
 
+const handleJobEnded = () => {
+  if (--activeJobs === 0) {
+    activityForJobs.end()
+    activityForJobs = null
+  }
+}
+
 /**
  * Creates a job
  *
@@ -99,16 +106,22 @@ exports.enqueueJob = async ({ name, inputPaths, outputDir, args, plugin }) => {
 
   // TODO: check cache folder for already stored jobs
   const deferred = pDefer()
+  // node 8 doenst have finally so we call then & catch
+  deferred.promise = deferred.promise
+    .catch(err => {
+      handleJobEnded()
+
+      throw err
+    })
+    .then(res => {
+      handleJobEnded()
+
+      return res
+    })
+
   jobsInProcess.set(job.contentDigest, {
     id: job.id,
     deferred,
-  })
-
-  deferred.promise = deferred.promise.finally(() => {
-    if (--activeJobs === 0) {
-      activityForJobs.end()
-      activityForJobs = null
-    }
   })
 
   runJob(job, deferred)
