@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.24...gatsby-plugin-offline@3.0.25) (2019-11-28)
+
+### Bug Fixes
+
+- **gatsby-plugin-offline:** Update incorrect casing for runtimeCachin… ([#19817](https://github.com/gatsbyjs/gatsby/issues/19817)) ([b44aca0](https://github.com/gatsbyjs/gatsby/commit/b44aca0))
+
 ## [3.0.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.23...gatsby-plugin-offline@3.0.24) (2019-11-26)
 
 **Note:** Version bump only for package gatsby-plugin-offline

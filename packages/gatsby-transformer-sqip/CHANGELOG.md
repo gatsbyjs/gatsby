@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.49](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sqip@2.1.48...gatsby-transformer-sqip@2.1.49) (2019-11-28)
+
+**Note:** Version bump only for package gatsby-transformer-sqip
+
 ## [2.1.48](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sqip@2.1.47...gatsby-transformer-sqip@2.1.48) (2019-11-26)
 
 **Note:** Version bump only for package gatsby-transformer-sqip
