@@ -1,5 +1,6 @@
 import fetchGraphql from "../../../utils/fetch-graphql"
 import store from "../../../store"
+import formatLogMessage from "../../../utils/format-log-message"
 
 const wpActionUPDATE = async ({
   helpers,
@@ -61,7 +62,7 @@ const wpActionUPDATE = async ({
 
   if (intervalRefetching) {
     helpers.reporter.info(
-      `[gatsby-source-wordpress] updated ${wpAction.referencedPostSingleName} ${wpAction.referencedPostID}`
+      formatLogMessage`updated ${wpAction.referencedPostSingleName} ${wpAction.referencedPostID}`
     )
   }
 

@@ -1,9 +1,11 @@
 import { buildNodeQueriesFromIntrospection } from "./source-nodes/generate-queries-from-introspection"
-
+import formatLogMessage from "../utils/format-log-message"
 import checkPluginRequirements from "../utils/check-plugin-requirements"
+import store from "../store"
 
 const onPreBootstrap = async (helpers, pluginOptions) => {
   const api = [helpers, pluginOptions]
+  store.dispatch.gatsbyApi.setState({ helpers, pluginOptions })
 
   //
   // this exits the build if requirements aren't met
@@ -12,13 +14,18 @@ const onPreBootstrap = async (helpers, pluginOptions) => {
   //
   // Introspect schema and build gql queries
   const activity = helpers.reporter.activityTimer(
-    `[gatsby-source-wordpress] introspect schema`
+    formatLogMessage`introspect schema`
   )
-  activity.start()
+
+  if (pluginOptions.verbose) {
+    activity.start()
+  }
 
   await buildNodeQueriesFromIntrospection(...api)
 
-  activity.end()
+  if (pluginOptions.verbose) {
+    activity.end()
+  }
 
   // store helpers and plugin options
   // do introspection

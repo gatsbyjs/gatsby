@@ -1,3 +1,4 @@
+import formatLogMessage from "../../../utils/format-log-message"
 const wpActionDELETE = async ({ helpers, cachedNodeIds, wpAction }) => {
   const { reporter, actions, getNode } = helpers
 
@@ -5,7 +6,7 @@ const wpActionDELETE = async ({ helpers, cachedNodeIds, wpAction }) => {
   const nodeId = wpAction.referencedPostGlobalRelayID
 
   reporter.info(
-    `[gatsby-source-wordpress] deleted ${wpAction.referencedPostSingleName} ${wpAction.referencedPostID}`
+    formatLogMessage`deleted ${wpAction.referencedPostSingleName} ${wpAction.referencedPostID}`
   )
 
   const node = await getNode(nodeId)

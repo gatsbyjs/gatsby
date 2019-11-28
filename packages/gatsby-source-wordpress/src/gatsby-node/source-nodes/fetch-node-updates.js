@@ -1,5 +1,6 @@
 import { CREATED_NODE_IDS } from "../constants"
 import { fetchAndRunWpActions } from "./wp-actions"
+import formatLogMessage from "../../utils/format-log-message"
 
 const fetchAndApplyNodeUpdates = async (
   { since, intervalRefetching },
@@ -13,7 +14,7 @@ const fetchAndApplyNodeUpdates = async (
 
   if (!intervalRefetching) {
     activity = reporter.activityTimer(
-      `[gatsby-source-wordpress] pull updates since last build`
+      formatLogMessage`pull updates since last build`
     )
     activity.start()
   }

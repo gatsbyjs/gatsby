@@ -188,7 +188,7 @@ export const buildNodeQueriesFromIntrospection = async (
 
   //
   // set the queries in our redux store
-  store.dispatch.introspection.setQueries(queries)
+  store.dispatch.introspection.setState(queries)
 
   return queries
 }

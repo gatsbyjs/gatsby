@@ -1,10 +1,10 @@
 import { createGatsbyNodesFromWPGQLContentNodes } from "./create-nodes"
 import paginatedWpNodeFetch from "./paginated-wp-node-fetch"
-
+import formatLogMessage from "../../utils/format-log-message"
 import { CREATED_NODE_IDS } from "../constants"
 import store from "../../store"
 
-export const fetchWPGQLContentNodes = async (_, helpers, { url }) => {
+export const fetchWPGQLContentNodes = async (_, helpers, { url, verbose }) => {
   const { reporter } = helpers
   const contentNodeGroups = []
 
@@ -17,9 +17,13 @@ export const fetchWPGQLContentNodes = async (_, helpers, { url }) => {
           const { listQueryString, typeInfo } = queryInfo
 
           const activity = reporter.activityTimer(
-            `[gatsby-source-wordpress] -> fetching all ${typeInfo.pluralName}`
+            formatLogMessage(typeInfo.pluralName)
           )
-          activity.start()
+
+          if (verbose) {
+            activity.start()
+          }
+
           const allNodesOfContentType = await paginatedWpNodeFetch({
             first: 100,
             after: null,
@@ -31,7 +35,10 @@ export const fetchWPGQLContentNodes = async (_, helpers, { url }) => {
             activity,
             helpers,
           })
-          activity.end()
+
+          if (verbose) {
+            activity.end()
+          }
 
           if (allNodesOfContentType && allNodesOfContentType.length) {
             contentNodeGroups.push({
@@ -58,16 +65,20 @@ export const fetchAndCreateAllNodes = async (_, helpers, pluginOptions) => {
 
   //
   // fetch nodes from WPGQL
-  activity = reporter.activityTimer(`[gatsby-source-wordpress] fetch content`)
+  activity = reporter.activityTimer(formatLogMessage`fetch WordPress nodes`)
   activity.start()
 
-  const wpgqlNodesByContentType = await fetchWPGQLContentNodes(_, ...api)
+  store.subscribe(state => {
+    activity.setStatus(`fetched ${store.getState().logger.entityCount}`)
+  })
+
+  const wpgqlNodesByContentType = await fetchWPGQLContentNodes({}, ...api)
 
   activity.end()
 
   //
   // Create Gatsby nodes from WPGQL response
-  activity = reporter.activityTimer(`[gatsby-source-wordpress] create nodes`)
+  activity = reporter.activityTimer(formatLogMessage`create nodes`)
   activity.start()
 
   const createdNodeIds = await createGatsbyNodesFromWPGQLContentNodes(

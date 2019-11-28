@@ -1,6 +1,7 @@
 import { parse } from "url"
 import fetchGraphql from "../../../utils/fetch-graphql"
 import store from "../../../store"
+import formatLogMessage from "../../../utils/format-log-message"
 
 const wpActionCREATE = async ({
   helpers,
@@ -55,7 +56,7 @@ const wpActionCREATE = async ({
 
   if (intervalRefetching) {
     helpers.reporter.info(
-      `[gatsby-source-wordpress] created ${wpAction.referencedPostSingleName} ${wpAction.referencedPostID}`
+      formatLogMessage`created ${wpAction.referencedPostSingleName} ${wpAction.referencedPostID}`
     )
   }
 

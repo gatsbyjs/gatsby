@@ -1,5 +1,6 @@
 import { getPaginatedQuery } from "./graphql-queries"
 import fetchGraphql from "../../utils/fetch-graphql"
+import store from "../../store"
 
 const paginatedWpNodeFetch = async ({
   contentTypePlural,
@@ -12,11 +13,6 @@ const paginatedWpNodeFetch = async ({
   allContentNodes = [],
   ...variables
 }) => {
-  // skip fetching media items for now
-  // if (contentTypePlural === `mediaItems`) {
-  //   return allContentNodes
-  // }
-
   const paginatedQuery = getPaginatedQuery(query)
 
   const response = await fetchGraphql({
@@ -24,15 +20,6 @@ const paginatedWpNodeFetch = async ({
     query: paginatedQuery,
     variables,
   })
-
-  if (response.errors) {
-    helpers.reporter.warn(`${nodeTypeName} fetch returned errors`)
-    response.errors.forEach(error => {
-      helpers.reporter.warn(error.message)
-    })
-
-    return null
-  }
 
   const { data } = response
 
@@ -58,6 +45,8 @@ const paginatedWpNodeFetch = async ({
     })
 
     activity.setStatus(`fetched ${allContentNodes.length}`)
+
+    store.dispatch.logger.incrementBy(nodes.length)
   }
 
   if (hasNextPage) {
