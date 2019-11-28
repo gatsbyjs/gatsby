@@ -12,6 +12,15 @@ const wpActionUPDATE = async ({
   pluginOptions,
 }) => {
   const { reporter } = helpers
+
+  const state = store.getState()
+  const {
+    gatsbyApi: {
+      pluginOptions: { verbose },
+    },
+    introspection: { queries },
+  } = state
+
   const nodeId = wpAction.referencedPostGlobalRelayID
 
   if (wpAction.referencedPostStatus !== `publish`) {
@@ -20,17 +29,10 @@ const wpActionUPDATE = async ({
     return cachedNodeIds.filter(cachedId => cachedId !== nodeId)
   }
 
-  const { verbose } = store.getState().gatsbyApi.pluginOptions
-
-  const { queries } = store.getState().introspection
-
-  const queryInfo = Object.values(queries).find(
+  const { nodeQueryString: query, typeInfo } = Object.values(queries).find(
     q => q.typeInfo.singleName === wpAction.referencedPostSingleName
   )
 
-  const { nodeQueryString: query } = queryInfo
-
-  // otherwise we need to refetch the post
   const { url } = pluginOptions
   const { data } = await fetchGraphql({
     url,
@@ -46,7 +48,6 @@ const wpActionUPDATE = async ({
     path: parse(data[wpAction.referencedPostSingleName].link).pathname,
   }
 
-  // then delete the posts node
   const { actions, getNode } = helpers
   const node = await getNode(nodeId)
 
@@ -56,16 +57,15 @@ const wpActionUPDATE = async ({
   // then we can delete it
   await actions.deleteNode({ node })
 
-  // Now recreate the deleted node but with updated data
+  // recreate the deleted node but with updated data
   const { createContentDigest } = helpers
   await actions.createNode({
-    ...node,
     ...updatedNodeContent,
     id: nodeId,
     parent: null,
     internal: {
       contentDigest: createContentDigest(updatedNodeContent),
-      type: `Wp${queryInfo.typeInfo.nodesTypeName}`,
+      type: `Wp${typeInfo.nodesTypeName}`,
     },
   })
 
@@ -78,19 +78,18 @@ const wpActionUPDATE = async ({
         }`
       )
     )
-    reporter.log(``)
 
     if (verbose) {
       Object.entries(node)
         .filter(([key]) => !key.includes(`modifiedGmt`) && key !== `modified`)
         .forEach(([key, value]) => {
-          // if the value of this field changed, log it
           if (
+            // if the value of this field changed, log it
             typeof updatedNodeContent[key] === `string` &&
             value !== updatedNodeContent[key]
           ) {
-            reporter.info(chalk.bold(`${key} changed`))
             reporter.log(``)
+            reporter.info(chalk.bold(`${key} changed`))
             reporter.log(`${chalk.italic.bold(`from`)}`)
             reporter.log(value)
             reporter.log(chalk.italic.bold(`to`))
