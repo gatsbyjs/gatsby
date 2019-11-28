@@ -43,7 +43,7 @@ Of the 111 submissions, 52 passed the automated review.
 
 ### Part 2: Manual Review
 
-Every theme that cleared the automated review was manually reviewed by [Jackson](https://twitter.com/jxnblk), [Amberley](https://twitter.com/amber1ey), [John](https://twitter.com/4lpine), [Kyle Gill](https://gill_kyle), [Chris](https://twitter.com/chrisbiscardi), [Flo](https://twitter.com/fk), and [me](https://twitter.com/jlengstorf).
+Every theme that cleared the automated review was manually reviewed by [Jackson](https://twitter.com/jxnblk), [Amberley](https://twitter.com/amber1ey), [John](https://twitter.com/4lpine), [Kyle Gill](https://twitter.com/gill_kyle), [Chris](https://twitter.com/chrisbiscardi), [Flo](https://twitter.com/fk), and [me](https://twitter.com/jlengstorf).
 
 Amberley did a manual accessibility audit. Nearly all of the themes we reviewed have a few accessibility issues, so we will be opening issues with feedback and suggestions to improve that.
 
