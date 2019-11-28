@@ -81,7 +81,7 @@ const gatsbyBin = path.join(
   `gatsby.js`
 )
 
-const { compareState } = require(`./changes`)
+const { compareState } = require(`../utils/nodes-diff`)
 
 const useGatsbyNode = (run = 1) => {
   const r = fs.readdirSync(`plugins`)
