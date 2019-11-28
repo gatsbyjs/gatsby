@@ -11,7 +11,6 @@ exports.onCreateNode = async (
   },
   { filter, nodeName = `localFile` }
 ) => {
-  // asdf
   if (filter(node)) {
     const fileNode = await createRemoteFileNode({
       url: node.url,
