@@ -24,13 +24,14 @@ const startIntervalRefetcher = (_, helpers, pluginOptions) => {
     setTimeout(refetcher, msRefetchInterval)
   }
 
-  // wait 10 seconds before starting the refetcher
+  // wait 5 seconds before starting the refetcher so the reporter message
+  // shows up last
   setTimeout(() => {
     helpers.reporter.info(
       `[gatsby-source-wordpress] Watching for WordPress changes`
     )
     refetcher()
-  }, 10000)
+  }, 5 * 1000)
 }
 
 export default startIntervalRefetcher
