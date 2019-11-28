@@ -5,11 +5,10 @@ const { haveEqualFields } = require(`../schema/infer/inference-metadata`)
 const { updateStateAndRunQueries } = require(`../query/query-watcher`)
 const report = require(`gatsby-cli/lib/reporter`)
 
-const inferredTypesChanged = (inferenceMetadata, prevInferenceMetadata) =>
-  Object.keys(inferenceMetadata).filter(
+const inferredTypesChanged = (typeMap, prevTypeMap) =>
+  Object.keys(typeMap).filter(
     type =>
-      inferenceMetadata[type].dirty &&
-      !haveEqualFields(inferenceMetadata[type], prevInferenceMetadata[type])
+      typeMap[type].dirty && !haveEqualFields(typeMap[type], prevTypeMap[type])
   ).length > 0
 
 const schemaChanged = (schemaCustomization, lastSchemaCustomization) =>
@@ -26,7 +25,7 @@ const maybeRebuildSchema = debounce(async () => {
   const { inferenceMetadata, schemaCustomization } = store.getState()
 
   if (
-    !inferredTypesChanged(inferenceMetadata, lastMetadata) &&
+    !inferredTypesChanged(inferenceMetadata.typeMap, lastMetadata.typeMap) &&
     !schemaChanged(schemaCustomization, lastSchemaCustomization)
   ) {
     return
