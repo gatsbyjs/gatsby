@@ -8,7 +8,7 @@ describe(`Create content digest`, () => {
 
     expect(typeof contentDigest).toEqual(`string`)
     expect(contentDigest).toMatchInlineSnapshot(
-      `"41e0e061ebde15ed7474b047b2a962c5"`
+      `"b37e16c620c055cf8207b999e3270e9b"`
     )
   })
 
