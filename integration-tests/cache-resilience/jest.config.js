@@ -1,3 +1,3 @@
 module.exports = {
-  //   snapshotSerializers: [`jest-serializer-path`],
+  testPathIgnorePatterns: [`/node_modules/`, `\\.cache`],
 }

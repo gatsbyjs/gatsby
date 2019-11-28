@@ -1,4 +1,4 @@
-const { compareState } = require(`../utils/nodes-diff`)
+const { compareState } = require(`../nodes-diff`)
 
 describe(`compareState`, () => {
   it(`computes additions`, () => {
