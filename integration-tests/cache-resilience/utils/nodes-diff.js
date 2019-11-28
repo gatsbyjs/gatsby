@@ -1,4 +1,5 @@
 const _ = require(`lodash`)
+const snapshotDiff = require(`snapshot-diff`)
 
 const reduceArrayToObject = array =>
   array.reduce((accumulator, currentValue) => {
@@ -24,10 +25,17 @@ const compareState = (oldState, newState) => {
     deletions,
     (left, right) => left.id === right.id
   ).map(({ id }) => {
+    const oldValue = oldState.get(id)
+    const newValue = newState.get(id)
+
     return {
       id,
-      oldValue: oldState.get(id),
-      newValue: newState.get(id),
+      oldValue,
+      newValue,
+      diff: snapshotDiff(oldValue, newValue)
+        .split(`\n`)
+        .slice(4)
+        .join(`\n`),
     }
   })
 

@@ -54,6 +54,11 @@ describe(`compareState`, () => {
         "additions": Object {},
         "changes": Object {
           "2": Object {
+            "diff": "  Object {
+          \\"id\\": \\"2\\",
+      -   \\"value\\": \\"b\\",
+      +   \\"value\\": \\"y\\",
+        }",
             "id": "2",
             "newValue": Object {
               "id": "2",
@@ -65,6 +70,11 @@ describe(`compareState`, () => {
             },
           },
           "3": Object {
+            "diff": "  Object {
+          \\"id\\": \\"3\\",
+      -   \\"value\\": \\"c\\",
+      +   \\"value\\": \\"z\\",
+        }",
             "id": "3",
             "newValue": Object {
               "id": "3",
