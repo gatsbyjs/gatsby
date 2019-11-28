@@ -1,10 +1,8 @@
-import {
-  onPreBootstrap,
-  sourceNodes,
-  createSchemaCustomization,
-  createResolvers,
-  onPostBootstrap,
-} from "./gatsby-node"
+import onPreBootstrap from "./gatsby-node/on-pre-bootstrap"
+import sourceNodes from "./gatsby-node/source-nodes"
+import createSchemaCustomization from "./gatsby-node/create-schema-customization"
+import createResolvers from "./gatsby-node/create-resolvers"
+import onCreateDevServer from "./gatsby-node/on-create-dev-server"
 
 module.exports = {
   // 1. check plugin requirements
@@ -24,5 +22,5 @@ module.exports = {
   createResolvers,
 
   // start the interval refetcher in development mode for real-time data updates
-  onPostBootstrap,
+  onCreateDevServer,
 }
