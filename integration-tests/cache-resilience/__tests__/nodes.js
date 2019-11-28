@@ -267,6 +267,19 @@ describe(`Cache`, () => {
             "additions": Object {},
             "changes": Object {
               "INDEPENDENT_NODE_1": Object {
+                "diff": "  Object {
+              \\"children\\": Array [],
+          -   \\"foo\\": \\"bar\\",
+          +   \\"foo\\": \\"baz\\",
+              \\"id\\": \\"INDEPENDENT_NODE_1\\",
+              \\"internal\\": Object {
+                \\"contentDigest\\": \\"0\\",
+                \\"counter\\": 36,
+                \\"owner\\": \\"gatsby-plugin-independent-node\\",
+                \\"type\\": \\"IndependentChanging\\",
+              },
+              \\"parent\\": null,
+            }",
                 "id": "INDEPENDENT_NODE_1",
                 "newValue": Object {
                   "children": Array [],
@@ -360,6 +373,22 @@ describe(`Cache`, () => {
             "additions": Object {},
             "changes": Object {
               "2131d29a-296c-5f73-affc-e422bec644fe": Object {
+                "diff": "  Object {
+          -   \\"bar\\": undefined,
+          +   \\"bar\\": \\"run-2\\",
+              \\"children\\": Array [],
+          -   \\"foo\\": \\"run-1\\",
+          +   \\"foo\\": undefined,
+              \\"id\\": \\"2131d29a-296c-5f73-affc-e422bec644fe\\",
+              \\"internal\\": Object {
+          -     \\"contentDigest\\": \\"cbc07ead8c18c9d616f0004a893d5cf3\\",
+          +     \\"contentDigest\\": \\"a33e2263d5a5f42473e111fb400cef3d\\",
+                \\"counter\\": 38,
+                \\"owner\\": \\"gatsby-transformer-parent-change\\",
+                \\"type\\": \\"ChildOfParent_ParentChangeForTransformer\\",
+              },
+              \\"parent\\": \\"parent_parentChangeForTransformer\\",
+            }",
                 "id": "2131d29a-296c-5f73-affc-e422bec644fe",
                 "newValue": Object {
                   "bar": "run-2",
@@ -389,6 +418,22 @@ describe(`Cache`, () => {
                 },
               },
               "parent_parentChangeForTransformer": Object {
+                "diff": "  Object {
+          +   \\"bar\\": \\"run-2\\",
+              \\"children\\": Array [
+                \\"2131d29a-296c-5f73-affc-e422bec644fe\\",
+              ],
+          -   \\"foo\\": \\"run-1\\",
+              \\"id\\": \\"parent_parentChangeForTransformer\\",
+              \\"internal\\": Object {
+          -     \\"contentDigest\\": \\"a032c69550f5567021eda97cc3a1faf2\\",
+          +     \\"contentDigest\\": \\"4a6a70b2f8849535de50f47c609006fe\\",
+                \\"counter\\": 37,
+                \\"owner\\": \\"gatsby-source-parent-change-for-transformer\\",
+                \\"type\\": \\"Parent_ParentChangeForTransformer\\",
+              },
+              \\"parent\\": null,
+            }",
                 "id": "parent_parentChangeForTransformer",
                 "newValue": Object {
                   "bar": "run-2",
@@ -445,6 +490,21 @@ describe(`Cache`, () => {
             "additions": Object {},
             "changes": Object {
               "parent_childChangeForTransformer": Object {
+                "diff": "  Object {
+          -   \\"children\\": Array [
+          -     \\"3b0c942e-b51f-587b-b37d-b36c5e9af8fa\\",
+          -   ],
+          +   \\"children\\": Array [],
+              \\"foo\\": \\"run-1\\",
+              \\"id\\": \\"parent_childChangeForTransformer\\",
+              \\"internal\\": Object {
+                \\"contentDigest\\": \\"25f73a6d69ce857a76e0a2cdbc186975\\",
+                \\"counter\\": 39,
+                \\"owner\\": \\"gatsby-source-child-change-for-transformer\\",
+                \\"type\\": \\"Parent_ChildChangeForTransformer\\",
+              },
+              \\"parent\\": null,
+            }",
                 "id": "parent_childChangeForTransformer",
                 "newValue": Object {
                   "children": Array [],
@@ -501,6 +561,20 @@ describe(`Cache`, () => {
             "additions": Object {},
             "changes": Object {
               "3b0c942e-b51f-587b-b37d-b36c5e9af8fa": Object {
+                "diff": "  Object {
+              \\"children\\": Array [],
+          -   \\"foo\\": \\"bar\\",
+          +   \\"foo\\": \\"baz\\",
+              \\"id\\": \\"3b0c942e-b51f-587b-b37d-b36c5e9af8fa\\",
+              \\"internal\\": Object {
+          -     \\"contentDigest\\": \\"59b3a74325cbf2001bc21eb662f1e297\\",
+          +     \\"contentDigest\\": \\"3bca2830e09b3c30b3ca76dccdaf5e8b\\",
+                \\"counter\\": 40,
+                \\"owner\\": \\"gatsby-transformer-child-change\\",
+                \\"type\\": \\"ChildOfParent_ChildChangeForTransformer\\",
+              },
+              \\"parent\\": \\"parent_childChangeForTransformer\\",
+            }",
                 "id": "3b0c942e-b51f-587b-b37d-b36c5e9af8fa",
                 "newValue": Object {
                   "children": Array [],
@@ -587,6 +661,30 @@ describe(`Cache`, () => {
             "additions": Object {},
             "changes": Object {
               "parent_parentChangeForFields": Object {
+                "diff": "  Object {
+          +   \\"bar\\": \\"run-2\\",
+              \\"children\\": Array [],
+              \\"fields\\": Object {
+          -     \\"bar\\": undefined,
+          -     \\"foo\\": \\"run-1\\",
+          +     \\"bar\\": \\"run-2\\",
+          +     \\"foo\\": undefined,
+              },
+          -   \\"foo\\": \\"run-1\\",
+              \\"id\\": \\"parent_parentChangeForFields\\",
+              \\"internal\\": Object {
+          -     \\"contentDigest\\": \\"ad237cf525f0ccb39ea0ba07165d4119\\",
+          +     \\"contentDigest\\": \\"72122def77d239ba36e9b9729fc53adf\\",
+                \\"counter\\": 41,
+                \\"fieldOwners\\": Object {
+                  \\"bar\\": \\"gatsby-fields-parent-change\\",
+                  \\"foo\\": \\"gatsby-fields-parent-change\\",
+                },
+                \\"owner\\": \\"gatsby-source-parent-change-for-fields\\",
+                \\"type\\": \\"Parent_ParentChangeForFields\\",
+              },
+              \\"parent\\": null,
+            }",
                 "id": "parent_parentChangeForFields",
                 "newValue": Object {
                   "bar": "run-2",
@@ -655,6 +753,26 @@ describe(`Cache`, () => {
             "additions": Object {},
             "changes": Object {
               "parent_childChangeForFields": Object {
+                "diff": "  Object {
+              \\"children\\": Array [],
+          -   \\"fields\\": Object {
+          -     \\"foo1\\": \\"bar\\",
+          -   },
+          +   \\"fields\\": Object {},
+              \\"foo\\": \\"run-1\\",
+              \\"id\\": \\"parent_childChangeForFields\\",
+              \\"internal\\": Object {
+                \\"contentDigest\\": \\"893740bfde4b8a6039e939cb0290d626\\",
+                \\"counter\\": 42,
+          -     \\"fieldOwners\\": Object {
+          -       \\"foo1\\": \\"gatsby-fields-child-change\\",
+          -     },
+          +     \\"fieldOwners\\": Object {},
+                \\"owner\\": \\"gatsby-source-child-change-for-fields\\",
+                \\"type\\": \\"Parent_ChildChangeForFields\\",
+              },
+              \\"parent\\": null,
+            }",
                 "id": "parent_childChangeForFields",
                 "newValue": Object {
                   "children": Array [],
@@ -704,6 +822,26 @@ describe(`Cache`, () => {
             "additions": Object {},
             "changes": Object {
               "parent_childChangeForFields": Object {
+                "diff": "  Object {
+              \\"children\\": Array [],
+              \\"fields\\": Object {
+          -     \\"foo1\\": \\"bar\\",
+          +     \\"foo2\\": \\"baz\\",
+              },
+              \\"foo\\": \\"run-1\\",
+              \\"id\\": \\"parent_childChangeForFields\\",
+              \\"internal\\": Object {
+                \\"contentDigest\\": \\"893740bfde4b8a6039e939cb0290d626\\",
+                \\"counter\\": 42,
+                \\"fieldOwners\\": Object {
+          -       \\"foo1\\": \\"gatsby-fields-child-change\\",
+          +       \\"foo2\\": \\"gatsby-fields-child-change\\",
+                },
+                \\"owner\\": \\"gatsby-source-child-change-for-fields\\",
+                \\"type\\": \\"Parent_ChildChangeForFields\\",
+              },
+              \\"parent\\": null,
+            }",
                 "id": "parent_childChangeForFields",
                 "newValue": Object {
                   "children": Array [],

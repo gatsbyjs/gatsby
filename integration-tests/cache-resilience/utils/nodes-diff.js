@@ -32,7 +32,9 @@ const compareState = (oldState, newState) => {
       id,
       oldValue,
       newValue,
-      diff: snapshotDiff(oldValue, newValue)
+      diff: snapshotDiff(oldValue, newValue, {
+        expand: true,
+      })
         .split(`\n`)
         .slice(4)
         .join(`\n`),
