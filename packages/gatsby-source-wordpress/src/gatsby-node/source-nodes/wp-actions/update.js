@@ -1,5 +1,5 @@
 import fetchGraphql from "../../../utils/fetch-graphql"
-import { getPageQuery } from "../graphql-queries"
+import store from "../../../store"
 
 const wpActionUPDATE = async ({
   helpers,
@@ -8,8 +8,7 @@ const wpActionUPDATE = async ({
   cachedNodeIds,
   pluginOptions,
 }) => {
-  const { createNodeId } = helpers
-  const nodeId = createNodeId(wpAction.referencedPostGlobalRelayID)
+  const nodeId = wpAction.referencedPostGlobalRelayID
 
   if (wpAction.referencedPostStatus !== `publish`) {
     // if the post status isn't publish anymore, we need to remove the node
@@ -17,9 +16,16 @@ const wpActionUPDATE = async ({
     return cachedNodeIds.filter(cachedId => cachedId !== nodeId)
   }
 
+  const { queries } = store.getState().introspection
+
+  const queryInfo = Object.values(queries).find(
+    q => q.typeInfo.singleName === wpAction.referencedPostSingleName
+  )
+
+  const { nodeQueryString: query } = queryInfo
+
   // otherwise we need to refetch the post
   const { url } = pluginOptions
-  const query = getPageQuery(wpAction.referencedPostSingleName)
   const { data } = await fetchGraphql({
     url,
     query,
@@ -28,9 +34,12 @@ const wpActionUPDATE = async ({
     },
   })
 
+  const updatedNodeContent = data[wpAction.referencedPostSingleName]
+
   // then delete the posts node
   const { actions, getNode } = helpers
   const node = await getNode(nodeId)
+
   // touch the node so we own it
   await actions.touchNode({ nodeId })
 
@@ -41,12 +50,12 @@ const wpActionUPDATE = async ({
   const { createContentDigest } = helpers
   await actions.createNode({
     ...node,
-    ...data.wpContent,
+    ...updatedNodeContent,
     id: nodeId,
     parent: null,
     internal: {
-      contentDigest: createContentDigest(node),
-      type: `WpContent`,
+      contentDigest: createContentDigest(updatedNodeContent),
+      type: `Wp${queryInfo.typeInfo.nodesTypeName}`,
     },
   })
 

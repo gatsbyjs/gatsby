@@ -73,12 +73,14 @@ export const buildNodesQueryOnFieldName = ({ fields, fieldName }) => {
 }
 export const buildNodeQueryOnFieldName = ({ fields, fieldName }) => {
   // this builds the gql query
-  let queryField = new Query(fieldName)
+  let queryField = new Query(fieldName, { id: `$id` })
 
   const queryFields = fields.map(transformField).filter(field => !!field)
 
   // this adds subfields to our query
   queryField.find(queryFields)
 
-  return queryField.toString()
+  return `query SINGLE_CONTENT_QUERY($id: ID!) {${queryField
+    .toString()
+    .replace(`"$id"`, `$id`)}}`
 }

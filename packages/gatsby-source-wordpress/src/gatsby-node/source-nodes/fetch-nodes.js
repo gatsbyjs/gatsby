@@ -14,7 +14,7 @@ export const fetchWPGQLContentNodes = async (_, helpers, { url }) => {
     Object.entries(queries).map(
       ([fieldName, queryInfo]) =>
         new Promise(async resolve => {
-          const { queryString, typeInfo } = queryInfo
+          const { listQueryString, typeInfo } = queryInfo
 
           const activity = reporter.activityTimer(
             `[gatsby-source-wordpress] -> fetching all ${typeInfo.pluralName}`
@@ -27,7 +27,7 @@ export const fetchWPGQLContentNodes = async (_, helpers, { url }) => {
             contentTypeSingular: typeInfo.singleName,
             nodeTypeName: typeInfo.nodesTypeName,
             url,
-            query: queryString,
+            query: listQueryString,
             activity,
             helpers,
           })

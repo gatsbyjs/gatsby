@@ -1,7 +1,6 @@
 import { parse } from "url"
 import fetchGraphql from "../../../utils/fetch-graphql"
-
-import { getPageQuery } from "../graphql-queries"
+import store from "../../../store"
 
 const wpActionCREATE = async ({
   helpers,
@@ -15,9 +14,16 @@ const wpActionCREATE = async ({
     return cachedNodeIds
   }
 
+  // otherwise we need to fetch the post
+  // so get the right gql query from redux
+  const { queries } = store.getState().introspection
+  const queryInfo = Object.values(queries).find(
+    q => q.typeInfo.singleName === wpAction.referencedPostSingleName
+  )
+  const { nodeQueryString: query } = queryInfo
+
   // fetch the new post
   const { url: wpUrl } = pluginOptions
-  const query = getPageQuery(wpAction.referencedPostSingleName)
   const { data } = await fetchGraphql({
     url: wpUrl,
     query,
@@ -25,33 +31,25 @@ const wpActionCREATE = async ({
       id: wpAction.referencedPostGlobalRelayID,
     },
   })
+  const nodeContent = data[wpAction.referencedPostSingleName]
 
   // create a node from it
-  const { actions, createContentDigest, createNodeId } = helpers
-  const nodeId = createNodeId(wpAction.referencedPostGlobalRelayID)
+  const { actions, createContentDigest } = helpers
+  const nodeId = wpAction.referencedPostGlobalRelayID
 
   const node = {
-    ...data.wpContent,
+    ...nodeContent,
     id: nodeId,
     contentType: wpAction.referencedPostSingleName,
-    // @todo move pagination to create-pages.js using pageContext
-    // we can't add anything here since we don't know what the next/prev nodes are.
-    pagination: {
-      previous___NODE: null,
-      next___NODE: null,
-      pageNumber: null,
-      isFirst: null,
-      isLast: null,
-    },
-    path: parse(data.wpContent.link).pathname,
+    path: parse(nodeContent.link).pathname,
   }
 
   await actions.createNode({
     ...node,
     parent: null,
     internal: {
-      contentDigest: createContentDigest(node),
-      type: `WpContent`,
+      contentDigest: createContentDigest(nodeContent),
+      type: `Wp${queryInfo.typeInfo.nodesTypeName}`,
     },
   })
 

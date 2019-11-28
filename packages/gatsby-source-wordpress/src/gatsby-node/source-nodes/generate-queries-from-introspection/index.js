@@ -1,6 +1,8 @@
 import recursivelyTransformFields from "./recursively-transform-fields"
-import { buildNodesQueryOnFieldName } from "./build-query-on-field-name"
-import { dd } from "dumper.js"
+import {
+  buildNodesQueryOnFieldName,
+  buildNodeQueryOnFieldName,
+} from "./build-query-on-field-name"
 // @todo create function to unmap check here for similar function https://www.gatsbyjs.org/packages/gatsby-source-graphql-universal/
 import { getAvailablePostTypesQuery } from "../graphql-queries"
 import fetchGraphql from "../../../utils/fetch-graphql"
@@ -163,9 +165,14 @@ export const buildNodeQueriesFromIntrospection = async (
       listType
     )
 
-    const queryString = buildNodesQueryOnFieldName({
+    const listQueryString = buildNodesQueryOnFieldName({
       fields: listType.fields,
       fieldName: listType.rootFieldName,
+    })
+
+    const nodeQueryString = buildNodeQueryOnFieldName({
+      fields: listType.fields,
+      fieldName: listType.fieldName,
     })
 
     queries[listType.rootFieldName] = {
@@ -174,7 +181,8 @@ export const buildNodeQueriesFromIntrospection = async (
         pluralName: listType.rootFieldName,
         nodesTypeName: listType.nodesTypeName,
       },
-      queryString,
+      listQueryString,
+      nodeQueryString,
     }
   }
 

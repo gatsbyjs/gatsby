@@ -1,23 +1,3 @@
-export const pageFields = `
-  content
-  title
-  link
-  date
-  id
-  excerpt
-  featuredImage {
-    sourceUrl
-  }
-`
-
-export const getPageQuery = singleName => `
-  query GET_GATSBY_PAGE($id: ID!) {
-    wpContent: ${singleName}(id: $id) {
-      ${pageFields}
-    }
-  }
-`
-
 export const getPaginatedQuery = query =>
   `query GENERIC_QUERY ($first: Int!, $after: String) {${query}}`
 
@@ -46,23 +26,3 @@ export const getAvailablePostTypesQuery = () => `
     }
   }
 `
-
-// export const getPagesQuery = contentTypePlural => `
-//   # Define our query variables
-//   query GET_GATSBY_PAGES($first:Int $after:String) {
-//     ${contentTypePlural}(
-//         first: $first
-//         after: $after
-//       ) {
-//           pageInfo {
-//             hasNextPage
-//             endCursor
-//           }
-//           nodes {
-//             ${pageFields}
-//           }
-//       }
-//   }
-// `
-
-// const getContentTypeIntrospection = singleName => ``
