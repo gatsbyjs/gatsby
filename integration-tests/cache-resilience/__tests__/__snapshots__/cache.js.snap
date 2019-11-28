@@ -7,7 +7,6 @@ Map {
     "id": "SitePage /dev-404-page/",
     "internal": Object {
       "contentDigest": "f91d29e10ba680b413138cf9ed86e655",
-      "counter": 1,
       "owner": "internal-data-bridge",
       "type": "SitePage",
     },
@@ -19,7 +18,6 @@ Map {
     "children": Array [],
     "id": "d48d1c52-fe48-53cb-8f08-aa4b47dde5a5",
     "internal": Object {
-      "counter": 2,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -40,7 +38,6 @@ Map {
     "children": Array [],
     "id": "1fc32581-893a-55e8-8927-bcd667e2b700",
     "internal": Object {
-      "counter": 3,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -61,7 +58,6 @@ Map {
     "children": Array [],
     "id": "a5079d69-ba80-53dc-82f9-0f440bd5448c",
     "internal": Object {
-      "counter": 4,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -83,7 +79,6 @@ Map {
     "children": Array [],
     "id": "f795702c-a3b8-5a88-88ee-5d06019d44fa",
     "internal": Object {
-      "counter": 5,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -104,7 +99,6 @@ Map {
     "children": Array [],
     "id": "6f4b2fa9-66b5-5205-a03f-140005a2cfe5",
     "internal": Object {
-      "counter": 6,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -125,7 +119,6 @@ Map {
     "children": Array [],
     "id": "3eaaf673-5a13-5784-894a-47b357425e05",
     "internal": Object {
-      "counter": 7,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -146,7 +139,6 @@ Map {
     "children": Array [],
     "id": "dc1f3dc9-7d73-533d-a090-787d5281f836",
     "internal": Object {
-      "counter": 8,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -167,7 +159,6 @@ Map {
     "children": Array [],
     "id": "624fa626-4203-5aab-a667-ee4ffa1dee80",
     "internal": Object {
-      "counter": 9,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -188,7 +179,6 @@ Map {
     "children": Array [],
     "id": "684f3e1c-cb9e-5123-87b1-609e60d5fa87",
     "internal": Object {
-      "counter": 10,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -209,7 +199,6 @@ Map {
     "children": Array [],
     "id": "08cd7b14-7698-5764-8775-c58ce54c44e8",
     "internal": Object {
-      "counter": 11,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -230,7 +219,6 @@ Map {
     "children": Array [],
     "id": "2bf51669-f85f-59be-94db-6056fd4b04a3",
     "internal": Object {
-      "counter": 12,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -251,7 +239,6 @@ Map {
     "children": Array [],
     "id": "5ae5dfed-66db-553c-a695-6d88233de8c7",
     "internal": Object {
-      "counter": 13,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -272,7 +259,6 @@ Map {
     "children": Array [],
     "id": "58820269-9021-5c79-80f5-35381958161b",
     "internal": Object {
-      "counter": 14,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -293,7 +279,6 @@ Map {
     "children": Array [],
     "id": "c56df8b2-d14d-5334-9f93-79f3654e01fe",
     "internal": Object {
-      "counter": 15,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -314,7 +299,6 @@ Map {
     "children": Array [],
     "id": "9beb7309-19ee-512e-8ea5-bf15934ed192",
     "internal": Object {
-      "counter": 16,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -335,7 +319,6 @@ Map {
     "children": Array [],
     "id": "c9535749-a52b-5c49-8671-11a311b98993",
     "internal": Object {
-      "counter": 17,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -358,7 +341,6 @@ Map {
     "children": Array [],
     "id": "aed25515-e1f7-5760-8f34-6461454230de",
     "internal": Object {
-      "counter": 18,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -381,7 +363,6 @@ Map {
     "children": Array [],
     "id": "7775d111-885f-58c6-aa94-47ad7d6d5408",
     "internal": Object {
-      "counter": 19,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -404,7 +385,6 @@ Map {
     "children": Array [],
     "id": "e419ee70-6845-577a-9caf-98198596750c",
     "internal": Object {
-      "counter": 20,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -427,7 +407,6 @@ Map {
     "children": Array [],
     "id": "b0cf71bb-65db-5a23-b472-51114a941295",
     "internal": Object {
-      "counter": 21,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -450,7 +429,6 @@ Map {
     "children": Array [],
     "id": "0b5d5612-63e0-5fc9-881c-02623175bd8a",
     "internal": Object {
-      "counter": 22,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -473,7 +451,6 @@ Map {
     "children": Array [],
     "id": "d35f263a-d648-5dac-a47f-79af5021d792",
     "internal": Object {
-      "counter": 23,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -496,7 +473,6 @@ Map {
     "children": Array [],
     "id": "4aee7760-8b89-5bab-a9e8-9f769b59362d",
     "internal": Object {
-      "counter": 24,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -519,7 +495,6 @@ Map {
     "children": Array [],
     "id": "ce2a4ef1-edef-51e3-8cb9-ae2bb5c87d1b",
     "internal": Object {
-      "counter": 25,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -542,7 +517,6 @@ Map {
     "children": Array [],
     "id": "4e757e74-ce81-573e-9014-175dfaed5aae",
     "internal": Object {
-      "counter": 26,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -565,7 +539,6 @@ Map {
     "children": Array [],
     "id": "7e0c6e91-4f9e-517b-aa9d-8349cc0a5e2a",
     "internal": Object {
-      "counter": 27,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -588,7 +561,6 @@ Map {
     "children": Array [],
     "id": "6170a8c5-cfee-535a-a3a1-688a9815ca4f",
     "internal": Object {
-      "counter": 28,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -611,7 +583,6 @@ Map {
     "children": Array [],
     "id": "138edb65-012b-5754-b531-0d4130a8a293",
     "internal": Object {
-      "counter": 29,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -634,7 +605,6 @@ Map {
     "children": Array [],
     "id": "976066e6-c8c1-5d54-aa70-e396a4093155",
     "internal": Object {
-      "counter": 30,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -657,7 +627,6 @@ Map {
     "children": Array [],
     "id": "fe8640ab-3196-5c63-86d8-7eb81947b196",
     "internal": Object {
-      "counter": 31,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -680,7 +649,6 @@ Map {
     "children": Array [],
     "id": "7374ebf2-d961-52ee-92a2-c25e7cb387a9",
     "internal": Object {
-      "counter": 32,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -702,7 +670,6 @@ Map {
     "children": Array [],
     "id": "0e693aa4-31a8-55c5-8fd7-02832e1aff3f",
     "internal": Object {
-      "counter": 33,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -725,7 +692,6 @@ Map {
     "host": undefined,
     "id": "Site",
     "internal": Object {
-      "counter": 34,
       "owner": "internal-data-bridge",
       "type": "Site",
     },
@@ -741,7 +707,6 @@ Map {
     "id": "STABLE_NODE_1",
     "internal": Object {
       "contentDigest": "0",
-      "counter": 35,
       "owner": "gatsby-plugin-stable",
       "type": "IndependentStable",
     },
@@ -753,7 +718,6 @@ Map {
     "id": "INDEPENDENT_NODE_1",
     "internal": Object {
       "contentDigest": "0",
-      "counter": 36,
       "owner": "gatsby-plugin-independent-node",
       "type": "IndependentChanging",
     },
@@ -767,7 +731,6 @@ Map {
     "id": "parent_parentChangeForTransformer",
     "internal": Object {
       "contentDigest": "a032c69550f5567021eda97cc3a1faf2",
-      "counter": 37,
       "owner": "gatsby-source-parent-change-for-transformer",
       "type": "Parent_ParentChangeForTransformer",
     },
@@ -780,7 +743,6 @@ Map {
     "id": "2131d29a-296c-5f73-affc-e422bec644fe",
     "internal": Object {
       "contentDigest": "cbc07ead8c18c9d616f0004a893d5cf3",
-      "counter": 38,
       "owner": "gatsby-transformer-parent-change",
       "type": "ChildOfParent_ParentChangeForTransformer",
     },
@@ -794,7 +756,6 @@ Map {
     "id": "parent_childChangeForTransformer",
     "internal": Object {
       "contentDigest": "25f73a6d69ce857a76e0a2cdbc186975",
-      "counter": 39,
       "owner": "gatsby-source-child-change-for-transformer",
       "type": "Parent_ChildChangeForTransformer",
     },
@@ -806,7 +767,6 @@ Map {
     "id": "3b0c942e-b51f-587b-b37d-b36c5e9af8fa",
     "internal": Object {
       "contentDigest": "59b3a74325cbf2001bc21eb662f1e297",
-      "counter": 40,
       "owner": "gatsby-transformer-child-change",
       "type": "ChildOfParent_ChildChangeForTransformer",
     },
@@ -822,7 +782,6 @@ Map {
     "id": "parent_parentChangeForFields",
     "internal": Object {
       "contentDigest": "ad237cf525f0ccb39ea0ba07165d4119",
-      "counter": 41,
       "fieldOwners": Object {
         "bar": "gatsby-fields-parent-change",
         "foo": "gatsby-fields-parent-change",
@@ -841,7 +800,6 @@ Map {
     "id": "parent_childChangeForFields",
     "internal": Object {
       "contentDigest": "893740bfde4b8a6039e939cb0290d626",
-      "counter": 42,
       "fieldOwners": Object {
         "foo1": "gatsby-fields-child-change",
       },
@@ -859,7 +817,6 @@ Map {
     "id": "SitePage /",
     "internal": Object {
       "contentDigest": "c5fa7d67d7b6095c8133348eb329bd52",
-      "counter": 43,
       "description": "c9535749-a52b-5c49-8671-11a311b98993",
       "owner": "internal-data-bridge",
       "type": "SitePage",
@@ -882,7 +839,6 @@ Map {
     "id": "SitePage /dev-404-page/",
     "internal": Object {
       "contentDigest": "f91d29e10ba680b413138cf9ed86e655",
-      "counter": 1,
       "owner": "internal-data-bridge",
       "type": "SitePage",
     },
@@ -894,7 +850,6 @@ Map {
     "children": Array [],
     "id": "d48d1c52-fe48-53cb-8f08-aa4b47dde5a5",
     "internal": Object {
-      "counter": 2,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -915,7 +870,6 @@ Map {
     "children": Array [],
     "id": "1fc32581-893a-55e8-8927-bcd667e2b700",
     "internal": Object {
-      "counter": 3,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -936,7 +890,6 @@ Map {
     "children": Array [],
     "id": "a5079d69-ba80-53dc-82f9-0f440bd5448c",
     "internal": Object {
-      "counter": 4,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -958,7 +911,6 @@ Map {
     "children": Array [],
     "id": "f795702c-a3b8-5a88-88ee-5d06019d44fa",
     "internal": Object {
-      "counter": 5,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -979,7 +931,6 @@ Map {
     "children": Array [],
     "id": "6f4b2fa9-66b5-5205-a03f-140005a2cfe5",
     "internal": Object {
-      "counter": 6,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1000,7 +951,6 @@ Map {
     "children": Array [],
     "id": "3eaaf673-5a13-5784-894a-47b357425e05",
     "internal": Object {
-      "counter": 7,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1021,7 +971,6 @@ Map {
     "children": Array [],
     "id": "dc1f3dc9-7d73-533d-a090-787d5281f836",
     "internal": Object {
-      "counter": 8,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1042,7 +991,6 @@ Map {
     "children": Array [],
     "id": "624fa626-4203-5aab-a667-ee4ffa1dee80",
     "internal": Object {
-      "counter": 9,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1063,7 +1011,6 @@ Map {
     "children": Array [],
     "id": "684f3e1c-cb9e-5123-87b1-609e60d5fa87",
     "internal": Object {
-      "counter": 10,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1084,7 +1031,6 @@ Map {
     "children": Array [],
     "id": "08cd7b14-7698-5764-8775-c58ce54c44e8",
     "internal": Object {
-      "counter": 11,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1105,7 +1051,6 @@ Map {
     "children": Array [],
     "id": "2bf51669-f85f-59be-94db-6056fd4b04a3",
     "internal": Object {
-      "counter": 12,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1126,7 +1071,6 @@ Map {
     "children": Array [],
     "id": "5ae5dfed-66db-553c-a695-6d88233de8c7",
     "internal": Object {
-      "counter": 13,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1147,7 +1091,6 @@ Map {
     "children": Array [],
     "id": "58820269-9021-5c79-80f5-35381958161b",
     "internal": Object {
-      "counter": 14,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1168,7 +1111,6 @@ Map {
     "children": Array [],
     "id": "c56df8b2-d14d-5334-9f93-79f3654e01fe",
     "internal": Object {
-      "counter": 15,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1189,7 +1131,6 @@ Map {
     "children": Array [],
     "id": "9beb7309-19ee-512e-8ea5-bf15934ed192",
     "internal": Object {
-      "counter": 16,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1210,7 +1151,6 @@ Map {
     "children": Array [],
     "id": "c9535749-a52b-5c49-8671-11a311b98993",
     "internal": Object {
-      "counter": 17,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1233,7 +1173,6 @@ Map {
     "children": Array [],
     "id": "aed25515-e1f7-5760-8f34-6461454230de",
     "internal": Object {
-      "counter": 18,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1256,7 +1195,6 @@ Map {
     "children": Array [],
     "id": "7775d111-885f-58c6-aa94-47ad7d6d5408",
     "internal": Object {
-      "counter": 19,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1279,7 +1217,6 @@ Map {
     "children": Array [],
     "id": "e419ee70-6845-577a-9caf-98198596750c",
     "internal": Object {
-      "counter": 20,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1302,7 +1239,6 @@ Map {
     "children": Array [],
     "id": "b0cf71bb-65db-5a23-b472-51114a941295",
     "internal": Object {
-      "counter": 21,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1325,7 +1261,6 @@ Map {
     "children": Array [],
     "id": "0b5d5612-63e0-5fc9-881c-02623175bd8a",
     "internal": Object {
-      "counter": 22,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1348,7 +1283,6 @@ Map {
     "children": Array [],
     "id": "d35f263a-d648-5dac-a47f-79af5021d792",
     "internal": Object {
-      "counter": 23,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1371,7 +1305,6 @@ Map {
     "children": Array [],
     "id": "4aee7760-8b89-5bab-a9e8-9f769b59362d",
     "internal": Object {
-      "counter": 24,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1394,7 +1327,6 @@ Map {
     "children": Array [],
     "id": "ce2a4ef1-edef-51e3-8cb9-ae2bb5c87d1b",
     "internal": Object {
-      "counter": 25,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1417,7 +1349,6 @@ Map {
     "children": Array [],
     "id": "4e757e74-ce81-573e-9014-175dfaed5aae",
     "internal": Object {
-      "counter": 26,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1440,7 +1371,6 @@ Map {
     "children": Array [],
     "id": "7e0c6e91-4f9e-517b-aa9d-8349cc0a5e2a",
     "internal": Object {
-      "counter": 27,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1463,7 +1393,6 @@ Map {
     "children": Array [],
     "id": "6170a8c5-cfee-535a-a3a1-688a9815ca4f",
     "internal": Object {
-      "counter": 28,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1486,7 +1415,6 @@ Map {
     "children": Array [],
     "id": "138edb65-012b-5754-b531-0d4130a8a293",
     "internal": Object {
-      "counter": 29,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1509,7 +1437,6 @@ Map {
     "children": Array [],
     "id": "976066e6-c8c1-5d54-aa70-e396a4093155",
     "internal": Object {
-      "counter": 30,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1532,7 +1459,6 @@ Map {
     "children": Array [],
     "id": "fe8640ab-3196-5c63-86d8-7eb81947b196",
     "internal": Object {
-      "counter": 31,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1555,7 +1481,6 @@ Map {
     "children": Array [],
     "id": "7374ebf2-d961-52ee-92a2-c25e7cb387a9",
     "internal": Object {
-      "counter": 32,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1577,7 +1502,6 @@ Map {
     "children": Array [],
     "id": "0e693aa4-31a8-55c5-8fd7-02832e1aff3f",
     "internal": Object {
-      "counter": 33,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1600,7 +1524,6 @@ Map {
     "host": undefined,
     "id": "Site",
     "internal": Object {
-      "counter": 34,
       "owner": "internal-data-bridge",
       "type": "Site",
     },
@@ -1616,7 +1539,6 @@ Map {
     "id": "STABLE_NODE_1",
     "internal": Object {
       "contentDigest": "0",
-      "counter": 35,
       "owner": "gatsby-plugin-stable",
       "type": "IndependentStable",
     },
@@ -1628,7 +1550,6 @@ Map {
     "id": "parent_childChangeForTransformer",
     "internal": Object {
       "contentDigest": "25f73a6d69ce857a76e0a2cdbc186975",
-      "counter": 39,
       "owner": "gatsby-source-child-change-for-transformer",
       "type": "Parent_ChildChangeForTransformer",
     },
@@ -1641,7 +1562,6 @@ Map {
     "id": "parent_childChangeForFields",
     "internal": Object {
       "contentDigest": "893740bfde4b8a6039e939cb0290d626",
-      "counter": 42,
       "fieldOwners": Object {},
       "owner": "gatsby-source-child-change-for-fields",
       "type": "Parent_ChildChangeForFields",
@@ -1657,7 +1577,6 @@ Map {
     "id": "SitePage /",
     "internal": Object {
       "contentDigest": "c5fa7d67d7b6095c8133348eb329bd52",
-      "counter": 43,
       "description": "c9535749-a52b-5c49-8671-11a311b98993",
       "owner": "internal-data-bridge",
       "type": "SitePage",
@@ -1680,7 +1599,6 @@ Map {
     "id": "SitePage /dev-404-page/",
     "internal": Object {
       "contentDigest": "f91d29e10ba680b413138cf9ed86e655",
-      "counter": 1,
       "owner": "internal-data-bridge",
       "type": "SitePage",
     },
@@ -1692,7 +1610,6 @@ Map {
     "children": Array [],
     "id": "d48d1c52-fe48-53cb-8f08-aa4b47dde5a5",
     "internal": Object {
-      "counter": 2,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1713,7 +1630,6 @@ Map {
     "children": Array [],
     "id": "1fc32581-893a-55e8-8927-bcd667e2b700",
     "internal": Object {
-      "counter": 3,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1734,7 +1650,6 @@ Map {
     "children": Array [],
     "id": "a5079d69-ba80-53dc-82f9-0f440bd5448c",
     "internal": Object {
-      "counter": 4,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1756,7 +1671,6 @@ Map {
     "children": Array [],
     "id": "f795702c-a3b8-5a88-88ee-5d06019d44fa",
     "internal": Object {
-      "counter": 5,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1777,7 +1691,6 @@ Map {
     "children": Array [],
     "id": "6f4b2fa9-66b5-5205-a03f-140005a2cfe5",
     "internal": Object {
-      "counter": 6,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1798,7 +1711,6 @@ Map {
     "children": Array [],
     "id": "3eaaf673-5a13-5784-894a-47b357425e05",
     "internal": Object {
-      "counter": 7,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1819,7 +1731,6 @@ Map {
     "children": Array [],
     "id": "dc1f3dc9-7d73-533d-a090-787d5281f836",
     "internal": Object {
-      "counter": 8,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1840,7 +1751,6 @@ Map {
     "children": Array [],
     "id": "624fa626-4203-5aab-a667-ee4ffa1dee80",
     "internal": Object {
-      "counter": 9,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1861,7 +1771,6 @@ Map {
     "children": Array [],
     "id": "684f3e1c-cb9e-5123-87b1-609e60d5fa87",
     "internal": Object {
-      "counter": 10,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1882,7 +1791,6 @@ Map {
     "children": Array [],
     "id": "08cd7b14-7698-5764-8775-c58ce54c44e8",
     "internal": Object {
-      "counter": 11,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1903,7 +1811,6 @@ Map {
     "children": Array [],
     "id": "2bf51669-f85f-59be-94db-6056fd4b04a3",
     "internal": Object {
-      "counter": 12,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1924,7 +1831,6 @@ Map {
     "children": Array [],
     "id": "5ae5dfed-66db-553c-a695-6d88233de8c7",
     "internal": Object {
-      "counter": 13,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1945,7 +1851,6 @@ Map {
     "children": Array [],
     "id": "58820269-9021-5c79-80f5-35381958161b",
     "internal": Object {
-      "counter": 14,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1966,7 +1871,6 @@ Map {
     "children": Array [],
     "id": "c56df8b2-d14d-5334-9f93-79f3654e01fe",
     "internal": Object {
-      "counter": 15,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1987,7 +1891,6 @@ Map {
     "children": Array [],
     "id": "9beb7309-19ee-512e-8ea5-bf15934ed192",
     "internal": Object {
-      "counter": 16,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -2008,7 +1911,6 @@ Map {
     "children": Array [],
     "id": "c9535749-a52b-5c49-8671-11a311b98993",
     "internal": Object {
-      "counter": 17,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -2031,7 +1933,6 @@ Map {
     "children": Array [],
     "id": "aed25515-e1f7-5760-8f34-6461454230de",
     "internal": Object {
-      "counter": 18,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -2054,7 +1955,6 @@ Map {
     "children": Array [],
     "id": "7775d111-885f-58c6-aa94-47ad7d6d5408",
     "internal": Object {
-      "counter": 19,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -2077,7 +1977,6 @@ Map {
     "children": Array [],
     "id": "e419ee70-6845-577a-9caf-98198596750c",
     "internal": Object {
-      "counter": 20,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -2100,7 +1999,6 @@ Map {
     "children": Array [],
     "id": "b0cf71bb-65db-5a23-b472-51114a941295",
     "internal": Object {
-      "counter": 21,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -2123,7 +2021,6 @@ Map {
     "children": Array [],
     "id": "0b5d5612-63e0-5fc9-881c-02623175bd8a",
     "internal": Object {
-      "counter": 22,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -2146,7 +2043,6 @@ Map {
     "children": Array [],
     "id": "d35f263a-d648-5dac-a47f-79af5021d792",
     "internal": Object {
-      "counter": 23,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -2169,7 +2065,6 @@ Map {
     "children": Array [],
     "id": "4aee7760-8b89-5bab-a9e8-9f769b59362d",
     "internal": Object {
-      "counter": 24,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -2192,7 +2087,6 @@ Map {
     "children": Array [],
     "id": "ce2a4ef1-edef-51e3-8cb9-ae2bb5c87d1b",
     "internal": Object {
-      "counter": 25,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -2215,7 +2109,6 @@ Map {
     "children": Array [],
     "id": "4e757e74-ce81-573e-9014-175dfaed5aae",
     "internal": Object {
-      "counter": 26,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -2238,7 +2131,6 @@ Map {
     "children": Array [],
     "id": "7e0c6e91-4f9e-517b-aa9d-8349cc0a5e2a",
     "internal": Object {
-      "counter": 27,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -2261,7 +2153,6 @@ Map {
     "children": Array [],
     "id": "6170a8c5-cfee-535a-a3a1-688a9815ca4f",
     "internal": Object {
-      "counter": 28,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -2284,7 +2175,6 @@ Map {
     "children": Array [],
     "id": "138edb65-012b-5754-b531-0d4130a8a293",
     "internal": Object {
-      "counter": 29,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -2307,7 +2197,6 @@ Map {
     "children": Array [],
     "id": "976066e6-c8c1-5d54-aa70-e396a4093155",
     "internal": Object {
-      "counter": 30,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -2330,7 +2219,6 @@ Map {
     "children": Array [],
     "id": "fe8640ab-3196-5c63-86d8-7eb81947b196",
     "internal": Object {
-      "counter": 31,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -2353,7 +2241,6 @@ Map {
     "children": Array [],
     "id": "7374ebf2-d961-52ee-92a2-c25e7cb387a9",
     "internal": Object {
-      "counter": 32,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -2375,7 +2262,6 @@ Map {
     "children": Array [],
     "id": "0e693aa4-31a8-55c5-8fd7-02832e1aff3f",
     "internal": Object {
-      "counter": 33,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -2398,7 +2284,6 @@ Map {
     "host": undefined,
     "id": "Site",
     "internal": Object {
-      "counter": 34,
       "owner": "internal-data-bridge",
       "type": "Site",
     },
@@ -2414,7 +2299,6 @@ Map {
     "id": "STABLE_NODE_1",
     "internal": Object {
       "contentDigest": "0",
-      "counter": 35,
       "owner": "gatsby-plugin-stable",
       "type": "IndependentStable",
     },
@@ -2428,7 +2312,6 @@ Map {
     "id": "parent_childChangeForTransformer",
     "internal": Object {
       "contentDigest": "25f73a6d69ce857a76e0a2cdbc186975",
-      "counter": 39,
       "owner": "gatsby-source-child-change-for-transformer",
       "type": "Parent_ChildChangeForTransformer",
     },
@@ -2443,7 +2326,6 @@ Map {
     "id": "parent_childChangeForFields",
     "internal": Object {
       "contentDigest": "893740bfde4b8a6039e939cb0290d626",
-      "counter": 42,
       "fieldOwners": Object {
         "foo2": "gatsby-fields-child-change",
       },
@@ -2458,7 +2340,6 @@ Map {
     "id": "INDEPENDENT_NODE_1",
     "internal": Object {
       "contentDigest": "0",
-      "counter": 36,
       "owner": "gatsby-plugin-independent-node",
       "type": "IndependentChanging",
     },
@@ -2472,7 +2353,6 @@ Map {
     "id": "parent_parentChangeForTransformer",
     "internal": Object {
       "contentDigest": "4a6a70b2f8849535de50f47c609006fe",
-      "counter": 37,
       "owner": "gatsby-source-parent-change-for-transformer",
       "type": "Parent_ParentChangeForTransformer",
     },
@@ -2485,7 +2365,6 @@ Map {
     "id": "2131d29a-296c-5f73-affc-e422bec644fe",
     "internal": Object {
       "contentDigest": "a33e2263d5a5f42473e111fb400cef3d",
-      "counter": 38,
       "owner": "gatsby-transformer-parent-change",
       "type": "ChildOfParent_ParentChangeForTransformer",
     },
@@ -2497,7 +2376,6 @@ Map {
     "id": "3b0c942e-b51f-587b-b37d-b36c5e9af8fa",
     "internal": Object {
       "contentDigest": "3bca2830e09b3c30b3ca76dccdaf5e8b",
-      "counter": 40,
       "owner": "gatsby-transformer-child-change",
       "type": "ChildOfParent_ChildChangeForTransformer",
     },
@@ -2513,7 +2391,6 @@ Map {
     "id": "parent_parentChangeForFields",
     "internal": Object {
       "contentDigest": "72122def77d239ba36e9b9729fc53adf",
-      "counter": 41,
       "fieldOwners": Object {
         "bar": "gatsby-fields-parent-change",
         "foo": "gatsby-fields-parent-change",
@@ -2532,7 +2409,6 @@ Map {
     "id": "SitePage /",
     "internal": Object {
       "contentDigest": "c5fa7d67d7b6095c8133348eb329bd52",
-      "counter": 43,
       "description": "c9535749-a52b-5c49-8671-11a311b98993",
       "owner": "internal-data-bridge",
       "type": "SitePage",

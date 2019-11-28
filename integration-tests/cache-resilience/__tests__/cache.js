@@ -20,6 +20,10 @@ const sanitiseNode = value => {
     delete value.internal.contentDigest
     delete value.version
   }
+
+  // we don't care about order of node creation at this point
+  delete value.internal.counter
+
   return value
 }
 
@@ -69,11 +73,13 @@ const useGatsbyNode = (run = 1) => {
   })
 }
 
-const build = () => {
+const build = ({ updatePlugins } = {}) => {
   spawnSync(gatsbyBin, [`clean`])
   useGatsbyNode(1)
 
   let processOutput
+
+  // First run, get state
   processOutput = spawnSync(gatsbyBin, [`build`], {
     stdio: [`inherit`, `inherit`, `inherit`, `inherit`],
     env: {
@@ -91,8 +97,10 @@ const build = () => {
 
   const postBootstrapStateFromFirstRun = loadState(`./on_post_bootstrap.state`)
 
-  // Invalidations
-  useGatsbyNode(2)
+  if (updatePlugins) {
+    // Invalidations
+    useGatsbyNode(2)
+  }
 
   // Second run, get state and compare with state from previous run
   processOutput = spawnSync(gatsbyBin, [`build`], {
@@ -120,61 +128,44 @@ const build = () => {
   }
 }
 
+afterAll(() => {
+  // go back to initial
+  useGatsbyNode(1)
+})
+
 describe(`Cache`, () => {
   beforeAll(() => {
     useGatsbyNode(1)
   })
 
   describe(`Redux`, () => {
-    it(`is persisted between builds`, done => {
-      spawnSync(gatsbyBin, [`clean`])
-
-      // First run, get state
-      spawnSync(gatsbyBin, [`build`], {
-        stdio: [`inherit`, `inherit`, `inherit`, `inherit`],
-        env: {
-          ...process.env,
-          EXIT_ON_POST_BOOTSTRAP: `1`,
-          NODE_ENV: `production`,
-        },
+    it(`is persisted between builds`, () => {
+      const {
+        preBootstrapStateFromFirstRun,
+        postBootstrapStateFromFirstRun,
+        preBootstrapStateFromSecondRun,
+        postBootstrapStateFromSecondRun,
+      } = build({
+        updatePlugins: false,
       })
-
-      const preBootstrapStateFromFirstRun = loadState(
-        `./on_pre_bootstrap.state`
-      )
-
-      const postBootstrapStateFromFirstRun = loadState(
-        `./on_post_bootstrap.state`
-      )
 
       expect(preBootstrapStateFromFirstRun.size).toEqual(0)
-
-      // Second run, get state and compare with state from previous run
-      spawnSync(gatsbyBin, [`build`], {
-        stdio: [`inherit`, `inherit`, `inherit`, `inherit`],
-        env: {
-          ...process.env,
-          EXIT_ON_POST_BOOTSTRAP: `1`,
-          NODE_ENV: `production`,
-        },
-      })
-
-      const preBootstrapStateFromSecondRun = loadState(
-        `./on_pre_bootstrap.state`
-      )
 
       expect(postBootstrapStateFromFirstRun).toEqual(
         preBootstrapStateFromSecondRun
       )
-
-      done()
+      expect(postBootstrapStateFromFirstRun).toEqual(
+        postBootstrapStateFromSecondRun
+      )
     })
 
-    describe.only(`Nodes`, () => {
+    describe(`Nodes`, () => {
       let states
 
       beforeAll(() => {
-        states = build()
+        states = build({
+          updatePlugins: true,
+        })
       })
 
       it(`sanity checks`, () => {
@@ -248,7 +239,6 @@ describe(`Cache`, () => {
                 "id": "INDEPENDENT_NODE_1",
                 "internal": Object {
                   "contentDigest": "0",
-                  "counter": 36,
                   "owner": "gatsby-plugin-independent-node",
                   "type": "IndependentChanging",
                 },
@@ -274,7 +264,6 @@ describe(`Cache`, () => {
               \\"id\\": \\"INDEPENDENT_NODE_1\\",
               \\"internal\\": Object {
                 \\"contentDigest\\": \\"0\\",
-                \\"counter\\": 36,
                 \\"owner\\": \\"gatsby-plugin-independent-node\\",
                 \\"type\\": \\"IndependentChanging\\",
               },
@@ -287,7 +276,6 @@ describe(`Cache`, () => {
                   "id": "INDEPENDENT_NODE_1",
                   "internal": Object {
                     "contentDigest": "0",
-                    "counter": 36,
                     "owner": "gatsby-plugin-independent-node",
                     "type": "IndependentChanging",
                   },
@@ -299,7 +287,6 @@ describe(`Cache`, () => {
                   "id": "INDEPENDENT_NODE_1",
                   "internal": Object {
                     "contentDigest": "0",
-                    "counter": 36,
                     "owner": "gatsby-plugin-independent-node",
                     "type": "IndependentChanging",
                   },
@@ -339,7 +326,6 @@ describe(`Cache`, () => {
                 "id": "2131d29a-296c-5f73-affc-e422bec644fe",
                 "internal": Object {
                   "contentDigest": "cbc07ead8c18c9d616f0004a893d5cf3",
-                  "counter": 38,
                   "owner": "gatsby-transformer-parent-change",
                   "type": "ChildOfParent_ParentChangeForTransformer",
                 },
@@ -353,7 +339,6 @@ describe(`Cache`, () => {
                 "id": "parent_parentChangeForTransformer",
                 "internal": Object {
                   "contentDigest": "a032c69550f5567021eda97cc3a1faf2",
-                  "counter": 37,
                   "owner": "gatsby-source-parent-change-for-transformer",
                   "type": "Parent_ParentChangeForTransformer",
                 },
@@ -383,7 +368,6 @@ describe(`Cache`, () => {
               \\"internal\\": Object {
           -     \\"contentDigest\\": \\"cbc07ead8c18c9d616f0004a893d5cf3\\",
           +     \\"contentDigest\\": \\"a33e2263d5a5f42473e111fb400cef3d\\",
-                \\"counter\\": 38,
                 \\"owner\\": \\"gatsby-transformer-parent-change\\",
                 \\"type\\": \\"ChildOfParent_ParentChangeForTransformer\\",
               },
@@ -397,7 +381,6 @@ describe(`Cache`, () => {
                   "id": "2131d29a-296c-5f73-affc-e422bec644fe",
                   "internal": Object {
                     "contentDigest": "a33e2263d5a5f42473e111fb400cef3d",
-                    "counter": 38,
                     "owner": "gatsby-transformer-parent-change",
                     "type": "ChildOfParent_ParentChangeForTransformer",
                   },
@@ -410,7 +393,6 @@ describe(`Cache`, () => {
                   "id": "2131d29a-296c-5f73-affc-e422bec644fe",
                   "internal": Object {
                     "contentDigest": "cbc07ead8c18c9d616f0004a893d5cf3",
-                    "counter": 38,
                     "owner": "gatsby-transformer-parent-change",
                     "type": "ChildOfParent_ParentChangeForTransformer",
                   },
@@ -428,7 +410,6 @@ describe(`Cache`, () => {
               \\"internal\\": Object {
           -     \\"contentDigest\\": \\"a032c69550f5567021eda97cc3a1faf2\\",
           +     \\"contentDigest\\": \\"4a6a70b2f8849535de50f47c609006fe\\",
-                \\"counter\\": 37,
                 \\"owner\\": \\"gatsby-source-parent-change-for-transformer\\",
                 \\"type\\": \\"Parent_ParentChangeForTransformer\\",
               },
@@ -443,7 +424,6 @@ describe(`Cache`, () => {
                   "id": "parent_parentChangeForTransformer",
                   "internal": Object {
                     "contentDigest": "4a6a70b2f8849535de50f47c609006fe",
-                    "counter": 37,
                     "owner": "gatsby-source-parent-change-for-transformer",
                     "type": "Parent_ParentChangeForTransformer",
                   },
@@ -457,7 +437,6 @@ describe(`Cache`, () => {
                   "id": "parent_parentChangeForTransformer",
                   "internal": Object {
                     "contentDigest": "a032c69550f5567021eda97cc3a1faf2",
-                    "counter": 37,
                     "owner": "gatsby-source-parent-change-for-transformer",
                     "type": "Parent_ParentChangeForTransformer",
                   },
@@ -499,7 +478,6 @@ describe(`Cache`, () => {
               \\"id\\": \\"parent_childChangeForTransformer\\",
               \\"internal\\": Object {
                 \\"contentDigest\\": \\"25f73a6d69ce857a76e0a2cdbc186975\\",
-                \\"counter\\": 39,
                 \\"owner\\": \\"gatsby-source-child-change-for-transformer\\",
                 \\"type\\": \\"Parent_ChildChangeForTransformer\\",
               },
@@ -512,7 +490,6 @@ describe(`Cache`, () => {
                   "id": "parent_childChangeForTransformer",
                   "internal": Object {
                     "contentDigest": "25f73a6d69ce857a76e0a2cdbc186975",
-                    "counter": 39,
                     "owner": "gatsby-source-child-change-for-transformer",
                     "type": "Parent_ChildChangeForTransformer",
                   },
@@ -526,7 +503,6 @@ describe(`Cache`, () => {
                   "id": "parent_childChangeForTransformer",
                   "internal": Object {
                     "contentDigest": "25f73a6d69ce857a76e0a2cdbc186975",
-                    "counter": 39,
                     "owner": "gatsby-source-child-change-for-transformer",
                     "type": "Parent_ChildChangeForTransformer",
                   },
@@ -541,7 +517,6 @@ describe(`Cache`, () => {
                 "id": "3b0c942e-b51f-587b-b37d-b36c5e9af8fa",
                 "internal": Object {
                   "contentDigest": "59b3a74325cbf2001bc21eb662f1e297",
-                  "counter": 40,
                   "owner": "gatsby-transformer-child-change",
                   "type": "ChildOfParent_ChildChangeForTransformer",
                 },
@@ -569,7 +544,6 @@ describe(`Cache`, () => {
               \\"internal\\": Object {
           -     \\"contentDigest\\": \\"59b3a74325cbf2001bc21eb662f1e297\\",
           +     \\"contentDigest\\": \\"3bca2830e09b3c30b3ca76dccdaf5e8b\\",
-                \\"counter\\": 40,
                 \\"owner\\": \\"gatsby-transformer-child-change\\",
                 \\"type\\": \\"ChildOfParent_ChildChangeForTransformer\\",
               },
@@ -582,7 +556,6 @@ describe(`Cache`, () => {
                   "id": "3b0c942e-b51f-587b-b37d-b36c5e9af8fa",
                   "internal": Object {
                     "contentDigest": "3bca2830e09b3c30b3ca76dccdaf5e8b",
-                    "counter": 40,
                     "owner": "gatsby-transformer-child-change",
                     "type": "ChildOfParent_ChildChangeForTransformer",
                   },
@@ -594,7 +567,6 @@ describe(`Cache`, () => {
                   "id": "3b0c942e-b51f-587b-b37d-b36c5e9af8fa",
                   "internal": Object {
                     "contentDigest": "59b3a74325cbf2001bc21eb662f1e297",
-                    "counter": 40,
                     "owner": "gatsby-transformer-child-change",
                     "type": "ChildOfParent_ChildChangeForTransformer",
                   },
@@ -637,7 +609,6 @@ describe(`Cache`, () => {
                 "id": "parent_parentChangeForFields",
                 "internal": Object {
                   "contentDigest": "ad237cf525f0ccb39ea0ba07165d4119",
-                  "counter": 41,
                   "fieldOwners": Object {
                     "bar": "gatsby-fields-parent-change",
                     "foo": "gatsby-fields-parent-change",
@@ -675,7 +646,6 @@ describe(`Cache`, () => {
               \\"internal\\": Object {
           -     \\"contentDigest\\": \\"ad237cf525f0ccb39ea0ba07165d4119\\",
           +     \\"contentDigest\\": \\"72122def77d239ba36e9b9729fc53adf\\",
-                \\"counter\\": 41,
                 \\"fieldOwners\\": Object {
                   \\"bar\\": \\"gatsby-fields-parent-change\\",
                   \\"foo\\": \\"gatsby-fields-parent-change\\",
@@ -696,7 +666,6 @@ describe(`Cache`, () => {
                   "id": "parent_parentChangeForFields",
                   "internal": Object {
                     "contentDigest": "72122def77d239ba36e9b9729fc53adf",
-                    "counter": 41,
                     "fieldOwners": Object {
                       "bar": "gatsby-fields-parent-change",
                       "foo": "gatsby-fields-parent-change",
@@ -716,7 +685,6 @@ describe(`Cache`, () => {
                   "id": "parent_parentChangeForFields",
                   "internal": Object {
                     "contentDigest": "ad237cf525f0ccb39ea0ba07165d4119",
-                    "counter": 41,
                     "fieldOwners": Object {
                       "bar": "gatsby-fields-parent-change",
                       "foo": "gatsby-fields-parent-change",
@@ -763,7 +731,6 @@ describe(`Cache`, () => {
               \\"id\\": \\"parent_childChangeForFields\\",
               \\"internal\\": Object {
                 \\"contentDigest\\": \\"893740bfde4b8a6039e939cb0290d626\\",
-                \\"counter\\": 42,
           -     \\"fieldOwners\\": Object {
           -       \\"foo1\\": \\"gatsby-fields-child-change\\",
           -     },
@@ -781,7 +748,6 @@ describe(`Cache`, () => {
                   "id": "parent_childChangeForFields",
                   "internal": Object {
                     "contentDigest": "893740bfde4b8a6039e939cb0290d626",
-                    "counter": 42,
                     "fieldOwners": Object {},
                     "owner": "gatsby-source-child-change-for-fields",
                     "type": "Parent_ChildChangeForFields",
@@ -797,7 +763,6 @@ describe(`Cache`, () => {
                   "id": "parent_childChangeForFields",
                   "internal": Object {
                     "contentDigest": "893740bfde4b8a6039e939cb0290d626",
-                    "counter": 42,
                     "fieldOwners": Object {
                       "foo1": "gatsby-fields-child-change",
                     },
@@ -832,7 +797,6 @@ describe(`Cache`, () => {
               \\"id\\": \\"parent_childChangeForFields\\",
               \\"internal\\": Object {
                 \\"contentDigest\\": \\"893740bfde4b8a6039e939cb0290d626\\",
-                \\"counter\\": 42,
                 \\"fieldOwners\\": Object {
           -       \\"foo1\\": \\"gatsby-fields-child-change\\",
           +       \\"foo2\\": \\"gatsby-fields-child-change\\",
@@ -852,7 +816,6 @@ describe(`Cache`, () => {
                   "id": "parent_childChangeForFields",
                   "internal": Object {
                     "contentDigest": "893740bfde4b8a6039e939cb0290d626",
-                    "counter": 42,
                     "fieldOwners": Object {
                       "foo2": "gatsby-fields-child-change",
                     },
@@ -870,7 +833,6 @@ describe(`Cache`, () => {
                   "id": "parent_childChangeForFields",
                   "internal": Object {
                     "contentDigest": "893740bfde4b8a6039e939cb0290d626",
-                    "counter": 42,
                     "fieldOwners": Object {
                       "foo1": "gatsby-fields-child-change",
                     },
@@ -888,7 +850,7 @@ describe(`Cache`, () => {
     })
 
     describe(`Fields`, () => {
-      it.todo(`are deleted and recreated when owner plugin changes`, () => {})
+      it.todo(`are deleted and recreated when owner plugin changes`)
     })
   })
   describe(`Disk`, () => {})
