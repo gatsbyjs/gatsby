@@ -60,8 +60,6 @@ module.exports = (plugin, state, storeByType = true) => {
   const nodes = getLookup(state)
   const dirty = getDirtyNodes(plugins, nodes)
 
-  debugger
-
   for (let [id, node] of nodes) {
     if (!dirty.has(id)) {
       if (storeByType) {
