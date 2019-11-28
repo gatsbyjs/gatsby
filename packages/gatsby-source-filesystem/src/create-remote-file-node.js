@@ -59,20 +59,6 @@ let totalJobs = 0
  * @param  {Reporter} [options.reporter]
  */
 
-/**
- * createFilePath
- * --
- *
- * @param  {String} directory
- * @param  {String} filename
- * @param  {String} url
- * @return {String}
- */
-const createFilePath = (directory, filename, ext) =>
-  path.join(directory, `${filename}${ext}`)
-const CACHE_DIR = `.cache`
-const FS_PLUGIN_DIR = `gatsby-source-filesystem`
-
 /********************
  * Queue Management *
  ********************/
