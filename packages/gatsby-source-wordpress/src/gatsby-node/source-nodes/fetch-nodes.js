@@ -65,21 +65,17 @@ export const fetchAndCreateAllNodes = async (_, helpers, pluginOptions) => {
 
   //
   // fetch nodes from WPGQL
-  activity = reporter.activityTimer(formatLogMessage`fetch WordPress nodes`)
+  activity = reporter.activityTimer(formatLogMessage`fetch and create nodes`)
   activity.start()
 
   store.subscribe(state => {
-    activity.setStatus(`fetched ${store.getState().logger.entityCount}`)
+    activity.setStatus(`created ${store.getState().logger.entityCount}`)
   })
 
   const wpgqlNodesByContentType = await fetchWPGQLContentNodes({}, ...api)
 
-  activity.end()
-
   //
   // Create Gatsby nodes from WPGQL response
-  activity = reporter.activityTimer(formatLogMessage`create nodes`)
-  activity.start()
 
   const createdNodeIds = await createGatsbyNodesFromWPGQLContentNodes(
     {
