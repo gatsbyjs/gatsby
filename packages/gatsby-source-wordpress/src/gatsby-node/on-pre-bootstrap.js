@@ -1,28 +1,8 @@
-import { init } from "@rematch/core"
-import immerPlugin from "@rematch/immer"
-import { dd } from "dumper.js"
 import { buildNodeQueriesFromIntrospection } from "./source-nodes/generate-queries-from-introspection"
 
 import checkPluginRequirements from "../utils/check-plugin-requirements"
 
-export const schemaStore = init({
-  models: {
-    introspection: {
-      state: {
-        queries: {},
-      },
-      reducers: {
-        setQueries(state, payload) {
-          state.queries = payload
-          return state
-        },
-      },
-    },
-  },
-  plugins: [immerPlugin()],
-})
-
-export default async (helpers, pluginOptions) => {
+const onPreBootstrap = async (helpers, pluginOptions) => {
   const api = [helpers, pluginOptions]
 
   //
@@ -47,3 +27,5 @@ export default async (helpers, pluginOptions) => {
   // get, store, and cache available content types
   // build, store, and cache gql query strings
 }
+
+export default onPreBootstrap

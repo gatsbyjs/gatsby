@@ -7,7 +7,7 @@ import fetchGraphql from "../../../utils/fetch-graphql"
 import gql from "../../../utils/gql"
 import { FIELD_BLACKLIST } from "../../constants"
 
-import { schemaStore } from "../../on-pre-bootstrap"
+import store from "../../../store"
 
 export const getAvailableContentTypes = async ({ url }) => {
   const query = getAvailablePostTypesQuery()
@@ -180,7 +180,7 @@ export const buildNodeQueriesFromIntrospection = async (
 
   //
   // set the queries in our redux store
-  schemaStore.dispatch.introspection.setQueries(queries)
+  store.dispatch.introspection.setQueries(queries)
 
   return queries
 }

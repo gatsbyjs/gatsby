@@ -2,13 +2,13 @@ import { createGatsbyNodesFromWPGQLContentNodes } from "./create-nodes"
 import paginatedWpNodeFetch from "./paginated-wp-node-fetch"
 
 import { CREATED_NODE_IDS } from "../constants"
-import { schemaStore } from "../on-pre-bootstrap"
+import store from "../../store"
 
 export const fetchWPGQLContentNodes = async (_, helpers, { url }) => {
   const { reporter } = helpers
   const contentNodeGroups = []
 
-  const { queries } = schemaStore.getState().introspection
+  const { queries } = store.getState().introspection
 
   await Promise.all(
     Object.entries(queries).map(
