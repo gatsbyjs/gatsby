@@ -844,7 +844,7 @@ actions.createNode = (node2, plugin, actionOptions) => dispatch => {
   const createNodeAction = (Array.isArray(actions) ? actions : [actions]).find(
     action =>
       action.type === `CREATE_NODE` ||
-      (action.type === `TOUCH_NODE` && actionOptions.firstRun)
+      (actionOptions && actionOptions.firstRun && action.type === `TOUCH_NODE`)
   )
 
   if (!createNodeAction) {
