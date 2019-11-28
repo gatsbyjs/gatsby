@@ -1,3 +1,4 @@
+const crypto = require(`crypto`)
 const objectHash = require(`node-object-hash`)
 
 const hasher = objectHash({
@@ -12,9 +13,21 @@ const hasher = objectHash({
   },
 })
 
+const hashPrimitive = input =>
+  crypto
+    .createHash(`md5`)
+    .update(input)
+    .digest(`hex`)
+
 /**
  * @type {import('../index').createContentDigest}
  */
-const createContentDigest = input => hasher.hash(input)
+const createContentDigest = input => {
+  if (typeof input === `object`) {
+    return hasher.hash(input)
+  }
+
+  return hashPrimitive(input)
+}
 
 module.exports = createContentDigest
