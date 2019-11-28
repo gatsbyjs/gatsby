@@ -162,25 +162,25 @@ Map {
     "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-plugin-independent-node",
     "ssrAPIs": Array [],
   },
-  "5b30a597-1b08-5eb5-b475-340a5c87ad06" => Object {
+  "624fa626-4203-5aab-a667-ee4ffa1dee80" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "5b30a597-1b08-5eb5-b475-340a5c87ad06",
+    "id": "624fa626-4203-5aab-a667-ee4ffa1dee80",
     "internal": Object {
       "counter": 9,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
-    "name": "gatsby-source-parent-change",
+    "name": "gatsby-source-parent-change-for-transformer",
     "nodeAPIs": Array [
       "sourceNodes",
     ],
     "parent": null,
-    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-parent-change",
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-parent-change-for-transformer",
     "pluginOptions": Object {
       "plugins": Array [],
     },
-    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-parent-change",
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-parent-change-for-transformer",
     "ssrAPIs": Array [],
   },
   "684f3e1c-cb9e-5123-87b1-609e60d5fa87" => Object {
@@ -204,25 +204,25 @@ Map {
     "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-transformer-parent-change",
     "ssrAPIs": Array [],
   },
-  "aabee054-3c12-5ff1-a6e2-f8de945501ef" => Object {
+  "08cd7b14-7698-5764-8775-c58ce54c44e8" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "aabee054-3c12-5ff1-a6e2-f8de945501ef",
+    "id": "08cd7b14-7698-5764-8775-c58ce54c44e8",
     "internal": Object {
       "counter": 11,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
-    "name": "gatsby-source-child-change",
+    "name": "gatsby-source-child-change-for-transformer",
     "nodeAPIs": Array [
       "sourceNodes",
     ],
     "parent": null,
-    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-child-change",
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-child-change-for-transformer",
     "pluginOptions": Object {
       "plugins": Array [],
     },
-    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-child-change",
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-child-change-for-transformer",
     "ssrAPIs": Array [],
   },
   "2bf51669-f85f-59be-94db-6056fd4b04a3" => Object {
@@ -246,12 +246,33 @@ Map {
     "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-transformer-child-change",
     "ssrAPIs": Array [],
   },
+  "5ae5dfed-66db-553c-a695-6d88233de8c7" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "5ae5dfed-66db-553c-a695-6d88233de8c7",
+    "internal": Object {
+      "counter": 13,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-source-parent-change-for-fields",
+    "nodeAPIs": Array [
+      "sourceNodes",
+    ],
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-parent-change-for-fields",
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-parent-change-for-fields",
+    "ssrAPIs": Array [],
+  },
   "58820269-9021-5c79-80f5-35381958161b" => Object {
     "browserAPIs": Array [],
     "children": Array [],
     "id": "58820269-9021-5c79-80f5-35381958161b",
     "internal": Object {
-      "counter": 13,
+      "counter": 14,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -267,12 +288,33 @@ Map {
     "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-fields-parent-change",
     "ssrAPIs": Array [],
   },
+  "c56df8b2-d14d-5334-9f93-79f3654e01fe" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "c56df8b2-d14d-5334-9f93-79f3654e01fe",
+    "internal": Object {
+      "counter": 15,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-source-child-change-for-fields",
+    "nodeAPIs": Array [
+      "sourceNodes",
+    ],
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-child-change-for-fields",
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-child-change-for-fields",
+    "ssrAPIs": Array [],
+  },
   "9beb7309-19ee-512e-8ea5-bf15934ed192" => Object {
     "browserAPIs": Array [],
     "children": Array [],
     "id": "9beb7309-19ee-512e-8ea5-bf15934ed192",
     "internal": Object {
-      "counter": 14,
+      "counter": 16,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -293,7 +335,7 @@ Map {
     "children": Array [],
     "id": "c9535749-a52b-5c49-8671-11a311b98993",
     "internal": Object {
-      "counter": 15,
+      "counter": 17,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -316,7 +358,7 @@ Map {
     "children": Array [],
     "id": "aed25515-e1f7-5760-8f34-6461454230de",
     "internal": Object {
-      "counter": 16,
+      "counter": 18,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -339,7 +381,7 @@ Map {
     "children": Array [],
     "id": "7775d111-885f-58c6-aa94-47ad7d6d5408",
     "internal": Object {
-      "counter": 17,
+      "counter": 19,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -362,7 +404,7 @@ Map {
     "children": Array [],
     "id": "e419ee70-6845-577a-9caf-98198596750c",
     "internal": Object {
-      "counter": 18,
+      "counter": 20,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -385,7 +427,7 @@ Map {
     "children": Array [],
     "id": "b0cf71bb-65db-5a23-b472-51114a941295",
     "internal": Object {
-      "counter": 19,
+      "counter": 21,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -408,7 +450,7 @@ Map {
     "children": Array [],
     "id": "0b5d5612-63e0-5fc9-881c-02623175bd8a",
     "internal": Object {
-      "counter": 20,
+      "counter": 22,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -431,7 +473,7 @@ Map {
     "children": Array [],
     "id": "d35f263a-d648-5dac-a47f-79af5021d792",
     "internal": Object {
-      "counter": 21,
+      "counter": 23,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -449,12 +491,12 @@ Map {
     "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "c144a03e-fb15-59b6-a2b2-f6fea8872008" => Object {
+  "4aee7760-8b89-5bab-a9e8-9f769b59362d" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "c144a03e-fb15-59b6-a2b2-f6fea8872008",
+    "id": "4aee7760-8b89-5bab-a9e8-9f769b59362d",
     "internal": Object {
-      "counter": 22,
+      "counter": 24,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -465,7 +507,7 @@ Map {
     "parent": null,
     "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
     "pluginOptions": Object {
-      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-parent-change/src/pages",
+      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-parent-change-for-transformer/src/pages",
       "pathCheck": false,
       "plugins": Array [],
     },
@@ -477,7 +519,7 @@ Map {
     "children": Array [],
     "id": "ce2a4ef1-edef-51e3-8cb9-ae2bb5c87d1b",
     "internal": Object {
-      "counter": 23,
+      "counter": 25,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -495,12 +537,12 @@ Map {
     "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "bb099152-8599-57dc-9a81-2f13ca83a8be" => Object {
+  "4e757e74-ce81-573e-9014-175dfaed5aae" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "bb099152-8599-57dc-9a81-2f13ca83a8be",
+    "id": "4e757e74-ce81-573e-9014-175dfaed5aae",
     "internal": Object {
-      "counter": 24,
+      "counter": 26,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -511,7 +553,7 @@ Map {
     "parent": null,
     "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
     "pluginOptions": Object {
-      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-child-change/src/pages",
+      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-child-change-for-transformer/src/pages",
       "pathCheck": false,
       "plugins": Array [],
     },
@@ -523,7 +565,7 @@ Map {
     "children": Array [],
     "id": "7e0c6e91-4f9e-517b-aa9d-8349cc0a5e2a",
     "internal": Object {
-      "counter": 25,
+      "counter": 27,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -541,12 +583,35 @@ Map {
     "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
+  "6170a8c5-cfee-535a-a3a1-688a9815ca4f" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "6170a8c5-cfee-535a-a3a1-688a9815ca4f",
+    "internal": Object {
+      "counter": 28,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-parent-change-for-fields/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
   "138edb65-012b-5754-b531-0d4130a8a293" => Object {
     "browserAPIs": Array [],
     "children": Array [],
     "id": "138edb65-012b-5754-b531-0d4130a8a293",
     "internal": Object {
-      "counter": 26,
+      "counter": 29,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -564,12 +629,35 @@ Map {
     "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
+  "976066e6-c8c1-5d54-aa70-e396a4093155" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "976066e6-c8c1-5d54-aa70-e396a4093155",
+    "internal": Object {
+      "counter": 30,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-child-change-for-fields/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
   "fe8640ab-3196-5c63-86d8-7eb81947b196" => Object {
     "browserAPIs": Array [],
     "children": Array [],
     "id": "fe8640ab-3196-5c63-86d8-7eb81947b196",
     "internal": Object {
-      "counter": 27,
+      "counter": 31,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -592,7 +680,7 @@ Map {
     "children": Array [],
     "id": "7374ebf2-d961-52ee-92a2-c25e7cb387a9",
     "internal": Object {
-      "counter": 28,
+      "counter": 32,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -614,7 +702,7 @@ Map {
     "children": Array [],
     "id": "0e693aa4-31a8-55c5-8fd7-02832e1aff3f",
     "internal": Object {
-      "counter": 29,
+      "counter": 33,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -637,7 +725,7 @@ Map {
     "host": undefined,
     "id": "Site",
     "internal": Object {
-      "counter": 30,
+      "counter": 34,
       "owner": "internal-data-bridge",
       "type": "Site",
     },
@@ -653,7 +741,7 @@ Map {
     "id": "STABLE_NODE_1",
     "internal": Object {
       "contentDigest": "0",
-      "counter": 31,
+      "counter": 35,
       "owner": "gatsby-plugin-stable",
       "type": "IndependentStable",
     },
@@ -665,78 +753,102 @@ Map {
     "id": "INDEPENDENT_NODE_1",
     "internal": Object {
       "contentDigest": "0",
-      "counter": 32,
+      "counter": 36,
       "owner": "gatsby-plugin-independent-node",
       "type": "IndependentChanging",
     },
     "parent": null,
   },
-  "parent_parentChange" => Object {
+  "parent_parentChangeForTransformer" => Object {
     "children": Array [
-      "4886e795-4b87-5964-b308-112031bdaf88",
+      "2131d29a-296c-5f73-affc-e422bec644fe",
     ],
+    "foo": "run-1",
+    "id": "parent_parentChangeForTransformer",
+    "internal": Object {
+      "contentDigest": "a032c69550f5567021eda97cc3a1faf2",
+      "counter": 37,
+      "owner": "gatsby-source-parent-change-for-transformer",
+      "type": "Parent_ParentChangeForTransformer",
+    },
+    "parent": null,
+  },
+  "2131d29a-296c-5f73-affc-e422bec644fe" => Object {
+    "bar": undefined,
+    "children": Array [],
+    "foo": "run-1",
+    "id": "2131d29a-296c-5f73-affc-e422bec644fe",
+    "internal": Object {
+      "contentDigest": "cbc07ead8c18c9d616f0004a893d5cf3",
+      "counter": 38,
+      "owner": "gatsby-transformer-parent-change",
+      "type": "ChildOfParent_ParentChangeForTransformer",
+    },
+    "parent": "parent_parentChangeForTransformer",
+  },
+  "parent_childChangeForTransformer" => Object {
+    "children": Array [
+      "3b0c942e-b51f-587b-b37d-b36c5e9af8fa",
+    ],
+    "foo": "run-1",
+    "id": "parent_childChangeForTransformer",
+    "internal": Object {
+      "contentDigest": "25f73a6d69ce857a76e0a2cdbc186975",
+      "counter": 39,
+      "owner": "gatsby-source-child-change-for-transformer",
+      "type": "Parent_ChildChangeForTransformer",
+    },
+    "parent": null,
+  },
+  "3b0c942e-b51f-587b-b37d-b36c5e9af8fa" => Object {
+    "children": Array [],
+    "foo": "bar",
+    "id": "3b0c942e-b51f-587b-b37d-b36c5e9af8fa",
+    "internal": Object {
+      "contentDigest": "59b3a74325cbf2001bc21eb662f1e297",
+      "counter": 40,
+      "owner": "gatsby-transformer-child-change",
+      "type": "ChildOfParent_ChildChangeForTransformer",
+    },
+    "parent": "parent_childChangeForTransformer",
+  },
+  "parent_parentChangeForFields" => Object {
+    "children": Array [],
     "fields": Object {
       "bar": undefined,
       "foo": "run-1",
     },
     "foo": "run-1",
-    "id": "parent_parentChange",
+    "id": "parent_parentChangeForFields",
     "internal": Object {
-      "contentDigest": "aede568d9b5cf8ae620c06a9fa57f456",
-      "counter": 33,
+      "contentDigest": "ad237cf525f0ccb39ea0ba07165d4119",
+      "counter": 41,
       "fieldOwners": Object {
         "bar": "gatsby-fields-parent-change",
         "foo": "gatsby-fields-parent-change",
       },
-      "owner": "gatsby-source-parent-change",
-      "type": "Parent_ParentChange",
+      "owner": "gatsby-source-parent-change-for-fields",
+      "type": "Parent_ParentChangeForFields",
     },
     "parent": null,
   },
-  "4886e795-4b87-5964-b308-112031bdaf88" => Object {
-    "bar": undefined,
+  "parent_childChangeForFields" => Object {
     "children": Array [],
-    "foo": "run-1",
-    "id": "4886e795-4b87-5964-b308-112031bdaf88",
-    "internal": Object {
-      "contentDigest": "96dd125d43f25f0bba42a7b4b7ba4885",
-      "counter": 34,
-      "owner": "gatsby-transformer-parent-change",
-      "type": "ChildOfParent_ParentChange",
-    },
-    "parent": "parent_parentChange",
-  },
-  "parent_childChange" => Object {
-    "children": Array [
-      "358f53bc-3eef-5881-a226-042304a159e3",
-    ],
     "fields": Object {
       "foo1": "bar",
     },
     "foo": "run-1",
-    "id": "parent_childChange",
+    "id": "parent_childChangeForFields",
     "internal": Object {
-      "contentDigest": "265623643e8806ecc810413fcf1ccefa",
-      "counter": 35,
+      "contentDigest": "893740bfde4b8a6039e939cb0290d626",
+      "counter": 42,
       "fieldOwners": Object {
         "foo1": "gatsby-fields-child-change",
       },
-      "owner": "gatsby-source-child-change",
-      "type": "Parent_ChildChange",
+      "owner": "gatsby-source-child-change-for-fields",
+      "type": "Parent_ChildChangeForFields",
     },
     "parent": null,
-  },
-  "358f53bc-3eef-5881-a226-042304a159e3" => Object {
-    "children": Array [],
-    "foo": "bar",
-    "id": "358f53bc-3eef-5881-a226-042304a159e3",
-    "internal": Object {
-      "contentDigest": "8072e58493504423579431f250d1846a",
-      "counter": 36,
-      "owner": "gatsby-transformer-child-change",
-      "type": "ChildOfParent_ChildChange",
-    },
-    "parent": "parent_childChange",
   },
   "SitePage /" => Object {
     "children": Array [],
@@ -747,7 +859,7 @@ Map {
     "id": "SitePage /",
     "internal": Object {
       "contentDigest": "c5fa7d67d7b6095c8133348eb329bd52",
-      "counter": 37,
+      "counter": 43,
       "description": "c9535749-a52b-5c49-8671-11a311b98993",
       "owner": "internal-data-bridge",
       "type": "SitePage",
@@ -925,25 +1037,25 @@ Map {
     "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-plugin-independent-node",
     "ssrAPIs": Array [],
   },
-  "5b30a597-1b08-5eb5-b475-340a5c87ad06" => Object {
+  "624fa626-4203-5aab-a667-ee4ffa1dee80" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "5b30a597-1b08-5eb5-b475-340a5c87ad06",
+    "id": "624fa626-4203-5aab-a667-ee4ffa1dee80",
     "internal": Object {
       "counter": 9,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
-    "name": "gatsby-source-parent-change",
+    "name": "gatsby-source-parent-change-for-transformer",
     "nodeAPIs": Array [
       "sourceNodes",
     ],
     "parent": null,
-    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-parent-change",
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-parent-change-for-transformer",
     "pluginOptions": Object {
       "plugins": Array [],
     },
-    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-parent-change",
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-parent-change-for-transformer",
     "ssrAPIs": Array [],
   },
   "684f3e1c-cb9e-5123-87b1-609e60d5fa87" => Object {
@@ -967,25 +1079,25 @@ Map {
     "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-transformer-parent-change",
     "ssrAPIs": Array [],
   },
-  "aabee054-3c12-5ff1-a6e2-f8de945501ef" => Object {
+  "08cd7b14-7698-5764-8775-c58ce54c44e8" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "aabee054-3c12-5ff1-a6e2-f8de945501ef",
+    "id": "08cd7b14-7698-5764-8775-c58ce54c44e8",
     "internal": Object {
       "counter": 11,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
-    "name": "gatsby-source-child-change",
+    "name": "gatsby-source-child-change-for-transformer",
     "nodeAPIs": Array [
       "sourceNodes",
     ],
     "parent": null,
-    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-child-change",
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-child-change-for-transformer",
     "pluginOptions": Object {
       "plugins": Array [],
     },
-    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-child-change",
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-child-change-for-transformer",
     "ssrAPIs": Array [],
   },
   "2bf51669-f85f-59be-94db-6056fd4b04a3" => Object {
@@ -1009,12 +1121,33 @@ Map {
     "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-transformer-child-change",
     "ssrAPIs": Array [],
   },
+  "5ae5dfed-66db-553c-a695-6d88233de8c7" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "5ae5dfed-66db-553c-a695-6d88233de8c7",
+    "internal": Object {
+      "counter": 13,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-source-parent-change-for-fields",
+    "nodeAPIs": Array [
+      "sourceNodes",
+    ],
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-parent-change-for-fields",
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-parent-change-for-fields",
+    "ssrAPIs": Array [],
+  },
   "58820269-9021-5c79-80f5-35381958161b" => Object {
     "browserAPIs": Array [],
     "children": Array [],
     "id": "58820269-9021-5c79-80f5-35381958161b",
     "internal": Object {
-      "counter": 13,
+      "counter": 14,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1030,12 +1163,33 @@ Map {
     "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-fields-parent-change",
     "ssrAPIs": Array [],
   },
+  "c56df8b2-d14d-5334-9f93-79f3654e01fe" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "c56df8b2-d14d-5334-9f93-79f3654e01fe",
+    "internal": Object {
+      "counter": 15,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-source-child-change-for-fields",
+    "nodeAPIs": Array [
+      "sourceNodes",
+    ],
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-child-change-for-fields",
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-child-change-for-fields",
+    "ssrAPIs": Array [],
+  },
   "9beb7309-19ee-512e-8ea5-bf15934ed192" => Object {
     "browserAPIs": Array [],
     "children": Array [],
     "id": "9beb7309-19ee-512e-8ea5-bf15934ed192",
     "internal": Object {
-      "counter": 14,
+      "counter": 16,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1056,7 +1210,7 @@ Map {
     "children": Array [],
     "id": "c9535749-a52b-5c49-8671-11a311b98993",
     "internal": Object {
-      "counter": 15,
+      "counter": 17,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1079,7 +1233,7 @@ Map {
     "children": Array [],
     "id": "aed25515-e1f7-5760-8f34-6461454230de",
     "internal": Object {
-      "counter": 16,
+      "counter": 18,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1102,7 +1256,7 @@ Map {
     "children": Array [],
     "id": "7775d111-885f-58c6-aa94-47ad7d6d5408",
     "internal": Object {
-      "counter": 17,
+      "counter": 19,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1125,7 +1279,7 @@ Map {
     "children": Array [],
     "id": "e419ee70-6845-577a-9caf-98198596750c",
     "internal": Object {
-      "counter": 18,
+      "counter": 20,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1148,7 +1302,7 @@ Map {
     "children": Array [],
     "id": "b0cf71bb-65db-5a23-b472-51114a941295",
     "internal": Object {
-      "counter": 19,
+      "counter": 21,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1171,7 +1325,7 @@ Map {
     "children": Array [],
     "id": "0b5d5612-63e0-5fc9-881c-02623175bd8a",
     "internal": Object {
-      "counter": 20,
+      "counter": 22,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1194,7 +1348,7 @@ Map {
     "children": Array [],
     "id": "d35f263a-d648-5dac-a47f-79af5021d792",
     "internal": Object {
-      "counter": 21,
+      "counter": 23,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1212,12 +1366,12 @@ Map {
     "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "c144a03e-fb15-59b6-a2b2-f6fea8872008" => Object {
+  "4aee7760-8b89-5bab-a9e8-9f769b59362d" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "c144a03e-fb15-59b6-a2b2-f6fea8872008",
+    "id": "4aee7760-8b89-5bab-a9e8-9f769b59362d",
     "internal": Object {
-      "counter": 22,
+      "counter": 24,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1228,7 +1382,7 @@ Map {
     "parent": null,
     "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
     "pluginOptions": Object {
-      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-parent-change/src/pages",
+      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-parent-change-for-transformer/src/pages",
       "pathCheck": false,
       "plugins": Array [],
     },
@@ -1240,7 +1394,7 @@ Map {
     "children": Array [],
     "id": "ce2a4ef1-edef-51e3-8cb9-ae2bb5c87d1b",
     "internal": Object {
-      "counter": 23,
+      "counter": 25,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1258,12 +1412,12 @@ Map {
     "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "bb099152-8599-57dc-9a81-2f13ca83a8be" => Object {
+  "4e757e74-ce81-573e-9014-175dfaed5aae" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "bb099152-8599-57dc-9a81-2f13ca83a8be",
+    "id": "4e757e74-ce81-573e-9014-175dfaed5aae",
     "internal": Object {
-      "counter": 24,
+      "counter": 26,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1274,7 +1428,7 @@ Map {
     "parent": null,
     "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
     "pluginOptions": Object {
-      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-child-change/src/pages",
+      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-child-change-for-transformer/src/pages",
       "pathCheck": false,
       "plugins": Array [],
     },
@@ -1286,7 +1440,7 @@ Map {
     "children": Array [],
     "id": "7e0c6e91-4f9e-517b-aa9d-8349cc0a5e2a",
     "internal": Object {
-      "counter": 25,
+      "counter": 27,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1304,12 +1458,35 @@ Map {
     "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
+  "6170a8c5-cfee-535a-a3a1-688a9815ca4f" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "6170a8c5-cfee-535a-a3a1-688a9815ca4f",
+    "internal": Object {
+      "counter": 28,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-parent-change-for-fields/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
   "138edb65-012b-5754-b531-0d4130a8a293" => Object {
     "browserAPIs": Array [],
     "children": Array [],
     "id": "138edb65-012b-5754-b531-0d4130a8a293",
     "internal": Object {
-      "counter": 26,
+      "counter": 29,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1327,12 +1504,35 @@ Map {
     "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
+  "976066e6-c8c1-5d54-aa70-e396a4093155" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "976066e6-c8c1-5d54-aa70-e396a4093155",
+    "internal": Object {
+      "counter": 30,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-child-change-for-fields/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
   "fe8640ab-3196-5c63-86d8-7eb81947b196" => Object {
     "browserAPIs": Array [],
     "children": Array [],
     "id": "fe8640ab-3196-5c63-86d8-7eb81947b196",
     "internal": Object {
-      "counter": 27,
+      "counter": 31,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1355,7 +1555,7 @@ Map {
     "children": Array [],
     "id": "7374ebf2-d961-52ee-92a2-c25e7cb387a9",
     "internal": Object {
-      "counter": 28,
+      "counter": 32,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1377,7 +1577,7 @@ Map {
     "children": Array [],
     "id": "0e693aa4-31a8-55c5-8fd7-02832e1aff3f",
     "internal": Object {
-      "counter": 29,
+      "counter": 33,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1400,7 +1600,7 @@ Map {
     "host": undefined,
     "id": "Site",
     "internal": Object {
-      "counter": 30,
+      "counter": 34,
       "owner": "internal-data-bridge",
       "type": "Site",
     },
@@ -1416,23 +1616,35 @@ Map {
     "id": "STABLE_NODE_1",
     "internal": Object {
       "contentDigest": "0",
-      "counter": 31,
+      "counter": 35,
       "owner": "gatsby-plugin-stable",
       "type": "IndependentStable",
     },
     "parent": null,
   },
-  "parent_childChange" => Object {
+  "parent_childChangeForTransformer" => Object {
+    "children": Array [],
+    "foo": "run-1",
+    "id": "parent_childChangeForTransformer",
+    "internal": Object {
+      "contentDigest": "25f73a6d69ce857a76e0a2cdbc186975",
+      "counter": 39,
+      "owner": "gatsby-source-child-change-for-transformer",
+      "type": "Parent_ChildChangeForTransformer",
+    },
+    "parent": null,
+  },
+  "parent_childChangeForFields" => Object {
     "children": Array [],
     "fields": Object {},
     "foo": "run-1",
-    "id": "parent_childChange",
+    "id": "parent_childChangeForFields",
     "internal": Object {
-      "contentDigest": "265623643e8806ecc810413fcf1ccefa",
-      "counter": 35,
+      "contentDigest": "893740bfde4b8a6039e939cb0290d626",
+      "counter": 42,
       "fieldOwners": Object {},
-      "owner": "gatsby-source-child-change",
-      "type": "Parent_ChildChange",
+      "owner": "gatsby-source-child-change-for-fields",
+      "type": "Parent_ChildChangeForFields",
     },
     "parent": null,
   },
@@ -1445,7 +1657,7 @@ Map {
     "id": "SitePage /",
     "internal": Object {
       "contentDigest": "c5fa7d67d7b6095c8133348eb329bd52",
-      "counter": 37,
+      "counter": 43,
       "description": "c9535749-a52b-5c49-8671-11a311b98993",
       "owner": "internal-data-bridge",
       "type": "SitePage",
@@ -1623,25 +1835,25 @@ Map {
     "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-plugin-independent-node",
     "ssrAPIs": Array [],
   },
-  "5b30a597-1b08-5eb5-b475-340a5c87ad06" => Object {
+  "624fa626-4203-5aab-a667-ee4ffa1dee80" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "5b30a597-1b08-5eb5-b475-340a5c87ad06",
+    "id": "624fa626-4203-5aab-a667-ee4ffa1dee80",
     "internal": Object {
       "counter": 9,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
-    "name": "gatsby-source-parent-change",
+    "name": "gatsby-source-parent-change-for-transformer",
     "nodeAPIs": Array [
       "sourceNodes",
     ],
     "parent": null,
-    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-parent-change",
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-parent-change-for-transformer",
     "pluginOptions": Object {
       "plugins": Array [],
     },
-    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-parent-change",
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-parent-change-for-transformer",
     "ssrAPIs": Array [],
   },
   "684f3e1c-cb9e-5123-87b1-609e60d5fa87" => Object {
@@ -1665,25 +1877,25 @@ Map {
     "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-transformer-parent-change",
     "ssrAPIs": Array [],
   },
-  "aabee054-3c12-5ff1-a6e2-f8de945501ef" => Object {
+  "08cd7b14-7698-5764-8775-c58ce54c44e8" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "aabee054-3c12-5ff1-a6e2-f8de945501ef",
+    "id": "08cd7b14-7698-5764-8775-c58ce54c44e8",
     "internal": Object {
       "counter": 11,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
-    "name": "gatsby-source-child-change",
+    "name": "gatsby-source-child-change-for-transformer",
     "nodeAPIs": Array [
       "sourceNodes",
     ],
     "parent": null,
-    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-child-change",
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-child-change-for-transformer",
     "pluginOptions": Object {
       "plugins": Array [],
     },
-    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-child-change",
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-child-change-for-transformer",
     "ssrAPIs": Array [],
   },
   "2bf51669-f85f-59be-94db-6056fd4b04a3" => Object {
@@ -1707,12 +1919,33 @@ Map {
     "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-transformer-child-change",
     "ssrAPIs": Array [],
   },
+  "5ae5dfed-66db-553c-a695-6d88233de8c7" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "5ae5dfed-66db-553c-a695-6d88233de8c7",
+    "internal": Object {
+      "counter": 13,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-source-parent-change-for-fields",
+    "nodeAPIs": Array [
+      "sourceNodes",
+    ],
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-parent-change-for-fields",
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-parent-change-for-fields",
+    "ssrAPIs": Array [],
+  },
   "58820269-9021-5c79-80f5-35381958161b" => Object {
     "browserAPIs": Array [],
     "children": Array [],
     "id": "58820269-9021-5c79-80f5-35381958161b",
     "internal": Object {
-      "counter": 13,
+      "counter": 14,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1728,12 +1961,33 @@ Map {
     "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-fields-parent-change",
     "ssrAPIs": Array [],
   },
+  "c56df8b2-d14d-5334-9f93-79f3654e01fe" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "c56df8b2-d14d-5334-9f93-79f3654e01fe",
+    "internal": Object {
+      "counter": 15,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-source-child-change-for-fields",
+    "nodeAPIs": Array [
+      "sourceNodes",
+    ],
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-child-change-for-fields",
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-child-change-for-fields",
+    "ssrAPIs": Array [],
+  },
   "9beb7309-19ee-512e-8ea5-bf15934ed192" => Object {
     "browserAPIs": Array [],
     "children": Array [],
     "id": "9beb7309-19ee-512e-8ea5-bf15934ed192",
     "internal": Object {
-      "counter": 14,
+      "counter": 16,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1754,7 +2008,7 @@ Map {
     "children": Array [],
     "id": "c9535749-a52b-5c49-8671-11a311b98993",
     "internal": Object {
-      "counter": 15,
+      "counter": 17,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1777,7 +2031,7 @@ Map {
     "children": Array [],
     "id": "aed25515-e1f7-5760-8f34-6461454230de",
     "internal": Object {
-      "counter": 16,
+      "counter": 18,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1800,7 +2054,7 @@ Map {
     "children": Array [],
     "id": "7775d111-885f-58c6-aa94-47ad7d6d5408",
     "internal": Object {
-      "counter": 17,
+      "counter": 19,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1823,7 +2077,7 @@ Map {
     "children": Array [],
     "id": "e419ee70-6845-577a-9caf-98198596750c",
     "internal": Object {
-      "counter": 18,
+      "counter": 20,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1846,7 +2100,7 @@ Map {
     "children": Array [],
     "id": "b0cf71bb-65db-5a23-b472-51114a941295",
     "internal": Object {
-      "counter": 19,
+      "counter": 21,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1869,7 +2123,7 @@ Map {
     "children": Array [],
     "id": "0b5d5612-63e0-5fc9-881c-02623175bd8a",
     "internal": Object {
-      "counter": 20,
+      "counter": 22,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1892,7 +2146,7 @@ Map {
     "children": Array [],
     "id": "d35f263a-d648-5dac-a47f-79af5021d792",
     "internal": Object {
-      "counter": 21,
+      "counter": 23,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1910,12 +2164,12 @@ Map {
     "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "c144a03e-fb15-59b6-a2b2-f6fea8872008" => Object {
+  "4aee7760-8b89-5bab-a9e8-9f769b59362d" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "c144a03e-fb15-59b6-a2b2-f6fea8872008",
+    "id": "4aee7760-8b89-5bab-a9e8-9f769b59362d",
     "internal": Object {
-      "counter": 22,
+      "counter": 24,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1926,7 +2180,7 @@ Map {
     "parent": null,
     "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
     "pluginOptions": Object {
-      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-parent-change/src/pages",
+      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-parent-change-for-transformer/src/pages",
       "pathCheck": false,
       "plugins": Array [],
     },
@@ -1938,7 +2192,7 @@ Map {
     "children": Array [],
     "id": "ce2a4ef1-edef-51e3-8cb9-ae2bb5c87d1b",
     "internal": Object {
-      "counter": 23,
+      "counter": 25,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1956,12 +2210,12 @@ Map {
     "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "bb099152-8599-57dc-9a81-2f13ca83a8be" => Object {
+  "4e757e74-ce81-573e-9014-175dfaed5aae" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "bb099152-8599-57dc-9a81-2f13ca83a8be",
+    "id": "4e757e74-ce81-573e-9014-175dfaed5aae",
     "internal": Object {
-      "counter": 24,
+      "counter": 26,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -1972,7 +2226,7 @@ Map {
     "parent": null,
     "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
     "pluginOptions": Object {
-      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-child-change/src/pages",
+      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-child-change-for-transformer/src/pages",
       "pathCheck": false,
       "plugins": Array [],
     },
@@ -1984,7 +2238,7 @@ Map {
     "children": Array [],
     "id": "7e0c6e91-4f9e-517b-aa9d-8349cc0a5e2a",
     "internal": Object {
-      "counter": 25,
+      "counter": 27,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -2002,12 +2256,35 @@ Map {
     "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
+  "6170a8c5-cfee-535a-a3a1-688a9815ca4f" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "6170a8c5-cfee-535a-a3a1-688a9815ca4f",
+    "internal": Object {
+      "counter": 28,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-parent-change-for-fields/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
   "138edb65-012b-5754-b531-0d4130a8a293" => Object {
     "browserAPIs": Array [],
     "children": Array [],
     "id": "138edb65-012b-5754-b531-0d4130a8a293",
     "internal": Object {
-      "counter": 26,
+      "counter": 29,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -2025,12 +2302,35 @@ Map {
     "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
+  "976066e6-c8c1-5d54-aa70-e396a4093155" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "976066e6-c8c1-5d54-aa70-e396a4093155",
+    "internal": Object {
+      "counter": 30,
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "parent": null,
+    "pluginFilepath": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/plugins/gatsby-source-child-change-for-fields/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "/Users/misiek/dev/gatsby/integration-tests/cache-resilience/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
   "fe8640ab-3196-5c63-86d8-7eb81947b196" => Object {
     "browserAPIs": Array [],
     "children": Array [],
     "id": "fe8640ab-3196-5c63-86d8-7eb81947b196",
     "internal": Object {
-      "counter": 27,
+      "counter": 31,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -2053,7 +2353,7 @@ Map {
     "children": Array [],
     "id": "7374ebf2-d961-52ee-92a2-c25e7cb387a9",
     "internal": Object {
-      "counter": 28,
+      "counter": 32,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -2075,7 +2375,7 @@ Map {
     "children": Array [],
     "id": "0e693aa4-31a8-55c5-8fd7-02832e1aff3f",
     "internal": Object {
-      "counter": 29,
+      "counter": 33,
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
     },
@@ -2098,7 +2398,7 @@ Map {
     "host": undefined,
     "id": "Site",
     "internal": Object {
-      "counter": 30,
+      "counter": 34,
       "owner": "internal-data-bridge",
       "type": "Site",
     },
@@ -2114,29 +2414,41 @@ Map {
     "id": "STABLE_NODE_1",
     "internal": Object {
       "contentDigest": "0",
-      "counter": 31,
+      "counter": 35,
       "owner": "gatsby-plugin-stable",
       "type": "IndependentStable",
     },
     "parent": null,
   },
-  "parent_childChange" => Object {
+  "parent_childChangeForTransformer" => Object {
     "children": Array [
-      "358f53bc-3eef-5881-a226-042304a159e3",
+      "3b0c942e-b51f-587b-b37d-b36c5e9af8fa",
     ],
+    "foo": "run-1",
+    "id": "parent_childChangeForTransformer",
+    "internal": Object {
+      "contentDigest": "25f73a6d69ce857a76e0a2cdbc186975",
+      "counter": 39,
+      "owner": "gatsby-source-child-change-for-transformer",
+      "type": "Parent_ChildChangeForTransformer",
+    },
+    "parent": null,
+  },
+  "parent_childChangeForFields" => Object {
+    "children": Array [],
     "fields": Object {
       "foo2": "baz",
     },
     "foo": "run-1",
-    "id": "parent_childChange",
+    "id": "parent_childChangeForFields",
     "internal": Object {
-      "contentDigest": "265623643e8806ecc810413fcf1ccefa",
-      "counter": 35,
+      "contentDigest": "893740bfde4b8a6039e939cb0290d626",
+      "counter": 42,
       "fieldOwners": Object {
         "foo2": "gatsby-fields-child-change",
       },
-      "owner": "gatsby-source-child-change",
-      "type": "Parent_ChildChange",
+      "owner": "gatsby-source-child-change-for-fields",
+      "type": "Parent_ChildChangeForFields",
     },
     "parent": null,
   },
@@ -2146,58 +2458,70 @@ Map {
     "id": "INDEPENDENT_NODE_1",
     "internal": Object {
       "contentDigest": "0",
-      "counter": 32,
+      "counter": 36,
       "owner": "gatsby-plugin-independent-node",
       "type": "IndependentChanging",
     },
     "parent": null,
   },
-  "parent_parentChange" => Object {
+  "parent_parentChangeForTransformer" => Object {
     "bar": "run-2",
     "children": Array [
-      "4886e795-4b87-5964-b308-112031bdaf88",
+      "2131d29a-296c-5f73-affc-e422bec644fe",
     ],
+    "id": "parent_parentChangeForTransformer",
+    "internal": Object {
+      "contentDigest": "4a6a70b2f8849535de50f47c609006fe",
+      "counter": 37,
+      "owner": "gatsby-source-parent-change-for-transformer",
+      "type": "Parent_ParentChangeForTransformer",
+    },
+    "parent": null,
+  },
+  "2131d29a-296c-5f73-affc-e422bec644fe" => Object {
+    "bar": "run-2",
+    "children": Array [],
+    "foo": undefined,
+    "id": "2131d29a-296c-5f73-affc-e422bec644fe",
+    "internal": Object {
+      "contentDigest": "a33e2263d5a5f42473e111fb400cef3d",
+      "counter": 38,
+      "owner": "gatsby-transformer-parent-change",
+      "type": "ChildOfParent_ParentChangeForTransformer",
+    },
+    "parent": "parent_parentChangeForTransformer",
+  },
+  "3b0c942e-b51f-587b-b37d-b36c5e9af8fa" => Object {
+    "children": Array [],
+    "foo": "baz",
+    "id": "3b0c942e-b51f-587b-b37d-b36c5e9af8fa",
+    "internal": Object {
+      "contentDigest": "3bca2830e09b3c30b3ca76dccdaf5e8b",
+      "counter": 40,
+      "owner": "gatsby-transformer-child-change",
+      "type": "ChildOfParent_ChildChangeForTransformer",
+    },
+    "parent": "parent_childChangeForTransformer",
+  },
+  "parent_parentChangeForFields" => Object {
+    "bar": "run-2",
+    "children": Array [],
     "fields": Object {
       "bar": "run-2",
       "foo": undefined,
     },
-    "id": "parent_parentChange",
+    "id": "parent_parentChangeForFields",
     "internal": Object {
-      "contentDigest": "5d9d1ac97e627eff9946d1473a70bb19",
-      "counter": 33,
+      "contentDigest": "72122def77d239ba36e9b9729fc53adf",
+      "counter": 41,
       "fieldOwners": Object {
         "bar": "gatsby-fields-parent-change",
         "foo": "gatsby-fields-parent-change",
       },
-      "owner": "gatsby-source-parent-change",
-      "type": "Parent_ParentChange",
+      "owner": "gatsby-source-parent-change-for-fields",
+      "type": "Parent_ParentChangeForFields",
     },
     "parent": null,
-  },
-  "4886e795-4b87-5964-b308-112031bdaf88" => Object {
-    "bar": "run-2",
-    "children": Array [],
-    "foo": undefined,
-    "id": "4886e795-4b87-5964-b308-112031bdaf88",
-    "internal": Object {
-      "contentDigest": "51f401f9d5b7fb4fd7c93dc1d0a30ae7",
-      "counter": 34,
-      "owner": "gatsby-transformer-parent-change",
-      "type": "ChildOfParent_ParentChange",
-    },
-    "parent": "parent_parentChange",
-  },
-  "358f53bc-3eef-5881-a226-042304a159e3" => Object {
-    "children": Array [],
-    "foo": "baz",
-    "id": "358f53bc-3eef-5881-a226-042304a159e3",
-    "internal": Object {
-      "contentDigest": "3f488c5264ccc0164818775b3ad38e52",
-      "counter": 36,
-      "owner": "gatsby-transformer-child-change",
-      "type": "ChildOfParent_ChildChange",
-    },
-    "parent": "parent_childChange",
   },
   "SitePage /" => Object {
     "children": Array [],
@@ -2208,7 +2532,7 @@ Map {
     "id": "SitePage /",
     "internal": Object {
       "contentDigest": "c5fa7d67d7b6095c8133348eb329bd52",
-      "counter": 37,
+      "counter": 43,
       "description": "c9535749-a52b-5c49-8671-11a311b98993",
       "owner": "internal-data-bridge",
       "type": "SitePage",

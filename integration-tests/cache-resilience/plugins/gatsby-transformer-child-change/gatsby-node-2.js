@@ -4,13 +4,13 @@ exports.onCreateNode = ({
   createNodeId,
   createContentDigest,
 }) => {
-  if (node.internal.type === `Parent_ChildChange`) {
+  if (node.internal.type === `Parent_ChildChangeForTransformer`) {
     const childNode = {
       parent: node.id,
       id: createNodeId(`${node.id} >>> Child`),
       foo: `baz`,
       internal: {
-        type: `ChildOfParent_ChildChange`,
+        type: `ChildOfParent_ChildChangeForTransformer`,
       },
     }
 

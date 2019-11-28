@@ -1,10 +1,10 @@
 exports.sourceNodes = ({ actions, createContentDigest }) => {
   const node = {
-    id: `parent_parentChange`,
+    id: `parent_parentChangeForTransformer`,
     internal: {
-      type: `Parent_ParentChange`,
+      type: `Parent_ParentChangeForTransformer`,
     },
-    foo: `run-1`,
+    bar: `run-2`,
   }
 
   node.internal.contentDigest = createContentDigest(node)

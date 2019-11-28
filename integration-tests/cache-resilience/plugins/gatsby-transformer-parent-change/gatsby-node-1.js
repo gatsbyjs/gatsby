@@ -1,18 +1,17 @@
-console.log(`[gatsby-transformer-parent-change] init`)
 exports.onCreateNode = ({
   actions,
   node,
   createNodeId,
   createContentDigest,
 }) => {
-  if (node.internal.type === `Parent_ParentChange`) {
+  if (node.internal.type === `Parent_ParentChangeForTransformer`) {
     const childNode = {
       parent: node.id,
       id: createNodeId(`${node.id} >>> Child`),
       foo: node.foo,
       bar: node.bar,
       internal: {
-        type: `ChildOfParent_ParentChange`,
+        type: `ChildOfParent_ParentChangeForTransformer`,
       },
     }
 

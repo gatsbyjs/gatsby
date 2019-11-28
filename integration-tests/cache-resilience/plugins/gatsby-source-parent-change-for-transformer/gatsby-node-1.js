@@ -1,8 +1,8 @@
 exports.sourceNodes = ({ actions, createContentDigest }) => {
   const node = {
-    id: `parent_childChange`,
+    id: `parent_parentChangeForTransformer`,
     internal: {
-      type: `Parent_ChildChange`,
+      type: `Parent_ParentChangeForTransformer`,
     },
     foo: `run-1`,
   }

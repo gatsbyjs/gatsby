@@ -1,5 +1,5 @@
 exports.onCreateNode = ({ actions, node }) => {
-  if (node.internal.type === `Parent_ParentChange`) {
+  if (node.internal.type === `Parent_ParentChangeForFields`) {
     actions.createNodeField({
       node,
       name: `foo`,
