@@ -44,33 +44,6 @@ const loadState = path => {
   return state
 }
 
-// expect.addSnapshotSerializer({
-//   test(value) {
-//     return value && value.buildTime
-//   },
-//   print(value, serialize) {
-//     delete value.buildTime
-//     delete value.internal.contentDigest
-//     return serialize(value)
-//   },
-// })
-
-// expect.addSnapshotSerializer({
-//   test(value) {
-//     return (
-//       value &&
-//       value.internal &&
-//       value.internal.contentDigest &&
-//       value.internal.type === `SitePlugin`
-//     )
-//   },
-//   print(value, serialize) {
-//     delete value.internal.contentDigest
-//     delete value.version
-//     return serialize(value)
-//   },
-// })
-
 jest.setTimeout(100000)
 
 const gatsbyBin = path.join(
