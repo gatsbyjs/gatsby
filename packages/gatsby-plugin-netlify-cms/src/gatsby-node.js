@@ -207,11 +207,11 @@ exports.onCreateWebpackConfig = (
           externals.map(({ name, assetName, sourceMap, assetDir }) =>
             [
               {
-                from: path.join(`node_modules`, name, assetDir, assetName),
+                from: require.resolve(path.join(name, assetDir, assetName)),
                 to: assetName,
               },
               sourceMap && {
-                from: path.join(`node_modules`, name, assetDir, sourceMap),
+                from: require.resolve(path.join(name, assetDir, sourceMap)),
                 to: sourceMap,
               },
             ].filter(item => item)
