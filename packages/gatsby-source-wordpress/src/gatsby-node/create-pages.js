@@ -1,13 +1,18 @@
 import { resolve } from "path"
+import createPermalinkPath from "../utils/create-permalink-path"
 import getTemplates from "../utils/get-templates"
+import gql from "../utils/gql"
 
 export default async ({ actions, graphql }) => {
-  const { data } = await graphql(`
-    query ALL_CONTENT_NODES {
-      allWpContent(filter: { link: { ne: null } }) {
+  const {
+    data: { allWpContentType },
+  } = await graphql(gql`
+    query ALL_CONTENT_TYPES {
+      allWpContentType {
         nodes {
-          path
-          id
+          singleName
+          pluralName
+          nodesTypeName
         }
       }
     }
@@ -15,20 +20,47 @@ export default async ({ actions, graphql }) => {
 
   const templates = getTemplates()
 
-  await Promise.all(
-    data.allWpContent.nodes.map(async node => {
-      // templates[0] will be replaced with a template hierarchy
-      // this whole create-pages should also be moved to a theme
-      // instead of gatsby-source-wordpress
-      const template = resolve(templates[0])
-
-      await actions.createPage({
-        component: template,
-        path: node.path,
-        context: {
-          id: node.id,
-        },
-      })
-    })
+  const contentTypeTemplates = templates.filter(path =>
+    path.includes(`./src/templates/types/`)
   )
+
+  for (const contentType of allWpContentType.nodes) {
+    const { nodesTypeName, singleName } = contentType
+
+    // this is a super super basic template hierarchy
+    // this doesn't reflect what our hierarchy will look like.
+    // this is for testing/demo purposes
+    const contentTypeTemplate = contentTypeTemplates.find(
+      path => path === `./src/templates/types/${singleName}.js`
+    )
+
+    if (!contentTypeTemplate) {
+      continue
+    }
+
+    const gatsbyNodeListFieldName = `allWp${nodesTypeName}`
+
+    const { data } = await graphql(`
+      query ALL_CONTENT_NODES {
+        ${gatsbyNodeListFieldName} {
+          nodes {
+            link
+            id
+          }
+        }
+      }
+    `)
+
+    await Promise.all(
+      data[gatsbyNodeListFieldName].nodes.map(async node => {
+        await actions.createPage({
+          component: resolve(contentTypeTemplate),
+          path: createPermalinkPath(node.link),
+          context: {
+            id: node.id,
+          },
+        })
+      })
+    )
+  }
 }

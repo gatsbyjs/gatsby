@@ -2,9 +2,14 @@ import fetchAndApplyNodeUpdates from "./fetch-node-updates"
 import { fetchAndCreateAllNodes } from "./fetch-nodes"
 
 import { LAST_COMPLETED_SOURCE_TIME } from "../constants"
+import { createContentTypeNodes } from "./get-content-types"
 
 const sourceNodes = async (helpers, pluginOptions) => {
   const api = [helpers, pluginOptions]
+
+  // this is temporary until WPGQL can give us a node list of post types
+  // see https://github.com/wp-graphql/wp-graphql/issues/1045
+  await createContentTypeNodes()
 
   const { cache } = helpers
 

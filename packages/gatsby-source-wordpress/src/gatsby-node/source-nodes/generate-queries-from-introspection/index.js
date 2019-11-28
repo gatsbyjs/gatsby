@@ -4,27 +4,11 @@ import {
   buildNodeQueryOnFieldName,
 } from "./build-query-on-field-name"
 // @todo create function to unmap check here for similar function https://www.gatsbyjs.org/packages/gatsby-source-graphql-universal/
-import { getAvailablePostTypesQuery } from "../graphql-queries"
 import fetchGraphql from "../../../utils/fetch-graphql"
 import gql from "../../../utils/gql"
 import { FIELD_BLACKLIST } from "../../constants"
 
 import store from "../../../store"
-
-export const getAvailableContentTypes = async ({ url }) => {
-  const query = getAvailablePostTypesQuery()
-
-  const { data } = await fetchGraphql({ url, query })
-
-  const contentTypes = data.postTypes.map(postTypeObj => {
-    return {
-      plural: postTypeObj.fieldNames.plural.toLowerCase(),
-      singular: postTypeObj.fieldNames.singular.toLowerCase(),
-    }
-  })
-
-  return contentTypes
-}
 
 export const buildNodeQueriesFromIntrospection = async (
   helpers,

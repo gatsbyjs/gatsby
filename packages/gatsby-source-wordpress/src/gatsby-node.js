@@ -2,6 +2,7 @@ import onPreBootstrap from "./gatsby-node/on-pre-bootstrap"
 import sourceNodes from "./gatsby-node/source-nodes"
 import createSchemaCustomization from "./gatsby-node/create-schema-customization"
 import createResolvers from "./gatsby-node/create-resolvers"
+import createPages from "./gatsby-node/create-pages"
 import onCreateDevServer from "./gatsby-node/on-create-dev-server"
 
 module.exports = {
@@ -20,6 +21,11 @@ module.exports = {
 
   // fetch and create image file nodes when they're queried for
   createResolvers,
+
+  // this will be moved into our theme, but lives here for now
+  // this builds out a Gatsby page for each WordPress page/post using
+  // the path from the WordPress permalink
+  createPages,
 
   // start the interval refetcher in development mode for real-time data updates
   onCreateDevServer,
