@@ -2,12 +2,13 @@ import { createGatsbyNodesFromWPGQLContentNodes } from "./create-nodes"
 import paginatedWpNodeFetch from "./paginated-wp-node-fetch"
 
 import { CREATED_NODE_IDS } from "../constants"
+import { schemaStore } from "../on-pre-bootstrap"
 
-import { buildNodeQueriesFromIntrospection } from "./generate-queries-from-introspection"
-
-export const fetchWPGQLContentNodes = async ({ queries }, helpers, { url }) => {
+export const fetchWPGQLContentNodes = async (_, helpers, { url }) => {
   const { reporter } = helpers
   const contentNodeGroups = []
+
+  const { queries } = schemaStore.getState().introspection
 
   await Promise.all(
     Object.entries(queries).map(
@@ -56,27 +57,19 @@ export const fetchAndCreateAllNodes = async (_, helpers, pluginOptions) => {
   let activity
 
   //
-  // Introspect schema and build gql queries
-  activity = reporter.activityTimer(
-    `[gatsby-source-wordpress] introspect schema`
-  )
-  activity.start()
-  const queries = await buildNodeQueriesFromIntrospection(...api)
-  await cache.set(`node-queries`, queries)
-  activity.end()
-
+  // fetch nodes from WPGQL
   activity = reporter.activityTimer(`[gatsby-source-wordpress] fetch content`)
   activity.start()
-  const wpgqlNodesByContentType = await fetchWPGQLContentNodes(
-    { queries },
-    ...api
-  )
+
+  const wpgqlNodesByContentType = await fetchWPGQLContentNodes(_, ...api)
+
   activity.end()
 
   //
-  // Create nodes
+  // Create Gatsby nodes from WPGQL response
   activity = reporter.activityTimer(`[gatsby-source-wordpress] create nodes`)
   activity.start()
+
   const createdNodeIds = await createGatsbyNodesFromWPGQLContentNodes(
     {
       wpgqlNodesByContentType,
@@ -87,5 +80,6 @@ export const fetchAndCreateAllNodes = async (_, helpers, pluginOptions) => {
   // save the node id's so we can touch them on the next build
   // so that we don't have to refetch all nodes
   await cache.set(CREATED_NODE_IDS, createdNodeIds)
+
   activity.end()
 }

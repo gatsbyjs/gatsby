@@ -1,15 +1,10 @@
-import checkPluginRequirements from "../../utils/check-plugin-requirements"
 import fetchAndApplyNodeUpdates from "./fetch-node-updates"
-import startIntervalRefetcher from "./interval-refetcher"
 import { fetchAndCreateAllNodes } from "./fetch-nodes"
 
 import { LAST_COMPLETED_SOURCE_TIME } from "../constants"
 
 const sourceNodes = async (helpers, pluginOptions) => {
   const api = [helpers, pluginOptions]
-
-  // this potentially exits the node process
-  await checkPluginRequirements(...api)
 
   const { cache } = helpers
 
@@ -34,10 +29,6 @@ const sourceNodes = async (helpers, pluginOptions) => {
   }
 
   await cache.set(LAST_COMPLETED_SOURCE_TIME, Date.now())
-
-  if (process.env.NODE_ENV !== `production`) {
-    startIntervalRefetcher({}, ...api)
-  }
 }
 
 export default sourceNodes
