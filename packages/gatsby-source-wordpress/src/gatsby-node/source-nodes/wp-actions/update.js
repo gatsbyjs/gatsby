@@ -90,10 +90,11 @@ const wpActionUPDATE = async ({
           ) {
             reporter.log(``)
             reporter.info(chalk.bold(`${key} changed`))
-            reporter.log(`${chalk.italic.bold(`from`)}`)
-            reporter.log(value)
-            reporter.log(chalk.italic.bold(`to`))
-            reporter.log(updatedNodeContent[key])
+            reporter.log(``)
+            reporter.log(`${chalk.italic.bold(`    from`)}`)
+            reporter.log(`      ${value}`)
+            reporter.log(chalk.italic.bold(`    to`))
+            reporter.log(`      ${updatedNodeContent[key]}`)
             reporter.log(``)
           }
         })
