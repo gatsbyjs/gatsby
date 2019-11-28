@@ -344,20 +344,21 @@ const reporter: Reporter = {
     const span = tracer.startSpan(text, spanArgs)
 
     let lastUpdateTime = 0
-    let progress = 0
+    let unflushedProgress = 0
+    let unflushedTotal = 0
     const progressUpdateDelay = Math.round(1000 / 10) // 10 fps *shrug*
 
-    const updateProgress = () => {
+    const updateProgress = forced => {
       const t = Date.now()
-      if (t - lastUpdateTime <= progressUpdateDelay) return
+      if (!forced && t - lastUpdateTime <= progressUpdateDelay) return
 
-      if (total > 0) {
-        reporterActions.setActivityTotal({ id, total: total })
-        total = 0
+      if (unflushedTotal > 0) {
+        reporterActions.setActivityTotal({ id, total: unflushedTotal })
+        unflushedTotal = 0
       }
-      if (progress > 0) {
-        reporterActions.activityTick({ id, increment: progress })
-        progress = 0
+      if (unflushedProgress > 0) {
+        reporterActions.activityTick({ id, increment: unflushedProgress })
+        unflushedProgress = 0
       }
       lastUpdateTime = t
     }
@@ -379,7 +380,7 @@ const reporter: Reporter = {
         })
       },
       tick: (increment = 1) => {
-        progress += increment // Have to manually track this :/
+        unflushedProgress += increment // Have to manually track this :/
         updateProgress()
       },
       panicOnBuild(...args) {
@@ -402,6 +403,7 @@ const reporter: Reporter = {
         return reporter.panic(...args)
       },
       done: () => {
+        updateProgress(true)
         span.finish()
         reporterActions.endActivity({
           id,
@@ -409,7 +411,7 @@ const reporter: Reporter = {
         })
       },
       set total(value) {
-        total = value
+        unflushedTotal = value
         updateProgress()
       },
       span,
