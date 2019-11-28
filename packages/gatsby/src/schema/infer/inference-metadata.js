@@ -56,6 +56,7 @@ type TypeMetadata = {
   fieldMap?: { [string]: ValueDescriptor },
   typeName?: string,
   dirty?: boolean, // tracks structural changes only
+  disabled?: boolean,
 }
 
 type Count = number
@@ -113,19 +114,47 @@ const getType = (value, key) => {
   }
 }
 
-const updateValueDescriptor = ({
-  nodeId,
-  key,
-  value,
-  operation = `add`,
-  descriptor = {},
-}) => {
+const updateValueDescriptor = (
+  { nodeId, key, value, operation = `add` /*: add | del*/, descriptor = {} },
+  path = []
+) => {
+  // The object may be traversed multiple times from root.
+  // Each time it does it should not revisit the same node twice
+  if (path.includes(value)) {
+    return [descriptor, false]
+  }
+
   const typeName = getType(value, key)
 
   if (typeName === `null`) {
     return [descriptor, false]
   }
 
+  path.push(value)
+
+  const ret = _updateValueDescriptor(
+    nodeId,
+    key,
+    value,
+    operation,
+    descriptor,
+    path,
+    typeName
+  )
+
+  path.pop()
+
+  return ret
+}
+const _updateValueDescriptor = (
+  nodeId,
+  key,
+  value,
+  operation,
+  descriptor,
+  path,
+  typeName
+) => {
   const delta = operation === `del` ? -1 : 1
   const typeInfo = descriptor[typeName] || { total: 0 }
   typeInfo.total += delta
@@ -138,25 +167,31 @@ const updateValueDescriptor = ({
   // Keeping track of the first node for this type. Only used for better conflict reporting.
   // (see Caveats section in the header comments)
   if (operation === `add`) {
-    typeInfo.first = typeInfo.first || nodeId
+    if (!typeInfo.first) {
+      typeInfo.first = nodeId
+    }
   } else if (operation === `del`) {
-    typeInfo.first =
-      typeInfo.first === nodeId || typeInfo.total === 0
-        ? undefined
-        : typeInfo.first
+    if (typeInfo.first === nodeId || typeInfo.total === 0) {
+      typeInfo.first = undefined
+    }
   }
 
   switch (typeName) {
     case `object`: {
       const { props = {} } = typeInfo
       Object.keys(value).forEach(key => {
-        const [propDescriptor, propDirty] = updateValueDescriptor({
-          nodeId,
-          key,
-          value: value[key],
-          operation,
-          descriptor: props[key],
-        })
+        const v = value[key]
+
+        const [propDescriptor, propDirty] = updateValueDescriptor(
+          {
+            nodeId,
+            key,
+            value: v,
+            operation,
+            descriptor: props[key],
+          },
+          path
+        )
         props[key] = propDescriptor
         dirty = dirty || propDirty
       })
@@ -165,13 +200,17 @@ const updateValueDescriptor = ({
     }
     case `array`: {
       value.forEach(item => {
-        const [itemDescriptor, itemDirty] = updateValueDescriptor({
-          nodeId,
-          descriptor: typeInfo.item,
-          operation,
-          value: item,
-          key,
-        })
+        const [itemDescriptor, itemDirty] = updateValueDescriptor(
+          {
+            nodeId,
+            descriptor: typeInfo.item,
+            operation,
+            value: item,
+            key,
+          },
+          path
+        )
+
         typeInfo.item = itemDescriptor
         dirty = dirty || itemDirty
       })
@@ -256,7 +295,10 @@ const descriptorsAreEqual = (descriptor, otherDescriptor) => {
 const nodeFields = (node, ignoredFields = new Set()) =>
   Object.keys(node).filter(key => !ignoredFields.has(key))
 
-const updateTypeMetadata = (metadata = {}, operation, node) => {
+const updateTypeMetadata = (metadata = initialMetadata(), operation, node) => {
+  if (metadata.disabled) {
+    return metadata
+  }
   metadata.total = (metadata.total || 0) + (operation === `add` ? 1 : -1)
   if (metadata.ignored) {
     return metadata
@@ -280,15 +322,21 @@ const updateTypeMetadata = (metadata = {}, operation, node) => {
   return metadata
 }
 
-const ignore = (metadata = {}, set = true) => {
+const ignore = (metadata = initialMetadata(), set = true) => {
   metadata.ignored = set
   metadata.fieldMap = {}
   return metadata
 }
 
+const disable = (metadata = initialMetadata(), set = true) => {
+  metadata.disabled = set
+  return metadata
+}
+
 const addNode = (metadata, node) => updateTypeMetadata(metadata, `add`, node)
 const deleteNode = (metadata, node) => updateTypeMetadata(metadata, `del`, node)
-const addNodes = (metadata, nodes) => nodes.reduce(addNode, metadata)
+const addNodes = (metadata = initialMetadata(), nodes) =>
+  nodes.reduce(addNode, metadata)
 
 const isMixedNumber = ({ float, int }) =>
   float && float.total > 0 && int && int.total > 0
@@ -469,13 +517,28 @@ const haveEqualFields = (
   )
 }
 
+const initialMetadata = state => {
+  return {
+    typeName: undefined,
+    disabled: false,
+    ignored: false,
+    dirty: false,
+    total: 0,
+    ignoredFields: undefined,
+    fieldMap: {},
+    ...state,
+  }
+}
+
 module.exports = {
   addNode,
   addNodes,
   deleteNode,
   ignore,
+  disable,
   isEmpty,
   hasNodes,
   haveEqualFields,
   getExampleObject,
+  initialMetadata,
 }

@@ -16,7 +16,6 @@ Object {
       "query": "",
     },
   },
-  "inferenceMetadata": Object {},
   "staticQueryComponents": Map {},
   "status": Object {
     "plugins": Object {},

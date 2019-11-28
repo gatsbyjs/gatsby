@@ -1,0 +1,255 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`actual compiling accepts identical fragment definitions 1`] = `
+Map {
+  "mockFile" => Object {
+    "hash": "hash",
+    "isHook": false,
+    "isStaticQuery": false,
+    "name": "mockFileQuery",
+    "originalText": "query mockFileQuery {
+           allPostsJson {
+             nodes {
+               ...PostsJsonFragment
+             }
+          }
+        }
+
+        fragment PostsJsonFragment on PostsJson {
+          id
+        }",
+    "path": "mockFile",
+    "text": "fragment PostsJsonFragment on PostsJson {
+  id
+}
+
+query mockFileQuery {
+  allPostsJson {
+    nodes {
+      ...PostsJsonFragment
+    }
+  }
+}
+",
+  },
+}
+`;
+
+exports[`actual compiling adds fragments from different documents 1`] = `
+Object {
+  "hash": "hash",
+  "isHook": false,
+  "isStaticQuery": false,
+  "name": "mockFileQuery",
+  "originalText": "query mockFileQuery {
+             allPostsJson {
+               nodes {
+                 ...PostsJsonFragment
+               }
+            }
+          }",
+  "path": "mockFile",
+  "text": "fragment PostsJsonFragment on PostsJson {
+  id
+}
+
+query mockFileQuery {
+  allPostsJson {
+    nodes {
+      ...PostsJsonFragment
+    }
+  }
+}
+",
+}
+`;
+
+exports[`actual compiling adds fragments from same documents 1`] = `
+Object {
+  "hash": "hash",
+  "isHook": false,
+  "isStaticQuery": false,
+  "name": "mockFileQuery",
+  "originalText": "query mockFileQuery {
+             allPostsJson {
+               nodes {
+                 ...PostsJsonFragment
+               }
+            }
+          }
+
+          fragment PostsJsonFragment on PostsJson {
+            id
+          }",
+  "path": "mockFile",
+  "text": "fragment PostsJsonFragment on PostsJson {
+  id
+}
+
+query mockFileQuery {
+  allPostsJson {
+    nodes {
+      ...PostsJsonFragment
+    }
+  }
+}
+",
+}
+`;
+
+exports[`actual compiling compiles a query 1`] = `
+Object {
+  "hash": "hash",
+  "isHook": false,
+  "isStaticQuery": false,
+  "name": "mockFileQuery",
+  "originalText": "query mockFileQuery {
+             allPostsJson {
+               nodes {
+                 id
+               }
+            }
+          }",
+  "path": "mockFile",
+  "text": "query mockFileQuery {
+  allPostsJson {
+    nodes {
+      id
+    }
+  }
+}
+",
+}
+`;
+
+exports[`actual compiling compiles static query 1`] = `
+Object {
+  "hash": "hash",
+  "id": Any<String>,
+  "isHook": undefined,
+  "isStaticQuery": true,
+  "name": "mockFileQuery",
+  "originalText": "query mockFileQuery {
+             allPostsJson {
+               nodes {
+                 id
+               }
+            }
+          }",
+  "path": "mockFile",
+  "text": "query mockFileQuery {
+  allPostsJson {
+    nodes {
+      id
+    }
+  }
+}
+",
+}
+`;
+
+exports[`actual compiling errors on double root 2`] = `
+Map {
+  "mockFile" => Object {
+    "hash": "hash",
+    "isHook": false,
+    "isStaticQuery": false,
+    "name": "mockFileQuery",
+    "originalText": "query mockFileQuery {
+             allPostsJson {
+               nodes {
+                 id
+               }
+            }
+          }
+
+          query AnotherQuery {
+            allPostsJson {
+              nodes {
+                id
+              }
+            }
+          }",
+    "path": "mockFile",
+    "text": "query mockFileQuery {
+  allPostsJson {
+    nodes {
+      id
+    }
+  }
+}
+",
+  },
+}
+`;
+
+exports[`actual compiling handles fragments that use other fragments 1`] = `
+Object {
+  "hash": "hash",
+  "isHook": false,
+  "isStaticQuery": false,
+  "name": "mockFileQuery",
+  "originalText": "query mockFileQuery {
+             allPostsJson {
+               nodes {
+                 ...PostsJsonFragment
+               }
+            }
+          }",
+  "path": "mockFile",
+  "text": "fragment PostsJsonFragment on PostsJson {
+  id
+  ...AnotherPostsJsonFragment
+}
+
+fragment AnotherPostsJsonFragment on PostsJson {
+  text
+}
+
+query mockFileQuery {
+  allPostsJson {
+    nodes {
+      ...PostsJsonFragment
+    }
+  }
+}
+",
+}
+`;
+
+exports[`actual compiling removes unused fragments from documents 1`] = `
+Object {
+  "hash": "hash",
+  "isHook": false,
+  "isStaticQuery": false,
+  "name": "mockFileQuery",
+  "originalText": "query mockFileQuery {
+             allPostsJson {
+               nodes {
+                 ...PostsJsonFragment
+               }
+            }
+          }
+
+          fragment PostsJsonFragment on PostsJson {
+            id
+          }
+
+          fragment UnusedFragment on PostsJson {
+            id
+          }",
+  "path": "mockFile",
+  "text": "fragment PostsJsonFragment on PostsJson {
+  id
+}
+
+query mockFileQuery {
+  allPostsJson {
+    nodes {
+      ...PostsJsonFragment
+    }
+  }
+}
+",
+}
+`;
