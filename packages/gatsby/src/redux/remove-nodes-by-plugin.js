@@ -60,9 +60,27 @@ module.exports = (plugin, state, storeByType = true) => {
   const nodes = getLookup(state)
   const dirty = getDirtyNodes(plugins, nodes)
 
+  debugger
+
   for (let [id, node] of nodes) {
     if (!dirty.has(id)) {
       if (storeByType) {
+        // HACK alert:
+        // this (mutating nodes) should be done just once so we do it for `storeByType` case for now (need better place for it)
+        if (node.internal.fieldOwners) {
+          // if node itself is not dirty, it can contain dirty node fields
+          Object.entries(node.internal.fieldOwners).forEach(
+            ([fieldName, owner]) => {
+              if (plugins.includes(owner)) {
+                // field owner is dirty, we should remove this field
+                delete node.fields[fieldName]
+                delete node.internal.fieldOwners[fieldName]
+              }
+            }
+          )
+        }
+        // HACK alert end
+
         const nodes = newState.has(node.internal.type)
           ? newState.get(node.internal.type)
           : new Map()

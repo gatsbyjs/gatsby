@@ -6,5 +6,7 @@ module.exports = {
     `gatsby-transformer-parent-change`,
     `gatsby-source-child-change`,
     `gatsby-transformer-child-change`,
+    `gatsby-fields-parent-change`,
+    `gatsby-fields-child-change`,
   ],
 }

@@ -275,7 +275,7 @@ describe(`Cache`, () => {
                 "id": "INDEPENDENT_NODE_1",
                 "internal": Object {
                   "contentDigest": "0",
-                  "counter": 28,
+                  "counter": 32,
                   "owner": "gatsby-plugin-independent-node",
                   "type": "IndependentChanging",
                 },
@@ -301,7 +301,7 @@ describe(`Cache`, () => {
                   "id": "INDEPENDENT_NODE_1",
                   "internal": Object {
                     "contentDigest": "0",
-                    "counter": 28,
+                    "counter": 32,
                     "owner": "gatsby-plugin-independent-node",
                     "type": "IndependentChanging",
                   },
@@ -313,7 +313,7 @@ describe(`Cache`, () => {
                   "id": "INDEPENDENT_NODE_1",
                   "internal": Object {
                     "contentDigest": "0",
-                    "counter": 28,
+                    "counter": 32,
                     "owner": "gatsby-plugin-independent-node",
                     "type": "IndependentChanging",
                   },
@@ -353,7 +353,7 @@ describe(`Cache`, () => {
                 "id": "4886e795-4b87-5964-b308-112031bdaf88",
                 "internal": Object {
                   "contentDigest": "96dd125d43f25f0bba42a7b4b7ba4885",
-                  "counter": 30,
+                  "counter": 34,
                   "owner": "gatsby-transformer-parent-change",
                   "type": "ChildOfParent_ParentChange",
                 },
@@ -363,11 +363,19 @@ describe(`Cache`, () => {
                 "children": Array [
                   "4886e795-4b87-5964-b308-112031bdaf88",
                 ],
+                "fields": Object {
+                  "bar": undefined,
+                  "foo": "run-1",
+                },
                 "foo": "run-1",
                 "id": "parent_parentChange",
                 "internal": Object {
                   "contentDigest": "aede568d9b5cf8ae620c06a9fa57f456",
-                  "counter": 29,
+                  "counter": 33,
+                  "fieldOwners": Object {
+                    "bar": "gatsby-fields-parent-change",
+                    "foo": "gatsby-fields-parent-change",
+                  },
                   "owner": "gatsby-source-parent-change",
                   "type": "Parent_ParentChange",
                 },
@@ -395,7 +403,7 @@ describe(`Cache`, () => {
                   "id": "4886e795-4b87-5964-b308-112031bdaf88",
                   "internal": Object {
                     "contentDigest": "51f401f9d5b7fb4fd7c93dc1d0a30ae7",
-                    "counter": 30,
+                    "counter": 34,
                     "owner": "gatsby-transformer-parent-change",
                     "type": "ChildOfParent_ParentChange",
                   },
@@ -408,7 +416,7 @@ describe(`Cache`, () => {
                   "id": "4886e795-4b87-5964-b308-112031bdaf88",
                   "internal": Object {
                     "contentDigest": "96dd125d43f25f0bba42a7b4b7ba4885",
-                    "counter": 30,
+                    "counter": 34,
                     "owner": "gatsby-transformer-parent-change",
                     "type": "ChildOfParent_ParentChange",
                   },
@@ -422,10 +430,18 @@ describe(`Cache`, () => {
                   "children": Array [
                     "4886e795-4b87-5964-b308-112031bdaf88",
                   ],
+                  "fields": Object {
+                    "bar": "run-2",
+                    "foo": undefined,
+                  },
                   "id": "parent_parentChange",
                   "internal": Object {
                     "contentDigest": "5d9d1ac97e627eff9946d1473a70bb19",
-                    "counter": 29,
+                    "counter": 33,
+                    "fieldOwners": Object {
+                      "bar": "gatsby-fields-parent-change",
+                      "foo": "gatsby-fields-parent-change",
+                    },
                     "owner": "gatsby-source-parent-change",
                     "type": "Parent_ParentChange",
                   },
@@ -435,11 +451,19 @@ describe(`Cache`, () => {
                   "children": Array [
                     "4886e795-4b87-5964-b308-112031bdaf88",
                   ],
+                  "fields": Object {
+                    "bar": undefined,
+                    "foo": "run-1",
+                  },
                   "foo": "run-1",
                   "id": "parent_parentChange",
                   "internal": Object {
                     "contentDigest": "aede568d9b5cf8ae620c06a9fa57f456",
-                    "counter": 29,
+                    "counter": 33,
+                    "fieldOwners": Object {
+                      "bar": "gatsby-fields-parent-change",
+                      "foo": "gatsby-fields-parent-change",
+                    },
                     "owner": "gatsby-source-parent-change",
                     "type": "Parent_ParentChange",
                   },
@@ -476,11 +500,13 @@ describe(`Cache`, () => {
                 "id": "parent_childChange",
                 "newValue": Object {
                   "children": Array [],
+                  "fields": Object {},
                   "foo": "run-1",
                   "id": "parent_childChange",
                   "internal": Object {
                     "contentDigest": "265623643e8806ecc810413fcf1ccefa",
-                    "counter": 31,
+                    "counter": 35,
+                    "fieldOwners": Object {},
                     "owner": "gatsby-source-child-change",
                     "type": "Parent_ChildChange",
                   },
@@ -490,11 +516,17 @@ describe(`Cache`, () => {
                   "children": Array [
                     "358f53bc-3eef-5881-a226-042304a159e3",
                   ],
+                  "fields": Object {
+                    "foo1": "bar",
+                  },
                   "foo": "run-1",
                   "id": "parent_childChange",
                   "internal": Object {
                     "contentDigest": "265623643e8806ecc810413fcf1ccefa",
-                    "counter": 31,
+                    "counter": 35,
+                    "fieldOwners": Object {
+                      "foo1": "gatsby-fields-child-change",
+                    },
                     "owner": "gatsby-source-child-change",
                     "type": "Parent_ChildChange",
                   },
@@ -509,7 +541,7 @@ describe(`Cache`, () => {
                 "id": "358f53bc-3eef-5881-a226-042304a159e3",
                 "internal": Object {
                   "contentDigest": "8072e58493504423579431f250d1846a",
-                  "counter": 32,
+                  "counter": 36,
                   "owner": "gatsby-transformer-child-change",
                   "type": "ChildOfParent_ChildChange",
                 },
@@ -536,7 +568,7 @@ describe(`Cache`, () => {
                   "id": "358f53bc-3eef-5881-a226-042304a159e3",
                   "internal": Object {
                     "contentDigest": "3f488c5264ccc0164818775b3ad38e52",
-                    "counter": 32,
+                    "counter": 36,
                     "owner": "gatsby-transformer-child-change",
                     "type": "ChildOfParent_ChildChange",
                   },
@@ -548,11 +580,281 @@ describe(`Cache`, () => {
                   "id": "358f53bc-3eef-5881-a226-042304a159e3",
                   "internal": Object {
                     "contentDigest": "8072e58493504423579431f250d1846a",
-                    "counter": 32,
+                    "counter": 36,
                     "owner": "gatsby-transformer-child-change",
                     "type": "ChildOfParent_ChildChange",
                   },
                   "parent": "parent_childChange",
+                },
+              },
+              "parent_childChange": Object {
+                "id": "parent_childChange",
+                "newValue": Object {
+                  "children": Array [
+                    "358f53bc-3eef-5881-a226-042304a159e3",
+                  ],
+                  "fields": Object {
+                    "foo2": "baz",
+                  },
+                  "foo": "run-1",
+                  "id": "parent_childChange",
+                  "internal": Object {
+                    "contentDigest": "265623643e8806ecc810413fcf1ccefa",
+                    "counter": 35,
+                    "fieldOwners": Object {
+                      "foo2": "gatsby-fields-child-change",
+                    },
+                    "owner": "gatsby-source-child-change",
+                    "type": "Parent_ChildChange",
+                  },
+                  "parent": null,
+                },
+                "oldValue": Object {
+                  "children": Array [
+                    "358f53bc-3eef-5881-a226-042304a159e3",
+                  ],
+                  "fields": Object {
+                    "foo1": "bar",
+                  },
+                  "foo": "run-1",
+                  "id": "parent_childChange",
+                  "internal": Object {
+                    "contentDigest": "265623643e8806ecc810413fcf1ccefa",
+                    "counter": 35,
+                    "fieldOwners": Object {
+                      "foo1": "gatsby-fields-child-change",
+                    },
+                    "owner": "gatsby-source-child-change",
+                    "type": "Parent_ChildChange",
+                  },
+                  "parent": null,
+                },
+              },
+            },
+            "deletions": Object {},
+          }
+        `)
+      })
+
+      it(`to be named`, () => {
+        const {
+          postBootstrapStateFromFirstRun,
+          preBootstrapStateFromSecondRun,
+          postBootstrapStateFromSecondRun,
+        } = getSubStateByPlugins(states, [
+          `gatsby-source-parent-change`,
+          `gatsby-fields-parent-change`,
+        ])
+
+        expect(
+          compareState(
+            postBootstrapStateFromFirstRun,
+            preBootstrapStateFromSecondRun
+          )
+        ).toMatchInlineSnapshot(`
+          Object {
+            "additions": Object {},
+            "changes": Object {},
+            "deletions": Object {
+              "parent_parentChange": Object {
+                "children": Array [
+                  "4886e795-4b87-5964-b308-112031bdaf88",
+                ],
+                "fields": Object {
+                  "bar": undefined,
+                  "foo": "run-1",
+                },
+                "foo": "run-1",
+                "id": "parent_parentChange",
+                "internal": Object {
+                  "contentDigest": "aede568d9b5cf8ae620c06a9fa57f456",
+                  "counter": 33,
+                  "fieldOwners": Object {
+                    "bar": "gatsby-fields-parent-change",
+                    "foo": "gatsby-fields-parent-change",
+                  },
+                  "owner": "gatsby-source-parent-change",
+                  "type": "Parent_ParentChange",
+                },
+                "parent": null,
+              },
+            },
+          }
+        `)
+
+        expect(
+          compareState(
+            postBootstrapStateFromFirstRun,
+            postBootstrapStateFromSecondRun
+          )
+        ).toMatchInlineSnapshot(`
+          Object {
+            "additions": Object {},
+            "changes": Object {
+              "parent_parentChange": Object {
+                "id": "parent_parentChange",
+                "newValue": Object {
+                  "bar": "run-2",
+                  "children": Array [
+                    "4886e795-4b87-5964-b308-112031bdaf88",
+                  ],
+                  "fields": Object {
+                    "bar": "run-2",
+                    "foo": undefined,
+                  },
+                  "id": "parent_parentChange",
+                  "internal": Object {
+                    "contentDigest": "5d9d1ac97e627eff9946d1473a70bb19",
+                    "counter": 33,
+                    "fieldOwners": Object {
+                      "bar": "gatsby-fields-parent-change",
+                      "foo": "gatsby-fields-parent-change",
+                    },
+                    "owner": "gatsby-source-parent-change",
+                    "type": "Parent_ParentChange",
+                  },
+                  "parent": null,
+                },
+                "oldValue": Object {
+                  "children": Array [
+                    "4886e795-4b87-5964-b308-112031bdaf88",
+                  ],
+                  "fields": Object {
+                    "bar": undefined,
+                    "foo": "run-1",
+                  },
+                  "foo": "run-1",
+                  "id": "parent_parentChange",
+                  "internal": Object {
+                    "contentDigest": "aede568d9b5cf8ae620c06a9fa57f456",
+                    "counter": 33,
+                    "fieldOwners": Object {
+                      "bar": "gatsby-fields-parent-change",
+                      "foo": "gatsby-fields-parent-change",
+                    },
+                    "owner": "gatsby-source-parent-change",
+                    "type": "Parent_ParentChange",
+                  },
+                  "parent": null,
+                },
+              },
+            },
+            "deletions": Object {},
+          }
+        `)
+      })
+
+      it(`to be named #2`, () => {
+        const {
+          postBootstrapStateFromFirstRun,
+          preBootstrapStateFromSecondRun,
+          postBootstrapStateFromSecondRun,
+        } = getSubStateByPlugins(states, [
+          `gatsby-source-child-change`,
+          `gatsby-fields-child-change`,
+        ])
+
+        expect(
+          compareState(
+            postBootstrapStateFromFirstRun,
+            preBootstrapStateFromSecondRun
+          )
+        ).toMatchInlineSnapshot(`
+          Object {
+            "additions": Object {},
+            "changes": Object {
+              "parent_childChange": Object {
+                "id": "parent_childChange",
+                "newValue": Object {
+                  "children": Array [],
+                  "fields": Object {},
+                  "foo": "run-1",
+                  "id": "parent_childChange",
+                  "internal": Object {
+                    "contentDigest": "265623643e8806ecc810413fcf1ccefa",
+                    "counter": 35,
+                    "fieldOwners": Object {},
+                    "owner": "gatsby-source-child-change",
+                    "type": "Parent_ChildChange",
+                  },
+                  "parent": null,
+                },
+                "oldValue": Object {
+                  "children": Array [
+                    "358f53bc-3eef-5881-a226-042304a159e3",
+                  ],
+                  "fields": Object {
+                    "foo1": "bar",
+                  },
+                  "foo": "run-1",
+                  "id": "parent_childChange",
+                  "internal": Object {
+                    "contentDigest": "265623643e8806ecc810413fcf1ccefa",
+                    "counter": 35,
+                    "fieldOwners": Object {
+                      "foo1": "gatsby-fields-child-change",
+                    },
+                    "owner": "gatsby-source-child-change",
+                    "type": "Parent_ChildChange",
+                  },
+                  "parent": null,
+                },
+              },
+            },
+            "deletions": Object {},
+          }
+        `)
+
+        expect(
+          compareState(
+            postBootstrapStateFromFirstRun,
+            postBootstrapStateFromSecondRun
+          )
+        ).toMatchInlineSnapshot(`
+          Object {
+            "additions": Object {},
+            "changes": Object {
+              "parent_childChange": Object {
+                "id": "parent_childChange",
+                "newValue": Object {
+                  "children": Array [
+                    "358f53bc-3eef-5881-a226-042304a159e3",
+                  ],
+                  "fields": Object {
+                    "foo2": "baz",
+                  },
+                  "foo": "run-1",
+                  "id": "parent_childChange",
+                  "internal": Object {
+                    "contentDigest": "265623643e8806ecc810413fcf1ccefa",
+                    "counter": 35,
+                    "fieldOwners": Object {
+                      "foo2": "gatsby-fields-child-change",
+                    },
+                    "owner": "gatsby-source-child-change",
+                    "type": "Parent_ChildChange",
+                  },
+                  "parent": null,
+                },
+                "oldValue": Object {
+                  "children": Array [
+                    "358f53bc-3eef-5881-a226-042304a159e3",
+                  ],
+                  "fields": Object {
+                    "foo1": "bar",
+                  },
+                  "foo": "run-1",
+                  "id": "parent_childChange",
+                  "internal": Object {
+                    "contentDigest": "265623643e8806ecc810413fcf1ccefa",
+                    "counter": 35,
+                    "fieldOwners": Object {
+                      "foo1": "gatsby-fields-child-change",
+                    },
+                    "owner": "gatsby-source-child-change",
+                    "type": "Parent_ChildChange",
+                  },
+                  "parent": null,
                 },
               },
             },
