@@ -93,7 +93,7 @@ exports.sourceNodes = async (
           }
         }
         data = data.concat(d.data.data)
-        if (d.data.links.next) {
+        if (d.data.links && d.data.links.next) {
           data = await getNext(d.data.links.next, data)
         }
 
