@@ -1,6 +1,8 @@
 import fetchGraphql from "../../../utils/fetch-graphql"
 import store from "../../../store"
 import formatLogMessage from "../../../utils/format-log-message"
+import { parse } from "url"
+import chalk from "chalk"
 
 const wpActionUPDATE = async ({
   helpers,
@@ -9,6 +11,7 @@ const wpActionUPDATE = async ({
   cachedNodeIds,
   pluginOptions,
 }) => {
+  const { reporter } = helpers
   const nodeId = wpAction.referencedPostGlobalRelayID
 
   if (wpAction.referencedPostStatus !== `publish`) {
@@ -37,7 +40,11 @@ const wpActionUPDATE = async ({
     },
   })
 
-  const updatedNodeContent = data[wpAction.referencedPostSingleName]
+  const updatedNodeContent = {
+    ...data[wpAction.referencedPostSingleName],
+    contentType: wpAction.referencedPostSingleName,
+    path: parse(data[wpAction.referencedPostSingleName].link).pathname,
+  }
 
   // then delete the posts node
   const { actions, getNode } = helpers
@@ -63,22 +70,37 @@ const wpActionUPDATE = async ({
   })
 
   if (intervalRefetching) {
-    helpers.reporter.log(``)
-    helpers.reporter.info(
+    reporter.log(``)
+    reporter.info(
       formatLogMessage(
-        `updated ${wpAction.referencedPostSingleName}${
-          verbose
-            ? `
-
-  {
-    ${wpAction.referencedPostSingleName}Id: ${wpAction.referencedPostID},
-    id: ${nodeId}
-  }`
-            : ` ${wpAction.referencedPostID}`
+        `${chalk.bold(`updated ${wpAction.referencedPostSingleName}`)} #${
+          wpAction.referencedPostID
         }`
       )
     )
-    helpers.reporter.log(``)
+    reporter.log(``)
+
+    if (verbose) {
+      Object.entries(node)
+        .filter(([key]) => !key.includes(`modifiedGmt`) && key !== `modified`)
+        .forEach(([key, value]) => {
+          // if the value of this field changed, log it
+          if (
+            typeof updatedNodeContent[key] === `string` &&
+            value !== updatedNodeContent[key]
+          ) {
+            reporter.info(chalk.bold(`${key} changed`))
+            reporter.log(``)
+            reporter.log(`${chalk.italic.bold(`from`)}`)
+            reporter.log(value)
+            reporter.log(chalk.italic.bold(`to`))
+            reporter.log(updatedNodeContent[key])
+            reporter.log(``)
+          }
+        })
+
+      reporter.log(``)
+    }
   }
 
   // we can leave cachedNodeIds as-is since the ID of the edited
