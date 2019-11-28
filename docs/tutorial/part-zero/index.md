@@ -4,7 +4,14 @@ typora-copy-images-to: ./
 disableTableOfContents: true
 ---
 
-Before you start building your first Gatsby site, you’ll need to familiarize yourself with some core web technologies and make sure that you have installed all required software tools.
+The short-and-sweet:
+
+```shell
+npm install -g gatsby-cli
+gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world
+```
+
+As you start building your first Gatsby site, you should familiarize yourself with some core web technologies and make sure that you have installed all relevant software tools.
 
 ## Familiarize yourself with the command line
 
