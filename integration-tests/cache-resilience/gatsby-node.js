@@ -3,6 +3,11 @@ const v8 = require(`v8`)
 
 const db = require(`gatsby/dist/db`)
 
+const {
+  ON_PRE_BOOTSTRAP_FILE_PATH,
+  ON_POST_BOOTSTRAP_FILE_PATH,
+} = require(`./utils/constants`)
+
 const createMap = nodes => {
   const map = new Map()
   nodes.forEach(node => {
@@ -13,14 +18,14 @@ const createMap = nodes => {
 
 exports.onPreBootstrap = ({ getNodes }) => {
   fs.writeFileSync(
-    `./on_pre_bootstrap.state`,
+    ON_PRE_BOOTSTRAP_FILE_PATH,
     v8.serialize(createMap(getNodes()))
   )
 }
 
 exports.onPostBootstrap = async ({ getNodes }) => {
   fs.writeFileSync(
-    `./on_post_bootstrap.state`,
+    ON_POST_BOOTSTRAP_FILE_PATH,
     v8.serialize(createMap(getNodes()))
   )
 

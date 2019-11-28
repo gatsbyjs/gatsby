@@ -3,6 +3,10 @@ const { spawnSync } = require(`child_process`)
 const path = require(`path`)
 const v8 = require(`v8`)
 const _ = require(`lodash`)
+const {
+  ON_PRE_BOOTSTRAP_FILE_PATH,
+  ON_POST_BOOTSTRAP_FILE_PATH,
+} = require(`../utils/constants`)
 
 // TODO: Make this not mutate the passed in value
 const sanitiseNode = value => {
@@ -96,9 +100,9 @@ const build = ({ updatePlugins } = {}) => {
     throw new Error(`Gatsby exited with non-zero code`)
   }
 
-  const preBootstrapStateFromFirstRun = loadState(`./on_pre_bootstrap.state`)
+  const preBootstrapStateFromFirstRun = loadState(ON_PRE_BOOTSTRAP_FILE_PATH)
 
-  const postBootstrapStateFromFirstRun = loadState(`./on_post_bootstrap.state`)
+  const postBootstrapStateFromFirstRun = loadState(ON_POST_BOOTSTRAP_FILE_PATH)
 
   if (updatePlugins) {
     // Invalidations
@@ -119,9 +123,9 @@ const build = ({ updatePlugins } = {}) => {
     throw new Error(`Gatsby exited with non-zero code`)
   }
 
-  const preBootstrapStateFromSecondRun = loadState(`./on_pre_bootstrap.state`)
+  const preBootstrapStateFromSecondRun = loadState(ON_PRE_BOOTSTRAP_FILE_PATH)
 
-  const postBootstrapStateFromSecondRun = loadState(`./on_post_bootstrap.state`)
+  const postBootstrapStateFromSecondRun = loadState(ON_POST_BOOTSTRAP_FILE_PATH)
 
   return {
     preBootstrapStateFromFirstRun,
@@ -134,6 +138,14 @@ const build = ({ updatePlugins } = {}) => {
 afterAll(() => {
   // go back to initial
   useGatsbyNode(1)
+
+  // delete saved states
+  if (fs.existsSync(ON_PRE_BOOTSTRAP_FILE_PATH)) {
+    fs.unlinkSync(ON_PRE_BOOTSTRAP_FILE_PATH)
+  }
+  if (fs.existsSync(ON_POST_BOOTSTRAP_FILE_PATH)) {
+    fs.unlinkSync(ON_POST_BOOTSTRAP_FILE_PATH)
+  }
 })
 
 describe(`Cache`, () => {
