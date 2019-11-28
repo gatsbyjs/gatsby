@@ -1,13 +1,31 @@
 import formatLogMessage from "../../../utils/format-log-message"
+import store from "../../../store"
+
 const wpActionDELETE = async ({ helpers, cachedNodeIds, wpAction }) => {
   const { reporter, actions, getNode } = helpers
 
   // get the node ID from the WPGQL id
   const nodeId = wpAction.referencedPostGlobalRelayID
 
+  const { verbose } = store.getState().gatsbyApi.pluginOptions
+
+  reporter.log(``)
   reporter.info(
-    formatLogMessage`deleted ${wpAction.referencedPostSingleName} ${wpAction.referencedPostID}`
+    formatLogMessage(
+      `deleted ${wpAction.referencedPostSingleName}${
+        verbose
+          ? `
+
+  {
+    ${wpAction.referencedPostSingleName}Id: ${wpAction.referencedPostID},
+    id: ${nodeId}
+  }`
+          : ` ${wpAction.referencedPostID}`
+      }`
+    )
   )
+
+  reporter.log(``)
 
   const node = await getNode(nodeId)
 

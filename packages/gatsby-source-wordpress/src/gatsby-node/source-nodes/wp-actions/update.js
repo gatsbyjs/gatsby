@@ -17,6 +17,8 @@ const wpActionUPDATE = async ({
     return cachedNodeIds.filter(cachedId => cachedId !== nodeId)
   }
 
+  const { verbose } = store.getState().gatsbyApi.pluginOptions
+
   const { queries } = store.getState().introspection
 
   const queryInfo = Object.values(queries).find(
@@ -61,9 +63,22 @@ const wpActionUPDATE = async ({
   })
 
   if (intervalRefetching) {
+    helpers.reporter.log(``)
     helpers.reporter.info(
-      formatLogMessage`updated ${wpAction.referencedPostSingleName} ${wpAction.referencedPostID}`
+      formatLogMessage(
+        `updated ${wpAction.referencedPostSingleName}${
+          verbose
+            ? `
+
+  {
+    ${wpAction.referencedPostSingleName}Id: ${wpAction.referencedPostID},
+    id: ${nodeId}
+  }`
+            : ` ${wpAction.referencedPostID}`
+        }`
+      )
     )
+    helpers.reporter.log(``)
   }
 
   // we can leave cachedNodeIds as-is since the ID of the edited

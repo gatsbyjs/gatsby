@@ -15,6 +15,8 @@ const wpActionCREATE = async ({
     return cachedNodeIds
   }
 
+  const { verbose } = store.getState().gatsbyApi.pluginOptions
+
   // otherwise we need to fetch the post
   // so get the right gql query from redux
   const { queries } = store.getState().introspection
@@ -55,9 +57,22 @@ const wpActionCREATE = async ({
   })
 
   if (intervalRefetching) {
+    helpers.reporter.log(``)
     helpers.reporter.info(
-      formatLogMessage`created ${wpAction.referencedPostSingleName} ${wpAction.referencedPostID}`
+      formatLogMessage(
+        `created ${wpAction.referencedPostSingleName}${
+          verbose
+            ? `
+
+  {
+    ${wpAction.referencedPostSingleName}Id: ${wpAction.referencedPostID},
+    id: ${nodeId}
+  }`
+            : ` ${wpAction.referencedPostID}`
+        }`
+      )
     )
+    helpers.reporter.log(``)
   }
 
   // add our node id to the list of cached node id's
