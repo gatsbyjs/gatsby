@@ -1546,7 +1546,7 @@ Congratulations! You've set up, built, and customized your first Gatsby theme!
 ### Further reading
 
 - Check out the [Gatsby themes docs](/docs/themes/) to keep learning.
-- Have an idea for a theme you'd like to build? Get a headstart on a local theme development workspace using the [Theme Workspace starter](https://github.com/gatsbyjs/gatsby/tree/master/themes/gatsby-starter-theme-workspace).
+- Have an idea for a theme you'd like to build? Get a headstart on a local theme development workspace using the [Theme Workspace starter](https://github.com/gatsbyjs/gatsby/tree/master/starters/gatsby-starter-theme-workspace).
 - Have you built a Gatsby starter before? Perhaps [convert that starter to a theme](/docs/themes/converting-a-starter).
 
 ### Livestreams
