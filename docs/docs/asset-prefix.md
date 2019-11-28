@@ -18,7 +18,7 @@ module.exports = {
 }
 ```
 
-One more step - when you build out this application, you need to add a flag so that Gatsby picks up this option.
+One more step ― when you build out this application, you need to add a flag so that Gatsby picks up this option.
 
 ### The `--prefix-paths` flag
 
@@ -38,7 +38,7 @@ Once your application is built out, all assets will be automatically prefixed by
 <script src="https://cdn.example.com/app-common-1234.js"></script>
 ```
 
-However - if you were to deploy your application as-is, those assets would not be available! You can do this in a few ways, but the general approach will be to deploy the contents of the `public` folder to _both_ your core domain, and the CDN/asset prefix location.
+However ― if you were to deploy your application as-is, those assets would not be available! You can do this in a few ways, but the general approach will be to deploy the contents of the `public` folder to _both_ your core domain, and the CDN/asset prefix location.
 
 ### Using `onPostBuild`
 
@@ -82,7 +82,7 @@ This feature works seamlessly with `pathPrefix`. Build out your application with
 
 When using a custom asset prefix with `gatsby-plugin-offline`, your assets can still be cached offline. However, to ensure the plugin works correctly, there are a few things you need to do.
 
-1.  Your asset server needs to have the `Access-Control-Allow-Origin` header set either to `*` or your site's origin.
-2.  Certain essential resources need to be available on your content server (i.e. the one used to serve pages). This includes `sw.js`, as well as resources to precache: the Webpack bundle, the app bundle, the manifest (and any icons referenced), and the resources for the offline plugin app shell.
+1. Your asset server needs to have the `Access-Control-Allow-Origin` header set either to `*` or your site's origin.
+2. Certain essential resources need to be available on your content server (i.e. the one used to serve pages). This includes `sw.js`, as well as resources to precache: the Webpack bundle, the app bundle, the manifest (and any icons referenced), and the resources for the offline plugin app shell.
 
     You can find most of these by looking for the `self.__precacheManifest` variable in your generated `sw.js`. Remember to also include `sw.js` itself, and any icons referenced in your `manifest.webmanifest` if you have one. To check your service worker is functioning as expected, look in Application → Service Workers in your browser dev tools, and check for any failed resources in the Console/Network tabs.

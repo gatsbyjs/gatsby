@@ -30,11 +30,11 @@ software product. The site contains a lot of content with hundreds of articles.
 
 Here's a list of my requirements for this site:
 
--   Speed - both in development and site performance
--   Ease of use - both in developer experience and content upkeep
--   Searchable content - it is a doc site after all
--   Inexpensive Hosting - maximize value (who doesn't want this?)
--   Automated continuous deployment
+- Speed ― both in development and site performance
+- Ease of use ― both in developer experience and content upkeep
+- Searchable content ― it is a doc site after all
+- Inexpensive Hosting ― maximize value (who doesn't want this?)
+- Automated continuous deployment
 
 The following is a report on my high-level experience of using Gatsby with
 Contentful, Netlify and Algolia and the problems they solve — without getting
@@ -98,9 +98,9 @@ Contentful is a hosted [headless CMS](/docs/headless-cms/) with a fantastic user
 similar to having a backend like WordPress, but you are fully responsible for
 the frontend layer. The beauty of Contentful is threefold.
 
--   Intuitive and attractive UI
--   Simple content modeling
--   [Free tier](https://www.contentful.com/pricing/)
+- Intuitive and attractive UI
+- Simple content modeling
+- [Free tier](https://www.contentful.com/pricing/)
 
 Dealing with the backend of Contentful is refreshing and the content modeling
 really leads the pack when compared to other headless content management
@@ -271,14 +271,14 @@ Netlify recently changed [their pricing](https://www.netlify.com/pricing/) to
 improve what was already an awesome hosting per dollar value. I can't get
 through this section without a bullet list of why Netlify is so fantastic.
 
--   Free to use for personal/commercial project (seriously great free tier)
--   Push button HTTPS via Let's Encrypt built in
--   Fast Global CDN
--   Support for custom domains
--   Atomic deploys
--   A crazy-cool, integrated build engine
--   [And a lot more....](https://www.netlify.com/features/)
--   Did I mention you get all this for FREE?
+- Free to use for personal/commercial project (seriously great free tier)
+- Push button HTTPS via Let's Encrypt built in
+- Fast Global CDN
+- Support for custom domains
+- Atomic deploys
+- A crazy-cool, integrated build engine
+- [And a lot more....](https://www.netlify.com/features/)
+- Did I mention you get all this for FREE?
 
 <div style="width:100%;height:0;padding-bottom:55%;position:relative;"><iframe src="https://giphy.com/embed/vMnuZGHJfFSTe" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/vMnuZGHJfFSTe">via GIPHY</a></p>
 

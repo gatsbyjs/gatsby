@@ -8,10 +8,10 @@ These stakeholders need to be convinced that Gatsby can offer them the balance o
 
 Some specific things that engineering leaders and managers care about include:
 
--   **Performance and security** No one wants their product to be noticeably slow or the source of a major security vulnerability. Getting these two key features right can be complicated, even for experienced engineering teams.
--   **Flexibility and scalability** Managers want to pick tools that can grow with their user base and with their long-term product roadmap. They do not want to choose a technology that will limit their growth or risk having to start over if (and when) that tool proves to be too rigid.
--   **Not reinventing the wheel** While many managers appreciate and sympathize with their team's or colleagues' desire to try out cool new tech, they'd rather not spend valuable time and resources on a new thing when the job is already being done to their satisfaction. As the saying goes, "If it ain't broke, don't fix it."
--   **Helping their team work smarter** New tech is interesting to managers when it removes obstacles for their team, helps them be more effective, and/or reduces [yak shaving](https://www.hanselman.com/blog/YakShavingDefinedIllGetThatDoneAsSoonAsIShaveThisYak.aspx). However, these benefits have to outweigh the cost of integrating a new tool and/or re-implementing an existing product.
+- **Performance and security** No one wants their product to be noticeably slow or the source of a major security vulnerability. Getting these two key features right can be complicated, even for experienced engineering teams.
+- **Flexibility and scalability** Managers want to pick tools that can grow with their user base and with their long-term product roadmap. They do not want to choose a technology that will limit their growth or risk having to start over if (and when) that tool proves to be too rigid.
+- **Not reinventing the wheel** While many managers appreciate and sympathize with their team's or colleagues' desire to try out cool new tech, they'd rather not spend valuable time and resources on a new thing when the job is already being done to their satisfaction. As the saying goes, "If it ain't broke, don't fix it."
+- **Helping their team work smarter** New tech is interesting to managers when it removes obstacles for their team, helps them be more effective, and/or reduces [yak shaving](https://www.hanselman.com/blog/YakShavingDefinedIllGetThatDoneAsSoonAsIShaveThisYak.aspx). However, these benefits have to outweigh the cost of integrating a new tool and/or re-implementing an existing product.
 
 ## Basic explanation
 
@@ -63,12 +63,12 @@ You may find that your engineering leaders and managers have some concerns about
 
 Case studies are an excellent way to build an engineering leader's confidence in Gatsby's capabilities. Here are some case studies you might want to share:
 
--   [Beyond Static: Haptic Media Uses Gatsby to Build a Dynamic Web App](/blog/2019-02-05-hapticmedia-case-study/)
--   [IBM Uses Gatsby to Manage Enterprise-Level Content](/blog/2018-12-17-ibm-case-study/#big-company-big-website)
--   [How we're migrating a government open data site to Gatsby](/blog/2019-02-08-government-open-data-site-with-gatsby/)
+- [Beyond Static: Haptic Media Uses Gatsby to Build a Dynamic Web App](/blog/2019-02-05-hapticmedia-case-study/)
+- [IBM Uses Gatsby to Manage Enterprise-Level Content](/blog/2018-12-17-ibm-case-study/#big-company-big-website)
+- [How we're migrating a government open data site to Gatsby](/blog/2019-02-08-government-open-data-site-with-gatsby/)
 
 For examples of Gatsby sites, [check out the Showcase](/showcase/).
 
 ## Conclusion
 
-When you're trying to win over a stakeholder, your first instinct may be to focus completely on Gatsby's benefits. However, when you're speaking to engineering leaders and managers, it's important to be positive while still being honest about Gatsby's limitations. Setting expectations before they go out to do their own research will help them focus on finding solutions rather than faults. There is ample proof that Gatsby works well for many websites - don't be afraid to help your engineering leaders dig into pros and cons. (And it doesn't hurt to get a few of their team members on your side. Check out the [Winning Over Developers](/docs/winning-over-developers/) page for more on that subject.)
+When you're trying to win over a stakeholder, your first instinct may be to focus completely on Gatsby's benefits. However, when you're speaking to engineering leaders and managers, it's important to be positive while still being honest about Gatsby's limitations. Setting expectations before they go out to do their own research will help them focus on finding solutions rather than faults. There is ample proof that Gatsby works well for many websites ― don't be afraid to help your engineering leaders dig into pros and cons. (And it doesn't hurt to get a few of their team members on your side. Check out the [Winning Over Developers](/docs/winning-over-developers/) page for more on that subject.)

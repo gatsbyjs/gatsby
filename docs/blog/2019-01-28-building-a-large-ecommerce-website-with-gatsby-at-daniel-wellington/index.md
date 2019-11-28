@@ -21,7 +21,7 @@ As we started to migrate a few markets to Gatsby, we quickly realized that the b
 
 We dug into the issue, and realized that our GraphQL queries were several orders of magnitude slower than the benchmarks (even the complex ones) provided by Gatsby.
 
-One reason for this issue being our need for customization: every page (frontpage, category page or campaign page) can be fully customized, which results in our GraphQL queries being complex - and _slow_.
+One reason for this issue being our need for customization: every page (frontpage, category page or campaign page) can be fully customized, which results in our GraphQL queries being complex ― and _slow_.
 
 We started optimizing them by running them only when needed. For instance, our footer is the same on every single page (for a market), so it's better to run the query for that component in `gatsby-node`'s `createPages` and inject the result via the `context` of the page, rather than having the query for the footer in the page's GraphQL query.
 
@@ -48,7 +48,7 @@ To manage this, we built our own internal interface as a separate React app. Thi
 
 ## Going to production in a sane way
 
-A great (and sometimes overlooked) inherent benefit of static generation makes us able to have a look at the website _exactly_ as our users will see it, before they see it. As a result, we never had issues that we didn't catch in our staging environments - the production build will generate the actual JS, CSS and HTML files that are tested before going live.
+A great (and sometimes overlooked) inherent benefit of static generation makes us able to have a look at the website _exactly_ as our users will see it, before they see it. As a result, we never had issues that we didn't catch in our staging environments ― the production build will generate the actual JS, CSS and HTML files that are tested before going live.
 
 To achieve that, we perform our code release in 2 steps. The first step builds the website (with production settings) and hosts it on a static server. Once the build is completed, we check the website, the new features, the content and if everything is good, we jump to the next step: pushing _the same files_ to the production static servers. The fact that it's exactly the same files makes all the difference here: there is no random issues happening only in production environments, there is no issue that we can't reproduce in a controlled environment.
 

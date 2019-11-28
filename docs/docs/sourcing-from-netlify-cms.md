@@ -55,7 +55,7 @@ want to put the configuration file in that same directory.
 
 Still in the root directory, add a "static" folder. Gatsby will copy everything in the static folder
 into the output, so we'll want to place the Netlify CMS configuration file as
-`static/admin/config.yml`. Let's create a test configuration now - add this to your new
+`static/admin/config.yml`. Let's create a test configuration now ― add this to your new
 `config.yml`:
 
 ```yaml:title=static/admin/config.yml
@@ -80,12 +80,11 @@ collections:
 Then in your terminal run `gatsby develop` to start the
 Gatsby development server. Once the server is running, it will print the address to open for
 viewing. It's typically `localhost:8000`. Open that in a browser and you should see the text
-"Hello World" in the top left corner. Now navigate to `/admin/` - so if your site is at
+"Hello World" in the top left corner. Now navigate to `/admin/` ― so if your site is at
 `localhost:8000`, go to `localhost:8000/admin/`. **The trailing slash is required!**
 
 You should now be viewing your Netlify CMS instance. You defined a "blog" collection in the
-configuration above, so you can create new blogs, but Netlify CMS will only store them in memory -
-if you refresh, your changes won't be there.
+configuration above, so you can create new blogs, but Netlify CMS will only store them in memory ― if you refresh, your changes won't be there.
 
 ## Saving to a Git Repo
 
@@ -112,7 +111,7 @@ help on this part, check out GitHub's
 ### Deploying to Netlify
 
 Now you can publish your Gatsby site straight from GitHub to Netlify from the [create site
-page](https://app.netlify.com/start) - the proper build command for Gatsby will be provided
+page](https://app.netlify.com/start) ― the proper build command for Gatsby will be provided
 automatically, just select your GitHub repo and go with the default options. Once you connect your
 GitHub repo to Netlify, deployment will begin. Note that the first deployment could take a few
 minutes since a lot of things aren't cached yet. Subsequent deploys will be faster.
@@ -124,7 +123,7 @@ did locally.
 
 Netlify CMS will need to authenticate with GitHub to save your content changes to your repo. As
 mentioned above, this requires a server, and Netlify handles that aspect for you. First you'll need
-to add your deployed site as an OAuth application in your GitHub settings - just follow the steps in
+to add your deployed site as an OAuth application in your GitHub settings ― just follow the steps in
 the [Netlify
 docs](https://www.netlify.com/docs/authentication-providers/#using-an-authentication-provider). This
 will allow scripts running on your deployed site, such as Netlify CMS, to access your GitHub
@@ -163,16 +162,16 @@ If you use the [Client-Side Implicit Grant](https://www.netlifycms.org/docs/auth
 
 ### Making changes
 
-Alright - you're all set to make changes in Netlify CMS and see them as commits in your GitHub repo!
+Alright ― you're all set to make changes in Netlify CMS and see them as commits in your GitHub repo!
 Open Netlify CMS on your deployed site at `/admin/`, allow access to GitHub when the permissions
 window pops up (check for blocked pop ups if you don't see it), and try creating and publishing a
 new blog post. Once you've done that, you'll find a new "blog" directory in your GitHub repo
 containing a Markdown file with your blog post content!
 
-This is the basic function of Netlify CMS - providing a comfortable editing experience and
+This is the basic function of Netlify CMS ― providing a comfortable editing experience and
 outputting raw content files to a Git repository. You've probably noticed that, even though the file
 was created in your repo, it's not anywhere on your site. That's because Netlify CMS doesn't go
-beyond creating the raw content - it's able to work with almost any static site generator because it
+beyond creating the raw content ― it's able to work with almost any static site generator because it
 allows the generator to determine how to build the raw content into something useful, whether for a
 website, mobile app, or something else entirely.
 

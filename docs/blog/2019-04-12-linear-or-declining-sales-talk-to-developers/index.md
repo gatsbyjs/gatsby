@@ -17,15 +17,15 @@ But at some point, your company hits an inflection point and the growth starts t
 
 You then walk into your weekly e-Staff meeting and pull up the same KPI's you review each week to see the health of your business. The monitor lights up the pretty trend graphs displaying your key metrics:
 
-1.  Site Visitors
-2.  Signups
-3.  Top of Funnel Conversions
-4.  MQL's
-5.  Lead to Opportunity Conversion Rates
-6.  Opportunity Win Rates
-7.  MoM, QoQ, and YoY Revenue Growth
-8.  New Business Wins
-9.  QoQ Average Sales Price
+1. Site Visitors
+2. Signups
+3. Top of Funnel Conversions
+4. MQL's
+5. Lead to Opportunity Conversion Rates
+6. Opportunity Win Rates
+7. MoM, QoQ, and YoY Revenue Growth
+8. New Business Wins
+9. QoQ Average Sales Price
 10. Gross Margins
 11. Opportunity Funnel and Forecast
 
@@ -35,7 +35,7 @@ Does this sound familiar? **Don't worry, you're not alone.**
 
 ## How Poor Performance Is Hurting Your Bottom Line
 
-Here's something that may come as a surprise to you: your answer to help solve the top of funnel and revenue growth problem is already working at your company -- and it may not take them that long to address it.
+Here's something that may come as a surprise to you: your answer to help solve the top of funnel and revenue growth problem is already working at your company ― and it may not take them that long to address it.
 
 No, it's not your "rockstar sales rep" or your amazing marketing content person. It's not asking for more budget to spend on a new channel to then hope and pray you're going to get an ROI.
 
@@ -47,16 +47,16 @@ I know first-hand the positive impacts that website and application performance 
 
 **Studies have shown the following to be true for conversion rates and page abandonment:**
 
--   47% expect a page to load in 2 seconds or less
--   40% of users will abandon a webpage if it takes more than 3 seconds to load
--   1 second delay (or 3 seconds of waiting) decreases customer satisfaction by 16%
--   4-second delay in page response results in 25% abandonment rate
--   10-second delay will often make users leave a site immediately
+- 47% expect a page to load in 2 seconds or less
+- 40% of users will abandon a webpage if it takes more than 3 seconds to load
+- 1 second delay (or 3 seconds of waiting) decreases customer satisfaction by 16%
+- 4-second delay in page response results in 25% abandonment rate
+- 10-second delay will often make users leave a site immediately
 
 **How does that impact revenue?**
 
--   If your e-commerce site is making $100,000 per day, a 1 second page delay could potentially cost you $2.5 million in lost sales every year.
--   1 second of load lag time would cost Amazon \\$1.6 billion in sales per year
+- If your e-commerce site is making $100,000 per day, a 1 second page delay could potentially cost you $2.5 million in lost sales every year.
+- 1 second of load lag time would cost Amazon \\$1.6 billion in sales per year
 
 Are you starting to see the picture of how poor site performance will dramatically hurt your top of funnel, and then ultimately your sales?
 
@@ -66,11 +66,11 @@ Are you starting to see the picture of how poor site performance will dramatical
 
 So why does poor performance persist? Simply put: organizational knowledge silos. Commercial and engineering organizations don't know (yet!) why and how they need to collaborate together to improve performance:
 
-1.  **Commercial leaders feel it's outside their domain.** Commercial Executives and Leaders feel they don't have the domain expertise to know what questions to ask or advice to give to their CIO, CTO, and development team in order to optimize their site's performance.
+1. **Commercial leaders feel it's outside their domain.** Commercial Executives and Leaders feel they don't have the domain expertise to know what questions to ask or advice to give to their CIO, CTO, and development team in order to optimize their site's performance.
 
-2.  **Developers don't know it's a priority.** Commercial Executives and Leaders simply assume their development teams are always using the best tools for performance and treating performance as a key initiative at all times. In reality, development organizations are responsive to and prioritize the needs vocalized by the commercial organization. If development teams don't know performance is important to sales and marketing, they won't prioritize it accordingly.
+2. **Developers don't know it's a priority.** Commercial Executives and Leaders simply assume their development teams are always using the best tools for performance and treating performance as a key initiative at all times. In reality, development organizations are responsive to and prioritize the needs vocalized by the commercial organization. If development teams don't know performance is important to sales and marketing, they won't prioritize it accordingly.
 
-3.  **Organizations don't track performance as a key metric.** Commercial Executives and Leaders often don't think about what a huge impact site/app performance could have on the KPI's they care about most, therefore, they never thought to focus on it. You'd be surprised how many companies I talk with don't have someone owning performance as a key metric.
+3. **Organizations don't track performance as a key metric.** Commercial Executives and Leaders often don't think about what a huge impact site/app performance could have on the KPI's they care about most, therefore, they never thought to focus on it. You'd be surprised how many companies I talk with don't have someone owning performance as a key metric.
 
 **I feel strongly that there needs to be a tighter bond between the commercial and engineering organizations.**
 
@@ -80,13 +80,13 @@ You should always be thinking about what tools or technologies are out there tha
 
 Some questions to ask others in your organization:
 
--   Why isn't our CMOs, CROs, VPs Sales/Marketing working closer with the developers, CIO and CTO on ways to optimize your website or application performance, since the studies clearly show the positive impact it has on the things they care about most like revenue, leads, adoption, churn, bounce rates, etc?
+- Why isn't our CMOs, CROs, VPs Sales/Marketing working closer with the developers, CIO and CTO on ways to optimize your website or application performance, since the studies clearly show the positive impact it has on the things they care about most like revenue, leads, adoption, churn, bounce rates, etc?
 
--   Why is our website and application performance only measured, monitored and discussed amongst the Developer and Operation teams and not the commercial teams? Should our VP of Sales and VP of Marketing be measuring the correlation between site performance and the core KPIs you look at everyday like leads, revenue and bounce rates?
+- Why is our website and application performance only measured, monitored and discussed amongst the Developer and Operation teams and not the commercial teams? Should our VP of Sales and VP of Marketing be measuring the correlation between site performance and the core KPIs you look at everyday like leads, revenue and bounce rates?
 
 ## Staying Up To Date With Changing Technology
 
-There are a multitude of things happening every day that you need to be on top of -- because if you're not, then poor performance is going to bite you sooner than later.
+There are a multitude of things happening every day that you need to be on top of ― because if you're not, then poor performance is going to bite you sooner than later.
 
 With the rise of new technology evolving at breakneck speeds, new devices rolling out every day, and new emerging markets springing up overnight, [50% of all site visits today are on mobile devices](https://www.gatsbyjs.org/blog/2018-10-16-why-mobile-performance-is-crucial/). And when your users are out and about, their network connection fluctuates, performance suffers, and many of them bounce. (When's the last time a website loaded fast on your phone when you were out and about?)
 
@@ -108,23 +108,23 @@ Many would like to change but they may not have a strong enough voice to make th
 
 So: what can you do?
 
-1.  **Get out of your office** and go introduce yourself (always a good start!)
+1. **Get out of your office** and go introduce yourself (always a good start!)
 
-2.  **Let them know what your KPI goals are** and ask them how they feel they could help. Explain what you know about the positive benefits benefits of site/app performance. (they love to help and will bend over backwards to do so!)
+2. **Let them know what your KPI goals are** and ask them how they feel they could help. Explain what you know about the positive benefits benefits of site/app performance. (they love to help and will bend over backwards to do so!)
 
-3.  **Talk to them about the benefits that performance has on your goals** and what it means to you, your team and the overall company. (not everyone connects the dots to the work they are doing and how important of a role they play within the company. IMHO, the developers are your Kings and Queens of the castle...so treat them as such!)
+3. **Talk to them about the benefits that performance has on your goals** and what it means to you, your team and the overall company. (not everyone connects the dots to the work they are doing and how important of a role they play within the company. IMHO, the developers are your Kings and Queens of the castle...so treat them as such!)
 
-4.  **Have them explain to you your current performance metrics** so you know where you stand today, therefore, you'll now have a benchmark for optimization.
+4. **Have them explain to you your current performance metrics** so you know where you stand today, therefore, you'll now have a benchmark for optimization.
 
-5.  **Ask them about their current toolset** and developer experience. (Listen closely to what they are saying. Retaining developers in today's world is paramount, and if they aren't happy you should find out what will make them happy ASAP).
+5. **Ask them about their current toolset** and developer experience. (Listen closely to what they are saying. Retaining developers in today's world is paramount, and if they aren't happy you should find out what will make them happy ASAP).
 
-6.  Do they feel like the tools they have in place today will allow them to effectively and efficiently optimize your website/app for better performance?
+6. Do they feel like the tools they have in place today will allow them to effectively and efficiently optimize your website/app for better performance?
 
-7.  How do they feel about working with the current CMS you may have in-house today? If they are not pleased, what would they ideally like to use and why?
+7. How do they feel about working with the current CMS you may have in-house today? If they are not pleased, what would they ideally like to use and why?
 
-8.  Do they have the tools/technology in place to allow them to ensure your site/app easily loads across any device? What about poor network connections? The abandonment rate for mobile and other handheld devices is astonishing with poor performance. Check your own sites mobile speed and compare it to your competitors' [here](https://www.thinkwithgoogle.com/feature/testmysite).
+8. Do they have the tools/technology in place to allow them to ensure your site/app easily loads across any device? What about poor network connections? The abandonment rate for mobile and other handheld devices is astonishing with poor performance. Check your own sites mobile speed and compare it to your competitors' [here](https://www.thinkwithgoogle.com/feature/testmysite).
 
-9.  **Ask if there are ways to improve performance while drastically reducing infra spend**. There are many ways today to completely eliminate your backend servers and gain amazing performance -- while increasing your gross margin!
+9. **Ask if there are ways to improve performance while drastically reducing infra spend**. There are many ways today to completely eliminate your backend servers and gain amazing performance ― while increasing your gross margin!
 
 10. **Recognize them often.** They work endless hours and are always looking for ways to learn more to better themselves and the company.
 
@@ -138,4 +138,4 @@ So: what can you do?
 
 So... I encourage the C-Suite and VP's of Sales and Marketing to work closer with your developers and focus on ways to improve your site/app performance. Performance needs to become a first-class citizen within your company if it's not already today. If you do so, then I'm confident you that pretty little chart you look at each week will start to go up and to the right again.
 
-PS - If you happen to be a developer who read this and you want to use new tools/technologies, then I encourage you to talk with your commercial orgs about how you feel you could impact the KPI's I mentioned in this post. You'll get their attention if you feel you can improve the things they care about by improving your site/app performance. Chances are you may gain an internal champion to help you get the tools/technology you've been longing for once you do.
+PS ― If you happen to be a developer who read this and you want to use new tools/technologies, then I encourage you to talk with your commercial orgs about how you feel you could impact the KPI's I mentioned in this post. You'll get their attention if you feel you can improve the things they care about by improving your site/app performance. Chances are you may gain an internal champion to help you get the tools/technology you've been longing for once you do.

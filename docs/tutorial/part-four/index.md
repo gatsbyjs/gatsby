@@ -63,8 +63,8 @@ See the [Using Gatsby without GraphQL](/docs/using-gatsby-without-graphql/) guid
 
 If you're building a small site, one efficient way to build it is to pull in unstructured data as outlined in this guide, using `createPages` API, and then if the site becomes more complex later on, you move on to building more complex sites, or you'd like to transform your data, follow these steps:
 
-1.  Check out the [Plugin Library](/plugins/) to see if the source plugins and/or transformer plugins you'd like to use already exist
-2.  If they don't exist, read the [Plugin Authoring](/docs/creating-plugins/) guide and consider building your own!
+1. Check out the [Plugin Library](/plugins/) to see if the source plugins and/or transformer plugins you'd like to use already exist
+2. If they don't exist, read the [Plugin Authoring](/docs/creating-plugins/) guide and consider building your own!
 
 ### How Gatsby's data layer uses GraphQL to pull data into components
 
@@ -210,7 +210,7 @@ Now you can start querying 😋
 
 ## Your first GraphQL query
 
-When building sites, you'll probably want to reuse common bits of data -- like the _site title_ for example. Look at the `/about/` page. You'll notice that you have the site title (`Pandas Eating Lots`) in both the layout component (the site header) as well as in the `<h1 />` of the `about.js` page (the page header).
+When building sites, you'll probably want to reuse common bits of data ― like the _site title_ for example. Look at the `/about/` page. You'll notice that you have the site title (`Pandas Eating Lots`) in both the layout component (the site header) as well as in the `<h1 />` of the `about.js` page (the page header).
 
 But what if you want to change the site title in the future? You'd have to search for the title across all your components and edit each instance. This is both cumbersome and error-prone, especially for larger, more complex sites. Instead, you can store the title in one location and reference that location from other files; change the title in a single place, and Gatsby will _pull_ your updated title into files that reference it.
 
@@ -288,7 +288,7 @@ The basic GraphQL query that retrieves the `title` in your `about.js` changes ab
 
 > 💡 In [part five](/tutorial/part-five/#introducing-graphiql), you'll meet a tool that lets us interactively explore the data available through GraphQL, and help formulate queries like the one above.
 
-Page queries live outside of the component definition -- by convention at the end of a page component file -- and are only available on page components.
+Page queries live outside of the component definition ― by convention at the end of a page component file ― and are only available on page components.
 
 ### Use a StaticQuery
 

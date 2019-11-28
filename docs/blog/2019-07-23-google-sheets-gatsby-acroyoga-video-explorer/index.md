@@ -418,9 +418,9 @@ This change immediately noticeable on my clunky old Android mobile device. This 
 
 Thanks the power of Gatsby, React, Material-UI, and Google Sheets, I'm now able to have a fast-loading video explorer site with intuitive linking and filtering. I can now go through and tag my Acroyoga videos collection, put it into this Google Sheet, and make it easier for me (and soon, others) to find the right video to try next. Of course, this is not the end of the road. Here's some ideas of how I could make this site even better:
 
--   Setup a webhook so that Netlify automatically rebuilds the site once I change something in Google Sheets
--   Create a way that users can save their favorites in localStorage or possibly, in something like Firebase
--   On the individual videos page, link out to similar videos
--   Tell more about the instructors on their video pages
+- Setup a webhook so that Netlify automatically rebuilds the site once I change something in Google Sheets
+- Create a way that users can save their favorites in localStorage or possibly, in something like Firebase
+- On the individual videos page, link out to similar videos
+- Tell more about the instructors on their video pages
 
 Thanks for reading this tutorial. If you get stuck on something, please feel free to reach out on Twitter @kyleapennell.

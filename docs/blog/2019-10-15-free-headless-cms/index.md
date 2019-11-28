@@ -14,11 +14,11 @@ How do you know which headless CMS is right for your site? In this post, we'll w
 
 ## Defining our headless CMS requirements
 
-1.  This headless CMS has to be free to use, and free to host.
+1. This headless CMS has to be free to use, and free to host.
 
-2.  This headless CMS has to be robust enough to grow with the site over time.
+2. This headless CMS has to be robust enough to grow with the site over time.
 
-3.  This headless CMS has to work with with front-end frameworks like Gatsby.
+3. This headless CMS has to work with with front-end frameworks like Gatsby.
 
 The difficulty with these must-haves is that there are no _truly free_ options. There are open source projects that provide code for free, but you have to host it somewhere. Then, there are hosted headless CMS's with generous free tiers. But most of them have prohibitive pricing once your project grows.
 
@@ -34,13 +34,13 @@ With a headless CMS architecture, the end-of-life for your website is dramatical
 
 ## Option #1. Headless WordPress
 
-Every CMS search, headless or not, has to start with the question, "Why not WordPress?". And for good reason - WordPress powers over 33% of the popular web, and has a dominant share of the content management software market.
+Every CMS search, headless or not, has to start with the question, "Why not WordPress?". And for good reason ― WordPress powers over 33% of the popular web, and has a dominant share of the content management software market.
 
 Every writer or marketer who works on the Internet is familiar with WordPress, so onboarding is rarely an issue. And there's a cottage industry of developer resources and documentation for WordPress available, so getting up to speed on the development side is relatively easy.
 
 ### How "free" is it?
 
-Cheap hosting is easy to find - providers like Bluehost and Amazon Lightsail offer WordPress hosting for about \\$4 dollars a month. Other popular hosts like GoDaddy can get you going for less than \\$10 dollars a month.
+Cheap hosting is easy to find ― providers like Bluehost and Amazon Lightsail offer WordPress hosting for about \\$4 dollars a month. Other popular hosts like GoDaddy can get you going for less than \\$10 dollars a month.
 
 If your website needed all-in-one WordPress, then these cheap, shared hosting packages wouldn't be enough to handle a website that expects any sort of traffic. However, you're just using headless WordPress, and all that you ask from the software is to organize your content, and send it to a front-end framework like Gatsby.
 
@@ -56,7 +56,7 @@ Because Netlify CMS is tied to third party authentication and git services, it's
 
 ## Option #3. Headless Ghost
 
-Ghost is a Node-based, robust CMS that recently [added features](https://ghost.org/blog/jamstack/) to make the software easier to use within a headless CMS architecture. Ghost is used by Apple, Sky News, DuckDuckGo, Mozilla, Square, and CloudFlare - so you'll be in good company if you choose it.
+Ghost is a Node-based, robust CMS that recently [added features](https://ghost.org/blog/jamstack/) to make the software easier to use within a headless CMS architecture. Ghost is used by Apple, Sky News, DuckDuckGo, Mozilla, Square, and CloudFlare ― so you'll be in good company if you choose it.
 
 ### How "free" is it?
 

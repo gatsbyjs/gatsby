@@ -12,7 +12,7 @@ import React from "react"
 export default () => <div>Hello world!</div>
 ```
 
-This Gatsby page is a React component. When you want to create a form, you need to store the state of the form - what the user has entered. Convert your function (stateless) component to a class (stateful) component.
+This Gatsby page is a React component. When you want to create a form, you need to store the state of the form ― what the user has entered. Convert your function (stateless) component to a class (stateful) component.
 
 ```jsx:title=src/pages/index.js
 import React from "react"

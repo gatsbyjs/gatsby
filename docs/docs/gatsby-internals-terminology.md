@@ -6,9 +6,9 @@ title: Terminology
 >
 > Outdated areas are:
 >
-> -   `data.json` doesn't exist anymore
-> -   Add `page-data.json`
-> -   Add `match-paths.json`
+> - `data.json` doesn't exist anymore
+> - Add `page-data.json`
+> - Add `match-paths.json`
 >
 > You can help by making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228).
 
@@ -20,14 +20,14 @@ Throughout the Gatsby code, you'll see the below object fields and variables men
 
 created by calls to [createPage](/docs/actions/#createPage) (see [Page Creation](/docs/page-creation)).
 
--   [path](#path)
--   [matchPath](#matchpath)
--   [jsonName](#jsonname)
--   [component](#component)
--   [componentChunkName](#componentchunkname)
--   [internalComponentName](#internalcomponentname) (unused)
--   [context](#pagecontext)
--   updatedAt
+- [path](#path)
+- [matchPath](#matchpath)
+- [jsonName](#jsonname)
+- [component](#component)
+- [componentChunkName](#componentchunkname)
+- [internalComponentName](#internalcomponentname) (unused)
+- [context](#pagecontext)
+- updatedAt
 
 The above fields are explained below
 

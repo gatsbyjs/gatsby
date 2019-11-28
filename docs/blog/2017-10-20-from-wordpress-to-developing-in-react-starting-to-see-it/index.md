@@ -27,7 +27,7 @@ as a test for doing projects built entirely in React.
 ## Letting Go
 
 The first thing I had to do while investigating React was to let go of some
-preconceived ideas I had - that JSX is just plain weird, that JSS (JavaScript
+preconceived ideas I had ― that JSX is just plain weird, that JSS (JavaScript
 Stylesheets) was an unnecessary abstraction. So I tried not to be bothered by
 the templating weirdness too much and embrace the differences. My classes soon
 became `classNames`s, my `<a>` tags became `<Links>`, and I quickly saw what

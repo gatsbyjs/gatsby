@@ -15,9 +15,9 @@ When Amazon announced in September that it was looking to build a new headquarte
 
 As a technology hub, the city wanted to put their best digital foot forward, so they turned to the Boston.gov team to build a website as the city's application — [amazon.boston.gov](http://amazon.boston.gov) .
 
-With a compressed application process, the Boston.gov team had a week and a half to build two websites -- a public-facing site, as well as a password-protected site with additional information.
+With a compressed application process, the Boston.gov team had a week and a half to build two websites ― a public-facing site, as well as a password-protected site with additional information.
 
-They needed tools that let them get off the ground immediately, iterate quickly, and build something beautiful -- so they turned to Gatsby.
+They needed tools that let them get off the ground immediately, iterate quickly, and build something beautiful ― so they turned to Gatsby.
 
 ![Amazon Boston homepage](./amazon-boston-3.jpg "Mayor Martin J. Walsh")
 

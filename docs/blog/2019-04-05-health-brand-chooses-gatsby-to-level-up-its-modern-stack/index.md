@@ -19,7 +19,7 @@ We reached out to their Director of Engineering, Daniel Archer, to share "Why Ga
 
 ## The Gatsby answer: Better code, SEO, page load times, and integration
 
-Ritual chose a rebuild with Gatsby due to the restrictions they were running into with liquid templates and UI-based content changes. While static and fast, the issues were making it more difficult to bring code up to their modern engineering standards. They also needed to enable other teams to quickly and easily change copy, imagery and new concepts. Both of these led them to look for a new solution - Gatsby.
+Ritual chose a rebuild with Gatsby due to the restrictions they were running into with liquid templates and UI-based content changes. While static and fast, the issues were making it more difficult to bring code up to their modern engineering standards. They also needed to enable other teams to quickly and easily change copy, imagery and new concepts. Both of these led them to look for a new solution ― Gatsby.
 
 ![ritual product](./ritual_product.png)
 

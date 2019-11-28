@@ -8,7 +8,7 @@ Create React App is an officially supported [CLI](/docs/glossary/#cli) tool from
 
 Gatsby is similar in that it can also help you set up an application and removes much of the configuration headache. However, Gatsby offers some additional advantages like performance optimizations with static rendering and a thriving ecosystem of plugins. Gatsby and Create React App even share nearly identical webpack and Babel configurations which makes porting less cumbersome. React's own [docs](https://reactjs.org/) run on Gatsby, and React even [recommends Gatsby](https://github.com/facebook/create-react-app#popular-alternatives) to users of Create React App!
 
-* * *
+---
 
 ## What do you get by changing to Gatsby?
 
@@ -18,8 +18,8 @@ _Both_ Create React App and Gatsby use React and allow users to build apps more 
 
 Gatsby enables some useful performance optimizations for you, by default. Route-based code splitting and pre-loading of the _next_ resources make your application lightning fast, without any additional effort! Further still, the following optimizations and techniques are also available to you:
 
--   `gatsby-link` uses an [intersection observer to preload linked pages](/blog/2019-04-02-behind-the-scenes-what-makes-gatsby-great/#intersectionobserver) when they appear in the viewport, making them feel like they load _instantly_
--   `gatsby-image` will create optimized versions of your images in different sizes, loading a smaller, optimized version of an image and replacing it with a higher resolution version when loading has finished. It also uses an intersection observer to cheaply lazy load images. Check out [the demo](https://using-gatsby-image.gatsbyjs.org/) to see for yourself
+- `gatsby-link` uses an [intersection observer to preload linked pages](/blog/2019-04-02-behind-the-scenes-what-makes-gatsby-great/#intersectionobserver) when they appear in the viewport, making them feel like they load _instantly_
+- `gatsby-image` will create optimized versions of your images in different sizes, loading a smaller, optimized version of an image and replacing it with a higher resolution version when loading has finished. It also uses an intersection observer to cheaply lazy load images. Check out [the demo](https://using-gatsby-image.gatsbyjs.org/) to see for yourself
 
 These features and more work together to make your Gatsby site fast by default. If you'd like a deep dive on these and other performance optimizations, check out [this blog post](/blog/2019-04-02-behind-the-scenes-what-makes-gatsby-great/)
 
@@ -35,7 +35,7 @@ This data layer simplifies the process of pulling data from different sources an
 
 > **Note**: GraphQL isn't required for managing data in a Gatsby app. Feel free to look over the guide on [using Gatsby without GraphQL](/docs/using-gatsby-without-graphql/) as well
 
-* * *
+---
 
 ## What changes need to be made?
 
@@ -51,9 +51,9 @@ npm install --save gatsby
 
 After installation, the key things that need to change are:
 
-1.  ensuring any calls to browser-based APIs still work (if there are any)
+1. ensuring any calls to browser-based APIs still work (if there are any)
 
-2.  converting routes into pages in the `/pages` directory
+2. converting routes into pages in the `/pages` directory
 
 The following sections explain the above steps as well as other changes that you might need to make depending on the complexity of your app. A default Create React App project is able to run with just the above steps.
 
@@ -105,7 +105,7 @@ The structure of a [Gatsby project](/docs/gatsby-project-structure/) adds some a
 
 An important difference to note is the `/pages` folder in the Gatsby project structure where components will automatically be turned into static pages by Gatsby. This is discussed more in the [routing](#routing) section below.
 
-The `src/pages/index.js` file in Gatsby is a little different from the `src/index.js` file in Create React App where the root React element mounts, because it is a sibling to other pages in the app -- rather than a parent like Create React App. This means in order to share state or wrap multiple pages you should use the [wrapRootElement](/docs/browser-apis/#wrapRootElement) Gatsby API.
+The `src/pages/index.js` file in Gatsby is a little different from the `src/index.js` file in Create React App where the root React element mounts, because it is a sibling to other pages in the app ― rather than a parent like Create React App. This means in order to share state or wrap multiple pages you should use the [wrapRootElement](/docs/browser-apis/#wrapRootElement) Gatsby API.
 
 ### Server-side rendering and browser APIs
 
@@ -119,15 +119,15 @@ The `gatsby build` command also won't be able to use browser APIs, so some code 
 
 Some common globals that would need to be protected are:
 
--   `window`
--   `localStorage`
--   `navigator`
+- `window`
+- `localStorage`
+- `navigator`
 
 Additionally, some packages that depend on globals existing (e.g. `react-router-dom`) may need to be [patched](/docs/debugging-html-builds/#fixing-third-party-modules) or migrated to other packages.
 
 These are only a few examples, though all can be fixed in one of two ways:
 
-1.  wrapping the code in an `if` statement to check if whatever you are referencing is defined so builds won't try to reference something undefined. Then the browser will be able to deal with it fine when the condition matches:
+1. wrapping the code in an `if` statement to check if whatever you are referencing is defined so builds won't try to reference something undefined. Then the browser will be able to deal with it fine when the condition matches:
 
 ```jsx
 if (typeof window !== `undefined`) {
@@ -135,7 +135,7 @@ if (typeof window !== `undefined`) {
 }
 ```
 
-2.  moving references to globals into a `componentDidMount` or `useEffect` hook:
+2. moving references to globals into a `componentDidMount` or `useEffect` hook:
 
 ```jsx
 import React from "react"

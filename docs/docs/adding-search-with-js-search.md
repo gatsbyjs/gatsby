@@ -242,18 +242,18 @@ export default Search
 
 Breaking down the code into smaller parts:
 
-1.  When the component is mounted, the `componentDidMount()` lifecycle method is triggered and the data will be fetched.
-2.  If no errors occur, the data received is added to the state and the `rebuildIndex()` function is invoked.
-3.  The search engine is then created and configured with the default options.
-4.  The data is then indexed using js-search.
-5.  When the contents of the input changes, js-search starts the search process based on the `input`'s value and returns the search results if any, which is then presented to the user via the `table` element.
+1. When the component is mounted, the `componentDidMount()` lifecycle method is triggered and the data will be fetched.
+2. If no errors occur, the data received is added to the state and the `rebuildIndex()` function is invoked.
+3. The search engine is then created and configured with the default options.
+4. The data is then indexed using js-search.
+5. When the contents of the input changes, js-search starts the search process based on the `input`'s value and returns the search results if any, which is then presented to the user via the `table` element.
 
 ### Joining all the pieces
 
 In order to get it working in your site, you would only need to import the newly created component to a page.
 As you can see [in the example site](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-js-search/src/pages/index.js).
 
-Run `gatsby develop` and if all went well, open your browser of choice and enter the url `http://localhost:8000` - you'll have a fully functional search at your disposal.
+Run `gatsby develop` and if all went well, open your browser of choice and enter the url `http://localhost:8000` ― you'll have a fully functional search at your disposal.
 
 ## JS-Search with a big dataset
 
@@ -559,11 +559,11 @@ export default ClientSearch
 
 Breaking down the code into smaller parts:
 
-1.  When the component is mounted, the `getDerivedStateFromProps()` lifecycle method is invoked and it will evaluate the state and if necessary update it.
-2.  Then the `componentDidMount()` lifecycle method will be triggered and the `rebuildIndex()` function is invoked.
-3.  The search engine is then created and configured with the options defined.
-4.  The data is then indexed using js-search.
-5.  When the contents of the input changes, js-search starts the search process based on the `input`'s value and returns the search results if any, which is then presented to the user via the `table` element.
+1. When the component is mounted, the `getDerivedStateFromProps()` lifecycle method is invoked and it will evaluate the state and if necessary update it.
+2. Then the `componentDidMount()` lifecycle method will be triggered and the `rebuildIndex()` function is invoked.
+3. The search engine is then created and configured with the options defined.
+4. The data is then indexed using js-search.
+5. When the contents of the input changes, js-search starts the search process based on the `input`'s value and returns the search results if any, which is then presented to the user via the `table` element.
 
 ### Summarizing
 

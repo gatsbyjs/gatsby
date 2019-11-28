@@ -43,6 +43,6 @@ Read more [about the GraphiQL Explorer](/blog/2019-06-03-integrating-graphiql-ex
 
 ## Other resources
 
--   See [Tutorial Part 5: Source Plugins](/tutorial/part-five/) for a more complete example of using GraphiQL
--   See the [README for GraphiQL](https://github.com/graphql/graphiql)
--   See [Using GraphQL Playground](/docs/using-graphql-playground/) for another example of a GraphQL IDE
+- See [Tutorial Part 5: Source Plugins](/tutorial/part-five/) for a more complete example of using GraphiQL
+- See the [README for GraphiQL](https://github.com/graphql/graphiql)
+- See [Using GraphQL Playground](/docs/using-graphql-playground/) for another example of a GraphQL IDE

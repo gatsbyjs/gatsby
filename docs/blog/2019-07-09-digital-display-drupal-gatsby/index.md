@@ -43,10 +43,10 @@ In this build, Netlify deploys Gatsby. It functions to expose an API and rebuild
 
 In this [video presentation](https://www.youtube.com/watch?time_continue=3&v=QiocnDGnKfs) from Gatsby Days Bay Area, Mediacurrent developer Ben Robertson explains the advantages Sandy Springs has realized by leveraging Gatsby:
 
--   **Stable**: With full control over the markup, the site build is fast.
--   **Scalable**: Gatsby makes it easier for the client to add additional sites in the future.
--   **Speedy**: Gatsby bakes in a lot of performance optimization for the front end, ultimately delivering a faster site.
--   **Hosting**: The Drupal site is never used by a non-editorial user, so fewer hosting resources are needed.
+- **Stable**: With full control over the markup, the site build is fast.
+- **Scalable**: Gatsby makes it easier for the client to add additional sites in the future.
+- **Speedy**: Gatsby bakes in a lot of performance optimization for the front end, ultimately delivering a faster site.
+- **Hosting**: The Drupal site is never used by a non-editorial user, so fewer hosting resources are needed.
 
 ![Drupal-powered digital display kiosk promotes a theatre event](./images/CitySprings3.jpg "City Spring's digital signage kiosk")
 

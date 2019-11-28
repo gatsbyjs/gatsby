@@ -18,7 +18,7 @@ Gatsby's rich data plugin ecosystem lets you build sites with the data you want 
   <figcaption>Your data could come from anywhere</figcaption>
 </figure>
 
-Most examples in the Gatsby docs and on the web at large focus on leveraging source plugins to manage your data in Gatsby sites. And rightly so! Gatsby's GraphQL data layer is powerful and extremely effective; it solves the "integration problem" of decoupled CMSs -- it's the glue between presentation layer and wherever your data is sourced from.
+Most examples in the Gatsby docs and on the web at large focus on leveraging source plugins to manage your data in Gatsby sites. And rightly so! Gatsby's GraphQL data layer is powerful and extremely effective; it solves the "integration problem" of decoupled CMSs ― it's the glue between presentation layer and wherever your data is sourced from.
 
 <figure>
   <img alt="" height="400" src="./integration_layer.png" />
@@ -40,8 +40,8 @@ We're calling this the **"content mesh"** — the infrastructure layer for a dec
 
 We'll take a look at a (very serious) example of how this works. In the example, we'll:
 
-1.  Load data from the [PokéAPI's](https://pokeapi.co/) REST endpoints
-2.  Create pages (and nested pages) from this data
+1. Load data from the [PokéAPI's](https://pokeapi.co/) REST endpoints
+2. Create pages (and nested pages) from this data
 
 That's it!
 
@@ -122,9 +122,9 @@ exports.createPages = async ({ actions: { createPage } }) => {
 
 The [`createPage` action](/docs/actions/#createPage) is passed an object containing:
 
--   `path`: This is the relative url you'd like your new page will be available at.
--   `component`: This is the absolute path to the React component you've defined for this page.
--   `context`: Context data for this page. Available either as props to the component (`this.props.pageContext`) or as `graphql` arguments.
+- `path`: This is the relative url you'd like your new page will be available at.
+- `component`: This is the absolute path to the React component you've defined for this page.
+- `context`: Context data for this page. Available either as props to the component (`this.props.pageContext`) or as `graphql` arguments.
 
 In our example, we're accessing the context as [props to the component](https://github.com/jlengstorf/gatsby-with-unstructured-data/blob/0a91d87b9d4d24a0e6b04b33cc271e054b7467b6/src/templates/all-pokemon.js#L4). This allows us to completely circumvent Gatsby's data layer; it's just props.
 
@@ -219,37 +219,37 @@ For each type of page, we are invoking the `createPage` action, and supplying it
 
 ## The pros of using unstructured data
 
--   When prototyping, or when new to Gatsby, this approach may feel more familiar, comfortable, and faster
--   There's no intermediate step: you fetch some data, then build pages with it
+- When prototyping, or when new to Gatsby, this approach may feel more familiar, comfortable, and faster
+- There's no intermediate step: you fetch some data, then build pages with it
 
 ## The tradeoffs of foregoing Gatsby's data layer
 
 Using Gatsby's data layer provides the following benefits:
 
--   Enables you to declaratively specify what data a page component needs, alongside the page component
--   Eliminates frontend data boilerplate — no need to worry about requesting & waiting for data. Just ask for the data you need with a GraphQL query and it'll show up when you need it
--   Pushes frontend complexity into queries — many data transformations can be done at build-time within your GraphQL queries (e.g. Markdown -> HTML, images -> responsive images, etc)
--   It's the perfect data querying language for the often complex/nested data dependencies of modern applications
--   Improves performance by removing data bloat — GraphQL enables you to select only the data you need, not whatever an API returns
--   Enables you to take advantage of hot reloading when developing; For example, in this post's example "Pokémon" site, if you wanted to add a "see other pokémon" section to the pokémon detail view, you would need to change your `gatsby-node.js` to pass all pokémon to to the page, and restart the dev server. In contrast, when using queries, you can add a query and it will hot reload.
+- Enables you to declaratively specify what data a page component needs, alongside the page component
+- Eliminates frontend data boilerplate — no need to worry about requesting & waiting for data. Just ask for the data you need with a GraphQL query and it'll show up when you need it
+- Pushes frontend complexity into queries — many data transformations can be done at build-time within your GraphQL queries (e.g. Markdown -> HTML, images -> responsive images, etc)
+- It's the perfect data querying language for the often complex/nested data dependencies of modern applications
+- Improves performance by removing data bloat — GraphQL enables you to select only the data you need, not whatever an API returns
+- Enables you to take advantage of hot reloading when developing; For example, in this post's example "Pokémon" site, if you wanted to add a "see other pokémon" section to the pokémon detail view, you would need to change your `gatsby-node.js` to pass all pokémon to to the page, and restart the dev server. In contrast, when using queries, you can add a query and it will hot reload.
 
 > Learn more about [GraphQL in Gatsby](/docs/querying-with-graphql/).
 
 Working outside of the data layer also means foregoing the optimizations provided by transformer plugins, like:
 
--   [`gatsby-image`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image) (speedy optimized images),
--   [`gatsby-transformer-sharp`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp) (provides queryable fields for processing your images in a variety of ways including resizing, cropping, and creating responsive images),
--   ... the whole Gatsby ecosystem of official and community-created [transformer plugins](/plugins/?=transformer).
+- [`gatsby-image`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image) (speedy optimized images),
+- [`gatsby-transformer-sharp`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp) (provides queryable fields for processing your images in a variety of ways including resizing, cropping, and creating responsive images),
+- ... the whole Gatsby ecosystem of official and community-created [transformer plugins](/plugins/?=transformer).
 
 Another difficulty added when working with unstructured data is that your data fetching code becomes increasingly hairy when you source directly from multiple locations.
 
 ## Links potentially of interest
 
--   GitHub issue: ["Choosing not to use the GraphQL feature of Gatsby – a bad idea?"](https://github.com/gatsbyjs/gatsby/issues/4994)
--   Kyle Mathews' reasoning for [going with GraphQL](https://github.com/gatsbyjs/gatsby/issues/4994#issuecomment-382110077).
--   The issue [introducing 1.0 GraphQL data layer](https://github.com/gatsbyjs/gatsby/issues/420).
--   Gatsby docs on [using Gatsby without GraphQL](/docs/using-gatsby-without-graphql)
+- GitHub issue: ["Choosing not to use the GraphQL feature of Gatsby – a bad idea?"](https://github.com/gatsbyjs/gatsby/issues/4994)
+- Kyle Mathews' reasoning for [going with GraphQL](https://github.com/gatsbyjs/gatsby/issues/4994#issuecomment-382110077).
+- The issue [introducing 1.0 GraphQL data layer](https://github.com/gatsbyjs/gatsby/issues/420).
+- Gatsby docs on [using Gatsby without GraphQL](/docs/using-gatsby-without-graphql)
 
 ## Thanks
 
--   Thank you to [Tanner Linsley](https://github.com/tannerlinsley) of [`react-static`](https://github.com/nozzle/react-static), who helped us realize that directly querying APIs and passing them into pages is a great way to build smaller sites, and came up with the term "unstructured data".
+- Thank you to [Tanner Linsley](https://github.com/tannerlinsley) of [`react-static`](https://github.com/nozzle/react-static), who helped us realize that directly querying APIs and passing them into pages is a great way to build smaller sites, and came up with the term "unstructured data".

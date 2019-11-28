@@ -11,6 +11,6 @@ This means that the configuration and functionality isn't directly written into 
 
 \##/docs/themes/building-themes.md Other resources
 
--   [Gatsby blog posts on themes](/blog/tags/themes)
--   [Jason Lengstorf and Brent Jackson livestream building a theme](https://www.youtube.com/watch?v=6Z4p-qjnKCQ)
--   [Jason Lengstorf and Emma Wedekind livestream building a theme](https://www.youtube.com/watch?v=W2uTfay3doo)
+- [Gatsby blog posts on themes](/blog/tags/themes)
+- [Jason Lengstorf and Brent Jackson livestream building a theme](https://www.youtube.com/watch?v=6Z4p-qjnKCQ)
+- [Jason Lengstorf and Emma Wedekind livestream building a theme](https://www.youtube.com/watch?v=W2uTfay3doo)

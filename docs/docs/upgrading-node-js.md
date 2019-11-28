@@ -27,7 +27,7 @@ Node.js version 6 reached _End-of-life_ status on 30th April 2019. Many of Gatsb
 
 Generally it's recommend to use [the Node version whose status is _Active LTS_](https://github.com/nodejs/Release#nodejs-release-working-group) (Node 10 at time of writing). However, in this document you'll learn how to update from Node 6 to Node 8 as this is likely to be the least disruptive upgrade for you.
 
-> What about Node.js 7? Stable versions of Node.js are evenly numbered releases - Node.js 6, Node.js 8, Node.js 10 etc. Only use uneven release numbers if you'd like to try cutting-edge and experimental features.
+> What about Node.js 7? Stable versions of Node.js are evenly numbered releases ― Node.js 6, Node.js 8, Node.js 10 etc. Only use uneven release numbers if you'd like to try cutting-edge and experimental features.
 
 There are multiple ways to update your version of Node.js depending on how you originally installed it. Read on to find the best approach for you.
 

@@ -30,23 +30,23 @@ Gatsby [builds](/docs/glossary#build) [static](/docs/glossary#static) HTML pages
 
 These are some common accessibility barriers when it comes to client-side routing:
 
--   Without page refreshes, screen reader users may not be informed that the page has changed.
--   Without a page refresh or focus management, a user's keyboard focus point may be kept in the same place as where they clicked, which isn't intuitive.
-    -   In layouts where the page changes partially to include a deep-linked modal dialog or other view layer, a user's focus point could be left in an entirely wrong spot on the page.
--   Without visible focus outlines, sighted keyboard, switch, and voice dictation users can't see their focus point on the screen when views change with focus management.
+- Without page refreshes, screen reader users may not be informed that the page has changed.
+- Without a page refresh or focus management, a user's keyboard focus point may be kept in the same place as where they clicked, which isn't intuitive.
+    - In layouts where the page changes partially to include a deep-linked modal dialog or other view layer, a user's focus point could be left in an entirely wrong spot on the page.
+- Without visible focus outlines, sighted keyboard, switch, and voice dictation users can't see their focus point on the screen when views change with focus management.
 
 Some of the commonly recommended solutions include (references at the end of this post):
 
--   Dynamically set focus to an HTML wrapper element on page change, to both move focus to the new content and make an announcement in assistive technology.
-    -   This pattern often uses `tabindex="-1"` on a DIV or other block-level element to allow focus to be placed on an otherwise non-interactive element.
--   Dynamically set focus to a h1-h6 heading element instead of a wrapper to move focus to new content and make a shorter screen reader announcement.
-    -   This also typically requires `tabindex="-1"` to focus the heading with JavaScript in a cross-browser way.
--   Dynamically set focus to an interactive element like a button to put keyboard users on an operable button/UI control in the correct part of the app and announce it to screen reader users.
-    -   The name of the button matters a lot here.
--   Leave focus where it is and make an [ARIA Live Region](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Live_Regions) announcement instead.
--   Reset focus to the top of the application (i.e. a parent wrapper element) to mimic a traditional browser refresh and announce new content in assistive technology.
--   Turn on focus outlines for keyboard and screen reader users while suppressing them for the mouse using [CSS :focus-visible and polyfill](https://github.com/WICG/focus-visible) or the [What Input](https://github.com/ten1seven/what-input) library.
--   Any combination of the above
+- Dynamically set focus to an HTML wrapper element on page change, to both move focus to the new content and make an announcement in assistive technology.
+    - This pattern often uses `tabindex="-1"` on a DIV or other block-level element to allow focus to be placed on an otherwise non-interactive element.
+- Dynamically set focus to a h1-h6 heading element instead of a wrapper to move focus to new content and make a shorter screen reader announcement.
+    - This also typically requires `tabindex="-1"` to focus the heading with JavaScript in a cross-browser way.
+- Dynamically set focus to an interactive element like a button to put keyboard users on an operable button/UI control in the correct part of the app and announce it to screen reader users.
+    - The name of the button matters a lot here.
+- Leave focus where it is and make an [ARIA Live Region](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Live_Regions) announcement instead.
+- Reset focus to the top of the application (i.e. a parent wrapper element) to mimic a traditional browser refresh and announce new content in assistive technology.
+- Turn on focus outlines for keyboard and screen reader users while suppressing them for the mouse using [CSS :focus-visible and polyfill](https://github.com/WICG/focus-visible) or the [What Input](https://github.com/ten1seven/what-input) library.
+- Any combination of the above
 
 In Gatsby–which uses React for rendering–we're currently setting focus to an element wrapping the entire application with a [custom implementation of @reach/router](/blog/2018-09-27-reach-router/). But similar to some of the [Reach demos](https://reach.tech/router), page content isn't announced consistently in Safari and Voiceover or NVDA and Firefox–two critical combinations for users of assistive technology. We're actively working to improve this automatic accessibility support as we explore more component- and research-driven solutions.
 
@@ -66,11 +66,11 @@ Meetings are recommended for testing demos of a product with assistive technolog
 
 In our meetings, we tested with:
 
--   Sam using NVDA and Chrome on Windows 10
--   Ka using JAWS and Firefox on Windows
--   Yvone using screen magnification in Chrome on a Samsung Note 9, and ZoomText for Chrome on Mac
--   Vu with Dragon NaturallySpeaking and the keyboard in Chrome
--   Carolyn with switch access
+- Sam using NVDA and Chrome on Windows 10
+- Ka using JAWS and Firefox on Windows
+- Yvone using screen magnification in Chrome on a Samsung Note 9, and ZoomText for Chrome on Mac
+- Vu with Dragon NaturallySpeaking and the keyboard in Chrome
+- Carolyn with switch access
 
 In each of the sessions, we learned about the tester's browsing method and in almost all cases was able to watch them browse through the prototypes. Asking a question to expand on a given detail provided lots of great insight (i.e. "tell me more about what makes that focus indicator confusing to you"). It helped to have the desired outcomes for the meetings defined and published ahead of time, so the testers knew what to keep in mind when testing and what questions they should try to answer.
 
@@ -80,11 +80,11 @@ We wanted to know the best approach for guiding users with disabilities through 
 
 The [prototypes for these tests](https://marcysutton.com/prototype-testing-accessible-clientside-routing/#What-are-Prototypes) covered some of the common techniques for enhancing the page loading experience for users with disabilities, each centered around the mechanics of loading new content. These techniques included:
 
--   [Example 1](https://marcy.codes/prototypes/routing/example-1.html): No focus change, with a Live Region announcement for screen readers
--   [Example 2](https://marcy.codes/prototypes/routing/example-2.html): Focus reset to application wrapper element, with a Live Region announcement for screen readers
--   [Example 3](https://marcy.codes/prototypes/routing/example-3.html): Focus changed to a heading element in the newly changed content
--   [Example 4](https://marcy.codes/prototypes/routing/example-4.html): Focus changed to an element wrapping the newly changed content
--   [Example 5](https://marcy.codes/prototypes/routing/example-5.html): Focus changed to a wrapper element at 100% width, rather than side-by-side (added during testing session #3 on zooming/magnification)
+- [Example 1](https://marcy.codes/prototypes/routing/example-1.html): No focus change, with a Live Region announcement for screen readers
+- [Example 2](https://marcy.codes/prototypes/routing/example-2.html): Focus reset to application wrapper element, with a Live Region announcement for screen readers
+- [Example 3](https://marcy.codes/prototypes/routing/example-3.html): Focus changed to a heading element in the newly changed content
+- [Example 4](https://marcy.codes/prototypes/routing/example-4.html): Focus changed to an element wrapping the newly changed content
+- [Example 5](https://marcy.codes/prototypes/routing/example-5.html): Focus changed to a wrapper element at 100% width, rather than side-by-side (added during testing session #3 on zooming/magnification)
 
 These prototypes used [Doggo Ipsum](https://doggoipsum.com/) for placeholder text, which made for some fun testing experiences. "Cuuuuuute long bois" was my personal favorite, captured in testing screenshots. :)
 
@@ -100,11 +100,11 @@ These tests were a good reminder that accessibility goes beyond support for scre
 
 A big motivation to test with screen reader users was to confirm whether the recommended focus management techniques actually worked for them. The prototypes included a few approaches specifically targeted at screen reader users, including:
 
--   Live Region announcements on view changes to inform screen reader users of changing content;
--   focus management sent to a wrapper element;
--   focus management sent to the first heading element.
+- Live Region announcements on view changes to inform screen reader users of changing content;
+- focus management sent to a wrapper element;
+- focus management sent to the first heading element.
 
-**Focusing on a wrapper element for new content worked okay** with our test subjects: they were informed of the new content and moved into the right place. It was **very subtle compared to focusing on a heading**, and better than resetting the page to the top (think Gmail - it would be a pain to have to start over every time you click on a link). In general, we found that **resetting focus to the top of the app would be very overwhelming**, especially in large applications.
+**Focusing on a wrapper element for new content worked okay** with our test subjects: they were informed of the new content and moved into the right place. It was **very subtle compared to focusing on a heading**, and better than resetting the page to the top (think Gmail ― it would be a pain to have to start over every time you click on a link). In general, we found that **resetting focus to the top of the app would be very overwhelming**, especially in large applications.
 
 **Focusing on a heading was found to be the best experience**, as it would save time and make it clear what happened. In NVDA, there was some duplicate reading of content and `<main>` was doing some extra announcements–seemed like an screen reader quirk more than a problem with the prototype.
 
@@ -167,11 +167,11 @@ The tester also mentioned that **navigating to the bottom of a screen required t
 
 The exact implementation(s) we integrate into Gatsby will likely evolve as we try things out and iterate on improvements. But the recommended approach coming out of these research sessions includes:
 
--   Rendering an interactive UI control in each view that becomes visible when the user navigates through the app by keyboard.
--   Making it function as a tab stop in a content region for keyboard users and providing a way to skip back to navigation so it is actually operable: a skip link is the most natural choice for this.
--   Making the control small in width and height (like a link or icon button) so the focus outline and content aren't cut off when zoomed way in.
--   Putting an `aria-label` or `aria-labelledby` attribute with an indication of the nearby content (like a heading), and what action the control does. E.g. "Portfolio, skip back to navigation". This would benefit from more user testing.
--   Focusing this skip link when a user completes an action that triggers a route change and updates the client-rendered view, both managing focus and notifying users of assistive technology.
+- Rendering an interactive UI control in each view that becomes visible when the user navigates through the app by keyboard.
+- Making it function as a tab stop in a content region for keyboard users and providing a way to skip back to navigation so it is actually operable: a skip link is the most natural choice for this.
+- Making the control small in width and height (like a link or icon button) so the focus outline and content aren't cut off when zoomed way in.
+- Putting an `aria-label` or `aria-labelledby` attribute with an indication of the nearby content (like a heading), and what action the control does. E.g. "Portfolio, skip back to navigation". This would benefit from more user testing.
+- Focusing this skip link when a user completes an action that triggers a route change and updates the client-rendered view, both managing focus and notifying users of assistive technology.
 
 Part of the challenge with this work is what might be ideal for one user with a disability might not be for another. These recommendations are an attempt at weaving multiple perspectives into one usable pattern, with the historical knowledge of where teams run into conflicts over accessibility in design (e.g. turning off visible focus outlines on container elements).
 
@@ -191,8 +191,8 @@ Thanks to [Fable](https://twitter.com/FableTechLabs) and your community of teste
 
 Links on accessible routing techniques in JavaScript apps
 
--   <https://www.smashingmagazine.com/2015/05/client-rendered-accessibility/>
--   <https://www.deque.com/blog/accessibility-tips-in-single-page-applications/>
--   <https://www.slideshare.net/frontenders-valtech/accessible-client-side-routing-nick-colley>
--   <https://medium.com/@robdel12/single-page-apps-routers-are-broken-255daa310cf>
--   <http://shortdiv.com/posts/client-side-a11y/>
+- <https://www.smashingmagazine.com/2015/05/client-rendered-accessibility/>
+- <https://www.deque.com/blog/accessibility-tips-in-single-page-applications/>
+- <https://www.slideshare.net/frontenders-valtech/accessible-client-side-routing-nick-colley>
+- <https://medium.com/@robdel12/single-page-apps-routers-are-broken-255daa310cf>
+- <http://shortdiv.com/posts/client-side-a11y/>

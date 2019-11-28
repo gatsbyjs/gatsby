@@ -129,8 +129,8 @@ to set up our page. `/blog${value}` is a [template
 string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals)
 that will result in:
 
--   blog-1.mdx => localhost:8000/blog/blog-1/
--   blog-2.mdx => localhost:8000/blog/blog-2/
+- blog-1.mdx => localhost:8000/blog/blog-1/
+- blog-2.mdx => localhost:8000/blog/blog-2/
 
 [`createFilePath`](https://www.gatsbyjs.org/packages/gatsby-source-filesystem/?=gatsby-source#createfilepath)
 is a function from `gatsby-source-filesystem` that translates file
@@ -219,7 +219,7 @@ API.
 
 ## Make a template for your posts
 
-You can create a file called `posts-page-layout.js` in `src/components` - this component
+You can create a file called `posts-page-layout.js` in `src/components` ― this component
 will be rendered as the template for all posts. There's a component,
 `MDXRenderer` which is used by `gatsby-plugin-mdx` that will be used to render any
 programmatically accessed MDX content.

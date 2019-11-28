@@ -6,11 +6,11 @@ Before you speak to executives about Gatsby, make sure you understand their stra
 
 Some things executives care about include:
 
--   **Brand visibility** Making sure people are learning about your company by showing up in all the right places. This can be accomplished through things like SEO (search engine optimization), buying ad space, and gaining influence through content creation and/or event participation.
--   **Customer experience** Do your customers like using your site and products? Can they find what they need? Do they have a positive impression of your company?
--   **Innovation** Creating and adopting new technology and business models, preferably ones that will have long-term success.
--   **Competitive edge** Distinguishing yourself from your competitors by delivering unique value that helps you claim a greater share of the market.
--   **Growing the business** For most executives, success means gaining clients, leads, users, purchases and awareness - getting more orders moving through that sales funnel.
+- **Brand visibility** Making sure people are learning about your company by showing up in all the right places. This can be accomplished through things like SEO (search engine optimization), buying ad space, and gaining influence through content creation and/or event participation.
+- **Customer experience** Do your customers like using your site and products? Can they find what they need? Do they have a positive impression of your company?
+- **Innovation** Creating and adopting new technology and business models, preferably ones that will have long-term success.
+- **Competitive edge** Distinguishing yourself from your competitors by delivering unique value that helps you claim a greater share of the market.
+- **Growing the business** For most executives, success means gaining clients, leads, users, purchases and awareness ― getting more orders moving through that sales funnel.
 
 ## Basic explanation
 
@@ -46,10 +46,10 @@ Sites built with Gatsby have experienced major sales and engagement benefits as 
 
 Case studies are a great way to help executives see Gatsby's potential and gain more practical insight into its benefits. Here are some case studies you might want to share:
 
--   [Youfit uses Gatsby to increase lead generation by 60%](/blog/2018-11-16-youfit-case-study/)
--   [IBM Uses Gatsby to Manage Enterprise-Level Content](/blog/2018-12-17-ibm-case-study/#big-company-big-website)
--   [Gatsby Fuels Content and Sales in Design+Code Rebuild](/blog/2019-03-15-design-code-blog-post/)
--   [Growing Housecall Pro by 973% with Gatsby](/blog/2019-05-02-growing-housecall-pro-by-973-percent/)
+- [Youfit uses Gatsby to increase lead generation by 60%](/blog/2018-11-16-youfit-case-study/)
+- [IBM Uses Gatsby to Manage Enterprise-Level Content](/blog/2018-12-17-ibm-case-study/#big-company-big-website)
+- [Gatsby Fuels Content and Sales in Design+Code Rebuild](/blog/2019-03-15-design-code-blog-post/)
+- [Growing Housecall Pro by 973% with Gatsby](/blog/2019-05-02-growing-housecall-pro-by-973-percent/)
 
 For even more examples of Gatsby sites, [check out the Showcase](/showcase/)
 

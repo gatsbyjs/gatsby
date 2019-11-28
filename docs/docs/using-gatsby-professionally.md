@@ -11,8 +11,8 @@ This section of the documentation is aimed to help you spend more time as a Gats
 
 It includes resources for how to explain Gatsby to different stakeholders, such as other developers, engineering leaders, marketers, executives and clients.
 
-It also includes resources that help your teams develop more effectively at scale -- when there are multiple developers on a project, or multiple projects in the organization.
+It also includes resources that help your teams develop more effectively at scale ― when there are multiple developers on a project, or multiple projects in the organization.
 
-Finally, it includes resources for you about how Gatsby can help you advance professionally within your career -- whatever your goals and ambitions are.
+Finally, it includes resources for you about how Gatsby can help you advance professionally within your career ― whatever your goals and ambitions are.
 
 <GuideList slug={props.slug} />

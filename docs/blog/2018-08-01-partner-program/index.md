@@ -27,11 +27,11 @@ So what's next for partners?
 
 We'll have a lot more features and benefits coming soon. Future additions to the program will include:
 
--   Lead capture form on your agency's [Site Showcase](/showcase/) page so people can get in touch with you directly
--   Live training for developers (in-person or virtual)
--   Joint case studies that are highlighted on the Gatsby blog, website, and other channels
--   Dedicated pages on [Gatsbyjs.org](https://github.com/gatsbyjs/rfcs/blob/8bb84d8a4ed495678ae76645f940a03ad562a7d1/text/0008--individual-agency-company-pages.md#agency-pages) highlighting partners & showcasing the sites they've built with Gatsby
--   Free swag! Exclusive partner swag coming soon.
+- Lead capture form on your agency's [Site Showcase](/showcase/) page so people can get in touch with you directly
+- Live training for developers (in-person or virtual)
+- Joint case studies that are highlighted on the Gatsby blog, website, and other channels
+- Dedicated pages on [Gatsbyjs.org](https://github.com/gatsbyjs/rfcs/blob/8bb84d8a4ed495678ae76645f940a03ad562a7d1/text/0008--individual-agency-company-pages.md#agency-pages) highlighting partners & showcasing the sites they've built with Gatsby
+- Free swag! Exclusive partner swag coming soon.
 
 Fill out the form below to let us know your interest in the Gatsby Partner Program!
 

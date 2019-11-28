@@ -9,11 +9,11 @@ _This is Part 4 of a series. Part 1 is_ [The Journey to a Content Mesh](/blog/20
 
 Mobile traffic now makes up over half of all site visits, and more than half of mobile site visits are abandoned if a page takes [over 3 seconds to load](https://www.thinkwithgoogle.com/data-gallery/detail/mobile-site-abandonment-three-second-load/).
 
-With the Fortune 500 spending millions of marketing dollars on marketing initiatives aimed at driving traffic to their site, the business impact of bouncing visitors is clear -- [every 100ms of latency costs 1% of sales.](https://www.digitalrealty.com/blog/the-cost-of-latency/)
+With the Fortune 500 spending millions of marketing dollars on marketing initiatives aimed at driving traffic to their site, the business impact of bouncing visitors is clear ― [every 100ms of latency costs 1% of sales.](https://www.digitalrealty.com/blog/the-cost-of-latency/)
 
-Unfortunately, in practice, great performance is surprisingly hard to achieve -- average page load times _haven't improved_ over several years of increasing connection speed.
+Unfortunately, in practice, great performance is surprisingly hard to achieve ― average page load times _haven't improved_ over several years of increasing connection speed.
 
-Why is that? Increased site complexity often distributes bottlenecks across multiple code points and teams of stakeholders. While performance checklists exist, they've ballooned to 40+ items -- making them costly and time-consuming for teams to implement.
+Why is that? Increased site complexity often distributes bottlenecks across multiple code points and teams of stakeholders. While performance checklists exist, they've ballooned to 40+ items ― making them costly and time-consuming for teams to implement.
 
 As Gatsby's co-founder Kyle Mathews likes to say (paraphrasing Tolstoy):
 
@@ -21,7 +21,7 @@ As Gatsby's co-founder Kyle Mathews likes to say (paraphrasing Tolstoy):
 All fast websites are alike, but all slow websites are slow in different ways.
 </Pullquote>
 
-Ultimately, we'll argue, performance must be solved _at the framework level_ -- that is, in the content mesh.
+Ultimately, we'll argue, performance must be solved _at the framework level_ ― that is, in the content mesh.
 
 ## The rise of smartphone usage
 
@@ -64,11 +64,11 @@ This has generally driven by increased page complexity driven by increased user 
 
 Second, the **growing complexity of websites**. Non-critical images, CSS, JS libraries, and 3rd party tracking software will often unintentionally end up on the critical path to page load:
 
--   A marketing analyst drops a `<script>` tag from a hot new vendor inside a Google Tag Manager container. This triggers a blocking network call to a pixel provider on page loads. Time To Interactive (TTI) now averages 800ms longer.
+- A marketing analyst drops a `<script>` tag from a hot new vendor inside a Google Tag Manager container. This triggers a blocking network call to a pixel provider on page loads. Time To Interactive (TTI) now averages 800ms longer.
 
--   After a team whiteboarding session, the lead designer for a popular lifestyle magazine decides to switch to a custom default site font. On Friday afternoon, a developer scans the JIRA ticket, thinks "this should be easy" and implements a two-line code change. The site now takes 20% longer to load.
+- After a team whiteboarding session, the lead designer for a popular lifestyle magazine decides to switch to a custom default site font. On Friday afternoon, a developer scans the JIRA ticket, thinks "this should be easy" and implements a two-line code change. The site now takes 20% longer to load.
 
--   The business unit of an e-commerce store needs additional inventory management tools, so they purchase a popular plugin in their CMS ecosystem that offers this functionality. What they don't know is that this plugin adds additional database calls every time a user loads a product page, delaying overall page loads by 500ms.
+- The business unit of an e-commerce store needs additional inventory management tools, so they purchase a popular plugin in their CMS ecosystem that offers this functionality. What they don't know is that this plugin adds additional database calls every time a user loads a product page, delaying overall page loads by 500ms.
 
 With website performance rarely tracked, almost never systematically, and with no performance "owner", it's easy to see how load times can balloon.
 
@@ -78,11 +78,11 @@ Like factory floors before the advent of [just-in-time manufacturing](https://en
 
 In the last 2-3 years, there's been growing attention to the crisis of mobile performance from a number of different corners:
 
--   As e-commerce grows globally, enterprises are increasingly targeting users on smartphones, often outside the fast-connection First World.
+- As e-commerce grows globally, enterprises are increasingly targeting users on smartphones, often outside the fast-connection First World.
 
--   In January 2018, Google announced that [it would use mobile page speed](https://webmasters.googleblog.com/2018/01/using-page-speed-in-mobile-search.html) as a ranking for mobile SEO. In July 2018, those changes took effect.
+- In January 2018, Google announced that [it would use mobile page speed](https://webmasters.googleblog.com/2018/01/using-page-speed-in-mobile-search.html) as a ranking for mobile SEO. In July 2018, those changes took effect.
 
--   Movements such as [Progressive Web Apps](https://developers.google.com/web/progressive-web-apps/) and the [JAMstack](https://jamstack.org/) have brought attention to site performance as a first-order goal.
+- Movements such as [Progressive Web Apps](https://developers.google.com/web/progressive-web-apps/) and the [JAMstack](https://jamstack.org/) have brought attention to site performance as a first-order goal.
 
 _Performant_ is the new _responsive_.
 
@@ -92,7 +92,7 @@ For digital agencies and enterprises, the challenge becomes: how to achieve perf
 
 There are two _types_ of performance optimizations.
 
-Teams can optimize the _payload_ -- what they're serving users. Or they can optimize _delivery_ -- how it gets to the client.
+Teams can optimize the _payload_ ― what they're serving users. Or they can optimize _delivery_ ― how it gets to the client.
 
 **Payload optimization**
 
@@ -102,13 +102,13 @@ When the amount of content and number of requests sent over the wire are minimiz
 
 **Delivery optimization**
 
-_Delivery optimizations_ involve serving files from a content delivery network (CDN) -- whether you're compiling to files or caching -- rather than letting each request hit your app server and database.
+_Delivery optimizations_ involve serving files from a content delivery network (CDN) ― whether you're compiling to files or caching ― rather than letting each request hit your app server and database.
 
 CDNs are globally available, so they'll be closer to your customer than your systems, which reduces [round-trip time](https://en.wikipedia.org/wiki/Round-trip_delay_time) (RTT). Serving files means that users get content immediately without requests waiting in queues or requiring database queries.
 
 **You may need to do both**
 
-Payload optimization and delivery optimization are complementary approaches. That's both good news -- you _can_ do both -- and bad news -- you often _need_ to do both.
+Payload optimization and delivery optimization are complementary approaches. That's both good news ― you _can_ do both ― and bad news ― you often _need_ to do both.
 
 For example, if you use a CDN to serve 3MB JavaScript bundles, your site is still going to be slow, especially on medium- and low-end mobile devices.
 
@@ -129,7 +129,7 @@ The challenge for digital agencies and enterprises is that both payload and deli
 
 For delivery optimization, one approach is to use a JAMStack solution like Hugo or Gatsby, which compile your site to static files that can be served from a global CDN, rather than scaling app servers and databases. This approach, when used for initial site construction, requires little developer time in return for large performance gains.
 
-Caching a traditional CMS website is another possibility -- though this often creates bugs (what if an item goes out of stock?), as well as confusion around the content go-live process.
+Caching a traditional CMS website is another possibility ― though this often creates bugs (what if an item goes out of stock?), as well as confusion around the content go-live process.
 
 **Payload optimization**
 
@@ -139,13 +139,13 @@ Comprehensive checklists [weigh in at around 40 items](https://www.smashingmagaz
 
 Among the many implementation challenges are:
 
--   **Time and budget**. Performance optimization happens at the end of projects, which means that even in the rare case time is allocated, it can be dropped in the rush to fix bugs and make up for inevitable schedule slippage.
+- **Time and budget**. Performance optimization happens at the end of projects, which means that even in the rare case time is allocated, it can be dropped in the rush to fix bugs and make up for inevitable schedule slippage.
 
--   **Skill mismatches**. Performance optimization is not in the skillset of many frontend developers. Simple changes by non-performance-oriented developers can easily undo days or weeks of dedicated performance work without dedicated training or stringent code review.
+- **Skill mismatches**. Performance optimization is not in the skillset of many frontend developers. Simple changes by non-performance-oriented developers can easily undo days or weeks of dedicated performance work without dedicated training or stringent code review.
 
--   **Lack of executive visibility**. Regular site performance reporting is rare, and difficult to track over time.
+- **Lack of executive visibility**. Regular site performance reporting is rare, and difficult to track over time.
 
--   **Lack of developer visibility**. While systems like Bugsnag can tie errors to specific lines of code, performance visibility is much higher level, even with detailed tools like Google Lighthouse. For non-experts, it's difficult to pinpoint performance regressions to specific code commits.
+- **Lack of developer visibility**. While systems like Bugsnag can tie errors to specific lines of code, performance visibility is much higher level, even with detailed tools like Google Lighthouse. For non-experts, it's difficult to pinpoint performance regressions to specific code commits.
 
 ## Performance should be solved at the framework level
 

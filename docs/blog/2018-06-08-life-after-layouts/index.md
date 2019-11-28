@@ -46,9 +46,9 @@ In V2, layouts are no longer automatically applied to our pages (more on _why_ t
 
 This ultimately boils down to two breaking changes and one recommendation:
 
-1.  **BREAKING CHANGE:** Components at `src/layouts/` are no longer automagically wrapped around page components.
-2.  **BREAKING CHANGE:** The `children` prop in our layout components is no longer a function (unless you explicitly provide a function).
-3.  We now recommend moving your layout components alongside the rest of your components (e.g. into `src/components/`).
+1. **BREAKING CHANGE:** Components at `src/layouts/` are no longer automagically wrapped around page components.
+2. **BREAKING CHANGE:** The `children` prop in our layout components is no longer a function (unless you explicitly provide a function).
+3. We now recommend moving your layout components alongside the rest of your components (e.g. into `src/components/`).
 
 If we upgrade our simplified app by running `yarn add gatsby react react-dom` (see [the V1 => V2 migration guide](/docs/migrating-from-v1-to-v2/) for more information on why we need to install React here), we need to upgrade our layout by moving `src/layouts/index.js` to `src/components/layout.js` and changing `children` from a function to a regular prop:
 
@@ -107,21 +107,21 @@ This change reduces the number of mysteries in your Gatsby projects, and makes d
 
 Removing layouts isn't the only improvement coming in Gatsby V2. We're really excited to introduce a lot of new and exciting features, such as:
 
--   Much faster hot reloading, which enables Ludicrous Mode
+- Much faster hot reloading, which enables Ludicrous Mode
 
-    <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Coming soon to Gatsby v2: Ludicrous mode data hot reloading ;-)<a href="https://t.co/by1PyOYXc0">https://t.co/by1PyOYXc0</a><br/><br/>(note, this gif is not sped up at all) <a href="https://t.co/hFIYMbpalN">pic.twitter.com/hFIYMbpalN</a></p>&mdash; Gatsby (@gatsbyjs) <a href="https://twitter.com/gatsbyjs/status/974507205121617920?ref_src=twsrc%5Etfw">March 16, 2018</a></blockquote>
+  <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Coming soon to Gatsby v2: Ludicrous mode data hot reloading ;-)<a href="https://t.co/by1PyOYXc0">https://t.co/by1PyOYXc0</a><br/><br/>(note, this gif is not sped up at all) <a href="https://t.co/hFIYMbpalN">pic.twitter.com/hFIYMbpalN</a></p>&mdash; Gatsby (@gatsbyjs) <a href="https://twitter.com/gatsbyjs/status/974507205121617920?ref_src=twsrc%5Etfw">March 16, 2018</a></blockquote>
 
--   We can now add GraphQL queries to any component in our app (not just page components) using [`StaticQuery`](/docs/static-query/)
+- We can now add GraphQL queries to any component in our app (not just page components) using [`StaticQuery`](/docs/static-query/)
 
--   Upgraded to the latest versions of React, Babel, Webpack, and other libraries Gatsby depends on
+- Upgraded to the latest versions of React, Babel, Webpack, and other libraries Gatsby depends on
 
--   Better support for CSS inlining and splitting, which will boost performance
+- Better support for CSS inlining and splitting, which will boost performance
 
 For a full list of what's new, check out our [V2 migration guide](/docs/migrating-from-v1-to-v2/) and [_What's New in Gatsby V2?_](/blog/2018-06-16-announcing-gatsby-v2-beta-launch/).
 
 ## What's next?
 
--   You can get started using Gatsby V2 right now by installing our V2 default starter:
+- You can get started using Gatsby V2 right now by installing our V2 default starter:
 
     ```shell
     gatsby new my-gatsby-v2-site https://github.com/gatsbyjs/gatsby-starter-default
@@ -129,6 +129,6 @@ For a full list of what's new, check out our [V2 migration guide](/docs/migratin
 
     Huge thanks to [Yuki Takemoto](https://github.com/mottox2) for upgrading the starter to V2!
 
--   You can also [see the V2 roadmap](https://github.com/gatsbyjs/gatsby/projects/2), help us squash any V2 bugs by opening [issues](https://github.com/gatsbyjs/gatsby/issues) or sending [pull requests](https://github.com/gatsbyjs/gatsby/pulls), or [follow along with our progress on Twitter](https://twitter.com/gatsbyjs).
+- You can also [see the V2 roadmap](https://github.com/gatsbyjs/gatsby/projects/2), help us squash any V2 bugs by opening [issues](https://github.com/gatsbyjs/gatsby/issues) or sending [pull requests](https://github.com/gatsbyjs/gatsby/pulls), or [follow along with our progress on Twitter](https://twitter.com/gatsbyjs).
 
 We can't wait to see what you build with this new and improved version of Gatsby!

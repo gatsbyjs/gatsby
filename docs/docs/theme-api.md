@@ -6,10 +6,10 @@ title: Themes API Reference
 
 Themes are packaged Gatsby sites shipped as plugins, so you have access to all of Gatsby's APIs for modifying default configuration settings and functionality.
 
--   [Gatsby Config](https://www.gatsbyjs.org/docs/gatsby-config/)
--   [Actions](https://www.gatsbyjs.org/docs/actions/)
--   [Node Interface](https://www.gatsbyjs.org/docs/node-interface/)
--   ... [and more](https://www.gatsbyjs.org/docs/api-specification/)
+- [Gatsby Config](https://www.gatsbyjs.org/docs/gatsby-config/)
+- [Actions](https://www.gatsbyjs.org/docs/actions/)
+- [Node Interface](https://www.gatsbyjs.org/docs/node-interface/)
+- ... [and more](https://www.gatsbyjs.org/docs/api-specification/)
 
 If you're new to Gatsby you can get started by following along with the guides for building out a site. Converting it to a theme will be straightforward later on since themes are prepackaged Gatsby sites.
 
@@ -135,5 +135,5 @@ The first example results in a final ordering of `['gatsby-theme-parent', 'gatsb
 
 Once you have the final ordering of themes you merge them together using a reduce function. [This reduce function](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/merge-gatsby-config.js) specifies the way each key in `gatsby-config.js` will merge together. Unless otherwise specified below, the last value wins.
 
--   `siteMetadata` and `mapping` both merge deeply using lodash's `merge` function. This means a theme can set default values in `siteMetadata` and the site can override them using the standard `siteMetadata` object in `gatsby-config.js`.
--   `plugins` are normalized to remove duplicates, then concatenated together.
+- `siteMetadata` and `mapping` both merge deeply using lodash's `merge` function. This means a theme can set default values in `siteMetadata` and the site can override them using the standard `siteMetadata` object in `gatsby-config.js`.
+- `plugins` are normalized to remove duplicates, then concatenated together.

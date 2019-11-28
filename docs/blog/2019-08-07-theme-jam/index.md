@@ -29,15 +29,15 @@ On top of that, submissions were code reviewed for documentation, the ability to
 
 Several parts of the judging could be done automatically, so we set up an ugly-but-effective [automated test](https://github.com/jlengstorf/theme-jam-tester) that would:
 
-1.  Run a [webpagetest.org](https://webpagetest.org/) audit on the demo site
-2.  Run a [Lighthouse](https://developers.google.com/web/tools/lighthouse/) audit on the demo site
-3.  Check for required fields and keywords in `package.json` (shout out to [unpkg.com](https://unpkg.com) for making this easy)
+1. Run a [webpagetest.org](https://webpagetest.org/) audit on the demo site
+2. Run a [Lighthouse](https://developers.google.com/web/tools/lighthouse/) audit on the demo site
+3. Check for required fields and keywords in `package.json` (shout out to [unpkg.com](https://unpkg.com) for making this easy)
 
 To pass the automated review, a theme must:
 
--   score at least 90 on the Lighthouse accessibility audit
--   score at least 80 on the Lighthouse performance audit
--   have all required fields in `package.json`
+- score at least 90 on the Lighthouse accessibility audit
+- score at least 80 on the Lighthouse performance audit
+- have all required fields in `package.json`
 
 Of the 111 submissions, 52 passed the automated review.
 
@@ -87,6 +87,6 @@ Just because the Theme Jam is over, it doesn't mean we're not super excited to b
 
 If you'd like to start building themes, here are a few resources:
 
--   [Gatsby theme official docs](/docs/themes/)
--   [Official egghead course on Gatsby themes](https://egghead.io/courses/gatsby-theme-authoring)
--   [Converting part of an existing website to Gatsby themes](https://www.youtube.com/watch?v=ciGFxNamooI&list=PLz8Iz-Fnk_eTpvd49Sa77NiF8Uqq5Iykx&index=4)
+- [Gatsby theme official docs](/docs/themes/)
+- [Official egghead course on Gatsby themes](https://egghead.io/courses/gatsby-theme-authoring)
+- [Converting part of an existing website to Gatsby themes](https://www.youtube.com/watch?v=ciGFxNamooI&list=PLz8Iz-Fnk_eTpvd49Sa77NiF8Uqq5Iykx&index=4)

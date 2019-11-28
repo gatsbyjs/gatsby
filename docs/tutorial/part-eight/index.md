@@ -6,13 +6,13 @@ disableTableOfContents: true
 
 Wow! You've come a long way! You've learned how to:
 
--   create new Gatsby sites
--   create pages and components
--   style components
--   add plugins to a site
--   source & transform data
--   use GraphQL to query data for pages
--   programmatically create pages from your data
+- create new Gatsby sites
+- create pages and components
+- style components
+- add plugins to a site
+- source & transform data
+- use GraphQL to query data for pages
+- programmatically create pages from your data
 
 In this final section, you're going to walk through some common steps for preparing a site to go live by introducing a powerful site diagnostic tool called [Lighthouse](https://developers.google.com/web/tools/lighthouse/). Along the way, we'll introduce a few more plugins you'll often want to use in your Gatsby sites.
 
@@ -22,7 +22,7 @@ Quoting from the [Lighthouse website](https://developers.google.com/web/tools/li
 
 > Lighthouse is an open-source, automated tool for improving the quality of web pages. You can run it against any web page, public or requiring authentication. It has audits for performance, accessibility, progressive web apps (PWAs), and more.
 
-Lighthouse is included in Chrome DevTools. Running its audit -- and then addressing the errors it finds and implementing the improvements it suggests -- is a great way to prepare your site to go live. It helps give you confidence that your site is as fast and accessible as possible.
+Lighthouse is included in Chrome DevTools. Running its audit ― and then addressing the errors it finds and implementing the improvements it suggests ― is a great way to prepare your site to go live. It helps give you confidence that your site is as fast and accessible as possible.
 
 Try it out!
 
@@ -30,7 +30,7 @@ First, you need to create a production build of your Gatsby site. The Gatsby dev
 
 ### ✋ Create a production build
 
-1.  Stop the development server (if it's still running) and run the following command:
+1. Stop the development server (if it's still running) and run the following command:
 
 ```shell
 gatsby build
@@ -38,7 +38,7 @@ gatsby build
 
 > 💡 As you learned in [part 1](/tutorial/part-one/), this does a production build of your site and outputs the built static files into the `public` directory.
 
-2.  View the production site locally. Run:
+2. View the production site locally. Run:
 
 ```shell
 gatsby serve
@@ -50,13 +50,13 @@ Once this starts, you can view your site at [`localhost:9000`](http://localhost:
 
 Now you're going to run your first Lighthouse test.
 
-1.  If you haven't already done so, open the site in Chrome Incognito Mode so no extensions interfere with the test. Then, open up the Chrome DevTools.
+1. If you haven't already done so, open the site in Chrome Incognito Mode so no extensions interfere with the test. Then, open up the Chrome DevTools.
 
-2.  Click on the "Audits" tab where you'll see a screen that looks like:
+2. Click on the "Audits" tab where you'll see a screen that looks like:
 
 ![Lighthouse audit start](./lighthouse-audit.png)
 
-3.  Click "Perform an audit..." (All available audit types should be selected by default). Then click "Run audit". (It'll then take a minute or so to run the audit). Once the audit is complete, you should see results that look like this:
+3. Click "Perform an audit..." (All available audit types should be selected by default). Then click "Run audit". (It'll then take a minute or so to run the audit). Once the audit is complete, you should see results that look like this:
 
 ![Lighthouse audit results](./lighthouse-audit-results.png)
 
@@ -80,15 +80,15 @@ Quoting [Google](https://developers.google.com/web/fundamentals/web-app-manifest
 
 ### ✋ Using `gatsby-plugin-manifest`
 
-1.  Install the plugin:
+1. Install the plugin:
 
 ```shell
 npm install --save gatsby-plugin-manifest
 ```
 
-2.  Add a favicon for your app under `src/images/icon.png`. For the purposes of this tutorial you can use [this example icon](https://raw.githubusercontent.com/gatsbyjs/gatsby/master/docs/tutorial/part-eight/icon.png), should you not have one available. The icon is necessary to build all images for the manifest. For more information, look at the docs for [`gatsby-plugin-manifest`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-manifest/README.md).
+2. Add a favicon for your app under `src/images/icon.png`. For the purposes of this tutorial you can use [this example icon](https://raw.githubusercontent.com/gatsbyjs/gatsby/master/docs/tutorial/part-eight/icon.png), should you not have one available. The icon is necessary to build all images for the manifest. For more information, look at the docs for [`gatsby-plugin-manifest`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-manifest/README.md).
 
-3.  Add the plugin to the `plugins` array in your `gatsby-config.js` file.
+3. Add the plugin to the `plugins` array in your `gatsby-config.js` file.
 
 ```javascript:title=gatsby-config.js
 {
@@ -111,7 +111,7 @@ npm install --save gatsby-plugin-manifest
 }
 ```
 
-That's all you need to get started with adding a web manifest to a Gatsby site. The example given reflects a base configuration -- Check out the [plugin reference](/packages/gatsby-plugin-manifest/?=gatsby-plugin-manifest#automatic-mode) for more options.
+That's all you need to get started with adding a web manifest to a Gatsby site. The example given reflects a base configuration ― Check out the [plugin reference](/packages/gatsby-plugin-manifest/?=gatsby-plugin-manifest#automatic-mode) for more options.
 
 ## Add offline support
 
@@ -121,13 +121,13 @@ Another requirement for a website to qualify as a PWA is the use of a [service w
 
 ### ✋ Using `gatsby-plugin-offline`
 
-1.  Install the plugin:
+1. Install the plugin:
 
 ```shell
 npm install --save gatsby-plugin-offline
 ```
 
-2.  Add the plugin to the `plugins` array in your `gatsby-config.js` file.
+2. Add the plugin to the `plugins` array in your `gatsby-config.js` file.
 
 ```javascript:title=gatsby-config.js
 {
@@ -166,13 +166,13 @@ Gatsby's [react helmet plugin](/packages/gatsby-plugin-react-helmet/) provides d
 
 ### ✋ Using `React Helmet` and `gatsby-plugin-react-helmet`
 
-1.  Install both packages:
+1. Install both packages:
 
 ```shell
 npm install --save gatsby-plugin-react-helmet react-helmet
 ```
 
-2.  Make sure you have a `description` and an `author` configured inside your `siteMetadata` object. Also, add the `gatsby-plugin-react-helmet` plugin to the `plugins` array in your `gatsby-config.js` file.
+2. Make sure you have a `description` and an `author` configured inside your `siteMetadata` object. Also, add the `gatsby-plugin-react-helmet` plugin to the `plugins` array in your `gatsby-config.js` file.
 
 ```javascript:title=gatsby-config.js
 module.exports = {
@@ -205,7 +205,7 @@ module.exports = {
 }
 ```
 
-3.  In the `src/components` directory, create a file called `seo.js` and add the following:
+3. In the `src/components` directory, create a file called `seo.js` and add the following:
 
 ```jsx:title=src/components/seo.js
 import React from "react"
@@ -293,7 +293,7 @@ export default SEO
 
 The above code sets up defaults for your most common metadata tags and provides you an `<SEO>` component to work with in the rest of your project. Pretty cool, right?
 
-4.  Now, you can use the `<SEO>` component in your templates and pages and pass props to it. For example, add it to your `blog-post.js` template like so:
+4. Now, you can use the `<SEO>` component in your templates and pages and pass props to it. For example, add it to your `blog-post.js` template like so:
 
 ```jsx:title=src/templates/blog-post.js
 import React from "react"
@@ -341,23 +341,23 @@ Now, if you run the Lighthouse audit again as laid out above, you should get clo
 
 In this section, we've shown you a few Gatsby-specific tools to improve your site's performance and prepare to go live.
 
-Lighthouse is a great tool for site improvements and learning -- Continue looking through the detailed feedback it provides and keep making your site better!
+Lighthouse is a great tool for site improvements and learning ― Continue looking through the detailed feedback it provides and keep making your site better!
 
 ## Next Steps
 
 ### Official Documentation
 
--   [Official Documentation](https://www.gatsbyjs.org/docs/): View our Official Documentation for _[Quick Start](https://www.gatsbyjs.org/docs/quick-start/)_, _[Detailed Guides](https://www.gatsbyjs.org/docs/preparing-your-environment/)_, _[API References](https://www.gatsbyjs.org/docs/gatsby-link/)_, and much more.
+- [Official Documentation](https://www.gatsbyjs.org/docs/): View our Official Documentation for _[Quick Start](https://www.gatsbyjs.org/docs/quick-start/)_, _[Detailed Guides](https://www.gatsbyjs.org/docs/preparing-your-environment/)_, _[API References](https://www.gatsbyjs.org/docs/gatsby-link/)_, and much more.
 
 ### Official Plugins
 
--   [Official Plugins](https://github.com/gatsbyjs/gatsby/tree/master/packages): The complete list of all the Official Plugins maintained by Gatsby.
+- [Official Plugins](https://github.com/gatsbyjs/gatsby/tree/master/packages): The complete list of all the Official Plugins maintained by Gatsby.
 
 ### Official Starters
 
-1.  [Gatsby's Default Starter](https://github.com/gatsbyjs/gatsby-starter-default): Kick off your project with this default boilerplate. This barebones starter ships with the main Gatsby configuration files you might need. _[working example](http://gatsbyjs.github.io/gatsby-starter-default/)_
-2.  [Gatsby's Blog Starter](https://github.com/gatsbyjs/gatsby-starter-blog): Gatsby starter for creating an awesome and blazing-fast blog. _[working example](http://gatsbyjs.github.io/gatsby-starter-blog/)_
-3.  [Gatsby's Hello-World Starter](https://github.com/gatsbyjs/gatsby-starter-hello-world): Gatsby Starter with the bare essentials needed for a Gatsby site. _[working example](https://gatsby-starter-hello-world-demo.netlify.com/)_
+1. [Gatsby's Default Starter](https://github.com/gatsbyjs/gatsby-starter-default): Kick off your project with this default boilerplate. This barebones starter ships with the main Gatsby configuration files you might need. _[working example](http://gatsbyjs.github.io/gatsby-starter-default/)_
+2. [Gatsby's Blog Starter](https://github.com/gatsbyjs/gatsby-starter-blog): Gatsby starter for creating an awesome and blazing-fast blog. _[working example](http://gatsbyjs.github.io/gatsby-starter-blog/)_
+3. [Gatsby's Hello-World Starter](https://github.com/gatsbyjs/gatsby-starter-hello-world): Gatsby Starter with the bare essentials needed for a Gatsby site. _[working example](https://gatsby-starter-hello-world-demo.netlify.com/)_
 
 ## That's all, folks
 
@@ -365,9 +365,9 @@ Well, not quite; just for this tutorial. There are [Additional Tutorials](/tutor
 
 This is just the beginning. Keep going!
 
--   Did you build something cool? Share it on Twitter, tag [#buildwithgatsby](https://twitter.com/search?q=%23buildwithgatsby), and [@mention us](https://twitter.com/gatsbyjs)!
--   Did you write a cool blog post about what you learned? Share that, too!
--   Contribute! Take a stroll through [open issues](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22) on the Gatsby repo and [become a contributor](/contributing/how-to-contribute/).
+- Did you build something cool? Share it on Twitter, tag [#buildwithgatsby](https://twitter.com/search?q=%23buildwithgatsby), and [@mention us](https://twitter.com/gatsbyjs)!
+- Did you write a cool blog post about what you learned? Share that, too!
+- Contribute! Take a stroll through [open issues](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22) on the Gatsby repo and [become a contributor](/contributing/how-to-contribute/).
 
 Check out the ["how to contribute"](/contributing/how-to-contribute/) docs for even more ideas.
 

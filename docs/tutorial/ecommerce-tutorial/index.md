@@ -4,19 +4,19 @@ title: "Gatsby E-Commerce Tutorial"
 
 ## Table of Contents
 
--   [Table of Contents](#table-of-contents)
--   [Why use Gatsby for an e-commerce site?](#why-use-gatsby-for-an-e-commerce-site)
--   [Prerequisites](#prerequisites)
-    -   [How does Gatsby work with Stripe?](#how-does-gatsby-work-with-stripe)
--   [Setting up a Gatsby site](#setting-up-a-gatsby-site)
--   [Installing the StripeJS plugin](#installing-the-stripejs-plugin)
-    -   [See your site hot reload in the browser!](#see-your-site-hot-reload-in-the-browser)
-    -   [How does the StripeJS plugin work?](#how-does-the-stripejs-plugin-work)
-    -   [Getting your Stripe test keys](#getting-your-stripe-test-keys)
--   [Examples](#examples)
-    -   [Easy: One Button](#easy-one-button)
-    -   [Advanced: Import SKUs via source plugin](#advanced-import-skus-via-source-plugin)
--   [Testing Payments](#testing-payments)
+- [Table of Contents](#table-of-contents)
+- [Why use Gatsby for an e-commerce site?](#why-use-gatsby-for-an-e-commerce-site)
+- [Prerequisites](#prerequisites)
+    - [How does Gatsby work with Stripe?](#how-does-gatsby-work-with-stripe)
+- [Setting up a Gatsby site](#setting-up-a-gatsby-site)
+- [Installing the StripeJS plugin](#installing-the-stripejs-plugin)
+    - [See your site hot reload in the browser!](#see-your-site-hot-reload-in-the-browser)
+    - [How does the StripeJS plugin work?](#how-does-the-stripejs-plugin-work)
+    - [Getting your Stripe test keys](#getting-your-stripe-test-keys)
+- [Examples](#examples)
+    - [Easy: One Button](#easy-one-button)
+    - [Advanced: Import SKUs via source plugin](#advanced-import-skus-via-source-plugin)
+- [Testing Payments](#testing-payments)
 
 In this advanced tutorial, you'll learn how to use Gatsby to build the UI for a basic e-commerce site that can accept payments, with [Stripe](https://stripe.com) as the backend for processing payments.
 
@@ -24,16 +24,16 @@ In this advanced tutorial, you'll learn how to use Gatsby to build the UI for a 
 
 Benefits of using Gatsby for e-commerce sites include the following:
 
--   Security inherent in static sites
--   Blazing fast performance when your pages are converted from React into static files
--   Easy to host
+- Security inherent in static sites
+- Blazing fast performance when your pages are converted from React into static files
+- Easy to host
 
 You can see the [working demo hosted here](https://gatsby-ecommerce-stripe.netlify.com/)
 
 ## Prerequisites
 
--   Since this is a more advanced tutorial, building a site with Gatsby before will likely make this tutorial less time-consuming ([see the main tutorial here](/tutorial/))
--   Stripe account: [register for an account here](https://dashboard.stripe.com/register)
+- Since this is a more advanced tutorial, building a site with Gatsby before will likely make this tutorial less time-consuming ([see the main tutorial here](/tutorial/))
+- Stripe account: [register for an account here](https://dashboard.stripe.com/register)
 
 ### How does Gatsby work with Stripe?
 
@@ -97,8 +97,8 @@ View your API credentials by logging into your Stripe account, and then going to
 
 You have 2 keys in both test mode and production mode:
 
--   a publishable key
--   a secret key
+- a publishable key
+- a secret key
 
 While testing, you must use the key(s) that include _test_. For production code, you will need to use the live keys. As the names imply, your publishable key may be included in code that you share publicly (for example, on the frontend, and in GitHub), whereas your secret key should not be shared with anyone or committed to any public repo. It's important to restrict access to this secret key because anyone who has it could potentially read or send requests from your Stripe account and see information about charges or purchases or even refund customers.
 

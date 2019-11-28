@@ -6,10 +6,10 @@ Docs reference guides, recipes, and tutorials teach Gatsby concepts to users wit
 
 Here are some things to keep in mind when deciding where to contribute to Gatsby:
 
--   [Blog posts](/contributing/docs-contributions#contributing-to-the-blog) are primarily made for case studies and time-sensitive storytelling.
--   [Reference guides](#reference-guides), in contrast, are evergreen -- or continually relevant -- and discoverable documentation articles that go beyond any one case study or situation.
--   [Recipes](#recipes) add concise, discoverable, and easy-to-follow instructions for common Gatsby tasks. They are smaller units than tutorials.
--   [Tutorials](#tutorials) should provide step-by-step guidance for Gatsby workflows, listing all pre-requisites and not assuming knowledge or skipping steps.
+- [Blog posts](/contributing/docs-contributions#contributing-to-the-blog) are primarily made for case studies and time-sensitive storytelling.
+- [Reference guides](#reference-guides), in contrast, are evergreen ― or continually relevant ― and discoverable documentation articles that go beyond any one case study or situation.
+- [Recipes](#recipes) add concise, discoverable, and easy-to-follow instructions for common Gatsby tasks. They are smaller units than tutorials.
+- [Tutorials](#tutorials) should provide step-by-step guidance for Gatsby workflows, listing all pre-requisites and not assuming knowledge or skipping steps.
 
 ## Why use templates?
 
@@ -53,11 +53,11 @@ If you find yourself wanting to teach the reader how to accomplish a series of r
 
 Guide topics should be chosen based on these priorities:
 
-1.  [Stub articles](/contributing/stub-list/) (docs that already exist on the site but don't have content in them yet)
-2.  Articles with the [help wanted and type:documentation](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22+label%3A%22type%3A+documentation%22) labels on GitHub
-3.  Articles related to improving [key learning workflows](https://github.com/gatsbyjs/gatsby/issues/13708)
-4.  Articles listed in the "Backlog" or "To prioritize" sections of the [Learning / Devrel Roadmap](https://github.com/gatsbyjs/gatsby/projects/10) on GitHub
-5.  Articles that you or other community members would like to see
+1. [Stub articles](/contributing/stub-list/) (docs that already exist on the site but don't have content in them yet)
+2. Articles with the [help wanted and type:documentation](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22+label%3A%22type%3A+documentation%22) labels on GitHub
+3. Articles related to improving [key learning workflows](https://github.com/gatsbyjs/gatsby/issues/13708)
+4. Articles listed in the "Backlog" or "To prioritize" sections of the [Learning / Devrel Roadmap](https://github.com/gatsbyjs/gatsby/projects/10) on GitHub
+5. Articles that you or other community members would like to see
 
 ### Length of a reference guide
 
@@ -139,11 +139,11 @@ Ideally, a guide overview fits above the fold on a desktop computer screen. This
 
 Guide overview articles are essentially new parent categories that help organize all the reference guides. Here's how to decide if you should create a new reference guide overview:
 
-1.  [Stub articles](/contributing/stub-list/) (docs that already exist on the site but don't have content in them yet)
-2.  Article sections with the [help wanted and type:documentation](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22+label%3A%22type%3A+documentation%22) labels on GitHub
-3.  Article sections related to improving [key learning workflows](https://github.com/gatsbyjs/gatsby/issues/13708), like "e-commerce"
-4.  Article sections listed in the "Backlog" or "To prioritize" sections of the [Learning / Devrel Roadmap](https://github.com/gatsbyjs/gatsby/projects/10) on GitHub
-5.  Article sections that you or other community members would like to see
+1. [Stub articles](/contributing/stub-list/) (docs that already exist on the site but don't have content in them yet)
+2. Article sections with the [help wanted and type:documentation](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22+label%3A%22type%3A+documentation%22) labels on GitHub
+3. Article sections related to improving [key learning workflows](https://github.com/gatsbyjs/gatsby/issues/13708), like "e-commerce"
+4. Article sections listed in the "Backlog" or "To prioritize" sections of the [Learning / Devrel Roadmap](https://github.com/gatsbyjs/gatsby/projects/10) on GitHub
+5. Article sections that you or other community members would like to see
 
 ## Reference guide overview template
 
@@ -175,7 +175,7 @@ Assume the reader has basic programming knowledge such as the command line, code
 - Links to starters
 ```
 
-* * *
+---
 
 ## Recipes
 
@@ -185,12 +185,12 @@ A recipe should list requirements and include a few short instructions to comple
 
 The components of a recipe are:
 
--   The name of the recipe, which should describe a single task
--   A 1-2 sentence description motivating what the recipe is for
--   Prerequisites and requirements
--   Step-by-step directions
-    -   Optional embedded examples
--   Links to additional resources
+- The name of the recipe, which should describe a single task
+- A 1-2 sentence description motivating what the recipe is for
+- Prerequisites and requirements
+- Step-by-step directions
+    - Optional embedded examples
+- Links to additional resources
 
 Recipes should be short. This is accomplished by limiting steps to what is unique to the task at-hand; prerequisites and requirements should be mentioned but not include install steps for things like npm or Gatsby CLI. Linking to full reference guide, tutorial, or a working example can complete the loop for anyone who needs more help.
 
@@ -202,15 +202,15 @@ Grouping recipes by topic will allow users to navigate and learn by subject matt
 
 Recipes should fall into these categories to start (suggest your idea in a GitHub issue!):
 
--   Pages/Layouts
--   Styling
--   Using a starter
--   Using themes
--   Sourcing data
--   Querying data
--   Images
--   Transforming data
--   Deploying
+- Pages/Layouts
+- Styling
+- Using a starter
+- Using themes
+- Sourcing data
+- Querying data
+- Images
+- Transforming data
+- Deploying
 
 Here's a template for a new recipe category:
 
@@ -305,10 +305,10 @@ We need tutorials to guide users of all skill levels through performing a series
 
 Topics should be chosen based on these priorities:
 
-1.  Tutorials related to improving [key learning workflows](https://github.com/gatsbyjs/gatsby/issues/13708)
-2.  Tutorials listed in the "Backlog" or "To prioritize" sections of the [Learning / Devrel Roadmap](https://github.com/gatsbyjs/gatsby/projects/10) on GitHub
-3.  Tutorials with the [help wanted and type:documentation](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22+label%3A%22type%3A+documentation%22) labels on GitHub
-4.  Tutorials that you or other community members would like to see
+1. Tutorials related to improving [key learning workflows](https://github.com/gatsbyjs/gatsby/issues/13708)
+2. Tutorials listed in the "Backlog" or "To prioritize" sections of the [Learning / Devrel Roadmap](https://github.com/gatsbyjs/gatsby/projects/10) on GitHub
+3. Tutorials with the [help wanted and type:documentation](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22+label%3A%22type%3A+documentation%22) labels on GitHub
+4. Tutorials that you or other community members would like to see
 
 ## Length of a tutorial
 
@@ -386,7 +386,7 @@ them at the bottom in an "Other Resources" section. You can also mention here an
 - Links to starters
 ```
 
-* * *
+---
 
 ## Plugin README template
 
@@ -440,7 +440,7 @@ If this is a source plugin README, source plugins ought to allow people to query
 If you have unanswered questions, would like help with enhancing or debugging the plugin, it is nice to include instructions for people who want to contribute to your plugin.
 ```
 
-* * *
+---
 
 ## Starter README template
 

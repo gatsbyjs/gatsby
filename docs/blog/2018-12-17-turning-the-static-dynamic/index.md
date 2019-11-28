@@ -3,7 +3,7 @@ title: "Turning the Static Dynamic: Gatsby + Netlify Functions + Netlify Identit
 date: 2018-12-26
 author: swyx
 tags: ["gatsby-for-apps"]
-excerpt: Gatsby is great for not only static sites but also traditional web applications. You can add authentication and serverless functionality and get up and running incredibly quickly with Netlify - here's how.
+excerpt: Gatsby is great for not only static sites but also traditional web applications. You can add authentication and serverless functionality and get up and running incredibly quickly with Netlify ― here's how.
 ---
 
 [In a recent Reactiflux interview](https://www.reactiflux.com/transcripts/gatsby-team/), the Gatsby team was asked this question:
@@ -26,24 +26,24 @@ Let's say you have a typical static Gatsby site, like [`gatsby-starter-default`]
 
 Now your client comes to you and asks you to add some custom logic that needs to be executed on the server:
 
--   Maybe you have third party API secrets you don't want to expose to your user.
--   Maybe you need [a serverside proxy to get around CORS issues](https://developer.yahoo.com/javascript/howto-proxy.html?guccounter=1).
--   Maybe you need to ping a database to check your inventory.
+- Maybe you have third party API secrets you don't want to expose to your user.
+- Maybe you need [a serverside proxy to get around CORS issues](https://developer.yahoo.com/javascript/howto-proxy.html?guccounter=1).
+- Maybe you need to ping a database to check your inventory.
 
 **Oh no! Now you have to rewrite everything and move to a Digital Ocean droplet!**
 
 I'm kidding. No, you don't have to rewrite everything.
 
-The beauty of serverless functions is that it is incrementally adoptable - **your site grows with your needs** - and with Gatsby you can rerender entire sections of your site based on live API data. Of course, the more you do this, the more resource intensive (in terms of bandwidth and computation) it can be, so there is a performance tradeoff. **Your site should be as dynamic as you need it to be, but no more.** Gatsby is perfect for this.
+The beauty of serverless functions is that it is incrementally adoptable ― **your site grows with your needs** ― and with Gatsby you can rerender entire sections of your site based on live API data. Of course, the more you do this, the more resource intensive (in terms of bandwidth and computation) it can be, so there is a performance tradeoff. **Your site should be as dynamic as you need it to be, but no more.** Gatsby is perfect for this.
 
 ## 5 Steps to add Netlify Functions to Gatsby
 
-Netlify Functions are a great low configuration solution for adding serverless functionality to your Gatsby site. You get 125,000 free calls a month - that's a function call every 20 seconds every day of the week, month, and year - and you can emulate them in local development with [`netlify-lambda`](https://github.com/netlify/netlify-lambda).
+Netlify Functions are a great low configuration solution for adding serverless functionality to your Gatsby site. You get 125,000 free calls a month ― that's a function call every 20 seconds every day of the week, month, and year ― and you can emulate them in local development with [`netlify-lambda`](https://github.com/netlify/netlify-lambda).
 
 Let's walk through the steps:
 
-1.  **Install dependencies**: `npm install -D http-proxy-middleware netlify-lambda npm-run-all`
-2.  **Run function emulation alongside Gatsby**: replace your `scripts` in `package.json`:
+1. **Install dependencies**: `npm install -D http-proxy-middleware netlify-lambda npm-run-all`
+2. **Run function emulation alongside Gatsby**: replace your `scripts` in `package.json`:
 
 ```js
   "scripts": {
@@ -59,7 +59,7 @@ Let's walk through the steps:
 
 When deploying to Netlify, `gatsby build` must be run before `netlify-lambda build src/lambda` or else your Netlify function builds will fail. To avoid this, do not set your build script command to `"build": "run-p build:**"` when you replace `scripts` in `package.json`. Doing so will run all build scripts in parallel. This will make it possible for `netlify-lambda build src/lambda` to run before `gatsby build`.
 
-3.  **Configure your Netlify build**: When serving your site on Netlify, `netlify-lambda` will now build each JavaScript/TypeScript file in your `src/lambda` folder as a standalone Netlify function (with a path corresponding to the filename). Make sure you have a Functions path in a `netlify.toml` file at root of your repository:
+3. **Configure your Netlify build**: When serving your site on Netlify, `netlify-lambda` will now build each JavaScript/TypeScript file in your `src/lambda` folder as a standalone Netlify function (with a path corresponding to the filename). Make sure you have a Functions path in a `netlify.toml` file at root of your repository:
 
 ```toml
 [build]
@@ -72,7 +72,7 @@ For more info or configuration options (e.g. in different branches and build env
 
 **NOTE:** the `command` specified in `netlify.toml` overrides the build command specified in your site's Netlify UI Build settings.
 
-4.  **Proxy the emulated functions for local development**: Head to `gatsby-config.js` and add this to your `module.exports`:
+4. **Proxy the emulated functions for local development**: Head to `gatsby-config.js` and add this to your `module.exports`:
 
 ```jsx:title=gatsby-config.js
 var proxy = require("http-proxy-middleware")
@@ -95,7 +95,7 @@ module.exports = {
 }
 ```
 
-5.  **Write your functions**: Make a `src/lambda` folder and write as many functions as you need. The only requirement is that each function must export a `handler`, although `netlify-lambda` helps you use webpack to bundle modules or you can [zip the functions yourself](https://www.netlify.com/blog/2018/09/14/forms-and-functions/#optional-zip-the-function-to-manage-dependencies). For example you can write `src/lambda/hello.js`:
+5. **Write your functions**: Make a `src/lambda` folder and write as many functions as you need. The only requirement is that each function must export a `handler`, although `netlify-lambda` helps you use webpack to bundle modules or you can [zip the functions yourself](https://www.netlify.com/blog/2018/09/14/forms-and-functions/#optional-zip-the-function-to-manage-dependencies). For example you can write `src/lambda/hello.js`:
 
 ```js
 // For more info, check https://www.netlify.com/docs/functions/#javascript-lambda-functions
@@ -133,9 +133,9 @@ It's a different tier of concern, which makes it hard to write about in the same
 
 ## 5 Steps to add Netlify Identity and Authenticated Pages to Gatsby
 
-1.  **Enable Netlify Identity**: Netlify Identity doesn't come enabled by default. You'll have to head to your site admin (e.g. `https://app.netlify.com/sites/YOUR_AWESOME_SITE/identity`) to turn it on. [Read the docs](https://www.netlify.com/docs/identity/) for further info on what you can do, for example add Facebook or Google social sign-on!
-2.  **Install dependencies**: `npm install netlify-identity-widget gatsby-plugin-create-client-paths`
-3.  **Configure Gatsby**: for dynamic-ness!
+1. **Enable Netlify Identity**: Netlify Identity doesn't come enabled by default. You'll have to head to your site admin (e.g. `https://app.netlify.com/sites/YOUR_AWESOME_SITE/identity`) to turn it on. [Read the docs](https://www.netlify.com/docs/identity/) for further info on what you can do, for example add Facebook or Google social sign-on!
+2. **Install dependencies**: `npm install netlify-identity-widget gatsby-plugin-create-client-paths`
+3. **Configure Gatsby**: for dynamic-ness!
 
 ```jsx:title=gatsby-config.js
 module.exports = {
@@ -150,7 +150,7 @@ module.exports = {
 }
 ```
 
-4.  **Write an authentication service**: `netlify-identity-widget` is a framework-agnostic overlay that ships with a nice signup/login UI. This gets you up and running the fastest, however if you need a smaller solution you may want to use the underlying [gotrue-js](https://github.com/netlify/gotrue-js), or [react-netlify-identity](https://github.com/sw-yx/react-netlify-identity) for a React Hooks solution.
+4. **Write an authentication service**: `netlify-identity-widget` is a framework-agnostic overlay that ships with a nice signup/login UI. This gets you up and running the fastest, however if you need a smaller solution you may want to use the underlying [gotrue-js](https://github.com/netlify/gotrue-js), or [react-netlify-identity](https://github.com/sw-yx/react-netlify-identity) for a React Hooks solution.
 
 Here's a usable example that stores your user in local storage:
 
@@ -200,7 +200,7 @@ export const logout = callback => {
 }
 ```
 
-5.  **Write your app**: Now, any sub paths in `src/pages/app` will be exempt from Gatsby static generation. To keep the dividing line between app and site crystal clear, I like to have all my dynamic Gatsby code in a dedicated `app` folder. This means you can use `@reach/router` with `netlify-identity-widget` to write a standard dynamic React app. Here's some sample code to give you an idea of how to hook them up:
+5. **Write your app**: Now, any sub paths in `src/pages/app` will be exempt from Gatsby static generation. To keep the dividing line between app and site crystal clear, I like to have all my dynamic Gatsby code in a dedicated `app` folder. This means you can use `@reach/router` with `netlify-identity-widget` to write a standard dynamic React app. Here's some sample code to give you an idea of how to hook them up:
 
 ```jsx:title=app.js
 import React from "react"
@@ -378,17 +378,17 @@ export function handler(event, context, callback) {
       statusCode: 200,
       body: JSON.stringify({
         msg:
-          "auth-hello - no authentication detected. Note that netlify-lambda doesn't locally emulate Netlify Identity.",
+          "auth-hello ― no authentication detected. Note that netlify-lambda doesn't locally emulate Netlify Identity.",
       }),
     })
   }
 }
 ```
 
-## Gatsby - Perfect for your next Hackathon
+## Gatsby ― Perfect for your next Hackathon
 
 It's 5 steps each to turn your static Gatsby sites into dynamic, authenticated, fully serverless apps with Netlify's free tools. This makes Gatsby a perfect tool for your next app. If you're at a hackathon, short on time, or just like to see a full working demo, check any of the following links.
 
--   **Code:** <https://github.com/sw-yx/jamstack-hackathon-starter>
--   **Starter:** <https://www.gatsbyjs.org/starters/jamstack-hackathon-starter>
--   **Live Demo:** <https://jamstack-hackathon-starter.netlify.com/>
+- **Code:** <https://github.com/sw-yx/jamstack-hackathon-starter>
+- **Starter:** <https://www.gatsbyjs.org/starters/jamstack-hackathon-starter>
+- **Live Demo:** <https://jamstack-hackathon-starter.netlify.com/>

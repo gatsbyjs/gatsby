@@ -16,63 +16,63 @@ This is a reference for upgrading your site from Gatsby v1 to Gatsby v2. While t
 
 This documentation page covers the _how_ of migrating from v1 to v2. Various blog posts cover the _why_:
 
--   [v2 Overview](/blog/2018-09-17-gatsby-v2/) by Kyle Mathews
--   [Improving accessibility](/blog/2018-09-27-reach-router/) by Amberley Romo
--   [Keeping Gatsby sites blazing fast](/blog/2019-10-03-gatsby-perf/) by Dustin Schau
+- [v2 Overview](/blog/2018-09-17-gatsby-v2/) by Kyle Mathews
+- [Improving accessibility](/blog/2018-09-27-reach-router/) by Amberley Romo
+- [Keeping Gatsby sites blazing fast](/blog/2019-10-03-gatsby-perf/) by Dustin Schau
 
 ## What we'll cover
 
--   [Updating Your Dependencies](#updating-your-dependencies)
+- [Updating Your Dependencies](#updating-your-dependencies)
 
-    -   [Update Gatsby version](#update-gatsby-version)
-    -   [Install React](#install-react)
-    -   [Install plugins' peer dependencies](#install-plugins-peer-dependencies)
+    - [Update Gatsby version](#update-gatsby-version)
+    - [Install React](#install-react)
+    - [Install plugins' peer dependencies](#install-plugins-peer-dependencies)
 
--   [Handling Breaking Changes](#handling-breaking-changes)
+- [Handling Breaking Changes](#handling-breaking-changes)
 
-    -   [Remove or refactor layout components](#remove-or-refactor-layout-components)
-    -   [Change `navigateTo` to `navigate`](#change-navigateto-to-navigate)
-    -   [Convert to either pure CommonJS or pure ES6](#convert-to-either-pure-commonjs-or-pure-es6)
-    -   [Move Babel configuration](#move-babel-configuration)
-    -   [Restore v1 PostCSS plugin setup](#restore-v1-postcss-plugin-setup)
-    -   [Migrate from React Router\` to @reach/router](#migrate-from-react-router-to-reachrouter)
-    -   [APIs onPreRouteUpdate and onRouteUpdate no longer called with the route update action](#apis-onprerouteupdate-and-onrouteupdate-no-longer-called-with-the-route-update-action)
-    -   [Browser API `replaceRouterComponent` was removed](#browser-api-replaceroutercomponent-was-removed)
-    -   [Browser API `replaceHistory` was removed](#browser-api-replacehistory-was-removed)
-    -   [Browser API `wrapRootComponent` was replaced with `wrapRootElement`](#browser-api-wraprootcomponent-was-replaced-with-wraprootelement)
-    -   [Don't query nodes by ID](#dont-query-nodes-by-id)
-    -   [Use Query in place of RootQueryType](#use-query-in-place-of-rootquerytype)
-    -   [Typography.js Plugin Config](#typographyjs-plugin-config-changes)
-    -   [Update CSS Modules class names that use dashes](#update-css-modules-class-names-that-use-dashes)
-    -   [Update Jest configuration](#update-jest-configuration)
-    -   [`gatsby-image`'s `outerWrapperClassName` was removed](#gatsby-images-outerwrapperclassname-was-removed)
+    - [Remove or refactor layout components](#remove-or-refactor-layout-components)
+    - [Change `navigateTo` to `navigate`](#change-navigateto-to-navigate)
+    - [Convert to either pure CommonJS or pure ES6](#convert-to-either-pure-commonjs-or-pure-es6)
+    - [Move Babel configuration](#move-babel-configuration)
+    - [Restore v1 PostCSS plugin setup](#restore-v1-postcss-plugin-setup)
+    - [Migrate from React Router\` to @reach/router](#migrate-from-react-router-to-reachrouter)
+    - [APIs onPreRouteUpdate and onRouteUpdate no longer called with the route update action](#apis-onprerouteupdate-and-onrouteupdate-no-longer-called-with-the-route-update-action)
+    - [Browser API `replaceRouterComponent` was removed](#browser-api-replaceroutercomponent-was-removed)
+    - [Browser API `replaceHistory` was removed](#browser-api-replacehistory-was-removed)
+    - [Browser API `wrapRootComponent` was replaced with `wrapRootElement`](#browser-api-wraprootcomponent-was-replaced-with-wraprootelement)
+    - [Don't query nodes by ID](#dont-query-nodes-by-id)
+    - [Use Query in place of RootQueryType](#use-query-in-place-of-rootquerytype)
+    - [Typography.js Plugin Config](#typographyjs-plugin-config-changes)
+    - [Update CSS Modules class names that use dashes](#update-css-modules-class-names-that-use-dashes)
+    - [Update Jest configuration](#update-jest-configuration)
+    - [`gatsby-image`'s `outerWrapperClassName` was removed](#gatsby-images-outerwrapperclassname-was-removed)
 
--   [Resolving Deprecations](#resolving-deprecations)
+- [Resolving Deprecations](#resolving-deprecations)
 
-    -   [Import Link from Gatsby](#import-link-from-gatsby)
-    -   [Import graphql from Gatsby](#import-graphql-from-gatsby)
-    -   [Rename `boundActionCreators` to `actions`](#rename-boundactioncreators-to-actions)
-    -   [Rename `pathContext` to `pageContext`](#rename-pathcontext-to-pagecontext)
-    -   [Rename responsive image queries](#rename-responsive-image-queries)
-    -   [`deleteNodes` API deprecated](#delete-nodes-api-deprecated)
+    - [Import Link from Gatsby](#import-link-from-gatsby)
+    - [Import graphql from Gatsby](#import-graphql-from-gatsby)
+    - [Rename `boundActionCreators` to `actions`](#rename-boundactioncreators-to-actions)
+    - [Rename `pathContext` to `pageContext`](#rename-pathcontext-to-pagecontext)
+    - [Rename responsive image queries](#rename-responsive-image-queries)
+    - [`deleteNodes` API deprecated](#delete-nodes-api-deprecated)
 
--   [Other Changes Worth Noting](#other-changes-worth-noting)
+- [Other Changes Worth Noting](#other-changes-worth-noting)
 
-    -   [Explicit query names no longer required](#explicit-query-names-no-longer-required)
-    -   [Remove inlined CSS in `html.js`](#remove-inlined-css-in-htmljs)
-    -   [Remove explicit polyfills](#remove-explicit-polyfills)
+    - [Explicit query names no longer required](#explicit-query-names-no-longer-required)
+    - [Remove inlined CSS in `html.js`](#remove-inlined-css-in-htmljs)
+    - [Remove explicit polyfills](#remove-explicit-polyfills)
 
--   [For Plugin Maintainers](#for-plugin-maintainers)
+- [For Plugin Maintainers](#for-plugin-maintainers)
 
-    -   [Setting the proper Peer Dependencies](#setting-the-proper-peer-dependencies)
-    -   [Change `modifyBabelrc` to `onCreateBabelConfig`](#change-modifybabelrc-to-oncreatebabelconfig)
-    -   [Change `modifyWebpackConfig` to `onCreateWebpackConfig`](#change-modifywebpackconfig-to-oncreatewebpackconfig)
-    -   [`createRemoteFileNode` API has changed](#createremotefilenode)
-    -   [Only allow defined keys on the `node.internal` object](#only-allow-defined-keys-on-the-node-internal-object)
-    -   [Import `graphql` types from `gatsby/graphql`](#import-graphql-types-from-gatsbygraphql)
+    - [Setting the proper Peer Dependencies](#setting-the-proper-peer-dependencies)
+    - [Change `modifyBabelrc` to `onCreateBabelConfig`](#change-modifybabelrc-to-oncreatebabelconfig)
+    - [Change `modifyWebpackConfig` to `onCreateWebpackConfig`](#change-modifywebpackconfig-to-oncreatewebpackconfig)
+    - [`createRemoteFileNode` API has changed](#createremotefilenode)
+    - [Only allow defined keys on the `node.internal` object](#only-allow-defined-keys-on-the-node-internal-object)
+    - [Import `graphql` types from `gatsby/graphql`](#import-graphql-types-from-gatsbygraphql)
 
--   [For Explorers](#for-explorers)
-    -   [V2 from Scratch](#starting-a-new-project-with-v2)
+- [For Explorers](#for-explorers)
+    - [V2 from Scratch](#starting-a-new-project-with-v2)
 
 ## Updating Your Dependencies
 
@@ -108,7 +108,7 @@ And compare "Wanted" and "Latest" versions and update `package.json` file manual
 npm i gatsby-plugin-google-analytics@latest gatsby-plugin-netlify@latest gatsby-plugin-sass@latest
 ```
 
-**NOTE**: The above command is only an example - adjust packages to ones you are actually using.
+**NOTE**: The above command is only an example ― adjust packages to ones you are actually using.
 
 ### Install React
 
@@ -136,11 +136,11 @@ You should search for the plugins that you use in the [plugin library](/plugins)
 
 There are some implications to this change:
 
--   Rendering different layouts for different pages is different. Use the standard React inheritance model. Gatsby no longer maintains, or needs to maintain, separate behavior for handling layouts.
+- Rendering different layouts for different pages is different. Use the standard React inheritance model. Gatsby no longer maintains, or needs to maintain, separate behavior for handling layouts.
 
--   Because the "top level component" changes between each page, React will rerender all children. This means that shared components previously in a Gatsby v1 layout-- like navigations-- will unmount and remount. This will break CSS transitions or React state within those shared components. If your use case requires layout component to not unmount use [`gatsby-plugin-layout`](/packages/gatsby-plugin-layout/).
+- Because the "top level component" changes between each page, React will rerender all children. This means that shared components previously in a Gatsby v1 layout-- like navigations-- will unmount and remount. This will break CSS transitions or React state within those shared components. If your use case requires layout component to not unmount use [`gatsby-plugin-layout`](/packages/gatsby-plugin-layout/).
 
--   To learn more about the decision behind this removal, read the [RFC for removing the special layout component](https://github.com/gatsbyjs/rfcs/blob/master/text/0002-remove-special-layout-components.md).
+- To learn more about the decision behind this removal, read the [RFC for removing the special layout component](https://github.com/gatsbyjs/rfcs/blob/master/text/0002-remove-special-layout-components.md).
 
 We recommend the following migration path:
 
@@ -153,7 +153,7 @@ import React from "react"
 
 export default ({ children }) => (
   <div>
--    {children()}
+- {children()}
 +    {children}
   </div>
 )
@@ -220,22 +220,22 @@ import { Helmet } from "react-helmet"
 + import { StaticQuery, graphql } from "gatsby"
 
 - export default ({ children, data }) => (
--   <>
--     <Helmet titleTemplate={`%s | ${data.site.siteMetadata.title}`} defaultTitle={data.site.siteMetadata.title} />
--     <div>
--       {children()}
--     </div>
--   </>
+- <>
+- <Helmet titleTemplate={`%s | ${data.site.siteMetadata.title}`} defaultTitle={data.site.siteMetadata.title} />
+- <div>
+- {children()}
+- </div>
+- </>
 - )
 -
 - export const query = graphql`
--   query LayoutQuery {
--     site {
--       siteMetadata {
--         title
--       }
--     }
--   }
+- query LayoutQuery {
+- site {
+- siteMetadata {
+- title
+- }
+- }
+- }
 - `
 + export default ({ children }) => (
 +   <StaticQuery
@@ -274,7 +274,7 @@ import React from "react"
 // Don't use navigate with an onClick btw :-)
 // Generally use the `<Link>` component.
 export default props => (
--  <div onClick={() => navigateTo(`/`)}>Click to go to home</div>
+- <div onClick={() => navigateTo(`/`)}>Click to go to home</div>
 +  <div onClick={() => navigate(`/`)}>Click to go to home</div>
 )
 ```
@@ -371,8 +371,8 @@ For _most_ sites, this change won't cause any breaking changes as the two router
 
 Two common ways this change _might_ break your site is:
 
--   You use the object form of the `to` prop in the `<Link>` component
--   You have client side routes
+- You use the object form of the `to` prop in the `<Link>` component
+- You have client side routes
 
 Read more about the features of our new router at <https://reach.tech/router>
 
@@ -435,9 +435,9 @@ import { navigate } from "@reach/router"
 
 #### The following props are no longer available on `<Link>`
 
--   `exact`
--   `strict`
--   `location`
+- `exact`
+- `strict`
+- `location`
 
 `exact` and `strict` are no longer necessary as @reach/router does matching
 this way by default.
@@ -462,7 +462,7 @@ exports.onCreatePage = async ({ page, actions }) => {
   // page.matchPath is a special key that's used for matching pages
   // only on the client.
   if (page.path.match(/^\/app/)) {
--    page.matchPath = "/app/:path"
+- page.matchPath = "/app/:path"
 +    page.matchPath = "/app/*"
 
     // Update the page.
@@ -473,9 +473,9 @@ exports.onCreatePage = async ({ page, actions }) => {
 
 #### Migrating React Router client routes to @reach/router
 
--   Use `<Location>` instead of `withRouter`
--   `import { navigate } from @reach/router` for programmatic navigation instead of the history object
--   There's no `Route` component any more. You can add a `<Router>` component (a site can have as many routers as it wishes). Then ensure the immediate children of `<Router>` have a prop named `path`.
+- Use `<Location>` instead of `withRouter`
+- `import { navigate } from @reach/router` for programmatic navigation instead of the history object
+- There's no `Route` component any more. You can add a `<Router>` component (a site can have as many routers as it wishes). Then ensure the immediate children of `<Router>` have a prop named `path`.
 
 A basic example of the `<Router>` component:
 
@@ -502,17 +502,17 @@ in store.gatsbyjs.org) from React Router to @reach/router.
  import { isAuthenticated } from '../../utils/auth';
 
 -export default ({ component: Component, ...rest }) => (
--  <Route
--    {...rest}
--    render={props =>
--      !isAuthenticated() ? (
--        // If we're not logged in, redirect to the home page.
--        <Redirect to={{ pathname: '/login' }} />
--      ) : (
--        <Component {...props} />
--      )
--    }
--  />
+- <Route
+- {...rest}
+- render={props =>
+- !isAuthenticated() ? (
+- // If we're not logged in, redirect to the home page.
+- <Redirect to={{ pathname: '/login' }} />
+- ) : (
+- <Component {...props} />
+- )
+- }
+- />
 -);
 +export default ({ component: Component, ...rest }) => {
 +  if (!isAuthenticated() && window.location.pathname !== `/login`) {
@@ -531,9 +531,9 @@ in store.gatsbyjs.org) from React Router to @reach/router.
 
 Here's links to diffs for three sites with client routes upgraded to @reach/router:
 
--   [store.gatsbyjs.org](https://github.com/gatsbyjs/store.gatsbyjs.org/pull/111)
--   [client-only-routes](https://github.com/gatsbyjs/gatsby/pull/6918/files#diff-69757e54875e28ef83eb8efe45a33fdf)
--   [simple-auth](https://github.com/gatsbyjs/gatsby/pull/6918/files#diff-53ac112a4b2ec760b26a86c953df2339)
+- [store.gatsbyjs.org](https://github.com/gatsbyjs/store.gatsbyjs.org/pull/111)
+- [client-only-routes](https://github.com/gatsbyjs/gatsby/pull/6918/files#diff-69757e54875e28ef83eb8efe45a33fdf)
+- [simple-auth](https://github.com/gatsbyjs/gatsby/pull/6918/files#diff-53ac112a4b2ec760b26a86c953df2339)
 
 ### APIs `onPreRouteUpdate` and `onRouteUpdate` no longer called with the route update action
 
@@ -556,15 +556,15 @@ import { Provider } from 'react-redux'
 
 -export const replaceRouterComponent = ({ history }) => {
 +export const wrapRootElement = ({ element }) => {
--  const ConnectedRouterWrapper = ({ children }) => (
+- const ConnectedRouterWrapper = ({ children }) => (
 +  const ConnectedRootElement = (
     <Provider store={store}>
--      <Router history={history}>{children}</Router>
+- <Router history={history}>{children}</Router>
 +      {element}
     </Provider>
   )
 
--  return ConnectedRouterWrapper
+- return ConnectedRouterWrapper
 +  return ConnectedRootElement
 }
 ```
@@ -583,14 +583,14 @@ We now pass `component` Element instead of `Root` Component and expect that `wra
 ```diff
 -export const wrapRootComponent = ({ Root }) => {
 +export const wrapRootElement = ({ element }) => {
--  const ConnectedRootComponent = () => (
+- const ConnectedRootComponent = () => (
 +  const ConnectedRootElement = (
     <Provider store={store}>
--      <Root />
+- <Root />
 +      {element}
     </Provider>
   )
--  return ConnectedRootComponent
+- return ConnectedRootComponent
 +  return ConnectedRootElement
 }
 ```
@@ -604,7 +604,7 @@ Here's an example querying an image:
 ```diff
   query MyImageQuery {
     allImageSharp(filter: {
--     id: {regex: "/default.jpg/"}
+- id: {regex: "/default.jpg/"}
 +     fluid: {originalName: {regex: "/default.jpg/"}}
     }) {
       edges {
@@ -667,7 +667,7 @@ import React from "react"
 import myStyles from "./my.module.css"
 
 export default ({ children }) => (
--  <div className={myStyles['my-class-name']}>
+- <div className={myStyles['my-class-name']}>
 +  <div className={myStyles.myClassName}>
     {children}
   </div>
@@ -839,8 +839,8 @@ import { graphql } from "gatsby"
 
 const Example = ({ data }) => {
   <div>
--    <Img sizes={data.foo.childImageSharp.sizes} />
--    <Img resolutions={data.bar.childImageSharp.resolutions} />
+- <Img sizes={data.foo.childImageSharp.sizes} />
+- <Img resolutions={data.bar.childImageSharp.resolutions} />
 +    <Img fluid={data.foo.childImageSharp.fluid} />
 +    <Img fixed={data.bar.childImageSharp.fixed} />
   </div>
@@ -852,8 +852,8 @@ export const pageQuery = graphql`
   query IndexQuery {
     foo: file(relativePath: { regex: "/foo.jpg/" }) {
       childImageSharp {
--        sizes(maxWidth: 700) {
--          ...GatsbyImageSharpSizes_tracedSVG
+- sizes(maxWidth: 700) {
+-  ...GatsbyImageSharpSizes_tracedSVG
 +        fluid(maxWidth: 700) {
 +          ...GatsbyImageSharpFluid_tracedSVG
         }
@@ -861,8 +861,8 @@ export const pageQuery = graphql`
     }
     bar: file(relativePath: { regex: "/bar.jpg/" }) {
       childImageSharp {
--        resolutions(width: 500) {
--          ...GatsbyImageSharpResolutions_withWebp
+- resolutions(width: 500) {
+-  ...GatsbyImageSharpResolutions_withWebp
 +        fixed(width: 500) {
 +          ...GatsbyImageSharpFixed_withWebp
         }
@@ -886,7 +886,7 @@ Gatsby v2 doesn't need explicit query names. You can skip them now:
 
 ```diff
 export const query = graphql`
--  query ThisIsExplicitQueryName($slug: String!) {
+- query ThisIsExplicitQueryName($slug: String!) {
 +  query($slug: String!) {
     markdownRemark(fields: { slug: { eq: $slug } }) {
       html
@@ -901,7 +901,7 @@ You can also skip the `query` keyword if you don't use query variables:
 
 ```diff
 export const query = graphql`
--  query ThisIsAnotherExplicitQueryName {
+- query ThisIsAnotherExplicitQueryName {
 +  {
     site {
       siteMetadata {
@@ -935,7 +935,7 @@ In most cases you won't have to do anything to be v2 compatible, but there are a
 
 ```diff:title=package.json
 "peerDependencies": {
--  "gatsby": "1"
+- "gatsby": "1"
 +  "gatsby": ">=1"
 }
 ```
@@ -948,10 +948,10 @@ Use `onCreateBabelConfig`:
 
 ```diff
 - exports.modifyBabelrc = ({ babelrc }) => {
--   return {
--     ...babelrc,
--     plugins: babelrc.plugins.concat([`foo`]),
--   }
+- return {
+- ...babelrc,
+- plugins: babelrc.plugins.concat([`foo`]),
+- }
 + exports.onCreateBabelConfig = ({ actions }) => {
 +   actions.setBabelPlugin({
 +     name: `babel-plugin-foo`,
@@ -974,10 +974,10 @@ Use `onCreateWebpackConfig`:
 + exports.onCreateWebpackConfig = ({ stage, actions }) => {
   switch (stage) {
     case `build-javascript`:
--       config.plugin(`Foo`, webpackFooPlugin, null)
--       break
--   }
--   return config
+- config.plugin(`Foo`, webpackFooPlugin, null)
+- break
+- }
+- return config
 +       actions.setWebpackConfig({
 +         plugins: [webpackFooPlugin],
 +       })

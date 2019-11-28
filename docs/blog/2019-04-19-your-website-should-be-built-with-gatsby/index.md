@@ -16,9 +16,9 @@ Gatsby is a web development technology we think you, your friends, your family a
 
 Building your website with Gatsby will most likely positively impact your website's:
 
--   Search Engine Optimization (SEO)
--   Bounce Rates, Lead Conversion and Revenue
--   Developer and User Experience
+- Search Engine Optimization (SEO)
+- Bounce Rates, Lead Conversion and Revenue
+- Developer and User Experience
 
 Gatsby's calling card is blazingly fast websites. This is achieved by pre-building a web page's content before a user hits it, as opposed to fetching content in real-time.
 
@@ -34,7 +34,7 @@ We've covered the basics, stick around as we dive into the details.
 
 ### The Landscape
 
-We've grown high expectations for web sites since their humble beginnings in the early 90s. Primarily, most websites are attached to diverse set data sources - a Content Management System (CMS) like WordPress or Shopify, a social feed from Instagram or Twitter, or high-resolution images hosted in a repository like Cloudinary.
+We've grown high expectations for web sites since their humble beginnings in the early 90s. Primarily, most websites are attached to diverse set data sources ― a Content Management System (CMS) like WordPress or Shopify, a social feed from Instagram or Twitter, or high-resolution images hosted in a repository like Cloudinary.
 
 This is fantastic, the CMS allows anyone to publish content to the web without having to continually hire a web developer. Pulling content from our social feeds means that we don't have to duplicate content, and it promotes all the different mediums through which users can engage with our brand.
 
@@ -46,7 +46,7 @@ You might be unfamiliar with the concept of a Content Delivery Network (CDN), in
 
 ## The Catch
 
-While this functionality is fantastic, the caveat is that we expose ourselves to terrible performance pitfalls - we're only as fast as the time it takes to fetch our slowest data source.
+While this functionality is fantastic, the caveat is that we expose ourselves to terrible performance pitfalls ― we're only as fast as the time it takes to fetch our slowest data source.
 
 Parallel to this evolution we've tended to access the web on smaller and smaller devices, shifting from the Desktop, then to the Laptop, and now to Mobile. Not only do we expect to view increasingly more impressive and functional with less, more compact devices, but also to access the web from anywhere: often over our mobile telecommunications network.
 
@@ -80,7 +80,7 @@ Recently Google has released a tool called [web.dev](https://web.dev/) to allow 
 
 ### Bounce Rates, Lead Conversion and Revenue
 
-Many websites are optimized to capture leads. Alas, some less artfully than others - I'm sure you've experienced a website that will accost you with a painfully timed pop-up, or throw up a barrier between you and content until you have surrendered your name, email and phone number.
+Many websites are optimized to capture leads. Alas, some less artfully than others ― I'm sure you've experienced a website that will accost you with a painfully timed pop-up, or throw up a barrier between you and content until you have surrendered your name, email and phone number.
 
 There is overwhelming evidence to support the fact that your website's load time has an impact on a visitor to your site becoming a lead.
 
@@ -98,10 +98,10 @@ One example of this is the ability to add offline support for your website using
 
 Gatsby is a sound technological investment, it's as future-proof as web technology comes. Let's get Nerdy 🤓
 
--   At its core, it's built on top of React, just about the most popular modern JavaScript language / library / framework (explaining React is probably worthy of its own blog post!), which was built and is maintained by Facebook.
--   Makes use of GraphQL to wrangle all your data sources.
--   Only loads the critical HTML, CSS, data, and JavaScript so your site loads as fast as possible (this is called code and data splitting).
--   Follows Google's [PRPL](https://developers.google.com/web/fundamentals/performance/prpl-pattern/) (Push, Render, Pre-cache, Lazy-load) architectural pattern which aims to boost your website's performance, especially on mobile devices.
+- At its core, it's built on top of React, just about the most popular modern JavaScript language / library / framework (explaining React is probably worthy of its own blog post!), which was built and is maintained by Facebook.
+- Makes use of GraphQL to wrangle all your data sources.
+- Only loads the critical HTML, CSS, data, and JavaScript so your site loads as fast as possible (this is called code and data splitting).
+- Follows Google's [PRPL](https://developers.google.com/web/fundamentals/performance/prpl-pattern/) (Push, Render, Pre-cache, Lazy-load) architectural pattern which aims to boost your website's performance, especially on mobile devices.
 
 ## The Limitations
 
@@ -121,6 +121,6 @@ In summary, next time you're looking to embark on the sheer adventure that is a 
 
 Our key takeaways:
 
--   Gatsby is optimized for performance, it will make your site as fast as possible. As the future of the web continues to trend to live on mobile, this is more important than ever.
--   Plugs into your existing Content Management System (CMS) - be it WordPress or Shopify.
--   It utilizes the greatest modern web technology has to offer in a way that it is productive for your developers to worth with.
+- Gatsby is optimized for performance, it will make your site as fast as possible. As the future of the web continues to trend to live on mobile, this is more important than ever.
+- Plugs into your existing Content Management System (CMS) ― be it WordPress or Shopify.
+- It utilizes the greatest modern web technology has to offer in a way that it is productive for your developers to worth with.

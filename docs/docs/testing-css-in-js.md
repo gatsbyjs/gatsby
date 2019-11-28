@@ -88,8 +88,8 @@ exports[`Button renders correctly 1`] = `
 
 If your styled component depends on `theme` via `ThemeProvider` you'll have two options:
 
--   Wrap all your components with the `ThemeProvider`
--   Use API helpers (have a look at the library's documentation, e.g. [styled-components](https://github.com/styled-components/jest-styled-components#theming) or [emotion](https://github.com/emotion-js/emotion/tree/master/packages/emotion-theming#createbroadcast-function))
+- Wrap all your components with the `ThemeProvider`
+- Use API helpers (have a look at the library's documentation, e.g. [styled-components](https://github.com/styled-components/jest-styled-components#theming) or [emotion](https://github.com/emotion-js/emotion/tree/master/packages/emotion-theming#createbroadcast-function))
 
 And this is where snapshots tests really shine. If you change, e.g. the primary color in your theme file you'll see which components get affected by this change. This way you can catch unintended changes to the style of your components.
 

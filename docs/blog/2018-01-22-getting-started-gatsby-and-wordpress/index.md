@@ -36,7 +36,7 @@ See the [docs page on `gatsby-config.js`](/docs/gatsby-config/) for more.
 
 For the curious:
 
--   `gatsby-plugin-react-helmet` is a plugin the starter includes. It's a [document head manager for React](/packages/gatsby-plugin-react-helmet/).
+- `gatsby-plugin-react-helmet` is a plugin the starter includes. It's a [document head manager for React](/packages/gatsby-plugin-react-helmet/).
 
 ## `gatsby-node.js`
 
@@ -133,12 +133,12 @@ If you include the "optional GraphQL query" noted above, the result of that quer
 
 ## Onward
 
-While this isn't a tutorial -- more a guided walkthrough of me familiarizing and stepping through an initial Gatsby setup -- if you're following along with the [demo code](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-wordpress) you're probably close to (or already!) seeing your WordPress data populate your Gatsby dev site if you run `npm run develop`!
+While this isn't a tutorial ― more a guided walkthrough of me familiarizing and stepping through an initial Gatsby setup ― if you're following along with the [demo code](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-wordpress) you're probably close to (or already!) seeing your WordPress data populate your Gatsby dev site if you run `npm run develop`!
 
 ## Sidenotes
 
-1.  You [don't need to know GraphQL](https://github.com/gatsbyjs/gatsby/issues/1172#issuecomment-308634739) to get started with Gatsby. I didn't. It's been a good introduction.
-2.  Gatsby makes heavy use of [plugins](/docs/plugins/) — both official and community — for a lot of things, from one that implements [Google Analytics](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics), to one that adds [GitHub's accessibility error scanner](https://github.com/alampros/gatsby-plugin-accessibilityjs) to all pages.
-3.  Read through some of the source code. I particularly enjoyed reading through [the bootstrap process](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/bootstrap/index.js). (It's beautifully commented).
-4.  Gatsby is a static Progressive Web App (PWA) generator, but to be PWA friendly (at least according to the [Lighthouse PWA audit](https://developers.google.com/web/tools/lighthouse/)), look into two plugins: `gatsby-plugin-manifest` and `gatsby-plugin-offline`.
-5.  I did end up [deploying with Netlify](/docs/deploying-to-netlify), and I'm super happy with it. (A [previous post](/blog/2017-12-06-gatsby-plus-contentful-plus-netlify/#solution-netlify--gatsby) discussed Netlify a bit more, if you're interested).
+1. You [don't need to know GraphQL](https://github.com/gatsbyjs/gatsby/issues/1172#issuecomment-308634739) to get started with Gatsby. I didn't. It's been a good introduction.
+2. Gatsby makes heavy use of [plugins](/docs/plugins/) — both official and community — for a lot of things, from one that implements [Google Analytics](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics), to one that adds [GitHub's accessibility error scanner](https://github.com/alampros/gatsby-plugin-accessibilityjs) to all pages.
+3. Read through some of the source code. I particularly enjoyed reading through [the bootstrap process](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/bootstrap/index.js). (It's beautifully commented).
+4. Gatsby is a static Progressive Web App (PWA) generator, but to be PWA friendly (at least according to the [Lighthouse PWA audit](https://developers.google.com/web/tools/lighthouse/)), look into two plugins: `gatsby-plugin-manifest` and `gatsby-plugin-offline`.
+5. I did end up [deploying with Netlify](/docs/deploying-to-netlify), and I'm super happy with it. (A [previous post](/blog/2017-12-06-gatsby-plus-contentful-plus-netlify/#solution-netlify--gatsby) discussed Netlify a bit more, if you're interested).

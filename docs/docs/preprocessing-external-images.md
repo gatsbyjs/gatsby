@@ -84,10 +84,10 @@ exports.onCreateNode = async ({
 
 Going step by step through the code:
 
-1.  Define some types for `MarkdownRemark` using the Schema Customization API. Defining a field for alternative text as `featuredImgAlt` can also improve accessibility, in addition to providing context for the image if it fails to load.
-2.  Create an `onCreateNode` function so you can watch for when `MarkdownRemark` nodes are made.
-3.  Use `createRemoteFileNode` by passing in the various required fields and get a reference to the file afterwards.
-4.  If the Node is created, attach it as a child of the original Node. `___NODE` tells the GraphQL layer that the name before it is going to be a field on the parent Node that links to another Node. To do this, pass the `id` as the reference. Do note, this new node is now attached to the root of the `markdownRemark` node instead of the `frontmatter` field.
+1. Define some types for `MarkdownRemark` using the Schema Customization API. Defining a field for alternative text as `featuredImgAlt` can also improve accessibility, in addition to providing context for the image if it fails to load.
+2. Create an `onCreateNode` function so you can watch for when `MarkdownRemark` nodes are made.
+3. Use `createRemoteFileNode` by passing in the various required fields and get a reference to the file afterwards.
+4. If the Node is created, attach it as a child of the original Node. `___NODE` tells the GraphQL layer that the name before it is going to be a field on the parent Node that links to another Node. To do this, pass the `id` as the reference. Do note, this new node is now attached to the root of the `markdownRemark` node instead of the `frontmatter` field.
 
 And since it is a File Node, `gatsby-transformer-sharp` will pick it up and create a `childImageSharp` child Node inside this newly created Node.
 

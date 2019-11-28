@@ -6,7 +6,7 @@ title: Page HTML Generation
 >
 > Outdated areas are:
 >
-> -   replace mentions of `data.json` with `page-data.json`
+> - replace mentions of `data.json` with `page-data.json`
 >
 > You can help by making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228).
 
@@ -14,9 +14,9 @@ In the [previous section](/docs/production-app/), we saw how Gatsby uses webpack
 
 The high level process is:
 
-1.  Create a webpack configuration for Node.js Server Side Rendering (SSR)
-2.  Build a `render-page.js` that takes a page path and renders its HTML
-3.  For each page in redux, call `render-page.js`
+1. Create a webpack configuration for Node.js Server Side Rendering (SSR)
+2. Build a `render-page.js` that takes a page path and renders its HTML
+3. For each page in redux, call `render-page.js`
 
 ## Webpack
 
@@ -26,13 +26,13 @@ For the first step, we use webpack to build an optimized Node.js bundle. The ent
 
 [static-entry.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js) exports a function that takes a path and returns rendered HTML. Here's what it does to create that HTML:
 
-1.  [Require page, json, and webpack chunk data sources](/docs/html-generation/#1-require-page-json-and-webpack-chunk-data-sources)
-2.  [Create HTML React Container](/docs/html-generation/#2-create-html-react-container)
-3.  [Load Page and Data](/docs/html-generation/#3-load-page-and-data)
-4.  [Create Page Component](/docs/html-generation/#4-create-page-component)
-5.  [Add Preload Link and Script Tags](/docs/html-generation/#5-add-preload-link-and-script-tags)
-6.  [Inject Page Info to CDATA](/docs/html-generation/#6-inject-page-info-to-cdata)
-7.  [Render Final HTML Document](/docs/html-generation/#7-render-final-html-document)
+1. [Require page, json, and webpack chunk data sources](/docs/html-generation/#1-require-page-json-and-webpack-chunk-data-sources)
+2. [Create HTML React Container](/docs/html-generation/#2-create-html-react-container)
+3. [Load Page and Data](/docs/html-generation/#3-load-page-and-data)
+4. [Create Page Component](/docs/html-generation/#4-create-page-component)
+5. [Add Preload Link and Script Tags](/docs/html-generation/#5-add-preload-link-and-script-tags)
+6. [Inject Page Info to CDATA](/docs/html-generation/#6-inject-page-info-to-cdata)
+7. [Render Final HTML Document](/docs/html-generation/#7-render-final-html-document)
 
 #### 1. Require page, json, and webpack chunk data sources
 

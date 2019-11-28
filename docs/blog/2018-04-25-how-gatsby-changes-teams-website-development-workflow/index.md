@@ -2,13 +2,13 @@
 title: How Gatsby Changes Teams' Website Development Workflow
 date: 2018-04-25
 author: "Sam Bhagwat"
-excerpt: Gatsby is more than just a new website framework -- it changes the way your team works together.
+excerpt: Gatsby is more than just a new website framework ― it changes the way your team works together.
 tags: ["gatsby-for-teams"]
 ---
 
-Gatsby is more than just a new website framework -- creating websites in Gatsby is a fundamentally different paradigm than in a CMS-specific framework.
+Gatsby is more than just a new website framework ― creating websites in Gatsby is a fundamentally different paradigm than in a CMS-specific framework.
 
-Website teams adopting Gatsby report improved collaboration at each stage -- from architecture and user research, to design and development, to testing and launch. Many of these derive from Gatsby features: faster development cycles, easy compatibility with React component libraries, a CMS-agnostic development environment, the ability to easily deploy static build artifacts.
+Website teams adopting Gatsby report improved collaboration at each stage ― from architecture and user research, to design and development, to testing and launch. Many of these derive from Gatsby features: faster development cycles, easy compatibility with React component libraries, a CMS-agnostic development environment, the ability to easily deploy static build artifacts.
 
 To fully take advantage of new, Gatsby-enabled workflows, consider adopting some of these techniques:
 
@@ -40,7 +40,7 @@ Especially if your organization already uses a React or HTML-based component lib
 
 _Make progress without access to the client CMS_
 
-Sometimes website development teams don't gain access to the client's CMS until development has already started. This can happen for a variety of reasons -- internal client policies, the need to onboard content editors, and so forth. Typically this is a difficult situation where development can be blocked or delayed, and can lead to timeline slippage, crunch time at the end of the project, and so on.
+Sometimes website development teams don't gain access to the client's CMS until development has already started. This can happen for a variety of reasons ― internal client policies, the need to onboard content editors, and so forth. Typically this is a difficult situation where development can be blocked or delayed, and can lead to timeline slippage, crunch time at the end of the project, and so on.
 
 With Gatsby, the CMS-agnostic development workflow gives teams tools to continue to make progress even without access to client content. One common approach is to develop and prototype UIs pulling placeholder content from markdown files stored in the repo. When the team gains access, it only takes a few lines of code to reconfigure the site to pull content from the CMS.
 
@@ -54,9 +54,9 @@ One option some teams have found powerful is to create static page components wi
 
 This could include:
 
--   Checking UI implementation of various components to ensure behavior is intended
--   Enabling QA visibility into desired site-specific page-level validations, such as "don't end a page in a carousel"
--   Communicating build history and last build status
+- Checking UI implementation of various components to ensure behavior is intended
+- Enabling QA visibility into desired site-specific page-level validations, such as "don't end a page in a carousel"
+- Communicating build history and last build status
 
 _Use branch and pull request-based artifacts to collaborate on specific pieces of work_
 

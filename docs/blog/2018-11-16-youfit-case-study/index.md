@@ -27,7 +27,7 @@ Youfit also wanted to optimize their location pages, which are customized based 
 
 As with many websites, Youfit depends on the site to attract new customers. But a slow site was dragging them down. The more time it takes for pages to load, the higher the bounce rate, which meant Youfit was losing potential sales. This was when Zach knew he needed to turn things around.
 
-Zach understands the digital landscape is always evolving, forcing teams and companies to learn and adjust or get left behind. When considering a website rebuild, Zach needed a solution that would help them achieve their main business objective - to generate more leads. They needed a fresh site, optimized for mobile with a stellar user experience and blazing fast page loads that captured leads.
+Zach understands the digital landscape is always evolving, forcing teams and companies to learn and adjust or get left behind. When considering a website rebuild, Zach needed a solution that would help them achieve their main business objective ― to generate more leads. They needed a fresh site, optimized for mobile with a stellar user experience and blazing fast page loads that captured leads.
 
 Zach chose Gatsby based on a recommendation from [64labs][64-labs], a mobile web development agency. They recommended Gatsby for the website rebuild because Gatsby is already optimized for performance. They knew a Gatsby website would provide incredibly fast pages load times and mobile optimization, resulting in a better user experience and increased lead generation.
 
@@ -37,10 +37,10 @@ After the website rebuild, the Youfit site was blazing fast. Navigating the site
 
 Youfit measured each page's speed post-launch and with the initial page load, the load time was _at least cut in half_! Since the relaunch of the website, they've also experienced:
 
--   22% increase in organic traffic
--   50%+ increase in accessibility score, causing their Google search rank to climb
--   An immediate 10% decrease in bounce rate, with exponential improvements projected in the near future
--   60% increase in lead conversion rates as more people signed up for a free trial
+- 22% increase in organic traffic
+- 50%+ increase in accessibility score, causing their Google search rank to climb
+- An immediate 10% decrease in bounce rate, with exponential improvements projected in the near future
+- 60% increase in lead conversion rates as more people signed up for a free trial
 
 Prior to the website rebuild, Youfit viewed their website as an "add-on" because the team did not see it as critical to the success of the company. But now that they are experiencing first-hand the benefits of Gatsby, their website has become a primary channel for lead generation.
 

@@ -16,7 +16,7 @@ The Impossible Burger is the breakout offering from the company, and it made a s
 
 The first version of the Impossible Foods website was adequate, but as the company grew several problems became evident. Designers and writers struggled with slow turn around times because the website could only be updated by a developer. The site's pages and map section were both static, providing no experience to users other than the delivery of flat information.
 
-Impossible Foods needed a website with new functionality, that could withstand surges in traffic as interest and demand for their innovative burgers grew around the world. And the website needed to offer a first-class experience to all stakeholders - from content editors and IT staff, to restaurants and consumers. These challenges and requirements led the Impossible Foods team to adopt a ["Content Mesh"](/blog/2018-10-04-journey-to-the-content-mesh) approach to their website architecture, with Contentful as a [headless CMS](/docs/headless-cms), Shopify for ecommerce, and Gatsby.
+Impossible Foods needed a website with new functionality, that could withstand surges in traffic as interest and demand for their innovative burgers grew around the world. And the website needed to offer a first-class experience to all stakeholders ― from content editors and IT staff, to restaurants and consumers. These challenges and requirements led the Impossible Foods team to adopt a ["Content Mesh"](/blog/2018-10-04-journey-to-the-content-mesh) approach to their website architecture, with Contentful as a [headless CMS](/docs/headless-cms), Shopify for ecommerce, and Gatsby.
 
 ## The Content Mesh Approach for Ecommerce
 

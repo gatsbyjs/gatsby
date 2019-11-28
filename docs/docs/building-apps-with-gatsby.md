@@ -4,8 +4,8 @@ title: Building Apps with Gatsby
 
 Gatsby is an excellent framework for building web apps. You can use Gatsby to create personalized, logged-in experiences with two different approaches.
 
-1.  "hybrid" app pages, and
-2.  client-only routes & user authentication
+1. "hybrid" app pages, and
+2. client-only routes & user authentication
 
 ## Hybrid app pages
 
@@ -15,8 +15,8 @@ When a visitor lands on a Gatsby page, the page's HTML file is loaded first, the
 
 Some examples of how you could apply this:
 
--   A news site with live data like sports scores or the weather
--   An e-commerce site with universal product pages and category pages, but also personalized recommendation sections
+- A news site with live data like sports scores or the weather
+- An e-commerce site with universal product pages and category pages, but also personalized recommendation sections
 
 You can also use your React components to create interactive widgets e.g. allow a user to do searches or submit forms. Because Gatsby is just React, it's easy to blend static and interactive/dynamic models of building web sites.
 

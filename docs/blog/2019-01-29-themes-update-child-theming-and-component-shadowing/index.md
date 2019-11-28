@@ -33,12 +33,12 @@ will improve the ability of people with different skill sets to create
 accessible, performant, beautiful sites. A few that I had in mind while building
 out child theming are:
 
--   A designer who wants to change a set of design tokens to create a whole new
-    look for a theme
--   Someone who is more familiar with HTML and CSS than React and GraphQL and
-    wants to create a set of child blog themes
--   Someone familiar with GraphQL wants to enable new functionality by writing
-    their own queries for page templates
+- A designer who wants to change a set of design tokens to create a whole new
+          look for a theme
+- Someone who is more familiar with HTML and CSS than React and GraphQL and
+          wants to create a set of child blog themes
+- Someone familiar with GraphQL wants to enable new functionality by writing
+          their own queries for page templates
 
 We also want child themes to enable an ecosystem to build on top of and compose
 with each other. The 80% use case for a blog should be capable of being built on
@@ -117,8 +117,8 @@ we've changed Component Shadowing so that it now applies to the entire `src/`
 directory instead of just the `src/components` directory. This change was made
 because of two key points of feedback:
 
-1.  people had trouble remembering which folders got shadowed
-2.  people who did remember, also wanted shadowing on templates and other, new
+1. people had trouble remembering which folders got shadowed
+2. people who did remember, also wanted shadowing on templates and other, new
     directories (for example one for design tokens) that didn't belong in
     components
 

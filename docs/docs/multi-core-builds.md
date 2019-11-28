@@ -18,11 +18,11 @@ You could negatively impact performance if you use this variable incorrectly. Th
 
 Set the `GATSBY_CPU_COUNT` environment variable whilst running the `gatsby build` command.
 
-`GATSBY_CPU_COUNT=physical_cores` - (default) calculate the number of worker pools based on the number of physical CPU cores on your machine.
+`GATSBY_CPU_COUNT=physical_cores` ― (default) calculate the number of worker pools based on the number of physical CPU cores on your machine.
 
-`GATSBY_CPU_COUNT=logical_cores` - calculate the number worker of pools based on the number of logical CPU cores on your machine.
+`GATSBY_CPU_COUNT=logical_cores` ― calculate the number worker of pools based on the number of logical CPU cores on your machine.
 
-`GATSBY_CPU_COUNT=2` - calculate the number worker pools based on a definite number.
+`GATSBY_CPU_COUNT=2` ― calculate the number worker pools based on a definite number.
 
 ## More information
 

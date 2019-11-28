@@ -105,7 +105,7 @@ There are a dozen [Gatsby-friendly form builders](/docs/building-a-contact-form)
 
 That's amazing!
 
-## The bottom line - Gatsby will make your agency more profitable
+## The bottom line ― Gatsby will make your agency more profitable
 
 Brian Webster of Delicious Simplicity shared that using Gatsby for client sites has enabled him to win more bids, because the cost is lower.
 

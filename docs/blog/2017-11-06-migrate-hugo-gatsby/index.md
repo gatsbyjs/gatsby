@@ -18,13 +18,13 @@ decided to take a different route—building it from scratch.
 I focused on the process, looking for ways to make site building more generic
 and reusable.
 
--   Content migration
--   Programmatic page creation in Gatsby
--   Manage styles with
-    [`Typography.js`](http://kyleamathews.github.io/typography.js/)
--   Automatic pagination
--   Tag pages
--   Add an admin panel with [NetlifyCMS](https://www.netlifycms.org/)
+- Content migration
+- Programmatic page creation in Gatsby
+- Manage styles with
+          [`Typography.js`](http://kyleamathews.github.io/typography.js/)
+- Automatic pagination
+- Tag pages
+- Add an admin panel with [NetlifyCMS](https://www.netlifycms.org/)
 
 This article will highlight lessons learned from the process, with the aim to
 provide high-level guidelines about patterns which can be applied in migrations
@@ -82,7 +82,7 @@ only issue I had was that sometimes titles were longer than 1 line and were not
 parse-able, so I just had to cut some words out where problematic.
 
 My previous frontmatter already contained `title`, `date`, `tags`, and most
-importantly - the `slug` fields. These were enough for my later work on the
+importantly ― the `slug` fields. These were enough for my later work on the
 programmatic creation of pages explained in the next section.
 
 ### Programmatic page creation
@@ -152,7 +152,7 @@ I re-use the `slug` field of the frontmatter of my existing structure. I don't
 have to generate or calculate slugs based on information of other fields, i.e.
 my scenario is easier than the tutorial on the official docs.
 
-This is an example of "unfair" easy - I don't have to do literally anything to
+This is an example of "unfair" easy ― I don't have to do literally anything to
 keep my previous URLs of existing content the same in the new system.
 
 The display of the data is handled by a React component acting as a template. My
@@ -287,10 +287,10 @@ module.exports = (createPage, nodes) => {
   groupedPages.forEach((group, index, groups) => {
     const pageIndex = index === 0 ? `` : index + 1
     const paginationRoute = `/blog/${pageIndex}`
-    // Avoid showing `Previous` link on first page - passed to context
+    // Avoid showing `Previous` link on first page ― passed to context
     const first = index === 0 ? true : false
-    // Avoid showing `Next` link if this is the last page - passed to context
-    const last = index === groups.length - 1 ? true : false
+    // Avoid showing `Next` link if this is the last page ― passed to context
+    const last = index === groups.length ― 1 ? true : false
 
     return createPage({
       path: paginationRoute,
@@ -324,7 +324,7 @@ const BlogPagedIndex = ({ pathContext }) => {
       // The pager
       <div>
         {!first && (
-          <Link to={`/blog/${index > 2 ? index - 1 : ''}`}>Newer posts<Link>
+          <Link to={`/blog/${index > 2 ? index ― 1 : ''}`}>Newer posts<Link>
         )}
         {!last && (
           <Link to={`/blog/${index + 1}`}>Older posts</Link>

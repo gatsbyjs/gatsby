@@ -10,14 +10,14 @@ Part of what makes Gatsby sites so fast is its recommended approach to handling 
 
 ## In this doc
 
--   [Setting up Gatsby Image](#setting-up-gatsby-image)
--   [Types of images with `gatsby-image`](#types-of-images-with-gatsby-image)
-    -   [Fixed images and parameters](#images-with-a-fixed-width-and-height)
-    -   [Fluid images and parameters](#images-that-stretch-across-a-fluid-container)
-    -   [Resized images](#resized-images)
-    -   [Shared query parameters](#shared-query-parameters)
--   [Image query fragments](#image-query-fragments)
--   [Gatsby Image props](#gatsby-image-props)
+- [Setting up Gatsby Image](#setting-up-gatsby-image)
+- [Types of images with `gatsby-image`](#types-of-images-with-gatsby-image)
+    - [Fixed images and parameters](#images-with-a-fixed-width-and-height)
+    - [Fluid images and parameters](#images-that-stretch-across-a-fluid-container)
+    - [Resized images](#resized-images)
+    - [Shared query parameters](#shared-query-parameters)
+- [Image query fragments](#image-query-fragments)
+- [Gatsby Image props](#gatsby-image-props)
 
 ## Setting up Gatsby Image
 
@@ -102,18 +102,18 @@ export default () => {
 
 In a query, you can specify options for fixed images.
 
--   `width` (int, default: 400)
--   `height` (int)
--   `quality` (int, default: 50)
+- `width` (int, default: 400)
+- `height` (int)
+- `quality` (int, default: 50)
 
 #### Returns
 
--   `base64` (string)
--   `aspectRatio` (float)
--   `width` (float)
--   `height` (float)
--   `src` (string)
--   `srcSet` (string)
+- `base64` (string)
+- `aspectRatio` (float)
+- `width` (float)
+- `height` (float)
+- `src` (string)
+- `srcSet` (string)
 
 This is where fragments like `GatsbyImageSharpFixed` come in handy, as they'll return all the above items in one line without having to type them all out:
 
@@ -173,22 +173,22 @@ export default () => {
 
 In a query, you can specify options for fluid images.
 
--   `maxWidth` (int, default: 800)
--   `maxHeight`(int)
--   `quality` (int, default: 50)
--   `srcSetBreakpoints` (array of int, default: \[])
--   `fit` (string, default: `[sharp.fit.cover][6]`)
--   `background` (string, default: `rgba(0,0,0,1)`)
+- `maxWidth` (int, default: 800)
+- `maxHeight`(int)
+- `quality` (int, default: 50)
+- `srcSetBreakpoints` (array of int, default: \[])
+- `fit` (string, default: `[sharp.fit.cover][6]`)
+- `background` (string, default: `rgba(0,0,0,1)`)
 
 #### Returns
 
--   `base64` (string)
--   `src` (string)
--   `width` (int)
--   `height` (int)
--   `aspectRatio` (float)
--   `src` (string)
--   `srcSet` (string)
+- `base64` (string)
+- `src` (string)
+- `width` (int)
+- `height` (int)
+- `aspectRatio` (float)
+- `src` (string)
+- `srcSet` (string)
 
 This is where fragments like `GatsbyImageSharpFluid` come in handy, as they'll return all the above items in one line without having to type them all out:
 
@@ -212,21 +212,21 @@ In addition to _fixed_ and _fluid_ images, the `gatsby-image` API allows you to 
 
 #### Parameters
 
--   `width` (int, default: 400)
--   `height` (int)
--   `quality` (int, default: 50)
--   `jpegProgressive` (bool, default: true)
--   `pngCompressionLevel` (int, default: 9)
--   `base64`(bool, default: false)
+- `width` (int, default: 400)
+- `height` (int)
+- `quality` (int, default: 50)
+- `jpegProgressive` (bool, default: true)
+- `pngCompressionLevel` (int, default: 9)
+- `base64`(bool, default: false)
 
 #### Returns
 
 Resize returns an object with the following items:
 
--   `src` (string)
--   `width` (int)
--   `height` (int)
--   `aspectRatio` (float)
+- `src` (string)
+- `width` (int)
+- `height` (int)
+- `aspectRatio` (float)
 
 ```graphql
 allImageSharp {
@@ -244,11 +244,11 @@ allImageSharp {
 
 In addition to `gatsby-plugin-sharp` settings in `gatsby-config.js`, there are additional query options that apply to both _fluid_ and _fixed_ images:
 
--   `grayscale` (bool, default: false)
--   `duotone` (bool|obj, default: false)
--   `toFormat` (string, default: \`\`)
--   `cropFocus` (string, default: `[sharp.strategy.attention][6]`)
--   `pngCompressionSpeed` (int, default: 4)
+- `grayscale` (bool, default: false)
+- `duotone` (bool|obj, default: false)
+- `toFormat` (string, default: \`\`)
+- `cropFocus` (string, default: `[sharp.strategy.attention][6]`)
+- `pngCompressionSpeed` (int, default: 4)
 
 Here's an example of using the `duotone` option with a fixed image:
 
@@ -265,7 +265,7 @@ fixed(
 <figure>
   <img alt="Jay Gatsby holding wine class in normal color and duotone." src="./images/duotone-before-after.png" />
   <figcaption>
-    Duotone | Before - After
+    Duotone | Before ― After
   </figcaption>
 </figure>
 
@@ -280,7 +280,7 @@ fixed(
 <figure>
   <img alt="Jay Gatsby holding wine class in normal color and duotone." src="./images/grayscale-before-after.png" />
   <figcaption>
-    Grayscale | Before - After
+    Grayscale | Before ― After
   </figcaption>
 </figure>
 
@@ -296,21 +296,21 @@ GraphQL includes a concept called "query fragments", which are a part of a query
 
 #### Fixed images
 
--   `GatsbyImageSharpFixed`
--   `GatsbyImageSharpFixed_noBase64`
--   `GatsbyImageSharpFixed_tracedSVG`
--   `GatsbyImageSharpFixed_withWebp`
--   `GatsbyImageSharpFixed_withWebp_noBase64`
--   `GatsbyImageSharpFixed_withWebp_tracedSVG`
+- `GatsbyImageSharpFixed`
+- `GatsbyImageSharpFixed_noBase64`
+- `GatsbyImageSharpFixed_tracedSVG`
+- `GatsbyImageSharpFixed_withWebp`
+- `GatsbyImageSharpFixed_withWebp_noBase64`
+- `GatsbyImageSharpFixed_withWebp_tracedSVG`
 
 #### Fluid images
 
--   `GatsbyImageSharpFluid`
--   `GatsbyImageSharpFluid_noBase64`
--   `GatsbyImageSharpFluid_tracedSVG`
--   `GatsbyImageSharpFluid_withWebp`
--   `GatsbyImageSharpFluid_withWebp_noBase64`
--   `GatsbyImageSharpFluid_withWebp_tracedSVG`
+- `GatsbyImageSharpFluid`
+- `GatsbyImageSharpFluid_noBase64`
+- `GatsbyImageSharpFluid_tracedSVG`
+- `GatsbyImageSharpFluid_withWebp`
+- `GatsbyImageSharpFluid_withWebp_noBase64`
+- `GatsbyImageSharpFluid_withWebp_tracedSVG`
 
 #### About `noBase64`
 

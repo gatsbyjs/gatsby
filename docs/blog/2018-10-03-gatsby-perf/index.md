@@ -11,9 +11,9 @@ We say it all the time: Gatsby sites are blazing fast.
 
 It's a great tagline. But for you, that might raise more questions:
 
--   What's the value in being blazing fast?
--   How do you know it's blazing fast?
--   How can it be even more blazing (incineratingly?) fast?
+- What's the value in being blazing fast?
+- How do you know it's blazing fast?
+- How can it be even more blazing (incineratingly?) fast?
 
 These are questions the Gatsby core team has thought about recently, since our recent release of Gatsby v2 improved upon Gatsby v1's gold standard to squeeze even more performance out of every site.
 
@@ -73,10 +73,10 @@ Armed with the powerful combo of Lighthouse, WebPagetest, and a knowledge of som
 
 Gatsby v1 was in many ways an experiment to prove out some meaningful ideas:
 
--   Injecting content at _build time_ from remote data sources with GraphQL
--   Statically rendering React components to HTML to maximize performance and SEO
--   Static site generation _and_ app-like functionality with React hydration
--   A pluggable and extensible architecture to augment and enhance Gatsby's base feature set and give Gatsby superpowers.
+- Injecting content at _build time_ from remote data sources with GraphQL
+- Statically rendering React components to HTML to maximize performance and SEO
+- Static site generation _and_ app-like functionality with React hydration
+- A pluggable and extensible architecture to augment and enhance Gatsby's base feature set and give Gatsby superpowers.
 
 [Pull data from WordPress at build time][`gatsby-source-wordpress`]? Sure. [Author your application in TypeScript][`gatsby-plugin-typescript`]? Seems reasonable. All this while maintaining sane and optimized defaults to truly squeeze every ounce of performance out of your application.
 

@@ -43,7 +43,7 @@ cd tutorial-part-three
 
 There are two main steps to using a plugin: Installing and configuring.
 
-1.  Install the `gatsby-plugin-typography` NPM package.
+1. Install the `gatsby-plugin-typography` NPM package.
 
 ```shell
 npm install --save gatsby-plugin-typography react-typography typography typography-theme-fairy-gates
@@ -51,7 +51,7 @@ npm install --save gatsby-plugin-typography react-typography typography typograp
 
 > Note: Typography.js requires a few additional packages, so those are included in the instructions. Additional requirements like this will be listed in the "install" instructions of each plugin.
 
-2.  Edit the file `gatsby-config.js` at the root of your project to the following:
+2. Edit the file `gatsby-config.js` at the root of your project to the following:
 
 ```javascript:title=gatsby-config.js
 module.exports = {
@@ -70,7 +70,7 @@ The `gatsby-config.js` is another special file that Gatsby will automatically re
 
 > Check out the [doc on `gatsby-config.js`](/docs/gatsby-config/) to read more, if you wish.
 
-3.  Typography.js needs a configuration file. Create a new directory called `utils` in the `src` directory. Then add a new file called `typography.js` to `utils` and copy the following into the file:
+3. Typography.js needs a configuration file. Create a new directory called `utils` in the `src` directory. Then add a new file called `typography.js` to `utils` and copy the following into the file:
 
 ```javascript:title=src/utils/typography.js
 import Typography from "typography"
@@ -82,7 +82,7 @@ export const { scale, rhythm, options } = typography
 export default typography
 ```
 
-4.  Start the development server.
+4. Start the development server.
 
 ```shell
 gatsby develop
@@ -175,9 +175,9 @@ You'll tackle these changes by creating your first layout component.
 
 ### ✋ Create your first layout component
 
-1.  Create a new directory at `src/components`.
+1. Create a new directory at `src/components`.
 
-2.  Create a very basic layout component at `src/components/layout.js`:
+2. Create a very basic layout component at `src/components/layout.js`:
 
 ```jsx:title=src/components/layout.js
 import React from "react"
@@ -189,7 +189,7 @@ export default ({ children }) => (
 )
 ```
 
-3.  Import this new layout component into your `src/pages/index.js` page component:
+3. Import this new layout component into your `src/pages/index.js` page component:
 
 ```jsx:title=src/pages/index.js
 import React from "react"
@@ -212,13 +212,13 @@ Sweet, the layout is working! The content of your index page is still centered.
 
 But try navigating to `/about/`, or `/contact/`. The content on those pages still won't be centered.
 
-4.  Import the layout component in `about.js` and `contact.js` (as you did for `index.js` in the previous step).
+4. Import the layout component in `about.js` and `contact.js` (as you did for `index.js` in the previous step).
 
 The content of all three of your pages is centered thanks to this single shared layout component!
 
 ### ✋ Add a site title
 
-1.  Add the following line to your new layout component:
+1. Add the following line to your new layout component:
 
 ```jsx:title=src/components/layout.js
 import React from "react"
@@ -237,7 +237,7 @@ If you go to any of your three pages, you'll see the same title added, e.g. the 
 
 ### ✋ Add navigation links between pages
 
-1.  Copy the following into your layout component file:
+1. Copy the following into your layout component file:
 
 ```jsx:title=src/components/layout.js
 import React from "react"

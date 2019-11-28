@@ -54,7 +54,7 @@ Edit the `gatsby-config.js` file and replace the `guid` and `apiKey` with yours.
 
 You can find your API keys on the Getting Started page in the Agility CMS Content Manager.
 
-![Agility CMS - Dashboard - API Keys](./images/agilitycms-api-keys.png)
+![Agility CMS ― Dashboard ― API Keys](./images/agilitycms-api-keys.png)
 
 If you use the `preview` key, you won't have to publish to see the changes you've made show up. If you use the `fetch` key, make sure you've published any content you wish to see changed.
 
@@ -66,7 +66,7 @@ All of those pages and content are then made available in GraphQL to the React C
 
 Check out the component called "Jumbotron". This is an example of how to display a styled heading and sub-heading with content that comes from Agility CMS. Here is the Module that provides this content being edited in the Agility CMS Content Manager:
 
-![Agility CMS - Example Module - Jumbotron](./images/agilitycms-jumbotron.png)
+![Agility CMS ― Example Module ― Jumbotron](./images/agilitycms-jumbotron.png)
 
 And here is the code used to render it. Notice that the `title` and `subTitle` fields are available as properties of the `item.fields` object.
 

@@ -44,9 +44,9 @@ Take the above URL and paste it in to a browser to see Pixabay's response to you
 
 Your plugin will have the following behavior:
 
--   Accept config options like a Pixabay API key and a search query
--   Make an API request using the provided config options
--   Convert the data in the API response to Gatsby's node system
+- Accept config options like a Pixabay API key and a search query
+- Make an API request using the provided config options
+- Convert the data in the API response to Gatsby's node system
 
 ### Setup a new Gatsby site
 
@@ -269,7 +269,7 @@ Photo data is: { largeImageURL: 'https://pixabay.com/get/ea36b70d29fd073ed1584d0
   ...(more data follows)...
 ```
 
-You're ready to add the final step of your plugin - converting this data into a Gatsby node.
+You're ready to add the final step of your plugin ― converting this data into a Gatsby node.
 
 ### Use `createNode` function
 
@@ -370,10 +370,10 @@ Don't publish this particular plugin to npm or the Gatsby Plugin Library, becaus
 
 You've written a local Gatsby plugin that:
 
--   can be configured with an entry in your `gatsby-config.js` file
--   requests data from a third-party API
--   pulls the API data into Gatsby's node system
--   allows the data to be queried with GraphQL
+- can be configured with an entry in your `gatsby-config.js` file
+- requests data from a third-party API
+- pulls the API data into Gatsby's node system
+- allows the data to be queried with GraphQL
 
 Congratulations!
 
@@ -381,7 +381,7 @@ Congratulations!
 
 Your plugin has been adapted from Jason Lengstorf's [`gatsby-source-pixabay` plugin](https://www.npmjs.com/package/gatsby-source-pixabay). Check out [the source on GitHub](https://github.com/jlengstorf/gatsby-source-pixabay).
 
-Try adding new features to your plugin, for example - download images from Pixabay, improve error handling, add documentation or automated tests.
+Try adding new features to your plugin, for example ― download images from Pixabay, improve error handling, add documentation or automated tests.
 
 Check out Gatsby's docs on [plugin authoring](/docs/creating-plugins/) and [creating a source plugin](/docs/creating-a-source-plugin/).
 

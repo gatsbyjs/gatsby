@@ -38,4 +38,4 @@ Additional modification steps are available in the [`gatsby-plugin-sitemap` docu
 
 ## More information
 
--   Also check out a post on [`gatsby-plugin-advanced-sitemap`](/blog/2019-05-07-advanced-sitemap-plugin-for-seo/) from the Gatsby blog
+- Also check out a post on [`gatsby-plugin-advanced-sitemap`](/blog/2019-05-07-advanced-sitemap-plugin-for-seo/) from the Gatsby blog

@@ -14,22 +14,22 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 
 ## Question Categories
 
--   [Functional Questions](#functional-questions-how-do-i-do-x-with-gatsby)
--   [GraphQL / Data Layer](#graphql--data-layer)
--   [Best Practices with Gatsby](#best-practices-with-gatsby)
--   [Content Management Systems (CMS)](#content-management-systems-cms)
--   [Gatsby for Dynamic Web Apps](#gatsby-for-dynamic-web-apps)
--   [Gatsby vs. Competitors](#gatsby-vs-competitors)
--   [Scaling Gatsby (Gatsby for Large Apps)](#scaling-gatsby-gatsby-for-large-apps)
--   [Gatsby Use Cases](#gatsby-use-cases)
--   [Misc. Questions](#misc-questions)
+- [Functional Questions](#functional-questions-how-do-i-do-x-with-gatsby)
+- [GraphQL / Data Layer](#graphql--data-layer)
+- [Best Practices with Gatsby](#best-practices-with-gatsby)
+- [Content Management Systems (CMS)](#content-management-systems-cms)
+- [Gatsby for Dynamic Web Apps](#gatsby-for-dynamic-web-apps)
+- [Gatsby vs. Competitors](#gatsby-vs-competitors)
+- [Scaling Gatsby (Gatsby for Large Apps)](#scaling-gatsby-gatsby-for-large-apps)
+- [Gatsby Use Cases](#gatsby-use-cases)
+- [Misc. Questions](#misc-questions)
 
 ### Functional Questions (How do I do X with Gatsby?)
 
 **Question:** Can I serialize an api to be stored and accessed client-side only?
 **Answer:** Yup (with a source plugin!). If it's a GraphQL API you can even use [`gatsby-source-graphql`](/packages/gatsby-source-graphql/) to invoke that API at _build time_
 
-**Question:** How would you recommend handling Gatsby pointing to environment specific endpoints? For example, we're required to deploy the same artifact to dev - uat - prod, so for pointing our app at the appropriate endpoint, we're looking at location.href and using if/else to determine the endpoint. Is there a better way?
+**Question:** How would you recommend handling Gatsby pointing to environment specific endpoints? For example, we're required to deploy the same artifact to dev ― uat ― prod, so for pointing our app at the appropriate endpoint, we're looking at location.href and using if/else to determine the endpoint. Is there a better way?
 **Answer:** Check out [Environment Variables](/docs/environment-variables/).
 
 **Question:** Is it possible to have the `gatsby-*.js` files be rewritten in TypeScript?
@@ -96,7 +96,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 ### Content Management Systems (CMS)
 
 **Question:** Will Gatsby compile/export static files using the theme from a Ghost installation or will Gatsby compile/export based on another Gatsby theme?
-**Answer:** When you use Gatsby + Ghost you will construct UI in Gatsby rather than Ghost -- [Modern publications with Gatsby & Ghost](/blog/2019-01-14-modern-publications-with-gatsby-ghost/)
+**Answer:** When you use Gatsby + Ghost you will construct UI in Gatsby rather than Ghost ― [Modern publications with Gatsby & Ghost](/blog/2019-01-14-modern-publications-with-gatsby-ghost/)
 
 **Question:** Should I stop using WordPress altogether? Does WordPress play well with Gatsby or is Contentful better? Looks like JAMstack is a WordPress killer.
 **Answer:** It's not a 100% replacement yet — best to start experimenting with things and see how it feels!
@@ -109,13 +109,13 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Answer:** People have written about their experiences on our blog. Here are some [blog posts about WordPress](/blog/tags/wordpress).
 
 **Question:** What are best practices for making a Gatsby site dynamic by posting/fetching to/from a DB, like MongoDB, MySql, etc..
-**Answer:** You can use a DB as your backend -- [Sourcing from Databases](/docs/sourcing-from-databases/). Posting to a database can be done with AJAX requests.
+**Answer:** You can use a DB as your backend ― [Sourcing from Databases](/docs/sourcing-from-databases/). Posting to a database can be done with AJAX requests.
 
 **Question:** What are your thoughts on sanity.io?
 **Answer:** Seems great :) Check out this blog post for more info: [Blazing fast development with Gatsby and Sanity.io](/blog/2019-01-25-blazing-fast-development-with-gatsby-and-sanity-io/)
 
 **Question:** What are some best practices around aligning (dynamic) CMS content schema with code changes in Gatsby?
-**Answer:** Great question - and we have some thoughts here. We're launching cloud services to tackle this very problem in 2019. In the interim--most CMSs have some type of webhook content, so you can trigger a re-build (static content is cheap, and so are changes!) when content changes.
+**Answer:** Great question ― and we have some thoughts here. We're launching cloud services to tackle this very problem in 2019. In the interim--most CMSs have some type of webhook content, so you can trigger a re-build (static content is cheap, and so are changes!) when content changes.
 
 **Question:** Would it be a good idea to manage several blogs or sites from one WordPress install as back office, and build all the sites on Gatsby?
 **Answer:** That would be a great idea! We've talked to some folks doing this.
@@ -196,11 +196,11 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Answer:** Not a strict upper limit, more of a rough one that we've seen in the wild.
 
 **Question:** Is there any way to only build new or updated content instead of the full site?
-**Answer:** Not currently - but this is on our roadmap. We're calling it "incremental re-builds," and we're super excited to begin working on this!
+**Answer:** Not currently ― but this is on our roadmap. We're calling it "incremental re-builds," and we're super excited to begin working on this!
 
 ### Gatsby Use Cases
 
-**Question:** To use Gatsby for a blog - is this overengineering?
+**Question:** To use Gatsby for a blog ― is this overengineering?
 **Answer:** Definitely not! [Here are some blogs built with Gatsby](/showcase/?filters%5B0%5D=Blog). One notable one is Dan Abramov's — <https://overreacted.io/>
 
 **Question:** Is it overkill to build every site with Gatsby?
@@ -272,7 +272,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Answer:** This is turned off on low-power devices.
 
 **Question:** Re content updates: But is a new build triggered on _every_ content change?
-**Answer:** You can configure it that way -- send webhooks to have your CI server rebuild.
+**Answer:** You can configure it that way ― send webhooks to have your CI server rebuild.
 
 **Question:** Can you talk more about Themes & how to create custom themes for V2?
 **Answer:** Look at [Introducing Gatsby Themes blog post](/blog/2018-11-11-introducing-gatsby-themes/) and [Introducing Gatsby Themes video](https://www.gatsbyjs.com/gatsby-days-themes-chris/) and stay tuned for more posts in next week!
@@ -286,6 +286,6 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Question:** What's the best way to get involved with contributing to Gatsby? Do you have regular calls for contributors or a preferred async channel e.g. Slack / Discord?
 **Answer:** We do have Discord, and highly recommend it! Check out our [Community page](/contributing/community/).
 
-* * *
+---
 
 Reminder that if you want to watch the full recorded webinar, [register here](https://www.gatsbyjs.com/behind-the-scenes/). Thanks for stopping by!

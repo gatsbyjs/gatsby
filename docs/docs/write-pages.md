@@ -6,9 +6,9 @@ title: Write Out Pages
 >
 > Outdated areas are:
 >
-> -   `data.json` should be replaced with `page-data.json`
-> -   remove mentions of `pages.json`
-> -   describe `match-paths.json`
+> - `data.json` should be replaced with `page-data.json`
+> - remove mentions of `pages.json`
+> - describe `match-paths.json`
 >
 > You can help by making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228).
 
@@ -52,19 +52,19 @@ Most of the code backing this section is in [pages-writer.js](https://github.com
 
 The dynamic files that are created are (all under the `.cache` directory).
 
--   [pages.json](#pagesjson)
--   [sync-requires.js](#sync-requiresjs)
--   [async-requires.js](#async-requiresjs)
--   [data.json](#datajson)
+- [pages.json](#pagesjson)
+- [sync-requires.js](#sync-requiresjs)
+- [async-requires.js](#async-requiresjs)
+- [data.json](#datajson)
 
 ## pages.json
 
 This is a collection of page objects, created from redux `pages` namespace. For each page it includes the
 
--   [componentChunkName](/docs/behind-the-scenes-terminology/#componentchunkname)
--   [jsonName](/docs/behind-the-scenes-terminology/#jsonname)
--   [path](/docs/behind-the-scenes-terminology/#path)
--   [matchPath](/docs/behind-the-scenes-terminology/#matchpath)
+- [componentChunkName](/docs/behind-the-scenes-terminology/#componentchunkname)
+- [jsonName](/docs/behind-the-scenes-terminology/#jsonname)
+- [path](/docs/behind-the-scenes-terminology/#path)
+- [matchPath](/docs/behind-the-scenes-terminology/#matchpath)
 
 The pages are sorted such that those with `matchPath`s come before those without. This is to assist [find-page.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/find-page.js) in selecting pages via regex before trying explicit paths. See [matchPaths](/docs/behind-the-scenes-terminology/#matchpath) for more info.
 
@@ -98,7 +98,7 @@ It is used during [static-entry.js](https://github.com/gatsbyjs/gatsby/blob/mast
 
 ## async-requires.js
 
-* * *
+---
 
 `async-requires.js` is very similar to `sync-requires.js`, in that it is a dynamically generated JavaScript file. The difference is that it is written to be used for code splitting via webpack. So, instead of using `require` with the component's path, it uses `import` and adds a `webpackChunkName` hint so that we can eventually link the componentChunkName to its resulting file (more info in [Code Splitting](/docs/how-code-splitting-works/) docs). `components` is a function, so that it can be lazily initialized.
 
@@ -146,7 +146,7 @@ This is a generated json file. It contains the entire `pages.json` contents ([as
 
 It is also used by [Page HTML Generation](/docs/html-generation/) in two ways:
 
-1.  `static-entry.js` produces a `page-renderer.js` webpack bundle that generates the HTML for a path. It requires `data.json` and uses the `pages` to lookup the page for the page.
-2.  To get the `jsonName` from the page object, and uses it to construct a resource path for the actual json result by looking it up in `data.json.dataPaths[jsonName]`.
+1. `static-entry.js` produces a `page-renderer.js` webpack bundle that generates the HTML for a path. It requires `data.json` and uses the `pages` to lookup the page for the page.
+2. To get the `jsonName` from the page object, and uses it to construct a resource path for the actual json result by looking it up in `data.json.dataPaths[jsonName]`.
 
 Now that we've written out page data, we can start on the [Webpack section](/docs/webpack-and-ssr/).

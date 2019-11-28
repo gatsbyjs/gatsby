@@ -13,22 +13,22 @@ _This blog post was originally posted on the [Contentful Docs](https://www.conte
 
 Working with React and having an emphasis on speedy performance, Gatsby is a promising static site generator that allows you to connect your projects to a variety of APIs and data sources; including Contentful's content infrastructure.
 
-This piece will walk you through getting your Gatsby website up and running with Contentful. Contentful makes it easy for you to focus on developing beautiful, well-performing websites while we deliver the content - this makes us a great companion to the full-fledged static content authoring experience offered by Gatsby.
+This piece will walk you through getting your Gatsby website up and running with Contentful. Contentful makes it easy for you to focus on developing beautiful, well-performing websites while we deliver the content ― this makes us a great companion to the full-fledged static content authoring experience offered by Gatsby.
 
 Here's an overview of what's involved:
 
--   Create a free Contentful account
--   Clone a sample repo
--   Create a space on Contentful to store content
--   Generate your Content Management and Content Delivery API access tokens
--   Import data into your space
--   Tweak your configuration file
--   Preview a production build
--   Publish and go live
+- Create a free Contentful account
+- Clone a sample repo
+- Create a space on Contentful to store content
+- Generate your Content Management and Content Delivery API access tokens
+- Import data into your space
+- Tweak your configuration file
+- Preview a production build
+- Publish and go live
 
 \###Getting started
 
-This guide assumes that you have [Gatsby installed](/docs/) and, optionally, a [GitHub account](https://github.com/join). You will also need a free Contentful account - [creating one](https://www.contentful.com/sign-up/) only takes a moment.
+This guide assumes that you have [Gatsby installed](/docs/) and, optionally, a [GitHub account](https://github.com/join). You will also need a free Contentful account ― [creating one](https://www.contentful.com/sign-up/) only takes a moment.
 
 Start by using this with the Gatsby CLI:
 
@@ -60,17 +60,17 @@ Create a new empty space by opening the sidebar menu and adding a Space. Give th
 
 Before getting to the exciting part of setting up your website, you first need to generate three access tokens to get your Contentful-powered website up and running by fetching data from the API.
 
--   [Content Management API](https://www.contentful.com/developers/docs/references/content-management-api/)
--   [Content Delivery API](https://www.contentful.com/developers/docs/references/content-delivery-api/)
--   [Content Preview API](https://www.contentful.com/developers/docs/references/content-preview-api/)
+- [Content Management API](https://www.contentful.com/developers/docs/references/content-management-api/)
+- [Content Delivery API](https://www.contentful.com/developers/docs/references/content-delivery-api/)
+- [Content Preview API](https://www.contentful.com/developers/docs/references/content-preview-api/)
 
 Head over to your Space Settings dropdown menu and navigate to the APIs section. From there, navigate to the tab for the API token you would like to generate.
 
-The Content Management API is used for write access to your space, so keep the generated token safe and private. Hit "Generate Personal Token", give it a name and click "Generate". Copy the token value and keep it safe and private - this is the only time you'll be able to view it in your dashboard.
+The Content Management API is used for write access to your space, so keep the generated token safe and private. Hit "Generate Personal Token", give it a name and click "Generate". Copy the token value and keep it safe and private ― this is the only time you'll be able to view it in your dashboard.
 
 ![Generating a personal access token](access_token.png)
 
-The Content Delivery API provides read-only access to your data and is one of the ways we deliver content to your website. Content is served via our Content Delivery Network (CDN). Click "Add API key" in the Content Delivery/Preview tab area. Grab the Space ID and personal Content Delivery API access token - you'll need this in a bit.
+The Content Delivery API provides read-only access to your data and is one of the ways we deliver content to your website. Content is served via our Content Delivery Network (CDN). Click "Add API key" in the Content Delivery/Preview tab area. Grab the Space ID and personal Content Delivery API access token ― you'll need this in a bit.
 
 The Content Preview API works much like the Content Delivery API, except it shows content internally for you to preview and hence does not use the CDN to serve content; since viewing is only limited to you, the previewing user. Creating an API key is the same here as you did with Content Delivery.
 
@@ -100,7 +100,7 @@ Using the credentials in the .contentful.json file, [content can now be imported
 
 \###It's ready, let's publish
 
-Time to check out your new website - preview changes in a local environment by running your project using the npm run dev command. This uses the [Contentful Preview API](https://www.contentful.com/developers/docs/references/content-preview-api/) to show unpublished content as if they were already published - perfect for a development or staging environment.
+Time to check out your new website ― preview changes in a local environment by running your project using the npm run dev command. This uses the [Contentful Preview API](https://www.contentful.com/developers/docs/references/content-preview-api/) to show unpublished content as if they were already published ― perfect for a development or staging environment.
 
 If you like what you see, use the npm run build command to start a static production build of your near-ready website and put it on a static host of your choice. After that, the npm run deploy command allows you to publish what you have on the production build onto GitHub Pages.
 

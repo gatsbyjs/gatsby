@@ -21,7 +21,7 @@ we've found that it's just as easy as the rest of the process.
 Here is how we set up i18n for our Gatsby marketing site, and a few tips along
 the way.
 
-* * *
+---
 
 ## Quick intro to i18n
 

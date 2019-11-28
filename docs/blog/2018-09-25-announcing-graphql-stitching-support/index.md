@@ -68,7 +68,7 @@ After this you will have a field named `swapi` in your Gatsby GraphQL and you ca
 
 ## Why is it needed?
 
-To understand why a separate new plugin is needed, let's dive into how Gatsby source plugins work. Gatsby's GraphQL schema can be extended with source plugins. Source plugins can extend the schema by adding _nodes_ - objects that have some kind of global id. This way a `gatsby-source-filesystem` plugin can add all the files from a directory as nodes. Gatsby introspects the nodes that it gets and creates a GraphQL schema which you can use to fetch all those nodes.
+To understand why a separate new plugin is needed, let's dive into how Gatsby source plugins work. Gatsby's GraphQL schema can be extended with source plugins. Source plugins can extend the schema by adding _nodes_ ― objects that have some kind of global id. This way a `gatsby-source-filesystem` plugin can add all the files from a directory as nodes. Gatsby introspects the nodes that it gets and creates a GraphQL schema which you can use to fetch all those nodes.
 
 This system works really well for many cases and it's very intuitive, you don't need to care about creating a GraphQL schema or types for the nodes, any objects can be used. However, this is a limitation when using existing GraphQL APIs. First of all, you won't be able to use the same API as the one provided by the third-party API, because it will be replaced by Gatsby's internal node API. This can be confusing, because you can't consult the third-party API's documentation. Secondly, the plugin needs to proactively fetch all the possible data from the API, which can be complicated because the plugin author would have to predict which data might be needed.
 

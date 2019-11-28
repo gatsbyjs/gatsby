@@ -6,12 +6,12 @@ The beauty of contributing to open source is that you can clone your favorite pr
 
 On this page:
 
--   [Repo setup](#repo-setup)
--   [Creating your own plugins and loaders](#creating-your-own-plugins-and-loaders)
--   [Making changes to the starter Library](#making-changes-to-the-starter-library)
--   [Contributing example sites](#contributing-example-sites)
--   [Using Docker to set up test environments](#using-docker-to-set-up-test-environments)
--   [Development tools](#development-tools)
+- [Repo setup](#repo-setup)
+- [Creating your own plugins and loaders](#creating-your-own-plugins-and-loaders)
+- [Making changes to the starter Library](#making-changes-to-the-starter-library)
+- [Contributing example sites](#contributing-example-sites)
+- [Using Docker to set up test environments](#using-docker-to-set-up-test-environments)
+- [Development tools](#development-tools)
 
 ## Repo setup
 
@@ -33,9 +33,9 @@ Note: You don't need to follow these steps to submit to the starter library. Thi
 
 To develop on the starter library, you'll need to supply a GitHub personal access token.
 
-1.  Create a personal access token in your GitHub [Developer settings](https://github.com/settings/tokens).
-2.  In the new token's settings, grant that token the "public_repo" scope.
-3.  Create a file in the root of `www` called `.env.development`, and add the token to that file like so:
+1. Create a personal access token in your GitHub [Developer settings](https://github.com/settings/tokens).
+2. In the new token's settings, grant that token the "public_repo" scope.
+3. Create a file in the root of `www` called `.env.development`, and add the token to that file like so:
 
 ```text:title=.env.development
 GITHUB_API_TOKEN=YOUR_TOKEN_HERE

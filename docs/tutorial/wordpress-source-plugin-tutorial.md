@@ -178,8 +178,8 @@ An index page with a post title and excerpt is great, but you should also build 
 
 To do this, you need to:
 
-1.  Create pages for each blog post
-2.  Link up the title on the index page with the post page.
+1. Create pages for each blog post
+2. Link up the title on the index page with the post page.
 
 If you haven't already, please read through [Part 7](/tutorial/part-seven/) of the foundational tutorial, as it goes through the concept and examples of this process with Markdown instead of WordPress.
 

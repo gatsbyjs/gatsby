@@ -6,9 +6,9 @@ title: GraphQL Node Types Creation
 >
 > Outdated areas are:
 >
-> -   the `inferObjectStructureFromNodes` function doesn't exist anymore
-> -   `setFieldsOnGraphQLNodeType` has been deprecated due to the new `createTypes` action
-> -   file node creation has been moved away from `setFileNodeRootType`
+> - the `inferObjectStructureFromNodes` function doesn't exist anymore
+> - `setFieldsOnGraphQLNodeType` has been deprecated due to the new `createTypes` action
+> - file node creation has been moved away from `setFileNodeRootType`
 >
 > You can help by making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228).
 
@@ -84,9 +84,9 @@ Fields on the node that were created directly by the source and transform plugin
 
 The creation of these fields is handled by the [inferObjectStructureFromNodes](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js#L317) function in [infer-graphql-type.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js). Given an object, a field could be in one of 3 sub-categories:
 
-1.  It involves a mapping in [`gatsby-config.js`](/docs/gatsby-config/#mapping-node-types)
-2.  It's value is a foreign key reference to some other node (ends in `___NODE`)
-3.  It's a plain object or value (e.g. String, number, etc)
+1. It involves a mapping in [`gatsby-config.js`](/docs/gatsby-config/#mapping-node-types)
+2. It's value is a foreign key reference to some other node (ends in `___NODE`)
+3. It's a plain object or value (e.g. String, number, etc)
 
 #### Mapping field
 

@@ -97,8 +97,8 @@ The button will display its text by default with a `font-size` of `18px` however
 
 > **Note:** If your component relies on `StaticQuery` or `graphql`, consider splitting it into two smaller components:
 >
-> -   one React component dealing only with the **UI layer**, and
-> -   another dealing with the **data layer**.
+> - one React component dealing only with the **UI layer**, and
+> - another dealing with the **data layer**.
 >
 > You could showcase the UI layer React component in your `mdx` files and your data layer component could use it to render the data it fetched thanks to `StaticQuery` and `graphql`.
 
@@ -180,5 +180,5 @@ module.exports = {
 
 ## Other resources
 
--   For more information on Docz visit [the Docz site](https://docz.site/) and in particular the [Gatsby theme documentation](https://www.docz.site/docs/gatsby-theme)
--   Check out the official [Docz starter](https://github.com/pedronauck/gatsby-starter-docz)
+- For more information on Docz visit [the Docz site](https://docz.site/) and in particular the [Gatsby theme documentation](https://www.docz.site/docs/gatsby-theme)
+- Check out the official [Docz starter](https://github.com/pedronauck/gatsby-starter-docz)

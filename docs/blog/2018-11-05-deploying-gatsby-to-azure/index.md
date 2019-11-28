@@ -13,9 +13,9 @@ In this post we will walk through the process of deploying a Gatsby blog to Micr
 
 To complete this tutorial you will need the following tools:
 
--   Node - To run the rest of the tools
--   Gatsby CLI - To create your blazingly fast blog!
--   VS Code - as a code editor
+- Node ― To run the rest of the tools
+- Gatsby CLI ― To create your blazingly fast blog!
+- VS Code ― as a code editor
 
 ### Prerequisites Installation
 
@@ -80,10 +80,10 @@ Microsoft Azure is a cloud hosting provider which offers a wide range of tools a
 
 As part of this tutorial you will:
 
--   Create an `Azure Storage Account` for our blog
--   Install the `Azure Storage` VS Code extension
--   Create a production build of your blog
--   Deploy your blog to Azure
+- Create an `Azure Storage Account` for our blog
+- Install the `Azure Storage` VS Code extension
+- Create a production build of your blog
+- Deploy your blog to Azure
 
 ### Create the Azure Storage Account
 
@@ -135,7 +135,7 @@ This will output a production build of your blog into the `public` folder.
 
 The easiest way to deploy your blog to your storage account is to use the `Azure Storage Extension` within VS Code.
 
-[Install the Azure Storage Extension - Extensions Gallery](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurestorage)
+[Install the Azure Storage Extension ― Extensions Gallery](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurestorage)
 
 > Alternatively, select the extension option from VS Code and search for `Azure Storage`.
 

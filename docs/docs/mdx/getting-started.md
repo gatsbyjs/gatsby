@@ -9,22 +9,22 @@ your site.
 
 ## 🚀 Quick start
 
-1.  **Initialize the MDX starter** with the Gatsby CLI
+1. **Initialize the MDX starter** with the Gatsby CLI
 
     ```shell
     gatsby new my-mdx-starter https://github.com/ChristopherBiscardi/gatsby-starter-mdx-basic
     ```
 
-2.  **Run the dev server** by changing directory to the scaffolded site and install dependencies
+2. **Run the dev server** by changing directory to the scaffolded site and install dependencies
 
     ```shell
     cd my-mdx-starter/
     gatsby develop
     ```
 
-3.  **Open the site** running at <http://localhost:8000>
+3. **Open the site** running at <http://localhost:8000>
 
-4.  **Update the MDX content** by opening the `my-mdx-starter` directory
+4. **Update the MDX content** by opening the `my-mdx-starter` directory
     in your code editor of choice and edit `src/pages/index.mdx`.
     Save your changes and the browser will update in real time!
 
@@ -33,7 +33,7 @@ your site.
 If you already have a Gatsby site that you'd like to add MDX to, you
 can follow these steps for configuring the [`gatsby-plugin-mdx`](/packages/gatsby-plugin-mdx/) plugin:
 
-1.  **Add `gatsby-plugin-mdx`** and MDX as dependencies
+1. **Add `gatsby-plugin-mdx`** and MDX as dependencies
 
     ```shell
     npm install gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
@@ -41,7 +41,7 @@ can follow these steps for configuring the [`gatsby-plugin-mdx`](/packages/gatsb
 
     > **Note:** If you're upgrading from v0, additionally [check out the MDX migration guide](https://mdxjs.com/migrating/v1).
 
-2.  **Update your `gatsby-config.js`** to use `gatsby-plugin-mdx`
+2. **Update your `gatsby-config.js`** to use `gatsby-plugin-mdx`
 
     ```javascript:title=gatsby-config.js
     module.exports = {
@@ -52,7 +52,7 @@ can follow these steps for configuring the [`gatsby-plugin-mdx`](/packages/gatsb
     }
     ```
 
-3.  **Restart `gatsby develop`** and add an `.mdx` page to \`src/pages
+3. **Restart `gatsby develop`** and add an `.mdx` page to \`src/pages
 
 > **Note:** If you want to query for frontmatter, exports, or other fields like
 > `tableOfContents` and you haven't previously added a `gatsby-source-filesystem`

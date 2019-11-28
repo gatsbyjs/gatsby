@@ -4,7 +4,7 @@ title: Scaling Issues
 
 In certain circumstances, your application may hit some scaling issues that necessitate workarounds. These workarounds should be treated as _temporary_ and should be revisited in the future as Gatsby scales to support larger applications with hundreds of thousands of pages.
 
-However -- until we get to that point, some workarounds are useful to consider if they unblock your team from deploying, developing, etc.
+However ― until we get to that point, some workarounds are useful to consider if they unblock your team from deploying, developing, etc.
 
 > Just looking for possible solutions? [Jump ahead](#possible-solutions-to-scaling-issues)
 
@@ -12,8 +12,8 @@ However -- until we get to that point, some workarounds are useful to consider i
 
 A scaling issue is evident if your application is unable to build due to an error _or_ if it is extremely slow in some lifecycle, e.g. `develop` or `build`. For example:
 
--   An "Out of Memory" occurs when building in CI
--   The `develop` lifecycle takes 10x as long as `build`
+- An "Out of Memory" occurs when building in CI
+- The `develop` lifecycle takes 10x as long as `build`
 
 and more. An example of a scaling error thrown to the console may look something like:
 
@@ -43,11 +43,11 @@ success extract queries from components — 0.127 s
 
 A scaling issue _can_ arise in varied cases, but typically something like:
 
--   A Gatsby application with ~100K+ pages
-    -   See [this issue](https://github.com/gatsbyjs/gatsby/issues/12343) for an example
--   Extremely large `json` files sourced with `gatsby-transformer-json`
--   Extremely large GraphQL queries, which are stored in memory in the `develop` lifecycle
-    -   See [this issue](https://github.com/gatsbyjs/gatsby/issues/12566) for an example
+- A Gatsby application with ~100K+ pages
+    - See [this issue](https://github.com/gatsbyjs/gatsby/issues/12343) for an example
+- Extremely large `json` files sourced with `gatsby-transformer-json`
+- Extremely large GraphQL queries, which are stored in memory in the `develop` lifecycle
+    - See [this issue](https://github.com/gatsbyjs/gatsby/issues/12566) for an example
 
 If you are seeing errors or slowness **and** your Gatsby app matches one of the above use-cases, it's very likely you are hitting some scaling issues.
 

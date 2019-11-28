@@ -26,9 +26,9 @@ Let's do a deep dive into how this feature was actually implemented step by step
 
 First of all, you have to initialize a Gatsby project and start it in develop mode.
 
-1.  `gatsby new gatsby-dark-mode`
-2.  `cd gatsby-dark-mode`
-3.  `npm start`
+1. `gatsby new gatsby-dark-mode`
+2. `cd gatsby-dark-mode`
+3. `npm start`
 
 Then, create a `context` folder within src and the `ThemeContext.js` file within it.
 
@@ -278,12 +278,12 @@ In just a few, simple steps we've enabled a conditional dark mode that our users
 
 We covered the following in today's article:
 
--   Introduction to dark mode in web development
--   Initializing a Gatsby project
--   Initializing the context object with `createContext`
--   Using the Gatsby Browser API and returning `wrapRootElement` from `gatsby-browser.js`
--   Wrapping the JSX within `layout.js` with a Context Consumer and a div with class referring to the dark mode state
--   Adding the switch inside the header
--   Adding the styles relevant to the Dark mode
+- Introduction to dark mode in web development
+- Initializing a Gatsby project
+- Initializing the context object with `createContext`
+- Using the Gatsby Browser API and returning `wrapRootElement` from `gatsby-browser.js`
+- Wrapping the JSX within `layout.js` with a Context Consumer and a div with class referring to the dark mode state
+- Adding the switch inside the header
+- Adding the styles relevant to the Dark mode
 
 Interested in seeing this in action? Head over to [`https://github.com/m-muhsin/gatsby-dark-mode`](https://github.com/m-muhsin/gatsby-dark-mode) and clone or fork my project.

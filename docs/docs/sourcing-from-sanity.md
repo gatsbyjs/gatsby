@@ -61,7 +61,7 @@ By [deploying a GraphQL API](https://www.sanity.io/help/graphql-beta) for your d
 
 Some background for this problem:
 
-Gatsby cannot know about the types and fields without having documents of the given types that contain the fields you want to query. This is a [known problem](https://github.com/gatsbyjs/gatsby/issues/3344) with Gatsby - luckily there is ongoing work to solve this issue, which will lead to much clearer schemas and less boilerplate.
+Gatsby cannot know about the types and fields without having documents of the given types that contain the fields you want to query. This is a [known problem](https://github.com/gatsbyjs/gatsby/issues/3344) with Gatsby ― luckily there is ongoing work to solve this issue, which will lead to much clearer schemas and less boilerplate.
 
 ## Using images
 
@@ -135,14 +135,14 @@ export const query = graphql`
 
 These are the fragments available on image assets, which allows easy lookup of the fields required by `gatsby-image` in various modes:
 
--   `GatsbySanityImageFixed`
--   `GatsbySanityImageFixed_noBase64`
--   `GatsbySanityImageFixed_withWebp`
--   `GatsbySanityImageFixed_withWebp_noBase64`
--   `GatsbySanityImageFluid`
--   `GatsbySanityImageFluid_noBase64`
--   `GatsbySanityImageFluid_withWebp`
--   `GatsbySanityImageFluid_withWebp_noBase64`
+- `GatsbySanityImageFixed`
+- `GatsbySanityImageFixed_noBase64`
+- `GatsbySanityImageFixed_withWebp`
+- `GatsbySanityImageFixed_withWebp_noBase64`
+- `GatsbySanityImageFluid`
+- `GatsbySanityImageFluid_noBase64`
+- `GatsbySanityImageFluid_withWebp`
+- `GatsbySanityImageFluid_withWebp_noBase64`
 
 ## Overlaying drafts
 
@@ -212,7 +212,7 @@ The above query will fetch all projects that have a `slug.current` field set, an
 
 Most [Gatsby starters](/starters/?v=2) have some example of building pages, which you should be able to modify to your needs.
 
-Remember to use the GraphiQL interface to help write the queries you need - it's usually running at `http://localhost:8000/___graphql` while running `gatsby develop`.
+Remember to use the GraphiQL interface to help write the queries you need ― it's usually running at `http://localhost:8000/___graphql` while running `gatsby develop`.
 
 ## "Raw" fields
 

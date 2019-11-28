@@ -25,9 +25,9 @@ It only takes a few steps to use Gatsby with Drupal as a headless CMS (also know
 
 Hooking up Gatsby to a new or existing Drupal site takes just a few steps:
 
--   Add the [`gatsby-source-drupal` plugin](/packages/gatsby-source-drupal/) to your Gatsby site
--   Configure the plugin with your Drupal credentials & hosted URL
--   Access all your Drupal data using GraphQL queries
+- Add the [`gatsby-source-drupal` plugin](/packages/gatsby-source-drupal/) to your Gatsby site
+- Configure the plugin with your Drupal credentials & hosted URL
+- Access all your Drupal data using GraphQL queries
 
 ## Why use Gatsby and Drupal together?
 
@@ -40,20 +40,20 @@ Many development teams, content teams, and client decision-makers are familiar w
 
 ### Drupal is great for:
 
--   Complex page layouts or content modelling with multiple sections per page
--   Teams with multi-stage content creation and review processes
--   Development teams who value using popular, open-source technologies
+- Complex page layouts or content modelling with multiple sections per page
+- Teams with multi-stage content creation and review processes
+- Development teams who value using popular, open-source technologies
 
 ### Drupal is not-so-great for:
 
--   Content teams who require a slick content editing experience
--   Teams requiring the use of Drupal UI Kit
+- Content teams who require a slick content editing experience
+- Teams requiring the use of Drupal UI Kit
 
 ## Interested in learning more?
 
 Using Gatsby together with Drupal offers a powerful, full-featured, open-source, and free alternative for expensive enterprise content management systems. To learn more:
 
--   Read [a Drupal agency's introduction to Gatsby](https://www.mediacurrent.com/what-is-gatsby.js/)
--   Watch [Kyle Mathews' presentation on Gatsby + Drupal](https://2017.badcamp.net/session/coding-development/beginner/headless-drupal-building-blazing-fast-websites-reactgatsbyjs)
--   Get started with Robert Ngo's [Decoupling Drupal with Gatsby tutorial](https://evolvingweb.ca/blog/decoupling-drupal-gatsby) and watch his [Evolving Web 2018 Drupal conference presentation](https://www.youtube.com/watch?v=s5kUJRGDz6I).
--   [Get in touch with the team](https://www.gatsbyjs.com/contact-us)
+- Read [a Drupal agency's introduction to Gatsby](https://www.mediacurrent.com/what-is-gatsby.js/)
+- Watch [Kyle Mathews' presentation on Gatsby + Drupal](https://2017.badcamp.net/session/coding-development/beginner/headless-drupal-building-blazing-fast-websites-reactgatsbyjs)
+- Get started with Robert Ngo's [Decoupling Drupal with Gatsby tutorial](https://evolvingweb.ca/blog/decoupling-drupal-gatsby) and watch his [Evolving Web 2018 Drupal conference presentation](https://www.youtube.com/watch?v=s5kUJRGDz6I).
+- [Get in touch with the team](https://www.gatsbyjs.com/contact-us)

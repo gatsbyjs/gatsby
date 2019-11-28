@@ -7,7 +7,7 @@ tags: ["code-editor", "source", "documentation-sites", "developer-experience"]
 
 VS Code is a truly great choice for your code editing needs. In this article, I'll show you some great tips and tricks, extensions, and more to maximize your productivity and get to what matters, building out great products. Some of these tips and tricks will make it even easier to contribute to the [Gatsby core repo](https://github.com/gatsbyjs/gatsby), and help ensure your pull requests are ✅ and accepted. That being said everything mentioned here can be applied to just about _any_ JavaScript project.
 
-## Editors - Make Your Selection
+## Editors ― Make Your Selection
 
 ![Lots of Available Options](./images/color-wall.jpeg)
 
@@ -29,8 +29,8 @@ The main [Gatsby GitHub repo](https://github.com/gatsbyjs/gatsby) has configurat
 
 To get started, go to the Extensions View and [search](https://code.visualstudio.com/docs/editor/extension-gallery#_browse-for-extensions) for these plugins and press the green Install button for each. You may have to restart for the Extensions to take effect.
 
--   [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
--   [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+- [Prettier ― Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
 
 Now as you view, create, and modify files ESLint will display "squiggles" for warnings and errors in your files according to the existing rules already configured. You can correct any issues as you go.
 
@@ -42,11 +42,11 @@ The other option is to configure Prettier to Format on Save. You can enable the 
 
 Of course once you start browsing the Extensions Marketplace you'll want to install additional plugins. Here is a short-list of _must-have_ plugins you should consider installing.
 
--   [Babel ES6/ES7](https://marketplace.visualstudio.com/items?itemName=dzannotti.vscode-babel-coloring)
--   [JSON Tools](https://marketplace.visualstudio.com/items?itemName=eriklynd.json-tools)
--   [markdownlint](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint)
--   [Rainbow Brackets](https://marketplace.visualstudio.com/items?itemName=2gua.rainbow-brackets)
--   [vscode-icons](https://marketplace.visualstudio.com/items?itemName=robertohuertasm.vscode-icons)
+- [Babel ES6/ES7](https://marketplace.visualstudio.com/items?itemName=dzannotti.vscode-babel-coloring)
+- [JSON Tools](https://marketplace.visualstudio.com/items?itemName=eriklynd.json-tools)
+- [markdownlint](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint)
+- [Rainbow Brackets](https://marketplace.visualstudio.com/items?itemName=2gua.rainbow-brackets)
+- [vscode-icons](https://marketplace.visualstudio.com/items?itemName=robertohuertasm.vscode-icons)
 
 You can take a look at my ["dotfiles" GitHub](https://github.com/mikelax/dotfiles/tree/master/vscode) for a README on the VS Code Extensions I am using along with editor settings.
 
@@ -54,8 +54,8 @@ You can take a look at my ["dotfiles" GitHub](https://github.com/mikelax/dotfile
 
 VS Code has a built-in debugger to enable proper runtime debugging, if you want to move past the `console.log` throughout your code. Use the following steps to be up and (debugging) in minutes.
 
-1.  Install the [Debugger for Chrome](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome) Extension for VS Code.
-2.  In the Debug view, click the Debug Dropdown in the Panel and select the option `Add Config (projectname)`. This will create a `launch.json` file in your `.vscode` subfolder in the given project. Add the following to this file.
+1. Install the [Debugger for Chrome](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome) Extension for VS Code.
+2. In the Debug view, click the Debug Dropdown in the Panel and select the option `Add Config (projectname)`. This will create a `launch.json` file in your `.vscode` subfolder in the given project. Add the following to this file.
 
 _NOTE_: You most likely will want to add the `.vscode` folder to your `.gitignore` file so it is not checked into source.
 

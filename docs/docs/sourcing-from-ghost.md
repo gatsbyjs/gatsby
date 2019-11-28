@@ -2,28 +2,24 @@
 title: Sourcing from Ghost
 ---
 
-[Ghost](https://ghost.org) is an open source, professional publishing platform built on a modern Node.js technology stack — designed for teams who need power, flexibility and performance - used by Apple, NASA, Sky News, OpenAI & many more.
+[Ghost](https://ghost.org) is an open source, professional publishing platform built on a modern Node.js technology stack — designed for teams who need power, flexibility and performance ― used by Apple, NASA, Sky News, OpenAI & many more.
 
 It comes with all the benefits of modern, centralized Headless CMS platforms, with the added benefit of being released completely for free under an MIT license, so you have total ownership and control of it without needing to depend on a third party back-end.
 
 This guide will walk you through using [Gatsby](/) with the [Ghost Content API](https://docs.ghost.org/api/content/).
 
- 
-
-* * *
+---
 
 ## Quick start
 
 The fastest way to get started is with the official **Gatsby Starter Ghost** repository, which contains a light scaffolding of queries and templates to get a brand new site up and running.
 
--   Repository: [`tryghost/gatsby-starter-ghost`](https://github.com/tryghost/gatsby-starter-ghost)
--   [Demo](https://gatsby.ghost.org)
+- Repository: [`tryghost/gatsby-starter-ghost`](https://github.com/tryghost/gatsby-starter-ghost)
+- [Demo](https://gatsby.ghost.org)
 
 [![Gatsby Starter Ghost](./images/gatsby-starter-ghost.jpg)](https://gatsby.ghost.org)
 
- 
-
-* * *
+---
 
 ## Install & setup
 
@@ -51,9 +47,7 @@ module.exports = {
 }
 ```
 
- 
-
-* * *
+---
 
 ## Generating pages
 
@@ -107,9 +101,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 }
 ```
 
- 
-
-* * *
+---
 
 ## Outputting data
 
@@ -148,9 +140,7 @@ export const postQuery = graphql`
 `
 ```
 
- 
-
-* * *
+---
 
 ## Wrapping up
 
@@ -160,8 +150,8 @@ You should have a broad understanding of how Gatsby and the Ghost Content API wo
 
 Here are some further resources and reading material to help you get started with some more advanced examples and use-cases:
 
--   [Gatsby + Ghost announcement post](/blog/2019-01-14-modern-publications-with-gatsby-ghost/)
--   [More info about Ghost as a Headless CMS](https://blog.ghost.org/jamstack/)
--   [Official Gatsby Starter for Ghost](https://github.com/tryghost/gatsby-starter-ghost)
--   [Official Gatsby Source Plugin for Ghost](/packages/gatsby-source-ghost/)
--   [Official Ghost developer docs](https://docs.ghost.org/api/)
+- [Gatsby + Ghost announcement post](/blog/2019-01-14-modern-publications-with-gatsby-ghost/)
+- [More info about Ghost as a Headless CMS](https://blog.ghost.org/jamstack/)
+- [Official Gatsby Starter for Ghost](https://github.com/tryghost/gatsby-starter-ghost)
+- [Official Gatsby Source Plugin for Ghost](/packages/gatsby-source-ghost/)
+- [Official Ghost developer docs](https://docs.ghost.org/api/)

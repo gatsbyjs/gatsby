@@ -8,7 +8,7 @@ This variety puts agency website teams between a rock and a hard place. They oft
 
 To add to the difficulty, when your UI development framework is coupled to your client's CMS backend, it doesn't just cause technical problems; it causes people problems. It makes your team's staffing plans dependent on specific projects. It hamstrings your ability to respond to changing client requirements by shifting resources around.
 
-Gatsby solves this -- because Gatsby pulls your data from wherever it lives and exposes it in a uniform GraphQL interface, agency teams can build all their UIs in React — no matter where their content is coming from.
+Gatsby solves this ― because Gatsby pulls your data from wherever it lives and exposes it in a uniform GraphQL interface, agency teams can build all their UIs in React — no matter where their content is coming from.
 
 Gatsby lets agencies stop reinventing the wheel and makes agency developers more productive. Teams can use the best tool for the job, without creating a hodgepodge of technologies to maintain.
 

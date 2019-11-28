@@ -72,7 +72,7 @@ important parts of website performance. How quickly is your website visible
 Let's dive into some tests I ran on webpagetest.org and see the Speed Index
 score for some well-known sites.
 
-Each test uses webpagetest's "Simple Testing" mode and the "Mobile - Regular 3G"
+Each test uses webpagetest's "Simple Testing" mode and the "Mobile ― Regular 3G"
 test configuration. This loads a website from a real phone in Virginia USA
 (Motorola G gen 4) on a simulated 3G connection.
 
@@ -142,17 +142,17 @@ high on the Annoying UX metric.
 
 #### Speed Index
 
--   8098 — CNN.com
--   5568 — downy.com
--   7649 — washingtonpost.com
--   2365 — gatsbyjs.org
+- 8098 — CNN.com
+- 5568 — downy.com
+- 7649 — washingtonpost.com
+- 2365 — gatsbyjs.org
 
 #### Time to Interactive
 
--   32.1s — CNN.com
--   14.2s — downy.com
--   31.4s — washingtonpost.com
--   4.4s — gatsbyjs.org
+- 32.1s — CNN.com
+- 14.2s — downy.com
+- 31.4s — washingtonpost.com
+- 4.4s — gatsbyjs.org
 
 ![reactnext-gatsby-performance.038](reactnext-gatsby-performance.038.png)
 

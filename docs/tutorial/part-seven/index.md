@@ -25,8 +25,8 @@ Let's get started.
 
 Creating new pages has two steps:
 
-1.  Generate the "path" or "slug" for the page.
-2.  Create the page.
+1. Generate the "path" or "slug" for the page.
+2. Create the page.
 
 _**Note**: Often data sources will directly provide a slug or pathname for content — when working with one of those systems (e.g. a CMS), you don't need to create the slugs yourself as you do with markdown files._
 
@@ -204,8 +204,8 @@ pages.
 
 As mentioned in the intro to this part of the tutorial, the steps to programmatically creating pages are:
 
-1.  Query data with GraphQL
-2.  Map the query results to pages
+1. Query data with GraphQL
+2. Map the query results to pages
 
 The above code is the first step for creating pages from your markdown as you're
 using the supplied `graphql` function to query the markdown slugs you created.
@@ -438,8 +438,8 @@ template components_ where you query for data for each page.
 
 Now that you've built a Gatsby site, where do you go next?
 
--   Share your Gatsby site on Twitter and see what other people have created by searching for #gatsbytutorial! Make sure to mention @gatsbyjs in your Tweet and include the hashtag #gatsbytutorial :)
--   You could take a look at some [example sites](https://github.com/gatsbyjs/gatsby/tree/master/examples#gatsby-example-websites)
--   Explore more [plugins](/docs/plugins/)
--   See what [other people are building with Gatsby](/showcase/)
--   Check out the documentation on [Gatsby's APIs](/docs/api-specification/), [nodes](/docs/node-interface/), or [GraphQL](/docs/graphql-reference/)
+- Share your Gatsby site on Twitter and see what other people have created by searching for #gatsbytutorial! Make sure to mention @gatsbyjs in your Tweet and include the hashtag #gatsbytutorial :)
+- You could take a look at some [example sites](https://github.com/gatsbyjs/gatsby/tree/master/examples#gatsby-example-websites)
+- Explore more [plugins](/docs/plugins/)
+- See what [other people are building with Gatsby](/showcase/)
+- Check out the documentation on [Gatsby's APIs](/docs/api-specification/), [nodes](/docs/node-interface/), or [GraphQL](/docs/graphql-reference/)

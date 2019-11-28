@@ -29,23 +29,23 @@ Most developers struggle with the steep learning curve associated with Magento. 
 
 We assessed different tools and products, settling on the following tech stack:
 
--   Gatsby (with hooks!)
--   Storybook
--   Prismic
--   Shopify
--   Firebase
+- Gatsby (with hooks!)
+- Storybook
+- Prismic
+- Shopify
+- Firebase
 
 ## Gatsby
 
 Gatsby provides us with a superior DX and a fast site. This includes:
 
--   Server-side rendering at build time
--   Hot reloading
--   Code splitting
--   Link preloading
--   Image optimization
--   The "content mesh" via GraphQL with GraphiQL
--   Hooks API
+- Server-side rendering at build time
+- Hot reloading
+- Code splitting
+- Link preloading
+- Image optimization
+- The "content mesh" via GraphQL with GraphiQL
+- Hooks API
 
 ### Content Mesh
 
@@ -61,8 +61,8 @@ Because Gatsby provides a build payload, we can host the site directly on a Cont
 
 Storybook is a UI for developing your frontend components in many different states. It allows you to develop your components without considering the application's state. This separation makes for:
 
--   Clear separation between data definition and fetching
--   Easier visual testing
+- Clear separation between data definition and fetching
+- Easier visual testing
 
 ## Shopify
 
@@ -86,13 +86,13 @@ Google Cloud hosts our applications at Elevar. We wanted to stay in the same clo
 
 Our project plan was not traditional compared to most e-commerce projects:
 
-1.  Design.
-2.  Turn designs into components.
-3.  Showcase components in Storybook with Knobs and Viewports.
-4.  Use component data requirements (React Props) to create types in Prismic. Setup sample data for each type.
-5.  Create components using data from components using Gatsby.
-6.  Add integrations with Shopify and Third-parties.
-7.  Configure Firebase and Launch site.
+1. Design.
+2. Turn designs into components.
+3. Showcase components in Storybook with Knobs and Viewports.
+4. Use component data requirements (React Props) to create types in Prismic. Setup sample data for each type.
+5. Create components using data from components using Gatsby.
+6. Add integrations with Shopify and Third-parties.
+7. Configure Firebase and Launch site.
 
 After design approval, we could focus purely on the designs and component implementation. We were only in Storybook at this point. User Acceptance Testing (UAT) is simpler this way. The client can view components shared across pages in various states. Component tweaks are smoother during this phase. The component data is completely decoupled from the source. Our React components already defined the data that they needed. We only needed to define the data in the CMS (Prismic).
 

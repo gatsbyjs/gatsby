@@ -4,13 +4,13 @@ title: Spreading Gatsby in Companies
 
 Broadly speaking, in terms of overall Gatsby usage, there are two types of organizations which have high receptivity to using Gatsby across the organization.
 
-First, **software companies** -- more broadly, organizations who primarily build, and generally sell, software.
+First, **software companies** ― more broadly, organizations who primarily build, and generally sell, software.
 
-Second, **Internet-adjacent organizations** -- non-software organizations whose activities have been significantly affected by the Internet. This includes businesses in areas like travel, retail, consumer finance, media, and so on.
+Second, **Internet-adjacent organizations** ― non-software organizations whose activities have been significantly affected by the Internet. This includes businesses in areas like travel, retail, consumer finance, media, and so on.
 
 ## Software companies
 
-Software companies -- whether small startups or large, Fortune 500 companies -- tend to have lots of software developers.
+Software companies ― whether small startups or large, Fortune 500 companies ― tend to have lots of software developers.
 
 Moreover, in software companies, technology decisions are often made bottoms-up by developers rather than top-down by executives.
 
@@ -30,6 +30,6 @@ Because developers are often not the decision-makers around technologies in thes
 
 If you're in an organization like this, it's important to:
 
--   strongly emphasize Gatsby's benefits in language familiar to [marketers](/docs/winning-over-marketers) and [executives](/docs/winning-over-executives).
+- strongly emphasize Gatsby's benefits in language familiar to [marketers](/docs/winning-over-marketers) and [executives](/docs/winning-over-executives).
 
--   position Gatsby as part of "digital transformation" initiatives your company undertakes. Faced with new competitors taking market share (e.g. Amazon in retail, Expedia and Airbnb in travel, PayPal in consumer finance), these businesses typically emphasize a priority as a company to be more Internet-native. This can provide an opening to pitch Gatsby as a way to do this.
+- position Gatsby as part of "digital transformation" initiatives your company undertakes. Faced with new competitors taking market share (e.g. Amazon in retail, Expedia and Airbnb in travel, PayPal in consumer finance), these businesses typically emphasize a priority as a company to be more Internet-native. This can provide an opening to pitch Gatsby as a way to do this.

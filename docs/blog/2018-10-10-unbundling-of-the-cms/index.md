@@ -15,23 +15,23 @@ Today, enterprise CPG, clothing, and consumer durables companies face dual threa
 
 But creating compelling experiences is challenging:
 
--   Marketers need content systems that model the website domain well to craft compelling messages.
+- Marketers need content systems that model the website domain well to craft compelling messages.
 
--   Development teams need UI frameworks that allow easy design customization to keep the site look and feel fresh.
+- Development teams need UI frameworks that allow easy design customization to keep the site look and feel fresh.
 
--   Business owners need high-quality add-ons like search, analytics, forms and payment to demonstrate value and justify continued investment. In addition, they need their sites to be _fast_.
+- Business owners need high-quality add-ons like search, analytics, forms and payment to demonstrate value and justify continued investment. In addition, they need their sites to be _fast_.
 
 ## Generic vs best-of-breed
 
 When compared with purpose-built CMSs like Shopify for e-commerce or WordPress for blogging, enterprise CMS applications like Sitecore, Evoq or Adobe Experience Manager (AEM) provide generic content modules.
 
-The enterprise CMS core development experiences are based in C#, ASP.NET, and J2EE -- languages and frameworks a decade out of date for frontend development. Add-ons are expensive and are difficult-to-use compared to pure-play alternatives.
+The enterprise CMS core development experiences are based in C#, ASP.NET, and J2EE ― languages and frameworks a decade out of date for frontend development. Add-ons are expensive and are difficult-to-use compared to pure-play alternatives.
 
 Best-of-breed products have emerged to provide top-notch alternatives in each of these areas, but have been difficult to integrate.
 
 One popular, paywalled, news site that currently stores all content and data in Drupal 7 is migrating to a microservices setup. They'll handle stories in [WordPress](https://wordpress.org/), store video in [JWPlayer](https://www.jwplayer.com/), and user data in [Auth0](https://auth0.com/). They're doing development in React and using [Segment](https://segment.com) for analytics, [Stripe](http://stripe.com) for payments and [Recurly](https://recurly.com/) for subscriptions.
 
-Another digital consumer brand moved from using Sitecore as a content and development platform to using [Contentful](https://www.contentful.com/) as a [headless CMS](/docs/headless-cms/), [Yotpo](https://www.yotpo.com/) for user-generated content -- primarily reviews, while development transitioned to React to provide a modern look and feel.
+Another digital consumer brand moved from using Sitecore as a content and development platform to using [Contentful](https://www.contentful.com/) as a [headless CMS](/docs/headless-cms/), [Yotpo](https://www.yotpo.com/) for user-generated content ― primarily reviews, while development transitioned to React to provide a modern look and feel.
 
 <figure>
   <img alt="The modularization of the CMS" height="400" src="./modular-cms-architecture.png" />
@@ -59,8 +59,8 @@ Enterprises who have purchased these CMS solutions are left asking themselves on
 
 Over the next three posts, we'll discuss the rise of a content mesh that makes integration _feasible_ for most digital agencies and enterprise customers.
 
-The next post, [The Rise of Modern Web Development](/blog/2018-10-11-rise-of-modern-web-development), discusses the development side -- how frameworks that increase development speed and reduce bugs have become ubiquitous.
+The next post, [The Rise of Modern Web Development](/blog/2018-10-11-rise-of-modern-web-development), discusses the development side ― how frameworks that increase development speed and reduce bugs have become ubiquitous.
 
 After that, [Why Mobile Performance is Crucial](/blog/2018-10-16-why-mobile-performance-is-crucial) discusses the rise of e-commerce on smartphones, why the average site haven't been getting any faster on mobile, and existing technology that can make sites fast _by default_.
 
-Finally, in our conclusion, Creating Compelling Experiences, we'll discuss a step-by-step approach for choosing a content architecture, modern development environment, a performance strategy -- and most importantly, choosing an "content mesh" that makes all the other choices easy.
+Finally, in our conclusion, Creating Compelling Experiences, we'll discuss a step-by-step approach for choosing a content architecture, modern development environment, a performance strategy ― and most importantly, choosing an "content mesh" that makes all the other choices easy.

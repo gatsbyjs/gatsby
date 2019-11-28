@@ -9,7 +9,7 @@ Gatsby provides an easy way to use a local HTTPS server during development, than
 Start the development server using `npm run develop` as usual, and add either the `-S` or `--https` flag.
 
 ```shell
-npm run develop -- --https
+npm run develop ― --https
 ```
 
 ## Setup
@@ -27,7 +27,7 @@ This is _only_ required the first time you are using Gatsby's HTTPS feature on y
 After typing in your password, `devcert` will attempt to install some software necessary to tell Firefox (and Chrome, only on Linux) to trust your development certificates.
 
 ```shell
-Unable to automatically install SSL certificate - please follow the
+Unable to automatically install SSL certificate ― please follow the
 prompts at http://localhost:52175 in Firefox to trust the root certificate
 See https://github.com/davewasmer/devcert#how-it-works for more details
 -- Press <Enter> once you finish the Firefox prompts --
@@ -47,8 +47,8 @@ machines for development (or if your dev environment is containerized in Docker)
 If you need to use a custom https setup, you can pass the `--https`, `--key-file` and
 `--cert-file` flags to `npm run develop`.
 
--   `--cert-file [relative path to ssl certificate file]`
--   `--key-file [relative path to ssl key file]`
+- `--cert-file [relative path to ssl certificate file]`
+- `--key-file [relative path to ssl key file]`
 
 See the example command:
 
@@ -58,6 +58,6 @@ $ gatsby develop --https --key-file ../relative/path/to/key.key --cert-file ../r
 
 in most cases, the `--https` passed by itself is easier and more convenient to get local https.
 
-* * *
+---
 
 Keep in mind that the automatic certificates issued with the `--https` flag are explicitly issued to `localhost` and will only be accepted there. Using it together with the `--host` option will likely result in browser warnings.

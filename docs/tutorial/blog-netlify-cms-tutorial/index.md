@@ -8,8 +8,8 @@ This tutorial will use [`gatsby-personal-starter-blog`](http://t.wang.sh/gatsby-
 
 ## Prerequisites
 
--   A GitHub account
--   The [Gatsby CLI](/docs/gatsby-cli) installed
+- A GitHub account
+- The [Gatsby CLI](/docs/gatsby-cli) installed
 
 ## Set up a Netlify CMS-managed Gatsby site in 5 steps:
 
@@ -40,7 +40,7 @@ Open the project in your code editor and open `static/admin/config.yml`. Replace
 
 ```diff
 backend:
--  name: test-repo
+- name: test-repo
 
 +  name: github
 +  repo: your-username/your-repo-name

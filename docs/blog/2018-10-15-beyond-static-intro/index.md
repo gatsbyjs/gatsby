@@ -15,15 +15,15 @@ Until then, I'd like to offer some brief teasers of some of the content we'll be
 
 > My first impression of Gatsby is that it is more of a static site generator which I interpret as being aimed at content or marketing websites and not as focused on web apps. That is a complete assumption so please correct me if I am wrong.
 >
-> -   [Triptcip][reddit-thread]
+> - [Triptcip][reddit-thread]
 
 ## What is an app?
 
 It's surprisingly challenging to define what separates an app from a static site.
 
--   Authentication?
--   Reacting to remote data changes?
--   A shopping cart?
+- Authentication?
+- Reacting to remote data changes?
+- A shopping cart?
 
 It's surprisingly murky where that line is drawn and why exactly many seem to clearly delineate the two _separate_ concepts.
 
@@ -39,9 +39,9 @@ Gatsby is great for static sites and for truly maximizing performance, while als
 
 One of the central ideas of Gatsby is that we statically generate our HTML content--using React DOM server-side APIs. A less-often illustrated feature is that this static HTML content can then be _enhanced_ with client-side JavaScript via React hydration. The general approach is as follows:
 
-1.  Build and render static HTML, creating content and pages with data injected at build time
-2.  Invoke [ReactDOM.hydrate method][hydrate] to pick up just where we left our static HTML
-3.  Transfer rendering to the [React reconciler][reconciler]
+1. Build and render static HTML, creating content and pages with data injected at build time
+2. Invoke [ReactDOM.hydrate method][hydrate] to pick up just where we left our static HTML
+3. Transfer rendering to the [React reconciler][reconciler]
 
 It's this last phase that bridges the gap between static sites and full-fledged applications. In this phase you can make data calls, authenticate users, and perform all the app-like functionality you desire.
 

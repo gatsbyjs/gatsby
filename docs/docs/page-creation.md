@@ -4,9 +4,9 @@ title: Page Creation
 
 A page is created by calling the [createPage](/docs/actions/#createPage) action. There are three main side effects that occur when a page is created.
 
-1.  The `pages` redux namespace is updated
-2.  The `components` redux namespace is updated
-3.  `onCreatePage` API is executed
+1. The `pages` redux namespace is updated
+2. The `components` redux namespace is updated
+3. `onCreatePage` API is executed
 
 ## Update Pages redux namespace
 

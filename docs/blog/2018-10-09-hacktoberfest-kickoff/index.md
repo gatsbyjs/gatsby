@@ -13,8 +13,8 @@ Happy October, everyone! We're stoked, because October means… Hacktoberfest!
 
 Hacktoberfest encourages open source contributions by motivating open source projects to create and label contributor-friendly issues, and pseudo-gamifying the participation of contributors. To take part:
 
--   [sign up](https://hacktoberfest.digitalocean.com/sign_up/register) to participate, and
--   submit five quality pull requests to public GitHub repositories (within the time frame of October 1–31).
+- [sign up](https://hacktoberfest.digitalocean.com/sign_up/register) to participate, and
+- submit five quality pull requests to public GitHub repositories (within the time frame of October 1–31).
 
 So far, [30+ people have contributed](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aissue+sort%3Aupdated-desc+label%3AHacktoberfest+is%3Aclosed) to close out Gatsby Hacktoberfest issues, and [there are 35 open](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aissue+sort%3Aupdated-desc+label%3AHacktoberfest+is%3Aopen) Hacktoberfest issues, with more on the way.
 
@@ -24,7 +24,7 @@ Check out the complete participation details and rules over at the [Hacktoberfes
 
 ## Why celebrate Hacktoberfest with Gatsby?
 
-We couldn't be more excited about Hacktoberfest -- it's right up our alley! Back in August, we were excited to celebrate hitting 1,000 contributors! (As of this writing, it's 1,197 😄)
+We couldn't be more excited about Hacktoberfest ― it's right up our alley! Back in August, we were excited to celebrate hitting 1,000 contributors! (As of this writing, it's 1,197 😄)
 
 <blockquote class="twitter-tweet" data-lang="en">
   <p lang="en" dir="ltr">
@@ -39,8 +39,8 @@ Gatsby is a great project to contribute to because you can learn about Gatsby wh
 
 Our Hacktoberfest goals are:
 
-1.  To provide a range of issues with a clearly defined scope, with minimal background knowledge needed outside of the issue description.
-2.  To make contributing to Gatsby as welcoming, friendly, and accessible as we can -- especially to first-time contributors.
+1. To provide a range of issues with a clearly defined scope, with minimal background knowledge needed outside of the issue description.
+2. To make contributing to Gatsby as welcoming, friendly, and accessible as we can ― especially to first-time contributors.
 
 Plus, if you've never contributed to Gatsby before, after your very first PR is merged, you can redeem some [free Gatsby swag](/contributing/contributor-swag/)! (_Note: Not Hacktoberfest related. We do this always!_)
 
@@ -65,7 +65,7 @@ You may also want to check out [the main issue](https://github.com/gatsbyjs/gats
 
 Through the month, we'll be continuously curating and adding "Hacktoberfest" labeled issues targeting many different facets of the Gatsby ecosystem (docs, core, packages, etc). If everything is claimed, don't worry! More issues are being added regularly. (And of course feel free to peruse [other open issues](https://github.com/gatsbyjs/gatsby/issues) in the queue). This is our first time actively organizing around Hacktoberfest, and we aim to be as responsive and supportive as possible.
 
-If you're considering contributing to Gatsby for the first time -- or if you've already contributed -- we're so glad you're here!
+If you're considering contributing to Gatsby for the first time ― or if you've already contributed ― we're so glad you're here!
 
 ## Still have questions?
 
@@ -73,6 +73,6 @@ For general questions, you could comment on the [main Hacktoberfest issue](https
 
 ## Quick links
 
--   [Hacktoberfest registration page](https://hacktoberfest.digitalocean.com/sign_up/register)
--   [Hacktoberfest FAQs](https://hacktoberfest.digitalocean.com/faq)
--   [Gatsby Hacktoberfest](https://github.com/gatsbyjs/gatsby/issues/8719)
+- [Hacktoberfest registration page](https://hacktoberfest.digitalocean.com/sign_up/register)
+- [Hacktoberfest FAQs](https://hacktoberfest.digitalocean.com/faq)
+- [Gatsby Hacktoberfest](https://github.com/gatsbyjs/gatsby/issues/8719)

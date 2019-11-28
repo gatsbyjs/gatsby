@@ -31,12 +31,12 @@ identity came in quite handy as well.
 After running Wintersmith for almost a year we encountered its limits. Some of
 the major drawbacks at that time were:
 
--   No code splitting, resulting in the client having to load a bunch of
-    unnecessary JavaScript and CSS files
--   Pulling in external resources, such as blog posts, was quite unhandy and
-    sometimes even impossible
--   Build process optimization was almost impossible and in our case resulted in a
-    Webpack setup on top of Wintersmith which was not really maintainable
+- No code splitting, resulting in the client having to load a bunch of
+          unnecessary JavaScript and CSS files
+- Pulling in external resources, such as blog posts, was quite unhandy and
+          sometimes even impossible
+- Build process optimization was almost impossible and in our case resulted in a
+          Webpack setup on top of Wintersmith which was not really maintainable
 
 ## React to the Rescue!
 
@@ -88,7 +88,7 @@ look at our code [on GitHub](https://github.com/smartive/smartive.ch).
 We are really looking forward to build other cool stuff for our customers using
 Gatsby!
 
-* * *
+---
 
 If you have any questions about the way we built
 [smartive.ch](https://smartive.ch) feel free to contact me on

@@ -21,11 +21,11 @@ When our team was hired to [transition the site from 18F](https://18f.gsa.gov/20
 
 Of course, we could have refactored just the data-update script, but what we really needed was a way for multiple team members to update the data from their government-issued computers (with limited admin rights). We wanted to create a workflow that would solve some of our biggest content management problems:
 
--   We couldn't use our government-issued computers to update the data.
--   We didn't have one source of truth for the data: we had `.tsv` data files to update the site visualizations with, and we had Excel files for download, both of which had to be manually maintained.
--   Updating the data required specific software dependencies (Make, SQLite3, npm), which our data specialists and subject matter experts lacked. Which meant...
--   A developer had to update the data, and we have only one developer on the team.
--   The codebase had a significant learning curve for new developers, due to the custom implementation of Jekyll.
+- We couldn't use our government-issued computers to update the data.
+- We didn't have one source of truth for the data: we had `.tsv` data files to update the site visualizations with, and we had Excel files for download, both of which had to be manually maintained.
+- Updating the data required specific software dependencies (Make, SQLite3, npm), which our data specialists and subject matter experts lacked. Which meant...
+- A developer had to update the data, and we have only one developer on the team.
+- The codebase had a significant learning curve for new developers, due to the custom implementation of Jekyll.
 
 At the same time, we didn't want to lose momentum on our user-centered design and development process, which we inherited from our colleagues at 18F. A refactored homepage served as an early proof of concept for fully transitioning our codebase, while allowing us to continue adding value for users.
 
@@ -49,15 +49,15 @@ Thankfully, Gatsby is open source. Had it not been, we wouldn't have considered 
 
 In addition to being open source, there are five main reasons we used Gatsby to refactor the site:
 
-1.  Gatsby is a cross-platform ecosystem out of the box.
+1. Gatsby is a cross-platform ecosystem out of the box.
 
-2.  [GraphQL](https://graphql.org/) allows us to query the data from a canonical source, instead of regenerating the data into multiple files to fit a particular context.
+2. [GraphQL](https://graphql.org/) allows us to query the data from a canonical source, instead of regenerating the data into multiple files to fit a particular context.
 
-3.  Anyone on our team can update the data. Team members need only Excel and GitHub to update the data, and we have one source of truth to maintain for each dataset.
+3. Anyone on our team can update the data. Team members need only Excel and GitHub to update the data, and we have one source of truth to maintain for each dataset.
 
-4.  Gatsby is a modern, web-component framework that allows us to design the site in a more modular way, leading to better code reuse.
+4. Gatsby is a modern, web-component framework that allows us to design the site in a more modular way, leading to better code reuse.
 
-5.  We're better aligned with industry best practices, which supports long-term site maintenance.
+5. We're better aligned with industry best practices, which supports long-term site maintenance.
 
 We'll look at each of these in the context of our homepage redesign.
 
@@ -168,9 +168,9 @@ Thankfully, we have strong communication on our team, and we work in the open, w
 
 Related to redundancy, providing a seamless user experience between the Gatsby and Jekyll portions of the site has been a challenge. There were three issues to resolve:
 
-1.  Page URL issue
-2.  Gatsby prefetch error
-3.  Federalist preview URL
+1. Page URL issue
+2. Gatsby prefetch error
+3. Federalist preview URL
 
 #### Page URL issue
 

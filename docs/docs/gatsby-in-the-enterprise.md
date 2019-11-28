@@ -12,7 +12,7 @@ This guide is designed to help you navigate the terrain in order to effectively 
 
 People mean different things when they say "enterprise". Some mean 500-person companies. Other people mean 20,000-person companies.
 
-When we say "enterprise" we mean large companies with established infrastructural setups -- in-house layers of code, frameworks, processes, and preferred vendors to handle concerns such as hosting, deployments, CDN, etc.
+When we say "enterprise" we mean large companies with established infrastructural setups ― in-house layers of code, frameworks, processes, and preferred vendors to handle concerns such as hosting, deployments, CDN, etc.
 
 Other common characteristics include specified procurement processes, standardization on particular technology stacks, changeover at e.g. 5-year intervals, and frequent security audits. Often, enterprises are heavily invested in maintaining and improving existing web properties ("brownfield") as opposed to creating new ones ("greenfield").
 

@@ -2,12 +2,12 @@
 title: Working with Video
 ---
 
--   [Sourcing video from a host](#sourcing-video-from-a-host)
--   [Embedding hosted videos in Markdown](#embedding-hosted-videos-in-markdown)
--   [Writing custom components for hosted video](#writing-custom-components-for-hosted-video)
--   [Querying video data from Markdown with GraphQL](#querying-video-data-from-markdown-with-graphql)
--   [Hosting your own HTML5 video files](#hosting-your-own-html5-video-files)
--   [Using custom video players](#using-custom-video-players)
+- [Sourcing video from a host](#sourcing-video-from-a-host)
+- [Embedding hosted videos in Markdown](#embedding-hosted-videos-in-markdown)
+- [Writing custom components for hosted video](#writing-custom-components-for-hosted-video)
+- [Querying video data from Markdown with GraphQL](#querying-video-data-from-markdown-with-graphql)
+- [Hosting your own HTML5 video files](#hosting-your-own-html5-video-files)
+- [Using custom video players](#using-custom-video-players)
 
 ## Sourcing video from a host
 
@@ -131,7 +131,7 @@ export const pageQuery = graphql`
 
 It's super common to source video from YouTube, Twitch or Vimeo. But what if you want to host your own video and include it as HTML5 video?
 
-To include your own video files that will work in multiple web browsers and platforms, you'll need to read up a bit on video extensions and codecs. We recommend MDN as a resource: [Media formats for HTML audio and video](https://developer.mozilla.org/en-US/docs/Web/HTML/Supported_media_formats). You may need video converter software to produce the necessary formats -- such as `.webm` and `.mp4` -- to support a range of devices and environments.
+To include your own video files that will work in multiple web browsers and platforms, you'll need to read up a bit on video extensions and codecs. We recommend MDN as a resource: [Media formats for HTML audio and video](https://developer.mozilla.org/en-US/docs/Web/HTML/Supported_media_formats). You may need video converter software to produce the necessary formats ― such as `.webm` and `.mp4` ― to support a range of devices and environments.
 
 HTML5 provides the `<video>` media element for working with videos. Inside the `<video>` element, you can provide multiple `<source>` elements that serve as different file formats the video player can use, with each browser electing to use a format it supports.
 
@@ -183,10 +183,10 @@ Even though there are two `<source>` elements, only one video will be displayed,
 
 One advantage of integrating a custom component with your own hosted video is it can give you more control over the video player, including its accessibility. Elements of accessible video and audio include:
 
--   captions: a text version of the audio, synchronized with the video
--   transcript (or subtitles): a text version of the audio and visual content, like captions but also including descriptions of key visual elements in the video
--   audio description: an audio version of visual information not conveyed in dialogue
--   accessible controls: buttons to operate the video that can be operated without a mouse, are labeled, and work across environments and browsers
+- captions: a text version of the audio, synchronized with the video
+- transcript (or subtitles): a text version of the audio and visual content, like captions but also including descriptions of key visual elements in the video
+- audio description: an audio version of visual information not conveyed in dialogue
+- accessible controls: buttons to operate the video that can be operated without a mouse, are labeled, and work across environments and browsers
 
 Though captions, transcripts, and audio descriptions primarily aim to assist those with greater difficulty seeing or hearing, they benefit many other users who prefer reading to listening. Captions can also help people watching videos when they can't have the sound turned on for whatever reason.
 

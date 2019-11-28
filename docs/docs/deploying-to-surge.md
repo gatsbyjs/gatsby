@@ -42,7 +42,7 @@ Press `enter` to confirm that the path to your `public/` folder is correct, and 
 
 You're done! Your terminal will output the address of the domain where your site was deployed.
 
-## Step 4: Bonus - Remembering a domain
+## Step 4: Bonus ― Remembering a domain
 
 To ensure future deploys are sent to the same location, you can store the domain name in a [`CNAME`](https://surge.sh/help/remembering-a-domain) file from your project root. Assuming your site was deployed to `https://my-cool-domain.surge.sh`, run the following command:
 
@@ -54,5 +54,5 @@ Consult the [Surge Docs](https://surge.sh/help/) for information about how to cu
 
 ## References:
 
--   [Surge Documentation](https://surge.sh/help/)
--   [Deploying to a Custom Domain](https://surge.sh/help/adding-a-custom-domain)
+- [Surge Documentation](https://surge.sh/help/)
+- [Deploying to a Custom Domain](https://surge.sh/help/adding-a-custom-domain)

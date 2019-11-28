@@ -3,11 +3,11 @@ title: "Modern static site generation with Gatsby"
 date: 2017-09-18
 image: "code-image.jpg"
 author: "Kostas Bariotis"
-excerpt: "In this post, I will talk about static site generators -- how they have evolved and why I switched from a Ghost powered site to Gatsby, a modern static site generator."
+excerpt: "In this post, I will talk about static site generators ― how they have evolved and why I switched from a Ghost powered site to Gatsby, a modern static site generator."
 tags: ["ghost", "wordpress"]
 ---
 
-In this post, I will talk about static site generators -- how they have evolved
+In this post, I will talk about static site generators ― how they have evolved
 and why I switched from a [Ghost](https://ghost.org) powered site to
 [Gatsby](/), a modern static site generator.
 
@@ -21,20 +21,20 @@ production by creating a landing page very fast.
 
 Static site generators like Jekyll all work pretty similarly:
 
--   Describe your content in some common templating language ([Pug](http://pugjs.org),
-    [Handlebars](http://handlebarsjs.com), etc)
--   While in development, start a local web server and add file "watchers" that
-    will listen for content changes and re-render the site
--   Finally, render the whole site in static HTML and deploy. The generator will
-    combine your files and produce a well formed HTML content.
+- Describe your content in some common templating language ([Pug](http://pugjs.org),
+          [Handlebars](http://handlebarsjs.com), etc)
+- While in development, start a local web server and add file "watchers" that
+          will listen for content changes and re-render the site
+- Finally, render the whole site in static HTML and deploy. The generator will
+          combine your files and produce a well formed HTML content.
 
 Let's say you navigate to the good old site example.com:
 
--   The browser requests the page at example.com
--   The server responds with the HTML content
--   The browser renders the page and loads the asset related to the script tag
--   JS will instruct the browser to manipulate the DOM, for example, to show a
-    "welcome to this page" popup dialog.
+- The browser requests the page at example.com
+- The server responds with the HTML content
+- The browser renders the page and loads the asset related to the script tag
+- JS will instruct the browser to manipulate the DOM, for example, to show a
+          "welcome to this page" popup dialog.
 
 A caveat here is that you have to keep the client side logic separated from the
 backend. The client side JS file that shows the modal dialog has nothing to do
@@ -64,8 +64,8 @@ ever has seen except the guys working internally on Facebook's codebase. But the
 thing that stood out immediately was the way which React was handling the DOM,
 aka the Virtual DOM.
 
-To change a page's display, you have to change the DOM -- but changing the DOM
-is computationally expensive, so -- slow. React is smart, and analyzes the
+To change a page's display, you have to change the DOM ― but changing the DOM
+is computationally expensive, so ― slow. React is smart, and analyzes the
 changes you want to make so it applies only required changes, thus making the
 rendering much faster.
 
@@ -73,29 +73,29 @@ If you use React with
 [server-side rendering](https://facebook.github.io/react/docs/react-dom-server.html),
 your flow looks something like this:
 
--   A browser requests a page
--   The server responds with static HTML
--   The browser immediately renders the page so the user can see it
--   The browser loads additional JS in the background
--   The client takes some action, like navigating to a different route.
--   The browser uses the additional JS to handle this action.
+- A browser requests a page
+- The server responds with static HTML
+- The browser immediately renders the page so the user can see it
+- The browser loads additional JS in the background
+- The client takes some action, like navigating to a different route.
+- The browser uses the additional JS to handle this action.
 
 On your end, the development flow looks:
 
--   Describe your content in React Components
--   During development, write code like a boss (hot reloading, modularized code,
-    webpack plugins, etc...)
--   Use React Server Side Rendering API to convert this code to static HTML
-    content, and JavaScript code, on your server
+- Describe your content in React Components
+- During development, write code like a boss (hot reloading, modularized code,
+          webpack plugins, etc...)
+- Use React Server Side Rendering API to convert this code to static HTML
+          content, and JavaScript code, on your server
 
 It's really that easy? Well, sort of.
 
 There is the need for a strong abstraction that will…
 
--   track your links across your components
--   parse content written in another format, like blog posts written in Markdown
--   generate code that will not bloat the client and will efficiently serve the
-    content to the user.
+- track your links across your components
+- parse content written in another format, like blog posts written in Markdown
+- generate code that will not bloat the client and will efficiently serve the
+          content to the user.
 
 Thankfully, there are a few projects that took the initiative on this:
 [Gatsby](/), [Phenomic](https://phenomic.io), and
@@ -120,7 +120,7 @@ that the browser doesn't fully re-render the site. Gatsby will generate a JSON
 file for each route, so the browser can request only that file and React will
 render only the appropriate components.
 
-(Previously to do this required a lot of customization -- I was using a
+(Previously to do this required a lot of customization ― I was using a
 technique called
 [pjax](https://github.com/kbariotis/kostasbariotis.com__ghost-theme/blob/master/src/js/app.js#L11)
 to create the same effect. While it looked the same, it was more hack-ish;
@@ -149,8 +149,8 @@ You can try it yourself by cloning the
 [source code](https://github.com/kbariotis/kostasbariotis.com) and after
 installing dependencies, run:
 
--   `npm run develop` to fire up the development server
--   `npm run build` to build the site (check the `/public` folder after it's done)
+- `npm run develop` to fire up the development server
+- `npm run build` to build the site (check the `/public` folder after it's done)
 
 ## An alternative to HTML caching
 
@@ -158,7 +158,7 @@ Now let's bring these threads together. Let's say you have a WordPress site.
 You're caching the content, which is nice for performance, but you're building
 on it now and want to move to a more modern web development experience.
 
-One path is the one I took -- for the last three years, I was using a similar
+One path is the one I took ― for the last three years, I was using a similar
 system called [Ghost](https://ghost.org). While it served me well, I really got
 tired of updating it, ssh-ing to the server, doing migrations and doing other
 ops required by such a stack. (There are paid hosting options, of course, but
@@ -177,11 +177,11 @@ WordPress's MySQL database.
 
 To conclude, Gatsby will allow us to:
 
--   serve static content without maintaining complex stacks
--   keep a clear separation between content and the presentation layer
--   have cool features like client side routing and hot reload on development, out
-    of the box
--   reuse the same code that is being used to generate the backend content at our
-    visitors' browsers
+- serve static content without maintaining complex stacks
+- keep a clear separation between content and the presentation layer
+- have cool features like client side routing and hot reload on development, out
+          of the box
+- reuse the same code that is being used to generate the backend content at our
+          visitors' browsers
 
 I hope you will experiment with Gatsby, and let me know what you think!

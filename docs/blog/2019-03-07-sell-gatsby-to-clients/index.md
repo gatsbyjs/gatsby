@@ -22,11 +22,11 @@ When talking to a client, marketer, or any team member, consider what they care 
 
 The website goal could be to increase brand awareness, generate leads, sell products, increase revenue, or a combination of several of these. But they may not care that a website development tool leverages React or that it's the cool new tool among developers. Some business outcomes that marketers and others may care about include:
 
--   SEO (Search Engine Optimization)
--   Lead conversion
--   Bounce rates
--   Team Productivity
--   Revenue
+- SEO (Search Engine Optimization)
+- Lead conversion
+- Bounce rates
+- Team Productivity
+- Revenue
 
 Keep your audience and their priorities in mind and be sure to talk about these things when you recommend tools for the job. I'll dive into a few of these business outcomes later.
 

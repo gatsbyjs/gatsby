@@ -18,15 +18,15 @@ Quoting [Google](https://developers.google.com/web/fundamentals/web-app-manifest
 
 ## Using `gatsby-plugin-manifest`
 
-1.  Install the plugin:
+1. Install the plugin:
 
 ```shell
 npm install --save gatsby-plugin-manifest
 ```
 
-2.  Add a favicon for your app under `src/images/icon.png`. The icon is necessary to build all images for the manifest. For more information look at the docs of [`gatsby-plugin-manifest`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-manifest/README.md).
+2. Add a favicon for your app under `src/images/icon.png`. The icon is necessary to build all images for the manifest. For more information look at the docs of [`gatsby-plugin-manifest`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-manifest/README.md).
 
-3.  Add the plugin to the `plugins` array in your `gatsby-config.js` file.
+3. Add the plugin to the `plugins` array in your `gatsby-config.js` file.
 
 ```javascript:title=gatsby-config.js
 {
@@ -53,4 +53,4 @@ npm install --save gatsby-plugin-manifest
 }
 ```
 
-That's all you need to get started with adding a web manifest to a Gatsby site. The example given reflects a base configuration -- check out the [plugin reference](/packages/gatsby-plugin-manifest/?=gatsby-plugin-manifest#automatic-mode) for more options.
+That's all you need to get started with adding a web manifest to a Gatsby site. The example given reflects a base configuration ― check out the [plugin reference](/packages/gatsby-plugin-manifest/?=gatsby-plugin-manifest#automatic-mode) for more options.

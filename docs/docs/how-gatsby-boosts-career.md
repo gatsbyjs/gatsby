@@ -10,7 +10,7 @@ As you ship Gatsby sites and get [other developers](/docs/winning-over-developer
 
 > Some insight on driving results forward from prominent React developer, Ryan Florence: <https://twitter.com/ryanflorence/status/1104060348363988992>
 
-In general, great engineering career opportunities often lie in developing expertise in new, rapidly emerging systems and technologies -- there are fewer established domain experts in these fields, room to carve out a personal brand as an expert, and an ever-growing demand for expertise.
+In general, great engineering career opportunities often lie in developing expertise in new, rapidly emerging systems and technologies ― there are fewer established domain experts in these fields, room to carve out a personal brand as an expert, and an ever-growing demand for expertise.
 
 For an inspiring story on how Gatsby has already transformed someone's career, read our [interview with Ahmed Alahmady](/blog/2019-05-03-how-gatsby-helped-jump-start-my-engineering-career/) on the Gatsby blog.
 

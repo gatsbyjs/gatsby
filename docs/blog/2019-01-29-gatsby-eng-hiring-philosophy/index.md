@@ -35,7 +35,7 @@ Gatsby of course faces some market risk. Crucially, though, we've faced and will
 
 ## Identifying Domain Experts to Help Us Solve Hard Problems
 
-As a company and as a project, we need to do a few things that range from highly unusual to near-unique -- that is, almost no one else in the world is doing them.
+As a company and as a project, we need to do a few things that range from highly unusual to near-unique ― that is, almost no one else in the world is doing them.
 
 As a result, we reduce technical risk by bringing domain experts into the Gatsby organization to make sure we can build what we need to build.
 
@@ -63,9 +63,9 @@ Other projects, like WordPress, Drupal, Kubernetes, and Linux, have vibrant cont
 
 Gatsby has the potential to join these projects. We have 1,500+ total contributors, including dozens of regular contributors because:
 
--   Many Gatsby users are proficient in Node.js, which makes up Gatsby's core code
+- Many Gatsby users are proficient in Node.js, which makes up Gatsby's core code
 
--   Many plugins are re-packaged "user code" -- well within reach for the average Gatsby developer to create.
+- Many plugins are re-packaged "user code" ― well within reach for the average Gatsby developer to create.
 
 Several Inkteam members have experience & an intuitive sense for how to manage open-source communities.
 
@@ -107,33 +107,33 @@ _First,_ we're remote and pay well to support our talent strategy
 
 The need to find domain experts is core to our mission and has shaped our organization. Because of who we're trying to hire, we've become:
 
--   **Remote.** We decided to be a remote team because our contributor base and talent pool are globally distributed.
+- **Remote.** We decided to be a remote team because our contributor base and talent pool are globally distributed.
 
--   **Generously paid...** Some remote organizations try to pay close to local wages; we try to pay close to Silicon Valley wages.
+- **Generously paid...** Some remote organizations try to pay close to local wages; we try to pay close to Silicon Valley wages.
 
--   **…with generous benefits**. 3 weeks of expected vacation, 3 months of paid parental leave and a 4-week Gatsby Sabbatical after 4 years of employment are unusual (at least for US-based companies ☺). We're typically not trying to recruit engineers who are just out of college; with the level of seniority we've recruited for, most of us are between 27 and 40. That's the time of life when many people settle into long-term relationships and consider, or start, having children. They start to value not just dedication, but also working smart and avoiding burnout. **Our goal as a company is to support your long-term plans.**
+- **…with generous benefits**. 3 weeks of expected vacation, 3 months of paid parental leave and a 4-week Gatsby Sabbatical after 4 years of employment are unusual (at least for US-based companies ☺). We're typically not trying to recruit engineers who are just out of college; with the level of seniority we've recruited for, most of us are between 27 and 40. That's the time of life when many people settle into long-term relationships and consider, or start, having children. They start to value not just dedication, but also working smart and avoiding burnout. **Our goal as a company is to support your long-term plans.**
 
 ### Skills: we value multi-talented people
 
-There are Gatsby-ites who have experience in multiple areas listed above, which makes them even _more_ valuable. That's because multi-talented people into the organization makes our organization flexible -- they can cover multiple bases and switch projects seamlessly.
+There are Gatsby-ites who have experience in multiple areas listed above, which makes them even _more_ valuable. That's because multi-talented people into the organization makes our organization flexible ― they can cover multiple bases and switch projects seamlessly.
 
 In general, it's a huge bonus when engineers have skills or experience such as:
 
--   Deep familiarity with the Gatsby codebase
+- Deep familiarity with the Gatsby codebase
 
--   Experience in open-source
+- Experience in open-source
 
--   Writing talent (_bonus_: has created courses or written a book)
+- Writing talent (_bonus_: has created courses or written a book)
 
--   Public speaking ability
+- Public speaking ability
 
--   Previously founded a startup or led a team
+- Previously founded a startup or led a team
 
--   Product thinking
+- Product thinking
 
--   Design skills
+- Design skills
 
--   A high-quality network to recruit
+- A high-quality network to recruit
 
 ### Collaboration: create an environment of open, collegial collaboration
 
@@ -141,21 +141,21 @@ Team structure/compensation and skills are two pillars of creating an effective 
 
 We have several [Gatsby core values](/blog/2018-09-07-gatsby-values) that inform team collaboration philosophy. These include:
 
--   [Do the right thing when no one is looking](/blog/2018-09-07-gatsby-values/#do-the-right-thing-when-no-one-is-looking)
+- [Do the right thing when no one is looking](/blog/2018-09-07-gatsby-values/#do-the-right-thing-when-no-one-is-looking)
 
--   [Work in the open](/blog/2018-09-07-gatsby-values/#work-in-the-open)
+- [Work in the open](/blog/2018-09-07-gatsby-values/#work-in-the-open)
 
--   [Set and manage clear expectations](/blog/2018-09-07-gatsby-values/#set-and-manage-clear-expectations)
+- [Set and manage clear expectations](/blog/2018-09-07-gatsby-values/#set-and-manage-clear-expectations)
 
--   [Embrace growth](/blog/2018-09-07-gatsby-values/#embrace-growth)
+- [Embrace growth](/blog/2018-09-07-gatsby-values/#embrace-growth)
 
--   [You belong here](/blog/2018-09-07-gatsby-values/#you-belong-here)
+- [You belong here](/blog/2018-09-07-gatsby-values/#you-belong-here)
 
 From company-wide retrospectives to vibrant Slack channels to every Gatsby team member who is stretched by working on something more popular and public than they've worked on before, and a myriad of other large and small ways, we try to live these values every day.
 
 ### Reach: hire globally
 
-A concurrent goal is to hire a globally diverse team. Ultimately, our goal is for 30% of the web to run on Gatsby, and to build a framework that produces great websites for all web users, we need a globally diverse team -- diverse in terms of national origin, gender, race, background, and so on.
+A concurrent goal is to hire a globally diverse team. Ultimately, our goal is for 30% of the web to run on Gatsby, and to build a framework that produces great websites for all web users, we need a globally diverse team ― diverse in terms of national origin, gender, race, background, and so on.
 
 ## How our philosophy shapes Gatsby's growth over time
 
@@ -167,9 +167,9 @@ Most organizations – either tech companies, startups, or agencies – aren't l
 
 A smoothly functioning organization needs alignment between seniority level and project complexity across the organization:
 
--   If a mid-level dev is assigned a domain-expert-complexity project, they will likely be overwhelmed and make little progress.
+- If a mid-level dev is assigned a domain-expert-complexity project, they will likely be overwhelmed and make little progress.
 
--   If a domain expert is assigned a mid-level-complexity project, they will likely be bored and produce sloppy work.
+- If a domain expert is assigned a mid-level-complexity project, they will likely be bored and produce sloppy work.
 
 (There are more failure cases, but these are two common ones.)
 
@@ -179,23 +179,23 @@ This will happen in two ways.
 
 **As new projects emerge, senior engineers will be needed.** Not all new projects need a senior engineer, but many do. In terms of the pioneer/settler/town planner analogy, new projects are either:
 
--   Frontier (now possible due to recent development)
+- Frontier (now possible due to recent development)
 
--   Infill development (previously collectively owned; newly dedicated staffing)
+- Infill development (previously collectively owned; newly dedicated staffing)
 
 Some examples of frontier & infill development that we're likely to staff in the near future include (Jan 2019):
 
--   Integrations + Plugins (infill development)
+- Integrations + Plugins (infill development)
 
--   OSS DX + Error messaging (infill development)
+- OSS DX + Error messaging (infill development)
 
--   One-click install (frontier)
+- One-click install (frontier)
 
--   Theme marketplace (frontier)
+- Theme marketplace (frontier)
 
 New products provide both _product mobility_ for senior engineers, and _ownership opportunity_ for mid-level engineers.
 
-**As products mature, they need more mid-level engineers**. Over time, as senior engineers and teams map out the landscape and define a problem – as we move from ["pioneer" to "settler" to "town planner"](https://medium.com/org-hacking/pioneers-settlers-town-planners-wardley-9dcd3709cde7) -- the avenue is opened for mid-level engineers to come on board and make concrete progress.
+**As products mature, they need more mid-level engineers**. Over time, as senior engineers and teams map out the landscape and define a problem – as we move from ["pioneer" to "settler" to "town planner"](https://medium.com/org-hacking/pioneers-settlers-town-planners-wardley-9dcd3709cde7) ― the avenue is opened for mid-level engineers to come on board and make concrete progress.
 
 A good example of this is Gatsby core. Gatsby Core, as a ["200,000-line codebase"](https://www.teamten.com/lawrence/writings/norris-numbers.html) needed senior members to seed the team; but now finds a greater demand for mid-level roles.
 
@@ -207,10 +207,10 @@ After the acquisition, there was a diaspora of PayPal employees/founders; ex-Pay
 
 Ex-PayPal-ers attribute this unusual outcome to two things.
 
--   **First, early employees wanted to make a dent in the universe**. PayPal filtered for people who cared about the company's idiosyncratic, frighteningly ambitious mission: create a parallel currency to the US dollar (they were about 20 years too early…).
+- **First, early employees wanted to make a dent in the universe**. PayPal filtered for people who cared about the company's idiosyncratic, frighteningly ambitious mission: create a parallel currency to the US dollar (they were about 20 years too early…).
 
--   **Second, the PayPal culture was created by early team members.** Not all the PayPal-ers who went on to make an impact were early employees; however, they were all recruited, interviewed, hired, and socialized by early employees.
+- **Second, the PayPal culture was created by early team members.** Not all the PayPal-ers who went on to make an impact were early employees; however, they were all recruited, interviewed, hired, and socialized by early employees.
 
 At Gatsby, we're building the future of the content web.
 
-In five years, we believe 7% of the web will be running on Gatsby. All of us at Gatsby will be shaping how that happens. Over the next 10 to 20 years, the content web -- how we compose and curate content, design, develop, and deploy our sites, and interact with readers will be shaped by your work.
+In five years, we believe 7% of the web will be running on Gatsby. All of us at Gatsby will be shaping how that happens. Over the next 10 to 20 years, the content web ― how we compose and curate content, design, develop, and deploy our sites, and interact with readers will be shaped by your work.

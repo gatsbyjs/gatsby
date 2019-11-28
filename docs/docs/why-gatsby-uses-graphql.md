@@ -186,11 +186,11 @@ Run `gatsby develop`, then open `localhost:8000/product/space-socks/` to see one
 
 This gets the job done, but it has a few shortcomings that are going to get more complicated as time goes on:
 
-1.  The images and the product data are in different places in the source code.
-2.  The image paths are absolute from the _built_ site, not the source code, which makes it confusing to know how to find them from the JSON.
-3.  The images are unoptimized, and any optimization you do would have to be manual.
-4.  To create a preview listing of all products, we'd need to pass _all_ of the product info in `context`, which will get unwieldy as the number of products increases.
-5.  It's not very obvious where data is coming from in the templates that render the pages, so updating the data might be confusing later.
+1. The images and the product data are in different places in the source code.
+2. The image paths are absolute from the _built_ site, not the source code, which makes it confusing to know how to find them from the JSON.
+3. The images are unoptimized, and any optimization you do would have to be manual.
+4. To create a preview listing of all products, we'd need to pass _all_ of the product info in `context`, which will get unwieldy as the number of products increases.
+5. It's not very obvious where data is coming from in the templates that render the pages, so updating the data might be confusing later.
 
 To overcome these limitations, Gatsby introduces GraphQL as a data management layer.
 
@@ -200,11 +200,11 @@ There's a bit more up-front setup required to get data into GraphQL, but the ben
 
 Using `data/products.json` as an example, by using GraphQL we're able to solve all of the limitations from the previous section:
 
-1.  The images can be collocated with the products in `data/images/`.
-2.  Image paths in `data/products.json` can be relative to the JSON file.
-3.  Gatsby can automatically optimize images for faster loading and better user experience.
-4.  You no longer need to pass all product data into `context` when creating pages.
-5.  Data is loaded using GraphQL in the components where it's used, making it much easier to see where data comes from and how to change it.
+1. The images can be collocated with the products in `data/images/`.
+2. Image paths in `data/products.json` can be relative to the JSON file.
+3. Gatsby can automatically optimize images for faster loading and better user experience.
+4. You no longer need to pass all product data into `context` when creating pages.
+5. Data is loaded using GraphQL in the components where it's used, making it much easier to see where data comes from and how to change it.
 
 ### Add the necessary plugins to load data into GraphQL
 
@@ -215,10 +215,10 @@ Using `data/products.json` as an example, by using GraphQL we're able to solve a
 
 In order to load the product and image data into GraphQL, you need to add a few [Gatsby plugins](/plugins/). Namely, you need plugins to:
 
--   Load the JSON file into Gatsby's internal data store, which can be queried using GraphQL ([`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/))
--   Convert JSON files into a format you can query with GraphQL ([`gatsby-transformer-json`](/packages/gatsby-transformer-json/))
--   Optimize images ([`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp/))
--   Add data about optimized images to Gatsby's data store ([`gatsby-transformer-sharp`](/packages/gatsby-transformer-sharp/))
+- Load the JSON file into Gatsby's internal data store, which can be queried using GraphQL ([`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/))
+- Convert JSON files into a format you can query with GraphQL ([`gatsby-transformer-json`](/packages/gatsby-transformer-json/))
+- Optimize images ([`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp/))
+- Add data about optimized images to Gatsby's data store ([`gatsby-transformer-sharp`](/packages/gatsby-transformer-sharp/))
 
 In addition to the plugins, we'll use [`gatsby-image`](/packages/gatsby-image/) to display the optimized images with lazy loading.
 
@@ -371,10 +371,10 @@ export default Product
 
 A few notes about this file:
 
-1.  The result of the query is added to the template component as the `data` prop.
-2.  The image path was automatically converted by the Sharp transformer into a "child node" that includes optimized versions of the image.
-3.  The query uses a [GraphQL fragment](/packages/gatsby-image/#fragments) to query all the required data for optimized images. GraphQL fragments _do not work_ in the GraphQL Playground.
-4.  The `img` tag has been swapped out for a `gatsby-image` component named `Image`. Instead of a `src` attribute, it accepts an object with optimized image data.
+1. The result of the query is added to the template component as the `data` prop.
+2. The image path was automatically converted by the Sharp transformer into a "child node" that includes optimized versions of the image.
+3. The query uses a [GraphQL fragment](/packages/gatsby-image/#fragments) to query all the required data for optimized images. GraphQL fragments _do not work_ in the GraphQL Playground.
+4. The `img` tag has been swapped out for a `gatsby-image` component named `Image`. Instead of a `src` attribute, it accepts an object with optimized image data.
 
 Save this file, run `gatsby develop`, then open `localhost:8000/gql/purple-hat/`:
 

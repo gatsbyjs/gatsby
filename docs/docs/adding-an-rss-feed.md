@@ -56,8 +56,8 @@ For basic setups with Markdown content like the [`gatsby-starter-blog`](https://
 
 Your content might not fit neatly into the blog-starter scenario, for various reasons like:
 
--   Your content isn't in Markdown so the plugin doesn't know about it
--   Your Markdown files have dates in the filenames, for which the slug URLs cause 404s
+- Your content isn't in Markdown so the plugin doesn't know about it
+- Your Markdown files have dates in the filenames, for which the slug URLs cause 404s
 
 The good news is you can accommodate these scenarios and more in `gatsby-config.js` and `gatsby-node.js`.
 

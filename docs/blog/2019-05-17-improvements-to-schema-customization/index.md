@@ -1,5 +1,5 @@
 ---
-title: Improvements to Schema Customization API - Available in Gatsby 2.5.0
+title: Improvements to Schema Customization API ― Available in Gatsby 2.5.0
 date: 2019-05-17
 author: Mikhail Novikov
 tags:
@@ -17,10 +17,10 @@ After about a month of testing schema customization both pre and post release, w
 
 However, the original design allowed some uncertainties to still creep in. In addition, it made inference a heavier process, trading performance for consistency without providing a way to opt-out completely. To summarize, the schema customization work released in Gatsby 2.2.0 suffered from a few non-ideal issues:
 
--   Resolvers and arguments of fields like Date and File was determined by inferred data
--   There was no easy way to use arguments/resolvers to override the above
--   Inference was run even when `@dontInfer` flag was on
--   There was no way to control inference outside of SDL, e.g. in Type Builders
+- Resolvers and arguments of fields like Date and File was determined by inferred data
+- There was no easy way to use arguments/resolvers to override the above
+- Inference was run even when `@dontInfer` flag was on
+- There was no way to control inference outside of SDL, e.g. in Type Builders
 
 Therefore we are excited to announce some changes in how we perform inference. In addition, we are deprecating some of the features introduced in 2.2.0 and will remove them in Gatsby v3.
 
@@ -60,8 +60,8 @@ Inference will run, but fields won't be added. If a type has defined fields of t
 
 Here are suggested changes to your code if you are using schema customization already. Your code will work in Gatsby 2.5.0, but those changes will ensure it stays compatible with Gatsby 3.0
 
-1.  Add resolver directives to fields
-2.  Add `@infer` or `@dontInfer` to your type if you don't have it already
+1. Add resolver directives to fields
+2. Add `@infer` or `@dontInfer` to your type if you don't have it already
 
 ```graphql:title=gatsby-node.js
 exports.sourceNodes = function sourceNodes({ actions }) {
@@ -95,17 +95,17 @@ exports.sourceNodes = function sourceNodes({ actions }) {
 
 Add resolver and resolver options (such as arguments) to the given field. There are currently 3 extensions available.
 
--   `@dateformat` - add date formatting arguments. Accepts `formatString` and
-    `locale` options that sets the defaults for this field
--   `@link` - connect to a different Node. Arguments `by` and `from`, which
-    define which field to compare to on a remote node and which field to use on
-    the source node
--   `@fileByRelativePath` - connect to a File node. Same arguments. The
-    difference from link is that this normalizes the relative path to be
-    relative from the path where source node is found.
--   `proxy` - in case the underlying node data contains field names with
-    characters that are invalid in GraphQL, `proxy` allows to explicitly
-    proxy those properties to fields with valid field names. Takes a `from` arg.
+- `@dateformat` ― add date formatting arguments. Accepts `formatString` and
+          `locale` options that sets the defaults for this field
+- `@link` ― connect to a different Node. Arguments `by` and `from`, which
+          define which field to compare to on a remote node and which field to use on
+          the source node
+- `@fileByRelativePath` ― connect to a File node. Same arguments. The
+          difference from link is that this normalizes the relative path to be
+          relative from the path where source node is found.
+- `proxy` ― in case the underlying node data contains field names with
+          characters that are invalid in GraphQL, `proxy` allows to explicitly
+          proxy those properties to fields with valid field names. Takes a `from` arg.
 
 ```graphql:title=gatsby-node.js
 exports.sourceNodes = function sourceNodes({ actions }) {
@@ -153,5 +153,5 @@ However, this is but a start and a path of continual, gradual improvement. We ar
 
 ## Helpful links
 
--   [createTypes Documentation](https://www.gatsbyjs.org/docs/actions/#createTypes)
--   [Umbrella issue for schema customization bug reports](https://github.com/gatsbyjs/gatsby/issues/12272)
+- [createTypes Documentation](https://www.gatsbyjs.org/docs/actions/#createTypes)
+- [Umbrella issue for schema customization bug reports](https://github.com/gatsbyjs/gatsby/issues/12272)

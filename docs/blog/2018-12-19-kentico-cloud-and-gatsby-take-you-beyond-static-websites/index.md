@@ -15,7 +15,7 @@ A few years ago I heard about static sites for the first time from a friend of m
 
 ## Why Gatsby?
 
-The great presentation by Callum MacDonald explained basic Gatsby features and purpose as well as cool new features of version 2. I knew the basics of Gatsby-like using React for the website implementation and that I would need to generate the static pages before deploying. But what I found really cool was the ability of handling images - you know, preloading and resizing. And I also thought that the prefetching of linked pages could make a huge difference in user experience. That really puts Gatsby above other similar generators.
+The great presentation by Callum MacDonald explained basic Gatsby features and purpose as well as cool new features of version 2. I knew the basics of Gatsby-like using React for the website implementation and that I would need to generate the static pages before deploying. But what I found really cool was the ability of handling images ― you know, preloading and resizing. And I also thought that the prefetching of linked pages could make a huge difference in user experience. That really puts Gatsby above other similar generators.
 
 ## Why static site?
 
@@ -96,14 +96,14 @@ graphql(`
 
 Implementing the site using Gatsby and the Kentico Cloud source plugin is super easy and fun, but at the end of the day, there are two questions you should ask:
 
--   Where should I host the static files?
--   How can I automatically regenerate the site when there are content or implementation changes?
+- Where should I host the static files?
+- How can I automatically regenerate the site when there are content or implementation changes?
 
 The first question is clear; you can keep using the same hosting provider and plan you have currently, right? But with the new implementation, all generated pages are just static files. You probably won't need the same amount of computing power or server memory. In our case, we decided to host the website on GitHub Pages, as the git repository is already hosted there, and the price is very tempting (0 USD). It also supports custom domains.
 
 ![Deploying static site](images/illustration-02.png)
 
-The answer to the second question is a bit more complicated. A static site needs to be regenerated every time the content or the site's source code is changed. We are using the Travis CI tool for automatic build and deployment to GitHub Pages. When there is an implementation change (push to GitHub repository), Travis is invoked automatically. For content changes, we are using [Kentico Cloud webhooks](http://bit.ly/2QzOdeS) - this works flawlessly! Whenever an editor publishes a new content item, webhook notification triggers a Travis build. Travis pulls the content from Kentico Cloud, fetches source code from GitHub, and after few moments of magic combines them into a nice set of static files - your static site. The last step of Travis is deployment to GitHub Pages.
+The answer to the second question is a bit more complicated. A static site needs to be regenerated every time the content or the site's source code is changed. We are using the Travis CI tool for automatic build and deployment to GitHub Pages. When there is an implementation change (push to GitHub repository), Travis is invoked automatically. For content changes, we are using [Kentico Cloud webhooks](http://bit.ly/2QzOdeS) ― this works flawlessly! Whenever an editor publishes a new content item, webhook notification triggers a Travis build. Travis pulls the content from Kentico Cloud, fetches source code from GitHub, and after few moments of magic combines them into a nice set of static files ― your static site. The last step of Travis is deployment to GitHub Pages.
 
 ## Build a Static Site Today
 

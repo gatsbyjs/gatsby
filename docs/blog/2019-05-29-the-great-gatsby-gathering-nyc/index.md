@@ -11,7 +11,7 @@ tags:
 
 Gatsby Days is one of our ways to say thank you. ([Another is tasty swag for contributors)](https://www.gatsbyjs.org/contributing/contributor-swag/). This series of single-day conferences aims to connect the Gatsby community with Gatsby's creators, core team and most of all each other. Our first event was held in San Francisco this past December, and our second Gatsby Days gathering just took place in New York on May 6th.
 
-Tens of thousands of developers are out there building both personal and commercial website projects on Gatsby, and gathering as many of you as we possibly can in one place is pretty incredible for the Gatsby team. We get to talk about what we are doing -- an overview of our current product roadmap and the future of modern website development -- with people who not only get it but love it as much as we do.
+Tens of thousands of developers are out there building both personal and commercial website projects on Gatsby, and gathering as many of you as we possibly can in one place is pretty incredible for the Gatsby team. We get to talk about what we are doing ― an overview of our current product roadmap and the future of modern website development ― with people who not only get it but love it as much as we do.
 
 The NYC gathering kicked off with a quick tour of "[What is Gatsby](https://www.gatsbyjs.com/gatsby-days-NYC-jason)" by Jason Lengstorf, followed by founder Kyle Matthews' "[The Future is the Cloud](https://www.gatsbyjs.com/gatsby-days-NYC-keynote-kyle)" keynote address, as well as [Chris Biscardi on Gatsby Themes](https://www.gatsbyjs.com/gatsby-days-NYC-themes). Attendees also heard true-life success tales from companies using Gatsby for large-scale projects. For all the Gatsby Days videos, see here.
 
@@ -29,7 +29,7 @@ The afternoon wrapped up with a series of 10 minute speed presentations from Gat
 
 After all that, everyone was definitely ready for happy hour. It was an enjoyable chance to get social with fellow attendees and speakers over drinks and food, and to talk over the themes from the day.
 
-Gatsby Days was the perfect energizing kick off to the rest of the week: our spring Gatsby Gathering. Since Gatsby is a distributed team, we mostly interact with each other and community members through GitHub and Slack. With team members sprinkled all over the globe, everywhere from California to Finland to India, it's a priority for us to convene every few months in person. Each time we get to connect, we play together -- in NYC there were outings to Broadway, a food tour of Brooklyn, and late night karaoke -- and make great strides during a week of face to face collaboration.
+Gatsby Days was the perfect energizing kick off to the rest of the week: our spring Gatsby Gathering. Since Gatsby is a distributed team, we mostly interact with each other and community members through GitHub and Slack. With team members sprinkled all over the globe, everywhere from California to Finland to India, it's a priority for us to convene every few months in person. Each time we get to connect, we play together ― in NYC there were outings to Broadway, a food tour of Brooklyn, and late night karaoke ― and make great strides during a week of face to face collaboration.
 
 ![Chris Biscardi and Dustin Schau show off their karaoke skills.](./images/chris-dustin.jpg)
 

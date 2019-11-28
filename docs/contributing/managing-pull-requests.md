@@ -18,9 +18,9 @@ For an introduction on what Pull Requests are and how to file one, check out the
 
 Some general things to verify in a pull request are:
 
--   Links ought to be relative instead of absolute when linking to docs (`/docs/some-reference/` instead of `https://www.gatsbyjs.org/docs/some-reference/`)
--   Language ought to be inclusive and accessible
--   Issues and RFCs (if any) that this PR addresses ought to be linked to
+- Links ought to be relative instead of absolute when linking to docs (`/docs/some-reference/` instead of `https://www.gatsbyjs.org/docs/some-reference/`)
+- Language ought to be inclusive and accessible
+- Issues and RFCs (if any) that this PR addresses ought to be linked to
 
 > 💡 When looking at a PR for the first time, it can help to read up on linked issues or [RFCs](/contributing/rfc-process/) (if there are any) to gain context on what the PR intends to add or fix.
 
@@ -34,37 +34,37 @@ Let's go over them below.
 
 We typically look for the following in [PRs that add documentation](/contributing/docs-contributions/):
 
--   Correctness — whether the added documentation is technically correct
--   Style — whether the written language follows our [style guide](/contributing/gatsby-style-guide/)
--   Headings – whether the heading levels in a doc start with h2 (`##` in Markdown) and grow in order, establishing an accessible content hierarchy
--   Type & Format – whether docs and learning materials align with our recommendations and [docs templates](/contributing/docs-templates/)
+- Correctness — whether the added documentation is technically correct
+- Style — whether the written language follows our [style guide](/contributing/gatsby-style-guide/)
+- Headings – whether the heading levels in a doc start with h2 (`##` in Markdown) and grow in order, establishing an accessible content hierarchy
+- Type & Format – whether docs and learning materials align with our recommendations and [docs templates](/contributing/docs-templates/)
 
 #### Code
 
 For [PRs that add code](/contributing/code-contributions/) (whether a feature or fix), we look for the following:
 
--   Correctness — whether the code does what we think it does
--   Tests — when fixing a bug or adding a new feature, it can be very valuable to add tests. While we do merge some small PRs without them, more often than not, it's good to have tests asserting behavior. This can be a combination of unit tests for the specific package, snapshot tests, and end to end tests. The goal here is to ensure that something that is being fixed or added _remains_ fixed or working the way we expect it to. Good tests ensure this.
--   Code Quality — focus on reasonable changes that will likely improve code maintenance, comprehension, or correctness. Stylistic changes are typically linted for by Prettier. Don't nitpick.
--   Documentation in the package's README if you're adding something
+- Correctness — whether the code does what we think it does
+- Tests — when fixing a bug or adding a new feature, it can be very valuable to add tests. While we do merge some small PRs without them, more often than not, it's good to have tests asserting behavior. This can be a combination of unit tests for the specific package, snapshot tests, and end to end tests. The goal here is to ensure that something that is being fixed or added _remains_ fixed or working the way we expect it to. Good tests ensure this.
+- Code Quality — focus on reasonable changes that will likely improve code maintenance, comprehension, or correctness. Stylistic changes are typically linted for by Prettier. Don't nitpick.
+- Documentation in the package's README if you're adding something
 
 #### Starters or Site Showcase
 
 For PRs that add a site or a starter to the showcase, we ought to check:
 
--   Check if the site or starter is built with Gatsby
--   Links — check if the links are working and accessible
--   Tags — ensure the tags match existing tags
--   Featured Status — new sites should not be marked as featured. Featured sites are occasionally updated by a member of the Gatsby team.
+- Check if the site or starter is built with Gatsby
+- Links — check if the links are working and accessible
+- Tags — ensure the tags match existing tags
+- Featured Status — new sites should not be marked as featured. Featured sites are occasionally updated by a member of the Gatsby team.
 
 #### Blog posts
 
 For PRs that add a blog post, we ought to check:
 
--   Correctness — whether the added documentation is technically correct
--   Style — whether the written language follows our [style guide](/contributing/gatsby-style-guide/)
--   Subject matter — blog posts should not be purely promotional, spammy, or inappropriate. An author should check with a member of the Gatsby team that their post is appropriate for the blog before creating their PR.
--   Time Sensitivity — blog posts are more time dependent than docs, especially since they get buried after more posts are published. If something is continually relevant and more of a general how-to, it should probably go in the [Reference Guides](/docs/guides/) section of the docs.
+- Correctness — whether the added documentation is technically correct
+- Style — whether the written language follows our [style guide](/contributing/gatsby-style-guide/)
+- Subject matter — blog posts should not be purely promotional, spammy, or inappropriate. An author should check with a member of the Gatsby team that their post is appropriate for the blog before creating their PR.
+- Time Sensitivity — blog posts are more time dependent than docs, especially since they get buried after more posts are published. If something is continually relevant and more of a general how-to, it should probably go in the [Reference Guides](/docs/guides/) section of the docs.
 
 ## Automated Checks
 
@@ -116,29 +116,29 @@ Let's look at some examples of good and bad PR titles:
 
 #### Good PR Titles ✅
 
--   `chore(docs): Fix links in contributing page`
--   `feat(gatsby): Add support for per page manifests`
--   `fix(gatsby-plugin-sharp): Ensure images exist before attempting conversion`
+- `chore(docs): Fix links in contributing page`
+- `feat(gatsby): Add support for per page manifests`
+- `fix(gatsby-plugin-sharp): Ensure images exist before attempting conversion`
 
 These are good PR titles because they are concise, specific and use the [conventional commit](https://www.conventionalcommits.org/en/v1.0.0-beta.3) format.
 
 #### Bad PR Titles ❌
 
--   `new tests`
--   `add support for my new cms`
--   `fix bug in gatsby`
+- `new tests`
+- `add support for my new cms`
+- `fix bug in gatsby`
 
 These are bad PR titles because they are generic, don't communicate the change properly and don't use the conventional commit format.
 
 ## Giving Feedback
 
--   Be _kind_. We're stronger every day because of our community, so compassion is important. We want all contributors to feel welcome.
--   Make suggestions using [GitHub's suggestions feature](https://help.github.com/en/articles/commenting-on-a-pull-request#adding-line-comments-to-a-pull-request) if possible. This makes accepting your suggestions easier for the author.
--   Link to examples when necessary
--   Try not to [bikeshed](http://bikeshed.com/) too much
--   Note when a suggestion is optional (as opposed to required)
--   Be objective and limit nitpicks (a few are fine if they add value or improve code readability)
--   Don't suggest and expect changes out of scope which are best addressed in a separate PR
+- Be _kind_. We're stronger every day because of our community, so compassion is important. We want all contributors to feel welcome.
+- Make suggestions using [GitHub's suggestions feature](https://help.github.com/en/articles/commenting-on-a-pull-request#adding-line-comments-to-a-pull-request) if possible. This makes accepting your suggestions easier for the author.
+- Link to examples when necessary
+- Try not to [bikeshed](http://bikeshed.com/) too much
+- Note when a suggestion is optional (as opposed to required)
+- Be objective and limit nitpicks (a few are fine if they add value or improve code readability)
+- Don't suggest and expect changes out of scope which are best addressed in a separate PR
 
 ## Rights and Permissions
 
@@ -154,8 +154,8 @@ Every PR opened in the repository needs to be approved before it can be merged. 
 
 Typically this is:
 
--   `gatsbyjs/core` for Code
--   `gatsbyjs/docs` for Documentation
+- `gatsbyjs/core` for Code
+- `gatsbyjs/docs` for Documentation
 
 We also have `CODEOWNERS` set on different parts of the repo and an approval by someone in the `CODEOWNERS` for the file(s) the PR is changing can also suffice.
 
@@ -169,7 +169,7 @@ Gatsbot is our little android friend that automatically merges PRs that are read
 
 ## Gotchas
 
--   Sometimes you might want to fix something on someone else's PR. This is perfectly okay to do as long as the author doesn't mind. However, depending on their settings, you might find that you are not able to push to their fork. In such a case, just leave your changes as suggestions.
+- Sometimes you might want to fix something on someone else's PR. This is perfectly okay to do as long as the author doesn't mind. However, depending on their settings, you might find that you are not able to push to their fork. In such a case, just leave your changes as suggestions.
 
 ## Frequently Asked Questions
 

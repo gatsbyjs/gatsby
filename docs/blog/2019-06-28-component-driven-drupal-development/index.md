@@ -1,5 +1,5 @@
 ---
-title: "Mediacurrent - Maximizing the Potential of Component-Driven Drupal Development with Gatsby"
+title: "Mediacurrent ― Maximizing the Potential of Component-Driven Drupal Development with Gatsby"
 date: 2019-06-28
 author: Caitlin Cashin
 excerpt: "Learn how Mediacurrent transformed their development process with Gatsby."
@@ -70,4 +70,4 @@ As Ben and the Mediacurrent wrap up their first successful Gatsby project, they'
 
 Everyone is looking forward to new growth and bright future with Gatsby.
 
-To learn more about Mediacurrent's work with Gatsby, check out Ben's Gatsby Days presentation -- [Move Fast, Don't Break Things: Trends in Modern Web Dev with Mediacurrent](https://youtu.be/QiocnDGnKfs), or read about one of Mediacurrent's client projects in ["Digital Display With Decoupled Drupal 8 & Gatsby"](/blog/2019-07-09-digital-display-drupal-gatsby/).
+To learn more about Mediacurrent's work with Gatsby, check out Ben's Gatsby Days presentation ― [Move Fast, Don't Break Things: Trends in Modern Web Dev with Mediacurrent](https://youtu.be/QiocnDGnKfs), or read about one of Mediacurrent's client projects in ["Digital Display With Decoupled Drupal 8 & Gatsby"](/blog/2019-07-09-digital-display-drupal-gatsby/).

@@ -42,7 +42,7 @@ Open the file at `src/pages/index.js`. The code in this file creates a component
 
 ### ✋ Make changes to the "Hello World" homepage
 
-1.  Change the "Hello World!" text to "Hello Gatsby!" and save the file. If your windows are side-by-side, you can see that your code and content changes are reflected almost instantly in the browser after you save the file.
+1. Change the "Hello World!" text to "Hello Gatsby!" and save the file. If your windows are side-by-side, you can see that your code and content changes are reflected almost instantly in the browser after you save the file.
 
 <video controls="controls" autoplay="true" loop="true">
   <source type="video/mp4" src="./02-demo-hot-reloading.mp4"></source>
@@ -51,7 +51,7 @@ Open the file at `src/pages/index.js`. The code in this file creates a component
 
 > 💡 Gatsby uses **hot reloading** to speed up your development process. Essentially, when you're running a Gatsby development server, the Gatsby site files are being "watched" in the background — any time you save a file, your changes will be immediately reflected in the browser. You don't need to hard refresh the page or restart the development server — your changes just appear.
 
-2.  Now you can make your changes a little more visible. Try replacing the code in `src/pages/index.js` with the code below and save again. You'll see changes to the text — the text color will be purple and the font size will be larger.
+2. Now you can make your changes a little more visible. Try replacing the code in `src/pages/index.js` with the code below and save again. You'll see changes to the text — the text color will be purple and the font size will be larger.
 
 ```jsx:title=src/pages/index.js
 import React from "react"
@@ -63,7 +63,7 @@ export default () => (
 
 > 💡 We'll be covering more about styling in Gatsby in [**part two**](/tutorial/part-two/) of the tutorial.
 
-3.  Remove the font size styling, change the "Hello Gatsby!" text to a level-one header, and add a paragraph beneath the header.
+3. Remove the font size styling, change the "Hello Gatsby!" text to a level-one header, and add a paragraph beneath the header.
 
 ```jsx:title=src/pages/index.js
 import React from "react"
@@ -80,7 +80,7 @@ export default () => (
 
 ![More changes with hot reloading](03-more-hot-reloading.png)
 
-4.  Add an image. (In this case, a random image from Unsplash).
+4. Add an image. (In this case, a random image from Unsplash).
 
 ```jsx:title=src/pages/index.js
 import React from "react"
@@ -153,7 +153,7 @@ Any React component defined in `src/pages/*.js` will automatically become a page
 
 You already have a `src/pages/index.js` file that came with the "Hello World" starter. Let's create an about page.
 
-1.  Create a new file at `src/pages/about.js`, copy the following code into the new file, and save.
+1. Create a new file at `src/pages/about.js`, copy the following code into the new file, and save.
 
 ```jsx:title=src/pages/about.js
 import React from "react"
@@ -166,7 +166,7 @@ export default () => (
 )
 ```
 
-2.  Navigate to <http://localhost:8000/about/>.
+2. Navigate to <http://localhost:8000/about/>.
 
 ![New about page](05-about-page.png)
 
@@ -176,8 +176,8 @@ Just by putting a React component in the `src/pages/about.js` file, you now have
 
 Let's say the homepage and the about page both got quite large and you were rewriting a lot of things. You can use sub-components to break the UI into reusable pieces. Both of your pages have `<h1>` headers — create a component that will describe a `Header`.
 
-1.  Create a new directory at `src/components` and a file within that directory called `header.js`.
-2.  Add the following code to the new `src/components/header.js` file.
+1. Create a new directory at `src/components` and a file within that directory called `header.js`.
+2. Add the following code to the new `src/components/header.js` file.
 
 ```jsx:title=src/components/header.js
 import React from "react"
@@ -185,7 +185,7 @@ import React from "react"
 export default () => <h1>This is a header.</h1>
 ```
 
-3.  Modify the `about.js` file to import the `Header` component. Replace the `h1` markup with `<Header />`:
+3. Modify the `about.js` file to import the `Header` component. Replace the `h1` markup with `<Header />`:
 
 ```jsx:title=src/pages/about.js
 import React from "react"
@@ -203,7 +203,7 @@ export default () => (
 
 In the browser, the "About Gatsby" header text should now be replaced with "This is a header." But you don't want the "About" page to say "This is a header." You want it to say, "About Gatsby".
 
-4.  Head back to `src/components/header.js` and make the following change:
+4. Head back to `src/components/header.js` and make the following change:
 
 ```jsx:title=src/components/header.js
 import React from "react"
@@ -211,7 +211,7 @@ import React from "react"
 export default props => <h1>{props.headerText}</h1> {/* highlight-line */}
 ```
 
-5.  Head back to `src/pages/about.js` and make the following change:
+5. Head back to `src/pages/about.js` and make the following change:
 
 ```jsx:title=src/pages/about.js
 import React from "react"
@@ -255,7 +255,7 @@ If you had passed another prop to your `<Header />` component, like so...
 
 ...you would have been able to also access the `arbitraryPhrase` prop: `{props.arbitraryPhrase}`.
 
-6.  To emphasize how this makes your components reusable, add an extra `<Header />` component to the about page, add the following code to the `src/pages/about.js` file, and save.
+6. To emphasize how this makes your components reusable, add an extra `<Header />` component to the about page, add the following code to the `src/pages/about.js` file, and save.
 
 ```jsx:title=src/pages/about.js
 import React from "react"
@@ -286,7 +286,7 @@ You'll often want to link between pages — Let's look at routing in a Gatsby si
 
 ### ✋ Using the `<Link />` component
 
-1.  Open the index page component (`src/pages/index.js`), import the `<Link />` component from Gatsby, add a `<Link />` component above the header, and give it a `to` property with the value of `"/contact/"` for the pathname:
+1. Open the index page component (`src/pages/index.js`), import the `<Link />` component from Gatsby, add a `<Link />` component above the header, and give it a `to` property with the value of `"/contact/"` for the pathname:
 
 ```jsx:title=src/pages/index.js
 import React from "react"
@@ -309,7 +309,7 @@ When you click the new "Contact" link on the homepage, you should see...
 
 ...the Gatsby development 404 page. Why? Because you're attempting to link to a page that doesn't exist yet.
 
-2.  Now you'll have to create a page component for your new "Contact" page at `src/pages/contact.js` and have it link back to the homepage:
+2. Now you'll have to create a page component for your new "Contact" page at `src/pages/contact.js` and have it link back to the homepage:
 
 ```jsx:title=src/pages/contact.js
 import React from "react"
@@ -380,10 +380,10 @@ case) and you'll see your newly published site! Great work!
 
 In this section you:
 
--   Learned about Gatsby starters, and how to use them to create new projects
--   Learned about JSX syntax
--   Learned about components
--   Learned about Gatsby page components and sub-components
--   Learned about React "props" and reusing React components
+- Learned about Gatsby starters, and how to use them to create new projects
+- Learned about JSX syntax
+- Learned about components
+- Learned about Gatsby page components and sub-components
+- Learned about React "props" and reusing React components
 
 Now, move on to [**adding styles to your site**](/tutorial/part-two/)!

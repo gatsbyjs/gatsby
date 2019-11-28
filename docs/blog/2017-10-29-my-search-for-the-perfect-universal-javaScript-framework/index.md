@@ -62,9 +62,9 @@ at building and hosting static websites.
 
 It is so much easier and fun to code for the web today. I would have saved a
 lot of development/devops hours at my previous startup just by using Gatsby. And
-the most fun fact about Gatsby is these aren't modern ideas at all - it's just
+the most fun fact about Gatsby is these aren't modern ideas at all ― it's just
 static websites done right.
 
 This post is based on a
-[tweetstorm](https://twitter.com/ketacode/status/924243146795515904) - find me
+[tweetstorm](https://twitter.com/ketacode/status/924243146795515904) ― find me
 on Twitter [@ketacode](https://twitter.com/ketacode)

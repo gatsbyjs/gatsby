@@ -1,5 +1,5 @@
 ---
-title: Improvements to GraphiQL IDE - adding GraphiQL Explorer
+title: Improvements to GraphiQL IDE ― adding GraphiQL Explorer
 date: 2019-06-03
 author: Michal Piechowiak
 tags:
@@ -74,9 +74,9 @@ or try it [live](https://gatsby-1774317511.gtsb.io/___graphql?explorerIsOpen=tru
 
 There are opportunities for further improvements for Gatsby users. Few things we will be working on are:
 
--   evaluating accessibility of GraphiQL interface and addressing found issues,
--   adding [support for using GraphQL fragments provided by Gatsby plugins](https://github.com/gatsbyjs/gatsby/issues/14371),
--   ~~adding [code snippet generation for common workflows](https://github.com/gatsbyjs/gatsby/issues/14476) (using another awesome OneGraph's GraphiQL addon - [`graphiql-code-exporter`](https://github.com/OneGraph/graphiql-code-exporter)).~~ [Check update!](#update-september-19th-2019)
+- evaluating accessibility of GraphiQL interface and addressing found issues,
+- adding [support for using GraphQL fragments provided by Gatsby plugins](https://github.com/gatsbyjs/gatsby/issues/14371),
+- ~~adding [code snippet generation for common workflows](https://github.com/gatsbyjs/gatsby/issues/14476) (using another awesome OneGraph's GraphiQL addon ― [`graphiql-code-exporter`](https://github.com/OneGraph/graphiql-code-exporter)).~~ [Check update!](#update-september-19th-2019)
 
 ## Update (September 19th 2019)
 
@@ -84,18 +84,18 @@ Code snippet generation (mentioned in [Future work section](#future-work)) was a
 
 Snippets we currently support are:
 
--   Page templates
--   Components using static queries (both `<StaticQuery>` and `useStaticQuery` variants)
+- Page templates
+- Components using static queries (both `<StaticQuery>` and `useStaticQuery` variants)
 
 Using those snippets allows users to quickly scaffold new pages and components that use queries created in GraphiQL IDE.
 
 Usual flow would look like this:
 
-1.  compose your query in GraphiQL,
-2.  click "Code Exporter" button in GraphiQL's toolbar,
-3.  select type of snippet
-4.  click "copy" button (or manually select generated code snippet and copy it),
-5.  paste copied snippet into new file in your code editor and save it.
+1. compose your query in GraphiQL,
+2. click "Code Exporter" button in GraphiQL's toolbar,
+3. select type of snippet
+4. click "copy" button (or manually select generated code snippet and copy it),
+5. paste copied snippet into new file in your code editor and save it.
 
 Now you have working page or component that uses your query!
 

@@ -270,13 +270,13 @@ Runtime is when a program is running (or being executable); it can refer to a fe
 
 ### Routing
 
-Routing is the mechanism for loading the correct content in a website or app based on a network request - usually a URL. For example, it allows for routing URLs like `/about-us` to the appropriate [page](#page), [template](#template), or [component](#component).
+Routing is the mechanism for loading the correct content in a website or app based on a network request ― usually a URL. For example, it allows for routing URLs like `/about-us` to the appropriate [page](#page), [template](#template), or [component](#component).
 
 ## S
 
 ### Schema
 
-An exact representation of how data is stored in a system, such as tables and fields in a database or a JSON file structure. In Gatsby, the GraphQL schema expresses all queryable data - or data that components can ask about as part of Gatsby's data layer.
+An exact representation of how data is stored in a system, such as tables and fields in a database or a JSON file structure. In Gatsby, the GraphQL schema expresses all queryable data ― or data that components can ask about as part of Gatsby's data layer.
 
 ### Server-side
 

@@ -9,7 +9,7 @@ tags:
 canonicalLink: https://www.taniarascia.com/add-comments-to-static-site/
 ---
 
-A while ago, I [migrated my site from WordPress to Gatsby](/blog/2019-03-21-migrating-from-wordpress-to-gatsby/), a static site generator that runs on JavaScript/React. Gatsby [recommends Disqus](/docs/adding-comments/) as a possible option for comments, and I briefly migrated all my comments over to it...until I looked at my site on a browser window without adblocker installed. I could see dozens of scripts injected into the site and even worse - truly egregious buzzfeed-esque ads embedded between all the comments. I decided it immediately had to go.
+A while ago, I [migrated my site from WordPress to Gatsby](/blog/2019-03-21-migrating-from-wordpress-to-gatsby/), a static site generator that runs on JavaScript/React. Gatsby [recommends Disqus](/docs/adding-comments/) as a possible option for comments, and I briefly migrated all my comments over to it...until I looked at my site on a browser window without adblocker installed. I could see dozens of scripts injected into the site and even worse ― truly egregious buzzfeed-esque ads embedded between all the comments. I decided it immediately had to go.
 
 I had no comments for a bit, but I felt like I had no idea what the reception of my articles was without having any place for people to leave comments. Occasionally people will leave useful critiques or tips on tutorials that can help future visitors as well, so I wanted to try adding something very simple back in.
 
@@ -19,33 +19,33 @@ Here's some pros and cons to rolling your own comment system:
 
 ## Pros
 
--   Free
--   No ads
--   No third party scripts injected into your site
--   Complete control over functionality and design
--   Can be as simple or complicated as you want
--   Little to no spam because spambots aren't set up to spam your custom content
--   Easy to migrate - it all exists in one Heroku + Postgres server
+- Free
+- No ads
+- No third party scripts injected into your site
+- Complete control over functionality and design
+- Can be as simple or complicated as you want
+- Little to no spam because spambots aren't set up to spam your custom content
+- Easy to migrate ― it all exists in one Heroku + Postgres server
 
 ## Cons
 
--   More work to set up
--   Less features
--   Need to set up manual anti-spam measures and moderation
+- More work to set up
+- Less features
+- Need to set up manual anti-spam measures and moderation
 
 If you've also struggled with this and wondered if there could be an easier way, or are just intrigued to see one person's implementation, read on!
 
 ## Introduction
 
-This guide will _not_ be a full, guided walkthrough - however, all the steps to create this are documented from start to finish in [Create and Deploy a Node.js, Express, & PostgreSQL REST API to Heroku](https://www.taniarascia.com/node-express-postgresql-heroku/). The comments API is a Node + Express server connected to a Postgres instance hosted for free on the hobby tier of Heroku (Hopefully I don't go over the 10,000 row limit any time soon). A combination of that article and what I've documented here can get you all the way to having your own comment system.
+This guide will _not_ be a full, guided walkthrough ― however, all the steps to create this are documented from start to finish in [Create and Deploy a Node.js, Express, & PostgreSQL REST API to Heroku](https://www.taniarascia.com/node-express-postgresql-heroku/). The comments API is a Node + Express server connected to a Postgres instance hosted for free on the hobby tier of Heroku (Hopefully I don't go over the 10,000 row limit any time soon). A combination of that article and what I've documented here can get you all the way to having your own comment system.
 
 > Note: Comments overall aren't a big deal to me, so I don't care if I'm just running some little hobby API I created, or if it goes down for any reason. I think it should be pretty solid, but obviously if your needs are more professional than mine, you should go ahead and buy Disqus or something.
 
 The comments API consists of three parts:
 
--   [Database](#database)
--   [API Server](#api)
--   [Front End](#front-end)
+- [Database](#database)
+- [API Server](#api)
+- [Front End](#front-end)
 
 The front end is written for React, but if you know how to make a form and an API call, it can be easily adjusted to whatever static system you're using.
 
@@ -53,7 +53,7 @@ The front end is written for React, but if you know how to make a form and an AP
 
 The first step assumes we'll be setting up a Postgres database called `comments_api` with a `comments` table.
 
-In the `comments_api` database, I created a `comments` table, with `ID`, `name`, `date`, and `text`. The `slug` refers to the article URL - so for `https://example.com/how-to-bake-a-cake`, the slug would be `how-to-bake-a-cake`. Finally, I added `parent_comment_id` in case you want to have the ability to reply to comments.
+In the `comments_api` database, I created a `comments` table, with `ID`, `name`, `date`, and `text`. The `slug` refers to the article URL ― so for `https://example.com/how-to-bake-a-cake`, the slug would be `how-to-bake-a-cake`. Finally, I added `parent_comment_id` in case you want to have the ability to reply to comments.
 
 ```sql
 CREATE DATABASE comments_api;
@@ -85,7 +85,7 @@ The aforementioned article goes much deeper into production level concerns of a 
 
 In our simplified, development example setup, we'll require `express`, a Node.js server, plus `bodyParser` and `cors` to allow our app to parse and request the data, and `pg` to create a Postgres pool connection.
 
-> This article is using default values for the Postgres connection - `user` as username, `password` as password, etc.
+> This article is using default values for the Postgres connection ― `user` as username, `password` as password, etc.
 
 ```js
 const express = require("express")
@@ -421,7 +421,7 @@ const commentForm = () => (
 
 Finally, we'll display the form and the comments. I decided to either display the form or a success/error message. A visitor won't be able to leave two comments in a row without reloading the page.
 
-After that, it's just a matter of looping through the comments and displaying them. I've made comment replies incredibly simple - only one reply allowed per post, and no nesting.
+After that, it's just a matter of looping through the comments and displaying them. I've made comment replies incredibly simple ― only one reply allowed per post, and no nesting.
 
 ```jsx:title=components/comments.js
 return (

@@ -15,7 +15,7 @@ AWS Amplify is a combination of client library, CLI toolchain, UI components & C
 
 Using the Amplify console, you can now easily deploy your application to AWS with built in CI / CD & atomic deployments.
 
-## Getting Started - Gatsby
+## Getting Started ― Gatsby
 
 First, we'll want to create a new Gatsby project. If you don't already have Gatsby installed, install it:
 
@@ -35,7 +35,7 @@ Finally, change into the new site directory:
 cd my-gatsby-site
 ```
 
-## Getting Started - AWS Amplify
+## Getting Started ― AWS Amplify
 
 Now that we have our Gatsby site up & running, let's add hosting & make the site live on AWS.
 

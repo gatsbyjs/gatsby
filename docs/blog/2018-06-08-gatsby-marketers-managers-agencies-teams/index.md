@@ -19,8 +19,8 @@ Last week, I was on a long plane flight and decided to pay the $30 for in-flight
 
 So I've become a fan girl for Gatsby. It's blazing-fast, secure, serverless, and lets me use the tools (CMS) that I already love. And this [new one-page overview](/gatsby-one-pager.pdf) is great in positioning Gatsby to the marketer, manager, agency, or team. The overview is perfect for:
 
--   An agency or individual freelancer trying to help a client understand the benefits of this new technology
--   An engineering manager trying to help less-technical stakeholders such as marketers or senior leadership understand why choosing Gatsby makes sense
--   A developer who's just launched a Gatsby website and coworkers are asking how you made it so fast and if you can do that for future projects
+- An agency or individual freelancer trying to help a client understand the benefits of this new technology
+- An engineering manager trying to help less-technical stakeholders such as marketers or senior leadership understand why choosing Gatsby makes sense
+- A developer who's just launched a Gatsby website and coworkers are asking how you made it so fast and if you can do that for future projects
 
 Get a better understanding of what Gatsby can do for your website. [Check it out](/gatsby-one-pager.pdf)!

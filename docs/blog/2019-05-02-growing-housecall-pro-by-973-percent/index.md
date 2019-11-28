@@ -46,11 +46,11 @@ Housecall Pro caters to a variety of home services industries. With that in mind
 
 With Gatsby, we can generate several hundred pages for all of the industries that we are targeting based on a single React template. This involved a simple process that boils down to the following simple steps:
 
--   Designers create a mock-up of the page
--   Developers create React components for each piece (composing as needed for re-use)
--   Developers create a JSON structure that holds all of the page's data
--   Content authors fill that structure
--   Gatsby loops through data structure and generates the pages
+- Designers create a mock-up of the page
+- Developers create React components for each piece (composing as needed for re-use)
+- Developers create a JSON structure that holds all of the page's data
+- Content authors fill that structure
+- Gatsby loops through data structure and generates the pages
 
 By providing data in the form of a JSON object, we can parse and iterate over each industry in which to generate a new page. Whether this JSON data comes from a file, or a CMS via an API call, or our own database, Gatsby provides the flexibility to build in any way we need.
 

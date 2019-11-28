@@ -1,5 +1,5 @@
 ---
-title: "How To Build A Blog with WordPress and Gatsby - Part 2"
+title: "How To Build A Blog with WordPress and Gatsby ― Part 2"
 date: 2019-04-30
 author: Tim Smith
 excerpt: "In the last post, you covered setting up WordPress for use with Gatsby. Today you will cover how to pull the data from WordPress into Gatsby and build pages."
@@ -49,16 +49,16 @@ gatsby new gatsby-wordpress
 
 Now that you have your project created, let's take a look inside. You will see a `src` folder along with several files. Here's a little breakdown of what these do:
 
--   **src/**: Directory that holds your React project
--   **.gitignore**: Tells what shouldn't be captured in git commits
--   **.prettierrc**: Determines styles in code editor (tabs, quotes, etc)
--   **LICENSE**: Basic MIT license
--   **README.md**: Markdown file with instructions for use
--   **`gatsby-browser.js`**: Gatsby Browser API stuff goes here. Global style calls go here too
--   **`gatsby-config.js`**: Configuration for your project including meta data and plugins
--   **`gatsby-node.js`**: Where you tell Gatsby to build pages from a template using provided data
--   **`gatsby-ssr.js`**: Gatsby Server Side Rendering APIs go here
--   **package.json**: File which holds custom scripts, dependency information, etc
+- **src/**: Directory that holds your React project
+- **.gitignore**: Tells what shouldn't be captured in git commits
+- **.prettierrc**: Determines styles in code editor (tabs, quotes, etc)
+- **LICENSE**: Basic MIT license
+- **README.md**: Markdown file with instructions for use
+- **`gatsby-browser.js`**: Gatsby Browser API stuff goes here. Global style calls go here too
+- **`gatsby-config.js`**: Configuration for your project including meta data and plugins
+- **`gatsby-node.js`**: Where you tell Gatsby to build pages from a template using provided data
+- **`gatsby-ssr.js`**: Gatsby Server Side Rendering APIs go here
+- **package.json**: File which holds custom scripts, dependency information, etc
 
 These files will be present in all Gatsby starters you use, so it's worth your time to have at least a basic level of understanding with each one. Let's take a look and see what dependencies and plugins you have by default. Open up the `package.json` file and scroll down to dependencies. This will tell you what packages you already have. Mine looks like this:
 
@@ -417,4 +417,4 @@ You're about half-way done with the actual Gatsby build. In this post I covered 
 
 The [code for this tutorial](https://github.com/iamtimsmith/building-a-blog-with-wordpress-and-gatsby) can be found on Gitub.
 
-See you in [How To Build A Blog with WordPress and Gatsby - Part 3](/blog/2019-05-02-how-to-build-a-blog-with-wordpress-and-gatsby-part-3)!
+See you in [How To Build A Blog with WordPress and Gatsby ― Part 3](/blog/2019-05-02-how-to-build-a-blog-with-wordpress-and-gatsby-part-3)!

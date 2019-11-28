@@ -34,31 +34,31 @@ On a recent livestream, [Ado Kukic](https://twitter.com/KukicAdo) helped me crea
 
 On the stream, we covered:
 
-1.  How to create dynamic routes in Gatsby
-2.  How to use [Auth0](https://auth0.com) to require a user login to view certain areas of a Gatsby site
-3.  How to store user tokens in a secure way
-4.  How to keep users logged in between page loads securely
+1. How to create dynamic routes in Gatsby
+2. How to use [Auth0](https://auth0.com) to require a user login to view certain areas of a Gatsby site
+3. How to store user tokens in a secure way
+4. How to keep users logged in between page loads securely
 
 The code we built is [available on GitHub](https://github.com/jlengstorf/gatsby-auth0-app) and will serve as a great starting point if you need to create a Gatsby app with user accounts.
 
 ## Additional links and resources
 
--   [Building Apps With Gatsby](/docs/building-apps-with-gatsby/)
--   [Auth0](https://auth0.com/)
--   [Simple auth example in Gatsby](https://github.com/gatsbyjs/gatsby/blob/master/examples/simple-auth/)
--   [Source code for the Gatsby store](https://github.com/gatsbyjs/store.gatsbyjs.org), which uses Auth0 to authenticate users
--   [Source code for the Gatsby store API](https://github.com/gatsbyjs/api.gatsbyjs.org), which uses Auth0 to authenticate requests
--   [Docs for the `wrapRootElement` API](/docs/browser-apis/#wrapRootElement)
--   [Ado Kukic on Twitter](https://twitter.com/KukicAdo)
--   [Jason Lengstorf on Twitter](https://twitter.com/jlengstorf)
+- [Building Apps With Gatsby](/docs/building-apps-with-gatsby/)
+- [Auth0](https://auth0.com/)
+- [Simple auth example in Gatsby](https://github.com/gatsbyjs/gatsby/blob/master/examples/simple-auth/)
+- [Source code for the Gatsby store](https://github.com/gatsbyjs/store.gatsbyjs.org), which uses Auth0 to authenticate users
+- [Source code for the Gatsby store API](https://github.com/gatsbyjs/api.gatsbyjs.org), which uses Auth0 to authenticate requests
+- [Docs for the `wrapRootElement` API](/docs/browser-apis/#wrapRootElement)
+- [Ado Kukic on Twitter](https://twitter.com/KukicAdo)
+- [Jason Lengstorf on Twitter](https://twitter.com/jlengstorf)
 
 ## Watch future livestreams
 
 There's a **new livestream every Thursday at 9 am Pacific.** The streams are even more fun live with the chat, so join in and let's learn together!
 
--   Click the "follow" button on [my Twitch account][twitch] to get notified when streams start
--   Check the "Upcoming Streams" section to learn who'll be joining me to teach us
--   [Send me ideas on Twitter](https://twitter.com/jlengstorf) for who you'd like to see on the stream
+- Click the "follow" button on [my Twitch account][twitch] to get notified when streams start
+- Check the "Upcoming Streams" section to learn who'll be joining me to teach us
+- [Send me ideas on Twitter](https://twitter.com/jlengstorf) for who you'd like to see on the stream
 
 See you on the next stream!
 

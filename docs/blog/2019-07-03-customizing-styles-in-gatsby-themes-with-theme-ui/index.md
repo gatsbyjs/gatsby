@@ -48,10 +48,10 @@ Styled System also takes some effort to set up and generally requires creating c
 
 Theme UI is intended to address some of these issues by:
 
--   Providing guidelines for how to create themeable UI and making configuration more portable
--   Allowing developers to use consistent styles anywhere in React with minimum effort
--   Enabling a simple way to style [MDX][] content, while keeping styles isolated
--   Abstracting some of the implementation details so you don't need to start from scratch
+- Providing guidelines for how to create themeable UI and making configuration more portable
+- Allowing developers to use consistent styles anywhere in React with minimum effort
+- Enabling a simple way to style [MDX][] content, while keeping styles isolated
+- Abstracting some of the implementation details so you don't need to start from scratch
 
 Theme UI currently includes optional packages for integrating with other libraries like [Typography.js][],
 and we plan to build more tools and integrations around the core foundation of Theme UI to make styling Gatsby sites even better in the future.

@@ -8,11 +8,11 @@ Want to submit a site to the [Site Showcase](/showcase/)? Follow these instructi
 
 There are three major steps:
 
-1.  If this is your first contribution to the Gatsby open source repo, follow the [Contribution guidelines](/contributing/code-contributions/).
+1. If this is your first contribution to the Gatsby open source repo, follow the [Contribution guidelines](/contributing/code-contributions/).
 
-2.  If there is a chance that someone else could have already submitted the site, please make sure no one else has already submitted it by searching [existing PRs](https://github.com/gatsbyjs/gatsby/pulls)
+2. If there is a chance that someone else could have already submitted the site, please make sure no one else has already submitted it by searching [existing PRs](https://github.com/gatsbyjs/gatsby/pulls)
 
-3.  Edit the [`sites.yml`](https://github.com/gatsbyjs/gatsby/blob/master/docs/sites.yml) file by adding your submission to the bottom of the list of sites in the following format:
+3. Edit the [`sites.yml`](https://github.com/gatsbyjs/gatsby/blob/master/docs/sites.yml) file by adding your submission to the bottom of the list of sites in the following format:
 
 ```yaml:title=docs/sites.yml
 - title: Title of the Site
@@ -50,7 +50,7 @@ Use the following template to ensure required fields are filled:
 - title: (required)
   url: (required)
   main_url: (required)
-  source_url: (optional - https://github.com/{username}/{titleofthesite})
+  source_url: (optional ― https://github.com/{username}/{titleofthesite})
   description: >
     (optional)
   categories:
@@ -68,38 +68,38 @@ Categories currently include both _type of site_ (structure) and the _content of
 
 #### Type of site
 
--   Blog
--   Directory
--   Documentation
--   eCommerce
--   Education
--   Portfolio
--   Gallery
--   See [`categories.yml`](https://github.com/gatsbyjs/gatsby/blob/master/docs/categories.yml) for an up to date list of valid categories.
+- Blog
+- Directory
+- Documentation
+- eCommerce
+- Education
+- Portfolio
+- Gallery
+- See [`categories.yml`](https://github.com/gatsbyjs/gatsby/blob/master/docs/categories.yml) for an up to date list of valid categories.
 
 #### Content of site
 
 A few notes on site content: a common question is this: "aren't all Gatsby sites technically in the "web development" category?" Well, no because this category means the _content_ of the site has to be about web development, like [React](https://reactjs.org/). Also, the difference between technology and web development is like this. [Cardiogram](https://cardiogr.am/) is technology, while [React](https://reactjs.org/) is web development.
 
--   Agency
--   Education
--   Entertainment
--   Finance
--   Food
--   Healthcare
--   Government
--   Marketing
--   Music
--   Media
--   Nonprofit
--   Open Source
--   Photography
--   Podcast
--   Real Estate
--   Science
--   Technology
--   Web Development
--   See [`categories.yml`](https://github.com/gatsbyjs/gatsby/blob/master/docs/categories.yml) for an up to date list of valid categories.
+- Agency
+- Education
+- Entertainment
+- Finance
+- Food
+- Healthcare
+- Government
+- Marketing
+- Music
+- Media
+- Nonprofit
+- Open Source
+- Photography
+- Podcast
+- Real Estate
+- Science
+- Technology
+- Web Development
+- See [`categories.yml`](https://github.com/gatsbyjs/gatsby/blob/master/docs/categories.yml) for an up to date list of valid categories.
 
 #### Adding new tag
 
@@ -113,10 +113,10 @@ By default, all sites submitted to the Site Showcase will be reviewed by the Gat
 
 Featured sites will be chosen quarterly based on the following criteria:
 
--   Well known brands
--   Use case diversity
--   Visual appeal
--   Visual diversity
+- Well known brands
+- Use case diversity
+- Visual appeal
+- Visual diversity
 
 #### How many can be featured at a time?
 
@@ -128,9 +128,9 @@ _Note: the Gatsby team will choose featured sites, leave as `featured: false` wh
 
 If your site is chosen as featured, here's what to do next:
 
-1.  Change `featured: false` to `featured: true`
+1. Change `featured: false` to `featured: true`
 
-2.  Add `featured` as a category:
+2. Add `featured` as a category:
 
 ```shell
 categories:

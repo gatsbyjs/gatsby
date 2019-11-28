@@ -1,5 +1,5 @@
 ---
-title: "How To Build A Blog with WordPress and Gatsby - Part 1"
+title: "How To Build A Blog with WordPress and Gatsby ― Part 1"
 date: 2019-04-26
 author: Tim Smith
 excerpt: "Ever wondered how to use Gatsby with WordPress? This post will cover everything you need to know about getting WordPress ready for a Gatsby site."
@@ -132,4 +132,4 @@ That being said, if you are creating custom content types for your blog you will
 
 If you have any questions, you can hit me up on twitter at [@iam_timsmith](https://twitter.com/iam_timsmith)!
 
-See you in [How To Build A Blog with WordPress and Gatsby - Part 2](/blog/2019-04-30-how-to-build-a-blog-with-wordpress-and-gatsby-part-2)!
+See you in [How To Build A Blog with WordPress and Gatsby ― Part 2](/blog/2019-04-30-how-to-build-a-blog-with-wordpress-and-gatsby-part-2)!

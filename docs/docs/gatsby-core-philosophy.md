@@ -8,8 +8,8 @@ Gatsby's core philosophy can be divided into three parts.
 
 **Second, [our tooling philosophy](#gatsbys-tooling-philosophy).** In order to make website building fun, Gatsby's tooling must embody certain qualities. These include:
 
--   [bundling the modern JavaScript ecosystem](#bundle-the-modern-javascript-ecosystem-for-the-content-web)
--   [progressive disclosure of complexity](#progressively-disclose-complexity)
+- [bundling the modern JavaScript ecosystem](#bundle-the-modern-javascript-ecosystem-for-the-content-web)
+- [progressive disclosure of complexity](#progressively-disclose-complexity)
 
 **Third, [our community philosophy](#gatsbys-community-philosophy).** We can't do this alone, so we're striving to build the most inclusive community on the web. For that reason, we _[work in the open](#work-in-the-open)_. At all times, we believe, and strive to communicate, that _[you belong here](#you-belong-here)_.
 
@@ -33,7 +33,7 @@ To [quote Alan Kay](https://www.youtube.com/watch?v=NdSD07U5uBs):
 
 Over the last few years, teams have begun moving from monolithic, integrated CMS setups to a modular "content mesh" pulling content and functionality from multiple sources and APIs. Their key challenge: pragmatically integrating all these pieces together.
 
-Gatsby's goal is to build a "content mesh system" that knits modular, best-of-breed tools in content modeling, authentication, search, analytics, payments, UI frameworks, and so on -- into a unified, high-quality whole.
+Gatsby's goal is to build a "content mesh system" that knits modular, best-of-breed tools in content modeling, authentication, search, analytics, payments, UI frameworks, and so on ― into a unified, high-quality whole.
 
 Read more on a [journey to the content mesh](/blog/2018-10-04-journey-to-the-content-mesh).
 
@@ -49,7 +49,7 @@ Technology is incredibly fun when we, like the wizard of fantasy, can type an in
 
 When this incantation is simple and takes seconds, we can easily get lost for hours in the rush of creation trying one thing after another improvising our way to an eventual design.
 
-Developers, designers, demand-gen marketers, copywriters -- every stakeholder in a website project _can_ feel this -- with proper tooling.
+Developers, designers, demand-gen marketers, copywriters ― every stakeholder in a website project _can_ feel this ― with proper tooling.
 
 As Bret Victor suggested in _Inventing on Principle_, each creator needs "an immediate connection to what they're making."
 
@@ -59,7 +59,7 @@ Developers can spend hours waiting for deploys, tracking down phantom "tooling" 
 
 We believe that with the right building blocks, and an integrated content mesh system, website projects should continue to feel fun no matter how big they get. We believe that every member of a website team deserves the ability to easily see how their work fits into the whole.
 
-When a copywriter edits a headline in their CMS, a designer draws a button in their illustration app, or a developer adds an if statement in their text editor, they shouldn't have to imagine what their change looks like in context. They should see it -- immediately.
+When a copywriter edits a headline in their CMS, a designer draws a button in their illustration app, or a developer adds an if statement in their text editor, they shouldn't have to imagine what their change looks like in context. They should see it ― immediately.
 
 [Read more here](/blog/2017-10-16-making-website-building-fun/).
 
@@ -69,7 +69,7 @@ Websites can have, or lack, many qualities. They can be fast, secure, maintainab
 
 We believe that these qualities should be baked into frameworks, so they are delivered _by default_ rather than implemented on a per-site basis.
 
-When features and qualities are only available if you implement them, that makes them a luxury -- available only to a few websites.
+When features and qualities are only available if you implement them, that makes them a luxury ― available only to a few websites.
 
 By contrast, by baking in qualities such as performance and security by default, Gatsby makes the right thing the easy thing.
 
@@ -113,15 +113,15 @@ We're convinced that the right path forward is to continue working in the open w
 
 Anyone can [open an issue](/contributing/how-to-file-an-issue/) and ask a question, and we'll respond. Anyone can submit a pull request, and we'll give honest feedback on it. Anyone can [submit an RFC](/contributing/rfc-process/) to make a major change to Gatsby. And when we want to do this, we'll submit an RFC as a proposal.
 
-Many of Gatsby's key features emerged from conversation between contributors. If you plumb through Gatsby's old issues, you'll see discussion of many of the core ideas that led to Gatsby -- from our plugin system to performance optimizations and so on.
+Many of Gatsby's key features emerged from conversation between contributors. If you plumb through Gatsby's old issues, you'll see discussion of many of the core ideas that led to Gatsby ― from our plugin system to performance optimizations and so on.
 
 ### You belong here
 
 Open source is great for developers. It lets you:
 
--   create a body of work and experience that looks great on a resumé or CV
--   build a referral network for paid work
--   turn it into a sustainable source of income
+- create a body of work and experience that looks great on a resumé or CV
+- build a referral network for paid work
+- turn it into a sustainable source of income
 
 #### Barriers to contributing to open source
 
@@ -137,15 +137,15 @@ Third, **many people don't see themselves represented in open source.**
 
 We believe that these barriers aren't simply obstacles to contributing, they're also obstacles to creating thriving projects. When these barriers persist:
 
--   projects lose so many brilliant people who have so much to contribute
--   projects lose an opportunity to add more maintainers
--   existing maintainers lose the opportunity to build support networks
+- projects lose so many brilliant people who have so much to contribute
+- projects lose an opportunity to add more maintainers
+- existing maintainers lose the opportunity to build support networks
 
 Our approach is to be proactive in creating community by:
 
--   actively reaching out and welcoming new contributors
--   remembering how steep the learning curve can be
--   investing in community as a primary measure of success
+- actively reaching out and welcoming new contributors
+- remembering how steep the learning curve can be
+- investing in community as a primary measure of success
 
 #### Community is everything
 
@@ -155,13 +155,13 @@ To accomplish this, we follow a guiding core value: you belong here.
 
 Some things we do in order to create an inclusive, welcoming community include:
 
--   An enforced [Code of conduct](/contributing/code-of-conduct/)
--   [Commitment to accessibility](/blog/2019-04-18-gatsby-commitment-to-accessibility/)
--   [Extensive docs](/docs)
--   Friendlier robots
--   Implicit trust
--   Active gratitude
--   [Active mentorship](/contributing/pair-programming/)
+- An enforced [Code of conduct](/contributing/code-of-conduct/)
+- [Commitment to accessibility](/blog/2019-04-18-gatsby-commitment-to-accessibility/)
+- [Extensive docs](/docs)
+- Friendlier robots
+- Implicit trust
+- Active gratitude
+- [Active mentorship](/contributing/pair-programming/)
 
 We've built an active community with hundreds of contributors, and we want to live the example of what a great open source community can be.
 

@@ -117,9 +117,9 @@ Quickly launch a new marketing site or add [CMS-powered pages](https://buttercms
 
 Adding a CMS-powered page to your app involves three easy steps:
 
-1.  Create the Page structure
-2.  Populate the content
-3.  Integrate into your application
+1. Create the Page structure
+2. Populate the content
+3. Integrate into your application
 
 If you need help after reading this, contact us via email or livechat.
 
@@ -271,9 +271,9 @@ Now open up [localhost:8000/home](http://localhost:8000/home) to see the home pa
 
 Let's say you want to add a set of customer case study pages to your marketing site. They all have the same structure but the content is different. Page Types are perfect for this scenario and involves three easy steps:
 
-1.  Create the Page Type structure
-2.  Populate the content
-3.  Integrate into your application
+1. Create the Page Type structure
+2. Populate the content
+3. Integrate into your application
 
 If you need help after reading this, contact us via email or livechat.
 
@@ -540,8 +540,8 @@ exports.createPages = async ({ graphql, actions }) => {
   posts = posts.data.allButterPost.edges
 
   posts.forEach((post, index) => {
-    const previous = index === posts.length - 1 ? null : posts[index + 1].node
-    const next = index === 0 ? null : posts[index - 1].node
+    const previous = index === posts.length ― 1 ? null : posts[index + 1].node
+    const next = index === 0 ? null : posts[index ― 1].node
 
     // Create blog posts pages.
     createPage({
@@ -608,9 +608,9 @@ Let's suppose you want to add a CMS to a static FAQ page with a title and a list
 
 Making your content dynamic with Butter is a two-step process:
 
-1.  **Setup custom content fields in Butter**
-2.  **Integrate the fields into your application**
-3.  **To setup custom content fields, first sign in to the Butter dashboard.**
+1. **Setup custom content fields in Butter**
+2. **Integrate the fields into your application**
+3. **To setup custom content fields, first sign in to the Butter dashboard.**
 
 Create a new workspace or click on an existing one. Workspaces let you organize content fields in a friendly way for content editors and have no effect on development or the API. For example, a real-estate website might have a workspace called "Properties" and another called "About Page".
 
@@ -647,7 +647,7 @@ const Faq = ({ data }) => {
 
   return (
     <Layout>
-      <SEO title="FAQ - Frequently Asked Questions" />
+      <SEO title="FAQ ― Frequently Asked Questions" />
       <h1
         style={{
           height: `30%`,
@@ -967,8 +967,8 @@ exports.createPages = async ({ graphql, actions }) => {
   posts = posts.data.allButterPost.edges;
 
   posts.forEach((post, index) => {
-    const previous = index === posts.length - 1 ? null : posts[index + 1].node
-    const next = index === 0 ? null : posts[index - 1].node
+    const previous = index === posts.length ― 1 ? null : posts[index + 1].node
+    const next = index === 0 ? null : posts[index ― 1].node
 }
 ```
 
@@ -981,7 +981,7 @@ See their [API reference](https://buttercms.com/docs/api/) for more information 
 
 This was an example meant to help you understand how ButterCMS works with Gatsby. You're now able to:
 
--   Create a ButterCMS repository and setting it up together with the Gatsby plugin
--   Query data from ButterCMS for single pages, multiple pages, blog posts, and custom content fields
+- Create a ButterCMS repository and setting it up together with the Gatsby plugin
+- Query data from ButterCMS for single pages, multiple pages, blog posts, and custom content fields
 
 If you got stuck, you can compare your code to the [`gatsby-starter-buttercms`](https://github.com/ButterCMS/gatsby-starter-buttercms). To learn more about ButterCMS, check out their [blog](https://buttercms.com/blog/). Their latest updates can be found [here](https://buttercms.com/blog/category/new-to-butter/).

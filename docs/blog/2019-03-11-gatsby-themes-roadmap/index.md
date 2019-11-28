@@ -12,10 +12,10 @@ deadline with an absolute minimum (1) of breaking changes. In this post we'll
 cover what we've shipped to date, where we are today, and what the roadmap looks
 like for where we're going:
 
-1.  Theme Composition
-2.  Component Shadowing 2a. Improving Docs
-3.  Simplifying the Data Model
-4.  ?
+1. Theme Composition
+2. Component Shadowing 2a. Improving Docs
+3. Simplifying the Data Model
+4. ?
 
 ## Theme Composition
 

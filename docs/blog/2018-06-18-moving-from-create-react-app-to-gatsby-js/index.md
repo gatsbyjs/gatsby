@@ -61,8 +61,8 @@ Gatsby uses [GraphQL](https://graphql.org/learn/) to share data across pages. Yo
 
 There are two types of routes:
 
--   static - when you know all the parts that will define your route, like `/home`
--   dynamic - when part of your route is only known at runtime like, `blog/:slug`
+- static ― when you know all the parts that will define your route, like `/home`
+- dynamic ― when part of your route is only known at runtime like, `blog/:slug`
 
 Let's assume you have the following static routes in your `create-react-app` project:
 
@@ -266,6 +266,6 @@ Since Gatsby builds "static" files you can host them on tons of services. One of
 
 ## Resources
 
--   [Contentful tutorials](https://howtocontentful.com/)
--   [Contentful's Gatsby video series](https://www.contentful.com/blog/2018/02/28/contentful-gatsby-video-tutorials/)
--   [Gatsby Getting Started docs](/docs/)
+- [Contentful tutorials](https://howtocontentful.com/)
+- [Contentful's Gatsby video series](https://www.contentful.com/blog/2018/02/28/contentful-gatsby-video-tutorials/)
+- [Gatsby Getting Started docs](/docs/)

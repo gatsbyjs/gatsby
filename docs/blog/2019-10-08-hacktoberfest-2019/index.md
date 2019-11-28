@@ -16,16 +16,16 @@ During Hacktoberfest, you're probably looking to contribute to an open source pr
 
 [Hacktoberfest](https://hacktoberfest.digitalocean.com/) is "a month-long celebration of open source software run by DigitalOcean and DEV".
 
--   [Register for Hacktoberfest](https://hacktoberfest.digitalocean.com/)
--   [Learn more about Hacktoberfest](https://hacktoberfest.digitalocean.com/faq)
+- [Register for Hacktoberfest](https://hacktoberfest.digitalocean.com/)
+- [Learn more about Hacktoberfest](https://hacktoberfest.digitalocean.com/faq)
 
 ### First time contributing to Gatsby?
 
 You may find these links helpful!
 
--   [How to Contribute](https://www.gatsbyjs.org/docs/how-to-contribute/)
--   [Code of Conduct](https://www.gatsbyjs.org/contributing/code-of-conduct/)
--   [How to Open a Pull Request](https://www.gatsbyjs.org/contributing/how-to-open-a-pull-request/)
+- [How to Contribute](https://www.gatsbyjs.org/docs/how-to-contribute/)
+- [Code of Conduct](https://www.gatsbyjs.org/contributing/code-of-conduct/)
+- [How to Open a Pull Request](https://www.gatsbyjs.org/contributing/how-to-open-a-pull-request/)
 
 PS: When your first PR is merged, you can claim some [free swag from the Gatsby Store](https://www.gatsbyjs.org/contributing/contributor-swag/)! 😄
 
@@ -41,9 +41,9 @@ We love our docs! Improving docs is a never-ending effort, and we have some [stu
 
 Want to do help us translate the Gatsby docs? Consider contributing to an existing repo (we have Spanish and Russian so far!), or start a new language translation by [opening an issue](https://www.gatsbyjs.org/contributing/how-to-file-an-issue/) to create a new repo and earn Hacktoberfest credit by contributing PRs to that repo.
 
--   Spanish repo: [`gatsbyjs/gatsby-es`](https://github.com/gatsbyjs/gatsby-es)
--   Russian repo: [`gatsbyjs/gatsby-ru`](https://github.com/gatsbyjs/gatsby-ru)
--   [New translation repo request](https://github.com/gatsbyjs/gatsby/issues/new?template=new_translation.md)
+- Spanish repo: [`gatsbyjs/gatsby-es`](https://github.com/gatsbyjs/gatsby-es)
+- Russian repo: [`gatsbyjs/gatsby-ru`](https://github.com/gatsbyjs/gatsby-ru)
+- [New translation repo request](https://github.com/gatsbyjs/gatsby/issues/new?template=new_translation.md)
 
 ### [OSS][oss]
 
@@ -57,12 +57,12 @@ Gatsby [plugins](https://www.gatsbyjs.org/docs/creating-plugins/) and [themes](h
 
 #### Plugins Created During Hacktoberfest
 
--   [`gatsby-source-etsy`](https://www.npmjs.com/package/gatsby-source-etsy): Source plugin for creative goods shop listings
+- [`gatsby-source-etsy`](https://www.npmjs.com/package/gatsby-source-etsy): Source plugin for creative goods shop listings
 
 ## Gatsby's Hacktoberfest Goals
 
-1.  To provide a range of issues with a clearly defined scope, with minimal context needed outside of the issue description.
-2.  To make contributing to Gatsby as welcoming, friendly, and accessible as we can -- especially to first-time contributors.
+1. To provide a range of issues with a clearly defined scope, with minimal context needed outside of the issue description.
+2. To make contributing to Gatsby as welcoming, friendly, and accessible as we can ― especially to first-time contributors.
 
 [docs-filter]: https://github.com/gatsbyjs/gatsby/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+label%3A%22Hacktoberfest%22+label%3A%22type%3A+documentation%22
 

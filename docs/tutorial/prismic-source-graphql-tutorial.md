@@ -13,15 +13,15 @@ Note that the Gatsby Prismic source plugin you will use during this tutorial, as
 
 By the end of this tutorial, you'll have done the following:
 
--   Learned how to configure the latest version of the Prismic source plugin
--   Fetch and render data from a Prismic repository
--   Create pages programmatically from a Prismic source
--   Configure previews for unpublished and edited documents
+- Learned how to configure the latest version of the Prismic source plugin
+- Fetch and render data from a Prismic repository
+- Create pages programmatically from a Prismic source
+- Configure previews for unpublished and edited documents
 
 ## Prerequisites
 
--   Familiarity with Gatsby
--   A personal Prismic repository. You can follow [this 5 minute guide](https://prismic.io/docs/reactjs/getting-started/create-repo-minimalist-blog) for instructions to set up a barebones repository for a minimalistic blog
+- Familiarity with Gatsby
+- A personal Prismic repository. You can follow [this 5 minute guide](https://prismic.io/docs/reactjs/getting-started/create-repo-minimalist-blog) for instructions to set up a barebones repository for a minimalistic blog
 
 ## Preparing your environment
 
@@ -283,9 +283,9 @@ export default ({ data }) => {
 
 You're rendering a very minimalistic page for each blog post; consisting of:
 
--   A link back to the homepage.
--   The article's title and page.
--   The rich text body which will contain formatted text and images.
+- A link back to the homepage.
+- The article's title and page.
+- The rich text body which will contain formatted text and images.
 
 Having a template is not enough to generate the dynamic pages, you will need to configure the plugin in `gatsby-config.js` so that pages are created following the same pattern defined in the link resolver function.
 
@@ -339,18 +339,18 @@ Your blog is ready to handle previews now. Just edit any of your blog posts in y
 
 After following this tutorial you have a minimalist blog that uses a Prismic repository as a data source. You have learned:
 
--   How to query the relevant data with GraphQL.
--   Render that data in your site.
--   Create templates to generate pages programmatically.
--   Build links to navigate your site.
--   And most importantly, how to setup previews so you can view changes to your documents without publishing them.
+- How to query the relevant data with GraphQL.
+- Render that data in your site.
+- Create templates to generate pages programmatically.
+- Build links to navigate your site.
+- And most importantly, how to setup previews so you can view changes to your documents without publishing them.
 
 ## Where to go from here
 
 If you want to go further, here are some more advanced things you can do using Prismic:
 
--   Rendering [slice components](https://www.youtube.com/watch?v=N85Tw06e29Q) for modular page building.
--   Using [webhooks](https://user-guides.prismic.io/webhooks/webhooks) as a trigger to rebuild your site.
--   Using a [helper function](https://prismic.io/docs/reactjs/getting-started/prismic-gatsby#27_0-using-the-html-serializer) to change links inside rich text fields to Link components.
+- Rendering [slice components](https://www.youtube.com/watch?v=N85Tw06e29Q) for modular page building.
+- Using [webhooks](https://user-guides.prismic.io/webhooks/webhooks) as a trigger to rebuild your site.
+- Using a [helper function](https://prismic.io/docs/reactjs/getting-started/prismic-gatsby#27_0-using-the-html-serializer) to change links inside rich text fields to Link components.
 
 You can read more about it in [Prismic's Gatsby documentation](https://prismic.io/docs/reactjs/getting-started/prismic-gatsby), build your [own full featured blog](https://user-guides.prismic.io/examples/gatsby-js-samples/sample-blog-with-api-based-cms-gatsbyjs) where you can try out Slices.

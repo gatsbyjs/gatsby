@@ -75,9 +75,9 @@ npm install <package-name>@<version> --save
 
 You can specify the version you want to install or upgrade to, in the following formats:
 
--   A specific version after the `@`
--   An annotated version with `*`,`^`,`~` to indicate that you want the latest major, minor or patch release respectively.
--   Use an `x` instead of a number to indicate that you want the latest major (`x`), minor (`<major>.x`) or patch release (`<major>.<minor>.x`). For example, to install the latest patch release for a given major and minor version: `npm install package-name@2.1.x --save`
+- A specific version after the `@`
+- An annotated version with `*`,`^`,`~` to indicate that you want the latest major, minor or patch release respectively.
+- Use an `x` instead of a number to indicate that you want the latest major (`x`), minor (`<major>.x`) or patch release (`<major>.<minor>.x`). For example, to install the latest patch release for a given major and minor version: `npm install package-name@2.1.x --save`
 
 For major upgrades, remember to follow up with the corresponding guide from the [Release and Migrations](/docs/releases-and-migration/) reference guide overview.
 
@@ -115,5 +115,5 @@ In case you get stuck in dependencies conflicts, you can use the [npm-force-reso
 
 Check out these related guides for major upgrades of Gatsby:
 
--   [Migrating from v1 to v2](/docs/migrating-from-v1-to-v2/)
--   [Migrating from v0 to v1](/docs/migrating-from-v0-to-v1/)
+- [Migrating from v1 to v2](/docs/migrating-from-v1-to-v2/)
+- [Migrating from v0 to v1](/docs/migrating-from-v0-to-v1/)

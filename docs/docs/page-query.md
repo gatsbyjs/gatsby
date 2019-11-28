@@ -107,7 +107,7 @@ import { graphql } from 'gatsby'
 + const HomePage = ({data}) => {
   return (
     <div>
--     Hello!
+- Hello!
 +     {data.site.siteMetadata.description}
     </div>
   )

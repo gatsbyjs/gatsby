@@ -11,9 +11,9 @@ In the last three sections, we've described the different facets of how to creat
 
 While these trends target different stakeholders, they're deeply interrelated. That's because to adopt a new architecture in one area, you often need to adopt new technologies in the other two.
 
-With users after user writing headlines like "[Gatsby + Contentful + Netlify (and Algolia)](/blog/2017-12-06-gatsby-plus-contentful-plus-netlify/)" -- grouping a React-based website framework, a headless CMS, a static host + CDN, and a search provider -- it's clear these these technologies are meant to be used together.
+With users after user writing headlines like "[Gatsby + Contentful + Netlify (and Algolia)](/blog/2017-12-06-gatsby-plus-contentful-plus-netlify/)" ― grouping a React-based website framework, a headless CMS, a static host + CDN, and a search provider ― it's clear these these technologies are meant to be used together.
 
-Website teams moving to this space have to plan four steps -- one for each category, plus integration.
+Website teams moving to this space have to plan four steps ― one for each category, plus integration.
 
 <figure>
   <img alt="" src="./modern-website-performance.png" />
@@ -30,22 +30,22 @@ In a modular CMS system, website teams can [use preferred workflows to choose yo
 
 This allows content teams to replace their heavyweight CMS monolith with their choice of:
 
--   A spreadsheet and text files (for extremely simple sites).
--   Specialized systems tailored to their use case, such as Shopify + Salsify + Bazaarvoice for an e-commerce site.
--   A headless cloud CMS with rich content modelling capabilities, such as Contentful.
+- A spreadsheet and text files (for extremely simple sites).
+- Specialized systems tailored to their use case, such as Shopify + Salsify + Bazaarvoice for an e-commerce site.
+- A headless cloud CMS with rich content modelling capabilities, such as Contentful.
 
 ### Second, pick a UI development library
 
 [React and Angular are both excellent, ubiquitous, modern choices](/blog/2018-10-11-rise-of-modern-web-development), with rich community ecosystems to address website-specific concerns like:
 
--   SEO
--   Routing
--   Accessibility
--   i18n
+- SEO
+- Routing
+- Accessibility
+- i18n
 
 ### Third, choose a performance strategy
 
-There are two main approaches to performance -- [payload optimization and delivery optimization](/blog/2018-10-16-why-mobile-performance-is-crucial#how-performance-optimization-works).
+There are two main approaches to performance ― [payload optimization and delivery optimization](/blog/2018-10-16-why-mobile-performance-is-crucial#how-performance-optimization-works).
 
 Payload optimization involves performance-enhancing development practices. Delivery optimization means compiling websites to static files that can be served from a global CDN, rather than running servers and databases.
 
@@ -57,17 +57,17 @@ To do payload optimization, your team will need to implement a [long performance
 
 ### Fourth, choose your content mesh
 
-To truly engage users, you need a modern website -- a modular CMS architecture, modern development framework, and cutting-edge performance.
+To truly engage users, you need a modern website ― a modular CMS architecture, modern development framework, and cutting-edge performance.
 
 The challenge for website teams is: how to achieve this without a lot of costly, time-intensive custom integration work?
 
 The answer: choose a content mesh. A content mesh:
 
--   pulls in data from your [headless CMS](/docs/headless-cms/) systems
+- pulls in data from your [headless CMS](/docs/headless-cms/) systems
 
--   enables you to develop in your preferred UI library while providing website tooling
+- enables you to develop in your preferred UI library while providing website tooling
 
--   automatically makes your site fast out of the box
+- automatically makes your site fast out of the box
 
 <figure>
   <img alt="The modern website landscape" src="./content-mesh.png" height="300" />
@@ -80,9 +80,9 @@ The answer: choose a content mesh. A content mesh:
 
 Website teams searching for a content mesh can consider:
 
--   utilizing vendor integrations
--   assorted JAMStack solutions
--   Gatsby
+- utilizing vendor integrations
+- assorted JAMStack solutions
+- Gatsby
 
 While some solutions have _part_ of the puzzle, only Gatsby comes with out-of-the-box CMS integrations, a modern development framework, and cutting-edge performance.
 
@@ -98,7 +98,7 @@ While this can solve the CMS integration problem, it locks the website in an idi
 
 Another option is the JAMstack space, with a proliferation of tools that make sites fast. These tools tend to _either_ support modern development frameworks _or_ connect to content systems, but not both.
 
-For example, VuePress and Nuxt.js allow teams to build sites in Vue, but don't offer connections with any enterprise content systems -- they require content to be stored as markdown files within the code repository.
+For example, VuePress and Nuxt.js allow teams to build sites in Vue, but don't offer connections with any enterprise content systems ― they require content to be stored as markdown files within the code repository.
 
 Middleman allows connections to third-party data sources, though currently only DatoCMS and Contentful are supported.
 
@@ -106,11 +106,11 @@ Middleman allows connections to third-party data sources, though currently only 
 
 Gatsby is the only content mesh option that creates fast websites, supports modern development frameworks, _and_ connects to enterprise content systems. Gatsby features:
 
--   **Integrations with 120+ backends**, including 15+ enterprise content systems like WordPress, Drupal, Contentful, Contentstack, Salsify and Shopify, as well as the ability to add additional sources.
+- **Integrations with 120+ backends**, including 15+ enterprise content systems like WordPress, Drupal, Contentful, Contentstack, Salsify and Shopify, as well as the ability to add additional sources.
 
--   **A React development environment**, along with key plugins that provide key website features like SEO, routing, accessibility, and i18n.
+- **A React development environment**, along with key plugins that provide key website features like SEO, routing, accessibility, and i18n.
 
--   **Lightning-fast out-of-the-box performance**, including both payload and delivery optimizations.
+- **Lightning-fast out-of-the-box performance**, including both payload and delivery optimizations.
 
 ## Conclusion
 

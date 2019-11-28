@@ -9,7 +9,7 @@ be generated that defines the shape of the data.
 Gatsby is able to automatically infer a GraphQL Schema from your data, and in
 many cases, this is really all you need. There are however situations when you
 either want to explicitly define the data shape, or add custom functionality to
-the query layer - this is what Gatsby's Schema Customization API provides.
+the query layer ― this is what Gatsby's Schema Customization API provides.
 
 The following guide walks through some examples to showcase the API.
 
@@ -64,7 +64,7 @@ Text
 
 To be able to query the contents of these files with GraphQL, they need to first be
 loaded into Gatsby's internal data store. This is what source and transformer
-plugin accomplish - in this case `gatsby-source-filesystem` and
+plugin accomplish ― in this case `gatsby-source-filesystem` and
 `gatsby-transformer-remark` plus `gatsby-transformer-json`. Every markdown post
 file is hereby transformed into a "node" object in the internal data store with
 a unique `id` and a type `MarkdownRemark`. Similarly, an author will be
@@ -183,7 +183,7 @@ bypassing the type inference mechanism altogether. With smaller scale projects
 inference is usually not a performance problem, but as projects grow the
 performance penalty of having to check each field type will become noticeable.
 
-Gatsby allows to opt out of inference with the `@dontInfer` type directive - which
+Gatsby allows to opt out of inference with the `@dontInfer` type directive ― which
 in turn requires that you explicitly provide type definitions for all fields
 that should be available for querying:
 
@@ -205,7 +205,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 Note that you don't need to explicitly provide the Node interface fields (`id`,
 `parent`, etc.), Gatsby will automatically add them for you.
 
-> If you wonder about the exclamation marks - those allow
+> If you wonder about the exclamation marks ― those allow
 > [specifying nullability](https://graphql.org/learn/schema/#lists-and-non-null)
 > in GraphQL, i.e. if a field value is allowed to be `null` or not.
 
@@ -373,7 +373,7 @@ Gatsby's internal data store for the full node object with the specified
 `id` and `type`.
 
 Because creating foreign-key relations is such a common use case, Gatsby
-luckily also provides a much easier way to do this -- with the help of
+luckily also provides a much easier way to do this ― with the help of
 extensions or directives. It looks like this:
 
 ```graphql
@@ -676,7 +676,7 @@ exports.createResolvers = ({ createResolvers }) => {
 ```
 
 Note that `createResolvers` allows adding new fields to types, modifying `args`
-and `resolver` -- but not overriding the field type. This is because
+and `resolver` ― but not overriding the field type. This is because
 `createResolvers` is run last in schema generation, and modifying a field type
 would mean having to regenerate corresponding input types (`filter`, `sort`),
 which you want to avoid. If possible, specifying field types should be done with
@@ -774,8 +774,8 @@ exports.createResolvers = ({ createResolvers }) => {
 }
 ```
 
-Because you might also be interested in the reverse - which contributors haven't
-received their swag yet - why not add a (required) custom query arg?
+Because you might also be interested in the reverse ― which contributors haven't
+received their swag yet ― why not add a (required) custom query arg?
 
 ```js:title=gatsby-node.js
 exports.createResolvers = ({ createResolvers }) => {

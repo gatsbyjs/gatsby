@@ -6,4 +6,4 @@ This is a stub article meant to be filled with tips on how to maintain a Gatsby 
 
 Topics to be covered:
 
--   yarn workspaces can solve yarn link inconsistencies
+- yarn workspaces can solve yarn link inconsistencies

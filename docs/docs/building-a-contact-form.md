@@ -89,7 +89,7 @@ Because the input is hidden, Formspree will know that only a bot could have made
 
 ### Run your own server
 
-If your form data requires a significant amount of business logic to handle, creating your own service might make the most sense. The most popular solution to this is writing an HTTP server - this can be done in many languages including PHP, Ruby, GoLang, or in our case Node.js with [Express](https://expressjs.com/).
+If your form data requires a significant amount of business logic to handle, creating your own service might make the most sense. The most popular solution to this is writing an HTTP server ― this can be done in many languages including PHP, Ruby, GoLang, or in our case Node.js with [Express](https://expressjs.com/).
 
 An initial implementation of a server using express, body-parser, and nodemailer may look like this:
 

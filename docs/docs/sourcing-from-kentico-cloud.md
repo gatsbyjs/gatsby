@@ -223,7 +223,7 @@ Now that your site's up and running, you need to set up automatic builds when pu
 
 You've seen how to set up a simple Gatsby site that sources content from Kentico Cloud and is automatically redeployed on any change to the content. Kentico Cloud is capable of creating many other kinds of relationships, including taxonomies for categorization, multiple languages, and linking items together. Want to do more?
 
--   See [more about what the Kentico Cloud source plugin can do](https://github.com/Kentico/gatsby-source-kentico-cloud#features).
--   Read the [Kentico Cloud documentation](https://developer.kenticocloud.com/docs) to see what's possible.
--   Explore the [Kentico Cloud Gatsby starter](https://github.com/Kentico/gatsby-starter-kentico-cloud) to see a more complete example.
--   Read a [blog post about using Kentico Cloud and Gatsby](/blog/2018-12-19-kentico-cloud-and-gatsby-take-you-beyond-static-websites/).
+- See [more about what the Kentico Cloud source plugin can do](https://github.com/Kentico/gatsby-source-kentico-cloud#features).
+- Read the [Kentico Cloud documentation](https://developer.kenticocloud.com/docs) to see what's possible.
+- Explore the [Kentico Cloud Gatsby starter](https://github.com/Kentico/gatsby-starter-kentico-cloud) to see a more complete example.
+- Read a [blog post about using Kentico Cloud and Gatsby](/blog/2018-12-19-kentico-cloud-and-gatsby-take-you-beyond-static-websites/).

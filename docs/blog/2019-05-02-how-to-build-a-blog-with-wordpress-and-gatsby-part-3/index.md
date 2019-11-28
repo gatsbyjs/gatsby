@@ -1,5 +1,5 @@
 ---
-title: "How To Build A Blog with WordPress and Gatsby - Part 3"
+title: "How To Build A Blog with WordPress and Gatsby ― Part 3"
 date: 2019-05-02
 author: Tim Smith
 excerpt: "In the third part of this series about WordPress and Gatsby, you will be creating pages using templates and components using data from WordPress."

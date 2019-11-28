@@ -11,15 +11,15 @@ We recently announced the [second major release of Gatsby](/blog/2018-09-17-gats
 
 @reach/router is a routing library for React written and maintained by one of the original creators of [react-router](https://github.com/ReactTraining/react-router), [Ryan Florence](https://twitter.com/ryanflorence). After [investigating the tradeoffs](https://github.com/gatsbyjs/gatsby/issues/5656), we made the leap to depending on @reach/router:
 
--   [Accessibility](https://reach.tech/router/accessibility) is a first-class concern
--   Smaller bundle size (~70% decrease, 18.4kb to 6kb gzipped)
--   Simplified API
+- [Accessibility](https://reach.tech/router/accessibility) is a first-class concern
+- Smaller bundle size (~70% decrease, 18.4kb to 6kb gzipped)
+- Simplified API
 
 ## How does it support accessibility?
 
 When you visit a Gatsby site, a static, server-rendered HTML page is loaded first, and then the JavaScript to hydrate the site into a web app is loaded. From there, internal routing is handled with the [Gatsby Link component](/docs/gatsby-link/), which wraps [@reach/router's Link component](https://reach.tech/router/api/Link).
 
-Web apps rerender in the client -- without making a request to the server to fetch new HTML -- resulting in a faster, more seamless user experience. These performance benefits, however, can create a broken experience for users who rely on assistive technology like screen readers.
+Web apps rerender in the client ― without making a request to the server to fetch new HTML ― resulting in a faster, more seamless user experience. These performance benefits, however, can create a broken experience for users who rely on assistive technology like screen readers.
 
 When a user navigates between traditional server-rendered pages, the page is fully reloaded; In response, screen readers can announce the new content. When using most client-side routing solutions (out of the box), without the page reload, screen readers don't know new content has been loaded to focus or announce.
 
@@ -107,12 +107,12 @@ We look forward to continuing to work actively with Ryan!
 
 Related Gatsby docs:
 
--   [V2 Migration Guide](/docs/migrating-from-v1-to-v2/#migrate-from-react-router-to-reachrouter)
--   [Gatsby Link API reference](/docs/gatsby-link/)
--   [V2 announcement blog post](/blog/2018-09-17-gatsby-v2/)
--   [Making your site accessible](/docs/making-your-site-accessible)
+- [V2 Migration Guide](/docs/migrating-from-v1-to-v2/#migrate-from-react-router-to-reachrouter)
+- [Gatsby Link API reference](/docs/gatsby-link/)
+- [V2 announcement blog post](/blog/2018-09-17-gatsby-v2/)
+- [Making your site accessible](/docs/making-your-site-accessible)
 
 External references:
 
--   [Single page app routers are broken](https://medium.com/@robdel12/single-page-apps-routers-are-broken-255daa310cf) by Rob DeLuca
--   [@reach/router docs](https://reach.tech/router)
+- [Single page app routers are broken](https://medium.com/@robdel12/single-page-apps-routers-are-broken-255daa310cf) by Rob DeLuca
+- [@reach/router docs](https://reach.tech/router)

@@ -8,9 +8,9 @@ transformations,
 like Babel plugins, but instead of adding them to your `.babelrc`, you import them in
 the file you want to use them. This has two big advantages:
 
--   No confusion about where a non-standard syntax is coming from. Macros are
-    explicitly imported wherever they are used.
--   No configuration files. Macros are included directly in your code as needed.
+- No confusion about where a non-standard syntax is coming from. Macros are
+          explicitly imported wherever they are used.
+- No configuration files. Macros are included directly in your code as needed.
 
 Like Babel plugins, macros run only at compile time. They are not included in
 the public JavaScript bundle. As such, macros have no effect on your code

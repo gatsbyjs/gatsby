@@ -51,13 +51,13 @@ We've used it to simply embed responsive content in stories but also to build fu
 
 **David:** The benefits that I've found are:
 
-1.  the general maintainability of static apps (which can be built with all kinds of tools and are critical to sustainable newsroom infrastructure),
+1. the general maintainability of static apps (which can be built with all kinds of tools and are critical to sustainable newsroom infrastructure),
 
-2.  the consolidated query system, which is very important for journalistic work where data can come from many sources such as Google Sheets used to keep track of small bits of text or translations, massive databases, CSV files, and practically anything else you can think of, and
+2. the consolidated query system, which is very important for journalistic work where data can come from many sources such as Google Sheets used to keep track of small bits of text or translations, massive databases, CSV files, and practically anything else you can think of, and
 
-3.  the speed of the built sites. Getting content onto people's screens is of utmost importance in journalism, and Gatsby does a good job with that.
+3. the speed of the built sites. Getting content onto people's screens is of utmost importance in journalism, and Gatsby does a good job with that.
 
-The dependence on React has been a barrier to wider adoption within ProPublica -- rightfully, not everyone wants to be tied to React. But ProPublica Illinois has seen a lot of benefit from it.
+The dependence on React has been a barrier to wider adoption within ProPublica ― rightfully, not everyone wants to be tied to React. But ProPublica Illinois has seen a lot of benefit from it.
 
 ## Creating beautiful data visualizations
 
@@ -74,7 +74,7 @@ Mixing d3 and React. Use JSX instead of the d3 selection API and keep everything
 
 ![mixing d3 and React](./images/d3react.jpg)
 
-This is pure HTML and CSS -- no extra libraries.
+This is pure HTML and CSS ― no extra libraries.
 
 ![pure HTML and CSS](./images/htmlcss.png)
 
@@ -120,7 +120,7 @@ For translation, pulling from Google Sheets is really powerful.
 
 **David:** This workflow isn't perfect, but it's better than the alternatives I've found. I am, however, excited to think about replacing parts of this with a full-blown [headless CMS](/docs/headless-cms/).
 
-**Sam:** My take is actually slightly different -- I think one really cool thing about what you're doing is that you've basically turned Google Sheets into a CMS.
+**Sam:** My take is actually slightly different ― I think one really cool thing about what you're doing is that you've basically turned Google Sheets into a CMS.
 
 **David:** I used that technique quite extensively at NPR. ProPublica uses the same techniques as well as ArchieML in Google Docs, which is helpful for longer pieces of text and more complex data structures.
 
@@ -133,7 +133,7 @@ Archie Markup Language (ArchieML). ArchieML is a text format optimized for human
 
 I hope to write a source plugin for Gatsby that pulls in ArchieML as structured data.
 
-**Sam:** Neat! Spreadsheets are an incredibly powerful tool for entering and storing data -- they need basically no onboarding, which is in contrast to every other system out there.
+**Sam:** Neat! Spreadsheets are an incredibly powerful tool for entering and storing data ― they need basically no onboarding, which is in contrast to every other system out there.
 
 In creating an effective content authoring and publishing workflow, a recipe I've seen succeed in a lot of different domains is to:
 
@@ -142,7 +142,7 @@ In creating an effective content authoring and publishing workflow, a recipe I'v
 
 ## Why web performance matters for publications
 
-**Sam:**: So we've talked about maintenance and scalability, as well a content authoring workflows. Let's talk a bit about performance -- what's the benefit of performance in a journalistic context? Do you track it?
+**Sam:**: So we've talked about maintenance and scalability, as well a content authoring workflows. Let's talk a bit about performance ― what's the benefit of performance in a journalistic context? Do you track it?
 
 **David:** It varies from publication to publication, but everybody tracks it and cares about it. There's a lot of content out there vying for people's attention, so you really need to convince people to go deeper with your story and very quickly. Some folks will always bounce because the content isn't for them, but you want to give yourself the best opportunity to engage.
 

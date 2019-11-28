@@ -6,9 +6,9 @@ Gatsby's `build` and `develop` steps run as a Node.js application which you can 
 
 In this guide you will learn how to debug some code using:
 
--   [VS Code debugger (Auto-Config)](#vs-code-debugger-auto-config)
--   [VS Code debugger (Manual-Config)](#vs-code-debugger-manual-config)
--   [Chrome DevTools for Node](#chrome-devtools-for-node)
+- [VS Code debugger (Auto-Config)](#vs-code-debugger-auto-config)
+- [VS Code debugger (Manual-Config)](#vs-code-debugger-manual-config)
+- [Chrome DevTools for Node](#chrome-devtools-for-node)
 
 As an example let's use the following code snippet in a `gatsby-node.js` file:
 
@@ -44,12 +44,12 @@ TypeError: Cannot read property 'internal' of undefined
 
 If you use VS Code and its integrated terminal, you can configure it to automatically create the debug config for you.
 
-1.  Press `Ctrl + ,` or `⌘ + ,` to open your preferences. Type `node debug` into the search bar. Make sure the `Auto Attach` option is set to `on`.
+1. Press `Ctrl + ,` or `⌘ + ,` to open your preferences. Type `node debug` into the search bar. Make sure the `Auto Attach` option is set to `on`.
     ![Search for on debug and set attach to enable](./images/set-node-attach-to-on.png)
 
-2.  Using VS Code's integrated terminal run `node --nolazy --inspect-brk node_modules/.bin/gatsby develop` instead of `gatsby develop`
+2. Using VS Code's integrated terminal run `node --nolazy --inspect-brk node_modules/.bin/gatsby develop` instead of `gatsby develop`
 
-3.  Set breakpoints and debug!
+3. Set breakpoints and debug!
 
 > **Note:** If the breakpoint is not being hit on `const value = createFilePath({ node, getNode })`
 > try running `gatsby clean` to delete the `.cache` and `public` folder and try again.
@@ -58,7 +58,7 @@ If you use VS Code and its integrated terminal, you can configure it to automati
 
 Using built in debuggers in code editors is very convenient. You will be able to skip a lot of setup needed to use Chrome DevTools. You will also be able to put breakpoints in the same view you write your code.
 
-We won't go in depth here about how to debug in VS Code - for that you can check the [excellent VS Code documentation](https://code.visualstudio.com/docs/editor/debugging). We will however share a launch configuration needed to run and debug Gatsby:
+We won't go in depth here about how to debug in VS Code ― for that you can check the [excellent VS Code documentation](https://code.visualstudio.com/docs/editor/debugging). We will however share a launch configuration needed to run and debug Gatsby:
 
 ```json:title=launch.json
 {
@@ -107,8 +107,8 @@ In your project directory instead of running `npm run develop` run the following
 node --inspect-brk --no-lazy node_modules/gatsby/dist/bin/gatsby develop
 ```
 
--   `--inspect-brk` will enable Node's inspector agent which will allow you to connect a debugger. It will also pause execution until the debugger is connected and then wait for you to resume it.
--   `--no-lazy` - this will force Node's V8 engine to disable lazy compilation and will help with using breakpoints.
+- `--inspect-brk` will enable Node's inspector agent which will allow you to connect a debugger. It will also pause execution until the debugger is connected and then wait for you to resume it.
+- `--no-lazy` ― this will force Node's V8 engine to disable lazy compilation and will help with using breakpoints.
 
 ### Connecting DevTools
 
@@ -144,17 +144,17 @@ In the example `Node` is `undefined` and to figure out why, let's go backwards. 
 
 ![Examine variable](./images/chrome-devtools-examine-var.png)
 
-You can now see the problem - `args` doesn't contain `Node` - it contains `node`. So this small typographic mistake was causing your code to fail. Adjusting your code to use a lowercase `node` fixes the problem and you did that without adding tons of `console.log` output!
+You can now see the problem ― `args` doesn't contain `Node` ― it contains `node`. So this small typographic mistake was causing your code to fail. Adjusting your code to use a lowercase `node` fixes the problem and you did that without adding tons of `console.log` output!
 
 ### Finishing thoughts on DevTools
 
 You can successfully debug your code using Chrome DevTools but using it isn't really that convenient. There are a lot of steps you need to do manually every time you want to use debugger, thankfully there are other methods that make it simpler to start such as the ones outlined above.
 
--   This was an introduction to Node.js debugging. Using information from this section you can setup debugging in your code editor or IDE of choice (if it supports node debugging).
--   You don't _need_ a code editor or IDE to debug Node.js applications. Using Chrome DevTools is usually a safe fallback.
--   Debugging isn't the only thing you can do in Chrome DevTools. Once you connect to DevTools you can use CPU or memory profilers. Check the `Profiler` and `Memory` tabs in DevTools.
+- This was an introduction to Node.js debugging. Using information from this section you can setup debugging in your code editor or IDE of choice (if it supports node debugging).
+- You don't _need_ a code editor or IDE to debug Node.js applications. Using Chrome DevTools is usually a safe fallback.
+- Debugging isn't the only thing you can do in Chrome DevTools. Once you connect to DevTools you can use CPU or memory profilers. Check the `Profiler` and `Memory` tabs in DevTools.
 
 ## Additional resources
 
--   [Debugging - Getting Started | Node.js](https://nodejs.org/en/docs/guides/debugging-getting-started/)
--   [Debugging with Node.js - Paul Irish talk at Node Summit 2017](https://www.youtube.com/watch?v=Xb_0awoShR8)
+- [Debugging ― Getting Started | Node.js](https://nodejs.org/en/docs/guides/debugging-getting-started/)
+- [Debugging with Node.js ― Paul Irish talk at Node Summit 2017](https://www.youtube.com/watch?v=Xb_0awoShR8)

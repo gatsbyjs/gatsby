@@ -42,19 +42,19 @@ gatsby new [<site-name> [<starter-url>]]
 
 #### Examples
 
--   Create a Gatsby site named `my-awesome-site` using the default starter:
+- Create a Gatsby site named `my-awesome-site` using the default starter:
 
 ```shell
 gatsby new my-awesome-site
 ```
 
--   Create a Gatsby site named `my-awesome-blog-site`, using [`gatsby-starter-blog`](https://www.gatsbyjs.org/starters/gatsbyjs/gatsby-starter-blog/):
+- Create a Gatsby site named `my-awesome-blog-site`, using [`gatsby-starter-blog`](https://www.gatsbyjs.org/starters/gatsbyjs/gatsby-starter-blog/):
 
 ```shell
 gatsby new my-awesome-blog-site https://github.com/gatsbyjs/gatsby-starter-blog
 ```
 
--   If you leave out both of the arguments, the CLI will run an interactive shell asking for these inputs:
+- If you leave out both of the arguments, the CLI will run an interactive shell asking for these inputs:
 
 ```shell
 gatsby new
@@ -157,10 +157,10 @@ At the root of a Gatsby site, wipe out the cache (`.cache` folder) and public di
 
 This is useful as a last resort when your local project seems to have issues or content does not seem to be refreshing. Issues this may fix commonly include:
 
--   Stale data, e.g. this file/resource/etc. isn't appearing
--   GraphQL error, e.g. this GraphQL resource should be present but is not
--   Dependency issues, e.g. invalid version, cryptic errors in console, etc.
--   Plugin issues, e.g. developing a local plugin and changes don't seem to be taking effect
+- Stale data, e.g. this file/resource/etc. isn't appearing
+- GraphQL error, e.g. this GraphQL resource should be present but is not
+- Dependency issues, e.g. invalid version, cryptic errors in console, etc.
+- Plugin issues, e.g. developing a local plugin and changes don't seem to be taking effect
 
 ### `plugin`
 

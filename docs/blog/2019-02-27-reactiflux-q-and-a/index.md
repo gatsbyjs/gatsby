@@ -9,7 +9,7 @@ Below is a transcript of an interview with Kyle Mathews, Chris Biscardi, and Dus
 
 Date of interview: December 13 2018
 
-* * *
+---
 
 **Q:** How do you see the future of Browser-apps/PWA in comparison to "old2 executables" on windows? — spYro
 
@@ -17,7 +17,7 @@ Date of interview: December 13 2018
 
 — kylemathews
 
-* * *
+---
 
 **Q:** Any progress in making react hooks work in v2? — Sylenth1
 
@@ -25,7 +25,7 @@ Date of interview: December 13 2018
 
 — kylemathews
 
-* * *
+---
 
 **Q:** Any plans for custom hooks in Gatsby? — alexanderson1993
 
@@ -33,7 +33,7 @@ Date of interview: December 13 2018
 
 — kylemathews
 
-* * *
+---
 
 **Q:** When would I choose Gatsby over next js — f_youngblood
 
@@ -41,7 +41,7 @@ Date of interview: December 13 2018
 
 — biscarch
 
-* * *
+---
 
 **Q:** What is the future of Gatsby beyond v2? — kdichev
 
@@ -51,7 +51,7 @@ We're also working on adding [Gatsby Theme support](/blog/2018-11-11-introducing
 
 — kylemathews
 
-* * *
+---
 
 **Q:** Is Gatsby ready to be used with dynamic Apps and an equivalent alternative to CRA by now? For example, a couple of months ago it was not possible yet to use Apollo Client (as in post-build to make dynamic requests to a GQL server from the client-side). Is this available now and are there any other limitations? In general, it has been confusing for me to understand why to use Gatsby for dynamic apps in the first place. It has been clearly advertised as a static site generator after all. Could you shed some light on that? Thanks! — tiny
 
@@ -59,7 +59,7 @@ We're also working on adding [Gatsby Theme support](/blog/2018-11-11-introducing
 
 — biscarch
 
-* * *
+---
 
 **Q:** When should we not choose Gatsby to start a React project? — alexluong
 
@@ -67,7 +67,7 @@ We're also working on adding [Gatsby Theme support](/blog/2018-11-11-introducing
 
 — kylemathews
 
-* * *
+---
 
 **Q:** Is there any specific place for documented or known issues with the react component lifecycle/prerendering in v2? I have a website that renders images correctly using `gatsby build` and `serve`, but when deployed to a CDN it seems my component never starts its animation and images are stuck with 0 opacity. (no asset optimization or configured prerendering selected on the CDN) — Tyler Churchill
 
@@ -75,7 +75,7 @@ We're also working on adding [Gatsby Theme support](/blog/2018-11-11-introducing
 
 — biscarch
 
-* * *
+---
 
 **Q:** How far down the roadmap are incremental builds? — ghardin137
 
@@ -83,7 +83,7 @@ We're also working on adding [Gatsby Theme support](/blog/2018-11-11-introducing
 
 — kylemathews
 
-* * *
+---
 
 **Q:** Do you hope or believe that Gatsby (and JAM-stack in general), headless CMS's and microservices will overcome rigid and outdated WordPress sites and architecture? — max
 
@@ -91,7 +91,7 @@ We're also working on adding [Gatsby Theme support](/blog/2018-11-11-introducing
 
 — kylemathews
 
-* * *
+---
 
 **Q:** What's the roadmap for Gatsby themes? When would it graduate from "experimental" feature? — alexluong
 
@@ -99,7 +99,7 @@ We're also working on adding [Gatsby Theme support](/blog/2018-11-11-introducing
 
 — biscarch
 
-* * *
+---
 
 **Q:** Will we be able to use incremental builds outside of the gatsby.com service? — ghardin137
 
@@ -107,7 +107,7 @@ We're also working on adding [Gatsby Theme support](/blog/2018-11-11-introducing
 
 — kylemathews
 
-* * *
+---
 
 **Q:** Where would you like to see Gatsby in a few years, what is your vision / long-term goal with it? — mo
 
@@ -115,7 +115,7 @@ We're also working on adding [Gatsby Theme support](/blog/2018-11-11-introducing
 
 — kylemathews
 
-* * *
+---
 
 **Q:** As a jaded javascripter who is getting tired of the whole 'new framework of the week', why should I care about Gatsby over other projects? Why would it be worth my time to help build the Gatsby community and contribute my time to creating plugins and troubleshooting the inevitable bugs that it will bring? What makes you special? — PenguinMan98
 
@@ -125,7 +125,7 @@ While it's inevitable that bugs come with any platform you choose to build on, G
 
 — biscarch
 
-* * *
+---
 
 **Q:** Is there some sort of change list or changelog? I have had problems finding one in the past, for Gatsby and its packages. — Everspace
 
@@ -133,7 +133,7 @@ While it's inevitable that bugs come with any platform you choose to build on, G
 
 — biscarch
 
-* * *
+---
 
 **Q:** Is there any plan to make Gatsby GraphQL-schema first, so is more "robust", instead of Gatsby building a schema out of the data-source. The main problem I'm facing is that data can change dynamically, GraphQL schema changes accordingly.. and this breaks GraphQL queries. I see others with the same problem. No easy solution. — monotono
 
@@ -143,7 +143,7 @@ We're also very excited that more and more services are offering native GraphQL 
 
 — kylemathews
 
-* * *
+---
 
 **Q:** Any info on contributing to the codebase or documentation greatly appreciated. Any tips that might not be in the official How To, or a contact if applicable/available. Thank you for your time — seanmoore1976
 
@@ -153,7 +153,7 @@ It's a great place to get started. That said, I'd also encourage to check out [a
 
 — dustin
 
-* * *
+---
 
 **Q:** How is authentication handled in Gatsby? — Reinhard
 
@@ -167,7 +167,7 @@ Check it out, and hope it's helpful!
 
 — dustin
 
-* * *
+---
 
 **Q:** What is the most exciting feature you are working right now? — Checkmatez
 
@@ -177,7 +177,7 @@ A Gatsby email _application_. Contribute to `DSchau/gatsby-mail` development by 
 
 — biscarch
 
-* * *
+---
 
 **Q:** What support will Gatsby team provide to .com clients and the idea behind it? — kdichev
 
@@ -185,7 +185,7 @@ A Gatsby email _application_. Contribute to `DSchau/gatsby-mail` development by 
 
 — kylemathews
 
-* * *
+---
 
 **Q:** I have found developing plugins that create nodes or interact with the `gatsby-api` to be a big hassle in comparison to how pages and other content is developed. Is there any plans on making something like "hot-reload" nodes or generation during development without having to stop and start `gatsby`? — Everspace
 
@@ -193,7 +193,7 @@ A Gatsby email _application_. Contribute to `DSchau/gatsby-mail` development by 
 
 — kylemathews
 
-* * *
+---
 
 **Q:** Would be interested in the Gatsby team's take on this: What are currently the best and/or most up-and-coming tech locations in the world besides Silicon Valley? — tiny
 
@@ -203,7 +203,7 @@ P.S. Gatsby is hiring worldwide for OSS Maintainers
 
 — biscarch
 
-* * *
+---
 
 **Q:** As a company do you have any plan in pursuing global partnerships? — yuchi
 
@@ -211,7 +211,7 @@ P.S. Gatsby is hiring worldwide for OSS Maintainers
 
 — kylemathews
 
-* * *
+---
 
 **Q:** What about non-product partnership? — yuchi
 
@@ -219,7 +219,7 @@ P.S. Gatsby is hiring worldwide for OSS Maintainers
 
 — kylemathews
 
-* * *
+---
 
 **Q:** What is one thing that Gatsby is capable of doing that might surprise some people? — ctlee
 
@@ -227,7 +227,7 @@ P.S. Gatsby is hiring worldwide for OSS Maintainers
 
 — biscarch
 
-* * *
+---
 
 **Q:** Where can we find Gatsby job postings? — Rshig
 

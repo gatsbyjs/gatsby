@@ -25,12 +25,12 @@ Before you begin writing, make sure to read the rest of this style guide.
 Docs can cover a broad range of topics. Please see the following
 examples:
 
--   [Reference guides](/docs/add-404-page/)
--   [Reference guide overviews](/docs/styling/)
--   [Recipes](/docs/recipes/)
--   [Tutorials](/tutorial/part-one/)
--   [Plugin README](/packages/gatsby-source-filesystem/)
--   [Starter README](https://github.com/gatsbyjs/gatsby-starter-default)
+- [Reference guides](/docs/add-404-page/)
+- [Reference guide overviews](/docs/styling/)
+- [Recipes](/docs/recipes/)
+- [Tutorials](/tutorial/part-one/)
+- [Plugin README](/packages/gatsby-source-filesystem/)
+- [Starter README](https://github.com/gatsbyjs/gatsby-starter-default)
 
 Please see the [Docs templates](/contributing/docs-templates/) for guidelines on how to format the above kinds of documents.
 
@@ -58,15 +58,15 @@ If the content is already somewhere else on the .org site, feel free to copy and
 
 Possible sources of great research materials:
 
--   blogposts (on gatsbyjs.org and other sites)
--   docs (on gatsbyjs.org and other sites)
--   video tutorials
--   Discord, Spectrum, or Twitter conversations
--   search engine results
--   presentations you or others have given
--   textbooks
--   dreams
--   anything else you can think of
+- blogposts (on gatsbyjs.org and other sites)
+- docs (on gatsbyjs.org and other sites)
+- video tutorials
+- Discord, Spectrum, or Twitter conversations
+- search engine results
+- presentations you or others have given
+- textbooks
+- dreams
+- anything else you can think of
 
 ### Write drafts and get feedback
 
@@ -169,18 +169,18 @@ Article titles should be short and reflect the main theme of the article to help
 
 Here are some title examples:
 
--   Creating & Modifying Pages
--   Adding a 404 Page
--   Querying Data with GraphQL
+- Creating & Modifying Pages
+- Adding a 404 Page
+- Querying Data with GraphQL
 
 The folder name is used in the URL, so only use dashes -, numbers 0-9, and
 lowercase letters a-z for it.
 
 Here are some folder name examples:
 
--   creating-and-modifying-pages
--   adding-a-404-page
--   querying-data-with-graphql
+- creating-and-modifying-pages
+- adding-a-404-page
+- querying-data-with-graphql
 
 Note: Just to clarify, you can include special characters in the article title
 but _not_ in the `.md` file name or folder name (e.g. title: What is GraphQL? and Folder Name:
@@ -208,13 +208,13 @@ Titles should aim to be brief while still conveying a comprehensive meaning of t
 
 Use the following as reference when creating and editing docs:
 
--   [formatting inline code and code blocks](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#code)
--   [adding images to articles](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#images).
-    If the images aren't already hosted somewhere else on the web, you'll need to put them online yourself.
-    A good way to do this is to commit them to a GitHub repository of your own, then push them to GitHub.
-    Then you can right click the image and copy its image source. And don't forget image alt text for accessibility!
-    For help with crafting efficient screen reader text, refer to the [W3C's alt decision tree](https://www.w3.org/WAI/tutorials/images/decision-tree/).
--   [header formatting](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#headers). Avoid using H1 header; that is reserved for the title of each document.
+- [formatting inline code and code blocks](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#code)
+- [adding images to articles](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#images).
+          If the images aren't already hosted somewhere else on the web, you'll need to put them online yourself.
+          A good way to do this is to commit them to a GitHub repository of your own, then push them to GitHub.
+          Then you can right click the image and copy its image source. And don't forget image alt text for accessibility!
+          For help with crafting efficient screen reader text, refer to the [W3C's alt decision tree](https://www.w3.org/WAI/tutorials/images/decision-tree/).
+- [header formatting](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#headers). Avoid using H1 header; that is reserved for the title of each document.
 
 #### Code formatting: Type tab
 
@@ -238,16 +238,16 @@ Each code snippet will include a tab showing the language type the snippet conta
 
 Please use the following language keywords where appropriate:
 
--   `javascript` or `js`
--   `jsx`
--   `graphql`
--   `html`
--   `css`
--   `shell`
--   `yaml`
--   `markdown`
--   `diff`
--   `flow`
+- `javascript` or `js`
+- `jsx`
+- `graphql`
+- `html`
+- `css`
+- `shell`
+- `yaml`
+- `markdown`
+- `diff`
+- `flow`
 
 If a language keyword is omitted, the type will show as `TEXT` (as shown above).
 
@@ -349,8 +349,8 @@ module.exports = {
 
 Proper nouns should use correct capitalization when possible. Below is a list of words as they should appear in Guide articles.
 
--   JavaScript (capital letters in "J" and "S" and no abbreviations)
--   Node.js
+- JavaScript (capital letters in "J" and "S" and no abbreviations)
+- Node.js
 
 A full-stack developer (adjective form with a dash) works on the full stack
 (noun form with no dash). The same goes with many other compound terms.
@@ -365,8 +365,8 @@ End users are spelled out with two words, rather than hyphenating with a dash.
 Use active voice instead of passive voice. Generally, it's a more concise and
 straightforward way to communicate a subject. For example:
 
--   (passive) The for loop in JavaScript is used by programmers to...
--   (active) Programmers use the for loop in JavaScript to...
+- (passive) The for loop in JavaScript is used by programmers to...
+- (active) Programmers use the for loop in JavaScript to...
 
 ### Make lists clear with the Oxford Comma
 
@@ -380,8 +380,8 @@ painter, sculptor, and architect. It makes things clearer.
 
 For words that have multiple spellings, prefer the US English word over British or Canadian English. For example:
 
--   `color` over `colour`
--   `behavior` over `behaviour`
+- `color` over `colour`
+- `behavior` over `behaviour`
 
 ### Use apps that help you edit
 
@@ -389,9 +389,9 @@ Use the [Hemingway App](https://www.hemingwayapp.com/). There's nothing magical
 about this tool, but it will automatically detect widely agreed-upon
 style issues:
 
--   passive voice
--   unnecessary adverbs
--   words that have more common equivalents
+- passive voice
+- unnecessary adverbs
+- words that have more common equivalents
 
 The Hemingway App will assign a "grade level" for your writing. You should aim
 for a grade level of 6. Another tool available is the De-Jargonizer, originally
@@ -408,11 +408,11 @@ When Gatsby commits to support a specific version of software (e.g. Node 8 and u
 
 When there are multiple ways to complete a task, the docs should explain the following:
 
-1.  The most fundamental way of completing the task
-2.  The most common way of completing a task
-3.  The best way to complete the task on the lowest supported versions of software
-4.  The best practice and why is it the best (if different than 3)
-5.  Any tips on how to pick an option
+1. The most fundamental way of completing the task
+2. The most common way of completing a task
+3. The best way to complete the task on the lowest supported versions of software
+4. The best practice and why is it the best (if different than 3)
+5. Any tips on how to pick an option
 
 For example, `gatsby-image` is a component that includes Gatsby best practices for handling images, yet there are more fundamental and common ways of handling them. Documentation ought to make the best practice clear in addition to the most common and fundamental ways.
 
@@ -432,31 +432,31 @@ Gatsby tutorials should prioritize helping users with the following attributes a
 
 Attributes:
 
--   new to React and interested in it
--   new to Gatsby and interested in it
--   new to JavaScript ecosystem and interested in it
--   proficient with browsers and operating system basics
+- new to React and interested in it
+- new to Gatsby and interested in it
+- new to JavaScript ecosystem and interested in it
+- proficient with browsers and operating system basics
 
 Looking for:
 
--   a way to learn and/or improve React skills
--   a way to start a site and/or app project that uses React
+- a way to learn and/or improve React skills
+- a way to start a site and/or app project that uses React
 
 ### Tutorials purpose
 
 By following the steps in a Gatsby tutorial, a user should:
 
--   Experience the value of Gatsby as quickly as possible. With Gatsby, a user typically values that it takes fewer steps (and is therefore easier) to:
-    -   start coding immediately without being an expert
-    -   start a new project
-    -   make edits and see them through hot reloading
-    -   publish a site
-    -   do basic tasks like create pages, link between pages, create routing, change styles
--   Know how to and actually start and deploy a site as quickly as possible.
--   Be able to share their site.
--   Know how to and actually find more advanced tutorials and docs.
--   Use enough React to do basic tasks like creating pages, links, styles.
--   Have fun!
+- Experience the value of Gatsby as quickly as possible. With Gatsby, a user typically values that it takes fewer steps (and is therefore easier) to:
+    - start coding immediately without being an expert
+    - start a new project
+    - make edits and see them through hot reloading
+    - publish a site
+    - do basic tasks like create pages, link between pages, create routing, change styles
+- Know how to and actually start and deploy a site as quickly as possible.
+- Be able to share their site.
+- Know how to and actually find more advanced tutorials and docs.
+- Use enough React to do basic tasks like creating pages, links, styles.
+- Have fun!
 
 ### Tutorials tone and style
 
@@ -474,8 +474,8 @@ Because the audience of the tutorial is people who do not consider themselves ex
 
 In practice, you can reach this goal by two rules of thumb:
 
--   Reduce the number of hyperlinks, tabs, and environments to the least number required to complete the tasks in the tutorial.
--   When there are multiple ways to complete a task, give people only one way. This way ought to be the best practice possible within the constraints of the lowest supported versions of software. If the best practice isn't possible with the lowest supported versions of software, mention that as a side note.
+- Reduce the number of hyperlinks, tabs, and environments to the least number required to complete the tasks in the tutorial.
+- When there are multiple ways to complete a task, give people only one way. This way ought to be the best practice possible within the constraints of the lowest supported versions of software. If the best practice isn't possible with the lowest supported versions of software, mention that as a side note.
 
 ## Recipes
 
@@ -495,20 +495,20 @@ Recipes are shorter and more concise than tutorials but more hands-on than refer
 
 "Docs" in Gatsby generally refers to the following sections:
 
--   Quick Start
--   Recipes
--   Reference Guides
--   Gatsby API
--   Releases & Migration
--   Conceptual Guide
--   Gatsby Internals
--   Using Gatsby Professionally
--   Contributing
--   Partnering with Gatsby
--   Commands (Gatsby CLI)
--   Cheat Sheet
--   Glossary
--   Gatsby REPL
+- Quick Start
+- Recipes
+- Reference Guides
+- Gatsby API
+- Releases & Migration
+- Conceptual Guide
+- Gatsby Internals
+- Using Gatsby Professionally
+- Contributing
+- Partnering with Gatsby
+- Commands (Gatsby CLI)
+- Cheat Sheet
+- Glossary
+- Gatsby REPL
 
 ### Docs audience
 
@@ -518,38 +518,38 @@ The docs should focus on helping users with the following attributes and goals.
 
 Attributes:
 
--   intermediate to advanced at React
--   frontend developer
--   prefer using a search engine and/or `ctrl + f` to find things on the gatsbyjs.org site
+- intermediate to advanced at React
+- frontend developer
+- prefer using a search engine and/or `ctrl + f` to find things on the gatsbyjs.org site
 
 Looking for:
 
--   way to get a site up and running quickly
--   a quick way to get the right words, types, defaults, descriptions, parameters, and returns for the API
--   bits of source code to study and/or copy
--   step-by-step tutorials for advanced tasks
--   understanding how Gatsby works at a deep level, so deep that they could actually modify or customize their own projects, or contribute to Gatsby core
--   how does Gatsby really work with Redux, React, and GraphQL?
--   error messages that tell them if it's a known bug/issue, lead them to docs, and/or suggest fixes
--   guides for how things work in Gatsby
--   they usually already have strong opinions or requirements about what they want to use as their CMS or data source and want to know best practices for their workflow
--   signs that Gatsby is a reliable, long-term choice (signs that it is growing and improving and evidence it will be around for a long time)
--   ways to check their project's requirements against what Gatsby offers
--   open source code from well-built example sites
+- way to get a site up and running quickly
+- a quick way to get the right words, types, defaults, descriptions, parameters, and returns for the API
+- bits of source code to study and/or copy
+- step-by-step tutorials for advanced tasks
+- understanding how Gatsby works at a deep level, so deep that they could actually modify or customize their own projects, or contribute to Gatsby core
+- how does Gatsby really work with Redux, React, and GraphQL?
+- error messages that tell them if it's a known bug/issue, lead them to docs, and/or suggest fixes
+- guides for how things work in Gatsby
+- they usually already have strong opinions or requirements about what they want to use as their CMS or data source and want to know best practices for their workflow
+- signs that Gatsby is a reliable, long-term choice (signs that it is growing and improving and evidence it will be around for a long time)
+- ways to check their project's requirements against what Gatsby offers
+- open source code from well-built example sites
 
 ### Docs purpose
 
 By referencing the docs, a user should:
 
--   get tasks done as quickly as possible
--   evaluate options for getting tasks done as quickly as possible
--   build sites and apps as quickly as possible, including the following kinds of sites:
-    -   marketing
-    -   blogs
-    -   portfolio
-    -   e-commerce
-    -   authenticated
-    -   accessible
+- get tasks done as quickly as possible
+- evaluate options for getting tasks done as quickly as possible
+- build sites and apps as quickly as possible, including the following kinds of sites:
+    - marketing
+    - blogs
+    - portfolio
+    - e-commerce
+    - authenticated
+    - accessible
 
 ### Docs tone and style
 
@@ -565,18 +565,18 @@ Because the audience of the docs is people who have intermediate to expert level
 
 In practice, you can reach this goal by two general rules:
 
--   Include an "additional information" section at the bottom of each guide with hyperlinks to relevant external blogposts, tutorials, and other Gatsby resources and docs.
--   When there are multiple ways to complete a task, [follow these instructions](#share-best-practices-whenever-possible).
+- Include an "additional information" section at the bottom of each guide with hyperlinks to relevant external blogposts, tutorials, and other Gatsby resources and docs.
+- When there are multiple ways to complete a task, [follow these instructions](#share-best-practices-whenever-possible).
 
 ## Why we chose GitHub for writing and maintaining docs
 
 The way the Gatsby community maintains docs and tutorials must meet the following requirements:
 
--   ability to ship quickly
--   ability to iterate quickly
--   OSS contributor access
--   code editing functionality
--   version control
--   a way to get feedback on each doc
+- ability to ship quickly
+- ability to iterate quickly
+- OSS contributor access
+- code editing functionality
+- version control
+- a way to get feedback on each doc
 
 GitHub meets these requirements.

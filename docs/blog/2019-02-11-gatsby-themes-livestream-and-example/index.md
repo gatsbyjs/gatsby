@@ -17,9 +17,9 @@ You can find more details in [the announcement post](/blog/2018-11-11-introducin
 
 What this means in practical terms is that you can use Gatsby themes to create a site with:
 
--   `package.json` with 4 installed packages (`gatsby`, `react`, `react-dom`, and your theme)
--   `gatsby-config.js` with metadata and a reference to your theme
--   a folder full of Markdown files for content
+- `package.json` with 4 installed packages (`gatsby`, `react`, `react-dom`, and your theme)
+- `gatsby-config.js` with metadata and a reference to your theme
+- a folder full of Markdown files for content
 
 And _that's it_.
 
@@ -35,22 +35,22 @@ frameborder="0" allowfullscreen />
 
 On the stream, we covered multiple topics:
 
-1.  How to build a Gatsby theme from scratch
-2.  How to create [child themes](/blog/2019-01-29-themes-update-child-theming-and-component-shadowing/#child-theming)
-3.  How to use [component shadowing](/blog/2019-01-29-themes-update-child-theming-and-component-shadowing/#component-shadowing)
-4.  How to install and use a Gatsby theme
+1. How to build a Gatsby theme from scratch
+2. How to create [child themes](/blog/2019-01-29-themes-update-child-theming-and-component-shadowing/#child-theming)
+3. How to use [component shadowing](/blog/2019-01-29-themes-update-child-theming-and-component-shadowing/#component-shadowing)
+4. How to install and use a Gatsby theme
 
 The code we built is [available on GitHub](https://github.com/jlengstorf/livestream-gatsby-themes) — use it as a starting point to build your own Gatsby themes today!
 
 ### Additional Links and Resources
 
--   Post: [Introducing Gatsby Themes](/blog/2018-11-11-introducing-gatsby-themes/)
--   Post: [Why Themes](/blog/2019-01-31-why-themes/)
--   [`gatsby-plugin-page-creator`](/packages/gatsby-plugin-page-creator/)
--   [`gatsby-mdx` getting started docs](https://gatsby-mdx.netlify.com/getting-started)
--   [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/)
--   [John Otander on Twitter](https://twitter.com/4lpine)
--   [Jason Lengstorf on Twitter](https://twitter.com/jlengstorf)
+- Post: [Introducing Gatsby Themes](/blog/2018-11-11-introducing-gatsby-themes/)
+- Post: [Why Themes](/blog/2019-01-31-why-themes/)
+- [`gatsby-plugin-page-creator`](/packages/gatsby-plugin-page-creator/)
+- [`gatsby-mdx` getting started docs](https://gatsby-mdx.netlify.com/getting-started)
+- [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/)
+- [John Otander on Twitter](https://twitter.com/4lpine)
+- [Jason Lengstorf on Twitter](https://twitter.com/jlengstorf)
 
 ## Watch future livestreams
 

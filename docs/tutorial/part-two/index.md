@@ -50,7 +50,7 @@ You now have a new Gatsby site (based on the Gatsby "hello world" starter) with 
 
 #### ✋ Add styles to a css file
 
-1.  Create a `.css` file in your new project:
+1. Create a `.css` file in your new project:
 
 ```shell
 cd src
@@ -72,7 +72,7 @@ You should now have a structure like this:
 │       └── global.css
 ```
 
-2.  Define some styles in the `global.css` file:
+2. Define some styles in the `global.css` file:
 
 ```css:title=src/styles/global.css
 html {
@@ -84,7 +84,7 @@ html {
 
 #### ✋ Include the stylesheet in `gatsby-browser.js`
 
-1.  Create the `gatsby-browser.js`
+1. Create the `gatsby-browser.js`
 
 ```shell
 cd ../..
@@ -105,7 +105,7 @@ Your project's file structure should now look like this:
 
 > 💡 What is `gatsby-browser.js`? Don't worry about this too much and for now, just know that `gatsby-browser.js` is one of a handful of special files that Gatsby looks for and uses (if they exist). Here, the naming of the file **is** important. If you do want to explore more now, check out [the docs](/docs/browser-apis/).
 
-2.  Import your recently-created stylesheet in the `gatsby-browser.js` file:
+2. Import your recently-created stylesheet in the `gatsby-browser.js` file:
 
 ```javascript:title=gatsby-browser.js
 import "./src/styles/global.css"
@@ -116,7 +116,7 @@ import "./src/styles/global.css"
 
 > Note: Both CommonJS (`require`) and ES Module (`import`) syntax work here. If you're not sure which to choose, we use `import` most of the time.
 
-3.  Start the development server:
+3. Start the development server:
 
 ```shell
 gatsby develop
@@ -150,7 +150,7 @@ In this section, you'll create a new page component and style that page componen
 
 First, create a new `Container` component.
 
-1.  Create a new directory at `src/components` and then, in this new directory, create a file named `container.js` and paste the following:
+1. Create a new directory at `src/components` and then, in this new directory, create a file named `container.js` and paste the following:
 
 ```javascript:title=src/components/container.js
 import React from "react"
@@ -163,7 +163,7 @@ export default ({ children }) => (
 
 You'll notice you imported a css module file named `container.module.css`. Let's create that file now.
 
-2.  In the same directory (`src/components`), create a `container.module.css` file and copy/paste the following:
+2. In the same directory (`src/components`), create a `container.module.css` file and copy/paste the following:
 
 ```css:title=src/components/container.module.css
 .container {
@@ -174,7 +174,7 @@ You'll notice you imported a css module file named `container.module.css`. Let's
 
 You'll notice that the file name ends with `.module.css` instead of the usual `.css`. This is how you tell Gatsby that this CSS file should be processed as a CSS module rather than plain CSS.
 
-3.  Create a new page component by creating a file at
+3. Create a new page component by creating a file at
     `src/pages/about-css-modules.js`:
 
 ```javascript:title=src/pages/about-css-modules.js
@@ -198,9 +198,9 @@ Now, if you visit `http://localhost:8000/about-css-modules/`, your page should l
 
 In this section, you'll create a list of people with names, avatars, and short Latin biographies. You'll create a `<User />` component and style that component using a CSS module.
 
-1.  Create the file for the CSS at `src/pages/about-css-modules.module.css`.
+1. Create the file for the CSS at `src/pages/about-css-modules.module.css`.
 
-2.  Paste the following into the new file:
+2. Paste the following into the new file:
 
 ```css:title=src/pages/about-css-modules.module.css
 .user {
@@ -236,7 +236,7 @@ In this section, you'll create a list of people with names, avatars, and short L
 }
 ```
 
-3.  Import the new `src/pages/about-css-modules.module.css` file into the `about-css-modules.js` page you created earlier by editing the first few lines of the file like so:
+3. Import the new `src/pages/about-css-modules.module.css` file into the `about-css-modules.js` page you created earlier by editing the first few lines of the file like so:
 
 ```javascript:title=src/pages/about-css-modules.js
 import React from "react"
@@ -254,7 +254,7 @@ The `console.log(styles)` code will log the resulting import so you can see the 
 
 If you compare that to your CSS file, you'll see that each class is now a key in the imported object pointing to a long string e.g. `avatar` points to `src-pages----about-css-modules-module---avatar---2lRF7`. These are the class names CSS Modules generates. They're guaranteed to be unique across your site. And because you have to import them to use the classes, there's never any question about where some CSS is being used.
 
-4.  Create a new `<User />` component inline in the `about-css-modules.js` page
+4. Create a new `<User />` component inline in the `about-css-modules.js` page
     component. Modify `about-css-modules.js` so it looks like the following:
 
 ```jsx:title=src/pages/about-css-modules.js
@@ -318,11 +318,11 @@ If you're interested in further reading, check out [Christopher "vjeux" Chedeau'
 
 Gatsby supports almost every possible styling option (if there isn't a plugin yet for your favorite CSS option, [please contribute one!](/contributing/how-to-contribute/))
 
--   [Typography.js](/packages/gatsby-plugin-typography/)
--   [Sass](/packages/gatsby-plugin-sass/)
--   [JSS](/packages/gatsby-plugin-jss/)
--   [Stylus](/packages/gatsby-plugin-stylus/)
--   [PostCSS](/packages/gatsby-plugin-postcss/)
+- [Typography.js](/packages/gatsby-plugin-typography/)
+- [Sass](/packages/gatsby-plugin-sass/)
+- [JSS](/packages/gatsby-plugin-jss/)
+- [Stylus](/packages/gatsby-plugin-stylus/)
+- [PostCSS](/packages/gatsby-plugin-postcss/)
 
 and more!
 

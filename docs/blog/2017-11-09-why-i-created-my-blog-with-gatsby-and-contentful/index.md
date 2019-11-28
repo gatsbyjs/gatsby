@@ -7,35 +7,35 @@ tags: ["contentful", "netlify", "getting-started", "hosting", "static"]
 
 I recently deployed my new blog at
 [halfelectronic.com](https://www.halfelectronic.com) and I thought it would be
-fitting to talk about how I built it in the first place -- you know, me being a
+fitting to talk about how I built it in the first place ― you know, me being a
 web developer and all.
 
 There is certainly no shortage of options when it comes to platforms and CMSs to
 build a blog these days: From the more traditional, cumbersome and usually
-troublesome PHP based ones -- I'm looking at you WordPress -- to the more
+troublesome PHP based ones ― I'm looking at you WordPress ― to the more
 minimal and modern ones like Ghost, Medium and Tumblr.
 
 However, in my experience, I found that pretty much all of these options
 typically force you to give up at least one of the following:
 
--   Money: As in the money you spend per month keeping the blog up and running.
--   Time: As in the time you spend maintaining, scaling and securing the blog
-    infrastructure once it has been deployed (i.e. DevOps time).
--   Control: As in the degree of control you have over the blog's appearance,
-    performance and architecture.
+- Money: As in the money you spend per month keeping the blog up and running.
+- Time: As in the time you spend maintaining, scaling and securing the blog
+          infrastructure once it has been deployed (i.e. DevOps time).
+- Control: As in the degree of control you have over the blog's appearance,
+          performance and architecture.
 
 This last point refers more than anything to online publishing platforms like
-Medium and WordPress.com -- not to be confused with the self-hosted WordPress
+Medium and WordPress.com ― not to be confused with the self-hosted WordPress
 alternative, which we'll discuss in a moment. And while that lack of control
 might not represent a problem to many bloggers, I often find it too limiting for
 my taste. I like to have my own domain, my own URL structures, my own color
 scheme and my own silly sidebar widgets which display what song I'm listening at
-the moment -- yeah, that's a thing I implemented 😁.
+the moment ― yeah, that's a thing I implemented 😁.
 
 By the same token, the idea of not having to worry about keeping your blog up
 and running 24/7 is certainly an appealing one. When you publish an article on
 Medium.com you know that no matter how many people read it, it is very unlikely
-that Medium will crash and people won't be able to access it -- and if it
+that Medium will crash and people won't be able to access it ― and if it
 happens, it's not really your problem anymore!
 
 It will be your problem, however, if you decide to create your own custom blog
@@ -69,7 +69,7 @@ nasty horror stories. As someone who spent three years working as a WordPress
 developer I could tell you some of those myself, but let's leave that for
 another day.
 
-Now, I am not saying that the WordPress Core is an insecure piece of software --
+Now, I am not saying that the WordPress Core is an insecure piece of software ―
 because I genuinely believe it is not. However, I do believe that WordPress
 suffers from the same kind of "ironic luck" that Windows has as an Operating
 System; that is, because of its massive popularity, hackers have a lot of
@@ -89,7 +89,7 @@ actually kind of slow...
 
 There are many reasons this could be happening: Maybe your shared hosting
 provider sucks, or maybe that shiny new \\$50 theme you bought on ThemeForest
-actually contains a lot of crap code -- a very common and too well-known
+actually contains a lot of crap code ― a very common and too well-known
 scenario.
 
 So, what do you do? Well, if you care about your readers and/or your SEO
@@ -157,7 +157,7 @@ That also means that our site is extremely unlikely to go down, regardless of
 the number of visitors we throw at it.
 
 All that sounds very nice and dandy, but unfortunately the web is not only made
-out of open source projects documentation sites and developer blogs -- although
+out of open source projects documentation sites and developer blogs ― although
 sometimes I wish it was!
 
 Even more importantly, the world is not full of tech-savvy developers who know
@@ -166,14 +166,14 @@ Static Sites Generators have only enjoyed a very limited success and adoption.
 The truth is, managing content in these sites has traditionally required a
 certain level of technical knowledge which the average user does not possess.
 
-"But wait, isn't that what Content Management Systems are for?" -- I hear you
+"But wait, isn't that what Content Management Systems are for?" ― I hear you
 asking. See, we have come full circle now!
 
 Why yes, they are!
 
 In fact, they are excellent at doing just that, managing content. Or, in other
 words, providing a nice GUI so that both technical and non-technical users can
-manage content -- that is, adding it, updating it, deleting it, publishing it as
+manage content ― that is, adding it, updating it, deleting it, publishing it as
 a draft, etc.
 
 The problem is that the monolithic and highly coupled architecture of most
@@ -203,7 +203,7 @@ neither of them having reached the 1.0 release yet.
 
 Ironically I chose Phenomic, mainly because I liked what the guys from
 [Serverless.com](http://serverless.com/)had done with their website at that
-time -- built using Phenomic.
+time ― built using Phenomic.
 
 So, I went ahead and built my blog using Phenomic. Overall, I thought it was a
 very good Static Site Generator. It allowed me to use CSS Modules, PostCSS and
@@ -246,7 +246,7 @@ it integrated an incredibly ingenious GraphQL layer which allowed the developer
 to query and fetch data from practically everywhere on the web!
 
 For us developers, that means that we are no longer restricted to rely on local
-static Markdown files to store the data of our static sites -- although that can
+static Markdown files to store the data of our static sites ― although that can
 still be done very efficiently as well.
 
 That data can also now be stored on any database or traditional storage device.
@@ -261,8 +261,8 @@ new version that contains the updated information.
 As good as this architecture sounded in my head, I knew that I had to test it
 first on a personal project before even thinking on implementing it somewhere
 else, and so I decided to re-engineer my finished Phenomic blog using Gatsby
-instead. Since the blog was only composed of React components -- which by nature
-are extremely portable -- 90% of the job was already done, so I only had to
+instead. Since the blog was only composed of React components ― which by nature
+are extremely portable ― 90% of the job was already done, so I only had to
 spend a couple of hours refactoring the top level of the application.
 
 Of course, in order to achieve this setup, there are still some key elements we
@@ -277,7 +277,7 @@ Personally, however, I found the idea of maintaining a CMS server and a database
 just for my simple blog not very appealing. Yes, our decoupled architecture
 means that if our CMS server or database ever goes down our static frontend
 won't be affected at all, but we still need to pay to have that CMS server up
-and running listening for requests -- which won't be that many -- and we still
+and running listening for requests ― which won't be that many ― and we still
 need to spend some time securing that MySQL database. Being a "Serverless"
 architectures enthusiast, I set out to find a more "serverless" and economic
 approach to this issue. Fortunately, the Gatsby community had already found
@@ -286,12 +286,12 @@ it in a powerful CMS called Contentful.
 ## Contentful to the rescue
 
 Contentful is both a Content-as-a-service (CaaS) provider as well as an
-excellent headless Content Management System -- which in my opinion is what most
+excellent headless Content Management System ― which in my opinion is what most
 CMSs should be nowadays.
 
 Instead of forcing you to render your content following a certain paradigm,
-Contentful only provides you with the tools necessary to manage your content --
-whatever that may be -- and expose it via HTTP endpoints.
+Contentful only provides you with the tools necessary to manage your content ―
+whatever that may be ― and expose it via HTTP endpoints.
 
 All of that content is stored in their databases, which means that you don't
 have to worry about maintaining or securing any server or database yourself.

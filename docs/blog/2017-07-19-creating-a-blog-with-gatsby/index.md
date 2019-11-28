@@ -71,12 +71,12 @@ growing, so oftentimes a plugin already exists that solves the particular
 problem you're trying to solve. To address the functionality you want for _this_
 blog, you can use the following plugins:
 
--   [`gatsby-plugin-catch-links`][`gatsby-plugin-catch-links`]
-    -   implements the history `pushState` API and does not require a page reload
-        on navigating to a different page in the blog
--   [`gatsby-plugin-react-helmet`][`gatsby-plugin-react-helmet`]
-    -   [react-helmet][react-helmet] is a tool that allows for modification of the
-        `head` tags; Gatsby statically renders any of these `head` tag changes
+- [`gatsby-plugin-catch-links`][`gatsby-plugin-catch-links`]
+    - implements the history `pushState` API and does not require a page reload
+              on navigating to a different page in the blog
+- [`gatsby-plugin-react-helmet`][`gatsby-plugin-react-helmet`]
+    - [react-helmet][react-helmet] is a tool that allows for modification of the
+              `head` tags; Gatsby statically renders any of these `head` tag changes
 
 with the following command:
 
@@ -93,7 +93,7 @@ functionality of the specified plugins.
 ```javascript:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
-    title: `Your Name - Blog`,
+    title: `Your Name ― Blog`,
     author: `Your Name`,
   },
   // highlight-start
@@ -163,13 +163,13 @@ over and convert to usable HTML.
 You only need one transformer plugin (for Markdown), so let's get that
 installed.
 
--   [`gatsby-transformer-remark`][`gatsby-transformer-remark`]
-    -   Uses the [remark][remark] Markdown parser to transform .md files on disk
-        into HTML; additionally, this transformer can optionally take plugins to
-        further extend functionality--e.g. add syntax highlighting with
-        `gatsby-remark-prismjs`, `gatsby-remark-copy-linked-files` to copy relative
-        files specified in markdown, `gatsby-remark-images` to compress images and
-        add responsive images with `srcset`, etc.
+- [`gatsby-transformer-remark`][`gatsby-transformer-remark`]
+    - Uses the [remark][remark] Markdown parser to transform .md files on disk
+              into HTML; additionally, this transformer can optionally take plugins to
+              further extend functionality--e.g. add syntax highlighting with
+              `gatsby-remark-prismjs`, `gatsby-remark-copy-linked-files` to copy relative
+              files specified in markdown, `gatsby-remark-images` to compress images and
+              add responsive images with `srcset`, etc.
 
 The process should be familiar by now, install and then add to config.
 
@@ -267,7 +267,7 @@ export default function Template({
   const { markdownRemark: post } = data // data.markdownRemark holds your post data
   return (
     <div className="blog-post-container">
-      <Helmet title={`Your Blog Name - ${post.frontmatter.title}`} />
+      <Helmet title={`Your Blog Name ― ${post.frontmatter.title}`} />
       <div className="blog-post">
         <h1>{post.frontmatter.title}</h1>
         <div
@@ -308,7 +308,7 @@ export default function Template({ data }) {
   const { markdownRemark: post } = data
   return (
     <div className="blog-post-container">
-      <Helmet title={`Your Blog Name - ${post.frontmatter.title}`} />
+      <Helmet title={`Your Blog Name ― ${post.frontmatter.title}`} />
       <div className="blog-post">
         <h1>{post.frontmatter.title}</h1>
         <div
@@ -592,7 +592,7 @@ export const pageQuery = graphql`
 OK! So we've followed a similar approach to your blog post template, so this
 should hopefully seem pretty familiar. Once more we're exporting `pageQuery`
 which contains a GraphQL query. Note that we're pulling a slightly different
-data set -- specifically, we are pulling an `excerpt` of 250 characters rather than
+data set ― specifically, we are pulling an `excerpt` of 250 characters rather than
 the full HTML as we are formatting the pulled date with a format
 string! GraphQL is awesome.
 
@@ -618,11 +618,11 @@ following along with this tutorial! You can not only make it pretty and style
 with CSS (or [styled-components][styled-components]!), but you could improve it
 functionally by implementing some of the following:
 
--   Add a tag listing and tag search page
-    -   hint: the `createPages` API in `gatsby-node.js` file is useful here, as is
-        frontmatter
--   adding navigation between a specific blog post and past/present blog posts
-    (the `context` API of `createPages` is useful here), etc.
+- Add a tag listing and tag search page
+    - hint: the `createPages` API in `gatsby-node.js` file is useful here, as is
+              frontmatter
+- adding navigation between a specific blog post and past/present blog posts
+          (the `context` API of `createPages` is useful here), etc.
 
 With your new found knowledge of Gatsby and its API, you should feel empowered to
 begin to utilize Gatsby to its fullest potential. A blog is just the starting
@@ -636,16 +636,16 @@ Now go build something great.
 
 ## Links
 
--   [`@dschau/gatsby-blog-starter-kit`][source-code]
-    -   A working repo demonstrating all of the aforementioned functionality of
-        Gatsby
--   [`@dschau/create-gatsby-blog-post`][create-gatsby-blog-post]
-    -   A utility and CLI I created to scaffold out a blog post following the
-        predefined Gatsby structure with frontmatter, date, path, etc.
--   [Source code for my blog][blog-source-code]
-    -   The source code for my blog, which takes the `gatsby-starter-blog-post`
-        (previous link), and expands upon it with a bunch of features and some more
-        advanced functionality
+- [`@dschau/gatsby-blog-starter-kit`][source-code]
+    - A working repo demonstrating all of the aforementioned functionality of
+              Gatsby
+- [`@dschau/create-gatsby-blog-post`][create-gatsby-blog-post]
+    - A utility and CLI I created to scaffold out a blog post following the
+              predefined Gatsby structure with frontmatter, date, path, etc.
+- [Source code for my blog][blog-source-code]
+    - The source code for my blog, which takes the `gatsby-starter-blog-post`
+              (previous link), and expands upon it with a bunch of features and some more
+              advanced functionality
 
 [react-dom-server]: https://facebook.github.io/react/docs/react-dom-server.html
 

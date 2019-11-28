@@ -20,11 +20,11 @@ When it comes to websites, performance is king, especially for ecommerce website
 
 With that in mind, they also needed it to tick off some major development points, such as:
 
-1.  Performance, performance, performance! The website had to be fast, as any delay in page load times meant lost customers and revenue.
-2.  Improve page load times by at least 20% over the competition
-3.  Optimize the site for mobile - the source of the majority of traffic
-4.  Develop quickly with easy-to-learn tools because the timeline to launch was tight
-5.  Make this project a blueprint for how to build future websites
+1. Performance, performance, performance! The website had to be fast, as any delay in page load times meant lost customers and revenue.
+2. Improve page load times by at least 20% over the competition
+3. Optimize the site for mobile ― the source of the majority of traffic
+4. Develop quickly with easy-to-learn tools because the timeline to launch was tight
+5. Make this project a blueprint for how to build future websites
 
 If the team didn't find a solution to meet these needs, they'd have to build it themselves and being responsible for performance optimizations, build processes, image optimizations, and edge hosting would have taken them easily another year to build. That definitely was NOT an option as they only had a few months to build and deploy the new Flamingo site.
 
@@ -70,7 +70,7 @@ Flamingo was able to achieve their sales and brand awareness goals with the new 
 
 Harry's had a website that was working, but the web team knew it could do better for Flamingo – it could move to the edge and head for a new frontier in ecommerce.
 
-Reflecting on it post-launch, the team says that Gatsby allowed them to focus on what they weren't able to in the past – building a beautiful site that was inherently fast. But there's been a surprise added value of Gatsby - the enthusiasm it has generated for the development team to push and learn.
+Reflecting on it post-launch, the team says that Gatsby allowed them to focus on what they weren't able to in the past – building a beautiful site that was inherently fast. But there's been a surprise added value of Gatsby ― the enthusiasm it has generated for the development team to push and learn.
 
 <Pullquote>The team has gotten excited about learning – excited about hosting at the edge and optimizing for performance, because Gatsby makes it easy.</Pullquote>
 
