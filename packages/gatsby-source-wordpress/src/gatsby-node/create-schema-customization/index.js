@@ -1,6 +1,5 @@
 import gql from "../../utils/gql"
 import fetchGraphql from "../../utils/fetch-graphql"
-import { dd } from "dumper.js"
 
 export default async (helpers, pluginOptions) => {
   const introspection = await fetchGraphql({

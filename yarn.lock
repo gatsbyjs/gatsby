@@ -4561,6 +4561,13 @@ babel-plugin-extract-import-names@^1.5.1:
   dependencies:
     "@babel/helper-plugin-utils" "7.0.0"
 
+babel-plugin-import-globals@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-import-globals/-/babel-plugin-import-globals-2.0.0.tgz#fd2527fe9764abfc373ddc903bb6ab596b771cb1"
+  integrity sha512-rozdNOLj7TApfQRdKcvU3Xh7V/9MRAc/JEuKstTtTKD41IqIZ4Srh5K1Gl+W5jXtfqcUWxeHQDrasFGxgEn7UQ==
+  dependencies:
+    "@babel/helper-module-imports" "^7.0.0"
+
 babel-plugin-istanbul@^4.1.6:
   version "4.1.6"
   resolved "http://registry.npmjs.org/babel-plugin-istanbul/-/babel-plugin-istanbul-4.1.6.tgz#36c59b2192efce81c5b378321b74175add1c9a45"
