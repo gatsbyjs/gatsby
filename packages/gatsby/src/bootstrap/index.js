@@ -5,7 +5,6 @@ const { slash } = require(`gatsby-core-utils`)
 const fs = require(`fs-extra`)
 const del = require(`del`)
 const path = require(`path`)
-const Promise = require(`bluebird`)
 const telemetry = require(`gatsby-telemetry`)
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
