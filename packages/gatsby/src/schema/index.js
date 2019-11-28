@@ -19,9 +19,53 @@ const getAllFieldExtensions = () => {
   }
 }
 
-const build = async ({ parentSpan }) => {
+// Schema building requires metadata for type inference.
+// Technically it means looping through all type nodes, analyzing node structure
+// and then using this aggregated node structure in related GraphQL type.
+// Actual logic for inference located in inferenceMetadata reducer and ./infer
+// Here we just orchestrate the process via redux actions
+const buildInferenceMetadata = ({ types }) =>
+  new Promise(resolve => {
+    if (!types || !types.length) {
+      resolve()
+      return
+    }
+    const typeNames = [...types]
+    // TODO: use async iterators when we switch to node>=10
+    //  or better investigate if we can offload metadata building to worker/Jobs API
+    //  and then feed the result into redux?
+    const processNextType = () => {
+      const typeName = typeNames.pop()
+      store.dispatch({
+        type: `BUILD_TYPE_METADATA`,
+        payload: {
+          typeName,
+          nodes: nodeStore.getNodesByType(typeName),
+        },
+      })
+      if (typeNames.length > 0) {
+        // Give event-loop a break
+        setTimeout(processNextType, 0)
+      } else {
+        resolve()
+      }
+    }
+    processNextType()
+  })
+
+const build = async ({ parentSpan, fullMetadataBuild = true }) => {
   const spanArgs = parentSpan ? { childOf: parentSpan } : {}
   const span = tracer.startSpan(`build schema`, spanArgs)
+
+  if (fullMetadataBuild) {
+    // Build metadata for type inference and start updating it incrementally
+    // except for SitePage type: we rebuild it in rebuildWithSitePage anyway
+    // so it makes little sense to update it incrementally
+    // (and those updates may have significant performance overhead)
+    await buildInferenceMetadata({ types: nodeStore.getTypes() })
+    store.dispatch({ type: `START_INCREMENTAL_INFERENCE` })
+    store.dispatch({ type: `DISABLE_TYPE_INFERENCE`, payload: [`SitePage`] })
+  }
 
   const {
     schemaCustomization: { thirdPartySchemas, types, printConfig },
@@ -70,12 +114,22 @@ const build = async ({ parentSpan }) => {
   span.finish()
 }
 
+const rebuild = async ({ parentSpan }) =>
+  await build({ parentSpan, fullMetadataBuild: false })
+
 const rebuildWithSitePage = async ({ parentSpan }) => {
   const spanArgs = parentSpan ? { childOf: parentSpan } : {}
   const span = tracer.startSpan(
     `rebuild schema with SitePage context`,
     spanArgs
   )
+  await buildInferenceMetadata({ types: [`SitePage`] })
+
+  // Disabling incremental inference for SitePage after the initial build
+  // as it has a significant performance cost for zero benefits.
+  // The only benefit is that schema rebuilds when SitePage.context structure changes.
+  // (one can just restart `develop` in this case)
+  store.dispatch({ type: `DISABLE_TYPE_INFERENCE`, payload: [`SitePage`] })
 
   const {
     schemaCustomization: { composer: schemaComposer },
@@ -111,6 +165,6 @@ const rebuildWithSitePage = async ({ parentSpan }) => {
 
 module.exports = {
   build,
-  rebuild: build,
+  rebuild,
   rebuildWithSitePage,
 }
