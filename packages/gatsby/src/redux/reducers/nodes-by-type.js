@@ -1,4 +1,4 @@
-const removeNodesByPlugin = require(`../remove-nodes-by-plugin`)
+// const removeNodesByPlugin = require(`../remove-nodes-by-plugin`)
 
 const getNodesOfType = (node, state) => {
   const { type } = node.internal
@@ -10,8 +10,20 @@ const getNodesOfType = (node, state) => {
 
 module.exports = (state = new Map(), action) => {
   switch (action.type) {
-    case `DELETE_CACHE`:
-      return removeNodesByPlugin(action.payload, state)
+    case `REBUILD_NODES_BY_TYPE`: {
+      const newState = new Map()
+      const nodes = action.payload
+
+      nodes.forEach(node => {
+        const { type } = node.internal
+        if (!newState.has(type)) {
+          newState.set(type, new Map())
+        }
+        newState.get(type).set(node.id, node)
+      })
+
+      return newState
+    }
     case `CREATE_NODE`: {
       const node = action.payload
       const nodesOfType = getNodesOfType(node, state)

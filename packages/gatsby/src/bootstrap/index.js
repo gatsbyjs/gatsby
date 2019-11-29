@@ -255,6 +255,13 @@ module.exports = async (args: BootstrapArgs) => {
     payload: JSON.stringify(hash),
   })
 
+  if (process.env.GATSBY_DB_NODES !== `loki`) {
+    store.dispatch({
+      type: `REBUILD_NODES_BY_TYPE`,
+      payload: store.getState().nodes,
+    })
+  }
+
   // Ensure the public/static directory
   await fs.ensureDir(path.join(program.directory, `public`, `static`))
 

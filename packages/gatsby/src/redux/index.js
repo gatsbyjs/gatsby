@@ -13,17 +13,6 @@ const emitter = mitt()
 const readState = () => {
   try {
     const state = readFromCache()
-    if (state.nodes) {
-      // re-create nodesByType
-      state.nodesByType = new Map()
-      state.nodes.forEach(node => {
-        const { type } = node.internal
-        if (!state.nodesByType.has(type)) {
-          state.nodesByType.set(type, new Map())
-        }
-        state.nodesByType.get(type).set(node.id, node)
-      })
-    }
     // jsonDataPaths was removed in the per-page-manifest
     // changes. Explicitly delete it here to cover case where user
     // runs gatsby the first time after upgrading.

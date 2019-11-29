@@ -49,7 +49,7 @@ const getDirtyNodes = (plugins, state) => {
  * that match a plugin name (e.g. node.internal.owner)
  * when a plugin version changes
  */
-module.exports = (plugin, state, storeByType = true) => {
+module.exports = (plugin, state) => {
   const plugins = [].concat(plugin).filter(Boolean)
   let newState = new Map()
 
@@ -62,30 +62,20 @@ module.exports = (plugin, state, storeByType = true) => {
 
   for (let [id, node] of nodes) {
     if (!dirty.has(id)) {
-      if (storeByType) {
-        // HACK alert:
-        // this (mutating nodes) should be done just once so we do it for `storeByType` case for now (need better place for it)
-        if (node.internal.fieldOwners) {
-          // if node itself is not dirty, it can contain dirty node fields
-          Object.entries(node.internal.fieldOwners).forEach(
-            ([fieldName, owner]) => {
-              if (plugins.includes(owner)) {
-                // field owner is dirty, we should remove this field
-                delete node.fields[fieldName]
-                delete node.internal.fieldOwners[fieldName]
-              }
+      if (node.internal.fieldOwners) {
+        // if node itself is not dirty, it can contain dirty node fields
+        Object.entries(node.internal.fieldOwners).forEach(
+          ([fieldName, owner]) => {
+            if (plugins.includes(owner)) {
+              // field owner is dirty, we should remove this field
+              delete node.fields[fieldName]
+              delete node.internal.fieldOwners[fieldName]
             }
-          )
-        }
-        // HACK alert end
-
-        const nodes = newState.has(node.internal.type)
-          ? newState.get(node.internal.type)
-          : new Map()
-        newState.set(node.internal.type, nodes.set(id, node))
-      } else {
-        newState.set(id, node)
+          }
+        )
       }
+
+      newState.set(id, node)
     }
   }
   return newState

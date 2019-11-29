@@ -70,16 +70,6 @@ test(`it removes children nodes recursively`, () => {
   expect(updated.has(`MarkdownRemark`)).toBe(false)
 })
 
-test(`it groups by type, by default`, () => {
-  const state = getState()
-
-  const updated = removeNodesByPlugin([`some-bogus-plugin`], state)
-
-  updated.forEach(value => {
-    expect(value instanceof Map).toBe(true)
-  })
-})
-
 describe(`grouping by node`, () => {
   const getDirtyByOwner = (state, owner) =>
     Array.from(state).reduce((merged, [id, node]) => {
