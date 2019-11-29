@@ -189,14 +189,6 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
     },
   })
 
-  //   if (process.env.GATSBY_DB_NODES !== `loki`) {
-
-  //   }
-
-  // store.dispatch({
-
-  // })
-
   await require(`../../utils/source-nodes`)({})
   // trigger page-hot-reloader (if it was setup in previous test)
   emitter.emit(`API_RUNNING_QUEUE_EMPTY`)
