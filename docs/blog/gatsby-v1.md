@@ -48,7 +48,7 @@ In the last year, Gatsby community and usage have exploded. Milestones reached:
 - JavaScript consultancy
   [Formidable built their website on Gatsby](https://formidable.com/)
 
-![screenshots of above sites](images/site-screenshots.png)
+![screenshots of above sites](./images/site-screenshots.png)
 
 And you're on of course a Gatsby website 😛
 
