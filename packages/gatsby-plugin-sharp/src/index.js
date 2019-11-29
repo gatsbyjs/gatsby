@@ -606,6 +606,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
     }
   }
 
+  // when using maxHeight and/or maxWidth determine appropriate aspect ratios
   let maxWidth
   let maxHeight
   if (!options.aspectRatio) {
