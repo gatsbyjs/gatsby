@@ -5,7 +5,7 @@ const _ = require(`lodash`)
 const getPluginHash = require(`./plugin-hash`)
 
 const CACHE_FOLDER = `caches`
-
+const DONT_DELETE = [`redux-state`, `loki`]
 /*
  * This function will first calculate a diff of plugin/file changes (e.g. if gatsby-node.js changes)
  * From this, it will then selectively invalidate files in .cache/caches
@@ -56,6 +56,8 @@ ${changes.map(change => `        - ${change}`).join(`\n`)}
                 .filter(folder => changesLookup[folder])
                 .map(folder => path.join(cacheFolderPath, folder))
             )
+          } else if (DONT_DELETE.includes(file)) {
+            return merged
           }
           return merged.concat(path.join(cacheDirectory, file))
         }, [])
