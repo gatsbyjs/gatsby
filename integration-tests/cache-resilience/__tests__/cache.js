@@ -759,7 +759,60 @@ describe(`Cache`, () => {
         ).toMatchInlineSnapshot(`
           Object {
             "additions": Object {},
-            "changes": Object {},
+            "changes": Object {
+              "parent_childChangeForFields": Object {
+                "diff": "  Object {
+              \\"children\\": Array [],
+          -   \\"fields\\": Object {
+          -     \\"foo1\\": \\"bar\\",
+          -   },
+          +   \\"fields\\": Object {},
+              \\"foo\\": \\"run-1\\",
+              \\"id\\": \\"parent_childChangeForFields\\",
+              \\"internal\\": Object {
+                \\"contentDigest\\": \\"893740bfde4b8a6039e939cb0290d626\\",
+          -     \\"fieldOwners\\": Object {
+          -       \\"foo1\\": \\"gatsby-fields-child-change\\",
+          -     },
+          +     \\"fieldOwners\\": Object {},
+                \\"owner\\": \\"gatsby-source-child-change-for-fields\\",
+                \\"type\\": \\"Parent_ChildChangeForFields\\",
+              },
+              \\"parent\\": null,
+            }",
+                "id": "parent_childChangeForFields",
+                "newValue": Object {
+                  "children": Array [],
+                  "fields": Object {},
+                  "foo": "run-1",
+                  "id": "parent_childChangeForFields",
+                  "internal": Object {
+                    "contentDigest": "893740bfde4b8a6039e939cb0290d626",
+                    "fieldOwners": Object {},
+                    "owner": "gatsby-source-child-change-for-fields",
+                    "type": "Parent_ChildChangeForFields",
+                  },
+                  "parent": null,
+                },
+                "oldValue": Object {
+                  "children": Array [],
+                  "fields": Object {
+                    "foo1": "bar",
+                  },
+                  "foo": "run-1",
+                  "id": "parent_childChangeForFields",
+                  "internal": Object {
+                    "contentDigest": "893740bfde4b8a6039e939cb0290d626",
+                    "fieldOwners": Object {
+                      "foo1": "gatsby-fields-child-change",
+                    },
+                    "owner": "gatsby-source-child-change-for-fields",
+                    "type": "Parent_ChildChangeForFields",
+                  },
+                  "parent": null,
+                },
+              },
+            },
             "deletions": Object {},
           }
         `)
@@ -777,7 +830,7 @@ describe(`Cache`, () => {
                 "diff": "  Object {
               \\"children\\": Array [],
               \\"fields\\": Object {
-                \\"foo1\\": \\"bar\\",
+          -     \\"foo1\\": \\"bar\\",
           +     \\"foo2\\": \\"baz\\",
               },
               \\"foo\\": \\"run-1\\",
@@ -785,7 +838,7 @@ describe(`Cache`, () => {
               \\"internal\\": Object {
                 \\"contentDigest\\": \\"893740bfde4b8a6039e939cb0290d626\\",
                 \\"fieldOwners\\": Object {
-                  \\"foo1\\": \\"gatsby-fields-child-change\\",
+          -       \\"foo1\\": \\"gatsby-fields-child-change\\",
           +       \\"foo2\\": \\"gatsby-fields-child-change\\",
                 },
                 \\"owner\\": \\"gatsby-source-child-change-for-fields\\",
@@ -797,7 +850,6 @@ describe(`Cache`, () => {
                 "newValue": Object {
                   "children": Array [],
                   "fields": Object {
-                    "foo1": "bar",
                     "foo2": "baz",
                   },
                   "foo": "run-1",
@@ -805,7 +857,6 @@ describe(`Cache`, () => {
                   "internal": Object {
                     "contentDigest": "893740bfde4b8a6039e939cb0290d626",
                     "fieldOwners": Object {
-                      "foo1": "gatsby-fields-child-change",
                       "foo2": "gatsby-fields-child-change",
                     },
                     "owner": "gatsby-source-child-change-for-fields",

@@ -1551,16 +1551,12 @@ Map {
   },
   "parent_childChangeForFields" => Object {
     "children": Array [],
-    "fields": Object {
-      "foo1": "bar",
-    },
+    "fields": Object {},
     "foo": "run-1",
     "id": "parent_childChangeForFields",
     "internal": Object {
       "contentDigest": "893740bfde4b8a6039e939cb0290d626",
-      "fieldOwners": Object {
-        "foo1": "gatsby-fields-child-change",
-      },
+      "fieldOwners": Object {},
       "owner": "gatsby-source-child-change-for-fields",
       "type": "Parent_ChildChangeForFields",
     },
@@ -2313,7 +2309,6 @@ Map {
   "parent_childChangeForFields" => Object {
     "children": Array [],
     "fields": Object {
-      "foo1": "bar",
       "foo2": "baz",
     },
     "foo": "run-1",
@@ -2321,7 +2316,6 @@ Map {
     "internal": Object {
       "contentDigest": "893740bfde4b8a6039e939cb0290d626",
       "fieldOwners": Object {
-        "foo1": "gatsby-fields-child-change",
         "foo2": "gatsby-fields-child-change",
       },
       "owner": "gatsby-source-child-change-for-fields",
