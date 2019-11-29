@@ -1,6 +1,5 @@
 const fs = require(`fs`)
 const v8 = require(`v8`)
-const path = require(`path`)
 
 const db = require(`gatsby/dist/db`)
 
@@ -8,29 +7,6 @@ const {
   ON_PRE_BOOTSTRAP_FILE_PATH,
   ON_POST_BOOTSTRAP_FILE_PATH,
 } = require(`./utils/constants`)
-
-const sanitizePageCreatorPluginOptions = options => {
-  if (options && options.path) {
-    return {
-      ...options,
-      path: path.relative(process.cwd(), options.path),
-    }
-  }
-  return options
-}
-
-// copied from packages/gatsby/src/bootstrap/load-plugins/load.js
-// and adjusted a bit to make it work
-const createPluginId = (createNodeId, name, pluginObject) =>
-  createNodeId(
-    name +
-      (pluginObject
-        ? JSON.stringify(
-            sanitizePageCreatorPluginOptions(pluginObject.pluginOptions)
-          )
-        : ``),
-    `Plugin`
-  )
 
 const createMap = (nodes, createNodeId) => {
   const map = new Map()
