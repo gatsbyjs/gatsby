@@ -11,7 +11,7 @@ const getNode = ({ type, owner, id, ...rest }) => {
   }
 }
 
-const getState = (groupByType = true) =>
+const getState = () =>
   [
     getNode({
       type: `File`,
@@ -40,13 +40,7 @@ const getState = (groupByType = true) =>
         })
       )
     )
-    .reduce((merged, node) => {
-      if (groupByType) {
-        const nodes = merged.get(node.internal.type) || new Map()
-        return merged.set(node.internal.type, nodes.set(node.id, node))
-      }
-      return merged.set(node.id, node)
-    }, new Map())
+    .reduce((merged, node) => merged.set(node.id, node), new Map())
 
 test(`it invalidates state with empty plugins array`, () => {
   const state = getState()
@@ -56,18 +50,23 @@ test(`it invalidates state with empty plugins array`, () => {
 test(`it removes nodes for a particular plugin`, () => {
   const state = getState()
 
-  expect(state.has(`MarkdownRemark`)).toBe(true)
+  expect(state.has(`gatsby-transformer-remark-1`)).toBe(true)
+
   const updated = removeNodesByPlugin([`gatsby-transformer-remark`], state)
 
-  expect(updated.has(`MarkdownRemark`)).toBe(false)
+  expect(updated.has(`gatsby-transformer-remark-1`)).toBe(false)
 })
 
 test(`it removes children nodes recursively`, () => {
   const state = getState()
+
+  expect(state.has(`gatsby-source-filesystem-1`)).toBe(true)
+  expect(state.has(`gatsby-transformer-remark-1`)).toBe(true)
+
   const updated = removeNodesByPlugin([`gatsby-source-filesystem`], state)
 
-  expect(updated.has(`File`)).toBe(false)
-  expect(updated.has(`MarkdownRemark`)).toBe(false)
+  expect(updated.has(`gatsby-source-filesystem-1`)).toBe(false)
+  expect(updated.has(`gatsby-transformer-remark-1`)).toBe(false)
 })
 
 describe(`grouping by node`, () => {
@@ -80,23 +79,19 @@ describe(`grouping by node`, () => {
     }, [])
 
   test(`it returns empty array when empty plugins array`, () => {
-    const state = getState(false)
+    const state = getState()
 
-    const updated = removeNodesByPlugin([], state, false)
+    const updated = removeNodesByPlugin([], state)
 
     expect(updated).toEqual(new Map())
   })
 
   test(`it removes nodes marked as dirty`, () => {
-    const state = getState(false)
+    const state = getState()
 
     const dirty = getDirtyByOwner(state, `gatsby-transformer-remark`)
 
-    const updated = removeNodesByPlugin(
-      [`gatsby-transformer-remark`],
-      state,
-      false
-    )
+    const updated = removeNodesByPlugin([`gatsby-transformer-remark`], state)
 
     dirty.forEach(id => {
       expect(updated.has(id)).toBe(false)
@@ -104,17 +99,13 @@ describe(`grouping by node`, () => {
   })
 
   test(`it removes dependent children nodes`, () => {
-    const state = getState(false)
+    const state = getState()
 
     const dirty = []
       .concat(getDirtyByOwner(state, `gatsby-source-filesystem`))
       .concat(getDirtyByOwner(state, `gatsby-transformer-remark`))
 
-    const updated = removeNodesByPlugin(
-      [`gatsby-source-filesystem`],
-      state,
-      false
-    )
+    const updated = removeNodesByPlugin([`gatsby-source-filesystem`], state)
 
     dirty.forEach(id => {
       expect(updated.has(id)).toBe(false)
