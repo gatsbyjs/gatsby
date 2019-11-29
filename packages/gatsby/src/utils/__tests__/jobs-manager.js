@@ -111,4 +111,18 @@ describe(`Jobs manager`, () => {
       // worker has been called
     })
   })
+
+  describe(`resolveWorker`, () => {
+    const { resolveWorker } = getJobsManager()
+    it(`should throw if the worker can't be found`, () => {
+      const plugin = {
+        name: `test-plugin`,
+        version: `1.0.0`,
+      }
+
+      expect(() => {
+        resolveWorker(plugin)
+      }).toThrow(`We couldn't find a worker.js`)
+    })
+  })
 })

@@ -30,6 +30,7 @@ const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
 const shadowCreatePagePath = _.memoize(
   require(`../../internal-plugins/webpack-theme-component-shadowing/create-page`)
 )
+const { resolveWorker, enqueueJob } = require(`../../utils/jobs-manager`)
 
 const actions = {}
 const isWindows = platform() === `win32`
@@ -176,7 +177,7 @@ actions.createPage = (
     if (invalidFields.length > 0) {
       const error = `${
         invalidFields.length === 1 ? singularMessage : pluralMessage
-      }
+        }
 
 ${invalidFields.map(f => `  * "${f}"`).join(`\n`)}
 
@@ -350,7 +351,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     internalComponentName = `Component${pascalCase(page.path)}`
   }
 
-  let internalPage: Page = {
+  const internalPage: Page = {
     internalComponentName,
     path: page.path,
     matchPath: page.matchPath,
@@ -437,10 +438,10 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   if (store.getState().pages.has(alternateSlashPath)) {
     report.warn(
       chalk.bold.yellow(`Non-deterministic routing danger: `) +
-        `Attempting to create page: "${page.path}", but page "${alternateSlashPath}" already exists\n` +
-        chalk.bold.yellow(
-          `This could lead to non-deterministic routing behavior`
-        )
+      `Attempting to create page: "${page.path}", but page "${alternateSlashPath}" already exists\n` +
+      chalk.bold.yellow(
+        `This could lead to non-deterministic routing behavior`
+      )
     )
   }
 
@@ -493,7 +494,7 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
 
           The node type "${node.internal.type}" is owned by "${
         typeOwners[node.internal.type]
-      }".
+        }".
 
           The node object passed to "deleteNode":
 
@@ -752,7 +753,7 @@ const createNode = (
   // Ensure the plugin isn't creating a node type owned by another
   // plugin. Type "ownership" is first come first served.
   if (plugin) {
-    let pluginName = plugin.name
+    const pluginName = plugin.name
 
     if (!typeOwners[node.internal.type])
       typeOwners[node.internal.type] = pluginName
@@ -762,7 +763,7 @@ const createNode = (
 
         The node type "${node.internal.type}" is owned by "${
         typeOwners[node.internal.type]
-      }".
+        }".
 
         If you copy and pasted code from elsewhere, you'll need to pick a new type name
         for your new node(s).
@@ -1175,6 +1176,34 @@ actions.setBabelPreset = (config: Object, plugin?: ?Plugin = null) => {
  * createJob({ id: `write file id: 123`, fileName: `something.jpeg` })
  */
 actions.createJob = (job: Job, plugin?: ?Plugin = null) => {
+  // let's by backwards compatible
+  const jobV2Args = [`name`, `inputPaths`, `outputDir`, `args`]
+  if (Object.keys(job).length === jobV2Args.length) {
+    try {
+      resolveWorker(plugin)
+
+      const doesntMatchesJobV2Spec = jobV2Args.some(
+        key => !Object.prototype.hasOwnProperty.call(job, key)
+      )
+
+      if (!doesntMatchesJobV2Spec) {
+        return () =>
+          enqueueJob({
+            name: job.name,
+            inputPaths: job.inputPaths,
+            outputDir: job.outputDir,
+            args: job.args,
+            plugin: {
+              name: plugin.name,
+              version: plugin.version,
+            },
+          })
+      }
+    } catch (err) {
+      // continue regardless of error
+    }
+  }
+
   return {
     type: `CREATE_JOB`,
     plugin,
@@ -1241,7 +1270,7 @@ const maybeAddPathPrefix = (path, pathPrefix) => {
   const isRelativeProtocol = path.startsWith(`//`)
   return `${
     parsed.protocol != null || isRelativeProtocol ? `` : pathPrefix
-  }${path}`
+    }${path}`
 }
 
 /**

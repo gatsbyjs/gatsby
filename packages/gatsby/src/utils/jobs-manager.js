@@ -140,3 +140,13 @@ exports.waitUntilAllJobsComplete = () => {
 
   return Promise.all(jobsPromises).then(() => {})
 }
+
+exports.resolveWorker = plugin => {
+  try {
+    return require.resolve(`${plugin.name}/worker.js`)
+  } catch (err) {
+    throw new Error(
+      `We couldn't find a worker.js file for ${plugin.name}@${plugin.version}`
+    )
+  }
+}
