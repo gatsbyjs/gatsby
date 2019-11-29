@@ -3209,13 +3209,12 @@
     - Static Marketing pages and Dynamic Client-side Authenticated App pages
     - SEO component
     - Apollo GraphQL (client-side)
-- url: https://lewis-gatsby-starter-i18n.firebaseapp.com
+- url: https://lewis-gatsby-starter-i18n.netlify.com
   repo: https://github.com/lewislbr/lewis-gatsby-starter-i18n
   description: A simple custom Gatsby starter template to start a new multilanguage website.
   tags:
     - i18n
     - Styling:CSS-in-JS
-    - PWA
     - Portfolio
     - SEO
   features:
@@ -3224,7 +3223,6 @@
     - Optimized images.
     - Offline capabilities.
     - Auto-generated sitemap and robots.txt.
-    - Google Analytics
 - url: https://gatsby-snipcart-starter.netlify.com/
   repo: https://github.com/issydennis/gatsby-snipcart
   description: A simple e-commerce shop built using Gatsby and Snipcart.
@@ -3253,12 +3251,11 @@
     - Styling with SCSS
     - Offline support
     - Web App Manifest
-- url: https://lewis-gatsby-starter-basic.firebaseapp.com
+- url: https://lewis-gatsby-starter-basic.netlify.com
   repo: https://github.com/lewislbr/lewis-gatsby-starter-basic
   description: A simple custom basic Gatsby starter template to start a new website.
   tags:
     - Styling:CSS-in-JS
-    - PWA
     - SEO
   features:
     - Bare-bones starter.
