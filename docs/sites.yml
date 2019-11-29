@@ -8760,6 +8760,16 @@
     - Media
   built_by: A+E Networks
   built_by_url: https://www.aenetworks.com/
+- title: Kölliker Immobilien
+  url: https://koelliker-immobilien.ch/
+  main_url: https://koelliker-immobilien.ch/
+  description: >
+    Built using Gatsby, Netlify and Contentful
+  categories:
+    - Real Estate
+    - Marketing
+  built_by: Matthias Gemperli
+  built_by_url: https://matthiasgemperli.ch
 - title: Lessmess Agency website
   url: https://lessmess.agency/
   main_url: https://lessmess.agency/
