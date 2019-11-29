@@ -8770,3 +8770,23 @@
     - Marketing
   built_by: Matthias Gemperli
   built_by_url: https://matthiasgemperli.ch
+- title: Lessmess Agency website
+  url: https://lessmess.agency/
+  main_url: https://lessmess.agency/
+  description: >
+    Website of Lessmess Agency
+  categories:
+    - Agency
+    - Web Development
+  built_by: Ilya Lesik
+  built_by_url: https://github.com/ilyalesik
+- title: Ezekiel Ekunola Portfolio
+  main_url: http://ezekielekunola.com/
+  url: http://ezekielekunola.com/
+  description: Built using Gatsby, Styled-Components
+  categories:
+    - Web Development
+    - Portfolio
+  built_by: Ezekiel Ekunola
+  built_by_url: https://github.com/easybuoy/
+  featured: false

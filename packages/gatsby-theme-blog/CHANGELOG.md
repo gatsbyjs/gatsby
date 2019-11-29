@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.2.3...gatsby-theme-blog@1.2.4) (2019-11-28)
+
+### Bug Fixes
+
+- **gatsby-theme-blog:** Dark/light mode switch icon is out of place ([#19813](https://github.com/gatsbyjs/gatsby/issues/19813)) ([4614bce](https://github.com/gatsbyjs/gatsby/commit/4614bce))
+
 ## [1.2.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.2.2...gatsby-theme-blog@1.2.3) (2019-11-26)
 
 **Note:** Version bump only for package gatsby-theme-blog
