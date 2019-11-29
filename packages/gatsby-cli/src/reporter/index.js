@@ -412,6 +412,7 @@ const reporter: Reporter = {
       },
       set total(value) {
         unflushedTotal = value
+        unflushedProgress = 0
         updateProgress()
       },
       span,
