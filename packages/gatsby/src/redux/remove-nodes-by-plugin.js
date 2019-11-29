@@ -1,27 +1,10 @@
-const isIterable = obj =>
-  obj !== null && typeof obj[Symbol.iterator] === `function`
-
-const getLookup = state => {
-  let lookup = new Map()
-  for (let [typeOrId, nodeOrNodes] of state) {
-    if (isIterable(nodeOrNodes)) {
-      for (let [id, node] of nodeOrNodes) {
-        lookup.set(id, node)
-      }
-    } else {
-      lookup.set(typeOrId, nodeOrNodes)
-    }
-  }
-  return lookup
-}
-
 /*
  * Traverse downwards through children
  * to get all dirty nodes of a plugin
  */
 const getDirtyNodes = (plugins, state) => {
-  let dirty = new Map()
-  for (let [id, node] of state) {
+  const dirty = new Map()
+  for (const [id, node] of state) {
     if (node && node.internal && plugins.includes(node.internal.owner)) {
       dirty.set(id, true)
       let children = (node.children || []).slice(0)
@@ -49,18 +32,17 @@ const getDirtyNodes = (plugins, state) => {
  * that match a plugin name (e.g. node.internal.owner)
  * when a plugin version changes
  */
-module.exports = (plugin, state) => {
+module.exports = (plugin, nodes) => {
   const plugins = [].concat(plugin).filter(Boolean)
-  let newState = new Map()
+  const newState = new Map()
 
   if (plugins.length === 0) {
     return new Map()
   }
 
-  const nodes = getLookup(state)
   const dirty = getDirtyNodes(plugins, nodes)
 
-  for (let [id, node] of nodes) {
+  for (const [id, node] of nodes) {
     if (!dirty.has(id)) {
       if (node.internal.fieldOwners) {
         // if node itself is not dirty, it can contain dirty node fields
