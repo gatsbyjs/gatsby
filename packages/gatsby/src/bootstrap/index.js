@@ -180,6 +180,28 @@ module.exports = async (args: BootstrapArgs) => {
   await apiRunnerNode(`onPreInit`, { parentSpan: activity.span })
   activity.end()
 
+  if (process.env.GATSBY_DB_NODES === `loki`) {
+    const loki = require(`../db/loki`)
+    // Start the nodes database (in memory loki js with interval disk
+    // saves). If data was saved from a previous build, it will be
+    // loaded here
+    activity = report.activityTimer(`start nodes db`, {
+      parentSpan: bootstrapSpan,
+    })
+    activity.start()
+    const dbSaveFile = `${cacheDirectory}/loki/loki.db`
+    try {
+      await loki.start({
+        saveFile: dbSaveFile,
+      })
+    } catch (e) {
+      report.error(
+        `Error starting DB. Perhaps try deleting ${path.dirname(dbSaveFile)}`
+      )
+    }
+    activity.end()
+  }
+
   // During builds, delete html and css files from the public directory as we don't want
   // deleted pages and styles from previous builds to stick around.
   if (process.env.NODE_ENV === `production`) {
@@ -237,28 +259,6 @@ module.exports = async (args: BootstrapArgs) => {
   await fs.ensureDir(path.join(program.directory, `public`, `static`))
 
   activity.end()
-
-  if (process.env.GATSBY_DB_NODES === `loki`) {
-    const loki = require(`../db/loki`)
-    // Start the nodes database (in memory loki js with interval disk
-    // saves). If data was saved from a previous build, it will be
-    // loaded here
-    activity = report.activityTimer(`start nodes db`, {
-      parentSpan: bootstrapSpan,
-    })
-    activity.start()
-    const dbSaveFile = `${cacheDirectory}/loki/loki.db`
-    try {
-      await loki.start({
-        saveFile: dbSaveFile,
-      })
-    } catch (e) {
-      report.error(
-        `Error starting DB. Perhaps try deleting ${path.dirname(dbSaveFile)}`
-      )
-    }
-    activity.end()
-  }
 
   activity = report.activityTimer(`copy gatsby files`, {
     parentSpan: bootstrapSpan,
