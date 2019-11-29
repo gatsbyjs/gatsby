@@ -5,8 +5,8 @@ import BlogPost from "../../components/template-parts/blog-post"
 export default ({ data }) => <BlogPost data={data} />
 
 export const query = graphql`
-  query page($id: String!, $nextPage: String, $previousPage: String) {
-    page: wpPage(id: { eq: $id }) {
+  query alot($id: String!, $nextPage: String, $previousPage: String) {
+    page: wpAlot(id: { eq: $id }) {
       title
       content
       featuredImage {
@@ -16,12 +16,12 @@ export const query = graphql`
       }
     }
 
-    nextPage: wpPage(id: { eq: $nextPage }) {
+    nextPage: wpAlot(id: { eq: $nextPage }) {
       title
       link
     }
 
-    previousPage: wpPage(id: { eq: $previousPage }) {
+    previousPage: wpAlot(id: { eq: $previousPage }) {
       title
       link
     }

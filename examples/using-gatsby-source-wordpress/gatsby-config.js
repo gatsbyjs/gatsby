@@ -1,5 +1,6 @@
 module.exports = {
   plugins: [
+    `gatsby-plugin-sharp`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -16,7 +17,6 @@ module.exports = {
       },
     },
     `gatsby-plugin-chakra-ui`,
-    `gatsby-plugin-sharp`,
     `gatsby-transformer-sharp`,
   ],
 }

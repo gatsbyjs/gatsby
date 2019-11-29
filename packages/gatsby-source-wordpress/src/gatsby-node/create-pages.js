@@ -1,5 +1,5 @@
 import { resolve } from "path"
-import createPermalinkPath from "../utils/create-permalink-path"
+import urlToPath from "../utils/url-to-path"
 import getTemplates from "../utils/get-templates"
 import gql from "../utils/gql"
 
@@ -51,13 +51,17 @@ export default async ({ actions, graphql }) => {
       }
     `)
 
+    const { nodes } = data[gatsbyNodeListFieldName]
+
     await Promise.all(
-      data[gatsbyNodeListFieldName].nodes.map(async node => {
+      nodes.map(async (node, i) => {
         await actions.createPage({
           component: resolve(contentTypeTemplate),
-          path: createPermalinkPath(node.link),
+          path: urlToPath(node.link),
           context: {
             id: node.id,
+            nextPage: (nodes[i + 1] || {}).id,
+            previousPage: (nodes[i - 1] || {}).id,
           },
         })
       })
