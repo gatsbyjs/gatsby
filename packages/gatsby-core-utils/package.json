@@ -29,7 +29,8 @@
   ],
   "types": "index.d.ts",
   "dependencies": {
-    "ci-info": "2.0.0"
+    "ci-info": "2.0.0",
+    "node-object-hash": "^2.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.4",
