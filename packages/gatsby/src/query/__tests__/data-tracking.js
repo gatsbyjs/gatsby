@@ -172,6 +172,11 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
           adapter: mockedLokiFsAdapter,
         },
       })
+    } else {
+      store.dispatch({
+        type: `REBUILD_NODES_BY_TYPE`,
+        payload: store.getState().nodes,
+      })
     }
   }
 
@@ -183,6 +188,14 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
       directory: __dirname,
     },
   })
+
+  //   if (process.env.GATSBY_DB_NODES !== `loki`) {
+
+  //   }
+
+  // store.dispatch({
+
+  // })
 
   await require(`../../utils/source-nodes`)({})
   // trigger page-hot-reloader (if it was setup in previous test)

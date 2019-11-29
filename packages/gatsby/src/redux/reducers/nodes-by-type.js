@@ -10,6 +10,9 @@ const getNodesOfType = (node, state) => {
 
 module.exports = (state = new Map(), action) => {
   switch (action.type) {
+    case `DELETE_CACHE`: {
+      return new Map()
+    }
     case `REBUILD_NODES_BY_TYPE`: {
       const newState = new Map()
       const nodes = action.payload
