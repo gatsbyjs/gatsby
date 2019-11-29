@@ -6,7 +6,6 @@ Map {
     "children": Array [],
     "id": "SitePage /dev-404-page/",
     "internal": Object {
-      "contentDigest": "f91d29e10ba680b413138cf9ed86e655",
       "owner": "internal-data-bridge",
       "type": "SitePage",
     },
@@ -314,10 +313,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/plugins/gatsby-fields-child-change",
     "ssrAPIs": Array [],
   },
-  "d54d4b0b-70e3-57f0-b8bd-26362ecfbbe3" => Object {
+  "9c78c104a1289f531e7f2f97e63d9686" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "d54d4b0b-70e3-57f0-b8bd-26362ecfbbe3",
+    "id": "9c78c104a1289f531e7f2f97e63d9686",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -336,10 +335,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "bfbac0d5-64bb-5c66-9ee6-9fe758667e97" => Object {
+  "e0514f739c5a6710240c2a482f678098" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "bfbac0d5-64bb-5c66-9ee6-9fe758667e97",
+    "id": "e0514f739c5a6710240c2a482f678098",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -358,10 +357,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "69fff652-b43a-5034-bf55-fe168947a840" => Object {
+  "1c84d3ff62f8021894261875cd82524b" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "69fff652-b43a-5034-bf55-fe168947a840",
+    "id": "1c84d3ff62f8021894261875cd82524b",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -380,10 +379,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "c4de7c9a-8e52-5faa-a049-c02e5225bb4b" => Object {
+  "996d13fe0d76121f6e45155f1726dc77" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "c4de7c9a-8e52-5faa-a049-c02e5225bb4b",
+    "id": "996d13fe0d76121f6e45155f1726dc77",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -402,10 +401,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "dbb34a29-961c-5105-999f-4f8cc7da475a" => Object {
+  "7c20bf1e4760658c29365cf0f5f44783" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "dbb34a29-961c-5105-999f-4f8cc7da475a",
+    "id": "7c20bf1e4760658c29365cf0f5f44783",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -424,10 +423,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "408366c7-0931-5fa4-98a2-7ed52514a903" => Object {
+  "5420e5422e6c8c64cf9d2800a7ad04ec" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "408366c7-0931-5fa4-98a2-7ed52514a903",
+    "id": "5420e5422e6c8c64cf9d2800a7ad04ec",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -446,10 +445,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "f3bf6f76-a015-5178-a2ae-d14ee8f83d77" => Object {
+  "bd0b0ebffec260762cb6f1e4b769a28b" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "f3bf6f76-a015-5178-a2ae-d14ee8f83d77",
+    "id": "bd0b0ebffec260762cb6f1e4b769a28b",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -468,10 +467,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "11301e34-63dd-5f55-be40-6f6f3e42deae" => Object {
+  "7208d1ae9e312577ecc8b2b29123830f" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "11301e34-63dd-5f55-be40-6f6f3e42deae",
+    "id": "7208d1ae9e312577ecc8b2b29123830f",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -490,10 +489,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "ff1876f4-aa5b-58a6-ad0b-84a9f8bb673a" => Object {
+  "45e5bbe561cb651c4da55ae0c9ccb6da" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "ff1876f4-aa5b-58a6-ad0b-84a9f8bb673a",
+    "id": "45e5bbe561cb651c4da55ae0c9ccb6da",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -512,10 +511,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "fe2aaed8-1020-5272-8d64-08ea72a5aea1" => Object {
+  "dc1b31130527acb45a9eba0d6bb5f36a" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "fe2aaed8-1020-5272-8d64-08ea72a5aea1",
+    "id": "dc1b31130527acb45a9eba0d6bb5f36a",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -534,10 +533,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "d7da1f41-8df5-51b6-8486-2b93e13d5e15" => Object {
+  "186906780d1618d564b4cba1544f6b1e" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "d7da1f41-8df5-51b6-8486-2b93e13d5e15",
+    "id": "186906780d1618d564b4cba1544f6b1e",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -556,10 +555,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "f1e8c9ec-44c4-528e-8600-9dbf2c1f3c8b" => Object {
+  "db350fb253e3be012579b4120b1e9ee0" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "f1e8c9ec-44c4-528e-8600-9dbf2c1f3c8b",
+    "id": "db350fb253e3be012579b4120b1e9ee0",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -578,10 +577,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "67f79f09-33af-51bb-b6c4-b528662561a2" => Object {
+  "cf4160fdd93f7b96fd24d5798110150d" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "67f79f09-33af-51bb-b6c4-b528662561a2",
+    "id": "cf4160fdd93f7b96fd24d5798110150d",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -600,10 +599,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "5b04593e-7bbd-5478-8de9-a6a15d742524" => Object {
+  "06b3df12d0a75328baf096b7d739ceb8" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "5b04593e-7bbd-5478-8de9-a6a15d742524",
+    "id": "06b3df12d0a75328baf096b7d739ceb8",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -622,10 +621,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "4ea4b5cf-2cad-599a-a805-ed20f20be17a" => Object {
+  "632942f5250406d3266d37b115bc3fa6" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "4ea4b5cf-2cad-599a-a805-ed20f20be17a",
+    "id": "632942f5250406d3266d37b115bc3fa6",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -665,10 +664,10 @@ Map {
     "resolve": "<PROJECT_ROOT>",
     "ssrAPIs": Array [],
   },
-  "b9a44867-c35c-5ccb-bf12-af5de86cf116" => Object {
+  "efb91ab8ba7711b4853bbdac0554c5ac" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "b9a44867-c35c-5ccb-bf12-af5de86cf116",
+    "id": "efb91ab8ba7711b4853bbdac0554c5ac",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -816,8 +815,6 @@ Map {
     "context": Object {},
     "id": "SitePage /",
     "internal": Object {
-      "contentDigest": "c5fa7d67d7b6095c8133348eb329bd52",
-      "description": "c9535749-a52b-5c49-8671-11a311b98993",
       "owner": "internal-data-bridge",
       "type": "SitePage",
     },
@@ -826,8 +823,6 @@ Map {
     "matchPath": undefined,
     "parent": null,
     "path": "/",
-    "pluginCreatorId": "c9535749-a52b-5c49-8671-11a311b98993",
-    "pluginCreator___NODE": "c9535749-a52b-5c49-8671-11a311b98993",
   },
 }
 `;
@@ -838,7 +833,6 @@ Map {
     "children": Array [],
     "id": "SitePage /dev-404-page/",
     "internal": Object {
-      "contentDigest": "f91d29e10ba680b413138cf9ed86e655",
       "owner": "internal-data-bridge",
       "type": "SitePage",
     },
@@ -1146,10 +1140,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/plugins/gatsby-fields-child-change",
     "ssrAPIs": Array [],
   },
-  "d54d4b0b-70e3-57f0-b8bd-26362ecfbbe3" => Object {
+  "9c78c104a1289f531e7f2f97e63d9686" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "d54d4b0b-70e3-57f0-b8bd-26362ecfbbe3",
+    "id": "9c78c104a1289f531e7f2f97e63d9686",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -1168,10 +1162,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "bfbac0d5-64bb-5c66-9ee6-9fe758667e97" => Object {
+  "e0514f739c5a6710240c2a482f678098" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "bfbac0d5-64bb-5c66-9ee6-9fe758667e97",
+    "id": "e0514f739c5a6710240c2a482f678098",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -1190,10 +1184,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "69fff652-b43a-5034-bf55-fe168947a840" => Object {
+  "1c84d3ff62f8021894261875cd82524b" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "69fff652-b43a-5034-bf55-fe168947a840",
+    "id": "1c84d3ff62f8021894261875cd82524b",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -1212,10 +1206,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "c4de7c9a-8e52-5faa-a049-c02e5225bb4b" => Object {
+  "996d13fe0d76121f6e45155f1726dc77" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "c4de7c9a-8e52-5faa-a049-c02e5225bb4b",
+    "id": "996d13fe0d76121f6e45155f1726dc77",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -1234,10 +1228,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "dbb34a29-961c-5105-999f-4f8cc7da475a" => Object {
+  "7c20bf1e4760658c29365cf0f5f44783" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "dbb34a29-961c-5105-999f-4f8cc7da475a",
+    "id": "7c20bf1e4760658c29365cf0f5f44783",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -1256,10 +1250,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "408366c7-0931-5fa4-98a2-7ed52514a903" => Object {
+  "5420e5422e6c8c64cf9d2800a7ad04ec" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "408366c7-0931-5fa4-98a2-7ed52514a903",
+    "id": "5420e5422e6c8c64cf9d2800a7ad04ec",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -1278,10 +1272,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "f3bf6f76-a015-5178-a2ae-d14ee8f83d77" => Object {
+  "bd0b0ebffec260762cb6f1e4b769a28b" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "f3bf6f76-a015-5178-a2ae-d14ee8f83d77",
+    "id": "bd0b0ebffec260762cb6f1e4b769a28b",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -1300,10 +1294,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "11301e34-63dd-5f55-be40-6f6f3e42deae" => Object {
+  "7208d1ae9e312577ecc8b2b29123830f" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "11301e34-63dd-5f55-be40-6f6f3e42deae",
+    "id": "7208d1ae9e312577ecc8b2b29123830f",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -1322,10 +1316,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "ff1876f4-aa5b-58a6-ad0b-84a9f8bb673a" => Object {
+  "45e5bbe561cb651c4da55ae0c9ccb6da" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "ff1876f4-aa5b-58a6-ad0b-84a9f8bb673a",
+    "id": "45e5bbe561cb651c4da55ae0c9ccb6da",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -1344,10 +1338,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "fe2aaed8-1020-5272-8d64-08ea72a5aea1" => Object {
+  "dc1b31130527acb45a9eba0d6bb5f36a" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "fe2aaed8-1020-5272-8d64-08ea72a5aea1",
+    "id": "dc1b31130527acb45a9eba0d6bb5f36a",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -1366,10 +1360,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "d7da1f41-8df5-51b6-8486-2b93e13d5e15" => Object {
+  "186906780d1618d564b4cba1544f6b1e" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "d7da1f41-8df5-51b6-8486-2b93e13d5e15",
+    "id": "186906780d1618d564b4cba1544f6b1e",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -1388,10 +1382,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "f1e8c9ec-44c4-528e-8600-9dbf2c1f3c8b" => Object {
+  "db350fb253e3be012579b4120b1e9ee0" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "f1e8c9ec-44c4-528e-8600-9dbf2c1f3c8b",
+    "id": "db350fb253e3be012579b4120b1e9ee0",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -1410,10 +1404,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "67f79f09-33af-51bb-b6c4-b528662561a2" => Object {
+  "cf4160fdd93f7b96fd24d5798110150d" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "67f79f09-33af-51bb-b6c4-b528662561a2",
+    "id": "cf4160fdd93f7b96fd24d5798110150d",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -1432,10 +1426,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "5b04593e-7bbd-5478-8de9-a6a15d742524" => Object {
+  "06b3df12d0a75328baf096b7d739ceb8" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "5b04593e-7bbd-5478-8de9-a6a15d742524",
+    "id": "06b3df12d0a75328baf096b7d739ceb8",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -1454,10 +1448,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "4ea4b5cf-2cad-599a-a805-ed20f20be17a" => Object {
+  "632942f5250406d3266d37b115bc3fa6" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "4ea4b5cf-2cad-599a-a805-ed20f20be17a",
+    "id": "632942f5250406d3266d37b115bc3fa6",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -1497,10 +1491,10 @@ Map {
     "resolve": "<PROJECT_ROOT>",
     "ssrAPIs": Array [],
   },
-  "b9a44867-c35c-5ccb-bf12-af5de86cf116" => Object {
+  "efb91ab8ba7711b4853bbdac0554c5ac" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "b9a44867-c35c-5ccb-bf12-af5de86cf116",
+    "id": "efb91ab8ba7711b4853bbdac0554c5ac",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -1557,12 +1551,16 @@ Map {
   },
   "parent_childChangeForFields" => Object {
     "children": Array [],
-    "fields": Object {},
+    "fields": Object {
+      "foo1": "bar",
+    },
     "foo": "run-1",
     "id": "parent_childChangeForFields",
     "internal": Object {
       "contentDigest": "893740bfde4b8a6039e939cb0290d626",
-      "fieldOwners": Object {},
+      "fieldOwners": Object {
+        "foo1": "gatsby-fields-child-change",
+      },
       "owner": "gatsby-source-child-change-for-fields",
       "type": "Parent_ChildChangeForFields",
     },
@@ -1576,8 +1574,6 @@ Map {
     "context": Object {},
     "id": "SitePage /",
     "internal": Object {
-      "contentDigest": "c5fa7d67d7b6095c8133348eb329bd52",
-      "description": "c9535749-a52b-5c49-8671-11a311b98993",
       "owner": "internal-data-bridge",
       "type": "SitePage",
     },
@@ -1586,8 +1582,6 @@ Map {
     "matchPath": undefined,
     "parent": null,
     "path": "/",
-    "pluginCreatorId": "c9535749-a52b-5c49-8671-11a311b98993",
-    "pluginCreator___NODE": "c9535749-a52b-5c49-8671-11a311b98993",
   },
 }
 `;
@@ -1598,7 +1592,6 @@ Map {
     "children": Array [],
     "id": "SitePage /dev-404-page/",
     "internal": Object {
-      "contentDigest": "f91d29e10ba680b413138cf9ed86e655",
       "owner": "internal-data-bridge",
       "type": "SitePage",
     },
@@ -1906,10 +1899,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/plugins/gatsby-fields-child-change",
     "ssrAPIs": Array [],
   },
-  "d54d4b0b-70e3-57f0-b8bd-26362ecfbbe3" => Object {
+  "9c78c104a1289f531e7f2f97e63d9686" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "d54d4b0b-70e3-57f0-b8bd-26362ecfbbe3",
+    "id": "9c78c104a1289f531e7f2f97e63d9686",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -1928,10 +1921,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "bfbac0d5-64bb-5c66-9ee6-9fe758667e97" => Object {
+  "e0514f739c5a6710240c2a482f678098" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "bfbac0d5-64bb-5c66-9ee6-9fe758667e97",
+    "id": "e0514f739c5a6710240c2a482f678098",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -1950,10 +1943,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "69fff652-b43a-5034-bf55-fe168947a840" => Object {
+  "1c84d3ff62f8021894261875cd82524b" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "69fff652-b43a-5034-bf55-fe168947a840",
+    "id": "1c84d3ff62f8021894261875cd82524b",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -1972,10 +1965,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "c4de7c9a-8e52-5faa-a049-c02e5225bb4b" => Object {
+  "996d13fe0d76121f6e45155f1726dc77" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "c4de7c9a-8e52-5faa-a049-c02e5225bb4b",
+    "id": "996d13fe0d76121f6e45155f1726dc77",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -1994,10 +1987,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "dbb34a29-961c-5105-999f-4f8cc7da475a" => Object {
+  "7c20bf1e4760658c29365cf0f5f44783" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "dbb34a29-961c-5105-999f-4f8cc7da475a",
+    "id": "7c20bf1e4760658c29365cf0f5f44783",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -2016,10 +2009,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "408366c7-0931-5fa4-98a2-7ed52514a903" => Object {
+  "5420e5422e6c8c64cf9d2800a7ad04ec" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "408366c7-0931-5fa4-98a2-7ed52514a903",
+    "id": "5420e5422e6c8c64cf9d2800a7ad04ec",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -2038,10 +2031,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "f3bf6f76-a015-5178-a2ae-d14ee8f83d77" => Object {
+  "bd0b0ebffec260762cb6f1e4b769a28b" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "f3bf6f76-a015-5178-a2ae-d14ee8f83d77",
+    "id": "bd0b0ebffec260762cb6f1e4b769a28b",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -2060,10 +2053,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "11301e34-63dd-5f55-be40-6f6f3e42deae" => Object {
+  "7208d1ae9e312577ecc8b2b29123830f" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "11301e34-63dd-5f55-be40-6f6f3e42deae",
+    "id": "7208d1ae9e312577ecc8b2b29123830f",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -2082,10 +2075,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "ff1876f4-aa5b-58a6-ad0b-84a9f8bb673a" => Object {
+  "45e5bbe561cb651c4da55ae0c9ccb6da" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "ff1876f4-aa5b-58a6-ad0b-84a9f8bb673a",
+    "id": "45e5bbe561cb651c4da55ae0c9ccb6da",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -2104,10 +2097,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "fe2aaed8-1020-5272-8d64-08ea72a5aea1" => Object {
+  "dc1b31130527acb45a9eba0d6bb5f36a" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "fe2aaed8-1020-5272-8d64-08ea72a5aea1",
+    "id": "dc1b31130527acb45a9eba0d6bb5f36a",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -2126,10 +2119,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "d7da1f41-8df5-51b6-8486-2b93e13d5e15" => Object {
+  "186906780d1618d564b4cba1544f6b1e" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "d7da1f41-8df5-51b6-8486-2b93e13d5e15",
+    "id": "186906780d1618d564b4cba1544f6b1e",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -2148,10 +2141,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "f1e8c9ec-44c4-528e-8600-9dbf2c1f3c8b" => Object {
+  "db350fb253e3be012579b4120b1e9ee0" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "f1e8c9ec-44c4-528e-8600-9dbf2c1f3c8b",
+    "id": "db350fb253e3be012579b4120b1e9ee0",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -2170,10 +2163,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "67f79f09-33af-51bb-b6c4-b528662561a2" => Object {
+  "cf4160fdd93f7b96fd24d5798110150d" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "67f79f09-33af-51bb-b6c4-b528662561a2",
+    "id": "cf4160fdd93f7b96fd24d5798110150d",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -2192,10 +2185,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "5b04593e-7bbd-5478-8de9-a6a15d742524" => Object {
+  "06b3df12d0a75328baf096b7d739ceb8" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "5b04593e-7bbd-5478-8de9-a6a15d742524",
+    "id": "06b3df12d0a75328baf096b7d739ceb8",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -2214,10 +2207,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "4ea4b5cf-2cad-599a-a805-ed20f20be17a" => Object {
+  "632942f5250406d3266d37b115bc3fa6" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "4ea4b5cf-2cad-599a-a805-ed20f20be17a",
+    "id": "632942f5250406d3266d37b115bc3fa6",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -2257,10 +2250,10 @@ Map {
     "resolve": "<PROJECT_ROOT>",
     "ssrAPIs": Array [],
   },
-  "b9a44867-c35c-5ccb-bf12-af5de86cf116" => Object {
+  "efb91ab8ba7711b4853bbdac0554c5ac" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "b9a44867-c35c-5ccb-bf12-af5de86cf116",
+    "id": "efb91ab8ba7711b4853bbdac0554c5ac",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -2320,6 +2313,7 @@ Map {
   "parent_childChangeForFields" => Object {
     "children": Array [],
     "fields": Object {
+      "foo1": "bar",
       "foo2": "baz",
     },
     "foo": "run-1",
@@ -2327,6 +2321,7 @@ Map {
     "internal": Object {
       "contentDigest": "893740bfde4b8a6039e939cb0290d626",
       "fieldOwners": Object {
+        "foo1": "gatsby-fields-child-change",
         "foo2": "gatsby-fields-child-change",
       },
       "owner": "gatsby-source-child-change-for-fields",
@@ -2408,8 +2403,6 @@ Map {
     "context": Object {},
     "id": "SitePage /",
     "internal": Object {
-      "contentDigest": "c5fa7d67d7b6095c8133348eb329bd52",
-      "description": "c9535749-a52b-5c49-8671-11a311b98993",
       "owner": "internal-data-bridge",
       "type": "SitePage",
     },
@@ -2418,8 +2411,6 @@ Map {
     "matchPath": undefined,
     "parent": null,
     "path": "/",
-    "pluginCreatorId": "c9535749-a52b-5c49-8671-11a311b98993",
-    "pluginCreator___NODE": "c9535749-a52b-5c49-8671-11a311b98993",
   },
 }
 `;

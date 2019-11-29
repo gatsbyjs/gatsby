@@ -35,18 +35,6 @@ const createPluginId = (createNodeId, name, pluginObject) =>
 const createMap = (nodes, createNodeId) => {
   const map = new Map()
   nodes.forEach(node => {
-    // HACK - SitePlugin nodes for gatsby-plugin-page-creator will have different id
-    // depending on CWD, which make it impossible to do snapshot testing.
-    // We will generate more stable id replacement here
-    if (
-      node.internal.type === `SitePlugin` &&
-      node.name === `gatsby-plugin-page-creator`
-    ) {
-      node = {
-        ...node,
-        id: createPluginId(createNodeId, node.name, node),
-      }
-    }
     map.set(node.id, node)
   })
   return map

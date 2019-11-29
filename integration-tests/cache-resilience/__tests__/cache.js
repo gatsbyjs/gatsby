@@ -3,26 +3,49 @@ const { spawnSync } = require(`child_process`)
 const path = require(`path`)
 const v8 = require(`v8`)
 const _ = require(`lodash`)
+const slash = require(`slash`)
 const {
   ON_PRE_BOOTSTRAP_FILE_PATH,
   ON_POST_BOOTSTRAP_FILE_PATH,
 } = require(`../utils/constants`)
+const { createContentDigest } = require(`gatsby-core-utils`)
+
+const sanitizePageCreatorPluginOptions = options => {
+  if (options && options.path) {
+    return {
+      ...options,
+      path: slash(path.relative(process.cwd(), options.path)),
+    }
+  }
+  return options
+}
 
 // TODO: Make this not mutate the passed in value
 const sanitiseNode = value => {
-  if (value && value.buildTime) {
-    delete value.buildTime
-    delete value.internal.contentDigest
-  }
-  if (
-    value &&
-    value.internal &&
-    value.internal.contentDigest &&
-    value.internal.type === `SitePlugin`
-  ) {
-    delete value.packageJson
-    delete value.internal.contentDigest
-    delete value.version
+  if (value && value.internal && value.internal.contentDigest) {
+    if (value.internal.type === `Site`) {
+      delete value.buildTime
+      delete value.internal.contentDigest
+    }
+    if (value.internal.type === `SitePlugin`) {
+      delete value.packageJson
+      delete value.internal.contentDigest
+      delete value.version
+      if (value.name === `gatsby-plugin-page-creator`) {
+        // make id more stable
+        value.id = createContentDigest(
+          `${value.name}${JSON.stringify(
+            sanitizePageCreatorPluginOptions(value.pluginOptions)
+          )}`
+        )
+      }
+    }
+    if (value.internal.type === `SitePage`) {
+      delete value.internal.contentDigest
+      delete value.internal.description
+      delete value.pluginCreatorId
+      delete value.pluginCreator___NODE
+    }
   }
 
   // we don't care about order of node creation at this point
@@ -49,10 +72,12 @@ const getSubStateByPlugins = (state, pluginNamesArray) =>
 
 const loadState = path => {
   const state = v8.deserialize(fs.readFileSync(path))
-  state.forEach((node, index) => {
-    state.set(index, sanitiseNode(node))
+  const newState = new Map()
+  state.forEach(node => {
+    const sanitisedNode = sanitiseNode(node)
+    newState.set(sanitisedNode.id, sanitisedNode)
   })
-  return state
+  return newState
 }
 
 jest.setTimeout(100000)
@@ -174,7 +199,7 @@ describe(`Cache`, () => {
       )
     })
 
-    describe(`Nodes`, () => {
+    describe.only(`Nodes`, () => {
       let states
 
       beforeAll(() => {
@@ -734,60 +759,7 @@ describe(`Cache`, () => {
         ).toMatchInlineSnapshot(`
           Object {
             "additions": Object {},
-            "changes": Object {
-              "parent_childChangeForFields": Object {
-                "diff": "  Object {
-              \\"children\\": Array [],
-          -   \\"fields\\": Object {
-          -     \\"foo1\\": \\"bar\\",
-          -   },
-          +   \\"fields\\": Object {},
-              \\"foo\\": \\"run-1\\",
-              \\"id\\": \\"parent_childChangeForFields\\",
-              \\"internal\\": Object {
-                \\"contentDigest\\": \\"893740bfde4b8a6039e939cb0290d626\\",
-          -     \\"fieldOwners\\": Object {
-          -       \\"foo1\\": \\"gatsby-fields-child-change\\",
-          -     },
-          +     \\"fieldOwners\\": Object {},
-                \\"owner\\": \\"gatsby-source-child-change-for-fields\\",
-                \\"type\\": \\"Parent_ChildChangeForFields\\",
-              },
-              \\"parent\\": null,
-            }",
-                "id": "parent_childChangeForFields",
-                "newValue": Object {
-                  "children": Array [],
-                  "fields": Object {},
-                  "foo": "run-1",
-                  "id": "parent_childChangeForFields",
-                  "internal": Object {
-                    "contentDigest": "893740bfde4b8a6039e939cb0290d626",
-                    "fieldOwners": Object {},
-                    "owner": "gatsby-source-child-change-for-fields",
-                    "type": "Parent_ChildChangeForFields",
-                  },
-                  "parent": null,
-                },
-                "oldValue": Object {
-                  "children": Array [],
-                  "fields": Object {
-                    "foo1": "bar",
-                  },
-                  "foo": "run-1",
-                  "id": "parent_childChangeForFields",
-                  "internal": Object {
-                    "contentDigest": "893740bfde4b8a6039e939cb0290d626",
-                    "fieldOwners": Object {
-                      "foo1": "gatsby-fields-child-change",
-                    },
-                    "owner": "gatsby-source-child-change-for-fields",
-                    "type": "Parent_ChildChangeForFields",
-                  },
-                  "parent": null,
-                },
-              },
-            },
+            "changes": Object {},
             "deletions": Object {},
           }
         `)
@@ -805,7 +777,7 @@ describe(`Cache`, () => {
                 "diff": "  Object {
               \\"children\\": Array [],
               \\"fields\\": Object {
-          -     \\"foo1\\": \\"bar\\",
+                \\"foo1\\": \\"bar\\",
           +     \\"foo2\\": \\"baz\\",
               },
               \\"foo\\": \\"run-1\\",
@@ -813,7 +785,7 @@ describe(`Cache`, () => {
               \\"internal\\": Object {
                 \\"contentDigest\\": \\"893740bfde4b8a6039e939cb0290d626\\",
                 \\"fieldOwners\\": Object {
-          -       \\"foo1\\": \\"gatsby-fields-child-change\\",
+                  \\"foo1\\": \\"gatsby-fields-child-change\\",
           +       \\"foo2\\": \\"gatsby-fields-child-change\\",
                 },
                 \\"owner\\": \\"gatsby-source-child-change-for-fields\\",
@@ -825,6 +797,7 @@ describe(`Cache`, () => {
                 "newValue": Object {
                   "children": Array [],
                   "fields": Object {
+                    "foo1": "bar",
                     "foo2": "baz",
                   },
                   "foo": "run-1",
@@ -832,6 +805,7 @@ describe(`Cache`, () => {
                   "internal": Object {
                     "contentDigest": "893740bfde4b8a6039e939cb0290d626",
                     "fieldOwners": Object {
+                      "foo1": "gatsby-fields-child-change",
                       "foo2": "gatsby-fields-child-change",
                     },
                     "owner": "gatsby-source-child-change-for-fields",
