@@ -3,7 +3,8 @@ const removeNodesByPlugin = require(`../remove-nodes-by-plugin`)
 module.exports = (state = new Map(), action) => {
   switch (action.type) {
     case `DELETE_CACHE`:
-      return removeNodesByPlugin(action.payload, state, false)
+      return removeNodesByPlugin(action.payload, state)
+
     case `CREATE_NODE`: {
       state.set(action.payload.id, action.payload)
       return state
