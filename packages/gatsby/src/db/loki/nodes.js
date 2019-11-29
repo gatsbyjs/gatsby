@@ -93,6 +93,39 @@ function deleteAll() {
   }
 }
 
+/**
+ *
+ * @param {*} plugins
+ */
+function deleteDataByOwners(plugins) {
+  process.stdout.write(
+    `[loki] cleaning up data inserted by ${plugins.join(`, `)}\n`
+  )
+
+  const nodeTypes = getTypes()
+  process.stdout.write(
+    `[loki] types ${require(`util`).inspect({ nodeTypes })}\n`
+  )
+  nodeTypes.forEach(nodeType => {
+    const nodesOfType = getNodesByType(nodeType)
+    process.stdout.write(
+      require(`util`).inspect({ nodeType, nodesOfType }) + `\n`
+    )
+    if (!nodesOfType.length) {
+      return
+    }
+
+    const nodeTypeOwner = nodesOfType[0].internal.owner
+    if (plugins.includes(nodeTypeOwner)) {
+      // delete entire collection
+    } else {
+      // iterate over nodes and delete node fields
+    }
+  })
+  // potential cleanup
+  deleteNodeTypeCollections()
+}
+
 // ///////////////////////////////////////////////////////////////////
 // Queries
 // ///////////////////////////////////////////////////////////////////
@@ -355,7 +388,7 @@ function ensureFieldIndexes(typeName, lokiArgs, sortArgs) {
 function reducer(state = new Map(), action) {
   switch (action.type) {
     case `DELETE_CACHE`:
-      deleteAll()
+      deleteDataByOwners(action.payload)
       return null
 
     case `CREATE_NODE`: {
