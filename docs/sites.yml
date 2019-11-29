@@ -8760,3 +8760,13 @@
     - Media
   built_by: A+E Networks
   built_by_url: https://www.aenetworks.com/
+- title: Ezekiel Ekunola Portfolio
+  main_url: http://ezekielekunola.com/
+  url: http://ezekielekunola.com/
+  description: Built using Gatsby, Styled-Components
+  categories:
+    - Web Development
+    - Portfolio
+  built_by: Ezekiel Ekunola
+  built_by_url: https://github.com/easybuoy/
+  featured: false
