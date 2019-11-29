@@ -6,10 +6,10 @@ const { updateStateAndRunQueries } = require(`../query/query-watcher`)
 const report = require(`gatsby-cli/lib/reporter`)
 
 const inferredTypesChanged = (typeMap, prevTypeMap) =>
-  Object.keys(typeMap).filter(
+  Object.keys(typeMap).some(
     type =>
       typeMap[type].dirty && !haveEqualFields(typeMap[type], prevTypeMap[type])
-  ).length > 0
+  )
 
 const schemaChanged = (schemaCustomization, lastSchemaCustomization) =>
   [`fieldExtensions`, `printConfig`, `thirdPartySchemas`, `types`].some(
