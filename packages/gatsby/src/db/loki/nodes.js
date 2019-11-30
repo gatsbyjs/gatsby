@@ -97,7 +97,7 @@ function deleteAll() {
  *
  * @param {*} plugins
  */
-function deleteDataByOwners(plugins) {
+function deleteDataByOwners(plugins = []) {
   if (plugins.length === 0) {
     deleteAll()
     return
