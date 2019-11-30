@@ -5,7 +5,7 @@
   "scripts": {
     "develop": "gatsby develop",
     "build": "gatsby build",
-    "test": "jest",
+    "test": "jest && GATSBY_DB_NODES=loki jest",
     "serve": "gatsby serve"
   },
   "dependencies": {
