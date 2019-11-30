@@ -48,7 +48,7 @@ aliases:
     filters:
       branches:
         ignore:
-          - /docs.+/
+          - /.+docs.+/
           - /blog.+/
 
   test_template: &test_template
@@ -65,7 +65,7 @@ aliases:
       branches:
         ignore:
           - master
-          - /docs.+/
+          - /.+docs.+/
           - /blog.+/
     requires:
       - lint
