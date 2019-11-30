@@ -1,8 +1,7 @@
-const crypto = require(`crypto`)
 const mdx = require(`../utils/mdx`)
 const extractExports = require(`../utils/extract-exports`)
 
-module.exports = async ({ id, node, content }) => {
+module.exports = async ({ id, node, content, createContentDigest }) => {
   let code
   try {
     code = await mdx(content)
@@ -39,10 +38,7 @@ module.exports = async ({ id, node, content }) => {
     mdxNode.fileAbsolutePath = node.absolutePath
   }
 
-  mdxNode.internal.contentDigest = crypto
-    .createHash(`md5`)
-    .update(JSON.stringify(mdxNode))
-    .digest(`hex`)
+  mdxNode.internal.contentDigest = createContentDigest(mdxNode)
 
   return mdxNode
 }
