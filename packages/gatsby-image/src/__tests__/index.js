@@ -220,7 +220,7 @@ describe(`<Image />`, () => {
     expect(console.warn).toBeCalled()
   })
 
-  it(`should select the correct mocked image of variants provided.`, () => {
+  it(`should select the correct mocked image of fluid variants provided.`, () => {
     const tripleFluidImageShapeMock = fluidImagesShapeMock.concat({
       aspectRatio: 5,
       src: `test_image_4.jpg`,
@@ -247,6 +247,36 @@ describe(`<Image />`, () => {
     const aspectPreserver = container.querySelector(`div div div`)
     expect(aspectPreserver.getAttribute(`style`)).toEqual(
       expect.stringMatching(/padding-bottom: 20%/)
+    )
+  })
+
+  it(`should select the correct mocked image of fixed variants provided.`, () => {
+    const tripleFixedImageShapeMock = fixedImagesShapeMock.concat({
+      width: 1024,
+      height: 768,
+      src: `test_image_4.jpg`,
+      srcSet: `third other srcSet`,
+      srcSetWebp: `third other srcSetWebp`,
+      base64: `string_of_base64`,
+      media: `only screen and (min-width: 1024px)`,
+    })
+    const { container } = render(
+      <Image
+        backgroundColor
+        className={`fixedArtDirectedImage`}
+        style={{ display: `inline` }}
+        title={`Title for the image`}
+        alt={`Alt text for the image`}
+        crossOrigin={`anonymous`}
+        fixed={tripleFixedImageShapeMock}
+        itemProp={`item-prop-for-the-image`}
+        placeholderStyle={{ color: `red` }}
+        placeholderClassName={`placeholder`}
+      />
+    )
+    const aspectPreserver = container.querySelector(`div div`)
+    expect(aspectPreserver.getAttribute(`style`)).toEqual(
+      expect.stringMatching(/width: 1024px; height: 768px;/)
     )
   })
 

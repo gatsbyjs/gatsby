@@ -54,7 +54,7 @@ const convertProps = props => {
  * @param prop    {string}   Check for fluid or fixed.
  * @return {boolean}
  */
-export const hasArtDirectionSupport = (props, prop) =>
+const hasArtDirectionSupport = (props, prop) =>
   props[prop] &&
   Array.isArray(props[prop]) &&
   props[prop].some(image => typeof image.media !== `undefined`)
@@ -64,7 +64,7 @@ export const hasArtDirectionSupport = (props, prop) =>
  * @param props   {object}   The props to check for art-direction support.
  * @return {boolean}
  */
-export const hasArtDirectionArray = props =>
+const hasArtDirectionArray = props =>
   hasArtDirectionSupport(props, `fluid`) ||
   hasArtDirectionSupport(props, `fixed`)
 
@@ -73,7 +73,7 @@ export const hasArtDirectionArray = props =>
  * @param media   {string}  A media query string.
  * @return {*|boolean}
  */
-export const matchesMedia = ({ media }) =>
+const matchesMedia = ({ media }) =>
   media ? isBrowser && window.matchMedia(media).matches : false
 
 /**
@@ -95,7 +95,7 @@ const getImageSrcKey = ({ fluid, fixed }) => {
  * @param index         {number}    The index of the image to return (default: 0).
  * @return {*}
  */
-export const getCurrentSrcData = ({ fluid, fixed }, index = 0) => {
+const getCurrentSrcData = ({ fluid, fixed }, index = 0) => {
   const currentData = fluid || fixed
   if (isBrowser && hasArtDirectionArray({ fluid, fixed })) {
     // Do we have an image for the current Viewport?
@@ -565,7 +565,7 @@ class Image extends React.Component {
 
     if (fixed) {
       const imageVariants = fixed
-      const image = imageVariants[0]
+      const image = getCurrentSrcData({ fixed })
 
       const divStyle = {
         position: `relative`,
