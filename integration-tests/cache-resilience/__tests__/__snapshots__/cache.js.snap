@@ -109,7 +109,6 @@ Map {
     "ssrAPIs": Array [],
   },
   "2131d29a-296c-5f73-affc-e422bec644fe" => Object {
-    "bar": undefined,
     "children": Array [],
     "foo": "run-1",
     "id": "2131d29a-296c-5f73-affc-e422bec644fe",
@@ -743,7 +742,6 @@ Map {
   "parent_parentChangeForFields" => Object {
     "children": Array [],
     "fields": Object {
-      "bar": undefined,
       "foo": "run-1",
     },
     "foo": "run-1",
@@ -774,7 +772,6 @@ Map {
   },
   "Site" => Object {
     "children": Array [],
-    "host": undefined,
     "id": "Site",
     "internal": Object {
       "owner": "internal-data-bridge",
@@ -783,7 +780,6 @@ Map {
     "parent": null,
     "pathPrefix": "",
     "polyfill": true,
-    "port": undefined,
     "siteMetadata": Object {},
   },
   "SitePage /" => Object {
@@ -799,7 +795,6 @@ Map {
     },
     "internalComponentName": "ComponentIndex",
     "isCreatedByStatefulCreatePages": true,
-    "matchPath": undefined,
     "parent": null,
     "path": "/",
   },
@@ -1529,7 +1524,6 @@ Map {
   },
   "Site" => Object {
     "children": Array [],
-    "host": undefined,
     "id": "Site",
     "internal": Object {
       "owner": "internal-data-bridge",
@@ -1538,7 +1532,6 @@ Map {
     "parent": null,
     "pathPrefix": "",
     "polyfill": true,
-    "port": undefined,
     "siteMetadata": Object {},
   },
   "SitePage /" => Object {
@@ -1554,7 +1547,6 @@ Map {
     },
     "internalComponentName": "ComponentIndex",
     "isCreatedByStatefulCreatePages": true,
-    "matchPath": undefined,
     "parent": null,
     "path": "/",
   },
@@ -1693,7 +1685,6 @@ Map {
   "2131d29a-296c-5f73-affc-e422bec644fe" => Object {
     "bar": "run-2",
     "children": Array [],
-    "foo": undefined,
     "id": "2131d29a-296c-5f73-affc-e422bec644fe",
     "internal": Object {
       "contentDigest": "a33e2263d5a5f42473e111fb400cef3d",
@@ -2327,7 +2318,6 @@ Map {
     "children": Array [],
     "fields": Object {
       "bar": "run-2",
-      "foo": undefined,
     },
     "id": "parent_parentChangeForFields",
     "internal": Object {
@@ -2356,7 +2346,6 @@ Map {
   },
   "Site" => Object {
     "children": Array [],
-    "host": undefined,
     "id": "Site",
     "internal": Object {
       "owner": "internal-data-bridge",
@@ -2365,7 +2354,6 @@ Map {
     "parent": null,
     "pathPrefix": "",
     "polyfill": true,
-    "port": undefined,
     "siteMetadata": Object {},
   },
   "SitePage /" => Object {
@@ -2381,7 +2369,6 @@ Map {
     },
     "internalComponentName": "ComponentIndex",
     "isCreatedByStatefulCreatePages": true,
-    "matchPath": undefined,
     "parent": null,
     "path": "/",
   },

@@ -365,7 +365,6 @@ describe(`Cache`, () => {
             "changes": Object {},
             "deletions": Object {
               "2131d29a-296c-5f73-affc-e422bec644fe": Object {
-                "bar": undefined,
                 "children": Array [],
                 "foo": "run-1",
                 "id": "2131d29a-296c-5f73-affc-e422bec644fe",
@@ -422,7 +421,6 @@ describe(`Cache`, () => {
                 "newValue": Object {
                   "bar": "run-2",
                   "children": Array [],
-                  "foo": undefined,
                   "id": "2131d29a-296c-5f73-affc-e422bec644fe",
                   "internal": Object {
                     "contentDigest": "a33e2263d5a5f42473e111fb400cef3d",
@@ -432,7 +430,6 @@ describe(`Cache`, () => {
                   "parent": "parent_parentChangeForTransformer",
                 },
                 "oldValue": Object {
-                  "bar": undefined,
                   "children": Array [],
                   "foo": "run-1",
                   "id": "2131d29a-296c-5f73-affc-e422bec644fe",
@@ -647,7 +644,6 @@ describe(`Cache`, () => {
               "parent_parentChangeForFields": Object {
                 "children": Array [],
                 "fields": Object {
-                  "bar": undefined,
                   "foo": "run-1",
                 },
                 "foo": "run-1",
@@ -706,7 +702,6 @@ describe(`Cache`, () => {
                   "children": Array [],
                   "fields": Object {
                     "bar": "run-2",
-                    "foo": undefined,
                   },
                   "id": "parent_parentChangeForFields",
                   "internal": Object {
@@ -723,7 +718,6 @@ describe(`Cache`, () => {
                 "oldValue": Object {
                   "children": Array [],
                   "fields": Object {
-                    "bar": undefined,
                     "foo": "run-1",
                   },
                   "foo": "run-1",

@@ -63,7 +63,12 @@ ${changes.map(change => `        - ${change}`).join(`\n`)}
         }, [])
       )
 
-      await Promise.all(filesToRemove.map(file => fs.remove(file)))
+      await Promise.all(
+        filesToRemove.map(file => {
+          console.log(`deleting file`, file)
+          return fs.remove(file)
+        })
+      )
     } catch (e) {
       report.error(`Failed to remove .cache files.`, e)
     }
