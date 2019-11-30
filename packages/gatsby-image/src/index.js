@@ -49,15 +49,64 @@ const convertProps = props => {
 }
 
 /**
+ * Checks if fluid or fixed are art-direction arrays.
+ * @param props   {object}   The props to check for images.
+ * @param prop    {string}   Check for fluid or fixed.
+ * @return {boolean}
+ */
+export const hasArtDirectionSupport = (props, prop) =>
+  props[prop] &&
+  Array.isArray(props[prop]) &&
+  props[prop].some(image => typeof image.media !== `undefined`)
+
+/**
+ * Checks for fluid or fixed Art direction support.
+ * @param props   {object}   The props to check for art-direction support.
+ * @return {boolean}
+ */
+export const hasArtDirectionArray = props =>
+  hasArtDirectionSupport(props, `fluid`) ||
+  hasArtDirectionSupport(props, `fixed`)
+
+/**
+ * Tries to detect if a media query matches the current viewport.
+ * @param media   {string}  A media query string.
+ * @return {*|boolean}
+ */
+export const matchesMedia = ({ media }) =>
+  media ? isBrowser && window.matchMedia(media).matches : false
+
+/**
  * Find the source of an image to use as a key in the image cache.
  * Use `the first image in either `fixed` or `fluid`
  * @param {{fluid: {src: string}[], fixed: {src: string}[]}} args
  * @return {string}
  */
 const getImageSrcKey = ({ fluid, fixed }) => {
-  const data = (fluid && fluid[0]) || (fixed && fixed[0])
+  const data = getCurrentSrcData({ fluid, fixed })
 
   return data.src
+}
+
+/**
+ * Returns the current src - if possible with art-direction support.
+ * @param fluid         {object}    Fluid Image (Array) if existent.
+ * @param fixed         {object}    Fixed Image (Array) if existent.
+ * @param index         {number}    The index of the image to return (default: 0).
+ * @return {*}
+ */
+export const getCurrentSrcData = ({ fluid, fixed }, index = 0) => {
+  const currentData = fluid || fixed
+  if (isBrowser && hasArtDirectionArray({ fluid, fixed })) {
+    // Do we have an image for the current Viewport?
+    const foundMedia = currentData.findIndex(matchesMedia)
+    if (foundMedia !== -1) {
+      return currentData[foundMedia]
+    }
+    return currentData[index]
+  }
+  // Else return the selected image.
+  return currentData[index]
 }
 
 // Cache if we've seen an image before so we don't bother with
@@ -416,7 +465,7 @@ class Image extends React.Component {
 
     if (fluid) {
       const imageVariants = fluid
-      const image = imageVariants[0]
+      const image = getCurrentSrcData({ fluid })
 
       return (
         <Tag
