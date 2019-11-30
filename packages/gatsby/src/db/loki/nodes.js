@@ -103,19 +103,10 @@ function deleteDataByOwners(plugins = []) {
     return
   }
 
-  process.stdout.write(
-    `[loki] cleaning up data inserted by ${plugins.join(`, `)}\n`
-  )
-
   const nodeTypes = getTypes()
-  process.stdout.write(
-    `[loki] types ${require(`util`).inspect({ nodeTypes })}\n`
-  )
   nodeTypes.forEach(nodeType => {
     const nodesOfType = getNodesByType(nodeType)
-    process.stdout.write(
-      require(`util`).inspect({ nodeType, nodesOfType }) + `\n`
-    )
+
     if (!nodesOfType.length) {
       return
     }
