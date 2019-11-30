@@ -8,25 +8,27 @@ const {
   ON_POST_BOOTSTRAP_FILE_PATH,
 } = require(`./utils/constants`)
 
-const createMap = (nodes, createNodeId) => {
+const createMap = nodes => {
   const map = new Map()
-  nodes.forEach(node => {
-    map.set(node.id, node)
-  })
+  nodes
+    .sort((a, b) => a.id.localeCompare(b.id))
+    .forEach(node => {
+      map.set(node.id, node)
+    })
   return map
 }
 
-exports.onPreBootstrap = ({ getNodes, createNodeId }) => {
+exports.onPreBootstrap = ({ getNodes }) => {
   fs.writeFileSync(
     ON_PRE_BOOTSTRAP_FILE_PATH,
-    v8.serialize(createMap(getNodes(), createNodeId))
+    v8.serialize(createMap(getNodes()))
   )
 }
 
-exports.onPostBootstrap = async ({ getNodes, createNodeId }) => {
+exports.onPostBootstrap = async ({ getNodes }) => {
   fs.writeFileSync(
     ON_POST_BOOTSTRAP_FILE_PATH,
-    v8.serialize(createMap(getNodes(), createNodeId))
+    v8.serialize(createMap(getNodes()))
   )
 
   await db.saveState()
