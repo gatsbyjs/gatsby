@@ -72,11 +72,16 @@ const getSubStateByPlugins = (state, pluginNamesArray) =>
 
 const loadState = path => {
   const state = v8.deserialize(fs.readFileSync(path))
+
+  const sanitisedState = state.map(sanitiseNode)
+
   const newState = new Map()
-  state.forEach(node => {
-    const sanitisedNode = sanitiseNode(node)
-    newState.set(sanitisedNode.id, sanitisedNode)
-  })
+  sanitisedState
+    .sort((a, b) => a.id.localeCompare(b.id))
+    .forEach(sanitisedNode => {
+      newState.set(sanitisedNode.id, sanitisedNode)
+    })
+
   return newState
 }
 

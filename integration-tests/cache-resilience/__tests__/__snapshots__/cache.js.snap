@@ -2,6 +2,28 @@
 
 exports[`Cache Redux Nodes sanity checks 1`] = `
 Map {
+  "06b3df12d0a75328baf096b7d739ceb8" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "06b3df12d0a75328baf096b7d739ceb8",
+    "internal": Object {
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "parent": null,
+    "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "<PROJECT_ROOT>/plugins/gatsby-source-child-change-for-fields/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
   "08cd7b14-7698-5764-8775-c58ce54c44e8" => Object {
     "browserAPIs": Array [],
     "children": Array [],
@@ -22,10 +44,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/plugins/gatsby-source-child-change-for-transformer",
     "ssrAPIs": Array [],
   },
-  "5420e5422e6c8c64cf9d2800a7ad04ec" => Object {
+  "186906780d1618d564b4cba1544f6b1e" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "5420e5422e6c8c64cf9d2800a7ad04ec",
+    "id": "186906780d1618d564b4cba1544f6b1e",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -37,17 +59,17 @@ Map {
     "parent": null,
     "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/plugins/gatsby-plugin-stable/src/pages",
+      "path": "<PROJECT_ROOT>/plugins/gatsby-transformer-child-change/src/pages",
       "pathCheck": false,
       "plugins": Array [],
     },
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "efb91ab8ba7711b4853bbdac0554c5ac" => Object {
+  "1c84d3ff62f8021894261875cd82524b" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "efb91ab8ba7711b4853bbdac0554c5ac",
+    "id": "1c84d3ff62f8021894261875cd82524b",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -59,29 +81,7 @@ Map {
     "parent": null,
     "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/src/pages",
-      "pathCheck": false,
-      "plugins": Array [],
-    },
-    "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
-    "ssrAPIs": Array [],
-  },
-  "cf4160fdd93f7b96fd24d5798110150d" => Object {
-    "browserAPIs": Array [],
-    "children": Array [],
-    "id": "cf4160fdd93f7b96fd24d5798110150d",
-    "internal": Object {
-      "owner": "internal-data-bridge",
-      "type": "SitePlugin",
-    },
-    "name": "gatsby-plugin-page-creator",
-    "nodeAPIs": Array [
-      "createPagesStatefully",
-    ],
-    "parent": null,
-    "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
-    "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/plugins/gatsby-fields-parent-change/src/pages",
+      "path": "<PROJECT_ROOT>/node_modules/gatsby/dist/internal-plugins/internal-data-bridge/src/pages",
       "pathCheck": false,
       "plugins": Array [],
     },
@@ -171,10 +171,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/plugins/gatsby-plugin-stable",
     "ssrAPIs": Array [],
   },
-  "7208d1ae9e312577ecc8b2b29123830f" => Object {
+  "45e5bbe561cb651c4da55ae0c9ccb6da" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "7208d1ae9e312577ecc8b2b29123830f",
+    "id": "45e5bbe561cb651c4da55ae0c9ccb6da",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -186,17 +186,17 @@ Map {
     "parent": null,
     "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/plugins/gatsby-source-parent-change-for-transformer/src/pages",
+      "path": "<PROJECT_ROOT>/plugins/gatsby-transformer-parent-change/src/pages",
       "pathCheck": false,
       "plugins": Array [],
     },
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "dc1b31130527acb45a9eba0d6bb5f36a" => Object {
+  "5420e5422e6c8c64cf9d2800a7ad04ec" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "dc1b31130527acb45a9eba0d6bb5f36a",
+    "id": "5420e5422e6c8c64cf9d2800a7ad04ec",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -208,7 +208,7 @@ Map {
     "parent": null,
     "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/plugins/gatsby-source-child-change-for-transformer/src/pages",
+      "path": "<PROJECT_ROOT>/plugins/gatsby-plugin-stable/src/pages",
       "pathCheck": false,
       "plugins": Array [],
     },
@@ -255,28 +255,6 @@ Map {
     "resolve": "<PROJECT_ROOT>/plugins/gatsby-source-parent-change-for-fields",
     "ssrAPIs": Array [],
   },
-  "db350fb253e3be012579b4120b1e9ee0" => Object {
-    "browserAPIs": Array [],
-    "children": Array [],
-    "id": "db350fb253e3be012579b4120b1e9ee0",
-    "internal": Object {
-      "owner": "internal-data-bridge",
-      "type": "SitePlugin",
-    },
-    "name": "gatsby-plugin-page-creator",
-    "nodeAPIs": Array [
-      "createPagesStatefully",
-    ],
-    "parent": null,
-    "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
-    "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/plugins/gatsby-source-parent-change-for-fields/src/pages",
-      "pathCheck": false,
-      "plugins": Array [],
-    },
-    "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
-    "ssrAPIs": Array [],
-  },
   "624fa626-4203-5aab-a667-ee4ffa1dee80" => Object {
     "browserAPIs": Array [],
     "children": Array [],
@@ -295,6 +273,28 @@ Map {
       "plugins": Array [],
     },
     "resolve": "<PROJECT_ROOT>/plugins/gatsby-source-parent-change-for-transformer",
+    "ssrAPIs": Array [],
+  },
+  "632942f5250406d3266d37b115bc3fa6" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "632942f5250406d3266d37b115bc3fa6",
+    "internal": Object {
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "parent": null,
+    "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "<PROJECT_ROOT>/plugins/gatsby-fields-child-change/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
   "684f3e1c-cb9e-5123-87b1-609e60d5fa87" => Object {
@@ -337,6 +337,28 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby/dist/internal-plugins/webpack-theme-component-shadowing",
     "ssrAPIs": Array [],
   },
+  "7208d1ae9e312577ecc8b2b29123830f" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "7208d1ae9e312577ecc8b2b29123830f",
+    "internal": Object {
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "parent": null,
+    "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "<PROJECT_ROOT>/plugins/gatsby-source-parent-change-for-transformer/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
   "7374ebf2-d961-52ee-92a2-c25e7cb387a9" => Object {
     "browserAPIs": Array [],
     "children": Array [],
@@ -358,10 +380,10 @@ Map {
     "resolve": "<PROJECT_ROOT>",
     "ssrAPIs": Array [],
   },
-  "1c84d3ff62f8021894261875cd82524b" => Object {
+  "7c20bf1e4760658c29365cf0f5f44783" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "1c84d3ff62f8021894261875cd82524b",
+    "id": "7c20bf1e4760658c29365cf0f5f44783",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -373,17 +395,17 @@ Map {
     "parent": null,
     "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/node_modules/gatsby/dist/internal-plugins/internal-data-bridge/src/pages",
+      "path": "<PROJECT_ROOT>/node_modules/gatsby/dist/internal-plugins/webpack-theme-component-shadowing/src/pages",
       "pathCheck": false,
       "plugins": Array [],
     },
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "186906780d1618d564b4cba1544f6b1e" => Object {
+  "996d13fe0d76121f6e45155f1726dc77" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "186906780d1618d564b4cba1544f6b1e",
+    "id": "996d13fe0d76121f6e45155f1726dc77",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -395,29 +417,7 @@ Map {
     "parent": null,
     "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/plugins/gatsby-transformer-child-change/src/pages",
-      "pathCheck": false,
-      "plugins": Array [],
-    },
-    "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
-    "ssrAPIs": Array [],
-  },
-  "06b3df12d0a75328baf096b7d739ceb8" => Object {
-    "browserAPIs": Array [],
-    "children": Array [],
-    "id": "06b3df12d0a75328baf096b7d739ceb8",
-    "internal": Object {
-      "owner": "internal-data-bridge",
-      "type": "SitePlugin",
-    },
-    "name": "gatsby-plugin-page-creator",
-    "nodeAPIs": Array [
-      "createPagesStatefully",
-    ],
-    "parent": null,
-    "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
-    "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/plugins/gatsby-source-child-change-for-fields/src/pages",
+      "path": "<PROJECT_ROOT>/node_modules/gatsby/dist/internal-plugins/prod-404/src/pages",
       "pathCheck": false,
       "plugins": Array [],
     },
@@ -444,6 +444,28 @@ Map {
     "resolve": "<PROJECT_ROOT>/plugins/gatsby-fields-child-change",
     "ssrAPIs": Array [],
   },
+  "9c78c104a1289f531e7f2f97e63d9686" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "9c78c104a1289f531e7f2f97e63d9686",
+    "internal": Object {
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "parent": null,
+    "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "<PROJECT_ROOT>/node_modules/gatsby/dist/internal-plugins/dev-404-page/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
   "a5079d69-ba80-53dc-82f9-0f440bd5448c" => Object {
     "browserAPIs": Array [],
     "children": Array [],
@@ -465,10 +487,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby/dist/internal-plugins/internal-data-bridge",
     "ssrAPIs": Array [],
   },
-  "e0514f739c5a6710240c2a482f678098" => Object {
+  "bd0b0ebffec260762cb6f1e4b769a28b" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "e0514f739c5a6710240c2a482f678098",
+    "id": "bd0b0ebffec260762cb6f1e4b769a28b",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -480,29 +502,7 @@ Map {
     "parent": null,
     "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/node_modules/gatsby/dist/internal-plugins/load-babel-config/src/pages",
-      "pathCheck": false,
-      "plugins": Array [],
-    },
-    "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
-    "ssrAPIs": Array [],
-  },
-  "7c20bf1e4760658c29365cf0f5f44783" => Object {
-    "browserAPIs": Array [],
-    "children": Array [],
-    "id": "7c20bf1e4760658c29365cf0f5f44783",
-    "internal": Object {
-      "owner": "internal-data-bridge",
-      "type": "SitePlugin",
-    },
-    "name": "gatsby-plugin-page-creator",
-    "nodeAPIs": Array [
-      "createPagesStatefully",
-    ],
-    "parent": null,
-    "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
-    "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/node_modules/gatsby/dist/internal-plugins/webpack-theme-component-shadowing/src/pages",
+      "path": "<PROJECT_ROOT>/plugins/gatsby-plugin-independent-node/src/pages",
       "pathCheck": false,
       "plugins": Array [],
     },
@@ -529,10 +529,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/plugins/gatsby-source-child-change-for-fields",
     "ssrAPIs": Array [],
   },
-  "9c78c104a1289f531e7f2f97e63d9686" => Object {
+  "cf4160fdd93f7b96fd24d5798110150d" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "9c78c104a1289f531e7f2f97e63d9686",
+    "id": "cf4160fdd93f7b96fd24d5798110150d",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -544,51 +544,7 @@ Map {
     "parent": null,
     "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/node_modules/gatsby/dist/internal-plugins/dev-404-page/src/pages",
-      "pathCheck": false,
-      "plugins": Array [],
-    },
-    "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
-    "ssrAPIs": Array [],
-  },
-  "45e5bbe561cb651c4da55ae0c9ccb6da" => Object {
-    "browserAPIs": Array [],
-    "children": Array [],
-    "id": "45e5bbe561cb651c4da55ae0c9ccb6da",
-    "internal": Object {
-      "owner": "internal-data-bridge",
-      "type": "SitePlugin",
-    },
-    "name": "gatsby-plugin-page-creator",
-    "nodeAPIs": Array [
-      "createPagesStatefully",
-    ],
-    "parent": null,
-    "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
-    "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/plugins/gatsby-transformer-parent-change/src/pages",
-      "pathCheck": false,
-      "plugins": Array [],
-    },
-    "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
-    "ssrAPIs": Array [],
-  },
-  "bd0b0ebffec260762cb6f1e4b769a28b" => Object {
-    "browserAPIs": Array [],
-    "children": Array [],
-    "id": "bd0b0ebffec260762cb6f1e4b769a28b",
-    "internal": Object {
-      "owner": "internal-data-bridge",
-      "type": "SitePlugin",
-    },
-    "name": "gatsby-plugin-page-creator",
-    "nodeAPIs": Array [
-      "createPagesStatefully",
-    ],
-    "parent": null,
-    "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
-    "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/plugins/gatsby-plugin-independent-node/src/pages",
+      "path": "<PROJECT_ROOT>/plugins/gatsby-fields-parent-change/src/pages",
       "pathCheck": false,
       "plugins": Array [],
     },
@@ -615,6 +571,50 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby/dist/internal-plugins/dev-404-page",
     "ssrAPIs": Array [],
   },
+  "db350fb253e3be012579b4120b1e9ee0" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "db350fb253e3be012579b4120b1e9ee0",
+    "internal": Object {
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "parent": null,
+    "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "<PROJECT_ROOT>/plugins/gatsby-source-parent-change-for-fields/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
+  "dc1b31130527acb45a9eba0d6bb5f36a" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "dc1b31130527acb45a9eba0d6bb5f36a",
+    "internal": Object {
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "parent": null,
+    "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "<PROJECT_ROOT>/plugins/gatsby-source-child-change-for-transformer/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
   "dc1f3dc9-7d73-533d-a090-787d5281f836" => Object {
     "browserAPIs": Array [],
     "children": Array [],
@@ -635,10 +635,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/plugins/gatsby-plugin-independent-node",
     "ssrAPIs": Array [],
   },
-  "996d13fe0d76121f6e45155f1726dc77" => Object {
+  "e0514f739c5a6710240c2a482f678098" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "996d13fe0d76121f6e45155f1726dc77",
+    "id": "e0514f739c5a6710240c2a482f678098",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -650,7 +650,29 @@ Map {
     "parent": null,
     "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/node_modules/gatsby/dist/internal-plugins/prod-404/src/pages",
+      "path": "<PROJECT_ROOT>/node_modules/gatsby/dist/internal-plugins/load-babel-config/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
+  "efb91ab8ba7711b4853bbdac0554c5ac" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "efb91ab8ba7711b4853bbdac0554c5ac",
+    "internal": Object {
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "parent": null,
+    "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "<PROJECT_ROOT>/src/pages",
       "pathCheck": false,
       "plugins": Array [],
     },
@@ -675,28 +697,6 @@ Map {
       "plugins": Array [],
     },
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby/dist/internal-plugins/prod-404",
-    "ssrAPIs": Array [],
-  },
-  "632942f5250406d3266d37b115bc3fa6" => Object {
-    "browserAPIs": Array [],
-    "children": Array [],
-    "id": "632942f5250406d3266d37b115bc3fa6",
-    "internal": Object {
-      "owner": "internal-data-bridge",
-      "type": "SitePlugin",
-    },
-    "name": "gatsby-plugin-page-creator",
-    "nodeAPIs": Array [
-      "createPagesStatefully",
-    ],
-    "parent": null,
-    "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
-    "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/plugins/gatsby-fields-child-change/src/pages",
-      "pathCheck": false,
-      "plugins": Array [],
-    },
-    "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
   "INDEPENDENT_NODE_1" => Object {
@@ -829,6 +829,28 @@ Map {
 
 exports[`Cache Redux Nodes sanity checks 2`] = `
 Map {
+  "06b3df12d0a75328baf096b7d739ceb8" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "06b3df12d0a75328baf096b7d739ceb8",
+    "internal": Object {
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "parent": null,
+    "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "<PROJECT_ROOT>/plugins/gatsby-source-child-change-for-fields/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
   "08cd7b14-7698-5764-8775-c58ce54c44e8" => Object {
     "browserAPIs": Array [],
     "children": Array [],
@@ -849,10 +871,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/plugins/gatsby-source-child-change-for-transformer",
     "ssrAPIs": Array [],
   },
-  "5420e5422e6c8c64cf9d2800a7ad04ec" => Object {
+  "186906780d1618d564b4cba1544f6b1e" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "5420e5422e6c8c64cf9d2800a7ad04ec",
+    "id": "186906780d1618d564b4cba1544f6b1e",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -864,17 +886,17 @@ Map {
     "parent": null,
     "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/plugins/gatsby-plugin-stable/src/pages",
+      "path": "<PROJECT_ROOT>/plugins/gatsby-transformer-child-change/src/pages",
       "pathCheck": false,
       "plugins": Array [],
     },
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "efb91ab8ba7711b4853bbdac0554c5ac" => Object {
+  "1c84d3ff62f8021894261875cd82524b" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "efb91ab8ba7711b4853bbdac0554c5ac",
+    "id": "1c84d3ff62f8021894261875cd82524b",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -886,29 +908,7 @@ Map {
     "parent": null,
     "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/src/pages",
-      "pathCheck": false,
-      "plugins": Array [],
-    },
-    "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
-    "ssrAPIs": Array [],
-  },
-  "cf4160fdd93f7b96fd24d5798110150d" => Object {
-    "browserAPIs": Array [],
-    "children": Array [],
-    "id": "cf4160fdd93f7b96fd24d5798110150d",
-    "internal": Object {
-      "owner": "internal-data-bridge",
-      "type": "SitePlugin",
-    },
-    "name": "gatsby-plugin-page-creator",
-    "nodeAPIs": Array [
-      "createPagesStatefully",
-    ],
-    "parent": null,
-    "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
-    "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/plugins/gatsby-fields-parent-change/src/pages",
+      "path": "<PROJECT_ROOT>/node_modules/gatsby/dist/internal-plugins/internal-data-bridge/src/pages",
       "pathCheck": false,
       "plugins": Array [],
     },
@@ -975,10 +975,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/plugins/gatsby-plugin-stable",
     "ssrAPIs": Array [],
   },
-  "7208d1ae9e312577ecc8b2b29123830f" => Object {
+  "45e5bbe561cb651c4da55ae0c9ccb6da" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "7208d1ae9e312577ecc8b2b29123830f",
+    "id": "45e5bbe561cb651c4da55ae0c9ccb6da",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -990,17 +990,17 @@ Map {
     "parent": null,
     "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/plugins/gatsby-source-parent-change-for-transformer/src/pages",
+      "path": "<PROJECT_ROOT>/plugins/gatsby-transformer-parent-change/src/pages",
       "pathCheck": false,
       "plugins": Array [],
     },
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "dc1b31130527acb45a9eba0d6bb5f36a" => Object {
+  "5420e5422e6c8c64cf9d2800a7ad04ec" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "dc1b31130527acb45a9eba0d6bb5f36a",
+    "id": "5420e5422e6c8c64cf9d2800a7ad04ec",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -1012,7 +1012,7 @@ Map {
     "parent": null,
     "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/plugins/gatsby-source-child-change-for-transformer/src/pages",
+      "path": "<PROJECT_ROOT>/plugins/gatsby-plugin-stable/src/pages",
       "pathCheck": false,
       "plugins": Array [],
     },
@@ -1059,28 +1059,6 @@ Map {
     "resolve": "<PROJECT_ROOT>/plugins/gatsby-source-parent-change-for-fields",
     "ssrAPIs": Array [],
   },
-  "db350fb253e3be012579b4120b1e9ee0" => Object {
-    "browserAPIs": Array [],
-    "children": Array [],
-    "id": "db350fb253e3be012579b4120b1e9ee0",
-    "internal": Object {
-      "owner": "internal-data-bridge",
-      "type": "SitePlugin",
-    },
-    "name": "gatsby-plugin-page-creator",
-    "nodeAPIs": Array [
-      "createPagesStatefully",
-    ],
-    "parent": null,
-    "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
-    "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/plugins/gatsby-source-parent-change-for-fields/src/pages",
-      "pathCheck": false,
-      "plugins": Array [],
-    },
-    "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
-    "ssrAPIs": Array [],
-  },
   "624fa626-4203-5aab-a667-ee4ffa1dee80" => Object {
     "browserAPIs": Array [],
     "children": Array [],
@@ -1099,6 +1077,28 @@ Map {
       "plugins": Array [],
     },
     "resolve": "<PROJECT_ROOT>/plugins/gatsby-source-parent-change-for-transformer",
+    "ssrAPIs": Array [],
+  },
+  "632942f5250406d3266d37b115bc3fa6" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "632942f5250406d3266d37b115bc3fa6",
+    "internal": Object {
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "parent": null,
+    "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "<PROJECT_ROOT>/plugins/gatsby-fields-child-change/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
   "684f3e1c-cb9e-5123-87b1-609e60d5fa87" => Object {
@@ -1141,6 +1141,28 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby/dist/internal-plugins/webpack-theme-component-shadowing",
     "ssrAPIs": Array [],
   },
+  "7208d1ae9e312577ecc8b2b29123830f" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "7208d1ae9e312577ecc8b2b29123830f",
+    "internal": Object {
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "parent": null,
+    "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "<PROJECT_ROOT>/plugins/gatsby-source-parent-change-for-transformer/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
   "7374ebf2-d961-52ee-92a2-c25e7cb387a9" => Object {
     "browserAPIs": Array [],
     "children": Array [],
@@ -1162,10 +1184,10 @@ Map {
     "resolve": "<PROJECT_ROOT>",
     "ssrAPIs": Array [],
   },
-  "1c84d3ff62f8021894261875cd82524b" => Object {
+  "7c20bf1e4760658c29365cf0f5f44783" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "1c84d3ff62f8021894261875cd82524b",
+    "id": "7c20bf1e4760658c29365cf0f5f44783",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -1177,17 +1199,17 @@ Map {
     "parent": null,
     "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/node_modules/gatsby/dist/internal-plugins/internal-data-bridge/src/pages",
+      "path": "<PROJECT_ROOT>/node_modules/gatsby/dist/internal-plugins/webpack-theme-component-shadowing/src/pages",
       "pathCheck": false,
       "plugins": Array [],
     },
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "186906780d1618d564b4cba1544f6b1e" => Object {
+  "996d13fe0d76121f6e45155f1726dc77" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "186906780d1618d564b4cba1544f6b1e",
+    "id": "996d13fe0d76121f6e45155f1726dc77",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -1199,29 +1221,7 @@ Map {
     "parent": null,
     "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/plugins/gatsby-transformer-child-change/src/pages",
-      "pathCheck": false,
-      "plugins": Array [],
-    },
-    "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
-    "ssrAPIs": Array [],
-  },
-  "06b3df12d0a75328baf096b7d739ceb8" => Object {
-    "browserAPIs": Array [],
-    "children": Array [],
-    "id": "06b3df12d0a75328baf096b7d739ceb8",
-    "internal": Object {
-      "owner": "internal-data-bridge",
-      "type": "SitePlugin",
-    },
-    "name": "gatsby-plugin-page-creator",
-    "nodeAPIs": Array [
-      "createPagesStatefully",
-    ],
-    "parent": null,
-    "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
-    "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/plugins/gatsby-source-child-change-for-fields/src/pages",
+      "path": "<PROJECT_ROOT>/node_modules/gatsby/dist/internal-plugins/prod-404/src/pages",
       "pathCheck": false,
       "plugins": Array [],
     },
@@ -1248,6 +1248,28 @@ Map {
     "resolve": "<PROJECT_ROOT>/plugins/gatsby-fields-child-change",
     "ssrAPIs": Array [],
   },
+  "9c78c104a1289f531e7f2f97e63d9686" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "9c78c104a1289f531e7f2f97e63d9686",
+    "internal": Object {
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "parent": null,
+    "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "<PROJECT_ROOT>/node_modules/gatsby/dist/internal-plugins/dev-404-page/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
   "a5079d69-ba80-53dc-82f9-0f440bd5448c" => Object {
     "browserAPIs": Array [],
     "children": Array [],
@@ -1269,10 +1291,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby/dist/internal-plugins/internal-data-bridge",
     "ssrAPIs": Array [],
   },
-  "e0514f739c5a6710240c2a482f678098" => Object {
+  "bd0b0ebffec260762cb6f1e4b769a28b" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "e0514f739c5a6710240c2a482f678098",
+    "id": "bd0b0ebffec260762cb6f1e4b769a28b",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -1284,29 +1306,7 @@ Map {
     "parent": null,
     "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/node_modules/gatsby/dist/internal-plugins/load-babel-config/src/pages",
-      "pathCheck": false,
-      "plugins": Array [],
-    },
-    "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
-    "ssrAPIs": Array [],
-  },
-  "7c20bf1e4760658c29365cf0f5f44783" => Object {
-    "browserAPIs": Array [],
-    "children": Array [],
-    "id": "7c20bf1e4760658c29365cf0f5f44783",
-    "internal": Object {
-      "owner": "internal-data-bridge",
-      "type": "SitePlugin",
-    },
-    "name": "gatsby-plugin-page-creator",
-    "nodeAPIs": Array [
-      "createPagesStatefully",
-    ],
-    "parent": null,
-    "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
-    "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/node_modules/gatsby/dist/internal-plugins/webpack-theme-component-shadowing/src/pages",
+      "path": "<PROJECT_ROOT>/plugins/gatsby-plugin-independent-node/src/pages",
       "pathCheck": false,
       "plugins": Array [],
     },
@@ -1333,10 +1333,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/plugins/gatsby-source-child-change-for-fields",
     "ssrAPIs": Array [],
   },
-  "9c78c104a1289f531e7f2f97e63d9686" => Object {
+  "cf4160fdd93f7b96fd24d5798110150d" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "9c78c104a1289f531e7f2f97e63d9686",
+    "id": "cf4160fdd93f7b96fd24d5798110150d",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -1348,51 +1348,7 @@ Map {
     "parent": null,
     "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/node_modules/gatsby/dist/internal-plugins/dev-404-page/src/pages",
-      "pathCheck": false,
-      "plugins": Array [],
-    },
-    "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
-    "ssrAPIs": Array [],
-  },
-  "45e5bbe561cb651c4da55ae0c9ccb6da" => Object {
-    "browserAPIs": Array [],
-    "children": Array [],
-    "id": "45e5bbe561cb651c4da55ae0c9ccb6da",
-    "internal": Object {
-      "owner": "internal-data-bridge",
-      "type": "SitePlugin",
-    },
-    "name": "gatsby-plugin-page-creator",
-    "nodeAPIs": Array [
-      "createPagesStatefully",
-    ],
-    "parent": null,
-    "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
-    "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/plugins/gatsby-transformer-parent-change/src/pages",
-      "pathCheck": false,
-      "plugins": Array [],
-    },
-    "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
-    "ssrAPIs": Array [],
-  },
-  "bd0b0ebffec260762cb6f1e4b769a28b" => Object {
-    "browserAPIs": Array [],
-    "children": Array [],
-    "id": "bd0b0ebffec260762cb6f1e4b769a28b",
-    "internal": Object {
-      "owner": "internal-data-bridge",
-      "type": "SitePlugin",
-    },
-    "name": "gatsby-plugin-page-creator",
-    "nodeAPIs": Array [
-      "createPagesStatefully",
-    ],
-    "parent": null,
-    "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
-    "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/plugins/gatsby-plugin-independent-node/src/pages",
+      "path": "<PROJECT_ROOT>/plugins/gatsby-fields-parent-change/src/pages",
       "pathCheck": false,
       "plugins": Array [],
     },
@@ -1419,6 +1375,50 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby/dist/internal-plugins/dev-404-page",
     "ssrAPIs": Array [],
   },
+  "db350fb253e3be012579b4120b1e9ee0" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "db350fb253e3be012579b4120b1e9ee0",
+    "internal": Object {
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "parent": null,
+    "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "<PROJECT_ROOT>/plugins/gatsby-source-parent-change-for-fields/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
+  "dc1b31130527acb45a9eba0d6bb5f36a" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "dc1b31130527acb45a9eba0d6bb5f36a",
+    "internal": Object {
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "parent": null,
+    "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "<PROJECT_ROOT>/plugins/gatsby-source-child-change-for-transformer/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
   "dc1f3dc9-7d73-533d-a090-787d5281f836" => Object {
     "browserAPIs": Array [],
     "children": Array [],
@@ -1439,10 +1439,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/plugins/gatsby-plugin-independent-node",
     "ssrAPIs": Array [],
   },
-  "996d13fe0d76121f6e45155f1726dc77" => Object {
+  "e0514f739c5a6710240c2a482f678098" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "996d13fe0d76121f6e45155f1726dc77",
+    "id": "e0514f739c5a6710240c2a482f678098",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -1454,7 +1454,29 @@ Map {
     "parent": null,
     "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/node_modules/gatsby/dist/internal-plugins/prod-404/src/pages",
+      "path": "<PROJECT_ROOT>/node_modules/gatsby/dist/internal-plugins/load-babel-config/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
+  "efb91ab8ba7711b4853bbdac0554c5ac" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "efb91ab8ba7711b4853bbdac0554c5ac",
+    "internal": Object {
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "parent": null,
+    "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "<PROJECT_ROOT>/src/pages",
       "pathCheck": false,
       "plugins": Array [],
     },
@@ -1479,28 +1501,6 @@ Map {
       "plugins": Array [],
     },
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby/dist/internal-plugins/prod-404",
-    "ssrAPIs": Array [],
-  },
-  "632942f5250406d3266d37b115bc3fa6" => Object {
-    "browserAPIs": Array [],
-    "children": Array [],
-    "id": "632942f5250406d3266d37b115bc3fa6",
-    "internal": Object {
-      "owner": "internal-data-bridge",
-      "type": "SitePlugin",
-    },
-    "name": "gatsby-plugin-page-creator",
-    "nodeAPIs": Array [
-      "createPagesStatefully",
-    ],
-    "parent": null,
-    "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
-    "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/plugins/gatsby-fields-child-change/src/pages",
-      "pathCheck": false,
-      "plugins": Array [],
-    },
-    "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
   "parent_childChangeForFields" => Object {
@@ -1584,6 +1584,28 @@ Map {
 
 exports[`Cache Redux Nodes sanity checks 3`] = `
 Map {
+  "06b3df12d0a75328baf096b7d739ceb8" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "06b3df12d0a75328baf096b7d739ceb8",
+    "internal": Object {
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "parent": null,
+    "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "<PROJECT_ROOT>/plugins/gatsby-source-child-change-for-fields/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
   "08cd7b14-7698-5764-8775-c58ce54c44e8" => Object {
     "browserAPIs": Array [],
     "children": Array [],
@@ -1604,10 +1626,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/plugins/gatsby-source-child-change-for-transformer",
     "ssrAPIs": Array [],
   },
-  "5420e5422e6c8c64cf9d2800a7ad04ec" => Object {
+  "186906780d1618d564b4cba1544f6b1e" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "5420e5422e6c8c64cf9d2800a7ad04ec",
+    "id": "186906780d1618d564b4cba1544f6b1e",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -1619,17 +1641,17 @@ Map {
     "parent": null,
     "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/plugins/gatsby-plugin-stable/src/pages",
+      "path": "<PROJECT_ROOT>/plugins/gatsby-transformer-child-change/src/pages",
       "pathCheck": false,
       "plugins": Array [],
     },
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "efb91ab8ba7711b4853bbdac0554c5ac" => Object {
+  "1c84d3ff62f8021894261875cd82524b" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "efb91ab8ba7711b4853bbdac0554c5ac",
+    "id": "1c84d3ff62f8021894261875cd82524b",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -1641,29 +1663,7 @@ Map {
     "parent": null,
     "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/src/pages",
-      "pathCheck": false,
-      "plugins": Array [],
-    },
-    "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
-    "ssrAPIs": Array [],
-  },
-  "cf4160fdd93f7b96fd24d5798110150d" => Object {
-    "browserAPIs": Array [],
-    "children": Array [],
-    "id": "cf4160fdd93f7b96fd24d5798110150d",
-    "internal": Object {
-      "owner": "internal-data-bridge",
-      "type": "SitePlugin",
-    },
-    "name": "gatsby-plugin-page-creator",
-    "nodeAPIs": Array [
-      "createPagesStatefully",
-    ],
-    "parent": null,
-    "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
-    "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/plugins/gatsby-fields-parent-change/src/pages",
+      "path": "<PROJECT_ROOT>/node_modules/gatsby/dist/internal-plugins/internal-data-bridge/src/pages",
       "pathCheck": false,
       "plugins": Array [],
     },
@@ -1753,10 +1753,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/plugins/gatsby-plugin-stable",
     "ssrAPIs": Array [],
   },
-  "7208d1ae9e312577ecc8b2b29123830f" => Object {
+  "45e5bbe561cb651c4da55ae0c9ccb6da" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "7208d1ae9e312577ecc8b2b29123830f",
+    "id": "45e5bbe561cb651c4da55ae0c9ccb6da",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -1768,17 +1768,17 @@ Map {
     "parent": null,
     "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/plugins/gatsby-source-parent-change-for-transformer/src/pages",
+      "path": "<PROJECT_ROOT>/plugins/gatsby-transformer-parent-change/src/pages",
       "pathCheck": false,
       "plugins": Array [],
     },
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "dc1b31130527acb45a9eba0d6bb5f36a" => Object {
+  "5420e5422e6c8c64cf9d2800a7ad04ec" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "dc1b31130527acb45a9eba0d6bb5f36a",
+    "id": "5420e5422e6c8c64cf9d2800a7ad04ec",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -1790,7 +1790,7 @@ Map {
     "parent": null,
     "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/plugins/gatsby-source-child-change-for-transformer/src/pages",
+      "path": "<PROJECT_ROOT>/plugins/gatsby-plugin-stable/src/pages",
       "pathCheck": false,
       "plugins": Array [],
     },
@@ -1837,28 +1837,6 @@ Map {
     "resolve": "<PROJECT_ROOT>/plugins/gatsby-source-parent-change-for-fields",
     "ssrAPIs": Array [],
   },
-  "db350fb253e3be012579b4120b1e9ee0" => Object {
-    "browserAPIs": Array [],
-    "children": Array [],
-    "id": "db350fb253e3be012579b4120b1e9ee0",
-    "internal": Object {
-      "owner": "internal-data-bridge",
-      "type": "SitePlugin",
-    },
-    "name": "gatsby-plugin-page-creator",
-    "nodeAPIs": Array [
-      "createPagesStatefully",
-    ],
-    "parent": null,
-    "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
-    "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/plugins/gatsby-source-parent-change-for-fields/src/pages",
-      "pathCheck": false,
-      "plugins": Array [],
-    },
-    "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
-    "ssrAPIs": Array [],
-  },
   "624fa626-4203-5aab-a667-ee4ffa1dee80" => Object {
     "browserAPIs": Array [],
     "children": Array [],
@@ -1877,6 +1855,28 @@ Map {
       "plugins": Array [],
     },
     "resolve": "<PROJECT_ROOT>/plugins/gatsby-source-parent-change-for-transformer",
+    "ssrAPIs": Array [],
+  },
+  "632942f5250406d3266d37b115bc3fa6" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "632942f5250406d3266d37b115bc3fa6",
+    "internal": Object {
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "parent": null,
+    "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "<PROJECT_ROOT>/plugins/gatsby-fields-child-change/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
   "684f3e1c-cb9e-5123-87b1-609e60d5fa87" => Object {
@@ -1919,6 +1919,28 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby/dist/internal-plugins/webpack-theme-component-shadowing",
     "ssrAPIs": Array [],
   },
+  "7208d1ae9e312577ecc8b2b29123830f" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "7208d1ae9e312577ecc8b2b29123830f",
+    "internal": Object {
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "parent": null,
+    "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "<PROJECT_ROOT>/plugins/gatsby-source-parent-change-for-transformer/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
   "7374ebf2-d961-52ee-92a2-c25e7cb387a9" => Object {
     "browserAPIs": Array [],
     "children": Array [],
@@ -1940,10 +1962,10 @@ Map {
     "resolve": "<PROJECT_ROOT>",
     "ssrAPIs": Array [],
   },
-  "1c84d3ff62f8021894261875cd82524b" => Object {
+  "7c20bf1e4760658c29365cf0f5f44783" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "1c84d3ff62f8021894261875cd82524b",
+    "id": "7c20bf1e4760658c29365cf0f5f44783",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -1955,17 +1977,17 @@ Map {
     "parent": null,
     "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/node_modules/gatsby/dist/internal-plugins/internal-data-bridge/src/pages",
+      "path": "<PROJECT_ROOT>/node_modules/gatsby/dist/internal-plugins/webpack-theme-component-shadowing/src/pages",
       "pathCheck": false,
       "plugins": Array [],
     },
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
-  "186906780d1618d564b4cba1544f6b1e" => Object {
+  "996d13fe0d76121f6e45155f1726dc77" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "186906780d1618d564b4cba1544f6b1e",
+    "id": "996d13fe0d76121f6e45155f1726dc77",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -1977,29 +1999,7 @@ Map {
     "parent": null,
     "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/plugins/gatsby-transformer-child-change/src/pages",
-      "pathCheck": false,
-      "plugins": Array [],
-    },
-    "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
-    "ssrAPIs": Array [],
-  },
-  "06b3df12d0a75328baf096b7d739ceb8" => Object {
-    "browserAPIs": Array [],
-    "children": Array [],
-    "id": "06b3df12d0a75328baf096b7d739ceb8",
-    "internal": Object {
-      "owner": "internal-data-bridge",
-      "type": "SitePlugin",
-    },
-    "name": "gatsby-plugin-page-creator",
-    "nodeAPIs": Array [
-      "createPagesStatefully",
-    ],
-    "parent": null,
-    "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
-    "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/plugins/gatsby-source-child-change-for-fields/src/pages",
+      "path": "<PROJECT_ROOT>/node_modules/gatsby/dist/internal-plugins/prod-404/src/pages",
       "pathCheck": false,
       "plugins": Array [],
     },
@@ -2026,6 +2026,28 @@ Map {
     "resolve": "<PROJECT_ROOT>/plugins/gatsby-fields-child-change",
     "ssrAPIs": Array [],
   },
+  "9c78c104a1289f531e7f2f97e63d9686" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "9c78c104a1289f531e7f2f97e63d9686",
+    "internal": Object {
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "parent": null,
+    "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "<PROJECT_ROOT>/node_modules/gatsby/dist/internal-plugins/dev-404-page/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
   "a5079d69-ba80-53dc-82f9-0f440bd5448c" => Object {
     "browserAPIs": Array [],
     "children": Array [],
@@ -2047,10 +2069,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby/dist/internal-plugins/internal-data-bridge",
     "ssrAPIs": Array [],
   },
-  "e0514f739c5a6710240c2a482f678098" => Object {
+  "bd0b0ebffec260762cb6f1e4b769a28b" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "e0514f739c5a6710240c2a482f678098",
+    "id": "bd0b0ebffec260762cb6f1e4b769a28b",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -2062,29 +2084,7 @@ Map {
     "parent": null,
     "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/node_modules/gatsby/dist/internal-plugins/load-babel-config/src/pages",
-      "pathCheck": false,
-      "plugins": Array [],
-    },
-    "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
-    "ssrAPIs": Array [],
-  },
-  "7c20bf1e4760658c29365cf0f5f44783" => Object {
-    "browserAPIs": Array [],
-    "children": Array [],
-    "id": "7c20bf1e4760658c29365cf0f5f44783",
-    "internal": Object {
-      "owner": "internal-data-bridge",
-      "type": "SitePlugin",
-    },
-    "name": "gatsby-plugin-page-creator",
-    "nodeAPIs": Array [
-      "createPagesStatefully",
-    ],
-    "parent": null,
-    "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
-    "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/node_modules/gatsby/dist/internal-plugins/webpack-theme-component-shadowing/src/pages",
+      "path": "<PROJECT_ROOT>/plugins/gatsby-plugin-independent-node/src/pages",
       "pathCheck": false,
       "plugins": Array [],
     },
@@ -2111,10 +2111,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/plugins/gatsby-source-child-change-for-fields",
     "ssrAPIs": Array [],
   },
-  "9c78c104a1289f531e7f2f97e63d9686" => Object {
+  "cf4160fdd93f7b96fd24d5798110150d" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "9c78c104a1289f531e7f2f97e63d9686",
+    "id": "cf4160fdd93f7b96fd24d5798110150d",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -2126,51 +2126,7 @@ Map {
     "parent": null,
     "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/node_modules/gatsby/dist/internal-plugins/dev-404-page/src/pages",
-      "pathCheck": false,
-      "plugins": Array [],
-    },
-    "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
-    "ssrAPIs": Array [],
-  },
-  "45e5bbe561cb651c4da55ae0c9ccb6da" => Object {
-    "browserAPIs": Array [],
-    "children": Array [],
-    "id": "45e5bbe561cb651c4da55ae0c9ccb6da",
-    "internal": Object {
-      "owner": "internal-data-bridge",
-      "type": "SitePlugin",
-    },
-    "name": "gatsby-plugin-page-creator",
-    "nodeAPIs": Array [
-      "createPagesStatefully",
-    ],
-    "parent": null,
-    "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
-    "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/plugins/gatsby-transformer-parent-change/src/pages",
-      "pathCheck": false,
-      "plugins": Array [],
-    },
-    "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
-    "ssrAPIs": Array [],
-  },
-  "bd0b0ebffec260762cb6f1e4b769a28b" => Object {
-    "browserAPIs": Array [],
-    "children": Array [],
-    "id": "bd0b0ebffec260762cb6f1e4b769a28b",
-    "internal": Object {
-      "owner": "internal-data-bridge",
-      "type": "SitePlugin",
-    },
-    "name": "gatsby-plugin-page-creator",
-    "nodeAPIs": Array [
-      "createPagesStatefully",
-    ],
-    "parent": null,
-    "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
-    "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/plugins/gatsby-plugin-independent-node/src/pages",
+      "path": "<PROJECT_ROOT>/plugins/gatsby-fields-parent-change/src/pages",
       "pathCheck": false,
       "plugins": Array [],
     },
@@ -2197,6 +2153,50 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby/dist/internal-plugins/dev-404-page",
     "ssrAPIs": Array [],
   },
+  "db350fb253e3be012579b4120b1e9ee0" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "db350fb253e3be012579b4120b1e9ee0",
+    "internal": Object {
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "parent": null,
+    "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "<PROJECT_ROOT>/plugins/gatsby-source-parent-change-for-fields/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
+  "dc1b31130527acb45a9eba0d6bb5f36a" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "dc1b31130527acb45a9eba0d6bb5f36a",
+    "internal": Object {
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "parent": null,
+    "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "<PROJECT_ROOT>/plugins/gatsby-source-child-change-for-transformer/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
   "dc1f3dc9-7d73-533d-a090-787d5281f836" => Object {
     "browserAPIs": Array [],
     "children": Array [],
@@ -2217,10 +2217,10 @@ Map {
     "resolve": "<PROJECT_ROOT>/plugins/gatsby-plugin-independent-node",
     "ssrAPIs": Array [],
   },
-  "996d13fe0d76121f6e45155f1726dc77" => Object {
+  "e0514f739c5a6710240c2a482f678098" => Object {
     "browserAPIs": Array [],
     "children": Array [],
-    "id": "996d13fe0d76121f6e45155f1726dc77",
+    "id": "e0514f739c5a6710240c2a482f678098",
     "internal": Object {
       "owner": "internal-data-bridge",
       "type": "SitePlugin",
@@ -2232,7 +2232,29 @@ Map {
     "parent": null,
     "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/node_modules/gatsby/dist/internal-plugins/prod-404/src/pages",
+      "path": "<PROJECT_ROOT>/node_modules/gatsby/dist/internal-plugins/load-babel-config/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
+    "ssrAPIs": Array [],
+  },
+  "efb91ab8ba7711b4853bbdac0554c5ac" => Object {
+    "browserAPIs": Array [],
+    "children": Array [],
+    "id": "efb91ab8ba7711b4853bbdac0554c5ac",
+    "internal": Object {
+      "owner": "internal-data-bridge",
+      "type": "SitePlugin",
+    },
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
+    "parent": null,
+    "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
+    "pluginOptions": Object {
+      "path": "<PROJECT_ROOT>/src/pages",
       "pathCheck": false,
       "plugins": Array [],
     },
@@ -2257,28 +2279,6 @@ Map {
       "plugins": Array [],
     },
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby/dist/internal-plugins/prod-404",
-    "ssrAPIs": Array [],
-  },
-  "632942f5250406d3266d37b115bc3fa6" => Object {
-    "browserAPIs": Array [],
-    "children": Array [],
-    "id": "632942f5250406d3266d37b115bc3fa6",
-    "internal": Object {
-      "owner": "internal-data-bridge",
-      "type": "SitePlugin",
-    },
-    "name": "gatsby-plugin-page-creator",
-    "nodeAPIs": Array [
-      "createPagesStatefully",
-    ],
-    "parent": null,
-    "pluginFilepath": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
-    "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/plugins/gatsby-fields-child-change/src/pages",
-      "pathCheck": false,
-      "plugins": Array [],
-    },
-    "resolve": "<PROJECT_ROOT>/node_modules/gatsby-plugin-page-creator",
     "ssrAPIs": Array [],
   },
   "INDEPENDENT_NODE_1" => Object {
