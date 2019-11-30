@@ -98,6 +98,11 @@ function deleteAll() {
  * @param {*} plugins
  */
 function deleteDataByOwners(plugins) {
+  if (plugins.length === 0) {
+    deleteAll()
+    return
+  }
+
   process.stdout.write(
     `[loki] cleaning up data inserted by ${plugins.join(`, `)}\n`
   )
@@ -117,9 +122,53 @@ function deleteDataByOwners(plugins) {
 
     const nodeTypeOwner = nodesOfType[0].internal.owner
     if (plugins.includes(nodeTypeOwner)) {
-      // delete entire collection
+      // delete entire collection, making sure children are delete as well
+      // (?) maybe this is not needed and garbage collection would handled that
+      nodesOfType.forEach(node => {
+        // edit parent node to remove child
+
+        const children = (node.children || []).slice(0)
+        while (children.length > 0) {
+          const id = children.shift()
+          const childNode = getNode(id)
+          deleteNode(childNode)
+
+          children.push(...childNode.children)
+        }
+
+        if (node.parent) {
+          const parent = getNode(node.parent)
+
+          if (parent) {
+            parent.children = parent.children.filter(
+              childId => childId !== node.id
+            )
+            updateNode(parent)
+          }
+        }
+        deleteNode(node)
+      })
     } else {
       // iterate over nodes and delete node fields
+      nodesOfType.forEach(node => {
+        if (node.internal.fieldOwners) {
+          let changed = false
+          // if node itself is not dirty, it can contain dirty node fields
+          Object.entries(node.internal.fieldOwners).forEach(
+            ([fieldName, owner]) => {
+              if (plugins.includes(owner)) {
+                // field owner is dirty, we should remove this field
+                delete node.fields[fieldName]
+                delete node.internal.fieldOwners[fieldName]
+                changed = true
+              }
+            }
+          )
+          if (changed) {
+            updateNode(node)
+          }
+        }
+      })
     }
   })
   // potential cleanup
