@@ -4601,3 +4601,13 @@
     - Styled Components
     - Coinbase, Fortmatic, Metamask, WalletConnect, and more
     - dFuse Blockchain Streaming and Notifications
+- url: https://gatsby-firebase-simple-auth.netlify.com/
+  repo: https://github.com/marcomelilli/gatsby-firebase-simple-auth
+  description: A simple Firebase Authentication Starter with protected routes
+  tags:
+    - Firebase
+    - Authentication
+    - Styling:Tailwind
+  features:
+    - Authentication with Firebase
+    - Protected Routes with Authorization
