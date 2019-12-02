@@ -405,7 +405,7 @@ workflows:
   nightly-react-next:
     triggers:
       - schedule:
-          cron: "0 0 * * *"
+          cron: "0 0 * * 1,2,3,4,5"
           filters:
             branches:
               only:
@@ -428,7 +428,7 @@ workflows:
   nightly-react-experimental:
     triggers:
       - schedule:
-          cron: "0 0 * * *"
+          cron: "0 0 * * 1,2,3,4,5"
           filters:
             branches:
               only:
