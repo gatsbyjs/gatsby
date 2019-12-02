@@ -8,9 +8,9 @@ tags:
   - case-studies
 ---
 
-Back in 2016 we were planning the latest [Mediacurrent.com](https://www.mediacurrent.com) site redesign and were intrigued by the decoupled approach which was gaining popularity in the Drupal community. We liked the idea of breaking apart the front-end and backend so that we could have more flexibility in how we executed redesigns (i.e. redesigns would not be tied to the Drupal upgrade lifecycle). 
+Back in 2016 we were planning the latest [Mediacurrent.com](https://www.mediacurrent.com) site redesign and were intrigued by the decoupled approach which was gaining popularity in the Drupal community. We liked the idea of breaking apart the front-end and back-end so that we could have more flexibility in how we executed redesigns (i.e. redesigns would not be tied to the Drupal upgrade lifecycle).
 
-We started this journey with Jekyll, but quickly switched to Gatsby. We're excited to have found the organizational agility we were looking for and now believe that Gatsby is a superior solution that can work for many organizations looking to leverage a fast, secure React-based front-end for their website. 
+We started this journey with Jekyll, but quickly switched to Gatsby. We're excited to have found the organizational agility we were looking for and now believe that Gatsby is a superior solution that can work for many organizations looking to leverage a fast, secure React-based front-end for their website.
 
 ## Finding a Front End Framework
 
@@ -20,7 +20,7 @@ While we were investigating the best decoupled approach for Mediacurrent.com, ou
 
 Along the way, we reviewed static generators that could solve some of the complexity problems and we liked the performance and security benefits Jekyll offered. At the time of our review, we expected to see more Jekyll/Drupal integrations in the wild than we found. Drupal could _simply_ publish content as markdown files that Jekyll could then consume. We did several POC’s and liked the overall approach. At first, Jekyll looked great, but it wasn’t long before Jekyll turned into “Mr. Hyde."
 
-For small blogging sites where content structure is simple and doesn’t require a myriad of 3rd party integrations, Jekyll shines. But when used as a static frontend for our Drupal 8 website, it soon became apparent that Jekyll wasn’t the best fit. We typically make daily content updates through our Drupal CMS which required Jekyll’s markdown files to constantly be updated with new content via source control. This added to the operational load of maintaining the site because there were often Git merge conflicts that had to be resolved.
+For small blogging sites where content structure is simple and doesn’t require a myriad of 3rd party integrations, Jekyll shines. But when used as a static front-end for our Drupal 8 website, it soon became apparent that Jekyll wasn’t the best fit. We typically make daily content updates through our Drupal CMS which required Jekyll’s markdown files to constantly be updated with new content via source control. This added to the operational load of maintaining the site because there were often Git merge conflicts that had to be resolved.
 
 ## Why Gatsby
 
