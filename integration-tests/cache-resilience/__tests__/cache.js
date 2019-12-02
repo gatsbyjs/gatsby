@@ -204,7 +204,7 @@ describe(`Cache`, () => {
       )
     })
 
-    describe.only(`Nodes`, () => {
+    describe(`Nodes`, () => {
       let states
 
       beforeAll(() => {
@@ -230,35 +230,13 @@ describe(`Cache`, () => {
           postBootstrapStateFromSecondRun,
         } = getSubStateByPlugins(states, [`gatsby-plugin-stable`])
 
-        const postCacheInvalidationDiff = compareState(
-          postBootstrapStateFromFirstRun,
-          preBootstrapStateFromSecondRun
-        )
-
         expect(postBootstrapStateFromFirstRun).toEqual(
           preBootstrapStateFromSecondRun
         )
 
-        expect(postCacheInvalidationDiff).toMatchInlineSnapshot(`
-          Object {
-            "additions": Object {},
-            "changes": Object {},
-            "deletions": Object {},
-          }
-        `)
-
-        expect(
-          compareState(
-            postBootstrapStateFromFirstRun,
-            postBootstrapStateFromSecondRun
-          )
-        ).toMatchInlineSnapshot(`
-          Object {
-            "additions": Object {},
-            "changes": Object {},
-            "deletions": Object {},
-          }
-        `)
+        expect(postBootstrapStateFromFirstRun).toEqual(
+          postBootstrapStateFromSecondRun
+        )
       })
 
       it(`are deleted and recreated when owner plugin changes`, () => {
@@ -268,80 +246,39 @@ describe(`Cache`, () => {
           postBootstrapStateFromSecondRun,
         } = getSubStateByPlugins(states, [`gatsby-plugin-independent-node`])
 
-        expect(
-          compareState(
+        {
+          const diff = compareState(
             postBootstrapStateFromFirstRun,
             preBootstrapStateFromSecondRun
           )
-        ).toMatchInlineSnapshot(`
-          Object {
-            "additions": Object {},
-            "changes": Object {},
-            "deletions": Object {
-              "INDEPENDENT_NODE_1": Object {
-                "children": Array [],
-                "foo": "bar",
-                "id": "INDEPENDENT_NODE_1",
-                "internal": Object {
-                  "contentDigest": "0",
-                  "owner": "gatsby-plugin-independent-node",
-                  "type": "IndependentChanging",
-                },
-                "parent": null,
-              },
-            },
-          }
-        `)
-        expect(
-          compareState(
+
+          expect(diff.dirtyIds).toEqual([`INDEPENDENT_NODE_1`])
+          expect(diff.deletions.INDEPENDENT_NODE_1).toBeTruthy()
+        }
+
+        {
+          const diff = compareState(
             postBootstrapStateFromFirstRun,
             postBootstrapStateFromSecondRun
           )
-        ).toMatchInlineSnapshot(`
-          Object {
-            "additions": Object {},
-            "changes": Object {
-              "INDEPENDENT_NODE_1": Object {
-                "diff": "  Object {
-              \\"children\\": Array [],
-          -   \\"foo\\": \\"bar\\",
-          +   \\"foo\\": \\"baz\\",
-              \\"id\\": \\"INDEPENDENT_NODE_1\\",
-              \\"internal\\": Object {
-                \\"contentDigest\\": \\"0\\",
-                \\"owner\\": \\"gatsby-plugin-independent-node\\",
-                \\"type\\": \\"IndependentChanging\\",
-              },
-              \\"parent\\": null,
-            }",
-                "id": "INDEPENDENT_NODE_1",
-                "newValue": Object {
-                  "children": Array [],
-                  "foo": "baz",
-                  "id": "INDEPENDENT_NODE_1",
-                  "internal": Object {
-                    "contentDigest": "0",
-                    "owner": "gatsby-plugin-independent-node",
-                    "type": "IndependentChanging",
-                  },
-                  "parent": null,
+
+          expect(diff.dirtyIds).toEqual([`INDEPENDENT_NODE_1`])
+
+          expect(diff.changes.INDEPENDENT_NODE_1.diff).toMatchInlineSnapshot(`
+            "  Object {
+                \\"children\\": Array [],
+            -   \\"foo\\": \\"bar\\",
+            +   \\"foo\\": \\"baz\\",
+                \\"id\\": \\"INDEPENDENT_NODE_1\\",
+                \\"internal\\": Object {
+                  \\"contentDigest\\": \\"0\\",
+                  \\"owner\\": \\"gatsby-plugin-independent-node\\",
+                  \\"type\\": \\"IndependentChanging\\",
                 },
-                "oldValue": Object {
-                  "children": Array [],
-                  "foo": "bar",
-                  "id": "INDEPENDENT_NODE_1",
-                  "internal": Object {
-                    "contentDigest": "0",
-                    "owner": "gatsby-plugin-independent-node",
-                    "type": "IndependentChanging",
-                  },
-                  "parent": null,
-                },
-              },
-            },
-            "deletions": Object {},
-          }
-        `)
+                \\"parent\\": null,
+              }"
+          `)
+        }
       })
 
       it(`are deleted and recreated when the owner plugin of a parent changes`, () => {
@@ -354,141 +291,74 @@ describe(`Cache`, () => {
           `gatsby-transformer-parent-change`,
         ])
 
-        expect(
-          compareState(
+        {
+          const diff = compareState(
             postBootstrapStateFromFirstRun,
             preBootstrapStateFromSecondRun
           )
-        ).toMatchInlineSnapshot(`
-          Object {
-            "additions": Object {},
-            "changes": Object {},
-            "deletions": Object {
-              "2131d29a-296c-5f73-affc-e422bec644fe": Object {
-                "children": Array [],
-                "foo": "run-1",
-                "id": "2131d29a-296c-5f73-affc-e422bec644fe",
-                "internal": Object {
-                  "contentDigest": "cbc07ead8c18c9d616f0004a893d5cf3",
-                  "owner": "gatsby-transformer-parent-change",
-                  "type": "ChildOfParent_ParentChangeForTransformer",
-                },
-                "parent": "parent_parentChangeForTransformer",
-              },
-              "parent_parentChangeForTransformer": Object {
-                "children": Array [
-                  "2131d29a-296c-5f73-affc-e422bec644fe",
-                ],
-                "foo": "run-1",
-                "id": "parent_parentChangeForTransformer",
-                "internal": Object {
-                  "contentDigest": "a032c69550f5567021eda97cc3a1faf2",
-                  "owner": "gatsby-source-parent-change-for-transformer",
-                  "type": "Parent_ParentChangeForTransformer",
-                },
-                "parent": null,
-              },
-            },
-          }
-        `)
 
-        expect(
-          compareState(
+          expect(diff.dirtyIds).toEqual([
+            `parent_parentChangeForTransformer`,
+            `parent_parentChangeForTransformer >>> Child`,
+          ])
+
+          expect(
+            diff.deletions[`parent_parentChangeForTransformer >>> Child`]
+          ).toBeTruthy()
+          expect(
+            diff.deletions[`parent_parentChangeForTransformer`]
+          ).toBeTruthy()
+        }
+
+        {
+          const diff = compareState(
             postBootstrapStateFromFirstRun,
             postBootstrapStateFromSecondRun
           )
-        ).toMatchInlineSnapshot(`
-          Object {
-            "additions": Object {},
-            "changes": Object {
-              "2131d29a-296c-5f73-affc-e422bec644fe": Object {
-                "diff": "  Object {
-          -   \\"bar\\": undefined,
-          +   \\"bar\\": \\"run-2\\",
-              \\"children\\": Array [],
-          -   \\"foo\\": \\"run-1\\",
-          +   \\"foo\\": undefined,
-              \\"id\\": \\"2131d29a-296c-5f73-affc-e422bec644fe\\",
-              \\"internal\\": Object {
-          -     \\"contentDigest\\": \\"cbc07ead8c18c9d616f0004a893d5cf3\\",
-          +     \\"contentDigest\\": \\"a33e2263d5a5f42473e111fb400cef3d\\",
-                \\"owner\\": \\"gatsby-transformer-parent-change\\",
-                \\"type\\": \\"ChildOfParent_ParentChangeForTransformer\\",
-              },
-              \\"parent\\": \\"parent_parentChangeForTransformer\\",
-            }",
-                "id": "2131d29a-296c-5f73-affc-e422bec644fe",
-                "newValue": Object {
-                  "bar": "run-2",
-                  "children": Array [],
-                  "id": "2131d29a-296c-5f73-affc-e422bec644fe",
-                  "internal": Object {
-                    "contentDigest": "a33e2263d5a5f42473e111fb400cef3d",
-                    "owner": "gatsby-transformer-parent-change",
-                    "type": "ChildOfParent_ParentChangeForTransformer",
-                  },
-                  "parent": "parent_parentChangeForTransformer",
+
+          expect(diff.dirtyIds).toEqual([
+            `parent_parentChangeForTransformer`,
+            `parent_parentChangeForTransformer >>> Child`,
+          ])
+
+          expect(
+            diff.changes[`parent_parentChangeForTransformer >>> Child`].diff
+          ).toMatchInlineSnapshot(`
+            "  Object {
+            -   \\"bar\\": undefined,
+            +   \\"bar\\": \\"run-2\\",
+                \\"children\\": Array [],
+            -   \\"foo\\": \\"run-1\\",
+            +   \\"foo\\": undefined,
+                \\"id\\": \\"parent_parentChangeForTransformer >>> Child\\",
+                \\"internal\\": Object {
+            -     \\"contentDigest\\": \\"011e1b3b5c83557485e0357e70427b65\\",
+            +     \\"contentDigest\\": \\"030fd9177896464496590fc0fe4d45bf\\",
+                  \\"owner\\": \\"gatsby-transformer-parent-change\\",
+                  \\"type\\": \\"ChildOfParent_ParentChangeForTransformer\\",
                 },
-                "oldValue": Object {
-                  "children": Array [],
-                  "foo": "run-1",
-                  "id": "2131d29a-296c-5f73-affc-e422bec644fe",
-                  "internal": Object {
-                    "contentDigest": "cbc07ead8c18c9d616f0004a893d5cf3",
-                    "owner": "gatsby-transformer-parent-change",
-                    "type": "ChildOfParent_ParentChangeForTransformer",
-                  },
-                  "parent": "parent_parentChangeForTransformer",
+                \\"parent\\": \\"parent_parentChangeForTransformer\\",
+              }"
+          `)
+          expect(diff.changes[`parent_parentChangeForTransformer`].diff)
+            .toMatchInlineSnapshot(`
+            "  Object {
+            +   \\"bar\\": \\"run-2\\",
+                \\"children\\": Array [
+                  \\"parent_parentChangeForTransformer >>> Child\\",
+                ],
+            -   \\"foo\\": \\"run-1\\",
+                \\"id\\": \\"parent_parentChangeForTransformer\\",
+                \\"internal\\": Object {
+            -     \\"contentDigest\\": \\"a032c69550f5567021eda97cc3a1faf2\\",
+            +     \\"contentDigest\\": \\"4a6a70b2f8849535de50f47c609006fe\\",
+                  \\"owner\\": \\"gatsby-source-parent-change-for-transformer\\",
+                  \\"type\\": \\"Parent_ParentChangeForTransformer\\",
                 },
-              },
-              "parent_parentChangeForTransformer": Object {
-                "diff": "  Object {
-          +   \\"bar\\": \\"run-2\\",
-              \\"children\\": Array [
-                \\"2131d29a-296c-5f73-affc-e422bec644fe\\",
-              ],
-          -   \\"foo\\": \\"run-1\\",
-              \\"id\\": \\"parent_parentChangeForTransformer\\",
-              \\"internal\\": Object {
-          -     \\"contentDigest\\": \\"a032c69550f5567021eda97cc3a1faf2\\",
-          +     \\"contentDigest\\": \\"4a6a70b2f8849535de50f47c609006fe\\",
-                \\"owner\\": \\"gatsby-source-parent-change-for-transformer\\",
-                \\"type\\": \\"Parent_ParentChangeForTransformer\\",
-              },
-              \\"parent\\": null,
-            }",
-                "id": "parent_parentChangeForTransformer",
-                "newValue": Object {
-                  "bar": "run-2",
-                  "children": Array [
-                    "2131d29a-296c-5f73-affc-e422bec644fe",
-                  ],
-                  "id": "parent_parentChangeForTransformer",
-                  "internal": Object {
-                    "contentDigest": "4a6a70b2f8849535de50f47c609006fe",
-                    "owner": "gatsby-source-parent-change-for-transformer",
-                    "type": "Parent_ParentChangeForTransformer",
-                  },
-                  "parent": null,
-                },
-                "oldValue": Object {
-                  "children": Array [
-                    "2131d29a-296c-5f73-affc-e422bec644fe",
-                  ],
-                  "foo": "run-1",
-                  "id": "parent_parentChangeForTransformer",
-                  "internal": Object {
-                    "contentDigest": "a032c69550f5567021eda97cc3a1faf2",
-                    "owner": "gatsby-source-parent-change-for-transformer",
-                    "type": "Parent_ParentChangeForTransformer",
-                  },
-                  "parent": null,
-                },
-              },
-            },
-            "deletions": Object {},
-          }
-        `)
+                \\"parent\\": null,
+              }"
+          `)
+        }
       })
 
       it(`are deleted and recreated when the owner plugin of a child changes`, () => {
@@ -501,127 +371,71 @@ describe(`Cache`, () => {
           `gatsby-transformer-child-change`,
         ])
 
-        expect(
-          compareState(
+        {
+          const diff = compareState(
             postBootstrapStateFromFirstRun,
             preBootstrapStateFromSecondRun
           )
-        ).toMatchInlineSnapshot(`
-          Object {
-            "additions": Object {},
-            "changes": Object {
-              "parent_childChangeForTransformer": Object {
-                "diff": "  Object {
-          -   \\"children\\": Array [
-          -     \\"3b0c942e-b51f-587b-b37d-b36c5e9af8fa\\",
-          -   ],
-          +   \\"children\\": Array [],
-              \\"foo\\": \\"run-1\\",
-              \\"id\\": \\"parent_childChangeForTransformer\\",
-              \\"internal\\": Object {
-                \\"contentDigest\\": \\"25f73a6d69ce857a76e0a2cdbc186975\\",
-                \\"owner\\": \\"gatsby-source-child-change-for-transformer\\",
-                \\"type\\": \\"Parent_ChildChangeForTransformer\\",
-              },
-              \\"parent\\": null,
-            }",
-                "id": "parent_childChangeForTransformer",
-                "newValue": Object {
-                  "children": Array [],
-                  "foo": "run-1",
-                  "id": "parent_childChangeForTransformer",
-                  "internal": Object {
-                    "contentDigest": "25f73a6d69ce857a76e0a2cdbc186975",
-                    "owner": "gatsby-source-child-change-for-transformer",
-                    "type": "Parent_ChildChangeForTransformer",
-                  },
-                  "parent": null,
-                },
-                "oldValue": Object {
-                  "children": Array [
-                    "3b0c942e-b51f-587b-b37d-b36c5e9af8fa",
-                  ],
-                  "foo": "run-1",
-                  "id": "parent_childChangeForTransformer",
-                  "internal": Object {
-                    "contentDigest": "25f73a6d69ce857a76e0a2cdbc186975",
-                    "owner": "gatsby-source-child-change-for-transformer",
-                    "type": "Parent_ChildChangeForTransformer",
-                  },
-                  "parent": null,
-                },
-              },
-            },
-            "deletions": Object {
-              "3b0c942e-b51f-587b-b37d-b36c5e9af8fa": Object {
-                "children": Array [],
-                "foo": "bar",
-                "id": "3b0c942e-b51f-587b-b37d-b36c5e9af8fa",
-                "internal": Object {
-                  "contentDigest": "59b3a74325cbf2001bc21eb662f1e297",
-                  "owner": "gatsby-transformer-child-change",
-                  "type": "ChildOfParent_ChildChangeForTransformer",
-                },
-                "parent": "parent_childChangeForTransformer",
-              },
-            },
-          }
-        `)
 
-        expect(
-          compareState(
+          expect(diff.dirtyIds).toEqual([
+            `parent_childChangeForTransformer >>> Child`,
+            `parent_childChangeForTransformer`,
+          ])
+
+          expect(
+            diff.deletions[`parent_childChangeForTransformer >>> Child`]
+          ).toBeTruthy()
+
+          expect(diff.changes[`parent_childChangeForTransformer`].diff)
+            .toMatchInlineSnapshot(`
+            "  Object {
+            -   \\"children\\": Array [
+            -     \\"parent_childChangeForTransformer >>> Child\\",
+            -   ],
+            +   \\"children\\": Array [],
+                \\"foo\\": \\"run-1\\",
+                \\"id\\": \\"parent_childChangeForTransformer\\",
+                \\"internal\\": Object {
+                  \\"contentDigest\\": \\"25f73a6d69ce857a76e0a2cdbc186975\\",
+                  \\"owner\\": \\"gatsby-source-child-change-for-transformer\\",
+                  \\"type\\": \\"Parent_ChildChangeForTransformer\\",
+                },
+                \\"parent\\": null,
+              }"
+          `)
+        }
+
+        {
+          const diff = compareState(
             postBootstrapStateFromFirstRun,
             postBootstrapStateFromSecondRun
           )
-        ).toMatchInlineSnapshot(`
-          Object {
-            "additions": Object {},
-            "changes": Object {
-              "3b0c942e-b51f-587b-b37d-b36c5e9af8fa": Object {
-                "diff": "  Object {
-              \\"children\\": Array [],
-          -   \\"foo\\": \\"bar\\",
-          +   \\"foo\\": \\"baz\\",
-              \\"id\\": \\"3b0c942e-b51f-587b-b37d-b36c5e9af8fa\\",
-              \\"internal\\": Object {
-          -     \\"contentDigest\\": \\"59b3a74325cbf2001bc21eb662f1e297\\",
-          +     \\"contentDigest\\": \\"3bca2830e09b3c30b3ca76dccdaf5e8b\\",
-                \\"owner\\": \\"gatsby-transformer-child-change\\",
-                \\"type\\": \\"ChildOfParent_ChildChangeForTransformer\\",
-              },
-              \\"parent\\": \\"parent_childChangeForTransformer\\",
-            }",
-                "id": "3b0c942e-b51f-587b-b37d-b36c5e9af8fa",
-                "newValue": Object {
-                  "children": Array [],
-                  "foo": "baz",
-                  "id": "3b0c942e-b51f-587b-b37d-b36c5e9af8fa",
-                  "internal": Object {
-                    "contentDigest": "3bca2830e09b3c30b3ca76dccdaf5e8b",
-                    "owner": "gatsby-transformer-child-change",
-                    "type": "ChildOfParent_ChildChangeForTransformer",
-                  },
-                  "parent": "parent_childChangeForTransformer",
+
+          expect(diff.dirtyIds).toEqual([
+            `parent_childChangeForTransformer >>> Child`,
+          ])
+
+          expect(
+            diff.changes[`parent_childChangeForTransformer >>> Child`].diff
+          ).toMatchInlineSnapshot(`
+            "  Object {
+                \\"children\\": Array [],
+            -   \\"foo\\": \\"bar\\",
+            +   \\"foo\\": \\"baz\\",
+                \\"id\\": \\"parent_childChangeForTransformer >>> Child\\",
+                \\"internal\\": Object {
+            -     \\"contentDigest\\": \\"ec8c3b932089b083a5380ab085be0633\\",
+            +     \\"contentDigest\\": \\"32fe5b6bc0489b6fa0f7eb6a9b563b27\\",
+                  \\"owner\\": \\"gatsby-transformer-child-change\\",
+                  \\"type\\": \\"ChildOfParent_ChildChangeForTransformer\\",
                 },
-                "oldValue": Object {
-                  "children": Array [],
-                  "foo": "bar",
-                  "id": "3b0c942e-b51f-587b-b37d-b36c5e9af8fa",
-                  "internal": Object {
-                    "contentDigest": "59b3a74325cbf2001bc21eb662f1e297",
-                    "owner": "gatsby-transformer-child-change",
-                    "type": "ChildOfParent_ChildChangeForTransformer",
-                  },
-                  "parent": "parent_childChangeForTransformer",
-                },
-              },
-            },
-            "deletions": Object {},
-          }
-        `)
+                \\"parent\\": \\"parent_childChangeForTransformer\\",
+              }"
+          `)
+        }
       })
 
-      it(`to be named`, () => {
+      it(`fields are deleted and recreated when the owner plugin of a node changes`, () => {
         const {
           postBootstrapStateFromFirstRun,
           preBootstrapStateFromSecondRun,
@@ -631,116 +445,55 @@ describe(`Cache`, () => {
           `gatsby-fields-parent-change`,
         ])
 
-        expect(
-          compareState(
+        {
+          const diff = compareState(
             postBootstrapStateFromFirstRun,
             preBootstrapStateFromSecondRun
           )
-        ).toMatchInlineSnapshot(`
-          Object {
-            "additions": Object {},
-            "changes": Object {},
-            "deletions": Object {
-              "parent_parentChangeForFields": Object {
-                "children": Array [],
-                "fields": Object {
-                  "foo": "run-1",
-                },
-                "foo": "run-1",
-                "id": "parent_parentChangeForFields",
-                "internal": Object {
-                  "contentDigest": "ad237cf525f0ccb39ea0ba07165d4119",
-                  "fieldOwners": Object {
-                    "bar": "gatsby-fields-parent-change",
-                    "foo": "gatsby-fields-parent-change",
-                  },
-                  "owner": "gatsby-source-parent-change-for-fields",
-                  "type": "Parent_ParentChangeForFields",
-                },
-                "parent": null,
-              },
-            },
-          }
-        `)
 
-        expect(
-          compareState(
+          expect(diff.dirtyIds).toEqual([`parent_parentChangeForFields`])
+
+          expect(diff.deletions[`parent_parentChangeForFields`]).toBeTruthy()
+        }
+
+        {
+          const diff = compareState(
             postBootstrapStateFromFirstRun,
             postBootstrapStateFromSecondRun
           )
-        ).toMatchInlineSnapshot(`
-          Object {
-            "additions": Object {},
-            "changes": Object {
-              "parent_parentChangeForFields": Object {
-                "diff": "  Object {
-          +   \\"bar\\": \\"run-2\\",
-              \\"children\\": Array [],
-              \\"fields\\": Object {
-          -     \\"bar\\": undefined,
-          -     \\"foo\\": \\"run-1\\",
-          +     \\"bar\\": \\"run-2\\",
-          +     \\"foo\\": undefined,
-              },
-          -   \\"foo\\": \\"run-1\\",
-              \\"id\\": \\"parent_parentChangeForFields\\",
-              \\"internal\\": Object {
-          -     \\"contentDigest\\": \\"ad237cf525f0ccb39ea0ba07165d4119\\",
-          +     \\"contentDigest\\": \\"72122def77d239ba36e9b9729fc53adf\\",
-                \\"fieldOwners\\": Object {
-                  \\"bar\\": \\"gatsby-fields-parent-change\\",
-                  \\"foo\\": \\"gatsby-fields-parent-change\\",
+
+          expect(diff.dirtyIds).toEqual([`parent_parentChangeForFields`])
+
+          expect(diff.changes[`parent_parentChangeForFields`].diff)
+            .toMatchInlineSnapshot(`
+            "  Object {
+            +   \\"bar\\": \\"run-2\\",
+                \\"children\\": Array [],
+                \\"fields\\": Object {
+            -     \\"bar\\": undefined,
+            -     \\"foo\\": \\"run-1\\",
+            +     \\"bar\\": \\"run-2\\",
+            +     \\"foo\\": undefined,
                 },
-                \\"owner\\": \\"gatsby-source-parent-change-for-fields\\",
-                \\"type\\": \\"Parent_ParentChangeForFields\\",
-              },
-              \\"parent\\": null,
-            }",
-                "id": "parent_parentChangeForFields",
-                "newValue": Object {
-                  "bar": "run-2",
-                  "children": Array [],
-                  "fields": Object {
-                    "bar": "run-2",
+            -   \\"foo\\": \\"run-1\\",
+                \\"id\\": \\"parent_parentChangeForFields\\",
+                \\"internal\\": Object {
+            -     \\"contentDigest\\": \\"ad237cf525f0ccb39ea0ba07165d4119\\",
+            +     \\"contentDigest\\": \\"72122def77d239ba36e9b9729fc53adf\\",
+                  \\"fieldOwners\\": Object {
+                    \\"bar\\": \\"gatsby-fields-parent-change\\",
+                    \\"foo\\": \\"gatsby-fields-parent-change\\",
                   },
-                  "id": "parent_parentChangeForFields",
-                  "internal": Object {
-                    "contentDigest": "72122def77d239ba36e9b9729fc53adf",
-                    "fieldOwners": Object {
-                      "bar": "gatsby-fields-parent-change",
-                      "foo": "gatsby-fields-parent-change",
-                    },
-                    "owner": "gatsby-source-parent-change-for-fields",
-                    "type": "Parent_ParentChangeForFields",
-                  },
-                  "parent": null,
+                  \\"owner\\": \\"gatsby-source-parent-change-for-fields\\",
+                  \\"type\\": \\"Parent_ParentChangeForFields\\",
                 },
-                "oldValue": Object {
-                  "children": Array [],
-                  "fields": Object {
-                    "foo": "run-1",
-                  },
-                  "foo": "run-1",
-                  "id": "parent_parentChangeForFields",
-                  "internal": Object {
-                    "contentDigest": "ad237cf525f0ccb39ea0ba07165d4119",
-                    "fieldOwners": Object {
-                      "bar": "gatsby-fields-parent-change",
-                      "foo": "gatsby-fields-parent-change",
-                    },
-                    "owner": "gatsby-source-parent-change-for-fields",
-                    "type": "Parent_ParentChangeForFields",
-                  },
-                  "parent": null,
-                },
-              },
-            },
-            "deletions": Object {},
-          }
-        `)
+                \\"parent\\": null,
+              }"
+          `)
+        }
       })
 
-      it(`to be named #2`, () => {
+      it(`fields are deleted and recreated when the owner plugin of a field changes`, () => {
         const {
           postBootstrapStateFromFirstRun,
           preBootstrapStateFromSecondRun,
@@ -750,146 +503,70 @@ describe(`Cache`, () => {
           `gatsby-fields-child-change`,
         ])
 
-        expect(
-          compareState(
+        {
+          const diff = compareState(
             postBootstrapStateFromFirstRun,
             preBootstrapStateFromSecondRun
           )
-        ).toMatchInlineSnapshot(`
-          Object {
-            "additions": Object {},
-            "changes": Object {
-              "parent_childChangeForFields": Object {
-                "diff": "  Object {
-              \\"children\\": Array [],
-          -   \\"fields\\": Object {
-          -     \\"foo1\\": \\"bar\\",
-          -   },
-          +   \\"fields\\": Object {},
-              \\"foo\\": \\"run-1\\",
-              \\"id\\": \\"parent_childChangeForFields\\",
-              \\"internal\\": Object {
-                \\"contentDigest\\": \\"893740bfde4b8a6039e939cb0290d626\\",
-          -     \\"fieldOwners\\": Object {
-          -       \\"foo1\\": \\"gatsby-fields-child-change\\",
-          -     },
-          +     \\"fieldOwners\\": Object {},
-                \\"owner\\": \\"gatsby-source-child-change-for-fields\\",
-                \\"type\\": \\"Parent_ChildChangeForFields\\",
-              },
-              \\"parent\\": null,
-            }",
-                "id": "parent_childChangeForFields",
-                "newValue": Object {
-                  "children": Array [],
-                  "fields": Object {},
-                  "foo": "run-1",
-                  "id": "parent_childChangeForFields",
-                  "internal": Object {
-                    "contentDigest": "893740bfde4b8a6039e939cb0290d626",
-                    "fieldOwners": Object {},
-                    "owner": "gatsby-source-child-change-for-fields",
-                    "type": "Parent_ChildChangeForFields",
-                  },
-                  "parent": null,
-                },
-                "oldValue": Object {
-                  "children": Array [],
-                  "fields": Object {
-                    "foo1": "bar",
-                  },
-                  "foo": "run-1",
-                  "id": "parent_childChangeForFields",
-                  "internal": Object {
-                    "contentDigest": "893740bfde4b8a6039e939cb0290d626",
-                    "fieldOwners": Object {
-                      "foo1": "gatsby-fields-child-change",
-                    },
-                    "owner": "gatsby-source-child-change-for-fields",
-                    "type": "Parent_ChildChangeForFields",
-                  },
-                  "parent": null,
-                },
-              },
-            },
-            "deletions": Object {},
-          }
-        `)
 
-        expect(
-          compareState(
+          expect(diff.dirtyIds).toEqual([`parent_childChangeForFields`])
+
+          expect(diff.changes[`parent_childChangeForFields`].diff)
+            .toMatchInlineSnapshot(`
+            "  Object {
+                \\"children\\": Array [],
+            -   \\"fields\\": Object {
+            -     \\"foo1\\": \\"bar\\",
+            -   },
+            +   \\"fields\\": Object {},
+                \\"foo\\": \\"run-1\\",
+                \\"id\\": \\"parent_childChangeForFields\\",
+                \\"internal\\": Object {
+                  \\"contentDigest\\": \\"893740bfde4b8a6039e939cb0290d626\\",
+            -     \\"fieldOwners\\": Object {
+            -       \\"foo1\\": \\"gatsby-fields-child-change\\",
+            -     },
+            +     \\"fieldOwners\\": Object {},
+                  \\"owner\\": \\"gatsby-source-child-change-for-fields\\",
+                  \\"type\\": \\"Parent_ChildChangeForFields\\",
+                },
+                \\"parent\\": null,
+              }"
+          `)
+        }
+
+        {
+          const diff = compareState(
             postBootstrapStateFromFirstRun,
             postBootstrapStateFromSecondRun
           )
-        ).toMatchInlineSnapshot(`
-          Object {
-            "additions": Object {},
-            "changes": Object {
-              "parent_childChangeForFields": Object {
-                "diff": "  Object {
-              \\"children\\": Array [],
-              \\"fields\\": Object {
-          -     \\"foo1\\": \\"bar\\",
-          +     \\"foo2\\": \\"baz\\",
-              },
-              \\"foo\\": \\"run-1\\",
-              \\"id\\": \\"parent_childChangeForFields\\",
-              \\"internal\\": Object {
-                \\"contentDigest\\": \\"893740bfde4b8a6039e939cb0290d626\\",
-                \\"fieldOwners\\": Object {
-          -       \\"foo1\\": \\"gatsby-fields-child-change\\",
-          +       \\"foo2\\": \\"gatsby-fields-child-change\\",
-                },
-                \\"owner\\": \\"gatsby-source-child-change-for-fields\\",
-                \\"type\\": \\"Parent_ChildChangeForFields\\",
-              },
-              \\"parent\\": null,
-            }",
-                "id": "parent_childChangeForFields",
-                "newValue": Object {
-                  "children": Array [],
-                  "fields": Object {
-                    "foo2": "baz",
-                  },
-                  "foo": "run-1",
-                  "id": "parent_childChangeForFields",
-                  "internal": Object {
-                    "contentDigest": "893740bfde4b8a6039e939cb0290d626",
-                    "fieldOwners": Object {
-                      "foo2": "gatsby-fields-child-change",
-                    },
-                    "owner": "gatsby-source-child-change-for-fields",
-                    "type": "Parent_ChildChangeForFields",
-                  },
-                  "parent": null,
-                },
-                "oldValue": Object {
-                  "children": Array [],
-                  "fields": Object {
-                    "foo1": "bar",
-                  },
-                  "foo": "run-1",
-                  "id": "parent_childChangeForFields",
-                  "internal": Object {
-                    "contentDigest": "893740bfde4b8a6039e939cb0290d626",
-                    "fieldOwners": Object {
-                      "foo1": "gatsby-fields-child-change",
-                    },
-                    "owner": "gatsby-source-child-change-for-fields",
-                    "type": "Parent_ChildChangeForFields",
-                  },
-                  "parent": null,
-                },
-              },
-            },
-            "deletions": Object {},
-          }
-        `)
-      })
-    })
 
-    describe(`Fields`, () => {
-      it.todo(`are deleted and recreated when owner plugin changes`)
+          expect(diff.dirtyIds).toEqual([`parent_childChangeForFields`])
+
+          expect(diff.changes[`parent_childChangeForFields`].diff)
+            .toMatchInlineSnapshot(`
+            "  Object {
+                \\"children\\": Array [],
+                \\"fields\\": Object {
+            -     \\"foo1\\": \\"bar\\",
+            +     \\"foo2\\": \\"baz\\",
+                },
+                \\"foo\\": \\"run-1\\",
+                \\"id\\": \\"parent_childChangeForFields\\",
+                \\"internal\\": Object {
+                  \\"contentDigest\\": \\"893740bfde4b8a6039e939cb0290d626\\",
+                  \\"fieldOwners\\": Object {
+            -       \\"foo1\\": \\"gatsby-fields-child-change\\",
+            +       \\"foo2\\": \\"gatsby-fields-child-change\\",
+                  },
+                  \\"owner\\": \\"gatsby-source-child-change-for-fields\\",
+                  \\"type\\": \\"Parent_ChildChangeForFields\\",
+                },
+                \\"parent\\": null,
+              }"
+          `)
+        }
+      })
     })
   })
   describe(`Disk`, () => {})

@@ -108,17 +108,6 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby/dist/internal-plugins/load-babel-config",
     "ssrAPIs": Array [],
   },
-  "2131d29a-296c-5f73-affc-e422bec644fe" => Object {
-    "children": Array [],
-    "foo": "run-1",
-    "id": "2131d29a-296c-5f73-affc-e422bec644fe",
-    "internal": Object {
-      "contentDigest": "cbc07ead8c18c9d616f0004a893d5cf3",
-      "owner": "gatsby-transformer-parent-change",
-      "type": "ChildOfParent_ParentChangeForTransformer",
-    },
-    "parent": "parent_parentChangeForTransformer",
-  },
   "2bf51669-f85f-59be-94db-6056fd4b04a3" => Object {
     "browserAPIs": Array [],
     "children": Array [],
@@ -138,17 +127,6 @@ Map {
     },
     "resolve": "<PROJECT_ROOT>/plugins/gatsby-transformer-child-change",
     "ssrAPIs": Array [],
-  },
-  "3b0c942e-b51f-587b-b37d-b36c5e9af8fa" => Object {
-    "children": Array [],
-    "foo": "bar",
-    "id": "3b0c942e-b51f-587b-b37d-b36c5e9af8fa",
-    "internal": Object {
-      "contentDigest": "59b3a74325cbf2001bc21eb662f1e297",
-      "owner": "gatsby-transformer-child-change",
-      "type": "ChildOfParent_ChildChangeForTransformer",
-    },
-    "parent": "parent_childChangeForTransformer",
   },
   "3eaaf673-5a13-5784-894a-47b357425e05" => Object {
     "browserAPIs": Array [],
@@ -728,7 +706,7 @@ Map {
   },
   "parent_childChangeForTransformer" => Object {
     "children": Array [
-      "3b0c942e-b51f-587b-b37d-b36c5e9af8fa",
+      "parent_childChangeForTransformer >>> Child",
     ],
     "foo": "run-1",
     "id": "parent_childChangeForTransformer",
@@ -738,6 +716,17 @@ Map {
       "type": "Parent_ChildChangeForTransformer",
     },
     "parent": null,
+  },
+  "parent_childChangeForTransformer >>> Child" => Object {
+    "children": Array [],
+    "foo": "bar",
+    "id": "parent_childChangeForTransformer >>> Child",
+    "internal": Object {
+      "contentDigest": "ec8c3b932089b083a5380ab085be0633",
+      "owner": "gatsby-transformer-child-change",
+      "type": "ChildOfParent_ChildChangeForTransformer",
+    },
+    "parent": "parent_childChangeForTransformer",
   },
   "parent_parentChangeForFields" => Object {
     "children": Array [],
@@ -759,7 +748,7 @@ Map {
   },
   "parent_parentChangeForTransformer" => Object {
     "children": Array [
-      "2131d29a-296c-5f73-affc-e422bec644fe",
+      "parent_parentChangeForTransformer >>> Child",
     ],
     "foo": "run-1",
     "id": "parent_parentChangeForTransformer",
@@ -769,6 +758,17 @@ Map {
       "type": "Parent_ParentChangeForTransformer",
     },
     "parent": null,
+  },
+  "parent_parentChangeForTransformer >>> Child" => Object {
+    "children": Array [],
+    "foo": "run-1",
+    "id": "parent_parentChangeForTransformer >>> Child",
+    "internal": Object {
+      "contentDigest": "011e1b3b5c83557485e0357e70427b65",
+      "owner": "gatsby-transformer-parent-change",
+      "type": "ChildOfParent_ParentChangeForTransformer",
+    },
+    "parent": "parent_parentChangeForTransformer",
   },
   "Site" => Object {
     "children": Array [],
@@ -1682,17 +1682,6 @@ Map {
     "resolve": "<PROJECT_ROOT>/node_modules/gatsby/dist/internal-plugins/load-babel-config",
     "ssrAPIs": Array [],
   },
-  "2131d29a-296c-5f73-affc-e422bec644fe" => Object {
-    "bar": "run-2",
-    "children": Array [],
-    "id": "2131d29a-296c-5f73-affc-e422bec644fe",
-    "internal": Object {
-      "contentDigest": "a33e2263d5a5f42473e111fb400cef3d",
-      "owner": "gatsby-transformer-parent-change",
-      "type": "ChildOfParent_ParentChangeForTransformer",
-    },
-    "parent": "parent_parentChangeForTransformer",
-  },
   "2bf51669-f85f-59be-94db-6056fd4b04a3" => Object {
     "browserAPIs": Array [],
     "children": Array [],
@@ -1712,17 +1701,6 @@ Map {
     },
     "resolve": "<PROJECT_ROOT>/plugins/gatsby-transformer-child-change",
     "ssrAPIs": Array [],
-  },
-  "3b0c942e-b51f-587b-b37d-b36c5e9af8fa" => Object {
-    "children": Array [],
-    "foo": "baz",
-    "id": "3b0c942e-b51f-587b-b37d-b36c5e9af8fa",
-    "internal": Object {
-      "contentDigest": "3bca2830e09b3c30b3ca76dccdaf5e8b",
-      "owner": "gatsby-transformer-child-change",
-      "type": "ChildOfParent_ChildChangeForTransformer",
-    },
-    "parent": "parent_childChangeForTransformer",
   },
   "3eaaf673-5a13-5784-894a-47b357425e05" => Object {
     "browserAPIs": Array [],
@@ -2302,7 +2280,7 @@ Map {
   },
   "parent_childChangeForTransformer" => Object {
     "children": Array [
-      "3b0c942e-b51f-587b-b37d-b36c5e9af8fa",
+      "parent_childChangeForTransformer >>> Child",
     ],
     "foo": "run-1",
     "id": "parent_childChangeForTransformer",
@@ -2312,6 +2290,17 @@ Map {
       "type": "Parent_ChildChangeForTransformer",
     },
     "parent": null,
+  },
+  "parent_childChangeForTransformer >>> Child" => Object {
+    "children": Array [],
+    "foo": "baz",
+    "id": "parent_childChangeForTransformer >>> Child",
+    "internal": Object {
+      "contentDigest": "32fe5b6bc0489b6fa0f7eb6a9b563b27",
+      "owner": "gatsby-transformer-child-change",
+      "type": "ChildOfParent_ChildChangeForTransformer",
+    },
+    "parent": "parent_childChangeForTransformer",
   },
   "parent_parentChangeForFields" => Object {
     "bar": "run-2",
@@ -2334,7 +2323,7 @@ Map {
   "parent_parentChangeForTransformer" => Object {
     "bar": "run-2",
     "children": Array [
-      "2131d29a-296c-5f73-affc-e422bec644fe",
+      "parent_parentChangeForTransformer >>> Child",
     ],
     "id": "parent_parentChangeForTransformer",
     "internal": Object {
@@ -2343,6 +2332,17 @@ Map {
       "type": "Parent_ParentChangeForTransformer",
     },
     "parent": null,
+  },
+  "parent_parentChangeForTransformer >>> Child" => Object {
+    "bar": "run-2",
+    "children": Array [],
+    "id": "parent_parentChangeForTransformer >>> Child",
+    "internal": Object {
+      "contentDigest": "030fd9177896464496590fc0fe4d45bf",
+      "owner": "gatsby-transformer-parent-change",
+      "type": "ChildOfParent_ParentChangeForTransformer",
+    },
+    "parent": "parent_parentChangeForTransformer",
   },
   "Site" => Object {
     "children": Array [],

@@ -1,13 +1,8 @@
-exports.onCreateNode = ({
-  actions,
-  node,
-  createNodeId,
-  createContentDigest,
-}) => {
+exports.onCreateNode = ({ actions, node, createContentDigest }) => {
   if (node.internal.type === `Parent_ChildChangeForTransformer`) {
     const childNode = {
       parent: node.id,
-      id: createNodeId(`${node.id} >>> Child`),
+      id: `${node.id} >>> Child`,
       foo: `bar`,
       internal: {
         type: `ChildOfParent_ChildChangeForTransformer`,

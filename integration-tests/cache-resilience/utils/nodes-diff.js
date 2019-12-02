@@ -46,10 +46,18 @@ const compareState = (oldState, newState) => {
     deletions = deletions.filter(deletion => deletion.id !== id)
   })
 
-  return {
+  const ret = {
     additions: reduceArrayToObject(additions),
     deletions: reduceArrayToObject(deletions),
     changes: reduceArrayToObject(changes),
+  }
+  return {
+    ...ret,
+    dirtyIds: Object.keys({
+      ...ret.additions,
+      ...ret.deletions,
+      ...ret.changes,
+    }),
   }
 }
 

@@ -17,6 +17,9 @@ describe(`compareState`, () => {
         },
         "changes": Object {},
         "deletions": Object {},
+        "dirtyIds": Array [
+          "2",
+        ],
       }
     `)
   })
@@ -36,6 +39,9 @@ describe(`compareState`, () => {
             "value": "b",
           },
         },
+        "dirtyIds": Array [
+          "2",
+        ],
       }
     `)
   })
@@ -87,6 +93,10 @@ describe(`compareState`, () => {
           },
         },
         "deletions": Object {},
+        "dirtyIds": Array [
+          "2",
+          "3",
+        ],
       }
     `)
   })
