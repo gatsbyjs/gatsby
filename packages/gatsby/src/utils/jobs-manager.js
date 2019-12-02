@@ -1,5 +1,6 @@
 const uuid = require(`uuid/v4`)
 const hasha = require(`hasha`)
+const fs = require(`fs-extra`)
 const pDefer = require(`p-defer`)
 const { createContentDigest } = require(`gatsby-core-utils`)
 const reporter = require(`gatsby-cli/lib/reporter`)
@@ -47,8 +48,10 @@ exports.jobsInProcess = jobsInProcess
  * @param {Job} job
  * @return Promise<T>
  */
-const runLocalWorker = (workerFn, job) =>
-  new Promise((resolve, reject) => {
+const runLocalWorker = async (workerFn, job) => {
+  await fs.ensureDir(job.outputDir)
+
+  return new Promise((resolve, reject) => {
     // execute worker nextTick
     // TODO should we think about threading/queueing here?
     process.nextTick(() => {
@@ -65,6 +68,7 @@ const runLocalWorker = (workerFn, job) =>
       }
     })
   })
+}
 
 /**
  *
@@ -96,10 +100,10 @@ const handleJobEnded = () => {
  */
 exports.enqueueJob = async ({ name, inputPaths, outputDir, args, plugin }) => {
   // TODO see if we can make this async, filehashing might be expensive to wait for
-  const inputPathsWithContentDigest = inputPaths.map(async path => {
+  const inputPathsWithContentDigest = inputPaths.map(path => {
     return {
       path: convertPathsToRelative(path),
-      contentDigest: await createFileHash(path),
+      contentDigest: createFileHash(path),
     }
   })
 
