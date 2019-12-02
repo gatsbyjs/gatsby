@@ -17,10 +17,10 @@ function BlogPost({ data }) {
       </Heading>
 
       {!!featuredImage &&
-        featuredImage.imageFile &&
-        featuredImage.imageFile.childImageSharp && (
+        featuredImage.remoteFile &&
+        featuredImage.remoteFile.childImageSharp && (
           <Box mb={5}>
-            <Img fluid={featuredImage.imageFile.childImageSharp.fluid} />
+            <Img fluid={featuredImage.remoteFile.childImageSharp.fluid} />
           </Box>
         )}
 

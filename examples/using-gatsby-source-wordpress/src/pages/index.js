@@ -23,11 +23,11 @@ export default ({ data }) => {
                 <Grid templateColumns="1fr 2fr" gap={6}>
                   <Box>
                     {!!page.featuredImage &&
-                      !!page.featuredImage.imageFile &&
-                      !!page.featuredImage.imageFile.childImageSharp && (
+                      !!page.featuredImage.remoteFile &&
+                      !!page.featuredImage.remoteFile.childImageSharp && (
                         <Img
                           fluid={
-                            page.featuredImage.imageFile.childImageSharp.fluid
+                            page.featuredImage.remoteFile.childImageSharp.fluid
                           }
                         />
                       )}
@@ -69,7 +69,7 @@ export const query = graphql`
         link
         excerpt
         featuredImage {
-          imageFile {
+          remoteFile {
             ...Thumbnail
           }
         }
@@ -82,7 +82,7 @@ export const query = graphql`
         link
         excerpt
         featuredImage {
-          imageFile {
+          remoteFile {
             ...Thumbnail
           }
         }
@@ -95,7 +95,7 @@ export const query = graphql`
         link
         excerpt
         featuredImage {
-          imageFile {
+          remoteFile {
             ...Thumbnail
           }
         }

@@ -3,7 +3,7 @@ import { createRemoteFileNode } from "gatsby-source-filesystem"
 export default helpers => {
   helpers.createResolvers({
     WpMediaItem: {
-      imageFile: {
+      remoteFile: {
         type: `File`,
         resolve: source =>
           createRemoteFileNode({

@@ -10,7 +10,7 @@ export const query = graphql`
       title
       content
       featuredImage {
-        imageFile {
+        remoteFile {
           ...HeroImage
         }
       }
