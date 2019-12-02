@@ -18,7 +18,7 @@ const convertPathsToRelative = path => path
 /**
  * @param {string} path
  */
-const createFileHash = path => hasha.fromFile(path, { algorithm: `sha1` })
+const createFileHash = path => hasha.fromFileSync(path, { algorithm: `sha1` })
 
 /**
  * @typedef Job
@@ -42,15 +42,44 @@ const createFileHash = path => hasha.fromFile(path, { algorithm: `sha1` })
 exports.jobsInProcess = jobsInProcess
 
 /**
+ * @template T
+ * @param {function({ inputPaths: Job["inputPaths"], outputDir: Job["outputDir"], args: Job["args"]}): T} workerFn
+ * @param {Job} job
+ * @return Promise<T>
+ */
+const runLocalWorker = (workerFn, job) =>
+  new Promise((resolve, reject) => {
+    // execute worker nextTick
+    // TODO should we think about threading/queueing here?
+    process.nextTick(() => {
+      try {
+        Promise.resolve(
+          workerFn({
+            inputPaths: job.inputPaths,
+            outputDir: job.outputDir,
+            args: job.args,
+          })
+        ).then(resolve, reject)
+      } catch (err) {
+        reject(err)
+      }
+    })
+  })
+
+/**
  *
  * @param {AugmentedJob} job
+ * @param {Job["plugin"]} plugin
  * @param {pDefer.DeferredPromise} deferred
  */
-const runJob = (job, deferred) => {
-  setTimeout(() => {
-    // TODO do worker implementation
-    deferred.resolve(`1`)
-  }, 100)
+const runJob = (job, plugin, deferred) => {
+  const worker = require(`${plugin.name}/worker.js`)
+  if (!worker[job.name]) {
+    deferred.reject(new Error(`No worker function found for ${job.name}`))
+    return
+  }
+
+  runLocalWorker(worker[job.name], job).then(deferred.resolve, deferred.reject)
 }
 
 const handleJobEnded = () => {
@@ -66,14 +95,13 @@ const handleJobEnded = () => {
  * @param {Job} args
  */
 exports.enqueueJob = async ({ name, inputPaths, outputDir, args, plugin }) => {
-  const inputPathsWithContentDigest = await Promise.all(
-    inputPaths.map(async path => {
-      return {
-        path: convertPathsToRelative(path),
-        contentDigest: await createFileHash(path),
-      }
-    })
-  )
+  // TODO see if we can make this async, filehashing might be expensive to wait for
+  const inputPathsWithContentDigest = inputPaths.map(async path => {
+    return {
+      path: convertPathsToRelative(path),
+      contentDigest: await createFileHash(path),
+    }
+  })
 
   const job = {
     id: uuid(),
@@ -124,7 +152,7 @@ exports.enqueueJob = async ({ name, inputPaths, outputDir, args, plugin }) => {
     deferred,
   })
 
-  runJob(job, deferred)
+  runJob(job, plugin, deferred)
 
   return deferred.promise
 }
@@ -136,7 +164,7 @@ exports.enqueueJob = async ({ name, inputPaths, outputDir, args, plugin }) => {
  */
 exports.waitUntilAllJobsComplete = () => {
   const jobsPromises = []
-  jobsInProcess.forEach(({ deferred }) => jobsPromises.push(deferred))
+  jobsInProcess.forEach(({ deferred }) => jobsPromises.push(deferred.promise))
 
   return Promise.all(jobsPromises).then(() => {})
 }
