@@ -8790,3 +8790,13 @@
   built_by: Ezekiel Ekunola
   built_by_url: https://github.com/easybuoy/
   featured: false
+- title: UXWorks
+  main_url: https://uxworks.org
+  url: https://uxworks.org
+  description: Built with Gatsby, Netlify and Markdown
+  categories:
+    - Web Development
+    - Blog
+  built_by: Amrish Kushwaha
+  built_by_url: https://github.com/isamrish
+  featured: false
