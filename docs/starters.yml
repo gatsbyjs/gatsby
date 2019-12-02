@@ -4604,14 +4604,10 @@
 - url: https://gatsby-starter-theme-antv.netlify.com
   repo: https://github.com/antvis/gatsby-starter-theme-antv
   description: Gatsby's starter of antv theme
-  # These correspond to the category filters in the library
-  # See docs/categories.yml for valid tags.
   tags:
-    - React
-    - antd
-    - antv
-  # Add your site features
-  # These will be included on your starter's detail page.
+    - Documentation
+    - Markdown
+    - Styling:Other
   features:
     - ⚛ Prerendered static site
     - 🌎 Internationalization support by i18next
@@ -4620,3 +4616,26 @@
     - 🏗 Unified Theme and Layout
     - 🆙 Easy customized header nav
     - 🧩 Built-in home page components
+- url: https://gatsby-starter-cafe.netlify.com
+  repo: https://github.com/crolla97/gatsby-starter-cafe
+  description: Gatsby starter for creating a single page cafe website using Contentful and Leaflet
+  tags:
+    - CMS:Contentful
+    - Styling:SCSS
+    - Landing Page
+    - Onepage
+  features:
+    - Leaflet interactive map
+    - Instagram Feed
+    - Contentful for menu item storage
+    - Responsive design
+- url: https://gatsby-firebase-simple-auth.netlify.com/
+  repo: https://github.com/marcomelilli/gatsby-firebase-simple-auth
+  description: A simple Firebase Authentication Starter with protected routes
+  tags:
+    - Firebase
+    - Authentication
+    - Styling:Tailwind
+  features:
+    - Authentication with Firebase
+    - Protected Routes with Authorization
