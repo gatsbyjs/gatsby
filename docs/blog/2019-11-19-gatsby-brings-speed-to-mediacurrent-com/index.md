@@ -24,7 +24,7 @@ For small blogging sites where content structure is simple and doesn’t require
 
 ## Why Gatsby
 
-Luckily, our team had been researching and testing Gatsby as a potential solution for our site’s front-end woes. We realized Gatsby is an ideal fit for our front-end for its ability to compile quickly and its component display flexibility. Other features of Gatsby that appeal to us include:
+Luckily, our team had been researching and testing Gatsby as a potential solution for our site’s front-end woes. We realized Gatsby was an ideal fit for our front-end due to its ability to compile quickly and its component display flexibility. Other features of Gatsby that appealed to us included:
 
 - A robust plugin system that easily integrates with Drupal and other systems
 - React and GraphQL-based
