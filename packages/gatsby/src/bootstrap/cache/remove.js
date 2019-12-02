@@ -5,7 +5,7 @@ const _ = require(`lodash`)
 const getPluginHash = require(`./plugin-hash`)
 
 const CACHE_FOLDER = `caches`
-const DONT_DELETE = [`redux-state`, `loki`]
+const DONT_DELETE = [`redux.state`, `loki`]
 /*
  * This function will first calculate a diff of plugin/file changes (e.g. if gatsby-node.js changes)
  * From this, it will then selectively invalidate files in .cache/caches
@@ -61,10 +61,10 @@ ${changes.map(change => `        - ${change}`).join(`\n`)}
       )
 
       await Promise.all(
-        filesToRemove.map(file => {
-          console.log(`deleting file`, file)
-          return fs.remove(file)
-        })
+        filesToRemove.map(file =>
+          // console.log(`deleting file`, file)
+          fs.remove(file)
+        )
       )
     } catch (e) {
       report.error(`Failed to remove .cache files.`, e)
