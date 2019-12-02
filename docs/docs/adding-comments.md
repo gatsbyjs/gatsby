@@ -34,7 +34,7 @@ If these concerns outweigh the benefits of Disqus, you may want to look into som
 
 ## Implementing Disqus
 
-![Disqus logo](images/disqus-logo.svg)
+![Disqus logo](./images/disqus-logo.svg)
 
 Here are the steps for adding Disqus comments to your own blog:
 
@@ -89,4 +89,4 @@ return (
 
 And you're done. You should now see the Disqus comment form appear beneath your blog post [looking like this](https://janosh.io/blog/disqus-comments#disqus_thread). Happy blogging!
 
-[![Disqus comments](images/disqus-comments.png)](https://janosh.io/blog/disqus-comments#disqus_thread)
+[![Disqus comments](./images/disqus-comments.png)](https://janosh.io/blog/disqus-comments#disqus_thread)

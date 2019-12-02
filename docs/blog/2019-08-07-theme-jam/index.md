@@ -13,7 +13,7 @@ At the beginning of July, [Brent Jackson](https://twitter.com/jxnblk) joined _Le
 
 ## What is the Theme Jam?
 
-![Theme Jam illustration by Maggie Appleton.](images/theme-jam.png)
+![Theme Jam illustration by Maggie Appleton.](./images/theme-jam.png)
 
 In a nutshell, the Theme Jam was a way for Gatsby to give back to its community: everyone who published a theme and submitted it to the Theme Jam will receive exclusive swag designed by [Maggie Appleton](https://maggieappleton.com/). Two creators who published themes our team reviewed as exemplary are getting an all-expenses paid trip to [Gatsby Days](https://www.gatsbyjs.com/resources/gatsby-days/). (For more details, see the [rules](https://themejam.gatsbyjs.org/rules).)
 
@@ -61,7 +61,7 @@ Two of the themes we received stood out especially. As we reviewed, we all took 
 
 ### Vojtěch’s Simplecast Gatsby Theme
 
-![Demo of the Simplecast Gatsby theme.](images/gatsby-theme-simplecast.gif)
+![Demo of the Simplecast Gatsby theme.](./images/gatsby-theme-simplecast.gif)
 
 Vojtěch combined data sourcing from [Simplecast](https://simplecast.com/)’s API, beautiful design, and an explorable UX to create this powerful theme for podcasters.
 
@@ -69,7 +69,7 @@ Vojtěch combined data sourcing from [Simplecast](https://simplecast.com/)’s A
 
 ### Allan’s Prismic-Powered Legal Pages Theme
 
-![Screenshot of the Gatsby Prismic Legals theme.](images/gatsby-theme-legals-prismic-mockup.jpg)
+![Screenshot of the Gatsby Prismic Legals theme.](./images/gatsby-theme-legals-prismic-mockup.jpg)
 
 Allan turned something boring (required legal pages) into something beautiful by pulling common legal pages — such as a “terms & conditions” page — from [Prismic](https://prismic.io/) and putting them into a gorgeous UI. This theme highlights theme composability: combine this theme with others to quickly add required legal pages to any Gatsby site!
 

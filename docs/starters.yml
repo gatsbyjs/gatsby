@@ -4606,7 +4606,6 @@
   description: Gatsby starter for creating a single page cafe website using Contentful and Leaflet
   tags:
     - CMS:Contentful
-    - Leaflet
     - Styling:SCSS
     - Landing Page
     - Onepage
@@ -4615,3 +4614,13 @@
     - Instagram Feed
     - Contentful for menu item storage
     - Responsive design
+- url: https://gatsby-firebase-simple-auth.netlify.com/
+  repo: https://github.com/marcomelilli/gatsby-firebase-simple-auth
+  description: A simple Firebase Authentication Starter with protected routes
+  tags:
+    - Firebase
+    - Authentication
+    - Styling:Tailwind
+  features:
+    - Authentication with Firebase
+    - Protected Routes with Authorization
