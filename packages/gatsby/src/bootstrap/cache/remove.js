@@ -12,7 +12,6 @@ const DONT_DELETE = [`redux-state`, `loki`]
  * the location where Gatsby stores long-lived cache files that can be safely kept around
  */
 module.exports = async function safeRemoveCache({
-  additional = [],
   directory,
   plugins,
   existing,
@@ -21,8 +20,6 @@ module.exports = async function safeRemoveCache({
   const cacheDirectory = path.join(directory, `.cache`)
 
   const { changes, hash } = await getPluginHash({
-    additional,
-    directory,
     plugins,
     existing,
   })

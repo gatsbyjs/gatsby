@@ -205,7 +205,7 @@ const loadPlugins = (config = {}, rootDir = null) => {
     resolve: slash(process.cwd()),
     id: createPluginId(`default-site-plugin`),
     name: `default-site-plugin`,
-    version: createFileContentHash(process.cwd(), `gatsby-*`),
+    version: createFileContentHash(process.cwd(), `gatsby-{node,config}.js`),
     pluginOptions: {
       plugins: [],
     },

@@ -214,7 +214,6 @@ module.exports = async (args: BootstrapArgs) => {
   }
 
   const { cacheDirectory, changes, hash } = await safeRemoveCache({
-    additional: [`gatsby-node.js`, `gatsby-config.js`],
     directory: program.directory,
     existing: existingPluginHash,
     plugins: flattenedPlugins,
