@@ -1,9 +1,14 @@
 const { actions } = require(`../actions`)
 const jobsReducer = require(`../reducers/jobs`)
+const jobsManager = require(`../../utils/jobs-manager`)
 
 Date.now = jest.fn(() => 1482363367071)
 
 describe(`Job actions/reducer`, () => {
+  beforeEach(() => {
+    jobsManager.jobsInProcess.clear()
+  })
+
   it(`allows creating jobs`, () => {
     expect(actions.createJob({ id: `test job` })).toMatchSnapshot()
   })
@@ -21,7 +26,7 @@ describe(`Job actions/reducer`, () => {
   })
 
   it(`Allows you to set other info on the job`, () => {
-    let state = jobsReducer(
+    const state = jobsReducer(
       undefined,
       actions.createJob({ id: `test job`, word: `yo` })
     )
