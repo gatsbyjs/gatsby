@@ -30,7 +30,7 @@ Luckily, our team had been researching and testing Gatsby as a potential solutio
 - React and GraphQL-based
 - Highly optimized for performance
 
-Additionally, Gatsby’s streamlined development workflow allows us to make front-end design changes more quickly compared to working with a CSS-based templating system or Jekyll’s markdown files.
+Additionally, Gatsby’s streamlined development workflow allowed us to make front-end design changes more quickly compared to working with a CSS-based templating system or Jekyll’s markdown files.
 
 ## Migrating to Gatsby
 
