@@ -2,6 +2,7 @@ const introspection = {
   state: {
     queries: {},
   },
+
   reducers: {
     setState(state, payload) {
       state.queries = payload
@@ -14,6 +15,7 @@ const logger = {
   state: {
     entityCount: 0,
   },
+
   reducers: {
     incrementBy(state, payload) {
       state.entityCount = state.entityCount + payload
@@ -29,9 +31,42 @@ const gatsbyApi = {
       verbose: false,
     },
   },
+
   reducers: {
     setState(_, payload) {
       return payload
+    },
+  },
+}
+
+const imageNodes = {
+  state: {
+    urls: new Set(),
+    nodeMetaByUrl: {},
+    nodeIds: [],
+  },
+
+  reducers: {
+    setNodeIds(_, payload) {
+      return {
+        nodeIds: payload,
+      }
+    },
+
+    pushNodeMeta(state, { id, sourceUrl, modifiedGmt }) {
+      state.nodeIds.push(id)
+      state.nodeMetaByUrl[sourceUrl] = {
+        id,
+        modifiedGmt,
+      }
+
+      return state
+    },
+
+    addUrlMatches(state, matches) {
+      matches.forEach(({ match }) => state.urls.add(match))
+
+      return state
     },
   },
 }
@@ -40,4 +75,5 @@ export default {
   introspection,
   gatsbyApi,
   logger,
+  imageNodes,
 }

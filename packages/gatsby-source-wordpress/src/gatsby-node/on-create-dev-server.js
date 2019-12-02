@@ -1,7 +1,7 @@
 import startIntervalRefetcher from "./source-nodes/interval-refetcher"
+import setImageNodeIdCache from "./set-image-node-id-cache"
 
-export default (helpers, pluginOptions) => {
-  if (process.env.NODE_ENV !== `production`) {
-    startIntervalRefetcher({}, helpers, pluginOptions)
-  }
+export default async (helpers, pluginOptions) => {
+  await setImageNodeIdCache()
+  startIntervalRefetcher({}, helpers, pluginOptions)
 }

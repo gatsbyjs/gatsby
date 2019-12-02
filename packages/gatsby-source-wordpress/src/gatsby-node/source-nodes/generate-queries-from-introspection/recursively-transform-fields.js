@@ -64,6 +64,13 @@ const transformField = ({ field, nodeListTypeNames }) => {
     // let's just turn this into an ID
     // to do that we just pull the WPGQL id for now
     fieldType.relationShipField = true
+
+    // if it's a media item node, we also need the URL,
+    // so mark it as a media item
+    if (field.type.name === `MediaItem`) {
+      fieldType.mediaItem = true
+    }
+
     if (fieldType.fields) {
       fieldType.fields = fieldType.fields.filter(
         innerField =>

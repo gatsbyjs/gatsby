@@ -1,16 +1,30 @@
-import { createRemoteFileNode } from "gatsby-source-filesystem"
+import {
+  createRemoteMediaItemNode,
+  getFileNodeMetaBySourceUrl,
+} from "./source-nodes/create-remote-media-item-node"
 
 export default helpers => {
   helpers.createResolvers({
     WpMediaItem: {
       remoteFile: {
         type: `File`,
-        resolve: source =>
-          createRemoteFileNode({
-            url: source.sourceUrl,
-            ...helpers,
-            createNode: helpers.actions.createNode,
-          }),
+        resolve: (source, _, context) => {
+          const nodeMeta = getFileNodeMetaBySourceUrl(source.sourceUrl)
+
+          if (nodeMeta && nodeMeta.id) {
+            return context.nodeModel.getNodeById({
+              id: nodeMeta.id,
+              type: `File`,
+            })
+          }
+
+          return null
+
+          // return createRemoteMediaItemNode({
+          //   mediaItemNode: source,
+          //   helpers,
+          // })
+        },
       },
     },
   })

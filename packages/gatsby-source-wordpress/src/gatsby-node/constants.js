@@ -6,7 +6,7 @@ export const FIELD_BLACKLIST = [
   `themes`,
   `userRoles`,
   `actionMonitorActions`,
-  `alots`,
+  // `alots`,
   // this causes an error on the WPGQL side
   `postTypeInfo`,
 ]

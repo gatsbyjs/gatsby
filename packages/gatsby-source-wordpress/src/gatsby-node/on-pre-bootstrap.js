@@ -27,6 +27,15 @@ const onPreBootstrap = async (helpers, pluginOptions) => {
     activity.end()
   }
 
+  // load up image node id's from cache
+  const imageNodeIds = await helpers.cache.get(`image-node-ids`)
+
+  // if they exist, touch them all and set them to state
+  if (imageNodeIds && imageNodeIds.length) {
+    imageNodeIds.forEach(nodeId => helpers.actions.touchNode({ nodeId }))
+    store.dispatch.imageNodes.setNodeIds(imageNodeIds)
+  }
+
   // store helpers and plugin options
   // do introspection
   // cache introspection and hash
