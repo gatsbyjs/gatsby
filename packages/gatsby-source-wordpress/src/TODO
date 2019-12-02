@@ -1,0 +1,7 @@
+- split node transformation, and creation into separate steps
+- create remote file nodes before node creation
+if all our nodes are transformed at the time of creation,
+we can use info about every other node while creating it
+this is important for linking remote file nodes.
+we can add the id of remote file nodes to the imageFile field of our MediaItem nodes
+so that they can be linked in schema customization instead of by overriding the resolver. This should fix a cli bug where it repeats `success Generating image thumbnails - 0.219s - 9/9 41.17/s` over and over for each image on the site
