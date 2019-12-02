@@ -31,6 +31,7 @@ starter:
   - Landing Page
   - Language:Other
   - Language:TypeScript
+  - Leaflet
   - Linting
   - Markdown
   - MDX
