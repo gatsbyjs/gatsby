@@ -58,6 +58,7 @@ module.exports = function preset(_, options = {}) {
           targets,
           // Exclude transforms that make all code slower (https://github.com/facebook/create-react-app/pull/5278)
           exclude: [`transform-typeof-symbol`],
+          ...options['@babel/preset-env'],
         },
       ],
       [
@@ -66,6 +67,7 @@ module.exports = function preset(_, options = {}) {
           useBuiltIns: true,
           pragma: `React.createElement`,
           development: stage === `develop`,
+          ...options['@babel/preset-react'],
         },
       ],
     ],
@@ -74,10 +76,21 @@ module.exports = function preset(_, options = {}) {
         resolve(`@babel/plugin-proposal-class-properties`),
         {
           loose: true,
+          ...options[`@babel/plugin-proposal-class-properties`],
         },
       ],
-      resolve(`babel-plugin-macros`),
-      resolve(`@babel/plugin-syntax-dynamic-import`),
+      [
+        resolve(`babel-plugin-macros`),
+        {
+          ...options[`babel-plugin-macros`],
+        }
+      ],
+      [
+        resolve(`@babel/plugin-syntax-dynamic-import`),
+        {
+          ...options[`@babel/plugin-syntax-dynamic-import`],
+        }
+      ],
       [
         resolve(`@babel/plugin-transform-runtime`),
         {
@@ -86,20 +99,28 @@ module.exports = function preset(_, options = {}) {
           regenerator: true,
           useESModules: stage !== `test`,
           absoluteRuntimePath,
+          ...options[`@babel/plugin-transform-runtime`],
         },
       ],
       [
         resolve(`@babel/plugin-transform-spread`),
         {
           loose: false, // Fixes #14848
+          ...options[`@babel/plugin-transform-spread`],
         },
       ],
-      IS_TEST && resolve(`babel-plugin-dynamic-import-node`),
+      IS_TEST && [
+        resolve(`babel-plugin-dynamic-import-node`),
+        {
+          ...options[`babel-plugin-dynamic-import-node`],
+        }
+      ],
       stage === `build-javascript` && [
         // Remove PropTypes from production build
         resolve(`babel-plugin-transform-react-remove-prop-types`),
         {
           removeImport: true,
+          ...options[`babel-plugin-transform-react-remove-prop-types`],
         },
       ],
     ].filter(Boolean),
