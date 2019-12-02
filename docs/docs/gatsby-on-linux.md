@@ -15,8 +15,6 @@ sudo apt update
 sudo apt -y upgrade
 ```
 
-> Only use `-y` if you want to upgrade to the latest version of the software.
-
 Install curl which allows you to transfer data and download additional dependencies.
 
 ```shell
@@ -31,11 +29,11 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash
 
 > Note that this is the current stable release of nvm. Full installation instructions and troubleshooting can be found at the [nvm GitHub page](https://github.com/nvm-sh/nvm)
 
-When `nvm` is installed, it does not default to a particular `node` version. You'll need to install the version you want and give `nvm` instructions to use it. This example uses `10.17.0`, but other version numbers can be used instead.
+When `nvm` is installed, it does not default to a particular `node` version. You'll need to install the version you want and give `nvm` instructions to use it. This example uses the latest release of version `10`, but other version numbers can be used instead.
 
 ```shell
-nvm install 10.17.0
-nvm use 10.17.0
+nvm install 10
+nvm use 10
 ```
 
 To confirm this has worked, use the following command.
@@ -62,11 +60,11 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash
 
 > Note that this is the current stable release of nvm. Full installation instructions and troubleshooting can be found at the [nvm GitHub page](https://github.com/nvm-sh/nvm)
 
-When `nvm` is installed, it does not default to a particular `node` version. You'll need to install the version you want and give `nvm` instructions to use it. This example uses `10.17.0`, but other version numbers can be used instead.
+When `nvm` is installed, it does not default to a particular `node` version. You'll need to install the version you want and give `nvm` instructions to use it. This example uses the latest release of version `10`, but other version numbers can be used instead.
 
 ```shell
-nvm install 10.17.0
-nvm use 10.17.0
+nvm install 10
+nvm use 10
 ```
 
 To confirm this has worked, use the following command.
@@ -105,11 +103,11 @@ Before using `nvm`, you need to install additional dependencies.
 sudo pacman -S grep awk tar git
 ```
 
-When `nvm` is installed, it does not default to a particular `node` version. You'll need to install the version you want and give `nvm` instructions to use it. This example uses `10.17.0`, but other version numbers can be used instead.
+When `nvm` is installed, it does not default to a particular `node` version. You'll need to install the version you want and give `nvm` instructions to use it. This example uses the latest release of version `10`, but other version numbers can be used instead.
 
 ```shell
-nvm install 10.17.0
-nvm use 10.17.0
+nvm install 10
+nvm use 10
 ```
 
 To confirm this has worked, use the following command.
@@ -139,8 +137,6 @@ If you have a fresh install of Ubuntu then update and upgrade:
 sudo apt update
 sudo apt -y upgrade
 ```
-
-> Only use `-y` if you want to upgrade to the latest version of the software.
 
 **Build tools**
 
