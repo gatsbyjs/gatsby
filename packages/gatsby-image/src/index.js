@@ -89,7 +89,7 @@ const getImageSrcKey = ({ fluid, fixed }) => {
 }
 
 /**
- * Returns the current src - if possible with art-direction support.
+ * Returns the current src - Preferably with art-direction support.
  * @param fluid         {object}    Fluid Image (Array) if existent.
  * @param fixed         {object}    Fixed Image (Array) if existent.
  * @param index         {number}    The index of the image to return (default: 0).
