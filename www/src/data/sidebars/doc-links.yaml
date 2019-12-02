@@ -418,8 +418,8 @@
                   link: /docs/linking-and-prefetching-with-gatsby/
                 - title: Location Data from Props
                   link: /docs/location-data-from-props/
-                - title: Centralizing Your Site's Navigation
-                  link: /docs/centralizing-your-sites-navigation/
+                - title: Creating Dynamic Navigation
+                  link: /docs/creating-dynamic-navigation/
                 - title: Rendering Sidebar Navigation Dynamically*
                   link: /docs/rendering-sidebar-navigation-dynamically/
                 - title: Client-only Routes & User Authentication
