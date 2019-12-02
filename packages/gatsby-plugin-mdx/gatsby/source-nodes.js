@@ -90,7 +90,7 @@ module.exports = (
     debug(`required`, plugin)
     if (_.isFunction(requiredPlugin.setParserPlugins)) {
       for (let parserPlugin of requiredPlugin.setParserPlugins(
-        plugin.pluginOptions
+        plugin.options || {}
       )) {
         if (_.isArray(parserPlugin)) {
           const [parser, parserPluginOptions] = parserPlugin
@@ -184,7 +184,8 @@ module.exports = (
             return html
           } catch (e) {
             reporter.error(
-              `Error querying the \`html\` field. This field is intended for use with RSS feed generation.
+              `gatsby-plugin-mdx: Error querying the \`html\` field.
+This field is intended for use with RSS feed generation.
 If you're trying to use it in application-level code, try querying for \`Mdx.body\` instead.
 Original error:
 ${e}`

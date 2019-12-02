@@ -249,7 +249,7 @@ Instead of a query constant and data that references the result like in the firs
 
 The last use case you may come across is how to handle a situation where you have multiple queries in the same file/page.
 
-This example is attempting to query for all the data in `speaking.yaml` and the direct file query in our first example. In order to do this you want to use aliasing in GraphQL.
+This example is attempting to query for all the data in `speaking.yaml` and the direct file query in the first example. In order to do this you want to use aliasing in GraphQL.
 
 The first thing to know is that an alias is assigning a name to a query. The second thing to know is that aliases are optional, but they can make your life easier! Below is an example.
 
@@ -361,7 +361,7 @@ Now for errors to watch out for. If you change your image processing from `fixed
 
 ![In image cache error message.](./ErrorMessage.png)
 
-Despite its appearance, solving this doesn't actually require flushing any kind of cache. In reality, it has to do with incompatible references. You likely triggered it because you changed the query to process the image as `fluid` but the JSX key was still set to `fixed`, or visa versa.
+Despite its appearance, solving this doesn't actually require flushing any kind of cache. In reality, it has to do with incompatible references. You likely triggered it because you changed the query to process the image as `fluid` but the JSX key was still set to `fixed`, or vice versa.
 
 ## The end
 

@@ -2,7 +2,7 @@
 let fs = require(`fs`)
 let workboxBuild = require(`workbox-build`)
 const path = require(`path`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 const glob = require(`glob`)
 const _ = require(`lodash`)
 
@@ -65,7 +65,12 @@ function getPrecachePages(globs, base) {
 
 exports.onPostBuild = (
   args,
-  { precachePages: precachePagesGlobs = [], appendScript = null, workboxConfig }
+  {
+    precachePages: precachePagesGlobs = [],
+    appendScript = null,
+    debug = undefined,
+    workboxConfig = {},
+  }
 ) => {
   const { pathPrefix, reporter } = args
   const rootDir = `public`
@@ -129,7 +134,7 @@ exports.onPostBuild = (
       {
         // page-data.json files are not content hashed
         urlPattern: /^https?:.*\page-data\/.*\/page-data\.json/,
-        handler: `NetworkFirst`,
+        handler: `StaleWhileRevalidate`,
       },
       {
         // Add runtime caching of various other page resources
@@ -146,10 +151,7 @@ exports.onPostBuild = (
     clientsClaim: true,
   }
 
-  const combinedOptions = {
-    ...options,
-    ...workboxConfig,
-  }
+  const combinedOptions = _.merge(options, workboxConfig)
 
   const idbKeyvalFile = `idb-keyval-iife.min.js`
   const idbKeyvalSource = require.resolve(`idb-keyval/dist/${idbKeyvalFile}`)
@@ -161,6 +163,16 @@ exports.onPostBuild = (
     .generateSW({ swDest, ...combinedOptions })
     .then(({ count, size, warnings }) => {
       if (warnings) warnings.forEach(warning => console.warn(warning))
+
+      if (debug !== undefined) {
+        const swText = fs
+          .readFileSync(swDest, `utf8`)
+          .replace(
+            /(workbox\.setConfig\({modulePathPrefix: "[^"]+")}\);/,
+            `$1, debug: ${JSON.stringify(debug)}});`
+          )
+        fs.writeFileSync(swDest, swText)
+      }
 
       const swAppend = fs
         .readFileSync(`${__dirname}/sw-append.js`, `utf8`)

@@ -17,7 +17,7 @@ Install the package by running the following command:
 
 ### How to configure
 
-Once installation is complete, we can now add this plugin to our `gatsby-config.js`, like so:
+Once installation is complete, you can now add this plugin to your `gatsby-config.js`, like so:
 
 ```javascript:title=gatsby-config.js
 module.exports = {

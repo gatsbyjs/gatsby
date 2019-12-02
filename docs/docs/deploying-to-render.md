@@ -36,19 +36,19 @@ You can set up a Gatsby site on Render in two quick steps:
 
 That's it! Your site will be live on your Render URL (which looks like `yoursite.onrender.com`) as soon as the build is done.
 
-## Continuous Deploys
+## Continuous deploys
 
 Now that Render is connected to your repo, it will **automatically build and publish your site** any time you push to GitHub.
 
 You can choose to disable auto deploys under the **Settings** section for your site and deploy it manually from the Render dashboard.
 
-## Render CDN and Cache Invalidation
+## Render CDN and cache invalidation
 
 Render hosts your site on a global, lightning fast CDN which ensures the fastest possible download times for all your users across the globe.
 
 Every deploy automatically and instantly invalidates the CDN cache, so your users can always access the latest content on your site.
 
-## Custom Domains
+## Custom domains
 
 Add your own domains to your site easily using Render's [custom domains](https://render.com/docs/custom-domains) guide.
 

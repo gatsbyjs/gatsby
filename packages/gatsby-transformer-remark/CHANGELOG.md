@@ -3,6 +3,66 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.39](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.6.38...gatsby-transformer-remark@2.6.39) (2019-12-02)
+
+### Bug Fixes
+
+- **gatsby-core-utils:** make createContentDigest deterministic ([#19832](https://github.com/gatsbyjs/gatsby/issues/19832)) ([cb6d0e2](https://github.com/gatsbyjs/gatsby/commit/cb6d0e2))
+
+## [2.6.38](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.6.37...gatsby-transformer-remark@2.6.38) (2019-11-26)
+
+### Features
+
+- **gatsby:** Schema rebuilding ([#19092](https://github.com/gatsbyjs/gatsby/issues/19092)) ([e4dae4d](https://github.com/gatsbyjs/gatsby/commit/e4dae4d))
+
+## [2.6.37](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.6.36...gatsby-transformer-remark@2.6.37) (2019-11-18)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.6.36](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.6.35...gatsby-transformer-remark@2.6.36) (2019-11-18)
+
+### Bug Fixes
+
+- **gatsby-transformer-remark:** pass current textNode into recursive call to maintain reference ([#19546](https://github.com/gatsbyjs/gatsby/issues/19546)) ([c05b6d8](https://github.com/gatsbyjs/gatsby/commit/c05b6d8))
+
+## [2.6.35](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.6.34...gatsby-transformer-remark@2.6.35) (2019-11-15)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.6.34](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.6.33...gatsby-transformer-remark@2.6.34) (2019-11-13)
+
+### Bug Fixes
+
+- **gatsby-transformer-remark:** Check key before trying to get cache ([#19288](https://github.com/gatsbyjs/gatsby/issues/19288)) ([8b8293d](https://github.com/gatsbyjs/gatsby/commit/8b8293d))
+
+## [2.6.33](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.6.32...gatsby-transformer-remark@2.6.33) (2019-11-10)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.6.32](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.6.31...gatsby-transformer-remark@2.6.32) (2019-10-28)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.6.31](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.6.30...gatsby-transformer-remark@2.6.31) (2019-10-28)
+
+### Bug Fixes
+
+- update minor updates in packages ([#18875](https://github.com/gatsbyjs/gatsby/issues/18875)) ([b692879](https://github.com/gatsbyjs/gatsby/commit/b692879))
+
+## [2.6.30](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.6.29...gatsby-transformer-remark@2.6.30) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.6.29](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.6.28...gatsby-transformer-remark@2.6.29) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.6.28](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.6.27...gatsby-transformer-remark@2.6.28) (2019-10-09)
+
+### Features
+
+- **gatsby-transformer-remark:** Handle CJK characters for tim… ([#18303](https://github.com/gatsbyjs/gatsby/issues/18303)) ([cc6acdf](https://github.com/gatsbyjs/gatsby/commit/cc6acdf))
+
 ## [2.6.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.6.26...gatsby-transformer-remark@2.6.27) (2019-10-04)
 
 ### Bug Fixes

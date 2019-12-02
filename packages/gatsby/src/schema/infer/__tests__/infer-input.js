@@ -23,11 +23,18 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
         end: jest.fn(),
       }
     },
+    phantomActivity: () => {
+      return {
+        start: jest.fn(),
+        end: jest.fn(),
+      }
+    },
   }
 })
 
 const buildTestSchema = async nodes => {
   store.dispatch({ type: `DELETE_CACHE` })
+  store.dispatch({ type: `START_INCREMENTAL_INFERENCE` })
   nodes.forEach(node =>
     actions.createNode(node, { name: `test` })(store.dispatch)
   )
@@ -37,6 +44,7 @@ const buildTestSchema = async nodes => {
     nodeStore,
     types: [],
     thirdPartySchemas: [],
+    inferenceMetadata: store.getState().inferenceMetadata,
   })
   return { schema, schemaComposer }
 }

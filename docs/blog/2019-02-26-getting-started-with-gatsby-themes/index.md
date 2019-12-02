@@ -324,4 +324,4 @@ If you run into an error that your theme plugin can't be found, try clearing you
 
 to your _package.json_ file. Then you can use `npm run clean` in your terminal.
 
-If you happen to find this tutorial helpful, please feel free to let me know on Twitter [@KatieofCode](https://www.twitter.com/katieofcode)! I would love to see what kind of themes you build.
+If you happen to find this tutorial helpful, please feel free to let me know on Twitter [@KatieFujihara](https://www.twitter.com/KatieFujihara)! I would love to see what kind of themes you build.

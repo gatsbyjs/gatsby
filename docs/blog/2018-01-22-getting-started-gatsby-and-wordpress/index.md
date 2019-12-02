@@ -70,7 +70,7 @@ module.exports = {
     {
       resolve: `gatsby-source-wordpress`,
       options: {
-        // your wordpress source
+        // your WordPress source
         baseUrl: `amberley.me`,
         protocol: `https`,
         // is it hosted on wordpress.com, or self-hosted?

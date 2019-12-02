@@ -28,7 +28,7 @@ date: 2019-01-29
 # Hello, world!
 ```
 
-Which can then be [queried with GraphQL](/docs/querying-with-graphql/):
+Which can then be [queried with GraphQL](/docs/graphql-concepts/):
 
 ```graphql
 query {
@@ -46,7 +46,7 @@ query {
 }
 ```
 
-> **Note:** To query `Mdx` content, it must be included in the node system using a
+> **Note:** To query `MDX` content, it must be included in the node system using a
 > source like the `gatsby-source-filesystem` plugin first. Instructions for sourcing
 > content from somewhere like your `/src/pages` directory can be found on the [plugin's README](/packages/gatsby-source-filesystem/).
 
@@ -60,7 +60,6 @@ author: Jay Gatsby
 ---
 
 <h1>{props.pageContext.frontmatter.title}</h1>
-
 <span>{props.pageContext.frontmatter.author}</span>
 
 (Blog post content, components, etc.)
@@ -80,7 +79,6 @@ import FAQ from "../components/faq.mdx"
 The chart is rendered inside our MDX document.
 
 <Chart />
-
 <FAQ />
 ```
 
@@ -94,12 +92,12 @@ file might look something like this:
 
 ### Why Gatsby?
 
-Gatsby delivers faster, more secure sites and apps from a variety of data 
+Gatsby delivers faster, more secure sites and apps from a variety of data
 sources
 
 ### Where do I start?
 
-The documentation offers guides for all different skill levels, you can 
+The documentation offers guides for all different skill levels, you can
 find more info at the Gatsby's [Quick Start page](https://www.gatsbyjs.org/docs/quick-start)
 
 <!-- This default export overrides the default layout ensuring -->
@@ -152,7 +150,7 @@ export const metadata = {
   path: "/world",
 };
 
-# Hello, <span children={metadata.name} /> 
+# Hello, <span children={metadata.name} />
 
 The span above will read: "Hello, World".
 
@@ -210,7 +208,7 @@ const PurpleBorder = ({ children }) => (
 export default PurpleBorder
 ```
 
-## GraphQL Queries
+## GraphQL queries
 
 You can fetch data to use in your MDX file by exporting a `pageQuery`
 in the same way you would for a `.js` page. The queried data is passed
@@ -238,3 +236,9 @@ export const pageQuery = graphql`
   }
 `
 ```
+
+> Note: For now, this only works [if the `.mdx` file exporting the query is placed in
+> `src/pages`](https://github.com/ChristopherBiscardi/gatsby-mdx/issues/187#issuecomment-437161966).
+> Exporting GraphQL queries from `.mdx` files that are used for programmatic page creation in
+> `gatsby-node.js` via `actions.createPage` [is not currently
+> supported](https://github.com/ChristopherBiscardi/gatsby-mdx/issues/187#issuecomment-489005677).

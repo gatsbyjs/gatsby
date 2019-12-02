@@ -31,6 +31,12 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
         end: jest.fn(),
       }
     },
+    phantomActivity: () => {
+      return {
+        start: jest.fn(),
+        end: jest.fn(),
+      }
+    },
   }
 })
 
@@ -69,6 +75,7 @@ const makeNodes = () => [
 describe(`build-node-types`, () => {
   async function runQuery(query, nodes = makeNodes()) {
     store.dispatch({ type: `DELETE_CACHE` })
+    store.dispatch({ type: `START_INCREMENTAL_INFERENCE` })
     nodes.forEach(node =>
       actions.createNode(node, { name: `test` })(store.dispatch)
     )
@@ -80,6 +87,7 @@ describe(`build-node-types`, () => {
       types: [],
       typeConflictReporter,
       thirdPartySchemas: [],
+      inferenceMetadata: store.getState().inferenceMetadata,
     })
     store.dispatch({ type: `SET_SCHEMA`, payload: schema })
 
