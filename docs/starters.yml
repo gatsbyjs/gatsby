@@ -4601,6 +4601,19 @@
     - Styled Components
     - Coinbase, Fortmatic, Metamask, WalletConnect, and more
     - dFuse Blockchain Streaming and Notifications
+- url: https://gatsby-starter-cafe.netlify.com
+  repo: https://github.com/crolla97/gatsby-starter-cafe
+  description: Gatsby starter for creating a single page cafe website using Contentful and Leaflet
+  tags:
+    - CMS:Contentful
+    - Styling:SCSS
+    - Landing Page
+    - Onepage
+  features:
+    - Leaflet interactive map
+    - Instagram Feed
+    - Contentful for menu item storage
+    - Responsive design
 - url: https://gatsby-firebase-simple-auth.netlify.com/
   repo: https://github.com/marcomelilli/gatsby-firebase-simple-auth
   description: A simple Firebase Authentication Starter with protected routes
