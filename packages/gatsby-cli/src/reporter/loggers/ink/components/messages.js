@@ -33,10 +33,12 @@ const getLabel = level => {
 }
 
 export const Message = ({ level, text, duration, statusText }) => {
-  let message = text
+  let message = ``
   if (duration) {
-    message += ` - ${duration.toFixed(3)}s`
+    // Anticipate hundreds of seconds (300s = 5min) but ignore >999s
+    message += `- ${duration.toFixed(3).padStart(10, ` `)}s - `
   }
+  message += text
   if (statusText) {
     message += ` - ${statusText}`
   }
