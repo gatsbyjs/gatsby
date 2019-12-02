@@ -8790,3 +8790,29 @@
   built_by: Ezekiel Ekunola
   built_by_url: https://github.com/easybuoy/
   featured: false
+- title: Gearbox Development
+  main_url: https://gearboxbuilt.com
+  url: https://gearboxbuilt.com
+  description: >
+    Gearbox is a performance website development & optimization company based out of Canada. Built using Gatsby/WordPress.
+  categories:
+    - Agency
+    - Web Development
+    - WordPress
+    - Portfolio
+    - Programming
+    - Technology
+    - Business
+  built_by: Gearbox Development
+  built_by_url: https://gearboxbuilt.com
+  featured: false
+- title: UXWorks
+  main_url: https://uxworks.org
+  url: https://uxworks.org
+  description: Built with Gatsby, Netlify and Markdown
+  categories:
+    - Web Development
+    - Blog
+  built_by: Amrish Kushwaha
+  built_by_url: https://github.com/isamrish
+  featured: false

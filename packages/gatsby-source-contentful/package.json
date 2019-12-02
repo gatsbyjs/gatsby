@@ -1,7 +1,7 @@
 {
   "name": "gatsby-source-contentful",
   "description": "Gatsby source plugin for building websites using the Contentful CMS as a data source",
-  "version": "2.1.65",
+  "version": "2.1.66",
   "author": "Marcus Ericsson <mericsson@gmail.com> (mericsson.com)",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -16,8 +16,8 @@
     "contentful": "^6.1.3",
     "deep-map": "^1.5.0",
     "fs-extra": "^8.1.0",
-    "gatsby-plugin-sharp": "^2.3.4",
-    "gatsby-source-filesystem": "^2.1.39",
+    "gatsby-plugin-sharp": "^2.3.5",
+    "gatsby-source-filesystem": "^2.1.40",
     "is-online": "^8.2.1",
     "json-stringify-safe": "^5.0.1",
     "lodash": "^4.17.15",

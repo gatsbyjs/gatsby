@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.31](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@4.1.30...gatsby-plugin-netlify-cms@4.1.31) (2019-12-02)
+
+### Bug Fixes
+
+- **gatsby-plugin-netlify-cms:** use `require.resolve` for modules hoisting. ([#19860](https://github.com/gatsbyjs/gatsby/issues/19860)) ([1eb1584](https://github.com/gatsbyjs/gatsby/commit/1eb1584))
+
 ## [4.1.30](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@4.1.29...gatsby-plugin-netlify-cms@4.1.30) (2019-11-28)
 
 ### Bug Fixes
