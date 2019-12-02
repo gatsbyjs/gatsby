@@ -374,8 +374,7 @@ describe(`build and update individual types`, () => {
     expect(String(field.type)).toEqual(`[Foo]`)
   })
 
-  it(`doesn't change ___NODE relations (defined as string)`, async () => {
-    // FIXME: this behavior seems a bit inconsistent, we should possibly reconsider it
+  it(`changes ___NODE relations (defined as string) from object type to union and back`, async () => {
     const node = {
       id: `Bar1`,
       internal: { type: `Bar`, contentDigest: `0` },
@@ -392,9 +391,9 @@ describe(`build and update individual types`, () => {
     }
     newSchema = await addNodeAndRebuild(node2)
     field = newSchema.getType(`Bar`).getFields().related
-    expect(String(field.type)).toEqual(`Foo`)
+    expect(String(field.type)).toEqual(`FooNestedUnion`)
 
-    newSchema = await deleteNodeAndRebuild(node)
+    newSchema = await deleteNodeAndRebuild(node2)
     field = newSchema.getType(`Bar`).getFields().related
     expect(String(field.type)).toEqual(`Foo`)
   })
