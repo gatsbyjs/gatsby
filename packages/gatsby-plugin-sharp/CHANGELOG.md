@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.3.4...gatsby-plugin-sharp@2.3.5) (2019-12-02)
+
+### Bug Fixes
+
+- **gatsby-core-utils:** make createContentDigest deterministic ([#19832](https://github.com/gatsbyjs/gatsby/issues/19832)) ([cb6d0e2](https://github.com/gatsbyjs/gatsby/commit/cb6d0e2))
+
 ## [2.3.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.3.3...gatsby-plugin-sharp@2.3.4) (2019-11-26)
 
 **Note:** Version bump only for package gatsby-plugin-sharp

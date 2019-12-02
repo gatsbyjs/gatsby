@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.3.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.3.8...gatsby-source-drupal@3.3.9) (2019-12-02)
+
+### Bug Fixes
+
+- **gatsby-source-drupal:** sanity check before accessing field ([#19867](https://github.com/gatsbyjs/gatsby/issues/19867)) ([8a2aeb3](https://github.com/gatsbyjs/gatsby/commit/8a2aeb3))
+
 ## [3.3.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.3.7...gatsby-source-drupal@3.3.8) (2019-11-26)
 
 **Note:** Version bump only for package gatsby-source-drupal
