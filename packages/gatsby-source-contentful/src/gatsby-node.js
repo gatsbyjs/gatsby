@@ -262,11 +262,4 @@ exports.onPreExtractQueries = async ({ store, getNodesByType }) => {
   if (gatsbyImageDoesNotExist) {
     return
   }
-
-  // We have both gatsby-image installed as well as ImageSharp nodes so let's
-  // add our fragments to .cache/fragments.
-  await fs.copy(
-    require.resolve(`gatsby-source-contentful/src/fragments.js`),
-    `${program.directory}/.cache/fragments/contentful-asset-fragments.js`
-  )
 }
