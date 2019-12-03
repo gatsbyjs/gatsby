@@ -54,8 +54,15 @@ const IndexPage = () => {
       </p>
       <p>
         Gatsby repo:{` `}
-        <a href={gatsbyRepoData.github.repository.url}>
-          {gatsbyRepoData.github.repository.nameWithOwner}
+        <a
+          href={
+            gatsbyRepoData.github.repository &&
+            gatsbyRepoData.github.repository.nameWithOwner
+          }
+        >
+          {gatsbyRepoData.github.repository
+            ? gatsbyRepoData.github.repository.url
+            : `(to get this data at build time from GitHub you need to include a GitHub access token in the request by including a .env file)`}
         </a>
       </p>
       <h2>Runtime</h2>
