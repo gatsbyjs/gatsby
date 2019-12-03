@@ -7,7 +7,7 @@ const { processFile } = require(`./process-file`)
 /**
  * @typedef WorkerInput
  * @property {string} contentDigest
- * @property {{outputPath: string, transforms: TransformArgs[]}} operations
+ * @property {{outputPath: string, args: TransformArgs[]}} operations
  * @property {object} pluginOptions
  */
 
@@ -18,12 +18,11 @@ const { processFile } = require(`./process-file`)
 const q = queue(({ inputPaths, outputDir, args }, callback) => {
   Promise.all(
     processFile(
-      inputPaths[0],
-      args.contentDigest,
+      inputPaths[0].path,
       args.operations.map(operation => {
         return {
           outputPath: path.join(outputDir, operation.outputPath),
-          args: operation.transforms,
+          args: operation.args,
         }
       }),
       args.pluginOptions
@@ -39,7 +38,7 @@ const q = queue(({ inputPaths, outputDir, args }, callback) => {
  * @param {string} outputDir the directory to save to
  * @param {WorkerInput} args
  */
-exports.IMAGE_PROCESSING = async (inputPaths, outputDir, args) =>
+exports.IMAGE_PROCESSING = async ({ inputPaths, outputDir, args }) =>
   new Promise((resolve, reject) => {
     q.push({ inputPaths, outputDir, args }, function(err) {
       if (err) {

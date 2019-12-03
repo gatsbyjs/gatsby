@@ -44,9 +44,9 @@ const healOptions = (
   defaultArgs = {}
 ) => {
   let options = _.defaults({}, args, { quality }, defaultArgs, generalArgs)
-  options.quality = parseInt(options.quality, 10)
-  options.pngCompressionLevel = parseInt(options.pngCompressionLevel, 10)
-  options.pngCompressionSpeed = parseInt(options.pngCompressionSpeed, 10)
+  options.quality = Number(options.quality)
+  options.pngCompressionLevel = Number(options.pngCompressionLevel)
+  options.pngCompressionSpeed = Number(options.pngCompressionSpeed)
   options.toFormat = options.toFormat.toLowerCase()
   options.toFormatBase64 = options.toFormatBase64.toLowerCase()
 
@@ -63,19 +63,27 @@ const healOptions = (
   if (options.width === undefined && options.height === undefined) {
     options.width = 400
   } else if (options.width !== undefined) {
-    options.width = parseInt(options.width, 10)
+    options.width = Number(options.width)
   } else if (options.height !== undefined) {
-    options.height = parseInt(options.height, 10)
+    options.height = Number(options.height)
   }
 
   // only set maxWidth to 800 if neither maxWidth nor maxHeight is passed
   if (options.maxWidth === undefined && options.maxHeight === undefined) {
     options.maxWidth = 800
   } else if (options.maxWidth !== undefined) {
-    options.maxWidth = parseInt(options.maxWidth, 10)
+    options.maxWidth = Number(options.maxWidth)
   } else if (options.maxHeight !== undefined) {
-    options.maxHeight = parseInt(options.maxHeight, 10)
+    options.maxHeight = Number(options.maxHeight)
   }
+
+  ;[`width`, `height`, `maxWidth`, `maxHeight`].forEach(prop => {
+    if (typeof options[prop] !== `undefined` && options[prop] < 1) {
+      throw new Error(
+        `${prop} has to be a positive int larger than zero (> 0), now it's ${options[prop]}`
+      )
+    }
+  })
 
   return options
 }

@@ -1,5 +1,6 @@
 const sharp = require(`./safe-sharp`)
 const fs = require(`fs-extra`)
+const path = require(`path`)
 const debug = require(`debug`)(`gatsby:gatsby-plugin-sharp`)
 const duotone = require(`./duotone`)
 const imagemin = require(`imagemin`)
@@ -73,35 +74,9 @@ const argsWhitelist = [
  * @param {String} file
  * @param {Transform[]} transforms
  */
-exports.processFile = (file, contentDigest, transforms, options = {}) => {
+exports.processFile = (file, transforms, options = {}) => {
   let pipeline
   try {
-    // adds gatsby cloud image service to gatsby-sharp
-    // this is an experimental api so it can be removed without any warnings
-    if (process.env.GATSBY_CLOUD_IMAGE_SERVICE_URL) {
-      let cloudPromise
-
-      return transforms.map(transform => {
-        if (!cloudPromise) {
-          cloudPromise = got
-            .post(process.env.GATSBY_CLOUD_IMAGE_SERVICE_URL, {
-              body: {
-                file,
-                hash: contentDigest,
-                transforms,
-                options,
-              },
-              json: true,
-            })
-            .then(() => transform)
-
-          return cloudPromise
-        }
-
-        return Promise.resolve(transform)
-      })
-    }
-
     pipeline = sharp(file)
 
     // Keep Metadata
@@ -115,6 +90,7 @@ exports.processFile = (file, contentDigest, transforms, options = {}) => {
   return transforms.map(async transform => {
     const { outputPath, args } = transform
     debug(`Start processing ${outputPath}`)
+    await fs.ensureDir(path.dirname(outputPath))
 
     let clonedPipeline = transforms.length > 1 ? pipeline.clone() : pipeline
 
