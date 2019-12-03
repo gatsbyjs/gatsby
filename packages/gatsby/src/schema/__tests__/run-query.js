@@ -138,7 +138,8 @@ const makeNodes = () => [
 function makeGqlType(nodes) {
   const { createSchemaComposer } = require(`../../schema/schema-composer`)
   const { addInferredFields } = require(`../infer/add-inferred-fields`)
-  const { addNodes, getExampleObject } = require(`../infer/inference-metadata`)
+  const { addNodes } = require(`../infer/inference-metadata`)
+  const { getExampleObject } = require(`../infer/build-example-data`)
 
   const sc = createSchemaComposer()
   const typeName = `Test`

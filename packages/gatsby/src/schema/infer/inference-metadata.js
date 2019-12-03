@@ -63,16 +63,51 @@ type Count = number
 type NodeId = string
 
 type ValueDescriptor = {
-  int?: { total: Count, first: NodeId, example: number },
-  float?: { total: Count, first: NodeId, example: number },
-  date?: { total: Count, first: NodeId, example: string },
-  string?: { total: Count, first: NodeId, example: string, empty: Count },
-  boolean?: { total: Count, first: NodeId, example: boolean },
-  array?: { total: Count, first: NodeId, item: ValueDescriptor },
-  relatedNode?: { total: Count, first: NodeId, nodes: { [NodeId]: Count } },
-  relatedNodeList?: { total: Count, first: NodeId, nodes: { [NodeId]: Count } },
-  object?: { total: 0, first: NodeId, props: { [string]: ValueDescriptor } },
+  int?: TypeInfoNumber,
+  float?: TypeInfoNumber,
+  date?: TypeInfoDate,
+  string?: TypeInfoString,
+  boolean?: TypeInfoBoolean,
+  array?: TypeInfoArray,
+  relatedNode?: TypeInfoRelatedNode,
+  relatedNodeList?: TypeInfoRelatedNode,
+  object?: TypeInfoObject,
 }
+
+abstract type TypeInfo = {
+  first?: NodeId | void, // Set to undefined if "del"
+  total: Count,
+}
+
+type TypeInfoString = TypeInfo & {
+  empty: Count,
+  example: string,
+}
+
+type TypeInfoDate = TypeInfo & {
+  example: string,
+}
+
+type TypeInfoNumber = {
+  example: number,
+}
+
+type TypeInfoBoolean = {
+  example: boolean,
+}
+
+type TypeInfoObject = TypeInfo & {
+  props?: {[name]: Descriptor},
+}
+
+type TypeInfoArray = TypeInfo & {
+  item: ValueDescriptor,
+}
+
+type TypeInfoRelatedNode = TypeInfo & {
+  nodes: { [NodeId]: Count }
+}
+
 ```
 
 ### Caveats
@@ -85,7 +120,7 @@ type ValueDescriptor = {
   (still rare edge cases possible when reporting may be confusing, i.e. when node is deleted)
 */
 
-const { groupBy, isEqual } = require(`lodash`)
+const { isEqual } = require(`lodash`)
 const is32BitInteger = require(`./is-32-bit-integer`)
 const { looksLikeADate } = require(`../types/date`)
 
@@ -348,177 +383,8 @@ const deleteNode = (metadata, node) => updateTypeMetadata(metadata, `del`, node)
 const addNodes = (metadata = initialMetadata(), nodes) =>
   nodes.reduce(addNode, metadata)
 
-const isMixedNumber = ({ float, int }) =>
-  float && float.total > 0 && int && int.total > 0
-
-const isMixOfDateAndString = ({ date, string }) =>
-  date && date.total > 0 && string && string.total > 0
-
-const hasOnlyEmptyStrings = ({ string }) =>
-  string && string.empty === string.total
-
 const possibleTypes = (descriptor = {}) =>
   Object.keys(descriptor).filter(type => descriptor[type].total > 0)
-
-const resolveWinnerType = descriptor => {
-  const candidates = possibleTypes(descriptor)
-  if (candidates.length === 1) {
-    return [candidates[0]]
-  }
-  if (candidates.length === 2 && isMixedNumber(descriptor)) {
-    return [`float`]
-  }
-  if (candidates.length === 2 && isMixOfDateAndString(descriptor)) {
-    return [hasOnlyEmptyStrings(descriptor) ? `date` : `string`]
-  }
-  if (candidates.length > 1) {
-    return [`null`, true]
-  }
-  return [`null`]
-}
-
-const prepareConflictExamples = (descriptor, isArrayItem) => {
-  const typeNameMapper = typeName => {
-    if (typeName === `relatedNode`) {
-      return `string`
-    }
-    if (typeName === `relatedNodeList`) {
-      return `[string]`
-    }
-    return [`float`, `int`].includes(typeName) ? `number` : typeName
-  }
-  const reportedValueMapper = typeName => {
-    if (typeName === `relatedNode`) {
-      const { nodes } = descriptor.relatedNode
-      return Object.keys(nodes).find(key => nodes[key] > 0)
-    }
-    if (typeName === `relatedNodeList`) {
-      const { nodes } = descriptor.relatedNodeList
-      return Object.keys(nodes).filter(key => nodes[key] > 0)
-    }
-    if (typeName === `object`) {
-      return getExampleObject({ typeName, fieldMap: descriptor.object.props })
-    }
-    if (typeName === `array`) {
-      const itemValue = buildExampleValue({
-        descriptor: descriptor.array.item,
-        isArrayItem: true,
-      })
-      return itemValue === null || itemValue === undefined ? [] : [itemValue]
-    }
-    return descriptor[typeName].example
-  }
-  const conflictingTypes = possibleTypes(descriptor)
-
-  if (isArrayItem) {
-    // Differentiate conflict examples by node they were first seen in.
-    // See Caveats section in the header of this file
-    const groups = groupBy(
-      conflictingTypes,
-      type => descriptor[type].first || ``
-    )
-    return Object.keys(groups).map(nodeId => {
-      return {
-        type: `[${groups[nodeId].map(typeNameMapper).join(`,`)}]`,
-        value: groups[nodeId].map(reportedValueMapper),
-      }
-    })
-  }
-
-  return conflictingTypes.map(type => {
-    return {
-      type: typeNameMapper(type),
-      value: reportedValueMapper(type),
-    }
-  })
-}
-
-const buildExampleValue = ({
-  descriptor,
-  typeConflictReporter,
-  isArrayItem = false,
-  path = ``,
-}) => {
-  const [type, conflicts = false] = resolveWinnerType(descriptor)
-
-  if (conflicts && typeConflictReporter) {
-    typeConflictReporter.addConflict(
-      path,
-      prepareConflictExamples(descriptor, isArrayItem)
-    )
-  }
-
-  const typeInfo = descriptor[type]
-
-  switch (type) {
-    case `null`:
-      return null
-
-    case `date`:
-    case `string`: {
-      if (isMixOfDateAndString(descriptor)) {
-        return hasOnlyEmptyStrings(descriptor) ? `1978-09-26` : `String`
-      }
-      return typeInfo.example
-    }
-
-    case `array`: {
-      const { item } = typeInfo
-      const exampleItemValue = item
-        ? buildExampleValue({
-            descriptor: item,
-            isArrayItem: true,
-            typeConflictReporter,
-            path,
-          })
-        : null
-      return exampleItemValue === null ? null : [exampleItemValue]
-    }
-
-    case `relatedNode`:
-    case `relatedNodeList`: {
-      const { nodes = {} } = typeInfo
-      return {
-        multiple: type === `relatedNodeList`,
-        linkedNodes: Object.keys(nodes).filter(key => nodes[key] > 0),
-      }
-    }
-
-    case `object`: {
-      const { props } = typeInfo
-      let hasKeys = false
-      const result = {}
-      Object.keys(props).forEach(prop => {
-        const value = buildExampleValue({
-          descriptor: typeInfo.props[prop],
-          typeConflictReporter,
-          path: `${path}.${prop}`,
-        })
-        if (value !== null) {
-          hasKeys = true
-          result[prop] = value
-        }
-      }, {})
-      return hasKeys ? result : null
-    }
-
-    default:
-      return typeInfo.example
-  }
-}
-
-const getExampleObject = ({ fieldMap = {}, typeName, typeConflictReporter }) =>
-  Object.keys(fieldMap).reduce((acc, key) => {
-    const value = buildExampleValue({
-      path: `${typeName}.${key}`,
-      descriptor: fieldMap[key],
-      typeConflictReporter,
-    })
-    if (key && value !== null) {
-      acc[key] = value
-    }
-    return acc
-  }, {})
 
 const isEmpty = ({ fieldMap }) =>
   Object.keys(fieldMap).every(
@@ -560,6 +426,5 @@ module.exports = {
   isEmpty,
   hasNodes,
   haveEqualFields,
-  getExampleObject,
   initialMetadata,
 }
