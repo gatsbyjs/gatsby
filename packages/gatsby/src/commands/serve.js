@@ -93,7 +93,7 @@ module.exports = async program => {
     // Express already handles trailing slashes, e.g. /hello/ => /hello/index.html
     if (req.url.slice(-1) !== `/`) {
       res.sendFile(req.url + `/index.html`, {
-        root
+        root,
       })
     } else {
       next()
