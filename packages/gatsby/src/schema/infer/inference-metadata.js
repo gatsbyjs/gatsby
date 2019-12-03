@@ -56,6 +56,7 @@ type TypeMetadata = {
   fieldMap?: { [string]: ValueDescriptor },
   typeName?: string,
   dirty?: boolean, // tracks structural changes only
+  disabled?: boolean,
 }
 
 type Count = number
@@ -68,7 +69,8 @@ type ValueDescriptor = {
   string?: { total: Count, first: NodeId, example: string, empty: Count },
   boolean?: { total: Count, first: NodeId, example: boolean },
   array?: { total: Count, first: NodeId, item: ValueDescriptor },
-  listOfUnion?: { total: Count, first: NodeId, nodes: { [NodeId]: Count } },
+  relatedNode?: { total: Count, first: NodeId, nodes: { [NodeId]: Count } },
+  relatedNodeList?: { total: Count, first: NodeId, nodes: { [NodeId]: Count } },
   object?: { total: 0, first: NodeId, props: { [string]: ValueDescriptor } },
 }
 ```
@@ -93,6 +95,9 @@ const getType = (value, key) => {
     case `number`:
       return is32BitInteger(value) ? `int` : `float`
     case `string`:
+      if (key.includes(`___NODE`)) {
+        return `relatedNode`
+      }
       return looksLikeADate(value) ? `date` : `string`
     case `boolean`:
       return `boolean`
@@ -104,7 +109,7 @@ const getType = (value, key) => {
         if (value.length === 0) {
           return `null`
         }
-        return key.includes(`___NODE`) ? `listOfUnion` : `array`
+        return key.includes(`___NODE`) ? `relatedNodeList` : `array`
       }
       if (!Object.keys(value).length) return `null`
       return `object`
@@ -113,19 +118,47 @@ const getType = (value, key) => {
   }
 }
 
-const updateValueDescriptor = ({
-  nodeId,
-  key,
-  value,
-  operation = `add`,
-  descriptor = {},
-}) => {
+const updateValueDescriptor = (
+  { nodeId, key, value, operation = `add` /* add | del */, descriptor = {} },
+  path = []
+) => {
+  // The object may be traversed multiple times from root.
+  // Each time it does it should not revisit the same node twice
+  if (path.includes(value)) {
+    return [descriptor, false]
+  }
+
   const typeName = getType(value, key)
 
   if (typeName === `null`) {
     return [descriptor, false]
   }
 
+  path.push(value)
+
+  const ret = _updateValueDescriptor(
+    nodeId,
+    key,
+    value,
+    operation,
+    descriptor,
+    path,
+    typeName
+  )
+
+  path.pop()
+
+  return ret
+}
+const _updateValueDescriptor = (
+  nodeId,
+  key,
+  value,
+  operation,
+  descriptor,
+  path,
+  typeName
+) => {
   const delta = operation === `del` ? -1 : 1
   const typeInfo = descriptor[typeName] || { total: 0 }
   typeInfo.total += delta
@@ -138,25 +171,31 @@ const updateValueDescriptor = ({
   // Keeping track of the first node for this type. Only used for better conflict reporting.
   // (see Caveats section in the header comments)
   if (operation === `add`) {
-    typeInfo.first = typeInfo.first || nodeId
+    if (!typeInfo.first) {
+      typeInfo.first = nodeId
+    }
   } else if (operation === `del`) {
-    typeInfo.first =
-      typeInfo.first === nodeId || typeInfo.total === 0
-        ? undefined
-        : typeInfo.first
+    if (typeInfo.first === nodeId || typeInfo.total === 0) {
+      typeInfo.first = undefined
+    }
   }
 
   switch (typeName) {
     case `object`: {
       const { props = {} } = typeInfo
       Object.keys(value).forEach(key => {
-        const [propDescriptor, propDirty] = updateValueDescriptor({
-          nodeId,
-          key,
-          value: value[key],
-          operation,
-          descriptor: props[key],
-        })
+        const v = value[key]
+
+        const [propDescriptor, propDirty] = updateValueDescriptor(
+          {
+            nodeId,
+            key,
+            value: v,
+            operation,
+            descriptor: props[key],
+          },
+          path
+        )
         props[key] = propDescriptor
         dirty = dirty || propDirty
       })
@@ -165,27 +204,36 @@ const updateValueDescriptor = ({
     }
     case `array`: {
       value.forEach(item => {
-        const [itemDescriptor, itemDirty] = updateValueDescriptor({
-          nodeId,
-          descriptor: typeInfo.item,
-          operation,
-          value: item,
-          key,
-        })
+        const [itemDescriptor, itemDirty] = updateValueDescriptor(
+          {
+            nodeId,
+            descriptor: typeInfo.item,
+            operation,
+            value: item,
+            key,
+          },
+          path
+        )
+
         typeInfo.item = itemDescriptor
         dirty = dirty || itemDirty
       })
       break
     }
-    case `listOfUnion`: {
+    case `relatedNode`:
+    case `relatedNodeList`: {
       const { nodes = {} } = typeInfo
-      value.forEach(nodeId => {
+      const listOfNodeIds = Array.isArray(value) ? value : [value]
+      listOfNodeIds.forEach(nodeId => {
         nodes[nodeId] = (nodes[nodeId] || 0) + delta
 
         // Treat any new related node addition or removal as a structural change
         // FIXME: this will produce false positives as this node can be
-        //  of the same type as another node already in the map (but we don't know it)
-        dirty = dirty || nodes[nodeId] === 0 || nodes[nodeId] === 1
+        //  of the same type as another node already in the map (but we don't know it here)
+        dirty =
+          dirty ||
+          nodes[nodeId] === 0 ||
+          (operation === `add` && nodes[nodeId] === 1)
       })
       typeInfo.nodes = nodes
       break
@@ -245,7 +293,8 @@ const descriptorsAreEqual = (descriptor, otherDescriptor) => {
         )
       )
     }
-    case `listOfUnion`: {
+    case `relatedNode`:
+    case `relatedNodeList`: {
       return isEqual(descriptor.nodes, otherDescriptor.nodes)
     }
     default:
@@ -256,7 +305,10 @@ const descriptorsAreEqual = (descriptor, otherDescriptor) => {
 const nodeFields = (node, ignoredFields = new Set()) =>
   Object.keys(node).filter(key => !ignoredFields.has(key))
 
-const updateTypeMetadata = (metadata = {}, operation, node) => {
+const updateTypeMetadata = (metadata = initialMetadata(), operation, node) => {
+  if (metadata.disabled) {
+    return metadata
+  }
   metadata.total = (metadata.total || 0) + (operation === `add` ? 1 : -1)
   if (metadata.ignored) {
     return metadata
@@ -280,15 +332,21 @@ const updateTypeMetadata = (metadata = {}, operation, node) => {
   return metadata
 }
 
-const ignore = (metadata = {}, set = true) => {
+const ignore = (metadata = initialMetadata(), set = true) => {
   metadata.ignored = set
   metadata.fieldMap = {}
   return metadata
 }
 
+const disable = (metadata = initialMetadata(), set = true) => {
+  metadata.disabled = set
+  return metadata
+}
+
 const addNode = (metadata, node) => updateTypeMetadata(metadata, `add`, node)
 const deleteNode = (metadata, node) => updateTypeMetadata(metadata, `del`, node)
-const addNodes = (metadata, nodes) => nodes.reduce(addNode, metadata)
+const addNodes = (metadata = initialMetadata(), nodes) =>
+  nodes.reduce(addNode, metadata)
 
 const isMixedNumber = ({ float, int }) =>
   float && float.total > 0 && int && int.total > 0
@@ -321,14 +379,21 @@ const resolveWinnerType = descriptor => {
 
 const prepareConflictExamples = (descriptor, isArrayItem) => {
   const typeNameMapper = typeName => {
-    if (typeName === `listOfUnion`) {
+    if (typeName === `relatedNode`) {
+      return `string`
+    }
+    if (typeName === `relatedNodeList`) {
       return `[string]`
     }
     return [`float`, `int`].includes(typeName) ? `number` : typeName
   }
   const reportedValueMapper = typeName => {
-    if (typeName === `listOfUnion`) {
-      const { nodes } = descriptor.listOfUnion
+    if (typeName === `relatedNode`) {
+      const { nodes } = descriptor.relatedNode
+      return Object.keys(nodes).find(key => nodes[key] > 0)
+    }
+    if (typeName === `relatedNodeList`) {
+      const { nodes } = descriptor.relatedNodeList
       return Object.keys(nodes).filter(key => nodes[key] > 0)
     }
     if (typeName === `object`) {
@@ -410,9 +475,13 @@ const buildExampleValue = ({
       return exampleItemValue === null ? null : [exampleItemValue]
     }
 
-    case `listOfUnion`: {
+    case `relatedNode`:
+    case `relatedNodeList`: {
       const { nodes = {} } = typeInfo
-      return Object.keys(nodes).filter(key => nodes[key] > 0)
+      return {
+        multiple: type === `relatedNodeList`,
+        linkedNodes: Object.keys(nodes).filter(key => nodes[key] > 0),
+      }
     }
 
     case `object`: {
@@ -469,13 +538,28 @@ const haveEqualFields = (
   )
 }
 
+const initialMetadata = state => {
+  return {
+    typeName: undefined,
+    disabled: false,
+    ignored: false,
+    dirty: false,
+    total: 0,
+    ignoredFields: undefined,
+    fieldMap: {},
+    ...state,
+  }
+}
+
 module.exports = {
   addNode,
   addNodes,
   deleteNode,
   ignore,
+  disable,
   isEmpty,
   hasNodes,
   haveEqualFields,
   getExampleObject,
+  initialMetadata,
 }

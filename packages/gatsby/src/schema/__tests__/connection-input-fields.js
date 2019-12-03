@@ -134,6 +134,7 @@ function makeNodes() {
 
 async function queryResult(nodes, query) {
   store.dispatch({ type: `DELETE_CACHE` })
+  store.dispatch({ type: `START_INCREMENTAL_INFERENCE` })
   nodes.forEach(node =>
     actions.createNode(node, { name: `test` })(store.dispatch)
   )

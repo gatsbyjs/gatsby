@@ -691,4 +691,97 @@ describe(`NodeModel`, () => {
       })
     })
   })
+
+  describe(`circular references`, () => {
+    describe(`directly on a node`, () => {
+      beforeEach(async () => {
+        // This tests whether addRootNodeToInlineObject properly prevents re-traversing the same key-value pair infinitely
+        const circular = { i_am: `recursion!` }
+        circular.circled = circular
+
+        const node = {
+          id: `circleId`,
+          parent: null,
+          children: [],
+          inlineObject: {
+            field: `fieldOfFirstNode`,
+          },
+          inlineArray: [1, 2, 3],
+          circular,
+          internal: {
+            type: `Test`,
+            contentDigest: `digest1`,
+          },
+        }
+        actions.createNode(node, { name: `test` })(store.dispatch)
+
+        await build({})
+        const {
+          schemaCustomization: { composer: schemaComposer },
+        } = store.getState()
+        schema = store.getState().schema
+
+        nodeModel = new LocalNodeModel({
+          schema,
+          schemaComposer,
+          nodeStore,
+          createPageDependency,
+        })
+      })
+
+      it(`trackInlineObjectsInRootNode should not infinitely loop on a circular reference`, () => {
+        const node = nodeModel.getAllNodes({ type: `Test` })[0]
+        const copiedInlineObject = { ...node.inlineObject }
+        nodeModel.trackInlineObjectsInRootNode(copiedInlineObject)
+
+        expect(nodeModel._trackedRootNodes instanceof Set).toBe(true)
+        expect(nodeModel._trackedRootNodes.has(node.id)).toEqual(true)
+      })
+    })
+    describe(`not directly on a node`, () => {
+      beforeEach(async () => {
+        // This tests whether addRootNodeToInlineObject properly prevents re-traversing the same key-value pair infinitely
+        const circular = { i_am: `recursion!` }
+        circular.circled = { bar: { circular } }
+
+        const node = {
+          id: `circleId`,
+          parent: null,
+          children: [],
+          inlineObject: {
+            field: `fieldOfFirstNode`,
+          },
+          inlineArray: [1, 2, 3],
+          foo: { circular },
+          internal: {
+            type: `Test`,
+            contentDigest: `digest1`,
+          },
+        }
+        actions.createNode(node, { name: `test` })(store.dispatch)
+
+        await build({})
+        const {
+          schemaCustomization: { composer: schemaComposer },
+        } = store.getState()
+        schema = store.getState().schema
+
+        nodeModel = new LocalNodeModel({
+          schema,
+          schemaComposer,
+          nodeStore,
+          createPageDependency,
+        })
+      })
+
+      it(`trackInlineObjectsInRootNode should not infinitely loop on a circular reference`, () => {
+        const node = nodeModel.getAllNodes({ type: `Test` })[0]
+        const copiedInlineObject = { ...node.inlineObject }
+        nodeModel.trackInlineObjectsInRootNode(copiedInlineObject)
+
+        expect(nodeModel._trackedRootNodes instanceof Set).toBe(true)
+        expect(nodeModel._trackedRootNodes.has(node.id)).toEqual(true)
+      })
+    })
+  })
 })
