@@ -4,7 +4,7 @@ import Layout from "../components/layout"
 
 const IndexPage = () => {
   // ----------------------
-  // BUILD TIME DATA FETCHING
+  // BUILD TIME DATA FETCHING USING GRAPHQL
   // ----------------------
   const gatsbyRepoData = useStaticQuery(graphql`
     query {
@@ -39,7 +39,7 @@ const IndexPage = () => {
       <h1>Examples</h1>
       <h2>Build Time</h2>
       <p>
-        This data from GitHub is fetched using gatsby-source-graphql file at
+        This data from GitHub is fetched using gatsby-source-graphql at
         build time. This data will only update when the site is rebuilt by
         Gatsby, but removes the need and latency to hit the GitHub API when the
         site loads.
