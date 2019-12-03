@@ -54,7 +54,7 @@
     "build": "babel src --out-dir lib --ignore \"**/__tests__\",\"**/__mocks__\"",
     "prepare": "cross-env NODE_ENV=production npm run build",
     "jest": "jest",
-    "postinstall": "node src/postinstall.js",
+    "postinstall": "node src/postinstall.js || true",
     "watch": "babel -w src --out-dir lib --ignore \"**/__tests__\",\"**/__mocks__\""
   },
   "yargs": {
