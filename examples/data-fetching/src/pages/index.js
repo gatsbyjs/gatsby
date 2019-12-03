@@ -39,10 +39,18 @@ const IndexPage = () => {
       <h1>Examples</h1>
       <h2>Build Time</h2>
       <p>
-        This data from GitHub is fetched using gatsby-source-graphql at
-        build time. This data will only update when the site is rebuilt by
-        Gatsby, but removes the need and latency to hit the GitHub API when the
-        site loads.
+        This data from GitHub is fetched using gatsby-source-graphql at build
+        time. This data will only update when the site is rebuilt by Gatsby, but
+        removes the need and latency to hit the GitHub API when the site loads.
+        Without needing to hit an API, the site will load faster for visitors
+        because the data was already loaded when the site built. This is
+        especially beneficial for users with slower internet connections or if
+        you want to allow your site to be visited offline using a plugin like
+        {` `}
+        <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-offline/">
+          gatsby-plugin-offline
+        </a>
+        .
       </p>
       <p>
         Gatsby repo:{` `}
