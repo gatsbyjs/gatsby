@@ -626,9 +626,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
           return null
         } else if (!_.get(edge, `node.fields.hasScreenshot`)) {
           reporter.warn(
-            `Starter showcase entry "${
-              edge.node.repo
-            }" seems offline. Skipping.`
+            `Starter showcase entry "${edge.node.repo}" seems offline. Skipping.`
           )
           return null
         } else {
@@ -667,9 +665,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
         if (!edge.node.fields.slug) return
         if (!edge.node.fields.hasScreenshot) {
           reporter.warn(
-            `Site showcase entry "${
-              edge.node.main_url
-            }" seems offline. Skipping.`
+            `Site showcase entry "${edge.node.main_url}" seems offline. Skipping.`
           )
           return
         }
