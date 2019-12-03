@@ -89,9 +89,11 @@ module.exports = async program => {
   const matchPaths = await readMatchPaths(program)
   router.use(matchPathRouter(matchPaths, { root }))
   router.use((req, res, next) => {
-    if (!/.+\..+$/g.test(req.url) && req.url.slice(-1) !== `/`) {
+    // Handle URLs without trailing slashes, e.g. /hello => /hello/index.html
+    // Express already handles trailing slashes, e.g. /hello/ => /hello/index.html
+    if (req.url.slice(-1) !== `/`) {
       res.sendFile(req.url + `/index.html`, {
-        root,
+        root
       })
     } else {
       next()
