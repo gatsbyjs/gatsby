@@ -1843,17 +1843,21 @@ Fragments can be nested inside other fragments, and multiple fragments can be us
 
 Data doesn't only have to be queried at build time and remain solely static. You can query data at runtime the same way you can fetch data in a regular React app.
 
+#### Prerequisites
+
+- A JavaScript file like a page component: `index.js`
+
 #### Directions
 
-1. In a file with a React component defined, like a page in `src/pages`, or a layout component, import hooks for `useState` and `useEffect`.
+1. In a file with a React component defined, like a page in `src/pages` or a layout component, import React hooks for `useState` and `useEffect`.
 
-```jsx
+```jsx:title=src/pages/index.js
 import React, { useState, useEffect } from "react"
 ```
 
-2. Inside the component, wrap a function to fetch data in a `useEffect` hook so it will retrieve data when the component mounts. `await` a result from the `fetch` API, and set that data into a variable with `useState`.
+2. Inside the component, wrap a function to fetch data in a `useEffect` hook so it will asynchronously retrieve data when the component mounts in the browser client. Then, `await` the result with the `fetch` API, and call the set function from the `useState` hook (in this case `setStarsCount`) to save the state variable (`starCount`) to the data returned from `fetch`.
 
-```jsx:title
+```jsx:title=src/pages/index.js
 import React, { useState, useEffect } from "react"
 
 const IndexPage = () => {
@@ -1874,8 +1878,9 @@ const IndexPage = () => {
 
   return (
     <section>
-      <p>Runtime Data: Star count for the Gatsby repo {starsCount}</p> //
-      highlight-line
+      // highlight-start
+      <p>Runtime Data: Star count for the Gatsby repo {starsCount}</p>
+      // highlight-end
     </section>
   )
 }
