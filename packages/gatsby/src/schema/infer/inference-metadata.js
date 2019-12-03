@@ -69,7 +69,8 @@ type ValueDescriptor = {
   string?: { total: Count, first: NodeId, example: string, empty: Count },
   boolean?: { total: Count, first: NodeId, example: boolean },
   array?: { total: Count, first: NodeId, item: ValueDescriptor },
-  listOfUnion?: { total: Count, first: NodeId, nodes: { [NodeId]: Count } },
+  relatedNode?: { total: Count, first: NodeId, nodes: { [NodeId]: Count } },
+  relatedNodeList?: { total: Count, first: NodeId, nodes: { [NodeId]: Count } },
   object?: { total: 0, first: NodeId, props: { [string]: ValueDescriptor } },
 }
 ```
@@ -94,6 +95,9 @@ const getType = (value, key) => {
     case `number`:
       return is32BitInteger(value) ? `int` : `float`
     case `string`:
+      if (key.includes(`___NODE`)) {
+        return `relatedNode`
+      }
       return looksLikeADate(value) ? `date` : `string`
     case `boolean`:
       return `boolean`
@@ -105,7 +109,7 @@ const getType = (value, key) => {
         if (value.length === 0) {
           return `null`
         }
-        return key.includes(`___NODE`) ? `listOfUnion` : `array`
+        return key.includes(`___NODE`) ? `relatedNodeList` : `array`
       }
       if (!Object.keys(value).length) return `null`
       return `object`
@@ -115,7 +119,7 @@ const getType = (value, key) => {
 }
 
 const updateValueDescriptor = (
-  { nodeId, key, value, operation = `add` /*: add | del*/, descriptor = {} },
+  { nodeId, key, value, operation = `add` /* add | del */, descriptor = {} },
   path = []
 ) => {
   // The object may be traversed multiple times from root.
@@ -216,15 +220,20 @@ const _updateValueDescriptor = (
       })
       break
     }
-    case `listOfUnion`: {
+    case `relatedNode`:
+    case `relatedNodeList`: {
       const { nodes = {} } = typeInfo
-      value.forEach(nodeId => {
+      const listOfNodeIds = Array.isArray(value) ? value : [value]
+      listOfNodeIds.forEach(nodeId => {
         nodes[nodeId] = (nodes[nodeId] || 0) + delta
 
         // Treat any new related node addition or removal as a structural change
         // FIXME: this will produce false positives as this node can be
-        //  of the same type as another node already in the map (but we don't know it)
-        dirty = dirty || nodes[nodeId] === 0 || nodes[nodeId] === 1
+        //  of the same type as another node already in the map (but we don't know it here)
+        dirty =
+          dirty ||
+          nodes[nodeId] === 0 ||
+          (operation === `add` && nodes[nodeId] === 1)
       })
       typeInfo.nodes = nodes
       break
@@ -284,7 +293,8 @@ const descriptorsAreEqual = (descriptor, otherDescriptor) => {
         )
       )
     }
-    case `listOfUnion`: {
+    case `relatedNode`:
+    case `relatedNodeList`: {
       return isEqual(descriptor.nodes, otherDescriptor.nodes)
     }
     default:
@@ -369,14 +379,21 @@ const resolveWinnerType = descriptor => {
 
 const prepareConflictExamples = (descriptor, isArrayItem) => {
   const typeNameMapper = typeName => {
-    if (typeName === `listOfUnion`) {
+    if (typeName === `relatedNode`) {
+      return `string`
+    }
+    if (typeName === `relatedNodeList`) {
       return `[string]`
     }
     return [`float`, `int`].includes(typeName) ? `number` : typeName
   }
   const reportedValueMapper = typeName => {
-    if (typeName === `listOfUnion`) {
-      const { nodes } = descriptor.listOfUnion
+    if (typeName === `relatedNode`) {
+      const { nodes } = descriptor.relatedNode
+      return Object.keys(nodes).find(key => nodes[key] > 0)
+    }
+    if (typeName === `relatedNodeList`) {
+      const { nodes } = descriptor.relatedNodeList
       return Object.keys(nodes).filter(key => nodes[key] > 0)
     }
     if (typeName === `object`) {
@@ -458,9 +475,13 @@ const buildExampleValue = ({
       return exampleItemValue === null ? null : [exampleItemValue]
     }
 
-    case `listOfUnion`: {
+    case `relatedNode`:
+    case `relatedNodeList`: {
       const { nodes = {} } = typeInfo
-      return Object.keys(nodes).filter(key => nodes[key] > 0)
+      return {
+        multiple: type === `relatedNodeList`,
+        linkedNodes: Object.keys(nodes).filter(key => nodes[key] > 0),
+      }
     }
 
     case `object`: {
