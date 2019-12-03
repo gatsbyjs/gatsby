@@ -18,7 +18,7 @@ Compiling pages at build time is useful when your website content won't change o
 
 ## Combining build time and client runtime data
 
-To illustrate this combination of build time and runtime data, this guide uses code from a [small example site](https://gatsby-data-fetching.netlify.com). It uses the [`gatsby-source-graphql`](/packages/gatsby-source-graphql/) plugin to fetch data from the GitHub API at build time for static content like the name and url to a repository, and the [`fetch` API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) to retrieve more dynamic data from the GitHub API on the [client-side](/docs/glossary#client-side) like star counts when the page loads in the browser.
+To illustrate a combination of build time and client runtime data, this guide uses code from a [small example site](https://gatsby-data-fetching.netlify.com). It uses the [`gatsby-source-graphql`](/packages/gatsby-source-graphql/) plugin to fetch data from GitHub's GraphQL API at build time for static content like the name and url to a repository, and the [`fetch` API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) to retrieve more dynamic data from the GitHub API on the [client-side](/docs/glossary#client-side) like star counts when the page loads in the browser.
 
 > Check out the code from the [full example here](https://github.com/gatsbyjs/gatsby/tree/master/examples/data-fetching).
 
@@ -46,7 +46,7 @@ module.exports = {
       options: {
         typeName: `GitHub`,
         fieldName: `github`,
-        url: `https://api.github.com/graphql`,
+        url: `https://api.github.com/graphql`, //highlight-line
         headers: {
           Authorization: `Bearer your-github-token`,
         },
@@ -62,7 +62,7 @@ Source plugins take advantage of the [`sourceNodes` API](/docs/node-apis/#source
 
 #### Writing a query to gather the static data needed for a page
 
-With the source plugin installed and added to your config, you can write a [static query](/docs/use-static-query/) that will pull the data from GraphQL API and will retrieve the necessary data while building the site.
+With the source plugin installed and added to your config, you can write a [static query](/docs/use-static-query/) that will retrieve the necessary data from Gatsby's data layer while building the site.
 
 ```jsx:title=src/pages/index.js
 import React from "react"
@@ -87,7 +87,7 @@ const IndexPage = () => {
     <section>
       <p>
         Build Time Data: Gatsby repo{` `}
-        <a href="gatsbyRepoData.github.repository.nameWithOwner.url">
+        <a href={gatsbyRepoData.github.repository.nameWithOwner.url}>
           {gatsbyRepoData.github.repository.nameWithOwner} // highlight-line
         </a>
       </p>
@@ -98,13 +98,13 @@ const IndexPage = () => {
 export default IndexPage
 ```
 
-### Fetching data at runtime
+### Fetching data at client-side runtime
 
 For fetching data at runtime, you can use any method to retrieve data that you would use in a regular React app.
 
 #### Retrieving data with the `fetch` API
 
-The `fetch` API is a modern implementation of the older, well-supported `XMLHttpRequest`.
+The `fetch` API is a modern implementation of the older, well-supported `XMLHttpRequest` (also known as AJAX).
 
 With the `useState` and `useEffect` hooks from React, you can query for the data once when the page loads, and save the data returned to a variable called `starsCount`. Every time the page is refreshed, `fetch` will go to the GitHub API to retrieve the most up-to-date version of the data.
 
@@ -143,7 +143,7 @@ const IndexPage = () => {
     <section>
       <p>
         Build Time Data: Gatsby repo{` `}
-        <a href="gatsbyRepoData.github.repository.nameWithOwner.url">
+        <a href={gatsbyRepoData.github.repository.nameWithOwner.url}>
           {gatsbyRepoData.github.repository.nameWithOwner}
         </a>
       </p>
