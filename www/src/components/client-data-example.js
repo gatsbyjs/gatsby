@@ -21,11 +21,11 @@ const ClientDataExample = () => {
         border: theme => `1px solid ${theme.colors.pullquote.borderColor}`,
         borderRadius: `2`,
         padding: `3`,
+        marginBottom: `2`,
       }}
     >
       <span>
-        Star count for the Gatsby repo: <b>{starsCount}</b> (this data is
-        fetched at runtime, if you refresh the page this number will update)
+        Star count for the Gatsby repo: <b>{starsCount}</b>
       </span>
     </div>
   )

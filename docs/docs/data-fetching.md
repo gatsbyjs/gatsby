@@ -2,6 +2,7 @@
 title: Build Time and Client Runtime Data Fetching
 ---
 
+import BuildDataExample from "../../www/src/components/build-data-example.js"
 import ClientDataExample from "../../www/src/components/client-data-example.js"
 
 This guide demonstrates how to fetch data at both [_build time_](/docs/glossary#build) and [_runtime_](/docs/glossary#runtime) in Gatsby.
@@ -24,13 +25,13 @@ To illustrate a combination of build time and client runtime data, this guide us
 
 ### Fetching data at build time
 
-For fetching data at build time, you can create an integration with a third-party system by sourcing data in your `gatsby-node` file and creating nodes for the GraphQL layer that become queryable in pages. This is the same method that source plugins implement to [source data](/docs/content-and-data/) while the site builds. You can read about that process in the [Creating a Source Plugin guide](/docs/creating-a-source-plugin/).
+In order to fetch data at build time, you can use a source plugin or source data yourself. To source data yourself you can create an integration with a third-party system by creating nodes for the GraphQL layer in your `gatsby-node` file from retrieved data that becomes queryable in pages. This is the same method that source plugins implement to [source data](/docs/content-and-data/) while the site builds. You can read about that process in the [Creating a Source Plugin guide](/docs/creating-a-source-plugin/).
 
 > This process of fetching data at build time and creating pages from the data is [covered in more depth in the tutorial](/tutorial/part-five/) as well as the docs for [creatiing pages from data programmatically](/docs/programmatically-create-pages-from-data/).
 
 #### Source data to be queried at build time
 
-The simplest way to source data is to take advantage of an existing source plugin. To install the `gatsby-source-graphql`:
+To source data using an existing source plugin you need to install a plugin and add it to your config. To use `gatsby-source-graphql`, first install it:
 
 ```shell
 npm install --save gatsby-source-graphql
@@ -58,7 +59,44 @@ module.exports = {
 
 > Because the GitHub GraphQL API requires you to be authenticated to make requests, you need to create a token that you would replace in the header for Authorization that says "your-github-token". You can [secure your key using environment variables](/docs/environment-variables/) if you're pushing code to a public repository.
 
-Source plugins take advantage of the [`sourceNodes` API](/docs/node-apis/#sourceNodes) and the [`createNode` action](/docs/actions/#createNode) provided by Gatsby to make your data queryable during the build process.
+Alternately, if you want to source data yourself you can use APIs Gatsby provides. Source plugins take advantage of the [`sourceNodes` API](/docs/node-apis/#sourceNodes) and the [`createNode` action](/docs/actions/#createNode) provided by Gatsby to make your data queryable during the build process. If you want to source data yourself you can add a section of code like this using the `createNode` API to add a node to your data layer manually:
+
+```js:title=gatsby-node.js
+const fetch = require(`node-fetch`)
+
+exports.sourceNodes = async ({
+  actions: { createNode },
+  createContentDigest,
+}) => {
+  // get data from GitHub API at build time
+  const result = await fetch(`https://api.github.com/repos/gatsbyjs/gatsby`)
+  const resultData = await result.json()
+  // create node for build time data example in the docs
+  createNode({
+    nameWithOwner: resultData.full_name,
+    url: resultData.html_url,
+    // required fields
+    id: `example-build-time-data`,
+    parent: null,
+    children: [],
+    internal: {
+      type: `Example`,
+      contentDigest: createContentDigest(resultData),
+    },
+  })
+}
+```
+
+This node created manually could be retrieved with a query like this:
+
+```graphql
+query {
+  example {
+    nameWithOwner
+    url
+  }
+}
+```
 
 #### Writing a query to gather the static data needed for a page
 
@@ -87,7 +125,7 @@ const IndexPage = () => {
     <section>
       <p>
         Build Time Data: Gatsby repo{` `}
-        <a href={gatsbyRepoData.github.repository.nameWithOwner.url}>
+        <a href={gatsbyRepoData.github.repository.url}>
           {gatsbyRepoData.github.repository.nameWithOwner} // highlight-line
         </a>
       </p>
@@ -97,6 +135,14 @@ const IndexPage = () => {
 
 export default IndexPage
 ```
+
+> This data is gathered at build time and written to a JSON file, the code is rewritten as the site is built to import the JSON file and set `gatsbyRepoData` equal to the contents of the JSON file instead of the call to `useStaticQuery`, you can read more about this process in the Gatsby internals section on [Normal vs Static Queries](/docs/static-vs-normal-queries/#replacing-queries-with-json-imports)
+
+Here's an adaptation of this build time data example being used on this page:
+
+<BuildDataExample />
+
+> the linked url and repository name are fetched at build time, if the name of the repository changed and the site were rebuilt it would change
 
 ### Fetching data at client-side runtime
 
@@ -113,6 +159,7 @@ import React, { useState, useEffect } from "react" // highlight-line
 import { graphql, useStaticQuery } from "gatsby"
 
 const IndexPage = () => {
+  // Build Time Data Fetching
   const gatsbyRepoData = useStaticQuery(graphql`
     query {
       github {
@@ -124,6 +171,7 @@ const IndexPage = () => {
       }
     }
   `)
+  // Client-side Runtime Data Fetching
   // highlight-start
   const [starsCount, setStarsCount] = useState(0)
   useEffect(() => {
@@ -143,7 +191,7 @@ const IndexPage = () => {
     <section>
       <p>
         Build Time Data: Gatsby repo{` `}
-        <a href={gatsbyRepoData.github.repository.nameWithOwner.url}>
+        <a href={gatsbyRepoData.github.repository.url}>
           {gatsbyRepoData.github.repository.nameWithOwner}
         </a>
       </p>
@@ -155,9 +203,13 @@ const IndexPage = () => {
 export default IndexPage
 ```
 
-Here's an example of what this runtime example being used on this page (which is also a Gatsby app)!
+In the code above, both the build time and runtime data are rendered on the same page. The build time data has the advantage of being loaded before the user ever gets to the page. When the site loads in the browser the runtime section in the `useEffect` hook will gather its data and render it as well.
+
+Here's an adaptation of this runtime example being used on this page (which is also a Gatsby app)!
 
 <ClientDataExample />
+
+> the star count is fetched at runtime, if you refresh the page this number will update
 
 ## Other resources
 
