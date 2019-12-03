@@ -2,7 +2,7 @@
   "name": "gatsby-data-fetching",
   "private": true,
   "description": "A site showing how to fetch data in Gatsby",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "author": "@gatsbyjs",
   "dependencies": {
     "dotenv": "^8.2.0",
@@ -14,27 +14,15 @@
     "react-dom": "^16.11.0",
     "react-helmet": "^5.2.1"
   },
-  "devDependencies": {
-    "prettier": "^1.19.1"
-  },
   "keywords": [
     "gatsby"
   ],
-  "license": "MIT",
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",
-    "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "start": "npm run develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby-starter-default"
-  },
-  "bugs": {
-    "url": "https://github.com/gatsbyjs/gatsby/issues"
   }
 }
