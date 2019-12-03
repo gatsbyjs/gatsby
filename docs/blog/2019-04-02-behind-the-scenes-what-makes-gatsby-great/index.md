@@ -107,7 +107,7 @@ To begin describing why build-time SSR is so appealing, let's first take a look 
 - Creating a bucket/location to host static content (like S3, Google Cloud Storage, etc.)
 - Setting up a [Domain Name System (DNS)](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_is_a_domain_name) to make your content reachable via a pretty URL, e.g. gatsbyjs.org
 - Routing the CDN layer in front of your static content
-- Set up a Continuous Integration (CI) environment so we can build and deploy code to production with minimal impact to end-users
+- Set up a Continuous Integration (CI) environment so we can build and deploy code to production with minimal impact to end users
 
 ... and, that's it! We're done as far as setup goes! We can use _whatever_ stack you prefer here. Netlify? [You bet.](https://www.gatsbyjs.org/docs/deploying-to-netlify) More a fan of AWS? [Of course.](https://www.gatsbyjs.org/docs/deploying-to-aws-amplify/) Heroku? [Yup.](https://www.gatsbyjs.org/docs/deploying-to-heroku/) You get the idea. Gatsby can be deployed anywhere easily and cheaply.
 
@@ -325,7 +325,7 @@ _Want to dive deeper? Much of this is encapsulated in our internal [Webpack conf
 
 ## Modern APIs in Gatsby
 
-Gatsby uses modern browser APIs to both maximize performance and user experience--which oftentimes go hand in hand!--only loading assets when they are necessary and likely to be requested. Specifically, the following APIs are crucial to the end-user experience in Gatsby:
+Gatsby uses modern browser APIs to both maximize performance and user experience--which oftentimes go hand in hand!--only loading assets when they are necessary and likely to be requested. Specifically, the following APIs are crucial to the end user experience in Gatsby:
 
 1. `IntersectionObserver` - an API to conditionally perform some action when an element enters the viewport/view
 1. `link rel="prefetch"` - an API to prefetch resources in the background when the browser is idle

@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.31](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.2.30...gatsby-plugin-manifest@2.2.31) (2019-12-02)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.2.30](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.2.29...gatsby-plugin-manifest@2.2.30) (2019-11-26)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.2.29](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.2.28...gatsby-plugin-manifest@2.2.29) (2019-11-18)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.2.28](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.2.27...gatsby-plugin-manifest@2.2.28) (2019-11-15)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.2.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.2.26...gatsby-plugin-manifest@2.2.27) (2019-11-10)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.2.26](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.2.25...gatsby-plugin-manifest@2.2.26) (2019-10-29)
+
+### Bug Fixes
+
+- update minor updates in packages ([#19087](https://github.com/gatsbyjs/gatsby/issues/19087)) ([294a48f](https://github.com/gatsbyjs/gatsby/commit/294a48f))
+
+## [2.2.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.2.24...gatsby-plugin-manifest@2.2.25) (2019-10-28)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.2.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.2.23...gatsby-plugin-manifest@2.2.24) (2019-10-28)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
 ## [2.2.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.2.22...gatsby-plugin-manifest@2.2.23) (2019-10-14)
 
 **Note:** Version bump only for package gatsby-plugin-manifest

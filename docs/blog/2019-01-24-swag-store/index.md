@@ -57,13 +57,13 @@ Since we had so many things to choose from, we needed something lightweight as a
 
 We also wanted the process of buying swag to be a fun and personable experience from beginning to end. People so willingly show their appreciation for Gatsby, and we wanted to be able to show our excitement and appreciation, too.
 
-![Tina Fey in a money shower](images/money-shower.gif)
+![Tina Fey in a money shower](./images/money-shower.gif)
 
 ## Figuring Out Our Limitations and Our Strengths
 
 Now that we’d decided on _what_ we were going to have, we came up against the inevitable, ever burning question, “How the hell can we make this work?”
 
-![Rosie Perez "What?"](images/giphy-1.gif)
+![Rosie Perez "What?"](./images/giphy-1.gif)
 
 And that question could only be answered by looking at what we had—and what we didn’t have. We had to identify our limitations and strengths.
 
@@ -181,7 +181,7 @@ But what did that process actually look like? We had our starting point — some
 
 Basically, our process looked like this:
 
-![South Park Underpants Gnomes](images/1_93222BZZGSWF__LBsgVvPg.jpg)
+![South Park Underpants Gnomes](./images/1_93222BZZGSWF__LBsgVvPg.jpg)
 _The Gatsby Swag Project off to a strong start!_
 
 So we worked with what we had — starting at the end and worked our way backwards.
@@ -222,7 +222,7 @@ Since we were going with an “automation first” framework, we had a lot to co
 
 Eventually, by working backwards from the end, we created a full process and recorded it using [Whimsical](https://whimsical.co/). You can see our flow chart [here](https://whimsical.co/HrgMvcBZxyyWxcPPAUzPXf)!
 
-![Flow chart with the step by step swag process](images/1_tzPNjNB2Lf0w_7mu21JDTQ.png)
+![Flow chart with the step by step swag process](./images/1_tzPNjNB2Lf0w_7mu21JDTQ.png)
 _Flow chart with the step by step swag process_
 
 The top section lists each tool that we’re using to manage and automated the swag process.
@@ -235,9 +235,9 @@ The top section lists each tool that we’re using to manage and automated the s
 
 - Each **hexagon** is a question that the framework needs to ask to decide how to move forward
 
-In this process, just like any site, we have a front-end that people see, and a backend that people don’t.
+In this process, just like any site, we have a frontend that people see, and a backend that people don’t.
 
-In this case, the front-end was the process that people went through to order and get their swag.
+In this case, the frontend was the process that people went through to order and get their swag.
 
 And the backend was the systems design, tools, and automation triggers that handled all the requests and process.
 

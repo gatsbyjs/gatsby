@@ -23,10 +23,7 @@ const mapDispatchToProps = dispatch => {
   return { increment: () => dispatch({ type: `INCREMENT` }) }
 }
 
-const ConnectedCounter = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Counter)
+const ConnectedCounter = connect(mapStateToProps, mapDispatchToProps)(Counter)
 
 class DefaultLayout extends React.Component {
   render() {

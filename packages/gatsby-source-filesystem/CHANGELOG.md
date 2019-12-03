@@ -3,6 +3,41 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.40](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.39...gatsby-source-filesystem@2.1.40) (2019-12-02)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+## [2.1.39](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.38...gatsby-source-filesystem@2.1.39) (2019-11-26)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+## [2.1.38](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.37...gatsby-source-filesystem@2.1.38) (2019-11-18)
+
+### Bug Fixes
+
+- **gatsby:** Handle special characters in windows paths ([#19600](https://github.com/gatsbyjs/gatsby/issues/19600)) ([9929cf0](https://github.com/gatsbyjs/gatsby/commit/9929cf0))
+
+## [2.1.37](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.36...gatsby-source-filesystem@2.1.37) (2019-11-15)
+
+### Bug Fixes
+
+- update dependency pretty-bytes to v5 ([#19485](https://github.com/gatsbyjs/gatsby/issues/19485)) ([29735ea](https://github.com/gatsbyjs/gatsby/commit/29735ea))
+
+## [2.1.36](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.35...gatsby-source-filesystem@2.1.36) (2019-11-10)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+## [2.1.35](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.34...gatsby-source-filesystem@2.1.35) (2019-10-28)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+## [2.1.34](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.33...gatsby-source-filesystem@2.1.34) (2019-10-28)
+
+### Bug Fixes
+
+- update minor updates in packages ([#18875](https://github.com/gatsbyjs/gatsby/issues/18875)) ([b692879](https://github.com/gatsbyjs/gatsby/commit/b692879))
+- update minor updates in packages ([#19080](https://github.com/gatsbyjs/gatsby/issues/19080)) ([95e908e](https://github.com/gatsbyjs/gatsby/commit/95e908e))
+
 ## [2.1.33](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.32...gatsby-source-filesystem@2.1.33) (2019-10-14)
 
 **Note:** Version bump only for package gatsby-source-filesystem

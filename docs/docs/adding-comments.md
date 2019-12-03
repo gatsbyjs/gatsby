@@ -18,7 +18,7 @@ You can also [roll your own comment system](/blog/2019-08-27-roll-your-own-comme
 
 ## Using Disqus for comments
 
-In this guide, we'll show you how to implement Disqus on your blog as it has a number of nice features.
+In this guide, you'll learn how to implement Disqus on your blog as it has a number of nice features.
 
 - It is low maintenance, meaning [moderating your comments and maintaining your forum](https://help.disqus.com/moderation/moderating-101) less hassle.
 - It provides official [React support](https://github.com/disqus/disqus-react).
@@ -34,7 +34,7 @@ If these concerns outweigh the benefits of Disqus, you may want to look into som
 
 ## Implementing Disqus
 
-![Disqus logo](images/disqus-logo.svg)
+![Disqus logo](./images/disqus-logo.svg)
 
 Here are the steps for adding Disqus comments to your own blog:
 
@@ -89,4 +89,4 @@ return (
 
 And you're done. You should now see the Disqus comment form appear beneath your blog post [looking like this](https://janosh.io/blog/disqus-comments#disqus_thread). Happy blogging!
 
-[![Disqus comments](images/disqus-comments.png)](https://janosh.io/blog/disqus-comments#disqus_thread)
+[![Disqus comments](./images/disqus-comments.png)](https://janosh.io/blog/disqus-comments#disqus_thread)

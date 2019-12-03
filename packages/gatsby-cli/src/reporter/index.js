@@ -1,7 +1,7 @@
 // @flow
 
 const semver = require(`semver`)
-const { isCI } = require(`ci-info`)
+const { isCI } = require(`gatsby-core-utils`)
 const signalExit = require(`signal-exit`)
 const reporterActions = require(`./redux/actions`)
 
@@ -17,7 +17,7 @@ if (!process.env.GATSBY_LOGGER) {
   if (
     inkExists &&
     semver.satisfies(process.version, `>=8`) &&
-    !isCI &&
+    !isCI() &&
     typeof jest === `undefined`
   ) {
     process.env.GATSBY_LOGGER = `ink`
@@ -100,7 +100,7 @@ const reporter: Reporter = {
   format: chalk,
   /**
    * Toggle verbosity.
-   * @param {boolean} [isVerbose=true]
+   * @param {boolean} [_isVerbose=true]
    */
   setVerbose: (_isVerbose = true) => {
     isVerbose = _isVerbose
@@ -119,6 +119,9 @@ const reporter: Reporter = {
     //  - ansi-colors: see https://github.com/doowb/ansi-colors/blob/8024126c7115a0efb25a9a0e87bc5e29fd66831f/index.js#L5-L7
     if (isNoColor) {
       process.env.FORCE_COLOR = `0`
+      // chalk determines color level at import time. Before we reach this point,
+      // chalk was already imported, so we need to retroactively adjust level
+      chalk.level = 0
     }
   },
   /**
@@ -212,7 +215,7 @@ const reporter: Reporter = {
 
   /**
    * Time an activity.
-   * @param {string} name - Name of activity.
+   * @param {string} text - Name of activity.
    * @param {ActivityArgs} activityArgs - optional object with tracer parentSpan
    * @returns {ActivityTracker} The activity tracker.
    */
@@ -245,9 +248,8 @@ const reporter: Reporter = {
       panicOnBuild(...args) {
         span.finish()
 
-        reporterActions.endActivity({
+        reporterActions.setActivityErrored({
           id,
-          status: ActivityStatuses.Failed,
         })
 
         return reporter.panicOnBuild(...args)
@@ -284,7 +286,7 @@ const reporter: Reporter = {
    * are visible to the user. So this function can be used to create a _hidden_ activity
    * that while not displayed in the CLI, still triggers a change in process status.
    *
-   * @param {string} name - Name of activity.
+   * @param {string} text - Name of activity.
    * @param {ActivityArgs} activityArgs - optional object with tracer parentSpan
    * @returns {ActivityTracker} The activity tracker.
    */
@@ -322,7 +324,7 @@ const reporter: Reporter = {
 
   /**
    * Create a progress bar for an activity
-   * @param {string} name - Name of activity.
+   * @param {string} text - Name of activity.
    * @param {number} total - Total items to be processed.
    * @param {number} start - Start count to show.
    * @param {ActivityArgs} activityArgs - optional object with tracer parentSpan
@@ -341,6 +343,26 @@ const reporter: Reporter = {
     }
     const span = tracer.startSpan(text, spanArgs)
 
+    let lastUpdateTime = 0
+    let unflushedProgress = 0
+    let unflushedTotal = 0
+    const progressUpdateDelay = Math.round(1000 / 10) // 10 fps *shrug*
+
+    const updateProgress = forced => {
+      const t = Date.now()
+      if (!forced && t - lastUpdateTime <= progressUpdateDelay) return
+
+      if (unflushedTotal > 0) {
+        reporterActions.setActivityTotal({ id, total: unflushedTotal })
+        unflushedTotal = 0
+      }
+      if (unflushedProgress > 0) {
+        reporterActions.activityTick({ id, increment: unflushedProgress })
+        unflushedProgress = 0
+      }
+      lastUpdateTime = t
+    }
+
     return {
       start: () => {
         reporterActions.startActivity({
@@ -358,14 +380,14 @@ const reporter: Reporter = {
         })
       },
       tick: (increment = 1) => {
-        reporterActions.activityTick({ id, increment })
+        unflushedProgress += increment // Have to manually track this :/
+        updateProgress()
       },
       panicOnBuild(...args) {
         span.finish()
 
-        reporterActions.endActivity({
+        reporterActions.setActivityErrored({
           id,
-          status: ActivityStatuses.Failed,
         })
 
         return reporter.panicOnBuild(...args)
@@ -381,6 +403,7 @@ const reporter: Reporter = {
         return reporter.panic(...args)
       },
       done: () => {
+        updateProgress(true)
         span.finish()
         reporterActions.endActivity({
           id,
@@ -388,7 +411,8 @@ const reporter: Reporter = {
         })
       },
       set total(value) {
-        reporterActions.setActivityTotal({ id, total: value })
+        unflushedTotal = value
+        updateProgress()
       },
       span,
     }

@@ -21,7 +21,7 @@ const LinkIcon = props => (
 const heading = Tag => props => (
   <Tag
     {...props}
-    css={{
+    css={css({
       a: {
         visibility: `hidden`,
       },
@@ -29,7 +29,7 @@ const heading = Tag => props => (
         visibility: `visible`,
       },
       pointerEvents: `painted`,
-    }}
+    })}
   >
     <a
       href={`#${props.id}`}

@@ -3,6 +3,76 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.66](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.65...gatsby-source-contentful@2.1.66) (2019-12-02)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.65](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.64...gatsby-source-contentful@2.1.65) (2019-11-28)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.64](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.63...gatsby-source-contentful@2.1.64) (2019-11-26)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.63](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.62...gatsby-source-contentful@2.1.63) (2019-11-25)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.62](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.61...gatsby-source-contentful@2.1.62) (2019-11-20)
+
+### Features
+
+- **gatsby-source-contentful:** handle SELF_SIGNED_CERT_IN_CHAIN error. ([#19161](https://github.com/gatsbyjs/gatsby/issues/19161)) ([62dd3d1](https://github.com/gatsbyjs/gatsby/commit/62dd3d1))
+
+## [2.1.61](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.60...gatsby-source-contentful@2.1.61) (2019-11-18)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.60](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.59...gatsby-source-contentful@2.1.60) (2019-11-18)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.59](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.58...gatsby-source-contentful@2.1.59) (2019-11-15)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.58](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.57...gatsby-source-contentful@2.1.58) (2019-11-15)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.57](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.56...gatsby-source-contentful@2.1.57) (2019-11-13)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.56](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.55...gatsby-source-contentful@2.1.56) (2019-11-10)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.55](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.54...gatsby-source-contentful@2.1.55) (2019-11-04)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** fix crash when downloading asset with a file that doesn't have a url ([#19218](https://github.com/gatsbyjs/gatsby/issues/19218)) ([0b57a3c](https://github.com/gatsbyjs/gatsby/commit/0b57a3c))
+
+## [2.1.54](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.53...gatsby-source-contentful@2.1.54) (2019-10-29)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.53](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.52...gatsby-source-contentful@2.1.53) (2019-10-29)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.52](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.51...gatsby-source-contentful@2.1.52) (2019-10-28)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.51](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.50...gatsby-source-contentful@2.1.51) (2019-10-28)
+
+### Bug Fixes
+
+- update minor updates in packages ([#18875](https://github.com/gatsbyjs/gatsby/issues/18875)) ([b692879](https://github.com/gatsbyjs/gatsby/commit/b692879))
+
 ## [2.1.50](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.49...gatsby-source-contentful@2.1.50) (2019-10-16)
 
 **Note:** Version bump only for package gatsby-source-contentful

@@ -330,7 +330,9 @@ module.exports = (
     }
 
     async function getHTML(markdownNode) {
-      const cachedHTML = await cache.get(htmlCacheKey(markdownNode))
+      const shouldCache = markdownNode && markdownNode.internal
+      const cachedHTML =
+        shouldCache && (await cache.get(htmlCacheKey(markdownNode)))
       if (cachedHTML) {
         return cachedHTML
       } else {
@@ -340,8 +342,11 @@ module.exports = (
           allowDangerousHTML: true,
         })
 
-        // Save new HTML to cache and return
-        cache.set(htmlCacheKey(markdownNode), html)
+        if (shouldCache) {
+          // Save new HTML to cache
+          cache.set(htmlCacheKey(markdownNode), html)
+        }
+
         return html
       }
     }

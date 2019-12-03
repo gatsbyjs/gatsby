@@ -50,9 +50,9 @@ const Banner = () => (
   >
     <InnerContainer>
       <Content>
-        {`Using Gatsby for your clients or team? Start 14-day free trial of `}
-        <OutboundLink href="https://www.gatsbyjs.com/preview">
-          Gatsby Preview
+        {`New! Create a site in 5 minutes with `}
+        <OutboundLink href="https://www.gatsbyjs.com/cloud">
+          Gatsby Cloud!
         </OutboundLink>
       </Content>
     </InnerContainer>

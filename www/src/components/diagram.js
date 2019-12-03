@@ -334,7 +334,7 @@ const Diagram = ({ customCSS }) => (
             <DottedLine />
             <SegmentTitle>Deploy</SegmentTitle>
             <div sx={{ pb: 5 }}>
-              <ItemTitle>Static Web Host</ItemTitle>
+              <ItemTitle>Web Hosting</ItemTitle>
               <ItemDescription>
                 {staticHosts.map(({ node: staticHost }, index) => (
                   <Fragment key={staticHost.url}>

@@ -34,6 +34,9 @@
             - title: Preparing a Site for Deployment
               link: /docs/preparing-for-deployment/
               breadcrumbTitle: Preparing for Deployment
+            - title: Deploying to Netlify
+              link: /docs/deploying-to-netlify/
+              breadcrumbTitle: Netlify
             - title: Deploying to AWS Amplify
               link: /docs/deploying-to-aws-amplify/
               breadcrumbTitle: AWS Amplify
@@ -52,15 +55,15 @@
             - title: Deploying to GitLab Pages
               link: /docs/deploying-to-gitlab-pages/
               breadcrumbTitle: GitLab Pages
-            - title: Deploying to Netlify
-              link: /docs/deploying-to-netlify/
-              breadcrumbTitle: Netlify
             - title: Deploying to Render
               link: /docs/deploying-to-render/
               breadcrumbTitle: Render
             - title: Deploying to Surge
               link: /docs/deploying-to-surge/
               breadcrumbTitle: Surge
+            - title: Deploying to IIS
+              link: /docs/deploying-to-iis/
+              breadcrumbTitle: IIS
             - title: Adding a Path Prefix
               link: /docs/path-prefix/
             - title: How Gatsby Works with GitHub Pages
@@ -129,10 +132,10 @@
             - title: Using Gatsby Without GraphQL
               link: /docs/using-gatsby-without-graphql/
               breadcrumbTitle: Gatsby Without GraphQL
-            - title: Sourcing From the Filesystem
+            - title: Sourcing from the Filesystem
               link: /docs/sourcing-from-the-filesystem/
               breadcrumbTitle: From the Filesystem
-            - title: Sourcing From Databases
+            - title: Sourcing from Databases
               link: /docs/sourcing-from-databases/
               breadcrumbTitle: From Databases
             - title: Sourcing from Hosted Services
@@ -187,7 +190,7 @@
               link: /docs/use-static-query/
               breadcrumbTitle: The useStaticQuery Hook
             - title: Using GraphQL Fragments
-              link: /docs/using-fragments/
+              link: /docs/using-graphql-fragments/
             - title: Creating Slugs for Pages
               link: /docs/creating-slugs-for-pages/
             - title: Creating Pages from Data Programmatically
@@ -239,6 +242,8 @@
           items:
             - title: Starter Library
               link: /starters/
+            - title: Modifying a Starter
+              link: /docs/modifying-a-starter/
             - title: Creating a Starter
               link: /docs/creating-a-starter/
         - title: Themes
@@ -246,6 +251,8 @@
           items:
             - title: What are Gatsby Themes?
               link: /docs/themes/what-are-gatsby-themes/
+            - title: Getting Started
+              link: /docs/themes/getting-started/
             - title: Using a Gatsby Theme
               link: /docs/themes/using-a-gatsby-theme/
             - title: Using Multiple Gatsby Themes
@@ -344,8 +351,8 @@
             - title: Debugging Async Lifecycles
               link: /docs/debugging-async-lifecycles/
               breadcrumbTitle: Async Lifecycles
-        - title: Adding Website Functionality
-          link: /docs/adding-website-functionality/
+        - title: Adding App and Website Functionality
+          link: /docs/adding-app-and-website-functionality/
           items:
             - title: Linking Between Pages
               link: /docs/linking-between-pages/
@@ -368,6 +375,9 @@
             - title: Adding Forms
               link: /docs/adding-forms/
               breadcrumbTitle: Forms
+            - title: Adding React Components
+              link: /docs/adding-react-components/
+              breadcrumbTitle: React Components
             - title: Building a Contact Form
               link: /docs/building-a-contact-form/
             - title: Adding a 404 Page
@@ -419,6 +429,11 @@
               link: /docs/client-data-fetching/
             - title: Using Client-Side Only Packages
               link: /docs/using-client-side-only-packages/
+            - title: Building an E-commerce Site
+              link: /docs/building-an-e-commerce-site/
+              items:
+                - title: Building an E-commerce Site with Shopify
+                  link: /docs/building-an-ecommerce-site-with-shopify/
         - title: Improving Performance
           link: /docs/performance/
           items:
@@ -459,6 +474,9 @@
             - title: Porting from Create React App to Gatsby
               link: /docs/porting-from-create-react-app-to-gatsby/
               breadcrumbTitle: Create React App to Gatsby
+            - title: Porting an HTML Site to Gatsby
+              link: /docs/porting-an-html-site-to-gatsby/
+              breadcrumbTitle: HTML to Gatsby
     - title: Gatsby API
       link: /docs/api-reference/
       items:
@@ -528,6 +546,8 @@
           link: /docs/building-with-components/
         - title: Lifecycle APIs
           link: /docs/gatsby-lifecycle-apis/
+        - title: React Hydration
+          link: /docs/react-hydration
         - title: PRPL Pattern
           link: /docs/prpl-pattern/
         - title: GraphQL Concepts
@@ -612,6 +632,8 @@
               link: /docs/winning-over-executives/
             - title: Clients*
               link: /docs/winning-over-clients/
+            - title: Content Creators
+              link: /docs/winning-over-content-creators/
         - title: Spreading Gatsby In Different Types of Organizations
           link: /docs/different-organization-types/
           breadcrumbTitle: Spreading Gatsby

@@ -12,7 +12,7 @@ Pages can be created in three ways:
 - Plugins can also implement `createPages` and create pages for you
 
 You can also implement the API [`onCreatePage`](/docs/node-apis/#onCreatePage)
-to modify pages created in core or plugins or to create [client-only routes](/docs/building-apps-with-gatsby/).
+to modify pages created in core or plugins or to create [client-only routes](/docs/client-only-routes-and-user-authentication/).
 
 ## Debugging help
 

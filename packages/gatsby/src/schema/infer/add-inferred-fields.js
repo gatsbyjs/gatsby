@@ -6,6 +6,7 @@ const report = require(`gatsby-cli/lib/reporter`)
 
 const { isFile } = require(`./is-file`)
 const { isDate } = require(`../types/date`)
+const { addDerivedType } = require(`../types/derived-types`)
 const is32BitInteger = require(`./is-32-bit-integer`)
 
 const addInferredFields = ({
@@ -350,15 +351,26 @@ const getSimpleFieldConfig = ({
           // "addDefaultResolvers: true" only makes sense for
           // pre-existing types.
           if (!config.shouldAddFields) return null
-          fieldTypeComposer = ObjectTypeComposer.create(
-            createTypeName(selector),
-            schemaComposer
-          )
-          fieldTypeComposer.setExtension(`createdFrom`, `inference`)
-          fieldTypeComposer.setExtension(
-            `plugin`,
-            typeComposer.getExtension(`plugin`)
-          )
+
+          const typeName = createTypeName(selector)
+          if (schemaComposer.has(typeName)) {
+            // Type could have been already created via schema customization
+            fieldTypeComposer = schemaComposer.getOTC(typeName)
+          } else {
+            fieldTypeComposer = ObjectTypeComposer.create(
+              typeName,
+              schemaComposer
+            )
+            fieldTypeComposer.setExtension(`createdFrom`, `inference`)
+            fieldTypeComposer.setExtension(
+              `plugin`,
+              typeComposer.getExtension(`plugin`)
+            )
+            addDerivedType({
+              typeComposer,
+              derivedTypeName: fieldTypeComposer.getTypeName(),
+            })
+          }
         }
 
         // Inference config options are either explicitly defined on a type

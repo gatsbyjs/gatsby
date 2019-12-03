@@ -19,8 +19,8 @@ import {
   zIndices as z,
 } from "gatsby-design-tokens"
 
-let breakpointsTokens = []
-for (let b in bp) {
+const breakpointsTokens = []
+for (const b in bp) {
   breakpointsTokens.push(bp[b])
 }
 
@@ -29,8 +29,8 @@ for (let b in bp) {
 // to define breakpoints, but not here
 breakpointsTokens.splice(0, 1)
 
-let fontsTokens = {}
-for (let fontFamily in f) {
+const fontsTokens = {}
+for (const fontFamily in f) {
   fontsTokens[fontFamily] = f[fontFamily].join(`, `)
 }
 // https://theme-ui.com/theme-spec#typography
@@ -193,8 +193,13 @@ const col = {
     placeholder: c.grey[60],
   },
   widget: {
+    border: c.grey[10],
     background: c.white,
     color: c.text.primary,
+  },
+  highlightedBox: {
+    background: c.yellow[10],
+    color: c.grey[80],
   },
   newsletter: {
     background: c.white,
@@ -210,6 +215,10 @@ const col = {
     secondaryBg: `transparent`,
     secondaryText: c.purple[50],
     secondaryBorder: c.purple[40],
+  },
+  pullquote: {
+    color: c.purple[60],
+    borderColor: c.purple[20],
   },
   modes: {
     dark: {
@@ -312,6 +321,10 @@ const col = {
         border: darkBorder,
         color: c.white,
       },
+      highlightedBox: {
+        background: c.grey[90],
+        color: c.white,
+      },
       newsletter: {
         background: darkBackground,
         border: darkBorder,
@@ -327,6 +340,10 @@ const col = {
         secondaryBg: `transparent`,
         secondaryText: c.purple[40],
         secondaryBorder: c.purple[40],
+      },
+      pullquote: {
+        color: c.purple[10],
+        borderColor: c.purple[90],
       },
     },
   },
