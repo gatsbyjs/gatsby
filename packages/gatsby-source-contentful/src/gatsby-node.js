@@ -246,20 +246,4 @@ exports.onPreExtractQueries = async ({ store, getNodesByType }) => {
     `${program.directory}/.cache/contentful/assets/`
   )
   await fs.ensureDir(CACHE_DIR)
-
-  if (getNodesByType(`ContentfulAsset`).length == 0) {
-    return
-  }
-
-  let gatsbyImageDoesNotExist = true
-  try {
-    require.resolve(`gatsby-image`)
-    gatsbyImageDoesNotExist = false
-  } catch (e) {
-    // Ignore
-  }
-
-  if (gatsbyImageDoesNotExist) {
-    return
-  }
 }
