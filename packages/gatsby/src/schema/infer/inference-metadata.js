@@ -158,8 +158,8 @@ const updateValueDescriptor = (
   key,
   value,
   operation = `add` /* add | del */,
-  descriptor = {},
-  path = []
+  descriptor,
+  path
 ) => {
   // The object may be traversed multiple times from root.
   // Each time it does it should not revisit the same node twice
@@ -426,7 +426,8 @@ const updateTypeMetadata = (metadata = initialMetadata(), operation, node) => {
       field,
       node[field],
       operation,
-      descriptor
+      descriptor,
+      []
     )
     structureChanged = structureChanged || valueStructureChanged
   })
