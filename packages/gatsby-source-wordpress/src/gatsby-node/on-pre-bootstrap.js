@@ -5,10 +5,17 @@ import store from "../store"
 
 const onPreBootstrap = async (helpers, pluginOptions) => {
   const api = [helpers, pluginOptions]
-  store.dispatch.gatsbyApi.setState({ helpers, pluginOptions })
 
   //
-  // this exits the build if requirements aren't met
+  // add the plugin options and Gatsby API helpers to our store
+  // to access them more easily
+  store.dispatch.gatsbyApi.setState({
+    helpers,
+    pluginOptions,
+  })
+
+  //
+  // exit the build if requirements aren't met
   await checkPluginRequirements(...api)
 
   //
@@ -30,9 +37,15 @@ const onPreBootstrap = async (helpers, pluginOptions) => {
   // load up image node id's from cache
   const imageNodeIds = await helpers.cache.get(`image-node-ids`)
 
-  // if they exist, touch them all and set them to state
+  // if they exist,
   if (imageNodeIds && imageNodeIds.length) {
-    imageNodeIds.forEach(nodeId => helpers.actions.touchNode({ nodeId }))
+    // touch them all so they don't get garbage collected by Gatsby
+    imageNodeIds.forEach(nodeId =>
+      helpers.actions.touchNode({
+        nodeId,
+      })
+    )
+    // and set them to state to set back to cache later
     store.dispatch.imageNodes.setNodeIds(imageNodeIds)
   }
 
