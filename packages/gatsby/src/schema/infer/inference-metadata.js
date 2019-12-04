@@ -154,7 +154,11 @@ const getType = (value, key) => {
 }
 
 const updateValueDescriptor = (
-  { nodeId, key, value, operation = `add` /* add | del */, descriptor = {} },
+  nodeId,
+  key,
+  value,
+  operation = `add` /* add | del */,
+  descriptor = {},
   path = []
 ) => {
   // The object may be traversed multiple times from root.
@@ -204,13 +208,11 @@ const updateValueDescriptorObject = (
     }
 
     const propDirty = updateValueDescriptor(
-      {
-        nodeId,
-        key,
-        value: v,
-        operation,
-        descriptor,
-      },
+      nodeId,
+      key,
+      v,
+      operation,
+      descriptor,
       path
     )
     dirty = dirty || propDirty
@@ -233,13 +235,11 @@ const updateValueDescriptorArray = (
     }
 
     const itemDirty = updateValueDescriptor(
-      {
-        nodeId,
-        descriptor,
-        operation,
-        value: item,
-        key,
-      },
+      nodeId,
+      key,
+      item,
+      operation,
+      descriptor,
       path
     )
     dirty = dirty || itemDirty
@@ -417,13 +417,13 @@ const updateTypeMetadata = (metadata = initialMetadata(), operation, node) => {
       fieldMap[field] = descriptor = {}
     }
 
-    const valueStructureChanged = updateValueDescriptor({
-      nodeId: node.id,
-      key: field,
-      value: node[field],
+    const valueStructureChanged = updateValueDescriptor(
+      node.id,
+      field,
+      node[field],
       operation,
-      descriptor,
-    })
+      descriptor
+    )
     structureChanged = structureChanged || valueStructureChanged
   })
   metadata.fieldMap = fieldMap
