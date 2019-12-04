@@ -147,6 +147,7 @@
     "babel-preset-gatsby-package": "^0.2.12",
     "cross-env": "^5.2.1",
     "documentation": "^12.1.4",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "rimraf": "^3.0.0",
