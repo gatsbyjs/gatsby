@@ -21,7 +21,7 @@ module.exports = (
     maintainCase = false,
     removeAccents = false,
     enableCustomId = false,
-    after = true,
+    isIconAfterH = true,
   }
 ) => {
   slugs.reset()
@@ -67,7 +67,7 @@ module.exports = (
         data: {
           hProperties: {
             "aria-label": `${label} permalink`,
-            class: `${className} ${after ? `after` : `before`}`,
+            class: `${className} ${isIconAfterH ? `after` : `before`}`,
           },
           hChildren: [
             {
