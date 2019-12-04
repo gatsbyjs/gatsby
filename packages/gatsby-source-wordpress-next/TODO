@@ -1,0 +1,5 @@
+- Clean up create-content-nodes.js by splitting it up into smaller pieces
+- move pagination from create-content-nodes.js to create-pages.js via pageContext vars
+- add helpful error messages
+- detect when a new post type becomes available in WPGQL, pull all nodes for that post type
+- add activity reporter to create-content-nodes.js

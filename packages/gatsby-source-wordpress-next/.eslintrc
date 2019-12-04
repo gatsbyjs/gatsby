@@ -1,0 +1,6 @@
+{
+  "globals": {
+    "dd": "readonly",
+    "dump": "readonly"
+  }
+}
