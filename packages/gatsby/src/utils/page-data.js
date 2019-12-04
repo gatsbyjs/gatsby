@@ -1,5 +1,6 @@
 const fs = require(`fs-extra`)
 const path = require(`path`)
+const telemetry = require(`gatsby-telemetry`)
 
 const getFilePath = ({ publicDir }, pagePath) => {
   const fixedPagePath = pagePath === `/` ? `index` : pagePath
@@ -19,7 +20,12 @@ const write = async ({ publicDir }, page, result) => {
     matchPath: page.matchPath,
     result,
   }
-  await fs.outputFile(filePath, JSON.stringify(body))
+  const bodyStr = JSON.stringify(body)
+  const pageDataSize = Buffer.byteLength(bodyStr)
+  telemetry.addBufferedMeasurementsOnEvent(`BUILD_END`, {
+    pageDataSize: pagePaths.length,
+  })
+  await fs.outputFile(filePath, bodyStr)
 }
 
 module.exports = {

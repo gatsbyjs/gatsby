@@ -13,6 +13,7 @@ module.exports = class AnalyticsTracker {
   store = new EventStorage()
   debouncer = {}
   metadataCache = {}
+  buffered = {}
   defaultTags = {}
   osInfo // lazy
   trackingEnabled // lazy
@@ -257,6 +258,23 @@ module.exports = class AnalyticsTracker {
     this.metadataCache[event] = Object.assign(cached, obj)
   }
 
+  addBufferedMeasurementsOnEvent(event, measurementName, value) {
+    const cachedEvent = this.buffered[event] || {}
+    const cachedMeasurements = cachedEvent.siteMeasurements || {}
+    const cachedMeasurement = cachedMeasurements[measurementName] || []
+    cachedMeasurement.push(value)
+    this.buffered[event].siteMeasurements[measurementName] = cachedMeasurement
+  }
+
+  addSiteMeasurement(event, obj) {
+    const cachedEvent = this.metadataCache[event] || {}
+    const cachedMeasurements = cachedEvent.siteMeasurements || {}
+    this.metadataCache[event] = Object.assign(
+      cachedEvent,
+      Object.assign(cachedMeasurements, obj)
+    )
+  }
+
   decorateAll(tags) {
     this.defaultTags = Object.assign(this.defaultTags, tags)
   }
@@ -266,10 +284,42 @@ module.exports = class AnalyticsTracker {
     this.store.updateConfig(`telemetry.enabled`, enabled)
   }
 
+  aggregateBuffered(data) {
+    const sum = data.reduce((acc, x) => acc + x, 0)
+    const mean = sum / data.length
+    const median = data.sort()[Math.floor((bundleSizes.length - 1) / 2)]
+    const stdDev = Math.sqrt(
+      data.reduce((acc, x) => acc + Math.pow(x - mean, 2)) / data.length
+    )
+    return {
+      min: data.reduce((acc, x) => (x < acc ? x : acc), data[0]),
+      max: data.reduce((acc, x) => (x > acc ? x : acc), 0),
+      sum: sum,
+      mean: mean,
+      median: median,
+      stdDev: stdDev,
+      medianSkewness: (3 * (mean - median)) / stdDev,
+      // mode skewness is unlikely useful here
+    }
+  }
+
   async sendEvents() {
     if (!this.isTrackingEnabled()) {
       return Promise.resolve()
     }
+
+    for (const event in this.buffered) {
+      this.decorateNextEvent(
+        event,
+        Object.keys(this.buffered[event]).reduce((obj, key) => {
+          return Object.assign(obj, {
+            [key]: this.aggregateBuffered(this.buffered[event][key]),
+          })
+        }, {})
+      )
+      delete this.buffered[event]
+    }
+
     return this.store.sendEvents()
   }
 }

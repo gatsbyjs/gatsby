@@ -86,6 +86,40 @@ module.exports = async function build(program: BuildArgs) {
   })
   activity.end()
 
+  if (telemetry.isTrackingEnabled()) {
+    // transform asset size to kB (from bytes) to fit 64 bit to numbers
+    const bundleSizes = stats
+      .toJson({ assets: true })
+      .assets.filter(asset => {
+        asset.name.endsWith(`.js`)
+      })
+      .map(asset => asset.size / 1000)
+
+    const sizeSum = bundleSizes.reduce((acc, x) => acc + x, 0)
+    const meanSize = sizeSum / bundleSizes.length
+    const medianSize = bundleSizes.sort()[
+      Math.floor((bundleSizes.length - 1) / 2)
+    ]
+    const stdDev = Math.sqrt(
+      bundleSizes.reduce((acc, x) => acc + Math.pow(x - meanSize, 2)) /
+        bundleSizes.length
+    )
+    const bundleStats = {
+      min: bundleSizes.reduce((acc, x) => (x < acc ? x : acc), bundleSizes[0]),
+      max: bundleSizes.reduce((acc, x) => (x > acc ? x : acc), 0),
+      sum: sizeSum,
+      mean: meanSize,
+      median: medianSize,
+      stdDev: stdDev,
+      medianSkewness: (3 * (meanSize - medianSize)) / stdDev,
+      // mode skewness is unlikely useful here
+    }
+
+    telemetry.addSiteMeasurement(`BUILD_END`, {
+      bundleStats,
+    })
+  }
+
   const workerPool = WorkerPool.create()
 
   const webpackCompilationHash = stats.hash
