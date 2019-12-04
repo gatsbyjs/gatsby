@@ -133,6 +133,37 @@ exports.sourceNodes = true
  * listeners/subscriptions for data updates.
  *
  * @gatsbyVersion 2.X.Y
+ * @example
+ * const createInitialNodes = async ({ actions }) => {
+ *   // Get current data
+ *   const data = await someApi.getData()
+ *
+ *   // Process data into nodes
+ *   data.forEach(datum => actions.createNode(processDatum(datum)))
+ * }
+ *
+ * const subscribeToLiveUpdates = ({ actions, getNode }) => {
+ *   // Setting up subscriptions. Note that this is done in separate function.
+ *   // This is done because listener callback will usually be kept in memory until
+ *   // we unsubscribe, so we want to limit execution context as much as possible
+ *   // to allow Node.js to garbage collect efficiently
+ *   someApi.subscribe(event => {
+ *     if (event.action === `delete`) {
+ *       // Delete the node
+ *       const nodeId = generateNodeIdFromDataObject(event.data)
+ *       const node = getNode(nodeId)
+ *       actions.deleteNode({ node })
+ *     } else if (event.action === `create` || event.action === `update`)  {
+ *       // Create or update the node
+ *       action.createNode(processDatum(event.data))
+ *     }
+ *   })
+ * }
+ *
+ * exports.sourceNodesStatefully = async ({ actions }) => {
+ *   await createInitialNodes({ actions })
+ *   subscribeToLiveUpdates({ actions })
+ * }
  */
 exports.sourceNodesStatefully = true
 
