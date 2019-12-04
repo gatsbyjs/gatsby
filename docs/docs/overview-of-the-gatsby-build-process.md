@@ -219,7 +219,7 @@ Calls the [`onPreBootstrap` node API](/docs/node-apis/#onPreBootstrap) in your s
 
 8. `source and transform nodes`
 
-Creates Node objects from your site and all plugins implementing the [`sourceNodes` API](/docs/node-apis/#sourceNodes), and warns about plugins that aren't creating any nodes. Nodes created by source or transformer plugins are cached.
+Creates Node objects from your site and all plugins implementing either the [`sourceNodes` API](/docs/node-apis/#sourceNodes) or the [`sourceNodesStatefully` API](/docs/node-apis/#sourceNodesStatefully), and warns about plugins that aren't creating any nodes. Nodes created by source or transformer plugins are cached.
 
 Node objects created at this stage are considered top level nodes, meaning they don't have a parent node that they are derived from.
 

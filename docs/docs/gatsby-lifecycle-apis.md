@@ -42,8 +42,8 @@ The core of the bootstrap process is the "api-runner", which helps to execute AP
 The sequence of the **main** bootstrap Node API lifecycles are:
 
 - [onPreBootstrap](/docs/node-apis/#onPreBootstrap) e.g. implemented by [`gatsby-plugin-typography`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-typography/src/gatsby-node.js)
-- [sourceNodes](/docs/node-apis/#sourceNodes) e.g. implemented by [`gatsby-source-wikipedia`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wikipedia/src/gatsby-node.js)
-  - within this `createNode` can be called multiple times, which then triggers [onCreateNode](/docs/node-apis/#onCreateNode).
+- [sourceNodes](/docs/node-apis/#sourceNodes) e.g. implemented by [`gatsby-source-wikipedia`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wikipedia/src/gatsby-node.js) and [sourceNodesStatefully](/docs/node-apis/#sourceNodesStatefully) e.g. implemented by [`internal-data-bridge`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/internal-data-bridge/gatsby-node.js)
+  - within those `createNode` can be called multiple times, which then triggers [onCreateNode](/docs/node-apis/#onCreateNode).
 - (the first schema build happens here)
 - [resolvableExtensions](/docs/node-apis/#resolvableExtensions) for filetype/language extensions e.g. [`gatsby-plugin-typescript`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-typescript/src/gatsby-node.js)
 - [createPages](/docs/node-apis/#createPages) e.g. implemented by [`page-hot-reloader`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/bootstrap/page-hot-reloader.js)
