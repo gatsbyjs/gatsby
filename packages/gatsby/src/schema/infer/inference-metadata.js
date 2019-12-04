@@ -158,13 +158,14 @@ const updateValueDescriptorObject = (
   typeInfo,
   nodeId,
   operation,
+  metadata,
   path
 ) => {
   path.push(value)
 
   const { props = {} } = typeInfo
   typeInfo.props = props
-  let dirty = false
+
   Object.keys(value).forEach(key => {
     const v = value[key]
 
@@ -173,67 +174,62 @@ const updateValueDescriptorObject = (
       props[key] = descriptor = {}
     }
 
-    const propDirty = updateValueDescriptor(
-      nodeId,
-      key,
-      v,
-      operation,
-      descriptor,
-      path
-    )
-    dirty = dirty || propDirty
+    updateValueDescriptor(nodeId, key, v, operation, descriptor, metadata, path)
   })
 
   path.pop()
-  return dirty
 }
+
 const updateValueDescriptorArray = (
   value,
   key,
   typeInfo,
   nodeId,
   operation,
+  metadata,
   path
 ) => {
-  let dirty = false
   value.forEach(item => {
     let descriptor = typeInfo.item
     if (descriptor === undefined) {
       typeInfo.item = descriptor = {}
     }
 
-    const itemDirty = updateValueDescriptor(
+    updateValueDescriptor(
       nodeId,
       key,
       item,
       operation,
       descriptor,
+      metadata,
       path
     )
-    dirty = dirty || itemDirty
   })
-
-  return dirty
 }
-const updateValueRelNodes = (listOfNodeIds, delta, operation, typeInfo) => {
+
+const updateValueDescriptorRelNodes = (
+  listOfNodeIds,
+  delta,
+  operation,
+  typeInfo,
+  metadata
+) => {
   const { nodes = {} } = typeInfo
   typeInfo.nodes = nodes
-  let dirty = false
+
   listOfNodeIds.forEach(nodeId => {
     nodes[nodeId] = (nodes[nodeId] || 0) + delta
 
     // Treat any new related node addition or removal as a structural change
     // FIXME: this will produce false positives as this node can be
     //  of the same type as another node already in the map (but we don't know it here)
-    dirty =
-      dirty ||
-      nodes[nodeId] === 0 ||
-      (operation === `add` && nodes[nodeId] === 1)
+    if (nodes[nodeId] === 0 || (operation === `add` && nodes[nodeId] === 1)) {
+      metadata.dirty = true
+    }
   })
-
-  return dirty
 }
-const updateValueString = (value, delta, typeInfo) => {
+
+const updateValueDescriptorString = (value, delta, typeInfo) => {
   if (value === ``) {
     const { empty = 0 } = typeInfo
     typeInfo.empty = empty + delta
@@ -241,24 +237,26 @@ const updateValueString = (value, delta, typeInfo) => {
   typeInfo.example =
     typeof typeInfo.example !== `undefined` ? typeInfo.example : value
 }
+
 const updateValueDescriptor = (
   nodeId,
   key,
   value,
   operation = `add` /* add | del */,
   descriptor,
+  metadata,
   path
 ) => {
   // The object may be traversed multiple times from root.
   // Each time it does it should not revisit the same node twice
   if (path.includes(value)) {
-    return false
+    return
   }
 
   const typeName = getType(value, key)
 
   if (typeName === `null`) {
-    return false
+    return
   }
 
   const delta = operation === `del` ? -1 : 1
@@ -270,8 +268,9 @@ const updateValueDescriptor = (
 
   // Keeping track of structural changes
   // (when value of a new type is added or an existing type has no more values assigned)
-  let dirty =
-    typeInfo.total === 0 || (operation === `add` && typeInfo.total === 1)
+  if (typeInfo.total === 0 || (operation === `add` && typeInfo.total === 1)) {
+    metadata.dirty = true
+  }
 
   // Keeping track of the first node for this type. Only used for better conflict reporting.
   // (see Caveats section in the header comments)
@@ -283,55 +282,55 @@ const updateValueDescriptor = (
     if (typeInfo.first === nodeId || typeInfo.total === 0) {
       typeInfo.first = undefined
     }
-  }
+  } // return function calls for TCO
 
   switch (typeName) {
-    case `object`: {
-      if (
-        updateValueDescriptorObject(value, typeInfo, nodeId, operation, path)
-      ) {
-        dirty = true
-      }
-      return dirty
-    }
-    case `array`: {
-      if (
-        updateValueDescriptorArray(
-          value,
-          key,
-          typeInfo,
-          nodeId,
-          operation,
-          path
-        )
-      ) {
-        dirty = true
-      }
-      return dirty
-    }
+    // I want to return the func call to use TCO, eslint ignores that case :(
+    /* eslint-disable consistent-return */
+    case `object`:
+      return updateValueDescriptorObject(
+        value,
+        typeInfo,
+        nodeId,
+        operation,
+        metadata,
+        path
+      )
+    case `array`:
+      return updateValueDescriptorArray(
+        value,
+        key,
+        typeInfo,
+        nodeId,
+        operation,
+        metadata,
+        path
+      )
     case `relatedNode`:
-      if (updateValueRelNodes([value], delta, operation, typeInfo)) {
-        dirty = true
-      }
-      return dirty
-    case `relatedNodeList`: {
-      if (updateValueRelNodes(value, delta, operation, typeInfo)) {
-        dirty = true
-      }
-      return dirty
-    }
-    case `string`: {
-      updateValueString(value, delta, typeInfo)
-      return dirty
-    }
+      return updateValueDescriptorRelNodes(
+        [value],
+        delta,
+        operation,
+        typeInfo,
+        metadata
+      )
+    case `relatedNodeList`:
+      return updateValueDescriptorRelNodes(
+        value,
+        delta,
+        operation,
+        typeInfo,
+        metadata
+      )
+    case `string`:
+      return updateValueDescriptorString(value, delta, typeInfo)
+    /* eslint-enable consistent-return */
   }
 
   // int, float, boolean, null
 
   typeInfo.example =
     typeof typeInfo.example !== `undefined` ? typeInfo.example : value
-
-  return dirty
 }
 
 const mergeObjectKeys = (obj, other) => {
@@ -391,27 +390,25 @@ const updateTypeMetadata = (metadata = initialMetadata(), operation, node) => {
   if (metadata.ignored) {
     return metadata
   }
-  const { ignoredFields, fieldMap = {}, dirty = false } = metadata
+  const { ignoredFields, fieldMap = {} } = metadata
 
-  let structureChanged = false
   nodeFields(node, ignoredFields).forEach(field => {
     let descriptor = fieldMap[field]
     if (descriptor === undefined) {
       fieldMap[field] = descriptor = {}
     }
 
-    const valueStructureChanged = updateValueDescriptor(
+    updateValueDescriptor(
       node.id,
       field,
       node[field],
       operation,
       descriptor,
+      metadata,
       []
     )
-    structureChanged = structureChanged || valueStructureChanged
   })
   metadata.fieldMap = fieldMap
-  metadata.dirty = dirty || structureChanged
   return metadata
 }
 
