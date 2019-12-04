@@ -46,6 +46,19 @@ const errorParser = ({
         }
       },
     },
+    {
+      regex: /Cannot query field "(.+)" on type "(.+)"./m,
+      cb: match => {
+        return {
+          id: `85923`,
+          context: {
+            sourceMessage: match[0],
+            field: match[1],
+            type: match[2],
+          },
+        }
+      },
+    },
     // Match anything with a generic catch-all error handler
     {
       regex: /[\s\S]*/gm,
