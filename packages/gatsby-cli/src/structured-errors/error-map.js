@@ -177,6 +177,12 @@ const errorMap = {
     type: `GRAPHQL`,
     level: `ERROR`,
   },
+  "85921": {
+    text: context =>
+      `There was an error in your GraphQL query:\n\n${context.sourceMessage}\n\nIf you're e.g. filtering for specific nodes make sure that you chose the correct field (that h as the same type "${context.inputType}") or adjust the context variable to the type "${context.expectedType}".`,
+    type: `GRAPHQL`,
+    level: `ERROR`,
+  },
   // Config errors
   "10123": {
     text: context =>

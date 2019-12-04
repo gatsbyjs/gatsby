@@ -19,6 +19,20 @@ const errorParser = ({
         }
       },
     },
+    {
+      regex: /Variable "(.+)" of type "(.+)" used in position expecting type "(.+)"/m,
+      cb: match => {
+        return {
+          id: `85921`,
+          context: {
+            sourceMessage: match[0],
+            variableName: match[1],
+            inputType: match[2],
+            expectedType: match[3],
+          },
+        }
+      },
+    },
     // Match anything with a generic catch-all error handler
     {
       regex: /[\s\S]*/gm,
