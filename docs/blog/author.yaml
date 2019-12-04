@@ -53,7 +53,6 @@
 - id: Fernando Poumian
   bio: Full-Stack Web Developer - https://www.halfelectronic.com
   avatar: avatars/fernando-poumian.jpeg
-  twitter: "@fernandopoumian"
 - id: Josh Weaver
   bio: Developer at By the Book, Inc. Enjoys technology, writing and playing music. Can't turn down a decent board game.
   avatar: avatars/josh-weaver.jpg
@@ -245,7 +244,7 @@
 - id: Katie Fujihara
   bio: Lover of making beautiful UI. Portland tech community organizer.
   avatar: avatars/katie-fujihara.jpg
-  twitter: "@katieofcode"
+  twitter: "@KatieFujihara"
 - id: Sidhartha Chatterjee
   bio: Core team @ GatsbyJS. Full-Stack Developer. Scuba diver.
   avatar: avatars/sidhartha-chatterjee.jpg

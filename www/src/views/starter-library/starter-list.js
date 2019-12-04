@@ -103,34 +103,36 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                       {owner} /
                     </span>
                     <span css={{ display: `flex` }}>
-                      {gatsbyMajorVersion[0][1] === `2` && (
-                        <span
-                          sx={{
-                            alignItems: `center`,
-                            bg: `muted`,
-                            display: `flex`,
-                            borderRadius: 5,
-                            fontSize: 0,
-                            lineHeight: `solid`,
-                            px: `2px`,
-                            pr: 2,
-                            py: `2px`,
-                            mr: 2,
-                          }}
-                        >
+                      {gatsbyMajorVersion &&
+                        gatsbyMajorVersion[0] &&
+                        gatsbyMajorVersion[0][1] === `2` && (
                           <span
-                            dangerouslySetInnerHTML={{ __html: V2Icon }}
                             sx={{
-                              color: `textMuted`,
-                              mb: 0,
+                              alignItems: `center`,
+                              bg: `muted`,
+                              display: `flex`,
+                              borderRadius: 5,
+                              fontSize: 0,
+                              lineHeight: `solid`,
+                              px: `2px`,
+                              pr: 2,
+                              py: `2px`,
                               mr: 2,
-                              "& svg": { height: 12, width: 12 },
                             }}
-                          />
-                          {` `}
-                          v2
-                        </span>
-                      )}
+                          >
+                            <span
+                              dangerouslySetInnerHTML={{ __html: V2Icon }}
+                              sx={{
+                                color: `textMuted`,
+                                mb: 0,
+                                mr: 2,
+                                "& svg": { height: 12, width: 12 },
+                              }}
+                            />
+                            {` `}
+                            v2
+                          </span>
+                        )}
                       <div
                         sx={{
                           alignItems: `center`,

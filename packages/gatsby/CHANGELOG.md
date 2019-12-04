@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.18.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.5...gatsby@2.18.6) (2019-12-02)
+
+### Bug Fixes
+
+- **gatsby:** use correct state in the schema hot reloader ([#19862](https://github.com/gatsbyjs/gatsby/issues/19862)) ([f92cb9c](https://github.com/gatsbyjs/gatsby/commit/f92cb9c))
+
+## [2.18.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.4...gatsby@2.18.5) (2019-11-28)
+
+### Bug Fixes
+
+- **gatsby:** Call cwd() when called instead of on import ([#19800](https://github.com/gatsbyjs/gatsby/issues/19800)) ([451a489](https://github.com/gatsbyjs/gatsby/commit/451a489))
+- **gatsby:** do not cause stack overflow over circular refs ([#19802](https://github.com/gatsbyjs/gatsby/issues/19802)) ([89c6b89](https://github.com/gatsbyjs/gatsby/commit/89c6b89)), closes [#11364](https://github.com/gatsbyjs/gatsby/issues/11364)
+
+### Performance Improvements
+
+- **gatsby:** Avoid unnecessary type inference during bootstrap ([#19781](https://github.com/gatsbyjs/gatsby/issues/19781)) ([006ecd8](https://github.com/gatsbyjs/gatsby/commit/006ecd8))
+
+## [2.18.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.3...gatsby@2.18.4) (2019-11-26)
+
+### Bug Fixes
+
+- **gatsby:** Remove relay compiler & use our own ([#19665](https://github.com/gatsbyjs/gatsby/issues/19665)) ([bda9f1f](https://github.com/gatsbyjs/gatsby/commit/bda9f1f))
+- update minor updates in packages ([#19776](https://github.com/gatsbyjs/gatsby/issues/19776)) ([559beb2](https://github.com/gatsbyjs/gatsby/commit/559beb2))
+- **gatsby:** memoize shadowCreatePagePath to fix performance r… ([#19774](https://github.com/gatsbyjs/gatsby/issues/19774)) ([3043786](https://github.com/gatsbyjs/gatsby/commit/3043786))
+
+## [2.18.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.2...gatsby@2.18.3) (2019-11-25)
+
+**Note:** Version bump only for package gatsby
+
 ## [2.18.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.1...gatsby@2.18.2) (2019-11-22)
 
 ### Bug Fixes

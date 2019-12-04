@@ -43,11 +43,11 @@ const errorMap = {
   },
   "85908": {
     text: context => {
-      const closetFragment = context.closestFragment
+      const closestFragment = context.closestFragment
         ? `\n\nDid you mean to use ` + `"${context.closestFragment}"?`
         : ``
 
-      return `There was an error in your GraphQL query:\n\nThe fragment "${context.fragmentName}" does not exist.${closetFragment}`
+      return `There was an error in your GraphQL query:\n\nThe fragment "${context.fragmentName}" does not exist.\n\n${context.codeFrame}${closestFragment}`
     },
     type: `GRAPHQL`,
     level: `ERROR`,
@@ -128,6 +128,21 @@ const errorMap = {
         GraphQL syntax error in query:\n\n${context.sourceMessage}${
         context.codeFrame ? `\n\n${context.codeFrame}` : ``
       }`),
+    type: `GRAPHQL`,
+    level: `ERROR`,
+  },
+  // Duplicate fragment
+  "85919": {
+    text: context =>
+      stripIndent(`
+      Found two different GraphQL fragments with identical name "${context.fragmentName}". Fragment names must be unique
+
+      File: ${context.leftFragment.filePath}
+      ${context.leftFragment.codeFrame}
+
+      File: ${context.rightFragment.filePath}
+      ${context.rightFragment.codeFrame}
+    `),
     type: `GRAPHQL`,
     level: `ERROR`,
   },
@@ -253,7 +268,7 @@ const errorMap = {
       [
         stripIndent(`
           Your plugins must export known APIs from their gatsby-${context.exportType}.js.
-      
+
           See https://www.gatsbyjs.org/docs/${context.exportType}-apis/ for the list of Gatsby ${context.exportType} APIs.
         `),
       ]

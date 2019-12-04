@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-react-docgen@5.0.21...gatsby-transformer-react-docgen@5.0.22) (2019-11-26)
+
+**Note:** Version bump only for package gatsby-transformer-react-docgen
+
 ## [5.0.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-react-docgen@5.0.20...gatsby-transformer-react-docgen@5.0.21) (2019-11-15)
 
 **Note:** Version bump only for package gatsby-transformer-react-docgen

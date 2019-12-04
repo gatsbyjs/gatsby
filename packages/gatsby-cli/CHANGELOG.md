@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.8.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.14...gatsby-cli@2.8.15) (2019-12-02)
+
+### Performance Improvements
+
+- **gatsby-cli:** throttle progress bar, build much faster this way ([#19866](https://github.com/gatsbyjs/gatsby/issues/19866)) ([c1764a3](https://github.com/gatsbyjs/gatsby/commit/c1764a3)), closes [#15505](https://github.com/gatsbyjs/gatsby/issues/15505) [#17452](https://github.com/gatsbyjs/gatsby/issues/17452) [#17966](https://github.com/gatsbyjs/gatsby/issues/17966) [#18801](https://github.com/gatsbyjs/gatsby/issues/18801) [#17873](https://github.com/gatsbyjs/gatsby/issues/17873)
+
+## [2.8.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.13...gatsby-cli@2.8.14) (2019-11-26)
+
+### Bug Fixes
+
+- **gatsby:** Remove relay compiler & use our own ([#19665](https://github.com/gatsbyjs/gatsby/issues/19665)) ([bda9f1f](https://github.com/gatsbyjs/gatsby/commit/bda9f1f))
+
 ## [2.8.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.12...gatsby-cli@2.8.13) (2019-11-20)
 
 ### Bug Fixes

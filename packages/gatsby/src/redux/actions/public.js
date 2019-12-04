@@ -20,7 +20,16 @@ const { getCommonDir } = require(`../../utils/path`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 const { trackCli } = require(`gatsby-telemetry`)
 const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
-const shadowCreatePagePath = require(`../../internal-plugins/webpack-theme-component-shadowing/create-page`)
+
+/**
+ * Memoize function used to pick shadowed page components to avoid expensive I/O.
+ * Ideally, we should invalidate memoized values if there are any FS operations
+ * on files that are in shadowing chain, but webpack currently doesn't handle
+ * shadowing changes during develop session, so no invalidation is not a deal breaker.
+ */
+const shadowCreatePagePath = _.memoize(
+  require(`../../internal-plugins/webpack-theme-component-shadowing/create-page`)
+)
 
 const actions = {}
 const isWindows = platform() === `win32`
@@ -427,7 +436,11 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 
   if (store.getState().pages.has(alternateSlashPath)) {
     report.warn(
-      `Attempting to create page "${page.path}", but page "${alternateSlashPath}" already exists. This could lead to non-deterministic routing behavior`
+      chalk.bold.yellow(`Non-deterministic routing danger: `) +
+        `Attempting to create page: "${page.path}", but page "${alternateSlashPath}" already exists\n` +
+        chalk.bold.yellow(
+          `This could lead to non-deterministic routing behavior`
+        )
     )
   }
 

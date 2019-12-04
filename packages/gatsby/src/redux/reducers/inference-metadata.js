@@ -3,11 +3,62 @@
 const { omit } = require(`lodash`)
 const {
   addNode,
+  addNodes,
   deleteNode,
   ignore,
+  disable,
 } = require(`../../schema/infer/inference-metadata`)
 const { NodeInterfaceFields } = require(`../../schema/types/node-interface`)
 const { typesWithoutInference } = require(`../../schema/types/type-defs`)
+
+const StepsEnum = {
+  initialBuild: `initialBuild`,
+  incrementalBuild: `incrementalBuild`,
+}
+
+const initialState = () => {
+  return {
+    step: StepsEnum.initialBuild, // `initialBuild` | `incrementalBuild`
+    typeMap: {},
+  }
+}
+
+module.exports = (state = initialState(), action) => {
+  switch (action.type) {
+    case `CREATE_NODE`:
+    case `DELETE_NODE`:
+    case `DELETE_NODES`:
+    case `ADD_CHILD_NODE_TO_PARENT_NODE`:
+    case `ADD_FIELD_TO_NODE`: {
+      // Perf: disable incremental inference until the first schema build.
+      // There are plugins which create and delete lots of nodes during bootstrap,
+      // which makes this reducer to do a lot of unnecessary work.
+      // Instead we defer the initial metadata creation until the first schema build
+      // and then enable incremental updates explicitly
+      if (state.step === StepsEnum.initialBuild) {
+        return state
+      }
+      state.typeMap = incrementalReducer(state.typeMap, action)
+      return state
+    }
+
+    case `START_INCREMENTAL_INFERENCE`: {
+      return {
+        ...state,
+        step: StepsEnum.incrementalBuild,
+      }
+    }
+
+    case `DELETE_CACHE`: {
+      return initialState()
+    }
+
+    default: {
+      state.typeMap = incrementalReducer(state.typeMap, action)
+      return state
+    }
+  }
+}
 
 const ignoredFields = new Set([
   ...NodeInterfaceFields,
@@ -15,18 +66,35 @@ const ignoredFields = new Set([
   `__gatsby_resolved`,
 ])
 
-module.exports = (state = {}, action) => {
-  switch (action.type) {
-    case `DELETE_CACHE`:
-      return {}
+const initialTypeMetadata = () => {
+  return { ignoredFields }
+}
 
+const incrementalReducer = (state = {}, action) => {
+  switch (action.type) {
     case `CREATE_TYPES`: {
       const typeDefs = Array.isArray(action.payload)
         ? action.payload
         : [action.payload]
       const ignoredTypes = typeDefs.reduce(typesWithoutInference, [])
       ignoredTypes.forEach(type => {
-        state[type] = ignore(state[type])
+        state[type] = ignore(state[type] || initialTypeMetadata())
+      })
+      return state
+    }
+
+    case `BUILD_TYPE_METADATA`: {
+      // Overwrites existing metadata
+      const { nodes, typeName } = action.payload
+      state[typeName] = addNodes(initialTypeMetadata(), nodes)
+      return state
+    }
+
+    case `DISABLE_TYPE_INFERENCE`: {
+      // Note: types disabled here will be re-enabled after BUILD_TYPE_METADATA
+      const types = action.payload
+      types.forEach(type => {
+        state[type] = disable(state[type] || initialTypeMetadata())
       })
       return state
     }
@@ -35,9 +103,9 @@ module.exports = (state = {}, action) => {
       const { payload: node, oldNode } = action
       const { type } = node.internal
       if (oldNode) {
-        state[type] = deleteNode(state[type] || { ignoredFields }, oldNode)
+        state[type] = deleteNode(state[type] || initialTypeMetadata(), oldNode)
       }
-      state[type] = addNode(state[type] || { ignoredFields }, node)
+      state[type] = addNode(state[type] || initialTypeMetadata(), node)
       return state
     }
 
@@ -45,7 +113,7 @@ module.exports = (state = {}, action) => {
       const node = action.payload
       if (!node) return state
       const { type } = node.internal
-      state[type] = deleteNode(state[type] || { ignoredFields }, node)
+      state[type] = deleteNode(state[type] || initialTypeMetadata(), node)
       return state
     }
 
@@ -79,7 +147,7 @@ module.exports = (state = {}, action) => {
       const { fullNodes } = action
       fullNodes.forEach(node => {
         const { type } = node.internal
-        state[type] = deleteNode(state[type] || { ignoredFields }, node)
+        state[type] = deleteNode(state[type] || initialTypeMetadata(), node)
       })
       return state
     }
