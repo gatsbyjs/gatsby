@@ -31,10 +31,16 @@ const errorMap = {
   },
   "85901": {
     text: context =>
-      `There was an error in your GraphQL query:\n\n${context.sourceMessage}`,
+      stripIndent(`
+        There was an error in your GraphQL query:\n\n${context.sourceMessage}${
+        context.codeFrame ? `\n\n${context.codeFrame}` : ``
+      }${context.filePath ? `\n\nFile path: ${context.filePath}` : ``}${
+        context.urlPath ? `\nUrl path: ${context.urlPath}` : ``
+      }${context.plugin ? `\nPlugin: ${context.plugin}` : ``}`),
     type: `GRAPHQL`,
     level: `ERROR`,
   },
+  // Deprecated
   "85907": {
     text: context =>
       `There was an error in your GraphQL query:\n\n${context.message}`,
@@ -52,6 +58,7 @@ const errorMap = {
     type: `GRAPHQL`,
     level: `ERROR`,
   },
+  // Deprecated
   "85909": {
     text: context => context.sourceMessage,
     type: `GRAPHQL`,

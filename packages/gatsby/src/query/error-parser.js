@@ -1,29 +1,11 @@
-const errorParser = ({ message, filePath, location }) => {
-  // Handle specific errors from Relay. A list of regexes to match certain
+const errorParser = ({
+  message,
+  filePath = undefined,
+  location = undefined,
+}) => {
+  // Handle GraphQL errors. A list of regexes to match certain
   // errors to specific callbacks
   const handlers = [
-    {
-      regex: /Field "(.+)" must not have a selection since type "(.+)" has no subfields/m,
-      cb: match => {
-        return {
-          id: `85909`,
-          context: {
-            sourceMessage: match[0],
-            fieldName: match[1],
-            typeName: match[2],
-          },
-        }
-      },
-    },
-    {
-      regex: /Encountered\s\d\serror.*:\n\s*(.*)/m,
-      cb: match => {
-        return {
-          id: `85907`,
-          context: { message: match[1] },
-        }
-      },
-    },
     // Match anything with a generic catch-all error handler
     {
       regex: /[\s\S]*/gm,
@@ -42,8 +24,8 @@ const errorParser = ({ message, filePath, location }) => {
     let matched = message.match(regex)
     if (matched) {
       structured = {
-        filePath,
-        location,
+        ...(filePath && { filePath }),
+        ...(location && { location }),
         ...cb(matched),
       }
       break

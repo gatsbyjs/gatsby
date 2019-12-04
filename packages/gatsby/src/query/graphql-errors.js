@@ -93,7 +93,7 @@ function findLocation(extractedMessage, def) {
   return location
 }
 
-function getCodeFrame(query: string, line?: number, column?: number) {
+export function getCodeFrame(query: string, line?: number, column?: number) {
   return codeFrameColumns(
     query,
     {
