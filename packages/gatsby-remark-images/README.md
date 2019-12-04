@@ -2,7 +2,7 @@
 
 Processes images in markdown so they can be used in the production build.
 
-In the processing, it make images responsive by:
+In the processing, it makes images responsive by:
 
 - Adding an elastic container to hold the size of the image while it loads to
   avoid layout jumps.

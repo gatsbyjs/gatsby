@@ -4514,8 +4514,8 @@
   categories:
     - Directory
     - eCommerce
-  built_by: Pilon
-  built_by_url: https://pilon.io/
+  built_by: Subscribe Pro
+  built_by_url: https://www.subscribepro.com/
   featured: false
 - title: Ouracademy
   main_url: https://our-academy.org/
@@ -7432,7 +7432,7 @@
     - Landing Page
     - Productivity
     - Technology
-  built_by: Vandre Leal
+  built_by: Vandré Leal
   built_by_url: https://vandreleal.github.io
   featured: false
 - title: tiaan.dev
@@ -8548,6 +8548,38 @@
   built_by: Corey Ward
   built_by_url: "http://www.coreyward.me/"
   featured: false
+- title: Anurag Hazra's Portfolio
+  url: https://anuraghazra.github.io/
+  main_url: https://anuraghazra.github.io/
+  source_url: https://github.com/anuraghazra/anuraghazra.github.io
+  description: >
+    Anurag Hazra's portfolio & personal blog, Creative FrontEnd web developer from india.
+  categories:
+    - Portfolio
+    - Blog
+    - Open Source
+    - JavaScript
+  built_by: Anurag Hazra
+  built_by_url: "https://github.com/anuraghazra"
+- title: VeganWorks
+  url: https://veganworks.com/
+  main_url: https://veganworks.com/
+  description: We make delicious vegan snack boxes.
+  categories:
+    - Food
+- title: codesundar
+  url: https://codesundar.com
+  main_url: https://codesundar.com
+  description: >
+    Learn PhoneGap, Ionic, Flutter
+  categories:
+    - Education
+    - Technology
+    - Web Development
+    - Blog
+  built_by: codesundar
+  built_by_url: https://codesundar.com
+  featured: false
 - title: Nordic Microfinance Initiative
   url: "https://www.nmimicro.no/"
   main_url: "https://www.nmimicro.no/"
@@ -8558,3 +8590,105 @@
     - Business
   built_by: Othermachines
   built_by_url: "https://othermachines.com"
+- title: Subscribe Pro Documentation
+  url: https://docs.subscribepro.com/
+  main_url: https://docs.subscribepro.com/
+  description: >
+    Subscribe Pro is a subscription commerce solution that enables brands to quickly add subscription commerce models such as box, subscribe-and-save, autoship and similar to their existing eCommerce websites.
+  categories:
+    - Documentation
+    - eCommerce
+    - API
+    - Technology
+    - Web Development
+  built_by: Subscribe Pro
+  built_by_url: https://www.subscribepro.com/
+- title: Software.com
+  main_url: https://www.software.com
+  url: https://www.software.com
+  description: Our data platform helps developers learn from their data, increase productivity, and code smarter.
+  categories:
+    - Data
+    - Productivity
+    - Programming
+  built_by: Brett Stevens, Joshua Cheng, Geoff Stevens
+  built_by_url: https://github.com/swdotcom/
+  featured: false
+- title: WTL Studio Website Builder
+  main_url: "https://wtlstudio.com/"
+  url: "https://wtlstudio.com/"
+  description: >
+    Cloud-based, SEO focused website builder - helping local businesses and startups reach audiences faster.
+  featured: false
+  categories:
+    - eCommerce
+    - SEO
+    - Business
+- title: ToolsDB
+  main_url: https://toolsdb.dev
+  url: https://toolsdb.dev
+  description: List of tools for better software development.
+  featured: false
+  categories:
+    - Technology
+    - Web Development
+    - Programming
+    - Productivity
+- title: Eastman Strings
+  url: https://www.eastmanstrings.com
+  main_url: https://www.eastmanstrings.com
+  description: >
+    Site was built using GatsbyJS, Cosmic CMS, and Netlify.
+  categories:
+    - Business
+    - Music
+  built_by: Tekhaus
+  built_by_url: https://www.tekha.us
+  featured: false
+- title: Lesley Lai
+  main_url: https://lesleylai.info
+  url: https://lesleylai.info
+  source_url: https://github.com/LesleyLai/blog
+  description: >
+    lesleylai.info is the personal website of Lesley Lai, where he talks mainly about C++ and Computer Graphics.
+  categories:
+    - Blog
+    - Open Source
+    - Portfolio
+    - Programming
+    - Technology
+  built_by: Lesley Lai
+  built_by_url: https://github.com/LesleyLai
+  featured: false
+- title: Whipstitch Webwork
+  url: https://www.whipstitchwebwork.com
+  main_url: https://www.whipstitchwebwork.com
+  description: >
+    Websites for smart people.
+  categories:
+    - Agency
+    - Web Development
+  built_by: Matthew Russell
+  featured: false
+- title: Vandré Leal
+  main_url: https://vandreleal.github.io
+  url: https://vandreleal.github.io
+  source_url: https://github.com/vandreleal/vandreleal.github.io
+  description: >
+    Portfolio of Vandré Leal.
+  categories:
+    - Portfolio
+    - Web Development
+  built_by: Vandré Leal
+  built_by_url: https://vandreleal.github.io
+  featured: false
+- title: talkoverflow
+  main_url: https://talkoverflow.com
+  url: https://talkoverflow.com
+  description: Blog on software engineering built with Gatsby themes and theme-ui
+  categories:
+    - Blog
+    - Web Development
+    - Technology
+  built_by: Patryk Jeziorowski
+  built_by_url: https://twitter.com/pjeziorowski
