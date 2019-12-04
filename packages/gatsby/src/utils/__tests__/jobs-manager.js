@@ -1,5 +1,6 @@
 const path = require(`path`)
 const _ = require(`lodash`)
+const ROOT_DIR = __dirname
 
 // I need a mock to spy on
 jest.mock(`p-defer`, () =>
@@ -22,8 +23,17 @@ jest.mock(
   { virtual: true }
 )
 
+jest.mock(`../../redux`, () => {
+  return {
+    store: {
+      getState: jest.fn(),
+    },
+  }
+})
+
 const worker = require(`gatsby-plugin-test/worker.js`)
 const reporter = require(`gatsby-cli/lib/reporter`)
+const { store } = require(`../../redux`)
 const getJobsManager = () => {
   let jobManager
   jest.isolateModules(() => {
@@ -34,7 +44,6 @@ const getJobsManager = () => {
 }
 
 const pDefer = require(`p-defer`)
-const ROOT_DIR = __dirname
 
 const createMockJob = () => {
   return {
@@ -43,7 +52,7 @@ const createMockJob = () => {
       path.join(ROOT_DIR, `fixtures/input1.jpg`),
       path.join(ROOT_DIR, `fixtures/input2.jpg`),
     ],
-    outputDir: path.join(`ROOT_DIR`, `public/outputDir`),
+    outputDir: path.join(ROOT_DIR, `public/outputDir`),
     args: {
       param1: `param1`,
       param2: `param2`,
@@ -61,6 +70,14 @@ describe(`Jobs manager`, () => {
     worker.TEST_JOB.mockReset()
     endActivity.mockClear()
     pDefer.mockClear()
+    store.getState.mockClear()
+    store.getState.mockImplementation(() => {
+      return {
+        program: {
+          directory: ROOT_DIR,
+        },
+      }
+    })
     reporter.phantomActivity.mockImplementation(() => {
       return {
         start: jest.fn(),
@@ -89,6 +106,23 @@ describe(`Jobs manager`, () => {
 
       expect(endActivity).toHaveBeenCalledTimes(1)
       expect(worker.TEST_JOB).toHaveBeenCalledTimes(1)
+      expect(worker.TEST_JOB).toHaveBeenCalledWith({
+        inputPaths: [
+          expect.objectContaining({
+            path: `fixtures/input1.jpg`,
+            contentDigest: expect.any(String),
+          }),
+          expect.objectContaining({
+            path: `fixtures/input2.jpg`,
+            contentDigest: expect.any(String),
+          }),
+        ],
+        outputDir: `public/outputDir`,
+        args: {
+          param1: `param1`,
+          param2: `param2`,
+        },
+      })
       expect(worker.NEXT_JOB).toHaveBeenCalledTimes(1)
     })
 
@@ -106,7 +140,7 @@ describe(`Jobs manager`, () => {
           path.join(ROOT_DIR, `fixtures/input1.jpg`),
           path.join(ROOT_DIR, `fixtures/input2.jpg`),
         ],
-        outputDir: path.join(`ROOT_DIR`, `public/outputDir`),
+        outputDir: path.join(ROOT_DIR, `public/outputDir`),
         args: {
           param1: `param1`,
           param2: `param2`,
@@ -141,14 +175,34 @@ describe(`Jobs manager`, () => {
         Promise.reject(new Error(`An error occured`))
       )
 
-      await expect(enqueueJob(jobArgs)).rejects.toEqual(
-        new Error(`An error occured`)
-      )
-      await expect(enqueueJob(jobArgs2)).rejects.toEqual(
-        new Error(`An error occured`)
-      )
+      expect.assertions(4)
+      try {
+        await enqueueJob(jobArgs)
+      } catch (err) {
+        expect(err).toMatchInlineSnapshot(`[Error: An error occured]`)
+      }
+      try {
+        await enqueueJob(jobArgs2)
+      } catch (err) {
+        expect(err).toMatchInlineSnapshot(`[Error: An error occured]`)
+      }
       expect(endActivity).toHaveBeenCalledTimes(2)
       expect(worker.TEST_JOB).toHaveBeenCalledTimes(2)
+    })
+
+    it(`should fail when paths are outside of gatsby`, async () => {
+      const { enqueueJob } = getJobsManager()
+      const jobArgs = createMockJob()
+      jobArgs.inputPaths = [`/tmp/files/image.jpg`]
+
+      expect.assertions(1)
+      try {
+        await enqueueJob(jobArgs)
+      } catch (err) {
+        expect(err).toMatchInlineSnapshot(
+          `[Error: /tmp/files/image.jpg is not inside <PROJECT_ROOT>/packages/gatsby/src/utils/__tests__. Make sure your files are inside your gatsby project.]`
+        )
+      }
     })
   })
 
@@ -174,9 +228,13 @@ describe(`Jobs manager`, () => {
         version: `1.0.0`,
       }
 
-      expect(() => {
+      try {
         resolveWorker(plugin)
-      }).toThrow(`We couldn't find a worker.js`)
+      } catch (err) {
+        expect(err).toMatchInlineSnapshot(
+          `[Error: We couldn't find a worker.js file for test-plugin@1.0.0]`
+        )
+      }
     })
   })
 })

@@ -1,9 +1,12 @@
 const uuid = require(`uuid/v4`)
+const path = require(`path`)
 const hasha = require(`hasha`)
 const fs = require(`fs-extra`)
 const pDefer = require(`p-defer`)
+const slash = require(`slash`)
 const { createContentDigest } = require(`gatsby-core-utils`)
 const reporter = require(`gatsby-cli/lib/reporter`)
+const { store } = require(`../redux`)
 
 let activityForJobs
 let activeJobs = 0
@@ -13,9 +16,20 @@ const jobsInProcess = new Map()
 
 /**
  * @param {string} path
+ * @param {string} rootDir
  * @return {string}
  */
-const convertPathsToRelative = path => path
+const convertPathsToRelative = (filePath, rootDir) => {
+  const relative = path.relative(rootDir, filePath)
+
+  if (relative.includes(`..`)) {
+    throw new Error(
+      `${filePath} is not inside ${rootDir}. Make sure your files are inside your gatsby project.`
+    )
+  }
+
+  return slash(relative)
+}
 /**
  * @param {string} path
  */
@@ -97,12 +111,16 @@ const handleJobEnded = () => {
  * Creates a job
  *
  * @param {Job} args
+ * @return {Promise<unknown>}
  */
 exports.enqueueJob = async ({ name, inputPaths, outputDir, args, plugin }) => {
+  const rootDir = store.getState().program.directory
+
   // TODO see if we can make this async, filehashing might be expensive to wait for
+  // When making this async might trigger the phantomactivity multiple times
   const inputPathsWithContentDigest = inputPaths.map(path => {
     return {
-      path: convertPathsToRelative(path),
+      path: convertPathsToRelative(path, rootDir),
       contentDigest: createFileHash(path),
     }
   })
@@ -111,7 +129,7 @@ exports.enqueueJob = async ({ name, inputPaths, outputDir, args, plugin }) => {
     id: uuid(),
     name,
     inputPaths: inputPathsWithContentDigest,
-    outputDir: convertPathsToRelative(outputDir),
+    outputDir: convertPathsToRelative(outputDir, rootDir),
     args,
     plugin,
   }

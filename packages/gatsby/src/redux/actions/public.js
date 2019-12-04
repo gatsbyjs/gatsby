@@ -1191,6 +1191,22 @@ actions.createJob = (job: Job, plugin?: ?Plugin = null) => {
   }
 }
 
+/**
+ * Create a "job". This is a long-running process that are generally
+ * started as side-effects to GraphQL queries.
+ * [`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp/) uses this for
+ * example.
+ *
+ * Gatsby doesn't finish its bootstrap until all jobs are ended.
+ * @param {Object} job A job object with name, inputPaths, outputDir and args
+ * @param {string} job.name The name of the job you want to execute
+ * @param {string[]} job.inputPaths The inputPaths that are needed to run
+ * @param {string} job.outputDir The directory where all files are being saved to
+ * @param {Object} job.args The arguments the job needs to execute
+ * @returns {Promise<unknown>} Promise to see if the job is done executing
+ * @example
+ * createJobV2({ name: `IMAGE_PROCESSING`, inputPaths: [`something.jpeg`], outputDir: `public/static`, args: { width: 100, height: 100 } })
+ */
 actions.createJobV2 = (job: JobV2, plugin?: ?Plugin = null) => () =>
   enqueueJob({
     name: job.name,
