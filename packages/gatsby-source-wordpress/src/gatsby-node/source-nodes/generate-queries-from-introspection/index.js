@@ -6,7 +6,6 @@ import {
 // @todo create function to unmap check here for similar function https://www.gatsbyjs.org/packages/gatsby-source-graphql-universal/
 import fetchGraphql from "../../../utils/fetch-graphql"
 import gql from "../../../utils/gql"
-import { FIELD_BLACKLIST } from "../../constants"
 
 import store from "../../../store"
 
@@ -14,6 +13,8 @@ export const buildNodeQueriesFromIntrospection = async (
   helpers,
   pluginOptions
 ) => {
+  const { fieldBlacklist } = store.getState().introspection
+
   const introspection = await fetchGraphql({
     url: pluginOptions.url,
     query: gql`
@@ -96,7 +97,7 @@ export const buildNodeQueriesFromIntrospection = async (
       field =>
         field.type.kind === `OBJECT` &&
         field.type.name.includes(`RootQueryTo`) &&
-        !FIELD_BLACKLIST.includes(field.name)
+        !fieldBlacklist.includes(field.name)
     )
     .map(field => {
       return {

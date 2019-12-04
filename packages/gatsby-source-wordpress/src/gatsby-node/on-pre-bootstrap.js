@@ -2,17 +2,12 @@ import { buildNodeQueriesFromIntrospection } from "./source-nodes/generate-queri
 import formatLogMessage from "../utils/format-log-message"
 import checkPluginRequirements from "../utils/check-plugin-requirements"
 import store from "../store"
+import { setApiHelpersToState } from "./set-api-helpers-to-state"
 
 const onPreBootstrap = async (helpers, pluginOptions) => {
   const api = [helpers, pluginOptions]
 
-  //
-  // add the plugin options and Gatsby API helpers to our store
-  // to access them more easily
-  store.dispatch.gatsbyApi.setState({
-    helpers,
-    pluginOptions,
-  })
+  setApiHelpersToState(helpers, pluginOptions)
 
   //
   // exit the build if requirements aren't met

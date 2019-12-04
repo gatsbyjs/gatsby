@@ -1,11 +1,12 @@
-import { dd, dump } from "dumper.js"
-import { FIELD_BLACKLIST } from "../../constants"
+import store from "../../../store"
 
-const filterField = ({ field, parentField, nodeListTypeNames }) => {
+const { fieldBlacklist } = store.getState().introspection
+
+const filterField = ({ field, nodeListTypeNames }) => {
   const fieldType = field.type || {}
   const ofType = fieldType.ofType || {}
 
-  if (FIELD_BLACKLIST.includes(field.name)) {
+  if (fieldBlacklist.includes(field.name)) {
     return false
   }
 

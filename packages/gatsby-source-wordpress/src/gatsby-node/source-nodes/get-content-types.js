@@ -1,7 +1,6 @@
 import { getAvailablePostTypesQuery } from "./graphql-queries"
 import fetchGraphql from "../../utils/fetch-graphql"
 import store from "../../store"
-import { FIELD_BLACKLIST } from "../constants"
 
 /**
  *
@@ -11,7 +10,7 @@ import { FIELD_BLACKLIST } from "../constants"
 export const createContentTypeNodes = async () => {
   const state = store.getState()
 
-  const { queries } = state.introspection
+  const { queries, fieldBlacklist } = state.introspection
 
   const {
     pluginOptions: { url },
@@ -24,7 +23,7 @@ export const createContentTypeNodes = async () => {
 
   const contentTypes = data.postTypes
     .filter(
-      contentType => !FIELD_BLACKLIST.includes(contentType.fieldNames.plural)
+      contentType => !fieldBlacklist.includes(contentType.fieldNames.plural)
     )
     .map(contentTypeObj => {
       const contentTypeQueryInfo = queries[contentTypeObj.fieldNames.plural]
