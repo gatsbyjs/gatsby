@@ -1,6 +1,6 @@
 ---
 title: How to handle comments in Gatsby blogs
-date: "2018-04-09"
+date: 2018-04-09
 author: "Gatsby Central"
 canonicalLink: https://www.gatsbycentral.com/how-to-handle-comments-in-gatsby-blogs
 publishedAt: "Gatsby Central"
@@ -18,7 +18,7 @@ You have three choices.
 
 ## Client side
 
-The second is the simplest choice. [Disqus](https://disqus.com/) is a popular client side comment service. They offer a free tier for non-commercial sites. Or plans start from $10/month.
+The second is the simplest choice. [Disqus](https://disqus.com/) is a popular client side comment service. They offer a free tier for non-commercial sites. Or plans start from \$10/month.
 
 There are also open source alternatives like [commento](https://github.com/adtac/commento). You need to install them. You need to manage and maintain a server. This is probably too much work to be worthwhile.
 
@@ -48,7 +48,7 @@ You could link your comment form to an email address. Then you could copy and pa
 
 ## Crazy
 
-There are many other options. Some crazier than others. You could push comments to WordPress. Then pull them from WordPress into Gatsby at build time. Or push them to a headless CMS. Via a serverless setup maybe.
+There are many other options. Some crazier than others. You could push comments to WordPress. Then pull them from WordPress into Gatsby at build time. Or push them to a [headless CMS](/docs/headless-cms/). Via a serverless setup maybe.
 
 You could create a comment form. Then have it generate a mailto link. Then people email you the comment. Then you copy and paste it into Git. Or the mailto link points to a service like mailgun. Then incoming emails turn into webhooks. Then forward to serverless. Then land as pull requests.
 

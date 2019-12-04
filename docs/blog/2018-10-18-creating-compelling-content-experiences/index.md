@@ -11,7 +11,7 @@ In the last three sections, we’ve described the different facets of how to cre
 
 While these trends target different stakeholders, they’re deeply interrelated. That’s because to adopt a new architecture in one area, you often need to adopt new technologies in the other two.
 
-With users after user writing headlines like "[Gatsby + Contentful + Netlify (and Algolia)](https://www.gatsbyjs.org/blog/2017-12-06-gatsby-plus-contentful-plus-netlify/)" -- grouping a React-based website framework, a headless CMS, a static host + CDN, and a search provider -- it’s clear these these technologies are meant to be used together.
+With users after user writing headlines like "[Gatsby + Contentful + Netlify (and Algolia)](/blog/2017-12-06-gatsby-plus-contentful-plus-netlify/)" -- grouping a React-based website framework, a headless CMS, a static host + CDN, and a search provider -- it’s clear these these technologies are meant to be used together.
 
 Website teams moving to this space have to plan four steps -- one for each category, plus integration.
 
@@ -36,7 +36,7 @@ This allows content teams to replace their heavyweight CMS monolith with their c
 
 ### Second, pick a UI development library
 
-[React and Angular are both excellent, ubiquitious, modern choices](/blog/2018-10-11-rise-of-modern-web-development), with rich community ecosystems to address website-specific concerns like:
+[React and Angular are both excellent, ubiquitous, modern choices](/blog/2018-10-11-rise-of-modern-web-development), with rich community ecosystems to address website-specific concerns like:
 
 - SEO
 - Routing
@@ -45,7 +45,7 @@ This allows content teams to replace their heavyweight CMS monolith with their c
 
 ### Third, choose a performance strategy
 
-There are two main approaches to performance -- [payload optimization and delivery optimization](https://www.gatsbyjs.org/blog/2018-10-16-why-mobile-performance-is-crucial#how-performance-optimization-works).
+There are two main approaches to performance -- [payload optimization and delivery optimization](/blog/2018-10-16-why-mobile-performance-is-crucial#how-performance-optimization-works).
 
 Payload optimization involves performance-enhancing development practices. Delivery optimization means compiling websites to static files that can be served from a global CDN, rather than running servers and databases.
 
@@ -53,7 +53,7 @@ Often, to ensure a fast site, you'll need both.
 
 To do delivery optimization, you'll need to pick a JAMStack site generator like Hugo or Gatsby.
 
-To do payload optimization, your team will need to implement a [long performance checklist](https://www.smashingmagazine.com/2018/01/front-end-performance-checklist-2018-pdf-pages/), or pick a framework such as Gatsby that [performs payload optimization](https://www.gatsbyjs.org/features/#legend) out of the box.
+To do payload optimization, your team will need to implement a [long performance checklist](https://www.smashingmagazine.com/2019/01/front-end-performance-checklist-2019-pdf-pages/), or pick a framework such as Gatsby that [performs payload optimization](/features/#legend) out of the box.
 
 ### Fourth, choose your content mesh
 
@@ -63,7 +63,7 @@ The challenge for website teams is: how to achieve this without a lot of costly,
 
 The answer: choose a content mesh. A content mesh:
 
-- pulls in data from your headless CMS systems
+- pulls in data from your [headless CMS](/docs/headless-cms/) systems
 
 - enables you to develop in your preferred UI library while providing website tooling
 
@@ -106,7 +106,7 @@ Middleman allows connections to third-party data sources, though currently only 
 
 Gatsby is the only content mesh option that creates fast websites, supports modern development frameworks, _and_ connects to enterprise content systems. Gatsby features:
 
-- **Integrations with 120+ backends**, including 15+ enterprise content systems like Wordpress, Drupal, Contentful, Contentstack, Salsify and Shopify, as well as the ability to add additional sources.
+- **Integrations with 120+ backends**, including 15+ enterprise content systems like WordPress, Drupal, Contentful, Contentstack, Salsify and Shopify, as well as the ability to add additional sources.
 
 - **A React development environment**, along with key plugins that provide key website features like SEO, routing, accessibility, and i18n.
 
@@ -120,7 +120,7 @@ Today, the CMS is being reimagined.
 
 With maturity comes growing functionality and complexity; a shift from monolithic to modular architectures.
 
-Today, there's a multitude of vendors, frameworks, and approaches for content modelling, authentication, search, analytics, payments, development environemnt, performance, and so on.
+Today, there's a multitude of vendors, frameworks, and approaches for content modelling, authentication, search, analytics, payments, development environment, performance, and so on.
 
 The key question becomes: how to bring these pieces into a unified whole?
 

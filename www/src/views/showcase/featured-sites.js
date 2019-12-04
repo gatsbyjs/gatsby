@@ -1,136 +1,140 @@
-import React, { Component } from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
+import { Component } from "react"
 import { Link } from "gatsby"
 import Img from "gatsby-image"
 import hex2rgba from "hex2rgba"
+import { useColorMode } from "theme-ui"
 
-import styles from "../shared/styles"
+import { screenshot, screenshotHover, withTitleHover } from "../shared/styles"
 import MdArrowForward from "react-icons/lib/md/arrow-forward"
 import ShowcaseItemCategories from "./showcase-item-categories"
-import FeaturedSitesIcon from "../../assets/featured-sites-icons.svg"
-import { ShowcaseIcon } from "../../assets/mobile-nav-icons"
-import URLQuery from "../../components/url-query"
-import { options, rhythm, scale } from "../../utils/typography"
-import presets, { colors } from "../../utils/presets"
-import scrollToAnchor from "../../utils/scroll-to-anchor"
+import { ShowcaseIcon } from "../../assets/icons"
+import { mediaQueries, colors } from "../../gatsby-plugin-theme-ui"
 import { svgStyles } from "../../utils/styles"
 import Button from "../../components/button"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 
-class FeaturedSites extends Component {
-  onClickHandler = (target, updateQuery, filter) =>
-    target.current
-      ? scrollToAnchor(target.current, () => {
-          updateQuery(({ filters }) => {
-            return { filters: [filter] }
-          })
-        })
-      : () => {}
+const featuredSitesCard = {
+  display: `flex`,
+  flexDirection: `column`,
+  flexGrow: 0,
+  flexShrink: 0,
+  width: 320,
+  marginBottom: 9,
+  marginRight: 6,
+  [mediaQueries.xl]: {
+    width: 360,
+    marginRight: 8,
+  },
+  [mediaQueries.xxl]: {
+    width: 400,
+  },
+}
 
-  render = () => {
-    const { featured, showcase } = this.props
+const GradientOverlay = () => {
+  const [colorMode] = useColorMode()
+  const gradientColor =
+    colorMode === `dark` ? colors.modes.dark.background : colors.background
+
+  return (
+    <div
+      sx={{
+        background: t =>
+          `linear-gradient(90deg, ${hex2rgba(gradientColor, 0)} 0%, ${hex2rgba(
+            gradientColor,
+            1
+          )} 100%)`,
+        bottom: t => t.space[6],
+        pointerEvents: `none`,
+        position: `absolute`,
+        right: t => `-${t.space[6]}`,
+        top: 0,
+        width: 60,
+      }}
+    />
+  )
+}
+
+class FeaturedSites extends Component {
+  setFilterToFeatured = e => {
+    e.preventDefault()
+
+    this.props.setFilters(`Featured`)
+  }
+
+  render() {
+    const { featured, setFilters } = this.props
 
     return (
       <section
         className="featured-sites"
-        css={{
-          margin: `${rhythm(options.blockMarginBottom)} ${rhythm(3 / 4)} 0`,
+        sx={{
+          mt: 6,
+          mx: 6,
           position: `relative`,
           display: `none`,
-          [presets.Desktop]: {
+          [mediaQueries.lg]: {
             display: `block`,
           },
         }}
       >
         <div
-          css={{
-            background: `url(${FeaturedSitesIcon})`,
-            backgroundRepeat: `no-repeat`,
-            backgroundSize: `contain`,
-            position: `absolute`,
-            height: `100%`,
-            width: `100%`,
-            left: -100,
-            opacity: 0.02,
-            top: 0,
-            zIndex: -1,
-          }}
-        />
-        <div
-          css={{
-            marginBottom: rhythm(options.blockMarginBottom * 2),
+          sx={{
             display: `flex`,
             alignItems: `center`,
             flexWrap: `wrap`,
           }}
         >
-          <img
-            src={FeaturedSitesIcon}
-            alt="icon"
-            css={{ marginBottom: 0, height: `1rem` }}
-          />
           <h1
-            css={{
-              ...scale(1 / 5),
-              color: colors.gatsby,
-              fontFamily: options.headerFontFamily.join(`,`),
+            sx={{
+              fontFamily: `header`,
+              fontSize: 4,
               fontWeight: `bold`,
-              marginRight: 30,
-              marginLeft: 4,
-              marginTop: 0,
-              marginBottom: 0,
+              ml: 1,
+              mr: 30,
+              my: 0,
             }}
           >
             Featured Sites
           </h1>
-          <URLQuery>
-            {(_, updateQuery) => (
-              <a
-                href="#showcase"
-                css={{
-                  ...styles.withTitleHover,
-                  display: `none`,
-                  [presets.Phablet]: {
-                    display: `block`,
-                  },
-                  "&&": {
-                    ...scale(-1 / 6),
-                    boxShadow: `none`,
-                    borderBottom: 0,
-                    color: colors.lilac,
-                    cursor: `pointer`,
-                    fontFamily: options.headerFontFamily.join(`,`),
-                    fontWeight: `normal`,
-                    "&:hover": {
-                      background: `transparent`,
-                      color: colors.gatsby,
-                    },
-                  },
-                }}
-                onClick={this.onClickHandler(showcase, updateQuery, `Featured`)}
-              >
-                <span className="title">View all</span>
-                &nbsp;
-                <MdArrowForward
-                  style={{ marginLeft: 4, verticalAlign: `sub` }}
-                />
-              </a>
-            )}
-          </URLQuery>
+          <a
+            href="#showcase"
+            sx={{
+              ...withTitleHover,
+              display: `none`,
+              fontSize: 1,
+              [mediaQueries.sm]: {
+                display: `block`,
+              },
+              "&&": {
+                borderBottom: 0,
+                cursor: `pointer`,
+                "&:hover": {
+                  color: `link.hoverColor`,
+                },
+              },
+            }}
+            onClick={this.setFilterToFeatured}
+          >
+            <span className="title">View all</span>
+            {` `}
+            <MdArrowForward sx={{ verticalAlign: `sub` }} />
+          </a>
           <div
             css={{
-              display: `flex`,
               alignItems: `center`,
+              display: `flex`,
               marginLeft: `auto`,
             }}
           >
             <div
-              css={{
-                ...scale(-1 / 6),
-                color: colors.gray.calm,
-                marginRight: 15,
-                fontFamily: options.headerFontFamily.join(`,`),
+              sx={{
+                color: `textMuted`,
                 display: `none`,
-                [presets.Tablet]: {
+                fontSize: 1,
+                mr: 4,
+                [mediaQueries.md]: {
                   display: `block`,
                 },
               }}
@@ -138,47 +142,47 @@ class FeaturedSites extends Component {
               Want to get featured?
             </div>
             <Button
-              to="https://gatsbyjs.org/docs/site-showcase-submissions/"
+              to="https://gatsbyjs.org/contributing/site-showcase-submissions/"
               tag="href"
               target="_blank"
               rel="noopener noreferrer"
-              small
+              variant="small"
               icon={<ArrowForwardIcon />}
             >
               Submit your Site
             </Button>
           </div>
         </div>
-        <div
-          css={{
-            position: `relative`,
-          }}
-        >
+        <div css={{ position: `relative` }}>
           <div
-            css={{
+            sx={{
+              borderBottom: t => `1px solid ${t.colors.ui.border}`,
               display: `flex`,
-              overflowX: `scroll`,
               flexShrink: 0,
-              margin: `0 -${rhythm(3 / 4)}`,
-              padding: `3px ${rhythm(3 / 4)} 0`,
-              ...styles.scrollbar,
+              margin: t => `0 -${t.space[6]}`,
+              overflowX: `scroll`,
+              padding: t => `${t.space[6]} ${t.space[6]} 0`,
             }}
           >
             {featured.slice(0, 9).map(({ node }) => (
               <div
                 key={node.id}
-                css={{
-                  ...styles.featuredSitesCard,
-                  ...styles.withTitleHover,
+                sx={{
+                  ...featuredSitesCard,
+                  ...withTitleHover,
                 }}
               >
                 <Link
-                  css={{
+                  sx={{
                     "&&": {
                       borderBottom: `none`,
-                      boxShadow: `none`,
-                      transition: `box-shadow .3s cubic-bezier(.4,0,.2,1), transform .3s cubic-bezier(.4,0,.2,1)`,
-                      "&:hover": { ...styles.screenshotHover },
+                      color: `heading`,
+                      fontFamily: `header`,
+                      fontSize: 3,
+                      fontWeight: `bold`,
+                      transition: t =>
+                        `box-shadow ${t.transition.speed.slow} ${t.transition.curve.default}, transform .3s ${t.transition.curve.default}`,
+                      "&:hover": { ...screenshotHover },
                     },
                   }}
                   to={node.fields.slug}
@@ -191,7 +195,7 @@ class FeaturedSites extends Component {
                           .fluid
                       }
                       alt={node.title}
-                      css={{ ...styles.screenshot }}
+                      sx={{ ...screenshot }}
                     />
                   )}
                   <div>
@@ -199,128 +203,95 @@ class FeaturedSites extends Component {
                   </div>
                 </Link>
                 <div
-                  css={{
-                    ...scale(-1 / 6),
-                    color: colors.gray.calm,
-                    fontWeight: `normal`,
-                    [presets.Desktop]: {
+                  sx={{
+                    color: `textMuted`,
+                    fontSize: 1,
+                    fontWeight: `body`,
+                    [mediaQueries.lg]: {
                       marginTop: `auto`,
                     },
                   }}
                 >
                   {node.built_by && (
                     <div
-                      css={{
-                        fontFamily: options.headerFontFamily.join(`,`),
-                      }}
+                      sx={{ color: `text`, fontFamily: `header`, fontSize: 2 }}
                     >
                       Built by {node.built_by}
                     </div>
                   )}
                   <ShowcaseItemCategories
                     categories={node.categories}
-                    onClickHandler={this.onClickHandler}
-                    showcase={showcase}
+                    onCategoryClick={c => setFilters(c)}
                   />
                 </div>
               </div>
             ))}
-            <div
-              css={{
-                display: `flex`,
-              }}
-            >
-              <URLQuery>
-                {(_, updateQuery) => (
-                  <a
-                    href="#showcase"
-                    css={{
-                      marginRight: `${rhythm(3 / 4)} !important`,
-                      backgroundColor: hex2rgba(colors.ui.light, 0.25),
-                      borderRadius: presets.radius,
-                      textAlign: `center`,
-                      "&&": {
-                        border: `1px solid ${colors.ui.light}`,
-                        boxShadow: `none`,
-                        transition: `all ${presets.animation.speedDefault} ${
-                          presets.animation.curveDefault
-                        }`,
-                        "&:hover": {
-                          background: `#fff`,
-                          transform: `translateY(-3px)`,
-                          boxShadow: `0 8px 20px ${hex2rgba(
-                            colors.lilac,
-                            0.5
-                          )}`,
-                        },
-                      },
-                      ...styles.featuredSitesCard,
+            <div sx={{ display: `flex` }}>
+              <a
+                href="#showcase"
+                sx={{
+                  backgroundColor: `card.background`,
+                  borderRadius: 1,
+                  marginRight: t => `${t.space[6]} !important`,
+                  textAlign: `center`,
+                  "&&": {
+                    border: 0,
+                    transition: t =>
+                      `all ${t.transition.speed.default} ${t.transition.curve.default}`,
+                    "&:hover": {
+                      transform: t => `translateY(-${t.space[1]})`,
+                      boxShadow: `overlay`,
+                    },
+                  },
+                  ...featuredSitesCard,
+                }}
+                onClick={this.setFilterToFeatured}
+              >
+                <div
+                  sx={{
+                    alignItems: `center`,
+                    borderRadius: 1,
+                    display: `flex`,
+                    flexBasis: `100%`,
+                    position: `relative`,
+                  }}
+                >
+                  <span
+                    sx={{
+                      color: `gatsby`,
+                      mx: `auto`,
                     }}
-                    onClick={this.onClickHandler(
-                      showcase,
-                      updateQuery,
-                      `Featured`
-                    )}
                   >
-                    <div
-                      css={{
-                        borderRadius: presets.radius,
-                        display: `flex`,
-                        alignItems: `center`,
-                        position: `relative`,
-                        flexBasis: `100%`,
+                    <span
+                      sx={{
+                        display: `block`,
+                        height: 44,
+                        mx: `auto`,
+                        mb: 6,
+                        width: `auto`,
+                        [mediaQueries.md]: {
+                          height: 64,
+                        },
+                        [mediaQueries.xl]: {
+                          height: 72,
+                        },
+                        "& svg": {
+                          height: `100%`,
+                          ...svgStyles.active,
+                        },
                       }}
                     >
                       <span
-                        css={{
-                          margin: `0 auto`,
-                          color: colors.gatsby,
-                        }}
-                      >
-                        <span
-                          css={{
-                            height: 44,
-                            width: `auto`,
-                            display: `block`,
-                            margin: `0 auto ${rhythm(
-                              options.blockMarginBottom
-                            )}`,
-                            [presets.Tablet]: {
-                              height: 64,
-                            },
-                            [presets.Hd]: {
-                              height: 72,
-                            },
-
-                            "& svg": {
-                              height: `100%`,
-                              ...svgStyles.active,
-                            },
-                          }}
-                        >
-                          <span
-                            dangerouslySetInnerHTML={{ __html: ShowcaseIcon }}
-                          />
-                        </span>
-                        View all Featured Sites
-                      </span>
-                    </div>
-                  </a>
-                )}
-              </URLQuery>
+                        dangerouslySetInnerHTML={{ __html: ShowcaseIcon }}
+                      />
+                    </span>
+                    View all Featured Sites
+                  </span>
+                </div>
+              </a>
             </div>
           </div>
-          <div
-            css={{
-              position: `absolute`,
-              top: `0`,
-              bottom: rhythm(options.blockMarginBottom),
-              right: `-${rhythm(3 / 4)}`,
-              width: 60,
-              pointerEvents: `none`,
-              background: `linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(255,255,255,1) 100%)`,
-            }}
-          />
+          <GradientOverlay />
         </div>
       </section>
     )

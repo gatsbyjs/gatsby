@@ -1,7 +1,7 @@
-const crypto = require(`crypto`)
 const deepMapKeys = require(`deep-map-keys`)
 const _ = require(`lodash`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
+const { URL } = require(`url`)
 
 const colorized = require(`./output-color`)
 const conflictFieldPrefix = `wordpress_`
@@ -9,18 +9,7 @@ const conflictFieldPrefix = `wordpress_`
 const restrictedNodeFields = [`id`, `children`, `parent`, `fields`, `internal`]
 
 /**
- * Encrypts a String using md5 hash of hexadecimal digest.
- *
- * @param {any} str
- */
-const digest = str =>
-  crypto
-    .createHash(`md5`)
-    .update(str)
-    .digest(`hex`)
-
-/**
- * Validate the GraphQL naming convetions & protect specific fields.
+ * Validate the GraphQL naming conventions & protect specific fields.
  *
  * @param {any} key
  * @returns the valid name
@@ -71,14 +60,18 @@ exports.normalizeACF = normalizeACF
 exports.combineACF = function(entities) {
   let acfOptionData = {}
   // Map each ACF Options object keys/data to single object
-  _.forEach(entities.filter(e => e.__type === `wordpress__acf_options`), e => {
-    if (e[`acf`]) {
-      acfOptionData[e.__acfOptionPageId || `options`] = {}
-      Object.keys(e[`acf`]).map(
-        k => (acfOptionData[e.__acfOptionPageId || `options`][k] = e[`acf`][k])
-      )
+  _.forEach(
+    entities.filter(e => e.__type === `wordpress__acf_options`),
+    e => {
+      if (e[`acf`]) {
+        acfOptionData[e.__acfOptionPageId || `options`] = {}
+        Object.keys(e[`acf`]).map(
+          k =>
+            (acfOptionData[e.__acfOptionPageId || `options`][k] = e[`acf`][k])
+        )
+      }
     }
-  })
+  )
 
   // Remove previous ACF Options objects (if any)
   _.pullAll(
@@ -94,6 +87,15 @@ exports.combineACF = function(entities) {
 
   return entities
 }
+
+// Create wordpress_id if the entity don't have one
+exports.generateFakeWordpressId = entities =>
+  entities.map(e => {
+    if (e.__type === `wordpress__yoast_redirects`) {
+      e.wordpress_id = `${e.origin}-${e.url}-${e.type}`
+    }
+    return e
+  })
 
 // Create entities from the few the WordPress API returns as an object for presumably
 // legacy reasons.
@@ -132,9 +134,8 @@ exports.normalizeEntities = normalizeEntities
 // Standardize ids + make sure keys are valid.
 exports.standardizeKeys = entities =>
   entities.map(e =>
-    deepMapKeys(
-      e,
-      key => (key === `ID` ? getValidKey({ key: `id` }) : getValidKey({ key }))
+    deepMapKeys(e, key =>
+      key === `ID` ? getValidKey({ key: `id` }) : getValidKey({ key })
     )
   )
 
@@ -165,19 +166,28 @@ exports.liftRenderedField = entities =>
   })
 
 // Exclude entities of unknown shape
-// Assume all entities contain a wordpress_id, except for whitelisted type wp_settings
+// Assume all entities contain a wordpress_id,
+// except for whitelisted type wp_settings and the site_metadata
 exports.excludeUnknownEntities = entities =>
-  entities.filter(e => e.wordpress_id || e.__type === `wordpress__wp_settings`) // Excluding entities without ID, or WP Settings
+  entities.filter(
+    e =>
+      e.wordpress_id ||
+      e.__type === `wordpress__wp_settings` ||
+      e.__type === `wordpress__site_metadata`
+  )
+// Excluding entities without ID, or WP Settings
 
 // Create node ID from known entities
 // excludeUnknownEntities whitelisted types don't contain a wordpress_id
 // we create the node ID based upon type if the wordpress_id doesn't exist
-exports.createGatsbyIds = (createNodeId, entities) =>
+exports.createGatsbyIds = (createNodeId, entities, _siteURL) =>
   entities.map(e => {
     if (e.wordpress_id) {
-      e.id = createNodeId(`${e.__type}-${e.wordpress_id.toString()}`)
+      e.id = createNodeId(
+        `${e.__type}-${e.wordpress_id.toString()}-${_siteURL}`
+      )
     } else {
-      e.id = createNodeId(e.__type)
+      e.id = createNodeId(`${e.__type}-${_siteURL}`)
     }
     return e
   })
@@ -224,26 +234,48 @@ exports.mapAuthorsToUsers = entities => {
 }
 
 exports.mapPostsToTagsCategories = entities => {
-  const tags = entities.filter(e => e.__type === `wordpress__TAG`)
-  const categories = entities.filter(e => e.__type === `wordpress__CATEGORY`)
+  const categoryTypes = [`wordpress__wc_categories`, `wordpress__CATEGORY`]
+  const tagTypes = [`wordpress__TAG`, `wordpress__wc_tags`]
+  const tags = entities.filter(e => tagTypes.includes(e.__type))
+  const categories = entities.filter(e => categoryTypes.includes(e.__type))
 
   return entities.map(e => {
     // Replace tags & categories with links to their nodes.
 
     let entityHasTags = e.tags && Array.isArray(e.tags) && e.tags.length
     if (tags.length && entityHasTags) {
-      e.tags___NODE = e.tags.map(
-        t => tags.find(tObj => t === tObj.wordpress_id).id
-      )
+      e.tags___NODE = e.tags
+        .map(t => {
+          const tagNode = tags.find(
+            tObj =>
+              (Number.isInteger(t) ? t : t.wordpress_id) === tObj.wordpress_id
+          )
+          if (tagNode) {
+            return tagNode.id
+          } else {
+            return undefined
+          }
+        })
+        .filter(node => node != undefined)
       delete e.tags
     }
 
     let entityHasCategories =
       e.categories && Array.isArray(e.categories) && e.categories.length
     if (categories.length && entityHasCategories) {
-      e.categories___NODE = e.categories.map(
-        c => categories.find(cObj => c === cObj.wordpress_id).id
-      )
+      e.categories___NODE = e.categories
+        .map(c => {
+          const categoryNode = categories.find(
+            cObj =>
+              (Number.isInteger(c) ? c : c.wordpress_id) === cObj.wordpress_id
+          )
+          if (categoryNode) {
+            return categoryNode.id
+          } else {
+            return undefined
+          }
+        })
+        .filter(node => node != undefined)
       delete e.categories
     }
 
@@ -257,8 +289,11 @@ exports.mapTagsCategoriesToTaxonomies = entities =>
     // Where should api_menus stuff link to?
     if (e.taxonomy && e.__type !== `wordpress__wp_api_menus_menus`) {
       // Replace taxonomy with a link to the taxonomy node.
-      e.taxonomy___NODE = entities.find(t => t.wordpress_id === e.taxonomy).id
-      delete e.taxonomy
+      const taxonomyNode = entities.find(t => t.wordpress_id === e.taxonomy)
+      if (taxonomyNode) {
+        e.taxonomy___NODE = taxonomyNode.id
+        delete e.taxonomy
+      }
     }
     return e
   })
@@ -281,12 +316,19 @@ exports.mapPolylangTranslations = entities =>
   entities.map(entity => {
     if (entity.polylang_translations) {
       entity.polylang_translations___NODE = entity.polylang_translations.map(
-        translation =>
-          entities.find(
+        translation => {
+          const post = entities.find(
             t =>
               t.wordpress_id === translation.wordpress_id &&
               entity.__type === t.__type
-          ).id
+          )
+
+          if (!post) {
+            return null
+          }
+
+          return post.id
+        }
       )
 
       delete entity.polylang_translations
@@ -434,7 +476,7 @@ exports.mapEntitiesToMedia = entities => {
       })
 
       // Deleting fields and replacing them with links to different nodes
-      // can cause build errors if object will have only linked properites:
+      // can cause build errors if object will have only linked properties:
       // https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-input-fields.js#L205
       // Hacky workaround:
       // Adding dummy field with concrete value (not link) fixes build
@@ -456,7 +498,10 @@ exports.downloadMediaFiles = async ({
   createNode,
   createNodeId,
   touchNode,
+  getNode,
   _auth,
+  reporter,
+  keepMediaSizes,
 }) =>
   Promise.all(
     entities.map(async e => {
@@ -468,20 +513,33 @@ exports.downloadMediaFiles = async ({
         // If we have cached media data and it wasn't modified, reuse
         // previously created file node to not try to redownload
         if (cacheMediaData && e.modified === cacheMediaData.modified) {
-          fileNodeID = cacheMediaData.fileNodeID
-          touchNode({ nodeId: cacheMediaData.fileNodeID })
+          const fileNode = getNode(cacheMediaData.fileNodeID)
+
+          // check if node still exists in cache
+          // it could be removed if image was made private
+          if (fileNode) {
+            fileNodeID = cacheMediaData.fileNodeID
+            touchNode({
+              nodeId: fileNodeID,
+            })
+          }
         }
 
         // If we don't have cached data, download the file
         if (!fileNodeID) {
+          // WordPress does not properly encode it's media urls
+          const encodedSourceUrl = encodeURI(e.source_url)
+
           try {
             const fileNode = await createRemoteFileNode({
-              url: e.source_url,
+              url: encodedSourceUrl,
               store,
               cache,
               createNode,
               createNodeId,
+              parentNodeId: e.id,
               auth: _auth,
+              reporter,
             })
 
             if (fileNode) {
@@ -500,7 +558,9 @@ exports.downloadMediaFiles = async ({
 
       if (fileNodeID) {
         e.localFile___NODE = fileNodeID
-        delete e.media_details.sizes
+        if (!keepMediaSizes) {
+          delete e.media_details.sizes
+        }
       }
 
       return e
@@ -513,7 +573,8 @@ const prepareACFChildNodes = (
   topLevelIndex,
   type,
   children,
-  childrenNodes
+  childrenNodes,
+  createContentDigest
 ) => {
   // Replace any child arrays with pointers to nodes
   _.each(obj, (value, key) => {
@@ -526,7 +587,8 @@ const prepareACFChildNodes = (
             topLevelIndex,
             type + key,
             children,
-            childrenNodes
+            childrenNodes,
+            createContentDigest
           ).id
       )
       delete obj[key]
@@ -538,7 +600,7 @@ const prepareACFChildNodes = (
     id: entityId + topLevelIndex + type,
     parent: entityId,
     children: [],
-    internal: { type, contentDigest: digest(JSON.stringify(obj)) },
+    internal: { type, contentDigest: createContentDigest(obj) },
   }
 
   children.push(acfChildNode.id)
@@ -551,7 +613,11 @@ const prepareACFChildNodes = (
   return acfChildNode
 }
 
-exports.createNodesFromEntities = ({ entities, createNode }) => {
+exports.createNodesFromEntities = ({
+  entities,
+  createNode,
+  createContentDigest,
+}) => {
   entities.forEach(e => {
     // Create subnodes for ACF Flexible layouts
     let { __type, ...entity } = e // eslint-disable-line no-unused-vars
@@ -571,7 +637,8 @@ exports.createNodesFromEntities = ({ entities, createNode }) => {
                 key,
                 type,
                 children,
-                childrenNodes
+                childrenNodes,
+                createContentDigest
               )
 
               return acfChildNode.id
@@ -589,7 +656,7 @@ exports.createNodesFromEntities = ({ entities, createNode }) => {
       parent: null,
       internal: {
         type: e.__type,
-        contentDigest: digest(JSON.stringify(entity)),
+        contentDigest: createContentDigest(entity),
       },
     }
     createNode(node)
@@ -598,3 +665,27 @@ exports.createNodesFromEntities = ({ entities, createNode }) => {
     })
   })
 }
+
+exports.createUrlPathsFromLinks = entities =>
+  entities.map(e => {
+    if (e.link && !e.path) {
+      try {
+        const link = new URL(e.link)
+        e.path = link.pathname
+      } catch (error) {
+        e.path = e.link
+      }
+    }
+    return e
+  })
+
+exports.normalizeMenuItems = entities =>
+  entities.map(e => {
+    if (e.__type === `wordpress__menus_menus_items`) {
+      // in case of nested menus items might be object
+      // this converts it into array so it's consistent
+      // and queried in simple manner
+      e.items = _.values(e.items)
+    }
+    return e
+  })

@@ -1,48 +1,56 @@
-import React from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
+import styled from "@emotion/styled"
+import { OutboundLink } from "gatsby-plugin-google-analytics"
 
-import presets, { colors } from "../utils/presets"
-import { rhythm, scale, options } from "../utils/typography"
+const InnerContainer = styled(`div`)`
+  align-items: center;
+  display: flex;
+  height: ${p => p.theme.sizes.bannerHeight};
+  overflow-x: auto;
+  mask-image: ${props =>
+    `linear-gradient(to right, transparent, ${props.theme.colors.purple[90]} ${props.theme.space[6]}, ${props.theme.colors.purple[90]} 96%, transparent)`};
+`
 
-const Banner = ({ children, background }) => {
-  const backgroundColor = background ? background : colors.gatsby
-  const horizontalPadding = rhythm(1 / 2)
+const Content = styled(`div`)`
+  color: ${p => p.theme.colors.whiteFade[80]};
+  font-family: ${p => p.theme.fonts.heading};
+  padding-left: ${p => p.theme.space[6]};
+  padding-right: ${p => p.theme.space[6]};
+  white-space: nowrap;
 
-  return (
-    <div
-      className="banner"
-      css={{
-        backgroundColor: backgroundColor,
-        height: presets.bannerHeight,
-        position: `fixed`,
-        width: `100%`,
-        zIndex: 3,
-      }}
-    >
-      <div
-        css={{
-          alignItems: `center`,
-          display: `flex`,
-          height: presets.bannerHeight,
-          overflowX: `auto`,
-          maskImage: `linear-gradient(to right, transparent, ${backgroundColor} ${horizontalPadding}, ${backgroundColor} 96%, transparent)`,
-        }}
-      >
-        <div
-          css={{
-            color: colors.ui.bright,
-            fontFamily: options.headerFontFamily.join(`,`),
-            fontSize: scale(-1 / 5).fontSize,
-            paddingLeft: horizontalPadding,
-            paddingRight: horizontalPadding,
-            WebkitFontSmoothing: `antialiased`,
-            whiteSpace: `nowrap`,
-          }}
-        >
-          {children}
-        </div>
-      </div>
-    </div>
-  )
-}
+  a {
+    color: ${p => p.theme.colors.white};
+    border-bottom: 1px solid ${p => p.theme.colors.white};
+  }
+
+  a:hover {
+    color: ${p => p.theme.colors.white};
+    border-bottom-color: ${p => p.theme.colors.white}a0;
+  }
+`
+
+const Banner = () => (
+  <aside
+    className="banner"
+    sx={{
+      backgroundColor: `banner`,
+      height: `bannerHeight`,
+      position: `fixed`,
+      width: `100%`,
+      zIndex: `banner`,
+      px: `env(safe-area-inset-left)`,
+    }}
+  >
+    <InnerContainer>
+      <Content>
+        {`New! Create a site in 5 minutes with `}
+        <OutboundLink href="https://www.gatsbyjs.com/cloud">
+          Gatsby Cloud!
+        </OutboundLink>
+      </Content>
+    </InnerContainer>
+  </aside>
+)
 
 export default Banner

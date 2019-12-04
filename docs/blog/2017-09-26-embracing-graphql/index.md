@@ -1,13 +1,13 @@
 ---
 title: "Embracing GraphQL — How I migrated React FAQ to Gatsby v1"
-date: "2017-09-26"
+date: 2017-09-26
 image: "toa-heftiba-274947.jpg"
 author: "Tim Arney"
 excerpt: "Moving to Gatsby 1.x and embracing the new GraphQL setup can be daunting but the effort is going to payoff"
 tags: ["v1", "graphql", "getting-started"]
 ---
 
-Before I built [React FAQ](https://reactfaq.site/), I went looking for a static
+Before I built "React FAQ" (GitHub: https://github.com/timarney/react-faq), I went looking for a static
 site generator.
 
 I had a few criteria in mind.
@@ -78,7 +78,7 @@ There were a few bumps into the road but thanks to the starter example, I pieced
 things together quickly. Quickly as in “I have no idea how this GraphQL stuff
 works, but I have it working, so cool”. Easy to update — check.
 
-## Digging Deeper
+## Digging deeper
 
 I'm not the type of person to settle on “It's working so don't touch anything”.
 So I started digging into how Gatsby 1.x works—particular the

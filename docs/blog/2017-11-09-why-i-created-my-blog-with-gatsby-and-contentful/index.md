@@ -57,7 +57,7 @@ If you are a little bit more tech savvy and have experience provisioning
 software in a Linux distribution, you might prefer to rent a droplet from
 Digital Ocean and host the blog yourself. This, in turn, will allow you to have
 greater control over your site. However, you will also to pay for that droplet,
-even if it's the cheaper $5/month one.
+even if it's the cheaper \$5/month one.
 
 Whatever path you take, let's say that you now have your new WordPress blog up
 and running. Now what?
@@ -88,7 +88,7 @@ actually kind of slow...
 <div style="width:100%;height:0;padding-bottom:55%;position:relative;"><iframe src="https://giphy.com/embed/kkpcRessCvNyo" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/angry-computer-frustrated-kkpcRessCvNyo">via GIPHY</a></p>
 
 There are many reasons this could be happening: Maybe your shared hosting
-provider sucks, or maybe that shiny new $50 theme you bought on ThemeForest
+provider sucks, or maybe that shiny new \$50 theme you bought on ThemeForest
 actually contains a lot of crap code -- a very common and too well-known
 scenario.
 
@@ -124,16 +124,14 @@ applications is usually a time-consuming task, to say the least.
 You might decide to take the easy route and host your blog on a WordPress
 specialized hosting service like [WP Engine](https://wpengine.com/), which will
 take care of all things related to security and scaling for you. But then you
-better be prepared to set aside $29 each month, which is what their cheapest
+better be prepared to set aside \$29 each month, which is what their cheapest
 plan costs.
 
-I don't know about you, but spending $29 each month on a simple blog seems a
+I don't know about you, but spending \$29 each month on a simple blog seems a
 little bit excessive to me, especially considering we could be spending next to
 nothing and end up with an infinitely more secure, scalable and faster website.
 
 Say what?
-
-<div style="width:100%;height:0;padding-bottom:75%;position:relative;"><iframe src="https://giphy.com/embed/xT0xeqCPRLHBUvWa88" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/way-orange-better-xT0xeqCPRLHBUvWa88">via GIPHY</a></p>
 
 ## Enter the world of static site generators...
 
@@ -320,7 +318,7 @@ comes to hosting static sites, providing you with an amazing Continuous
 Deployment infrastructure to generate and deploy static sites on demand, which
 incidentally is perfect for this kind of architecture.
 
-Just like Contentful, Netlify also has a very genereous free tier which is more
+Just like Contentful, Netlify also has a very generous free tier which is more
 than enough for simple projects like this. If you ever need to scale, though,
 they also offer several other tiers that can easily meet the demands of bigger
 projects.
@@ -338,6 +336,6 @@ paradigms like Serverless, I predict it could be very far.
 
 But whatever that limit is, I am quite sure that this is a step in the right
 direction towards making the web a safer, faster and more enjoyable experience
-for both developers and end-users.
+for both developers and end users.
 
 <div style="width:100%;height:0;padding-bottom:52%;position:relative;"><iframe src="https://giphy.com/embed/12xSrwKxHxB3BS" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/black-and-white-end-ending-12xSrwKxHxB3BS">via GIPHY</a></p>

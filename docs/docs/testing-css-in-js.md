@@ -1,5 +1,5 @@
 ---
-title: "Testing CSS-in-JS"
+title: Testing CSS-in-JS
 ---
 
 Popular CSS-in-JS libraries like [styled-components](https://github.com/styled-components/styled-components) or [emotion](https://github.com/emotion-js/emotion) can also be tested with the help of [jest-styled-components](https://github.com/styled-components/jest-styled-components) or [jest-emotion](https://github.com/emotion-js/emotion/tree/master/packages/jest-emotion) respectively. These packages improve Jest's built-in snapshot testing experience and are a great way to help avoid unintended changes to your website's UI. Please refer to your package's documentation to see if it also offers testing capabilities.
@@ -8,26 +8,24 @@ _Snapshot serializers_ like `jest-styled-components` or `jest-emotion` modify th
 
 By default snapshots of your styled components show the generated class names (which you didn't set) and no styling information. When changing the styles you'll only see the diff of some cryptic class names (hashes). That's why you should use the above mentioned _snapshot serializers_. They remove the hashes and format the CSS in style elements.
 
-For this example we'll use emotion. The testing utilities of emotion and glamor are largely based on [jest-styled-components](https://github.com/styled-components/jest-styled-components) so they have a similar usage. Please have a look at the testing section of your library to follow along.
+For this example you'll use emotion. The testing utilities of emotion and glamor are largely based on [jest-styled-components](https://github.com/styled-components/jest-styled-components) so they have a similar usage. Please have a look at the testing section of your library to follow along.
 
 ## Installation
 
-```sh
+```shell
 npm install --save-dev jest-emotion babel-plugin-emotion
 ```
 
-As [Gatsby's emotion plugin](https://www.gatsbyjs.org/packages/gatsby-plugin-emotion/) is using `babel-plugin-emotion` under the hood you'll also need to install it so that Jest can use it.
+As [Gatsby's emotion plugin](/packages/gatsby-plugin-emotion/) is using `babel-plugin-emotion` under the hood you'll also need to install it so that Jest can use it.
 
 If you followed along with the [Unit testing guide](/docs/unit-testing) you'll have the file `jest-preprocess.js` at the root of your project. Open that file and add the plugin:
 
 ```diff:title=jest-preprocess.js
 const babelOptions = {
-  presets: ["@babel/react", "@babel/env"],
-  plugins: [
+  presets: ["babel-preset-gatsby"],
++  plugins: [
 +    "emotion",
-    "@babel/plugin-proposal-optional-chaining",
-    "@babel/plugin-proposal-class-properties",
-  ],
++  ],
 }
 
 module.exports = require("babel-jest").createTransformer(babelOptions)
@@ -37,7 +35,7 @@ In order to tell Jest to use the serializer you'll need to create the file `setu
 
 ```js:title=setup-test-env.js
 import { createSerializer } from "jest-emotion"
-import * as emotion from "emotion"
+import * as emotion from "@emotion/core"
 
 expect.addSnapshotSerializer(createSerializer(emotion))
 ```
@@ -52,7 +50,7 @@ Lastly you need to tell Jest where to find this file. Open your `package.json` a
 
 ## Usage
 
-In this example you'll use `react-test-renderer` but you can also use [react-testing-library](/docs/testing-react-components) or any other appropriate library. Because you created the `setup-test-env.js` file you can write your unit tests like you used to do. But now you'll also get the styling information!
+In this example you'll use `react-test-renderer` but you can also use [@testing-library/react](/docs/testing-react-components) or any other appropriate library. Because you created the `setup-test-env.js` file you can write your unit tests like you used to do. But now you'll also get the styling information!
 
 ```js:title=src/components/Button.test.js
 import React from "react"

@@ -1,13 +1,10 @@
-import React from "react"
-// import FaAngleDown from "react-icons/lib/fa/angle-down"
-// import FaAngleUp from "react-icons/lib/fa/angle-up"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import MdCheckboxBlank from "react-icons/lib/md/check-box-outline-blank"
 import MdCheckbox from "react-icons/lib/md/check-box"
-import { colors } from "../../utils/presets"
-import { scale } from "../../utils/typography"
 
 import Collapsible from "../shared/collapsible"
-import styles from "../shared/styles"
+import { filterButton, filterCheckbox } from "../shared/styles"
 
 export default function LHSFilter({
   sortRecent,
@@ -30,7 +27,7 @@ export default function LHSFilter({
           }
         })
         .map(([c, count]) => (
-          <ul key={c} css={{ margin: 0 }}>
+          <ul key={c} sx={{ m: 0 }}>
             <button
               className={filters.has(c) ? `selected` : ``}
               onClick={() => {
@@ -41,30 +38,20 @@ export default function LHSFilter({
                   setFilters(filters.add(c))
                 }
               }}
-              css={styles.filterButton}
+              sx={{
+                ...filterButton,
+                color: filters.has(c) ? `link.color` : `textMuted`,
+              }}
             >
-              <div
-                css={{
-                  color: filters.has(c) ? colors.gatsby : colors.ui.bright,
-                  ...scale(0),
-                  marginRight: 8,
-                }}
-              >
+              <div sx={filterCheckbox}>
                 {filters.has(c) ? (
                   <MdCheckbox style={{ verticalAlign: `-0.125em` }} />
                 ) : (
                   <MdCheckboxBlank style={{ verticalAlign: `-0.125em` }} />
                 )}
               </div>
-              <div
-                css={{
-                  color: filters.has(c) ? colors.gatsby : false,
-                  marginRight: `auto`,
-                }}
-              >
-                {c.replace(/^gatsby-/, `*-`)}
-              </div>
-              <div css={styles.filterCount}>{count}</div>
+              <div sx={{ mr: `auto` }}>{c.replace(/^gatsby-/, `*-`)}</div>
+              <div>{count}</div>
             </button>
           </ul>
         ))}

@@ -1,10 +1,11 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { navigate } from "gatsby"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import ArrowBackIcon from "react-icons/lib/md/arrow-back"
 import PaginationLink from "./PaginationLink"
-import presets, { colors } from "../../utils/presets"
-import { options, rhythm } from "../../utils/typography"
+import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 
 class Pagination extends React.Component {
   changePage = e => {
@@ -22,66 +23,70 @@ class Pagination extends React.Component {
 
     const prevNextLinkStyles = {
       "&&": {
-        boxShadow: `none`,
         borderBottom: 0,
-        fontFamily: options.headerFontFamily.join(`,`),
-        fontWeight: `bold`,
-        color: colors.gatsby,
+        color: `gatsby`,
       },
     }
 
     return (
       <div
-        css={{
+        sx={{
           display: `flex`,
           justifyContent: `space-between`,
-          margin: `${rhythm(1)} 0`,
+          margin: t => `0 -${t.space[6]}`,
+          p: 6,
           flexDirection: `column`,
-          [presets.Tablet]: {
+          fontSize: 1,
+          [mediaQueries.md]: {
+            background: `transparent`,
+            borderTop: 0,
+            marginBottom: 0,
+            paddingTop: 0,
             flexDirection: `row`,
           },
         }}
       >
         <div
-          css={{
+          sx={{
             display: `flex`,
             margin: `0`,
             padding: `0`,
             justifyContent: `space-between`,
             alignItems: `center`,
-            marginBottom: rhythm(1 / 2),
-            [presets.Tablet]: {
+            mb: 3,
+            [mediaQueries.md]: {
               width: `15rem`,
-              marginBottom: 0,
+              mb: 0,
             },
           }}
         >
-          <PaginationLink to={prevPageLink} css={prevNextLinkStyles}>
+          <PaginationLink to={prevPageLink} sx={prevNextLinkStyles}>
             <ArrowBackIcon style={{ verticalAlign: `sub` }} />
             Newer posts
           </PaginationLink>
-          <PaginationLink to={nextPageLink} css={prevNextLinkStyles}>
+          <PaginationLink to={nextPageLink} sx={prevNextLinkStyles}>
             Older posts
             <ArrowForwardIcon style={{ verticalAlign: `sub` }} />
           </PaginationLink>
         </div>
         <div
-          css={{
+          sx={{
             display: `flex`,
             alignItems: `center`,
             justifyContent: `flex-end`,
-            fontFamily: options.headerFontFamily.join(`,`),
+            fontSize: 1,
           }}
         >
           <span>Showing page &nbsp;</span>
           <select
+            aria-label="Pagination Dropdown"
             value={currentPage === 1 ? `` : currentPage.toString()}
             onChange={this.changePage}
-            css={{
+            sx={{
               appearance: `none`,
               border: `none`,
               padding: `0.5ch 2ch 0.5ch 0.5ch`,
-              color: `rebeccapurple`,
+              color: `gatsby`,
               fontWeight: `bold`,
             }}
           >
@@ -89,6 +94,8 @@ class Pagination extends React.Component {
               <option
                 value={`${i === 0 ? `` : i + 1}`}
                 key={`pagination-number${i + 1}`}
+                aria-label={`Goto Page ${i + 1}`}
+                aria-current={currentPage === i + 1}
               >
                 {i + 1}
               </option>
@@ -98,10 +105,10 @@ class Pagination extends React.Component {
             width="10"
             height="5"
             viewBox="0 0 10 5"
-            css={{
+            sx={{
               position: `relative`,
-              right: `1.5ch`,
-              fill: `rebeccapurple`,
+              right: 4,
+              fill: `gatsby`,
               pointerEvents: `none`,
             }}
           >

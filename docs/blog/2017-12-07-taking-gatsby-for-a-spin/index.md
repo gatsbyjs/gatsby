@@ -1,6 +1,6 @@
 ---
 title: Taking Gatsby for a spin
-date: "2017-12-06"
+date: 2017-12-06
 author: "Arden de Raaij"
 image: "great-gatsby.jpg"
 excerpt: "A static site generator based on React, does that even make sense? GatsbyJS tries to answer this question with a hypermodern, feature-packed, *jamstacked* development tool that you can try out right now!"
@@ -39,7 +39,7 @@ Even though Gatsby is pretty new, the developers using it seem really involved. 
 
 ## Some thoughts on Gatsby
 
-It's telling that [most of the websites that are made with Gatsby](https://github.com/gatsbyjs/gatsby#showcase) are developer portfolios and documentation websites. It shows that Gatsby is still a bit in its early-adopters phase. But seeing what kind of sites are already made with Gatsby, I'm sure the future is bright. I've had a blast creating my own site with Gatsby ([checkout the github repo here](https://github.com/aderaaij/ardennl-gatsby)) and in the end it didn't take more than a weekend to complete, including doing the [tutorial](/tutorial/) and experimenting with the [Gatsby starters](/docs/gatsby-starters/).
+It's telling that [most of the websites that are made with Gatsby](https://github.com/gatsbyjs/gatsby#showcase) are developer portfolios and documentation websites. It shows that Gatsby is still a bit in its early-adopters phase. But seeing what kind of sites are already made with Gatsby, I'm sure the future is bright. I've had a blast creating my own site with Gatsby ([checkout the GitHub repo here](https://github.com/aderaaij/ardennl-gatsby)) and in the end it didn't take more than a weekend to complete, including doing the [tutorial](/tutorial/) and experimenting with the [Gatsby starters](/docs/gatsby-starters/).
 
 Some other thoughts I had while working with Gatsby:
 
@@ -49,7 +49,7 @@ Gatsby definitely delivers on speed. The whole PRPL pattern thing seems to work 
 
 ### GraphQL is amazing
 
-Data from anywhere with static output. That's sort of the holy grail isn't it? Right now the data I use in this site comes from markdown files, but I can already see that switching to another content source is going to be a breeze with GraphQL. The queries are clean and readable and the Graph*i*QL IDE is the perfect helper. In a way, GraphQL allows you to separate your front-end from the type of data source.
+Data from anywhere with static output. That's sort of the holy grail isn't it? Right now the data I use in this site comes from markdown files, but I can already see that switching to another content source is going to be a breeze with GraphQL. The queries are clean and readable and the Graph*i*QL IDE is the perfect helper. In a way, GraphQL allows you to separate your frontend from the type of data source.
 
 ```es6
 export const query = graphql`
@@ -79,7 +79,7 @@ export const query = graphql`
 
 After reading some articles on the Gatsby site, I decided to set up my Gatsby hosting on a free plan from [Netlify](https://www.netlify.com/) (which is ridiculously generous by the way, what's the catch?) and that has been a fun experience. Netlify already supports Gatsby out of the box, which means you can configure automatic deploys with `git` in a few clicks. Every time I push to master, the site gets rebuild and uploaded by Netlify. _Magic_. There's also the possibility to configure staging servers based on your branches, so you can always test out your changes before merging to master and deploying.
 
-But wait, there's more. If you use [Contentful](https://www.contentful.com/) as Content Management System and Netlify as your host, you can easily create a Webhook to trigger a rebuild on every content update! I haven't tried this myself yet, but [this posts](https://www.halfelectronic.com/post/setting-up-gatsby-js-contentful-and-netlify/) by [Fernando Poumián](https://twitter.com/fernandopoumian) is a great resource to get you going.
+But wait, there's more. If you use [Contentful](https://www.contentful.com/) as Content Management System and Netlify as your host, you can easily create a Webhook to trigger a rebuild on every content update! I haven't tried this myself yet, but [this posts](https://www.halfelectronic.com/post/setting-up-gatsby-js-contentful-and-netlify/) by Fernando Poumián is a great resource to get you going.
 
 Incremental builds aren't yet possible, so every update means a complete rebuild. I'm sure that's no cause for concern on smaller sites, but with larger sites that are updated often it could be a problem. Luckily, incremental builds will be part of Gatsby ['sooner than later'](https://twitter.com/gatsbyjs/status/937053640652611584), which will take care of that problem.
 

@@ -15,17 +15,19 @@ const getDirFilesWalk = async dir => {
   const dirFiles = await readdir(dir)
 
   const additionalFiles = [].concat(
-    ...(await Promise.all(
-      dirFiles.map(async file => {
-        const filePath = `${dir}/${file}`
-        const fileStat = await stat(filePath)
+    ...(
+      await Promise.all(
+        dirFiles.map(async file => {
+          const filePath = `${dir}/${file}`
+          const fileStat = await stat(filePath)
 
-        if (fileStat.isDirectory()) {
-          return await getDirFilesWalk(filePath)
-        }
-        return undefined
-      })
-    )).filter(Boolean)
+          if (fileStat.isDirectory()) {
+            return await getDirFilesWalk(filePath)
+          }
+          return undefined
+        })
+      )
+    ).filter(Boolean)
   )
 
   return [...dirFiles, ...additionalFiles]
@@ -39,7 +41,7 @@ describe(`long term caching`, () => {
 
   const createPublic0 = async () => {
     execFileSync(`yarn`, [`build`], { cwd: basePath })
-    move(`${basePath}/public`, `${basePath}/public-0`)
+    return move(`${basePath}/public`, `${basePath}/public-0`)
   }
 
   const createPublic1 = async () => {
@@ -51,7 +53,7 @@ describe(`long term caching`, () => {
     await writeFile(`${pagesPath}/index.js`, modifiedData)
 
     execFileSync(`yarn`, [`build`], { cwd: basePath })
-    await move(`${basePath}/public`, `${basePath}/public-1`)
+    return move(`${basePath}/public`, `${basePath}/public-1`)
   }
 
   const createPublic2 = async () => {
@@ -64,7 +66,7 @@ describe(`long term caching`, () => {
     await writeFile(`${pagesPath}/index.js`, modifiedData)
 
     execFileSync(`yarn`, [`build`], { cwd: basePath })
-    await move(`${basePath}/public`, `${basePath}/public-2`)
+    return move(`${basePath}/public`, `${basePath}/public-2`)
   }
 
   const createPublic3 = async () => {
@@ -77,7 +79,7 @@ describe(`long term caching`, () => {
     await writeFile(`${pagesPath}/index.js`, modifiedData)
 
     execFileSync(`yarn`, [`build`], { cwd: basePath })
-    await move(`${basePath}/public`, `${basePath}/public-3`)
+    return move(`${basePath}/public`, `${basePath}/public-3`)
   }
 
   const createPublic4 = async () => {
@@ -91,7 +93,7 @@ describe(`long term caching`, () => {
     await writeFile(`${pagesPath}/index.js`, modifiedData)
 
     execFileSync(`yarn`, [`build`], { cwd: basePath })
-    await move(`${basePath}/public`, `${basePath}/public-4`)
+    return move(`${basePath}/public`, `${basePath}/public-4`)
   }
 
   const createPublic5 = async () => {
@@ -103,7 +105,7 @@ describe(`long term caching`, () => {
     await writeFile(`${srcPath}/async-2.js`, modifiedData)
 
     execFileSync(`yarn`, [`build`], { cwd: basePath })
-    await move(`${basePath}/public`, `${basePath}/public-5`)
+    return move(`${basePath}/public`, `${basePath}/public-5`)
   }
 
   beforeAll(async () => {
@@ -119,8 +121,6 @@ describe(`long term caching`, () => {
 
     srcPath = resolve(`${basePath}/src`)
     pagesPath = resolve(`${srcPath}/pages`)
-
-    execFileSync(`yarn`, [], { cwd: basePath })
 
     await createPublic0()
     await createPublic1()

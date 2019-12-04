@@ -1,40 +1,170 @@
 /* @flow */
-const _ = require(`lodash`)
-const { GraphQLSchema, GraphQLObjectType } = require(`graphql`)
-const { mergeSchemas } = require(`graphql-tools`)
 
-const buildNodeTypes = require(`./build-node-types`)
-const buildNodeConnections = require(`./build-node-connections`)
+const tracer = require(`opentracing`).globalTracer()
 const { store } = require(`../redux`)
-const invariant = require(`invariant`)
-const { clearUnionTypes } = require(`./infer-graphql-type`)
+const nodeStore = require(`../db/nodes`)
+const { createSchemaComposer } = require(`./schema-composer`)
+const { buildSchema, rebuildSchemaWithSitePage } = require(`./schema`)
+const { builtInFieldExtensions } = require(`./extensions`)
+const { TypeConflictReporter } = require(`./infer/type-conflict-reporter`)
 
-module.exports = async ({ parentSpan }) => {
-  clearUnionTypes()
-  const typesGQL = await buildNodeTypes({ parentSpan })
-  const connections = buildNodeConnections(_.values(typesGQL))
+const getAllFieldExtensions = () => {
+  const {
+    schemaCustomization: { fieldExtensions: customFieldExtensions },
+  } = store.getState()
 
-  // Pull off just the graphql node from each type object.
-  const nodes = _.mapValues(typesGQL, `node`)
+  return {
+    ...customFieldExtensions,
+    ...builtInFieldExtensions,
+  }
+}
 
-  invariant(!_.isEmpty(nodes), `There are no available GQL nodes`)
-  invariant(!_.isEmpty(connections), `There are no available GQL connections`)
-
-  const thirdPartySchemas = store.getState().thirdPartySchemas || []
-
-  const gatsbySchema = new GraphQLSchema({
-    query: new GraphQLObjectType({
-      name: `RootQueryType`,
-      fields: { ...connections, ...nodes },
-    }),
+// Schema building requires metadata for type inference.
+// Technically it means looping through all type nodes, analyzing node structure
+// and then using this aggregated node structure in related GraphQL type.
+// Actual logic for inference located in inferenceMetadata reducer and ./infer
+// Here we just orchestrate the process via redux actions
+const buildInferenceMetadata = ({ types }) =>
+  new Promise(resolve => {
+    if (!types || !types.length) {
+      resolve()
+      return
+    }
+    const typeNames = [...types]
+    // TODO: use async iterators when we switch to node>=10
+    //  or better investigate if we can offload metadata building to worker/Jobs API
+    //  and then feed the result into redux?
+    const processNextType = () => {
+      const typeName = typeNames.pop()
+      store.dispatch({
+        type: `BUILD_TYPE_METADATA`,
+        payload: {
+          typeName,
+          nodes: nodeStore.getNodesByType(typeName),
+        },
+      })
+      if (typeNames.length > 0) {
+        // Give event-loop a break
+        setTimeout(processNextType, 0)
+      } else {
+        resolve()
+      }
+    }
+    processNextType()
   })
 
-  const schema = mergeSchemas({
-    schemas: [gatsbySchema, ...thirdPartySchemas],
+const build = async ({ parentSpan, fullMetadataBuild = true }) => {
+  const spanArgs = parentSpan ? { childOf: parentSpan } : {}
+  const span = tracer.startSpan(`build schema`, spanArgs)
+
+  if (fullMetadataBuild) {
+    // Build metadata for type inference and start updating it incrementally
+    // except for SitePage type: we rebuild it in rebuildWithSitePage anyway
+    // so it makes little sense to update it incrementally
+    // (and those updates may have significant performance overhead)
+    await buildInferenceMetadata({ types: nodeStore.getTypes() })
+    store.dispatch({ type: `START_INCREMENTAL_INFERENCE` })
+    store.dispatch({ type: `DISABLE_TYPE_INFERENCE`, payload: [`SitePage`] })
+  }
+
+  const {
+    schemaCustomization: { thirdPartySchemas, types, printConfig },
+    inferenceMetadata,
+    config: { mapping: typeMapping },
+  } = store.getState()
+
+  const typeConflictReporter = new TypeConflictReporter()
+
+  // Ensure that user-defined types are processed last
+  const sortedTypes = [
+    ...types.filter(
+      type => type.plugin && type.plugin.name !== `default-site-plugin`
+    ),
+    ...types.filter(
+      type => !type.plugin || type.plugin.name === `default-site-plugin`
+    ),
+  ]
+
+  const fieldExtensions = getAllFieldExtensions()
+  const schemaComposer = createSchemaComposer({ fieldExtensions })
+  const schema = await buildSchema({
+    schemaComposer,
+    nodeStore,
+    types: sortedTypes,
+    fieldExtensions,
+    thirdPartySchemas,
+    typeMapping,
+    printConfig,
+    typeConflictReporter,
+    inferenceMetadata,
+    parentSpan,
   })
 
+  typeConflictReporter.printConflicts()
+
+  store.dispatch({
+    type: `SET_SCHEMA_COMPOSER`,
+    payload: schemaComposer,
+  })
   store.dispatch({
     type: `SET_SCHEMA`,
     payload: schema,
   })
+
+  span.finish()
+}
+
+const rebuild = async ({ parentSpan }) =>
+  await build({ parentSpan, fullMetadataBuild: false })
+
+const rebuildWithSitePage = async ({ parentSpan }) => {
+  const spanArgs = parentSpan ? { childOf: parentSpan } : {}
+  const span = tracer.startSpan(
+    `rebuild schema with SitePage context`,
+    spanArgs
+  )
+  await buildInferenceMetadata({ types: [`SitePage`] })
+
+  // Disabling incremental inference for SitePage after the initial build
+  // as it has a significant performance cost for zero benefits.
+  // The only benefit is that schema rebuilds when SitePage.context structure changes.
+  // (one can just restart `develop` in this case)
+  store.dispatch({ type: `DISABLE_TYPE_INFERENCE`, payload: [`SitePage`] })
+
+  const {
+    schemaCustomization: { composer: schemaComposer },
+    config: { mapping: typeMapping },
+    inferenceMetadata,
+  } = store.getState()
+
+  const typeConflictReporter = new TypeConflictReporter()
+
+  const schema = await rebuildSchemaWithSitePage({
+    schemaComposer,
+    nodeStore,
+    fieldExtensions: getAllFieldExtensions(),
+    typeMapping,
+    typeConflictReporter,
+    inferenceMetadata,
+    parentSpan,
+  })
+
+  typeConflictReporter.printConflicts()
+
+  store.dispatch({
+    type: `SET_SCHEMA_COMPOSER`,
+    payload: schemaComposer,
+  })
+  store.dispatch({
+    type: `SET_SCHEMA`,
+    payload: schema,
+  })
+
+  span.finish()
+}
+
+module.exports = {
+  build,
+  rebuild,
+  rebuildWithSitePage,
 }

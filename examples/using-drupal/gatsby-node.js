@@ -3,8 +3,8 @@ const path = require(`path`)
 // Create a slug for each recipe and set it as a field on the node.
 exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNodeField } = actions
-  if (node.internal.type === `recipes`) {
-    const slug = `/recipes/${node.internalId}/`
+  if (node.internal.type === `node__recipe`) {
+    const slug = `/recipes/${node.drupal_internal__nid}/`
     createNodeField({
       node,
       name: `slug`,
@@ -18,41 +18,37 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
 exports.createPages = ({ actions, graphql }) => {
   const { createPage } = actions
 
-  return new Promise((resolve, reject) => {
-    const recipeTemplate = path.resolve(`src/templates/recipe.js`)
-    // Query for recipe nodes to use in creating pages.
-    resolve(
-      graphql(
-        `
-          {
-            allRecipes {
-              edges {
-                node {
-                  internalId
-                  fields {
-                    slug
-                  }
-                }
+  const recipeTemplate = path.resolve(`src/templates/recipe.js`)
+  // Query for recipe nodes to use in creating pages.
+  return graphql(
+    `
+      {
+        recipes: allNodeRecipe {
+          edges {
+            node {
+              internalId: drupal_internal__nid
+              fields {
+                slug
               }
             }
           }
-        `
-      ).then(result => {
-        if (result.errors) {
-          reject(result.errors)
         }
+      }
+    `
+  ).then(result => {
+    if (result.errors) {
+      throw result.errors
+    }
 
-        // Create pages for each recipe.
-        result.data.allRecipes.edges.forEach(({ node }) => {
-          createPage({
-            path: node.fields.slug,
-            component: recipeTemplate,
-            context: {
-              slug: node.fields.slug,
-            },
-          })
-        })
+    // Create pages for each recipe.
+    result.data.recipes.edges.forEach(({ node }) => {
+      createPage({
+        path: node.fields.slug,
+        component: recipeTemplate,
+        context: {
+          slug: node.fields.slug,
+        },
       })
-    )
+    })
   })
 }

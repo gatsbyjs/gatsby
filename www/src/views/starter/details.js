@@ -1,9 +1,9 @@
-import React from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import { Link } from "gatsby"
-import presets, { colors } from "../../utils/presets"
-import { options, rhythm } from "../../utils/typography"
-import sharedStyles from "../shared/styles"
-import FaExtLink from "react-icons/lib/fa/external-link"
+import MdLaunch from "react-icons/lib/md/launch"
+
+import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 
 const Details = ({
   allDeps,
@@ -13,50 +13,27 @@ const Details = ({
   startersYaml,
 }) => (
   <div
-    css={{
-      padding: sharedStyles.gutter,
-      [presets.Desktop]: {
-        padding: sharedStyles.gutterDesktop,
+    sx={{
+      p: 6,
+      [mediaQueries.md]: {
         display: `grid`,
+        gridRowGap: 6,
+        gridColumnGap: 6,
         gridTemplateColumns: `auto 1fr`,
-        gridRowGap: `20px`,
+        p: 8,
       },
     }}
   >
-    <div
-      css={{
-        color: colors.gray.calm,
-        fontFamily: options.headerFontFamily.join(`,`),
-        paddingRight: 20,
-      }}
-    >
-      Tags
-    </div>
-    <div>{startersYaml.tags.join(`, `)}</div>
+    <h2 sx={styles.headline}>Tags</h2>
+    <div sx={styles.content}>{startersYaml.tags.join(`, `)}</div>
 
-    <div
-      css={{
-        color: colors.gray.calm,
-        fontFamily: options.headerFontFamily.join(`,`),
-        paddingRight: 20,
-      }}
-    >
-      Description
-    </div>
-    <div>{startersYaml.description}</div>
+    <h2 sx={styles.headline}>Description</h2>
+    <div sx={styles.content}>{startersYaml.description}</div>
 
-    <div
-      css={{
-        color: colors.gray.calm,
-        fontFamily: options.headerFontFamily.join(`,`),
-        paddingRight: 20,
-      }}
-    >
-      Features
-    </div>
-    <div>
+    <h2 sx={styles.headline}>Features</h2>
+    <div sx={styles.content}>
       {startersYaml.features ? (
-        <ul css={{ marginTop: 0 }}>
+        <ul sx={{ mt: 0 }}>
           {startersYaml.features.map((f, i) => (
             <li key={i}>{f}</li>
           ))}
@@ -66,52 +43,35 @@ const Details = ({
       )}
     </div>
 
-    <div
-      css={{
-        color: colors.gray.calm,
-        fontFamily: options.headerFontFamily.join(`,`),
-        paddingRight: 20,
-      }}
-    >
-      Dependencies
-    </div>
+    <h2 sx={styles.headline}>Dependencies</h2>
 
     <div>
       <div
-        css={{
+        sx={{
           display: `grid`,
-          gridAutoRows: `50px`,
-          marginBottom: rhythm(options.blockMarginBottom * 5),
-          [presets.Desktop]: {
+          [mediaQueries.lg]: {
             gridTemplateColumns: `repeat(3, 1fr)`,
-            gridColumnGap: 20,
+            gridGap: 5,
           },
         }}
       >
         {shownDeps &&
-          shownDeps.map(
-            dep =>
-              /^gatsby-/.test(dep) ? (
-                <div key={dep}>
-                  <Link to={`/packages/${dep}`}>{dep}</Link>
-                </div>
-              ) : (
-                <div
-                  key={dep}
-                  css={{
-                    ...sharedStyles.truncate,
-                    marginBottom: `1rem`,
-                  }}
-                >
-                  <a href={`https://npm.im/${dep}`}>
-                    {`${dep} `}
-                    <FaExtLink />
-                  </a>
-                </div>
-              )
+          shownDeps.map(dep =>
+            /^gatsby-/.test(dep) ? (
+              <div key={dep}>
+                <Link to={`/packages/${dep}`}>{dep}</Link>
+              </div>
+            ) : (
+              <div key={dep}>
+                <a href={`https://npm.im/${dep}`}>
+                  {`${dep} `}
+                  <MdLaunch />
+                </a>
+              </div>
+            )
           )}
         {showMore && (
-          <button css={{ ...styles.showMoreButton }} onClick={showAllDeps}>
+          <button sx={styles.showMoreButton} onClick={showAllDeps}>
             {`Show ${allDeps.length - shownDeps.length} more`}
           </button>
         )}
@@ -123,22 +83,32 @@ const Details = ({
 export default Details
 
 const styles = {
+  headline: {
+    color: `textMuted`,
+    fontWeight: `normal`,
+    fontSize: 3,
+    mt: 0,
+    mb: 2,
+    [mediaQueries.md]: {
+      mb: 0,
+    },
+  },
+  content: {
+    pb: 8,
+    [mediaQueries.md]: { pb: 0 },
+  },
   showMoreButton: {
+    backgroundColor: `gatsby`,
     border: 0,
-    borderRadius: presets.radius,
+    borderRadius: 1,
     cursor: `pointer`,
-    fontFamily: options.headerFontFamily.join(`,`),
+    fontFamily: `header`,
     fontWeight: `bold`,
-    padding: `${rhythm(1 / 5)} ${rhythm(2 / 3)}`,
-    WebkitFontSmoothing: `antialiased`,
+    py: 1,
+    px: 4,
     "&&": {
-      backgroundColor: colors.gatsby,
       borderBottom: `none`,
-      boxShadow: `none`,
       color: `white`,
-      "&:hover": {
-        backgroundColor: colors.gatsby,
-      },
     },
   },
 }

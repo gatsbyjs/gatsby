@@ -1,5 +1,6 @@
 import React from "react"
-import ReactHighcharts from "react-highcharts"
+import loadable from "@loadable/component"
+import { radii } from "../gatsby-plugin-theme-ui"
 
 const dateToUTC = date => {
   const d = String(date)
@@ -10,43 +11,43 @@ const dateToUTC = date => {
 }
 
 const highchartsOptions = {
-  colors: ["#fd9800", "#008FD5", "#77AB43", "#663399", "#C4C4C4"],
+  colors: [`#fd9800`, `#008FD5`, `#77AB43`, `#663399`, `#C4C4C4`],
   chart: {
     backgroundColor: null,
     style: {
-      fontFamily: "Overpass, sans-serif",
+      fontFamily: `Overpass, sans-serif`,
     },
   },
   title: {
     style: {
-      color: "#241236",
+      color: `#241236`,
     },
-    align: "left",
+    align: `left`,
   },
   legend: {
-    align: "left",
-    verticalAlign: "bottom",
+    align: `left`,
+    verticalAlign: `bottom`,
   },
   tooltip: {
-    backgroundColor: "#FFFFFF",
-    borderRadius: 2,
+    backgroundColor: `#FFFFFF`,
+    borderRadius: radii[1],
   },
   credits: {
     enabled: false,
   },
   xAxis: {
     gridLineWidth: 1,
-    gridLineColor: "#F3F3F3",
-    lineColor: "#F3F3F3",
-    minorGridLineColor: "#F3F3F3",
-    tickColor: "#F3F3F3",
+    gridLineColor: `#F3F3F3`,
+    lineColor: `#F3F3F3`,
+    minorGridLineColor: `#F3F3F3`,
+    tickColor: `#F3F3F3`,
     tickWidth: 1,
   },
   yAxis: {
-    gridLineColor: "#F3F3F3",
-    lineColor: "#F3F3F3",
-    minorGridLineColor: "#F3F3F3",
-    tickColor: "#F3F3F3",
+    gridLineColor: `#F3F3F3`,
+    lineColor: `#F3F3F3`,
+    minorGridLineColor: `#F3F3F3`,
+    tickColor: `#F3F3F3`,
     tickWidth: 1,
   },
   plotOptions: {
@@ -56,25 +57,26 @@ const highchartsOptions = {
   },
 }
 
+const LazyHighChart = loadable(() => import(`react-highcharts`))
+
 const DateChart = props => {
   const seriesData = JSON.parse(props.seriesData || props[`series-data`])
   const yAxisLabel = props.yAxisLabel || props[`y-axis-label`]
   const config = {
     chart: {
-      type: "spline",
-      zoomType: "x",
+      type: `spline`,
+      zoomType: `x`,
     },
     tooltip: {
-      pointFormat:
-        '<span style="color:{point.color}">●</span> {series.name}: <b>{point.y:.2f}%</b><br/>',
+      pointFormat: `<span style="color:{point.color}">●</span> {series.name}: <b>{point.y:.2f}%</b><br/>`,
     },
     title: {
       text: props.title,
     },
     xAxis: {
-      type: "datetime",
+      type: `datetime`,
       title: {
-        text: "Date",
+        text: `Date`,
       },
     },
     yAxis: {
@@ -85,17 +87,19 @@ const DateChart = props => {
         format: `{value}%`,
       },
     },
-    series: seriesData.map(series => ({
-      name: series.name,
-      data: series.data.map(edge => [
-        dateToUTC(edge.date),
-        100 * parseFloat(edge.value),
-      ]),
-    })),
+    series: seriesData.map(series => {
+      return {
+        name: series.name,
+        data: series.data.map(edge => [
+          dateToUTC(edge.date),
+          100 * parseFloat(edge.value),
+        ]),
+      }
+    }),
   }
   return (
     <div className="gatsby-highcharts">
-      <ReactHighcharts
+      <LazyHighChart
         config={{
           ...highchartsOptions,
           ...config,

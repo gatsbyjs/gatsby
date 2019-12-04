@@ -1,9 +1,15 @@
 const grayMatter = require(`gray-matter`)
-const crypto = require(`crypto`)
 const _ = require(`lodash`)
 
 module.exports = async function onCreateNode(
-  { node, getNode, loadNodeContent, actions, createNodeId, reporter },
+  {
+    node,
+    loadNodeContent,
+    actions,
+    createNodeId,
+    reporter,
+    createContentDigest,
+  },
   pluginOptions
 ) {
   const { createNode, createParentChildLink } = actions
@@ -13,26 +19,24 @@ module.exports = async function onCreateNode(
     node.internal.mediaType !== `text/markdown` &&
     node.internal.mediaType !== `text/x-markdown`
   ) {
-    return
+    return {}
   }
 
   const content = await loadNodeContent(node)
 
   try {
     let data = grayMatter(content, pluginOptions)
-    // Convert date objects to string. Otherwise there's type mismatches
-    // during inference as some dates are strings and others date objects.
+
     if (data.data) {
-      data.data = _.mapValues(data.data, v => {
-        if (_.isDate(v)) {
-          return v.toJSON()
-        } else {
-          return v
+      data.data = _.mapValues(data.data, value => {
+        if (_.isDate(value)) {
+          return value.toJSON()
         }
+        return value
       })
     }
 
-    const markdownNode = {
+    let markdownNode = {
       id: createNodeId(`${node.id} >>> MarkdownRemark`),
       children: [],
       parent: node.id,
@@ -45,7 +49,6 @@ module.exports = async function onCreateNode(
     markdownNode.frontmatter = {
       title: ``, // always include a title
       ...data.data,
-      _PARENT: node.id,
     }
 
     markdownNode.excerpt = data.excerpt
@@ -56,13 +59,12 @@ module.exports = async function onCreateNode(
       markdownNode.fileAbsolutePath = node.absolutePath
     }
 
-    markdownNode.internal.contentDigest = crypto
-      .createHash(`md5`)
-      .update(JSON.stringify(markdownNode))
-      .digest(`hex`)
+    markdownNode.internal.contentDigest = createContentDigest(markdownNode)
 
     createNode(markdownNode)
     createParentChildLink({ parent: node, child: markdownNode })
+
+    return markdownNode
   } catch (err) {
     reporter.panicOnBuild(
       `Error processing Markdown ${
@@ -70,5 +72,7 @@ module.exports = async function onCreateNode(
       }:\n
       ${err.message}`
     )
+
+    return {} // eslint
   }
 }

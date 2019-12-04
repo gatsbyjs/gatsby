@@ -3,7 +3,7 @@ title: "Making website building fun"
 date: 2017-10-16
 author: "Kyle Mathews"
 typora-copy-images-to: ./
-tags: ["right-building-blocks", "gatsby-image", "react", "graphql", "plugins"]
+tags: ["web-building-blocks", "gatsby-image", "react", "graphql", "plugins"]
 ---
 
 I still remember the first non-trivial React component I built in 2014—not long
@@ -41,9 +41,7 @@ Compare this with the minimum code necessary for the original headroom.js.
 #### HTML
 
 ```html
-<header class="headroom">
-  <h1>header content</h1>
-</header>
+<header class="headroom"><h1>header content</h1></header>
 ```
 
 #### JavaScript

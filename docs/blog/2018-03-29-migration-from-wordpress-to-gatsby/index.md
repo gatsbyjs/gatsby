@@ -24,7 +24,7 @@ The results of a [Lighthouse audit](https://www.vojtechruzicka.com/chrome-audit-
 
 ![lighthouse audit before](./chrome-audit-score-before.jpg)
 
-Especially the performance. With such long page load times, many users just leave before the page fully loads. Especially when on mobile and low-quality connections. Another issue is security. With a significant part of web powered by WordPress, it is a target of automated attacks all the time. That means constant fear of losing your precious blog. And it's internal database storing all the content was pretty much a black box for me. And of course, there's cost involved. As I didn't want to manage my installation, keep it updated and in good shape, I paid for hosted solution. Last but not least, Wordpress is built with PHP, which I am not familiar with and it is something I am not eager to learn. That means that any customizations or tweaks are out of the question for me.
+Especially the performance. With such long page load times, many users just leave before the page fully loads. Especially when on mobile and low-quality connections. Another issue is security. With a significant part of web powered by WordPress, it is a target of automated attacks all the time. That means constant fear of losing your precious blog. And its internal database storing all the content was pretty much a black box for me. And of course, there's cost involved. As I didn't want to manage my installation, keep it updated and in good shape, I paid for hosted solution. Last but not least, WordPress is built with PHP, which I am not familiar with and it is something I am not eager to learn. That means that any customizations or tweaks are out of the question for me.
 
 Long story short, I decided to get rid of WordPress and replace it with a much more lightweight solution. There was a brief moment where I considered using Medium instead, but I decided I value control of my own content more. After listening to a very inspiring lightning talk by [Ladislav Prskavec](https://twitter.com/abtris/) about JAM Stack, I decided its time to give it a try.
 
@@ -56,7 +56,7 @@ There are many factors to consider. Maturity is important as it means a big comm
 
 ### Modern technologies
 
-Gatsby is built with a lot of interesting technologies. If you are a front-end developer, you'll probably be familiar with most of these, so adoption should be quick. If not, it gives you chance to learn a lot of interesting stuff. Gatsby is powered by React. You'll be able to nicely structure your project to components and use all the existing React components there not specifically developed for Gatsby. For styling, you can attach plain old CSS stylesheet, but Gatsby offers many more choices like Sass, Glamor, Styled Components, Stylus, Less or Styled JSX. Gatsby is built on top of Webpack. And it can generate offline-ready Progressive Web App and uses GraphQL for querying data.
+Gatsby is built with a lot of interesting technologies. If you are a frontend developer, you'll probably be familiar with most of these, so adoption should be quick. If not, it gives you chance to learn a lot of interesting stuff. Gatsby is powered by React. You'll be able to nicely structure your project to components and use all the existing React components there not specifically developed for Gatsby. For styling, you can attach plain old CSS stylesheet, but Gatsby offers many more choices like Sass, Glamor, Styled Components, Stylus, Less or Styled JSX. Gatsby is built on top of Webpack. And it can generate offline-ready Progressive Web App and uses GraphQL for querying data.
 
 ### Data sources and GraphQL
 
@@ -91,6 +91,6 @@ My blog is now deployed on Netlify CDN, which means the user will be served fast
 
 ![after](./results.png)
 
-Quite a difference, right? Long story short - Gatsby is great. You should give it a try, especially if you are a front-end developer. And keep watching its development as I am sure we can look forward to even more awesomeness in the future. If Gatsby is not your cup of the, you should still consider switching to a static site generator as the advantages are too good to ignore. To learn more about Gatsby, check out [this curated list](/docs/awesome-gatsby/) of Gatsby-related resources.
+Quite a difference, right? Long story short - Gatsby is great. You should give it a try, especially if you are a frontend developer. And keep watching its development as I am sure we can look forward to even more awesomeness in the future. If Gatsby is not your cup of the, you should still consider switching to a static site generator as the advantages are too good to ignore. To learn more about Gatsby, check out [this curated list](/docs/awesome-gatsby-resources/) of Gatsby-related resources.
 
 _This article was originally published on [Vojtech Ruzicka's Blog](https://www.vojtechruzicka.com/)._
