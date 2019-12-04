@@ -140,6 +140,10 @@ function createJob(job, { reporter, reportStatus = true }) {
 }
 
 function queueImageResizing({ file, args = {}, reporter }) {
+  if (!bar) {
+    bar = createProgress(`Generating image thumbnails`, reporter)
+    bar.start()
+  }
   const {
     src,
     width,
@@ -149,6 +153,9 @@ function queueImageResizing({ file, args = {}, reporter }) {
     outputDir,
     options,
   } = prepareQueue({ file, args })
+
+  pendingImagesCounter++
+  bar.total = pendingImagesCounter
 
   // Create job and add it to the queue, the queue will be processed inside gatsby-node.js
   const finishedPromise = createJob(
@@ -167,7 +174,16 @@ function queueImageResizing({ file, args = {}, reporter }) {
       },
     },
     { reporter }
-  )
+  ).then(() => {
+    completedImagesCounter++
+    if (bar) {
+      bar.tick()
+      if (completedImagesCounter === pendingImagesCounter) {
+        bar.done()
+        bar = null
+      }
+    }
+  })
 
   return {
     src,
