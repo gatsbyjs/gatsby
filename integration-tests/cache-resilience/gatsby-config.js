@@ -15,5 +15,8 @@ module.exports = {
 
     `gatsby-source-child-change-for-fields`,
     `gatsby-fields-child-change`,
+
+    `gatsby-cache-stable`,
+    `gatsby-cache-unstable`,
   ],
 }
