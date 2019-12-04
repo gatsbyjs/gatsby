@@ -1,12 +1,29 @@
 {
-  "name": "gatsby-theme-workspace",
-  "version": "1.0.6",
+  "name": "gatsby-theme",
+  "version": "0.0.6",
   "main": "index.js",
-  "private": true,
+  "bin": {
+    "gatsby-theme": "./cli.js"
+  },
   "author": "christopherbiscardi <chris@christopherbiscardi.com> (@chrisbiscardi)",
   "license": "MIT",
-  "workspaces": [
-    "test-site",
-    "gatsby-theme"
-  ]
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-theme"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-theme#readme",
+  "dependencies": {
+    "@babel/core": "^7.7.4",
+    "@babel/helper-plugin-utils": "^7.0.0",
+    "@babel/plugin-syntax-jsx": "^7.7.4",
+    "commander": "^2.20.3",
+    "fast-levenshtein": "^2.0.6",
+    "glob": "^7.1.6",
+    "globby": "^10.0.1",
+    "inquirer": "^6.5.2",
+    "lodash": "^4.17.15",
+    "mkdirp": "^0.5.1",
+    "npm-keyword": "^6.1.0"
+  }
 }
