@@ -153,42 +153,6 @@ const getType = (value, key) => {
   }
 }
 
-const updateValueDescriptor = (
-  nodeId,
-  key,
-  value,
-  operation = `add` /* add | del */,
-  descriptor,
-  path
-) => {
-  // The object may be traversed multiple times from root.
-  // Each time it does it should not revisit the same node twice
-  if (path.includes(value)) {
-    return false
-  }
-
-  const typeName = getType(value, key)
-
-  if (typeName === `null`) {
-    return false
-  }
-
-  path.push(value)
-
-  const ret = _updateValueDescriptor(
-    nodeId,
-    key,
-    value,
-    operation,
-    descriptor,
-    path,
-    typeName
-  )
-
-  path.pop()
-
-  return ret
-}
 const updateValueDescriptorObject = (
   value,
   typeInfo,
@@ -196,6 +160,8 @@ const updateValueDescriptorObject = (
   operation,
   path
 ) => {
+  path.push(value)
+
   const { props = {} } = typeInfo
   typeInfo.props = props
   let dirty = false
@@ -217,6 +183,8 @@ const updateValueDescriptorObject = (
     )
     dirty = dirty || propDirty
   })
+
+  path.pop()
   return dirty
 }
 const updateValueDescriptorArray = (
@@ -273,15 +241,26 @@ const updateValueString = (value, delta, typeInfo) => {
   typeInfo.example =
     typeof typeInfo.example !== `undefined` ? typeInfo.example : value
 }
-const _updateValueDescriptor = (
+const updateValueDescriptor = (
   nodeId,
   key,
   value,
-  operation,
+  operation = `add` /* add | del */,
   descriptor,
-  path,
-  typeName
+  path
 ) => {
+  // The object may be traversed multiple times from root.
+  // Each time it does it should not revisit the same node twice
+  if (path.includes(value)) {
+    return false
+  }
+
+  const typeName = getType(value, key)
+
+  if (typeName === `null`) {
+    return false
+  }
+
   const delta = operation === `del` ? -1 : 1
   let typeInfo = descriptor[typeName]
   if (typeInfo === undefined) {
