@@ -7,7 +7,7 @@ const errorParser = ({
   // errors to specific callbacks
   const handlers = [
     {
-      regex: /Variable "(.+)" of required type "(.+)" was not provided/m,
+      regex: /Variable "(.+)" of required type "(.+)" was not provided./m,
       cb: match => {
         return {
           id: `85920`,
@@ -20,7 +20,7 @@ const errorParser = ({
       },
     },
     {
-      regex: /Variable "(.+)" of type "(.+)" used in position expecting type "(.+)"/m,
+      regex: /Variable "(.+)" of type "(.+)" used in position expecting type "(.+)"./m,
       cb: match => {
         return {
           id: `85921`,
@@ -29,6 +29,19 @@ const errorParser = ({
             variableName: match[1],
             inputType: match[2],
             expectedType: match[3],
+          },
+        }
+      },
+    },
+    {
+      regex: /Field "(.+)" must not have a selection since type "(.+)" has no subfields./m,
+      cb: match => {
+        return {
+          id: `85922`,
+          context: {
+            sourceMessage: match[0],
+            fieldName: match[1],
+            fieldType: match[2],
           },
         }
       },
