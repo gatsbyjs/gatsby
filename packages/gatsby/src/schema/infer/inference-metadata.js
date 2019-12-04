@@ -247,10 +247,9 @@ const updateValueDescriptorArray = (
 
   return dirty
 }
-const updateValueRelNodes = (value, delta, operation, typeInfo) => {
+const updateValueRelNodes = (listOfNodeIds, delta, operation, typeInfo) => {
   const { nodes = {} } = typeInfo
   typeInfo.nodes = nodes
-  const listOfNodeIds = Array.isArray(value) ? value : [value]
   let dirty = false
   listOfNodeIds.forEach(nodeId => {
     nodes[nodeId] = (nodes[nodeId] || 0) + delta
