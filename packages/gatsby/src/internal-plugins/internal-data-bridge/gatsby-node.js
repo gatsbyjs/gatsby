@@ -40,11 +40,47 @@ function transformPackageJson(json) {
 
 const createPageId = path => `SitePage ${path}`
 
-exports.sourceNodesStatefully = ({ createContentDigest, actions, store }) => {
-  const { createNode, deleteNode } = actions
-  const state = store.getState()
-  const { program } = state
-  const { flattenedPlugins } = state
+const prepareGatsbyConfigNode = ({
+  config = {},
+  store,
+  createContentDigest,
+}) => {
+  const buildTime = moment()
+    .subtract(process.uptime(), `seconds`)
+    .toJSON()
+
+  const { program } = store.getState()
+
+  // Delete plugins from the config as we add plugins above.
+  const configCopy = {
+    ...config,
+  }
+  delete configCopy.plugins
+  const node = {
+    siteMetadata: {
+      ...configCopy.siteMetadata,
+    },
+    port: program.port,
+    host: program.host,
+    ...configCopy,
+    buildTime,
+  }
+
+  return {
+    ...node,
+    id: `Site`,
+    parent: null,
+    children: [],
+    internal: {
+      contentDigest: createContentDigest(node),
+      type: `Site`,
+    },
+  }
+}
+
+const createInitialNodes = ({ createContentDigest, actions, store }) => {
+  const { createNode } = actions
+  const { flattenedPlugins, config } = store.getState()
 
   // Add our default development page since we know it's going to
   // exist and we need a node to exist so its query works :-)
@@ -79,41 +115,22 @@ exports.sourceNodesStatefully = ({ createContentDigest, actions, store }) => {
   })
 
   // Add site node.
-  const buildTime = moment()
-    .subtract(process.uptime(), `seconds`)
-    .toJSON()
-
-  const createGatsbyConfigNode = (config = {}) => {
-    // Delete plugins from the config as we add plugins above.
-    const configCopy = {
-      ...config,
-    }
-    delete configCopy.plugins
-    const node = {
-      siteMetadata: {
-        ...configCopy.siteMetadata,
-      },
-      port: state.program.port,
-      host: state.program.host,
-      ...configCopy,
-      buildTime,
-    }
-    createNode({
-      ...node,
-      id: `Site`,
-      parent: null,
-      children: [],
-      internal: {
-        contentDigest: createContentDigest(node),
-        type: `Site`,
-      },
+  createNode(
+    prepareGatsbyConfigNode({
+      config,
+      store,
+      createContentDigest,
     })
-  }
+  )
+}
 
-  createGatsbyConfigNode(state.config)
+exports.sourceNodesStatefully = ({ createContentDigest, actions, store }) => {
+  createInitialNodes({ createContentDigest, actions, store })
+
+  const { createNode, deleteNode } = actions
 
   const pathToGatsbyConfig = systemPath.join(
-    program.directory,
+    store.getState().program.directory,
     `gatsby-config.js`
   )
   chokidar.watch(pathToGatsbyConfig).on(`change`, () => {
@@ -122,7 +139,13 @@ exports.sourceNodesStatefully = ({ createContentDigest, actions, store }) => {
       // Delete require cache so we can reload the module.
       delete require.cache[require.resolve(pathToGatsbyConfig)]
       const config = require(pathToGatsbyConfig)
-      createGatsbyConfigNode(config)
+      createNode(
+        prepareGatsbyConfigNode({
+          config,
+          store,
+          createContentDigest,
+        })
+      )
     } catch (e) {
       // Restore the old cache since requiring the new gatsby-config.js failed.
       if (oldCache !== undefined) {
