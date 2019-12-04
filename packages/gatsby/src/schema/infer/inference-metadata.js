@@ -331,10 +331,14 @@ const _updateValueDescriptor = (
       return dirty
     }
     case `relatedNode`:
-      updateValueRelNodes([value], delta, operation, typeInfo)
+      if (updateValueRelNodes([value], delta, operation, typeInfo)) {
+        dirty = true
+      }
       return dirty
     case `relatedNodeList`: {
-      updateValueRelNodes(value, delta, operation, typeInfo)
+      if (updateValueRelNodes(value, delta, operation, typeInfo)) {
+        dirty = true
+      }
       return dirty
     }
     case `string`: {
