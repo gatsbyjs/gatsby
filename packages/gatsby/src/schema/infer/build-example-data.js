@@ -67,12 +67,12 @@ const buildExampleValue = ({
     }
 
     case `object`: {
-      const { props } = typeInfo
+      const { dprops } = typeInfo
       let hasKeys = false
       const result = {}
-      Object.keys(props).forEach(prop => {
+      Object.keys(dprops).forEach(prop => {
         const value = buildExampleValue({
-          descriptor: typeInfo.props[prop],
+          descriptor: dprops[prop],
           typeConflictReporter,
           path: `${path}.${prop}`,
         })
@@ -80,7 +80,7 @@ const buildExampleValue = ({
           hasKeys = true
           result[prop] = value
         }
-      }, {})
+      })
       return hasKeys ? result : null
     }
 
@@ -126,7 +126,7 @@ const prepareConflictExamples = (descriptor, isArrayItem) => {
       return Object.keys(nodes).filter(key => nodes[key] > 0)
     }
     if (typeName === `object`) {
-      return getExampleObject({ typeName, fieldMap: descriptor.object.props })
+      return getExampleObject({ typeName, fieldMap: descriptor.object.dprops })
     }
     if (typeName === `array`) {
       const itemValue = buildExampleValue({

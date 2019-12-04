@@ -97,7 +97,7 @@ type TypeInfoBoolean = {
 }
 
 type TypeInfoObject = TypeInfo & {
-  props?: {[name]: Descriptor},
+  dprops?: {[name]: Descriptor},
 }
 
 type TypeInfoArray = TypeInfo & {
@@ -163,15 +163,15 @@ const updateValueDescriptorObject = (
 ) => {
   path.push(value)
 
-  const { props = {} } = typeInfo
-  typeInfo.props = props
+  const { dprops = {} } = typeInfo
+  typeInfo.dprops = dprops
 
   Object.keys(value).forEach(key => {
     const v = value[key]
 
-    let descriptor = props[key]
+    let descriptor = dprops[key]
     if (descriptor === undefined) {
-      props[key] = descriptor = {}
+      dprops[key] = descriptor = {}
     }
 
     updateValueDescriptor(nodeId, key, v, operation, descriptor, metadata, path)
@@ -333,10 +333,10 @@ const updateValueDescriptor = (
     typeof typeInfo.example !== `undefined` ? typeInfo.example : value
 }
 
-const mergeObjectKeys = (obj, other) => {
-  const props = Object.keys(obj)
-  const otherProps = Object.keys(other)
-  return [...new Set(props.concat(otherProps))]
+const mergeObjectKeys = (dpropsKeysA, dpropsKeysB) => {
+  const dprops = Object.keys(dpropsKeysA)
+  const otherProps = Object.keys(dpropsKeysB)
+  return [...new Set(dprops.concat(otherProps))]
 }
 
 const descriptorsAreEqual = (descriptor, otherDescriptor) => {
@@ -359,14 +359,14 @@ const descriptorsAreEqual = (descriptor, otherDescriptor) => {
         otherDescriptor.array.item
       )
     case `object`: {
-      const props = mergeObjectKeys(
-        descriptor.object.props,
-        otherDescriptor.object.props
+      const dpropsKeys = mergeObjectKeys(
+        descriptor.object.dprops,
+        otherDescriptor.object.dprops
       )
-      return props.every(prop =>
+      return dpropsKeys.every(prop =>
         descriptorsAreEqual(
-          descriptor.object.props[prop],
-          otherDescriptor.object.props[prop]
+          descriptor.object.dprops[prop],
+          otherDescriptor.object.dprops[prop]
         )
       )
     }
