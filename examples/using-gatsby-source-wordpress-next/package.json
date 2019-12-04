@@ -1,8 +1,12 @@
 {
-  "name": "using-gatsby-source-wordpress",
-  "description": "Gatsby example site using gatsby-source-wordpress",
+  "name": "using-gatsby-source-wordpress-next",
+  "description": "Gatsby example site using gatsby-source-wordpress@next",
   "license": "MIT",
   "version": "0.0.1",
+  "author": {
+    "name": "Tyler",
+    "email": "tyler@gatsbyjs.com"
+  },
   "scripts": {
     "develop": "gatsby develop",
     "develop-clean": "gatsby clean && gatsby develop",
