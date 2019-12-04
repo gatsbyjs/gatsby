@@ -45,7 +45,7 @@ Each method detailed below will start with the following contact form:
 
 ### Getform
 
-Getform is a form backend platform which offers a free-plan for handling form submissions on static sites. In order to begin receiving form submissions from your Gatsby site, you must first create a form on the platform. When creating the form, direct the http POST method to the Getform, by placing the `name` attributes for the fields you want to make visible. (name, email, message etc.)
+Getform is a form backend platform which offers a free-plan for handling form submissions on static sites. In order to begin receiving form submissions from your Gatsby site, you must first create a form on the Gatsby site. When creating the form, direct the http POST method to the Getform, by placing the `name` attributes for the fields you want to make visible. (name, email, message etc.)
 
 ```jsx:title=src/pages/contact.js
 <form method="post" action="https://getform.io/{your-unique-getform-endpoint}">
