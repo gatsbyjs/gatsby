@@ -21,7 +21,7 @@ module.exports = (
     maintainCase = false,
     removeAccents = false,
     enableCustomId = false,
-    isIconAfterH = true,
+    isIconAfterH = false,
   }
 ) => {
   slugs.reset()
