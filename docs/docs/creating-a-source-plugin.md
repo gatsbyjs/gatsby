@@ -28,7 +28,7 @@ Gatsby's minimum supported Node.js version is Node 8 and as it's common to want 
 source directory and compile the code. All plugins maintained in the Gatsby repo
 follow this pattern.
 
-Your `gatsby-node.js` should look something like:
+Your `gatsby-node.js` should implement the [`sourceNodes`](/docs/node-apis/#sourceNodes) or the [`sourceNodesStatefully`](/docs/node-apis/#sourceNodesStatefully) API. For example:
 
 ```javascript:title=gatsby-node.js
 exports.sourceNodes = async ({ actions }) => {
@@ -45,7 +45,7 @@ exports.sourceNodes = async ({ actions }) => {
 }
 ```
 
-Peruse the [`sourceNodes`](/docs/node-apis/#sourceNodes) and
+Peruse the [`sourceNodes`](/docs/node-apis/#sourceNodes), [`sourceNodesStatefully`](/docs/node-apis/#sourceNodesStatefully), and
 [`createNode`](/docs/actions/#createNode) docs for detailed
 documentation on implementing those APIs.
 
@@ -157,4 +157,4 @@ One tip to improve the development experience of using a plugin is to reduce the
 - **Add event-based sync**. Some data sources keep event logs and are able to return a list of objects modified since a given time. If you're building a source plugin, you can store
   the last time you fetched data using
   [`setPluginStatus`](/docs/actions/#setPluginStatus) and then only sync down nodes that have been modified since that time. [gatsby-source-contentful](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful) is an example of a source plugin that does this.
-- **Proactively fetch updates**. One challenge when developing locally is that a developer might make modifications in a remote data source, like a CMS, and then want to see how it looks in the local environment. Typically they will have to restart the `gatsby develop` server to see changes. This can be avoided if your source plugin knows to proactively fetch updates from the remote server. For example,[gatsby-source-sanity](https://github.com/sanity-io/gatsby-source-sanity), listens to changes to Sanity content when `watchMode` is enabled and pulls them into the Gatsby develop server.
+- **Proactively fetch updates**. One challenge when developing locally is that a developer might make modifications in a remote data source, like a CMS, and then want to see how it looks in the local environment. Typically they will have to restart the `gatsby develop` server or hit the [refresh endpoint](/docs/environment-variables/#reserved-environment-variables) to see changes. If data source allows subscribing to data changes events, you should implement the [`sourceNodesStatefully`](/docs/node-apis/#sourceNodesStatefully) API instead of `sourceNodes`. This will ensure that plugin won't try to create new subscriptions on data refreshes managed by Gatsby.
