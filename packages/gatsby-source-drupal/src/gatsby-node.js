@@ -57,7 +57,7 @@ exports.sourceNodes = async (
   })
   const allData = await Promise.all(
     _.map(data.data.links, async (url, type) => {
-      if (type === `self`) return
+      if (type === `self` || type === `describedby`) return
       if (!url) return
       if (!type) return
       const getNext = async (url, data = []) => {
@@ -93,7 +93,7 @@ exports.sourceNodes = async (
           }
         }
         data = data.concat(d.data.data)
-        if (d.data.links.next) {
+        if (d.data.links && d.data.links.next) {
           data = await getNext(d.data.links.next, data)
         }
 

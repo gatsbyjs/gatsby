@@ -191,7 +191,7 @@ class SidebarBody extends Component {
   }
 
   render() {
-    const { closeSidebar, itemList, location, onPositionChange } = this.props
+    const { closeSidebar, itemList, location } = this.props
     const { openSectionHash, activeItemLink, activeItemParents } = this.state
 
     const isSingle = itemList.filter(item => item.level === 0).length === 1
@@ -224,16 +224,6 @@ class SidebarBody extends Component {
           </header>
         )}
         <nav
-          onScroll={({ nativeEvent }) => {
-            // get proper scroll position
-            const position = nativeEvent.target.scrollTop
-            const { pathname } = location
-            const sidebarType = pathname.split(`/`)[1]
-
-            requestAnimationFrame(() => {
-              onPositionChange(sidebarType, position)
-            })
-          }}
           ref={this.scrollRef}
           sx={{
             WebkitOverflowScrolling: `touch`,

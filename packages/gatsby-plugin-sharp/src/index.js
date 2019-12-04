@@ -40,6 +40,7 @@ exports.setBoundActionCreators = actions => {
   boundActionCreators = actions
 }
 
+const cachedOutputFiles = new Map()
 function queueImageResizing({ file, args = {}, reporter }) {
   const pluginOptions = getPluginOptions()
   const options = healOptions(pluginOptions, args, file.extension)
@@ -103,19 +104,29 @@ function queueImageResizing({ file, args = {}, reporter }) {
     outputPath: outputFilePath,
   }
 
+  const outputFile = path.join(job.outputDir, job.outputPath)
   let finishedPromise = Promise.resolve()
 
-  // Check if the output file already exists so we don't redo work.
+  if (cachedOutputFiles.has(outputFile)) {
+    finishedPromise = cachedOutputFiles.get(outputFile)
+  }
+
+  // Check if the output file already exists or already is being created.
   // TODO: Remove this when jobs api is stable, it will have a better check
-  const outputFile = path.join(job.outputDir, job.outputPath)
-  if (!fs.existsSync(outputFile)) {
+  if (!fs.existsSync(outputFile) && !cachedOutputFiles.has(outputFile)) {
     // schedule job immediately - this will be changed when image processing on demand is implemented
     finishedPromise = scheduleJob(
       job,
       boundActionCreators,
       pluginOptions,
       reporter
-    )
+    ).then(res => {
+      cachedOutputFiles.delete(outputFile)
+
+      return res
+    })
+
+    cachedOutputFiles.set(outputFile, finishedPromise)
   }
 
   return {
