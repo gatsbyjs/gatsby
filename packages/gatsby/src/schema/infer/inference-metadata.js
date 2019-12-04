@@ -185,6 +185,88 @@ const updateValueDescriptor = (
 
   return ret
 }
+const updateValueDescriptorObject = (
+  value,
+  typeInfo,
+  nodeId,
+  operation,
+  path
+) => {
+  const { props = {} } = typeInfo
+  typeInfo.props = props
+  let dirty = false
+  Object.keys(value).forEach(key => {
+    const v = value[key]
+
+    const [propDescriptor, propDirty] = updateValueDescriptor(
+      {
+        nodeId,
+        key,
+        value: v,
+        operation,
+        descriptor: props[key],
+      },
+      path
+    )
+    props[key] = propDescriptor
+    dirty = dirty || propDirty
+  })
+  return dirty
+}
+const updateValueDescriptorArray = (
+  value,
+  key,
+  typeInfo,
+  nodeId,
+  operation,
+  path
+) => {
+  let dirty = false
+  value.forEach(item => {
+    const [itemDescriptor, itemDirty] = updateValueDescriptor(
+      {
+        nodeId,
+        descriptor: typeInfo.item,
+        operation,
+        value: item,
+        key,
+      },
+      path
+    )
+
+    typeInfo.item = itemDescriptor
+    dirty = dirty || itemDirty
+  })
+
+  return dirty
+}
+const updateValueRelNodes = (value, delta, operation, typeInfo) => {
+  const { nodes = {} } = typeInfo
+  typeInfo.nodes = nodes
+  const listOfNodeIds = Array.isArray(value) ? value : [value]
+  let dirty = false
+  listOfNodeIds.forEach(nodeId => {
+    nodes[nodeId] = (nodes[nodeId] || 0) + delta
+
+    // Treat any new related node addition or removal as a structural change
+    // FIXME: this will produce false positives as this node can be
+    //  of the same type as another node already in the map (but we don't know it here)
+    dirty =
+      dirty ||
+      nodes[nodeId] === 0 ||
+      (operation === `add` && nodes[nodeId] === 1)
+  })
+
+  return dirty
+}
+const updateValueString = (value, delta, typeInfo) => {
+  if (value === ``) {
+    const { empty = 0 } = typeInfo
+    typeInfo.empty = empty + delta
+  }
+  typeInfo.example =
+    typeof typeInfo.example !== `undefined` ? typeInfo.example : value
+}
 const _updateValueDescriptor = (
   nodeId,
   key,
@@ -195,7 +277,10 @@ const _updateValueDescriptor = (
   typeName
 ) => {
   const delta = operation === `del` ? -1 : 1
-  const typeInfo = descriptor[typeName] || { total: 0 }
+  let typeInfo = descriptor[typeName]
+  if (typeInfo === undefined) {
+    typeInfo = descriptor[typeName] = { total: 0 }
+  }
   typeInfo.total += delta
 
   // Keeping track of structural changes
@@ -217,77 +302,46 @@ const _updateValueDescriptor = (
 
   switch (typeName) {
     case `object`: {
-      const { props = {} } = typeInfo
-      Object.keys(value).forEach(key => {
-        const v = value[key]
-
-        const [propDescriptor, propDirty] = updateValueDescriptor(
-          {
-            nodeId,
-            key,
-            value: v,
-            operation,
-            descriptor: props[key],
-          },
-          path
-        )
-        props[key] = propDescriptor
-        dirty = dirty || propDirty
-      })
-      typeInfo.props = props
-      break
+      if (
+        updateValueDescriptorObject(value, typeInfo, nodeId, operation, path)
+      ) {
+        dirty = true
+      }
+      return [descriptor, dirty]
     }
     case `array`: {
-      value.forEach(item => {
-        const [itemDescriptor, itemDirty] = updateValueDescriptor(
-          {
-            nodeId,
-            descriptor: typeInfo.item,
-            operation,
-            value: item,
-            key,
-          },
+      if (
+        updateValueDescriptorArray(
+          value,
+          key,
+          typeInfo,
+          nodeId,
+          operation,
           path
         )
-
-        typeInfo.item = itemDescriptor
-        dirty = dirty || itemDirty
-      })
-      break
+      ) {
+        dirty = true
+      }
+      return [descriptor, dirty]
     }
     case `relatedNode`:
+      updateValueRelNodes([value], delta, operation, typeInfo)
+      return [descriptor, dirty]
     case `relatedNodeList`: {
-      const { nodes = {} } = typeInfo
-      const listOfNodeIds = Array.isArray(value) ? value : [value]
-      listOfNodeIds.forEach(nodeId => {
-        nodes[nodeId] = (nodes[nodeId] || 0) + delta
-
-        // Treat any new related node addition or removal as a structural change
-        // FIXME: this will produce false positives as this node can be
-        //  of the same type as another node already in the map (but we don't know it here)
-        dirty =
-          dirty ||
-          nodes[nodeId] === 0 ||
-          (operation === `add` && nodes[nodeId] === 1)
-      })
-      typeInfo.nodes = nodes
-      break
+      updateValueRelNodes(value, delta, operation, typeInfo)
+      return [descriptor, dirty]
     }
     case `string`: {
-      if (value === ``) {
-        const { empty = 0 } = typeInfo
-        typeInfo.empty = empty + delta
-      }
-      typeInfo.example =
-        typeof typeInfo.example !== `undefined` ? typeInfo.example : value
-      break
+      updateValueString(value, delta, typeInfo)
+      return [descriptor, dirty]
     }
-    default:
-      typeInfo.example =
-        typeof typeInfo.example !== `undefined` ? typeInfo.example : value
-      break
   }
-  descriptor[typeName] = typeInfo
+
+  // int, float, boolean, null
+
+  typeInfo.example =
+    typeof typeInfo.example !== `undefined` ? typeInfo.example : value
+
   return [descriptor, dirty]
 }
 
