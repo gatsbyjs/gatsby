@@ -6,6 +6,19 @@ const errorParser = ({
   // Handle GraphQL errors. A list of regexes to match certain
   // errors to specific callbacks
   const handlers = [
+    {
+      regex: /Variable "(.+)" of required type "(.+)" was not provided/m,
+      cb: match => {
+        return {
+          id: `85920`,
+          context: {
+            sourceMessage: match[0],
+            variableName: match[1],
+            variableType: match[2],
+          },
+        }
+      },
+    },
     // Match anything with a generic catch-all error handler
     {
       regex: /[\s\S]*/gm,
