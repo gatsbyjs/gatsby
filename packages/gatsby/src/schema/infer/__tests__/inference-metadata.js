@@ -680,7 +680,10 @@ describe(`Get example value for type inference`, () => {
         ],
         typeConflictReporter,
       })
-      expect(example.related___NODE).toBe(`foo`)
+      expect(example.related___NODE).toEqual({
+        multiple: false,
+        linkedNodes: [`foo`, `bar`, `baz`],
+      })
     })
 
     it(`aggregates array of related node ids`, () => {
@@ -692,7 +695,10 @@ describe(`Get example value for type inference`, () => {
         ],
         typeConflictReporter,
       })
-      expect(example.related___NODE).toEqual([`foo`, `bar`, `baz`])
+      expect(example.related___NODE).toEqual({
+        multiple: true,
+        linkedNodes: [`foo`, `bar`, `baz`],
+      })
     })
 
     it(`skips nullish values and empty arrays/objects`, () => {
@@ -1033,8 +1039,8 @@ describe(`Type change detection`, () => {
     { object: { foo: `foo`, bar: `bar` } },
     { list: [`item`], bar: `bar` },
     { listOfObjects: [{ foo: `foo`, bar: `bar` }] },
-    { union___NODE: `foo` },
-    { listOfUnion___NODE: [`foo`] },
+    { relatedNode___NODE: `foo` },
+    { relatedNodeList___NODE: [`foo`] },
   ]
 
   const addOne = (node, metadata = initialMetadata) =>
@@ -1125,39 +1131,38 @@ describe(`Type change detection`, () => {
     expect(haveEqualFields(metadata, initialMetadata)).toEqual(true)
   })
 
-  // TODO
-  it.skip(`detects on any change of the union field`, () => {
+  it(`detects on any change of the relatedNode field`, () => {
     // We do not know a type of the node being added hence consider and
     // add/delete to such fields as mutations
-    let metadata = addOne({ union___NODE: `added` })
+    let metadata = addOne({ relatedNode___NODE: `added` })
     expect(metadata.dirty).toEqual(true)
     expect(haveEqualFields(metadata, initialMetadata)).toEqual(true)
     metadata.dirty = false
 
-    metadata = deleteOne({ union___NODE: `added` }, metadata)
+    metadata = deleteOne({ relatedNode___NODE: `added` }, metadata)
     expect(metadata.dirty).toEqual(true)
     expect(haveEqualFields(metadata, initialMetadata)).toEqual(true)
   })
 
-  it.skip(`does not detect when the same node added to the union field`, () => {
-    const metadata = addOne({ union___NODE: `foo` })
+  it(`does not detect when the same node added to the relatedNode field`, () => {
+    const metadata = addOne({ relatedNode___NODE: `foo` })
     expect(metadata.dirty).toEqual(false)
     expect(haveEqualFields(metadata, initialMetadata)).toEqual(true)
   })
 
-  it(`detects on any change of the listOfUnion field`, () => {
-    let metadata = addOne({ listOfUnion___NODE: [`added`] })
+  it(`detects on any change of the relatedNodeList field`, () => {
+    let metadata = addOne({ relatedNodeList___NODE: [`added`] })
     expect(metadata.dirty).toEqual(true)
     expect(haveEqualFields(metadata, initialMetadata)).toEqual(true)
     metadata.dirty = false
 
-    metadata = deleteOne({ listOfUnion___NODE: [`added`] }, metadata)
+    metadata = deleteOne({ relatedNodeList___NODE: [`added`] }, metadata)
     expect(metadata.dirty).toEqual(true)
     expect(haveEqualFields(metadata, initialMetadata)).toEqual(true)
   })
 
-  it(`does not detect when the same node added to the listOfUnion field`, () => {
-    const metadata = addOne({ listOfUnion___NODE: [`foo`] })
+  it(`does not detect when the same node added to the relatedNodeList field`, () => {
+    const metadata = addOne({ relatedNodeList___NODE: [`foo`] })
     expect(metadata.dirty).toEqual(false)
     expect(haveEqualFields(metadata, initialMetadata)).toEqual(true)
   })
