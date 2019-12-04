@@ -193,14 +193,14 @@ describe(`Jobs manager`, () => {
     it(`should fail when paths are outside of gatsby`, async () => {
       const { enqueueJob } = getJobsManager()
       const jobArgs = createMockJob()
-      jobArgs.inputPaths = [`/tmp/files/image.jpg`]
+      jobArgs.inputPaths = [`/anotherdir/files/image.jpg`]
 
       expect.assertions(1)
       try {
         await enqueueJob(jobArgs)
       } catch (err) {
         expect(err).toMatchInlineSnapshot(
-          `[Error: /tmp/files/image.jpg is not inside <PROJECT_ROOT>/packages/gatsby/src/utils/__tests__. Make sure your files are inside your gatsby project.]`
+          `[Error: /anotherdir/files/image.jpg is not inside <PROJECT_ROOT>/packages/gatsby/src/utils/__tests__. Make sure your files are inside your gatsby project.]`
         )
       }
     })
