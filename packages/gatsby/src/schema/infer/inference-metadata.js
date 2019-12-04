@@ -282,7 +282,7 @@ const updateValueDescriptor = (
     if (typeInfo.first === nodeId || typeInfo.total === 0) {
       typeInfo.first = undefined
     }
-  } // return function calls for TCO
+  }
 
   switch (typeName) {
     // I want to return the func call to use TCO, eslint ignores that case :(
