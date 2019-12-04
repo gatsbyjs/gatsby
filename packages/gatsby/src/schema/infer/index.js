@@ -14,8 +14,9 @@ const addInferredTypes = ({
 }) => {
   // XXX(freiksenet): Won't be needed after plugins set typedefs
   // Infer File first so all the links to it would work
-  const typesWithNodes = Object.keys(inferenceMetadata).filter(typeName =>
-    hasNodes(inferenceMetadata[typeName])
+  const { typeMap } = inferenceMetadata
+  const typesWithNodes = Object.keys(typeMap).filter(typeName =>
+    hasNodes(typeMap[typeName])
   )
   const typeNames = putFileFirst(typesWithNodes)
   const noNodeInterfaceTypes = []
@@ -89,14 +90,14 @@ const addInferredType = ({
   // node type owner information directly from store
   if (
     typeComposer.getExtension(`createdFrom`) === `inference` &&
-    hasNodes(inferenceMetadata[typeName])
+    hasNodes(inferenceMetadata.typeMap[typeName])
   ) {
     const nodes = nodeStore.getNodesByType(typeName)
     typeComposer.setExtension(`plugin`, nodes[0].internal.owner)
   }
 
   const exampleValue = getExampleObject({
-    ...inferenceMetadata[typeName],
+    ...inferenceMetadata.typeMap[typeName],
     typeName,
     typeConflictReporter,
   })

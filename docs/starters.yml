@@ -1901,7 +1901,7 @@
     - Material Design theme and icons
     - Simple setup without opinionated setup
     - Fully instrumented for successful PROD deployments
-- url: https://gatsby-shopify.alexander-productions.de/
+- url: https://gatsby-shopify-starter.netlify.com/
   repo: https://github.com/AlexanderProd/gatsby-shopify-starter
   description: Kick off your next, ecommerce experience with this Gatsby starter. It is based on the default Gatsby starter to be easily modifiable.
   tags:
@@ -3209,13 +3209,12 @@
     - Static Marketing pages and Dynamic Client-side Authenticated App pages
     - SEO component
     - Apollo GraphQL (client-side)
-- url: https://lewis-gatsby-starter-i18n.firebaseapp.com
+- url: https://lewis-gatsby-starter-i18n.netlify.com
   repo: https://github.com/lewislbr/lewis-gatsby-starter-i18n
   description: A simple custom Gatsby starter template to start a new multilanguage website.
   tags:
     - i18n
     - Styling:CSS-in-JS
-    - PWA
     - Portfolio
     - SEO
   features:
@@ -3224,7 +3223,6 @@
     - Optimized images.
     - Offline capabilities.
     - Auto-generated sitemap and robots.txt.
-    - Google Analytics
 - url: https://gatsby-snipcart-starter.netlify.com/
   repo: https://github.com/issydennis/gatsby-snipcart
   description: A simple e-commerce shop built using Gatsby and Snipcart.
@@ -3253,12 +3251,11 @@
     - Styling with SCSS
     - Offline support
     - Web App Manifest
-- url: https://lewis-gatsby-starter-basic.firebaseapp.com
+- url: https://lewis-gatsby-starter-basic.netlify.com
   repo: https://github.com/lewislbr/lewis-gatsby-starter-basic
   description: A simple custom basic Gatsby starter template to start a new website.
   tags:
     - Styling:CSS-in-JS
-    - PWA
     - SEO
   features:
     - Bare-bones starter.
@@ -4604,3 +4601,41 @@
     - Styled Components
     - Coinbase, Fortmatic, Metamask, WalletConnect, and more
     - dFuse Blockchain Streaming and Notifications
+- url: https://gatsby-starter-theme-antv.netlify.com
+  repo: https://github.com/antvis/gatsby-starter-theme-antv
+  description: Gatsby's starter of antv theme
+  tags:
+    - Documentation
+    - Markdown
+    - Styling:Other
+  features:
+    - ⚛ Prerendered static site
+    - 🌎 Internationalization support by i18next
+    - 📝 Markdown-based documentation and menus
+    - 🎬 Examples with live playground
+    - 🏗 Unified Theme and Layout
+    - 🆙 Easy customized header nav
+    - 🧩 Built-in home page components
+- url: https://gatsby-starter-cafe.netlify.com
+  repo: https://github.com/crolla97/gatsby-starter-cafe
+  description: Gatsby starter for creating a single page cafe website using Contentful and Leaflet
+  tags:
+    - CMS:Contentful
+    - Styling:SCSS
+    - Landing Page
+    - Onepage
+  features:
+    - Leaflet interactive map
+    - Instagram Feed
+    - Contentful for menu item storage
+    - Responsive design
+- url: https://gatsby-firebase-simple-auth.netlify.com/
+  repo: https://github.com/marcomelilli/gatsby-firebase-simple-auth
+  description: A simple Firebase Authentication Starter with protected routes
+  tags:
+    - Firebase
+    - Authentication
+    - Styling:Tailwind
+  features:
+    - Authentication with Firebase
+    - Protected Routes with Authorization

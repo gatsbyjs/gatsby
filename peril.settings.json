@@ -6,7 +6,6 @@
     "modules": ["@slack/client", "joi", "js-yaml", "date-fns"]
   },
   "rules": {
-    "issue_comment": ["peril/rules/not-stale.ts"],
     "issues.opened": ["peril/rules/emptybody.ts", "peril/rules/labeler.ts"],
     "pull_request.closed (pull_request.merged == true)": [
       "peril/rules/invite-collaborator.ts"
@@ -40,11 +39,5 @@
         "gatsbyjs/gatsby@peril/rules/pull-request-on-starter.ts"
       ]
     }
-  },
-  "tasks": {
-    "stale": "peril/tasks/stale.ts"
-  },
-  "scheduler": {
-    "daily": "stale"
   }
 }
