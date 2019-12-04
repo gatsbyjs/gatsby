@@ -160,13 +160,13 @@ const updateValueDescriptor = (
   // The object may be traversed multiple times from root.
   // Each time it does it should not revisit the same node twice
   if (path.includes(value)) {
-    return [descriptor, false]
+    return false
   }
 
   const typeName = getType(value, key)
 
   if (typeName === `null`) {
-    return [descriptor, false]
+    return false
   }
 
   path.push(value)
@@ -198,17 +198,21 @@ const updateValueDescriptorObject = (
   Object.keys(value).forEach(key => {
     const v = value[key]
 
-    const [propDescriptor, propDirty] = updateValueDescriptor(
+    let descriptor = props[key]
+    if (descriptor === undefined) {
+      props[key] = descriptor = {}
+    }
+
+    const propDirty = updateValueDescriptor(
       {
         nodeId,
         key,
         value: v,
         operation,
-        descriptor: props[key],
+        descriptor,
       },
       path
     )
-    props[key] = propDescriptor
     dirty = dirty || propDirty
   })
   return dirty
@@ -223,18 +227,21 @@ const updateValueDescriptorArray = (
 ) => {
   let dirty = false
   value.forEach(item => {
-    const [itemDescriptor, itemDirty] = updateValueDescriptor(
+    let descriptor = typeInfo.item
+    if (descriptor === undefined) {
+      typeInfo.item = descriptor = {}
+    }
+
+    const itemDirty = updateValueDescriptor(
       {
         nodeId,
-        descriptor: typeInfo.item,
+        descriptor,
         operation,
         value: item,
         key,
       },
       path
     )
-
-    typeInfo.item = itemDescriptor
     dirty = dirty || itemDirty
   })
 
@@ -307,7 +314,7 @@ const _updateValueDescriptor = (
       ) {
         dirty = true
       }
-      return [descriptor, dirty]
+      return dirty
     }
     case `array`: {
       if (
@@ -322,18 +329,18 @@ const _updateValueDescriptor = (
       ) {
         dirty = true
       }
-      return [descriptor, dirty]
+      return dirty
     }
     case `relatedNode`:
       updateValueRelNodes([value], delta, operation, typeInfo)
-      return [descriptor, dirty]
+      return dirty
     case `relatedNodeList`: {
       updateValueRelNodes(value, delta, operation, typeInfo)
-      return [descriptor, dirty]
+      return dirty
     }
     case `string`: {
       updateValueString(value, delta, typeInfo)
-      return [descriptor, dirty]
+      return dirty
     }
   }
 
@@ -342,7 +349,7 @@ const _updateValueDescriptor = (
   typeInfo.example =
     typeof typeInfo.example !== `undefined` ? typeInfo.example : value
 
-  return [descriptor, dirty]
+  return dirty
 }
 
 const mergeObjectKeys = (obj, other) => {
@@ -406,14 +413,18 @@ const updateTypeMetadata = (metadata = initialMetadata(), operation, node) => {
 
   let structureChanged = false
   nodeFields(node, ignoredFields).forEach(field => {
-    const [descriptor, valueStructureChanged] = updateValueDescriptor({
+    let descriptor = fieldMap[field]
+    if (descriptor === undefined) {
+      fieldMap[field] = descriptor = {}
+    }
+
+    const valueStructureChanged = updateValueDescriptor({
       nodeId: node.id,
       key: field,
       value: node[field],
       operation,
-      descriptor: fieldMap[field],
+      descriptor,
     })
-    fieldMap[field] = descriptor
     structureChanged = structureChanged || valueStructureChanged
   })
   metadata.fieldMap = fieldMap
