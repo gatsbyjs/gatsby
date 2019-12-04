@@ -106,7 +106,7 @@ const doBuildPages = async ({
   workerPool,
 }) => {
   telemetry.addSiteMeasurement(`BUILD_END`, {
-    pagesCount: pagePaths.length
+    pagesCount: pagePaths.length,
   })
 
   try {

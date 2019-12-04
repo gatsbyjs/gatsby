@@ -311,11 +311,13 @@ module.exports = class AnalyticsTracker {
     for (const event in this.buffered) {
       this.decorateNextEvent(
         event,
-        Object.keys(this.buffered[event]).reduce((obj, key) => {
-          return Object.assign(obj, {
-            [key]: this.aggregateBuffered(this.buffered[event][key]),
-          })
-        }, {})
+        Object.keys(this.buffered[event]).reduce(
+          (obj, key) =>
+            Object.assign(obj, {
+              [key]: this.aggregateBuffered(this.buffered[event][key]),
+            }),
+          {}
+        )
       )
       delete this.buffered[event]
     }
