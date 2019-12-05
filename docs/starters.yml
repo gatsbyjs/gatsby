@@ -4639,3 +4639,22 @@
   features:
     - Authentication with Firebase
     - Protected Routes with Authorization
+- url: https://demo.gatsbystorefront.com/
+  repo: https://github.com/GatsbyStorefront/gatsby-starter-storefront-shopify
+  description: Lightning fast PWA storefront for Shopify
+  tags:
+    - CMS:Headless
+    - Shopify
+    - SEO
+    - PWA
+    - eCommerce
+    - Styling:CSS-in-JS
+  features:
+    - Gatsby Storefront
+    - gatsby-theme-storefront-shopify
+    - Shopify Integration
+    - Shopping Cart
+    - PWA
+    - Optimized images with gatsby-image.
+    - SEO
+    - A11y

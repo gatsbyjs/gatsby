@@ -8816,3 +8816,18 @@
   built_by: Amrish Kushwaha
   built_by_url: https://github.com/isamrish
   featured: false
+- title: Jarod Peachey
+  main_url: https://jarodpeachey.netlify.com
+  url: https://jarodpeachey.netlify.com
+  # optional: for open-source sites, this URL points to the repo that powers the site
+  source_url: https://github.com/jarodpeachey/portfolio-website
+  description: >
+    Jarod Peachey is a front-end developer focused on building modern and fast websites for everyone.
+  categories:
+    - Blog
+    - JavaScript
+    - Mobile Development
+    - Portfolio
+  built_by: Jarod Peachey
+  built_by_url: https://github.com/jarodpeachey
+  featured: false

@@ -19,12 +19,16 @@ exports.sourceNodes = async (
     headers,
     params,
     concurrentFileRequests,
+    disallowedLinkTypes,
   } = pluginOptions
   const { createNode } = actions
   const drupalFetchActivity = reporter.activityTimer(`Fetch data from Drupal`)
 
   // Default apiBase to `jsonapi`
   apiBase = apiBase || `jsonapi`
+
+  // Default disallowedLinkTypes to self, describedby.
+  disallowedLinkTypes = disallowedLinkTypes || [`self`, `describedby`]
 
   // Default concurrentFileRequests to `20`
   concurrentFileRequests = concurrentFileRequests || 20
@@ -57,7 +61,7 @@ exports.sourceNodes = async (
   })
   const allData = await Promise.all(
     _.map(data.data.links, async (url, type) => {
-      if (type === `self` || type === `describedby`) return
+      if (disallowedLinkTypes.includes(type)) return
       if (!url) return
       if (!type) return
       const getNext = async (url, data = []) => {
