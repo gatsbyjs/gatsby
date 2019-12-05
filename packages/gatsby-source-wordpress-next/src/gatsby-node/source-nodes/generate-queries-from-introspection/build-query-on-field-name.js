@@ -34,6 +34,7 @@ const transformField = ({ field, nodeListTypeNames }) => {
     field.type.kind === `LIST` &&
     nodeListTypeNames.includes(field.type.ofType.name)
   ) {
+    return {
       [field.name]: [`id`],
     }
   }
