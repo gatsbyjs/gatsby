@@ -4658,3 +4658,22 @@
     - Optimized images with gatsby-image.
     - SEO
     - A11y
+- url: https://gatsby-theme-ghost.netlify.com/
+  repo: https://github.com/akanshgulati/gatsby-theme-ghost
+  description: Minimalistic theme with pagination, tags, author, SEO, mobile friendly, performance optimisation and navigation.
+  tags:
+    - Blog
+    - Theme
+    - Pagination
+    - Markdown
+    - SEO
+  features:
+    - Pagination;
+    - Tag pages (with pagination);
+    - Author page;
+    - SEO component
+    - Code Snippet Support
+    - RSS Generator
+    - SEO Friendly
+    - Accessibility
+    - Comment System ready
