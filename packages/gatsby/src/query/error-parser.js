@@ -59,6 +59,20 @@ const errorParser = ({
         }
       },
     },
+    {
+      regex: /(.+) cannot represent (.+) value: "(.+)"/m,
+      cb: match => {
+        return {
+          id: `85924`,
+          context: {
+            sourceMessage: match[0],
+            type: match[1],
+            desc: match[2],
+            value: match[3],
+          },
+        }
+      },
+    },
     // Match anything with a generic catch-all error handler
     {
       regex: /[\s\S]*/gm,

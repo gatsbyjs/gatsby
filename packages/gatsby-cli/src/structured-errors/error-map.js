@@ -195,6 +195,19 @@ const errorMap = {
     type: `GRAPHQL`,
     level: `ERROR`,
   },
+  "85924": {
+    text: context => {
+      const optionalInfo = `${
+        context.codeFrame ? `\n\n${context.codeFrame}` : ``
+      }${context.filePath ? `\n\nFile path: ${context.filePath}` : ``}${
+        context.urlPath ? `\nUrl path: ${context.urlPath}` : ``
+      }${context.plugin ? `\nPlugin: ${context.plugin}` : ``}`
+
+      return `There was an error in your GraphQL query:\n\n${context.sourceMessage}\n\nThis can happen when you or a plugin explicitly defined the GraphQL schema for this GraphQL object type via "createTypes" in gatsby-node.js and "${context.value}" doesn't match the (scalar) type of "${context.type}".${optionalInfo}`
+    },
+    type: `GRAPHQL`,
+    level: `ERROR`,
+  },
   // Config errors
   "10123": {
     text: context =>
