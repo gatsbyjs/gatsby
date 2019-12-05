@@ -45,6 +45,7 @@ module.exports = async function build(program: BuildArgs) {
 
   telemetry.trackCli(`BUILD_START`)
   signalExit(exitCode => {
+    telemetry.flushBuffered()
     telemetry.trackCli(`BUILD_END`, { exitCode })
   })
 
@@ -95,7 +96,6 @@ module.exports = async function build(program: BuildArgs) {
       })
       .map(asset => asset.size / 1000)
 
-    console.log(`aggregating`, bundleSizes)
     const bundleStats = telemetry.aggregateStats(bundleSizes)
 
     telemetry.addSiteMeasurement(`BUILD_END`, {

@@ -293,7 +293,7 @@ module.exports = class AnalyticsTracker {
         data.reduce((acc, x) => acc + Math.pow(x - mean, 2), 0) /
           (data.length - 1)
       ) || 0
-    const result = {
+    return {
       min: data.reduce((acc, x) => (x < acc ? x : acc), data[0] || 0),
       max: data.reduce((acc, x) => (x > acc ? x : acc), 0),
       sum: sum,
@@ -305,16 +305,9 @@ module.exports = class AnalyticsTracker {
         data.length /
         Math.pow(stdDev, 3),
     }
-    console.log(data)
-    console.log(result)
-    return result
   }
 
-  async sendEvents() {
-    if (!this.isTrackingEnabled()) {
-      return Promise.resolve()
-    }
-
+  flushBuffered() {
     for (const event in this.buffered) {
       this.decorateNextEvent(
         event,
@@ -327,6 +320,12 @@ module.exports = class AnalyticsTracker {
         )
       )
       delete this.buffered[event]
+    }
+  }
+
+  async sendEvents() {
+    if (!this.isTrackingEnabled()) {
+      return Promise.resolve()
     }
 
     return this.store.sendEvents()

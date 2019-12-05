@@ -33,6 +33,7 @@ module.exports = {
   addSiteMeasurement: (event, obj) => instance.addSiteMeasurement(event, obj),
   addBufferedMeasurementsOnEvent: (event, measurementName, value) =>
     instance.addBufferedMeasurementsOnEvent(event, measurementName, value),
+  flushBuffered: () => instance.flushBuffered(),
   expressMiddleware: source => (req, res, next) => {
     try {
       instance.trackActivity(`${source}_ACTIVE`)
