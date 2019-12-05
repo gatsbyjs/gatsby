@@ -151,7 +151,7 @@ You should now be viewing your Forestry login page. Login to view your dashboard
 
 ### Making Changes
 
-Alright - you're all set to make changes in Netlify CMS and see them as commits in your GitHub repo!
+You can now make changes in your Forestry admin dashboard and see them as commits in your GitHub repo!
 Open the Forestry dashboard on your deployed site at `/admin`, allow access to GitHub when the permissions
 window pops up (check for blocked pop ups if you don't see it), and try creating and publishing a
 new blog post. Once you've done that, you'll find a new `content/posts` directory in your GitHub repo
