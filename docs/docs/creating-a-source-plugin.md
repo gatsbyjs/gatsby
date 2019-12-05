@@ -28,7 +28,11 @@ Gatsby's minimum supported Node.js version is Node 8 and as it's common to want 
 source directory and compile the code. All plugins maintained in the Gatsby repo
 follow this pattern.
 
-Your `gatsby-node.js` should implement the [`sourceNodes`](/docs/node-apis/#sourceNodes) or the [`sourceNodesStatefully`](/docs/node-apis/#sourceNodesStatefully) API. For example:
+Source plugins need to create Nodes for data that they would like to make available in Gatsby's GraphQL queries. To do this, you need to implement one of the following APIs in your plugin's `gatsby-node.js` file.
+
+### `sourceNodes`
+
+In general, the lifecycle where your plugin should create Nodes is the [`sourceNodes`](/docs/node-apis/#sourceNodes) API. To do this, you can call the `createNode` action as illustrated in the example below.
 
 ```javascript:title=gatsby-node.js
 exports.sourceNodes = async ({ actions }) => {
@@ -45,9 +49,52 @@ exports.sourceNodes = async ({ actions }) => {
 }
 ```
 
-Peruse the [`sourceNodes`](/docs/node-apis/#sourceNodes), [`sourceNodesStatefully`](/docs/node-apis/#sourceNodesStatefully), and
-[`createNode`](/docs/actions/#createNode) docs for detailed
-documentation on implementing those APIs.
+Your plugin should create _all_ nodes in this lifecycle.
+
+The `sourceNodes` function for your plugin _may_ be called multiple times while running `develop`. Because of this, they shouldn't register file watchers or open websockets as this will be done multiple times and could result in memory leaks.
+
+### `sourceNodesStatefully`
+
+The [`sourceNodesStatefully`](/docs/node-apis/#sourceNodesStatefully) lifecycle should be used by your plugin if your data source allows subscribing to changes. In this case, your plugin is responsible for listening to these changes and calling `createNode` or `deleteNode` appropriately. Let's take a look at an example.
+
+```javascript:title=gatsby-node.js
+exports.sourceNodesStatefully = async ({ actions }) => {
+  await createInitialNodes({ actions })
+  subscribeToLiveUpdates({ actions })
+}
+
+const createInitialNodes = async ({ actions }) => {
+  // Get current data
+  const data = await someApi.getData()
+
+  // Process data into nodes
+  data.forEach(datum => actions.createNode(processDatum(datum)))
+}
+
+const subscribeToLiveUpdates = ({ actions, getNode }) => {
+  // Setting up subscriptions. Note that this is done in separate function.
+  // This is done because listener callback will usually be kept in memory until
+  // we unsubscribe, so we want to limit execution context as much as possible
+  // to allow Node.js to garbage collect efficiently
+  someApi.subscribe(event => {
+    if (event.action === `delete`) {
+      // Delete the node
+      const nodeId = generateNodeIdFromDataObject(event.data)
+      const node = getNode(nodeId)
+      actions.deleteNode({ node })
+    } else if (event.action === `create` || event.action === `update`) {
+      // Create or update the node
+      action.createNode(processDatum(event.data))
+    }
+  })
+}
+```
+
+In the example above, the plugin fetches data, creates all initial Nodes and then subscribes to changes. When these changes are triggered, the plugin is responsible for creating, updating or deleting its Nodes.
+
+This lifecycle enables plugins like [`gatsby-source-filesystem`](https://www.gatsbyjs.org/packages/gatsby-source-filesystem/) to react to file changes and make immediate updates to its nodes without waiting on Gatsby to trigger an update.
+
+Read the [`sourceNodes`](/docs/node-apis/#sourceNodes), [`sourceNodesStatefully`](/docs/node-apis/#sourceNodesStatefully), [`createNode`](/docs/actions/#createNode) and[`deleteNode`](/docs/actions/#deleteNode) docs for documentation on the APIs.
 
 ### Transforming data received from remote sources
 
@@ -157,4 +204,4 @@ One tip to improve the development experience of using a plugin is to reduce the
 - **Add event-based sync**. Some data sources keep event logs and are able to return a list of objects modified since a given time. If you're building a source plugin, you can store
   the last time you fetched data using
   [`setPluginStatus`](/docs/actions/#setPluginStatus) and then only sync down nodes that have been modified since that time. [gatsby-source-contentful](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful) is an example of a source plugin that does this.
-- **Proactively fetch updates**. One challenge when developing locally is that a developer might make modifications in a remote data source, like a CMS, and then want to see how it looks in the local environment. Typically they will have to restart the `gatsby develop` server or hit the [refresh endpoint](/docs/environment-variables/#reserved-environment-variables) to see changes. If the data source allows you to subscribe to data change events, you should implement the [`sourceNodesStatefully`](/docs/node-apis/#sourceNodesStatefully) API instead of `sourceNodes`. This will ensure the plugin won't try to create new subscriptions on data refreshes managed by Gatsby.
+- **Proactively fetch updates**. One challenge when developing locally is that a developer might make modifications in a remote data source, like a CMS, and then want to see how it looks in the local environment. Typically they will have to restart the `gatsby develop` server or hit the [refresh endpoint](/docs/environment-variables/#reserved-environment-variables) to see changes. If the data source allows you to subscribe to data change events, you should implement the [`sourceNodesStatefully`](#sourceNodesStatefully) API instead of [`sourceNodes`](#sourceNodes).
