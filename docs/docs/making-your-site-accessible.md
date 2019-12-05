@@ -49,7 +49,7 @@ For more on supported rules, check out the docs for [`eslint-plugin-jsx-a11y`](h
 }
 ```
 
-Note: Including a local `.eslintrc` file will [override](/docs/eslint/#configuring-eslint) all of Gatsby's default linting and disable the built-in `eslint-loader,` meaning your tweaked rules won't make it to the console and will only show up in IDE integrations. If you would like to change this behavior and make sure the `eslint-loader` pulls in your customizations, make sure you're using [`gatsby-plugin-eslint`](https://www.gatsbyjs.org/packages/gatsby-plugin-eslint/).
+Note: Including a local `.eslintrc` file will [override](/docs/eslint/#configuring-eslint) all of Gatsby's default linting and disable the built-in `eslint-loader,` meaning your tweaked rules won't make it to the console and will only show up in IDE integrations. If you would like to change this behavior and make sure the `eslint-loader` pulls in your customizations, make sure you enable the loader yourself. One way to do this is by using the Community plugin [`gatsby-plugin-eslint`](https://www.gatsbyjs.org/packages/gatsby-plugin-eslint/).
 
 This is a start to testing for accessibility: [further recommendations](#how-to-improve-accessibility) can be found below.
 
