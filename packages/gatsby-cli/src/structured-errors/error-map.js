@@ -268,8 +268,14 @@ const errorMap = {
   },
   // Plugin errors
   "11321": {
-    text: context =>
-      `"${context.pluginName}" threw an error while running the ${context.api} lifecycle:\n\n${context.message}`,
+    text: context => {
+      const graphqlNotDefined =
+        context.message === `graphql is not defined`
+          ? `\n\nMake sure that you use "graphql" as the first argument of the createPages API:\n\nexports.createPages = ({ graphql }) => {}\n\nYou can learn more here: https://www.gatsbyjs.org/docs/node-apis/#createPages`
+          : ``
+
+      return `"${context.pluginName}" threw an error while running the ${context.api} lifecycle:\n\n${context.message}${graphqlNotDefined}`
+    },
     type: `PLUGIN`,
     level: `ERROR`,
   },

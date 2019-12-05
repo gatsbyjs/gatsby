@@ -7,7 +7,7 @@ const errorParser = ({
   // errors to specific callbacks
   const handlers = [
     {
-      regex: /Variable "(.+)" of required type "(.+)" was not provided./m,
+      regex: /Variable "(.+)" of required type "(.+)" was not provided\./m,
       cb: match => {
         return {
           id: `85920`,
@@ -20,7 +20,7 @@ const errorParser = ({
       },
     },
     {
-      regex: /Variable "(.+)" of type "(.+)" used in position expecting type "(.+)"./m,
+      regex: /Variable "(.+)" of type "(.+)" used in position expecting type "(.+)"\./m,
       cb: match => {
         return {
           id: `85921`,
@@ -34,7 +34,7 @@ const errorParser = ({
       },
     },
     {
-      regex: /Field "(.+)" must not have a selection since type "(.+)" has no subfields./m,
+      regex: /Field "(.+)" must not have a selection since type "(.+)" has no subfields\./m,
       cb: match => {
         return {
           id: `85922`,
@@ -47,7 +47,7 @@ const errorParser = ({
       },
     },
     {
-      regex: /Cannot query field "(.+)" on type "(.+)"./m,
+      regex: /Cannot query field "(.+)" on type "(.+)"\./m,
       cb: match => {
         return {
           id: `85923`,
@@ -74,7 +74,7 @@ const errorParser = ({
       },
     },
     {
-      regex: /Cannot return null for non-nullable field (.+)./m,
+      regex: /Cannot return null for non-nullable field (.+)/m,
       cb: match => {
         return {
           id: `85925`,
