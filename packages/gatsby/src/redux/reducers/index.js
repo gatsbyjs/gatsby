@@ -56,6 +56,7 @@ module.exports = {
   components: require(`./components`),
   staticQueryComponents: require(`./static-query-components`),
   jobs: require(`./jobs`),
+  jobsV2: require(`./jobsv2`),
   webpack: require(`./webpack`),
   webpackCompilationHash: require(`./webpack-compilation-hash`),
   redirects: require(`./redirects`),

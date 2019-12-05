@@ -30,7 +30,8 @@ const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
 const shadowCreatePagePath = _.memoize(
   require(`../../internal-plugins/webpack-theme-component-shadowing/create-page`)
 )
-const { enqueueJob } = require(`../../utils/jobs-manager`)
+const { prepareJob } = require(`../../utils/jobs-manager`)
+const { actions: internalActions } = require(`./internal`)
 
 const actions = {}
 const isWindows = platform() === `win32`
@@ -849,6 +850,7 @@ const createNode = (
 
 actions.createNode = (...args) => dispatch => {
   const actions = createNode(...args)
+
   dispatch(actions)
   const createNodeAction = (Array.isArray(actions) ? actions : [actions]).find(
     action => action.type === `CREATE_NODE`
@@ -1207,17 +1209,17 @@ actions.createJob = (job: Job, plugin?: ?Plugin = null) => {
  * @example
  * createJobV2({ name: `IMAGE_PROCESSING`, inputPaths: [`something.jpeg`], outputDir: `public/static`, args: { width: 100, height: 100 } })
  */
-actions.createJobV2 = (job: JobV2, plugin?: ?Plugin = null) => () =>
-  enqueueJob({
-    name: job.name,
-    inputPaths: job.inputPaths,
-    outputDir: job.outputDir,
-    args: job.args,
-    plugin: {
-      name: plugin.name,
-      version: plugin.version,
-    },
-  })
+actions.createJobV2 = (job: JobV2, plugin: Plugin = null) => (
+  dispatch,
+  getState
+) => {
+  const internalJob = prepareJob(
+    { plugin, ...job },
+    getState().program.directory
+  )
+
+  return internalActions.enqueueJob(internalJob, plugin)(dispatch, getState)
+}
 
 /**
  * Set (update) a "job". Sometimes on really long running jobs you want

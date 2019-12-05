@@ -103,9 +103,13 @@ module.exports = async function build(program: BuildArgs) {
     `BOOTSTRAP_QUERY_RUNNING_FINISHED`
   )
 
+  await db.saveState()
+
   await waitUntilAllJobsComplete()
 
+  // we need to save it again to make sure our latest state has been saved
   await db.saveState()
+
   const pagePaths = [...store.getState().pages.keys()]
   activity = report.createProgress(
     `Building static HTML for pages`,

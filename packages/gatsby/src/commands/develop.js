@@ -381,6 +381,8 @@ module.exports = async (program: any) => {
     `BOOTSTRAP_QUERY_RUNNING_FINISHED`
   )
 
+  db.saveState()
+
   await waitUntilAllJobsComplete()
   requiresWriter.startListener()
   db.startAutosave()

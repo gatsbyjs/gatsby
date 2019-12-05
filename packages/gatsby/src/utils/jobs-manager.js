@@ -6,7 +6,6 @@ const pDefer = require(`p-defer`)
 const slash = require(`slash`)
 const { createContentDigest } = require(`gatsby-core-utils`)
 const reporter = require(`gatsby-cli/lib/reporter`)
-const { store } = require(`../redux`)
 
 let activityForJobs
 let activeJobs = 0
@@ -34,6 +33,7 @@ const convertPathsToRelative = (filePath, rootDir) => {
  * @param {string} path
  */
 const createFileHash = path => hasha.fromFileSync(path, { algorithm: `sha1` })
+exports.createFileHash = createFileHash
 
 /**
  * @typedef Job
@@ -45,9 +45,13 @@ const createFileHash = path => hasha.fromFileSync(path, { algorithm: `sha1` })
  */
 
 /**
- * @typedef {Job} AugmentedJob
- * @property {string} id
+ * @typedef AugmentedJob
+ * @property {number} id
+ * @property {string} name
  * @property {{path: string, contentDigest: string}[]} inputPaths
+ * @property {string} outputDir,
+ * @property {Record<string, *>} args
+ * @property {{name: string, version: string}} plugin
  */
 
 /**
@@ -87,10 +91,9 @@ const runLocalWorker = async (workerFn, job) => {
 /**
  *
  * @param {AugmentedJob} job
- * @param {Job["plugin"]} plugin
  * @param {pDefer.DeferredPromise} deferred
  */
-const runJob = (job, plugin, deferred) => {
+const runJob = ({ plugin, ...job }, deferred) => {
   const worker = require(`${plugin.name}/worker.js`)
   if (!worker[job.name]) {
     deferred.reject(new Error(`No worker function found for ${job.name}`))
@@ -108,16 +111,19 @@ const handleJobEnded = () => {
 }
 
 /**
- * Creates a job
+ * Create an internal job object
  *
- * @param {Job} args
- * @return {Promise<unknown>}
+ * @param {Job} job
+ * @param {string} rootDir
+ * @return {AugmentedJob}
  */
-exports.enqueueJob = async ({ name, inputPaths, outputDir, args, plugin }) => {
-  const rootDir = store.getState().program.directory
-
+exports.prepareJob = (
+  { name, inputPaths, outputDir, args, plugin },
+  rootDir
+) => {
   // TODO see if we can make this async, filehashing might be expensive to wait for
-  // When making this async might trigger the phantomactivity multiple times
+  // currently this needs to be sync as we could miss jobs to have been scheduled and
+  // are still processing their hashes
   const inputPathsWithContentDigest = inputPaths.map(path => {
     return {
       path: convertPathsToRelative(path, rootDir),
@@ -142,6 +148,16 @@ exports.enqueueJob = async ({ name, inputPaths, outputDir, args, plugin }) => {
     plugin: job.plugin,
   })
 
+  return job
+}
+
+/**
+ * Creates a job
+ *
+ * @param {Job} args
+ * @return {Promise<unknown>}
+ */
+exports.enqueueJob = job => {
   // When we already have a job that's executing, return the same promise.
   if (jobsInProcess.has(job.contentDigest)) {
     return jobsInProcess.get(job.contentDigest).deferred.promise
@@ -174,7 +190,7 @@ exports.enqueueJob = async ({ name, inputPaths, outputDir, args, plugin }) => {
     deferred,
   })
 
-  runJob(job, plugin, deferred)
+  runJob(job, deferred)
 
   return deferred.promise
 }
