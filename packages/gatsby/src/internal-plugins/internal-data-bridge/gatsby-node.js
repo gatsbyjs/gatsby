@@ -157,3 +157,7 @@ emitter.on(`DELETE_PAGE`, action => {
   const node = getNode(nodeId)
   boundActionCreators.deleteNode({ node })
 })
+
+exports.createSchemaCustomization = ({ actions }) => {
+  actions.createTypes(require(`../../schema/types/built-in-types`)())
+}
