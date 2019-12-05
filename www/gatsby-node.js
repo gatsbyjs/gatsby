@@ -419,7 +419,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
     toPath: `/docs/data-fetching/`,
     isPermanent: true,
   })
-  
+
   createRedirect({
     fromPath: `/docs/centralizing-your-sites-navigation/`,
     toPath: `/docs/creating-dynamic-navigation/`,
