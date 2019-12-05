@@ -35,7 +35,23 @@ For websites, rendering [static HTML](/docs/glossary#static) pages means that Ja
 
 ### Linting with eslint-jsx-plugin-a11y
 
-Gatsby ships with the `eslint-jsx-plugin-a11y` package. [eslint-plugin-jsx-a11y](https://github.com/evcohen/eslint-plugin-jsx-a11y) is an accessibility [linting](/docs/glossary#linting) tool for your code, helping you develop more inclusive Gatsby projects. This plugin encourages you to include alternative text for image tags, validates [ARIA](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA) props, and eliminates redundant role properties, among other things. Gatsby warns on all of the rules included in eslint-jsx-plugin-a11y, which reduces the time required to implement accessibility by reminding you throughout development. This is a start to testing for accessibility: [further recommendations](#how-to-improve-accessibility) can be found below.
+Gatsby ships with the `eslint-jsx-plugin-a11y` package and warnings for all of its rules enabled by default. [eslint-plugin-jsx-a11y](https://github.com/evcohen/eslint-plugin-jsx-a11y) is an accessibility [linting](/docs/glossary#linting) tool for your code, helping you develop more inclusive Gatsby projects by reducing the time to find accessibility errors. This plugin encourages you to include alternative text for image tags, validates [ARIA](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA) props, and eliminates redundant role properties, among other things.
+
+The rules Gatsby enables in `eslint-plugin-jsx-a11y` by default can be [customized in `.eslintrc`](/docs/eslint/#configuring-eslint). 
+
+```json:title=.eslintrc
+{
+  "extends": ["react-app", "plugin:jsx-a11y/recommended"],
+  "plugins": ["jsx-a11y"],
+  "rules": {
+    "jsx-a11y/rule-name": "warning"
+  }
+}
+```
+
+Note: Including a local `.eslintrc` file will override all of Gatsby's default linting and disable the built-in `eslint-loader,` meaning your tweaked rules won't make it to the console and will only show up in IDE integrations. If you would like to change this behavior and make sure the `eslint-loader` pulls in your customizations, make sure you're using [`gatsby-plugin-eslint`](https://www.gatsbyjs.org/packages/gatsby-plugin-eslint/).
+
+This is a start to testing for accessibility: [further recommendations](#how-to-improve-accessibility) can be found below.
 
 ## How to improve accessibility?
 
