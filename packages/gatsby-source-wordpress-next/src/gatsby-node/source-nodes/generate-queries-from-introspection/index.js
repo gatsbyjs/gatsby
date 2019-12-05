@@ -5,7 +5,7 @@ import {
 } from "./build-query-on-field-name"
 // @todo create function to unmap check here for similar function https://www.gatsbyjs.org/packages/gatsby-source-graphql-universal/
 import fetchGraphql from "../../../utils/fetch-graphql"
-import gql from "../../../utils/gql"
+import { introspectionQuery } from "../graphql-queries"
 
 import store from "../../../store"
 
@@ -17,76 +17,7 @@ export const buildNodeQueriesFromIntrospection = async (
 
   const introspection = await fetchGraphql({
     url: pluginOptions.url,
-    query: gql`
-      {
-        __schema {
-          queryType {
-            fields {
-              name
-              args {
-                type {
-                  kind
-                }
-              }
-              type {
-                kind
-                name
-                fields {
-                  name
-                  args {
-                    type {
-                      kind
-                    }
-                  }
-                  type {
-                    name
-                    kind
-                    ofType {
-                      kind
-                      name
-                      fields {
-                        name
-                      }
-                    }
-                    fields {
-                      name
-                      args {
-                        type {
-                          kind
-                        }
-                      }
-                      type {
-                        kind
-                        name
-                        ofType {
-                          kind
-                          name
-                          fields {
-                            name
-                          }
-                        }
-                        fields {
-                          name
-                          args {
-                            type {
-                              kind
-                            }
-                          }
-                          type {
-                            name
-                            kind
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    `,
+    query: introspectionQuery,
   })
 
   const rootFields = introspection.data.__schema.queryType.fields
