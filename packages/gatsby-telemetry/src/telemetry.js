@@ -269,10 +269,9 @@ module.exports = class AnalyticsTracker {
   addSiteMeasurement(event, obj) {
     const cachedEvent = this.metadataCache[event] || {}
     const cachedMeasurements = cachedEvent.siteMeasurements || {}
-    this.metadataCache[event] = Object.assign(
-      cachedEvent,
-      Object.assign(cachedMeasurements, obj)
-    )
+    this.metadataCache[event] = Object.assign(cachedEvent, {
+      siteMeasurements: Object.assign(cachedMeasurements, obj),
+    })
   }
 
   decorateAll(tags) {
@@ -309,7 +308,7 @@ module.exports = class AnalyticsTracker {
 
   flushBuffered() {
     for (const event in this.buffered) {
-      this.decorateNextEvent(
+      this.addSiteMeasurement(
         event,
         Object.keys(this.buffered[event]).reduce(
           (obj, key) =>

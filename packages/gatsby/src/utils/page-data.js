@@ -21,13 +21,14 @@ const write = async ({ publicDir }, page, result) => {
     result,
   }
   const bodyStr = JSON.stringify(body)
-  const pageDataSize = Buffer.byteLength(bodyStr)
+  // transform asset size to kB (from bytes) to fit 64 bit to numbers
+  const pageDataSize = Buffer.byteLength(bodyStr) / 1000
   telemetry.addBufferedMeasurementsOnEvent(
     `BUILD_END`,
     `pageDataStats`,
     pageDataSize
-  ),
-    await fs.outputFile(filePath, bodyStr)
+  )
+  await fs.outputFile(filePath, bodyStr)
 }
 
 module.exports = {
