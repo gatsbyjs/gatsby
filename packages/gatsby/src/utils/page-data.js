@@ -22,10 +22,13 @@ const write = async ({ publicDir }, page, result) => {
   }
   const bodyStr = JSON.stringify(body)
   const pageDataSize = Buffer.byteLength(bodyStr)
-  telemetry.addBufferedMeasurementsOnEvent(`BUILD_END`, {
-    pageDataSize: pagePaths.length,
-  })
-  await fs.outputFile(filePath, bodyStr)
+  console.log(`buffering pade data size ${pageDataSize}`)
+  telemetry.addBufferedMeasurementsOnEvent(
+    `BUILD_END`,
+    `pageDataStats`,
+    pageDataSize
+  ),
+    await fs.outputFile(filePath, bodyStr)
 }
 
 module.exports = {

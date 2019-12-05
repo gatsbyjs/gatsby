@@ -260,10 +260,10 @@ module.exports = class AnalyticsTracker {
 
   addBufferedMeasurementsOnEvent(event, measurementName, value) {
     const cachedEvent = this.buffered[event] || {}
-    const cachedMeasurements = cachedEvent.siteMeasurements || {}
-    const cachedMeasurement = cachedMeasurements[measurementName] || []
+    const cachedMeasurement = cachedEvent[measurementName] || []
     cachedMeasurement.push(value)
-    this.buffered[event].siteMeasurements[measurementName] = cachedMeasurement
+    this.buffered[event] = cachedEvent // ensure at least empty object
+    this.buffered[event][measurementName] = cachedMeasurement
   }
 
   addSiteMeasurement(event, obj) {
@@ -284,23 +284,30 @@ module.exports = class AnalyticsTracker {
     this.store.updateConfig(`telemetry.enabled`, enabled)
   }
 
-  aggregateBuffered(data) {
+  aggregateStats(data) {
     const sum = data.reduce((acc, x) => acc + x, 0)
-    const mean = sum / data.length
-    const median = data.sort()[Math.floor((bundleSizes.length - 1) / 2)]
-    const stdDev = Math.sqrt(
-      data.reduce((acc, x) => acc + Math.pow(x - mean, 2)) / data.length
-    )
-    return {
-      min: data.reduce((acc, x) => (x < acc ? x : acc), data[0]),
+    const mean = sum / data.length || 0
+    const median = data.sort()[Math.floor((data.length - 1) / 2)] || 0
+    const stdDev =
+      Math.sqrt(
+        data.reduce((acc, x) => acc + Math.pow(x - mean, 2), 0) /
+          (data.length - 1)
+      ) || 0
+    const result = {
+      min: data.reduce((acc, x) => (x < acc ? x : acc), data[0] || 0),
       max: data.reduce((acc, x) => (x > acc ? x : acc), 0),
       sum: sum,
       mean: mean,
       median: median,
       stdDev: stdDev,
-      medianSkewness: (3 * (mean - median)) / stdDev,
-      // mode skewness is unlikely useful here
+      skewness:
+        data.reduce((acc, x) => acc + Math.pow(x - mean, 3), 0) /
+        data.length /
+        Math.pow(stdDev, 3),
     }
+    console.log(data)
+    console.log(result)
+    return result
   }
 
   async sendEvents() {
@@ -314,7 +321,7 @@ module.exports = class AnalyticsTracker {
         Object.keys(this.buffered[event]).reduce(
           (obj, key) =>
             Object.assign(obj, {
-              [key]: this.aggregateBuffered(this.buffered[event][key]),
+              [key]: this.aggregateStats(this.buffered[event][key]),
             }),
           {}
         )
