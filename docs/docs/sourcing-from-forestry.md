@@ -75,7 +75,7 @@ public_path: "/static/uploads"
 
 This sets where media is saved. Visit Gatsby's [guide on its static folder](/docs/static-folder/) to learn more. The rest of the settings can remain the same.
 
-Open `package.json` and add the following to scripts:
+Open `package.json` and add the following to scripts already available:
 
 ```json:title=package.json
 "scripts": {
