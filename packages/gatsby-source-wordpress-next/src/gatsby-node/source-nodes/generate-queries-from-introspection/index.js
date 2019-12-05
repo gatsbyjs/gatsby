@@ -141,7 +141,6 @@ export const buildNodeQueriesFromIntrospection = async (
 
   // for each root field that returns a list of nodes
   // build a query to fetch those nodes
-  // nodeListTypeNames.forEach(async typeName => )
   for (const typeName of nodeListTypeNames) {
     const listType = nodeListTypes[typeName]
 
@@ -153,11 +152,13 @@ export const buildNodeQueriesFromIntrospection = async (
     const listQueryString = buildNodesQueryOnFieldName({
       fields: listType.fields,
       fieldName: listType.rootFieldName,
+      nodeListTypeNames,
     })
 
     const nodeQueryString = buildNodeQueryOnFieldName({
       fields: listType.fields,
       fieldName: listType.fieldName,
+      nodeListTypeNames,
     })
 
     queries[listType.rootFieldName] = {

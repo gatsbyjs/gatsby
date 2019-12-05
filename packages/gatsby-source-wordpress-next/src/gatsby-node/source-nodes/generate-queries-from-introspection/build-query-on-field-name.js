@@ -1,6 +1,6 @@
 import Query from "graphql-query-builder"
 
-const transformField = field => {
+const transformField = ({ field, nodeListTypeNames }) => {
   if (!field) {
     return null
   }
@@ -20,9 +20,22 @@ const transformField = field => {
     return null
   }
 
-  // temp remove lists
-  if (field.type.kind === `LIST`) {
+  // temp remove lists that we don't have nodes for
+  if (
+    field.type.kind === `LIST` &&
+    !nodeListTypeNames.includes(field.type.ofType.name)
+  ) {
+    // dd(field)
     return null
+  }
+
+  // just pull the node id for lists we have nodes for
+  if (
+    field.type.kind === `LIST` &&
+    nodeListTypeNames.includes(field.type.ofType.name)
+  ) {
+      [field.name]: [`id`],
+    }
   }
 
   // pull the id and sourceUrl connections to media items
@@ -33,9 +46,9 @@ const transformField = field => {
   }
 
   // just pull the id for fields that are connections to other nodes
-  if (field.type.relationShipField && field.type.mediaItem) {
+  if (field.type.relationShipField && !field.type.mediaItem) {
     return {
-      [field.name]: [`id`, `sourceUrl`],
+      [field.name]: [`id`],
     }
   }
 
@@ -44,7 +57,7 @@ const transformField = field => {
     return {
       [field.name]: field.type.fields
         // time to recurse!
-        .map(transformField)
+        .map(field => transformField({ field, nodeListTypeNames }))
         // remove null fields that we omitted above
         .filter(f => !!f),
     }
@@ -53,7 +66,11 @@ const transformField = field => {
   return field.name
 }
 
-export const buildNodesQueryOnFieldName = ({ fields, fieldName }) => {
+export const buildNodesQueryOnFieldName = ({
+  fields,
+  fieldName,
+  nodeListTypeNames,
+}) => {
   // this builds the gql query
   let queryField = new Query(fieldName, {
     $variables: true,
@@ -65,7 +82,9 @@ export const buildNodesQueryOnFieldName = ({ fields, fieldName }) => {
       pageInfo: [`hasNextPage`, `endCursor`],
     },
     {
-      nodes: fields.map(transformField).filter(field => !!field),
+      nodes: fields
+        .map(field => transformField({ field, nodeListTypeNames }))
+        .filter(field => !!field),
     },
   ])
 
@@ -78,11 +97,17 @@ export const buildNodesQueryOnFieldName = ({ fields, fieldName }) => {
 
   return queryString
 }
-export const buildNodeQueryOnFieldName = ({ fields, fieldName }) => {
+export const buildNodeQueryOnFieldName = ({
+  fields,
+  fieldName,
+  nodeListTypeNames,
+}) => {
   // this builds the gql query
   let queryField = new Query(fieldName, { id: `$id` })
 
-  const queryFields = fields.map(transformField).filter(field => !!field)
+  const queryFields = fields
+    .map(field => transformField({ field, nodeListTypeNames }))
+    .filter(field => !!field)
 
   // this adds subfields to our query
   queryField.find(queryFields)
