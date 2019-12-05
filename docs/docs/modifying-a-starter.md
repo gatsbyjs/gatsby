@@ -24,7 +24,7 @@ Taking the default Gatsby starter as an example, dedicate some time to looking t
 
 - `src/pages`: a directory for page components to live, with at least one [index.js file (example)](https://github.com/gatsbyjs/gatsby-starter-hello-world/blob/master/src/pages/index.js).
 - `gatsby-config.js`: a space to add configurable data and plugins. Among the [API files](/docs/api-files/), `gatsby-config.js` is the one you're most likely to need to modify. See [Gatsby Config](/docs/gatsby-config/) for more information.
-- `package.json`: the "command center" for Gatsby dependencies and scripts. Find an example in the [default starter's package.json](https://github.com/gatsbyjs/gatsby-default-starter/blob/master/package.json) file.
+- `package.json`: the "command center" for Gatsby dependencies and scripts. Find an example in the [default starter's package.json](https://github.com/gatsbyjs/gatsby-starter-default/blob/master/package.json) file.
 - `README.md`: this should include instructions for how to install and configure the starter, a list of its features or structure, and helpful tips. If you plan to share the source code for your site with other people, you can replace this information with documentation for your specific project.
 - `static`: a directory for static assets, such as a `favicon.ico` file. You can add whatever static files you need in here and they'll be copied to the `public` folder. If you're not sure which files belong here, check out the [Reference Guide to the static folder](/docs/static-folder/).
 
@@ -208,7 +208,7 @@ Try adding a property to `siteMetadata`, querying for it, and displaying the dat
 
 ## Customizing styles
 
-Continuing with `default-gatsby-starter` as an example, have a look at `src/pages/index.js`:
+Continuing with `gatsby-starter-default` as an example, have a look at `src/pages/index.js`:
 
 ```javascript:title=src/pages/index.js
 import React from "react"

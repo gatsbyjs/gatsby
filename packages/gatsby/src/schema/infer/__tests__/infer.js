@@ -9,6 +9,7 @@ const { actions } = require(`../../../redux/actions`)
 const { buildSchema } = require(`../../schema`)
 const { createSchemaComposer } = require(`../../schema-composer`)
 const { buildObjectType } = require(`../../types/type-builders`)
+const { hasNodes } = require(`../inference-metadata`)
 const { TypeConflictReporter } = require(`../type-conflict-reporter`)
 const withResolverContext = require(`../../context`)
 require(`../../../db/__tests__/fixtures/ensure-loki`)()
@@ -106,17 +107,130 @@ const makeNodes = () => [
   },
 ]
 
+const addNodes = nodes => {
+  nodes.forEach(node => {
+    if (!node.internal.contentDigest) {
+      node.internal.contentDigest = `0`
+    }
+    actions.createNode(node, { name: `test` })(store.dispatch)
+  })
+}
+
+const deleteNodes = nodes => {
+  nodes.forEach(node => {
+    store.dispatch(actions.deleteNode({ node }, { name: `test` }))
+  })
+}
+
+describe(`Inference states`, () => {
+  const node = () => {
+    return {
+      id: `1`,
+      parent: null,
+      children: [],
+      foo: `bar`,
+      internal: { type: `Test` },
+    }
+  }
+
+  beforeEach(() => {
+    store.dispatch({ type: `DELETE_CACHE` })
+  })
+
+  describe(`Initial build`, () => {
+    it(`has incremental inference disabled by default`, () => {
+      addNodes([node()])
+      const { inferenceMetadata } = store.getState()
+      expect(inferenceMetadata).toEqual({
+        step: `initialBuild`,
+        typeMap: {},
+      })
+    })
+
+    it(`can switch to incremental build mode`, () => {
+      store.dispatch({ type: `START_INCREMENTAL_INFERENCE` })
+      addNodes([node()])
+      const { inferenceMetadata } = store.getState()
+      expect(inferenceMetadata.step).toEqual(`incrementalBuild`)
+      expect(inferenceMetadata.typeMap).toHaveProperty(`Test`)
+    })
+  })
+
+  describe(`Incremental builds`, () => {
+    beforeEach(() => {
+      store.dispatch({ type: `START_INCREMENTAL_INFERENCE` })
+    })
+
+    it(`does incremental inference`, () => {
+      addNodes([node()])
+      const { inferenceMetadata } = store.getState()
+      expect(inferenceMetadata.step).toEqual(`incrementalBuild`)
+      expect(inferenceMetadata.typeMap).toHaveProperty(`Test`)
+      expect(hasNodes(inferenceMetadata.typeMap.Test)).toEqual(true)
+
+      deleteNodes([node()])
+      expect(hasNodes(inferenceMetadata.typeMap.Test)).toEqual(false)
+    })
+
+    it(`switches to initial build state on cache delete`, () => {
+      store.dispatch({ type: `DELETE_CACHE` })
+      const { inferenceMetadata } = store.getState()
+      expect(inferenceMetadata).toEqual({ step: `initialBuild`, typeMap: {} })
+    })
+  })
+
+  describe(`Any state`, () => {
+    const runInAllStates = callback => {
+      callback(`initialBuild`)
+      store.dispatch({ type: `DELETE_CACHE` })
+      store.dispatch({ type: `START_INCREMENTAL_INFERENCE` })
+      callback(`incrementalBuild`)
+    }
+
+    it(`supports full type inference`, () => {
+      runInAllStates(state => {
+        store.dispatch({
+          type: `BUILD_TYPE_METADATA`,
+          payload: {
+            typeName: `Test`,
+            nodes: [node()],
+          },
+        })
+        const { inferenceMetadata } = store.getState()
+        expect(inferenceMetadata.step).toEqual(state)
+        expect(inferenceMetadata.typeMap).toHaveProperty(`Test`)
+      })
+    })
+
+    it(`supports createTypes`, () => {
+      runInAllStates(state => {
+        store.dispatch({
+          type: `CREATE_TYPES`,
+          payload: buildObjectType({
+            name: `Test`,
+            extensions: {
+              infer: false,
+            },
+          }),
+        })
+        const { inferenceMetadata } = store.getState()
+        expect(inferenceMetadata.step).toEqual(state)
+        expect(inferenceMetadata.typeMap.Test).toBeDefined()
+        expect(inferenceMetadata.typeMap.Test.ignored).toEqual(true)
+      })
+    })
+  })
+})
+
+describe(`Incremental builds`, () => {})
+
 describe(`GraphQL type inference`, () => {
   const typeConflictReporter = new TypeConflictReporter()
 
   const buildTestSchema = async (nodes, buildSchemaArgs, typeDefs) => {
     store.dispatch({ type: `DELETE_CACHE` })
-    nodes.forEach(node => {
-      if (!node.internal.contentDigest) {
-        node.internal.contentDigest = `0`
-      }
-      actions.createNode(node, { name: `test` })(store.dispatch)
-    })
+    store.dispatch({ type: `START_INCREMENTAL_INFERENCE` })
+    addNodes(nodes)
 
     const { builtInFieldExtensions } = require(`../../extensions`)
     Object.keys(builtInFieldExtensions).forEach(name => {

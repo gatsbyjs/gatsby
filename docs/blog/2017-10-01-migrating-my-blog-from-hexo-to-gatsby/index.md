@@ -82,7 +82,7 @@ are many ways you could do this but I'll go over what I did.
 To get all the Gatsby files you can use the Gatsby CLI.
 
 ```yaml
-gatsby new temp-gatsby-files # Initialize gatsby in a temp directory
+gatsby new temp-gatsby-files # Initialize Gatsby in a temp directory
 cp -R temp-gatsby-files/* ./ # Copy all the files into your root directory
 rm -rf temp-gatsby-files     # Remove the temp directory
 ```

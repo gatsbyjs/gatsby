@@ -16,12 +16,12 @@ const Footer = ({ previous, next }) => (
     {(previous || next) && (
       <Flex
         as="ul"
-        css={{
+        css={css({
           flexWrap: `wrap`,
           justifyContent: `space-between`,
           listStyle: `none`,
           padding: 0,
-        }}
+        })}
       >
         <li>
           {previous && (
