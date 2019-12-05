@@ -96,8 +96,9 @@ type TypeInfoBoolean = {
   example: boolean,
 }
 
+// "dprops" is "descriptor props", which makes it easier to search for than "props"
 type TypeInfoObject = TypeInfo & {
-  dprops?: {[name]: Descriptor},
+  dprops?: {[name: "number" | "string" | "boolean" | "null" | "date" | "string" | "array" | "object"]: Descriptor},
 }
 
 type TypeInfoArray = TypeInfo & {
@@ -149,6 +150,7 @@ const getType = (value, key) => {
       if (!Object.keys(value).length) return `null`
       return `object`
     default:
+      // bigint, symbol, function, unknown (host objects in IE were typeof "unknown", for example)
       return `null`
   }
 }
@@ -171,7 +173,8 @@ const updateValueDescriptorObject = (
 
     let descriptor = dprops[key]
     if (descriptor === undefined) {
-      dprops[key] = descriptor = {}
+      descriptor = {}
+      dprops[key] = descriptor
     }
 
     updateValueDescriptor(nodeId, key, v, operation, descriptor, metadata, path)
@@ -192,7 +195,8 @@ const updateValueDescriptorArray = (
   value.forEach(item => {
     let descriptor = typeInfo.item
     if (descriptor === undefined) {
-      typeInfo.item = descriptor = {}
+      descriptor = {}
+      typeInfo.item = descriptor
     }
 
     updateValueDescriptor(
@@ -285,10 +289,8 @@ const updateValueDescriptor = (
   }
 
   switch (typeName) {
-    // I want to return the func call to use TCO, eslint ignores that case :(
-    /* eslint-disable consistent-return */
     case `object`:
-      return updateValueDescriptorObject(
+      updateValueDescriptorObject(
         value,
         typeInfo,
         nodeId,
@@ -296,8 +298,9 @@ const updateValueDescriptor = (
         metadata,
         path
       )
+      return
     case `array`:
-      return updateValueDescriptorArray(
+      updateValueDescriptorArray(
         value,
         key,
         typeInfo,
@@ -306,25 +309,22 @@ const updateValueDescriptor = (
         metadata,
         path
       )
+      return
     case `relatedNode`:
-      return updateValueDescriptorRelNodes(
+      updateValueDescriptorRelNodes(
         [value],
         delta,
         operation,
         typeInfo,
         metadata
       )
+      return
     case `relatedNodeList`:
-      return updateValueDescriptorRelNodes(
-        value,
-        delta,
-        operation,
-        typeInfo,
-        metadata
-      )
+      updateValueDescriptorRelNodes(value, delta, operation, typeInfo, metadata)
+      return
     case `string`:
-      return updateValueDescriptorString(value, delta, typeInfo)
-    /* eslint-enable consistent-return */
+      updateValueDescriptorString(value, delta, typeInfo)
+      return
   }
 
   // int, float, boolean, null
@@ -395,7 +395,8 @@ const updateTypeMetadata = (metadata = initialMetadata(), operation, node) => {
   nodeFields(node, ignoredFields).forEach(field => {
     let descriptor = fieldMap[field]
     if (descriptor === undefined) {
-      fieldMap[field] = descriptor = {}
+      descriptor = {}
+      fieldMap[field] = descriptor
     }
 
     updateValueDescriptor(
