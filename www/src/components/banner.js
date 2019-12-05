@@ -9,9 +9,7 @@ const InnerContainer = styled(`div`)`
   height: ${p => p.theme.sizes.bannerHeight};
   overflow-x: auto;
   mask-image: ${props =>
-    `linear-gradient(to right, transparent, ${props.theme.colors.purple[90]} ${
-      props.theme.space[6]
-    }, ${props.theme.colors.purple[90]} 96%, transparent)`};
+    `linear-gradient(to right, transparent, ${props.theme.colors.purple[90]} ${props.theme.space[6]}, ${props.theme.colors.purple[90]} 96%, transparent)`};
 `
 
 const Content = styled(`div`)`

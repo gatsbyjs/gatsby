@@ -90,10 +90,7 @@ actions.deletePage = (page: PageInput) => {
   }
 }
 
-const pascalCase = _.flow(
-  _.camelCase,
-  _.upperFirst
-)
+const pascalCase = _.flow(_.camelCase, _.upperFirst)
 const hasWarnedForPageComponentInvalidContext = new Set()
 const hasWarnedForPageComponentInvalidCasing = new Set()
 const hasErroredBecauseOfNodeValidation = new Set()

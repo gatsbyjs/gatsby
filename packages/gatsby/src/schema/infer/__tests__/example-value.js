@@ -20,7 +20,10 @@ describe(`Get example value for type inference`, () => {
       "key-with..unsupported-values": true,
       emptyArray: [],
       anArray: [1, 2, 3, 4],
-      nestedArrays: [[1, 2, 3], [4, 5, 6]],
+      nestedArrays: [
+        [1, 2, 3],
+        [4, 5, 6],
+      ],
       objectsInArray: [{ field1: true }, { field2: 1 }],
       frontmatter: {
         date: `2006-07-22T22:39:53.000Z`,
