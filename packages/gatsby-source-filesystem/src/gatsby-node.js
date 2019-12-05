@@ -123,7 +123,7 @@ const createFSMachine = (
   return interpret(fsMachine).start()
 }
 
-exports.sourceNodes = (api, pluginOptions) => {
+exports.sourceNodesStatefully = (api, pluginOptions) => {
   const typeDefs = `
     type File implements Node @infer {
       birthtime: Date @deprecated(reason: "Use \`birthTime\` instead")
