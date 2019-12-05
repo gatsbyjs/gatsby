@@ -73,6 +73,18 @@ const errorParser = ({
         }
       },
     },
+    {
+      regex: /Cannot return null for non-nullable field (.+)./m,
+      cb: match => {
+        return {
+          id: `85925`,
+          context: {
+            sourceMessage: match[0],
+            field: match[1],
+          },
+        }
+      },
+    },
     // Match anything with a generic catch-all error handler
     {
       regex: /[\s\S]*/gm,

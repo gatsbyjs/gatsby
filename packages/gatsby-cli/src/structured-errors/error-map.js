@@ -1,5 +1,12 @@
 const { stripIndent, stripIndents } = require(`common-tags`)
 
+const optionalGraphQLInfo = context =>
+  `${context.codeFrame ? `\n\n${context.codeFrame}` : ``}${
+    context.filePath ? `\n\nFile path: ${context.filePath}` : ``
+  }${context.urlPath ? `\nUrl path: ${context.urlPath}` : ``}${
+    context.plugin ? `\nPlugin: ${context.plugin}` : ``
+  }`
+
 const errorMap = {
   "": {
     text: context => {
@@ -32,11 +39,9 @@ const errorMap = {
   "85901": {
     text: context =>
       stripIndent(`
-        There was an error in your GraphQL query:\n\n${context.sourceMessage}${
-        context.codeFrame ? `\n\n${context.codeFrame}` : ``
-      }${context.filePath ? `\n\nFile path: ${context.filePath}` : ``}${
-        context.urlPath ? `\nUrl path: ${context.urlPath}` : ``
-      }${context.plugin ? `\nPlugin: ${context.plugin}` : ``}`),
+        There was an error in your GraphQL query:\n\n${
+          context.sourceMessage
+        }${optionalGraphQLInfo(context)}`),
     type: `GRAPHQL`,
     level: `ERROR`,
   },
@@ -156,12 +161,6 @@ const errorMap = {
   // Undefined variables in Queries
   "85920": {
     text: context => {
-      const optionalInfo = `${
-        context.codeFrame ? `\n\n${context.codeFrame}` : ``
-      }${context.filePath ? `\n\nFile path: ${context.filePath}` : ``}${
-        context.urlPath ? `\nUrl path: ${context.urlPath}` : ``
-      }${context.plugin ? `\nPlugin: ${context.plugin}` : ``}`
-
       const generalMessage = stripIndents(`You might have a typo in the variable name "${context.variableName}" or you didn't provide the variable via context to this page query. Have a look at the docs to learn how to add data to context:
 
       https://www.gatsbyjs.org/docs/page-query/#how-to-add-query-variables-to-a-page-query`)
@@ -172,7 +171,11 @@ const errorMap = {
       https://www.gatsbyjs.org/docs/use-static-query/`)
 
       return stripIndent(`
-        There was an error in your GraphQL query:\n\n${context.sourceMessage}${optionalInfo}\n\n${generalMessage}\n\n${staticQueryMessage}`)
+        There was an error in your GraphQL query:\n\n${
+          context.sourceMessage
+        }${optionalGraphQLInfo(
+        context
+      )}\n\n${generalMessage}\n\n${staticQueryMessage}`)
     },
     type: `GRAPHQL`,
     level: `ERROR`,
@@ -196,15 +199,26 @@ const errorMap = {
     level: `ERROR`,
   },
   "85924": {
-    text: context => {
-      const optionalInfo = `${
-        context.codeFrame ? `\n\n${context.codeFrame}` : ``
-      }${context.filePath ? `\n\nFile path: ${context.filePath}` : ``}${
-        context.urlPath ? `\nUrl path: ${context.urlPath}` : ``
-      }${context.plugin ? `\nPlugin: ${context.plugin}` : ``}`
-
-      return `There was an error in your GraphQL query:\n\n${context.sourceMessage}\n\nThis can happen when you or a plugin explicitly defined the GraphQL schema for this GraphQL object type via "createTypes" in gatsby-node.js and "${context.value}" doesn't match the (scalar) type of "${context.type}".${optionalInfo}`
-    },
+    text: context =>
+      `There was an error in your GraphQL query:\n\n${
+        context.sourceMessage
+      }\n\nThis can happen when you or a plugin/theme explicitly defined the GraphQL schema for this GraphQL object type via the schema customization API and "${
+        context.value
+      }" doesn't match the (scalar) type of "${
+        context.type
+      }".${optionalGraphQLInfo(context)}`,
+    type: `GRAPHQL`,
+    level: `ERROR`,
+  },
+  "85925": {
+    text: context =>
+      `There was an error in your GraphQL query:\n\n${
+        context.sourceMessage
+      }\n\nThe field "${
+        context.field
+      }" was explicitly defined as non-nullable via the schema customization API (by yourself or a plugin/theme). This means that this field is not optional and you have to define a value. If this is not your desired behavior and you defined the schema yourself, go to "createTypes" in gatsby-node.js. If you're using a plugin/theme, you can learn more here on how to fix field types:\nhttps://www.gatsbyjs.org/docs/schema-customization/#fixing-field-types${optionalGraphQLInfo(
+        context
+      )}`,
     type: `GRAPHQL`,
     level: `ERROR`,
   },
