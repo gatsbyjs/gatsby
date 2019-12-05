@@ -15,7 +15,7 @@ const introspection = {
   },
 
   reducers: {
-    setState(state, payload) {
+    setQueries(state, payload) {
       state.queries = payload
       return state
     },
