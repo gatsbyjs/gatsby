@@ -6,7 +6,7 @@ title: Node Tracking
 >
 > Outdated areas are:
 >
-> - _source files links_ needs to be updated
+> - _links to source files_ need to be updated
 >
 > You can help by making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228).
 
