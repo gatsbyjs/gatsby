@@ -55,7 +55,7 @@ The `sourceNodes` function for your plugin _may_ be called multiple times while 
 
 ### `sourceNodesStatefully`
 
-The [`sourceNodesStatefully`](/docs/node-apis/#sourceNodesStatefully) lifecycle should be used by your plugin if your data source allows subscribing to changes. In this case, your plugin is responsible for listening to these changes and calling `createNode` or `deleteNode` appropriately. Let's take a look at an example.
+The [`sourceNodesStatefully`](/docs/node-apis/#sourceNodesStatefully) lifecycle should be used by your plugin if your data source supports subscribing to changes. In this case, your plugin is responsible for listening to these changes and calling `createNode` or `deleteNode` appropriately. Let's take a look at an example.
 
 ```javascript:title=gatsby-node.js
 exports.sourceNodesStatefully = async ({ actions }) => {
@@ -72,7 +72,7 @@ const createInitialNodes = async ({ actions }) => {
 }
 
 const subscribeToLiveUpdates = ({ actions, getNode }) => {
-  // Setting up subscriptions. Note that this is done in separate function.
+  // Setting up subscriptions. Note that this is done in a separate function.
   // This is done because listener callback will usually be kept in memory until
   // we unsubscribe, so we want to limit execution context as much as possible
   // to allow Node.js to garbage collect efficiently
