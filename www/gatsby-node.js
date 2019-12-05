@@ -417,7 +417,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
   createRedirect({
     fromPath: `/docs/client-data-fetching/`,
     toPath: `/docs/data-fetching/`,
-    isPermanent; true,
+    isPermanent: true,
   })
   
   createRedirect({
