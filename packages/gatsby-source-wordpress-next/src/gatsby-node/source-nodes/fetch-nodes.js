@@ -59,7 +59,7 @@ export const fetchWPGQLContentNodes = async (_, helpers, { url, verbose }) => {
   return contentNodeGroups
 }
 
-export const fetchAndCreateAllNodes = async (_, helpers, pluginOptions) => {
+export const fetchAndCreateAllNodes = async (helpers, pluginOptions) => {
   const api = [helpers, pluginOptions]
 
   const { reporter, cache } = helpers
