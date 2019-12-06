@@ -1,9 +1,12 @@
 // @flow
 
+const fs = require(`fs-extra`)
 import { print, visit, getLocation } from "graphql"
 import { codeFrameColumns } from "@babel/code-frame"
+const levenshtein = require(`fast-levenshtein`)
 import _ from "lodash"
 import report from "gatsby-cli/lib/reporter"
+const { locInGraphQlToLocInFile } = require(`./error-parser`)
 
 type RelayGraphQLError = Error & { validationErrors?: Object }
 
@@ -80,8 +83,8 @@ function findLocation(extractedMessage, def) {
   visit(def, {
     enter(node) {
       if (location) return
-      for (let [regex, handler] of handlers) {
-        let match = extractedMessage.match(regex)
+      for (const [regex, handler] of handlers) {
+        const match = extractedMessage.match(regex)
         if (!match) continue
         if ((location = handler(match.slice(1), node))) break
       }
@@ -111,12 +114,12 @@ function getCodeFrameFromRelayError(
   extractedMessage: string,
   error: Error
 ) {
-  let { start, source } = findLocation(extractedMessage, def) || {}
-  let query = source ? source.body : print(def)
+  const { start, source } = findLocation(extractedMessage, def) || {}
+  const query = source ? source.body : print(def)
 
   // we can't reliably get a location without the location source, since
   // the printed query may differ from the original.
-  let { line, column } = (source && getLocation(source, start)) || {}
+  const { line, column } = (source && getLocation(source, start)) || {}
   return getCodeFrame(query, line, column)
 }
 
@@ -125,9 +128,9 @@ export function multipleRootQueriesError(
   def: any,
   otherDef: any
 ) {
-  let name = def.name.value
-  let otherName = otherDef.name.value
-  let unifiedName = `${_.camelCase(name)}And${_.upperFirst(
+  const name = def.name.value
+  const otherName = otherDef.name.value
+  const unifiedName = `${_.camelCase(name)}And${_.upperFirst(
     _.camelCase(otherName)
   )}`
 
@@ -187,20 +190,15 @@ export function multipleRootQueriesError(
 }
 
 export function graphqlError(
-  namePathMap: Map<string, string>,
-  nameDefMap: Map<string, any>,
+  definitionsByName: Map<string, any>,
   error: Error | RelayGraphQLError
 ) {
   let codeBlock
-  let { message, docName } = extractError(error)
-  let filePath = namePathMap.get(docName)
+  const { message, docName } = extractError(error)
+  const { def, filePath } = definitionsByName.get(docName) || {}
 
   if (filePath && docName) {
-    codeBlock = getCodeFrameFromRelayError(
-      nameDefMap.get(docName),
-      message,
-      error
-    )
+    codeBlock = getCodeFrameFromRelayError(def, message, error)
     const formattedMessage = formatError(message, filePath, codeBlock)
     return { formattedMessage, docName, message, codeBlock }
   }
@@ -220,4 +218,105 @@ export function graphqlError(
   }
 
   return { formattedMessage: reportedMessage, docName, message, codeBlock }
+}
+
+export function unknownFragmentError({
+  fragmentNames,
+  filePath,
+  definition,
+  node,
+}) {
+  const name = node.name.value
+  const closestFragment = fragmentNames
+    .map(f => {
+      return { fragment: f, score: levenshtein.get(name, f) }
+    })
+    .filter(f => f.score < 10)
+    .sort((a, b) => a.score > b.score)[0]?.fragment
+
+  let text
+  try {
+    text = fs.readFileSync(filePath, { encoding: `utf-8` })
+  } catch {
+    text = definition.text
+  }
+
+  return {
+    id: `85908`,
+    filePath,
+    context: {
+      fragmentName: name,
+      closestFragment,
+      codeFrame: codeFrameColumns(
+        text,
+        {
+          start: locInGraphQlToLocInFile(
+            definition.templateLoc,
+            getLocation({ body: definition.text }, node.loc.start)
+          ),
+          end: locInGraphQlToLocInFile(
+            definition.templateLoc,
+            getLocation({ body: definition.text }, node.loc.end)
+          ),
+        },
+        {
+          linesAbove: 10,
+          linesBelow: 10,
+        }
+      ),
+    },
+  }
+}
+
+export function duplicateFragmentError({
+  name,
+  leftDefinition,
+  rightDefinition,
+}) {
+  return {
+    id: `85919`,
+    context: {
+      fragmentName: name,
+      leftFragment: {
+        filePath: leftDefinition.filePath,
+        codeFrame: codeFrameColumns(
+          leftDefinition.text,
+          {
+            start: getLocation(
+              { body: leftDefinition.text },
+              leftDefinition.def.name.loc.start
+            ),
+            end: getLocation(
+              { body: leftDefinition.text },
+              leftDefinition.def.name.loc.end
+            ),
+          },
+          {
+            linesAbove: 10,
+            linesBelow: 10,
+          }
+        ),
+      },
+      rightFragment: {
+        filePath: rightDefinition.filePath,
+        codeFrame: codeFrameColumns(
+          rightDefinition.text,
+          {
+            start: getLocation(
+              { body: rightDefinition.text },
+              rightDefinition.def.name.loc.start
+            ),
+            end: getLocation(
+              { body: rightDefinition.text },
+              rightDefinition.def.name.loc.end
+            ),
+          },
+          {
+            linesAbove: 10,
+            linesBelow: 10,
+          }
+        ),
+      },
+    },
+  }
 }

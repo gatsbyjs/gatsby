@@ -6,6 +6,12 @@ jest.mock(`graphql-tools`, () => {
     RenameTypes: jest.fn(),
   }
 })
+jest.mock(`apollo-link-http`, () => {
+  return {
+    createHttpLink: jest.fn(),
+  }
+})
+const { createHttpLink } = require(`apollo-link-http`)
 jest.mock(`gatsby/graphql`, () => {
   const graphql = jest.requireActual(`gatsby/graphql`)
   return {
@@ -15,6 +21,7 @@ jest.mock(`gatsby/graphql`, () => {
   }
 })
 const { sourceNodes } = require(`../gatsby-node`)
+const nodeFetch = require(`node-fetch`)
 
 const getInternalGatsbyAPI = () => {
   const actions = {
@@ -65,5 +72,34 @@ describe(`createSchemaNode`, () => {
 
     expect(api.createContentDigest).toHaveBeenCalledWith(expect.any(String))
     expect(api.createContentDigest).toHaveBeenCalledTimes(1)
+  })
+})
+
+describe(`createHttpLink`, () => {
+  it(`use passed in fetch if provided`, async () => {
+    const api = getInternalGatsbyAPI()
+    const mockFetch = jest.fn()
+    await sourceNodes(api, {
+      typeName: `Github foo`,
+      fieldName: `github`,
+      url: `https://github.com`,
+      fetch: mockFetch,
+    })
+
+    expect(createHttpLink).toHaveBeenCalledWith(
+      expect.objectContaining({ fetch: mockFetch })
+    )
+  })
+  it(`use default fetch if not provided`, async () => {
+    const api = getInternalGatsbyAPI()
+    await sourceNodes(api, {
+      typeName: `Github foo`,
+      fieldName: `github`,
+      url: `https://github.com`,
+    })
+
+    expect(createHttpLink).toHaveBeenCalledWith(
+      expect.objectContaining({ fetch: nodeFetch })
+    )
   })
 })

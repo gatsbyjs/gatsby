@@ -51,7 +51,7 @@ const formatValue = value => {
     const usedTypes = []
     value.forEach(item => {
       const type = typeOf(item)
-      if (usedTypes.indexOf(type) !== -1) {
+      if (usedTypes.includes(type)) {
         if (!wasElipsisLast) {
           output.push(`...`)
           wasElipsisLast = true

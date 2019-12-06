@@ -7,7 +7,7 @@ excerpt: "Moving to Gatsby 1.x and embracing the new GraphQL setup can be daunti
 tags: ["v1", "graphql", "getting-started"]
 ---
 
-Before I built [React FAQ](https://reactfaq.site/), I went looking for a static
+Before I built "React FAQ" (GitHub: https://github.com/timarney/react-faq), I went looking for a static
 site generator.
 
 I had a few criteria in mind.
