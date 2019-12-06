@@ -16,7 +16,6 @@ import HomepageFeatures from "../components/homepage/homepage-features"
 import HomepageEcosystem from "../components/homepage/homepage-ecosystem"
 import HomepageBlog from "../components/homepage/homepage-blog"
 import HomepageNewsletter from "../components/homepage/homepage-newsletter"
-import HomepageSection from "../components/homepage/homepage-section"
 import FooterLinks from "../components/shared/footer-links"
 import {
   setupScrollersObserver,
