@@ -155,6 +155,9 @@ module.exports = async function build(program: BuildArgs) {
     parentSpan: buildSpan,
   })
 
+  // Make sure we saved the latest state so we have all jobs cached
+  await db.saveState()
+
   report.info(`Done building in ${process.uptime()} sec`)
 
   buildSpan.finish()

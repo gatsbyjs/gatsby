@@ -115,14 +115,20 @@ const handleJobEnded = () => {
 /**
  * Create an internal job object
  *
- * @param {Job} job
+ * @param {Job|AugmentedJob} job
+ * @param {{name: string, version: string}} plugin
  * @param {string} rootDir
  * @return {AugmentedJob}
  */
-exports.createInternalJob = (
-  { name, inputPaths, outputDir, args, plugin },
-  rootDir
-) => {
+exports.createInternalJob = (job, plugin, rootDir) => {
+  // It looks like we already have an augmented job so we shouldn't redo this work
+  if (job.id && job.contentDigest) {
+    console.log(`cached`)
+    return job
+  }
+
+  const { name, inputPaths, outputDir, args } = job
+
   // TODO see if we can make this async, filehashing might be expensive to wait for
   // currently this needs to be sync as we could miss jobs to have been scheduled and
   // are still processing their hashes
@@ -133,7 +139,7 @@ exports.createInternalJob = (
     }
   })
 
-  const job = {
+  const augmentedJob = {
     id: uuid(),
     name,
     inputPaths: inputPathsWithContentDigest,
@@ -142,15 +148,17 @@ exports.createInternalJob = (
     plugin,
   }
 
-  job.contentDigest = createContentDigest({
+  augmentedJob.contentDigest = createContentDigest({
     name: job.name,
-    inputPaths: job.inputPaths.map(inputPath => inputPath.contentDigest),
-    outputDir: job.outputDir,
-    args: job.args,
-    plugin: job.plugin,
+    inputPaths: augmentedJob.inputPaths.map(
+      inputPath => inputPath.contentDigest
+    ),
+    outputDir: augmentedJob.outputDir,
+    args: augmentedJob.args,
+    plugin: augmentedJob.plugin,
   })
 
-  return job
+  return augmentedJob
 }
 
 /**

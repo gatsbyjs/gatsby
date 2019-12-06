@@ -44,6 +44,10 @@ const getJobsManager = () => {
 }
 
 const pDefer = require(`p-defer`)
+const plugin = {
+  name: `gatsby-plugin-test`,
+  version: `1.0.0`,
+}
 
 const createMockJob = (overrides = {}) => {
   return {
@@ -57,10 +61,6 @@ const createMockJob = (overrides = {}) => {
       param1: `param1`,
       param2: `param2`,
     },
-    plugin: {
-      name: `gatsby-plugin-test`,
-      version: `1.0.0`,
-    },
     ...overrides,
   }
 }
@@ -68,7 +68,7 @@ const createMockJob = (overrides = {}) => {
 const createInternalMockJob = (overrides = {}) => {
   const { createInternalJob } = getJobsManager()
 
-  return createInternalJob(createMockJob(overrides), ROOT_DIR)
+  return createInternalJob(createMockJob(overrides), plugin, ROOT_DIR)
 }
 
 describe(`Jobs manager`, () => {
@@ -97,7 +97,7 @@ describe(`Jobs manager`, () => {
     it(`should return the correct format`, async () => {
       const { createInternalJob } = getJobsManager()
       const mockedJob = createMockJob()
-      const job = await createInternalJob(mockedJob, ROOT_DIR)
+      const job = createInternalJob(mockedJob, plugin, ROOT_DIR)
 
       expect(job).toStrictEqual(
         expect.objectContaining({
@@ -132,12 +132,24 @@ describe(`Jobs manager`, () => {
 
       expect.assertions(1)
       try {
-        await createInternalJob(jobArgs, ROOT_DIR)
+        createInternalJob(jobArgs, plugin, ROOT_DIR)
       } catch (err) {
         expect(err).toMatchInlineSnapshot(
           `[Error: /anotherdir/files/image.jpg is not inside <PROJECT_ROOT>/packages/gatsby/src/utils/__tests__. Make sure your files are inside your gatsby project.]`
         )
       }
+    })
+
+    it(`shouldn't augument a job twice`, () => {
+      jest.doMock(`uuid/v4`)
+      const uuid = require(`uuid/v4`)
+      uuid.mockReturnValue(`1234`)
+      const { createInternalJob } = getJobsManager()
+
+      const internalJob = createInternalJob(createMockJob(), plugin, ROOT_DIR)
+      createInternalJob(internalJob, plugin, ROOT_DIR)
+
+      expect(uuid).toHaveBeenCalledTimes(1)
     })
   })
 

@@ -1211,13 +1211,8 @@ actions.createJob = (job: Job, plugin?: ?Plugin = null) => {
 actions.createJobV2 = (job: JobV2, plugin: Plugin) => (dispatch, getState) => {
   const currentState = getState()
   const internalJob = createInternalJob(
-    {
-      ...job,
-      plugin: {
-        name: plugin.name,
-        version: plugin.version,
-      },
-    },
+    job,
+    plugin,
     currentState.program.directory
   )
 
