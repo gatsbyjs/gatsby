@@ -2,9 +2,9 @@ import React from "react"
 
 import PageRenderer from "./page-renderer"
 import normalizePagePath from "./normalize-page-path"
-import { StaticQueryContext } from "gatsby"
+// import { StaticQueryContext } from "gatsby"
 import {
-  getStaticQueryData,
+  // getStaticQueryData,
   getPageQueryData,
   registerPath as socketRegisterPath,
   unregisterPath as socketUnregisterPath,
@@ -26,11 +26,11 @@ const getPathFromProps = props =>
     ? normalizePagePath(props.pageResources.page.path)
     : undefined
 
-class JSONStore extends React.Component {
+class JSONStoreForPageQueries extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      staticQueryData: getStaticQueryData(),
+      // staticQueryData: getStaticQueryData(),
       pageQueryData: getPageQueryData(),
       path: null,
     }
@@ -38,7 +38,7 @@ class JSONStore extends React.Component {
 
   handleMittEvent = (type, event) => {
     this.setState({
-      staticQueryData: getStaticQueryData(),
+      // staticQueryData: getStaticQueryData(),
       pageQueryData: getPageQueryData(),
     })
   }
@@ -89,11 +89,11 @@ class JSONStore extends React.Component {
     }
 
     return (
-      <StaticQueryContext.Provider value={this.state.staticQueryData}>
-        <PageRenderer {...this.props} {...data} />
-      </StaticQueryContext.Provider>
+      // <StaticQueryContext.Provider value={this.state.staticQueryData}>
+      <PageRenderer {...this.props} {...data} />
+      // </StaticQueryContext.Provider>
     )
   }
 }
 
-export default JSONStore
+export default JSONStoreForPageQueries

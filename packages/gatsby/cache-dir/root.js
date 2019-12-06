@@ -9,7 +9,8 @@ import {
 } from "./navigation"
 import { apiRunner } from "./api-runner-browser"
 import loader from "./loader"
-import JSONStore from "./json-store"
+import JSONStoreForPageQueries from "./json-store-page-queries"
+import JSONStoreForStaticQueries from "./json-store-static-queries"
 import EnsureResources from "./ensure-resources"
 
 import { reportError, clearError } from "./error-overlay-handler"
@@ -48,7 +49,7 @@ const RouteHandler = props => (
       basepath: `/`,
     }}
   >
-    <JSONStore {...props} />
+    <JSONStoreForPageQueries {...props} />
   </BaseContext.Provider>
 )
 
@@ -130,4 +131,6 @@ const WrappedRoot = apiRunner(
   }
 ).pop()
 
-export default () => WrappedRoot
+export default () => (
+  <JSONStoreForStaticQueries>{WrappedRoot}</JSONStoreForStaticQueries>
+)
