@@ -92,7 +92,10 @@ class LocationHandler extends React.Component {
     let custom404
     if (real404PageResources) {
       custom404 = (
-        <JSONStore {...this.props} pageResources={real404PageResources} />
+        <JSONStoreForPageQueries
+          {...this.props}
+          pageResources={real404PageResources}
+        />
       )
     }
 
