@@ -57,7 +57,7 @@ module.exports = {
 
 Now we're all set to start setting up content editing with Tina. If you want to test it out, run `gatsby develop` and take a look. You should see an edit icon in the lower left-hand corner, open it to find an empty Tina sidebar. This [sidebar](https://tinacms.org/docs/concepts/sidebar) is the main interface for using Tina to edit and manage content.
 
-**! IMAGE OF EMPTY SIDEBAR HERE !**
+![Empty Tina Sidebar](./step-one_empty-sidebar.jpg)
 
 ## Add a Form
 
@@ -105,7 +105,7 @@ You can add a form to the sidebar from any component. When that component is ren
 
 Now spin up the development server (`gatsby develop`) and see what the default form looks like.
 
-**! IMAGE OF POST PAGE WITH FORM HERE !**
+![Default Form](./step-two_default-form.jpg)
 
 We should have access to all the fields passed into the component via GraphQL. Without specifying how the form should display, default labels and values are rendered.
 
@@ -144,7 +144,7 @@ We can customize the form by defining a form options object. This provides contr
 
 Now instead of the default form, open up the sidebar to see the custom `BlogPostForm`.
 
-**! IMAGE OF POST PAGE WITH CUSTOM FORM HERE !**
+![Custom Form](./step-three_custom-form.jpg)
 
 ## Add In-Page Editing
 
@@ -155,7 +155,7 @@ Editing in the sidebar works fine for many types of content. Yet, long-form cont
    ```javascript
    import { liveRemarkForm } from "gatsby-tinacms-remark"
    import { Wysiwyg } from "@tinacms/fields"
-   import { TinaField } from "@tinacms"
+   import { TinaField } from "tinacms"
    import { Button as TinaButton } from "@tinacms/styles"
    ```
 
@@ -169,31 +169,25 @@ Editing in the sidebar works fine for many types of content. Yet, long-form cont
 
    ```javascript
    <TinaField name="rawMarkdownBody" Component={Wysiwyg}>
-     <div
-       dangerouslySetInnerHTML={{
-         __html: props.data.markdownRemark.html,
-       }}
-     />
+     <section dangerouslySetInnerHTML={{ __html: post.html }} />
    </TinaField>
    ```
 
-4. Add a button to toggle ‘edit’ mode. This button also serves as a flag to signal inline content editing.
+4. Add a button anywhere on your page to toggle ‘edit’ mode. This button also serves as a flag to signal inline content editing.
 
    ```
-   const { isEditing, setIsEditing } = props
+   const { isEditing, setIsEditing } = this.props
 
    <TinaButton primary onClick={() => setIsEditing(p => !p)}>{isEditing ? 'Preview' : 'Edit'}</TinaButton>
    ```
 
 The `liveRemarkForm` HOC is similar to `remarkForm`, they both return components where Tina can edit the data that they render. With `RemarkForm`, this data is edited in the sidebar. With `liveRemarkForm`, the data is edited on the page. The difference is, `liveRemarkForm` returns a component wrapped in a `TinaForm`. In 'edit-mode', the form displays on the page itself.
 
-> Please note, `liveRemarkForm` still accepts a form definition, so the sidebar form will remain the same.
-
 Within the template component, we can wrap child elements in a `TinaField` component. `TinaField` allows us to render a field on the page, such as a wysiwyg editor. The `Component` prop tells Tina which field component to render in edit-mode. In non-edit-mode (_and in production_), `TinaField` will pass the child elements that it wraps.
 
 To trigger edit-mode, `liveRemarkForm` provides a state variable and hook: `isEditing` and `setIsEditing`. These are passed as props to the template component. In the example above, `TinaButton` toggles this state. You could create your own button to handle this. Or, you can import the same `Button` (as `TinaButton`) used in the sidebar.
 
-**! IMAGE OF POST PAGE WITH INLINE EDITING HERE !**
+![Inline Editing](./step-four_inline-editing.jpg)
 
 ## Add Create Post Button
 
@@ -206,7 +200,7 @@ We will register the `content-creator` plugin in a component on the site. When t
 1. Import `withPlugin` and `RemarkCreatorPlugin`.
 
    ```javascript
-   import { withPlugin } from "react-tinacms"
+   import { withPlugin } from "tinacms"
    import { RemarkCreatorPlugin } from "gatsby-tinacms-remark"
    ```
 
@@ -238,14 +232,14 @@ We will register the `content-creator` plugin in a component on the site. When t
 3. Export the component and plugin using `withPlugin()`.
 
    ```
-   export default withPlugin(BlogIndex, CreateBlogPlugin)
+   export default withPlugin(Layout, CreateBlogPlugin)
    ```
 
 The 'create-content' button shows up in the top right-hand corner of the sidebar menu. It looks like a plus ➕ icon. Click it and add a new blog post to the site!
 
 We now have a way to add new posts from the Tina sidebar. The location of the new files will be based on the return value from the `filename` property. There's lots of ways to configure this return value, please reference the [documentation](https://tinacms.org/docs/gatsby/creating-new-files#4-formatting-the-filename--path) for more info.
 
-**! IMAGE OF SIDEBAR ADD BUTTON HERE !**
+![Create Content](./step-five_create-content.jpg)
 
 ## Tina Teams
 
