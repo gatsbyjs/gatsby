@@ -11,12 +11,12 @@ free](https://www.gatsbyjs.org/blog/2019-11-25-getting-started-with-gatsby-cloud
 ## The problem
 So what problem did we learn about?
 
-When watching folks onboard onto Gatsby Cloud, there was a clear point of confusion. This screenshot depicts step one of Gatsby Cloud onboarding, during which users select an organization and a repository from GitHub. I drew speech bubbles on top of the screenshot pointing out that users are confused by this screen. One speech bubble says: “I don’t even know what organization this is referring to!” while the other says “If I’m just trying out Gatsby for personal use, I don’t want to save my Gatsby project in my work’s GitHub organization.”
-
-![Screenshot](select-an-organization-confusion.png)
+When watching folks onboard onto Gatsby Cloud, there was a clear point of confusion. This screenshot depicts step two of Gatsby Cloud onboarding, during which users select an organization from GitHub. I drew a speech bubble on top of the screenshot pointing out that users are confused by this screen. The speech bubble says: “Wait, I don't want to create a repository in my work's GitHub organization. Terminate mission!"
+ 
+![Screenshot](select-work-org-confusion.png)
 
 ## What was the real problem?
-We knew users were confused, yet we didn’t know why. Here are some principles that helped us figure out why they were confused.
+We knew users were confused, yet we didn’t know how to solve it quite yet. Here are some principles that helped us figure out the fundamental root of confusion and how to resolve it.
 
 ## Interaction is negative
 
@@ -48,7 +48,7 @@ Then, this screen asks them to “add new organization.” This is where the sof
 
 By the time the user adds an organization (and they don’t know why they have to add it), and sees this next screen below, of course they are confused about why they added an organization. They didn’t need to!
  
-![screenshot of step two of Gatsby Cloud onboarding, during which users select an organization and a repository from GitHub. I drew speech bubbles on top of the screenshot pointing out that users are confused by this screen. One speech bubble says: “Wait, I don't want to create a repository in my work's GitHub organization. Terminate mission!”](select-work-org-confusion.png)
+![screenshot of step two of Gatsby Cloud onboarding, during which users select an organization from GitHub. I drew a speech bubble on top of the screenshot pointing out that users are confused by this screen. The speech bubble says: “Wait, I don't want to create a repository in my work's GitHub organization. Terminate mission!”](select-work-org-confusion.png)
 
 To reduce interaction by inferring from history, we assume the user wants to save their first site in their GitHub personal account, the last value they provided us with when they logged in. They can *correct* this assumption if it’s wrong.
 
