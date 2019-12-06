@@ -1,5 +1,6 @@
 ---
 title: React
+disableTableOfContents: true
 ---
 
 Learn about React, including what it is, why you might use it, and how it fits into the Gatsby ecosystem.
