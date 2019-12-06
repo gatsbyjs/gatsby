@@ -12,6 +12,7 @@ In this guide, you will learn how to deploy your Gatsby site to Firebase Hosting
 
    - installed [Node.js](https://nodejs.org/en/download/) on your local machine.
    - a [Firebase Account](https://console.firebase.google.com).
+   - created a [Firebase Project](https://firebase.google.com/docs/web/setup#create-firebase-project).
 
 1. This guide assumes that you already have a Gatsby project on your local machine.
 
