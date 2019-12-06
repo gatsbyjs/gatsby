@@ -4,7 +4,7 @@ title: Deploying to Firebase Hosting
 
 In this guide, you will learn how to deploy your Gatsby site to Firebase Hosting.
 
-[Firebase Hosting](https://firebase.google.com/docs/hosting) is a free web content hosting for developers. With a single command, you can quickly deploy web apps and serve both static and dynamic content to a global CDN (content delivery network).
+[Firebase Hosting](https://firebase.google.com/docs/hosting) is a free web content hosting platform for developers. With a single command, you can quickly deploy web apps and serve both static and dynamic content to a global CDN (content delivery network).
 
 ## Pre-requisites
 
@@ -43,7 +43,7 @@ In this guide, you will learn how to deploy your Gatsby site to Firebase Hosting
    - select the Firebase products you wish to setup. Be sure to select **Firebase Hosting**.
    - select the Firebase Project you wish to use or create a new one, if you haven't done it previously.
 
-   When prompted to select your public directory, you can simply press <kbd>enter</kbd> since it defaults to `public`, which is also Gatsby's default public directory.
+   When prompted to select your public directory, press <kbd>enter</kbd>. It will default to `public`, which is also Gatsby's default public directory.
 
 1. Prepare your site for deployment by running `gatsby build`. This generates a publishable version of your site in the `public` folder.
 
