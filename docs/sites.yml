@@ -8859,6 +8859,17 @@
   built_by: Thomas Maximini
   built_by_url: https://github.com/tmaximini
   featured: false
+- title: Harshil Shah
+  url: https://harshil.net
+  main_url: https://harshil.net
+  description: >
+    Harshil Shah is an iOS engineer from Mumbai, India
+  categories:
+    - Blog
+    - Mobile Development
+  built_by: Harshil Shah
+  built_by_url: https://twitter.com/_HarshilShah
+  featured: false
 - title: Code Examples
   url: https://codeexamples.dev/
   main_url: https://codeexamples.dev/
