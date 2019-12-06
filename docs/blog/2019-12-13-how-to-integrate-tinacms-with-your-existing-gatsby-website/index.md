@@ -1,6 +1,6 @@
 ---
 title: Integrate TinaCMS With Your Gatsby Website
-date: "2019-11-28T00:00:00.000Z"
+date: "2019-12-13T00:00:00.000Z"
 author: Scott Byrne
 tags:
   - cms
