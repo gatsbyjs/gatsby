@@ -32,7 +32,9 @@ Source plugins need to create Nodes for data that they would like to make availa
 
 ### `sourceNodes`
 
-In general, the lifecycle where your plugin should create Nodes is the [`sourceNodes`](/docs/node-apis/#sourceNodes) API. To do this, you can call the `createNode` action as illustrated in the example below.
+In general, the lifecycle where your plugin should create Nodes is the [`sourceNodes`](/docs/node-apis/#sourceNodes) API. For the majority of apps, using `sourceNodes` is the appropriate and sufficient choice. If your application is reacting in real-time to changes from an external data source, please look at the documentation for sourceNodesStatefully to determine if that is a better fit for your use case.
+
+To do this, you can call the `createNode` action as illustrated in the example below.
 
 ```javascript:title=gatsby-node.js
 exports.sourceNodes = async ({ actions }) => {
