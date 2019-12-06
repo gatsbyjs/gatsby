@@ -38,7 +38,7 @@ As usual when setting up a new tool, we need to install a few packages. We will 
 $ yarn add gatsby-plugin-tinacms gatsby-tinacms-remark gatsby-tinacms-git styled-components
 ```
 
-After installing those packages, add `gatsby-plugin-tinacms` to the list of plugins in `gatsby-config.js`. We'll also pass options to tell Tina what plugins to use:
+After installing those packages, add `gatsby-plugin-tinacms` to the list of plugins in `gatsby-config.js`. We'll also pass options to tell Tina what plugins to use and when to hide the sidebar:
 
 ```javascript
 module.exports = {
@@ -47,6 +47,10 @@ module.exports = {
     {
       resolve: "gatsby-plugin-tinacms",
       options: {
+        sidebar: {
+          hidden: process.env.NODE_ENV === "production",
+          position: "displace",
+        },
         plugins: ["gatsby-tinacms-git", "gatsby-tinacms-remark"],
       },
     },
