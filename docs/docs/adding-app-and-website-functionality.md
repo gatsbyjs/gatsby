@@ -71,6 +71,22 @@ The following diagram shows how a `<Router />` component can be mounted on a pag
 
 In this illustration, a client-rendered user page could display specific information about the logged-in user, and dynamic client-side routes at `/app/tasks/:id` could display specific information for a task of a given ID.
 
+## Differences between Gatsby and other React apps
+
+There is a bit of a paradigm shift to overcome in understanding how a Gatsby app is different from an app created with a tool like Create React App.
+
+> _A site built with Create React App can actually be [ported to Gatsby](/docs/porting-from-create-react-app-to-gatsby/)._
+
+### The global `App.js` component
+
+One main distinction explained in the diagrams in the section on [common patterns for Gatsby apps](#common-patterns-for-gatsby-apps) is the combination of hybrid and static pages that Gatsby offers vs one global `App.js` component. An app from Create React App will have exclusivley client routes set up on one `App.js` component rendered at the root, which isn't unmounted. The `App.js` component is often the place in a React app where Theme Providers and Context are wrapped around the entire app so some data can be provided to all components or preserved between route changes. Gatsby has a root element that can be wrapped to preserve state or data between page navigation as well, but it is accessed through the [`wrapRootElement` API](/docs/browser-apis/#wrapRootElement) instead of being in a file in your `src` folder. Persistent UI elements can be wrapped around pages with the [`wrapPageElement` API](/docs/browser-apis/#wrapPageElement).
+
+### Page and route creation
+
+In a React app, creating pages requires setting up a router. Gatsby instead handles some pieces of routing on your behalf; you can create a page by putting an exported component inside the pages directory. Gatsby will generate a page with a fixed URL based on the filename of the component. You can still import a router and set up routes yourself though.
+
+> _To compare Gatsby with other Jamstack tools like Next.js and Jekyll, check out the [feature comparison](/features/jamstack/) page._
+
 ---
 
 Generating performant sites with statically rendered assets is a core focus of Gatsby, but it's only one side of the coin. In this section of the docs, you will find a showcase of guides and concepts on how to level up your site to include all the app-like features on top of the static base.

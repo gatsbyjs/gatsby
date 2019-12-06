@@ -46,7 +46,7 @@ individuals and companies.
 - [Jason Quense](https://github.com/jquense)
 - [Fabien Bernard](https://github.com/fabien0102)
 - [Scotty Eckenthal](https://github.com/scottyeck)
-- [Nicholas Young](https://github.com/nicholaswyoung)
+- [Nicholas Young](https://github.com/secretfader)
 - [Florian Kissling](https://github.com/fk)
 - [Jacob Bolda](https://github.com/jbolda)
 - [Noah Lange](https://github.com/noahlange)

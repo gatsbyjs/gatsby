@@ -65,8 +65,6 @@
           items:
             - title: Submit to Site Showcase
               link: /contributing/site-showcase-submissions/
-            - title: Submit to Creator Showcase
-              link: /contributing/submit-to-creator-showcase/
             - title: Submit to Starter Library
               link: /contributing/submit-to-starter-library/
             - title: Submit to Plugin Library
