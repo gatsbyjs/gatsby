@@ -8859,3 +8859,16 @@
   built_by: Thomas Maximini
   built_by_url: https://github.com/tmaximini
   featured: false
+- title: Code Examples
+  url: https://codeexamples.dev/
+  main_url: https://codeexamples.dev/
+  description: >
+    Examples about various programming languages like JavaScript, Python, Rust, Angular, React, Vue.js etc.
+  categories:
+    - Blog
+    - Education
+    - Programming
+    - Web Development
+  built_by: Sai gowtham
+  built_by_url: https://twitter.com/saigowthamr
+  featured: false
