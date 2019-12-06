@@ -73,9 +73,9 @@ exports.onRouteUpdateDelayed = true
 exports.onRouteUpdate = true
 
 /**
- * Allows a plugin to influence scrolling behavior on navigation. 
- * Default behavior is persisting last known scrolling positions and scrolling back to them on navigation. 
- * Plugins can also override this and return an Array of coordinates or an element name to scroll to. 
+ * Allows a plugin to influence scrolling behavior on navigation.
+ * Default behavior is persisting last known scrolling positions and scrolling back to them on navigation.
+ * Plugins can also override this and return an Array of coordinates or an element name to scroll to.
  * @param {object} $0
  * @param {object} $0.prevRouterProps The previous state of the router before the route change.
  * @param {object} $0.routerProps The current state of the router.
