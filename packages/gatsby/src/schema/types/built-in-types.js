@@ -2,7 +2,7 @@ const { parse } = require(`graphql`)
 
 const fileType = `
   type File implements Node @infer {
-    sourceInstanceName: String
+    sourceInstanceName: String!
     absolutePath: String!
     relativePath: String!
     extension: String!
@@ -38,7 +38,7 @@ const fileType = `
 
 const directoryType = `
   type Directory implements Node @infer {
-    sourceInstanceName: String
+    sourceInstanceName: String!
     absolutePath: String!
     relativePath: String!
     extension: String!

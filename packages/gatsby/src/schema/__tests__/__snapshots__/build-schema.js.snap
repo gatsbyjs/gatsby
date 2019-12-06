@@ -85,7 +85,7 @@ input DateQueryOperatorInput {
 }
 
 type Directory implements Node {
-  sourceInstanceName: String
+  sourceInstanceName: String!
   absolutePath: String!
   relativePath: String!
   extension: String!
@@ -450,7 +450,7 @@ input DirectorySortInput {
 }
 
 type File implements Node {
-  sourceInstanceName: String
+  sourceInstanceName: String!
   absolutePath: String!
   relativePath: String!
   extension: String!

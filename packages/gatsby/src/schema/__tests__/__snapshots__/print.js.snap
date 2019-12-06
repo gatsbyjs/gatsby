@@ -13,7 +13,7 @@ exports[`Print type definitions allows specifying types owned by plugins to excl
 "### Type definitions saved at 2019-01-01 ###
 
 type File implements Node @dontInfer {
-  sourceInstanceName: String
+  sourceInstanceName: String!
   absolutePath: String!
   relativePath: String!
   extension: String!
@@ -47,7 +47,7 @@ type File implements Node @dontInfer {
 }
 
 type Directory implements Node @dontInfer {
-  sourceInstanceName: String
+  sourceInstanceName: String!
   absolutePath: String!
   relativePath: String!
   extension: String!
@@ -137,7 +137,7 @@ exports[`Print type definitions allows specifying types to exclude 1`] = `
 "### Type definitions saved at 2019-01-01 ###
 
 type File implements Node @dontInfer {
-  sourceInstanceName: String
+  sourceInstanceName: String!
   absolutePath: String!
   relativePath: String!
   extension: String!
@@ -171,7 +171,7 @@ type File implements Node @dontInfer {
 }
 
 type Directory implements Node @dontInfer {
-  sourceInstanceName: String
+  sourceInstanceName: String!
   absolutePath: String!
   relativePath: String!
   extension: String!
@@ -263,7 +263,7 @@ exports[`Print type definitions saves correct type definitions 1`] = `
 "### Type definitions saved at 2019-01-01 ###
 
 type File implements Node @dontInfer {
-  sourceInstanceName: String
+  sourceInstanceName: String!
   absolutePath: String!
   relativePath: String!
   extension: String!
@@ -297,7 +297,7 @@ type File implements Node @dontInfer {
 }
 
 type Directory implements Node @dontInfer {
-  sourceInstanceName: String
+  sourceInstanceName: String!
   absolutePath: String!
   relativePath: String!
   extension: String!
