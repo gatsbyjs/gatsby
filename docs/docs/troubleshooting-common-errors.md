@@ -70,9 +70,43 @@ A common problem that trips up users that install and begin to use styled-compon
 
 Adding `gatsby-plugin-styled-components` (in the case of styled-components) or `gatsby-plugin-emotion` (in the case of emotion) to `gatsby-config.js` will inform Gatsby to process the styles server-side so they display correctly in the final build.
 
+## Errors with GraphQL
+
+Gatsby's GraphQL data layer provides access to build time data, there are sometimes errors you may encounter while implementing plugins that are sourcing data or adding nodes to the schema yourself.
+
+### Unknown field 'A' on type 'B'
+
+If the data you are requesting in a GraphQL query differs from what has been [sourced](/docs/content-and-data/) in the GraphQL schema you might encounter an error like `Unknown field 'A' on type 'B'`. Like the error suggests, a field you are asking for is not defined under the type that is listed. If your site is still building okay, you can open up `localhost:8000/___graphql` and examine your schema which includes the definition of what fields are included on the type provided by the error. This can help you identify what fields aren't being created and locate where those fields should be created, whether by a plugin or in your code.
+
+If the error is describing an `Unknown field 'X' on type 'Query'`, the content type you are trying to source is likely not processing correctly. The `Query` type represents the top-level root queries that are included in the GraphQL schema. Source plugins will often create root nodes that you can query like `mdx` (created by `gatsby-plugin-mdx`) or for a collection of root nodes like `allFile` (created by `gatsby-source-filesystem`).
+
+Some ideas for debugging these errors is to verify the following:
+
+- you are using a transformer plugin (like `gatsby-transformer-yaml`) the data you need is pulled in using a source plugin (like `gatsby-source-filesystem`)
+
+```javascript:title=gatsby-config.js
+{
+  plugins: [
+    `gatsby-transformer-yaml`,
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `./src/data/`, // location of yaml files
+      },
+    },
+  ]
+}
+```
+
+- the structure of your content being sourced matches your GraphQL schema as well as the way you are querying the data
+
+Comparing your GraphQL query to your site's schema in [GraphiQL at `localhost:8000/___graphql`](http://localhost:8000/___graphql) and whatever plugin or code you are using to source data is a great way to find these errors as they should all express the data in the same shape.
+
+- a source plugin you are using, or your own implementation of the [`sourceNodes` API](/docs/node-apis/#sourceNodes) isn't misconfigured
+
 ## Errors using gatsby-image and sharp
 
-Gatsby's image processing is broken up into different packages
+Gatsby's image processing is broken up into different packages which need to work together to source images and transform them into different optimized versions. You might run into these errors getting them to play together nicely.
 
 ### Field "image" must not have a selection since type "String" has no subfields
 
