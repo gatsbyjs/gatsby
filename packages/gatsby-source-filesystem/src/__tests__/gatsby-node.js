@@ -83,7 +83,9 @@ describe(`tests`, () => {
   describe(`handles chokidar events emitted before "ready"`, () => {
     it(`queues node creation from added files`, async () => {
       const api = createApi()
-      const sourceNodesPromise = gatsbyNode.sourceNodes(api, { path: `` })
+      const sourceNodesPromise = gatsbyNode.sourceNodesStatefully(api, {
+        path: ``,
+      })
       // allow microtasks execution
       await tick()
 
@@ -102,7 +104,9 @@ describe(`tests`, () => {
 
     it(`queues node creation from changed files`, async () => {
       const api = createApi()
-      const sourceNodesPromise = gatsbyNode.sourceNodes(api, { path: `` })
+      const sourceNodesPromise = gatsbyNode.sourceNodesStatefully(api, {
+        path: ``,
+      })
       // allow microtasks execution
       await tick()
 
@@ -120,7 +124,9 @@ describe(`tests`, () => {
 
     it(`queues node creation from added directories`, async () => {
       const api = createApi()
-      const sourceNodesPromise = gatsbyNode.sourceNodes(api, { path: `` })
+      const sourceNodesPromise = gatsbyNode.sourceNodesStatefully(api, {
+        path: ``,
+      })
       // allow microtasks execution
       await tick()
 
@@ -139,7 +145,9 @@ describe(`tests`, () => {
 
     it(`queues node deletion from deleted files`, async () => {
       const api = createApi()
-      const sourceNodesPromise = gatsbyNode.sourceNodes(api, { path: `` })
+      const sourceNodesPromise = gatsbyNode.sourceNodesStatefully(api, {
+        path: ``,
+      })
       // allow microtasks execution
       await tick()
 
@@ -157,7 +165,9 @@ describe(`tests`, () => {
 
     it(`queues node deletion from deleted directories`, async () => {
       const api = createApi()
-      const sourceNodesPromise = gatsbyNode.sourceNodes(api, { path: `` })
+      const sourceNodesPromise = gatsbyNode.sourceNodesStatefully(api, {
+        path: ``,
+      })
       // allow microtasks execution
       await tick()
 
@@ -177,7 +187,9 @@ describe(`tests`, () => {
   describe(`handles chokidar events emitted after "ready"`, () => {
     it(`creates nodes from added files`, async () => {
       const api = createApi()
-      const sourceNodesPromise = gatsbyNode.sourceNodes(api, { path: `` })
+      const sourceNodesPromise = gatsbyNode.sourceNodesStatefully(api, {
+        path: ``,
+      })
       // allow microtasks execution
       await tick()
 
@@ -196,7 +208,9 @@ describe(`tests`, () => {
 
     it(`creates nodes from changed files`, async () => {
       const api = createApi()
-      const sourceNodesPromise = gatsbyNode.sourceNodes(api, { path: `` })
+      const sourceNodesPromise = gatsbyNode.sourceNodesStatefully(api, {
+        path: ``,
+      })
       // allow microtasks execution
       await tick()
 
@@ -215,7 +229,9 @@ describe(`tests`, () => {
 
     it(`creates nodes from added directories`, async () => {
       const api = createApi()
-      const sourceNodesPromise = gatsbyNode.sourceNodes(api, { path: `` })
+      const sourceNodesPromise = gatsbyNode.sourceNodesStatefully(api, {
+        path: ``,
+      })
       // allow microtasks execution
       await tick()
 
@@ -234,7 +250,9 @@ describe(`tests`, () => {
 
     it(`delete nodes from deleted files`, async () => {
       const api = createApi()
-      const sourceNodesPromise = gatsbyNode.sourceNodes(api, { path: `` })
+      const sourceNodesPromise = gatsbyNode.sourceNodesStatefully(api, {
+        path: ``,
+      })
       // allow microtasks execution
       await tick()
 
@@ -252,7 +270,9 @@ describe(`tests`, () => {
 
     it(`delete nodes from deleted directories`, async () => {
       const api = createApi()
-      const sourceNodesPromise = gatsbyNode.sourceNodes(api, { path: `` })
+      const sourceNodesPromise = gatsbyNode.sourceNodesStatefully(api, {
+        path: ``,
+      })
       // allow microtasks execution
       await tick()
 
