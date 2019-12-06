@@ -66,7 +66,7 @@ The following errors are related to styles in your site, using CSS, preprocessor
 
 ### Inconsistent CSS styles between develop and build using styled-components or emotion
 
-A common problem that trips up users that install and begin to use styled-components or emotion is forgetting to include the related plugin in the config. Because `gatsby develop` doesn't run server-side rendering, the build may look different if the plugin is not included to tell Gatsby to server-side render the styles for the CSS-in-JS solution being used.
+A common problem that trips up users that install and begin to use styled-components or emotion is not including the related plugin in the config. Because `gatsby develop` doesn't run server-side rendering, the build may look different if the plugin is not included to tell Gatsby to server-side render the styles for the CSS-in-JS solution being used.
 
 Adding `gatsby-plugin-styled-components` (in the case of styled-components) or `gatsby-plugin-emotion` (in the case of emotion) to `gatsby-config.js` will inform Gatsby to process the styles server-side so they display correctly in the final build.
 
@@ -114,7 +114,7 @@ Another possibility is that empty strings are used for image paths somewhere in 
 
 ### Problems installing `sharp` with `gatsby-plugin-sharp` - gyp ERR! build error
 
-If you see an error message in the console when installing dependencies that look related to sharp like `gyp ERR! build error` and `npm ERR! Failed at the sharp@x.x.x install script`, then can often be resolved by deleting the `node_nodules` folder in the root of your project and installing dependencies again:
+If you see an error message in the console when installing dependencies that look related to sharp like `gyp ERR! build error` and `npm ERR! Failed at the sharp@x.x.x install script`, they can often be resolved by deleting the `node_nodules` folder in the root of your project and installing dependencies again:
 
 ```shell
 # be careful as this command will delete all files recursively in
@@ -126,7 +126,7 @@ rm -rf node_modules
 npm install
 ```
 
-The version of Node.js that's used to install sharp needs to match the versioin of Node.js that is run, so clearing `node_modules` and reinstalling often resolves the problem.
+The version of Node.js that's used to install sharp needs to match the version of Node.js that is run, so clearing `node_modules` and reinstalling often resolves the problem.
 
 ### Incompatible library version: sharp.node requires version X or later, but Y provides version Z
 
@@ -174,9 +174,9 @@ Module not found: Error: Can't resolve `../..SomeFile.svg`
   ...
 ```
 
-The build is failing to find the file at `../..SomeFile.svg`. This could be frustrating if your site works when you when run it locally with `gatsby develop`, and even works when you run `gatsby build` and `gatsby serve` locally. A likely problem is that the operating system you are running locally is different than the one where your site is deployed where it's likely running some distribution and flavor of Linux.
+The build is failing to find the file at `../..SomeFile.svg`. This can be frustrating if your site works when you when run it locally with `gatsby develop`, and even works when you run `gatsby build` and `gatsby serve` locally. A likely problem is that the operating system you are running locally is different than the one where your site is deployed. Oftentimes your deployment target is running some distribution and flavor of Linux.
 
-The most common culprit to fix this issue is with filepaths having mixed capitalization. In the example above, check to make sure that the file is actually named `SomeFile.svg` and not something different like `Somefile.svg` or `somefile.svg`. Some operating systems will pick up on this discrepancy for you and find the image without any problems. Your deployment environment may not.
+The most common culprit to prompt this issue is with filepaths having mixed capitalization. In the example above, check to make sure that the file is actually named `SomeFile.svg` and not something different like `Somefile.svg` or `somefile.svg`. Some operating systems will pick up on this discrepancy for you and find the image without any problems. Your deployment environment may not.
 
 Checking the capitalization of files output in your build logs and redeploying is the best next step.
 
