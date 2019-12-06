@@ -95,16 +95,14 @@ const runLocalWorker = async (workerFn, job) => {
 /**
  *
  * @param {AugmentedJob} job
- * @param {pDefer.DeferredPromise} deferred
  */
-const runJob = ({ plugin, ...job }, deferred) => {
+const runJob = ({ plugin, ...job }) => {
   const worker = require(`${plugin.name}/worker.js`)
   if (!worker[job.name]) {
-    deferred.reject(new Error(`No worker function found for ${job.name}`))
-    return
+    throw new Error(`No worker function found for ${job.name}`)
   }
 
-  runLocalWorker(worker[job.name], job).then(deferred.resolve, deferred.reject)
+  return runLocalWorker(worker[job.name], job)
 }
 
 const handleJobEnded = () => {
@@ -161,7 +159,7 @@ exports.createInternalJob = (
  * @param {AugmentedJob} job
  * @return {Promise<unknown>}
  */
-exports.enqueueJob = job => {
+exports.enqueueJob = async job => {
   // When we already have a job that's executing, return the same promise.
   if (jobsInProcess.has(job.contentDigest)) {
     return jobsInProcess.get(job.contentDigest).deferred.promise
@@ -174,27 +172,19 @@ exports.enqueueJob = job => {
     activityForJobs.start()
   }
 
-  // TODO: check cache folder for already stored jobs
   const deferred = pDefer()
-  // node 8 doenst have finally so we call then & catch
-  deferred.promise = deferred.promise
-    .catch(err => {
-      handleJobEnded()
-
-      throw err
-    })
-    .then(res => {
-      handleJobEnded()
-
-      return res
-    })
-
   jobsInProcess.set(job.contentDigest, {
     id: job.id,
     deferred,
   })
 
-  runJob(job, deferred)
+  try {
+    await deferred.resolve(runJob(job))
+  } catch (err) {
+    deferred.reject(err)
+  } finally {
+    handleJobEnded()
+  }
 
   return deferred.promise
 }
