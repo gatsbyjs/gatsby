@@ -141,13 +141,6 @@ class IndexRoute extends React.Component {
           <HomepageBlog posts={posts} />
 
           <HomepageNewsletter />
-
-          <HomepageSection
-            css={{
-              paddingTop: `0 !important`,
-              paddingBottom: `0 !important`,
-            }}
-          />
         </main>
         <FooterLinks />
       </Layout>
