@@ -8831,3 +8831,31 @@
   built_by: Jarod Peachey
   built_by_url: https://github.com/jarodpeachey
   featured: false
+- title: Thomas Maximini
+  main_url: https://www.thomasmaximini.com/
+  url: https://www.thomasmaximini.com/
+  # optional: for open-source sites, this URL points to the repo that powers the site
+  source_url: https://github.com/tmaximini/maxi.io
+  description: >
+    Thomas Maximini is a full stack web developer from Germany
+  categories:
+    - Blog
+    - JavaScript
+    - Photography
+    - Portfolio
+    - Web Development
+  built_by: Thomas Maximini
+  built_by_url: https://github.com/tmaximini
+  featured: false
+- title: Aretha Iskandar
+  main_url: https://arethaiskandar.com/
+  url: https://arethaiskandar.com/
+  # optional: for open-source sites, this URL points to the repo that powers the site
+  source_url: https://github.com/tmaximini/arethaiskandar.com
+  description: >
+    Aretha Iskandar is a Jazz and Soul Singer / Songwriter from Paris
+  categories:
+    - Music
+  built_by: Thomas Maximini
+  built_by_url: https://github.com/tmaximini
+  featured: false
