@@ -132,7 +132,7 @@ The version of Node.js that's used to install sharp needs to match the versioin 
 
 The error `Incompatible library version: sharp.node requires version X or later, but Y provides version Z` means that there are multiple incompatible versions of the `sharp` package installed in `node_modules`. Your error may look something like this:
 
-```
+```shell
 Something went wrong installing the "sharp" module
 dlopen(/Users/you/gatsby-site/node_modules/sharp/build/Release/sharp.node, 1): Library not loaded: @rpath/libglib-2.0.dylib
   Referenced from: /Users/you/gatsby-site/node_modules/sharp/build/Release/sharp.node
@@ -150,7 +150,7 @@ To fix this, you'll need to update all Gatsby plugins in the current project tha
 
 To update these packages, run:
 
-```sh
+```shell
 npm install gatsby-plugin-sharp gatsby-plugin-manifest gatsby-remark-images-contentful gatsby-source-contentful gatsby-transformer-sharp gatsby-transformer-sqip
 ```
 
