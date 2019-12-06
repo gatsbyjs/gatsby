@@ -173,12 +173,16 @@ Editing in the sidebar works fine for many types of content. Yet, long-form cont
    </TinaField>
    ```
 
-4. Add a button anywhere on your page to toggle ‘edit’ mode. This button also serves as a flag to signal inline content editing.
+4. Add a button anywhere on your page to toggle ‘edit’ mode. This button also serves as a flag to signal inline content editing. You'll only want this to display in production, so here you can see one way of rendering it conditionally.
 
    ```
    const { isEditing, setIsEditing } = this.props
 
-   <TinaButton primary onClick={() => setIsEditing(p => !p)}>{isEditing ? 'Preview' : 'Edit'}</TinaButton>
+   {process.env.NODE_ENV != "production" && (
+      <TinaButton primary onClick={() => setIsEditing(p => !p)}>
+        {isEditing ? "Preview" : "Edit"}
+      </TinaButton>
+    )}
    ```
 
 The `liveRemarkForm` HOC is similar to `remarkForm`, they both return components where Tina can edit the data that they render. With `RemarkForm`, this data is edited in the sidebar. With `liveRemarkForm`, the data is edited on the page. The difference is, `liveRemarkForm` returns a component wrapped in a `TinaForm`. In 'edit-mode', the form displays on the page itself.
