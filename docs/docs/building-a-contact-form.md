@@ -45,7 +45,7 @@ Each method detailed below will start with the following contact form:
 
 ### Getform
 
-Getform is a form backend platform which offers a free-plan for handling form submissions on static sites. In order to begin receiving form submissions from your Gatsby site, you must first create a form on the Gatsby site. When creating the form, direct the http POST method to the Getform, by placing the `name` attributes for the fields you want to make visible. (name, email, message etc.)
+Getform is a form backend platform which offers a free-plan for handling form submissions on static sites. Begin by creating a form on your Gatsby site that you can receive submissions from. When creating the form, direct the HTTP POST method to the Getform, by placing the `name` attributes for the fields you want to make visible. (name, email, message etc.)
 
 ```jsx:title=src/pages/contact.js
 <form method="post" action="https://getform.io/{your-unique-getform-endpoint}">
@@ -65,7 +65,7 @@ Getform is a form backend platform which offers a free-plan for handling form su
   ...
 </form>
 ```
-Once you've made the changes on your Gatsby contact form, you can head over to your contact page and start receiving submissions to the form, the submissions will then be visible on Getform dashboard. You can add multiple email addresses to receive email notifications for the forms created, as well as manipulate the data you see on Getform using Zapier and Webhooks options that are offered. 
+Once you've made the code changes to your form, you can head over to the contact page on your site and start submitting data to the form. The submissions will then be visible on the Getform dashboard. You can add multiple email addresses to receive email notifications for the forms created, as well as manipulate the data you see on Getform using Zapier and Webhooks options that are offered. 
  
 You can find more info on the registration process and form setup on the [Getform website](https://getform.io/) and find code examples (AJAX, reCAPTCHA etc) on their [Codepen](https://codepen.io/getform).
 
