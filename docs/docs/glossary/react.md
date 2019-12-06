@@ -12,9 +12,9 @@ Facebook first released React in 2013. The company still maintains the project, 
 
 Where publishing tools such as WordPress and Jekyll rely on a system of template files to create a UI, React uses [components](/docs/glossary#component). Components are contained chunks of JavaScript, CSS, and HTML or SVG that can be reused, shared, and combined to create a web site or application.
 
-Components may be purely presentational. For example, you might create a `Logo` component that's just an SVG image. Or a component may encapsulate functionality. An `InputBox` component might include an input control, a label, and some simple validation. 
+Components may be purely presentational. For example, you might create a `Logo` component that's just an SVG image. Or a component may encapsulate functionality. An `InputBox` component might include an input control, a label, and some simple validation.
 
-Components are also _composable_, which is a fancy way of saying that you can use multiple child components to create a parent component or view.  Indeed, this is how to build Gatsby pages and templates.
+Components are also _composable_, which is a fancy way of saying that you can use multiple child components to create a parent component or view. Indeed, this is how to build Gatsby pages and templates.
 
 React components respond to changes in _state_. In React, _state_ is a set of properties and values that determine how a component looks or behaves. State can change in response to user activity, such as a click or key press. State can also change as the result of a completed network request. When a value in a component's state changes, the component is the only part of the UI that changes. In other words, React can update part of a page or an entire view without requiring a full page reload.
 
@@ -22,5 +22,4 @@ Gatsby bundles React, [webpack](/docs/glossary#webpack), [GraphQL](/docs/glossar
 
 ### Learn more about React
 
-* [React](https://reactjs.org/) Official web site
-
+- [React](https://reactjs.org/) Official web site
