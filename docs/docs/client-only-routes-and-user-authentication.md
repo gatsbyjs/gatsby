@@ -49,7 +49,7 @@ const App = () => {
 export default App
 ```
 
-With routes nested under the `<Router />` from Reach Router, it will [render the component from the route that corresponds to the `location`](https://reach.tech/router/api/Router). In the case of the `/app/profile` path, the `Profile` component will be rendered.
+With routes nested under the `<Router />` from Reach Router, it will [render the component from the route that corresponds to the `location`](https://reach.tech/router/api/Router). In the case of the `/app/profile` path, the `Profile` component will be rendered, as its prefix matches the base path of `/app`, and the remaining part is identical to the child's path.
 
 ### Adjusting routes to account for authenticated users
 
