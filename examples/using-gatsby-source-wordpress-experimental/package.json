@@ -1,0 +1,35 @@
+{
+  "name": "using-gatsby-source-wordpress-experimental",
+  "description": "Gatsby example site using gatsby-source-wordpress@next",
+  "license": "MIT",
+  "version": "0.0.1",
+  "author": {
+    "name": "Tyler",
+    "email": "tyler@gatsbyjs.com"
+  },
+  "scripts": {
+    "develop": "gatsby develop",
+    "develop-clean": "gatsby clean && gatsby develop",
+    "build": "gatsby build",
+    "clean-build": "gatsby clean && gatsby build",
+    "start": "npm run develop",
+    "serve": "gatsby serve"
+  },
+  "dependencies": {
+    "@chakra-ui/core": "^0.4.1",
+    "@emotion/core": "^10.0.22",
+    "@emotion/styled": "^10.0.23",
+    "emotion-theming": "^10.0.19",
+    "gatsby": "2.17.2",
+    "gatsby-image": "^2.2.34",
+    "gatsby-plugin-chakra-ui": "^0.1.0",
+    "gatsby-plugin-sharp": "2.2.32",
+    "gatsby-source-filesystem": "^2.1.39",
+    "gatsby-transformer-sharp": "2.3.0",
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2"
+  },
+  "devDependencies": {
+    "prettier": "^1.13.7"
+  }
+}
