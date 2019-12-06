@@ -4,7 +4,7 @@ title: Deploying to Firebase Hosting
 
 In this guide, you will learn how to deploy your Gatsby site to Firebase Hosting.
 
-[Firebase Hosting](https://firebase.google.com/docs/hosting) is a free web content hosting for developers. With a single command, you can quickly deploy web apps and serve both static and dynamic content to a global CDN (content delivery network).
+[Firebase Hosting](https://firebase.google.com/docs/hosting) is a free web content hosting platform for developers. With a single command, you can quickly deploy web apps and serve both static and dynamic content to a global CDN (content delivery network).
 
 ## Pre-requisites
 
