@@ -1,7 +1,7 @@
 {
   "name": "gatsby-transformer-sharp",
   "description": "Gatsby transformer plugin for images using Sharp",
-  "version": "2.3.6",
+  "version": "2.3.7",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -30,7 +30,7 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "gatsby": "^2.12.0",
+    "gatsby": "^2.12.1",
     "gatsby-plugin-sharp": "^2.0.0-beta.3"
   },
   "repository": {

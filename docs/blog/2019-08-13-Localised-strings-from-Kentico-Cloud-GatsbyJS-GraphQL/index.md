@@ -34,11 +34,11 @@ If you want to look at building localized strings, the first step is to head to 
 
 Here is a [Content Item](https://docs.kenticocloud.com/tutorials/write-and-collaborate/write-content/adding-content-items) derived from a '_localized String_' Content Type, which has a single field for the 'value'.
 
-![An example of the localized content item](images/Localise-Content-Item.png)
+![An example of the localized content item](./images/Localise-Content-Item.png)
 
 As I mentioned earlier, localized strings work in a pair of 'key' and 'value'. The good thing about Kentico Cloud is that the 'key' is something you could derive from the 'Code name' for the content item and it saves you creating additional fields for it.
 
-![An example of the localized content item, showing the code name](images/Localise-Content-Item-Codename.png)
+![An example of the localized content item, showing the code name](./images/Localise-Content-Item-Codename.png)
 
 You will most likely be utilizing the IDs for the content item, but it's useful to have the code name as well.
 
@@ -47,7 +47,7 @@ You will most likely be utilizing the IDs for the content item, but it's useful 
 With your content type set up, the next step is to get your content in – ensuring you add the content for all your languages (I’m assuming you’ve already set up your languages in the settings!).
 
 _(If you need to know how to switch the content from one culture to another have a look at the [switching languages](https://docs.kenticocloud.com/tutorials/write-and-collaborate/create-multilingual-content/switching-languages) section in the Kentico Cloud documentation.)_
-![An example of the localized content item in FR, showing the code name](images/Localise-Content-Item-FR.png)
+![An example of the localized content item in FR, showing the code name](./images/Localise-Content-Item-FR.png)
 
 One thing to remember at this point is that if you want to use similar text (or simply give yourself a starting point) in the destination culture to your original culture, then you can use the [Copy from language](https://docs.kenticocloud.com/tutorials/write-and-collaborate/create-multilingual-content/translating-content-items#a-translating-a-content-item) option once you have switched over to the new culture.
 
@@ -60,18 +60,18 @@ _(Another assumption for you... We’re assuming you have GatsbyJS + GraphQL set
 With your content items in Kentico Cloud, you should be able to see them when you conduct a GraphQL query.
 
 Here is an example of the GraphQL query you will use to retrieve the ID and CodeName for the Content Items from Kentico Cloud using GatsbyJS. Think of this as the 'key' you would need to retrieve the 'value'. You can see the 'codename' and 'id' as potential options that you could use in the below GraphQL query.
-![A view of the GraphiQL preview of retrieving language nodes](images/GraphiQL-retrieve-lang-nodes.png)
+![A view of the GraphiQL preview of retrieving language nodes](./images/GraphiQL-retrieve-lang-nodes.png)
 
 You can retrieve all localization strings using the following GraphQL query.
-![Retrieving all language versions of the localized strings](images/GraphiQL-retrieve-lang-variants.png)
+![Retrieving all language versions of the localized strings](./images/GraphiQL-retrieve-lang-variants.png)
 
 However, to retrieve the actual 'value', there’s a little more to do in your GraphQL query.
 
 Here is an example of a GraphQL query where I am using the 'CodeName'.
-![GraphiQL retrieve language nodes localized strings condition code name](images/GraphiQL-retrieve-lang-variants-based-on-condition-codename.png)
+![GraphiQL retrieve language nodes localized strings condition code name](./images/GraphiQL-retrieve-lang-variants-based-on-condition-codename.png)
 
 And, here is an example of a GraphQL query where I am using the ID.
-![GraphiQL retrieve language nodes localized strings condition ID](images/GraphiQL-retrieve-lang-variants-based-on-condition-id.png)
+![GraphiQL retrieve language nodes localized strings condition ID](./images/GraphiQL-retrieve-lang-variants-based-on-condition-id.png)
 
 As you can see, once you know which 'key' you need, then it's pretty simple to get the 'value' and also detect the language variant you need to retrieve in GatsbyJS using this GraphQL query format.
 

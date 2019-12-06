@@ -4,6 +4,8 @@
     "@babel/node": "^7.7.4",
     "@babel/runtime": "^7.7.4",
     "@lerna/prompt": "3.18.5",
+    "@typescript-eslint/eslint-plugin": "^2.9.0",
+    "@typescript-eslint/parser": "^2.9.0",
     "babel-eslint": "^10.0.3",
     "babel-jest": "^24.9.0",
     "chalk": "^2.4.2",
