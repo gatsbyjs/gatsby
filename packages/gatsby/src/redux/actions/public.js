@@ -30,8 +30,7 @@ const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
 const shadowCreatePagePath = _.memoize(
   require(`../../internal-plugins/webpack-theme-component-shadowing/create-page`)
 )
-const { prepareJob } = require(`../../utils/jobs-manager`)
-const { actions: internalActions } = require(`./internal`)
+const { enqueueJob, createInternalJob } = require(`../../utils/jobs-manager`)
 
 const actions = {}
 const isWindows = platform() === `win32`
@@ -1209,16 +1208,52 @@ actions.createJob = (job: Job, plugin?: ?Plugin = null) => {
  * @example
  * createJobV2({ name: `IMAGE_PROCESSING`, inputPaths: [`something.jpeg`], outputDir: `public/static`, args: { width: 100, height: 100 } })
  */
-actions.createJobV2 = (job: JobV2, plugin: Plugin = null) => (
-  dispatch,
-  getState
-) => {
-  const internalJob = prepareJob(
-    { plugin, ...job },
-    getState().program.directory
+actions.createJobV2 = (job: JobV2, plugin: Plugin) => (dispatch, getState) => {
+  const currentState = getState()
+  const internalJob = createInternalJob(
+    {
+      ...job,
+      plugin: {
+        name: plugin.name,
+        version: plugin.version,
+      },
+    },
+    currentState.program.directory
   )
 
-  return internalActions.enqueueJob(internalJob, plugin)(dispatch, getState)
+  // Check if we already ran this job before, if yes we return the result
+  if (
+    currentState.jobsV2 &&
+    currentState.jobsV2.done.has(internalJob.contentDigest)
+  ) {
+    return Promise.resolve(
+      currentState.jobsV2.done.get(internalJob.contentDigest).result
+    )
+  }
+
+  dispatch({
+    type: `CREATE_JOB_V2`,
+    plugin,
+    payload: {
+      job: internalJob,
+      plugin,
+    },
+  })
+
+  // Queue the job for execution
+  return enqueueJob(internalJob).then(result => {
+    // store the result in redux so we have it for the next run
+    dispatch({
+      type: `END_JOB_V2`,
+      plugin,
+      payload: {
+        job: internalJob,
+        result,
+      },
+    })
+
+    return result
+  })
 }
 
 /**

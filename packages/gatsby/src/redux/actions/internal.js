@@ -1,6 +1,5 @@
 // @flow
 import type { Plugin } from "./types"
-const { enqueueJob } = require(`../../utils/jobs-manager`)
 
 const actions = {}
 
@@ -209,50 +208,18 @@ actions.pageQueryRun = (
 }
 
 /**
- * @param {import('../../utils/jobs-manager').AugmentedJob} job
- * @private
- */
-actions.enqueueJob = (job, plugin: Plugin, traceId?: string) => (
-  dispatch,
-  getState
-) => {
-  const currentState = getState()
-
-  // Check if we already ran this job before, if yes we return the result
-  if (currentState.jobsV2.done.has(job.contentDigest)) {
-    return Promise.resolve(currentState.jobsV2.done.get(job.contentDigest))
-  }
-
-  dispatch({
-    type: `CREATE_JOB_V2`,
-    plugin,
-    payload: {
-      job,
-      plugin,
-    },
-  })
-
-  // Queue the job for execution
-  return enqueueJob(job).then(result => {
-    dispatch({
-      type: `END_JOB_V2`,
-      plugin,
-      payload: {
-        job,
-        result,
-      },
-    })
-
-    return result
-  })
-}
-/**
  * @param {string} contentDigest
  * @private
  */
-actions.removStaleJob = (contentDigest, plugin?: ?Plugin, traceId?: string) => {
+actions.removeStaleJob = (
+  contentDigest,
+  plugin?: ?Plugin,
+  traceId?: string
+) => {
   return {
     type: `REMOVE_STALE_JOB_V2`,
+    plugin,
+    traceId,
     payload: {
       contentDigest,
     },

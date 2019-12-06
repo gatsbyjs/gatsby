@@ -45,7 +45,7 @@ const getJobsManager = () => {
 
 const pDefer = require(`p-defer`)
 
-const createMockJob = () => {
+const createMockJob = (overrides = {}) => {
   return {
     name: `TEST_JOB`,
     inputPaths: [
@@ -61,7 +61,14 @@ const createMockJob = () => {
       name: `gatsby-plugin-test`,
       version: `1.0.0`,
     },
+    ...overrides,
   }
+}
+
+const createInternalMockJob = (overrides = {}) => {
+  const { createInternalJob } = getJobsManager()
+
+  return createInternalJob(createMockJob(overrides), ROOT_DIR)
 }
 
 describe(`Jobs manager`, () => {
@@ -86,18 +93,68 @@ describe(`Jobs manager`, () => {
     })
   })
 
+  describe(`createInternalJob`, () => {
+    it(`should return the correct format`, async () => {
+      const { createInternalJob } = getJobsManager()
+      const mockedJob = createMockJob()
+      const job = await createInternalJob(mockedJob, ROOT_DIR)
+
+      expect(job).toStrictEqual(
+        expect.objectContaining({
+          id: expect.any(String),
+          name: mockedJob.name,
+          contentDigest: expect.any(String),
+          inputPaths: [
+            {
+              path: `fixtures/input1.jpg`,
+              contentDigest: expect.any(String),
+            },
+            {
+              path: `fixtures/input2.jpg`,
+              contentDigest: expect.any(String),
+            },
+          ],
+          outputDir: `public/outputDir`,
+          args: mockedJob.args,
+          plugin: {
+            name: `gatsby-plugin-test`,
+            version: `1.0.0`,
+          },
+        })
+      )
+    })
+
+    it(`should fail when paths are outside of gatsby`, async () => {
+      const { createInternalJob } = getJobsManager()
+      const jobArgs = createMockJob({
+        inputPaths: [`/anotherdir/files/image.jpg`],
+      })
+
+      expect.assertions(1)
+      try {
+        await createInternalJob(jobArgs, ROOT_DIR)
+      } catch (err) {
+        expect(err).toMatchInlineSnapshot(
+          `[Error: /anotherdir/files/image.jpg is not inside <PROJECT_ROOT>/packages/gatsby/src/utils/__tests__. Make sure your files are inside your gatsby project.]`
+        )
+      }
+    })
+  })
+
   describe(`enqueueJob`, () => {
     it(`should schedule a job`, async () => {
       const { enqueueJob } = getJobsManager()
       worker.TEST_JOB.mockReturnValue(`myresult`)
       worker.NEXT_JOB = jest.fn().mockReturnValue(`another result`)
 
-      const job1 = enqueueJob(createMockJob())
-      const job2 = enqueueJob({
-        ...createMockJob(),
-        inputPaths: [],
-        name: `NEXT_JOB`,
-      })
+      const mockedJob = createInternalMockJob()
+      const job1 = enqueueJob(mockedJob)
+      const job2 = enqueueJob(
+        createInternalMockJob({
+          inputPaths: [],
+          name: `NEXT_JOB`,
+        })
+      )
 
       await Promise.all([
         expect(job1).resolves.toBe(`myresult`),
@@ -107,45 +164,23 @@ describe(`Jobs manager`, () => {
       expect(endActivity).toHaveBeenCalledTimes(1)
       expect(worker.TEST_JOB).toHaveBeenCalledTimes(1)
       expect(worker.TEST_JOB).toHaveBeenCalledWith({
-        inputPaths: [
-          expect.objectContaining({
-            path: `fixtures/input1.jpg`,
-            contentDigest: expect.any(String),
-          }),
-          expect.objectContaining({
-            path: `fixtures/input2.jpg`,
-            contentDigest: expect.any(String),
-          }),
-        ],
-        outputDir: `public/outputDir`,
-        args: {
-          param1: `param1`,
-          param2: `param2`,
-        },
+        inputPaths: mockedJob.inputPaths,
+        outputDir: mockedJob.outputDir,
+        args: mockedJob.args,
       })
       expect(worker.NEXT_JOB).toHaveBeenCalledTimes(1)
     })
 
     it(`should only enqueue a job once`, async () => {
       const { enqueueJob } = getJobsManager()
-      const jobArgs = createMockJob()
+      const jobArgs = createInternalMockJob()
       const jobArgs2 = _.cloneDeep(jobArgs)
-      const jobArgs3 = {
-        name: `TEST_JOB`,
-        plugin: {
-          name: `gatsby-plugin-test`,
-          version: `1.0.0`,
-        },
-        inputPaths: [
-          path.join(ROOT_DIR, `fixtures/input1.jpg`),
-          path.join(ROOT_DIR, `fixtures/input2.jpg`),
-        ],
-        outputDir: path.join(ROOT_DIR, `public/outputDir`),
+      const jobArgs3 = createInternalMockJob({
         args: {
-          param1: `param1`,
           param2: `param2`,
+          param1: `param1`,
         },
-      }
+      })
 
       worker.TEST_JOB.mockReturnValue(`myresult`)
 
@@ -166,8 +201,8 @@ describe(`Jobs manager`, () => {
 
     it(`should fail when the worker throws an error`, async () => {
       const { enqueueJob } = getJobsManager()
-      const jobArgs = createMockJob()
-      const jobArgs2 = { ...createMockJob(), inputPaths: [] }
+      const jobArgs = createInternalMockJob()
+      const jobArgs2 = createInternalMockJob({ inputPaths: [] })
 
       worker.TEST_JOB.mockImplementationOnce(() => {
         throw new Error(`An error occured`)
@@ -189,21 +224,6 @@ describe(`Jobs manager`, () => {
       expect(endActivity).toHaveBeenCalledTimes(2)
       expect(worker.TEST_JOB).toHaveBeenCalledTimes(2)
     })
-
-    it(`should fail when paths are outside of gatsby`, async () => {
-      const { enqueueJob } = getJobsManager()
-      const jobArgs = createMockJob()
-      jobArgs.inputPaths = [`/anotherdir/files/image.jpg`]
-
-      expect.assertions(1)
-      try {
-        await enqueueJob(jobArgs)
-      } catch (err) {
-        expect(err).toMatchInlineSnapshot(
-          `[Error: /anotherdir/files/image.jpg is not inside <PROJECT_ROOT>/packages/gatsby/src/utils/__tests__. Make sure your files are inside your gatsby project.]`
-        )
-      }
-    })
   })
 
   describe(`waitUntilAllJobsComplete`, () => {
@@ -212,7 +232,7 @@ describe(`Jobs manager`, () => {
     // unsure how to test this yet without a real worker
     it(`should have all tasks resolved when promise is resolved`, async () => {
       worker.TEST_JOB.mockReturnValue(`myresult`)
-      const promise = enqueueJob(createMockJob())
+      const promise = enqueueJob(createInternalMockJob())
 
       await waitUntilAllJobsComplete()
       expect(worker.TEST_JOB).toHaveBeenCalledTimes(1)
@@ -235,6 +255,61 @@ describe(`Jobs manager`, () => {
           `[Error: We couldn't find a worker.js file for test-plugin@1.0.0]`
         )
       }
+    })
+  })
+  // exports.isJobStale = (job, rootDir) => {
+  //   const doesInputPathsExists = !job.inputPaths.some(inputPath => {
+  //     const fullPath = path.join(rootDir, inputPath.path)
+  //     if (fs.existsSync(fullPath)) {
+  //       return true
+  //     }
+
+  //     const fileHash = createFileHash(fullPath)
+  //     return fileHash !== inputPath.contentDigest
+  //   })
+
+  //   return doesInputPathsExists
+  // }
+
+  describe(`isJobStale`, () => {
+    it(`should mark a job as stale if file does not exists`, () => {
+      const { isJobStale } = getJobsManager()
+      const inputPaths = [
+        {
+          path: `unknown-file.jpg`,
+          contentDigest: `1234`,
+        },
+      ]
+
+      expect(isJobStale({ inputPaths }, ROOT_DIR)).toBe(true)
+    })
+
+    it(`should mark a job as stale if contentDigest isn't equal`, () => {
+      const { isJobStale } = getJobsManager()
+      const inputPaths = [
+        {
+          path: `fixtures/input1.jpg`,
+          contentDigest: `1234`,
+        },
+      ]
+
+      expect(isJobStale({ inputPaths }, ROOT_DIR)).toBe(true)
+    })
+
+    it(`shouldn't mark a job as stale if file is the same`, () => {
+      jest.doMock(`hasha`)
+      const hasha = require(`hasha`)
+      hasha.fromFileSync.mockReturnValue(`1234`)
+
+      const { isJobStale } = getJobsManager()
+      const inputPaths = [
+        {
+          path: `fixtures/input1.jpg`,
+          contentDigest: `1234`,
+        },
+      ]
+
+      expect(isJobStale({ inputPaths }, ROOT_DIR)).toBe(false)
     })
   })
 })

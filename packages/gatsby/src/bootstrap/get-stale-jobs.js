@@ -1,40 +1,23 @@
-const fs = require(`fs-extra`)
-const path = require(`path`)
-const { createFileHash } = require(`../utils/jobs-manager`)
-const { internalActions } = require(`../redux/actions`)
-
-const checkInputPathsStillExists = job => {
-  const fileNotExists = job.inputPaths.some(inputPath => {
-    const fullPath = path.join(process.cwd(), inputPath.path)
-    if (!fs.existsSync(fullPath)) {
-      return true
-    }
-
-    const fileHash = createFileHash(fullPath)
-    return fileHash !== inputPath.contentDigest
-  })
-
-  return !fileNotExists
-}
+const { isJobStale } = require(`../utils/jobs-manager`)
+const { publicActions, internalActions } = require(`../redux/actions`)
 
 module.exports = state => {
   const actions = []
 
-  // check for finished jobs which inputPaths do not exist anymore.
-  // we cleanup our cache
+  // If any of our finished jobs are stale we remove them to keep our cache small
   state.jobsV2.done.forEach((job, contentDigest) => {
-    if (!checkInputPathsStillExists(job)) {
-      actions.push(internalActions.removStaleJob(contentDigest))
+    if (isJobStale(job, state.program.directory)) {
+      actions.push(internalActions.removeStaleJob(contentDigest))
     }
   })
 
-  // We check our stale cache for jobs that do not have the correct inputPaths anymore
-  // these jobs should be rescheduled by a gatsby plugin and not by us as the inputs have changed
+  // If any of our pending jobs do not have an existing inputPath or the inputPath changed
+  // we remove it from the queue
   state.jobsV2.stale.forEach(({ job, plugin }) => {
-    if (checkInputPathsStillExists(job)) {
-      actions.push(internalActions.enqueueJob(job, plugin))
+    if (isJobStale(job, state.program.directory)) {
+      actions.push(internalActions.removeStaleJob(job.contentDigest))
     } else {
-      actions.push(internalActions.removStaleJob(job))
+      actions.push(publicActions.createJobV2(job, plugin))
     }
   })
 

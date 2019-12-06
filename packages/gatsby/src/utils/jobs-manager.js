@@ -19,6 +19,10 @@ const jobsInProcess = new Map()
  * @return {string}
  */
 const convertPathsToRelative = (filePath, rootDir) => {
+  if (!path.isAbsolute(filePath)) {
+    filePath = path.resolve(rootDir, filePath)
+  }
+
   const relative = path.relative(rootDir, filePath)
 
   if (relative.includes(`..`)) {
@@ -33,7 +37,6 @@ const convertPathsToRelative = (filePath, rootDir) => {
  * @param {string} path
  */
 const createFileHash = path => hasha.fromFileSync(path, { algorithm: `sha1` })
-exports.createFileHash = createFileHash
 
 /**
  * @typedef Job
@@ -46,8 +49,9 @@ exports.createFileHash = createFileHash
 
 /**
  * @typedef AugmentedJob
- * @property {number} id
+ * @property {string} id
  * @property {string} name
+ * @property {string} contentDigest
  * @property {{path: string, contentDigest: string}[]} inputPaths
  * @property {string} outputDir,
  * @property {Record<string, *>} args
@@ -74,13 +78,13 @@ const runLocalWorker = async (workerFn, job) => {
     // TODO should we think about threading/queueing here?
     process.nextTick(() => {
       try {
-        Promise.resolve(
+        resolve(
           workerFn({
             inputPaths: job.inputPaths,
             outputDir: job.outputDir,
             args: job.args,
           })
-        ).then(resolve, reject)
+        )
       } catch (err) {
         reject(err)
       }
@@ -117,7 +121,7 @@ const handleJobEnded = () => {
  * @param {string} rootDir
  * @return {AugmentedJob}
  */
-exports.prepareJob = (
+exports.createInternalJob = (
   { name, inputPaths, outputDir, args, plugin },
   rootDir
 ) => {
@@ -154,7 +158,7 @@ exports.prepareJob = (
 /**
  * Creates a job
  *
- * @param {Job} args
+ * @param {AugmentedJob} job
  * @return {Promise<unknown>}
  */
 exports.enqueueJob = job => {
@@ -215,4 +219,22 @@ exports.resolveWorker = plugin => {
       `We couldn't find a worker.js file for ${plugin.name}@${plugin.version}`
     )
   }
+}
+
+/**
+ * @param {Partial<AugmentedJob>  & {inputPaths: AugmentedJob['inputPaths']}} job
+ * @return {boolean}
+ */
+exports.isJobStale = (job, rootDir) => {
+  const areInputPathsStale = job.inputPaths.some(inputPath => {
+    const fullPath = path.join(rootDir, inputPath.path)
+    if (!fs.existsSync(fullPath)) {
+      return true
+    }
+
+    const fileHash = createFileHash(fullPath)
+    return fileHash !== inputPath.contentDigest
+  })
+
+  return areInputPathsStale
 }
