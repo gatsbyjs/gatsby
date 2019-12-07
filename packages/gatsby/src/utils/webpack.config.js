@@ -160,9 +160,7 @@ module.exports = async (
         return {
           commons: [
             require.resolve(`event-source-polyfill`),
-            `${require.resolve(
-              `webpack-hot-middleware/client`
-            )}?path=${getHmrPath()}`,
+            `${require.resolve(`webpack-hot-middleware/client`)}`,
             directoryPath(`.cache/app`),
           ],
         }
@@ -202,6 +200,7 @@ module.exports = async (
     switch (stage) {
       case `develop`:
         configPlugins = configPlugins.concat([
+          plugins.fastRefresh(),
           plugins.hotModuleReplacement(),
           plugins.noEmitOnErrors(),
           plugins.eslintGraphqlSchemaReload(),
@@ -379,9 +378,6 @@ module.exports = async (
           require.resolve(`@babel/runtime/package.json`)
         ),
         "core-js": path.dirname(require.resolve(`core-js/package.json`)),
-        "react-hot-loader": path.dirname(
-          require.resolve(`react-hot-loader/package.json`)
-        ),
         "react-lifecycles-compat": directoryPath(
           `.cache/react-lifecycles-compat.js`
         ),

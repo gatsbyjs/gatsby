@@ -5,6 +5,7 @@ const flexbugs = require(`postcss-flexbugs-fixes`)
 const TerserPlugin = require(`terser-webpack-plugin`)
 const MiniCssExtractPlugin = require(`mini-css-extract-plugin`)
 const OptimizeCssAssetsPlugin = require(`optimize-css-assets-webpack-plugin`)
+const ReactRefreshWebpackPlugin = require(`@pmmmwh/react-refresh-webpack-plugin`)
 const isWsl = require(`is-wsl`)
 
 const GatsbyWebpackStatsExtractor = require(`./gatsby-webpack-stats-extractor`)
@@ -259,6 +260,7 @@ module.exports = async ({
       return {
         options: {
           stage,
+          plugins: [require.resolve(`react-refresh/babel`)],
           ...options,
         },
         loader: require.resolve(`./babel-loader`),
@@ -608,6 +610,11 @@ module.exports = async ({
       },
     }
   ) => new OptimizeCssAssetsPlugin(options)
+
+  plugins.fastRefresh = () =>
+    new ReactRefreshWebpackPlugin({
+      disableRefreshCheck: true,
+    })
 
   /**
    * Extracts css requires into a single file;
