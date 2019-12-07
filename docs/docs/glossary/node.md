@@ -1,5 +1,6 @@
 ---
 title: Node.js
+disableTableOfContents: true
 ---
 
 Learn more about Node.js, one of the software packages that makes Gatsby possible.
