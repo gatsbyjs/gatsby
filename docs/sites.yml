@@ -8792,7 +8792,7 @@
   featured: false
 - title: Gearbox Development
   main_url: https://gearboxbuilt.com
-  url: https://gearboxbuilt.com
+  url: https://gearboxbuilt.com/?no-load-in
   description: >
     Gearbox is a performance website development & optimization company based out of Canada. Built using Gatsby/WordPress.
   categories:
