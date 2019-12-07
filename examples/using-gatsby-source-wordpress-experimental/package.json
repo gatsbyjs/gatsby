@@ -25,6 +25,7 @@
     "gatsby-plugin-chakra-ui": "^0.1.0",
     "gatsby-plugin-sharp": "2.2.32",
     "gatsby-source-filesystem": "^2.1.39",
+    "gatsby-source-wordpress-experimental": "^0.0.0--alpha.1",
     "gatsby-transformer-sharp": "2.3.0",
     "react": "^16.3.2",
     "react-dom": "^16.3.2"

@@ -9,7 +9,7 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-source-wordpress`,
+      resolve: `gatsby-source-wordpress-experimental`,
       options: {
         // url: `http://wpgraphql.local/graphql`,
         url: `https://dev-gatsby-source-wordpress-v4.pantheonsite.io/graphql`,
