@@ -1,7 +1,7 @@
 import React from "react"
 import { graphql, Link } from "gatsby"
 import Img from "gatsby-image"
-import urlToPath from "gatsby-source-wordpress/src/utils/url-to-path"
+import urlToPath from "gatsby-source-wordpress-experimental/utils/url-to-path"
 
 import { Stack, Box, Heading, Text, Grid } from "@chakra-ui/core"
 import Layout from "../components/layout"
