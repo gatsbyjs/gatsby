@@ -8883,3 +8883,16 @@
   built_by: Sai gowtham
   built_by_url: https://twitter.com/saigowthamr
   featured: false
+- title: Yearlyglot - Fluent Every Year
+  url: https://www.yearlyglot.com/blog
+  main_url: https://www.yearlyglot.com
+  description: >
+    A popular blog on languages, second language acquisition and polyglottery.
+  categories:
+    - Blog
+    - Education
+    - Learning
+    - Travel
+  built_by: Donovan Nagel
+  built_by_url: https://www.donovannagel.com
+  featured: false
