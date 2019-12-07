@@ -260,7 +260,7 @@ The process of requesting specific data from somewhere. With Gatsby you normally
 
 ## R
 
-### React
+### [React](/docs/glossary/react)
 
 A code library (written with [JavaScript](#javascript)) for building user interfaces. It’s the framework that [Gatsby](#gatsby) uses to build pages and structure content.
 

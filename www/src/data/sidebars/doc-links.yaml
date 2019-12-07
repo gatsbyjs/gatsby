@@ -695,6 +695,9 @@
       link: /docs/cheat-sheet/
     - title: Glossary
       link: /docs/glossary/
+      items:
+        - title: React
+          link: /docs/glossary/react
     - title: Gatsby Telemetry
       link: /docs/telemetry/
     - title: Gatsby REPL
