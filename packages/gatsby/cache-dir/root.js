@@ -9,8 +9,10 @@ import {
 } from "./navigation"
 import { apiRunner } from "./api-runner-browser"
 import loader from "./loader"
-import JSONStoreForPageQueries from "./json-store-page-queries"
-import JSONStoreForStaticQueries from "./json-store-static-queries"
+import {
+  JSONStoreForPageQueries,
+  JSONStoreForStaticQueries,
+} from "./json-store"
 import EnsureResources from "./ensure-resources"
 
 import { reportError, clearError } from "./error-overlay-handler"

@@ -1,14 +1,13 @@
 import React from "react"
-
-import PageRenderer from "./page-renderer"
-import normalizePagePath from "./normalize-page-path"
-// import { StaticQueryContext } from "gatsby"
+import { StaticQueryContext } from "gatsby"
 import {
-  // getStaticQueryData,
   getPageQueryData,
   registerPath as socketRegisterPath,
   unregisterPath as socketUnregisterPath,
+  getStaticQueryData,
 } from "./socketIo"
+import PageRenderer from "./page-renderer"
+import normalizePagePath from "./normalize-page-path"
 
 if (process.env.NODE_ENV === `production`) {
   throw new Error(
@@ -26,19 +25,17 @@ const getPathFromProps = props =>
     ? normalizePagePath(props.pageResources.page.path)
     : undefined
 
-class JSONStoreForPageQueries extends React.Component {
+export class JSONStoreForPageQueries extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      // staticQueryData: getStaticQueryData(),
       pageQueryData: getPageQueryData(),
       path: null,
     }
   }
 
-  handleMittEvent = (type, event) => {
+  handleMittEvent = () => {
     this.setState({
-      // staticQueryData: getStaticQueryData(),
       pageQueryData: getPageQueryData(),
     })
   }
@@ -70,14 +67,12 @@ class JSONStoreForPageQueries extends React.Component {
     // We want to update this component when:
     // - location changed
     // - page data for path changed
-    // - static query results changed
 
     return (
       this.props.location !== nextProps.location ||
       this.state.path !== nextState.path ||
       this.state.pageQueryData[normalizePagePath(nextState.path)] !==
-        nextState.pageQueryData[normalizePagePath(nextState.path)] ||
-      this.state.staticQueryData !== nextState.staticQueryData
+        nextState.pageQueryData[normalizePagePath(nextState.path)]
     )
   }
 
@@ -88,12 +83,44 @@ class JSONStoreForPageQueries extends React.Component {
       return <div />
     }
 
-    return (
-      // <StaticQueryContext.Provider value={this.state.staticQueryData}>
-      <PageRenderer {...this.props} {...data} />
-      // </StaticQueryContext.Provider>
-    )
+    return <PageRenderer {...this.props} {...data} />
   }
 }
 
-export default JSONStoreForPageQueries
+export class JSONStoreForStaticQueries extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      staticQueryData: getStaticQueryData(),
+    }
+  }
+
+  handleMittEvent = () => {
+    this.setState({
+      staticQueryData: getStaticQueryData(),
+    })
+  }
+
+  componentDidMount() {
+    ___emitter.on(`*`, this.handleMittEvent)
+  }
+
+  componentWillUnmount() {
+    ___emitter.off(`*`, this.handleMittEvent)
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    // We want to update this component when:
+    // - static query results changed
+
+    return this.state.staticQueryData !== nextState.staticQueryData
+  }
+
+  render() {
+    return (
+      <StaticQueryContext.Provider value={this.state.staticQueryData}>
+        {this.props.children}
+      </StaticQueryContext.Provider>
+    )
+  }
+}

@@ -2,7 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 
 import loader from "./loader"
-import JSONStoreForPageQueries from "./json-store-page-queries"
+import { JSONStoreForPageQueries } from "./json-store"
 
 const DevPageRenderer = ({ location }) => {
   const pageResources = loader.loadPageSync(location.pathname)
