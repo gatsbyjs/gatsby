@@ -8,7 +8,6 @@ export default ({ element }) => (
         site {
           siteMetadata {
             title
-            author
           }
         }
       }
@@ -18,11 +17,13 @@ export default ({ element }) => (
         siteMetadata: { title, author },
       },
     }) => (
-      <div>
+      <>
         {element}
-        <span>{title}</span>
-        <span>{author}</span>
-      </div>
+        <div>
+          StaticQuery in wrapRootElement test (should show site title):
+          <span data-testid="wrap-root-element-result">{title}</span>
+        </div>
+      </>
     )}
   />
 )
