@@ -2,11 +2,10 @@
 title: Gatsby on Linux
 ---
 
-# Linux
 
-This guide assumes you already have a native installation of Linux on your machine. The following steps walk through how to install `node` and associated depdendencies.
+This guide assumes you already have a native installation of Linux on your machine. The following steps walk through how to install Node.js and associated dependencies.
 
-### Ubuntu, Debian and other `apt` based distros
+## Ubuntu, Debian, and other `apt` based distros
 
 Begin by updating and upgrading.
 
@@ -29,7 +28,7 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash
 
 > Note that this is the current stable release of nvm. Full installation instructions and troubleshooting can be found at the [nvm GitHub page](https://github.com/nvm-sh/nvm)
 
-When `nvm` is installed, it does not default to a particular `node` version. You'll need to install the version you want and give `nvm` instructions to use it. This example uses the latest release of version `10`, but other version numbers can be used instead.
+When `nvm` is installed, it does not default to a particular `node` version. You'll need to install the version you want and give `nvm` instructions to use it. This example uses the latest release of version `10`, but more recent version numbers can be used instead.
 
 ```shell
 nvm install 10
@@ -50,7 +49,7 @@ Finally, install `git` which will be necessary for creating your first Gatsby pr
 sudo apt install git
 ```
 
-### Fedora, RedHat and other `dnf` based distros
+## Fedora, RedHat, and other `dnf` based distros
 
 These distros come installed with `curl`, so you can use that to download `nvm`.
 
@@ -60,7 +59,7 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash
 
 > Note that this is the current stable release of nvm. Full installation instructions and troubleshooting can be found at the [nvm GitHub page](https://github.com/nvm-sh/nvm)
 
-When `nvm` is installed, it does not default to a particular `node` version. You'll need to install the version you want and give `nvm` instructions to use it. This example uses the latest release of version `10`, but other version numbers can be used instead.
+When `nvm` is installed, it does not default to a particular `node` version. You'll need to install the version you want and give `nvm` instructions to use it. This example uses the latest release of version `10`, but more recent version numbers can be used instead.
 
 ```shell
 nvm install 10
@@ -81,7 +80,7 @@ Finally, install `git` which will be necessary for creating your first Gatsby pr
 sudo dnf install git
 ```
 
-### Archlinux and other `pacman` based distros
+## Archlinux and other `pacman` based distros
 
 Begin by updating.
 
@@ -103,7 +102,7 @@ Before using `nvm`, you need to install additional dependencies.
 sudo pacman -S grep awk tar git
 ```
 
-When `nvm` is installed, it does not default to a particular `node` version. You'll need to install the version you want and give `nvm` instructions to use it. This example uses the latest release of version `10`, but other version numbers can be used instead.
+When `nvm` is installed, it does not default to a particular `node` version. You'll need to install the version you want and give `nvm` instructions to use it. This example uses the latest release of version `10`, but more recent version numbers can be used instead.
 
 ```shell
 nvm install 10
@@ -120,7 +119,7 @@ node -v
 
 ## Windows Subsystem Linux (WSL)
 
-This guide assumes that you already have WSL installed with a working Linux distro. If you don't, follow [this guide from microsoft's site](https://docs.microsoft.com/en-us/windows/wsl/install-win10) to install WSL and a Linux distro of your choice.
+This guide assumes that you already have WSL installed with a working Linux distro. If you don't, follow [this guide from Microsoft's site](https://docs.microsoft.com/en-us/windows/wsl/install-win10) to install WSL and a Linux distro of your choice.
 
 As of October 17th 2017, Windows 10 ships with WSL and Linux distributions are available via the [Windows Store], there are several different distributions to use which can be configured via `wslconfig` if you have more than one distribution installed.
 
