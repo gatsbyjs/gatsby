@@ -5,6 +5,7 @@ exports.DEFAULT_OPTIONS = {
   linkImagesToOriginal: true,
   showCaptions: false,
   markdownCaptions: false,
+  wrapFigureOnlyWithCaptions: true,
   withWebp: false,
   tracedSVG: false,
   loading: `lazy`,

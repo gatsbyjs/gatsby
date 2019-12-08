@@ -337,6 +337,12 @@ module.exports = (
     <figcaption class="gatsby-resp-image-figcaption">${imageCaption}</figcaption>
   </figure>
       `.trim()
+    } else if (!options.wrapFigureOnlyWithCaptions) {
+      rawHTML = `
+  <figure class="gatsby-resp-image-figure" style="${wrapperStyle}">
+    ${rawHTML}
+  </figure>
+      `.trim()
     }
 
     return rawHTML

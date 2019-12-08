@@ -593,6 +593,42 @@ describe(`markdownCaptions`, () => {
   })
 })
 
+describe(`wrapFigureOnlyWithCaptions`, () => {
+  describe(`when there is no caption`, () => {
+    let pluginOptions
+    beforeEach(() => {
+      const imagePath = `images/my-image.jpeg`
+      const content = `![my image](./${imagePath})`
+      pluginOptions = createPluginOptions(content, imagePath)
+    })
+    it(`wraps <figure> when wrapFigureOnlyWithCaptions === false`, async () => {
+      const nodes = await plugin(pluginOptions, {
+        showCaptions: [`title`],
+        wrapFigureOnlyWithCaptions: false,
+      })
+      expect(nodes.length).toBe(1)
+
+      const node = nodes.pop()
+      const $ = cheerio.load(node.value)
+      expect($(`figure`).length).toBe(1)
+      expect($(`figcaption`).length).toBe(0)
+      expect(node.value).toMatchSnapshot()
+    })
+    it(`does not wrap <figure> when wrapFigureOnlyWithCaptions === true`, async () => {
+      const nodes = await plugin(pluginOptions, {
+        showCaptions: [`title`],
+        wrapFigureOnlyWithCaptions: true,
+      })
+      expect(nodes.length).toBe(1)
+
+      const node = nodes.pop()
+      const $ = cheerio.load(node.value)
+      expect($(`figure`).length).toBe(0)
+      expect($(`figcaption`).length).toBe(0)
+    })
+  })
+})
+
 describe(`disableBgImageOnAlpha`, () => {
   it(`does not disable background image on transparent images when disableBgImageOnAlpha === false`, async () => {
     const imagePath = `images/my-image.jpeg`
