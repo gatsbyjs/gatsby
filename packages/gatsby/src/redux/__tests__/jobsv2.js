@@ -3,7 +3,7 @@ jest.spyOn(jobsManager, `enqueueJob`)
 jest.mock(`uuid/v4`, () => () => `1234`)
 
 const { actions, internalActions } = require(`../actions`)
-const jobsReducer = require(`../reducers/jobsV2`)
+const jobsReducer = require(`../reducers/jobsv2`)
 
 describe(`Job v2 actions/reducer`, () => {
   const plugin = {
