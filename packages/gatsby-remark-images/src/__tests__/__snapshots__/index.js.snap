@@ -310,7 +310,7 @@ exports[`it uses tracedSVG placeholder when enabled 1`] = `
 
 exports[`markdownCaptions display title in markdown as caption when showCaptions === true && markdownCaptions === true 1`] = `
 "<figure class=\\"gatsby-resp-image-figure\\" style=\\"\\">
-    <span
+          <span
       class=\\"gatsby-resp-image-wrapper\\"
       style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\"
     >
@@ -336,13 +336,13 @@ exports[`markdownCaptions display title in markdown as caption when showCaptions
       />
   </a>
     </span>
-    <figcaption class=\\"gatsby-resp-image-figcaption\\"><p>some <em>title</em></p></figcaption>
-  </figure>"
+          <figcaption class=\\"gatsby-resp-image-figcaption\\"><p>some <em>title</em></p></figcaption>
+        </figure>"
 `;
 
 exports[`markdownCaptions display title in text as caption when showCaptions === true && markdownCaptions === false 1`] = `
 "<figure class=\\"gatsby-resp-image-figure\\" style=\\"\\">
-    <span
+          <span
       class=\\"gatsby-resp-image-wrapper\\"
       style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\"
     >
@@ -368,13 +368,13 @@ exports[`markdownCaptions display title in text as caption when showCaptions ===
       />
   </a>
     </span>
-    <figcaption class=\\"gatsby-resp-image-figcaption\\">some _title_</figcaption>
-  </figure>"
+          <figcaption class=\\"gatsby-resp-image-figcaption\\">some _title_</figcaption>
+        </figure>"
 `;
 
 exports[`showCaptions display alt as caption if specified first in showCaptions array 1`] = `
 "<figure class=\\"gatsby-resp-image-figure\\" style=\\"\\">
-    <span
+          <span
       class=\\"gatsby-resp-image-wrapper\\"
       style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\"
     >
@@ -400,13 +400,13 @@ exports[`showCaptions display alt as caption if specified first in showCaptions 
       />
   </a>
     </span>
-    <figcaption class=\\"gatsby-resp-image-figcaption\\">some alt</figcaption>
-  </figure>"
+          <figcaption class=\\"gatsby-resp-image-figcaption\\">some alt</figcaption>
+        </figure>"
 `;
 
 exports[`showCaptions display alt as caption if specified in showCaptions array 1`] = `
 "<figure class=\\"gatsby-resp-image-figure\\" style=\\"\\">
-    <span
+          <span
       class=\\"gatsby-resp-image-wrapper\\"
       style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\"
     >
@@ -432,13 +432,13 @@ exports[`showCaptions display alt as caption if specified in showCaptions array 
       />
   </a>
     </span>
-    <figcaption class=\\"gatsby-resp-image-figcaption\\">some alt</figcaption>
-  </figure>"
+          <figcaption class=\\"gatsby-resp-image-figcaption\\">some alt</figcaption>
+        </figure>"
 `;
 
 exports[`showCaptions display alt as caption if specified in showCaptions array, even if it matches filename 1`] = `
 "<figure class=\\"gatsby-resp-image-figure\\" style=\\"\\">
-    <span
+          <span
       class=\\"gatsby-resp-image-wrapper\\"
       style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\"
     >
@@ -464,13 +464,13 @@ exports[`showCaptions display alt as caption if specified in showCaptions array,
       />
   </a>
     </span>
-    <figcaption class=\\"gatsby-resp-image-figcaption\\">my image</figcaption>
-  </figure>"
+          <figcaption class=\\"gatsby-resp-image-figcaption\\">my image</figcaption>
+        </figure>"
 `;
 
 exports[`showCaptions display alt as caption if title was not found and showCaptions === true 1`] = `
 "<figure class=\\"gatsby-resp-image-figure\\" style=\\"\\">
-    <span
+          <span
       class=\\"gatsby-resp-image-wrapper\\"
       style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\"
     >
@@ -496,13 +496,13 @@ exports[`showCaptions display alt as caption if title was not found and showCapt
       />
   </a>
     </span>
-    <figcaption class=\\"gatsby-resp-image-figcaption\\">some alt</figcaption>
-  </figure>"
+          <figcaption class=\\"gatsby-resp-image-figcaption\\">some alt</figcaption>
+        </figure>"
 `;
 
 exports[`showCaptions display title as caption if specified first in showCaptions array 1`] = `
 "<figure class=\\"gatsby-resp-image-figure\\" style=\\"\\">
-    <span
+          <span
       class=\\"gatsby-resp-image-wrapper\\"
       style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\"
     >
@@ -528,13 +528,13 @@ exports[`showCaptions display title as caption if specified first in showCaption
       />
   </a>
     </span>
-    <figcaption class=\\"gatsby-resp-image-figcaption\\">some title</figcaption>
-  </figure>"
+          <figcaption class=\\"gatsby-resp-image-figcaption\\">some title</figcaption>
+        </figure>"
 `;
 
 exports[`showCaptions display title as caption if specified in showCaptions array 1`] = `
 "<figure class=\\"gatsby-resp-image-figure\\" style=\\"\\">
-    <span
+          <span
       class=\\"gatsby-resp-image-wrapper\\"
       style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\"
     >
@@ -560,13 +560,13 @@ exports[`showCaptions display title as caption if specified in showCaptions arra
       />
   </a>
     </span>
-    <figcaption class=\\"gatsby-resp-image-figcaption\\">some title</figcaption>
-  </figure>"
+          <figcaption class=\\"gatsby-resp-image-figcaption\\">some title</figcaption>
+        </figure>"
 `;
 
 exports[`showCaptions display title as caption when showCaptions === true 1`] = `
 "<figure class=\\"gatsby-resp-image-figure\\" style=\\"\\">
-    <span
+          <span
       class=\\"gatsby-resp-image-wrapper\\"
       style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\"
     >
@@ -592,13 +592,13 @@ exports[`showCaptions display title as caption when showCaptions === true 1`] = 
       />
   </a>
     </span>
-    <figcaption class=\\"gatsby-resp-image-figcaption\\">some title</figcaption>
-  </figure>"
+          <figcaption class=\\"gatsby-resp-image-figcaption\\">some title</figcaption>
+        </figure>"
 `;
 
 exports[`showCaptions fallback to alt as caption if specified second in showCaptions array 1`] = `
 "<figure class=\\"gatsby-resp-image-figure\\" style=\\"\\">
-    <span
+          <span
       class=\\"gatsby-resp-image-wrapper\\"
       style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\"
     >
@@ -624,13 +624,13 @@ exports[`showCaptions fallback to alt as caption if specified second in showCapt
       />
   </a>
     </span>
-    <figcaption class=\\"gatsby-resp-image-figcaption\\">some alt</figcaption>
-  </figure>"
+          <figcaption class=\\"gatsby-resp-image-figcaption\\">some alt</figcaption>
+        </figure>"
 `;
 
 exports[`showCaptions fallback to title as caption if specified second in showCaptions array 1`] = `
 "<figure class=\\"gatsby-resp-image-figure\\" style=\\"\\">
-    <span
+          <span
       class=\\"gatsby-resp-image-wrapper\\"
       style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\"
     >
@@ -656,13 +656,13 @@ exports[`showCaptions fallback to title as caption if specified second in showCa
       />
   </a>
     </span>
-    <figcaption class=\\"gatsby-resp-image-figcaption\\">some title</figcaption>
-  </figure>"
+          <figcaption class=\\"gatsby-resp-image-figcaption\\">some title</figcaption>
+        </figure>"
 `;
 
 exports[`wrapFigureOnlyWithCaptions when there is no caption wraps <figure> when wrapFigureOnlyWithCaptions === false 1`] = `
 "<figure class=\\"gatsby-resp-image-figure\\" style=\\"\\">
-    <span
+          <span
       class=\\"gatsby-resp-image-wrapper\\"
       style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\"
     >
@@ -688,5 +688,5 @@ exports[`wrapFigureOnlyWithCaptions when there is no caption wraps <figure> when
       />
   </a>
     </span>
-  </figure>"
+        </figure>"
 `;
