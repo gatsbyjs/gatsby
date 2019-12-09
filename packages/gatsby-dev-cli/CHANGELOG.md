@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.40](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.5.39...gatsby-dev-cli@2.5.40) (2019-12-09)
+
+### Bug Fixes
+
+- **gatsby-dev-cli:** chmod gatsby bin on copy ([#19985](https://github.com/gatsbyjs/gatsby/issues/19985)) ([a4d1126](https://github.com/gatsbyjs/gatsby/commit/a4d1126))
+
 ## [2.5.39](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.5.38...gatsby-dev-cli@2.5.39) (2019-11-26)
 
 **Note:** Version bump only for package gatsby-dev-cli
