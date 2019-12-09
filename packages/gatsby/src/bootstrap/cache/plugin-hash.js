@@ -8,9 +8,9 @@ module.exports = async function getPluginHash({ plugins, existing }) {
 
   return {
     changes: _.uniq(
-      Object.keys(pluginsHash).filter(name => {
+      Object.keys({ ...pluginsHash, ...existing }).filter(name => {
         const hash = pluginsHash[name]
-        return typeof existing[name] !== `undefined` && hash !== existing[name]
+        return hash !== existing[name]
       })
     ),
     hash: pluginsHash,

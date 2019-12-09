@@ -31,7 +31,7 @@ module.exports = async function safeRemoveCache({
 
   if (hasExistingCache && !equalHashes) {
     report.info(report.stripIndent`
-      The following files or plugins have changed since the last time you ran Gatsby:
+      The following plugins were changed, added or removed since the last time you ran Gatsby:
 ${changes.map(change => `        - ${change}`).join(`\n`)}
       As a precaution, we're invalidating parts of your cache to ensure your data is sparkly fresh.
     `)
