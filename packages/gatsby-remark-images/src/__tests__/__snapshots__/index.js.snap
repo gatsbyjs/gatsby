@@ -23,6 +23,7 @@ exports[`disableBgImage disables background image when disableBgImage === true 1
         src=\\"not-a-real-dir/images/my-image.jpeg\\"
         srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
         sizes=\\"(max-width: 650px) 100vw, 650px\\"
+        style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
         loading=\\"lazy\\"
       />
   </a>
@@ -52,6 +53,7 @@ exports[`disableBgImage does not disable background image when disableBgImage ==
         src=\\"not-a-real-dir/images/my-image.jpeg\\"
         srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
         sizes=\\"(max-width: 650px) 100vw, 650px\\"
+        style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
         loading=\\"lazy\\"
       />
   </a>
@@ -81,6 +83,7 @@ exports[`disableBgImageOnAlpha disables background image on transparent images w
         src=\\"not-a-real-dir/images/my-image.jpeg\\"
         srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
         sizes=\\"(max-width: 650px) 100vw, 650px\\"
+        style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
         loading=\\"lazy\\"
       />
   </a>
@@ -110,6 +113,7 @@ exports[`disableBgImageOnAlpha does not disable background image on transparent 
         src=\\"not-a-real-dir/images/my-image.jpeg\\"
         srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
         sizes=\\"(max-width: 650px) 100vw, 650px\\"
+        style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
         loading=\\"lazy\\"
       />
   </a>
@@ -132,6 +136,7 @@ exports[`it handles goofy nesting properly 1`] = `
         src=\\"not-a-real-dir/images/this-image-already-has-a-link.jpeg\\"
         srcset=\\"not-a-real-dir/images/this-image-already-has-a-link.jpeg, not-a-real-dir/images/this-image-already-has-a-link.jpeg\\"
         sizes=\\"(max-width: 650px) 100vw, 650px\\"
+        style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
         loading=\\"lazy\\"
       />
     </span>"
@@ -153,6 +158,7 @@ exports[`it leaves images that are already linked alone 1`] = `
         src=\\"not-a-real-dir/image/my-image.jpg\\"
         srcset=\\"not-a-real-dir/image/my-image.jpg, not-a-real-dir/image/my-image.jpg\\"
         sizes=\\"(max-width: 650px) 100vw, 650px\\"
+        style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
         loading=\\"lazy\\"
       />
     </span>"
@@ -162,7 +168,7 @@ exports[`it leaves linked HTML img tags alone 1`] = `
 "<a href=\\"https://example.org\\">
   <span class=\\"gatsby-resp-image-wrapper\\" style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\">
       <span class=\\"gatsby-resp-image-background-image\\" style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw&apos;); background-size: cover; display: block;\\"></span>
-  <img class=\\"gatsby-resp-image-image\\" alt=\\"this image already has a link\\" title=\\"this image already has a link\\" src=\\"not-a-real-dir/images/this-image-already-has-a-link.jpeg\\" srcset=\\"not-a-real-dir/images/this-image-already-has-a-link.jpeg, not-a-real-dir/images/this-image-already-has-a-link.jpeg\\" sizes=\\"(max-width: 650px) 100vw, 650px\\" loading=\\"lazy\\">
+  <img class=\\"gatsby-resp-image-image\\" alt=\\"this image already has a link\\" title=\\"this image already has a link\\" src=\\"not-a-real-dir/images/this-image-already-has-a-link.jpeg\\" srcset=\\"not-a-real-dir/images/this-image-already-has-a-link.jpeg, not-a-real-dir/images/this-image-already-has-a-link.jpeg\\" sizes=\\"(max-width: 650px) 100vw, 650px\\" style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\" loading=\\"lazy\\">
     </span>
 </a>"
 `;
@@ -170,7 +176,7 @@ exports[`it leaves linked HTML img tags alone 1`] = `
 exports[`it leaves single-line linked HTML img tags alone 1`] = `
 "<span class=\\"gatsby-resp-image-wrapper\\" style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\">
       <span class=\\"gatsby-resp-image-background-image\\" style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw&apos;); background-size: cover; display: block;\\"></span>
-  <img class=\\"gatsby-resp-image-image\\" alt=\\"this image already has a link\\" title=\\"this image already has a link\\" src=\\"not-a-real-dir/images/this-image-already-has-a-link.jpeg\\" srcset=\\"not-a-real-dir/images/this-image-already-has-a-link.jpeg, not-a-real-dir/images/this-image-already-has-a-link.jpeg\\" sizes=\\"(max-width: 650px) 100vw, 650px\\" loading=\\"lazy\\">
+  <img class=\\"gatsby-resp-image-image\\" alt=\\"this image already has a link\\" title=\\"this image already has a link\\" src=\\"not-a-real-dir/images/this-image-already-has-a-link.jpeg\\" srcset=\\"not-a-real-dir/images/this-image-already-has-a-link.jpeg, not-a-real-dir/images/this-image-already-has-a-link.jpeg\\" sizes=\\"(max-width: 650px) 100vw, 650px\\" style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\" loading=\\"lazy\\">
     </span>"
 `;
 
@@ -178,7 +184,7 @@ exports[`it transforms HTML img tags 1`] = `
 "<span class=\\"gatsby-resp-image-wrapper\\" style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\">
       <a class=\\"gatsby-resp-image-link\\" href=\\"not-a-real-dir/image/my-image.jpeg\\" style=\\"display: block\\" target=\\"_blank\\" rel=\\"noopener\\">
     <span class=\\"gatsby-resp-image-background-image\\" style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw&apos;); background-size: cover; display: block;\\"></span>
-  <img class=\\"gatsby-resp-image-image\\" alt=\\"my image\\" title=\\"my image\\" src=\\"not-a-real-dir/image/my-image.jpeg\\" srcset=\\"not-a-real-dir/image/my-image.jpeg, not-a-real-dir/image/my-image.jpeg\\" sizes=\\"(max-width: 650px) 100vw, 650px\\" loading=\\"lazy\\">
+  <img class=\\"gatsby-resp-image-image\\" alt=\\"my image\\" title=\\"my image\\" src=\\"not-a-real-dir/image/my-image.jpeg\\" srcset=\\"not-a-real-dir/image/my-image.jpeg, not-a-real-dir/image/my-image.jpeg\\" sizes=\\"(max-width: 650px) 100vw, 650px\\" style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\" loading=\\"lazy\\">
   </a>
     </span>"
 `;
@@ -187,7 +193,7 @@ exports[`it transforms HTML img tags with query strings 1`] = `
 "<span class=\\"gatsby-resp-image-wrapper\\" style=\\"position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 300px;\\">
       <a class=\\"gatsby-resp-image-link\\" href=\\"not-a-real-dir/image/my-image.jpeg\\" style=\\"display: block\\" target=\\"_blank\\" rel=\\"noopener\\">
     <span class=\\"gatsby-resp-image-background-image\\" style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw&apos;); background-size: cover; display: block;\\"></span>
-  <img class=\\"gatsby-resp-image-image\\" alt=\\"my image\\" title=\\"my image\\" src=\\"not-a-real-dir/image/my-image.jpeg\\" srcset=\\"not-a-real-dir/image/my-image.jpeg, not-a-real-dir/image/my-image.jpeg\\" sizes=\\"(max-width: 650px) 100vw, 650px\\" loading=\\"lazy\\">
+  <img class=\\"gatsby-resp-image-image\\" alt=\\"my image\\" title=\\"my image\\" src=\\"not-a-real-dir/image/my-image.jpeg\\" srcset=\\"not-a-real-dir/image/my-image.jpeg, not-a-real-dir/image/my-image.jpeg\\" sizes=\\"(max-width: 650px) 100vw, 650px\\" style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\" loading=\\"lazy\\">
   </a>
     </span>"
 `;
@@ -215,6 +221,7 @@ exports[`it transforms image references in markdown 1`] = `
         src=\\"not-a-real-dir/images/my-image.jpeg\\"
         srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
         sizes=\\"(max-width: 650px) 100vw, 650px\\"
+        style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
         loading=\\"lazy\\"
       />
   </a>
@@ -244,6 +251,7 @@ exports[`it transforms images in markdown 1`] = `
         src=\\"not-a-real-dir/images/my-image.jpeg\\"
         srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
         sizes=\\"(max-width: 650px) 100vw, 650px\\"
+        style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
         loading=\\"lazy\\"
       />
   </a>
@@ -273,6 +281,7 @@ exports[`it transforms images in markdown with query strings 1`] = `
         src=\\"not-a-real-dir/images/my-image.jpeg\\"
         srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
         sizes=\\"(max-width: 650px) 100vw, 650px\\"
+        style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
         loading=\\"lazy\\"
       />
   </a>
@@ -302,6 +311,7 @@ exports[`it uses tracedSVG placeholder when enabled 1`] = `
         src=\\"not-a-real-dir/images/my-image.jpeg\\"
         srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
         sizes=\\"(max-width: 650px) 100vw, 650px\\"
+        style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
         loading=\\"lazy\\"
       />
   </a>
@@ -332,6 +342,7 @@ exports[`markdownCaptions display title in markdown as caption when showCaptions
         src=\\"not-a-real-dir/images/my-image.jpeg\\"
         srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
         sizes=\\"(max-width: 650px) 100vw, 650px\\"
+        style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
         loading=\\"lazy\\"
       />
   </a>
@@ -364,6 +375,7 @@ exports[`markdownCaptions display title in text as caption when showCaptions ===
         src=\\"not-a-real-dir/images/my-image.jpeg\\"
         srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
         sizes=\\"(max-width: 650px) 100vw, 650px\\"
+        style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
         loading=\\"lazy\\"
       />
   </a>
@@ -396,6 +408,7 @@ exports[`showCaptions display alt as caption if specified first in showCaptions 
         src=\\"not-a-real-dir/images/my-image.jpeg\\"
         srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
         sizes=\\"(max-width: 650px) 100vw, 650px\\"
+        style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
         loading=\\"lazy\\"
       />
   </a>
@@ -428,6 +441,7 @@ exports[`showCaptions display alt as caption if specified in showCaptions array 
         src=\\"not-a-real-dir/images/my-image.jpeg\\"
         srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
         sizes=\\"(max-width: 650px) 100vw, 650px\\"
+        style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
         loading=\\"lazy\\"
       />
   </a>
@@ -460,6 +474,7 @@ exports[`showCaptions display alt as caption if specified in showCaptions array,
         src=\\"not-a-real-dir/images/my-image.jpeg\\"
         srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
         sizes=\\"(max-width: 650px) 100vw, 650px\\"
+        style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
         loading=\\"lazy\\"
       />
   </a>
@@ -492,6 +507,7 @@ exports[`showCaptions display alt as caption if title was not found and showCapt
         src=\\"not-a-real-dir/images/my-image.jpeg\\"
         srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
         sizes=\\"(max-width: 650px) 100vw, 650px\\"
+        style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
         loading=\\"lazy\\"
       />
   </a>
@@ -524,6 +540,7 @@ exports[`showCaptions display title as caption if specified first in showCaption
         src=\\"not-a-real-dir/images/my-image.jpeg\\"
         srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
         sizes=\\"(max-width: 650px) 100vw, 650px\\"
+        style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
         loading=\\"lazy\\"
       />
   </a>
@@ -556,6 +573,7 @@ exports[`showCaptions display title as caption if specified in showCaptions arra
         src=\\"not-a-real-dir/images/my-image.jpeg\\"
         srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
         sizes=\\"(max-width: 650px) 100vw, 650px\\"
+        style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
         loading=\\"lazy\\"
       />
   </a>
@@ -588,6 +606,7 @@ exports[`showCaptions display title as caption when showCaptions === true 1`] = 
         src=\\"not-a-real-dir/images/my-image.jpeg\\"
         srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
         sizes=\\"(max-width: 650px) 100vw, 650px\\"
+        style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
         loading=\\"lazy\\"
       />
   </a>
@@ -620,6 +639,7 @@ exports[`showCaptions fallback to alt as caption if specified second in showCapt
         src=\\"not-a-real-dir/images/my-image.jpeg\\"
         srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
         sizes=\\"(max-width: 650px) 100vw, 650px\\"
+        style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
         loading=\\"lazy\\"
       />
   </a>
@@ -652,6 +672,7 @@ exports[`showCaptions fallback to title as caption if specified second in showCa
         src=\\"not-a-real-dir/images/my-image.jpeg\\"
         srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
         sizes=\\"(max-width: 650px) 100vw, 650px\\"
+        style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
         loading=\\"lazy\\"
       />
   </a>

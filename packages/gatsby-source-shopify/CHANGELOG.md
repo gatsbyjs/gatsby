@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.33](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.0.32...gatsby-source-shopify@3.0.33) (2019-12-09)
+
+### Bug Fixes
+
+- **gatsby-source-shopify:** allShopifyPage node creation issue [#18249](https://github.com/gatsbyjs/gatsby/issues/18249) fix ([#19950](https://github.com/gatsbyjs/gatsby/issues/19950)) ([94bc770](https://github.com/gatsbyjs/gatsby/commit/94bc770))
+
 ## [3.0.32](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.0.31...gatsby-source-shopify@3.0.32) (2019-12-02)
 
 **Note:** Version bump only for package gatsby-source-shopify
