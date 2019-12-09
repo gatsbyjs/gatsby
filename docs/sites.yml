@@ -8896,3 +8896,15 @@
   built_by: Donovan Nagel
   built_by_url: https://www.donovannagel.com
   featured: false
+- title: Bearer - API Monitoring & Protection for your app
+  url: https://www.bearer.sh/
+  main_url: https://www.bearer.sh/
+  description: >
+    Bearer helps developers monitor API usage in real-time, protect their app against API limits and failures, and integrate APIs faster.
+  categories:
+    - API
+    - Technology
+    - Web Development
+    - Open Source
+  built_by: Bearer
+  featured: false
