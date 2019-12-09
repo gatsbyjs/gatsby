@@ -23,7 +23,7 @@ for folder in $GLOB; do
   # note: redirect output to dev/null to avoid any possibility of leaking token
   git clone --quiet --depth 1 "https://$GITHUB_API_TOKEN@github.com/gatsbyjs/$NAME.git" "$CLONE_DIR" > /dev/null
   cd "$CLONE_DIR"
-  find . | grep -v ".git" | grep -v "^\\.*$" | xargs rm -rf # delete all files (to handle deletions in monorepo)
+  find . | grep -v ".git" | grep -v "^\.*$" | xargs rm -rf # delete all files (to handle deletions in monorepo)
   cp -r "$BASE/$folder/." .
 
   if [ "$IS_WORKSPACE" = null ]; then
