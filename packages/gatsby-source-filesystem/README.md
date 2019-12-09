@@ -268,10 +268,7 @@ The following example is adapted from the source of [`gatsby-source-mysql`](http
 // gatsby-node.js
 const createMySqlNodes = require(`./create-nodes`)
 
-exports.sourceNodes = async (
-  { actions, createNodeId, store, cache },
-  config
-) => {
+exports.sourceNodes = async ({ actions, createNodeId, cache }, config) => {
   const { createNode } = actions
   const { conn, queries } = config
   const { db, results } = await query(conn, queries)
@@ -283,7 +280,6 @@ exports.sourceNodes = async (
         createMySqlNodes(result, results, createNode, {
           createNode,
           createNodeId,
-          store,
           cache,
         })
       )
@@ -305,7 +301,6 @@ function attach(node, key, value, ctx) {
     ctx.linkChildren.push(parentNodeId =>
       createFileNodeFromBuffer({
         buffer: value,
-        store: ctx.store,
         cache: ctx.cache,
         createNode: ctx.createNode,
         createNodeId: ctx.createNodeId,

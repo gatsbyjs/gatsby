@@ -31,6 +31,7 @@ const createMockCache = () => {
   return {
     get: jest.fn(),
     set: jest.fn(),
+    directory: __dirname,
   }
 }
 
@@ -47,6 +48,7 @@ describe(`create-file-node-from-buffer`, () => {
         }
       }),
     },
+    cache: createMockCache(),
     createNode: jest.fn(),
     createNodeId: jest.fn(),
   }
@@ -84,7 +86,7 @@ describe(`create-file-node-from-buffer`, () => {
       const buffer = createMockBuffer(`buffer-content`)
       await setup({ buffer })
 
-      expect(ensureDir).toBeCalledTimes(2)
+      expect(ensureDir).toBeCalledTimes(1)
       expect(bufferEq(buffer, output)).toBe(true)
     })
 
@@ -150,17 +152,6 @@ describe(`create-file-node-from-buffer`, () => {
         })
       }).toThrowErrorMatchingInlineSnapshot(
         `"cache must be the Gatsby cache, was undefined"`
-      )
-    })
-
-    it(`throws on invalid inputs: store`, () => {
-      expect(() => {
-        createFileNodeFromBuffer({
-          ...defaultArgs,
-          store: undefined,
-        })
-      }).toThrowErrorMatchingInlineSnapshot(
-        `"store must be the redux store, was undefined"`
       )
     })
   })
