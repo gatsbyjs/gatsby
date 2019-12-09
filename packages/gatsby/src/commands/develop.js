@@ -30,9 +30,10 @@ const WorkerPool = require(`../utils/worker/pool`)
 
 const withResolverContext = require(`../schema/context`)
 const sourceNodes = require(`../utils/source-nodes`)
+const createSchemaCustomization = require(`../utils/create-schema-customization`)
 const websocketManager = require(`../utils/websocket-manager`)
 const getSslCert = require(`../utils/get-ssl-cert`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 const { initTracer } = require(`../utils/tracer`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const db = require(`../db`)
@@ -187,6 +188,20 @@ async function startServer(program) {
    * If no GATSBY_REFRESH_TOKEN env var is available, then no Authorization header is required
    **/
   const REFRESH_ENDPOINT = `/__refresh`
+  const refresh = async req => {
+    let activity = report.activityTimer(`createSchemaCustomization`, {})
+    activity.start()
+    await createSchemaCustomization({
+      refresh: true,
+    })
+    activity.end()
+    activity = report.activityTimer(`Refreshing source data`, {})
+    activity.start()
+    await sourceNodes({
+      webhookBody: req.body,
+    })
+    activity.end()
+  }
   app.use(REFRESH_ENDPOINT, express.json())
   app.post(REFRESH_ENDPOINT, (req, res) => {
     const enableRefresh = process.env.ENABLE_GATSBY_REFRESH_ENDPOINT
@@ -195,13 +210,7 @@ async function startServer(program) {
       !refreshToken || req.headers.authorization === refreshToken
 
     if (enableRefresh && authorizedRefresh) {
-      const activity = report.activityTimer(`Refreshing source data`, {})
-      activity.start()
-      sourceNodes({
-        webhookBody: req.body,
-      }).then(() => {
-        activity.end()
-      })
+      refresh(req)
     }
     res.end()
   })
@@ -374,6 +383,9 @@ module.exports = async (program: any) => {
   // Start the createPages hot reloader.
   require(`../bootstrap/page-hot-reloader`)(graphqlRunner)
 
+  // Start the schema hot reloader.
+  require(`../bootstrap/schema-hot-reloader`)()
+
   await queryUtil.initialProcessQueries()
 
   require(`../redux/actions`).boundActionCreators.setProgramStatus(
@@ -514,8 +526,8 @@ module.exports = async (program: any) => {
       .sync(`{,!(node_modules|public)/**/}*.js`, { nodir: true })
       .forEach(file => {
         const fileText = fs.readFileSync(file)
-        const matchingApis = deprecatedApis.filter(
-          api => fileText.indexOf(api) !== -1
+        const matchingApis = deprecatedApis.filter(api =>
+          fileText.includes(api)
         )
         matchingApis.forEach(api => deprecatedLocations[api].push(file))
       })

@@ -27,6 +27,8 @@ To develop on the starter library, you'll need to supply a GitHub personal acces
 GITHUB_API_TOKEN=YOUR_TOKEN_HERE
 ```
 
+_Note:_ For `gatsby build` to be able to run you also need a `.env.production` file with the same contents
+
 ### Enabling guess.js
 
 Guess.js is disabled by default and can be enabled by setting `ANALYTICS_SERVICE_ACCOUNT` and `ANALYTICS_SERVICE_ACCOUNT_KEY` env variables. These variables need to have access to the gatsbyjs.org analytics.
@@ -48,7 +50,7 @@ Add the following env variable to your `.env.development` file to enable placeho
 GATSBY_SCREENSHOT_PLACEHOLDER=true
 ```
 
-For more information checkout [`gatsby-transformer-screenshot` docs](http://www.gatsbyjs.org/packages/gatsby-transformer-screenshot#placeholder-image).
+For more information checkout [`gatsby-transformer-screenshot` docs](https://www.gatsbyjs.org/packages/gatsby-transformer-screenshot#placeholder-image).
 
 ## `theme-ui`, CSS authoring, and dark mode
 

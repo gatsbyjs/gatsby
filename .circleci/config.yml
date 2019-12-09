@@ -71,6 +71,52 @@ aliases:
       - lint
       - unit_tests_node8
 
+  e2e_tests_production_runtime_alias: &e2e_tests_production_runtime_alias
+    <<: *e2e-executor
+    parameters:
+      nightly:
+        type: boolean
+        default: false
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/production-runtime
+          test_command: CYPRESS_PROJECT_ID=is8aoq CYPRESS_RECORD_KEY=cb4708d2-1578-4665-9a07-c59f8db28d91 yarn test && CYPRESS_PROJECT_ID=htpvkv CYPRESS_RECORD_KEY=0d734841-c613-41d2-86e5-df0b5968f93f yarn test:offline
+          skip_file_change_test: << parameters.nightly >>
+      - notify-status:
+          condition: << parameters.nightly >>
+
+  e2e_tests_development_runtime_alias: &e2e_tests_development_runtime_alias
+    <<: *e2e-executor
+    parameters:
+      nightly:
+        type: boolean
+        default: false
+    environment:
+      CYPRESS_PROJECT_ID: s3j3qj
+      CYPRESS_RECORD_KEY: 3904ca0c-bc98-47d9-8371-b68c5e81fb9b
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/development-runtime
+          skip_file_change_test: << parameters.nightly >>
+      - notify-status:
+          condition: << parameters.nightly >>
+
+  e2e_tests_gatsby-image_alias: &e2e_tests_gatsby-image_alias
+    <<: *e2e-executor
+    parameters:
+      nightly:
+        type: boolean
+        default: false
+    environment:
+      CYPRESS_PROJECT_ID: ave32k
+      CYPRESS_RECORD_KEY: fb3cb6e0-a0f9-48b2-aa9a-95e8ef150a85
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/gatsby-image
+          skip_file_change_test: << parameters.nightly >>
+      - notify-status:
+          condition: << parameters.nightly >>
+
 commands:
   notify-status:
     parameters:
@@ -86,6 +132,9 @@ commands:
 
   e2e-test:
     parameters:
+      skip_file_change_test:
+        type: boolean
+        default: false
       trigger_pattern:
         type: string
         default: "packages/*|.circleci/*"
@@ -100,7 +149,10 @@ commands:
       #- <<: *restore_cache
       #- <<: *install_node_modules
       #- <<: *persist_cache
-      - run: ./scripts/assert-changed-files.sh "<< parameters.trigger_pattern >>|<< parameters.test_path >>/*"
+      - unless:
+          condition: << parameters.skip_file_change_test >>
+          steps:
+            - run: ./scripts/assert-changed-files.sh "<< parameters.trigger_pattern >>|<< parameters.test_path >>/*"
       - run: ./scripts/e2e-test.sh "<< parameters.test_path >>" "<< parameters.test_command >>"
 
 version: 2.1
@@ -110,11 +162,18 @@ jobs:
     executor: node
     steps:
       - checkout
-      - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*"
       - <<: *restore_cache
       - <<: *install_node_modules
       - <<: *persist_cache
+      # persist our git checkout and node_modules as the next step (assert-changed-files) might exit this step
+      # when no files have changed (master). We still need to have these files for jobs like lint & unit_tests_node8
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - "*"
+      - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*"
       - run: yarn bootstrap -- concurrency=2
+      # Persist the workspace again with all packages already built
       - persist_to_workspace:
           root: ./
           paths:
@@ -184,47 +243,31 @@ jobs:
           test_path: e2e-tests/path-prefix
 
   e2e_tests_gatsby-image:
-    <<: *e2e-executor
-    parameters:
-      postStatus:
-        type: boolean
-        default: false
-    environment:
-      CYPRESS_PROJECT_ID: ave32k
-      CYPRESS_RECORD_KEY: fb3cb6e0-a0f9-48b2-aa9a-95e8ef150a85
-    steps:
-      - e2e-test:
-          test_path: e2e-tests/gatsby-image
-      - notify-status:
-          condition: << parameters.postStatus >>
+    <<: *e2e_tests_gatsby-image_alias
+
+  e2e_tests_gatsby-image_with_experimental_react:
+    <<: *e2e_tests_gatsby-image_alias
+
+  e2e_tests_gatsby-image_with_next_react:
+    <<: *e2e_tests_gatsby-image_alias
 
   e2e_tests_development_runtime:
-    <<: *e2e-executor
-    parameters:
-      postStatus:
-        type: boolean
-        default: false
-    environment:
-      CYPRESS_PROJECT_ID: s3j3qj
-      CYPRESS_RECORD_KEY: 3904ca0c-bc98-47d9-8371-b68c5e81fb9b
-    steps:
-      - e2e-test:
-          test_path: e2e-tests/development-runtime
-      - notify-status:
-          condition: << parameters.postStatus >>
+    <<: *e2e_tests_development_runtime_alias
+
+  e2e_tests_development_runtime_with_experimental_react:
+    <<: *e2e_tests_development_runtime_alias
+
+  e2e_tests_development_runtime_with_next_react:
+    <<: *e2e_tests_development_runtime_alias
 
   e2e_tests_production_runtime:
-    <<: *e2e-executor
-    parameters:
-      postStatus:
-        type: boolean
-        default: false
-    steps:
-      - e2e-test:
-          test_path: e2e-tests/production-runtime
-          test_command: CYPRESS_PROJECT_ID=is8aoq CYPRESS_RECORD_KEY=cb4708d2-1578-4665-9a07-c59f8db28d91 yarn test && CYPRESS_PROJECT_ID=htpvkv CYPRESS_RECORD_KEY=0d734841-c613-41d2-86e5-df0b5968f93f yarn test:offline
-      - notify-status:
-          condition: << parameters.postStatus >>
+    <<: *e2e_tests_production_runtime_alias
+
+  e2e_tests_production_runtime_with_experimental_react:
+    <<: *e2e_tests_production_runtime_alias
+
+  e2e_tests_production_runtime_with_next_react:
+    <<: *e2e_tests_production_runtime_alias
 
   themes_e2e_tests_development_runtime:
     <<: *e2e-executor
@@ -283,9 +326,9 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: v1_www_public_dir
+          key: v2_www_public_dir
       - restore_cache:
-          key: v1_www_cache_dir
+          key: v2_www_cache_dir
       - run:
           command: yarn
           working_directory: ~/project/www
@@ -294,11 +337,11 @@ jobs:
           command: GATSBY_CPU_COUNT=8 yarn build
           working_directory: ~/project/www
       - save_cache:
-          key: v1_www_public_dir_{{ epoch }}
+          key: v2_www_public_dir_{{ epoch }}
           paths:
             - ~/project/www/public
       - save_cache:
-          key: v1_www_cache_dir_{{ epoch }}
+          key: v2_www_cache_dir_{{ epoch }}
           paths:
             - ~/project/www/.cache
 
@@ -308,7 +351,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: v1_www_public_dir
+          key: v2_www_public_dir
       - run:
           command: yarn add netlify-cli
           working_directory: ~/project/www
@@ -362,7 +405,7 @@ workflows:
   nightly-react-next:
     triggers:
       - schedule:
-          cron: "0 0 * * *"
+          cron: "0 0 * * 1,2,3,4,5"
           filters:
             branches:
               only:
@@ -370,22 +413,22 @@ workflows:
     jobs:
       - bootstrap-with-experimental-react:
           version: "next"
-      - e2e_tests_gatsby-image:
-          postStatus: true
+      - e2e_tests_gatsby-image_with_next_react:
+          nightly: true
           requires:
             - bootstrap-with-experimental-react
-      - e2e_tests_development_runtime:
-          postStatus: true
+      - e2e_tests_development_runtime_with_next_react:
+          nightly: true
           requires:
             - bootstrap-with-experimental-react
-      - e2e_tests_production_runtime:
-          postStatus: true
+      - e2e_tests_production_runtime_with_next_react:
+          nightly: true
           requires:
             - bootstrap-with-experimental-react
   nightly-react-experimental:
     triggers:
       - schedule:
-          cron: "0 0 * * *"
+          cron: "0 0 * * 1,2,3,4,5"
           filters:
             branches:
               only:
@@ -393,16 +436,16 @@ workflows:
     jobs:
       - bootstrap-with-experimental-react:
           version: "experimental"
-      - e2e_tests_gatsby-image:
-          postStatus: true
+      - e2e_tests_gatsby-image_with_experimental_react:
+          nightly: true
           requires:
             - bootstrap-with-experimental-react
-      - e2e_tests_development_runtime:
-          postStatus: true
+      - e2e_tests_development_runtime_with_experimental_react:
+          nightly: true
           requires:
             - bootstrap-with-experimental-react
-      - e2e_tests_production_runtime:
-          postStatus: true
+      - e2e_tests_production_runtime_with_experimental_react:
+          nightly: true
           requires:
             - bootstrap-with-experimental-react
 
@@ -452,6 +495,8 @@ workflows:
       - starters_validate:
           <<: *ignore_master
       - starters_publish:
+          requires:
+            - bootstrap
           filters:
             branches:
               only:

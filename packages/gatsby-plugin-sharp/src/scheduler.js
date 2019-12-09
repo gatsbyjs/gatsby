@@ -1,5 +1,4 @@
 const _ = require(`lodash`)
-const { existsSync } = require(`fs`)
 const uuidv4 = require(`uuid/v4`)
 const pDefer = require(`p-defer`)
 const worker = require(`./worker`)
@@ -32,7 +31,7 @@ const cleanupJob = (job, boundActionCreators) => {
 }
 
 const executeJobs = _.throttle(
-  (pluginOptions, boundActionCreators) => {
+  boundActionCreators => {
     toProcess.forEach(job => {
       const { task } = job
       toProcess.delete(task.inputPaths[0])
@@ -61,9 +60,9 @@ const executeJobs = _.throttle(
 const scheduleJob = async (
   job,
   boundActionCreators,
+  pluginOptions,
   reporter,
-  reportStatus = true,
-  pluginOptions
+  reportStatus = true
 ) => {
   const isQueued = toProcess.has(job.inputPath)
   let scheduledPromise
@@ -71,12 +70,6 @@ const scheduleJob = async (
   if (reportStatus && !bar) {
     bar = createProgress(`Generating image thumbnails`, reporter)
     bar.start()
-  }
-
-  // Check if the output file already exists so we don't redo work.
-  // TODO: Remove this when jobs api is stable, it will have a better check
-  if (existsSync(job.outputPath)) {
-    return Promise.resolve()
   }
 
   // if an input image is already queued we add it to a transforms queue
@@ -145,12 +138,13 @@ const scheduleJob = async (
       { name: `gatsby-plugin-sharp` }
     )
   }
+
   pendingImagesCounter++
   if (bar) {
     bar.total = pendingImagesCounter
   }
 
-  executeJobs(pluginOptions, boundActionCreators, reportStatus)
+  executeJobs(boundActionCreators)
 
   return scheduledPromise
 }

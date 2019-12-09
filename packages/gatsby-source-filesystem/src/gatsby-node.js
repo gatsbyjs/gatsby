@@ -124,14 +124,6 @@ const createFSMachine = (
 }
 
 exports.sourceNodes = (api, pluginOptions) => {
-  const typeDefs = `
-    type File implements Node @infer {
-      birthtime: Date @deprecated(reason: "Use \`birthTime\` instead")
-      birthtimeMs: Float @deprecated(reason: "Use \`birthTime\` instead")
-    }
-  `
-  api.actions.createTypes(typeDefs)
-
   // Validate that the path exists.
   if (!fs.existsSync(pluginOptions.path)) {
     api.reporter.panic(`

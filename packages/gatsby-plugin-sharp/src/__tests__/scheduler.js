@@ -4,12 +4,6 @@ jest.mock(`lodash`, () => {
   }
 })
 
-jest.mock(`fs`, () => {
-  return {
-    existsSync: jest.fn().mockReturnValue(false),
-  }
-})
-
 jest.mock(`../worker`, () => {
   return {
     IMAGE_PROCESSING: jest.fn(),
@@ -46,7 +40,7 @@ describe(`scheduler`, () => {
       },
       contentDigest: `digest`,
     }
-    await scheduleJob(job, boundActionCreators, {}, false, `value`)
+    await scheduleJob(job, boundActionCreators, `value`, {}, false)
 
     expect(createProgress).not.toHaveBeenCalled()
     expect(workerMock).toHaveBeenCalledWith([job.inputPath], job.outputDir, {
@@ -116,6 +110,7 @@ describe(`scheduler`, () => {
         },
         boundActionCreators,
         {},
+        {},
         false
       )
     } catch (err) {
@@ -153,7 +148,7 @@ describe(`scheduler`, () => {
       },
       contentDigest: `digest`,
     }
-    const job1Promise = scheduleJob(job1, boundActionCreators, {}, false)
+    const job1Promise = scheduleJob(job1, boundActionCreators, {}, {}, false)
 
     const job2 = {
       inputPath: `/test-image.jpg`,
@@ -164,7 +159,7 @@ describe(`scheduler`, () => {
       },
       contentDigest: `digest`,
     }
-    const job2Promise = scheduleJob(job2, boundActionCreators, {}, false)
+    const job2Promise = scheduleJob(job2, boundActionCreators, {}, {}, false)
 
     await Promise.all([job1Promise, job2Promise])
 
@@ -188,30 +183,5 @@ describe(`scheduler`, () => {
         ],
       })
     )
-  })
-
-  it(`Shouldn't schedule a job when outputFile already exists`, async () => {
-    const fs = require(`fs`)
-    fs.existsSync.mockReturnValue(true)
-    const workerMock = require(`../worker`).IMAGE_PROCESSING
-    const { scheduleJob } = require(`../scheduler`)
-    const boundActionCreators = {
-      createJob: jest.fn(),
-    }
-
-    await scheduleJob(
-      {
-        inputPath: `/test-image.jpg`,
-        outputDir: `/public/static/`,
-        outputPath: `/1234/test-image.jpg`,
-        args: {},
-      },
-      boundActionCreators,
-      {},
-      false
-    )
-
-    expect(boundActionCreators.createJob).not.toHaveBeenCalled()
-    expect(workerMock).not.toHaveBeenCalled()
   })
 })
