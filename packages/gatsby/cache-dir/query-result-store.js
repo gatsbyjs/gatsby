@@ -25,7 +25,7 @@ const getPathFromProps = props =>
     ? normalizePagePath(props.pageResources.page.path)
     : undefined
 
-export class JSONStoreForPageQueries extends React.Component {
+export class PageQueryStore extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -87,7 +87,7 @@ export class JSONStoreForPageQueries extends React.Component {
   }
 }
 
-export class JSONStoreForStaticQueries extends React.Component {
+export class StaticQueryStore extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
