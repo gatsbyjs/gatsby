@@ -190,8 +190,6 @@ npm install gatsby-plugin-sharp gatsby-plugin-manifest gatsby-remark-images-cont
 
 If updating these doesn't fix the issue, your project probably uses other plugins from the community that depend on a different version of `sharp`. Try running `npm list sharp` or `yarn why sharp` to see all packages in the current project that use `sharp` and try updating them as well.
 
-(using a variable in a static query)
-
 ## Errors building and deploying
 
 The process of building your site [varies slightly from the development process](/docs/overview-of-the-gatsby-build-process/). Some errors can arise when you build your site if
