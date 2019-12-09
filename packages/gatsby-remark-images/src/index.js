@@ -330,18 +330,17 @@ module.exports = (
     `.trim()
 
     // Wrap in figure and use title as caption
-    if (imageCaption) {
+    if (imageCaption || !options.wrapFigureOnlyWithCaptions) {
+      if (imageCaption) {
+        rawHTML = `
+          ${rawHTML}
+          <figcaption class="gatsby-resp-image-figcaption">${imageCaption}</figcaption>
+        `.trim()
+      }
       rawHTML = `
-  <figure class="gatsby-resp-image-figure" style="${wrapperStyle}">
-    ${rawHTML}
-    <figcaption class="gatsby-resp-image-figcaption">${imageCaption}</figcaption>
-  </figure>
-      `.trim()
-    } else if (!options.wrapFigureOnlyWithCaptions) {
-      rawHTML = `
-  <figure class="gatsby-resp-image-figure" style="${wrapperStyle}">
-    ${rawHTML}
-  </figure>
+        <figure class="gatsby-resp-image-figure" style="${wrapperStyle}">
+          ${rawHTML}
+        </figure>
       `.trim()
     }
 
