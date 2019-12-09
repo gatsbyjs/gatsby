@@ -212,7 +212,7 @@ beforeAll(() => {
   useGatsbyNodeAndConfig(1)
 })
 
-describe.skip(`nothing changed between gatsby runs`, () => {
+describe(`nothing changed between gatsby runs`, () => {
   describe(`Nodes`, () => {
     it(`nodes are persisted between builds when nothing changes`, () => {
       const {
