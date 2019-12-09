@@ -268,14 +268,8 @@ const errorMap = {
   },
   // Plugin errors
   "11321": {
-    text: context => {
-      const graphqlNotDefined =
-        context.message === `graphql is not defined`
-          ? `\n\nMake sure that you use "graphql" as the first argument of the createPages API:\n\nexports.createPages = ({ graphql }) => {}\n\nYou can learn more here: https://www.gatsbyjs.org/docs/node-apis/#createPages`
-          : ``
-
-      return `"${context.pluginName}" threw an error while running the ${context.api} lifecycle:\n\n${context.message}${graphqlNotDefined}`
-    },
+    text: context =>
+      `"${context.pluginName}" threw an error while running the ${context.api} lifecycle:\n\n${context.message}\n\n${context.codeFrame}`,
     type: `PLUGIN`,
     level: `ERROR`,
   },
@@ -366,6 +360,13 @@ const errorMap = {
             : []
         )
         .join(`\n`),
+    level: `ERROR`,
+  },
+  // "X" is not defined in Gatsby's node APIs
+  "11330": {
+    text: context =>
+      `"${context.pluginName}" threw an error while running the ${context.api} lifecycle:\n\n${context.message}\n\n${context.codeFrame}\n\nMake sure that you don't have a typo somewhere and use valid arguments in ${context.api} lifecycle.\nLearn more about ${context.api} here: https://www.gatsbyjs.org/docs/node-apis/#${context.api}`,
+    type: `PLUGIN`,
     level: `ERROR`,
   },
   // node object didn't pass validation
