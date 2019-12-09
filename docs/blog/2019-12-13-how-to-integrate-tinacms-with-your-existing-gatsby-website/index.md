@@ -264,6 +264,8 @@ GIT_AUTHOR_NAME
 
 Since these values will be set at the environment level, all edits made using Tina will use these values when pushing changes to git.
 
+The team behind TinaCMS is currently nearing the initial beta release of [**Tina Teams**](https://tinacms.org/teams), a custom live editing environment for you and your team. Tina Teams handles user authentication with individual user commits to provide the best possible editing experience for your team. Stay tuned!
+
 ## Summary
 
 These are just some simple steps to get up and running with Tina, the possibilities don't end here. Make sure to check out [Tina Starter Grande](https://github.com/tinacms/tina-starter-grande) to see a more advacned implementation of Tina on a Gatsby website.
