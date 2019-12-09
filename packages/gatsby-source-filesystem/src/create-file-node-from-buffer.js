@@ -33,9 +33,6 @@ const cacheId = hash => `create-file-node-from-buffer-${hash}`
  * @param  {Function} options.createNode
  */
 
-const CACHE_DIR = `.cache`
-const FS_PLUGIN_DIR = `gatsby-source-filesystem`
-
 /**
  * writeBuffer
  * --
