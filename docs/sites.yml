@@ -8883,6 +8883,17 @@
   built_by: Sai gowtham
   built_by_url: https://twitter.com/saigowthamr
   featured: false
+- title: Samir Mujanovic
+  main_url: https://www.samirmujanovic.com/
+  url: https://www.samirmujanovic.com/
+  description: >
+    I'm a Frontend Developer with 3 years of experience. I describe myself as a developer who loves coding, open-source and web platform.
+  categories:
+    - Portfolio
+    - Web Development
+    - Design
+  built_by: Samir Mujanovic
+  built_by_url: https://github.com/sameerrM
 - title: Yearlyglot - Fluent Every Year
   url: https://www.yearlyglot.com/blog
   main_url: https://www.yearlyglot.com
