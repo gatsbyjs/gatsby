@@ -249,11 +249,20 @@ We now have a way to add new posts from the Tina sidebar. The location of the ne
 
 ![Create Content](./step-five_create-content.jpg)
 
-## Tina Teams
+## Access Tina In The Cloud
 
-Now that we’ve built a tailored editing experience for creating and writing content, we need a way to let non-technical folks edit the site.
+Now that we’ve built a tailored editing experience for creating and writing content, we need a way to let non-technical folks edit the site. We'll set it up with [Gatsby Cloud](https://www.gatsbyjs.com/cloud/), which is a hosted service for building and maintaining Gatsby websites.
 
-**! SAY MORE STUFF ABOUT TEAMS HERE ! -- Gatsby Cloud stuff would be so cool here...maybe a part II??**
+To get Tina working in Gatsby Cloud, you'll need to configure the following four environment variables during **Step 3** of the process:
+
+```
+GIT_COMMITTER_EMAIL
+GIT_COMMITTER_NAME
+GIT_AUTHOR_EMAIL
+GIT_AUTHOR_NAME
+```
+
+Since these values will be set at the environment level, all edits made using Tina will use these values when pushing changes to git.
 
 ## Summary
 
