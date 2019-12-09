@@ -125,7 +125,7 @@
     "stack-trace": "^0.0.10",
     "string-similarity": "^1.2.2",
     "style-loader": "^0.23.1",
-    "terser-webpack-plugin": "1.4.1",
+    "terser-webpack-plugin": "^1.4.2",
     "true-case-path": "^2.2.1",
     "type-of": "^2.0.1",
     "url-loader": "^1.1.2",
