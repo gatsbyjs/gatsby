@@ -169,9 +169,6 @@ createRemoteFileNode({
   // The id of the parent node (i.e. the node to which the new remote File node will be linked to.
   parentNodeId,
 
-  // The redux store which is passed to all Node APIs.
-  store,
-
   // Gatsby's cache which the helper uses to check if the file has been downloaded already. It's passed to all Node APIs.
   cache,
 
@@ -204,7 +201,6 @@ const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
 exports.downloadMediaFiles = ({
   nodes,
-  store,
   cache,
   createNode,
   createNodeId,
@@ -219,7 +215,6 @@ exports.downloadMediaFiles = ({
         fileNode = await createRemoteFileNode({
           url: node.source_url,
           parentNodeId: node.id,
-          store,
           cache,
           createNode,
           createNodeId,
@@ -250,7 +245,6 @@ createRemoteFileNode({
   // The source url of the remote file
   url: `https://example.com/a-file-without-an-extension`,
   parentNodeId: node.id,
-  store,
   cache,
   createNode,
   createNodeId,

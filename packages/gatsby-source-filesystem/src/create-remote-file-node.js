@@ -280,7 +280,6 @@ const pushTask = task =>
  */
 module.exports = ({
   url,
-  store,
   cache,
   createNode,
   parentNodeId = null,
@@ -301,9 +300,6 @@ module.exports = ({
   }
   if (typeof createNode !== `function`) {
     throw new Error(`createNode must be a function, was ${typeof createNode}`)
-  }
-  if (typeof store !== `object`) {
-    throw new Error(`store must be the redux store, was ${typeof store}`)
   }
   if (typeof cache !== `object`) {
     throw new Error(`cache must be the Gatsby cache, was ${typeof cache}`)
@@ -329,7 +325,6 @@ module.exports = ({
 
   const fileDownloadPromise = pushTask({
     url,
-    store,
     cache,
     createNode,
     parentNodeId,
