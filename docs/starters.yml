@@ -620,6 +620,7 @@
   description: Single page starter based on the Photon site template
   tags:
     - HTML5UP
+    - Onepage
     - Styling:SCSS
   features:
     - Designed by HTML5 UP
@@ -747,6 +748,7 @@
   description: Single page starter based on the Stellar site template
   tags:
     - HTML5UP
+    - Onepage
     - Styling:SCSS
   features:
     - Designed by HTML5 UP
@@ -759,6 +761,7 @@
   description: Single page starter based on the Strata site template
   tags:
     - Portfolio
+    - Onepage
     - HTML5UP
     - Styling:SCSS
   features:
@@ -4658,3 +4661,15 @@
     - Optimized images with gatsby-image.
     - SEO
     - A11y
+- url: https://gatsby-lander.surge.sh/
+  repo: https://github.com/codebushi/gatsby-starter-lander
+  description: Single page starter built with Tailwind CSS
+  tags:
+    - Onepage
+    - Linting
+    - Styling:Tailwind
+  features:
+    - Simple One Page Site
+    - Landing Page Design
+    - Fully Responsive
+    - Styling with Tailwind
