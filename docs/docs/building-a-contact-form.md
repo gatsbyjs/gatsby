@@ -85,7 +85,7 @@ All forms set up in this way come with reCAPTCHA by default, but you can also en
 <input type="text" name="_gotcha" style="display:none" />
 ```
 
-Because the input is hidden, Formspree will know that only a bot could have made the submission, and it will be silently ignore it!
+Because the input is hidden, Formspree will know that only a bot could have made the submission and it will be silently ignored!
 
 ### Run your own server
 

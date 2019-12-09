@@ -117,7 +117,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
 Just like before, you can test this to make sure the pages were created as expected by starting your development server and visiting [localhost:8000/stuff](http://localhost:8000/stuff) to get a list of all of the available pages. Again, this is only available in a development environment since a live site will show a different 404 page. You should see an `/about` page and a `/sample-page` page in there. If so, your gatsby-node.js file worked and you can update the template to show the data you want.
 
-![See a list of available pages](images/gatsby1.png)
+![See a list of available pages](./images/gatsby1.png)
 
 ## Updating the page template
 
@@ -279,7 +279,7 @@ export const query = graphql`
 
 And here's what it looks like when you visit the homepage of your blog:
 
-![Finished blog home page](images/gatsby2.png)
+![Finished blog home page](./images/gatsby2.png)
 
 It's looking pretty good so far. You're getting pretty close to being done, you just have a few more things to change and you're ready to start blogging!
 
@@ -316,7 +316,7 @@ The title you're seeing in the header comes from the title listed here. You can 
 
 Since you are building a blog using WordPress and want your users to have full control over the data, you should get your site name from WordPress so if it ever changes the user can update it. Fortunately, WordPress makes this available to us through the API, so you can query it in GraphQL like so:
 
-![Graphql query to get siteName from WordPress](images/gatsby3.png)
+![Graphql query to get siteName from WordPress](./images/gatsby3.png)
 
 Using queries works a bit differently inside of components. Rather than just writing a query which drops data into your page or template, you have to use a new component called `StaticQuery` which is designed specifically for using queries inside of components.
 
@@ -421,7 +421,7 @@ export default Header
 
 The header component above looks a little different than it originally did, but as you start to dig into it a bit more you can see it hasn't changed much. You essentially just wrapped your header in the StaticQuery component and then ran your query inside of that component to give the header the necessary data.
 
-![Your Gatsby.js blog after updating the header component](images/gatsby4.png)
+![Your Gatsby.js blog after updating the header component](./images/gatsby4.png)
 
 ### Adding a Menu to the Header
 
@@ -505,7 +505,7 @@ module.exports = {
 
 If you look at the code above, you'll notice you have added two new routes to the gatsby-source-wordpress. These routes are created automatically by the plugin inside of WordPress without any additional configuration. Remember, after making changes to files outside of the src folder, you need to restart your development server by running `gatsby develop`. After restarting, you can visit [http://localhost:8000/\_\_\_graphql](http://localhost:8000/___graphql) and query for the menu information, which will look like the screenshot below.
 
-![GraphiQL query to get menu items from WordPress](images/gatsby6.png)
+![GraphiQL query to get menu items from WordPress](./images/gatsby6.png)
 
 The final step is to add this query into your static query and create the menu itself in the header component. You can just drop this in under the wordpressSiteMetadata piece. Once you have it added into the query, you can just use a `map()` function to iterate over the menu items and create it dynamically, allowing the user to update it through WordPress. Doing it this way does require us to specify which menu you want, so you need the name of the menu which is set in WordPress. In this case, your menu is called Main Menu so you will use that in your query.
 
@@ -584,7 +584,7 @@ export default Header
 
 That's a good looking component! Let's see what it looks like when you visit the site:
 
-![Blog after adding menu to header](images/gatsby7.png)
+![Blog after adding menu to header](./images/gatsby7.png)
 
 ## Wrapping up
 

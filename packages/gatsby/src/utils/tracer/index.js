@@ -1,4 +1,4 @@
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 const path = require(`path`)
 const opentracing = require(`opentracing`)
 

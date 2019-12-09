@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-custom-blocks@2.1.18...gatsby-remark-custom-blocks@2.1.19) (2019-11-26)
+
+**Note:** Version bump only for package gatsby-remark-custom-blocks
+
+## [2.1.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-custom-blocks@2.1.17...gatsby-remark-custom-blocks@2.1.18) (2019-11-15)
+
+**Note:** Version bump only for package gatsby-remark-custom-blocks
+
+## [2.1.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-custom-blocks@2.1.16...gatsby-remark-custom-blocks@2.1.17) (2019-11-10)
+
+**Note:** Version bump only for package gatsby-remark-custom-blocks
+
+## [2.1.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-custom-blocks@2.1.15...gatsby-remark-custom-blocks@2.1.16) (2019-11-04)
+
+### Performance Improvements
+
+- **gatsby-remark-custom-blocks:** `_.has` already do `_.isNil`, so remove redundant check ([#19254](https://github.com/gatsbyjs/gatsby/issues/19254)) ([0fd3148](https://github.com/gatsbyjs/gatsby/commit/0fd3148))
+
 ## [2.1.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-custom-blocks@2.1.14...gatsby-remark-custom-blocks@2.1.15) (2019-10-14)
 
 **Note:** Version bump only for package gatsby-remark-custom-blocks
