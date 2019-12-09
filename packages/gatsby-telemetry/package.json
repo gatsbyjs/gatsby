@@ -8,9 +8,9 @@
   },
   "dependencies": {
     "@babel/code-frame": "^7.5.5",
-    "@babel/runtime": "^7.7.4",
-    "bluebird": "^3.7.1",
-    "boxen": "^4.1.0",
+    "@babel/runtime": "^7.7.6",
+    "bluebird": "^3.7.2",
+    "boxen": "^4.2.0",
     "configstore": "^5.0.0",
     "envinfo": "^7.5.0",
     "fs-extra": "^8.1.0",
@@ -26,8 +26,8 @@
     "uuid": "3.3.3"
   },
   "devDependencies": {
-    "@babel/cli": "^7.7.4",
-    "@babel/core": "^7.7.4",
+    "@babel/cli": "^7.7.5",
+    "@babel/core": "^7.7.5",
     "babel-jest": "^24.9.0",
     "babel-preset-gatsby-package": "^0.2.12",
     "cross-env": "^5.2.1",

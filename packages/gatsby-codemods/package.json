@@ -24,11 +24,11 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@babel/runtime": "^7.7.4"
+    "@babel/runtime": "^7.7.6"
   },
   "devDependencies": {
-    "@babel/cli": "^7.7.4",
-    "@babel/core": "^7.7.4",
+    "@babel/cli": "^7.7.5",
+    "@babel/core": "^7.7.5",
     "babel-preset-gatsby-package": "^0.2.12",
     "cross-env": "^5.2.1",
     "jscodeshift": "^0.6.4"
