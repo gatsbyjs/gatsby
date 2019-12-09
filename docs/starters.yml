@@ -4661,6 +4661,21 @@
     - Optimized images with gatsby-image.
     - SEO
     - A11y
+- url: https://keturah.netlify.com/
+  repo: https://github.com/giocare/gatsby-starter-keturah
+  description: A portfolio starter for developers
+  tags:
+    - Portfolio
+    - SEO
+    - Markdown
+  features:
+    - Target Audience Developers
+    - Designed To Resemble A Terminal And Text Editor
+    - Responsive Design
+    - FontAwesome Icon Library
+    - Easily Customize Content Using Markdown Files
+    - SEO Friendly Component
+    - Social Media Icons Provided
 - url: https://gatsby-lander.surge.sh/
   repo: https://github.com/codebushi/gatsby-starter-lander
   description: Single page starter built with Tailwind CSS
