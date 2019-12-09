@@ -250,16 +250,5 @@ describe(`create-remote-file-node`, () => {
         `"cache must be the Gatsby cache, was undefined"`
       )
     })
-
-    it(`throws on invalid inputs: store`, () => {
-      expect(() => {
-        createRemoteFileNode({
-          ...defaultArgs,
-          store: undefined,
-        })
-      }).toThrowErrorMatchingInlineSnapshot(
-        `"store must be the redux store, was undefined"`
-      )
-    })
   })
 })
