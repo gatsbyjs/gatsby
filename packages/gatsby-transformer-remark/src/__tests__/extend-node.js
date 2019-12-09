@@ -51,8 +51,10 @@ async function queryResult(
   } = require(`../../../gatsby/src/schema/infer/add-inferred-fields`)
   const {
     addNodes,
-    getExampleObject,
   } = require(`../../../gatsby/src/schema/infer/inference-metadata`)
+  const {
+    getExampleObject,
+  } = require(`../../../gatsby/src/schema/infer/build-example-data`)
 
   const typeName = `MarkdownRemark`
   const sc = createSchemaComposer()

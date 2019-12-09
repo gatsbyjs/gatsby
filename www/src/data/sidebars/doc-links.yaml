@@ -64,6 +64,9 @@
             - title: Deploying to IIS
               link: /docs/deploying-to-iis/
               breadcrumbTitle: IIS
+            - title: Deploying to Firebase Hosting
+              link: /docs/deploying-to-firebase/
+              breadcrumbTitle: Firebase Hosting
             - title: Adding a Path Prefix
               link: /docs/path-prefix/
             - title: How Gatsby Works with GitHub Pages
@@ -414,8 +417,6 @@
               items:
                 - title: "@reach/router and Gatsby"
                   link: /docs/reach-router-and-gatsby/
-                - title: Linking and Prefetching with Gatsby*
-                  link: /docs/linking-and-prefetching-with-gatsby/
                 - title: Location Data from Props
                   link: /docs/location-data-from-props/
                 - title: Creating Dynamic Navigation
@@ -694,6 +695,9 @@
       link: /docs/cheat-sheet/
     - title: Glossary
       link: /docs/glossary/
+      items:
+        - title: React
+          link: /docs/glossary/react
     - title: Gatsby Telemetry
       link: /docs/telemetry/
     - title: Gatsby REPL

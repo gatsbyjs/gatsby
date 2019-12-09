@@ -2,12 +2,13 @@
 const _ = require(`lodash`)
 
 const {
-  getExampleObject,
   addNode,
   deleteNode,
   addNodes,
   haveEqualFields,
 } = require(`../inference-metadata`)
+const { getExampleObject } = require(`../build-example-data`)
+
 const { TypeConflictReporter } = require(`../type-conflict-reporter`)
 
 const INVALID_VALUE = undefined

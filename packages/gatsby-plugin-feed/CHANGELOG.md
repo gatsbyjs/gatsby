@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-feed@2.3.22...gatsby-plugin-feed@2.3.23) (2019-12-05)
+
+### Features
+
+- **gatsby-plugin-feed:** Allows to override default feed url generation ([#19869](https://github.com/gatsbyjs/gatsby/issues/19869)) ([dd222d5](https://github.com/gatsbyjs/gatsby/commit/dd222d5))
+
 ## [2.3.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-feed@2.3.21...gatsby-plugin-feed@2.3.22) (2019-11-26)
 
 **Note:** Version bump only for package gatsby-plugin-feed

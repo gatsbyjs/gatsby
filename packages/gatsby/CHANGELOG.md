@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.18.8](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.7...gatsby@2.18.8) (2019-12-09)
+
+### Bug Fixes
+
+- **gatsby:** Ensure the number of jest-workers respects GATSBY_CPU_COUNT env var ([#19975](https://github.com/gatsbyjs/gatsby/issues/19975)) ([ce53d81](https://github.com/gatsbyjs/gatsby/commit/ce53d81))
+
+## [2.18.7](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.6...gatsby@2.18.7) (2019-12-05)
+
+### Bug Fixes
+
+- **gatsby:** support union types for one-to-one \_\_\_NODE relations ([#19916](https://github.com/gatsbyjs/gatsby/issues/19916)) ([44875b8](https://github.com/gatsbyjs/gatsby/commit/44875b8))
+
+### Features
+
+- **gatsby:** add all rules from eslint-plugin-jsx-a11y ([#19946](https://github.com/gatsbyjs/gatsby/issues/19946)) ([000bef3](https://github.com/gatsbyjs/gatsby/commit/000bef3))
+
 ## [2.18.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.5...gatsby@2.18.6) (2019-12-02)
 
 ### Bug Fixes

@@ -620,6 +620,7 @@
   description: Single page starter based on the Photon site template
   tags:
     - HTML5UP
+    - Onepage
     - Styling:SCSS
   features:
     - Designed by HTML5 UP
@@ -747,6 +748,7 @@
   description: Single page starter based on the Stellar site template
   tags:
     - HTML5UP
+    - Onepage
     - Styling:SCSS
   features:
     - Designed by HTML5 UP
@@ -759,6 +761,7 @@
   description: Single page starter based on the Strata site template
   tags:
     - Portfolio
+    - Onepage
     - HTML5UP
     - Styling:SCSS
   features:
@@ -4639,3 +4642,49 @@
   features:
     - Authentication with Firebase
     - Protected Routes with Authorization
+- url: https://demo.gatsbystorefront.com/
+  repo: https://github.com/GatsbyStorefront/gatsby-starter-storefront-shopify
+  description: Lightning fast PWA storefront for Shopify
+  tags:
+    - CMS:Headless
+    - Shopify
+    - SEO
+    - PWA
+    - eCommerce
+    - Styling:CSS-in-JS
+  features:
+    - Gatsby Storefront
+    - gatsby-theme-storefront-shopify
+    - Shopify Integration
+    - Shopping Cart
+    - PWA
+    - Optimized images with gatsby-image.
+    - SEO
+    - A11y
+- url: https://keturah.netlify.com/
+  repo: https://github.com/giocare/gatsby-starter-keturah
+  description: A portfolio starter for developers
+  tags:
+    - Portfolio
+    - SEO
+    - Markdown
+  features:
+    - Target Audience Developers
+    - Designed To Resemble A Terminal And Text Editor
+    - Responsive Design
+    - FontAwesome Icon Library
+    - Easily Customize Content Using Markdown Files
+    - SEO Friendly Component
+    - Social Media Icons Provided
+- url: https://gatsby-lander.surge.sh/
+  repo: https://github.com/codebushi/gatsby-starter-lander
+  description: Single page starter built with Tailwind CSS
+  tags:
+    - Onepage
+    - Linting
+    - Styling:Tailwind
+  features:
+    - Simple One Page Site
+    - Landing Page Design
+    - Fully Responsive
+    - Styling with Tailwind
