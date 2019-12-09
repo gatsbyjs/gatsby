@@ -8792,7 +8792,7 @@
   featured: false
 - title: Gearbox Development
   main_url: https://gearboxbuilt.com
-  url: https://gearboxbuilt.com
+  url: https://gearboxbuilt.com/?no-load-in
   description: >
     Gearbox is a performance website development & optimization company based out of Canada. Built using Gatsby/WordPress.
   categories:
@@ -8820,7 +8820,7 @@
   main_url: https://jarodpeachey.netlify.com
   url: https://jarodpeachey.netlify.com
   # optional: for open-source sites, this URL points to the repo that powers the site
-  source_url: https://github.com/jarodpeachey/portfolio-website
+  source_url: https://github.com/jarodpeachey/portfolio
   description: >
     Jarod Peachey is a front-end developer focused on building modern and fast websites for everyone.
   categories:
@@ -8894,4 +8894,28 @@
     - Design
   built_by: Samir Mujanovic
   built_by_url: https://github.com/sameerrM
+- title: Yearlyglot - Fluent Every Year
+  url: https://www.yearlyglot.com/blog
+  main_url: https://www.yearlyglot.com
+  description: >
+    A popular blog on languages, second language acquisition and polyglottery.
+  categories:
+    - Blog
+    - Education
+    - Learning
+    - Travel
+  built_by: Donovan Nagel
+  built_by_url: https://www.donovannagel.com
+  featured: false
+- title: Bearer - API Monitoring & Protection for your app
+  url: https://www.bearer.sh/
+  main_url: https://www.bearer.sh/
+  description: >
+    Bearer helps developers monitor API usage in real-time, protect their app against API limits and failures, and integrate APIs faster.
+  categories:
+    - API
+    - Technology
+    - Web Development
+    - Open Source
+  built_by: Bearer
   featured: false
