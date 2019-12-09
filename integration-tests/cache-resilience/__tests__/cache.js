@@ -105,7 +105,7 @@ const gatsbyBin = path.join(
 
 const { compareState } = require(`../utils/nodes-diff`)
 
-const useGatsbyNode = (run = 1) => {
+const useGatsbyNode = run => {
   const r = fs.readdirSync(`plugins`)
   r.forEach(pluginName => {
     const inputPath = path.join(`plugins`, pluginName, `gatsby-node-${run}.js`)
@@ -118,15 +118,24 @@ const useGatsbyNode = (run = 1) => {
   })
 }
 
+const useGatsbyConfig = run => {
+  fs.copyFileSync(`gatsby-config-${run}.js`, path.join(`gatsby-config.js`))
+}
+
+const useGatsbyNodeAndConfig = (run = 1) => {
+  useGatsbyNode(run)
+  useGatsbyConfig(run)
+}
+
 const build = ({ updatePlugins } = {}) => {
   spawnSync(gatsbyBin, [`clean`])
-  useGatsbyNode(1)
+  useGatsbyNodeAndConfig(1)
 
   let processOutput
 
   // First run, get state
   processOutput = spawnSync(gatsbyBin, [`build`], {
-    stdio: [`inherit`, `inherit`, `inherit`, `inherit`],
+    stdio: [`ignore`, `ignore`, `ignore`, `ignore`],
     env: {
       ...process.env,
       EXIT_ON_POST_BOOTSTRAP: `1`,
@@ -144,12 +153,12 @@ const build = ({ updatePlugins } = {}) => {
 
   if (updatePlugins) {
     // Invalidations
-    useGatsbyNode(2)
+    useGatsbyNodeAndConfig(2)
   }
 
   // Second run, get state and compare with state from previous run
   processOutput = spawnSync(gatsbyBin, [`build`], {
-    stdio: [`inherit`, `inherit`, `inherit`, `inherit`],
+    stdio: [`ignore`, `ignore`, `ignore`, `ignore`],
     env: {
       ...process.env,
       EXIT_ON_POST_BOOTSTRAP: `1`,
@@ -187,7 +196,7 @@ const build = ({ updatePlugins } = {}) => {
 
 afterAll(() => {
   // go back to initial
-  useGatsbyNode(1)
+  useGatsbyNodeAndConfig(1)
 
   // delete saved states
   if (fs.existsSync(ON_PRE_BOOTSTRAP_FILE_PATH)) {
@@ -200,10 +209,10 @@ afterAll(() => {
 
 // describe(`Cache`, () => {
 beforeAll(() => {
-  useGatsbyNode(1)
+  useGatsbyNodeAndConfig(1)
 })
 
-describe(`nothing changed between gatsby runs`, () => {
+describe.skip(`nothing changed between gatsby runs`, () => {
   describe(`Nodes`, () => {
     it(`nodes are persisted between builds when nothing changes`, () => {
       const {
@@ -244,297 +253,764 @@ describe(`some plugins changed between gatsby runs`, () => {
       expect(states.nodes.preBootstrapStateFromFirstRun.size).toEqual(0)
 
       // test-dev only snapshots to see what's happening
-      expect(states.nodes.postBootstrapStateFromFirstRun).toMatchSnapshot()
-      expect(states.nodes.preBootstrapStateFromSecondRun).toMatchSnapshot()
-      expect(states.nodes.postBootstrapStateFromSecondRun).toMatchSnapshot()
+      // expect(states.nodes.postBootstrapStateFromFirstRun).toMatchSnapshot()
+      // expect(states.nodes.preBootstrapStateFromSecondRun).toMatchSnapshot()
+      // expect(states.nodes.postBootstrapStateFromSecondRun).toMatchSnapshot()
     })
 
-    it(`are not deleted when the owner plugin does not change`, () => {
-      const {
-        postBootstrapStateFromFirstRun,
-        preBootstrapStateFromSecondRun,
-        postBootstrapStateFromSecondRun,
-      } = getNodesSubStateByPlugins(states, [`gatsby-plugin-stable`])
-
-      expect(postBootstrapStateFromFirstRun).toEqual(
-        preBootstrapStateFromSecondRun
-      )
-
-      expect(postBootstrapStateFromFirstRun).toEqual(
-        postBootstrapStateFromSecondRun
-      )
-    })
-
-    it(`are deleted and recreated when owner plugin changes`, () => {
-      const {
-        postBootstrapStateFromFirstRun,
-        preBootstrapStateFromSecondRun,
-        postBootstrapStateFromSecondRun,
-      } = getNodesSubStateByPlugins(states, [`gatsby-plugin-independent-node`])
-
-      {
-        const diff = compareState(
+    describe(`Plugin changes`, () => {
+      it(`are not deleted when the owner plugin does not change`, () => {
+        const {
           postBootstrapStateFromFirstRun,
+          preBootstrapStateFromSecondRun,
+          postBootstrapStateFromSecondRun,
+        } = getNodesSubStateByPlugins(states, [`gatsby-plugin-stable`])
+
+        expect(postBootstrapStateFromFirstRun).toEqual(
           preBootstrapStateFromSecondRun
         )
 
-        expect(diff.dirtyIds).toEqual([`INDEPENDENT_NODE_1`])
-        expect(diff.deletions.INDEPENDENT_NODE_1).toBeTruthy()
-      }
-
-      {
-        const diff = compareState(
-          postBootstrapStateFromFirstRun,
+        expect(postBootstrapStateFromFirstRun).toEqual(
           postBootstrapStateFromSecondRun
         )
+      })
 
-        expect(diff.dirtyIds).toEqual([`INDEPENDENT_NODE_1`])
+      it(`are deleted and recreated when owner plugin changes`, () => {
+        const {
+          postBootstrapStateFromFirstRun,
+          preBootstrapStateFromSecondRun,
+          postBootstrapStateFromSecondRun,
+        } = getNodesSubStateByPlugins(states, [
+          `gatsby-plugin-independent-node`,
+        ])
 
-        expect(diff.changes.INDEPENDENT_NODE_1.diff).toMatchInlineSnapshot(`
+        {
+          const diff = compareState(
+            postBootstrapStateFromFirstRun,
+            preBootstrapStateFromSecondRun
+          )
+
+          expect(diff.dirtyIds).toEqual([`INDEPENDENT_NODE_1`])
+          expect(diff.deletions.INDEPENDENT_NODE_1).toBeTruthy()
+        }
+
+        {
+          const diff = compareState(
+            postBootstrapStateFromFirstRun,
+            postBootstrapStateFromSecondRun
+          )
+
+          expect(diff.dirtyIds).toEqual([`INDEPENDENT_NODE_1`])
+
+          expect(diff.changes.INDEPENDENT_NODE_1.diff).toMatchInlineSnapshot(`
+              "  Object {
+                  \\"children\\": Array [],
+              -   \\"foo\\": \\"bar\\",
+              +   \\"foo\\": \\"baz\\",
+                  \\"id\\": \\"INDEPENDENT_NODE_1\\",
+                  \\"internal\\": Object {
+                    \\"contentDigest\\": \\"0\\",
+                    \\"owner\\": \\"gatsby-plugin-independent-node\\",
+                    \\"type\\": \\"IndependentChanging\\",
+                  },
+                  \\"parent\\": null,
+                }"
+            `)
+        }
+      })
+
+      it(`are deleted and recreated when the owner plugin of a parent changes`, () => {
+        const {
+          postBootstrapStateFromFirstRun,
+          preBootstrapStateFromSecondRun,
+          postBootstrapStateFromSecondRun,
+        } = getNodesSubStateByPlugins(states, [
+          `gatsby-source-parent-change-for-transformer`,
+          `gatsby-transformer-parent-change`,
+        ])
+
+        {
+          const diff = compareState(
+            postBootstrapStateFromFirstRun,
+            preBootstrapStateFromSecondRun
+          )
+
+          expect(diff.dirtyIds).toEqual([
+            `parent_parentChangeForTransformer`,
+            `parent_parentChangeForTransformer >>> Child`,
+          ])
+
+          expect(
+            diff.deletions[`parent_parentChangeForTransformer >>> Child`]
+          ).toBeTruthy()
+          expect(
+            diff.deletions[`parent_parentChangeForTransformer`]
+          ).toBeTruthy()
+        }
+
+        {
+          const diff = compareState(
+            postBootstrapStateFromFirstRun,
+            postBootstrapStateFromSecondRun
+          )
+
+          expect(diff.dirtyIds).toEqual([
+            `parent_parentChangeForTransformer`,
+            `parent_parentChangeForTransformer >>> Child`,
+          ])
+
+          expect(
+            diff.changes[`parent_parentChangeForTransformer >>> Child`].diff
+          ).toMatchInlineSnapshot(`
+              "  Object {
+              -   \\"bar\\": undefined,
+              +   \\"bar\\": \\"run-2\\",
+                  \\"children\\": Array [],
+              -   \\"foo\\": \\"run-1\\",
+              +   \\"foo\\": undefined,
+                  \\"id\\": \\"parent_parentChangeForTransformer >>> Child\\",
+                  \\"internal\\": Object {
+              -     \\"contentDigest\\": \\"011e1b3b5c83557485e0357e70427b65\\",
+              +     \\"contentDigest\\": \\"030fd9177896464496590fc0fe4d45bf\\",
+                    \\"owner\\": \\"gatsby-transformer-parent-change\\",
+                    \\"type\\": \\"ChildOfParent_ParentChangeForTransformer\\",
+                  },
+                  \\"parent\\": \\"parent_parentChangeForTransformer\\",
+                }"
+            `)
+          expect(diff.changes[`parent_parentChangeForTransformer`].diff)
+            .toMatchInlineSnapshot(`
+              "  Object {
+              +   \\"bar\\": \\"run-2\\",
+                  \\"children\\": Array [
+                    \\"parent_parentChangeForTransformer >>> Child\\",
+                  ],
+              -   \\"foo\\": \\"run-1\\",
+                  \\"id\\": \\"parent_parentChangeForTransformer\\",
+                  \\"internal\\": Object {
+              -     \\"contentDigest\\": \\"a032c69550f5567021eda97cc3a1faf2\\",
+              +     \\"contentDigest\\": \\"4a6a70b2f8849535de50f47c609006fe\\",
+                    \\"owner\\": \\"gatsby-source-parent-change-for-transformer\\",
+                    \\"type\\": \\"Parent_ParentChangeForTransformer\\",
+                  },
+                  \\"parent\\": null,
+                }"
+            `)
+        }
+      })
+
+      it(`are deleted and recreated when the owner plugin of a child changes`, () => {
+        const {
+          postBootstrapStateFromFirstRun,
+          preBootstrapStateFromSecondRun,
+          postBootstrapStateFromSecondRun,
+        } = getNodesSubStateByPlugins(states, [
+          `gatsby-source-child-change-for-transformer`,
+          `gatsby-transformer-child-change`,
+        ])
+
+        {
+          const diff = compareState(
+            postBootstrapStateFromFirstRun,
+            preBootstrapStateFromSecondRun
+          )
+
+          expect(diff.dirtyIds).toEqual([
+            `parent_childChangeForTransformer >>> Child`,
+            `parent_childChangeForTransformer`,
+          ])
+
+          expect(
+            diff.deletions[`parent_childChangeForTransformer >>> Child`]
+          ).toBeTruthy()
+
+          expect(diff.changes[`parent_childChangeForTransformer`].diff)
+            .toMatchInlineSnapshot(`
+              "  Object {
+              -   \\"children\\": Array [
+              -     \\"parent_childChangeForTransformer >>> Child\\",
+              -   ],
+              +   \\"children\\": Array [],
+                  \\"foo\\": \\"run-1\\",
+                  \\"id\\": \\"parent_childChangeForTransformer\\",
+                  \\"internal\\": Object {
+                    \\"contentDigest\\": \\"25f73a6d69ce857a76e0a2cdbc186975\\",
+                    \\"owner\\": \\"gatsby-source-child-change-for-transformer\\",
+                    \\"type\\": \\"Parent_ChildChangeForTransformer\\",
+                  },
+                  \\"parent\\": null,
+                }"
+            `)
+        }
+
+        {
+          const diff = compareState(
+            postBootstrapStateFromFirstRun,
+            postBootstrapStateFromSecondRun
+          )
+
+          expect(diff.dirtyIds).toEqual([
+            `parent_childChangeForTransformer >>> Child`,
+          ])
+
+          expect(
+            diff.changes[`parent_childChangeForTransformer >>> Child`].diff
+          ).toMatchInlineSnapshot(`
+              "  Object {
+                  \\"children\\": Array [],
+              -   \\"foo\\": \\"bar\\",
+              +   \\"foo\\": \\"baz\\",
+                  \\"id\\": \\"parent_childChangeForTransformer >>> Child\\",
+                  \\"internal\\": Object {
+              -     \\"contentDigest\\": \\"ec8c3b932089b083a5380ab085be0633\\",
+              +     \\"contentDigest\\": \\"32fe5b6bc0489b6fa0f7eb6a9b563b27\\",
+                    \\"owner\\": \\"gatsby-transformer-child-change\\",
+                    \\"type\\": \\"ChildOfParent_ChildChangeForTransformer\\",
+                  },
+                  \\"parent\\": \\"parent_childChangeForTransformer\\",
+                }"
+            `)
+        }
+      })
+
+      it(`fields are deleted and recreated when the owner plugin of a node changes`, () => {
+        const {
+          postBootstrapStateFromFirstRun,
+          preBootstrapStateFromSecondRun,
+          postBootstrapStateFromSecondRun,
+        } = getNodesSubStateByPlugins(states, [
+          `gatsby-source-parent-change-for-fields`,
+          `gatsby-fields-parent-change`,
+        ])
+
+        {
+          const diff = compareState(
+            postBootstrapStateFromFirstRun,
+            preBootstrapStateFromSecondRun
+          )
+
+          expect(diff.dirtyIds).toEqual([`parent_parentChangeForFields`])
+
+          expect(diff.deletions[`parent_parentChangeForFields`]).toBeTruthy()
+        }
+
+        {
+          const diff = compareState(
+            postBootstrapStateFromFirstRun,
+            postBootstrapStateFromSecondRun
+          )
+
+          expect(diff.dirtyIds).toEqual([`parent_parentChangeForFields`])
+
+          expect(diff.changes[`parent_parentChangeForFields`].diff)
+            .toMatchInlineSnapshot(`
+              "  Object {
+              +   \\"bar\\": \\"run-2\\",
+                  \\"children\\": Array [],
+                  \\"fields\\": Object {
+              -     \\"bar\\": undefined,
+              -     \\"foo\\": \\"run-1\\",
+              +     \\"bar\\": \\"run-2\\",
+              +     \\"foo\\": undefined,
+                  },
+              -   \\"foo\\": \\"run-1\\",
+                  \\"id\\": \\"parent_parentChangeForFields\\",
+                  \\"internal\\": Object {
+              -     \\"contentDigest\\": \\"ad237cf525f0ccb39ea0ba07165d4119\\",
+              +     \\"contentDigest\\": \\"72122def77d239ba36e9b9729fc53adf\\",
+                    \\"fieldOwners\\": Object {
+                      \\"bar\\": \\"gatsby-fields-parent-change\\",
+                      \\"foo\\": \\"gatsby-fields-parent-change\\",
+                    },
+                    \\"owner\\": \\"gatsby-source-parent-change-for-fields\\",
+                    \\"type\\": \\"Parent_ParentChangeForFields\\",
+                  },
+                  \\"parent\\": null,
+                }"
+            `)
+        }
+      })
+
+      it(`fields are deleted and recreated when the owner plugin of a field changes`, () => {
+        const {
+          postBootstrapStateFromFirstRun,
+          preBootstrapStateFromSecondRun,
+          postBootstrapStateFromSecondRun,
+        } = getNodesSubStateByPlugins(states, [
+          `gatsby-source-child-change-for-fields`,
+          `gatsby-fields-child-change`,
+        ])
+
+        {
+          const diff = compareState(
+            postBootstrapStateFromFirstRun,
+            preBootstrapStateFromSecondRun
+          )
+
+          expect(diff.dirtyIds).toEqual([`parent_childChangeForFields`])
+
+          expect(diff.changes[`parent_childChangeForFields`].diff)
+            .toMatchInlineSnapshot(`
+              "  Object {
+                  \\"children\\": Array [],
+              -   \\"fields\\": Object {
+              -     \\"foo1\\": \\"bar\\",
+              -   },
+              +   \\"fields\\": Object {},
+                  \\"foo\\": \\"run-1\\",
+                  \\"id\\": \\"parent_childChangeForFields\\",
+                  \\"internal\\": Object {
+                    \\"contentDigest\\": \\"893740bfde4b8a6039e939cb0290d626\\",
+              -     \\"fieldOwners\\": Object {
+              -       \\"foo1\\": \\"gatsby-fields-child-change\\",
+              -     },
+              +     \\"fieldOwners\\": Object {},
+                    \\"owner\\": \\"gatsby-source-child-change-for-fields\\",
+                    \\"type\\": \\"Parent_ChildChangeForFields\\",
+                  },
+                  \\"parent\\": null,
+                }"
+            `)
+        }
+
+        {
+          const diff = compareState(
+            postBootstrapStateFromFirstRun,
+            postBootstrapStateFromSecondRun
+          )
+
+          expect(diff.dirtyIds).toEqual([`parent_childChangeForFields`])
+
+          expect(diff.changes[`parent_childChangeForFields`].diff)
+            .toMatchInlineSnapshot(`
+              "  Object {
+                  \\"children\\": Array [],
+                  \\"fields\\": Object {
+              -     \\"foo1\\": \\"bar\\",
+              +     \\"foo2\\": \\"baz\\",
+                  },
+                  \\"foo\\": \\"run-1\\",
+                  \\"id\\": \\"parent_childChangeForFields\\",
+                  \\"internal\\": Object {
+                    \\"contentDigest\\": \\"893740bfde4b8a6039e939cb0290d626\\",
+                    \\"fieldOwners\\": Object {
+              -       \\"foo1\\": \\"gatsby-fields-child-change\\",
+              +       \\"foo2\\": \\"gatsby-fields-child-change\\",
+                    },
+                    \\"owner\\": \\"gatsby-source-child-change-for-fields\\",
+                    \\"type\\": \\"Parent_ChildChangeForFields\\",
+                  },
+                  \\"parent\\": null,
+                }"
+            `)
+        }
+      })
+    })
+
+    describe(`Plugin Additions`, () => {
+      it.skip(`Addition of plugin invalidates nodes cache`, () => {})
+      it.skip(`Addition of plugin invalidates disk cache`, () => {})
+
+      it(`ensure transformer nodes are created when source plugin is added`, () => {
+        const {
+          postBootstrapStateFromFirstRun,
+          preBootstrapStateFromSecondRun,
+          postBootstrapStateFromSecondRun,
+        } = getNodesSubStateByPlugins(states, [
+          `gatsby-source-parent-addition-for-transformer`,
+          `gatsby-transformer-parent-addition`,
+        ])
+
+        {
+          const diff = compareState(
+            postBootstrapStateFromFirstRun,
+            preBootstrapStateFromSecondRun
+          )
+
+          expect(diff.dirtyIds).toEqual([])
+        }
+
+        {
+          const diff = compareState(
+            postBootstrapStateFromFirstRun,
+            postBootstrapStateFromSecondRun
+          )
+
+          expect(diff.dirtyIds).toEqual([
+            `parent_parentAdditionForTransformer`,
+            `parent_parentAdditionForTransformer >>> Child`,
+          ])
+
+          expect(
+            diff.additions[`parent_parentAdditionForTransformer`]
+          ).toBeTruthy()
+          expect(
+            diff.additions[`parent_parentAdditionForTransformer >>> Child`]
+          ).toBeTruthy()
+        }
+      })
+
+      it(`ensure transformer nodes are created when transformer plugin is added`, () => {
+        const {
+          postBootstrapStateFromFirstRun,
+          preBootstrapStateFromSecondRun,
+          postBootstrapStateFromSecondRun,
+        } = getNodesSubStateByPlugins(states, [
+          `gatsby-source-child-addition-for-transformer`,
+          `gatsby-transformer-child-addition`,
+        ])
+
+        {
+          const diff = compareState(
+            postBootstrapStateFromFirstRun,
+            preBootstrapStateFromSecondRun
+          )
+
+          expect(diff.dirtyIds).toEqual([])
+        }
+
+        {
+          const diff = compareState(
+            postBootstrapStateFromFirstRun,
+            postBootstrapStateFromSecondRun
+          )
+
+          expect(diff.dirtyIds).toEqual([
+            `parent_childAdditionForTransformer >>> Child`,
+            `parent_childAdditionForTransformer`,
+          ])
+
+          expect(
+            diff.additions[`parent_childAdditionForTransformer >>> Child`]
+          ).toBeTruthy()
+
+          expect(diff.changes[`parent_childAdditionForTransformer`].diff)
+            .toMatchInlineSnapshot(`
             "  Object {
-                \\"children\\": Array [],
-            -   \\"foo\\": \\"bar\\",
-            +   \\"foo\\": \\"baz\\",
-                \\"id\\": \\"INDEPENDENT_NODE_1\\",
+            -   \\"children\\": Array [],
+            +   \\"children\\": Array [
+            +     \\"parent_childAdditionForTransformer >>> Child\\",
+            +   ],
+                \\"foo\\": \\"run-1\\",
+                \\"id\\": \\"parent_childAdditionForTransformer\\",
                 \\"internal\\": Object {
-                  \\"contentDigest\\": \\"0\\",
-                  \\"owner\\": \\"gatsby-plugin-independent-node\\",
-                  \\"type\\": \\"IndependentChanging\\",
+                  \\"contentDigest\\": \\"24c80ac557fe30571844672133789fca\\",
+                  \\"owner\\": \\"gatsby-source-child-addition-for-transformer\\",
+                  \\"type\\": \\"Parent_ChildAdditionForTransformer\\",
                 },
                 \\"parent\\": null,
               }"
           `)
-      }
-    })
+        }
+      })
 
-    it(`are deleted and recreated when the owner plugin of a parent changes`, () => {
-      const {
-        postBootstrapStateFromFirstRun,
-        preBootstrapStateFromSecondRun,
-        postBootstrapStateFromSecondRun,
-      } = getNodesSubStateByPlugins(states, [
-        `gatsby-source-parent-change-for-transformer`,
-        `gatsby-transformer-parent-change`,
-      ])
-
-      {
-        const diff = compareState(
+      it.skip(`ensure fields are created when owner of node is added`, () => {
+        const {
           postBootstrapStateFromFirstRun,
-          preBootstrapStateFromSecondRun
-        )
+          preBootstrapStateFromSecondRun,
+          postBootstrapStateFromSecondRun,
+        } = getNodesSubStateByPlugins(states, [
+          `gatsby-source-parent-addition-for-fields`,
+          `gatsby-fields-parent-addition`,
+        ])
+        {
+          const diff = compareState(
+            postBootstrapStateFromFirstRun,
+            preBootstrapStateFromSecondRun
+          )
+          expect(diff.dirtyIds).toEqual([])
+        }
+        {
+          const diff = compareState(
+            postBootstrapStateFromFirstRun,
+            postBootstrapStateFromSecondRun
+          )
+          expect(diff.dirtyIds).toEqual([`parent_parentAdditionForFields`])
+          expect(diff.additions[`parent_parentAdditionForFields`]).toBeTruthy()
+        }
+      })
 
-        expect(diff.dirtyIds).toEqual([
-          `parent_parentChangeForTransformer`,
-          `parent_parentChangeForTransformer >>> Child`,
+      it(`ensure fields are created when owner of field is added`, () => {
+        const {
+          postBootstrapStateFromFirstRun,
+          preBootstrapStateFromSecondRun,
+          postBootstrapStateFromSecondRun,
+        } = getNodesSubStateByPlugins(states, [
+          `gatsby-source-child-addition-for-fields`,
+          `gatsby-fields-child-addition`,
         ])
 
-        expect(
-          diff.deletions[`parent_parentChangeForTransformer >>> Child`]
-        ).toBeTruthy()
-        expect(diff.deletions[`parent_parentChangeForTransformer`]).toBeTruthy()
-      }
+        {
+          const diff = compareState(
+            postBootstrapStateFromFirstRun,
+            preBootstrapStateFromSecondRun
+          )
 
-      {
-        const diff = compareState(
-          postBootstrapStateFromFirstRun,
-          postBootstrapStateFromSecondRun
-        )
+          expect(diff.dirtyIds).toEqual([])
+        }
 
-        expect(diff.dirtyIds).toEqual([
-          `parent_parentChangeForTransformer`,
-          `parent_parentChangeForTransformer >>> Child`,
-        ])
+        {
+          const diff = compareState(
+            postBootstrapStateFromFirstRun,
+            postBootstrapStateFromSecondRun
+          )
 
-        expect(diff.changes[`parent_parentChangeForTransformer >>> Child`].diff)
-          .toMatchInlineSnapshot(`
+          expect(diff.dirtyIds).toEqual([`parent_childAdditionForFields`])
+
+          expect(diff.changes[`parent_childAdditionForFields`].diff)
+            .toMatchInlineSnapshot(`
             "  Object {
-            -   \\"bar\\": undefined,
-            +   \\"bar\\": \\"run-2\\",
                 \\"children\\": Array [],
-            -   \\"foo\\": \\"run-1\\",
-            +   \\"foo\\": undefined,
-                \\"id\\": \\"parent_parentChangeForTransformer >>> Child\\",
+            +   \\"fields\\": Object {
+            +     \\"foo1\\": \\"bar\\",
+            +   },
+                \\"foo\\": \\"run-1\\",
+                \\"id\\": \\"parent_childAdditionForFields\\",
                 \\"internal\\": Object {
-            -     \\"contentDigest\\": \\"011e1b3b5c83557485e0357e70427b65\\",
-            +     \\"contentDigest\\": \\"030fd9177896464496590fc0fe4d45bf\\",
-                  \\"owner\\": \\"gatsby-transformer-parent-change\\",
-                  \\"type\\": \\"ChildOfParent_ParentChangeForTransformer\\",
-                },
-                \\"parent\\": \\"parent_parentChangeForTransformer\\",
-              }"
-          `)
-        expect(diff.changes[`parent_parentChangeForTransformer`].diff)
-          .toMatchInlineSnapshot(`
-            "  Object {
-            +   \\"bar\\": \\"run-2\\",
-                \\"children\\": Array [
-                  \\"parent_parentChangeForTransformer >>> Child\\",
-                ],
-            -   \\"foo\\": \\"run-1\\",
-                \\"id\\": \\"parent_parentChangeForTransformer\\",
-                \\"internal\\": Object {
-            -     \\"contentDigest\\": \\"a032c69550f5567021eda97cc3a1faf2\\",
-            +     \\"contentDigest\\": \\"4a6a70b2f8849535de50f47c609006fe\\",
-                  \\"owner\\": \\"gatsby-source-parent-change-for-transformer\\",
-                  \\"type\\": \\"Parent_ParentChangeForTransformer\\",
+                  \\"contentDigest\\": \\"73b91e21e8e1825f0719497573dedf53\\",
+            +     \\"fieldOwners\\": Object {
+            +       \\"foo1\\": \\"gatsby-fields-child-addition\\",
+            +     },
+                  \\"owner\\": \\"gatsby-source-child-addition-for-fields\\",
+                  \\"type\\": \\"Parent_ChildAdditionForFields\\",
                 },
                 \\"parent\\": null,
               }"
           `)
-      }
+        }
+      })
     })
 
-    it(`are deleted and recreated when the owner plugin of a child changes`, () => {
-      const {
-        postBootstrapStateFromFirstRun,
-        preBootstrapStateFromSecondRun,
-        postBootstrapStateFromSecondRun,
-      } = getNodesSubStateByPlugins(states, [
-        `gatsby-source-child-change-for-transformer`,
-        `gatsby-transformer-child-change`,
-      ])
-
-      {
-        const diff = compareState(
+    describe(`Plugin Deletions`, () => {
+      it(`Deletion of plugin invalidates nodes cache`, () => {
+        const {
           postBootstrapStateFromFirstRun,
-          preBootstrapStateFromSecondRun
-        )
+          preBootstrapStateFromSecondRun,
+          postBootstrapStateFromSecondRun,
+        } = getNodesSubStateByPlugins(states, [`gatsby-plugin-deletion`])
 
-        expect(diff.dirtyIds).toEqual([
-          `parent_childChangeForTransformer >>> Child`,
-          `parent_childChangeForTransformer`,
+        {
+          const diff = compareState(
+            postBootstrapStateFromFirstRun,
+            preBootstrapStateFromSecondRun
+          )
+
+          expect(diff.dirtyIds).toEqual([`DELETION_NODE_1`])
+          expect(diff.deletions.DELETION_NODE_1).toBeTruthy()
+        }
+
+        {
+          const diff = compareState(
+            postBootstrapStateFromFirstRun,
+            postBootstrapStateFromSecondRun
+          )
+
+          expect(diff.dirtyIds).toEqual([`DELETION_NODE_1`])
+          expect(diff.deletions.DELETION_NODE_1).toBeTruthy()
+        }
+      })
+      it(`Deletion of plugin invalidates disk cache`, () => {
+        const {
+          postBootstrapStateFromFirstRun,
+          preBootstrapStateFromSecondRun,
+          postBootstrapStateFromSecondRun,
+        } = getDiskCacheSnapshotSubStateByPlugins(states, [
+          `gatsby-plugin-deletion`,
         ])
 
+        // plugin had something in disk cache
         expect(
-          diff.deletions[`parent_childChangeForTransformer >>> Child`]
-        ).toBeTruthy()
+          (postBootstrapStateFromFirstRun[`gatsby-plugin-deletion`] || [])
+            .length
+        ).toEqual(1)
+        // cache was deleted in second run
+        expect(
+          (preBootstrapStateFromSecondRun[`gatsby-plugin-deletion`] || [])
+            .length
+        ).toEqual(0)
 
-        expect(diff.changes[`parent_childChangeForTransformer`].diff)
-          .toMatchInlineSnapshot(`
+        // finally, end result does not include cache
+        expect(
+          (postBootstrapStateFromSecondRun[`gatsby-plugin-deletion`] || [])
+            .length
+        ).toEqual(0)
+      })
+      // it(`Deletion of plugin handles child nodes if it is a parent`, () => {})
+      // it(`Deletion of plugin handles parent nodes if it is a child`, () => {})
+      // it(`Deletion of plugin handles node fields`, () => {})
+      it(`ensure transformer nodes are deleted when source plugin is deleted`, () => {
+        const {
+          postBootstrapStateFromFirstRun,
+          preBootstrapStateFromSecondRun,
+          postBootstrapStateFromSecondRun,
+        } = getNodesSubStateByPlugins(states, [
+          `gatsby-source-parent-deletion-for-transformer`,
+          `gatsby-transformer-parent-deletion`,
+        ])
+
+        {
+          const diff = compareState(
+            postBootstrapStateFromFirstRun,
+            preBootstrapStateFromSecondRun
+          )
+
+          expect(diff.dirtyIds).toEqual([
+            `parent_parentDeletionForTransformer`,
+            `parent_parentDeletionForTransformer >>> Child`,
+          ])
+
+          expect(
+            diff.deletions[`parent_parentDeletionForTransformer`]
+          ).toBeTruthy()
+          expect(
+            diff.deletions[`parent_parentDeletionForTransformer >>> Child`]
+          ).toBeTruthy()
+        }
+
+        {
+          const diff = compareState(
+            postBootstrapStateFromFirstRun,
+            postBootstrapStateFromSecondRun
+          )
+
+          expect(diff.dirtyIds).toEqual([
+            `parent_parentDeletionForTransformer`,
+            `parent_parentDeletionForTransformer >>> Child`,
+          ])
+
+          expect(
+            diff.deletions[`parent_parentDeletionForTransformer`]
+          ).toBeTruthy()
+          expect(
+            diff.deletions[`parent_parentDeletionForTransformer >>> Child`]
+          ).toBeTruthy()
+        }
+      })
+
+      it(`ensure transformer nodes are deleted when transformer plugin is deleted`, () => {
+        const {
+          postBootstrapStateFromFirstRun,
+          preBootstrapStateFromSecondRun,
+          postBootstrapStateFromSecondRun,
+        } = getNodesSubStateByPlugins(states, [
+          `gatsby-source-child-deletion-for-transformer`,
+          `gatsby-transformer-child-deletion`,
+        ])
+
+        {
+          const diff = compareState(
+            postBootstrapStateFromFirstRun,
+            preBootstrapStateFromSecondRun
+          )
+
+          expect(diff.dirtyIds).toEqual([
+            `parent_childDeletionForTransformer >>> Child`,
+            `parent_childDeletionForTransformer`,
+          ])
+
+          expect(
+            diff.deletions[`parent_childDeletionForTransformer >>> Child`]
+          ).toBeTruthy()
+
+          expect(diff.changes[`parent_childDeletionForTransformer`].diff)
+            .toMatchInlineSnapshot(`
             "  Object {
             -   \\"children\\": Array [
-            -     \\"parent_childChangeForTransformer >>> Child\\",
+            -     \\"parent_childDeletionForTransformer >>> Child\\",
             -   ],
             +   \\"children\\": Array [],
                 \\"foo\\": \\"run-1\\",
-                \\"id\\": \\"parent_childChangeForTransformer\\",
+                \\"id\\": \\"parent_childDeletionForTransformer\\",
                 \\"internal\\": Object {
-                  \\"contentDigest\\": \\"25f73a6d69ce857a76e0a2cdbc186975\\",
-                  \\"owner\\": \\"gatsby-source-child-change-for-transformer\\",
-                  \\"type\\": \\"Parent_ChildChangeForTransformer\\",
+                  \\"contentDigest\\": \\"c3a86e3891837cae828521bcc99561de\\",
+                  \\"owner\\": \\"gatsby-source-child-deletion-for-transformer\\",
+                  \\"type\\": \\"Parent_ChildDeletionForTransformer\\",
                 },
                 \\"parent\\": null,
               }"
           `)
-      }
+        }
 
-      {
-        const diff = compareState(
+        {
+          const diff = compareState(
+            postBootstrapStateFromFirstRun,
+            postBootstrapStateFromSecondRun
+          )
+          expect(diff.dirtyIds).toEqual([
+            `parent_childDeletionForTransformer >>> Child`,
+            `parent_childDeletionForTransformer`,
+          ])
+
+          expect(
+            diff.deletions[`parent_childDeletionForTransformer >>> Child`]
+          ).toBeTruthy()
+
+          expect(diff.changes[`parent_childDeletionForTransformer`].diff)
+            .toMatchInlineSnapshot(`
+            "  Object {
+            -   \\"children\\": Array [
+            -     \\"parent_childDeletionForTransformer >>> Child\\",
+            -   ],
+            +   \\"children\\": Array [],
+                \\"foo\\": \\"run-1\\",
+                \\"id\\": \\"parent_childDeletionForTransformer\\",
+                \\"internal\\": Object {
+                  \\"contentDigest\\": \\"c3a86e3891837cae828521bcc99561de\\",
+                  \\"owner\\": \\"gatsby-source-child-deletion-for-transformer\\",
+                  \\"type\\": \\"Parent_ChildDeletionForTransformer\\",
+                },
+                \\"parent\\": null,
+              }"
+          `)
+        }
+      })
+
+      it.skip(`ensure fields are deleted when owner of node is deleted`, () => {
+        const {
           postBootstrapStateFromFirstRun,
-          postBootstrapStateFromSecondRun
-        )
+          preBootstrapStateFromSecondRun,
+          postBootstrapStateFromSecondRun,
+        } = getNodesSubStateByPlugins(states, [
+          `gatsby-source-parent-addition-for-fields`,
+          `gatsby-fields-parent-addition`,
+        ])
+        {
+          const diff = compareState(
+            postBootstrapStateFromFirstRun,
+            preBootstrapStateFromSecondRun
+          )
+          expect(diff.dirtyIds).toEqual([])
+        }
+        {
+          const diff = compareState(
+            postBootstrapStateFromFirstRun,
+            postBootstrapStateFromSecondRun
+          )
+          expect(diff.dirtyIds).toEqual([`parent_parentAdditionForFields`])
+          expect(diff.additions[`parent_parentAdditionForFields`]).toBeTruthy()
+        }
+      })
 
-        expect(diff.dirtyIds).toEqual([
-          `parent_childChangeForTransformer >>> Child`,
+      it(`ensure fields are deleted when owner of field is deleted`, () => {
+        const {
+          postBootstrapStateFromFirstRun,
+          preBootstrapStateFromSecondRun,
+          postBootstrapStateFromSecondRun,
+        } = getNodesSubStateByPlugins(states, [
+          `gatsby-source-child-deletion-for-fields`,
+          `gatsby-fields-child-deletion`,
         ])
 
-        expect(diff.changes[`parent_childChangeForTransformer >>> Child`].diff)
-          .toMatchInlineSnapshot(`
-            "  Object {
-                \\"children\\": Array [],
-            -   \\"foo\\": \\"bar\\",
-            +   \\"foo\\": \\"baz\\",
-                \\"id\\": \\"parent_childChangeForTransformer >>> Child\\",
-                \\"internal\\": Object {
-            -     \\"contentDigest\\": \\"ec8c3b932089b083a5380ab085be0633\\",
-            +     \\"contentDigest\\": \\"32fe5b6bc0489b6fa0f7eb6a9b563b27\\",
-                  \\"owner\\": \\"gatsby-transformer-child-change\\",
-                  \\"type\\": \\"ChildOfParent_ChildChangeForTransformer\\",
-                },
-                \\"parent\\": \\"parent_childChangeForTransformer\\",
-              }"
-          `)
-      }
-    })
+        {
+          const diff = compareState(
+            postBootstrapStateFromFirstRun,
+            preBootstrapStateFromSecondRun
+          )
 
-    it(`fields are deleted and recreated when the owner plugin of a node changes`, () => {
-      const {
-        postBootstrapStateFromFirstRun,
-        preBootstrapStateFromSecondRun,
-        postBootstrapStateFromSecondRun,
-      } = getNodesSubStateByPlugins(states, [
-        `gatsby-source-parent-change-for-fields`,
-        `gatsby-fields-parent-change`,
-      ])
+          expect(diff.dirtyIds).toEqual([`parent_childDeletionForFields`])
 
-      {
-        const diff = compareState(
-          postBootstrapStateFromFirstRun,
-          preBootstrapStateFromSecondRun
-        )
-
-        expect(diff.dirtyIds).toEqual([`parent_parentChangeForFields`])
-
-        expect(diff.deletions[`parent_parentChangeForFields`]).toBeTruthy()
-      }
-
-      {
-        const diff = compareState(
-          postBootstrapStateFromFirstRun,
-          postBootstrapStateFromSecondRun
-        )
-
-        expect(diff.dirtyIds).toEqual([`parent_parentChangeForFields`])
-
-        expect(diff.changes[`parent_parentChangeForFields`].diff)
-          .toMatchInlineSnapshot(`
-            "  Object {
-            +   \\"bar\\": \\"run-2\\",
-                \\"children\\": Array [],
-                \\"fields\\": Object {
-            -     \\"bar\\": undefined,
-            -     \\"foo\\": \\"run-1\\",
-            +     \\"bar\\": \\"run-2\\",
-            +     \\"foo\\": undefined,
-                },
-            -   \\"foo\\": \\"run-1\\",
-                \\"id\\": \\"parent_parentChangeForFields\\",
-                \\"internal\\": Object {
-            -     \\"contentDigest\\": \\"ad237cf525f0ccb39ea0ba07165d4119\\",
-            +     \\"contentDigest\\": \\"72122def77d239ba36e9b9729fc53adf\\",
-                  \\"fieldOwners\\": Object {
-                    \\"bar\\": \\"gatsby-fields-parent-change\\",
-                    \\"foo\\": \\"gatsby-fields-parent-change\\",
-                  },
-                  \\"owner\\": \\"gatsby-source-parent-change-for-fields\\",
-                  \\"type\\": \\"Parent_ParentChangeForFields\\",
-                },
-                \\"parent\\": null,
-              }"
-          `)
-      }
-    })
-
-    it(`fields are deleted and recreated when the owner plugin of a field changes`, () => {
-      const {
-        postBootstrapStateFromFirstRun,
-        preBootstrapStateFromSecondRun,
-        postBootstrapStateFromSecondRun,
-      } = getNodesSubStateByPlugins(states, [
-        `gatsby-source-child-change-for-fields`,
-        `gatsby-fields-child-change`,
-      ])
-
-      {
-        const diff = compareState(
-          postBootstrapStateFromFirstRun,
-          preBootstrapStateFromSecondRun
-        )
-
-        expect(diff.dirtyIds).toEqual([`parent_childChangeForFields`])
-
-        expect(diff.changes[`parent_childChangeForFields`].diff)
-          .toMatchInlineSnapshot(`
+          expect(diff.changes[`parent_childDeletionForFields`].diff)
+            .toMatchInlineSnapshot(`
             "  Object {
                 \\"children\\": Array [],
             -   \\"fields\\": Object {
@@ -542,52 +1018,53 @@ describe(`some plugins changed between gatsby runs`, () => {
             -   },
             +   \\"fields\\": Object {},
                 \\"foo\\": \\"run-1\\",
-                \\"id\\": \\"parent_childChangeForFields\\",
+                \\"id\\": \\"parent_childDeletionForFields\\",
                 \\"internal\\": Object {
-                  \\"contentDigest\\": \\"893740bfde4b8a6039e939cb0290d626\\",
+                  \\"contentDigest\\": \\"e7fa2815ef392415bcf8d2b46ecb59d1\\",
             -     \\"fieldOwners\\": Object {
-            -       \\"foo1\\": \\"gatsby-fields-child-change\\",
+            -       \\"foo1\\": \\"gatsby-fields-child-deletion\\",
             -     },
             +     \\"fieldOwners\\": Object {},
-                  \\"owner\\": \\"gatsby-source-child-change-for-fields\\",
-                  \\"type\\": \\"Parent_ChildChangeForFields\\",
+                  \\"owner\\": \\"gatsby-source-child-deletion-for-fields\\",
+                  \\"type\\": \\"Parent_ChildDeletionForFields\\",
                 },
                 \\"parent\\": null,
               }"
           `)
-      }
+        }
 
-      {
-        const diff = compareState(
-          postBootstrapStateFromFirstRun,
-          postBootstrapStateFromSecondRun
-        )
+        {
+          const diff = compareState(
+            postBootstrapStateFromFirstRun,
+            postBootstrapStateFromSecondRun
+          )
 
-        expect(diff.dirtyIds).toEqual([`parent_childChangeForFields`])
+          expect(diff.dirtyIds).toEqual([`parent_childDeletionForFields`])
 
-        expect(diff.changes[`parent_childChangeForFields`].diff)
-          .toMatchInlineSnapshot(`
+          expect(diff.changes[`parent_childDeletionForFields`].diff)
+            .toMatchInlineSnapshot(`
             "  Object {
                 \\"children\\": Array [],
-                \\"fields\\": Object {
+            -   \\"fields\\": Object {
             -     \\"foo1\\": \\"bar\\",
-            +     \\"foo2\\": \\"baz\\",
-                },
+            -   },
+            +   \\"fields\\": Object {},
                 \\"foo\\": \\"run-1\\",
-                \\"id\\": \\"parent_childChangeForFields\\",
+                \\"id\\": \\"parent_childDeletionForFields\\",
                 \\"internal\\": Object {
-                  \\"contentDigest\\": \\"893740bfde4b8a6039e939cb0290d626\\",
-                  \\"fieldOwners\\": Object {
-            -       \\"foo1\\": \\"gatsby-fields-child-change\\",
-            +       \\"foo2\\": \\"gatsby-fields-child-change\\",
-                  },
-                  \\"owner\\": \\"gatsby-source-child-change-for-fields\\",
-                  \\"type\\": \\"Parent_ChildChangeForFields\\",
+                  \\"contentDigest\\": \\"e7fa2815ef392415bcf8d2b46ecb59d1\\",
+            -     \\"fieldOwners\\": Object {
+            -       \\"foo1\\": \\"gatsby-fields-child-deletion\\",
+            -     },
+            +     \\"fieldOwners\\": Object {},
+                  \\"owner\\": \\"gatsby-source-child-deletion-for-fields\\",
+                  \\"type\\": \\"Parent_ChildDeletionForFields\\",
                 },
                 \\"parent\\": null,
               }"
           `)
-      }
+        }
+      })
     })
   })
 
@@ -649,4 +1126,3 @@ describe(`some plugins changed between gatsby runs`, () => {
     })
   })
 })
-// })
