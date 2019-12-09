@@ -12,7 +12,7 @@ Right now, Tina uses a Git backend to track content changes. When detected, chan
 
 In this article, we will walk through how to add TinaCMS to an existing Gatsby website. We will cover installing and configuring the Tina [sidebar](https://tinacms.org/docs/concepts/sidebar). Learn how to create a content editing [form](https://tinacms.org/docs/concepts/forms) for markdown. Touch on customizing the form with Tina [field](https://tinacms.org/docs/concepts/fields) components. Set-up [inline (aka on-page) editing](https://tinacms.org/docs/gatsby/inline-editing). And then we'll configure a [`content-creator`](https://tinacms.org/docs/gatsby/creating-new-files) plugin that will allow us to add new files to the site. Let's use the classic [Gatsby’s Starter Blog 💜](https://github.com/gatsbyjs/gatsby-starter-blog) as our example.
 
-> Follow along by referencing [a fork of the Gatsby starter blog](https://github.com/spbyrne/tinacms-gatsby-starter-tutorial) that makes the same changes outlined in this post.
+> Follow along by referencing [a fork of the Gatsby starter blog](https://github.com/tinacms/gatsby-tinacms-blog-post-reference) that makes the same changes outlined in this post.
 
 Want to see a more advanced example of TinaCMS integrated with a Gatsby website? Checkout [Tina Grande](https://github.com/tinacms/tina-starter-grande), a gatsby starter with first-class TinaCMS integration.
 
