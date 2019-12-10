@@ -1,4 +1,5 @@
 const { getFieldsEnum } = require(`./sort`)
+const { addDerivedType } = require(`./derived-types`)
 const { distinct, group } = require(`../resolvers`)
 
 const getPageInfo = ({ schemaComposer }) =>
@@ -15,6 +16,7 @@ const getPageInfo = ({ schemaComposer }) =>
 
 const getEdge = ({ schemaComposer, typeComposer }) => {
   const typeName = typeComposer.getTypeName() + `Edge`
+  addDerivedType({ typeComposer, derivedTypeName: typeName })
   return schemaComposer.getOrCreateOTC(typeName, tc => {
     tc.addFields({
       next: typeComposer,
@@ -41,6 +43,7 @@ const createPagination = ({
   })
   paginationTypeComposer.makeFieldNonNull(`edges`)
   paginationTypeComposer.makeFieldNonNull(`nodes`)
+  addDerivedType({ typeComposer, derivedTypeName: typeName })
   return paginationTypeComposer
 }
 

@@ -11,6 +11,9 @@ function onCreateBabelConfig({ actions }, options) {
   actions.setBabelPlugin({
     name: require.resolve(`@babel/plugin-proposal-nullish-coalescing-operator`),
   })
+  actions.setBabelPlugin({
+    name: require.resolve(`@babel/plugin-proposal-numeric-separator`),
+  })
 }
 
 function onCreateWebpackConfig({ actions, loaders }) {

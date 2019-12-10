@@ -6,6 +6,7 @@ const report = require(`gatsby-cli/lib/reporter`)
 
 const { isFile } = require(`./is-file`)
 const { isDate } = require(`../types/date`)
+const { addDerivedType } = require(`../types/derived-types`)
 const is32BitInteger = require(`./is-32-bit-integer`)
 
 const addInferredFields = ({
@@ -168,6 +169,7 @@ const getFieldConfig = ({
       value: exampleValue,
       key: unsanitizedKey,
     })
+    arrays = arrays + (value.multiple ? 1 : 0)
   } else {
     fieldConfig = getSimpleFieldConfig({
       schemaComposer,
@@ -254,9 +256,7 @@ const getFieldConfigFromFieldNameConvention = ({
       ? nodeStore.getNodes().find(node => _.get(node, foreignKey) === value)
       : nodeStore.getNode(value)
 
-  const linkedNodes = Array.isArray(value)
-    ? value.map(getNodeBy)
-    : [getNodeBy(value)]
+  const linkedNodes = value.linkedNodes.map(getNodeBy)
 
   const linkedTypes = _.uniq(
     linkedNodes.filter(Boolean).map(node => node.internal.type)
@@ -265,7 +265,7 @@ const getFieldConfigFromFieldNameConvention = ({
   invariant(
     linkedTypes.length,
     `Encountered an error trying to infer a GraphQL type for: \`${key}\`. ` +
-      `There is no corresponding node with the \`id\` field matching: "${value}".`
+      `There is no corresponding node with the \`id\` field matching: "${value.linkedNodes}".`
   )
 
   let type
@@ -365,6 +365,10 @@ const getSimpleFieldConfig = ({
               `plugin`,
               typeComposer.getExtension(`plugin`)
             )
+            addDerivedType({
+              typeComposer,
+              derivedTypeName: fieldTypeComposer.getTypeName(),
+            })
           }
         }
 

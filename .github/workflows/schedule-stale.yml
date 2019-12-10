@@ -9,12 +9,11 @@ jobs:
     steps:
       - name: stale
         id: stale
-        uses: gatsbyjs/stale@gatsby-repo-test
+        uses: gatsbyjs/stale@0.1.0
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DAYS_BEFORE_STALE: 20
           DAYS_BEFORE_CLOSE: 10
-          DRY_RUN: true
           OPERATIONS_PER_RUN: 5000
           STALE_ISSUE_MESSAGE: |
             Hiya!
@@ -36,10 +35,6 @@ jobs:
             Thanks again for being part of the Gatsby community! 💪💜
           EXEMPT_ISSUE_LABELS: |
             not stale
-            important
-            good first issue
-            no triage
-            status: confirmed
       - name: Post slack report
         uses: pullreminders/slack-action@v1.0.7
         env:

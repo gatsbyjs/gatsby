@@ -703,16 +703,21 @@ const addRootNodeToInlineObject = (
   rootNodeMap,
   data,
   nodeId,
-  isNode = false
+  isNode = false,
+  path = new Set()
 ) => {
+  path.add(data)
+
   const isPlainObject = _.isPlainObject(data)
 
   if (isPlainObject || _.isArray(data)) {
     _.each(data, (o, key) => {
+      if (path.has(o)) return
       if (!isNode || key !== `internal`) {
         addRootNodeToInlineObject(rootNodeMap, o, nodeId)
       }
     })
+
     // don't need to track node itself
     if (!isNode) {
       rootNodeMap.set(data, nodeId)
