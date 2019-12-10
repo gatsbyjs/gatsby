@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.45](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-screenshot@2.1.44...gatsby-transformer-screenshot@2.1.45) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-transformer-screenshot
+
 ## [2.1.44](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-screenshot@2.1.43...gatsby-transformer-screenshot@2.1.44) (2019-12-09)
 
 **Note:** Version bump only for package gatsby-transformer-screenshot
