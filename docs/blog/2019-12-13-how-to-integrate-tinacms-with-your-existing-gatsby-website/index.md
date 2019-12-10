@@ -251,7 +251,7 @@ We now have a way to add new posts from the Tina sidebar. The location of the ne
 
 ## Access Tina In The Cloud
 
-Now that we’ve built a tailored editing experience for creating and writing content, we need a way to let non-technical folks edit the site. We'll set it up with [Gatsby Cloud](https://www.gatsbyjs.com/cloud/), which is a hosted service for building and maintaining Gatsby websites.
+Since Tina makes edits using the Gatsby development server, we need to create an environment for the development server to run in the cloud. This way non-technical editors can visit that cloud-hosted environment to manage content. We'll set it up with [Gatsby Cloud](https://www.gatsbyjs.com/cloud/), which is a hosted service for building and maintaining Gatsby websites.
 
 When it's time to allow your editors to a site with Tina on a hosted server, you will need to be extra careful around safeguarding against run-time errors. Does your site blow up if an array is empty? or if an image isn't defined? You'll want to account for these edge cases which your editors may run into while editing.
 
