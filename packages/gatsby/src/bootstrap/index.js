@@ -19,7 +19,7 @@ const report = require(`gatsby-cli/lib/reporter`)
 const getConfigFile = require(`./get-config-file`)
 const tracer = require(`opentracing`).globalTracer()
 const preferDefault = require(`./prefer-default`)
-const getStaleJobs = require(`./get-stale-jobs`)
+const removeStaleJobs = require(`./remove-stale-jobs`)
 // Add `util.promisify` polyfill for old node versions
 require(`util.promisify/shim`)()
 
@@ -144,7 +144,7 @@ module.exports = async (args: BootstrapArgs) => {
   activity.end()
 
   // run stale jobs
-  store.dispatch(getStaleJobs(store.getState()))
+  store.dispatch(removeStaleJobs(store.getState()))
 
   activity = report.activityTimer(`load plugins`, { parentSpan: bootstrapSpan })
   activity.start()

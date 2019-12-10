@@ -1,12 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`get-stale-jobs should enqueue pending jobs 1`] = `
+exports[`remove-stale-jobs should enqueue pending jobs 1`] = `
 Array [
   undefined,
 ]
 `;
 
-exports[`get-stale-jobs should remove stale jobs from done cache 1`] = `
+exports[`remove-stale-jobs should remove stale jobs from done cache 1`] = `
 Array [
   Object {
     "payload": Object {
@@ -19,7 +19,7 @@ Array [
 ]
 `;
 
-exports[`get-stale-jobs should remove stale jobs from pending cache 1`] = `
+exports[`remove-stale-jobs should remove stale jobs from pending cache 1`] = `
 Array [
   Object {
     "payload": Object {

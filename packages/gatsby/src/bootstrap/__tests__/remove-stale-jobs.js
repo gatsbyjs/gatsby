@@ -5,9 +5,9 @@ const { internalActions, publicActions } = require(`../../redux/actions`)
 
 jest.spyOn(internalActions, `removeStaleJob`)
 
-const getStaleJobs = require(`../get-stale-jobs`)
+const removeStaleJobs = require(`../remove-stale-jobs`)
 
-describe(`get-stale-jobs`, () => {
+describe(`remove-stale-jobs`, () => {
   let state
 
   beforeEach(() => {
@@ -34,7 +34,7 @@ describe(`get-stale-jobs`, () => {
 
     isJobStale.mockReturnValue(true)
 
-    expect(getStaleJobs(state)).toMatchSnapshot()
+    expect(removeStaleJobs(state)).toMatchSnapshot()
     expect(internalActions.removeStaleJob).toHaveBeenCalledTimes(1)
     expect(internalActions.removeStaleJob).toHaveBeenCalledWith(`1234`)
     expect(publicActions.createJobV2).not.toHaveBeenCalled()
@@ -56,7 +56,7 @@ describe(`get-stale-jobs`, () => {
 
     isJobStale.mockReturnValue(true)
 
-    expect(getStaleJobs(state)).toMatchSnapshot()
+    expect(removeStaleJobs(state)).toMatchSnapshot()
     expect(internalActions.removeStaleJob).toHaveBeenCalledTimes(1)
     expect(internalActions.removeStaleJob).toHaveBeenCalledWith(`1234`)
     expect(publicActions.createJobV2).not.toHaveBeenCalled()
@@ -78,7 +78,7 @@ describe(`get-stale-jobs`, () => {
 
     isJobStale.mockReturnValue(false)
 
-    expect(getStaleJobs(state)).toMatchSnapshot()
+    expect(removeStaleJobs(state)).toMatchSnapshot()
     expect(internalActions.removeStaleJob).toHaveBeenCalledTimes(0)
     expect(publicActions.createJobV2).toHaveBeenCalledTimes(1)
     expect(publicActions.createJobV2).toHaveBeenCalledWith(
