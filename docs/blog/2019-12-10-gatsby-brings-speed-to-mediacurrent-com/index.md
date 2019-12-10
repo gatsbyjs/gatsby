@@ -1,6 +1,6 @@
 ---
 title: Gatsby Brings Speed and Simplicity to Mediacurrent.com
-date: 2019-11-19
+date: 2019-12-10
 author: Mark Casias
 excerpt: "We believe Gatsby is a superior solution that can work for many organizations looking to leverage a fast, secure React-based front-end for their website."
 tags:
