@@ -1,7 +1,7 @@
 {
   "name": "gatsby-transformer-toml",
   "description": "Gatsby transformer plugin for toml",
-  "version": "2.2.19",
+  "version": "2.2.20",
   "author": "Ruben Harutyunyan <vagr9k@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -14,7 +14,7 @@
   "devDependencies": {
     "@babel/cli": "^7.7.5",
     "@babel/core": "^7.7.5",
-    "babel-preset-gatsby-package": "^0.2.12",
+    "babel-preset-gatsby-package": "^0.2.13",
     "cross-env": "^5.2.1"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-toml#readme",

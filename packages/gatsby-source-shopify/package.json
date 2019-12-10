@@ -1,6 +1,6 @@
 {
   "name": "gatsby-source-shopify",
-  "version": "3.0.33",
+  "version": "3.0.34",
   "description": "Gatsby source plugin for building websites using Shopfiy as a data source.",
   "scripts": {
     "build": "babel src --out-dir . --ignore **/__tests__",
@@ -33,10 +33,10 @@
     "cross-env": "^5.2.1"
   },
   "dependencies": {
-    "babel-preset-gatsby-package": "^0.2.12",
+    "babel-preset-gatsby-package": "^0.2.13",
     "chalk": "^2.4.2",
     "gatsby-node-helpers": "^0.3.0",
-    "gatsby-source-filesystem": "^2.1.40",
+    "gatsby-source-filesystem": "^2.1.41",
     "graphql-request": "^1.8.2",
     "lodash": "^4.17.15",
     "p-iteration": "^1.1.8",

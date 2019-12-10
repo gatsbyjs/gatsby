@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-gtag@1.1.17...gatsby-plugin-google-gtag@1.1.18) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-plugin-google-gtag
+
 ## [1.1.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-gtag@1.1.16...gatsby-plugin-google-gtag@1.1.17) (2019-11-26)
 
 **Note:** Version bump only for package gatsby-plugin-google-gtag
