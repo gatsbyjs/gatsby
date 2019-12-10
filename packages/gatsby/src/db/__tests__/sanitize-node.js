@@ -22,6 +22,13 @@ describe(`node sanitization`, () => {
         field: `fieldOfFirstNode`,
         re: /re/,
       },
+      repeat: `foo`,
+      repeat2: `bar`,
+      repeat3: {
+        repeat3: {
+          repeat: `bar`,
+        },
+      },
       inlineArray: [1, 2, 3, Symbol(`test`)],
       internal: {
         type: `Test`,

@@ -7,7 +7,7 @@ Object {
     "self": [Circular],
   },
   "deep": Object {
-    "deepCircular": Object {
+    "indirectCircular": Object {
       "down1": Object {
         "down2": Object {
           "deepCircular": [Circular],
@@ -30,5 +30,12 @@ Object {
     "type": "Test",
   },
   "parent": null,
+  "repeat": "foo",
+  "repeat2": "bar",
+  "repeat3": Object {
+    "repeat3": Object {
+      "repeat": "bar",
+    },
+  },
 }
 `;
