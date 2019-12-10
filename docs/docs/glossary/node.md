@@ -7,7 +7,7 @@ Learn more about Node.js, one of the software packages that makes Gatsby possibl
 
 ## What is Node.js?
 
-Node.js is a JavaScript runtime that uses same engine as Google Chrome. With Node.js, you can run JavaScript applications on your computer, without the need for a web browser. 
+Node.js is a JavaScript runtime that uses same engine as Google Chrome. With Node.js, you can run JavaScript applications on your computer, without the need for a web browser.
 
 In the early 2000s, services such as Gmail and Flickr showed us that JavaScript could be used to build robust applications, available to anyone with a web browser and internet connection.
 
@@ -21,19 +21,16 @@ You will need to [install Node.js](https://www.gatsbyjs.org/tutorial/part-zero/#
 
 Installing Node.js also installs [npm](/docs/glossary#npm), the Node.js _package manager_. A package manager is special software that lets you install and update modules and packages used in your project.
 
-You'll use npm to install Gatsby and its dependencies. Type `npm install -g gatsby-cli` at a command line prompt to install the Gatsby command line interface or CLI. The `-g` flag installs the CLI globally, putting Gatsby's command at your fingertips. 
+You'll use npm to install Gatsby and its dependencies. Type `npm install -g gatsby-cli` at a command line prompt to install the Gatsby command line interface or CLI. The `-g` flag installs the CLI globally, putting Gatsby's command at your fingertips.
 
 You can then use `gatsby new` to create a new Gatsby site.
 
 ## Learn more about Node.js
 
-* [Node.js](https://nodejs.org/en/) official web site
+- [Node.js](https://nodejs.org/en/) official web site
 
-* [Introduction to Node.js](https://nodejs.dev)
+- [Introduction to Node.js](https://nodejs.dev)
 
-* [NodeSchool](https://nodeschool.io/) offers online and in-person Node.js workshops
+- [NodeSchool](https://nodeschool.io/) offers online and in-person Node.js workshops
 
-* [V8](https://v8.dev/) developer blog web site
-
-  
-
+- [V8](https://v8.dev/) developer blog web site
