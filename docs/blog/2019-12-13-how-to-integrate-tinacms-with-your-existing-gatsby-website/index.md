@@ -8,7 +8,7 @@ tags:
 
 [TinaCMS](https://tinacms.org/) is a toolkit of javascript components. You can use these components to build content editing functionality into your site.
 
-Right now, Tina uses a Git backend to track content changes. When detected, changes are immediately written to back to source files. Saving, commits (and pushes) those chages to your repo. While Git backed for now, the Tina Team has built inherent flexibility into the CMS. Adding support for alternate backends, such as posting to a database, is on the Tina [roadmap](https://github.com/tinacms/tinacms/blob/master/ROADMAP.md).
+Right now, Tina uses a Git backend to track content changes. When detected, changes are immediately written to back to source files. Saving pushes those chages to your repo. While Git backed for now, the Tina Team has built inherent flexibility into the CMS. Adding support for alternate backends, such as posting to a database, is on the Tina [roadmap](https://github.com/tinacms/tinacms/blob/master/ROADMAP.md).
 
 In this article, we will walk through how to add TinaCMS to an existing Gatsby website. We will cover installing and configuring the Tina [sidebar](https://tinacms.org/docs/concepts/sidebar). Learn how to create a content editing [form](https://tinacms.org/docs/concepts/forms) for markdown. Touch on customizing the form with Tina [field](https://tinacms.org/docs/concepts/fields) components. Set-up [inline (aka on-page) editing](https://tinacms.org/docs/gatsby/inline-editing). And then we'll configure a [`content-creator`](https://tinacms.org/docs/gatsby/creating-new-files) plugin that will allow us to add new files to the site. Let's use the classic [Gatsby’s Starter Blog 💜](https://github.com/gatsbyjs/gatsby-starter-blog) as our example.
 
