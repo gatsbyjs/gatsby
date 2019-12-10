@@ -143,7 +143,7 @@ const options = {
       // Use cacheFirst since these don't need to be revalidated (same RegExp
       // and same reason as above)
       urlPattern: /(\.js$|\.css$|static\/)/,
-      handler: `cacheOnly`,
+      handler: `cacheFirst`,
     },
     {
       // page-data.json files are not content hashed

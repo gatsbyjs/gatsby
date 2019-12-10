@@ -168,7 +168,7 @@ export const pageQuery = graphql`
 
 Save these changes and look at localhost:8000 to see your new homepage with a list of sorted blog posts!
 
-![WordPress home after query](/images/wordpress-source-plugin-home.jpg)
+![WordPress home after query](./images/wordpress-source-plugin-home.jpg)
 
 > **NOTE:** to future editors: it would be useful to also have examples of how to load blog posts to their own individual pages. And helpful to insert a screenshot of the final result here
 
@@ -215,7 +215,7 @@ exports.createPages = ({ graphql, actions }) => {
 
 Next, stop and restart the `gatsby develop` environment. As you watch the terminal you should see two Post objects log to the terminal:
 
-![Two posts logged to the terminal](/images/wordpress-source-plugin-log.jpg)
+![Two posts logged to the terminal](./images/wordpress-source-plugin-log.jpg)
 
 Excellent! As explained in Part 7 of the tutorial, this `createPages` export is one of the Gatsby "workhorses" and allows us to create your blog posts (or pages, or custom post types, etc.) from your WordPress install.
 
@@ -296,7 +296,7 @@ exports.createPages = ({ graphql, actions }) => {
 
 You will need to stop and start your environment again using `gatsby develop`. When you do, you will not see a change on the index page of the site, but if you navigate to a 404 page, like [http://localhost:8000/asdf](http://localhost:8000/asdf), you should see the two sample posts created and be able to click on them to go to the sample posts:
 
-![Sample post links](/images/wordpress-source-plugin-sample-post-links.gif)
+![Sample post links](./images/wordpress-source-plugin-sample-post-links.gif)
 
 But nobody likes to go to a 404 page to find a blog post! So, let's link these up from the home page.
 
@@ -349,7 +349,7 @@ export const pageQuery = graphql`
 
 And that's it! When you wrap the title in the `Link` component and reference the slug of the post, Gatsby will add some magic to the link, preload it, and make the transition between pages incredibly fast:
 
-![Final product with links from the home page to the blog posts](/images/wordpress-source-plugin-home-to-post-links.gif)
+![Final product with links from the home page to the blog posts](./images/wordpress-source-plugin-home-to-post-links.gif)
 
 ### Wrapping up.
 

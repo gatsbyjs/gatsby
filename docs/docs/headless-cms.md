@@ -43,6 +43,7 @@ Here are more resources for guides, plugins, and starters for CMS systems you ca
 | [Cockpit](https://getcockpit.com/)            |                                                                                  | [docs](/packages/gatsby-plugin-cockpit)              |
 | [CraftCMS](https://craftcms.com/)             |                                                                                  | [docs](/packages/gatsby-source-craftcms)             |
 | [AgilityCMS](https://agilitycms.com/)         | [guide](/docs/sourcing-from-agilitycms/)                                         | [docs](/packages/@agility/gatsby-source-agilitycms/) | [starter](/starters/agility/agility-gatsby-starter/)                |
+| [Forestry](https://forestry.io/)              | [guide](/docs/sourcing-from-forestry/)                                           |                                                      |                                                                     |
 | [Gentics Mesh](https://getmesh.io)            | [guide](/docs/sourcing-from-gentics-mesh)                                        |                                                      |                                                                     |
 
 ## How to add new guides to this section
