@@ -294,6 +294,40 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
     { pluginOptions: { excerpt_separator: `<!-- end -->` } }
   )
 
+  const contentWithoutSeparator = `---
+title: "my little pony"
+date: "2017-09-18T23:19:51.246Z"
+---
+Where oh where **is** my little pony? Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla viverra, eros at efficitur pulvinar, lectus orci accumsan nisi, eu blandit elit nulla nec lectus. Integer porttitor imperdiet sapien. Quisque in orci sed nisi consequat aliquam. Aenean id mollis nisi. Sed auctor odio id erat facilisis venenatis. Quisque posuere faucibus libero vel fringilla.
+
+In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincidunt, sem velit vulputate enim, nec interdum augue enim nec mauris. Nulla iaculis ante sed enim placerat pretium. Nulla metus odio, facilisis vestibulum lobortis vitae, bibendum at nunc. Donec sit amet efficitur metus, in bibendum nisi. Vivamus tempus vel turpis sit amet auctor. Maecenas luctus vestibulum velit, at sagittis leo volutpat quis. Praesent posuere nec augue eget sodales. Pellentesque vitae arcu ut est varius venenatis id maximus sem. Curabitur non consectetur turpis.
+`
+
+  bootstrapTest(
+    `given MARKDOWN without excerpt separator, falls back to pruneLength`,
+    contentWithoutSeparator,
+    `excerpt(pruneLength: 40, format: MARKDOWN)`,
+    node => {
+      expect(node).toMatchSnapshot()
+      expect(node.excerpt.length).toBe(45)
+      expect(node.excerpt).toBe(
+        `Where oh where **is** my little pony? Lorem…\n`
+      )
+    },
+    { pluginOptions: { excerpt_separator: `<!-- end -->` } }
+  )
+
+  bootstrapTest(
+    `given MARKDOWN, pruning is done not counting markdown characters`,
+    contentWithoutSeparator,
+    `excerpt(pruneLength: 19, format: MARKDOWN)`,
+    node => {
+      expect(node).toMatchSnapshot()
+      // we want the pruning to preserve markdown chars and not count them in the length
+      expect(node.excerpt.length).toBe(23)
+      expect(node.excerpt).toBe(`Where oh where **is**…\n`)
+    }
+  )
   const content = `---
 title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
