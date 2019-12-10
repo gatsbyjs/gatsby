@@ -3,25 +3,28 @@
 exports[`Job v2 actions/reducer should enqueueJob 1`] = `
 Object {
   "active": Set {
-    "0264dcc4010e386cf4a9e94dc9e94af4",
+    "c104a6cd55b060a801b2c838e8a7bf40",
   },
   "done": Map {},
   "stale": Map {
-    "0264dcc4010e386cf4a9e94dc9e94af4" => Object {
+    "c104a6cd55b060a801b2c838e8a7bf40" => Object {
       "job": Object {
         "args": Object {},
-        "contentDigest": "0264dcc4010e386cf4a9e94dc9e94af4",
+        "contentDigest": "c104a6cd55b060a801b2c838e8a7bf40",
         "id": "1234",
         "inputPaths": Array [],
         "name": "TEST_JOB",
         "outputDir": "public/static",
         "plugin": Object {
+          "isLocal": false,
           "name": "test-plugin",
+          "resolve": "/node_modules/test-plugin",
           "version": "1.0.0",
         },
       },
       "plugin": Object {
         "name": "test-plugin",
+        "resolve": "/node_modules/test-plugin",
         "version": "1.0.0",
       },
     },
@@ -35,13 +38,15 @@ exports[`Job v2 actions/reducer should enqueueJob 2`] = `
     Array [
       Object {
         "args": Object {},
-        "contentDigest": "0264dcc4010e386cf4a9e94dc9e94af4",
+        "contentDigest": "c104a6cd55b060a801b2c838e8a7bf40",
         "id": "1234",
         "inputPaths": Array [],
         "name": "TEST_JOB",
         "outputDir": "public/static",
         "plugin": Object {
+          "isLocal": false,
           "name": "test-plugin",
+          "resolve": "/node_modules/test-plugin",
           "version": "1.0.0",
         },
       },

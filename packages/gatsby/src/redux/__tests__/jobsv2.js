@@ -9,6 +9,7 @@ describe(`Job v2 actions/reducer`, () => {
   const plugin = {
     name: `test-plugin`,
     version: `1.0.0`,
+    resolve: `/node_modules/test-plugin`,
   }
   const createGlobalState = defaultState => {
     return {
