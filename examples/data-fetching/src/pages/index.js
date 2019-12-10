@@ -23,15 +23,12 @@ const IndexPage = () => {
   // ----------------------
   const [starsCount, setStarsCount] = useState(0)
   useEffect(() => {
-    const fetchData = async () => {
-      // get data from GitHub api
-      const result = await fetch(`https://api.github.com/repos/gatsbyjs/gatsby`)
-      // parse JSON from request
-      const resultData = await result.json()
-      // set data for the number of stars
-      setStarsCount(resultData.stargazers_count)
-    }
-    fetchData()
+    // get data from GitHub api
+    fetch(`https://api.github.com/repos/gatsbyjs/gatsby`)
+      .then(response => response.json()) // parse JSON from request
+      .then(resultData => {
+        setStarsCount(resultData.stargazers_count)
+      }) // set data for the number of stars
   }, [])
 
   return (
