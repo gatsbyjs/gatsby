@@ -64,6 +64,9 @@
             - title: Deploying to IIS
               link: /docs/deploying-to-iis/
               breadcrumbTitle: IIS
+            - title: Deploying to Firebase Hosting
+              link: /docs/deploying-to-firebase/
+              breadcrumbTitle: Firebase Hosting
             - title: Adding a Path Prefix
               link: /docs/path-prefix/
             - title: How Gatsby Works with GitHub Pages
@@ -418,8 +421,6 @@
                   link: /docs/location-data-from-props/
                 - title: Creating Dynamic Navigation
                   link: /docs/creating-dynamic-navigation/
-                - title: Rendering Sidebar Navigation Dynamically*
-                  link: /docs/rendering-sidebar-navigation-dynamically/
                 - title: Client-only Routes & User Authentication
                   link: /docs/client-only-routes-and-user-authentication/
                   breadcrumbTitle: Client Routes & User Auth
@@ -692,6 +693,9 @@
       link: /docs/cheat-sheet/
     - title: Glossary
       link: /docs/glossary/
+      items:
+        - title: React
+          link: /docs/glossary/react
     - title: Gatsby Telemetry
       link: /docs/telemetry/
     - title: Gatsby REPL

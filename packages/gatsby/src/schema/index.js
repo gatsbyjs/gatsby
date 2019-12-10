@@ -6,7 +6,32 @@ const nodeStore = require(`../db/nodes`)
 const { createSchemaComposer } = require(`./schema-composer`)
 const { buildSchema, rebuildSchemaWithSitePage } = require(`./schema`)
 const { builtInFieldExtensions } = require(`./extensions`)
+const { builtInTypeDefinitions } = require(`./types/built-in-types`)
 const { TypeConflictReporter } = require(`./infer/type-conflict-reporter`)
+
+const getAllTypeDefinitions = () => {
+  const {
+    schemaCustomization: { types },
+  } = store.getState()
+
+  const builtInTypes = builtInTypeDefinitions().map(typeDef => {
+    return {
+      typeOrTypeDef: typeDef,
+      plugin: undefined,
+    }
+  })
+
+  // Ensure that user-defined types are processed last
+  return [
+    ...builtInTypes,
+    ...types.filter(
+      type => type.plugin && type.plugin.name !== `default-site-plugin`
+    ),
+    ...types.filter(
+      type => !type.plugin || type.plugin.name === `default-site-plugin`
+    ),
+  ]
+}
 
 const getAllFieldExtensions = () => {
   const {
@@ -68,29 +93,19 @@ const build = async ({ parentSpan, fullMetadataBuild = true }) => {
   }
 
   const {
-    schemaCustomization: { thirdPartySchemas, types, printConfig },
+    schemaCustomization: { thirdPartySchemas, printConfig },
     inferenceMetadata,
     config: { mapping: typeMapping },
   } = store.getState()
 
   const typeConflictReporter = new TypeConflictReporter()
 
-  // Ensure that user-defined types are processed last
-  const sortedTypes = [
-    ...types.filter(
-      type => type.plugin && type.plugin.name !== `default-site-plugin`
-    ),
-    ...types.filter(
-      type => !type.plugin || type.plugin.name === `default-site-plugin`
-    ),
-  ]
-
   const fieldExtensions = getAllFieldExtensions()
   const schemaComposer = createSchemaComposer({ fieldExtensions })
   const schema = await buildSchema({
     schemaComposer,
     nodeStore,
-    types: sortedTypes,
+    types: getAllTypeDefinitions(),
     fieldExtensions,
     thirdPartySchemas,
     typeMapping,

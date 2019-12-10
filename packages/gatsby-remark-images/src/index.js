@@ -190,6 +190,15 @@ module.exports = (
       )
     }
 
+    const imageStyle = `
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      vertical-align: middle;
+      position: absolute;
+      top: 0;
+      left: 0;`.replace(/\s*(\S+:)\s*/g, `$1`)
+
     // Create our base image tag
     let imageTag = `
       <img
@@ -199,6 +208,7 @@ module.exports = (
         src="${fallbackSrc}"
         srcset="${srcSet}"
         sizes="${fluidResult.sizes}"
+        style="${imageStyle}"
         loading="${loading}"
       />
     `.trim()
