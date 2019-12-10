@@ -1,0 +1,26 @@
+{
+  "name": "gatsby-www-components",
+  "version": "1.0.0",
+  "description": "Package for components used in gatsby.org",
+  "main": "src/index.js",
+  "keywords": [
+    "gatsby"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-www-components#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.7.4",
+    "@babel/core": "^7.7.4",
+    "@babel/runtime": "^7.7.4",
+    "babel-preset-gatsby-package": "^0.2.12"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-www-components"
+  },
+  "scripts": {
+    "build": "babel src --out-dir ./dist",
+    "watch": "babel -w src --out-dir ./dist"
+  }
+}
