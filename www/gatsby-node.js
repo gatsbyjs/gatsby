@@ -419,6 +419,16 @@ exports.createPages = ({ graphql, actions, reporter }) => {
     isPermanent: true,
   })
 
+  /* This redirects from a now removed stub that 
+  showed up in the first page of Google results. 
+  Can be removed if SEO is no longer impacted. */
+
+  createRedirect({
+    fromPath: `/docs/rendering-sidebar-navigation-dynamically/`,
+    toPath: `/docs/creating-dynamic-navigation/`,
+    isPermanent: true,
+  })
+
   Object.entries(startersRedirects).forEach(([fromSlug, toSlug]) => {
     createRedirect({
       fromPath: `/starters${fromSlug}`,
