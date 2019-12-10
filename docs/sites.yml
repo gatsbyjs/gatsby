@@ -8902,3 +8902,13 @@
     - Open Source
   built_by: Bearer
   featured: false
+- title: 8fit.com
+  url: https://8fit.com/
+  main_url: https://8fit.com/
+  description: >
+    Get personalized workouts, custom meal plans, and nutrition guidance, right in the palm of your hand. Prioritize progress over perfection with the 8fit app!
+  categories:
+    - App
+    - Food
+    - Sports
+  featured: false
