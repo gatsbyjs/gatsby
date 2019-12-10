@@ -11,16 +11,16 @@
   },
   "dependencies": {
     "@babel/code-frame": "^7.5.5",
-    "@babel/runtime": "^7.7.4",
+    "@babel/runtime": "^7.7.6",
     "@hapi/joi": "^15.1.1",
     "better-opn": "^1.0.0",
-    "bluebird": "^3.7.1",
+    "bluebird": "^3.7.2",
     "chalk": "^2.4.2",
     "clipboardy": "^2.1.0",
     "common-tags": "^1.8.0",
     "configstore": "^5.0.0",
     "convert-hrtime": "^3.0.0",
-    "core-js": "^2.6.10",
+    "core-js": "^2.6.11",
     "envinfo": "^7.5.0",
     "execa": "^3.4.0",
     "fs-exists-cached": "^1.0.0",
@@ -51,13 +51,13 @@
     "yurnalist": "^1.1.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.7.4",
-    "@babel/core": "^7.7.4",
+    "@babel/cli": "^7.7.5",
+    "@babel/core": "^7.7.5",
     "babel-preset-gatsby-package": "^0.2.12",
     "cross-env": "^5.2.1"
   },
   "optionalDependencies": {
-    "ink": "^2.5.0",
+    "ink": "^2.6.0",
     "ink-spinner": "^3.0.1"
   },
   "files": [
