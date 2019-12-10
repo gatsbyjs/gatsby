@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.14](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby-package@0.2.12...babel-preset-gatsby-package@0.2.14) (2019-12-10)
+
+### Features
+
+- **gatsby:** support nullish coalescing operator in gatsby ([#20010](https://github.com/gatsbyjs/gatsby/issues/20010)) ([a898a77](https://github.com/gatsbyjs/gatsby/commit/a898a77))
+
 ## [0.2.13](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby-package@0.2.12...babel-preset-gatsby-package@0.2.13) (2019-12-10)
 
 ### Features
