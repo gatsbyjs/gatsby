@@ -942,6 +942,33 @@ final text
   )
 
   bootstrapTest(
+    `correctly generates table of contents in relative path`,
+    `---
+title: "my little pony"
+date: "2017-09-18T23:19:51.246Z"
+---
+# first title
+
+some text
+
+## second title
+
+some other text
+
+# third title
+
+final text
+`,
+    `tableOfContents(absolute: false)
+    frontmatter {
+        title
+    }`,
+    node => {
+      expect(node).toMatchSnapshot()
+    }
+  )
+
+  bootstrapTest(
     `table of contents is generated with correct depth (graphql option)`,
     `---
 title: "my little pony"

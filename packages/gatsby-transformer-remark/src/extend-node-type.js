@@ -301,7 +301,9 @@ module.exports = (
 
             return node
           }
-          tocAst.map = addSlugToUrl(tocAst.map)
+          if (appliedTocOptions.absolute) {
+            tocAst.map = addSlugToUrl(tocAst.map)
+          }
 
           toc = hastToHTML(toHAST(tocAst.map))
         } else {
@@ -604,6 +606,12 @@ module.exports = (
       tableOfContents: {
         type: `String`,
         args: {
+          // TODO:(v3) set default value to false
+          absolute: {
+            type: `Boolean`,
+            defaultValue: true,
+          },
+          // TODO:(v3) set default value to empty string
           pathToSlugField: {
             type: `String`,
             defaultValue: `fields.slug`,
