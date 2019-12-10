@@ -44,7 +44,7 @@ Node.js is an environment that can run JavaScript code outside of a web browser.
 
 - On **Linux**:
 
-  Install curl and nvm. nvm is used to manage node and all its associated versions.
+  Install curl and nvm (Node Version Manager). nvm is used to manage node and all its associated versions.
 
   - Ubuntu, Debian, and other `apt` based distros:
     - Run `sudo apt-get install curl` to install curl which allows you to transfer data and download additional dependencies.
@@ -60,16 +60,17 @@ Node.js is an environment that can run JavaScript code outside of a web browser.
       `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash`
     - To confirm this has worked, use the following command. `nvm --version`. The output should be a version number.
 
-
 If the Linux distribution you are using is not listed here, please find instructions on the web.  
  _💡 If when installing a package, it asks for confirmation, type `y` and press enter._
 
-1. When nvm is installed, it does not default to a particular node version. You’ll need to install the version you want and give nvm instructions to use it. This example uses the latest release of version 10, but more recent version numbers can be used instead.
+#### Set default Node.js version
+
+When nvm is installed, it does not default to a particular node version. You’ll need to install the version you want and give nvm instructions to use it. This example uses the latest release of version 10, but more recent version numbers can be used instead.
 
 ```shell
 nvm install 10
 nvm use 10
-``` 
+```
 
 ![Check node and npm versions in terminal](01-node-npm-versions.png)
 
