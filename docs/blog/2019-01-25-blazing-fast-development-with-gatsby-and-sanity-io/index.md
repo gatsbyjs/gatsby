@@ -27,7 +27,7 @@ Add the source plugin to your Gatsby project:
 npm install --save gatsby-source-sanity
 ```
 
-The source plugin gives you a comprehensive GraphQL API in Gatsby for your structured content from Sanity. We strongly recommend using the [GraphiQL explorer](/docs/introducing-graphiql/) to test queries and familiarize yourself with the schema documentation. It's super useful!
+The source plugin gives you a comprehensive GraphQL API in Gatsby for your structured content from Sanity. We strongly recommend using the [GraphiQL explorer](/docs/running-queries-with-graphiql/) to test queries and familiarize yourself with the schema documentation. It's super useful!
 
 Once you have installed the plugin, add this configuration to `gatsby-config.js`:
 

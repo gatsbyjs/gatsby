@@ -34,6 +34,9 @@
             - title: Preparing a Site for Deployment
               link: /docs/preparing-for-deployment/
               breadcrumbTitle: Preparing for Deployment
+            - title: Deploying to Netlify
+              link: /docs/deploying-to-netlify/
+              breadcrumbTitle: Netlify
             - title: Deploying to AWS Amplify
               link: /docs/deploying-to-aws-amplify/
               breadcrumbTitle: AWS Amplify
@@ -52,15 +55,18 @@
             - title: Deploying to GitLab Pages
               link: /docs/deploying-to-gitlab-pages/
               breadcrumbTitle: GitLab Pages
-            - title: Deploying to Netlify
-              link: /docs/deploying-to-netlify/
-              breadcrumbTitle: Netlify
             - title: Deploying to Render
               link: /docs/deploying-to-render/
               breadcrumbTitle: Render
             - title: Deploying to Surge
               link: /docs/deploying-to-surge/
               breadcrumbTitle: Surge
+            - title: Deploying to IIS
+              link: /docs/deploying-to-iis/
+              breadcrumbTitle: IIS
+            - title: Deploying to Firebase Hosting
+              link: /docs/deploying-to-firebase/
+              breadcrumbTitle: Firebase Hosting
             - title: Adding a Path Prefix
               link: /docs/path-prefix/
             - title: How Gatsby Works with GitHub Pages
@@ -411,12 +417,10 @@
               items:
                 - title: "@reach/router and Gatsby"
                   link: /docs/reach-router-and-gatsby/
-                - title: Linking and Prefetching with Gatsby*
-                  link: /docs/linking-and-prefetching-with-gatsby/
                 - title: Location Data from Props
                   link: /docs/location-data-from-props/
-                - title: Centralizing Your Site's Navigation
-                  link: /docs/centralizing-your-sites-navigation/
+                - title: Creating Dynamic Navigation
+                  link: /docs/creating-dynamic-navigation/
                 - title: Rendering Sidebar Navigation Dynamically*
                   link: /docs/rendering-sidebar-navigation-dynamically/
                 - title: Client-only Routes & User Authentication
@@ -471,6 +475,9 @@
             - title: Porting from Create React App to Gatsby
               link: /docs/porting-from-create-react-app-to-gatsby/
               breadcrumbTitle: Create React App to Gatsby
+            - title: Porting an HTML Site to Gatsby
+              link: /docs/porting-an-html-site-to-gatsby/
+              breadcrumbTitle: HTML to Gatsby
     - title: Gatsby API
       link: /docs/api-reference/
       items:
@@ -688,6 +695,9 @@
       link: /docs/cheat-sheet/
     - title: Glossary
       link: /docs/glossary/
+      items:
+        - title: React
+          link: /docs/glossary/react
     - title: Gatsby Telemetry
       link: /docs/telemetry/
     - title: Gatsby REPL
