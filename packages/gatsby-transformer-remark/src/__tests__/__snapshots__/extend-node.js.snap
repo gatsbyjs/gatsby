@@ -212,6 +212,20 @@ Object {
 }
 `;
 
+exports[`Excerpt is generated correctly from schema given MARKDOWN without excerpt separator, falls back to pruneLength 1`] = `
+Object {
+  "excerpt": "Where oh where **is** my little pony? Lorem…
+",
+}
+`;
+
+exports[`Excerpt is generated correctly from schema given MARKDOWN, pruning is done not counting markdown characters 1`] = `
+Object {
+  "excerpt": "Where oh where **is**…
+",
+}
+`;
+
 exports[`Excerpt is generated correctly from schema given PLAIN correctly uses excerpt separator 1`] = `
 Object {
   "excerpt": "Where oh where is my little pony?",
