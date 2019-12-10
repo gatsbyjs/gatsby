@@ -87,8 +87,31 @@ exports.createPagesStatefully = true
  * creating nodes.
  *
  * See also the documentation for [`createNode`](/docs/actions/#createNode).
+ *
+ * @param {object} $0
+ * @param {object} $0.actions
+ * @param {string} $0.basePath
+ * @param {string} $0.pathPrefix
+ * @param {object} $0.boundActionCreators
+ * @param {object} $0.actions
+ * @param {function} $0.loadNodeContent
+ * @param {object} $0.store
+ * @param {object} $0.emitter
+ * @param {function} $0.getCache
+ * @param {function} $0.getNodes
+ * @param {function} $0.getNode
+ * @param {function} $0.getNodesByType
+ * @param {boolean} $0.hasNodeChanged
+ * @param {object} $0.reporter
+ * @param {function} $0.getNodeAndSavePathDependency
+ * @param {object} $0.cache
+ * @param {function} $0.createNodeId
+ * @param {function} $0.createContentDigest
+ * @param {object} $0.tracing
+ * @param {object} $0.schema
+ * @param {object} pluginOptions
  * @example
- * exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
+ * exports.sourceNodes = ({ actions, createNodeId, createContentDigest }, pluginOptions) => {
  *   const { createNode } = actions
  *
  *   // Data can come from anywhere, but for now create it manually
@@ -218,8 +241,9 @@ exports.setFieldsOnGraphQLNodeType = true
  * @param {object} $0.actions.createTypes
  * @param {object} $0.actions.createFieldExtension
  * @param {object} $0.actions.addThirdPartySchema
+ * @param {object} pluginOptions
  * @example
- * exports.createSchemaCustomization = ({ actions }) => {
+ * exports.createSchemaCustomization = ({ actions }, pluginOptions) => {
  *   const { createTypes, createFieldExtension } = actions
  *
  *   createFieldExtension({
