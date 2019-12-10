@@ -1,7 +1,7 @@
 jest.mock(`../process-file`)
 
 const path = require(`path`)
-const worker = require(`../worker`).IMAGE_PROCESSING
+const worker = require(`../gatsby-worker`).IMAGE_PROCESSING
 const { processFile } = require(`../process-file`)
 
 describe(`worker`, () => {

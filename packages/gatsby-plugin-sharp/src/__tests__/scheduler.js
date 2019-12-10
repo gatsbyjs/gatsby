@@ -1,4 +1,4 @@
-jest.mock(`../worker`, () => {
+jest.mock(`../gatsby-worker`, () => {
   return {
     IMAGE_PROCESSING: jest.fn(),
   }
@@ -16,7 +16,7 @@ const getScheduler = () => {
   return scheduler
 }
 
-const workerMock = require(`../worker`).IMAGE_PROCESSING
+const workerMock = require(`../gatsby-worker`).IMAGE_PROCESSING
 
 describe(`scheduler`, () => {
   let boundActionCreators = {}

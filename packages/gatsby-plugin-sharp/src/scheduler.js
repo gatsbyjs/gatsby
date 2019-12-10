@@ -3,7 +3,7 @@ const path = require(`path`)
 const fs = require(`fs-extra`)
 const got = require(`got`)
 const { createContentDigest } = require(`gatsby-core-utils`)
-const worker = require(`./worker`)
+const worker = require(`./gatsby-worker`)
 
 const processImages = async (jobId, job, boundActionCreators) => {
   try {
