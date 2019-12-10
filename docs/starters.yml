@@ -1698,12 +1698,14 @@
   repo: https://github.com/SeonHyungJo/gatsby-snyung-starter
   description: Basic starter template for You
   tags:
-    - Blog
+    - CMS:Contentful
+    - Markdown
+    - Linting
+    - Pagination
+    - Portfolio
     - SEO
-    - Utterances
-    - XML Sitemaps
-    - Tag Searching
     - Styling:SCSS
+    - Transitions
   features:
     - SASS/SCSS
     - Add Utterances
