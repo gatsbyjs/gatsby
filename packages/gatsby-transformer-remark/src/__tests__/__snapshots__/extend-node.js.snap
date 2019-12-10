@@ -588,6 +588,23 @@ Object {
 }
 `;
 
+exports[`Table of contents is generated correctly from schema correctly generates table of contents in relative path 1`] = `
+Object {
+  "frontmatter": Object {
+    "title": "my little pony",
+  },
+  "tableOfContents": "<ul>
+<li>
+<p><a href=\\"#first-title\\">first title</a></p>
+<ul>
+<li><a href=\\"#second-title\\">second title</a></li>
+</ul>
+</li>
+<li><a href=\\"#third-title\\">third title</a></li>
+</ul>",
+}
+`;
+
 exports[`Table of contents is generated correctly from schema returns null on non existing table of contents field 1`] = `
 Object {
   "frontmatter": Object {
