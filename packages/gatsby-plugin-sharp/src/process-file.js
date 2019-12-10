@@ -9,7 +9,6 @@ const imageminPngquant = require(`imagemin-pngquant`)
 const imageminWebp = require(`imagemin-webp`)
 const _ = require(`lodash`)
 const { cpuCoreCount, createContentDigest } = require(`gatsby-core-utils`)
-const got = require(`got`)
 
 // Try to enable the use of SIMD instructions. Seems to provide a smallish
 // speedup on resizing heavy loads (~10%). Sharp disables this feature by
@@ -245,10 +244,7 @@ exports.createArgsDigest = args => {
   })
 
   const argsDigest = createContentDigest(sortKeys(filtered))
-
-  const argsDigestShort = argsDigest.substr(argsDigest.length - 5)
-
-  return argsDigestShort
+  return argsDigest.substr(argsDigest.length - 5)
 }
 
 const sortKeys = object => {

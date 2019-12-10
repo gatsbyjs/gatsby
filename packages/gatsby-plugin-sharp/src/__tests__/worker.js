@@ -10,42 +10,46 @@ describe(`worker`, () => {
   })
 
   it(`should call processFile with the right arguments`, async () => {
-    processFile.mockImplementation((file, contentDigest, transforms) =>
+    processFile.mockImplementation((file, transforms) =>
       transforms.map(transform => Promise.resolve(transform))
     )
     const job = {
-      inputPath: `inputpath/file.jpg`,
-      outputDir: `/public/static/`,
-      contentDigest: `1234`,
-      operations: [
+      inputPaths: [
         {
-          outputPath: `myoutputpath/1234/file.jpg`,
-          transforms: {
-            width: 100,
-            height: 100,
-          },
+          path: `inputpath/file.jpg`,
+          contentDigest: `1234`,
         },
       ],
-      pluginOptions: {},
+      outputDir: `/public/static/`,
+      args: {
+        operations: [
+          {
+            outputPath: `myoutputpath/1234/file.jpg`,
+            args: {
+              width: 100,
+              height: 100,
+            },
+          },
+        ],
+        pluginOptions: {},
+      },
     }
 
-    await worker([job.inputPath], job.outputDir, {
-      pluginOptions: job.pluginOptions,
-      contentDigest: job.contentDigest,
-      operations: job.operations,
-    })
+    await worker(job)
 
     expect(processFile).toHaveBeenCalledTimes(1)
     expect(processFile).toHaveBeenCalledWith(
-      job.inputPath,
-      job.contentDigest,
-      job.operations.map(operation => {
-        return {
-          outputPath: path.join(job.outputDir, operation.outputPath),
-          args: operation.transforms,
-        }
-      }),
-      job.pluginOptions
+      job.inputPaths[0].path,
+      [
+        {
+          ...job.args.operations[0],
+          outputPath: path.join(
+            job.outputDir,
+            job.args.operations[0].outputPath
+          ),
+        },
+      ],
+      job.args.pluginOptions
     )
   })
 
@@ -55,28 +59,30 @@ describe(`worker`, () => {
     ])
 
     const job = {
-      inputPath: `inputpath/file.jpg`,
-      outputDir: `/public/static/`,
-      contentDigest: `1234`,
-      operations: [
+      inputPaths: [
         {
-          outputPath: `myoutputpath/1234/file.jpg`,
-          args: {
-            width: 100,
-            height: 100,
-          },
+          path: `inputpath/file.jpg`,
+          contentDigest: `1234`,
         },
       ],
-      pluginOptions: {},
+      outputDir: `/public/static/`,
+      args: {
+        operations: [
+          {
+            outputPath: `myoutputpath/1234/file.jpg`,
+            args: {
+              width: 100,
+              height: 100,
+            },
+          },
+        ],
+        pluginOptions: {},
+      },
     }
 
     expect.assertions(1)
     try {
-      await worker([job.inputPath], job.outputDir, {
-        pluginOptions: job.pluginOptions,
-        contentDigest: job.contentDigest,
-        operations: job.operations,
-      })
+      await worker(job)
     } catch (err) {
       expect(err.message).toEqual(`transform failed`)
     }

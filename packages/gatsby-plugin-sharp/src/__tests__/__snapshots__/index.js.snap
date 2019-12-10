@@ -59,6 +59,23 @@ Object {
 }
 `;
 
+exports[`gatsby-plugin-sharp fluid includes responsive image properties, e.g. sizes, srcset, etc. with the createJob api 1`] = `
+Object {
+  "aspectRatio": 1,
+  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsSAAALEgHS3X78AAABKklEQVQ4y8WUy07DMBBFrwMpr4aybjepUeqIFd/CAgmJsuIHgWXVL+Gx4C3xCdQJnpm0UDJNAQnVuouMM8dzY4+DcoA/C/8Fe9bv4ABMMpQOZc5yFPqfwEUQY499jHoY9/BsKQyTRTNMyzu8WAwTbBnI2DY438XbPr0qFsFCvlrkMTERYFgRL3HYUvh5OMdpQqkbBtPC9NDiINQPCZM6LGVvUzIpwNch4V5EGxHS/DeYtjfHZbcyXB8yGfaPimcafLEMHqmw2L5OsWkUUuY6Ee5V28WUP25TXjwPS3iWUFnfcFQPFna98rlmSGL4IOZucQvgT76Po53qeOTYTtp4qpFKe/qM29PhJsVVl3SXsluntLfS7rPvn10MP1Aau+lKBuA9I/kV/AyW6gNTIWTuA/r8lQAAAABJRU5ErkJggg==",
+  "density": 72,
+  "originalImg": "/static/1234/c616f/test.png",
+  "originalName": undefined,
+  "presentationHeight": 100,
+  "presentationWidth": 100,
+  "sizes": "(max-width: 100px) 100vw, 100px",
+  "src": "/static/1234/c616f/test.png",
+  "srcSet": "/static/1234/c616f/test.png 100w",
+  "srcSetType": "image/png",
+  "tracedSVG": undefined,
+}
+`;
+
 exports[`gatsby-plugin-sharp image quirks handles padding bytes correctly 1`] = `
 Object {
   "hUnits": "px",
@@ -67,6 +84,232 @@ Object {
   "type": "jpg",
   "wUnits": "px",
   "width": 746,
+}
+`;
+
+exports[`gatsby-plugin-sharp queueImageResizing with createJob file name works with spaces & special characters createJob 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "args": Object {
+          "operations": Array [
+            Object {
+              "args": Array [
+                Object {
+                  "base64": true,
+                  "duotone": false,
+                  "grayscale": false,
+                  "jpegProgressive": true,
+                  "jpegQuality": null,
+                  "maxWidth": 800,
+                  "pathPrefix": "",
+                  "pngCompressionLevel": 9,
+                  "pngCompressionSpeed": 4,
+                  "pngQuality": null,
+                  "quality": 50,
+                  "sizeByPixelDensity": false,
+                  "toFormat": "png",
+                  "toFormatBase64": "",
+                  "webpQuality": null,
+                  "width": 3,
+                },
+              ],
+              "outputPath": "9b610/spaces and '\\"@#$%^&,.png",
+            },
+          ],
+          "pluginOptions": Object {
+            "defaultQuality": 50,
+            "forceBase64Format": false,
+            "lazyImageGeneration": true,
+            "stripMetadata": true,
+            "useMozJpeg": false,
+          },
+        },
+        "inputPaths": Array [
+          "<PROJECT_ROOT>/packages/gatsby-plugin-sharp/src/__tests__/images/144-density.png",
+        ],
+        "name": "IMAGE_PROCESSING",
+        "outputDir": "<PROJECT_ROOT>/public/static/1234",
+      },
+      Object {},
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": Promise {},
+    },
+  ],
+}
+`;
+
+exports[`gatsby-plugin-sharp queueImageResizing with createJob should round height when auto-calculated createJob 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "args": Object {
+          "operations": Array [
+            Object {
+              "args": Array [
+                Object {
+                  "base64": true,
+                  "duotone": false,
+                  "grayscale": false,
+                  "jpegProgressive": true,
+                  "jpegQuality": null,
+                  "maxWidth": 800,
+                  "pathPrefix": "",
+                  "pngCompressionLevel": 9,
+                  "pngCompressionSpeed": 4,
+                  "pngQuality": null,
+                  "quality": 50,
+                  "sizeByPixelDensity": false,
+                  "toFormat": "png",
+                  "toFormatBase64": "",
+                  "webpQuality": null,
+                  "width": 3,
+                },
+              ],
+              "outputPath": "9b610/test.png",
+            },
+          ],
+          "pluginOptions": Object {
+            "defaultQuality": 50,
+            "forceBase64Format": false,
+            "lazyImageGeneration": true,
+            "stripMetadata": true,
+            "useMozJpeg": false,
+          },
+        },
+        "inputPaths": Array [
+          "<PROJECT_ROOT>/packages/gatsby-plugin-sharp/src/__tests__/images/144-density.png",
+        ],
+        "name": "IMAGE_PROCESSING",
+        "outputDir": "<PROJECT_ROOT>/public/static/1234",
+      },
+      Object {},
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": Promise {},
+    },
+  ],
+}
+`;
+
+exports[`gatsby-plugin-sharp queueImageResizing with createJobV2 file name works with spaces & special characters createJobV2 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "args": Object {
+          "operations": Array [
+            Object {
+              "args": Array [
+                Object {
+                  "base64": true,
+                  "duotone": false,
+                  "grayscale": false,
+                  "jpegProgressive": true,
+                  "jpegQuality": null,
+                  "maxWidth": 800,
+                  "pathPrefix": "",
+                  "pngCompressionLevel": 9,
+                  "pngCompressionSpeed": 4,
+                  "pngQuality": null,
+                  "quality": 50,
+                  "sizeByPixelDensity": false,
+                  "toFormat": "png",
+                  "toFormatBase64": "",
+                  "webpQuality": null,
+                  "width": 3,
+                },
+              ],
+              "outputPath": "9b610/spaces and '\\"@#$%^&,.png",
+            },
+          ],
+          "pluginOptions": Object {
+            "defaultQuality": 50,
+            "forceBase64Format": false,
+            "lazyImageGeneration": true,
+            "stripMetadata": true,
+            "useMozJpeg": false,
+          },
+        },
+        "inputPaths": Array [
+          "<PROJECT_ROOT>/packages/gatsby-plugin-sharp/src/__tests__/images/144-density.png",
+        ],
+        "name": "IMAGE_PROCESSING",
+        "outputDir": "<PROJECT_ROOT>/public/static/1234",
+      },
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": Promise {},
+    },
+  ],
+}
+`;
+
+exports[`gatsby-plugin-sharp queueImageResizing with createJobV2 should round height when auto-calculated createJobV2 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "args": Object {
+          "operations": Array [
+            Object {
+              "args": Array [
+                Object {
+                  "base64": true,
+                  "duotone": false,
+                  "grayscale": false,
+                  "jpegProgressive": true,
+                  "jpegQuality": null,
+                  "maxWidth": 800,
+                  "pathPrefix": "",
+                  "pngCompressionLevel": 9,
+                  "pngCompressionSpeed": 4,
+                  "pngQuality": null,
+                  "quality": 50,
+                  "sizeByPixelDensity": false,
+                  "toFormat": "png",
+                  "toFormatBase64": "",
+                  "webpQuality": null,
+                  "width": 3,
+                },
+              ],
+              "outputPath": "9b610/test.png",
+            },
+          ],
+          "pluginOptions": Object {
+            "defaultQuality": 50,
+            "forceBase64Format": false,
+            "lazyImageGeneration": true,
+            "stripMetadata": true,
+            "useMozJpeg": false,
+          },
+        },
+        "inputPaths": Array [
+          "<PROJECT_ROOT>/packages/gatsby-plugin-sharp/src/__tests__/images/144-density.png",
+        ],
+        "name": "IMAGE_PROCESSING",
+        "outputDir": "<PROJECT_ROOT>/public/static/1234",
+      },
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": Promise {},
+    },
+  ],
 }
 `;
 
