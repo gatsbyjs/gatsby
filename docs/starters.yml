@@ -4688,3 +4688,26 @@
     - Landing Page Design
     - Fully Responsive
     - Styling with Tailwind
+- url: https://gatsby-starter-papan01.netlify.com/
+  repo: https://github.com/papan01/gatsby-starter-papan01
+  description: A Gatsby starter for creating a markdown blog.
+  tags:
+    - Linting
+    - Blog
+    - Styling:SCSS
+    - Markdown
+    - Pagination
+    - PWA
+    - SEO
+  features:
+    - SSR React Code Splitting(loadable-components)
+    - Theme Toggle(light/dark)
+    - Pagination
+    - SEO(Sitemap, Schema.org, OpenGraph tags, Twitter tag)
+    - Web application manifest and offline support
+    - Google Analytics
+    - Disqus
+    - RSS
+    - ESLint(Airbnb) for linting
+    - Prettier code formatting
+    - gh-pages for deploying to GitHub pages
