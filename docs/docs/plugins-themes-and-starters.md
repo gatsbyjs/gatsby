@@ -7,7 +7,7 @@ In the Gatsby ecosystem, there's more than one way to build a site. To help you 
 
 ## What is a plugin?
 
-Gatsby plugins are Node.js packages that implement Gatsby APIs. There are many types of [plugins](/plugins/), including data sourcing, SEO, responsive images, offline support, support for Sass, TypeScript, sitemaps and RSS, Google Analytics, and more. You can also [make your own plugins](/docs/creating-plugins/) and distribute them for fellow Gatsby developers to use!
+Gatsby plugins are Node.js packages that implement Gatsby APIs and are commonly installed through a registry like npm. There are many types of [plugins](/plugins/), including data sourcing, SEO, responsive images, offline support, support for Sass, TypeScript, sitemaps and RSS, Google Analytics, and more. You can also [make your own plugins](/docs/creating-plugins/) and either distribute them for fellow Gatsby developers to use or [install them locally](/docs/loading-plugins-from-your-local-plugins-folder/).
 
 - [Plugin docs](/docs/plugins/)
 - [Using a plugin](/docs/using-a-plugin-in-your-site/)
@@ -16,9 +16,9 @@ Gatsby plugins are Node.js packages that implement Gatsby APIs. There are many t
 
 ## What is a theme?
 
-A Gatsby theme is a type of plugin that includes a `gatsby-config.js` file and adds pre-configured functionality, data sourcing, and/or UI code to Gatsby sites. Themes can be packaged and distributed through a registry like npm or yarn, and versions can be updated through a site's `package.json` file.
+A Gatsby theme is a type of plugin that includes a `gatsby-config.js` file and adds pre-configured functionality, data sourcing, and/or UI code to Gatsby sites. Like plugins, themes can be packaged and distributed through a registry like npm or yarn, and versions can be updated through a site's `package.json` file.
 
-With a Gatsby theme, all of your default configuration (shared functionality, data sourcing, design) is abstracted out of your site, and into an installable package.
+With a Gatsby theme, all of your default configuration (shared functionality, data sourcing, design) is abstracted out of your site and into an installable package. A theme might differ from a plugin in that it packages up usage of a plugin into a consumable API, making it easy to include functionality without having to type out all of the code by hand (such as GraphQL queries). To learn more about how Gatsby themes, check out the docs on [What are Gatsby Themes?](/docs/themes/what-are-gatsby-themes/)
 
 - [Themes docs](/docs/themes/)
 - [Using a theme](/docs/themes/using-a-gatsby-theme/)

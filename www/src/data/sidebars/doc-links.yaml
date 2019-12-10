@@ -541,8 +541,8 @@
           link: /docs/gatsby-core-philosophy/
         - title: Gatsby Project Structure
           link: /docs/gatsby-project-structure/
-        - title: Themes, Plugins, & Starters
-          link: /docs/themes-plugins-and-starters/
+        - title: Plugins, Themes, & Starters
+          link: /docs/plugins-themes-and-starters/
         - title: Overview of the Gatsby Build Process
           link: /docs/overview-of-the-gatsby-build-process/
         - title: Building with Components
