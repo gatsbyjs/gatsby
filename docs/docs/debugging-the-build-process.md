@@ -72,6 +72,10 @@ If you use VS Code and its integrated terminal, you can configure it to automati
 
 2.  Using VS Code's integrated terminal run `node --nolazy --inspect-brk node_modules/.bin/gatsby develop` instead of `gatsby develop`
 
+> **Note:** On machines running on Windows you may get an error such as 
+> `basedir=$(dirname "$(echo "$0" | sed -e 's,\\,/,g')") SyntaxError: missing ) after argument list`
+> A workaround is to run `node --nolazy --inspect-brk node_modules/gatsby/dist/bin/gatsby develop`.
+
 3.  Set breakpoints and debug!
 
 > **Note:** If the breakpoint is not being hit on `const value = createFilePath({ node, getNode })`
