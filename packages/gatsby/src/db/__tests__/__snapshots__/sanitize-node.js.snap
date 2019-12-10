@@ -3,6 +3,18 @@
 exports[`node sanitization Remove not supported fields / values 1`] = `
 Object {
   "children": Array [],
+  "circularReference": Object {
+    "self": [Circular],
+  },
+  "deep": Object {
+    "deepCircular": Object {
+      "down1": Object {
+        "down2": Object {
+          "deepCircular": [Circular],
+        },
+      },
+    },
+  },
   "id": "id1",
   "inlineArray": Array [
     1,

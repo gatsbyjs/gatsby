@@ -2,7 +2,17 @@ const sanitizeNode = require(`../sanitize-node`)
 
 describe(`node sanitization`, () => {
   let testNode
+
   beforeEach(() => {
+    const circularReference = {}
+    circularReference.self = circularReference
+    const indirectCircular = {
+      down1: {
+        down2: {},
+      },
+    }
+    indirectCircular.down1.down2.deepCircular = indirectCircular
+
     testNode = {
       id: `id1`,
       parent: null,
@@ -17,6 +27,10 @@ describe(`node sanitization`, () => {
         type: `Test`,
         contentDigest: `digest1`,
         owner: `test`,
+      },
+      circularReference,
+      deep: {
+        indirectCircular,
       },
     }
   })
