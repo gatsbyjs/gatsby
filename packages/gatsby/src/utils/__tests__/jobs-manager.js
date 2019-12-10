@@ -14,7 +14,7 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
 })
 
 jest.mock(
-  `gatsby-plugin-test/worker.js`,
+  `/node_modules/gatsby-plugin-test/gatsby-worker.js`,
   () => {
     return {
       TEST_JOB: jest.fn(),
@@ -31,7 +31,7 @@ jest.mock(`../../redux`, () => {
   }
 })
 
-const worker = require(`gatsby-plugin-test/worker.js`)
+const worker = require(`/node_modules/gatsby-plugin-test/gatsby-worker.js`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 const { store } = require(`../../redux`)
 const getJobsManager = () => {
@@ -47,6 +47,7 @@ const pDefer = require(`p-defer`)
 const plugin = {
   name: `gatsby-plugin-test`,
   version: `1.0.0`,
+  resolve: `/node_modules/gatsby-plugin-test`,
 }
 
 const createMockJob = (overrides = {}) => {
@@ -119,6 +120,8 @@ describe(`Jobs manager`, () => {
           plugin: {
             name: `gatsby-plugin-test`,
             version: `1.0.0`,
+            resolve: `/node_modules/gatsby-plugin-test`,
+            isLocal: false,
           },
         })
       )
@@ -251,37 +254,6 @@ describe(`Jobs manager`, () => {
       await expect(promise).resolves.toBe(`myresult`)
     })
   })
-
-  describe(`resolveWorker`, () => {
-    const { resolveWorker } = getJobsManager()
-    it(`should throw if the worker can't be found`, () => {
-      const plugin = {
-        name: `test-plugin`,
-        version: `1.0.0`,
-      }
-
-      try {
-        resolveWorker(plugin)
-      } catch (err) {
-        expect(err).toMatchInlineSnapshot(
-          `[Error: We couldn't find a worker.js file for test-plugin@1.0.0]`
-        )
-      }
-    })
-  })
-  // exports.isJobStale = (job, rootDir) => {
-  //   const doesInputPathsExists = !job.inputPaths.some(inputPath => {
-  //     const fullPath = path.join(rootDir, inputPath.path)
-  //     if (fs.existsSync(fullPath)) {
-  //       return true
-  //     }
-
-  //     const fileHash = createFileHash(fullPath)
-  //     return fileHash !== inputPath.contentDigest
-  //   })
-
-  //   return doesInputPathsExists
-  // }
 
   describe(`isJobStale`, () => {
     it(`should mark a job as stale if file does not exists`, () => {

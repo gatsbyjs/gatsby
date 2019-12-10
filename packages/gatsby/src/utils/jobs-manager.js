@@ -44,7 +44,7 @@ const createFileHash = path => hasha.fromFileSync(path, { algorithm: `sha1` })
  * @property {string[]} inputPaths
  * @property {string} outputDir,
  * @property {Record<string, *>} args
- * @property {{name: string, version: string}} plugin
+ * @property {{name: string, version: string, resolve: string, isLocal: boolean}} plugin
  */
 
 /**
@@ -55,7 +55,7 @@ const createFileHash = path => hasha.fromFileSync(path, { algorithm: `sha1` })
  * @property {{path: string, contentDigest: string}[]} inputPaths
  * @property {string} outputDir,
  * @property {Record<string, *>} args
- * @property {{name: string, version: string}} plugin
+ * @property {{name: string, version: string, resolve: string, isLocal: boolean}} plugin
  */
 
 /**
@@ -97,12 +97,18 @@ const runLocalWorker = async (workerFn, job) => {
  * @param {AugmentedJob} job
  */
 const runJob = ({ plugin, ...job }) => {
-  const worker = require(`${plugin.name}/worker.js`)
-  if (!worker[job.name]) {
-    throw new Error(`No worker function found for ${job.name}`)
-  }
+  try {
+    const worker = require(path.posix.join(plugin.resolve, `gatsby-worker.js`))
+    if (!worker[job.name]) {
+      throw new Error(`No worker function found for ${job.name}`)
+    }
 
-  return runLocalWorker(worker[job.name], job)
+    return runLocalWorker(worker[job.name], job)
+  } catch (err) {
+    throw new Error(
+      `We couldn't find a gatsby-worker.js(${plugin.resolve}/gatsby-worker.js) file for ${plugin.name}@${plugin.version}`
+    )
+  }
 }
 
 const handleJobEnded = () => {
@@ -123,7 +129,6 @@ const handleJobEnded = () => {
 exports.createInternalJob = (job, plugin, rootDir) => {
   // It looks like we already have an augmented job so we shouldn't redo this work
   if (job.id && job.contentDigest) {
-    console.log(`cached`)
     return job
   }
 
@@ -145,7 +150,12 @@ exports.createInternalJob = (job, plugin, rootDir) => {
     inputPaths: inputPathsWithContentDigest,
     outputDir: convertPathsToRelative(outputDir, rootDir),
     args,
-    plugin,
+    plugin: {
+      name: plugin.name,
+      version: plugin.version,
+      resolve: plugin.resolve,
+      isLocal: !plugin.resolve.includes(`/node_modules/`),
+    },
   }
 
   augmentedJob.contentDigest = createContentDigest({
@@ -207,16 +217,6 @@ exports.waitUntilAllJobsComplete = () => {
   jobsInProcess.forEach(({ deferred }) => jobsPromises.push(deferred.promise))
 
   return Promise.all(jobsPromises).then(() => {})
-}
-
-exports.resolveWorker = plugin => {
-  try {
-    return require.resolve(`${plugin.name}/worker.js`)
-  } catch (err) {
-    throw new Error(
-      `We couldn't find a worker.js file for ${plugin.name}@${plugin.version}`
-    )
-  }
 }
 
 /**
