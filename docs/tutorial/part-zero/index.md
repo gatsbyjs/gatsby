@@ -36,35 +36,42 @@ To install Gatsby and Node.js, it is recommended to use [Homebrew](https://brew.
 
 Node.js is an environment that can run JavaScript code outside of a web browser. Gatsby is built with Node.js. To get up and running with Gatsby, you’ll need to have a recent version installed on your computer. npm comes bundled with Node.js so if you don't have npm, chances are that you don't have Node.js too.
 
-_Note: Gatsby's minimum supported Node.js version is Node 8, but feel free to use a more recent version._
+### Install Node.js for your appropriate operating system.
 
-1. Open your Terminal.
-1. Install Node.js for your appropriate operating system.
+- On **MacOS** with homebrew installed, run `brew install node`. If you don't want to install it through homebrew, download the latest Node.js version from [the official Node.js website](https://nodejs.org/en/), double click on the downloaded file and go through the installation process.
 
-   - On **MacOS** with homebrew installed, run `brew install node`. If you don't want to install it through homebrew, download the latest Node.js version from [the official Node.js website](https://nodejs.org/en/), double click on the downloaded file and go through the installation process.
-   - On **Windows**, download and install the latest Node.js version from [the official Node.js website](https://nodejs.org/en/)
-   - On **Linux**:
-     - Using pacman (Arch, Manjaro, etc):
-       - Run `pacman -S nodejs npm`
-     - Using apt-get (Ubuntu, Debian, Mint, elementaryOS, etc):
-       - Run `sudo apt-get install curl` to install the tool to download Node.js
-       - After it finishes installing, run `curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -` to download the Node.js installer.
-       - Install Node.js by running `sudo apt-get install nodejs`.
-     - Using yum (Fedora, CentOS, RHEL):
-       - Run `sudo yum install -y gcc-c++ make` to install the prequesites used to compile Node.js.
-       - Run `curl -sL https://rpm.nodesource.com/setup_12.x | sudo -E bash -` to download the Node.js installer.
-       - Install Node.js by running `sudo yum install nodejs`.
-     - Using dnf (Fedora 22+):
-       - Run `sudo dnf install -y gcc-c++ make` to install the prequesites used to compile Node.js.
-       - Run `curl -sL https://rpm.nodesource.com/setup_12.x | sudo -E bash -` to download the Node.js installer.
-       - Install Node.js by running `sudo dnf install nodejs`.
+- On **Windows**, download and install the latest Node.js version from [the official Node.js website](https://nodejs.org/en/)
 
-   If the Linux distribution you are using is not listed here, please find instructions on the web.  
-   _💡 If when installing a package, it asks for confirmation, type `y` and press enter._
+- On **Linux**:
 
-1. Verify you have Node.js and npm installed by running `node --version` and `npm --version` in the terminal.
-1. The output of each of those commands should be a version number. Your versions may not be the same as those shown below! If entering those commands doesn’t show you a version number, go back and make sure you have installed Node.js.
-   ![Check node and npm versions in terminal](01-node-npm-versions.png)
+  Install curl and nvm. nvm is used to manage node and all its associated versions.
+
+  - Ubuntu, Debian, and other `apt` based distros:
+    - Run `sudo apt-get install curl` to install curl which allows you to transfer data and download additional dependencies.
+    - After it finishes installing, run `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash` to download the latest nvm version.
+    - To confirm this has worked, use the following command. `nvm --version`. The output should be a version number.
+  - Arch, Manjaro and other `pacman` based distros:
+    - These distros come installed with curl, so you can use that to download nvm.
+      `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash`
+    - Before using nvm, you need to install additional dependencies by running `sudo pacman -S grep awk tar git`.
+    - To confirm this has worked, use the following command. `nvm --version`. The output should be a version number.
+  - Fedora, RedHat, and other `dnf` based distros:
+    - These distros come installed with curl, so you can use that to download nvm.
+      `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash`
+    - To confirm this has worked, use the following command. `nvm --version`. The output should be a version number.
+
+
+If the Linux distribution you are using is not listed here, please find instructions on the web.  
+ _💡 If when installing a package, it asks for confirmation, type `y` and press enter._
+
+1. When nvm is installed, it does not default to a particular node version. You’ll need to install the version you want and give nvm instructions to use it. This example uses the latest release of version 10, but more recent version numbers can be used instead.
+
+```shell
+nvm install 10
+nvm use 10
+``` 
+
+![Check node and npm versions in terminal](01-node-npm-versions.png)
 
 Once you have followed the installation steps and you have checked everything is installed properly, you can continue to the next step:
 
