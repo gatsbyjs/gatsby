@@ -268,52 +268,52 @@ module.exports = (
       )
       if (cachedToc) {
         return cachedToc
-      }
+      } else {
+        const ast = await getAST(markdownNode)
+        const tocAst = mdastToToc(ast, appliedTocOptions)
 
-      const ast = await getAST(markdownNode)
-      const tocAst = mdastToToc(ast, appliedTocOptions)
-
-      let toc = ``
-      if (tocAst.map) {
-        const addSlugToUrl = function(node) {
-          if (node.url) {
-            if (
-              _.get(markdownNode, appliedTocOptions.pathToSlugField) ===
-              undefined
-            ) {
-              console.warn(
-                `Skipping TableOfContents. Field '${appliedTocOptions.pathToSlugField}' missing from markdown node`
-              )
-              return null
+        let toc
+        if (tocAst.map) {
+          const addSlugToUrl = function(node) {
+            if (node.url) {
+              if (
+                _.get(markdownNode, appliedTocOptions.pathToSlugField) ===
+                undefined
+              ) {
+                console.warn(
+                  `Skipping TableOfContents. Field '${appliedTocOptions.pathToSlugField}' missing from markdown node`
+                )
+                return null
+              }
+              node.url = [
+                basePath,
+                _.get(markdownNode, appliedTocOptions.pathToSlugField),
+                node.url,
+              ]
+                .join(`/`)
+                .replace(/\/\//g, `/`)
             }
-            node.url = [
-              basePath,
-              _.get(markdownNode, appliedTocOptions.pathToSlugField),
-              node.url,
-            ]
-              .join(`/`)
-              .replace(/\/\//g, `/`)
-          }
-          if (node.children) {
-            node.children = node.children
-              .map(node => addSlugToUrl(node))
-              .filter(Boolean)
+            if (node.children) {
+              node.children = node.children
+                .map(node => addSlugToUrl(node))
+                .filter(Boolean)
+            }
+
+            return node
           }
           if (appliedTocOptions.absolute) {
             tocAst.map = addSlugToUrl(tocAst.map)
           }
 
-          return node
+          toc = hastToHTML(toHAST(tocAst.map, { allowDangerousHTML: true }), {
+            allowDangerousHTML: true,
+          })
+        } else {
+          toc = ``
         }
-        tocAst.map = addSlugToUrl(tocAst.map)
-
-        toc = hastToHTML(toHAST(tocAst.map, { allowDangerousHTML: true }), {
-          allowDangerousHTML: true,
-        })
+        cache.set(tableOfContentsCacheKey(markdownNode, appliedTocOptions), toc)
+        return toc
       }
-
-      cache.set(tableOfContentsCacheKey(markdownNode, appliedTocOptions), toc)
-      return toc
     }
 
     async function getHTMLAst(markdownNode) {

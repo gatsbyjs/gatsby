@@ -15113,21 +15113,6 @@ mdast-util-to-hast@^3.0.0, mdast-util-to-hast@^3.0.4:
     unist-util-visit "^1.1.0"
     xtend "^4.0.1"
 
-mdast-util-to-hast@^7.0:
-  version "7.0.0"
-  resolved "https://nexus.stackline.com/repository/npm-group/mdast-util-to-hast/-/mdast-util-to-hast-7.0.0.tgz#589b562ce1ae0a7849e6c38536a9e7bc4f415e54"
-  integrity sha512-vxnXKSZgvPG2grZM3kxaF052pxsLtq8TPAkiMkqYj1nFTOazYUPXt3LFYIEB6Ws/IX7Uyvljzk64kD6DwZl/wQ==
-  dependencies:
-    collapse-white-space "^1.0.0"
-    detab "^2.0.0"
-    mdast-util-definitions "^1.2.0"
-    mdurl "^1.0.1"
-    trim-lines "^1.0.0"
-    unist-builder "^2.0.0"
-    unist-util-generated "^1.0.0"
-    unist-util-position "^3.0.0"
-    unist-util-visit "^2.0.0"
-
 mdast-util-to-nlcst@^3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/mdast-util-to-nlcst/-/mdast-util-to-nlcst-3.2.0.tgz#dad262857658d1eab4b5814a20e2f93d7ca1e3b6"
@@ -21977,11 +21962,6 @@ unist-builder@1.0.4, unist-builder@^1.0.1, unist-builder@^1.0.2:
   dependencies:
     object-assign "^4.1.0"
 
-unist-builder@^2.0.0:
-  version "2.0.2"
-  resolved "https://nexus.stackline.com/repository/npm-group/unist-builder/-/unist-builder-2.0.2.tgz#f24abd96f703925f03df175c1e4143f79e348839"
-  integrity sha512-I4TpMKqInirL3CG23f1bZyGE/UJecAYHcv586XMLqIkC0iUkI1hi+WZENoaKwdguC0O8nDaYRhHtWjuSjN4HDw==
-
 unist-util-find@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/unist-util-find/-/unist-util-find-1.0.1.tgz#1062bbb6928c7a97c6adc89b53745d4c46c222a2"
@@ -21989,11 +21969,6 @@ unist-util-find@^1.0.1:
     lodash.iteratee "^4.5.0"
     remark "^5.0.1"
     unist-util-visit "^1.1.0"
-
-unist-util-generated@^1.0.0:
-  version "1.1.5"
-  resolved "https://nexus.stackline.com/repository/npm-group/unist-util-generated/-/unist-util-generated-1.1.5.tgz#1e903e68467931ebfaea386dae9ea253628acd42"
-  integrity sha512-1TC+NxQa4N9pNdayCYA1EGUOCAO0Le3fVp7Jzns6lnua/mYgwHo0tz5WUAfrdpNch1RZLHc61VZ1SDgrtNXLSw==
 
 unist-util-generated@^1.1.0:
   version "1.1.2"
