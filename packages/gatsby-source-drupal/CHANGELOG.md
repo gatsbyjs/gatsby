@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.3.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.3.9...gatsby-source-drupal@3.3.10) (2019-12-05)
+
+### Bug Fixes
+
+- **gatsby-source-drupal:** allow specifying disallowed link types ([#19930](https://github.com/gatsbyjs/gatsby/issues/19930)) ([238b9fc](https://github.com/gatsbyjs/gatsby/commit/238b9fc))
+- **gatsby-source-drupal:** skip jsonapi_schema endpoint ([#19879](https://github.com/gatsbyjs/gatsby/issues/19879)) ([61a0280](https://github.com/gatsbyjs/gatsby/commit/61a0280)), closes [#19867](https://github.com/gatsbyjs/gatsby/issues/19867)
+
 ## [3.3.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.3.8...gatsby-source-drupal@3.3.9) (2019-12-02)
 
 ### Bug Fixes

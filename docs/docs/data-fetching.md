@@ -5,7 +5,7 @@ title: Build Time and Client Runtime Data Fetching
 import BuildDataExample from "../../www/src/components/build-data-example.js"
 import ClientDataExample from "../../www/src/components/client-data-example.js"
 
-This guide demonstrates how to fetch data at both [_build time_](/docs/glossary#build) and [_runtime_](/docs/glossary#runtime) in Gatsby.
+This guide demonstrates how to fetch data at both [_build time_](/docs/glossary#build) and [_runtime_](/docs/glossary#runtime) in Gatsby. Most of the techniques outlined are for custom data handling. Be sure to check out Gatsby's [plugin library](/plugins/) to see if there's an off-the-shelf solution for your data requirements, such as [sourcing from a CMS](/docs/headless-cms/) or other third-party integration.
 
 ## The benefits of the hybrid nature of Gatsby apps
 
@@ -19,19 +19,19 @@ Compiling pages at build time is useful when your website content won't change o
 
 ## Combining build time and client runtime data
 
-To illustrate a combination of build time and client runtime data, this guide uses code from a [small example site](https://gatsby-data-fetching.netlify.com). It uses the [`gatsby-source-graphql`](/packages/gatsby-source-graphql/) plugin to fetch data from GitHub's GraphQL API at build time for static content like the name and url to a repository, and the [`fetch` API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) to retrieve more dynamic data from the GitHub API on the [client-side](/docs/glossary#client-side) like star counts when the page loads in the browser.
-
+To illustrate a combination of build time and client runtime data, this guide uses code from a [small example site](https://gatsby-data-fetching.netlify.com). It uses the [`gatsby-source-graphql`](/packages/gatsby-source-graphql/) plugin to fetch data from GitHub's GraphQL API at build time for static content like the name and URL to a repository, and the [`fetch` API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) to retrieve more dynamic data from the GitHub API on the [client-side](/docs/glossary#client-side) like star counts when the page loads in the browser.
+Reasons to fetch certain data at build time vs. client runtime will vary, but in this example the repo's name and URL are much less likely to change between builds of the site. The repo's star counts, on the other hand, are likely to change often and would benefit from a client-side request to the GitHub API to stay current between static site builds.
 > Check out the code from the [full example here](https://github.com/gatsbyjs/gatsby/tree/master/examples/data-fetching).
 
 ### Fetching data at build time
 
-In order to fetch data at build time, you can use a source plugin or source data yourself. To source data yourself you can create an integration with a third-party system by creating nodes for the GraphQL layer in your `gatsby-node` file from retrieved data that becomes queryable in pages. This is the same method that source plugins implement to [source data](/docs/content-and-data/) while the site builds. You can read about that process in the [Creating a Source Plugin guide](/docs/creating-a-source-plugin/).
+In order to fetch data at build time, you can use a source plugin or source data yourself. To source data yourself you can create an integration with a third-party system by creating [nodes for the GraphQL layer](/docs/node-creation/) in your `gatsby-node` file from retrieved data that becomes queryable in pages. This is the same method that source plugins implement to [source data](/docs/content-and-data/) while the site builds. You can read about that process in the [Creating a Source Plugin guide](/docs/creating-a-source-plugin/).
 
 > This process of fetching data at build time and creating pages from the data is [covered in more depth in the tutorial](/tutorial/part-five/) as well as the docs for [creatiing pages from data programmatically](/docs/programmatically-create-pages-from-data/).
 
 #### Source data to be queried at build time
 
-To source data using an existing source plugin you need to install a plugin and add it to your config. To use `gatsby-source-graphql`, first install it:
+To source data using an existing source plugin you need to install a plugin and add it to your [config](/docs/api-files-gatsby-config/). To use `gatsby-source-graphql`, first install it:
 
 ```shell
 npm install --save gatsby-source-graphql
@@ -57,7 +57,7 @@ module.exports = {
 }
 ```
 
-> Because the GitHub GraphQL API requires you to be authenticated to make requests, you need to create a token that you would replace in the header for Authorization that says "your-github-token". You can [secure your key using environment variables](/docs/environment-variables/) if you're pushing code to a public repository.
+> Because the GitHub GraphQL API requires you to be authenticated to make requests, you need to create a token and replace the "your-github-token" text in the header for Authorization with that token. You can [secure your key using environment variables](/docs/environment-variables/) if you're pushing code to a public repository.
 
 Alternately, if you want to source data yourself you can use APIs Gatsby provides. Source plugins take advantage of the [`sourceNodes` API](/docs/node-apis/#sourceNodes) and the [`createNode` action](/docs/actions/#createNode) provided by Gatsby to make your data queryable during the build process. If you want to source data yourself you can add a section of code like this using the `createNode` API to add a node to your data layer manually:
 
@@ -136,17 +136,17 @@ const IndexPage = () => {
 export default IndexPage
 ```
 
-> This data is gathered at build time and written to a JSON file, the code is rewritten as the site is built to import the JSON file and set `gatsbyRepoData` equal to the contents of the JSON file instead of the call to `useStaticQuery`, you can read more about this process in the Gatsby internals section on [Normal vs Static Queries](/docs/static-vs-normal-queries/#replacing-queries-with-json-imports)
+> This data is gathered at build time and written to a JSON file. As the build continues, the code is rewritten behind the scenes to dynamically import the JSON file and set `gatsbyRepoData` equal to the contents of the JSON file instead of the call to `useStaticQuery`. You can read more about this process in the Gatsby internals section on [Normal vs Static Queries](/docs/static-vs-normal-queries/#replacing-queries-with-json-imports)
 
 Here's an adaptation of this build time data example being used on this page:
 
 <BuildDataExample />
 
-> the linked url and repository name are fetched at build time, if the name of the repository changed and the site were rebuilt it would change
+The linked URL and repository name are fetched at build time; if the name of the repository changed and the site were rebuilt, it would update.
 
 ### Fetching data at client-side runtime
 
-For fetching data at runtime, you can use any method to retrieve data that you would use in a regular React app.
+For fetching data at runtime in the browser, you can use any method to retrieve data that you would use in a regular React app.
 
 #### Retrieving data with the `fetch` API
 
@@ -200,17 +200,17 @@ const IndexPage = () => {
 export default IndexPage
 ```
 
-In the code above, both the build time and runtime data are rendered on the same page. The build time data has the advantage of being loaded before the user ever gets to the page. When the site loads in the browser the runtime section in the `useEffect` hook will gather its data and render it as well.
+In the code above, both the build time and runtime data are rendered from the same page component. The build time data has the advantage of being loaded before the user ever gets to the page. When the site loads in the browser, the runtime section in the `useEffect` hook will gather its data and render it as well.
 
 Here's an adaptation of this runtime example being used on this page (which is also a Gatsby app)!
 
 <ClientDataExample />
 
-> the star count is fetched at runtime, if you refresh the page this number will update
+The repo's star count is fetched at runtime; if you refresh the page, this number will likely update.
 
 ## Other resources
 
-You may be interested to check out other projects (both used in production and proof of concepts) that illustrate this usage:
+You may be interested in other projects (both used in production and proof-of-concepts) that illustrate this usage:
 
 - [Live example](https://gatsby-data-fetching.netlify.com) of the code used in this guide
 - [Gatsby store](https://github.com/gatsbyjs/store.gatsbyjs.org): with static product pages at build time and client-side interactions for ecommerce features
