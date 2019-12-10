@@ -14,7 +14,7 @@ Object {
         ],
         "hProperties": Object {
           "aria-label": "heading uno permalink",
-          "class": "anchor",
+          "class": "anchor before",
         },
       },
       "title": null,
@@ -42,6 +42,7 @@ Object {
   "data": Object {
     "hProperties": Object {
       "id": "heading-uno",
+      "style": "position:relative;",
     },
     "htmlAttributes": Object {
       "id": "heading-uno",
@@ -80,7 +81,7 @@ Object {
         ],
         "hProperties": Object {
           "aria-label": "heading uno permalink",
-          "class": "custom-class",
+          "class": "custom-class before",
         },
       },
       "title": null,
@@ -108,6 +109,7 @@ Object {
   "data": Object {
     "hProperties": Object {
       "id": "heading-uno",
+      "style": "position:relative;",
     },
     "htmlAttributes": Object {
       "id": "heading-uno",
@@ -146,7 +148,7 @@ Object {
         ],
         "hProperties": Object {
           "aria-label": "heading uno permalink",
-          "class": "anchor",
+          "class": "anchor before",
         },
       },
       "title": null,
@@ -174,6 +176,7 @@ Object {
   "data": Object {
     "hProperties": Object {
       "id": "heading-uno",
+      "style": "position:relative;",
     },
     "htmlAttributes": Object {
       "id": "heading-uno",
@@ -222,6 +225,7 @@ Object {
   "data": Object {
     "hProperties": Object {
       "id": "heading-uno",
+      "style": "position:relative;",
     },
     "htmlAttributes": Object {
       "id": "heading-uno",
@@ -260,7 +264,7 @@ Object {
         ],
         "hProperties": Object {
           "aria-label": "Heading One permalink",
-          "class": "anchor",
+          "class": "anchor before",
         },
       },
       "title": null,
@@ -288,6 +292,7 @@ Object {
   "data": Object {
     "hProperties": Object {
       "id": "Heading-One",
+      "style": "position:relative;",
     },
     "htmlAttributes": Object {
       "id": "Heading-One",
@@ -326,7 +331,7 @@ Object {
         ],
         "hProperties": Object {
           "aria-label": "Heading Two permalink",
-          "class": "anchor",
+          "class": "anchor before",
         },
       },
       "title": null,
@@ -354,6 +359,7 @@ Object {
   "data": Object {
     "hProperties": Object {
       "id": "Heading-Two",
+      "style": "position:relative;",
     },
     "htmlAttributes": Object {
       "id": "Heading-Two",
@@ -392,7 +398,7 @@ Object {
         ],
         "hProperties": Object {
           "aria-label": "Heading Three permalink",
-          "class": "anchor",
+          "class": "anchor before",
         },
       },
       "title": null,
@@ -420,6 +426,7 @@ Object {
   "data": Object {
     "hProperties": Object {
       "id": "Heading-Three",
+      "style": "position:relative;",
     },
     "htmlAttributes": Object {
       "id": "Heading-Three",
