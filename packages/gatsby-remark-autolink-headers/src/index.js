@@ -21,7 +21,7 @@ module.exports = (
     maintainCase = false,
     removeAccents = false,
     enableCustomId = false,
-    isIconAfterH = false,
+    isIconAfterHeader = false,
   }
 ) => {
   slugs.reset()
@@ -58,7 +58,7 @@ module.exports = (
 
     if (icon !== false) {
       const label = id.split(`-`).join(` `)
-      const method = after ? `push` : `unshift`
+      const method = isIconAfterHeader ? `push` : `unshift`
       node.children[method]({
         type: `link`,
         url: `#${id}`,
@@ -67,7 +67,7 @@ module.exports = (
         data: {
           hProperties: {
             "aria-label": `${label} permalink`,
-            class: `${className} ${isIconAfterH ? `after` : `before`}`,
+            class: `${className} ${isIconAfterHeader ? `after` : `before`}`,
           },
           hChildren: [
             {
