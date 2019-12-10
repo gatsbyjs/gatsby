@@ -17,13 +17,11 @@ A year later, Node.js made its debut as a standalone runtime using the V8 engine
 
 Once you've installed Node.js, you can use it to run JavaScript from the [command line](/docs/glossary#command-line). Type `node` at a prompt to launch the Node.js interactive shell. Include the path to a JavaScript file to execute that script: e.g. `node /Users/gatsbyfan/hello-world.js`.
 
-You will need to [install Node.js](https://www.gatsbyjs.org/tutorial/part-zero/#-install-nodejs-and-npm) before using Gatsby. Gatsby is built using JavaScript, and requires the Node.js runtime.
+You will need to [install Node.js](/tutorial/part-zero/#-install-nodejs-and-npm) before using Gatsby. Gatsby is built using JavaScript, and requires the Node.js runtime.
 
 Installing Node.js also installs [npm](/docs/glossary#npm), the Node.js _package manager_. A package manager is special software that lets you install and update modules and packages used in your project.
 
-You'll use npm to install Gatsby and its dependencies. Type `npm install -g gatsby-cli` at a command line prompt to install the Gatsby command line interface or CLI. The `-g` flag installs the CLI globally, putting Gatsby's command at your fingertips.
-
-You can then use `gatsby new` to create a new Gatsby site.
+You'll use npm to install Gatsby and its dependencies. Type `npm install -g gatsby-cli` at a command line prompt to install the Gatsby command line interface or CLI. The `-g` flag installs the CLI globally, which means that you can Gatsby by typing `gatsby` at a prompt. For example, you can use `gatsby new` to create a new Gatsby site.
 
 ## Learn more about Node.js
 
