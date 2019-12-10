@@ -2,6 +2,8 @@ const path = require(`path`)
 const queue = require(`async/queue`)
 const { processFile } = require(`./process-file`)
 
+exports.IMAGE_PROCESSING_JOB_NAME = `IMAGE_PROCESSING`
+
 /** @typedef {import('./process-file').TransformArgs} TransformArgs */
 
 /**

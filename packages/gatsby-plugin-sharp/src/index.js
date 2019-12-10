@@ -11,6 +11,9 @@ const { createArgsDigest } = require(`./process-file`)
 const { reportError } = require(`./report-error`)
 const { getPluginOptions, healOptions } = require(`./plugin-options`)
 const { memoizedTraceSVG, notMemoizedtraceSVG } = require(`./trace-svg`)
+const duotone = require(`./duotone`)
+const { createProgress } = require(`./utils`)
+const { IMAGE_PROCESSING_JOB_NAME } = require(`./gatsby-worker`)
 
 const imageSizeCache = new Map()
 const getImageSize = file => {
@@ -28,8 +31,6 @@ const getImageSize = file => {
   }
 }
 
-const duotone = require(`./duotone`)
-
 // Bound action creators should be set when passed to onPreInit in gatsby-node.
 // ** It is NOT safe to just directly require the gatsby module **.
 // There is no guarantee that the module resolved is the module executing!
@@ -39,8 +40,6 @@ let { boundActionCreators } = require(`gatsby/dist/redux/actions`)
 exports.setBoundActionCreators = actions => {
   boundActionCreators = actions
 }
-
-const { createProgress } = require(`./utils`)
 
 function prepareQueue({ file, args }) {
   const pluginOptions = getPluginOptions()
@@ -106,43 +105,40 @@ function prepareQueue({ file, args }) {
   }
 }
 
-let bar,
-  pendingImagesCounter = 0,
-  completedImagesCounter = 0
-function createJob(job, { reporter, reportStatus = true }) {
-  if (reportStatus && !bar) {
-    bar = createProgress(`Generating image thumbnails`, reporter)
-    bar.start()
+let progressBar
+let pendingImagesCounter = 0
+let completedImagesCounter = 0
+async function createJob(job, { reporter, reportStatus = true }) {
+  if (reportStatus && !progressBar) {
+    progressBar = createProgress(`Generating image thumbnails`, reporter)
+    progressBar.start()
   }
 
   const transforms = job.args.operations
   pendingImagesCounter += transforms.length
-  bar.total = pendingImagesCounter
+  progressBar.total = pendingImagesCounter
 
-  let promise
   if (boundActionCreators.createJobV2) {
-    promise = boundActionCreators.createJobV2(job)
+    await boundActionCreators.createJobV2(job)
   } else {
-    promise = scheduleJob(job, boundActionCreators)
+    await scheduleJob(job, boundActionCreators)
   }
 
-  return promise.then(() => {
-    completedImagesCounter += transforms.length
-    if (bar) {
-      bar.tick(transforms.length)
+  completedImagesCounter += transforms.length
+  if (progressBar) {
+    progressBar.tick(transforms.length)
 
-      if (completedImagesCounter === pendingImagesCounter) {
-        bar.done()
-        bar = null
-      }
+    if (completedImagesCounter === pendingImagesCounter) {
+      progressBar.done()
+      progressBar = null
     }
-  })
+  }
 }
 
 function queueImageResizing({ file, args = {}, reporter }) {
-  if (!bar) {
-    bar = createProgress(`Generating image thumbnails`, reporter)
-    bar.start()
+  if (!progressBar) {
+    progressBar = createProgress(`Generating image thumbnails`, reporter)
+    progressBar.start()
   }
   const {
     src,
@@ -155,12 +151,12 @@ function queueImageResizing({ file, args = {}, reporter }) {
   } = prepareQueue({ file, args })
 
   pendingImagesCounter++
-  bar.total = pendingImagesCounter
+  progressBar.total = pendingImagesCounter
 
   // Create job and add it to the queue, the queue will be processed inside gatsby-node.js
   const finishedPromise = createJob(
     {
-      name: `IMAGE_PROCESSING`,
+      name: IMAGE_PROCESSING_JOB_NAME,
       inputPaths: [file.absolutePath],
       outputDir,
       args: {
@@ -176,11 +172,11 @@ function queueImageResizing({ file, args = {}, reporter }) {
     { reporter }
   ).then(() => {
     completedImagesCounter++
-    if (bar) {
-      bar.tick()
+    if (progressBar) {
+      progressBar.tick()
       if (completedImagesCounter === pendingImagesCounter) {
-        bar.done()
-        bar = null
+        progressBar.done()
+        progressBar = null
       }
     }
   })
@@ -197,9 +193,9 @@ function queueImageResizing({ file, args = {}, reporter }) {
 }
 
 function batchQueueImageResizing({ file, transforms = [], reporter }) {
-  if (!bar) {
-    bar = createProgress(`Generating image thumbnails`, reporter)
-    bar.start()
+  if (!progressBar) {
+    progressBar = createProgress(`Generating image thumbnails`, reporter)
+    progressBar.start()
   }
   const operations = []
   const images = []
@@ -233,11 +229,11 @@ function batchQueueImageResizing({ file, transforms = [], reporter }) {
   })
 
   pendingImagesCounter += transforms.length
-  bar.total = pendingImagesCounter
+  progressBar.total = pendingImagesCounter
 
   const finishedPromise = createJob(
     {
-      name: `IMAGE_PROCESSING`,
+      name: IMAGE_PROCESSING_JOB_NAME,
       inputPaths: [file.absolutePath],
       outputDir: path.join(
         process.cwd(),
@@ -253,11 +249,11 @@ function batchQueueImageResizing({ file, transforms = [], reporter }) {
     { reporter }
   ).then(() => {
     completedImagesCounter += transforms.length
-    if (bar) {
-      bar.tick(transforms.length)
+    if (progressBar) {
+      progressBar.tick(transforms.length)
       if (completedImagesCounter === pendingImagesCounter) {
-        bar.done()
-        bar = null
+        progressBar.done()
+        progressBar = null
       }
     }
   })
