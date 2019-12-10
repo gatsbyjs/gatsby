@@ -1845,7 +1845,8 @@ Data doesn't only have to be queried at build time and remain solely static. You
 
 #### Prerequisites
 
-- A JavaScript file like a page component: `index.js`
+- [A Gatsby Site](/docs/quick-start/)
+- A page component, such as `index.js`
 
 #### Directions
 
@@ -1855,7 +1856,7 @@ Data doesn't only have to be queried at build time and remain solely static. You
 import React, { useState, useEffect } from "react"
 ```
 
-2. Inside the component, wrap a function to fetch data in a `useEffect` hook so it will asynchronously retrieve data when the component mounts in the browser client. Then, `await` the result with the `fetch` API, and call the set function from the `useState` hook (in this case `setStarsCount`) to save the state variable (`starCount`) to the data returned from `fetch`.
+2. Inside the component, wrap a function to fetch data in a `useEffect` hook so it will asynchronously retrieve data when the component mounts in the browser client. Then, `await` the result with the `fetch` API, and call the set function from the `useState` hook (in this case `setStarsCount`) to save the state variable (`starsCount`) to the data returned from `fetch`.
 
 ```jsx:title=src/pages/index.js
 import React, { useState, useEffect } from "react"
