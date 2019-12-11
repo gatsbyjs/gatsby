@@ -26,6 +26,7 @@ describe(`node sanitization`, () => {
       repeat2: `bar`,
       repeat3: {
         repeat3: {
+          test: () => {},
           repeat: `bar`,
         },
       },
