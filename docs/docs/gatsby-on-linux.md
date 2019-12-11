@@ -127,7 +127,7 @@ As of October 17th 2017, Windows 10 ships with WSL and Linux distributions are a
 wslconfig /setdefault ubuntu
 ```
 
-> Please note that if you have used the [Gatsby on Windows](/docs/gatsby-on-windows) setup without WSL, then you have to delete any existing `node_modules` folder in your project and re-install the dependencies in your WSL environment.
+> Please note that if you have used the [Gatsby on Windows](/docs/gatsby-on-windows/) setup without WSL, then you have to delete any existing `node_modules` folder in your project and re-install the dependencies in your WSL environment.
 
 ### Using Windows Subsystem Linux: Ubuntu
 
