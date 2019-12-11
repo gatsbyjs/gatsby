@@ -11,6 +11,9 @@ const IndexPage = () => (
     <Link data-testid="page-2-link" to="/page-2/">
       Go to page 2
     </Link>
+    <Link data-testid="page-blogtest-link" to="/blogtest/">
+      Go to blogtest
+    </Link>
     <button
       data-testid="page-2-button-link"
       onClick={() => navigate(`/page-2/`)}

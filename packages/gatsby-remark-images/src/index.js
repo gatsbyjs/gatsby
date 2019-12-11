@@ -13,7 +13,7 @@ const _ = require(`lodash`)
 const { fluid, stats, traceSVG } = require(`gatsby-plugin-sharp`)
 const Promise = require(`bluebird`)
 const cheerio = require(`cheerio`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 const chalk = require(`chalk`)
 
 // If the image is relative (not hosted elsewhere)
@@ -190,6 +190,15 @@ module.exports = (
       )
     }
 
+    const imageStyle = `
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      vertical-align: middle;
+      position: absolute;
+      top: 0;
+      left: 0;`.replace(/\s*(\S+:)\s*/g, `$1`)
+
     // Create our base image tag
     let imageTag = `
       <img
@@ -199,6 +208,7 @@ module.exports = (
         src="${fallbackSrc}"
         srcset="${srcSet}"
         sizes="${fluidResult.sizes}"
+        style="${imageStyle}"
         loading="${loading}"
       />
     `.trim()
@@ -286,6 +296,9 @@ module.exports = (
     if (options.disableBgImageOnAlpha) {
       const imageStats = await stats({ file: imageNode, reporter })
       if (imageStats && imageStats.isTransparent) removeBgImage = true
+    }
+    if (options.disableBgImage) {
+      removeBgImage = true
     }
 
     const bgImage = removeBgImage

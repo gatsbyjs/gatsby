@@ -279,7 +279,7 @@ describe(`Dev loader`, () => {
       originalPathPrefix = global.__PATH_PREFIX__
       global.__PATH_PREFIX__ = ``
       mock.setup()
-      mock.get(`/app-data.json`, (req, res) =>
+      mock.get(`/page-data/app-data.json`, (req, res) =>
         res
           .status(200)
           .header(`content-type`, `application/json`)

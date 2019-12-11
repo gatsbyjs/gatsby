@@ -6,7 +6,7 @@ theme.overrideThemeStyles = ({ rhythm, scale }, options) => {
     "h1, h2, h3": {
       ...scale(1 / 6),
       fontWeight: `normal`,
-      color: `#999`,
+      color: `rebeccapurple`,
       lineHeight: `1.2`,
     },
     "code, kbd, pre, samp": {

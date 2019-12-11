@@ -50,17 +50,21 @@ async function queryResult(
     addInferredFields,
   } = require(`../../../gatsby/src/schema/infer/add-inferred-fields`)
   const {
-    getExampleValue,
-  } = require(`../../../gatsby/src/schema/infer/example-value`)
+    addNodes,
+  } = require(`../../../gatsby/src/schema/infer/inference-metadata`)
+  const {
+    getExampleObject,
+  } = require(`../../../gatsby/src/schema/infer/build-example-data`)
 
   const typeName = `MarkdownRemark`
   const sc = createSchemaComposer()
   const tc = sc.createObjectTC(typeName)
   sc.addTypeDefs(typeDefs)
+  const inferenceMetadata = addNodes({ typeName }, nodes)
   addInferredFields({
     schemaComposer: sc,
     typeComposer: tc,
-    exampleValue: getExampleValue({ nodes, typeName }),
+    exampleValue: getExampleObject(inferenceMetadata),
   })
   tc.addFields(extendNodeTypeFields)
   sc.Query.addFields({
@@ -290,6 +294,40 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
     { pluginOptions: { excerpt_separator: `<!-- end -->` } }
   )
 
+  const contentWithoutSeparator = `---
+title: "my little pony"
+date: "2017-09-18T23:19:51.246Z"
+---
+Where oh where **is** my little pony? Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla viverra, eros at efficitur pulvinar, lectus orci accumsan nisi, eu blandit elit nulla nec lectus. Integer porttitor imperdiet sapien. Quisque in orci sed nisi consequat aliquam. Aenean id mollis nisi. Sed auctor odio id erat facilisis venenatis. Quisque posuere faucibus libero vel fringilla.
+
+In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincidunt, sem velit vulputate enim, nec interdum augue enim nec mauris. Nulla iaculis ante sed enim placerat pretium. Nulla metus odio, facilisis vestibulum lobortis vitae, bibendum at nunc. Donec sit amet efficitur metus, in bibendum nisi. Vivamus tempus vel turpis sit amet auctor. Maecenas luctus vestibulum velit, at sagittis leo volutpat quis. Praesent posuere nec augue eget sodales. Pellentesque vitae arcu ut est varius venenatis id maximus sem. Curabitur non consectetur turpis.
+`
+
+  bootstrapTest(
+    `given MARKDOWN without excerpt separator, falls back to pruneLength`,
+    contentWithoutSeparator,
+    `excerpt(pruneLength: 40, format: MARKDOWN)`,
+    node => {
+      expect(node).toMatchSnapshot()
+      expect(node.excerpt.length).toBe(45)
+      expect(node.excerpt).toBe(
+        `Where oh where **is** my little pony? Lorem…\n`
+      )
+    },
+    { pluginOptions: { excerpt_separator: `<!-- end -->` } }
+  )
+
+  bootstrapTest(
+    `given MARKDOWN, pruning is done not counting markdown characters`,
+    contentWithoutSeparator,
+    `excerpt(pruneLength: 19, format: MARKDOWN)`,
+    node => {
+      expect(node).toMatchSnapshot()
+      // we want the pruning to preserve markdown chars and not count them in the length
+      expect(node.excerpt.length).toBe(23)
+      expect(node.excerpt).toBe(`Where oh where **is**…\n`)
+    }
+  )
   const content = `---
 title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
@@ -938,6 +976,33 @@ final text
   )
 
   bootstrapTest(
+    `correctly generates table of contents in relative path`,
+    `---
+title: "my little pony"
+date: "2017-09-18T23:19:51.246Z"
+---
+# first title
+
+some text
+
+## second title
+
+some other text
+
+# third title
+
+final text
+`,
+    `tableOfContents(absolute: false)
+    frontmatter {
+        title
+    }`,
+    node => {
+      expect(node).toMatchSnapshot()
+    }
+  )
+
+  bootstrapTest(
     `table of contents is generated with correct depth (graphql option)`,
     `---
 title: "my little pony"
@@ -1104,9 +1169,9 @@ console.log('hello world')
     `htmlAst`,
     node => {
       expect(node).toMatchSnapshot()
-      expect(node.htmlAst.children[0].children[0].properties.className).toEqual(
-        [`language-js`]
-      )
+      expect(
+        node.htmlAst.children[0].children[0].properties.className
+      ).toEqual([`language-js`])
       expect(node.htmlAst.children[0].children[0].properties.dataMeta).toEqual(
         `foo bar`
       )

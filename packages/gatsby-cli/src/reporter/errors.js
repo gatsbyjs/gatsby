@@ -94,6 +94,7 @@ function getErrorFormatter() {
  * Convert a stringified webpack compilation error back into
  * an Error instance so it can be formatted properly
  * @param {string} errorStr
+ * @param {string} sourceMapFile
  */
 async function createErrorFromString(
   errorStr: string = ``,

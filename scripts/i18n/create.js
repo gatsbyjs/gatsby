@@ -4,6 +4,8 @@ const shell = require(`shelljs`)
 const { graphql } = require(`@octokit/graphql`)
 const log4js = require(`log4js`)
 
+require(`dotenv`).config()
+
 const { makeProgressIssue } = require(`./make-progress-issue`)
 const { inviteMaintainers } = require(`./invite-maintainers`)
 
