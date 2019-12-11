@@ -93,9 +93,10 @@ const generateQueriesFromIntrospection = ({ introspection }) => {
 
 export const buildNodeQueriesFromIntrospection = async (
   { introspection, schemaHasChanged = false },
-  helpers
+  helpers,
+  pluginOptions
 ) => {
-  const QUERY_CACHE_KEY = `introspection-node-queries`
+  const QUERY_CACHE_KEY = `${pluginOptions.url}--introspection-node-queries`
 
   let queries = await helpers.cache.get(QUERY_CACHE_KEY)
 
