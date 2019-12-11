@@ -1,4 +1,4 @@
-import gql from "../../utils/gql"
+import gql from "../utils/gql"
 
 export const getPaginatedQuery = query =>
   `query GENERIC_QUERY ($first: Int!, $after: String) {${query}}`

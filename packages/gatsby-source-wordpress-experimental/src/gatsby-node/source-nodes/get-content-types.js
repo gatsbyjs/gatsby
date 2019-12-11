@@ -1,4 +1,4 @@
-import { getAvailablePostTypesQuery } from "./graphql-queries"
+import { getAvailablePostTypesQuery } from "../graphql-queries"
 import fetchGraphql from "../../utils/fetch-graphql"
 import store from "../../store"
 

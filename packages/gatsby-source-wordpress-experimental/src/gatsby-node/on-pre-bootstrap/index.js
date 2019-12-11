@@ -1,9 +1,9 @@
-import { buildNodeQueriesFromIntrospection } from "../source-nodes/generate-queries-from-introspection"
+import { buildNodeQueriesFromIntrospection } from "./build-queries-from-introspection"
 import formatLogMessage from "../../utils/format-log-message"
-import checkPluginRequirements from "../../utils/check-plugin-requirements"
+import checkPluginRequirements from "./check-plugin-requirements"
 import store from "../../store"
 import { setApiHelpersToState } from "./set-api-helpers-to-state"
-import { introspectionQuery } from "../source-nodes/graphql-queries"
+import { introspectionQuery } from "../graphql-queries"
 import fetchGraphql from "../../utils/fetch-graphql"
 import checkIfSchemaHasChanged from "./check-if-schema-has-changed"
 

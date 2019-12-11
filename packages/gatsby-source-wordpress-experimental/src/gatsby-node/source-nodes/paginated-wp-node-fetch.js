@@ -1,4 +1,4 @@
-import { getPaginatedQuery } from "./graphql-queries"
+import { getPaginatedQuery } from "../graphql-queries"
 import fetchGraphql from "../../utils/fetch-graphql"
 import store from "../../store"
 
