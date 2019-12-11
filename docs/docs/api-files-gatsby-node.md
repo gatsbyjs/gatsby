@@ -27,7 +27,7 @@ exports.createPages = async ({ graphql, actions }) => {
         }
       }
     }
-  `
+  `)
   result.data.allSamplePages.edges.forEach(edge => {
     createPage({
       path: `${edge.node.slug}`,
