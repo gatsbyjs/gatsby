@@ -1697,19 +1697,24 @@
     - SVG to React component
     - Ueno's TSlint
     - Decorators
-- url: https://gatsby-sseon-starter.netlify.com/
-  repo: https://github.com/SeonHyungJo/gatsby-sseon-starter
-  description: Simple starter template for Gatsby
+- url: https://gatsby-snyung-starter.netlify.com/
+  repo: https://github.com/SeonHyungJo/gatsby-snyung-starter
+  description: Basic starter template for You
   tags:
-    - Blog
-    - Disqus
+    - CMS:Contentful
     - Markdown
+    - Linting
+    - Pagination
+    - Portfolio
+    - SEO
     - Styling:SCSS
+    - Transitions
   features:
     - SASS/SCSS
-    - Comes with React Helmet for adding site meta tags
-    - Add Disqus
+    - Add Utterances
     - Nice Pagination
+    - Comes with React Helmet for adding site meta tags
+    - Create Yout Name Card for writing meta data
 - url: https://gatsby-contentstack-starter.netlify.com/
   repo: https://github.com/contentstack/gatsby-starter-contentstack
   description: A Gatsby starter powered by Headless CMS Contentstack.
@@ -4688,3 +4693,26 @@
     - Landing Page Design
     - Fully Responsive
     - Styling with Tailwind
+- url: https://gatsby-starter-papan01.netlify.com/
+  repo: https://github.com/papan01/gatsby-starter-papan01
+  description: A Gatsby starter for creating a markdown blog.
+  tags:
+    - Linting
+    - Blog
+    - Styling:SCSS
+    - Markdown
+    - Pagination
+    - PWA
+    - SEO
+  features:
+    - SSR React Code Splitting(loadable-components)
+    - Theme Toggle(light/dark)
+    - Pagination
+    - SEO(Sitemap, Schema.org, OpenGraph tags, Twitter tag)
+    - Web application manifest and offline support
+    - Google Analytics
+    - Disqus
+    - RSS
+    - ESLint(Airbnb) for linting
+    - Prettier code formatting
+    - gh-pages for deploying to GitHub pages
