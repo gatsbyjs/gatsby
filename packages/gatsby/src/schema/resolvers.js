@@ -157,6 +157,12 @@ const link = (options = {}, fieldConfig) => async (
   const oneOf = value => {
     return { in: value }
   }
+
+  // Return early if fieldValue is [] since { in: [] } doesn't make sense
+  if (Array.isArray(fieldValue) && fieldValue.length === 0) {
+    return fieldValue
+  }
+
   const operator = Array.isArray(fieldValue) ? oneOf : equals
   args.filter = options.by.split(`.`).reduceRight((acc, key, i, { length }) => {
     return {

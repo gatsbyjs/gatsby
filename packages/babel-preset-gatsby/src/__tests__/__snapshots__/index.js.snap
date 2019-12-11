@@ -9,6 +9,12 @@ Object {
         "loose": true,
       },
     ],
+    Array [
+      "<PROJECT_ROOT>/node_modules/@babel/plugin-proposal-nullish-coalescing-operator/lib/index.js",
+    ],
+    Array [
+      "<PROJECT_ROOT>/node_modules/@babel/plugin-proposal-optional-chaining/lib/index.js",
+    ],
     "<PROJECT_ROOT>/node_modules/babel-plugin-macros/dist/index.js",
     "<PROJECT_ROOT>/node_modules/@babel/plugin-syntax-dynamic-import/lib/index.js",
     Array [
@@ -65,6 +71,12 @@ Object {
       Object {
         "loose": true,
       },
+    ],
+    Array [
+      "<PROJECT_ROOT>/node_modules/@babel/plugin-proposal-nullish-coalescing-operator/lib/index.js",
+    ],
+    Array [
+      "<PROJECT_ROOT>/node_modules/@babel/plugin-proposal-optional-chaining/lib/index.js",
     ],
     "<PROJECT_ROOT>/node_modules/babel-plugin-macros/dist/index.js",
     "<PROJECT_ROOT>/node_modules/@babel/plugin-syntax-dynamic-import/lib/index.js",
@@ -127,6 +139,12 @@ Object {
         "loose": true,
       },
     ],
+    Array [
+      "<PROJECT_ROOT>/node_modules/@babel/plugin-proposal-nullish-coalescing-operator/lib/index.js",
+    ],
+    Array [
+      "<PROJECT_ROOT>/node_modules/@babel/plugin-proposal-optional-chaining/lib/index.js",
+    ],
     "<PROJECT_ROOT>/node_modules/babel-plugin-macros/dist/index.js",
     "<PROJECT_ROOT>/node_modules/@babel/plugin-syntax-dynamic-import/lib/index.js",
     Array [
@@ -181,6 +199,12 @@ Object {
       Object {
         "loose": true,
       },
+    ],
+    Array [
+      "<PROJECT_ROOT>/node_modules/@babel/plugin-proposal-nullish-coalescing-operator/lib/index.js",
+    ],
+    Array [
+      "<PROJECT_ROOT>/node_modules/@babel/plugin-proposal-optional-chaining/lib/index.js",
     ],
     "<PROJECT_ROOT>/node_modules/babel-plugin-macros/dist/index.js",
     "<PROJECT_ROOT>/node_modules/@babel/plugin-syntax-dynamic-import/lib/index.js",

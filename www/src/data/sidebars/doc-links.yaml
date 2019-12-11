@@ -421,8 +421,6 @@
                   link: /docs/location-data-from-props/
                 - title: Creating Dynamic Navigation
                   link: /docs/creating-dynamic-navigation/
-                - title: Rendering Sidebar Navigation Dynamically*
-                  link: /docs/rendering-sidebar-navigation-dynamically/
                 - title: Client-only Routes & User Authentication
                   link: /docs/client-only-routes-and-user-authentication/
                   breadcrumbTitle: Client Routes & User Auth
@@ -696,6 +694,8 @@
     - title: Glossary
       link: /docs/glossary/
       items:
+        - title: Node.js
+          link: /docs/glossary/node
         - title: React
           link: /docs/glossary/react
     - title: Gatsby Telemetry
