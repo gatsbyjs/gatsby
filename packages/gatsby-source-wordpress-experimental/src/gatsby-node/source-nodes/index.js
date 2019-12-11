@@ -19,7 +19,6 @@ const sourceNodes = async (helpers, pluginOptions) => {
   const { schemaHasChanged } = store.getState().introspection
 
   const fetchEverything = !lastCompletedSourceTime || schemaHasChanged
-  const fetchUpdates = !fetchEverything
 
   // If this is an uncached build,
   // or our initial build to fetch and cache everything didn't complete,
@@ -30,7 +29,7 @@ const sourceNodes = async (helpers, pluginOptions) => {
 
   // If we've already successfully pulled everything from WPGraphQL
   // just pull the latest changes
-  if (fetchUpdates) {
+  if (!fetchEverything) {
     await fetchAndApplyNodeUpdates(
       {
         since: lastCompletedSourceTime,
