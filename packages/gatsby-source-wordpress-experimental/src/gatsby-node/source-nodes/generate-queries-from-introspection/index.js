@@ -4,21 +4,11 @@ import {
   buildNodeQueryOnFieldName,
 } from "./build-query-on-field-name"
 // @todo create function to unmap check here for similar function https://www.gatsbyjs.org/packages/gatsby-source-graphql-universal/
-import fetchGraphql from "../../../utils/fetch-graphql"
-import { introspectionQuery } from "../graphql-queries"
 
 import store from "../../../store"
 
-export const buildNodeQueriesFromIntrospection = async (
-  helpers,
-  pluginOptions
-) => {
+const generateQueriesFromIntrospection = ({ introspection }) => {
   const { fieldBlacklist } = store.getState().introspection
-
-  const introspection = await fetchGraphql({
-    url: pluginOptions.url,
-    query: introspectionQuery,
-  })
 
   const rootFields = introspection.data.__schema.queryType.fields
 
@@ -75,11 +65,6 @@ export const buildNodeQueriesFromIntrospection = async (
   for (const typeName of nodeListTypeNames) {
     const listType = nodeListTypes[typeName]
 
-    await helpers.cache.set(
-      `${listType.fieldName}--types-by-single-field-name`,
-      listType
-    )
-
     const listQueryString = buildNodesQueryOnFieldName({
       fields: listType.fields,
       fieldName: listType.rootFieldName,
@@ -103,7 +88,31 @@ export const buildNodeQueriesFromIntrospection = async (
     }
   }
 
-  //
-  // set the queries in our redux store
-  store.dispatch.introspection.setQueries(queries)
+  return queries
+}
+
+export const buildNodeQueriesFromIntrospection = async (
+  { introspection, schemaHasChanged = false },
+  helpers
+) => {
+  const QUERY_CACHE_KEY = `introspection-node-queries`
+
+  let queries = await helpers.cache.get(QUERY_CACHE_KEY)
+
+  if (
+    // we've never generated queries, or the schema has changed
+    !queries ||
+    schemaHasChanged
+  ) {
+    // generate them again
+    queries = generateQueriesFromIntrospection({
+      introspection,
+      helpers,
+    })
+
+    // and cache them
+    await helpers.cache.set(QUERY_CACHE_KEY, queries)
+  }
+
+  return queries
 }

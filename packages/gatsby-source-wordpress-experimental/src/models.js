@@ -1,6 +1,7 @@
 const introspection = {
   state: {
     queries: {},
+    schemaWasChanged: null,
     fieldBlacklist: [
       // these aren't useful without authentication
       `revisions`,
@@ -15,6 +16,11 @@ const introspection = {
   },
 
   reducers: {
+    setSchemaWasChanged(state, payload) {
+      state.schemaWasChanged = !!payload
+
+      return state
+    },
     setQueries(state, payload) {
       state.queries = payload
       return state

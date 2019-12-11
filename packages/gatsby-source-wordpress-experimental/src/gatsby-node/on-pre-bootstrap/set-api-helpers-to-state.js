@@ -1,4 +1,4 @@
-import store from "../store"
+import store from "../../store"
 
 export const setApiHelpersToState = (helpers, pluginOptions) => {
   //
