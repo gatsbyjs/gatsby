@@ -1,12 +1,13 @@
-const fs = require(`fs`)
+const fs = require(`fs-extra`)
 const { spawnSync } = require(`child_process`)
 const path = require(`path`)
 const v8 = require(`v8`)
 const _ = require(`lodash`)
+const del = require(`del`)
 const slash = require(`slash`)
 const {
   ON_PRE_BOOTSTRAP_FILE_PATH,
-  ON_POST_BOOTSTRAP_FILE_PATH,
+  ON_POST_BUILD_FILE_PATH,
 } = require(`../utils/constants`)
 const { createContentDigest } = require(`gatsby-core-utils`)
 
@@ -90,6 +91,7 @@ const loadState = path => {
   return {
     nodes: newState,
     diskCacheSnapshot: state.diskCacheSnapshot,
+    queryResults: state.queryResults,
   }
 }
 
@@ -122,23 +124,66 @@ const useGatsbyConfig = run => {
   fs.copyFileSync(`gatsby-config-${run}.js`, path.join(`gatsby-config.js`))
 }
 
-const useGatsbyNodeAndConfig = (run = 1) => {
+const useGatsbyQuery = run => {
+  const r = fs.readdirSync(`plugins`)
+  return r.reduce((acc, pluginName) => {
+    const inputPath = path.join(`plugins`, pluginName, `query-${run}.js`)
+    if (fs.existsSync(inputPath)) {
+      const pagePath = path.join(
+        `plugins`,
+        pluginName,
+        `src`,
+        `pages`,
+        `${pluginName}.js`
+      )
+
+      const { query, expectedResult } = require(path.join(
+        process.cwd(),
+        inputPath
+      ))
+
+      const content = `
+      import { graphql } from "gatsby"
+export default () => null
+
+export const query = graphql\`
+  ${query}
+\`
+      `
+
+      fs.outputFileSync(pagePath, content)
+
+      acc[pluginName] = expectedResult
+      // fs.copyFileSync(
+      //   inputPath,
+      //   path.join(`plugins`, pluginName, `gatsby-node.js`)
+      // )
+    }
+    return acc
+  }, {})
+}
+
+const useGatsbyNodeAndConfigAndQuery = (run = 1) => {
   useGatsbyNode(run)
   useGatsbyConfig(run)
+  return useGatsbyQuery(run)
 }
 
 const build = ({ updatePlugins } = {}) => {
   spawnSync(gatsbyBin, [`clean`])
-  useGatsbyNodeAndConfig(1)
+  let expectedResultsFromRun = useGatsbyNodeAndConfigAndQuery(1)
+
+  const expectedQueryResults = {
+    firstRun: expectedResultsFromRun,
+  }
 
   let processOutput
 
   // First run, get state
   processOutput = spawnSync(gatsbyBin, [`build`], {
-    stdio: [`ignore`, `ignore`, `ignore`, `ignore`],
+    stdio: [`inherit`, `inherit`, `inherit`, `inherit`],
     env: {
       ...process.env,
-      EXIT_ON_POST_BOOTSTRAP: `1`,
       NODE_ENV: `production`,
     },
   })
@@ -149,19 +194,20 @@ const build = ({ updatePlugins } = {}) => {
 
   const preBootstrapStateFromFirstRun = loadState(ON_PRE_BOOTSTRAP_FILE_PATH)
 
-  const postBootstrapStateFromFirstRun = loadState(ON_POST_BOOTSTRAP_FILE_PATH)
+  const postBuildStateFromFirstRun = loadState(ON_POST_BUILD_FILE_PATH)
 
   if (updatePlugins) {
     // Invalidations
-    useGatsbyNodeAndConfig(2)
+    expectedResultsFromRun = useGatsbyNodeAndConfigAndQuery(2)
   }
+
+  expectedQueryResults.secondRun = expectedResultsFromRun
 
   // Second run, get state and compare with state from previous run
   processOutput = spawnSync(gatsbyBin, [`build`], {
-    stdio: [`ignore`, `ignore`, `ignore`, `ignore`],
+    stdio: [`inherit`, `inherit`, `inherit`, `inherit`],
     env: {
       ...process.env,
-      EXIT_ON_POST_BOOTSTRAP: `1`,
       NODE_ENV: `production`,
     },
   })
@@ -172,68 +218,83 @@ const build = ({ updatePlugins } = {}) => {
 
   const preBootstrapStateFromSecondRun = loadState(ON_PRE_BOOTSTRAP_FILE_PATH)
 
-  const postBootstrapStateFromSecondRun = loadState(ON_POST_BOOTSTRAP_FILE_PATH)
+  const postBuildStateFromSecondRun = loadState(ON_POST_BUILD_FILE_PATH)
+
+  debugger
 
   return {
     nodes: {
       preBootstrapStateFromFirstRun: preBootstrapStateFromFirstRun.nodes,
-      postBootstrapStateFromFirstRun: postBootstrapStateFromFirstRun.nodes,
+      postBuildStateFromFirstRun: postBuildStateFromFirstRun.nodes,
       preBootstrapStateFromSecondRun: preBootstrapStateFromSecondRun.nodes,
-      postBootstrapStateFromSecondRun: postBootstrapStateFromSecondRun.nodes,
+      postBuildStateFromSecondRun: postBuildStateFromSecondRun.nodes,
     },
     diskCacheSnapshot: {
       preBootstrapStateFromFirstRun:
         preBootstrapStateFromFirstRun.diskCacheSnapshot,
-      postBootstrapStateFromFirstRun:
-        postBootstrapStateFromFirstRun.diskCacheSnapshot,
+      postBuildStateFromFirstRun: postBuildStateFromFirstRun.diskCacheSnapshot,
       preBootstrapStateFromSecondRun:
         preBootstrapStateFromSecondRun.diskCacheSnapshot,
-      postBootstrapStateFromSecondRun:
-        postBootstrapStateFromSecondRun.diskCacheSnapshot,
+      postBuildStateFromSecondRun:
+        postBuildStateFromSecondRun.diskCacheSnapshot,
+    },
+    queryResults: {
+      actual: {
+        firstRun: postBuildStateFromFirstRun.queryResults,
+        secondRun: postBuildStateFromSecondRun.queryResults,
+      },
+      expected: expectedQueryResults,
     },
   }
 }
 
 afterAll(() => {
   // go back to initial
-  useGatsbyNodeAndConfig(1)
+  useGatsbyNodeAndConfigAndQuery(1)
 
   // delete saved states
   if (fs.existsSync(ON_PRE_BOOTSTRAP_FILE_PATH)) {
     fs.unlinkSync(ON_PRE_BOOTSTRAP_FILE_PATH)
   }
-  if (fs.existsSync(ON_POST_BOOTSTRAP_FILE_PATH)) {
-    fs.unlinkSync(ON_POST_BOOTSTRAP_FILE_PATH)
+  if (fs.existsSync(ON_POST_BUILD_FILE_PATH)) {
+    fs.unlinkSync(ON_POST_BUILD_FILE_PATH)
   }
 })
 
-// describe(`Cache`, () => {
-beforeAll(() => {
-  useGatsbyNodeAndConfig(1)
+beforeAll(async () => {
+  await del([`plugins/**/src/**`])
+
+  useGatsbyNodeAndConfigAndQuery(1)
 })
 
 describe(`nothing changed between gatsby runs`, () => {
+  let states
+
+  beforeAll(() => {
+    states = build({
+      updatePlugins: false,
+    })
+  })
+
   describe(`Nodes`, () => {
     it(`nodes are persisted between builds when nothing changes`, () => {
       const {
         nodes: {
           preBootstrapStateFromFirstRun,
-          postBootstrapStateFromFirstRun,
+          postBuildStateFromFirstRun,
           preBootstrapStateFromSecondRun,
-          postBootstrapStateFromSecondRun,
+          postBuildStateFromSecondRun,
         },
-      } = build({
-        updatePlugins: false,
-      })
+      } = states
 
       expect(preBootstrapStateFromFirstRun.size).toEqual(0)
 
-      expect(postBootstrapStateFromFirstRun).toEqual(
-        preBootstrapStateFromSecondRun
-      )
-      expect(postBootstrapStateFromFirstRun).toEqual(
-        postBootstrapStateFromSecondRun
-      )
+      expect(postBuildStateFromFirstRun).toEqual(preBootstrapStateFromSecondRun)
+      expect(postBuildStateFromFirstRun).toEqual(postBuildStateFromSecondRun)
+    })
+
+    it(`query results matches expectations`, () => {
+      expect(states.queryResults.actual).toEqual(states.queryResults.expected)
     })
   })
 })
@@ -251,42 +312,39 @@ describe(`some plugins changed between gatsby runs`, () => {
     it(`sanity checks`, () => {
       // preconditions - we expect our cache to be empty on first run
       expect(states.nodes.preBootstrapStateFromFirstRun.size).toEqual(0)
+    })
 
-      // test-dev only snapshots to see what's happening
-      // expect(states.nodes.postBootstrapStateFromFirstRun).toMatchSnapshot()
-      // expect(states.nodes.preBootstrapStateFromSecondRun).toMatchSnapshot()
-      // expect(states.nodes.postBootstrapStateFromSecondRun).toMatchSnapshot()
+    it(`query results matches expectations`, () => {
+      expect(states.queryResults.actual).toEqual(states.queryResults.expected)
     })
 
     describe(`Plugin changes`, () => {
       it(`are not deleted when the owner plugin does not change`, () => {
         const {
-          postBootstrapStateFromFirstRun,
+          postBuildStateFromFirstRun,
           preBootstrapStateFromSecondRun,
-          postBootstrapStateFromSecondRun,
+          postBuildStateFromSecondRun,
         } = getNodesSubStateByPlugins(states, [`gatsby-plugin-stable`])
 
-        expect(postBootstrapStateFromFirstRun).toEqual(
+        expect(postBuildStateFromFirstRun).toEqual(
           preBootstrapStateFromSecondRun
         )
 
-        expect(postBootstrapStateFromFirstRun).toEqual(
-          postBootstrapStateFromSecondRun
-        )
+        expect(postBuildStateFromFirstRun).toEqual(postBuildStateFromSecondRun)
       })
 
       it(`are deleted and recreated when owner plugin changes`, () => {
         const {
-          postBootstrapStateFromFirstRun,
+          postBuildStateFromFirstRun,
           preBootstrapStateFromSecondRun,
-          postBootstrapStateFromSecondRun,
+          postBuildStateFromSecondRun,
         } = getNodesSubStateByPlugins(states, [
           `gatsby-plugin-independent-node`,
         ])
 
         {
           const diff = compareState(
-            postBootstrapStateFromFirstRun,
+            postBuildStateFromFirstRun,
             preBootstrapStateFromSecondRun
           )
 
@@ -296,8 +354,8 @@ describe(`some plugins changed between gatsby runs`, () => {
 
         {
           const diff = compareState(
-            postBootstrapStateFromFirstRun,
-            postBootstrapStateFromSecondRun
+            postBuildStateFromFirstRun,
+            postBuildStateFromSecondRun
           )
 
           expect(diff.dirtyIds).toEqual([`INDEPENDENT_NODE_1`])
@@ -321,9 +379,9 @@ describe(`some plugins changed between gatsby runs`, () => {
 
       it(`are deleted and recreated when the owner plugin of a parent changes`, () => {
         const {
-          postBootstrapStateFromFirstRun,
+          postBuildStateFromFirstRun,
           preBootstrapStateFromSecondRun,
-          postBootstrapStateFromSecondRun,
+          postBuildStateFromSecondRun,
         } = getNodesSubStateByPlugins(states, [
           `gatsby-source-parent-change-for-transformer`,
           `gatsby-transformer-parent-change`,
@@ -331,7 +389,7 @@ describe(`some plugins changed between gatsby runs`, () => {
 
         {
           const diff = compareState(
-            postBootstrapStateFromFirstRun,
+            postBuildStateFromFirstRun,
             preBootstrapStateFromSecondRun
           )
 
@@ -350,8 +408,8 @@ describe(`some plugins changed between gatsby runs`, () => {
 
         {
           const diff = compareState(
-            postBootstrapStateFromFirstRun,
-            postBootstrapStateFromSecondRun
+            postBuildStateFromFirstRun,
+            postBuildStateFromSecondRun
           )
 
           expect(diff.dirtyIds).toEqual([
@@ -401,9 +459,9 @@ describe(`some plugins changed between gatsby runs`, () => {
 
       it(`are deleted and recreated when the owner plugin of a child changes`, () => {
         const {
-          postBootstrapStateFromFirstRun,
+          postBuildStateFromFirstRun,
           preBootstrapStateFromSecondRun,
-          postBootstrapStateFromSecondRun,
+          postBuildStateFromSecondRun,
         } = getNodesSubStateByPlugins(states, [
           `gatsby-source-child-change-for-transformer`,
           `gatsby-transformer-child-change`,
@@ -411,7 +469,7 @@ describe(`some plugins changed between gatsby runs`, () => {
 
         {
           const diff = compareState(
-            postBootstrapStateFromFirstRun,
+            postBuildStateFromFirstRun,
             preBootstrapStateFromSecondRun
           )
 
@@ -445,8 +503,8 @@ describe(`some plugins changed between gatsby runs`, () => {
 
         {
           const diff = compareState(
-            postBootstrapStateFromFirstRun,
-            postBootstrapStateFromSecondRun
+            postBuildStateFromFirstRun,
+            postBuildStateFromSecondRun
           )
 
           expect(diff.dirtyIds).toEqual([
@@ -475,9 +533,9 @@ describe(`some plugins changed between gatsby runs`, () => {
 
       it(`fields are deleted and recreated when the owner plugin of a node changes`, () => {
         const {
-          postBootstrapStateFromFirstRun,
+          postBuildStateFromFirstRun,
           preBootstrapStateFromSecondRun,
-          postBootstrapStateFromSecondRun,
+          postBuildStateFromSecondRun,
         } = getNodesSubStateByPlugins(states, [
           `gatsby-source-parent-change-for-fields`,
           `gatsby-fields-parent-change`,
@@ -485,7 +543,7 @@ describe(`some plugins changed between gatsby runs`, () => {
 
         {
           const diff = compareState(
-            postBootstrapStateFromFirstRun,
+            postBuildStateFromFirstRun,
             preBootstrapStateFromSecondRun
           )
 
@@ -496,8 +554,8 @@ describe(`some plugins changed between gatsby runs`, () => {
 
         {
           const diff = compareState(
-            postBootstrapStateFromFirstRun,
-            postBootstrapStateFromSecondRun
+            postBuildStateFromFirstRun,
+            postBuildStateFromSecondRun
           )
 
           expect(diff.dirtyIds).toEqual([`parent_parentChangeForFields`])
@@ -533,9 +591,9 @@ describe(`some plugins changed between gatsby runs`, () => {
 
       it(`fields are deleted and recreated when the owner plugin of a field changes`, () => {
         const {
-          postBootstrapStateFromFirstRun,
+          postBuildStateFromFirstRun,
           preBootstrapStateFromSecondRun,
-          postBootstrapStateFromSecondRun,
+          postBuildStateFromSecondRun,
         } = getNodesSubStateByPlugins(states, [
           `gatsby-source-child-change-for-fields`,
           `gatsby-fields-child-change`,
@@ -543,7 +601,7 @@ describe(`some plugins changed between gatsby runs`, () => {
 
         {
           const diff = compareState(
-            postBootstrapStateFromFirstRun,
+            postBuildStateFromFirstRun,
             preBootstrapStateFromSecondRun
           )
 
@@ -575,8 +633,8 @@ describe(`some plugins changed between gatsby runs`, () => {
 
         {
           const diff = compareState(
-            postBootstrapStateFromFirstRun,
-            postBootstrapStateFromSecondRun
+            postBuildStateFromFirstRun,
+            postBuildStateFromSecondRun
           )
 
           expect(diff.dirtyIds).toEqual([`parent_childChangeForFields`])
@@ -613,9 +671,9 @@ describe(`some plugins changed between gatsby runs`, () => {
 
       it(`ensure transformer nodes are created when source plugin is added`, () => {
         const {
-          postBootstrapStateFromFirstRun,
+          postBuildStateFromFirstRun,
           preBootstrapStateFromSecondRun,
-          postBootstrapStateFromSecondRun,
+          postBuildStateFromSecondRun,
         } = getNodesSubStateByPlugins(states, [
           `gatsby-source-parent-addition-for-transformer`,
           `gatsby-transformer-parent-addition`,
@@ -623,7 +681,7 @@ describe(`some plugins changed between gatsby runs`, () => {
 
         {
           const diff = compareState(
-            postBootstrapStateFromFirstRun,
+            postBuildStateFromFirstRun,
             preBootstrapStateFromSecondRun
           )
 
@@ -632,8 +690,8 @@ describe(`some plugins changed between gatsby runs`, () => {
 
         {
           const diff = compareState(
-            postBootstrapStateFromFirstRun,
-            postBootstrapStateFromSecondRun
+            postBuildStateFromFirstRun,
+            postBuildStateFromSecondRun
           )
 
           expect(diff.dirtyIds).toEqual([
@@ -652,9 +710,9 @@ describe(`some plugins changed between gatsby runs`, () => {
 
       it(`ensure transformer nodes are created when transformer plugin is added`, () => {
         const {
-          postBootstrapStateFromFirstRun,
+          postBuildStateFromFirstRun,
           preBootstrapStateFromSecondRun,
-          postBootstrapStateFromSecondRun,
+          postBuildStateFromSecondRun,
         } = getNodesSubStateByPlugins(states, [
           `gatsby-source-child-addition-for-transformer`,
           `gatsby-transformer-child-addition`,
@@ -662,7 +720,7 @@ describe(`some plugins changed between gatsby runs`, () => {
 
         {
           const diff = compareState(
-            postBootstrapStateFromFirstRun,
+            postBuildStateFromFirstRun,
             preBootstrapStateFromSecondRun
           )
 
@@ -671,8 +729,8 @@ describe(`some plugins changed between gatsby runs`, () => {
 
         {
           const diff = compareState(
-            postBootstrapStateFromFirstRun,
-            postBootstrapStateFromSecondRun
+            postBuildStateFromFirstRun,
+            postBuildStateFromSecondRun
           )
 
           expect(diff.dirtyIds).toEqual([
@@ -706,24 +764,24 @@ describe(`some plugins changed between gatsby runs`, () => {
 
       it.skip(`ensure fields are created when owner of node is added`, () => {
         const {
-          postBootstrapStateFromFirstRun,
+          postBuildStateFromFirstRun,
           preBootstrapStateFromSecondRun,
-          postBootstrapStateFromSecondRun,
+          postBuildStateFromSecondRun,
         } = getNodesSubStateByPlugins(states, [
           `gatsby-source-parent-addition-for-fields`,
           `gatsby-fields-parent-addition`,
         ])
         {
           const diff = compareState(
-            postBootstrapStateFromFirstRun,
+            postBuildStateFromFirstRun,
             preBootstrapStateFromSecondRun
           )
           expect(diff.dirtyIds).toEqual([])
         }
         {
           const diff = compareState(
-            postBootstrapStateFromFirstRun,
-            postBootstrapStateFromSecondRun
+            postBuildStateFromFirstRun,
+            postBuildStateFromSecondRun
           )
           expect(diff.dirtyIds).toEqual([`parent_parentAdditionForFields`])
           expect(diff.additions[`parent_parentAdditionForFields`]).toBeTruthy()
@@ -732,9 +790,9 @@ describe(`some plugins changed between gatsby runs`, () => {
 
       it(`ensure fields are created when owner of field is added`, () => {
         const {
-          postBootstrapStateFromFirstRun,
+          postBuildStateFromFirstRun,
           preBootstrapStateFromSecondRun,
-          postBootstrapStateFromSecondRun,
+          postBuildStateFromSecondRun,
         } = getNodesSubStateByPlugins(states, [
           `gatsby-source-child-addition-for-fields`,
           `gatsby-fields-child-addition`,
@@ -742,7 +800,7 @@ describe(`some plugins changed between gatsby runs`, () => {
 
         {
           const diff = compareState(
-            postBootstrapStateFromFirstRun,
+            postBuildStateFromFirstRun,
             preBootstrapStateFromSecondRun
           )
 
@@ -751,8 +809,8 @@ describe(`some plugins changed between gatsby runs`, () => {
 
         {
           const diff = compareState(
-            postBootstrapStateFromFirstRun,
-            postBootstrapStateFromSecondRun
+            postBuildStateFromFirstRun,
+            postBuildStateFromSecondRun
           )
 
           expect(diff.dirtyIds).toEqual([`parent_childAdditionForFields`])
@@ -784,14 +842,14 @@ describe(`some plugins changed between gatsby runs`, () => {
     describe(`Plugin Deletions`, () => {
       it(`Deletion of plugin invalidates nodes cache`, () => {
         const {
-          postBootstrapStateFromFirstRun,
+          postBuildStateFromFirstRun,
           preBootstrapStateFromSecondRun,
-          postBootstrapStateFromSecondRun,
+          postBuildStateFromSecondRun,
         } = getNodesSubStateByPlugins(states, [`gatsby-plugin-deletion`])
 
         {
           const diff = compareState(
-            postBootstrapStateFromFirstRun,
+            postBuildStateFromFirstRun,
             preBootstrapStateFromSecondRun
           )
 
@@ -801,8 +859,8 @@ describe(`some plugins changed between gatsby runs`, () => {
 
         {
           const diff = compareState(
-            postBootstrapStateFromFirstRun,
-            postBootstrapStateFromSecondRun
+            postBuildStateFromFirstRun,
+            postBuildStateFromSecondRun
           )
 
           expect(diff.dirtyIds).toEqual([`DELETION_NODE_1`])
@@ -811,17 +869,16 @@ describe(`some plugins changed between gatsby runs`, () => {
       })
       it(`Deletion of plugin invalidates disk cache`, () => {
         const {
-          postBootstrapStateFromFirstRun,
+          postBuildStateFromFirstRun,
           preBootstrapStateFromSecondRun,
-          postBootstrapStateFromSecondRun,
+          postBuildStateFromSecondRun,
         } = getDiskCacheSnapshotSubStateByPlugins(states, [
           `gatsby-plugin-deletion`,
         ])
 
         // plugin had something in disk cache
         expect(
-          (postBootstrapStateFromFirstRun[`gatsby-plugin-deletion`] || [])
-            .length
+          (postBuildStateFromFirstRun[`gatsby-plugin-deletion`] || []).length
         ).toEqual(1)
         // cache was deleted in second run
         expect(
@@ -831,8 +888,7 @@ describe(`some plugins changed between gatsby runs`, () => {
 
         // finally, end result does not include cache
         expect(
-          (postBootstrapStateFromSecondRun[`gatsby-plugin-deletion`] || [])
-            .length
+          (postBuildStateFromSecondRun[`gatsby-plugin-deletion`] || []).length
         ).toEqual(0)
       })
       // it(`Deletion of plugin handles child nodes if it is a parent`, () => {})
@@ -840,9 +896,9 @@ describe(`some plugins changed between gatsby runs`, () => {
       // it(`Deletion of plugin handles node fields`, () => {})
       it(`ensure transformer nodes are deleted when source plugin is deleted`, () => {
         const {
-          postBootstrapStateFromFirstRun,
+          postBuildStateFromFirstRun,
           preBootstrapStateFromSecondRun,
-          postBootstrapStateFromSecondRun,
+          postBuildStateFromSecondRun,
         } = getNodesSubStateByPlugins(states, [
           `gatsby-source-parent-deletion-for-transformer`,
           `gatsby-transformer-parent-deletion`,
@@ -850,7 +906,7 @@ describe(`some plugins changed between gatsby runs`, () => {
 
         {
           const diff = compareState(
-            postBootstrapStateFromFirstRun,
+            postBuildStateFromFirstRun,
             preBootstrapStateFromSecondRun
           )
 
@@ -869,8 +925,8 @@ describe(`some plugins changed between gatsby runs`, () => {
 
         {
           const diff = compareState(
-            postBootstrapStateFromFirstRun,
-            postBootstrapStateFromSecondRun
+            postBuildStateFromFirstRun,
+            postBuildStateFromSecondRun
           )
 
           expect(diff.dirtyIds).toEqual([
@@ -889,9 +945,9 @@ describe(`some plugins changed between gatsby runs`, () => {
 
       it(`ensure transformer nodes are deleted when transformer plugin is deleted`, () => {
         const {
-          postBootstrapStateFromFirstRun,
+          postBuildStateFromFirstRun,
           preBootstrapStateFromSecondRun,
-          postBootstrapStateFromSecondRun,
+          postBuildStateFromSecondRun,
         } = getNodesSubStateByPlugins(states, [
           `gatsby-source-child-deletion-for-transformer`,
           `gatsby-transformer-child-deletion`,
@@ -899,7 +955,7 @@ describe(`some plugins changed between gatsby runs`, () => {
 
         {
           const diff = compareState(
-            postBootstrapStateFromFirstRun,
+            postBuildStateFromFirstRun,
             preBootstrapStateFromSecondRun
           )
 
@@ -933,8 +989,8 @@ describe(`some plugins changed between gatsby runs`, () => {
 
         {
           const diff = compareState(
-            postBootstrapStateFromFirstRun,
-            postBootstrapStateFromSecondRun
+            postBuildStateFromFirstRun,
+            postBuildStateFromSecondRun
           )
           expect(diff.dirtyIds).toEqual([
             `parent_childDeletionForTransformer >>> Child`,
@@ -967,24 +1023,24 @@ describe(`some plugins changed between gatsby runs`, () => {
 
       it.skip(`ensure fields are deleted when owner of node is deleted`, () => {
         const {
-          postBootstrapStateFromFirstRun,
+          postBuildStateFromFirstRun,
           preBootstrapStateFromSecondRun,
-          postBootstrapStateFromSecondRun,
+          postBuildStateFromSecondRun,
         } = getNodesSubStateByPlugins(states, [
           `gatsby-source-parent-addition-for-fields`,
           `gatsby-fields-parent-addition`,
         ])
         {
           const diff = compareState(
-            postBootstrapStateFromFirstRun,
+            postBuildStateFromFirstRun,
             preBootstrapStateFromSecondRun
           )
           expect(diff.dirtyIds).toEqual([])
         }
         {
           const diff = compareState(
-            postBootstrapStateFromFirstRun,
-            postBootstrapStateFromSecondRun
+            postBuildStateFromFirstRun,
+            postBuildStateFromSecondRun
           )
           expect(diff.dirtyIds).toEqual([`parent_parentAdditionForFields`])
           expect(diff.additions[`parent_parentAdditionForFields`]).toBeTruthy()
@@ -993,9 +1049,9 @@ describe(`some plugins changed between gatsby runs`, () => {
 
       it(`ensure fields are deleted when owner of field is deleted`, () => {
         const {
-          postBootstrapStateFromFirstRun,
+          postBuildStateFromFirstRun,
           preBootstrapStateFromSecondRun,
-          postBootstrapStateFromSecondRun,
+          postBuildStateFromSecondRun,
         } = getNodesSubStateByPlugins(states, [
           `gatsby-source-child-deletion-for-fields`,
           `gatsby-fields-child-deletion`,
@@ -1003,7 +1059,7 @@ describe(`some plugins changed between gatsby runs`, () => {
 
         {
           const diff = compareState(
-            postBootstrapStateFromFirstRun,
+            postBuildStateFromFirstRun,
             preBootstrapStateFromSecondRun
           )
 
@@ -1035,8 +1091,8 @@ describe(`some plugins changed between gatsby runs`, () => {
 
         {
           const diff = compareState(
-            postBootstrapStateFromFirstRun,
-            postBootstrapStateFromSecondRun
+            postBuildStateFromFirstRun,
+            postBuildStateFromSecondRun
           )
 
           expect(diff.dirtyIds).toEqual([`parent_childDeletionForFields`])
@@ -1080,39 +1136,35 @@ describe(`some plugins changed between gatsby runs`, () => {
     })
     it(`preserve disk cache if owner plugin did not changed`, () => {
       const {
-        postBootstrapStateFromFirstRun,
+        postBuildStateFromFirstRun,
         preBootstrapStateFromSecondRun,
-        postBootstrapStateFromSecondRun,
+        postBuildStateFromSecondRun,
       } = getDiskCacheSnapshotSubStateByPlugins(states, [`gatsby-cache-stable`])
 
       // plugin had something in disk cache
       expect(
-        (postBootstrapStateFromFirstRun[`gatsby-cache-stable`] || []).length
+        (postBuildStateFromFirstRun[`gatsby-cache-stable`] || []).length
       ).toEqual(1)
 
       // cache was preserved as plugin didn't change
-      expect(postBootstrapStateFromFirstRun).toEqual(
-        preBootstrapStateFromSecondRun
-      )
+      expect(postBuildStateFromFirstRun).toEqual(preBootstrapStateFromSecondRun)
 
       // finally, end result is the same
-      expect(postBootstrapStateFromFirstRun).toEqual(
-        postBootstrapStateFromSecondRun
-      )
+      expect(postBuildStateFromFirstRun).toEqual(postBuildStateFromSecondRun)
     })
 
     it(`deletes disk cache for plugin if owner plugin changed`, () => {
       const {
-        postBootstrapStateFromFirstRun,
+        postBuildStateFromFirstRun,
         preBootstrapStateFromSecondRun,
-        postBootstrapStateFromSecondRun,
+        postBuildStateFromSecondRun,
       } = getDiskCacheSnapshotSubStateByPlugins(states, [
         `gatsby-cache-unstable`,
       ])
 
       // plugin had something in disk cache
       expect(
-        (postBootstrapStateFromFirstRun[`gatsby-cache-unstable`] || []).length
+        (postBuildStateFromFirstRun[`gatsby-cache-unstable`] || []).length
       ).toEqual(1)
       // cache was deleted in second run
       expect(
@@ -1120,9 +1172,7 @@ describe(`some plugins changed between gatsby runs`, () => {
       ).toEqual(0)
 
       // finally, end result is the same
-      expect(postBootstrapStateFromFirstRun).toEqual(
-        postBootstrapStateFromSecondRun
-      )
+      expect(postBuildStateFromFirstRun).toEqual(postBuildStateFromSecondRun)
     })
   })
 })

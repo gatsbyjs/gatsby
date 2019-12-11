@@ -1,4 +1,5 @@
 plugins/**/gatsby-node.js
+plugins/**/src
 gatsby-config.js
 
 # temporary test artifacts
