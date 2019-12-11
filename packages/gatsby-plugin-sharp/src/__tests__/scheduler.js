@@ -29,7 +29,7 @@ describe(`scheduler`, () => {
   })
 
   it(`should schedule an image processing job`, async () => {
-    workerMock.mockReturnValue(Promise.resolve())
+    workerMock.mockResolvedValue()
     const { scheduleJob } = getScheduler()
 
     const job = {
@@ -64,7 +64,7 @@ describe(`scheduler`, () => {
   })
 
   it(`should fail the job when transform failed`, async () => {
-    workerMock.mockReturnValue(Promise.reject(`failed transform`))
+    workerMock.mockRejectedValue(`failed transform`)
     const { scheduleJob } = getScheduler()
 
     expect.assertions(1)
@@ -91,7 +91,7 @@ describe(`scheduler`, () => {
   })
 
   it(`Shouldn't schedule a job when outputFile already exists`, async () => {
-    workerMock.mockReturnValue(Promise.resolve())
+    workerMock.mockResolvedValue()
     const orignalSync = fs.existsSync
     fs.existsSync = jest.fn().mockReturnValue(true)
     const { scheduleJob } = getScheduler()
@@ -115,7 +115,7 @@ describe(`scheduler`, () => {
   })
 
   it(`Shouldn't schedule a job when with same outputFile is already being queued`, async () => {
-    workerMock.mockReturnValue(Promise.resolve())
+    workerMock.mockResolvedValue()
     const { scheduleJob } = getScheduler()
     const job = {
       inputPaths: [`/test-image.jpg`],
