@@ -1,6 +1,7 @@
 const report = require(`gatsby-cli/lib/reporter`)
 const { ObjectTypeComposer } = require(`graphql-compose`)
-const { getExampleObject, hasNodes } = require(`./inference-metadata`)
+const { hasNodes } = require(`./inference-metadata`)
+const { getExampleObject } = require(`./build-example-data`)
 const { addNodeInterface } = require(`../types/node-interface`)
 const { addInferredFields } = require(`./add-inferred-fields`)
 

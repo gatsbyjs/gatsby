@@ -28,7 +28,7 @@ When the development server is running for one of your Gatsby sites, open Graphi
 
 Make sure to check out the GraphiQL docs in the upper right-hand corner of the IDE. It's easy to miss them, but they're worth visiting!
 
-![A diagram pointing out where to find the GraphiQl docs](images/graphiql-docs.png)
+![A diagram pointing out where to find the GraphiQl docs](./images/graphiql-docs.png)
 
 ## Using the GraphiQL Explorer
 
