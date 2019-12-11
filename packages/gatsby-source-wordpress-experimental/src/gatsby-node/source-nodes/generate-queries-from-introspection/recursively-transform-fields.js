@@ -40,7 +40,10 @@ const filterField = ({ field, nodeListTypeNames }) => {
     // check if we will have Gatsby nodes of this type
     const connectionIsAGatsbyNode =
       nodesSubField &&
-      nodeListTypeNames.find(type => type === nodesSubField.type.ofType.name)
+      nodeListTypeNames.find(
+        type =>
+          !!nodesSubField.type.ofType && type === nodesSubField.type.ofType.name
+      )
 
     // remove connections that aren't to Gatsby nodes
     return !connectionIsAGatsbyNode
@@ -82,7 +85,7 @@ const transformField = ({ field, nodeListTypeNames }) => {
   // else if (fieldType.fields && fieldType.fields.find(field => field.)) {
 
   // }
-  else if (fieldType.fields) {
+  else if (fieldType.fields && fieldType.fields.length) {
     fieldType.fields = fieldType.fields
       .filter(innerField =>
         filterField({
