@@ -170,16 +170,23 @@ function queueImageResizing({ file, args = {}, reporter }) {
       },
     },
     { reporter }
-  ).then(() => {
-    completedImagesCounter++
-    if (progressBar) {
-      progressBar.tick()
-      if (completedImagesCounter === pendingImagesCounter) {
-        progressBar.done()
-        progressBar = null
+  )
+    .then(() => {
+      completedImagesCounter++
+      if (progressBar) {
+        progressBar.tick()
+        if (completedImagesCounter === pendingImagesCounter) {
+          progressBar.done()
+          progressBar = null
+        }
       }
-    }
-  })
+    })
+    .catch(err => {
+      reporter.panic(
+        `The transformation for image ${file.absolutePath} failed. Please make sure it exists and is readable.`,
+        err
+      )
+    })
 
   return {
     src,
@@ -247,16 +254,23 @@ function batchQueueImageResizing({ file, transforms = [], reporter }) {
       },
     },
     { reporter }
-  ).then(() => {
-    completedImagesCounter += transforms.length
-    if (progressBar) {
-      progressBar.tick(transforms.length)
-      if (completedImagesCounter === pendingImagesCounter) {
-        progressBar.done()
-        progressBar = null
+  )
+    .then(() => {
+      completedImagesCounter += transforms.length
+      if (progressBar) {
+        progressBar.tick(transforms.length)
+        if (completedImagesCounter === pendingImagesCounter) {
+          progressBar.done()
+          progressBar = null
+        }
       }
-    }
-  })
+    })
+    .catch(err => {
+      reporter.panic(
+        `The transformation for image ${file.absolutePath} failed. Please make sure it exists and is readable.`,
+        err
+      )
+    })
 
   return images.map(image => {
     return {
