@@ -7,6 +7,30 @@ const get = query =>
     `https://www.graphqlhub.com/graphql?query=${encodeURIComponent(query)}`
   )
 
+exports.createSchemaCustomization = async ({ actions }) => {
+  const typeDefs = `
+    type HNComment implements Node @childOf(types: ["HNStory", "HNComment"], many: true) {
+      text: String
+      timeISO: Date @dateformat
+      by: String
+      order: Int
+    }
+
+    type HNStory implements Node {
+      title: String
+      score: Int
+      timeISO: Date @dateformat
+      url: String
+      by: String
+      descendants: Int
+      content: String
+      domain: String
+      order: Int
+    }
+  `
+  actions.createTypes(typeDefs)
+}
+
 exports.sourceNodes = async ({
   actions,
   getNode,
