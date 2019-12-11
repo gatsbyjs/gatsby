@@ -9,8 +9,9 @@
   },
   "scripts": {
     "develop": "gatsby develop",
-    "develop-clean": "gatsby clean && gatsby develop",
+    "clean": "gatsby clean",
     "build": "gatsby build",
+    "clean-develop": "gatsby clean && gatsby develop",
     "clean-build": "gatsby clean && gatsby build",
     "start": "npm run develop",
     "serve": "gatsby serve"
