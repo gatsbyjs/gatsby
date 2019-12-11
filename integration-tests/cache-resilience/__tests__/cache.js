@@ -220,8 +220,6 @@ const build = ({ updatePlugins } = {}) => {
 
   const postBuildStateFromSecondRun = loadState(ON_POST_BUILD_FILE_PATH)
 
-  debugger
-
   return {
     nodes: {
       preBootstrapStateFromFirstRun: preBootstrapStateFromFirstRun.nodes,
