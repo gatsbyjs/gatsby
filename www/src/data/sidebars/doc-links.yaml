@@ -695,7 +695,7 @@
       link: /docs/glossary/
       items:
         - title: Node.js
-          link: /docs/glossary/nodejs
+          link: /docs/glossary/node
         - title: React
           link: /docs/glossary/react
     - title: Gatsby Telemetry
