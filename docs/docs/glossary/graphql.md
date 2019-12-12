@@ -40,7 +40,7 @@ And its response contains only what you've requested.
 {
   "data": {
     "article": {
-      "title": "Gatsby promotes GraphQL adoption"
+      "title": "Gatsby promotes GraphQL adoption",
       "body": "...",
       "reporter": {
         "name": "Jane Gatsby",
