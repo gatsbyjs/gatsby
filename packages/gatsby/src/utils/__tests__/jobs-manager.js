@@ -244,10 +244,12 @@ describe(`Jobs manager`, () => {
     it(`should fail when the worker returns a non object result`, async () => {
       const { enqueueJob } = jobManager
       const jobArgs = createInternalMockJob()
+      const jobArgs2 = createInternalMockJob({ inputPaths: [] })
 
-      worker.TEST_JOB.mockResolvedValue(`my result`)
+      worker.TEST_JOB.mockResolvedValueOnce(`my result`)
+      worker.TEST_JOB.mockResolvedValueOnce(null)
 
-      expect.assertions(1)
+      expect.assertions(2)
       try {
         await enqueueJob(jobArgs)
       } catch (err) {
@@ -255,6 +257,7 @@ describe(`Jobs manager`, () => {
           `[Error: Result of a worker should be an object, type of "string" was given]`
         )
       }
+      await expect(enqueueJob(jobArgs2)).resolves.toBeNull()
     })
   })
 
