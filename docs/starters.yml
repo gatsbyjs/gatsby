@@ -4716,6 +4716,35 @@
     - ESLint(Airbnb) for linting
     - Prettier code formatting
     - gh-pages for deploying to GitHub pages
+- url: https://www.cryptocatalyst.net/
+  repo: https://github.com/n8tb1t/gatsby-starter-cryptocurrency
+  description: A full-fledged cryptocurrency Gatsby starter portal with landing page, blog, roadmap, devs team, and docs.
+  tags:
+    - Linting
+    - Blog
+    - Styling:SCSS
+    - Markdown
+    - Pagination
+    - PWA
+    - SEO
+  features:
+    - Beautiful Mobile-first design.
+    - modular SCSS styles.
+    - Configurable color scheme.
+    - Advanced config options.
+    - Advanced landing page.
+    - Blog Component.
+    - Live comments.
+    - Roadmap component.
+    - Developers page component.
+    - Algolia advanced search index, with content chunks.
+    - Docs component.
+    - No outdated codebase, use only react hooks.
+    - Easy to modify react components.
+    - SEO (Sitemap, OpenGraph tags, Twitter tags)
+    - Google Analytics Support
+    - Offline Support & WebApp Manifest
+    - Easy to modify assets.
 - url: https://chronoblog-profile.netlify.com/
   repo: https://github.com/Ganevru/gatsby-starter-chronoblog-profile
   description: This starter will help you launch a personal website with a simple text feed on the main page. This starter looks simple and neat, but at the same time, it has great potential for organizing your content using tags, dates, and search. The homepage is organized in compact feeds. The display of content in these feeds is based on the tags of this content (for example, only content with a podcast tag gets into the feed with podcasts).
