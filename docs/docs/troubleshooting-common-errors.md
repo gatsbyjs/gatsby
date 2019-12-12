@@ -18,6 +18,8 @@ This will delete the `.cache` folder, as well as the `public` folder for you. Ru
 
 You may also want to refer to the dedicated guide on [Debugging Cache Issues](/docs/debugging-cache-issues/).
 
+> For additional discussion on caching and persistence issues, refer to the [umbrella issue](https://github.com/gatsbyjs/gatsby/issues/11747).
+
 ## Errors with common plugin configurations
 
 Plugins [extend Gatsby's functionality](/docs/what-is-a-plugin/), because they introduce new behavior it's possible that an installed plugin introduces errors.
@@ -26,13 +28,14 @@ Plugins [extend Gatsby's functionality](/docs/what-is-a-plugin/), because they i
 
 If you encounter a webpack error that says `Generating SSR bundle failed` after installing a plugin and trying to run `gatsby develop` or `gatsby build`, it's possible you haven't yet installed all the packages you need.
 
-For some plugins like styled-components, emotion, or SASS, it won't be enough to only install the plugin, you also need to install libraries they rely on. The official installation instructions should guide you to install all needed libraries when you install the plugin, but some tutorials or blog posts you find at other sources may not.
+For some plugins like emotion, styled-components, or SASS, it won't be enough to only install the plugin, you also need to install libraries they rely on. The official installation instructions should guide you to install all needed libraries when you install the plugin, but some tutorials or blog posts you find at other sources may not.
 
 Here are some examples of plugins that require you to install more than just the plugin:
 
 - [gatsby-plugin-emotion](/packages/gatsby-plugin-emotion/): `@emotion/core`, and `@emotion/styled`
 - [gatsby-plugin-styled-components](/packages/gatsby-plugin-styled-components/): `styled-components`, and `babel-plugin-styled-components`
 - [gatsby-plugin-sass](/packages/gatsby-plugin-sass/): `node-sass`, or `dart-sass`
+- [gatsby-plugin-material-ui](/packages/gatsby-plugin-material-ui/): `@material-ui/styles`
 - [gatsby-image](/packages/gatsby-image/): `gatsby-transformer-sharp`, and `gatsby-plugin-sharp`
 
 Rather than packaging up the other dependent libraries alongside these plugins, they can stay smaller in size when they are published and are able to rely on alternative implementations. One example is `gatsby-plugin-sass` that can use either the Node.js or Dart implementations of SASS.
@@ -144,7 +147,9 @@ allMdx {
 
 In the first code example, the `image` field was not modified (using Gatsby terminology, transformed) by a plugin to add subfields, so it would only return a string. `gatsby-plugin-sharp` and `gatsby-transformer-sharp` can be included before other plugins that would manipulate or create image nodes (like `gatsby-source-filesystem` or `gatsby-source-contentful`) to ensure that they are present before Gatsby tries to modify them and add the needed fields like `childImageSharp`.
 
-Another possibility is that empty strings are used for image paths somewhere in your site, and when Gatsby constructs a GraphQL schema it [infers](/docs/glossary#inference) the wrong type because the empty string doesn't look like a path.
+You can read more about how images are added to the GraphQL schema in the guide on [processing external images](/docs/preprocessing-external-images/).
+
+Another possibility that could cause this issue is from empty strings used for image paths somewhere in your site. If this is the case, when Gatsby constructs a GraphQL schema it may [infer](/docs/glossary#inference) the wrong type because the empty string doesn't look like a file path.
 
 ### Problems installing `sharp` with `gatsby-plugin-sharp` - gyp ERR! build error
 
@@ -161,6 +166,8 @@ npm install
 ```
 
 The version of Node.js that's used to install sharp needs to match the version of Node.js that is run, so clearing `node_modules` and reinstalling often resolves the problem.
+
+> For more discussion around problems with sharp installation and image processing, refer to [this issue](https://github.com/gatsbyjs/gatsby/issues/10841).
 
 ### Incompatible library version: sharp.node requires version X or later, but Y provides version Z
 
