@@ -7,30 +7,26 @@ jest.mock(`got`)
 const got = require(`got`)
 const fs = require(`fs-extra`)
 
-const getScheduler = () => {
-  let scheduler
-  jest.isolateModules(() => {
-    scheduler = require(`../scheduler`)
-  })
-
-  return scheduler
-}
-
 const workerMock = require(`../gatsby-worker`).IMAGE_PROCESSING
 
 describe(`scheduler`, () => {
   let boundActionCreators = {}
+  let scheduler
   beforeEach(() => {
     workerMock.mockReset()
     boundActionCreators = {
       createJob: jest.fn(),
       endJob: jest.fn(),
     }
+
+    jest.isolateModules(() => {
+      scheduler = require(`../scheduler`)
+    })
   })
 
   it(`should schedule an image processing job`, async () => {
     workerMock.mockResolvedValue()
-    const { scheduleJob } = getScheduler()
+    const { scheduleJob } = scheduler
 
     const job = {
       inputPaths: [`/test-image[new].jpg`],
@@ -65,7 +61,7 @@ describe(`scheduler`, () => {
 
   it(`should fail the job when transform failed`, async () => {
     workerMock.mockRejectedValue(`failed transform`)
-    const { scheduleJob } = getScheduler()
+    const { scheduleJob } = scheduler
 
     expect.assertions(1)
     try {
@@ -94,7 +90,7 @@ describe(`scheduler`, () => {
     workerMock.mockResolvedValue()
     const orignalSync = fs.existsSync
     fs.existsSync = jest.fn().mockReturnValue(true)
-    const { scheduleJob } = getScheduler()
+    const { scheduleJob } = scheduler
     const job = {
       inputPaths: [`/test-image.jpg`],
       outputDir: `/public/static/`,
@@ -116,7 +112,7 @@ describe(`scheduler`, () => {
 
   it(`Shouldn't schedule a job when with same outputFile is already being queued`, async () => {
     workerMock.mockResolvedValue()
-    const { scheduleJob } = getScheduler()
+    const { scheduleJob } = scheduler
     const job = {
       inputPaths: [`/test-image.jpg`],
       outputDir: `/public/static/`,
@@ -154,7 +150,7 @@ describe(`scheduler`, () => {
     })
 
     it(`should offload sharp transforms to the cloud`, async () => {
-      const { scheduleJob } = getScheduler()
+      const { scheduleJob } = scheduler
       const job = {
         inputPaths: [`/test-image.jpg`],
         outputDir: `/public/static/`,
