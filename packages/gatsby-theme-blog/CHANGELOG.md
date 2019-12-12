@@ -3,6 +3,50 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.2.9...gatsby-theme-blog@1.2.10) (2019-12-11)
+
+**Note:** Version bump only for package gatsby-theme-blog
+
+## [1.2.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.2.7...gatsby-theme-blog@1.2.9) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-theme-blog
+
+## [1.2.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.2.7...gatsby-theme-blog@1.2.8) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-theme-blog
+
+## [1.2.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.2.6...gatsby-theme-blog@1.2.7) (2019-12-09)
+
+### Bug Fixes
+
+- **gatsby-theme-blog:** Fix home-footer in Night mode ([#19977](https://github.com/gatsbyjs/gatsby/issues/19977)) ([06e650d](https://github.com/gatsbyjs/gatsby/commit/06e650d))
+
+## [1.2.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.2.5...gatsby-theme-blog@1.2.6) (2019-12-05)
+
+**Note:** Version bump only for package gatsby-theme-blog
+
+## [1.2.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.2.4...gatsby-theme-blog@1.2.5) (2019-12-02)
+
+**Note:** Version bump only for package gatsby-theme-blog
+
+## [1.2.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.2.3...gatsby-theme-blog@1.2.4) (2019-11-28)
+
+### Bug Fixes
+
+- **gatsby-theme-blog:** Dark/light mode switch icon is out of place ([#19813](https://github.com/gatsbyjs/gatsby/issues/19813)) ([4614bce](https://github.com/gatsbyjs/gatsby/commit/4614bce))
+
+## [1.2.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.2.2...gatsby-theme-blog@1.2.3) (2019-11-26)
+
+**Note:** Version bump only for package gatsby-theme-blog
+
+## [1.2.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.1.29...gatsby-theme-blog@1.2.2) (2019-11-25)
+
+**Note:** Version bump only for package gatsby-theme-blog
+
+## [1.1.29](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.1.28...gatsby-theme-blog@1.1.29) (2019-11-25)
+
+**Note:** Version bump only for package gatsby-theme-blog
+
 ## [1.1.28](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.1.27...gatsby-theme-blog@1.1.28) (2019-11-22)
 
 **Note:** Version bump only for package gatsby-theme-blog

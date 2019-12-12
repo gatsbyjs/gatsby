@@ -413,6 +413,22 @@ exports.createPages = ({ graphql, actions, reporter }) => {
     isPermanent: true,
   })
 
+  createRedirect({
+    fromPath: `/docs/centralizing-your-sites-navigation/`,
+    toPath: `/docs/creating-dynamic-navigation/`,
+    isPermanent: true,
+  })
+
+  /* This redirects from a now removed stub that 
+  showed up in the first page of Google results. 
+  Can be removed if SEO is no longer impacted. */
+
+  createRedirect({
+    fromPath: `/docs/rendering-sidebar-navigation-dynamically/`,
+    toPath: `/docs/creating-dynamic-navigation/`,
+    isPermanent: true,
+  })
+
   Object.entries(startersRedirects).forEach(([fromSlug, toSlug]) => {
     createRedirect({
       fromPath: `/starters${fromSlug}`,
@@ -1040,23 +1056,6 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
           )
         })
     }
-  } else if (node.internal.type === `CreatorsYaml`) {
-    // Creator pages
-    const validTypes = {
-      individual: `people`,
-      agency: `agencies`,
-      company: `companies`,
-    }
-
-    if (!validTypes[node.type]) {
-      throw new Error(
-        `Creators must have a type of “individual”, “agency”, or “company”, but invalid type “${node.type}” was provided for ${node.name}.`
-      )
-    }
-    slug = `/creators/${validTypes[node.type]}/${slugify(node.name, {
-      lower: true,
-    })}`
-    createNodeField({ node, name: `slug`, value: slug })
   }
   return null
 }

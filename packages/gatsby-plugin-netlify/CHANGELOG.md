@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.30](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@2.1.28...gatsby-plugin-netlify@2.1.30) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-plugin-netlify
+
+## [2.1.29](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@2.1.28...gatsby-plugin-netlify@2.1.29) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-plugin-netlify
+
+## [2.1.28](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@2.1.27...gatsby-plugin-netlify@2.1.28) (2019-12-09)
+
+**Note:** Version bump only for package gatsby-plugin-netlify
+
+## [2.1.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@2.1.26...gatsby-plugin-netlify@2.1.27) (2019-11-26)
+
+**Note:** Version bump only for package gatsby-plugin-netlify
+
+## [2.1.26](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@2.1.25...gatsby-plugin-netlify@2.1.26) (2019-11-25)
+
+**Note:** Version bump only for package gatsby-plugin-netlify
+
 ## [2.1.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@2.1.24...gatsby-plugin-netlify@2.1.25) (2019-11-15)
 
 **Note:** Version bump only for package gatsby-plugin-netlify

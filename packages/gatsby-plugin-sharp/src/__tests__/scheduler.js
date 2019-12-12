@@ -40,7 +40,7 @@ describe(`scheduler`, () => {
       },
       contentDigest: `digest`,
     }
-    await scheduleJob(job, boundActionCreators, {}, false, `value`)
+    await scheduleJob(job, boundActionCreators, `value`, {}, false)
 
     expect(createProgress).not.toHaveBeenCalled()
     expect(workerMock).toHaveBeenCalledWith([job.inputPath], job.outputDir, {
@@ -110,6 +110,7 @@ describe(`scheduler`, () => {
         },
         boundActionCreators,
         {},
+        {},
         false
       )
     } catch (err) {
@@ -147,7 +148,7 @@ describe(`scheduler`, () => {
       },
       contentDigest: `digest`,
     }
-    const job1Promise = scheduleJob(job1, boundActionCreators, {}, false)
+    const job1Promise = scheduleJob(job1, boundActionCreators, {}, {}, false)
 
     const job2 = {
       inputPath: `/test-image.jpg`,
@@ -158,7 +159,7 @@ describe(`scheduler`, () => {
       },
       contentDigest: `digest`,
     }
-    const job2Promise = scheduleJob(job2, boundActionCreators, {}, false)
+    const job2Promise = scheduleJob(job2, boundActionCreators, {}, {}, false)
 
     await Promise.all([job1Promise, job2Promise])
 

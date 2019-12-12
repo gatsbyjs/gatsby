@@ -14,10 +14,10 @@ export interface CustomEventArgs {
   action: string
   label?: string
   value?: string
-  nonInteraction: boolean
-  transport: "beacon" | "xhr" | "image"
-  hitCallback: Function
-  callbackTimeout: Number
+  nonInteraction?: boolean
+  transport?: "beacon" | "xhr" | "image"
+  hitCallback?: Function
+  callbackTimeout?: Number
 }
 
 export function trackCustomEvent(args: CustomEventArgs): void

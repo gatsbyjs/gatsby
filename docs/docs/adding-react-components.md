@@ -75,7 +75,7 @@ To learn more about solutions for supporting SSR and client-side libraries, chec
 
 Some packages expect `window` or another browser global to be defined. These packages will have to be patched.
 
-You can learn how to patch these packages on the [Debugging HTML Builds documentation](docs/debugging-html-builds/#fixing-third-party-modules).
+You can learn how to patch these packages on the [Debugging HTML Builds documentation](/docs/debugging-html-builds/#fixing-third-party-modules).
 
 ### Components without server-side rendering
 

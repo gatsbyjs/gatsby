@@ -1,24 +1,24 @@
 {
   "name": "gatsby-transformer-sharp",
   "description": "Gatsby transformer plugin for images using Sharp",
-  "version": "2.3.5",
+  "version": "2.3.9",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.7.2",
-    "bluebird": "^3.7.1",
+    "@babel/runtime": "^7.7.6",
+    "bluebird": "^3.7.2",
     "fs-extra": "^8.1.0",
     "potrace": "^2.1.2",
     "probe-image-size": "^4.1.1",
     "semver": "^5.7.1",
-    "sharp": "^0.23.2"
+    "sharp": "^0.23.4"
   },
   "devDependencies": {
-    "@babel/cli": "^7.7.0",
-    "@babel/core": "^7.7.2",
-    "babel-preset-gatsby-package": "^0.2.11",
+    "@babel/cli": "^7.7.5",
+    "@babel/core": "^7.7.5",
+    "babel-preset-gatsby-package": "^0.2.14",
     "cross-env": "^5.2.1"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp#readme",
@@ -30,7 +30,7 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "gatsby": "^2.12.0",
+    "gatsby": "^2.12.1",
     "gatsby-plugin-sharp": "^2.0.0-beta.3"
   },
   "repository": {
