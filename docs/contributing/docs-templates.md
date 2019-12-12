@@ -437,7 +437,7 @@ This section could also include before-and-after examples of data when the plugi
 
 If this is a source plugin README, source plugins ought to allow people to query for data within their Gatsby site. Please include code examples to show how to query for data using your source plugin.
 
-If this is a theme that requires data in a specific format in order to match an existing query include those examples here.
+If this is a theme that requires data in a specific format in order to match an existing query, include those examples here.
 
 ## How to run tests
 
