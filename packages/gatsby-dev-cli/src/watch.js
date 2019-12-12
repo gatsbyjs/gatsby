@@ -57,6 +57,15 @@ async function watch(
         }
       }
 
+      // When the gatsby binary is copied over, it is not setup with the executable
+      // permissions that it is given when installed via yarn.
+      // This fixes the issue where after running gatsby-dev, running `yarn gatsby develop`
+      // fails with a permission issue.
+      // @fixes https://github.com/gatsbyjs/gatsby/issues/18809
+      if (/bin\/gatsby.js$/.test(newPath)) {
+        fs.chmodSync(newPath, `0755`)
+      }
+
       numCopied += 1
       if (!quiet) {
         console.log(`Copied ${oldPath} to ${newPath}`)
@@ -147,6 +156,7 @@ async function watch(
     /\.git/i,
     /\.DS_Store/,
     /[/\\]__tests__[/\\]/i,
+    /[/\\]__mocks__[/\\]/i,
     /\.npmrc/i,
   ].concat(
     allPackagesToWatch.map(p => new RegExp(`${p}[\\/\\\\]src[\\/\\\\]`, `i`))

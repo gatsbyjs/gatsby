@@ -427,7 +427,7 @@ And there you go! A working, albeit small, blog!
 
 Try playing more with the site. Try adding some more markdown files. Explore
 querying other data from the `MarkdownRemark` nodes and adding them to the
-frontpage or blog posts pages.
+front page or blog posts pages.
 
 In this part of the tutorial, you've learned the foundations of building with
 Gatsby's data layer. You've learned how to _source_ and _transform_ data using

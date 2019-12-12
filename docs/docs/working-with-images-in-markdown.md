@@ -181,7 +181,11 @@ npm install --save gatsby-remark-images gatsby-plugin-sharp
 
 Also make sure that `gatsby-source-filesystem` is installed and points at the directory where your images are located.
 
-Configure the plugins in your `gatsby-config` file. As with the previous example, either `Remark` or `MDX` can be used; `gatsby-plugin-mdx` will be used in this case. Put the `gatsby-remark-images` plugin within the `gatsbyRemarkPlugins` option field of `gatsby-plugin-mdx`.
+Configure the plugins in your `gatsby-config` file. As with the previous example, either `Remark` or `MDX` can be used.
+
+### Using the MDX Plugin
+
+The `gatsby-plugin-mdx` plugin will be used in the example below. Put the `gatsby-remark-images` plugin within the `gatsbyRemarkPlugins` option field of `gatsby-plugin-mdx`.
 
 > Note: This example configuration assumes your images and Markdown pages are sourced from the same directory. Check out the section on [configuring for different directories](#configuring-for-images-and-posts-in-different-directories) for additional help.
 
@@ -212,7 +216,38 @@ module.exports = {
 }
 ```
 
-With this configuration, you can use the default Markdown syntax for images. They will be processed by Sharp and appear as if you placed them in a `gatsby-image` component.
+### Using the Transformer Remark Plugin
+
+Here is a similar example using the `gatsby-transformer-remark` plugin instead of `gatsby-plugin-mdx`. Put the `gatsby-remark-images` plugin within the `plugins` option field of `gatsby-transformer-remark`.
+
+```js:title=gatsby-config.js
+module.exports = {
+  plugins: [
+    `gatsby-plugin-sharp`,
+    {
+      resolve: `gatsby-transformer-remark`,
+      options: {
+        plugins: [
+          {
+            resolve: `gatsby-remark-images`,
+            options: {
+              maxWidth: 800,
+            },
+          },
+        ],
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `${__dirname}/src/posts`,
+      },
+    },
+  ],
+}
+```
+
+With the configurations above, you can use the default Markdown syntax for images. They will be processed by Sharp and appear as if you placed them in a `gatsby-image` component.
 
 ```md
 ![Hopper The Rabbit](./rabbit-friend.png)

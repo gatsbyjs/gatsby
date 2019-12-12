@@ -620,6 +620,7 @@
   description: Single page starter based on the Photon site template
   tags:
     - HTML5UP
+    - Onepage
     - Styling:SCSS
   features:
     - Designed by HTML5 UP
@@ -747,6 +748,7 @@
   description: Single page starter based on the Stellar site template
   tags:
     - HTML5UP
+    - Onepage
     - Styling:SCSS
   features:
     - Designed by HTML5 UP
@@ -759,6 +761,7 @@
   description: Single page starter based on the Strata site template
   tags:
     - Portfolio
+    - Onepage
     - HTML5UP
     - Styling:SCSS
   features:
@@ -1694,19 +1697,24 @@
     - SVG to React component
     - Ueno's TSlint
     - Decorators
-- url: https://gatsby-sseon-starter.netlify.com/
-  repo: https://github.com/SeonHyungJo/gatsby-sseon-starter
-  description: Simple starter template for Gatsby
+- url: https://gatsby-snyung-starter.netlify.com/
+  repo: https://github.com/SeonHyungJo/gatsby-snyung-starter
+  description: Basic starter template for You
   tags:
-    - Blog
-    - Disqus
+    - CMS:Contentful
     - Markdown
+    - Linting
+    - Pagination
+    - Portfolio
+    - SEO
     - Styling:SCSS
+    - Transitions
   features:
     - SASS/SCSS
-    - Comes with React Helmet for adding site meta tags
-    - Add Disqus
+    - Add Utterances
     - Nice Pagination
+    - Comes with React Helmet for adding site meta tags
+    - Create Yout Name Card for writing meta data
 - url: https://gatsby-contentstack-starter.netlify.com/
   repo: https://github.com/contentstack/gatsby-starter-contentstack
   description: A Gatsby starter powered by Headless CMS Contentstack.
@@ -4601,3 +4609,134 @@
     - Styled Components
     - Coinbase, Fortmatic, Metamask, WalletConnect, and more
     - dFuse Blockchain Streaming and Notifications
+- url: https://gatsby-starter-theme-antv.netlify.com
+  repo: https://github.com/antvis/gatsby-starter-theme-antv
+  description: Gatsby's starter of antv theme
+  tags:
+    - Documentation
+    - Markdown
+    - Styling:Other
+  features:
+    - ⚛ Prerendered static site
+    - 🌎 Internationalization support by i18next
+    - 📝 Markdown-based documentation and menus
+    - 🎬 Examples with live playground
+    - 🏗 Unified Theme and Layout
+    - 🆙 Easy customized header nav
+    - 🧩 Built-in home page components
+- url: https://gatsby-starter-cafe.netlify.com
+  repo: https://github.com/crolla97/gatsby-starter-cafe
+  description: Gatsby starter for creating a single page cafe website using Contentful and Leaflet
+  tags:
+    - CMS:Contentful
+    - Styling:SCSS
+    - Landing Page
+    - Onepage
+  features:
+    - Leaflet interactive map
+    - Instagram Feed
+    - Contentful for menu item storage
+    - Responsive design
+- url: https://gatsby-firebase-simple-auth.netlify.com/
+  repo: https://github.com/marcomelilli/gatsby-firebase-simple-auth
+  description: A simple Firebase Authentication Starter with protected routes
+  tags:
+    - Firebase
+    - Authentication
+    - Styling:Tailwind
+  features:
+    - Authentication with Firebase
+    - Protected Routes with Authorization
+- url: https://demo.gatsbystorefront.com/
+  repo: https://github.com/GatsbyStorefront/gatsby-starter-storefront-shopify
+  description: Lightning fast PWA storefront for Shopify
+  tags:
+    - CMS:Headless
+    - Shopify
+    - SEO
+    - PWA
+    - eCommerce
+    - Styling:CSS-in-JS
+  features:
+    - Gatsby Storefront
+    - gatsby-theme-storefront-shopify
+    - Shopify Integration
+    - Shopping Cart
+    - PWA
+    - Optimized images with gatsby-image.
+    - SEO
+    - A11y
+- url: https://keturah.netlify.com/
+  repo: https://github.com/giocare/gatsby-starter-keturah
+  description: A portfolio starter for developers
+  tags:
+    - Portfolio
+    - SEO
+    - Markdown
+  features:
+    - Target Audience Developers
+    - Designed To Resemble A Terminal And Text Editor
+    - Responsive Design
+    - FontAwesome Icon Library
+    - Easily Customize Content Using Markdown Files
+    - SEO Friendly Component
+    - Social Media Icons Provided
+- url: https://gatsby-lander.surge.sh/
+  repo: https://github.com/codebushi/gatsby-starter-lander
+  description: Single page starter built with Tailwind CSS
+  tags:
+    - Onepage
+    - Linting
+    - Styling:Tailwind
+  features:
+    - Simple One Page Site
+    - Landing Page Design
+    - Fully Responsive
+    - Styling with Tailwind
+- url: https://gatsby-starter-papan01.netlify.com/
+  repo: https://github.com/papan01/gatsby-starter-papan01
+  description: A Gatsby starter for creating a markdown blog.
+  tags:
+    - Linting
+    - Blog
+    - Styling:SCSS
+    - Markdown
+    - Pagination
+    - PWA
+    - SEO
+  features:
+    - SSR React Code Splitting(loadable-components)
+    - Theme Toggle(light/dark)
+    - Pagination
+    - SEO(Sitemap, Schema.org, OpenGraph tags, Twitter tag)
+    - Web application manifest and offline support
+    - Google Analytics
+    - Disqus
+    - RSS
+    - ESLint(Airbnb) for linting
+    - Prettier code formatting
+    - gh-pages for deploying to GitHub pages
+- url: https://chronoblog-profile.netlify.com/
+  repo: https://github.com/Ganevru/gatsby-starter-chronoblog-profile
+  description: This starter will help you launch a personal website with a simple text feed on the main page. This starter looks simple and neat, but at the same time, it has great potential for organizing your content using tags, dates, and search. The homepage is organized in compact feeds. The display of content in these feeds is based on the tags of this content (for example, only content with a podcast tag gets into the feed with podcasts).
+  tags:
+    - Blog
+    - Portfolio
+    - MDX
+    - Markdown
+    - SEO
+    - Styling:CSS-in-JS
+    - Linting
+  features:
+    - Specially designed to create a personal website (in a simple and strict "text" style)
+    - Universal text feed divided into categories
+    - Search and Tags for organizing content
+    - A simple change of primary and secondary colors of the site, fonts, radius of curvature of elements, etc (thanks to Theme UI theming)
+    - Clean and Universal UI
+    - Mobile friendly, all elements and custom images are adapted to any screen
+    - Light/Dark mode
+    - Easy customization of icons and links to your social networks
+    - MDX for the main menu of the site, footer and other elements of the site
+    - MDX for pages and content
+    - Code syntax highlighting
+    - SEO (OpenGraph and Twitter) out of the box with default settings that make sense (thanks to React Helmet)

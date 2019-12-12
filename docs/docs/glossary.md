@@ -34,7 +34,7 @@ A tool that lets you write the most modern [JavaScript](#javascript), and on [bu
 
 ### Backend
 
-The behind the scenes that the [public](#public) do not see. This often refers to the control panel of your [CMS](#cms). These are often powered by server-side programming languages such as Node.js, PHP, Go, ASP.net, Ruby, or Java.
+The behind the scenes that the [public](#public) does not see. This often refers to the control panel of your [CMS](#cms). These are often powered by server-side programming languages such as Node.js, PHP, Go, ASP.net, Ruby, or Java.
 
 ### Build
 
@@ -214,7 +214,7 @@ A way of writing HTML content with plain text, using special characters to denot
 
 Gatsby uses [data nodes](/docs/node-interface/) to represent a single piece of data. A [data source](#data-source) will create multiple nodes.
 
-### Node.js
+### [Node.js](/docs/glossary/node)
 
 A program that lets you run [JavaScript](#javascript) on your computer. Gatsby is powered by Node.
 
@@ -260,7 +260,7 @@ The process of requesting specific data from somewhere. With Gatsby you normally
 
 ## R
 
-### React
+### [React](/docs/glossary/react)
 
 A code library (written with [JavaScript](#javascript)) for building user interfaces. It’s the framework that [Gatsby](#gatsby) uses to build pages and structure content.
 
