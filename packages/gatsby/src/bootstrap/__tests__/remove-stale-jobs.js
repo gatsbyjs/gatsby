@@ -12,9 +12,6 @@ describe(`remove-stale-jobs`, () => {
 
   beforeEach(() => {
     state = {
-      program: {
-        directory: __dirname,
-      },
       jobsV2: {
         done: new Map(),
         stale: new Map(),
@@ -27,7 +24,7 @@ describe(`remove-stale-jobs`, () => {
 
   it(`should remove stale jobs from done cache`, () => {
     const job = {
-      inputPaths: [`src/myfile.js`],
+      inputPaths: [`/src/myfile.js`],
     }
 
     state.jobsV2.done.set(`1234`, job)
@@ -43,7 +40,7 @@ describe(`remove-stale-jobs`, () => {
   it(`should remove stale jobs from pending cache`, () => {
     const data = {
       job: {
-        inputPaths: [`src/myfile.js`],
+        inputPaths: [`/src/myfile.js`],
         contentDigest: `1234`,
       },
       plugin: {
@@ -65,7 +62,7 @@ describe(`remove-stale-jobs`, () => {
   it(`should enqueue pending jobs`, () => {
     const data = {
       job: {
-        inputPaths: [`src/myfile.js`],
+        inputPaths: [`/src/myfile.js`],
         contentDigest: `1234`,
       },
       plugin: {

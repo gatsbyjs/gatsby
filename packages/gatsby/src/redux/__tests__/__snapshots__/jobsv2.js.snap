@@ -3,18 +3,18 @@
 exports[`Job v2 actions/reducer should enqueueJob 1`] = `
 Object {
   "active": Set {
-    "c104a6cd55b060a801b2c838e8a7bf40",
+    "aa9932d515707737e953173cd9c77306",
   },
   "done": Map {},
   "stale": Map {
-    "c104a6cd55b060a801b2c838e8a7bf40" => Object {
+    "aa9932d515707737e953173cd9c77306" => Object {
       "job": Object {
         "args": Object {},
-        "contentDigest": "c104a6cd55b060a801b2c838e8a7bf40",
+        "contentDigest": "aa9932d515707737e953173cd9c77306",
         "id": "1234",
         "inputPaths": Array [],
         "name": "TEST_JOB",
-        "outputDir": "public/static",
+        "outputDir": "/public/static",
         "plugin": Object {
           "isLocal": false,
           "name": "test-plugin",
@@ -38,11 +38,11 @@ exports[`Job v2 actions/reducer should enqueueJob 2`] = `
     Array [
       Object {
         "args": Object {},
-        "contentDigest": "c104a6cd55b060a801b2c838e8a7bf40",
+        "contentDigest": "aa9932d515707737e953173cd9c77306",
         "id": "1234",
         "inputPaths": Array [],
         "name": "TEST_JOB",
-        "outputDir": "public/static",
+        "outputDir": "/public/static",
         "plugin": Object {
           "isLocal": false,
           "name": "test-plugin",

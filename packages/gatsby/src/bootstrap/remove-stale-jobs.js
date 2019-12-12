@@ -6,7 +6,7 @@ module.exports = state => {
 
   // If any of our finished jobs are stale we remove them to keep our cache small
   state.jobsV2.done.forEach((job, contentDigest) => {
-    if (isJobStale(job, state.program.directory)) {
+    if (isJobStale(job)) {
       actions.push(internalActions.removeStaleJob(contentDigest))
     }
   })
@@ -14,7 +14,7 @@ module.exports = state => {
   // If any of our pending jobs do not have an existing inputPath or the inputPath changed
   // we remove it from the queue
   state.jobsV2.stale.forEach(({ job, plugin }) => {
-    if (isJobStale(job, state.program.directory)) {
+    if (isJobStale(job)) {
       actions.push(internalActions.removeStaleJob(job.contentDigest))
     } else {
       actions.push(publicActions.createJobV2(job, plugin))

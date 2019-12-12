@@ -16,23 +16,14 @@ const jobsInProcess = new Map()
 
 /**
  * @param {string} filePath
- * @param {string} rootDir
  * @return {string}
  */
-const convertPathsToRelative = (filePath, rootDir) => {
+const convertPathsToAbsolute = filePath => {
   if (!path.isAbsolute(filePath)) {
-    filePath = path.resolve(rootDir, filePath)
+    throw new Error(`${filePath} should be an absolute path.`)
   }
 
-  const relative = path.relative(rootDir, filePath)
-
-  if (relative.includes(`..`)) {
-    throw new Error(
-      `${filePath} is not inside ${rootDir}. Make sure your files are inside your gatsby project.`
-    )
-  }
-
-  return slash(relative)
+  return slash(filePath)
 }
 /**
  * @param {string} path
@@ -119,10 +110,9 @@ const runJob = job => {
  *
  * @param {JobInput|InternalJob} job
  * @param {{name: string, version: string, resolve: string}} plugin
- * @param {string} rootDir
  * @return {InternalJob}
  */
-exports.createInternalJob = (job, plugin, rootDir) => {
+exports.createInternalJob = (job, plugin) => {
   // It looks like we already have an augmented job so we shouldn't redo this work
   // @ts-ignore
   if (job.id && job.contentDigest) {
@@ -136,7 +126,7 @@ exports.createInternalJob = (job, plugin, rootDir) => {
   // are still processing their hashes
   const inputPathsWithContentDigest = inputPaths.map(path => {
     return {
-      path: convertPathsToRelative(path, rootDir),
+      path: convertPathsToAbsolute(path),
       contentDigest: createFileHash(path),
     }
   })
@@ -147,7 +137,7 @@ exports.createInternalJob = (job, plugin, rootDir) => {
     name,
     contentDigest: ``,
     inputPaths: inputPathsWithContentDigest,
-    outputDir: convertPathsToRelative(outputDir, rootDir),
+    outputDir: convertPathsToAbsolute(outputDir),
     args,
     plugin: {
       name: plugin.name,
@@ -231,17 +221,15 @@ exports.waitUntilAllJobsComplete = () => {
 
 /**
  * @param {Partial<InternalJob>  & {inputPaths: InternalJob['inputPaths']}} job
- * @param {string} rootDir
  * @return {boolean}
  */
-exports.isJobStale = (job, rootDir) => {
+exports.isJobStale = job => {
   const areInputPathsStale = job.inputPaths.some(inputPath => {
-    const fullPath = path.join(rootDir, inputPath.path)
-    if (!fs.existsSync(fullPath)) {
+    if (!fs.existsSync(inputPath.path)) {
       return true
     }
 
-    const fileHash = createFileHash(fullPath)
+    const fileHash = createFileHash(inputPath.path)
     return fileHash !== inputPath.contentDigest
   })
 

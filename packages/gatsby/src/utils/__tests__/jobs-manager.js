@@ -1,6 +1,6 @@
 const path = require(`path`)
 const _ = require(`lodash`)
-const ROOT_DIR = __dirname
+const slash = require(`slash`)
 let jobManager = null
 
 // I need a mock to spy on
@@ -24,20 +24,12 @@ jest.mock(
   { virtual: true }
 )
 
-jest.mock(`../../redux`, () => {
-  return {
-    store: {
-      getState: jest.fn(),
-    },
-  }
-})
 jest.mock(`uuid/v4`, () =>
   jest.fn().mockImplementation(jest.requireActual(`uuid/v4`))
 )
 
 const worker = require(`/node_modules/gatsby-plugin-test/gatsby-worker.js`)
 const reporter = require(`gatsby-cli/lib/reporter`)
-const { store } = require(`../../redux`)
 const hasha = require(`hasha`)
 const fs = require(`fs-extra`)
 const pDefer = require(`p-defer`)
@@ -55,10 +47,10 @@ const createMockJob = (overrides = {}) => {
   return {
     name: `TEST_JOB`,
     inputPaths: [
-      path.join(ROOT_DIR, `fixtures/input1.jpg`),
-      path.join(ROOT_DIR, `fixtures/input2.jpg`),
+      path.resolve(__dirname, `fixtures/input1.jpg`),
+      path.resolve(__dirname, `fixtures/input2.jpg`),
     ],
-    outputDir: path.join(ROOT_DIR, `public/outputDir`),
+    outputDir: path.resolve(__dirname, `public/outputDir`),
     args: {
       param1: `param1`,
       param2: `param2`,
@@ -70,7 +62,7 @@ const createMockJob = (overrides = {}) => {
 const createInternalMockJob = (overrides = {}) => {
   const { createInternalJob } = jobManager
 
-  return createInternalJob(createMockJob(overrides), plugin, ROOT_DIR)
+  return createInternalJob(createMockJob(overrides), plugin)
 }
 
 describe(`Jobs manager`, () => {
@@ -81,14 +73,6 @@ describe(`Jobs manager`, () => {
     endActivity.mockClear()
     pDefer.mockClear()
     uuid.mockClear()
-    store.getState.mockClear()
-    store.getState.mockImplementation(() => {
-      return {
-        program: {
-          directory: ROOT_DIR,
-        },
-      }
-    })
     reporter.phantomActivity.mockImplementation(() => {
       return {
         start: jest.fn(),
@@ -98,6 +82,7 @@ describe(`Jobs manager`, () => {
 
     jest.isolateModules(() => {
       jobManager = require(`../jobs-manager`)
+      jobManager.jobsInProcess.clear()
     })
   })
 
@@ -105,7 +90,7 @@ describe(`Jobs manager`, () => {
     it(`should return the correct format`, async () => {
       const { createInternalJob } = jobManager
       const mockedJob = createMockJob()
-      const job = createInternalJob(mockedJob, plugin, ROOT_DIR)
+      const job = createInternalJob(mockedJob, plugin)
 
       expect(job).toStrictEqual(
         expect.objectContaining({
@@ -114,15 +99,15 @@ describe(`Jobs manager`, () => {
           contentDigest: expect.any(String),
           inputPaths: [
             {
-              path: `fixtures/input1.jpg`,
+              path: slash(mockedJob.inputPaths[0]),
               contentDigest: expect.any(String),
             },
             {
-              path: `fixtures/input2.jpg`,
+              path: slash(mockedJob.inputPaths[1]),
               contentDigest: expect.any(String),
             },
           ],
-          outputDir: `public/outputDir`,
+          outputDir: slash(mockedJob.outputDir),
           args: mockedJob.args,
           plugin: {
             name: `gatsby-plugin-test`,
@@ -134,18 +119,18 @@ describe(`Jobs manager`, () => {
       )
     })
 
-    it(`should fail when paths are outside of gatsby`, async () => {
+    it(`should fail when path is relative`, async () => {
       const { createInternalJob } = jobManager
       const jobArgs = createMockJob({
-        inputPaths: [`/anotherdir/files/image.jpg`],
+        inputPaths: [`./files/image.jpg`],
       })
 
       expect.assertions(1)
       try {
-        createInternalJob(jobArgs, plugin, ROOT_DIR)
+        createInternalJob(jobArgs, plugin)
       } catch (err) {
         expect(err).toMatchInlineSnapshot(
-          `[Error: /anotherdir/files/image.jpg is not inside <PROJECT_ROOT>/packages/gatsby/src/utils/__tests__. Make sure your files are inside your gatsby project.]`
+          `[Error: ./files/image.jpg should be an absolute path.]`
         )
       }
     })
@@ -153,8 +138,8 @@ describe(`Jobs manager`, () => {
     it(`shouldn't augument a job twice`, () => {
       const { createInternalJob } = jobManager
 
-      const internalJob = createInternalJob(createMockJob(), plugin, ROOT_DIR)
-      createInternalJob(internalJob, plugin, ROOT_DIR)
+      const internalJob = createInternalJob(createMockJob(), plugin)
+      createInternalJob(internalJob, plugin)
 
       expect(uuid).toHaveBeenCalledTimes(1)
     })
@@ -279,24 +264,24 @@ describe(`Jobs manager`, () => {
       const { isJobStale } = jobManager
       const inputPaths = [
         {
-          path: `unknown-file.jpg`,
+          path: `/tmp/unknown-file.jpg`,
           contentDigest: `1234`,
         },
       ]
 
-      expect(isJobStale({ inputPaths }, ROOT_DIR)).toBe(true)
+      expect(isJobStale({ inputPaths })).toBe(true)
     })
 
     it(`should mark a job as stale if contentDigest isn't equal`, () => {
       const { isJobStale } = jobManager
       const inputPaths = [
         {
-          path: `fixtures/input1.jpg`,
+          path: path.resolve(__dirname, `fixtures/input1.jpg`),
           contentDigest: `1234`,
         },
       ]
 
-      expect(isJobStale({ inputPaths }, ROOT_DIR)).toBe(true)
+      expect(isJobStale({ inputPaths })).toBe(true)
     })
 
     it(`shouldn't mark a job as stale if file is the same`, () => {
@@ -305,12 +290,12 @@ describe(`Jobs manager`, () => {
       const { isJobStale } = jobManager
       const inputPaths = [
         {
-          path: `fixtures/input1.jpg`,
+          path: path.resolve(__dirname, `fixtures/input1.jpg`),
           contentDigest: `1234`,
         },
       ]
 
-      expect(isJobStale({ inputPaths }, ROOT_DIR)).toBe(false)
+      expect(isJobStale({ inputPaths })).toBe(false)
     })
   })
 })

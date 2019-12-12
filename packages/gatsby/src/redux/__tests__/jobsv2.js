@@ -42,7 +42,7 @@ describe(`Job v2 actions/reducer`, () => {
         {
           name: `TEST_JOB`,
           inputPaths: [],
-          outputDir: `public/static`,
+          outputDir: `/public/static`,
           args: {},
         },
         plugin
@@ -73,7 +73,7 @@ describe(`Job v2 actions/reducer`, () => {
     const job = {
       name: `TEST_JOB`,
       inputPaths: [],
-      outputDir: `public/static`,
+      outputDir: `/public/static`,
       args: {},
     }
 
