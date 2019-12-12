@@ -20,12 +20,7 @@ const transformField = ({ field, nodeListTypeNames }) => {
     return null
   }
 
-  // temp remove lists that we don't have nodes for
-  if (
-    field.type.kind === `LIST` &&
-    !nodeListTypeNames.includes(field.type.ofType.name)
-  ) {
-    // dd(field)
+  if (field.type.kind === `LIST` && field.type.ofType.kind !== `SCALAR`) {
     return null
   }
 
