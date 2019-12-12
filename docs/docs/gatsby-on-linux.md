@@ -13,7 +13,7 @@ sudo apt update
 sudo apt -y upgrade
 ```
 
-Install curl which allows you to transfer data and download additional dependencies.
+Install cURL which allows you to transfer data and download additional dependencies.
 
 ```shell
 sudo apt install curl
@@ -120,12 +120,14 @@ node -v
 
 This guide assumes that you already have WSL installed with a working Linux distro. If you don't, follow [this guide from Microsoft's site](https://docs.microsoft.com/en-us/windows/wsl/install-win10) to install WSL and a Linux distro of your choice.
 
-As of October 17th 2017, Windows 10 ships with WSL and Linux distributions are available via the [Windows Store], there are several different distributions to use which can be configured via `wslconfig` if you have more than one distribution installed.
+As of October 17th 2017, Windows 10 ships with WSL and Linux distributions are available via the Microsoft Store, there are several different distributions to use which can be configured via `wslconfig` if you have more than one distribution installed.
 
 ```shell
 # set default distribution to Ubuntu
 wslconfig /setdefault ubuntu
 ```
+
+> Please note that if you have used the [Gatsby on Windows](/docs/gatsby-on-windows/) setup without WSL, then you have to delete any existing `node_modules` folder in your project and re-install the dependencies in your WSL environment.
 
 ### Using Windows Subsystem Linux: Ubuntu
 
@@ -182,7 +184,7 @@ sudo apt update && sudo apt -y upgrade && sudo apt install build-essential && su
 ### Additional links and resources
 
 - [Super detailed guide to making VSCode work with ESL from VSCode's docs website](https://code.visualstudio.com/docs/remote/wsl)
-- [Windows store page for downloading Ubuntu on Windows](https://www.microsoft.com/en-us/store/p/ubuntu/9nblggh4msv6)
+- [Microsoft Store page for downloading Ubuntu on Windows](https://www.microsoft.com/en-us/store/p/ubuntu/9nblggh4msv6)
 - [n](https://github.com/tj/n)
 - [nvm](https://github.com/creationix/nvm)
 - [n-install](https://github.com/mklement0/n-install)
