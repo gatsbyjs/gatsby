@@ -198,7 +198,7 @@ exports.enqueueJob = async job => {
   try {
     const result = await runJob(job)
     // this check is to keep our worker results consistent for cloud
-    if (!_.isPlainObject(result)) {
+    if (result == null && !_.isPlainObject(result)) {
       throw new Error(
         `Result of a worker should be an object, type of "${typeof result}" was given`
       )
