@@ -103,12 +103,11 @@ exports.saveResolvedNodes = async (nodeTypeNames, resolver) => {
   }
 }
 
-const getNodesAndResolvedNodes = typeName => {
+const addResolvedNodes = (typeName, arr) => {
   const { nodesByType, resolvedNodesCache } = store.getState()
   const nodes /*: Map<mixed> */ = nodesByType.get(typeName)
-  let arr = []
 
-  if (!nodes) return arr
+  if (!nodes) return
 
   const resolvedNodes = resolvedNodesCache.get(typeName)
 
@@ -118,8 +117,6 @@ const getNodesAndResolvedNodes = typeName => {
     }
     arr.push(node)
   })
-
-  return arr
 }
 
-exports.getNodesAndResolvedNodes = getNodesAndResolvedNodes
+exports.addResolvedNodes = addResolvedNodes
