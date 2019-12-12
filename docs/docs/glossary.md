@@ -214,7 +214,7 @@ A way of writing HTML content with plain text, using special characters to denot
 
 Gatsby uses [data nodes](/docs/node-interface/) to represent a single piece of data. A [data source](#data-source) will create multiple nodes.
 
-### Node.js
+### [Node.js](/docs/glossary/node)
 
 A program that lets you run [JavaScript](#javascript) on your computer. Gatsby is powered by Node.
 
