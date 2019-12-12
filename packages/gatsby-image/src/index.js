@@ -51,17 +51,17 @@ const convertProps = props => {
 /**
  * Checks if fluid or fixed are art-direction arrays.
  *
- * @param currentData  {array}   The props to check for images.
+ * @param currentData  {{media?: string}[]}   The props to check for images.
  * @return {boolean}
  */
 const hasArtDirectionSupport = currentData =>
-  currentData &&
+  !!currentData &&
   Array.isArray(currentData) &&
   currentData.some(image => typeof image.media !== `undefined`)
 
 /**
  * Tries to detect if a media query matches the current viewport.
- * @param media   {string}  A media query string.
+ * @property media   {{media?: string}}  A media query string.
  * @return {boolean}
  */
 const matchesMedia = ({ media }) =>
@@ -70,7 +70,7 @@ const matchesMedia = ({ media }) =>
 /**
  * Find the source of an image to use as a key in the image cache.
  * Use `the first image in either `fixed` or `fluid`
- * @param {{fluid: {src: string}[], fixed: {src: string}[]}} args
+ * @param {{fluid: {src: string, media?: string}[], fixed: {src: string, media?: string}[]}} args
  * @return {string}
  */
 const getImageSrcKey = ({ fluid, fixed }) => {
@@ -81,8 +81,8 @@ const getImageSrcKey = ({ fluid, fixed }) => {
 
 /**
  * Returns the current src - Preferably with art-direction support.
- * @param currentData  {array}   The fluid or fixed image array.
- * @return {*}
+ * @param currentData  {{media?: string}[]}   The fluid or fixed image array.
+ * @return {{src: string, media?: string}}
  */
 const getCurrentSrcData = currentData => {
   if (isBrowser && hasArtDirectionSupport(currentData)) {
