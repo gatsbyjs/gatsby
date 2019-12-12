@@ -4716,3 +4716,34 @@
     - ESLint(Airbnb) for linting
     - Prettier code formatting
     - gh-pages for deploying to GitHub pages
+- url: https://www.cryptocatalyst.net/
+  repo: https://github.com/n8tb1t/gatsby-starter-cryptocurrency
+  description: A full-fledged cryptocurrency Gatsby starter portal with landing page, blog, roadmap, devs team, and docs.
+  tags:
+    - Cryptocurrency
+    - Linting
+    - Blog
+    - Styling:SCSS
+    - Markdown
+    - Pagination
+    - PWA
+    - SEO
+  features:
+    - Beautiful Mobile-first design.
+    - modular SCSS styles.
+    - Configurable color scheme.
+    - Advanced config options.
+    - Advanced landing page.
+    - Blog Component.
+    - Live comments.
+    - Roadmap component.
+    - Developers page component.
+    - Algolia advanced search index, with content chunks.
+    - Docs component.
+    - No outdated codebase, use only react hooks.
+    - Easy to modify react components.
+    - SEO (Sitemap, OpenGraph tags, Twitter tags)
+    - Google Analytics Support
+    - Offline Support & WebApp Manifest
+    - Easy to modify assets.
+
