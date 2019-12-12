@@ -87,9 +87,11 @@ nvm install 10
 nvm use 10
 ```
 
+To confirm that this worked, you can run `npm --version` and `node --version`. The output should look similar to the screenshot below, showing version numbers in response to the commands.
+
 ![Check node and npm versions in terminal](01-node-npm-versions.png)
 
-Once you have followed the installation steps and you have checked everything is installed properly, you can continue to the next step:
+Once you have followed the installation steps and you have checked everything is installed properly, you can continue to the next step.
 
 ## Install Git
 
