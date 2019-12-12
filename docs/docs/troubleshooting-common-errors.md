@@ -8,7 +8,7 @@ This guide is meant as a reference for common errors that have tripped up other 
 
 ## Problems with the cache
 
-Running a site in `gatsby develop` will set up a server locally that enables features like [hot-module replacement](/glossary#hot-module-replacement). Gatsby keeps a cache of data and rendered assets in the `.cache` folder at the root of a Gatsby site so that it doesn't have to repeat work processing optimized resources. If you see errors about not being able to find a resource in the cache it may be enough to clear your cache and restart your server. You can clear Gatsby's cache by running;
+Running a site in `gatsby develop` will set up a server locally that enables features like [hot-module replacement](/docs/glossary#hot-module-replacement). Gatsby keeps a cache of data and rendered assets in the `.cache` folder at the root of a Gatsby site so that it doesn't have to repeat work processing optimized resources. If you see errors about not being able to find a resource in the cache it may be enough to clear your cache and restart your server. You can clear Gatsby's cache by running:
 
 ```shell
 gatsby clean
@@ -55,13 +55,13 @@ Can't resolve '@emotion/core' in '/Users/you/tmp/gatsby-site/.cache' // highligh
 File: .cache/develop-static-entry.js
 ```
 
-This error is a result of Gatsby having failing to find `@emotion/core` because `gatsby-plugin-emotion` has been installed and added to the `gatsby-config`, without installing the emotion library. Install it like this:
+This error is a result of Gatsby having failed to find `@emotion/core` because `gatsby-plugin-emotion` has been installed and added to the `gatsby-config`, without installing the emotion library. Install it like this:
 
 ```shell
 npm install --save @emotion/core
 ```
 
-Or replace `@emotion/core` with the name of the library that is missing. With the plugin installed, any necessary libraries installed, and the plugin added to your `gatsby-config`, it should resolve this error.
+Or replace `@emotion/core` with the name of the library that is missing. Installing the plugin and any necessary libraries as well as adding the plugin to your `gatsby-config` should resolve this error.
 
 ## Errors in styling
 
@@ -79,13 +79,13 @@ Gatsby's GraphQL data layer provides access to build time data, there are someti
 
 ### Unknown field 'A' on type 'B'
 
-If the data you are requesting in a GraphQL query differs from what has been [sourced](/docs/content-and-data/) in the GraphQL schema you might encounter an error like `Unknown field 'A' on type 'B'`. Like the error suggests, a field you are asking for is not defined under the type that is listed. If your site is still building okay, you can open up `localhost:8000/___graphql` and examine your schema which includes the definition of what fields are included on the type provided by the error. This can help you identify what fields aren't being created and locate where those fields should be created, whether by a plugin or in your code.
+If the data you are requesting in a GraphQL query differs from what has been [sourced](/docs/content-and-data/) in the GraphQL schema you might encounter an error like `Unknown field 'A' on type 'B'`. As the error suggests, a field you are asking for is not defined under the type that is listed. If your site is still building okay, you can open up `localhost:8000/___graphql` and examine your schema, which includes the definition of what fields are included on the type provided by the error. This can help you identify what fields aren't being created and locate where those fields should be created, whether by a plugin or in your code.
 
 If the error is describing an `Unknown field 'X' on type 'Query'`, the content type you are trying to source is likely not processing correctly. The `Query` type represents the top-level root queries that are included in the GraphQL schema. Source plugins will often create root nodes that you can query like `mdx` (created by `gatsby-plugin-mdx`) or for a collection of root nodes like `allFile` (created by `gatsby-source-filesystem`).
 
-Some ideas for debugging these errors is to verify the following:
+Some ideas for debugging these errors include verifying the following:
 
-- you are using a transformer plugin (like `gatsby-transformer-yaml`) the data you need is pulled in using a source plugin (like `gatsby-source-filesystem`)
+- if you are using a transformer plugin (like `gatsby-transformer-yaml`), the data you need is pulled in using a source plugin (like `gatsby-source-filesystem`)
 
 ```javascript:title=gatsby-config.js
 {
@@ -105,7 +105,7 @@ Some ideas for debugging these errors is to verify the following:
 
 Comparing your GraphQL query to your site's schema in [GraphiQL at `localhost:8000/___graphql`](http://localhost:8000/___graphql) and whatever plugin or code you are using to source data is a great way to find these errors as they should all express the data in the same shape.
 
-- a source plugin you are using, or your own implementation of the [`sourceNodes` API](/docs/node-apis/#sourceNodes) isn't misconfigured
+- neither any source plugins you are using nor your own implementation of the [`sourceNodes` API](/docs/node-apis/#sourceNodes) are misconfigured
 
 ## Errors using gatsby-image and sharp
 
@@ -145,7 +145,7 @@ allMdx {
 }
 ```
 
-In the first code example, the `image` field was not modified (using Gatsby terminology, transformed) by a plugin to add subfields, so it would only return a string. `gatsby-plugin-sharp` and `gatsby-transformer-sharp` can be included before other plugins that would manipulate or create image nodes (like `gatsby-source-filesystem` or `gatsby-source-contentful`) to ensure that they are present before Gatsby tries to modify them and add the needed fields like `childImageSharp`.
+In the first code example, the `image` field was not transformed (_modified_) by a plugin to add subfields, so it would only return a string. `gatsby-plugin-sharp` and `gatsby-transformer-sharp` can be included before other plugins that would manipulate or create image nodes (like `gatsby-source-filesystem` or `gatsby-source-contentful`) to ensure that they are present before Gatsby tries to modify them and add the needed fields like `childImageSharp`.
 
 You can read more about how images are added to the GraphQL schema in the guide on [processing external images](/docs/preprocessing-external-images/).
 
