@@ -98,7 +98,7 @@ We completely proofed that this stack is great for this type of project.
 
 Building the plugin in the process allowed us to scale it as far as we needed it without a hitch, with the need for redirects and custom headers showing up fairly quickly as the project went on.
 
-![](oerol.png)
+![The final end result, viewable at oerol.nl](oerol.png)
 
 The plugin is now the de facto way of [using Gatsby in combination with S3](https://www.gatsbyjs.org/docs/deploying-to-s3-cloudfront/), and the OSS community has mostly picked it up since it’s humble beginnings, adding a lot of stability and cool new ideas:
 
