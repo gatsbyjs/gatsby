@@ -106,7 +106,7 @@ render() {
 }
 ```
 
-In Node, `API_KEY` will be available to your site (Server-side) as `process.env.API_KEY`. You can use `dotenv` to commit your `.env.*` file containing `API_KEY` in order to make it available client-side, but we recommend against checking these files into source control. By prefixing your variable with `GATSBY_` (as shown above), Gatsby automatically embeds it as process.env.GATSBY_* in compiled JS making it available in the browser context.
+In Node, your site has access to `API_KEY` (Server-side) using the identifier `process.env.API_KEY`. To access it client-side, you can use a `.env.*` file containing `API_KEY`. However, we **strongly** advise against checking these files into source control as it's a security issue to expose the API key. As a more secure alternative, you can prefix your variable with `GATSBY_` (as shown above). With this prefix, Gatsby automatically embeds the variable as process.env.GATSBY_* in compiled JS making it available in the browser context without exposing it elsewhere.
 
 ```js
 // In any server-side code, e.g. gatsby-config.js
