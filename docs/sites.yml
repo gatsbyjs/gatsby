@@ -8924,3 +8924,15 @@
   built_by: Anton Aberg
   built_by_url: https://github.com/aaaberg
   featured: false
+- title: Catalyst Network - Cryptocurrency
+  url: https://www.cryptocatalyst.net/
+  main_url: https://www.cryptocatalyst.net/
+  source_url: https://github.com/n8tb1t/gatsby-starter-cryptocurrency
+  description: >
+    An All-in-One solution for Modern Transactions.
+  categories:
+    - Business
+    - Technology
+  built_by: n8tb1t
+  built_by_url: https://github.com/n8tb1t/
+  featured: false
