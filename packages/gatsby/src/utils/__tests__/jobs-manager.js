@@ -163,8 +163,8 @@ describe(`Jobs manager`, () => {
   describe(`enqueueJob`, () => {
     it(`should schedule a job`, async () => {
       const { enqueueJob } = jobManager
-      worker.TEST_JOB.mockReturnValue(`myresult`)
-      worker.NEXT_JOB = jest.fn().mockReturnValue(`another result`)
+      worker.TEST_JOB.mockReturnValue({ output: `myresult` })
+      worker.NEXT_JOB = jest.fn().mockReturnValue({ output: `another result` })
       const mockedJob = createInternalMockJob()
       const job1 = enqueueJob(mockedJob)
       const job2 = enqueueJob(
@@ -174,10 +174,10 @@ describe(`Jobs manager`, () => {
         })
       )
       await Promise.all([
-        expect(job1).resolves.toBe(`myresult`),
-        expect(job2).resolves.toBe(`another result`),
+        expect(job1).resolves.toStrictEqual({ output: `myresult` }),
+        expect(job2).resolves.toStrictEqual({ output: `another result` }),
       ])
-      expect(endActivity).toHaveBeenCalledTimes(2)
+      expect(endActivity).toHaveBeenCalledTimes(1)
       expect(worker.TEST_JOB).toHaveBeenCalledTimes(1)
       expect(worker.TEST_JOB).toHaveBeenCalledWith({
         inputPaths: mockedJob.inputPaths,
@@ -198,7 +198,7 @@ describe(`Jobs manager`, () => {
         },
       })
 
-      worker.TEST_JOB.mockReturnValue(`myresult`)
+      worker.TEST_JOB.mockReturnValue({ output: `myresult` })
 
       const promises = []
       promises.push(enqueueJob(jobArgs))
@@ -206,9 +206,9 @@ describe(`Jobs manager`, () => {
       promises.push(enqueueJob(jobArgs3))
 
       await expect(Promise.all(promises)).resolves.toStrictEqual([
-        `myresult`,
-        `myresult`,
-        `myresult`,
+        { output: `myresult` },
+        { output: `myresult` },
+        { output: `myresult` },
       ])
       expect(pDefer).toHaveBeenCalledTimes(1) // this should be enough to check if our job is deterministic
       expect(endActivity).toHaveBeenCalledTimes(1)
@@ -240,18 +240,34 @@ describe(`Jobs manager`, () => {
       expect(endActivity).toHaveBeenCalledTimes(2)
       expect(worker.TEST_JOB).toHaveBeenCalledTimes(2)
     })
+
+    it(`should fail when the worker returns a non object result`, async () => {
+      const { enqueueJob } = jobManager
+      const jobArgs = createInternalMockJob()
+
+      worker.TEST_JOB.mockResolvedValue(`my result`)
+
+      expect.assertions(1)
+      try {
+        await enqueueJob(jobArgs)
+      } catch (err) {
+        expect(err).toMatchInlineSnapshot(
+          `[Error: Result of a worker should be an object, type of "string" was given]`
+        )
+      }
+    })
   })
 
   describe(`waitUntilAllJobsComplete`, () => {
     // unsure how to test this yet without a real worker
     it(`should have all tasks resolved when promise is resolved`, async () => {
-      worker.TEST_JOB.mockReturnValue(`myresult`)
+      worker.TEST_JOB.mockReturnValue({ output: `myresult` })
       const { enqueueJob, waitUntilAllJobsComplete } = jobManager
       const promise = enqueueJob(createInternalMockJob())
 
       await waitUntilAllJobsComplete()
       expect(worker.TEST_JOB).toHaveBeenCalledTimes(1)
-      await expect(promise).resolves.toBe(`myresult`)
+      await expect(promise).resolves.toStrictEqual({ output: `myresult` })
     })
   })
 

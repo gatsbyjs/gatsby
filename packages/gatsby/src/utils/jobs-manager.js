@@ -4,6 +4,7 @@ const hasha = require(`hasha`)
 const fs = require(`fs-extra`)
 const pDefer = require(`p-defer`)
 const slash = require(`slash`)
+const _ = require(`lodash`)
 const { createContentDigest } = require(`gatsby-core-utils`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 
@@ -14,7 +15,7 @@ let activeJobs = 0
 const jobsInProcess = new Map()
 
 /**
- * @param {string} path
+ * @param {string} filePath
  * @param {string} rootDir
  * @return {string}
  */
@@ -39,23 +40,24 @@ const convertPathsToRelative = (filePath, rootDir) => {
 const createFileHash = path => hasha.fromFileSync(path, { algorithm: `sha1` })
 
 /**
- * @typedef Job
+ * @typedef BaseJobInterface
  * @property {string} name
- * @property {string[]} inputPaths
  * @property {string} outputDir,
- * @property {Record<string, *>} args
- * @property {{name: string, version: string, resolve: string, isLocal: boolean}} plugin
- */
+ * @property {Record<string, any>} args
 
-/**
- * @typedef AugmentedJob
+ * @typedef JobInputInterface
+ * @property {string[]} inputPaths
+ * @property {{name: string, version: string, resolve: string}} plugin
+
+ * @typedef InternalJobInterface
  * @property {string} id
- * @property {string} name
  * @property {string} contentDigest
  * @property {{path: string, contentDigest: string}[]} inputPaths
- * @property {string} outputDir,
- * @property {Record<string, *>} args
  * @property {{name: string, version: string, resolve: string, isLocal: boolean}} plugin
+ *
+ * I know this sucks but this is the only way to do it properly in jsdoc..
+ * @typedef {BaseJobInterface & JobInputInterface} JobInput
+ * @typedef {BaseJobInterface & InternalJobInterface} InternalJob
  */
 
 /**
@@ -66,8 +68,8 @@ exports.jobsInProcess = jobsInProcess
 
 /**
  * @template T
- * @param {function({ inputPaths: Job["inputPaths"], outputDir: Job["outputDir"], args: Job["args"]}): T} workerFn
- * @param {AugmentedJob} job
+ * @param {function({ inputPaths: InternalJob["inputPaths"], outputDir: InternalJob["outputDir"], args: InternalJob["args"]}): T} workerFn
+ * @param {InternalJob} job
  * @return Promise<T>
  */
 const runLocalWorker = async (workerFn, job) => {
@@ -94,7 +96,7 @@ const runLocalWorker = async (workerFn, job) => {
 
 /**
  *
- * @param {AugmentedJob} job
+ * @param {InternalJob} job
  */
 const runJob = job => {
   const { plugin } = job
@@ -115,13 +117,14 @@ const runJob = job => {
 /**
  * Create an internal job object
  *
- * @param {Job|AugmentedJob} job
- * @param {{name: string, version: string}} plugin
+ * @param {JobInput|InternalJob} job
+ * @param {{name: string, version: string, resolve: string}} plugin
  * @param {string} rootDir
- * @return {AugmentedJob}
+ * @return {InternalJob}
  */
 exports.createInternalJob = (job, plugin, rootDir) => {
   // It looks like we already have an augmented job so we shouldn't redo this work
+  // @ts-ignore
   if (job.id && job.contentDigest) {
     return job
   }
@@ -138,9 +141,11 @@ exports.createInternalJob = (job, plugin, rootDir) => {
     }
   })
 
-  const augmentedJob = {
+  /** @type {InternalJob} */
+  const internalJob = {
     id: uuid(),
     name,
+    contentDigest: ``,
     inputPaths: inputPathsWithContentDigest,
     outputDir: convertPathsToRelative(outputDir, rootDir),
     args,
@@ -152,24 +157,24 @@ exports.createInternalJob = (job, plugin, rootDir) => {
     },
   }
 
-  augmentedJob.contentDigest = createContentDigest({
+  internalJob.contentDigest = createContentDigest({
     name: job.name,
-    inputPaths: augmentedJob.inputPaths.map(
+    inputPaths: internalJob.inputPaths.map(
       inputPath => inputPath.contentDigest
     ),
-    outputDir: augmentedJob.outputDir,
-    args: augmentedJob.args,
-    plugin: augmentedJob.plugin,
+    outputDir: internalJob.outputDir,
+    args: internalJob.args,
+    plugin: internalJob.plugin,
   })
 
-  return augmentedJob
+  return internalJob
 }
 
 /**
  * Creates a job
  *
- * @param {AugmentedJob} job
- * @return {Promise<unknown>}
+ * @param {InternalJob} job
+ * @return {Promise<object>}
  */
 exports.enqueueJob = async job => {
   // When we already have a job that's executing, return the same promise.
@@ -191,7 +196,14 @@ exports.enqueueJob = async job => {
   })
 
   try {
-    deferred.resolve(runJob(job))
+    const result = await runJob(job)
+    // this check is to keep our worker results consistent for cloud
+    if (!_.isPlainObject(result)) {
+      throw new Error(
+        `Result of a worker should be an object, type of "${typeof result}" was given`
+      )
+    }
+    deferred.resolve(result)
   } catch (err) {
     deferred.reject(err)
   } finally {
@@ -218,7 +230,8 @@ exports.waitUntilAllJobsComplete = () => {
 }
 
 /**
- * @param {Partial<AugmentedJob>  & {inputPaths: AugmentedJob['inputPaths']}} job
+ * @param {Partial<InternalJob>  & {inputPaths: InternalJob['inputPaths']}} job
+ * @param {string} rootDir
  * @return {boolean}
  */
 exports.isJobStale = (job, rootDir) => {
