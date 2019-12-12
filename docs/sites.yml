@@ -8924,6 +8924,16 @@
   built_by: Anton Aberg
   built_by_url: https://github.com/aaaberg
   featured: false
+- title: Geothermal Heat Pump DIY Project
+  url: https://diyheatpump.net/
+  main_url: https://diyheatpump.net/
+  description: Personal project by Yuriy Logvin that demonstrates how you can switch to heating with electricity at a minimal cost. The goal here is to show that everyone can build a geothermal heat pump and start saving money.
+  categories:
+    - Blog
+    - Education
+    - Technology
+  built_by: Yuriy Logvin
+  built_by_url: https://powerwatcher.net
 - title: Catalyst Network - Cryptocurrency
   url: https://www.cryptocatalyst.net/
   main_url: https://www.cryptocatalyst.net/
