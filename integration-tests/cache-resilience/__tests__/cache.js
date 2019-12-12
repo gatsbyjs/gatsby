@@ -418,40 +418,40 @@ describe(`some plugins changed between gatsby runs`, () => {
           expect(
             diff.changes[`parent_parentChangeForTransformer >>> Child`].diff
           ).toMatchInlineSnapshot(`
-              "  Object {
-              -   \\"bar\\": undefined,
-              +   \\"bar\\": \\"run-2\\",
-                  \\"children\\": Array [],
-              -   \\"foo\\": \\"run-1\\",
-              +   \\"foo\\": undefined,
-                  \\"id\\": \\"parent_parentChangeForTransformer >>> Child\\",
-                  \\"internal\\": Object {
-              -     \\"contentDigest\\": \\"011e1b3b5c83557485e0357e70427b65\\",
-              +     \\"contentDigest\\": \\"030fd9177896464496590fc0fe4d45bf\\",
-                    \\"owner\\": \\"gatsby-transformer-parent-change\\",
-                    \\"type\\": \\"ChildOfParent_ParentChangeForTransformer\\",
-                  },
-                  \\"parent\\": \\"parent_parentChangeForTransformer\\",
-                }"
-            `)
+            "  Object {
+            -   \\"bar\\": undefined,
+            +   \\"bar\\": \\"run-2\\",
+                \\"children\\": Array [],
+            -   \\"foo\\": \\"run-1\\",
+            +   \\"foo\\": undefined,
+                \\"id\\": \\"parent_parentChangeForTransformer >>> Child\\",
+                \\"internal\\": Object {
+            -     \\"contentDigest\\": \\"603e50c1fe96279688538ab046d1d70a\\",
+            +     \\"contentDigest\\": \\"f784f9722081b56fee8ca34708299a37\\",
+                  \\"owner\\": \\"gatsby-transformer-parent-change\\",
+                  \\"type\\": \\"ChildOfParent_ParentChangeForTransformer\\",
+                },
+                \\"parent\\": \\"parent_parentChangeForTransformer\\",
+              }"
+          `)
           expect(diff.changes[`parent_parentChangeForTransformer`].diff)
             .toMatchInlineSnapshot(`
-              "  Object {
-              +   \\"bar\\": \\"run-2\\",
-                  \\"children\\": Array [
-                    \\"parent_parentChangeForTransformer >>> Child\\",
-                  ],
-              -   \\"foo\\": \\"run-1\\",
-                  \\"id\\": \\"parent_parentChangeForTransformer\\",
-                  \\"internal\\": Object {
-              -     \\"contentDigest\\": \\"a032c69550f5567021eda97cc3a1faf2\\",
-              +     \\"contentDigest\\": \\"4a6a70b2f8849535de50f47c609006fe\\",
-                    \\"owner\\": \\"gatsby-source-parent-change-for-transformer\\",
-                    \\"type\\": \\"Parent_ParentChangeForTransformer\\",
-                  },
-                  \\"parent\\": null,
-                }"
-            `)
+            "  Object {
+            +   \\"bar\\": \\"run-2\\",
+                \\"children\\": Array [
+                  \\"parent_parentChangeForTransformer >>> Child\\",
+                ],
+            -   \\"foo\\": \\"run-1\\",
+                \\"id\\": \\"parent_parentChangeForTransformer\\",
+                \\"internal\\": Object {
+            -     \\"contentDigest\\": \\"9d6d458358c77dbe8f4247752ebe41f0\\",
+            +     \\"contentDigest\\": \\"3021b9f76357d1cffb3c40fabc9e08fb\\",
+                  \\"owner\\": \\"gatsby-source-parent-change-for-transformer\\",
+                  \\"type\\": \\"Parent_ParentChangeForTransformer\\",
+                },
+                \\"parent\\": null,
+              }"
+          `)
         }
       })
 
@@ -482,21 +482,21 @@ describe(`some plugins changed between gatsby runs`, () => {
 
           expect(diff.changes[`parent_childChangeForTransformer`].diff)
             .toMatchInlineSnapshot(`
-              "  Object {
-              -   \\"children\\": Array [
-              -     \\"parent_childChangeForTransformer >>> Child\\",
-              -   ],
-              +   \\"children\\": Array [],
-                  \\"foo\\": \\"run-1\\",
-                  \\"id\\": \\"parent_childChangeForTransformer\\",
-                  \\"internal\\": Object {
-                    \\"contentDigest\\": \\"25f73a6d69ce857a76e0a2cdbc186975\\",
-                    \\"owner\\": \\"gatsby-source-child-change-for-transformer\\",
-                    \\"type\\": \\"Parent_ChildChangeForTransformer\\",
-                  },
-                  \\"parent\\": null,
-                }"
-            `)
+            "  Object {
+            -   \\"children\\": Array [
+            -     \\"parent_childChangeForTransformer >>> Child\\",
+            -   ],
+            +   \\"children\\": Array [],
+                \\"foo\\": \\"run-1\\",
+                \\"id\\": \\"parent_childChangeForTransformer\\",
+                \\"internal\\": Object {
+                  \\"contentDigest\\": \\"80e2ed37e11de736be839404c5f373f9\\",
+                  \\"owner\\": \\"gatsby-source-child-change-for-transformer\\",
+                  \\"type\\": \\"Parent_ChildChangeForTransformer\\",
+                },
+                \\"parent\\": null,
+              }"
+          `)
         }
 
         {
@@ -512,20 +512,20 @@ describe(`some plugins changed between gatsby runs`, () => {
           expect(
             diff.changes[`parent_childChangeForTransformer >>> Child`].diff
           ).toMatchInlineSnapshot(`
-              "  Object {
-                  \\"children\\": Array [],
-              -   \\"foo\\": \\"bar\\",
-              +   \\"foo\\": \\"baz\\",
-                  \\"id\\": \\"parent_childChangeForTransformer >>> Child\\",
-                  \\"internal\\": Object {
-              -     \\"contentDigest\\": \\"ec8c3b932089b083a5380ab085be0633\\",
-              +     \\"contentDigest\\": \\"32fe5b6bc0489b6fa0f7eb6a9b563b27\\",
-                    \\"owner\\": \\"gatsby-transformer-child-change\\",
-                    \\"type\\": \\"ChildOfParent_ChildChangeForTransformer\\",
-                  },
-                  \\"parent\\": \\"parent_childChangeForTransformer\\",
-                }"
-            `)
+            "  Object {
+                \\"children\\": Array [],
+            -   \\"foo\\": \\"bar\\",
+            +   \\"foo\\": \\"baz\\",
+                \\"id\\": \\"parent_childChangeForTransformer >>> Child\\",
+                \\"internal\\": Object {
+            -     \\"contentDigest\\": \\"bd4478bada76e1f5a45a3b326eaec443\\",
+            +     \\"contentDigest\\": \\"70f659e959d7d3fb752f811e8b0eb8ad\\",
+                  \\"owner\\": \\"gatsby-transformer-child-change\\",
+                  \\"type\\": \\"ChildOfParent_ChildChangeForTransformer\\",
+                },
+                \\"parent\\": \\"parent_childChangeForTransformer\\",
+              }"
+          `)
         }
       })
 
@@ -560,30 +560,30 @@ describe(`some plugins changed between gatsby runs`, () => {
 
           expect(diff.changes[`parent_parentChangeForFields`].diff)
             .toMatchInlineSnapshot(`
-              "  Object {
-              +   \\"bar\\": \\"run-2\\",
-                  \\"children\\": Array [],
-                  \\"fields\\": Object {
-              -     \\"bar\\": undefined,
-              -     \\"foo\\": \\"run-1\\",
-              +     \\"bar\\": \\"run-2\\",
-              +     \\"foo\\": undefined,
+            "  Object {
+            +   \\"bar\\": \\"run-2\\",
+                \\"children\\": Array [],
+                \\"fields\\": Object {
+            -     \\"bar\\": undefined,
+            -     \\"foo\\": \\"run-1\\",
+            +     \\"bar\\": \\"run-2\\",
+            +     \\"foo\\": undefined,
+                },
+            -   \\"foo\\": \\"run-1\\",
+                \\"id\\": \\"parent_parentChangeForFields\\",
+                \\"internal\\": Object {
+            -     \\"contentDigest\\": \\"e88540d53597617cf99d612601037013\\",
+            +     \\"contentDigest\\": \\"3b78e62e87d3f1d8e92d274aa8dbe548\\",
+                  \\"fieldOwners\\": Object {
+                    \\"bar\\": \\"gatsby-fields-parent-change\\",
+                    \\"foo\\": \\"gatsby-fields-parent-change\\",
                   },
-              -   \\"foo\\": \\"run-1\\",
-                  \\"id\\": \\"parent_parentChangeForFields\\",
-                  \\"internal\\": Object {
-              -     \\"contentDigest\\": \\"ad237cf525f0ccb39ea0ba07165d4119\\",
-              +     \\"contentDigest\\": \\"72122def77d239ba36e9b9729fc53adf\\",
-                    \\"fieldOwners\\": Object {
-                      \\"bar\\": \\"gatsby-fields-parent-change\\",
-                      \\"foo\\": \\"gatsby-fields-parent-change\\",
-                    },
-                    \\"owner\\": \\"gatsby-source-parent-change-for-fields\\",
-                    \\"type\\": \\"Parent_ParentChangeForFields\\",
-                  },
-                  \\"parent\\": null,
-                }"
-            `)
+                  \\"owner\\": \\"gatsby-source-parent-change-for-fields\\",
+                  \\"type\\": \\"Parent_ParentChangeForFields\\",
+                },
+                \\"parent\\": null,
+              }"
+          `)
         }
       })
 
@@ -607,26 +607,26 @@ describe(`some plugins changed between gatsby runs`, () => {
 
           expect(diff.changes[`parent_childChangeForFields`].diff)
             .toMatchInlineSnapshot(`
-              "  Object {
-                  \\"children\\": Array [],
-              -   \\"fields\\": Object {
-              -     \\"foo1\\": \\"bar\\",
-              -   },
-              +   \\"fields\\": Object {},
-                  \\"foo\\": \\"run-1\\",
-                  \\"id\\": \\"parent_childChangeForFields\\",
-                  \\"internal\\": Object {
-                    \\"contentDigest\\": \\"893740bfde4b8a6039e939cb0290d626\\",
-              -     \\"fieldOwners\\": Object {
-              -       \\"foo1\\": \\"gatsby-fields-child-change\\",
-              -     },
-              +     \\"fieldOwners\\": Object {},
-                    \\"owner\\": \\"gatsby-source-child-change-for-fields\\",
-                    \\"type\\": \\"Parent_ChildChangeForFields\\",
-                  },
-                  \\"parent\\": null,
-                }"
-            `)
+            "  Object {
+                \\"children\\": Array [],
+            -   \\"fields\\": Object {
+            -     \\"foo1\\": \\"bar\\",
+            -   },
+            +   \\"fields\\": Object {},
+                \\"foo\\": \\"run-1\\",
+                \\"id\\": \\"parent_childChangeForFields\\",
+                \\"internal\\": Object {
+                  \\"contentDigest\\": \\"fb9e9b9c26522bceaa1f51c537b2aff2\\",
+            -     \\"fieldOwners\\": Object {
+            -       \\"foo1\\": \\"gatsby-fields-child-change\\",
+            -     },
+            +     \\"fieldOwners\\": Object {},
+                  \\"owner\\": \\"gatsby-source-child-change-for-fields\\",
+                  \\"type\\": \\"Parent_ChildChangeForFields\\",
+                },
+                \\"parent\\": null,
+              }"
+          `)
         }
 
         {
@@ -639,26 +639,26 @@ describe(`some plugins changed between gatsby runs`, () => {
 
           expect(diff.changes[`parent_childChangeForFields`].diff)
             .toMatchInlineSnapshot(`
-              "  Object {
-                  \\"children\\": Array [],
-                  \\"fields\\": Object {
-              -     \\"foo1\\": \\"bar\\",
-              +     \\"foo2\\": \\"baz\\",
+            "  Object {
+                \\"children\\": Array [],
+                \\"fields\\": Object {
+            -     \\"foo1\\": \\"bar\\",
+            +     \\"foo2\\": \\"baz\\",
+                },
+                \\"foo\\": \\"run-1\\",
+                \\"id\\": \\"parent_childChangeForFields\\",
+                \\"internal\\": Object {
+                  \\"contentDigest\\": \\"fb9e9b9c26522bceaa1f51c537b2aff2\\",
+                  \\"fieldOwners\\": Object {
+            -       \\"foo1\\": \\"gatsby-fields-child-change\\",
+            +       \\"foo2\\": \\"gatsby-fields-child-change\\",
                   },
-                  \\"foo\\": \\"run-1\\",
-                  \\"id\\": \\"parent_childChangeForFields\\",
-                  \\"internal\\": Object {
-                    \\"contentDigest\\": \\"893740bfde4b8a6039e939cb0290d626\\",
-                    \\"fieldOwners\\": Object {
-              -       \\"foo1\\": \\"gatsby-fields-child-change\\",
-              +       \\"foo2\\": \\"gatsby-fields-child-change\\",
-                    },
-                    \\"owner\\": \\"gatsby-source-child-change-for-fields\\",
-                    \\"type\\": \\"Parent_ChildChangeForFields\\",
-                  },
-                  \\"parent\\": null,
-                }"
-            `)
+                  \\"owner\\": \\"gatsby-source-child-change-for-fields\\",
+                  \\"type\\": \\"Parent_ChildChangeForFields\\",
+                },
+                \\"parent\\": null,
+              }"
+          `)
         }
       })
     })
@@ -750,7 +750,7 @@ describe(`some plugins changed between gatsby runs`, () => {
                 \\"foo\\": \\"run-1\\",
                 \\"id\\": \\"parent_childAdditionForTransformer\\",
                 \\"internal\\": Object {
-                  \\"contentDigest\\": \\"24c80ac557fe30571844672133789fca\\",
+                  \\"contentDigest\\": \\"f85e860f002547e9da9e893e3e44e162\\",
                   \\"owner\\": \\"gatsby-source-child-addition-for-transformer\\",
                   \\"type\\": \\"Parent_ChildAdditionForTransformer\\",
                 },
@@ -823,7 +823,7 @@ describe(`some plugins changed between gatsby runs`, () => {
                 \\"foo\\": \\"run-1\\",
                 \\"id\\": \\"parent_childAdditionForFields\\",
                 \\"internal\\": Object {
-                  \\"contentDigest\\": \\"73b91e21e8e1825f0719497573dedf53\\",
+                  \\"contentDigest\\": \\"bdf44fdce30b104b4f290d66c2dc3ca1\\",
             +     \\"fieldOwners\\": Object {
             +       \\"foo1\\": \\"gatsby-fields-child-addition\\",
             +     },
@@ -976,7 +976,7 @@ describe(`some plugins changed between gatsby runs`, () => {
                 \\"foo\\": \\"run-1\\",
                 \\"id\\": \\"parent_childDeletionForTransformer\\",
                 \\"internal\\": Object {
-                  \\"contentDigest\\": \\"c3a86e3891837cae828521bcc99561de\\",
+                  \\"contentDigest\\": \\"872081fdfb66891ee6ccdcd13716a5ce\\",
                   \\"owner\\": \\"gatsby-source-child-deletion-for-transformer\\",
                   \\"type\\": \\"Parent_ChildDeletionForTransformer\\",
                 },
@@ -1009,7 +1009,7 @@ describe(`some plugins changed between gatsby runs`, () => {
                 \\"foo\\": \\"run-1\\",
                 \\"id\\": \\"parent_childDeletionForTransformer\\",
                 \\"internal\\": Object {
-                  \\"contentDigest\\": \\"c3a86e3891837cae828521bcc99561de\\",
+                  \\"contentDigest\\": \\"872081fdfb66891ee6ccdcd13716a5ce\\",
                   \\"owner\\": \\"gatsby-source-child-deletion-for-transformer\\",
                   \\"type\\": \\"Parent_ChildDeletionForTransformer\\",
                 },
@@ -1074,7 +1074,7 @@ describe(`some plugins changed between gatsby runs`, () => {
                 \\"foo\\": \\"run-1\\",
                 \\"id\\": \\"parent_childDeletionForFields\\",
                 \\"internal\\": Object {
-                  \\"contentDigest\\": \\"e7fa2815ef392415bcf8d2b46ecb59d1\\",
+                  \\"contentDigest\\": \\"8f6ce9febd79d1af741b4b7edfa023a5\\",
             -     \\"fieldOwners\\": Object {
             -       \\"foo1\\": \\"gatsby-fields-child-deletion\\",
             -     },
@@ -1106,7 +1106,7 @@ describe(`some plugins changed between gatsby runs`, () => {
                 \\"foo\\": \\"run-1\\",
                 \\"id\\": \\"parent_childDeletionForFields\\",
                 \\"internal\\": Object {
-                  \\"contentDigest\\": \\"e7fa2815ef392415bcf8d2b46ecb59d1\\",
+                  \\"contentDigest\\": \\"8f6ce9febd79d1af741b4b7edfa023a5\\",
             -     \\"fieldOwners\\": Object {
             -       \\"foo1\\": \\"gatsby-fields-child-deletion\\",
             -     },

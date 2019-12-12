@@ -4,4 +4,4 @@ gatsby-config.js
 
 # temporary test artifacts
 on_pre_bootstrap.state
-on_post_bootstrap.state
+on_post_build.state
