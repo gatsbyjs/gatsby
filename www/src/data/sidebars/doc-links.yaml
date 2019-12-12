@@ -696,6 +696,8 @@
     - title: Glossary
       link: /docs/glossary/
       items:
+        - title: GraphQL
+          link: /docs/glossary/graphql
         - title: React
           link: /docs/glossary/react
     - title: Gatsby Telemetry
