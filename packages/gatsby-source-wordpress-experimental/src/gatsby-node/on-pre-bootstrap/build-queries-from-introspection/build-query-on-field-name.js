@@ -1,5 +1,3 @@
-import Query from "graphql-query-builder"
-
 const transformField = ({ field, nodeListTypeNames }) => {
   if (!field) {
     return null
@@ -30,23 +28,39 @@ const transformField = ({ field, nodeListTypeNames }) => {
     nodeListTypeNames.includes(field.type.ofType.name)
   ) {
     return {
-      [field.name]: [`id`],
+      fieldName: field.name,
+      innerFields: [`id`],
+    }
+  }
+
+  // pull the id for connections
+  if (field.type.relationShipField && !field.type.mediaItem) {
+    return {
+      fieldName: field.name,
+      innerFields: [`id`],
     }
   }
 
   // pull the id and sourceUrl for connections to media items
   if (field.type.relationShipField && field.type.mediaItem) {
     return {
-      [field.name]: [`id`, `sourceUrl`],
+      fieldName: field.name,
+      innerFields: [`id`, `sourceUrl`],
     }
   }
 
   // if this field has fields,
   if (field.type && field.type.fields) {
     return {
-      [field.name]: field.type.fields
+      fieldName: field.name,
+      innerFields: field.type.fields
         // time to recurse!
-        .map(field => transformField({ field, nodeListTypeNames }))
+        .map(field =>
+          transformField({
+            field,
+            nodeListTypeNames,
+          })
+        )
         // remove null fields that we omitted above
         .filter(Boolean),
     }
@@ -59,49 +73,76 @@ export const buildNodesQueryOnFieldName = ({
   fields,
   fieldName,
   nodeListTypeNames,
-}) => {
-  // this builds the gql query
-  let queryField = new Query(fieldName, {
-    $variables: true,
+}) =>
+  buildQuery({
+    queryName: `NODE_LIST_QUERY`,
+    variables: `$first: Int!, $after: String`,
+    fieldName,
+    fieldVariables: `first: $first, after: $after`,
+    fields: [
+      {
+        fieldName: `pageInfo`,
+        innerFields: [`hasNextPage`, `endCursor`],
+      },
+      {
+        fieldName: `nodes`,
+        innerFields: fields
+          .map(field => transformField({ field, nodeListTypeNames }))
+          .filter(Boolean),
+      },
+    ],
   })
 
-  // this adds subfields to our query
-  queryField.find([
-    {
-      pageInfo: [`hasNextPage`, `endCursor`],
-    },
-    {
-      nodes: fields
-        .map(field => transformField({ field, nodeListTypeNames }))
-        .filter(Boolean),
-    },
-  ])
+const buildVariables = variables =>
+  variables && typeof variables === `string` ? `(${variables})` : ``
 
-  const queryString = queryField
-    .toString()
-    // add pagination variables.
-    .replace(`$variables:true`, `first: $first, after: $after`)
-  // can't figure out how to properly do this ^ in graphql-query-builder.
-  // just replacing a placeholder for now.
+const buildSelectionSet = ({ fields }) =>
+  fields
+    .map(field => {
+      if (typeof field === `string`) {
+        return field
+      }
 
-  return queryString
-}
+      const { fieldName, variables, innerFields } = field
+
+      if (fieldName && innerFields) {
+        return `
+            ${fieldName} ${buildVariables(variables)} {
+              ${buildSelectionSet({ fields: innerFields })}
+            }
+          `
+      }
+
+      return null
+    })
+    .filter(Boolean).join(`
+    `)
+
+const buildQuery = ({
+  queryName,
+  fieldName,
+  fieldVariables,
+  variables,
+  fields,
+}) => `
+  query ${queryName} ${buildVariables(variables)} {
+    ${fieldName} ${buildVariables(fieldVariables)} {
+      ${buildSelectionSet({ fields })}
+    }
+  }
+`
+
 export const buildNodeQueryOnFieldName = ({
   fields,
   fieldName,
   nodeListTypeNames,
-}) => {
-  // this builds the gql query
-  let queryField = new Query(fieldName, { id: `$id` })
-
-  const queryFields = fields
-    .map(field => transformField({ field, nodeListTypeNames }))
-    .filter(Boolean)
-
-  // this adds subfields to our query
-  queryField.find(queryFields)
-
-  return `query SINGLE_CONTENT_QUERY($id: ID!) {${queryField
-    .toString()
-    .replace(`"$id"`, `$id`)}}`
-}
+}) =>
+  buildQuery({
+    queryName: `SINGLE_CONTENT_QUERY`,
+    variables: `$id: ID!`,
+    fieldName,
+    fieldVariables: `id: $id`,
+    fields: fields
+      .map(field => transformField({ field, nodeListTypeNames }))
+      .filter(Boolean),
+  })

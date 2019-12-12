@@ -1,4 +1,3 @@
-import { getPaginatedQuery } from "../graphql-queries"
 import fetchGraphql from "../../utils/fetch-graphql"
 import store from "../../store"
 
@@ -13,11 +12,9 @@ const paginatedWpNodeFetch = async ({
   allContentNodes = [],
   ...variables
 }) => {
-  const paginatedQuery = getPaginatedQuery(query)
-
   const response = await fetchGraphql({
     url,
-    query: paginatedQuery,
+    query,
     variables,
   })
 

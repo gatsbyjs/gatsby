@@ -1,8 +1,5 @@
 import gql from "../utils/gql"
 
-export const getPaginatedQuery = query =>
-  `query GENERIC_QUERY ($first: Int!, $after: String) {${query}}`
-
 export const getActionMonitorQuery = () => `
     query GET_ACTION_MONITOR_ACTIONS($since: Float!) {
       actionMonitorActions(where: {sinceTimestamp: $since}) {
