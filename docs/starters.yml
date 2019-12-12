@@ -4716,3 +4716,27 @@
     - ESLint(Airbnb) for linting
     - Prettier code formatting
     - gh-pages for deploying to GitHub pages
+- url: https://chronoblog-profile.netlify.com/
+  repo: https://github.com/Ganevru/gatsby-starter-chronoblog-profile
+  description: This starter will help you launch a personal website with a simple text feed on the main page. This starter looks simple and neat, but at the same time, it has great potential for organizing your content using tags, dates, and search. The homepage is organized in compact feeds. The display of content in these feeds is based on the tags of this content (for example, only content with a podcast tag gets into the feed with podcasts).
+  tags:
+    - Blog
+    - Portfolio
+    - MDX
+    - Markdown
+    - SEO
+    - Styling:CSS-in-JS
+    - Linting
+  features:
+    - Specially designed to create a personal website (in a simple and strict "text" style)
+    - Universal text feed divided into categories
+    - Search and Tags for organizing content
+    - A simple change of primary and secondary colors of the site, fonts, radius of curvature of elements, etc (thanks to Theme UI theming)
+    - Clean and Universal UI
+    - Mobile friendly, all elements and custom images are adapted to any screen
+    - Light/Dark mode
+    - Easy customization of icons and links to your social networks
+    - MDX for the main menu of the site, footer and other elements of the site
+    - MDX for pages and content
+    - Code syntax highlighting
+    - SEO (OpenGraph and Twitter) out of the box with default settings that make sense (thanks to React Helmet)
