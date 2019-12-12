@@ -69,7 +69,7 @@ Check out [the docs on issue labeling for more info](/contributing/how-to-label-
 - If insufficient, do the following:
   1. Provide an answer
   2. Label the issue with documentation
-  3. Keep it open until a PR has added the answer to the documentation
+  3. Keep it open until a PR has added the answer to the documentation, and the issue includes a link to said documentation
 
 If an issue comes in as a question with a known answer it can be tempting to answer it and close the issue. However, the consequence of this approach is that the answer to a question others may have is now buried in a closed issue and may be hard to surface. The preferred solution is to get that answer documented in the main Gatsby documentation.
 
