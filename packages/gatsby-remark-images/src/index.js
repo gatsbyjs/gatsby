@@ -249,6 +249,7 @@ module.exports = (
           alt="${alt}"
           title="${title}"
           loading="${loading}"
+          style="${imageStyle}"
         />
       </picture>
       `.trim()
