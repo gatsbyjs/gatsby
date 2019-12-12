@@ -48,7 +48,7 @@ const transformField = ({ field, nodeListTypeNames }) => {
         // time to recurse!
         .map(field => transformField({ field, nodeListTypeNames }))
         // remove null fields that we omitted above
-        .filter(f => !!f),
+        .filter(Boolean),
     }
   }
 
@@ -73,7 +73,7 @@ export const buildNodesQueryOnFieldName = ({
     {
       nodes: fields
         .map(field => transformField({ field, nodeListTypeNames }))
-        .filter(field => !!field),
+        .filter(Boolean),
     },
   ])
 
@@ -96,7 +96,7 @@ export const buildNodeQueryOnFieldName = ({
 
   const queryFields = fields
     .map(field => transformField({ field, nodeListTypeNames }))
-    .filter(field => !!field)
+    .filter(Boolean)
 
   // this adds subfields to our query
   queryField.find(queryFields)
