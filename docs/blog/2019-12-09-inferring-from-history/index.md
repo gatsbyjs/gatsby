@@ -11,30 +11,32 @@ free](https://www.gatsbyjs.org/blog/2019-11-25-getting-started-with-gatsby-cloud
 ## The problem
 So what problem did we learn about?
 
-When watching folks onboard onto Gatsby Cloud, there was a clear point of confusion. Please see the screenshot below and read the thought bubbles which depict what users said during usability tests.
+When watching folks onboard onto Gatsby Cloud, there was a clear point of confusion. Please see the screenshot below and read the thought bubble which depicts *approximately* what users said during usability tests.
  
 ![This screenshot depicts step two of Gatsby Cloud onboarding, during which users select an organization from GitHub. I drew a speech bubble on top of the screenshot pointing out that users are confused by this screen. The speech bubble says: “Wait, I don't want to create a repository in my work's GitHub organization. Terminate mission!"](select-work-org-confusion.png)
 
 ## What was the real problem?
-We knew users were confused, yet we didn’t know how to solve it quite yet. Here are some principles that helped us figure out the fundamental root of confusion and how to resolve it.
+We knew users were confused, yet we didn’t know how to solve it quite yet. Here are some principles that helped us figure out the reason for the confusion and how to resolve it.
 
 ## Interaction is negative
 
-I know, I know, this is a bit of a purposefully inflammatory and misleading statement. Interaction design is something I care about and do full-time along with many of you, so why would we do it if it’s negative? Well, the real phrase ought to read “_unnecessary_ interaction is negative.” So anything the software can do to [*reduce* the amount of unnecessary interaction](http://worrydream.com/MagicInk/#p145) it takes to reach a goal is good.
+I know, I know, this is a bit of a purposefully inflammatory and misleading statement. Interaction design is something I care about and do full-time along with many of you, so why would I say it’s negative? Well, the real phrase ought to read “_unnecessary_ interaction is negative.” So anything software can do to [*reduce* the amount of unnecessary interaction](http://worrydream.com/MagicInk/#p145) it takes to reach a goal is good.
 
 So how do you reduce unnecessary interaction?
 
 ## Reduce interaction by inferring from history and the environment
 To reduce interaction, you can infer “as much as possible from history and the environment.” See this full quote below:
 
->  If the software properly infers as much as possible from history and the environment, it should be able to produce at least a reasonable starting point for the context model. Most of the user’s interaction will then consist of correcting (or confirming) the software’s predictions. This is generally less stressful than constructing the entire context from scratch. - Brett Victor, [“Magic Ink”](http://worrydream.com/MagicInk/#p173)
+<Pullquote>If the software properly infers as much as possible from history and the environment, it should be able to produce at least a reasonable starting point for the context model. Most of the user’s interaction will then consist of correcting (or confirming) the software’s predictions. This is generally less stressful than constructing the entire context from scratch.</Pullquote>
 
-The principle is to make the best guess we can of what the user wants and then let them *correct* our best guess if it’s wrong. If we infer from history and the environment, the guess will be right most of the time.
+_Quote from Brett Victor, [“Magic Ink”](http://worrydream.com/MagicInk/#p173)_
+
+The principle is to make the best guess we can of what the user wants and then let them *correct* our best guess if it’s wrong. And the guess will be right most of the time, if we infer from history and the environment.
 
 So what could we infer from “history” and the “environment” to solve the problem we had in Gatsby Cloud, where everyone was confused and frustrated at needing to choose a GitHub organization?
 
 ### Inferring from history
-The first step is simply to look at history, at what happened before the point of confusion. I’ll take you on a tour of what happened just moments before users hit their point of major confusion.
+The first step is simply to look at history; I’ll take you on a tour of what happened (hint: history happened) just moments before users hit their point of major confusion.
 
 In this first screenshot, the user selects a starter.
 ![Screenshot of the starter page](final-state.png)
