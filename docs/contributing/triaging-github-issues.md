@@ -71,7 +71,7 @@ Check out [the docs on issue labeling for more info](/contributing/how-to-label-
   2. Label the issue with documentation
   3. Keep it open until a PR has added the answer to the documentation, and the issue includes a link to said documentation
 
-If an issue comes in as a question with a known answer it can be tempting to answer it and close the issue. However, the consequence of this approach is that the answer to a question others may have is now buried in a closed issue and may be hard to surface. The preferred solution is to get that answer documented in the main Gatsby documentation.
+If an issue comes in as a question with a known answer it can be tempting to answer it and close the issue. However, the consequence of this approach is that the answer to a question others may have is now buried in a closed issue and may be hard to surface. The preferred solution is to get that answer documented in the main Gatsby documentation and connect the issue to an answer by including a docs link.
 
 When a question comes in and it is determined to have a known answer, find the existing documentation that explains it. If that documentation does not exist, is insufficient, or unclear, it is reasonable to provide an answer in a comment in the issue. However, the issue should remain open and be labled as documentation. If you are able, you can open a PR adding the provided answer to the official documentation.
 
