@@ -16,9 +16,9 @@ Gatsby plugins are Node.js packages that implement Gatsby APIs and are commonly 
 
 ## What is a theme?
 
-A Gatsby theme is a type of plugin that includes a `gatsby-config.js` file and adds pre-configured functionality, data sourcing, and/or UI code to Gatsby sites. Like plugins, themes can be packaged and distributed through a registry like npm or yarn, and versions can be updated through a site's `package.json` file.
+A Gatsby theme is a type of plugin that includes a `gatsby-config.js` file and adds pre-configured functionality, data sourcing, and/or UI code to Gatsby sites. Since they are plugins, themes can be packaged and distributed through a registry like npm or yarn, and versions can be updated through a site's `package.json` file.
 
-With a Gatsby theme, all of your default configuration (shared functionality, data sourcing, design) is abstracted out of your site and into an installable package. A theme might differ from a plugin in that it packages up usage of a plugin into a consumable API, making it easy to include functionality without having to type out all of the code by hand (such as GraphQL queries). To understand more of the motivation for Gatsby themes, check out the docs on [What are Gatsby Themes?](/docs/themes/what-are-gatsby-themes/)
+With a Gatsby theme, all of your default configuration (shared functionality, data sourcing, design) is abstracted out of your site and into an installable package. A theme might differ from a typical plugin in that it packages up usage of a plugin into a consumable API, making it easy to include functionality without having to type out all of the code by hand (such as GraphQL queries). To understand more of the motivation for Gatsby themes, check out the docs on [What are Gatsby Themes?](/docs/themes/what-are-gatsby-themes/)
 
 - [Themes docs](/docs/themes/)
 - [Using a theme](/docs/themes/using-a-gatsby-theme/)
