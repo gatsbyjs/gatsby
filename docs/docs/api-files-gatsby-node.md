@@ -9,7 +9,7 @@ Every Gatsby Node API passes a [set of Node API helpers](/docs/node-api-helpers/
 ```jsx:title=gatsby-node.js
 const path = require(`path`)
 // Log out information after a build is done
-exports.onPostBuild = ({reporter}) => {
+exports.onPostBuild = ({ reporter }) => {
   reporter.info(`Your Gatsby site has been built!`)
 }
 // Create blog pages dynamically
@@ -27,13 +27,13 @@ exports.createPages = async ({ graphql, actions }) => {
         }
       }
     }
-  `
+  `)
   result.data.allSamplePages.edges.forEach(edge => {
     createPage({
       path: `${edge.node.slug}`,
       component: blogPostTemplate,
       context: {
-        title: edge.node.title
+        title: edge.node.title,
       },
     })
   })

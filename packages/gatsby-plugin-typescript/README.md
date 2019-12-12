@@ -17,7 +17,7 @@ Provides drop-in support for TypeScript and TSX.
 ```javascript
 module.exports = {
   // ...,
-  plugins: [...`gatsby-plugin-typescript`],
+  plugins: [`gatsby-plugin-typescript`],
 }
 ```
 

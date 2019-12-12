@@ -6,6 +6,7 @@
   categories:
     - Web Development
     - Featured
+    - Documentation
 - title: Flamingo
   main_url: https://www.shopflamingo.com/
   url: https://www.shopflamingo.com/
@@ -8900,4 +8901,38 @@
     - Web Development
     - Open Source
   built_by: Bearer
+  featured: false
+- title: 8fit.com
+  url: https://8fit.com/
+  main_url: https://8fit.com/
+  description: >
+    Get personalized workouts, custom meal plans, and nutrition guidance, right in the palm of your hand. Prioritize progress over perfection with the 8fit app!
+  categories:
+    - App
+    - Food
+    - Sports
+  featured: false
+- title: Dispel - Remote Access for Industrial Control Systems
+  url: https://dispel.io
+  main_url: https://dispel.io
+  description: >
+    Dispel provides secure, moving target defense networks through which your teams can remotely access industrial control systems in seconds, replacing static-defense products that take 5 to 15 minutes to work through.
+  categories:
+    - Business
+    - Technology
+    - Security
+  built_by: Anton Aberg
+  built_by_url: https://github.com/aaaberg
+  featured: false
+- title: Catalyst Network - Cryptocurrency
+  url: https://www.cryptocatalyst.net/
+  main_url: https://www.cryptocatalyst.net/
+  source_url: https://github.com/n8tb1t/gatsby-starter-cryptocurrency
+  description: >
+    An All-in-One solution for Modern Transactions.
+  categories:
+    - Business
+    - Technology
+  built_by: n8tb1t
+  built_by_url: https://github.com/n8tb1t/
   featured: false
