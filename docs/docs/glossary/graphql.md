@@ -34,7 +34,7 @@ A request for an article and its reporter might look like the example that follo
 }
 ```
 
-
+And its response contains only what you've requested. 
 
 ```
 {
