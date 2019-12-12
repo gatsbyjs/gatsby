@@ -34,17 +34,10 @@ const transformField = ({ field, nodeListTypeNames }) => {
     }
   }
 
-  // pull the id and sourceUrl connections to media items
+  // pull the id and sourceUrl for connections to media items
   if (field.type.relationShipField && field.type.mediaItem) {
     return {
       [field.name]: [`id`, `sourceUrl`],
-    }
-  }
-
-  // just pull the id for fields that are connections to other nodes
-  if (field.type.relationShipField && !field.type.mediaItem) {
-    return {
-      [field.name]: [`id`],
     }
   }
 
