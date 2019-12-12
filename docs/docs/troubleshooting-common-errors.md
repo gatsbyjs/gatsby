@@ -199,9 +199,15 @@ If updating these doesn't fix the issue, your project probably uses other plugin
 
 ## Errors building and deploying
 
-The process of building your site [varies slightly from the development process](/docs/overview-of-the-gatsby-build-process/). Some errors can arise when you build your site if
+The process of building your site [varies slightly from the development process](/docs/overview-of-the-gatsby-build-process/). Some errors can arise when you build your site if you include references to the browser, though almost all problems should be caught by error messages in `develop` mode.
 
 For more information on common problems while building your site, refer to the [Debugging HTML Builds](/docs/debugging-html-builds/) guide.
+
+### Error: ReferenceError: window is not defined when running `gatsby build`
+
+You may encounter an error like `Error: ReferenceError: window is not defined` that you didn't see in development if you reference browser globals like `window` or `document` in your code. Because the build is not running in a browser, it will not have access to a browser, which is why objects like `window` will not be defined.
+
+Exact steps for fixing this issue can be found on in the Debugging HTML Builds guide in the section on [checking if `window` is defined](/docs/debugging-html-builds/#how-to-check-if-window-is-defined).
 
 ### Build problems from Field 'browser' doesn't contain a valid alias configuration
 
@@ -218,9 +224,3 @@ The build is failing to find the file at `../..SomeFile.svg`. This can be frustr
 The most common culprit to prompt this issue is with filepaths having mixed capitalization. In the example above, check to make sure that the file is actually named `SomeFile.svg` and not something different like `Somefile.svg` or `somefile.svg`. Some operating systems will pick up on this discrepancy for you and find the image without any problems. Your deployment environment may not.
 
 Checking the capitalization of files output in your build logs and redeploying is the best next step.
-
-### Error: ReferenceError: window is not defined when running `gatsby build`
-
-You may encounter an error like `Error: ReferenceError: window is not defined` that you didn't see in development if you reference browser globals like `window` or `document` in your code. Because the build is not running in a browser, it will not have access to a browser, which is why objects like `window` will not be defined.
-
-Exact steps for fixing this issue can be found on in the Debugging HTML Builds guide in the section on [checking if `window` is defined](/docs/debugging-html-builds/#how-to-check-if-window-is-defined).
