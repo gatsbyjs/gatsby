@@ -22,7 +22,7 @@ Here are templates (models) to follow when contributing to Gatsby docs to ensure
 
 Reference guide articles cover discrete topics as documentation with links to other resources. A reference guide explains a Gatsby concept or technique without the step-by-step context provided by a tutorial or recipe.
 
-Reference guide sections provide canonical information on how and why to build things with Gatsby for a variety of scenarios. Reference material would list text headings for each section of a guide, rather than "steps 1-5" like a tutorial.
+Reference guide sections provide canonical information on how and why to build things with Gatsby for a variety of scenarios. Reference material should list text headings for each section of a guide, rather than "steps 1-5" like a tutorial.
 
 #### Other types of guide articles
 
@@ -31,10 +31,10 @@ The Gatsby docs include multiple types of guides. They mostly follow the same fo
 - [Reference Guides](/docs/guides/): explanations of Gatsby site development techniques and common workflows. These should be written for all skill-levels.
 - [API Reference](/docs/api-reference/): technical docs on API methods and options, common files, and links to additional resources and explanations.
 - [Releases & Migration](/docs/releases-and-migration/): release notes and guides on how to upgrade Gatsby and third-party packages.
-- [Conceptual Guide](/docs/conceptual-guide/): high-level docs to explain important Gatsby concepts and philosophies.
+- [Conceptual Guides](/docs/conceptual-guide/): high-level docs to explain important Gatsby concepts and philosophies.
   - As an example, "Plugins, Themes, and Starters" would be an overarching concept article, with individual reference guide sections for Plugin, Theme, and Starter docs.
 - [Gatsby Internals](/docs/gatsby-internals/): previously titled Behind the Scenes, these docs go in depth into how Gatsby works under the hood.
-- [Using Gatsby Professionally](/docs/using-gatsby-professionally/): articles on winning overstakeholders, working in larger organizations, and building a career as a Gatsby developer.
+- [Using Gatsby Professionally](/docs/using-gatsby-professionally/): articles on winning over stakeholders, working in larger organizations, and building a career as a Gatsby developer.
 
 ### What should a reference guide be about?
 

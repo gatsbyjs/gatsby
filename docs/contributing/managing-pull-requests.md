@@ -146,7 +146,7 @@ These are bad PR titles because they are generic, don't communicate the change p
 
 Sometimes the easiest way to unblock a stalled PR is to sort out merge conflicts or apply remaining suggestions. When the GitHub UI won't cut it, you can (often) apply changes directly to someone's remote fork with Git:
 
-- Add their Gatsby fork as a remote:<br />`git add <forkname> git@github.com:<username>/gatsby.git`
+- Add their Gatsby fork as a remote:<br />`git remote add <forkname> git@github.com:<username>/gatsby.git`
 - Fetch the branches:<br />`git fetch <forkname>`
 - Check out their branch locally:<br />`git checkout -b <branch-name> <forkname>/<branch-name>`
 - Make your changes, add some commits
