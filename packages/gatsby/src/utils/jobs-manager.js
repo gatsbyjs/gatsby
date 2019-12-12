@@ -7,7 +7,7 @@ const slash = require(`slash`)
 const { createContentDigest } = require(`gatsby-core-utils`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 
-let activityForJobs
+let activityForJobs = null
 let activeJobs = 0
 
 /** @type {Map<string, {id: string, deferred: pDefer.DeferredPromise}>} */
@@ -67,7 +67,7 @@ exports.jobsInProcess = jobsInProcess
 /**
  * @template T
  * @param {function({ inputPaths: Job["inputPaths"], outputDir: Job["outputDir"], args: Job["args"]}): T} workerFn
- * @param {Job} job
+ * @param {AugmentedJob} job
  * @return Promise<T>
  */
 const runLocalWorker = async (workerFn, job) => {
@@ -96,7 +96,8 @@ const runLocalWorker = async (workerFn, job) => {
  *
  * @param {AugmentedJob} job
  */
-const runJob = ({ plugin, ...job }) => {
+const runJob = job => {
+  const { plugin } = job
   try {
     const worker = require(path.posix.join(plugin.resolve, `gatsby-worker.js`))
     if (!worker[job.name]) {
@@ -108,13 +109,6 @@ const runJob = ({ plugin, ...job }) => {
     throw new Error(
       `We couldn't find a gatsby-worker.js(${plugin.resolve}/gatsby-worker.js) file for ${plugin.name}@${plugin.version}`
     )
-  }
-}
-
-const handleJobEnded = () => {
-  if (--activeJobs === 0) {
-    activityForJobs.end()
-    activityForJobs = null
   }
 }
 
@@ -197,11 +191,15 @@ exports.enqueueJob = async job => {
   })
 
   try {
-    await deferred.resolve(runJob(job))
+    deferred.resolve(runJob(job))
   } catch (err) {
     deferred.reject(err)
   } finally {
-    handleJobEnded()
+    if (--activeJobs === 0) {
+      activityForJobs.end()
+      // eslint-disable-next-line require-atomic-updates
+      activityForJobs = null
+    }
   }
 
   return deferred.promise
