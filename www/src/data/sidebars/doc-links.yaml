@@ -354,6 +354,8 @@
             - title: Debugging Async Lifecycles
               link: /docs/debugging-async-lifecycles/
               breadcrumbTitle: Async Lifecycles
+            - title: Troubleshooting Common Errors
+              link: /docs/troubleshooting-common-errors/
         - title: Adding App and Website Functionality
           link: /docs/adding-app-and-website-functionality/
           items:
