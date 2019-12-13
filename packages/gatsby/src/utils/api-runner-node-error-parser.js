@@ -25,7 +25,7 @@ const errorParser = ({ err }) => {
   let structured
 
   for (const { regex, cb } of handlers) {
-    let matched = err.message.match(regex)
+    const matched = err.message.match(regex)
     if (matched) {
       structured = {
         ...cb(matched),

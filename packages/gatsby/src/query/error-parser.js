@@ -100,7 +100,7 @@ const errorParser = ({
   let structured
 
   for (const { regex, cb } of handlers) {
-    let matched = message.match(regex)
+    const matched = message.match(regex)
     if (matched) {
       structured = {
         ...(filePath && { filePath }),

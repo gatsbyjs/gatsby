@@ -364,21 +364,21 @@ function runPlugin(api, plugin, args, stopQueuedApiRuns, activity, apiSpan) {
   return new Promise(resolve => {
     resolve(runAPI(plugin, api, { ...args, parentSpan: apiSpan }, activity))
   }).catch(err => {
-    let pluginName =
+    const pluginName =
       plugin.name === `default-site-plugin` ? `gatsby-node.js` : plugin.name
 
     decorateEvent(`BUILD_PANIC`, {
       pluginName: `${plugin.name}@${plugin.version}`,
     })
 
-    let localReporter = getLocalReporter(activity, reporter)
+    const localReporter = getLocalReporter(activity, reporter)
 
     const file = stackTrace
       .parse(err)
       .find(file => /gatsby-node/.test(file.fileName))
 
     let codeFrame = ``
-    let structuredError = errorParser({ err })
+    const structuredError = errorParser({ err })
 
     if (file) {
       const { fileName, lineNumber: line, columnNumber: column } = file
