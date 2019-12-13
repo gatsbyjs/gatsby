@@ -58,14 +58,14 @@ There are so many ways to add styles to your website; Gatsby supports almost eve
 
 [Starters](/docs/starters/) are boilerplate Gatsby sites maintained officially, or by the community.
 
-- [Using a starter](/docs/recipes/starters#using-a-starter)
+- [Using a starter](/docs/recipes/working-with-starters#using-a-starter)
 
 ## [4. Working with themes](/docs/recipes/working-with-themes)
 
 A Gatsby theme lets you centralize the look-and-feel of your site. You can seamlessly update a theme, compose themes together, and even swap out one compatible theme for another.
 
-- [Creating a new site using a theme starter](/docs/recipes/themes#creating-a-new-site-using-a-theme-starter)
-- [Building a new theme](/docs/recipes#building-a-new-theme)
+- [Creating a new site using a theme starter](/docs/recipes/working-with-themes#creating-a-new-site-using-a-theme-starter)
+- [Building a new theme](/docs/recipes/working-with-themes#building-a-new-theme)
 
 ## [5. Sourcing data](/docs/recipes/sourcing-data)
 
