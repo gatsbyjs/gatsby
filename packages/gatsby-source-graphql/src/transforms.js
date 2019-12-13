@@ -1,6 +1,10 @@
 const { GraphQLObjectType, GraphQLNonNull } = require(`gatsby/graphql`)
-const { visitSchema, VisitSchemaKind } = require(`graphql-tools-fork`)
-const { cloneType, healSchema } = require(`graphql-tools-fork`)
+const {
+  VisitSchemaKind,
+  cloneType,
+  healSchema,
+  visitSchema,
+} = require(`graphql-tools-fork`)
 
 class NamespaceUnderFieldTransform {
   constructor({ typeName, fieldName, resolver }) {
