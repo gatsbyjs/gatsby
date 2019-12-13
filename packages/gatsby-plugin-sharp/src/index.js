@@ -131,6 +131,8 @@ async function createJob(job, { reporter, reportStatus = true }) {
     if (completedImagesCounter === pendingImagesCounter) {
       progressBar.done()
       progressBar = null
+      completedImagesCounter = 0
+      pendingImagesCounter = 0
     }
   }
 }
@@ -178,6 +180,8 @@ function queueImageResizing({ file, args = {}, reporter }) {
         if (completedImagesCounter === pendingImagesCounter) {
           progressBar.done()
           progressBar = null
+          completedImagesCounter = 0
+          pendingImagesCounter = 0
         }
       }
     })
