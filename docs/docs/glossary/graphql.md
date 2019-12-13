@@ -3,7 +3,7 @@ title: GraphQL
 disableTableOfContents: true
 ---
 
-# What is GraphQL?
+## What is GraphQL?
 
 GraphQL is a query language for requesting information from an [API](/docs/glossary#api), and a protocol for servers that support it. GraphQL is one of the ways that you can import data into your Gatsby components.
 
