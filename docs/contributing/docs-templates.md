@@ -179,7 +179,7 @@ Assume the reader has basic programming knowledge such as the command line, code
 
 ## Recipes
 
-[Docs Recipes](/docs/recipes/) should act as discoverable, concise instructions for completing common Gatsby tasks without having to navigate elsewhere. They live on the [Recipes section](/docs/recipes/) in the docs, the source of which can be found in the [`docs/docs/recipes.md` landing page](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/recipes.md) and [`docs/docs/recipes/*` folder](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/recipes/) in the GitHub repo.
+[Docs Recipes](/docs/recipes/) should act as discoverable, concise instructions for completing common Gatsby tasks without having to navigate elsewhere. They live in the [Recipes section](/docs/recipes/) in the docs, the source of which can be found in the [`docs/docs/recipes.md` landing page](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/recipes.md) and [`docs/docs/recipes/*` folder](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/recipes/) in the GitHub repo.
 
 A recipe should list requirements and include a few short instructions to complete a task. It should omit boilerplate and list only directly related, actionable instructions inline. Recipes are smaller units than tutorials, each limited to a single feature or task. Multiple recipes could be linked from a reference guide or tutorial, however the content should be consolidated in the Recipes section for discoverability. If a recipe is recorded as a video, it should be less than five or ten minutes long.
 
