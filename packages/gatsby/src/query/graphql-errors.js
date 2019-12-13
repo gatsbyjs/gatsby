@@ -130,9 +130,15 @@ export function multipleRootQueriesError(
 ) {
   const name = def.name.value
   const otherName = otherDef.name.value
+  const field = def.selectionSet.selections[0].name.value
+  const otherField = otherDef.selectionSet.selections[0].name.value
   const unifiedName = `${_.camelCase(name)}And${_.upperFirst(
     _.camelCase(otherName)
   )}`
+
+  console.log(JSON.stringify(def, null, 2))
+  console.log(JSON.stringify(otherDef, null, 2))
+  console.log(filePath)
 
   return {
     id: `85910`,
@@ -143,13 +149,13 @@ export function multipleRootQueriesError(
       beforeCodeFrame: codeFrameColumns(
         report.stripIndent`
         query ${otherName} {
-          bar {
+          ${field} {
             #...
           }
         }
 
         query ${name} {
-          foo {
+          ${otherField} {
             #...
           }
         }
@@ -162,15 +168,16 @@ export function multipleRootQueriesError(
         },
         {
           linesBelow: Number.MAX_SAFE_INTEGER,
+          highlightCode: true,
         }
       ),
       afterCodeFrame: codeFrameColumns(
         report.stripIndent`
         query ${unifiedName} {
-          bar {
+          ${field} {
             #...
           }
-          foo {
+          ${otherField} {
             #...
           }
         }
@@ -183,6 +190,7 @@ export function multipleRootQueriesError(
         },
         {
           linesBelow: Number.MAX_SAFE_INTEGER,
+          highlightCode: true,
         }
       ),
     },

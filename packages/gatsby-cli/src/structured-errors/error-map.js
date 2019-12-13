@@ -72,17 +72,23 @@ const errorMap = {
   "85910": {
     text: context =>
       stripIndents(`
-        Multiple "root" queries found in file: "${context.name}" and "${context.otherName}".
+        Multiple "root" queries found: "${context.name}" and "${context.otherName}".
         Only the first ("${context.otherName}") will be registered.
 
         Instead of:
+
         ${context.beforeCodeFrame}
 
         Do:
+
         ${context.afterCodeFrame}
+
+        This can happen if when you use two page/static queries in one file. Please combine those into one query.
+        If you're defining multiple components (each with a static query) in one file, you'll need to move each component to its own file.
       `),
     type: `GRAPHQL`,
     level: `ERROR`,
+    docsUrl: `https://www.gatsbyjs.org/docs/graphql/`,
   },
   "85911": {
     text: context =>
