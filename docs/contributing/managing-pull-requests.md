@@ -20,7 +20,7 @@ Some general things to verify in a pull request are:
 
 - Links ought to be relative instead of absolute when linking to docs (`/docs/some-reference/` instead of `https://www.gatsbyjs.org/docs/some-reference/`)
 - Language ought to be inclusive and accessible
-- Issues and RFCs (if any) that this PR addresses ought to be linked to
+- Issues and Requests for Comments (RFCs) (if any) that this PR addresses ought to be linked to
 
 > 💡 When looking at a PR for the first time, it can help to read up on linked issues or [RFCs](/contributing/rfc-process/) (if there are any) to gain context on what the PR intends to add or fix.
 
@@ -144,7 +144,7 @@ These are bad PR titles because they are generic, don't communicate the change p
 
 ### Who can review a PR?
 
-If you're a member of the [gatsbyjs](http://github.com/gatsbyjs) organization on GitHub, you can review a PR.
+If you're a member of the [gatsbyjs](http://github.com/gatsbyjs) organization on GitHub, you can review **most** PRs. PRs with [`topic: internal`](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aopen+is%3Aissue+label%3A%22topic%3A+internal%22) are reserved for Core and Learning team members as they are typically part of an internal project or hiring process.
 
 > 💡 Not a member yet? Want to [get involved in contributing](/contributing/how-to-contribute/) to open source projects? Make your first contribution and you'll be invited automatically!
 

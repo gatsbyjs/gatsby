@@ -20,9 +20,10 @@ module.exports = async function getConfigFile(
   distance: number = 3
 ) {
   const configPath = path.join(rootDir, configName)
-  let configModule
+  let configModule, configFilePath
   try {
-    configModule = require(configPath)
+    configFilePath = require.resolve(configPath)
+    configModule = require(configFilePath)
   } catch (err) {
     const nearMatch = await fs.readdir(rootDir).then(files =>
       files.find(file => {
@@ -58,5 +59,5 @@ module.exports = async function getConfigFile(
     }
   }
 
-  return configModule
+  return { configModule, configFilePath }
 }

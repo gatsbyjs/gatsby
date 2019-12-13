@@ -14,13 +14,13 @@ It currently supports:
 This plug-in was created to solve a couple of problems the React team has faced
 with [reactjs.org](https://github.com/reactjs/reactjs.org):
 
-- Examples were stored separately from documentation (eg in Codepen) which made
+- Examples were stored separately from documentation (e.g. in Codepen) which made
   it more difficult to coordinate updates. (It was easy to forget to update an
   example when an API changes.)
-- Examples (eg Codepens) were owned by a single author, so the community
+- Examples (e.g. Codepens) were owned by a single author, so the community
   couldn't contribute PRs to update them without forking and fragmenting
   ownership.
-- It was easy to create invalid links (eg Babel REPL links that \_don't quite
+- It was easy to create invalid links (e.g. Babel REPL links that \_don't quite
   work).
 
 ## Overview
@@ -131,17 +131,17 @@ specified examples directory. (This will avoid broken links at runtime.)
   options: {
     // Optional default link text.
     // Defaults to "REPL".
-    // eg <a href="...">Click here</a>
+    // e.g. <a href="...">Click here</a>
     defaultText: 'Click here',
 
 
     // Example code links are relative to this dir.
-    // eg examples/path/to/file.js
+    // e.g. examples/path/to/file.js
     directory: `${__dirname}/examples/`,
 
     // Optional link target.
     // Note that if a target is specified, "noreferrer" will also be added.
-    // eg <a href="..." target="_blank" rel="noreferrer">...</a>
+    // e.g. <a href="..." target="_blank" rel="noreferrer">...</a>
     target: '_blank',
 
 
@@ -154,11 +154,11 @@ specified examples directory. (This will avoid broken links at runtime.)
 
       // Optional HTML contents to inject into REPL.
       // Defaults to `<div id="root"></div>`.
-      // eg '<div id="root"></div>'
+      // e.g. '<div id="root"></div>'
       html: '',
 
       // Optional externals to load from a CDN.
-      // eg '//unpkg.com/react/umd/react.development.js'
+      // e.g. '//unpkg.com/react/umd/react.development.js'
       externals: [],
 
       // Include CSS with matching name.
@@ -171,11 +171,11 @@ specified examples directory. (This will avoid broken links at runtime.)
     codesandbox: {
       // Optional HTML contents to inject into REPL.
       // Defaults to `<div id="root"></div>`.
-      // eg '<div id="root"></div>'
+      // e.g. '<div id="root"></div>'
       html: '',
 
       // Optional runtime dependencies to load from NPM.
-      // eg ['react', 'react-dom'] or ['react@15', 'react-dom@15']
+      // e.g. ['react', 'react-dom'] or ['react@15', 'react-dom@15']
       dependencies: [],
     }
   },

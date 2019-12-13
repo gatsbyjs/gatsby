@@ -50,7 +50,7 @@ module.exports = themeOptions => {
 }
 ```
 
-While using the usual object export (`module.exports = {}`) in your theme means that you can run the theme standalone as its own site, when using a function in your theme to accept options you will need to run the theme as part of an example site. See how the [theme authoring starter](https://github.com/gatsbyjs/gatsby/tree/master/themes/gatsby-starter-theme-workspace) handles this using Yarn Workspaces.
+While using the usual object export (`module.exports = {}`) in your theme means that you can run the theme standalone as its own site, when using a function in your theme to accept options you will need to run the theme as part of an example site. See how the [theme authoring starter](https://github.com/gatsbyjs/gatsby-starter-theme-workspace) handles this using Yarn Workspaces.
 
 ### Accessing options elsewhere
 
@@ -104,7 +104,7 @@ gatsby-theme-amazing/src/components/header.js
 and here is the path where you would shadow it in your site:
 
 ```
-<our-site>/src/gatsby-theme-amazing/components/header.js
+<your-site>/src/gatsby-theme-amazing/components/header.js
 ```
 
 Shadowing only works on imported files in the `src` directory. This is because shadowing is built on top of Webpack, so the module graph needs to include the shadowable file.

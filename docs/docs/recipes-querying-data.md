@@ -1,14 +1,14 @@
 ---
-title: Querying data
+title: "Recipes: Querying Data"
 ---
 
-## Recipes: Querying data
+Gatsby lets you access your data across all sources using a single GraphQL interface.
 
-### Querying data with a Page Query
+## Querying data with a Page Query
 
 You can use the `graphql` tag to query data in the pages of your Gatsby site. This gives you access to anything included in Gatsby's data layer, such as site metadata, source plugins, images, and more.
 
-#### Directions
+### Directions
 
 1. Import `graphql` from `gatsby`.
 
@@ -48,17 +48,17 @@ const IndexPage = ({ data }) => (
 export default IndexPage
 ```
 
-#### Additional resources
+### Additional resources
 
 - [GraphQL and Gatsby](/docs/graphql/): understanding the expected shape of your data
 - [More on querying data in pages with GraphQL](/docs/page-query/)
 - [MDN on Tagged Template Literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) like the ones used in GraphQL
 
-### Querying data with the StaticQuery Component
+## Querying data with the StaticQuery Component
 
 `StaticQuery` is a component for retrieving data from Gatsby's data layer in [non-page components](/docs/static-query/), such as a header, navigation, or any other child component.
 
-#### Directions
+### Directions
 
 1. The `StaticQuery` Component requires two render props: `query` and `render`.
 
@@ -93,18 +93,18 @@ export default NonPageComponent
 
 2. You can now use this component as you would [any other component](/docs/building-with-components#non-page-components) by importing it into a larger page of JSX components and HTML markup.
 
-### Querying data with the useStaticQuery hook
+## Querying data with the useStaticQuery hook
 
 Since Gatsby v2.1.0, you can use the `useStaticQuery` hook to query data with a JavaScript function instead of a component. The syntax removes the need for a `<StaticQuery>` component to wrap everything, which some people find simpler to write.
 
 The `useStaticQuery` hook takes a GraphQL query and returns the requested data. It can be stored in a variable and used later in your JSX templates.
 
-#### Prerequisites
+### Prerequisites
 
 - You'll need React and ReactDOM 16.8.0 or later (keeping Gatsby updated handles this)
 - Recommended reading: the [Rules of React Hooks](https://reactjs.org/docs/hooks-rules.html)
 
-#### Directions
+### Directions
 
 1. Import `useStaticQuery` and `graphql` from `gatsby` in order to use the hook query the data.
 
@@ -139,24 +139,24 @@ const NonPageComponent = () => {
 export default NonPageComponent
 ```
 
-#### Additional resources
+### Additional resources
 
 - [More on Static Query for querying data in components](/docs/static-query/)
 - [The difference between a static query and a page query](/docs/static-query/#how-staticquery-differs-from-page-query)
 - [More on the useStaticQuery hook](/docs/use-static-query/)
 - [Visualize your data with GraphiQL](/docs/introducing-graphiql/)
 
-### Limiting with GraphQL
+## Limiting with GraphQL
 
 When querying for data with GraphQL, you can limit the number of results returned with a specific number. This is helpful if you only need a few pieces of data or need to [paginate data](/docs/adding-pagination/).
 
 To limit data, you'll need a Gatsby site with some nodes in the GraphQL data layer. All sites have some nodes like `allSitePage` and `sitePage` created automatically: more can be added by installing source plugins like `gatsby-source-filesystem` in `gatsby-config.js`.
 
-#### Prerequisites
+### Prerequisites
 
 - A [Gatsby site](/docs/quick-start/)
 
-#### Directions
+### Directions
 
 1. Run `gatsby develop` to start the development server.
 2. Open a tab in your browser at: `http://localhost:8000/___graphql`.
@@ -192,7 +192,7 @@ To limit data, you'll need a Gatsby site with some nodes in the GraphQL data lay
 
 5. Click the play button in the GraphiQL page and the data in the `edges` field will be limited to the number specified.
 
-#### Additional resources
+### Additional resources
 
 - Learn about [nodes in Gatsby's GraphQL data API](/docs/node-interface/)
 - [Gatsby GraphQL reference for limiting](/docs/graphql-reference/#limit)
@@ -205,18 +205,18 @@ To limit data, you'll need a Gatsby site with some nodes in the GraphQL data lay
   height="300"
 />
 
-### Sorting with GraphQL
+## Sorting with GraphQL
 
 The ordering of your results can be specified with the GraphQL `sort` argument. You can specify which fields to sort by and the order to sort in.
 
 For this recipe, you'll need a Gatsby site with a collection of nodes to sort in the GraphQL data layer. All sites have some nodes like `allSitePage` created automatically: more can be added by installing source plugins.
 
-#### Prerequisites
+### Prerequisites
 
 - A [Gatsby site](/docs/quick-start)
 - Queryable fields prefixed with `all`, e.g. `allSitePage`
 
-#### Directions
+### Directions
 
 1. Run `gatsby develop` to start the development server.
 2. Open the GraphiQL explorer in a browser tab at: `http://localhost:8000/___graphql`
@@ -253,7 +253,7 @@ For this recipe, you'll need a Gatsby site with a collection of nodes to sort in
 
 5. Click the play button in the GraphiQL page and the data returned will be sorted ascending by the `path` field.
 
-#### Additional resources
+### Additional resources
 
 - [Gatsby GraphQL reference for sorting](/docs/graphql-reference/#sort)
 - Learn about [nodes in Gatsby's GraphQL data API](/docs/node-interface/)
@@ -266,18 +266,18 @@ For this recipe, you'll need a Gatsby site with a collection of nodes to sort in
   height="300"
 />
 
-### Filtering with GraphQL
+## Filtering with GraphQL
 
 Queried results can be filtered down with operators like `eq` (equals), `ne` (not equals), `in`, and `regex` on specified fields.
 
 For this recipe, you'll need a Gatsby site with a collection of nodes to filter in the GraphQL data layer. All sites have some nodes like `allSitePage` created automatically: more can be added by installing source and transformer plugins like `gatsby-source-filesystem` and `gatsby-transformer-remark` in `gatsby-config.js` to produce `allMarkdownRemark`.
 
-#### Prerequisites
+### Prerequisites
 
 - A [Gatsby site](/docs/quick-start)
 - Queryable fields prefixed with `all`, e.g. `allSitePage` or `allMarkdownRemark`
 
-#### Directions
+### Directions
 
 1. Run `gatsby develop` to start the development server.
 2. Open the GraphiQL explorer in a browser tab at: `http://localhost:8000/___graphql`
@@ -317,7 +317,7 @@ For this recipe, you'll need a Gatsby site with a collection of nodes to filter 
 
 5. Click the play button in the GraphiQL page. The data that matches the filter parameters should be returned, in this case only sourced Markdown files tagged with a category of 'magical creatures'.
 
-#### Additional resources
+### Additional resources
 
 - [Gatsby GraphQL reference for filtering](/docs/graphql-reference/#filter)
 - [Complete list of possible operators](/docs/graphql-reference/#complete-list-of-possible-operators)
@@ -331,13 +331,13 @@ For this recipe, you'll need a Gatsby site with a collection of nodes to filter 
   height="300"
 />
 
-### GraphQL Query Aliases
+## GraphQL Query Aliases
 
 You can rename any field in a GraphQL query with an alias.
 
 If you would like to run two queries on the same datasource, you can use an alias to avoid a naming collision with two queries of the same name.
 
-#### Directions
+### Directions
 
 1. Run `gatsby develop` to start the development server.
 2. Open the GraphiQL explorer in a browser tab at: `http://localhost:8000/___graphql`
@@ -373,7 +373,7 @@ If you would like to run two queries on the same datasource, you can use an alia
 
 5. Click the play button in the GraphiQL page and 2 objects with alias names you provided should be output.
 
-#### Additional resources
+### Additional resources
 
 - [Gatsby GraphQL reference for aliasing](/docs/graphql-reference/#aliasing)
 - Live example:
@@ -385,13 +385,13 @@ If you would like to run two queries on the same datasource, you can use an alia
   height="300"
 />
 
-### GraphQL Query Fragments
+## GraphQL Query Fragments
 
 GraphQL fragments are shareable chunks of a query that can be reused.
 
 You might want to use them to share multiple fields between queries or to colocate a component with the data it uses.
 
-#### Directions
+### Directions
 
 1. Declare a `graphql` template string with a Fragment in it. The fragment should be made up of the keyword `fragment`, a name, the GraphQL type it is associated with (in this case of type `Site`, as demonstrated by `on Site`), and the fields that make up the fragment:
 
@@ -424,9 +424,9 @@ export const pageQuery = graphql`
 
 Fragments can be nested inside other fragments, and multiple fragments can be used in the same query.
 
-#### Additional resources
+### Additional resources
 
-- [Simple example repo using fragments](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-fragments)
+- [Simple example repo using fragments](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-graphql-fragments)
 - [Gatsby GraphQL reference for fragments](/docs/graphql-reference/#fragments)
 - [Gatsby image fragments](/docs/gatsby-image/#image-query-fragments)
 - [Example repo with co-located data](https://github.com/gatsbyjs/gatsby/tree/master/examples/gatsbygram)

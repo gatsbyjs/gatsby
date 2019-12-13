@@ -1,23 +1,21 @@
 ---
-title: Styling with CSS
+title: "Recipes: Styling with CSS"
 ---
-
-## Recipes: Styling with CSS
 
 There are so many ways to add styles to your website; Gatsby supports almost every possible option, through official and community plugins.
 
-### Using global CSS files without a Layout component
+## Using global CSS files without a Layout component
 
-#### Prerequisites
+### Prerequisites
 
 - An existing [Gatsby site](/docs/quick-start/) with an index page component
 - A `gatsby-browser.js` file
 
-#### Directions
+### Directions
 
 1. Create a global CSS file as `src/styles/global.css` and paste the following into the file:
 
-```css:title=src/styles/styles/global.css
+```css:title=src/styles/global.css
 html {
   background-color: lavenderblush;
 }
@@ -39,17 +37,17 @@ import "./src/styles/global.css"
 
 > **Note:** This approach is not the best fit if you are using CSS-in-JS for styling your site, in which case a layout page with all the shared components should be used. This is covered in the next recipe.
 
-#### Additional resources
+### Additional resources
 
 - More on [adding global styles without a layout component](/docs/global-css/#adding-global-styles-without-a-layout-component)
 
-### Using global styles in a layout component
+## Using global styles in a layout component
 
-#### Prerequisites
+### Prerequisites
 
 - A [Gatsby site](/docs/quick-start/) with an index page component
 
-#### Directions
+### Directions
 
 You can add global styles to a [shared layout component](/tutorial/part-three/#your-first-layout-component). This component is used for things that are common throughout the site, like a header or footer.
 
@@ -83,19 +81,19 @@ import Layout from "../components/layout"
 export default () => <Layout>Hello world!</Layout>
 ```
 
-#### Additional resources
+### Additional resources
 
 - [Standard Styling with Global CSS Files](/docs/global-css/)
 - [More about layout components](/tutorial/part-three)
 
-### Using Styled Components
+## Using Styled Components
 
-#### Prerequisites
+### Prerequisites
 
 - A [Gatsby site](/docs/quick-start/) with an index page component
 - [gatsby-plugin-styled-components, styled-components, and babel-plugin-styled-components](/packages/gatsby-plugin-styled-components/) installed in `package.json`
 
-#### Directions
+### Directions
 
 1. Inside your `gatsby-config.js` file add `gatsby-plugin-styled-components`
 
@@ -161,22 +159,22 @@ export default () => (
 
 4. Run `gatsby develop` to see the changes
 
-#### Additional resources
+### Additional resources
 
 - [More on Using Styled Components](/docs/styled-components/)
 - [Egghead lesson](https://egghead.io/lessons/gatsby-style-gatsby-sites-with-styled-components)
 
-### Using CSS Modules
+## Using CSS Modules
 
-#### Prerequisites
+### Prerequisites
 
 - An existing [Gatsby site](/docs/quick-start/) with an index page component
 
-#### Directions
+### Directions
 
 1. Create a CSS module as `src/pages/index.module.css` and paste the following into the module:
 
-```css:title=src/components/index.module.css
+```css:title=src/pages/index.module.css
 .feature {
   margin: 2rem auto;
   max-width: 500px;
@@ -204,12 +202,12 @@ export default () => (
 **Note:**
 Notice that the file extension is `.module.css` instead of `.css`, which tells Gatsby that this is a CSS module.
 
-#### Additional resources
+### Additional resources
 
 - More on [Using CSS Modules](/tutorial/part-two/#css-modules)
 - [Live example on Using CSS modules](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-css-modules)
 
-### Using Sass/SCSS
+## Using Sass/SCSS
 
 Sass is an extension of CSS that gives you more advanced features like nested rules, variables, mixins, and more.
 
@@ -217,11 +215,11 @@ Sass has 2 syntaxes. The most commonly used syntax is "SCSS", and is a superset 
 
 Sass will compile .scss and .sass files to .css files for you, so you can write your stylesheets with more advanced features.
 
-#### Prerequisites
+### Prerequisites
 
 - A [Gatsby site](/docs/quick-start/).
 
-#### Directions
+### Directions
 
 1. Install the Gatsby plugin [gatsby-plugin-sass](https://www.gatsbyjs.org/packages/gatsby-plugin-sass/) and `node-sass`.
 
@@ -261,20 +259,20 @@ import "./styles.sass"
 
 _Note: You can use Sass/SCSS files as modules too, like mentioned in the previous recipe about CSS modules, with the difference that instead of .css the extensions have to be .scss or .sass_
 
-#### Additional resources
+### Additional resources
 
 - [Difference between .sass and .scss](https://responsivedesign.is/articles/difference-between-sass-and-scss/)
 - [Sass guide from the official Sass website](https://sass-lang.com/guide)
 - [A more complete installation tutorial on Sass with some more explanations and more resources](https://www.gatsbyjs.org/docs/sass/)
 
-### Adding a Local Font
+## Adding a Local Font
 
-#### Prerequisites
+### Prerequisites
 
 - A [Gatsby site](/docs/quick-start/)
 - A font file: `.woff2`, `.ttf`, etc.
 
-#### Directions
+### Directions
 
 1. Copy a font file into your Gatsby project, such as `src/fonts/fontname.woff2`.
 
@@ -303,19 +301,19 @@ By targeting the HTML `body` element, your font will apply to most text on the p
 
 If fonts are not updating following steps above, make sure to replace the existing font-family in relevant CSS.
 
-#### Additional resources
+### Additional resources
 
 - More on [importing assets into files](/docs/importing-assets-into-files/)
 
-### Using Emotion
+## Using Emotion
 
 [Emotion](https://emotion.sh) is a powerful CSS-in-JS library that supports both inline CSS styles and styled components. You can use each styling feature individually or together in the same file.
 
-#### Prerequisites
+### Prerequisites
 
 - A [Gatsby site](/docs/quick-start)
 
-#### Directions
+### Directions
 
 1. Install the [Gatsby Emotion plugin](/packages/gatsby-plugin-emotion/) and Emotion packages.
 
@@ -374,23 +372,23 @@ export default () => (
 )
 ```
 
-#### Additional resources
+### Additional resources
 
 - [Using Emotion in Gatsby](/docs/emotion/)
 - [Emotion website](https://emotion.sh)
 - [Getting started with Emotion and Gatsby](https://egghead.io/lessons/gatsby-getting-started-with-emotion-and-gatsby)
 
-### Using Google Fonts
+## Using Google Fonts
 
 Hosting your own [Google Fonts](https://fonts.google.com/) locally within a project means they won't have to be fetched over the network when your site loads, increasing your site's speed index by up to ~300 milliseconds on desktop and 1+ seconds on 3G. It's also recommended to limit custom font usage to only the essential for performance.
 
-#### Prerequisites
+### Prerequisites
 
 - A [Gatsby site](/docs/quick-start)
 - The [Gatsby CLI](/docs/gatsby-cli/) installed
 - Choosing a font package from [the typefaces project](https://github.com/KyleAMathews/typefaces)
 
-#### Directions
+### Directions
 
 1. Run `npm install --save typeface-your-chosen-font`, replacing `your-chosen-font` with the name of the font you want to install from [the typefaces project](https://github.com/KyleAMathews/typefaces).
 
@@ -412,7 +410,7 @@ body {
 
 _NOTE: So for the above example, the relevant CSS declaration would be `font-family: 'Source Sans Pro';`_
 
-#### Additional resources
+### Additional resources
 
 - [Typography.js](/docs/typography-js/) - Another option for using Google fonts on a Gatsby site
 - [The Typefaces Project Docs](https://github.com/KyleAMathews/typefaces/blob/master/README.md)

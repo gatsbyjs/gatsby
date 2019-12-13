@@ -7,8 +7,8 @@ title: Environment Variables
 You can provide environment variables to your site to customise its behavior in different environments.
 
 Environment variables can be distinguished between different types.
-There are environment variables that are defined in special places intended to be used in different deployment environments. Let's call these “Project Env Vars”.
-And there are true OS-level environment variables that might be used in command-line calls. Let's call these “OS Env Vars”.
+There are environment variables that are defined in special places intended to be used in different deployment environments. You can call these “Project Env Vars”.
+And there are true OS-level environment variables that might be used in command-line calls. You can call these “OS Env Vars”.
 
 In both cases you want to be able to access the relevant value of these variables for the environment you are in.
 
@@ -106,7 +106,7 @@ render() {
 }
 ```
 
-`API_KEY` will be available to your site (Server-side) as `process.env.API_KEY`. If you commit your `.env.*` file containing `API_KEY` to source control it would also be available on the client-side. However we **strongly** advise against that! You should prefix your variable with `GATSBY_` (as shown above) instead and Gatsby automatically makes it available in the browser context.
+In Node, your site has access to your `API_KEY` (Server-side) using the identifier `process.env.API_KEY`. To access it client-side, you can use a `.env.*` file containing `API_KEY`. However, we **strongly** advise against checking these files into source control as it's a security issue to expose the API key. As a more secure alternative, you can prefix your variable with `GATSBY_` (as shown above). With this prefix, Gatsby automatically embeds the variable as process.env.GATSBY\_\* in compiled JS making it available in the browser context without exposing it elsewhere.
 
 ```js
 // In any server-side code, e.g. gatsby-config.js

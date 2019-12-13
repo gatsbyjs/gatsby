@@ -41,7 +41,7 @@ export const anchorsTargetIsEquivalentToSelf = anchor =>
    * Some browsers use the empty string to mean _self, check
    * for actual `_self`
    */
-  [`_self`, ``].indexOf(anchor.target) !== -1 ||
+  [`_self`, ``].includes(anchor.target) ||
   /**
    * As per https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#attr-target
    */

@@ -1,19 +1,17 @@
 ---
-title: Deploying your site
+title: "Recipes: Deploying Your Site"
 ---
-
-## Recipes: Deploying your site
 
 Showtime. Once you are happy with your site, you are ready to go live with it!
 
-### Preparing for deployment
+## Preparing for deployment
 
-#### Prerequisites
+### Prerequisites
 
 - A [Gatsby site](/docs/quick-start)
 - The [Gatsby CLI](/docs/gatsby-cli) installed
 
-#### Directions
+### Directions
 
 1. Stop your development server if it is running (`Ctrl + C` on your command line in most cases)
 
@@ -45,24 +43,24 @@ gatsby build --prefix-paths
 gatsby build && gatsby serve
 ```
 
-#### Additional resources
+### Additional resources
 
 - Walk through building and deploying an example site in [tutorial part one](/tutorial/part-one/#deploying-a-gatsby-site)
 - Learn about [performance optimization](/docs/performance/)
 - Read about [other deployment related topics](/docs/preparing-for-deployment/)
 - Check out the [deployment docs](/docs/deploying-and-hosting/) for specific hosting platforms and how to deploy to them
 
-### Deploying to Netlify
+## Deploying to Netlify
 
 Use [`netlify-cli`](https://www.netlify.com/docs/cli/) to deploy your Gatsby application without leaving the command-line interface.
 
-#### Prerequisites
+### Prerequisites
 
 - A [Gatsby site](/docs/quick-start) with a single component `index.js`
 - The [netlify-cli](https://www.npmjs.com/package/netlify-cli) package installed
 - The [Gatsby CLI](/docs/gatsby-cli) installed
 
-#### Directions
+### Directions
 
 1. Build your gatsby application using `gatsby build`
 
@@ -78,23 +76,23 @@ Use [`netlify-cli`](https://www.netlify.com/docs/cli/) to deploy your Gatsby app
 
 7. Make sure that everything looks fine before deploying to production using `netlify deploy --prod`
 
-#### Additional resources
+### Additional resources
 
 - [Hosting on Netlify](/docs/hosting-on-netlify)
 - [gatsby-plugin-netlify](/packages/gatsby-plugin-netlify)
 
-### Deploying to ZEIT Now
+## Deploying to ZEIT Now
 
 Use [Now CLI](https://zeit.co/download) to deploy your Gatsby application without leaving the command-line interface.
 
-#### Prerequisites
+### Prerequisites
 
 - A [ZEIT Now](https://zeit.co/signup) account
 - A [Gatsby site](/docs/quick-start) with a single component `index.js`
 - [Now CLI](https://zeit.co/download) package installed
 - [Gatsby CLI](/docs/gatsby-cli) installed
 
-#### Directions
+### Directions
 
 1. Login into Now CLI using `now login`
 
@@ -102,6 +100,6 @@ Use [Now CLI](https://zeit.co/download) to deploy your Gatsby application withou
 
 3. Run `now` to deploy it
 
-#### Additional resources
+### Additional resources
 
 - [Deploying to ZEIT Now](/docs/deploying-to-zeit-now/)

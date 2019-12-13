@@ -8,6 +8,12 @@ const pathWithoutExtension = fullPath => {
   return path.join(parsed.dir, parsed.name)
 }
 
+// TO-DO:
+//  - implement ability to add/remove shadowed modules from the webpack chain as file are being created/deleted
+//    ( https://github.com/gatsbyjs/gatsby/issues/11456 ):
+//    - this will also need to add memo invalidation for page template shadowing:
+//      see memoized `shadowCreatePagePath` function used in `createPage` action creator.
+
 module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
   cache = {}
 

@@ -1,23 +1,21 @@
 ---
-title: Transforming data
+title: "Recipes: Transforming Data"
 ---
-
-## Recipes: Transforming data
 
 Transforming data in Gatsby is plugin-driven. Transformer plugins take data fetched using source plugins, and process it into something more usable (e.g. JSON into JavaScript objects, and more).
 
-### Transforming Markdown into HTML
+## Transforming Markdown into HTML
 
 The `gatsby-transformer-remark` plugin can transform Markdown files to HTML.
 
-#### Prerequisites
+### Prerequisites
 
 - A Gatsby site with `gatsby-config.js` and an `index.js` page
 - A Markdown file saved in your Gatsby site `src` directory
 - A source plugin installed, such as `gatsby-source-filesystem`
 - The `gatsby-transformer-remark` plugin installed
 
-#### Directions
+### Directions
 
 1. Add the transformer plugin in your `gatsby-config.js`:
 
@@ -52,7 +50,7 @@ export const query = graphql`
 
 3. Restart the development server and open GraphiQL at `http://localhost:8000/___graphql`. Explore the fields available on the `MarkdownRemark` node.
 
-#### Additional resources
+### Additional resources
 
 - [Tutorial on transforming Markdown to HTML](/tutorial/part-six/#transformer-plugins) using `gatsby-transformer-remark`
 - Browse available transformer plugins in the [Gatsby plugin library](/plugins/?=transformer)

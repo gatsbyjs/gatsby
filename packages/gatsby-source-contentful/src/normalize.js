@@ -380,6 +380,17 @@ exports.createContentTypeNodes = ({
         internal: {
           type: `${makeTypeName(contentTypeItemId)}`,
         },
+        sys: {},
+      }
+
+      // Revision applies to entries, assets, and content types
+      if (entryItem.sys.revision) {
+        entryNode.sys.revision = entryItem.sys.revision
+      }
+
+      // Content type applies to entries only
+      if (entryItem.sys.contentType) {
+        entryNode.sys.contentType = entryItem.sys.contentType
       }
 
       // Use default locale field.
