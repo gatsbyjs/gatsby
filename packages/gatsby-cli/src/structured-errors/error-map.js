@@ -83,7 +83,7 @@ const errorMap = {
 
         ${context.afterCodeFrame}
 
-        This can happen if when you use two page/static queries in one file. Please combine those into one query.
+        This can happen when you use two page/static queries in one file. Please combine those into one query.
         If you're defining multiple components (each with a static query) in one file, you'll need to move each component to its own file.
       `),
     type: `GRAPHQL`,
