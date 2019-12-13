@@ -19,19 +19,35 @@ export const buildNodesQueryOnFieldName = ({ fields, fieldName }) =>
 const buildVariables = variables =>
   variables && typeof variables === `string` ? `(${variables})` : ``
 
-const buildSelectionSet = ({ fields }) =>
+const buildFragment = ({ name, fields }) => `
+  ... on ${name} {
+    ${buildSelectionSet(fields)}
+  }
+`
+
+const buildFragments = fragments => fragments.map(buildFragment).join(` `)
+
+const buildSelectionSet = fields =>
   fields
     .map(field => {
       if (typeof field === `string`) {
         return field
       }
 
-      const { fieldName, variables, innerFields } = field
+      const { fieldName, variables, innerFields, innerFragments } = field
+
+      if (fieldName && innerFragments) {
+        return `
+          ${fieldName} {
+            ${buildFragments(innerFragments)}
+          }
+        `
+      }
 
       if (fieldName && innerFields) {
         return `
             ${fieldName} ${buildVariables(variables)} {
-              ${buildSelectionSet({ fields: innerFields })}
+              ${buildSelectionSet(innerFields)}
             }
           `
       }
@@ -50,7 +66,7 @@ const buildQuery = ({
 }) => `
   query ${queryName} ${buildVariables(variables)} {
     ${fieldName} ${buildVariables(fieldVariables)} {
-      ${buildSelectionSet({ fields })}
+      ${buildSelectionSet(fields)}
     }
   }
 `

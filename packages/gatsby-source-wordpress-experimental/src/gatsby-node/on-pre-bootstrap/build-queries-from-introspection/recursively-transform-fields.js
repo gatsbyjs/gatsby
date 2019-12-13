@@ -47,10 +47,10 @@ const filterField = ({ field, nodeListTypeNames }) => {
     return false
   }
 
-  if (fieldType.kind === `UNION`) {
-    // @todo our query builder wont allow us to use fragments. Need to do something custom instead of using graphql-query-builder, or fork it and add support
-    return false
-  }
+  // if (fieldType.kind === `UNION`) {
+  //   // @todo our query builder wont allow us to use fragments. Need to do something custom instead of using graphql-query-builder, or fork it and add support
+  //   return false
+  // }
 
   // if this is a connection field
   if (fieldType.name && fieldType.name.includes(`Connection`)) {
@@ -77,6 +77,21 @@ const filterField = ({ field, nodeListTypeNames }) => {
   return true
 }
 
+const transformFragments = ({ possibleTypes, nodeListTypeNames }) =>
+  possibleTypes
+    .map(possibleType => {
+      const isAGatsbyNode = nodeListTypeNames.includes(possibleType.name)
+
+      if (isAGatsbyNode) {
+        possibleType.fields = [`id`]
+        return possibleType
+      }
+
+      // @todo handle types that aren't Gatsby node types
+      return false
+    })
+    .filter(Boolean)
+
 const transformField = ({ field, nodeListTypeNames }) => {
   const fieldType = field.type || {}
 
@@ -92,10 +107,20 @@ const transformField = ({ field, nodeListTypeNames }) => {
   }
 
   // pull the id for connections
-  if (isAGatsbyNode && !isAMediaItemNode) {
+  if (isAGatsbyNode) {
     return {
       fieldName: field.name,
       innerFields: [`id`],
+    }
+  }
+
+  if (fieldType.kind === `UNION`) {
+    return {
+      fieldName: field.name,
+      innerFragments: transformFragments({
+        possibleTypes: fieldType.possibleTypes,
+        nodeListTypeNames,
+      }),
     }
   }
 
