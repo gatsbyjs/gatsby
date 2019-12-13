@@ -136,10 +136,6 @@ export function multipleRootQueriesError(
     _.camelCase(otherName)
   )}`
 
-  console.log(JSON.stringify(def, null, 2))
-  console.log(JSON.stringify(otherDef, null, 2))
-  console.log(filePath)
-
   return {
     id: `85910`,
     filePath,
