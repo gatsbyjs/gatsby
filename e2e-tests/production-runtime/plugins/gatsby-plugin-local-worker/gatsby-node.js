@@ -1,8 +1,10 @@
-exports.onPostBootstrap = async ({ actions }) => {
+const path = require(`path`)
+
+exports.onPostBootstrap = async ({ actions, store }) => {
   const result = await actions.createJobV2({
     name: `TEST_JOB`,
     inputPaths: [],
-    outputDir: `./public`,
+    outputDir: path.join(store.getState().program.directory, `./public`),
     args: {
       result: `hello`,
     },
