@@ -255,14 +255,17 @@ Since Tina makes edits using the Gatsby development server, we need to create an
 
 When it's time to allow your editors to a site with Tina on a hosted server, you will need to be extra careful around safeguarding against run-time errors. Does your site blow up if an array is empty? or if an image isn't defined? You'll want to account for these edge cases which your editors may run into while editing.
 
-To get Tina working in Gatsby Cloud, you'll need to configure the following four environment variables during **Step 3** of the process:
+To get Tina working in Gatsby Cloud, you'll need to configure the following environment variables in your `Site Settings`:
 
 ```
 GIT_COMMITTER_EMAIL
 GIT_COMMITTER_NAME
 GIT_AUTHOR_EMAIL
 GIT_AUTHOR_NAME
+SSH_KEY
 ```
+
+The `SSH_KEY` is a private key that allows write access to your git repo. You'll need to add the public key to your repo under `Deploy Keys` in `Settings` and enable `write access`.
 
 Since these values will be set at the environment level, all edits made using Tina will use these values when pushing changes to git.
 
