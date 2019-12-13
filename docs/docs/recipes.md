@@ -31,38 +31,85 @@ See [docs templates](/docs/docs-templates/) in the contributing docs for more he
 
 Craving a happy medium between [full-length tutorials](/tutorial/) and crawling the [docs](/docs/)? Here's a cookbook of guiding recipes on how to build things, Gatsby style.
 
-## [1. Pages and layouts](/docs/recipes-pages-layouts)
+## [1. Pages and layouts](/docs/recipes/pages-layouts)
 
 Add pages to your Gatsby site, and use layouts to manage common page elements.
 
-## [2. Styling with CSS](/docs/recipes-styling-css)
+- [Project structure](/docs/recipes/pages-layouts#project-structure)
+- [Creating pages automatically](/docs/recipes/pages-layouts#creating-pages-automatically)
+- [Linking between pages](/docs/recipes/pages-layouts#linking-between-pages)
+- [Creating a layout component](/docs/recipes/pages-layouts#creating-a-layout-component)
+- [Creating pages programmatically with createPage](/docs/recipes/pages-layouts#creating-pages-programmatically-with-createpage)
+
+## [2. Styling with CSS](/docs/recipes/styling-css)
 
 There are so many ways to add styles to your website; Gatsby supports almost every possible option, through official and community plugins.
 
-## [3. Working with starters](/docs/recipes-working-with-starters)
+- [Using global CSS files without a Layout component](/docs/recipes/styling-css#using-global-css-files-without-a-layout-component)
+- [Using global styles in a layout component](/docs/recipes/styling-css#using-global-styles-in-a-layout-component)
+- [Using Styled Components](/docs/recipes/styling-css#using-styled-components)
+- [Using CSS Modules](/docs/recipes/styling-css#using-css-modules)
+- [Using Sass/SCSS](/docs/recipes/styling-css#using-sassscss)
+- [Adding a Local Font](/docs/recipes/styling-css#adding-a-local-font)
+- [Using Emotion](/docs/recipes/styling-css#using-emotion)
+- [Using Google Fonts](/docs/recipes/styling-css#using-google-fonts)
+
+## [3. Working with starters](/docs/recipes/working-with-starters)
 
 [Starters](/docs/starters/) are boilerplate Gatsby sites maintained officially, or by the community.
 
-## [4. Working with themes](/docs/recipes-working-with-themes)
+- [Using a starter](/docs/recipes/starters#using-a-starter)
+
+## [4. Working with themes](/docs/recipes/working-with-themes)
 
 A Gatsby theme lets you centralize the look-and-feel of your site. You can seamlessly update a theme, compose themes together, and even swap out one compatible theme for another.
 
-## [5. Sourcing data](/docs/recipes-sourcing-data)
+- [Creating a new site using a theme starter](/docs/recipes/themes#creating-a-new-site-using-a-theme-starter)
+- [Building a new theme](/docs/recipes#building-a-new-theme)
+
+## [5. Sourcing data](/docs/recipes/sourcing-data)
 
 Pull data from multiple locations, like the filesystem or database, into your Gatsby site.
 
-## [6. Querying data](/docs/recipes-querying-data)
+- [Adding data to GraphQL](/docs/recipes/sourcing-data#adding-data-to-graphql)
+- [Sourcing Markdown data for blog posts and pages with GraphQL](/docs/recipes/sourcing-data#sourcing-markdown-data-for-blog-posts-and-pages-with-graphql)
+- [Sourcing from WordPress](/docs/recipes/sourcing-data#sourcing-from-wordpress)
+- [Sourcing data from Contentful](/docs/recipes/sourcing-data#sourcing-data-from-contentful)
+- [Pulling data from an external source and creating pages without GraphQL](/docs/recipes/sourcing-data#pulling-data-from-an-external-source-and-creating-pages-without-graphql)
+- [Sourcing content from Drupal](/docs/recipes/sourcing-data#sourcing-content-from-drupal)
+
+## [6. Querying data](/docs/recipes/querying-data)
 
 Gatsby lets you access your data across all sources using a single GraphQL interface.
 
-## [7. Working with images](/docs/recipes-working-with-images)
+- [Querying data with a Page Query](/docs/recipes/querying-data#querying-data-with-a-page-query)
+- [Querying data with the StaticQuery Component](/docs/recipes/querying-data#querying-data-with-the-staticquery-component)
+- [Querying data with the useStaticQuery hook](/docs/recipes/querying-data/#querying-data-with-the-usestaticquery-hook)
+- [Limiting with GraphQL](/docs/recipes/querying-data#limiting-with-graphql)
+- [Sorting with GraphQL](/docs/recipes/querying-data#sorting-with-graphql)
+- [Filtering with GraphQL](/docs/recipes/querying-data#filtering-with-graphql)
+- [GraphQL Query Aliases](/docs/recipes/querying-data#graphql-query-aliases)
+- [GraphQL Query Fragments](/docs/recipes/querying-data#graphql-query-fragments)
+
+## [7. Working with images](/docs/recipes/working-with-images)
 
 Access images as static resources, or automate the process of optimizing them through powerful plugins.
 
-## [8. Transforming data](/docs/recipes-transforming-data)
+- [Import an image into a component with webpack](/docs/recipes/working-with-images#import-an-image-into-a-component-with-webpack)
+- [Reference an image from the static folder](/docs/recipes/working-with-images#reference-an-image-from-the-static-folder)
+- [Optimizing and querying local images with gatsby-image](/docs/recipes/working-with-images#optimizing-and-querying-local-images-with-gatsby-image)
+- [Optimizing and querying images in post frontmatter with gatsby-image](/docs/recipes/working-with-images#optimizing-and-querying-images-in-post-frontmatter-with-gatsby-image)
+
+## [8. Transforming data](/docs/recipes/transforming-data)
 
 Transforming data in Gatsby is plugin-driven. Transformer plugins take data fetched using source plugins, and process it into something more usable (e.g. JSON into JavaScript objects, and more).
 
-## [9. Deploying your site](/docs/recipes-deploying-your-site)
+- [Transforming Markdown into HTML](/docs/recipes/transforming-data#transforming-markdown-into-html)
+
+## [9. Deploying your site](/docs/recipes/deploying-your-site)
 
 Showtime. Once you are happy with your site, you are ready to go live with it!
+
+- [Preparing for deployment](/docs/recipes/deploying-your-site#preparing-for-deployment)
+- [Deploying to Netlify](/docs/recipes/deploying-your-site#deploying-to-netlify)
+- [Deploying to ZEIT Now](/docs/recipes/deploying-your-site#deploying-to-zeit-now)

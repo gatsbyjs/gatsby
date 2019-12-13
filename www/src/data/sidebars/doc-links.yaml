@@ -16,23 +16,23 @@
       link: /docs/recipes/
       items:
         - title: Pages and layouts
-          link: /docs/recipes-pages-layouts
+          link: /docs/recipes/pages-layouts
         - title: Styling with CSS
-          link: /docs/recipes-styling-css
+          link: /docs/recipes/styling-css
         - title: Working with starters
-          link: /docs/recipes-working-with-starters
+          link: /docs/recipes/working-with-starters
         - title: Working with themes
-          link: /docs/recipes-working-with-themes
+          link: /docs/recipes/working-with-themes
         - title: Sourcing data
-          link: /docs/recipes-sourcing-data
+          link: /docs/recipes/sourcing-data
         - title: Querying data
-          link: /docs/recipes-querying-data
+          link: /docs/recipes/querying-data
         - title: Working with images
-          link: /docs/recipes-working-with-images
+          link: /docs/recipes/working-with-images
         - title: Transforming data
-          link: /docs/recipes-transforming-data
+          link: /docs/recipes/transforming-data
         - title: Deploying your site
-          link: /docs/recipes-deploying-your-site
+          link: /docs/recipes/deploying-your-site
     - title: Reference Guides
       link: /docs/guides/
       items:
