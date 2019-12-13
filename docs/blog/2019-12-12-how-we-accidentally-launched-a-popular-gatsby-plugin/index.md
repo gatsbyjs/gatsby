@@ -15,7 +15,7 @@ tags:
 It all started when we ([Oberon](https://www.oberon.nl/)) noticed a certain pattern among a subset of our clients — festivals.
 Their sites tend to have lots of issues with server load and costs.
 
-They are after all websites that remain largely unused for most of the year — until they’re not. And at those few yearly moments (such as at the start of a ticket sale), loads can get really, really high.
+They are, after all websites that remain largely unused for most of the year — until they’re not. And at those few yearly moments (such as at the start of a ticket sale), loads can get really, really high.
 
 This makes most festival websites not _particularly good_ candidates for hosting on servers that are shared by multiple sites, because they can bring down all other sites during this brief period.
 Additionally, clients are paying a fixed hosting fee for a server that mostly remains unused throughout the year.
