@@ -1,20 +1,26 @@
+import compress from "graphql-query-compress"
+
 export const buildNodesQueryOnFieldName = ({ fields, fieldName }) =>
-  buildQuery({
-    queryName: `NODE_LIST_QUERY`,
-    variables: `$first: Int!, $after: String`,
-    fieldName,
-    fieldVariables: `first: $first, after: $after`,
-    fields: [
-      {
-        fieldName: `pageInfo`,
-        innerFields: [`hasNextPage`, `endCursor`],
-      },
-      {
-        fieldName: `nodes`,
-        innerFields: fields,
-      },
-    ],
-  })
+  compress(
+    buildQuery({
+      queryName: `NODE_LIST_QUERY`,
+      variables: `$first: Int!, $after: String`,
+      fieldName,
+      fieldVariables: `first: $first, after: $after ${
+        [`pages`].includes(fieldName) ? `, where: {parent: null}` : ``
+      }`,
+      fields: [
+        {
+          fieldName: `pageInfo`,
+          fields: [`hasNextPage`, `endCursor`],
+        },
+        {
+          fieldName: `nodes`,
+          fields: fields,
+        },
+      ],
+    })
+  )
 
 const buildVariables = variables =>
   variables && typeof variables === `string` ? `(${variables})` : ``
@@ -25,29 +31,36 @@ const buildFragment = ({ name, fields }) => `
   }
 `
 
-const buildFragments = fragments => fragments.map(buildFragment).join(` `)
+const buildFragments = fragments => `
+  __typename
+  ${fragments.map(buildFragment).join(` `)}
+`
 
-const buildSelectionSet = fields =>
-  fields
+const buildSelectionSet = fields => {
+  if (!fields || !fields.length) {
+    return ``
+  }
+
+  return fields
     .map(field => {
       if (typeof field === `string`) {
         return field
       }
 
-      const { fieldName, variables, innerFields, innerFragments } = field
+      const { fieldName, variables, fields, fragments } = field
 
-      if (fieldName && innerFragments) {
+      if (fieldName && fragments) {
         return `
           ${fieldName} {
-            ${buildFragments(innerFragments)}
+            ${buildFragments(fragments)}
           }
         `
       }
 
-      if (fieldName && innerFields) {
+      if (fieldName && fields) {
         return `
             ${fieldName} ${buildVariables(variables)} {
-              ${buildSelectionSet(innerFields)}
+              ${buildSelectionSet(fields)}
             }
           `
       }
@@ -56,6 +69,7 @@ const buildSelectionSet = fields =>
     })
     .filter(Boolean).join(`
     `)
+}
 
 const buildQuery = ({
   queryName,
@@ -72,10 +86,12 @@ const buildQuery = ({
 `
 
 export const buildNodeQueryOnFieldName = ({ fields, fieldName }) =>
-  buildQuery({
-    queryName: `SINGLE_CONTENT_QUERY`,
-    variables: `$id: ID!`,
-    fieldName,
-    fieldVariables: `id: $id`,
-    fields: fields,
-  })
+  compress(
+    buildQuery({
+      queryName: `SINGLE_CONTENT_QUERY`,
+      variables: `$id: ID!`,
+      fieldName,
+      fieldVariables: `id: $id`,
+      fields: fields,
+    })
+  )

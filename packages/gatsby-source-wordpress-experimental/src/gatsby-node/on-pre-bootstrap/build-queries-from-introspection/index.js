@@ -7,81 +7,88 @@ import {
 
 import store from "../../../store"
 
-const generateQueriesFromIntrospection = ({ introspection }) => {
-  const { fieldBlacklist } = store.getState().introspection
+const generateQueriesFromIntrospection = ({
+  introspection,
+  nodeListFilter,
+  fieldBlacklist = [],
+  rootType = `RootQuery`,
+}) => {
+  if (!nodeListFilter || typeof nodeListFilter !== `function`) {
+    throw new Error(`nodeListFilter must be a function.`)
+  }
 
-  const rootFields = introspection.data.__schema.queryType.fields
+  const { types } = introspection.data.__schema
+  const typeMap = new Map(types.map(type => [type.name, type]))
+  const rootFields = typeMap.get(rootType).fields
 
-  // first we want to find root query fields that will return lists of nodes
-  const rootQueryListConnections = rootFields
-    .filter(
-      field =>
-        field.type.kind === `OBJECT` &&
-        field.type.name.includes(`RootQueryTo`) &&
-        !fieldBlacklist.includes(field.name)
-    )
-    .map(field => {
-      return {
-        rootFieldName: field.name,
-        rootTypeName: field.type.name,
-        nodesTypeName: field.type.fields.find(
-          innerField => innerField.name === `nodes`
-        ).type.ofType.name,
-      }
-    })
+  // find fields that are lists of nodes.
+  const nodeListFields = rootFields.filter(field => {
+    if (field.type.kind !== `OBJECT`) {
+      return false
+    }
 
-  // get an array of type names for the nodes in our root query node lists
-  const nodeListTypeNames = rootQueryListConnections.map(
-    field => field.nodesTypeName
-  )
+    const type = typeMap.get(field.type.name)
 
-  // build an object where the root property names are node list types
-  // each of those properties contains an object of info about that types fields
-  const nodeListTypes = rootQueryListConnections.reduce(
-    (accumulator, connection) => {
-      const name = connection.nodesTypeName
-      const typeInfo = rootFields.find(field => field.type.name === name)
+    return type && type.fields.find(nodeListFilter)
+  })
 
-      typeInfo.type.fields = recursivelyTransformFields({
-        field: typeInfo,
-        fields: typeInfo.type.fields,
-        nodeListTypeNames,
-      })
+  const nodeListFieldNames = nodeListFields.map(field => field.name)
 
-      accumulator[name] = {
-        fieldName: typeInfo.name,
-        ...connection,
-        ...typeInfo.type,
-      }
-      return accumulator
-    },
-    {}
-  )
+  const nodeListTypeNames = nodeListFields.map(field => {
+    const connectionType = typeMap.get(field.type.name)
+    const nodesField = connectionType.fields.find(nodeListFilter)
+    return nodesField.type.ofType.name
+  })
+
+  const futureGatsbyNodesInfo = {
+    fieldNames: nodeListFieldNames,
+    typeNames: nodeListTypeNames,
+  }
 
   let queries = {}
 
-  // for each root field that returns a list of nodes
-  // build a query to fetch those nodes
-  for (const typeName of nodeListTypeNames) {
-    const listType = nodeListTypes[typeName]
+  for (const { type, name } of nodeListFields) {
+    if (fieldBlacklist.includes(name)) {
+      continue
+    }
+
+    const fieldFields = typeMap.get(type.name).fields
+    const nodesField = fieldFields.find(nodeListFilter)
+
+    const nodesType = typeMap.get(nodesField.type.ofType.name)
+    const { fields } = nodesType
+
+    const singleTypeInfo = rootFields.find(
+      field => field.type.name === nodesType.name
+    )
+
+    const singleFieldName = singleTypeInfo.name
+
+    const transformedFields = recursivelyTransformFields({
+      maxDepth: 3,
+      field: nodesType,
+      fields,
+      futureGatsbyNodesInfo,
+      typeMap,
+    })
 
     const listQueryString = buildNodesQueryOnFieldName({
-      fields: listType.fields,
-      fieldName: listType.rootFieldName,
-      nodeListTypeNames,
+      fields: transformedFields,
+      fieldName: name,
+      nodeListFieldNames,
     })
 
     const nodeQueryString = buildNodeQueryOnFieldName({
-      fields: listType.fields,
-      fieldName: listType.fieldName,
-      nodeListTypeNames,
+      fields: transformedFields,
+      fieldName: singleFieldName,
+      nodeListFieldNames,
     })
 
-    queries[listType.rootFieldName] = {
+    queries[name] = {
       typeInfo: {
-        singleName: listType.fieldName,
-        pluralName: listType.rootFieldName,
-        nodesTypeName: listType.nodesTypeName,
+        singleName: singleFieldName,
+        pluralName: name,
+        nodesTypeName: nodesType.name,
       },
       listQueryString,
       nodeQueryString,
@@ -90,6 +97,8 @@ const generateQueriesFromIntrospection = ({ introspection }) => {
 
   return queries
 }
+
+const nodeListFilter = field => field.name === `nodes`
 
 export const buildNodeQueriesFromIntrospection = async (
   { introspection, schemaHasChanged = false },
@@ -106,9 +115,12 @@ export const buildNodeQueriesFromIntrospection = async (
     schemaHasChanged
   ) {
     // generate them again
+    const { fieldBlacklist } = store.getState().introspection
+
     queries = generateQueriesFromIntrospection({
       introspection,
-      helpers,
+      fieldBlacklist,
+      nodeListFilter,
     })
 
     // and cache them

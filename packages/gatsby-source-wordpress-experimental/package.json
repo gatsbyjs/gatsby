@@ -15,6 +15,7 @@
     "axios": "^0.19.0",
     "axios-rate-limit": "^1.2.1",
     "execall": "^2.0.0",
+    "graphql-query-compress": "^1.2.2",
     "graphql-tools": "^3.1.1",
     "invariant": "^2.2.4",
     "node-fetch": "^1.7.3",

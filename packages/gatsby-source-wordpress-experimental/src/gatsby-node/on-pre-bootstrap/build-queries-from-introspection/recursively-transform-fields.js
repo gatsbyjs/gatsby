@@ -2,149 +2,231 @@ import store from "../../../store"
 
 const { fieldBlacklist } = store.getState().introspection
 
-const filterField = ({ field, nodeListTypeNames }) => {
-  const fieldType = field.type || {}
-  const ofType = fieldType.ofType || {}
+const transformFragments = ({
+  possibleTypes,
+  futureGatsbyNodesInfo,
+  typeMap,
+  maxDepth,
+  depth,
+}) =>
+  possibleTypes
+    ? possibleTypes
+        .map(possibleType => {
+          const type = typeMap.get(possibleType.name)
 
-  if (!field) {
+          if (!type) {
+            return false
+          }
+
+          const isAGatsbyNode = futureGatsbyNodesInfo.typeNames.includes(
+            possibleType.name
+          )
+
+          if (isAGatsbyNode) {
+            // we use the id to link to the top level Gatsby node
+            possibleType.fields = [`id`]
+            return possibleType
+          }
+
+          const typeInfo = typeMap.get(possibleType.name)
+
+          if (typeInfo) {
+            const fields = recursivelyTransformFields({
+              fields: typeInfo.fields,
+              futureGatsbyNodesInfo,
+              typeMap,
+              maxDepth,
+              depth,
+            })
+
+            if (!fields || !fields.length) {
+              return false
+            }
+
+            possibleType.fields = fields
+            return possibleType
+          }
+
+          return false
+        })
+        .filter(Boolean)
+    : null
+
+function transformField({
+  field,
+  futureGatsbyNodesInfo,
+  typeMap,
+  maxDepth,
+  depth,
+}) {
+  // we're potentially infinitely recursing when fields are connected to other types that have fields that are connections to other types
+  //  so we need a maximum limit for that
+  if (depth >= maxDepth) {
     return false
   }
 
-  if (
-    field.args.length &&
-    // remove fields that have required args. They'll cause query errors if ommitted
-    //  and we can't determine how to use those args programatically.
-    field.args.find(arg => arg && arg.type && arg.type.kind === `NON_NULL`)
-  ) {
-    return false
-  }
+  depth++
 
-  // if we're recursing and we have infinite relational data
-  // for which we have no top-level nodes,
-  // and the level we've recursed to is too far down to have a next level
-  // don't query for this field
-  if (fieldType.kind === `OBJECT` && !fieldType.fields) {
+  // if the field has no type we can't use it.
+  if (!field || !field.type) {
     return false
-  }
-
-  if (fieldType.kind === `LIST` && ofType.kind !== `SCALAR`) {
-    return null
   }
 
   if (fieldBlacklist.includes(field.name)) {
     return false
   }
 
-  const gatsbyNodeExists = nodeListTypeNames.find(type => type === ofType.name)
-
+  // remove fields that have required args. They'll cause query errors if ommitted
+  //  and we can't determine how to use those args programatically.
   if (
-    fieldType.kind === `LIST` &&
-    ofType.kind !== `SCALAR` &&
-    !gatsbyNodeExists
+    field.args &&
+    field.args.length &&
+    field.args.find(arg => arg && arg.type && arg.type.kind === `NON_NULL`)
   ) {
-    // for now remove relational lists unless we've already created Gatsby nodes from this type
-    // @todo possibly make nodes out of these fields by fetching the node from the connection field. Not sure if this will work yet or not
     return false
   }
 
-  // if (fieldType.kind === `UNION`) {
-  //   // @todo our query builder wont allow us to use fragments. Need to do something custom instead of using graphql-query-builder, or fork it and add support
-  //   return false
-  // }
+  const fieldType = field.type || {}
+  const ofType = fieldType.ofType || {}
 
-  // if this is a connection field
-  if (fieldType.name && fieldType.name.includes(`Connection`)) {
-    // get the list of nodes on this field
-    const nodesSubField = fieldType.fields.find(field => field.name === `nodes`)
+  if (
+    fieldType.kind === `SCALAR` ||
+    (fieldType.kind === `NON_NULL` && ofType.kind === `SCALAR`) ||
+    (fieldType.kind === `LIST` && fieldType.ofType.kind === `SCALAR`)
+  ) {
+    return field.name
+  }
 
-    // remove this field if there are no nodes to get
-    if (!nodesSubField) {
+  const isListOfGatsbyNodes =
+    ofType && futureGatsbyNodesInfo.typeNames.includes(ofType.name)
+
+  if (fieldType.kind === `LIST` && isListOfGatsbyNodes) {
+    return {
+      fieldName: field.name,
+      fields: [`id`],
+    }
+  } else if (fieldType.kind === `LIST`) {
+    const listOfType = typeMap.get(ofType.name)
+
+    const transformedFields = recursivelyTransformFields({
+      fields: listOfType.fields,
+      futureGatsbyNodesInfo,
+      typeMap,
+      depth,
+      maxDepth,
+    })
+
+    const transformedFragments = transformFragments({
+      possibleTypes: listOfType.possibleTypes,
+      futureGatsbyNodesInfo,
+      typeMap,
+      depth,
+      maxDepth,
+    })
+
+    if (
+      (!transformedFields &&
+        transformedFragments &&
+        !transformedFragments.length) ||
+      (!transformedFragments && transformedFields && !transformedFields.length)
+    ) {
       return false
     }
 
-    // check if we will have Gatsby nodes of this type
-    const connectionIsAGatsbyNode =
-      nodesSubField &&
-      nodeListTypeNames.find(
-        type =>
-          !!nodesSubField.type.ofType && type === nodesSubField.type.ofType.name
-      )
-
-    // remove connections that aren't to Gatsby nodes
-    return !connectionIsAGatsbyNode
+    return {
+      fieldName: field.name,
+      fields: transformedFields,
+      fragments: transformedFragments,
+    }
   }
 
-  return true
-}
+  const isAGatsbyNode = futureGatsbyNodesInfo.typeNames.includes(fieldType.name)
+  const isAMediaItemNode = isAGatsbyNode && fieldType.name === `MediaItem`
 
-const transformFragments = ({ possibleTypes, nodeListTypeNames }) =>
-  possibleTypes
-    .map(possibleType => {
-      const isAGatsbyNode = nodeListTypeNames.includes(possibleType.name)
-
-      if (isAGatsbyNode) {
-        possibleType.fields = [`id`]
-        return possibleType
-      }
-
-      // @todo handle types that aren't Gatsby node types
-      return false
-    })
-    .filter(Boolean)
-
-const transformField = ({ field, nodeListTypeNames }) => {
-  const fieldType = field.type || {}
-
-  const isAGatsbyNode = nodeListTypeNames.includes(field.type.name)
-  const isAMediaItemNode = isAGatsbyNode && field.type.name === `MediaItem`
-
-  // pull the id and sourceUrl for connections to media items
+  // pull the id and sourceUrl for connections to media item gatsby nodes
   if (isAMediaItemNode) {
     return {
       fieldName: field.name,
-      innerFields: [`id`, `sourceUrl`],
+      fields: [`id`, `sourceUrl`],
+    }
+  } else if (isAGatsbyNode) {
+    // just pull the id for connections to other gatsby nodes
+    return {
+      fieldName: field.name,
+      fields: [`id`],
     }
   }
 
-  // pull the id for connections
-  if (isAGatsbyNode) {
+  const typeInfo = typeMap.get(fieldType.name)
+  const { fields } = typeInfo
+
+  if (fields) {
+    const transformedFields = recursivelyTransformFields({
+      fields,
+      futureGatsbyNodesInfo,
+      typeMap,
+      depth,
+      maxDepth,
+    })
+
+    if (!transformedFields || !transformedFields.length) {
+      return false
+    }
+
     return {
       fieldName: field.name,
-      innerFields: [`id`],
+      fields: transformedFields,
     }
   }
 
   if (fieldType.kind === `UNION`) {
+    const typeInfo = typeMap.get(fieldType.name)
+
+    const transformedFields = recursivelyTransformFields({
+      fields: typeInfo.fields,
+      futureGatsbyNodesInfo,
+      typeMap,
+      depth,
+      maxDepth,
+    })
+
+    const fragments = transformFragments({
+      possibleTypes: typeInfo.possibleTypes,
+      futureGatsbyNodesInfo,
+      typeMap,
+      depth,
+      maxDepth,
+    })
+
     return {
       fieldName: field.name,
-      innerFragments: transformFragments({
-        possibleTypes: fieldType.possibleTypes,
-        nodeListTypeNames,
-      }),
+      fields: transformedFields,
+      fragments,
     }
   }
 
-  if (fieldType.fields) {
-    return {
-      fieldName: field.name,
-      innerFields: recursivelyTransformFields({
-        fields: field.type.fields,
-        nodeListTypeNames,
-      }),
-    }
-  }
-
-  return field.name
+  return false
 }
 
-const recursivelyTransformFields = ({ fields, nodeListTypeNames }) =>
+const recursivelyTransformFields = ({
+  fields,
+  futureGatsbyNodesInfo,
+  typeMap,
+  maxDepth,
+  depth = 0,
+}) =>
   fields
-    .filter(field =>
-      filterField({
-        field,
-        nodeListTypeNames,
-      })
-    )
-    .map(field => transformField({ field, nodeListTypeNames }))
+    ? fields
+        .map(field =>
+          transformField({
+            field,
+            futureGatsbyNodesInfo,
+            typeMap,
+            maxDepth,
+            depth,
+          })
+        )
+        .filter(Boolean)
+    : null
 
 export default recursivelyTransformFields

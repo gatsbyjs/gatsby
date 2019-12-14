@@ -12,6 +12,7 @@ const introspection = {
       `actionMonitorActions`,
       // this causes an error on the WPGQL side so I'm removing it temporarily
       `postTypeInfo`,
+      `edges`,
     ],
   },
 

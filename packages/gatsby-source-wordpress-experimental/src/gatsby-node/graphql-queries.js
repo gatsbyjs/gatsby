@@ -28,7 +28,21 @@ export const getAvailablePostTypesQuery = () => `
 export const introspectionQuery = gql`
   {
     __schema {
-      queryType {
+      types {
+        kind
+        name
+        possibleTypes {
+          kind
+          name
+        }
+        interfaces {
+          kind
+          name
+        }
+        ofType {
+          kind
+          name
+        }
         fields {
           name
           args {
@@ -37,73 +51,11 @@ export const introspectionQuery = gql`
             }
           }
           type {
-            kind
             name
-            possibleTypes {
+            kind
+            ofType {
               kind
               name
-            }
-            fields {
-              name
-              args {
-                type {
-                  kind
-                }
-              }
-              type {
-                name
-                kind
-                possibleTypes {
-                  kind
-                  name
-                }
-                ofType {
-                  kind
-                  name
-                  fields {
-                    name
-                  }
-                }
-                fields {
-                  name
-                  args {
-                    type {
-                      kind
-                    }
-                  }
-                  type {
-                    kind
-                    name
-                    possibleTypes {
-                      kind
-                      name
-                    }
-                    ofType {
-                      kind
-                      name
-                      fields {
-                        name
-                      }
-                    }
-                    fields {
-                      name
-                      args {
-                        type {
-                          kind
-                        }
-                      }
-                      type {
-                        name
-                        kind
-                        possibleTypes {
-                          kind
-                          name
-                        }
-                      }
-                    }
-                  }
-                }
-              }
             }
           }
         }
