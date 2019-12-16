@@ -3,7 +3,6 @@ import { jsx } from "theme-ui"
 import React from "react"
 import { navigate, PageRenderer } from "gatsby"
 import mousetrap from "mousetrap"
-import Modal from "react-modal"
 import MdClose from "react-icons/lib/md/close"
 
 import { Global } from "@emotion/core"
@@ -24,6 +23,7 @@ import PageWithSidebar from "../components/page-with-sidebar"
 import SiteMetadata from "../components/site-metadata"
 import SkipNavLink from "../components/skip-nav-link"
 import "../assets/fonts/futura"
+import LazyModal from "./modal"
 
 let windowWidth
 
@@ -38,8 +38,6 @@ class DefaultLayout extends React.Component {
   }
 
   componentDidMount() {
-    Modal.setAppElement(`#___gatsby`)
-
     if (this.props.isModal && window.innerWidth > 750) {
       mousetrap.bind(`left`, this.props.modalPrevious)
       mousetrap.bind(`right`, this.props.modalNext)
@@ -79,7 +77,7 @@ class DefaultLayout extends React.Component {
           <PageRenderer
             location={{ pathname: this.props.modalBackgroundPath }}
           />
-          <Modal
+          <LazyModal
             isOpen={true}
             style={{
               content: {
@@ -161,7 +159,7 @@ class DefaultLayout extends React.Component {
               {this.props.modalPreviousLink}
               {this.props.modalNextLink}
             </div>
-          </Modal>
+          </LazyModal>
         </>
       )
     }
