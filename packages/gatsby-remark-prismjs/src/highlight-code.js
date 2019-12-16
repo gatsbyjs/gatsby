@@ -2,11 +2,13 @@ const Prism = require(`prismjs`)
 const _ = require(`lodash`)
 const loadPrismLanguage = require(`./load-prism-language`)
 const handleDirectives = require(`./directives`)
+const escapeHTML = require(`./escape-html`)
 const unsupportedLanguages = new Set()
 
 module.exports = (
   language,
   code,
+  additionalEscapeCharacters = {},
   lineNumbersHighlight = [],
   noInlineHighlight = false
 ) => {
@@ -34,7 +36,7 @@ module.exports = (
         console.warn(message, `applying generic code block`)
         unsupportedLanguages.add(lang)
       }
-      return _.escape(code)
+      return escapeHTML(_.escape(code), additionalEscapeCharacters)
     }
   }
 
