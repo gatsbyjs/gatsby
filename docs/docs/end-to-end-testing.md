@@ -216,4 +216,4 @@ cy.checkA11y(axeRunContext, axeRunOptions)
 
 ## Other resources
 
-You can read the [Cypress' getting started guide](https://docs.cypress.io/guides/getting-started/writing-your-first-test.html) to revisit the concepts you explored here and learn about many more. If you want a more detailed guide, you can read the [Cypress' Core Concepts](https://docs.cypress.io/guides/core-concepts/introduction-to-cypress.html#Cypress-Can-Be-Simple-Sometimes). If you want to learn more about a specific Cypress command, check the [API Reference.](https://docs.cypress.io/api/api/table-of-contents.html)
+You can read [Cypress' getting started guide](https://docs.cypress.io/guides/getting-started/writing-your-first-test.html) to revisit the concepts you explored here and learn about many more. If you want a more detailed guide, you can read [Cypress' Core Concepts](https://docs.cypress.io/guides/core-concepts/introduction-to-cypress.html#Cypress-Can-Be-Simple-Sometimes). If you want to learn more about a specific Cypress command, check the [API Reference.](https://docs.cypress.io/api/api/table-of-contents.html)
