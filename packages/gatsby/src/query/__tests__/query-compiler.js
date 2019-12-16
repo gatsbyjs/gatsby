@@ -676,72 +676,7 @@ describe(`actual compiling`, () => {
         errors.push(e)
       },
     })
-    expect(errors).toMatchInlineSnapshot(
-      `
-      Array [
-        Object {
-          "context": Object {
-            "afterCodeFrame": "  1 | query anotherQueryAndMockFileQuery {
-        2 |   bar {
-        3 |     #...
-        4 |   }
-        5 |   foo {
-        6 |     #...
-        7 |   }
-        8 | }",
-            "beforeCodeFrame": "   1 | query mockFileQuery {
-         2 |   bar {
-         3 |     #...
-         4 |   }
-         5 | }
-         6 |` +
-        ` ` +
-        `
-         7 | query AnotherQuery {
-         8 |   foo {
-         9 |     #...
-        10 |   }
-        11 | }",
-            "name": "AnotherQuery",
-            "otherName": "mockFileQuery",
-          },
-          "filePath": "mockFile",
-          "id": "85910",
-        },
-      ]
-    `,
-      `
-      Array [
-        Object {
-          "context": Object {
-            "afterCodeFrame": "[0m [90m 1 | [39mquery anotherQueryAndMockFileQuery {[0m
-      [0m [90m 2 | [39m  allPostsJson {[0m
-      [0m [90m 3 | [39m    [33m#[39m[33m...[39m[0m
-      [0m [90m 4 | [39m  }[0m
-      [0m [90m 5 | [39m  allPostsJson {[0m
-      [0m [90m 6 | [39m    [33m#[39m[33m...[39m[0m
-      [0m [90m 7 | [39m  }[0m
-      [0m [90m 8 | [39m}[0m",
-            "beforeCodeFrame": "[0m [90m  1 | [39mquery mockFileQuery {[0m
-      [0m [90m  2 | [39m  allPostsJson {[0m
-      [0m [90m  3 | [39m    [33m#[39m[33m...[39m[0m
-      [0m [90m  4 | [39m  }[0m
-      [0m [90m  5 | [39m}[0m
-      [0m [90m  6 | [39m[0m
-      [0m [90m  7 | [39mquery [33mAnotherQuery[39m {[0m
-      [0m [90m  8 | [39m  allPostsJson {[0m
-      [0m [90m  9 | [39m    [33m#[39m[33m...[39m[0m
-      [0m [90m 10 | [39m  }[0m
-      [0m [90m 11 | [39m}[0m",
-            "name": "AnotherQuery",
-            "otherName": "mockFileQuery",
-          },
-          "filePath": "mockFile",
-          "id": "85910",
-        },
-      ]
-    `
-    )
+    expect(errors).toMatchSnapshot()
     expect(result).toMatchSnapshot()
   })
 
