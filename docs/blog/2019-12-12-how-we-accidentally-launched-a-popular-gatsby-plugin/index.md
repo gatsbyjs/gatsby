@@ -53,10 +53,10 @@ AWS Amplify is a suite of services and tools including continuous integration, c
 
 I noticed there were some more downsides to Amplify:
 
-- [Gatsby’s redirect functionality](https://www.gatsbyjs.org/docs/actions/#createRedirect) did not work, at all.
+- [Gatsby’s redirect functionality](/docs/actions/#createRedirect) did not work, at all.
   Our client absolutely needed redirects that they could control from the CMS, and in turn, we wanted to control them with the same data source that was already present in Gatsby, not having to write an additional script that would add a lot of overhead.
 
-- [Gatsby’s recommended caching headers](https://www.gatsbyjs.org/docs/caching/) were not applied — not very good for your lighthouse scores, and one of the primary reasons we chose Gatsby in the first place.
+- [Gatsby’s recommended caching headers](/docs/caching/) were not applied — not very good for your lighthouse scores, and one of the primary reasons we chose Gatsby in the first place.
 
 - Gatsby allows you to have [routes that only exist on the client side](/docs/building-apps-with-gatsby/#client-only-routes--user-authentication).
 
