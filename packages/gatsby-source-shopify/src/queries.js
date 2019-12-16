@@ -180,6 +180,18 @@ export const PRODUCTS_QUERY = `
                     id
                     originalSrc
                   }
+                  metafields(first: 250) {
+                    edges {
+                      node {
+                        description
+                        id
+                        key
+                        namespace
+                        value
+                        valueType
+                      }
+                    }
+                  }
                   price
                   selectedOptions {
                     name
