@@ -96,9 +96,7 @@ module.exports = async function build(program: BuildArgs) {
     // transform asset size to kB (from bytes) to fit 64 bit to numbers
     const bundleSizes = stats
       .toJson({ assets: true })
-      .assets.filter(asset => {
-        return asset.name.endsWith(`.js`)
-      })
+      .assets.filter(asset => asset.name.endsWith(`.js`))
       .map(asset => asset.size / 1000)
 
     const bundleStats = telemetry.aggregateStats(bundleSizes)
