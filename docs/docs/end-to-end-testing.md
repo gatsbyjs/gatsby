@@ -64,7 +64,7 @@ Please read the [Cypress' official documentation](https://docs.cypress.io/guides
 
 A good use case for writing automated end-to-end tests is asserting **accessibility** with [cypress-axe](https://github.com/avanslaars/cypress-axe), a Cypress plugin that incorporates the [axe](https://deque.com/axe) accessibility testing API. While some [manual testing](https://www.smashingmagazine.com/2018/09/importance-manual-accessibility-testing/) is still required to ensure good web accessibility, automation can ease the burden on human testers.
 
-To use `cypress-axe`, you have to install the `cypress-axe` and [axe-core](https://github.com/dequelabs/axe-core) packages. You'll also use some commands from [@testing-library/cypress](https://testing-library.com/docs/cypress-testing-library/intro) to select elements—see [best practices for selecting elements](https://docs.cypress.io/guides/references/best-practices.html#Selecting-Elements).
+To use `cypress-axe`, you have to install the `cypress-axe` and [axe-core](https://github.com/dequelabs/axe-core) packages. You'll also use some commands from [@testing-library/cypress](https://testing-library.com/docs/cypress-testing-library/intro) to select elements — see [best practices for selecting elements](https://docs.cypress.io/guides/references/best-practices.html#Selecting-Elements).
 
 ```bash
 yarn add -D cypress-axe axe-core @testing-library/cypress
@@ -184,7 +184,7 @@ The autocomplete feature comes in handy with the `should` command because you ca
 
 ### Customize axe options
 
-You can disable a specific accessibility rule, or run only a subset of the rules by changing the [axe.run options](https://www.deque.com/axe/axe-for-web/documentation/api-documentation/#options-parameter)—see in the link what other options you can change. To do that, you pass an options object as the second parameter to the `checkA11y` command:
+You can disable a specific accessibility rule, or run only a subset of the rules by changing the [axe.run options](https://www.deque.com/axe/axe-for-web/documentation/api-documentation/#options-parameter) — see in the link what other options you can change. To do that, you pass an options object as the second parameter to the `checkA11y` command:
 
 ```js:title=cypress/e2e/accessibility.test.js
 const axeRunOptions = {
