@@ -313,6 +313,7 @@ module.exports = class AnalyticsTracker {
           (data.length - 1)
       ) || 0
     return {
+      count: data.length,
       min: data.reduce((acc, x) => (x < acc ? x : acc), data[0] || 0),
       max: data.reduce((acc, x) => (x > acc ? x : acc), 0),
       sum: sum,
