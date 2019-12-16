@@ -246,6 +246,22 @@ describe(`Jobs manager`, () => {
     })
   })
 
+  describe(`removeInProgressJob`, () => {
+    // unsure how to test this yet without a real worker
+    it(`should have all tasks resolved when promise is resolved`, async () => {
+      worker.TEST_JOB.mockReturnValue({ output: `myresult` })
+      const { enqueueJob, removeInProgressJob } = jobManager
+      const internalJob = createInternalMockJob()
+      await enqueueJob(internalJob)
+
+      expect(jobManager.jobsInProcess.size).toBe(1)
+
+      removeInProgressJob(internalJob.contentDigest)
+
+      expect(jobManager.jobsInProcess.size).toBe(0)
+    })
+  })
+
   describe(`waitUntilAllJobsComplete`, () => {
     // unsure how to test this yet without a real worker
     it(`should have all tasks resolved when promise is resolved`, async () => {

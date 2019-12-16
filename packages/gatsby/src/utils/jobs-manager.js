@@ -175,7 +175,7 @@ exports.enqueueJob = async job => {
   // Bump active jobs
   activeJobs++
   if (!activityForJobs) {
-    activityForJobs = reporter.phantomActivity(`Running jobs`)
+    activityForJobs = reporter.phantomActivity(`Running jobs v2`)
     activityForJobs.start()
   }
 
@@ -205,6 +205,10 @@ exports.enqueueJob = async job => {
   }
 
   return deferred.promise
+}
+
+exports.removeInProgressJob = contentDigest => {
+  jobsInProcess.delete(contentDigest)
 }
 
 /**

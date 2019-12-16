@@ -30,7 +30,11 @@ const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
 const shadowCreatePagePath = _.memoize(
   require(`../../internal-plugins/webpack-theme-component-shadowing/create-page`)
 )
-const { enqueueJob, createInternalJob } = require(`../../utils/jobs-manager`)
+const {
+  enqueueJob,
+  createInternalJob,
+  removeInProgressJob,
+} = require(`../../utils/jobs-manager`)
 
 const actions = {}
 const isWindows = platform() === `win32`
@@ -1246,6 +1250,9 @@ actions.createJobV2 = (job: JobV2, plugin: Plugin) => (dispatch, getState) => {
         result,
       },
     })
+
+    // remove the job from our inProgressJobQueue as it's available in our done state.
+    removeInProgressJob(internalJob.contentDigest)
 
     return result
   })

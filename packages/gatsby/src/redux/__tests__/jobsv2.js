@@ -1,5 +1,6 @@
 const jobsManager = require(`../../utils/jobs-manager`)
 jest.spyOn(jobsManager, `enqueueJob`)
+jest.spyOn(jobsManager, `removeInProgressJob`)
 jest.mock(`uuid/v4`, () => () => `1234`)
 
 const { actions, internalActions } = require(`../actions`)
@@ -63,6 +64,7 @@ describe(`Job v2 actions/reducer`, () => {
       result: `myresult`,
       inputPaths: [],
     })
+    expect(jobsManager.removeInProgressJob).toHaveBeenCalledTimes(1)
     expect(jobsManager.enqueueJob).toMatchSnapshot()
   })
 

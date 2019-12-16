@@ -83,6 +83,24 @@ module.exports = async (args: BootstrapArgs) => {
     payload: program,
   })
 
+  let activityForJobs
+
+  emitter.on(`CREATE_JOB`, () => {
+    if (!activityForJobs) {
+      activityForJobs = report.phantomActivity(`Running jobs`)
+      activityForJobs.start()
+    }
+  })
+
+  const onEndJob = () => {
+    if (activityForJobs && store.getState().jobs.active.length === 0) {
+      activityForJobs.end()
+      activityForJobs = null
+    }
+  }
+
+  emitter.on(`END_JOB`, onEndJob)
+
   // Try opening the site's gatsby-config.js file.
   let activity = report.activityTimer(`open and validate gatsby-configs`, {
     parentSpan: bootstrapSpan,
