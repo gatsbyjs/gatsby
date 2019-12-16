@@ -7,7 +7,7 @@ title: End-to-End Testing
 To run Gatsby's development server and Cypress at the same time, you'll use the little helper [start-server-and-test](https://github.com/bahmutov/start-server-and-test). If you're already using [@testing-library/react](https://github.com/testing-library/react-testing-library) for [unit testing](/docs/unit-testing), you might want to install [@testing-library/cypress](https://github.com/testing-library/cypress-testing-library), too. This way you can use the same methods you used with `@testing-library/react` in your Cypress tests. Install the following packages to your `devDependencies`:
 
 ```shell
-yarn add -D cypress start-server-and-test
+npm install --save-dev cypress start-server-and-test
 ```
 
 We also want the URLs used by `cy.visit()` or `cy.request()` to be prefixed, hence you have to create the file `cypress.json` at the root of your project with the following content:
@@ -32,7 +32,7 @@ Last but not least you add additional scripts to your `package.json` to run Cypr
 }
 ```
 
-Run `yarn test:e2e` in your command line and see Cypress running for the first time. A folder named `cypress` will be created at the root of your project and a new application window will pop up. [Cypress' getting started guide](https://docs.cypress.io/guides/getting-started/writing-your-first-test.html#) is a good start to learn how to write tests!
+Type `npm run test:e2e` in your command line and see Cypress running for the first time. A folder named `cypress` will be created at the root of your project and a new application window will pop up. [Cypress' getting started guide](https://docs.cypress.io/guides/getting-started/writing-your-first-test.html#) is a good start to learn how to write tests!
 
 _Important note_: If you are running Gatsby with the `--https` flag, whether using your own or automatically generated certificates, you will also need to tell `start-server-and-test` to disable HTTPS certificate checks (otherwise it will wait forever and never actually launch Cypress. You do this by passing in an environmental variable: `START_SERVER_AND_TEST_INSECURE=1`. [start-server-and-test docs](https://github.com/bahmutov/start-server-and-test#disable-https-certificate-checks).
 
@@ -67,7 +67,7 @@ A good use case for writing automated end-to-end tests is asserting **accessibil
 To use `cypress-axe`, you have to install the `cypress-axe` and [axe-core](https://github.com/dequelabs/axe-core) packages. You'll also use some commands from [@testing-library/cypress](https://testing-library.com/docs/cypress-testing-library/intro) to select elements — see [best practices for selecting elements](https://docs.cypress.io/guides/references/best-practices.html#Selecting-Elements).
 
 ```bash
-yarn add -D cypress-axe axe-core @testing-library/cypress
+npm install --save-dev cypress-axe axe-core @testing-library/cypress
 ```
 
 Then you add the `cypress-axe` and `@testing-library/cypress` commands in `cypress/support/index.js`:
@@ -116,7 +116,7 @@ describe("Accessibility tests", () => {
 
 The `/// <reference types="Cypress" />` line at the top gives you [autocompletion](https://docs.cypress.io/guides/tooling/intelligent-code-completion.html#Triple-slash-directives) for the Cypress commands.
 
-You can now type `yarn test:e2e` in your terminal to run the test. If you already have the development server open, you can type `yarn cy:open` instead.
+You can now type `npm run test:e2e` in your terminal to run the test. If you already have the development server open, you can type `npm run cy:open` instead.
 
 One thing to keep in mind is that you can't always see the exact error message from the sidebar (command log). For that, you have to open the browser developer console and find the message in the output. You can see how an accessibility error looks in the [cypress-axe GitHub page](https://github.com/avanslaars/cypress-axe#output).
 
