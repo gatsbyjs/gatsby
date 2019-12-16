@@ -114,7 +114,7 @@ describe("Accessibility tests", () => {
 })
 ```
 
-The `/// <reference types="Cypress" />` line at the top gives you [autocomplete](https://docs.cypress.io/guides/tooling/intelligent-code-completion.html#Triple-slash-directives) for the Cypress commands.
+The `/// <reference types="Cypress" />` line at the top gives you [autocompletion](https://docs.cypress.io/guides/tooling/intelligent-code-completion.html#Triple-slash-directives) for the Cypress commands.
 
 You can now type `yarn test:e2e` in your terminal to run the test. If you already have the development server open, you can type `yarn cy:open` instead.
 
