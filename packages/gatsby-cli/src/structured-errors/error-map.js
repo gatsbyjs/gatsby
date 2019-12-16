@@ -275,7 +275,9 @@ const errorMap = {
   // Plugin errors
   "11321": {
     text: context =>
-      `"${context.pluginName}" threw an error while running the ${context.api} lifecycle:\n\n${context.message}\n\n${context.codeFrame}`,
+      `"${context.pluginName}" threw an error while running the ${
+        context.api
+      } lifecycle:\n\n${context.message}${optionalGraphQLInfo(context)}`,
     type: `PLUGIN`,
     level: `ERROR`,
   },
