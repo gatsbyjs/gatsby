@@ -60,9 +60,9 @@ You do not have to use GraphQL with Gatsby, however GraphQL offers a few advanta
 
 ## Learn more
 
-- [GraphQL & Gatsby](https://www.gatsbyjs.org/docs/graphql/)
+- [GraphQL & Gatsby](/docs/graphql/)
 
-- [Why Gatsby Uses GraphQL](https://www.gatsbyjs.org/docs/why-gatsby-uses-graphql/)
+- [Why Gatsby Uses GraphQL](/docs/why-gatsby-uses-graphql/)
 
 - [GraphQL](https://graphql.org) official site
 
