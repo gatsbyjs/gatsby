@@ -265,7 +265,6 @@ module.exports = class AnalyticsTracker {
     }
 
     const cached = await cache.get(measurementName)
-    console.log(`GOT FROM CACHE`, cached)
     measurements[measurementName] = Object.assign(
       measurements[measurementName] || {},
       cached
