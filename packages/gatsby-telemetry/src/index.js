@@ -31,9 +31,11 @@ module.exports = {
   isTrackingEnabled: () => instance.isTrackingEnabled,
   aggregateStats: data => instance.aggregateStats(data),
   addSiteMeasurement: (event, obj) => instance.addSiteMeasurement(event, obj),
-  addCachedMeasurementsOnEvent: (event, measurementName, value) =>
-    instance.addCachedMeasurementsOnEvent(event, measurementName, value),
-  flushCached: telemetryCache => instance.flushCached(telemetryCache),
+  addBufferedMeasurementOnEvent: (event, measurementName, entry) =>
+    instance.addBufferedMeasurementOnEvent(event, measurementName, entry),
+  addCachedMeasurementsOnEvent: (event, measurementName, entry) =>
+    instance.addCachedMeasurementsOnEvent(event, measurementName, entry),
+  flushBuffered: () => instance.flushBuffered(),
   expressMiddleware: source => (req, res, next) => {
     try {
       instance.trackActivity(`${source}_ACTIVE`)

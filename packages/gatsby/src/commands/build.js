@@ -46,11 +46,11 @@ module.exports = async function build(program: BuildArgs) {
 
   telemetry.trackCli(`BUILD_START`)
   process.on(`exit`, exitCode => {
-    telemetry.flushCached(getCache(`gatsby-telemetry`))
+    telemetry.flushBuffered()
     telemetry.trackCli(`BUILD_END`, { exitCode })
   })
   signalExit(exitCode => {
-    telemetry.flushCached(getCache(`gatsby-telemetry`))
+    telemetry.flushBuffered()
     telemetry.trackCli(`BUILD_END`, { exitCode })
   })
 
@@ -93,6 +93,12 @@ module.exports = async function build(program: BuildArgs) {
   activity.end()
 
   if (telemetry.isTrackingEnabled()) {
+    await telemetry.addCachedMeasurementsOnEvent(
+      `BUILD_END`,
+      `pageDataStats`,
+      getCache(`gatsby-telemetry`)
+    )
+
     // transform asset size to kB (from bytes) to fit 64 bit to numbers
     const bundleSizes = stats
       .toJson({ assets: true })
@@ -104,9 +110,6 @@ module.exports = async function build(program: BuildArgs) {
     telemetry.addSiteMeasurement(`BUILD_END`, {
       bundleStats,
     })
-
-    // these measurements will be populated to cache and read from there on BUILD_END
-    telemetry.addCachedMeasurementsOnEvent(`BUILD_END`, `pageDataStats`)
   }
 
   const workerPool = WorkerPool.create()

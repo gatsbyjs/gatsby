@@ -13,7 +13,7 @@ module.exports = class AnalyticsTracker {
   store = new EventStorage()
   debouncer = {}
   metadataCache = {}
-  cachedEventKeys = {}
+  buffered = {}
   defaultTags = {}
   osInfo // lazy
   trackingEnabled // lazy
@@ -258,14 +258,33 @@ module.exports = class AnalyticsTracker {
     this.metadataCache[event] = Object.assign(cached, obj)
   }
 
-  addCachedMeasurementsOnEvent(event, measurementName) {
-    let cachedKeys = this.cachedEventKeys[event]
-    if (!Array.isArray(cachedKeys)) {
-      cachedKeys = []
+  async addCachedMeasurementsOnEvent(event, measurementName, cache) {
+    let measurements = this.buffered[event]
+    if (!measurements) {
+      measurements = {}
     }
 
-    cachedKeys.push(measurementName)
-    this.cachedEventKeys[event] = cachedKeys
+    const cached = await cache.get(measurementName)
+    console.log(`GOT FROM CACHE`, cached)
+    measurements[measurementName] = Object.assign(
+      measurements[measurementName] || {},
+      cached
+    )
+
+    this.buffered[event] = measurements
+  }
+
+  addBufferedMeasurementOnEvent(event, measurementName, entry) {
+    let measurements = this.buffered[event]
+    if (!measurements) {
+      measurements = {}
+    }
+    measurements[measurementName] = Object.assign(
+      measurements[measurementName] || {},
+      entry
+    )
+
+    this.buffered[event] = measurements
   }
 
   addSiteMeasurement(event, obj) {
@@ -308,21 +327,21 @@ module.exports = class AnalyticsTracker {
     }
   }
 
-  flushCached(telemetryCache) {
-    for (const event in this.cachedEventKeys) {
+  flushBuffered() {
+    for (const event in this.buffered) {
       this.addSiteMeasurement(
         event,
-        (this.cachedEventKeys[event] || []).reduce(
+        Object.keys(this.buffered[event] || {}).reduce(
           (obj, key) =>
             Object.assign(obj, {
               [key]: this.aggregateStats(
-                Object.values(telemetryCache.get(key) || {})
+                Object.values(this.buffered[event][key] || {})
               ),
             }),
           {}
         )
       )
-      delete this.cachedEventKeys[event]
+      delete this.buffered[event]
     }
   }
 
