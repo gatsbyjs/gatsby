@@ -167,6 +167,11 @@ exports.createPages = ({ graphql, actions, reporter }) => {
     isPermanent: true,
   })
   createRedirect({
+    fromPath: `/contributing/submit-to-creator-showcase/`,
+    toPath: `/showcase/`,
+    isPermanent: true,
+  })
+  createRedirect({
     fromPath: `/docs/submit-to-starter-library/`,
     toPath: `/contributing/submit-to-starter-library/`,
     isPermanent: true,
@@ -383,6 +388,47 @@ exports.createPages = ({ graphql, actions, reporter }) => {
     toPath: `/docs/awesome-gatsby-resources/`,
     isPermanent: true,
   })
+
+  createRedirect({
+    fromPath: `/docs/sourcing-from-kentico-cloud/`,
+    toPath: `/docs/sourcing-from-kentico-kontent/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/building-apps-with-gatsby/`,
+    toPath: `/docs/adding-app-and-website-functionality/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/adding-website-functionality/`,
+    toPath: `/docs/adding-app-and-website-functionality/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/using-fragments/`,
+    toPath: `/docs/using-graphql-fragments/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/centralizing-your-sites-navigation/`,
+    toPath: `/docs/creating-dynamic-navigation/`,
+    isPermanent: true,
+  })
+
+  /* This redirects from a now removed stub that 
+  showed up in the first page of Google results. 
+  Can be removed if SEO is no longer impacted. */
+
+  createRedirect({
+    fromPath: `/docs/rendering-sidebar-navigation-dynamically/`,
+    toPath: `/docs/creating-dynamic-navigation/`,
+    isPermanent: true,
+  })
+
   Object.entries(startersRedirects).forEach(([fromSlug, toSlug]) => {
     createRedirect({
       fromPath: `/starters${fromSlug}`,
@@ -407,9 +453,6 @@ exports.createPages = ({ graphql, actions, reporter }) => {
     )
     const showcaseTemplate = path.resolve(
       `src/templates/template-showcase-details.js`
-    )
-    const creatorPageTemplate = path.resolve(
-      `src/templates/template-creator-details.js`
     )
     const featureComparisonPageTemplate = path.resolve(
       `src/templates/template-feature-comparison.js`
@@ -442,15 +485,6 @@ exports.createPages = ({ graphql, actions, reporter }) => {
           }
         }
         allAuthorYaml {
-          edges {
-            node {
-              fields {
-                slug
-              }
-            }
-          }
-        }
-        allCreatorsYaml {
           edges {
             node {
               fields {
@@ -629,18 +663,6 @@ exports.createPages = ({ graphql, actions, reporter }) => {
         createPage({
           path: `${edge.node.fields.slug}`,
           component: slash(contributorPageTemplate),
-          context: {
-            slug: edge.node.fields.slug,
-          },
-        })
-      })
-
-      result.data.allCreatorsYaml.edges.forEach(edge => {
-        if (!edge.node.fields) return
-        if (!edge.node.fields.slug) return
-        createPage({
-          path: `${edge.node.fields.slug}`,
-          component: slash(creatorPageTemplate),
           context: {
             slug: edge.node.fields.slug,
           },
@@ -1034,25 +1056,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
           )
         })
     }
-  } else if (node.internal.type === `CreatorsYaml`) {
-    // Creator pages
-    const validTypes = {
-      individual: `people`,
-      agency: `agencies`,
-      company: `companies`,
-    }
-
-    if (!validTypes[node.type]) {
-      throw new Error(
-        `Creators must have a type of “individual”, “agency”, or “company”, but invalid type “${node.type}” was provided for ${node.name}.`
-      )
-    }
-    slug = `/creators/${validTypes[node.type]}/${slugify(node.name, {
-      lower: true,
-    })}`
-    createNodeField({ node, name: `slug`, value: slug })
   }
-  // end Creator pages
   return null
 }
 

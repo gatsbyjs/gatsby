@@ -3,6 +3,43 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.35](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.0.33...gatsby-page-utils@0.0.35) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+## [0.0.34](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.0.33...gatsby-page-utils@0.0.34) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+## [0.0.33](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.0.32...gatsby-page-utils@0.0.33) (2019-12-02)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+## [0.0.32](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.0.31...gatsby-page-utils@0.0.32) (2019-11-26)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+## [0.0.31](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.0.30...gatsby-page-utils@0.0.31) (2019-11-18)
+
+### Bug Fixes
+
+- **gatsby:** Handle special characters in windows paths ([#19600](https://github.com/gatsbyjs/gatsby/issues/19600)) ([9929cf0](https://github.com/gatsbyjs/gatsby/commit/9929cf0))
+
+## [0.0.30](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.0.29...gatsby-page-utils@0.0.30) (2019-11-15)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+## [0.0.29](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.0.28...gatsby-page-utils@0.0.29) (2019-11-10)
+
+**Note:** Version bump only for package gatsby-page-utils
+
+## [0.0.28](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.0.27...gatsby-page-utils@0.0.28) (2019-10-28)
+
+### Bug Fixes
+
+- update minor updates in packages ([#18875](https://github.com/gatsbyjs/gatsby/issues/18875)) ([b692879](https://github.com/gatsbyjs/gatsby/commit/b692879))
+- update minor updates in packages ([#19080](https://github.com/gatsbyjs/gatsby/issues/19080)) ([95e908e](https://github.com/gatsbyjs/gatsby/commit/95e908e))
+
 ## [0.0.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.0.26...gatsby-page-utils@0.0.27) (2019-10-14)
 
 **Note:** Version bump only for package gatsby-page-utils

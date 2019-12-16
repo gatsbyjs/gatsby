@@ -51,7 +51,7 @@ Gatsby provides us with a superior DX and a fast site. This includes:
 
 Gatsby provides conveniences around data fetching. The “Content Mesh” is a mesh of different content sources stitched into a single data layer. You can query this layer using GraphQL. Our “Content Mesh” consists of Prismic, Shopify, and Yotpo. You can see how those data sources make up the Homepage below:
 
-![Strivectin content mesh.](images/content-mesh.png)
+![Strivectin content mesh.](./images/content-mesh.png)
 
 ### Leaving the server behind
 

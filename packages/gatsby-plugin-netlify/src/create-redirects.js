@@ -37,7 +37,7 @@ export default async function writeRedirectsFile(
     for (let key in rest) {
       const value = rest[key]
 
-      if (typeof value === `string` && value.indexOf(` `) >= 0) {
+      if (typeof value === `string` && value.includes(` `)) {
         console.warn(
           `Invalid redirect value "${value}" specified for key "${key}". ` +
             `Values should not contain spaces.`

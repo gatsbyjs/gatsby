@@ -49,6 +49,15 @@ const GatsbyReporter = {
    * reporter.panicOnBuild(`text`, new Error('something'))
    */
   panicOnBuild: true,
+
+  /**
+   * Note that this method only works if the --verbose option has
+   * been passed to the CLI
+   * @type {GatsbyReporterFn}
+   * @example
+   * reporter.verbose(`text`)
+   */
+  verbose: true,
 };
 
 /** */
@@ -108,7 +117,7 @@ const GatsbyTracing = {
    * exports.sourceNodes = async ({ actions, tracing }) => {
    *   const span = tracing.startSpan(`foo`)
    *
-   *   // Perform any span operations. E.g add a tag to your span
+   *   // Perform any span operations. E.g. add a tag to your span
    *   span.setTag(`bar`, `baz`)
    *
    *   // Rest of your plugin code

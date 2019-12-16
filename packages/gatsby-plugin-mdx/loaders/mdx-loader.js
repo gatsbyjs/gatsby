@@ -21,7 +21,7 @@ const genMdx = require(`../utils/gen-mdx`)
 const withDefaultOptions = require(`../utils/default-options`)
 const createMDXNode = require(`../utils/create-mdx-node`)
 const { createFileNode } = require(`../utils/create-fake-file-node`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 
 const DEFAULT_OPTIONS = {
   footnotes: true,

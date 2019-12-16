@@ -43,11 +43,11 @@ const errorMap = {
   },
   "85908": {
     text: context => {
-      const closetFragment = context.closestFragment
+      const closestFragment = context.closestFragment
         ? `\n\nDid you mean to use ` + `"${context.closestFragment}"?`
         : ``
 
-      return `There was an error in your GraphQL query:\n\nThe fragment "${context.fragmentName}" does not exist.${closetFragment}`
+      return `There was an error in your GraphQL query:\n\nThe fragment "${context.fragmentName}" does not exist.\n\n${context.codeFrame}${closestFragment}`
     },
     type: `GRAPHQL`,
     level: `ERROR`,
@@ -131,6 +131,21 @@ const errorMap = {
     type: `GRAPHQL`,
     level: `ERROR`,
   },
+  // Duplicate fragment
+  "85919": {
+    text: context =>
+      stripIndent(`
+      Found two different GraphQL fragments with identical name "${context.fragmentName}". Fragment names must be unique
+
+      File: ${context.leftFragment.filePath}
+      ${context.leftFragment.codeFrame}
+
+      File: ${context.rightFragment.filePath}
+      ${context.rightFragment.codeFrame}
+    `),
+    type: `GRAPHQL`,
+    level: `ERROR`,
+  },
   // Config errors
   "10123": {
     text: context =>
@@ -157,6 +172,21 @@ const errorMap = {
       `\nIf you are trying to run a theme directly, use the theme in an example site or starter instead and run that site to test.` +
       `\nIf you are in the root gatsby-config.js for your site, change the export to be an object and not a function as functions` +
       `\nare not supported in the root gatsby-config.`,
+    type: `CONFIG`,
+    level: `ERROR`,
+  },
+  "10226": {
+    text: context =>
+      [
+        `Couldn't find the "${context.themeName}" plugin declared in "${context.configFilePath}".`,
+        context.pathToLocalTheme &&
+          `Tried looking for a local plugin in ${context.pathToLocalTheme}.`,
+        `Tried looking for an installed package in the following paths:\n${context.nodeResolutionPaths
+          .map(potentialLocationPath => ` - ${potentialLocationPath}`)
+          .join(`\n`)}`,
+      ]
+        .filter(Boolean)
+        .join(`\n\n`),
     type: `CONFIG`,
     level: `ERROR`,
   },
@@ -238,7 +268,7 @@ const errorMap = {
       [
         stripIndent(`
           Your plugins must export known APIs from their gatsby-${context.exportType}.js.
-      
+
           See https://www.gatsbyjs.org/docs/${context.exportType}-apis/ for the list of Gatsby ${context.exportType} APIs.
         `),
       ]

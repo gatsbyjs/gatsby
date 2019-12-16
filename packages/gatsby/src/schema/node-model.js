@@ -557,7 +557,7 @@ async function resolveRecursive(
   fieldsToResolve
 ) {
   const gqlFields = getFields(schema, type, node)
-  let resolvedFields = {}
+  const resolvedFields = {}
   for (const fieldName of Object.keys(fieldsToResolve)) {
     const fieldToResolve = fieldsToResolve[fieldName]
     const queryField = queryFields[fieldName]
@@ -667,7 +667,7 @@ const determineResolvableFields = (
     const gqlField = gqlFields[fieldName]
     const gqlFieldType = getNamedType(gqlField.type)
     const typeComposer = schemaComposer.getAnyTC(type.name)
-    let possibleTCs = [
+    const possibleTCs = [
       typeComposer,
       ...nodeTypeNames.map(name => schemaComposer.getAnyTC(name)),
     ]
@@ -703,16 +703,21 @@ const addRootNodeToInlineObject = (
   rootNodeMap,
   data,
   nodeId,
-  isNode = false
+  isNode = false,
+  path = new Set()
 ) => {
+  path.add(data)
+
   const isPlainObject = _.isPlainObject(data)
 
   if (isPlainObject || _.isArray(data)) {
     _.each(data, (o, key) => {
+      if (path.has(o)) return
       if (!isNode || key !== `internal`) {
         addRootNodeToInlineObject(rootNodeMap, o, nodeId)
       }
     })
+
     // don't need to track node itself
     if (!isNode) {
       rootNodeMap.set(data, nodeId)

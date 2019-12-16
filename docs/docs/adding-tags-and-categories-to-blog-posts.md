@@ -61,7 +61,7 @@ The above query groups posts by `tags`, and returns each `tag` with the number o
 
 ## Make a tags page template (for `/tags/{tag}`)
 
-If you followed the tutorial for [Adding Markdown Pages](/docs/adding-markdown-pages/), then this process should sound familiar: Make a tag page template, then use it in `createPages` in `gatsby-node.js` to generate individual pages for the tags in our posts.
+If you followed the tutorial for [Adding Markdown Pages](/docs/adding-markdown-pages/), then this process should sound familiar: Make a tag page template, then use it in `createPages` in `gatsby-node.js` to generate individual pages for the tags in your posts.
 
 First, you'll add a tags template at `src/templates/tags.js`:
 
@@ -225,8 +225,8 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 
 Some notes:
 
-- Our GraphQL query only looks for data you need to generate these pages. Anything else can be queried again later (and, if you notice, you do this above in the tags template for the post title).
-- You have referenced two `allMarkdownRemark` fields in our query. To avoid naming collisions you must [alias](/docs/graphql-reference/#aliasing) one of them. You alias both to make our code more human-readable.
+- Your GraphQL query only looks for data you need to generate these pages. Anything else can be queried again later (and, if you notice, you do this above in the tags template for the post title).
+- You have referenced two `allMarkdownRemark` fields in your query. To avoid naming collisions you must [alias](/docs/graphql-reference/#aliasing) one of them. You alias both to make your code more human-readable.
 - While making the tag pages, note that you pass `tag.name` through in the `context`. This is the value that gets used in the `TagPage` query to limit your search to only posts tagged with the tag in the URL.
 
 ## Make a tags index page (`/tags`) that renders a list of all tags

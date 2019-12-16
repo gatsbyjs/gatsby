@@ -3,6 +3,80 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.3.7...gatsby-plugin-sharp@2.3.8) (2019-12-16)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.3.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.3.5...gatsby-plugin-sharp@2.3.7) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.3.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.3.5...gatsby-plugin-sharp@2.3.6) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.3.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.3.4...gatsby-plugin-sharp@2.3.5) (2019-12-02)
+
+### Bug Fixes
+
+- **gatsby-core-utils:** make createContentDigest deterministic ([#19832](https://github.com/gatsbyjs/gatsby/issues/19832)) ([cb6d0e2](https://github.com/gatsbyjs/gatsby/commit/cb6d0e2))
+
+## [2.3.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.3.3...gatsby-plugin-sharp@2.3.4) (2019-11-26)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.3.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.3.2...gatsby-plugin-sharp@2.3.3) (2019-11-25)
+
+### Bug Fixes
+
+- **gatsby-plugin-sharp:** fix progressbar & caching layer ([#19717](https://github.com/gatsbyjs/gatsby/issues/19717)) ([7f9d5bb](https://github.com/gatsbyjs/gatsby/commit/7f9d5bb))
+
+## [2.3.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.3.1...gatsby-plugin-sharp@2.3.2) (2019-11-18)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.3.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.3.0...gatsby-plugin-sharp@2.3.1) (2019-11-18)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+# [2.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.39...gatsby-plugin-sharp@2.3.0) (2019-11-15)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.2.39](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.38...gatsby-plugin-sharp@2.2.39) (2019-11-15)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.2.38](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.37...gatsby-plugin-sharp@2.2.38) (2019-11-13)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.2.37](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.36...gatsby-plugin-sharp@2.2.37) (2019-11-10)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.2.36](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.35...gatsby-plugin-sharp@2.2.36) (2019-10-29)
+
+### Bug Fixes
+
+- **gatsby-plugin-sharp:** fix "Cannot set property 'multipassCount' of undefined" error ([#19131](https://github.com/gatsbyjs/gatsby/issues/19131)) ([3766dcd](https://github.com/gatsbyjs/gatsby/commit/3766dcd))
+
+## [2.2.35](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.34...gatsby-plugin-sharp@2.2.35) (2019-10-29)
+
+### Bug Fixes
+
+- update minor updates in packages ([#19087](https://github.com/gatsbyjs/gatsby/issues/19087)) ([294a48f](https://github.com/gatsbyjs/gatsby/commit/294a48f))
+
+## [2.2.34](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.33...gatsby-plugin-sharp@2.2.34) (2019-10-28)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.2.33](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.32...gatsby-plugin-sharp@2.2.33) (2019-10-28)
+
+### Bug Fixes
+
+- update minor updates in packages ([#18875](https://github.com/gatsbyjs/gatsby/issues/18875)) ([b692879](https://github.com/gatsbyjs/gatsby/commit/b692879))
+
 ## [2.2.32](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.2.31...gatsby-plugin-sharp@2.2.32) (2019-10-16)
 
 **Note:** Version bump only for package gatsby-plugin-sharp
