@@ -8946,3 +8946,13 @@
   built_by: n8tb1t
   built_by_url: https://github.com/n8tb1t/
   featured: false
+- title: Rumaan Khalander - Portfolio
+  url: https://www.rumaan.me/
+  main_url: https://www.rumaan.me/
+  description: >
+    Rumaan Khalander is a Full-Stack Dev from Bengaluru who loves to develop for mobile and web.
+  categories:
+    - Portfolio
+  built_by: rumaan
+  built_by_url: https://github.com/rumaan/
+  featured: false
