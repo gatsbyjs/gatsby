@@ -89,7 +89,6 @@ module.exports = async function(content) {
   const {
     getNode: rawGetNode,
     getNodes,
-    createContentDigest,
     reporter,
     cache,
     pathPrefix,
@@ -120,7 +119,6 @@ module.exports = async function(content) {
       id: `fakeNodeIdMDXFileABugIfYouSeeThis`,
       node: fileNode,
       content,
-      createContentDigest,
     })
   } catch (e) {
     return callback(e)

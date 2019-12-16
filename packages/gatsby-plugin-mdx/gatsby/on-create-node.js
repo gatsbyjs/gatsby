@@ -20,7 +20,6 @@ module.exports = async (
     loadNodeContent,
     actions,
     createNodeId,
-    createContentDigest,
     getNode,
     getNodes,
     reporter,
@@ -54,7 +53,6 @@ module.exports = async (
     id: createNodeId(`${node.id} >>> Mdx`),
     node,
     content,
-    createContentDigest,
   })
 
   createNode(mdxNode)

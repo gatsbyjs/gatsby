@@ -77,7 +77,6 @@ describe(`mdx-loader`, () => {
           getNodes() {
             return fixtures.map(([, node]) => node)
           },
-          createContentDigest: jest.fn().mockReturnValue(`contentDigest`),
           pluginOptions: {},
           cache: {
             get() {

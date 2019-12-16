@@ -1,7 +1,9 @@
+const { createContentDigest } = require(`gatsby-core-utils`)
+
 const mdx = require(`../utils/mdx`)
 const extractExports = require(`../utils/extract-exports`)
 
-module.exports = async ({ id, node, content, createContentDigest }) => {
+module.exports = async ({ id, node, content }) => {
   let code
   try {
     code = await mdx(content)
