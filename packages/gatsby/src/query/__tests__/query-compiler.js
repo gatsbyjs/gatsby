@@ -709,6 +709,37 @@ describe(`actual compiling`, () => {
           "id": "85910",
         },
       ]
+    `,
+      `
+      Array [
+        Object {
+          "context": Object {
+            "afterCodeFrame": "[0m [90m 1 | [39mquery anotherQueryAndMockFileQuery {[0m
+      [0m [90m 2 | [39m  allPostsJson {[0m
+      [0m [90m 3 | [39m    [33m#[39m[33m...[39m[0m
+      [0m [90m 4 | [39m  }[0m
+      [0m [90m 5 | [39m  allPostsJson {[0m
+      [0m [90m 6 | [39m    [33m#[39m[33m...[39m[0m
+      [0m [90m 7 | [39m  }[0m
+      [0m [90m 8 | [39m}[0m",
+            "beforeCodeFrame": "[0m [90m  1 | [39mquery mockFileQuery {[0m
+      [0m [90m  2 | [39m  allPostsJson {[0m
+      [0m [90m  3 | [39m    [33m#[39m[33m...[39m[0m
+      [0m [90m  4 | [39m  }[0m
+      [0m [90m  5 | [39m}[0m
+      [0m [90m  6 | [39m[0m
+      [0m [90m  7 | [39mquery [33mAnotherQuery[39m {[0m
+      [0m [90m  8 | [39m  allPostsJson {[0m
+      [0m [90m  9 | [39m    [33m#[39m[33m...[39m[0m
+      [0m [90m 10 | [39m  }[0m
+      [0m [90m 11 | [39m}[0m",
+            "name": "AnotherQuery",
+            "otherName": "mockFileQuery",
+          },
+          "filePath": "mockFile",
+          "id": "85910",
+        },
+      ]
     `
     )
     expect(result).toMatchSnapshot()
@@ -786,16 +817,12 @@ describe(`actual compiling`, () => {
       Array [
         Object {
           "context": Object {
-            "sourceMessage": "Cannot query field \\"id\\" on type \\"PostsJsonConnection\\".
-
-      GraphQL request:3:16
-      2 |              allPostsJson {
-      3 |                id
-        |                ^
-      4 |             }",
+            "field": "id",
+            "sourceMessage": "Cannot query field \\"id\\" on type \\"PostsJsonConnection\\".",
+            "type": "PostsJsonConnection",
           },
           "filePath": "mockFile",
-          "id": "85901",
+          "id": "85923",
           "location": Object {
             "end": Object {
               "column": 16,

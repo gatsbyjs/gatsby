@@ -19,10 +19,11 @@ Object {
 exports[`vague one 1`] = `
 Object {
   "context": Object {
-    "message": "- Unknown field 'fdnjkgd' on type 'SiteSiteMetadata'.",
+    "sourceMessage": "Encountered 1 error(s):
+  - Unknown field 'fdnjkgd' on type 'SiteSiteMetadata'.",
   },
   "filePath": "test.js",
-  "id": "85907",
+  "id": "85901",
   "location": Object {
     "start": Object {
       "column": 10,
