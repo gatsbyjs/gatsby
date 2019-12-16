@@ -16,7 +16,7 @@
     "lodash": "^4.17.15",
     "mdast-util-to-hast": "^3.0.4",
     "mdast-util-to-string": "^1.0.7",
-    "mdast-util-toc": "^2.1.0",
+    "mdast-util-toc": "^5.0",
     "remark": "^10.0.1",
     "remark-parse": "^6.0.3",
     "remark-retext": "^3.1.3",
