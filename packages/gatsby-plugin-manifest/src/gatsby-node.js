@@ -3,6 +3,10 @@ import path from "path"
 import sharp from "./safe-sharp"
 import { createContentDigest, cpuCoreCount } from "gatsby-core-utils"
 import { defaultIcons, doesIconExist, addDigestToPath } from "./common"
+import { withPrefix as fallbackWithPrefix, withAssetPrefix } from "gatsby"
+
+// TODO: remove for v3
+const withPrefix = withAssetPrefix || fallbackWithPrefix
 
 sharp.simd(true)
 
@@ -118,6 +122,11 @@ const makeManifest = async (cache, reporter, pluginOptions, shouldLocalize) => {
   if (!manifest.icons) {
     manifest.icons = [...defaultIcons]
   }
+
+  //Fix #18497 by prefixing paths
+  manifest.icons = manifest.icons.map(icon => {
+    return { ...icon, src: withPrefix(icon.src) }
+  })
 
   // Specify extra options for each icon (if requested).
   if (pluginOptions.icon_options) {
