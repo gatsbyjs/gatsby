@@ -8946,6 +8946,14 @@
   built_by: n8tb1t
   built_by_url: https://github.com/n8tb1t/
   featured: false
+- title: SaoBear's-Blog
+  main_url: https://saobear.xyz/
+  url: https://saobear.xyz/
+  source_url: https://github.com/PiccoloYu/SaoBear-is-Blog
+  featured: false
+  categories:
+    - Blog
+    - Web Development
 - title: Rumaan Khalander - Portfolio
   url: https://www.rumaan.me/
   main_url: https://www.rumaan.me/
