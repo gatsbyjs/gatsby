@@ -41,7 +41,7 @@ class ActionCreatorsDocs extends React.Component {
             <a href="http://redux.js.org">Redux</a>
             {` `}
             internally to manage state. When you implement a Gatsby API, you are
-            passed a collection of actions (equivalent to
+            passed a collection of actions (equivalent to actions bound with
             {` `}
             <a href="https://redux.js.org/api/bindactioncreators">
               bindActionCreators
