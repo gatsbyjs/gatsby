@@ -93,7 +93,7 @@ module.exports = async function build(program: BuildArgs) {
   activity.end()
 
   if (telemetry.isTrackingEnabled()) {
-    await telemetry.addCachedMeasurementsOnEvent(
+    await telemetry.bufferCachedMeasurementsOnEvent(
       `BUILD_END`,
       `pageDataStats`,
       getCache(`gatsby-telemetry`)

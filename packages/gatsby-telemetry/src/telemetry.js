@@ -258,7 +258,7 @@ module.exports = class AnalyticsTracker {
     this.metadataCache[event] = Object.assign(cached, obj)
   }
 
-  async addCachedMeasurementsOnEvent(event, measurementName, cache) {
+  async bufferCachedMeasurementsOnEvent(event, measurementName, cache) {
     let measurements = this.buffered[event]
     if (!measurements) {
       measurements = {}
