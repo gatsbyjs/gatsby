@@ -162,6 +162,26 @@ module.exports = {
 }
 ```
 
+## Disallowed Link Types
+
+You can use the `disallowedLinkTypes` option to skip link types found in JSON:API documents. By default it skips the `self` and `describedby` links, which do not provide data that can be sourced. You may override the setting to add additional link types to be skipped.
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-drupal`,
+      options: {
+        baseUrl: `https://live-contentacms.pantheonsite.io/`,
+        // skip the action--action resource type.
+        disallowedLinkTypes: [`self`, `describedby`, `action--action`],
+      },
+    },
+  ],
+}
+```
+
 ## Gatsby Preview (experimental)
 
 You will need to have the Drupal module installed, more information on that here: https://www.drupal.org/project/gatsby

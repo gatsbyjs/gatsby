@@ -1,9 +1,7 @@
 import React from "react"
-import Modal from "react-modal"
 import MdWarning from "react-icons/lib/md/warning"
 
 import Layout from "../../components/guidelines/layout"
-
 import { Box, Flex, Text } from "../../components/guidelines/system"
 
 import {
@@ -20,14 +18,12 @@ import {
   SectionSubheading,
 } from "../../components/guidelines/typography"
 
+import LazyModal from "../../components/modal"
 import Badge from "../../components/guidelines/badge"
 import Overview from "../../components/guidelines/color/overview"
 import ColorModal from "../../components/guidelines/color/modal"
 
 import palette from "../../utils/guidelines/extend-palette-info"
-
-// http://reactcommunity.org/react-modal/accessibility/
-Modal.setAppElement(`#___gatsby`)
 
 const LegacyColorIcon = ({ textColor }) => (
   <Box
@@ -235,7 +231,7 @@ class Color extends React.Component {
           </Columns>
         </Section>
 
-        <Modal
+        <LazyModal
           closeTimeoutMS={300}
           contentLabel="Example Modal In Gatsby"
           isOpen={this.state.isModalOpen}
@@ -262,7 +258,7 @@ class Color extends React.Component {
             handleModalClose={this.handleModalClose}
             palette={palette}
           />
-        </Modal>
+        </LazyModal>
       </Layout>
     )
   }
