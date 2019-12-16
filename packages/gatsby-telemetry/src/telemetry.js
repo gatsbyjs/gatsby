@@ -13,7 +13,7 @@ module.exports = class AnalyticsTracker {
   store = new EventStorage()
   debouncer = {}
   metadataCache = {}
-  buffered = {}
+  cachedEventKeys = {}
   defaultTags = {}
   osInfo // lazy
   trackingEnabled // lazy
@@ -258,12 +258,14 @@ module.exports = class AnalyticsTracker {
     this.metadataCache[event] = Object.assign(cached, obj)
   }
 
-  addBufferedMeasurementsOnEvent(event, measurementName, value) {
-    const cachedEvent = this.buffered[event] || {}
-    const cachedMeasurement = cachedEvent[measurementName] || []
-    cachedMeasurement.push(value)
-    this.buffered[event] = cachedEvent // ensure at least empty object
-    this.buffered[event][measurementName] = cachedMeasurement
+  addCachedMeasurementsOnEvent(event, measurementName) {
+    let cachedKeys = this.cachedEventKeys[event]
+    if (!Array.isArray(cachedKeys)) {
+      cachedKeys = []
+    }
+
+    cachedKeys.push(measurementName)
+    this.cachedEventKeys[event] = cachedKeys
   }
 
   addSiteMeasurement(event, obj) {
@@ -306,19 +308,21 @@ module.exports = class AnalyticsTracker {
     }
   }
 
-  flushBuffered() {
-    for (const event in this.buffered) {
+  flushCached(telemetryCache) {
+    for (const event in this.cachedEventKeys) {
       this.addSiteMeasurement(
         event,
-        Object.keys(this.buffered[event]).reduce(
+        (this.cachedEventKeys[event] || []).reduce(
           (obj, key) =>
             Object.assign(obj, {
-              [key]: this.aggregateStats(this.buffered[event][key]),
+              [key]: this.aggregateStats(
+                Object.values(telemetryCache.get(key) || {})
+              ),
             }),
           {}
         )
       )
-      delete this.buffered[event]
+      delete this.cachedEventKeys[event]
     }
   }
 

@@ -1,6 +1,9 @@
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const telemetry = require(`gatsby-telemetry`)
+const getCache = require(`../utils/get-cache`)
+
+const telemetryCache = getCache(`gatsby-telemetry`)
 
 const getFilePath = ({ publicDir }, pagePath) => {
   const fixedPagePath = pagePath === `/` ? `index` : pagePath
@@ -23,11 +26,11 @@ const write = async ({ publicDir }, page, result) => {
   const bodyStr = JSON.stringify(body)
   // transform asset size to kB (from bytes) to fit 64 bit to numbers
   const pageDataSize = Buffer.byteLength(bodyStr) / 1000
-  telemetry.addBufferedMeasurementsOnEvent(
-    `BUILD_END`,
-    `pageDataStats`,
-    pageDataSize
-  )
+  const pageDataSizeCache = telemetryCache.get(`pageDataStats`)
+  pageDataSizeCache[filePath] = pageDataSize
+  console.log(`pageDataStats`, pageDataSizeCache)
+  telemetryCache.set(`pageDataSize`, pageDataSizeCache)
+
   await fs.outputFile(filePath, bodyStr)
 }
 

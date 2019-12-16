@@ -15,6 +15,7 @@ const { store, emitter } = require(`../redux`)
 const queryUtil = require(`../query`)
 const appDataUtil = require(`../utils/app-data`)
 const WorkerPool = require(`../utils/worker/pool`)
+const getCache = require(`../utils/get-cache`)
 const { structureWebpackErrors } = require(`../utils/webpack-error-utils`)
 
 type BuildArgs = {
@@ -44,8 +45,12 @@ module.exports = async function build(program: BuildArgs) {
   buildActivity.start()
 
   telemetry.trackCli(`BUILD_START`)
+  process.on(`exit`, exitCode => {
+    telemetry.flushCached(getCache(`gatsby-telemetry`))
+    telemetry.trackCli(`BUILD_END`, { exitCode })
+  })
   signalExit(exitCode => {
-    telemetry.flushBuffered()
+    telemetry.flushCached(getCache(`gatsby-telemetry`))
     telemetry.trackCli(`BUILD_END`, { exitCode })
   })
 
@@ -101,6 +106,9 @@ module.exports = async function build(program: BuildArgs) {
     telemetry.addSiteMeasurement(`BUILD_END`, {
       bundleStats,
     })
+
+    // these measurements will be populated to cache and read from there on BUILD_END
+    telemetry.addCachedMeasurementsOnEvent(`BUILD_END`, `pageDataStats`)
   }
 
   const workerPool = WorkerPool.create()
