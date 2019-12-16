@@ -58,7 +58,7 @@ You should now have a folder called `gatsby-site` containing a basic Gatsby appl
 cd gatsby-site
 ```
 
-The `/src` folder contains most of the front-end code for the Gatsby site. In the Gatsby [build](/docs/glossary#build) process, [every component file in the `/src/pages` folder will automatically create an HTML page](/docs/recipes/#creating-pages-automatically). In your new Gatsby application, the only page created is from the index page component in `/src/pages/index.js`:
+The `/src` folder contains most of the front-end code for the Gatsby site. In the Gatsby [build](/docs/glossary#build) process, [every component file in the `/src/pages` folder will automatically create an HTML page](/docs/recipes/pages-layouts#creating-pages-automatically). In your new Gatsby application, the only page created is from the index page component in `/src/pages/index.js`:
 
 ```jsx:title=/gatsby-site/src/pages/index.js
 import React from "react"
