@@ -196,7 +196,7 @@ const axeRunOptions = {
 cy.checkA11y(null, axeRunOptions)
 ```
 
-The `checkA11y` command runs under the hood the `axe.run` method. This method can slow down Cypress and make the window unresponsive if you have a lot of elements on the page. To overcome this, you can use the [axe.run context](https://www.deque.com/axe/axe-for-web/documentation/api-documentation/#context-parameter)—the first parameter of the `checkA11y` command—and exclude some elements to improve speed. For example, code blocks from [gatsby-remark-prismjs](/packages/gatsby-remark-prismjs/) can slow down your tests. You can test if they are accessible in a single test, and exclude them in the rest of your tests.
+The `checkA11y` command runs under the hood the `axe.run` method. This method can slow down Cypress and make the window unresponsive if you have a lot of elements on the page. To overcome this, you can use the [axe.run context](https://www.deque.com/axe/axe-for-web/documentation/api-documentation/#context-parameter) and exclude some elements to improve speed. For example, code blocks from [gatsby-remark-prismjs](/packages/gatsby-remark-prismjs/) can slow down your tests. You can test if they are accessible in a single test, and exclude them in the rest of your tests.
 
 ```js:title=cypress/e2e/accessibility.test.js
 const axeRunOptions = {
