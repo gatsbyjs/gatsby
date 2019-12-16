@@ -240,15 +240,6 @@
                   link: /docs/remark-plugin-tutorial/
                 - title: Maintaining a Plugin*
                   link: /docs/maintaining-a-plugin/
-        - title: Starters
-          link: /docs/starters/
-          items:
-            - title: Starter Library
-              link: /starters/
-            - title: Modifying a Starter
-              link: /docs/modifying-a-starter/
-            - title: Creating a Starter
-              link: /docs/creating-a-starter/
         - title: Themes
           link: /docs/themes/
           items:
@@ -270,6 +261,15 @@
               link: /docs/themes/theme-composition/
             - title: Conventions
               link: /docs/themes/conventions/
+        - title: Starters
+          link: /docs/starters/
+          items:
+            - title: Starter Library
+              link: /starters/
+            - title: Modifying a Starter
+              link: /docs/modifying-a-starter/
+            - title: Creating a Starter
+              link: /docs/creating-a-starter/
         - title: Styling Your Site
           link: /docs/styling/
           breadcrumbTitle: Styling
@@ -541,6 +541,8 @@
           link: /docs/gatsby-core-philosophy/
         - title: Gatsby Project Structure
           link: /docs/gatsby-project-structure/
+        - title: Plugins, Themes, & Starters
+          link: /docs/plugins-themes-and-starters/
         - title: Overview of the Gatsby Build Process
           link: /docs/overview-of-the-gatsby-build-process/
         - title: Building with Components

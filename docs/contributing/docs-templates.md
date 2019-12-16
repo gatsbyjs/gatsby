@@ -8,6 +8,7 @@ Here are some things to keep in mind when deciding where to contribute to Gatsby
 
 - [Blog posts](/contributing/docs-contributions#contributing-to-the-blog) are primarily made for case studies and time-sensitive storytelling.
 - [Reference guides](#reference-guides), in contrast, are evergreen -- or continually relevant -- and discoverable documentation articles that go beyond any one case study or situation.
+  - [Other guides](#other-types-of-guide-articles) add documentation for specific purposes like the API reference, Conceptual Guide, Gatsby Internals, and more.
 - [Recipes](#recipes) add concise, discoverable, and easy-to-follow instructions for common Gatsby tasks. They are smaller units than tutorials.
 - [Tutorials](#tutorials) should provide step-by-step guidance for Gatsby workflows, listing all pre-requisites and not assuming knowledge or skipping steps.
 
@@ -21,7 +22,19 @@ Here are templates (models) to follow when contributing to Gatsby docs to ensure
 
 Reference guide articles cover discrete topics as documentation with links to other resources. A reference guide explains a Gatsby concept or technique without the step-by-step context provided by a tutorial or recipe.
 
-Reference guide sections provide canonical information on how and why to build things with Gatsby for a variety of scenarios.
+Reference guide sections provide canonical information on how and why to build things with Gatsby for a variety of scenarios. Reference material should list text headings for each section of a guide, rather than "steps 1-5" like a tutorial.
+
+#### Other types of guide articles
+
+The Gatsby docs include multiple types of guides. They mostly follow the same format, but some docs will have a slightly different purpose and/or audience.
+
+- [Reference Guides](/docs/guides/): explanations of Gatsby site development techniques and common workflows. These should be written for all skill-levels.
+- [API Reference](/docs/api-reference/): technical docs on API methods and options, common files, and links to additional resources and explanations.
+- [Releases & Migration](/docs/releases-and-migration/): release notes and guides on how to upgrade Gatsby and third-party packages.
+- [Conceptual Guides](/docs/conceptual-guide/): high-level docs to explain important Gatsby concepts and philosophies.
+  - As an example, "Plugins, Themes, and Starters" would be an overarching concept article, with individual reference guide sections for Plugin, Theme, and Starter docs.
+- [Gatsby Internals](/docs/gatsby-internals/): previously titled Behind the Scenes, these docs go in depth into how Gatsby works under the hood.
+- [Using Gatsby Professionally](/docs/using-gatsby-professionally/): articles on winning over stakeholders, working in larger organizations, and building a career as a Gatsby developer.
 
 ### What should a reference guide be about?
 
