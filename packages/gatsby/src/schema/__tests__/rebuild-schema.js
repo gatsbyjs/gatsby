@@ -101,6 +101,18 @@ const createExternalSchema = () => {
   return new GraphQLSchema({ query })
 }
 
+describe(`Built-in types`, () => {
+  beforeEach(async () => {
+    store.dispatch({ type: `DELETE_CACHE` })
+    await build({})
+  })
+
+  it(`preserves built-in types`, async () => {
+    const newSchema = await rebuildTestSchema()
+    expect(printSchema(newSchema)).toMatchSnapshot()
+  })
+})
+
 describe(`build and update individual types`, () => {
   const createNodes = () => [
     {
@@ -196,16 +208,6 @@ describe(`build and update individual types`, () => {
 
     const fields = newSchema.getType(`Foo`).getFields()
     expect(String(fields.numberKey.type)).toEqual(`Float`)
-
-    const expectRemoved = [`IntQueryOperatorInput`]
-    const expectAdded = [`Float`, `FloatQueryOperatorInput`]
-    const newExpectedTypes = initialTypes
-      .filter(type => !expectRemoved.includes(type))
-      .concat(expectAdded)
-      .sort()
-
-    const types = Object.keys(newSchema.getTypeMap()).sort()
-    expect(types).toEqual(newExpectedTypes)
 
     await expectSymmetricDelete(node)
   })
@@ -1195,16 +1197,11 @@ describe(`Compatibility with addThirdPartySchema`, () => {
 
   it(`rebuilds after third party schema is extended with createResolvers`, async () => {
     const newSchema = await rebuildTestSchema()
+    const queryFields = newSchema.getType(`Query`).getFields()
 
     const print = typePrinter(newSchema)
-    expect(print(`Query`)).toMatchInlineSnapshot(`
-      "type Query {
-        foo(id: StringQueryOperatorInput, parent: NodeFilterInput, children: NodeFilterListInput, internal: InternalFilterInput, field: StringQueryOperatorInput): Foo
-        allFoo(filter: FooFilterInput, sort: FooSortInput, skip: Int, limit: Int): FooConnection!
-        external: ExternalType
-        external2: String
-      }"
-    `)
+    expect(String(queryFields.external.type)).toEqual(`ExternalType`)
+    expect(String(queryFields.external2.type)).toEqual(`String`)
     expect(print(`ExternalType`)).toMatchInlineSnapshot(`
       "type ExternalType {
         externalFoo(injectedFooArg: String): String

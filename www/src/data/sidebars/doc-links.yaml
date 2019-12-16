@@ -64,6 +64,9 @@
             - title: Deploying to IIS
               link: /docs/deploying-to-iis/
               breadcrumbTitle: IIS
+            - title: Deploying to Firebase Hosting
+              link: /docs/deploying-to-firebase/
+              breadcrumbTitle: Firebase Hosting
             - title: Adding a Path Prefix
               link: /docs/path-prefix/
             - title: How Gatsby Works with GitHub Pages
@@ -237,15 +240,6 @@
                   link: /docs/remark-plugin-tutorial/
                 - title: Maintaining a Plugin*
                   link: /docs/maintaining-a-plugin/
-        - title: Starters
-          link: /docs/starters/
-          items:
-            - title: Starter Library
-              link: /starters/
-            - title: Modifying a Starter
-              link: /docs/modifying-a-starter/
-            - title: Creating a Starter
-              link: /docs/creating-a-starter/
         - title: Themes
           link: /docs/themes/
           items:
@@ -267,6 +261,15 @@
               link: /docs/themes/theme-composition/
             - title: Conventions
               link: /docs/themes/conventions/
+        - title: Starters
+          link: /docs/starters/
+          items:
+            - title: Starter Library
+              link: /starters/
+            - title: Modifying a Starter
+              link: /docs/modifying-a-starter/
+            - title: Creating a Starter
+              link: /docs/creating-a-starter/
         - title: Styling Your Site
           link: /docs/styling/
           breadcrumbTitle: Styling
@@ -351,6 +354,8 @@
             - title: Debugging Async Lifecycles
               link: /docs/debugging-async-lifecycles/
               breadcrumbTitle: Async Lifecycles
+            - title: Troubleshooting Common Errors
+              link: /docs/troubleshooting-common-errors/
         - title: Adding App and Website Functionality
           link: /docs/adding-app-and-website-functionality/
           items:
@@ -418,8 +423,6 @@
                   link: /docs/location-data-from-props/
                 - title: Creating Dynamic Navigation
                   link: /docs/creating-dynamic-navigation/
-                - title: Rendering Sidebar Navigation Dynamically*
-                  link: /docs/rendering-sidebar-navigation-dynamically/
                 - title: Client-only Routes & User Authentication
                   link: /docs/client-only-routes-and-user-authentication/
                   breadcrumbTitle: Client Routes & User Auth
@@ -538,6 +541,8 @@
           link: /docs/gatsby-core-philosophy/
         - title: Gatsby Project Structure
           link: /docs/gatsby-project-structure/
+        - title: Plugins, Themes, & Starters
+          link: /docs/plugins-themes-and-starters/
         - title: Overview of the Gatsby Build Process
           link: /docs/overview-of-the-gatsby-build-process/
         - title: Building with Components
@@ -692,6 +697,11 @@
       link: /docs/cheat-sheet/
     - title: Glossary
       link: /docs/glossary/
+      items:
+        - title: Node.js
+          link: /docs/glossary/node
+        - title: React
+          link: /docs/glossary/react
     - title: Gatsby Telemetry
       link: /docs/telemetry/
     - title: Gatsby REPL
