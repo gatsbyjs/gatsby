@@ -1,4 +1,12 @@
 const path = require(`path`)
+const fs = require(`fs-extra`)
+
+exports.onPreBootstrap = () => {
+  fs.copyFileSync(
+    `./src/templates/static-page-from-cache.js`,
+    `./.cache/static-page-from-cache.js`
+  )
+}
 
 exports.createPages = ({ actions: { createPage } }) => {
   createPage({
@@ -82,6 +90,11 @@ exports.createPages = ({ actions: { createPage } }) => {
     context: {
       domMarker: `dynamic-and-wildcard`,
     },
+  })
+
+  createPage({
+    path: `/page-from-cache/`,
+    component: path.resolve(`./.cache/static-page-from-cache.js`),
   })
 }
 
