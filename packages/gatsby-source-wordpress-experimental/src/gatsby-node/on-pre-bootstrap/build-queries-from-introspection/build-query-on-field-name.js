@@ -1,13 +1,16 @@
 import compress from "graphql-query-compress"
 
-export const buildNodesQueryOnFieldName = ({ fields, fieldName }) =>
+export const buildNodesQueryOnFieldName = ({ fields, fieldName, postTypes }) =>
   compress(
     buildQuery({
       queryName: `NODE_LIST_QUERY`,
       variables: `$first: Int!, $after: String`,
       fieldName,
       fieldVariables: `first: $first, after: $after ${
-        [`pages`].includes(fieldName) ? `, where: {parent: null}` : ``
+        postTypes.length &&
+        postTypes.map(postType => postType.plural).includes(fieldName)
+          ? `, where: {parent: null}`
+          : ``
       }`,
       fields: [
         {

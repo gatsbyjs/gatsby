@@ -1,3 +1,6 @@
+import { getAvailablePostTypesQuery } from "../../graphql-queries"
+import fetchGraphql from "../../../utils/fetch-graphql"
+
 import recursivelyTransformFields from "./recursively-transform-fields"
 import {
   buildNodesQueryOnFieldName,
@@ -7,9 +10,10 @@ import {
 
 import store from "../../../store"
 
-const generateQueriesFromIntrospection = ({
+const generateQueriesFromIntrospection = async ({
   introspection,
   nodeListFilter,
+  pluginOptions,
   fieldBlacklist = [],
   rootType = `RootQuery`,
 }) => {
@@ -45,6 +49,18 @@ const generateQueriesFromIntrospection = ({
     typeNames: nodeListTypeNames,
   }
 
+  // This is temporary. We need a list of post types so we
+  // can add field arguments just to post type fields so we can
+  // get a flat list of posts and pages, instead of having them
+  // nested as children
+  // for example we need to do posts(where: { parent: null }) { nodes { ... }}
+  // https://github.com/wp-graphql/wp-graphql/issues/928
+  const query = getAvailablePostTypesQuery()
+  const { url } = pluginOptions
+  const {
+    data: { postTypes },
+  } = await fetchGraphql({ url, query })
+
   let queries = {}
 
   for (const { type, name } of nodeListFields) {
@@ -76,6 +92,7 @@ const generateQueriesFromIntrospection = ({
       fields: transformedFields,
       fieldName: name,
       nodeListFieldNames,
+      postTypes,
     })
 
     const nodeQueryString = buildNodeQueryOnFieldName({
@@ -117,10 +134,11 @@ export const buildNodeQueriesFromIntrospection = async (
     // generate them again
     const { fieldBlacklist } = store.getState().introspection
 
-    queries = generateQueriesFromIntrospection({
+    queries = await generateQueriesFromIntrospection({
       introspection,
       fieldBlacklist,
       nodeListFilter,
+      pluginOptions,
     })
 
     // and cache them
