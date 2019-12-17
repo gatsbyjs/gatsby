@@ -1,9 +1,20 @@
-const isEmpty = require(`lodash/isEmpty`)
+module.exports = (code, additionalHtmlEscapes = {}) => {
+  const baseHTMLEscapes = {
+    "&": `&amp;`,
+    ">": `&gt;`,
+    "<": `&lt;`,
+    '"': `&quot;`,
+    "'": `&#39;`,
+  }
 
-module.exports = (code, additionalEscapeCharacters = {}) => {
-  if (isEmpty(additionalEscapeCharacters)) return code
-  const escapedChars = char => additionalEscapeCharacters[char]
-  const chars = Object.keys(additionalEscapeCharacters)
+  const htmlEscapes = {
+    ...additionalHtmlEscapes,
+    ...baseHTMLEscapes,
+  }
+
+  const escapedChars = char => htmlEscapes[char]
+
+  const chars = Object.keys(htmlEscapes)
 
   const charsRe = new RegExp(`[${chars.join()}]`, `g`)
 

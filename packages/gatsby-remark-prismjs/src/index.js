@@ -1,5 +1,4 @@
 const visit = require(`unist-util-visit`)
-
 const parseOptions = require(`./parse-options`)
 const loadLanguageExtension = require(`./load-prism-language-extension`)
 const highlightCode = require(`./highlight-code`)
