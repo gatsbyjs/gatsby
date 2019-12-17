@@ -4001,26 +4001,6 @@
     - htaccess support
     - Typography.js
     - Integration with Social Media
-- url: https://blogerist.netlify.com
-  repo: https://github.com/bvlktech/blogerist
-  description: Starter blog built with GatsbyJS
-  tags:
-    - Blog
-    - Markdown
-    - SEO
-    - PWA
-  features:
-    - A simple landing page with blog functionality built with Netlify CMS
-    - Create Blog posts from Netlify CMS
-    - Uses SCSS for styling
-    - Blazing fast loading times thanks to pre-rendered HTML and automatic chunk loading of JS files
-    - Uses gatbsy-image with Netlify-CMS preview support
-    - Separate components for everything
-    - Netlify deploy configuration
-    - Netlify forms functionality
-    - Discus commenting added to each blog post
-    - Perfect score on Lighthouse for SEO, Accessibility and Performance
-    - ..and more
 - url: https://gatsby-starter-bloomer-db0aaf.netlify.com
   repo: https://github.com/zlutfi/gatsby-starter-bloomer
   description: Barebones starter website with Bloomer React components for Bulma.
@@ -4716,3 +4696,73 @@
     - ESLint(Airbnb) for linting
     - Prettier code formatting
     - gh-pages for deploying to GitHub pages
+- url: https://gatsby-starter-boilerplatev-kontent-demo.netlify.com/
+  repo: https://github.com/viperfx07/gatsby-starter-boilerplatev-kontent
+  description: A Gatsby starter using BoilerplateV for Kentico Kontent.
+  tags:
+    - Blog
+    - CMS:Headless
+    - CMS:Kontent
+    - Styling:Bootstrap
+    - Styling:CSS-in-JS
+    - Linting
+  features:
+    - Sass (SCSS Flavored) CSS
+    - ITCSS Structure of CSS (with glob added for css)
+    - Bootstrap CSS Framework
+    - React Helmet <head> Management
+    - ESLint(Airbnb) for JS linting
+    - Prettier for JS formatting
+- url: https://www.cryptocatalyst.net/
+  repo: https://github.com/n8tb1t/gatsby-starter-cryptocurrency
+  description: A full-fledged cryptocurrency Gatsby starter portal with landing page, blog, roadmap, devs team, and docs.
+  tags:
+    - Linting
+    - Blog
+    - Styling:SCSS
+    - Markdown
+    - Pagination
+    - PWA
+    - SEO
+  features:
+    - Beautiful Mobile-first design.
+    - modular SCSS styles.
+    - Configurable color scheme.
+    - Advanced config options.
+    - Advanced landing page.
+    - Blog Component.
+    - Live comments.
+    - Roadmap component.
+    - Developers page component.
+    - Algolia advanced search index, with content chunks.
+    - Docs component.
+    - No outdated codebase, use only react hooks.
+    - Easy to modify react components.
+    - SEO (Sitemap, OpenGraph tags, Twitter tags)
+    - Google Analytics Support
+    - Offline Support & WebApp Manifest
+    - Easy to modify assets.
+- url: https://chronoblog-profile.netlify.com/
+  repo: https://github.com/Ganevru/gatsby-starter-chronoblog-profile
+  description: This starter will help you launch a personal website with a simple text feed on the main page. This starter looks simple and neat, but at the same time, it has great potential for organizing your content using tags, dates, and search. The homepage is organized in compact feeds. The display of content in these feeds is based on the tags of this content (for example, only content with a podcast tag gets into the feed with podcasts).
+  tags:
+    - Blog
+    - Portfolio
+    - MDX
+    - Markdown
+    - SEO
+    - Styling:CSS-in-JS
+    - Linting
+  features:
+    - Specially designed to create a personal website (in a simple and strict "text" style)
+    - Universal text feed divided into categories
+    - Search and Tags for organizing content
+    - A simple change of primary and secondary colors of the site, fonts, radius of curvature of elements, etc (thanks to Theme UI theming)
+    - Clean and Universal UI
+    - Mobile friendly, all elements and custom images are adapted to any screen
+    - Light/Dark mode
+    - Easy customization of icons and links to your social networks
+    - MDX for the main menu of the site, footer and other elements of the site
+    - MDX for pages and content
+    - Code syntax highlighting
+    - SEO (OpenGraph and Twitter) out of the box with default settings that make sense (thanks to React Helmet)
