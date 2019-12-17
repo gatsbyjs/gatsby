@@ -4696,6 +4696,23 @@
     - ESLint(Airbnb) for linting
     - Prettier code formatting
     - gh-pages for deploying to GitHub pages
+- url: https://gatsby-starter-boilerplatev-kontent-demo.netlify.com/
+  repo: https://github.com/viperfx07/gatsby-starter-boilerplatev-kontent
+  description: A Gatsby starter using BoilerplateV for Kentico Kontent.
+  tags:
+    - Blog
+    - CMS:Headless
+    - CMS:Kontent
+    - Styling:Bootstrap
+    - Styling:CSS-in-JS
+    - Linting
+  features:
+    - Sass (SCSS Flavored) CSS
+    - ITCSS Structure of CSS (with glob added for css)
+    - Bootstrap CSS Framework
+    - React Helmet <head> Management
+    - ESLint(Airbnb) for JS linting
+    - Prettier for JS formatting
 - url: https://www.cryptocatalyst.net/
   repo: https://github.com/n8tb1t/gatsby-starter-cryptocurrency
   description: A full-fledged cryptocurrency Gatsby starter portal with landing page, blog, roadmap, devs team, and docs.
