@@ -64,7 +64,7 @@ Please read the [Cypress' official documentation](https://docs.cypress.io/guides
 
 A good use case for writing automated end-to-end tests is asserting **accessibility** with [cypress-axe](https://github.com/avanslaars/cypress-axe), a Cypress plugin that incorporates the [axe](https://deque.com/axe) accessibility testing API. While some [manual testing](https://www.smashingmagazine.com/2018/09/importance-manual-accessibility-testing/) is still required to ensure good web accessibility, automation can ease the burden on human testers.
 
-To use `cypress-axe`, you have to install the `cypress-axe` and [axe-core](https://github.com/dequelabs/axe-core) packages. You'll also use some commands from [@testing-library/cypress](https://testing-library.com/docs/cypress-testing-library/intro) to select elements — see [best practices for selecting elements](https://docs.cypress.io/guides/references/best-practices.html#Selecting-Elements).
+To use cypress-axe, you have to install the `cypress-axe` and [axe-core](https://github.com/dequelabs/axe-core) packages. You'll also use some commands from [@testing-library/cypress](https://testing-library.com/docs/cypress-testing-library/intro) to select elements — see [best practices for selecting elements](https://docs.cypress.io/guides/references/best-practices.html#Selecting-Elements).
 
 ```bash
 npm install --save-dev cypress-axe axe-core @testing-library/cypress
@@ -196,7 +196,7 @@ const axeRunOptions = {
 cy.checkA11y(null, axeRunOptions)
 ```
 
-The `checkA11y` command runs under the hood the `axe.run` method. This method can slow down Cypress and make the window unresponsive if you have a lot of elements on the page. To overcome this, you can use the [axe.run context](https://www.deque.com/axe/axe-for-web/documentation/api-documentation/#context-parameter) and exclude some elements to improve speed. For example, code blocks from [gatsby-remark-prismjs](/packages/gatsby-remark-prismjs/) can slow down your tests. You can test if they are accessible in a single test, and exclude them in the rest of your tests.
+The `checkA11y` command runs the `axe.run` method under the hood. This method can slow down Cypress and make the window unresponsive if you have a lot of elements on the page. To overcome this, you can use the [axe.run context](https://www.deque.com/axe/axe-for-web/documentation/api-documentation/#context-parameter) and exclude some elements to improve speed. For example, code blocks from [gatsby-remark-prismjs](/packages/gatsby-remark-prismjs/) can slow down your tests. You can test if they are accessible in a single test, and exclude them in the rest of your tests.
 
 ```js:title=cypress/e2e/accessibility.test.js
 const axeRunOptions = {
