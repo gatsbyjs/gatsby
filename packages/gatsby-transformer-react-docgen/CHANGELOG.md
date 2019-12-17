@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-react-docgen@5.0.24...gatsby-transformer-react-docgen@5.0.25) (2019-12-12)
+
+### Bug Fixes
+
+- **gatsby-transformer-react-docgen:** support schema rebuilding ([#20095](https://github.com/gatsbyjs/gatsby/issues/20095)) ([2c83f09](https://github.com/gatsbyjs/gatsby/commit/2c83f09))
+
 ## [5.0.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-react-docgen@5.0.22...gatsby-transformer-react-docgen@5.0.24) (2019-12-10)
 
 **Note:** Version bump only for package gatsby-transformer-react-docgen

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.38](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.37...gatsby-remark-images@3.1.38) (2019-12-12)
+
+### Bug Fixes
+
+- **gatsby-remark-images:** add styles to webp `img` tags ([#20086](https://github.com/gatsbyjs/gatsby/issues/20086)) ([8227b0b](https://github.com/gatsbyjs/gatsby/commit/8227b0b))
+
 ## [3.1.37](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.1.35...gatsby-remark-images@3.1.37) (2019-12-10)
 
 **Note:** Version bump only for package gatsby-remark-images

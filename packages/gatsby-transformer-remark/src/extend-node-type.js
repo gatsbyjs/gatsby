@@ -305,7 +305,9 @@ module.exports = (
             tocAst.map = addSlugToUrl(tocAst.map)
           }
 
-          toc = hastToHTML(toHAST(tocAst.map))
+          toc = hastToHTML(toHAST(tocAst.map, { allowDangerousHTML: true }), {
+            allowDangerousHTML: true,
+          })
         } else {
           toc = ``
         }
