@@ -125,34 +125,41 @@ export const buildNodeQueriesFromIntrospection = async (
   pluginOptions
 ) => {
   const QUERY_CACHE_KEY = `${pluginOptions.url}--introspection-node-queries`
+  const INTROSPECTION_CACHE_KEY = `${pluginOptions.url}--introspection-response`
 
   const schemaHasChanged = await checkIfSchemaHasChanged()
 
   let queries = await helpers.cache.get(QUERY_CACHE_KEY)
+  let introspection = await helpers.cache.get(INTROSPECTION_CACHE_KEY)
 
   if (
     // we've never generated queries, or the schema has changed
     !queries ||
+    !introspection ||
     schemaHasChanged
   ) {
+    const genericMessage = `
+Generating queries from introspection and re-fetching all data.`
+
     if (pluginOptions.verbose && queries && schemaHasChanged) {
       helpers.reporter.info(
         formatLogMessage(
-          `The schema has changed since the last build. Refetching all data.`
+          `The schema has changed since the last build. ${genericMessage}`
         )
       )
     } else if (pluginOptions.verbose && !queries) {
       helpers.reporter.info(
-        formatLogMessage(
-          `No cached queries. Generating queries from introspection.`
-        )
+        formatLogMessage(`No cached queries. ${genericMessage}`)
       )
     }
+
     // generate them again
-    const introspection = await fetchGraphql({
+    introspection = await fetchGraphql({
       url: pluginOptions.url,
       query: introspectionQuery,
     })
+
+    await helpers.cache.set(INTROSPECTION_CACHE_KEY, introspection)
 
     const { fieldBlacklist } = store.getState().introspection
 
@@ -168,7 +175,10 @@ export const buildNodeQueriesFromIntrospection = async (
   }
 
   // set the queries in our redux store to use later
-  store.dispatch.introspection.setQueries(queries)
+  store.dispatch.introspection.setState({
+    queries,
+    introspectionData: introspection,
+  })
 
   return queries
 }

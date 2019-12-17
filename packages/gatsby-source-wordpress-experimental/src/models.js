@@ -1,6 +1,7 @@
 const introspection = {
   state: {
     queries: {},
+    introspectionData: null,
     schemaWasChanged: null,
     fieldBlacklist: [
       // these aren't useful without authentication
@@ -24,12 +25,23 @@ const introspection = {
 
       return state
     },
+
     setQueries(state, payload) {
       state.queries = payload
       return state
     },
+
     addFieldsToBlackList(state, payload) {
       state.fieldBlacklist = [...state.fieldBlacklist, ...payload]
+      return state
+    },
+
+    setState(state, payload) {
+      state = {
+        ...state,
+        ...payload,
+      }
+
       return state
     },
   },

@@ -60,6 +60,14 @@ export const introspectionQuery = gql`
           }
         }
       }
+
+      mutationType {
+        fields {
+          type {
+            name
+          }
+        }
+      }
     }
   }
 `

@@ -1,49 +1,18 @@
-import gql from "../../utils/gql"
-import fetchGraphql from "../../utils/fetch-graphql"
+import store from "../../store"
 
 export default async (helpers, pluginOptions) => {
-  const introspection = await fetchGraphql({
-    url: pluginOptions.url,
-    query: gql`
-      query {
-        __schema {
-          types {
-            kind
-            name
-            fields {
-              name
-              description
-              type {
-                ofType {
-                  kind
-                  name
-                }
-                kind
-                name
-                description
-              }
-            }
-          }
+  const { data } = store.getState().introspection.introspectionData
 
-          mutationType {
-            fields {
-              type {
-                name
-              }
-            }
-          }
-        }
-      }
-    `,
-  })
+  // const typeMap = new Map(data.__schema.types.map(type => [type.name, type]))
+
   let typeDefs = []
 
-  const mutationTypes = introspection.data.__schema.mutationType.fields.map(
+  const mutationTypes = data.__schema.mutationType.fields.map(
     field => field.type.name
   )
 
   // for now just pull object types, we'll need other types soon though
-  introspection.data.__schema.types
+  data.__schema.types
     .filter(
       type =>
         type.name !== `RootQuery` &&
