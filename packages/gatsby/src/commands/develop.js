@@ -219,6 +219,9 @@ async function startServer(program) {
     require(`webpack-dev-middleware`)(compiler, {
       logLevel: `silent`,
       publicPath: devConfig.output.publicPath,
+      watchOptions: devConfig.devServer
+        ? devConfig.devServer.watchOptions
+        : null,
       stats: `errors-only`,
     })
   )
