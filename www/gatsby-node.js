@@ -7,7 +7,7 @@ const slugify = require(`slugify`)
 const url = require(`url`)
 const getpkgjson = require(`get-package-json-from-github`)
 const parseGHUrl = require(`parse-github-url`)
-const { GraphQLClient } = require(`graphql-request`)
+const { GraphQLClient } = require(`@jamo/graphql-request`)
 const moment = require(`moment`)
 const startersRedirects = require(`./starter-redirects.json`)
 const {
