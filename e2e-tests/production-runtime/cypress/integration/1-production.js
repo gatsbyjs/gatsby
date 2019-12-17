@@ -124,5 +124,15 @@ describe(`Production build tests`, () => {
         .invoke(`text`)
         .should(`equal`, `Hi from the second page`)
     })
+
+    it(`should show 404 page when url with unicode characters point to a non-existent page route`, () => {
+      cy.visit(`/안녕404/`, {
+        failOnStatusCode: false,
+      })
+
+      cy.waitForRouteChange()
+        .getTestElement(`404`)
+        .should(`exist`)
+    })
   })
 })
