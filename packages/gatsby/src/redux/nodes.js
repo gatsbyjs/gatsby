@@ -103,26 +103,20 @@ exports.saveResolvedNodes = async (nodeTypeNames, resolver) => {
   }
 }
 
-const getNodesAndResolvedNodes = typeName => {
+const addResolvedNodes = (typeName, arr) => {
   const { nodesByType, resolvedNodesCache } = store.getState()
-  const nodes = nodesByType.get(typeName)
-  if (nodes) {
-    const resolvedNodes = resolvedNodesCache.get(typeName)
+  const nodes /*: Map<mixed> */ = nodesByType.get(typeName)
+
+  if (!nodes) return
+
+  const resolvedNodes = resolvedNodesCache.get(typeName)
+
+  nodes.forEach(node => {
     if (resolvedNodes) {
-      return Array.from(resolvedNodesIterator(nodes, resolvedNodes))
-    } else {
-      return Array.from(nodes.values())
+      node.__gatsby_resolved = resolvedNodes.get(node.id)
     }
-  } else {
-    return []
-  }
+    arr.push(node)
+  })
 }
 
-function* resolvedNodesIterator(nodes, resolvedNodes) {
-  for (const node of nodes.values()) {
-    node.__gatsby_resolved = resolvedNodes.get(node.id)
-    yield node
-  }
-}
-
-exports.getNodesAndResolvedNodes = getNodesAndResolvedNodes
+exports.addResolvedNodes = addResolvedNodes
