@@ -121,15 +121,16 @@ const Box = posed.div({
 })
 
 <TransitionState>
-      {({ transitionStatus, exit, enter }) => {
-        console.log('exit object is', exit)
-        console.log('enter object is', enter)
+      {({ transitionStatus, exit, enter, mount }) => {
+        console.log("current page's transition status is", transitionStatus)
+        console.log("exit object is", exit)
+        console.log("enter object is", enter)
 
         return (
             <Box
               className="box"
               pose={
-                ['entering', 'entered'].includes(transitionStatus)
+                mount // this is true while the page is mounting or has mounted
                   ? 'visible'
                   : 'hidden'
               }
@@ -139,7 +140,7 @@ const Box = posed.div({
 </TransitionState>
 ```
 
-Now, the `Box` component will be aware of the transition status of the page it's a child of, and it will fade in/out accordingly.
+Now, the `Box` component will be aware of wether the page it's a child of is mounting or unmounting, and it will fade in/out accordingly.
 
 ## Excluding elements from page transitions
 
