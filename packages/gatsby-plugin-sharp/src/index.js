@@ -151,7 +151,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
 
 // A value in pixels(Int)
 const defaultBase64Width = () => getPluginOptions().base64Width || 20
-async function generateBase64({ file, args, reporter }) {
+async function generateBase64({ file, args = {}, reporter }) {
   const pluginOptions = getPluginOptions()
   const options = healOptions(pluginOptions, args, file.extension, {
     width: defaultBase64Width(),
