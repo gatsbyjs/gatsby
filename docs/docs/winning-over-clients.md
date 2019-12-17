@@ -15,7 +15,7 @@ Some benefits that you can use to pitch Gatsby to clients include:
 - Lower hosting cost helps keep project under budget
 - Fast performing websites which reduce page load and response time
 - Helps in making highly scalable and dynamic apps
-- Rich plugin ecosystem which helps tackle complex codes
+- Rich plugin ecosystem which helps tackle complex code
 
 [This one-pager](/gatsby-one-pager.pdf) may also be useful for clients -- it explains Gatsby in their language.
 
