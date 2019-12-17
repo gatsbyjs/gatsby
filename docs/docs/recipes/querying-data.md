@@ -430,3 +430,55 @@ Fragments can be nested inside other fragments, and multiple fragments can be us
 - [Gatsby GraphQL reference for fragments](/docs/graphql-reference/#fragments)
 - [Gatsby image fragments](/docs/gatsby-image/#image-query-fragments)
 - [Example repo with co-located data](https://github.com/gatsbyjs/gatsby/tree/master/examples/gatsbygram)
+
+## Querying data client-side with `fetch`
+
+Data doesn't only have to be queried at build time and remain solely static. You can query data at runtime the same way you can fetch data in a regular React app.
+
+### Prerequisites
+
+- [A Gatsby Site](/docs/quick-start/)
+- A page component, such as `index.js`
+
+### Directions
+
+1. In a file with a React component defined, like a page in `src/pages` or a layout component, import React hooks for `useState` and `useEffect`.
+
+```jsx:title=src/pages/index.js
+import React, { useState, useEffect } from "react"
+```
+
+2. Inside the component, wrap a function to fetch data in a `useEffect` hook so it will asynchronously retrieve data when the component mounts in the browser client. Then, `await` the result with the `fetch` API, and call the set function from the `useState` hook (in this case `setStarsCount`) to save the state variable (`starsCount`) to the data returned from `fetch`.
+
+```jsx:title=src/pages/index.js
+import React, { useState, useEffect } from "react"
+
+const IndexPage = () => {
+  // highlight-start
+  const [starsCount, setStarsCount] = useState(0)
+  useEffect(() => {
+    // get data from GitHub api
+    fetch(`https://api.github.com/repos/gatsbyjs/gatsby`)
+      .then(response => response.json()) // parse JSON from request
+      .then(resultData => {
+        setStarsCount(resultData.stargazers_count)
+      }) // set data for the number of stars
+  }, [])
+  // highlight-end
+
+  return (
+    <section>
+      // highlight-start
+      <p>Runtime Data: Star count for the Gatsby repo {starsCount}</p>
+      // highlight-end
+    </section>
+  )
+}
+
+export default IndexPage
+```
+
+### Additional resources
+
+- Guide on [client-data fetching](/docs/data-fetching/)
+- Live [example site](https://gatsby-data-fetching.netlify.com/) using this example

@@ -1,5 +1,6 @@
 const _ = require(`lodash`)
 const Promise = require(`bluebird`)
+const fetch = require(`node-fetch`)
 const path = require(`path`)
 const fs = require(`fs-extra`)
 const slash = require(`slash`)
@@ -410,6 +411,12 @@ exports.createPages = ({ graphql, actions, reporter }) => {
   createRedirect({
     fromPath: `/docs/using-fragments/`,
     toPath: `/docs/using-graphql-fragments/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/client-data-fetching/`,
+    toPath: `/docs/data-fetching/`,
     isPermanent: true,
   })
 
@@ -1091,7 +1098,11 @@ exports.onPostBuild = () => {
 }
 
 // XXX this should probably be a plugin or something.
-exports.sourceNodes = ({ actions: { createTypes }, schema }) => {
+exports.sourceNodes = async ({
+  actions: { createTypes, createNode },
+  createContentDigest,
+  schema,
+}) => {
   /*
    * NOTE: This _only_ defines the schema we currently query for. If anything in
    * the query at `src/pages/contributing/events.js` changes, we need to make
@@ -1144,6 +1155,23 @@ exports.sourceNodes = ({ actions: { createTypes }, schema }) => {
   `
 
   createTypes(typeDefs)
+
+  // get data from GitHub API at build time
+  const result = await fetch(`https://api.github.com/repos/gatsbyjs/gatsby`)
+  const resultData = await result.json()
+  // create node for build time data example in the docs
+  createNode({
+    nameWithOwner: resultData.full_name,
+    url: resultData.html_url,
+    // required fields
+    id: `example-build-time-data`,
+    parent: null,
+    children: [],
+    internal: {
+      type: `Example`,
+      contentDigest: createContentDigest(resultData),
+    },
+  })
 }
 
 exports.onCreateWebpackConfig = ({ actions, plugins }) => {
