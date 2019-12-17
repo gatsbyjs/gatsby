@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { Link } from "gatsby"
-import { mediaQueries, colors } from "../gatsby-plugin-theme-ui"
+import { colors, mediaQueries } from "../gatsby-plugin-theme-ui"
 
 function isUnderDepthLimit(depth, maxDepth) {
   if (maxDepth === null) {
@@ -17,38 +17,40 @@ function isUnderDepthLimit(depth, maxDepth) {
 function createItems(items, location, depth, maxDepth) {
   return (
     items &&
-    items.map(item => (
+    items.map((item, index) => (
       <li
         sx={{ [mediaQueries.xl]: { fontSize: 1 } }}
-        key={location.pathname + item.url}
+        key={location.pathname + (item.url || depth + `-` + index)}
       >
-        <Link
-          sx={{
-            "&&": {
-              color: `textMuted`,
-              border: 0,
-              transition: t =>
-                `all ${t.transition.speed.fast} ${t.transition.curve.default}`,
-              ":hover": {
-                color: `link.color`,
-                borderBottom: t => `1px solid ${t.colors.link.hoverBorder}`,
+        {item.url && (
+          <Link
+            sx={{
+              "&&": {
+                color: `textMuted`,
+                border: 0,
+                transition: t =>
+                  `all ${t.transition.speed.fast} ${t.transition.curve.default}`,
+                ":hover": {
+                  color: `link.color`,
+                  borderBottom: t => `1px solid ${t.colors.link.hoverBorder}`,
+                },
               },
-            },
-          }}
-          getProps={({ href, location }) =>
-            location && location.href && location.href.includes(href)
-              ? {
-                  style: {
-                    color: colors.link.color,
-                    borderBottom: `1px solid ${colors.link.hoverBorder}`,
-                  },
-                }
-              : null
-          }
-          to={location.pathname + item.url}
-        >
-          {item.title}
-        </Link>
+            }}
+            getProps={({ href, location }) =>
+              location && location.href && location.href.includes(href)
+                ? {
+                    style: {
+                      color: colors.link.color,
+                      borderBottom: `1px solid ${colors.link.hoverBorder}`,
+                    },
+                  }
+                : null
+            }
+            to={location.pathname + item.url}
+          >
+            {item.title}
+          </Link>
+        )}
         {item.items && isUnderDepthLimit(depth, maxDepth) && (
           <ul sx={{ color: `textMuted`, listStyle: `none`, ml: 5 }}>
             {createItems(item.items, location, depth + 1, maxDepth)}

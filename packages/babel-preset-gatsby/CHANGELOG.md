@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.26](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.2.25...babel-preset-gatsby@0.2.26) (2019-12-11)
+
+### Features
+
+- **gatsby:** support `?.` and `??` in generated pages ([#20036](https://github.com/gatsbyjs/gatsby/issues/20036)) ([ea6185c](https://github.com/gatsbyjs/gatsby/commit/ea6185c))
+
 ## [0.2.25](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.2.23...babel-preset-gatsby@0.2.25) (2019-12-10)
 
 **Note:** Version bump only for package babel-preset-gatsby

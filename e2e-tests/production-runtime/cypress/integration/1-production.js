@@ -98,6 +98,13 @@ describe(`Production build tests`, () => {
     cy.getTestElement(`process.env.NOT_EXISTING_VAR`).should(`be.empty`)
   })
 
+  it(`should be able to create a page from component located in .cache directory`, () => {
+    cy.visit(`/page-from-cache/`).waitForRouteChange()
+
+    // `bar` is set in gatsby-node createPages
+    cy.getTestElement(`dom-marker`).contains(`[static-page-from-cache]`)
+  })
+
   describe(`Supports unicode characters in urls`, () => {
     it(`Can navigate directly`, () => {
       cy.visit(`/안녕/`, {
