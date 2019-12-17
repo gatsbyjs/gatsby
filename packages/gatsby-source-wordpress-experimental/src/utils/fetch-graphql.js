@@ -1,6 +1,7 @@
 import axios from "axios"
 import rateLimit from "axios-rate-limit"
 import formatLogMessage from "./format-log-message"
+import store from "../store"
 
 const http = rateLimit(axios.create(), {
   maxRPS: 50,
@@ -13,22 +14,42 @@ const fetchGraphql = async ({
   exitOnError = false,
   variables = {},
 }) => {
-  const response = await http.post(url, { query, variables })
+  const { helpers } = store.getState().gatsbyApi
+  const { reporter } = helpers
+
+  let response
+  const timeout = 30 * 1000
+
+  try {
+    response = await http.post(url, { query, variables }, { timeout })
+  } catch (e) {
+    if (e.message.includes(`timeout of ${timeout}ms exceeded`)) {
+      reporter.error(e)
+      reporter.panic(
+        formatLogMessage(
+          `It took too long for ${url} to respond (longer than ${timeout /
+            1000} seconds). Make sure you have the right URL set in plugin options, and your site is available.`
+        )
+      )
+    } else {
+      reporter.panic(e)
+    }
+  }
 
   if (response.status !== 200) {
-    console.error(formatLogMessage(`Couldn't connect to ${url}`))
-    process.exit()
+    reporter.panic(
+      formatLogMessage(`Couldn't connect to ${url} [${response.status}]`)
+    )
   }
 
   const contentType = response.headers[`content-type`]
 
   if (!contentType.includes(`application/json;`)) {
-    console.error(
+    reporter.panic(
       formatLogMessage(`Unable to connect to WPGraphQL.
         Double check that your WordPress URL is correct and WPGraphQL is installed.
         ${url}`)
     )
-    process.exit()
   }
 
   const json = response.data
@@ -41,11 +62,11 @@ const fetchGraphql = async ({
         errorMap.to &&
         error.message === errorMap.from
       ) {
-        return console.error(formatLogMessage(errorMap.to))
+        return reporter.error(formatLogMessage(errorMap.to))
       }
 
       if (error.debugMessage) {
-        console.error(
+        reporter.error(
           formatLogMessage(`Error category: ${error.category}
 ${error.message}
 ${
@@ -57,27 +78,31 @@ ${
       }
 
       if (!error.debugMessage) {
-        console.error(formatLogMessage(`${error.message} (${error.category})`))
+        reporter.error(formatLogMessage(`${error.message} (${error.category})`))
       }
     })
 
     if (exitOnError) {
-      process.exit()
+      reporter.panic(
+        formatLogMessage(`Encountered errors. See above for more info.`)
+      )
     }
 
     if (Object.keys(variables).length) {
-      console.error(formatLogMessage(`GraphQL vars:`, variables))
+      reporter.error(formatLogMessage(`GraphQL vars:`, variables))
     }
 
-    console.error(formatLogMessage(`GraphQL query: ${query}`))
+    reporter.error(formatLogMessage(`GraphQL query: ${query}`))
 
     if (json.data) {
-      console.error(formatLogMessage`GraphQL data:`)
-      console.log(json.data)
+      reporter.error(formatLogMessage`GraphQL data:`)
+      reporter.info(json.data)
     }
 
     if (!json.data) {
-      process.exit()
+      reporter.panic(
+        formatLogMessage(`Encountered errors. See above for more info.`)
+      )
     }
   }
 
