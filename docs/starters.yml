@@ -4001,26 +4001,6 @@
     - htaccess support
     - Typography.js
     - Integration with Social Media
-- url: https://blogerist.netlify.com
-  repo: https://github.com/bvlktech/blogerist
-  description: Starter blog built with GatsbyJS
-  tags:
-    - Blog
-    - Markdown
-    - SEO
-    - PWA
-  features:
-    - A simple landing page with blog functionality built with Netlify CMS
-    - Create Blog posts from Netlify CMS
-    - Uses SCSS for styling
-    - Blazing fast loading times thanks to pre-rendered HTML and automatic chunk loading of JS files
-    - Uses gatbsy-image with Netlify-CMS preview support
-    - Separate components for everything
-    - Netlify deploy configuration
-    - Netlify forms functionality
-    - Discus commenting added to each blog post
-    - Perfect score on Lighthouse for SEO, Accessibility and Performance
-    - ..and more
 - url: https://gatsby-starter-bloomer-db0aaf.netlify.com
   repo: https://github.com/zlutfi/gatsby-starter-bloomer
   description: Barebones starter website with Bloomer React components for Bulma.
