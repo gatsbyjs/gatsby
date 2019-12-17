@@ -698,6 +698,12 @@ describe(`NodeModel`, () => {
         // This tests whether addRootNodeToInlineObject properly prevents re-traversing the same key-value pair infinitely
         const circular = { i_am: `recursion!` }
         circular.circled = circular
+        const indirectCircular = {
+          down1: {
+            down2: {},
+          },
+        }
+        indirectCircular.down1.down2.deepCircular = indirectCircular
 
         const node = {
           id: `circleId`,
@@ -708,6 +714,9 @@ describe(`NodeModel`, () => {
           },
           inlineArray: [1, 2, 3],
           circular,
+          indirect: {
+            indirectCircular,
+          },
           internal: {
             type: `Test`,
             contentDigest: `digest1`,
