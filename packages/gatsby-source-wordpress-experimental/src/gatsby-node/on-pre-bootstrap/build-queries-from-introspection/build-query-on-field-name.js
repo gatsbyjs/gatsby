@@ -8,8 +8,10 @@ export const buildNodesQueryOnFieldName = ({ fields, fieldName, postTypes }) =>
       fieldName,
       fieldVariables: `first: $first, after: $after ${
         postTypes.length &&
+        // this is temporary until we can get a flat list of posts
+        // https://github.com/wp-graphql/wp-graphql/issues/928
         postTypes.map(postType => postType.plural).includes(fieldName)
-          ? `, where: {parent: null}`
+          ? `, where: { parent: null }`
           : ``
       }`,
       fields: [
