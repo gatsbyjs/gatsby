@@ -18,7 +18,7 @@ Want to see a more advanced example of TinaCMS integrated with a Gatsby website?
 ## Prerequisites
 
 - A Gatsby project that sources local `markdown` content. Use Gatsby's [Starter Blog](https://github.com/gatsbyjs/gatsby-starter-blog) if you don't have an existing website.
-- [Gatsby Development Environment](https://www.gatsbyjs.org/tutorial/part-zero/)
+- [Gatsby Development Environment](/tutorial/part-zero/)
 
 ## Setup
 
