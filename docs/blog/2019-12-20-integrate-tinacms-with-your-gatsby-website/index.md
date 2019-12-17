@@ -5,9 +5,9 @@ author: Scott Byrne
 tags: ["gatsby-cloud", "cloud", "cms", "markdown"]
 ---
 
-[TinaCMS](https://tinacms.org/) is a toolkit of javascript components. You can use these components to build content editing functionality into your site.
+[TinaCMS](https://tinacms.org/) is a toolkit of JavaScript components. You can use these components to build content editing functionality into your site.
 
-Right now, Tina uses a Git backend to track content changes. When detected, changes are immediately written to back to source files. Saving pushes those chages to your repo. While Git backed for now, the Tina Team has built inherent flexibility into the CMS. Adding support for alternate backends, such as posting to a database, is on the Tina [roadmap](https://github.com/tinacms/tinacms/blob/master/ROADMAP.md).
+Right now, Tina uses a Git backend to track content changes. When detected, changes are immediately written back to source files. Saving pushes those changes to your repo. While Git backed for now, the Tina Team has built inherent flexibility into the CMS. Adding support for alternate backends, such as posting to a database, is on the [Tina roadmap](https://github.com/tinacms/tinacms/blob/master/ROADMAP.md).
 
 In this article, we will walk through how to add TinaCMS to an existing Gatsby website. We will cover installing and configuring the Tina [sidebar](https://tinacms.org/docs/concepts/sidebar). Learn how to create a content editing [form](https://tinacms.org/docs/concepts/forms) for markdown. Touch on customizing the form with Tina [field](https://tinacms.org/docs/concepts/fields) components. Set-up [inline (aka on-page) editing](https://tinacms.org/docs/gatsby/inline-editing). And then we'll configure a [`content-creator`](https://tinacms.org/docs/gatsby/creating-new-files) plugin that will allow us to add new files to the site. Let's use the classic [Gatsby’s Starter Blog 💜](https://github.com/gatsbyjs/gatsby-starter-blog) as our example.
 
@@ -112,7 +112,7 @@ Now spin up the development server (`gatsby develop`) and see what the default f
 
 We should have access to all the fields passed into the component via GraphQL. Without specifying how the form should display, default labels and values are rendered.
 
-Try editing the content and see what happens; you should see your changes updating live on the site 🥳. Look at the source file for this particular post, you’ll notice the edits you made are also reflected there. Tina is writing to disk as you are editing content in the sidebar. Gatsby picks this up and rebuilds the site to reflect the changes in ‘real-time.’
+Try editing the content and see what happens; you should see your changes updating live on the site 🥳. Look at the source file for this particular post, you’ll notice the edits you made are also reflected there. Tina is writing to disk as you are editing content in the sidebar. Gatsby picks this up and rebuilds the site to reflect the changes in "real time."
 
 ## Customize The Editing Form
 
