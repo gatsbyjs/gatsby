@@ -10,9 +10,11 @@ const introspection = {
       // this field is used to determine content changes in WP
       // no need to pull it into the Gatsby schema
       `actionMonitorActions`,
-      // this causes an error on the WPGQL side so I'm removing it temporarily
-      `postTypeInfo`,
       `edges`,
+      // the next two cause an error on the WPGQL side so I'm removing them temporarily
+      // https://github.com/wp-graphql/wp-graphql/issues/848
+      `postTypeInfo`,
+      `connectedPostTypes`,
     ],
   },
 
