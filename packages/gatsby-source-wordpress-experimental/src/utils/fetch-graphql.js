@@ -28,7 +28,8 @@ const fetchGraphql = async ({
       reporter.panic(
         formatLogMessage(
           `It took too long for ${url} to respond (longer than ${timeout /
-            1000} seconds). Make sure you have the right URL set in plugin options, and your site is available.`
+            1000} seconds).
+Make sure your site is reachable and that you have the right URL set in plugin options.`
         )
       )
     } else {
