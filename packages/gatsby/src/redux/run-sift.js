@@ -119,20 +119,13 @@ function handleMany(siftArgs, nodes, sort, resolvedFields) {
  *   if `firstOnly` is true
  */
 const runSift = (args: Object) => {
-  const { getNode, getNodesAndResolvedNodes } = require(`./nodes`)
+  const { getNode, addResolvedNodes } = require(`./nodes`)
 
   const { nodeTypeNames } = args
 
-  let nodes
+  let nodes = []
 
-  if (nodeTypeNames.length > 1) {
-    nodes = nodeTypeNames.reduce((acc, typeName) => {
-      acc.push(...getNodesAndResolvedNodes(typeName))
-      return acc
-    }, [])
-  } else {
-    nodes = getNodesAndResolvedNodes(nodeTypeNames[0])
-  }
+  nodeTypeNames.forEach(typeName => addResolvedNodes(typeName, nodes))
 
   return runSiftOnNodes(nodes, args, getNode)
 }
