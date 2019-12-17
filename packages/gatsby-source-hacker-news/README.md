@@ -32,7 +32,7 @@ query {
         by
         descendants
         timeISO(fromNow: true)
-        children {
+        childrenHnComment {
           id
           text
           timeISO(fromNow: true)
