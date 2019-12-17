@@ -8,7 +8,7 @@ import Layout from "../components/layout"
 
 export default ({ data }) => {
   const pages = [
-    ...data.allWpAlot.nodes,
+    // ...data.allWpAlot.nodes,
     ...data.allWpPost.nodes,
     ...data.allWpPage.nodes,
   ]
@@ -89,17 +89,17 @@ export const query = graphql`
       }
     }
 
-    allWpAlot(limit: 10) {
-      nodes {
-        title
-        link
-        excerpt
-        featuredImage {
-          remoteFile {
-            ...Thumbnail
-          }
-        }
-      }
-    }
+    # allWpAlot(limit: 10) {
+    #   nodes {
+    #     title
+    #     link
+    #     excerpt
+    #     featuredImage {
+    #       remoteFile {
+    #         ...Thumbnail
+    #       }
+    #     }
+    #   }
+    # }
   }
 `
