@@ -3,9 +3,6 @@ import formatLogMessage from "../../utils/format-log-message"
 import checkPluginRequirements from "./check-plugin-requirements"
 import store from "../../store"
 import { setApiHelpersToState } from "./set-api-helpers-to-state"
-import { introspectionQuery } from "../graphql-queries"
-import fetchGraphql from "../../utils/fetch-graphql"
-import checkIfSchemaHasChanged from "./check-if-schema-has-changed"
 
 const onPreBootstrap = async (helpers, pluginOptions) => {
   const api = [helpers, pluginOptions]
@@ -26,29 +23,7 @@ const onPreBootstrap = async (helpers, pluginOptions) => {
     activity.start()
   }
 
-  const introspection = await fetchGraphql({
-    url: pluginOptions.url,
-    query: introspectionQuery,
-  })
-
-  const schemaHasChanged = await checkIfSchemaHasChanged({
-    introspection,
-    helpers,
-  })
-
-  // record wether the schema changed so other logic can beware
-  store.dispatch.introspection.setSchemaWasChanged(schemaHasChanged)
-
-  const queries = await buildNodeQueriesFromIntrospection(
-    {
-      introspection,
-      schemaHasChanged,
-    },
-    ...api
-  )
-
-  // set the queries in our redux store to use later
-  store.dispatch.introspection.setQueries(queries)
+  await buildNodeQueriesFromIntrospection(...api)
 
   if (pluginOptions.verbose) {
     activity.end()

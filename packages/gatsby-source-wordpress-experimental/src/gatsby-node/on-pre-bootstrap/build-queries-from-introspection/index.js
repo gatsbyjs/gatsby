@@ -1,5 +1,7 @@
 import { getAvailablePostTypesQuery } from "../../graphql-queries"
 import fetchGraphql from "../../../utils/fetch-graphql"
+import { introspectionQuery } from "../../graphql-queries"
+import checkIfSchemaHasChanged from "../check-if-schema-has-changed"
 
 import recursivelyTransformFields from "./recursively-transform-fields"
 import {
@@ -9,6 +11,7 @@ import {
 // @todo create function to unmap check here for similar function https://www.gatsbyjs.org/packages/gatsby-source-graphql-universal/
 
 import store from "../../../store"
+import formatLogMessage from "../../../utils/format-log-message"
 
 const generateQueriesFromIntrospection = async ({
   introspection,
@@ -118,11 +121,12 @@ const generateQueriesFromIntrospection = async ({
 const nodeListFilter = field => field.name === `nodes`
 
 export const buildNodeQueriesFromIntrospection = async (
-  { introspection, schemaHasChanged = false },
   helpers,
   pluginOptions
 ) => {
   const QUERY_CACHE_KEY = `${pluginOptions.url}--introspection-node-queries`
+
+  const schemaHasChanged = await checkIfSchemaHasChanged()
 
   let queries = await helpers.cache.get(QUERY_CACHE_KEY)
 
@@ -131,7 +135,25 @@ export const buildNodeQueriesFromIntrospection = async (
     !queries ||
     schemaHasChanged
   ) {
+    if (pluginOptions.verbose && queries && schemaHasChanged) {
+      helpers.reporter.info(
+        formatLogMessage(
+          `The schema has changed since the last build. Refetching all data.`
+        )
+      )
+    } else if (pluginOptions.verbose && !queries) {
+      helpers.reporter.info(
+        formatLogMessage(
+          `No cached queries. Generating queries from introspection.`
+        )
+      )
+    }
     // generate them again
+    const introspection = await fetchGraphql({
+      url: pluginOptions.url,
+      query: introspectionQuery,
+    })
+
     const { fieldBlacklist } = store.getState().introspection
 
     queries = await generateQueriesFromIntrospection({
@@ -144,6 +166,9 @@ export const buildNodeQueriesFromIntrospection = async (
     // and cache them
     await helpers.cache.set(QUERY_CACHE_KEY, queries)
   }
+
+  // set the queries in our redux store to use later
+  store.dispatch.introspection.setQueries(queries)
 
   return queries
 }
