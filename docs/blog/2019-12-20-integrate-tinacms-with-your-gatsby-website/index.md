@@ -257,14 +257,12 @@ When it's time to allow your editors to edit a site with Tina on a hosted server
 To get Tina working in Gatsby Cloud, you'll need to configure the following environment variables in your `Site Settings`:
 
 ```
-GIT_COMMITTER_EMAIL
-GIT_COMMITTER_NAME
 GIT_AUTHOR_EMAIL
 GIT_AUTHOR_NAME
 SSH_KEY
 ```
 
-The `SSH_KEY` is a private key that allows write access to your git repo. You'll need to add the public key to your repo under `Deploy Keys` in `Settings` and enable `write access`.
+The `SSH_KEY` is a private key that allows write access to your git repo. You'll need to add the public key to your repo under `Deploy Keys` in `Settings` and enable `write access`. The `SSH_KEY` needs to be Base64 encoded before adding to Gatsby Cloud; you can encode this locally by running `cat ./.ssh/id_rsa | base64`.
 
 Since these values will be set at the environment level, all edits made using Tina will use these values when pushing changes to git.
 
