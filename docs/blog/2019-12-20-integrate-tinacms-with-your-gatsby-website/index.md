@@ -1,9 +1,8 @@
 ---
 title: Integrate TinaCMS With Your Gatsby Website
-date: "2019-12-13T00:00:00.000Z"
+date: "2019-12-20T00:00:00.000Z"
 author: Scott Byrne
-tags:
-  - cms
+tags: ["gatsby-cloud", "cloud", "cms", "markdown"]
 ---
 
 [TinaCMS](https://tinacms.org/) is a toolkit of javascript components. You can use these components to build content editing functionality into your site.
