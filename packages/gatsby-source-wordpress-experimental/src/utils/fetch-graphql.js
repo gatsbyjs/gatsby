@@ -20,6 +20,9 @@ const fetchGraphql = async ({
   let response
   const timeout = 30 * 1000
 
+  const genericError = `
+Make sure your site is reachable and that you have the right URL set in plugin options.`
+
   try {
     response = await http.post(url, { query, variables }, { timeout })
   } catch (e) {
@@ -28,19 +31,19 @@ const fetchGraphql = async ({
       reporter.panic(
         formatLogMessage(
           `It took too long for ${url} to respond (longer than ${timeout /
-            1000} seconds).
-Make sure your site is reachable and that you have the right URL set in plugin options.`
+            1000} seconds). ${genericError}`
         )
       )
+    } else if (e.message.includes(`ECONNREFUSED`)) {
+      reporter.panic(
+        formatLogMessage(`${url} refused to connect. ${genericError}`)
+      )
     } else {
+      reporter.error(
+        formatLogMessage(`Couldn't connect to ${url}. ${genericError}`)
+      )
       reporter.panic(e)
     }
-  }
-
-  if (response.status !== 200) {
-    reporter.panic(
-      formatLogMessage(`Couldn't connect to ${url} [${response.status}]`)
-    )
   }
 
   const contentType = response.headers[`content-type`]
@@ -73,7 +76,7 @@ ${error.message}
 ${
   error.debugMessage
     ? error.debugMessage
-    : `If you haven't already, try enabling GRAPHQL_DEBUG in wp-config.php for more detailed error messages`
+    : `If you haven't already, try adding define("GRAPHQL_DEBUG", true); to your wp-config.php for more detailed error messages.`
 }`)
         )
       }
