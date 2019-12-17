@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.18.13](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.12...gatsby@2.18.13) (2019-12-17)
+
+### Bug Fixes
+
+- **gatsby:** fix circular ref stack overflow checks ([#20039](https://github.com/gatsbyjs/gatsby/issues/20039)) ([f780d21](https://github.com/gatsbyjs/gatsby/commit/f780d21))
+
+### Features
+
+- **gatsby:** Use webpack watchOptions config for webpack-dev-middleware ([#20067](https://github.com/gatsbyjs/gatsby/issues/20067)) ([aff5540](https://github.com/gatsbyjs/gatsby/commit/aff5540))
+
+### Performance Improvements
+
+- **gatsby:** Eliminate generator ([#20102](https://github.com/gatsbyjs/gatsby/issues/20102)) ([c3ca41a](https://github.com/gatsbyjs/gatsby/commit/c3ca41a))
+
 ## [2.18.12](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.11...gatsby@2.18.12) (2019-12-15)
 
 **Note:** Version bump only for package gatsby
