@@ -15,6 +15,8 @@ let activeJobs = 0
 const jobsInProcess = new Map()
 
 /**
+ * We want to use absolute paths to make sure they are on the filesystem
+ *
  * @param {string} filePath
  * @return {string}
  */
@@ -26,6 +28,8 @@ const convertPathsToAbsolute = filePath => {
   return slash(filePath)
 }
 /**
+ * Get contenthash of a file
+ *
  * @param {string} path
  */
 const createFileHash = path => hasha.fromFileSync(path, { algorithm: `sha1` })
@@ -58,6 +62,8 @@ const createFileHash = path => hasha.fromFileSync(path, { algorithm: `sha1` })
 exports.jobsInProcess = jobsInProcess
 
 /**
+ * Get the local worker function and execute it on the user's machine
+ *
  * @template T
  * @param {function({ inputPaths: InternalJob["inputPaths"], outputDir: InternalJob["outputDir"], args: InternalJob["args"]}): T} workerFn
  * @param {InternalJob} job
@@ -86,8 +92,12 @@ const runLocalWorker = async (workerFn, job) => {
 }
 
 /**
+ * Make sure we have everything we need to run a job
+ * If we do, run it locally.
+ * TODO add external job execution through ipc
  *
  * @param {InternalJob} job
+ * @return Promise<object>
  */
 const runJob = job => {
   const { plugin } = job
@@ -147,6 +157,7 @@ exports.createInternalJob = (job, plugin) => {
     },
   }
 
+  // generate a contentDigest based on all parameters including file content
   internalJob.contentDigest = createContentDigest({
     name: job.name,
     inputPaths: internalJob.inputPaths.map(
@@ -168,6 +179,7 @@ exports.createInternalJob = (job, plugin) => {
  */
 exports.enqueueJob = async job => {
   // When we already have a job that's executing, return the same promise.
+  // we have another check in our createJobV2 action to return jobs that have been done in a previous gatsby run
   if (jobsInProcess.has(job.contentDigest)) {
     return jobsInProcess.get(job.contentDigest).deferred.promise
   }
@@ -197,6 +209,7 @@ exports.enqueueJob = async job => {
   } catch (err) {
     deferred.reject(err)
   } finally {
+    // when all jobs are done we end the activity
     if (--activeJobs === 0) {
       activityForJobs.end()
       // eslint-disable-next-line require-atomic-updates
@@ -207,6 +220,11 @@ exports.enqueueJob = async job => {
   return deferred.promise
 }
 
+/**
+ * Remove a job from our inProgressQueue to reduce memory usage
+ *
+ * @param {string} contentDigest
+ */
 exports.removeInProgressJob = contentDigest => {
   jobsInProcess.delete(contentDigest)
 }
@@ -229,10 +247,12 @@ exports.waitUntilAllJobsComplete = () => {
  */
 exports.isJobStale = job => {
   const areInputPathsStale = job.inputPaths.some(inputPath => {
+    // does the inputPath still exists?
     if (!fs.existsSync(inputPath.path)) {
       return true
     }
 
+    // check if we're talking about the same file
     const fileHash = createFileHash(inputPath.path)
     return fileHash !== inputPath.contentDigest
   })

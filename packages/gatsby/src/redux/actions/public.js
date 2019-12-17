@@ -1208,19 +1208,17 @@ actions.createJob = (job: Job, plugin?: ?Plugin = null) => {
  * @param {string[]} job.inputPaths The inputPaths that are needed to run
  * @param {string} job.outputDir The directory where all files are being saved to
  * @param {Object} job.args The arguments the job needs to execute
- * @returns {Promise<unknown>} Promise to see if the job is done executing
+ * @returns {Promise<object>} Promise to see if the job is done executing
  * @example
  * createJobV2({ name: `IMAGE_PROCESSING`, inputPaths: [`something.jpeg`], outputDir: `public/static`, args: { width: 100, height: 100 } })
  */
 actions.createJobV2 = (job: JobV2, plugin: Plugin) => (dispatch, getState) => {
   const currentState = getState()
-  const internalJob = createInternalJob(
-    job,
-    plugin,
-    currentState.program.directory
-  )
+  const internalJob = createInternalJob(job, plugin)
 
   // Check if we already ran this job before, if yes we return the result
+  // We have an inflight (in progress) queue inside the jobs manager to make sure
+  // we don't waste resources twice during the process
   if (
     currentState.jobsV2 &&
     currentState.jobsV2.done.has(internalJob.contentDigest)
@@ -1252,6 +1250,7 @@ actions.createJobV2 = (job: JobV2, plugin: Plugin) => (dispatch, getState) => {
     })
 
     // remove the job from our inProgressJobQueue as it's available in our done state.
+    // this is a perf optimisations so we don't grow our memory too much when using gatsby preview
     removeInProgressJob(internalJob.contentDigest)
 
     return result

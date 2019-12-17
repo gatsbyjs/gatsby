@@ -208,6 +208,8 @@ actions.pageQueryRun = (
 }
 
 /**
+ * Remove jobs which are marked as stale (inputPath doesn't exists)
+ *
  * @param {string} contentDigest
  * @private
  */

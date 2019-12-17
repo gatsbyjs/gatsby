@@ -12,7 +12,7 @@ module.exports = state => {
   })
 
   // If any of our pending jobs do not have an existing inputPath or the inputPath changed
-  // we remove it from the queue
+  // we remove it from the queue as they would fail anyway
   state.jobsV2.stale.forEach(({ job, plugin }) => {
     if (isJobStale(job)) {
       actions.push(internalActions.removeStaleJob(job.contentDigest))
