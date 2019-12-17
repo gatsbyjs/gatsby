@@ -144,22 +144,22 @@ Now, the `Box` component will be aware of wether the page it's a child of is mou
 
 ## Excluding elements from page transitions
 
-You may want to have elements on a page that persist throughout the page transition (_ex. a site-wide header_). This can be accomplished by wrapping elements in the `TransitionPortal` component.
+You may want to have elements on a page that persist throughout the page transition (_ex. a site-wide header_). This can be accomplished by wrapping elements in a persistent layout component by using the following plugin option in your `gatsby-config.js`.
 
 ```javascript
-import { TransitionPortal } from "gatsby-plugin-transition-link"
+module.exports = {
+    plugins: [
+       {
+          resolve: "gatsby-plugin-transition-link",
+          options: {
+              layout: require.resolve(`./src/components/Layout.js`)
+            }
+       }
+    ]
+];
 ```
 
-```javascript
-<TransitionPortal>
-  <SomeComponent>
-    This component will sit on top of both pages, and persist through page
-    transitions.
-  </SomeComponent>
-</TransitionPortal>
-```
-
-As always, check out [the `TransitionPortal` docs](https://transitionlink.tylerbarnes.ca/docs/transitionportal/) for more information about `TransitionPortal`.
+As always, check out [the installation docs](https://transitionlink.tylerbarnes.ca/docs/transitionportal/) for more information.
 
 ## Further reading
 
