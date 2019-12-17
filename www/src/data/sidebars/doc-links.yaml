@@ -445,8 +445,8 @@
                 - title: Client-only Routes & User Authentication
                   link: /docs/client-only-routes-and-user-authentication/
                   breadcrumbTitle: Client Routes & User Auth
-            - title: Client Data Fetching
-              link: /docs/client-data-fetching/
+            - title: Build Time and Client-side Data Fetching
+              link: /docs/data-fetching/
             - title: Using Client-Side Only Packages
               link: /docs/using-client-side-only-packages/
             - title: Building an E-commerce Site
