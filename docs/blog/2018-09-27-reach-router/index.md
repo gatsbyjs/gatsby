@@ -25,15 +25,7 @@ When a user navigates between traditional server-rendered pages, the page is ful
 
 The video below demonstrates this challenge (Video by [Rob DeLuca](https://twitter.com/robdel12), which accompanied his related article, “[Single page app routers are broken](https://medium.com/@robdel12/single-page-apps-routers-are-broken-255daa310cf)”)
 
-<iframe
-  width="560"
-  height="315"
-  src="https://www.youtube.com/embed/NKTdNv8JpuM?rel=0"
-  frameborder="0"
-  allow="autoplay; encrypted-media"
-  allowfullscreen
-  title="YouTube: (React) Disqus router"
-/>
+https://youtu.be/NKTdNv8JpuM
 
 A primary focus (no pun intended) of @reach/router is to manage focus in client-side routing, out of the box, lifting the onus from devs to manage it from scratch. From the @reach/router documentation:
 
