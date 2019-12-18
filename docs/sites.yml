@@ -8964,7 +8964,7 @@
   built_by: rumaan
   built_by_url: https://github.com/rumaan/
   featured: false
-  - title: DigiGov
+- title: DigiGov
   # this is the URL that is linked from the showcase
   main_url: https://digigov.grnet.gr/
   # this URL is used to generate a screenshot
