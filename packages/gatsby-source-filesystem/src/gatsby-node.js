@@ -141,7 +141,7 @@ const createFSMachine = (
           flushPathQueue().then(resolve, reject)
         },
         queueNodeDeleting(_, { path }) {
-          pathQueue.push({ op: `delete `, path })
+          pathQueue.push({ op: `delete`, path })
         },
         queueNodeProcessing(_, { path }) {
           pathQueue.push({ op: `upsert`, path })
@@ -184,7 +184,7 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
     ignored: [
       `**/*.un~`,
       `**/.DS_Store`,
-      `** /.gitignore`,
+      `**/.gitignore`,
       `**/.npmignore`,
       `**/.babelrc`,
       `**/yarn.lock`,
