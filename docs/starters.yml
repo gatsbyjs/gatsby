@@ -4766,3 +4766,26 @@
     - MDX for pages and content
     - Code syntax highlighting
     - SEO (OpenGraph and Twitter) out of the box with default settings that make sense (thanks to React Helmet)
+- url: https://chronoblog-hacker.netlify.com/
+  repo: https://github.com/Ganevru/gatsby-starter-chronoblog-hacker
+  description: A dark (but with ability to switch to light) starter that uses the Source Code Pro font (optional) and minimalistic UI
+  tags:
+    - Blog
+    - Portfolio
+    - MDX
+    - Markdown
+    - SEO
+    - Styling:CSS-in-JS
+    - Linting
+  features:
+    - Specially designed to create a personal website
+    - Search and Tags for organizing content
+    - A simple change of primary and secondary colors of the site, fonts, radius of curvature of elements, etc (thanks to Theme UI theming)
+    - Clean and Minimalistic UI
+    - Mobile friendly, all elements and custom images are adapted to any screen
+    - Light/Dark mode
+    - Easy customization of icons and links to your social networks
+    - MDX for the main menu of the site, footer and other elements of the site
+    - MDX for pages and content
+    - Code syntax highlighting
+    - SEO (OpenGraph and Twitter) out of the box with default settings that make sense (thanks to React Helmet)
