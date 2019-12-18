@@ -1,7 +1,11 @@
 import store from "../../store"
 
-const transformFields = fields =>
-  fields.reduce((acc, curr) => {
+const transformFields = fields => {
+  if (!fields || !fields.length) {
+    return null
+  }
+
+  return fields.reduce((acc, curr) => {
     const { name } = curr
     // skip fields that have required arguments
     if (curr.args && curr.args.find(arg => arg.type.kind === `NON_NULL`)) {
@@ -45,27 +49,54 @@ const transformFields = fields =>
       return acc
     }
 
-    if (curr.type.kind === `LIST` && curr.type.ofType.kind === `OBJECT`) {
+    if (curr.type.kind === `LIST`) {
       const type = `Wp${curr.type.ofType.name}`
-      acc[name] = {
-        type: `[${type}]`,
-        resolve: (source, args, context, info) => {
-          if (source.nodes.length) {
-            return context.nodeModel.getNodesByIds({
-              ids: source.nodes.map(node => node.id),
-              type,
-            })
-          } else {
-            return null
-          }
-        },
+
+      if (curr.type.ofType.kind === `OBJECT`) {
+        acc[name] = {
+          type: `[${type}]`,
+          resolve: (source, args, context, info) => {
+            if (source.nodes.length) {
+              return context.nodeModel.getNodesByIds({
+                ids: source.nodes.map(node => node.id),
+                type,
+              })
+            } else {
+              return null
+            }
+          },
+        }
+        return acc
       }
-      return acc
+
+      if (curr.type.ofType.kind === `UNION`) {
+        acc[name] = {
+          type: `[${type}]`,
+          resolve: (source, args, context, info) => {
+            const field = source[name]
+
+            if (!field || !field.length) {
+              return null
+            }
+
+            return field.map(item =>
+              context.nodeModel.getNodeById({
+                id: item.id,
+                type: `Wp${item.__typename}`,
+              })
+            )
+          },
+        }
+
+        return acc
+      }
     }
 
+    // dd(curr)
     // unhandled fields are removed from the schema by not mutating the accumulator
     return acc
   }, {})
+}
 
 export default async ({ actions, schema }, pluginOptions) => {
   const { data } = store.getState().introspection.introspectionData
@@ -78,34 +109,63 @@ export default async ({ actions, schema }, pluginOptions) => {
     field => field.type.name
   )
 
-  // for now just pull object types, we'll need other types soon though
   data.__schema.types
     .filter(
       type =>
         type.name !== `RootQuery` &&
-        (type.kind === `OBJECT` || type.kind === `LIST`) &&
+        type.kind !== `SCALAR` &&
+        type.kind !== `ENUM` &&
+        type.kind !== `INPUT_OBJECT` &&
         // don't create mutation types, we don't need them
         !mutationTypes.includes(type.name)
     )
     .forEach(type => {
-      if (type.kind === `LIST` && type.ofType.kind === `UNION`) {
-        dd(type)
+      if (type.kind === `UNION`) {
+        typeDefs.push(
+          schema.buildUnionType({
+            name: `Wp${type.name}`,
+            types: type.possibleTypes.map(
+              possibleType => `Wp${possibleType.name}`
+            ),
+            resolveType: node => `Wp${node.type}`,
+          })
+        )
+        return
       }
+
       const transformedFields = transformFields(type.fields)
 
-      const objectType = {
-        name: `Wp${type.name}`,
-        fields: transformedFields,
-        extensions: {
-          infer: false,
-        },
+      if (type.kind === `INTERFACE`) {
+        typeDefs.push(
+          schema.buildInterfaceType({
+            name: `Wp${type.name}`,
+            fields: transformedFields,
+            resolveType: node => dd(node),
+          })
+        )
+
+        return
       }
 
-      if (!type.name.includes(`Connection`)) {
-        objectType.interfaces = [`Node`]
+      if (type.kind === `OBJECT`) {
+        const objectType = {
+          name: `Wp${type.name}`,
+          fields: transformedFields,
+          extensions: {
+            infer: false,
+          },
+        }
+
+        if (!type.name.includes(`Connection`)) {
+          objectType.interfaces = [`Node`]
+        }
+
+        typeDefs.push(schema.buildObjectType(objectType))
+
+        return
       }
 
-      typeDefs.push(schema.buildObjectType(objectType))
+      dd(type)
     })
 
   actions.createTypes(typeDefs)
