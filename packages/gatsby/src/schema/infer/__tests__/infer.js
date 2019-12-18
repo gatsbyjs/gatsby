@@ -1053,6 +1053,31 @@ Object {
         slash(path.resolve(dir, `file_2.txt`))
       )
     })
+
+    it(`Links to file node from non-standard field name`, async () => {
+      const nodes = [
+        {
+          id: `1`,
+          "file-dashed": `./file_1.jpg`,
+          parent: `parent`,
+          internal: { type: `Test` },
+        },
+      ].concat(getFileNodes())
+
+      const result = await getQueryResult(
+        nodes,
+        `
+          file_dashed {
+            absolutePath
+          }
+        `
+      )
+
+      expect(result.errors).not.toBeDefined()
+      expect(
+        result.data.allTest.edges[0].node.file_dashed.absolutePath
+      ).toEqual(slash(path.resolve(dir, `file_1.jpg`)))
+    })
   })
 
   describe(`Linked inference by __NODE convention`, () => {
