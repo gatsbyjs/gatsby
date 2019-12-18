@@ -83,15 +83,9 @@ const createFSMachine = (
             NOT_READY: {
               on: {
                 CHOKIDAR_READY: `READY`,
-                CHOKIDAR_ADD: {
-                  actions: `queueNodeProcessing`,
-                },
-                CHOKIDAR_CHANGE: {
-                  actions: `queueNodeProcessing`,
-                },
-                CHOKIDAR_UNLINK: {
-                  actions: `queueNodeDeleting`,
-                },
+                CHOKIDAR_ADD: { actions: `queueNodeProcessing` },
+                CHOKIDAR_CHANGE: { actions: `queueNodeProcessing` },
+                CHOKIDAR_UNLINK: { actions: `queueNodeDeleting` },
               },
               exit: `flushPathQueue`,
             },
@@ -156,14 +150,11 @@ exports.sourceNodes = (api, pluginOptions) => {
   // Validate that the path exists.
   if (!fs.existsSync(pluginOptions.path)) {
     api.reporter.panic(`
-The path passed to gatsby - source - filesystem does not exist on your file system:
-
-                    ${pluginOptions.path}
-
+The path passed to gatsby-source-filesystem does not exist on your file system:
+${pluginOptions.path}
 Please pick a path to an existing directory.
-
 See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
-                    `)
+      `)
   }
 
   // Validate that the path is absolute.
