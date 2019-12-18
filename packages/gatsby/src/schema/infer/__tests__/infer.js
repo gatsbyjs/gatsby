@@ -1055,10 +1055,12 @@ Object {
     })
 
     it(`Links to file node from non-standard field name`, async () => {
+      const fieldWithSpecialChars = `file-ж-ä-!@#$%^&*()_-=+:;'"?,~\``
       const nodes = [
         {
           id: `1`,
           "file-dashed": `./file_1.jpg`,
+          [fieldWithSpecialChars]: `./file_1.jpg`,
           parent: `parent`,
           internal: { type: `Test` },
         },
@@ -1070,13 +1072,19 @@ Object {
           file_dashed {
             absolutePath
           }
+          file___________________________ {
+            absolutePath
+          }
         `
       )
 
       expect(result.errors).not.toBeDefined()
-      expect(
-        result.data.allTest.edges[0].node.file_dashed.absolutePath
-      ).toEqual(slash(path.resolve(dir, `file_1.jpg`)))
+      const node = result.data.allTest.edges[0].node
+      const expectedFilePath = slash(path.resolve(dir, `file_1.jpg`))
+      expect(node.file_dashed.absolutePath).toEqual(expectedFilePath)
+      expect(node.file___________________________.absolutePath).toEqual(
+        expectedFilePath
+      )
     })
   })
 
