@@ -191,7 +191,7 @@ jobs:
   unit_tests_node8:
     executor:
       name: node
-      image: "8.9.0"
+      image: "8.0.0"
     <<: *test_template
 
   unit_tests_node10:
