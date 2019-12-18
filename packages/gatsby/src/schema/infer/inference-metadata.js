@@ -343,40 +343,36 @@ const descriptorsAreEqual = (descriptor, otherDescriptor) => {
   const types = possibleTypes(descriptor)
   const otherTypes = possibleTypes(otherDescriptor)
 
-  // Empty are equal
-  if (types.length === 0 && otherTypes.length === 0) {
-    return true
-  }
-  // Conflicting and non-matching types are not equal
-  // TODO: consider descriptors with equal conflicts as equal?
-  if (types.length > 1 || otherTypes.length > 1 || types[0] !== otherTypes[0]) {
-    return false
-  }
-  switch (types[0]) {
-    case `array`:
-      return descriptorsAreEqual(
-        descriptor.array.item,
-        otherDescriptor.array.item
-      )
-    case `object`: {
-      const dpropsKeys = mergeObjectKeys(
-        descriptor.object.dprops,
-        otherDescriptor.object.dprops
-      )
-      return dpropsKeys.every(prop =>
-        descriptorsAreEqual(
-          descriptor.object.dprops[prop],
-          otherDescriptor.object.dprops[prop]
+  const childDescriptorsAreEqual = type => {
+    switch (type) {
+      case `array`:
+        return descriptorsAreEqual(
+          descriptor.array.item,
+          otherDescriptor.array.item
         )
-      )
+      case `object`: {
+        const dpropsKeys = mergeObjectKeys(
+          descriptor.object.dprops,
+          otherDescriptor.object.dprops
+        )
+        return dpropsKeys.every(prop =>
+          descriptorsAreEqual(
+            descriptor.object.dprops[prop],
+            otherDescriptor.object.dprops[prop]
+          )
+        )
+      }
+      case `relatedNode`:
+      case `relatedNodeList`: {
+        return isEqual(descriptor.nodes, otherDescriptor.nodes)
+      }
+      default:
+        return true
     }
-    case `relatedNode`:
-    case `relatedNodeList`: {
-      return isEqual(descriptor.nodes, otherDescriptor.nodes)
-    }
-    default:
-      return true
   }
+
+  // Equal when all possible types are equal (including conflicts)
+  return isEqual(types, otherTypes) && types.every(childDescriptorsAreEqual)
 }
 
 const nodeFields = (node, ignoredFields = new Set()) =>
