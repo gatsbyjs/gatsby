@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.18.14](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.13...gatsby@2.18.14) (2019-12-18)
+
+### Bug Fixes
+
+- **gatsby:** add ./ prefix to paths in async-requires ([#20169](https://github.com/gatsbyjs/gatsby/issues/20169)) ([4f2154a](https://github.com/gatsbyjs/gatsby/commit/4f2154a))
+- **gatsby:** do not rebuild schema having identical conflicts ([#20099](https://github.com/gatsbyjs/gatsby/issues/20099)) ([0d14926](https://github.com/gatsbyjs/gatsby/commit/0d14926))
+- **gatsby:** support file inference for any field name (not just [a-zA-Z0-9_]) ([#20186](https://github.com/gatsbyjs/gatsby/issues/20186)) ([b681959](https://github.com/gatsbyjs/gatsby/commit/b681959))
+- **gatsby:** support unicode characters for 404 page ([#20165](https://github.com/gatsbyjs/gatsby/issues/20165)) ([51474e8](https://github.com/gatsbyjs/gatsby/commit/51474e8))
+- **gatsby-telemetry:** only report unique plugins ([#20147](https://github.com/gatsbyjs/gatsby/issues/20147)) ([4c138d5](https://github.com/gatsbyjs/gatsby/commit/4c138d5))
+
 ## [2.18.13](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.12...gatsby@2.18.13) (2019-12-17)
 
 ### Bug Fixes
