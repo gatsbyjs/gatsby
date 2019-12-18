@@ -133,6 +133,7 @@ module.exports = {
           )
         },
         gatsbyRemarkPlugins: [
+          `gatsby-remark-embedder`,
           `gatsby-remark-graphviz`,
           `gatsby-remark-embed-video`,
           {
@@ -158,6 +159,7 @@ module.exports = {
       resolve: `gatsby-transformer-remark`,
       options: {
         plugins: [
+          `gatsby-remark-embedder`,
           `gatsby-remark-graphviz`,
           `gatsby-remark-embed-video`,
           `gatsby-remark-code-titles`,
