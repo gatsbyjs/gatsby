@@ -8964,3 +8964,20 @@
   built_by: rumaan
   built_by_url: https://github.com/rumaan/
   featured: false
+- title: DigiGov
+  # this is the URL that is linked from the showcase
+  main_url: https://digigov.grnet.gr/
+  # this URL is used to generate a screenshot
+  url: https://digigov.grnet.gr/
+  # optional: short paragraph describing the content and/or purpose of the site that will appear in the modal detail view and permalink views for your site
+  description: >
+    DigiGov is an initiative for the Digital Transformation of the Greek Public Sector
+  # You can list as many categories as you want here. Check list of Categories below in this doc!
+  # If you'd like to create a new category, simply list it here.
+  categories:
+    - Government
+  # Add the name (developer or company) and URL (e.g. Twitter, GitHub, portfolio) to be used for attribution
+  built_by: GRNET
+  built_by_url: https://grnet.gr/
+  # leave as false, the Gatsby site review board will choose featured sites quarterly
+  featured: false
