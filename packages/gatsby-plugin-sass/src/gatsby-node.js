@@ -26,7 +26,7 @@ exports.onCreateWebpackConfig = (
   const sassRule = {
     test: sassRuleTest || /\.s(a|c)ss$/,
     use: isSSR
-      ? [loaders.null()]
+      ? [loaders.css({ ...cssLoaderOptions, importLoaders: 2 })]
       : [
           loaders.miniCssExtract(),
           loaders.css({ ...cssLoaderOptions, importLoaders: 2 }),
