@@ -140,7 +140,7 @@ const Box = posed.div({
 </TransitionState>
 ```
 
-Now, the `Box` component will be aware of wether the page it's a child of is mounting or unmounting, and it will fade in/out accordingly.
+Now, the `Box` component will be aware of whether the page it's a child of is mounting or unmounting, and it will fade in/out accordingly.
 
 ## Excluding elements from page transitions
 
