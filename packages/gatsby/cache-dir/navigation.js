@@ -174,11 +174,7 @@ class RouteUpdates extends React.Component {
 
   componentDidUpdate(prevProps, prevState, shouldFireRouteUpdate) {
     if (shouldFireRouteUpdate) {
-      onRouteUpdate(
-        this.props.location,
-        prevProps.location,
-        this.props.announceLocation
-      )
+      onRouteUpdate(this.props.location, prevProps.location)
     }
   }
 

@@ -30,6 +30,7 @@ window.___loader = publicLoader
 navigationInit()
 
 apiRunnerAsync(`onClientEntry`).then(() => {
+  console.log(`HELLO`)
   // Let plugins register a service worker. The plugin just needs
   // to return true.
   if (apiRunner(`registerServiceWorker`).length > 0) {
@@ -55,17 +56,13 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     </BaseContext.Provider>
   )
 
-  let announceLocation = null
   class LocationHandler extends React.Component {
     render() {
       const { location } = this.props
       return (
         <EnsureResources location={location}>
           {({ pageResources, location }) => (
-            <RouteUpdates
-              location={location}
-              announceLocation={announceLocation}
-            >
+            <RouteUpdates location={location}>
               <ScrollContext
                 location={location}
                 shouldUpdateScroll={shouldUpdateScroll}
@@ -89,7 +86,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
                   />
                 </Router>
               </ScrollContext>
-              <RouteAnnouncer />
+              <RouteAnnouncer location={location} />
             </RouteUpdates>
           )}
         </EnsureResources>
@@ -97,12 +94,19 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     }
   }
 
-  const RouteAnnouncer = () => {
-    const [announcement, setAnnouncement] = useState(``)
-    useEffect(() => {
-      announceLocation = () => {
+  class RouteAnnouncer extends React.Component {
+    constructor(props) {
+      super(props)
+      this.state = { announcement: `` }
+      console.log(`constructor`)
+    }
+
+    componentDidUpdate(prevProps) {
+      console.log(`did update`, this.props.location.pathname)
+      if (this.props.location.pathname !== prevProps.location.pathname) {
         requestAnimationFrame(() => {
-          let pageName = `new page`
+          console.log(`updating`, this.props.location.pathname)
+          let pageName = `new page at ${this.props.location.pathname}`
           if (document.title) {
             pageName = document.title
           }
@@ -112,34 +116,45 @@ apiRunnerAsync(`onClientEntry`).then(() => {
           if (pageHeadings) {
             pageName = pageHeadings[0].innerHTML
           }
-          setAnnouncement(`Navigated to ${pageName}`)
+          let newAnnouncement = `Navigated to ${pageName}`
+          if (this.state.announcement !== newAnnouncement) {
+            console.log(
+              `setting state`,
+              this.state.announcement,
+              newAnnouncement
+            )
+            this.setState({
+              announcement: newAnnouncement,
+            })
+          }
         })
       }
-      // cleanup
-      return () => {
-        announceLocation = null
-      }
-    })
-    return (
-      <div
-        id="gatsby-announcer"
-        style={{
-          position: `absolute`,
-          width: 1,
-          height: 1,
-          padding: 0,
-          overflow: `hidden`,
-          clip: `rect(0, 0, 0, 0)`,
-          whiteSpace: `nowrap`,
-          border: 0,
-        }}
-        role="status"
-        aria-live="assertive"
-        aria-atomic="true"
-      >
-        {announcement}
-      </div>
-    )
+    }
+
+    render() {
+      console.log(`rendering`, this.props.location.pathname)
+      const { announcement } = this.state
+      return (
+        <div
+          id="gatsby-announcer"
+          style={{
+            position: `absolute`,
+            width: 1,
+            height: 1,
+            padding: 0,
+            overflow: `hidden`,
+            clip: `rect(0, 0, 0, 0)`,
+            whiteSpace: `nowrap`,
+            border: 0,
+          }}
+          role="alert"
+          aria-live="assertive"
+          aria-atomic="true"
+        >
+          {announcement}
+        </div>
+      )
+    }
   }
 
   const { pagePath, location: browserLoc } = window
