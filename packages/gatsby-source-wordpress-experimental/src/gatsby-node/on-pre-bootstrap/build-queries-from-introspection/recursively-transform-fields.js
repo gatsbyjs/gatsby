@@ -125,14 +125,22 @@ function transformField({
     })
 
     if (
-      (!transformedFields &&
-        transformedFragments &&
-        !transformedFragments.length) ||
-      (!transformedFragments && transformedFields && !transformedFields.length)
+      !transformedFields &&
+      transformedFragments &&
+      !transformedFragments.length
     ) {
       return false
     }
 
+    if (
+      !transformedFragments &&
+      transformedFields &&
+      !transformedFields.length
+    ) {
+      return false
+    }
+
+    // if we have either fragments or fields
     return {
       fieldName: field.name,
       fields: transformedFields,
