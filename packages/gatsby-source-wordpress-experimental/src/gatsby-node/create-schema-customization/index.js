@@ -1,6 +1,73 @@
 import store from "../../store"
 
-export default async (helpers, pluginOptions) => {
+const transformFields = fields =>
+  fields.reduce((acc, curr) => {
+    const { name } = curr
+    // skip fields that have required arguments
+    if (curr.args && curr.args.find(arg => arg.type.kind === `NON_NULL`)) {
+      return acc
+    }
+
+    if (curr.type && curr.type.name && curr.type.name.includes(`Connection`)) {
+      acc[name] = `Wp${curr.type.name}`
+      return acc
+    }
+
+    // non null scalar types
+    if (curr.type.kind === `NON_NULL` && curr.type.ofType.kind === `SCALAR`) {
+      acc[name] = `${curr.type.ofType.name}!`
+      return acc
+    }
+
+    // scalar types
+    if (curr.type.kind === `SCALAR`) {
+      acc[name] = curr.type.name
+      return acc
+    }
+
+    // object types should be top level Gatsby nodes
+    // so we link them by id
+    if (curr.type.kind === `OBJECT`) {
+      acc[name] = {
+        type: `Wp${curr.type.name}`,
+        resolve: (source, args, context, info) => {
+          if (!source[name] || (source[name] && !source[name].id)) {
+            return null
+          }
+
+          return context.nodeModel.getNodeById({
+            id: source[name].id,
+            type: `Wp${curr.type.name}`,
+          })
+        },
+      }
+
+      return acc
+    }
+
+    if (curr.type.kind === `LIST` && curr.type.ofType.kind === `OBJECT`) {
+      const type = `Wp${curr.type.ofType.name}`
+      acc[name] = {
+        type: `[${type}]`,
+        resolve: (source, args, context, info) => {
+          if (source.nodes.length) {
+            return context.nodeModel.getNodesByIds({
+              ids: source.nodes.map(node => node.id),
+              type,
+            })
+          } else {
+            return null
+          }
+        },
+      }
+      return acc
+    }
+
+    // unhandled fields are removed from the schema by not mutating the accumulator
+    return acc
+  }, {})
+
+export default async ({ actions, schema }, pluginOptions) => {
   const { data } = store.getState().introspection.introspectionData
 
   // const typeMap = new Map(data.__schema.types.map(type => [type.name, type]))
@@ -16,75 +83,30 @@ export default async (helpers, pluginOptions) => {
     .filter(
       type =>
         type.name !== `RootQuery` &&
-        type.kind === `OBJECT` &&
-        // don't create mutation or connection types! we don't need them
-        !mutationTypes.includes(type.name) &&
-        !type.name.includes(`Connection`)
+        (type.kind === `OBJECT` || type.kind === `LIST`) &&
+        // don't create mutation types, we don't need them
+        !mutationTypes.includes(type.name)
     )
     .forEach(type => {
-      // create type definition
-      typeDefs.push(
-        helpers.schema.buildObjectType({
-          name: `Wp${type.name}`,
-          interfaces: [`Node`],
-          fields: type.fields.reduce((acc, { name, ...curr }) => {
-            // skip mutations
-            if (mutationTypes.includes(curr.type.name)) {
-              return acc
-            }
+      if (type.kind === `LIST` && type.ofType.kind === `UNION`) {
+        dd(type)
+      }
+      const transformedFields = transformFields(type.fields)
 
-            // skip connection types?
-            if (
-              curr.type &&
-              curr.type.name &&
-              curr.type.name.includes(`Connection`)
-            ) {
-              return acc
-            }
+      const objectType = {
+        name: `Wp${type.name}`,
+        fields: transformedFields,
+        extensions: {
+          infer: false,
+        },
+      }
 
-            // non null scalar types
-            if (
-              curr.type.kind === `NON_NULL` &&
-              curr.type.ofType.kind === `SCALAR`
-            ) {
-              acc[name] = `${curr.type.ofType.name}!`
-            }
+      if (!type.name.includes(`Connection`)) {
+        objectType.interfaces = [`Node`]
+      }
 
-            // scalar types
-            if (curr.type.kind === `SCALAR`) {
-              acc[name] = curr.type.name
-            }
-
-            // object types should be top level Gatsby nodes
-            // so we link them by id
-            if (curr.type.kind === `OBJECT`) {
-              acc[name] = {
-                type: `Wp${curr.type.name}`,
-                resolve: (source, args, context, info) => {
-                  if (!source[name] || (source[name] && !source[name].id)) {
-                    return null
-                  }
-
-                  return context.nodeModel.getNodeById({
-                    id: source[name].id,
-                    type: `Wp${curr.type.name}`,
-                  })
-                },
-              }
-            }
-
-            // handle lists & unions here
-
-            return acc
-          }, {}),
-          extensions: {
-            infer: false,
-          },
-        })
-      )
-
-      // create gql query string
+      typeDefs.push(schema.buildObjectType(objectType))
     })
 
-  helpers.actions.createTypes(typeDefs)
+  actions.createTypes(typeDefs)
 }
