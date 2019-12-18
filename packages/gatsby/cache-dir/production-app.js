@@ -1,5 +1,5 @@
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
-import React, { useEffect, useState } from "react"
+import React from "react"
 import ReactDOM from "react-dom"
 import { Router, navigate, Location, BaseContext } from "@reach/router"
 import { ScrollContext } from "gatsby-react-router-scroll"
