@@ -112,7 +112,7 @@ The theme's `bio.css` file would then be replaced with your new CSS file.
 
 As long as the theme author imports components/files without the file extension, users are able to shadow these with other types of files. For example the theme author created a TypeScript file at `src/components/bio.tsx` and uses it in another file:
 
-```js:title=src/components/header.js
+```js:title=src/components/header.tsx
 import Bio from "./bio"
 
 /* Rest of the code */

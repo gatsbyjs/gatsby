@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.2.13...gatsby-theme-blog@1.2.14) (2019-12-17)
+
+**Note:** Version bump only for package gatsby-theme-blog
+
+## [1.2.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.2.12...gatsby-theme-blog@1.2.13) (2019-12-16)
+
+**Note:** Version bump only for package gatsby-theme-blog
+
+## [1.2.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.2.11...gatsby-theme-blog@1.2.12) (2019-12-15)
+
+**Note:** Version bump only for package gatsby-theme-blog
+
+## [1.2.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.2.10...gatsby-theme-blog@1.2.11) (2019-12-12)
+
+**Note:** Version bump only for package gatsby-theme-blog
+
+## [1.2.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.2.9...gatsby-theme-blog@1.2.10) (2019-12-11)
+
+**Note:** Version bump only for package gatsby-theme-blog
+
+## [1.2.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.2.7...gatsby-theme-blog@1.2.9) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-theme-blog
+
+## [1.2.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.2.7...gatsby-theme-blog@1.2.8) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-theme-blog
+
+## [1.2.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.2.6...gatsby-theme-blog@1.2.7) (2019-12-09)
+
+### Bug Fixes
+
+- **gatsby-theme-blog:** Fix home-footer in Night mode ([#19977](https://github.com/gatsbyjs/gatsby/issues/19977)) ([06e650d](https://github.com/gatsbyjs/gatsby/commit/06e650d))
+
 ## [1.2.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.2.5...gatsby-theme-blog@1.2.6) (2019-12-05)
 
 **Note:** Version bump only for package gatsby-theme-blog
