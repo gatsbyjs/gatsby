@@ -53,6 +53,12 @@ const createFSMachine = (
     )
   }
 
+  const log = expr => (ctx, action, meta) => {
+    if (meta.state.matches(`BOOTSTRAP.BOOTSTRAPPED`)) {
+      reporter.info(expr(ctx, action, meta))
+    }
+  }
+
   const fsMachine = Machine(
     {
       id: `fs`,
@@ -77,17 +83,46 @@ const createFSMachine = (
             NOT_READY: {
               on: {
                 CHOKIDAR_READY: `READY`,
-                CHOKIDAR_ADD: { actions: `queueNodeProcessing` },
-                CHOKIDAR_CHANGE: { actions: `queueNodeProcessing` },
-                CHOKIDAR_UNLINK: { actions: `queueNodeDeleting` },
+                CHOKIDAR_ADD: {
+                  actions: `queueNodeProcessing`,
+                },
+                CHOKIDAR_CHANGE: {
+                  actions: `queueNodeProcessing`,
+                },
+                CHOKIDAR_UNLINK: {
+                  actions: `queueNodeDeleting`,
+                },
               },
               exit: `flushPathQueue`,
             },
             READY: {
               on: {
-                CHOKIDAR_ADD: { actions: `createAndProcessNode` },
-                CHOKIDAR_CHANGE: { actions: `createAndProcessNode` },
-                CHOKIDAR_UNLINK: { actions: `deletePathNode` },
+                CHOKIDAR_ADD: {
+                  actions: [
+                    `createAndProcessNode`,
+                    log(
+                      (_, { pathType, path }) => `added ${pathType} at ${path}`
+                    ),
+                  ],
+                },
+                CHOKIDAR_CHANGE: {
+                  actions: [
+                    `createAndProcessNode`,
+                    log(
+                      (_, { pathType, path }) =>
+                        `changed ${pathType} at ${path}`
+                    ),
+                  ],
+                },
+                CHOKIDAR_UNLINK: {
+                  actions: [
+                    `deletePathNode`,
+                    log(
+                      (_, { pathType, path }) =>
+                        `${pathType} deleted at ${path}`
+                    ),
+                  ],
+                },
               },
             },
           },
@@ -96,23 +131,17 @@ const createFSMachine = (
     },
     {
       actions: {
-        createAndProcessNode(_, { pathType, path }, { state }) {
-          if (state.matches(`BOOTSTRAP.BOOTSTRAPPED`)) {
-            reporter.info(`added ${pathType} at ${path}`)
-          }
+        createAndProcessNode(_, { pathType, path }) {
           createAndProcessNode(path).catch(err => reporter.error(err))
         },
         deletePathNode(_, { pathType, path }, { state }) {
-          if (state.matches(`BOOTSTRAP.BOOTSTRAPPED`)) {
-            reporter.info(`${pathType} deleted at ${path}`)
-          }
           deletePathNode(path)
         },
         flushPathQueue(_, { resolve, reject }) {
           flushPathQueue().then(resolve, reject)
         },
         queueNodeDeleting(_, { path }) {
-          pathQueue.push({ op: `delete`, path })
+          pathQueue.push({ op: `delete `, path })
         },
         queueNodeProcessing(_, { path }) {
           pathQueue.push({ op: `upsert`, path })
@@ -127,14 +156,14 @@ exports.sourceNodes = (api, pluginOptions) => {
   // Validate that the path exists.
   if (!fs.existsSync(pluginOptions.path)) {
     api.reporter.panic(`
-The path passed to gatsby-source-filesystem does not exist on your file system:
+The path passed to gatsby - source - filesystem does not exist on your file system:
 
-${pluginOptions.path}
+                    ${pluginOptions.path}
 
 Please pick a path to an existing directory.
 
 See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
-      `)
+                    `)
   }
 
   // Validate that the path is absolute.
@@ -155,7 +184,7 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
     ignored: [
       `**/*.un~`,
       `**/.DS_Store`,
-      `**/.gitignore`,
+      `** /.gitignore`,
       `**/.npmignore`,
       `**/.babelrc`,
       `**/yarn.lock`,
