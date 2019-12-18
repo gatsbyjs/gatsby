@@ -24,6 +24,8 @@ Some general things to verify in a pull request are:
 
 > 💡 When looking at a PR for the first time, it can help to read up on linked issues or [RFCs](/contributing/rfc-process/) (if there are any) to gain context on what the PR intends to add or fix.
 
+Note for Gatsby Core or Learning team members: if a PR has merge conflicts or needs a little help to push it across the finish line, contributing directly to a fork or branch can be a great way to resolve it. See notes on [pushing to a remote fork in Git](#pushing-changes-to-a-remote-fork).
+
 ### Type Specific Guidelines
 
 Each kind of PR also requires a different set of specific checks from us before they are merged in.
@@ -140,11 +142,23 @@ These are bad PR titles because they are generic, don't communicate the change p
 - Be objective and limit nitpicks (a few are fine if they add value or improve code readability)
 - Don't suggest and expect changes out of scope which are best addressed in a separate PR
 
+## Pushing changes to a remote fork
+
+Sometimes the easiest way to unblock a stalled PR is to sort out merge conflicts or apply remaining suggestions. When the GitHub UI won't cut it, you can (often) apply changes directly to someone's remote fork with Git:
+
+- Add their Gatsby fork as a remote:<br />`git remote add <forkname> git@github.com:<username>/gatsby.git`
+- Fetch the branches:<br />`git fetch <forkname>`
+- Check out their branch locally:<br />`git checkout -b <branch-name> <forkname>/<branch-name>`
+- Make your changes, add some commits
+- Push branch to the remote fork (also see [Gotchas](#gotchas) below):<br /> `git push <forkname> head:<branch-name>`
+
+Alternatively, you can manage forks and branches with [hub](https://github.com/github/hub).
+
 ## Rights and Permissions
 
 ### Who can review a PR?
 
-If you're a member of the [gatsbyjs](http://github.com/gatsbyjs) organization on GitHub, you can review a PR.
+If you're a member of the [gatsbyjs](http://github.com/gatsbyjs) organization on GitHub, you can review **most** PRs. PRs with [`topic: internal`](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aopen+is%3Aissue+label%3A%22topic%3A+internal%22) are reserved for Core and Learning team members as they are typically part of an internal project or hiring process.
 
 > 💡 Not a member yet? Want to [get involved in contributing](/contributing/how-to-contribute/) to open source projects? Make your first contribution and you'll be invited automatically!
 

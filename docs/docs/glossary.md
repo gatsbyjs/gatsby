@@ -140,7 +140,7 @@ The [public-facing](#public) interface for your website or app, delivered using 
 
 Gatsby is a modern website framework that builds performance into every website or app by leveraging the latest web technologies such as [React](#react), [GraphQL](#graphql), and modern [JavaScript](#javascript). Gatsby makes it easy to create blazing fast, compelling web experiences without needing to become a performance expert.
 
-### GraphQL
+### [GraphQL](/docs/glossary/graphql)
 
 A [query](#query) language that allows you to pull data into your website or app. It’s the [interface that Gatsby uses](/docs/graphql/) for managing site data.
 
@@ -214,7 +214,7 @@ A way of writing HTML content with plain text, using special characters to denot
 
 Gatsby uses [data nodes](/docs/node-interface/) to represent a single piece of data. A [data source](#data-source) will create multiple nodes.
 
-### Node.js
+### [Node.js](/docs/glossary/node)
 
 A program that lets you run [JavaScript](#javascript) on your computer. Gatsby is powered by Node.
 

@@ -8912,3 +8912,55 @@
     - Food
     - Sports
   featured: false
+- title: Dispel - Remote Access for Industrial Control Systems
+  url: https://dispel.io
+  main_url: https://dispel.io
+  description: >
+    Dispel provides secure, moving target defense networks through which your teams can remotely access industrial control systems in seconds, replacing static-defense products that take 5 to 15 minutes to work through.
+  categories:
+    - Business
+    - Technology
+    - Security
+  built_by: Anton Aberg
+  built_by_url: https://github.com/aaaberg
+  featured: false
+- title: Geothermal Heat Pump DIY Project
+  url: https://diyheatpump.net/
+  main_url: https://diyheatpump.net/
+  description: Personal project by Yuriy Logvin that demonstrates how you can switch to heating with electricity at a minimal cost. The goal here is to show that everyone can build a geothermal heat pump and start saving money.
+  categories:
+    - Blog
+    - Education
+    - Technology
+  built_by: Yuriy Logvin
+  built_by_url: https://powerwatcher.net
+- title: Catalyst Network - Cryptocurrency
+  url: https://www.cryptocatalyst.net/
+  main_url: https://www.cryptocatalyst.net/
+  source_url: https://github.com/n8tb1t/gatsby-starter-cryptocurrency
+  description: >
+    An All-in-One solution for Modern Transactions.
+  categories:
+    - Business
+    - Technology
+  built_by: n8tb1t
+  built_by_url: https://github.com/n8tb1t/
+  featured: false
+- title: SaoBear's-Blog
+  main_url: https://saobear.xyz/
+  url: https://saobear.xyz/
+  source_url: https://github.com/PiccoloYu/SaoBear-is-Blog
+  featured: false
+  categories:
+    - Blog
+    - Web Development
+- title: Rumaan Khalander - Portfolio
+  url: https://www.rumaan.me/
+  main_url: https://www.rumaan.me/
+  description: >
+    Rumaan Khalander is a Full-Stack Dev from Bengaluru who loves to develop for mobile and web.
+  categories:
+    - Portfolio
+  built_by: rumaan
+  built_by_url: https://github.com/rumaan/
+  featured: false
