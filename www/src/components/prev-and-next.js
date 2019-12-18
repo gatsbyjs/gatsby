@@ -49,13 +49,19 @@ const PrevAndNext = ({ prev = null, next = null, ...props }) => {
             <span
               sx={{
                 [mediaQueries.md]: {
-                  marginLeft: t => `-${t.space[4]}`,
+                  ml: `-1.5em`,
                 },
                 display: `inline-flex`,
                 alignItems: `center`,
               }}
             >
-              <ArrowBackIcon sx={{ verticalAlign: `sub` }} />
+              <ArrowBackIcon
+                sx={{
+                  flexShrink: 0,
+                  mr: `0.5em`,
+                  verticalAlign: `sub`,
+                }}
+              />
               {prev.title}
             </span>
           </Link>
@@ -74,14 +80,20 @@ const PrevAndNext = ({ prev = null, next = null, ...props }) => {
             <span
               sx={{
                 [mediaQueries.md]: {
-                  marginRight: t => `-${t.space[4]}`,
+                  mr: `-1.5em`,
                 },
                 display: `inline-flex`,
                 alignItems: `center`,
               }}
             >
               {next.title}
-              <ArrowForwardIcon sx={{ verticalAlign: `sub` }} />
+              <ArrowForwardIcon
+                sx={{
+                  flexShrink: 0,
+                  ml: `0.5em`,
+                  verticalAlign: `sub`,
+                }}
+              />
             </span>
           </Link>
         )}

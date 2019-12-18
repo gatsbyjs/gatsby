@@ -6,14 +6,33 @@
       link: /docs/
     - title: Quick Start
       link: /docs/quick-start/
-    - title: Recipes
-      link: /docs/recipes/
     - title: Plugin Library
       link: /plugins/
     - title: Starter Library
       link: /starters/
     - title: Awesome Gatsby Resources
       link: /docs/awesome-gatsby-resources/
+    - title: Recipes
+      link: /docs/recipes/
+      items:
+        - title: Pages and Layouts
+          link: /docs/recipes/pages-layouts
+        - title: Styling with CSS
+          link: /docs/recipes/styling-css
+        - title: Working with Starters
+          link: /docs/recipes/working-with-starters
+        - title: Working with Themes
+          link: /docs/recipes/working-with-themes
+        - title: Sourcing Data
+          link: /docs/recipes/sourcing-data
+        - title: Querying Data
+          link: /docs/recipes/querying-data
+        - title: Working with Images
+          link: /docs/recipes/working-with-images
+        - title: Transforming Data
+          link: /docs/recipes/transforming-data
+        - title: Deploying Your Site
+          link: /docs/recipes/deploying-your-site
     - title: Reference Guides
       link: /docs/guides/
       items:
@@ -240,15 +259,6 @@
                   link: /docs/remark-plugin-tutorial/
                 - title: Maintaining a Plugin*
                   link: /docs/maintaining-a-plugin/
-        - title: Starters
-          link: /docs/starters/
-          items:
-            - title: Starter Library
-              link: /starters/
-            - title: Modifying a Starter
-              link: /docs/modifying-a-starter/
-            - title: Creating a Starter
-              link: /docs/creating-a-starter/
         - title: Themes
           link: /docs/themes/
           items:
@@ -270,6 +280,15 @@
               link: /docs/themes/theme-composition/
             - title: Conventions
               link: /docs/themes/conventions/
+        - title: Starters
+          link: /docs/starters/
+          items:
+            - title: Starter Library
+              link: /starters/
+            - title: Modifying a Starter
+              link: /docs/modifying-a-starter/
+            - title: Creating a Starter
+              link: /docs/creating-a-starter/
         - title: Styling Your Site
           link: /docs/styling/
           breadcrumbTitle: Styling
@@ -354,6 +373,8 @@
             - title: Debugging Async Lifecycles
               link: /docs/debugging-async-lifecycles/
               breadcrumbTitle: Async Lifecycles
+            - title: Troubleshooting Common Errors
+              link: /docs/troubleshooting-common-errors/
         - title: Adding App and Website Functionality
           link: /docs/adding-app-and-website-functionality/
           items:
@@ -424,8 +445,8 @@
                 - title: Client-only Routes & User Authentication
                   link: /docs/client-only-routes-and-user-authentication/
                   breadcrumbTitle: Client Routes & User Auth
-            - title: Client Data Fetching
-              link: /docs/client-data-fetching/
+            - title: Build Time and Client-side Data Fetching
+              link: /docs/data-fetching/
             - title: Using Client-Side Only Packages
               link: /docs/using-client-side-only-packages/
             - title: Building an E-commerce Site
@@ -539,6 +560,8 @@
           link: /docs/gatsby-core-philosophy/
         - title: Gatsby Project Structure
           link: /docs/gatsby-project-structure/
+        - title: Plugins, Themes, & Starters
+          link: /docs/plugins-themes-and-starters/
         - title: Overview of the Gatsby Build Process
           link: /docs/overview-of-the-gatsby-build-process/
         - title: Building with Components
@@ -694,6 +717,8 @@
     - title: Glossary
       link: /docs/glossary/
       items:
+        - title: GraphQL
+          link: /docs/glossary/graphql
         - title: Node.js
           link: /docs/glossary/node
         - title: React

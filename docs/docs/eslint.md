@@ -38,10 +38,8 @@ module.exports = {
 }
 ```
 
+Note: When there is no ESLint file Gatsby implicitly adds a barebones ESLint loader. This loader pipes ESLint feedback into the terminal window where you are running or building Gatsby and also to the console in your browser developer tools. This gives you consolidated, immediate feedback on newly-saved files. When you include a custom `.eslintrc` file, Gatsby gives you full control over the ESLint configuration. This means that it will override the built-in `eslint-loader` and you need to enable any and all rules yourself. One way to do this is to use the Community plugin [`gatsby-eslint-plugin`](/packages/gatsby-plugin-eslint/). This also means that the default [ESLint config Gatsby ships with](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/eslint-config.js) will be entirely overwritten. If you would still like to take advantage of those rules, you'll need to copy them to your local file.
+
 ### Disabling ESLint
 
-Create an empty .eslintrc.js file at the root of your project to disable linting.
-
-When there is no ESLint file Gatsby implicitly adds a barebones ESLint loader. The empty file will disable this behavior as Gatsby assumes once you have an ESLint file you are in charge of linting.
-
-Note: If you provide a custom `.eslintrc.js` file, Gatsby gives you full control about the ESLint configuration. This means that it will disable the built-in `eslint-loader` and you need to enable it yourself. One way to do so is to use the Community plugin [`gatsby-eslint-plugin`](/packages/gatsby-plugin-eslint/).
+Creating an empty `.eslintrc` file at the root of your project will disable ESLint for your site. The empty file will disable the built-in `eslint-loader` because Gatsby assumes once you have an ESLint file you are in charge of linting.
