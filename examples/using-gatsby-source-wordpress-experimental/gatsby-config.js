@@ -11,10 +11,18 @@ module.exports = {
     {
       resolve: `gatsby-source-wordpress-experimental`,
       options: {
-        url: `http://gatsbysourcewordpressv4.local/graphql`,
-        // url: `https://dev-gatsby-source-wordpress-v4.pantheonsite.io/graphql`,
+        // url: `http://gatsbysourcewordpressv4.local/graphql`,
+        url: `https://dev-gatsby-source-wordpress-v4.pantheonsite.io/graphql`,
         verbose: true,
-        excludeFields: [`alots`],
+        // excludeFields: [`alots`],
+        nodeSettings: {
+          MediaItem: {
+            limit: 100,
+          },
+          Alot: {
+            exclude: true,
+          },
+        },
       },
     },
     `gatsby-plugin-chakra-ui`,

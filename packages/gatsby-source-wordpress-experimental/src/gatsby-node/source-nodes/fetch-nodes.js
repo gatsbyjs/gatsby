@@ -13,7 +13,11 @@ export const fetchWPGQLContentNodes = async (helpers, { url, verbose }) => {
 
   await Promise.all(
     Object.entries(queries).map(async ([fieldName, queryInfo]) => {
-      const { listQueryString, typeInfo } = queryInfo
+      const { listQueryString, typeInfo, settings } = queryInfo
+
+      if (settings.exclude) {
+        return
+      }
 
       const activity = reporter.activityTimer(
         formatLogMessage(typeInfo.pluralName)
@@ -33,6 +37,7 @@ export const fetchWPGQLContentNodes = async (helpers, { url, verbose }) => {
         query: listQueryString,
         activity,
         helpers,
+        settings,
       })
 
       if (verbose) {

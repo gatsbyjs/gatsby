@@ -9,6 +9,7 @@ const paginatedWpNodeFetch = async ({
   nodeTypeName,
   activity,
   helpers,
+  settings,
   allContentNodes = [],
   ...variables
 }) => {
@@ -44,6 +45,15 @@ const paginatedWpNodeFetch = async ({
     activity.setStatus(`fetched ${allContentNodes.length}`)
 
     store.dispatch.logger.incrementBy(nodes.length)
+  }
+
+  if (
+    settings &&
+    settings.limit &&
+    allContentNodes.length &&
+    allContentNodes.length >= settings.limit
+  ) {
+    return allContentNodes
   }
 
   if (hasNextPage) {
