@@ -29,6 +29,7 @@ Changes to the meaning of a text or code example should be done in the main [Eng
 The first step for starting a new translation is to check what exists. So far, there are repositories for the following languages:
 
 - [Arabic](https://github.com/gatsbyjs/gatsby-ar)
+- [Bengali](https://github.com/gatsbyjs/gatsby-bn)
 - [German](https://github.com/gatsbyjs/gatsby-de)
 - [Spanish](https://github.com/gatsbyjs/gatsby-es)
 - [French](https://github.com/gatsbyjs/gatsby-fr)
