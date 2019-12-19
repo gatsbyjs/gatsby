@@ -1,3 +1,4 @@
+import gqlPrettier from "graphql-prettier"
 import axios from "axios"
 import rateLimit from "axios-rate-limit"
 import formatLogMessage from "./format-log-message"
@@ -92,16 +93,13 @@ ${
       )
     }
 
-    if (Object.keys(variables).length) {
-      reporter.error(formatLogMessage(`GraphQL vars:`, variables))
+    if (variables) {
+      reporter.error(
+        formatLogMessage(`GraphQL vars: ${JSON.stringify(variables)}`)
+      )
     }
 
-    reporter.error(formatLogMessage(`GraphQL query: ${query}`))
-
-    if (json.data) {
-      reporter.error(formatLogMessage`GraphQL data:`)
-      reporter.info(json.data)
-    }
+    reporter.error(formatLogMessage(`GraphQL query: ${gqlPrettier(query)}`))
 
     if (!json.data) {
       reporter.panic(
