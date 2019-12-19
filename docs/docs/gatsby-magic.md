@@ -39,7 +39,7 @@ Gatsby provides a few different ways to create HTML pages that hook into its rou
 
 - In your site’s gatsby-node.js file by implementing the API [createPages](https://www.gatsbyjs.org/docs/node-apis/#createPages)
 - Gatsby core automatically turns React components in src/pages into pages
-- Plugins can also implement createPages and create pages for you
+- Plugins can also implement `createPages` for you, which will create additional pages
 
 A big part of how Gatsby builds work is its compilation of static HTML pages that are initially fetched from a server and then rehydrated into a full React web application when browser JavaScript takes over. This is where client-side routing comes into the picture with @reach/router, as that’s how Gatsby links pages together.
 
