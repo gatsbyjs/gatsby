@@ -568,6 +568,8 @@
           link: /docs/building-with-components/
         - title: Lifecycle APIs
           link: /docs/gatsby-lifecycle-apis/
+        - title: Gatsby Magic
+          link: /docs/gatsby-magic
         - title: React Hydration
           link: /docs/react-hydration
         - title: PRPL Pattern
