@@ -163,7 +163,7 @@ API_URL="http://foo.bar"
 ```
 
 ```javascript:title=gatsby-config.js
-let activeEnv =
+const activeEnv =
   process.env.GATSBY_ACTIVE_ENV || process.env.NODE_ENV || "development"
 
 console.log(`Using environment config: '${activeEnv}'`)

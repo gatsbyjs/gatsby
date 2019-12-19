@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.45](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.1.44...gatsby-telemetry@1.1.45) (2019-12-18)
+
+### Bug Fixes
+
+- **gatsby-telemetry:** suppress flush if disabled ([#20170](https://github.com/gatsbyjs/gatsby/issues/20170)) ([456b3db](https://github.com/gatsbyjs/gatsby/commit/456b3db))
+
 ## [1.1.44](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.1.42...gatsby-telemetry@1.1.44) (2019-12-10)
 
 **Note:** Version bump only for package gatsby-telemetry
