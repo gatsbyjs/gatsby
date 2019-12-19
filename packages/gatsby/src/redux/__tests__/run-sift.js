@@ -183,7 +183,7 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
           mockNodes()[3].id,
         ])
       })
-      it('return empty array in case of empty nodes', async () => {
+      it(`return empty array in case of empty nodes`, async () => {
         const resultSingular = await runSift({
           gqlType,
           queryArgs,
