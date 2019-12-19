@@ -2203,8 +2203,8 @@
   built_by_url: "https://www.michaeluloth.com"
   featured: false
 - title: Pomegranate Opera
-  main_url: "https://www.pomegranateopera.com"
-  url: "https://www.pomegranateopera.com"
+  main_url: "https://pomegranateopera.netlify.com"
+  url: "https://pomegranateopera.netlify.com"
   description: Pomegranate Opera is a lesbian opera written by Amanda Hale & Kye Marshall. Site designed by Stephen Bell.
   categories:
     - Gallery
@@ -3025,8 +3025,8 @@
   built_by_url: https://www.michaeluloth.com
   featured: false
 - title: Peter Barrett
-  url: https://www.peterbarrett.ca
-  main_url: https://www.peterbarrett.ca
+  url: "https://peterbarrett.netlify.com"
+  main_url: "https://peterbarrett.netlify.com"
   description: >
     Peter Barrett is a Canadian baritone from Newfoundland and Labrador who performs opera and concert repertoire in Canada, the U.S. and around the world. Site designed by Stephen Bell.
   categories:
@@ -3549,8 +3549,8 @@
   built_by_url: "https://www.michaeluloth.com"
   featured: false
 - title: The AZOOR Society
-  main_url: "https://www.theazoorsociety.org"
-  url: "https://www.theazoorsociety.org"
+  main_url: "https://theazoorsociety.netlify.com"
+  url: "https://theazoorsociety.netlify.com"
   description: The AZOOR Society is a UK-based charity committed to promoting awareness of Acute Zonal Occult Outer Retinopathy and assisting further research. Site designed by Stephen Bell.
   categories:
     - Community
