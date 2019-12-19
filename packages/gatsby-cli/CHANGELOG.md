@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.8.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.19...gatsby-cli@2.8.20) (2019-12-18)
+
+### Features
+
+- **gatsby-cli:** support for develop PORT env var ([#20110](https://github.com/gatsbyjs/gatsby/issues/20110)) ([6ee8235](https://github.com/gatsbyjs/gatsby/commit/6ee8235))
+
 ## [2.8.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.18...gatsby-cli@2.8.19) (2019-12-15)
 
 **Note:** Version bump only for package gatsby-cli

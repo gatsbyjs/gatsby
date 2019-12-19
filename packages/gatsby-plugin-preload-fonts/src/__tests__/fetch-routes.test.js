@@ -70,7 +70,7 @@ describe(`fetch-routes`, () => {
       .spyOn(process, `exit`)
       .mockImplementationOnce(() => {})
 
-    cache.hash = `7c709be36bd82265bb0eb74a233f3040`
+    cache.hash = `09f5b092fb87d859e0ac53dbae299a9e`
     await fetchRoutes({ logger, endpoint, cache })
 
     expect(mockExit).toHaveBeenCalledWith(0)

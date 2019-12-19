@@ -132,7 +132,7 @@
           link: /tutorial/wordpress-source-plugin-tutorial/
         - title: Adding Images to a WordPress Site
           link: /tutorial/wordpress-image-tutorial/
-        - title: Using the Prismic with GraphQL Source Plugin
+        - title: Using Prismic with the GraphQL Source Plugin
           link: /tutorial/prismic-source-graphql-tutorial/
         - title: Writing Documentation with Docz
           link: /tutorial/writing-documentation-with-docz/

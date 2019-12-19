@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.36](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.0.35...gatsby-source-shopify@3.0.36) (2019-12-17)
+
+### Features
+
+- **gatsby-source-shopify:** Add compareAtPrice to presentment prices ([#20144](https://github.com/gatsbyjs/gatsby/issues/20144)) ([5ea9af7](https://github.com/gatsbyjs/gatsby/commit/5ea9af7))
+- **gatsby-source-shopify:** add metafields to each product variant node ([#20066](https://github.com/gatsbyjs/gatsby/issues/20066)) ([5150e15](https://github.com/gatsbyjs/gatsby/commit/5150e15))
+
 ## [3.0.35](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.0.33...gatsby-source-shopify@3.0.35) (2019-12-10)
 
 **Note:** Version bump only for package gatsby-source-shopify

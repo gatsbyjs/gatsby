@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.3.8...gatsby-plugin-sharp@2.3.9) (2019-12-17)
+
+### Bug Fixes
+
+- **#19220:** added default args for generateBase64 function ([#20158](https://github.com/gatsbyjs/gatsby/issues/20158)) ([d6c2b73](https://github.com/gatsbyjs/gatsby/commit/d6c2b73)), closes [#19220](https://github.com/gatsbyjs/gatsby/issues/19220)
+
 ## [2.3.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.3.7...gatsby-plugin-sharp@2.3.8) (2019-12-16)
 
 **Note:** Version bump only for package gatsby-plugin-sharp
