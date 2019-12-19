@@ -14,6 +14,7 @@
     "bluebird": "^3.7.2",
     "deep-map": "^1.5.0",
     "deep-map-keys": "^1.2.0",
+    "eslint-plugin-react-ssr": "^0.0.0",
     "gatsby-source-filesystem": "^2.1.42",
     "json-stringify-safe": "^5.0.1",
     "lodash": "^4.17.15",

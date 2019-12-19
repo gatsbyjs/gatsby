@@ -18,5 +18,8 @@
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-schema-snapshot#readme",
   "peerDependencies": {
     "gatsby": "^2.13.55"
+  },
+  "dependencies": {
+    "eslint-plugin-react-ssr": "^0.0.0"
   }
 }

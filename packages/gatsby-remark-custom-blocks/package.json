@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.7.6",
+    "eslint-plugin-react-ssr": "^0.0.0",
     "remark-custom-blocks": "^2.4.2"
   },
   "devDependencies": {

@@ -18,6 +18,7 @@
     "@babel/helper-plugin-utils": "^7.0.0",
     "@babel/plugin-syntax-jsx": "^7.7.4",
     "commander": "^2.20.3",
+    "eslint-plugin-react-ssr": "^0.0.0",
     "fast-levenshtein": "^2.0.6",
     "glob": "^7.1.6",
     "globby": "^10.0.1",

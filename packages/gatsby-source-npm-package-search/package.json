@@ -12,6 +12,7 @@
   "dependencies": {
     "@babel/runtime": "^7.7.6",
     "algoliasearch": "^3.35.1",
+    "eslint-plugin-react-ssr": "^0.0.0",
     "got": "^8.3.2"
   },
   "devDependencies": {

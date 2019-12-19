@@ -29,6 +29,7 @@
   "license": "MIT",
   "dependencies": {
     "@babel/runtime": "^7.7.6",
+    "eslint-plugin-react-ssr": "^0.0.0",
     "guess-webpack": "~0.4.12"
   },
   "devDependencies": {

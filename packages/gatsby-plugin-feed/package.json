@@ -9,6 +9,7 @@
   "dependencies": {
     "@babel/runtime": "^7.7.6",
     "@hapi/joi": "^15.1.1",
+    "eslint-plugin-react-ssr": "^0.0.0",
     "fs-extra": "^8.1.0",
     "lodash.merge": "^4.6.2",
     "rss": "^1.2.2"

@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.7.6",
+    "eslint-plugin-react-ssr": "^0.0.0",
     "gatsby-core-utils": "^1.0.24",
     "semver": "^5.7.1",
     "sharp": "^0.23.4"

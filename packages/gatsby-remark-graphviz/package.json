@@ -9,6 +9,7 @@
   "dependencies": {
     "@babel/runtime": "^7.7.6",
     "cheerio": "^1.0.0-rc.3",
+    "eslint-plugin-react-ssr": "^0.0.0",
     "unist-util-visit": "^1.4.1",
     "viz.js": "^2.1.2"
   },

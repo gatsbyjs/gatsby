@@ -9,7 +9,8 @@
   "dependencies": {
     "@babel/runtime": "^7.7.6",
     "bluebird": "^3.7.2",
-    "csvtojson": "^1.1"
+    "csvtojson": "^1.1",
+    "eslint-plugin-react-ssr": "^0.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.5",

@@ -13,6 +13,7 @@
     "boxen": "^4.2.0",
     "configstore": "^5.0.0",
     "envinfo": "^7.5.0",
+    "eslint-plugin-react-ssr": "^0.0.0",
     "fs-extra": "^8.1.0",
     "gatsby-core-utils": "^1.0.24",
     "git-up": "4.0.1",

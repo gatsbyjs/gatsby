@@ -8,7 +8,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.7.6",
-    "babel-plugin-react-css-modules": "^3.4.2"
+    "babel-plugin-react-css-modules": "^3.4.2",
+    "eslint-plugin-react-ssr": "^0.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.5",

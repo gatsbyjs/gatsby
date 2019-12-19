@@ -22,6 +22,7 @@
     "convert-hrtime": "^3.0.0",
     "core-js": "^2.6.11",
     "envinfo": "^7.5.0",
+    "eslint-plugin-react-ssr": "^0.0.0",
     "execa": "^3.4.0",
     "fs-exists-cached": "^1.0.0",
     "fs-extra": "^8.1.0",

@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "@mdx-js/mdx": "^1.5.1",
+    "eslint-plugin-react-ssr": "^0.0.0",
     "gatsby-plugin-mdx": "^1.0.63",
     "gatsby-plugin-sharp": "^2.3.9",
     "gatsby-remark-copy-linked-files": "^2.1.33",

@@ -10,8 +10,9 @@ module.exports = schema => {
         __BASE_PATH__: true, // this will rarely, if ever, be used by consumers
       },
       extends: [`react-app`],
-      plugins: [`graphql`],
+      plugins: [`graphql`, `react-ssr`],
       rules: {
+        "react-ssr/no-globals": `error`,
         "import/no-webpack-loader-syntax": [0],
         "graphql/template-strings": [
           `error`,

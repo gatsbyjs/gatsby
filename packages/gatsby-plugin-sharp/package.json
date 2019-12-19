@@ -10,6 +10,7 @@
     "@babel/runtime": "^7.7.6",
     "async": "^2.6.3",
     "bluebird": "^3.7.2",
+    "eslint-plugin-react-ssr": "^0.0.0",
     "fs-extra": "^8.1.0",
     "gatsby-core-utils": "^1.0.24",
     "got": "^8.3.2",

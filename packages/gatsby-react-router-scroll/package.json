@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.7.6",
+    "eslint-plugin-react-ssr": "^0.0.0",
     "scroll-behavior": "^0.9.10",
     "warning": "^3.0.0"
   },

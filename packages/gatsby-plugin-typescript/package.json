@@ -15,7 +15,8 @@
     "@babel/plugin-proposal-optional-chaining": "^7.7.5",
     "@babel/preset-typescript": "^7.7.4",
     "@babel/runtime": "^7.7.6",
-    "babel-plugin-remove-graphql-queries": "^2.7.19"
+    "babel-plugin-remove-graphql-queries": "^2.7.19",
+    "eslint-plugin-react-ssr": "^0.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.5",

@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.7.6",
+    "eslint-plugin-react-ssr": "^0.0.0",
     "xlsx": "^0.15.3"
   },
   "devDependencies": {

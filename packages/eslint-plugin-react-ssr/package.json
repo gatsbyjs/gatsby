@@ -1,0 +1,28 @@
+{
+  "name": "eslint-plugin-react-ssr",
+  "version": "0.0.0",
+  "description": "eslint-plugin-react-ssr",
+  "keywords": [
+    "eslint",
+    "eslintplugin",
+    "eslint-plugin"
+  ],
+  "author": "eslint-plugin-react-ssr",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src --out-dir . --ignore **/__tests__",
+    "watch": "babel -w src --out-dir . --ignore **/__tests__",
+    "test": "mocha tests --recursive"
+  },
+  "dependencies": {
+    "requireindex": "~1.1.0"
+  },
+  "devDependencies": {
+    "eslint": "~3.9.1",
+    "mocha": "^3.1.2"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "license": "ISC"
+}

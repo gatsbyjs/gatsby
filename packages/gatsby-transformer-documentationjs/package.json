@@ -9,6 +9,7 @@
   "dependencies": {
     "@babel/runtime": "^7.7.6",
     "documentation": "^12.1.4",
+    "eslint-plugin-react-ssr": "^0.0.0",
     "prismjs": "^1.17.1"
   },
   "devDependencies": {

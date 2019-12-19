@@ -10,7 +10,8 @@
     "@babel/parser": "^7.7.5",
     "@babel/runtime": "^7.7.6",
     "@babel/traverse": "^7.7.4",
-    "bluebird": "^3.7.2"
+    "bluebird": "^3.7.2",
+    "eslint-plugin-react-ssr": "^0.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.5",

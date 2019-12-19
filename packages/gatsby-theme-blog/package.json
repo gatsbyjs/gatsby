@@ -23,6 +23,7 @@
     "@theme-ui/prism": "^0.2.50",
     "@theme-ui/typography": "^0.2.46",
     "deepmerge": "^4.2.2",
+    "eslint-plugin-react-ssr": "^0.0.0",
     "gatsby-image": "^2.2.37",
     "gatsby-plugin-emotion": "^4.1.18",
     "gatsby-plugin-feed": "^2.3.25",

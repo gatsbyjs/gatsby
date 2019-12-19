@@ -18,7 +18,8 @@
     "@babel/preset-flow": "^7.7.4",
     "@babel/preset-react": "^7.7.4",
     "babel-plugin-dynamic-import-node": "^2.3.0",
-    "core-js": "^2.6.11"
+    "core-js": "^2.6.11",
+    "eslint-plugin-react-ssr": "^0.0.0"
   },
   "license": "MIT",
   "main": "index.js",

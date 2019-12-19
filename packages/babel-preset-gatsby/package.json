@@ -20,7 +20,8 @@
     "@babel/runtime": "^7.7.6",
     "babel-plugin-dynamic-import-node": "^2.3.0",
     "babel-plugin-macros": "^2.8.0",
-    "babel-plugin-transform-react-remove-prop-types": "^0.4.24"
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
+    "eslint-plugin-react-ssr": "^0.0.0"
   },
   "peerDependencies": {
     "@babel/core": "^7.0.0"

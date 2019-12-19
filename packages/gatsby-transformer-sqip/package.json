@@ -9,6 +9,7 @@
   "dependencies": {
     "@babel/runtime": "^7.7.6",
     "bluebird": "^3.7.2",
+    "eslint-plugin-react-ssr": "^0.0.0",
     "fs-extra": "^8.1.0",
     "gatsby-plugin-sharp": "^2.3.9",
     "md5-file": "^4.0.0",
