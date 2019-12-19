@@ -64,7 +64,8 @@ function handleFirst(siftArgs, nodes) {
       )
 
   if (index !== -1) {
-    return [nodes[index]]
+    const result  = nodes[index];
+    return result ? [result] : [];
   } else {
     return []
   }
