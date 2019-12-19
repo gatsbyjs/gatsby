@@ -1,5 +1,5 @@
 jest.mock("danger", () => jest.fn())
-import * as danger from "danger"
+import danger from "danger"
 
 const dm = danger as any
 
