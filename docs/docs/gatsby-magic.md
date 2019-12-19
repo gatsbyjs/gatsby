@@ -37,7 +37,7 @@ Gatsby sites are full React web applications, meaning they have access to client
 
 Gatsby provides a few different ways to create HTML pages that hook into its routing system. Here are some examples of [how to create pages](https://www.gatsbyjs.org/docs/creating-and-modifying-pages) in Gatsby:
 
-- In your site’s gatsby-node.js by implementing the API [createPages](https://www.gatsbyjs.org/docs/node-apis/#createPages)
+- In your site’s gatsby-node.js file by implementing the API [createPages](https://www.gatsbyjs.org/docs/node-apis/#createPages)
 - Gatsby core automatically turns React components in src/pages into pages
 - Plugins can also implement createPages and create pages for you
 
