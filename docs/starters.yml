@@ -4563,7 +4563,7 @@
     - Responsive design
     - Customizable content through markdown files
     - SEO component with React Helmet
-- url: https://chronoblog.netlify.com
+- url: https://chronoblog.now.sh
   repo: https://github.com/Ganevru/gatsby-starter-chronoblog
   description: Chronoblog is a Gatsby js theme specifically designed to create a personal website. The main idea of ​​Chronoblog is to allow you not only to write a personal blog but also to keep a record of everything important that you have done.
   tags:
@@ -4742,7 +4742,7 @@
     - Google Analytics Support
     - Offline Support & WebApp Manifest
     - Easy to modify assets.
-- url: https://chronoblog-profile.netlify.com/
+- url: https://chronoblog-profile.now.sh
   repo: https://github.com/Ganevru/gatsby-starter-chronoblog-profile
   description: This starter will help you launch a personal website with a simple text feed on the main page. This starter looks simple and neat, but at the same time, it has great potential for organizing your content using tags, dates, and search. The homepage is organized in compact feeds. The display of content in these feeds is based on the tags of this content (for example, only content with a podcast tag gets into the feed with podcasts).
   tags:
@@ -4766,7 +4766,7 @@
     - MDX for pages and content
     - Code syntax highlighting
     - SEO (OpenGraph and Twitter) out of the box with default settings that make sense (thanks to React Helmet)
-- url: https://chronoblog-hacker.netlify.com/
+- url: https://chronoblog-hacker.now.sh
   repo: https://github.com/Ganevru/gatsby-starter-chronoblog-hacker
   description: A dark (but with ability to switch to light) starter that uses the Source Code Pro font (optional) and minimalistic UI
   tags:
