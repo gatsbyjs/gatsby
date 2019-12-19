@@ -50,6 +50,7 @@
     "clean": "gatsby clean",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
     "bench": "rm -r markdown-pages; NUM_PAGES=${NUM_PAGES:-2000} node md.generate.js; gatsby clean; node --max_old_space_size=2000 node_modules/.bin/gatsby build",
-    "benchnb": "gatsby clean; node --max_old_space_size=2000 node_modules/.bin/gatsby build"
+    "benchnb": "gatsby clean; node --max_old_space_size=2000 node_modules/.bin/gatsby build",
+    "postinstall": "NUM_PAGES=2000 yarn bench"
   }
 }
