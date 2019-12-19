@@ -1,7 +1,7 @@
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const telemetry = require(`gatsby-telemetry`)
-const getCache = require(`../utils/get-cache`)
+const { store } = require(`../redux`)
 
 const getFilePath = ({ publicDir }, pagePath) => {
   const fixedPagePath = pagePath === `/` ? `index` : pagePath
@@ -25,13 +25,12 @@ const write = async ({ publicDir }, page, result) => {
   // transform asset size to kB (from bytes) to fit 64 bit to numbers
   const pageDataSize = Buffer.byteLength(bodyStr) / 1000
 
-  const telemetryCache = getCache(`gatsby-telemetry`)
-  const pageDataSizeCache = (await telemetryCache.get(`pageDataStats`)) || {}
-  pageDataSizeCache[filePath] = pageDataSize
-  await telemetryCache.set(`pageDataStats`, pageDataSizeCache)
-
-  telemetry.addBufferedMeasurementOnEvent(`BUILD_END`, `pageDataStats`, {
-    [filePath]: pageDataSize,
+  store.dispatch({
+    type: `ADD_PAGE_DATA_STATS`,
+    payload: {
+      filePath,
+      size: pageDataSize,
+    },
   })
 
   await fs.outputFile(filePath, bodyStr)

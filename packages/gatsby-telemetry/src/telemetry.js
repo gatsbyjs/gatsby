@@ -13,7 +13,6 @@ module.exports = class AnalyticsTracker {
   store = new EventStorage()
   debouncer = {}
   metadataCache = {}
-  buffered = {}
   defaultTags = {}
   osInfo // lazy
   trackingEnabled // lazy
@@ -258,34 +257,6 @@ module.exports = class AnalyticsTracker {
     this.metadataCache[event] = Object.assign(cached, obj)
   }
 
-  async bufferCachedMeasurementsOnEvent(event, measurementName, cache) {
-    let measurements = this.buffered[event]
-    if (!measurements) {
-      measurements = {}
-    }
-
-    const cached = await cache.get(measurementName)
-    measurements[measurementName] = Object.assign(
-      measurements[measurementName] || {},
-      cached
-    )
-
-    this.buffered[event] = measurements
-  }
-
-  addBufferedMeasurementOnEvent(event, measurementName, entry) {
-    let measurements = this.buffered[event]
-    if (!measurements) {
-      measurements = {}
-    }
-    measurements[measurementName] = Object.assign(
-      measurements[measurementName] || {},
-      entry
-    )
-
-    this.buffered[event] = measurements
-  }
-
   addSiteMeasurement(event, obj) {
     const cachedEvent = this.metadataCache[event] || {}
     const cachedMeasurements = cachedEvent.siteMeasurements || {}
@@ -324,24 +295,6 @@ module.exports = class AnalyticsTracker {
         data.reduce((acc, x) => acc + Math.pow(x - mean, 3), 0) /
         data.length /
         Math.pow(stdDev, 3),
-    }
-  }
-
-  flushBuffered() {
-    for (const event in this.buffered) {
-      this.addSiteMeasurement(
-        event,
-        Object.keys(this.buffered[event] || {}).reduce(
-          (obj, key) =>
-            Object.assign(obj, {
-              [key]: this.aggregateStats(
-                Object.values(this.buffered[event][key] || {})
-              ),
-            }),
-          {}
-        )
-      )
-      delete this.buffered[event]
     }
   }
 

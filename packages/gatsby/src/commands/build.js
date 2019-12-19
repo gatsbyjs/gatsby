@@ -15,7 +15,6 @@ const { store, emitter } = require(`../redux`)
 const queryUtil = require(`../query`)
 const appDataUtil = require(`../utils/app-data`)
 const WorkerPool = require(`../utils/worker/pool`)
-const getCache = require(`../utils/get-cache`)
 const { structureWebpackErrors } = require(`../utils/webpack-error-utils`)
 
 type BuildArgs = {
@@ -46,11 +45,9 @@ module.exports = async function build(program: BuildArgs) {
 
   telemetry.trackCli(`BUILD_START`)
   process.on(`exit`, exitCode => {
-    telemetry.flushBuffered()
     telemetry.trackCli(`BUILD_END`, { exitCode })
   })
   signalExit(exitCode => {
-    telemetry.flushBuffered()
     telemetry.trackCli(`BUILD_END`, { exitCode })
   })
 
@@ -93,22 +90,16 @@ module.exports = async function build(program: BuildArgs) {
   activity.end()
 
   if (telemetry.isTrackingEnabled()) {
-    await telemetry.bufferCachedMeasurementsOnEvent(
-      `BUILD_END`,
-      `pageDataStats`,
-      getCache(`gatsby-telemetry`)
-    )
-
     // transform asset size to kB (from bytes) to fit 64 bit to numbers
     const bundleSizes = stats
       .toJson({ assets: true })
       .assets.filter(asset => asset.name.endsWith(`.js`))
       .map(asset => asset.size / 1000)
-
-    const bundleStats = telemetry.aggregateStats(bundleSizes)
+    const pageDataSizes = [...store.getState().pageDataStats.values()]
 
     telemetry.addSiteMeasurement(`BUILD_END`, {
-      bundleStats,
+      bundleStats: telemetry.aggregateStats(bundleSizes),
+      pageDataStats: telemetry.aggregateStats(pageDataSizes),
     })
   }
 
