@@ -1,5 +1,4 @@
-const setup = require(`./starter-kit/setup`)
-
+const chromium = require(`chrome-aws-lambda`)
 const { createContentDigest } = require(`gatsby-core-utils`)
 
 const AWS = require(`aws-sdk`)
@@ -7,7 +6,7 @@ const s3 = new AWS.S3({
   apiVersion: `2006-03-01`,
 })
 
-exports.handler = async (event, context, callback) => {
+exports.handler = async (event, context) => {
   // For keeping the browser launch
   context.callbackWaitsForEmptyEventLoop = false
 
@@ -19,8 +18,7 @@ exports.handler = async (event, context, callback) => {
   const url = request.url
 
   if (!url) {
-    callback(null, proxyError(`no url provided`))
-    return
+    return proxyError(`no url provided`)
   }
 
   const width = request.width || 1024
@@ -28,15 +26,20 @@ exports.handler = async (event, context, callback) => {
 
   const fullPage = request.fullPage || false
 
-  const browser = await setup.getBrowser()
-  exports
-    .run(browser, url, width, height, fullPage)
-    .then(result => {
-      callback(null, proxyResponse(result))
-    })
-    .catch(err => {
-      callback(null, proxyError(err))
-    })
+  const browser = await chromium.puppeteer.launch({
+    args: chromium.args,
+    defaultViewport: chromium.defaultViewport,
+    executablePath: await chromium.executablePath,
+    headless: chromium.headless,
+  })
+
+  let result
+  try {
+    result = await exports.run(browser, url, width, height, fullPage)
+    return proxyResponse(result)
+  } catch (error){
+    return proxyError(error)
+  }
 }
 
 exports.run = async (browser, url, width, height, fullPage) => {
