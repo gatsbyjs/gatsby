@@ -4,7 +4,7 @@ title: Gatsby Magic
 
 This guide will explain the amazing features that may seem like “magic” and what goes on behind the scenes in GatsbyJS.
 
-##
+## Starters
 
 Starters
 
