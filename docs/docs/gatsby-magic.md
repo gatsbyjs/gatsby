@@ -43,7 +43,7 @@ Gatsby provides a few different ways to create HTML pages that hook into its rou
 
 When Gatsby sites get built static HTML pages are compiled. When a user initially navigates to a page on the site, the HTML page is fetched from a server and then rehydrated into a full React web application when browser JavaScript takes over. This is where client-side routing comes into the picture with @reach/router, as that’s how Gatsby links pages together.
 
-Routes in Gatsby are generated for you under the hood by creating pages. Changing a route would depend on how that page was created: either changing a filename in `src/pages` or updating a slug in a post’s frontmatter metdata for a dynamic blog route.
+Routes in Gatsby are generated for you under the hood by creating pages. Changing a route would depend on how that page was created: either changing a filename in `src/pages`, updating a slug in a post’s frontmatter metadata for a dynamic blog route, or changing the path you chose when generating a page with the `createPages` API.
 
 Here is where you can find more information on [Routing in Gatsby](https://www.gatsbyjs.org/docs/routing/), including details on how to customize and authenticate routes.
 
