@@ -64,7 +64,7 @@ Check out the Using Redux example with [./gatsby-ssr.js](https://github.com/gats
 
 GraphQL is a query language (the QL part of its name) that Gatsby uses to generate a data layer available to your site’s components. If you're familiar with SQL, it works in a very similar way at build time.
 
-Using a special syntax, you describe the data you want in your component and then that data is given to you, such as site metadata from your `gatsby-config.js`, connected WordPress posts, Markdown files, images, and more. Gatsby uses **GraphQL** to enable components to declare the data they need and apply it to render on a page. Using GraphQL in Gatsby provides many [benefits](https://www.gatsbyjs.org/docs/why-gatsby-uses-graphql/), such as the ability to return data from multiple sources in one query, and transform that data at the same time (such as using Gatsby Image).
+Using a special syntax, you describe the data you want in your component and then that data is given to you, such as site metadata from your `gatsby-config.js`, connected WordPress posts, Markdown files, images, and more. Gatsby uses GraphQL to enable components to declare the data they need and apply it to render on a page. Using GraphQL in Gatsby provides many [benefits](https://www.gatsbyjs.org/docs/why-gatsby-uses-graphql/), such as the ability to return data from multiple sources in one query, and transform that data at the same time (such as using Gatsby Image).
 
 Here is how you get started using GraphQL in Gatsby: [https://www.gatsbyjs.org/tutorial/part-four/](https://www.gatsbyjs.org/tutorial/part-four/)
 
