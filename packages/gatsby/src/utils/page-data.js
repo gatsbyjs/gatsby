@@ -1,6 +1,5 @@
 const fs = require(`fs-extra`)
 const path = require(`path`)
-const telemetry = require(`gatsby-telemetry`)
 const { store } = require(`../redux`)
 
 const getFilePath = ({ publicDir }, pagePath) => {
