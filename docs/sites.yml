@@ -9047,3 +9047,15 @@
   built_by: Bare Advertising & Communications
   built_by_url: https://www.bare.ca/
   featured: false
+- title: Paul Scanlon - Blog
+  main_url: https://paulie.dev/
+  url: https://paulie.dev/
+  source_url: https://github.com/PaulieScanlon/paulie-dev-2019
+  description: >
+    I'm a React UI developer / UX Engineer. React, GatsbyJs, JavaScript, TypeScript/Flow, StyledComponents, Storybook, TDD (Jest/Enzyme) and a tiny bit of Node.js.
+  categories:
+    - Blog
+    - Web Development
+  built_by: Paul Scanlon
+  built_by_url: http://www.pauliescanlon.io
+  featured: false
