@@ -55,6 +55,10 @@ function isEqId(firstOnly, siftArgs) {
 }
 
 function handleFirst(siftArgs, nodes) {
+  if (nodes.length === 0) {
+    return []
+  }
+
   const index = _.isEmpty(siftArgs)
     ? 0
     : nodes.findIndex(
@@ -64,8 +68,7 @@ function handleFirst(siftArgs, nodes) {
       )
 
   if (index !== -1) {
-    const result  = nodes[index];
-    return result ? [result] : [];
+    return [nodes[index]]
   } else {
     return []
   }
