@@ -49,7 +49,7 @@ Here is where you can find more information on [Routing in Gatsby](https://www.g
 
 ## Redux
 
-Redux is a state management library often used together with React apps. Gatsby uses Redux behind-the-scenes to manage the state of your site, which is also a React application. You don’t have to do anything with Redux directly in Gatsby for it to work.
+Redux is a state management library often used together with React apps. Gatsby is also a React application and uses Redux behind-the-scenes to manage the state of your site. You don’t have to do anything with Redux directly in Gatsby for it to work.
 
 Redux helps you write applications that behave consistently, run in different environments (client, server, and native), and are easy to test; that’s why Gatsby uses it as a core technology under the hood. On top of that, Redux provides a great developer experience, such as [live code editing combined with a time-traveling debugger](https://github.com/reduxjs/redux-devtools). Redux is bundled with Gatsby by default to provide automatic state management, and it’s also available as a standalone package on npm.
 
