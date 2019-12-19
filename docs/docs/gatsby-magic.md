@@ -13,7 +13,7 @@ A starter is a fully functional Gatsby site that can run on its own but is desig
 
 You can find more information on how to get started, how to modify existing starters, and how to create your very own [in the starter documentation](https://www.gatsbyjs.org/docs/starters/).
 
-##
+## Plugins
 
 Plugins
 
