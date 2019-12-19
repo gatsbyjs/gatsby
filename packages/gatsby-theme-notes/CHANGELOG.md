@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.38](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.0.37...gatsby-theme-notes@1.0.38) (2019-12-19)
+
+**Note:** Version bump only for package gatsby-theme-notes
+
+## [1.0.37](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.0.36...gatsby-theme-notes@1.0.37) (2019-12-18)
+
+**Note:** Version bump only for package gatsby-theme-notes
+
+## [1.0.36](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.0.35...gatsby-theme-notes@1.0.36) (2019-12-17)
+
+**Note:** Version bump only for package gatsby-theme-notes
+
+## [1.0.35](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.0.34...gatsby-theme-notes@1.0.35) (2019-12-15)
+
+**Note:** Version bump only for package gatsby-theme-notes
+
+## [1.0.34](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.0.33...gatsby-theme-notes@1.0.34) (2019-12-11)
+
+**Note:** Version bump only for package gatsby-theme-notes
+
+## [1.0.33](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.0.31...gatsby-theme-notes@1.0.33) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-theme-notes
+
+## [1.0.32](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.0.31...gatsby-theme-notes@1.0.32) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-theme-notes
+
+## [1.0.31](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.0.30...gatsby-theme-notes@1.0.31) (2019-12-09)
+
+**Note:** Version bump only for package gatsby-theme-notes
+
+## [1.0.30](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.0.29...gatsby-theme-notes@1.0.30) (2019-12-05)
+
+**Note:** Version bump only for package gatsby-theme-notes
+
+## [1.0.29](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.0.28...gatsby-theme-notes@1.0.29) (2019-12-02)
+
+**Note:** Version bump only for package gatsby-theme-notes
+
 ## [1.0.28](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.0.27...gatsby-theme-notes@1.0.28) (2019-11-28)
 
 **Note:** Version bump only for package gatsby-theme-notes

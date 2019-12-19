@@ -6,6 +6,7 @@
   categories:
     - Web Development
     - Featured
+    - Documentation
 - title: Flamingo
   main_url: https://www.shopflamingo.com/
   url: https://www.shopflamingo.com/
@@ -435,19 +436,19 @@
   categories:
     - Education
     - Entertainment
-# - title: William Owen UK Portfolio / Blog
-#   main_url: "http://william-owen.co.uk/"
-#   url: "http://william-owen.co.uk/"
-#   featured: false
-#   description: >-
-#     Over 20 years experience delivering customer-facing websites, internet-based
-#     solutions and creative visual design for a wide range of companies and
-#     organisations.
-#   categories:
-#     - Portfolio
-#     - Blog
-#   built_by: William Owen
-#   built_by_url: "https://twitter.com/twilowen"
+- title: William Owen UK Portfolio / Blog
+  main_url: "http://william-owen.co.uk/"
+  url: "http://william-owen.co.uk/"
+  featured: false
+  description: >-
+    Over 20 years experience delivering customer-facing websites, internet-based
+    solutions and creative visual design for a wide range of companies and
+    organisations.
+  categories:
+    - Portfolio
+    - Blog
+  built_by: William Owen
+  built_by_url: "https://twitter.com/twilowen"
 - title: A4 纸网
   main_url: "http://www.a4z.cn/"
   url: "http://www.a4z.cn/price"
@@ -1044,13 +1045,6 @@
   featured: false
   categories:
     - Marketing
-- title: Union Plus Credit Card
-  main_url: "http://www.unionpluscard.com"
-  url: "https://unionplus.capitalone.com/"
-  featured: false
-  categories:
-    - Marketing
-    - Finance
 - title: Gin Lane
   main_url: "http://www.ginlane.com/"
   url: "https://www.ginlane.com/"
@@ -1102,14 +1096,6 @@
   categories:
     - Portfolio
     - Web Development
-# - title: Philipp Czernitzki - Blog/Website
-#   main_url: "http://philippczernitzki.me/"
-#   url: "http://philippczernitzki.me/"
-#   featured: false
-#   categories:
-#     - Portfolio
-#     - Web Development
-#     - Blog
 - title: WebGazer
   main_url: "https://www.webgazer.io/"
   url: "https://www.webgazer.io/"
@@ -2209,8 +2195,8 @@
   built_by_url: "https://www.michaeluloth.com"
   featured: false
 - title: Pomegranate Opera
-  main_url: "https://www.pomegranateopera.com"
-  url: "https://www.pomegranateopera.com"
+  main_url: "https://pomegranateopera.netlify.com"
+  url: "https://pomegranateopera.netlify.com"
   description: Pomegranate Opera is a lesbian opera written by Amanda Hale & Kye Marshall. Site designed by Stephen Bell.
   categories:
     - Gallery
@@ -3031,8 +3017,8 @@
   built_by_url: https://www.michaeluloth.com
   featured: false
 - title: Peter Barrett
-  url: https://www.peterbarrett.ca
-  main_url: https://www.peterbarrett.ca
+  url: "https://peterbarrett.netlify.com"
+  main_url: "https://peterbarrett.netlify.com"
   description: >
     Peter Barrett is a Canadian baritone from Newfoundland and Labrador who performs opera and concert repertoire in Canada, the U.S. and around the world. Site designed by Stephen Bell.
   categories:
@@ -3555,8 +3541,8 @@
   built_by_url: "https://www.michaeluloth.com"
   featured: false
 - title: The AZOOR Society
-  main_url: "https://www.theazoorsociety.org"
-  url: "https://www.theazoorsociety.org"
+  main_url: "https://theazoorsociety.netlify.com"
+  url: "https://theazoorsociety.netlify.com"
   description: The AZOOR Society is a UK-based charity committed to promoting awareness of Acute Zonal Occult Outer Retinopathy and assisting further research. Site designed by Stephen Bell.
   categories:
     - Community
@@ -4742,7 +4728,6 @@
 - title: Pattyrn
   main_url: https://pattyrn.com
   url: https://pattyrn.com
-  # optional: short paragraph describing the content and/or purpose of the site that will appear in the modal detail view and permalink views for your site
   description: >
     Pattyrn uses advanced machine learning AI to analyze the platform’s your teams use, making it easy to solve performance problems, reduce bottlenecks, and monitor culture health to optimize your ROI and help boost performance without causing burn out.
   categories:
@@ -6848,17 +6833,6 @@
   built_by: Kyle Kitlinski
   built_by_url: http://github.com/k-kit
   featured: false
-- title: Smoopit
-  main_url: https://smoopit.com
-  url: https://smoopit.com/
-  description: >
-    Smoopit helps you schedule meetings without the extra effort of checking your availability or back-and-forth emails.
-  categories:
-    - Business
-    - Productivity
-  built_by: Chandra Bhushan
-  built_by_url: https://github.com/chandu2304
-  featured: false
 - title: Mill3 Studio
   main_url: https://mill3.studio/en/
   url: https://mill3.studio/en/
@@ -8789,4 +8763,299 @@
     - Portfolio
   built_by: Ezekiel Ekunola
   built_by_url: https://github.com/easybuoy/
+  featured: false
+- title: Gearbox Development
+  main_url: https://gearboxbuilt.com
+  url: https://gearboxbuilt.com/?no-load-in
+  description: >
+    Gearbox is a performance website development & optimization company based out of Canada. Built using Gatsby/WordPress.
+  categories:
+    - Agency
+    - Web Development
+    - WordPress
+    - Portfolio
+    - Programming
+    - Technology
+    - Business
+  built_by: Gearbox Development
+  built_by_url: https://gearboxbuilt.com
+  featured: false
+- title: UXWorks
+  main_url: https://uxworks.org
+  url: https://uxworks.org
+  description: Built with Gatsby, Netlify and Markdown
+  categories:
+    - Web Development
+    - Blog
+  built_by: Amrish Kushwaha
+  built_by_url: https://github.com/isamrish
+  featured: false
+- title: Jarod Peachey
+  main_url: https://jarodpeachey.netlify.com
+  url: https://jarodpeachey.netlify.com
+  source_url: https://github.com/jarodpeachey/portfolio
+  description: >
+    Jarod Peachey is a front-end developer focused on building modern and fast websites for everyone.
+  categories:
+    - Blog
+    - JavaScript
+    - Mobile Development
+    - Portfolio
+  built_by: Jarod Peachey
+  built_by_url: https://github.com/jarodpeachey
+  featured: false
+- title: Thomas Maximini
+  main_url: https://www.thomasmaximini.com/
+  url: https://www.thomasmaximini.com/
+  source_url: https://github.com/tmaximini/maxi.io
+  description: >
+    Thomas Maximini is a full stack web developer from Germany
+  categories:
+    - Blog
+    - JavaScript
+    - Photography
+    - Portfolio
+    - Web Development
+  built_by: Thomas Maximini
+  built_by_url: https://github.com/tmaximini
+  featured: false
+- title: Aretha Iskandar
+  main_url: https://arethaiskandar.com/
+  url: https://arethaiskandar.com/
+  source_url: https://github.com/tmaximini/arethaiskandar.com
+  description: >
+    Aretha Iskandar is a Jazz and Soul Singer / Songwriter from Paris
+  categories:
+    - Music
+  built_by: Thomas Maximini
+  built_by_url: https://github.com/tmaximini
+  featured: false
+- title: Harshil Shah
+  url: https://harshil.net
+  main_url: https://harshil.net
+  description: >
+    Harshil Shah is an iOS engineer from Mumbai, India
+  categories:
+    - Blog
+    - Mobile Development
+  built_by: Harshil Shah
+  built_by_url: https://twitter.com/_HarshilShah
+  featured: false
+- title: Code Examples
+  url: https://codeexamples.dev/
+  main_url: https://codeexamples.dev/
+  description: >
+    Examples about various programming languages like JavaScript, Python, Rust, Angular, React, Vue.js etc.
+  categories:
+    - Blog
+    - Education
+    - Programming
+    - Web Development
+  built_by: Sai gowtham
+  built_by_url: https://twitter.com/saigowthamr
+  featured: false
+- title: Samir Mujanovic
+  main_url: https://www.samirmujanovic.com/
+  url: https://www.samirmujanovic.com/
+  description: >
+    I'm a Frontend Developer with 3 years of experience. I describe myself as a developer who loves coding, open-source and web platform.
+  categories:
+    - Portfolio
+    - Web Development
+    - Design
+  built_by: Samir Mujanovic
+  built_by_url: https://github.com/sameerrM
+- title: Yearlyglot - Fluent Every Year
+  url: https://www.yearlyglot.com/blog
+  main_url: https://www.yearlyglot.com
+  description: >
+    A popular blog on languages, second language acquisition and polyglottery.
+  categories:
+    - Blog
+    - Education
+    - Learning
+    - Travel
+  built_by: Donovan Nagel
+  built_by_url: https://www.donovannagel.com
+  featured: false
+- title: Bearer - API Monitoring & Protection for your app
+  url: https://www.bearer.sh/
+  main_url: https://www.bearer.sh/
+  description: >
+    Bearer helps developers monitor API usage in real-time, protect their app against API limits and failures, and integrate APIs faster.
+  categories:
+    - API
+    - Technology
+    - Web Development
+    - Open Source
+  built_by: Bearer
+  featured: false
+- title: 8fit.com
+  url: https://8fit.com/
+  main_url: https://8fit.com/
+  description: >
+    Get personalized workouts, custom meal plans, and nutrition guidance, right in the palm of your hand. Prioritize progress over perfection with the 8fit app!
+  categories:
+    - App
+    - Food
+    - Sports
+  featured: false
+- title: Dispel - Remote Access for Industrial Control Systems
+  url: https://dispel.io
+  main_url: https://dispel.io
+  description: >
+    Dispel provides secure, moving target defense networks through which your teams can remotely access industrial control systems in seconds, replacing static-defense products that take 5 to 15 minutes to work through.
+  categories:
+    - Business
+    - Technology
+    - Security
+  built_by: Anton Aberg
+  built_by_url: https://github.com/aaaberg
+  featured: false
+- title: Geothermal Heat Pump DIY Project
+  url: https://diyheatpump.net/
+  main_url: https://diyheatpump.net/
+  description: Personal project by Yuriy Logvin that demonstrates how you can switch to heating with electricity at a minimal cost. The goal here is to show that everyone can build a geothermal heat pump and start saving money.
+  categories:
+    - Blog
+    - Education
+    - Technology
+  built_by: Yuriy Logvin
+  built_by_url: https://powerwatcher.net
+- title: Catalyst Network - Cryptocurrency
+  url: https://www.cryptocatalyst.net/
+  main_url: https://www.cryptocatalyst.net/
+  source_url: https://github.com/n8tb1t/gatsby-starter-cryptocurrency
+  description: >
+    An All-in-One solution for Modern Transactions.
+  categories:
+    - Business
+    - Technology
+  built_by: n8tb1t
+  built_by_url: https://github.com/n8tb1t/
+  featured: false
+- title: SaoBear's-Blog
+  main_url: https://saobear.xyz/
+  url: https://saobear.xyz/
+  source_url: https://github.com/PiccoloYu/SaoBear-is-Blog
+  featured: false
+  categories:
+    - Blog
+    - Web Development
+- title: Rumaan Khalander - Portfolio
+  url: https://www.rumaan.me/
+  main_url: https://www.rumaan.me/
+  description: >
+    Rumaan Khalander is a Full-Stack Dev from Bengaluru who loves to develop for mobile and web.
+  categories:
+    - Portfolio
+  built_by: rumaan
+  built_by_url: https://github.com/rumaan/
+  featured: false
+- title: DigiGov
+  main_url: https://digigov.grnet.gr/
+  url: https://digigov.grnet.gr/
+  description: >
+    DigiGov is an initiative for the Digital Transformation of the Greek Public Sector
+  categories:
+    - Government
+  built_by: GRNET
+  built_by_url: https://grnet.gr/
+  featured: false
+- title: Zeek Interactive
+  main_url: https://zeek.com
+  url: https://zeek.com
+  description: >
+    Business site for Zeek Interactive. Using WordPress as a data store via the WPGraphQL plugin.
+  categories:
+    - Blog
+    - Web Development
+    - Mobile Development
+    - WordPress
+    - Agency
+    - Business
+  built_by: Zeek Interactive
+  built_by_url: https://zeek.com
+  featured: false
+- title: Bare Advertising & Communications
+  url: https://bare.ca/
+  main_url: https://bare.ca/
+  description: >
+    Bare is a full-service branding and production agency in Vancouver BC with deep experience in digital/traditional communications and strategy. We specialize in building headless WordPress sites with Gatsby.
+  categories:
+    - WordPress
+    - Agency
+    - Business
+  built_by: Bare Advertising & Communications
+  built_by_url: https://www.bare.ca/
+  featured: false
+- title: The Decking Superstore
+  url: https://www.thedeckingsuperstore.com/
+  main_url: https://www.thedeckingsuperstore.com/
+  description: >
+    One of Northern California's largest outdoor decking and siding providers.
+  categories:
+    - WordPress
+    - Business
+  built_by: Bare Advertising & Communications
+  built_by_url: https://www.bare.ca/
+  featured: false
+- title: Precision Cedar Products
+  url: https://www.precisioncedar.com/
+  main_url: https://www.precisioncedar.com/
+  description: >
+    Western Red Cedar Distributor in Vancouver Canada.
+  categories:
+    - WordPress
+    - Business
+  built_by: Bare Advertising & Communications
+  built_by_url: https://www.bare.ca/
+  featured: false
+- title: Circle Restoration
+  url: https://www.circlerestoration.com/
+  main_url: https://www.circlerestoration.com/
+  description: >
+    Restoration Services Provider in Vancouver Canada.
+  categories:
+    - WordPress
+    - Business
+  built_by: Bare Advertising & Communications
+  built_by_url: https://www.bare.ca/
+  featured: false
+- title: ALS Rally
+  url: https://www.alsrally.com/
+  main_url: https://www.alsrally.com/
+  description: >
+    Non profit fundraiser for ALS Research.
+  categories:
+    - WordPress
+    - Nonprofit
+    - Event
+  built_by: Bare Advertising & Communications
+  built_by_url: https://www.bare.ca/
+  featured: false
+- title: Vancouver Welsh Men's Choir
+  url: https://vancouverchoir.ca/
+  main_url: https://vancouverchoir.ca/
+  description: >
+    Vancouver Welsh Men's Choir website for upcoming shows, ticket purchases and online merchandise.
+  categories:
+    - WordPress
+    - Entertainment
+    - Event
+    - eCommerce
+  built_by: Bare Advertising & Communications
+  built_by_url: https://www.bare.ca/
+  featured: false
+- title: Paul Scanlon - Blog
+  main_url: https://paulie.dev/
+  url: https://paulie.dev/
+  source_url: https://github.com/PaulieScanlon/paulie-dev-2019
+  description: >
+    I'm a React UI developer / UX Engineer. React, GatsbyJs, JavaScript, TypeScript/Flow, StyledComponents, Storybook, TDD (Jest/Enzyme) and a tiny bit of Node.js.
+  categories:
+    - Blog
+    - Web Development
+  built_by: Paul Scanlon
+  built_by_url: http://www.pauliescanlon.io
   featured: false
