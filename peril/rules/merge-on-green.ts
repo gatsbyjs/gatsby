@@ -1,5 +1,5 @@
 import { danger, peril } from "danger"
-import octokit from "@octokit/rest"
+import * as octokit from "@octokit/rest"
 
 const ACCEPTABLE_MERGEABLE_STATES = [`clean`, `unstable`]
 
