@@ -9,7 +9,7 @@ This guide will explain the amazing features that may seem like “magic” and 
 
 Starters are optional precompiled Gatsby sites that are maintained by Gatsby’s core team and growing open source community; they can be used for blogging, e-commerce, design, and documentation to allow users to create blazing fast sites. Gatsby offers over a hundred opinionated starters from a variety of categories such as Blog, SEO, Portfolio, WordPress, and Markdown. You can browse the selection [in Gatsby's Starter Library](https://www.gatsbyjs.org/starters/?v=2).
 
-A starter is a full Gatsby site you can run from the start, and then it’s yours to own and change. After selecting a starter, you can create your own site locally based on that project using the `gatsby new` CLI command, which handles the cloning from Git for you. A cloned starter does not maintain a connection to the original source code, so they are helpful as starting points to customize heavily and create an entirely new Gatsby site.
+A starter is a fully functional Gatsby site that can run on its own but is designed to be used by you as a jumping-off point for creating your own site. After selecting a starter, you can create your own site locally based on that project using the `gatsby new` CLI command, which handles cloning the project from Git for you. A cloned starter does not maintain a connection to the original source code, so they are helpful as starting points to customize heavily and create an entirely new Gatsby site.
 
 You can find more information on how to get started, how to modify existing starters, and how to create your very own [in the starter documentation](https://www.gatsbyjs.org/docs/starters/).
 
