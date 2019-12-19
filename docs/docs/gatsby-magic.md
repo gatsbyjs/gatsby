@@ -22,7 +22,7 @@ Plugins are different from starters in that plugins package up functionality for
 
 To learn more about Gatsby’s plugin system, check out the [plugins section](https://www.gatsbyjs.org/docs/plugins/) of the docs.
 
-##
+## Themes
 
 Themes
 
