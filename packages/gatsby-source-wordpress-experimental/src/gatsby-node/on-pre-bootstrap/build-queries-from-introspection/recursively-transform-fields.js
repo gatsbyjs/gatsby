@@ -1,6 +1,6 @@
 import store from "../../../store"
 
-const { fieldBlacklist } = store.getState().introspection
+const { fieldBlacklist, fieldAliases } = store.getState().introspection
 
 const transformFragments = ({
   possibleTypes,
@@ -72,7 +72,17 @@ function transformField({
     return false
   }
 
-  if (fieldBlacklist.includes(field.name)) {
+  // this is used to alias fields that conflict with Gatsby node fields
+  // for ex Gatsby and WPGQL both have a `parent` field
+  const fieldName =
+    fieldAliases && fieldAliases[field.name]
+      ? `${fieldAliases[field.name]}: ${field.name}`
+      : field.name
+
+  if (
+    fieldBlacklist.includes(field.name) ||
+    fieldBlacklist.includes(fieldName)
+  ) {
     return false
   }
 
@@ -94,7 +104,7 @@ function transformField({
     (fieldType.kind === `NON_NULL` && ofType.kind === `SCALAR`) ||
     (fieldType.kind === `LIST` && fieldType.ofType.kind === `SCALAR`)
   ) {
-    return field.name
+    return fieldName
   }
 
   const isListOfGatsbyNodes =
@@ -102,7 +112,7 @@ function transformField({
 
   if (fieldType.kind === `LIST` && isListOfGatsbyNodes) {
     return {
-      fieldName: field.name,
+      fieldName: fieldName,
       fields: [`id`],
     }
   } else if (fieldType.kind === `LIST`) {
@@ -142,7 +152,7 @@ function transformField({
 
     // if we have either fragments or fields
     return {
-      fieldName: field.name,
+      fieldName: fieldName,
       fields: transformedFields,
       fragments: transformedFragments,
     }
@@ -154,13 +164,13 @@ function transformField({
   // pull the id and sourceUrl for connections to media item gatsby nodes
   if (isAMediaItemNode) {
     return {
-      fieldName: field.name,
+      fieldName: fieldName,
       fields: [`id`, `sourceUrl`],
     }
   } else if (isAGatsbyNode) {
     // just pull the id for connections to other gatsby nodes
     return {
-      fieldName: field.name,
+      fieldName: fieldName,
       fields: [`id`],
     }
   }
@@ -182,7 +192,7 @@ function transformField({
     }
 
     return {
-      fieldName: field.name,
+      fieldName: fieldName,
       fields: transformedFields,
     }
   }
@@ -207,7 +217,7 @@ function transformField({
     })
 
     return {
-      fieldName: field.name,
+      fieldName: fieldName,
       fields: transformedFields,
       fragments,
     }

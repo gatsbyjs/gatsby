@@ -17,6 +17,13 @@ const introspection = {
       `postTypeInfo`,
       `connectedPostTypes`,
     ],
+    fieldAliases: {
+      parent: `wpParent`,
+      children: `wpChildren`,
+      internal: `wpInternal`,
+      plugin: `wpPlugin`,
+      actionOptions: `wpActionOptions`,
+    },
   },
 
   reducers: {

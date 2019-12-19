@@ -1,12 +1,20 @@
 import store from "../../store"
 
+const { fieldAliases } = store.getState().introspection
+
 const transformFields = fields => {
   if (!fields || !fields.length) {
     return null
   }
 
   return fields.reduce((acc, curr) => {
-    const { name } = curr
+    // this is used to alias fields that conflict with Gatsby node fields
+    // for ex Gatsby and WPGQL both have a `parent` field
+    const name =
+      fieldAliases && fieldAliases[curr.name]
+        ? fieldAliases[curr.name]
+        : curr.name
+
     // skip fields that have required arguments
     if (curr.args && curr.args.find(arg => arg.type.kind === `NON_NULL`)) {
       return acc
@@ -58,14 +66,22 @@ const transformFields = fields => {
       acc[name] = {
         type: `Wp${curr.type.name}`,
         resolve: (source, args, context, info) => {
-          if (!source[name] || (source[name] && !source[name].id)) {
+          const field = source[name]
+
+          if (!field || (field && !field.id)) {
             return null
           }
 
-          return context.nodeModel.getNodeById({
-            id: source[name].id,
+          const node = context.nodeModel.getNodeById({
+            id: field.id,
             type: `Wp${curr.type.name}`,
           })
+
+          // if (!node && curr.type.name === `MediaItem`) {
+          //   dump(field)
+          // }
+
+          return node
         },
       }
 
@@ -127,17 +143,16 @@ const transformFields = fields => {
       acc[name] = {
         type: `Wp${curr.type.name}`,
         resolve: (source, args, context, info) => {
-          dd(source)
           const field = source[name]
 
           if (!field || !field.id) {
             return null
           }
 
-          // return context.nodeModel.getNodeById({
-          //   id: field.id,
-          //   type:
-          // })
+          return context.nodeModel.getNodeById({
+            id: field.id,
+            type: field.type,
+          })
         },
       }
       return acc
