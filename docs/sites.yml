@@ -8977,3 +8977,73 @@
   built_by: Zeek Interactive
   built_by_url: https://zeek.com
   featured: false
+- title: Bare Advertising & Communications
+  url: https://bare.ca/
+  main_url: https://bare.ca/
+  description: >
+    Bare is a full-service branding and production agency in Vancouver BC with deep experience in digital/traditional communications and strategy. We specialize in building headless WordPress sites with Gatsby.
+  categories:
+    - WordPress
+    - Agency
+    - Business
+  built_by: Bare Advertising & Communications
+  built_by_url: https://www.bare.ca/
+  featured: false
+- title: The Decking Superstore
+  url: https://www.thedeckingsuperstore.com/
+  main_url: https://www.thedeckingsuperstore.com/
+  description: >
+    One of Northern California's largest outdoor decking and siding providers.
+  categories:
+    - WordPress
+    - Business
+  built_by: Bare Advertising & Communications
+  built_by_url: https://www.bare.ca/
+  featured: false
+- title: Precision Cedar Products
+  url: https://www.precisioncedar.com/
+  main_url: https://www.precisioncedar.com/
+  description: >
+    Western Red Cedar Distributor in Vancouver Canada.
+  categories:
+    - WordPress
+    - Business
+  built_by: Bare Advertising & Communications
+  built_by_url: https://www.bare.ca/
+  featured: false
+- title: Circle Restoration
+  url: https://www.circlerestoration.com/
+  main_url: https://www.circlerestoration.com/
+  description: >
+    Restoration Services Provider in Vancouver Canada.
+  categories:
+    - WordPress
+    - Business
+  built_by: Bare Advertising & Communications
+  built_by_url: https://www.bare.ca/
+  featured: false
+- title: ALS Rally
+  url: https://www.alsrally.com/
+  main_url: https://www.alsrally.com/
+  description: >
+    Non profit fundraiser for ALS Research.
+  categories:
+    - WordPress
+    - Nonprofit
+    - Event
+  built_by: Bare Advertising & Communications
+  built_by_url: https://www.bare.ca/
+  featured: false
+- title: Vancouver Welsh Men's Choir
+  url: https://vancouverchoir.ca/
+  main_url: https://vancouverchoir.ca/
+  description: >
+    Vancouver Welsh Men's Choir website for upcoming shows, ticket purchases and online merchandise.
+  categories:
+    - WordPress
+    - Entertainment
+    - Event
+    - eCommerce
+  built_by: Bare Advertising & Communications
+  built_by_url: https://www.bare.ca/
+  featured: false
