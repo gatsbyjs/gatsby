@@ -6,7 +6,6 @@ This guide will explain the amazing features that may seem like “magic” and 
 
 ## Starters
 
-Starters
 
 Starters are optional precompiled Gatsby sites that are maintained by Gatsby’s core team and growing open source community; they can be used for blogging, e-commerce, design, and documentation to allow users to create blazing fast sites. Gatsby offers over a hundred opinionated starters from a variety of categories such as Blog, SEO, Portfolio, WordPress, and Markdown. You can browse the selection [in Gatsby's Starter Library](https://www.gatsbyjs.org/starters/?v=2).
 
