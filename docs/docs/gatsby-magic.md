@@ -24,7 +24,6 @@ To learn more about Gatsby’s plugin system, check out the [plugins section](ht
 
 ## Themes
 
-Themes
 
 Gatsby themes are a type of plugin with a `gatsby-config.js` file, effectively making them into Gatsby sites you can install from a package manager like npm. Themes provide a way to package up and distribute functionality for both Gatsby’s data layer and UI components, making them possible to update and receive changes from the original source code. This is how themes differ from starters, which do not maintain a connection to their source. Themes also come with a powerful API called [Shadowing](https://www.gatsbyjs.org/docs/themes/shadowing/), which allows you to structure themes in a customizable hierarchy.
 
