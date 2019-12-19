@@ -72,7 +72,7 @@ Here is how you get started using GraphQL in Gatsby: [https://www.gatsbyjs.org/t
 
 webpack is an open-source JavaScript module bundler that Gatsby uses under the hood to package up your site content and assets into a static bundle. You don’t have to do anything to webpack directly for it to work on your Gatsby site, but you do have the option to [customize](https://www.gatsbyjs.org/docs/add-custom-webpack-config/) it if necessary to provide a special configuration.
 
-When Gatsby creates its default webpack config, a function will be called allowing you to modify it using a package called webpack-merge. Gatsby does multiple webpack builds with a somewhat different configuration; each build type is referred to as a “stage”.
+When Gatsby creates its default webpack config, a function is called allowing you to modify the config using a package called webpack-merge. Gatsby does multiple webpack builds with a somewhat different configuration; each build type is referred to as a “stage”.
 
 You can learn more about [webpack](https://www.gatsbyjs.org/docs/webpack-and-ssr/) including how to [add a custom webpack Config](https://www.gatsbyjs.org/docs/add-custom-webpack-config/) in Gatsby by visiting the docs.
 
