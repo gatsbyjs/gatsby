@@ -436,19 +436,19 @@
   categories:
     - Education
     - Entertainment
-# - title: William Owen UK Portfolio / Blog
-#   main_url: "http://william-owen.co.uk/"
-#   url: "http://william-owen.co.uk/"
-#   featured: false
-#   description: >-
-#     Over 20 years experience delivering customer-facing websites, internet-based
-#     solutions and creative visual design for a wide range of companies and
-#     organisations.
-#   categories:
-#     - Portfolio
-#     - Blog
-#   built_by: William Owen
-#   built_by_url: "https://twitter.com/twilowen"
+- title: William Owen UK Portfolio / Blog
+  main_url: "http://william-owen.co.uk/"
+  url: "http://william-owen.co.uk/"
+  featured: false
+  description: >-
+    Over 20 years experience delivering customer-facing websites, internet-based
+    solutions and creative visual design for a wide range of companies and
+    organisations.
+  categories:
+    - Portfolio
+    - Blog
+  built_by: William Owen
+  built_by_url: "https://twitter.com/twilowen"
 - title: A4 纸网
   main_url: "http://www.a4z.cn/"
   url: "http://www.a4z.cn/price"
@@ -1096,14 +1096,6 @@
   categories:
     - Portfolio
     - Web Development
-# - title: Philipp Czernitzki - Blog/Website
-#   main_url: "http://philippczernitzki.me/"
-#   url: "http://philippczernitzki.me/"
-#   featured: false
-#   categories:
-#     - Portfolio
-#     - Web Development
-#     - Blog
 - title: WebGazer
   main_url: "https://www.webgazer.io/"
   url: "https://www.webgazer.io/"
@@ -4736,7 +4728,6 @@
 - title: Pattyrn
   main_url: https://pattyrn.com
   url: https://pattyrn.com
-  # optional: short paragraph describing the content and/or purpose of the site that will appear in the modal detail view and permalink views for your site
   description: >
     Pattyrn uses advanced machine learning AI to analyze the platform’s your teams use, making it easy to solve performance problems, reduce bottlenecks, and monitor culture health to optimize your ROI and help boost performance without causing burn out.
   categories:
@@ -8802,7 +8793,6 @@
 - title: Jarod Peachey
   main_url: https://jarodpeachey.netlify.com
   url: https://jarodpeachey.netlify.com
-  # optional: for open-source sites, this URL points to the repo that powers the site
   source_url: https://github.com/jarodpeachey/portfolio
   description: >
     Jarod Peachey is a front-end developer focused on building modern and fast websites for everyone.
@@ -8817,7 +8807,6 @@
 - title: Thomas Maximini
   main_url: https://www.thomasmaximini.com/
   url: https://www.thomasmaximini.com/
-  # optional: for open-source sites, this URL points to the repo that powers the site
   source_url: https://github.com/tmaximini/maxi.io
   description: >
     Thomas Maximini is a full stack web developer from Germany
@@ -8833,7 +8822,6 @@
 - title: Aretha Iskandar
   main_url: https://arethaiskandar.com/
   url: https://arethaiskandar.com/
-  # optional: for open-source sites, this URL points to the repo that powers the site
   source_url: https://github.com/tmaximini/arethaiskandar.com
   description: >
     Aretha Iskandar is a Jazz and Soul Singer / Songwriter from Paris
@@ -8965,19 +8953,12 @@
   built_by_url: https://github.com/rumaan/
   featured: false
 - title: DigiGov
-  # this is the URL that is linked from the showcase
   main_url: https://digigov.grnet.gr/
-  # this URL is used to generate a screenshot
   url: https://digigov.grnet.gr/
-  # optional: short paragraph describing the content and/or purpose of the site that will appear in the modal detail view and permalink views for your site
   description: >
     DigiGov is an initiative for the Digital Transformation of the Greek Public Sector
-  # You can list as many categories as you want here. Check list of Categories below in this doc!
-  # If you'd like to create a new category, simply list it here.
   categories:
     - Government
-  # Add the name (developer or company) and URL (e.g. Twitter, GitHub, portfolio) to be used for attribution
   built_by: GRNET
   built_by_url: https://grnet.gr/
-  # leave as false, the Gatsby site review board will choose featured sites quarterly
   featured: false
