@@ -8962,3 +8962,18 @@
   built_by: GRNET
   built_by_url: https://grnet.gr/
   featured: false
+- title: Zeek Interactive
+  main_url: https://zeek.com
+  url: https://zeek.com
+  description: >
+    Business site for Zeek Interactive. Using WordPress as a data store via the WPGraphQL plugin.
+  categories:
+    - Blog
+    - Web Development
+    - Mobile Development
+    - WordPress
+    - Agency
+    - Business
+  built_by: Zeek Interactive
+  built_by_url: https://zeek.com
+  featured: false
