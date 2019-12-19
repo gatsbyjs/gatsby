@@ -12,6 +12,19 @@ const transformFields = fields => {
       return acc
     }
 
+    // if we don't have any typenames we can't use this
+    if (!curr.type.name && !curr.type.ofType.name) {
+      return acc
+    }
+
+    if (curr.type.kind === `NON_NULL` && curr.type.ofType.kind === `OBJECT`) {
+      return acc
+    }
+
+    if (curr.type.kind === `NON_NULL` && curr.type.ofType.kind === `ENUM`) {
+      return acc
+    }
+
     if (curr.type && curr.type.name && curr.type.name.includes(`Connection`)) {
       acc[name] = `Wp${curr.type.name}`
       return acc
@@ -20,6 +33,16 @@ const transformFields = fields => {
     // non null scalar types
     if (curr.type.kind === `NON_NULL` && curr.type.ofType.kind === `SCALAR`) {
       acc[name] = `${curr.type.ofType.name}!`
+      return acc
+    }
+
+    // non null list types
+    if (curr.type.kind === `NON_NULL` && curr.type.ofType.kind === `LIST`) {
+      if (!curr.type.ofType.name) {
+        return acc
+      }
+
+      acc[name] = `[${curr.type.ofType.name}]!`
       return acc
     }
 
@@ -62,7 +85,7 @@ const transformFields = fields => {
                 type,
               })
             } else {
-              return null
+              return []
             }
           },
         }
@@ -76,7 +99,7 @@ const transformFields = fields => {
             const field = source[name]
 
             if (!field || !field.length) {
-              return null
+              return []
             }
 
             return field.map(item =>
@@ -90,9 +113,37 @@ const transformFields = fields => {
 
         return acc
       }
+
+      if (curr.type.ofType.kind === `SCALAR`) {
+        acc[name] = {
+          type: `[${curr.type.ofType.name}]`,
+        }
+
+        return acc
+      }
     }
 
-    // dd(curr)
+    if (curr.type.kind === `UNION`) {
+      acc[name] = {
+        type: `Wp${curr.type.name}`,
+        resolve: (source, args, context, info) => {
+          dd(source)
+          const field = source[name]
+
+          if (!field || !field.id) {
+            return null
+          }
+
+          // return context.nodeModel.getNodeById({
+          //   id: field.id,
+          //   type:
+          // })
+        },
+      }
+      return acc
+    }
+
+    dd(curr)
     // unhandled fields are removed from the schema by not mutating the accumulator
     return acc
   }, {})
@@ -164,8 +215,6 @@ export default async ({ actions, schema }, pluginOptions) => {
 
         return
       }
-
-      dd(type)
     })
 
   actions.createTypes(typeDefs)
