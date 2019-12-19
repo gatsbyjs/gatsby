@@ -4,9 +4,10 @@ date: 2019-12-19
 author: "Hashim Warren"
 tags: ["learning-to-code", "contest"]
 ---
+
 import EmailCaptureForm100Days from "../../../www/src/components/email-capture-form-100days"
 
-### If you're looking for a fun way to explore how to build blazing fast websites with Gatsby, our #100DaysOfGatsby challenge is for you! 
+### If you're looking for a fun way to explore how to build blazing fast websites with Gatsby, our #100DaysOfGatsby challenge is for you!
 
 ![alt text](/100daysofgatsby.png "100 Days of Gatsby")
 
@@ -16,17 +17,15 @@ Udemy named Gatsby [the #1 emerging tech skill](https://www.cnbc.com/2019/12/02/
 
 Register below to join the #100daysofGatsby coding challenge!
 
-
 <EmailCaptureForm100Days signupMessage="Get weekly updates on new challenges, ideas for where to start, and step-by-step documentation for completing the challenge." />
 
 ## Use #100DaysOfGatsby on Social Media
 
-As you work on your Gatsby project, connect with the community by using  #100DaysOfGatsby in your tweets or posts on social media. If you need help with a challenge, or want to share a tool or technique that was useful, visit our Gatsby communities on Discord, Spectrum, Reddit, and Reddit.
+As you work on your Gatsby project, connect with the community by using #100DaysOfGatsby in your tweets or posts on social media. If you need help with a challenge, or want to share a tool or technique that was useful, visit our Gatsby communities on Discord, Spectrum, Reddit, and Reddit.
 
 ## 👉🏽 New to React or Web Development?
 
 If you are an aspiring React developer, then this challenge will supercharge your learning. Gatsby is a great framework to adopt first so you can master React, Node.js, and JavaScript. Register your email in the form above and we will send you beginner-friendly, interesting projects that will help you explore the Gatsby and React ecosystem.
-
 
 ## 👉🏽 Experienced React Developer?
 
