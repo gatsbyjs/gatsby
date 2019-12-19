@@ -6,7 +6,6 @@ This guide will explain the amazing features that may seem like “magic” and 
 
 ## Starters
 
-
 Starters are optional precompiled Gatsby sites that are maintained by Gatsby’s core team and growing open source community; they can be used for blogging, e-commerce, design, and documentation to allow users to create blazing fast sites. Gatsby offers over a hundred opinionated starters from a variety of categories such as Blog, SEO, Portfolio, WordPress, and Markdown. You can browse the selection [in Gatsby's Starter Library](https://www.gatsbyjs.org/starters/?v=2).
 
 A starter is a fully functional Gatsby site that can run on its own but is designed to be used by you as a jumping-off point for creating your own site. After selecting a starter, you can create your own site locally based on that project using the `gatsby new` CLI command, which handles cloning the project from Git for you. A cloned starter does not maintain a connection to the original source code, so they are helpful as starting points to customize heavily and create an entirely new Gatsby site.
@@ -15,7 +14,6 @@ You can find more information on how to get started, how to modify existing star
 
 ## Plugins
 
-
 Gatsby plugins are Node.js packages that implement Gatsby APIs to add extra functionality to a Gatsby site. Plugins are commonly installed through a registry like npm and configured in a `gatsby-config.js` file. There are many types of [plugins](https://www.gatsbyjs.org/plugins/), including data sourcing, SEO, responsive images, offline support, support for Sass, TypeScript, sitemaps, and RSS, Google Analytics, and more. You can also [make your own plugins](https://www.gatsbyjs.org/docs/creating-plugins/) and either distribute them for fellow Gatsby developers to use or [install them locally](https://www.gatsbyjs.org/docs/loading-plugins-from-your-local-plugins-folder/).
 
 Plugins are different from starters in that plugins package up functionality for Gatsby’s data layer and other structural site code into installable parts. Additionally, plugins remain tied to the original source code and can be updated accordingly. Starters, in contrast, break their connection to the original source code, making them a one time snapshot, and include all source code for a Gatsby site including CSS styles and JSX markup.
@@ -23,7 +21,6 @@ Plugins are different from starters in that plugins package up functionality for
 To learn more about Gatsby’s plugin system, check out the [plugins section](https://www.gatsbyjs.org/docs/plugins/) of the docs.
 
 ## Themes
-
 
 Gatsby themes are a type of plugin with their own `gatsby-config.js` file, effectively making them into Gatsby sites you can install from a package manager like npm. Themes provide a way to package up and distribute functionality for both Gatsby’s data layer and UI components. Since themes are a type of plugin, your Gatsby site can make use of multiple themes at the same time. They have the added benefit of maintaining their tie to the original source code, allowing you to update and receive changes to them. This is how themes differ from starters, which do not maintain a connection to their source. Themes also come with a powerful API called [Shadowing](https://www.gatsbyjs.org/docs/themes/shadowing/), which allows you to structure themes in a customizable hierarchy.
 
