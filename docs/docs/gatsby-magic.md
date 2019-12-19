@@ -41,7 +41,7 @@ Gatsby provides a few different ways to create HTML pages that hook into its rou
 - Gatsby core automatically turns React components in src/pages into pages
 - Plugins can also implement `createPages` for you, which will create additional pages
 
-A big part of how Gatsby builds work is its compilation of static HTML pages that are initially fetched from a server and then rehydrated into a full React web application when browser JavaScript takes over. This is where client-side routing comes into the picture with @reach/router, as that’s how Gatsby links pages together.
+When Gatsby sites get built static HTML pages are compiled. When a user initially navigates to a page on the site, the HTML page is fetched from a server and then rehydrated into a full React web application when browser JavaScript takes over. This is where client-side routing comes into the picture with @reach/router, as that’s how Gatsby links pages together.
 
 Routes in Gatsby are generated for you under the hood by creating pages. Changing a route would depend on how that page was created: either changing a filename in `src/pages` or updating a slug in a post’s frontmatter metdata for a dynamic blog route.
 
