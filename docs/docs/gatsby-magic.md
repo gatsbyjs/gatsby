@@ -18,7 +18,7 @@ You can find more information on how to get started, how to modify existing star
 
 Gatsby plugins are Node.js packages that implement Gatsby APIs to add extra functionality to a Gatsby site. Plugins are commonly installed through a registry like npm and configured in a `gatsby-config.js` file. There are many types of [plugins](https://www.gatsbyjs.org/plugins/), including data sourcing, SEO, responsive images, offline support, support for Sass, TypeScript, sitemaps, and RSS, Google Analytics, and more. You can also [make your own plugins](https://www.gatsbyjs.org/docs/creating-plugins/) and either distribute them for fellow Gatsby developers to use or [install them locally](https://www.gatsbyjs.org/docs/loading-plugins-from-your-local-plugins-folder/).
 
-Plugins are different from starters in that plugins package up functionality for Gatsby’s data layer and other structural site code into installable parts. Starters, in contrast, include all source code for a Gatsby site including CSS styles and JSX markup.
+Plugins are different from starters in that plugins package up functionality for Gatsby’s data layer and other structural site code into installable parts. Additionally, plugins remain tied to the original source code and can be updated accordingly. Starters, in contrast, break their connection to the original source code, making them a one time snapshot, and include all source code for a Gatsby site including CSS styles and JSX markup.
 
 To learn more about Gatsby’s plugin system, check out the [plugins section](https://www.gatsbyjs.org/docs/plugins/) of the docs.
 
