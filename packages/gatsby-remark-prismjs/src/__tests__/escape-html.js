@@ -13,4 +13,14 @@ describe(`escaping html entities`, () => {
     }
     expect(escapeHtml(code, mapping)).toBe(`hello world&#123;`)
   })
+
+  it(`escapes base html entities and additional html entities`, () => {
+    const code = `hello world&><"'{`
+    const mapping = {
+      "{": `&#123;`,
+    }
+    expect(escapeHtml(code, mapping)).toBe(
+      `hello world&amp;&gt;&lt;&quot;&#39;&#123;`
+    )
+  })
 })
