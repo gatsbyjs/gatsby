@@ -44,9 +44,6 @@ module.exports = async function build(program: BuildArgs) {
   buildActivity.start()
 
   telemetry.trackCli(`BUILD_START`)
-  process.on(`exit`, exitCode => {
-    telemetry.trackCli(`BUILD_END`, { exitCode })
-  })
   signalExit(exitCode => {
     telemetry.trackCli(`BUILD_END`, { exitCode })
   })
