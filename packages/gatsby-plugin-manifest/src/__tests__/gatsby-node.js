@@ -71,13 +71,13 @@ const manifestOptions = {
   display: `standalone`,
   icons: [
     {
-      src: `/icons/icon-48x48.png`,
+      src: `icons/icon-48x48.png`,
       sizes: `48x48`,
       type: `image/png`,
       purpose: `all`,
     },
     {
-      src: `/icons/icon-128x128.png`,
+      src: `icons/icon-128x128.png`,
       sizes: `128x128`,
       type: `image/png`,
     },
@@ -90,7 +90,6 @@ describe(`Test plugin manifest options`, () => {
     fs.mkdirSync.mockReset()
     fs.existsSync.mockReset()
     sharp.mockClear()
-    global.__PATH_PREFIX__ = ``
   })
 
   // the require of gatsby-node performs the invoking
@@ -124,12 +123,12 @@ describe(`Test plugin manifest options`, () => {
     const pluginSpecificOptions = {
       icons: [
         {
-          src: `/icons/icon-48x48.png`,
+          src: `icons/icon-48x48.png`,
           sizes: `${size}x${size}`,
           type: `image/png`,
         },
         {
-          src: `/other-icons/icon-48x48.png`,
+          src: `other-icons/icon-48x48.png`,
           sizes: `${size}x${size}`,
           type: `image/png`,
         },
@@ -143,11 +142,11 @@ describe(`Test plugin manifest options`, () => {
 
     const firstIconPath = path.join(
       `public`,
-      path.dirname(`/icons/icon-48x48.png`)
+      path.dirname(`icons/icon-48x48.png`)
     )
     const secondIconPath = path.join(
       `public`,
-      path.dirname(`/other-icons/icon-48x48.png`)
+      path.dirname(`other-icons/icon-48x48.png`)
     )
 
     expect(fs.mkdirSync).toHaveBeenNthCalledWith(1, firstIconPath)
@@ -164,7 +163,7 @@ describe(`Test plugin manifest options`, () => {
       icon: icon,
       icons: [
         {
-          src: `/icons/icon-48x48.png`,
+          src: `icons/icon-48x48.png`,
           sizes: `${size}x${size}`,
           type: `image/png`,
         },
@@ -256,16 +255,6 @@ describe(`Test plugin manifest options`, () => {
       expect.anything(),
       JSON.stringify(manifestOptions)
     )
-  })
-
-  it(`properly prefixes icons in manifest with asset or path prefix`, async () => {
-    global.__PATH_PREFIX__ = `/test-prefix`
-
-    await onPostBootstrap(apiArgs, {
-      ...manifestOptions,
-    })
-
-    expect(fs.writeFileSync).toMatchSnapshot()
   })
 
   it(`icon options iterator adds options and the icon array take precedence`, async () => {
