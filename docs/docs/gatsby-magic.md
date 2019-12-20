@@ -2,7 +2,7 @@
 title: Gatsby Magic
 ---
 
-This guide will explain the amazing features that may seem like “magic” and what goes on behind the scenes in GatsbyJS.
+This guide will explain the amazing features that may seem like “magic” and what goes on behind the scenes in Gatsby.
 
 ## Starters
 
@@ -10,7 +10,7 @@ Starters are optional precompiled Gatsby sites that are maintained by Gatsby’s
 
 A starter is a fully functional Gatsby site that can run on its own but is designed to be used by you as a jumping-off point for creating your own site. After selecting a starter, you can create your own site locally based on that project using the `gatsby new` CLI command, which handles cloning the project from Git for you. A cloned starter does not maintain a connection to the original source code, so they are helpful as starting points to customize heavily and create an entirely new Gatsby site.
 
-You can find more information on how to get started, how to modify existing starters, and how to create your very own [in the starter documentation](docs/starters/).
+You can find more information on how to get started, how to modify existing starters, and how to create your very own [in the starter documentation](/docs/starters/).
 
 ## Plugins
 
@@ -30,7 +30,7 @@ To learn more about Gatsby themes including themes available in the plugin libra
 
 ## Routing
 
-Gatsby sites are full React web applications, meaning they have access to client-side APIs including routing (a fancy word for matching a URL with a part of a web page using JavaScript). Gatsby creates paths to access content, handling dynamic [routing](/docs/glossary#routing) for you and providing performance benefits through [content prefetching](/docs/routing/#performance-and-prefetching). A lot of the work is done at build time for a site using mostly [static content](/docs/adding-app-and-website-functionality/#static-pages). To handle applications that include functionality that cannot be handled at build time or through [rehydration](/docs/adding-app-and-website-functionality/#how-hydration-makes-apps-possible), including authentication or retrieving dynamic content, you can use [client-only routes](/docs/client-only-routes-and-user-authentication) using [@reach/router](/docs/reach-router-and-gatsby/) which is built into Gatsby.
+Gatsby sites are full React web applications, meaning they have access to client-side APIs including routing (a fancy word for matching a URL with a part of a web page using JavaScript). Gatsby creates paths to access content, handling dynamic [routing](/docs/glossary#routing) for you and providing performance benefits through [content prefetching](docs/routing/#performance-and-prefetching). A lot of the work is done at build time for a site using mostly [static content](/docs/adding-app-and-website-functionality/#static-pages). To handle applications that include functionality that cannot be handled at build time or through [rehydration](/docs/adding-app-and-website-functionality/#how-hydration-makes-apps-possible), including authentication or retrieving dynamic content, you can use [client-only routes](/docs/client-only-routes-and-user-authentication) using [@reach/router](/docs/reach-router-and-gatsby/) which is built into Gatsby.
 
 Gatsby provides a few different ways to create HTML pages that hook into its routing system. Here are some examples of [how to create pages](/docs/creating-and-modifying-pages) in Gatsby:
 
