@@ -9060,7 +9060,7 @@
   built_by_url: http://www.pauliescanlon.io
   featured: false
 - title: EF Design
-    main_url: "https://ef.design"
+    main_url: https://ef.design
     url: https://ef.design
     description: >
       Home of everything creative, digital and brand at EF.
