@@ -1,3 +1,4 @@
+<!--Gatsby OSS team is on holiday, expect a delayed response-->
 ---
 name: New Translation Request 🌐
 about: Suggest a new language translation of the repo.
