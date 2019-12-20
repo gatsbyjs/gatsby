@@ -1,4 +1,4 @@
-  
+
 **/coverage/**
 **/node_modules/**
 bin/
@@ -7,7 +7,7 @@ packages/*/lib/**
 packages/*/scripts/**
 **/dist/*
 **/__testfixtures__/**
-**/__tests__/fixtures/** 
+**/__tests__/fixtures/**
 peril
 docs
 plop-templates
@@ -20,5 +20,6 @@ integration-tests
 **/*.d.ts
 
 packages/*/*.js
+packages/gatsby-plugin-preload-fonts/prepare/*.js
 packages/gatsby-image/withIEPolyfill/index.js
 packages/gatsby/cache-dir/commonjs/**/*
