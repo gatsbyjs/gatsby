@@ -115,8 +115,8 @@ const fetchGraphql = async ({
     if (!contentType.includes(`application/json;`)) {
       throw new Error(
         `Unable to connect to WPGraphQL.
-${genericError}
-        ${url}`
+        ${genericError}
+URL: ${url}`
       )
     }
   } catch (e) {
