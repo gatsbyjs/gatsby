@@ -32,7 +32,7 @@ export default async function fetchReferencedMediaItemsAndCreateNodes({
       panicOnError: true,
     })
 
-    for (const node of Object.values(data)) {
+    for (const node of Object.values(data.mediaItems.nodes)) {
       await actions.createNode({
         ...node,
         parent: null,
