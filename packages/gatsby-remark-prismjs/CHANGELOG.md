@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.3.28](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-prismjs@3.3.27...gatsby-remark-prismjs@3.3.28) (2019-12-20)
+
+### Features
+
+- **gatsby-remark-prism-js:** add additional html escapes ([#20156](https://github.com/gatsbyjs/gatsby/issues/20156)) ([c484c04](https://github.com/gatsbyjs/gatsby/commit/c484c04))
+
 ## [3.3.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-prismjs@3.3.25...gatsby-remark-prismjs@3.3.27) (2019-12-10)
 
 **Note:** Version bump only for package gatsby-remark-prismjs

@@ -1,3 +1,5 @@
+<!-- Gatsby OSS team is on holiday, expect a delayed response -->
+
 <!--
   Have any questions? Check out the contributing docs at https://gatsby.dev/contribute, or
   ask in this Pull Request and a Gatsby maintainer will be happy to help :)

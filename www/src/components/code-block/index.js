@@ -2,17 +2,10 @@
 import { jsx } from "theme-ui"
 import React from "react"
 import PropTypes from "prop-types"
-import loadable from "@loadable/component"
 
 import Copy from "../copy"
 import normalize from "./normalize"
-
-const LazyHighlight = loadable(async () => {
-  const Module = await import(`prism-react-renderer`)
-  const Highlight = Module.default
-  const defaultProps = Module.defaultProps
-  return props => <Highlight {...defaultProps} {...props} />
-})
+import LazyHighlight from "../lazy-highlight"
 
 const getParams = (name = ``) => {
   const [lang, params = ``] = name.split(`:`)

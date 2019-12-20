@@ -71,7 +71,7 @@ webpack is an open-source JavaScript module bundler that Gatsby uses under the h
 
 When Gatsby creates its default webpack config, a function is called allowing you to modify the config using a package called webpack-merge. Gatsby does multiple webpack builds with a somewhat different configuration; each build type is referred to as a “stage”.
 
-You can learn more about [webpack](/docs/webpack-and-ssr/) including how to [add a custom webpack Config](/docs/add-custom-webpack-config/) in Gatsby by visiting the docs.
+You can learn more about [webpack](https://www.gatsbyjs.org/docs/webpack-and-ssr/) including how to [add a custom webpack Config](https://www.gatsbyjs.org/docs/add-custom-webpack-config/) in Gatsby by visiting the docs.
 
 ## Gatsby Cloud
 
