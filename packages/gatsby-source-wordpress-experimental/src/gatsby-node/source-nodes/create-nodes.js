@@ -11,7 +11,7 @@ export const createGatsbyNodesFromWPGQLContentNodes = async (
   pluginOptions
 ) => {
   const createdNodeIds = []
-  const referencedMediaItemNodeIds = []
+  const referencedMediaItemNodeIds = new Set()
 
   for (const wpgqlNodesGroup of wpgqlNodesByContentType) {
     const wpgqlNodes = wpgqlNodesGroup.allNodesOfContentType
@@ -43,7 +43,7 @@ export const createGatsbyNodesFromWPGQLContentNodes = async (
             .filter(id => id !== node.id)
 
           if (matchedIds.length) {
-            referencedMediaItemNodeIds.push(matchedIds)
+            matchedIds.forEach(id => referencedMediaItemNodeIds.add(id))
           }
         }
       }
@@ -63,12 +63,14 @@ export const createGatsbyNodesFromWPGQLContentNodes = async (
     }
   }
 
+  const referencedMediaItemNodeIdsArray = [...referencedMediaItemNodeIds]
+
   if (
     pluginOptions.schema.MediaItem.onlyFetchIfReferenced &&
-    referencedMediaItemNodeIds.length
+    referencedMediaItemNodeIdsArray.length
   ) {
     await fetchReferencedMediaItemsAndCreateNodes({
-      referencedMediaItemNodeIds,
+      referencedMediaItemNodeIds: referencedMediaItemNodeIdsArray,
     })
   }
 

@@ -1,3 +1,4 @@
+import chunk from "lodash/chunk"
 import store from "../../store"
 import fetchGraphql from "../../utils/fetch-graphql"
 
@@ -9,39 +10,38 @@ export default async function fetchReferencedMediaItemsAndCreateNodes({
   const { pluginOptions, helpers } = state.gatsbyApi
   const { createContentDigest, actions } = helpers
 
-  // fetch MediaItem nodes that are referenced in existing nodes by id.
-  const query = `
-      fragment GatsbyMediaItemFields on MediaItem {
+  const chunkedIds = chunk(referencedMediaItemNodeIds, 100)
+
+  for (const ids of chunkedIds) {
+    const query = `
+    query MEDIA_ITEMS($in: [ID]) {
+      mediaItems(where:{ in: $in }) {
+        nodes {
           ${selectionSet}
         }
-
-      query {
-        ${referencedMediaItemNodeIds
-          .map(
-            (id, index) => `
-          idIndex${index}: mediaItemBy(id: "${id}") {
-            ...GatsbyMediaItemFields
-          }
-        `
-          )
-          .join(` `)}
       }
+    }
     `
 
-  const { data } = await fetchGraphql({
-    url: pluginOptions.url,
-    query,
-  })
-
-  for (const node of Object.values(data)) {
-    await actions.createNode({
-      ...node,
-      parent: null,
-      internal: {
-        contentDigest: createContentDigest(node),
-        // @todo allow namespacing types with a plugin option. Default to `Wp`
-        type: `WpMediaItem`,
+    const { data } = await fetchGraphql({
+      url: pluginOptions.url,
+      query,
+      variables: {
+        ids,
       },
+      exitOnError: true,
     })
+
+    for (const node of Object.values(data)) {
+      await actions.createNode({
+        ...node,
+        parent: null,
+        internal: {
+          contentDigest: createContentDigest(node),
+          // @todo allow namespacing types with a plugin option. Default to `Wp`
+          type: `WpMediaItem`,
+        },
+      })
+    }
   }
 }
