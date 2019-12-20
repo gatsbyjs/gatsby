@@ -1,7 +1,6 @@
 
 packages/*/yarn.lock
 packages/*/package-lock.json
-packages/*/node_modules/*
 
 # Logs
 logs
