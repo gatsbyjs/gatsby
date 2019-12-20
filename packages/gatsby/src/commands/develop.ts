@@ -277,7 +277,7 @@ async function startServer(program: IProgram) {
       const proxiedUrl = url + req.originalUrl
       const {
         // remove `host` from copied headers
-        // eslint-disable-next-line no-unused-vars
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         headers: { host, ...headers },
         method,
       } = req
@@ -423,7 +423,7 @@ module.exports = async (program: IProgram) => {
   }
 
   function prepareUrls(
-    protocol: "http" | "https",
+    protocol: `http` | `https`,
     host: string,
     port: number
   ): PreparedUrls {
@@ -534,7 +534,8 @@ module.exports = async (program: IProgram) => {
   }
 
   function printDeprecationWarnings() {
-    const deprecatedApis: ["boundActionCreators", "pathContext"] = [
+    type DeprecatedAPIList = ["boundActionCreators", "pathContext"] // eslint-disable-line
+    const deprecatedApis: DeprecatedAPIList = [
       `boundActionCreators`,
       `pathContext`,
     ]
@@ -617,7 +618,7 @@ module.exports = async (program: IProgram) => {
 
     if (isSuccessful && isFirstCompile) {
       printInstructions(
-        program.sitePackageJson.name || "(Unnamed package)",
+        program.sitePackageJson.name || `(Unnamed package)`,
         urls
       )
       printDeprecationWarnings()

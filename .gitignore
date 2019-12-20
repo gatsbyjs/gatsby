@@ -1,6 +1,7 @@
 
 packages/*/yarn.lock
 packages/*/package-lock.json
+packages/*/node_modules/*
 
 # Logs
 logs
@@ -52,6 +53,7 @@ node_modules/
 
 # misc
 .serverless/
+.eslintcache
 
 # lock files
 yarn.lock
