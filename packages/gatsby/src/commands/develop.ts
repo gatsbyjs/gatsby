@@ -1,51 +1,74 @@
-/* @flow */
+import url from "url"
+import fs from "fs"
+import openurl from "better-opn"
+import chokidar from "chokidar"
 
-const url = require(`url`)
-const glob = require(`glob`)
-const fs = require(`fs`)
-const openurl = require(`better-opn`)
-const chokidar = require(`chokidar`)
-const express = require(`express`)
-const graphqlHTTP = require(`express-graphql`)
-const graphqlPlayground = require(`graphql-playground-middleware-express`)
-  .default
-const graphiqlExplorer = require(`gatsby-graphiql-explorer`)
-const { formatError } = require(`graphql`)
-const got = require(`got`)
-const webpack = require(`webpack`)
-const webpackConfig = require(`../utils/webpack.config`)
-const bootstrap = require(`../bootstrap`)
-const { store, emitter } = require(`../redux`)
-const { syncStaticDir } = require(`../utils/get-static-dir`)
-const buildHTML = require(`./build-html`)
-const { withBasePath } = require(`../utils/path`)
-const report = require(`gatsby-cli/lib/reporter`)
-const launchEditor = require(`react-dev-utils/launchEditor`)
-const formatWebpackMessages = require(`react-dev-utils/formatWebpackMessages`)
-const chalk = require(`chalk`)
-const address = require(`address`)
-const cors = require(`cors`)
-const telemetry = require(`gatsby-telemetry`)
-const WorkerPool = require(`../utils/worker/pool`)
+import { PackageJson } from "gatsby"
+import glob from "glob"
+import express from "express"
+import got from "got"
+import webpack from "webpack"
+import graphqlHTTP from "express-graphql"
+import graphqlPlayground from "graphql-playground-middleware-express"
+import graphiqlExplorer from "gatsby-graphiql-explorer"
+import { formatError } from "graphql"
 
-const withResolverContext = require(`../schema/context`)
-const sourceNodes = require(`../utils/source-nodes`)
-const createSchemaCustomization = require(`../utils/create-schema-customization`)
-const websocketManager = require(`../utils/websocket-manager`)
-const getSslCert = require(`../utils/get-ssl-cert`)
-const { slash } = require(`gatsby-core-utils`)
-const { initTracer } = require(`../utils/tracer`)
-const apiRunnerNode = require(`../utils/api-runner-node`)
-const db = require(`../db`)
-const detectPortInUseAndPrompt = require(`../utils/detect-port-in-use-and-prompt`)
-const onExit = require(`signal-exit`)
-const queryUtil = require(`../query`)
-const queryWatcher = require(`../query/query-watcher`)
-const requiresWriter = require(`../bootstrap/requires-writer`)
-const {
+import webpackConfig from "../utils/webpack.config"
+import bootstrap from "../bootstrap"
+import { store, emitter } from "../redux"
+import { syncStaticDir } from "../utils/get-static-dir"
+import buildHTML from "./build-html"
+import { withBasePath } from "../utils/path"
+import report from "gatsby-cli/lib/reporter"
+import launchEditor from "react-dev-utils/launchEditor"
+import formatWebpackMessages from "react-dev-utils/formatWebpackMessages"
+import chalk from "chalk"
+import address from "address"
+import cors from "cors"
+import telemetry from "gatsby-telemetry"
+import WorkerPool from "../utils/worker/pool"
+import http from "http"
+import https from "https"
+
+import withResolverContext from "../schema/context"
+import sourceNodes from "../utils/source-nodes"
+import createSchemaCustomization from "../utils/create-schema-customization"
+import websocketManager from "../utils/websocket-manager"
+import getSslCert from "../utils/get-ssl-cert"
+import { slash } from "gatsby-core-utils"
+import { initTracer } from "../utils/tracer"
+import apiRunnerNode from "../utils/api-runner-node"
+import db from "../db"
+import detectPortInUseAndPrompt from "../utils/detect-port-in-use-and-prompt"
+import onExit from "signal-exit"
+import queryUtil from "../query"
+import queryWatcher from "../query/query-watcher"
+import requiresWriter from "../bootstrap/requires-writer"
+import {
   reportWebpackWarnings,
   structureWebpackErrors,
-} = require(`../utils/webpack-error-utils`)
+} from "../utils/webpack-error-utils"
+
+interface ICert {
+  keyPath: string
+  certPath: string
+  key: string
+  cert: string
+}
+
+interface IProgram {
+  useYarn: boolean
+  open: boolean
+  openTracingConfigFile: string
+  port: number
+  host: string
+  [`cert-file`]?: string
+  [`key-file`]?: string
+  directory: string
+  https?: boolean
+  sitePackageJson: PackageJson
+  ssl?: ICert
+}
 
 // const isInteractive = process.stdout.isTTY
 
@@ -61,7 +84,7 @@ onExit(() => {
 })
 
 const waitJobsFinished = () =>
-  new Promise((resolve, reject) => {
+  new Promise(resolve => {
     const onEndJob = () => {
       if (store.getState().jobs.active.length === 0) {
         resolve()
@@ -72,13 +95,15 @@ const waitJobsFinished = () =>
     onEndJob()
   })
 
-async function startServer(program) {
+type ActivityTracker = any // TODO: Replace this with proper type once reporter is typed
+
+async function startServer(program: IProgram) {
   const indexHTMLActivity = report.phantomActivity(`building index.html`, {})
   indexHTMLActivity.start()
   const directory = program.directory
   const directoryPath = withBasePath(directory)
   const workerPool = WorkerPool.create()
-  const createIndexHtml = async ({ activity }) => {
+  const createIndexHtml = async (activity: ActivityTracker) => {
     try {
       await buildHTML.buildPages({
         program,
@@ -103,7 +128,7 @@ async function startServer(program) {
     }
   }
 
-  await createIndexHtml({ activity: indexHTMLActivity })
+  await createIndexHtml(indexHTMLActivity)
 
   indexHTMLActivity.end()
 
@@ -188,7 +213,7 @@ async function startServer(program) {
    * If no GATSBY_REFRESH_TOKEN env var is available, then no Authorization header is required
    **/
   const REFRESH_ENDPOINT = `/__refresh`
-  const refresh = async req => {
+  const refresh = async (req: express.Request) => {
     let activity = report.activityTimer(`createSchemaCustomization`, {})
     activity.start()
     await createSchemaCustomization({
@@ -261,11 +286,11 @@ async function startServer(program) {
           got
             .stream(proxiedUrl, { headers, method, decompress: false })
             .on(`response`, response =>
-              res.writeHead(response.statusCode, response.headers)
+              res.writeHead(response.statusCode!, response.headers)
             )
             .on(`error`, (err, _, response) => {
               if (response) {
-                res.writeHead(response.statusCode, response.headers)
+                res.writeHead(response.statusCode!, response.headers)
               } else {
                 const message = `Error when trying to proxy request "${req.originalUrl}" to "${proxiedUrl}"`
 
@@ -284,12 +309,12 @@ async function startServer(program) {
   // This fixes "Unexpected token < in JSON at position 0" runtime
   // errors after restarting development server and
   // cause automatic hard refresh in the browser.
-  app.use(/.*\.hot-update\.json$/i, (req, res) => {
+  app.use(/.*\.hot-update\.json$/i, (_, res) => {
     res.status(404).end()
   })
 
   // Render an HTML page and serve it.
-  app.use((req, res, next) => {
+  app.use((_, res) => {
     res.sendFile(directoryPath(`public/index.html`), err => {
       if (err) {
         res.status(500).end()
@@ -299,29 +324,16 @@ async function startServer(program) {
 
   /**
    * Set up the HTTP server and socket.io.
+   * If a SSL cert exists in program, use it with `createServer`.
    **/
-  let server = require(`http`).Server(app)
+  let server = program.ssl
+    ? https.createServer(program.ssl, app)
+    : new http.Server(app)
 
-  // If a SSL cert exists in program, use it with `createServer`.
-  if (program.ssl) {
-    server = require(`https`).createServer(program.ssl, app)
-  }
   websocketManager.init({ server, directory: program.directory })
   const socket = websocketManager.getSocket()
 
-  const listener = server.listen(program.port, program.host, err => {
-    if (err) {
-      if (err.code === `EADDRINUSE`) {
-        // eslint-disable-next-line max-len
-        report.panic(
-          `Unable to start Gatsby on port ${program.port} as there's already a process listening on that port.`
-        )
-        return
-      }
-
-      report.panic(`There was a problem starting the development server`, err)
-    }
-  })
+  const listener = server.listen(program.port, program.host)
 
   // Register watcher that rebuilds index.html every time html.js changes.
   const watchGlobs = [`src/html.js`, `plugins/**/gatsby-ssr.js`].map(path =>
@@ -329,14 +341,14 @@ async function startServer(program) {
   )
 
   chokidar.watch(watchGlobs).on(`change`, async () => {
-    await createIndexHtml({ activity: indexHTMLActivity })
+    await createIndexHtml(indexHTMLActivity)
     socket.to(`clients`).emit(`reload`)
   })
 
   return { compiler, listener, webpackActivity }
 }
 
-module.exports = async (program: any) => {
+module.exports = async (program: IProgram) => {
   initTracer(program.openTracingConfigFile)
   report.pendingActivity({ id: `webpack-develop` })
   telemetry.trackCli(`DEVELOP_START`)
@@ -403,19 +415,30 @@ module.exports = async (program: any) => {
 
   let { compiler, webpackActivity } = await startServer(program)
 
-  function prepareUrls(protocol, host, port) {
-    const formatUrl = hostname =>
+  type PreparedUrls = {
+    lanUrlForConfig: string
+    lanUrlForTerminal: string
+    localUrlForTerminal: string
+    localUrlForBrowser: string
+  }
+
+  function prepareUrls(
+    protocol: "http" | "https",
+    host: string,
+    port: number
+  ): PreparedUrls {
+    const formatUrl = (hostname: string) =>
       url.format({
         protocol,
         hostname,
         port,
         pathname: `/`,
       })
-    const prettyPrintUrl = hostname =>
+    const prettyPrintUrl = (hostname: string) =>
       url.format({
         protocol,
         hostname,
-        port: chalk.bold(port),
+        port: chalk.bold(String(port)),
         pathname: `/`,
       })
 
@@ -461,7 +484,7 @@ module.exports = async (program: any) => {
     }
   }
 
-  function printInstructions(appName, urls, useYarn) {
+  function printInstructions(appName: string, urls: PreparedUrls) {
     console.log()
     console.log(`You can now view ${chalk.bold(appName)} in the browser.`)
     console.log()
@@ -511,7 +534,10 @@ module.exports = async (program: any) => {
   }
 
   function printDeprecationWarnings() {
-    const deprecatedApis = [`boundActionCreators`, `pathContext`]
+    const deprecatedApis: ["boundActionCreators", "pathContext"] = [
+      `boundActionCreators`,
+      `pathContext`,
+    ]
     const fixMap = {
       boundActionCreators: {
         newName: `actions`,
@@ -522,8 +548,10 @@ module.exports = async (program: any) => {
         docsLink: `https://gatsby.dev/pathContext`,
       },
     }
-    const deprecatedLocations = {}
-    deprecatedApis.forEach(api => (deprecatedLocations[api] = []))
+    const deprecatedLocations = {
+      boundActionCreators: [] as string[],
+      pathContext: [] as string[],
+    }
 
     glob
       .sync(`{,!(node_modules|public)/**/}*.js`, { nodir: true })
@@ -557,7 +585,7 @@ module.exports = async (program: any) => {
   //   console.log(`set invalid`, args, this)
   // })
 
-  compiler.hooks.watchRun.tapAsync(`log compiling`, function(args, done) {
+  compiler.hooks.watchRun.tapAsync(`log compiling`, function(_, done) {
     if (webpackActivity) {
       webpackActivity.end()
     }
@@ -588,10 +616,13 @@ module.exports = async (program: any) => {
     const isSuccessful = !messages.errors.length
 
     if (isSuccessful && isFirstCompile) {
-      printInstructions(program.sitePackageJson.name, urls, program.useYarn)
+      printInstructions(
+        program.sitePackageJson.name || "(Unnamed package)",
+        urls
+      )
       printDeprecationWarnings()
       if (program.open) {
-        Promise.resolve(openurl(urls.localUrlForBrowser)).catch(err =>
+        Promise.resolve(openurl(urls.localUrlForBrowser)).catch(() =>
           console.log(
             `${chalk.yellow(
               `warn`

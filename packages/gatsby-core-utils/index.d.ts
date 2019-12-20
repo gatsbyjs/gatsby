@@ -13,6 +13,12 @@ export declare function createContentDigest(input: any): string
 export declare function joinPath(...paths: string[]): string
 
 /**
+ * Convert Windows backslash paths to slash paths: foo\\bar ➔ foo/bar
+ * @param {string} path
+ */
+export declare function slash(path: string): string
+
+/**
  * Checks if the file name matches a node path
  * @param {string} fileName File name
  */
