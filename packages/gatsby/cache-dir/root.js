@@ -9,7 +9,7 @@ import {
 } from "./navigation"
 import { apiRunner } from "./api-runner-browser"
 import loader from "./loader"
-import JSONStore from "./json-store"
+import { PageQueryStore, StaticQueryStore } from "./query-result-store"
 import EnsureResources from "./ensure-resources"
 
 import { reportError, clearError } from "./error-overlay-handler"
@@ -48,7 +48,7 @@ const RouteHandler = props => (
       basepath: `/`,
     }}
   >
-    <JSONStore {...props} />
+    <PageQueryStore {...props} />
   </BaseContext.Provider>
 )
 
@@ -91,7 +91,7 @@ class LocationHandler extends React.Component {
     let custom404
     if (real404PageResources) {
       custom404 = (
-        <JSONStore {...this.props} pageResources={real404PageResources} />
+        <PageQueryStore {...this.props} pageResources={real404PageResources} />
       )
     }
 
@@ -130,4 +130,4 @@ const WrappedRoot = apiRunner(
   }
 ).pop()
 
-export default () => WrappedRoot
+export default () => <StaticQueryStore>{WrappedRoot}</StaticQueryStore>

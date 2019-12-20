@@ -1,3 +1,4 @@
+const Wrapper = require(`./src/wrap-root-element`).default
 require(`./src/index.css`)
 
 if (typeof window !== `undefined`) {
@@ -24,3 +25,5 @@ exports.onRouteUpdate = ({ location }) => {
 exports.onPrefetchPathname = ({ pathname }) => {
   addLogEntry(`onPrefetchPathname`, pathname)
 }
+
+exports.wrapRootElement = Wrapper
