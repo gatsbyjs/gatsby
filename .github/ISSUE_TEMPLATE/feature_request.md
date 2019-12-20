@@ -3,6 +3,8 @@ name: Feature Request 💡
 about: Suggest a new idea for the project.
 ---
 
+<!-- Gatsby OSS team is on holiday, expect a delayed response -->
+
 <!--
   Please fill out each section below, otherwise, your issue will be closed.
 
