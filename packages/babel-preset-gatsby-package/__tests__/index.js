@@ -31,11 +31,7 @@ describe(`babel-preset-gatsby-package`, () => {
         nodeVersion,
       })
 
-      const [
-        // eslint-disable-next-line no-unused-vars
-        _,
-        opts,
-      ] = presets.find(preset =>
+      const [, opts] = presets.find(preset =>
         [].concat(preset).includes(`@babel/preset-env`)
       )
 
