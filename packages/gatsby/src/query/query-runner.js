@@ -72,6 +72,7 @@ ${formatErrorDetails(errorDetails)}`)
     delete result.pageContext.pluginCreatorId
     delete result.pageContext.componentPath
     delete result.pageContext.context
+    delete result.pageContext.isCreatedByStatefulCreatePages
   }
 
   const resultJSON = JSON.stringify(result)
