@@ -180,6 +180,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                           ...shortcutIcon,
                           svg: { verticalAlign: `text-top !important` },
                         }}
+                        aria-label={`Open source code for ${name}`}
                       >
                         <GithubIcon />
                       </a>
@@ -192,6 +193,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                           ...shortcutIcon,
                           svg: { verticalAlign: `text-top !important` },
                         }}
+                        aria-label={`Open demo for ${name}`}
                       >
                         <LaunchDemoIcon />
                       </a>
