@@ -60,7 +60,7 @@ const generateQueriesFromIntrospection = async ({
   // for example we need to do posts(where: { parent: null }) { nodes { ... }}
   // https://github.com/wp-graphql/wp-graphql/issues/928
   const query = getAvailablePostTypesQuery()
-  const { url, nodeSettings } = pluginOptions
+  const { url, schema } = pluginOptions
   const {
     data: { postTypes },
   } = await fetchGraphql({ url, query })
@@ -79,7 +79,7 @@ const generateQueriesFromIntrospection = async ({
 
     const { fields } = nodesType
 
-    const settings = nodeSettings[nodesType.name] || {}
+    const settings = schema[nodesType.name] || {}
 
     const singleTypeInfo = rootFields.find(
       field => field.type.name === nodesType.name

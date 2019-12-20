@@ -15,7 +15,7 @@ module.exports = {
         url: `https://dev-gatsby-source-wordpress-v4.pantheonsite.io/graphql`,
         verbose: true,
         // excludeFields: [`alots`],
-        nodeSettings: {
+        schema: {
           MediaItem: {
             onlyFetchedIfReferenced: true,
           },
