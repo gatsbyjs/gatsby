@@ -1,106 +1,75 @@
 const chromium = require(`chrome-aws-lambda`)
-const { createContentDigest } = require(`gatsby-core-utils`)
-
-const AWS = require(`aws-sdk`)
-const s3 = new AWS.S3({
-  apiVersion: `2006-03-01`,
-})
+const getIO = require(`./screenshot.js`)
 
 exports.handler = async (event, context) => {
-  // For keeping the browser launch
-  context.callbackWaitsForEmptyEventLoop = false
+  let browser = null
+  let image
+  const request = event.body ? JSON.parse(event.body) : {}
 
-  let request = {}
-  if (event.body) {
-    request = JSON.parse(event.body)
-  }
-
-  const url = request.url
-
-  if (!url) {
+  if (!request.url) {
     return proxyError(`no url provided`)
   }
 
-  const width = request.width || 1024
-  const height = request.height || 768
-
-  const fullPage = request.fullPage || false
-
-  const browser = await chromium.puppeteer.launch({
-    args: chromium.args,
-    defaultViewport: chromium.defaultViewport,
-    executablePath: await chromium.executablePath,
-    headless: chromium.headless,
+  const screenshot = await getIO({
+    url: request.url,
+    width: request.width || 1024,
+    height: request.height || 768,
+    fullPage: request.fullPage || false,
   })
 
-  let result
+  console.log(
+    `Invoked: ${screenshot.url} (${screenshot.width}x${screenshot.height})`
+  )
+
+  console.log(`SCREENSHOT`, screenshot)
+
+  // is it cached already?
+  const maybeFile = await screenshot.getFile()
+  if (maybeFile) {
+    console.log(`Cache hit. Returning screenshot from cache`)
+    return proxyResponse({
+      url: screenshot.fileUrl,
+      expires: screenshot.expires,
+    })
+  }
+
   try {
-    result = await exports.run(browser, url, width, height, fullPage)
-    return proxyResponse(result)
-  } catch (error){
+    browser = await chromium.puppeteer.launch({
+      args: chromium.args,
+      defaultViewport: chromium.defaultViewport,
+      executablePath: await chromium.executablePath,
+      // headless: chromium.headless,
+      headless: true,
+    })
+
+    console.log(`Opening browser`)
+    const page = await browser.newPage()
+    await page.setViewport({
+      width: screenshot.width,
+      height: screenshot.height,
+      deviceScaleFactor: 2,
+    })
+
+    console.log(`Taking screenshot`)
+    await page.goto(screenshot.url, { waitUntil: [`networkidle2`] })
+    await page.waitFor(1000) // wait for full-size images to fade in
+    image = await page.screenshot({ fullPage: screenshot.fullPage })
+    await page.close()
+    await browser.close()
+
+    console.log(`Writing file`)
+    await screenshot.putFile(image)
+    return proxyResponse({
+      url: screenshot.fileUrl,
+      expires: screenshot.expires,
+    })
+  } catch (error) {
     return proxyError(error)
-  }
-}
-
-exports.run = async (browser, url, width, height, fullPage) => {
-  console.log(`Invoked: ${url} (${width}x${height})`)
-
-  if (!process.env.S3_BUCKET) {
-    throw new Error(
-      `Provide the S3 bucket to use by adding an S3_BUCKET` +
-      ` environment variable to this Lambda's configuration`
-    )
-  }
-
-  const region = await s3GetBucketLocation(process.env.S3_BUCKET)
-
-  if (!region) {
-    throw new Error(`invalid bucket ${process.env.S3_BUCKET}`)
-  }
-
-  const contentDigest = createContentDigest({ url, width, height })
-  const key = `${contentDigest}.png`
-
-  const screenshotUrl = `https://s3-${region}.amazonaws.com/${
-    process.env.S3_BUCKET
-    }/${key}`
-
-  const metadata = await s3HeadObject(key)
-
-  const now = new Date()
-  if (metadata) {
-    if (metadata.Expiration) {
-      const expires = getDateFromExpiration(metadata.Expiration)
-      if (now < expires) {
-        console.log(`Returning cached screenshot`)
-        return { url: screenshotUrl, expires }
-      }
-    } else {
-      throw new Error(`no expiration date set`)
+  } finally {
+    if (browser !== null) {
+      await browser.close()
     }
   }
-
-  console.log(`Taking new screenshot`)
-
-  const page = await browser.newPage()
-
-  await page.setViewport({ width, height, deviceScaleFactor: 2 })
-  await page.goto(url, { waitUntil: [`load`, `networkidle0`] })
-  // wait for full-size images to fade in
-  await page.waitFor(1000)
-
-  const screenshot = await page.screenshot({ fullPage })
-  const up = await s3PutObject(key, screenshot)
-
-  await page.close()
-
-  let expires
-
-  if (up && up.Expiration) {
-    expires = getDateFromExpiration(up.Expiration)
-  }
-
-  return { url: screenshotUrl, expires }
 }
 
 const proxyResponse = body => {
@@ -127,51 +96,3 @@ const proxyError = err => {
     }),
   }
 }
-
-const s3PutObject = async (key, body) => {
-  const params = {
-    ACL: `public-read`,
-    Bucket: process.env.S3_BUCKET,
-    Key: key,
-    Body: body,
-    ContentType: `image/png`,
-  }
-
-  return new Promise((resolve, reject) => {
-    s3.putObject(params, (err, data) => {
-      if (err) reject(err)
-      else resolve(data)
-    })
-  })
-}
-
-const s3GetBucketLocation = bucket => {
-  const params = {
-    Bucket: bucket,
-  }
-
-  return new Promise((resolve, reject) => {
-    s3.getBucketLocation(params, (err, data) => {
-      if (err) resolve(null)
-      else resolve(data.LocationConstraint)
-    })
-  })
-}
-
-const s3HeadObject = key => {
-  const params = {
-    Bucket: process.env.S3_BUCKET,
-    Key: key,
-  }
-
-  return new Promise((resolve, reject) => {
-    s3.headObject(params, (err, data) => {
-      if (err) resolve(null)
-      else resolve(data)
-    })
-  })
-}
-
-const expiryPattern = /expiry-date="([^"]*)"/
-const getDateFromExpiration = expiration =>
-  new Date(expiryPattern.exec(expiration)[1])
