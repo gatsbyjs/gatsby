@@ -18,7 +18,7 @@ import {
   SectionSubheading,
 } from "../../components/guidelines/typography"
 
-import LazyModal from "../../components/modal"
+import LazyModal from "../../components/lazy-modal"
 import Badge from "../../components/guidelines/badge"
 import Overview from "../../components/guidelines/color/overview"
 import ColorModal from "../../components/guidelines/color/modal"
