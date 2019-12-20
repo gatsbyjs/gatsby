@@ -1,0 +1,28 @@
+{
+  "name": "gatsby-data-fetching",
+  "private": true,
+  "description": "A site showing how to fetch data in Gatsby",
+  "version": "1.0.0",
+  "author": "@gatsbyjs",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "gatsby": "^2.17.11",
+    "gatsby-plugin-react-helmet": "^3.1.14",
+    "gatsby-source-graphql": "^2.1.24",
+    "prop-types": "^15.7.2",
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0",
+    "react-helmet": "^5.2.1"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "scripts": {
+    "build": "gatsby build",
+    "develop": "gatsby develop",
+    "start": "npm run develop",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean",
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
+  }
+}

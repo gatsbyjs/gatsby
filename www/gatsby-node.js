@@ -1,5 +1,6 @@
 const _ = require(`lodash`)
 const Promise = require(`bluebird`)
+const fetch = require(`node-fetch`)
 const path = require(`path`)
 const fs = require(`fs-extra`)
 const slash = require(`slash`)
@@ -7,7 +8,7 @@ const slugify = require(`slugify`)
 const url = require(`url`)
 const getpkgjson = require(`get-package-json-from-github`)
 const parseGHUrl = require(`parse-github-url`)
-const { GraphQLClient } = require(`graphql-request`)
+const { GraphQLClient } = require(`@jamo/graphql-request`)
 const moment = require(`moment`)
 const startersRedirects = require(`./starter-redirects.json`)
 const {
@@ -164,11 +165,6 @@ exports.createPages = ({ graphql, actions, reporter }) => {
   createRedirect({
     fromPath: `/docs/submit-to-creator-showcase/`,
     toPath: `/contributing/submit-to-creator-showcase/`,
-    isPermanent: true,
-  })
-  createRedirect({
-    fromPath: `/contributing/submit-to-creator-showcase/`,
-    toPath: `/showcase/`,
     isPermanent: true,
   })
   createRedirect({
@@ -414,7 +410,23 @@ exports.createPages = ({ graphql, actions, reporter }) => {
   })
 
   createRedirect({
+    fromPath: `/docs/client-data-fetching/`,
+    toPath: `/docs/data-fetching/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
     fromPath: `/docs/centralizing-your-sites-navigation/`,
+    toPath: `/docs/creating-dynamic-navigation/`,
+    isPermanent: true,
+  })
+
+  /* This redirects from a now removed stub that 
+  showed up in the first page of Google results. 
+  Can be removed if SEO is no longer impacted. */
+
+  createRedirect({
+    fromPath: `/docs/rendering-sidebar-navigation-dynamically/`,
     toPath: `/docs/creating-dynamic-navigation/`,
     isPermanent: true,
   })
@@ -443,6 +455,9 @@ exports.createPages = ({ graphql, actions, reporter }) => {
     )
     const showcaseTemplate = path.resolve(
       `src/templates/template-showcase-details.js`
+    )
+    const creatorPageTemplate = path.resolve(
+      `src/templates/template-creator-details.js`
     )
     const featureComparisonPageTemplate = path.resolve(
       `src/templates/template-feature-comparison.js`
@@ -475,6 +490,15 @@ exports.createPages = ({ graphql, actions, reporter }) => {
           }
         }
         allAuthorYaml {
+          edges {
+            node {
+              fields {
+                slug
+              }
+            }
+          }
+        }
+        allCreatorsYaml {
           edges {
             node {
               fields {
@@ -653,6 +677,18 @@ exports.createPages = ({ graphql, actions, reporter }) => {
         createPage({
           path: `${edge.node.fields.slug}`,
           component: slash(contributorPageTemplate),
+          context: {
+            slug: edge.node.fields.slug,
+          },
+        })
+      })
+
+      result.data.allCreatorsYaml.edges.forEach(edge => {
+        if (!edge.node.fields) return
+        if (!edge.node.fields.slug) return
+        createPage({
+          path: `${edge.node.fields.slug}`,
+          component: slash(creatorPageTemplate),
           context: {
             slug: edge.node.fields.slug,
           },
@@ -1046,7 +1082,25 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
           )
         })
     }
+  } else if (node.internal.type === `CreatorsYaml`) {
+    // Creator pages
+    const validTypes = {
+      individual: `people`,
+      agency: `agencies`,
+      company: `companies`,
+    }
+
+    if (!validTypes[node.type]) {
+      throw new Error(
+        `Creators must have a type of “individual”, “agency”, or “company”, but invalid type “${node.type}” was provided for ${node.name}.`
+      )
+    }
+    slug = `/creators/${validTypes[node.type]}/${slugify(node.name, {
+      lower: true,
+    })}`
+    createNodeField({ node, name: `slug`, value: slug })
   }
+  // end Creator pages
   return null
 }
 
@@ -1081,7 +1135,11 @@ exports.onPostBuild = () => {
 }
 
 // XXX this should probably be a plugin or something.
-exports.sourceNodes = ({ actions: { createTypes }, schema }) => {
+exports.sourceNodes = async ({
+  actions: { createTypes, createNode },
+  createContentDigest,
+  schema,
+}) => {
   /*
    * NOTE: This _only_ defines the schema we currently query for. If anything in
    * the query at `src/pages/contributing/events.js` changes, we need to make
@@ -1134,6 +1192,23 @@ exports.sourceNodes = ({ actions: { createTypes }, schema }) => {
   `
 
   createTypes(typeDefs)
+
+  // get data from GitHub API at build time
+  const result = await fetch(`https://api.github.com/repos/gatsbyjs/gatsby`)
+  const resultData = await result.json()
+  // create node for build time data example in the docs
+  createNode({
+    nameWithOwner: resultData.full_name,
+    url: resultData.html_url,
+    // required fields
+    id: `example-build-time-data`,
+    parent: null,
+    children: [],
+    internal: {
+      type: `Example`,
+      contentDigest: createContentDigest(resultData),
+    },
+  })
 }
 
 exports.onCreateWebpackConfig = ({ actions, plugins }) => {

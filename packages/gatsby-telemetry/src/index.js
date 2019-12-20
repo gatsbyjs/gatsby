@@ -1,7 +1,7 @@
 const Telemetry = require(`./telemetry`)
-const flush = require(`./flush`)
-
 const instance = new Telemetry()
+
+const flush = require(`./flush`)(instance.isTrackingEnabled())
 
 process.on(`exit`, flush)
 

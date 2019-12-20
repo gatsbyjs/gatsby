@@ -230,7 +230,7 @@ You should now see your “About Gatsby” header text again!
 
 ### What are “props”?
 
-Earlier you defined React components as reusable pieces of code describing a UI. To make these reusable pieces dynamic you need to be able to supply them with different data. You do that with input called “props". Props are (appropriately enough) properties supplied to React components.
+Earlier you defined React components as reusable pieces of code describing a UI. To make these reusable pieces dynamic you need to be able to supply them with different data. You do that with input called "props". Props are (appropriately enough) properties supplied to React components.
 
 In `about.js` you passed a `headerText` prop with the value of `"About Gatsby"` to the imported `Header` sub-component:
 

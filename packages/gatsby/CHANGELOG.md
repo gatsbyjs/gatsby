@@ -3,6 +3,61 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.18.15](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.14...gatsby@2.18.15) (2019-12-19)
+
+### Bug Fixes
+
+- **gatsby:** Fix sift query against empty nodes ([#20212](https://github.com/gatsbyjs/gatsby/issues/20212)) ([6beeec3](https://github.com/gatsbyjs/gatsby/commit/6beeec3))
+
+## [2.18.14](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.13...gatsby@2.18.14) (2019-12-18)
+
+### Bug Fixes
+
+- **gatsby:** add ./ prefix to paths in async-requires ([#20169](https://github.com/gatsbyjs/gatsby/issues/20169)) ([4f2154a](https://github.com/gatsbyjs/gatsby/commit/4f2154a))
+- **gatsby:** do not rebuild schema having identical conflicts ([#20099](https://github.com/gatsbyjs/gatsby/issues/20099)) ([0d14926](https://github.com/gatsbyjs/gatsby/commit/0d14926))
+- **gatsby:** support file inference for any field name (not just [a-zA-Z0-9_]) ([#20186](https://github.com/gatsbyjs/gatsby/issues/20186)) ([b681959](https://github.com/gatsbyjs/gatsby/commit/b681959))
+- **gatsby:** support unicode characters for 404 page ([#20165](https://github.com/gatsbyjs/gatsby/issues/20165)) ([51474e8](https://github.com/gatsbyjs/gatsby/commit/51474e8))
+- **gatsby-telemetry:** only report unique plugins ([#20147](https://github.com/gatsbyjs/gatsby/issues/20147)) ([4c138d5](https://github.com/gatsbyjs/gatsby/commit/4c138d5))
+
+## [2.18.13](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.12...gatsby@2.18.13) (2019-12-17)
+
+### Bug Fixes
+
+- **gatsby:** fix circular ref stack overflow checks ([#20039](https://github.com/gatsbyjs/gatsby/issues/20039)) ([f780d21](https://github.com/gatsbyjs/gatsby/commit/f780d21))
+
+### Features
+
+- **gatsby:** Use webpack watchOptions config for webpack-dev-middleware ([#20067](https://github.com/gatsbyjs/gatsby/issues/20067)) ([aff5540](https://github.com/gatsbyjs/gatsby/commit/aff5540))
+
+### Performance Improvements
+
+- **gatsby:** Eliminate generator ([#20102](https://github.com/gatsbyjs/gatsby/issues/20102)) ([c3ca41a](https://github.com/gatsbyjs/gatsby/commit/c3ca41a))
+
+## [2.18.12](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.11...gatsby@2.18.12) (2019-12-15)
+
+**Note:** Version bump only for package gatsby
+
+## [2.18.11](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.10...gatsby@2.18.11) (2019-12-11)
+
+### Bug Fixes
+
+- **gatsby:** Add early return in link resolver for empty arrays ([#20068](https://github.com/gatsbyjs/gatsby/issues/20068)) ([3e2ad17](https://github.com/gatsbyjs/gatsby/commit/3e2ad17))
+- **gatsby:** remove default noscript tag from html.js template ([#20023](https://github.com/gatsbyjs/gatsby/issues/20023)) ([ebdaf6d](https://github.com/gatsbyjs/gatsby/commit/ebdaf6d))
+
+## [2.18.10](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.8...gatsby@2.18.10) (2019-12-10)
+
+**Note:** Version bump only for package gatsby
+
+## [2.18.9](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.8...gatsby@2.18.9) (2019-12-10)
+
+**Note:** Version bump only for package gatsby
+
+## [2.18.8](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.7...gatsby@2.18.8) (2019-12-09)
+
+### Bug Fixes
+
+- **gatsby:** Ensure the number of jest-workers respects GATSBY_CPU_COUNT env var ([#19975](https://github.com/gatsbyjs/gatsby/issues/19975)) ([ce53d81](https://github.com/gatsbyjs/gatsby/commit/ce53d81))
+
 ## [2.18.7](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.6...gatsby@2.18.7) (2019-12-05)
 
 ### Bug Fixes
