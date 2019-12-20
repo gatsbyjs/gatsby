@@ -52,8 +52,8 @@ class Collapsible extends Component {
               p: 0,
               letterSpacing: `tracked`,
               textTransform: `uppercase`,
-              background: "none",
-              border: "none",
+              background: `none`,
+              border: `none`,
               "&:hover": {
                 color: `gatsby`,
               },
