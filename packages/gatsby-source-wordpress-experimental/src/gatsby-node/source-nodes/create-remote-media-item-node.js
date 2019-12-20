@@ -64,9 +64,13 @@ export const createRemoteMediaItemNode = async ({ mediaItemNode, helpers }) => {
         reporter,
       })
 
+      if (!node) {
+        throw new Error(`Couldn't create file node from ${sourceUrl}`)
+      }
+
       return node
     },
-    { retries: 10, onFailedAttempt: error => console.log(error) }
+    { retries: 10, onFailedAttempt: error => helpers.reporter.error(error) }
   )
 
   // push it's id and url to our store for caching,
