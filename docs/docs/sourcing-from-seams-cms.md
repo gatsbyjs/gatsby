@@ -8,10 +8,9 @@ title: Sourcing from Seams-CMS
 
 Creating a Seams-CMS account is free for small hobby or small sites. For this tutorial, we will be using the demo workspace that is automatically created when you create a new account. Make sure you add an API key to this workspace. We will be needing your workspace ID and the (read-only) API key shortly.
 
-
 ## Setup
 
-Create a new Gatsby site with the [default starter](https://github.com/gatsbyjs/gatsby-starter-default): 
+Create a new Gatsby site with the [default starter](https://github.com/gatsbyjs/gatsby-starter-default):
 
 Run this in your terminal:
 
@@ -48,7 +47,6 @@ module.exports = {
 ```
 
 Note that `<API_KEY>` and `<WORKSPACE>` should come from your own Seams-CMS account. Inside the `contentTypes` array, we define which content types we want to download from Seams-CMS into GatsbyJS. This should also map to the names of your content type (API id's) that you will be sourcing.
-
 
 ### Run and check our connection
 
@@ -99,7 +97,6 @@ query MyQuery {
 
 This will return the blogposts title, content, author name and category name in which the blogpost was posted.
 
-
 ### Generate the blog post page
 
 Now we can create a simple site with just one page holding all blogposts. We do this by creating a template blog index file at `src/templates/blog-index.js` with the following content:
@@ -111,13 +108,15 @@ import Layout from "../components/layout"
 
 const BlogIndex = ({ pageContext: { blogPosts } }) => (
   <Layout>
-    {blogPosts.map((blogPost) => (
-        <>
-          <h4>Title: {blogPost.node.content.title.value}</h4>
-          <h4>Author: {blogPost.node.content.author.value[0].content.name.value}</h4>
-          <p>{blogPost.node.content.content.value}</p>
-          <hr />
-        </>
+    {blogPosts.map(blogPost => (
+      <>
+        <h4>Title: {blogPost.node.content.title.value}</h4>
+        <h4>
+          Author: {blogPost.node.content.author.value[0].content.name.value}
+        </h4>
+        <p>{blogPost.node.content.content.value}</p>
+        <hr />
+      </>
     ))}
   </Layout>
 )
@@ -165,15 +164,14 @@ const blogQuery = `
        }
      }
    }
-`; 
+`
 ```
 
 Finally, we create and export a `createPages` function in the same `gatsby-node.js` file that will create our page:
 
 ```javascript:title=gatsby-node.js
-
 exports.createPages = async ({ graphql, actions: { createPage } }) => {
-  const query = await graphql(blogQuery);
+  const query = await graphql(blogQuery)
 
   createPage({
     path: `/blogs`,
@@ -181,15 +179,12 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
     context: {
       blogPosts: query.data.allSeamsCmsBlogpost.edges,
     },
-  });
-};
+  })
+}
 ```
 
-
 Finally, when we rerun `gatsby develop` again, it should generate a `/blogs` page with our content. You can visit this at `http://localhost:8000/blogs`.
-
 
 ## More info
 
 More detailed info about setting up Seams-CMS with GatsbyJS can be found on our [blog](https://blog.seams-cms.com/entry/using-seams-cms-with-gatsbyjs/).
-
