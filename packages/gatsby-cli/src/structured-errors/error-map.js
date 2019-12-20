@@ -1,5 +1,12 @@
 const { stripIndent, stripIndents } = require(`common-tags`)
 
+const optionalGraphQLInfo = context =>
+  `${context.codeFrame ? `\n\n${context.codeFrame}` : ``}${
+    context.filePath ? `\n\nFile path: ${context.filePath}` : ``
+  }${context.urlPath ? `\nUrl path: ${context.urlPath}` : ``}${
+    context.plugin ? `\nPlugin: ${context.plugin}` : ``
+  }`
+
 const errorMap = {
   "": {
     text: context => {
@@ -31,10 +38,14 @@ const errorMap = {
   },
   "85901": {
     text: context =>
-      `There was an error in your GraphQL query:\n\n${context.sourceMessage}`,
+      stripIndent(`
+        There was an error in your GraphQL query:\n\n${
+          context.sourceMessage
+        }${optionalGraphQLInfo(context)}`),
     type: `GRAPHQL`,
     level: `ERROR`,
   },
+  // Deprecated
   "85907": {
     text: context =>
       `There was an error in your GraphQL query:\n\n${context.message}`,
@@ -52,6 +63,7 @@ const errorMap = {
     type: `GRAPHQL`,
     level: `ERROR`,
   },
+  // Deprecated
   "85909": {
     text: context => context.sourceMessage,
     type: `GRAPHQL`,
@@ -60,17 +72,23 @@ const errorMap = {
   "85910": {
     text: context =>
       stripIndents(`
-        Multiple "root" queries found in file: "${context.name}" and "${context.otherName}".
+        Multiple "root" queries found: "${context.name}" and "${context.otherName}".
         Only the first ("${context.otherName}") will be registered.
 
         Instead of:
+
         ${context.beforeCodeFrame}
 
         Do:
+
         ${context.afterCodeFrame}
+
+        This can happen when you use two page/static queries in one file. Please combine those into one query.
+        If you're defining multiple components (each with a static query) in one file, you'll need to move each component to its own file.
       `),
     type: `GRAPHQL`,
     level: `ERROR`,
+    docsUrl: `https://www.gatsbyjs.org/docs/graphql/`,
   },
   "85911": {
     text: context =>
@@ -146,6 +164,70 @@ const errorMap = {
     type: `GRAPHQL`,
     level: `ERROR`,
   },
+  // Undefined variables in Queries
+  "85920": {
+    text: context => {
+      const generalMessage = stripIndents(`You might have a typo in the variable name "${context.variableName}" or you didn't provide the variable via context to this page query. Have a look at the docs to learn how to add data to context:
+
+      https://www.gatsbyjs.org/docs/page-query/#how-to-add-query-variables-to-a-page-query`)
+
+      const staticQueryMessage = stripIndents(`If you're not using a page query but a StaticQuery / useStaticQuery you see this error because they currently don't support variables. To learn more about the limitations of StaticQuery / useStaticQuery, please visit these docs:
+
+      https://www.gatsbyjs.org/docs/static-query/
+      https://www.gatsbyjs.org/docs/use-static-query/`)
+
+      return stripIndent(`
+        There was an error in your GraphQL query:\n\n${
+          context.sourceMessage
+        }${optionalGraphQLInfo(
+        context
+      )}\n\n${generalMessage}\n\n${staticQueryMessage}`)
+    },
+    type: `GRAPHQL`,
+    level: `ERROR`,
+  },
+  "85921": {
+    text: context =>
+      `There was an error in your GraphQL query:\n\n${context.sourceMessage}\n\nIf you're e.g. filtering for specific nodes make sure that you choose the correct field (that has the same type "${context.inputType}") or adjust the context variable to the type "${context.expectedType}".`,
+    type: `GRAPHQL`,
+    level: `ERROR`,
+  },
+  "85922": {
+    text: context =>
+      `There was an error in your GraphQL query:\n\n${context.sourceMessage}\n\nThis can happen if you e.g. accidentally added { } to the field "${context.fieldName}". If you didn't expect "${context.fieldName}" to be of type "${context.fieldType}" make sure that your input source and/or plugin is correct.`,
+    type: `GRAPHQL`,
+    level: `ERROR`,
+  },
+  "85923": {
+    text: context =>
+      `There was an error in your GraphQL query:\n\n${context.sourceMessage}\n\nIf you don't expect "${context.field}" to exist on the type "${context.type}" it is most likely a typo.\nHowever, if you expect "${context.field}" to exist there are a couple of solutions to common problems:\n\n- If you added a new data source and/or changed something inside gatsby-node.js/gatsby-config.js, please try a restart of your development server\n- The field might be accessible in another subfield, please try your query in GraphiQL and use the GraphiQL explorer to see which fields you can query and what shape they have\n- You want to optionally use your field "${context.field}" and right now it is not used anywhere. Therefore Gatsby can't infer the type and add it to the GraphQL schema. A quick fix is to add a least one entry with that field ("dummy content")\n\nIt is recommended to explicitly type your GraphQL schema if you want to use optional fields. This way you don't have to add the mentioned "dummy content". Visit our docs to learn how you can define the schema for "${context.type}":\nhttps://www.gatsbyjs.org/docs/schema-customization/#creating-type-definitions`,
+    type: `GRAPHQL`,
+    level: `ERROR`,
+  },
+  "85924": {
+    text: context =>
+      `There was an error in your GraphQL query:\n\n${
+        context.sourceMessage
+      }\n\nThis can happen when you or a plugin/theme explicitly defined the GraphQL schema for this GraphQL object type via the schema customization API and "${
+        context.value
+      }" doesn't match the (scalar) type of "${
+        context.type
+      }".${optionalGraphQLInfo(context)}`,
+    type: `GRAPHQL`,
+    level: `ERROR`,
+  },
+  "85925": {
+    text: context =>
+      `There was an error in your GraphQL query:\n\n${
+        context.sourceMessage
+      }\n\nThe field "${
+        context.field
+      }" was explicitly defined as non-nullable via the schema customization API (by yourself or a plugin/theme). This means that this field is not optional and you have to define a value. If this is not your desired behavior and you defined the schema yourself, go to "createTypes" in gatsby-node.js. If you're using a plugin/theme, you can learn more here on how to fix field types:\nhttps://www.gatsbyjs.org/docs/schema-customization/#fixing-field-types${optionalGraphQLInfo(
+        context
+      )}`,
+    type: `GRAPHQL`,
+    level: `ERROR`,
+  },
   // Config errors
   "10123": {
     text: context =>
@@ -193,7 +275,9 @@ const errorMap = {
   // Plugin errors
   "11321": {
     text: context =>
-      `"${context.pluginName}" threw an error while running the ${context.api} lifecycle:\n\n${context.message}`,
+      `"${context.pluginName}" threw an error while running the ${
+        context.api
+      } lifecycle:\n\n${context.message}${optionalGraphQLInfo(context)}`,
     type: `PLUGIN`,
     level: `ERROR`,
   },
@@ -284,6 +368,13 @@ const errorMap = {
             : []
         )
         .join(`\n`),
+    level: `ERROR`,
+  },
+  // "X" is not defined in Gatsby's node APIs
+  "11330": {
+    text: context =>
+      `"${context.pluginName}" threw an error while running the ${context.api} lifecycle:\n\n${context.message}\n\n${context.codeFrame}\n\nMake sure that you don't have a typo somewhere and use valid arguments in ${context.api} lifecycle.\nLearn more about ${context.api} here: https://www.gatsbyjs.org/docs/node-apis/#${context.api}`,
+    type: `PLUGIN`,
     level: `ERROR`,
   },
   // node object didn't pass validation
