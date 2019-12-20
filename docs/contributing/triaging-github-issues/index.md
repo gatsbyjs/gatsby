@@ -79,11 +79,11 @@ If an issue comes in as a question with a known answer it can be tempting to ans
 
 #### Bug Report
 
-Bug Reports are issues that identify functionality in Gatsby that should work but does not in a given scenario. If an issue is a Bug Report it should include steps to reproduce the problem. If it doesn't, ask the issue filer for those steps and label the issue with `needs reproduction`.
+Bug Reports are issues that identify functionality in Gatsby that should work but does not in a given scenario. If an issue is a Bug Report, it should include steps to reproduce the problem. If it doesn't, ask the issue filer for those steps and label the issue with `needs reproduction`.
 
 Attempt to reproduce the bug using the steps given. If that's not possible, ask for more information and label the issue as `needs more info`.
 
-If the reproduction is successful label the issue with `confirmed` and determine who is best suited to implement a fix. If it's approachable for the community consider the `help wanted` or `good first issue` labels. Otherwise, label with `inkteam to review` so it can be picked up by a Gatsby team member.
+If the reproduction is successful, label the issue with `confirmed` and determine who is best suited to implement a fix. If it's approachable for the community, consider the `help wanted` or `good first issue` labels. Otherwise, label with `inkteam to review` so it can be picked up by a Gatsby team member.
 
 ![Flow chart for handling a Bug Report](./BugFlow.png)
 
@@ -91,7 +91,7 @@ If the reproduction is successful label the issue with `confirmed` and determine
 
 Feature Requests are issues that request support for additional functionality not currently covered in the existing codebase. The first step in triaging a feature request is to determine if it's a reasonable request; this is a challenge and if you don't feel comfortable making this determination please label with `inkteam to review`. If it's clear that this isn't a feature it makes sense for Gatsby to implement, provide a comment explaining the decision making and close the issue.
 
-If it's determined to be a worthwhile feature the next decision point is whether the feature should be added to core or upstream. Upstream features should be labeled with `upstream` and include comments about the scope.
+If it's determined to be a worthwhile feature, the next decision point is whether the feature should be added to core or upstream. Upstream features should be labeled with `upstream` and include comments about the scope.
 
 If it's a core change, is it a breaking change? Breaking changes should be labeled with `breaking change` and typically closed. Note that they may sometimes be left open with the note that the functionality can only be added in a major release.
 
