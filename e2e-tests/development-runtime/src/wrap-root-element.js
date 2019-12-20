@@ -14,7 +14,7 @@ export default ({ element }) => (
     `}
     render={({
       site: {
-        siteMetadata: { title, author },
+        siteMetadata: { title },
       },
     }) => (
       <>
