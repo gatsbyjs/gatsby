@@ -13,6 +13,15 @@ const paginatedWpNodeFetch = async ({
   allContentNodes = [],
   ...variables
 }) => {
+  if (
+    settings &&
+    settings.limit &&
+    allContentNodes.length &&
+    allContentNodes.length >= settings.limit
+  ) {
+    return allContentNodes
+  }
+
   const response = await fetchGraphql({
     url,
     query,
@@ -47,15 +56,6 @@ const paginatedWpNodeFetch = async ({
     store.dispatch.logger.incrementBy(nodes.length)
   }
 
-  if (
-    settings &&
-    settings.limit &&
-    allContentNodes.length &&
-    allContentNodes.length >= settings.limit
-  ) {
-    return allContentNodes
-  }
-
   if (hasNextPage) {
     await paginatedWpNodeFetch({
       first: variables.first,
@@ -68,6 +68,7 @@ const paginatedWpNodeFetch = async ({
       allContentNodes,
       activity,
       helpers,
+      settings,
     })
   }
 

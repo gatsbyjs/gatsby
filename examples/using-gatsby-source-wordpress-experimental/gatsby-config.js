@@ -17,10 +17,10 @@ module.exports = {
         // excludeFields: [`alots`],
         nodeSettings: {
           MediaItem: {
-            limit: 100,
+            onlyFetchedIfReferenced: true,
           },
           Alot: {
-            exclude: true,
+            limit: 100,
           },
         },
       },

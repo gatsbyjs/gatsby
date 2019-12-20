@@ -1,6 +1,7 @@
 import store from "../../store"
 
-const { fieldAliases } = store.getState().introspection
+const state = store.getState()
+const { fieldAliases } = state.introspection
 
 const transformFields = fields => {
   if (!fields || !fields.length) {
@@ -62,6 +63,8 @@ const transformFields = fields => {
 
     // object types should be top level Gatsby nodes
     // so we link them by id
+    // @todo check if the object type actually is a Gatsby node.
+    // in the future WPGQL plugins may add types in unexpected ways
     if (curr.type.kind === `OBJECT`) {
       acc[name] = {
         type: `Wp${curr.type.name}`,
@@ -76,10 +79,6 @@ const transformFields = fields => {
             id: field.id,
             type: `Wp${curr.type.name}`,
           })
-
-          // if (!node && curr.type.name === `MediaItem`) {
-          //   dump(field)
-          // }
 
           return node
         },
@@ -158,7 +157,6 @@ const transformFields = fields => {
       return acc
     }
 
-    dd(curr)
     // unhandled fields are removed from the schema by not mutating the accumulator
     return acc
   }, {})

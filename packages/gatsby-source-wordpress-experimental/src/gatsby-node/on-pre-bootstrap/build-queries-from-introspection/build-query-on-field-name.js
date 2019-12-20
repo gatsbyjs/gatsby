@@ -43,7 +43,7 @@ const buildFragments = fragments => `
   ${fragments.map(buildFragment).join(` `)}
 `
 
-const buildSelectionSet = fields => {
+export const buildSelectionSet = fields => {
   if (!fields || !fields.length) {
     return ``
   }

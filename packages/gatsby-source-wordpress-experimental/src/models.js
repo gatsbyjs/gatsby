@@ -76,8 +76,8 @@ const gatsbyApi = {
   },
 
   reducers: {
-    setState(_, payload) {
-      return payload
+    setState(state, payload) {
+      return { ...state, ...payload }
     },
   },
 }
@@ -106,8 +106,10 @@ const imageNodes = {
       return state
     },
 
-    addUrlMatches(state, matches) {
-      matches.forEach(({ match }) => state.urls.add(match))
+    addImgMatches(state, matches) {
+      matches.forEach(match =>
+        match.subMatches.forEach(subMatch => state.urls.add(subMatch))
+      )
 
       return state
     },

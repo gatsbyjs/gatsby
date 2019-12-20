@@ -7,6 +7,7 @@ import recursivelyTransformFields from "./recursively-transform-fields"
 import {
   buildNodesQueryOnFieldName,
   buildNodeQueryOnFieldName,
+  buildSelectionSet,
 } from "./build-query-on-field-name"
 // @todo create function to unmap check here for similar function https://www.gatsbyjs.org/packages/gatsby-source-graphql-universal/
 
@@ -94,6 +95,8 @@ const generateQueriesFromIntrospection = async ({
       typeMap,
     })
 
+    const selectionSet = buildSelectionSet(transformedFields)
+
     const listQueryString = buildNodesQueryOnFieldName({
       fields: transformedFields,
       fieldName: name,
@@ -115,6 +118,7 @@ const generateQueriesFromIntrospection = async ({
       },
       listQueryString,
       nodeQueryString,
+      selectionSet,
       settings,
     }
   }
