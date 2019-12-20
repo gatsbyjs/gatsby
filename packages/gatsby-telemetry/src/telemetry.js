@@ -283,6 +283,12 @@ module.exports = class AnalyticsTracker {
         data.reduce((acc, x) => acc + Math.pow(x - mean, 2), 0) /
           (data.length - 1)
       ) || 0
+
+    const skewness =
+      data.reduce((acc, x) => acc + Math.pow(x - mean, 3), 0) /
+      data.length /
+      Math.pow(stdDev, 3)
+
     return {
       count: data.length,
       min: data.reduce((acc, x) => (x < acc ? x : acc), data[0] || 0),
@@ -291,10 +297,7 @@ module.exports = class AnalyticsTracker {
       mean: mean,
       median: median,
       stdDev: stdDev,
-      skewness:
-        data.reduce((acc, x) => acc + Math.pow(x - mean, 3), 0) /
-        data.length /
-        Math.pow(stdDev, 3),
+      skewness: !Number.isNaN(skewness) ? skewness : 0,
     }
   }
 
