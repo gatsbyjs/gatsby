@@ -1,3 +1,4 @@
+import pRetry from "p-retry"
 import { createRemoteFileNode } from "gatsby-source-filesystem"
 import store from "../../store"
 
@@ -51,15 +52,22 @@ export const createRemoteMediaItemNode = async ({ mediaItemNode, helpers }) => {
   const { sourceUrl, modifiedGmt } = mediaItemNode
 
   // Otherwise we need to download it
-  const remoteFileNode = await createRemoteFileNode({
-    url: sourceUrl,
-    parentNodeId: mediaItemNode.id,
-    store: gatsbyStore,
-    cache,
-    createNode,
-    createNodeId,
-    reporter,
-  })
+  const remoteFileNode = await pRetry(
+    async () => {
+      const node = await createRemoteFileNode({
+        url: sourceUrl,
+        parentNodeId: mediaItemNode.id,
+        store: gatsbyStore,
+        cache,
+        createNode,
+        createNodeId,
+        reporter,
+      })
+
+      return node
+    },
+    { retries: 10, onFailedAttempt: error => console.log(error) }
+  )
 
   // push it's id and url to our store for caching,
   // so we can touch this node next time
