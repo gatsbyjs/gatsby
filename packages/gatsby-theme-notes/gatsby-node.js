@@ -1,9 +1,8 @@
 const fs = require(`fs`)
 const path = require(`path`)
 const mkdirp = require(`mkdirp`)
-const crypto = require(`crypto`)
 const Debug = require(`debug`)
-const { urlResolve } = require(`gatsby-core-utils`)
+const { urlResolve, createContentDigest } = require(`gatsby-core-utils`)
 
 const debug = Debug(`gatsby-theme-notes`)
 
@@ -165,10 +164,7 @@ breadcrumbSeparator: String
     children: [],
     internal: {
       type: `NotesConfig`,
-      contentDigest: crypto
-        .createHash(`md5`)
-        .update(JSON.stringify(notesConfig))
-        .digest(`hex`),
+      contentDigest: createContentDigest(notesConfig),
       content: JSON.stringify(notesConfig),
       description: `Notes Config`,
     },

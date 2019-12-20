@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.37](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.36...gatsby-image@2.2.37) (2019-12-17)
+
+### Bug Fixes
+
+- **gatsby-image:** add matchMedia to fix wrong aspect ratio and dimensions in art-directed image arrays ([#19887](https://github.com/gatsbyjs/gatsby/issues/19887)) ([b3c000b](https://github.com/gatsbyjs/gatsby/commit/b3c000b))
+
 ## [2.2.36](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.34...gatsby-image@2.2.36) (2019-12-10)
 
 **Note:** Version bump only for package gatsby-image
