@@ -79,7 +79,7 @@ Once you've installed a Gatsby site, go to the root directory of your project an
 |     Option      | Description                                     |
 | :-------------: | ----------------------------------------------- |
 | `-H`, `--host`  | Set host. Defaults to localhost                 |
-| `-p`, `--port`  | Set port. Defaults to 8000                      |
+| `-p`, `--port`  | Set port. Defaults to env.PORT or 8000          |
 | `-o`, `--open`  | Open the site in your (default) browser for you |
 | `-S`, `--https` | Use HTTPS                                       |
 
