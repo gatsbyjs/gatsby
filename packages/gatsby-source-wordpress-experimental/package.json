@@ -19,6 +19,7 @@
     "graphql-tools": "^3.1.1",
     "invariant": "^2.2.4",
     "node-fetch": "^1.7.3",
+    "p-retry": "^4.2.0",
     "uuid": "^3.3.3"
   },
   "devDependencies": {

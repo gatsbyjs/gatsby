@@ -15,7 +15,7 @@ export const fetchWPGQLContentNodes = async (helpers, { url, verbose }) => {
     Object.entries(queries).map(async ([fieldName, queryInfo]) => {
       const { listQueryString, typeInfo, settings } = queryInfo
 
-      if (settings.exclude || settings.onlyFetchedIfReferenced) {
+      if (settings.exclude || settings.onlyFetchIfReferenced) {
         return
       }
 

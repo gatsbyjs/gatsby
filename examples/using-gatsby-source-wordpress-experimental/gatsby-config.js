@@ -17,7 +17,7 @@ module.exports = {
         // excludeFields: [`alots`],
         schema: {
           MediaItem: {
-            onlyFetchedIfReferenced: true,
+            onlyFetchIfReferenced: true,
           },
           Alot: {
             limit: 100,

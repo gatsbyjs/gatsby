@@ -36,7 +36,7 @@ export const createGatsbyNodesFromWPGQLContentNodes = async (
           store.dispatch.imageNodes.addImgMatches(imageUrlMatches)
         }
 
-        if (pluginOptions.schema.MediaItem.onlyFetchedIfReferenced) {
+        if (pluginOptions.schema.MediaItem.onlyFetchIfReferenced) {
           // get an array of all referenced media file ID's
           const matchedIds = execall(/"id":"([^"]*)","sourceUrl"/gm, nodeString)
             .map(match => match.subMatches[0])
@@ -64,7 +64,7 @@ export const createGatsbyNodesFromWPGQLContentNodes = async (
   }
 
   if (
-    pluginOptions.schema.MediaItem.onlyFetchedIfReferenced &&
+    pluginOptions.schema.MediaItem.onlyFetchIfReferenced &&
     referencedMediaItemNodeIds.length
   ) {
     await fetchReferencedMediaItemsAndCreateNodes({
