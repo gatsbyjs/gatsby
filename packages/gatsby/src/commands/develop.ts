@@ -428,7 +428,7 @@ module.exports = async (program: IProgram): Promise<void> => {
 
   let { compiler, webpackActivity } = await startServer(program)
 
-  type PreparedUrls = {
+  interface IPreparedUrls {
     lanUrlForConfig: string
     lanUrlForTerminal: string
     localUrlForTerminal: string
@@ -439,7 +439,7 @@ module.exports = async (program: IProgram): Promise<void> => {
     protocol: `http` | `https`,
     host: string,
     port: number
-  ): PreparedUrls {
+  ): IPreparedUrls {
     const formatUrl = (hostname: string): string =>
       url.format({
         protocol,
@@ -497,7 +497,7 @@ module.exports = async (program: IProgram): Promise<void> => {
     }
   }
 
-  function printInstructions(appName: string, urls: PreparedUrls): void {
+  function printInstructions(appName: string, urls: IPreparedUrls): void {
     console.log()
     console.log(`You can now view ${chalk.bold(appName)} in the browser.`)
     console.log()

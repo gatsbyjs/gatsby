@@ -61,7 +61,7 @@
   "private": true,
   "lint-staged": {
     "*.{js,jsx}": [
-      "eslint --ignore-path .gitignore --ignore-path .prettierignore --fix",
+      "eslint --cache --ext .js,.jsx,.ts,.tsx --fix",
       "git add"
     ],
     "*.{md,css,scss,yaml,yml}": [

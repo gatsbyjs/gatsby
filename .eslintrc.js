@@ -85,6 +85,13 @@ module.exports = {
       plugins: ["@typescript-eslint/eslint-plugin"],
       rules: {
         ...TSEslint.configs.recommended.rules,
+        // This rule ensures that typescript types do not have semicolons
+        // at the end of their lines, since our prettier setup is to have no semicolons
+        // e.g.,
+        // interface Foo {
+        // -  baz: string;
+        // +  baz: string
+        // }
         "@typescript-eslint/member-delimiter-style": [
           "error",
           {
@@ -93,12 +100,25 @@ module.exports = {
             },
           },
         ],
+        // This ensures all interfaces are named with an I as a prefix
+        // e.g.,
+        // interface IFoo {}
         "@typescript-eslint/interface-name-prefix": [
           "error",
           { prefixWithI: "always" },
         ],
         "@typescript-eslint/no-empty-function": "off",
+        // This ensures that we always type the return type of functions
+        // a high level focus of our TS setup is typing fn inputs and outputs.
         "@typescript-eslint/explicit-function-return-type": "error",
+        // This forces us to use interfaces over types aliases for object defintions.
+        // Type is still useful for opaque types
+        // e.g.,
+        // type UUID = string
+        "@typescript-eslint/consistent-type-definitions": [
+          "error",
+          "interface",
+        ],
       },
     },
   ],
