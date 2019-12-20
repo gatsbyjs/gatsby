@@ -4170,7 +4170,7 @@
     - postcss-preset-env to write tomorrow's CSS today
     - Bare bones starter to help you hit the ground running
 - url: https://gatsby-starter-grayscale-promo.netlify.com/
-  repo: https://github.com/awesome1888/gatsby-starter-grayscale-promo
+  repo: https://github.com/gannochenko/gatsby-starter-grayscale-promo
   description: one-page promo site
   tags:
     - Language:TypeScript
