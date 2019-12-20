@@ -186,6 +186,7 @@ jobs:
       - <<: *attach_to_bootstrap
       - run: yarn lint:code
       - run: yarn lint:other
+      - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
       - run: yarn typecheck
       - run: yarn check-repo-fields
 
