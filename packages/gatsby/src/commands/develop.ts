@@ -100,13 +100,12 @@ const waitJobsFinished = (): Promise<void> =>
     onEndJob()
   })
 
-type ActivityTracker = unknown // TODO: Replace this with proper type once reporter is typed
+type ActivityTracker = any // TODO: Replace this with proper type once reporter is typed
 
-// TODO
 interface IServer {
-  compiler: unknown
-  listener: unknown
-  webpackActivity: unknown
+  compiler: webpack.Compiler
+  listener: http.Server | https.Server
+  webpackActivity: ActivityTracker
 }
 
 async function startServer(program: IProgram): Promise<IServer> {
