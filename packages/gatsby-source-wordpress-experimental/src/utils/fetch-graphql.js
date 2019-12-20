@@ -8,6 +8,93 @@ const http = rateLimit(axios.create(), {
   maxRPS: 50,
 })
 
+const timeout = 30 * 1000
+
+const handleGraphQLErrors = ({
+  query,
+  variables,
+  response,
+  errorMap,
+  exitOnError,
+  reporter,
+}) => {
+  const json = response.data
+  const { errors } = json
+
+  if (!errors) {
+    return
+  }
+
+  for (const error of errors) {
+    const errorWasMapped =
+      errorMap &&
+      errorMap.from &&
+      errorMap.to &&
+      error.message === errorMap.from
+
+    if (errorWasMapped && exitOnError) {
+      reporter.panic(formatLogMessage(errorMap.to))
+    } else if (errorWasMapped) {
+      reporter.error(formatLogMessage(errorMap.to))
+    }
+
+    if (error.debugMessage) {
+      reporter.error(
+        formatLogMessage(`Error category: ${error.category}
+${error.message}
+${
+  error.debugMessage
+    ? error.debugMessage
+    : `If you haven't already, try adding define("GRAPHQL_DEBUG", true); to your wp-config.php for more detailed error messages.`
+}`)
+      )
+    } else {
+      reporter.error(formatLogMessage(`${error.message} (${error.category})`))
+    }
+  }
+
+  if (exitOnError) {
+    reporter.panic(
+      formatLogMessage(`Encountered errors. See above for details.`)
+    )
+  }
+
+  if (variables && Object.keys(variables).length) {
+    reporter.error(
+      formatLogMessage(`GraphQL vars: ${JSON.stringify(variables)}`)
+    )
+  }
+
+  reporter.error(formatLogMessage(`GraphQL query: ${gqlPrettier(query)}`))
+
+  if (!json.data) {
+    reporter.panic(
+      formatLogMessage(`Encountered errors. See above for details.`)
+    )
+  }
+}
+
+const genericError = `
+Make sure your WordPress URL is correct in gatsby-config.js, your site is up, and WPGraphQL and WPGatsby are installed.`
+
+const handleFetchErrors = ({ e, reporter, url }) => {
+  if (e.message.includes(`timeout of ${timeout}ms exceeded`)) {
+    reporter.error(e)
+    reporter.panic(
+      formatLogMessage(
+        `It took too long for ${url} to respond (longer than ${timeout /
+          1000} seconds). ${genericError}`
+      )
+    )
+  } else if (e.message.includes(`ECONNREFUSED`)) {
+    reporter.panic(
+      formatLogMessage(`${url} refused to connect. ${genericError}`)
+    )
+  } else {
+    reporter.panic(formatLogMessage(e.toString()))
+  }
+}
+
 const fetchGraphql = async ({
   url,
   query,
@@ -19,96 +106,33 @@ const fetchGraphql = async ({
   const { reporter } = helpers
 
   let response
-  const timeout = 30 * 1000
-
-  const genericError = `
-Make sure your site is reachable and that you have the right URL set in plugin options.`
 
   try {
     response = await http.post(url, { query, variables }, { timeout })
+
+    const contentType = response.headers[`content-type`]
+
+    if (!contentType.includes(`application/json;`)) {
+      throw new Error(
+        `Unable to connect to WPGraphQL.
+${genericError}
+        ${url}`
+      )
+    }
   } catch (e) {
-    if (e.message.includes(`timeout of ${timeout}ms exceeded`)) {
-      reporter.error(e)
-      reporter.panic(
-        formatLogMessage(
-          `It took too long for ${url} to respond (longer than ${timeout /
-            1000} seconds). ${genericError}`
-        )
-      )
-    } else if (e.message.includes(`ECONNREFUSED`)) {
-      reporter.panic(
-        formatLogMessage(`${url} refused to connect. ${genericError}`)
-      )
-    } else {
-      reporter.error(
-        formatLogMessage(`Couldn't connect to ${url}. ${genericError}`)
-      )
-      reporter.panic(e)
-    }
+    handleFetchErrors({ e, reporter, url })
   }
 
-  const contentType = response.headers[`content-type`]
+  handleGraphQLErrors({
+    query,
+    variables,
+    response,
+    errorMap,
+    exitOnError,
+    reporter,
+  })
 
-  if (!contentType.includes(`application/json;`)) {
-    reporter.panic(
-      formatLogMessage(`Unable to connect to WPGraphQL.
-        Double check that your WordPress URL is correct and WPGraphQL is installed.
-        ${url}`)
-    )
-  }
-
-  const json = response.data
-
-  if (json.errors) {
-    json.errors.forEach(error => {
-      if (
-        errorMap &&
-        errorMap.from &&
-        errorMap.to &&
-        error.message === errorMap.from
-      ) {
-        return reporter.error(formatLogMessage(errorMap.to))
-      }
-
-      if (error.debugMessage) {
-        reporter.error(
-          formatLogMessage(`Error category: ${error.category}
-${error.message}
-${
-  error.debugMessage
-    ? error.debugMessage
-    : `If you haven't already, try adding define("GRAPHQL_DEBUG", true); to your wp-config.php for more detailed error messages.`
-}`)
-        )
-      }
-
-      if (!error.debugMessage) {
-        reporter.error(formatLogMessage(`${error.message} (${error.category})`))
-      }
-    })
-
-    if (exitOnError) {
-      reporter.panic(
-        formatLogMessage(`Encountered errors. See above for more info.`)
-      )
-    }
-
-    if (variables) {
-      reporter.error(
-        formatLogMessage(`GraphQL vars: ${JSON.stringify(variables)}`)
-      )
-    }
-
-    reporter.error(formatLogMessage(`GraphQL query: ${gqlPrettier(query)}`))
-
-    if (!json.data) {
-      reporter.panic(
-        formatLogMessage(`Encountered errors. See above for more info.`)
-      )
-    }
-  }
-
-  return json
+  return response.data
 }
 
 export default fetchGraphql
