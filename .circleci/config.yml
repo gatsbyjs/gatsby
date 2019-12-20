@@ -186,6 +186,7 @@ jobs:
       - <<: *attach_to_bootstrap
       - run: yarn lint:code
       - run: yarn lint:other
+      - run: yarn typecheck
       - run: yarn check-repo-fields
 
   unit_tests_node8:

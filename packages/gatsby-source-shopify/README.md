@@ -37,6 +37,9 @@ plugins: [
       // The domain name of your Shopify shop. This is required.
       // Example: 'gatsby-source-shopify-test-shop' if your Shopify address is
       // 'gatsby-source-shopify-test-shop.myshopify.com'.
+      // If you are running your shop on a custom domain, you need to use that
+      // as the shop name, without a trailing slash, for example:
+      // shopName: "gatsby-shop.com",
       shopName: "gatsby-source-shopify-test-shop",
 
       // An API access token to your Shopify shop. This is required.
