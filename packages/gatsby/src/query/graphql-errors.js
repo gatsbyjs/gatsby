@@ -164,7 +164,10 @@ export function multipleRootQueriesError(
         },
         {
           linesBelow: Number.MAX_SAFE_INTEGER,
-          highlightCode: true,
+          // colors are problematic for tests as we can different
+          // results depending on platform, so we don't
+          // highlight code for tests
+          highlightCode: process.env.NODE_ENV !== `test`,
         }
       ),
       afterCodeFrame: codeFrameColumns(
