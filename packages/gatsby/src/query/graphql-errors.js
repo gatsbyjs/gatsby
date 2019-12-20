@@ -136,6 +136,11 @@ export function multipleRootQueriesError(
     _.camelCase(otherName)
   )}`
 
+  // colors are problematic for tests as we can different
+  // results depending on platform, so we don't
+  // highlight code for tests
+  const highlightCode = process.env.NODE_ENV !== `test`
+
   return {
     id: `85910`,
     filePath,
@@ -164,10 +169,7 @@ export function multipleRootQueriesError(
         },
         {
           linesBelow: Number.MAX_SAFE_INTEGER,
-          // colors are problematic for tests as we can different
-          // results depending on platform, so we don't
-          // highlight code for tests
-          highlightCode: process.env.NODE_ENV !== `test`,
+          highlightCode,
         }
       ),
       afterCodeFrame: codeFrameColumns(
@@ -189,7 +191,7 @@ export function multipleRootQueriesError(
         },
         {
           linesBelow: Number.MAX_SAFE_INTEGER,
-          highlightCode: true,
+          highlightCode,
         }
       ),
     },

@@ -152,14 +152,14 @@ exports[`actual compiling errors on double root 1`] = `
 Array [
   Object {
     "context": Object {
-      "afterCodeFrame": "[0m [90m 1 | [39mquery anotherQueryAndMockFileQuery {[0m
-[0m [90m 2 | [39m  allPostsJson {[0m
-[0m [90m 3 | [39m    [33m#[39m[33m...[39m[0m
-[0m [90m 4 | [39m  }[0m
-[0m [90m 5 | [39m  allPostsJson {[0m
-[0m [90m 6 | [39m    [33m#[39m[33m...[39m[0m
-[0m [90m 7 | [39m  }[0m
-[0m [90m 8 | [39m}[0m",
+      "afterCodeFrame": "  1 | query anotherQueryAndMockFileQuery {
+  2 |   allPostsJson {
+  3 |     #...
+  4 |   }
+  5 |   allPostsJson {
+  6 |     #...
+  7 |   }
+  8 | }",
       "beforeCodeFrame": "   1 | query mockFileQuery {
    2 |   allPostsJson {
    3 |     #...
