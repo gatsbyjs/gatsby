@@ -1,3 +1,5 @@
+<!--Gatsby OSS team is on holiday, expect a delayed response-->
+
 ---
 name: Question 🤔
 about: Usage question or discussion about Gatsby.
