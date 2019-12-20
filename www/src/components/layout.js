@@ -23,7 +23,7 @@ import PageWithSidebar from "../components/page-with-sidebar"
 import SiteMetadata from "../components/site-metadata"
 import SkipNavLink from "../components/skip-nav-link"
 import "../assets/fonts/futura"
-import LazyModal from "./modal"
+import LazyModal from "./lazy-modal"
 
 let windowWidth
 
