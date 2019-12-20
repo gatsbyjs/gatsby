@@ -15,7 +15,7 @@ const handleGraphQLErrors = ({
   variables,
   response,
   errorMap,
-  exitOnError,
+  panicOnError,
   reporter,
 }) => {
   const json = response.data
@@ -32,7 +32,7 @@ const handleGraphQLErrors = ({
       errorMap.to &&
       error.message === errorMap.from
 
-    if (errorWasMapped && exitOnError) {
+    if (errorWasMapped && panicOnError) {
       reporter.panic(formatLogMessage(errorMap.to))
     } else if (errorWasMapped) {
       reporter.error(formatLogMessage(errorMap.to))
@@ -53,7 +53,7 @@ ${
     }
   }
 
-  if (exitOnError) {
+  if (panicOnError) {
     reporter.panic(
       formatLogMessage(`Encountered errors. See above for details.`)
     )
@@ -99,7 +99,7 @@ const fetchGraphql = async ({
   url,
   query,
   errorMap,
-  exitOnError = false,
+  panicOnError = false,
   variables = {},
 }) => {
   const { helpers } = store.getState().gatsbyApi
@@ -128,7 +128,7 @@ URL: ${url}`
     variables,
     response,
     errorMap,
-    exitOnError,
+    panicOnError,
     reporter,
   })
 

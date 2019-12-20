@@ -29,7 +29,7 @@ export default async function fetchReferencedMediaItemsAndCreateNodes({
       variables: {
         ids,
       },
-      exitOnError: true,
+      panicOnError: true,
     })
 
     for (const node of Object.values(data)) {

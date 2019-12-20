@@ -12,7 +12,7 @@ const isWpGatsby = async (_, pluginOptions) =>
       from: `Cannot query field "isWpGatsby" on type "RootQuery".`,
       to: `WPGatsby is not active in your WordPress installation. Please install it.`,
     },
-    exitOnError: true,
+    panicOnError: true,
   })
 
 const checkPluginRequirements = async (helpers, pluginOptions) => {
