@@ -9061,7 +9061,7 @@
   featured: false
 - title: EF Design
     main_url: "https://ef.design"
-    url: "https://ef.design"
+    url: https://ef.design
     description: >
       Home of everything creative, digital and brand at EF.
     featured: false
