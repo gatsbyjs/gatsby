@@ -113,7 +113,7 @@ const createFSMachine = (
                     `deletePathNode`,
                     log(
                       (_, { pathType, path }) =>
-                        `${pathType} deleted at ${path}`
+                        deleted `${pathType} at ${path}`
                     ),
                   ],
                 },
