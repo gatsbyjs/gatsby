@@ -72,6 +72,8 @@ export const createGatsbyNodesFromWPGQLContentNodes = async (
     await fetchReferencedMediaItemsAndCreateNodes({
       referencedMediaItemNodeIds: referencedMediaItemNodeIdsArray,
     })
+
+    return [...createdNodeIds, ...referencedMediaItemNodeIdsArray]
   }
 
   return createdNodeIds
