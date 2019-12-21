@@ -84,8 +84,6 @@ export const fetchAndCreateAllNodes = async (helpers, pluginOptions) => {
     ...api
   )
 
-  dump(createdNodeIds.length)
-
   // save the node id's so we can touch them on the next build
   // so that we don't have to refetch all nodes
   await cache.set(CREATED_NODE_IDS, createdNodeIds)
