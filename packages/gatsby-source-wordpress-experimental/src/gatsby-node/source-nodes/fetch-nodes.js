@@ -84,17 +84,19 @@ export const fetchAndCreateAllNodes = async (helpers, pluginOptions) => {
     ...api
   )
 
+  dump(createdNodeIds.length)
+
   // save the node id's so we can touch them on the next build
   // so that we don't have to refetch all nodes
   await cache.set(CREATED_NODE_IDS, createdNodeIds)
 
-  const downloadAllReferencedImages = true
+  const downloadHtmlImages = false
 
   // this downloads any referenced image upfront,
   // instead of as images are queried for
   // the only reason to download them all upfront is to not break
   // the cli output...
-  if (downloadAllReferencedImages) {
+  if (downloadHtmlImages) {
     // these are image urls that were used in other nodes we created
     const fileUrls = Array.from(store.getState().imageNodes.urls)
 
