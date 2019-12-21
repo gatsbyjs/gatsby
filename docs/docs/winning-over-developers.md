@@ -35,7 +35,7 @@ Gatsby has many benefits that give developers the freedom to build great website
 
 ### Data integration
 
-> Gatsby supports easy data integration from sources like CMSs, SaaS services, APIs, databases, and other data sources of all flavors. Gatsby can also pull unstructured data directly into Gatsby pages using API calls specifically crafted for this purpose, this works great with smaller websites which can later be scaled up effortlessly as per requirement. This makes Gatsby stand out from most other static site generators.
+> Gatsby supports data integration from sources like CMSs, SaaS services, APIs, databases, and other data sources of all flavors. Gatsby can also pull unstructured data directly into pages using API calls specifically crafted for this purpose, this works great with smaller websites which can later be scaled up effortlessly if necessary. This makes Gatsby stand out from most other static site generators.
 
 ### Community and documentation
 
