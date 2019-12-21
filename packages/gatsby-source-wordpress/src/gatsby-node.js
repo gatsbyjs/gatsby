@@ -246,8 +246,12 @@ exports.sourceNodes = async (
   if (typeof _normalizer === `function`) {
     wordpressDataNormalizers.push({
       name: `customNormalizer`,
-      normalizer: helpers => _normalizer(helpers),
+      normalizer: _normalizer,
     })
+  }
+
+  if (typeof _normalizers === `function`) {
+    wordpressDataNormalizers = _normalizers([...wordpressDataNormalizers])
   }
 
   // creates nodes for each entry
@@ -261,20 +265,13 @@ exports.sourceNodes = async (
       }),
   })
 
-  if (typeof _normalizers === `function`) {
-    wordpressDataNormalizers = _normalizers(
-      [...wordpressDataNormalizers],
-      normalizerHelpers
-    )
-  }
-
   // Normalize data & create nodes
-  await wordpressDataNormalizers
-    .map(n => n.normalizer)
-    .reduce(async (entities, normalizerFunction) => {
-      entities = await entities
-      return await normalizerFunction({ entities, ...normalizerHelpers })
-    }, Promise.resolve(entities))
+  for (const { normalizer } of wordpressDataNormalizers) {
+    entities = await normalizer({
+      entities,
+      ...normalizerHelpers,
+    })
+  }
 
   return
 }

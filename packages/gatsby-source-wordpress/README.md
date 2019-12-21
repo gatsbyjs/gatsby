@@ -140,10 +140,23 @@ module.exports = {
         // URLs for thumbnails, or any other media detail.
         // Defaults to false
         keepMediaSizes: false,
+        // use a custom normalizer which is applied after the built-in ones.
+        normalizer: function({ entities }) {
+          return entities
+        },
         // add/remove wordpress data normalizers
         // each normalizer is an object with name and normalizer property being a function that accepts
         // object with entities array and different helpers and configuration settings
-        normalizers: normalizers => [dropUnusedMediaNormalizer, ...normalizers],
+        normalizers: normalizers => [
+          ...normalizers,
+          {
+            name: "nameOfTheFunction",
+            normalizer: function({ entities }) {
+              // manipulate entities here
+              return entities
+            },
+          },
+        ],
       },
     },
   ],
@@ -751,7 +764,7 @@ To learn more about image processing check
 ## Using a custom normalizer
 
 The plugin uses the concept of normalizers to transform the json data from WordPress into
-GraphQL nodes. You can extend the normalizers by modyfing the normalizers array in plugin options in `gatsby-config.js`.
+GraphQL nodes. You can extend the normalizers by modifying the normalizers array in plugin options in `gatsby-config.js`.
 
 ### Example:
 
@@ -805,12 +818,9 @@ and also your `wordpress-source-plugin` options from `gatsby-config.js`. To lear
 const dropUnusedMediaNormalizer = {
   name: "dropUnusedMediaNormalizer",
   normalizer: function({ entities }) {
-    return entities.filter(e => {
-      if (e.__type === "wordpress__wp_media" && !e.post) {
-        return false
-      }
-      return true
-    })
+    return entities.filter(
+      e => !(e.__type === "wordpress__wp_media" && !e.post)
+    )
   },
 }
 ```
