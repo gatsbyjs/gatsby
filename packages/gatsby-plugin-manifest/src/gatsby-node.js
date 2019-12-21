@@ -219,7 +219,11 @@ const makeManifest = async ({
 
   //Fix #18497 by prefixing paths
   manifest.icons = manifest.icons.map(icon => {
-    return { ...icon, src: path.join(basePath, icon.src) }
+    return {
+      ...icon,
+      src: path.join(basePath, icon.src),
+      start_url: path.join(basePath, icon.start_url),
+    }
   })
 
   //Write manifest
