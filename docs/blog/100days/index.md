@@ -21,7 +21,7 @@ Register below to join the #100daysofGatsby coding challenge!
 
 ## Use #100DaysOfGatsby on Social Media
 
-As you work on your Gatsby project, connect with the community by using #100DaysOfGatsby in your tweets or posts on social media. If you need help with a challenge, or want to share a tool or technique that was useful, visit our Gatsby communities on Discord, Spectrum, Reddit, and Reddit.
+As you work on your Gatsby project, connect with the community by using #100DaysOfGatsby in your tweets or posts on social media. If you need help with a challenge, or want to share a tool or technique that was useful, visit our [Gatsby communities](/contributing/community/#where-to-get-support) on [Discord](https://discordapp.com/invite/gatsby), [Spectrum](https://spectrum.chat/gatsby-js), [Dev](https://dev.to/t/gatsby), and [Reddit](https://www.reddit.com/r/gatsbyjs/).
 
 ## 👉🏽 New to React or Web Development?
 
