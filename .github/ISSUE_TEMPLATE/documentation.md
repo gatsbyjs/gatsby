@@ -47,4 +47,5 @@ Why should we document this and who will benefit from it?
 - [ ] Add the article to the [docs sidebar](https://github.com/gatsbyjs/gatsby/blob/master/www/src/data/sidebars/doc-links.yaml) under the [parent doc] section.
 
 ### Open a pull request
+
 - [ ] Open a pull request with your work including the words "closes #[this issue's number]" in the pull request description
