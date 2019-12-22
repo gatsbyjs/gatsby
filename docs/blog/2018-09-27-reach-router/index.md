@@ -25,15 +25,7 @@ When a user navigates between traditional server-rendered pages, the page is ful
 
 The video below demonstrates this challenge (Video by [Rob DeLuca](https://twitter.com/robdel12), which accompanied his related article, “[Single page app routers are broken](https://medium.com/@robdel12/single-page-apps-routers-are-broken-255daa310cf)”)
 
-<iframe
-  width="560"
-  height="315"
-  src="https://www.youtube.com/embed/NKTdNv8JpuM?rel=0"
-  frameborder="0"
-  allow="autoplay; encrypted-media"
-  allowfullscreen
-  title="YouTube: (React) Disqus router"
-/>
+https://youtu.be/NKTdNv8JpuM
 
 A primary focus (no pun intended) of @reach/router is to manage focus in client-side routing, out of the box, lifting the onus from devs to manage it from scratch. From the @reach/router documentation:
 
@@ -59,18 +51,7 @@ A primary focus (no pun intended) of @reach/router is to manage focus in client-
 
 The video below demonstrates this focus management:
 
-<blockquote class="twitter-tweet" data-conversation="none" data-lang="en">
-  <p lang="en" dir="ltr">
-    Check out that focus management 😍
-    <br />
-    <br />
-    The same code that makes this possible is what makes relative links and embedded
-    routers possible too. <a href="https://t.co/DjqveMfspA">
-      pic.twitter.com/DjqveMfspA
-    </a>
-  </p>
-  &mdash; Ryan Florence (@ryanflorence) <a href="https://twitter.com/ryanflorence/status/1002219535921889281?ref_src=twsrc%5Etfw">May 31, 2018</a>
-</blockquote>
+https://twitter.com/ryanflorence/status/1002219535921889281
 
 In terms of the development experience with Gatsby, this change is mostly under the hood, folded into the implementation of the Gatsby Link component. In terms of usability, accessibility by default is a win for everyone 🙌🏻.
 
@@ -84,26 +65,7 @@ For most sites, migrating from v1 to v2 shouldn’t be too painful, but there ar
 
 We look forward to continuing to work actively with Ryan!
 
-<blockquote class="twitter-tweet" data-lang="en">
-  <p lang="en" dir="ltr">
-    Reach Router is hitting the big time with{" "}
-    <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a>{" "}
-    adopting it and Nike shipping a site with it{" "}
-    <a href="https://t.co/fthOUQ1lJh">https://t.co/fthOUQ1lJh</a> :D
-    <br />
-    <br />
-    I&#39;ll be spending all day Thursday fixing/adding stuff Gatsby needs. AND!
-    Gatsby is sponsoring my time.
-    <br />
-    <br />
-    Thanks{" "}
-    <a href="https://twitter.com/kylemathews?ref_src=twsrc%5Etfw">
-      @kylemathews
-    </a>{" "}
-    and the rest of the team 🙏🏽
-  </p>
-  &mdash; Ryan Florence (@ryanflorence) <a href="https://twitter.com/ryanflorence/status/1042117992140554241?ref_src=twsrc%5Etfw">September 18, 2018</a>
-</blockquote>
+https://twitter.com/ryanflorence/status/1042117992140554241
 
 Related Gatsby docs:
 

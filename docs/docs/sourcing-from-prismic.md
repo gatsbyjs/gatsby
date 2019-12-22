@@ -20,11 +20,11 @@ Before initializing your Gatsby project you should sign up for an account on [Pr
 
 Create your first custom type (Repeatable Type) with the name `Post` and add some fields to it. Choose rational names for the `API ID` input while configuring a field because these names will appear in your queries. You should always add the `uid` field in order to have a unique identifier (e.g. for filtering). Then switch to the content overview and create a new document with your `Post` type. Fill out the fields and publish the item.
 
-<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/yrOYLNiYtBQ?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+https://youtu.be/yrOYLNiYtBQ
 
 In order for Gatsby to grab all information from Prismic you'll need to generate an access token. Head over to `Settings → API & Security`, fill out the `Application name` field (the Callback URL can be left empty), and press `Add this application`.
 
-<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/iH0P4KcOeVc?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+https://youtu.be/iH0P4KcOeVc
 
 ### Gatsby
 
@@ -167,7 +167,7 @@ Setup your Netlify project and afterwards go to the `Build hooks` setting at `Se
 
 Prismic offers a [Content Relationship](https://user-guides.prismic.io/content-modeling-and-custom-types/field-reference/content-relationship) field which is used to link to another document in your Prismic repository. You can use that in combination with a custom type to create a tagging system (in this example _categories_). And what's cool about that? You can edit your entries any time and they'll update in every post! Read the [official docs](https://user-guides.prismic.io/how-to-guides/create-a-custom-tagging-system) on that or watch the video:
 
-<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/67yir-jQrFk?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+https://youtu.be/67yir-jQrFk
 
 The video shows the usage of a group field and relationship field — if you only want to have one category, skip the group field. Similar as to the `Post` custom type the `Category` one can also be queried. Furthermore, the `allPrismicPost` query also has the `categories` node available:
 
@@ -177,7 +177,7 @@ The video shows the usage of a group field and relationship field — if you onl
 
 When creating a new custom type, you are able to choose `Single Type`, too. In this example, you'll fill the homepage with content from Prismic and therefore have complete control over the content of your site. The goal is to eliminate the need to change website code, and to change your content in Prismic instead. Visit your Prismic repository and follow the video:
 
-<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/bvDAUEaJXrM?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+https://youtu.be/bvDAUEaJXrM
 
 Single pages (like your homepage, privacy policy page etc.) don't need [GraphQL connections](https://blog.apollographql.com/explaining-graphql-connections-c48b7c3d6976) (e.g. `allPrismicHomepage`) due to the fact that only one document for that type exists in Prismic anyway. Therefore you need to use `prismicHomepage` for your query. This also has the benefit that you don't have to map over an array. Your page could look something like this:
 
