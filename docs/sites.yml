@@ -9059,3 +9059,13 @@
   built_by: Paul Scanlon
   built_by_url: http://www.pauliescanlon.io
   featured: false
+- title: EF Design
+  main_url: https://ef.design
+  url: https://ef.design
+  description: >
+    Home of everything creative, digital and brand at EF.
+  featured: false
+  categories:
+    - Marketing
+    - Design
+  built_by: João Matos (Global Creative Studio - Education First)
