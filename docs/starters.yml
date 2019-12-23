@@ -4695,7 +4695,7 @@
     - RSS
     - ESLint(Airbnb) for linting
     - Prettier code formatting
-    - gh-pages for deploying to GitHub pages
+    - gh-pages for deploying to GitHub Pages
 - url: https://gatsby-starter-boilerplatev-kontent-demo.netlify.com/
   repo: https://github.com/viperfx07/gatsby-starter-boilerplatev-kontent
   description: A Gatsby starter using BoilerplateV for Kentico Kontent.
