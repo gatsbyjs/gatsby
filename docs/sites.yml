@@ -9069,3 +9069,14 @@
     - Marketing
     - Design
   built_by: João Matos (Global Creative Studio - Education First)
+- title: Codica
+  main_url: https://www.codica.com/
+  url: https://www.codica.com/
+  description: >
+    We help startups and established brands with JAMStack, Progressive Web Apps and Marketplaces development.
+  categories:
+    - Agency
+    - Web Development
+  built_by: Codica
+  built_by_url: https://www.codica.com/
+  featured: false
