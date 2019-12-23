@@ -539,7 +539,7 @@ Do the same for your shop url, commit and push. Congrats!
 
 You should now be able to access the site and navigate easily between your shop and your blog. Great job!
 
-If you enjoyed the article or have any questions, please reach out to me on [twitter](https://twitter.com/andricokaroulla?lang=en)!
+If you enjoyed the article or have any questions, please reach out to me on [Twitter](https://twitter.com/andricokaroulla?lang=en)!
 
 You can find a variety of JavaScript related articles [here](https://medium.com/@andricokaroulla)
 
