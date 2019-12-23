@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.18.17](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.16...gatsby@2.18.17) (2019-12-23)
+
+### Bug Fixes
+
+- **gatsby:** don't write out `isCreatedByStatefulCreatePages` to page-data files ([#20241](https://github.com/gatsbyjs/gatsby/issues/20241)) ([4b113bd](https://github.com/gatsbyjs/gatsby/commit/4b113bd))
+
+### Features
+
+- **gatsby:** Improve structured errors around GraphQL ([#20120](https://github.com/gatsbyjs/gatsby/issues/20120)) ([a5740f9](https://github.com/gatsbyjs/gatsby/commit/a5740f9))
+
 ## [2.18.16](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.15...gatsby@2.18.16) (2019-12-20)
 
 ### Bug Fixes
