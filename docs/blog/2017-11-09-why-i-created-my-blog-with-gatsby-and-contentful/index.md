@@ -195,12 +195,12 @@ thought of that and created Gatsby.js.
 A little disclaimer: I absolutely love React, so, when I first learned that
 there were some emerging Static Site Generators who leveraged only React and
 Webpack, I knew that I had to try at least one of them for the new upcoming blog
-I was planning to build. These projects were [Gatsby.js ](http://gatsbyjs.org/)
+I was planning to build. These projects were [Gatsby.js](http://gatsbyjs.org/)
 and [Phenomic](https://phenomic.io/), and both were still quite young back then,
 neither of them having reached the 1.0 release yet.
 
 Ironically I chose Phenomic, mainly because I liked what the guys from
-[Serverless.com ](http://serverless.com/)had done with their website at that
+[Serverless.com](http://serverless.com/) had done with their website at that
 time -- built using Phenomic.
 
 So, I went ahead and built my blog using Phenomic. Overall, I thought it was a
