@@ -16,7 +16,7 @@ module.exports = (code, additionalHtmlEscapes = {}) => {
 
   const chars = Object.keys(htmlEscapes)
 
-  const charsRe = new RegExp(`[${chars.join()}]`, `g`)
+  const charsRe = new RegExp(`[${chars.join('')}]`, `g`)
 
   const rehasUnescapedChars = new RegExp(charsRe.source)
 
