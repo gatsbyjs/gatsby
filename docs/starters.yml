@@ -4789,3 +4789,21 @@
     - MDX for pages and content
     - Code syntax highlighting
     - SEO (OpenGraph and Twitter) out of the box with default settings that make sense (thanks to React Helmet)
+- url: https://gatsby-starter-robin.netlify.com/
+  repo: https://github.com/robinmetral/gatsby-starter-robin
+  description: Gatsby Default Starter with state-of-the-art tooling
+  tags:
+    - MDX
+    - Styling:CSS-in-JS
+    - Linting
+    - Testing
+    - Storybook
+  features:
+    - 📚 Write in MDX
+    - 👩‍🎤 Style with Emotion
+    - 💅 Linting with ESLint and Prettier
+    - 📝 Unit and integration testing with Jest and react-testing-library
+    - 💯 E2E browser testing with Cypress
+    - 📓 Visual testing with Storybook
+    - ✔️ CI with GitHub Actions
+    - ⚡ CD with Netlify
