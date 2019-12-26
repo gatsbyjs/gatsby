@@ -34,7 +34,7 @@ async function onCreateNode(
   }
 
   // changes the incoming imagesdir option to take the
-  const asciidocOptions = processPluginOptions(pluginOptions, pathPrefix)
+  const asciidocOptions = processPluginOptions(pluginOptions, pathPrefix, node)
 
   const { createNode, createParentChildLink } = actions
   // Load Asciidoc contents
@@ -106,7 +106,7 @@ async function onCreateNode(
   }
 }
 
-const processPluginOptions = _.memoize((pluginOptions, pathPrefix) => {
+const processPluginOptions = _.memoize((pluginOptions, pathPrefix, node) => {
   const defaultImagesDir = `/images@`
   const currentPathPrefix = pathPrefix || ``
 
@@ -115,6 +115,9 @@ const processPluginOptions = _.memoize((pluginOptions, pathPrefix) => {
   if (clonedPluginOptions.attributes === undefined) {
     clonedPluginOptions.attributes = {}
   }
+
+  // Set the base_dir to the current node (i.e. document) path
+  clonedPluginOptions.base_dir = node.dir
 
   clonedPluginOptions.attributes.imagesdir = withPathPrefix(
     currentPathPrefix,
