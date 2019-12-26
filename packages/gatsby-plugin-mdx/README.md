@@ -24,20 +24,27 @@ MDX seeks to make writing with Markdown and JSX simpler while being more express
 
 ## Table of contents
 
-- [Installation](#installation)
-- [Usage](#usage)
-  - [Configuration](#configuration)
-    - [Extensions](#extensions)
-    - [Default layouts](#default-layouts)
-    - [Imports](#imports)
-    - [Shortcodes](#shortcodes)
-    - [Gatsby remark plugins](#gatsby-remark-plugins)
-    - [Markdown plugins](#remark-plugins)
-    - [HAST plugins](#rehype-plugins)
-    - [Media types](#media-types)
-  - [Components](#components)
-    - [MDXProvider](#mdxprovider)
-    - [MDXRenderer](#mdxrenderer)
+- [What’s MDX?](#whats-mdx)
+  - [Why MDX?](#why-mdx)
+    - [Read more about MDX](#read-more-about-mdx)
+  - [Table of contents](#table-of-contents)
+  - [Installation](#installation)
+  - [Usage](#usage)
+    - [Configuration](#configuration)
+      - [Extensions](#extensions)
+      - [Default layouts](#default-layouts)
+      - [Imports](#imports)
+      - [Shortcodes](#shortcodes)
+      - [Gatsby remark plugins](#gatsby-remark-plugins)
+      - [MD plugins](#md-plugins)
+      - [HAST plugins](#hast-plugins)
+      - [Media types](#media-types)
+        - [Explanation](#explanation)
+    - [Components](#components)
+      - [MDXProvider](#mdxprovider)
+        - [Related](#related)
+      - [MDXRenderer](#mdxrenderer)
+  - [License](#license)
 
 ## Installation
 
@@ -270,6 +277,8 @@ Here's a color picker!
 
 <SketchPicker />
 ```
+
+_**Note:** you should rerun your gatsby development environment to update imports in mdx files. Otherwise, you'll get a `ReferenceError` for new imports. You can use the shortcodes approach if that is an issue for you.
 
 #### Shortcodes
 
