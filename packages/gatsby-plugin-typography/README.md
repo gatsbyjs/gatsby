@@ -9,7 +9,7 @@ See it in action in the [Tutorial](https://www.gatsbyjs.org/tutorial/part-three/
 
 `npm install --save gatsby-plugin-typography react-typography typography`
 
-## Why to use
+## How to use
 
 A typical `typography.js` file utilizing one of its themes might look like this:
 
