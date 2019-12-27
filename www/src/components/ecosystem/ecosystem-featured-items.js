@@ -6,16 +6,15 @@ import {
   HorizontalScroller,
   HorizontalScrollerContent,
 } from "../shared/horizontal-scroller"
-
-import { colors, space, mediaQueries } from "../../utils/presets"
+import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
 
 const EcosystemFeaturedItemsRoot = styled(HorizontalScroller)`
-  margin: 0 -${space[6]};
+  margin: 0 -${p => p.theme.space[6]};
 
   ${mediaQueries.md} {
-    border-top: 1px solid ${colors.ui.border.subtle};
-    margin-top: ${space[3]};
+    border-top: 1px solid ${p => p.theme.colors.ui.border};
+    margin-top: ${p => p.theme.space[3]};
     margin-bottom: 0;
     overflow-y: scroll;
     overflow-x: hidden;
@@ -23,8 +22,8 @@ const EcosystemFeaturedItemsRoot = styled(HorizontalScroller)`
 `
 
 const List = styled(HorizontalScrollerContent)`
-  padding-left: ${space[6]};
-  padding-right: ${space[6]};
+  padding-left: ${p => p.theme.space[6]};
+  padding-right: ${p => p.theme.space[6]};
 
   ${mediaQueries.md} {
     flex-direction: column;

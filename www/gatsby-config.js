@@ -1,5 +1,4 @@
 const path = require(`path`)
-const git = require(`git-rev-sync`)
 require(`dotenv`).config({
   path: `.env.${process.env.NODE_ENV}`,
 })
@@ -65,6 +64,7 @@ module.exports = {
     "Mdx.frontmatter.author": `AuthorYaml`,
   },
   plugins: [
+    `gatsby-plugin-theme-ui`,
     {
       resolve: `gatsby-source-npm-package-search`,
       options: {
@@ -133,8 +133,8 @@ module.exports = {
           )
         },
         gatsbyRemarkPlugins: [
+          `gatsby-remark-embedder`,
           `gatsby-remark-graphviz`,
-          `gatsby-remark-embed-video`,
           {
             resolve: `gatsby-remark-images`,
             options: {
@@ -158,8 +158,8 @@ module.exports = {
       resolve: `gatsby-transformer-remark`,
       options: {
         plugins: [
+          `gatsby-remark-embedder`,
           `gatsby-remark-graphviz`,
-          `gatsby-remark-embed-video`,
           `gatsby-remark-code-titles`,
           {
             resolve: `gatsby-remark-images`,
@@ -179,7 +179,6 @@ module.exports = {
             resolve: `gatsby-remark-prismjs`,
             options: {
               aliases: {
-                console: `bash`,
                 dosini: `ini`,
                 env: `bash`,
                 es6: `js`,
@@ -189,9 +188,7 @@ module.exports = {
                 htaccess: `apacheconf`,
                 mdx: `markdown`,
                 ml: `fsharp`,
-                sh: `bash`,
                 styl: `stylus`,
-                terminal: `bash`,
               },
             },
           },
@@ -308,7 +305,14 @@ module.exports = {
         ],
       },
     },
-    `gatsby-plugin-netlify`,
+    {
+      resolve: `gatsby-plugin-netlify`,
+      options: {
+        headers: {
+          "/*": [`Referrer-Policy: strict-origin-when-cross-origin`],
+        },
+      },
+    },
     `gatsby-plugin-netlify-cache`,
     {
       resolve: `gatsby-plugin-mailchimp`,
@@ -320,16 +324,6 @@ module.exports = {
       resolve: `gatsby-transformer-screenshot`,
       options: {
         nodeTypes: [`StartersYaml`],
-      },
-    },
-    {
-      resolve: `gatsby-plugin-sentry`,
-      options: {
-        dsn: `https://2904ad31b1744c688ae19b627f51a5de@sentry.io/1471074`,
-        release: git.long(),
-        environment: process.env.NODE_ENV,
-        enabled: (() =>
-          [`production`, `stage`].indexOf(process.env.NODE_ENV) !== -1)(),
       },
     },
     // `gatsby-plugin-subfont`,

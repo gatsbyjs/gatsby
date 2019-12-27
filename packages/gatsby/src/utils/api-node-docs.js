@@ -138,6 +138,9 @@ exports.onCreateNode = true
  * for programmatically manipulating pages created by other plugins e.g.
  * if you want paths without trailing slashes.
  *
+ * There is a mechanism in Gatsby to prevent calling onCreatePage for pages
+ * created by the same gatsby-node.js to avoid infinite loops/callback.
+ *
  * See the guide [Creating and Modifying Pages](/docs/creating-and-modifying-pages/)
  * for more on this API.
  */

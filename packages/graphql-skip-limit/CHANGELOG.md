@@ -3,6 +3,62 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.23](https://github.com/gatsbyjs/gatsby/compare/graphql-skip-limit@2.1.21...graphql-skip-limit@2.1.23) (2019-12-10)
+
+**Note:** Version bump only for package graphql-skip-limit
+
+## [2.1.22](https://github.com/gatsbyjs/gatsby/compare/graphql-skip-limit@2.1.21...graphql-skip-limit@2.1.22) (2019-12-10)
+
+**Note:** Version bump only for package graphql-skip-limit
+
+## [2.1.21](https://github.com/gatsbyjs/gatsby/compare/graphql-skip-limit@2.1.20...graphql-skip-limit@2.1.21) (2019-11-26)
+
+**Note:** Version bump only for package graphql-skip-limit
+
+## [2.1.20](https://github.com/gatsbyjs/gatsby/compare/graphql-skip-limit@2.1.19...graphql-skip-limit@2.1.20) (2019-11-15)
+
+**Note:** Version bump only for package graphql-skip-limit
+
+## [2.1.19](https://github.com/gatsbyjs/gatsby/compare/graphql-skip-limit@2.1.18...graphql-skip-limit@2.1.19) (2019-11-10)
+
+**Note:** Version bump only for package graphql-skip-limit
+
+## [2.1.18](https://github.com/gatsbyjs/gatsby/compare/graphql-skip-limit@2.1.17...graphql-skip-limit@2.1.18) (2019-10-14)
+
+**Note:** Version bump only for package graphql-skip-limit
+
+## [2.1.17](https://github.com/gatsbyjs/gatsby/compare/graphql-skip-limit@2.1.16...graphql-skip-limit@2.1.17) (2019-10-14)
+
+**Note:** Version bump only for package graphql-skip-limit
+
+## [2.1.16](https://github.com/gatsbyjs/gatsby/compare/graphql-skip-limit@2.1.15...graphql-skip-limit@2.1.16) (2019-10-09)
+
+**Note:** Version bump only for package graphql-skip-limit
+
+## [2.1.15](https://github.com/gatsbyjs/gatsby/compare/graphql-skip-limit@2.1.13...graphql-skip-limit@2.1.15) (2019-09-26)
+
+**Note:** Version bump only for package graphql-skip-limit
+
+## [2.1.14](https://github.com/gatsbyjs/gatsby/compare/graphql-skip-limit@2.1.13...graphql-skip-limit@2.1.14) (2019-09-26)
+
+**Note:** Version bump only for package graphql-skip-limit
+
+## [2.1.13](https://github.com/gatsbyjs/gatsby/compare/graphql-skip-limit@2.1.12...graphql-skip-limit@2.1.13) (2019-09-25)
+
+**Note:** Version bump only for package graphql-skip-limit
+
+## [2.1.12](https://github.com/gatsbyjs/gatsby/compare/graphql-skip-limit@2.1.11...graphql-skip-limit@2.1.12) (2019-09-20)
+
+**Note:** Version bump only for package graphql-skip-limit
+
+## [2.1.11](https://github.com/gatsbyjs/gatsby/compare/graphql-skip-limit@2.1.10...graphql-skip-limit@2.1.11) (2019-09-20)
+
+**Note:** Version bump only for package graphql-skip-limit
+
+## [2.1.10](https://github.com/gatsbyjs/gatsby/compare/graphql-skip-limit@2.1.9...graphql-skip-limit@2.1.10) (2019-09-16)
+
+**Note:** Version bump only for package graphql-skip-limit
+
 ## [2.1.9](https://github.com/gatsbyjs/gatsby/compare/graphql-skip-limit@2.1.8...graphql-skip-limit@2.1.9) (2019-09-09)
 
 **Note:** Version bump only for package graphql-skip-limit

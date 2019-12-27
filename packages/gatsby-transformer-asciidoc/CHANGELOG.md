@@ -3,6 +3,56 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-asciidoc@1.1.20...gatsby-transformer-asciidoc@1.1.21) (2019-12-15)
+
+### Bug Fixes
+
+- **docs:** custom converter example ([#20119](https://github.com/gatsbyjs/gatsby/issues/20119)) ([7bcbd02](https://github.com/gatsbyjs/gatsby/commit/7bcbd02))
+
+## [1.1.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-asciidoc@1.1.18...gatsby-transformer-asciidoc@1.1.20) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-transformer-asciidoc
+
+## [1.1.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-asciidoc@1.1.18...gatsby-transformer-asciidoc@1.1.19) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-transformer-asciidoc
+
+## [1.1.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-asciidoc@1.1.17...gatsby-transformer-asciidoc@1.1.18) (2019-11-26)
+
+**Note:** Version bump only for package gatsby-transformer-asciidoc
+
+## [1.1.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-asciidoc@1.1.16...gatsby-transformer-asciidoc@1.1.17) (2019-11-15)
+
+**Note:** Version bump only for package gatsby-transformer-asciidoc
+
+## [1.1.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-asciidoc@1.1.15...gatsby-transformer-asciidoc@1.1.16) (2019-11-10)
+
+**Note:** Version bump only for package gatsby-transformer-asciidoc
+
+## [1.1.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-asciidoc@1.1.14...gatsby-transformer-asciidoc@1.1.15) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-transformer-asciidoc
+
+## [1.1.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-asciidoc@1.1.13...gatsby-transformer-asciidoc@1.1.14) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-transformer-asciidoc
+
+## [1.1.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-asciidoc@1.1.12...gatsby-transformer-asciidoc@1.1.13) (2019-10-09)
+
+**Note:** Version bump only for package gatsby-transformer-asciidoc
+
+## [1.1.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-asciidoc@1.1.10...gatsby-transformer-asciidoc@1.1.12) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-transformer-asciidoc
+
+## [1.1.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-asciidoc@1.1.10...gatsby-transformer-asciidoc@1.1.11) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-transformer-asciidoc
+
+## [1.1.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-asciidoc@1.1.9...gatsby-transformer-asciidoc@1.1.10) (2019-09-20)
+
+**Note:** Version bump only for package gatsby-transformer-asciidoc
+
 ## [1.1.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-asciidoc@1.1.8...gatsby-transformer-asciidoc@1.1.9) (2019-09-09)
 
 **Note:** Version bump only for package gatsby-transformer-asciidoc

@@ -183,6 +183,16 @@ if (!process.env.GATSBY_DB_NODES || process.env.GATSBY_DB_NODES === `redux`) {
           mockNodes()[3].id,
         ])
       })
+      it(`return empty array in case of empty nodes`, async () => {
+        const queryArgs = { filter: {}, sort: {} }
+        const resultSingular = await runSift({
+          gqlType,
+          queryArgs,
+          firstOnly: true,
+          nodeTypeNames: [`NonExistentNodeType`],
+        })
+        expect(resultSingular).toEqual([])
+      })
     })
   })
 } else {

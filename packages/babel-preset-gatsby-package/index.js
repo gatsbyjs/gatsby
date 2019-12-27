@@ -17,6 +17,8 @@ function preset(context, options = {}) {
   }
 
   const nodeConfig = {
+    corejs: 2,
+    useBuiltIns: `entry`,
     targets: {
       node: IS_PRODUCTION ? nodeVersion : `current`,
     },
@@ -30,7 +32,6 @@ function preset(context, options = {}) {
           {
             loose: true,
             debug: !!debug,
-            useBuiltIns: `entry`,
             shippedProposals: true,
             modules: `commonjs`,
           },
@@ -42,6 +43,7 @@ function preset(context, options = {}) {
     ],
     plugins: [
       r(`@babel/plugin-proposal-class-properties`),
+      r(`@babel/plugin-proposal-nullish-coalescing-operator`),
       r(`@babel/plugin-proposal-optional-chaining`),
       r(`@babel/plugin-transform-runtime`),
       r(`@babel/plugin-syntax-dynamic-import`),

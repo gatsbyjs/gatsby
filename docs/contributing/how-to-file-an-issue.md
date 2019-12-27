@@ -2,7 +2,7 @@
 title: How to File an Issue
 ---
 
-The [issue tracker](https://github.com/gatsbyjs/gatsby/issues) is the preferred channel for bug reports, features requests and submitting pull requests.
+The [issue tracker](https://github.com/gatsbyjs/gatsby/issues) is the preferred channel for bug reports, feature requests and [submitting pull requests](/contributing/how-to-open-a-pull-request/).
 
 If you want your issue to be resolved quickly, please include in your issue:
 
@@ -21,4 +21,4 @@ If an issue is affecting you, start at the top of this list and complete as many
 2.  If there is an issue and you can add more detail, write a comment describing how the bug is affecting OR if you can, write up a work-around for the bug
 3.  If there _is not_ an issue, write the most complete description of what's happening, preferably with link to a Gatsby site that reproduces the problem or [create a reproducible test case](/contributing/how-to-make-a-reproducible-test-case/)
 4.  Offer to help fix the bug (and it is totally expected that you ask for help; open-source maintainers want to help contributors)
-5.  Deliver a well-crafted, tested PR
+5.  [Deliver a well-crafted, tested PR](/contributing/how-to-open-a-pull-request/)

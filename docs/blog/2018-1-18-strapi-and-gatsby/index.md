@@ -10,11 +10,11 @@ tags: ["blogs", "cms", "headless-cms", "getting-started"]
 
 ![Showing the idea of using Gatsby with Strapi ](gatsby-strapi.png)
 
-A static website contains Web pages with fixed content. Technically, it is a simple list of HTML files, which displays the same information to every visitor. Unlike dynamic websites, they do not require any back-end programming or database. Publishing a static website is easy: the files are uploaded on a simple Web server or storage provider. The two main advantages of static websites are security and speed: there is no database so it can not be hacked and there is no need to render a page for each request, which makes Web browsing faster.
+A static website contains Web pages with fixed content. Technically, it is a simple list of HTML files, which displays the same information to every visitor. Unlike dynamic websites, they do not require any backend programming or database. Publishing a static website is easy: the files are uploaded on a simple Web server or storage provider. The two main advantages of static websites are security and speed: there is no database so it can not be hacked and there is no need to render a page for each request, which makes Web browsing faster.
 
 To make their creation easier, numerous open-source static websites generators are available: [Jekyll](https://jekyllrb.com/), [Hugo](https://gohugo.io/), [Hexo](https://hexo.io/), etc. Most of the time, the content is managed through static (ideally Markdown) files or a Content API. Then, the generator requests the content, injects it in templates defined by the developer and generates a bunch of HTML files.
 
-Progressive Web Apps (PWA) are web applications, highly based on JavaScript, and are [reliable, fast and engaging](https://developers.google.com/web/progressive-web-apps/). Since they make web browsing much faster and offer a better user experience, PWA have become the default way to build Web interfaces. Thus, many amazing front-end frameworks appeared over the last couple years: Angular, React and more recently, Vue.
+Progressive Web Apps (PWA) are web applications, highly based on JavaScript, and are [reliable, fast and engaging](https://developers.google.com/web/progressive-web-apps/). Since they make web browsing much faster and offer a better user experience, PWA have become the default way to build Web interfaces. Thus, many amazing frontend frameworks appeared over the last couple years: Angular, React and more recently, Vue.
 
 > Gatsby: when static websites meet Progressive Web Apps
 
@@ -32,7 +32,7 @@ Created by [Kyle Mathews](https://twitter.com/kylemathews), the project was offi
 
 ## What is Strapi?
 
-[Strapi](https://strapi.io) is an _open source **Headless CMS Front-End Developers Love**_. It's more than a [Node.js Framework and more than a Headless CMS](https://strapi.io/overview), it saves weeks of API development time, and allows easy long-term content management through a beautiful administration panel _anyone can use_.
+[Strapi](https://strapi.io) is an _open source **Headless CMS Frontend Developers Love**_. It's more than a [Node.js Framework and more than a Headless CMS](https://strapi.io/overview), it saves weeks of API development time, and allows easy long-term content management through a beautiful administration panel _anyone can use_.
 
 ![The Strapi Logo](logo-strapi.png)
 
@@ -69,15 +69,7 @@ Note: Within the content below we provide links that open a running _localhost_ 
 
 This video series will take you step by step through creating a blog in Gatsby and teach you how to connect it to the open sourced [headless CMS](/docs/headless-cms/) - Strapi.
 
-<iframe
-  width="1206"
-  height="678"
-  title="Intro - Learn GatsbyJS with Strapi Headless CMS YouTube Tutorial Series"
-  src="https://www.youtube.com/embed/It4PRFJJaF0"
-  frameborder="0"
-  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-  allowfullscreen
-/>
+https://youtu.be/It4PRFJJaF0
 
 _Important links from Video:_
 
@@ -88,15 +80,7 @@ _Important links from Video:_
 
 ### 2. Installation
 
-<iframe
-  width="1206"
-  height="678"
-  title="Installation - Learn GatsbyJS with Strapi Headless CMS YouTube Tutorial Series"
-  src="https://www.youtube.com/embed/4QnDgxtWqOI"
-  frameborder="0"
-  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-  allowfullscreen
-/>
+https://youtu.be/4QnDgxtWqOI
 
 _Important links from Video:_
 
@@ -168,15 +152,7 @@ Starting here, you should be able to visit the admin panel of your project: http
 
 ### 3. Content Types
 
-<iframe
-  width="886"
-  height="498"
-  title="Content Types - Learn GatsbyJS with Strapi Headless CMS YouTube Tutorial Series"
-  src="https://www.youtube.com/embed/cPEkpfik6X4"
-  frameborder="0"
-  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-  allowfullscreen
-/>
+https://youtu.be/cPEkpfik6X4
 
 _Important links from Video:_
 
@@ -184,7 +160,7 @@ _Important links from Video:_
 
 #### Create a Content Type
 
-Strapi CMS projects are based on a data structure called Content Types (equivalent to models in frameworks and Content Types in Wordpress).
+Strapi CMS projects are based on a data structure called Content Types (equivalent to models in frameworks and Content Types in WordPress).
 
 [Create a Content Type](http://localhost:1337/admin/plugins/content-type-builder/) named `article` with four fields:
 
@@ -214,15 +190,7 @@ Note: You can download the sample content from the video [here](https://github.c
 
 ### 4. Roles and Permissions
 
-<iframe
-  width="886"
-  height="498"
-  title="Roles and Permissions - Learn GatsbyJS with Strapi Headless CMS YouTube Tutorial Series"
-  src="https://www.youtube.com/embed/1jev6QRwcSo"
-  frameborder="0"
-  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-  allowfullscreen
-/>
+https://youtu.be/1jev6QRwcSo
 
 #### Allow access to Article
 
@@ -236,15 +204,7 @@ Great job, our API is ready! We can start developing the static website.
 
 ### 5. Setting up Gatsby
 
-<iframe
-  width="886"
-  height="498"
-  title="Setting up Gatsby - Learn GatsbyJS with Strapi Headless CMS YouTube Tutorial Series"
-  src="https://www.youtube.com/embed/SnrEEW1uTlU"
-  frameborder="0"
-  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-  allowfullscreen
-/>
+https://youtu.be/SnrEEW1uTlU
 
 _Important links from Video:_
 
@@ -360,15 +320,7 @@ Next, restart the server to ensure Gatsby registers these updates.
 
 ### 6. Create our Index Page
 
-<iframe
-  width="886"
-  height="498"
-  title="Create the Index page view - Learn GatsbyJS with Strapi Headless CMS YouTube Tutorial Series"
-  src="https://www.youtube.com/embed/UaFgCubwRD8"
-  frameborder="0"
-  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-  allowfullscreen
-/>
+https://youtu.be/UaFgCubwRD8
 
 _Important links from Video:_
 
@@ -489,15 +441,7 @@ export const pageQuery = graphql`
 
 ### 7. Create the Article page view
 
-<iframe
-  width="886"
-  height="498"
-  title="Create the Article page view - Learn GatsbyJS with Strapi Headless CMS YouTube Tutorial Series"
-  src="https://www.youtube.com/embed/FTzwb49tBvw"
-  frameborder="0"
-  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-  allowfullscreen
-/>
+https://youtu.be/FTzwb49tBvw
 
 _Important links from Video:_
 
@@ -619,15 +563,7 @@ From now on, you should be able to visit the detail page by clicking on URLs dis
 
 ### 8. Gatsby Images and author page
 
-<iframe
-  width="886"
-  height="498"
-  title="Gatsby Images & author page - Learn GatsbyJS with Strapi Headless CMS YouTube Tutorial Series"
-  src="https://www.youtube.com/embed/mPyJrjD3oU0"
-  frameborder="0"
-  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-  allowfullscreen
-/>
+https://youtu.be/mPyJrjD3oU0
 
 _Important links from Video:_
 

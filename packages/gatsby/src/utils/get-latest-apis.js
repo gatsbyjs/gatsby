@@ -8,7 +8,7 @@ const OUTPUT_FILE = path.join(ROOT, `latest-apis.json`)
 
 module.exports = async function getLatestAPI() {
   try {
-    const { data } = await axios.get(API_FILE)
+    const { data } = await axios.get(API_FILE, { timeout: 5000 })
 
     await fs.writeFile(OUTPUT_FILE, JSON.stringify(data, null, 2), `utf8`)
 

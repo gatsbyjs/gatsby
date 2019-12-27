@@ -15,6 +15,7 @@ module.exports = async ({ syncToken, reporter, pluginConfig }) => {
     accessToken: pluginConfig.get(`accessToken`),
     host: pluginConfig.get(`host`),
     environment: pluginConfig.get(`environment`),
+    proxy: pluginConfig.get(`proxy`),
   }
 
   const client = contentful.createClient(contentfulClientOptions)
@@ -23,10 +24,12 @@ module.exports = async ({ syncToken, reporter, pluginConfig }) => {
   // {'locale': value} } so we need to get the space and its default local.
   //
   // We'll extend this soon to support multiple locales.
+  let space
   let locales
   let defaultLocale = `en-US`
   try {
     console.log(`Fetching default locale`)
+    space = await client.getSpace()
     locales = await client.getLocales().then(response => response.items)
     defaultLocale = _.find(locales, { default: true }).code
     locales = locales.filter(pluginConfig.get(`localeFilter`))
@@ -36,6 +39,11 @@ module.exports = async ({ syncToken, reporter, pluginConfig }) => {
     let errors
     if (e.code === `ENOTFOUND`) {
       details = `You seem to be offline`
+    } else if (e.code === `SELF_SIGNED_CERT_IN_CHAIN`) {
+      reporter.panic(
+        `We couldn't make a secure connection to your contentful space. Please check if you have any self-signed SSL certificates installed.`,
+        e
+      )
     } else if (e.response) {
       if (e.response.status === 404) {
         // host and space used to generate url
@@ -118,6 +126,7 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`)
     contentTypeItems,
     defaultLocale,
     locales,
+    space,
   }
 
   return result

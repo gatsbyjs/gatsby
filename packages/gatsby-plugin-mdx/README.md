@@ -43,13 +43,13 @@ MDX seeks to make writing with Markdown and JSX simpler while being more express
 
 Install with npm:
 
-```sh
+```shell
 npm install --save gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
 ```
 
 Install with yarn:
 
-```sh
+```shell
 yarn add gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
 ```
 
@@ -340,9 +340,7 @@ module.exports = {
 }
 ```
 
-###### Note:
-
-Using a string reference is currently not supported for `gatsbyRemarkPlugins`. (A PR would be accepted for this)
+Using a string reference is also supported for `gatsbyRemarkPlugins`.
 
 ```js
 gatsbyRemarkPlugins: [`gatsby-remark-images`]
@@ -474,7 +472,7 @@ The following components can be customized with the MDXProvider:
 | `em`            | [Emphasis](https://github.com/syntax-tree/mdast#emphasis)            | `_emphasis_`                                        |
 | `strong`        | [Strong](https://github.com/syntax-tree/mdast#strong)                | `**strong**`                                        |
 | `delete`        | [Delete](https://github.com/syntax-tree/mdast#delete)                | `~~strikethrough~~`                                 |
-| `code`          | [InlineCode](https://github.com/syntax-tree/mdast#inlinecode)        |                                                     |
+| `inlineCode`    | [InlineCode](https://github.com/syntax-tree/mdast#inlinecode)        |                                                     |
 | `hr`            | [Break](https://github.com/syntax-tree/mdast#break)                  | `---`                                               |
 | `a`             | [Link](https://github.com/syntax-tree/mdast#link)                    | `<https://mdxjs.com>` or `[MDX](https://mdxjs.com)` |
 | `img`           | [Image](https://github.com/syntax-tree/mdast#image)                  | `![alt](https://mdx-logo.now.sh)`                   |

@@ -88,6 +88,7 @@ exports.sourceNodes = async (
     contentTypeItems,
     defaultLocale,
     locales,
+    space,
   } = await fetchData({
     syncToken,
     reporter,
@@ -108,6 +109,7 @@ exports.sourceNodes = async (
       .map(locale => {
         const nodeId = createNodeId(
           normalize.makeId({
+            spaceId: space.sys.id,
             id: node.sys.id,
             currentLocale: locale.code,
             defaultLocale,
@@ -152,6 +154,7 @@ exports.sourceNodes = async (
     assets,
     defaultLocale,
     locales,
+    space,
   })
 
   // Build foreign reference map before starting to insert any nodes
@@ -161,6 +164,7 @@ exports.sourceNodes = async (
     resolvable,
     defaultLocale,
     locales,
+    space,
   })
 
   const newOrUpdatedEntries = []
@@ -203,6 +207,7 @@ exports.sourceNodes = async (
       foreignReferenceMap,
       defaultLocale,
       locales,
+      space,
     })
   })
 
@@ -213,6 +218,7 @@ exports.sourceNodes = async (
       createNodeId,
       defaultLocale,
       locales,
+      space,
     })
   })
 
@@ -240,27 +246,4 @@ exports.onPreExtractQueries = async ({ store, getNodesByType }) => {
     `${program.directory}/.cache/contentful/assets/`
   )
   await fs.ensureDir(CACHE_DIR)
-
-  if (getNodesByType(`ContentfulAsset`).length == 0) {
-    return
-  }
-
-  let gatsbyImageDoesNotExist = true
-  try {
-    require.resolve(`gatsby-image`)
-    gatsbyImageDoesNotExist = false
-  } catch (e) {
-    // Ignore
-  }
-
-  if (gatsbyImageDoesNotExist) {
-    return
-  }
-
-  // We have both gatsby-image installed as well as ImageSharp nodes so let's
-  // add our fragments to .cache/fragments.
-  await fs.copy(
-    require.resolve(`gatsby-source-contentful/src/fragments.js`),
-    `${program.directory}/.cache/fragments/contentful-asset-fragments.js`
-  )
 }

@@ -1,11 +1,11 @@
 const Telemetry = require(`./telemetry`)
-const flush = require(`./flush`)
-
 const instance = new Telemetry()
+
+const flush = require(`./flush`)(instance.isTrackingEnabled())
 
 process.on(`exit`, flush)
 
-// For longrunning commands we want to occasinally flush the data
+// For long running commands we want to occasionally flush the data
 // The data is also sent on exit.
 
 const interval = Number.isFinite(+process.env.TELEMETRY_BUFFER_INTERVAL)
@@ -28,7 +28,9 @@ module.exports = {
   startBackgroundUpdate: _ => {
     setTimeout(tick, interval)
   },
-
+  isTrackingEnabled: () => instance.isTrackingEnabled,
+  aggregateStats: data => instance.aggregateStats(data),
+  addSiteMeasurement: (event, obj) => instance.addSiteMeasurement(event, obj),
   expressMiddleware: source => (req, res, next) => {
     try {
       instance.trackActivity(`${source}_ACTIVE`)

@@ -3,6 +3,102 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.43](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.42...gatsby-source-filesystem@2.1.43) (2019-12-20)
+
+### Bug Fixes
+
+- **gatsby-source-filesystem:** fix add/change text ([#20188](https://github.com/gatsbyjs/gatsby/issues/20188)) ([0fda1e6](https://github.com/gatsbyjs/gatsby/commit/0fda1e6))
+
+## [2.1.42](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.40...gatsby-source-filesystem@2.1.42) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+## [2.1.41](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.40...gatsby-source-filesystem@2.1.41) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+## [2.1.40](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.39...gatsby-source-filesystem@2.1.40) (2019-12-02)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+## [2.1.39](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.38...gatsby-source-filesystem@2.1.39) (2019-11-26)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+## [2.1.38](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.37...gatsby-source-filesystem@2.1.38) (2019-11-18)
+
+### Bug Fixes
+
+- **gatsby:** Handle special characters in windows paths ([#19600](https://github.com/gatsbyjs/gatsby/issues/19600)) ([9929cf0](https://github.com/gatsbyjs/gatsby/commit/9929cf0))
+
+## [2.1.37](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.36...gatsby-source-filesystem@2.1.37) (2019-11-15)
+
+### Bug Fixes
+
+- update dependency pretty-bytes to v5 ([#19485](https://github.com/gatsbyjs/gatsby/issues/19485)) ([29735ea](https://github.com/gatsbyjs/gatsby/commit/29735ea))
+
+## [2.1.36](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.35...gatsby-source-filesystem@2.1.36) (2019-11-10)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+## [2.1.35](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.34...gatsby-source-filesystem@2.1.35) (2019-10-28)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+## [2.1.34](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.33...gatsby-source-filesystem@2.1.34) (2019-10-28)
+
+### Bug Fixes
+
+- update minor updates in packages ([#18875](https://github.com/gatsbyjs/gatsby/issues/18875)) ([b692879](https://github.com/gatsbyjs/gatsby/commit/b692879))
+- update minor updates in packages ([#19080](https://github.com/gatsbyjs/gatsby/issues/19080)) ([95e908e](https://github.com/gatsbyjs/gatsby/commit/95e908e))
+
+## [2.1.33](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.32...gatsby-source-filesystem@2.1.33) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+## [2.1.32](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.31...gatsby-source-filesystem@2.1.32) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+## [2.1.31](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.30...gatsby-source-filesystem@2.1.31) (2019-10-09)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+## [2.1.30](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.29...gatsby-source-filesystem@2.1.30) (2019-10-08)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+## [2.1.29](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.28...gatsby-source-filesystem@2.1.29) (2019-10-04)
+
+### Bug Fixes
+
+- update dependency bluebird to ^3.7.0 ([#18029](https://github.com/gatsbyjs/gatsby/issues/18029)) ([bd235a8](https://github.com/gatsbyjs/gatsby/commit/bd235a8))
+- update dependency chokidar to v3.2.1 ([#18009](https://github.com/gatsbyjs/gatsby/issues/18009)) ([4df0306](https://github.com/gatsbyjs/gatsby/commit/4df0306))
+
+## [2.1.28](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.26...gatsby-source-filesystem@2.1.28) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+## [2.1.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.26...gatsby-source-filesystem@2.1.27) (2019-09-26)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+## [2.1.26](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.25...gatsby-source-filesystem@2.1.26) (2019-09-20)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+## [2.1.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.24...gatsby-source-filesystem@2.1.25) (2019-09-20)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+## [2.1.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.23...gatsby-source-filesystem@2.1.24) (2019-09-18)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+## [2.1.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.22...gatsby-source-filesystem@2.1.23) (2019-09-18)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
 ## [2.1.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.21...gatsby-source-filesystem@2.1.22) (2019-09-09)
 
 ### Bug Fixes
@@ -107,7 +203,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-- **gatsby:** various Typescript definitions ([#15268](https://github.com/gatsbyjs/gatsby/issues/15268)) ([b8f3ed5](https://github.com/gatsbyjs/gatsby/commit/b8f3ed5))
+- **gatsby:** various TypeScript definitions ([#15268](https://github.com/gatsbyjs/gatsby/issues/15268)) ([b8f3ed5](https://github.com/gatsbyjs/gatsby/commit/b8f3ed5))
 
 ## [2.1.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.0...gatsby-source-filesystem@2.1.1) (2019-06-25)
 

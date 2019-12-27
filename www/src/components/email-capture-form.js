@@ -1,49 +1,43 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import styled from "@emotion/styled"
 
 import SendIcon from "react-icons/lib/md/send"
 
-import {
-  colors,
-  space,
-  mediaQueries,
-  fontSizes,
-  fonts,
-  radii,
-  shadows,
-  lineHeights,
-} from "../utils/presets"
-import { formInput, formInputFocus, buttonStyles } from "../utils/styles"
+import { mediaQueries } from "../gatsby-plugin-theme-ui"
+import { themedInput, formInputFocus, buttonStyles } from "../utils/styles"
 import { rhythm } from "../utils/typography"
 
-const stripedBorderHeight = space[1]
-
 const Container = styled(`div`)`
-  background: ${colors.purple[5]};
-  box-shadow: ${shadows.raised}, inset 0 0 0 1px ${colors.purple[10]};
-  border-radius: ${radii[2]}px;
-  margin-top: ${space[8]};
-  padding: calc(${space[6]} * 1.2);
-  padding-bottom: calc(${rhythm(space[6] * 1.2)} + ${stripedBorderHeight});
+  background: ${p => p.theme.colors.newsletter.background};
+  box-shadow: ${p => p.theme.shadows.floating},
+    inset 0 0 0 1px ${p => p.theme.colors.newsletter.border};
+  border-radius: ${p => p.theme.radii[2]}px;
+  margin-top: ${p => p.theme.space[8]};
+  padding: calc(${p => p.theme.space[6]} * 1.2);
+  padding-bottom: calc(
+    ${props => rhythm(props.theme.space[6] * 1.2)} + ${p => p.theme.space[1]}
+  );
   position: relative;
 
   :after {
-    border-radius: 0 0 ${radii[2]}px ${radii[2]}px;
-    background: ${colors.white}
+    border-radius: 0 0 ${p => p.theme.radii[2]}px ${p => p.theme.radii[2]}px;
+    background: ${p => p.theme.colors.newsletter.background}
       repeating-linear-gradient(
         135deg,
-        ${colors.red[40]},
-        ${colors.red[40]} 20px,
+        ${p => p.theme.colors.newsletter.stripeColorA},
+        ${p => p.theme.colors.newsletter.stripeColorA} 20px,
         transparent 20px,
         transparent 40px,
-        ${colors.blue[40]} 40px,
-        ${colors.blue[40]} 60px,
+        ${p => p.theme.colors.newsletter.stripeColorB} 40px,
+        ${p => p.theme.colors.newsletter.stripeColorB} 60px,
         transparent 60px,
         transparent 80px
       );
     bottom: 0;
     content: "";
-    height: ${stripedBorderHeight};
+    height: ${p => p.theme.space[1]};
     left: 0;
     right: 0;
     position: absolute;
@@ -68,64 +62,22 @@ const StyledForm = styled(`form`)`
 `
 
 const Label = styled(`label`)`
-  font-size: ${fontSizes[1]};
+  font-size: ${p => p.theme.fontSizes[1]};
   :after {
     content: ${props => (props.isRequired ? `'*'` : ``)};
-    color: ${colors.text.secondary};
+    color: ${p => p.theme.colors.textMuted};
   }
-`
-
-const SingleLineInput = styled(`input`)`
-  ${formInput};
-  border-color: ${colors.purple[20]};
-  width: 100%;
-  -webkit-appearance: none;
-
-  :focus {
-    ${formInputFocus}
-  }
-`
-
-const SingleLineInputOnHomepage = styled(SingleLineInput)`
-  font-family: ${fonts.system};
-  font-size: ${fontSizes[2]};
-  padding: ${space[2]};
 `
 
 const ErrorMessage = styled(`div`)`
-  color: ${colors.warning};
-  font-family: ${fonts.system};
-  font-size: ${fontSizes[1]};
-  margin: ${space[2]} 0;
+  color: ${p => p.theme.colors.warning};
+  font-family: ${p => p.theme.fonts.system};
+  font-size: ${p => p.theme.fontSizes[1]};
+  margin: ${p => p.theme.space[2]} 0;
 `
 
 const SuccessMessage = styled(`div`)`
-  font-family: ${fonts.system};
-`
-
-const Submit = styled(`input`)`
-  ${buttonStyles.default};
-  margin-top: ${space[3]};
-`
-
-const SubmitOnHomepage = styled(`button`)`
-  ${buttonStyles.default};
-  font-size: ${fontSizes[3]};
-  width: 100%;
-  margin-top: ${space[3]};
-
-  span {
-    align-items: center;
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-  }
-
-  ${mediaQueries.lg} {
-    width: auto;
-    margin-top: 0;
-    margin-left: ${space[2]};
-  }
+  font-family: ${p => p.theme.fonts.system};
 `
 
 class Form extends React.Component {
@@ -212,10 +164,6 @@ class Form extends React.Component {
   render() {
     const { isHomepage } = this.props
 
-    const SingleLineInputComponent = isHomepage
-      ? SingleLineInputOnHomepage
-      : SingleLineInput
-
     return (
       <StyledForm onSubmit={this.onSubmit} isHomepage={isHomepage}>
         {!isHomepage && (
@@ -223,7 +171,7 @@ class Form extends React.Component {
             Email
           </Label>
         )}
-        <SingleLineInputComponent
+        <input
           id="email"
           name="email"
           type="email"
@@ -234,6 +182,13 @@ class Form extends React.Component {
           }}
           aria-label={isHomepage ? `Email` : ``}
           placeholder={`your.email@example.com`}
+          sx={{
+            ...themedInput,
+            width: `100%`,
+            "&:focus": {
+              ...formInputFocus,
+            },
+          }}
         />
         {this.state.fieldErrors.email && (
           <ErrorMessage>{this.state.fieldErrors.email}</ErrorMessage>
@@ -243,14 +198,40 @@ class Form extends React.Component {
         )}
 
         {isHomepage ? (
-          <SubmitOnHomepage type="submit">
+          <button
+            type="submit"
+            sx={{
+              ...buttonStyles().default,
+              fontSize: 3,
+              mt: 3,
+              width: `100%`,
+              span: {
+                alignItems: `center`,
+                display: `flex`,
+                justifyContent: `space-between`,
+                width: `100%`,
+              },
+              [mediaQueries.lg]: {
+                ml: 2,
+                mt: 0,
+                width: `auto`,
+              },
+            }}
+          >
             <span>
               Subscribe
               <SendIcon />
             </span>
-          </SubmitOnHomepage>
+          </button>
         ) : (
-          <Submit type="submit" value="Subscribe" />
+          <input
+            type="submit"
+            value="Subscribe"
+            sx={{
+              ...buttonStyles().default,
+              mt: 3,
+            }}
+          />
         )}
       </StyledForm>
     )
@@ -285,7 +266,7 @@ class EmailCaptureForm extends React.Component {
     )
 
     return (
-      <>
+      <React.Fragment>
         {isHomepage ? (
           <div className={className}>
             {this.state.successMessage ? (
@@ -299,12 +280,12 @@ class EmailCaptureForm extends React.Component {
         ) : (
           <Container>
             <p
-              css={{
-                color: colors.gatsby,
+              sx={{
+                color: `newsletter.heading`,
                 fontWeight: `bold`,
-                fontSize: fontSizes[3],
-                fontFamily: fonts.header,
-                lineHeight: lineHeights.dense,
+                fontSize: 3,
+                fontFamily: `header`,
+                lineHeight: `dense`,
               }}
             >
               {signupMessage}
@@ -320,7 +301,7 @@ class EmailCaptureForm extends React.Component {
             )}
           </Container>
         )}
-      </>
+      </React.Fragment>
     )
   }
 }

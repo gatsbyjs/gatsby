@@ -1,6 +1,7 @@
 #! /usr/bin/env node
 
-const crypto = require(`crypto`)
+import { createContentDigest } from "gatsby-core-utils"
+
 const { URL } = require(`url`)
 
 const puppeteer = require(`puppeteer`)
@@ -21,7 +22,8 @@ const {
 
 const logger = createLogger(LOG_LEVEL)
 
-const endpoint = path => `http://${HOST}:${PORT}${path}`
+const devServer = `http://${HOST}:${PORT}`
+const endpoint = path => `${devServer}${path}`
 
 export async function main() {
   logger.newline()
@@ -65,12 +67,19 @@ export async function main() {
       if (!Object.prototype.hasOwnProperty.call(cache.assets, pathname)) {
         cache.assets[pathname] = Object.create(null)
       }
-      cache.assets[pathname][req.url()] = true
-      bar.interrupt(green(ellipses(` found ${req.url()}`, 80)))
+
+      const isSelfHosted = req.url().startsWith(devServer)
+
+      const fontUrl = isSelfHosted
+        ? req.url().slice(devServer.length)
+        : req.url()
+
+      cache.assets[pathname][fontUrl] = true
+
+      bar.interrupt(green(ellipses(` found ${fontUrl}`, 80)))
     }
   })
 
-  const hash = crypto.createHash(`md5`)
   for (const route of routes) {
     // wait until there are no more than 2 network connections for 500ms
     // to allow for dynamically inserted <link> and <script> tags to load
@@ -81,7 +90,6 @@ export async function main() {
     // unfortunately, this increases the minimum load time per route to
     // ~500ms, which adds up quickly on large sites; there may be room
     // for optimization here
-    hash.update(route)
     logger.info(`visit`, route)
     await page.goto(endpoint(route), { waitUntil: `networkidle2` })
     bar.tick()
@@ -90,7 +98,7 @@ export async function main() {
   await browser.close()
   logger.resetAdapter()
 
-  cache.hash = hash.digest(`hex`)
+  cache.hash = createContentDigest(routes)
   cache.timestamp = Date.now()
   await save(cache)
 

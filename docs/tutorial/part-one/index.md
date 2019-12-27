@@ -1,5 +1,5 @@
 ---
-title: Get to know Gatsby building blocks
+title: Get to Know Gatsby Building Blocks
 typora-copy-images-to: ./
 disableTableOfContents: true
 ---
@@ -20,7 +20,7 @@ When creating a new Gatsby site, you can use the following command structure to 
 gatsby new [SITE_DIRECTORY_NAME] [URL_OF_STARTER_GITHUB_REPO]
 ```
 
-If you omit a URL from the end, Gatsby will automatically generate a site for you based on the [**default starter**](https://github.com/gatsbyjs/gatsby-starter-default). For this section of the tutorial, stick with the “Hello World” site you already created in tutorial part zero.
+If you omit a URL from the end, Gatsby will automatically generate a site for you based on the [**default starter**](https://github.com/gatsbyjs/gatsby-starter-default). For this section of the tutorial, stick with the “Hello World” site you already created in tutorial part zero. You can learn more about [modifying starters](/docs/modifying-a-starter) in the docs.
 
 ### ✋ Open up the code
 
@@ -131,7 +131,7 @@ One of the big mental shifts you make when starting to build with components (if
 
 While a seemingly simple change, this has profound implications for how you think about building websites.
 
-Take the example of creating a custom button. In the past, you would create a CSS class (perhaps `.primary-button`) with your custom styles and then whenever you want to apply those styles e.g.
+Take the example of creating a custom button. In the past, you would create a CSS class (perhaps `.primary-button`) with your custom styles and then use it whenever you want to apply those styles. For example:
 
 ```html
 <button class="primary-button">Click me</button>
@@ -230,7 +230,7 @@ You should now see your “About Gatsby” header text again!
 
 ### What are “props”?
 
-Earlier you defined React components as reusable pieces of code describing a UI. To make these reusable pieces dynamic you need to be able to supply them with different data. You do that with input called “props". Props are (appropriately enough) properties supplied to React components.
+Earlier you defined React components as reusable pieces of code describing a UI. To make these reusable pieces dynamic you need to be able to supply them with different data. You do that with input called "props". Props are (appropriately enough) properties supplied to React components.
 
 In `about.js` you passed a `headerText` prop with the value of `"About Gatsby"` to the imported `Header` sub-component:
 
@@ -246,7 +246,7 @@ Over in `header.js`, the header component expects to receive the `headerText` pr
 
 > 💡 In JSX, you can embed any JavaScript expression by wrapping it with `{}`. This is how you can access the `headerText` property (or “prop!”) from the “props” object.
 
-If you had passed another prop to our `<Header />` component, like so...
+If you had passed another prop to your `<Header />` component, like so...
 
 ```jsx:title=src/pages/about.js
 <Header headerText="About Gatsby" arbitraryPhrase="is arbitrary" />
@@ -308,7 +308,7 @@ When you click the new "Contact" link on the homepage, you should see...
 
 ...the Gatsby development 404 page. Why? Because you're attempting to link to a page that doesn't exist yet.
 
-2.  Now you'll have to create a page component for our new "Contact" page at `src/pages/contact.js` and have it link back to the homepage:
+2.  Now you'll have to create a page component for your new "Contact" page at `src/pages/contact.js` and have it link back to the homepage:
 
 ```jsx:title=src/pages/contact.js
 import React from "react"
@@ -324,7 +324,7 @@ export default () => (
 )
 ```
 
-After you save the file, you should see the contact page and be able to link between it and the homepage.
+After you save the file, you should see the contact page and be able to follow the link to the homepage.
 
 <video controls="controls" loop="true">
   <source type="video/mp4" src="./10-linking-between-pages.mp4"></source>
@@ -345,7 +345,7 @@ If you haven't previously installed &amp; set up Surge, open a new terminal wind
 npm install --global surge
 
 # Then create a (free) account with them
-surge
+surge login
 ```
 
 Next, build your site by running the following command in the terminal at the root of your site (tip: make sure you're running this command at the root of your site, in this case in the hello-world folder, which you can do by opening a new tab in the same window you used to run `gatsby develop`):
@@ -385,4 +385,4 @@ In this section you:
 - Learned about Gatsby page components and sub-components
 - Learned about React “props” and reusing React components
 
-Now, move on to [**adding styles to our site**](/tutorial/part-two/)!
+Now, move on to [**adding styles to your site**](/tutorial/part-two/)!

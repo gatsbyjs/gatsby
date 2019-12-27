@@ -3,6 +3,94 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.3.7...gatsby-transformer-sharp@2.3.9) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+## [2.3.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.3.7...gatsby-transformer-sharp@2.3.8) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+## [2.3.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.3.6...gatsby-transformer-sharp@2.3.7) (2019-12-05)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+## [2.3.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.3.5...gatsby-transformer-sharp@2.3.6) (2019-11-26)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+## [2.3.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.3.4...gatsby-transformer-sharp@2.3.5) (2019-11-15)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+## [2.3.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.3.3...gatsby-transformer-sharp@2.3.4) (2019-11-13)
+
+### Bug Fixes
+
+- **gatsby-transformer-sharp:** explicitly register enum types ([#19343](https://github.com/gatsbyjs/gatsby/issues/19343)) ([fdc7ccd](https://github.com/gatsbyjs/gatsby/commit/fdc7ccd))
+
+## [2.3.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.3.2...gatsby-transformer-sharp@2.3.3) (2019-11-10)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+## [2.3.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.3.1...gatsby-transformer-sharp@2.3.2) (2019-10-29)
+
+### Bug Fixes
+
+- update minor updates in packages ([#19087](https://github.com/gatsbyjs/gatsby/issues/19087)) ([294a48f](https://github.com/gatsbyjs/gatsby/commit/294a48f))
+
+## [2.3.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.3.0...gatsby-transformer-sharp@2.3.1) (2019-10-28)
+
+### Bug Fixes
+
+- update minor updates in packages ([#18875](https://github.com/gatsbyjs/gatsby/issues/18875)) ([b692879](https://github.com/gatsbyjs/gatsby/commit/b692879))
+
+# [2.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.2.23...gatsby-transformer-sharp@2.3.0) (2019-10-21)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+## [2.2.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.2.22...gatsby-transformer-sharp@2.2.23) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+## [2.2.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.2.21...gatsby-transformer-sharp@2.2.22) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+## [2.2.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.2.20...gatsby-transformer-sharp@2.2.21) (2019-10-09)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+## [2.2.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.2.19...gatsby-transformer-sharp@2.2.20) (2019-10-04)
+
+### Bug Fixes
+
+- update dependency bluebird to ^3.7.0 ([#18029](https://github.com/gatsbyjs/gatsby/issues/18029)) ([bd235a8](https://github.com/gatsbyjs/gatsby/commit/bd235a8))
+
+## [2.2.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.2.17...gatsby-transformer-sharp@2.2.19) (2019-09-26)
+
+### Bug Fixes
+
+- update dependency sharp to ^0.23.1 ([#17904](https://github.com/gatsbyjs/gatsby/issues/17904)) ([f19ad3c](https://github.com/gatsbyjs/gatsby/commit/f19ad3c))
+
+## [2.2.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.2.17...gatsby-transformer-sharp@2.2.18) (2019-09-26)
+
+### Bug Fixes
+
+- update dependency sharp to ^0.23.1 ([#17904](https://github.com/gatsbyjs/gatsby/issues/17904)) ([f19ad3c](https://github.com/gatsbyjs/gatsby/commit/f19ad3c))
+
+## [2.2.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.2.16...gatsby-transformer-sharp@2.2.17) (2019-09-24)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+## [2.2.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.2.15...gatsby-transformer-sharp@2.2.16) (2019-09-20)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+## [2.2.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.2.14...gatsby-transformer-sharp@2.2.15) (2019-09-18)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
 ## [2.2.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.2.13...gatsby-transformer-sharp@2.2.14) (2019-09-09)
 
 **Note:** Version bump only for package gatsby-transformer-sharp

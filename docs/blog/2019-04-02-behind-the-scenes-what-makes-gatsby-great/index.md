@@ -97,8 +97,7 @@ This is the central idea of server-side rendering. Gatsby uses server-side APIs 
 
 ### Zero Node.js servers required ✋
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">I’m watching <a href="https://twitter.com/SchauDustin?ref_src=twsrc%5Etfw">@SchauDustin</a> talk about how <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> handles things like static rendering  and all the complex scaling problems using it eliminates.<br/><br/>He‘s effectively gone full <a href="https://twitter.com/MarieKondo?ref_src=twsrc%5Etfw">@MarieKondo</a> on building apps: “Does horizontally scaling servers spark joy? Why are you still doing it?” <a href="https://t.co/uRFXWLsLvZ">pic.twitter.com/uRFXWLsLvZ</a></p>&mdash; Jason Lengstorf (@jlengstorf) <a href="https://twitter.com/jlengstorf/status/1090659696233463808?ref_src=twsrc%5Etfw">January 30, 2019</a></blockquote>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+https://twitter.com/jlengstorf/status/1090659696233463808
 
 To begin describing why build-time SSR is so appealing, let's first take a look at what a deploy and release looks like if we don't require a server. What's required for a typical set-up for deploying static content (which Gatsby produces)? It looks something like:
 
@@ -107,7 +106,7 @@ To begin describing why build-time SSR is so appealing, let's first take a look 
 - Creating a bucket/location to host static content (like S3, Google Cloud Storage, etc.)
 - Setting up a [Domain Name System (DNS)](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_is_a_domain_name) to make your content reachable via a pretty URL, e.g. gatsbyjs.org
 - Routing the CDN layer in front of your static content
-- Set up a Continuous Integration (CI) environment so we can build and deploy code to production with minimal impact to end-users
+- Set up a Continuous Integration (CI) environment so we can build and deploy code to production with minimal impact to end users
 
 ... and, that's it! We're done as far as setup goes! We can use _whatever_ stack you prefer here. Netlify? [You bet.](https://www.gatsbyjs.org/docs/deploying-to-netlify) More a fan of AWS? [Of course.](https://www.gatsbyjs.org/docs/deploying-to-aws-amplify/) Heroku? [Yup.](https://www.gatsbyjs.org/docs/deploying-to-heroku/) You get the idea. Gatsby can be deployed anywhere easily and cheaply.
 
@@ -325,7 +324,7 @@ _Want to dive deeper? Much of this is encapsulated in our internal [Webpack conf
 
 ## Modern APIs in Gatsby
 
-Gatsby uses modern browser APIs to both maximize performance and user experience--which oftentimes go hand in hand!--only loading assets when they are necessary and likely to be requested. Specifically, the following APIs are crucial to the end-user experience in Gatsby:
+Gatsby uses modern browser APIs to both maximize performance and user experience--which oftentimes go hand in hand!--only loading assets when they are necessary and likely to be requested. Specifically, the following APIs are crucial to the end user experience in Gatsby:
 
 1. `IntersectionObserver` - an API to conditionally perform some action when an element enters the viewport/view
 1. `link rel="prefetch"` - an API to prefetch resources in the background when the browser is idle

@@ -1,23 +1,23 @@
 ---
-title: "Environment Variables"
+title: Environment Variables
 ---
 
 ## Environments and Environment Variables
 
 You can provide environment variables to your site to customise its behavior in different environments.
 
-First we need to distinguish between different types of Env variables.  
-There are env variables that are defined in special places intended to be used in different deployment environments. Let's call these “Project Env Vars”.  
-And there are true OS-level environment variables that might be used in command-line calls. Let's call these “OS Env Vars”.
+Environment variables can be distinguished between different types.
+There are environment variables that are defined in special places intended to be used in different deployment environments. You can call these “Project Env Vars”.
+And there are true OS-level environment variables that might be used in command-line calls. You can call these “OS Env Vars”.
 
-In both cases we want to be able to access the relevant value of these variables for the environment we’re in.
+In both cases you want to be able to access the relevant value of these variables for the environment you are in.
 
 By default gatsby supports only 2 environments:
 
 - If you run `gatsby develop`, then you will be in the 'development' environment.
 - If you run `gatsby build` or `gatsby serve`, then you will be in the 'production' environment.
 
-If you want to define other environments then you'll need to do a little more work. See[ "Additional Environments" below](#additional-environments-staging-test-etc). You can also have a look at our [environment variables codesandbox](https://codesandbox.io/s/6w9jjrnnjn) while reading the examples below.
+If you want to define other environments then you'll need to do a little more work. See ["Additional Environments" below](#additional-environments-staging-test-etc). You can also have a look at our [environment variables codesandbox](https://codesandbox.io/s/6w9jjrnnjn) while reading the examples below.
 
 ## Accessing Environment Variables in JavaScript
 
@@ -106,7 +106,7 @@ render() {
 }
 ```
 
-`API_KEY` will be available to your site (Server-side) as `process.env.API_KEY`. If you commit your `.env.*` file containing `API_KEY` to source control it would also be available on the client-side. However we **strongly** advise against that! You should prefix your variable with `GATSBY_` (as shown above) instead and Gatsby automatically makes it available in the browser context.
+In Node, your site has access to your `API_KEY` (Server-side) using the identifier `process.env.API_KEY`. To access it client-side, you can use a `.env.*` file containing `API_KEY`. However, we **strongly** advise against checking these files into source control as it's a security issue to expose the API key. As a more secure alternative, you can prefix your variable with `GATSBY_` (as shown above). With this prefix, Gatsby automatically embeds the variable as process.env.GATSBY\_\* in compiled JS making it available in the browser context without exposing it elsewhere.
 
 ```js
 // In any server-side code, e.g. gatsby-config.js
@@ -138,6 +138,14 @@ If set to true, this will expose a `/__refresh` webhook that is able to receive 
 
 You can trigger this endpoint locally for example on Unix-based operating systems (like Ubuntu and MacOS) you can use `curl -X POST http://localhost:8000/__refresh`.
 
+## Build Variables
+
+Gatsby uses additional environment variables in the build step to fine-tune the outcome of a build. You may find these helpful for more advanced configurations, such as using [CI/CD](https://en.wikipedia.org/wiki/CI/CD) to deploy a Gatsby site.
+
+For example, you can set `CI=true` as an environment variable to allow Gatsby's build script to tailor the terminal output to an automated deployment environment. Some CI/CD tooling may already set this environment variable. This is useful for limiting the verbosity of the build output for [dumb terminals](https://en.wikipedia.org/wiki/Computer_terminal#Dumb_terminals), such as terminal in progress animations.
+
+Gatsby detects an optimal level of parallelism for the render phase of `gatsby build` based on the reported number of physical CPUs. For builds that are run in virtual environments, you may need to adjust the number of worker parallelism with the `GATSBY_CPU_COUNT` environment variable. See [Multi-core builds](https://www.gatsbyjs.org/docs/multi-core-builds/).
+
 ## Additional Environments (Staging, Test, etc)
 
 As noted above `NODE_ENV` is a reserved environment variable in Gatsby as it is needed by the build system to make key optimizations when compiling React and other modules. For this reason it is necessary to make use of a secondary environment variable for additional environment support, and manually make the environment variables available to the client-side code.
@@ -155,7 +163,7 @@ API_URL="http://foo.bar"
 ```
 
 ```javascript:title=gatsby-config.js
-let activeEnv =
+const activeEnv =
   process.env.GATSBY_ACTIVE_ENV || process.env.NODE_ENV || "development"
 
 console.log(`Using environment config: '${activeEnv}'`)
