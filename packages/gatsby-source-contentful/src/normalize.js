@@ -53,24 +53,26 @@ const fixId = id => {
 }
 exports.fixId = fixId
 
-const fixIds = object =>
-  _.mapValues(object, (val, key) => {
-    if (key === `sys`) {
-      val = {
-        ...val,
-        id: fixId(val.id),
-        contentful_id: val.id,
-      }
-    }
+const fixIds = (object, depth = 0) =>
+  depth > 10
+    ? object
+    : _.mapValues(object, (val, key) => {
+        if (key === `sys`) {
+          val = {
+            ...val,
+            id: fixId(val.id),
+            contentful_id: val.id,
+          }
+        }
 
-    if (_.isArray(val)) {
-      return _.toArray(fixIds(val))
-    }
-    if (_.isPlainObject(val)) {
-      return fixIds(val)
-    }
-    return val
-  })
+        if (_.isArray(val)) {
+          return _.toArray(fixIds(val, depth + 1))
+        }
+        if (_.isPlainObject(val)) {
+          return fixIds(val, depth + 1)
+        }
+        return val
+      })
 exports.fixIds = fixIds
 
 const makeId = ({ spaceId, id, currentLocale, defaultLocale }) =>
