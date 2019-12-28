@@ -9069,3 +9069,11 @@
     - Marketing
     - Design
   built_by: João Matos (Global Creative Studio - Education First)
+- title: Zatsuzen
+  main_url: "https://zatsuzen.com"
+  url: "https://zatsuzen.com"
+  description: Web developer's portfolio
+  built_by: Akane
+  featured: false
+  categories:
+    - Portfolio
