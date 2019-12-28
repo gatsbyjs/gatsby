@@ -9077,3 +9077,12 @@
   featured: false
   categories:
     - Portfolio
+- title: Zatsuzen Blog
+  main_url: "https://blog.zatsuzen.com"
+  url: "https://blog.zatsuzen.com"
+  built_by_url: "https://zatsuzen.com" 
+  description: Web developer's tech blog
+  built_by: Akane
+  featured: false
+  categories:
+    - Blog
