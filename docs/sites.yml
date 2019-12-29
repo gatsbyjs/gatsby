@@ -9069,3 +9069,17 @@
     - Marketing
     - Design
   built_by: João Matos (Global Creative Studio - Education First)
+- title: webman.pro
+  main_url: https://webman.pro/
+  url: https://webman.pro/
+  description: >
+    {titleofthesite} is an awesome portfolio and technical blog where
+    professional Front End engineer Dmytro Chumak shares his thoughts
+    and experience to inspire other developers.
+  featured: false
+  categories:
+    - Blog
+    - Web Development
+    - JavaScript
+  built_by: Dmytro Chumak
+  built_by_url: https://github.com/wwwebman
