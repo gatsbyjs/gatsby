@@ -4789,3 +4789,16 @@
     - MDX for pages and content
     - Code syntax highlighting
     - SEO (OpenGraph and Twitter) out of the box with default settings that make sense (thanks to React Helmet)
+- url: https://gatsby-starter-tailwind2-emotion-styled-components.netlify.com/
+  repo: https://github.com/chrish-d/gatsby-starter-tailwind2-emotion-styled-components
+  description: A (reasonably) unopinionated Gatsby starter, including; Tailwind 2 and Emotion. Use Tailwind utilities with Emotion powered CSS-in-JS to produce component scoped CSS (no need for utilities like Purge CSS, etc).
+  tags:
+    - Styling:CSS-in-JS
+    - Styling:Tailwind
+    - Styling:Other
+  features:
+    - Utility-first CSS using Tailwind 2.
+    - CSS scoped within components (no "bleeding").
+    - Only compiles the CSS you use (no need to use PurgeCSS/similar).
+    - Automatically gives you Critical CSS with inline stlyes.
+    - Hybrid of PostCSS and CSS-in-JS to give you Tailwind base styles.
