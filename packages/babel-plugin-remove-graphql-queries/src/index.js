@@ -155,6 +155,28 @@ function getGraphQLTag(path) {
   }
 }
 
+function isUseStaticQuery(path) {
+  if (path.node.callee.type === `MemberExpression`) {
+    if (
+      path.node.callee.property.name === `useStaticQuery` &&
+      path
+        .get(`callee`)
+        .get(`object`)
+        .referencesImport(`gatsby`)
+    ) {
+      return true
+    }
+  } else {
+    if (
+      path.node.callee.name === `useStaticQuery` &&
+      path.get(`callee`).referencesImport(`gatsby`)
+    ) {
+      return true
+    }
+  }
+  return false
+}
+
 export default function({ types: t }) {
   return {
     visitor: {
@@ -200,29 +222,9 @@ export default function({ types: t }) {
 
         const nestedHookVisitor = {
           CallExpression(path2) {
-            let isUseStaticQuery = false
-            if (path2.node.callee.type === `MemberExpression`) {
-              if (
-                path2.node.callee.property.name === `useStaticQuery` &&
-                path2
-                  .get(`callee`)
-                  .get(`object`)
-                  .referencesImport(`gatsby`)
-              ) {
-                isUseStaticQuery = true
-              }
-            } else {
-              if (
-                path2.node.callee.name === `useStaticQuery` &&
-                path2.get(`callee`).referencesImport(`gatsby`)
-              ) {
-                isUseStaticQuery = true
-              }
-            }
-
             if (
               [`production`, `test`].includes(process.env.NODE_ENV) &&
-              isUseStaticQuery
+              isUseStaticQuery(path2)
             ) {
               const identifier = t.identifier(`staticQueryData`)
               const filename = state.file.opts.filename
@@ -365,22 +367,7 @@ export default function({ types: t }) {
         // Traverse once again for useStaticQuery instances
         path.traverse({
           CallExpression(hookPath) {
-            if (hookPath.node.callee.type === `MemberExpression`) {
-              if (
-                hookPath.node.callee.property.name !== `useStaticQuery` ||
-                !hookPath
-                  .get(`callee`)
-                  .get(`object`)
-                  .referencesImport(`gatsby`)
-              )
-                return
-            } else {
-              if (
-                hookPath.node.callee.name !== `useStaticQuery` ||
-                !hookPath.get(`callee`).referencesImport(`gatsby`)
-              )
-                return
-            }
+            if (!isUseStaticQuery(hookPath)) return
 
             // Also see if it's a variable that's passed in as a prop
             // and if it is, go find it.
