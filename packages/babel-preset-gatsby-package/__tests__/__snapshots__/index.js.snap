@@ -172,7 +172,7 @@ Array [
       "modules": "commonjs",
       "shippedProposals": true,
       "targets": Object {
-        "node": "8.0",
+        "node": "10.0",
       },
       "useBuiltIns": "entry",
     },

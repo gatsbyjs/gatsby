@@ -41,14 +41,14 @@ const setup = version => {
 }
 
 describe(`error handling`, () => {
-  it(`panics on Node < 8.0.0`, () => {
-    const { reporter } = setup(`v6.0.0`)
+  it(`panics on Node < 10.0.0`, () => {
+    const { reporter } = setup(`v8.0.0`)
 
     expect(reporter.panic).toHaveBeenCalledTimes(1)
   })
 
   it(`shows error with link to more info`, () => {
-    const { reporter } = setup(`v6.0.0`)
+    const { reporter } = setup(`v8.0.0`)
 
     expect(reporter.panic).toHaveBeenCalledWith(
       expect.stringContaining(`https://gatsby.dev/upgrading-node-js`)
@@ -57,8 +57,8 @@ describe(`error handling`, () => {
 })
 
 describe(`normal behavior`, () => {
-  it(`does not panic on Node >= 8.0.0`, () => {
-    ;[`8.0.0`, `8.9.0`, `10.0.0`, `11.0.0`, `12.0.0`].forEach(version => {
+  it(`does not panic on Node >= 10.0.0`, () => {
+    ;[`10.0.0`, `11.0.0`, `12.0.0`].forEach(version => {
       const { reporter } = setup(version)
 
       expect(reporter.panic).not.toHaveBeenCalled()

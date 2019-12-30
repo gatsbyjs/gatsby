@@ -17,7 +17,7 @@ if (useJsonLogger) {
 // Check if update is available
 updateNotifier({ pkg }).notify({ isGlobal: true })
 
-const MIN_NODE_VERSION = `>=8.0.0`
+const MIN_NODE_VERSION = `>=10.0.0`
 
 if (!semver.satisfies(process.version, MIN_NODE_VERSION)) {
   report.panic(
