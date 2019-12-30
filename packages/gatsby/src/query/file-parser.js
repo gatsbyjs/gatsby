@@ -39,6 +39,29 @@ const generateQueryName = ({ def, hash, file }) => {
   return def
 }
 
+function isUseStaticQuery(path) {
+  if (path.node.callee.type === `MemberExpression`) {
+    if (
+      path.node.callee.property.name === `useStaticQuery` &&
+      path
+        .get(`callee`)
+        .get(`object`)
+        .referencesImport(`gatsby`)
+    ) {
+      return true
+    }
+  } else {
+    if (
+      path.node.callee.name === `useStaticQuery` &&
+      path.get(`callee`).referencesImport(`gatsby`)
+    ) {
+      return true
+    }
+  }
+
+  return false
+}
+
 const warnForUnknownQueryVariable = (varName, file, usageFunction) =>
   report.warn(
     `\nWe were unable to find the declaration of variable "${varName}", which you passed as the "query" prop into the ${usageFunction} declaration in "${file}".
@@ -257,12 +280,7 @@ async function findGraphQLTags(
         // Look for queries in useStaticQuery hooks.
         traverse(ast, {
           CallExpression(hookPath) {
-            if (
-              hookPath.node.callee.name !== `useStaticQuery` ||
-              !hookPath.get(`callee`).referencesImport(`gatsby`)
-            ) {
-              return
-            }
+            if (!isUseStaticQuery(hookPath)) return
 
             const firstArg = hookPath.get(`arguments`)[0]
 

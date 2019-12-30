@@ -150,6 +150,11 @@ export default () => {
   const data = useStaticQuery(graphql\`query StaticQueryName { foo }\`);
   return <div>{data.doo}</div>;
 }`,
+    "static-query-hooks-alternative-import.js": `import * as Gatsby from 'gatsby'
+export default () => {
+  const data = Gatsby.useStaticQuery(Gatsby.graphql\`query StaticQueryName { foo }\`);
+  return <div>{data.doo}</div>;
+}`,
     "static-query-hooks-with-type-parameter.ts": `import { graphql, useStaticQuery } from 'gatsby'
 export default () => {
   const data = useStaticQuery<HomepageQuery>(graphql\`query StaticQueryName { foo }\`);
