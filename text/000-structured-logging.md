@@ -82,7 +82,7 @@ Related tools that have good log output:
 
 # Adoption strategy
 
-This would mostly be an internal change. See next section for more details.
+This would mostly be an internal change. See the next section for more details.
 
 # How we teach this
 
@@ -94,7 +94,7 @@ Existing Gatsby developers will be unaffected by this change unless they are mai
 
 # Unresolved questions
 
-- do we have to maintain backwards compatibility with the existing reporter? Probably large majority of usage is in Gatsby monorepo.
+- do we have to maintain backward compatibility with the existing reporter? Probably a large majority of usage is in Gatsby monorepo.
 - there are some parts of Gatsby that use the existing reporter before the redux store is available. What do we do there?
 - should we use something like winston or bunyan to output logs?
 - how do we make this easier to use in plugins / helper functions?

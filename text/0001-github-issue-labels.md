@@ -58,7 +58,7 @@ Assign an issue to one of the existing [projects](https://github.com/gatsbyjs/ga
 
 ### Milestones
 
-We talked about using GitHub's Milestones as a way of defining a roadmap however, Gatsby already has a [`v2` Project](https://github.com/gatsbyjs/gatsby/projects/2) which contains more info than a Milestone could. In the interest of keeping this plan as simple as possible, I'm going to drop Milestones for now (unless anyone has strong objections). This could be looked at again once the labelling and projects is in place.
+We talked about using GitHub's Milestones as a way of defining a roadmap however, Gatsby already has a [`v2` Project](https://github.com/gatsbyjs/gatsby/projects/2) which contains more info than a Milestone could. In the interest of keeping this plan as simple as possible, I'm going to drop Milestones for now (unless anyone has strong objections). This could be looked at again once the labelling and projects are in place.
 
 ### Existing labels
 
@@ -81,7 +81,7 @@ There are 20 existing labels. While we're adding new labels, it makes sense to r
 | question | ✅keep | rename to `type: discussion` or similar |
 | review | ❌delete | ~~~Used by wafflebot? Investigate this~~~ No longer used |
 | stale? |  ✅keep | Used by stalebot to close stale issues. Maybe rename to `bot: stale?` |
-| upstream-issue | ❌delete | I'm 50/50 on this one. There's only two issues using it so have opted to delete it |
+| upstream-issue | ❌delete | I'm 50/50 on this one. There are only two issues using it so have opted to delete it |
 | UX Design | ❌delete | redundant - add all issues with this label to the 'UX' project before deleting the label |
 | v0 | ❌delete | it's never been used |
 | v1  | ❌delete | We _could_ keep this but I don't think it adds much value (currently applied to 8 issues) |
@@ -96,7 +96,7 @@ There are 20 existing labels. While we're adding new labels, it makes sense to r
 
 # Drawbacks
 
-The time to implement is fairly short, but we may discover that the proposed labels don't cover all categories of issue.
+The time to implement is fairly short, but we may discover that the proposed labels don't cover all categories of issues.
 
 Maybe this system turns out not to be useful? If that happens we can stop labelling issues and be in the same situation as now.
 
@@ -111,7 +111,7 @@ Alternatives are:
 
 # Adoption strategy
 
-This is relevent to the Gatsby GitHub repo, so no adoption strategy is necessary.
+This is relevant to the Gatsby GitHub repo, so no adoption strategy is necessary.
 
 # How we teach this
 

@@ -21,7 +21,7 @@ You should consider using this process if you intend to make "substantial"
 changes to Gatsby or its documentation. Some examples that would benefit from
 an RFC are:
 
-   - A new feature that creates new API surface area, and would
+   - A new feature that creates a new API surface area, and would
      require a feature flag if introduced.
    - The removal of features that already shipped as part of the release
      channel.

@@ -70,7 +70,7 @@ Shortening the input needed is nice: you can take away the https://www before th
 - [ ] If we garbage collect and warn for certain situations, e.g. “we just got rid of every single node of this type,” the user can determine if that action was correct and may find the root cause of some errors that are hard to trace 
 - [ ] Ctrl+c & `gatsby develop` → notify ppl they might need to hit `r` if they’ve changed package.json, gatsby node, etc.
 - [ ] Peer dependency warnings - how to let ppl know they can ignore them - track thru telemetry
-- [ ] If developing a local plugin, offer to restart & clear cache so it’ll take affect
+- [ ] If developing a local plugin, offer to restart & clear cache so it’ll take effect
 
 
 

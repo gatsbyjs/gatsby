@@ -10,7 +10,7 @@ We want to move to begin supporting Node 8 as our minimum recommended and suppor
 
 We are doing this for several reasons, specifically:
 
-- Node 6 is near the end of its life, and will enter into [maintance mode in April 2019][node6-lts]
+- Node 6 is near the end of its life, and will enter into [maintenance mode in April 2019][node6-lts]
 - Node 8 supports several features that make documentation and general ease-of-use arguably easier, specifically:
   - native `async/await` support
 
@@ -21,7 +21,7 @@ Coupled together, the two main benefits of moving to Node 8 as a minimum support
 
 # Detailed design
 
-The design of this change is primarily documentation driven. This is due to the primary reason that we are considering deprecating Node 6 support, not outright dropping support. In much the same way that Node 6 will enter into maintance mode it will similarly enter a deprecation/maintenance mode for Gatsby v2.
+The design of this change is primarily documentation driven. This is due to the primary reason that we are considering deprecating Node 6 support, not outright dropping support. In much the same way that Node 6 will enter into maintenance mode it will similarly enter a deprecation/maintenance mode for Gatsby v2.
 
 To the best of our abilities, we will _not_ introduce breaking changes which break Node 6 support. Primarily, this is due to the fact that we will continue to use [`babel-preset-gatsby-package`][babel-preset-gatsby-package] to _continue_ to target Node 6 APIs and code requirements. We want to keep Node 6 support (from a library/framework) level as long as we are able to, because the cost of continuing to support it is relatively small from a library/framework level, but the cost of breaking builds unknowingly is much more burdensome.
 
@@ -30,7 +30,7 @@ In effect, the approach is as simple as:
 1. Continue to support Node 6 as a `node` version target in `babel-preset-gatsby-package`
 1. Document Node 8 as a minimum recommended Node version, so that new/repeat visitors to Gatsby's documentation are already using our recommended Node minimum versions and future upgrades/breaking changes have a minimal/null cost
 
-On 1), when we are ready and we feel sufficent time has elapsed, we will bump `babel-preset-gatsby-package` to target version `8` of node, like so:
+On 1), when we are ready and we feel sufficient time has elapsed, we will bump `babel-preset-gatsby-package` to target version `8` of node, like so:
 
 ```diff
 const nodeConfig = {
@@ -97,7 +97,7 @@ There aren't really any reasonable alternatives. A library must eventually be de
 The impact of _not_ doing this is two-fold:
 
 1) The _engineering cost_ of not being able to use a growing number of libraries that require Node 8 or greater
-1) The _support cost_ of answering questions/concerns re: possibily confusing APIs, global installs, and general just many experiencing _more issues_ on Node 6
+1) The _support cost_ of answering questions/concerns re: possibly confusing APIs, global installs, and general just many experiencing _more issues_ on Node 6
 
 # Adoption strategy
 
