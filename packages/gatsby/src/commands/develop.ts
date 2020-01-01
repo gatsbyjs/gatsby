@@ -272,35 +272,42 @@ async function startServer(program: IProgram) {
   // Set up API proxy.
   const { proxy } = store.getState().config
   if (proxy) {
-    const { prefix, url } = proxy
-    app.use(`${prefix}/*`, (req, res) => {
-      const proxiedUrl = url + req.originalUrl
-      const {
-        // remove `host` from copied headers
-        // eslint-disable-next-line no-unused-vars
-        headers: { host, ...headers },
-        method,
-      } = req
-      req
-        .pipe(
-          got
-            .stream(proxiedUrl, { headers, method, decompress: false })
-            .on(`response`, response =>
-              res.writeHead(response.statusCode!, response.headers)
-            )
-            .on(`error`, (err, _, response) => {
-              if (response) {
+    function setUpProxy(prefix, url) {
+      app.use(`${prefix}/*`, (req, res) => {
+        const proxiedUrl = url + req.originalUrl
+        const {
+          // remove `host` from copied headers
+          // eslint-disable-next-line no-unused-vars
+          headers: { host, ...headers },
+          method,
+        } = req
+        req
+          .pipe(
+            got
+              .stream(proxiedUrl, { headers, method, decompress: false })
+              .on(`response`, response =>
                 res.writeHead(response.statusCode!, response.headers)
-              } else {
-                const message = `Error when trying to proxy request "${req.originalUrl}" to "${proxiedUrl}"`
+              )
+              .on(`error`, (err, _, response) => {
+                if (response) {
+                  res.writeHead(response.statusCode!, response.headers)
+                } else {
+                  const message = `Error when trying to proxy request "${req.originalUrl}" to "${proxiedUrl}"`
 
-                report.error(message, err)
-                res.sendStatus(500)
-              }
-            })
-        )
-        .pipe(res)
-    })
+                  report.error(message, err)
+                  res.sendStatus(500)
+                }
+              })
+          )
+          .pipe(res)
+      })
+    }
+    if (Array.isArray(proxy)) {
+      proxy.forEach(({prefix, url}) => setUpProxy(prefix, url))
+    } else { 
+      const { prefix, url } = proxy
+      setUpProxy(prefix, url)
+    }
   }
 
   await apiRunnerNode(`onCreateDevServer`, { app })
