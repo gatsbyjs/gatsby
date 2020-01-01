@@ -272,7 +272,7 @@ async function startServer(program: IProgram) {
   // Set up API proxy.
   const { proxy } = store.getState().config
   if (proxy) {
-    function setUpProxy(prefix, url) {
+    proxy.forEach(({prefix, url}) => {
       app.use(`${prefix}/*`, (req, res) => {
         const proxiedUrl = url + req.originalUrl
         const {
@@ -301,13 +301,7 @@ async function startServer(program: IProgram) {
           )
           .pipe(res)
       })
-    }
-    if (Array.isArray(proxy)) {
-      proxy.forEach(({prefix, url}) => setUpProxy(prefix, url))
-    } else { 
-      const { prefix, url } = proxy
-      setUpProxy(prefix, url)
-    }
+    })
   }
 
   await apiRunnerNode(`onCreateDevServer`, { app })
