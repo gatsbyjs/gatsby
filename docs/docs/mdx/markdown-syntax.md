@@ -62,16 +62,16 @@ Here's how those tags render in HTML:
 
 - can use `*`, `-`, or `+` for each list item
 
+<!-- prettier-ignore-start -->
 ```markdown
-- Gatsby
-  - docs
-
 * Gatsby
-  - docs
-
+  * docs
 - Gatsby
   - docs
++ Gatsby
+  + docs
 ```
+<!-- prettier-ignore-end -->
 
 How unordered lists are rendered in HTML:
 
