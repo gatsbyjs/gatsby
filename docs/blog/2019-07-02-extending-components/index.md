@@ -23,7 +23,7 @@ Before component extending was added this meant you had to copy over
 the entire component implementation from the theme to wrap it with
 your Card. It might look something like:
 
-```js:title=src/gatsby-theme-blog/components/author.js
+```jsx:title=src/gatsby-theme-blog/components/author.js
 import React from "react"
 import { Avatar, MediaObject, Icon } from "gatsby-theme-blog"
 import Card from "../components/card"
@@ -60,7 +60,7 @@ Author component and wrap it with your Card.
 Now, that component extending has been added you can do the
 following instead:
 
-```js:title=src/gatsby-theme-blog/components/author.js
+```jsx:title=src/gatsby-theme-blog/components/author.js
 import React from "react"
 import { Author } from "gatsby-theme-blog/src/components/author"
 import Card from "../components/card"
@@ -91,7 +91,7 @@ the component. Below, `NewsletterButton` is re-exported and
 `variant="link"` is added in the shadowed file to override its
 default value.
 
-```js:title=src/gatsby-theme-blog/components/newsletter/button.js
+```jsx:title=src/gatsby-theme-blog/components/newsletter/button.js
 import { NewsletterButton } from "gatsby-theme-blog/src/components/newsletter"
 
 export default props => <NewsletterButton {...props} variant="link" />
@@ -104,7 +104,7 @@ you might want to apply CSS using the [Emotion CSS prop](/docs/emotion).
 This will allow you to change the styling of a particular component without
 changing any of its functionality.
 
-```js:title=src/gatsby-theme-blog/components/newsletter/button.js
+```jsx:title=src/gatsby-theme-blog/components/newsletter/button.js
 import { NewsletterButton } from "gatsby-theme-blog/src/components/newsletter"
 
 export default props => (

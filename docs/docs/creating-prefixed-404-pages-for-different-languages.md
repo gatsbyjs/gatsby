@@ -6,7 +6,7 @@ Using the [`onCreatePage`](/docs/node-apis/#onCreatePage) API in your project's 
 
 Here is an example that shows you how to create an English 404 page at `src/pages/en/404.js`, and a German 404 page at `/src/pages/de/404.js`:
 
-```javascript:title=src/pages/en/404.js
+```jsx:title=src/pages/en/404.js
 import React from "react"
 import Layout from "../../components/layout"
 
@@ -18,7 +18,7 @@ export default () => (
 )
 ```
 
-```javascript:title=src/pages/de/404.js
+```jsx:title=src/pages/de/404.js
 import React from "react"
 import Layout from "../../components/layout"
 

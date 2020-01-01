@@ -27,7 +27,7 @@ You can also use the `package.json` script variant of these commands, typically 
 
 ### `new`
 
-```
+```shell
 gatsby new [<site-name> [<starter-url>]]
 ```
 
@@ -96,7 +96,7 @@ gatsby develop -H 0.0.0.0
 
 Then the terminal will log information as usual, but will additionally include a URL that you can navigate to from a client on the same network to see how the site renders.
 
-```
+```shell
 You can now view gatsbyjs.org in the browser.
 ⠀
   Local:            http://0.0.0.0:8000/

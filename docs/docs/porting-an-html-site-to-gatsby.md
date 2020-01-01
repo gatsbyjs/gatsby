@@ -10,7 +10,7 @@ This guide focuses on the parts of Gatsby that are applicable to a static websit
 
 Here is the structure of an example static HTML/CSS website that this guide will walk through porting:
 
-```
+```text
 website-domain
   ├── assets
   │   ├── favicon.ico
@@ -68,7 +68,7 @@ export default () => <div>Hello world!</div>
 
 [Run the development server](/docs/quick-start/#start-development-server) with `gatsby develop` in the command line to see the website in your browser.
 
-```sh
+```shell
 gatsby develop
 ```
 
@@ -419,7 +419,7 @@ The other 2 `Who We Are` pages for Marin and Sam can now be made with a similar 
 
 Once `/services` and the root level HTML files are ported, here is what the finished Gatsby project file structure looks like:
 
-```
+```text
 gatsby-site
 ├── static
 │   ├── favicon.ico
@@ -511,7 +511,7 @@ gatsby serve --prefix-paths
 
 Here is the structure of the HTML & non-JavaScript asset files in the Gatsby build output:
 
-```
+```text
 website-domain
   ├── favicon.ico
   ├── person.png

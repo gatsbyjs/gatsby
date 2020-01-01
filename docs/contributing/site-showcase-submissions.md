@@ -132,7 +132,7 @@ If your site is chosen as featured, here's what to do next:
 
 2.  Add `featured` as a category:
 
-```shell
+```yaml
 categories:
   - featured
 ```

@@ -121,7 +121,7 @@ For a full list of what's new, check out our [V2 migration guide](/docs/migratin
 
 - You can get started using Gatsby V2 right now by installing our V2 default starter:
 
-  ```
+  ```shell
   gatsby new my-gatsby-v2-site https://github.com/gatsbyjs/gatsby-starter-default
   ```
 

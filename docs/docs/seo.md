@@ -40,19 +40,19 @@ Some examples using react-helmet:
 Google uses structured data that it finds on the web to understand the content of the page, as well as to gather information about the web and the world in general.
 For example, here is a structured data snippet in the [JSON-LD format](https://developers.google.com/search/docs/guides/intro-structured-data) (JavaScript Object Notation for Linked Data) that might appear on the contact page of a company called Spooky Technologies, describing their contact information:
 
-```js
+```html
 <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Company",
-  "url": "http://www.spookytech.com",
-  "name": "Spooky technologies",
-  "contactPoint": {
-    "@type": "ContactPoint",
-    "telephone": "+5-601-785-8543",
-    "contactType": "Customer Support"
+  {
+    "@context": "https://schema.org",
+    "@type": "Company",
+    "url": "http://www.spookytech.com",
+    "name": "Spooky technologies",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+5-601-785-8543",
+      "contactType": "Customer Support"
+    }
   }
-}
 </script>
 ```
 

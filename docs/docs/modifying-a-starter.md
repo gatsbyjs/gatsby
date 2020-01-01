@@ -34,7 +34,7 @@ If you'd like to read descriptions of all of these files, as well as the other f
 
 How exactly you add content to your site will depend somewhat on your starter's structure. The default starter includes the `src/pages/` directory, which contains `404.js`, `index.js`, and `page-2.js`. Adding a JavaScript file to this directory will automatically create a new route available at `localhost:8000/[file-name]`. For example, if you'd like to add a page to share your speaking experience, you might include `speaking.js` in `src/pages/` as written below:
 
-```javascript:title=src/pages/speaking.js
+```jsx:title=src/pages/speaking.js
 import React from "react"
 import { Link } from "gatsby"
 
@@ -105,7 +105,7 @@ module.exports = {
 
 Elsewhere on the site, GraphQL queries access that data and display it in the browser. The `Layout` component, for instance, runs a query for `siteMetadata`'s `title` property. It then passes that value to the `Header` component via props:
 
-```javascript:title=src/components/layout.js
+```jsx:title=src/components/layout.js
 import React from "react"
 import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby" // highlight-line
@@ -157,7 +157,7 @@ export default Layout
 
 This allows the `Header` to set the content of the `<h1>` that appears on every page of the website to the value of `siteTitle`:
 
-```javascript:title=src/components/header.js
+```jsx:title=src/components/header.js
 import { Link } from "gatsby"
 import PropTypes from "prop-types"
 import React from "react"
@@ -210,7 +210,7 @@ Try adding a property to `siteMetadata`, querying for it, and displaying the dat
 
 Continuing with `gatsby-starter-default` as an example, have a look at `src/pages/index.js`:
 
-```javascript:title=src/pages/index.js
+```jsx:title=src/pages/index.js
 import React from "react"
 import { Link } from "gatsby"
 
