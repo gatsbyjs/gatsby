@@ -2391,7 +2391,7 @@
     - Green / Red alert footer on user's answer
     - Navigation generated based on the index of each question
 - url: https://gatsby-starter-accessibility.netlify.com/
-  repo: https://github.com/benjamingrobertson/gatsby-starter-accessibility
+  repo: https://github.com/benrobertsonio/gatsby-starter-accessibility
   description: The default Gatsby starter with powerful accessibility tools built-in.
   tags:
     - Storybook
