@@ -21,13 +21,13 @@ In November, I began a conversation with a mid-sized retail and digital commerce
 - First, the content editorial experience for staff was so poor that multiple team members had actually quit because of it (saying as much in their exit interview).
 - Second, development velocity was painfully slow because of the complex implementation.
 
-Once I talked about the value of a microservices approach, the unbeatable fast speed of a React powered front end, preview, and the partial builds feature on the roadmap Gatsby (and was honest about the trade offs), the client enthusiastically wanted to know more, and they are likely proceeding with a Gatsby stack for their replatform.
+Once I talked about the value of a microservices approach, the unbeatable fast speed of a React powered frontend, preview, and the partial builds feature on the roadmap Gatsby (and was honest about the trade offs), the client enthusiastically wanted to know more, and they are likely proceeding with a Gatsby stack for their replatform.
 
 Here are three smart points of entry to get the conversation focused on use cases. (To learn more about explaining the technicalities of Gatsby, check out Linda’s extensive article on [how to break down Gatsby in a way that will resonate](/blog/2019-03-07-sell-gatsby-to-clients/).
 
 ## #1 Developers are the bottleneck
 
-One of the primary drawbacks of a monolithic CMS like WordPress or Drupal is that the front-end theming layer is tightly coupled with the backend data layer. That means that a developer working only in the theme layer must still be comfortable with PHP, a backend programming language. In a headless approach, using JavaScript at the render layer, a themer only needs to know HTML, CSS, and JavaScript, the languages already in their toolkit.
+One of the primary drawbacks of a monolithic CMS like WordPress or Drupal is that the frontend theming layer is tightly coupled with the backend data layer. That means that a developer working only in the theme layer must still be comfortable with PHP, a backend programming language. In a headless approach, using JavaScript at the render layer, a themer only needs to know HTML, CSS, and JavaScript, the languages already in their toolkit.
 
 If the client is suffering from slow developer velocity, this benefit will resonate and provide value to their organization.
 
@@ -45,7 +45,7 @@ Mobile websites that take [more than 3 seconds to load have a 53% bounce rate](h
   There is fast (which every site should be) and then there is Gatsby-fast.
 </Pullquote>
 
-Every site needs to be performant. There isn’t a site out there where slow response times won’t negatively impact user engagement, conversion, and often, the bottom line. But remember, there is fast (which every site should be) and then there is Gatsby-fast. Companies that migrate to Gatsby will find their site is [between three and 10 times faster](https://www.gatsbyjs.com/guides/why-are-gatsby-sites-fast/). Indeed, the speed of a Gatsby-powered front end resembles more of the instantaneous feel of native mobile apps.
+Every site needs to be performant. There isn’t a site out there where slow response times won’t negatively impact user engagement, conversion, and often, the bottom line. But remember, there is fast (which every site should be) and then there is Gatsby-fast. Companies that migrate to Gatsby will find their site is [between three and 10 times faster](https://www.gatsbyjs.com/guides/why-are-gatsby-sites-fast/). Indeed, the speed of a Gatsby-powered frontend resembles more of the instantaneous feel of native mobile apps.
 
 ---
 

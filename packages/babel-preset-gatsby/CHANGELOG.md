@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.26](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.2.25...babel-preset-gatsby@0.2.26) (2019-12-11)
+
+### Features
+
+- **gatsby:** support `?.` and `??` in generated pages ([#20036](https://github.com/gatsbyjs/gatsby/issues/20036)) ([ea6185c](https://github.com/gatsbyjs/gatsby/commit/ea6185c))
+
+## [0.2.25](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.2.23...babel-preset-gatsby@0.2.25) (2019-12-10)
+
+**Note:** Version bump only for package babel-preset-gatsby
+
+## [0.2.24](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.2.23...babel-preset-gatsby@0.2.24) (2019-12-10)
+
+**Note:** Version bump only for package babel-preset-gatsby
+
+## [0.2.23](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.2.22...babel-preset-gatsby@0.2.23) (2019-11-26)
+
+**Note:** Version bump only for package babel-preset-gatsby
+
+## [0.2.22](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.2.21...babel-preset-gatsby@0.2.22) (2019-11-15)
+
+### Bug Fixes
+
+- update dependency babel-plugin-dynamic-import-node to v2 ([#19535](https://github.com/gatsbyjs/gatsby/issues/19535)) ([500ebf6](https://github.com/gatsbyjs/gatsby/commit/500ebf6))
+
+## [0.2.21](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.2.20...babel-preset-gatsby@0.2.21) (2019-11-10)
+
+**Note:** Version bump only for package babel-preset-gatsby
+
 ## [0.2.20](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.2.19...babel-preset-gatsby@0.2.20) (2019-10-14)
 
 **Note:** Version bump only for package babel-preset-gatsby

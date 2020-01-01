@@ -1,13 +1,11 @@
 import Typography from "typography"
 import CodePlugin from "typography-plugin-code"
-import { colors, lineHeights } from "../gatsby-plugin-theme-ui"
-// typography.js expects an array,
-// so grab font stacks directly from tokens
-import { fonts } from "gatsby-design-tokens"
+import { colors, lineHeights, fonts } from "../gatsby-plugin-theme-ui"
 
 const _options = {
-  bodyFontFamily: fonts.system,
-  headerFontFamily: fonts.header,
+  // typography.js expects an array, theme-ui a CSS prop value
+  bodyFontFamily: fonts.system.split(`, `),
+  headerFontFamily: fonts.header.split(`, `),
   baseLineHeight: lineHeights.body,
   headerLineHeight: lineHeights.heading,
   headerColor: colors.heading,

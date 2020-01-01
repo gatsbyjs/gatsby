@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.2.25...gatsby-link@2.2.27) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-link
+
+## [2.2.26](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.2.25...gatsby-link@2.2.26) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-link
+
+## [2.2.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.2.24...gatsby-link@2.2.25) (2019-11-26)
+
+**Note:** Version bump only for package gatsby-link
+
+## [2.2.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.2.23...gatsby-link@2.2.24) (2019-11-15)
+
+**Note:** Version bump only for package gatsby-link
+
+## [2.2.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.2.22...gatsby-link@2.2.23) (2019-11-10)
+
+**Note:** Version bump only for package gatsby-link
+
 ## [2.2.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.2.21...gatsby-link@2.2.22) (2019-10-14)
 
 **Note:** Version bump only for package gatsby-link

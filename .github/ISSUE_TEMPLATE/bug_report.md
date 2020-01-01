@@ -3,6 +3,8 @@ name: Bug Report 🐞
 about: Something isn't working as expected? Here is the right place to report.
 ---
 
+<!-- Gatsby OSS team is on holiday, expect a delayed response -->
+
 <!--
   Please fill out each section below, otherwise, your issue will be closed. This info allows Gatsby maintainers to diagnose (and fix!) your issue as quickly as possible.
 

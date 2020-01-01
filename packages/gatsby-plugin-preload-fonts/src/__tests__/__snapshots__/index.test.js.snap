@@ -17,7 +17,7 @@ Object {
       "https://foo.bar/path/to/font.otf": true,
     },
   },
-  "hash": "7c709be36bd82265bb0eb74a233f3040",
+  "hash": "09f5b092fb87d859e0ac53dbae299a9e",
   "timestamp": Any<Number>,
 }
 `;

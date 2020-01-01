@@ -227,41 +227,43 @@ const actions = {
           name: activity.text,
           duration: Math.round(durationMS),
         })
-      }
 
-      const durationS = durationMS / 1000
-
-      actionsToEmit.push({
-        type: Actions.EndActivity,
-        payload: {
-          uuid: activity.uuid,
-          id,
-          status,
-          duration: durationS,
-          type: activity.type,
-        },
-      })
-
-      if (activity.type !== ActivityTypes.Hidden) {
-        actionsToEmit.push(
-          actions.createLog({
-            text: activity.text,
-            level: ActivityStatusToLogLevel[status],
+        const durationS = durationMS / 1000
+        if (activity.errored) {
+          status = ActivityStatuses.Failed
+        }
+        actionsToEmit.push({
+          type: Actions.EndActivity,
+          payload: {
+            uuid: activity.uuid,
+            id,
+            status,
             duration: durationS,
-            statusText:
-              activity.statusText ||
-              (status === ActivityStatuses.Success &&
-              activity.type === ActivityTypes.Progress
-                ? `${activity.current}/${activity.total} ${(
-                    activity.total / durationS
-                  ).toFixed(2)}/s`
-                : undefined),
-            activity_uuid: activity.uuid,
-            activity_current: activity.current,
-            activity_total: activity.total,
-            activity_type: activity.type,
-          })
-        )
+            type: activity.type,
+          },
+        })
+
+        if (activity.type !== ActivityTypes.Hidden) {
+          actionsToEmit.push(
+            actions.createLog({
+              text: activity.text,
+              level: ActivityStatusToLogLevel[status],
+              duration: durationS,
+              statusText:
+                activity.statusText ||
+                (status === ActivityStatuses.Success &&
+                activity.type === ActivityTypes.Progress
+                  ? `${activity.current}/${activity.total} ${(
+                      activity.total / durationS
+                    ).toFixed(2)}/s`
+                  : undefined),
+              activity_uuid: activity.uuid,
+              activity_current: activity.current,
+              activity_total: activity.total,
+              activity_type: activity.type,
+            })
+          )
+        }
       }
     }
 
@@ -288,6 +290,19 @@ const actions = {
         uuid: activity.uuid,
         id,
         ...rest,
+      },
+    }
+  },
+  setActivityErrored: ({ id, ...rest }) => {
+    const activity = getActivity(id)
+    if (!activity) {
+      return null
+    }
+
+    return {
+      type: Actions.ActivityErrored,
+      payload: {
+        id,
       },
     }
   },

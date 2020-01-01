@@ -2,6 +2,7 @@
 const fs = require(`fs-extra`)
 const crypto = require(`crypto`)
 const _ = require(`lodash`)
+const slugify = require(`slugify`)
 
 // Traverse is a es6 module...
 import traverse from "@babel/traverse"
@@ -14,7 +15,7 @@ const {
 
 const report = require(`gatsby-cli/lib/reporter`)
 
-import type { DocumentNode, DefinitionNode } from "graphql"
+import type { DocumentNode } from "graphql"
 import { babelParseToAst } from "../utils/babel-parse-to-ast"
 import { codeFrameColumns } from "@babel/code-frame"
 
@@ -26,8 +27,12 @@ import { locInGraphQlToLocInFile } from "./error-parser"
  */
 const generateQueryName = ({ def, hash, file }) => {
   if (!def.name || !def.name.value) {
+    const slugified = slugify(file, {
+      replacement: ` `,
+      lower: false,
+    })
     def.name = {
-      value: `${_.camelCase(file)}${hash}`,
+      value: `${_.camelCase(slugified)}${hash}`,
       kind: `Name`,
     }
   }
@@ -111,17 +116,27 @@ const warnForGlobalTag = file =>
       file
   )
 
+type GraphQLDocumentInFile = {
+  filePath: string,
+  doc: DocumentNode,
+  templateLoc: string,
+  text: string,
+  hash: string,
+  isHook: boolean,
+  isStaticQuery: boolean,
+}
+
 async function findGraphQLTags(
   file,
   text,
   { parentSpan, addError } = {}
-): Promise<Array<DefinitionNode>> {
+): Promise<Array<GraphQLDocumentInFile>> {
   return new Promise((resolve, reject) => {
     parseToAst(file, text, { parentSpan, addError })
       .then(ast => {
-        let queries = []
+        const documents = []
         if (!ast) {
-          resolve(queries)
+          resolve(documents)
           return
         }
 
@@ -149,10 +164,6 @@ async function findGraphQLTags(
           if (isGlobal) warnForGlobalTag(file)
 
           gqlAst.definitions.forEach(def => {
-            documentLocations.set(
-              def,
-              `${taggedTemplateExpressPath.node.start}-${def.loc.start}`
-            )
             generateQueryName({
               def,
               hash,
@@ -160,22 +171,30 @@ async function findGraphQLTags(
             })
           })
 
-          const definitions = [...gqlAst.definitions].map(d => {
-            d.isStaticQuery = true
-            d.isHook = isHook
-            d.text = text
-            d.hash = hash
+          let templateLoc
 
-            taggedTemplateExpressPath.traverse({
-              TemplateElement(templateElementPath) {
-                d.templateLoc = templateElementPath.node.loc
-              },
-            })
-
-            return d
+          taggedTemplateExpressPath.traverse({
+            TemplateElement(templateElementPath) {
+              templateLoc = templateElementPath.node.loc
+            },
           })
 
-          queries.push(...definitions)
+          const docInFile = {
+            filePath: file,
+            doc: gqlAst,
+            text: text,
+            hash: hash,
+            isStaticQuery: true,
+            isHook,
+            templateLoc,
+          }
+
+          documentLocations.set(
+            docInFile,
+            `${taggedTemplateExpressPath.node.start}-${gqlAst.loc.start}`
+          )
+
+          documents.push(docInFile)
         }
 
         // Look for queries in <StaticQuery /> elements.
@@ -295,10 +314,6 @@ async function findGraphQLTags(
                 if (isGlobal) warnForGlobalTag(file)
 
                 gqlAst.definitions.forEach(def => {
-                  documentLocations.set(
-                    def,
-                    `${innerPath.node.start}-${def.loc.start}`
-                  )
                   generateQueryName({
                     def,
                     hash,
@@ -306,26 +321,36 @@ async function findGraphQLTags(
                   })
                 })
 
-                queries.push(
-                  ...gqlAst.definitions.map(d => {
-                    d.text = text
+                let templateLoc
+                innerPath.traverse({
+                  TemplateElement(templateElementPath) {
+                    templateLoc = templateElementPath.node.loc
+                  },
+                })
 
-                    innerPath.traverse({
-                      TemplateElement(templateElementPath) {
-                        d.templateLoc = templateElementPath.node.loc
-                      },
-                    })
+                const docInFile = {
+                  filePath: file,
+                  doc: gqlAst,
+                  text: text,
+                  hash: hash,
+                  isStaticQuery: false,
+                  isHook: false,
+                  templateLoc,
+                }
 
-                    return d
-                  })
+                documentLocations.set(
+                  docInFile,
+                  `${innerPath.node.start}-${gqlAst.loc.start}`
                 )
+
+                documents.push(docInFile)
               },
             })
           },
         })
 
         // Remove duplicate queries
-        const uniqueQueries = _.uniqBy(queries, q => documentLocations.get(q))
+        const uniqueQueries = _.uniqBy(documents, q => documentLocations.get(q))
 
         resolve(uniqueQueries)
       })
@@ -360,7 +385,7 @@ export default class FileParser {
       return null
     }
 
-    if (text.indexOf(`graphql`) === -1) return null
+    if (!text.includes(`graphql`)) return null
     const hash = crypto
       .createHash(`md5`)
       .update(file)
@@ -368,7 +393,7 @@ export default class FileParser {
       .digest(`hex`)
 
     try {
-      let astDefinitions =
+      const astDefinitions =
         cache[hash] ||
         (cache[hash] = await findGraphQLTags(file, text, {
           parentSpan: this.parentSpan,
@@ -384,12 +409,7 @@ export default class FileParser {
         })
       }
 
-      return astDefinitions.length
-        ? {
-            kind: `Document`,
-            definitions: astDefinitions,
-          }
-        : null
+      return astDefinitions
     } catch (err) {
       // default error
       let structuredError = {
@@ -470,14 +490,13 @@ export default class FileParser {
   async parseFiles(
     files: Array<string>,
     addError
-  ): Promise<Map<string, DocumentNode>> {
-    const documents = new Map()
+  ): Promise<Array<DocumentNode>> {
+    const documents = []
 
     return Promise.all(
       files.map(file =>
-        this.parseFile(file, addError).then(doc => {
-          if (!doc) return
-          documents.set(file, doc)
+        this.parseFile(file, addError).then(docs => {
+          documents.push(...(docs || []))
         })
       )
     ).then(() => documents)

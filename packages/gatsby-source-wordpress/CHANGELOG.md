@@ -3,6 +3,56 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.54](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.53...gatsby-source-wordpress@3.1.54) (2019-12-20)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.53](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.51...gatsby-source-wordpress@3.1.53) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.52](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.51...gatsby-source-wordpress@3.1.52) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.51](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.50...gatsby-source-wordpress@3.1.51) (2019-12-02)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.50](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.49...gatsby-source-wordpress@3.1.50) (2019-11-26)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.49](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.48...gatsby-source-wordpress@3.1.49) (2019-11-18)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.48](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.47...gatsby-source-wordpress@3.1.48) (2019-11-15)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.47](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.46...gatsby-source-wordpress@3.1.47) (2019-11-10)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** Cannot read property of undefined error with polylang ([#19331](https://github.com/gatsbyjs/gatsby/issues/19331)) ([bd48b21](https://github.com/gatsbyjs/gatsby/commit/bd48b21)), closes [gatsbyjs#19285](https://github.com/gatsbyjs/issues/19285)
+
+## [3.1.46](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.45...gatsby-source-wordpress@3.1.46) (2019-10-28)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.45](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.44...gatsby-source-wordpress@3.1.45) (2019-10-28)
+
+### Bug Fixes
+
+- update minor updates in packages ([#18875](https://github.com/gatsbyjs/gatsby/issues/18875)) ([b692879](https://github.com/gatsbyjs/gatsby/commit/b692879))
+
+## [3.1.44](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.43...gatsby-source-wordpress@3.1.44) (2019-10-22)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** add undefined check to avoid mapPostsToTagsCategories error ([#18895](https://github.com/gatsbyjs/gatsby/issues/18895)) ([ad646d6](https://github.com/gatsbyjs/gatsby/commit/ad646d6))
+
 ## [3.1.43](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.42...gatsby-source-wordpress@3.1.43) (2019-10-14)
 
 **Note:** Version bump only for package gatsby-source-wordpress

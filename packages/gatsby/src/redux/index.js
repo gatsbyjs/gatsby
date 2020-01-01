@@ -60,6 +60,7 @@ const saveState = () => {
     `components`,
     `staticQueryComponents`,
     `webpackCompilationHash`,
+    `pageDataStats`,
   ])
 
   return writeToCache(pickedState)

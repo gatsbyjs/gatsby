@@ -60,6 +60,7 @@ const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
                         href={node.source_url}
                         target="_blank"
                         rel="noopener noreferrer"
+                        aria-label={`Open source code for ${node.title}`}
                       >
                         <GithubIcon style={{ verticalAlign: `text-top` }} />
                       </a>
@@ -71,6 +72,7 @@ const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
                     href={node.main_url}
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label={`Open website for ${node.title}`}
                   >
                     <LaunchSiteIcon style={{ verticalAlign: `text-top` }} />
                   </a>
