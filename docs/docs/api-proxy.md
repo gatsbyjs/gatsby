@@ -23,6 +23,23 @@ module.exports = {
 }
 ```
 
+or:
+
+```js:title=gatsby-config.js
+module.exports = {
+  proxy: [
+    {
+      prefix: "/api",
+      url: "http://dev-mysite.com",
+    },
+    {
+      prefix: "/api2",
+      url: "http://dev2-mysite.com",
+    },
+  ],
+}
+```
+
 This way, when you `fetch('/api/todos')` in development, the development server
 will recognize that it’s not a static asset, and will proxy your request to
 `http://dev-mysite.com/api/todos` as a fallback.
