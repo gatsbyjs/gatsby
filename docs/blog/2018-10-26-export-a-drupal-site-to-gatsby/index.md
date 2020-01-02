@@ -64,10 +64,13 @@ const tags = db
 To avoid 404 in case you created some url aliases you can query the `url_alias` table and create an aliases frontmatter property and later (depending on your hosting platform) use a plugin like [gatsby-plugin-meta-redirect](https://github.com/nsresulta/gatsby-plugin-meta-redirect) to use the gatsby [createRedirect](https://www.gatsbyjs.org/docs/actions/#createRedirect) function:
 
 ```javascript
-const aliases = db.prepare(`SELECT alias FROM url_alias
-    WHERE source = ? AND alias != ?`)
-    .pluck()
-    .all('node/' + row.nid, slug);
+const aliases = db
+  .prepare(
+    `SELECT alias FROM url_alias
+    WHERE source = ? AND alias != ?`
+  )
+  .pluck()
+  .all("node/" + row.nid, slug)
 ```
 
 For the image, you will retrieve only the URL of the image, so you can download it and store it locally. And you will replace `public://` for the URL path of the images folder on your old site:
