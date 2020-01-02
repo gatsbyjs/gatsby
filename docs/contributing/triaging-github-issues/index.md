@@ -67,7 +67,7 @@ Check out [the docs on issue labeling for more info](/contributing/how-to-label-
 
 Issues are categorized into one of five types: question or discussion, bug report, feature request, documentation, or maintenance.
 
-### Questions with immediate answers
+#### Questions with immediate answers
 
 - Point to existing documentation to answer the question
 - If insufficient, do the following:
@@ -89,7 +89,7 @@ If the reproduction is successful, label the issue with `confirmed` and determin
 
 #### Feature Request
 
-Feature Requests are issues that request support for additional functionality not currently covered in the existing codebase. The first step in triaging a feature request is to determine if it's a reasonable request; this is a challenge and if you don't feel comfortable making this determination please label with `inkteam to review`. If it's clear that this isn't a feature it makes sense for Gatsby to implement, provide a comment explaining the decision making and close the issue.
+Feature Requests are issues that request support for additional functionality not currently covered in the existing codebase. The first step in triaging a feature request is to determine if it's a reasonable request; this is a challenge and if you don't feel comfortable making this determination please label with `inkteam to review`. If it's clear that this isn't a feature it makes sense for Gatsby to implement, provide a comment explaining the decision making and close the issue. Review the [saved replies](#saved-replies) to see if there is an appropriate response already available.
 
 If it's determined to be a worthwhile feature, the next decision point is whether the feature should be added to core or upstream. Upstream issues are those that are outside of Gatsby's control and caused by dependencies. Upstream features should be labeled with `upstream` and include comments about the scope.
 
@@ -98,14 +98,16 @@ If it's a core change, is it a breaking change? Breaking changes should be label
 Non-breaking changes can be labeled as `help wanted` and it is often best to ask the creator of the issue if they'd be interested in helping develop the PR.
 ![Flow chart for handling a Feature Request](./FeatureFlow.png)
 
-### Documentation
+#### Documentation
 
 Issues can be filed requesting documentation on a particular topic. Sometimes the documentation already exists, so you can link to it and close the issue.
+
+Alternatively, the issue may be something the team is unable to address. Consider using a [saved reply](#saved-replies) in that circumstance.
 
 Otherwise, label the issue with `documentation` and ask the issuer filer if they'd like to help with a PR.
 ![Flow chart for handling a Documentation Request](./DocumentationFlow.png)
 
-### Maintenance
+#### Maintenance
 
 Maintenance issues are things like bumping a package version. These issues should be labeled with `maintenance`.
 
