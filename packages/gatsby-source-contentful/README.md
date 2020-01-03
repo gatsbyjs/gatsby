@@ -237,11 +237,11 @@ You might query for a **single** node inside a component in your `src/components
 
 #### A note about LongText fields
 
-If you include fields with a `LongText` type in your Contentful `ContentType`, their returned value will be **an object not a string**. This is because Contentful LongText fields are Markdown by default. In order to handle the Markdown content properly, this field type is created as a child node so Gatsby can transform it to HTML.
+If you include fields with a `LongText` type in your Contentful `ContentType`, their returned value will be **an object not a string**. This is because Contentful LongText fields are Markdown by default. In order to handle the Markdown content properly, this field type is created as a child node so that a transformer plugin such as gatsby-transformer-remark can transform it to HTML.
 
 `ShortText` type fields will be returned as strings.
 
-Querying a **single** `CaseStudy` node with the ShortText properties `title` and `subtitle` and LongText property `body` requires formatting the LongText fields as an object with the _child node containing the exact same field name as the parent_:
+Querying a **single** `CaseStudy` node with the ShortText properties `title` and `subtitle` and LongText property `body` requires formatting the LongText fields as an object with the _child node being the childMarkodwnRemark generated automatically by the gatsby-trasnformer-remark:
 
 ```graphql
 {
@@ -249,11 +249,22 @@ Querying a **single** `CaseStudy` node with the ShortText properties `title` and
     title
     subtitle
     body {
-      body
+      childMarkdownRemark {
+        html
+      }
     }
   }
 }
 ```
+You can then use the LongText html by setting the inner HTML:
+
+```
+  <div dangerouslySetInnerHTML={{
+       __html: data.contentfulCaseStudy.body.childMarkdownRemark.html,
+     }}
+   />
+```
+
 
 #### Duplicated entries
 
