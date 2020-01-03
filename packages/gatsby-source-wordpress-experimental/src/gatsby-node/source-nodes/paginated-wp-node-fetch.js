@@ -21,6 +21,13 @@ const paginatedWpNodeFetch = async ({
     return allContentNodes
   }
 
+  if (
+    settings.limit &&
+    allContentNodes.length + variables.first > settings.limit
+  ) {
+    variables.first = settings.limit - allContentNodes.length
+  }
+
   const response = await fetchGraphql({
     url,
     query,
@@ -50,7 +57,6 @@ const paginatedWpNodeFetch = async ({
 
   if (hasNextPage) {
     await paginatedWpNodeFetch({
-      first: variables.first,
       after: endCursor,
       url,
       contentTypePlural,
