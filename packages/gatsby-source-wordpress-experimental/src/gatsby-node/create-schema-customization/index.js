@@ -212,7 +212,7 @@ export default async ({ actions, schema }, pluginOptions) => {
       }
 
       if (type.kind === `OBJECT`) {
-        const objectType = {
+        let objectType = {
           name: `Wp${type.name}`,
           fields: transformedFields,
           extensions: {
@@ -222,6 +222,30 @@ export default async ({ actions, schema }, pluginOptions) => {
 
         if (!type.name.includes(`Connection`)) {
           objectType.interfaces = [`Node`]
+        }
+
+        if (type.name === `MediaItem`) {
+          objectType.fields.remoteFile = {
+            type: `File`,
+            // can't make this work. Created a custom resolver instead.
+            // extensions: {
+            //   link: {}
+            // },
+            resolve: (mediaItemNode, args, context, info) =>
+              context.nodeModel.getNodeById({
+                id: mediaItemNode.remoteFile.id,
+                type: `File`,
+              }),
+            // we could create these remote media item nodes when queried for
+            // instead of downloading all referenced nodes and linking by id
+            // but it messes up the cli output, and queries are run in order so we wouldn't have parallelized downloads which is slow
+            // anyway we could just put the download here  in the resolver
+            // if that ever changes:
+            // createRemoteMediaItemNode({
+            //   mediaItemNode,
+            //   helpers,
+            // })
+          }
         }
 
         typeDefs.push(schema.buildObjectType(objectType))

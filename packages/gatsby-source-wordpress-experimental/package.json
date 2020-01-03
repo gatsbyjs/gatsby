@@ -12,6 +12,7 @@
     "@rematch/immer": "^1.2.0",
     "apollo-link": "1.2.13",
     "apollo-link-http": "^1.5.16",
+    "atob": "^2.1.2",
     "axios": "^0.19.0",
     "axios-rate-limit": "^1.2.1",
     "execall": "^2.0.0",

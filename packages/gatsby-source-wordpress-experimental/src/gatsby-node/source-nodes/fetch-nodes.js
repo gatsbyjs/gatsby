@@ -5,51 +5,72 @@ import { CREATED_NODE_IDS } from "../constants"
 import store from "../../store"
 import { createRemoteMediaItemNode } from "./create-remote-media-item-node"
 
-export const fetchWPGQLContentNodes = async (helpers, { url, verbose }) => {
+export const fetchWPGQLContentNodes = async ({
+  queryInfo,
+  test,
+  variables,
+  allContentNodes = [],
+}) => {
+  const { pluginOptions, helpers } = store.getState().gatsbyApi
   const { reporter } = helpers
+  const { url, verbose } = pluginOptions
+
+  const { listQueryString, typeInfo, settings } = queryInfo
+
+  const activity = reporter.activityTimer(formatLogMessage(typeInfo.pluralName))
+
+  if (verbose) {
+    activity.start()
+  }
+
+  const allNodesOfContentType = await paginatedWpNodeFetch({
+    first: 100,
+    after: null,
+    contentTypePlural: typeInfo.pluralName,
+    contentTypeSingular: typeInfo.singleName,
+    nodeTypeName: typeInfo.nodesTypeName,
+    query: listQueryString,
+    url,
+    activity,
+    helpers,
+    settings,
+    test,
+    allContentNodes,
+    ...variables,
+  })
+
+  if (verbose) {
+    activity.end()
+  }
+
+  if (allNodesOfContentType && allNodesOfContentType.length) {
+    return {
+      singular: queryInfo.singleName,
+      plural: queryInfo.pluralName,
+      allNodesOfContentType,
+    }
+  }
+
+  return false
+}
+
+export const fetchWPGQLContentNodesByContentType = async () => {
   const contentNodeGroups = []
 
   const { queries } = store.getState().introspection
 
   await Promise.all(
-    Object.entries(queries).map(async ([fieldName, queryInfo]) => {
-      const { listQueryString, typeInfo, settings } = queryInfo
+    Object.entries(queries).map(async ([_, queryInfo]) => {
+      const { settings } = queryInfo
 
       if (settings.exclude || settings.onlyFetchIfReferenced) {
         return
       }
 
-      const activity = reporter.activityTimer(
-        formatLogMessage(typeInfo.pluralName)
-      )
+      const contentNodeGroup = await fetchWPGQLContentNodes({ queryInfo })
 
-      if (verbose) {
-        activity.start()
-      }
-
-      const allNodesOfContentType = await paginatedWpNodeFetch({
-        first: 100,
-        after: null,
-        contentTypePlural: typeInfo.pluralName,
-        contentTypeSingular: typeInfo.singleName,
-        nodeTypeName: typeInfo.nodesTypeName,
-        url,
-        query: listQueryString,
-        activity,
-        helpers,
-        settings,
-      })
-
-      if (verbose) {
-        activity.end()
-      }
-
-      if (allNodesOfContentType && allNodesOfContentType.length) {
-        contentNodeGroups.push({
-          singular: fieldName,
-          plural: fieldName,
-          allNodesOfContentType,
-        })
+      if (contentNodeGroup) {
+        contentNodeGroups.push(contentNodeGroup)
       }
     })
   )
@@ -73,7 +94,7 @@ export const fetchAndCreateAllNodes = async (helpers, pluginOptions) => {
     activity.setStatus(`created ${store.getState().logger.entityCount}`)
   })
 
-  const wpgqlNodesByContentType = await fetchWPGQLContentNodes(...api)
+  const wpgqlNodesByContentType = await fetchWPGQLContentNodesByContentType()
 
   //
   // Create Gatsby nodes from WPGQL response
@@ -88,44 +109,43 @@ export const fetchAndCreateAllNodes = async (helpers, pluginOptions) => {
   // so that we don't have to refetch all nodes
   await cache.set(CREATED_NODE_IDS, createdNodeIds)
 
-  const downloadHtmlImages = false
+  // const downloadHtmlImages = false
 
-  // this downloads any referenced image upfront,
-  // instead of as images are queried for
-  // the only reason to download them all upfront is to not break
-  // the cli output...
-  if (downloadHtmlImages) {
-    // these are image urls that were used in other nodes we created
-    const fileUrls = Array.from(store.getState().imageNodes.urls)
+  // this downloads images in html.
+  // one problem is that we can't get media items by source url in WPGraphQL
+  // before doing this, we'll need something to change on the WPGQL side
+  // if (downloadHtmlImages) {
+  //   // these are image urls that were used in other nodes we created
+  //   const fileUrls = Array.from(store.getState().imageNodes.urls)
 
-    // these are file metadata nodes we've already fetched
-    const mediaItemNodes = helpers.getNodesByType(`WpMediaItem`)
+  //   // these are file metadata nodes we've already fetched
+  //   const mediaItemNodes = helpers.getNodesByType(`WpMediaItem`)
 
-    // build an object where the media item urls are properties,
-    // and media item nodes are values
-    // so we can check if the urls we regexed from our other nodes content
-    // are media item nodes
-    const mediaItemNodesKeyedByUrl = mediaItemNodes.reduce((acc, curr) => {
-      acc[curr.mediaItemUrl] = curr
-      return acc
-    }, {})
-    // const mediaItemNodesKeyedByUrl = store.getState().imageNodes.nodeMetaByUrl
+  //   // build an object where the media item urls are properties,
+  //   // and media item nodes are values
+  //   // so we can check if the urls we regexed from our other nodes content
+  //   // are media item nodes
+  //   const mediaItemNodesKeyedByUrl = mediaItemNodes.reduce((acc, curr) => {
+  //     acc[curr.mediaItemUrl] = curr
+  //     return acc
+  //   }, {})
+  //   // const mediaItemNodesKeyedByUrl = store.getState().imageNodes.nodeMetaByUrl
 
-    await Promise.all(
-      fileUrls.map(async url => {
-        // check if we have a media item node for this regexed url
-        const mediaItemNode = mediaItemNodesKeyedByUrl[url]
+  //   await Promise.all(
+  //     fileUrls.map(async url => {
+  //       // check if we have a media item node for this regexed url
+  //       const mediaItemNode = mediaItemNodesKeyedByUrl[url]
 
-        if (mediaItemNode) {
-          // create remote file node from media node
-          await createRemoteMediaItemNode({
-            mediaItemNode,
-            helpers,
-          })
-        }
-      })
-    )
-  }
+  //       if (mediaItemNode) {
+  //         // create remote file node from media node
+  //         await createRemoteMediaItemNode({
+  //           mediaItemNode,
+  //           helpers,
+  //         })
+  //       }
+  //     })
+  //   )
+  // }
 
   activity.end()
 }
