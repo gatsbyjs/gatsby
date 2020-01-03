@@ -115,6 +115,32 @@ describe(`Test plugin manifest options`, () => {
     expect(contents).toMatchSnapshot()
   })
 
+  it(`correctly works with custom favicon path`, async () => {
+    fs.statSync.mockReturnValueOnce({ isFile: () => true })
+
+    const overrideDir = `custom-dir`
+
+    const pluginSpecificOptions = {
+      icon: `images/gatsby-logo.png`,
+      override_favicon_directory: overrideDir,
+    }
+    await onPostBootstrap(apiArgs, {
+      name: `GatsbyJS`,
+      short_name: `GatsbyJS`,
+      start_url: `/`,
+      background_color: `#f7f0eb`,
+      theme_color: `#a2466c`,
+      display: `standalone`,
+      ...pluginSpecificOptions,
+    })
+
+    expect(sharp).toHaveBeenCalledTimes(2)
+    const content = JSON.parse(fs.writeFileSync.mock.calls[0][1])
+    for (const icon of content.icons) {
+      expect(path.dirname(icon.src)).toEqual(overrideDir)
+    }
+  })
+
   it(`correctly works with multiple icon paths`, async () => {
     fs.existsSync.mockReturnValue(false)
 
