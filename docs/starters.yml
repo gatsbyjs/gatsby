@@ -4807,3 +4807,14 @@
     - 📓 Visual testing with Storybook
     - ✔️ CI with GitHub Actions
     - ⚡ CD with Netlify
+- url: https://gatsby-starter-darkmode.now.sh
+  repo: https://github.com/someshkar/gatsby-starter-darkmode
+  description: Gatsby Default Starter with a dark mode using styled-components
+  tags:
+    - Landing Page
+    - Styling:CSS-in-JS
+  features:
+    - Build a landing page with a super simple to configure dark mode
+    - Customizable dark/other themes using the styled-components ThemeProvider
+    - localStorage based retention of user theme selection across reloads
+    - Change the button which toggles themes easily
