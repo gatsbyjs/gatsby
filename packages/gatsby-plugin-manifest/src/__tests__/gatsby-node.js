@@ -134,7 +134,6 @@ describe(`Test plugin manifest options`, () => {
       ...pluginSpecificOptions,
     })
 
-    expect(sharp).toHaveBeenCalledTimes(2)
     const content = JSON.parse(fs.writeFileSync.mock.calls[0][1])
     for (const icon of content.icons) {
       expect(path.dirname(icon.src)).toEqual(overrideDir)
