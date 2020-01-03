@@ -162,10 +162,8 @@ const transformFields = fields => {
   }, {})
 }
 
-export default async ({ actions, schema }, pluginOptions) => {
+export default async ({ actions, schema }) => {
   const { data } = store.getState().introspection.introspectionData
-
-  // const typeMap = new Map(data.__schema.types.map(type => [type.name, type]))
 
   let typeDefs = []
 
@@ -199,6 +197,7 @@ export default async ({ actions, schema }, pluginOptions) => {
 
       const transformedFields = transformFields(type.fields)
 
+      // interfaces dont work properly yet
       if (type.kind === `INTERFACE`) {
         typeDefs.push(
           schema.buildInterfaceType({
@@ -243,7 +242,7 @@ export default async ({ actions, schema }, pluginOptions) => {
 
               // we could create these remote media item nodes when queried for
               // instead of downloading all referenced nodes and linking by id
-              // but it messes up the cli output, and queries are run in order so we wouldn't have parallelized downloads which is slow
+              // but it messes up the cli output, and queries are run in order so we wouldn't have parallelized downloads which is too slow
               // anyway we could just put the download here  in the resolver
               // if that ever changes:
               // createRemoteMediaItemNode({
