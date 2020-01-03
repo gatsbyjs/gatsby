@@ -4,7 +4,7 @@ const { defaultIcons, doesIconExist, addDigestToPath } = require(`../common`)
 describe(`gatsby-plugin-manifest`, () => {
   describe(`defaultIcons`, () => {
     it(`includes all icon sizes`, () => {
-      expect(defaultIcons).toMatchSnapshot()
+      expect(defaultIcons()).toMatchSnapshot()
     })
   })
 
