@@ -15,13 +15,19 @@ export default async function fetchReferencedMediaItemsAndCreateNodes({
   const { createContentDigest, actions } = helpers
   const { reporter } = helpers
   const { url, verbose } = pluginOptions
+  const { typeInfo, settings, selectionSet } = queryInfo
 
   let allMediaItemNodes = []
 
-  const nodesPerFetch = 10
-  const chunkedIds = chunk(referencedMediaItemNodeIds, nodesPerFetch)
+  if (settings.limit && settings.limit < referencedMediaItemNodeIds.length) {
+    referencedMediaItemNodeIds = referencedMediaItemNodeIds.slice(
+      0,
+      settings.limit
+    )
+  }
 
-  const { typeInfo, settings, selectionSet } = queryInfo
+  const nodesPerFetch = 100
+  const chunkedIds = chunk(referencedMediaItemNodeIds, nodesPerFetch)
 
   const activity = reporter.activityTimer(
     formatLogMessage(typeInfo.nodesTypeName)
