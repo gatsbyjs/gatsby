@@ -9082,3 +9082,15 @@
     - Web Development
   built_by: Ramón Chancay
   built_by_url: "https://ramonchancay.me/"
+- title: borderless
+  url: https://junhobaik.github.io
+  main_url: https://junhobaik.github.io
+  source_url: https://github.com/junhobaik/junhobaik.github.io/tree/develop
+  description: >
+    Junho Baik's Development Blog
+  categories:
+    - Blog
+    - Web Development
+  built_by: Junho Baik
+  built_by_url: https://github.com/junhobaik
+  featured: false
