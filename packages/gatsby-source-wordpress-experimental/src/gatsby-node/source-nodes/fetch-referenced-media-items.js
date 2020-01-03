@@ -1,8 +1,9 @@
 import chunk from "lodash/chunk"
 import store from "../../store"
 import atob from "atob"
-import { fetchWPGQLContentNodes } from "./fetch-nodes"
 import { createRemoteMediaItemNode } from "./create-remote-media-item-node"
+import formatLogMessage from "../../utils/format-log-message"
+import paginatedWpNodeFetch from "./paginated-wp-node-fetch"
 
 export default async function fetchReferencedMediaItemsAndCreateNodes({
   referencedMediaItemNodeIds,
@@ -10,13 +11,27 @@ export default async function fetchReferencedMediaItemsAndCreateNodes({
   const state = store.getState()
   const queryInfo = state.introspection.queries.mediaItems
 
-  const { helpers } = state.gatsbyApi
+  const { helpers, pluginOptions } = state.gatsbyApi
   const { createContentDigest, actions } = helpers
+  const { reporter } = helpers
+  const { url, verbose } = pluginOptions
 
   let allMediaItemNodes = []
 
   const nodesPerFetch = 10
   const chunkedIds = chunk(referencedMediaItemNodeIds, nodesPerFetch)
+
+  const { typeInfo, settings, selectionSet } = queryInfo
+
+  const activity = reporter.activityTimer(
+    formatLogMessage(typeInfo.nodesTypeName)
+  )
+
+  if (verbose) {
+    activity.start()
+  }
+
+  const allContentNodes = []
 
   for (const relayIds of chunkedIds) {
     // relay id's are base64 encoded from strings like attachment:89381
@@ -31,23 +46,26 @@ export default async function fetchReferencedMediaItemsAndCreateNodes({
     )
 
     const query = `
-    query MEDIA_ITEMS($in: [ID]) {
-      mediaItems(first: ${nodesPerFetch}, where:{ in: $in }) {
-        nodes {
-          ${queryInfo.selectionSet}
+      query MEDIA_ITEMS($in: [ID]) {
+        mediaItems(first: ${nodesPerFetch}, where:{ in: $in }) {
+          nodes {
+            ${selectionSet}
+          }
         }
       }
-    }
     `
 
-    const { allNodesOfContentType } = await fetchWPGQLContentNodes({
-      queryInfo: {
-        ...queryInfo,
-        listQueryString: query,
-      },
-      variables: {
-        in: ids,
-      },
+    const allNodesOfContentType = await paginatedWpNodeFetch({
+      first: nodesPerFetch,
+      contentTypePlural: typeInfo.pluralName,
+      nodeTypeName: typeInfo.nodesTypeName,
+      query,
+      url,
+      activity,
+      helpers,
+      settings,
+      allContentNodes,
+      in: ids,
     })
 
     allMediaItemNodes = [...allMediaItemNodes, ...allNodesOfContentType]
@@ -77,4 +95,8 @@ export default async function fetchReferencedMediaItemsAndCreateNodes({
       })
     })
   )
+
+  if (verbose) {
+    activity.end()
+  }
 }

@@ -3,7 +3,6 @@ import paginatedWpNodeFetch from "./paginated-wp-node-fetch"
 import formatLogMessage from "../../utils/format-log-message"
 import { CREATED_NODE_IDS } from "../constants"
 import store from "../../store"
-import { createRemoteMediaItemNode } from "./create-remote-media-item-node"
 
 export const fetchWPGQLContentNodes = async ({
   queryInfo,
@@ -17,7 +16,9 @@ export const fetchWPGQLContentNodes = async ({
 
   const { listQueryString, typeInfo, settings } = queryInfo
 
-  const activity = reporter.activityTimer(formatLogMessage(typeInfo.pluralName))
+  const activity = reporter.activityTimer(
+    formatLogMessage(typeInfo.nodesTypeName)
+  )
 
   if (verbose) {
     activity.start()
@@ -27,7 +28,6 @@ export const fetchWPGQLContentNodes = async ({
     first: 100,
     after: null,
     contentTypePlural: typeInfo.pluralName,
-    contentTypeSingular: typeInfo.singleName,
     nodeTypeName: typeInfo.nodesTypeName,
     query: listQueryString,
     url,

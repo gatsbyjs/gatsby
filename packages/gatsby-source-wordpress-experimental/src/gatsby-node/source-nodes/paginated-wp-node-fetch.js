@@ -3,7 +3,6 @@ import store from "../../store"
 
 const paginatedWpNodeFetch = async ({
   contentTypePlural,
-  contentTypeSingular,
   url,
   query,
   nodeTypeName,
@@ -39,12 +38,8 @@ const paginatedWpNodeFetch = async ({
   } = data
 
   if (nodes) {
-    // normalize nodes
     nodes.forEach(node => {
-      node.contentType = contentTypeSingular
-      node.contentTypePlural = contentTypePlural
       node.type = nodeTypeName
-      node.wpId = node.id
       allContentNodes.push(node)
     })
 
@@ -59,7 +54,6 @@ const paginatedWpNodeFetch = async ({
       after: endCursor,
       url,
       contentTypePlural,
-      contentTypeSingular,
       nodeTypeName,
       query,
       allContentNodes,
