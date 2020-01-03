@@ -231,20 +231,26 @@ export default async ({ actions, schema }, pluginOptions) => {
             // extensions: {
             //   link: {}
             // },
-            resolve: (mediaItemNode, args, context, info) =>
-              context.nodeModel.getNodeById({
+            resolve: (mediaItemNode, args, context, info) => {
+              if (!mediaItemNode || !mediaItemNode.remoteFile) {
+                return null
+              }
+
+              return context.nodeModel.getNodeById({
                 id: mediaItemNode.remoteFile.id,
                 type: `File`,
-              }),
-            // we could create these remote media item nodes when queried for
-            // instead of downloading all referenced nodes and linking by id
-            // but it messes up the cli output, and queries are run in order so we wouldn't have parallelized downloads which is slow
-            // anyway we could just put the download here  in the resolver
-            // if that ever changes:
-            // createRemoteMediaItemNode({
-            //   mediaItemNode,
-            //   helpers,
-            // })
+              })
+
+              // we could create these remote media item nodes when queried for
+              // instead of downloading all referenced nodes and linking by id
+              // but it messes up the cli output, and queries are run in order so we wouldn't have parallelized downloads which is slow
+              // anyway we could just put the download here  in the resolver
+              // if that ever changes:
+              // createRemoteMediaItemNode({
+              //   mediaItemNode,
+              //   helpers,
+              // })
+            },
           }
         }
 
