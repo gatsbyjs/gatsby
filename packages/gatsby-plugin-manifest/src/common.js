@@ -1,8 +1,7 @@
 import fs from "fs"
-import sysPath from "path"
+import sysPath, { basename, join } from "path"
 
-// default icons for generating icons
-exports.defaultIcons = [
+const _defaultIcons = [
   {
     src: `icons/icon-48x48.png`,
     sizes: `48x48`,
@@ -44,6 +43,23 @@ exports.defaultIcons = [
     type: `image/png`,
   },
 ]
+
+/**
+ * Returns the default icon configuration, optionally with custom directory name
+ *
+ * @param {String} dirName (optional) override the default directory name for icons
+ */
+exports.defaultIcons = dirName => {
+  if (!dirName) {
+    return _defaultIcons
+  }
+
+  return _defaultIcons.map(icon => {
+    const fileName = basename(icon.src)
+    icon.src = join(dirName, fileName)
+    return icon
+  })
+}
 
 /**
  * Check if the icon exists on the filesystem

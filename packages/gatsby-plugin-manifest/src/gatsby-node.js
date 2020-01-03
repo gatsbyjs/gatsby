@@ -116,7 +116,7 @@ const makeManifest = async (cache, reporter, pluginOptions, shouldLocalize) => {
 
   // If icons are not manually defined, use the default icon set.
   if (!manifest.icons) {
-    manifest.icons = [...defaultIcons]
+    manifest.icons = [...defaultIcons(pluginOptions.override_favicon_directory)]
   }
 
   // Specify extra options for each icon (if requested).

@@ -19,7 +19,9 @@ exports.onRenderBody = (
 
   const srcIconExists = !!pluginOptions.icon
 
-  const icons = pluginOptions.icons || defaultIcons
+  const icons =
+    pluginOptions.icons ||
+    defaultIcons(pluginOptions.override_favicon_directory)
   const legacy =
     typeof pluginOptions.legacy !== `undefined` ? pluginOptions.legacy : true
 

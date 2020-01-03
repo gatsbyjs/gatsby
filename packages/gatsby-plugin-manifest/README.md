@@ -136,6 +136,34 @@ In the manual mode, you are responsible for defining the entire web app manifest
 
 ### Feature configuration - **Optional**
 
+#### Override the favicon folder
+
+By default, favicons are generated inside a `icons` directory. As this can cause issues with certain hosting environments
+(see [#12233](https://github.com/gatsbyjs/gatsby/issues/12233)) you can manually change the directory name.
+
+```js
+// in gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `GatsbyJS`,
+        short_name: `GatsbyJS`,
+        start_url: `/`,
+        background_color: `#f7f0eb`,
+        theme_color: `#a2466c`,
+        display: `standalone`,
+        icon: `favicon.svg`,
+        override_favicon_directory: `favicons`,
+      },
+    },
+  ],
+}
+```
+
+The icons will then be generated in `./public/favicons` instead of `./public/icons`.
+
 #### Localization configuration
 
 Localization allows you to create unique manifests for each localized version of your site. As many languages as you want are supported. Localization requires unique paths for each language (e.g. if your default about page is at `/about`, the German (`de`) version would be `/de/about`)
