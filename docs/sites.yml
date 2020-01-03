@@ -1786,7 +1786,7 @@
   url: "https://mattferderer.com"
   source_url: "https://github.com/mattferderer/gatsbyblog"
   description: >
-    {titleofthesite} is a blog built with Gatsby that discusses web related tech
+    A blog built with Gatsby that discusses web related tech
     such as JavaScript, .NET, Blazor & security.
   categories:
     - Blog
