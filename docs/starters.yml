@@ -4789,6 +4789,29 @@
     - MDX for pages and content
     - Code syntax highlighting
     - SEO (OpenGraph and Twitter) out of the box with default settings that make sense (thanks to React Helmet)
+- url: https://5e0a570d6afb0ef0fb162f0f--wizardly-bassi-e4658f.netlify.com/
+  repo: https://github.com/adamistheanswer/gatsby-starter-baysik-blog
+  description: A basic and themeable starter for creating blogs in Gatsby.
+  tags:
+    - Blog
+    - Portfolio
+    - MDX
+    - Markdown
+    - SEO
+    - Styling:CSS-in-JS
+    - Linting
+  features:
+    - Specially designed to create a personal website
+    - Clean and Minimalistic UI
+    - Facebook Comments
+    - Mobile friendly, all elements and custom images are adapted to any screen
+    - Light/Dark mode
+    - Prettier code formatting
+    - RSS
+    - Links to your social networks
+    - MDX for pages and content
+    - Code syntax highlighting
+    - SEO (OpenGraph and Twitter) out of the box with default settings that make sense (thanks to React Helmet)
 - url: https://gatsby-starter-robin.netlify.com/
   repo: https://github.com/robinmetral/gatsby-starter-robin
   description: Gatsby Default Starter with state-of-the-art tooling
