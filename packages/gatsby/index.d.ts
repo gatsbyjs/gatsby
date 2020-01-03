@@ -1,7 +1,16 @@
 import * as React from "react"
 import { EventEmitter } from "events"
-import { WindowLocation } from "@reach/router"
+import { WindowLocation, NavigateFn } from "@reach/router"
 import { createContentDigest } from "gatsby-core-utils"
+import {
+  ComposeEnumTypeConfig,
+  ComposeInputObjectTypeConfig,
+  ComposeInterfaceTypeConfig,
+  ComposeObjectTypeConfig,
+  ComposeScalarTypeConfig,
+  ComposeUnionTypeConfig,
+} from "graphql-compose"
+import { GraphQLOutputType } from "graphql"
 
 export {
   default as Link,
@@ -648,8 +657,9 @@ export interface CreateDevServerArgs extends ParentSpanPluginArgs {
   app: any
 }
 
-export interface CreateNodeArgs extends ParentSpanPluginArgs {
-  node: Node
+export interface CreateNodeArgs<T extends object = {}>
+  extends ParentSpanPluginArgs {
+  node: Node & T
   traceId: string
   traceTags: {
     nodeId: string
@@ -687,9 +697,66 @@ export interface SetFieldsOnGraphQLNodeTypeArgs extends ParentSpanPluginArgs {
   traceId: "initial-setFieldsOnGraphQLNodeType"
 }
 
-export interface SourceNodesArgs extends ParentSpanPluginArgs {
+export interface GatsbyGraphQLObjectType<TSource = any, TContext = any> {
+  kind: "OBJECT"
+  config: ComposeObjectTypeConfig<TSource, TContext>
+}
+
+interface GatsbyGraphQLInputObjectType {
+  kind: "INPUT_OBJECT"
+  config: ComposeInputObjectTypeConfig
+}
+
+interface GatsbyGraphQLUnionType<TSource = any, TContext = any> {
+  kind: "UNION"
+  config: ComposeUnionTypeConfig<TSource, TContext>
+}
+
+interface GatsbyGraphQLInterfaceType<TSource = any, TContext = any> {
+  kind: "INTERFACE"
+  config: ComposeInterfaceTypeConfig<TSource, TContext>
+}
+
+interface GatsbyGraphQLEnumType {
+  kind: "ENUM"
+  config: ComposeEnumTypeConfig
+}
+
+interface GatsbyGraphQLScalarType {
+  kind: "SCALAR"
+  config: ComposeScalarTypeConfig
+}
+
+export type GatsbyGraphQLType<TSource = any, TContext = any> =
+  | GatsbyGraphQLObjectType
+  | GatsbyGraphQLInputObjectType
+  | GatsbyGraphQLUnionType<TSource, TContext>
+  | GatsbyGraphQLInterfaceType<TSource, TContext>
+  | GatsbyGraphQLEnumType
+  | GatsbyGraphQLScalarType
+
+export interface SourceNodesSchemaObject<TSource = any, TContext = any> {
+  buildObjectType(
+    config: ComposeObjectTypeConfig<TSource, TContext>
+  ): GatsbyGraphQLObjectType<TSource, TContext>
+  buildUnionType(
+    config: ComposeUnionTypeConfig<TSource, TContext>
+  ): GatsbyGraphQLUnionType<TSource, TContext>
+  buildInterfaceType(
+    config: ComposeInterfaceTypeConfig<TSource, TContext>
+  ): GatsbyGraphQLInterfaceType<TSource, TContext>
+  buildInputObjectType(
+    config: ComposeInputObjectTypeConfig
+  ): GatsbyGraphQLInputObjectType
+  buildEnumType(config: ComposeEnumTypeConfig): GatsbyGraphQLEnumType
+  buildScalarType(config: ComposeScalarTypeConfig): GatsbyGraphQLScalarType
+}
+
+export interface SourceNodesArgs<TSource = any, TContext = any>
+  extends ParentSpanPluginArgs {
   traceId: "initial-sourceNodes"
   waitForCascadingActions: boolean
+  schema: SourceNodesSchemaObject<TSource, TContext>
 }
 
 export interface CreateResolversArgs extends ParentSpanPluginArgs {
@@ -804,7 +871,12 @@ export interface Actions {
 
   /** @see https://www.gatsbyjs.org/docs/actions/#createPage */
   createPage<TContext = Record<string, unknown>>(
-    args: { path: string; matchPath?: string; component: string; context: TContext },
+    args: {
+      path: string
+      matchPath?: string
+      component: string
+      context: TContext
+    },
     plugin?: ActionPlugin,
     option?: ActionOptions
   ): void
@@ -913,7 +985,13 @@ export interface Actions {
 
   /** @see https://www.gatsbyjs.org/docs/actions/#createTypes */
   createTypes(
-    types: string | object | Array<string | object>,
+    types:
+      | string
+      | GraphQLOutputType
+      | GatsbyGraphQLType
+      | string[]
+      | GraphQLOutputType[]
+      | GatsbyGraphQLType[],
     plugin?: ActionPlugin,
     traceId?: string
   ): void
@@ -1119,12 +1197,13 @@ export interface ReplaceComponentRendererArgs extends BrowserPluginArgs {
     path: string
     "*": string
     uri: string
-    location: object
-    navigate: Function
+    location: Location
+    navigate: NavigateFn
     children: undefined
     pageResources: object
     data: object
-    pageContext: object
+    pageContext: { id: string; [key: string]: unknown }
+    pathContext: { id: string; [key: string]: unknown }
   }
   loader: object
 }
