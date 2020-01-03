@@ -9092,6 +9092,20 @@
     - Web Development
   built_by: Ramón Chancay
   built_by_url: "https://ramonchancay.me/"
+- title: webman.pro
+  main_url: https://webman.pro/
+  url: https://webman.pro/
+  description: >
+    webman.pro is an awesome portfolio and technical blog where
+    professional Front End engineer Dmytro Chumak shares his thoughts
+    and experience to inspire other developers.
+  featured: false
+  categories:
+    - Blog
+    - Web Development
+    - JavaScript
+  built_by: Dmytro Chumak
+  built_by_url: https://github.com/wwwebman
 - title: borderless
   url: https://junhobaik.github.io
   main_url: https://junhobaik.github.io
