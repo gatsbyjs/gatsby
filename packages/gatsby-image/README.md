@@ -279,7 +279,7 @@ Pass in the data returned from the `fixed` object in your query via the
 
 ```graphql
 {
-  imageSharp {
+  childImageSharp {
     # Other options include height (set both width and height to crop),
     # grayscale, duotone, rotate, etc.
     fixed(width: 400) {
