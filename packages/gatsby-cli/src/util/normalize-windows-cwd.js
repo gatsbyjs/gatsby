@@ -53,10 +53,7 @@ module.exports = function normalizeWindowsCwd() {
 
 function driveLetterToUpperCase(path) {
   const segments = path.split(`:\\`)
-  path =
-    segments.length > 1
-      ? segments.shift().toUpperCase() + `:\\` + segments.join(`:\\`)
-      : path
-
-  return path
+  return segments.length > 1
+    ? segments.shift().toUpperCase() + `:\\` + segments.join(`:\\`)
+    : path
 }
