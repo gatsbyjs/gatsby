@@ -4831,7 +4831,7 @@
     - ✔️ CI with GitHub Actions
     - ⚡ CD with Netlify
 - url: https://gatsby-resume-starter.netlify.com/
-  repo: https://github.com/barancezayirli/gatsby-resume-tailwind
+  repo: https://github.com/barancezayirli/gatsby-starter-resume-cms
   description: Resume starter styled using Tailwind with Netlify CMS as headless CMS.
   tags:
     - CMS:Headless
