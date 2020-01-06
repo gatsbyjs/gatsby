@@ -41,7 +41,7 @@ const setup = version => {
 }
 
 describe(`error handling`, () => {
-  it(`panics on Node < 10.0.0`, () => {
+  it(`panics on Node < 10.13.0`, () => {
     const { reporter } = setup(`v8.0.0`)
 
     expect(reporter.panic).toHaveBeenCalledTimes(1)
@@ -57,8 +57,8 @@ describe(`error handling`, () => {
 })
 
 describe(`normal behavior`, () => {
-  it(`does not panic on Node >= 10.0.0`, () => {
-    ;[`10.0.0`, `11.0.0`, `12.0.0`].forEach(version => {
+  it(`does not panic on Node >= 10.13.0`, () => {
+    ;[`10.13.0`, `11.0.0`, `12.0.0`].forEach(version => {
       const { reporter } = setup(version)
 
       expect(reporter.panic).not.toHaveBeenCalled()
