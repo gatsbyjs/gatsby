@@ -4830,3 +4830,21 @@
     - 📓 Visual testing with Storybook
     - ✔️ CI with GitHub Actions
     - ⚡ CD with Netlify
+- url: https://gatsby-resume-starter.netlify.com/
+  repo: https://github.com/barancezayirli/gatsby-starter-resume-cms
+  description: Resume starter styled using Tailwind with Netlify CMS as headless CMS.
+  tags:
+    - CMS:Headless
+    - SEO
+    - PWA
+    - Portfolio
+  features:
+    - One-page resume/CV
+    - PWA
+    - Multiple Netlify CMS widgets
+    - Netlify CMS as Headless CMS
+    - Tailwind for styling with theming
+    - Optimized build process (purge css)
+    - Basic SEO, site metadata
+    - Prettier
+    - Social media links
