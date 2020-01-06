@@ -9069,3 +9069,17 @@
     - Marketing
     - Design
   built_by: João Matos (Global Creative Studio - Education First)
+- title: Simplefolio
+  main_url: https://gatsby-simplefolio.netlify.com/
+  url: https://gatsby-simplefolio.netlify.com/
+  source_url: https://github.com/cobidev/gatsby-simplefolio
+  description: >
+    Simplefolio is a clean, beautiful and responsive portfolio template for Developers
+  categories:
+    - Portfolio
+    - Entrepreneurship
+    - Open Source
+    - Web Development
+  built_by: Jacobo Martinez
+  built_by_url: https://cobidev.com
+  featured: false
