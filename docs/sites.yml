@@ -9069,6 +9069,18 @@
     - Marketing
     - Design
   built_by: João Matos (Global Creative Studio - Education First)
+- title: PWA Shields
+  url: https://www.pwa-shields.com
+  main_url: https://www.pwa-shields.com
+  source_url: https://github.com/richardtaylordawson/pwa-shields
+  description: >
+    Personalize your app's README with custom, fun, PWA shields in SVG
+  categories:
+    - Documentation
+    - App
+    - API
+  built_by: Richard Taylor Dawson
+  built_by_url: https://richardtaylordawson.com
 - title: Zatsuzen
   url: https://zatsuzen.com
   main_url: https://zatsuzen.com
