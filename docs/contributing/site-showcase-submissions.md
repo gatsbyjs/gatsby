@@ -28,7 +28,7 @@ There are three major steps:
 
   # optional: short paragraph describing the content and/or purpose of the site that will appear in the modal detail view and permalink views for your site
   description: >
-    {titleofthesite} is a shiny new website built with Gatsby v2 that makes important contributions towards a faster web for everyone.
+    This blog is a shiny new website built with Gatsby v2 that makes important contributions towards a faster web for everyone.
 
   # You can list as many categories as you want here. Check list of Categories below in this doc!
   # If you'd like to create a new category, simply list it here.

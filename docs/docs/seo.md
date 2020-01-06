@@ -2,11 +2,11 @@
 title: SEO with Gatsby
 ---
 
-Gatsby helps your site place better in search engines. Some advantages come out of the box and some require configuration.
+Gatsby can help your site rank and perform better in search engines. Using Gatsby makes your site fast and efficient for search engine crawlers, like Googlebot, to crawl your site and index your pages. Some advantages, like speed, come out of the box and others require configuration.
 
 ## Server rendering
 
-Because Gatsby pages are server-rendered, all the page content is available to Google and other search engines or crawlers.
+Because Gatsby pages are server-side rendered, all the page content is available to Googlebot and other search engine crawlers.
 
 You can see this by viewing the source for this page with `curl` (in your terminal):
 
@@ -14,17 +14,17 @@ You can see this by viewing the source for this page with `curl` (in your termin
 curl https://www.gatsbyjs.org/docs/seo
 ```
 
-`Right-Click => View source` won't show you the actual HTML (but the pages are still server-rendered!) as this site is using service workers. [Read these notes](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline#notes) to learn more.
+`Right-Click => View source` won't show you the actual HTML (but the pages are still server-side rendered!) as this site is using service workers. [Read these notes](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline#notes) to learn more.
 
 ## Speed boost
 
 Gatsby's many built-in performance optimizations, such as rendering to static files, progressive image loading, and the [PRPL pattern](/docs/prpl-pattern/)—all help your site be lightning-fast by default.
 
-Starting in January 2018, Google [rewards faster sites with a bump in search rankings](https://searchengineland.com/google-speed-update-page-speed-will-become-ranking-factor-mobile-search-289904).
+In July 2018, [Google announced a new ranking factor for site speed](https://webmasters.googleblog.com/2018/01/using-page-speed-in-mobile-search.html), calling the algorithm update the "Speed Update". Google will possibly rank pages higher in the search results for faster loading times, however, the intent of the search query is still very relevant and a slower page can rank higher if the content is more relevant.
 
 ## Page metadata
 
-Adding metadata to pages, such as page title and description, helps search engines understand your content and when to show your pages in search results.
+Adding metadata to pages, such as page title, meta description, alt text and structured data using JSON-LD, helps search engines understand your content and when to show your pages in search results.
 
 A common way to add metadata to pages is to add [react-helmet](https://github.com/nfl/react-helmet) components (together with the [Gatsby React Helmet plugin](/packages/gatsby-plugin-react-helmet) for SSR support) to your page components. Here's a [guide on how to add an SEO component](https://www.gatsbyjs.org/docs/add-seo-component/) to your Gatsby app.
 
@@ -38,6 +38,7 @@ Some examples using react-helmet:
 ## Generate rich snippets in search engines using structured data
 
 Google uses structured data that it finds on the web to understand the content of the page, as well as to gather information about the web and the world in general.
+
 For example, here is a structured data snippet in the [JSON-LD format](https://developers.google.com/search/docs/guides/intro-structured-data) (JavaScript Object Notation for Linked Data) that might appear on the contact page of a company called Spooky Technologies, describing their contact information:
 
 ```js
@@ -56,7 +57,9 @@ For example, here is a structured data snippet in the [JSON-LD format](https://d
 </script>
 ```
 
-When using structured data, you'll need to test during development and the [Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool) from Google is one recommended method. After deployment, their [Rich result status reports](https://support.google.com/webmasters/answer/7552505?hl=en) may help to monitor the health of your pages and mitigate any templating or serving issues.
+When using structured data, you'll need to test during development and the [Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool) from Google is one recommended method.
+
+After deployment, their [Rich result status reports](https://support.google.com/webmasters/answer/7552505?hl=en) may help to monitor the health of your pages and mitigate any templating or serving issues.
 
 ## Additional resources
 

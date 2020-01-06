@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.30](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-graphql@2.1.29...gatsby-source-graphql@2.1.30) (2020-01-06)
+
+### Bug Fixes
+
+- **gatsby-source-graphql:** filter unused variables ([#20293](https://github.com/gatsbyjs/gatsby/issues/20293)) ([cb8d987](https://github.com/gatsbyjs/gatsby/commit/cb8d987)), closes [#20280](https://github.com/gatsbyjs/gatsby/issues/20280)
+
 ## [2.1.29](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-graphql@2.1.28...gatsby-source-graphql@2.1.29) (2019-12-19)
 
 ### Bug Fixes
