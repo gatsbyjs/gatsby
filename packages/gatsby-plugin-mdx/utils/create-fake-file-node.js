@@ -26,7 +26,7 @@ exports.createFileNode = async (
   let internal
   if (stats.isDirectory()) {
     internal = {
-      contentDigest : createContentDigest(obj),
+      contentDigest : createContentDigest({ stats: stats, absolutePath: slashedFile.absolutePath }),
       type: `Directory`,
       description: `Directory "${path.relative(process.cwd(), slashed)}"`,
     }
