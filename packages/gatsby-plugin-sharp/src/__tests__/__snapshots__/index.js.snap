@@ -12,12 +12,14 @@ Object {
 
 exports[`gatsby-plugin-sharp duotone fixed 1`] = `
 Object {
-  "aspectRatio": 1,
+  "aspectRatio": 2.0661764705882355,
   "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAAH6ji2bAAAACXBIWXMAAAPoAAAD6AG1e1JrAAABk0lEQVQ4y7VUy07DMBDsf9IDhcauaVM4IajUIuALOFRI/R24wB8AgkpInJKI9ME5zDi24rx5HjZKvOP17Hg2neh8nNjo8CGESGL7sbpwMvrlaepriF4J3dQLMlsXvzbVFCKHLJ3J8+5PRxqlF0OzleFLkSG7Xrp4faiyRaI/Lgs13QhNVB5uCUyUTDyUloidvkjezvyMEB8B4uZkqAHCiR44bYtCcecSirD5XQDmIGzVjOrEiJo4fhvY2jWTG3C6g/TLmZ+8VwEJekWy20+loUSzA5kDp15BKJmXhmD6Iqcjtep5eSArk0ZQPPpqPNAaWiBpbKt0pLgEU2xuIOewTh7rmFWFRH9/M78uaG8yNuox4oYbbrQEhaI4HKEh7mvfS2OE98WR0r6P26zj2ofW5rWowlzY2WduAQxZ14odmNZuMWA0h6wo5pplDxj+MrgnqDM3W32E/QYNxaxN2f7ztNx6qWUCOC3H+F/Y35EU2XCw3QkGhBrHX/WXLbwG4wewoAwMst84t/0jH4ZG36DFLv9m7E/1HjvIa/canAAAAABJRU5ErkJggg==",
-  "height": 100,
+  "height": 48,
   "originalName": undefined,
   "src": "/static/1234/a2779/test.png",
-  "srcSet": "/static/1234/a2779/test.png 1x",
+  "srcSet": "/static/1234/a2779/test.png 1x,
+/static/1234/e1d4a/test.png 1.5x,
+/static/1234/dbffc/test.png 2x",
   "tracedSVG": undefined,
   "width": 100,
 }
@@ -25,7 +27,7 @@ Object {
 
 exports[`gatsby-plugin-sharp duotone fluid 1`] = `
 Object {
-  "aspectRatio": 1,
+  "aspectRatio": 2.0661764705882355,
   "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAAH6ji2bAAAACXBIWXMAAAPoAAAD6AG1e1JrAAABk0lEQVQ4y7VUy07DMBDsf9IDhcauaVM4IajUIuALOFRI/R24wB8AgkpInJKI9ME5zDi24rx5HjZKvOP17Hg2neh8nNjo8CGESGL7sbpwMvrlaepriF4J3dQLMlsXvzbVFCKHLJ3J8+5PRxqlF0OzleFLkSG7Xrp4faiyRaI/Lgs13QhNVB5uCUyUTDyUloidvkjezvyMEB8B4uZkqAHCiR44bYtCcecSirD5XQDmIGzVjOrEiJo4fhvY2jWTG3C6g/TLmZ+8VwEJekWy20+loUSzA5kDp15BKJmXhmD6Iqcjtep5eSArk0ZQPPpqPNAaWiBpbKt0pLgEU2xuIOewTh7rmFWFRH9/M78uaG8yNuox4oYbbrQEhaI4HKEh7mvfS2OE98WR0r6P26zj2ofW5rWowlzY2WduAQxZ14odmNZuMWA0h6wo5pplDxj+MrgnqDM3W32E/QYNxaxN2f7ztNx6qWUCOC3H+F/Y35EU2XCw3QkGhBrHX/WXLbwG4wewoAwMst84t/0jH4ZG36DFLv9m7E/1HjvIa/canAAAAABJRU5ErkJggg==",
   "density": 72,
   "originalImg": "/static/1234/a2779/test.png",
@@ -44,7 +46,7 @@ Object {
 
 exports[`gatsby-plugin-sharp fluid includes responsive image properties, e.g. sizes, srcset, etc. 1`] = `
 Object {
-  "aspectRatio": 1,
+  "aspectRatio": 2.0661764705882355,
   "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsSAAALEgHS3X78AAABKklEQVQ4y8WUy07DMBBFrwMpr4aybjepUeqIFd/CAgmJsuIHgWXVL+Gx4C3xCdQJnpm0UDJNAQnVuouMM8dzY4+DcoA/C/8Fe9bv4ABMMpQOZc5yFPqfwEUQY499jHoY9/BsKQyTRTNMyzu8WAwTbBnI2DY438XbPr0qFsFCvlrkMTERYFgRL3HYUvh5OMdpQqkbBtPC9NDiINQPCZM6LGVvUzIpwNch4V5EGxHS/DeYtjfHZbcyXB8yGfaPimcafLEMHqmw2L5OsWkUUuY6Ee5V28WUP25TXjwPS3iWUFnfcFQPFna98rlmSGL4IOZucQvgT76Po53qeOTYTtp4qpFKe/qM29PhJsVVl3SXsluntLfS7rPvn10MP1Aau+lKBuA9I/kV/AyW6gNTIWTuA/r8lQAAAABJRU5ErkJggg==",
   "density": 72,
   "originalImg": "/static/1234/c616f/test.png",
@@ -62,11 +64,11 @@ Object {
 exports[`gatsby-plugin-sharp image quirks handles padding bytes correctly 1`] = `
 Object {
   "hUnits": "px",
-  "height": 1000,
-  "mime": "image/jpeg",
-  "type": "jpg",
+  "height": 136,
+  "mime": "image/png",
+  "type": "png",
   "wUnits": "px",
-  "width": 746,
+  "width": 281,
 }
 `;
 
@@ -84,12 +86,14 @@ Object {
 
 exports[`gatsby-plugin-sharp tracedSVG runs on demand 1`] = `
 Object {
-  "aspectRatio": 1,
+  "aspectRatio": 2.0661764705882355,
   "base64": undefined,
-  "height": 100,
+  "height": 48,
   "originalName": undefined,
   "src": "/static/1234/c616f/test.png",
-  "srcSet": "/static/1234/c616f/test.png 1x",
+  "srcSet": "/static/1234/c616f/test.png 1x,
+/static/1234/9c8ff/test.png 1.5x,
+/static/1234/40714/test.png 2x",
   "tracedSVG": "data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20width='100'%20height='100'%3e%3cpath%20d='M41%2024c-18%207-24%2029-11%2043%2015%2017%2044%208%2046-15%201-19-17-34-35-28'%20fill='red'%20fill-rule='evenodd'/%3e%3c/svg%3e",
   "width": 100,
 }
@@ -97,7 +101,7 @@ Object {
 
 exports[`gatsby-plugin-sharp tracedSVG runs on demand 2`] = `
 Object {
-  "aspectRatio": 1,
+  "aspectRatio": 2.0661764705882355,
   "base64": undefined,
   "density": 72,
   "originalImg": "/static/1234/c616f/test.png",
