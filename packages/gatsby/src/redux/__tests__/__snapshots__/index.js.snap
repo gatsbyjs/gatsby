@@ -21,6 +21,7 @@ Object {
     "done": Map {},
     "stale": Map {},
   },
+  "pageDataStats": Map {},
   "staticQueryComponents": Map {},
   "status": Object {
     "plugins": Object {},

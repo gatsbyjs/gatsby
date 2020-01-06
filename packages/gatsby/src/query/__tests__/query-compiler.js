@@ -676,41 +676,7 @@ describe(`actual compiling`, () => {
         errors.push(e)
       },
     })
-    expect(errors).toMatchInlineSnapshot(
-      `
-      Array [
-        Object {
-          "context": Object {
-            "afterCodeFrame": "  1 | query anotherQueryAndMockFileQuery {
-        2 |   bar {
-        3 |     #...
-        4 |   }
-        5 |   foo {
-        6 |     #...
-        7 |   }
-        8 | }",
-            "beforeCodeFrame": "   1 | query mockFileQuery {
-         2 |   bar {
-         3 |     #...
-         4 |   }
-         5 | }
-         6 |` +
-        ` ` +
-        `
-         7 | query AnotherQuery {
-         8 |   foo {
-         9 |     #...
-        10 |   }
-        11 | }",
-            "name": "AnotherQuery",
-            "otherName": "mockFileQuery",
-          },
-          "filePath": "mockFile",
-          "id": "85910",
-        },
-      ]
-    `
-    )
+    expect(errors).toMatchSnapshot()
     expect(result).toMatchSnapshot()
   })
 
@@ -786,16 +752,12 @@ describe(`actual compiling`, () => {
       Array [
         Object {
           "context": Object {
-            "sourceMessage": "Cannot query field \\"id\\" on type \\"PostsJsonConnection\\".
-
-      GraphQL request:3:16
-      2 |              allPostsJson {
-      3 |                id
-        |                ^
-      4 |             }",
+            "field": "id",
+            "sourceMessage": "Cannot query field \\"id\\" on type \\"PostsJsonConnection\\".",
+            "type": "PostsJsonConnection",
           },
           "filePath": "mockFile",
-          "id": "85901",
+          "id": "85923",
           "location": Object {
             "end": Object {
               "column": 16,

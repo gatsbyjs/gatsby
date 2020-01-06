@@ -436,19 +436,19 @@
   categories:
     - Education
     - Entertainment
-# - title: William Owen UK Portfolio / Blog
-#   main_url: "http://william-owen.co.uk/"
-#   url: "http://william-owen.co.uk/"
-#   featured: false
-#   description: >-
-#     Over 20 years experience delivering customer-facing websites, internet-based
-#     solutions and creative visual design for a wide range of companies and
-#     organisations.
-#   categories:
-#     - Portfolio
-#     - Blog
-#   built_by: William Owen
-#   built_by_url: "https://twitter.com/twilowen"
+- title: William Owen UK Portfolio / Blog
+  main_url: "http://william-owen.co.uk/"
+  url: "http://william-owen.co.uk/"
+  featured: false
+  description: >-
+    Over 20 years experience delivering customer-facing websites, internet-based
+    solutions and creative visual design for a wide range of companies and
+    organisations.
+  categories:
+    - Portfolio
+    - Blog
+  built_by: William Owen
+  built_by_url: "https://twitter.com/twilowen"
 - title: A4 纸网
   main_url: "http://www.a4z.cn/"
   url: "http://www.a4z.cn/price"
@@ -1096,14 +1096,6 @@
   categories:
     - Portfolio
     - Web Development
-# - title: Philipp Czernitzki - Blog/Website
-#   main_url: "http://philippczernitzki.me/"
-#   url: "http://philippczernitzki.me/"
-#   featured: false
-#   categories:
-#     - Portfolio
-#     - Web Development
-#     - Blog
 - title: WebGazer
   main_url: "https://www.webgazer.io/"
   url: "https://www.webgazer.io/"
@@ -1794,7 +1786,7 @@
   url: "https://mattferderer.com"
   source_url: "https://github.com/mattferderer/gatsbyblog"
   description: >
-    {titleofthesite} is a blog built with Gatsby that discusses web related tech
+    A blog built with Gatsby that discusses web related tech
     such as JavaScript, .NET, Blazor & security.
   categories:
     - Blog
@@ -2203,8 +2195,8 @@
   built_by_url: "https://www.michaeluloth.com"
   featured: false
 - title: Pomegranate Opera
-  main_url: "https://www.pomegranateopera.com"
-  url: "https://www.pomegranateopera.com"
+  main_url: "https://pomegranateopera.netlify.com"
+  url: "https://pomegranateopera.netlify.com"
   description: Pomegranate Opera is a lesbian opera written by Amanda Hale & Kye Marshall. Site designed by Stephen Bell.
   categories:
     - Gallery
@@ -3025,8 +3017,8 @@
   built_by_url: https://www.michaeluloth.com
   featured: false
 - title: Peter Barrett
-  url: https://www.peterbarrett.ca
-  main_url: https://www.peterbarrett.ca
+  url: "https://peterbarrett.netlify.com"
+  main_url: "https://peterbarrett.netlify.com"
   description: >
     Peter Barrett is a Canadian baritone from Newfoundland and Labrador who performs opera and concert repertoire in Canada, the U.S. and around the world. Site designed by Stephen Bell.
   categories:
@@ -3549,8 +3541,8 @@
   built_by_url: "https://www.michaeluloth.com"
   featured: false
 - title: The AZOOR Society
-  main_url: "https://www.theazoorsociety.org"
-  url: "https://www.theazoorsociety.org"
+  main_url: "https://theazoorsociety.netlify.com"
+  url: "https://theazoorsociety.netlify.com"
   description: The AZOOR Society is a UK-based charity committed to promoting awareness of Acute Zonal Occult Outer Retinopathy and assisting further research. Site designed by Stephen Bell.
   categories:
     - Community
@@ -4736,7 +4728,6 @@
 - title: Pattyrn
   main_url: https://pattyrn.com
   url: https://pattyrn.com
-  # optional: short paragraph describing the content and/or purpose of the site that will appear in the modal detail view and permalink views for your site
   description: >
     Pattyrn uses advanced machine learning AI to analyze the platform’s your teams use, making it easy to solve performance problems, reduce bottlenecks, and monitor culture health to optimize your ROI and help boost performance without causing burn out.
   categories:
@@ -7140,7 +7131,7 @@
   featured: false
 - title: Recetas El Universo
   description: >-
-    Recipes and videos with the best of Ecuadorian cuisine.
+    Recipes and videos with the best of Ecuadorian cuisine. 
     Collectable recipes from Diario El Universo.
   main_url: "https://recetas-eu.netlify.com/"
   url: "https://recetas-eu.netlify.com/"
@@ -8802,7 +8793,6 @@
 - title: Jarod Peachey
   main_url: https://jarodpeachey.netlify.com
   url: https://jarodpeachey.netlify.com
-  # optional: for open-source sites, this URL points to the repo that powers the site
   source_url: https://github.com/jarodpeachey/portfolio
   description: >
     Jarod Peachey is a front-end developer focused on building modern and fast websites for everyone.
@@ -8817,7 +8807,6 @@
 - title: Thomas Maximini
   main_url: https://www.thomasmaximini.com/
   url: https://www.thomasmaximini.com/
-  # optional: for open-source sites, this URL points to the repo that powers the site
   source_url: https://github.com/tmaximini/maxi.io
   description: >
     Thomas Maximini is a full stack web developer from Germany
@@ -8833,7 +8822,6 @@
 - title: Aretha Iskandar
   main_url: https://arethaiskandar.com/
   url: https://arethaiskandar.com/
-  # optional: for open-source sites, this URL points to the repo that powers the site
   source_url: https://github.com/tmaximini/arethaiskandar.com
   description: >
     Aretha Iskandar is a Jazz and Soul Singer / Songwriter from Paris
@@ -8964,3 +8952,204 @@
   built_by: rumaan
   built_by_url: https://github.com/rumaan/
   featured: false
+- title: DigiGov
+  main_url: https://digigov.grnet.gr/
+  url: https://digigov.grnet.gr/
+  description: >
+    DigiGov is an initiative for the Digital Transformation of the Greek Public Sector
+  categories:
+    - Government
+  built_by: GRNET
+  built_by_url: https://grnet.gr/
+  featured: false
+- title: Zeek Interactive
+  main_url: https://zeek.com
+  url: https://zeek.com
+  description: >
+    Business site for Zeek Interactive. Using WordPress as a data store via the WPGraphQL plugin.
+  categories:
+    - Blog
+    - Web Development
+    - Mobile Development
+    - WordPress
+    - Agency
+    - Business
+  built_by: Zeek Interactive
+  built_by_url: https://zeek.com
+  featured: false
+- title: Bare Advertising & Communications
+  url: https://bare.ca/
+  main_url: https://bare.ca/
+  description: >
+    Bare is a full-service branding and production agency in Vancouver BC with deep experience in digital/traditional communications and strategy. We specialize in building headless WordPress sites with Gatsby.
+  categories:
+    - WordPress
+    - Agency
+    - Business
+  built_by: Bare Advertising & Communications
+  built_by_url: https://www.bare.ca/
+  featured: false
+- title: The Decking Superstore
+  url: https://www.thedeckingsuperstore.com/
+  main_url: https://www.thedeckingsuperstore.com/
+  description: >
+    One of Northern California's largest outdoor decking and siding providers.
+  categories:
+    - WordPress
+    - Business
+  built_by: Bare Advertising & Communications
+  built_by_url: https://www.bare.ca/
+  featured: false
+- title: Precision Cedar Products
+  url: https://www.precisioncedar.com/
+  main_url: https://www.precisioncedar.com/
+  description: >
+    Western Red Cedar Distributor in Vancouver Canada.
+  categories:
+    - WordPress
+    - Business
+  built_by: Bare Advertising & Communications
+  built_by_url: https://www.bare.ca/
+  featured: false
+- title: Circle Restoration
+  url: https://www.circlerestoration.com/
+  main_url: https://www.circlerestoration.com/
+  description: >
+    Restoration Services Provider in Vancouver Canada.
+  categories:
+    - WordPress
+    - Business
+  built_by: Bare Advertising & Communications
+  built_by_url: https://www.bare.ca/
+  featured: false
+- title: ALS Rally
+  url: https://www.alsrally.com/
+  main_url: https://www.alsrally.com/
+  description: >
+    Non profit fundraiser for ALS Research.
+  categories:
+    - WordPress
+    - Nonprofit
+    - Event
+  built_by: Bare Advertising & Communications
+  built_by_url: https://www.bare.ca/
+  featured: false
+- title: Vancouver Welsh Men's Choir
+  url: https://vancouverchoir.ca/
+  main_url: https://vancouverchoir.ca/
+  description: >
+    Vancouver Welsh Men's Choir website for upcoming shows, ticket purchases and online merchandise.
+  categories:
+    - WordPress
+    - Entertainment
+    - Event
+    - eCommerce
+  built_by: Bare Advertising & Communications
+  built_by_url: https://www.bare.ca/
+  featured: false
+- title: Paul Scanlon - Blog
+  main_url: https://paulie.dev/
+  url: https://paulie.dev/
+  source_url: https://github.com/PaulieScanlon/paulie-dev-2019
+  description: >
+    I'm a React UI developer / UX Engineer. React, GatsbyJs, JavaScript, TypeScript/Flow, StyledComponents, Storybook, TDD (Jest/Enzyme) and a tiny bit of Node.js.
+  categories:
+    - Blog
+    - Web Development
+  built_by: Paul Scanlon
+  built_by_url: http://www.pauliescanlon.io
+  featured: false
+- title: EF Design
+  main_url: https://ef.design
+  url: https://ef.design
+  description: >
+    Home of everything creative, digital and brand at EF.
+  featured: false
+  categories:
+    - Marketing
+    - Design
+  built_by: João Matos (Global Creative Studio - Education First)
+- title: PWA Shields
+  url: https://www.pwa-shields.com
+  main_url: https://www.pwa-shields.com
+  source_url: https://github.com/richardtaylordawson/pwa-shields
+  description: >
+    Personalize your app's README with custom, fun, PWA shields in SVG
+  categories:
+    - Documentation
+    - App
+    - API
+  built_by: Richard Taylor Dawson
+  built_by_url: https://richardtaylordawson.com
+- title: Zatsuzen
+  url: https://zatsuzen.com
+  main_url: https://zatsuzen.com
+  description: >
+    Web developer's portfolio
+  categories:
+    - Portfolio
+  built_by: Akane
+  built_by_url: https://twitter.com/akanewz
+  featured: false
+- title: Reeemoter
+  description: >-
+    Join thousands of developers from everywhere and access to job 
+    offers from hundreds of companies worldwide right 
+    at your inbox for free.
+  main_url: "https://reeemoter.com/"
+  url: "https://reeemoter.com/"
+  featured: false
+  categories:
+    - Technology
+    - Web Development
+  built_by: Ramón Chancay
+  built_by_url: "https://ramonchancay.me/"
+- title: webman.pro
+  main_url: https://webman.pro/
+  url: https://webman.pro/
+  description: >
+    webman.pro is an awesome portfolio and technical blog where
+    professional Front End engineer Dmytro Chumak shares his thoughts
+    and experience to inspire other developers.
+  featured: false
+  categories:
+    - Blog
+    - Web Development
+    - JavaScript
+  built_by: Dmytro Chumak
+  built_by_url: https://github.com/wwwebman
+- title: borderless
+  url: https://junhobaik.github.io
+  main_url: https://junhobaik.github.io
+  source_url: https://github.com/junhobaik/junhobaik.github.io/tree/develop
+  description: >
+    Junho Baik's Development Blog
+  categories:
+    - Blog
+    - Web Development
+  built_by: Junho Baik
+  built_by_url: https://github.com/junhobaik
+  featured: false
+- title: Thomas Wang's Blog
+  main_url: "https://www.thomaswang.io"
+  url: "https://www.thomaswang.io"
+  description: >-
+    Technical blog by Thomas Wang
+  built_by: Thomas Wang
+  built_by_url: https://github.com/thomaswang
+  featured: false
+  categories:
+    - Blog
+    - Web Development
+- title: Engleezi
+  main_url: "https://www.myengleezi.com"
+  url: "https://myengleezi.com/teachers/"
+  description: >-
+    Affordable, accessible and fun, Engleezi is an English tutoring service that aims to make your child a better and more fluent English speaker. Our unique online approach gets your children learning English one-on-one from a native English teacher from the comfort of your home.
+  built_by: Suleiman Mayow
+  built_by_url: https://github.com/sullom101
+  featured: false
+  categories:
+    - Education
+    - Learning
+    - Technology

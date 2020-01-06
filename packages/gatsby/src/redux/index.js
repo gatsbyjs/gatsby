@@ -62,6 +62,7 @@ const saveState = () => {
     `jobsV2`,
     `staticQueryComponents`,
     `webpackCompilationHash`,
+    `pageDataStats`,
   ])
 
   return writeToCache(pickedState)

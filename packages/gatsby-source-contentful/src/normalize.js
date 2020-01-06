@@ -1,7 +1,6 @@
 const _ = require(`lodash`)
 const crypto = require(`crypto`)
 const stringify = require(`json-stringify-safe`)
-const deepMap = require(`deep-map`)
 
 const digest = str =>
   crypto
@@ -54,17 +53,25 @@ const fixId = id => {
 }
 exports.fixId = fixId
 
-exports.fixIds = object => {
-  const out = deepMap(object, (v, k) => (k === `id` ? fixId(v) : v))
+const fixIds = object =>
+  _.mapValues(object, (val, key) => {
+    if (key === `sys`) {
+      val = {
+        ...val,
+        id: fixId(val.id),
+        contentful_id: val.id,
+      }
+    }
 
-  return {
-    ...out,
-    sys: {
-      ...out.sys,
-      contentful_id: object.sys.id,
-    },
-  }
-}
+    if (_.isArray(val)) {
+      return _.toArray(fixIds(val))
+    }
+    if (_.isPlainObject(val)) {
+      return fixIds(val)
+    }
+    return val
+  })
+exports.fixIds = fixIds
 
 const makeId = ({ spaceId, id, currentLocale, defaultLocale }) =>
   currentLocale === defaultLocale
