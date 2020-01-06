@@ -9,6 +9,7 @@ const defaultOptions = {
   downloadLocal: false,
   localeFilter: () => true,
   forceFullSync: false,
+  useNameForId: true,
 }
 
 const createPluginConfig = pluginOptions => {
@@ -40,6 +41,7 @@ const optionsSchema = Joi.object().keys({
       password: Joi.string(),
     }),
   }),
+  useNameForId: Joi.boolean(),
   // default plugins passed by gatsby
   plugins: Joi.array(),
 })

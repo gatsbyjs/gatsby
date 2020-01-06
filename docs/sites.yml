@@ -9069,6 +9069,18 @@
     - Marketing
     - Design
   built_by: João Matos (Global Creative Studio - Education First)
+- title: PWA Shields
+  url: https://www.pwa-shields.com
+  main_url: https://www.pwa-shields.com
+  source_url: https://github.com/richardtaylordawson/pwa-shields
+  description: >
+    Personalize your app's README with custom, fun, PWA shields in SVG
+  categories:
+    - Documentation
+    - App
+    - API
+  built_by: Richard Taylor Dawson
+  built_by_url: https://richardtaylordawson.com
 - title: Zatsuzen
   url: https://zatsuzen.com
   main_url: https://zatsuzen.com
@@ -9118,6 +9130,29 @@
   built_by: Junho Baik
   built_by_url: https://github.com/junhobaik
   featured: false
+- title: Thomas Wang's Blog
+  main_url: "https://www.thomaswang.io"
+  url: "https://www.thomaswang.io"
+  description: >-
+    Technical blog by Thomas Wang
+  built_by: Thomas Wang
+  built_by_url: https://github.com/thomaswang
+  featured: false
+  categories:
+    - Blog
+    - Web Development
+- title: Engleezi
+  main_url: "https://www.myengleezi.com"
+  url: "https://myengleezi.com/teachers/"
+  description: >-
+    Affordable, accessible and fun, Engleezi is an English tutoring service that aims to make your child a better and more fluent English speaker. Our unique online approach gets your children learning English one-on-one from a native English teacher from the comfort of your home.
+  built_by: Suleiman Mayow
+  built_by_url: https://github.com/sullom101
+  featured: false
+  categories:
+    - Education
+    - Learning
+    - Technology
 - title: Simplefolio
   main_url: https://gatsby-simplefolio.netlify.com/
   url: https://gatsby-simplefolio.netlify.com/
