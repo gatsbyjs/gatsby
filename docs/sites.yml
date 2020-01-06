@@ -9141,3 +9141,15 @@
   categories:
     - Blog
     - Web Development
+- title: Engleezi
+  main_url: "https://www.myengleezi.com"
+  url: "https://myengleezi.com/teachers/"
+  description: >-
+    Affordable, accessible and fun, Engleezi is an English tutoring service that aims to make your child a better and more fluent English speaker. Our unique online approach gets your children learning English one-on-one from a native English teacher from the comfort of your home.
+  built_by: Suleiman Mayow
+  built_by_url: https://github.com/sullom101
+  featured: false
+  categories:
+    - Education
+    - Learning
+    - Technology
