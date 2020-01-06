@@ -1,5 +1,6 @@
 const _ = require(`lodash`)
 const Promise = require(`bluebird`)
+const fetch = require(`node-fetch`)
 const path = require(`path`)
 const fs = require(`fs-extra`)
 const slash = require(`slash`)
@@ -7,7 +8,7 @@ const slugify = require(`slugify`)
 const url = require(`url`)
 const getpkgjson = require(`get-package-json-from-github`)
 const parseGHUrl = require(`parse-github-url`)
-const { GraphQLClient } = require(`graphql-request`)
+const { GraphQLClient } = require(`@jamo/graphql-request`)
 const moment = require(`moment`)
 const startersRedirects = require(`./starter-redirects.json`)
 const {
@@ -383,6 +384,53 @@ exports.createPages = ({ graphql, actions, reporter }) => {
     toPath: `/docs/awesome-gatsby-resources/`,
     isPermanent: true,
   })
+
+  createRedirect({
+    fromPath: `/docs/sourcing-from-kentico-cloud/`,
+    toPath: `/docs/sourcing-from-kentico-kontent/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/building-apps-with-gatsby/`,
+    toPath: `/docs/adding-app-and-website-functionality/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/adding-website-functionality/`,
+    toPath: `/docs/adding-app-and-website-functionality/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/using-fragments/`,
+    toPath: `/docs/using-graphql-fragments/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/client-data-fetching/`,
+    toPath: `/docs/data-fetching/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/centralizing-your-sites-navigation/`,
+    toPath: `/docs/creating-dynamic-navigation/`,
+    isPermanent: true,
+  })
+
+  /* This redirects from a now removed stub that 
+  showed up in the first page of Google results. 
+  Can be removed if SEO is no longer impacted. */
+
+  createRedirect({
+    fromPath: `/docs/rendering-sidebar-navigation-dynamically/`,
+    toPath: `/docs/creating-dynamic-navigation/`,
+    isPermanent: true,
+  })
+
   Object.entries(startersRedirects).forEach(([fromSlug, toSlug]) => {
     createRedirect({
       fromPath: `/starters${fromSlug}`,
@@ -1087,7 +1135,11 @@ exports.onPostBuild = () => {
 }
 
 // XXX this should probably be a plugin or something.
-exports.sourceNodes = ({ actions: { createTypes }, schema }) => {
+exports.sourceNodes = async ({
+  actions: { createTypes, createNode },
+  createContentDigest,
+  schema,
+}) => {
   /*
    * NOTE: This _only_ defines the schema we currently query for. If anything in
    * the query at `src/pages/contributing/events.js` changes, we need to make
@@ -1140,6 +1192,23 @@ exports.sourceNodes = ({ actions: { createTypes }, schema }) => {
   `
 
   createTypes(typeDefs)
+
+  // get data from GitHub API at build time
+  const result = await fetch(`https://api.github.com/repos/gatsbyjs/gatsby`)
+  const resultData = await result.json()
+  // create node for build time data example in the docs
+  createNode({
+    nameWithOwner: resultData.full_name,
+    url: resultData.html_url,
+    // required fields
+    id: `example-build-time-data`,
+    parent: null,
+    children: [],
+    internal: {
+      type: `Example`,
+      contentDigest: createContentDigest(resultData),
+    },
+  })
 }
 
 exports.onCreateWebpackConfig = ({ actions, plugins }) => {

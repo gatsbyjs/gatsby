@@ -23,7 +23,7 @@ const useCoverage = !!process.env.GENERATE_JEST_REPORT
 module.exports = {
   notify: true,
   verbose: true,
-  roots: [...pkgs, `<rootDir>/peril`],
+  roots: pkgs,
   modulePathIgnorePatterns: ignoreDirs,
   coveragePathIgnorePatterns: ignoreDirs,
   testPathIgnorePatterns: [

@@ -7,8 +7,8 @@ GATSBY_PATH="${CIRCLE_WORKING_DIRECTORY:-../../}"
 command -v sudo && sudo npm install -g gatsby-dev-cli || npm install -g gatsby-dev-cli &&
 
 # setting up child integration test link to gatsby packages
-cd $SRC_PATH &&
-gatsby-dev --set-path-to-repo $GATSBY_PATH &&
+cd "$SRC_PATH" &&
+gatsby-dev --set-path-to-repo "$GATSBY_PATH" &&
 gatsby-dev --scan-once --quiet && # copies _all_ files in gatsby/packages
 chmod +x ./node_modules/.bin/gatsby && # this is sometimes necessary to ensure executable
 sh -c "$CUSTOM_COMMAND" &&

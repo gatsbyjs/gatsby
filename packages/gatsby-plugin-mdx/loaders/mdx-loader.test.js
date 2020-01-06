@@ -57,7 +57,7 @@ const fixtures = c
 describe(`mdx-loader`, () => {
   expect.addSnapshotSerializer({
     print(val /*, serialize */) {
-      return prettier.format(val, { parser: `babylon` })
+      return prettier.format(val, { parser: `babel` })
     },
     test() {
       return true

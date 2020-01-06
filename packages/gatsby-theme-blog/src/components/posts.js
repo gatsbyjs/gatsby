@@ -23,9 +23,9 @@ const Posts = ({ location, posts, siteTitle, socialLinks }) => (
               >
                 <Styled.a
                   as={Link}
-                  css={{
+                  css={css({
                     textDecoration: `none`,
-                  }}
+                  })}
                   to={node.slug}
                 >
                   {title}

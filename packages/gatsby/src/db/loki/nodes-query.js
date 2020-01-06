@@ -21,9 +21,9 @@ const { getValueAt } = require(`../../utils/get-value-at`)
 const { runSiftOnNodes } = require(`../../redux/run-sift`)
 
 // Takes a raw graphql filter and converts it into a mongo-like args
-// object that can be understood by loki. E.g `eq` becomes
+// object that can be understood by loki. E.g. `eq` becomes
 // `$eq`. gqlFilter should be the raw graphql filter returned from
-// graphql-js. e.g gqlFilter:
+// graphql-js. e.g. gqlFilter:
 //
 // {
 //   internal: {
@@ -73,7 +73,7 @@ function toMongoArgs(gqlFilter, lastFieldType) {
       if (k === `regex`) {
         const re = prepareRegex(v)
         // To ensure that false is returned if a field doesn't
-        // exist. E.g `{nested.field: {$regex: /.*/}}`
+        // exist. E.g. `{nested.field: {$regex: /.*/}}`
         mongoArgs[`$where`] = obj => !_.isUndefined(obj) && re.test(obj)
       } else if (k === `glob`) {
         const Minimatch = require(`minimatch`).Minimatch
@@ -202,7 +202,7 @@ function doesSortFieldsHaveArray(type, sortArgs) {
  *
  * {Object} gqlType: A GraphQL type
  *
- * {Object} queryArgs: The raw graphql query as a js object. E.g `{
+ * {Object} queryArgs: The raw graphql query as a js object. E.g. `{
  * filter: { fields { slug: { eq: "/somepath" } } } }`
  *
  * {Object} context: The context from the QueryJob

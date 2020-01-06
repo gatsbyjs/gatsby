@@ -25,7 +25,7 @@ The main goals for the new site were simple:
 
 ## Easy onboarding with Gatsby
 
-Alison Joseph, Front-End Developer at IBM, took over this project from a coworker who had already done great work choosing the framework for the website rebuild. Taking on a new project mid-stream can be daunting but Alison found the Gatsby documentation was top notch and better than any other open source docs she’s seen.
+Alison Joseph, Frontend Developer at IBM, took over this project from a coworker who had already done great work choosing the framework for the website rebuild. Taking on a new project mid-stream can be daunting but Alison found the Gatsby documentation was top notch and better than any other open source docs she’s seen.
 
 Alison was the only developer able to focus full-time on the Gatsby project and it took about six months before the new site launched in October 2018. She’s quick to point out if they had gone the custom, in-house route, the project would have easily taken twice as long and required more than one developer.
 
