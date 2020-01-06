@@ -3,8 +3,6 @@ name: Documentation 📝
 about: Suggest better docs coverage for a particular tool or process.
 ---
 
-<!-- Gatsby OSS team is on holiday, expect a delayed response -->
-
 <!--
   To make it easier for us to help you, please include as much useful information as possible.
 
