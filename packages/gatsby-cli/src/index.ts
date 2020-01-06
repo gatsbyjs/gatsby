@@ -7,12 +7,16 @@ import createCli from "./create-cli"
 import report from "./reporter"
 import pkg from "../package.json"
 import updateNotifier from "update-notifier"
+import normalizeWindowsCwd from "./util/normalize-windows-cwd"
 
 const useJsonLogger = process.argv.slice(2).some(arg => arg.includes(`json`))
 
 if (useJsonLogger) {
   process.env.GATSBY_LOGGER = `json`
 }
+
+// Ensure stable runs on Windows when started from different shells (i.e. c:\dir vs C:\dir)
+normalizeWindowsCwd()
 
 // Check if update is available
 updateNotifier({ pkg }).notify({ isGlobal: true })
