@@ -4862,6 +4862,7 @@
     - PWA
     - TypeScript
     - Absolute import
+    - Usefull ready made custom hooks
     - Ready made form component for Netlify form
     - Global CSS component and Reset CSS component
     - Advanced SEO components(ex. default twitter ogp image, sitemaps, robot.txt)
