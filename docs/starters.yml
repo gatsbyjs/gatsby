@@ -4830,7 +4830,7 @@
     - 📓 Visual testing with Storybook
     - ✔️ CI with GitHub Actions
     - ⚡ CD with Netlify
-    - url: https://gatsby-simplefolio.netlify.com/
+- url: https://gatsby-simplefolio.netlify.com/
   repo: https://github.com/cobidev/gatsby-simplefolio
   description: A clean, beautiful and responsive portfolio template for Developers ⚡️
   tags:
