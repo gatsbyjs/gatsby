@@ -4848,3 +4848,22 @@
     - Basic SEO, site metadata
     - Prettier
     - Social media links
+- url: https://gatsby-starter-hpp.netlify.com/
+  repo: https://github.com/hppRC/gatsby-starter-hpp
+  description: All in one Gatsby skeleton based TypeScript, emotion, and unstated-next.
+  tags:
+    - MDX
+    - SEO
+    - PWA
+    - Linting
+    - Styling:CSS-in-JS
+    - Language:TypeScript
+  features:
+    - PWA
+    - TypeScript
+    - Absolute import
+    - Ready made form component for Netlify form
+    - Global CSS component and Reset CSS component
+    - Advanced SEO components(ex. default twitter ogp image, sitemaps, robot.txt)
+    - Prettier, ESLint
+    - unstated-next(usefull easy state library)
