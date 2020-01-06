@@ -1786,7 +1786,7 @@
   url: "https://mattferderer.com"
   source_url: "https://github.com/mattferderer/gatsbyblog"
   description: >
-    {titleofthesite} is a blog built with Gatsby that discusses web related tech
+    A blog built with Gatsby that discusses web related tech
     such as JavaScript, .NET, Blazor & security.
   categories:
     - Blog
@@ -7131,7 +7131,7 @@
   featured: false
 - title: Recetas El Universo
   description: >-
-    Recipes and videos with the best of Ecuadorian cuisine.
+    Recipes and videos with the best of Ecuadorian cuisine. 
     Collectable recipes from Diario El Universo.
   main_url: "https://recetas-eu.netlify.com/"
   url: "https://recetas-eu.netlify.com/"
@@ -9059,3 +9059,97 @@
   built_by: Paul Scanlon
   built_by_url: http://www.pauliescanlon.io
   featured: false
+- title: EF Design
+  main_url: https://ef.design
+  url: https://ef.design
+  description: >
+    Home of everything creative, digital and brand at EF.
+  featured: false
+  categories:
+    - Marketing
+    - Design
+  built_by: João Matos (Global Creative Studio - Education First)
+- title: PWA Shields
+  url: https://www.pwa-shields.com
+  main_url: https://www.pwa-shields.com
+  source_url: https://github.com/richardtaylordawson/pwa-shields
+  description: >
+    Personalize your app's README with custom, fun, PWA shields in SVG
+  categories:
+    - Documentation
+    - App
+    - API
+  built_by: Richard Taylor Dawson
+  built_by_url: https://richardtaylordawson.com
+- title: Zatsuzen
+  url: https://zatsuzen.com
+  main_url: https://zatsuzen.com
+  description: >
+    Web developer's portfolio
+  categories:
+    - Portfolio
+  built_by: Akane
+  built_by_url: https://twitter.com/akanewz
+  featured: false
+- title: Reeemoter
+  description: >-
+    Join thousands of developers from everywhere and access to job 
+    offers from hundreds of companies worldwide right 
+    at your inbox for free.
+  main_url: "https://reeemoter.com/"
+  url: "https://reeemoter.com/"
+  featured: false
+  categories:
+    - Technology
+    - Web Development
+  built_by: Ramón Chancay
+  built_by_url: "https://ramonchancay.me/"
+- title: webman.pro
+  main_url: https://webman.pro/
+  url: https://webman.pro/
+  description: >
+    webman.pro is an awesome portfolio and technical blog where
+    professional Front End engineer Dmytro Chumak shares his thoughts
+    and experience to inspire other developers.
+  featured: false
+  categories:
+    - Blog
+    - Web Development
+    - JavaScript
+  built_by: Dmytro Chumak
+  built_by_url: https://github.com/wwwebman
+- title: borderless
+  url: https://junhobaik.github.io
+  main_url: https://junhobaik.github.io
+  source_url: https://github.com/junhobaik/junhobaik.github.io/tree/develop
+  description: >
+    Junho Baik's Development Blog
+  categories:
+    - Blog
+    - Web Development
+  built_by: Junho Baik
+  built_by_url: https://github.com/junhobaik
+  featured: false
+- title: Thomas Wang's Blog
+  main_url: "https://www.thomaswang.io"
+  url: "https://www.thomaswang.io"
+  description: >-
+    Technical blog by Thomas Wang
+  built_by: Thomas Wang
+  built_by_url: https://github.com/thomaswang
+  featured: false
+  categories:
+    - Blog
+    - Web Development
+- title: Engleezi
+  main_url: "https://www.myengleezi.com"
+  url: "https://myengleezi.com/teachers/"
+  description: >-
+    Affordable, accessible and fun, Engleezi is an English tutoring service that aims to make your child a better and more fluent English speaker. Our unique online approach gets your children learning English one-on-one from a native English teacher from the comfort of your home.
+  built_by: Suleiman Mayow
+  built_by_url: https://github.com/sullom101
+  featured: false
+  categories:
+    - Education
+    - Learning
+    - Technology

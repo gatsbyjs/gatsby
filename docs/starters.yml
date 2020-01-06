@@ -2391,7 +2391,7 @@
     - Green / Red alert footer on user's answer
     - Navigation generated based on the index of each question
 - url: https://gatsby-starter-accessibility.netlify.com/
-  repo: https://github.com/benjamingrobertson/gatsby-starter-accessibility
+  repo: https://github.com/benrobertsonio/gatsby-starter-accessibility
   description: The default Gatsby starter with powerful accessibility tools built-in.
   tags:
     - Storybook
@@ -4170,7 +4170,7 @@
     - postcss-preset-env to write tomorrow's CSS today
     - Bare bones starter to help you hit the ground running
 - url: https://gatsby-starter-grayscale-promo.netlify.com/
-  repo: https://github.com/awesome1888/gatsby-starter-grayscale-promo
+  repo: https://github.com/gannochenko/gatsby-starter-grayscale-promo
   description: one-page promo site
   tags:
     - Language:TypeScript
@@ -4695,7 +4695,7 @@
     - RSS
     - ESLint(Airbnb) for linting
     - Prettier code formatting
-    - gh-pages for deploying to GitHub pages
+    - gh-pages for deploying to GitHub Pages
 - url: https://gatsby-starter-boilerplatev-kontent-demo.netlify.com/
   repo: https://github.com/viperfx07/gatsby-starter-boilerplatev-kontent
   description: A Gatsby starter using BoilerplateV for Kentico Kontent.
@@ -4789,3 +4789,62 @@
     - MDX for pages and content
     - Code syntax highlighting
     - SEO (OpenGraph and Twitter) out of the box with default settings that make sense (thanks to React Helmet)
+- url: https://5e0a570d6afb0ef0fb162f0f--wizardly-bassi-e4658f.netlify.com/
+  repo: https://github.com/adamistheanswer/gatsby-starter-baysik-blog
+  description: A basic and themeable starter for creating blogs in Gatsby.
+  tags:
+    - Blog
+    - Portfolio
+    - MDX
+    - Markdown
+    - SEO
+    - Styling:CSS-in-JS
+    - Linting
+  features:
+    - Specially designed to create a personal website
+    - Clean and Minimalistic UI
+    - Facebook Comments
+    - Mobile friendly, all elements and custom images are adapted to any screen
+    - Light/Dark mode
+    - Prettier code formatting
+    - RSS
+    - Links to your social networks
+    - MDX for pages and content
+    - Code syntax highlighting
+    - SEO (OpenGraph and Twitter) out of the box with default settings that make sense (thanks to React Helmet)
+- url: https://gatsby-starter-robin.netlify.com/
+  repo: https://github.com/robinmetral/gatsby-starter-robin
+  description: Gatsby Default Starter with state-of-the-art tooling
+  tags:
+    - MDX
+    - Styling:CSS-in-JS
+    - Linting
+    - Testing
+    - Storybook
+  features:
+    - 📚 Write in MDX
+    - 👩‍🎤 Style with Emotion
+    - 💅 Linting with ESLint and Prettier
+    - 📝 Unit and integration testing with Jest and react-testing-library
+    - 💯 E2E browser testing with Cypress
+    - 📓 Visual testing with Storybook
+    - ✔️ CI with GitHub Actions
+    - ⚡ CD with Netlify
+- url: https://gatsby-resume-starter.netlify.com/
+  repo: https://github.com/barancezayirli/gatsby-starter-resume-cms
+  description: Resume starter styled using Tailwind with Netlify CMS as headless CMS.
+  tags:
+    - CMS:Headless
+    - SEO
+    - PWA
+    - Portfolio
+  features:
+    - One-page resume/CV
+    - PWA
+    - Multiple Netlify CMS widgets
+    - Netlify CMS as Headless CMS
+    - Tailwind for styling with theming
+    - Optimized build process (purge css)
+    - Basic SEO, site metadata
+    - Prettier
+    - Social media links

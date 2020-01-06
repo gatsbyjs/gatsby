@@ -97,8 +97,7 @@ This is the central idea of server-side rendering. Gatsby uses server-side APIs 
 
 ### Zero Node.js servers required ✋
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">I’m watching <a href="https://twitter.com/SchauDustin?ref_src=twsrc%5Etfw">@SchauDustin</a> talk about how <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> handles things like static rendering  and all the complex scaling problems using it eliminates.<br/><br/>He‘s effectively gone full <a href="https://twitter.com/MarieKondo?ref_src=twsrc%5Etfw">@MarieKondo</a> on building apps: “Does horizontally scaling servers spark joy? Why are you still doing it?” <a href="https://t.co/uRFXWLsLvZ">pic.twitter.com/uRFXWLsLvZ</a></p>&mdash; Jason Lengstorf (@jlengstorf) <a href="https://twitter.com/jlengstorf/status/1090659696233463808?ref_src=twsrc%5Etfw">January 30, 2019</a></blockquote>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+https://twitter.com/jlengstorf/status/1090659696233463808
 
 To begin describing why build-time SSR is so appealing, let's first take a look at what a deploy and release looks like if we don't require a server. What's required for a typical set-up for deploying static content (which Gatsby produces)? It looks something like:
 

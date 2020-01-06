@@ -17,7 +17,7 @@ import { jsx } from "theme-ui"
 
 This is a JSX pragma. What the heck is a JSX pragma? I had heard the phrase, but not thought too much about it until it came up with Gatsby theming -- and lots of other folks hadn't either:
 
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Do you know what &quot;jsx pragma&quot; is?</p>&mdash; Amberley Romo (@amber1ey) <a href="https://twitter.com/amber1ey/status/1153382680916049921?ref_src=twsrc%5Etfw">July 22, 2019</a></blockquote>
+https://twitter.com/amber1ey/status/1153382680916049921
 
 ## Striking a balance in documentation
 
