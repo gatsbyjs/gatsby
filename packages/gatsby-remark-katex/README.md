@@ -31,7 +31,7 @@ plugins: [
 
 **Add Katex CSS to your template:** Katex's CSS file is required to render the formulas correctly. Include the CSS file in your template ([example][4]):
 
-```
+```javascript
 require(`katex/dist/katex.min.css`)
 ```
 
@@ -41,7 +41,7 @@ Surround your equation with `$` to generate a math equation in inline mode.
 
 **Example markdown:**
 
-```
+```markdown
 $a^2 + b^2 = c^2$
 ```
 
@@ -52,7 +52,7 @@ display mode.
 
 **Example markdown:**
 
-```
+```markdown
 $$
 a^2 + b^2 = c^2
 $$

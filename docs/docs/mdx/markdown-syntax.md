@@ -6,12 +6,17 @@ Markdown is a very common way to write content in Gatsby posts and pages. This g
 
 ## Headings
 
-```
+```markdown
 # heading 1
+
 ## heading 2
+
 ### heading 3
+
 #### heading 4
+
 ##### heading 5
+
 ###### heading 6
 ```
 
@@ -57,7 +62,8 @@ Here's how those tags render in HTML:
 
 - can use `*`, `-`, or `+` for each list item
 
-```
+<!-- prettier-ignore-start -->
+```markdown
 * Gatsby
   * docs
 - Gatsby
@@ -65,6 +71,7 @@ Here's how those tags render in HTML:
 + Gatsby
   + docs
 ```
+<!-- prettier-ignore-end -->
 
 How unordered lists are rendered in HTML:
 
@@ -82,10 +89,10 @@ How unordered lists are rendered in HTML:
 - number and period for each list item
 - using `1.` for each item can automatically increment depending on the content
 
-```
-  1. One
-  1. Two
-  1. Three
+```markdown
+1. One
+1. Two
+1. Three
 ```
 
 1. One
@@ -98,7 +105,7 @@ How unordered lists are rendered in HTML:
 
 Links in Markdown use this format. URLs can be relative or remote:
 
-```
+```markdown
 [Text](url)
 ```
 
@@ -108,7 +115,7 @@ Example of a link rendering in HTML:
 
 ### Image with alt text
 
-```
+```markdown
 ![alt text](path-to-image)
 ```
 
@@ -116,7 +123,7 @@ Example of a link rendering in HTML:
 
 This pattern is appropriate for [decorative or repetitive images](https://www.w3.org/WAI/tutorials/images/decision-tree/):
 
-```
+```markdown
 ![](path-to-image)
 ```
 
@@ -127,7 +134,7 @@ This pattern is appropriate for [decorative or repetitive images](https://www.w3
 - It is recommended to place `>` before each line
 - You can use other Markdown syntax inside blockquotes
 
-```
+```markdown
 > blockquote
 >
 > > nested blockquote
@@ -182,12 +189,12 @@ This pattern is appropriate for [decorative or repetitive images](https://www.w3
 
 ## Frontmatter + MDX example
 
-```
+```mdx
 ---
 description: A simple example of a description in frontmatter
 ---
 
-import { Chart } from '../components/chart'
+import { Chart } from "../components/chart"
 
 # Here’s a chart
 

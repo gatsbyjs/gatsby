@@ -30,7 +30,7 @@ Everything in Gatsby is built using components.
 
 A basic directory structure of a project might look like this:
 
-```
+```text
 .
 ├── gatsby-config.js
 ├── package.json

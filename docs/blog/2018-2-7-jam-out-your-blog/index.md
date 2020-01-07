@@ -102,7 +102,9 @@ I should also mention that Prose is an open source project that is available for
 
 Let’s summarize where we are and why [Netlify](https://www.netlify.com/) will take care of the rest.
 
-```[ ] Lean - simplify the tools and services use to a bare minimum
+```markdown
+[ ] Lean - simplify the tools and services use to a bare minimum
+
 [ ] Inexpensive Hosting - again, to maximize value and keep personal costs down
 
 [ ] Continuous Deployment - the site needs to always be up and running and current
