@@ -158,15 +158,6 @@ const transformFields = ({ fields, gatsbyNodeTypes }) => {
         }
 
         return accumulator
-
-        // otherwise use the default resolver parent.fieldName/source.fieldName
-      } else if (current.type.ofType.kind === `UNION` && !isAGatsbyNode) {
-        accumulator[name] = {
-          type: `[${type}]`,
-          resolve: source => dump(current.type) && dd(source),
-        }
-
-        return accumulator
       }
 
       if (current.type.ofType.kind === `SCALAR`) {
