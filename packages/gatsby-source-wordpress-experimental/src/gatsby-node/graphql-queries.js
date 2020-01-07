@@ -15,18 +15,25 @@ export const getActionMonitorQuery = () => `
     }
   `
 
-export const getAvailablePostTypesQuery = () => `
-  {
-    postTypes {
-      fieldNames {
-        plural
-        singular
-      }
+const availablePostTypesSelectionSet = gql`
+  postTypes {
+    fieldNames {
+      plural
+      singular
     }
+    typeName
   }
 `
-export const introspectionQuery = gql`
+
+export const getAvailablePostTypesQuery = () => `
   {
+    ${availablePostTypesSelectionSet}
+  }
+`
+export const introspectionQuery = `
+  {
+    ${availablePostTypesSelectionSet}
+
     __schema {
       types {
         kind

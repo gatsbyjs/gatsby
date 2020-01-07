@@ -1,9 +1,10 @@
 import store from "../../store"
+import { getContentTypeQueryInfos } from "../source-nodes/fetch-nodes"
 
 const state = store.getState()
 const { fieldAliases } = state.introspection
 
-const transformFields = fields => {
+const transformFields = ({ fields, gatsbyNodeTypes }) => {
   if (!fields || !fields.length) {
     return null
   }
@@ -61,13 +62,13 @@ const transformFields = fields => {
       return acc
     }
 
-    // object types should be top level Gatsby nodes
-    // so we link them by id
-    // @todo check if the object type actually is a Gatsby node.
-    // in the future WPGQL plugins may add types in unexpected ways
-    if (curr.type.kind === `OBJECT`) {
+    const typeName = `Wp${curr.type.name}`
+    const isAGatsbyNode = gatsbyNodeTypes.includes(curr.type.name)
+
+    // link gatsby nodes by id
+    if (curr.type.kind === `OBJECT` && isAGatsbyNode) {
       acc[name] = {
-        type: `Wp${curr.type.name}`,
+        type: typeName,
         resolve: (source, args, context, info) => {
           const field = source[name]
 
@@ -75,16 +76,20 @@ const transformFields = fields => {
             return null
           }
 
-          const node = context.nodeModel.getNodeById({
+          return context.nodeModel.getNodeById({
             id: field.id,
-            type: `Wp${curr.type.name}`,
+            type: typeName,
           })
-
-          return node
         },
       }
 
       return acc
+
+      // for other object types, just use the default resolver
+    } else if (curr.type.kind === `OBJECT` && !isAGatsbyNode) {
+      acc[name] = {
+        type: typeName,
+      }
     }
 
     if (curr.type.kind === `LIST`) {
@@ -107,6 +112,7 @@ const transformFields = fields => {
         return acc
       }
 
+      // link unions of Gatsby nodes by id
       if (curr.type.ofType.kind === `UNION`) {
         acc[name] = {
           type: `[${type}]`,
@@ -117,13 +123,28 @@ const transformFields = fields => {
               return []
             }
 
-            return field.map(item =>
-              context.nodeModel.getNodeById({
+            return field.map(item => {
+              const node = context.nodeModel.getNodeById({
                 id: item.id,
                 type: `Wp${item.__typename}`,
               })
-            )
+
+              if (node) {
+                return node
+              }
+
+              return item
+            })
           },
+        }
+
+        return acc
+
+        // otherwise use the default resolver parent.fieldName/source.fieldName
+      } else if (curr.type.ofType.kind === `UNION` && !isAGatsbyNode) {
+        acc[name] = {
+          type: `[${type}]`,
+          resolve: source => dump(curr.type) && dd(source),
         }
 
         return acc
@@ -171,14 +192,18 @@ export default async ({ actions, schema }) => {
     field => field.type.name
   )
 
+  const gatsbyNodeTypes = getContentTypeQueryInfos().map(
+    query => query.typeInfo.nodesTypeName
+  )
+
   data.__schema.types
     .filter(
       type =>
+        // remove unneeded types
         type.name !== `RootQuery` &&
         type.kind !== `SCALAR` &&
         type.kind !== `ENUM` &&
         type.kind !== `INPUT_OBJECT` &&
-        // don't create mutation types, we don't need them
         !mutationTypes.includes(type.name)
     )
     .forEach(type => {
@@ -189,13 +214,26 @@ export default async ({ actions, schema }) => {
             types: type.possibleTypes.map(
               possibleType => `Wp${possibleType.name}`
             ),
-            resolveType: node => `Wp${node.type}`,
+            resolveType: node => {
+              if (node.type) {
+                return `Wp${node.type}`
+              }
+
+              if (node.__typename) {
+                return `Wp${node.__typename}`
+              }
+
+              return null
+            },
           })
         )
         return
       }
 
-      const transformedFields = transformFields(type.fields)
+      const transformedFields = transformFields({
+        fields: type.fields,
+        gatsbyNodeTypes,
+      })
 
       // interfaces dont work properly yet
       if (type.kind === `INTERFACE`) {
@@ -219,7 +257,7 @@ export default async ({ actions, schema }) => {
           },
         }
 
-        if (!type.name.includes(`Connection`)) {
+        if (gatsbyNodeTypes.includes(type.name)) {
           objectType.interfaces = [`Node`]
         }
 

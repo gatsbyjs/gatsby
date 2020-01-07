@@ -54,19 +54,23 @@ export const fetchWPGQLContentNodes = async ({
   return false
 }
 
+export const getContentTypeQueryInfos = () => {
+  const { queries } = store.getState().introspection
+  const queryInfos = Object.values(queries).filter(queryInfo => {
+    const { settings } = queryInfo
+
+    return !(settings.exclude || settings.onlyFetchIfReferenced)
+  })
+  return queryInfos
+}
+
 export const fetchWPGQLContentNodesByContentType = async () => {
   const contentNodeGroups = []
 
-  const { queries } = store.getState().introspection
+  const queries = getContentTypeQueryInfos()
 
   await Promise.all(
-    Object.entries(queries).map(async ([_, queryInfo]) => {
-      const { settings } = queryInfo
-
-      if (settings.exclude || settings.onlyFetchIfReferenced) {
-        return
-      }
-
+    queries.map(async queryInfo => {
       const contentNodeGroup = await fetchWPGQLContentNodes({ queryInfo })
 
       if (contentNodeGroup) {
