@@ -55,7 +55,7 @@ Go to your GitHub account and create a new repo, this’ll be the repo that you 
 
 Run the code that GitHub outputs when creating a new repo:
 
-```
+```shell
 git remote add origin git@github.com:<account-name>/lerna-monorepo-starter.git
 git push -u origin master
 ```
@@ -72,12 +72,10 @@ So imagine our application is starting to grow, the shop and the blog start inte
 
 Let’s start splitting up our application. I’ll only be touching the surface of what Lerna is capable of, so I’d recommend checking out their repo to learn more. Install Lerna with `yarn global add lerna`. We need to create a file in the root directory called `lerna.json`. Add in the following:
 
-```
+```json
 {
   "lerna": "2.11.0",
-  "packages": [
-    "packages/*"
-  ],
+  "packages": ["packages/*"],
   "npmClient": "yarn",
   "useWorkspaces": true,
   "version": "1.0.0"
@@ -86,7 +84,7 @@ Let’s start splitting up our application. I’ll only be touching the surface 
 
 The above specifies the version of Lerna we’re using. We also let Lerna know where to find our packages, in this case the packages will be contained within a directory inside of `packages`. We specify that we’re using Yarn, the current version of our application and that we’re using Yarn Workspaces enables Lerna’s package hoisting. To enable Yarn workspaces, add the following to your `package.json` file.
 
-```
+```json
 {
   ...rest of file,
   "private": true,
@@ -98,7 +96,7 @@ The above specifies the version of Lerna we’re using. We also let Lerna know w
 
 Once that’s been completed create a new `packages` directory in the root of the project. Create three additional directories inside of it so the structure looks like the following:
 
-```
+```text
 packages
  | blog
  | shared-ui
@@ -164,7 +162,7 @@ export { default as PrimaryLayout } from "./layouts/PrimaryLayouts"
 
 Your packages folder hierarchy should look like this now
 
-```
+```text
 packages
   | blog
   | shared-ui
@@ -341,7 +339,7 @@ Leave the production file alone for now and repeat for blog package, just change
 
 Now add the following code to the top of your `gatsby-config.js` file in your shop package.
 
-```jsx:title=gatsby-config.js
+```js:title=gatsby-config.js
 const activeEnv = process.env.ACTIVE_ENV | "development"
 
 require("dotenv").config({
@@ -417,7 +415,7 @@ Note: you’ll likely need `react-router-dom` specified as a dependency to get t
 
 Before we push, we need to make a couple more changes to our pipeline. Update your `.travis.yml` file so it looks like the following:
 
-```yml:title=travis.yml
+```yaml:title=.travis.yml
 language: node_js
 node_js:
   - "10.9.0"
@@ -446,7 +444,7 @@ We won’t worry about the latter for now, but let’s deal with running scripts
 
 We’ll do this by adding a `matrix` step right after the `install` step to the CI pipeline. This `matrix` step will let us specify which packages we want to run the CI pipeline on. We’ll name each matrix and set a environment variables for the package location. We’ll then change the `script` step so Travis moves into the correct directory and runs the `script` step. Delete everything after the `install` step and add the following:
 
-```
+```yaml:title=.travis.yml
 matrix:
   include:
     - name: "Blog Pipeline"
@@ -471,7 +469,7 @@ Travis-CI isn’t permitted to deploy to your Now account by default, and requir
 
 We’ll add the final part of our pipeline now, which deals with deployment. Make sure your `.travis.yml` file looks like the following, and we’ll run through the additions.
 
-```yml:title=.travis.yml
+```yaml:title=.travis.yml
 language: node_js
 node_js:
   - "10.9.0"
@@ -510,7 +508,7 @@ Note that we’ve added some additional environment variables to our matrix so a
 
 We have to do add a little bit of configuration on our side to ensure that Now hosts our sites correctly. The config comes in the form of a `now.json` file, which outlines the options we want Now to use when deploying our site. Go into the directory for our blog packages and create a `now.json` file. We want to let Now know that we’re deploying a static site, the entry directory to the static site, and what alias we want to assign our site. Put this inside your `now.json` file.
 
-```jsx:title=now.json
+```json:title=now.json
 {
   "type": "static",
   "alias": "lerna-monorepo-blog",

@@ -6,7 +6,7 @@ Code in the file `gatsby-node.js` is run once in the process of building your si
 
 Every Gatsby Node API passes a [set of Node API helpers](/docs/node-api-helpers/). These let you access several methods like reporting, or perform actions like creating new pages.
 
-```jsx:title=gatsby-node.js
+```js:title=gatsby-node.js
 const path = require(`path`)
 // Log out information after a build is done
 exports.onPostBuild = ({ reporter }) => {

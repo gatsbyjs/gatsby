@@ -117,7 +117,7 @@ The code above will create pages in the root of the site at `/`, with the path b
 
 Then, within the `post.js` template, you can determine exactly how and where you want to output data on each page. Again, you'll use GraphQL to query individual fields, so a simple example looks something like this:
 
-```javascript:title=templates/post.js
+```jsx:title=templates/post.js
 import React from "react"
 import { graphql } from "gatsby"
 
