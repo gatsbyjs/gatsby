@@ -112,15 +112,15 @@ function getProgressBar(reporter) {
   }
 
   progressBarInstance = createProgress(`Generating image thumbnails`, reporter)
+  const originalDone = progressBarInstance.done
+
+  progressBarInstance.done = () => {
+    originalDone.call(progressBarInstance)
+    progressBarInstance = null
+  }
   progressBarInstance.start()
 
-  return {
-    ...progressBarInstance,
-    done: () => {
-      progressBarInstance.done()
-      progressBarInstance = null
-    },
-  }
+  return progressBarInstance
 }
 
 let pendingImagesCounter = 0
