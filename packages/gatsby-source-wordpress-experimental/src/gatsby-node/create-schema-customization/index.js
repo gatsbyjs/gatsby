@@ -9,54 +9,84 @@ const transformFields = ({ fields, gatsbyNodeTypes }) => {
     return null
   }
 
-  return fields.reduce((acc, curr) => {
+  return fields.reduce((accumulator, current) => {
     // this is used to alias fields that conflict with Gatsby node fields
     // for ex Gatsby and WPGQL both have a `parent` field
     const name =
-      fieldAliases && fieldAliases[curr.name]
-        ? fieldAliases[curr.name]
-        : curr.name
+      fieldAliases && fieldAliases[current.name]
+        ? fieldAliases[current.name]
+        : current.name
 
     // skip fields that have required arguments
-    if (curr.args && curr.args.find(arg => arg.type.kind === `NON_NULL`)) {
-      return acc
+    if (
+      current.args &&
+      current.args.find(arg => arg.type.kind === `NON_NULL`)
+    ) {
+      return accumulator
     }
 
     // if we don't have any typenames we can't use this
-    if (!curr.type.name && !curr.type.ofType.name) {
-      return acc
+    if (!current.type.name && !current.type.ofType.name) {
+      return accumulator
     }
 
-    if (curr.type.kind === `NON_NULL` && curr.type.ofType.kind === `OBJECT`) {
-      return acc
+    if (
+      current.type.kind === `NON_NULL` &&
+      current.type.ofType.kind === `OBJECT`
+    ) {
+      return accumulator
     }
 
-    if (curr.type.kind === `NON_NULL` && curr.type.ofType.kind === `ENUM`) {
-      return acc
+    if (
+      current.type.kind === `NON_NULL` &&
+      current.type.ofType.kind === `ENUM`
+    ) {
+      return accumulator
     }
 
-    if (curr.type.kind === `NON_NULL` && curr.type.ofType.kind === `SCALAR`) {
-      acc[name] = `${curr.type.ofType.name}!`
-      return acc
+    if (
+      current.type &&
+      current.type.name &&
+      current.type.name.includes(`Connection`)
+    ) {
+      accumulator[name] = `Wp${current.type.name}`
+      return accumulator
     }
 
-    if (curr.type.kind === `NON_NULL` && curr.type.ofType.kind === `LIST`) {
-      acc[name] = `[${curr.type.ofType.name}]!`
-      return acc
+    // non null scalar types
+    if (
+      current.type.kind === `NON_NULL` &&
+      current.type.ofType.kind === `SCALAR`
+    ) {
+      accumulator[name] = `${current.type.ofType.name}!`
+      return accumulator
+    }
+
+    // non null list types
+    if (
+      current.type.kind === `NON_NULL` &&
+      current.type.ofType.kind === `LIST`
+    ) {
+      if (!current.type.ofType.name) {
+        return accumulator
+      }
+
+      accumulator[name] = `[${current.type.ofType.name}]!`
+      return accumulator
     }
 
     // scalar types
-    if (curr.type.kind === `SCALAR`) {
-      acc[name] = curr.type.name
-      return acc
+    if (current.type.kind === `SCALAR`) {
+      accumulator[name] = current.type.name
+      return accumulator
     }
 
-    const typeName = `Wp${curr.type.name}`
-    const isAGatsbyNode = gatsbyNodeTypes.includes(curr.type.name)
+    const typeName = `Wp${current.type.name}`
+    const isAGatsbyNode = gatsbyNodeTypes.includes(current.type.name)
 
     // link gatsby nodes by id
-    if (curr.type.kind === `OBJECT` && isAGatsbyNode) {
-      acc[name] = {
+    if (current.type.kind === `OBJECT` && isAGatsbyNode) {
+      accumulator[name] = {
         type: typeName,
         resolve: (source, args, context, info) => {
           const field = source[name]
@@ -72,20 +102,20 @@ const transformFields = ({ fields, gatsbyNodeTypes }) => {
         },
       }
 
-      return acc
+      return accumulator
 
       // for other object types, just use the default resolver
-    } else if (curr.type.kind === `OBJECT` && !isAGatsbyNode) {
-      acc[name] = {
+    } else if (current.type.kind === `OBJECT` && !isAGatsbyNode) {
+      accumulator[name] = {
         type: typeName,
       }
     }
 
-    if (curr.type.kind === `LIST`) {
-      const type = `Wp${curr.type.ofType.name}`
+    if (current.type.kind === `LIST`) {
+      const type = `Wp${current.type.ofType.name}`
 
-      if (curr.type.ofType.kind === `OBJECT`) {
-        acc[name] = {
+      if (current.type.ofType.kind === `OBJECT`) {
+        accumulator[name] = {
           type: `[${type}]`,
           resolve: (source, args, context, info) => {
             if (source.nodes.length) {
@@ -98,12 +128,12 @@ const transformFields = ({ fields, gatsbyNodeTypes }) => {
             }
           },
         }
-        return acc
+        return accumulator
       }
 
       // link unions of Gatsby nodes by id
-      if (curr.type.ofType.kind === `UNION`) {
-        acc[name] = {
+      if (current.type.ofType.kind === `UNION`) {
+        accumulator[name] = {
           type: `[${type}]`,
           resolve: (source, args, context, info) => {
             const field = source[name]
@@ -127,21 +157,30 @@ const transformFields = ({ fields, gatsbyNodeTypes }) => {
           },
         }
 
-        return acc
-      }
+        return accumulator
 
-      if (curr.type.ofType.kind === `SCALAR`) {
-        acc[name] = {
-          type: `[${curr.type.ofType.name}]`,
+        // otherwise use the default resolver parent.fieldName/source.fieldName
+      } else if (current.type.ofType.kind === `UNION` && !isAGatsbyNode) {
+        accumulator[name] = {
+          type: `[${type}]`,
+          resolve: source => dump(current.type) && dd(source),
         }
 
-        return acc
+        return accumulator
+      }
+
+      if (current.type.ofType.kind === `SCALAR`) {
+        accumulator[name] = {
+          type: `[${current.type.ofType.name}]`,
+        }
+
+        return accumulator
       }
     }
 
-    if (curr.type.kind === `UNION`) {
-      acc[name] = {
-        type: `Wp${curr.type.name}`,
+    if (current.type.kind === `UNION`) {
+      accumulator[name] = {
+        type: `Wp${current.type.name}`,
         resolve: (source, args, context, info) => {
           const field = source[name]
 
@@ -155,11 +194,11 @@ const transformFields = ({ fields, gatsbyNodeTypes }) => {
           })
         },
       }
-      return acc
+      return accumulator
     }
 
-    // unhandled fields are removed from the schema by not mutating the accumulator
-    return acc
+    // unhandled fields are removed from the schema by not mutating the accumulatorumulator
+    return accumulator
   }, {})
 }
 
@@ -194,7 +233,6 @@ export default async ({ actions, schema }) => {
             types: type.possibleTypes.map(
               possibleType => `Wp${possibleType.name}`
             ),
-            description: type.description,
             resolveType: node => {
               if (node.type) {
                 return `Wp${node.type}`
@@ -222,7 +260,6 @@ export default async ({ actions, schema }) => {
           schema.buildInterfaceType({
             name: `Wp${type.name}`,
             fields: transformedFields,
-            description: type.description,
             resolveType: node => dd(node),
           })
         )
@@ -234,7 +271,6 @@ export default async ({ actions, schema }) => {
         let objectType = {
           name: `Wp${type.name}`,
           fields: transformedFields,
-          description: type.description,
           extensions: {
             infer: false,
           },
@@ -247,7 +283,6 @@ export default async ({ actions, schema }) => {
         if (type.name === `MediaItem`) {
           objectType.fields.remoteFile = {
             type: `File`,
-            description: type.description,
             // can't make this work. Created a custom resolver instead.
             // extensions: {
             //   link: {}
