@@ -4589,13 +4589,15 @@
     - Styled Components
     - Coinbase, Fortmatic, Metamask, WalletConnect, and more
     - dFuse Blockchain Streaming and Notifications
-- url: https://gatsby-starter-theme-antv.netlify.com
+- url: https://gatsby-starter-theme-antv.antv.vision
   repo: https://github.com/antvis/gatsby-starter-theme-antv
-  description: Gatsby's starter of antv theme
+  description: ⚛️ Polished Gatsby theme for documentation site
   tags:
     - Documentation
     - Markdown
-    - Styling:Other
+    - AntV
+    - antd
+    - Ant Design
   features:
     - ⚛ Prerendered static site
     - 🌎 Internationalization support by i18next
