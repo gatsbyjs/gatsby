@@ -38,6 +38,7 @@ export const introspectionQuery = `
       types {
         kind
         name
+        description
         possibleTypes {
           kind
           name
@@ -52,6 +53,7 @@ export const introspectionQuery = `
         }
         fields {
           name
+          description
           args {
             type {
               kind

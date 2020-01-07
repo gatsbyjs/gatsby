@@ -194,6 +194,7 @@ export default async ({ actions, schema }) => {
             types: type.possibleTypes.map(
               possibleType => `Wp${possibleType.name}`
             ),
+            description: type.description,
             resolveType: node => {
               if (node.type) {
                 return `Wp${node.type}`
@@ -221,6 +222,7 @@ export default async ({ actions, schema }) => {
           schema.buildInterfaceType({
             name: `Wp${type.name}`,
             fields: transformedFields,
+            description: type.description,
             resolveType: node => dd(node),
           })
         )
@@ -232,6 +234,7 @@ export default async ({ actions, schema }) => {
         let objectType = {
           name: `Wp${type.name}`,
           fields: transformedFields,
+          description: type.description,
           extensions: {
             infer: false,
           },
@@ -244,6 +247,7 @@ export default async ({ actions, schema }) => {
         if (type.name === `MediaItem`) {
           objectType.fields.remoteFile = {
             type: `File`,
+            description: type.description,
             // can't make this work. Created a custom resolver instead.
             // extensions: {
             //   link: {}
