@@ -161,6 +161,62 @@ function init() {
   maybeRedirect(window.location.pathname)
 }
 
+class RouteAnnouncer extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { announcement: `` }
+    console.log(`constructor`)
+  }
+
+  componentDidUpdate(prevProps) {
+    requestAnimationFrame(() => {
+      console.log(`updating`, this.props.location.pathname)
+      let pageName = `new page at ${this.props.location.pathname}`
+      if (document.title) {
+        pageName = document.title
+      }
+      const pageHeadings = document
+        .getElementById(`gatsby-focus-wrapper`)
+        .getElementsByTagName(`h1`)
+      if (pageHeadings) {
+        pageName = pageHeadings[0].textContent
+      }
+      let newAnnouncement = `Navigated to ${pageName}`
+      if (this.state.announcement !== newAnnouncement) {
+        console.log(`setting state`, this.state.announcement, newAnnouncement)
+        this.setState({
+          announcement: newAnnouncement,
+        })
+      }
+    })
+  }
+
+  render() {
+    console.log(`rendering`, this.props.location.pathname)
+    const { announcement } = this.state
+    return (
+      <div
+        id="gatsby-announcer"
+        style={{
+          position: `absolute`,
+          width: 1,
+          height: 1,
+          padding: 0,
+          overflow: `hidden`,
+          clip: `rect(0, 0, 0, 0)`,
+          whiteSpace: `nowrap`,
+          border: 0,
+        }}
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+      >
+        {announcement}
+      </div>
+    )
+  }
+}
+
 // Fire on(Pre)RouteUpdate APIs
 class RouteUpdates extends React.Component {
   constructor(props) {
@@ -188,7 +244,12 @@ class RouteUpdates extends React.Component {
   }
 
   render() {
-    return this.props.children
+    return (
+      <div>
+        {this.props.children}
+        <RouteAnnouncer location={location} />
+      </div>
+    )
   }
 }
 
