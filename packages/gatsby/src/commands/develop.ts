@@ -15,7 +15,7 @@ import { formatError } from "graphql"
 
 import webpackConfig from "../utils/webpack.config"
 import bootstrap from "../bootstrap"
-import { store, emitter } from "../redux"
+import { store } from "../redux"
 import { syncStaticDir } from "../utils/get-static-dir"
 import buildHTML from "./build-html"
 import { withBasePath } from "../utils/path"
