@@ -35,23 +35,12 @@ const transformFields = ({ fields, gatsbyNodeTypes }) => {
       return acc
     }
 
-    if (curr.type && curr.type.name && curr.type.name.includes(`Connection`)) {
-      acc[name] = `Wp${curr.type.name}`
-      return acc
-    }
-
-    // non null scalar types
     if (curr.type.kind === `NON_NULL` && curr.type.ofType.kind === `SCALAR`) {
       acc[name] = `${curr.type.ofType.name}!`
       return acc
     }
 
-    // non null list types
     if (curr.type.kind === `NON_NULL` && curr.type.ofType.kind === `LIST`) {
-      if (!curr.type.ofType.name) {
-        return acc
-      }
-
       acc[name] = `[${curr.type.ofType.name}]!`
       return acc
     }
@@ -136,15 +125,6 @@ const transformFields = ({ fields, gatsbyNodeTypes }) => {
               return item
             })
           },
-        }
-
-        return acc
-
-        // otherwise use the default resolver parent.fieldName/source.fieldName
-      } else if (curr.type.ofType.kind === `UNION` && !isAGatsbyNode) {
-        acc[name] = {
-          type: `[${type}]`,
-          resolve: source => dump(curr.type) && dd(source),
         }
 
         return acc
