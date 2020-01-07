@@ -32,8 +32,6 @@ export const getAvailablePostTypesQuery = () => `
 `
 export const introspectionQuery = `
   {
-    ${availablePostTypesSelectionSet}
-
     __schema {
       types {
         kind
