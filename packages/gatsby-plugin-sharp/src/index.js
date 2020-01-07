@@ -105,14 +105,28 @@ function prepareQueue({ file, args }) {
   }
 }
 
-let progressBar
+let progressBarInstance
+function getProgressBar(reporter) {
+  if (progressBarInstance) {
+    return progressBarInstance
+  }
+
+  progressBarInstance = createProgress(`Generating image thumbnails`, reporter)
+  progressBarInstance.start()
+
+  return {
+    ...progressBarInstance,
+    done: () => {
+      progressBarInstance.done()
+      progressBarInstance = null
+    },
+  }
+}
+
 let pendingImagesCounter = 0
 let completedImagesCounter = 0
-async function createJob(job, { reporter, reportStatus = true }) {
-  if (reportStatus && !progressBar) {
-    progressBar = createProgress(`Generating image thumbnails`, reporter)
-    progressBar.start()
-  }
+async function createJob(job, { reporter }) {
+  const progressBar = getProgressBar(reporter)
 
   const transforms = job.args.operations
   pendingImagesCounter += transforms.length
@@ -130,7 +144,6 @@ async function createJob(job, { reporter, reportStatus = true }) {
 
     if (completedImagesCounter === pendingImagesCounter) {
       progressBar.done()
-      progressBar = null
       completedImagesCounter = 0
       pendingImagesCounter = 0
     }
@@ -138,10 +151,6 @@ async function createJob(job, { reporter, reportStatus = true }) {
 }
 
 function queueImageResizing({ file, args = {}, reporter }) {
-  if (!progressBar) {
-    progressBar = createProgress(`Generating image thumbnails`, reporter)
-    progressBar.start()
-  }
   const {
     src,
     width,
@@ -151,9 +160,6 @@ function queueImageResizing({ file, args = {}, reporter }) {
     outputDir,
     options,
   } = prepareQueue({ file, args })
-
-  pendingImagesCounter++
-  progressBar.total = pendingImagesCounter
 
   // Create job and add it to the queue, the queue will be processed inside gatsby-node.js
   const finishedPromise = createJob(
@@ -172,25 +178,12 @@ function queueImageResizing({ file, args = {}, reporter }) {
       },
     },
     { reporter }
-  )
-    .then(() => {
-      completedImagesCounter++
-      if (progressBar) {
-        progressBar.tick()
-        if (completedImagesCounter === pendingImagesCounter) {
-          progressBar.done()
-          progressBar = null
-          completedImagesCounter = 0
-          pendingImagesCounter = 0
-        }
-      }
-    })
-    .catch(err => {
-      reporter.panic(
-        `The transformation for image ${file.absolutePath} failed. Please make sure it exists and is readable.`,
-        err
-      )
-    })
+  ).catch(err => {
+    reporter.panic(
+      `The transformation for image ${file.absolutePath} failed. Please make sure it exists and is readable.`,
+      err
+    )
+  })
 
   return {
     src,
@@ -204,10 +197,6 @@ function queueImageResizing({ file, args = {}, reporter }) {
 }
 
 function batchQueueImageResizing({ file, transforms = [], reporter }) {
-  if (!progressBar) {
-    progressBar = createProgress(`Generating image thumbnails`, reporter)
-    progressBar.start()
-  }
   const operations = []
   const images = []
 
@@ -239,9 +228,6 @@ function batchQueueImageResizing({ file, transforms = [], reporter }) {
     })
   })
 
-  pendingImagesCounter += transforms.length
-  progressBar.total = pendingImagesCounter
-
   const finishedPromise = createJob(
     {
       name: IMAGE_PROCESSING_JOB_NAME,
@@ -258,23 +244,12 @@ function batchQueueImageResizing({ file, transforms = [], reporter }) {
       },
     },
     { reporter }
-  )
-    .then(() => {
-      completedImagesCounter += transforms.length
-      if (progressBar) {
-        progressBar.tick(transforms.length)
-        if (completedImagesCounter === pendingImagesCounter) {
-          progressBar.done()
-          progressBar = null
-        }
-      }
-    })
-    .catch(err => {
-      reporter.panic(
-        `The transformation for image ${file.absolutePath} failed. Please make sure it exists and is readable.`,
-        err
-      )
-    })
+  ).catch(err => {
+    reporter.panic(
+      `The transformation for image ${file.absolutePath} failed. Please make sure it exists and is readable.`,
+      err
+    )
+  })
 
   return images.map(image => {
     return {
