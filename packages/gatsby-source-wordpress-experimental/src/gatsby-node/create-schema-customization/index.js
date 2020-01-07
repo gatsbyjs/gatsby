@@ -105,7 +105,7 @@ const transformFields = ({ fields, gatsbyNodeTypes }) => {
                 type,
               })
             } else {
-              return []
+              return null
             }
           },
         }
@@ -120,7 +120,7 @@ const transformFields = ({ fields, gatsbyNodeTypes }) => {
             const field = source[name]
 
             if (!field || !field.length) {
-              return []
+              return null
             }
 
             return field.map(item => {
