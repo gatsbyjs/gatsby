@@ -27,7 +27,7 @@ p {
 
 2. Import the global CSS file in the `gatsby-browser.js` file such as the following:
 
-```javascript:gatsby-browser.js
+```javascript:title=gatsby-browser.js
 import "./src/styles/global.css"
 ```
 
@@ -276,7 +276,7 @@ _Note: You can use Sass/SCSS files as modules too, like mentioned in the previou
 
 1. Copy a font file into your Gatsby project, such as `src/fonts/fontname.woff2`.
 
-```
+```text
 src/fonts/fontname.woff2
 ```
 

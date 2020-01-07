@@ -3,8 +3,6 @@ name: New Translation Request 🌐
 about: Suggest a new language translation of the repo.
 ---
 
-<!-- Gatsby OSS team is on holiday, expect a delayed response -->
-
 <!--
   Please fill out the YAML form below, otherwise, your issue will be closed.
 

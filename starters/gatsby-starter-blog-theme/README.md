@@ -39,20 +39,20 @@ Quickly get started using the Gatsby blog theme! This starter creates a new Gats
 
 Here are the top-level files and directories you'll see in a site created using the blog theme starter:
 
-```
+```text
 gatsby-starter-blog-theme
 ├── content
-│ ├── assets
-│ │ └── avatar.png
-│ └── posts
-│ ├── hello-world.mdx
-│ └── my-second-post.mdx
+│   ├── assets
+│   │   └── avatar.png
+│   └── posts
+│       ├── hello-world.mdx
+│       └── my-second-post.mdx
 ├── src
-│ └── gatsby-theme-blog
-│ ├── components
-│ │ └── bio-content.js
-│ └── gatsby-theme-ui
-│ └── colors.js
+│   └── gatsby-theme-blog
+│       ├── components
+│       │   └── bio-content.js
+│       └── gatsby-theme-ui
+│           └── colors.js
 ├── .gitignore
 ├── .prettierrc
 ├── gatsby-config.js

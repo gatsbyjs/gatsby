@@ -151,7 +151,7 @@ Gatsby--like other tools--uses the filesystem as a convention for mapping to rou
 
 _also note we expose a [programatic API](/docs/node-apis/#createPages) for dynamic route creation_
 
-```
+```text
 ├── src/
   ├── pages/
     └── about.js
@@ -200,7 +200,7 @@ Pretty vanilla looking component! We are rendering a `form` with some validation
 
 We use code-splitting (enabled via our internalized dependency [Webpack](https://webpack.js.org)), and in particular, our approach prioritizes app-level dependencies (libraries used by the majority or all routes) coupled with route-based code splitting for dependencies that are likely only used on a particular route. To more fully understand this, let's take a look at a sample structure produced by our build process: `gatsby build`.
 
-```title=public/
+```text:title=public/
 ├── 404
 │   └── index.html
 ├── 9-f5d9c17474395c2890a3.js # highlight-line
@@ -506,7 +506,7 @@ If you check out the [pull request](https://github.com/DSchau/gatsby-perf-audit/
 
 In this pull request, I _intentionally_ introduce a few dependencies like Bootstrap, lodash, and... jQuery because let's at least make the performance problems clear and obvious! If you check out the [CI logs](https://circleci.com/gh/DSchau/gatsby-perf-audit/13?utm_campaign=vcs-integration-link&utm_medium=referral&utm_source=github-build-link) you can see the output from the failing CI check:
 
-```
+```text
  ● performance audit
 
     expect(received).toBe(expected) // Object.is equality
