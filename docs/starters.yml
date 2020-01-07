@@ -4598,7 +4598,6 @@
     - AntV
     - antd
     - Ant Design
-    - Styling:less
   features:
     - ⚛ Prerendered static site
     - 🌎 Internationalization support by i18next
