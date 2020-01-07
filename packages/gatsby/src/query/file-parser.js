@@ -40,26 +40,16 @@ const generateQueryName = ({ def, hash, file }) => {
 }
 
 function isUseStaticQuery(path) {
-  if (path.node.callee.type === `MemberExpression`) {
-    if (
+  return (
+    (path.node.callee.type === `MemberExpression` &&
       path.node.callee.property.name === `useStaticQuery` &&
       path
         .get(`callee`)
         .get(`object`)
-        .referencesImport(`gatsby`)
-    ) {
-      return true
-    }
-  } else {
-    if (
-      path.node.callee.name === `useStaticQuery` &&
-      path.get(`callee`).referencesImport(`gatsby`)
-    ) {
-      return true
-    }
-  }
-
-  return false
+        .referencesImport(`gatsby`)) ||
+    (path.node.callee.name === `useStaticQuery` &&
+      path.get(`callee`).referencesImport(`gatsby`))
+  )
 }
 
 const warnForUnknownQueryVariable = (varName, file, usageFunction) =>
@@ -319,49 +309,70 @@ async function findGraphQLTags(
           },
         })
 
+        function TaggedTemplateExpression(innerPath) {
+          const { ast: gqlAst, isGlobal, hash, text } = getGraphQLTag(innerPath)
+          if (!gqlAst) return
+
+          if (isGlobal) warnForGlobalTag(file)
+
+          gqlAst.definitions.forEach(def => {
+            generateQueryName({
+              def,
+              hash,
+              file,
+            })
+          })
+
+          let templateLoc
+          innerPath.traverse({
+            TemplateElement(templateElementPath) {
+              templateLoc = templateElementPath.node.loc
+            },
+          })
+
+          const docInFile = {
+            filePath: file,
+            doc: gqlAst,
+            text: text,
+            hash: hash,
+            isStaticQuery: false,
+            isHook: false,
+            templateLoc,
+          }
+
+          documentLocations.set(
+            docInFile,
+            `${innerPath.node.start}-${gqlAst.loc.start}`
+          )
+
+          documents.push(docInFile)
+        }
+
+        function followVariableDeclarations(binding) {
+          const node = binding.path ? binding.path.node : undefined
+          if (
+            node &&
+            node.type === `VariableDeclarator` &&
+            node.id.type === `Identifier` &&
+            node.init.type === `Identifier`
+          ) {
+            return followVariableDeclarations(
+              binding.path.scope.getBinding(node.init.name)
+            )
+          }
+          return binding
+        }
+
         // Look for exported page queries
         traverse(ast, {
           ExportNamedDeclaration(path, state) {
             path.traverse({
-              TaggedTemplateExpression(innerPath) {
-                const { ast: gqlAst, isGlobal, hash, text } = getGraphQLTag(
-                  innerPath
+              TaggedTemplateExpression,
+              ExportSpecifier(path) {
+                const binding = followVariableDeclarations(
+                  path.scope.getBinding(path.node.local.name)
                 )
-                if (!gqlAst) return
-
-                if (isGlobal) warnForGlobalTag(file)
-
-                gqlAst.definitions.forEach(def => {
-                  generateQueryName({
-                    def,
-                    hash,
-                    file,
-                  })
-                })
-
-                let templateLoc
-                innerPath.traverse({
-                  TemplateElement(templateElementPath) {
-                    templateLoc = templateElementPath.node.loc
-                  },
-                })
-
-                const docInFile = {
-                  filePath: file,
-                  doc: gqlAst,
-                  text: text,
-                  hash: hash,
-                  isStaticQuery: false,
-                  isHook: false,
-                  templateLoc,
-                }
-
-                documentLocations.set(
-                  docInFile,
-                  `${innerPath.node.start}-${gqlAst.loc.start}`
-                )
-
-                documents.push(docInFile)
+                binding.path.traverse({ TaggedTemplateExpression })
               },
             })
           },

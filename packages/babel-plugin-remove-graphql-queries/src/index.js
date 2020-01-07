@@ -156,25 +156,16 @@ function getGraphQLTag(path) {
 }
 
 function isUseStaticQuery(path) {
-  if (path.node.callee.type === `MemberExpression`) {
-    if (
+  return (
+    (path.node.callee.type === `MemberExpression` &&
       path.node.callee.property.name === `useStaticQuery` &&
       path
         .get(`callee`)
         .get(`object`)
-        .referencesImport(`gatsby`)
-    ) {
-      return true
-    }
-  } else {
-    if (
-      path.node.callee.name === `useStaticQuery` &&
-      path.get(`callee`).referencesImport(`gatsby`)
-    ) {
-      return true
-    }
-  }
-  return false
+        .referencesImport(`gatsby`)) ||
+    (path.node.callee.name === `useStaticQuery` &&
+      path.get(`callee`).referencesImport(`gatsby`))
+  )
 }
 
 export default function({ types: t }) {
@@ -240,6 +231,9 @@ export default function({ types: t }) {
               // import { useStaticQuery } from 'gatsby'
               // but not if its like:
               // import * as Gatsby from 'gatsby'
+              // because we know we can remove the useStaticQuery import,
+              // but we don't know if other 'gatsby' exports are used, so we
+              // cannot remove all 'gatsby' imports.
               if (path2.node.callee.type !== `MemberExpression`) {
                 // Remove imports to useStaticQuery
                 const importPath = path2.scope.getBinding(`useStaticQuery`).path
@@ -364,40 +358,50 @@ export default function({ types: t }) {
           },
         })
 
+        function followVariableDeclarations(binding) {
+          const node = binding.path ? binding.path.node : undefined
+          if (
+            node &&
+            node.type === `VariableDeclarator` &&
+            node.id.type === `Identifier` &&
+            node.init.type === `Identifier`
+          ) {
+            return followVariableDeclarations(
+              binding.path.scope.getBinding(node.init.name)
+            )
+          }
+          return binding
+        }
+
         // Traverse once again for useStaticQuery instances
         path.traverse({
           CallExpression(hookPath) {
             if (!isUseStaticQuery(hookPath)) return
 
-            // Also see if it's a variable that's passed in as a prop
+            function TaggedTemplateExpression(templatePath) {
+              setImportForStaticQuery(templatePath)
+            }
+
+            // See if the query is a variable that's being passed in
             // and if it is, go find it.
             if (
-              hookPath.node.callee.name !== `graphql` &&
-              hookPath.node.arguments.length === 1
+              hookPath.node.arguments.length === 1 &&
+              hookPath.node.arguments[0].type === `Identifier`
             ) {
               const [{ name: varName }] = hookPath.node.arguments
 
-              path.traverse({
-                VariableDeclarator(varPath) {
-                  if (
-                    varPath.node.id.name === varName &&
-                    varPath.node.init.type === `TaggedTemplateExpression`
-                  ) {
-                    varPath.traverse({
-                      TaggedTemplateExpression(templatePath) {
-                        setImportForStaticQuery(templatePath)
-                      },
-                    })
-                  }
-                },
-              })
+              let binding = hookPath.scope.getBinding(varName)
+
+              if (binding) {
+                followVariableDeclarations(binding).path.traverse({
+                  TaggedTemplateExpression,
+                })
+              }
             }
 
             hookPath.traverse({
               // Assume the query is inline in the component and extract that.
-              TaggedTemplateExpression(templatePath) {
-                setImportForStaticQuery(templatePath)
-              },
+              TaggedTemplateExpression,
             })
           },
         })

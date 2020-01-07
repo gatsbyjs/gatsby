@@ -23,6 +23,23 @@ query PageQueryName {
   foo
 }
 \``,
+    "page-query-indirect.js": `import { graphql } from 'gatsby'
+    const query = graphql\`
+query PageQueryIndirect {
+  foo
+}
+\`
+export { query }
+`,
+    "page-query-indirect-2.js": `import { graphql } from 'gatsby'
+    const query = graphql\`
+query PageQueryIndirect2 {
+  foo
+}
+\`
+const query2 = query;
+export { query2 }
+`,
     "page-query-no-name.js": `import { graphql } from 'gatsby'
   export const query = graphql\`
 query {
