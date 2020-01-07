@@ -40,12 +40,9 @@ const onPreRouteUpdate = (location, prevLocation) => {
   }
 }
 
-const onRouteUpdate = (location, prevLocation, announceLocation) => {
+const onRouteUpdate = (location, prevLocation) => {
   if (!maybeRedirect(location.pathname)) {
     apiRunner(`onRouteUpdate`, { location, prevLocation })
-    if (announceLocation) {
-      announceLocation()
-    }
     // Temp hack while awaiting https://github.com/reach/router/issues/119
     window.__navigatingToLink = false
   }
@@ -165,12 +162,10 @@ class RouteAnnouncer extends React.Component {
   constructor(props) {
     super(props)
     this.state = { announcement: `` }
-    console.log(`constructor`)
   }
 
   componentDidUpdate(prevProps) {
     requestAnimationFrame(() => {
-      console.log(`updating`, this.props.location.pathname)
       let pageName = `new page at ${this.props.location.pathname}`
       if (document.title) {
         pageName = document.title
@@ -183,7 +178,6 @@ class RouteAnnouncer extends React.Component {
       }
       let newAnnouncement = `Navigated to ${pageName}`
       if (this.state.announcement !== newAnnouncement) {
-        console.log(`setting state`, this.state.announcement, newAnnouncement)
         this.setState({
           announcement: newAnnouncement,
         })
@@ -192,7 +186,6 @@ class RouteAnnouncer extends React.Component {
   }
 
   render() {
-    console.log(`rendering`, this.props.location.pathname)
     const { announcement } = this.state
     return (
       <div
