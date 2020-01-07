@@ -3,7 +3,7 @@
 // NOTE: This needs to be run before any other integration tests as it
 // sets up the service worker in offline mode. Therefore, if you want
 // to test an individual integration test, you must run this
-// first. E.g to run `compilation-hash.js` test, run
+// first. E.g. to run `compilation-hash.js` test, run
 //
 // cypress run -s \
 // "cypress/integration/1-production.js,cypress/integration/compilation-hash.js" \

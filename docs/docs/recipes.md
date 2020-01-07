@@ -435,7 +435,7 @@ export default () => (
 
 1. Create a CSS module as `src/pages/index.module.css` and paste the following into the module:
 
-```css:title=src/components/index.module.css
+```css:title=src/pages/index.module.css
 .feature {
   margin: 2rem auto;
   max-width: 500px;

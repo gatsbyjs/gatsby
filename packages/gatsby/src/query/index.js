@@ -323,7 +323,7 @@ const runQueuedQueries = async () => {
  *
  * 1. A node has changed (but only after the api call has finished
  * running)
- * 2. A component query (e.g by editing a React Component) has
+ * 2. A component query (e.g. by editing a React Component) has
  * changed
  *
  * For what constitutes a dirty query, see `calcQueries`

@@ -74,20 +74,21 @@ aliases:
   e2e_tests_production_runtime_alias: &e2e_tests_production_runtime_alias
     <<: *e2e-executor
     parameters:
-      postStatus:
+      nightly:
         type: boolean
         default: false
     steps:
       - e2e-test:
           test_path: e2e-tests/production-runtime
           test_command: CYPRESS_PROJECT_ID=is8aoq CYPRESS_RECORD_KEY=cb4708d2-1578-4665-9a07-c59f8db28d91 yarn test && CYPRESS_PROJECT_ID=htpvkv CYPRESS_RECORD_KEY=0d734841-c613-41d2-86e5-df0b5968f93f yarn test:offline
+          skip_file_change_test: << parameters.nightly >>
       - notify-status:
-          condition: << parameters.postStatus >>
+          condition: << parameters.nightly >>
 
   e2e_tests_development_runtime_alias: &e2e_tests_development_runtime_alias
     <<: *e2e-executor
     parameters:
-      postStatus:
+      nightly:
         type: boolean
         default: false
     environment:
@@ -96,13 +97,14 @@ aliases:
     steps:
       - e2e-test:
           test_path: e2e-tests/development-runtime
+          skip_file_change_test: << parameters.nightly >>
       - notify-status:
-          condition: << parameters.postStatus >>
+          condition: << parameters.nightly >>
 
   e2e_tests_gatsby-image_alias: &e2e_tests_gatsby-image_alias
     <<: *e2e-executor
     parameters:
-      postStatus:
+      nightly:
         type: boolean
         default: false
     environment:
@@ -111,8 +113,9 @@ aliases:
     steps:
       - e2e-test:
           test_path: e2e-tests/gatsby-image
+          skip_file_change_test: << parameters.nightly >>
       - notify-status:
-          condition: << parameters.postStatus >>
+          condition: << parameters.nightly >>
 
 commands:
   notify-status:
@@ -129,6 +132,9 @@ commands:
 
   e2e-test:
     parameters:
+      skip_file_change_test:
+        type: boolean
+        default: false
       trigger_pattern:
         type: string
         default: "packages/*|.circleci/*"
@@ -143,7 +149,10 @@ commands:
       #- <<: *restore_cache
       #- <<: *install_node_modules
       #- <<: *persist_cache
-      - run: ./scripts/assert-changed-files.sh "<< parameters.trigger_pattern >>|<< parameters.test_path >>/*"
+      - unless:
+          condition: << parameters.skip_file_change_test >>
+          steps:
+            - run: ./scripts/assert-changed-files.sh "<< parameters.trigger_pattern >>|<< parameters.test_path >>/*"
       - run: ./scripts/e2e-test.sh "<< parameters.test_path >>" "<< parameters.test_command >>"
 
 version: 2.1
@@ -405,15 +414,15 @@ workflows:
       - bootstrap-with-experimental-react:
           version: "next"
       - e2e_tests_gatsby-image_with_next_react:
-          postStatus: true
+          nightly: true
           requires:
             - bootstrap-with-experimental-react
       - e2e_tests_development_runtime_with_next_react:
-          postStatus: true
+          nightly: true
           requires:
             - bootstrap-with-experimental-react
       - e2e_tests_production_runtime_with_next_react:
-          postStatus: true
+          nightly: true
           requires:
             - bootstrap-with-experimental-react
   nightly-react-experimental:
@@ -428,15 +437,15 @@ workflows:
       - bootstrap-with-experimental-react:
           version: "experimental"
       - e2e_tests_gatsby-image_with_experimental_react:
-          postStatus: true
+          nightly: true
           requires:
             - bootstrap-with-experimental-react
       - e2e_tests_development_runtime_with_experimental_react:
-          postStatus: true
+          nightly: true
           requires:
             - bootstrap-with-experimental-react
       - e2e_tests_production_runtime_with_experimental_react:
-          postStatus: true
+          nightly: true
           requires:
             - bootstrap-with-experimental-react
 
