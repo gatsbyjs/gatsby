@@ -63,6 +63,10 @@ It's nice to update labels as the state of an issue changes or if the type of an
 
 Check out [the docs on issue labeling for more info](/contributing/how-to-label-an-issue/)
 
+### Resolution flowchart
+
+Issues are categorized into one of five types: question or discussion, bug report, feature request, documentation, or maintenance.
+
 ### Questions with immediate answers
 
 - Point to existing documentation to answer the question
@@ -73,11 +77,37 @@ Check out [the docs on issue labeling for more info](/contributing/how-to-label-
 
 If an issue comes in as a question with a known answer it can be tempting to answer it and close the issue. However, the consequence of this approach is that the answer to a question others may have is now buried in a closed issue and may be hard to surface. The preferred solution is to get that answer documented in the main Gatsby documentation and connect the issue to an answer by including a docs link.
 
-When a question comes in and it is determined to have a known answer, find the existing documentation that explains it. If that documentation does not exist, is insufficient, or unclear, it is reasonable to provide an answer in a comment in the issue. However, the issue should remain open and be labled as documentation. If you are able, you can open a PR adding the provided answer to the official documentation.
+#### Bug Report
 
-### Resolution flowchart
+Bug Reports are issues that identify functionality in Gatsby that should work but does not in a given scenario. If an issue is a Bug Report, it should include steps to reproduce the problem. If it doesn't, ask the issue filer for those steps and label the issue with `needs reproduction`.
 
-The [resolution flowchart](https://whimsical.co/QvuMgo31T2C3xcWbou8xhy) provides a decision tree for how issues should be categorized into one of five types: question or discussion, bug report, feature request, documentation, or maintenance.
+Attempt to reproduce the bug using the steps given. If that's not possible, ask for more information and label the issue as `needs more info`.
+
+If the reproduction is successful, label the issue with `confirmed` and determine who is best suited to implement a fix. If it's approachable for the community, consider the `help wanted` or `good first issue` labels. Otherwise, label with `inkteam to review` so it can be picked up by a Gatsby team member.
+
+![Flow chart for handling a Bug Report](./BugFlow.png)
+
+#### Feature Request
+
+Feature Requests are issues that request support for additional functionality not currently covered in the existing codebase. The first step in triaging a feature request is to determine if it's a reasonable request; this is a challenge and if you don't feel comfortable making this determination please label with `inkteam to review`. If it's clear that this isn't a feature it makes sense for Gatsby to implement, provide a comment explaining the decision making and close the issue.
+
+If it's determined to be a worthwhile feature, the next decision point is whether the feature should be added to core or upstream. Upstream issues are those that are outside of Gatsby's control and caused by dependencies. Upstream features should be labeled with `upstream` and include comments about the scope.
+
+If it's a core change, is it a breaking change? Breaking changes should be labeled with `breaking change` and typically closed. Note that they may sometimes be left open with the note that the functionality can only be added in a major release.
+
+Non-breaking changes can be labeled as `help wanted` and it is often best to ask the creator of the issue if they'd be interested in helping develop the PR.
+![Flow chart for handling a Feature Request](./FeatureFlow.png)
+
+### Documentation
+
+Issues can be filed requesting documentation on a particular topic. Sometimes the documentation already exists, so you can link to it and close the issue.
+
+Otherwise, label the issue with `documentation` and ask the issuer filer if they'd like to help with a PR.
+![Flow chart for handling a Documentation Request](./DocumentationFlow.png)
+
+### Maintenance
+
+Maintenance issues are things like bumping a package version. These issues should be labeled with `maintenance`.
 
 ### Saved replies
 

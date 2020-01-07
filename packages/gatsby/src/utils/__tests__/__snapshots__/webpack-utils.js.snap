@@ -7,7 +7,7 @@ Object {
   "type": "javascript/auto",
   "use": Array [
     Object {
-      "loader": "<PROJECT_ROOT>/node_modules/babel-loader/lib/index.js",
+      "loader": "<PROJECT_ROOT>/packages/gatsby/node_modules/babel-loader/lib/index.js",
       "options": Object {
         "babelrc": false,
         "cacheIdentifier": "develop---gatsby-dependencies@1.0.0",

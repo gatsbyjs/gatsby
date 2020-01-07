@@ -88,7 +88,7 @@ module.exports = "test-file-stub"
   includes un-transpiled ES6 code. By default Jest doesn't try to transform code
   inside `node_modules`, so you will get an error like this:
 
-```
+```text
 /my-app/node_modules/gatsby/cache-dir/gatsby-browser-entry.js:1
 ({"Object.<anonymous>":function(module,exports,require,__dirname,__filename,global,jest){import React from "react"
                                                                                             ^^^^^^

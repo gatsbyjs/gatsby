@@ -257,6 +257,14 @@ module.exports = class AnalyticsTracker {
     this.metadataCache[event] = Object.assign(cached, obj)
   }
 
+  addSiteMeasurement(event, obj) {
+    const cachedEvent = this.metadataCache[event] || {}
+    const cachedMeasurements = cachedEvent.siteMeasurements || {}
+    this.metadataCache[event] = Object.assign(cachedEvent, {
+      siteMeasurements: Object.assign(cachedMeasurements, obj),
+    })
+  }
+
   decorateAll(tags) {
     this.defaultTags = Object.assign(this.defaultTags, tags)
   }
@@ -266,10 +274,38 @@ module.exports = class AnalyticsTracker {
     this.store.updateConfig(`telemetry.enabled`, enabled)
   }
 
+  aggregateStats(data) {
+    const sum = data.reduce((acc, x) => acc + x, 0)
+    const mean = sum / data.length || 0
+    const median = data.sort()[Math.floor((data.length - 1) / 2)] || 0
+    const stdDev =
+      Math.sqrt(
+        data.reduce((acc, x) => acc + Math.pow(x - mean, 2), 0) /
+          (data.length - 1)
+      ) || 0
+
+    const skewness =
+      data.reduce((acc, x) => acc + Math.pow(x - mean, 3), 0) /
+      data.length /
+      Math.pow(stdDev, 3)
+
+    return {
+      count: data.length,
+      min: data.reduce((acc, x) => (x < acc ? x : acc), data[0] || 0),
+      max: data.reduce((acc, x) => (x > acc ? x : acc), 0),
+      sum: sum,
+      mean: mean,
+      median: median,
+      stdDev: stdDev,
+      skewness: !Number.isNaN(skewness) ? skewness : 0,
+    }
+  }
+
   async sendEvents() {
     if (!this.isTrackingEnabled()) {
       return Promise.resolve()
     }
+
     return this.store.sendEvents()
   }
 }

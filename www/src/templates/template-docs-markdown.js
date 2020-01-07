@@ -134,8 +134,8 @@ function DocsTemplate({ data, location, pageContext: { next, prev } }) {
                     See the issue relating to this stub on GitHub
                   </a>
                 )}
-                <PrevAndNext sx={{ mt: 9 }} prev={prev} next={next} />
                 <MarkdownPageFooter page={page} />
+                <PrevAndNext sx={{ mt: 9 }} prev={prev} next={next} />
               </div>
             </div>
           </Container>

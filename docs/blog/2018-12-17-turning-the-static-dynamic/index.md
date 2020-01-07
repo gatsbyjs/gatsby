@@ -45,7 +45,7 @@ Let's walk through the steps:
 1. **Install dependencies**: `npm install -D http-proxy-middleware netlify-lambda npm-run-all`
 2. **Run function emulation alongside Gatsby**: replace your `scripts` in `package.json`:
 
-```js
+```json
   "scripts": {
     "develop": "gatsby develop",
     "start": "run-p start:**",
@@ -137,7 +137,7 @@ It's a different tier of concern, which makes it hard to write about in the same
 2. **Install dependencies**: `npm install netlify-identity-widget gatsby-plugin-create-client-paths`
 3. **Configure Gatsby**: for dynamic-ness!
 
-```jsx:title=gatsby-config.js
+```js:title=gatsby-config.js
 module.exports = {
   plugins: [
     {
@@ -154,7 +154,7 @@ module.exports = {
 
 Here's a usable example that stores your user in local storage:
 
-```jsx:title=service/auth.js
+```js:title=service/auth.js
 import netlifyIdentity from "netlify-identity-widget"
 
 export const isBrowser = () => typeof window !== "undefined"

@@ -2,10 +2,9 @@ import errorParser from "../error-parser"
 
 it.each([
   [
-    `vague one`,
-    `Encountered 1 error(s):
-  - Unknown field 'fdnjkgd' on type 'SiteSiteMetadata'.`,
-    `85907`,
+    `specific one`,
+    `Variable "Foo" of required type "Bar" was not provided.`,
+    `85920`,
   ],
   [`totally vague one`, `foo bar`, `85901`],
 ])(`%s`, (_name, message, expectedId) => {

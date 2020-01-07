@@ -110,6 +110,20 @@ module.exports = async function build(program: BuildArgs) {
 
   await processPageQueries()
 
+  if (telemetry.isTrackingEnabled()) {
+    // transform asset size to kB (from bytes) to fit 64 bit to numbers
+    const bundleSizes = stats
+      .toJson({ assets: true })
+      .assets.filter(asset => asset.name.endsWith(`.js`))
+      .map(asset => asset.size / 1000)
+    const pageDataSizes = [...store.getState().pageDataStats.values()]
+
+    telemetry.addSiteMeasurement(`BUILD_END`, {
+      bundleStats: telemetry.aggregateStats(bundleSizes),
+      pageDataStats: telemetry.aggregateStats(pageDataSizes),
+    })
+  }
+
   require(`../redux/actions`).boundActionCreators.setProgramStatus(
     `BOOTSTRAP_QUERY_RUNNING_FINISHED`
   )
