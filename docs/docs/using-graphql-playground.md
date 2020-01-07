@@ -14,7 +14,7 @@ GraphQL Playground is a way for you to interact with the data your sources and p
 
 To access this experimental feature utilizing GraphQL Playground with Gatsby, add `GATSBY_GRAPHQL_IDE` to your `develop` script in your `package.json`, like this:
 
-```
+```json
 "develop": "GATSBY_GRAPHQL_IDE=playground gatsby develop",
 ```
 

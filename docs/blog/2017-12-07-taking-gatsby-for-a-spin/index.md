@@ -51,7 +51,7 @@ Gatsby definitely delivers on speed. The whole PRPL pattern thing seems to work 
 
 Data from anywhere with static output. That's sort of the holy grail isn't it? Right now the data I use in this site comes from markdown files, but I can already see that switching to another content source is going to be a breeze with GraphQL. The queries are clean and readable and the Graph*i*QL IDE is the perfect helper. In a way, GraphQL allows you to separate your frontend from the type of data source.
 
-```es6
+```javascript
 export const query = graphql`
   query BlogPostQuery($slug: String!) {
     markdownRemark(fields: { slug: { eq: $slug } }) {
