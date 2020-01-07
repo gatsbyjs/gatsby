@@ -1,16 +1,17 @@
-const Redux = require(`redux`)
-const _ = require(`lodash`)
+import Redux from "redux"
+import _ from "lodash"
 
-const mitt = require(`mitt`)
-const thunk = require(`redux-thunk`).default
-const reducers = require(`./reducers`)
-const { writeToCache, readFromCache } = require(`./persist`)
+import mitt from "mitt"
+import thunk from "redux-thunk"
+import reducers from "./reducers"
+import { writeToCache, readFromCache } from "./persist"
+import { IReduxState, ActionsUnion } from "./types"
 
 // Create event emitter for actions
-const emitter = mitt()
+export const emitter = mitt()
 
 // Read old node data from cache.
-const readState = () => {
+export const readState = (): IReduxState => {
   try {
     const state = readFromCache()
     if (state.nodes) {
@@ -32,26 +33,31 @@ const readState = () => {
   } catch (e) {
     // ignore errors.
   }
-  return {}
+  // I feel like this could lead to bugs?
+  return {} as IReduxState
 }
 
 /**
  * Redux middleware handling array of actions
  */
-const multi = ({ dispatch }) => next => action =>
+const multi: Redux.Middleware = ({ dispatch }) => next => (
+  action: ActionsUnion
+): ActionsUnion | ActionsUnion[] =>
   Array.isArray(action) ? action.filter(Boolean).map(dispatch) : next(action)
 
-const configureStore = initialState =>
+export const configureStore = (
+  initialState: IReduxState
+): Redux.Store<IReduxState> =>
   Redux.createStore(
     Redux.combineReducers({ ...reducers }),
     initialState,
     Redux.applyMiddleware(thunk, multi)
   )
 
-const store = configureStore(readState())
+export const store = configureStore(readState())
 
 // Persist state.
-const saveState = () => {
+export const saveState = (): Promise<void> => {
   const state = store.getState()
   const pickedState = _.pick(state, [
     `nodes`,
@@ -70,11 +76,3 @@ store.subscribe(() => {
   const lastAction = store.getState().lastAction
   emitter.emit(lastAction.type, lastAction)
 })
-
-module.exports = {
-  emitter,
-  store,
-  configureStore,
-  readState,
-  saveState,
-}
