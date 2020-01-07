@@ -62,8 +62,7 @@ Now that you have your project created, let's take a look inside. You will see a
 
 These files will be present in all Gatsby starters you use, so it's worth your time to have at least a basic level of understanding with each one. Let's take a look and see what dependencies and plugins you have by default. Open up the `package.json` file and scroll down to dependencies. This will tell you what packages you already have. Mine looks like this:
 
-```json
-// package.json
+```json:title=package.json
 {
   "name": "gatsby-starter-default",
   "private": true,
@@ -149,8 +148,7 @@ npm install gatsby-source-wordpress gatsby-plugin-sitemap
 
 Looking at your `package.json` file will reveal that each of these packages have been added to the project, but this isn't enough to start using the gatsby-plugin files. You first need to add them to the `gatsby-config.js` file. Luckily, the docs for these plugins are awesome and do a good job explaining all of this. I'd recommend you take a look at them to find out what each of the settings does, but I'll provide the code for the `gatsby-config.js` file after adding all of these plugins to your site:
 
-```javascript
-// gatsby-config.js
+```javascript:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
     title: `Gatsby Default Starter`,
@@ -250,8 +248,7 @@ Unless there is some special functionality needed for blog posts, you can just [
 
 Below is the code I'm using for the template starter. This is just to make sure things are working after you finish setting up your `gatsby-node.js` logic. Once you know the page is being created, you will update the template to display correctly.
 
-```javascript
-// src/templates/BlogPost.js
+```jsx:title=src/templates/BlogPost.js
 import React from "react"
 import Layout from "../components/layout"
 
@@ -279,9 +276,7 @@ The gatsby-node.js file allows you to pull in a template file, then query your d
 
 The code below pulls in the data for blog posts from WordPress and creates a page for each one using the createPage API provided by Gatsby. It is also much easier to pull in templates in this file using the path package, so I installed it using `npm install path`.
 
-```javascript
-// gatsby-node.js
-
+```javascript:title=gatsby-node.js
 /**
  * Implement Gatsby's Node APIs in this file.
  *
@@ -337,8 +332,7 @@ You can now see all of the pages available and clicking on one should take you t
 
 Now that you have pages being created at the desired locations, you should update your blog post template to display the appropriate data. Although you need to make some changes, you will keep it as a stateless functional component. The code below will create your template. I would like to point out that you are using GraphQL to query the information which is then used as a prop called data.
 
-```javascript
-// src/templates/BlogPostTemplate.js
+```jsx:title=src/templates/BlogPostTemplate.js
 import React from "react"
 import { graphql } from "gatsby"
 import Img from "gatsby-image"
