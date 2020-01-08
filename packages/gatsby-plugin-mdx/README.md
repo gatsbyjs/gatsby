@@ -278,7 +278,7 @@ Here's a color picker!
 <SketchPicker />
 ```
 
-_**Note:** you should rerun your gatsby development environment to update imports in mdx files. Otherwise, you'll get a `ReferenceError` for new imports. You can use the shortcodes approach if that is an issue for you.
+_**Note:** You should rerun your Gatsby development environment to update imports in MDX files. Otherwise, you'll get a `ReferenceError` for new imports. You can use the shortcodes approach if that is an issue for you._
 
 #### Shortcodes
 
