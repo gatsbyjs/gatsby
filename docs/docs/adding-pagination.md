@@ -13,7 +13,7 @@ The information needed to query for those specific items (i.e. values for [`limi
 
 ## Example
 
-```js:title=src/templates/blog-list-template.js
+```jsx:title=src/templates/blog-list-template.js
 import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
