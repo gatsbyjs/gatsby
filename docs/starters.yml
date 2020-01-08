@@ -4893,6 +4893,18 @@
     - Basic SEO, site metadata
     - Prettier
     - Social media links
+- url: https://greater-gatsby.now.sh
+  repo: https://github.com/rbutera/greater-gatsby
+  description: Barebones and lightweight starter with TypeScript, PostCSS, TailwindCSS and Storybook.
+  tags:
+    - PWA
+    - Language:TypeScript
+    - Styling:Tailwind
+  features:
+    - Lightweight & Barebones
+    - includes Storybook
+    - Full TypeScript support
+    - Uses styled-components Global Styles API for consistency in styling across application and Storybook
 - url: https://gatsby-simplefolio.netlify.com/
   repo: https://github.com/cobidev/gatsby-simplefolio
   description: A clean, beautiful and responsive portfolio template for Developers ⚡️
