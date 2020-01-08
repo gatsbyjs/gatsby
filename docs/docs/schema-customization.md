@@ -423,16 +423,16 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       publishedAt: Date @dateformat(formatString: "DD-MM-YYYY")
     }`,
     schema.buildObjectType({
-      name: 'AuthorJson',
+      name: "AuthorJson",
       fields: {
         joinedAt: {
-          type: 'Date',
+          type: "Date",
           extensions: {
-            dateformat: {}
-          }
-        }
-      }
-    })
+            dateformat: {},
+          },
+        },
+      },
+    }),
   ]
   createTypes(typeDefs)
 }
