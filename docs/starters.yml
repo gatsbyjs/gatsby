@@ -4595,9 +4595,7 @@
   tags:
     - Documentation
     - Markdown
-    - AntV
-    - antd
-    - Ant Design
+    - Styling:Other
   features:
     - ⚛ Prerendered static site
     - 🌎 Internationalization support by i18next
