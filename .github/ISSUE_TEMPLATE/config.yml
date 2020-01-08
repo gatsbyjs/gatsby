@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Gatsby Discord
+    url: http://gatsby.dev/discord
+    about: Ask questions, get help and discuss new things you're building with the Gatsby community.
+  - name: AskGatsbyJS Twitter
+    url: https://twitter.com/AskGatsbyJS
+    about: The official Twitter account to ask questions and get help with Gatsby.
