@@ -4830,6 +4830,21 @@
     - 📓 Visual testing with Storybook
     - ✔️ CI with GitHub Actions
     - ⚡ CD with Netlify
+- url: https://help.dferber.de
+  repo: https://github.com/dferber90/gatsby-starter-help-center
+  description: A themeable starter for a help center
+  tags:
+    - Documentation
+    - Markdown
+    - MDX
+    - Search
+  features:
+    - Manage content in Markdown and YAML files
+    - Multiple authors possible
+    - Apply your own theme
+    - Usable in any language
+    - SEO friendly
+    - Easy to add Analytics
 - url: https://evaluates2.github.io/Gatsby-Starter-TypeScript-Redux-TDD-BDD
   repo: https://github.com/Evaluates2/Gatsby-Starter-TypeScript-Redux-TDD-BDD
   description: An awesome Gatsby starter template that takes care of the tooling setup, allowing you and your team to dive right into building ultra-fast React applications quickly and deploy them with confidence! 📦
