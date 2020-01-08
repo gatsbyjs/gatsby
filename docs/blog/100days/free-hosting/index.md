@@ -21,7 +21,7 @@ To complete this challenge, we would like you to:
 
 1. host your project in a cloud git repository (publicly or privately),
 2. then use a “build service” to create a production version of your site
-3. and automatically publish your site’s assets directly to a CDN.
+3. and automatically publish your site’s assets directly to a Content Delivery Network (CDN).
 
 Amazingly, for small projects you can use all of these services for free. There are many Gatsby sites in the wild that pay \$0 for hosting!
 
