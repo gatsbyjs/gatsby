@@ -1,6 +1,6 @@
 import store from "../../store"
 
-export const setApiHelpersToState = (helpers, pluginOptions) => {
+export const setGatsbyApiToState = (helpers, pluginOptions) => {
   //
   // add the plugin options and Gatsby API helpers to our store
   // to access them more easily

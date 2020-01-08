@@ -1,5 +1,7 @@
 import store from "../../store"
 import { getContentTypeQueryInfos } from "../source-nodes/fetch-nodes"
+import { getPluginOptions } from "../../utils/get-gatsby-api"
+import { createRemoteMediaItemNode } from "../source-nodes/create-remote-media-item-node"
 
 const state = store.getState()
 const { fieldAliases } = state.introspection
@@ -279,24 +281,33 @@ export default async ({ actions, schema }) => {
             //   link: {}
             // },
             resolve: (mediaItemNode, args, context, info) => {
-              if (!mediaItemNode || !mediaItemNode.remoteFile) {
+              if (!mediaItemNode) {
                 return null
               }
 
-              return context.nodeModel.getNodeById({
+              if (
+                !mediaItemNode.remoteFile &&
+                !getPluginOptions().type.MediaItem.onlyFetchIfReferenced
+              ) {
+                // this isn't such a good way to do this.
+                // query running prevents us from downloading a bunch of images in parallell
+                // and this messes up the cli output.
+                // for now MediaItem.onlyFetchIfReferenced = true is the recommended way to get media files
+                return createRemoteMediaItemNode({
+                  mediaItemNode,
+                })
+              }
+
+              if (!mediaItemNode.remoteFile) {
+                return null
+              }
+
+              const node = context.nodeModel.getNodeById({
                 id: mediaItemNode.remoteFile.id,
                 type: `File`,
               })
 
-              // we could create these remote media item nodes when queried for
-              // instead of downloading all referenced nodes and linking by id
-              // but it messes up the cli output, and queries are run in order so we wouldn't have parallelized downloads which is too slow
-              // anyway we could just put the download here  in the resolver
-              // if that ever changes:
-              // createRemoteMediaItemNode({
-              //   mediaItemNode,
-              //   helpers,
-              // })
+              return node
             },
           }
         }

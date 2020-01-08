@@ -89,7 +89,7 @@ export const query = graphql`
       }
     }
 
-    # allWpAlot(limit: 10) {
+    # allWpAlot(filter: { featuredImage: { sourceUrl: { ne: null } } }) {
     #   nodes {
     #     title
     #     link

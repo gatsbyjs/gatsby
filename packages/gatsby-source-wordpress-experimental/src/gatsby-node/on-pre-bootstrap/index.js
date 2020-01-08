@@ -2,16 +2,14 @@ import { buildNodeQueriesFromIntrospection } from "./build-queries-from-introspe
 import formatLogMessage from "../../utils/format-log-message"
 import checkPluginRequirements from "./check-plugin-requirements"
 import store from "../../store"
-import { setApiHelpersToState } from "./set-api-helpers-to-state"
+import { setGatsbyApiToState } from "./set-gatsby-api-to-state"
 
 const onPreBootstrap = async (helpers, pluginOptions) => {
-  const api = [helpers, pluginOptions]
-
-  setApiHelpersToState(helpers, pluginOptions)
+  setGatsbyApiToState(helpers, pluginOptions)
 
   //
   // exit the build if requirements aren't met
-  await checkPluginRequirements(...api)
+  await checkPluginRequirements()
 
   //
   // Introspect schema and build gql queries
@@ -23,7 +21,7 @@ const onPreBootstrap = async (helpers, pluginOptions) => {
     activity.start()
   }
 
-  await buildNodeQueriesFromIntrospection(...api)
+  await buildNodeQueriesFromIntrospection()
 
   if (pluginOptions.verbose) {
     activity.end()

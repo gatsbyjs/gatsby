@@ -1,3 +1,5 @@
+import merge from "lodash/merge"
+
 const introspection = {
   state: {
     queries: {},
@@ -72,12 +74,20 @@ const gatsbyApi = {
     helpers: {},
     pluginOptions: {
       verbose: false,
+      schema: {
+        queryDepth: 10,
+      },
+      type: {
+        MediaItem: {
+          onlyFetchIfReferenced: false,
+        },
+      },
     },
   },
 
   reducers: {
     setState(state, payload) {
-      return { ...state, ...payload }
+      return merge(state, payload)
     },
   },
 }

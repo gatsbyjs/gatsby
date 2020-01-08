@@ -1,12 +1,11 @@
 import { CREATED_NODE_IDS } from "../constants"
 import { fetchAndRunWpActions } from "./wp-actions"
 import formatLogMessage from "../../utils/format-log-message"
+import { getGatsbyApi } from "../../utils/get-gatsby-api"
 
-const fetchAndApplyNodeUpdates = async (
-  { since, intervalRefetching },
-  helpers,
-  pluginOptions
-) => {
+const fetchAndApplyNodeUpdates = async ({ since, intervalRefetching }) => {
+  const { helpers, pluginOptions } = getGatsbyApi()
+
   const { cache, reporter } = helpers
   let cachedNodeIds = await cache.get(CREATED_NODE_IDS)
 

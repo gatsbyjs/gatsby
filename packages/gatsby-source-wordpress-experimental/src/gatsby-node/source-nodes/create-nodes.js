@@ -1,15 +1,19 @@
 import execall from "execall"
 import fetchReferencedMediaItemsAndCreateNodes from "./fetch-referenced-media-items"
 import urlToPath from "../../utils/url-to-path"
-// import store from "../../store"
+import { getGatsbyApi } from "../../utils/get-gatsby-api"
 
 // const imgSrcRemoteFileRegex = /(?:src=\\")((?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#/%=~_|$?!:,.]*\)|[A-Z0-9+&@#/%=~_|$])\.(?:jpeg|jpg|png|gif|ico|pdf|doc|docx|ppt|pptx|pps|ppsx|odt|xls|psd|mp3|m4a|ogg|wav|mp4|m4v|mov|wmv|avi|mpg|ogv|3gp|3g2|svg|bmp|tif|tiff|asf|asx|wm|wmx|divx|flv|qt|mpe|webm|mkv|txt|asc|c|cc|h|csv|tsv|ics|rtx|css|htm|html|m4b|ra|ram|mid|midi|wax|mka|rtf|js|swf|class|tar|zip|gz|gzip|rar|7z|exe|pot|wri|xla|xlt|xlw|mdb|mpp|docm|dotx|dotm|xlsm|xlsb|xltx|xltm|xlam|pptm|ppsm|potx|potm|ppam|sldx|sldm|onetoc|onetoc2|onetmp|onepkg|odp|ods|odg|odc|odb|odf|wp|wpd|key|numbers|pages))(?=\\"| |\.)/gim
 
 export const createGatsbyNodesFromWPGQLContentNodes = async (
   { wpgqlNodesByContentType },
-  { actions, createContentDigest },
-  pluginOptions
+  originalHelpers
 ) => {
+  const {
+    helpers: { actions, createContentDigest },
+    pluginOptions,
+  } = getGatsbyApi()
+
   const createdNodeIds = []
   const referencedMediaItemNodeIds = new Set()
 
@@ -36,7 +40,7 @@ export const createGatsbyNodesFromWPGQLContentNodes = async (
         //   store.dispatch.imageNodes.addImgMatches(imageUrlMatches)
         // }
 
-        if (pluginOptions.schema.MediaItem.onlyFetchIfReferenced) {
+        if (pluginOptions.type.MediaItem.onlyFetchIfReferenced) {
           // get an array of all referenced media file ID's
           const matchedIds = execall(/"id":"([^"]*)","sourceUrl"/gm, nodeString)
             .map(match => match.subMatches[0])
@@ -66,7 +70,7 @@ export const createGatsbyNodesFromWPGQLContentNodes = async (
   const referencedMediaItemNodeIdsArray = [...referencedMediaItemNodeIds]
 
   if (
-    pluginOptions.schema.MediaItem.onlyFetchIfReferenced &&
+    pluginOptions.type.MediaItem.onlyFetchIfReferenced &&
     referencedMediaItemNodeIdsArray.length
   ) {
     await fetchReferencedMediaItemsAndCreateNodes({

@@ -1,6 +1,7 @@
 import pRetry from "p-retry"
 import { createRemoteFileNode } from "gatsby-source-filesystem"
 import store from "../../store"
+import { getHelpers } from "../../utils/get-gatsby-api"
 
 export const getFileNodeMetaBySourceUrl = sourceUrl => {
   const fileNodesMetaByUrls = store.getState().imageNodes.nodeMetaByUrl
@@ -31,7 +32,8 @@ export const getFileNodeByMediaItemNode = async ({
   return null
 }
 
-export const createRemoteMediaItemNode = async ({ mediaItemNode, helpers }) => {
+export const createRemoteMediaItemNode = async ({ mediaItemNode }) => {
+  const helpers = getHelpers()
   const existingNode = await getFileNodeByMediaItemNode({
     mediaItemNode,
     helpers,
@@ -49,13 +51,13 @@ export const createRemoteMediaItemNode = async ({ mediaItemNode, helpers }) => {
     actions: { createNode },
   } = helpers
 
-  const { sourceUrl, modifiedGmt } = mediaItemNode
+  const { mediaItemUrl, modifiedGmt } = mediaItemNode
 
   // Otherwise we need to download it
   const remoteFileNode = await pRetry(
     async () => {
       const node = await createRemoteFileNode({
-        url: sourceUrl,
+        url: mediaItemUrl,
         parentNodeId: mediaItemNode.id,
         store: gatsbyStore,
         cache,
@@ -65,12 +67,17 @@ export const createRemoteMediaItemNode = async ({ mediaItemNode, helpers }) => {
       })
 
       if (!node) {
-        throw new Error(`Couldn't create file node from ${sourceUrl}`)
+        throw new Error(`Couldn't create file node from ${mediaItemUrl}`)
       }
 
       return node
     },
-    { retries: 10, onFailedAttempt: error => helpers.reporter.error(error) }
+    {
+      retries: 10,
+      onFailedAttempt: error => {
+        helpers.reporter.error(error)
+      },
+    }
   )
 
   // push it's id and url to our store for caching,
@@ -78,7 +85,7 @@ export const createRemoteMediaItemNode = async ({ mediaItemNode, helpers }) => {
   // and so we can easily access the id by source url later
   store.dispatch.imageNodes.pushNodeMeta({
     id: remoteFileNode.id,
-    sourceUrl,
+    sourceUrl: mediaItemUrl,
     modifiedGmt,
   })
 

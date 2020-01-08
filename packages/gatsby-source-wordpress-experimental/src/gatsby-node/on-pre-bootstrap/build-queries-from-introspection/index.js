@@ -60,7 +60,11 @@ const generateQueriesFromIntrospection = async ({
   // for example we need to do posts(where: { parent: null }) { nodes { ... }}
   // https://github.com/wp-graphql/wp-graphql/issues/928
   const query = getAvailablePostTypesQuery()
-  const { url, schema } = pluginOptions
+  const {
+    url,
+    type: typeOptions,
+    schema: { queryDepth },
+  } = pluginOptions
   const {
     data: { postTypes },
   } = await fetchGraphql({ url, query })
@@ -79,7 +83,7 @@ const generateQueriesFromIntrospection = async ({
 
     const { fields } = nodesType
 
-    const settings = schema[nodesType.name] || {}
+    const settings = typeOptions[nodesType.name] || {}
 
     const singleTypeInfo = rootFields.find(
       field => field.type.name === nodesType.name
@@ -88,7 +92,7 @@ const generateQueriesFromIntrospection = async ({
     const singleFieldName = singleTypeInfo.name
 
     const transformedFields = recursivelyTransformFields({
-      maxDepth: 3,
+      maxDepth: queryDepth,
       field: nodesType,
       fields,
       futureGatsbyNodesInfo,
@@ -128,10 +132,9 @@ const generateQueriesFromIntrospection = async ({
 
 const nodeListFilter = field => field.name === `nodes`
 
-export const buildNodeQueriesFromIntrospection = async (
-  helpers,
-  pluginOptions
-) => {
+export const buildNodeQueriesFromIntrospection = async () => {
+  const { pluginOptions, helpers } = store.getState().gatsbyApi
+
   const QUERY_CACHE_KEY = `${pluginOptions.url}--introspection-node-queries`
   const INTROSPECTION_CACHE_KEY = `${pluginOptions.url}--introspection-response`
 
@@ -181,6 +184,8 @@ Generating queries from introspection and re-fetching all data.`
     // and cache them
     await helpers.cache.set(QUERY_CACHE_KEY, queries)
   }
+
+  // dd(Object.values(queries).map(query => query.typeInfo))
 
   // set the queries in our redux store to use later
   store.dispatch.introspection.setState({

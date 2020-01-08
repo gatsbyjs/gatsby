@@ -3,6 +3,7 @@ import paginatedWpNodeFetch from "./paginated-wp-node-fetch"
 import formatLogMessage from "../../utils/format-log-message"
 import { CREATED_NODE_IDS } from "../constants"
 import store from "../../store"
+import { getGatsbyApi } from "../../utils/get-gatsby-api"
 
 export const fetchWPGQLContentNodes = async ({
   queryInfo,
@@ -56,11 +57,9 @@ export const fetchWPGQLContentNodes = async ({
 
 export const getContentTypeQueryInfos = () => {
   const { queries } = store.getState().introspection
-  const queryInfos = Object.values(queries).filter(queryInfo => {
-    const { settings } = queryInfo
-
-    return !(settings.exclude || settings.onlyFetchIfReferenced)
-  })
+  const queryInfos = Object.values(queries).filter(
+    ({ settings }) => !settings.exclude
+  )
   return queryInfos
 }
 
@@ -71,6 +70,10 @@ export const fetchWPGQLContentNodesByContentType = async () => {
 
   await Promise.all(
     queries.map(async queryInfo => {
+      if (queryInfo.settings.onlyFetchIfReferenced) {
+        return
+      }
+
       const contentNodeGroup = await fetchWPGQLContentNodes({ queryInfo })
 
       if (contentNodeGroup) {
@@ -82,9 +85,10 @@ export const fetchWPGQLContentNodesByContentType = async () => {
   return contentNodeGroups
 }
 
-export const fetchAndCreateAllNodes = async (helpers, pluginOptions) => {
-  const api = [helpers, pluginOptions]
+export const fetchAndCreateAllNodes = async () => {
+  const { helpers, pluginOptions } = getGatsbyApi()
 
+  const api = [helpers, pluginOptions]
   const { reporter, cache } = helpers
 
   //

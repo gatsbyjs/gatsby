@@ -88,7 +88,7 @@ export default async function fetchReferencedMediaItemsAndCreateNodes({
         helpers,
       })
 
-      await actions.createNode({
+      node = {
         ...node,
         remoteFile: {
           id: remoteFile.id,
@@ -98,7 +98,9 @@ export default async function fetchReferencedMediaItemsAndCreateNodes({
           contentDigest: createContentDigest(node),
           type: `WpMediaItem`,
         },
-      })
+      }
+
+      await actions.createNode(node)
     })
   )
 

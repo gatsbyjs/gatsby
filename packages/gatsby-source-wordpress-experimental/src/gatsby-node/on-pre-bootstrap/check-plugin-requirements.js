@@ -1,8 +1,9 @@
 import fetchGraphql from "../../utils/fetch-graphql"
+import { getPluginOptions } from "../../utils/get-gatsby-api"
 
-const isWpGatsby = async (_, pluginOptions) =>
+const isWpGatsby = async () =>
   fetchGraphql({
-    url: pluginOptions.url,
+    url: getPluginOptions().url,
     query: `
         {
           isWpGatsby
@@ -15,8 +16,8 @@ const isWpGatsby = async (_, pluginOptions) =>
     panicOnError: true,
   })
 
-const checkPluginRequirements = async (helpers, pluginOptions) => {
-  await isWpGatsby(helpers, pluginOptions)
+const checkPluginRequirements = async () => {
+  await isWpGatsby()
 }
 
 export default checkPluginRequirements
