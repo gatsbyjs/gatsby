@@ -12,7 +12,7 @@ cd "$1" || exit
 yarn
 
 echo "=== Copying built Gatsby to website."
-gatsby-dev --scan-once --quiet
+gatsby-dev --scan-once
 
 # copy file if target dir exists
 FRAGMENTSDIR="node_modules/gatsby-transformer-sharp/src"

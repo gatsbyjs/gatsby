@@ -1,0 +1,41 @@
+{
+  "name": "gatsby-core-utils",
+  "version": "1.0.25",
+  "description": "A collection of gatsby utils used in different gatsby packages",
+  "keywords": [
+    "gatsby",
+    "gatsby-core-utils"
+  ],
+  "author": "Ward Peeters <ward@coding-tech.com>",
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-core-utils#readme",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-core-utils"
+  },
+  "scripts": {
+    "build": "babel src --out-dir dist/ --ignore **/__tests__",
+    "prepare": "cross-env NODE_ENV=production npm run build",
+    "watch": "babel -w src --out-dir dist/ --ignore **/__tests__"
+  },
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "files": [
+    "dist/",
+    "index.d.ts"
+  ],
+  "types": "index.d.ts",
+  "dependencies": {
+    "ci-info": "2.0.0",
+    "node-object-hash": "^2.0.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.7.5",
+    "@babel/core": "^7.7.5",
+    "babel-preset-gatsby-package": "^0.2.14",
+    "cross-env": "^5.2.1"
+  }
+}

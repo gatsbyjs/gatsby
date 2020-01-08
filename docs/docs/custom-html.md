@@ -15,25 +15,34 @@ cp .cache/default-html.js src/html.js
 
 And then make modifications as needed.
 
-### Required props
+If you need to insert custom html into the `<head>` or `<footer>` of each page on your site, you can use `html.js`.
+
+> Customizing `html.js` is a workaround solution for when the use of the appropriate APIs is not available in `gatsby-ssr.js`. Consider using [`onRenderBody`](/docs/ssr-apis/#onRenderBody) or [`onPreRenderHTML`](/docs/ssr-apis/#onPreRenderHTML) instead of the method above.
+> As a further consideration, customizing `html.js` is not supported within a Gatsby Theme. Use the API methods mentioned instead.
+
+## Required props
 
 Note: the various props that are rendered into pages _are_ required e.g.
 `headComponents`, `preBodyComponents`, `body`, and `postBodyComponents`.
 
-### React Helmet
+## Inserting html into the `<head>`
 
-Also, anything you render in the `html.js` component will _not_ be made "live" in
+Anything you render in the `html.js` component will _not_ be made "live" in
 the client like other components. If you want to dynamically update your
 `<head>` we recommend using
 [React Helmet](/packages/gatsby-plugin-react-helmet/)
 
-### Target container
+## Inserting html into the `<footer>`
+
+If you want to insert custom html into the footer, html.js is the preferred way of doing this. If you're writing a plugin, consider using the `setPostBodyComponents` prop in the [Gatsby SSR API](/docs/ssr-apis/).
+
+## Target container
 
 If you see this error: `Uncaught Error: _registerComponent(...): Target container is not a DOM element.` it means your `html.js` is missing the required
 "target container". Inside your `<body>` you must have a div with an id of
 `___gatsby` like:
 
-```jsx
+```jsx:title=src/html.js
 <div
   key={`body`}
   id="___gatsby"
@@ -41,11 +50,11 @@ If you see this error: `Uncaught Error: _registerComponent(...): Target containe
 />
 ```
 
-### Adding custom JavaScript
+## Adding custom JavaScript
 
 You can add custom JavaScript to your HTML document by using React's [dangerouslySetInnerHTML](https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml) attribute.
 
-```jsx
+```jsx:title=src/html.js
 <script
   dangerouslySetInnerHTML={{
     __html: `

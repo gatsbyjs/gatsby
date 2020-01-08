@@ -1,40 +1,24 @@
-import React from "react"
-import { css } from "glamor"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
+import { Fragment } from "react"
+import { keyframes } from "@emotion/core"
+import { Link, StaticQuery, graphql } from "gatsby"
 
-import { rhythm, scale, options } from "../utils/typography"
-import presets, { colors } from "../utils/presets"
-import logo from "../monogram.svg"
-import { GraphQLIcon, ReactJSIcon } from "../assets/logos"
-import { vP } from "../components/gutters"
+import logo from "../assets/monogram.svg"
+import { GraphQLIcon, ReactJSIcon } from "../assets/tech-logos"
 import FuturaParagraph from "../components/futura-paragraph"
 import TechWithIcon from "../components/tech-with-icon"
 
-const stripeColor = `255, 255, 255, 0.9`
-const stripeSize = 15
-const stripeAnimation = css.keyframes({
-  "0%": {
-    backgroundPosition: `${rhythm(stripeSize)} ${rhythm(stripeSize * 2)}`,
-  },
-  "100%": { backgroundPosition: `0 0` },
-})
-const stripeBg = {
-  backgroundColor: colors.ui.whisper,
-  backgroundSize: `${rhythm(stripeSize)} ${rhythm(stripeSize)}`,
-  backgroundImage: `linear-gradient(45deg, rgba(${stripeColor}) 25%, transparent 25%, transparent 50%, rgba(${stripeColor}) 50%, rgba(${stripeColor}) 75%, transparent 75%, transparent)`,
-  animation: `${stripeAnimation} 14s linear infinite`,
-}
-const lineAnimation = css.keyframes({
-  to: {
-    strokeDashoffset: 10,
-  },
+const lineAnimation = keyframes({
+  to: { strokeDashoffset: 10 },
 })
 
 const Segment = ({ className, children }) => (
   <div
     className={`Segment ${className}`}
     css={{
-      maxWidth: rhythm(30),
       margin: `0 auto`,
+      maxWidth: `48rem`,
       textAlign: `center`,
     }}
   >
@@ -45,19 +29,20 @@ const Segment = ({ className, children }) => (
 const SegmentTitle = ({ children }) => (
   <h2
     className="Segment-title"
-    css={{
+    sx={{
+      bg: `accent`,
+      borderRadius: 1,
+      bottom: t => `-${t.space[2]}`,
+      color: `black`,
       display: `inline`,
-      background: colors.accent,
-      color: colors.gray.copy,
-      borderRadius: presets.radius,
+      fontSize: 1,
+      fontWeight: `body`,
+      letterSpacing: `tracked`,
+      lineHeight: `solid`,
       margin: `0 auto`,
       position: `relative`,
-      bottom: `-.5rem`,
-      padding: `.35rem .6rem`,
-      fontWeight: `normal`,
-      letterSpacing: `.5px`,
-      ...scale(-2 / 5),
-      lineHeight: 1,
+      px: 3,
+      py: 2,
       textTransform: `uppercase`,
       transform: `translateZ(0)`,
     }}
@@ -75,8 +60,8 @@ const VerticalLine = () => (
   >
     <path
       d="M10 40 L10 -10"
-      css={{
-        stroke: colors.lilac,
+      sx={{
+        stroke: t => t.colors.lilac,
         strokeWidth: `3`,
         strokeLinecap: `round`,
         strokeDasharray: `0.5 10`,
@@ -87,24 +72,26 @@ const VerticalLine = () => (
 )
 
 const box = {
-  border: `1px solid ${colors.ui.light}`,
-  borderRadius: presets.radiusLg,
-  padding: `${rhythm(1)} ${rhythm(1)} 0`,
-  background: colors.ui.whisper,
+  borderColor: `ui.border`,
+  borderRadius: 2,
+  borderStyle: `solid`,
+  borderWidth: `1px`,
+  px: 7,
+  py: 5,
 }
 
 const borderAndBoxShadow = {
-  border: `1px solid ${colors.ui.light}`,
-  background: `#fff`,
-  width: `100%`,
-  boxShadow: `0 5px 15px rgba(0,0,0,0.035)`,
-  borderRadius: presets.radius,
+  bg: `card.background`,
+  border: 0,
+  borderRadius: 1,
+  boxShadow: `raised`,
   transform: `translateZ(0)`,
+  width: `100%`,
 }
 
 const SourceItems = ({ children }) => (
   <div
-    css={{
+    sx={{
       display: `flex`,
       flexWrap: `wrap`,
       justifyContent: `center`,
@@ -115,28 +102,23 @@ const SourceItems = ({ children }) => (
   </div>
 )
 
-const boxPadding = { padding: `${rhythm(1 / 3)} ${rhythm(2 / 4)}` }
+const boxPadding = { py: 3, px: 4 }
 
 const SourceItem = ({ children }) => (
   <div
-    css={{
-      boxSizing: `border-box`,
-      padding: `0 ${rhythm(2 / 3)} ${rhythm(1)}`,
+    sx={{
+      py: 4,
+      px: 5,
       display: `flex`,
-      [presets.Mobile]: {
-        flex: `1 1 50%`,
-      },
-      [presets.Phablet]: {
-        flex: `1 1 33%`,
-        maxWidth: `33%`,
-      },
+      flex: [null, `1 1 50%`, null, `1 1 33%`],
+      maxWidth: [null, null, null, `33%`],
     }}
   >
     <div
-      css={{
+      sx={{
         ...borderAndBoxShadow,
         ...boxPadding,
-        lineHeight: 1.2,
+        lineHeight: `dense`,
         textAlign: `left`,
       }}
     >
@@ -147,75 +129,70 @@ const SourceItem = ({ children }) => (
 
 const ItemTitle = ({ children }) => (
   <h3
-    css={{
-      color: colors.gatsby,
+    sx={{
+      fontSize: 2,
       margin: 0,
-      fontStyle: `normal`,
-      ...scale(0),
+      color: `card.header`,
     }}
   >
     {children}
   </h3>
 )
 
-const ItemDescription = ({ children }) => (
+const ItemDescription = ({ children, color }) => (
   <small
-    css={{
-      lineHeight: 1.2,
+    sx={{
+      color: color ? color : `textMuted`,
       display: `block`,
-      color: colors.gatsby,
-      [presets.Hd]: {
-        fontSize: scale(-1 / 5).fontSize,
-      },
+      fontFamily: `system`,
+      fontSize: 1,
+      lineHeight: `dense`,
     }}
   >
     {children}
   </small>
 )
 
-const Gatsby = ({ children }) => (
+const ItemDescriptionLink = ({ to, children }) => (
+  <Link css={{ "&&": { color: `purple.80` } }} to={to}>
+    {children}
+  </Link>
+)
+
+const Gatsby = () => (
   <div
-    css={{
+    sx={{
       ...borderAndBoxShadow,
-      padding: rhythm(1),
+      bg: `white`,
+      p: 5,
       margin: `0 auto`,
-      width: rhythm(5.5),
-      height: rhythm(5.5),
-      [presets.Desktop]: {
-        width: rhythm(6),
-        height: rhythm(6),
-      },
+      width: `8.5rem`,
+      height: `8.5rem`,
     }}
   >
     <img
       src={logo}
-      css={{
+      sx={{
         display: `inline-block`,
-        height: rhythm(1.75),
-        width: rhythm(1.75),
-        [presets.Desktop]: {
-          width: rhythm(2.25),
-          height: rhythm(2.25),
-        },
+        height: [t => t.space[8], null, null, null, t => t.space[9]],
         margin: 0,
         verticalAlign: `middle`,
+        width: `auto`,
       }}
       alt="Gatsby"
     />
     <ItemDescription>
       <small
-        css={{
-          marginTop: `.25rem`,
+        sx={{
+          color: `grey.50`,
           display: `block`,
+          mt: 2,
+          mb: 1,
         }}
       >
         powered by
       </small>
-      <span
-        css={{
-          color: colors.gatsby,
-        }}
-      >
+      <span sx={{ color: `gatsby` }}>
         <TechWithIcon icon={GraphQLIcon}>GraphQL</TechWithIcon>
       </span>
     </ItemDescription>
@@ -223,105 +200,129 @@ const Gatsby = ({ children }) => (
 )
 
 const Diagram = () => (
-  <section
-    className="Diagram"
-    css={{
-      borderRadius: presets.radiusLg,
-      fontFamily: options.headerFontFamily.join(`,`),
-      padding: vP,
-      marginTop: rhythm(1),
-      textAlign: `center`,
-      borderTopLeftRadius: 0,
-      borderTopRightRadius: 0,
-      flex: `1 1 100%`,
-      borderTop: `1px solid ${colors.ui.light}`,
-      [presets.Tablet]: {
-        marginTop: 0,
-      },
-    }}
-  >
-    <h1 css={{ marginBottom: rhythm(1.5), ...scale(0.9) }}>How Gatsby works</h1>
-    <div css={{ maxWidth: rhythm(20), margin: `0 auto ${rhythm(2)}` }}>
-      <FuturaParagraph>
-        Gatsby lets you build blazing fast sites with <em>your data</em>,
-        whatever the source. Liberate your sites from legacy CMSs and fly into
-        the future.
-      </FuturaParagraph>
-    </div>
-
-    <Segment className="Source">
-      <SegmentTitle>Data Sources</SegmentTitle>
-      <SourceItems>
-        <SourceItem>
-          <ItemTitle>CMSs</ItemTitle>
-          <ItemDescription>Contentful, Drupal, WordPress, etc.</ItemDescription>
-        </SourceItem>
-        <SourceItem>
-          <ItemTitle>Markdown</ItemTitle>
-          <ItemDescription>Documentation, Posts, etc.</ItemDescription>
-        </SourceItem>
-        <SourceItem>
-          <ItemTitle>Data</ItemTitle>
-          <ItemDescription>
-            APIs, Databases, YAML, JSON, CSV, etc.
-          </ItemDescription>
-        </SourceItem>
-      </SourceItems>
-    </Segment>
-
-    <Segment className="Build">
-      <VerticalLine />
-      <SegmentTitle>Build</SegmentTitle>
-      <div
-        css={{
-          ...box,
-          ...stripeBg,
-          paddingTop: 0,
-          paddingBottom: 0,
+  <StaticQuery
+    query={graphql`
+      query StaticHostsQuery {
+        allStaticHostsYaml {
+          edges {
+            node {
+              title
+              url
+            }
+          }
+        }
+      }
+    `}
+    render={({ allStaticHostsYaml: { edges: staticHosts } }) => (
+      <section
+        className="Diagram"
+        sx={{
+          flex: `1 1 100%`,
+          fontFamily: `header`,
+          p: 6,
+          textAlign: `center`,
         }}
       >
-        <VerticalLine />
-        <Gatsby />
-        <VerticalLine />
-        <div
-          css={{
-            ...borderAndBoxShadow,
-            ...boxPadding,
-            paddingTop: rhythm(1 / 2),
-            paddingBottom: rhythm(1 / 2),
-            width: `auto`,
-            display: `inline-block`,
+        <h1
+          sx={{
+            fontWeight: `heading`,
+            mb: 6,
           }}
         >
-          <ItemDescription>
-            HTML &middot; CSS &middot;
-            {` `}
-            <TechWithIcon icon={ReactJSIcon} height="1.1em">
-              React
-            </TechWithIcon>
-          </ItemDescription>
+          How Gatsby works
+        </h1>
+        <div sx={{ maxWidth: `30rem`, mt: 0, mx: `auto`, mb: 9 }}>
+          <FuturaParagraph>
+            Pull data from <em>anywhere</em>
+          </FuturaParagraph>
         </div>
-        <VerticalLine />
-      </div>
-    </Segment>
 
-    <Segment className="Deploy">
-      <VerticalLine />
-      <SegmentTitle>Deploy</SegmentTitle>
-      <div
-        css={{
-          ...box,
-          paddingBottom: rhythm(1),
-        }}
-      >
-        <ItemTitle>Static Web Host</ItemTitle>
-        <ItemDescription>
-          Amazon S3, Netlify, GitHub Pages, Surge.sh, Aerobatic, Now.sh, & many
-          more
-        </ItemDescription>
-      </div>
-    </Segment>
-  </section>
+        <Segment className="Source">
+          <SegmentTitle>Data Sources</SegmentTitle>
+          <SourceItems>
+            <SourceItem>
+              <ItemTitle>CMSs</ItemTitle>
+              <ItemDescription>
+                Contentful, Drupal, WordPress, etc.
+              </ItemDescription>
+            </SourceItem>
+            <SourceItem>
+              <ItemTitle>Markdown</ItemTitle>
+              <ItemDescription>Documentation, Posts, etc.</ItemDescription>
+            </SourceItem>
+            <SourceItem>
+              <ItemTitle>Data</ItemTitle>
+              <ItemDescription>
+                APIs, Databases, YAML, JSON, CSV, etc.
+              </ItemDescription>
+            </SourceItem>
+          </SourceItems>
+        </Segment>
+
+        <Segment className="Build">
+          <VerticalLine />
+          <SegmentTitle>Build</SegmentTitle>
+          <div
+            sx={{
+              ...box,
+              backgroundColor: `purple.70`,
+              backgroundSize: t => `${t.sizes[10]} ${t.sizes[10]}`,
+              backgroundImage: t =>
+                `linear-gradient(45deg, ${t.colors.purple[80]} 25%, transparent 25%, transparent 50%, ${t.colors.purple[80]} 50%, ${t.colors.purple[80]} 75%, transparent 75%, transparent)`,
+              py: 0,
+            }}
+          >
+            <VerticalLine />
+            <Gatsby />
+            <VerticalLine />
+            <div
+              sx={{
+                ...borderAndBoxShadow,
+                ...boxPadding,
+                bg: `white`,
+                display: `inline-block`,
+                py: 3,
+                width: `auto`,
+              }}
+            >
+              <ItemDescription color="grey.50">
+                HTML &middot; CSS &middot;
+                {` `}
+                <TechWithIcon icon={ReactJSIcon} height="1.1em">
+                  React
+                </TechWithIcon>
+              </ItemDescription>
+            </div>
+            <VerticalLine />
+          </div>
+        </Segment>
+
+        <Segment className="Deploy">
+          <VerticalLine />
+          <SegmentTitle>Deploy</SegmentTitle>
+          <div
+            sx={{
+              ...box,
+              pb: 5,
+            }}
+          >
+            <ItemTitle>Web Hosting</ItemTitle>
+            <ItemDescription>
+              {staticHosts.map(({ node: staticHost }, index) => (
+                <Fragment key={staticHost.url}>
+                  {index > 0 && `, `}
+                  <ItemDescriptionLink to={staticHost.url}>
+                    {staticHost.title}
+                  </ItemDescriptionLink>
+                </Fragment>
+              ))}
+              {` `}& many more
+            </ItemDescription>
+          </div>
+        </Segment>
+      </section>
+    )}
+  />
 )
 
 export default Diagram

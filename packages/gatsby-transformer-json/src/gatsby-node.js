@@ -1,13 +1,17 @@
 const _ = require(`lodash`)
-const crypto = require(`crypto`)
 const path = require(`path`)
 
-async function onCreateNode({ node, actions, loadNodeContent, createNodeId }, pluginOptions) {
+async function onCreateNode(
+  { node, actions, loadNodeContent, createNodeId, createContentDigest },
+  pluginOptions
+) {
   function getType({ node, object, isArray }) {
     if (pluginOptions && _.isFunction(pluginOptions.typeName)) {
       return pluginOptions.typeName({ node, object, isArray })
     } else if (pluginOptions && _.isString(pluginOptions.typeName)) {
       return pluginOptions.typeName
+    } else if (node.internal.type !== `File`) {
+      return _.upperFirst(_.camelCase(`${node.internal.type} Json`))
     } else if (isArray) {
       return _.upperFirst(_.camelCase(`${node.name} Json`))
     } else {
@@ -16,18 +20,13 @@ async function onCreateNode({ node, actions, loadNodeContent, createNodeId }, pl
   }
 
   function transformObject(obj, id, type) {
-    const objStr = JSON.stringify(obj)
-    const contentDigest = crypto
-      .createHash(`md5`)
-      .update(objStr)
-      .digest(`hex`)
     const jsonNode = {
       ...obj,
       id,
       children: [],
       parent: node.id,
       internal: {
-        contentDigest,
+        contentDigest: createContentDigest(obj),
         type,
       },
     }
@@ -49,14 +48,16 @@ async function onCreateNode({ node, actions, loadNodeContent, createNodeId }, pl
     parsedContent.forEach((obj, i) => {
       transformObject(
         obj,
-        obj.id ? obj.id : createNodeId(`${node.id} [${i}] >>> JSON`),
+        obj.id ? String(obj.id) : createNodeId(`${node.id} [${i}] >>> JSON`),
         getType({ node, object: obj, isArray: true })
       )
     })
   } else if (_.isPlainObject(parsedContent)) {
     transformObject(
       parsedContent,
-      parsedContent.id ? parsedContent.id : createNodeId(`${node.id} >>> JSON`),
+      parsedContent.id
+        ? String(parsedContent.id)
+        : createNodeId(`${node.id} >>> JSON`),
       getType({ node, object: parsedContent, isArray: false })
     )
   }

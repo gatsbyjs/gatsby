@@ -1,40 +1,43 @@
-import React, { Component } from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
+import { Component } from "react"
 import {
   InstantSearch,
+  Configure,
   SearchBox,
   Stats,
   RefinementList,
   InfiniteHits,
-  Toggle,
-} from "react-instantsearch/dom"
+  ToggleRefinement,
+} from "react-instantsearch-dom"
 import { navigate as reachNavigate } from "@reach/router"
-import { colors } from "../utils/presets"
 import { Link } from "gatsby"
-import DownloadArrow from "react-icons/lib/md/file-download"
-import AlgoliaLogo from "../assets/algolia.svg"
-import debounce from "lodash/debounce"
-import unescape from "lodash/unescape"
+import ArrowDownwardIcon from "react-icons/lib/md/arrow-downward"
+import AlgoliaLogo from "../assets/vendor-logos/algolia.svg"
+import GatsbyIcon from "../components/gatsby-monogram"
+import { debounce, unescape } from "lodash-es"
 
-import presets from "../utils/presets"
-import typography, { rhythm, scale } from "../utils/typography"
-import { scrollbarStyles } from "../utils/styles"
-import { css as glam } from "glamor"
+import { space, mediaQueries } from "../gatsby-plugin-theme-ui"
+import { visuallyHidden } from "../utils/styles"
+import { Global, css } from "@emotion/core"
 import removeMD from "remove-markdown"
+import SkipNavLink from "../components/skip-nav-link"
 
 // This is for the urlSync
 const updateAfter = 700
 
 // A couple constants for CSS
-const searchInputHeight = rhythm(7 / 4)
-const searchMetaHeight = rhythm(8 / 4)
-const searchInputWrapperMargin = rhythm(3 / 4)
+const searchInputHeight = `2.25rem`
+const searchMetaHeight = `3rem`
+const searchInputWrapperMargin = space[6]
 
-glam.insert(`
-  .ais-SearchBox__input:valid ~ .ais-SearchBox__reset {
+/* stylelint-disable */
+const searchBoxStyles = t => css`
+  .ais-SearchBox-input:valid ~ .ais-SearchBox-reset {
     display: block;
   }
 
-  .ais-SearchBox__root {
+  .ais-SearchBox {
     display: inline-block;
     position: relative;
     margin: 0;
@@ -44,55 +47,52 @@ glam.insert(`
     box-sizing: border-box;
   }
 
-  .ais-SearchBox__wrapper {
+  .ais-SearchBox-form {
     height: calc(${searchInputHeight} + ${searchInputWrapperMargin});
     display: flex;
     align-items: flex-end;
+    margin-bottom: 0;
   }
 
-  .ais-SearchBox__input {
+  .ais-SearchBox-input {
+    appearance: none;
     -webkit-appearance: none;
-    background: #fff;
-    border: 1px solid ${colors.ui.bright};
-    border-radius: ${presets.radiusLg}px;
-    color: ${colors.gatsby};
+    background: ${t.colors.themedInput.background};
+    border-radius: ${t.radii[2]}px;
+    border: 0;
+    color: ${t.colors.text};
     display: inline-block;
-    font-size: 18px;
-    font-family: ${typography.options.headerFontFamily.join(`,`)};
     height: ${searchInputHeight};
     padding: 0;
     padding-right: ${searchInputHeight};
     padding-left: ${searchInputHeight};
     margin: 0 ${searchInputWrapperMargin};
-    -webkit-transition: box-shadow 0.4s ease, background 0.4s ease;
-    transition: box-shadow 0.4s ease, background 0.4s ease;
+    transition: box-shadow ${t.transition.speed.default}
+      ${t.transition.curve.default};
     vertical-align: middle;
     white-space: normal;
-    width: calc(100% - ${rhythm(6 / 4)});
-  }
-  .ais-SearchBox__input:hover,
-  .ais-SearchBox__input:active,
-  .ais-SearchBox__input:focus {
-    box-shadow: none;
-    outline: 0;
+    width: calc(100% - 2rem);
+
+    :hover,
+    :active,
+    :focus {
+      box-shadow: none;
+      outline: 0;
+    }
+
+    :active,
+    :focus {
+      box-shadow: 0 0 0 2px ${t.colors.themedInput.focusBoxShadow};
+      background: ${t.colors.themedInput.backgroundFocus};
+    }
+
+    ::placeholder {
+      color: ${t.colors.themedInput.placeholder};
+    }
   }
 
-  .ais-SearchBox__input:active,
-  .ais-SearchBox__input:focus {
-    border-color: ${colors.lilac};
-    box-shadow: 0 0 0 3px ${colors.ui.bright};
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  }
-
-  .ais-SearchBox__input::-webkit-input-placeholder,
-  .ais-SearchBox__input::-moz-placeholder,
-  .ais-SearchBox__input:-ms-input-placeholder,
-  .ais-SearchBox__input::placeholder {
-    color: ${colors.lilac};
-  }
-
-  .ais-SearchBox__submit,
-  .ais-SearchBox__reset {
+  .ais-SearchBox-submit,
+  .ais-SearchBox-reset {
     position: absolute;
     margin: 0;
     border: 0;
@@ -109,100 +109,121 @@ glam.insert(`
     user-select: none;
   }
 
-  .ais-SearchBox__submit {
+  .ais-SearchBox-submit {
     top: ${searchInputWrapperMargin};
     right: inherit;
     left: ${searchInputWrapperMargin};
-    border-radius: ${presets.radiusLg}px 0 0 ${presets.radiusLg}px;
+    border-radius: ${t.radii[2]}px 0 0 ${t.radii[2]}px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
-  .ais-SearchBox__submit:focus {
+  .ais-SearchBox-submit:focus {
     outline: 0;
   }
-  .ais-SearchBox__submit svg {
-    width: 1rem;
-    height: 1rem;
-    vertical-align: middle;
-    fill: ${colors.ui.bright};
+  .ais-SearchBox-submit:focus svg {
+    fill: ${t.colors.lilac};
+  }
+  .ais-SearchBox-submit svg {
+    width: ${t.space[4]};
+    height: ${t.space[4]};
+    fill: ${t.colors.themedInput.placeholder};
   }
 
-  .ais-SearchBox__reset {
+  .ais-SearchBox-reset {
     display: none;
     top: ${searchInputWrapperMargin};
     left: auto;
     right: ${searchInputWrapperMargin};
     font-size: inherit;
   }
-  .ais-SearchBox__reset:focus {
+  .ais-SearchBox-reset:focus {
     outline: 0;
   }
-  .ais-SearchBox__reset:hover svg {
-    fill: ${colors.gatsby};
+  .ais-SearchBox-reset:hover svg,
+  .ais-SearchBox-reset:focus svg {
+    fill: ${t.colors.gatsby};
   }
-  .ais-SearchBox__reset svg {
-    fill: ${colors.ui.bright};
-    width: 12px;
-    height: 12px;
+  .ais-SearchBox-reset svg {
+    fill: ${t.colors.themedInput.placeholder};
+    width: ${t.space[3]};
+    height: ${t.space[3]};
     vertical-align: middle;
   }
+  .ais-SearchBox-input:valid ~ .ais-SearchBox-reset {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-  .ais-InfiniteHits__loadMore {
-    background-color: transparent;
-    border: 1px solid ${colors.gatsby};
-    border-radius: ${presets.radius}px;
-    color: ${colors.gatsby};
+  .ais-InfiniteHits-list {
+    list-style: none;
+    margin-left: 0;
+    margin-bottom: 0;
+  }
+
+  .ais-InfiniteHits-item {
+    margin-bottom: 0;
+  }
+
+  .ais-InfiniteHits-loadMore {
+    background-color: ${t.colors.gatsby};
+    border: 0;
+    border-radius: ${t.radii[1]}px;
+    color: ${t.colors.white};
     cursor: pointer;
-    width: calc(100% - ${rhythm(6 / 4)});
-    margin: ${rhythm(3 / 4)};
-    height: ${rhythm(2)};
+    width: calc(100% - (${space[6]} * 2));
+    margin: ${t.space[6]};
+    height: ${t.space[9]};
     outline: none;
-    transition: all ${presets.animation.speedDefault} ${
-  presets.animation.curveDefault
-};
-    font-family: ${typography.options.headerFontFamily.join(`,`)};
+    transition: all ${t.transition.speed.default} ${t.transition.curve.default};
+    font-family: ${t.fonts.heading};
+    font-weight: bold;
   }
-  .ais-InfiniteHits__loadMore:hover {
-    background-color: ${colors.gatsby};
-    color: #fff;
+  .ais-InfiniteHits-loadMore:hover,
+  .ais-InfiniteHits-loadMore:focus {
+    background-color: ${t.colors.gatsby};
+    color: ${t.colors.white};
   }
-
-  .ais-InfiniteHits__loadMore[disabled] {
+  .ais-InfiniteHits-loadMore[disabled] {
     display: none;
   }
-`)
+`
+/* stylelint-enable */
 
 // Search shows a list of "hits", and is a child of the PluginSearchBar component
 class Search extends Component {
-  constructor(props, context) {
-    super(props)
-  }
-
   render() {
     return (
-      <div
-        css={{
-          paddingBottom: rhythm(2.5),
-          [presets.Tablet]: {
-            paddingBottom: 0,
-          },
-        }}
-      >
+      <div sx={{ pb: [11, null, null, 0] }}>
         <div
-          css={{
-            borderBottom: `1px solid ${colors.ui.light}`,
+          sx={{
+            borderBottomWidth: `1px`,
+            borderBottomStyle: `solid`,
+            borderColor: `ui.border`,
             display: `flex`,
             flexDirection: `column`,
             width: `100%`,
           }}
         >
+          <Global styles={searchBoxStyles} />
           <SearchBox translations={{ placeholder: `Search Gatsby Library` }} />
-
           <div css={{ display: `none` }}>
+            <Configure analyticsTags={[`gatsby-plugins`]} />
             <RefinementList
-              attributeName="keywords"
+              attribute="keywords"
+              transformItems={items =>
+                items.map(({ count, ...item }) => {
+                  return {
+                    ...item,
+                    count: count || 0,
+                  }
+                })
+              }
               defaultRefinement={[`gatsby-component`, `gatsby-plugin`]}
             />
-            <Toggle
-              attributeName="deprecated"
+            <ToggleRefinement
+              attribute="deprecated"
               value={false}
               label="No deprecated plugins"
               defaultRefinement={true}
@@ -210,18 +231,13 @@ class Search extends Component {
           </div>
 
           <div
-            css={{
+            sx={{
               alignItems: `center`,
-              color: colors.gray.calm,
+              color: `textMuted`,
               display: `flex`,
-              fontFamily: typography.options.headerFontFamily.join(`,`),
-              fontSize: scale(1),
               height: searchMetaHeight,
-              paddingLeft: rhythm(3 / 4),
-              paddingRight: rhythm(3 / 4),
-              [presets.Tablet]: {
-                fontSize: scale(-1 / 4).fontSize,
-              },
+              px: 6,
+              fontSize: 0,
             }}
           >
             <Stats
@@ -231,18 +247,17 @@ class Search extends Component {
                 },
               }}
             />
+            <SkipNavLink />
           </div>
         </div>
 
         <div>
           <div
-            css={{
-              [presets.Tablet]: {
-                height: `calc(100vh - ${presets.headerHeight} - ${
-                  presets.bannerHeight
-                } - ${searchInputHeight} - ${searchInputWrapperMargin} - ${searchMetaHeight})`,
+            sx={{
+              [mediaQueries.md]: {
+                height: t =>
+                  `calc(100vh - ${t.sizes.headerHeight} - ${t.sizes.bannerHeight} - ${searchInputHeight} - ${searchInputWrapperMargin} - ${searchMetaHeight})`,
                 overflowY: `scroll`,
-                ...scrollbarStyles,
               },
             }}
           >
@@ -251,7 +266,7 @@ class Search extends Component {
                 <Result
                   hit={result.hit}
                   pathname={this.props.pathname}
-                  search={this.props.searchState}
+                  query={this.props.query}
                 />
               )}
             />
@@ -259,22 +274,21 @@ class Search extends Component {
         </div>
 
         <div
-          css={{
+          sx={{
             fontSize: 0,
             lineHeight: 0,
             height: 20,
-            marginTop: rhythm(3 / 4),
+            mt: 6,
             display: `none`,
           }}
         >
           <a
             href={`https://www.algolia.com/`}
-            css={{
+            sx={{
               "&&": {
                 background: `url(${AlgoliaLogo})`,
                 border: `none`,
-                boxShadow: `none`,
-                fontWeight: `normal`,
+                fontWeight: `body`,
                 backgroundRepeat: `no-repeat`,
                 backgroundPosition: `50%`,
                 backgroundSize: `100%`,
@@ -284,7 +298,7 @@ class Search extends Component {
                 width: 110,
                 height: `100%`,
                 display: `block`,
-                marginLeft: `auto`,
+                ml: `auto`,
                 "&:hover": {
                   background: `url(${AlgoliaLogo})`,
                   backgroundRepeat: `no-repeat`,
@@ -303,98 +317,116 @@ class Search extends Component {
 }
 
 // the result component is fed into the InfiniteHits component
-const Result = ({ hit, pathname, search }) => {
+const Result = ({ hit, pathname, query }) => {
   // Example:
-  // pathname = `/plugins/gatsby-link/` || `/plugins/@comsoc/gatsby-mdast-copy-linked-files`
+  // pathname = `/packages/gatsby-link/` || `/packages/@comsoc/gatsby-mdast-copy-linked-files`
   //  hit.name = `gatsby-link` || `@comsoc/gatsby-mdast-copy-linked-files`
-  const selected = pathname.includes(hit.name)
+  const selected = new RegExp(`^/packages/${hit.name}/?$`).test(pathname)
   return (
     <Link
-      to={`/packages/${hit.name}/?=${search}`}
-      css={{
+      to={`/packages/${hit.name}/?=${query}`}
+      aria-current={selected ? `true` : undefined}
+      sx={{
         "&&": {
-          boxShadow: `none`,
-          background: selected ? `#fff` : false,
+          bg: selected ? `sidebar.itemHoverBackground` : `background`,
           borderBottom: 0,
-          color: colors.gray.dark,
           display: `block`,
-          fontWeight: `400`,
-          padding: rhythm(3 / 4),
+          fontWeight: `body`,
           position: `relative`,
-          transition: `all ${presets.animation.speedDefault} ${
-            presets.animation.curveDefault
-          }`,
+          px: 6,
+          py: 5,
+          transition: `none`,
           zIndex: selected ? 1 : false,
           "&:hover": {
-            background: selected ? `#fff` : colors.ui.border,
+            bg: selected
+              ? `sidebar.itemHoverBackground`
+              : `sidebar.itemHoverBackground`,
           },
           "&:before": {
-            background: colors.ui.border,
+            bg: `ui.border`,
             bottom: 0,
-            content: ` `,
+            content: `''`,
             height: 1,
             left: 0,
             position: `absolute`,
             top: `auto`,
             width: `100%`,
+            [mediaQueries.md]: {
+              display: `none`,
+            },
           },
           "&:after": {
-            background: selected ? colors.gatsby : false,
+            bg: selected ? `gatsby` : false,
             bottom: 0,
-            content: ` `,
-            position: `absolute`,
+            content: `''`,
             left: 0,
-            top: -1,
+            position: `absolute`,
+            top: 0,
             width: 4,
           },
         },
       }}
     >
       <div
-        css={{
+        sx={{
           alignItems: `baseline`,
           display: `flex`,
           justifyContent: `space-between`,
-          marginBottom: rhythm(typography.options.blockMarginBottom / 2),
+          mb: 3,
         }}
       >
-        <div
-          css={{
-            color: selected ? colors.gatsby : false,
-            fontFamily: typography.options.headerFontFamily.join(`,`),
+        <h2
+          sx={{
+            alignItems: `center`,
+            color: selected ? `navigation.linkColor` : `text`,
+            display: `flex`,
+            fontFamily: `system`,
+            fontSize: 1,
             fontWeight: `bold`,
-            lineHeight: 1.2,
+            my: 0,
           }}
         >
           {hit.name}
+        </h2>
+        <div>
+          <span sx={visuallyHidden}>
+            {hit.downloadsLast30Days} monthly downloads
+          </span>
         </div>
         <div
-          css={{
+          aria-hidden
+          sx={{
             alignItems: `center`,
-            color: selected ? colors.lilac : colors.gray.bright,
+            color: selected ? `lilac` : `textMuted`,
             display: `flex`,
-            fontFamily: typography.options.headerFontFamily.join(`,`),
-            fontSize: rhythm(4 / 7),
+            lineHeight: `solid`,
+            fontSize: 0,
           }}
         >
-          {hit.humanDownloadsLast30Days}
-          {` `}
+          {hit.repository &&
+            hit.name[0] !== `@` &&
+            hit.repository.url.indexOf(`https://github.com/gatsbyjs/gatsby`) ===
+              0 && (
+              <span sx={{ mr: 1 }} alt={`Official Gatsby Plugin`}>
+                <GatsbyIcon />
+              </span>
+            )}
           <span
             css={{
-              color: selected ? colors.lilac : colors.gray.bright,
-              marginLeft: rhythm(1 / 6),
+              width: `5em`,
+              textAlign: `right`,
             }}
           >
-            <DownloadArrow />
+            {hit.humanDownloadsLast30Days}
+            {` `}
+            <ArrowDownwardIcon />
           </span>
         </div>
       </div>
       <div
-        css={{
-          color: selected ? `inherit` : colors.gray.calm,
-          fontFamily: typography.options.systemFontFamily.join(`,`),
-          fontSize: scale(-1 / 2).fontSize,
-          lineHeight: 1.5,
+        sx={{
+          color: selected ? `inherit` : `textMuted`,
+          fontSize: 1,
         }}
       >
         {removeMD(unescape(hit.description))}
@@ -413,18 +445,23 @@ class PluginSearchBar extends Component {
 
   urlToSearch = () => {
     if (this.props.location.search) {
-      return this.props.location.search.slice(2)
+      const match = /(\?|&)=([^&]+)/.exec(this.props.location.search)
+      if (match) return decodeURIComponent(match[2])
+      return ``
     }
     return ``
   }
 
   updateHistory(value) {
-    reachNavigate(`${this.props.location.pathname}?=${value.query}`, {
-      replace: true,
-    })
+    reachNavigate(
+      `${this.props.location.pathname}?=${encodeURIComponent(value.query)}`,
+      {
+        replace: true,
+      }
+    )
   }
 
-  onSearchStateChange(searchState) {
+  onSearchStateChange = searchState => {
     this.updateHistory(searchState)
     this.setState({ searchState })
   }
@@ -437,11 +474,11 @@ class PluginSearchBar extends Component {
           appId="OFCNCOG2CU"
           indexName="npm-search"
           searchState={this.state.searchState}
-          onSearchStateChange={this.onSearchStateChange.bind(this)}
+          onSearchStateChange={this.onSearchStateChange}
         >
           <Search
             pathname={this.props.location.pathname}
-            searchState={this.state.searchState.query}
+            query={this.state.searchState.query}
           />
         </InstantSearch>
       </div>

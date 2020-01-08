@@ -1,30 +1,30 @@
-const crypto = require(`crypto`)
 const uuidv4 = require(`uuid/v4`)
-const { buildSchema, printSchema } = require(`graphql`)
+const { buildSchema, printSchema } = require(`gatsby/graphql`)
 const {
-  makeRemoteExecutableSchema,
   transformSchema,
   introspectSchema,
   RenameTypes,
-} = require(`graphql-tools`)
+} = require(`graphql-tools-fork`)
 const { createHttpLink } = require(`apollo-link-http`)
-const fetch = require(`node-fetch`)
+const nodeFetch = require(`node-fetch`)
 const invariant = require(`invariant`)
+
 const {
   NamespaceUnderFieldTransform,
   StripNonQueryTransform,
 } = require(`./transforms`)
 
 exports.sourceNodes = async (
-  { actions, createNodeId, cache, store },
+  { actions, createNodeId, cache, createContentDigest },
   options
 ) => {
-  const { addThirdPartySchema, createPageDependency, createNode } = actions
+  const { addThirdPartySchema, createNode } = actions
   const {
     url,
     typeName,
     fieldName,
     headers = {},
+    fetch = nodeFetch,
     fetchOptions = {},
     createLink,
     createSchema,
@@ -41,7 +41,7 @@ exports.sourceNodes = async (
   )
   invariant(
     (url && url.length > 0) || createLink,
-    `gatsby-source-graphql requiers either option \`url\` or \`createLink\` callback`
+    `gatsby-source-graphql requires either option \`url\` or \`createLink\` callback`
   )
 
   let link
@@ -74,29 +74,38 @@ exports.sourceNodes = async (
     await cache.set(cacheKey, sdl)
   }
 
-  const remoteSchema = makeRemoteExecutableSchema({
-    schema: introspectionSchema,
-    link,
-  })
-
   const nodeId = createNodeId(`gatsby-source-graphql-${typeName}`)
-  const node = createSchemaNode({ id: nodeId, typeName, fieldName })
+  const node = createSchemaNode({
+    id: nodeId,
+    typeName,
+    fieldName,
+    createContentDigest,
+  })
   createNode(node)
 
   const resolver = (parent, args, context) => {
-    createPageDependency({ path: context.path, nodeId: nodeId })
+    context.nodeModel.createPageDependency({
+      path: context.path,
+      nodeId: nodeId,
+    })
     return {}
   }
 
-  const schema = transformSchema(remoteSchema, [
-    new StripNonQueryTransform(),
-    new RenameTypes(name => `${typeName}_${name}`),
-    new NamespaceUnderFieldTransform({
-      typeName,
-      fieldName,
-      resolver,
-    }),
-  ])
+  const schema = transformSchema(
+    {
+      schema: introspectionSchema,
+      link,
+    },
+    [
+      new StripNonQueryTransform(),
+      new RenameTypes(name => `${typeName}_${name}`),
+      new NamespaceUnderFieldTransform({
+        typeName,
+        fieldName,
+        resolver,
+      }),
+    ]
+  )
 
   addThirdPartySchema({ schema })
 
@@ -104,7 +113,14 @@ exports.sourceNodes = async (
     if (refetchInterval) {
       const msRefetchInterval = refetchInterval * 1000
       const refetcher = () => {
-        createNode(createSchemaNode({ id: nodeId, typeName, fieldName }))
+        createNode(
+          createSchemaNode({
+            id: nodeId,
+            typeName,
+            fieldName,
+            createContentDigest,
+          })
+        )
         setTimeout(refetcher, msRefetchInterval)
       }
       setTimeout(refetcher, msRefetchInterval)
@@ -112,12 +128,9 @@ exports.sourceNodes = async (
   }
 }
 
-function createSchemaNode({ id, typeName, fieldName }) {
+function createSchemaNode({ id, typeName, fieldName, createContentDigest }) {
   const nodeContent = uuidv4()
-  const nodeContentDigest = crypto
-    .createHash(`md5`)
-    .update(nodeContent)
-    .digest(`hex`)
+  const nodeContentDigest = createContentDigest(nodeContent)
   return {
     id,
     typeName: typeName,

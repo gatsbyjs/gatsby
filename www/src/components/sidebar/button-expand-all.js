@@ -1,59 +1,53 @@
-import React, { Fragment } from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
+import React from "react"
 import GoFold from "react-icons/lib/go/fold"
 import GoUnfold from "react-icons/lib/go/unfold"
 
-import presets, { colors } from "../../utils/presets"
-import { scale, options, rhythm } from "../../utils/typography"
+const iconStyles = {
+  display: `inline-block`,
+  mr: 2,
+}
 
 const ExpandAllButton = ({ onClick, expandAll }) => (
   <button
     onClick={onClick}
-    css={{
-      ...scale(-2 / 3),
-      lineHeight: 1,
-      background: `transparent`,
-      border: `none`,
-      borderRadius: presets.radius,
-      color: colors.gatsby,
-      display: `flex`,
-      cursor: `pointer`,
+    sx={{
       alignItems: `center`,
+      bg: `transparent`,
+      border: `none`,
+      borderRadius: 1,
+      color: `textMuted`,
+      cursor: `pointer`,
+      display: `flex`,
       flexGrow: 0,
-      marginLeft: `auto`,
-      paddingTop: rhythm(options.blockMarginBottom / 3),
-      paddingBottom: rhythm(options.blockMarginBottom / 3),
-      fontFamily: options.systemFontFamily.join(`,`),
+      fontSize: 0,
+      lineHeight: `solid`,
+      py: 2,
       textAlign: `left`,
-      transition: `all .2s`,
+      transition: t => `all ${t.transition.speed.fast}`,
       "&:hover": {
-        background: colors.ui.bright,
+        bg: `sidebar.itemHoverBackground`,
+        color: `navigation.linkHover`,
       },
     }}
   >
     {expandAll ? (
-      <Fragment>
-        <span>Collapse All</span>
-        <span css={{ ...styles.icon }}>
+      <React.Fragment>
+        <span sx={iconStyles}>
           <GoFold />
         </span>
-      </Fragment>
+        <span>Collapse All</span>
+      </React.Fragment>
     ) : (
-      <Fragment>
-        <span>Expand All</span>
-        <span css={{ ...styles.icon }}>
+      <React.Fragment>
+        <span sx={iconStyles}>
           <GoUnfold />
         </span>
-      </Fragment>
+        <span>Expand All</span>
+      </React.Fragment>
     )}
   </button>
 )
 
 export default ExpandAllButton
-
-const styles = {
-  icon: {
-    display: `inline-block`,
-    fontSize: `.9rem`,
-    marginLeft: 8,
-  },
-}

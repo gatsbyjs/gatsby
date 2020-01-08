@@ -19,7 +19,7 @@ I focused on the process, looking for ways to make site building more generic
 and reusable.
 
 - Content migration
-- Programatic page creation in Gatsby
+- Programmatic page creation in Gatsby
 - Manage styles with
   [`Typography.js`](http://kyleamathews.github.io/typography.js/)
 - Automatic pagination
@@ -77,15 +77,15 @@ The only work I had to do on the content migration was to reformat the
 [frontmatter](https://gohugo.io/content-management/front-matter/). In Hugo, I
 used TOML, whereas `gatsby-transformer-remark` works only with YAML for the
 moment. Luckily, I still had the Hugo CLI on my system so could make use of its
-[build-in conversion tool](https://gohugo.io/commands/hugo_convert_toyaml/). The
+[built-in conversion tool](https://gohugo.io/commands/hugo_convert_toyaml/). The
 only issue I had was that sometimes titles were longer than 1 line and were not
 parse-able, so I just had to cut some words out where problematic.
 
 My previous frontmatter already contained `title`, `date`, `tags`, and most
 importantly - the `slug` fields. These were enough for my later work on the
-programatic creation of pages explained in the next section.
+programmatic creation of pages explained in the next section.
 
-### Programatic page creation
+### Programmatic page creation
 
 This is the official
 [documentation](/docs/creating-and-modifying-pages/),
@@ -93,14 +93,15 @@ plus there is a
 [tutorial](/tutorial/part-four/#data-in-gatsby), which
 gives examples. In sum, I created a `gatsby-node.js` file which exports
 `createPages` method using the `createPage` action from
-[`boundActionCreators`](/docs/bound-action-creators/).
+[`boundActionCreators`](/docs/actions/).
 
 This might sound way more complicated than what it is:
 
 ```jsx
-exports.createPages = ({ graphql, boundActionCreators }) => {
-  const { createPage } = boundActionCreators
-  graphql(`
+exports.createPages = async ({ graphql, actions }) => {
+  const { createPage } = actions
+
+  const result = await graphql(`
     {
       allMarkdownRemark {
         edges {
@@ -114,10 +115,10 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
         }
       }
     }
-  `).then(result => {
-    const posts = result.data.allMarkdownRemark.edges
-    // Create content programatically here
-  })
+  `)
+
+  const posts = result.data.allMarkdownRemark.edges
+  // Create content programmatically here
 }
 ```
 
@@ -171,7 +172,7 @@ Steps were:
 Add `gatsby-plugin-typography` and `typography-theme-moraga` (for example) and
 "enable" the plugin in the `gatsby-config.js` file:
 
-```javascript=
+```javascript
 {
   resolve: `gatsby-plugin-typography`,
   options: {
@@ -182,7 +183,7 @@ Add `gatsby-plugin-typography` and `typography-theme-moraga` (for example) and
 
 In `src/utils/typograhy` add:
 
-```javascript=
+```javascript
 import Typography from "typography"
 import theme from "typography-theme-moraga"
 
@@ -238,9 +239,9 @@ const createPostPages = require(`./gatsby-actions/createPostPages`)
 const createPaginatedPostsPages = require(`./gatsby-actions/createPaginatedPostsPages`)
 const createTagPages = require(`./gatsby-actions/createTagPages`)
 
-exports.createPages = ({ graphql, boundActionCreators }) => {
-  const { createPage } = boundActionCreators
-  graphql(`
+exports.createPages = async ({ graphql, actions }) => {
+  const { createPage } = actions
+  const result = await graphql(`
     {
       allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
         edges {
@@ -254,16 +255,16 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
         }
       }
     }
-  `).then(result => {
-    const posts = result.data.allMarkdownRemark.edges
-    createPostPages(createPage, posts)
-    createPaginatedPostsPages(createPage, posts)
-    createTagPages(createPage, posts)
-  })
+  `
+
+  const posts = result.data.allMarkdownRemark.edges
+  createPostPages(createPage, posts)
+  createPaginatedPostsPages(createPage, posts)
+  createTagPages(createPage, posts)
 }
 ```
 
-Easy to read, understand and mantain. The pagination module is a bit longer than
+Easy to read, understand and maintain. The pagination module is a bit longer than
 the one of the posts:
 
 ```jsx
@@ -380,7 +381,7 @@ createPage({
 
 Initially, I tried to use the `git-gateway` identity management approach in
 Netlify, but it didn't work for me. I could not reach the point to validate or
-reset the password for my user 1, so I kept the "old-school" way of github
+reset the password for my user 1, so I kept the "old-school" way of GitHub
 integration which works just fine for me at the moment, having the fact I will
 be 1 user to work on the site.
 
@@ -425,14 +426,14 @@ production.
 The branch in this configuration has to match to deployment branch of Netlify
 service:
 
-![](Efubv8f.png)
+![Deploy Settings](Efubv8f.png)
 
 This is my admin page React component which is placed in `src/pages/admin` so
 that Gatsby delivers the HTML page at `/admin`.
 
 ```jsx
 import React from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 
 const AdminPage = () => (
   <div className="admin">

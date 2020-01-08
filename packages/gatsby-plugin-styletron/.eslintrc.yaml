@@ -1,5 +1,1 @@
-{
-  "rules": {
-    "react/display-name": [0]
-  }
-}
+{ "rules": { "react/display-name": [0] } }

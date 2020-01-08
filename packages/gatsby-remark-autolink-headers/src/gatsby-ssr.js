@@ -7,17 +7,22 @@ const pluginDefaults = {
 }
 
 exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
-  const {
-    className,
-    icon,
-    offsetY,
-  } = Object.assign(pluginDefaults, pluginOptions)
+  const { className, icon, offsetY } = Object.assign(
+    pluginDefaults,
+    pluginOptions
+  )
 
   const styles = `
-    .${className} {
-      float: left;
+    .${className}.before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: translateX(-100%);
       padding-right: 4px;
-      margin-left: -20px;
+    }
+    .${className}.after {
+      display: inline-block;
+      padding-left: 4px;
     }
     h1 .${className} svg,
     h2 .${className} svg,
@@ -59,11 +64,13 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
     })
   `
 
-  const style = icon
-    ?  <style key={`gatsby-remark-autolink-headers-style`} type="text/css">
-        {styles}
-      </style>
-    : undefined
+  const style = icon ? (
+    <style key={`gatsby-remark-autolink-headers-style`} type="text/css">
+      {styles}
+    </style>
+  ) : (
+    undefined
+  )
 
   return setHeadComponents([
     style,

@@ -1,3 +1,6 @@
+import { reportError, clearError } from "./error-overlay-handler"
+import normalizePagePath from "./normalize-page-path"
+
 let socket = null
 
 let staticQueryData = {}
@@ -16,10 +19,16 @@ export default function socketIo() {
         // eslint-disable-next-line no-undef
         socket = io()
 
-        const didDataChange = (msg, queryData) =>
-          !(msg.payload.id in queryData) ||
-          JSON.stringify(msg.payload.result) !==
-            JSON.stringify(queryData[msg.payload.id])
+        const didDataChange = (msg, queryData) => {
+          const id =
+            msg.type === `staticQueryResult`
+              ? msg.payload.id
+              : normalizePagePath(msg.payload.id)
+          return (
+            !(id in queryData) ||
+            JSON.stringify(msg.payload.result) !== JSON.stringify(queryData[id])
+          )
+        }
 
         socket.on(`message`, msg => {
           if (msg.type === `staticQueryResult`) {
@@ -29,13 +38,18 @@ export default function socketIo() {
                 [msg.payload.id]: msg.payload.result,
               }
             }
-          }
-          if (msg.type === `pageQueryResult`) {
+          } else if (msg.type === `pageQueryResult`) {
             if (didDataChange(msg, pageQueryData)) {
               pageQueryData = {
                 ...pageQueryData,
-                [msg.payload.id]: msg.payload.result,
+                [normalizePagePath(msg.payload.id)]: msg.payload.result,
               }
+            }
+          } else if (msg.type === `overlayError`) {
+            if (msg.payload.message) {
+              reportError(msg.payload.id, msg.payload.message)
+            } else {
+              clearError(msg.payload.id)
             }
           }
           if (msg.type && msg.payload) {
@@ -54,6 +68,7 @@ export default function socketIo() {
 
 const inFlightGetPageDataPromiseCache = {}
 function getPageData(pathname) {
+  pathname = normalizePagePath(pathname)
   if (inFlightGetPageDataPromiseCache[pathname]) {
     return inFlightGetPageDataPromiseCache[pathname]
   } else {
@@ -63,7 +78,10 @@ function getPageData(pathname) {
         resolve(pageQueryData[pathname])
       } else {
         const onPageDataCallback = msg => {
-          if (msg.type === `pageQueryResult` && msg.payload.id === pathname) {
+          if (
+            msg.type === `pageQueryResult` &&
+            normalizePagePath(msg.payload.id) === pathname
+          ) {
             socket.off(`message`, onPageDataCallback)
             delete inFlightGetPageDataPromiseCache[pathname]
             resolve(pageQueryData[pathname])

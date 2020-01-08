@@ -19,22 +19,25 @@ export default async function writeRedirectsFile(
       fromPath,
       isPermanent,
       redirectInBrowser, // eslint-disable-line no-unused-vars
+      force,
       toPath,
+      statusCode,
       ...rest
     } = redirect
 
+    let status = isPermanent ? `301` : `302`
+    if (statusCode) status = String(statusCode)
+
+    if (force) status = `${status}!`
+
     // The order of the first 3 parameters is significant.
     // The order for rest params (key-value pairs) is arbitrary.
-    const pieces = [
-      fromPath,
-      toPath,
-      isPermanent ? 301 : 302, // Status
-    ]
+    const pieces = [fromPath, toPath, status]
 
     for (let key in rest) {
       const value = rest[key]
 
-      if (typeof value === `string` && value.indexOf(` `) >= 0) {
+      if (typeof value === `string` && value.includes(` `)) {
         console.warn(
           `Invalid redirect value "${value}" specified for key "${key}". ` +
             `Values should not contain spaces.`

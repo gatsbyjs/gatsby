@@ -1,0 +1,59 @@
+{
+  "name": "gatsby-graphiql-explorer",
+  "version": "0.2.31",
+  "description": "GraphiQL IDE with custom features for Gatsby users",
+  "main": "index.js",
+  "scripts": {
+    "build:app": "webpack --config ./src/app/webpack.config.js",
+    "build:babel": "babel src/index.js --out-dir . --ignore **/__tests__",
+    "build": "npm-run-all --parallel build:app build:babel",
+    "prepare": "cross-env NODE_ENV=production npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch:app": "npm run build:app -- --watch",
+    "watch:babel": "npm run build:babel -- --watch",
+    "watch": "npm-run-all --parallel watch:app watch:babel"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-graphiql-explorer#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-graphiql-explorer"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@babel/runtime": "^7.7.6"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.7.5",
+    "@babel/core": "^7.7.5",
+    "@babel/plugin-proposal-class-properties": "^7.7.4",
+    "@babel/plugin-transform-runtime": "^7.7.6",
+    "@babel/preset-env": "^7.7.6",
+    "@babel/preset-react": "^7.7.4",
+    "babel-loader": "^8.0.6",
+    "babel-preset-gatsby-package": "^0.2.14",
+    "cross-env": "^5.2.1",
+    "css-loader": "^1.0.1",
+    "graphiql": "^0.17.5",
+    "graphiql-code-exporter": "^2.0.8",
+    "graphiql-explorer": "^0.4.5",
+    "html-webpack-plugin": "^3.2.0",
+    "npm-run-all": "4.1.5",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
+    "whatwg-fetch": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  }
+}

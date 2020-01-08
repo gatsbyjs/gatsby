@@ -1,5 +1,4 @@
 const axios = require(`axios`)
-const crypto = require(`crypto`)
 const url = require(`url`)
 const _ = require(`lodash`)
 
@@ -8,11 +7,36 @@ const get = query =>
     `https://www.graphqlhub.com/graphql?query=${encodeURIComponent(query)}`
   )
 
+exports.createSchemaCustomization = async ({ actions }) => {
+  const typeDefs = `
+    type HNComment implements Node @childOf(types: ["HNStory", "HNComment"], many: true) {
+      text: String
+      timeISO: Date! @dateformat
+      by: String!
+      order: Int!
+    }
+
+    type HNStory implements Node {
+      title: String
+      score: Int
+      timeISO: Date! @dateformat
+      url: String
+      by: String!
+      descendants: Int
+      content: String!
+      domain: String
+      order: Int!
+    }
+  `
+  actions.createTypes(typeDefs)
+}
+
 exports.sourceNodes = async ({
   actions,
   getNode,
   createNodeId,
   hasNodeChanged,
+  createContentDigest,
 }) => {
   const { createNode } = actions
 
@@ -98,7 +122,7 @@ fragment commentsFragment on HackerNewsItem {
       kids.kids = []
     }
     const kidLessStory = _.omit(story, `kids`)
-    const childIds = kids.kids.map(k => createNodeId(k.id))
+    const childIds = kids.kids.filter(Boolean).map(k => createNodeId(k.id))
 
     const storyNode = {
       ...kidLessStory,
@@ -117,17 +141,16 @@ fragment commentsFragment on HackerNewsItem {
     storyNode.by = storyNode.by.id
 
     // Get content digest of node.
-    const contentDigest = crypto
-      .createHash(`md5`)
-      .update(JSON.stringify(storyNode))
-      .digest(`hex`)
-
+    const contentDigest = createContentDigest(storyNode)
     storyNode.internal.contentDigest = contentDigest
     createNode(storyNode)
 
     // Recursively create comment nodes.
     const createCommentNodes = (comments, parent, depth = 0) => {
       comments.forEach((comment, i) => {
+        if (!comment) {
+          return
+        }
         if (!comment.kids) {
           comment.kids = []
         }
@@ -147,11 +170,7 @@ fragment commentsFragment on HackerNewsItem {
         const nodeStr = JSON.stringify(commentNode)
 
         // Get content digest of comment node.
-        const contentDigest = crypto
-          .createHash(`md5`)
-          .update(nodeStr)
-          .digest(`hex`)
-
+        const contentDigest = createContentDigest(nodeStr)
         commentNode.internal.contentDigest = contentDigest
         commentNode.internal.content = nodeStr
 

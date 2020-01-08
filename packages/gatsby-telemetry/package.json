@@ -1,0 +1,66 @@
+{
+  "name": "gatsby-telemetry",
+  "description": "Gatsby Telemetry",
+  "version": "1.1.46",
+  "author": "Jarmo Isotalo <jarmo@isotalo.fi>",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "dependencies": {
+    "@babel/code-frame": "^7.5.5",
+    "@babel/runtime": "^7.7.6",
+    "bluebird": "^3.7.2",
+    "boxen": "^4.2.0",
+    "configstore": "^5.0.0",
+    "envinfo": "^7.5.0",
+    "fs-extra": "^8.1.0",
+    "gatsby-core-utils": "^1.0.25",
+    "git-up": "4.0.1",
+    "is-docker": "2.0.0",
+    "lodash": "^4.17.15",
+    "node-fetch": "2.6.0",
+    "resolve-cwd": "^2.0.0",
+    "source-map": "^0.7.3",
+    "stack-trace": "^0.0.10",
+    "stack-utils": "1.0.2",
+    "uuid": "3.3.3"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.7.5",
+    "@babel/core": "^7.7.5",
+    "babel-jest": "^24.9.0",
+    "babel-preset-gatsby-package": "^0.2.14",
+    "cross-env": "^5.2.1",
+    "jest": "^24.9.0",
+    "jest-cli": "^24.9.0",
+    "jest-junit": "^6.4.0"
+  },
+  "files": [
+    "lib",
+    "src"
+  ],
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-telemetry#readme",
+  "keywords": [
+    "telemetry"
+  ],
+  "license": "MIT",
+  "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-telemetry"
+  },
+  "scripts": {
+    "build": "babel src --out-dir lib --ignore \"**/__tests__\",\"**/__mocks__\"",
+    "prepare": "cross-env NODE_ENV=production npm run build",
+    "jest": "jest",
+    "postinstall": "node src/postinstall.js || true",
+    "watch": "babel -w src --out-dir lib --ignore \"**/__tests__\",\"**/__mocks__\""
+  },
+  "yargs": {
+    "boolean-negation": false
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  }
+}

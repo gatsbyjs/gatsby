@@ -1,20 +1,20 @@
 ---
-title: "Using third-party GraphQL APIs"
+title: Using Third-party GraphQL APIs
 ---
 
-Gatsby v2 introduces a simple way to integrate any GraphQL API into Gatsby's GraphQL. You can integrate both third-party APIs, like Github's, APIs of services like GraphCMS or your custom GraphQL API.
+Gatsby v2 introduces a simple way to integrate any GraphQL API into Gatsby's GraphQL. You can integrate both third-party APIs, like GitHub's, APIs of services like GraphCMS or your custom GraphQL API.
 
 ## Basic example
 
 First install the plugin.
 
-```
-yarn add gatsby-source-graphql
+```shell
+npm install gatsby-source-graphql
 ```
 
-Providing there is a GraphQL API under a `url`, adding it to an API just requires adding this to the config.
+Provided there is a GraphQL API under a `url`, adding it to an API just requires adding this to the config.
 
-```js
+```js:title=gatsby-config.js
 module.exports = {
   plugins: [
     {
@@ -47,7 +47,7 @@ Third-party APIs will be available under the `fieldName` specified, so you can q
 }
 ```
 
-Note that types of the third-party API will be prefixed with `${typeName}_`. You need to prefix it too, eg when using variables or fragments.
+Note that types of the third-party API will be prefixed with `${typeName}_`. You need to prefix it too, e.g. when using variables or fragments.
 
 ```graphql
 {
@@ -66,7 +66,7 @@ Note that types of the third-party API will be prefixed with `${typeName}_`. You
 
 You can also create pages dynamically by adding a `createPages` callback in `gatsby-node.js`. For example you can create a page for every Star Wars species.
 
-```js
+```js:title=gatsby-node.js
 const path = require(`path`)
 
 exports.createPages = async ({ actions, graphql }) => {
@@ -93,8 +93,10 @@ exports.createPages = async ({ actions, graphql }) => {
 }
 ```
 
-## Futher reading
+## Further reading
 
-- [graphql-source-graphql docs](/packages/gatsby-source-graphql)
-- [Example with Github API](https://github.com/freiksenet/gatsby-github-displayer)
+- [gatsby-source-graphql docs](/packages/gatsby-source-graphql)
+- [Example with GitHub API](https://github.com/freiksenet/gatsby-github-displayer)
 - [Example with GraphCMS](https://github.com/freiksenet/gatsby-graphcms)
+- [Example with Hasura](https://github.com/hasura/graphql-engine/tree/master/community/sample-apps/gatsby-postgres-graphql)
+- [Example with AWS AppSync](https://github.com/aws-samples/aws-appsync-gatsby-sample)

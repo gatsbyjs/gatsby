@@ -2,6 +2,8 @@
 title: Building with Components
 ---
 
+import LayerModel from "../../www/src/components/layer-model"
+
 To use Gatsby, you will need a basic understanding of React components.
 
 The [official tutorial](https://reactjs.org/tutorial/tutorial.html)
@@ -15,6 +17,10 @@ open source components, tutorials, and tooling that can be used seamlessly for
 building sites with Gatsby. Gatsby is built to behave almost exactly like a
 normal React application.
 
+The following model shows how data from a source can be queried by GraphQL for use inside components in the process of building a Gatsby site:
+
+<LayerModel initialLayer="View" />
+
 [Thinking in React](https://facebook.github.io/react/docs/thinking-in-react.html)
 is a good resource for learning how to structure applications with React.
 
@@ -24,7 +30,7 @@ Everything in Gatsby is built using components.
 
 A basic directory structure of a project might look like this:
 
-```sh
+```text
 .
 ├── gatsby-config.js
 ├── package.json
@@ -53,19 +59,15 @@ otherwise your build will fail.
 
 Example:
 
-`src/pages/about.jsx`
+```jsx:title=src/pages/about.jsx
+import React from "react"
 
-```jsx
-import React, { Component } from "react"
-
-class AboutPage extends Component {
-  render() {
-    return (
-      <div className="about-container">
-        <p>About me.</p>
-      </div>
-    )
-  }
+function AboutPage(props) {
+  return (
+    <div className="about-container">
+      <p>About me.</p>
+    </div>
+  )
 }
 
 export default AboutPage
@@ -79,26 +81,23 @@ pages are React components but very often these components are just wrappers aro
 `src/templates/post.jsx` is an example of a page component. It queries GraphQL
 for markdown data and then renders the page using this data.
 
-See [part four](/tutorial/part-four/) of the tutorial for a detailed
+See [part seven](/tutorial/part-seven/) of the tutorial for a detailed
 introduction to programmatically creating pages.
 
 Example:
 
-```jsx
+```jsx:title=src/templates/post.jsx
 import React from "react"
 import { graphql } from "gatsby"
 
-class BlogPostTemplate extends React.Component {
-  render() {
-    const post = this.props.data.markdownRemark
-
-    return (
-      <div>
-        <h1>{post.frontmatter.title}</h1>
-        <div dangerouslySetInnerHTML={{ __html: post.html }} />
-      </div>
-    )
-  }
+function BlogPostTemplate(props) {
+  const post = props.data.markdownRemark
+  return (
+    <div>
+      <h1>{post.frontmatter.title}</h1>
+      <div dangerouslySetInnerHTML={{ __html: post.html }} />
+    </div>
+  )
 }
 
 export default BlogPostTemplate
@@ -120,7 +119,7 @@ export const pageQuery = graphql`
 `src/html.jsx` is responsible for everything other than where Gatsby lives in
 the `<body />`.
 
-In this file you can modify the `<head>` metadata, general structure of the
+In this file, you can modify the `<head>` metadata and general structure of the
 document and add external links.
 
 Typically you should omit this from your site as the default html.js file will
@@ -129,7 +128,7 @@ have an html.js.
 
 Example:
 
-```jsx
+```jsx:title=src/html.jsx
 import React from "react"
 import favicon from "./favicon.png"
 
@@ -142,39 +141,31 @@ if (process.env.NODE_ENV === "production") {
   }
 }
 
-export default class HTML extends React.Component {
-  render() {
-    let css
-    if (process.env.NODE_ENV === "production") {
-      css = (
-        <style
-          id="gatsby-inlined-css"
-          dangerouslySetInnerHTML={{ __html: inlinedStyles }}
-        />
-      )
-    }
-    return (
-      <html lang="en">
-        <head>
-          <meta charSet="utf-8" />
-          <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1.0"
-          />
-          {this.props.headComponents}
-          <link rel="shortcut icon" href={favicon} />
-          {css}
-        </head>
-        <body>
-          <div
-            id="___gatsby"
-            dangerouslySetInnerHTML={{ __html: this.props.body }}
-          />
-          {this.props.postBodyComponents}
-        </body>
-      </html>
+function HTML(props) {
+  let css
+  if (process.env.NODE_ENV === "production") {
+    css = (
+      <style
+        id="gatsby-inlined-css"
+        dangerouslySetInnerHTML={{ __html: inlinedStyles }}
+      />
     )
   }
+  return (
+    <html lang="en">
+      <head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        {props.headComponents}
+        <link rel="icon" href={favicon} />
+        {css}
+      </head>
+      <body>
+        <div id="___gatsby" dangerouslySetInnerHTML={{ __html: props.body }} />
+        {props.postBodyComponents}
+      </body>
+    </html>
+  )
 }
 ```
 
@@ -182,3 +173,8 @@ These are examples of the different ways React components are used in Gatsby
 sites. To see full working examples, check out the
 [examples directory](https://github.com/gatsbyjs/gatsby/tree/master/examples) in
 the Gatsby repo.
+
+### Non-page components
+
+A Non-page component is one that's embedded inside some other component, forming a component hierarchy. An example would be a Header component that's included in multiple page components.
+Gatsby uses GraphQL to enable components to declare the data they need. Using the [StaticQuery](/docs/static-query/) component or [useStaticQuery hook](/docs/use-static-query/), you can colocate a non-page component with its data.

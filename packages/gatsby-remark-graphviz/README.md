@@ -8,7 +8,7 @@ Processes [graphviz](https://www.graphviz.org/) (`dot` and `circo`) code blocks 
 
 `npm install --save gatsby-remark-graphviz`
 
-Note that you do **not** need graphviz installed on your machine as this project depends on viz.js which is a pure javascript port of graphviz.
+Note that you do **not** need graphviz installed on your machine as this project depends on viz.js which is a pure JavaScript port of graphviz.
 
 ## How to use
 
@@ -19,7 +19,9 @@ plugins: [
     resolve: 'gatsby-transformer-remark',
     options: {
       plugins: [
-        'gatsby-remark-graphviz'
+        'gatsby-remark-graphviz',
+        // place before other plugins that modify code blocks (such as prismjs)
+        // 'gatsby-remark-prismjs',
       ]
     }
   }
@@ -40,9 +42,32 @@ Which will be rendered using viz.js and the output html will replace the code bl
 
 ![rendered-graph](/packages/gatsby-remark-graphviz/rendered-graph.svg)
 
-## Caveats
+Custom attributes can be passed to the rendered SVG:
 
-In your gatsby-config.js, make sure you place this plugin before other remark plugins that modify code blocks (like prism).
+    ```dot id="my-id" class="my-class"
+    digraph graphname {
+      a -> b;
+      b -> c;
+      a -> c;
+    }
+    ```
+
+By default, the following inline style is applied to all rendered SVGs in order to make them responsive:
+
+```css
+max-width: 100%;
+height: auto;
+```
+
+This can be overwritten by using the custom attributes feature:
+
+    ```dot style=""
+    digraph graphname {
+      a -> b;
+      b -> c;
+      a -> c;
+    }
+    ```
 
 ## Caveats
 
