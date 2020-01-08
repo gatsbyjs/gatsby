@@ -4,17 +4,19 @@ title: Processing Payments with Stripe
 
 ## Why Stripe and Gatsby?
 
-Gatsby is an excellent choice for an e-commerce website because static sites are secure, incredibly fast, and easy to host. Whether you're running an online store, accepting donations for a charity, or billing based on usage, you'll need a way to accept payments. Payment processing platforms like Paypal and Stripe are ideal solutions for these use cases.
+Gatsby is an excellent choice for an e-commerce website because static sites are secure and incredibly fast. Whether you're running an online store, accepting donations for a charity, or billing based on usage, you'll need a way to accept payments. Payment processing platforms like Paypal and Stripe are ideal solutions for these use cases.
+
+## Prerequisites
 
 Stripe is a developer-friendly payment processing platform. With a Stripe account, you can process payments, create recurring payments, and send invoices. They offer many more products which you can explore on [the Stripe website](https://stripe.com/). Stripe provides an excellent dashboard to manage your account as well as a high-quality, well-documented API. The [Stripe API documentation](https://stripe.com/docs/api) is an excellent resource.
 
-## Setting up your Stripe account
+### Setting up your Stripe account
 
 To get started, create a [Stripe account](https://dashboard.stripe.com/register). Choose the integrations and services you'd like to use like whether you want to just accept payments or also pay sellers/service providers. You can change your choices later. Stripe uses your choices to recommend services like Payments and Billing. After registering, you'll need to activate your account with your business details such as address and banking information.
 
 ### Getting your Stripe test keys
 
-Once logged into the Stripe dashboard, you can find your API keys under the Developers menu. Before you activate your account, you'll only have access to your test API keys. You'll need to use your publishable and secret keys as described in the documentation for any plugins, starters, or other integrations you use. Test keys allow you to test your Stripe integration without making real payments. Learn more at the [Stripe testing documentation](https://stripe.com/docs/testing). To access your live API keys, activate your account.
+Once logged into the Stripe dashboard, you can find your API keys under the Developers menu. Before you activate your account, you'll only have access to your test API keys. You'll need to use your publishable and secret keys as described in the documentation for any plugins, starters, or other integrations you use. Test keys allow you to test your Stripe integration without making real payments. To access your live API keys, activate your account.
 
 While testing, you must use the key(s) that include the word test. For production code, you will need to use the live keys. As the names imply, your publishable key may be included in code that you share publicly (for example, on the frontend, and in GitHub), whereas your secret key should not be shared with anyone or committed to any public repo. It’s important to restrict access to this secret key because anyone who has it could potentially read or send requests from your Stripe account and see information about charges or purchases or even refund customers.
 
@@ -95,5 +97,6 @@ Stripe Billing is an excellent tool for creating recurring payments, even provid
 
 - [Stripe website](https://stripe.com/)
 - [Stripe API documentation](https://stripe.com/docs/api)
+- [Stripe testing documentation](https://stripe.com/docs/testing).
 - [React Stripe Elements Github](https://github.com/stripe/react-stripe-elements)
 - [Making an e-commerce Gatsby Site with Stripe](https://www.gatsbyjs.org/tutorial/ecommerce-tutorial/)
