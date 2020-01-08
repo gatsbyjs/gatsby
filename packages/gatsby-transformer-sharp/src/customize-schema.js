@@ -75,9 +75,9 @@ const fixedNodeType = ({
         },
         aspectRatio: { type: GraphQLFloat },
         width: { type: new GraphQLNonNull(GraphQLFloat) },
-        height: { type: GraphQLNonNull(GraphQLFloat) },
-        src: { type: GraphQLNonNull(GraphQLString) },
-        srcSet: { type: GraphQLNonNull(GraphQLString) },
+        height: { type: new GraphQLNonNull(GraphQLFloat) },
+        src: { type: new GraphQLNonNull(GraphQLString) },
+        srcSet: { type: new GraphQLNonNull(GraphQLString) },
         srcWebp: {
           type: GraphQLString,
           resolve: ({ file, image, fieldArgs }) => {
