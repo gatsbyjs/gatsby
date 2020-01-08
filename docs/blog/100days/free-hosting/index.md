@@ -1,6 +1,6 @@
 ---
 title: Challenge - Host Your Gatsby Site for Free
-date: 2020-1-8
+date: 2020-01-08
 author: "Hashim Warren"
 tags: ["learning-to-code", "contest", "100-Days-of-Gatsby"]
 ---
