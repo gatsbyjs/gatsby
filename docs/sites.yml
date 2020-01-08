@@ -9115,6 +9115,16 @@
     - Web Development
   built_by: Ramón Chancay
   built_by_url: "https://ramonchancay.me/"
+- title: Ananya Neogi
+  main_url: https://ananyaneogi.com
+  url: https://ananyaneogi.com
+  description: >
+    Showcases Ananya's work as a frontend developer and comprises of a collection of written articles on web development, programming and, user experience.
+  categories:
+    - Portfolio
+    - Blog
+  built_by: Ananya Neogi
+  built_by_url: https://ananyaneogi.com
 - title: webman.pro
   main_url: https://webman.pro/
   url: https://webman.pro/
