@@ -313,7 +313,7 @@ async function startServer(program: IProgram): Promise<IServer> {
               })
           )
           .pipe(res)
-        })
+      })
     })
   }
 
