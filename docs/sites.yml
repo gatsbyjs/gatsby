@@ -2290,6 +2290,19 @@
   built_by: Janosh Riebesell
   built_by_url: "https://janosh.io"
   featured: false
+- title: Gold Edge Training
+  url: "https://www.goldedgetraining.co.uk"
+  main_url: "https://www.goldedgetraining.co.uk"
+  description: >
+    AAT approved online distance learning accountancy training provider. Branded landing page / mini brochure promoting competitor differentiators, student testimonials, offers, service benefits and features. Designed to both inform potential students and encourage visits to company eCommerce site or direct company contact.
+  categories:
+    - Education
+    - Learning
+    - Landing Page
+    - Business
+    - Finance
+  built_by: Leo Furze-Waddock
+  built_by_url: "https://www.linkedin.com/in/lfurzewaddock"
 - title: Gatsby Manor
   description: >
     We build themes for gatsby. We have themes for all projects including personal,
@@ -9069,6 +9082,37 @@
     - Marketing
     - Design
   built_by: João Matos (Global Creative Studio - Education First)
+- title: Codica
+  main_url: https://www.codica.com/
+  url: https://www.codica.com/
+  description: >
+    We help startups and established brands with JAMStack, Progressive Web Apps and Marketplaces development.
+  categories:
+    - Agency
+    - Web Development
+  built_by: Codica
+  built_by_url: https://www.codica.com/
+- title: Bhavani Ravi's Portfolio
+  url: https://bhavaniravi.com
+  main_url: https://bhavaniravi.com
+  description: >
+    Showcase of Bhavani Ravi's skillset and blogs
+  categories:
+    - Blog
+    - Portfolio
+  built_by: Bhavani Ravi
+  built_by_url: https://twitter.com/geeky_bhavani
+- title: Kotoriyama
+  main_url: https://kotoriyama.com/
+  url: https://kotoriyama.com/
+  description: >
+    Japanese Indie Game Creator.
+  featured: false
+  categories:
+    - App
+    - Entertainment
+    - Mobile Development
+  built_by: Motoyoshi Shiine (Kotoriyama)
 - title: PWA Shields
   url: https://www.pwa-shields.com
   main_url: https://www.pwa-shields.com
@@ -9104,6 +9148,16 @@
     - Web Development
   built_by: Ramón Chancay
   built_by_url: "https://ramonchancay.me/"
+- title: Ananya Neogi
+  main_url: https://ananyaneogi.com
+  url: https://ananyaneogi.com
+  description: >
+    Showcases Ananya's work as a frontend developer and comprises of a collection of written articles on web development, programming and, user experience.
+  categories:
+    - Portfolio
+    - Blog
+  built_by: Ananya Neogi
+  built_by_url: https://ananyaneogi.com
 - title: webman.pro
   main_url: https://webman.pro/
   url: https://webman.pro/
@@ -9130,6 +9184,16 @@
   built_by: Junho Baik
   built_by_url: https://github.com/junhobaik
   featured: false
+- title: React Resume Generator
+  main_url: https://github.com/nimahkh/resume_generator
+  url: https://nimahkh.github.io/nima_habibkhoda
+  source_url: https://github.com/nimahkh/resume_generator
+  description: >
+    The resume generator is a project to create your own resume web page easyly with Gatsby.
+  categories:
+    - Portfolio
+  built_by: Nima Habibkhoda
+  featured: false
 - title: Thomas Wang's Blog
   main_url: "https://www.thomaswang.io"
   url: "https://www.thomaswang.io"
@@ -9153,3 +9217,27 @@
     - Education
     - Learning
     - Technology
+- title: madewithlove
+  main_url: https://www.madewithlove.be
+  url: https://www.madewithlove.be
+  description: >-
+    We build digital products and create the teams around them. We can help with software engineering, product management, managing technical teams, audits and technical consulting.
+  built_by: madewithlove
+  built_by_url: https://www.madewithlove.be
+  featured: false
+  categories:
+    - Web Development
+    - Blog
+    - Agency
+    - Business
+- title: Sprucehill
+  url: https://sprucehill.ca/
+  main_url: https://sprucehill.ca/
+  description: >
+    Sprucehill is a North Vancouver based custom home builder and renovator.
+  categories:
+    - WordPress
+    - Business
+  built_by: Bare Advertising & Communications
+  built_by_url: https://www.bare.ca/
+  featured: false

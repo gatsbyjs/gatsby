@@ -43,7 +43,7 @@ it(`Transforms queries in useStaticQuery`, () => {
 
   export default () => {
     const siteTitle = useStaticQuery(graphql\`{site { siteMetadata { title }}}\`)
-    
+
     return (
       <h1>{siteTitle.site.siteMetadata.title}</h1>
     )
@@ -79,7 +79,7 @@ it(`Transforms queries defined in own variable in useStaticQuery`, () => {
   export default () => {
     const query = graphql\`{site { siteMetadata { title }}}\`
     const siteTitle = useStaticQuery(query)
-    
+
     return (
       <h1>{siteTitle.site.siteMetadata.title}</h1>
     )
@@ -95,7 +95,7 @@ it(`Transforms queries and preserves destructuring in useStaticQuery`, () => {
   export default () => {
     const query = graphql\`{site { siteMetadata { title }}}\`
     const { site } = useStaticQuery(query)
-    
+
     return (
       <h1>{site.siteMetadata.title}</h1>
     )
@@ -111,7 +111,7 @@ it(`Transforms queries and preserves variable type in useStaticQuery`, () => {
   export default () => {
     const query = graphql\`{site { siteMetadata { title }}}\`
     let { site } = useStaticQuery(query)
-    
+
     return (
       <h1>{site.siteMetadata.title}</h1>
     )
@@ -142,18 +142,18 @@ it(`Transforms only the call expression in useStaticQuery`, () => {
   matchesSnapshot(`
   import React from "react"
   import { graphql, useStaticQuery } from "gatsby"
-  
+
   const useSiteMetadata = () => {
     return useStaticQuery(
       graphql\`{site { siteMetadata { title }}}\`
     ).site.siteMetadata
   }
-  
+
   export default () => {
     const siteMetadata = useSiteMetadata()
-  
+
     return <h1>{siteMetadata.title}</h1>
-  }    
+  }
   `)
 })
 
@@ -165,7 +165,23 @@ it(`Only runs transforms if useStaticQuery is imported from gatsby`, () => {
   export default () => {
     const query = graphql\`{site { siteMetadata { title }}}\`
     const siteTitle = useStaticQuery(query)
-    
+
+    return (
+      <h1>{siteTitle.site.siteMetadata.title}</h1>
+    )
+  }
+  `)
+})
+
+it(`Allow alternative import of useStaticQuery`, () => {
+  matchesSnapshot(`
+  import React from 'react'
+  import * as Gatsby from 'gatsby'
+
+  export default () => {
+    const query = Gatsby.graphql\`{site { siteMetadata { title }}}\`
+    const siteTitle = Gatsby.useStaticQuery(query)
+
     return (
       <h1>{siteTitle.site.siteMetadata.title}</h1>
     )
@@ -270,7 +286,6 @@ it(`distinguishes between the right tags`, () => {
       animation-timing-function: ease-out;
     }
   \`;
-
 
   export const query = graphql\`
      {
