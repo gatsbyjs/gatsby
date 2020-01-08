@@ -4589,9 +4589,9 @@
     - Styled Components
     - Coinbase, Fortmatic, Metamask, WalletConnect, and more
     - dFuse Blockchain Streaming and Notifications
-- url: https://gatsby-starter-theme-antv.netlify.com
+- url: https://gatsby-starter-theme-antv.antv.vision
   repo: https://github.com/antvis/gatsby-starter-theme-antv
-  description: Gatsby's starter of antv theme
+  description: ⚛️ Polished Gatsby theme for documentation site
   tags:
     - Documentation
     - Markdown
@@ -4845,3 +4845,72 @@
     - Usable in any language
     - SEO friendly
     - Easy to add Analytics
+- url: https://evaluates2.github.io/Gatsby-Starter-TypeScript-Redux-TDD-BDD
+  repo: https://github.com/Evaluates2/Gatsby-Starter-TypeScript-Redux-TDD-BDD
+  description: An awesome Gatsby starter template that takes care of the tooling setup, allowing you and your team to dive right into building ultra-fast React applications quickly and deploy them with confidence! 📦
+  tags:
+    - Redux
+    - Language:TypeScript
+    - Linting
+    - Testing
+    - Styling:None
+  features:
+    - 📚 Written in TypeScript.
+    - 💡 Redux preconfigured (with local-storage integration.
+    - 💅 Linting with TSLint and Prettier.
+    - 📝 Unit testing with Jest and react-test-renderer.
+    - 💯 Behavior-driven E2E browser testing with Cypress + Cucumber.js plugin.
+    - 📓 Steps for deploying to Gh-pages
+    - ✔️ CI with TravisCI
+    - ⚡ Steps for deploying to GitHub Pages, AWS S3, or Netlify.
+- url: https://gatsby-resume-starter.netlify.com/
+  repo: https://github.com/barancezayirli/gatsby-starter-resume-cms
+  description: Resume starter styled using Tailwind with Netlify CMS as headless CMS.
+  tags:
+    - CMS:Headless
+    - SEO
+    - PWA
+    - Portfolio
+  features:
+    - One-page resume/CV
+    - PWA
+    - Multiple Netlify CMS widgets
+    - Netlify CMS as Headless CMS
+    - Tailwind for styling with theming
+    - Optimized build process (purge css)
+    - Basic SEO, site metadata
+    - Prettier
+    - Social media links
+- url: https://gatsby-typescript-emotion-storybook.netlify.com/
+  repo: https://github.com/duncanleung/gatsby-typescript-emotion-storybook
+  description: Config for TypeScript + Emotion + Storybook + React Intl + SVGR + Jest.
+  tags:
+    - Language:TypeScript
+    - Styling:CSS-in-JS
+    - Storybook
+    - i18n
+    - Linting
+    - Testing
+  features:
+    - 💻 TypeScript
+    - 📓 Visual testing with Storybook
+    - 👩‍🎤 CSS-in-JS styling with Emotion
+    - 💅 Linting with ESLint and Prettier
+    - 🌎 React Intl internationalization support
+    - 🖼️ SVG support with SVGR
+    - 📝 Unit and integration testing with Jest and react-testing-library
+    - ⚡ CD with Netlify
+- url: https://felco-gsap.netlify.com
+  repo: https://github.com/AshfaqKabir/Felco-Gsap-Gatsby-Starter
+  description: Minimal Multipurpose Gsap Gatsby Landing Page. Helps Getting Started With Gsap and Netlify Forms.
+  tags:
+    - Portfolio
+    - Styling:CSS-in-JS
+  features:
+    - Minimal 3 Page Responsive Layout
+    - Multipurpose Gatsby Theme
+    - Working Netlify Form
+    - Gsap For Modern Animtaions
+    - Styled Components for responsive component based styling with theming
+    - Basic SEO, site metadata
+    - Prettier

@@ -92,7 +92,7 @@ Periodically, gatsbybot will create pull requests to keep translations repos up-
 
 If for whatever reason you'd like to manually sync your translation repo, you can do so by running these commands:
 
-```
+```shell
 git remote add source https://github.com/gatsbyjs/gatsby-i18n-source.git
 git pull source master
 ```
@@ -141,7 +141,7 @@ Sometimes a PR has a valid reason to not be merged as-is. Templates can help spe
 
 If a PR includes content that is of poor quality (such as from Google Translate or missing important nuance) or doesn't meet the requirements, it would help to include a drafted reply to encourage contributors to continue with the project. Here is an example that can be translated for a given repo:
 
-```
+```text
 Hey! Thanks so much for opening a pull request!
 
 We really appreciate you sending this over, but the change you’ve proposed is not going to be accepted because it doesn't meaningfully translate the Gatsby docs content.
@@ -156,7 +156,7 @@ Thanks again, and we look forward to seeing more PRs from you in the future! �
 
 Because the main Gatsby repo is the source of content, more substantive changes should be closed and redirected there. Here is a template that could be translated for your repo:
 
-```
+```text
 Hey! Thanks so much for opening a pull request!
 
 We really appreciate you sending this over, but the change you’ve proposed is not going to be accepted because it includes broad changes to the docs content that should be done in the [main Gatsby repo](https://github.com/gatsbyjs/gatsby) instead.
@@ -191,7 +191,7 @@ Leave text in code blocks untranslated except for comments. You may optionally t
 
 ✅ DO:
 
-```js
+```jsx
 // Ejemplo
 import React from "react"
 export default () => (
@@ -201,7 +201,7 @@ export default () => (
 
 ✅ ALSO OKAY:
 
-```js
+```jsx
 // Ejemplo
 import React from "react"
 export default () => (
@@ -211,7 +211,7 @@ export default () => (
 
 ❌ DON'T:
 
-```js
+```jsx
 // Ejemplo
 import React from "react"
 export default () => (
@@ -222,7 +222,7 @@ export default () => (
 
 ❌ DEFINITELY DON'T:
 
-```js
+```jsx
 importar Reaccionar desde "reaccionar"
 exportar defecto () => (
    <div estilo = {{color: `morado`, fontSize:` 72px`}}> ¡Hola Gatsby! </div>
@@ -235,13 +235,13 @@ Translate link text but keep all slugs and hashes in links the same as they are 
 
 ✅ OK:
 
-```md
+```markdown
 - [Configure su entorno de desarrollo](/tutorial/set-up-your-development-environment)
 ```
 
 ❌ DON'T:
 
-```md
+```markdown
 - [Configura tu entorno de desarrollo](/tutorial/configura-tu-entorno-de-desarrollo)
 ```
 
@@ -254,7 +254,7 @@ If an external link is to an article in a reference like [MDN] or [Wikipedia], a
 
 ✅ OK:
 
-```md
+```markdown
 Los elementos de React son [inmutables](https://es.wikipedia.org/wiki/Objeto_inmutable).
 ```
 
