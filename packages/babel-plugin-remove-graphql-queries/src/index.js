@@ -359,7 +359,7 @@ export default function({ types: t }) {
         })
 
         function followVariableDeclarations(binding) {
-          const node = binding.path ? binding.path.node : undefined
+          const node = binding.path?.node
           if (
             node &&
             node.type === `VariableDeclarator` &&
