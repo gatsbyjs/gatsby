@@ -30,8 +30,7 @@ Just like with the blog post template, you can probably just use a [stateless fu
 
 I will go ahead and start off with a generic template again and then fill it out later with the appropriate data. The code below will get a simple template created for us to use for pages for now:
 
-```javascript
-// src/templates/Page.js
+```jsx:title=src/templates/Page.js
 import React from "react"
 import Layout from "../components/layout"
 
@@ -48,9 +47,7 @@ export default PageTemplate
 
 Awesome! Now that you have your page template created, you can add pages to the gatsby-node.js file. First, you will import the template just like you did for the BlogPostTemplate. Then you will add the allWordpressPage piece to the GraphQL query. Finally, you will use the `createPage` API to create pages based on the information retrieved from the GraphQL query and use the Page template to build the pages automatically. Below is the finished gatsby-node.js file. See if you can spot the things I mentioned for the pages.
 
-```javascript
-// gatsby-node.js
-
+```javascript:title=gatsby-node.js
 /**
  * Implement Gatsby's Node APIs in this file.
  *
@@ -125,8 +122,7 @@ Since you have your page routes set up, you can start adding to the template. Th
 
 The end result is a basic component as shown below:
 
-```javascript
-// src/templates/Page.js
+```jsx:title=src/templates/Page.js
 import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout.js"
@@ -175,8 +171,7 @@ You can also see that the starter default comes with a few pages already in the 
 
 Since you want your blog to show up on the homepage, you can edit the file called `index.js` to do this. Let's take a look at this file before you make any changes:
 
-```javascript
-// src/pages/index.js
+```jsx:title=src/pages/index.js
 import React from "react"
 import { Link } from "gatsby"
 
@@ -204,8 +199,7 @@ You are going to remove everything after the SEO tag but before the closing Layo
 
 To keep things basic, you'll just create a list of recent blog posts with an image, title, author, date, and excerpt. Each of the items in this list should link to the individual blog post for readers. Below is the code to create this layout. It's pretty straightforward and looks very similar to your blog post template with the exception of the map function which iterates over the items in an array.
 
-```javascript
-// src/pages/index.js
+```jsx:title=src/pages/index.js
 import React from "react"
 import { graphql, Link } from "gatsby"
 import Img from "gatsby-image"
@@ -298,8 +292,7 @@ One of the first things I notice about the blog pictured above is the header. It
 
 In the gatsby-config.js file, you can see a piece at the top called `siteMetadata` with a title, description, and author. This is where some basic information is kept about the project for the SEO component, but also for the site name.
 
-```javascript
-// gatsby-config.js
+```javascript:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
     title: `Gatsby Default Starter`,
@@ -320,8 +313,7 @@ Since you are building a blog using WordPress and want your users to have full c
 
 Using queries works a bit differently inside of components. Rather than just writing a query which drops data into your page or template, you have to use a new component called `StaticQuery` which is designed specifically for using queries inside of components.
 
-```javascript
-// src/components/header.js
+```jsx:title=src/components/header.js
 import { Link } from "gatsby"
 import PropTypes from "prop-types"
 import React from "react"
@@ -368,8 +360,7 @@ export default Header
 
 If you take a quick look at the existing header component, you will see that a site-title is being passed in as a prop which is then used to display the site title from `gatsby-config.js` in the header. What you are going to do is use the `StaticQuery` component provided by Gatsby and use a query prop to run your query and then a render prop to actually render out your component like you normally would. You can see below how you do this in code:
 
-```javascript
-// src/components/header.js
+```jsx:title=src/components/header.js
 import { StaticQuery, graphql, Link } from "gatsby"
 import React from "react"
 
@@ -429,8 +420,7 @@ Let's take it a step further and say your user wants a menu in the header that h
 
 When you were setting your gatsby-config.js file in the [second part of the series](/blog/2019-04-30-how-to-build-a-blog-with-wordpress-and-gatsby-part-2), you just stuck with the default routes provided in the gatsby-source-wordpress docs. The WP API Menus plugin creates a few new routes for those endpoints, so the first thing you need to do is add these endpoints to the gatsby-config.js file.
 
-```javascript
-// gatsby-config.js
+```javascript:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
     title: `Gatsby Default Starter`,
@@ -509,8 +499,7 @@ If you look at the code above, you'll notice you have added two new routes to th
 
 The final step is to add this query into your static query and create the menu itself in the header component. You can just drop this in under the wordpressSiteMetadata piece. Once you have it added into the query, you can just use a `map()` function to iterate over the menu items and create it dynamically, allowing the user to update it through WordPress. Doing it this way does require us to specify which menu you want, so you need the name of the menu which is set in WordPress. In this case, your menu is called Main Menu so you will use that in your query.
 
-```javascript
-// src/components/header.js
+```jsx:title=src/components/header.js
 import { StaticQuery, graphql, Link } from "gatsby"
 import React from "react"
 

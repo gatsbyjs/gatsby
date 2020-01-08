@@ -189,7 +189,7 @@ const Layout = ({ children }) => (
 
 Locate the `header.js` file inside `src/components` and remove everything so only the functional component definition is left (everything else is just boilerplate code given to you when generating your project):
 
-```js:title=src/components/header.js
+```jsx:title=src/components/header.js
 import React from "react"
 import { Link } from "gatsby"
 const Header = ({ siteTitle, menuLinks }) => (

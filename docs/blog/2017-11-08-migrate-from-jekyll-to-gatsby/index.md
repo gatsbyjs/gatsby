@@ -67,7 +67,7 @@ need to extract the date from the file name.
 
 The slug in my case is generated with this (default in Jekyll) structure:
 
-```
+```text
 https://blog.singuerinc.com/[n-categories]/YYYY/MM/DD/dashed-title/
 
 // Given this data:
