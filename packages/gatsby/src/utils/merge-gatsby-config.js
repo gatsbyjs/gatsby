@@ -54,4 +54,5 @@ const howToMerge = {
       _.isEqual(normalizePluginEntry(a), normalizePluginEntry(b))
     ),
   mapping: (objA, objB) => _.merge({}, objA, objB),
+  developMiddleware: (a, b) => (app) => { a(app); b(app) },
 }
