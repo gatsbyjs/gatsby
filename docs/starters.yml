@@ -4876,10 +4876,6 @@
     - i18n
     - Linting
     - Testing
-    - CMS:Netlify
-    - Markdown
-    - MDX
-    - SEO
   features:
     - 💻 TypeScript
     - 📓 Visual testing with Storybook
@@ -4889,7 +4885,6 @@
     - 🖼️ SVG support with SVGR
     - 📝 Unit and integration testing with Jest and react-testing-library
     - ⚡ CD with Netlify
-    - 📚 Markdown in MDX
 - url: https://felco-gsap.netlify.com
   repo: https://github.com/AshfaqKabir/Felco-Gsap-Gatsby-Starter
   description: Minimal Multipurpose Gsap Gatsby Landing Page. Helps Getting Started With Gsap and Netlify Forms.
