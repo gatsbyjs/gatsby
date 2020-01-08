@@ -2,7 +2,7 @@
 title: Open Community Pair Programming Sessions
 ---
 
-The best part of open source is the community, and every community is stronger when it works together. To help build the strongest community possible, Gatsby is offering free [one-hour pair programming sessions][cal] to anyone and everyone in the open source community.
+The best part of open source is the community, and every community is stronger when it works together. To help build the strongest community possible, Gatsby is offering free [45 minute pair programming sessions][cal] to anyone and everyone in the open source community.
 
 ## How community pair programming sessions work
 
