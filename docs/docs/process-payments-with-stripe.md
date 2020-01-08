@@ -63,7 +63,7 @@ As described in the documentation, you'll need to:
 4. Submit the token to your server (client-side)
 5. Create a charge with the token (server-side)
 
-Because of how Gatsby is rendered, you'll need to make sure the window is available before loading Stripe. One way to do this is using the useState hook to save an instance of stripe and the useEffect hook to load stripe if the window is not undefined. The code snippet below shows a small example of these changes. Instead of passing your API key to the `<StripeProvider />`, you'll pass the stripe variable.
+Because of how Gatsby is rendered, you'll need to make sure the window is available before loading Stripe. One way to do this is using the `useState` hook to save an instance of Stripe and the useEffect hook to load Stripe if the window is not undefined. The code snippet below shows a small example of these changes. Instead of passing your API key to the `<StripeProvider />`, you'll pass the `stripe` variable.
 
 ```javascript
 import { Elements, StripeProvider } from "react-stripe-elements"
