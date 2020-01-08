@@ -32,7 +32,7 @@ You can also use the `package.json` script variant of these commands, typically 
 
 ### `new`
 
-```
+```bash
 gatsby new [<site-name> [<starter-url>]]
 ```
 

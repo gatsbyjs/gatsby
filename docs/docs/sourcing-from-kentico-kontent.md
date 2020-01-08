@@ -74,7 +74,7 @@ To see how to put that data into your site, first go to <http://localhost:8000/>
 
 The title here is generated in the layout from the site metadata. By default, the Kentico Kontent Sample Project has a single item named "Home" that is the only item of the Home type. So you can change the layout component to query the metadata of that item and then use that data to populate your title.
 
-```javascript:title=src/components/layout.js
+```jsx:title=src/components/layout.js
 ...
 const Layout = ({ children }) => (
   <StaticQuery
@@ -167,7 +167,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
 Now create a basic template to display each article with a title and the body that you pull with a GraphQL query:
 
-```javascript:title=src/templates/article.js
+```jsx:title=src/templates/article.js
 import React from "react"
 import { graphql } from "gatsby"
 
