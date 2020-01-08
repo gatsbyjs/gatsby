@@ -1,6 +1,5 @@
 const _ = require(`lodash`)
 const stringify = require(`json-stringify-safe`)
-const deepMap = require(`deep-map`)
 const { createContentDigest } = require(`gatsby-core-utils`)
 
 const digest = str => createContentDigest(str)
