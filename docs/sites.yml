@@ -472,15 +472,6 @@
     - Web Development
     - Open Source
     - Library
-- title: Artivest
-  main_url: "https://artivest.co/"
-  url: "https://artivest.co/what-we-do/for-advisors-and-investors/"
-  featured: false
-  categories:
-    - Marketing
-    - Blog
-    - Documentation
-    - Finance
 - title: The Audacious Project
   main_url: "https://audaciousproject.org/"
   url: "https://audaciousproject.org/"
@@ -1011,8 +1002,8 @@
     - Marketing
     - Healthcare
 - title: Moteefe
-  main_url: "http://www.moteefe.com/"
-  url: "http://www.moteefe.com/"
+  main_url: "https://www.moteefe.com/"
+  url: "https://www.moteefe.com/"
   featured: false
   categories:
     - Marketing
@@ -2322,7 +2313,6 @@
 - title: Ema Suriano's Portfolio
   main_url: https://emasuriano.com/
   url: https://emasuriano.com/
-  source_url: https://github.com/EmaSuriano/emasuriano.github.io
   description: >
     Ema Suriano's portfolio to display information about him, his projects and what he's writing about.
   categories:
@@ -3757,17 +3747,6 @@
   built_by: Marcy Sutton
   built_by_url: https://marcysutton.com
   featured: true
-- title: Kepinski.me
-  main_url: https://kepinski.me
-  url: https://kepinski.me
-  description: >
-    The personal site of Antoni Kepinski, Node.js Developer.
-  categories:
-    - Portfolio
-    - Open Source
-  built_by: Antoni Kepinski
-  built_by_url: https://kepinski.me
-  featured: false
 - title: WPGraphQL Docs
   main_url: https://docs.wpgraphql.com
   url: https://docs.wpgraphql.com
@@ -5293,7 +5272,6 @@
 - title: Kenneth Kwakye-Gyamfi Portfolio Site
   url: https://www.kwakye-gyamfi.com
   main_url: https://www.kwakye-gyamfi.com
-  source_url: https://github.com/cr05s19xx/cross-site
   description: >
     Personal portfolio site for Kenneth Kwakye-Gyamfi, a mobile and web full stack applications developer currently based in Accra, Ghana.
   categories:
@@ -7319,7 +7297,6 @@
 - title: GatsbyFinds
   main_url: https://gatsbyfinds.netlify.com
   url: https://gatsbyfinds.netlify.com
-  source_url: https://github.com/bvlktech/GatsbyFinds
   description: >
     GatsbyFinds is a website built ontop of Gatsby v2 by providing developers with a showcase of all the lastest projects made with the beloved GatsbyJS.
   categories:
@@ -9185,7 +9162,7 @@
   built_by_url: https://github.com/junhobaik
   featured: false
 - title: React Resume Generator
-  main_url: https://github.com/nimahkh/resume_generator
+  main_url: https://nimahkh.github.io/nima_habibkhoda
   url: https://nimahkh.github.io/nima_habibkhoda
   source_url: https://github.com/nimahkh/resume_generator
   description: >
