@@ -96,4 +96,4 @@ Stripe Billing is an excellent tool for creating recurring payments, even provid
 - [Stripe website](https://stripe.com/)
 - [Stripe API documentation](https://stripe.com/docs/api)
 - [React Stripe Elements Github](https://github.com/stripe/react-stripe-elements)
-- [Gatsby E-Commerce Tutorial](https://www.gatsbyjs.org/tutorial/ecommerce-tutorial/)
+- [Making an e-commerce Gatsby Site with Stripe](https://www.gatsbyjs.org/tutorial/ecommerce-tutorial/)
