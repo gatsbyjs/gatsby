@@ -2,4 +2,4 @@
 import "typeface-montserrat"
 import "typeface-merriweather"
 
-require(`prismjs/themes/prism-coy.css`)
+import "prismjs/themes/prism.css"
