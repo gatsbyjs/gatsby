@@ -10,7 +10,7 @@ tags:
 
 If you’re looking into using [Theme UI](https://theme-ui.com/) , you’ll come across some (potentially) unfamiliar looking syntax:
 
-```javascript
+```jsx
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 ```

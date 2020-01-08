@@ -33,6 +33,10 @@ Gatsby has many benefits that give developers the freedom to build great website
 
 > Just about every feature you could want for building a state-of-the-art website or web app is available through Gatsby. If the feature isn't already built in, there's an extensive library of available plugins. There's a list of features, their availability, and comparisons with other site building options available on the [Features page](/features/). The complete list of currently available plugins can be found on the [Plugins page](/plugins/).
 
+### Data integration
+
+> Gatsby supports data integration from sources like CMSs, SaaS services, APIs, databases, and other data sources of all flavors. Gatsby can also pull unstructured data directly into pages using API calls specifically crafted for this purpose, this works great with smaller websites which can later be scaled up effortlessly if necessary. This makes Gatsby stand out from most other static site generators.
+
 ### Community and documentation
 
 > You'd be hard-pressed to find a more active and welcoming open-source community than Gatsby. Documentation is thorough, detailed, and doesn't make any assumptions about your experience-level going in. The Gatsby team is committed to transparency and working in the open so the community can follow and participate in Gatsby's development and direction. Everyone is encouraged to contribute to Gatsby and every contribution is valued.

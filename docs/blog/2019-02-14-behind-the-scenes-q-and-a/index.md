@@ -216,7 +216,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Answer:** All of the above!
 
 **Question:** Is Gatsby production ready? It's fantastic!
-**Answer:** Yep! Here are some sites using Gatsby in production: [Gatsby Showcase ](/showcase/)(includes the Flamingo e-commerce site).
+**Answer:** Yep! Here are some sites using Gatsby in production: [Gatsby Showcase](/showcase/) (includes the Flamingo e-commerce site).
 
 ### Misc. questions
 

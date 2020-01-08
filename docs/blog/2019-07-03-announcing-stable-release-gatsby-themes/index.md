@@ -38,7 +38,7 @@ Shadowing allows you to override specific components by creating a new file and 
 
 Stability for shadowing means that creating a single file is all you need to start changing how your theme renders your site. Additionally, we've added the ability to import and extend the parent component, allowing the use of props for customizing features of any React component.
 
-```js:title=my-site/src/my-theme/components/header.js
+```jsx:title=my-site/src/my-theme/components/header.js
 import Header from "my-theme/src/components/header"
 
 export default props => <Header {...props} myProp={true} />
