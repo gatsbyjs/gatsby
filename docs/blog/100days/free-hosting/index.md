@@ -15,7 +15,7 @@ _Learn more about [#100DaysOfGatsby here](/blog/100days)!_
 
 This week we invite you to deploy your Gatsby project to the web!
 
-If you’re experienced with launching an all-in-one CMS-powered or database-backed website, then the process of putting a Gatsby site live on the web may feel strange to you. You will be using continuous deployment tools to prepare and publish your site. It’s okay if your site is unfinished, as getting a website deployed will allow you to test on mobile devices and share with your colleagues to get feedback in design and development.
+If you’re experienced with launching an all-in-one CMS-powered or database-backed website, then the process of putting a Gatsby site live on the web may feel strange to you. You will be using continuous deployment tools to prepare and publish your site. It’s okay if your site is unfinished, as getting a website deployed will allow you to test on mobile devices and share with your colleagues to get feedback on design and development.
 
 To complete this challenge, we would like you to:
 
