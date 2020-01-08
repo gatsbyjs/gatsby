@@ -9217,6 +9217,19 @@
     - Education
     - Learning
     - Technology
+- title: madewithlove
+  main_url: https://www.madewithlove.be
+  url: https://www.madewithlove.be
+  description: >-
+    We build digital products and create the teams around them. We can help with software engineering, product management, managing technical teams, audits and technical consulting.
+  built_by: madewithlove
+  built_by_url: https://www.madewithlove.be
+  featured: false
+  categories:
+    - Web Development
+    - Blog
+    - Agency
+    - Business
 - title: Sprucehill
   url: https://sprucehill.ca/
   main_url: https://sprucehill.ca/
