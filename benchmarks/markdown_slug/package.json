@@ -5,6 +5,7 @@
   "version": "0.0.1",
   "author": "PvdZ <pvdz@github>",
   "dependencies": {
+    "del-cli": "^3.0.0",
     "gatsby": "*",
     "gatsby-image": "*",
     "gatsby-plugin-feed": "*",
@@ -51,6 +52,6 @@
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
     "bench": "rm -r markdown-pages; NUM_PAGES=${NUM_PAGES:-2000} node md.generate.js; gatsby clean; node --max_old_space_size=2000 node_modules/.bin/gatsby build",
     "benchnb": "gatsby clean; node --max_old_space_size=2000 node_modules/.bin/gatsby build",
-    "postinstall": "NUM_PAGES=${NUM_PAGES:-2000} node md.generate.js"
+    "postinstall": "del-cli markdown-pages && gatsby clean && NUM_PAGES=${NUM_PAGES:-2000} node md.generate.js"
   }
 }
