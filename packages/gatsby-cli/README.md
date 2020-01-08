@@ -78,9 +78,9 @@ development server.
 
 #### Options
 
-|     Option      | Description                                     | Default              |
+|     Option      | Description                                     |       Default        |
 | :-------------: | ----------------------------------------------- | :------------------: |
-| `-H`, `--host`  | Set host.                                       | `localhost`          |
+| `-H`, `--host`  | Set host.                                       |     `localhost`      |
 | `-p`, `--port`  | Set port.                                       | `env.PORT` or `8000` |
 | `-o`, `--open`  | Open the site in your (default) browser for you |                      |
 | `-S`, `--https` | Use HTTPS                                       |                      |
