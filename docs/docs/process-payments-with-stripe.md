@@ -45,7 +45,7 @@ Whether you're using Checkout or Elements, you'll need to create a product on St
 
 The [Stripe Checkout documentation](https://stripe.com/docs/payments/checkout/one-time) provides detailed information on how to setup Checkout if you're interested. Because of how Gastby is rendered, there are a few changes you'll need to make like using the `gatsby-plugin-stripe`.
 
-Check out the [Gatsby E-Commerce Tutorial](https://www.gatsbyjs.org/tutorial/ecommerce-tutorial/#installing-the-stripejs-plugin) to learn how to setup your account to use the "Checkout client-only integration", create products on the Stripe dashboard, and integrate Checkout with Gatsby. The tutorial will explain everything you need to start selling your products.
+Check out the [Gatsby E-Commerce Tutorial](https://www.gatsbyjs.org/tutorial/ecommerce-tutorial/#installing-the-stripejs-plugin) to learn how to set up your account to use the "Checkout client-only integration", create products on the Stripe dashboard, and integrate Checkout with Gatsby. The tutorial will explain everything you need to start selling your products.
 
 ### Stripe Elements
 
