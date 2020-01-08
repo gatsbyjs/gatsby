@@ -30,7 +30,7 @@ if (!semver.satisfies(process.version, `>=${MIN_NODE_VERSION}`)) {
 
 const NEXT_MIN_NODE_VERSION = `10.13.0`
 
-if (!semver.satisfies(process.version, NEXT_MIN_NODE_VERSION)) {
+if (!semver.satisfies(process.version, `>=${NEXT_MIN_NODE_VERSION}`)) {
   report.warn(
     report.stripIndent(`
       Gatsby will be dropping support for Node.js ${process.version} soon 
