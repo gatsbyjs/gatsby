@@ -31,7 +31,7 @@ In the `authoring-themes-tutorial` folder, create two new folders, `gatsby-theme
 
 Create a `package.json` file in each of the new folders. Your file tree will look like this:
 
-```
+```text
 .
 ├── gatsby-theme-events
 │   └── package.json
@@ -115,7 +115,7 @@ You should now see the following dependencies in your `site/package.json`:
 
 If you run `yarn workspaces info`, you'll be able to verify that the site is using the `gatsby-theme-events` from the workspace.
 
-```shell
+```json
 {
   "gatsby-theme-events": {
     "location": "gatsby-theme-events",
@@ -125,9 +125,7 @@ If you run `yarn workspaces info`, you'll be able to verify that the site is usi
   "site": {
     "location": "site",
     // highlight-start
-    "workspaceDependencies": [
-      "gatsby-theme-events"
-    ],
+    "workspaceDependencies": ["gatsby-theme-events"],
     // highlight-end
     "mismatchedWorkspaceDependencies": []
   }
@@ -608,7 +606,7 @@ Create new files for the event template, and the events template:
 
 #### Events template
 
-```javascript:title=gatsby-theme-events/src/templates/events.js
+```jsx:title=gatsby-theme-events/src/templates/events.js
 import React from "react"
 
 const EventsTemplate = () => <p>TODO: Build the events page template</p>
@@ -618,7 +616,7 @@ export default EventsTemplate
 
 #### Event template
 
-```javascript:title=gatsby-theme-events/src/templates/event.js
+```jsx:title=gatsby-theme-events/src/templates/event.js
 import React from "react"
 
 const EventTemplate = () => <p>TODO: Build the event page template</p>
@@ -642,7 +640,7 @@ If you hit [http://localhost:8000/404](http://localhost:8000/404) (for example -
 
 To show event data, you'll import `graphql` and `useStaticQuery` from Gatsby in the `events.js` component.
 
-```javascript:title=gatsby-theme-events/src/templates/events.js
+```jsx:title=gatsby-theme-events/src/templates/events.js
 import React from "react"
 // highlight-next-line
 import { graphql, useStaticQuery } from "gatsby"
@@ -654,7 +652,7 @@ export default EventsTemplate
 
 Refactor the `EventsTemplate` component to include a static query for events data:
 
-```javascript:title=gatsby-theme-events/src/templates/events.js
+```jsx:title=gatsby-theme-events/src/templates/events.js
 import React from "react"
 import { graphql, useStaticQuery } from "gatsby"
 
@@ -693,7 +691,7 @@ Start creating the UI to display the event data.
 
 Create a new file at `gatsby-theme-events/src/components/layout.js`:
 
-```javascript:title=gatsby-theme-events/src/components/layout.js
+```jsx:title=gatsby-theme-events/src/components/layout.js
 import React from "react"
 
 const Layout = ({ children }) => (
@@ -710,7 +708,7 @@ export default Layout
 
 Create a new file at `gatsby-theme-events/src/components/event-list.js`:
 
-```javascript:title=gatsby-theme-events/src/components/event-list.js
+```jsx:title=gatsby-theme-events/src/components/event-list.js
 import React from "react"
 
 const EventList = ({ events }) => <pre>{JSON.stringify(events, null, 2)}</pre>
@@ -727,7 +725,7 @@ By updating the `events.js` template with the following code, you will:
 - Import the two new components.
 - Refactor the `render` method to use the new components, and give the `<EventList>` component the events data.
 
-```javascript:title=gatsby-theme-events/src/templates/events.js
+```jsx:title=gatsby-theme-events/src/templates/events.js
 import React from "react"
 import { graphql, useStaticQuery } from "gatsby"
 // highlight-start
@@ -823,7 +821,7 @@ Similar to `EventList`, you'll need to create a React component template for an 
 
 First, you'll create a page query to query for individual events by `id`.
 
-```javascript:title=gatsby-theme-events/src/templates/event.js
+```jsx:title=gatsby-theme-events/src/templates/event.js
 import React from "react"
 // highlight-start
 import { graphql } from "gatsby"
@@ -849,7 +847,7 @@ export default EventTemplate
 
 ### Modify the event template to access event data
 
-```javascript:title=gatsby-theme-events/src/templates/event.js
+```jsx:title=gatsby-theme-events/src/templates/event.js
 import React from "react"
 import { graphql } from "gatsby"
 // highlight-start
@@ -882,7 +880,7 @@ export default EventTemplate
 
 There's some wishful programming here again -- the `<Event>` component doesn't exist yet. Create that component in `gatsby-theme-events/src/components/event.js`:
 
-```javascript:title=gatsby-theme-events/src/components/event.js
+```jsx:title=gatsby-theme-events/src/components/event.js
 import React from "react"
 
 const Event = props => <pre>{JSON.stringify(props, null, 2)}</pre>
@@ -896,7 +894,7 @@ To start off, as before, run `JSON.stringify` on the props data getting passed t
 
 Data is logging on the individual event pages. As before, now update the component to use markup, rather than displaying the raw data:
 
-```javascript:title=gatsby-theme-events/src/components/event.js
+```jsx:title=gatsby-theme-events/src/components/event.js
 import React from "react"
 
 // highlight-start
@@ -930,7 +928,7 @@ Now you'll refactor this component with some business logic to display the event
 - If the event is multi-day: July 4-6, 2019
 - If the event spans different months: July 30 - August 2 2019
 
-```javascript:title=gatsby-theme-events/src/components/event.js
+```jsx:title=gatsby-theme-events/src/components/event.js
 import React from "react"
 
 // highlight-start
@@ -1224,7 +1222,7 @@ Now, refactor the `layout.js` component in `gatsby-theme-events` to actually use
 
 First, import the `Layout`, `Header`, `Main`, and `Container` [components from Theme UI](https://theme-ui.com/layout).
 
-```javascript:title=gatsby-theme-events/src/components/layout.js
+```jsx:title=gatsby-theme-events/src/components/layout.js
 import React from "react"
 // highlight-next-line
 import { Layout as ThemeLayout, Header, Main, Container } from "theme-ui"
@@ -1241,7 +1239,7 @@ export default Layout
 
 Next, refactor the `layout.js` component to use the Theme UI components:
 
-```javascript:title=gatsby-theme-events/src/components/layout.js
+```jsx:title=gatsby-theme-events/src/components/layout.js
 import React from "react"
 import { Layout as ThemeLayout, Header, Main, Container } from "theme-ui"
 
@@ -1271,7 +1269,7 @@ yarn workspace site develop
 
 To continue applying theme styles, you can use the `Style` import from Theme UI. For example, in the `event-list.js` component, change the `<h1>`, `<ul>` and `<li>` elements to reference their themed styles:
 
-```javascript:title=gatsby-theme-events/src/components/event-list.js
+```jsx:title=gatsby-theme-events/src/components/event-list.js
 import React from "react"
 import { Link } from "gatsby"
 // highlight-next-line
@@ -1529,7 +1527,7 @@ Anything inside `theme-test/src/@jlengstorf/gatsby-theme-events` will "shadow" t
 
 For example, create a new file to override the layout component: `theme-test/src/@jlengstorf/gatsby-theme-events/components/layout.js`.
 
-```javascript:title=theme-test/src/@jlengstorf/gatsby-theme-events/components/layout.js
+```jsx:title=theme-test/src/@jlengstorf/gatsby-theme-events/components/layout.js
 import React from "react"
 
 export default ({ children }) => <>{children}</>
