@@ -89,7 +89,7 @@ const CheckoutForm = props => {
 
 ## Recurring payments
 
-Stripe Billing is an excellent tool to create recurring payments, even providing the ability to charge based on usage or tiered subscription plans. The [Billing documentation](https://stripe.com/docs/billing) explains the different options to set up recurring payments. The [Subscription documentation](https://stripe.com/docs/billing/subscriptions/set-up-subscription) shows how to create subscription plans, create paymentMethods and customers, and create subscriptions.
+Stripe Billing is an excellent tool for creating recurring payments, even providing the ability to charge based on usage or tiered subscription plans. The [Billing documentation](https://stripe.com/docs/billing) explains the different options to set up recurring payments. The [Subscription documentation](https://stripe.com/docs/billing/subscriptions/set-up-subscription) shows how to create subscription plans, payment methods, and customers.
 
 ## Other resources
 
