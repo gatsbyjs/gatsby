@@ -4866,6 +4866,25 @@
     - Basic SEO, site metadata
     - Prettier
     - Social media links
+- url: https://gatsby-typescript-emotion-storybook.netlify.com/
+  repo: https://github.com/duncanleung/gatsby-typescript-emotion-storybook
+  description: Config for TypeScript + Emotion + Storybook + React Intl + SVGR + Jest.
+  tags:
+    - Language:TypeScript
+    - Styling:CSS-in-JS
+    - Storybook
+    - i18n
+    - Linting
+    - Testing
+  features:
+    - 💻 TypeScript
+    - 📓 Visual testing with Storybook
+    - 👩‍🎤 CSS-in-JS styling with Emotion
+    - 💅 Linting with ESLint and Prettier
+    - 🌎 React Intl internationalization support
+    - 🖼️ SVG support with SVGR
+    - 📝 Unit and integration testing with Jest and react-testing-library
+    - ⚡ CD with Netlify
 - url: https://felco-gsap.netlify.com
   repo: https://github.com/AshfaqKabir/Felco-Gsap-Gatsby-Starter
   description: Minimal Multipurpose Gsap Gatsby Landing Page. Helps Getting Started With Gsap and Netlify Forms.
