@@ -4893,6 +4893,22 @@
     - Basic SEO, site metadata
     - Prettier
     - Social media links
+- url: https://gatsby-simplefolio.netlify.com/
+  repo: https://github.com/cobidev/gatsby-simplefolio
+  description: A clean, beautiful and responsive portfolio template for Developers ⚡️
+  tags:
+    - Portfolio
+    - PWA
+    - SEO
+    - Onepage
+  features:
+    - Modern UI Design
+    - Reveal Animations
+    - Fully Responsive
+    - Easy site customization
+    - Configurable color scheme
+    - OnePage portfolio site
+    - Fast image optimization
 - url: https://gatsby-starter-hpp.netlify.com/
   repo: https://github.com/hppRC/gatsby-starter-hpp
   description: All in one Gatsby skeleton based TypeScript, emotion, and unstated-next.
