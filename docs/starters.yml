@@ -4866,3 +4866,17 @@
     - Basic SEO, site metadata
     - Prettier
     - Social media links
+- url: https://felco-gsap.netlify.com
+  repo: https://github.com/AshfaqKabir/Felco-Gsap-Gatsby-Starter
+  description: Minimal Multipurpose Gsap Gatsby Landing Page. Helps Getting Started With Gsap and Netlify Forms.
+  tags:
+    - Portfolio
+    - Styling:CSS-in-JS
+  features:
+    - Minimal 3 Page Responsive Layout
+    - Multipurpose Gatsby Theme
+    - Working Netlify Form
+    - Gsap For Modern Animtaions
+    - Styled Components for responsive component based styling with theming
+    - Basic SEO, site metadata
+    - Prettier
