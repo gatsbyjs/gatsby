@@ -39,13 +39,13 @@ Quickly get started using the Gatsby notes theme! This starter creates a new Gat
 
 Here are the top-level files and directories you'll see in a site created using the notes theme starter.
 
-```
+```text
 gatsby-starter-notes-theme
 ├── content
-│ └── notes
-│ ├── example-dir
-│ │ └── hi.mdx
-│ └── hello.mdx
+│   └── notes
+│       ├── example-dir
+│       │   └── hi.mdx
+│       └── hello.mdx
 ├── .gitignore
 ├── .prettierrc
 ├── gatsby-config.js

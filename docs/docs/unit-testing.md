@@ -40,7 +40,7 @@ module.exports = {
     ".+\\.(css|styl|less|sass|scss)$": `identity-obj-proxy`,
     ".+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": `<rootDir>/__mocks__/file-mock.js`,
   },
-  testPathIgnorePatterns: [`node_modules`, `.cache`, `public`],
+  testPathIgnorePatterns: [`node_modules`, `\\.cache`, `<rootDir>.*/public`],
   transformIgnorePatterns: [`node_modules/(?!(gatsby)/)`],
   globals: {
     __PATH_PREFIX__: ``,
@@ -88,7 +88,7 @@ module.exports = "test-file-stub"
   includes un-transpiled ES6 code. By default Jest doesn't try to transform code
   inside `node_modules`, so you will get an error like this:
 
-```
+```text
 /my-app/node_modules/gatsby/cache-dir/gatsby-browser-entry.js:1
 ({"Object.<anonymous>":function(module,exports,require,__dirname,__filename,global,jest){import React from "react"
                                                                                             ^^^^^^

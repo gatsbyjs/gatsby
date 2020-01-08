@@ -27,7 +27,7 @@ with [reactjs.org](https://github.com/reactjs/reactjs.org):
 
 For example, given the following project directory structure:
 
-```
+```text
 ./examples/
 ├── components-and-props
 │   ├── composing-components.js
@@ -71,7 +71,7 @@ CodeSandbox](codesandbox://components-and-props/rendering-a-component.js)
 
 Sometimes a larger code example would require more than a single file, with various types. For example, you might have an example folder like this:
 
-```
+```text
 ├── my-example
 │   ├── index.js
 │   ├── util.js

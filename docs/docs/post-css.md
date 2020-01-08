@@ -24,7 +24,7 @@ plugins: [`gatsby-plugin-postcss`],
 
 3.  Write your stylesheets using PostCSS (.css files) and require or import them as normal.
 
-```css:styles.css
+```css:title=styles.css
 @custom-media --med (width <= 50rem);
 
 @media (--med) {

@@ -725,6 +725,8 @@
           link: /docs/glossary/node
         - title: React
           link: /docs/glossary/react
+        - title: webpack
+          link: /docs/glossary/webpack
     - title: Gatsby Telemetry
       link: /docs/telemetry/
     - title: Gatsby REPL
