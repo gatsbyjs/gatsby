@@ -421,7 +421,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     "type MarkdownRemark implements Node { frontmatter: Frontmatter }",
     `type Frontmatter {
       publishedAt: Date @dateformat(formatString: "DD-MM-YYYY")
-    }`
+    }`,
     schema.buildObjectType({
       name: 'AuthorJson',
       fields: {
