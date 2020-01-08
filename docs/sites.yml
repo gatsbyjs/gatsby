@@ -9194,6 +9194,18 @@
     - Education
     - Learning
     - Technology
+- title: The Rebigulator
+  main_url: "https://www.rebigulator.org/"
+  source_url: "https://github.com/Me4502/Rebigulator/"
+  url: "https://rebigulator.org/"
+  description: A quote-based via game powered by Frinkiac
+  built_by: Matthew Miller
+  built_by_url: https://matthewmiller.dev/
+  featured: false
+  categories:
+    - Open Source
+    - Entertainment
+    - App
 - title: madewithlove
   main_url: https://www.madewithlove.be
   url: https://www.madewithlove.be
