@@ -12,8 +12,8 @@ const { reportError } = require(`./report-error`)
 const { getPluginOptions, healOptions } = require(`./plugin-options`)
 const { memoizedTraceSVG, notMemoizedtraceSVG } = require(`./trace-svg`)
 const duotone = require(`./duotone`)
-const { createProgress } = require(`./utils`)
 const { IMAGE_PROCESSING_JOB_NAME } = require(`./gatsby-worker`)
+const { createProgress } = require(`./utils`)
 
 const imageSizeCache = new Map()
 const getImageSize = file => {
@@ -30,6 +30,38 @@ const getImageSize = file => {
     return dimensions
   }
 }
+
+let progressBar
+let pendingImagesCounter = 0
+let firstPass = true
+const createOrGetProgressBar = reporter => {
+  if (!progressBar) {
+    progressBar = createProgress(`Generating image thumbnails`, reporter)
+    const originalDoneFn = progressBar.done
+    progressBar.done = () => {
+      originalDoneFn.call(progressBar)
+      progressBar = null
+      pendingImagesCounter = 0
+    }
+
+    if (!firstPass) {
+      let progressBarCurrentValue = 0
+      const originalTickFn = progressBar.tick
+      progressBar.tick = (ticks = 1) => {
+        originalTickFn.call(progressBar, ticks)
+        progressBarCurrentValue += ticks
+
+        if (progressBarCurrentValue === pendingImagesCounter) {
+          progressBar.done()
+        }
+      }
+    }
+    firstPass = false
+  }
+
+  return progressBar
+}
+exports.getProgressBar = () => progressBar
 
 // Bound action creators should be set when passed to onPreInit in gatsby-node.
 // ** It is NOT safe to just directly require the gatsby module **.
@@ -105,28 +137,12 @@ function prepareQueue({ file, args }) {
   }
 }
 
-let progressBarInstance
-function getProgressBar(reporter) {
-  if (progressBarInstance) {
-    return progressBarInstance
-  }
-
-  progressBarInstance = createProgress(`Generating image thumbnails`, reporter)
-  const originalDone = progressBarInstance.done
-
-  progressBarInstance.done = () => {
-    originalDone.call(progressBarInstance)
-    progressBarInstance = null
-  }
-  progressBarInstance.start()
-
-  return progressBarInstance
-}
-
-let pendingImagesCounter = 0
-let completedImagesCounter = 0
 async function createJob(job, { reporter }) {
-  const progressBar = getProgressBar(reporter)
+  const progressBar = createOrGetProgressBar(reporter)
+
+  if (pendingImagesCounter === 0) {
+    progressBar.start()
+  }
 
   const transforms = job.args.operations
   pendingImagesCounter += transforms.length
@@ -138,16 +154,7 @@ async function createJob(job, { reporter }) {
     await scheduleJob(job, boundActionCreators)
   }
 
-  completedImagesCounter += transforms.length
-  if (progressBar) {
-    progressBar.tick(transforms.length)
-
-    if (completedImagesCounter === pendingImagesCounter) {
-      progressBar.done()
-      completedImagesCounter = 0
-      pendingImagesCounter = 0
-    }
-  }
+  progressBar.tick(transforms.length)
 }
 
 function queueImageResizing({ file, args = {}, reporter }) {
