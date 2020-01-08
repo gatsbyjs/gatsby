@@ -1,5 +1,5 @@
 ---
-title: Process Payments with Stripe
+title: Processing Payments with Stripe
 ---
 
 ## Why Stripe and Gatsby?
