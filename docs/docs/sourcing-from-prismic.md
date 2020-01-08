@@ -50,7 +50,7 @@ npm install --save-dev dotenv
 
 Create a file called `.env.development` at the root of your project with the following content:
 
-```
+```text
 API_KEY=paste-your-secret-access-token-here-wou7evoh0eexuf
 ```
 

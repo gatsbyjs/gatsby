@@ -237,7 +237,7 @@ cd blog
 
 Start the server:
 
-```
+```bash
 gatsby develop
 ```
 
@@ -255,7 +255,7 @@ In this example, we are using Strapi. Obviously, we are going to need a source p
 
 Let's install it:
 
-```
+```bash
 npm install --save gatsby-source-strapi
 ```
 
@@ -330,7 +330,7 @@ _Important links from Video:_
 
 First, we want to display the list of articles. To do so, add the following content in the existing home page file:
 
-```js:title=/blog/src/pages/index.js
+```jsx:title=/blog/src/pages/index.js
 import React from "react"
 import { Link, graphql } from "gatsby"
 import Layout from "../components/layout"
@@ -387,7 +387,7 @@ Gatsby includes a useful GraphiQL interface. It makes GraphQL queries developmen
 
 To add images, we will need to import `Img` from package `gatsby-image` installed by default. Replace the content of `blog/src/pages/index.js` with the following :
 
-```js:title=/blog/src/pages/index.js
+```jsx:title=/blog/src/pages/index.js
 import React from "react"
 import { Link, graphql } from "gatsby"
 import Img from "gatsby-image"
@@ -455,7 +455,7 @@ Let's create the template, containing a specific GraphQL request and defining th
 
 In order to do this, first create a folder called `templates` in your `src` directory. Then within `templates` create a file called `article.js`.
 
-```js:title=/blog/src/templates/article.js
+```jsx:title=/blog/src/templates/article.js
 import React from "react"
 import { Link, graphql } from "gatsby"
 import Img from "gatsby-image"
@@ -502,7 +502,7 @@ That looks fine, but at this point, Gatsby does not know when this template shou
 
 First, we are going to code a new function called `makeRequest` to execute the GraphQL request. Then, we export a function named `createPages` in which we get the list of articles and create a page for each of them. Here is the result:
 
-```js:title=/blog/gatsby-node.js
+```jsx:title=/blog/gatsby-node.js
 const path = require(`path`)
 
 const makeRequest = (graphql, request) =>
@@ -577,7 +577,7 @@ Articles are written by authors. They deserve a dedicated page.
 
 The processes for creating author views and article pages are very similar. First, create a new file in our `templates` folder called, `author.js`. Add the code below to this file.
 
-```js:title=/blog/src/templates/author.js
+```jsx:title=/blog/src/templates/author.js
 import React from "react"
 import { Link, graphql } from "gatsby"
 import Layout from "../components/layout"

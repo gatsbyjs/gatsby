@@ -3,8 +3,6 @@ name: Question 🤔
 about: Usage question or discussion about Gatsby.
 ---
 
-<!-- Gatsby OSS team is on holiday, expect a delayed response -->
-
 <!--
   To make it easier for us to help you, please include as much useful information as possible.
 
