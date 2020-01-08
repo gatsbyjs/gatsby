@@ -33,11 +33,11 @@
     "directory": "packages/gatsby-transformer-screenshot"
   },
   "scripts": {
-    "build": "babel src --out-dir . --ignore **/__tests__",
-    "build-lambda-package": "npm run prepare-lambda-package && cp chrome/headless_shell.tar.gz lambda-dist && cd lambda-dist && zip -rq ../lambda-package.zip .",
-    "prepare-lambda-package": "babel lambda --out-dir lambda-dist && cp lambda/package.json lambda-dist/package.json && cd lambda-dist && PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1 npm install --production",
+    "build": "babel src --out-dir . --ignore **/__tests__ --ignore lambda",
+    "build-lambda-package": "npm run prepare-lambda-package && cd lambda-dist && zip -rq ../lambda-package.zip .",
+    "prepare-lambda-package": "rm -rf lambda-dist && mkdir lambda-dist && cp lambda/package.json lambda-dist/package.json && cp lambda/screenshot.js lambda-dist/screenshot.js && cp lambda/index.js lambda-dist/index.js && cd lambda-dist && npm install --production",
     "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir . --ignore **/__tests__"
+    "watch": "babel -w src --out-dir . --ignore **/__tests__ --ignore lambda"
   },
   "engines": {
     "node": ">=8.0.0"
