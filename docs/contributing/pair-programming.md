@@ -21,7 +21,7 @@ If you're interested in support for a commercial Gatsby project, please [get in 
 
 We also expect the following from pair programming participants:
 
-- These sessions tend to work best when you have a specific goal for the session. Preferably you have already selected and worked on an issue and have created a Pull Request with your work.
+- These sessions tend to work best when you have a specific goal for the session. Preferably you have already selected an issue or have started work and created a work-in-progress pull request.
 - If you're new to building with Gatsby we recommend [working through the tutorial](https://www.gatsbyjs.org/tutorial/) before your session. If you get stuck part way through that's a great time to book a pairing session.
 - If you're new to contributing to open source we recommend following the ["Setting Up Your Local Dev Environment" guide](https://www.gatsbyjs.org/contributing/setting-up-your-local-dev-environment/) before your session.
 - All participants are expected to adhere to [Gatsby’s code of conduct](/contributing/code-of-conduct/)
