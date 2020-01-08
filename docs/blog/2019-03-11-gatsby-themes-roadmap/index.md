@@ -58,7 +58,7 @@ each theme points to its parents. (So `gatsby-theme-supertheme` references
 themes and the user only has to know about and install
 `gatsby-theme-supertheme`.
 
-```
+```text
 gatsby-theme-supertheme
 ├── gatsby-theme-a
 │   ├── gatsby-theme-a1

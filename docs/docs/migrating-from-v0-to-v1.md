@@ -72,7 +72,7 @@ module.exports = {
 
 and a minimal query would look like
 
-```
+```javascript
 export const pageQuery = graphql`
   query SiteMetadataLookup($slug: String!) {
     site {
@@ -80,7 +80,7 @@ export const pageQuery = graphql`
         title
       }
     }
-}
+  }
 `
 ```
 
@@ -255,7 +255,7 @@ This is a normal React.js component with a special Gatsby twist—a GraphQL quer
 specifying the data needs of the component. As a start, make the component look
 like the following. You can make it more complex once the basics are working.
 
-```javascript
+```jsx
 import React from "react"
 
 class BlogPostTemplate extends React.Component {

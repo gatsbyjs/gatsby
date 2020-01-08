@@ -140,7 +140,7 @@ HTML5 provides the `<video>` media element for working with videos. Inside the `
 If you have a video called `dog.mp4` in your site under `src/assets/dog.mp4`, you can [include that video in your page with webpack](/docs/importing-assets-into-files) like you would other assets. Then reference it in a `<source>` element, which is wrapped by a `<video>` element:
 
 <!-- prettier-ignore -->
-```javascript:title=src/pages/index.js
+```jsx:title=src/pages/index.js
 import React from "react"
 import DogVideo from "../assets/dog.mp4"
 
@@ -159,7 +159,7 @@ The `controls` attribute on the `<video>` will provide a default set of buttons 
 Adding more source tags for additional formats will allow the browser to find a source type that it supports, if there are no matching source types the video will fail to load. You can see what formats are supported in different browsers on [MDN's docs about supported media formats](https://developer.mozilla.org/en-US/docs/Web/HTML/Supported_media_formats#Browser_compatibility).
 
 <!-- prettier-ignore -->
-```javascript:title=src/pages/index.js
+```jsx:title=src/pages/index.js
 import React from "react"
 import DogMp4 from "../assets/dog.mp4"
 import DogOgg from "../assets/dog.ogg" // highlight-line
@@ -192,7 +192,7 @@ Though captions, transcripts, and audio descriptions primarily aim to assist tho
 
 HTML5 provides support for these types of assistive content through the `<track>` element. The track element is nested under a `<video`> element as an empty tag. An example usage of the `<track>` element with a video looks like this:
 
-```javascript:title=src/pages/index.js
+```jsx:title=src/pages/index.js
 import React from "react"
 import DogMp4 from "../assets/dog.mp4"
 import Captions from "file-loader!../assets/captions.vtt" // highlight-line
