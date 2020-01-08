@@ -18,6 +18,7 @@ if (useJsonLogger) {
 updateNotifier({ pkg }).notify({ isGlobal: true })
 
 const MIN_NODE_VERSION = `8.0.0`
+const NEXT_MIN_NODE_VERSION = `10.13.0`
 
 if (!semver.satisfies(process.version, `>=${MIN_NODE_VERSION}`)) {
   report.panic(
@@ -27,8 +28,6 @@ if (!semver.satisfies(process.version, `>=${MIN_NODE_VERSION}`)) {
     `)
   )
 }
-
-const NEXT_MIN_NODE_VERSION = `10.13.0`
 
 if (!semver.satisfies(process.version, `>=${NEXT_MIN_NODE_VERSION}`)) {
   report.warn(
