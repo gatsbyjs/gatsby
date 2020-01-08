@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "@mdx-js/mdx": "^1.5.1",
+    "gatsby-core-utils": "^1.0.25",
     "gatsby-plugin-mdx": "^1.0.64",
     "gatsby-plugin-sharp": "^2.3.10",
     "gatsby-remark-copy-linked-files": "^2.1.33",
