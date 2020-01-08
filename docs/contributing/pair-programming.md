@@ -6,12 +6,12 @@ The best part of open source is the community, and every community is stronger w
 
 ## How community pair programming sessions work
 
-1.  Select or create [an issue](https://github.com/gatsbyjs/gatsby/issues) you would like to work on and work on it yourself.
-2.  Create a [Pull Request](https://github.com/gatsbyjs/gatsby/compare) when you encounter any problem.
+1.  Select or create [an issue](https://github.com/gatsbyjs/gatsby/issues) you would like to work on and work on it yourself
+2.  [Create a pull request](https://www.gatsbyjs.org/contributing/how-to-open-a-pull-request/) when you encounter any problem
 3.  Sign up for any available slot on [the open pairing calendar][cal]
-4.  You’ll be paired with one of the Gatsby Inkteam
-5.  Join the video meeting during your time slot (we are using Zoom)
-6.  We'll help you with your PR or Issue!
+4.  You’ll be paired with a Gatsby team member
+5.  Join the video meeting during your time slot (we use [Zoom](https://zoom.us) for meetings)
+6.  We'll help you with your pull request or issue!
 
 ### What we expect in pair programming sessions
 
@@ -21,7 +21,7 @@ If you're interested in support for a commercial Gatsby project, please [get in 
 
 We also expect the following from pair programming participants:
 
-- These sessions tend to work best when you have a specific goal for the session. Preferably you have already selected an issue or have started work and created a work-in-progress pull request.
+- These sessions work best when you have a specific goal for the session. You should choose an issue or pull request that you'd like to work on.
 - If you're new to building with Gatsby we recommend [working through the tutorial](https://www.gatsbyjs.org/tutorial/) before your session. If you get stuck part way through that's a great time to book a pairing session.
 - If you're new to contributing to open source we recommend following the ["Setting Up Your Local Dev Environment" guide](https://www.gatsbyjs.org/contributing/setting-up-your-local-dev-environment/) before your session.
 - All participants are expected to adhere to [Gatsby’s code of conduct](/contributing/code-of-conduct/)
