@@ -13,7 +13,7 @@ To reduce the number of requests to the server, importing images that are less t
 
 Here's an example:
 
-```js
+```jsx
 import React from "react"
 import logo from "./logo.png" // Tell Webpack this JS file uses this image
 

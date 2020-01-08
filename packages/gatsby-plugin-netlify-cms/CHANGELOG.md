@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.34](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@4.1.33...gatsby-plugin-netlify-cms@4.1.34) (2020-01-06)
+
+### Bug Fixes
+
+- **plugin-netlify-cms:** set global window vars required for Gatsby components ([#20264](https://github.com/gatsbyjs/gatsby/issues/20264)) ([06386b6](https://github.com/gatsbyjs/gatsby/commit/06386b6))
+
 ## [4.1.33](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@4.1.31...gatsby-plugin-netlify-cms@4.1.33) (2019-12-10)
 
 **Note:** Version bump only for package gatsby-plugin-netlify-cms

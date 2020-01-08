@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.18.18](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.17...gatsby@2.18.18) (2020-01-06)
+
+**Note:** Version bump only for package gatsby
+
+## [2.18.17](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.16...gatsby@2.18.17) (2019-12-23)
+
+### Bug Fixes
+
+- **gatsby:** don't write out `isCreatedByStatefulCreatePages` to page-data files ([#20241](https://github.com/gatsbyjs/gatsby/issues/20241)) ([4b113bd](https://github.com/gatsbyjs/gatsby/commit/4b113bd))
+
+### Features
+
+- **gatsby:** Improve structured errors around GraphQL ([#20120](https://github.com/gatsbyjs/gatsby/issues/20120)) ([a5740f9](https://github.com/gatsbyjs/gatsby/commit/a5740f9))
+
+## [2.18.16](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.15...gatsby@2.18.16) (2019-12-20)
+
+### Bug Fixes
+
+- **gatsby:** enable static queries in `wrapRootElement` ([#19986](https://github.com/gatsbyjs/gatsby/issues/19986)) ([c591eb7](https://github.com/gatsbyjs/gatsby/commit/c591eb7))
+
+### Features
+
+- **gatsby:** bundle and page-data stats for telemetry ([#20146](https://github.com/gatsbyjs/gatsby/issues/20146)) ([3fe97f2](https://github.com/gatsbyjs/gatsby/commit/3fe97f2))
+
 ## [2.18.15](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.14...gatsby@2.18.15) (2019-12-19)
 
 ### Bug Fixes

@@ -69,7 +69,7 @@ The Gatsby blog theme package has a component that contains the content of the s
 
 If you look at the file tree of your site, you'll see it looks like this:
 
-```
+```text
 my-blog
 ├── content
 │   ├── assets

@@ -68,7 +68,7 @@ export const pageQuery = graphql`
 
 When included in a page component file, a page query returns a data object that is passed automatically to the component as a prop.
 
-```javascript
+```jsx
 // highlight-start
 const HomePage = ({ data }) => {
   // highlight-end
@@ -148,7 +148,7 @@ The `useStaticQuery` hook takes one argument:
 
 - `query`: a `graphql` query string
 
-```jsx
+```javascript
 const data = useStaticQuery(graphql`
   query HeaderQuery {
     site {
