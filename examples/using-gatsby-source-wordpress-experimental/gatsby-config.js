@@ -19,9 +19,9 @@ module.exports = {
         //   queryDepth: 6,
         // },
         type: {
-          // MediaItem: {
-          //   onlyFetchIfReferenced: true,
-          // },
+          MediaItem: {
+            onlyFetchIfReferenced: true,
+          },
           Page: {
             limit: 10,
           },
