@@ -1,8 +1,11 @@
 blank_issues_enabled: false
 contact_links:
+  - name: Gatsby Documentation
+    url: https://www.gatsbyjs.org/docs/
+    about: Check out the Gatsby documentation for answers to common questions
   - name: Gatsby Discord
     url: http://gatsby.dev/discord
-    about: Ask questions, get help and discuss new things you're building with the Gatsby community.
+    about: Ask questions, get help and discuss new things you're building with the Gatsby community
   - name: AskGatsbyJS Twitter
     url: https://twitter.com/AskGatsbyJS
-    about: The official Twitter account to ask questions and get help with Gatsby.
+    about: The official Twitter account to ask questions and get help with Gatsby
