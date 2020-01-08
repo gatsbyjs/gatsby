@@ -335,11 +335,11 @@ Whether you are using V2 or V3 of ACF to REST, the query below will return `opti
 
 If you have specified `acfOptionPageIds` in your site's `gatsby-config.js` (ex: `option_page_1`), then they will be accessible by their ID:
 
-```
+```graphql
 {
   allWordpressAcfOptions {
     edges {
-      node{
+      node {
         option_page_1 {
           test_acf
         }
@@ -424,7 +424,7 @@ To access data stored in these fields, you need to use GraphQL
 require you to know types of nodes. The easiest way to get the types of nodes is to use
 `___GraphiQL` debugger and run the below query (adjust post type and field name):
 
-```graphQL
+```graphql
 {
   allWordpressPage {
     edges {
@@ -445,7 +445,7 @@ When you have node type names, you can use them to create inline fragments.
 
 Full example:
 
-```graphQL
+```graphql
 {
   allWordpressPage {
     edges {
@@ -687,7 +687,7 @@ currently not supported.
 
 To access image processing in your queries you need to use this pattern:
 
-```
+```graphql
 {
   imageFieldName {
     localFile {
@@ -959,14 +959,14 @@ During the upload process to the WordPress media library, the `post_parent` valu
 
 When the post an image is attached to becomes inaccessible (e.g. from changing visibility settings, or deleting the post), the image itself is restricted in the REST API:
 
-```
-   {
-      "code":"rest_forbidden",
-      "message":"You don't have permission to do this.",
-      "data":{
-         "status":403
-      }
-   }
+```json
+{
+  "code": "rest_forbidden",
+  "message": "You don't have permission to do this.",
+  "data": {
+    "status": 403
+  }
+}
 ```
 
 which prevents Gatsby from retrieving it.
@@ -993,7 +993,7 @@ When running locally, or in other situations that may involve self-signed certif
 
 To solve this, you can disable Node.js' rejection of unauthorized certificates by adding the following to `.env.development`:
 
-```
+```shell
 NODE_TLS_REJECT_UNAUTHORIZED=0
 ```
 

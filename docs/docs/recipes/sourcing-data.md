@@ -248,7 +248,7 @@ module.exports = {
 
 3. Create a template component such as `src/templates/post.js` with the following code in it:
 
-```javascript:title=post.js
+```jsx:title=post.js
 import React, { Component } from "react"
 import { graphql } from "gatsby"
 import PropTypes from "prop-types"
@@ -507,7 +507,7 @@ exports.createPages = async ({ actions: { createPage } }) => {
 
 2. Create a template to display Pokémon on the homepage:
 
-```js:title=src/templates/all-pokemon.js
+```jsx:title=src/templates/all-pokemon.js
 import React from "react"
 
 export default ({ pageContext: { allPokemon } }) => (
@@ -546,7 +546,7 @@ export default ({ pageContext: { allPokemon } }) => (
 
 1. Install the `gatsby-source-drupal` plugin.
 
-```
+```shell
 npm install --save gatsby-source-drupal
 ```
 

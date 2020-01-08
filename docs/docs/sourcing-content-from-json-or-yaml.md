@@ -218,7 +218,7 @@ Once the dynamic site structure and content exists, you need to tell Gatsby to g
 
 If you don't already have one, create a `gatsby-node.js` file at the root of the project. Add the following code inside the file:
 
-```jsx:title=gatsby-node.js
+```js:title=gatsby-node.js
 const fs = require("fs")
 const yaml = require("js-yaml")
 exports.createPages = ({ actions }) => {
@@ -283,7 +283,7 @@ export default basicTemplate
 
 After parsing a YAML file into data and configuring Gatsby to produce pages with a template, you should have the following file and folder structure:
 
-```
+```text
   |gatsby-YAML-JSON-at-buildtime
     |content
       - index.yaml

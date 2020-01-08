@@ -6,7 +6,7 @@ If a plugin is only relevant to your specific use-case, or if you’re developin
 
 Place the code in the `plugins` folder in the root of your project like this:
 
-```
+```text
 plugins
 └── my-own-plugin
     └── package.json

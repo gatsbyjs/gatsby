@@ -321,6 +321,7 @@ describe(`sanitizeComponents`, () => {
 
     const sanitizedComponents = sanitizeComponents([
       <link
+        key="manifest"
         rel="manifest"
         href="https://gatsbyjs.org/blog/manifest.webmanifest"
       />,

@@ -1,0 +1,56 @@
+{
+  "name": "gatsby-starter-blog",
+  "private": true,
+  "description": "A benchmark for building Gatsby with many simple random md files (index by slug)",
+  "version": "0.0.1",
+  "author": "PvdZ <pvdz@github>",
+  "dependencies": {
+    "gatsby": "*",
+    "gatsby-image": "*",
+    "gatsby-plugin-feed": "*",
+    "gatsby-plugin-google-analytics": "*",
+    "gatsby-plugin-manifest": "*",
+    "gatsby-plugin-offline": "*",
+    "gatsby-plugin-react-helmet": "*",
+    "gatsby-plugin-sharp": "*",
+    "gatsby-plugin-typography": "*",
+    "gatsby-remark-copy-linked-files": "*",
+    "gatsby-remark-images": "*",
+    "gatsby-remark-prismjs": "*",
+    "gatsby-remark-responsive-iframe": "*",
+    "gatsby-remark-smartypants": "*",
+    "gatsby-source-filesystem": "*",
+    "gatsby-transformer-remark": "*",
+    "gatsby-transformer-sharp": "*",
+    "prismjs": "^1.17.1",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-helmet": "^5.2.1",
+    "react-typography": "^0.16.19",
+    "typeface-merriweather": "0.0.72",
+    "typeface-montserrat": "0.0.75",
+    "typography": "^0.16.19",
+    "typography-theme-wordpress-2016": "^0.16.19"
+  },
+  "devDependencies": {
+    "faker": "^4.1.0",
+    "prettier": "^1.19.1"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "build": "gatsby build",
+    "develop": "gatsby develop",
+    "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
+    "start": "npm run develop",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean",
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
+    "bench": "rm -r markdown-pages; NUM_PAGES=${NUM_PAGES:-2000} node md.generate.js; gatsby clean; node --max_old_space_size=2000 node_modules/.bin/gatsby build",
+    "benchnb": "gatsby clean; node --max_old_space_size=2000 node_modules/.bin/gatsby build",
+    "postinstall": "NUM_PAGES=${NUM_PAGES:-2000} node md.generate.js"
+  }
+}
