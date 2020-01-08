@@ -12,6 +12,7 @@ _To help you learn about Gatsby and our ecosystem, we invite you to take the #10
 _Learn more about [#100DaysOfGatsby here](/blog/100days)!_
 
 ## Challenge 2: Build and Deploy Your Gatsby Site (Using Free Tools)
+
 This week we invite you to deploy your Gatsby project to the web!
 
 If you’re experienced with launching an all-in-one CMS-powered or database-backed website, then the process of putting a Gatsby site live on the web may feel strange to you. You will be using continuous deployment tools to prepare and publish your site. It’s okay if your site is unfinished, as getting a website deployed will allow you to test on mobile devices and share with your colleagues to get feedback in design and development.
@@ -20,12 +21,11 @@ To complete this challenge, we would like you to:
 
 1. host your project in a cloud git repository (publicly or privately),
 2. then use a “build service” to create a production version of your site
-3. and automatically publish your site’s assets directly to a CDN. 
+3. and automatically publish your site’s assets directly to a CDN.
 
-Amazingly, for small projects you can use all of these services for free. There are many Gatsby sites in the wild that pay $0 for hosting! 
+Amazingly, for small projects you can use all of these services for free. There are many Gatsby sites in the wild that pay \$0 for hosting!
 
 Bonus: Try deploying your site to the free tier of multiple services to see first hand which one you’d like to adopt. You may notice differences in features, developer experience, and build speeds and limits.
-
 
 ### Challenge Resources
 
