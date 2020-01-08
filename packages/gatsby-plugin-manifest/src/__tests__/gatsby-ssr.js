@@ -4,9 +4,11 @@ jest.mock(`fs`, () => {
   }
 })
 
-jest.mock(`gatsby/dist/utils/create-content-digest`, () =>
-  jest.fn(() => `contentDigest`)
-)
+jest.mock(`gatsby-core-utils`, () => {
+  return {
+    createContentDigest: jest.fn(() => `contentDigest`),
+  }
+})
 
 const { onRenderBody } = require(`../gatsby-ssr`)
 
@@ -85,7 +87,7 @@ describe(`gatsby-plugin-manifest`, () => {
       expect(headComponents).toMatchSnapshot()
     })
 
-    it(`Adds "shortcut icon" and "manifest" links and "theme_color" meta tag to head`, () => {
+    it(`Adds "icon" and "manifest" links and "theme_color" meta tag to head`, () => {
       onRenderBody(ssrArgs, {
         icon: true,
         theme_color: `#000000`,
@@ -110,6 +112,7 @@ describe(`gatsby-plugin-manifest`, () => {
       it(testName, () => {
         onRenderBody(args, {
           start_url: `/`,
+          lang: `en`,
           localize: [
             {
               start_url: `/de/`,

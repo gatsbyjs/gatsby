@@ -2,7 +2,13 @@
 title: Learning how to code with Gatsby
 date: 2018-07-07
 author: "Shannon Soper"
-tags: ["college", "case study", "design", "getting-started"]
+tags:
+  [
+    "learning-to-code",
+    "case-studies",
+    "cutting-edge-experiences",
+    "getting-started",
+  ]
 ---
 
 ## Graphic Design Students at the Art Institute
@@ -15,9 +21,9 @@ However, in his current class _nobody has dropped out_. And every single one of 
 
 ## Here are some of the student’s final sites:
 
-[![Image of graphic designer's site](graphic-design-1.png)](http://mmd-site.netlify.com/)
+[![Image of graphic designer's site](graphic-design-1.png)](http://mywetpaintstudio.com/)
 
-[Melany Dierks](http://mmd-site.netlify.com/) ([source](https://github.com/reguv760/mmd-site))
+[Melany Dierks](http://mywetpaintstudio.com/) ([source](https://github.com/reguv760/mmd-site2))
 
 [![Image of graphic designer's site](graphic-design-2.png)](http://myceevee.netlify.com/)
 
@@ -56,7 +62,8 @@ Structure of the class:
 3.  _Taught them Gatsby._ Learning NextJS wasn’t as smooth as I would have liked but once we jumped to learn GatsbyJS, some interesting things happened. A light when on. They were excited.
 
 <Pullquote>
-Once we jumped to learn GatsbyJS, some interesting things happened. A light when on. They were excited.
+  Once we jumped to learn GatsbyJS, some interesting things happened. A light
+  when on. They were excited.
 </Pullquote>
 
 ### What do your students like about Gatsby?

@@ -82,3 +82,41 @@ exports.getNodeAndSavePathDependency = (id, path) => {
   createPageDependency({ path, nodeId: id })
   return node
 }
+
+exports.saveResolvedNodes = async (nodeTypeNames, resolver) => {
+  for (const typeName of nodeTypeNames) {
+    const nodes = store.getState().nodesByType.get(typeName)
+    const resolvedNodes = new Map()
+    if (nodes) {
+      for (const node of nodes.values()) {
+        const resolved = await resolver(node)
+        resolvedNodes.set(node.id, resolved)
+      }
+      store.dispatch({
+        type: `SET_RESOLVED_NODES`,
+        payload: {
+          key: typeName,
+          nodes: resolvedNodes,
+        },
+      })
+    }
+  }
+}
+
+const addResolvedNodes = (typeName, arr) => {
+  const { nodesByType, resolvedNodesCache } = store.getState()
+  const nodes /*: Map<mixed> */ = nodesByType.get(typeName)
+
+  if (!nodes) return
+
+  const resolvedNodes = resolvedNodesCache.get(typeName)
+
+  nodes.forEach(node => {
+    if (resolvedNodes) {
+      node.__gatsby_resolved = resolvedNodes.get(node.id)
+    }
+    arr.push(node)
+  })
+}
+
+exports.addResolvedNodes = addResolvedNodes

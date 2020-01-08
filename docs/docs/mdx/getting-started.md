@@ -11,13 +11,13 @@ your site.
 
 1. **Initialize the MDX starter** with the Gatsby CLI
 
-   ```sh
-   npx gatsby new my-mdx-starter https://github.com/ChristopherBiscardi/gatsby-starter-mdx-basic
+   ```shell
+   gatsby new my-mdx-starter https://github.com/ChristopherBiscardi/gatsby-starter-mdx-basic
    ```
 
 1. **Run the dev server** by changing directory to the scaffolded site and install dependencies
 
-   ```sh
+   ```shell
    cd my-mdx-starter/
    gatsby develop
    ```
@@ -31,12 +31,14 @@ your site.
 ## Add MDX to an existing Gatsby site
 
 If you already have a Gatsby site that you'd like to add MDX to, you
-can follow these steps for configuring the [gatsby-plugin-mdx](/packages/gatsby-plugin-mdx/) plugin:
+can follow these steps for configuring the [gatsby-plugin-mdx](/packages/gatsby-plugin-mdx/) plugin.
+
+Alternatively, you may be looking to configure an existing blog site to use MDX. [This blog post](/blog/2019-11-21-how-to-convert-an-existing-gatsby-blog-to-use-mdx/) walks you through those steps in detail.
 
 1. **Add `gatsby-plugin-mdx`** and MDX as dependencies
 
-   ```sh
-   yarn add gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
+   ```shell
+   npm install gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
    ```
 
    > **Note:** If you're upgrading from v0, additionally [check out the MDX migration guide](https://mdxjs.com/migrating/v1).

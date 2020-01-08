@@ -1,1 +1,1 @@
-exports.createContentDigest = require(`./dist/utils/create-content-digest`)
+exports.createContentDigest = require(`gatsby-core-utils`).createContentDigest

@@ -5,23 +5,34 @@ import { Link } from "gatsby"
 import Layout from "../components/layout"
 import InstrumentPage from "../utils/instrument-page"
 
-const Page = props => (
-  <pre data-testid="dom-marker">[client-only-path] {props.page}</pre>
-)
-
-const routes = [`/`, `/profile`, `/dashboard`]
+const routes = [`/`, `/not-found`, `/page/profile`, `/nested`, `/nested/foo`]
 
 const basePath = `/client-only-paths`
 
-const ClientOnlyPathPage = props => (
+const Page = ({ page }) => (
+  <pre data-testid="dom-marker">[client-only-path] {page}</pre>
+)
+
+const NestedRouterRoute = props => (
+  <Page page={`nested-page/${props.nestedPage}`} />
+)
+
+const PageWithNestedRouter = () => (
+  <Router>
+    <NestedRouterRoute path="/:nestedPage" />
+    <NestedRouterRoute default nestedPage="index" />
+  </Router>
+)
+
+const NotFound = () => <Page page="NotFound" />
+
+const ClientOnlyPathPage = () => (
   <Layout>
-    <Router
-      location={props.location}
-      basepath={basePath}
-      id="client-only-paths-sub-router"
-    >
-      <Page path="/" page="index" />
-      <Page path="/:page" />
+    <Router id="client-only-paths-sub-router">
+      <Page path={basePath} page="index" />
+      <Page path={`${basePath}/page/:page`} />
+      <PageWithNestedRouter path={`${basePath}/nested/*`} />
+      <NotFound default />
     </Router>
     <ul>
       {routes.map(route => (

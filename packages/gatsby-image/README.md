@@ -16,6 +16,26 @@ of a container. Some ways you can use `<img />` won't work with gatsby-image._
 
 **[Demo](https://using-gatsby-image.gatsbyjs.org)**
 
+## Table of Contents
+
+- [Problem](#problem)
+- [Solution](#solution)
+- [Install](#install)
+- [How to use](#how-to-use)
+- [Polyfilling object-fit/object-position for IE](#polyfilling-object-fitobject-position-for-ie)
+- [Types of Responsive Images](#two-types-of-responsive-images)
+- [Fragments](#fragments)
+  - [gatsby-transformer-sharp](#gatsby-transformer-sharp)
+  - [gatsby-source-contentful](#gatsby-source-contentful)
+  - [gatsby-source-datocms](#gatsby-source-datocms)
+  - [gatsby-source-sanity](#gatsby-source-sanity)
+- [Fixed Queries](#fixed-queries)
+- [Fluid Queries](#fluid-queries)
+- [Art directing multiple images](#art-directing-multiple-images)
+- [Gatsby Image Props](#gatsby-image-props)
+- [Image Processing Arguments](#image-processing-arguments)
+- [Other Stuff](#some-other-stuff-to-be-aware-of)
+
 ## Problem
 
 Large, unoptimized images dramatically slow down your site.
@@ -125,7 +145,7 @@ export const query = graphql`
 `
 ```
 
-For other explanations of how to get started with gatsby-image, see this blog post by community member Kyle Gill [Image Optimization Made Easy with Gatsby.js](https://medium.com/@kyle.robert.gill/ridiculously-easy-image-optimization-with-gatsby-js-59d48e15db6e) or this one by Hunter Chang (which also includes some details about changes to gatsby-image for Gatsby v2): [An Intro To Gatsby Image V2](https://codebushi.com/using-gatsby-image/)
+For other explanations of how to get started with gatsby-image, see this blog post by community member Kyle Gill [Image Optimization Made Easy with Gatsby.js](https://medium.com/@kyle.robert.gill/ridiculously-easy-image-optimization-with-gatsby-js-59d48e15db6e), this post by Hunter Chang (which also includes some details about changes to gatsby-image for Gatsby v2): [An Intro To Gatsby Image V2](https://codebushi.com/using-gatsby-image/), or [this free playlist on egghead.io](https://egghead.io/playlists/using-gatsby-image-with-gatsby-ea85129e) with examples for using `gatsby-image`.
 
 ## Polyfilling object-fit/object-position for IE
 
@@ -232,6 +252,8 @@ Their fragments are:
 - `GatsbySanityImageFixed_noBase64`
 - `GatsbySanityImageFluid`
 - `GatsbySanityImageFluid_noBase64`
+
+_Links to source code for fragment fields of official Gatsby plugins can be found in the [Gatsby GraphQL API](/docs/graphql-api/)_
 
 If you don't want to use the blur-up effect, choose the fragment with `noBase64`
 at the end. If you want to use the traced placeholder SVGs, choose the fragment
@@ -361,14 +383,14 @@ export default ({ data }) => {
 
 export const query = graphql`
   query {
-    mobileImage(relativePath: { eq: "blog/avatars/kyle-mathews.jpeg" }) {
+    mobileImage: file(relativePath: { eq: "blog/avatars/kyle-mathews.jpeg" }) {
       childImageSharp {
         fluid(maxWidth: 1000, quality: 100) {
           ...GatsbyImageSharpFluid
         }
       }
     }
-    desktopImage(
+    desktopImage: file(
       relativePath: { eq: "blog/avatars/kyle-mathews-desktop.jpeg" }
     ) {
       childImageSharp {
@@ -391,7 +413,7 @@ While you could achieve a similar effect with plain CSS media queries, `gatsby-i
 | `fluid`                | `object` / `array`  | Data returned from the `fluid` query. When prop is an array it has to be combined with `media` keys, allows for art directing `fluid` images. |
 | `fadeIn`               | `bool`              | Defaults to fading in the image on load                                                                                                       |
 | `durationFadeIn`       | `number`            | fading duration is set up to 500ms by default                                                                                                 |
-| `title`                | `string`            | Passed to the `img` element                                                                                                                   |
+| `title`                | `string`            | Passed to the `img` element                                                                                                                   |  |
 | `alt`                  | `string`            | Passed to the `img` element. Defaults to an empty string `alt=""`                                                                             |
 | `crossOrigin`          | `string`            | Passed to the `img` element                                                                                                                   |
 | `className`            | `string` / `object` | Passed to the wrapper element. Object is needed to support Glamor's css prop                                                                  |
@@ -411,11 +433,12 @@ While you could achieve a similar effect with plain CSS media queries, `gatsby-i
 | `fixedImages`          | `array`             | An array of objects returned from `fixed` queries. When combined with `media` keys, allows for art directing `fixed` images.                  |
 | `fluidImages`          | `array`             | An array of objects returned from `fluid` queries. When combined with `media` keys, allows for art directing `fluid` images.                  |
 | `draggable`            | `bool`              | Set the img tag draggable to either `false`, `true`                                                                                           |
+| `itemProp`             | `string`            | Add an [`itemprop` schema.org structured data attribute](https://schema.org/docs/gs.html#microdata_itemprop) on the image.                    |
 
 ## Image processing arguments
 
 [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp) supports many additional arguments for transforming your images like
-`quality`, `sizeByPixelDensity`, `pngCompressionLevel`, `cropFocus`, `greyscale` and many more. See its documentation for more.
+`quality`, `sizeByPixelDensity`, `pngCompressionLevel`, `cropFocus`, `grayscale` and many more. See its documentation for more.
 
 ## Some other stuff to be aware of
 
@@ -435,4 +458,4 @@ While you could achieve a similar effect with plain CSS media queries, `gatsby-i
   to use a gif with `gatsby-image`, it won't work. For now, the best workaround is
   to [import the gif directly](/docs/adding-images-fonts-files).
 - Lazy loading behavior is dependent on `IntersectionObserver` which is not available
-  in some fairly common browsers including Safari and IE. A polyfill is recommended.
+  in IE. A polyfill is recommended.

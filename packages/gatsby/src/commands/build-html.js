@@ -2,11 +2,14 @@
 const Promise = require(`bluebird`)
 const webpack = require(`webpack`)
 const fs = require(`fs-extra`)
-const convertHrtime = require(`convert-hrtime`)
+// const convertHrtime = require(`convert-hrtime`)
 const { chunk } = require(`lodash`)
 const webpackConfig = require(`../utils/webpack.config`)
+const reporter = require(`gatsby-cli/lib/reporter`)
 const { createErrorFromString } = require(`gatsby-cli/lib/reporter/errors`)
 const telemetry = require(`gatsby-telemetry`)
+
+const { structureWebpackErrors } = require(`../utils/webpack-error-utils`)
 
 const runWebpack = compilerConfig =>
   new Promise((resolve, reject) => {
@@ -25,21 +28,18 @@ const doBuildRenderer = async (program, webpackConfig) => {
   // render-page.js is hard coded in webpack.config
   const outputFile = `${directory}/public/render-page.js`
   if (stats.hasErrors()) {
-    let webpackErrors = stats.toJson().errors.filter(Boolean)
-    const error = webpackErrors.length
-      ? createErrorFromString(webpackErrors[0], `${outputFile}.map`)
-      : new Error(
-          `There was an issue while building the site: ` +
-            `\n\n${stats.toString()}`
-        )
-    throw error
+    reporter.panic(
+      structureWebpackErrors(`build-html`, stats.compilation.errors)
+    )
   }
   return outputFile
 }
 
-const buildRenderer = async (program, stage) => {
+const buildRenderer = async (program, stage, { parentSpan }) => {
   const { directory } = program
-  const config = await webpackConfig(program, directory, stage, null)
+  const config = await webpackConfig(program, directory, stage, null, {
+    parentSpan,
+  })
   return await doBuildRenderer(program, config)
 }
 
@@ -66,9 +66,9 @@ const renderHTMLQueue = (
       gatsby_log_level: process.env.gatsby_log_level,
     })
 
-    const start = process.hrtime()
+    // const start = process.hrtime()
     const segments = chunk(pages, 50)
-    let finished = 0
+    // let finished = 0
 
     Promise.map(
       segments,
@@ -81,13 +81,14 @@ const renderHTMLQueue = (
               envVars,
             })
             .then(() => {
-              finished += pageSegment.length
-              if (activity) {
-                activity.setStatus(
-                  `${finished}/${pages.length} ${(
-                    finished / convertHrtime(process.hrtime(start)).seconds
-                  ).toFixed(2)} pages/second`
-                )
+              // finished += pageSegment.length
+              if (activity && activity.tick) {
+                activity.tick(pageSegment.length)
+                // activity.setStatus(
+                //   `${finished}/${pages.length} ${(
+                //     finished / convertHrtime(process.hrtime(start)).seconds
+                //   ).toFixed(2)} pages/second`
+                // )
               }
               resolve()
             })
@@ -104,14 +105,17 @@ const doBuildPages = async ({
   activity,
   workerPool,
 }) => {
-  telemetry.decorateEvent(`BUILD_END`, {
-    siteMeasurements: { pagesCount: pagePaths.length },
+  telemetry.addSiteMeasurement(`BUILD_END`, {
+    pagesCount: pagePaths.length,
   })
 
   try {
     await renderHTMLQueue({ workerPool, activity }, rendererPath, pagePaths)
   } catch (e) {
-    const prettyError = createErrorFromString(e.stack, `${rendererPath}.map`)
+    const prettyError = await createErrorFromString(
+      e.stack,
+      `${rendererPath}.map`
+    )
     prettyError.context = e.context
     throw prettyError
   }
@@ -124,7 +128,9 @@ const buildPages = async ({
   activity,
   workerPool,
 }) => {
-  const rendererPath = await buildRenderer(program, stage)
+  const rendererPath = await buildRenderer(program, stage, {
+    parentSpan: activity.span,
+  })
   await doBuildPages({ rendererPath, pagePaths, activity, workerPool })
   await deleteRenderer(rendererPath)
 }

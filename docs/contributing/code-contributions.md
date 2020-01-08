@@ -19,6 +19,8 @@ This page includes details specific to the Gatsby core and ecosystem codebase.
 
 To start setting up the Gatsby repo on your machine using git, Yarn and Gatsby-CLI, check out the page on [setting up your local dev environment](/contributing/setting-up-your-local-dev-environment/).
 
+Alternatively, you can skip the local setup and [use an online dev environment](/contributing/using-an-online-dev-environment/).
+
 To contribute to the blog or Gatsbyjs.org website, check out the setup steps on the [blog and website contributions](/contributing/blog-and-website-contributions/) page. For instructions on contributing to the docs, visit the [docs contributions page](/contributing/docs-contributions/).
 
 ## Creating your own plugins and loaders
@@ -53,12 +55,12 @@ With all of the possible Gatsby integrations, it might help to spin up a Docker 
 
 > Do you have a setup not listed here? Let us know by adding it to this file and opening a PR.
 
-### Docker, Wordpress and Gatsby
+### Docker, WordPress and Gatsby
 
-To install Wordpress to use with Gatsby, this `docker-compose.yml` file will come in handy:
+To install WordPress to use with Gatsby, this `docker-compose.yml` file will come in handy:
 
-```
-version: '2'
+```yaml:title=docker-compose.yml
+version: "2"
 
 services:
   db:
@@ -89,27 +91,27 @@ services:
       WORDPRESS_DB_HOST: db:3306
       WORDPRESS_DB_PASSWORD: wordpress
     volumes:
-    - ./wp-content:/var/www/html/wp-content
-    - ./wp-app:/var/www/html
+      - ./wp-content:/var/www/html/wp-content
+      - ./wp-app:/var/www/html
 
   phpmyadmin:
-      image: phpmyadmin/phpmyadmin
-      container_name: sessions_phpmyadmin
-      environment:
-       - PMA_ARBITRARY=1
-       - PMA_HOST=sessions_db
-       - PMA_USER=wordpress
-       - PMA_PASSWORD=wordpress
-      restart: always
-      ports:
-       - 8080:80
-      volumes:
-       - /sessions
+    image: phpmyadmin/phpmyadmin
+    container_name: sessions_phpmyadmin
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=sessions_db
+      - PMA_USER=wordpress
+      - PMA_PASSWORD=wordpress
+    restart: always
+    ports:
+      - 8080:80
+    volumes:
+      - /sessions
 ```
 
-Use the above file contents when following the Docker Wordpress install instructions: https://docs.docker.com/compose/wordpress/
+Use the above file contents when following the Docker WordPress install instructions: https://docs.docker.com/compose/wordpress/
 
-Using Docker Compose, you can start and stop a Wordpress instance and integrate it with the [Gatsby Wordpress source plugin](/docs/sourcing-from-wordpress/).
+Using Docker Compose, you can start and stop a WordPress instance and integrate it with the [Gatsby WordPress source plugin](/docs/sourcing-from-wordpress/).
 
 ## Development tools
 
@@ -119,4 +121,4 @@ Check [Debugging the build process](/docs/debugging-the-build-process/) page to 
 
 ## Feedback
 
-At any point during the contributing process, the Gatsby Core team would love to help! We hold a weekly [Core Maintainer's meeting](/contributing/community#core-maintainers-meeting) where you can share your creation(s) and receive advice and feedback directly from the team!
+At any point during the contributing process the Gatsby team would love to help! For help with a specific problem you can [open an issue on GitHub](/contributing/how-to-file-an-issue/). Or drop in to [our Discord server](https://gatsby.dev/discord) for general community discussion and support.

@@ -59,7 +59,7 @@ See more about [Plugins](/docs/plugins/) for more on utilizing plugins, and to s
 
 ## pathPrefix
 
-It's common for sites to be hosted somewhere other than the root of their domain. Say we have a Gatsby site at `example.com/blog/`. In this case, we would need a prefix (`/blog`) added to all paths on the site.
+It's common for sites to be hosted somewhere other than the root of their domain. Say you have a Gatsby site at `example.com/blog/`. In this case, you would need a prefix (`/blog`) added to all paths on the site.
 
 ```javascript:title=gatsby-config.js
 module.exports = {
@@ -86,6 +86,8 @@ See more about [Browser Support](/docs/browser-support/#polyfills) in Gatsby.
 ## Mapping node types
 
 Gatsby includes an advanced feature that lets you create "mappings" between node types.
+
+> Note: Gatsby v2.2 introduced a new way to create foreign-key relations between node types with [the `@link` GraphQL field extension](/docs/schema-customization/#foreign-key-fields).
 
 For instance, imagine you have a multi-author markdown blog where you want to "link" from each blog post to the author information stored in a yaml file named `author.yaml`:
 

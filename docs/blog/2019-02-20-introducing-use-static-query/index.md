@@ -2,9 +2,7 @@
 title: Introducing useStaticQuery
 date: 2019-02-20
 author: Sidhartha Chatterjee
-tags:
-  - hooks
-  - static query
+tags: ["releases"]
 ---
 
 React Hooks are _cool_. Besides simplifying your code and removing the need for a lot of boilerplate associated with classes in JavaScript (looking at you, `this`), they enable some serious shareability. They also make it possible to use state in functional components.
@@ -132,7 +130,7 @@ We're really excited about this pattern and everything it enables. With our upco
 
 # Where can I get this?
 
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr">useStaticQuery hook snuck into <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> pretty quick 😍 <a href="https://t.co/PbzTuzk6hb">https://t.co/PbzTuzk6hb</a> waaay nicer API than using the &lt;StaticQuery&gt; component. <a href="https://t.co/6Mf4sSF5C3">pic.twitter.com/6Mf4sSF5C3</a></p>&mdash; Jacob Impson (@jacobimpson) <a href="https://twitter.com/jacobimpson/status/1095930703504584706?ref_src=twsrc%5Etfw">February 14, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+https://twitter.com/jacobimpson/status/1095930703504584706
 
 The astute reader (Jacob is astute, be like Jacob) would've noticed that we _stealthily_ released `useStaticQuery` last week.
 

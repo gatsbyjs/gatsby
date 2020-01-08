@@ -106,7 +106,7 @@ const navigate = (to, options = {}) => {
           navigator.serviceWorker.controller.state === `activated`
         ) {
           navigator.serviceWorker.controller.postMessage({
-            gatsbyApi: `resetWhitelist`,
+            gatsbyApi: `clearPathResources`,
           })
         }
 
@@ -129,7 +129,9 @@ function shouldUpdateScroll(prevRouterProps, { location }) {
     getSavedScrollPosition: args => this._stateStorage.read(args),
   })
   if (results.length > 0) {
-    return results[0]
+    // Use the latest registered shouldUpdateScroll result, this allows users to override plugin's configuration
+    // @see https://github.com/gatsbyjs/gatsby/issues/12038
+    return results[results.length - 1]
   }
 
   if (prevRouterProps) {
@@ -139,7 +141,7 @@ function shouldUpdateScroll(prevRouterProps, { location }) {
     if (oldPathname === pathname) {
       // Scroll to element if it exists, if it doesn't, or no hash is provided,
       // scroll to top.
-      return hash ? hash.slice(1) : [0, 0]
+      return hash ? decodeURI(hash.slice(1)) : [0, 0]
     }
   }
   return true
@@ -149,7 +151,6 @@ function init() {
   // Temp hack while awaiting https://github.com/reach/router/issues/119
   window.__navigatingToLink = false
 
-  window.___loader = loader
   window.___push = to => navigate(to, { replace: false })
   window.___replace = to => navigate(to, { replace: true })
   window.___navigate = (to, options) => navigate(to, options)

@@ -12,7 +12,7 @@ Easily add Google Tagmanager to your Gatsby site.
 // In your gatsby-config.js
 plugins: [
   {
-    resolve: `gatsby-plugin-google-tagmanager`,
+    resolve: "gatsby-plugin-google-tagmanager",
     options: {
       id: "YOUR_GOOGLE_TAGMANAGER_ID",
 
@@ -20,10 +20,36 @@ plugins: [
       // Defaults to false meaning GTM will only be loaded in production.
       includeInDevelopment: false,
 
+      // datalayer to be set before GTM is loaded
+      // should be an object or a function that is executed in the browser
+      // Defaults to null
+      defaultDataLayer: { platform: "gatsby" },
+
       // Specify optional GTM environment details.
       gtmAuth: "YOUR_GOOGLE_TAGMANAGER_ENVIRONMENT_AUTH_STRING",
       gtmPreview: "YOUR_GOOGLE_TAGMANAGER_ENVIRONMENT_PREVIEW_NAME",
       dataLayerName: "YOUR_DATA_LAYER_NAME",
+    },
+  },
+]
+```
+
+If you like to use data at runtime for your defaultDataLayer you can do that by defining it as a function.
+
+```javascript
+// In your gatsby-config.js
+plugins: [
+  {
+    resolve: "gatsby-plugin-google-tagmanager",
+    options: {
+      // datalayer to be set before GTM is loaded
+      // should be a stringified object or object
+      // Defaults to null
+      defaultDataLayer: function() {
+        return {
+          pageType: window.pageType,
+        }
+      },
     },
   },
 ]

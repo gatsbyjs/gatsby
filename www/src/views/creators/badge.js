@@ -1,15 +1,14 @@
-import React from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 
-import { colors, space, letterSpacings } from "../../utils/presets"
-
-const Badge = ({ forHire, children, customCSS }) => (
+const Badge = ({ forHire, children, overrideCSS }) => (
   <div
-    css={[
-      styles.badge,
-      forHire ? styles.forHire : styles.hiring,
-      { letterSpacing: customCSS ? letterSpacings.tracked : null },
-      customCSS && forHire ? customCSS : {},
-    ]}
+    sx={{
+      ...styles.badge,
+      ...(forHire ? styles.forHire : styles.hiring),
+      letterSpacing: overrideCSS ? `tracked` : null,
+      ...(overrideCSS && forHire ? overrideCSS : {}),
+    }}
   >
     {children}
   </div>
@@ -20,11 +19,11 @@ export default Badge
 const styles = {
   badge: {
     borderRadius: 20,
-    padding: `0 ${space[2]}`,
+    px: 2,
   },
   hiring: {
-    background: colors.purple[10],
-    color: colors.lilac,
+    bg: `purple.10`,
+    color: `lilac`,
   },
   forHire: {
     background: `#effaef`,

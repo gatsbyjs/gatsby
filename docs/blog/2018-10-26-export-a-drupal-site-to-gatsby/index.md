@@ -2,14 +2,14 @@
 title: How to export a Drupal site to Gatsby
 date: 2018-12-18
 author: Joaquín Bravo Contreras
-tags: ["drupal", "tutorials"]
+tags: ["drupal", "getting-started"]
 ---
 
 This blogpost explains how I learned to reduce the cost of maintaining a simple brochure or blog site. When using Drupal, you need at least a shared hosting platform (there is no Wordpress.com for Drupal sites). So, migrating to a static site generator, like Jekyll or Gatsby, seemed like a good idea. Gatsby is also a great opportunity to learn React and then get hosting for free using something like GitHub Pages. This post is going to describe how to migrate a simple blog--that has featured images on the posts, comments and tags--from Drupal to Gatsby.
 
 To facilitate exporting the site, the first thing I did was export the database from the mysql database server to an sqlite file that I could use locally. To do this I used the [mysql2sqlite](https://github.com/dumblob/mysql2sqlite) project, which, as described on the project page, can be done with two commands like:
 
-```
+```shell
 mysqldump --skip-extended-insert --compact DB_name > dump_mysql.sql
 ./mysql2sqlite dump_mysql.sql | sqlite3 mysqlite.db
 ```
@@ -18,7 +18,7 @@ mysqldump --skip-extended-insert --compact DB_name > dump_mysql.sql
 
 To do this yourself, you'll build a simple blog using the excellent [gatsby-starter-blog](https://github.com/gatsbyjs/gatsby-starter-blog) project. Create a new project and then add a [sqlite library](https://github.com/JoshuaWise/better-sqlite3) as a dev dependency:
 
-```
+```shell
 gatsby new gatsby-blog https://github.com/gatsbyjs/gatsby-starter-blog
 git init # so you can keep track of the changes
 npm i --save-dev better-sqlite3
@@ -104,8 +104,8 @@ db.close();
 
 This script is now finished and you can execute it in your shell with this command:
 
-```
-> node src/scripts/import.js mysqlite.db
+```shell
+node src/scripts/import.js mysqlite.db
 ```
 
 To have comments on your site you can use a service like [Disqus](https://disqus.com/). Disqus has an import process that uses a [custom XML import format](https://help.disqus.com/developer/custom-xml-import-format) based on the WXR (WordPress eXtended RSS) schema. So the process would be the same. Create a script named `src/scripts/export_comments.js` to query the database and, in this case, write a single file containing all the comments of your old site:

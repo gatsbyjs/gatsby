@@ -1,6 +1,7 @@
 ---
 title: Transformer plugins
 typora-copy-images-to: ./
+disableTableOfContents: true
 ---
 
 > This tutorial is part of a series about Gatsby’s data layer. Make sure you’ve gone through [part 4](/tutorial/part-four/) and [part 5](/tutorial/part-five/) before continuing here.

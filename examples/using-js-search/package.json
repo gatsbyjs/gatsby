@@ -4,7 +4,9 @@
   "description": "Gatsby example site to demonstrate client side search",
   "version": "0.1.0",
   "keywords": [
-    "Gatsby", "client side search", "js-search"
+    "Gatsby",
+    "client side search",
+    "js-search"
   ],
   "license": "MIT",
   "scripts": {
@@ -12,7 +14,7 @@
     "develop": "gatsby develop",
     "start": "npm run develop",
     "serve": "gatsby serve",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\""
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing \""
   },
   "dependencies": {
     "axios": "^0.19.0",

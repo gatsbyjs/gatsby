@@ -5,7 +5,7 @@ import domReady from "@mikaelkristiansson/domready"
 import socketIo from "./socketIo"
 import emitter from "./emitter"
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
-import { setLoader } from "./loader"
+import { setLoader, publicLoader } from "./loader"
 import DevLoader from "./dev-loader"
 import syncRequires from "./sync-requires"
 // Generated during bootstrap
@@ -16,6 +16,8 @@ window.___emitter = emitter
 const loader = new DevLoader(syncRequires, matchPaths)
 setLoader(loader)
 loader.setApiRunner(apiRunner)
+
+window.___loader = publicLoader
 
 // Let the site/plugins run code very early.
 apiRunnerAsync(`onClientEntry`).then(() => {

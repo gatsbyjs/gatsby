@@ -6,8 +6,8 @@ const compression = require(`compression`)
 const express = require(`express`)
 const chalk = require(`chalk`)
 const { match: reachMatch } = require(`@reach/router/lib/utils`)
-const rl = require(`readline`)
 const onExit = require(`signal-exit`)
+const report = require(`gatsby-cli/lib/reporter`)
 
 const telemetry = require(`gatsby-telemetry`)
 
@@ -15,23 +15,28 @@ const detectPortInUseAndPrompt = require(`../utils/detect-port-in-use-and-prompt
 const getConfigFile = require(`../bootstrap/get-config-file`)
 const preferDefault = require(`../bootstrap/prefer-default`)
 
-const rlInterface = rl.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-})
-
-// Quit immediately on hearing ctrl-c
-rlInterface.on(`SIGINT`, () => {
-  process.exit()
-})
-
 onExit(() => {
   telemetry.trackCli(`SERVE_STOP`)
 })
 
 const readMatchPaths = async program => {
   const filePath = path.join(program.directory, `.cache`, `match-paths.json`)
-  const rawJSON = await fs.readFile(filePath)
+  let rawJSON = `[]`
+  try {
+    rawJSON = await fs.readFile(filePath)
+  } catch (error) {
+    report.warn(error)
+    report.warn(
+      `Could not read ${chalk.bold(
+        `match-paths.json`
+      )} from the .cache directory`
+    )
+    report.warn(
+      `Client-side routing will not work correctly. Maybe you need to re-run ${chalk.bold(
+        `gatsby build`
+      )}?`
+    )
+  }
   return JSON.parse(rawJSON)
 }
 
@@ -62,9 +67,11 @@ module.exports = async program => {
   let { prefixPaths, port, open, host } = program
   port = typeof port === `string` ? parseInt(port, 10) : port
 
-  const config = await preferDefault(
-    getConfigFile(program.directory, `gatsby-config`)
+  const { configModule } = await getConfigFile(
+    program.directory,
+    `gatsby-config`
   )
+  const config = preferDefault(configModule)
 
   const { pathPrefix: configPathPrefix } = config || {}
 
@@ -88,8 +95,7 @@ module.exports = async program => {
     return next()
   })
   app.use(function(req, res, next) {
-    res.header(`Access-Control-Allow-Origin`, `http://${host}:${port}`)
-    res.header(`Access-Control-Allow-Credentials`, true)
+    res.header(`Access-Control-Allow-Origin`, `*`)
     res.header(
       `Access-Control-Allow-Headers`,
       `Origin, X-Requested-With, Content-Type, Accept`
@@ -101,24 +107,24 @@ module.exports = async program => {
   const startListening = () => {
     app.listen(port, host, () => {
       let openUrlString = `http://${host}:${port}${pathPrefix}`
-      console.log(
-        `${chalk.blue(`info`)} gatsby serve running at: ${chalk.bold(
-          openUrlString
-        )}`
-      )
+      report.info(`gatsby serve running at: ${chalk.bold(openUrlString)}`)
       if (open) {
-        console.log(`${chalk.blue(`info`)} Opening browser...`)
+        report.info(`Opening browser...`)
         Promise.resolve(openurl(openUrlString)).catch(err =>
-          console.log(
-            `${chalk.yellow(
-              `warn`
-            )} Browser not opened because no browser was found`
-          )
+          report.warn(`Browser not opened because no browser was found`)
         )
       }
     })
   }
 
-  port = await detectPortInUseAndPrompt(port, rlInterface)
-  startListening()
+  try {
+    port = await detectPortInUseAndPrompt(port)
+    startListening()
+  } catch (e) {
+    if (e.message === `USER_REJECTED`) {
+      return
+    }
+
+    throw e
+  }
 }

@@ -3,40 +3,36 @@
   "version": "1.0.0",
   "private": true,
   "description": "Gatsby example site that shows use of mobx",
+  "author": "jonniebigodes",
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",
-    "format": "prettier --trailing-comma es5 --no-semi --single-quote --write \"src/**/*.js\"",
-    "lint": "eslint **/*.{js,jsx} --quiet -o linterrors.txt --ignore-path .gitignore",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "deploy": "gh-pages -b gh-pages -d public",
-    "pre-deploy": "gatsby build --prefix-paths"
+    "format": "prettier --write \"src/**/*.js\"",
+    "lint": "eslint **/*.{js,jsx} --quiet -o linterrors.txt --ignore-path .gitignore"
   },
-  "main": "n/a",
+  
   "keywords": [
     "gatsby",
     "mobx"
   ],
-  "author": "jonniebigodes <jonniebigodes@hotmail.com>",
   "license": "MIT",
   "dependencies": {
-    "gatsby": "^2.0.21",
-    "mobx": "^5.1.0",
-    "mobx-react": "^5.2.8",
-    "mobx-react-devtools": "^6.0.3",
-    "react": "^16.5.0",
-    "react-dom": "^16.5.0"
+    "gatsby": "^2.15.9",
+    "mobx": "^5.13.0",
+    "mobx-react": "^6.1.3",
+    "prop-types": "^15.7.2",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
   },
   "devDependencies": {
-    "babel-eslint": "^9.0.0",
-    "eslint": "^5.5.0",
-    "eslint-config-airbnb": "^17.1.0",
-    "eslint-config-prettier": "^3.0.1",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-jsx-a11y": "^6.1.1",
-    "eslint-plugin-prettier": "^2.6.2",
-    "eslint-plugin-react": "^7.11.1",
-    "gh-pages": "^1.2.0",
-    "prettier": "^1.14.2"
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.3.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-prettier": "^6.2.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-react": "^7.14.3",
+    "prettier": "^1.18.2"
   }
 }

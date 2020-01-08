@@ -110,9 +110,7 @@ export default async function onCreateNode(
     components = parseMetadata(content, node, pluginOptions)
   } catch (err) {
     reporter.error(
-      `There was a problem parsing component metadata for file: "${
-        node.relativePath
-      }"`,
+      `There was a problem parsing component metadata for file: "${node.relativePath}"`,
       err
     )
     return

@@ -2,11 +2,6 @@
 title: MDX Plugins
 ---
 
-## Table of contents
-
-- [Gatsby remark plugins](#gatsby-remark-plugins)
-- [remark plugins](#remark-plugins)
-
 ## Gatsby remark plugins
 
 `gatsby-plugin-mdx` is compatible with all of the [gatsby-remark
@@ -24,14 +19,15 @@ yarn add gatsby-plugin-sharp gatsby-remark-images
 If you don't have `gatsby-source-filesystem` installed, also install that.
 
 Then configure the plugins. `gatsby-source-filesystem` needs to be
-pointed at wherever you have your images on disk,
-`gatsby-remark-images` needs to be a sub-plugin of `gatsby-plugin-mdx`, and
-`gatsby-plugin-sharp` can be included on its own.
+pointed at wherever you have your images on disk, `gatsby-remark-images`
+needs to be both a sub-plugin of `gatsby-plugin-mdx`and a string entry in
+the plugins array, and `gatsby-plugin-sharp` can be included on its own.
 
-```javascript=gatsby-config.js
+```javascript:title=gatsby-config.js
 module.exports = {
   plugins: [
     `gatsby-plugin-sharp`,
+    `gatsby-remark-images`,
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
@@ -63,14 +59,14 @@ by Gatsby image processing.
 ![my image](./my-awesome-image.png)
 ```
 
-## remark plugins
+## Remark plugins
 
 You can use [remark plugins](https://github.com/remarkjs/remark/blob/master/doc/plugins.md)
 directly if there are transformations you'd like to make on your
 MDX documents. This can do anything from adding emoji support to
 enforcing a particular title capitalization format.
 
-```javascript=gatsby-config.js
+```javascript:title=gatsby-config.js
 const capitalize = require(`remark-capitalize`)
 const emoji = require(`remark-emoji`)
 
@@ -79,7 +75,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
-        mdPlugins: [capitalize, emoji],
+        remarkPlugins: [capitalize, emoji],
       },
     },
   ],

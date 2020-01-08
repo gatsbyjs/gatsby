@@ -18,9 +18,9 @@ import {
 import Layout from "../../components/guidelines/layout"
 import Badge from "../../components/guidelines/badge"
 
-import theme from "../../utils/guidelines/theme"
+import theme from "../../gatsby-plugin-theme-ui"
 import { Box, Flex, Text } from "../../components/guidelines/system"
-import { mediaQueries } from "../../utils/presets"
+import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 
 const ColorExample = ({ hex, token }) => (
   <tr>
@@ -48,7 +48,7 @@ const ColorExample = ({ hex, token }) => (
       }}
     >
       <Flex alignItems="center">
-        <Text color={hex} fontWeight={1} fontSize={6} mr={8}>
+        <Text color={hex} fontWeight="bold" fontSize={6} mr={8}>
           Aa
         </Text>
         <div
@@ -139,7 +139,7 @@ const DesignTokens = ({ location }) => (
                       key={`${index}-${space}`}
                       height={space}
                       width={space}
-                      bg="orange.30"
+                      bg="grey.30"
                     />
                     <SrOnly>
                       A box with <code>space[{index}]</code> set as value for
@@ -157,7 +157,7 @@ const DesignTokens = ({ location }) => (
       </Columns>
     </Section>
 
-    <Section bg="grey.5">
+    <Section bg="ui.background">
       <SectionHeading>Shadows &amp; Elevation</SectionHeading>
       <Columns>
         <CopyColumn>
@@ -268,7 +268,7 @@ const DesignTokens = ({ location }) => (
                       key={`${index}-radius`}
                       height={40}
                       width={80}
-                      bg="orange.30"
+                      bg="grey.30"
                       borderRadius={index}
                     />
                     <SrOnly>
@@ -444,7 +444,7 @@ const DesignTokens = ({ location }) => (
                     <td>
                       <Text
                         letterSpacing={letterSpacing}
-                        color="grey.90"
+                        color="text"
                         lineHeight="solid"
                         css={{
                           whiteSpace: `nowrap`,
@@ -630,15 +630,15 @@ const DesignTokens = ({ location }) => (
                 </tr>
               </thead>
               <tbody>
-                {Object.keys(theme.transition).map((color, i) => {
-                  if (typeof theme.transition[color] === `object`) {
-                    return Object.keys(theme.transition[color]).map(
-                      (range, i) => (
+                {Object.keys(theme.transition).map(token => {
+                  if (typeof theme.transition[token] === `object`) {
+                    return Object.keys(theme.transition[token]).map(
+                      (value, i) => (
                         <tr key={`tokens-transition-${i}`}>
                           <td>
-                            <code>{`colors.${color}.${range}`}</code>
+                            <code>{`transition.${token}.${value}`}</code>
                           </td>
-                          <td>{theme.transition[color][range]}</td>
+                          <td>{theme.transition[token][value]}</td>
                         </tr>
                       )
                     )

@@ -138,6 +138,9 @@ exports.onCreateNode = true
  * for programmatically manipulating pages created by other plugins e.g.
  * if you want paths without trailing slashes.
  *
+ * There is a mechanism in Gatsby to prevent calling onCreatePage for pages
+ * created by the same gatsby-node.js to avoid infinite loops/callback.
+ *
  * See the guide [Creating and Modifying Pages](/docs/creating-and-modifying-pages/)
  * for more on this API.
  */
@@ -209,6 +212,7 @@ exports.setFieldsOnGraphQLNodeType = true
  * generated schema, e.g. to customize added third-party types, use the
  * [`createResolvers`](/docs/node-apis/#createResolvers) API.
  *
+ * @gatsbyVersion 2.12.0
  * @param {object} $0
  * @param {object} $0.actions
  * @param {object} $0.actions.createTypes
@@ -259,7 +263,7 @@ exports.createSchemaCustomization = true
  * * When extending a field with an existing field resolver, the original
  *   resolver function is available from `info.originalResolver`.
  * * The `createResolvers` API is called as the last step in schema generation.
- *   Thus, an intermediate schema is made available on the `schema` property.
+ *   Thus, an intermediate schema is made available on the `intermediateSchema` property.
  *   In resolver functions themselves, it is recommended to access the final
  *   built schema from `info.schema`.
  * * Gatsby's data layer, including all internal query capabilities, is
@@ -278,8 +282,9 @@ exports.createSchemaCustomization = true
  *
  * For fuller examples, see [`using-type-definitions`](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-type-definitions).
  *
+ * @gatsbyVersion 2.2.0
  * @param {object} $0
- * @param {GraphQLSchema} $0.schema Current GraphQL schema
+ * @param {GraphQLSchema} $0.intermediateSchema Current GraphQL schema
  * @param {function} $0.createResolvers Add custom resolvers to GraphQL field configs
  * @param {object} $1
  * @param {object} $1.resolvers Resolvers from plugin options in `gatsby-config.js`.

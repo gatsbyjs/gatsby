@@ -1,5 +1,5 @@
 import React from "react"
-import { Router, Location } from "@reach/router"
+import { Router, Location, BaseContext } from "@reach/router"
 import { ScrollContext } from "gatsby-react-router-scroll"
 
 import {
@@ -9,7 +9,7 @@ import {
 } from "./navigation"
 import { apiRunner } from "./api-runner-browser"
 import loader from "./loader"
-import JSONStore from "./json-store"
+import { PageQueryStore, StaticQueryStore } from "./query-result-store"
 import EnsureResources from "./ensure-resources"
 
 import { reportError, clearError } from "./error-overlay-handler"
@@ -33,6 +33,25 @@ if (window.__webpack_hot_middleware_reporter__ !== undefined) {
 
 navigationInit()
 
+// In gatsby v2 if Router is used in page using matchPaths
+// paths need to contain full path.
+// For example:
+//   - page have `/app/*` matchPath
+//   - inside template user needs to use `/app/xyz` as path
+// Resetting `basepath`/`baseuri` keeps current behaviour
+// to not introduce breaking change.
+// Remove this in v3
+const RouteHandler = props => (
+  <BaseContext.Provider
+    value={{
+      baseuri: `/`,
+      basepath: `/`,
+    }}
+  >
+    <PageQueryStore {...props} />
+  </BaseContext.Provider>
+)
+
 class LocationHandler extends React.Component {
   render() {
     let { location } = this.props
@@ -51,11 +70,11 @@ class LocationHandler extends React.Component {
                   location={location}
                   id="gatsby-focus-wrapper"
                 >
-                  <JSONStore
-                    path={
+                  <RouteHandler
+                    path={encodeURI(
                       locationAndPageResources.pageResources.page.matchPath ||
-                      locationAndPageResources.pageResources.page.path
-                    }
+                        locationAndPageResources.pageResources.page.path
+                    )}
                     {...this.props}
                     {...locationAndPageResources}
                   />
@@ -72,7 +91,7 @@ class LocationHandler extends React.Component {
     let custom404
     if (real404PageResources) {
       custom404 = (
-        <JSONStore {...this.props} pageResources={real404PageResources} />
+        <PageQueryStore {...this.props} pageResources={real404PageResources} />
       )
     }
 
@@ -83,7 +102,7 @@ class LocationHandler extends React.Component {
           location={location}
           id="gatsby-focus-wrapper"
         >
-          <JSONStore
+          <RouteHandler
             path={location.pathname}
             location={location}
             pageResources={dev404PageResources}
@@ -111,4 +130,4 @@ const WrappedRoot = apiRunner(
   }
 ).pop()
 
-export default () => WrappedRoot
+export default () => <StaticQueryStore>{WrappedRoot}</StaticQueryStore>

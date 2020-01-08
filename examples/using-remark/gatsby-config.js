@@ -68,7 +68,13 @@ module.exports = {
     },
     `gatsby-transformer-yaml`,
     `gatsby-plugin-sharp`,
-    `gatsby-plugin-catch-links`,
+    {
+      resolve: `gatsby-plugin-catch-links`,
+      options: {
+        // Links are relative to this directory
+        excludeRegex: /excluded-link/,
+      },
+    },
     `gatsby-plugin-glamor`,
   ],
 }

@@ -20,10 +20,30 @@ function getNodesReducer() {
   return nodesReducer
 }
 
+function getNodesByTypeReducer() {
+  let nodesReducer
+  switch (backend) {
+    case `redux`:
+      nodesReducer = require(`./nodes-by-type`)
+      break
+    case `loki`:
+      nodesReducer = (state = null) => null
+      break
+    default:
+      throw new Error(
+        `Unsupported DB nodes backend (value of env var GATSBY_DB_NODES)`
+      )
+  }
+  return nodesReducer
+}
+
+/**
+ * @property exports.nodesTouched Set<string>
+ */
 module.exports = {
   program: require(`./program`),
   nodes: getNodesReducer(),
-  nodesByType: require(`./nodes-by-type`),
+  nodesByType: getNodesByTypeReducer(),
   resolvedNodesCache: require(`./resolved-nodes`),
   nodesTouched: require(`./nodes-touched`),
   lastAction: require(`./last-action`),
@@ -42,4 +62,7 @@ module.exports = {
   babelrc: require(`./babelrc`),
   schemaCustomization: require(`./schema-customization`),
   themes: require(`./themes`),
+  logs: require(`gatsby-cli/lib/reporter/redux/reducer`),
+  inferenceMetadata: require(`./inference-metadata`),
+  pageDataStats: require(`./page-data-stats`),
 }

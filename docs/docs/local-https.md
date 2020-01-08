@@ -1,5 +1,5 @@
 ---
-title: "Local HTTPS"
+title: Local HTTPS
 ---
 
 Gatsby provides an easy way to use a local HTTPS server during development, thanks to [devcert](https://github.com/davewasmer/devcert). When you enable the `https` option, a private key and certificate file will be created for your project and used by the development server.
@@ -47,7 +47,7 @@ If you need to use a custom https setup, you can pass the `--https`, `--key-file
 See the example command:
 
 ```shell
-$ gatsby develop --https --key-file ../relative/path/to/key.key --cert-file ../relative/path/to/cert.crt
+gatsby develop --https --key-file ../relative/path/to/key.key --cert-file ../relative/path/to/cert.crt
 ```
 
 in most cases, the `--https` passed by itself is easier and more convenient to get local https.

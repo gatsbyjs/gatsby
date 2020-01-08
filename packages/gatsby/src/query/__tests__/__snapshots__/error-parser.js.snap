@@ -1,12 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`totally vague one 1`] = `
+exports[`specific one 1`] = `
 Object {
   "context": Object {
-    "sourceMessage": "foo bar",
+    "sourceMessage": "Variable \\"Foo\\" of required type \\"Bar\\" was not provided.",
+    "variableName": "Foo",
+    "variableType": "Bar",
   },
   "filePath": "test.js",
-  "id": "85901",
+  "id": "85920",
   "location": Object {
     "start": Object {
       "column": 10,
@@ -16,13 +18,13 @@ Object {
 }
 `;
 
-exports[`vague one 1`] = `
+exports[`totally vague one 1`] = `
 Object {
   "context": Object {
-    "message": "- Unknown field 'fdnjkgd' on type 'SiteSiteMetadata'.",
+    "sourceMessage": "foo bar",
   },
   "filePath": "test.js",
-  "id": "85907",
+  "id": "85901",
   "location": Object {
     "start": Object {
       "column": 10,

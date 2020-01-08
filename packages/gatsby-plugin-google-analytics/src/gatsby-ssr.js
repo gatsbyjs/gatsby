@@ -1,24 +1,33 @@
 import React from "react"
 
 const knownOptions = {
-  clientId: `string`,
-  sampleRate: `number`,
-  siteSpeedSampleRate: `number`,
-  alwaysSendReferrer: `boolean`,
-  allowAnchor: `boolean`,
-  cookieName: `string`,
-  cookieExpires: `number`,
-  storeGac: `boolean`,
-  legacyCookieDomain: `string`,
-  legacyHistoryImport: `boolean`,
-  allowLinker: `boolean`,
+  createOnly: {
+    clientId: `string`,
+    sampleRate: `number`,
+    siteSpeedSampleRate: `number`,
+    alwaysSendReferrer: `boolean`,
+    allowAnchor: `boolean`,
+    cookieName: `string`,
+    cookieExpires: `number`,
+    storeGac: `boolean`,
+    legacyCookieDomain: `string`,
+    legacyHistoryImport: `boolean`,
+    allowLinker: `boolean`,
+  },
+  general: {
+    allowAdFeatures: `boolean`,
+    dataSource: `string`,
+    queueTime: `number`,
+    forceSSL: `boolean`,
+    transport: `string`,
+  },
 }
 
 export const onRenderBody = (
   { setHeadComponents, setPostBodyComponents },
   pluginOptions
 ) => {
-  if (process.env.NODE_ENV !== `production`) {
+  if (process.env.NODE_ENV !== `production` || !pluginOptions.trackingId) {
     return null
   }
 
@@ -41,8 +50,8 @@ export const onRenderBody = (
   }
 
   const gaCreateOptions = {}
-  for (const option in knownOptions) {
-    if (typeof pluginOptions[option] === knownOptions[option]) {
+  for (const option in knownOptions.createOnly) {
+    if (typeof pluginOptions[option] === knownOptions.createOnly[option]) {
       gaCreateOptions[option] = pluginOptions[option]
     }
   }
@@ -63,15 +72,13 @@ export const onRenderBody = (
   ${
     typeof pluginOptions.anonymize !== `undefined` &&
     pluginOptions.anonymize === true
-      ? `function gaOptout(){document.cookie=disableStr+'=true; expires=Thu, 31 Dec 2099 23:59:59 UTC;path=/',window[disableStr]=!0}var gaProperty='${
-          pluginOptions.trackingId
-        }',disableStr='ga-disable-'+gaProperty;document.cookie.indexOf(disableStr+'=true')>-1&&(window[disableStr]=!0);`
+      ? `function gaOptout(){document.cookie=disableStr+'=true; expires=Thu, 31 Dec 2099 23:59:59 UTC;path=/',window[disableStr]=!0}var gaProperty='${pluginOptions.trackingId}',disableStr='ga-disable-'+gaProperty;document.cookie.indexOf(disableStr+'=true')>-1&&(window[disableStr]=!0);`
       : ``
   }
   if(${
     typeof pluginOptions.respectDNT !== `undefined` &&
     pluginOptions.respectDNT == true
-      ? `!(navigator.doNotTrack == "1" || window.doNotTrack == "1")`
+      ? `!(parseInt(navigator.doNotTrack) === 1 || parseInt(window.doNotTrack) === 1 || parseInt(navigator.msDoNotTrack) === 1 || navigator.doNotTrack === "yes")`
       : `true`
   }) {
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -109,8 +116,14 @@ export const onRenderBody = (
         typeof pluginOptions.variationId !== `undefined`
           ? `ga('set', 'expVar', '${pluginOptions.variationId}');`
           : ``
-      }}
-      `,
+      }
+      ${Object.keys(knownOptions.general).reduce((gaSetCommands, option) => {
+        if (typeof pluginOptions[option] === knownOptions.general[option]) {
+          gaSetCommands += `ga('set', '${option}', '${pluginOptions[option]}');\n`
+        }
+        return gaSetCommands
+      }, ``)}
+      }`,
       }}
     />,
   ])

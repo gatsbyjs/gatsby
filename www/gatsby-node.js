@@ -1,5 +1,6 @@
 const _ = require(`lodash`)
 const Promise = require(`bluebird`)
+const fetch = require(`node-fetch`)
 const path = require(`path`)
 const fs = require(`fs-extra`)
 const slash = require(`slash`)
@@ -7,9 +8,22 @@ const slugify = require(`slugify`)
 const url = require(`url`)
 const getpkgjson = require(`get-package-json-from-github`)
 const parseGHUrl = require(`parse-github-url`)
-const { GraphQLClient } = require(`graphql-request`)
+const { GraphQLClient } = require(`@jamo/graphql-request`)
 const moment = require(`moment`)
 const startersRedirects = require(`./starter-redirects.json`)
+const {
+  generateComparisonPageSet,
+} = require(`./src/utils/generate-comparison-page-set.js`)
+const yaml = require(`js-yaml`)
+const docLinksData = yaml.load(
+  fs.readFileSync(`./src/data/sidebars/doc-links.yaml`)
+)
+const tutorialLinksData = yaml.load(
+  fs.readFileSync(`./src/data/sidebars/tutorial-links.yaml`)
+)
+const contributingLinksData = yaml.load(
+  fs.readFileSync(`./src/data/sidebars/contributing-links.yaml`)
+)
 
 let ecosystemFeaturedItems
 
@@ -47,6 +61,12 @@ exports.createPages = ({ graphql, actions, reporter }) => {
   const { createPage, createRedirect } = actions
 
   createRedirect({
+    fromPath: `/docs/themes/api-reference`,
+    toPath: `/docs/theme-api/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
     fromPath: `/docs/component-css/`, // Merged Component CSS and CSS Modules
     toPath: `/docs/css-modules/`,
     isPermanent: true,
@@ -80,6 +100,11 @@ exports.createPages = ({ graphql, actions, reporter }) => {
   createRedirect({
     fromPath: `/docs/community/`, // Moved "Community" page from /docs/community to /contributing/community
     toPath: `/contributing/community/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/deploying-to-now/`,
+    toPath: `/docs/deploying-to-zeit-now/`,
     isPermanent: true,
   })
   createRedirect({
@@ -167,6 +192,11 @@ exports.createPages = ({ graphql, actions, reporter }) => {
   createRedirect({
     fromPath: `/docs/netlify-cms/`,
     toPath: `/docs/sourcing-from-netlify-cms/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/docs/sourcing-from-saas-services/`,
+    toPath: `/docs/sourcing-from-hosted-services/`,
     isPermanent: true,
   })
 
@@ -282,7 +312,12 @@ exports.createPages = ({ graphql, actions, reporter }) => {
   })
   createRedirect({
     fromPath: `/docs/image-tutorial/`,
-    toPath: `/tutorial/image-tutorial/`,
+    toPath: `/tutorial/wordpress-image-tutorial/`,
+    isPermanent: true,
+  })
+  createRedirect({
+    fromPath: `/tutorial/image-tutorial/`,
+    toPath: `/tutorial/wordpress-image-tutorial/`,
     isPermanent: true,
   })
   createRedirect({
@@ -320,6 +355,82 @@ exports.createPages = ({ graphql, actions, reporter }) => {
     isPermanent: true,
   })
 
+  createRedirect({
+    fromPath: `/docs/hosting-on-netlify/`,
+    toPath: `/docs/deploying-to-netlify/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/querying-with-graphql/`,
+    toPath: `/docs/graphql-concepts/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/introducing-graphiql/`,
+    toPath: `/docs/running-queries-with-graphiql/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/life-and-times-of-a-gatsby-build/`,
+    toPath: `/docs/overview-of-the-gatsby-build-process/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/awesome-gatsby/`,
+    toPath: `/docs/awesome-gatsby-resources/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/sourcing-from-kentico-cloud/`,
+    toPath: `/docs/sourcing-from-kentico-kontent/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/building-apps-with-gatsby/`,
+    toPath: `/docs/adding-app-and-website-functionality/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/adding-website-functionality/`,
+    toPath: `/docs/adding-app-and-website-functionality/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/using-fragments/`,
+    toPath: `/docs/using-graphql-fragments/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/client-data-fetching/`,
+    toPath: `/docs/data-fetching/`,
+    isPermanent: true,
+  })
+
+  createRedirect({
+    fromPath: `/docs/centralizing-your-sites-navigation/`,
+    toPath: `/docs/creating-dynamic-navigation/`,
+    isPermanent: true,
+  })
+
+  /* This redirects from a now removed stub that 
+  showed up in the first page of Google results. 
+  Can be removed if SEO is no longer impacted. */
+
+  createRedirect({
+    fromPath: `/docs/rendering-sidebar-navigation-dynamically/`,
+    toPath: `/docs/creating-dynamic-navigation/`,
+    isPermanent: true,
+  })
+
   Object.entries(startersRedirects).forEach(([fromSlug, toSlug]) => {
     createRedirect({
       fromPath: `/starters${fromSlug}`,
@@ -347,6 +458,9 @@ exports.createPages = ({ graphql, actions, reporter }) => {
     )
     const creatorPageTemplate = path.resolve(
       `src/templates/template-creator-details.js`
+    )
+    const featureComparisonPageTemplate = path.resolve(
+      `src/templates/template-feature-comparison.js`
     )
 
     // Query for markdown nodes to use in creating pages.
@@ -535,9 +649,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
           return null
         } else if (!_.get(edge, `node.fields.hasScreenshot`)) {
           reporter.warn(
-            `Starter showcase entry "${
-              edge.node.repo
-            }" seems offline. Skipping.`
+            `Starter showcase entry "${edge.node.repo}" seems offline. Skipping.`
           )
           return null
         } else {
@@ -588,9 +700,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
         if (!edge.node.fields.slug) return
         if (!edge.node.fields.hasScreenshot) {
           reporter.warn(
-            `Site showcase entry "${
-              edge.node.main_url
-            }" seems offline. Skipping.`
+            `Site showcase entry "${edge.node.main_url}" seems offline. Skipping.`
           )
           return
         }
@@ -604,18 +714,109 @@ exports.createPages = ({ graphql, actions, reporter }) => {
       })
 
       // Create docs pages.
-      result.data.allMdx.edges.forEach(edge => {
-        const slug = _.get(edge, `node.fields.slug`)
+      const docPages = result.data.allMdx.edges
+      const docLinks = docLinksData[0].items
+      const tutorialLinks = tutorialLinksData[0].items
+      const contributingLinks = contributingLinksData[0].items
+
+      // flatten sidebar links trees for easier next/prev link calculation
+      function flattenList(itemList) {
+        return itemList.reduce((reducer, { items, ...rest }) => {
+          reducer.push(rest)
+          if (items) reducer.push(...flattenList(items))
+          return reducer
+        }, [])
+      }
+
+      const flattenedDocs = flattenList(docLinks)
+      const flattenedTutorials = flattenList(tutorialLinks)
+      const flattenedContributing = flattenList(contributingLinks)
+
+      // with flattened tree object finding next and prev is just getting the next index
+      function getSibling(index, list, direction) {
+        if (direction === `next`) {
+          const next = index === list.length - 1 ? null : list[index + 1]
+          // for tutorial links that use subheadings on the same page skip the link and try the next item
+          if (next && next.link && next.link.includes(`#`)) {
+            return getSibling(index + 1, list, `next`)
+          }
+          return next
+        } else if (direction === `prev`) {
+          const prev = index === 0 ? null : list[index - 1]
+          if (prev && prev.link && prev.link.includes(`#`)) {
+            return getSibling(index - 1, list, `prev`)
+          }
+          return prev
+        } else {
+          reporter.warn(
+            `Did not provide direction to sibling function for building next and prev links`
+          )
+          return null
+        }
+      }
+
+      function findDoc(doc) {
+        if (!doc.link) return null
+        return (
+          doc.link === this.link ||
+          doc.link === this.link.substring(0, this.link.length - 1)
+        )
+      }
+
+      docPages.forEach(({ node }) => {
+        const slug = _.get(node, `fields.slug`)
         if (!slug) return
 
         if (!_.includes(slug, `/blog/`)) {
+          const docIndex = flattenedDocs.findIndex(findDoc, {
+            link: slug,
+          })
+          const tutorialIndex = flattenedTutorials.findIndex(findDoc, {
+            link: slug,
+          })
+          const contributingIndex = flattenedContributing.findIndex(findDoc, {
+            link: slug,
+          })
+
+          // add values to page context for next and prev page
+          let nextAndPrev = {}
+          if (docIndex > -1) {
+            nextAndPrev.prev = getSibling(docIndex, flattenedDocs, `prev`)
+            nextAndPrev.next = getSibling(docIndex, flattenedDocs, `next`)
+          }
+          if (tutorialIndex > -1) {
+            nextAndPrev.prev = getSibling(
+              tutorialIndex,
+              flattenedTutorials,
+              `prev`
+            )
+            nextAndPrev.next = getSibling(
+              tutorialIndex,
+              flattenedTutorials,
+              `next`
+            )
+          }
+          if (contributingIndex > -1) {
+            nextAndPrev.prev = getSibling(
+              contributingIndex,
+              flattenedContributing,
+              `prev`
+            )
+            nextAndPrev.next = getSibling(
+              contributingIndex,
+              flattenedContributing,
+              `next`
+            )
+          }
+
           createPage({
-            path: `${edge.node.fields.slug}`, // required
+            path: `${node.fields.slug}`, // required
             component: slash(
-              edge.node.fields.package ? localPackageTemplate : docsTemplate
+              node.fields.package ? localPackageTemplate : docsTemplate
             ),
             context: {
-              slug: edge.node.fields.slug,
+              slug: node.fields.slug,
+              ...nextAndPrev,
             },
           })
         }
@@ -646,6 +847,21 @@ exports.createPages = ({ graphql, actions, reporter }) => {
           })
         }
       })
+
+      // Create feature comparison pages
+      const jamstackPages = generateComparisonPageSet(`jamstack`)
+      const cmsPages = generateComparisonPageSet(`cms`)
+      const comparisonPages = [...jamstackPages, ...cmsPages]
+      for (const { path, options, featureType } of comparisonPages) {
+        createPage({
+          path,
+          component: slash(featureComparisonPageTemplate),
+          context: {
+            options,
+            featureType,
+          },
+        })
+      }
 
       // redirecting cypress-gatsby => gatsby-cypress
       createRedirect({
@@ -876,9 +1092,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
 
     if (!validTypes[node.type]) {
       throw new Error(
-        `Creators must have a type of “individual”, “agency”, or “company”, but invalid type “${
-          node.type
-        }” was provided for ${node.name}.`
+        `Creators must have a type of “individual”, “agency”, or “company”, but invalid type “${node.type}” was provided for ${node.name}.`
       )
     }
     slug = `/creators/${validTypes[node.type]}/${slugify(node.name, {
@@ -921,7 +1135,11 @@ exports.onPostBuild = () => {
 }
 
 // XXX this should probably be a plugin or something.
-exports.sourceNodes = ({ actions: { createTypes }, schema }) => {
+exports.sourceNodes = async ({
+  actions: { createTypes, createNode },
+  createContentDigest,
+  schema,
+}) => {
   /*
    * NOTE: This _only_ defines the schema we currently query for. If anything in
    * the query at `src/pages/contributing/events.js` changes, we need to make
@@ -938,6 +1156,28 @@ exports.sourceNodes = ({ actions: { createTypes }, schema }) => {
       data: AirtableData
     }
 
+    type SitesYaml implements Node {
+      title: String!
+      main_url: String!
+      url: String!
+      source_url: String
+      featured: Boolean
+      categories: [String]!
+      built_by: String
+      built_by_url: String
+      description: String
+      screenshotFile: Screenshot # added by gatsby-transformer-screenshot
+    }
+
+    type StartersYaml implements Node {
+      url: String!
+      repo: String!
+      description: String
+      tags: [String!]
+      features: [String!]
+      screenshotFile: Screenshot # added by gatsby-transformer-screenshot
+    }
+
     type AirtableData @dontInfer {
       name: String @proxy(from: "Name_of_Event")
       organizerFirstName: String @proxy(from: "Organizer_Name")
@@ -952,6 +1192,23 @@ exports.sourceNodes = ({ actions: { createTypes }, schema }) => {
   `
 
   createTypes(typeDefs)
+
+  // get data from GitHub API at build time
+  const result = await fetch(`https://api.github.com/repos/gatsbyjs/gatsby`)
+  const resultData = await result.json()
+  // create node for build time data example in the docs
+  createNode({
+    nameWithOwner: resultData.full_name,
+    url: resultData.html_url,
+    // required fields
+    id: `example-build-time-data`,
+    parent: null,
+    children: [],
+    internal: {
+      type: `Example`,
+      contentDigest: createContentDigest(resultData),
+    },
+  })
 }
 
 exports.onCreateWebpackConfig = ({ actions, plugins }) => {

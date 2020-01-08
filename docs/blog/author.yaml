@@ -14,6 +14,10 @@
   bio: Freelance Web Developer http://line37.com . Maintainer of https://reactfaq.site
   avatar: avatars/tim-arney.jpg
   twitter: "@timarney"
+- id: Tara Arnold
+  bio: Senior Marketing Content Strategist https://mediacurrent.com
+  avatar: avatars/tara-arnold-mc.png
+  twitter: "@mediacurrent"
 - id: Ian Sinnott
   bio: Zealous about simplicity. Loves JavaScript, UX, the web. https://www.iansinnott.com
   avatar: avatars/ian-sinnott.jpg
@@ -49,7 +53,6 @@
 - id: Fernando Poumian
   bio: Full-Stack Web Developer - https://www.halfelectronic.com
   avatar: avatars/fernando-poumian.jpeg
-  twitter: "@fernandopoumian"
 - id: Josh Weaver
   bio: Developer at By the Book, Inc. Enjoys technology, writing and playing music. Can't turn down a decent board game.
   avatar: avatars/josh-weaver.jpg
@@ -122,7 +125,7 @@
   avatar: avatars/dan-kass.jpg
   twitter: "@JustFixNYC"
 - id: Gatsby Central
-  bio: The community for gatsby developers
+  bio: The community for Gatsby developers
   avatar: avatars/gatsby-central.jpg
   twitter: "@GatsbyCentral"
 - id: Ray Gesualdo
@@ -241,13 +244,13 @@
 - id: Katie Fujihara
   bio: Lover of making beautiful UI. Portland tech community organizer.
   avatar: avatars/katie-fujihara.jpg
-  twitter: "@katieofcode"
+  twitter: "@KatieFujihara"
 - id: Sidhartha Chatterjee
-  bio: OSS Maintainer @ GatsbyJS. Full Stack Developer. Consultant. Scuba Diver.
+  bio: Core team @ GatsbyJS. Full-Stack Developer. Scuba diver.
   avatar: avatars/sidhartha-chatterjee.jpg
   twitter: "@chatsidhartha"
 - id: Tania Rascia
-  bio: Designer, developer, writer. I build open source projects and write the missing instruction manuals of the web.
+  bio: Web developer and writer specializing in modern JavaScript.
   avatar: avatars/tania-rascia.jpg
   twitter: "@taniarascia"
 - id: Kym Ellis
@@ -312,6 +315,10 @@
   bio: Web Developer, Open Source advocate, new tech explorer - https://lannonbr.com/
   avatar: avatars/benjamin-lannon.jpg
   twitter: "@lannonbr"
+- id: Thomas Wang
+  bio: A social developer on the JAMStack.
+  avatar: avatars/thomas-wang.jpeg
+  twitter: "@thomaswangio"
 - id: Hashim Warren
   bio: Marketer turned Web Developer  - https://hashim.xyz
   avatar: avatars/hashim-warren.jpg
@@ -324,3 +331,48 @@
   bio: Web Developer at Apollo. Always learning!
   avatar: avatars/trevor-blades.jpg
   twitter: "@trevorblades"
+- id: Kyle Pennell
+  bio: I make websites that help people explore the offline world - https://kyleapennell.com
+  avatar: avatars/kyle-pennell.jpg
+  twitter: "@kyleapennell"
+- id: Grant Glidewell
+  bio: New dad moving modern technologies forward with cutting-edge projects @ThirdAndGrove. And doggos
+  avatar: avatars/grant-glidewell.jpg
+- id: Clearleft
+  bio: We help design leaders get the most from their digital products, services & teams. We also organise UX London, Leading Design & Patterns Day
+  avatar: avatars/clearleft.png
+- id: Ilesh Mistry
+  bio: https://www.ileshmistry.com | Gatsby and GraphQL fan | @kentico MVP working at @MMT_Digital uses @KenticoKontent 💻 | @ManUtd fan 🔴 | Husband ❤️ | Father 💙 | Traveller ✈️ 🏝 | @Marvel fan 💪
+  avatar: avatars/ilesh-mistry.jpg
+  twitter: "@ileshmistry"
+- id: Thomas Slade
+  bio: Web developer with a focus on modern e-commerce @getelevar - https://www.getelevar.com/
+  avatar: avatars/thomas-slade.jpeg
+  twitter: "@twslade"
+- id: Maddie Wolf
+  bio: Podcast listener. Puzzle doer. Dog stalker. Will explode if I don’t pet every dog I see.
+  avatar: avatars/maddie-wolf.jpeg
+- id: Kilian Valkhof
+  bio: Creates tools that make designers & developers better at what they do. Polypane.rocks and Superposition.design | @kilianvalkhof | https://kilianvalkhof.com/
+  avatar: avatars/kilian-valkhof.jpg
+  twitter: "@kilianvalkhof"
+- id: David Bailey
+  bio: I build things for the web! ✧ Also interested in music, photography and language learning
+  avatar: avatars/david-bailey.jpg
+  twitter: "@davidbailey00"
+- id: Madalyn Parker
+  bio: Working to make the web a better place. Mental health advocate, passionate about a11y, requires strong coffee.
+  avatar: avatars/madalyn-parker.jpg
+  twitter: "@madalynrose"
+- id: Mark Casias
+  bio: Sr. Software Engineer for Mediacurrent. Bass player.
+  avatar: avatars/mark-casias.png
+  twitter: "@teampoop"
+- id: Jari Zwarts
+  bio: Frontend @ Oberon. Maker of things. https://jari.io
+  avatar: avatars/jari-zwarts.png
+  twitter: "@JariZwarts"
+- id: Scott Byrne
+  bio: Product Designer at Forestry.io & TinaCMS Team Member
+  avatar: avatars/scott-byrne.jpg
+  twitter: "@scottpbyrne"

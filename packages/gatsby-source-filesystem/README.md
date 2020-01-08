@@ -51,7 +51,7 @@ In addition to the name and path parameters you may pass an optional `ignore` ar
 
 They will be added to the following default list:
 
-```
+```text
 **/*.un~
 **/.DS_Store
 **/.gitignore
@@ -213,7 +213,7 @@ exports.downloadMediaFiles = ({
   nodes.map(async node => {
     let fileNode
     // Ensures we are only processing Media Files
-    // `wordpress__wp_media` is the media file type name for Wordpress
+    // `wordpress__wp_media` is the media file type name for WordPress
     if (node.__type === `wordpress__wp_media`) {
       try {
         fileNode = await createRemoteFileNode({

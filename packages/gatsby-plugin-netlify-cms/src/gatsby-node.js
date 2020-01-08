@@ -6,6 +6,8 @@ import HtmlWebpackExcludeAssetsPlugin from "html-webpack-exclude-assets-plugin"
 import MiniCssExtractPlugin from "mini-css-extract-plugin"
 // TODO: swap back when https://github.com/geowarin/friendly-errors-webpack-plugin/pull/86 lands
 import FriendlyErrorsPlugin from "@pieh/friendly-errors-webpack-plugin"
+import CopyPlugin from "copy-webpack-plugin"
+import HtmlWebpackTagsPlugin from "html-webpack-tags-plugin"
 
 // Deep mapping function for plain objects and arrays. Allows any value,
 // including an object or array, to be transformed.
@@ -33,34 +35,32 @@ function replaceRule(value) {
     return value
   }
 
-  // when javascript we exclude node_modules
+  // remove dependency rule
   if (
     value.type === `javascript/auto` &&
-    value.exclude &&
-    value.exclude instanceof RegExp
+    value.use &&
+    value.use[0] &&
+    value.use[0].options &&
+    value.use[0].options.presets &&
+    /babel-preset-gatsby[/\\]dependencies\.js/.test(
+      value.use[0].options.presets
+    )
   ) {
-    return {
-      ...value,
-      exclude: new RegExp(
-        [value.exclude.source, `node_modules|bower_components`].join(`|`)
-      ),
-    }
-  }
-
-  // Manually swap `style-loader` for `MiniCssExtractPlugin.loader`.
-  // `style-loader` is only used in development, and doesn't allow us to pass
-  // the `styles` entry css path to Netlify CMS.
-  if (
-    typeof value.loader === `string` &&
-    value.loader.includes(`style-loader`)
-  ) {
-    return {
-      ...value,
-      loader: MiniCssExtractPlugin.loader,
-    }
+    return null
   }
 
   return value
+}
+
+exports.onPreInit = ({ reporter }) => {
+  try {
+    require.resolve(`netlify-cms`)
+    reporter.warn(
+      `The netlify-cms package is deprecated, please install netlify-cms-app instead. You can do this by running "npm install netlify-cms-app"`
+    )
+  } catch (err) {
+    // carry on
+  }
 }
 
 exports.onCreateDevServer = ({ app, store }, { publicPath = `admin` }) => {
@@ -79,13 +79,16 @@ exports.onCreateDevServer = ({ app, store }, { publicPath = `admin` }) => {
 }
 
 exports.onCreateWebpackConfig = (
-  { store, stage, getConfig, plugins, pathPrefix, loaders },
+  { store, stage, getConfig, plugins, pathPrefix, loaders, rules, actions },
   {
     modulePath,
+    customizeWebpackConfig,
     publicPath = `admin`,
     enableIdentityWidget = true,
     htmlTitle = `Content Manager`,
+    htmlFavicon = ``,
     manualInit = false,
+    includeRobots = false,
   }
 ) => {
   if (![`develop`, `build-javascript`].includes(stage)) {
@@ -94,13 +97,45 @@ exports.onCreateWebpackConfig = (
   const gatsbyConfig = getConfig()
   const { program } = store.getState()
   const publicPathClean = trim(publicPath, `/`)
+
+  const externals = [
+    {
+      name: `react`,
+      global: `React`,
+      assetDir: `umd`,
+      assetName: `react.production.min.js`,
+    },
+    {
+      name: `react-dom`,
+      global: `ReactDOM`,
+      assetDir: `umd`,
+      assetName: `react-dom.production.min.js`,
+    },
+    {
+      name: `netlify-cms-app`,
+      global: `NetlifyCmsApp`,
+      assetDir: `dist`,
+      assetName: `netlify-cms-app.js`,
+      sourceMap: `netlify-cms-app.js.map`,
+    },
+  ]
+
+  if (enableIdentityWidget) {
+    externals.unshift({
+      name: `netlify-identity-widget`,
+      global: `netlifyIdentity`,
+      assetDir: `build`,
+      assetName: `netlify-identity-widget.js`,
+      sourceMap: `netlify-identity-widget.js.map`,
+    })
+  }
+
   const config = {
     ...gatsbyConfig,
     entry: {
       cms: [
-        manualInit && `${__dirname}/cms-manual-init.js`,
-        `${__dirname}/cms.js`,
-        enableIdentityWidget && `${__dirname}/cms-identity.js`,
+        path.join(__dirname, `cms.js`),
+        enableIdentityWidget && path.join(__dirname, `cms-identity.js`),
       ]
         .concat(modulePath)
         .filter(p => p),
@@ -109,7 +144,7 @@ exports.onCreateWebpackConfig = (
       path: path.join(program.directory, `public`, publicPathClean),
     },
     module: {
-      rules: deepMap(gatsbyConfig.module.rules, replaceRule),
+      rules: deepMap(gatsbyConfig.module.rules, replaceRule).filter(Boolean),
     },
     plugins: [
       // Remove plugins that either attempt to process the core Netlify CMS
@@ -139,15 +174,20 @@ exports.onCreateWebpackConfig = (
 
       // Use a simple filename with no hash so we can access from source by
       // path.
-      new MiniCssExtractPlugin({
-        filename: `[name].css`,
-      }),
+      stage !== `develop` &&
+        new MiniCssExtractPlugin({
+          filename: `[name].css`,
+        }),
 
       // Auto generate CMS index.html page.
       new HtmlWebpackPlugin({
         title: htmlTitle,
+        favicon: htmlFavicon,
         chunks: [`cms`],
         excludeAssets: [/cms.css/],
+        meta: {
+          robots: includeRobots ? `all` : `none`, // Control whether search engines index this page
+        },
       }),
 
       // Exclude CSS from index.html, as any imported styles are assumed to be
@@ -160,6 +200,34 @@ exports.onCreateWebpackConfig = (
         __PATH__PREFIX__: pathPrefix,
         CMS_PUBLIC_PATH: JSON.stringify(publicPath),
       }),
+
+      new CopyPlugin(
+        [].concat.apply(
+          [],
+          externals.map(({ name, assetName, sourceMap, assetDir }) =>
+            [
+              {
+                from: require.resolve(path.join(name, assetDir, assetName)),
+                to: assetName,
+              },
+              sourceMap && {
+                from: require.resolve(path.join(name, assetDir, sourceMap)),
+                to: sourceMap,
+              },
+            ].filter(item => item)
+          )
+        )
+      ),
+
+      new HtmlWebpackTagsPlugin({
+        tags: externals.map(({ assetName }) => assetName),
+        append: false,
+      }),
+
+      new webpack.DefinePlugin({
+        CMS_MANUAL_INIT: JSON.stringify(manualInit),
+        PRODUCTION: JSON.stringify(stage !== `develop`),
+      }),
     ].filter(p => p),
 
     // Remove common chunks style optimizations from Gatsby's default
@@ -171,7 +239,51 @@ exports.onCreateWebpackConfig = (
       minimizer: stage === `develop` ? [] : gatsbyConfig.optimization.minimizer,
     },
     devtool: stage === `develop` ? `cheap-module-source-map` : `source-map`,
+    externals: externals.map(({ name, global }) => {
+      return {
+        [name]: global,
+      }
+    }),
   }
+
+  if (customizeWebpackConfig) {
+    customizeWebpackConfig(config, {
+      store,
+      stage,
+      pathPrefix,
+      getConfig,
+      rules,
+      loaders,
+      plugins,
+    })
+  }
+
+  actions.setWebpackConfig({
+    // force code splitting for netlify-identity-widget
+    optimization:
+      stage === `develop`
+        ? {}
+        : {
+            splitChunks: {
+              cacheGroups: {
+                "netlify-identity-widget": {
+                  test: /[\\/]node_modules[\\/](netlify-identity-widget)[\\/]/,
+                  name: `netlify-identity-widget`,
+                  chunks: `all`,
+                  enforce: true,
+                },
+              },
+            },
+          },
+    // ignore netlify-identity-widget when not enabled
+    plugins: enableIdentityWidget
+      ? []
+      : [
+          new webpack.IgnorePlugin({
+            resourceRegExp: /^netlify-identity-widget$/,
+          }),
+        ],
+  })
 
   return new Promise((resolve, reject) => {
     if (stage === `develop`) {

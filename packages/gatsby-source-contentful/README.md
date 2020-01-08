@@ -77,8 +77,7 @@ module.exports = {
 
 Query a `ContentfulAsset`'s `localFile` field in GraphQL to gain access to the common fields of the `gatsby-source-filesystem` `File` node. This is not a Contentful node, so usage for `gatsby-image` is different:
 
-```GraphQL
-graphql`
+```graphql
   query MyQuery {
     # Example is for a `ContentType` with a `ContentfulAsset` field
     # You could also query an asset directly via
@@ -94,7 +93,7 @@ graphql`
           ...GatsbyContentfulFluid_withWebp
         }
 
-        # Query for locally stored file(eg An image) - `File` node
+        # Query for locally stored file(e.g. An image) - `File` node
         localFile {
           # Where the asset is downloaded into cache, don't use this
           absolutePath
@@ -109,7 +108,6 @@ graphql`
       }
     }
   }
-`
 ```
 
 Note: This feature downloads any file from a `ContentfulAsset` node that `gatsby-source-contentful` provides. They are all copied over from `./cache/gatsby-source-filesystem/` to the sites build location `./public/static/`.
@@ -146,7 +144,7 @@ You can pass in any other options available in the [contentful.js SDK](https://g
 
 **`localeFilter`** [function][optional] [default: `() => true`]
 
-Possibility to limit how many locales/nodes are created in graphQL. This can limit the memory usage by reducing the amout of nodes created. Useful if you have a large space in contentful and only want to get the data from one selected locale.
+Possibility to limit how many locales/nodes are created in graphQL. This can limit the memory usage by reducing the amount of nodes created. Useful if you have a large space in contentful and only want to get the data from one selected locale.
 
 For example, to filter locales on only germany `localeFilter: locale => locale.code === 'de-DE'`
 
@@ -156,13 +154,27 @@ List of locales and their codes can be found in Contentful app -> Settings -> Lo
 
 Prevents the use of sync tokens when accessing the Contentful API.
 
+**`proxy`** [object][optional] [default: `undefined`]
+
+Axios proxy configuration. See the [axios request config documentation](https://github.com/mzabriskie/axios#request-config) for further information about the supported values.
+
+**`useNameForId`** [boolean][optional] [default: `true`]
+
+Use the content's `name` when generating the GraphQL schema e.g. a Content Type called `[Component] Navigation bar` will be named `contentfulComponentNavigationBar`.
+
+When set to `false`, the content's internal ID will be used instead e.g. a Content Type with the ID `navigationBar` will be called `contentfulNavigationBar`.
+
+Using the ID is a much more stable property to work with as it will change less often. However, in some scenarios, Content Types' IDs will be auto-generated (e.g. when creating a new Content Type without specifying an ID) which means the name in the GraphQL schema will be something like `contentfulC6XwpTaSiiI2Ak2Ww0oi6qa`. This won't change and will still function perfectly as a valid field name but it is obviously pretty ugly to work with.
+
+If you are confident your Content Types will have natural-language IDs (e.g. `blogPost`), then you should set this option to `false`. If you are unable to ensure this, then you should leave this option set to `true` (the default).
+
 ## Notes on Contentful Content Models
 
 There are currently some things to keep in mind when building your content models at Contentful.
 
 1.  At the moment, fields that do not have at least one populated instance will not be created in the GraphQL schema.
 
-2.  When using reference fields, be aware that this source plugin will automatically create the reverse reference. You do not need to create references on both content types. For simplicity, it is easier to put the reference field on the child in child/parent relationships.
+2.  When using reference fields, be aware that this source plugin will automatically create the reverse reference. You do not need to create references on both content types.
 
 ## How to query for nodes
 
@@ -199,7 +211,7 @@ You might do this in your `gatsby-node.js` using Gatsby's [`createPages`](https:
 
 To query for a single `image` asset with the title 'foo' and a width of 1600px:
 
-```
+```javascript
 export const assetQuery = graphql`
   {
     contentfulAsset(filter: { title: { eq: 'foo' } }) {

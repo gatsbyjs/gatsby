@@ -7,49 +7,6 @@ will be full of relevant articles written to be easily understood by the many pe
 
 The community plans, writes, and maintains these Docs on GitHub.
 
-## Table of Contents
-
-- [Welcome!](#welcome)
-- [What kinds of docs can I write?](#what-kinds-of-docs-can-i-write)
-- [Writing process](#writing-process)
-  - [Think of your audience](#think-of-your-audience)
-  - [Research](#research)
-  - [Write drafts and get feedback](#write-drafts-and-get-feedback)
-- [Word choice](#word-choice)
-  - [Use "you" as the pronoun](#use-you-as-the-pronoun)
-  - [Avoid "easy" and "simple"](#avoid-easy-and-simple)
-  - [Avoid emojis, slang, and metaphors](#avoid-emojis-slang-and-metaphors)
-  - [Define jargon](#define-jargon)
-- [Writing style](#writing-style)
-  - [Write concisely](#write-concisely)
-  - [Use clear hyperlinks](#use-clear-hyperlinks)
-  - [Indicate when something is optional](#indicate-when-something-is-optional)
-  - [Abbreviate terms](#abbreviate-terms)
-  - [Use SEO optimized titles](#use-seo-optimized-titles)
-- [Grammar & formatting](#grammar-and-formatting)
-  - [Format titles and headers](#format-titles-and-headers)
-  - [Format code blocks, inline code, and images](#format-code-blocks-inline-code-and-images)
-  - [Capitalize proper nouns](#capitalize-proper-nouns)
-  - [Use active voice](#use-active-voice)
-  - [Make lists clear with the Oxford Comma](#make-lists-clear-with-the-oxford-comma)
-  - [Use apps that help you edit](#use-apps-that-help-you-edit)
-- [Best practices](#best-practices)
-  - [Support software versions](#software-versions)
-  - [Share best practices whenever possible](#share-best-practices-whenever-possible)
-- [The difference between tutorials, recipes, and docs](#the-difference-between-tutorials-recipes-and-docs)
-- [Tutorials](#tutorials)
-  - [Tutorials Audience](#tutorials-audience)
-  - [Tutorials Purpose](#tutorials-purpose)
-  - [Tutorials Tone and style](#tutorials-tone-and-style)
-- [Recipes](#recipes)
-  - [Recipes Audience](#recipes-audience)
-  - [Recipes Purpose](#recipes-purpose)
-  - [Recipes Tone and style](#recipes-tone-and-style)
-- [Docs](#docs)
-  - [Docs Audience](#docs-audience)
-  - [Docs Purpose](#docs-purpose)
-  - [Docs Tone and style](#docs-tone-and-style)
-
 ## Welcome!
 
 You don't have to be an expert in a
@@ -75,7 +32,7 @@ examples:
 - [Plugin README](/packages/gatsby-source-filesystem/)
 - [Starter README](https://github.com/gatsbyjs/gatsby-starter-default)
 
-Please see the [Docs templates](/contributing/docs-templates/) for guidelines on how to format the above kinds of documents.
+Please see the [Docs templates](/contributing/docs-templates/) for guidelines on how to format the above kinds of documents, as well as tips for different types of guide articles.
 
 ## Writing process
 
@@ -125,13 +82,19 @@ Also, there's a community of contributors to support you. Bounce ideas off of th
 
 ### Use "you" as the pronoun
 
-Your articles should use the second person ("you") to help to give it a conversational tone. This way, the text and instructions seem to speak directly to the person reading it. Try to avoid using the first person ("I", "we", "let's", and "us").
+In English, your articles should use the second person ("you") to provide a conversational tone. This way, the text and instructions seem to speak directly to the person reading it. Try to avoid using the first person ("I", "we", "let's", and "us").
 
-Using "you" is also more accurate than saying "we," because typically only one person is reading the tutorial or guide at a time and the person who wrote the tutorial is not actually going through it with them, so "we" would be inaccurate. You might notice that some technical documentation uses third person pronouns and nouns like "they" and "the user," which add more distance and feel colder than the conversational and warm "you" and "your."
+For other languages, refer to each translation's guidelines (if applicable) for consistent phrasing. When appropriate, we suggest starting with the informal "you" to keep a conversational tone.
+
+Using "you" in English is also more accurate than saying "we," because typically only one person is reading the tutorial or guide at a time and the person who wrote the tutorial is not actually going through it with them, so "we" would be inaccurate. You might notice that some technical documentation uses third person pronouns and nouns like "they" and "the user," which add more distance and feel colder than the conversational and warm "you" and "your."
+
+When updating a doc to adhere to this part of the Gatsby Style Guide, one exception in English is when "we" refers to Gatsby's core processes. The subject is the code in this case, rather than a teacher/reader connotation, and should be rewritten or restructured to not confuse the reader about what they are responsible for doing when something is happening automatically behind the scenes.
 
 ### Avoid "easy" and "simple"
 
-Avoid using words like "easy", "simple," and "basic" because if users have a hard time completing the task that is supposedly "easy," they will question their abilities. Consider using more specific descriptors; for example, when you say the phrase "deployment is easy," what do you really mean? Is it easy because it takes fewer steps than another option? If so, just use the most specific descriptor possible, which in that case would be "this deployment method involves fewer steps than other options."
+Avoid using words like "easy", "simple" and "basic" because if users have a hard time completing the task that is supposedly "easy," they will question their abilities. Consider using more specific descriptors; for example, when you say the phrase "deployment is easy," what do you really mean? Is it easy because it takes fewer steps than another option? If so, use the most specific descriptor possible, which in that case would be "this deployment method involves fewer steps than other options."
+
+For even more inclusive docs, avoid phrases that assume a reader's experience or skill level, like "just deploy it and you're done" or "for a refresher (referring to a completely different doc that someone may not have read)". Often, rephrasing results in stronger sentences that appeal to a wider range of contexts.
 
 ### Avoid emojis, slang, and metaphors
 
@@ -186,7 +149,7 @@ abstract syntax tree (AST) is ..."
 
 ### Use SEO optimized titles
 
-This explains how to create a doc that shows up in search engines like Google or Bing.
+This explains how to account for Search Engine Optimization (SEO) and create a doc that shows up in search engines like Google or Bing.
 
 When you create the new guide or tutorial under `/docs/`, you’ll either create a file or a folder if there will be images pulled into the doc.
 
@@ -238,6 +201,8 @@ Article title or document title:
 Article header or subhead:
 
 > Salty, sweet, and spicy
+
+Titles should aim to be brief while still conveying a comprehensive meaning of the article; headings have more leeway in terms of length. Because titles show up throughout the docs in navigation elements (like breadcrumbs, and sidebar navigation) there is a preference for shorter names to help mitigate visual clutter.
 
 ### Format code blocks, inline code, and images
 
@@ -306,11 +271,11 @@ alert(s)
 
 #### Code formatting: Line highlighting
 
-You may also choose to include line highlighting in your code snippets, using the following keywords inline in the snippet:
+You may also choose to include line highlighting in your code snippets, using the following keywords as comments inline in the snippet:
 
 ##### `highlight-line`: highlights the current line
 
-````
+````no-highlight
 ```javascript:title=gatsby-config.js
 module.exports = {
 	siteMetadata: {
@@ -332,7 +297,7 @@ module.exports = {
 
 ##### `highlight-next-line`: highlights the next line
 
-````
+````no-highlight
 ```javascript:title=gatsby-config.js
 module.exports = {
 	siteMetadata: {
@@ -356,7 +321,7 @@ module.exports = {
 
 ##### `highlight-start` & `highlight-end`: highlights a range
 
-````
+````no-highlight
 ```javascript:title=gatsby-config.js
 module.exports = {
 	// highlight-start
@@ -420,7 +385,7 @@ For words that have multiple spellings, prefer the US English word over British 
 
 ### Use apps that help you edit
 
-Use the [Hemingway App](https://www.hemingwayapp.com/). There’s nothing magical
+Use the [Hemingway App](https://hemingwayapp.com/). There’s nothing magical
 about this tool, but it will automatically detect widely agreed-upon
 style issues:
 

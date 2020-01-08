@@ -3,6 +3,1117 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.18.18](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.17...gatsby@2.18.18) (2020-01-06)
+
+**Note:** Version bump only for package gatsby
+
+## [2.18.17](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.16...gatsby@2.18.17) (2019-12-23)
+
+### Bug Fixes
+
+- **gatsby:** don't write out `isCreatedByStatefulCreatePages` to page-data files ([#20241](https://github.com/gatsbyjs/gatsby/issues/20241)) ([4b113bd](https://github.com/gatsbyjs/gatsby/commit/4b113bd))
+
+### Features
+
+- **gatsby:** Improve structured errors around GraphQL ([#20120](https://github.com/gatsbyjs/gatsby/issues/20120)) ([a5740f9](https://github.com/gatsbyjs/gatsby/commit/a5740f9))
+
+## [2.18.16](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.15...gatsby@2.18.16) (2019-12-20)
+
+### Bug Fixes
+
+- **gatsby:** enable static queries in `wrapRootElement` ([#19986](https://github.com/gatsbyjs/gatsby/issues/19986)) ([c591eb7](https://github.com/gatsbyjs/gatsby/commit/c591eb7))
+
+### Features
+
+- **gatsby:** bundle and page-data stats for telemetry ([#20146](https://github.com/gatsbyjs/gatsby/issues/20146)) ([3fe97f2](https://github.com/gatsbyjs/gatsby/commit/3fe97f2))
+
+## [2.18.15](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.14...gatsby@2.18.15) (2019-12-19)
+
+### Bug Fixes
+
+- **gatsby:** Fix sift query against empty nodes ([#20212](https://github.com/gatsbyjs/gatsby/issues/20212)) ([6beeec3](https://github.com/gatsbyjs/gatsby/commit/6beeec3))
+
+## [2.18.14](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.13...gatsby@2.18.14) (2019-12-18)
+
+### Bug Fixes
+
+- **gatsby:** add ./ prefix to paths in async-requires ([#20169](https://github.com/gatsbyjs/gatsby/issues/20169)) ([4f2154a](https://github.com/gatsbyjs/gatsby/commit/4f2154a))
+- **gatsby:** do not rebuild schema having identical conflicts ([#20099](https://github.com/gatsbyjs/gatsby/issues/20099)) ([0d14926](https://github.com/gatsbyjs/gatsby/commit/0d14926))
+- **gatsby:** support file inference for any field name (not just [a-zA-Z0-9_]) ([#20186](https://github.com/gatsbyjs/gatsby/issues/20186)) ([b681959](https://github.com/gatsbyjs/gatsby/commit/b681959))
+- **gatsby:** support unicode characters for 404 page ([#20165](https://github.com/gatsbyjs/gatsby/issues/20165)) ([51474e8](https://github.com/gatsbyjs/gatsby/commit/51474e8))
+- **gatsby-telemetry:** only report unique plugins ([#20147](https://github.com/gatsbyjs/gatsby/issues/20147)) ([4c138d5](https://github.com/gatsbyjs/gatsby/commit/4c138d5))
+
+## [2.18.13](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.12...gatsby@2.18.13) (2019-12-17)
+
+### Bug Fixes
+
+- **gatsby:** fix circular ref stack overflow checks ([#20039](https://github.com/gatsbyjs/gatsby/issues/20039)) ([f780d21](https://github.com/gatsbyjs/gatsby/commit/f780d21))
+
+### Features
+
+- **gatsby:** Use webpack watchOptions config for webpack-dev-middleware ([#20067](https://github.com/gatsbyjs/gatsby/issues/20067)) ([aff5540](https://github.com/gatsbyjs/gatsby/commit/aff5540))
+
+### Performance Improvements
+
+- **gatsby:** Eliminate generator ([#20102](https://github.com/gatsbyjs/gatsby/issues/20102)) ([c3ca41a](https://github.com/gatsbyjs/gatsby/commit/c3ca41a))
+
+## [2.18.12](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.11...gatsby@2.18.12) (2019-12-15)
+
+**Note:** Version bump only for package gatsby
+
+## [2.18.11](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.10...gatsby@2.18.11) (2019-12-11)
+
+### Bug Fixes
+
+- **gatsby:** Add early return in link resolver for empty arrays ([#20068](https://github.com/gatsbyjs/gatsby/issues/20068)) ([3e2ad17](https://github.com/gatsbyjs/gatsby/commit/3e2ad17))
+- **gatsby:** remove default noscript tag from html.js template ([#20023](https://github.com/gatsbyjs/gatsby/issues/20023)) ([ebdaf6d](https://github.com/gatsbyjs/gatsby/commit/ebdaf6d))
+
+## [2.18.10](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.8...gatsby@2.18.10) (2019-12-10)
+
+**Note:** Version bump only for package gatsby
+
+## [2.18.9](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.8...gatsby@2.18.9) (2019-12-10)
+
+**Note:** Version bump only for package gatsby
+
+## [2.18.8](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.7...gatsby@2.18.8) (2019-12-09)
+
+### Bug Fixes
+
+- **gatsby:** Ensure the number of jest-workers respects GATSBY_CPU_COUNT env var ([#19975](https://github.com/gatsbyjs/gatsby/issues/19975)) ([ce53d81](https://github.com/gatsbyjs/gatsby/commit/ce53d81))
+
+## [2.18.7](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.6...gatsby@2.18.7) (2019-12-05)
+
+### Bug Fixes
+
+- **gatsby:** support union types for one-to-one \_\_\_NODE relations ([#19916](https://github.com/gatsbyjs/gatsby/issues/19916)) ([44875b8](https://github.com/gatsbyjs/gatsby/commit/44875b8))
+
+### Features
+
+- **gatsby:** add all rules from eslint-plugin-jsx-a11y ([#19946](https://github.com/gatsbyjs/gatsby/issues/19946)) ([000bef3](https://github.com/gatsbyjs/gatsby/commit/000bef3))
+
+## [2.18.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.5...gatsby@2.18.6) (2019-12-02)
+
+### Bug Fixes
+
+- **gatsby:** use correct state in the schema hot reloader ([#19862](https://github.com/gatsbyjs/gatsby/issues/19862)) ([f92cb9c](https://github.com/gatsbyjs/gatsby/commit/f92cb9c))
+
+## [2.18.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.4...gatsby@2.18.5) (2019-11-28)
+
+### Bug Fixes
+
+- **gatsby:** Call cwd() when called instead of on import ([#19800](https://github.com/gatsbyjs/gatsby/issues/19800)) ([451a489](https://github.com/gatsbyjs/gatsby/commit/451a489))
+- **gatsby:** do not cause stack overflow over circular refs ([#19802](https://github.com/gatsbyjs/gatsby/issues/19802)) ([89c6b89](https://github.com/gatsbyjs/gatsby/commit/89c6b89)), closes [#11364](https://github.com/gatsbyjs/gatsby/issues/11364)
+
+### Performance Improvements
+
+- **gatsby:** Avoid unnecessary type inference during bootstrap ([#19781](https://github.com/gatsbyjs/gatsby/issues/19781)) ([006ecd8](https://github.com/gatsbyjs/gatsby/commit/006ecd8))
+
+## [2.18.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.3...gatsby@2.18.4) (2019-11-26)
+
+### Bug Fixes
+
+- **gatsby:** Remove relay compiler & use our own ([#19665](https://github.com/gatsbyjs/gatsby/issues/19665)) ([bda9f1f](https://github.com/gatsbyjs/gatsby/commit/bda9f1f))
+- update minor updates in packages ([#19776](https://github.com/gatsbyjs/gatsby/issues/19776)) ([559beb2](https://github.com/gatsbyjs/gatsby/commit/559beb2))
+- **gatsby:** memoize shadowCreatePagePath to fix performance r… ([#19774](https://github.com/gatsbyjs/gatsby/issues/19774)) ([3043786](https://github.com/gatsbyjs/gatsby/commit/3043786))
+
+## [2.18.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.2...gatsby@2.18.3) (2019-11-25)
+
+**Note:** Version bump only for package gatsby
+
+## [2.18.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.1...gatsby@2.18.2) (2019-11-22)
+
+### Bug Fixes
+
+- **gatsby:** Clean up third party schema customizations to avoid schema rebuilding failure ([#19712](https://github.com/gatsbyjs/gatsby/issues/19712)) ([b703ab1](https://github.com/gatsbyjs/gatsby/commit/b703ab1))
+- **gatsby:** Fix createRequireFromPath deprecation warning ([#19677](https://github.com/gatsbyjs/gatsby/issues/19677)) ([78a7858](https://github.com/gatsbyjs/gatsby/commit/78a7858))
+- **gatsby:** Improve warning message about implicit child fields ([#19657](https://github.com/gatsbyjs/gatsby/issues/19657)) ([3501267](https://github.com/gatsbyjs/gatsby/commit/3501267))
+
+### Performance Improvements
+
+- **gatsby:** perf problem for match-page search in large sites ([#19691](https://github.com/gatsbyjs/gatsby/issues/19691)) ([58b89fa](https://github.com/gatsbyjs/gatsby/commit/58b89fa)), closes [#19512](https://github.com/gatsbyjs/gatsby/issues/19512)
+
+## [2.18.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.0...gatsby@2.18.1) (2019-11-20)
+
+### Bug Fixes
+
+- **gatsby:** don't rerun static queries if text didn't change ([#19616](https://github.com/gatsbyjs/gatsby/issues/19616)) ([824b685](https://github.com/gatsbyjs/gatsby/commit/824b685))
+- **gatsby:** Improve discoverPluginsWithoutNodes performance ([#19594](https://github.com/gatsbyjs/gatsby/issues/19594)) ([83f3f0f](https://github.com/gatsbyjs/gatsby/commit/83f3f0f))
+- **reporter:** TypeScript definitions for Reporter ([#19189](https://github.com/gatsbyjs/gatsby/issues/19189)) ([02ddd46](https://github.com/gatsbyjs/gatsby/commit/02ddd46)), closes [#19025](https://github.com/gatsbyjs/gatsby/issues/19025)
+
+### Features
+
+- **gatsby:** add plugin data to `gatsby develop` telemetry to… ([#19623](https://github.com/gatsbyjs/gatsby/issues/19623)) ([3c559c9](https://github.com/gatsbyjs/gatsby/commit/3c559c9))
+- **gatsby:** Enable shadowing of page template queries ([#17681](https://github.com/gatsbyjs/gatsby/issues/17681)) ([6a82da8](https://github.com/gatsbyjs/gatsby/commit/6a82da8))
+
+# [2.18.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.17.17...gatsby@2.18.0) (2019-11-19)
+
+### Features
+
+- **gatsby:** Schema rebuilding ([#19092](https://github.com/gatsbyjs/gatsby/issues/19092)) ([e4dae4d](https://github.com/gatsbyjs/gatsby/commit/e4dae4d))
+
+## [2.17.17](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.17.16...gatsby@2.17.17) (2019-11-18)
+
+### Bug Fixes
+
+- **gatsby:** Handle special characters in windows paths ([#19600](https://github.com/gatsbyjs/gatsby/issues/19600)) ([9929cf0](https://github.com/gatsbyjs/gatsby/commit/9929cf0))
+- **gatsby:** Improve perf of stale node detection ([#19599](https://github.com/gatsbyjs/gatsby/issues/19599)) ([2e8f381](https://github.com/gatsbyjs/gatsby/commit/2e8f381))
+
+## [2.17.16](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.17.15...gatsby@2.17.16) (2019-11-18)
+
+### Bug Fixes
+
+- **gatsby:** Fix filtering on resolvable children ([#19586](https://github.com/gatsbyjs/gatsby/issues/19586)) ([7b500f4](https://github.com/gatsbyjs/gatsby/commit/7b500f4))
+
+## [2.17.15](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.17.14...gatsby@2.17.15) (2019-11-15)
+
+### Bug Fixes
+
+- **gatsby:** createIndexHtml call missing activity ([#19544](https://github.com/gatsbyjs/gatsby/issues/19544)) ([b2df860](https://github.com/gatsbyjs/gatsby/commit/b2df860))
+
+## [2.17.14](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.17.13...gatsby@2.17.14) (2019-11-15)
+
+### Bug Fixes
+
+- update dependency babel-plugin-dynamic-import-node to v2 ([#19535](https://github.com/gatsbyjs/gatsby/issues/19535)) ([500ebf6](https://github.com/gatsbyjs/gatsby/commit/500ebf6))
+- update dependency convert-hrtime to v3 ([#19530](https://github.com/gatsbyjs/gatsby/issues/19530)) ([1a5ddc5](https://github.com/gatsbyjs/gatsby/commit/1a5ddc5))
+- update dependency copyfiles to v2 ([#19531](https://github.com/gatsbyjs/gatsby/issues/19531)) ([1f9a2b5](https://github.com/gatsbyjs/gatsby/commit/1f9a2b5))
+
+## [2.17.13](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.17.12...gatsby@2.17.13) (2019-11-13)
+
+### Bug Fixes
+
+- **gatsby:** Use crossorigin for link in linkPrefetch strategy ([#17581](https://github.com/gatsbyjs/gatsby/issues/17581)) ([2aac625](https://github.com/gatsbyjs/gatsby/commit/2aac625))
+
+## [2.17.12](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.17.11...gatsby@2.17.12) (2019-11-13)
+
+### Bug Fixes
+
+- **gatsby:** add / to prefix when stripping prefixes ([#17544](https://github.com/gatsbyjs/gatsby/issues/17544)) ([58fe032](https://github.com/gatsbyjs/gatsby/commit/58fe032))
+- **gatsby:** controlled search input component on dev-404-page ([#19168](https://github.com/gatsbyjs/gatsby/issues/19168)) ([d65183b](https://github.com/gatsbyjs/gatsby/commit/d65183b))
+- **gatsby:** Ensure inferred types do not conflict with types created via schema customization ([#19338](https://github.com/gatsbyjs/gatsby/issues/19338)) ([3565d5a](https://github.com/gatsbyjs/gatsby/commit/3565d5a))
+- **gatsby:** non-latin hash link ([#19376](https://github.com/gatsbyjs/gatsby/issues/19376)) ([8938c95](https://github.com/gatsbyjs/gatsby/commit/8938c95))
+- **gatsby:** Re-use plugin resolution logic for theme dir resolution ([#19470](https://github.com/gatsbyjs/gatsby/issues/19470)) ([52be765](https://github.com/gatsbyjs/gatsby/commit/52be765))
+- update minor updates in packages ([#19423](https://github.com/gatsbyjs/gatsby/issues/19423)) ([9935376](https://github.com/gatsbyjs/gatsby/commit/9935376))
+
+## [2.17.11](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.17.10...gatsby@2.17.11) (2019-11-10)
+
+**Note:** Version bump only for package gatsby
+
+## [2.17.10](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.17.9...gatsby@2.17.10) (2019-11-06)
+
+### Bug Fixes
+
+- **gatsby:** Use CWD to get name if not specified in package.j… ([#19304](https://github.com/gatsbyjs/gatsby/issues/19304)) ([d50ddbc](https://github.com/gatsbyjs/gatsby/commit/d50ddbc))
+
+## [2.17.9](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.17.8...gatsby@2.17.9) (2019-11-05)
+
+### Bug Fixes
+
+- **requires-writer:** use `@reach/router` path ranking algorit… ([#19050](https://github.com/gatsbyjs/gatsby/issues/19050)) ([813c191](https://github.com/gatsbyjs/gatsby/commit/813c191))
+
+## [2.17.8](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.17.7...gatsby@2.17.8) (2019-11-04)
+
+### Bug Fixes
+
+- **gatsby:** clear cache before refresh ([#19159](https://github.com/gatsbyjs/gatsby/issues/19159)) ([4d5d780](https://github.com/gatsbyjs/gatsby/commit/4d5d780))
+- **gatsby:** Fix flatMap import in schema/print.js ([#19208](https://github.com/gatsbyjs/gatsby/issues/19208)) ([0471751](https://github.com/gatsbyjs/gatsby/commit/0471751))
+- **webpack-utils:** compact user JS only in production builds ([#19240](https://github.com/gatsbyjs/gatsby/issues/19240)) ([982fd22](https://github.com/gatsbyjs/gatsby/commit/982fd22)), closes [#19128](https://github.com/gatsbyjs/gatsby/issues/19128)
+
+## [2.17.7](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.17.6...gatsby@2.17.7) (2019-10-29)
+
+### Bug Fixes
+
+- update minor updates in packages ([#19087](https://github.com/gatsbyjs/gatsby/issues/19087)) ([294a48f](https://github.com/gatsbyjs/gatsby/commit/294a48f))
+
+### Features
+
+- **gatsby:** enable local themes ([#15856](https://github.com/gatsbyjs/gatsby/issues/15856)) ([bd85555](https://github.com/gatsbyjs/gatsby/commit/bd85555))
+
+## [2.17.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.17.5...gatsby@2.17.6) (2019-10-28)
+
+### Bug Fixes
+
+- update minor updates in packages ([#19086](https://github.com/gatsbyjs/gatsby/issues/19086)) ([54565f0](https://github.com/gatsbyjs/gatsby/commit/54565f0))
+
+## [2.17.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.17.4...gatsby@2.17.5) (2019-10-28)
+
+### Bug Fixes
+
+- update minor updates in packages ([#19080](https://github.com/gatsbyjs/gatsby/issues/19080)) ([95e908e](https://github.com/gatsbyjs/gatsby/commit/95e908e))
+- **gatsby:** Remove internal Node modules in getNonGatsbyCallS… ([#19009](https://github.com/gatsbyjs/gatsby/issues/19009)) ([467aa54](https://github.com/gatsbyjs/gatsby/commit/467aa54))
+- update minor updates in packages ([#18875](https://github.com/gatsbyjs/gatsby/issues/18875)) ([b692879](https://github.com/gatsbyjs/gatsby/commit/b692879))
+
+### Features
+
+- **redirects:** allow multiple redirects from same path when they have different options ([#19048](https://github.com/gatsbyjs/gatsby/issues/19048)) ([84f8aea](https://github.com/gatsbyjs/gatsby/commit/84f8aea))
+
+## [2.17.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.17.3...gatsby@2.17.4) (2019-10-25)
+
+### Bug Fixes
+
+- **gatsby:** fix hashes used in webpack for output ([#18973](https://github.com/gatsbyjs/gatsby/issues/18973)) ([76ac266](https://github.com/gatsbyjs/gatsby/commit/76ac266))
+
+## [2.17.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.17.2...gatsby@2.17.3) (2019-10-25)
+
+### Bug Fixes
+
+- **gatsby:** Fix matchpath ordering ([#18478](https://github.com/gatsbyjs/gatsby/issues/18478)) ([b8aa333](https://github.com/gatsbyjs/gatsby/commit/b8aa333))
+
+## [2.17.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.17.1...gatsby@2.17.2) (2019-10-23)
+
+### Bug Fixes
+
+- fix overriding default options of `gatsby-plugin-page-creator` on Windows ([#18828](https://github.com/gatsbyjs/gatsby/issues/18828)) ([fc61f06](https://github.com/gatsbyjs/gatsby/commit/fc61f06))
+- **gatsby:** ensure `[@child](https://github.com/child)Of` adds convenience fields before root field arguments ([#18935](https://github.com/gatsbyjs/gatsby/issues/18935)) ([366d915](https://github.com/gatsbyjs/gatsby/commit/366d915))
+
+### Features
+
+- **gatsby:** Ensure status is set to Failed for thrown errors or panicOnBuild in plugins ([#18887](https://github.com/gatsbyjs/gatsby/issues/18887)) ([d7950e1](https://github.com/gatsbyjs/gatsby/commit/d7950e1))
+
+## [2.17.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.17.0...gatsby@2.17.1) (2019-10-22)
+
+**Note:** Version bump only for package gatsby
+
+# [2.17.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.16.5...gatsby@2.17.0) (2019-10-21)
+
+### Features
+
+- **gatsby:** Move webpackCompilationHash into app-data.json ([#16686](https://github.com/gatsbyjs/gatsby/issues/16686)) ([ebff315](https://github.com/gatsbyjs/gatsby/commit/ebff315))
+
+## [2.16.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.16.4...gatsby@2.16.5) (2019-10-18)
+
+**Note:** Version bump only for package gatsby
+
+## [2.16.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.16.3...gatsby@2.16.4) (2019-10-17)
+
+**Note:** Version bump only for package gatsby
+
+## [2.16.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.16.2...gatsby@2.16.3) (2019-10-15)
+
+### Performance Improvements
+
+- **schema:** speed up and lower memory usage of type inference ([#18008](https://github.com/gatsbyjs/gatsby/issues/18008)) ([e87ac50](https://github.com/gatsbyjs/gatsby/commit/e87ac50))
+
+## [2.16.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.16.1...gatsby@2.16.2) (2019-10-15)
+
+### Bug Fixes
+
+- **gatsby:** create page dependencies from contextual node model methods even if no path is passed ([#18650](https://github.com/gatsbyjs/gatsby/issues/18650)) ([3d38af2](https://github.com/gatsbyjs/gatsby/commit/3d38af2))
+- **gatsby:** Extend fields when merging types ([#18500](https://github.com/gatsbyjs/gatsby/issues/18500)) ([302aa26](https://github.com/gatsbyjs/gatsby/commit/302aa26))
+
+## [2.16.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.16.0...gatsby@2.16.1) (2019-10-14)
+
+### Bug Fixes
+
+- **gatsby:** Fix sort for Node 12 ([#18502](https://github.com/gatsbyjs/gatsby/issues/18502)) ([d2869ad](https://github.com/gatsbyjs/gatsby/commit/d2869ad))
+- update dependency autoprefixer to ^9.6.5 ([#18598](https://github.com/gatsbyjs/gatsby/issues/18598)) ([1525257](https://github.com/gatsbyjs/gatsby/commit/1525257))
+- update dependency core-js to ^2.6.10 ([#18569](https://github.com/gatsbyjs/gatsby/issues/18569)) ([7a20eb7](https://github.com/gatsbyjs/gatsby/commit/7a20eb7))
+
+# [2.16.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.37...gatsby@2.16.0) (2019-10-14)
+
+### Features
+
+- **gatsby:** structured logging ([#14973](https://github.com/gatsbyjs/gatsby/issues/14973)) ([eafb8c6](https://github.com/gatsbyjs/gatsby/commit/eafb8c6))
+
+## [2.15.37](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.36...gatsby@2.15.37) (2019-10-14)
+
+### Bug Fixes
+
+- update dependency webpack to v4.41.1 ([#18504](https://github.com/gatsbyjs/gatsby/issues/18504)) ([a93df04](https://github.com/gatsbyjs/gatsby/commit/a93df04))
+
+## [2.15.36](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.35...gatsby@2.15.36) (2019-10-11)
+
+### Bug Fixes
+
+- **gatsby:** update location state when location.key changes ([#18039](https://github.com/gatsbyjs/gatsby/issues/18039)) ([de3f323](https://github.com/gatsbyjs/gatsby/commit/de3f323))
+
+## [2.15.35](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.34...gatsby@2.15.35) (2019-10-10)
+
+**Note:** Version bump only for package gatsby
+
+## [2.15.34](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.33...gatsby@2.15.34) (2019-10-09)
+
+**Note:** Version bump only for package gatsby
+
+## [2.15.33](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.32...gatsby@2.15.33) (2019-10-08)
+
+**Note:** Version bump only for package gatsby
+
+## [2.15.32](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.31...gatsby@2.15.32) (2019-10-08)
+
+### Bug Fixes
+
+- **gatsby:** In public actions, don't let actionOptions overwr… ([#18302](https://github.com/gatsbyjs/gatsby/issues/18302)) ([014b95e](https://github.com/gatsbyjs/gatsby/commit/014b95e))
+
+## [2.15.31](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.30...gatsby@2.15.31) (2019-10-08)
+
+### Bug Fixes
+
+- update dependency react-hot-loader to ^4.12.15 ([#18295](https://github.com/gatsbyjs/gatsby/issues/18295)) ([7c3e8b3](https://github.com/gatsbyjs/gatsby/commit/7c3e8b3))
+
+## [2.15.30](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.29...gatsby@2.15.30) (2019-10-08)
+
+### Bug Fixes
+
+- update dependency autoprefixer to ^9.6.4 ([#18204](https://github.com/gatsbyjs/gatsby/issues/18204)) ([b31fc56](https://github.com/gatsbyjs/gatsby/commit/b31fc56))
+- update dependency eslint-plugin-react to ^7.16.0 ([#18119](https://github.com/gatsbyjs/gatsby/issues/18119)) ([a8144ee](https://github.com/gatsbyjs/gatsby/commit/a8144ee))
+- **gatsby:** catch more browser only variable for SSR error ([#18112](https://github.com/gatsbyjs/gatsby/issues/18112)) ([e9ef934](https://github.com/gatsbyjs/gatsby/commit/e9ef934))
+
+## [2.15.29](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.28...gatsby@2.15.29) (2019-10-04)
+
+### Bug Fixes
+
+- update dependency bluebird to ^3.7.0 ([#18029](https://github.com/gatsbyjs/gatsby/issues/18029)) ([bd235a8](https://github.com/gatsbyjs/gatsby/commit/bd235a8))
+- update dependency chokidar to v3.2.1 ([#18009](https://github.com/gatsbyjs/gatsby/issues/18009)) ([4df0306](https://github.com/gatsbyjs/gatsby/commit/4df0306))
+- update dependency eslint-plugin-react to ^7.15.0 ([#18010](https://github.com/gatsbyjs/gatsby/issues/18010)) ([6a5cd19](https://github.com/gatsbyjs/gatsby/commit/6a5cd19))
+- update dependency eslint-plugin-react to ^7.15.1 ([#18031](https://github.com/gatsbyjs/gatsby/issues/18031)) ([8d5597f](https://github.com/gatsbyjs/gatsby/commit/8d5597f))
+- update dependency webpack-dev-server to ^3.8.2 ([#18055](https://github.com/gatsbyjs/gatsby/issues/18055)) ([aa540c3](https://github.com/gatsbyjs/gatsby/commit/aa540c3))
+- **gatsby:** Fix not materializing concrete fields ([#17942](https://github.com/gatsbyjs/gatsby/issues/17942)) ([8439305](https://github.com/gatsbyjs/gatsby/commit/8439305))
+
+## [2.15.28](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.26...gatsby@2.15.28) (2019-09-26)
+
+### Bug Fixes
+
+- **gatsby:** console output: npm run build -> gatsby build ([#17896](https://github.com/gatsbyjs/gatsby/issues/17896)) ([fbbf406](https://github.com/gatsbyjs/gatsby/commit/fbbf406))
+
+## [2.15.27](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.26...gatsby@2.15.27) (2019-09-26)
+
+### Bug Fixes
+
+- **gatsby:** console output: npm run build -> gatsby build ([#17896](https://github.com/gatsbyjs/gatsby/issues/17896)) ([fbbf406](https://github.com/gatsbyjs/gatsby/commit/fbbf406))
+
+## [2.15.26](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.25...gatsby@2.15.26) (2019-09-25)
+
+**Note:** Version bump only for package gatsby
+
+## [2.15.25](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.24...gatsby@2.15.25) (2019-09-25)
+
+### Bug Fixes
+
+- **gatsby:** don't add undefined ([#17886](https://github.com/gatsbyjs/gatsby/issues/17886)) ([f0cdef0](https://github.com/gatsbyjs/gatsby/commit/f0cdef0))
+
+## [2.15.24](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.23...gatsby@2.15.24) (2019-09-25)
+
+### Bug Fixes
+
+- **query:** improve query performance ([#17682](https://github.com/gatsbyjs/gatsby/issues/17682)) ([a1b1396](https://github.com/gatsbyjs/gatsby/commit/a1b1396))
+
+## [2.15.23](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.22...gatsby@2.15.23) (2019-09-25)
+
+### Bug Fixes
+
+- **gatsby:** remove 404 pagedata logic on client side pages ([#17412](https://github.com/gatsbyjs/gatsby/issues/17412)) ([6c64948](https://github.com/gatsbyjs/gatsby/commit/6c64948))
+- update dependency webpack to ~4.41.0 ([#17863](https://github.com/gatsbyjs/gatsby/issues/17863)) ([9c24bca](https://github.com/gatsbyjs/gatsby/commit/9c24bca))
+- **gatsby:** prevent unmount wrapPageElement while page-data l… ([#17111](https://github.com/gatsbyjs/gatsby/issues/17111)) ([610b581](https://github.com/gatsbyjs/gatsby/commit/610b581))
+
+### Features
+
+- **gatsby-telemetry:** add exitCode to `BUILD_END` event ([#17847](https://github.com/gatsbyjs/gatsby/issues/17847)) ([6ab4de6](https://github.com/gatsbyjs/gatsby/commit/6ab4de6))
+
+## [2.15.22](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.21...gatsby@2.15.22) (2019-09-24)
+
+### Bug Fixes
+
+- update dependency react-hot-loader to ^4.12.14 ([#17817](https://github.com/gatsbyjs/gatsby/issues/17817)) ([9e9dc3b](https://github.com/gatsbyjs/gatsby/commit/9e9dc3b))
+
+## [2.15.21](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.20...gatsby@2.15.21) (2019-09-23)
+
+### Bug Fixes
+
+- update dependency is-wsl to ^2.1.1 ([#17815](https://github.com/gatsbyjs/gatsby/issues/17815)) ([1287648](https://github.com/gatsbyjs/gatsby/commit/1287648))
+
+## [2.15.20](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.19...gatsby@2.15.20) (2019-09-20)
+
+### Bug Fixes
+
+- **gatsby:** add timeout so fetching API info doesn't fail on very slow connections ([#17735](https://github.com/gatsbyjs/gatsby/issues/17735)) ([e85278c](https://github.com/gatsbyjs/gatsby/commit/e85278c))
+- update dependency eslint-plugin-graphql to ^3.1.0 ([#17775](https://github.com/gatsbyjs/gatsby/issues/17775)) ([5f4db21](https://github.com/gatsbyjs/gatsby/commit/5f4db21))
+- update dependency socket.io to ^2.3.0 ([#17760](https://github.com/gatsbyjs/gatsby/issues/17760)) ([1ef5053](https://github.com/gatsbyjs/gatsby/commit/1ef5053))
+
+## [2.15.19](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.18...gatsby@2.15.19) (2019-09-20)
+
+### Bug Fixes
+
+- **gatsby:** support `export { X as default }` syntax when checking if page template files have default export ([#17752](https://github.com/gatsbyjs/gatsby/issues/17752)) ([b785583](https://github.com/gatsbyjs/gatsby/commit/b785583))
+
+## [2.15.18](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.17...gatsby@2.15.18) (2019-09-18)
+
+**Note:** Version bump only for package gatsby
+
+## [2.15.17](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.16...gatsby@2.15.17) (2019-09-18)
+
+### Bug Fixes
+
+- update dependency webpack-dev-server to ^3.8.1 ([#17669](https://github.com/gatsbyjs/gatsby/issues/17669)) ([97f328c](https://github.com/gatsbyjs/gatsby/commit/97f328c))
+
+## [2.15.16](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.15...gatsby@2.15.16) (2019-09-16)
+
+### Bug Fixes
+
+- update dependency @babel/parser to ^7.6.0 ([#17620](https://github.com/gatsbyjs/gatsby/issues/17620)) ([2d942ed](https://github.com/gatsbyjs/gatsby/commit/2d942ed))
+
+## [2.15.15](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.14...gatsby@2.15.15) (2019-09-13)
+
+### Bug Fixes
+
+- update dependency react-hot-loader to ^4.12.13 ([#17580](https://github.com/gatsbyjs/gatsby/issues/17580)) ([d43d2be](https://github.com/gatsbyjs/gatsby/commit/d43d2be))
+- update minor updates in packages except react, babel and eslint ([#17601](https://github.com/gatsbyjs/gatsby/issues/17601)) ([588cd8f](https://github.com/gatsbyjs/gatsby/commit/588cd8f))
+
+## [2.15.14](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.13...gatsby@2.15.14) (2019-09-10)
+
+**Note:** Version bump only for package gatsby
+
+## [2.15.13](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.12...gatsby@2.15.13) (2019-09-09)
+
+### Bug Fixes
+
+- **gatsby:** fix node internal validation ([#17511](https://github.com/gatsbyjs/gatsby/issues/17511)) ([97a720d](https://github.com/gatsbyjs/gatsby/commit/97a720d))
+
+## [2.15.12](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.11...gatsby@2.15.12) (2019-09-09)
+
+### Bug Fixes
+
+- **gatsby:** move default-site-plugin lower than plugin page-creation ([#17409](https://github.com/gatsbyjs/gatsby/issues/17409)) ([4af8a59](https://github.com/gatsbyjs/gatsby/commit/4af8a59))
+
+## [2.15.11](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.10...gatsby@2.15.11) (2019-09-09)
+
+### Bug Fixes
+
+- **gatsby:** Allow overriding options for default instance of gatsby-plugin-page-creator ([#17420](https://github.com/gatsbyjs/gatsby/issues/17420)) ([9bdeda4](https://github.com/gatsbyjs/gatsby/commit/9bdeda4))
+
+## [2.15.10](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.9...gatsby@2.15.10) (2019-09-09)
+
+### Bug Fixes
+
+- **gatsby:** fix mapping stack trace to source file after dependency upgrade ([#17445](https://github.com/gatsbyjs/gatsby/issues/17445)) ([f38d8c7](https://github.com/gatsbyjs/gatsby/commit/f38d8c7))
+- **gatsby:** Handle Windows drive letter casing correctly ([#17492](https://github.com/gatsbyjs/gatsby/issues/17492)) ([beddfb8](https://github.com/gatsbyjs/gatsby/commit/beddfb8))
+- **gatsby:** Use concrete type resolver on interface fields ([#17284](https://github.com/gatsbyjs/gatsby/issues/17284)) ([fd72133](https://github.com/gatsbyjs/gatsby/commit/fd72133))
+
+## [2.15.9](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.8...gatsby@2.15.9) (2019-09-05)
+
+**Note:** Version bump only for package gatsby
+
+## [2.15.8](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.7...gatsby@2.15.8) (2019-09-05)
+
+### Bug Fixes
+
+- **gatsby:** order matchpaths paths by specificity ([#17411](https://github.com/gatsbyjs/gatsby/issues/17411)) ([2968413](https://github.com/gatsbyjs/gatsby/commit/2968413))
+
+## [2.15.7](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.6...gatsby@2.15.7) (2019-09-04)
+
+**Note:** Version bump only for package gatsby
+
+## [2.15.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.5...gatsby@2.15.6) (2019-09-04)
+
+### Features
+
+- **gatsby:** enable page-creator on all themes ([#16698](https://github.com/gatsbyjs/gatsby/issues/16698)) ([7398da4](https://github.com/gatsbyjs/gatsby/commit/7398da4))
+
+## [2.15.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.4...gatsby@2.15.5) (2019-09-03)
+
+### Bug Fixes
+
+- update dependency webpack-dev-middleware to ^3.7.1 ([#17343](https://github.com/gatsbyjs/gatsby/issues/17343)) ([a578f4e](https://github.com/gatsbyjs/gatsby/commit/a578f4e))
+
+## [2.15.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.3...gatsby@2.15.4) (2019-09-03)
+
+**Note:** Version bump only for package gatsby
+
+## [2.15.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.2...gatsby@2.15.3) (2019-09-02)
+
+**Note:** Version bump only for package gatsby
+
+## [2.15.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.1...gatsby@2.15.2) (2019-09-01)
+
+### Bug Fixes
+
+- **gatsby:** fix an infinite loop in node child collection ([#17078](https://github.com/gatsbyjs/gatsby/issues/17078)) ([240b4f8](https://github.com/gatsbyjs/gatsby/commit/240b4f8))
+- **gatsby-cli:** Open Lan URL if Windows ([#16769](https://github.com/gatsbyjs/gatsby/issues/16769)) ([b2a2d6b](https://github.com/gatsbyjs/gatsby/commit/b2a2d6b))
+- update minor updates in packages except react, babel and eslint ([#17254](https://github.com/gatsbyjs/gatsby/issues/17254)) ([252d867](https://github.com/gatsbyjs/gatsby/commit/252d867))
+
+## [2.15.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.15.0...gatsby@2.15.1) (2019-08-30)
+
+**Note:** Version bump only for package gatsby
+
+# [2.15.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.14.7...gatsby@2.15.0) (2019-08-30)
+
+### Features
+
+- **gatsby:** Materialization ([#16091](https://github.com/gatsbyjs/gatsby/issues/16091)) ([ac10d3d](https://github.com/gatsbyjs/gatsby/commit/ac10d3d))
+
+## [2.14.7](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.14.6...gatsby@2.14.7) (2019-08-30)
+
+**Note:** Version bump only for package gatsby
+
+## [2.14.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.14.5...gatsby@2.14.6) (2019-08-29)
+
+**Note:** Version bump only for package gatsby
+
+## [2.14.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.14.4...gatsby@2.14.5) (2019-08-29)
+
+### Bug Fixes
+
+- update minor updates in packages except react, babel and eslint ([#17178](https://github.com/gatsbyjs/gatsby/issues/17178)) ([77dad68](https://github.com/gatsbyjs/gatsby/commit/77dad68))
+
+## [2.14.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.14.3...gatsby@2.14.4) (2019-08-29)
+
+### Bug Fixes
+
+- **gatsby:** revert redirects map to array ([#17168](https://github.com/gatsbyjs/gatsby/issues/17168)) ([b553891](https://github.com/gatsbyjs/gatsby/commit/b553891))
+
+## [2.14.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.14.2...gatsby@2.14.3) (2019-08-29)
+
+### Bug Fixes
+
+- update dependency react-hot-loader to ^4.12.12 ([#17103](https://github.com/gatsbyjs/gatsby/issues/17103)) ([41f60b7](https://github.com/gatsbyjs/gatsby/commit/41f60b7))
+
+## [2.14.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.14.1...gatsby@2.14.2) (2019-08-28)
+
+### Bug Fixes
+
+- **gatsby:** Release stdio streams when exiting `gatsby develop` ([#16714](https://github.com/gatsbyjs/gatsby/issues/16714)) ([280cf7f](https://github.com/gatsbyjs/gatsby/commit/280cf7f))
+
+## [2.14.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.14.0...gatsby@2.14.1) (2019-08-28)
+
+**Note:** Version bump only for package gatsby
+
+# [2.14.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.83...gatsby@2.14.0) (2019-08-26)
+
+### Bug Fixes
+
+- update dependency address to v1.1.2 ([#17083](https://github.com/gatsbyjs/gatsby/issues/17083)) ([1f9664a](https://github.com/gatsbyjs/gatsby/commit/1f9664a))
+
+### Features
+
+- **gatsby:** add better splitchunks config ([#17093](https://github.com/gatsbyjs/gatsby/issues/17093)) ([fc93b7b](https://github.com/gatsbyjs/gatsby/commit/fc93b7b))
+
+## [2.13.83](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.82...gatsby@2.13.83) (2019-08-25)
+
+### Bug Fixes
+
+- update dependency babel-eslint to ^10.0.3 ([#17071](https://github.com/gatsbyjs/gatsby/issues/17071)) ([28a7daf](https://github.com/gatsbyjs/gatsby/commit/28a7daf))
+
+## [2.13.82](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.81...gatsby@2.13.82) (2019-08-24)
+
+### Bug Fixes
+
+- update dependency del to v5 ([#17026](https://github.com/gatsbyjs/gatsby/issues/17026)) ([47b2d86](https://github.com/gatsbyjs/gatsby/commit/47b2d86))
+
+## [2.13.81](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.80...gatsby@2.13.81) (2019-08-24)
+
+### Bug Fixes
+
+- update dependency dotenv to v8 ([#17027](https://github.com/gatsbyjs/gatsby/issues/17027)) ([f92295e](https://github.com/gatsbyjs/gatsby/commit/f92295e))
+- update dependency fs-extra to v8 ([#17031](https://github.com/gatsbyjs/gatsby/issues/17031)) ([d891a19](https://github.com/gatsbyjs/gatsby/commit/d891a19))
+- update dependency is-relative-url to v3 ([#17038](https://github.com/gatsbyjs/gatsby/issues/17038)) ([ff9ae84](https://github.com/gatsbyjs/gatsby/commit/ff9ae84))
+- update dependency is-wsl to v2 ([#17039](https://github.com/gatsbyjs/gatsby/issues/17039)) ([bfed424](https://github.com/gatsbyjs/gatsby/commit/bfed424))
+- update dependency jest-worker to v24 ([#17040](https://github.com/gatsbyjs/gatsby/issues/17040)) ([bd089a4](https://github.com/gatsbyjs/gatsby/commit/bd089a4))
+- update dependency slash to v3 ([#17019](https://github.com/gatsbyjs/gatsby/issues/17019)) ([c81f45c](https://github.com/gatsbyjs/gatsby/commit/c81f45c))
+
+## [2.13.80](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.79...gatsby@2.13.80) (2019-08-23)
+
+### Bug Fixes
+
+- update dependency @gatsbyjs/relay-compiler to v2.0.0-prin… ([#16986](https://github.com/gatsbyjs/gatsby/issues/16986)) ([25f0318](https://github.com/gatsbyjs/gatsby/commit/25f0318))
+
+## [2.13.79](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.78...gatsby@2.13.79) (2019-08-23)
+
+### Bug Fixes
+
+- update dependency chokidar to v3 ([#16975](https://github.com/gatsbyjs/gatsby/issues/16975)) ([816d475](https://github.com/gatsbyjs/gatsby/commit/816d475))
+
+## [2.13.78](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.77...gatsby@2.13.78) (2019-08-23)
+
+### Bug Fixes
+
+- **gatsby:** update check for default exports ([#16979](https://github.com/gatsbyjs/gatsby/issues/16979)) ([d16474d](https://github.com/gatsbyjs/gatsby/commit/d16474d))
+
+## [2.13.77](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.76...gatsby@2.13.77) (2019-08-23)
+
+### Bug Fixes
+
+- update minor updates in packages except react, babel and… ([#16960](https://github.com/gatsbyjs/gatsby/issues/16960)) ([d6bd515](https://github.com/gatsbyjs/gatsby/commit/d6bd515))
+
+## [2.13.76](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.75...gatsby@2.13.76) (2019-08-22)
+
+### Bug Fixes
+
+- update minor updates in packages except react, babel and… ([#16948](https://github.com/gatsbyjs/gatsby/issues/16948)) ([1c34c9b](https://github.com/gatsbyjs/gatsby/commit/1c34c9b))
+- **gatsby:** Remove deprecation warning from express-graphql ([#16956](https://github.com/gatsbyjs/gatsby/issues/16956)) ([58ed3ca](https://github.com/gatsbyjs/gatsby/commit/58ed3ca))
+
+## [2.13.75](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.74...gatsby@2.13.75) (2019-08-22)
+
+**Note:** Version bump only for package gatsby
+
+## [2.13.74](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.73...gatsby@2.13.74) (2019-08-21)
+
+### Bug Fixes
+
+- update dependency bluebird to ^3.5.5 ([#16825](https://github.com/gatsbyjs/gatsby/issues/16825)) ([ec0be83](https://github.com/gatsbyjs/gatsby/commit/ec0be83))
+- update dependency cache-manager to ^2.10.0 ([#16828](https://github.com/gatsbyjs/gatsby/issues/16828)) ([917a1a7](https://github.com/gatsbyjs/gatsby/commit/917a1a7))
+- update dependency chalk to ^2.4.2 ([#16830](https://github.com/gatsbyjs/gatsby/issues/16830)) ([3c89607](https://github.com/gatsbyjs/gatsby/commit/3c89607))
+- update dependency common-tags to ^1.8.0 ([#16834](https://github.com/gatsbyjs/gatsby/issues/16834)) ([8ed5197](https://github.com/gatsbyjs/gatsby/commit/8ed5197))
+- update dependency core-js to ^2.6.9 ([#16839](https://github.com/gatsbyjs/gatsby/issues/16839)) ([e1860c0](https://github.com/gatsbyjs/gatsby/commit/e1860c0))
+- update dependency css-loader to ^1.0.1 ([#16858](https://github.com/gatsbyjs/gatsby/issues/16858)) ([2d3536f](https://github.com/gatsbyjs/gatsby/commit/2d3536f))
+- update dependency debug to ^3.2.6 ([#16859](https://github.com/gatsbyjs/gatsby/issues/16859)) ([697f76b](https://github.com/gatsbyjs/gatsby/commit/697f76b))
+- update dependency detect-port to ^1.3.0 ([#16860](https://github.com/gatsbyjs/gatsby/issues/16860)) ([d4246d8](https://github.com/gatsbyjs/gatsby/commit/d4246d8))
+- update dependency eslint to ^5.16.0 ([#16862](https://github.com/gatsbyjs/gatsby/issues/16862)) ([e3b306c](https://github.com/gatsbyjs/gatsby/commit/e3b306c))
+- update dependency eslint-loader to ^2.2.1 ([#16864](https://github.com/gatsbyjs/gatsby/issues/16864)) ([7c7c79c](https://github.com/gatsbyjs/gatsby/commit/7c7c79c))
+- update dependency eslint-plugin-flowtype to ^2.50.3 ([#16866](https://github.com/gatsbyjs/gatsby/issues/16866)) ([aeaa141](https://github.com/gatsbyjs/gatsby/commit/aeaa141))
+- update dependency eslint-plugin-import to ^2.18.2 ([#16867](https://github.com/gatsbyjs/gatsby/issues/16867)) ([aed2414](https://github.com/gatsbyjs/gatsby/commit/aed2414))
+- update dependency eslint-plugin-jsx-a11y to ^6.2.3 ([#16868](https://github.com/gatsbyjs/gatsby/issues/16868)) ([a6a1d4f](https://github.com/gatsbyjs/gatsby/commit/a6a1d4f))
+- update dependency eslint-plugin-react to ^7.14.3 ([#16869](https://github.com/gatsbyjs/gatsby/issues/16869)) ([6864ef6](https://github.com/gatsbyjs/gatsby/commit/6864ef6))
+- update dependency event-source-polyfill to ^1.0.8 ([#16870](https://github.com/gatsbyjs/gatsby/issues/16870)) ([1430af5](https://github.com/gatsbyjs/gatsby/commit/1430af5))
+- **gatsby:** Fix tracing so that everything happens under one span ([#16893](https://github.com/gatsbyjs/gatsby/issues/16893)) ([f8cae16](https://github.com/gatsbyjs/gatsby/commit/f8cae16))
+- **gatsby:** Use publicLoader in production-app ([#16800](https://github.com/gatsbyjs/gatsby/issues/16800)) ([4ea8cb1](https://github.com/gatsbyjs/gatsby/commit/4ea8cb1))
+- update dependency express to ^4.17.1 ([#16872](https://github.com/gatsbyjs/gatsby/issues/16872)) ([b0ae41e](https://github.com/gatsbyjs/gatsby/commit/b0ae41e))
+- update dependency express-graphql to ^0.9.0 ([#16873](https://github.com/gatsbyjs/gatsby/issues/16873)) ([9e16547](https://github.com/gatsbyjs/gatsby/commit/9e16547))
+- update dependency flat to ^4.1.0 ([#16875](https://github.com/gatsbyjs/gatsby/issues/16875)) ([19e5b30](https://github.com/gatsbyjs/gatsby/commit/19e5b30))
+- update dependency got to v8.3.2 ([#16881](https://github.com/gatsbyjs/gatsby/issues/16881)) ([ac583b1](https://github.com/gatsbyjs/gatsby/commit/ac583b1))
+- update dependency graphql-compose to ^6.3.5 ([#16882](https://github.com/gatsbyjs/gatsby/issues/16882)) ([10ec53b](https://github.com/gatsbyjs/gatsby/commit/10ec53b))
+
+### Features
+
+- **gatsby:** Bumps eslint-config-react-app 4.x ([#16168](https://github.com/gatsbyjs/gatsby/issues/16168)) ([1bbce27](https://github.com/gatsbyjs/gatsby/commit/1bbce27))
+
+## [2.13.73](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.72...gatsby@2.13.73) (2019-08-21)
+
+### Bug Fixes
+
+- update dependency babel-plugin-add-module-exports to ^0.3.3([#16810](https://github.com/gatsbyjs/gatsby/issues/16810)) ([6378994](https://github.com/gatsbyjs/gatsby/commit/6378994))
+- update dependency better-queue to ^3.8.10 ([#16824](https://github.com/gatsbyjs/gatsby/issues/16824)) ([6834344](https://github.com/gatsbyjs/gatsby/commit/6834344))
+- update dependency cache-manager-fs-hash to ^0.0.7 ([#16829](https://github.com/gatsbyjs/gatsby/issues/16829)) ([3ceb6db](https://github.com/gatsbyjs/gatsby/commit/3ceb6db))
+- update dependency chokidar to v2.1.6 ([#16832](https://github.com/gatsbyjs/gatsby/issues/16832)) ([dbcf65f](https://github.com/gatsbyjs/gatsby/commit/dbcf65f))
+- update dependency compression to ^1.7.4 ([#16836](https://github.com/gatsbyjs/gatsby/issues/16836)) ([2e60499](https://github.com/gatsbyjs/gatsby/commit/2e60499))
+
+## [2.13.72](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.71...gatsby@2.13.72) (2019-08-20)
+
+### Bug Fixes
+
+- update dependency [@hapi](https://github.com/hapi)/joi to ^15.1.1 ([#16796](https://github.com/gatsbyjs/gatsby/issues/16796)) ([2cfc19c](https://github.com/gatsbyjs/gatsby/commit/2cfc19c))
+- update dependency [@reach](https://github.com/reach)/router to ^1.2.1 ([#16797](https://github.com/gatsbyjs/gatsby/issues/16797)) ([f3554bc](https://github.com/gatsbyjs/gatsby/commit/f3554bc))
+- update dependency address to v1.1.0 ([#16802](https://github.com/gatsbyjs/gatsby/issues/16802)) ([503f1b3](https://github.com/gatsbyjs/gatsby/commit/503f1b3))
+- update dependency autoprefixer to ^9.6.1 ([#16807](https://github.com/gatsbyjs/gatsby/issues/16807)) ([780c62a](https://github.com/gatsbyjs/gatsby/commit/780c62a))
+
+## [2.13.71](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.70...gatsby@2.13.71) (2019-08-20)
+
+### Bug Fixes
+
+- **gatsby:** keep all page-data files in public ([#16766](https://github.com/gatsbyjs/gatsby/issues/16766)) ([a573f9f](https://github.com/gatsbyjs/gatsby/commit/a573f9f))
+
+## [2.13.70](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.69...gatsby@2.13.70) (2019-08-20)
+
+### Features
+
+- **gatsby:** Add meta tag for development ([#16743](https://github.com/gatsbyjs/gatsby/issues/16743)) ([d0e24d2](https://github.com/gatsbyjs/gatsby/commit/d0e24d2))
+
+## [2.13.69](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.68...gatsby@2.13.69) (2019-08-20)
+
+### Bug Fixes
+
+- **telemetry:** only look at websocket updates when we have active clients. ([#16750](https://github.com/gatsbyjs/gatsby/issues/16750)) ([164cd5b](https://github.com/gatsbyjs/gatsby/commit/164cd5b))
+
+## [2.13.68](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.67...gatsby@2.13.68) (2019-08-19)
+
+### Bug Fixes
+
+- **gatsby:** remove finally to enable ie11 + firefox support ([#16734](https://github.com/gatsbyjs/gatsby/issues/16734)) ([a4c97e3](https://github.com/gatsbyjs/gatsby/commit/a4c97e3))
+
+### Features
+
+- **gatsby:** Allow specifying type on link extension ([#16680](https://github.com/gatsbyjs/gatsby/issues/16680)) ([f9bbb55](https://github.com/gatsbyjs/gatsby/commit/f9bbb55))
+
+## [2.13.67](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.66...gatsby@2.13.67) (2019-08-16)
+
+**Note:** Version bump only for package gatsby
+
+## [2.13.66](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.65...gatsby@2.13.66) (2019-08-16)
+
+### Bug Fixes
+
+- **gatsby:** don't break if an ancestor directory is inaccessible ([#15876](https://github.com/gatsbyjs/gatsby/issues/15876)) ([cac4246](https://github.com/gatsbyjs/gatsby/commit/cac4246))
+
+## [2.13.65](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.64...gatsby@2.13.65) (2019-08-16)
+
+### Bug Fixes
+
+- **gatsby:** Set default for modulesThatUseGatsby ([#16657](https://github.com/gatsbyjs/gatsby/issues/16657)) ([278ff98](https://github.com/gatsbyjs/gatsby/commit/278ff98))
+
+## [2.13.64](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.63...gatsby@2.13.64) (2019-08-15)
+
+### Bug Fixes
+
+- **gatsby:** adjust regex to handle MODULE_NOT_FOUND errors thrown by Bazel ([#16573](https://github.com/gatsbyjs/gatsby/issues/16573)) ([ee19535](https://github.com/gatsbyjs/gatsby/commit/ee19535))
+
+## [2.13.63](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.62...gatsby@2.13.63) (2019-08-14)
+
+### Bug Fixes
+
+- **gatsby:** Set CORS to \* in serve ([#14483](https://github.com/gatsbyjs/gatsby/issues/14483)) ([74959ab](https://github.com/gatsbyjs/gatsby/commit/74959ab))
+- **gatsby:** Use anonymous requests when fetching resources ([#14443](https://github.com/gatsbyjs/gatsby/issues/14443)) ([cdd800f](https://github.com/gatsbyjs/gatsby/commit/cdd800f)), closes [/github.com/gatsbyjs/gatsby/issues/14293#issue-448125073](https://github.com//github.com/gatsbyjs/gatsby/issues/14293/issues/issue-448125073) [#14293](https://github.com/gatsbyjs/gatsby/issues/14293)
+
+## [2.13.62](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.61...gatsby@2.13.62) (2019-08-13)
+
+### Bug Fixes
+
+- **gatsby:** check if navigator.connection is defined ([#16572](https://github.com/gatsbyjs/gatsby/issues/16572)) ([8c54e5b](https://github.com/gatsbyjs/gatsby/commit/8c54e5b))
+- **gatsby:** Don't show deprecation warning when adding childr… ([#16559](https://github.com/gatsbyjs/gatsby/issues/16559)) ([5c7a3e1](https://github.com/gatsbyjs/gatsby/commit/5c7a3e1))
+
+## [2.13.61](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.60...gatsby@2.13.61) (2019-08-12)
+
+### Features
+
+- **gatsby-plugin-schema-snapshot:** First version ([#16561](https://github.com/gatsbyjs/gatsby/issues/16561)) ([9dd1070](https://github.com/gatsbyjs/gatsby/commit/9dd1070))
+
+## [2.13.60](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.59...gatsby@2.13.60) (2019-08-12)
+
+### Bug Fixes
+
+- **gatsby:** improve hot-reloading for hooks ([#16546](https://github.com/gatsbyjs/gatsby/issues/16546)) ([8d66161](https://github.com/gatsbyjs/gatsby/commit/8d66161))
+
+## [2.13.59](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.58...gatsby@2.13.59) (2019-08-12)
+
+### Bug Fixes
+
+- **gatsby:** remove page not found for client routes in develop ([#16301](https://github.com/gatsbyjs/gatsby/issues/16301)) ([69b808a](https://github.com/gatsbyjs/gatsby/commit/69b808a))
+
+### Features
+
+- **gatsby:** Allow proxying field values from nested fields ([#16149](https://github.com/gatsbyjs/gatsby/issues/16149)) ([d2128ab](https://github.com/gatsbyjs/gatsby/commit/d2128ab))
+
+## [2.13.58](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.57...gatsby@2.13.58) (2019-08-11)
+
+### Features
+
+- **gatsby:** Display network url for GraphiQL when using -H ([#16530](https://github.com/gatsbyjs/gatsby/issues/16530)) ([44fd333](https://github.com/gatsbyjs/gatsby/commit/44fd333))
+- **gatsby:** enable richer error handling for unknown APIs ([#16105](https://github.com/gatsbyjs/gatsby/issues/16105)) ([0adab13](https://github.com/gatsbyjs/gatsby/commit/0adab13))
+
+## [2.13.57](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.56...gatsby@2.13.57) (2019-08-09)
+
+**Note:** Version bump only for package gatsby
+
+## [2.13.56](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.55...gatsby@2.13.56) (2019-08-09)
+
+**Note:** Version bump only for package gatsby
+
+## [2.13.55](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.54...gatsby@2.13.55) (2019-08-09)
+
+### Bug Fixes
+
+- **gatsby:** Make root plural fields non nullable ([#15321](https://github.com/gatsbyjs/gatsby/issues/15321)) ([2c79309](https://github.com/gatsbyjs/gatsby/commit/2c79309))
+- **gatsby:** Reserve graphqljs internal directive names ([#16483](https://github.com/gatsbyjs/gatsby/issues/16483)) ([4032012](https://github.com/gatsbyjs/gatsby/commit/4032012))
+
+### Features
+
+- **gatsby:** Allow field extensions to register return types ([#16484](https://github.com/gatsbyjs/gatsby/issues/16484)) ([0df297b](https://github.com/gatsbyjs/gatsby/commit/0df297b))
+- **gatsby:** Allow printing type definitions to file (schema lock-down) ([#16291](https://github.com/gatsbyjs/gatsby/issues/16291)) ([23a460a](https://github.com/gatsbyjs/gatsby/commit/23a460a))
+
+## [2.13.54](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.53...gatsby@2.13.54) (2019-08-08)
+
+### Bug Fixes
+
+- **gatsby:** reevaluate page query if context modified via createPage ([#15404](https://github.com/gatsbyjs/gatsby/issues/15404)) ([ddddc68](https://github.com/gatsbyjs/gatsby/commit/ddddc68))
+
+## [2.13.53](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.52...gatsby@2.13.53) (2019-08-08)
+
+### Bug Fixes
+
+- **gatsby-plugin-offline:** Change navigation handler logic ([#13502](https://github.com/gatsbyjs/gatsby/issues/13502)) ([504b077](https://github.com/gatsbyjs/gatsby/commit/504b077))
+
+## [2.13.52](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.51...gatsby@2.13.52) (2019-08-06)
+
+### Bug Fixes
+
+- **gatsby:** Add findMatchPath to the default loader ([#16334](https://github.com/gatsbyjs/gatsby/issues/16334)) ([f6aa41e](https://github.com/gatsbyjs/gatsby/commit/f6aa41e))
+- **gatsby:** always use publicLoader for window.\_\_\_loader ([#16122](https://github.com/gatsbyjs/gatsby/issues/16122)) ([afb3485](https://github.com/gatsbyjs/gatsby/commit/afb3485))
+- **gatsby:** createSchemaCustomization typings ([#16369](https://github.com/gatsbyjs/gatsby/issues/16369)) ([ac48c51](https://github.com/gatsbyjs/gatsby/commit/ac48c51))
+
+### Features
+
+- **gatsby:** Allow custom resolver context ([#16359](https://github.com/gatsbyjs/gatsby/issues/16359)) ([142b8ff](https://github.com/gatsbyjs/gatsby/commit/142b8ff))
+
+## [2.13.51](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.50...gatsby@2.13.51) (2019-08-05)
+
+### Bug Fixes
+
+- **gatsby:** Don't delete 404 page-data so we don't crash build ([#16354](https://github.com/gatsbyjs/gatsby/issues/16354)) ([a2855b3](https://github.com/gatsbyjs/gatsby/commit/a2855b3))
+- **gatsby:** Prefer a user's shouldUpdateScroll over a plugin's ([#16328](https://github.com/gatsbyjs/gatsby/issues/16328)) ([f02f366](https://github.com/gatsbyjs/gatsby/commit/f02f366))
+
+### Features
+
+- **gatsby:** Allow all dateformat options as directive args ([#16335](https://github.com/gatsbyjs/gatsby/issues/16335)) ([1a02b85](https://github.com/gatsbyjs/gatsby/commit/1a02b85))
+
+## [2.13.50](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.48...gatsby@2.13.50) (2019-08-01)
+
+**Note:** Version bump only for package gatsby
+
+## [2.13.48](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.47...gatsby@2.13.48) (2019-08-01)
+
+**Note:** Version bump only for package gatsby
+
+## [2.13.47](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.46...gatsby@2.13.47) (2019-08-01)
+
+### Bug Fixes
+
+- **gatsby:** Handle missing match-paths.json in serve ([#16246](https://github.com/gatsbyjs/gatsby/issues/16246)) ([d54de72](https://github.com/gatsbyjs/gatsby/commit/d54de72))
+
+## [2.13.46](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.45...gatsby@2.13.46) (2019-08-01)
+
+### Bug Fixes
+
+- **gatsby:** Check if callSite exists in stack-trace-utils ([#16257](https://github.com/gatsbyjs/gatsby/issues/16257)) ([4a348b2](https://github.com/gatsbyjs/gatsby/commit/4a348b2))
+- **gatsby:** Check if page exists before trying to get page data ([#16220](https://github.com/gatsbyjs/gatsby/issues/16220)) ([065a551](https://github.com/gatsbyjs/gatsby/commit/065a551))
+- **gatsby:** Panic when root config is a function ([#16272](https://github.com/gatsbyjs/gatsby/issues/16272)) ([81ff489](https://github.com/gatsbyjs/gatsby/commit/81ff489))
+- **gatsby:** use Set instead of Array in page-component state machine ([#15533](https://github.com/gatsbyjs/gatsby/issues/15533)) ([d5d7e5d](https://github.com/gatsbyjs/gatsby/commit/d5d7e5d))
+
+## [2.13.45](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.44...gatsby@2.13.45) (2019-07-30)
+
+### Bug Fixes
+
+- **gatsby:** Add error message for field extension validation ([#16232](https://github.com/gatsbyjs/gatsby/issues/16232)) ([f64a9e0](https://github.com/gatsbyjs/gatsby/commit/f64a9e0))
+- **gatsby:** Fix absent parents ([#16228](https://github.com/gatsbyjs/gatsby/issues/16228)) ([5330a21](https://github.com/gatsbyjs/gatsby/commit/5330a21))
+- **gatsby:** Fix special case id:eq queries for abstract types ([#16114](https://github.com/gatsbyjs/gatsby/issues/16114)) ([6d8b663](https://github.com/gatsbyjs/gatsby/commit/6d8b663))
+- **gatsby:** Respect infer extension in schema update ([#16110](https://github.com/gatsbyjs/gatsby/issues/16110)) ([ce56b9d](https://github.com/gatsbyjs/gatsby/commit/ce56b9d))
+
+## [2.13.44](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.43...gatsby@2.13.44) (2019-07-30)
+
+### Bug Fixes
+
+- **gatsby:** enable babel.config.js once again ([#16205](https://github.com/gatsbyjs/gatsby/issues/16205)) ([d72b6d9](https://github.com/gatsbyjs/gatsby/commit/d72b6d9))
+- **gatsby:** run onPrefetchPathname when prefetch is disabled ([#16208](https://github.com/gatsbyjs/gatsby/issues/16208)) ([da859c0](https://github.com/gatsbyjs/gatsby/commit/da859c0))
+
+## [2.13.43](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.42...gatsby@2.13.43) (2019-07-30)
+
+**Note:** Version bump only for package gatsby
+
+## [2.13.42](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.41...gatsby@2.13.42) (2019-07-29)
+
+**Note:** Version bump only for package gatsby
+
+## [2.13.41](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.40...gatsby@2.13.41) (2019-07-25)
+
+**Note:** Version bump only for package gatsby
+
+## [2.13.40](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.39...gatsby@2.13.40) (2019-07-25)
+
+**Note:** Version bump only for package gatsby
+
+## [2.13.39](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.38...gatsby@2.13.39) (2019-07-24)
+
+**Note:** Version bump only for package gatsby
+
+## [2.13.38](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.37...gatsby@2.13.38) (2019-07-23)
+
+### Bug Fixes
+
+- **gatsby:** use joi validation result instead of payload ([#15379](https://github.com/gatsbyjs/gatsby/issues/15379)) ([5856fb7](https://github.com/gatsbyjs/gatsby/commit/5856fb7))
+
+## [2.13.37](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.36...gatsby@2.13.37) (2019-07-23)
+
+**Note:** Version bump only for package gatsby
+
+## [2.13.36](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.35...gatsby@2.13.36) (2019-07-23)
+
+### Features
+
+- **gatsby:** Includes ts/tsx files to eslint rules ([#15976](https://github.com/gatsbyjs/gatsby/issues/15976)) ([6adcb9a](https://github.com/gatsbyjs/gatsby/commit/6adcb9a))
+
+## [2.13.35](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.34...gatsby@2.13.35) (2019-07-23)
+
+**Note:** Version bump only for package gatsby
+
+## [2.13.34](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.33...gatsby@2.13.34) (2019-07-23)
+
+### Bug Fixes
+
+- **gatsby:** add jsdoc for matchPath on page Object ([#15749](https://github.com/gatsbyjs/gatsby/issues/15749)) ([5633fdb](https://github.com/gatsbyjs/gatsby/commit/5633fdb))
+- **gatsby:** Add touchNode to populate typeOwners ([#15919](https://github.com/gatsbyjs/gatsby/issues/15919)) ([9d5026f](https://github.com/gatsbyjs/gatsby/commit/9d5026f))
+
+## [2.13.33](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.32...gatsby@2.13.33) (2019-07-22)
+
+### Bug Fixes
+
+- **gatsby:** Use UTC dates in test ([#15895](https://github.com/gatsbyjs/gatsby/issues/15895)) ([6eb1b76](https://github.com/gatsbyjs/gatsby/commit/6eb1b76))
+
+## [2.13.32](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.31...gatsby@2.13.32) (2019-07-20)
+
+**Note:** Version bump only for package gatsby
+
+## [2.13.31](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.30...gatsby@2.13.31) (2019-07-19)
+
+**Note:** Version bump only for package gatsby
+
+## [2.13.30](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.29...gatsby@2.13.30) (2019-07-19)
+
+**Note:** Version bump only for package gatsby
+
+## [2.13.29](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.28...gatsby@2.13.29) (2019-07-19)
+
+**Note:** Version bump only for package gatsby
+
+## [2.13.28](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.27...gatsby@2.13.28) (2019-07-18)
+
+### Bug Fixes
+
+- **gatsby:** 404 page when using path-prefix ([#15858](https://github.com/gatsbyjs/gatsby/issues/15858)) ([51886a3](https://github.com/gatsbyjs/gatsby/commit/51886a3))
+- **gatsby:** Make intermediate schema available to createResolvers API ([#15838](https://github.com/gatsbyjs/gatsby/issues/15838)) ([055a1b0](https://github.com/gatsbyjs/gatsby/commit/055a1b0))
+
+### Features
+
+- **gatsby:** Allow explicitly defining parent-child relations with type extensions ([#15715](https://github.com/gatsbyjs/gatsby/issues/15715)) ([696106d](https://github.com/gatsbyjs/gatsby/commit/696106d))
+
+## [2.13.27](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.26...gatsby@2.13.27) (2019-07-17)
+
+### Bug Fixes
+
+- **gatsby:** Hot reload package and theme queries ([#15739](https://github.com/gatsbyjs/gatsby/issues/15739)) ([1685a2b](https://github.com/gatsbyjs/gatsby/commit/1685a2b))
+- **gatsby:** Track nodes when mutated ([#15720](https://github.com/gatsbyjs/gatsby/issues/15720)) ([f939f6c](https://github.com/gatsbyjs/gatsby/commit/f939f6c))
+
+## [2.13.26](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.25...gatsby@2.13.26) (2019-07-17)
+
+### Bug Fixes
+
+- **docs:** Don’t include example code in API docs that doesn’t work ([#15803](https://github.com/gatsbyjs/gatsby/issues/15803)) ([044eea5](https://github.com/gatsbyjs/gatsby/commit/044eea5))
+
+### Features
+
+- **gatsby:** pass webhook data to sourceNodes functions ([#15564](https://github.com/gatsbyjs/gatsby/issues/15564)) ([dd130f1](https://github.com/gatsbyjs/gatsby/commit/dd130f1))
+
+## [2.13.25](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.24...gatsby@2.13.25) (2019-07-16)
+
+### Bug Fixes
+
+- **gatsby:** fix matchpath prioritisation ([#15762](https://github.com/gatsbyjs/gatsby/issues/15762)) ([a1ab8bc](https://github.com/gatsbyjs/gatsby/commit/a1ab8bc))
+
+## [2.13.24](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.23...gatsby@2.13.24) (2019-07-16)
+
+### Bug Fixes
+
+- **gatsby:** Fix import on cache-dir/gatsby-browser-entry.js ([#15735](https://github.com/gatsbyjs/gatsby/issues/15735)) ([4b206c3](https://github.com/gatsbyjs/gatsby/commit/4b206c3)), closes [/github.com/gatsbyjs/gatsby/blob/2d27d7d42112fcbeb13cd52fa9fe0d46b1764d13/packages/gatsby/cache-dir/loader.js#L355](https://github.com//github.com/gatsbyjs/gatsby/blob/2d27d7d42112fcbeb13cd52fa9fe0d46b1764d13/packages/gatsby/cache-dir/loader.js/issues/L355)
+
+## [2.13.23](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.22...gatsby@2.13.23) (2019-07-15)
+
+### Features
+
+- **gatsby:** Refine typing on createPage ([#15723](https://github.com/gatsbyjs/gatsby/issues/15723)) ([65d5181](https://github.com/gatsbyjs/gatsby/commit/65d5181))
+
+## [2.13.22](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.21...gatsby@2.13.22) (2019-07-15)
+
+### Bug Fixes
+
+- **gatsby:** Add NodeInput for createNode function types ([#14537](https://github.com/gatsbyjs/gatsby/issues/14537)) ([1b549e8](https://github.com/gatsbyjs/gatsby/commit/1b549e8))
+
+### Features
+
+- **gatsby:** Add nodeInterface extension ([#15545](https://github.com/gatsbyjs/gatsby/issues/15545)) ([8c46237](https://github.com/gatsbyjs/gatsby/commit/8c46237))
+- **gatsby:** add prefetchPathname the public api ([#13985](https://github.com/gatsbyjs/gatsby/issues/13985)) ([7173f96](https://github.com/gatsbyjs/gatsby/commit/7173f96))
+
+## [2.13.21](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.20...gatsby@2.13.21) (2019-07-14)
+
+### Features
+
+- **gatsby:** Add enum and scalar type builders ([#15689](https://github.com/gatsbyjs/gatsby/issues/15689)) ([e12d79d](https://github.com/gatsbyjs/gatsby/commit/e12d79d))
+
+## [2.13.20](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.19...gatsby@2.13.20) (2019-07-13)
+
+**Note:** Version bump only for package gatsby
+
+## [2.13.19](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.18...gatsby@2.13.19) (2019-07-12)
+
+**Note:** Version bump only for package gatsby
+
+## [2.13.18](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.17...gatsby@2.13.18) (2019-07-12)
+
+**Note:** Version bump only for package gatsby
+
+## [2.13.17](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.16...gatsby@2.13.17) (2019-07-12)
+
+### Bug Fixes
+
+- **gatsby:** blank dev-404-page when no custom 404 page found ([#15658](https://github.com/gatsbyjs/gatsby/issues/15658)) ([11e86a6](https://github.com/gatsbyjs/gatsby/commit/11e86a6))
+
+## [2.13.16](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.15...gatsby@2.13.16) (2019-07-12)
+
+### Bug Fixes
+
+- **gatsby:** Make createPage action errors structured ([#15619](https://github.com/gatsbyjs/gatsby/issues/15619)) ([44654be](https://github.com/gatsbyjs/gatsby/commit/44654be))
+- **svg:** don't try to use convertShapeToPath svgo optim ([#15636](https://github.com/gatsbyjs/gatsby/issues/15636)) ([4db78dc](https://github.com/gatsbyjs/gatsby/commit/4db78dc))
+
+## [2.13.15](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.14...gatsby@2.13.15) (2019-07-11)
+
+### Bug Fixes
+
+- **gatsby:** handle `/404/`, `/404`, `404/` or `404` page paths ([#15615](https://github.com/gatsbyjs/gatsby/issues/15615)) ([482ea8d](https://github.com/gatsbyjs/gatsby/commit/482ea8d))
+
+## [2.13.14](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.13...gatsby@2.13.14) (2019-07-11)
+
+**Note:** Version bump only for package gatsby
+
+## [2.13.13](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.12...gatsby@2.13.13) (2019-07-10)
+
+### Bug Fixes
+
+- don't break joi validation for production bundles webpack… ([#15602](https://github.com/gatsbyjs/gatsby/issues/15602)) ([4c50024](https://github.com/gatsbyjs/gatsby/commit/4c50024))
+- don't break joi validation for unhandledRejections & apirunner ([#15600](https://github.com/gatsbyjs/gatsby/issues/15600)) ([14ba538](https://github.com/gatsbyjs/gatsby/commit/14ba538))
+
+## [2.13.12](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.11...gatsby@2.13.12) (2019-07-10)
+
+### Bug Fixes
+
+- **gatsby:** Prefer nodes over inline objects in findRootNodeAncestor ([#14843](https://github.com/gatsbyjs/gatsby/issues/14843)) ([e18acb6](https://github.com/gatsbyjs/gatsby/commit/e18acb6))
+
+### Features
+
+- **gatsby:** Make builtin field extensions wrap resolvers ([#15515](https://github.com/gatsbyjs/gatsby/issues/15515)) ([c2edf6c](https://github.com/gatsbyjs/gatsby/commit/c2edf6c))
+
+## [2.13.11](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.10...gatsby@2.13.11) (2019-07-09)
+
+### Bug Fixes
+
+- support unicode paths ([#15552](https://github.com/gatsbyjs/gatsby/issues/15552)) ([f3b9912](https://github.com/gatsbyjs/gatsby/commit/f3b9912))
+
+## [2.13.10](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.9...gatsby@2.13.10) (2019-07-09)
+
+### Bug Fixes
+
+- **gatsby:** restore client-only-paths behaviour ([#15457](https://github.com/gatsbyjs/gatsby/issues/15457)) ([0ffbe59](https://github.com/gatsbyjs/gatsby/commit/0ffbe59))
+
+## [2.13.9](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.8...gatsby@2.13.9) (2019-07-08)
+
+### Bug Fixes
+
+- **gatsby:** support for yarn workspaces in gatsby-dependents ([#15517](https://github.com/gatsbyjs/gatsby/issues/15517)) ([3b5e41b](https://github.com/gatsbyjs/gatsby/commit/3b5e41b))
+
+## [2.13.8](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.7...gatsby@2.13.8) (2019-07-08)
+
+### Bug Fixes
+
+- **gatsby:** speed up and lower memory of createPages ([#15503](https://github.com/gatsbyjs/gatsby/issues/15503)) ([0ffa8bc](https://github.com/gatsbyjs/gatsby/commit/0ffa8bc))
+
+## [2.13.7](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.6...gatsby@2.13.7) (2019-07-07)
+
+### Bug Fixes
+
+- **gatsby:** bump `react-hot-loader` version to fix regression… ([#15485](https://github.com/gatsbyjs/gatsby/issues/15485)) ([02eaaa4](https://github.com/gatsbyjs/gatsby/commit/02eaaa4))
+- **gatsby:** Exclude node_modules when depth > 1 ([#15442](https://github.com/gatsbyjs/gatsby/issues/15442)) ([ba0c3cb](https://github.com/gatsbyjs/gatsby/commit/ba0c3cb))
+
+## [2.13.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.5...gatsby@2.13.6) (2019-07-06)
+
+### Bug Fixes
+
+- **gatsby:** parse pageData response when contentType is not s… ([#15410](https://github.com/gatsbyjs/gatsby/issues/15410)) ([8bf80be](https://github.com/gatsbyjs/gatsby/commit/8bf80be))
+
+## [2.13.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.4...gatsby@2.13.5) (2019-07-06)
+
+### Bug Fixes
+
+- **PnP:** updates the test to account for the property name ch… ([#15463](https://github.com/gatsbyjs/gatsby/issues/15463)) ([f657474](https://github.com/gatsbyjs/gatsby/commit/f657474))
+
+## [2.13.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.3...gatsby@2.13.4) (2019-07-05)
+
+**Note:** Version bump only for package gatsby
+
 ## [2.13.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.2...gatsby@2.13.3) (2019-07-03)
 
 ### Bug Fixes
@@ -41,7 +1152,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - **gatsby:** adds the missing micromatch dependency ([#15310](https://github.com/gatsbyjs/gatsby/issues/15310)) ([5f66f21](https://github.com/gatsbyjs/gatsby/commit/5f66f21))
 - **gatsby:** Exclude gatsby itself in gatsby-dependents ([#15318](https://github.com/gatsbyjs/gatsby/issues/15318)) ([25cd90e](https://github.com/gatsbyjs/gatsby/commit/25cd90e))
-- **gatsby:** various Typescript definitions ([#15268](https://github.com/gatsbyjs/gatsby/issues/15268)) ([b8f3ed5](https://github.com/gatsbyjs/gatsby/commit/b8f3ed5))
+- **gatsby:** various TypeScript definitions ([#15268](https://github.com/gatsbyjs/gatsby/issues/15268)) ([b8f3ed5](https://github.com/gatsbyjs/gatsby/commit/b8f3ed5))
 - **themes:** normalize plugin entries before merging plugin ar… ([#15307](https://github.com/gatsbyjs/gatsby/issues/15307)) ([300d331](https://github.com/gatsbyjs/gatsby/commit/300d331))
 
 ### Features
@@ -1232,7 +2343,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-- **gatsby:** avoid full page refresh when navigating to non-existant page ([#10684](https://github.com/gatsbyjs/gatsby/issues/10684)) ([88866c7](https://github.com/gatsbyjs/gatsby/commit/88866c7))
+- **gatsby:** avoid full page refresh when navigating to non-existent page ([#10684](https://github.com/gatsbyjs/gatsby/issues/10684)) ([88866c7](https://github.com/gatsbyjs/gatsby/commit/88866c7))
 
 <a name="2.0.77"></a>
 
@@ -2770,7 +3881,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - [www] Blog post meta styles #1561 @fk
 - Fix unsupported method in IE #1573 @variadicintegrity
-- Don't set a default title in html.js as not overriden by react-helmet #1578
+- Don't set a default title in html.js as not overridden by react-helmet #1578
   @KyleAMathews
 - Downgrade Glamor to v2 as v3 unstable #1580 @KyleAMathews
 - Remove the slash between the pathPrefix and pathname when navigating #1574
@@ -2778,7 +3889,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - Fix url in Contentful example #1596 @axe312ger
 - Small fixes to tutorial #1586 @benmathews
 - Add missing dep to gatsby-source-filesystem #1607 @jquense
-- Wordpress -> WordPress #1608 @Alaev
+- WordPress -> WordPress #1608 @Alaev
 - Fix typo #1609 @fk
 - Update modifyWebpackConfig docs #1613 @KyleAMathews
 - Fix broken links #1614 @KyleAMathews
@@ -2891,7 +4002,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - Adds Material Blog starter to the list of starters. #1344 @Vagr9K committed
   with KyleAMathews 4 days ago
 - Continuation: WIP update home page with new design #1355 @fk
-- Wordpress source plugin and example site #1321 @sebastienfi
+- WordPress source plugin and example site #1321 @sebastienfi
 - [v1.0] Documentation improvements. #1370 @Vagr9K
 - 1.0.0 announcement blog post #1379 @KyleAMathews
 - Adds gatsby-transformer-toml to the core. ##1382 @Vagr9K
@@ -2979,7 +4090,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Added
 
 - Add using-remark example site #1230 @fk
-- Add friendly webpack ouput #1240 @craig-mulligan
+- Add friendly webpack output #1240 @craig-mulligan
 - Add documentation on how to use custom webpack-config #1242 @bananenmannfrau
 - Add graphql fields for creating responsive images using Contentful image API
   #1228 @kyleamathews

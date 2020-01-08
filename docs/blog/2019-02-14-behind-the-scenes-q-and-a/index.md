@@ -3,8 +3,6 @@ title: "Behind the Scenes Q & A: What Makes Gatsby Great Webinar"
 date: 2019-02-14
 author: Linda Watkins
 tags:
-  - webinar
-  - q&a
   - performance
 image: "./images/what-makes-gatsby-great.png"
 showImageInArticle: true
@@ -62,7 +60,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Answer:** Yes, build-times do go up with image processing as it's very CPU intensive.
 
 **Question:** I have an app which has Frontend and Admin Panel so how do I do code splitting based on Module so the admin javascript should not include in Frontend and vice versa?
-**Answer:** Gatsby splits code automatically by route so code only used on the admin panel will only be loaded there. Check out [Building Apps with Gatsby](/docs/building-apps-with-gatsby/) for details about how to build the admin section.
+**Answer:** Gatsby splits code automatically by route so code only used on the admin panel will only be loaded there. Check out [Building Apps with Gatsby](/docs/adding-app-and-website-functionality/) for details about how to build the admin section.
 
 ### GraphQL / Data Layer
 
@@ -100,7 +98,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Question:** Will Gatsby compile/export static files using the theme from a Ghost installation or will Gatsby compile/export based on another Gatsby theme?
 **Answer:** When you use Gatsby + Ghost you will construct UI in Gatsby rather than Ghost -- [Modern publications with Gatsby & Ghost](/blog/2019-01-14-modern-publications-with-gatsby-ghost/)
 
-**Question:** Should I stop using Wordpress altogether? Does Wordpress play well with Gatsby or is Contentful better? Looks like JAMstack is a Wordpress killer.
+**Question:** Should I stop using WordPress altogether? Does WordPress play well with Gatsby or is Contentful better? Looks like JAMstack is a WordPress killer.
 **Answer:** It's not a 100% replacement yet — best to start experimenting with things and see how it feels!
 
 **Question:** How do content managers preview their changes?
@@ -119,7 +117,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Question:** What are some best practices around aligning (dynamic) CMS content schema with code changes in Gatsby?
 **Answer:** Great question - and we have some thoughts here. We're launching cloud services to tackle this very problem in 2019. In the interim--most CMSs have some type of webhook content, so you can trigger a re-build (static content is cheap, and so are changes!) when content changes.
 
-**Question:** Would it be a good idea to manage several blogs or sites from one Wordpress install as back office, and build all the sites on Gatsby?
+**Question:** Would it be a good idea to manage several blogs or sites from one WordPress install as back office, and build all the sites on Gatsby?
 **Answer:** That would be a great idea! We've talked to some folks doing this.
 
 **Question:** If a company had numerous content managers (let's say 30), and they all needed to be able to create and publish content to a blog (which could be multiple on the same site) or a page, each update would require a new build? Is that an accurate understanding?
@@ -128,14 +126,14 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Question:** The Preview feature is awesome. But I'm thinking like a 24 hours news channel, which our company has, and a manager needing to post content at 2 am, or even more, stories being posted multiple times an hour at all hours. Will each update require a new build?
 **Answer:** Yes. Builds are fast and automatic though so doesn't take any extra work or mental overhead.
 
-**Question:** How can I use gatsby-image for images in the content body like a Wordpress post?
+**Question:** How can I use gatsby-image for images in the content body like a WordPress post?
 **Answer:** That's a bit tricky as the content body is a HTML string. There's issues talking about how to make this happen so jump into the discussion and help out.
 
 **Question:** Is there a 3rd party CMS that you recommend that works particular well with Gatsby?
 **Answer:** Lots of CMS-s! Here's a list: [Headless CMS](/docs/headless-cms/)
 
-**Question:** How can you trigger a content refresh on the Gatsby site (frontend) when using gatsby-source-wordpress with a Wordpress CMS?
-**Answer:** You create a webhook on your CMS, and point the webhook at your CI system (eg Netlify).
+**Question:** How can you trigger a content refresh on the Gatsby site (frontend) when using gatsby-source-wordpress with a WordPress CMS?
+**Answer:** You create a webhook on your CMS, and point the webhook at your CI system (e.g. Netlify).
 
 **Question:** I have a site built on Drupal 7. How easy would it be to migrate to Gatsby with say Netlify as a CDN?
 **Answer:** [`gatsby-source-drupal`](/packages/gatsby-source-drupal/) only supports Drupal 8 at the moment, I believe.
@@ -147,7 +145,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 
 **Question:** Are there data fetching hooks that we can use for client-side loading of authenticated content that isn't serialized at build-time?
 **Answer:** Check out [Building a site with authentication](/docs/building-a-site-with-authentication/) and [Building Apps with Gatsby
-](/docs/building-apps-with-gatsby/)
+](/docs/adding-app-and-website-functionality/)
 
 **Question:** How to do SSR loading for Dynamic content- for example, a blog, as it uses build time SSR technique?
 **Answer:** Gatsby's data layer and source plugins can fetch data dynamically at build time to grab your data. Then whenever your data changes, you rebuild your site with the updated content. Builds are fast so you can update the site every few minutes if necessary.
@@ -208,7 +206,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Question:** Is it overkill to build every site with Gatsby.js?
 **Answer:** We don't think so :)
 
-**Question:** Do you think there will be a market for Gatsby premium themes (like for Wordpress)?
+**Question:** Do you think there will be a market for Gatsby premium themes (like for WordPress)?
 **Answer:** Yep :) it's on the roadmap!
 
 **Question:** Beyond blogs and ecommerce websites, what other use cases are you seeing people building with Gatsby?
@@ -218,7 +216,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Answer:** All of the above!
 
 **Question:** Is Gatsby production ready? It's fantastic!
-**Answer:** Yep! Here are some sites using Gatsby in production: [Gatsby Showcase ](/showcase/)(includes the Flamingo e-commerce site).
+**Answer:** Yep! Here are some sites using Gatsby in production: [Gatsby Showcase](/showcase/) (includes the Flamingo e-commerce site).
 
 ### Misc. questions
 
@@ -226,7 +224,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Answer:** You can do this client-side, there isn't any good out-of-the-box documentation on how to do this right now though. If you do it, write it up!
 
 **Question:** What is a 'route'?
-**Answer:** Basically a URL, eg `/blog/{post-name}`
+**Answer:** Basically a URL, e.g. `/blog/{post-name}`
 
 **Question:** Should i know React before starting to learn Gatsby?
 **Answer:** You don't need to! Gatsby is a great playground for learning React. Check out this post: [How Gatsby scales with your expertise & scope](/blog/2018-12-19-gatsby-scales-with-expertise-and-scope/)

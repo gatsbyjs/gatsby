@@ -3,7 +3,7 @@ title: Gatsby Days, Meetups, and more!
 date: 2018-11-27
 author: Linda Watkins
 tags:
-  - events
+  - community
 ---
 
 When I started as Director of Marketing at Gatsby 4 months ago, I was impressed with the enthusiasm and energy I saw in the community around Gatsby. And as I’ve started to connect with developers at technology meetups and conferences, I’ve heard so many of you talk about interest in Gatsby-sponsored events. Well, now the wait is over!
@@ -14,9 +14,9 @@ We’re starting to roll out Gatsby Days across the US and internationally. The 
 
 [Register for Gatsby Days in Mountain View, CA on December 7th](https://www.eventbrite.com/e/gatsby-days-tickets-51837151315).
 
-We’ll also be planning more Gatsby Days after the New Year. We did a twitter poll a few weeks ago to gauge interest in locations for Gatsby Days and London gathered over 250 votes! There were also a lot of write-in votes for Chicago, Dallas, Paris, and Berlin. Here are the results of the twitter poll:
+We’ll also be planning more Gatsby Days after the New Year. We did a Twitter poll a few weeks ago to gauge interest in locations for Gatsby Days and London gathered over 250 votes! There were also a lot of write-in votes for Chicago, Dallas, Paris, and Berlin. Here are the results of the Twitter poll:
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Announcing &#39;Gatsby Days&#39;! (in-person, one-day, Gatsby conference on a weekday). What location would you attend? (specify others in comments)</p>&mdash; Gatsby (@gatsbyjs) <a href="https://twitter.com/gatsbyjs/status/1050456663138820097?ref_src=twsrc%5Etfw">October 11, 2018</a></blockquote>
+https://twitter.com/gatsbyjs/status/1050456663138820097
 
 If you didn’t get a chance to cast your vote for a Gatsby Days host city, you can [cast your vote here](https://www.gatsbyjs.com/gatsby-days-signup) (and get notified when a Gatsby Days comes to your city).
 

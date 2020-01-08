@@ -77,7 +77,13 @@ export interface FileSystemNode extends Node {
   // stats
   atime: Date
   atimeMs: number
+  /**
+   * @deprecated Use `birthTime` instead
+   */
   birthtime: Date
+  /**
+   * @deprecated Use `birthTime` instead
+   */
   birthtimeMs: number
   ctime: Date
   ctimeMs: number

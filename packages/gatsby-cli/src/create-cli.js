@@ -2,7 +2,9 @@ const path = require(`path`)
 const resolveCwd = require(`resolve-cwd`)
 const yargs = require(`yargs`)
 const report = require(`./reporter`)
+const { setStore } = require(`./reporter/redux`)
 const didYouMean = require(`./did-you-mean`)
+const { getLocalGatsbyVersion } = require(`./util/version`)
 const envinfo = require(`envinfo`)
 const existsSync = require(`fs-exists-cached`).sync
 const clipboardy = require(`clipboardy`)
@@ -21,6 +23,7 @@ const handlerP = fn => (...args) => {
 
 function buildLocalCommands(cli, isLocalSite) {
   const defaultHost = `localhost`
+  const defaultPort = `8000`
   const directory = path.resolve(`.`)
 
   // 'not dead' query not available in browserslist used in Gatsby v1
@@ -52,7 +55,7 @@ function buildLocalCommands(cli, isLocalSite) {
       cli.showHelp()
       report.verbose(`current directory: ${directory}`)
       return report.panic(
-        `gatsby <${command}> can only be run for a gatsby site. \n` +
+        `gatsby <${command}> can only be run for a gatsby site.\n` +
           `Either the current working directory does not contain a valid package.json or ` +
           `'gatsby' is not specified as a dependency`
       )
@@ -82,14 +85,8 @@ function buildLocalCommands(cli, isLocalSite) {
   function getCommandHandler(command, handler) {
     return argv => {
       report.setVerbose(!!argv.verbose)
-      if (argv.noColor) {
-        // disables colors in popular terminal output coloring packages
-        //  - chalk: see https://www.npmjs.com/package/chalk#chalksupportscolor
-        //  - ansi-colors: see https://github.com/doowb/ansi-colors/blob/8024126c7115a0efb25a9a0e87bc5e29fd66831f/index.js#L5-L7
-        process.env.FORCE_COLOR = `0`
-      }
 
-      report.setNoColor(!!argv.noColor)
+      report.setNoColor(argv.noColor || process.env.NO_COLOR)
 
       process.env.gatsby_log_level = argv.verbose ? `verbose` : `normal`
       report.verbose(`set gatsby_log_level: "${process.env.gatsby_log_level}"`)
@@ -98,7 +95,7 @@ function buildLocalCommands(cli, isLocalSite) {
       report.verbose(`set gatsby_executing_command: "${command}"`)
 
       let localCmd = resolveLocalCommand(command)
-      let args = { ...argv, ...siteInfo, report, useYarn }
+      let args = { ...argv, ...siteInfo, report, useYarn, setStore }
 
       report.verbose(`running command: ${command}`)
       return handler ? handler(args, localCmd) : localCmd(args)
@@ -120,8 +117,10 @@ function buildLocalCommands(cli, isLocalSite) {
         .option(`p`, {
           alias: `port`,
           type: `string`,
-          default: `8000`,
-          describe: `Set port. Defaults to 8000`,
+          default: process.env.PORT || defaultPort,
+          describe: process.env.PORT
+            ? `Set port. Defaults to ${process.env.PORT} (set by env.PORT) (otherwise defaults ${defaultPort})`
+            : `Set port. Defaults to ${defaultPort}`,
         })
         .option(`o`, {
           alias: `open`,
@@ -266,7 +265,7 @@ function buildLocalCommands(cli, isLocalSite) {
 
   cli.command({
     command: `repl`,
-    desc: `Get a node repl with context of Gatsby environment, see (add docs link here)`,
+    desc: `Get a node repl with context of Gatsby environment, see (https://www.gatsbyjs.org/docs/gatsby-repl/)`,
     handler: getCommandHandler(`repl`, (args, cmd) => {
       process.env.NODE_ENV = process.env.NODE_ENV || `development`
       return cmd(args)
@@ -287,29 +286,6 @@ function isLocalGatsbySite() {
     /* ignore */
   }
   return !!inGatsbySite
-}
-
-function getLocalGatsbyVersion() {
-  let version
-  try {
-    const packageInfo = require(path.join(
-      process.cwd(),
-      `node_modules`,
-      `gatsby`,
-      `package.json`
-    ))
-    version = packageInfo.version
-
-    try {
-      setDefaultTags({ installedGatsbyVersion: version })
-    } catch (e) {
-      // ignore
-    }
-  } catch (err) {
-    /* ignore */
-  }
-
-  return version
 }
 
 function getVersionInfo() {
@@ -351,6 +327,12 @@ module.exports = argv => {
       default: false,
       type: `boolean`,
       describe: `Turn off the color in output`,
+      global: true,
+    })
+    .option(`json`, {
+      describe: `Turn on the JSON logger`,
+      default: false,
+      type: `boolean`,
       global: true,
     })
 

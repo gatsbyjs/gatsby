@@ -55,7 +55,7 @@ If you are seeing errors or slowness **and** your Gatsby app matches one of the 
 
 It's difficult to pin down exactly _how_ to fix a scaling issue. We have some recommendations and workarounds that _may_ work for your application.
 
-Note: the application of these techniques should be considered analogous to a applying a bandage. A bandage solves the underlying issue, but at some indeterminate point in the future the underlying issue may be healed! In much the same way--treat these techniques as temporary and re-visit in the future if underlying scaling issues in Gatsby have since been resolved.
+Note: the application of these techniques should be considered analogous to applying a bandage. A bandage solves the underlying issue, but at some indeterminate point in the future the underlying issue may be healed! In much the same way--treat these techniques as temporary and re-visit in the future if underlying scaling issues in Gatsby have since been resolved.
 
 ### `GATSBY_DB_NODES`
 
@@ -71,5 +71,20 @@ Loki allows us to opt-in to possibly more performant internal operations and it 
   "scripts": {
     "build": "cross-env GATSBY_DB_NODES=loki gatsby build"
   }
+}
+```
+
+### Switch off type inference for `SitePage.context`
+
+When using the `createPages` API to pass large amounts of data to pages via `context` (which is generally not recommended), Gatsby's type inference can become slow. In most cases, it is not actually necessary to include the `SitePage.context` field in the GraphQL schema, so switching off type inference for the `SitePage` type should be safe:
+
+```js
+// gatsby-node.js
+exports.createSchemaCustomization = ({ actions }) => {
+  actions.createTypes(`
+    type SitePage implements Node @dontInfer {
+      path: String!
+    }
+  `)
 }
 ```

@@ -1,13 +1,13 @@
 ---
-title: "How To Build A Blog with Wordpress and Gatsby.js - Part 1"
+title: "How To Build A Blog with WordPress and Gatsby.js - Part 1"
 date: 2019-04-26
 author: Tim Smith
 excerpt: "Ever wondered how to use Gatsby.js with WordPress? This post will cover everything you need to know about getting WordPress ready for a Gatsby site."
 tags:
   - wordpress
   - apis
-  - blog
-  - headless cms
+  - blogs
+  - headless-cms
   - react
 canonicalLink: https://www.iamtimsmith.com/blog/how-to-build-a-blog-with-wordpress-and-gatsby-part-1/
 ---
@@ -69,11 +69,11 @@ Now let's get down to business...
 
 ## Setting up WordPress
 
-This article assumes you have at least a rudimentary knowledge of WordPress. If you've never used it, you can check out [my quick guide to setting up a WordPress site](https://www.iamtimsmith.com/blog/how-to-build-a-beautiful-website-in-less-than-10-minutes/).
+This article assumes you have at least a rudimentary knowledge of WordPress. If you've never used it, you can check out [my quick guide to setting up a WordPress site](https://www.iamtimsmith.com/blog/how-to-build-website-in-less-than-10-minutes/).
 
 ## A bit about WordPress as a CMS
 
-Wordpress is a Content Management System (or CMS) built using PHP and MySQL. Typically when building a WordPress site, you would build a theme that essentially acts as a "skin" for the content. Since you're using Gatsby to build the frontend, you won't be using this functionality.
+WordPress is a Content Management System (or CMS) built using PHP and MySQL. Typically when building a WordPress site, you would build a theme that essentially acts as a "skin" for the content. Since you're using Gatsby to build the frontend, you won't be using this functionality.
 
 As I mentioned in my other blog post, WordPress exposes REST APIs which can be used to get data for your React application. This same principle will be used here, although you'll be adding some things to improve the REST API and make it more flexible.
 
@@ -130,6 +130,6 @@ Not to be too anti-climactic, but there's really not a ton more to do on the Wor
 
 That being said, if you are creating custom content types for your blog you will need a way to differentiate them in ACF. Creating a custom page template will serve this purpose so you can filter on the page template to show the custom fields. You can also use the page template to filter in your Gatsby project to make sure you are receiving the desired fields for a given page.
 
-If you have any questions, you can hit me up on twitter at [@iam_timsmith](https://twitter.com/iam_timsmith)!
+If you have any questions, you can hit me up on Twitter at [@iam_timsmith](https://twitter.com/iam_timsmith)!
 
-See you in [How To Build A Blog with Wordpress and Gatsby.js - Part 2](/blog/2019-04-30-how-to-build-a-blog-with-wordpress-and-gatsby-part-2)!
+See you in [How To Build A Blog with WordPress and Gatsby.js - Part 2](/blog/2019-04-30-how-to-build-a-blog-with-wordpress-and-gatsby-part-2)!

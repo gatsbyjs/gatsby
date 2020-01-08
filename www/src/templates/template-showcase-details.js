@@ -73,12 +73,26 @@ class ShowcaseTemplate extends React.Component {
   }
 
   render() {
-    const { data } = this.props
+    let { data } = this.props
 
     const isModal =
       this.props.location.state && this.props.location.state.isModal
 
     const categories = data.sitesYaml.categories || []
+
+    /*
+     * This shouldn't ever happen due to filtering on hasScreenshot field
+     * However, it appears to break Gatsby Build
+     * so let's avoid a failure here
+     */
+    if (
+      !data.sitesYaml.childScreenshot ||
+      !data.sitesYaml.childScreenshot.screenshotFile
+    ) {
+      data.sitesYaml.childScreenshot = {
+        screenshotFile: data.fallback,
+      }
+    }
 
     return (
       <ShowcaseDetails
@@ -121,6 +135,12 @@ export const pageQuery = graphql`
       }
       fields {
         slug
+      }
+    }
+
+    fallback: file(relativePath: { eq: "screenshot-fallback.png" }) {
+      childImageSharp {
+        ...ScreenshotDetails
       }
     }
   }

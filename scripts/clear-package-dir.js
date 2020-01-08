@@ -115,7 +115,9 @@ const run = async () => {
   try {
     const changed = JSON.parse(
       execSync(
-        `node_modules/.bin/lerna changed --json --loglevel=silent`
+        `${path.resolve(
+          `node_modules/.bin/lerna`
+        )} changed --json --loglevel=silent`
       ).toString()
     )
     const filesToDelete = _.flatten(changed.map(getListOfFilesToClear))
@@ -142,7 +144,7 @@ const run = async () => {
       }
     }
   } catch {
-    // if no packages are marked are changed, lerna will exit with non-zero
+    // if no packages are marked as changed, lerna will exit with non-zero
   }
 }
 

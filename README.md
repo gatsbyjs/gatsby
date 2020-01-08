@@ -8,7 +8,7 @@
 </h1>
 
 <h3 align="center">
-  ⚛️ 📄 :rocket:
+  ⚛️ 📄 🚀
 </h3>
 <h3 align="center">
   Fast in every way that matters
@@ -89,7 +89,7 @@ Gatsby is a modern web framework for blazing fast websites.
 - [Migration Guides](#-migration-guides)
 - [How to Contribute](#-how-to-contribute)
 - [License](#memo-license)
-- [Thanks to Our Contributors and Sponsors](#-thanks-to-our-contributors-and-sponsors)
+- [Thanks to Our Contributors and Sponsors](#-thanks)
 
 ## 🚀 Get Up and Running in 5 Minutes
 
@@ -106,7 +106,7 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
 
    Get your Gatsby blog set up in a single command:
 
-   ```sh
+   ```shell
    # create a new Gatsby site using the default starter
    gatsby new my-blazing-fast-site
    ```
@@ -115,7 +115,7 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
 
    Next, move into your new site’s directory and start it up:
 
-   ```sh
+   ```shell
    cd my-blazing-fast-site/
    gatsby develop
    ```
@@ -167,7 +167,6 @@ We are currently only accepting bug fixes for Gatsby v1. No new features will be
 
 Licensed under the [MIT License](./LICENSE).
 
-## 💜 Thanks to Our Contributors and Sponsors
+## 💜 Thanks
 
-Thanks to our many contributors and sponsors as well as the companies sponsoring
-our testing and hosting infrastructure: [Circle CI](https://circleci.com/), [Appveyor](https://www.appveyor.com/), and [Netlify](https://www.netlify.com/).
+Thanks to our many contributors and to [Netlify](https://www.netlify.com/) for hosting [gatsbyjs.org](https://gatsbyjs.org) and our example sites.

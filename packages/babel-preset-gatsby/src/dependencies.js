@@ -18,7 +18,7 @@ module.exports = function(api, options = {}) {
     presets: [
       [
         // Latest stable ECMAScript features
-        `@babel/preset-env`,
+        resolve(`@babel/preset-env`),
         {
           // Allow importing core-js in entrypoint and use browserlist to select polyfills
           useBuiltIns: `usage`,

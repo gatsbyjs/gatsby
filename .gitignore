@@ -52,6 +52,7 @@ node_modules/
 
 # misc
 .serverless/
+.eslintcache
 
 # lock files
 yarn.lock
@@ -62,3 +63,4 @@ package-lock.json
 !themes/gatsby-starter-blog-theme/package-lock.json
 !themes/gatsby-starter-notes-theme/package-lock.json
 !themes/gatsby-starter-theme/package-lock.json
+!themes/gatsby-starter-theme-workspace/package-lock.json

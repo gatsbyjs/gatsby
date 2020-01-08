@@ -56,6 +56,11 @@ const IndexPage = ({ pageContext }) => (
           Path Context
         </Link>
       </li>
+      <li>
+        <Link to="/안녕" data-testid="page-with-unicode-path">
+          Go to page with unicode path
+        </Link>
+      </li>
     </ul>
   </Layout>
 )

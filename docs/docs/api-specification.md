@@ -55,9 +55,9 @@ in some of its data fields.
 See
 [the full list of (official only for now — adding support for community plugins later) plugins](/docs/plugins/).
 
-# API
+## API
 
-## Concepts
+### Concepts
 
 - _Page_ — a site page with a pathname, a template component, and optional
   GraphQL query.
@@ -76,7 +76,9 @@ See
   inferred. Parent/child links from nodes and their transformed derivative nodes
   are first class links.
 
-## Operators
+_More definitions and terms are defined in the [Glossary](/docs/glossary/)_
+
+### Operators
 
 - _Create_ — make a new thing
 - _Get_ — get an existing thing
@@ -84,7 +86,7 @@ See
 - _Replace_ — replace an existing thing
 - _Set_ — merge into an existing thing
 
-## Extension APIs
+### Extension APIs
 
 Gatsby has multiple processes. The most prominent is the "bootstrap" process. It
 has several subprocesses. One tricky part to their design is that they run both
@@ -98,7 +100,7 @@ load site config -> load plugins -> source nodes -> transform nodes -> create
 graphql schema -> create pages -> compile component queries -> run queries ->
 fin
 
-Once the initial bootstrap is finished, we start `webpack-dev-server` and an express server for serving files for the development server, and for a production build, we start building the CSS then JavaScript then HTML with webpack.
+Once the initial bootstrap is finished, a `webpack-dev-server` and express server are started for serving files for the development workflow with live updates. For a production build, Gatsby skips the development server and instead builds the CSS, then JavaScript, then static HTML with webpack.
 
 During these processes there are various extension points where plugins can
 intervene. All major processes have an `onPre` and `onPost` e.g. `onPreBootstrap`

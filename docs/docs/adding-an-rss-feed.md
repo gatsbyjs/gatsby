@@ -63,7 +63,7 @@ The good news is you can accommodate these scenarios and more in `gatsby-config.
 
 To customize the default feed schema (a.k.a. structure) output by the plugin to work with your website's content, you can start with the following code:
 
-```js:title=gatsby.config.js
+```js:title=gatsby-config.js
 module.exports = {
   plugins: [
     {
@@ -132,7 +132,7 @@ The `output` field in your feed object allows you to customize the filename for 
 
 By default, feed is referenced in every page. You can customize this behavior by providing an extra field `match` of type `string`. This string will be used to build a `RegExp`, and this regular expression will be used to test the `pathname` of current page. Only pages that satisfied the regular expression will have feed reference included.
 
-To see your feed in action, run `gatsby build && gatsby serve` and you can then inspect the content and URLs in your RSS file at `http://localhost:9000/rss.xml`.
+To see your feed in action, run `gatsby build && gatsby serve` and you can then inspect the content and URLs in your RSS file at <http://localhost:9000/rss.xml>.
 
 > NOTE: if your blog has custom permalinks, such as links with or without dates in them, you may need to [customize `gatsby-node.js`](https://github.com/gatsbyjs/gatsby-starter-blog/blob/master/gatsby-node.js#L57) to output the correct URLs in your RSS feed. [Get in touch with us](/contributing/how-to-contribute/) if you need any help!
 
@@ -140,7 +140,7 @@ To see your feed in action, run `gatsby build && gatsby serve` and you can then 
 
 If creating a RSS feed for a podcast you probably will want to include iTunes RSS blocks. They take the format of `itunes:author` which GraphQL does not read. Here's an example of how to implement iTunes RSS blocks using this plugin:
 
-```js:title=gatsby.config.js
+```js:title=gatsby-config.js
 module.exports = {
   plugins: [
     {
@@ -183,3 +183,7 @@ module.exports = {
 ## Happy blogging!
 
 With the [Gatsby feed plugin](/packages/gatsby-plugin-feed/), you can share your writing easily with people subscribed through RSS readers like Feedly or RSS Feed Reader. Now that your feed is set up, you won't really have to think about it; publish a new post, and your RSS feed will automatically update with your Gatsby build. Voilà!
+
+## More resources
+
+[Jason Lengstorf and Amberley Romo livestream building an RSS feed powered podcast site](https://www.youtube.com/watch?v=0hGlvyuQiKQ).

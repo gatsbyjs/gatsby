@@ -4,7 +4,7 @@ date: 2019-06-17
 author: Marisa Morby
 excerpt: "In this post I outline the high level tasks and goals of product managers at Gatsby"
 tags:
-  - product management
+  - gatsby-inc
 ---
 
 Our goal with product management at Gatsby is to create an ongoing and iterative product discovery and development process that allows us to ship customer value quickly and with confidence in our product–market fit. There are a lot of ways to break down product development and management.
@@ -67,7 +67,7 @@ We’ve had working sessions where we will complete Wardley maps as a team aroun
 
 ### Intent mapping
 
-Our Principal Product Manager, [Preston So](@prestonso) introduced us to intent mapping as a way to set priorities and dependencies for major pieces of product work over the next 3 - 6 months. It’s a way to let all the teams have one source of truth for what we want to focus on in the medium-term.
+Our Principal Product Manager, [Preston So](https://twitter.com/prestonso) introduced us to intent mapping as a way to set priorities and dependencies for major pieces of product work over the next 3 - 6 months. It’s a way to let all the teams have one source of truth for what we want to focus on in the medium-term.
 
 Acceptance criteria listed in the intent maps helps explain what we are going to build and why. We don’t create anything without a reason, and always bring the team in to collaborate on acceptance criteria.
 

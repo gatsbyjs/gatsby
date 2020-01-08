@@ -3,13 +3,26 @@ const { codeFrameColumns } = require(`@babel/code-frame`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const chalk = require(`chalk`)
+const { isNodeInternalModulePath } = require(`gatsby-core-utils`)
 
 const gatsbyLocation = path.dirname(require.resolve(`gatsby/package.json`))
+const reduxThunkLocation = path.dirname(
+  require.resolve(`redux-thunk/package.json`)
+)
+const reduxLocation = path.dirname(require.resolve(`redux/package.json`))
 
 const getNonGatsbyCallSite = () =>
   stackTrace
     .get()
-    .find(callSite => !callSite.getFileName().includes(gatsbyLocation))
+    .find(
+      callSite =>
+        callSite &&
+        callSite.getFileName() &&
+        !callSite.getFileName().includes(gatsbyLocation) &&
+        !callSite.getFileName().includes(reduxLocation) &&
+        !callSite.getFileName().includes(reduxThunkLocation) &&
+        !isNodeInternalModulePath(callSite.getFileName())
+    )
 
 const getNonGatsbyCodeFrame = ({ highlightCode = true } = {}) => {
   const callSite = getNonGatsbyCallSite()
@@ -22,9 +35,11 @@ const getNonGatsbyCodeFrame = ({ highlightCode = true } = {}) => {
   const column = callSite.getColumnNumber()
 
   const code = fs.readFileSync(fileName, { encoding: `utf-8` })
-  return [
-    `File ${chalk.bold(`${fileName}:${line}:${column}`)}`,
-    codeFrameColumns(
+  return {
+    fileName,
+    line,
+    column,
+    codeFrame: codeFrameColumns(
       code,
       {
         start: {
@@ -36,9 +51,23 @@ const getNonGatsbyCodeFrame = ({ highlightCode = true } = {}) => {
         highlightCode,
       }
     ),
-  ].join(`\n`)
+  }
+}
+
+const getNonGatsbyCodeFrameFormatted = ({ highlightCode = true } = {}) => {
+  const possibleCodeFrame = getNonGatsbyCodeFrame({
+    highlightCode,
+  })
+
+  if (!possibleCodeFrame) {
+    return null
+  }
+
+  const { fileName, line, column, codeFrame } = possibleCodeFrame
+  return `File ${chalk.bold(`${fileName}:${line}:${column}`)}\n${codeFrame}`
 }
 
 module.exports = {
   getNonGatsbyCodeFrame,
+  getNonGatsbyCodeFrameFormatted,
 }

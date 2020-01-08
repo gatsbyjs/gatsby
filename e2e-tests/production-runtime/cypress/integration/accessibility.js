@@ -1,6 +1,6 @@
-describe(`focus managment`, () => {
+describe(`focus management`, () => {
   it(`Focus router wrapper after navigation to regular page (from index)`, () => {
-    cy.visit(`/`).waitForRouteChange()
+    cy.visit(`/`).waitForAPIorTimeout(`onRouteUpdate`, { timeout: 10000 })
 
     cy.changeFocus()
     cy.assertRouterWrapperFocus(false)
@@ -27,7 +27,9 @@ describe(`focus managment`, () => {
   })
 
   it(`Focus router wrapper after navigation from 404`, () => {
-    cy.visit(`/broken-path`, { failOnStatusCode: false }).waitForRouteChange()
+    cy.visit(`/broken-path`, {
+      failOnStatusCode: false,
+    }).waitForAPIorTimeout(`onRouteUpdate`, { timeout: 5000 })
 
     cy.changeFocus()
     cy.assertRouterWrapperFocus(false)
@@ -36,7 +38,9 @@ describe(`focus managment`, () => {
   })
 
   it(`Focus router wrapper after navigation from one 404 path to another 404 path`, () => {
-    cy.visit(`/broken-path`, { failOnStatusCode: false }).waitForRouteChange()
+    cy.visit(`/broken-path`, {
+      failOnStatusCode: false,
+    }).waitForAPIorTimeout(`onRouteUpdate`, { timeout: 5000 })
 
     // navigating to different not existing page should also trigger
     // router wrapper focus as this is different page
@@ -69,7 +73,7 @@ describe(`focus managment`, () => {
 
     cy.changeFocus()
     cy.assertRouterWrapperFocus(false)
-    cy.navigateAndWaitForRouteChange(`/client-only-paths/profile`)
+    cy.navigateAndWaitForRouteChange(`/client-only-paths/page/profile`)
 
     // inner paths are handled by router instance defined in client-only-paths page
     // which means that navigating inside those should be handled by that router

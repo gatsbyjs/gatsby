@@ -1,6 +1,10 @@
 const reducer = require(`../config`)
 
 describe(`config reducer`, () => {
+  beforeEach(() => {
+    jest.resetModules()
+  })
+
   it(`let's you add a config`, () => {
     const action = {
       type: `SET_SITE_CONFIG`,

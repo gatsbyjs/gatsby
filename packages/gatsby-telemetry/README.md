@@ -10,7 +10,7 @@ Capture an event of type `type` and decorate the generated event with these tags
 
 ### trackError(type, tags)
 
-Capture an error of type `type`. The exception maybe passed in tags and it will be sanitize to anonymize the contents.
+Capture an error of type `type`. The exception maybe passed in tags and it will be sanitized to anonymize the contents.
 
 ### trackBuildError(type, tags)
 

@@ -1,14 +1,13 @@
-const { createHash } = require(`crypto`)
-const uuid = require(`uuid/v1`)
+const uuidv4 = require(`uuid/v4`)
 const EventStorage = require(`./event-storage`)
-const { sanitizeErrors, cleanPaths } = require(`./error-helpers`)
-const ci = require(`ci-info`)
+const { cleanPaths } = require(`./error-helpers`)
+const { isCI, getCIName } = require(`gatsby-core-utils`)
 const os = require(`os`)
-const { basename, join, sep } = require(`path`)
-const { execSync } = require(`child_process`)
+const { join, sep } = require(`path`)
 const isDocker = require(`is-docker`)
 const showAnalyticsNotification = require(`./showAnalyticsNotification`)
 const lodash = require(`lodash`)
+const { getRepositoryId } = require(`./repository-id`)
 
 module.exports = class AnalyticsTracker {
   store = new EventStorage()
@@ -18,17 +17,32 @@ module.exports = class AnalyticsTracker {
   osInfo // lazy
   trackingEnabled // lazy
   componentVersion
-  sessionId = uuid()
+  sessionId = this.getSessionId()
 
   constructor() {
     try {
-      this.componentVersion = require(`../package.json`).version
-      this.installedGatsbyVersion = this.getGatsbyVersion()
-      this.gatsbyCliVersion = this.getGatsbyCliVersion()
+      if (this.store.isTrackingDisabled()) {
+        this.trackingEnabled = false
+      }
+
       this.defaultTags = this.getTagsFromEnv()
+
+      // These may throw and should be last
+      this.componentVersion = require(`../package.json`).version
+      this.gatsbyCliVersion = this.getGatsbyCliVersion()
+      this.installedGatsbyVersion = this.getGatsbyVersion()
     } catch (e) {
       // ignore
     }
+  }
+
+  // We might have two instances of this lib loaded, one from globally installed gatsby-cli and one from local gatsby.
+  // Hence we need to use process level globals that are not scoped to this module
+  getSessionId() {
+    return (
+      process.gatsbyTelemetrySessionId ||
+      (process.gatsbyTelemetrySessionId = uuidv4())
+    )
   }
 
   getTagsFromEnv() {
@@ -111,18 +125,37 @@ module.exports = class AnalyticsTracker {
     delete this.metadataCache[type]
     const eventType = `CLI_ERROR_${type}`
 
+    this.formatErrorAndStoreEvent(eventType, lodash.merge({}, tags, decoration))
+  }
+
+  captureBuildError(type, tags = {}) {
+    if (!this.isTrackingEnabled()) {
+      return
+    }
+    const decoration = this.metadataCache[type]
+    delete this.metadataCache[type]
+    const eventType = `BUILD_ERROR_${type}`
+
+    this.formatErrorAndStoreEvent(eventType, lodash.merge({}, tags, decoration))
+  }
+
+  formatErrorAndStoreEvent(eventType, tags) {
     if (tags.error) {
       // `error` ought to have been `errors` but is `error` in the database
       if (Array.isArray(tags.error)) {
         const { error, ...restOfTags } = tags
         error.forEach(err => {
-          this.captureError(type, { error: err, ...restOfTags })
+          this.formatErrorAndStoreEvent(eventType, {
+            error: err,
+            ...restOfTags,
+          })
         })
         return
       }
 
       tags.errorV2 = {
-        id: tags.error.id,
+        // errorCode field was changed from `id` to `code`
+        id: tags.error.code || tags.error.id,
         text: cleanPaths(tags.error.text),
         level: tags.error.level,
         type: tags.error?.type,
@@ -134,23 +167,7 @@ module.exports = class AnalyticsTracker {
       delete tags.error
     }
 
-    this.buildAndStoreEvent(eventType, lodash.merge({}, tags, decoration))
-  }
-
-  captureBuildError(type, tags = {}) {
-    if (!this.isTrackingEnabled()) {
-      return
-    }
-    const decoration = this.metadataCache[type]
-    delete this.metadataCache[type]
-    const eventType = `BUILD_ERROR_${type}`
-
-    if (tags.error) {
-      // `error` ought to have been `errors` but is `error` in the database
-      tags.error = sanitizeErrors(tags.error)
-    }
-
-    this.buildAndStoreEvent(eventType, lodash.merge({}, tags, decoration))
+    this.buildAndStoreEvent(eventType, tags)
   }
 
   buildAndStoreEvent(eventType, tags) {
@@ -162,10 +179,10 @@ module.exports = class AnalyticsTracker {
       sessionId: this.sessionId,
       time: new Date(),
       machineId: this.getMachineId(),
-      repositoryId: this.getRepoId(),
       componentId: `gatsby-cli`,
       osInformation: this.getOsInfo(),
       componentVersion: this.componentVersion,
+      ...getRepositoryId(),
     }
     this.store.addEvent(event)
   }
@@ -177,7 +194,7 @@ module.exports = class AnalyticsTracker {
     }
     let machineId = this.store.getConfig(`telemetry.machineId`)
     if (!machineId) {
-      machineId = uuid()
+      machineId = uuidv4()
       this.store.updateConfig(`telemetry.machineId`, machineId)
     }
     this.machineId = machineId
@@ -191,7 +208,7 @@ module.exports = class AnalyticsTracker {
     }
     let enabled = this.store.getConfig(`telemetry.enabled`)
     if (enabled === undefined || enabled === null) {
-      if (!ci.isCI) {
+      if (!isCI()) {
         showAnalyticsNotification()
       }
       enabled = true
@@ -199,25 +216,6 @@ module.exports = class AnalyticsTracker {
     }
     this.trackingEnabled = enabled
     return enabled
-  }
-
-  getRepoId() {
-    // we may live multiple levels in git repo
-    let prefix = `pwd:`
-    let repo = basename(process.cwd())
-    try {
-      const originBuffer = execSync(
-        `git config --local --get remote.origin.url`,
-        { timeout: 1000, stdio: `pipe` }
-      )
-      repo = String(originBuffer).trim()
-      prefix = `git:`
-    } catch (e) {
-      // ignore
-    }
-    const hash = createHash(`sha256`)
-    hash.update(repo)
-    return prefix + hash.digest(`hex`)
   }
 
   getOsInfo() {
@@ -231,8 +229,8 @@ module.exports = class AnalyticsTracker {
       release: os.release(),
       cpus: (cpus && cpus.length > 0 && cpus[0].model) || undefined,
       arch: os.arch(),
-      ci: ci.isCI,
-      ciName: (ci.isCI && ci.name) || process.env.CI_NAME || undefined,
+      ci: isCI(),
+      ciName: getCIName(),
       docker: isDocker(),
     }
     this.osInfo = osInfo
@@ -259,6 +257,14 @@ module.exports = class AnalyticsTracker {
     this.metadataCache[event] = Object.assign(cached, obj)
   }
 
+  addSiteMeasurement(event, obj) {
+    const cachedEvent = this.metadataCache[event] || {}
+    const cachedMeasurements = cachedEvent.siteMeasurements || {}
+    this.metadataCache[event] = Object.assign(cachedEvent, {
+      siteMeasurements: Object.assign(cachedMeasurements, obj),
+    })
+  }
+
   decorateAll(tags) {
     this.defaultTags = Object.assign(this.defaultTags, tags)
   }
@@ -268,10 +274,38 @@ module.exports = class AnalyticsTracker {
     this.store.updateConfig(`telemetry.enabled`, enabled)
   }
 
+  aggregateStats(data) {
+    const sum = data.reduce((acc, x) => acc + x, 0)
+    const mean = sum / data.length || 0
+    const median = data.sort()[Math.floor((data.length - 1) / 2)] || 0
+    const stdDev =
+      Math.sqrt(
+        data.reduce((acc, x) => acc + Math.pow(x - mean, 2), 0) /
+          (data.length - 1)
+      ) || 0
+
+    const skewness =
+      data.reduce((acc, x) => acc + Math.pow(x - mean, 3), 0) /
+      data.length /
+      Math.pow(stdDev, 3)
+
+    return {
+      count: data.length,
+      min: data.reduce((acc, x) => (x < acc ? x : acc), data[0] || 0),
+      max: data.reduce((acc, x) => (x > acc ? x : acc), 0),
+      sum: sum,
+      mean: mean,
+      median: median,
+      stdDev: stdDev,
+      skewness: !Number.isNaN(skewness) ? skewness : 0,
+    }
+  }
+
   async sendEvents() {
     if (!this.isTrackingEnabled()) {
       return Promise.resolve()
     }
+
     return this.store.sendEvents()
   }
 }

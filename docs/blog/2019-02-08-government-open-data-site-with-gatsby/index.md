@@ -3,11 +3,8 @@ title: "How we're migrating a government open data site to Gatsby"
 date: 2019-02-08
 author: Ryan Johnson
 tags:
-  - open data
-  - government
-  - design
-  - data
-  - d3
+  - cutting-edge-experiences
+  - data-visualization
   - case-studies
 canonicalLink: https://revenuedata.doi.gov/blog/homepage-revamp-part-two/
 ---
@@ -68,7 +65,7 @@ We'll look at each of these in the context of our homepage redesign.
 
 As mentioned above, our most significant challenge transitioning the codebase from 18F to ONRR was operating system compatibility. We were asking a lot of our IT group, who had to vet our tech stack to ensure it met security requirements. It was a time consuming process that, even when we were granted administrative privileges, still left us with dependency errors and a parallel data-update workflow using separate machines.
 
-Gatsby combines multiple front-end tools into one, and the packages are managed with [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/), so the scope of our IT requests is limited to widely used package managers. From what we can tell so far, running Gatsby is nearly identical regardless of the operating system you're using. As we'll describe in the next section, we were able to build a data-update workflow that we could support using our government-issued computers.
+Gatsby combines multiple frontend tools into one, and the packages are managed with [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/), so the scope of our IT requests is limited to widely used package managers. From what we can tell so far, running Gatsby is nearly identical regardless of the operating system you're using. As we'll describe in the next section, we were able to build a data-update workflow that we could support using our government-issued computers.
 
 ### GraphQL
 
@@ -185,7 +182,7 @@ Fortunately, Gatsby provides a hook into the entire lifecycle of its build proce
 
 Developers tout Gatsby's speed, and [prefetching](/docs/how-code-splitting-works/) page assets is integral to Gatsby's performance advantages. However, Gatsby isn't aware of our deployment structure, which results in an error when a page loads in the production environment.
 
-Basically, the Jekyll part of the site deploys to a directory that isn't known to Gatsby at build time. Consequently, Gatsby creates a `pages.json` object that contains the wrong locations for files. To deal with this, we use another feature of Gatsby's client API, [`onClientEntry`](/docs/browser-apis/#onClientEntry). Using `gatsby-browser.js`, we override `pages.json` by passing the correct assets to Gatsby ([full code here](https://github.com/ONRR/doi-extractives-data/blob/dev/gatsby-site/gatsby-browser.js).)
+Basically, the Jekyll part of the site deploys to a directory that isn't known to Gatsby at build time. Consequently, Gatsby creates a `pages.json` object that contains the wrong locations for files. To deal with this, we use another feature of Gatsby's client API, [`onClientEntry`](/docs/browser-apis/#onClientEntry). Using `gatsby-browser.js`, we override `pages.json` by passing the correct assets to Gatsby ([full code here](https://github.com/ONRR/doi-extractives-data/blob/d355ba54a08a4a36a23e4f3d4a06bbca517cee5f/gatsby-browser.js)).
 
 ```javascript
 exports.onClientEntry = () => {

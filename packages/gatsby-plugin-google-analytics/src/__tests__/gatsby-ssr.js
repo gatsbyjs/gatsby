@@ -29,7 +29,7 @@ describe(`gatsby-plugin-google-analytics`, () => {
           const setHeadComponents = jest.fn()
           const setPostBodyComponents = jest.fn()
 
-          options = Object.assign({}, options)
+          options = Object.assign({ trackingId: `TEST_TRACKING_ID` }, options)
 
           onRenderBody({ setHeadComponents, setPostBodyComponents }, options)
 
@@ -38,6 +38,15 @@ describe(`gatsby-plugin-google-analytics`, () => {
             setPostBodyComponents,
           }
         }
+
+        it(`does not set tracking script when trackingId not given`, () => {
+          const { setHeadComponents, setPostBodyComponents } = setup({
+            trackingId: ``,
+          })
+
+          expect(setHeadComponents).not.toHaveBeenCalled()
+          expect(setPostBodyComponents).not.toHaveBeenCalled()
+        })
 
         it(`sets tracking script`, () => {
           const { setHeadComponents, setPostBodyComponents } = setup()
@@ -56,9 +65,7 @@ describe(`gatsby-plugin-google-analytics`, () => {
         })
 
         it(`sets trackingId`, () => {
-          const { setPostBodyComponents } = setup({
-            trackingId: `TEST_TRACKING_ID`,
-          })
+          const { setPostBodyComponents } = setup()
 
           const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0])
 
@@ -135,6 +142,35 @@ describe(`gatsby-plugin-google-analytics`, () => {
 
           expect(result).toMatch(/cookieName/)
           expect(result).toMatch(/sampleRate/)
+        })
+
+        it(`sets additional general fields`, () => {
+          const { setPostBodyComponents } = setup({
+            transport: `beacon`,
+            allowAdFeatures: true,
+            queueTime: 5,
+          })
+
+          const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0])
+          expect(result).toContain(`ga('set', 'transport', 'beacon')`)
+          expect(result).toContain(`ga('set', 'allowAdFeatures', 'true')`)
+          expect(result).toContain(`ga('set', 'queueTime', '5')`)
+        })
+
+        it(`does not set fields that have an invalid value`, () => {
+          const { setPostBodyComponents } = setup({
+            allowAdFeatures: `swag`,
+          })
+
+          const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0])
+          expect(result).not.toContain(`allowAdFeatures`)
+        })
+
+        it(`does not set fields that were not set`, () => {
+          const { setPostBodyComponents } = setup({})
+
+          const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0])
+          expect(result).not.toContain(`allowAdFeatures`)
         })
       })
     })

@@ -35,7 +35,7 @@ a `rel=canonical` e.g.
 
 URL search parameters are included in the canonical URL by default. If you worry about duplicate content because for example `/blog` and `/blog?tag=foobar` will be indexed separately, you should set the option `stripQueryString` to `true`. The latter will then be changed to `/blog`.
 
-```title=gatsby-config.js
+```js:title=gatsby-config.js
 module.exports = {
   plugins: [
     {
@@ -45,6 +45,6 @@ module.exports = {
         stripQueryString: true,
       },
     },
-  ]
+  ],
 }
 ```

@@ -2,7 +2,7 @@
 title: "Improvements to Plugin Authoring Experience"
 date: 2019-04-25
 author: Shannon Soper
-tags: ["ux", "plugins"]
+tags: ["ux", "user-testing", "plugins"]
 ---
 
 We recently interviewed authors of popular Gatsby plugins; here's what we learned and how we're changing to support plugin authors!

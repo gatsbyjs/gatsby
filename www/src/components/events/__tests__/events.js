@@ -1,5 +1,5 @@
 import React from "react"
-import { render } from "react-testing-library"
+import { render } from "@testing-library/react"
 
 import Events from "../events"
 
@@ -37,7 +37,6 @@ describe(`<Events />`, () => {
     )
     const upcoming = getByText(`Upcoming Events`)
     const past = getByText(`Past Events`)
-
     ;[upcoming, past].forEach(el => {
       expect(el.nextSibling.querySelectorAll(`li`).length).toBeGreaterThan(0)
     })
@@ -60,7 +59,7 @@ describe(`<Events />`, () => {
 
     it(`display's today's events as upcoming`, () => {
       const { getByText } = render(
-        <Events events={mockEvents([`1990-10-18`].map(toEvent))} />
+        <Events events={mockEvents([`2100-10-08`].map(toEvent))} />
       )
 
       const upcoming = getByText(`Upcoming Events`)

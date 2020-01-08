@@ -1,5 +1,5 @@
 ---
-title: "Proxying API Requests in Development"
+title: Proxying API Requests in Development
 ---
 
 ## Resources
@@ -14,7 +14,7 @@ backend implementation.
 To tell the development server to proxy any unknown requests to your API server
 in development, add a `proxy` field to your `gatsby-config.js`, for example:
 
-```js:title=gatsby-config.js
+```javascript:title=gatsby-config.js
 module.exports = {
   proxy: {
     prefix: "/api",

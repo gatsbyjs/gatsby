@@ -2,7 +2,7 @@
 title: Introducing the Gatsby UX Research Program
 date: 2017-12-20
 author: "Shannon Soper"
-tags: ["ux"]
+tags: ["ux", "user-testing"]
 ---
 
 ## How this all started
@@ -71,15 +71,34 @@ The second most common pain point is GraphQL. About half of our interviewees sai
 Other salient feedback includes that people who have used WordPress for a long time are looking for other solutions and want Gatsby to play well with many kinds of CMSs. Finally, almost every interviewee loves the Gatsby development experience because it is smooth and fast. Here are some fun quotes:
 
 <Pullquote citation="Alec Lomas, AZ, frontend dev and design">
-You guys are pretty much nailing it. Just keep killin’ it, I guess!
+  You guys are pretty much nailing it. Just keep killin’ it, I guess!
 </Pullquote>
 
 <Pullquote citation="David Luhr, UT, UX">
-I’ve played around with static sites in Jekyll in the past, but I’ve always hit a pain point with how much functionality I could build into the different includes and partials and things that were starting to become popular with different templating languages. So I’ve always loved React for all the encapsulation of style and functionality. And components--but I never really knew how to use it. And Gatsby has been that first opportunity where everything comes together, everything can be in one system. My background is really design focused, so I think of a component library along those lines. Until Gatsby, I never really had a way to see how I could use that across all of our pages instead of relying on a content management library that was kind of slow to develop in.
+  I’ve played around with static sites in Jekyll in the past, but I’ve always
+  hit a pain point with how much functionality I could build into the different
+  includes and partials and things that were starting to become popular with
+  different templating languages. So I’ve always loved React for all the
+  encapsulation of style and functionality. And components--but I never really
+  knew how to use it. And Gatsby has been that first opportunity where
+  everything comes together, everything can be in one system. My background is
+  really design focused, so I think of a component library along those lines.
+  Until Gatsby, I never really had a way to see how I could use that across all
+  of our pages instead of relying on a content management library that was kind
+  of slow to develop in.
 </Pullquote>
 
 <Pullquote citation="Juliette Pichot, Germany, web developer">
-If you ever decide to sell to consumers, I really think that the speed / responsiveness of Gatsby is a really good selling point. Like when I tried to sell my idea of building the new site in Gatsby (which would take a little longer compared to building it in Squarespace) to my husband, I simply showed him how quick it is to navigate around a Gatsby site and he was instantly sold. The explicit awareness that website speed matters a lot is currently kinda limited to Silicon Valley etc, but the benefits are definitely apparent as well to the average consumer. Pair that with stats around how speed increases conversions and it'd definitely be a pretty appealing offer to people.
+  If you ever decide to sell to consumers, I really think that the speed /
+  responsiveness of Gatsby is a really good selling point. Like when I tried to
+  sell my idea of building the new site in Gatsby (which would take a little
+  longer compared to building it in Squarespace) to my husband, I simply showed
+  him how quick it is to navigate around a Gatsby site and he was instantly
+  sold. The explicit awareness that website speed matters a lot is currently
+  kinda limited to Silicon Valley etc, but the benefits are definitely apparent
+  as well to the average consumer. Pair that with stats around how speed
+  increases conversions and it'd definitely be a pretty appealing offer to
+  people.
 </Pullquote>
 
 ## So what does this all mean?

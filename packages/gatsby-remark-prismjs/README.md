@@ -20,9 +20,9 @@ plugins: [
           resolve: `gatsby-remark-prismjs`,
           options: {
             // Class prefix for <pre> tags containing syntax highlighting;
-            // defaults to 'language-' (eg <pre class="language-js">).
+            // defaults to 'language-' (e.g. <pre class="language-js">).
             // If your site loads Prism into the browser at runtime,
-            // (eg for use with libraries like react-live),
+            // (e.g. for use with libraries like react-live),
             // you may use this to prevent Prism from re-processing syntax.
             // This is an uncommon use-case though;
             // If you're unsure, it's best to use the default value.
@@ -40,9 +40,9 @@ plugins: [
             // bash highlighter.
             aliases: {},
             // This toggles the display of line numbers globally alongside the code.
-            // To use it, add the following line in src/layouts/index.js
+            // To use it, add the following line in gatsby-browser.js
             // right after importing the prism color scheme:
-            //  `require("prismjs/plugins/line-numbers/prism-line-numbers.css");`
+            //  require("prismjs/plugins/line-numbers/prism-line-numbers.css")
             // Defaults to false.
             // If you wish to only show line numbers on certain code blocks,
             // leave false and use the {numberLines: true} syntax below
@@ -68,6 +68,17 @@ plugins: [
                 },
               },
             ],
+            // Customize the prompt used in shell output
+            // Values below are default
+            prompt: {
+              user: "root",
+              host: "localhost",
+              global: false,
+            },
+            // By default the HTML entities <>&'" are escaped.
+            // Add additional HTML escapes by providing a mapping
+            // of HTML entities and their escape value IE: { '}': '&#123;' }
+            escapeEntities: {},
           },
         },
       ],
@@ -190,6 +201,41 @@ Then add in the corresponding CSS:
   padding: 0;
   padding-left: 2.8em;
   overflow: initial;
+}
+```
+
+#### Optional: Add shell prompt
+
+If you want a fancy prompt on anything with `shell` or `bash`, you need to import
+the following CSS file in `gatsby-browser.js`:
+
+```javascript
+// gatsby-browser.js
+require("prismjs/plugins/command-line/prism-command-line.css")
+```
+
+If you want to change the resulting prompt, use the following CSS:
+
+```css
+.command-line-prompt > span:before {
+  color: #999;
+  content: " ";
+  display: block;
+  padding-right: 0.8em;
+}
+
+/* Prompt for all users */
+.command-line-prompt > span[data-user]:before {
+  content: "[" attr(data-user) "@" attr(data-host) "] $";
+}
+
+/* Prompt for root */
+.command-line-prompt > span[data-user="root"]:before {
+  content: "[" attr(data-user) "@" attr(data-host) "] #";
+}
+
+.command-line-prompt > span[data-prompt]:before {
+  content: attr(data-prompt);
 }
 ```
 
@@ -323,6 +369,25 @@ plugins: [
   }
 ]
 ```
+````
+
+### Shell prompt
+
+To show fancy prompts next to shell commands (only triggers on `bash`), either set `prompt.global` to `true` in `gatsby-config.js`,
+or pass at least one of `{outputLines: <range>}`, `{promptUser: <user>}`, or `{promptHost: <host>}` to a snippet
+
+By default, every line gets a prompt appended to the start, this behaviour can be changed by specifying `{outputLines: <range>}`
+to the language.
+
+````
+```bash{outputLines: 2-10,12}
+````
+
+The user and host used in the appended prompt is pulled from the `prompt.user` and `prompt.host` values,
+unless explicitly overridden by the `promptUser` and `promptHost` options in the snippet, e.g.:
+
+````
+```bash{promptUser: alice}{promptHost: dev.localhost}
 ````
 
 ### Line hiding

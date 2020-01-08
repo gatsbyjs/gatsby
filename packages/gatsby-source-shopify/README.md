@@ -11,7 +11,7 @@ stores via the [Shopify Storefront API][shopify-storefront-api].
 
 ## Install
 
-```sh
+```shell
 npm install --save gatsby-source-shopify
 ```
 
@@ -37,6 +37,9 @@ plugins: [
       // The domain name of your Shopify shop. This is required.
       // Example: 'gatsby-source-shopify-test-shop' if your Shopify address is
       // 'gatsby-source-shopify-test-shop.myshopify.com'.
+      // If you are running your shop on a custom domain, you need to use that
+      // as the shop name, without a trailing slash, for example:
+      // shopName: "gatsby-shop.com",
       shopName: "gatsby-source-shopify-test-shop",
 
       // An API access token to your Shopify shop. This is required.
@@ -57,10 +60,18 @@ plugins: [
       // at startup. If your application encounters timeout errors during
       // startup, try decreasing this number.
       paginationSize: 250,
+
+      // List of collections you want to fetch.
+      // Possible values are: 'shop' and 'content'.
+      // Defaults to ['shop', 'content'].
+      includeCollections: ["shop", "content"],
     },
   },
 ]
 ```
+
+NOTE: By default, all metafields are private. In order to pull metafields,
+you must first [expose the metafield to the Storefront API](https://help.shopify.com/en/api/guides/metafields/storefront-api-metafields#expose-metafields-to-the-storefront-api).
 
 ## How to query
 
@@ -106,7 +117,6 @@ The following data types are available:
 | **Product**        | Represents an individual item for sale in a Shopify store.                                                            |
 | **ProductOption**  | Custom product property names.                                                                                        |
 | **ProductVariant** | Represents a different version of a product, such as differing sizes or differing colors.                             |
-| **ProductType**    | Represents a category of products.                                                                                    |
 | **ShopPolicy**     | Policy that a merchant has configured for their store, such as their refund or privacy policy.                        |
 
 For each data type listed above, `shopify${typeName}` and

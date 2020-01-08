@@ -28,7 +28,7 @@
     "gatsby-transformer-yaml": "^2.1.11",
     "glamor": "^2.20.40",
     "katex": "^0.10.1",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.14",
     "lodash-id": "^0.14.0",
     "lodash-webpack-plugin": "^0.11.5",
     "prismjs": "^1.16.0",

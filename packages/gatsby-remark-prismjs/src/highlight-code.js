@@ -1,12 +1,13 @@
 const Prism = require(`prismjs`)
-const _ = require(`lodash`)
 const loadPrismLanguage = require(`./load-prism-language`)
 const handleDirectives = require(`./directives`)
+const escapeHTML = require(`./escape-html`)
 const unsupportedLanguages = new Set()
 
 module.exports = (
   language,
   code,
+  additionalEscapeCharacters = {},
   lineNumbersHighlight = [],
   noInlineHighlight = false
 ) => {
@@ -34,13 +35,14 @@ module.exports = (
         console.warn(message, `applying generic code block`)
         unsupportedLanguages.add(lang)
       }
-      return _.escape(code)
+      return escapeHTML(code, additionalEscapeCharacters)
     }
   }
 
   const grammar = Prism.languages[language]
   const highlighted = Prism.highlight(code, grammar, language)
   const codeSplits = handleDirectives(highlighted, lineNumbersHighlight)
+
   let finalCode = ``
   const lastIdx = codeSplits.length - 1 // Don't add back the new line character after highlighted lines
   // as they need to be display: block and full-width.

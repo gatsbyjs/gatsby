@@ -4,8 +4,8 @@ date: 2019-06-19
 author: Marisa Morby
 excerpt: "Open Beta for Gatsby Preview is here, with more CMS integrations!"
 tags:
-  - commercial
-  - Gatsby Preview
+  - gatsby-preview
+  - gatsby-inc
 ---
 
 We’re excited to announce Gatsby Preview is now in open beta, and you can [try it free for 14 days!](https://www.gatsbyjs.com/preview)

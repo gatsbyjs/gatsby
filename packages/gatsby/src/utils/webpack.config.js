@@ -3,7 +3,6 @@ require(`v8-compile-cache`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const dotenv = require(`dotenv`)
-const FriendlyErrorsWebpackPlugin = require(`@pieh/friendly-errors-webpack-plugin`)
 const PnpWebpackPlugin = require(`pnp-webpack-plugin`)
 const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
@@ -23,7 +22,13 @@ const hasLocalEslint = require(`./local-eslint-config-finder`)
 //   3) build-javascript: Build JS and CSS chunks for production
 //   4) build-html: build all HTML files
 
-module.exports = async (program, directory, suppliedStage) => {
+module.exports = async (
+  program,
+  directory,
+  suppliedStage,
+  port,
+  { parentSpan } = {}
+) => {
   const modulesThatUseGatsby = await getGatsbyDependents()
   const directoryPath = withBasePath(directory)
 
@@ -199,10 +204,7 @@ module.exports = async (program, directory, suppliedStage) => {
         configPlugins = configPlugins.concat([
           plugins.hotModuleReplacement(),
           plugins.noEmitOnErrors(),
-
-          new FriendlyErrorsWebpackPlugin({
-            clearConsole: false,
-          }),
+          plugins.eslintGraphqlSchemaReload(),
         ])
         break
       case `build-javascript`: {
@@ -259,6 +261,18 @@ module.exports = async (program, directory, suppliedStage) => {
       rules.images(),
       rules.media(),
       rules.miscAssets(),
+
+      // This is a hack that exports one of @reach/router internals (BaseContext)
+      // to export list. We need it to reset basepath and baseuri context after
+      // Gatsby main router changes it, to keep v2 behaviour.
+      // We will need to most likely remove this for v3.
+      {
+        test: require.resolve(`@reach/router/es/index`),
+        type: `javascript/auto`,
+        use: [{
+          loader: require.resolve(`./reach-router-add-basecontext-export-loader`),
+        }],
+      }
     ]
 
     // Speedup 🏎️💨 the build! We only include transpilation of node_modules on javascript production builds
@@ -302,7 +316,7 @@ module.exports = async (program, directory, suppliedStage) => {
         // RHL will patch React, replace React-DOM by React-🔥-DOM and work with fiber directly
         // It's necessary to remove the warning in console (https://github.com/gatsbyjs/gatsby/issues/11934)
         configRules.push({
-          include: /node_modules/,
+          include: /node_modules\/react-dom/,
           test: /\.jsx?$/,
           use: {
             loader: require.resolve(`./webpack-hmr-hooks-patch`),
@@ -450,13 +464,34 @@ module.exports = async (program, directory, suppliedStage) => {
   }
 
   if (stage === `build-javascript`) {
+    const componentsCount = store.getState().components.size
+
     config.optimization = {
       runtimeChunk: {
         name: `webpack-runtime`,
       },
+      // use hashes instead of ids for module identifiers
+      // TODO update to deterministic in webpack 5 (hashed is deprecated)
+      // @see https://webpack.js.org/guides/caching/#module-identifiers
+      moduleIds: `hashed`,
       splitChunks: {
         name: false,
+        chunks: `all`,
         cacheGroups: {
+          default: false,
+          vendors: false,
+          commons: {
+            name: `commons`,
+            chunks: `all`,
+            // if a chunk is used more than half the components count,
+            // we can assume it's pretty global
+            minChunks: componentsCount > 2 ? componentsCount * 0.5 : 2,
+          },
+          react: {
+            name: `commons`,
+            chunks: `all`,
+            test: /[\\/]node_modules[\\/](react|react-dom|scheduler)[\\/]/,
+          },
           // Only create one CSS file to avoid
           // problems with code-split CSS loading in different orders
           // causing inconsistent/non-determanistic styling
@@ -467,6 +502,8 @@ module.exports = async (program, directory, suppliedStage) => {
             test: /\.(css|scss|sass|less|styl)$/,
             chunks: `all`,
             enforce: true,
+            // this rule trumps all other rules because of the priority.
+            priority: 10,
           },
         },
       },
@@ -548,6 +585,7 @@ module.exports = async (program, directory, suppliedStage) => {
     rules,
     loaders,
     plugins,
+    parentSpan,
   })
 
   return getConfig()
