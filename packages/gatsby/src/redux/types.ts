@@ -1,5 +1,5 @@
 export interface IReduxState {
-  nodes?: any // TODO
+  nodes?: Map<string, Set<string>> // TODO: Confirm this is correct.
   nodesByType: Map<any, any> // TODO
   lastAction: ActionsUnion
   jobs: {
@@ -58,7 +58,13 @@ export interface IReplaceComponentQueryAction {
 export interface IReplaceStaticQueryAction {
   type: `REPLACE_STATIC_QUERY`
   plugin: Plugin | null | undefined
-  payload: any // TODO
+  payload: {
+    name: string
+    componentPath: string
+    id: string
+    query: string
+    hash: string
+  }
 }
 
 export interface IQueryExtractedAction {
@@ -96,7 +102,7 @@ export interface ISetProgramStatusAction {
   type: `SET_PROGRAM_STATUS`
   plugin: Plugin
   traceId: string | undefined
-  payload: ProgramStatus // TODO: Make this an enum
+  payload: ProgramStatus
 }
 
 export interface IPageQueryRunAction {

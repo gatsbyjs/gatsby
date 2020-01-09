@@ -1,7 +1,7 @@
 const { bindActionCreators } = require(`redux`)
 const { store } = require(`..`)
 
-const { actions: internalActions } = require(`./internal`)
+const internalActions = require(`./internal`)
 const { actions: publicActions } = require(`./public`)
 const {
   actions: restrictedActions,
