@@ -4898,7 +4898,7 @@
   description: The default Gatsby starter with no styles.
   tags:
     - Styling:None
-   features:
+ features:
     - Based on gatsby-starter-default
     - No styles
 - url: https://greater-gatsby.now.sh
