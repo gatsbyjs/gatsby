@@ -9242,4 +9242,25 @@
     - Blog
   built_by: Nathaniel Ryan Mathew
   built_by_url: https://github.com/nathanielmathew
+- title: monica*dev
+  url: https://www.aboutmonica.com/
+  main_url: https://www.aboutmonica.com/
+  description: >
+    Personal site for Monica Powell, a software engineer who is passionate about making open-source more accessible and building community, online & offline.
+  categories:
+    - Web Development
+    - Blog
+    - Programming
+    - Portfolio
+  built_by: Monica Powell
+  built_by_url: https://www.aboutmonica.com/
+- title: Shivam Sinha
+  url: https://www.helloshivam.com/
+  main_url: https://www.helloshivam.com/
+  description: >
+    Portfolio of Shivam Sinha, Graphic Designer and Creative Coder based in New York.
+  categories:
+    - Portfolio
+  built_by: Shivam Sinha
+  built_by_url: https://www.helloshivam.com/
   featured: false
