@@ -3,6 +3,7 @@ jest.mock(`../reporter`, () => {
     panic: jest.fn(),
     log: jest.fn(),
     stripIndent: jest.fn(str => str),
+    warn: jest.fn(),
   }
 })
 jest.mock(`../create-cli`)
@@ -51,6 +52,16 @@ describe(`error handling`, () => {
     const { reporter } = setup(`v6.0.0`)
 
     expect(reporter.panic).toHaveBeenCalledWith(
+      expect.stringContaining(`https://gatsby.dev/upgrading-node-js`)
+    )
+  })
+})
+
+describe(`deprecation warning`, () => {
+  it(`warns on Node < 10.13.0`, () => {
+    const { reporter } = setup(`v10.12.0`)
+
+    expect(reporter.warn).toHaveBeenCalledWith(
       expect.stringContaining(`https://gatsby.dev/upgrading-node-js`)
     )
   })
