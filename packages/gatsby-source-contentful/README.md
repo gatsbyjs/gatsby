@@ -273,6 +273,7 @@ You can then insert the HTML inline in your JSX:
      }}
    />
 ```
+While this solution is not ideal, you can alternatively use "Rich text" fields instead of "Long text" in order to avoid the inline html (see below).
 
 #### Duplicated entries
 
