@@ -150,7 +150,7 @@ This next query will pull in a sorted list of the blog posts:
 
 ## Rendering the blog posts to `index.js`
 
-Now that you've created GraphQL queries that pull in the data you want, you'll use that second query to create a list of sorted blogpost titles on your site's homepage. Here is what your `index.js` should look like:
+Now that you've created GraphQL queries that pull in the data you want, you'll use that second query to create a list of sorted blogpost titles on your site's homepage. Here's what your home page component in `src/pages/index.js` should look like:
 
 ```jsx:title=src/pages/index.js
 import React from "react"
@@ -332,7 +332,7 @@ But nobody likes to go to a 404 page to find a blog post! So, let's link these u
 
 Since you already have your structure and query done for the `index.js` page, all you need to do is use the `Link` component to wrap your titles and you should be good to go.
 
-Open up your `index.js` file and add the following:
+Open up `src/pages/index.js` again and add the following:
 
 ```jsx:title=src/pages/index.js
 import React from "react"
