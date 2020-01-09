@@ -21,12 +21,13 @@ To do this yourself, you'll build a simple blog using the excellent [gatsby-star
 ```shell
 gatsby new gatsby-blog https://github.com/gatsbyjs/gatsby-starter-blog
 git init # so you can keep track of the changes
-npm i --save-dev better-sqlite3
+npm i # to install regular gastby requirements
+npm i --save-dev better-sqlite3 # to add an sqlite javascript client
 ```
 
 The useful commands on an sqlite3 command line to explore are `.tables` to see all tables :) and `.schema table_name` to see information about a specific table. Oh! and `.help` to know more.
 
-Next, you will be creating a new file on your project at `src/scripts/migrate.js`. Initially, what you want is to iterate through all your posts and export basic data like title, created date, body and status (published or draft). All of that data is in two tables, the _node_ table and the _field_data_body_. Initially, your script will look like this:
+Next, you will be creating a new file on your project at `src/scripts/import.js`. Initially, what you want is to iterate through all your posts and export basic data like title, created date, body and status (published or draft). All of that data is in two tables, the _node_ table and the _field_data_body_. Initially, your script will look like this:
 
 ```javascript
 const Database = require('better-sqlite3');
@@ -58,6 +59,18 @@ const tags = db
   )
   .pluck()
   .all(row.nid)
+```
+
+To avoid 404 in case you created some url aliases you can query the `url_alias` table and create an aliases frontmatter property and later (depending on your hosting platform) use a plugin like [gatsby-plugin-meta-redirect](https://github.com/nsresulta/gatsby-plugin-meta-redirect) to use the gatsby [createRedirect](https://www.gatsbyjs.org/docs/actions/#createRedirect) function:
+
+```javascript
+const aliases = db
+  .prepare(
+    `SELECT alias FROM url_alias
+    WHERE source = ? AND alias != ?`
+  )
+  .pluck()
+  .all("node/" + row.nid, slug)
 ```
 
 For the image, you will retrieve only the URL of the image, so you can download it and store it locally. And you will replace `public://` for the URL path of the images folder on your old site:

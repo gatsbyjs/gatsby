@@ -472,15 +472,6 @@
     - Web Development
     - Open Source
     - Library
-- title: Artivest
-  main_url: "https://artivest.co/"
-  url: "https://artivest.co/what-we-do/for-advisors-and-investors/"
-  featured: false
-  categories:
-    - Marketing
-    - Blog
-    - Documentation
-    - Finance
 - title: The Audacious Project
   main_url: "https://audaciousproject.org/"
   url: "https://audaciousproject.org/"
@@ -1011,8 +1002,8 @@
     - Marketing
     - Healthcare
 - title: Moteefe
-  main_url: "http://www.moteefe.com/"
-  url: "http://www.moteefe.com/"
+  main_url: "https://www.moteefe.com/"
+  url: "https://www.moteefe.com/"
   featured: false
   categories:
     - Marketing
@@ -2290,6 +2281,19 @@
   built_by: Janosh Riebesell
   built_by_url: "https://janosh.io"
   featured: false
+- title: Gold Edge Training
+  url: "https://www.goldedgetraining.co.uk"
+  main_url: "https://www.goldedgetraining.co.uk"
+  description: >
+    AAT approved online distance learning accountancy training provider. Branded landing page / mini brochure promoting competitor differentiators, student testimonials, offers, service benefits and features. Designed to both inform potential students and encourage visits to company eCommerce site or direct company contact.
+  categories:
+    - Education
+    - Learning
+    - Landing Page
+    - Business
+    - Finance
+  built_by: Leo Furze-Waddock
+  built_by_url: "https://www.linkedin.com/in/lfurzewaddock"
 - title: Gatsby Manor
   description: >
     We build themes for gatsby. We have themes for all projects including personal,
@@ -2309,7 +2313,6 @@
 - title: Ema Suriano's Portfolio
   main_url: https://emasuriano.com/
   url: https://emasuriano.com/
-  source_url: https://github.com/EmaSuriano/emasuriano.github.io
   description: >
     Ema Suriano's portfolio to display information about him, his projects and what he's writing about.
   categories:
@@ -3744,17 +3747,6 @@
   built_by: Marcy Sutton
   built_by_url: https://marcysutton.com
   featured: true
-- title: Kepinski.me
-  main_url: https://kepinski.me
-  url: https://kepinski.me
-  description: >
-    The personal site of Antoni Kepinski, Node.js Developer.
-  categories:
-    - Portfolio
-    - Open Source
-  built_by: Antoni Kepinski
-  built_by_url: https://kepinski.me
-  featured: false
 - title: WPGraphQL Docs
   main_url: https://docs.wpgraphql.com
   url: https://docs.wpgraphql.com
@@ -5280,7 +5272,6 @@
 - title: Kenneth Kwakye-Gyamfi Portfolio Site
   url: https://www.kwakye-gyamfi.com
   main_url: https://www.kwakye-gyamfi.com
-  source_url: https://github.com/cr05s19xx/cross-site
   description: >
     Personal portfolio site for Kenneth Kwakye-Gyamfi, a mobile and web full stack applications developer currently based in Accra, Ghana.
   categories:
@@ -7306,7 +7297,6 @@
 - title: GatsbyFinds
   main_url: https://gatsbyfinds.netlify.com
   url: https://gatsbyfinds.netlify.com
-  source_url: https://github.com/bvlktech/GatsbyFinds
   description: >
     GatsbyFinds is a website built ontop of Gatsby v2 by providing developers with a showcase of all the lastest projects made with the beloved GatsbyJS.
   categories:
@@ -9069,6 +9059,37 @@
     - Marketing
     - Design
   built_by: João Matos (Global Creative Studio - Education First)
+- title: Codica
+  main_url: https://www.codica.com/
+  url: https://www.codica.com/
+  description: >
+    We help startups and established brands with JAMStack, Progressive Web Apps and Marketplaces development.
+  categories:
+    - Agency
+    - Web Development
+  built_by: Codica
+  built_by_url: https://www.codica.com/
+- title: Bhavani Ravi's Portfolio
+  url: https://bhavaniravi.com
+  main_url: https://bhavaniravi.com
+  description: >
+    Showcase of Bhavani Ravi's skillset and blogs
+  categories:
+    - Blog
+    - Portfolio
+  built_by: Bhavani Ravi
+  built_by_url: https://twitter.com/geeky_bhavani
+- title: Kotoriyama
+  main_url: https://kotoriyama.com/
+  url: https://kotoriyama.com/
+  description: >
+    Japanese Indie Game Creator.
+  featured: false
+  categories:
+    - App
+    - Entertainment
+    - Mobile Development
+  built_by: Motoyoshi Shiine (Kotoriyama)
 - title: PWA Shields
   url: https://www.pwa-shields.com
   main_url: https://www.pwa-shields.com
@@ -9104,6 +9125,16 @@
     - Web Development
   built_by: Ramón Chancay
   built_by_url: "https://ramonchancay.me/"
+- title: Ananya Neogi
+  main_url: https://ananyaneogi.com
+  url: https://ananyaneogi.com
+  description: >
+    Showcases Ananya's work as a frontend developer and comprises of a collection of written articles on web development, programming and, user experience.
+  categories:
+    - Portfolio
+    - Blog
+  built_by: Ananya Neogi
+  built_by_url: https://ananyaneogi.com
 - title: webman.pro
   main_url: https://webman.pro/
   url: https://webman.pro/
@@ -9131,7 +9162,7 @@
   built_by_url: https://github.com/junhobaik
   featured: false
 - title: React Resume Generator
-  main_url: https://github.com/nimahkh/resume_generator
+  main_url: https://nimahkh.github.io/nima_habibkhoda
   url: https://nimahkh.github.io/nima_habibkhoda
   source_url: https://github.com/nimahkh/resume_generator
   description: >
@@ -9163,3 +9194,61 @@
     - Education
     - Learning
     - Technology
+- title: The Rebigulator
+  main_url: "https://www.rebigulator.org/"
+  source_url: "https://github.com/Me4502/Rebigulator/"
+  url: "https://rebigulator.org/"
+  description: A quote-based via game powered by Frinkiac
+  built_by: Matthew Miller
+  built_by_url: https://matthewmiller.dev/
+  featured: false
+  categories:
+    - Open Source
+    - Entertainment
+    - App
+- title: madewithlove
+  main_url: https://www.madewithlove.be
+  url: https://www.madewithlove.be
+  description: >-
+    We build digital products and create the teams around them. We can help with software engineering, product management, managing technical teams, audits and technical consulting.
+  built_by: madewithlove
+  built_by_url: https://www.madewithlove.be
+  featured: false
+  categories:
+    - Web Development
+    - Blog
+    - Agency
+    - Business
+- title: Sprucehill
+  url: https://sprucehill.ca/
+  main_url: https://sprucehill.ca/
+  description: >
+    Sprucehill is a North Vancouver based custom home builder and renovator.
+  categories:
+    - WordPress
+    - Business
+  built_by: Bare Advertising & Communications
+  built_by_url: https://www.bare.ca/
+  featured: false
+- title: monica*dev
+  url: https://www.aboutmonica.com/
+  main_url: https://www.aboutmonica.com/
+  description: >
+    Personal site for Monica Powell, a software engineer who is passionate about making open-source more accessible and building community, online & offline.
+  categories:
+    - Web Development
+    - Blog
+    - Programming
+    - Portfolio
+  built_by: Monica Powell
+  built_by_url: https://www.aboutmonica.com/
+- title: Shivam Sinha
+  url: https://www.helloshivam.com/
+  main_url: https://www.helloshivam.com/
+  description: >
+    Portfolio of Shivam Sinha, Graphic Designer and Creative Coder based in New York.
+  categories:
+    - Portfolio
+  built_by: Shivam Sinha
+  built_by_url: https://www.helloshivam.com/
+  featured: false

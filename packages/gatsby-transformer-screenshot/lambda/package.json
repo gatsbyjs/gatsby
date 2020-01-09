@@ -1,13 +1,14 @@
 {
   "dependencies": {
+    "chrome-aws-lambda": "^2.0.1",
     "gatsby-core-utils": "^1.0.22",
-    "puppeteer": "0.13.0",
-    "tar": "^4.4.13"
+    "puppeteer-core": "^2.0.0"
   },
   "devDependencies": {
     "aws-sdk": "^2.586.0"
   },
-  "keywords": [
-    "gatsby-plugin"
-  ]
+  "keywords": [],
+  "engines": {
+    "node": ">=10.13.0"
+  }
 }
