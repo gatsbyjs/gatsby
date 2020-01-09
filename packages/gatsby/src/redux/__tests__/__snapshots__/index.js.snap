@@ -17,9 +17,8 @@ Object {
     },
   },
   "jobsV2": Object {
-    "active": Set {},
-    "done": Map {},
-    "stale": Map {},
+    "complete": Map {},
+    "incomplete": Map {},
   },
   "pageDataStats": Map {},
   "staticQueryComponents": Map {},

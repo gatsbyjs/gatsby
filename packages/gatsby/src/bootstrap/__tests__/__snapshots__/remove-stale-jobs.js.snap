@@ -6,7 +6,7 @@ Array [
 ]
 `;
 
-exports[`remove-stale-jobs should remove stale jobs from done cache 1`] = `
+exports[`remove-stale-jobs should remove stale jobs from complete cache 1`] = `
 Array [
   Object {
     "payload": Object {
