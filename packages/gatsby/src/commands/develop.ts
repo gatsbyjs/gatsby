@@ -285,7 +285,7 @@ async function startServer(program: IProgram): Promise<IServer> {
   // Set up API proxy.
   const { proxy } = store.getState().config
   if (proxy) {
-    proxy.forEach(({prefix, url}) => {
+    proxy.forEach(({ prefix, url }) => {
       app.use(`${prefix}/*`, (req, res) => {
         const proxiedUrl = url + req.originalUrl
         const {
