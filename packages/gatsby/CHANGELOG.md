@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.18.19](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.18...gatsby@2.18.19) (2020-01-09)
+
+### Bug Fixes
+
+- **gatsby:** Webpack /_ webpackPrefetch/webpackPreload _/ comments causing a bug ([#20403](https://github.com/gatsbyjs/gatsby/issues/20403)) ([1b89b10](https://github.com/gatsbyjs/gatsby/commit/1b89b10))
+
+### Features
+
+- **gatsby:** Allow alternative import syntax for useStaticQuery ([#20330](https://github.com/gatsbyjs/gatsby/issues/20330)) ([17eaa72](https://github.com/gatsbyjs/gatsby/commit/17eaa72))
+
 ## [2.18.18](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.17...gatsby@2.18.18) (2020-01-06)
 
 **Note:** Version bump only for package gatsby

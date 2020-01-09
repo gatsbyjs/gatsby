@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.3.9...gatsby-transformer-sharp@2.3.10) (2020-01-09)
+
+### Bug Fixes
+
+- **gatsby-transformer-sharp:** define required image fields as non-null in schema ([#20314](https://github.com/gatsbyjs/gatsby/issues/20314)) ([e3026c9](https://github.com/gatsbyjs/gatsby/commit/e3026c9))
+
 ## [2.3.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.3.7...gatsby-transformer-sharp@2.3.9) (2019-12-10)
 
 **Note:** Version bump only for package gatsby-transformer-sharp

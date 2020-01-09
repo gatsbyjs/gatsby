@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.74](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.73...gatsby-source-contentful@2.1.74) (2020-01-09)
+
+### Bug Fixes
+
+- **gatsby-transformer-sharp:** define required image fields as non-null in schema ([#20314](https://github.com/gatsbyjs/gatsby/issues/20314)) ([e3026c9](https://github.com/gatsbyjs/gatsby/commit/e3026c9))
+
+### Features
+
+- **gatsby-source-contentful:** Add option to use Content Type ID for GraphQL schema generation ([#20265](https://github.com/gatsbyjs/gatsby/issues/20265)) ([0e71cfb](https://github.com/gatsbyjs/gatsby/commit/0e71cfb))
+
 ## [2.1.73](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.72...gatsby-source-contentful@2.1.73) (2019-12-23)
 
 ### Bug Fixes

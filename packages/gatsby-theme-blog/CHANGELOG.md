@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.2.19...gatsby-theme-blog@1.2.20) (2020-01-09)
+
+**Note:** Version bump only for package gatsby-theme-blog
+
 ## [1.2.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.2.18...gatsby-theme-blog@1.2.19) (2020-01-06)
 
 **Note:** Version bump only for package gatsby-theme-blog
