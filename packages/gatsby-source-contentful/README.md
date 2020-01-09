@@ -237,7 +237,7 @@ You might query for a **single** node inside a component in your `src/components
 
 #### A note about LongText fields
 
-If you include fields with a `LongText` type in your Contentful `ContentType`, their returned value will be **an object not a string**. This is because Contentful LongText fields are Markdown by default. In order to handle the Markdown content properly, this field type is created as a child node so that a transformer plugin such as gatsby-transformer-remark or react-markdown, can transform it to HTML.
+If you include fields with a `LongText` type in your Contentful `ContentType`, their returned value will be **an object not a string**. This is because Contentful LongText fields are Markdown by default. In order to handle the Markdown content properly, this field type is created as a child node so that a transformer plugin such as [gatsby-transformer-remark](https://www.gatsbyjs.org/packages/gatsby-transformer-remark/), can transform it to HTML.
 
 `ShortText` type fields will be returned as strings.
 
