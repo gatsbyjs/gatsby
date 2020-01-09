@@ -333,7 +333,7 @@ This adds the `dotenv` module to only the blog and shop packages, this way we do
 
 Create a new file in your shop package called `.env.development` and `.env.production`. Inside the former, add the following line:
 
-`BLOG_URL=https://localhost:8000`
+`BLOG_URL=http://localhost:8000`
 
 Leave the production file alone for now and repeat for blog package, just change the name of the variable to `SHOP_URL` and the port to `8001`.
 
