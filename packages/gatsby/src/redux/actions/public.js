@@ -1182,7 +1182,7 @@ actions.setBabelPreset = (config: Object, plugin?: ?Plugin = null) => {
  * [`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp/) uses this for
  * example.
  *
- * Gatsby doesn't finish its bootstrap until all jobs are ended.
+ * Gatsby doesn't finish its process until all jobs are ended.
  * @param {Object} job A job object with at least an id set
  * @param {id} job.id The id of the job
  * @example
@@ -1202,7 +1202,7 @@ actions.createJob = (job: Job, plugin?: ?Plugin = null) => {
  * [`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp/) uses this for
  * example.
  *
- * Gatsby doesn't finish its bootstrap until all jobs are ended.
+ * Gatsby doesn't finish its process until all jobs are ended.
  * @param {Object} job A job object with name, inputPaths, outputDir and args
  * @param {string} job.name The name of the job you want to execute
  * @param {string[]} job.inputPaths The inputPaths that are needed to run
@@ -1221,10 +1221,10 @@ actions.createJobV2 = (job: JobV2, plugin: Plugin) => (dispatch, getState) => {
   // we don't waste resources twice during the process
   if (
     currentState.jobsV2 &&
-    currentState.jobsV2.done.has(internalJob.contentDigest)
+    currentState.jobsV2.complete.has(internalJob.contentDigest)
   ) {
     return Promise.resolve(
-      currentState.jobsV2.done.get(internalJob.contentDigest).result
+      currentState.jobsV2.complete.get(internalJob.contentDigest).result
     )
   }
 
@@ -1277,7 +1277,7 @@ actions.setJob = (job: Job, plugin?: ?Plugin = null) => {
 /**
  * End a "job".
  *
- * Gatsby doesn't finish its bootstrap until all jobs are ended.
+ * Gatsby doesn't finish its process until all jobs are ended.
  * @param {Object} job  A job object with at least an id set
  * @param {id} job.id The id of the job
  * @example

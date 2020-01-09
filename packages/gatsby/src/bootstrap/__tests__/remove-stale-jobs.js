@@ -13,8 +13,8 @@ describe(`remove-stale-jobs`, () => {
   beforeEach(() => {
     state = {
       jobsV2: {
-        done: new Map(),
-        stale: new Map(),
+        complete: new Map(),
+        incomplete: new Map(),
       },
     }
 
@@ -22,12 +22,12 @@ describe(`remove-stale-jobs`, () => {
     internalActions.removeStaleJob.mockClear()
   })
 
-  it(`should remove stale jobs from done cache`, () => {
+  it(`should remove stale jobs from complete cache`, () => {
     const job = {
       inputPaths: [`/src/myfile.js`],
     }
 
-    state.jobsV2.done.set(`1234`, job)
+    state.jobsV2.complete.set(`1234`, job)
 
     isJobStale.mockReturnValue(true)
 
@@ -49,7 +49,7 @@ describe(`remove-stale-jobs`, () => {
       },
     }
 
-    state.jobsV2.stale.set(`1234`, data)
+    state.jobsV2.incomplete.set(`1234`, data)
 
     isJobStale.mockReturnValue(true)
 
@@ -71,7 +71,7 @@ describe(`remove-stale-jobs`, () => {
       },
     }
 
-    state.jobsV2.stale.set(`1234`, data)
+    state.jobsV2.incomplete.set(`1234`, data)
 
     isJobStale.mockReturnValue(false)
 

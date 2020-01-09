@@ -1,5 +1,5 @@
 module.exports = (
-  state = { active: new Set(), stale: new Map(), done: new Map() },
+  state = { incomplete: new Map(), complete: new Map() },
   action
 ) => {
   switch (action.type) {
