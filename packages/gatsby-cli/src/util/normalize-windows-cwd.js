@@ -41,10 +41,13 @@ module.exports = function normalizeWindowsCwd() {
     if (normalizedCwd !== process.cwd()) {
       report.warn(
         report.stripIndent(`
-          Your working directory has a lowercase drive letter:
+          Your working directory has a lower case drive letter:
             "${cwd}".
-          For stable cross-platform builds we recommend switching it to:
-            "${normalizedCwd}".
+          ---^
+          For solid development experience, we recommend switching it to upper case:
+            cd "C:\\"
+            cd "${normalizedCwd}"
+          (Windows requires two directory switches to change the case of the drive letter)
         `)
       )
     }
