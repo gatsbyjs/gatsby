@@ -161,10 +161,10 @@ function init() {
 class RouteAnnouncer extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { announcement: `` }
+    this.announcementRef = React.createRef()
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, nextProps) {
     requestAnimationFrame(() => {
       let pageName = `new page at ${this.props.location.pathname}`
       if (document.title) {
@@ -173,20 +173,18 @@ class RouteAnnouncer extends React.Component {
       const pageHeadings = document
         .getElementById(`gatsby-focus-wrapper`)
         .getElementsByTagName(`h1`)
-      if (pageHeadings) {
+      if (pageHeadings && pageHeadings.length) {
         pageName = pageHeadings[0].textContent
       }
-      let newAnnouncement = `Navigated to ${pageName}`
-      if (this.state.announcement !== newAnnouncement) {
-        this.setState({
-          announcement: newAnnouncement,
-        })
+      const newAnnouncement = `Navigated to ${pageName}`
+      const oldAnnouncement = this.announcementRef.current.innerText
+      if (oldAnnouncement !== newAnnouncement) {
+        this.announcementRef.current.innerText = newAnnouncement
       }
     })
   }
 
   render() {
-    const { announcement } = this.state
     return (
       <div
         id="gatsby-announcer"
@@ -203,9 +201,8 @@ class RouteAnnouncer extends React.Component {
         role="alert"
         aria-live="assertive"
         aria-atomic="true"
-      >
-        {announcement}
-      </div>
+        ref={this.announcementRef}
+      ></div>
     )
   }
 }
