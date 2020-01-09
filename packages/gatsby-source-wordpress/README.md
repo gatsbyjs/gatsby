@@ -144,9 +144,15 @@ module.exports = {
         normalizer: function({ entities }) {
           return entities
         },
-        // add/remove wordpress data normalizers
-        // each normalizer is an object with name and normalizer property being a function that accepts
-        // object with entities array and different helpers and configuration settings
+        // The normalizers option allows you to manipulate the array of internal
+        // normalizers that are applied to entities after they're fetched
+        // from WordPress.
+        // You can add your own normalizers to this array by adding an object
+        // that contains name and normalizer properties.
+        // Name is the name of your normalizer, and normalizer is a function that
+        // should return the array of entities that are passed to it.
+        // This is useful if you need more control over the order of normalizers,
+        // instead of your normalizer being applied after the built in normalizers (as is the case with the normalizer option).
         normalizers: normalizers => [
           ...normalizers,
           {
