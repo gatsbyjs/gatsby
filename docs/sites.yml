@@ -9230,6 +9230,18 @@
   built_by: Bare Advertising & Communications
   built_by_url: https://www.bare.ca/
   featured: false
+- title: monica*dev
+  url: https://www.aboutmonica.com/
+  main_url: https://www.aboutmonica.com/
+  description: >
+    Personal site for Monica Powell, a software engineer who is passionate about making open-source more accessible and building community, online & offline.
+  categories:
+    - Web Development
+    - Blog
+    - Programming
+    - Portfolio
+  built_by: Monica Powell
+  built_by_url: https://www.aboutmonica.com/
 - title: Shivam Sinha
   url: https://www.helloshivam.com/
   main_url: https://www.helloshivam.com/
