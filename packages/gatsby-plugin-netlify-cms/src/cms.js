@@ -31,8 +31,10 @@ if (PRODUCTION) {
    */
   window.addEventListener(`DOMContentLoaded`, event => {
     const list = document.querySelectorAll(`link[rel='stylesheet']`)
-    list.forEach(({ href }) => {
-      CMS.registerPreviewStyle(href)
+    list.forEach(link => {
+      CMS.registerPreviewStyle(link.href)
+      // remove the preview style from the CMS context
+      link.parentNode.removeChild(link)
     })
   })
 }
