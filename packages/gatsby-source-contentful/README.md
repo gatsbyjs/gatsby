@@ -274,8 +274,6 @@ You can then insert the HTML inline in your JSX:
    />
 ```
 
-"Long text" fields can 
-
 #### Duplicated entries
 
 When Contentful pulls the data, all localizations will be pulled. Therefore, if you have a localization active, it will duplicate the entries. Narrow the search by filtering the query with `node_locale` filter:
