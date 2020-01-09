@@ -1,4 +1,10 @@
-import Redux from "redux"
+import {
+  applyMiddleware,
+  combineReducers,
+  createStore,
+  Store,
+  Middleware,
+} from "redux"
 import _ from "lodash"
 
 import mitt from "mitt"
@@ -33,25 +39,24 @@ export const readState = (): IReduxState => {
   } catch (e) {
     // ignore errors.
   }
-  // I feel like this could lead to bugs?
+  // BUG: Would this not cause downstream bugs? seems likely. Why wouldn't we just
+  // throw and kill the program?
   return {} as IReduxState
 }
 
 /**
  * Redux middleware handling array of actions
  */
-const multi: Redux.Middleware = ({ dispatch }) => next => (
+const multi: Middleware = ({ dispatch }) => next => (
   action: ActionsUnion
 ): ActionsUnion | ActionsUnion[] =>
   Array.isArray(action) ? action.filter(Boolean).map(dispatch) : next(action)
 
-export const configureStore = (
-  initialState: IReduxState
-): Redux.Store<IReduxState> =>
-  Redux.createStore(
-    Redux.combineReducers({ ...reducers }),
+export const configureStore = (initialState: IReduxState): Store<IReduxState> =>
+  createStore(
+    combineReducers({ ...reducers }),
     initialState,
-    Redux.applyMiddleware(thunk, multi)
+    applyMiddleware(thunk, multi)
   )
 
 export const store = configureStore(readState())
