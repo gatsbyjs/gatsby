@@ -1,18 +1,14 @@
 const fs = require(`fs`)
 const path = require(`path`)
-const crypto = require(`crypto`)
 const babel = require(`@babel/core`)
+const { createContentDigest } = require(`gatsby-core-utils`)
 
 const defaultOptions = require(`../utils/default-options`)
 const createMDXNode = require(`../utils/create-mdx-node`)
 const { MDX_SCOPES_LOCATION } = require(`../constants`)
 const genMDX = require(`../utils/gen-mdx`)
 
-const contentDigest = val =>
-  crypto
-    .createHash(`md5`)
-    .update(val)
-    .digest(`hex`)
+const contentDigest = val => createContentDigest(val)
 
 module.exports = async (
   {
