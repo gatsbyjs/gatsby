@@ -4,15 +4,12 @@ function preset(context, options = {}) {
   const { browser = false, debug = false, nodeVersion = `8.0` } = options
   const { NODE_ENV, BABEL_ENV } = process.env
 
-  const IS_PRODUCTION = (BABEL_ENV || NODE_ENV) === `production`
   const IS_TEST  = (BABEL_ENV || NODE_ENV) === `test`
 
   const browserConfig = {
     useBuiltIns: false,
     targets: {
-      browsers: IS_PRODUCTION
-        ? [`last 4 versions`, `safari >= 7`, `ie >= 9`]
-        : [`last 2 versions`, `not ie <= 11`, `not android 4.4.3`],
+      browsers: [`last 2 versions`, `not ie <= 11`, `not android 4.4.3`],
     },
   }
 
@@ -20,7 +17,7 @@ function preset(context, options = {}) {
     corejs: 2,
     useBuiltIns: `entry`,
     targets: {
-      node: IS_PRODUCTION ? nodeVersion : `current`,
+      node: nodeVersion,
     },
   }
 
@@ -38,7 +35,7 @@ function preset(context, options = {}) {
           browser ? browserConfig : nodeConfig
         ),
       ],
-      [r(`@babel/preset-react`), { development: !IS_PRODUCTION }],
+      [r(`@babel/preset-react`)],
       r(`@babel/preset-flow`),
     ],
     plugins: [
