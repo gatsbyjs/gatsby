@@ -188,7 +188,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
   ).catch(err => {
     reporter.panic(
       `The transformation for image ${file.absolutePath} failed. Please make sure it exists and is readable.`,
-      err
+      typeof err === `string` ? new Error(err) : err
     )
   })
 
@@ -254,7 +254,7 @@ function batchQueueImageResizing({ file, transforms = [], reporter }) {
   ).catch(err => {
     reporter.panic(
       `The transformation for image ${file.absolutePath} failed. Please make sure it exists and is readable.`,
-      err
+      typeof err === `string` ? new Error(err) : err
     )
   })
 
