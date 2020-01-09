@@ -6,7 +6,7 @@ Gatsby themes introduce a concept called "shadowing". This feature allows users 
 
 A practical use case is when you've installed `gatsby-theme-blog` and want to customize the author `Bio` component to add your own biographical content. Shadowing lets you replace the theme’s original file, `gatsby-theme-blog/src/components/bio.js`, with your own file to make any changes you need.
 
-## Shadowing Example
+## Shadowing example
 
 If you’ve installed `gatsby-theme-blog` you’ll notice that it renders a `Bio` component which is used in the `BlogPost` template. If you’d like to change the `Bio` component you can do so with the shadowing API.
 
@@ -14,7 +14,7 @@ If you’ve installed `gatsby-theme-blog` you’ll notice that it renders a `Bio
 
 You can inspect `gatsby-theme-blog`'s file structure to determine the file path for the file you want to shadow.
 
-```txt:title="tree gatsby-theme-blog"
+```text:title="tree gatsby-theme-blog"
 ├── gatsby-config.js
 ├── gatsby-node.js
 └── src
@@ -52,14 +52,14 @@ Any file that lives in the `src/gatsby-theme-blog` directory of the user’s sit
 
 This means that `user-site/src/gatsby-theme-blog/components/bio.js` will be rendered in place of `gatsby-theme-blog/src/components/bio.js`:
 
-```js:title=src/gatsby-theme-blog/components/bio.js
+```jsx:title=src/gatsby-theme-blog/components/bio.js
 import React from "react"
 export default () => <h1>My new bio component!</h1>
 ```
 
 A successful shadow of the Bio component will result in the following directory tree:
 
-```txt
+```text
 user-site
 └── src
     └── gatsby-theme-blog
@@ -86,13 +86,12 @@ export default {
 
 Which will result in the following directory tree:
 
-```txt
+```text
 user-site
 └── src
     └── gatsby-theme-blog
-        └── components
-            └── tokens
-                  └──index.js // highlight-line
+        └── gatsby-plugin-theme-ui
+            └──index.js // highlight-line
 ```
 
 ## Any source file is shadowable
@@ -101,13 +100,25 @@ The shadowing API isn’t restricted to React components; you can override any J
 
 If you wanted to shadow a CSS file in `gatsby-theme-awesome-css` that's found at `src/styles/bio.css` you can do so by creating `user-site/src/gatsby-theme-awesome-css/styles/bio.css`
 
-```js:title=user-site/src/gatsby-theme-awesome-css/styles/bio.css
+```css:title=user-site/src/gatsby-theme-awesome-css/styles/bio.css
 .bio {
   border: 10px solid tomato;
 }
 ```
 
 The theme's `bio.css` file would then be replaced with your new CSS file.
+
+## File extensions can be overridden
+
+As long as the theme author imports components/files without the file extension, users are able to shadow these with other types of files. For example the theme author created a TypeScript file at `src/components/bio.tsx` and uses it in another file:
+
+```jsx:title=src/components/header.tsx
+import Bio from "./bio"
+
+/* Rest of the code */
+```
+
+You'll be able to shadow the Bio file by creating e.g. a JavaScript file at `src/gatsby-theme-blog/components/bio.js` as the file extension wasn't used in the import.
 
 ## Extending shadowed files
 
@@ -117,7 +128,7 @@ This means that you can import the component you’re shadowing and then render 
 
 Without extending the component, you would have to manually copy over the entire component implementation from the theme to wrap it with your custom shadowed component. It might look something like:
 
-```js:title=src/gatsby-theme-blog/components/bio.js
+```jsx:title=src/gatsby-theme-blog/components/bio.js
 import React from "react"
 import { Avatar, MediaObject, Icon } from "gatsby-theme-blog"
 import Card from "../components/card"
@@ -147,7 +158,7 @@ This workflow isn’t too bad, especially since the component is relatively stra
 
 In the above example it might be preferable to be able to import the `Bio` component and wrap it with your `Card`. When importing, you can do the following instead:
 
-```js:title=src/gatsby-theme-blog/components/bio.js
+```jsx:title=src/gatsby-theme-blog/components/bio.js
 import React from "react"
 import { Author } from "gatsby-theme-blog/src/components/bio"
 import Card from "../components/card"
@@ -163,11 +174,11 @@ This is a quick and efficient way to customize rendering without needing to worr
 
 ### Applying new props
 
-In some cases components offer prop APIs to change their behavior. With component extending you can import that component and then add your new prop to change it.
+In some cases components offer prop APIs to change their behavior. To extend a component you can import it and then add a new prop.
 
-If `NewsletterCTA` accepts a `variant` prop which changes the look and colors of the call to action, you can use it when you extend the component. Below, `NewsletterCTA` is re-exported and `variant="link"` is added in the shadowed file to override its default value.
+For example, if `NewsletterCTA` accepts a `variant` prop which changes the look and colors of the call to action, you can use it when you extend the component. Below, `NewsletterCTA` is re-exported and `variant="link"` is added in the shadowed file to override its default value.
 
-```js:title=src/gatsby-theme-blog/components/newsletter/call-to-action.js
+```jsx:title=src/gatsby-theme-blog/components/newsletter/call-to-action.js
 import { NewsletterCTA } from "gatsby-theme-blog/src/components/newsletter"
 
 export default props => <NewsletterCTA {...props} variant="link" />
@@ -177,7 +188,7 @@ export default props => <NewsletterCTA {...props} variant="link" />
 
 In addition to passing a different prop to a component you’re extending, you might want to apply CSS using the [Emotion CSS prop](/docs/emotion/). This will allow you to change the styling of a particular component without changing any of its functionality.
 
-```js:title=src/gatsby-theme-blog/components/newsletter/call-to-action.js
+```jsx:title=src/gatsby-theme-blog/components/newsletter/call-to-action.js
 import { NewsletterCTA } from "gatsby-theme-blog/src/components/newsletter"
 
 export default props => (

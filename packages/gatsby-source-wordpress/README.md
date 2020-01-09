@@ -46,13 +46,13 @@ module.exports = {
   plugins: [
     /*
      * Gatsby's data processing layer begins with “source”
-     * plugins. Here the site sources its data from Wordpress.
+     * plugins. Here the site sources its data from WordPress.
      */
     {
       resolve: "gatsby-source-wordpress",
       options: {
         /*
-         * The base URL of the Wordpress site without the trailingslash and the protocol. This is required.
+         * The base URL of the WordPress site without the trailingslash and the protocol. This is required.
          * Example : 'gatsbyjsexamplewordpress.wordpress.com' or 'www.example-site.com'
          */
         baseUrl: "gatsbyjsexamplewordpress.wordpress.com",
@@ -63,7 +63,7 @@ module.exports = {
         // If true, then the plugin will source its content on wordpress.com using the JSON REST API V2.
         // If your site is hosted on wordpress.org, then set this to false.
         hostingWPCOM: false,
-        // If useACF is true, then the source plugin will try to import the Wordpress ACF Plugin contents.
+        // If useACF is true, then the source plugin will try to import the WordPress ACF Plugin contents.
         // This feature is untested for sites hosted on wordpress.com.
         // Defaults to true.
         useACF: true,
@@ -95,13 +95,13 @@ module.exports = {
           wpcom_pass: process.env.WORDPRESS_PASSWORD,
 
           // If you use "JWT Authentication for WP REST API" (https://wordpress.org/plugins/jwt-authentication-for-wp-rest-api/)
-          // or (https://github.com/jonathan-dejong/simple-jwt-authentication) requires jwt_base_path, path can be found in wordpress wp-api.
-          // plugin, you can specify user and password to obtain access token and use authenticated requests against wordpress REST API.
+          // or (https://github.com/jonathan-dejong/simple-jwt-authentication) requires jwt_base_path, path can be found in WordPress wp-api.
+          // plugin, you can specify user and password to obtain access token and use authenticated requests against WordPress REST API.
           jwt_user: process.env.JWT_USER,
           jwt_pass: process.env.JWT_PASSWORD,
           jwt_base_path: "/jwt-auth/v1/token", // Default - can skip if you are using https://wordpress.org/plugins/jwt-authentication-for-wp-rest-api/
         },
-        // Set cookies that should be send with requests to wordpress as key value pairs
+        // Set cookies that should be send with requests to WordPress as key value pairs
         cookies: {},
         // Set verboseOutput to true to display a verbose output on `npm run develop` or `npm run build`
         // It can help you debug specific API Endpoints problems.
@@ -205,7 +205,7 @@ plugins.
       the current locale and available translations to all post types translated with Polylang.
 
 - [x] [Yoast](https://yoast.com/wordpress/plugins/seo/)
-  - You must have the plugin [wp-api-yoast-meta](https://github.com/maru3l/wp-api-yoast-meta) installed in wordpress.
+  - You must have the plugin [wp-api-yoast-meta](https://github.com/maru3l/wp-api-yoast-meta) installed in WordPress.
   - Will pull the `yoast_meta: { ... }` field's contents in entity.
   - Work with Yoast premium :
     - Will create Yoast redirects model base on Yoast redirect
@@ -264,7 +264,7 @@ and would skip pulling Comments.
 
 ## How to query
 
-You can query nodes created from Wordpress using GraphQL like the following:
+You can query nodes created from WordPress using GraphQL like the following:
 Note : Learn to use the GraphQL tool and Ctrl+Spacebar at
 <http://localhost:3000/___graphiql> to discover the types and properties of your
 GraphQL model.
@@ -354,11 +354,11 @@ Whether you are using V2 or V3 of ACF to REST, the query below will return `opti
 
 If you have specified `acfOptionPageIds` in your site's `gatsby-config.js` (ex: `option_page_1`), then they will be accessible by their ID:
 
-```
+```graphql
 {
   allWordpressAcfOptions {
     edges {
-      node{
+      node {
         option_page_1 {
           test_acf
         }
@@ -443,7 +443,7 @@ To access data stored in these fields, you need to use GraphQL
 require you to know types of nodes. The easiest way to get the types of nodes is to use
 `___GraphiQL` debugger and run the below query (adjust post type and field name):
 
-```graphQL
+```graphql
 {
   allWordpressPage {
     edges {
@@ -464,7 +464,7 @@ When you have node type names, you can use them to create inline fragments.
 
 Full example:
 
-```graphQL
+```graphql
 {
   allWordpressPage {
     edges {
@@ -701,12 +701,12 @@ You can apply image processing to:
   - Image field type (return value must be set to `Image Object` or `Image URL` or field name must be `featured_media`),
   - Gallery field type.
 
-Image processing of inline images added in wordpress WYSIWIG editor is
+Image processing of inline images added in WordPress WYSIWIG editor is
 currently not supported.
 
 To access image processing in your queries you need to use this pattern:
 
-```
+```graphql
 {
   imageFieldName {
     localFile {
@@ -1009,14 +1009,14 @@ During the upload process to the WordPress media library, the `post_parent` valu
 
 When the post an image is attached to becomes inaccessible (e.g. from changing visibility settings, or deleting the post), the image itself is restricted in the REST API:
 
-```
-   {
-      "code":"rest_forbidden",
-      "message":"You don't have permission to do this.",
-      "data":{
-         "status":403
-      }
-   }
+```json
+{
+  "code": "rest_forbidden",
+  "message": "You don't have permission to do this.",
+  "data": {
+    "status": 403
+  }
+}
 ```
 
 which prevents Gatsby from retrieving it.
@@ -1043,7 +1043,7 @@ When running locally, or in other situations that may involve self-signed certif
 
 To solve this, you can disable Node.js' rejection of unauthorized certificates by adding the following to `.env.development`:
 
-```
+```shell
 NODE_TLS_REJECT_UNAUTHORIZED=0
 ```
 

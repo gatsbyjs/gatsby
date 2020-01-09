@@ -15,8 +15,8 @@ Each of these features has extensive configuration available so you are always i
 
 ## Install
 
-```
-$ npm install --save gatsby-plugin-manifest
+```shell
+npm install --save gatsby-plugin-manifest
 ```
 
 ## How to use
@@ -238,7 +238,7 @@ module.exports = {
 
 #### Disable favicon
 
-Excludes `<link rel="shortcut icon" href="/favicon.png" />` link tag to html output. You can set `include_favicon` plugin option to `false` to opt-out of this behavior.
+Excludes `<link rel="icon" href="/favicon.png" />` link tag to html output. You can set `include_favicon` plugin option to `false` to opt-out of this behavior.
 
 ```js
 // in gatsby-config.js
@@ -422,7 +422,7 @@ For more information see the w3 spec https://www.w3.org/TR/appmanifest/ or Mozil
 
 This means that there are multiple incompatible versions of the `sharp` package installed in `node_modules`. The complete error typically looks like this:
 
-```
+```text
 Something went wrong installing the "sharp" module
 
 dlopen(/Users/misiek/dev/gatsby-starter-blog/node_modules/sharp/build/Release/sharp.node, 1): Library not loaded: @rpath/libglib-2.0.dylib

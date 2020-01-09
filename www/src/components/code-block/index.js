@@ -1,10 +1,11 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import PropTypes from "prop-types"
-import Highlight, { defaultProps } from "prism-react-renderer"
 
 import Copy from "../copy"
 import normalize from "./normalize"
-import { fontSizes, radii, space } from "../../utils/presets"
+import LazyHighlight from "../lazy-highlight"
 
 const getParams = (name = ``) => {
   const [lang, params = ``] = name.split(`:`)
@@ -42,17 +43,12 @@ const CodeBlock = ({
   )
 
   return (
-    <Highlight
-      {...defaultProps}
-      code={content}
-      language={language}
-      theme={undefined}
-    >
+    <LazyHighlight code={content} language={language} theme={undefined}>
       {({ tokens, getLineProps, getTokenProps }) => (
         <React.Fragment>
           {title && (
             <div className="gatsby-code-title">
-              <div css={{ fontSize: fontSizes[0] }}>{title}</div>
+              <div sx={{ fontSize: 0 }}>{title}</div>
             </div>
           )}
           <div className="gatsby-highlight">
@@ -60,11 +56,11 @@ const CodeBlock = ({
               {copy && (
                 <Copy
                   fileName={title}
-                  css={{
+                  sx={{
                     position: `absolute`,
-                    right: space[1],
-                    top: space[1],
-                    borderRadius: `${radii[2]}px ${radii[2]}px`,
+                    right: t => t.space[1],
+                    top: t => t.space[1],
+                    borderRadius: 2,
                   }}
                   content={content}
                 />
@@ -94,7 +90,7 @@ const CodeBlock = ({
           </div>
         </React.Fragment>
       )}
-    </Highlight>
+    </LazyHighlight>
   )
 }
 

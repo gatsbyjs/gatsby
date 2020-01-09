@@ -5,7 +5,7 @@ author: Shannon Soper
 tags: ["plugins", "documentation"]
 ---
 
-Earlier this week, we launched a [Plugin Library](/packages/) on Gatsbyjs.org and are excited for you to use it! This article explains how UX research drove the design of this library and the accompanying [Plugin Authoring](/docs/creating-plugins/) doc.
+Earlier this week, we launched a [Plugin Library](/plugins/) on Gatsbyjs.org and are excited for you to use it! This article explains how UX research drove the design of this library and the accompanying [Plugin Authoring](/docs/creating-plugins/) doc.
 
 ![Plugin tweet](plugin-tweet.png)
 
@@ -32,13 +32,12 @@ With the empathy map and the interviews as our guide, we learned that most peopl
 
 Next, we analyzed over 10 admirable and/or popular plugin libraries to draw from their strengths and learn from their weaknesses. Examples, in no particular order, include:
 
-- [JS.coach](https://js.coach/)
 - [VIM Awesome](https://vimawesome.com/)
 - [Best of JS](https://bestof.js.org/)
 - [Sketch extension library](https://sketchapp.com/extensions/)
 - [Chrome plugin library](https://chrome.google.com/webstore/detail/plugins/mmcblfncjaclajmegihojiekebofjcen?hl=en)
 - [Microsoft Visual Studio Code Extensions](https://marketplace.visualstudio.com/VSCode)
-- [Wordpress Plugins](https://wordpress.org/plugins/)
+- [WordPress Plugins](https://wordpress.org/plugins/)
 - [Npms.io](https://npms.io/)
 - [Yarnpkg.com](https://yarnpkg.com/en/packages)
 - [Apple App store](https://www.apple.com/ios/app-store/)

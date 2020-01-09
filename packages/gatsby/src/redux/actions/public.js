@@ -9,7 +9,7 @@ const path = require(`path`)
 const fs = require(`fs`)
 const { trueCasePathSync } = require(`true-case-path`)
 const url = require(`url`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 const { hasNodeChanged, getNode } = require(`../../db/nodes`)
 const sanitizeNode = require(`../../db/sanitize-node`)
 const { store } = require(`..`)
@@ -21,11 +21,24 @@ const apiRunnerNode = require(`../../utils/api-runner-node`)
 const { trackCli } = require(`gatsby-telemetry`)
 const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
 
+/**
+ * Memoize function used to pick shadowed page components to avoid expensive I/O.
+ * Ideally, we should invalidate memoized values if there are any FS operations
+ * on files that are in shadowing chain, but webpack currently doesn't handle
+ * shadowing changes during develop session, so no invalidation is not a deal breaker.
+ */
+const shadowCreatePagePath = _.memoize(
+  require(`../../internal-plugins/webpack-theme-component-shadowing/create-page`)
+)
+
 const actions = {}
 const isWindows = platform() === `win32`
 
-function getRelevantFilePathSegments(filePath) {
-  return filePath.split(`/`).filter(s => s !== ``)
+const ensureWindowsDriveIsUppercase = filePath => {
+  const segments = filePath.split(`:`).filter(s => s !== ``)
+  return segments.length > 0
+    ? segments.shift().toUpperCase() + `:` + segments.join(`:`)
+    : filePath
 }
 
 const findChildren = initialChildren => {
@@ -90,10 +103,7 @@ actions.deletePage = (page: PageInput) => {
   }
 }
 
-const pascalCase = _.flow(
-  _.camelCase,
-  _.upperFirst
-)
+const pascalCase = _.flow(_.camelCase, _.upperFirst)
 const hasWarnedForPageComponentInvalidContext = new Set()
 const hasWarnedForPageComponentInvalidCasing = new Set()
 const hasErroredBecauseOfNodeValidation = new Set()
@@ -226,6 +236,11 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     }
   }
 
+  const pageComponentPath = shadowCreatePagePath(page.component)
+  if (pageComponentPath) {
+    page.component = pageComponentPath
+  }
+
   // Don't check if the component exists during tests as we use a lot of fake
   // component paths.
   if (process.env.NODE_ENV !== `test`) {
@@ -294,9 +309,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       }
 
       if (isWindows) {
-        const segments = getRelevantFilePathSegments(page.component)
-        page.component =
-          segments.shift().toUpperCase() + `/` + segments.join(`/`)
+        page.component = ensureWindowsDriveIsUppercase(page.component)
       }
 
       if (trueComponentPath !== page.component) {
@@ -362,8 +375,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   // Only run validation once during builds.
   if (
     !internalPage.component.includes(`/.cache/`) &&
-    (process.env.NODE_ENV === `production` &&
-      !fileOkCache[internalPage.component])
+    process.env.NODE_ENV === `production` &&
+    !fileOkCache[internalPage.component]
   ) {
     const fileName = internalPage.component
     const fileContent = fs.readFileSync(fileName, `utf-8`)
@@ -423,7 +436,11 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 
   if (store.getState().pages.has(alternateSlashPath)) {
     report.warn(
-      `Attempting to create page "${page.path}", but page "${alternateSlashPath}" already exists. This could lead to non-deterministic routing behavior`
+      chalk.bold.yellow(`Non-deterministic routing danger: `) +
+        `Attempting to create page: "${page.path}", but page "${alternateSlashPath}" already exists\n` +
+        chalk.bold.yellow(
+          `This could lead to non-deterministic routing behavior`
+        )
     )
   }
 
@@ -533,10 +550,15 @@ actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
     nodes.map(n => findChildren(getNode(n).children))
   )
 
+  const nodeIds = [...nodes, ...descendantNodes]
+
   const deleteNodesAction = {
     type: `DELETE_NODES`,
     plugin,
-    payload: [...nodes, ...descendantNodes],
+    // Payload contains node IDs but inference-metadata and loki reducers require
+    // full node instances
+    payload: nodeIds,
+    fullNodes: nodeIds.map(getNode),
   }
   return deleteNodesAction
 }
@@ -778,9 +800,9 @@ const createNode = (
   // Check if the node has already been processed.
   if (oldNode && !hasNodeChanged(node.id, node.internal.contentDigest)) {
     updateNodeAction = {
-      type: `TOUCH_NODE`,
-      plugin,
       ...actionOptions,
+      plugin,
+      type: `TOUCH_NODE`,
       payload: node.id,
     }
   } else {
@@ -789,9 +811,9 @@ const createNode = (
     if (oldNode) {
       const createDeleteAction = node => {
         return {
+          ...actionOptions,
           type: `DELETE_NODE`,
           plugin,
-          ...actionOptions,
           payload: node,
         }
       }
@@ -801,10 +823,10 @@ const createNode = (
     }
 
     updateNodeAction = {
+      ...actionOptions,
       type: `CREATE_NODE`,
       plugin,
       oldNode,
-      ...actionOptions,
       payload: node,
     }
   }
@@ -959,10 +981,11 @@ actions.createNodeField = (
   node = sanitizeNode(node)
 
   return {
+    ...actionOptions,
     type: `ADD_FIELD_TO_NODE`,
     plugin,
-    ...actionOptions,
     payload: node,
+    addedField: name,
   }
 }
 

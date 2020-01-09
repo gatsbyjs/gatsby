@@ -3,6 +3,63 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.28](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-guess-js@1.1.26...gatsby-plugin-guess-js@1.1.28) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-plugin-guess-js
+
+## [1.1.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-guess-js@1.1.26...gatsby-plugin-guess-js@1.1.27) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-plugin-guess-js
+
+## [1.1.26](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-guess-js@1.1.25...gatsby-plugin-guess-js@1.1.26) (2019-11-26)
+
+**Note:** Version bump only for package gatsby-plugin-guess-js
+
+## [1.1.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-guess-js@1.1.24...gatsby-plugin-guess-js@1.1.25) (2019-11-15)
+
+**Note:** Version bump only for package gatsby-plugin-guess-js
+
+## [1.1.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-guess-js@1.1.23...gatsby-plugin-guess-js@1.1.24) (2019-11-13)
+
+**Note:** Version bump only for package gatsby-plugin-guess-js
+
+## [1.1.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-guess-js@1.1.22...gatsby-plugin-guess-js@1.1.23) (2019-11-10)
+
+**Note:** Version bump only for package gatsby-plugin-guess-js
+
+## [1.1.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-guess-js@1.1.21...gatsby-plugin-guess-js@1.1.22) (2019-10-28)
+
+### Bug Fixes
+
+- update minor updates in packages ([#18875](https://github.com/gatsbyjs/gatsby/issues/18875)) ([b692879](https://github.com/gatsbyjs/gatsby/commit/b692879))
+
+## [1.1.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-guess-js@1.1.20...gatsby-plugin-guess-js@1.1.21) (2019-10-14)
+
+**Note:** Version bump only for package gatsby-plugin-guess-js
+
+## [1.1.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-guess-js@1.1.19...gatsby-plugin-guess-js@1.1.20) (2019-10-14)
+
+### Bug Fixes
+
+- update dependency guess-webpack to ~0.4.9 ([#18537](https://github.com/gatsbyjs/gatsby/issues/18537)) ([a24b9ef](https://github.com/gatsbyjs/gatsby/commit/a24b9ef))
+
+## [1.1.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-guess-js@1.1.18...gatsby-plugin-guess-js@1.1.19) (2019-10-10)
+
+### Bug Fixes
+
+- **gatsby-plugin-guess-js:** don't leak jwt in gatsby-browser ([#18434](https://github.com/gatsbyjs/gatsby/issues/18434)) ([e99b961](https://github.com/gatsbyjs/gatsby/commit/e99b961))
+- **gatsby-plugin-guess-js:** Sanitise pluginOptions to remove jwt tokens ([#18397](https://github.com/gatsbyjs/gatsby/issues/18397)) ([5637cd6](https://github.com/gatsbyjs/gatsby/commit/5637cd6))
+
+## [1.1.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-guess-js@1.1.17...gatsby-plugin-guess-js@1.1.18) (2019-10-09)
+
+**Note:** Version bump only for package gatsby-plugin-guess-js
+
+## [1.1.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-guess-js@1.1.16...gatsby-plugin-guess-js@1.1.17) (2019-10-04)
+
+### Bug Fixes
+
+- update dependency guess-webpack to ~0.4.8 ([#17933](https://github.com/gatsbyjs/gatsby/issues/17933)) ([4ed934c](https://github.com/gatsbyjs/gatsby/commit/4ed934c))
+
 ## [1.1.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-guess-js@1.1.14...gatsby-plugin-guess-js@1.1.16) (2019-09-26)
 
 **Note:** Version bump only for package gatsby-plugin-guess-js

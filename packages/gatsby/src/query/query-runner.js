@@ -5,9 +5,10 @@ const report = require(`gatsby-cli/lib/reporter`)
 
 const path = require(`path`)
 const { store } = require(`../redux`)
-const { formatErrorDetails } = require(`./utils`)
 const { boundActionCreators } = require(`../redux/actions`)
 const pageDataUtil = require(`../utils/page-data`)
+const { getCodeFrame } = require(`./graphql-errors`)
+const { default: errorParser } = require(`./error-parser`)
 
 const resultHashes = {}
 
@@ -22,7 +23,7 @@ type QueryJob = {
 
 // Run query
 module.exports = async (graphqlRunner, queryJob: QueryJob) => {
-  const { program, webpackCompilationHash } = store.getState()
+  const { program } = store.getState()
 
   const graphql = (query, context) => graphqlRunner.query(query, context)
 
@@ -38,22 +39,39 @@ module.exports = async (graphqlRunner, queryJob: QueryJob) => {
   // If there's a graphql error then log the error. If we're building, also
   // quit.
   if (result && result.errors) {
-    const errorDetails = new Map()
-    errorDetails.set(`Errors`, result.errors || [])
+    let urlPath = undefined
+    let queryContext = {}
+    const plugin = queryJob.pluginCreatorId || `none`
+
     if (queryJob.isPage) {
-      errorDetails.set(`URL path`, queryJob.context.path)
-      errorDetails.set(
-        `Context`,
-        JSON.stringify(queryJob.context.context, null, 2)
-      )
+      urlPath = queryJob.context.path
+      queryContext = queryJob.context.context
     }
-    errorDetails.set(`Plugin`, queryJob.pluginCreatorId || `none`)
-    errorDetails.set(`Query`, queryJob.query)
 
-    report.panicOnBuild(`
-The GraphQL query from ${queryJob.componentPath} failed.
+    const structuredErrors = result.errors
+      .map(e => {
+        const structuredError = errorParser({
+          message: e.message,
+        })
 
-${formatErrorDetails(errorDetails)}`)
+        structuredError.context = {
+          ...structuredError.context,
+          codeFrame: getCodeFrame(
+            queryJob.query,
+            e.locations[0].line,
+            e.locations[0].column
+          ),
+          filePath: queryJob.componentPath,
+          ...(urlPath && { urlPath }),
+          ...queryContext,
+          plugin,
+        }
+
+        return structuredError
+      })
+      .filter(Boolean)
+
+    report.panicOnBuild(structuredErrors)
   }
 
   // Add the page context onto the results.
@@ -72,6 +90,7 @@ ${formatErrorDetails(errorDetails)}`)
     delete result.pageContext.pluginCreatorId
     delete result.pageContext.componentPath
     delete result.pageContext.context
+    delete result.pageContext.isCreatedByStatefulCreatePages
   }
 
   const resultJSON = JSON.stringify(result)
@@ -87,12 +106,7 @@ ${formatErrorDetails(errorDetails)}`)
       const publicDir = path.join(program.directory, `public`)
       const { pages } = store.getState()
       const page = pages.get(queryJob.id)
-      await pageDataUtil.write(
-        { publicDir },
-        page,
-        result,
-        webpackCompilationHash
-      )
+      await pageDataUtil.write({ publicDir }, page, result)
     } else {
       // The babel plugin is hard-coded to load static queries from
       // public/static/d/

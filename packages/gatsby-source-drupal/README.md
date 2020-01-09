@@ -144,7 +144,7 @@ module.exports = {
 
 ## Concurrent File Requests
 
-You can use the `concurrentFileRequests` option to change how many simultaneous file requests are made to the server/service. This benefits build speed, however to many concurrent file request could cause memory exhaustion depending on the server's memory size so change with caution.
+You can use the `concurrentFileRequests` option to change how many simultaneous file requests are made to the server/service. This benefits build speed, however too many concurrent file request could cause memory exhaustion depending on the server's memory size so change with caution.
 
 ```javascript
 // In your gatsby-config.js
@@ -162,6 +162,26 @@ module.exports = {
 }
 ```
 
+## Disallowed Link Types
+
+You can use the `disallowedLinkTypes` option to skip link types found in JSON:API documents. By default it skips the `self` and `describedby` links, which do not provide data that can be sourced. You may override the setting to add additional link types to be skipped.
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-drupal`,
+      options: {
+        baseUrl: `https://live-contentacms.pantheonsite.io/`,
+        // skip the action--action resource type.
+        disallowedLinkTypes: [`self`, `describedby`, `action--action`],
+      },
+    },
+  ],
+}
+```
+
 ## Gatsby Preview (experimental)
 
 You will need to have the Drupal module installed, more information on that here: https://www.drupal.org/project/gatsby
@@ -170,8 +190,26 @@ In your Drupal module configuration, set the update URL to your Gatsby Preview i
 
 _NOTES_:
 
-- This is experimental feature in active development. APIs used for this feature are not yet stable - it can break while we iterate on API design (particularly when versions of `gatsby-source-drupal` and `Gatsby Live Preview` drupal module are incompatible).
-- It's not feature complete yet. There is no handling of deleting content yet.
+- This is experimental feature in active development. APIs used for this feature are not yet stable - it can break while we iterate on API design (particularly when versions of `gatsby-source-drupal` and `Gatsby Live Preview` Drupal module are incompatible).
+
+### Preview Secret
+
+While you don't need to pass any additional options for preview to work, you can pass a `secret` for added security between your Drupal instance and Gatsby preview. Ensure this secret matches the one set in your Drupal Gatsby Preview settings.
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-drupal`,
+      options: {
+        baseUrl: `https://live-contentacms.pantheonsite.io/`,
+        secret: process.env.PREVIEW_SECRET, // optional, must match Drupal instance preview secret
+      },
+    },
+  ],
+}
+```
 
 ## How to query
 

@@ -35,20 +35,11 @@ Browserslist — https://css-tricks.com/browserlist-good-idea/
 
 By default, Gatsby emulates the following config:
 
-```javascript:title=package.json
+```json:title=package.json
 {
- "browserslist": [
-   ">0.25%",
-   "not dead"
- ]
+  "browserslist": [">0.25%", "not dead"]
 }
 ```
 
 If you only support newer browsers, make sure to specify this in your
 `package.json`. This will often enable you to ship smaller JavaScript files.
-
-## Note about IE < 11
-
-React depends on collection types `Map` and `Set`. While these are not used by Gatsby, Gatsby uses React and you will need to polyfill these if you support older browsers and devices including IE < 11.
-
-Read more about this in [ReactJS Docs - JavaScript Environment Requirements](https://reactjs.org/docs/javascript-environment-requirements.html)

@@ -51,6 +51,8 @@ In `gatsby-plugin-offline` 3.x, the following options are available:
   ]
   ```
 
+  <br />
+
   ```javascript:title=src/custom-sw-code.js
   // show a notification after 15 seconds (the notification
   // permission must be granted first)
@@ -64,6 +66,8 @@ In `gatsby-plugin-offline` 3.x, the following options are available:
   })
   workbox.routing.registerRoute(customRoute)
   ```
+
+- `debug` specifies whether Workbox should show debugging output in the browser console at runtime. When undefined, defaults to showing debug messages on `localhost` only.
 
 - `workboxConfig` allows you to override the default Workbox options - see [Overriding Workbox configuration](#overriding-workbox-configuration). For example:
 
@@ -139,22 +143,22 @@ const options = {
       // Use cacheFirst since these don't need to be revalidated (same RegExp
       // and same reason as above)
       urlPattern: /(\.js$|\.css$|static\/)/,
-      handler: `CacheFirst`,
+      handler: `cacheFirst`,
     },
     {
       // page-data.json files are not content hashed
       urlPattern: /^https?:.*\page-data\/.*\/page-data\.json/,
-      handler: `NetworkFirst`,
+      handler: `networkFirst`,
     },
     {
       // Add runtime caching of various other page resources
       urlPattern: /^https?:.*\.(png|jpg|jpeg|webp|svg|gif|tiff|js|woff|woff2|json|css)$/,
-      handler: `StaleWhileRevalidate`,
+      handler: `staleWhileRevalidate`,
     },
     {
       // Google Fonts CSS (doesn't end in .css so we need to specify it)
       urlPattern: /^https?:\/\/fonts\.googleapis\.com\/css/,
-      handler: `StaleWhileRevalidate`,
+      handler: `staleWhileRevalidate`,
     },
   ],
   skipWaiting: true,

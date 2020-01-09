@@ -13,20 +13,20 @@ In this tutorial you're going to cover the steps to creating a simple, custom, a
 If you don't have Gatsby installed, open up your terminal and type in:
 
 ```shell
-$ npm install --global gatsby-cli
+npm install --global gatsby-cli
 ```
 
 Then, still in your Terminal, head over to a folder you'd want to get started in and type in:
 
 ```shell
-$ gatsby new GatsbyLightbox https://github.com/gatsbyjs/gatsby-starter-default
+gatsby new GatsbyLightbox https://github.com/gatsbyjs/gatsby-starter-default
 ```
 
 Once it's done scaffolding the starter application, type in:
 
 ```shell
-$ cd GatsbyLightbox
-$ yarn develop
+cd GatsbyLightbox
+yarn develop
 ```
 
 Now open up your browser to `localhost:8000` and you should see the starter application ready to go.
@@ -65,7 +65,7 @@ Now that you have configured the filesystem, go ahead and create a component tha
 
 Create a new file inside `src/components` called `cars.js`.
 
-```js
+```jsx
 import React from "react"
 import { StaticQuery, graphql } from "gatsby"
 import Lightbox from "./lightbox"
@@ -95,7 +95,7 @@ export default Cars
 
 Notice how the `StaticQuery` component is using a render prop where it's returning your `Lightbox` component. For now, it's a simple component inside `components/lightbox.js` that looks like this:
 
-```js
+```jsx
 import React, { Component } from "react"
 import PropTypes from "prop-types"
 import Img from "gatsby-image"
@@ -128,7 +128,7 @@ By now, you should have all the images displaying on the home page and doing a f
 For styling, you're going to be using [styled-components](https://www.styled-components.com/). To get it configured with Gatsby, run the following inside your terminal in your application:
 
 ```shell
-$ yarn add gatsby-plugin-styled-components styled-components babel-plugin-styled-components
+yarn add gatsby-plugin-styled-components styled-components babel-plugin-styled-components
 ```
 
 And add the following to `gatsby-config.js`:
@@ -145,7 +145,7 @@ module.exports = {
 
 Lets restart the application to make sure the config has taken its effect. Now, you're going to create a simple `LightboxContainer` styled component to wrap your images in. Your `lightbox.js` component should look like this now:
 
-```js
+```jsx
 import React, { Component } from "react"
 import PropTypes from "prop-types"
 import Img from "gatsby-image"
@@ -193,12 +193,12 @@ For the sake of accessibility, you'll be using [Dialog](https://ui.reach.tech/di
 Go ahead and install all the dependencies:
 
 ```shell
-$ yarn add @reach/dialog
+yarn add @reach/dialog
 ```
 
 And configure a basic dialog inside the `Lightbox` component.
 
-```js
+```jsx
 import React, { Component, Fragment } from "react"
 import PropTypes from "prop-types"
 import Img from "gatsby-image"
@@ -269,7 +269,7 @@ Now, when you click the `Show Dialog` button, you should see something like this
 
 Now, you're going to convert each `Img` component into a button that you can click that will trigger the lightbox to open up with the right image selected. Here's how you do that:
 
-```js
+```jsx
 import React, { Component, Fragment } from "react"
 import PropTypes from "prop-types"
 import Img from "gatsby-image"

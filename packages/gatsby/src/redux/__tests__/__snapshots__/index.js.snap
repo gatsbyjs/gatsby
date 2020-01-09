@@ -16,6 +16,7 @@ Object {
       "query": "",
     },
   },
+  "pageDataStats": Map {},
   "staticQueryComponents": Map {},
   "status": Object {
     "plugins": Object {},

@@ -19,7 +19,7 @@ You can also use the `package.json` script variant of these commands, typically 
 }
 ```
 
-## Commands
+## CLI Commands
 
 1. [new](#new)
 2. [develop](#develop)
@@ -32,10 +32,44 @@ You can also use the `package.json` script variant of these commands, typically 
 
 ### `new`
 
-`gatsby new gatsby-site`
+```bash
+gatsby new [<site-name> [<starter-url>]]
+```
 
-See the [Gatsby starters docs](https://www.gatsbyjs.org/docs/gatsby-starters/)
-for more.
+| Argument    | Description                                                                                                                                                                                                     |
+| ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| site-name   | Your Gatsby site name, which is also used to create the project directory.                                                                                                                                      |
+| starter-url | A Gatsby starter URL or local file path. Defaults to [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default); see the [Gatsby starters](/docs/gatsby-starters/) docs for more information. |
+
+> Note: The `site-name` should only consist of letters and numbers. If you specify a `.`, `./` or a `<space>` in the name, `gatsby new` will throw an error.
+
+#### Examples
+
+- Create a Gatsby site named `my-awesome-site`, using the [default starter](https://github.com/gatsbyjs/gatsby-starter-default):
+
+```bash
+gatsby new my-awesome-site
+```
+
+- Create a Gatsby site named `my-awesome-blog-site`, using [gatsby-starter-blog](https://www.gatsbyjs.org/starters/gatsbyjs/gatsby-starter-blog/):
+
+```bash
+gatsby new my-awesome-blog-site https://github.com/gatsbyjs/gatsby-starter-blog
+```
+
+- If you leave out both of the arguments, the CLI will run an interactive shell asking for these inputs:
+
+```bash
+gatsby new
+? What is your project called? › my-gatsby-project
+? What starter would you like to use? › - Use arrow-keys. Return to submit.
+❯  gatsby-starter-default
+   gatsby-starter-hello-world
+   gatsby-starter-blog
+   (Use a different starter)
+```
+
+See the [Gatsby starters docs](https://www.gatsbyjs.org/docs/gatsby-starters/) for more details.
 
 ### `develop`
 
@@ -44,12 +78,12 @@ development server.
 
 #### Options
 
-|     Option      | Description                                     |   Default   |
-| :-------------: | ----------------------------------------------- | :---------: |
-| `-H`, `--host`  | Set host.                                       | `localhost` |
-| `-p`, `--port`  | Set port.                                       |   `8000`    |
-| `-o`, `--open`  | Open the site in your (default) browser for you |             |
-| `-S`, `--https` | Use HTTPS                                       |             |
+|     Option      | Description                                     |       Default        |
+| :-------------: | ----------------------------------------------- | :------------------: |
+| `-H`, `--host`  | Set host.                                       |     `localhost`      |
+| `-p`, `--port`  | Set port.                                       | `env.PORT` or `8000` |
+| `-o`, `--open`  | Open the site in your (default) browser for you |                      |
+| `-S`, `--https` | Use HTTPS                                       |                      |
 
 Follow the [Local HTTPS guide](https://www.gatsbyjs.org/docs/local-https/)
 to find out how you can set up an HTTPS development server using Gatsby.

@@ -39,7 +39,7 @@ to over-engineer simple websites. Not to mention that building a development
 environment alone is the biggest requirement when starting from scratch.
 Therefore another option needed to be explored.
 
-[Wordpress](https://wordpress.org/) would be the fastest solution to build a
+[WordPress](https://wordpress.org/) would be the fastest solution to build a
 website but I wanted to be able to rapidly prototype on customs themes.
 Unfortunately, understanding the architecture to develop themes on this stack
 would require additional time. Not to mention I dislike PHP (#sorryNotSorry 😅)

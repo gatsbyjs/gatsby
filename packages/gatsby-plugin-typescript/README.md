@@ -17,7 +17,7 @@ Provides drop-in support for TypeScript and TSX.
 ```javascript
 module.exports = {
   // ...,
-  plugins: [...`gatsby-plugin-typescript`],
+  plugins: [`gatsby-plugin-typescript`],
 }
 ```
 
@@ -63,6 +63,10 @@ compiler is not involved, the following applies:
 > cannot be compiled to ES.next. Workaround: Convert
 > to using export default and export const,
 > and import x, {y} from "z".
+>
+> Does not support baseUrl.
+> Workaround: use [gatsby-plugin-root-import](https://www.gatsbyjs.org/packages/gatsby-plugin-root-import/)
+> and configure it to point the baseUrl value (also set baseUrl option in tsconfig.json file).
 
 https://babeljs.io/docs/en/babel-plugin-transform-typescript.html
 

@@ -17,8 +17,8 @@ export function createProgress(message, reporter) {
 
   return {
     start() {},
-    tick() {
-      bar.tick()
+    tick(increment = 1) {
+      bar.tick(increment)
     },
     done() {},
     set total(value) {
