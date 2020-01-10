@@ -62,7 +62,7 @@ export const configureStore = (initialState: IReduxState): Store<IReduxState> =>
 export const store = configureStore(readState())
 
 // Persist state.
-export const saveState = (): Promise<void> => {
+export const saveState = (): void => {
   const state = store.getState()
   const pickedState = _.pick(state, [
     `nodes`,

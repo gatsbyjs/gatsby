@@ -1,5 +1,5 @@
 export interface IReduxState {
-  nodes?: Map<string, Set<string>> // TODO: Confirm this is correct.
+  nodes?: any // TODO
   nodesByType: Map<any, any> // TODO
   lastAction: ActionsUnion
   jobs: {

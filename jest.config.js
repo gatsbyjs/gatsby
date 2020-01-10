@@ -53,7 +53,7 @@ module.exports = {
   },
   collectCoverageFrom: coverageDirs,
   reporters: process.env.CI
-    ? [`jest-silent-reporter`, { useDots: true }]
+    ? [[`jest-silent-reporter`, { useDots: true }]]
     : [`default`].concat(useCoverage ? `jest-junit` : []),
   testEnvironment: `jest-environment-jsdom-fourteen`,
   moduleFileExtensions: [`js`, `jsx`, `ts`, `tsx`, `json`],
