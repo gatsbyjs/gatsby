@@ -165,7 +165,9 @@ module.exports = async (args: BootstrapArgs) => {
   const flattenedPlugins = await loadPlugins(config, program.directory)
   activity.end()
 
-  const pluginsStr = flattenedPlugins.map(p => `${p.name}@${p.version}`)
+  // Multiple occurrences of the same name-version-pair can occur,
+  // so we report an array of unique pairs
+  const pluginsStr = _.uniq(flattenedPlugins.map(p => `${p.name}@${p.version}`))
   telemetry.decorateEvent(`BUILD_END`, {
     plugins: pluginsStr,
   })

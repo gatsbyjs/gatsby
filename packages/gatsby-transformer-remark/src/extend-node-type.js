@@ -214,8 +214,15 @@ module.exports = (
       // Use Bluebird's Promise function "each" to run remark plugins serially.
       await Promise.each(pluginOptions.plugins, plugin => {
         const requiredPlugin = require(plugin.resolve)
-        if (_.isFunction(requiredPlugin)) {
-          return requiredPlugin(
+        // Allow both exports = function(), and exports.default = function()
+        const defaultFunction = _.isFunction(requiredPlugin)
+          ? requiredPlugin
+          : _.isFunction(requiredPlugin.default)
+          ? requiredPlugin.default
+          : undefined
+
+        if (defaultFunction) {
+          return defaultFunction(
             {
               markdownAST,
               markdownNode,

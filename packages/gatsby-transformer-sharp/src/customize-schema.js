@@ -6,6 +6,7 @@ const {
   GraphQLString,
   GraphQLInt,
   GraphQLFloat,
+  GraphQLNonNull,
 } = require(`gatsby/graphql`)
 const {
   queueImageResizing,
@@ -73,10 +74,10 @@ const fixedNodeType = ({
             }),
         },
         aspectRatio: { type: GraphQLFloat },
-        width: { type: GraphQLFloat },
-        height: { type: GraphQLFloat },
-        src: { type: GraphQLString },
-        srcSet: { type: GraphQLString },
+        width: { type: new GraphQLNonNull(GraphQLFloat) },
+        height: { type: new GraphQLNonNull(GraphQLFloat) },
+        src: { type: new GraphQLNonNull(GraphQLString) },
+        srcSet: { type: new GraphQLNonNull(GraphQLString) },
         srcWebp: {
           type: GraphQLString,
           resolve: ({ file, image, fieldArgs }) => {
@@ -229,9 +230,9 @@ const fluidNodeType = ({
               reporter,
             }),
         },
-        aspectRatio: { type: GraphQLFloat },
-        src: { type: GraphQLString },
-        srcSet: { type: GraphQLString },
+        aspectRatio: { type: new GraphQLNonNull(GraphQLFloat) },
+        src: { type: new GraphQLNonNull(GraphQLString) },
+        srcSet: { type: new GraphQLNonNull(GraphQLString) },
         srcWebp: {
           type: GraphQLString,
           resolve: ({ file, image, fieldArgs }) => {
@@ -266,7 +267,7 @@ const fluidNodeType = ({
             ).then(({ srcSet }) => srcSet)
           },
         },
-        sizes: { type: GraphQLString },
+        sizes: { type: new GraphQLNonNull(GraphQLString) },
         originalImg: { type: GraphQLString },
         originalName: { type: GraphQLString },
         presentationWidth: { type: GraphQLInt },

@@ -432,7 +432,7 @@ that can be replaced too: `inlineCode` and `wrapper`. `inlineCode` is
 for inline `<code>` and `wrapper` is the special element that wraps
 all of the MDX content.
 
-```js
+```jsx
 import { MDXProvider } from "@mdx-js/react"
 
 const MyH1 = props => <h1 style={{ color: "tomato" }} {...props} />
@@ -498,13 +498,13 @@ from a GraphQL page query or `StaticQuery`.
 `MDXRenderer` takes any prop and passes it on to your MDX content,
 just like a normal React component.
 
-```js
+```jsx
 <MDXRenderer title="My Stuff!">{mdx.body}</MDXRenderer>
 ```
 
 Using a page query:
 
-```js
+```jsx
 import { MDXRenderer } from "gatsby-plugin-mdx"
 
 export default class MyPageLayout {

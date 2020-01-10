@@ -224,7 +224,7 @@ The Breadcrumb component takes one prop:
 - `itemList` - an object comprised of the docs hierarchical structure
 
 <!-- prettier-ignore -->
-```javascript
+```jsx
 import Breadcrumb from "../../www/src/components/docs-breadcrumb"
 
 <Breadcrumb location={props.location} itemList={itemList} />
@@ -261,7 +261,7 @@ The component takes 2 props:
 - `page` - an object with data passed in from the sites `gatsby-node.js` that contains information from the MDX plugin about the structure of headings
 
 <!-- prettier-ignore -->
-```javascript
+```jsx
 import TableOfContents from "../../www/src/components/docs-table-of-contents"
 
 <TableOfContents location={props.location} page={page} />
@@ -273,7 +273,7 @@ The Table of Contents component also has some optional configurations that can b
 
 In docs where the Table of Contents isn't required and should be disabled, a key in the frontmatter called `disableTableOfContents` can be set to `true` like this:
 
-```md
+```markdown
 ---
 title: Glossary
 disableTableOfContents: true
@@ -284,7 +284,7 @@ When you're new to Gatsby there can be a lot of words to learn...
 
 In other docs where the Table of Contents is extremely long it can make sense to only show headers from the doc up to a certain level, rather than all subheadings. You can set the `tableOfContentsDepth` key to a number that will limit the subheadings shown in the table of contents to that "depth". If it is set to 2, `<h2>`/`##`, and `<h3>`/`###` headers will be listed, if set to 3, `<h2>`/`##`, `<h3>`/`###`, and `<h4>`/`####` will all be shown. It is set like this:
 
-```md
+```markdown
 ---
 title: Glossary
 tableOfContentsDepth: 2

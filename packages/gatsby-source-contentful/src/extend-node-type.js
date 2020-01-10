@@ -6,6 +6,7 @@ const {
   GraphQLInt,
   GraphQLFloat,
   GraphQLJSON,
+  GraphQLNonNull,
 } = require(`gatsby/graphql`)
 const qs = require(`qs`)
 const base64Img = require(`base64-img`)
@@ -327,10 +328,10 @@ const fixedNodeType = ({ name, getTracedSVG }) => {
           resolve: getTracedSVG,
         },
         aspectRatio: { type: GraphQLFloat },
-        width: { type: GraphQLFloat },
-        height: { type: GraphQLFloat },
-        src: { type: GraphQLString },
-        srcSet: { type: GraphQLString },
+        width: { type: new GraphQLNonNull(GraphQLFloat) },
+        height: { type: new GraphQLNonNull(GraphQLFloat) },
+        src: { type: new GraphQLNonNull(GraphQLString) },
+        srcSet: { type: new GraphQLNonNull(GraphQLString) },
         srcWebp: {
           type: GraphQLString,
           resolve({ image, options, context }) {
@@ -421,9 +422,9 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
           type: GraphQLString,
           resolve: getTracedSVG,
         },
-        aspectRatio: { type: GraphQLFloat },
-        src: { type: GraphQLString },
-        srcSet: { type: GraphQLString },
+        aspectRatio: { type: new GraphQLNonNull(GraphQLFloat) },
+        src: { type: new GraphQLNonNull(GraphQLString) },
+        srcSet: { type: new GraphQLNonNull(GraphQLString) },
         srcWebp: {
           type: GraphQLString,
           resolve({ image, options, context }) {
@@ -458,7 +459,7 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
             return _.get(fluid, `srcSet`)
           },
         },
-        sizes: { type: GraphQLString },
+        sizes: { type: new GraphQLNonNull(GraphQLString) },
       },
     }),
     args: {

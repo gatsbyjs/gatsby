@@ -248,7 +248,7 @@ module.exports = {
 
 3. Create a template component such as `src/templates/post.js` with the following code in it:
 
-```javascript:title=post.js
+```jsx:title=post.js
 import React, { Component } from "react"
 import { graphql } from "gatsby"
 import PropTypes from "prop-types"
@@ -402,7 +402,7 @@ plugins: [
 
 8. Query data with the [GraphiQL editor](/docs/introducing-graphiql/) at <https://localhost:8000/___graphql>. The Contentful plugin adds several new node types to your site, including every content type in your Contentful website. Your example space with a "Blog Post" content type produces a `allContentfulBlogPost` node type in GraphQL.
 
-![the graphql interface, with a sample query outlined below](./images/recipe-sourcing-contentful-graphql.png)
+![the graphql interface, with a sample query outlined below](../images/recipe-sourcing-contentful-graphql.png)
 
 To query for Blog Post titles from Contentful, use the following GraphQL query:
 
@@ -507,7 +507,7 @@ exports.createPages = async ({ actions: { createPage } }) => {
 
 2. Create a template to display Pokémon on the homepage:
 
-```js:title=src/templates/all-pokemon.js
+```jsx:title=src/templates/all-pokemon.js
 import React from "react"
 
 export default ({ pageContext: { allPokemon } }) => (
@@ -546,7 +546,7 @@ export default ({ pageContext: { allPokemon } }) => (
 
 1. Install the `gatsby-source-drupal` plugin.
 
-```
+```shell
 npm install --save gatsby-source-drupal
 ```
 

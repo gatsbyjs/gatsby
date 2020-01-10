@@ -90,6 +90,7 @@ Gatsby lets you access your data across all sources using a single GraphQL inter
 - [Filtering with GraphQL](/docs/recipes/querying-data#filtering-with-graphql)
 - [GraphQL Query Aliases](/docs/recipes/querying-data#graphql-query-aliases)
 - [GraphQL Query Fragments](/docs/recipes/querying-data#graphql-query-fragments)
+- [Querying data client-side with fetch](/docs/recipes/querying-data#querying-data-client-side-with-fetch)
 
 ## [7. Working with images](/docs/recipes/working-with-images)
 

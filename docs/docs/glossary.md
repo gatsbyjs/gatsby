@@ -170,7 +170,7 @@ Once a site has been [built](#build) by Gatsby and loaded in a web browser, [cli
 
 ### Inference
 
-As part of its data layer and [build](#build) process, Gatsby will automatically **infer** a [schema](#schema), or type-based structure, based on available data sources (e.g. Markdown file nodes, Wordpress posts, etc.). More control can be gained over this structure by using Gatsby's [Schema Customization API](/docs/schema-customization/).
+As part of its data layer and [build](#build) process, Gatsby will automatically **infer** a [schema](#schema), or type-based structure, based on available data sources (e.g. Markdown file nodes, WordPress posts, etc.). More control can be gained over this structure by using Gatsby's [Schema Customization API](/docs/schema-customization/).
 
 ## J
 
@@ -330,7 +330,7 @@ A UI refers to a User Interface. In the field of human-computer interaction, a U
 
 ## W
 
-### Webpack
+### [webpack](/docs/glossary/webpack)
 
 A [JavaScript](#javascript) application that Gatsby uses to bundle your website's code up. This happens automatically on [build](#build).
 
