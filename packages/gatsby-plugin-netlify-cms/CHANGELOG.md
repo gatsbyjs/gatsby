@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.35](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@4.1.34...gatsby-plugin-netlify-cms@4.1.35) (2020-01-09)
+
+### Bug Fixes
+
+- **netlify-cms-plugin:** remove preview styles from global context ([#20429](https://github.com/gatsbyjs/gatsby/issues/20429)) ([a4e5fb9](https://github.com/gatsbyjs/gatsby/commit/a4e5fb9))
+
 ## [4.1.34](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@4.1.33...gatsby-plugin-netlify-cms@4.1.34) (2020-01-06)
 
 ### Bug Fixes
