@@ -83,7 +83,7 @@ exports.processFile = (file, transforms, options = {}) => {
       pipeline = pipeline.withMetadata()
     }
   } catch (err) {
-    throw new Error(`Failed to process image ${file}`)
+    throw new Error(`Failed to load image ${file} into sharp.`)
   }
 
   return transforms.map(async transform => {
@@ -180,7 +180,14 @@ exports.processFile = (file, transforms, options = {}) => {
       return transform
     }
 
-    await clonedPipeline.toFile(outputPath)
+    try {
+      await clonedPipeline.toFile(outputPath)
+    } catch (err) {
+      throw new Error(
+        `Failed to write ${file} into ${outputPath}. (${err.message})`
+      )
+    }
+
     return transform
   })
 }
