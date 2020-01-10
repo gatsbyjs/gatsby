@@ -1,18 +1,21 @@
-/* @flow */
-const Promise = require(`bluebird`)
-const webpack = require(`webpack`)
-const fs = require(`fs-extra`)
-// const convertHrtime = require(`convert-hrtime`)
-const { chunk } = require(`lodash`)
-const webpackConfig = require(`../utils/webpack.config`)
-const reporter = require(`gatsby-cli/lib/reporter`)
-const { createErrorFromString } = require(`gatsby-cli/lib/reporter/errors`)
-const telemetry = require(`gatsby-telemetry`)
+import Bluebird from "bluebird"
+import webpack from "webpack"
+import fs from "fs-extra"
+// import convertHrtime from "convert-hrtime"
+import { chunk } from "lodash"
+import webpackConfig from "../utils/webpack.config"
+import reporter from "gatsby-cli/lib/reporter"
+import { createErrorFromString } from "gatsby-cli/lib/reporter/errors"
+import telemetry from "gatsby-telemetry"
+import { BuildHTMLStage, IProgram } from "./types"
 
-const { structureWebpackErrors } = require(`../utils/webpack-error-utils`)
+type IActivity = any // TODO
+type IWorkerPool = any // TODO
 
-const runWebpack = compilerConfig =>
-  new Promise((resolve, reject) => {
+import { structureWebpackErrors } from "../utils/webpack-error-utils"
+
+const runWebpack = (compilerConfig): Bluebird<webpack.Stats> =>
+  new Bluebird((resolve, reject) => {
     webpack(compilerConfig).run((err, stats) => {
       if (err) {
         reject(err)
@@ -22,7 +25,10 @@ const runWebpack = compilerConfig =>
     })
   })
 
-const doBuildRenderer = async (program, webpackConfig) => {
+const doBuildRenderer = async (
+  program: IProgram,
+  webpackConfig: webpack.Configuration
+): Promise<string> => {
   const { directory } = program
   const stats = await runWebpack(webpackConfig)
   // render-page.js is hard coded in webpack.config
@@ -35,7 +41,11 @@ const doBuildRenderer = async (program, webpackConfig) => {
   return outputFile
 }
 
-const buildRenderer = async (program, stage, { parentSpan }) => {
+const buildRenderer = async (
+  program: IProgram,
+  stage: BuildHTMLStage,
+  parentSpan: IActivity
+): Promise<string> => {
   const { directory } = program
   const config = await webpackConfig(program, directory, stage, null, {
     parentSpan,
@@ -43,7 +53,7 @@ const buildRenderer = async (program, stage, { parentSpan }) => {
   return await doBuildRenderer(program, config)
 }
 
-const deleteRenderer = async rendererPath => {
+const deleteRenderer = async (rendererPath: string): Promise<void> => {
   try {
     await fs.remove(rendererPath)
     await fs.remove(`${rendererPath}.map`)
@@ -53,27 +63,28 @@ const deleteRenderer = async rendererPath => {
 }
 
 const renderHTMLQueue = (
-  { workerPool, activity },
-  htmlComponentRendererPath,
-  pages
-) =>
-  new Promise((resolve, reject) => {
+  workerPool: IWorkerPool,
+  activity: IActivity,
+  htmlComponentRendererPath: string,
+  pages: string[]
+): Promise<void> =>
+  new Bluebird((resolve, reject) => {
     // We need to only pass env vars that are set programmatically in gatsby-cli
     // to child process. Other vars will be picked up from environment.
-    const envVars = Object.entries({
-      NODE_ENV: process.env.NODE_ENV,
-      gatsby_executing_command: process.env.gatsby_executing_command,
-      gatsby_log_level: process.env.gatsby_log_level,
-    })
+    const envVars = [
+      ["NODE_ENV", process.env.NODE_ENV],
+      ["gatsby_executing_command", process.env.gatsby_executing_command],
+      ["gatsby_log_level", process.env.gatsby_log_level],
+    ]
 
     // const start = process.hrtime()
     const segments = chunk(pages, 50)
     // let finished = 0
 
-    Promise.map(
+    Bluebird.map(
       segments,
       pageSegment =>
-        new Promise((resolve, reject) => {
+        new Bluebird<void>((resolve, reject) => {
           workerPool
             .renderHTML({
               htmlComponentRendererPath,
@@ -95,22 +106,22 @@ const renderHTMLQueue = (
             .catch(reject)
         })
     )
-      .then(resolve)
+      .then(() => resolve())
       .catch(reject)
   })
 
-const doBuildPages = async ({
-  rendererPath,
-  pagePaths,
-  activity,
-  workerPool,
-}) => {
+const doBuildPages = async (
+  rendererPath: string,
+  pagePaths: string[],
+  activity: IActivity,
+  workerPool: IWorkerPool
+) => {
   telemetry.addSiteMeasurement(`BUILD_END`, {
     pagesCount: pagePaths.length,
   })
 
   try {
-    await renderHTMLQueue({ workerPool, activity }, rendererPath, pagePaths)
+    await renderHTMLQueue(workerPool, activity, rendererPath, pagePaths)
   } catch (e) {
     const prettyError = await createErrorFromString(
       e.stack,
@@ -127,14 +138,18 @@ const buildPages = async ({
   pagePaths,
   activity,
   workerPool,
-}) => {
-  const rendererPath = await buildRenderer(program, stage, {
-    parentSpan: activity.span,
-  })
-  await doBuildPages({ rendererPath, pagePaths, activity, workerPool })
+}: {
+  program: IProgram
+  stage: BuildHTMLStage
+  pagePaths: string[]
+  activity: IActivity
+  workerPool: IWorkerPool
+}): Promise<void> => {
+  const rendererPath = await buildRenderer(program, stage, activity.span)
+  await doBuildPages(rendererPath, pagePaths, activity, workerPool)
   await deleteRenderer(rendererPath)
 }
 
-module.exports = {
+export default {
   buildPages,
 }
