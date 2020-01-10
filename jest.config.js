@@ -35,7 +35,7 @@ module.exports = {
   ],
   transform: {
     "^.+\\.js$": `<rootDir>/jest-transformer.js`,
-    "^.+\\.tsx?$": `<rootDir>/node_modules/ts-jest/preprocessor.js`,
+    "^.+\\.tsx?$": `<rootDir>/jest-transformer.js`,
   },
   moduleNameMapper: {
     "^highlight.js$": `<rootDir>/node_modules/highlight.js/lib/index.js`,
