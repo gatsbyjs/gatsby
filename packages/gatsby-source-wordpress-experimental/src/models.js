@@ -18,6 +18,13 @@ const introspection = {
       // https://github.com/wp-graphql/wp-graphql/issues/848
       `postTypeInfo`,
       `connectedPostTypes`,
+      // we don't need auth fields
+      `isJwtAuthSecretRevoked`,
+      `isRestricted`,
+      `jwtAuthExpiration`,
+      `jwtAuthToken`,
+      `jwtRefreshToken`,
+      `jwtUserSecret`,
     ],
     fieldAliases: {
       parent: `wpParent`,
