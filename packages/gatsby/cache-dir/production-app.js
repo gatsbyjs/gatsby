@@ -30,7 +30,6 @@ window.___loader = publicLoader
 navigationInit()
 
 apiRunnerAsync(`onClientEntry`).then(() => {
-  console.log(`HELLO`)
   // Let plugins register a service worker. The plugin just needs
   // to return true.
   if (apiRunner(`registerServiceWorker`).length > 0) {
