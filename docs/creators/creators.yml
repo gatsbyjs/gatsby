@@ -199,9 +199,9 @@
 - name: Ramón Chancay
   type: individual
   description: >-
-    Front-end / Back-end Developer in Guayaquil Ecuador.
-    Currently at Everymundo.
-    I enjoy teaching and sharing what I know.
+    Front-end Engineer in Guayaquil Ecuador.
+    Currently at Everymundo and Freelancer in other companies.
+    Fan number 1 of Jamstack, I propose solutions serverless.
     I give professional advice to developers and companies.
   location: "Guayaquil, Ecuador"
   website: "https://ramonchancay.me"
@@ -454,6 +454,16 @@
     We’re an agile group of full-time, fast-moving, hard-working, idea-generating, results-getting, on-timing, on-budgeting, espresso-fuelled content writers, designers, developers, media mavens, strategists, and producers.
   location: Canada
   website: "https://bare.ca/"
+  for_hire: true
+  hiring: false
+  portfolio: true
+- name: Epic Awesome
+  type: agency
+  image: images/epic-awesome.jpg
+  description: >-
+    We help startups and small business to grow their business. We provide business and tech consulting alongside web and mobile development.
+  location: Brazil and Sweden
+  website: "https://epicawesome.se/"
   for_hire: true
   hiring: false
   portfolio: true

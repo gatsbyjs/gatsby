@@ -1,5 +1,5 @@
 const _ = require(`lodash`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 const fs = require(`fs`)
 const path = require(`path`)
 const crypto = require(`crypto`)
@@ -22,7 +22,7 @@ function createFileContentHash(root, globPattern) {
 }
 
 /**
- * Make sure key is unique to plugin options. E.g there could
+ * Make sure key is unique to plugin options. E.g. there could
  * be multiple source-filesystem plugins, with different names
  * (docs, blogs).
  * @param {*} name Name of the plugin
@@ -88,7 +88,18 @@ function resolvePlugin(pluginName, rootDir) {
       rootDir !== null
         ? createRequireFromPath(`${rootDir}/:internal:`)
         : require
-    const resolvedPath = slash(path.dirname(requireSource.resolve(pluginName)))
+
+    // If the path is absolute, resolve the directory of the internal plugin,
+    // otherwise resolve the directory containing the package.json
+    const resolvedPath = slash(
+      path.dirname(
+        requireSource.resolve(
+          path.isAbsolute(pluginName)
+            ? pluginName
+            : `${pluginName}/package.json`
+        )
+      )
+    )
 
     const packageJSON = JSON.parse(
       fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)

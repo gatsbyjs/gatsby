@@ -2,7 +2,7 @@ const _ = require(`lodash`)
 const path = require(`path`)
 const fs = require(`fs-extra`)
 const crypto = require(`crypto`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 const { store, emitter } = require(`../redux/`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 const { match } = require(`@reach/router/lib/utils`)
@@ -80,6 +80,7 @@ const getMatchPaths = pages => {
   // More info in https://github.com/gatsbyjs/gatsby/issues/16097
   // small speedup: don't bother traversing when no matchPaths found.
   if (matchPathPages.length) {
+    const newMatches = []
     pages.forEach((page, index) => {
       const isInsideMatchPath = !!matchPathPages.find(
         pageWithMatchPath =>
@@ -87,7 +88,7 @@ const getMatchPaths = pages => {
       )
 
       if (isInsideMatchPath) {
-        matchPathPages.push(
+        newMatches.push(
           createMatchPathEntry(
             {
               ...page,
@@ -98,6 +99,8 @@ const getMatchPaths = pages => {
         )
       }
     })
+    // Add afterwards because the new matches are not relevant for the existing search
+    matchPathPages.push(...newMatches)
   }
 
   return matchPathPages
@@ -170,7 +173,7 @@ const preferDefault = m => m && m.default || m
       )
 
       return `  "${c.componentChunkName}": () => import("${slash(
-        relativeComponentPath
+        `./${relativeComponentPath}`
       )}" /* webpackChunkName: "${c.componentChunkName}" */)`
     })
     .join(`,\n`)}

@@ -25,7 +25,7 @@ module.exports = async function onCreateNode(
   const content = await loadNodeContent(node)
 
   try {
-    let data = grayMatter(content, pluginOptions)
+    const data = grayMatter(content, pluginOptions)
 
     if (data.data) {
       data.data = _.mapValues(data.data, value => {
@@ -36,7 +36,7 @@ module.exports = async function onCreateNode(
       })
     }
 
-    let markdownNode = {
+    const markdownNode = {
       id: createNodeId(`${node.id} >>> MarkdownRemark`),
       children: [],
       parent: node.id,

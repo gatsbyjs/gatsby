@@ -1,10 +1,8 @@
 const report = require(`gatsby-cli/lib/reporter`)
 const { ObjectTypeComposer } = require(`graphql-compose`)
-const { getExampleValue } = require(`./example-value`)
-const {
-  addNodeInterface,
-  getNodeInterface,
-} = require(`../types/node-interface`)
+const { hasNodes } = require(`./inference-metadata`)
+const { getExampleObject } = require(`./build-example-data`)
+const { addNodeInterface } = require(`../types/node-interface`)
 const { addInferredFields } = require(`./add-inferred-fields`)
 
 const addInferredTypes = ({
@@ -12,11 +10,16 @@ const addInferredTypes = ({
   nodeStore,
   typeConflictReporter,
   typeMapping,
+  inferenceMetadata,
   parentSpan,
 }) => {
   // XXX(freiksenet): Won't be needed after plugins set typedefs
   // Infer File first so all the links to it would work
-  const typeNames = putFileFirst(nodeStore.getTypes())
+  const { typeMap } = inferenceMetadata
+  const typesWithNodes = Object.keys(typeMap).filter(typeName =>
+    hasNodes(typeMap[typeName])
+  )
+  const typeNames = putFileFirst(typesWithNodes)
   const noNodeInterfaceTypes = []
 
   const typesToInfer = []
@@ -69,6 +72,7 @@ const addInferredTypes = ({
       typeConflictReporter,
       typeMapping,
       parentSpan,
+      inferenceMetadata,
     })
   )
 }
@@ -79,25 +83,24 @@ const addInferredType = ({
   nodeStore,
   typeConflictReporter,
   typeMapping,
+  inferenceMetadata = {},
   parentSpan,
 }) => {
   const typeName = typeComposer.getTypeName()
-  const nodes = nodeStore.getNodesByType(typeName)
   // TODO: Move this to where the type is created once we can get
   // node type owner information directly from store
-  if (typeComposer.getExtension(`createdFrom`) === `inference`) {
+  if (
+    typeComposer.getExtension(`createdFrom`) === `inference` &&
+    hasNodes(inferenceMetadata.typeMap[typeName])
+  ) {
+    const nodes = nodeStore.getNodesByType(typeName)
     typeComposer.setExtension(`plugin`, nodes[0].internal.owner)
   }
 
-  const exampleValue = getExampleValue({
-    nodes,
+  const exampleValue = getExampleObject({
+    ...inferenceMetadata.typeMap[typeName],
     typeName,
     typeConflictReporter,
-    ignoreFields: [
-      ...getNodeInterface({ schemaComposer }).getFieldNames(),
-      `$loki`,
-      `__gatsby_resolved`,
-    ],
   })
 
   addInferredFields({

@@ -152,7 +152,7 @@ First, create a new `Container` component.
 
 1. Create a new directory at `src/components` and then, in this new directory, create a file named `container.js` and paste the following:
 
-```javascript:title=src/components/container.js
+```jsx:title=src/components/container.js
 import React from "react"
 import containerStyles from "./container.module.css"
 
@@ -177,7 +177,7 @@ You'll notice that the file name ends with `.module.css` instead of the usual `.
 3. Create a new page component by creating a file at
    `src/pages/about-css-modules.js`:
 
-```javascript:title=src/pages/about-css-modules.js
+```jsx:title=src/pages/about-css-modules.js
 import React from "react"
 
 import Container from "../components/container"
@@ -248,7 +248,7 @@ import Container from "../components/container"
 console.log(styles)
 ```
 
-The `console.log(styles)` code will log the resulting import so you can see the result of your processed `./about-css-modules.module.css` file. If you open the developer console (using e.g. Firefox or Chrome's developer tools) in your browser, you'll see:
+The `console.log(styles)` code will log the resulting import so you can see the result of your processed `./about-css-modules.module.css` file. If you open the developer console (using e.g. Firefox or Chrome's developer tools, often by the F12 key) in your browser, you'll see:
 
 ![Import result of CSS module in console](css-modules-console.png)
 

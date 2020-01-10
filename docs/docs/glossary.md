@@ -34,7 +34,7 @@ A tool that lets you write the most modern [JavaScript](#javascript), and on [bu
 
 ### Backend
 
-The behind the scenes that the [public](#public) do not see. This often refers to the control panel of your [CMS](#cms). These are often powered by server-side programming languages such as Node.js, PHP, Go, ASP.net, Ruby, or Java.
+The behind the scenes that the [public](#public) does not see. This often refers to the control panel of your [CMS](#cms). These are often powered by server-side programming languages such as Node.js, PHP, Go, ASP.net, Ruby, or Java.
 
 ### Build
 
@@ -140,7 +140,7 @@ The [public-facing](#public) interface for your website or app, delivered using 
 
 Gatsby is a modern website framework that builds performance into every website or app by leveraging the latest web technologies such as [React](#react), [GraphQL](#graphql), and modern [JavaScript](#javascript). Gatsby makes it easy to create blazing fast, compelling web experiences without needing to become a performance expert.
 
-### GraphQL
+### [GraphQL](/docs/glossary/graphql)
 
 A [query](#query) language that allows you to pull data into your website or app. It’s the [interface that Gatsby uses](/docs/graphql/) for managing site data.
 
@@ -167,6 +167,10 @@ A feature in use when you run `gatsby develop` that live updates your site on sa
 Once a site has been [built](#build) by Gatsby and loaded in a web browser, [client-side](#client-side) JavaScript assets will download and turn the site into a full React application that can manipulate the [DOM](#dom). This process is often called re-hydration as it runs some of the same JavaScript code used to generate Gatsby pages, but this time with browser DOM APIs like `window` available.
 
 ## I
+
+### Inference
+
+As part of its data layer and [build](#build) process, Gatsby will automatically **infer** a [schema](#schema), or type-based structure, based on available data sources (e.g. Markdown file nodes, WordPress posts, etc.). More control can be gained over this structure by using Gatsby's [Schema Customization API](/docs/schema-customization/).
 
 ## J
 
@@ -210,7 +214,7 @@ A way of writing HTML content with plain text, using special characters to denot
 
 Gatsby uses [data nodes](/docs/node-interface/) to represent a single piece of data. A [data source](#data-source) will create multiple nodes.
 
-### Node.js
+### [Node.js](/docs/glossary/node)
 
 A program that lets you run [JavaScript](#javascript) on your computer. Gatsby is powered by Node.
 
@@ -256,7 +260,7 @@ The process of requesting specific data from somewhere. With Gatsby you normally
 
 ## R
 
-### React
+### [React](/docs/glossary/react)
 
 A code library (written with [JavaScript](#javascript)) for building user interfaces. It’s the framework that [Gatsby](#gatsby) uses to build pages and structure content.
 
@@ -326,7 +330,7 @@ A UI refers to a User Interface. In the field of human-computer interaction, a U
 
 ## W
 
-### Webpack
+### [webpack](/docs/glossary/webpack)
 
 A [JavaScript](#javascript) application that Gatsby uses to bundle your website's code up. This happens automatically on [build](#build).
 

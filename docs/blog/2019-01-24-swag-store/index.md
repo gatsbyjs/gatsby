@@ -38,32 +38,19 @@ We also saw that people were excited about:
 
 - Stickers
 
-<blockquote class="twitter-tweet" data-lang="en">
-  <p lang="en" dir="ltr">
-    So... I ordered custom nail wraps for{" "}
-    <a href="https://twitter.com/FormidableLabs?ref_src=twsrc%5Etfw">
-      @FormidableLabs
-    </a>{" "}
-    swag. They came in the mail today and I love them so much.{" "}
-    <a href="https://t.co/h0B8rOqEHs">pic.twitter.com/h0B8rOqEHs</a>
-  </p>
-  &mdash; Becca Lee (@the_becca_lee){" "}
-  <a href="https://twitter.com/the_becca_lee/status/1009920104019083264?ref_src=twsrc%5Etfw">
-    June 21, 2018
-  </a>
-</blockquote>
+https://twitter.com/the_becca_lee/status/1009920104019083264
 
 Since we had so many things to choose from, we needed something lightweight as a trial run. We decided on shirts because we already had the design for those. We also got socks for people (like me) who always find off the rack shirts impossible to wear and look good. And of course we got some stickers so that we could wallpaper our laptops with Gatsby.
 
 We also wanted the process of buying swag to be a fun and personable experience from beginning to end. People so willingly show their appreciation for Gatsby, and we wanted to be able to show our excitement and appreciation, too.
 
-![Tina Fey in a money shower](images/money-shower.gif)
+![Tina Fey in a money shower](./images/money-shower.gif)
 
 ## Figuring Out Our Limitations and Our Strengths
 
 Now that we’d decided on _what_ we were going to have, we came up against the inevitable, ever burning question, “How the hell can we make this work?”
 
-![Rosie Perez "What?"](images/giphy-1.gif)
+![Rosie Perez "What?"](./images/giphy-1.gif)
 
 And that question could only be answered by looking at what we had—and what we didn’t have. We had to identify our limitations and strengths.
 
@@ -181,7 +168,7 @@ But what did that process actually look like? We had our starting point — some
 
 Basically, our process looked like this:
 
-![South Park Underpants Gnomes](images/1_93222BZZGSWF__LBsgVvPg.jpg)
+![South Park Underpants Gnomes](./images/1_93222BZZGSWF__LBsgVvPg.jpg)
 _The Gatsby Swag Project off to a strong start!_
 
 So we worked with what we had — starting at the end and worked our way backwards.
@@ -222,7 +209,7 @@ Since we were going with an “automation first” framework, we had a lot to co
 
 Eventually, by working backwards from the end, we created a full process and recorded it using [Whimsical](https://whimsical.co/). You can see our flow chart [here](https://whimsical.co/HrgMvcBZxyyWxcPPAUzPXf)!
 
-![Flow chart with the step by step swag process](images/1_tzPNjNB2Lf0w_7mu21JDTQ.png)
+![Flow chart with the step by step swag process](./images/1_tzPNjNB2Lf0w_7mu21JDTQ.png)
 _Flow chart with the step by step swag process_
 
 The top section lists each tool that we’re using to manage and automated the swag process.
@@ -269,33 +256,11 @@ Setting up a mostly automated process for swag gave us the best of both worlds, 
 
 It also meant that we got to see pictures like this:
 
-<blockquote class="twitter-tweet" data-lang="en">
-  <p lang="en" dir="ltr">
-    Thanks{" "}
-    <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> for
-    the t-shirt! If there are any developers out there that haven’t tried out
-    Gatsby yet here is my dog Birch silently judging you. 😉 Trust me, it’s
-    awesome. <a href="https://t.co/THDSmhKdBb">pic.twitter.com/THDSmhKdBb</a>
-  </p>
-  &mdash; Ryan Wiemer (@ryanwiemer){" "}
-  <a href="https://twitter.com/ryanwiemer/status/1022267081998266368?ref_src=twsrc%5Etfw">
-    July 25, 2018
-  </a>
-</blockquote>
+https://twitter.com/ryanwiemer/status/1022267081998266368
 
 And this:
 
-<blockquote class="twitter-tweet" data-lang="en">
-  <p lang="en" dir="ltr">
-    <a href="https://twitter.com/jlengstorf?ref_src=twsrc%5Etfw">@jlengstorf</a>{" "}
-    You have seen pictures of the Gatsby socks with dogs, well, meet rayman! 🧦
-    🎉 <a href="https://t.co/kFhAA6SsfV">pic.twitter.com/kFhAA6SsfV</a>
-  </p>
-  &mdash; Sara Vieira (@NikkitaFTW){" "}
-  <a href="https://twitter.com/NikkitaFTW/status/1024332058125107200?ref_src=twsrc%5Etfw">
-    July 31, 2018
-  </a>
-</blockquote>
+https://twitter.com/NikkitaFTW/status/1024332058125107200
 
 Dogs and cats in Gatsby swag? Yes please. I’ll have another. Find out how you can [#buildwithgatsby](https://twitter.com/search?src=typd&q=%23buildwithgatsby) on [Twitter](https://twitter.com/gatsbyjs) or on our [site](https://www.gatsbyjs.com/)!
 

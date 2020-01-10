@@ -7,7 +7,7 @@ excerpt: "Moving to Gatsby 1.x and embracing the new GraphQL setup can be daunti
 tags: ["v1", "graphql", "getting-started"]
 ---
 
-Before I built [React FAQ](https://reactfaq.site/), I went looking for a static
+Before I built "React FAQ" (GitHub: https://github.com/timarney/react-faq), I went looking for a static
 site generator.
 
 I had a few criteria in mind.
@@ -65,7 +65,7 @@ reviews were solid but I was still stuck on my pre-1.0 mindset.
 Then three weeks ago I saw this tweet from
 [@ryanflorence](https://twitter.com/ryanflorence):
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">.<a href="https://twitter.com/gatsbyjs">@gatsbyjs</a> is a completely original approach to web development. The mix of static/dynamic and how it handles data is really interesting.</p>&mdash; Ryan Florence (@ryanflorence) <a href="https://twitter.com/ryanflorence/status/906233888560758784">September 8, 2017</a></blockquote>
+https://twitter.com/ryanflorence/status/906233888560758784
 
 Well, that sounded like a pretty good endorsement.
 

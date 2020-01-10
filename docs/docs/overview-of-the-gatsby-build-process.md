@@ -271,7 +271,7 @@ An internal Gatsby utility adds code for redirects, like implemented with [`crea
 
 20. `Build manifest and related icons` - (from `gatsby-plugin-manifest`)
 
-This step is activated by `gatsby-plugin-manifest` in the `gatsby-default-starter` and is not a part of the built-in Gatsby functionality, demonstrating how plugins are able to tap into the lifecycle.
+This step is activated by `gatsby-plugin-manifest` in the `gatsby-default-starter` and is not a part of the built-in Gatsby functionality, demonstrating how plugins are able to tap into the lifecycle. The plugin adds a manifest.json file with the specified configurations and icons.
 
 21. `onPostBootstrap`
 

@@ -69,7 +69,7 @@ The Gatsby blog theme package has a component that contains the content of the s
 
 If you look at the file tree of your site, you'll see it looks like this:
 
-```
+```text
 my-blog
 ├── content
 │   ├── assets
@@ -94,6 +94,8 @@ In the `src` directory of the site, there's a `gatsby-theme-blog` directory. Any
 Open up the `bio-content.js` file and make some content edits:
 
 ```jsx:title=bio-content.js
+import React, { Fragment } from "react"
+
 export default () => (
   {/* highlight-start */}
   <Fragment>
@@ -144,6 +146,9 @@ The blog theme ships with a default Gatsby purple theme, but you can override an
 Open up `/src/gatsby-theme-blog/gatsby-plugin-theme-ui/colors.js`, and uncomment the code in that file.
 
 ```javascript:title=colors.js
+import merge from "deepmerge"
+import defaultThemeColors from "gatsby-theme-blog/src/gatsby-plugin-theme-ui/colors"
+
 {/* highlight-start */}
 const darkBlue = `#007acc`
 const lightBlue = `#66E0FF`

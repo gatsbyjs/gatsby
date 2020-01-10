@@ -2,7 +2,15 @@
 title: Converting a Starter to a Theme
 ---
 
-Gatsby themes are designed to be easy to create from an existing starter. Here we will walk you through the main steps of converting your starter to a theme.
+Gatsby themes are designed to be easy to create from an existing starter. This guide will walk you through the main steps of converting your starter to a theme.
+
+## What is a starter? What is a theme?
+
+A starter is a boilerplate Gatsby site that users can copy and [customize](/docs/modifying-a-starter/). Once modified, a starter maintains no connection to its source.
+
+A theme is a type of plugin that includes a `gatsby-config.js` file and adds pre-configured functionality, data sourcing, and/or UI code to Gatsby sites. In contrast to starters, themes can be packaged and distributed through a registry like npm, and their versions can be tracked/managed through a `package.json` file.
+
+One reason to convert a starter to a theme is to make it easier to push updates out to consumers of your code. With a starter, users would have to try and update their code from the original starter repo and run the risk of overwriting some of their own changes. With a theme, it's much easier for developers to update code through their package manager and rely on a consistent theme API that respects their customizations.
 
 ## Prepare Your `package.json`
 
