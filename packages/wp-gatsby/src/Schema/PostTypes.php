@@ -75,8 +75,8 @@ class PostTypes
 
                       if (!$is_blacklisted && !$is_processed) {
                         $post_type_object = get_post_type_object($allowed_post_type);
-                        $graphql_single_name = $post_type_object->graphql_single_name ?? null;
-                        $graphql_plural_name = $post_type_object->graphql_plural_name ?? null;
+                        $graphql_single_name = lcfirst($post_type_object->graphql_single_name) ?? null;
+                        $graphql_plural_name = lcfirst($post_type_object->graphql_plural_name) ?? null;
 
                         $root_field_index = array_search(
                           $graphql_single_name,
