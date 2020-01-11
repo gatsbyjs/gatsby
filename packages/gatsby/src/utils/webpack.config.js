@@ -272,15 +272,18 @@ module.exports = async (
         use: [{
           loader: require.resolve(`./reach-router-add-basecontext-export-loader`),
         }],
-      },
-      {
-        test: (input) => {
+      }
+    ]
+
+    if (stage === `develop`) {
+      configRules.push({
+        test: input => {
           const pageComponents = Array.from(store.getState().components.keys())
           return pageComponents.includes(input)
         }, // regex to match files to receive react-hot-loader functionality
         loader: require.resolve(`react-hot-loader-loader`),
-      }
-    ]
+      })
+    }
 
     // Speedup 🏎️💨 the build! We only include transpilation of node_modules on javascript production builds
     // TODO create gatsby plugin to enable this behaviour on develop (only when people are requesting this feature)

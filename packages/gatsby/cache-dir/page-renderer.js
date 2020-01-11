@@ -17,13 +17,17 @@ class PageRenderer extends React.Component {
       loader: publicLoader,
     })
 
-    const AsyncPageComponent = loadable(() =>
-      this.props.pageResources.component()
-    )
+    let PageComponent
+
+    if (process.env.NODE_ENV === `production`) {
+      PageComponent = this.props.pageResources.component
+    } else {
+      PageComponent = loadable(() => this.props.pageResources.component())
+    }
 
     const pageElement =
       replacementElement ||
-      createElement(AsyncPageComponent, {
+      createElement(PageComponent, {
         ...props,
         key: this.props.path || this.props.pageResources.page.path,
       })
