@@ -14,7 +14,10 @@ Create a new Gatsby site with the [default starter](https://github.com/gatsbyjs/
 
 Run this in your terminal:
 
-`gatsby new seamscms-site && cd seamscms-site`
+```shell
+gatsby new seamscms-site
+cd seamscms-site
+```
 
 ### Install the source plugin
 
