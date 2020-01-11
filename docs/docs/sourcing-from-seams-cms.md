@@ -18,7 +18,7 @@ Run this in your terminal:
 
 ### Install the source plugin
 
-Next, we will be installing the Seams-CMS gatsby source plugin:
+Next, we will be installing the Seams-CMS Gatsby source plugin:
 
 ```shell
 npm install --save  seams-cms-gatsby-source
