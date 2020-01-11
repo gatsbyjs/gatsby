@@ -3,7 +3,8 @@
 // @see https://reactjs.org/blog/2019/10/22/react-release-channels.html
 // It updates all of our packages react/react-dom to an experimental
 // channel, for which the circle ci config then installs.
-//
+// npm update react@next react-dom@next
+// yarn upgrade react@next react-dom@next
 // This file intentionally does not use in node-packages because it is
 // ran before we do an install.
 const fs = require(`fs`)
