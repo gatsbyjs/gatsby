@@ -51,7 +51,7 @@ module.exports = {
 }
 ```
 
-Note that `<API_KEY>` and `<WORKSPACE>` should come from your own Seams-CMS account. Inside the `contentTypes` array, we define which content types we want to download from Seams-CMS into GatsbyJS. This should also map to the names of your content type (API id's) that you will be sourcing.
+Note that `<API_KEY>` and `<WORKSPACE>` should come from your own Seams-CMS account. Inside the `contentTypes` array, we define which content types we want to download from Seams-CMS into Gatsby. This should also map to the names of your content type (API id's) that you will be sourcing.
 
 ### Run and check our connection
 
