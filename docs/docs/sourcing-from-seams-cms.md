@@ -6,7 +6,7 @@ title: Sourcing from Seams-CMS
 
 [Seams-CMS](https://seams-cms.com) is a headless CMS system that allows you to easily manage content and data with either simple or complex structures and supports localization.
 
-Creating a Seams-CMS account is free for small hobby or small sites. For this tutorial, we will be using the demo workspace that is automatically created when you create a new account. Make sure you add an API key to this workspace. We will be needing your workspace ID and the (read-only) API key shortly.
+Creating a Seams-CMS account is free for hobby or small sites. For this tutorial, we will be using the demo workspace that is automatically generated when you create a new account. Make sure you add an API key to this workspace in the API key settings. We will be needing your workspace ID and the (read-only) API key shortly.
 
 ## Setup
 
@@ -41,7 +41,7 @@ module.exports = {
       resolve: 'seams-cms-gatsby-source',
       options: {
         apiKey: <API_KEY>,
-        workspace: <WORKSPACE>,
+        workspace: <WORKSPACE_ID>,
         contentTypes: ['blogpost'],
       },
     }
@@ -51,7 +51,7 @@ module.exports = {
 }
 ```
 
-Note that `<API_KEY>` and `<WORKSPACE>` should come from your own Seams-CMS account. Inside the `contentTypes` array, we define which content types we want to download from Seams-CMS into Gatsby. This should also map to the names of your content type (API id's) that you will be sourcing.
+You have to change `<API_KEY>` and `<WORKSPACE_ID>` into the API key and workspace ID from your own Seams-CMS account. Inside the `contentTypes` array, we define the API id's of the content types we like to import from Seams-CMS into Gatsby.
 
 ### Run and check our connection
 
@@ -61,7 +61,7 @@ Next, we can run Gatsby and let it fetch our blogposts from Seams-CMS:
 gatsby develop
 ```
 
-To check if it worked, we can log into the GraphQL admin at `http://localhost:8000/___graphql` and look for an `allSeamsCmsBlogpost` section. This means that blogposts are fetched and stored in the GraphQL layer of Gatsby, ready to be consumed.
+To check if it worked, we can log into the GraphQL admin at `http://localhost:8000/___graphql` and look for an `allSeamsCmsBlogpost` section. If found, it means that blogposts are correctly fetched and stored in the GraphQL layer of Gatsby, ready to be consumed.
 
 To see what kind of data it holds, try running the following query:
 
