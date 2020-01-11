@@ -191,4 +191,4 @@ Finally, when we rerun `gatsby develop` again, it should generate a `/blogs` pag
 
 ## More info
 
-More detailed info about setting up Seams-CMS with GatsbyJS can be found on our [blog](https://blog.seams-cms.com/entry/using-seams-cms-with-gatsbyjs/).
+More detailed info about setting up Seams-CMS with Gatsby can be found on our [blog](https://blog.seams-cms.com/entry/using-seams-cms-with-gatsbyjs/).
