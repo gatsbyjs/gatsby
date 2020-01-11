@@ -128,7 +128,7 @@ const BlogIndex = ({ pageContext: { blogPosts } }) => (
 export default BlogIndex
 ```
 
-It fetches our blog posts from the `pageContext` (we pass our data along with this variable), and we iterate over all the posts. For each post we print the title, the author's name and the content and whatever you like to add that is present in the graphQL data. For instance, at our Seams-CMS blog, we also fetch things like tags, categories, snippets, image headers, etc.
+It fetches our blog posts from the `pageContext` (we pass our data along with this variable), and we iterate over all the posts. For each post we print the title, the author's name and the content and whatever you like to add that is present in the GraphQL data. For instance, at our Seams-CMS blog, we also fetch things like tags, categories, snippets, image headers, etc.
 
 Once we have created our template, we will be connecting our data to the template. We can do this inside the `gatsby-node.js` found in our root directory. Note that we will be needing a GraphQL query that we can generate automatically through the web interface. Select all the fields you want to use in your template and copy/paste the query into the new file:
 
