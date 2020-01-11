@@ -20,7 +20,9 @@ Run this in your terminal:
 
 Next, we will be installing the Seams-CMS gatsby source plugin:
 
-`yarn add seams-cms-gatsby-source`
+```shell
+npm install --save  seams-cms-gatsby-source
+```
 
 ### Adding configuration
 
