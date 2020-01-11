@@ -58,7 +58,7 @@ Next, we can run Gatsby and let it fetch our blogposts from Seams-CMS:
 gatsby develop
 ```
 
-To check if it worked, we can log into the graphQL admin at `http://localhost:8000/___graphql` and look for an `allSeamsCmsBlogpost` section. This means that blogposts are fetched and stored in the graphQL layer of gatsby, ready to be consumed.
+To check if it worked, we can log into the GraphQL admin at `http://localhost:8000/___graphql` and look for an `allSeamsCmsBlogpost` section. This means that blogposts are fetched and stored in the GraphQL layer of Gatsby, ready to be consumed.
 
 To see what kind of data it holds, try running the following query:
 
