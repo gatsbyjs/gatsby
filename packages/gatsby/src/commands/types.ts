@@ -22,6 +22,6 @@ export interface IProgram {
 }
 
 export enum BuildHTMLStage {
-  DevelopHTML = "develop-html",
-  BuildHTML = "build-html",
+  DevelopHTML = `develop-html`,
+  BuildHTML = `build-html`,
 }

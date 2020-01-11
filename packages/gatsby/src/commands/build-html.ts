@@ -72,9 +72,9 @@ const renderHTMLQueue = (
     // We need to only pass env vars that are set programmatically in gatsby-cli
     // to child process. Other vars will be picked up from environment.
     const envVars = [
-      ["NODE_ENV", process.env.NODE_ENV],
-      ["gatsby_executing_command", process.env.gatsby_executing_command],
-      ["gatsby_log_level", process.env.gatsby_log_level],
+      [`NODE_ENV`, process.env.NODE_ENV],
+      [`gatsby_executing_command`, process.env.gatsby_executing_command],
+      [`gatsby_log_level`, process.env.gatsby_log_level],
     ]
 
     // const start = process.hrtime()
@@ -115,7 +115,7 @@ const doBuildPages = async (
   pagePaths: string[],
   activity: IActivity,
   workerPool: IWorkerPool
-) => {
+): Promise<void> => {
   telemetry.addSiteMeasurement(`BUILD_END`, {
     pagesCount: pagePaths.length,
   })
