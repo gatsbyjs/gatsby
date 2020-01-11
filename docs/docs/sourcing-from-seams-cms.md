@@ -54,7 +54,9 @@ Note that `<API_KEY>` and `<WORKSPACE>` should come from your own Seams-CMS acco
 
 Next, we can run Gatsby and let it fetch our blogposts from Seams-CMS:
 
-`gatsby develop`
+```shell
+gatsby develop
+```
 
 To check if it worked, we can log into the graphQL admin at `http://localhost:8000/___graphql` and look for an `allSeamsCmsBlogpost` section. This means that blogposts are fetched and stored in the graphQL layer of gatsby, ready to be consumed.
 
