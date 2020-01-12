@@ -40,8 +40,8 @@ module.exports = {
       // Seams-CMS source plug
       resolve: 'seams-cms-gatsby-source',
       options: {
-        apiKey: <API_KEY>,
         workspace: <WORKSPACE_ID>,
+        apiKey: <API_KEY>,
         contentTypes: ['blogpost'],
       },
     }
@@ -51,7 +51,7 @@ module.exports = {
 }
 ```
 
-You have to change `<API_KEY>` and `<WORKSPACE_ID>` into the API key and workspace ID from your own Seams-CMS account. Inside the `contentTypes` array, we define the API id's of the content types we like to import from Seams-CMS into Gatsby.
+You have to change `<WORKSPACE_ID>` and `<API_KEY>` into the ID of the workspace from your own Seams-CMS account and the newly generated API key inside that workspace. Within the `contentTypes` array, we define all the ID's of the content types we like to import from Seams-CMS into Gatsby, in this case we only want to import the `blogpost` content.
 
 ### Run and check our connection
 
