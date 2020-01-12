@@ -3,7 +3,7 @@ title: JAMStack
 disableTableOfContents: true
 ---
 
-Learn how to use Gatsby to build websites powered by the JAMStack, a modern architecture that uses JavaScript, APIs and markup instead of a databases and server-side programming languages.
+Learn how to use Gatsby to build websites powered by the JAMStack, a modern architecture that uses JavaScript, APIs and markup without requiring the use of a database or server-side programming language.
 
 ## What is the JAMStack?
 
