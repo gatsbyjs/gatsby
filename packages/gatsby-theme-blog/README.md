@@ -4,7 +4,7 @@
   </a>
 </p>
 <h1 align="center">
-  The Gatsby blog theme
+  The Gatsby Blog theme
 </h1>
 
 A Gatsby theme for creating a blog.

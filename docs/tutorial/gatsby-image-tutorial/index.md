@@ -187,7 +187,7 @@ In order to reference your images in YAML make sure that the relative paths are 
 
 The inside of the YAML file would look something like this:
 
-```
+```yaml
 - image: speaking/kcdc.jpg
 ```
 
@@ -225,7 +225,7 @@ Since the images are stored as part of an array, they can be accessed using the 
 
 If your query is part of a reusable component you may want to use a Static Query hook. The code necessary to do this is almost the same as the single image use case above.
 
-```javascript:title=src/components/header-image.js
+```jsx:title=src/components/header-image.js
 export default () => {
   const data = useStaticQuery(graphql`
     query {

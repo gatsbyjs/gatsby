@@ -6,6 +6,7 @@ const {
   GraphQLString,
   GraphQLInt,
   GraphQLFloat,
+  GraphQLNonNull,
 } = require(`gatsby/graphql`)
 const {
   queueImageResizing,
@@ -27,6 +28,7 @@ const {
   ImageFormatType,
   ImageCropFocusType,
   DuotoneGradientType,
+  PotraceTurnPolicyType,
   PotraceType,
   ImageFitType,
 } = require(`./types`)
@@ -72,10 +74,10 @@ const fixedNodeType = ({
             }),
         },
         aspectRatio: { type: GraphQLFloat },
-        width: { type: GraphQLFloat },
-        height: { type: GraphQLFloat },
-        src: { type: GraphQLString },
-        srcSet: { type: GraphQLString },
+        width: { type: new GraphQLNonNull(GraphQLFloat) },
+        height: { type: new GraphQLNonNull(GraphQLFloat) },
+        src: { type: new GraphQLNonNull(GraphQLString) },
+        srcSet: { type: new GraphQLNonNull(GraphQLString) },
         srcWebp: {
           type: GraphQLString,
           resolve: ({ file, image, fieldArgs }) => {
@@ -146,6 +148,15 @@ const fixedNodeType = ({
         defaultValue: false,
       },
       quality: {
+        type: GraphQLInt,
+      },
+      jpegQuality: {
+        type: GraphQLInt,
+      },
+      pngQuality: {
+        type: GraphQLInt,
+      },
+      webpQuality: {
         type: GraphQLInt,
       },
       toFormat: {
@@ -219,9 +230,9 @@ const fluidNodeType = ({
               reporter,
             }),
         },
-        aspectRatio: { type: GraphQLFloat },
-        src: { type: GraphQLString },
-        srcSet: { type: GraphQLString },
+        aspectRatio: { type: new GraphQLNonNull(GraphQLFloat) },
+        src: { type: new GraphQLNonNull(GraphQLString) },
+        srcSet: { type: new GraphQLNonNull(GraphQLString) },
         srcWebp: {
           type: GraphQLString,
           resolve: ({ file, image, fieldArgs }) => {
@@ -256,7 +267,7 @@ const fluidNodeType = ({
             ).then(({ srcSet }) => srcSet)
           },
         },
-        sizes: { type: GraphQLString },
+        sizes: { type: new GraphQLNonNull(GraphQLString) },
         originalImg: { type: GraphQLString },
         originalName: { type: GraphQLString },
         presentationWidth: { type: GraphQLInt },
@@ -294,6 +305,15 @@ const fluidNodeType = ({
         defaultValue: false,
       },
       quality: {
+        type: GraphQLInt,
+      },
+      jpegQuality: {
+        type: GraphQLInt,
+      },
+      pngQuality: {
+        type: GraphQLInt,
+      },
+      webpQuality: {
         type: GraphQLInt,
       },
       toFormat: {
@@ -456,6 +476,15 @@ const createFields = ({
         quality: {
           type: GraphQLInt,
         },
+        jpegQuality: {
+          type: GraphQLInt,
+        },
+        pngQuality: {
+          type: GraphQLInt,
+        },
+        webpQuality: {
+          type: GraphQLInt,
+        },
         jpegProgressive: {
           type: GraphQLBoolean,
           defaultValue: true,
@@ -567,6 +596,14 @@ module.exports = ({
   })
 
   if (createTypes) {
-    createTypes([imageSharpType])
+    createTypes([
+      ImageFormatType,
+      ImageFitType,
+      ImageCropFocusType,
+      DuotoneGradientType,
+      PotraceTurnPolicyType,
+      PotraceType,
+      imageSharpType,
+    ])
   }
 }

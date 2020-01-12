@@ -12,7 +12,7 @@ beforeEach(() => {
   global.__PATH_PREFIX__ = ``
 })
 
-describe(`Test plugin sitemap`, async () => {
+describe(`Test plugin sitemap`, () => {
   it(`default settings work properly`, async () => {
     internals.writeFile = jest.fn()
     internals.writeFile.mockResolvedValue(true)

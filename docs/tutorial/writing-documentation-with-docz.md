@@ -24,10 +24,10 @@ To set up Docz you need to install the Docz Gatsby theme and add some custom con
 cd my-gatsby-site-with-docz
 ```
 
-And install the `gatsby-theme-docz` package:
+And install required packages:
 
 ```shell
-npm install --save gatsby-theme-docz@next
+npm install --save gatsby-theme-docz
 ```
 
 Add `gatsby-theme-docz` under `plugins` in `gatsby-config.js`:

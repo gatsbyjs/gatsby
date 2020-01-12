@@ -62,10 +62,12 @@ class ContributorPageTemplate extends React.Component {
                 >
                   {contributor.bio}
                 </p>
-                <a href={`https://twitter.com/${contributor.twitter}`}>
-                  {` `}
-                  {contributor.twitter}
-                </a>
+                {contributor.twitter && (
+                  <a href={`https://twitter.com/${contributor.twitter}`}>
+                    {` `}
+                    {contributor.twitter}
+                  </a>
+                )}
               </div>
             </div>
             <div sx={{ py: 7, px: 6 }}>

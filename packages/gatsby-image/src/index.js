@@ -49,15 +49,51 @@ const convertProps = props => {
 }
 
 /**
+ * Checks if fluid or fixed are art-direction arrays.
+ *
+ * @param currentData  {{media?: string}[]}   The props to check for images.
+ * @return {boolean}
+ */
+const hasArtDirectionSupport = currentData =>
+  !!currentData &&
+  Array.isArray(currentData) &&
+  currentData.some(image => typeof image.media !== `undefined`)
+
+/**
+ * Tries to detect if a media query matches the current viewport.
+ * @property media   {{media?: string}}  A media query string.
+ * @return {boolean}
+ */
+const matchesMedia = ({ media }) =>
+  media ? isBrowser && !!window.matchMedia(media).matches : false
+
+/**
  * Find the source of an image to use as a key in the image cache.
  * Use `the first image in either `fixed` or `fluid`
- * @param {{fluid: {src: string}[], fixed: {src: string}[]}} args
+ * @param {{fluid: {src: string, media?: string}[], fixed: {src: string, media?: string}[]}} args
  * @return {string}
  */
 const getImageSrcKey = ({ fluid, fixed }) => {
-  const data = (fluid && fluid[0]) || (fixed && fixed[0])
+  const data = fluid ? getCurrentSrcData(fluid) : getCurrentSrcData(fixed)
 
   return data.src
+}
+
+/**
+ * Returns the current src - Preferably with art-direction support.
+ * @param currentData  {{media?: string}[]}   The fluid or fixed image array.
+ * @return {{src: string, media?: string}}
+ */
+const getCurrentSrcData = currentData => {
+  if (isBrowser && hasArtDirectionSupport(currentData)) {
+    // Do we have an image for the current Viewport?
+    const foundMedia = currentData.findIndex(matchesMedia)
+    if (foundMedia !== -1) {
+      return currentData[foundMedia]
+    }
+  }
+  // Else return the first image.
+  return currentData[0]
 }
 
 // Cache if we've seen an image before so we don't bother with
@@ -239,7 +275,6 @@ const Img = React.forwardRef((props, ref) => {
     style,
     onLoad,
     onError,
-    onClick,
     loading,
     draggable,
     ...otherProps
@@ -253,7 +288,6 @@ const Img = React.forwardRef((props, ref) => {
       {...otherProps}
       onLoad={onLoad}
       onError={onError}
-      onClick={onClick}
       ref={ref}
       loading={loading}
       draggable={draggable}
@@ -274,7 +308,6 @@ const Img = React.forwardRef((props, ref) => {
 Img.propTypes = {
   style: PropTypes.object,
   onError: PropTypes.func,
-  onClick: PropTypes.func,
   onLoad: PropTypes.func,
 }
 
@@ -419,7 +452,7 @@ class Image extends React.Component {
 
     if (fluid) {
       const imageVariants = fluid
-      const image = imageVariants[0]
+      const image = getCurrentSrcData(fluid)
 
       return (
         <Tag
@@ -492,7 +525,6 @@ class Image extends React.Component {
                 ref={this.imageRef}
                 onLoad={this.handleImageLoaded}
                 onError={this.props.onError}
-                onClick={this.props.onClick}
                 itemProp={itemProp}
                 loading={loading}
                 draggable={draggable}
@@ -520,7 +552,7 @@ class Image extends React.Component {
 
     if (fixed) {
       const imageVariants = fixed
-      const image = imageVariants[0]
+      const image = getCurrentSrcData(fixed)
 
       const divStyle = {
         position: `relative`,
@@ -593,7 +625,6 @@ class Image extends React.Component {
                 ref={this.imageRef}
                 onLoad={this.handleImageLoaded}
                 onError={this.props.onError}
-                onClick={this.props.onClick}
                 itemProp={itemProp}
                 loading={loading}
                 draggable={draggable}
@@ -657,6 +688,10 @@ const fluidObject = PropTypes.shape({
   media: PropTypes.string,
 })
 
+// If you modify these propTypes, please don't forget to update following files as well:
+// https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-image/index.d.ts
+// https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-image/README.md#gatsby-image-props
+// https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/gatsby-image.md#gatsby-image-props
 Image.propTypes = {
   resolutions: fixedObject,
   sizes: fluidObject,
@@ -676,7 +711,6 @@ Image.propTypes = {
   backgroundColor: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   onLoad: PropTypes.func,
   onError: PropTypes.func,
-  onClick: PropTypes.func,
   onStartLoad: PropTypes.func,
   Tag: PropTypes.string,
   itemProp: PropTypes.string,

@@ -432,7 +432,7 @@ that can be replaced too: `inlineCode` and `wrapper`. `inlineCode` is
 for inline `<code>` and `wrapper` is the special element that wraps
 all of the MDX content.
 
-```js
+```jsx
 import { MDXProvider } from "@mdx-js/react"
 
 const MyH1 = props => <h1 style={{ color: "tomato" }} {...props} />
@@ -472,7 +472,7 @@ The following components can be customized with the MDXProvider:
 | `em`            | [Emphasis](https://github.com/syntax-tree/mdast#emphasis)            | `_emphasis_`                                        |
 | `strong`        | [Strong](https://github.com/syntax-tree/mdast#strong)                | `**strong**`                                        |
 | `delete`        | [Delete](https://github.com/syntax-tree/mdast#delete)                | `~~strikethrough~~`                                 |
-| `code`          | [InlineCode](https://github.com/syntax-tree/mdast#inlinecode)        |                                                     |
+| `inlineCode`    | [InlineCode](https://github.com/syntax-tree/mdast#inlinecode)        |                                                     |
 | `hr`            | [Break](https://github.com/syntax-tree/mdast#break)                  | `---`                                               |
 | `a`             | [Link](https://github.com/syntax-tree/mdast#link)                    | `<https://mdxjs.com>` or `[MDX](https://mdxjs.com)` |
 | `img`           | [Image](https://github.com/syntax-tree/mdast#image)                  | `![alt](https://mdx-logo.now.sh)`                   |
@@ -498,13 +498,13 @@ from a GraphQL page query or `StaticQuery`.
 `MDXRenderer` takes any prop and passes it on to your MDX content,
 just like a normal React component.
 
-```js
+```jsx
 <MDXRenderer title="My Stuff!">{mdx.body}</MDXRenderer>
 ```
 
 Using a page query:
 
-```js
+```jsx
 import { MDXRenderer } from "gatsby-plugin-mdx"
 
 export default class MyPageLayout {

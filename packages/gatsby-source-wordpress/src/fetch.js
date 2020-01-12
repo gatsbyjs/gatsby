@@ -285,7 +285,7 @@ async function fetchData({
 
   let entities = []
   if (routeResponse) {
-    if (type.indexOf(`wordpress__menus_menus`) !== -1) {
+    if (type.includes(`wordpress__menus_menus`)) {
       routeResponse = routeResponse.map(r => {
         return { ...r, ID: r.term_id }
       })

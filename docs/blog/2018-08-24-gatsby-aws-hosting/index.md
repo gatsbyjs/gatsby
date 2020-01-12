@@ -7,7 +7,7 @@ excerpt: "In this post, we'll walk through how to host & publish your next Gatsb
 canonicalLink: "https://aws-amplify.github.io/amplify-js/media/hosting_guide"
 ---
 
-![Publishing Your Next Gatsby Site to AWS With AWS Amplify](images/gatsbyaws.jpeg)
+![Publishing Your Next Gatsby Site to AWS With AWS Amplify](./images/gatsbyaws.jpeg)
 
 In this post, we'll walk through how to host & publish your next Gatsby site to AWS using [AWS Amplify](https://aws-amplify.github.io/).
 
@@ -57,33 +57,33 @@ Now that the GitHub project has been created we can log into the [Amplify Consol
 
 From here, under Deploy we can click GET STARTED:
 
-![Amplify Console](images/amplify1.png)
+![Amplify Console](./images/amplify1.png)
 
 Next, we'll choose GitHub as our repository & click **Next**.
 
-![Choosing repo](images/amplify2.png)
+![Choosing repo](./images/amplify2.png)
 
 Then connect the mater branch of the new repo we just created & click **Next**:
 
-![Choosing branch](images/amplify3.png)
+![Choosing branch](./images/amplify3.png)
 
 In this view, we can review the default build settings & click **Next** to continue:
 
-![Build settings](images/amplify4.png)
+![Build settings](./images/amplify4.png)
 
 Finally, we can review the deployment & click **Save & Deploy** when we're ready to deploy our app:
 
-![Deploying](images/amplify5.png)
+![Deploying](./images/amplify5.png)
 
 Once the deployment is successful, you should see this:
 
-![Successful deployment](images/amplify6.png)
+![Successful deployment](./images/amplify6.png)
 
 To view details of the deployment, click on the name of the branch (in our case, **master**).
 
 In this view, you can see details about the deployment including a link to view the app & screenshots of the app on different devices.
 
-![Deployment details](images/amplify7.png)
+![Deployment details](./images/amplify7.png)
 
 ## Kicking off a new build
 
@@ -113,11 +113,11 @@ git push origin master
 
 Now, when we go back into the Amplify console we'll see that a new build has been started:
 
-![New build](images/amplify8.png)
+![New build](./images/amplify8.png)
 
 When the build is completed & we launch the app, we should now see our new heading:
 
-![New build completed](images/amplify9.png)
+![New build completed](./images/amplify9.png)
 
 ## Next Steps
 

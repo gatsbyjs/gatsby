@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-autolink-headers@2.1.22...gatsby-remark-autolink-headers@2.1.23) (2020-01-09)
+
+### Bug Fixes
+
+- **gatsby-remark-autolink-headers:** Scroll to document top ([#20363](https://github.com/gatsbyjs/gatsby/issues/20363)) ([1810254](https://github.com/gatsbyjs/gatsby/commit/1810254))
+
+## [2.1.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-autolink-headers@2.1.21...gatsby-remark-autolink-headers@2.1.22) (2020-01-06)
+
+### Features
+
+- **gatsby-remark-autolink-headers:** Allow `after` option to make icon appear after header text ([#19937](https://github.com/gatsbyjs/gatsby/issues/19937)) ([a6774ca](https://github.com/gatsbyjs/gatsby/commit/a6774ca))
+
+## [2.1.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-autolink-headers@2.1.19...gatsby-remark-autolink-headers@2.1.21) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-remark-autolink-headers
+
+## [2.1.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-autolink-headers@2.1.19...gatsby-remark-autolink-headers@2.1.20) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-remark-autolink-headers
+
+## [2.1.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-autolink-headers@2.1.18...gatsby-remark-autolink-headers@2.1.19) (2019-11-26)
+
+**Note:** Version bump only for package gatsby-remark-autolink-headers
+
+## [2.1.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-autolink-headers@2.1.17...gatsby-remark-autolink-headers@2.1.18) (2019-11-15)
+
+**Note:** Version bump only for package gatsby-remark-autolink-headers
+
+## [2.1.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-autolink-headers@2.1.16...gatsby-remark-autolink-headers@2.1.17) (2019-11-10)
+
+**Note:** Version bump only for package gatsby-remark-autolink-headers
+
 ## [2.1.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-autolink-headers@2.1.15...gatsby-remark-autolink-headers@2.1.16) (2019-10-14)
 
 **Note:** Version bump only for package gatsby-remark-autolink-headers

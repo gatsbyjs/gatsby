@@ -12,7 +12,7 @@ For more information, read about [why Gatsby uses GraphQL](/docs/why-gatsby-uses
 
 ## Basic query
 
-Start with the basics, pulling up the site `title` from your `gatsby-config.js`'s `siteMetaData`. Here the query is on the left and the results are on the right.
+Start with the basics, pulling up the site `title` from your `gatsby-config.js`'s `siteMetadata`. Here the query is on the left and the results are on the right.
 
 <iframe title="A basic query" src="https://711808k40x.sse.codesandbox.io/___graphql?query=%7B%0A%20%20site%20%7B%0A%20%20%20%20siteMetadata%20%7B%0A%20%20%20%20%20%20title%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&explorerIsOpen=false" width="600" height="400"></iframe>
 
@@ -161,6 +161,20 @@ Want to run two queries on the same datasource? You can do this by aliasing your
 <iframe title="Using aliases" src="https://711808k40x.sse.codesandbox.io/___graphql?query=%7B%0A%20%20someEntries%3A%20allMarkdownRemark(skip%3A%203%2C%20limit%3A%203)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20frontmatter%20%7B%0A%20%20%20%20%20%20%20%20%20%20title%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%20%20someMoreEntries%3A%20allMarkdownRemark(limit%3A%203)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20frontmatter%20%7B%0A%20%20%20%20%20%20%20%20%20%20title%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&explorerIsOpen=false" width="600" height="400"></iframe>
 
 When you use your data, you will be able to reference it using the alias instead of the root query name. In this example, that would be `data.someEntries` or `data.someMoreEntries` instead of `data.allMarkdownRemark`.
+
+## Conditionals
+
+GraphQL allows you to skip a piece of a query depending on variables. This is handy when you need to render some part of a page conditionally.
+
+Try changing variable `withDate` in the example query below:
+
+<iframe title="Using conditionals" src="https://711808k40x.sse.codesandbox.io/___graphql?query=query%20GetBlogPosts%20(%24withDate%3ABoolean%20%3D%20false)%20%7B%0A%20%20allMarkdownRemark(limit%3A%203%2C%20skip%3A%201)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20frontmatter%20%7B%0A%20%20%20%20%20%20%20%20%20%20title%0A%20%20%20%20%20%20%20%20%20%20date%20%40include(if%3A%24withDate)%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&operationName=GetBlogPosts" width="600" height="400"></iframe>
+
+Use directive `@include(if: $variable)` to conditionally include a part of a query or `@skip(if: $variable)` to exclude it.
+
+You can use those directives on any level of the query and even on fragments. Take a look at an advanced example:
+
+<iframe title="Using conditionals: Advanced" src="https://711808k40x.sse.codesandbox.io/___graphql?query=query%20GetBlogPosts%20(%24preview%3ABoolean%20%3D%20true)%20%7B%0A%20%20allMarkdownRemark(limit%3A%203%2C%20skip%3A%201)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20...BlogPost%20%40skip(if%3A%24preview)%0A%20%20%20%20%20%20%20%20...BlogPostPreview%20%40include(if%3A%24preview)%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%20%20allFile(limit%3A2)%20%40skip(if%3A%24preview)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20relativePath%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A%0Afragment%20BlogPost%20on%20MarkdownRemark%20%7B%0A%20%20html%0A%20%20frontmatter%20%7B%0A%20%20%20%20title%0A%20%20%20%20date%0A%20%20%7D%0A%7D%0A%0Afragment%20BlogPostPreview%20on%20MarkdownRemark%20%7B%0A%20%20excerpt%0A%20%20frontmatter%20%7B%0A%20%20%20%20title%0A%20%20%7D%0A%7D&operationName=GetBlogPosts" width="600" height="400"></iframe>
 
 ## Where next?
 
