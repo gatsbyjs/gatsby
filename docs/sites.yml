@@ -9264,3 +9264,16 @@
   built_by: Shivam Sinha
   built_by_url: https://www.helloshivam.com/
   featured: false
+  - title: Eric Howey Web Development
+  main_url: https://www.erichowey.dev/
+  url: https://www.erichowey.dev/
+  source_url: https://github.com/ehowey/erichoweydev
+  description: >
+    Personal website and blog for Eric Howey. I am a freelance web developer based in Alberta, Canada specializing in Gatsby, React, Wordpress and Theme-UI.
+  categories:
+    - Portfolio
+    - Web Development
+    - Blog
+  built_by: Eric Howey
+  built_by_url: https://www.erichowey.dev/
+  featured: false
