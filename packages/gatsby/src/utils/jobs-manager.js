@@ -11,7 +11,7 @@ const reporter = require(`gatsby-cli/lib/reporter`)
 let activityForJobs = null
 let activeJobs = 0
 
-/** @type {Map<string, {id: string, deferred: pDefer.DeferredPromise}>} */
+/** @type {Map<string, {id: string, deferred: pDefer.DeferredPromise<any>}>} */
 const jobsInProcess = new Map()
 
 /**
@@ -55,6 +55,9 @@ const createFileHash = path => hasha.fromFileSync(path, { algorithm: `sha1` })
  * @typedef {BaseJobInterface & InternalJobInterface} InternalJob
  */
 
+/** @type {pDefer.DeferredPromise<void>|null} */
+let hasActiveJobs = null
+
 /**
  * @deprecated
  * TODO: Remove for Gatsby v3 (compatibility mode)
@@ -75,7 +78,7 @@ const runLocalWorker = async (workerFn, job) => {
   return new Promise((resolve, reject) => {
     // execute worker nextTick
     // TODO should we think about threading/queueing here?
-    process.nextTick(() => {
+    setImmediate(() => {
       try {
         resolve(
           workerFn({
@@ -184,6 +187,10 @@ exports.enqueueJob = async job => {
     return jobsInProcess.get(job.contentDigest).deferred.promise
   }
 
+  if (activeJobs === 0) {
+    hasActiveJobs = pDefer()
+  }
+
   // Bump active jobs
   activeJobs++
   if (!activityForJobs) {
@@ -211,6 +218,7 @@ exports.enqueueJob = async job => {
   } finally {
     // when all jobs are done we end the activity
     if (--activeJobs === 0) {
+      hasActiveJobs.resolve()
       activityForJobs.end()
       // eslint-disable-next-line require-atomic-updates
       activityForJobs = null
@@ -234,12 +242,8 @@ exports.removeInProgressJob = contentDigest => {
  *
  * @return {Promise<void>}
  */
-exports.waitUntilAllJobsComplete = () => {
-  const jobsPromises = []
-  jobsInProcess.forEach(({ deferred }) => jobsPromises.push(deferred.promise))
-
-  return Promise.all(jobsPromises).then(() => {})
-}
+exports.waitUntilAllJobsComplete = () =>
+  hasActiveJobs ? hasActiveJobs.promise : Promise.resolve()
 
 /**
  * @param {Partial<InternalJob>  & {inputPaths: InternalJob['inputPaths']}} job

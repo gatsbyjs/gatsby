@@ -195,7 +195,9 @@ describe(`Jobs manager`, () => {
         { output: `myresult` },
         { output: `myresult` },
       ])
-      expect(pDefer).toHaveBeenCalledTimes(1) // this should be enough to check if our job is deterministic
+
+      // we have 1 pdefer for the job & 1 for the wait until all jobs are done
+      expect(pDefer).toHaveBeenCalledTimes(2) // this should be enough to check if our job is deterministic
       expect(endActivity).toHaveBeenCalledTimes(1)
       expect(worker.TEST_JOB).toHaveBeenCalledTimes(1)
     })
