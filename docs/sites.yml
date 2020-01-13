@@ -9279,3 +9279,15 @@
   built_by: Shivam Sinha
   built_by_url: https://www.helloshivam.com/
   featured: false
+- title: a+ Saúde
+  url: https://www.amaissaude.com.br/
+  main_url: https://www.amaissaude.com.br/
+  description: >
+    An even better experience in using health services.
+  categories:
+    - Healthcare
+    - Marketing
+    - Blog
+  built_by: Grupo Fleury
+  built_by_url: http://www.grupofleury.com.br/
+  featured: false
