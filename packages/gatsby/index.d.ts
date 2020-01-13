@@ -711,11 +711,12 @@ export interface PreRenderHTMLArgs extends NodePluginArgs {
   replacePostBodyComponents: (comp: React.ReactNode[]) => void
 }
 
+type ReactProps<T extends Element> = React.DetailedHTMLProps<React.HTMLAttributes<T>, T>
 export interface RenderBodyArgs extends NodePluginArgs {
   pathname: string
   setHeadComponents: (comp: React.ReactNode[]) => void
-  setHtmlAttributes: (attr: React.HtmlHTMLAttributes<HTMLHtmlElement>) => void
-  setBodyAttributes: (attr: React.HTMLAttributes<HTMLBodyElement>) => void
+  setHtmlAttributes: (attr: ReactProps<HTMLHtmlElement>) => void
+  setBodyAttributes: (attr: ReactProps<HTMLBodyElement>) => void
   setPreBodyComponents: (comp: React.ReactNode[]) => void
   setPostBodyComponents: (comp: React.ReactNode[]) => void
   setBodyProps: Function
@@ -724,8 +725,8 @@ export interface RenderBodyArgs extends NodePluginArgs {
 export interface ReplaceRendererArgs extends NodePluginArgs {
   replaceBodyHTMLString: (str: string) => void
   setHeadComponents: (comp: React.ReactNode[]) => void
-  setHtmlAttributes: (attr: React.HtmlHTMLAttributes<HTMLHtmlElement>) => void
-  setBodyAttributes: (attr: React.HTMLAttributes<HTMLBodyElement>) => void
+  setHtmlAttributes: (attr: ReactProps<HTMLHtmlElement>) => void
+  setBodyAttributes: (attr: ReactProps<HTMLBodyElement>) => void
   setPreBodyComponents: (comp: React.ReactNode[]) => void
   setPostBodyComponents: (comp: React.ReactNode[]) => void
   setBodyProps: Function
