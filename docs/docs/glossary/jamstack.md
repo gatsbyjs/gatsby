@@ -7,23 +7,30 @@ Learn how to use Gatsby to build websites powered by the JAMStack, a modern arch
 
 ## What is the JAMStack?
 
-JAMStack is a modern architecture for building websites and applications. The _<abbr>JAM</abbr>_ in JAMStack stands for [JavaScript](/docs/glossary#javascript), [APIs](/docs/glossary#api), and HTML markup.
+JAMStack is a modern architecture for building websites and applications. The _<abbr>JAM</abbr>_ in JAMStack stands for [JavaScript](/docs/glossary#javascript), [APIs](/docs/glossary#api), and HTML markup. Unlike websites built using WordPress or Drupal, JAMStack sites do not require a database. You can even skip the webserver, and opt to host your site using an object storage service and a content delivery network (or CDN).
 
-With more traditional websites, such as those built with WordPress or Drupal, content is stored in a database. There's also a presentation layer made of template files, which are sometimes called _views_.
+With more traditional websites, such as those built using WordPress or Drupal, content is stored in a database. There's also a presentation layer of template files that mix HTML markup with template tags. Template tags are placeholders for pieces of content, e.g. `{{ title }}` for the title of the page.
 
-Template files use a mix of [HTML](/docs/glossary#html), CSS, JavaScript, and template tags. Think of template tags as placeholders for pieces of content, e.g. `{{ title }}` for the title of the page.
+A software layer then pulls it all together: it retrieves content from the database, replaces template tags with the appropriate chunks of content, and returns it all to the browser. A single page gets regenerated each time the server receives a request for that URL.
 
-A software layer then pulls it all together. This layer retrieves content from the database, replaces tags in the template files with the appropriate chunks of content, and returns it all to the browser. A single page gets regenerated each time the server receives a request for that URL.
+In this type of architecture, the [frontend](/docs/glossary#frontend) (what you see in the browser) and [backend](/docs/glossary#backend) (the database and software layer) are _tightly coupled_. Both the content and how it's presented are part of the same code base &mdash; sometimes called a _monolithic architecture_. Content is only available as HTML and can only be consumed by clients (e.g. web browsers) that can parse HTML.
 
-In this type of architecture, the [frontend](/docs/glossary#frontend) (what you see in the browser) and [backend](/docs/glossary#backend) (the database and software layer) are _tightly coupled_. Both the content and how it's presented are part of the same code base. Content is only available as HTML and only clients that are capable of parsing HTML (browsers, for example) can use it.
+In a JAMStack architecture, however, the frontend and backend are [decoupled](https://www.gatsbyjs.org/docs/glossary#decoupled). A JAMStack frontend consists of JavaScript, HTML, and CSS. Gatsby generates these files during the [build](https://github.com/webinista/gatsby/blob/d163615cafb4473999381c5d22e59c12fc7d2e04/docs/glossary#build) process.
 
-### The advantages of JAMStack
+A JAMStack backend is a content API that returns JSON or XML. This API can be a [hosted datastore](https://www.gatsbyjs.org/docs/sourcing-from-hosted-services/), a [headless CMS](https://www.gatsbyjs.org/docs/headless-cms/), or a custom application. It's only concerned with serving JSON or XML, which means you can use the same API for your Gatsby site and native applications.
 
-In a JAMStack architecture, the frontend and backend are [decoupled](https://www.gatsbyjs.org/docs/glossary#decoupled). Instead of using a database server and software layer to generate markup, your site's content and its presentation are separate concerns.
+### Advantages of a JAMStack architecture
 
-A JAMStack backend consists of a content API that returns JSON or XML. Your API can be a [hosted datastore](https://www.gatsbyjs.org/docs/sourcing-from-hosted-services/), a [headless CMS](https://www.gatsbyjs.org/docs/headless-cms/), or a custom application. The same API can serve your Gatsby site as well as your mobile and desktop applications.
+JAMStack sites, such as those created with Gatsby, offer three key advantages over other web site architectures.
 
-A JAMStack frontend consists of JavaScript, HTML, and CSS. Gatsby generates these files during the [build](/docs/glossary#build) process. Because they are static files, they can be hosted anywhere. You can use web server-based hosting, or use an object storage service and content delivery network such as [Netlify](https://www.gatsbyjs.org/docs/deploying-to-netlify), [Render](https://www.gatsbyjs.org/docs/deploying-to-render), or Amazon Web Services' [S3 and Cloudfront](https://www.gatsbyjs.org/docs/deploying-to-s3-cloudfront).
+- **Speed**: JAMStack sites lack the overhead caused by software and database layers. As a result, they render and load more quickly than sites that use monolithic architectures.
+- **Hosting flexibility**: Because they're static files, JAMStack sites can be hosted anywhere. You can use traditional web server software, such as Apache or Nginx. For the best performance and security, you can use an object storage service and content delivery network such as [Netlify](https://www.gatsbyjs.org/docs/deploying-to-netlify), [Render](https://www.gatsbyjs.org/docs/deploying-to-render), or Amazon Web Services' [S3 and Cloudfront](https://www.gatsbyjs.org/docs/deploying-to-s3-cloudfront).
+- **An improved developer experience**: Frontend developers can build sites without needing to know a server-side language. Backend developers can focus on building APIs. Decoupled development teams can work in parallel, allowing each team to focus on what they do best. Using a third-party [CMS](https://www.gatsbyjs.org/docs/glossary#cms) service also means that your developer-operations team doesn't have to manage a separate stack for content.
+- **Better security**: No database and no software layer means that JAMStack sites are not vulnerable to [SQL injection](https://www.owasp.org/index.php/SQL_Injection) or server-side [code injection](https://www.owasp.org/index.php/Code_Injection) attacks. Pages are compiled in advance, so they aren't at risk of a [server-side includes injection](<https://www.owasp.org/index.php/Server-Side_Includes_(SSI)_Injection>) attack. Hosting your site on a content delivery network offers protection from [denial of service](https://www.owasp.org/index.php/Denial_of_Service) attacks. Shifting to a JAMStack architecture limits or eliminates entire classes of vulnerabilities.
+
+> **NOTE:** Gatsby and other JAMStack sites can still be affected by [cross-site scripting](https://www.owasp.org/index.php/Types_of_Cross-Site_Scripting) attacks. They can also be compromised if your API endpoints are compromised.
+
+Using Gatsby can help you build faster, more secure websites, with search engine optimization and accessibility features already built in.
 
 ### Learn more about JAMStack architecture
 
