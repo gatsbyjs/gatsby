@@ -30,7 +30,7 @@ JAMStack sites, such as those created with Gatsby, offer three key advantages ov
 
 > **NOTE:** Gatsby and other JAMStack sites can still be affected by [cross-site scripting](https://www.owasp.org/index.php/Types_of_Cross-Site_Scripting) attacks. They can also be compromised if your API endpoints are compromised.
 
-Using Gatsby can help you build faster, more secure websites, with search engine optimization and accessibility features already built in.
+Using Gatsby can help you build faster, more secure websites, with search engine optimization and accessibility features already built in. See how Gatsby [compares](/features/) to other frameworks.
 
 ### Learn more about JAMStack architecture
 
