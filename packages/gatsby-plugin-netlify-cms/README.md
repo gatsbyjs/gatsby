@@ -143,9 +143,7 @@ CMS.init({
 
 `enableIdentityWidget` is `true` by default, allowing [Netlify
 Identity](https://www.netlify.com/docs/identity/) to be used without
-configuration, but you may need to disable it in some cases, such as when using
-a Netlify CMS backend that conflicts. This is currently known to be the case
-when using the GitLab backend, but only when using implicit OAuth.
+configuration. Disable it when not using Netlify Identity to reduce bundle size.
 
 ```javascript
 plugins: [
