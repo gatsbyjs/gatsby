@@ -41,6 +41,7 @@ const onPreBootstrap = async (helpers, pluginOptions) => {
 
     // and set them to state to set back to cache later
     // since we may append more image id's to the store down the line
+    // in onPostBuild, all imageNodeIds in state are cached for the next build
     store.dispatch.imageNodes.setNodeIds(imageNodeIds)
   }
 }
