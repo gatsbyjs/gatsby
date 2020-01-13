@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.28](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-mongodb@2.1.27...gatsby-source-mongodb@2.1.28) (2020-01-09)
+
+**Note:** Version bump only for package gatsby-source-mongodb
+
 ## [2.1.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-mongodb@2.1.25...gatsby-source-mongodb@2.1.27) (2019-12-10)
 
 **Note:** Version bump only for package gatsby-source-mongodb

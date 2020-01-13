@@ -65,7 +65,6 @@ There are several ways to structure queries depending on how you prefer to work,
 const path = require(`path`)
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
-  const { createPage } = actions
   const postTemplate = path.resolve(`./src/templates/post.js`)
 
   // Query Ghost data
@@ -96,9 +95,9 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   items.forEach(({ node }) => {
     node.url = `/${node.slug}/`
 
-    createPage({
+    actions.createPage({
       path: node.url,
-      component: path.resolve(postTemplate),
+      component: postTemplate,
       context: {
         slug: node.slug,
       },

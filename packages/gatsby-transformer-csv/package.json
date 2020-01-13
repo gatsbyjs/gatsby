@@ -1,7 +1,7 @@
 {
   "name": "gatsby-transformer-csv",
   "description": "Gatsby transformer plugin for CSV files",
-  "version": "2.1.23",
+  "version": "2.1.24",
   "author": "Sonal Saldanha <sonal.saldanha@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -14,7 +14,7 @@
   "devDependencies": {
     "@babel/cli": "^7.7.5",
     "@babel/core": "^7.7.5",
-    "babel-preset-gatsby-package": "^0.2.14",
+    "babel-preset-gatsby-package": "^0.2.15",
     "cross-env": "^5.2.1",
     "json2csv": "^3.11"
   },

@@ -144,6 +144,25 @@ module.exports = {
         normalizer: function({ entities }) {
           return entities
         },
+        // The normalizers option allows you to manipulate the array of internal
+        // normalizers that are applied to entities after they're fetched
+        // from WordPress.
+        // You can add your own normalizers to this array by adding an object
+        // that contains name and normalizer properties.
+        // Name is the name of your normalizer, and normalizer is a function that
+        // should return the array of entities that are passed to it.
+        // This is useful if you need more control over the order of normalizers,
+        // instead of your normalizer being applied after the built in normalizers (as is the case with the normalizer option).
+        normalizers: normalizers => [
+          ...normalizers,
+          {
+            name: "nameOfTheFunction",
+            normalizer: function({ entities }) {
+              // manipulate entities here
+              return entities
+            },
+          },
+        ],
       },
     },
   ],
@@ -751,7 +770,7 @@ To learn more about image processing check
 ## Using a custom normalizer
 
 The plugin uses the concept of normalizers to transform the json data from WordPress into
-GraphQL nodes. You can extend the normalizers by passing a custom function to your `gatsby-config.js`.
+GraphQL nodes. You can extend the normalizers by modifying the normalizers array in plugin options in `gatsby-config.js`.
 
 ### Example:
 
@@ -759,7 +778,9 @@ You have a custom post type `movie` and a related custom taxonomy `genre` in you
 `gatsby-source-wordpress` doesn't know about the relation of the two, we can build an additional normalizer function to map the movie GraphQL nodes to the genre nodes:
 
 ```javascript
-function mapMoviesToGenres({ entities }) {
+const mapMoviesToGenres = {
+  name: `mapMoviesToGenres`,
+  normalizer: function({ entities }) {
   const genres = entities.filter(e => e.__type === `wordpress__wp_genre`)
 
   return entities.map(e => {
@@ -778,7 +799,7 @@ function mapMoviesToGenres({ entities }) {
 }
 ```
 
-In your `gatsby-config.js` you can then pass the function to the plugin options:
+In your `gatsby-config.js` you can then add the normalizer to the plugin options called normalizers:
 
 ```javascript
 module.exports = {
@@ -787,7 +808,7 @@ module.exports = {
       resolve: "gatsby-source-wordpress",
       options: {
         // ...
-        normalizer: mapMoviesToGenres,
+        normalizers: normalizers => [...normalizers, mapMoviesToGenres],
       },
     },
   ],
@@ -796,6 +817,35 @@ module.exports = {
 
 Next to the entities, the object passed to the custom normalizer function also contains other helpful Gatsby functions
 and also your `wordpress-source-plugin` options from `gatsby-config.js`. To learn more about the passed object see the [source code](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/src/gatsby-node.js).
+
+### Example with modyfing gatsby-source-wordpress normalizers
+
+```javascript
+const dropUnusedMediaNormalizer = {
+  name: "dropUnusedMediaNormalizer",
+  normalizer: function({ entities }) {
+    return entities.filter(
+      e => !(e.__type === "wordpress__wp_media" && !e.post)
+    )
+  },
+}
+```
+
+Adding this normalizer on top of other/builtin normalizers, so unused media entities are not further processed.
+
+```javascript
+module.exports = {
+  plugins: [
+    {
+      resolve: "gatsby-source-wordpress",
+      options: {
+        // ...
+        normalizers: normalizers => [dropUnusedMediaNormalizer, ...normalizers],
+      },
+    },
+  ],
+}
+```
 
 ## Site's `gatsby-node.js` example
 

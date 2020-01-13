@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-csv@2.1.23...gatsby-transformer-csv@2.1.24) (2020-01-09)
+
+**Note:** Version bump only for package gatsby-transformer-csv
+
 ## [2.1.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-csv@2.1.21...gatsby-transformer-csv@2.1.23) (2020-01-09)
 
 **Note:** Version bump only for package gatsby-transformer-csv

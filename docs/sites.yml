@@ -9230,6 +9230,18 @@
   built_by: Bare Advertising & Communications
   built_by_url: https://www.bare.ca/
   featured: false
+- title: Kanazawa.js Community Page
+  main_url: https://kanazawajs.now.sh/
+  url: https://kanazawajs.now.sh/
+  source_url: https://github.com/kanazawa-js/community-page
+  description: >
+    Kanazawa.js is a local community for the JSer around Kanazawa to share knowledge about JavaScript.
+  categories:
+    - Community
+    - Programming
+    - Web Development
+  built_by: Kanazawa.js
+  built_by_url: https://twitter.com/knzw_js
 - title: monica*dev
   url: https://www.aboutmonica.com/
   main_url: https://www.aboutmonica.com/

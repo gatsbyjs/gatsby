@@ -2,7 +2,7 @@
 title: Challenge - Track Your Coding Progress with a Blazing Fast Blog
 date: 2019-12-31
 author: "Hashim Warren"
-tags: ["learning-to-code", "contest", "100-Day-of-Gatsby"]
+tags: ["learning-to-code", "contest", "100-Days-of-Gatsby"]
 ---
 
 _Did you hear the news? Gatsby was named the [#1 new technology to learn in 2020](https://www.cnbc.com/2019/12/02/10-hottest-tech-skills-that-could-pay-off-most-in-2020-says-new-report.html)!_
