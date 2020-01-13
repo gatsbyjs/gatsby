@@ -37,6 +37,7 @@ The first step for starting a new translation is to check what exists. So far, t
 - [Hindi](https://github.com/gatsbyjs/gatsby-hi)
 - [Indonesian](https://github.com/gatsbyjs/gatsby-id)
 - [Italian](https://github.com/gatsbyjs/gatsby-it)
+- [Japanese](https://github.com/gatsbyjs/gatsby-ja)
 - [Korean](https://github.com/gatsbyjs/gatsby-ko)
 - [Mongolian](https://github.com/gatsbyjs/gatsby-mn)
 - [Dutch](https://github.com/gatsbyjs/gatsby-nl)

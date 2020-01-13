@@ -9230,6 +9230,19 @@
   built_by: Bare Advertising & Communications
   built_by_url: https://www.bare.ca/
   featured: false
+- title: Nathaniel Ryan Mathew
+  url: https://nathanielmathew.me
+  main_url: https://nathanielmathew.me
+  source_url: https://github.com/nathanielmathew/MyPortfolio
+  description: >
+    A personal online Portfolio built using GatsbyJS, that showcases Achievements, Projects and Additional information.
+  categories:
+    - Portfolio
+    - Open Source
+    - Blog
+  built_by: Nathaniel Ryan Mathew
+  built_by_url: https://github.com/nathanielmathew
+  featured: false
 - title: Kanazawa.js Community Page
   main_url: https://kanazawajs.now.sh/
   url: https://kanazawajs.now.sh/
@@ -9242,6 +9255,7 @@
     - Web Development
   built_by: Kanazawa.js
   built_by_url: https://twitter.com/knzw_js
+  featured: false
 - title: monica*dev
   url: https://www.aboutmonica.com/
   main_url: https://www.aboutmonica.com/
@@ -9254,6 +9268,7 @@
     - Portfolio
   built_by: Monica Powell
   built_by_url: https://www.aboutmonica.com/
+  featured: false
 - title: Shivam Sinha
   url: https://www.helloshivam.com/
   main_url: https://www.helloshivam.com/
@@ -9275,4 +9290,39 @@
     - Media
   built_by: Eric Howey
   built_by_url: https://www.erichowey.dev/
+  featured: false
+- title: Eric Howey Web Development
+  main_url: https://www.erichowey.dev/
+  url: https://www.erichowey.dev/
+  source_url: https://github.com/ehowey/erichoweydev
+  description: >
+    Personal website and blog for Eric Howey. I am a freelance web developer based in Alberta, Canada specializing in Gatsby, React, Wordpress and Theme-UI.
+  categories:
+    - Portfolio
+    - Web Development
+    - Freelance
+    - Blog
+  built_by: Eric Howey
+  built_by_url: https://www.erichowey.dev/
+- title: Solfej Chord Search
+  url: https://www.solfej.io/chords
+  main_url: https://www.solfej.io/chords
+  description: >
+    Solfej Chord Search helps you master every chord imaginable. It shows you notes, intervals, guitar and piano fingerings for 1000s of chords.
+  categories:
+    - Education
+    - Music
+  built_by: Shayan Javadi
+  built_by_url: https://www.instagram.com/shawnjavadi/
+- title: a+ Saúde
+  url: https://www.amaissaude.com.br/
+  main_url: https://www.amaissaude.com.br/
+  description: >
+    An even better experience in using health services.
+  categories:
+    - Healthcare
+    - Marketing
+    - Blog
+  built_by: Grupo Fleury
+  built_by_url: http://www.grupofleury.com.br/
   featured: false
