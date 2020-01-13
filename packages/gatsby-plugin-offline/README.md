@@ -197,8 +197,16 @@ Gatsby offers great SEO capabilities and that is no different with `gatsby-plugi
 
 To see the HTML data that crawlers will receive, run this in your terminal:
 
-```bash
-curl https://www.yourdomain.tld
+**on Windows (using powershell):**
+
+```shell
+Invoke-WebRequest https://www.gatsbyjs.org/docs/seo | Select -ExpandProperty Content
+```
+
+**on Mac OS/Linux:**
+
+```shell
+curl https://www.gatsbyjs.org/docs/seo
 ```
 
 Alternatively you can have a look at the `/public/index.html` file in your project folder.
