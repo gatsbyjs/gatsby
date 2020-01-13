@@ -9279,6 +9279,16 @@
   built_by: Shivam Sinha
   built_by_url: https://www.helloshivam.com/
   featured: false
+- title: Solfej Chord Search
+  url: https://www.solfej.io/chords
+  main_url: https://www.solfej.io/chords
+  description: >
+    Solfej Chord Search helps you master every chord imaginable. It shows you notes, intervals, guitar and piano fingerings for 1000s of chords.
+  categories:
+    - Education
+    - Music
+  built_by: Shayan Javadi
+  built_by_url: https://www.instagram.com/shawnjavadi/
 - title: a+ Saúde
   url: https://www.amaissaude.com.br/
   main_url: https://www.amaissaude.com.br/
