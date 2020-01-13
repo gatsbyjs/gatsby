@@ -9279,6 +9279,18 @@
   built_by: Shivam Sinha
   built_by_url: https://www.helloshivam.com/
   featured: false
+- title: Brianna Sharpe - Writer
+  main_url: https://www.briannasharpe.com/
+  url: https://www.briannasharpe.com/
+  source_url: https://github.com/ehowey/briannasharpe
+  description: >
+    Brianna Sharpe is an Alberta, Canada based freelance writer and journalist focused on health, LGBTQ2S+, parenting, and the environment.
+  categories:
+    - Portfolio
+    - Media
+  built_by: Eric Howey
+  built_by_url: https://www.erichowey.dev/
+  featured: false
 - title: Eric Howey Web Development
   main_url: https://www.erichowey.dev/
   url: https://www.erichowey.dev/
