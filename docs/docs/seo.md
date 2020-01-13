@@ -73,7 +73,3 @@ After deployment, their [Rich result status reports](https://support.google.com/
 ## Additional resources
 
 You might also be interested in [blog posts about SEO in Gatsby](/blog/tags/seo/).
-
-```
-
-```
