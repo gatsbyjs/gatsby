@@ -285,34 +285,35 @@ async function startServer(program: IProgram): Promise<IServer> {
   // Set up API proxy.
   const { proxy } = store.getState().config
   if (proxy) {
-    const { prefix, url } = proxy
-    app.use(`${prefix}/*`, (req, res) => {
-      const proxiedUrl = url + req.originalUrl
-      const {
-        // remove `host` from copied headers
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        headers: { host, ...headers },
-        method,
-      } = req
-      req
-        .pipe(
-          got
-            .stream(proxiedUrl, { headers, method, decompress: false })
-            .on(`response`, response =>
-              res.writeHead(response.statusCode || 200, response.headers)
-            )
-            .on(`error`, (err, _, response) => {
-              if (response) {
-                res.writeHead(response.statusCode || 400, response.headers)
-              } else {
-                const message = `Error when trying to proxy request "${req.originalUrl}" to "${proxiedUrl}"`
+    proxy.forEach(({ prefix, url }) => {
+      app.use(`${prefix}/*`, (req, res) => {
+        const proxiedUrl = url + req.originalUrl
+        const {
+          // remove `host` from copied headers
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          headers: { host, ...headers },
+          method,
+        } = req
+        req
+          .pipe(
+            got
+              .stream(proxiedUrl, { headers, method, decompress: false })
+              .on(`response`, response =>
+                res.writeHead(response.statusCode || 200, response.headers)
+              )
+              .on(`error`, (err, _, response) => {
+                if (response) {
+                  res.writeHead(response.statusCode || 400, response.headers)
+                } else {
+                  const message = `Error when trying to proxy request "${req.originalUrl}" to "${proxiedUrl}"`
 
-                report.error(message, err)
-                res.sendStatus(500)
-              }
-            })
-        )
-        .pipe(res)
+                  report.error(message, err)
+                  res.sendStatus(500)
+                }
+              })
+          )
+          .pipe(res)
+      })
     })
   }
 
