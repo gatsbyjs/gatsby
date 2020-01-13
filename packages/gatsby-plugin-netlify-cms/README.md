@@ -237,6 +237,24 @@ plugins: [
 ]
 ```
 
+## Disable widget on site
+
+To completely disable the widget (and not the CMS) if you're not using Netlify Identity within your site, add the following to `gatsby-node.js`:
+
+```javascript
+const webpack = require(`webpack`)
+
+exports.onCreateWebpackConfig = ({ actions }) => {
+  actions.setWebpackConfig({
+    plugins: [
+      new webpack.IgnorePlugin({
+        resourceRegExp: /^netlify-identity-widget$/,
+      }),
+    ],
+  })
+}
+```
+
 ## Support
 
 For help with integrating Netlify CMS with Gatsby, check out the community
