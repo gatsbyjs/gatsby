@@ -4893,6 +4893,14 @@
     - Basic SEO, site metadata
     - Prettier
     - Social media links
+- url: https://gatsby-starter-default-nostyles.netlify.com/
+  repo: https://github.com/JuanJavier1979/gatsby-starter-default-nostyles
+  description: The default Gatsby starter with no styles.
+  tags:
+    - Styling:None
+  features:
+    - Based on gatsby-starter-default
+    - No styles
 - url: https://greater-gatsby.now.sh
   repo: https://github.com/rbutera/greater-gatsby
   description: Barebones and lightweight starter with TypeScript, PostCSS, TailwindCSS and Storybook.
