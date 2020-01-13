@@ -266,13 +266,14 @@ In order to handle the Markdown content, you must use a transformer plugin such 
 You can then insert the HTML inline in your JSX:
 
 ```
-  <div 
+  <div
   className="body"
   dangerouslySetInnerHTML={{
        __html: data.contentfulCaseStudy.body.childMarkdownRemark.html,
      }}
    />
 ```
+
 While this solution is not ideal, you can alternatively use "Rich text" fields instead of "Long text" in order to avoid the inline html (see below).
 
 #### Duplicated entries
