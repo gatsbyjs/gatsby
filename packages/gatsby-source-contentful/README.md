@@ -237,7 +237,7 @@ You might query for a **single** node inside a component in your `src/components
 
 #### A note about LongText fields
 
-On Contentful, a "Long text" field uses Markdown by default. The field is exposed as an object, while the raw Markdown is exposed as a child node. Except if the content is Markdown-free, you cannot use it as is:
+On Contentful, a "Long text" field uses Markdown by default. The field is exposed as an object, while the raw Markdown is exposed as a child node. 
 
 ```graphql
 {
@@ -248,8 +248,7 @@ On Contentful, a "Long text" field uses Markdown by default. The field is expose
   }
 }
 ```
-
-In order to handle the Markdown content, you must use a transformer plugin such as [gatsby-transformer-remark](https://www.gatsbyjs.org/packages/gatsby-transformer-remark/). The transformer will create a childMarkdownRemark on the "Long text" field and expose the generated html as a child node:
+Unless the text is Markdown-free, you cannot use the returned value directly. In order to handle the Markdown content, you must use a transformer plugin such as [gatsby-transformer-remark](https://www.gatsbyjs.org/packages/gatsby-transformer-remark/). The transformer will create a childMarkdownRemark on the "Long text" field and expose the generated html as a child node:
 
 ```graphql
 {
@@ -263,7 +262,7 @@ In order to handle the Markdown content, you must use a transformer plugin such 
 }
 ```
 
-You can then insert the HTML inline in your JSX:
+You can then insert the returned HTML inline in your JSX:
 
 ```
   <div
@@ -273,8 +272,6 @@ You can then insert the HTML inline in your JSX:
      }}
    />
 ```
-
-While this solution is not ideal, you can alternatively use "Rich text" fields instead of "Long text" in order to avoid the inline html (see below).
 
 #### Duplicated entries
 
