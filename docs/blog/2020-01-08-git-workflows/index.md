@@ -9,18 +9,13 @@ tags: ["source control", "Github", "workflows"]
 import Breakout from "./Breakout"
 import { visuallyHidden } from "../../../www/src/utils/styles"
 
-2020 is shaping up to be a really exciting year for Gatsby. On the Cloud team, we have a bunch of really cool stuff on the roadmap. In order to help us build all the stuff we want to build, we've been refining some processes. And managing code reviews were at the top of the list.
+2020 is shaping up to be a really exciting year for Gatsby, with lots of ambitious projects on the roadmap. On the Cloud team, we've been getting all of our ducks in a row, making sure we're all set to hit the ground running. One of the areas we've been focusing on is our Github workflow.
 
-Specifically, we were seeing a lot of "stalled" Pull Requests (PRs)—work was being put up for review, but not receiving prompt attention. These PRs tended to be quite large and complex.
+We were seeing a lot of "stalled" Pull Requests (PRs) - work was being put up for review, but not receiving prompt attention. These PRs tended to be quite large and complex, essentially containing the entirety of work for a given feature or refactor.
 
-If you've ever been tasked with reviewing a large PR, you know how much trouble it can be. In addition to the time commitment, it requires so much mental energy to keep all that context in your head at once. It can also make it harder to suggest tweaks; large PRs develop a kind of inertia. If the reviewer has a great idea around an alternate approach, but that approach would require a week of development time to implement, it's likely that the feedback won't even be shared.
+Monolithic PRs are difficult to review. In addition to the time investment, they also tend to require a lot of mental energy; to be an effective reviewer, you need to build up a mental picture of the change, and the larger that change is, the more context needs to be held in focus. Additionally, large PRs tend to develop their own inertia. If a reviewer has a great idea for an alternative approach, but it would require scrapping most of the work already done in the PR, it's not likely to be acted upon (if it's even shared in the first place).
 
-So it's easy to say that developers should limit the size of their PRs, but this is very much easier said than done. Github really doesn't make it clear or intuitive how to break work up into multiple reviewable units. Pull Requests (PRs) are based on branches, and it's not always clear how to manage multiple simultaneous PRs. Effectively, this gives developers 2 common choices:
-
-1. Work on the feature until it's done, and then open a mammoth everything-included PR.
-2. Work on the feature until you've finished the first chunk, open a reasonably-small PR, and switch to another task while you wait for a review.
-
-At a distributed company like Gatsby, where our team is located across the globe, there isn't always a teammate around to review your work. So we really don't want developers to be blocked waiting for feedback.
+It's easy to say that developers should limit the size of their PRs, but this is very much easier said than done. Github really doesn't make it clear or intuitive how to break work up into multiple reviewable units. PRs are based on branches, and it's not always clear how to juggle multiple branches. Even for folks who are comfortable with Git, the path can be very tricky.
 
 Ideally, the developer could spin up new PRs as they went, allowing them to solicit feedback early, without being blocked while waiting for it. If the feedback _does_ require significant changes, it should be easy to integrate those changes into their more-recent work.
 
@@ -256,13 +251,17 @@ With 3-4 incremental branches, developers have to bounce between them and make s
 
 # When should I use this flow?
 
-Given the drawbacks mentioned above, this is probably not something that should be adopted for _every_ change. It provides the most benefit for changes that are too big to fit into a single PR, and too broad to easily conceal behind a feature flag.
+Given the drawbacks mentioned above, this is probably not something that should be adopted for _every_ change. It provides the most benefit for changes that are too big to fit into a single PR.
 
 It's hard to define a "big" PR - sometimes, a PR changes 2,000 lines of code, but only because a codemod slightly tweaked a bunch of files. Other times, a 300-line PR is so dense that it could benefit from being broken up into smaller pieces.
 
 The amount of time it takes to _review_ a PR is often correlated with the amount of time it took to _write_ it, so maybe a better rule of thumb is that a PR is too big if it encompasses more than a few days' worth of development effort.
 
-For self-contained changes, a feature flag can be a great way to avoid big PRs. Unfortunately, they don't address the problem of developers being blocked while awaiting feedback, so a streamlined version of this flow can still help in these cases.
+It's also worth mentioning that feature flags are a viable alternative to this flow. Feature flags are toggles that can be flipped, and read from within the codebase. This means that unfinished work can be merged into production as long as it's hidden behind a feature flag. Once all the changes have been merged, the flag can be flipped, and the feature will be enabled.
+
+Feature flags are great because they allow developers to break monolithic changes into smaller PRs, but sometimes the cost of architecting a change to fit behind a feature flag is more trouble than it's worth (eg. sprawling changes that affect many different parts of the codebase, or large refactors).
+
+When using feature flags, a streamlined version of this flow can still be useful, to ensure that developers aren't blocked while waiting for feedback.
 
 # Conclusion
 
