@@ -703,31 +703,32 @@ export interface CreateSchemaCustomizationArgs extends ParentSpanPluginArgs {
 }
 
 export interface PreRenderHTMLArgs extends NodePluginArgs {
-  getHeadComponents: any[]
-  replaceHeadComponents: Function
-  getPreBodyComponents: any[]
-  replacePreBodyComponents: Function
-  getPostBodyComponents: any[]
-  replacePostBodyComponents: Function
+  getHeadComponents: () => React.ReactNode[]
+  replaceHeadComponents: (comp: React.ReactNode[]) => void
+  getPreBodyComponents: () => React.ReactNode[]
+  replacePreBodyComponents: (comp: React.ReactNode[]) => void
+  getPostBodyComponents: () => React.ReactNode[]
+  replacePostBodyComponents: (comp: React.ReactNode[]) => void
 }
 
+type ReactProps<T extends Element> = React.DetailedHTMLProps<React.HTMLAttributes<T>, T>
 export interface RenderBodyArgs extends NodePluginArgs {
   pathname: string
-  setHeadComponents: Function
-  setHtmlAttributes: Function
-  setBodyAttributes: Function
-  setPreBodyComponents: Function
-  setPostBodyComponents: Function
+  setHeadComponents: (comp: React.ReactNode[]) => void
+  setHtmlAttributes: (attr: ReactProps<HTMLHtmlElement>) => void
+  setBodyAttributes: (attr: ReactProps<HTMLBodyElement>) => void
+  setPreBodyComponents: (comp: React.ReactNode[]) => void
+  setPostBodyComponents: (comp: React.ReactNode[]) => void
   setBodyProps: Function
 }
 
 export interface ReplaceRendererArgs extends NodePluginArgs {
-  replaceBodyHTMLString: Function
-  setHeadComponents: Function
-  setHtmlAttributes: Function
-  setBodyAttributes: Function
-  setPreBodyComponents: Function
-  setPostBodyComponents: Function
+  replaceBodyHTMLString: (str: string) => void
+  setHeadComponents: (comp: React.ReactNode[]) => void
+  setHtmlAttributes: (attr: ReactProps<HTMLHtmlElement>) => void
+  setBodyAttributes: (attr: ReactProps<HTMLBodyElement>) => void
+  setPreBodyComponents: (comp: React.ReactNode[]) => void
+  setPostBodyComponents: (comp: React.ReactNode[]) => void
   setBodyProps: Function
 }
 
