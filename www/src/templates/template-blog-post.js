@@ -35,7 +35,6 @@ class BlogPostTemplate extends React.Component {
       </p>
     )
     let canonicalLink
-    console.log(post)
 
     if (post.frontmatter.canonicalLink) {
       canonicalLink = (
