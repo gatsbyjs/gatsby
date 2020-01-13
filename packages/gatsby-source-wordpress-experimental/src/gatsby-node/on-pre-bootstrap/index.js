@@ -14,18 +14,12 @@ const onPreBootstrap = async (helpers, pluginOptions) => {
   //
   // Introspect schema and build gql queries
   const activity = helpers.reporter.activityTimer(
-    formatLogMessage`introspect schema`
+    formatLogMessage(`ingest WPGraphQL schema`)
   )
 
-  if (pluginOptions.verbose) {
-    activity.start()
-  }
-
+  activity.start()
   await buildNodeQueriesFromIntrospection()
-
-  if (pluginOptions.verbose) {
-    activity.end()
-  }
+  activity.end()
 
   // load up image node id's from cache
   const imageNodeIds = await helpers.cache.get(`image-node-ids`)

@@ -74,8 +74,8 @@ ${
   }
 }
 
-const genericError = `
-Make sure your WordPress URL is correct in gatsby-config.js, your site is up, and WPGraphQL and WPGatsby are installed.`
+// @todo add a link to docs page for debugging
+const genericError = `Take a moment to check that \n  - your WordPress URL is correct in gatsby-config.js \n  - your server is responding to requests \n  - WPGraphQL and WPGatsby are installed in your WordPress site`
 
 const handleFetchErrors = ({ e, reporter, url }) => {
   if (e.message.includes(`timeout of ${timeout}ms exceeded`)) {
@@ -83,15 +83,21 @@ const handleFetchErrors = ({ e, reporter, url }) => {
     reporter.panic(
       formatLogMessage(
         `It took too long for ${url} to respond (longer than ${timeout /
-          1000} seconds). ${genericError}`
+          1000} seconds). \n${genericError}`,
+        { useVerboseStyle: true }
       )
     )
-  } else if (e.message.includes(`ECONNREFUSED`)) {
+  } else if (
+    e.message.includes(`ECONNREFUSED`) ||
+    e.message === `Request failed with status code 405`
+  ) {
     reporter.panic(
-      formatLogMessage(`${url} refused to connect. ${genericError}`)
+      formatLogMessage(`${e.message} \n\n${genericError}`, {
+        useVerboseStyle: true,
+      })
     )
   } else {
-    reporter.panic(formatLogMessage(e.toString()))
+    reporter.panic(formatLogMessage(e.toString(), { useVerboseStyle: true }))
   }
 }
 
@@ -113,11 +119,7 @@ const fetchGraphql = async ({
     const contentType = response.headers[`content-type`]
 
     if (!contentType.includes(`application/json;`)) {
-      throw new Error(
-        `Unable to connect to WPGraphQL.
-        ${genericError}
-URL: ${url}`
-      )
+      throw new Error(`Unable to connect to WPGraphQL. \n\n${genericError}`)
     }
   } catch (e) {
     handleFetchErrors({ e, reporter, url })

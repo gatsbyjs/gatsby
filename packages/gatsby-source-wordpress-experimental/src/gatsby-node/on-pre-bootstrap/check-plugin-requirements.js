@@ -11,6 +11,7 @@ const isWpGatsby = async () =>
       `,
     errorMap: {
       from: `Cannot query field "isWpGatsby" on type "RootQuery".`,
+      // @todo add a link to download WPGatsby here
       to: `WPGatsby is not active in your WordPress installation. Please install it.`,
     },
     panicOnError: true,

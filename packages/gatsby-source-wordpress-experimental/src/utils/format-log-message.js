@@ -1,7 +1,7 @@
 import chalk from "chalk"
 import store from "../store"
 
-export default input => {
+export default (input, { useVerboseStyle = false } = {}) => {
   const { verbose } = store.getState().gatsbyApi.pluginOptions
 
   let message
@@ -11,7 +11,7 @@ export default input => {
     message = input[0]
   }
 
-  return verbose
+  return verbose || useVerboseStyle
     ? `${chalk.white.bgBlue(` gatsby-source-wordpress `)} ${message}`
     : `[gatsby-source-wordpress] ${message}`
 }

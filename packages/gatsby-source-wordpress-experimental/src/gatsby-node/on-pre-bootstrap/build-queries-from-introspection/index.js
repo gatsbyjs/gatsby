@@ -149,18 +149,13 @@ export const buildNodeQueriesFromIntrospection = async () => {
     !introspection ||
     schemaHasChanged
   ) {
-    const genericMessage = `
-Generating queries from introspection and re-fetching all data.`
+    const genericMessage = `Fetching all data.`
 
     if (pluginOptions.verbose && queries && schemaHasChanged) {
       helpers.reporter.info(
         formatLogMessage(
-          `The schema has changed since the last build. ${genericMessage}`
+          `The WPGraphQL schema has changed since the last build. \n${genericMessage}`
         )
-      )
-    } else if (pluginOptions.verbose && !queries) {
-      helpers.reporter.info(
-        formatLogMessage(`No cached queries. ${genericMessage}`)
       )
     }
 
