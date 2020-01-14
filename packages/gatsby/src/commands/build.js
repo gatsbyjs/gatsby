@@ -11,12 +11,14 @@ const { initTracer, stopTracer } = require(`../utils/tracer`)
 const db = require(`../db`)
 const signalExit = require(`signal-exit`)
 const telemetry = require(`gatsby-telemetry`)
-const { store } = require(`../redux`)
+const { store, emitter } = require(`../redux`)
 const queryUtil = require(`../query`)
 const appDataUtil = require(`../utils/app-data`)
 const WorkerPool = require(`../utils/worker/pool`)
 const { structureWebpackErrors } = require(`../utils/webpack-error-utils`)
-const { waitUntilAllJobsComplete } = require(`../utils/jobs-manager`)
+const {
+  waitUntilAllJobsComplete: waitUntilAllJobsV2Complete,
+} = require(`../utils/jobs-manager`)
 
 type BuildArgs = {
   directory: string,
@@ -24,6 +26,24 @@ type BuildArgs = {
   prefixPaths: boolean,
   noUglify: boolean,
   openTracingConfigFile: string,
+}
+
+const waitUntilAllJobsComplete = () => {
+  const jobsV1Promise = new Promise(resolve => {
+    const onEndJob = () => {
+      if (store.getState().jobs.active.length === 0) {
+        resolve()
+        emitter.off(`END_JOB`, onEndJob)
+      }
+    }
+    emitter.on(`END_JOB`, onEndJob)
+    onEndJob()
+  })
+
+  return Promise.all([
+    jobsV1Promise,
+    waitUntilAllJobsV2Complete(),
+  ]).then(() => {})
 }
 
 module.exports = async function build(program: BuildArgs) {

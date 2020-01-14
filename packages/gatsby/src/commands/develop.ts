@@ -17,7 +17,7 @@ import { formatError } from "graphql"
 
 import webpackConfig from "../utils/webpack.config"
 import bootstrap from "../bootstrap"
-import { store } from "../redux"
+import { store, emitter } from "../redux"
 import { syncStaticDir } from "../utils/get-static-dir"
 import buildHTML from "./build-html"
 import { withBasePath } from "../utils/path"
@@ -54,7 +54,7 @@ import {
   structureWebpackErrors,
 } from "../utils/webpack-error-utils"
 
-import { waitUntilAllJobsComplete } from "../utils/jobs-manager"
+import { waitUntilAllJobsComplete as waitUntilAllJobsV2Complete } from "../utils/jobs-manager"
 
 interface ICert {
   keyPath: string
@@ -75,6 +75,24 @@ interface IProgram {
   https?: boolean
   sitePackageJson: PackageJson
   ssl?: ICert
+}
+
+const waitUntilAllJobsComplete = (): Promise<void> => {
+  const jobsV1Promise = new Promise(resolve => {
+    const onEndJob = (): void => {
+      if (store.getState().jobs.active.length === 0) {
+        resolve()
+        emitter.off(`END_JOB`, onEndJob)
+      }
+    }
+    emitter.on(`END_JOB`, onEndJob)
+    onEndJob()
+  })
+
+  return Promise.all([
+    jobsV1Promise,
+    waitUntilAllJobsV2Complete(),
+  ]).then(() => {})
 }
 
 // const isInteractive = process.stdout.isTTY

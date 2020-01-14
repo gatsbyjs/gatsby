@@ -1,8 +1,6 @@
 const _ = require(`lodash`)
 const { oneLine } = require(`common-tags`)
 const moment = require(`moment`)
-const pDefer = require(`p-defer`)
-const { jobsInProcess } = require(`../../utils/jobs-manager`)
 
 module.exports = (state = { active: [], done: [] }, action) => {
   switch (action.type) {
@@ -22,19 +20,6 @@ module.exports = (state = { active: [], done: [] }, action) => {
         state.active[index] = mergedJob
         return state
       } else {
-        if (jobsInProcess.has(action.payload.id)) {
-          throw new Error(oneLine`
-          The plugin "${_.get(action, `plugin.name`, `anonymous`)}"
-          tried to create a job with the id "${
-            action.payload.id
-          }" that already exists.`)
-        }
-
-        jobsInProcess.set(action.payload.id, {
-          id: action.payload.id,
-          deferred: pDefer(),
-        })
-
         state.active.push({
           ...action.payload,
           createdAt: Date.now(),
@@ -61,11 +46,6 @@ module.exports = (state = { active: [], done: [] }, action) => {
         completedAt,
         runTime: moment(completedAt).diff(moment(job.createdAt)),
       })
-
-      if (jobsInProcess.has(action.payload.id)) {
-        const { deferred } = jobsInProcess.get(action.payload.id)
-        deferred.resolve()
-      }
 
       return state
     }
