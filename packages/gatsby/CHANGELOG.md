@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.18.22](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.21...gatsby@2.18.22) (2020-01-14)
+
+### Bug Fixes
+
+- **gatsby:** fix error cannot read referencePath of undefined ([#20517](https://github.com/gatsbyjs/gatsby/issues/20517)) ([c759a7d](https://github.com/gatsbyjs/gatsby/commit/c759a7d))
+- **typing:** more precise typing for ssr api ([#20564](https://github.com/gatsbyjs/gatsby/issues/20564)) ([b53ec9a](https://github.com/gatsbyjs/gatsby/commit/b53ec9a))
+
+### Features
+
+- **gatsby:** Supports multiple development proxies ([#20369](https://github.com/gatsbyjs/gatsby/issues/20369)) ([8d1e37a](https://github.com/gatsbyjs/gatsby/commit/8d1e37a))
+
 ## [2.18.21](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.20...gatsby@2.18.21) (2020-01-09)
 
 **Note:** Version bump only for package gatsby
