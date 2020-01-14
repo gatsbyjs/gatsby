@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace WP_Gatsby\ActionMonitor;
 
@@ -6,7 +6,7 @@ use GraphQLRelay\Relay;
 
 /**
  * This class registers and controls a post type which can be used to
- * monitor WP events like post save or delete in order to invalidate 
+ * monitor WP events like post save or delete in order to invalidate
  * Gatsby's cached nodes
 */
 class ActionMonitor
@@ -14,10 +14,10 @@ class ActionMonitor
     /**
      * Set up the Action monitor when the class is initialized
      */
-    function __construct() 
+    function __construct()
     {
         add_action(
-            'init', 
+            'init',
             function () {
                 $this->initPostType();
                 $this->monitorActions();
@@ -29,7 +29,7 @@ class ActionMonitor
     /**
      * Use WP Action hooks to create action monitor posts
      */
-    function monitorActions() 
+    function monitorActions()
     {
         add_action('save_post', [$this, 'savePost'], 10, 2);
     }
@@ -37,8 +37,8 @@ class ActionMonitor
     /**
      * On save post
      */
-    function savePost($post_id, $post) 
-    {        
+    function savePost($post_id, $post)
+    {
         if ($post->post_status === 'auto-draft') {
             return $post_id;
         }
@@ -46,7 +46,7 @@ class ActionMonitor
         if ($post->post_type === 'revision') {
             return $post_id;
         }
-        
+
         if ($post->post_type === 'action_monitor') {
             return $post_id;
         }
@@ -55,10 +55,10 @@ class ActionMonitor
             return $post_id;
         }
 
-        // 
+        //
         // add a check here to make sure this is a post type available in WPGQL
         // so that we don't monitor posts made by plugins
-        // maybe add a filter to allow plugins to add themselves to this list of 
+        // maybe add a filter to allow plugins to add themselves to this list of
         // whitelisted post types?
         //
 
@@ -136,14 +136,14 @@ class ActionMonitor
     /**
      * Add post meta to schema
      */
-    function registerGraphQLFields() 
+    function registerGraphQLFields()
     {
         add_action(
             'graphql_register_types',
             function () {
                 register_graphql_field(
                     'ActionMonitorAction',
-                    'actionType', 
+                    'actionType',
                     [
                         'type' => 'String',
                         'description' => __(
@@ -151,15 +151,15 @@ class ActionMonitor
                             'WP_Gatsby'
                         ),
                         'resolve' => function ($post) {
-                            $action_type 
+                            $action_type
                                 = get_post_meta($post->ID, 'action_type', true);
                             return $action_type ?? null;
                         }
-                    ] 
+                    ]
                 );
                 register_graphql_field(
                     'ActionMonitorAction',
-                    'referencedPostStatus', 
+                    'referencedPostStatus',
                     [
                         'type' => 'String',
                         'description' => __(
@@ -174,11 +174,11 @@ class ActionMonitor
                             );
                             return $referenced_post_status ?? null;
                         }
-                    ] 
+                    ]
                 );
                 register_graphql_field(
                     'ActionMonitorAction',
-                    'referencedPostID', 
+                    'referencedPostID',
                     [
                         'type' => 'String',
                         'description' => __(
@@ -193,11 +193,11 @@ class ActionMonitor
                             );
                             return $referenced_post_id ?? null;
                         }
-                    ] 
+                    ]
                 );
                 register_graphql_field(
                     'ActionMonitorAction',
-                    'referencedPostGlobalRelayID', 
+                    'referencedPostGlobalRelayID',
                     [
                         'type' => 'String',
                         'description' => __(
@@ -212,7 +212,7 @@ class ActionMonitor
                             );
                             return $referenced_post_relay_id ?? null;
                         }
-                    ] 
+                    ]
                 );
                 register_graphql_field(
                     'ActionMonitorAction',
@@ -231,11 +231,11 @@ class ActionMonitor
                             );
                             return $referenced_post_single_name ?? null;
                         }
-                    ] 
+                    ]
                 );
                 register_graphql_field(
                     'ActionMonitorAction',
-                    'referencedPostPluralName', 
+                    'referencedPostPluralName',
                     [
                         'type' => 'String',
                         'description' => __(
@@ -250,16 +250,16 @@ class ActionMonitor
                             );
                             return $referenced_post_plural_name ?? null;
                         }
-                    ] 
+                    ]
                 );
 
                 register_graphql_field(
                     'RootQueryToActionMonitorActionConnectionWhereArgs',
-                    'sinceTimestamp', 
+                    'sinceTimestamp',
                     [
                         'type' => 'Number',
                         'description' => 'List Actions performed since a timestamp.'
-                    ] 
+                    ]
                 );
 
                 add_filter(
@@ -282,7 +282,7 @@ class ActionMonitor
     /**
      * Register Action monitor post type
      */
-    function initPostType() 
+    function initPostType()
     {
         /**
          * Post Type: Action Monitor.
