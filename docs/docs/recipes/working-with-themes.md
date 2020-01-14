@@ -6,13 +6,16 @@ A [Gatsby theme](/docs/themes/what-are-gatsby-themes) abstracts Gatsby configura
 
 ## Creating a new site using a theme
 
-Found a theme you'd like to use on your project? Awesome! You can work through setting up by following the steps below.
+Found a theme you'd like to use on your project? Awesome! You can configure it for use by following the steps below.
 
-> If you'd like to take a look at more theme options, you could take a look at this [list of themes](https://www.npmjs.com/search?q=gatsby-theme) .
+> If you'd like to take a look at more theme options, check out [list of themes](https://www.npmjs.com/search?q=gatsby-theme).
 
 ### Prerequisities
 
-The [Gatsby CLI](/docs/gatsby-cli) installed
+Make sure you have the following installed:
+
+- [Gatsby CLI](/docs/gatsby-cli)
+- [Yarn](https://yarnpkg.com/lang/en/docs/install/#mac-stable)
 
 ### Directions
 
@@ -24,19 +27,16 @@ gatsby new {your-project-name}
 
 2. Change directory and install theme
 
+In this example, our theme is `gatsby-theme-blog`. You can replace that reference with whatever your theme is named.
+
 ```shell
 cd {your-project-name}
-npm install {theme-name}
-```
-
-For Example
-
-```shell
 npm install gatsby-theme-blog
-
 ```
 
 3. Add theme to `gatsby.config.js`
+
+Follow the instructions found in the README of the theme you're using to determine what configuration it requires.
 
 ```shell
 module.exports = {
@@ -76,7 +76,7 @@ Creating a site based on a starter that configures a theme follows the same proc
 
 ### Prerequisites
 
-- The [Gatsby CLI](/docs/gatsby-cli) installed
+- Make sure you have the [Gatsby CLI](/docs/gatsby-cli) installed
 
 ### Directions
 
