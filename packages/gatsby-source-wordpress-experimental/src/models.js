@@ -7,6 +7,7 @@ const introspection = {
     schemaWasChanged: null,
     fieldBlacklist: [
       // these aren't useful without authentication
+      // @todo make this dynamic when authentication is added
       `revisions`,
       `themes`,
       `userRoles`,
