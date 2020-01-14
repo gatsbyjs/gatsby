@@ -21,7 +21,13 @@ To access this experimental feature utilizing GraphQL Playground with Gatsby, ad
 If you are on **Windows** then you should use:
 
 ```
-"develop": "SET GATSBY_GRAPHQL_IDE=playground&gatsby develop",
+"develop": "cross-env GATSBY_GRAPHQL_IDE=playground&gatsby develop",
+```
+
+If you haven't installed **cross-env**, you can do it with:
+
+```
+npm install --save-dev cross-env
 ```
 
 Use `npm run develop` instead of `gatsby develop` and access it when the development server is running on <https://localhost:8000/___graphql>
