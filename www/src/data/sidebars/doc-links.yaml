@@ -721,6 +721,8 @@
       items:
         - title: GraphQL
           link: /docs/glossary/graphql
+        - title: Headless CMS
+          link: /docs/glossary/headless-cms/
         - title: Node.js
           link: /docs/glossary/node
         - title: React
