@@ -32,7 +32,7 @@ export const createContentTypeNodes = async () => {
       return helpers.actions.createNode({
         ...typeInfo,
         id: helpers.createNodeId(
-          `${typeInfo.nodesTypeName}${typeInfo.singleName}--content-type`
+          `${typeInfo.nodesTypeName}${typeInfo.singularName}--content-type`
         ),
         parent: null,
         internal: {

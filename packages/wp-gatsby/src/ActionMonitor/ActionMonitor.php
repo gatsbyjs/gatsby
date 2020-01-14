@@ -216,7 +216,7 @@ class ActionMonitor
                 );
                 register_graphql_field(
                     'ActionMonitorAction',
-                    'referencedPostSingleName', 
+                    'referencedPostSingularName',
                     [
                         'type' => 'String',
                         'description' => __(

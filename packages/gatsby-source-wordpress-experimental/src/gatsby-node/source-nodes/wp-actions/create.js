@@ -21,7 +21,7 @@ const wpActionCREATE = async ({
   // so get the right gql query from redux
   const { queries } = store.getState().introspection
   const queryInfo = Object.values(queries).find(
-    q => q.typeInfo.singleName === wpAction.referencedPostSingleName
+    q => q.typeInfo.singularName === wpAction.referencedPostSingularName
   )
   const { nodeQueryString: query } = queryInfo
 
@@ -34,7 +34,7 @@ const wpActionCREATE = async ({
       id: wpAction.referencedPostGlobalRelayID,
     },
   })
-  const nodeContent = data[wpAction.referencedPostSingleName]
+  const nodeContent = data[wpAction.referencedPostSingularName]
 
   // create a node from it
   const { actions, createContentDigest } = helpers
@@ -43,7 +43,7 @@ const wpActionCREATE = async ({
   const node = {
     ...nodeContent,
     id: nodeId,
-    contentType: wpAction.referencedPostSingleName,
+    contentType: wpAction.referencedPostSingularName,
     path: parse(nodeContent.link).pathname,
   }
 
@@ -60,12 +60,12 @@ const wpActionCREATE = async ({
     helpers.reporter.log(``)
     helpers.reporter.info(
       formatLogMessage(
-        `created ${wpAction.referencedPostSingleName}${
+        `created ${wpAction.referencedPostSingularName}${
           verbose
             ? `
 
   {
-    ${wpAction.referencedPostSingleName}Id: ${wpAction.referencedPostID},
+    ${wpAction.referencedPostSingularName}Id: ${wpAction.referencedPostID},
     id: ${nodeId}
   }`
             : ` ${wpAction.referencedPostID}`

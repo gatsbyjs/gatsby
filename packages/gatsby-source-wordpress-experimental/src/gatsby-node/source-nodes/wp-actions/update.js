@@ -30,7 +30,7 @@ const wpActionUPDATE = async ({
   }
 
   const { nodeQueryString: query, typeInfo } = Object.values(queries).find(
-    q => q.typeInfo.singleName === wpAction.referencedPostSingleName
+    q => q.typeInfo.singularName === wpAction.referencedPostSingularName
   )
 
   const { url } = pluginOptions
@@ -43,9 +43,9 @@ const wpActionUPDATE = async ({
   })
 
   const updatedNodeContent = {
-    ...data[wpAction.referencedPostSingleName],
-    contentType: wpAction.referencedPostSingleName,
-    path: parse(data[wpAction.referencedPostSingleName].link).pathname,
+    ...data[wpAction.referencedPostSingularName],
+    contentType: wpAction.referencedPostSingularName,
+    path: parse(data[wpAction.referencedPostSingularName].link).pathname,
   }
 
   const { actions, getNode } = helpers
@@ -73,7 +73,7 @@ const wpActionUPDATE = async ({
     reporter.log(``)
     reporter.info(
       formatLogMessage(
-        `${chalk.bold(`updated ${wpAction.referencedPostSingleName}`)} #${
+        `${chalk.bold(`updated ${wpAction.referencedPostSingularName}`)} #${
           wpAction.referencedPostID
         }`
       )

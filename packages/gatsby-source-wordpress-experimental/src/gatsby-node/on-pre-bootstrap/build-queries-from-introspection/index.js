@@ -111,7 +111,7 @@ const generateQueriesFromIntrospection = async introspectionData => {
 
     queries[name] = {
       typeInfo: {
-        singleName: singleFieldName,
+        singularName: singleFieldName,
         pluralName: name,
         nodesTypeName: nodesType.name,
       },

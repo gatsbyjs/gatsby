@@ -7,7 +7,7 @@ export const getActionMonitorQuery = () => `
           referencedPostID
           referencedPostStatus
           referencedPostGlobalRelayID
-          referencedPostSingleName
+          referencedPostSingularName
           referencedPostPluralName
           actionType
         }

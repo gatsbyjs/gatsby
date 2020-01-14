@@ -10,7 +10,7 @@ export default async ({ actions, graphql }) => {
     query ALL_CONTENT_TYPES {
       allWpContentType {
         nodes {
-          singleName
+          singularName
           pluralName
           nodesTypeName
         }
@@ -25,13 +25,13 @@ export default async ({ actions, graphql }) => {
   )
 
   for (const contentType of allWpContentType.nodes) {
-    const { nodesTypeName, singleName } = contentType
+    const { nodesTypeName, singularName } = contentType
 
     // this is a super super basic template hierarchy
     // this doesn't reflect what our hierarchy will look like.
     // this is for testing/demo purposes
     const contentTypeTemplate = contentTypeTemplates.find(
-      path => path === `./src/templates/types/${singleName}.js`
+      path => path === `./src/templates/types/${singularName}.js`
     )
 
     if (!contentTypeTemplate) {

@@ -12,12 +12,12 @@ const wpActionDELETE = async ({ helpers, cachedNodeIds, wpAction }) => {
   reporter.log(``)
   reporter.info(
     formatLogMessage(
-      `deleted ${wpAction.referencedPostSingleName}${
+      `deleted ${wpAction.referencedPostSingularName}${
         verbose
           ? `
 
   {
-    ${wpAction.referencedPostSingleName}Id: ${wpAction.referencedPostID},
+    ${wpAction.referencedPostSingularName}Id: ${wpAction.referencedPostID},
     id: ${nodeId}
   }`
           : ` ${wpAction.referencedPostID}`
