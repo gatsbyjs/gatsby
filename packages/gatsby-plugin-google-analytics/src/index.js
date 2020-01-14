@@ -14,9 +14,10 @@ const createFunctionWithTimeout = (callback, opt_timeout = 1000) => {
 }
 
 function OutboundLink(props) {
+  const { eventCategory, eventAction, eventLabel, eventValue, ...rest } = props
   return (
     <a
-      {...props}
+      {...rest}
       onClick={e => {
         if (typeof props.onClick === `function`) {
           props.onClick(e)
@@ -37,9 +38,10 @@ function OutboundLink(props) {
         }
         if (window.ga) {
           window.ga(`send`, `event`, {
-            eventCategory: props.eventCategory || `Outbound Link`,
-            eventAction: props.eventAction || `click`,
-            eventLabel: props.eventLabel || props.href,
+            eventCategory: eventCategory || `Outbound Link`,
+            eventAction: eventAction || `click`,
+            eventLabel: eventLabel || props.href,
+            eventValue,
             transport: redirect ? `beacon` : ``,
             hitCallback: function() {
               if (redirect) {
