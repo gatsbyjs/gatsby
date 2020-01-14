@@ -37,13 +37,21 @@ let firstPass = true
 const createOrGetProgressBar = reporter => {
   if (!progressBar) {
     progressBar = createProgress(`Generating image thumbnails`, reporter)
+
     const originalDoneFn = progressBar.done
+
+    // TODO this logic should be moved to the reporter.
+    // when done is called we remove the progressbar instance and reset all the things
+    // this will be called onPostBuild or when devserver is created
     progressBar.done = () => {
       originalDoneFn.call(progressBar)
       progressBar = null
       pendingImagesCounter = 0
     }
 
+    // when we create a progressBar for the second time so when .done() has been called before
+    // we create a modified tick function that automatically stops the progressbar when total is reached
+    // this is used for development as we're watching for changes
     if (!firstPass) {
       let progressBarCurrentValue = 0
       const originalTickFn = progressBar.tick
