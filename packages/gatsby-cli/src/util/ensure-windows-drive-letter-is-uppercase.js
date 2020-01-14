@@ -1,4 +1,4 @@
-const { platform, tmpdir } = require(`os`)
+const { tmpdir } = require(`os`)
 const report = require(`../reporter`)
 
 /**
@@ -20,10 +20,7 @@ const report = require(`../reporter`)
  * and then the next one from "C:" shell, you may get a bunch of webpack warnings
  * because it expects module paths to be case-sensitive.
  */
-module.exports = function normalizeWindowsCwd() {
-  if (platform() !== `win32`) {
-    return
-  }
+module.exports = function ensureWindowsDriveLetterIsUppercase() {
   const cwd = process.cwd()
   const normalizedCwd = driveLetterToUpperCase(cwd)
 
