@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.8.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.26...gatsby-cli@2.8.27) (2020-01-14)
+
+### Bug Fixes
+
+- **gatsby-cli:** normalize case of windows drive letter ([#20437](https://github.com/gatsbyjs/gatsby/issues/20437)) ([3e9bf07](https://github.com/gatsbyjs/gatsby/commit/3e9bf07))
+
 ## [2.8.26](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.25...gatsby-cli@2.8.26) (2020-01-09)
 
 **Note:** Version bump only for package gatsby-cli
