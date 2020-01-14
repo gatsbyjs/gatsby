@@ -1,13 +1,23 @@
 import fetchGraphql from "../../../utils/fetch-graphql"
-import { getActionMonitorQuery } from "../../graphql-queries"
+import { actionMonitorQuery } from "../../graphql-queries"
 import wpActionCREATE from "./create"
 import wpActionDELETE from "./delete"
 import wpActionUPDATE from "./update"
 
+/**
+ * getWpActions
+ *
+ * pull the latest changes from WP and determine which of those changes
+ * require updates in Gatsby, then return valid changes
+ * An example of a non-valid change would be a post that was created
+ * and then immediately deleted.
+ */
 export const getWpActions = async (__, { url }, variables) => {
-  const query = getActionMonitorQuery()
-
-  const { data } = await fetchGraphql({ url, query, variables })
+  const { data } = await fetchGraphql({
+    url,
+    query: actionMonitorQuery,
+    variables,
+  })
 
   // we only want to use the latest action on each post ID in case multiple
   // actions were recorded for the same post
@@ -37,6 +47,10 @@ export const getWpActions = async (__, { url }, variables) => {
   return actions
 }
 
+/**
+ * Acts on changes in WordPress to call functions that sync Gatsby with
+ * the latest WP changes
+ */
 export const handleWpActions = async api => {
   let { cachedNodeIds } = api
 
@@ -55,6 +69,12 @@ export const handleWpActions = async api => {
   return cachedNodeIds
 }
 
+/**
+ * fetchAndRunWpActions
+ *
+ * fetches a list of latest changes in WordPress
+ * and then acts on those changes
+ */
 export const fetchAndRunWpActions = async ({
   helpers,
   pluginOptions,

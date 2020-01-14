@@ -1,36 +1,41 @@
 import gql from "../utils/gql"
 
-export const getActionMonitorQuery = () => `
-    query GET_ACTION_MONITOR_ACTIONS($since: Float!) {
-      actionMonitorActions(where: {sinceTimestamp: $since}) {
-        nodes {
-          referencedPostID
-          referencedPostStatus
-          referencedPostGlobalRelayID
-          referencedPostSingularName
-          referencedPostPluralName
-          actionType
-        }
+/**
+ * Used to fetch WP changes since a unix timestamp
+ * so we can do incremental data fetches
+ */
+export const actionMonitorQuery = gql`
+  query GET_ACTION_MONITOR_ACTIONS($since: Float!) {
+    actionMonitorActions(where: { sinceTimestamp: $since }) {
+      nodes {
+        referencedPostID
+        referencedPostStatus
+        referencedPostGlobalRelayID
+        referencedPostSingularName
+        referencedPostPluralName
+        actionType
       }
     }
-  `
-
-const availablePostTypesSelectionSet = gql`
-  postTypes {
-    fieldNames {
-      plural
-      singular
-    }
-    typeName
   }
 `
 
-export const getAvailablePostTypesQuery = () => `
+/**
+ * Returns a list of post types and some info about
+ * their root field names and type names
+ */
+export const availablePostTypesQuery = gql`
   {
-    ${availablePostTypesSelectionSet}
+    postTypes {
+      fieldNames {
+        plural
+        singular
+      }
+      typeName
+    }
   }
 `
-export const introspectionQuery = `
+
+export const introspectionQuery = gql`
   {
     __schema {
       types {

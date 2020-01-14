@@ -6,6 +6,11 @@ import { createRemoteMediaItemNode } from "../source-nodes/create-remote-media-i
 const state = store.getState()
 const { fieldAliases } = state.introspection
 
+/**
+ * Transforms fields from the WPGQL schema to work in the Gatsby schema
+ * with proper node linking and type namespacing
+ * also filters out unusable fields and types
+ */
 const transformFields = ({ fields, gatsbyNodeTypes }) => {
   if (!fields || !fields.length) {
     return null
@@ -195,6 +200,9 @@ const transformFields = ({ fields, gatsbyNodeTypes }) => {
   }, {})
 }
 
+/**
+ * createSchemaCustomization
+ */
 export default async ({ actions, schema }) => {
   const { data } = store.getState().introspection.introspectionData
 
@@ -276,10 +284,6 @@ export default async ({ actions, schema }) => {
         if (type.name === `MediaItem`) {
           objectType.fields.remoteFile = {
             type: `File`,
-            // can't make this work. Created a custom resolver instead.
-            // extensions: {
-            //   link: {}
-            // },
             resolve: (mediaItemNode, args, context, info) => {
               if (!mediaItemNode) {
                 return null
@@ -289,10 +293,13 @@ export default async ({ actions, schema }) => {
                 !mediaItemNode.remoteFile &&
                 !getPluginOptions().type.MediaItem.onlyFetchIfReferenced
               ) {
-                // this isn't such a good way to do this.
+                // @todo think of a better way to fetch images
+                // this isn't such a good way to do it.
                 // query running prevents us from downloading a bunch of images in parallell
-                // and this messes up the cli output.
-                // for now MediaItem.onlyFetchIfReferenced = true is the recommended way to get media files
+                // and this also messes up the cli output.
+                // for now MediaItem.onlyFetchIfReferenced = true is the recommended way to get media files as that option downloads referenced images upfront
+                // where this option fetches images as they're queried for
+                // @todo create a clearer plugin option (MediaItem.fetchOnQuery?)
                 return createRemoteMediaItemNode({
                   mediaItemNode,
                 })

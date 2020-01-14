@@ -1,4 +1,4 @@
-import { getAvailablePostTypesQuery } from "../graphql-queries"
+import { availablePostTypesQuery } from "../graphql-queries"
 import fetchGraphql from "../../utils/fetch-graphql"
 import store from "../../store"
 
@@ -17,9 +17,7 @@ export const createContentTypeNodes = async () => {
     helpers,
   } = state.gatsbyApi
 
-  const query = getAvailablePostTypesQuery()
-
-  const { data } = await fetchGraphql({ url, query })
+  const { data } = await fetchGraphql({ url, query: availablePostTypesQuery })
 
   const contentTypes = data.postTypes
     .filter(

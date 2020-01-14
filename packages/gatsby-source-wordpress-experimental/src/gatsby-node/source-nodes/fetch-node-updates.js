@@ -3,6 +3,13 @@ import { fetchAndRunWpActions } from "./wp-actions"
 import formatLogMessage from "../../utils/format-log-message"
 import { getGatsbyApi } from "../../utils/get-gatsby-api"
 
+/**
+ * fetchAndApplyNodeUpdates
+ *
+ * uses query info (types and gql query strings) fetched/generated in
+ * onPreBootstrap to ask WordPress for the latest changes, and then
+ * apply creates, updates, and deletes to Gatsby nodes
+ */
 const fetchAndApplyNodeUpdates = async ({ since, intervalRefetching }) => {
   const { helpers, pluginOptions } = getGatsbyApi()
 

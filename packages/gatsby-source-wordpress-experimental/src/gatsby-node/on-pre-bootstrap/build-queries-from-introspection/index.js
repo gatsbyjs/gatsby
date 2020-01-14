@@ -1,4 +1,4 @@
-import { getAvailablePostTypesQuery } from "../../graphql-queries"
+import { availablePostTypesQuery } from "../../graphql-queries"
 import fetchGraphql from "../../../utils/fetch-graphql"
 import { introspectionQuery } from "../../graphql-queries"
 import checkIfSchemaHasChanged from "../check-if-schema-has-changed"
@@ -14,6 +14,15 @@ import {
 import store from "../../../store"
 import formatLogMessage from "../../../utils/format-log-message"
 
+/**
+ * generateQueriesFromIntrospection
+ *
+ * Takes in data from an introspection query and
+ * processes it to build GraphQL query strings/info
+ *
+ * @param {object} introspectionData
+ * @returns {Object} GraphQL query info including gql query strings
+ */
 const generateQueriesFromIntrospection = async introspectionData => {
   const state = store.getState()
   const { pluginOptions } = state.gatsbyApi
@@ -54,7 +63,6 @@ const generateQueriesFromIntrospection = async introspectionData => {
   // nested as children
   // for example we need to do posts(where: { parent: null }) { nodes { ... }}
   // https://github.com/wp-graphql/wp-graphql/issues/928
-  const query = getAvailablePostTypesQuery()
   const {
     url,
     type: typeOptions,
@@ -62,22 +70,43 @@ const generateQueriesFromIntrospection = async introspectionData => {
   } = pluginOptions
   const {
     data: { postTypes },
-  } = await fetchGraphql({ url, query })
+  } = await fetchGraphql({ url, query: availablePostTypesQuery })
 
   let queries = {}
 
   for (const { type, name } of nodeListFields) {
+    // this removes problematic fields
+    // and fields that are blacklisted via plugin settings
     if (fieldBlacklist.includes(name)) {
       continue
     }
 
+    // nested fields
     const fieldFields = typeMap.get(type.name).fields
+
+    // a nested field containing a list of nodes
     const nodesField = fieldFields.find(nodeListFilter)
 
+    // the type of this query
     const nodesType = typeMap.get(nodesField.type.ofType.name)
 
     const { fields } = nodesType
 
+    /**
+     * plugin settings for this type
+     * For example:
+     * {
+      resolve: `gatsby-source-wordpress-experimental`,
+      options: {
+        url: `http://gatsbysourcewordpressv4.local/graphql`,
+        type: {
+          Page: { // <-- this object
+            limit: 10,
+          },
+        },
+      },
+    },
+     */
     const settings = typeOptions[nodesType.name] || {}
 
     const singleTypeInfo = rootFields.find(
@@ -109,6 +138,9 @@ const generateQueriesFromIntrospection = async introspectionData => {
       nodeListFieldNames,
     })
 
+    // build a query info object containing gql query strings for fetching
+    // node lists or single nodes, as well as type info and plugin
+    // settings for this type
     queries[name] = {
       typeInfo: {
         singularName: singleFieldName,
@@ -125,6 +157,14 @@ const generateQueriesFromIntrospection = async introspectionData => {
   return queries
 }
 
+/**
+ * buildNodeQueriesFromIntrospection
+ *
+ * Uses plugin options to introspect the remote GraphQL
+ * source, run cache logic, and generate GQL query strings/info
+ *
+ * @returns {Object} GraphQL query info including gql query strings
+ */
 export const buildNodeQueriesFromIntrospection = async () => {
   const { pluginOptions, helpers } = store.getState().gatsbyApi
 
