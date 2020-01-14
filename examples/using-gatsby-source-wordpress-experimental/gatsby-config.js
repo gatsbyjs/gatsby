@@ -14,10 +14,10 @@ module.exports = {
         url: `http://gatsbysourcewordpressv4.local/graphql`,
         // url: `https://dev-gatsby-source-wordpress-v4.pantheonsite.io/graphql`,
         verbose: true,
-        // excludeFields: [`alots`],
-        // schema: {
-        //   queryDepth: 6,
-        // },
+        excludeFields: [`editLock`, `editLast`],
+        schema: {
+          queryDepth: 10,
+        },
         develop: {
           nodeUpdateInterval: 100,
         },
