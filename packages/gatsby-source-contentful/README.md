@@ -237,7 +237,7 @@ You might query for a **single** node inside a component in your `src/components
 
 #### A note about LongText fields
 
-On Contentful, a "Long text" field uses Markdown by default. The field is exposed as an object, while the raw Markdown is exposed as a child node. 
+On Contentful, a "Long text" field uses Markdown by default. The field is exposed as an object, while the raw Markdown is exposed as a child node.
 
 ```graphql
 {
@@ -248,6 +248,7 @@ On Contentful, a "Long text" field uses Markdown by default. The field is expose
   }
 }
 ```
+
 Unless the text is Markdown-free, you cannot use the returned value directly. In order to handle the Markdown content, you must use a transformer plugin such as [gatsby-transformer-remark](https://www.gatsbyjs.org/packages/gatsby-transformer-remark/). The transformer will create a childMarkdownRemark on the "Long text" field and expose the generated html as a child node:
 
 ```graphql
