@@ -200,13 +200,13 @@ To see the HTML data that crawlers will receive, run this in your terminal:
 **on Windows (using powershell):**
 
 ```shell
-Invoke-WebRequest https://www.gatsbyjs.org/docs/seo | Select -ExpandProperty Content
+Invoke-WebRequest https://www.yourdomain.tld | Select -ExpandProperty Content
 ```
 
 **on Mac OS/Linux:**
 
 ```shell
-curl https://www.gatsbyjs.org/docs/seo
+curl https://www.yourdomain.tld
 ```
 
 Alternatively you can have a look at the `/public/index.html` file in your project folder.
