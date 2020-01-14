@@ -4,7 +4,7 @@ const { fieldBlacklist, fieldAliases } = store.getState().introspection
 
 const transformFragments = ({
   possibleTypes,
-  futureGatsbyNodesInfo,
+  gatsbyNodesInfo,
   typeMap,
   maxDepth,
   depth,
@@ -18,7 +18,7 @@ const transformFragments = ({
             return false
           }
 
-          const isAGatsbyNode = futureGatsbyNodesInfo.typeNames.includes(
+          const isAGatsbyNode = gatsbyNodesInfo.typeNames.includes(
             possibleType.name
           )
 
@@ -33,7 +33,7 @@ const transformFragments = ({
           if (typeInfo) {
             const fields = recursivelyTransformFields({
               fields: typeInfo.fields,
-              futureGatsbyNodesInfo,
+              gatsbyNodesInfo,
               typeMap,
               maxDepth,
               depth,
@@ -52,13 +52,7 @@ const transformFragments = ({
         .filter(Boolean)
     : null
 
-function transformField({
-  field,
-  futureGatsbyNodesInfo,
-  typeMap,
-  maxDepth,
-  depth,
-}) {
+function transformField({ field, gatsbyNodesInfo, typeMap, maxDepth, depth }) {
   // we're potentially infinitely recursing when fields are connected to other types that have fields that are connections to other types
   //  so we need a maximum limit for that
   if (depth >= maxDepth) {
@@ -108,7 +102,7 @@ function transformField({
   }
 
   const isListOfGatsbyNodes =
-    ofType && futureGatsbyNodesInfo.typeNames.includes(ofType.name)
+    ofType && gatsbyNodesInfo.typeNames.includes(ofType.name)
 
   if (fieldType.kind === `LIST` && isListOfGatsbyNodes) {
     return {
@@ -120,7 +114,7 @@ function transformField({
 
     const transformedFields = recursivelyTransformFields({
       fields: listOfType.fields,
-      futureGatsbyNodesInfo,
+      gatsbyNodesInfo,
       typeMap,
       depth,
       maxDepth,
@@ -128,7 +122,7 @@ function transformField({
 
     const transformedFragments = transformFragments({
       possibleTypes: listOfType.possibleTypes,
-      futureGatsbyNodesInfo,
+      gatsbyNodesInfo,
       typeMap,
       depth,
       maxDepth,
@@ -158,7 +152,7 @@ function transformField({
     }
   }
 
-  const isAGatsbyNode = futureGatsbyNodesInfo.typeNames.includes(fieldType.name)
+  const isAGatsbyNode = gatsbyNodesInfo.typeNames.includes(fieldType.name)
   const isAMediaItemNode = isAGatsbyNode && fieldType.name === `MediaItem`
 
   // pull the id and sourceUrl for connections to media item gatsby nodes
@@ -181,7 +175,7 @@ function transformField({
   if (fields) {
     const transformedFields = recursivelyTransformFields({
       fields,
-      futureGatsbyNodesInfo,
+      gatsbyNodesInfo,
       typeMap,
       depth,
       maxDepth,
@@ -202,7 +196,7 @@ function transformField({
 
     const transformedFields = recursivelyTransformFields({
       fields: typeInfo.fields,
-      futureGatsbyNodesInfo,
+      gatsbyNodesInfo,
       typeMap,
       depth,
       maxDepth,
@@ -210,7 +204,7 @@ function transformField({
 
     const fragments = transformFragments({
       possibleTypes: typeInfo.possibleTypes,
-      futureGatsbyNodesInfo,
+      gatsbyNodesInfo,
       typeMap,
       depth,
       maxDepth,
@@ -228,7 +222,7 @@ function transformField({
 
 const recursivelyTransformFields = ({
   fields,
-  futureGatsbyNodesInfo,
+  gatsbyNodesInfo,
   typeMap,
   maxDepth,
   depth = 0,
@@ -238,7 +232,7 @@ const recursivelyTransformFields = ({
         .map(field =>
           transformField({
             field,
-            futureGatsbyNodesInfo,
+            gatsbyNodesInfo,
             typeMap,
             maxDepth,
             depth,

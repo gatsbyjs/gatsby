@@ -14,22 +14,17 @@ import {
 import store from "../../../store"
 import formatLogMessage from "../../../utils/format-log-message"
 
-const generateQueriesFromIntrospection = async ({
-  introspection,
-  nodeListFilter,
-  pluginOptions,
-  fieldBlacklist = [],
-  rootType = `RootQuery`,
-}) => {
-  if (!nodeListFilter || typeof nodeListFilter !== `function`) {
-    throw new Error(`nodeListFilter must be a function.`)
-  }
+const generateQueriesFromIntrospection = async introspectionData => {
+  const state = store.getState()
+  const { pluginOptions } = state.gatsbyApi
+  const { fieldBlacklist = [] } = state.introspection || {}
 
-  const { types } = introspection.data.__schema
+  const nodeListFilter = field => field.name === `nodes`
+  const { types } = introspectionData.data.__schema
   const typeMap = new Map(types.map(type => [type.name, type]))
-  const rootFields = typeMap.get(rootType).fields
+  const rootFields = typeMap.get(`RootQuery`).fields
 
-  // find fields that are lists of nodes.
+  // find root fields that are lists of nodes.
   const nodeListFields = rootFields.filter(field => {
     if (field.type.kind !== `OBJECT`) {
       return false
@@ -48,12 +43,12 @@ const generateQueriesFromIntrospection = async ({
     return nodesField.type.ofType.name
   })
 
-  const futureGatsbyNodesInfo = {
+  const gatsbyNodesInfo = {
     fieldNames: nodeListFieldNames,
     typeNames: nodeListTypeNames,
   }
 
-  // This is temporary. We need a list of post types so we
+  // @todo This is temporary. We need a list of post types so we
   // can add field arguments just to post type fields so we can
   // get a flat list of posts and pages, instead of having them
   // nested as children
@@ -95,7 +90,7 @@ const generateQueriesFromIntrospection = async ({
       maxDepth: queryDepth,
       field: nodesType,
       fields,
-      futureGatsbyNodesInfo,
+      gatsbyNodesInfo,
       typeMap,
     })
 
@@ -130,8 +125,6 @@ const generateQueriesFromIntrospection = async ({
   return queries
 }
 
-const nodeListFilter = field => field.name === `nodes`
-
 export const buildNodeQueriesFromIntrospection = async () => {
   const { pluginOptions, helpers } = store.getState().gatsbyApi
 
@@ -141,12 +134,12 @@ export const buildNodeQueriesFromIntrospection = async () => {
   const schemaHasChanged = await checkIfSchemaHasChanged()
 
   let queries = await helpers.cache.get(QUERY_CACHE_KEY)
-  let introspection = await helpers.cache.get(INTROSPECTION_CACHE_KEY)
+  let introspectionData = await helpers.cache.get(INTROSPECTION_CACHE_KEY)
 
   if (
     // we've never generated queries, or the schema has changed
     !queries ||
-    !introspection ||
+    !introspectionData ||
     schemaHasChanged
   ) {
     if (pluginOptions.verbose && queries && schemaHasChanged) {
@@ -158,21 +151,15 @@ export const buildNodeQueriesFromIntrospection = async () => {
     }
 
     // generate them again
-    introspection = await fetchGraphql({
+    introspectionData = await fetchGraphql({
       url: pluginOptions.url,
       query: introspectionQuery,
     })
 
-    await helpers.cache.set(INTROSPECTION_CACHE_KEY, introspection)
+    // cache introspection response
+    await helpers.cache.set(INTROSPECTION_CACHE_KEY, introspectionData)
 
-    const { fieldBlacklist } = store.getState().introspection
-
-    queries = await generateQueriesFromIntrospection({
-      introspection,
-      fieldBlacklist,
-      nodeListFilter,
-      pluginOptions,
-    })
+    queries = await generateQueriesFromIntrospection(introspectionData)
 
     // and cache them
     await helpers.cache.set(QUERY_CACHE_KEY, queries)
@@ -183,7 +170,7 @@ export const buildNodeQueriesFromIntrospection = async () => {
   // set the queries in our redux store to use later
   store.dispatch.introspection.setState({
     queries,
-    introspectionData: introspection,
+    introspectionData,
   })
 
   return queries

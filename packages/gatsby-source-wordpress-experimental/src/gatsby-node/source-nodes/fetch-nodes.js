@@ -46,7 +46,7 @@ export const fetchWPGQLContentNodes = async ({
 
   if (allNodesOfContentType && allNodesOfContentType.length) {
     return {
-      singular: queryInfo.singleName,
+      singular: queryInfo.singularName,
       plural: queryInfo.pluralName,
       allNodesOfContentType,
     }
@@ -94,7 +94,7 @@ export const fetchAndCreateAllNodes = async () => {
   //
   // fetch nodes from WPGQL
   const activity = reporter.activityTimer(
-    formatLogMessage`fetch and create nodes`
+    formatLogMessage(`fetch and create nodes`)
   )
   activity.start()
 
