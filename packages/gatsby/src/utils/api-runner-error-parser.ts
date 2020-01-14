@@ -1,8 +1,18 @@
-const errorParser = ({ err }) => {
+interface IMatch {
+  id: string
+  context: {
+    message: string
+    [key: string]: string
+  }
+  error?: Error | undefined
+  [key: string]: unknown
+}
+
+const errorParser = ({ err }): IMatch => {
   const handlers = [
     {
       regex: /(.+) is not defined/m,
-      cb: match => {
+      cb: (match): IMatch => {
         return {
           id: `11330`,
           context: { message: match[0], arg: match[1] },
@@ -12,7 +22,7 @@ const errorParser = ({ err }) => {
     // Match anything with a generic catch-all error handler
     {
       regex: /[\s\S]*/gm,
-      cb: match => {
+      cb: (match): IMatch => {
         return {
           id: `11321`,
           context: { message: err instanceof Error ? match[0] : err },

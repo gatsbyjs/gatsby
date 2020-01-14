@@ -22,7 +22,7 @@ const { emitter, store } = require(`../redux`)
 const getPublicPath = require(`./get-public-path`)
 const { getNonGatsbyCodeFrameFormatted } = require(`./stack-trace-utils`)
 const { trackBuildError, decorateEvent } = require(`gatsby-telemetry`)
-const { default: errorParser } = require(`./api-runner-error-parser`)
+import errorParser from "./api-runner-error-parser"
 
 // Bind action creators per plugin so we can auto-add
 // metadata to actions they create.
@@ -169,7 +169,7 @@ const runAPI = async (plugin, api, args, activity) => {
         },
       }
     }
-    let localReporter = getLocalReporter(activity, reporter)
+    const localReporter = getLocalReporter(activity, reporter)
 
     const apiCallArgs = [
       {
@@ -237,12 +237,12 @@ const runAPI = async (plugin, api, args, activity) => {
 }
 
 let apiRunnersActive = 0
-let apisRunningByTraceId = new Map()
+const apisRunningByTraceId = new Map()
 let waitingForCasacadeToFinish = []
 
 module.exports = async (api, args = {}, { pluginSource, activity } = {}) => {
   let resolve
-  let promise = new Promise(res => (resolve = res)) // This is guaranteed to assign to `resolve` in sync
+  const promise = new Promise(res => (resolve = res)) // This is guaranteed to assign to `resolve` in sync
 
   const { parentSpan, traceId, traceTags, waitForCascadingActions } = args
 
@@ -303,12 +303,12 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) => {
     }
   }
 
-  let results = []
+  const results = []
   for (const plugin of implementingPlugins) {
     if (stopQueuedApiRuns) {
       break
     }
-    let result = await runPlugin(
+    const result = await runPlugin(
       api,
       plugin,
       args,
