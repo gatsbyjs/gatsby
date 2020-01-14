@@ -259,9 +259,9 @@ const Placeholder = ({
   imageVariants,
   generateSources,
   spreadProps,
-  [`aria-hidden`]: ariaHidden,
+  ariaHidden,
 }) => {
-  const baseImage = <Img src={src} {...spreadProps} aria-hidden={ariaHidden} />
+  const baseImage = <Img src={src} {...spreadProps} ariaHidden={ariaHidden} />
 
   return imageVariants.length > 1 ? (
     <picture>
@@ -284,7 +284,7 @@ const Img = React.forwardRef((props, ref) => {
     loading,
     draggable,
     // `ariaHidden`props is used to exclude placeholders from the accessibility tree.
-    [`aria-hidden`]: ariaHidden,
+    ariaHidden,
     ...otherProps
   } = props
 
@@ -504,7 +504,7 @@ class Image extends React.Component {
           {/* Show the blurry base64 image. */}
           {image.base64 && (
             <Placeholder
-              aria-hidden
+              ariaHidden
               src={image.base64}
               spreadProps={placeholderImageProps}
               imageVariants={imageVariants}
@@ -515,7 +515,7 @@ class Image extends React.Component {
           {/* Show the traced SVG image. */}
           {image.tracedSVG && (
             <Placeholder
-              aria-hidden
+              ariaHidden
               src={image.tracedSVG}
               spreadProps={placeholderImageProps}
               imageVariants={imageVariants}
@@ -605,7 +605,7 @@ class Image extends React.Component {
           {/* Show the blurry base64 image. */}
           {image.base64 && (
             <Placeholder
-              aria-hidden
+              ariaHidden
               src={image.base64}
               spreadProps={placeholderImageProps}
               imageVariants={imageVariants}
@@ -616,7 +616,7 @@ class Image extends React.Component {
           {/* Show the traced SVG image. */}
           {image.tracedSVG && (
             <Placeholder
-              aria-hidden
+              ariaHidden
               src={image.tracedSVG}
               spreadProps={placeholderImageProps}
               imageVariants={imageVariants}
