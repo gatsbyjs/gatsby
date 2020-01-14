@@ -35,20 +35,6 @@ function isCssRule({ test }) {
   return test instanceof RegExp && cssTests.includes(test.toString())
 }
 
-function replaceStyleLoader(rule) {
-  if (rule.loader.includes(`style-loader`)) {
-    return {
-      ...rule,
-      loader: MiniCssExtractPlugin.loader,
-      options: {
-        hmr: true,
-      },
-    }
-  }
-
-  return rule
-}
-
 function replaceRule(value, stage) {
   // If `value` does not have a `test` property, it isn't a rule object.
   if (!value || !value.test) {
@@ -71,6 +57,20 @@ function replaceRule(value, stage) {
 
   // use MiniCssExtractPlugin.loader in development
   if (stage === `develop` && value.test && isCssRule(value)) {
+    function replaceStyleLoader(rule) {
+      if (rule.loader.includes(`style-loader`)) {
+        return {
+          ...rule,
+          loader: MiniCssExtractPlugin.loader,
+          options: {
+            hmr: true,
+          },
+        }
+      }
+
+      return rule
+    }
+
     if (value.use) {
       return {
         ...value,
