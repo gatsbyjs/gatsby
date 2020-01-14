@@ -32,7 +32,7 @@ cd wordpress-tutorial-site
 Install the `gatsby-source-wordpress` plugin. For extra reading on the plugin’s features and examples of GraphQL queries not included in this tutorial, see the [`gatsby-source-wordpress` plugin’s README file](/packages/gatsby-source-wordpress/?=wordpress).
 
 ```shell
-npm install --save gatsby-source-wordpress
+npm install gatsby-source-wordpress
 ```
 
 Add the `gatsby-source-wordpress` plugin to `gatsby-config.js` using the following code, which you can also find in the [demo site’s source code](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-wordpress/gatsby-config.js).
@@ -40,7 +40,9 @@ Add the `gatsby-source-wordpress` plugin to `gatsby-config.js` using the followi
 ```js:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
-    title: "Gatsby WordPress Tutorial",
+    title: `Gatsby WordPress Tutorial`,
+    description: `An example to learn how to source data from WordPress.`,
+    author: `@gatsbyjs`,
   },
   plugins: [
     // https://public-api.wordpress.com/wp/v2/sites/gatsbyjsexamplewordpress.wordpress.com/pages/
@@ -54,11 +56,11 @@ module.exports = {
       options: {
         /*
          * The base URL of the WordPress site without the trailingslash and the protocol. This is required.
-         * Example : 'dev-gatbsyjswp.pantheonsite.io' or 'www.example-site.com'
+         * Example : 'demo.wp-api.org' or 'www.example-site.com'
          */
-        baseUrl: `dev-gatbsyjswp.pantheonsite.io`,
+        baseUrl: `live-gatbsyjswp.pantheonsite.io`,
         // The protocol. This can be http or https.
-        protocol: `http`,
+        protocol: `https`,
         // Indicates whether the site is hosted on wordpress.com.
         // If false, then the assumption is made that the site is self hosted.
         // If true, then the plugin will source its content on wordpress.com using the JSON REST API V2.
@@ -70,6 +72,32 @@ module.exports = {
       },
     },
     // highlight-end
+    /**
+     * The following plugins aren't required for gatsby-source-wordpress,
+     * but we need them so the default starter we installed above will keep working.
+     **/
+    `gatsby-plugin-react-helmet`,
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `images`,
+        path: `${__dirname}/src/images`,
+      },
+    },
+    `gatsby-transformer-sharp`,
+    `gatsby-plugin-sharp`,
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `gatsby-starter-default`,
+        short_name: `starter`,
+        start_url: `/`,
+        background_color: `#663399`,
+        theme_color: `#663399`,
+        display: `minimal-ui`,
+        icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
+      },
+    },
   ],
 }
 ```
@@ -122,7 +150,7 @@ This next query will pull in a sorted list of the blog posts:
 
 ## Rendering the blog posts to `index.js`
 
-Now that you've created GraphQL queries that pull in the data you want, you'll use that second query to create a list of sorted blogpost titles on your site's homepage. Here is what your `index.js` should look like:
+Now that you've created GraphQL queries that pull in the data you want, you'll use that second query to create a list of sorted blogpost titles on your site's homepage. Here's what your home page component in `src/pages/index.js` should look like:
 
 ```jsx:title=src/pages/index.js
 import React from "react"
@@ -213,7 +241,7 @@ exports.createPages = ({ graphql, actions }) => {
 }
 ```
 
-Next, stop and restart the `gatsby develop` environment. As you watch the terminal you should see two Post objects log to the terminal:
+Next, [stop and restart](https://www.gatsbyjs.org/tutorial/part-zero/#view-your-site-locally) the `gatsby develop` environment. As you watch the terminal you should see two Post objects log to the terminal:
 
 ![Two posts logged to the terminal](./images/wordpress-source-plugin-log.jpg)
 
@@ -304,7 +332,7 @@ But nobody likes to go to a 404 page to find a blog post! So, let's link these u
 
 Since you already have your structure and query done for the `index.js` page, all you need to do is use the `Link` component to wrap your titles and you should be good to go.
 
-Open up your `index.js` file and add the following:
+Open up `src/pages/index.js` again and add the following:
 
 ```jsx:title=src/pages/index.js
 import React from "react"
@@ -319,7 +347,7 @@ export default ({ data }) => {
       <h1>My WordPress Blog</h1>
       <h4>Posts</h4>
       {data.allWordpressPost.edges.map(({ node }) => (
-        <div>
+        <div key={node.slug}>
           //highlight-start
           <Link to={node.slug}>
             <p>{node.title}</p>
