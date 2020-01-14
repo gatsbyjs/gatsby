@@ -70,7 +70,7 @@ exports.jobsInProcess = jobsInProcess
  * @template T
  * @param {function({ inputPaths: InternalJob["inputPaths"], outputDir: InternalJob["outputDir"], args: InternalJob["args"]}): T} workerFn
  * @param {InternalJob} job
- * @return Promise<T>
+ * @return {Promise<T>}
  */
 const runLocalWorker = async (workerFn, job) => {
   await fs.ensureDir(job.outputDir)
@@ -100,7 +100,7 @@ const runLocalWorker = async (workerFn, job) => {
  * TODO add external job execution through ipc
  *
  * @param {InternalJob} job
- * @return Promise<object>
+ * @return {Promise<object>}
  */
 const runJob = job => {
   const { plugin } = job
