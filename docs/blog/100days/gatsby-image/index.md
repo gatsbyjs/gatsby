@@ -37,7 +37,7 @@ Follow this tutorial that explains how to [add images to your markdown-based pag
 
 #### Part 2 Resource
 
-[This recipe](/docs/recipes/pages-layouts#directions) will help you to rapidly create an About page using JSX, the preferred templating language for [React](/docs/glossary/react/). After that, you can [learn about gatsby-image](/docs/working-with-images), then [use its API](/docs/gatsby-image/) to transform your selfie into a black-and-white square.
+[Create an About page](/docs/recipes/pages-layouts/#creating-pages-automatically) using JSX, the preferred templating language for [React](/docs/glossary/react/). After that, you can [learn about gatsby-image](/docs/working-with-images), then [use its API](/docs/gatsby-image/) to transform your selfie into a black-and-white square.
 
 ### How to Get Help
 
