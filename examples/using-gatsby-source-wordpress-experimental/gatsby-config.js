@@ -18,6 +18,9 @@ module.exports = {
         // schema: {
         //   queryDepth: 6,
         // },
+        develop: {
+          nodeUpdateInterval: 100,
+        },
         type: {
           MediaItem: {
             onlyFetchIfReferenced: true,

@@ -3,11 +3,21 @@ import fetchAndApplyNodeUpdates from "./fetch-node-updates"
 import formatLogMessage from "../../utils/format-log-message"
 import store from "../../store"
 
+/**
+ * Starts constantly refetching the latest WordPress changes
+ * so we can update Gatsby nodes when data changes
+ */
 const startIntervalRefetcher = (_, helpers, pluginOptions) => {
   const { cache } = helpers
   const { verbose } = store.getState().gatsbyApi.pluginOptions
 
-  const msRefetchInterval = 300
+  const msRefetchInterval =
+    pluginOptions &&
+    pluginOptions.develop &&
+    pluginOptions.develop.nodeUpdateInterval
+      ? pluginOptions.develop.nodeUpdateInterval
+      : 300
+
   const refetcher = async () => {
     const lastCompletedSourceTime = await cache.get(LAST_COMPLETED_SOURCE_TIME)
 
