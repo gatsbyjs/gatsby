@@ -6,9 +6,6 @@ excerpt: "A look at how the Cloud team adopted a new workflow to achieve smaller
 tags: ["source control", "Github", "workflows"]
 ---
 
-import Breakout from "./Breakout"
-import { visuallyHidden } from "../../../www/src/utils/styles"
-
 2020 is shaping up to be a really exciting year for Gatsby, with lots of ambitious projects on the roadmap. On the Cloud team, we've been getting all of our ducks in a row, making sure we're all set to hit the ground running. One of the areas we've been focusing on is our Github workflow.
 
 We were seeing a lot of "stalled" Pull Requests (PRs) - work was being put up for review, but not receiving prompt attention. These PRs tended to be quite large and complex, essentially containing the entirety of work for a given feature or refactor.
@@ -33,7 +30,7 @@ import baseGithub from "./base-github.png"
 
 <img src={baseGithub} aria-describedby="base-github-description" />
 
-<span id="base-github-description" css={visuallyHidden}>4 git branches are represented with parallel lines. Our root branch, feat/headless-cms, is forked from staging, and contains no commits. feat/headless-cms-pt1 is forked from our root branch, and includes two commits, A and B. Finally, a fourth branch, feat/headless-cms-pt2, is forked after commit B, and includes one commit, C.</span>
+<VisuallyHidden id="base-github-description">4 git branches are represented with parallel lines. Our root branch, feat/headless-cms, is forked from staging, and contains no commits. feat/headless-cms-pt1 is forked from our root branch, and includes two commits, A and B. Finally, a fourth branch, feat/headless-cms-pt2, is forked after commit B, and includes one commit, C.</VisuallyHidden>
 
 In a traditional workflow, opening a PR makes it hard for us to keep working on that feature; we'll bloat the PR if we keep committing to it, and it's not obvious how to manage "chained" PRs. This is a big part of why teams wind up with big PRs.
 
