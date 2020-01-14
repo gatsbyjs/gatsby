@@ -44,9 +44,9 @@ const getFilters = filters =>
 // Run Sift
 /////////////////////////////////////////////////////////////////////
 
-function isEqId(firstOnly, siftArgs) {
+function isEqId(siftArgs) {
+  // The `id` of each node is invariably unique. So if a query is doing id $eq(string) it can find only one node tops
   return (
-    firstOnly &&
     siftArgs.length > 0 &&
     siftArgs[0].id &&
     Object.keys(siftArgs[0].id).length === 1 &&
@@ -153,14 +153,15 @@ const runSiftOnNodes = (nodes, args, getNode) => {
 
   // If the the query for single node only has a filter for an "id"
   // using "eq" operator, then we'll just grab that ID and return it.
-  if (isEqId(firstOnly, siftFilter)) {
-    const node = getNode(siftFilter[0].id[`$eq`])
+  if (isEqId(siftFilter)) {
+    const node = getNode(siftFilter[0].id.$eq)
 
     if (
       !node ||
       (node.internal && !nodeTypeNames.includes(node.internal.type))
     ) {
-      return []
+      if (firstOnly) return []
+      return null
     }
 
     return [node]
