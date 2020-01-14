@@ -71,7 +71,7 @@ const scheduleJob = async (job, boundActionCreators) => {
   )
 
   const promise = new Promise((resolve, reject) => {
-    process.nextTick(() => {
+    setImmediate(() => {
       processImages(jobId, convertedJob, boundActionCreators).then(
         resolve,
         reject

@@ -8,6 +8,7 @@ const imageminMozjpeg = require(`imagemin-mozjpeg`)
 const imageminPngquant = require(`imagemin-pngquant`)
 const imageminWebp = require(`imagemin-webp`)
 const _ = require(`lodash`)
+const { SharpError } = require(`./sharp-error`)
 const { cpuCoreCount, createContentDigest } = require(`gatsby-core-utils`)
 
 // Try to enable the use of SIMD instructions. Seems to provide a smallish
@@ -83,109 +84,118 @@ exports.processFile = (file, transforms, options = {}) => {
       pipeline = pipeline.withMetadata()
     }
   } catch (err) {
-    throw new Error(`Failed to load image ${file} into sharp.`)
+    throw new SharpError(`Failed to load image ${file} into sharp.`, err)
   }
 
   return transforms.map(async transform => {
-    const { outputPath, args } = transform
-    debug(`Start processing ${outputPath}`)
-    await fs.ensureDir(path.dirname(outputPath))
-
-    let clonedPipeline = transforms.length > 1 ? pipeline.clone() : pipeline
-
-    if (args.trim) {
-      clonedPipeline = clonedPipeline.trim(args.trim)
-    }
-
-    if (!args.rotate) {
-      clonedPipeline = clonedPipeline.rotate()
-    }
-
-    // Sharp only allows ints as height/width. Since both aren't always
-    // set, check first before trying to round them.
-    let roundedHeight = args.height
-    if (roundedHeight) {
-      roundedHeight = Math.round(roundedHeight)
-    }
-
-    let roundedWidth = args.width
-    if (roundedWidth) {
-      roundedWidth = Math.round(roundedWidth)
-    }
-
-    clonedPipeline
-      .resize(roundedWidth, roundedHeight, {
-        position: args.cropFocus,
-        fit: args.fit,
-        background: args.background,
-      })
-      .png({
-        compressionLevel: args.pngCompressionLevel,
-        adaptiveFiltering: false,
-        force: args.toFormat === `png`,
-      })
-      .webp({
-        quality: args.webpQuality || args.quality,
-        force: args.toFormat === `webp`,
-      })
-      .tiff({
-        quality: args.quality,
-        force: args.toFormat === `tiff`,
-      })
-
-    // jpeg
-    if (!options.useMozJpeg) {
-      clonedPipeline = clonedPipeline.jpeg({
-        quality: args.jpegQuality || args.quality,
-        progressive: args.jpegProgressive,
-        force: args.toFormat === `jpg`,
-      })
-    }
-
-    // grayscale
-    if (args.grayscale) {
-      clonedPipeline = clonedPipeline.grayscale()
-    }
-
-    // rotate
-    if (args.rotate && args.rotate !== 0) {
-      clonedPipeline = clonedPipeline.rotate(args.rotate)
-    }
-
-    // duotone
-    if (args.duotone) {
-      clonedPipeline = await duotone(
-        args.duotone,
-        args.toFormat,
-        clonedPipeline
-      )
-    }
-
-    // lets decide how we want to save this transform
-    if (args.toFormat === `png`) {
-      await compressPng(clonedPipeline, outputPath, {
-        ...args,
-        stripMetadata: options.stripMetadata,
-      })
-      return transform
-    }
-
-    if (options.useMozJpeg && args.toFormat === `jpg`) {
-      await compressJpg(clonedPipeline, outputPath, args)
-      return transform
-    }
-
-    if (args.toFormat === `webp`) {
-      await compressWebP(clonedPipeline, outputPath, args)
-      return transform
-    }
-
     try {
-      await clonedPipeline.toFile(outputPath)
+      const { outputPath, args } = transform
+      debug(`Start processing ${outputPath}`)
+      await fs.ensureDir(path.dirname(outputPath))
+
+      let clonedPipeline = transforms.length > 1 ? pipeline.clone() : pipeline
+
+      if (args.trim) {
+        clonedPipeline = clonedPipeline.trim(args.trim)
+      }
+
+      if (!args.rotate) {
+        clonedPipeline = clonedPipeline.rotate()
+      }
+
+      // Sharp only allows ints as height/width. Since both aren't always
+      // set, check first before trying to round them.
+      let roundedHeight = args.height
+      if (roundedHeight) {
+        roundedHeight = Math.round(roundedHeight)
+      }
+
+      let roundedWidth = args.width
+      if (roundedWidth) {
+        roundedWidth = Math.round(roundedWidth)
+      }
+
+      clonedPipeline
+        .resize(roundedWidth, roundedHeight, {
+          position: args.cropFocus,
+          fit: args.fit,
+          background: args.background,
+        })
+        .png({
+          compressionLevel: args.pngCompressionLevel,
+          adaptiveFiltering: false,
+          force: args.toFormat === `png`,
+        })
+        .webp({
+          quality: args.webpQuality || args.quality,
+          force: args.toFormat === `webp`,
+        })
+        .tiff({
+          quality: args.quality,
+          force: args.toFormat === `tiff`,
+        })
+
+      // jpeg
+      if (!options.useMozJpeg) {
+        clonedPipeline = clonedPipeline.jpeg({
+          quality: args.jpegQuality || args.quality,
+          progressive: args.jpegProgressive,
+          force: args.toFormat === `jpg`,
+        })
+      }
+
+      // grayscale
+      if (args.grayscale) {
+        clonedPipeline = clonedPipeline.grayscale()
+      }
+
+      // rotate
+      if (args.rotate && args.rotate !== 0) {
+        clonedPipeline = clonedPipeline.rotate(args.rotate)
+      }
+
+      // duotone
+      if (args.duotone) {
+        clonedPipeline = await duotone(
+          args.duotone,
+          args.toFormat,
+          clonedPipeline
+        )
+      }
+
+      // lets decide how we want to save this transform
+      if (args.toFormat === `png`) {
+        await compressPng(clonedPipeline, outputPath, {
+          ...args,
+          stripMetadata: options.stripMetadata,
+        })
+        return transform
+      }
+
+      if (options.useMozJpeg && args.toFormat === `jpg`) {
+        await compressJpg(clonedPipeline, outputPath, args)
+        return transform
+      }
+
+      if (args.toFormat === `webp`) {
+        await compressWebP(clonedPipeline, outputPath, args)
+        return transform
+      }
+
+      try {
+        await clonedPipeline.toFile(outputPath)
+      } catch (err) {
+        throw new Error(
+          `Failed to write ${file} into ${outputPath}. (${err.message})`
+        )
+      }
     } catch (err) {
-      throw new Error(
-        `Failed to write ${file} into ${outputPath}. (${err.message})`
-      )
+      if (err instanceof SharpError) {
+        // rethrow
+        throw err
+      }
+
+      throw new SharpError(`Processing ${file} failed`, err)
     }
 
     return transform

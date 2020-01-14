@@ -1,4 +1,3 @@
-jest.mock(`got`)
 jest.mock(`../safe-sharp`, () => {
   return {
     simd: jest.fn(),

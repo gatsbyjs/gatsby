@@ -178,7 +178,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
         operations: [
           {
             outputPath: relativePath,
-            args: [options],
+            args: options,
           },
         ],
         pluginOptions: getPluginOptions(),
@@ -186,30 +186,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
     },
     { reporter }
   ).catch(err => {
-    const msg = `The transformation for image ${
-      file.absolutePath
-    } failed. Please make sure it exists and is readable.
-
-      ${JSON.stringify(
-        {
-          operations: [
-            {
-              outputPath: relativePath,
-              args: [options],
-            },
-          ],
-        },
-        null,
-        2
-      )}`
-
-    // it's weird that err can be undefined, need to investigate (quickfix)
-    // todo remove fix
-    if (err) {
-      reporter.panic(msg, typeof err === `string` ? new Error(err) : err)
-    } else {
-      reporter.panic(msg)
-    }
+    reporter.panic(err)
   })
 
   return {
@@ -272,25 +249,7 @@ function batchQueueImageResizing({ file, transforms = [], reporter }) {
     },
     { reporter }
   ).catch(err => {
-    const msg = `The transformation for image ${
-      file.absolutePath
-    } failed. Please make sure it exists and is readable.
-
-      ${JSON.stringify(
-        {
-          operations,
-        },
-        null,
-        2
-      )}`
-
-    // it's weird that err can be undefined, need to investigate (quickfix)
-    // todo remove fix
-    if (err) {
-      reporter.panic(msg, typeof err === `string` ? new Error(err) : err)
-    } else {
-      reporter.panic(msg)
-    }
+    reporter.panic(err)
   })
 
   return images.map(image => {
@@ -468,7 +427,11 @@ async function fluid({ file, args = {}, reporter, cache }) {
   try {
     metadata = await sharp(file.absolutePath).metadata()
   } catch (err) {
-    reportError(`Failed to process image ${file.absolutePath}`, err, reporter)
+    reportError(
+      `Failed to retrieve metadata from image ${file.absolutePath}`,
+      err,
+      reporter
+    )
     return null
   }
 
