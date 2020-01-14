@@ -1,7 +1,5 @@
 import store from "../../../store"
 
-const { fieldBlacklist, fieldAliases } = store.getState().introspection
-
 const transformFragments = ({
   possibleTypes,
   gatsbyNodesInfo,
@@ -52,7 +50,15 @@ const transformFragments = ({
         .filter(Boolean)
     : null
 
-function transformField({ field, gatsbyNodesInfo, typeMap, maxDepth, depth }) {
+function transformField({
+  field,
+  gatsbyNodesInfo,
+  typeMap,
+  maxDepth,
+  depth,
+  fieldBlacklist,
+  fieldAliases,
+}) {
   // we're potentially infinitely recursing when fields are connected to other types that have fields that are connections to other types
   //  so we need a maximum limit for that
   if (depth >= maxDepth) {
@@ -226,8 +232,10 @@ const recursivelyTransformFields = ({
   typeMap,
   maxDepth,
   depth = 0,
-}) =>
-  fields
+}) => {
+  const { fieldBlacklist, fieldAliases } = store.getState().introspection
+
+  return fields
     ? fields
         .map(field =>
           transformField({
@@ -236,9 +244,12 @@ const recursivelyTransformFields = ({
             typeMap,
             maxDepth,
             depth,
+            fieldBlacklist,
+            fieldAliases,
           })
         )
         .filter(Boolean)
     : null
+}
 
 export default recursivelyTransformFields

@@ -75,8 +75,7 @@ const generateQueriesFromIntrospection = async introspectionData => {
   let queries = {}
 
   for (const { type, name } of nodeListFields) {
-    // this removes problematic fields
-    // and fields that are blacklisted via plugin settings
+    // this removes problematic root fields (themes, revisions, actionMonitorActions)
     if (fieldBlacklist.includes(name)) {
       continue
     }

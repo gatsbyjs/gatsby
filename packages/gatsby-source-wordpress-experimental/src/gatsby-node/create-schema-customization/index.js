@@ -3,15 +3,17 @@ import { getContentTypeQueryInfos } from "../source-nodes/fetch-nodes"
 import { getPluginOptions } from "../../utils/get-gatsby-api"
 import { createRemoteMediaItemNode } from "../source-nodes/create-remote-media-item-node"
 
-const state = store.getState()
-const { fieldAliases } = state.introspection
-
 /**
  * Transforms fields from the WPGQL schema to work in the Gatsby schema
  * with proper node linking and type namespacing
  * also filters out unusable fields and types
  */
-const transformFields = ({ fields, gatsbyNodeTypes }) => {
+const transformFields = ({
+  fields,
+  gatsbyNodeTypes,
+  fieldAliases,
+  fieldBlacklist,
+}) => {
   if (!fields || !fields.length) {
     return null
   }
@@ -23,6 +25,11 @@ const transformFields = ({ fields, gatsbyNodeTypes }) => {
       fieldAliases && fieldAliases[current.name]
         ? fieldAliases[current.name]
         : current.name
+
+    // skip blacklisted fields
+    if (fieldBlacklist.includes(name)) {
+      return accumulator
+    }
 
     // skip fields that have required arguments
     if (
@@ -204,7 +211,12 @@ const transformFields = ({ fields, gatsbyNodeTypes }) => {
  * createSchemaCustomization
  */
 export default async ({ actions, schema }) => {
-  const { data } = store.getState().introspection.introspectionData
+  const state = store.getState()
+  const {
+    fieldAliases,
+    fieldBlacklist,
+    introspectionData: { data },
+  } = state.introspection
 
   let typeDefs = []
 
@@ -253,6 +265,8 @@ export default async ({ actions, schema }) => {
       const transformedFields = transformFields({
         fields: type.fields,
         gatsbyNodeTypes,
+        fieldAliases,
+        fieldBlacklist,
       })
 
       // interfaces dont work properly yet

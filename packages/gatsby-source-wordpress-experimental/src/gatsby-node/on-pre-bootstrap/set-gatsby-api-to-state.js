@@ -13,8 +13,7 @@ export const setGatsbyApiToState = (helpers, pluginOptions) => {
     return
   }
 
-  // set up plugin options
-  if (pluginOptions.excludeFields) {
+  if (pluginOptions.excludeFields && pluginOptions.excludeFields.length) {
     store.dispatch.introspection.addFieldsToBlackList(
       pluginOptions.excludeFields
     )
