@@ -10,7 +10,7 @@ module.exports = schema => {
         __PATH_PREFIX__: true,
         __BASE_PATH__: true, // this will rarely, if ever, be used by consumers
       },
-      extends: [require.resolve(`react-app`)],
+      extends: [require.resolve(`eslint-config-react-app`)],
       plugins: [`graphql`],
       rules: {
         "import/no-webpack-loader-syntax": [0],
