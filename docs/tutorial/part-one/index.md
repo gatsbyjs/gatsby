@@ -368,7 +368,7 @@ Then finally deploy your site by publishing the generated files to surge.sh.
 surge public/
 ```
 
-> Note that you will have to press the `enter` key after you see the `domain: some-name.surge.sh` information on your command-line interface. 
+> Note that you will have to press the `enter` key after you see the `domain: some-name.surge.sh` information on your command-line interface.
 
 Once this finishes running, you should see in your terminal something like:
 
