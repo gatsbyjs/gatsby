@@ -100,15 +100,15 @@ module.exports = {
         path: `${__dirname}/src/data/guidelines/`,
       },
     },
-    {
-      resolve: `gatsby-source-git`,
-      options: {
-        name: `docs-es`,
-        remote: `https://github.com/gatsbyjs/gatsby-es.git`,
-        branch: `master`,
-        patterns: `docs/**`,
-      },
-    },
+    // {
+    //   resolve: `gatsby-source-git`,
+    //   options: {
+    //     name: `docs-es`,
+    //     remote: `https://github.com/gatsbyjs/gatsby-es.git`,
+    //     branch: `master`,
+    //     patterns: `docs/**`,
+    //   },
+    // },
     `gatsby-transformer-gatsby-api-calls`,
     {
       resolve: `gatsby-plugin-typography`,
