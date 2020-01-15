@@ -402,8 +402,27 @@ jobs:
           paths:
             - "*"
 
+  run_benchmarks:
+    docker:
+      - image: circleci/node:12
+    resource_class: xlarge
+    steps:
+      - checkout
+      - run: ./scripts/build-benchmark.sh
+
 workflows:
   version: 2
+
+  run_benchmarks:
+    jobs: [run_benchmarks]
+    triggers:
+      - schedule:
+          cron: "12 3 * * *" # every day at 03:12
+          filters:
+            branches:
+              only:
+                - master
+
   nightly-react-next:
     triggers:
       - schedule:
