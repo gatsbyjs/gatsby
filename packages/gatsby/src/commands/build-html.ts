@@ -62,53 +62,41 @@ const deleteRenderer = async (rendererPath: string): Promise<void> => {
   }
 }
 
-const renderHTMLQueue = (
+const renderHTMLQueue = async (
   workerPool: IWorkerPool,
   activity: IActivity,
   htmlComponentRendererPath: string,
   pages: string[]
-): Promise<void> =>
-  new Bluebird((resolve, reject) => {
-    // We need to only pass env vars that are set programmatically in gatsby-cli
-    // to child process. Other vars will be picked up from environment.
-    const envVars = [
-      [`NODE_ENV`, process.env.NODE_ENV],
-      [`gatsby_executing_command`, process.env.gatsby_executing_command],
-      [`gatsby_log_level`, process.env.gatsby_log_level],
-    ]
+): Promise<void> => {
+  // We need to only pass env vars that are set programmatically in gatsby-cli
+  // to child process. Other vars will be picked up from environment.
+  const envVars = [
+    [`NODE_ENV`, process.env.NODE_ENV],
+    [`gatsby_executing_command`, process.env.gatsby_executing_command],
+    [`gatsby_log_level`, process.env.gatsby_log_level],
+  ]
 
-    // const start = process.hrtime()
-    const segments = chunk(pages, 50)
-    // let finished = 0
+  // const start = process.hrtime()
+  const segments = chunk(pages, 50)
+  // let finished = 0
 
-    Bluebird.map(
-      segments,
-      pageSegment =>
-        new Bluebird<void>((resolve, reject) => {
-          workerPool
-            .renderHTML({
-              htmlComponentRendererPath,
-              paths: pageSegment,
-              envVars,
-            })
-            .then(() => {
-              // finished += pageSegment.length
-              if (activity && activity.tick) {
-                activity.tick(pageSegment.length)
-                // activity.setStatus(
-                //   `${finished}/${pages.length} ${(
-                //     finished / convertHrtime(process.hrtime(start)).seconds
-                //   ).toFixed(2)} pages/second`
-                // )
-              }
-              resolve()
-            })
-            .catch(reject)
-        })
-    )
-      .then(() => resolve())
-      .catch(reject)
+  await Bluebird.map(segments, async pageSegment => {
+    await workerPool.renderHTML({
+      htmlComponentRendererPath,
+      paths: pageSegment,
+      envVars,
+    })
+    // finished += pageSegment.length
+    if (activity && activity.tick) {
+      activity.tick(pageSegment.length)
+      // activity.setStatus(
+      //   `${finished}/${pages.length} ${(
+      //     finished / convertHrtime(process.hrtime(start)).seconds
+      //   ).toFixed(2)} pages/second`
+      // )
+    }
   })
+}
 
 const doBuildPages = async (
   rendererPath: string,
@@ -132,7 +120,7 @@ const doBuildPages = async (
   }
 }
 
-const buildPages = async ({
+const buildHTML = async ({
   program,
   stage,
   pagePaths,
@@ -150,6 +138,4 @@ const buildPages = async ({
   await deleteRenderer(rendererPath)
 }
 
-export default {
-  buildPages,
-}
+export default buildHTML

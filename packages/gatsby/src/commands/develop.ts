@@ -96,7 +96,7 @@ async function startServer(program: IProgram): Promise<IServer> {
   const workerPool = WorkerPool.create()
   const createIndexHtml = async (activity: ActivityTracker): Promise<void> => {
     try {
-      await buildHTML.buildPages({
+      await buildHTML({
         program,
         stage: BuildHTMLStage.DevelopHTML,
         pagePaths: [`/`],

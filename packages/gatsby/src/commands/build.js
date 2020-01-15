@@ -142,7 +142,7 @@ module.exports = async function build(program: BuildArgs) {
   )
   activity.start()
   try {
-    await buildHTML.buildPages({
+    await buildHTML({
       program,
       stage: `build-html`,
       pagePaths,
