@@ -245,22 +245,41 @@ You might query for a **single** node inside a component in your `src/components
 
 #### A note about LongText fields
 
-If you include fields with a `LongText` type in your Contentful `ContentType`, their returned value will be **an object not a string**. This is because Contentful LongText fields are Markdown by default. In order to handle the Markdown content properly, this field type is created as a child node so Gatsby can transform it to HTML.
-
-`ShortText` type fields will be returned as strings.
-
-Querying a **single** `CaseStudy` node with the ShortText properties `title` and `subtitle` and LongText property `body` requires formatting the LongText fields as an object with the _child node containing the exact same field name as the parent_:
+On Contentful, a "Long text" field uses Markdown by default. The field is exposed as an object, while the raw Markdown is exposed as a child node.
 
 ```graphql
 {
   contentfulCaseStudy {
-    title
-    subtitle
     body {
       body
     }
   }
 }
+```
+
+Unless the text is Markdown-free, you cannot use the returned value directly. In order to handle the Markdown content, you must use a transformer plugin such as [gatsby-transformer-remark](https://www.gatsbyjs.org/packages/gatsby-transformer-remark/). The transformer will create a childMarkdownRemark on the "Long text" field and expose the generated html as a child node:
+
+```graphql
+{
+  contentfulCaseStudy {
+    body {
+      childMarkdownRemark {
+        html
+      }
+    }
+  }
+}
+```
+
+You can then insert the returned HTML inline in your JSX:
+
+```
+  <div
+  className="body"
+  dangerouslySetInnerHTML={{
+       __html: data.contentfulCaseStudy.body.childMarkdownRemark.html,
+     }}
+   />
 ```
 
 #### Duplicated entries
