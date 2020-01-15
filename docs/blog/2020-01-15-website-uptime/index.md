@@ -26,7 +26,7 @@ When your app is experiencing scaling issues, on the other hand, it usually inst
 
 Meanwhile your entire engineering organization grinds to a halt as everyone who could potentially find the key bottleneck starts looking for it, and everyone else starts rubbernecking because the unfolding drama is _way more interesting_ than whatever else they were working on.
 
-If you're building a website, puts an end to traffic-spike-induced downtime.
+If you're building a website, Gatsby puts an end to traffic-spike-induced downtime.
 
 Gatsby sites are simply files that can be pushed to a CDN like Cloudflare or Netlify or AWS Cloudfront. And CDNs are much less likely to go down.
 
