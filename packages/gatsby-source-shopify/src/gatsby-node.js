@@ -154,7 +154,7 @@ const createNodes = async (
   await forEach(
     await queryAll(
       client,
-      [`shop`, NODE_TO_ENDPOINT_MAPPING[endpoint]],
+      [NODE_TO_ENDPOINT_MAPPING[endpoint]],
       query,
       paginationSize
     ),
