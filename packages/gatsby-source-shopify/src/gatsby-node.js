@@ -42,12 +42,13 @@ export const sourceNodes = async (
   {
     shopName,
     accessToken,
+    apiVersion = `2019-07`,
     verbose = true,
     paginationSize = 250,
     includeCollections = [SHOP, CONTENT],
   }
 ) => {
-  const client = createClient(shopName, accessToken)
+  const client = createClient(shopName, accessToken, apiVersion)
 
   // Convenience function to namespace console messages.
   const formatMsg = msg =>
