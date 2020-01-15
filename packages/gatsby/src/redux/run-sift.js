@@ -86,7 +86,7 @@ function handleMany(siftArgs, nodes, sort, resolvedFields) {
   if (!result || !result.length) return null
 
   // Sort results.
-  if (sort) {
+  if (sort && result.length > 1) {
     // create functions that return the item to compare on
     const dottedFields = objectToDottedField(resolvedFields)
     const dottedFieldKeys = Object.keys(dottedFields)
@@ -123,9 +123,26 @@ function handleMany(siftArgs, nodes, sort, resolvedFields) {
  *   if `firstOnly` is true
  */
 const runSift = (args: Object) => {
-  const { getNode, addResolvedNodes } = require(`./nodes`)
+  const { getNode, addResolvedNodes, getResolvedNode } = require(`./nodes`)
 
   const { nodeTypeNames } = args
+  if (
+    args.queryArgs?.filter &&
+    Object.getOwnPropertyNames(args.queryArgs.filter).length === 1 &&
+    typeof args.queryArgs.filter?.id?.eq === `string`
+  ) {
+    // The args have an id.eq which subsumes all other queries
+    // Since the id of every node is unique there can only ever be one node found this way. Find it and return it.
+    let id = args.queryArgs.filter.id.eq
+    let node = undefined
+    nodeTypeNames.some(typeName => {
+      node = getResolvedNode(typeName, id)
+      return !!node
+    })
+    if (node) {
+      return [node]
+    }
+  }
 
   let nodes = []
 
