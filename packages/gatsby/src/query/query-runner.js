@@ -10,7 +10,7 @@ const pageDataUtil = require(`../utils/page-data`)
 const { getCodeFrame } = require(`./graphql-errors`)
 const { default: errorParser } = require(`./error-parser`)
 
-const resultHashes = {}
+const resultHashes = new Map()
 
 type QueryJob = {
   id: string,
@@ -99,8 +99,8 @@ module.exports = async (graphqlRunner, queryJob: QueryJob) => {
     .update(resultJSON)
     .digest(`base64`)
 
-  if (resultHashes[queryJob.id] !== resultHash) {
-    resultHashes[queryJob.id] = resultHash
+  if (resultHash !== resultHashes.get(queryJob.id)) {
+    resultHashes.set(queryJob.id, resultHash)
 
     if (queryJob.isPage) {
       const publicDir = path.join(program.directory, `public`)
