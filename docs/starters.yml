@@ -4986,7 +4986,7 @@
   repo: https://github.com/robertistok/gatsby-starter-fusion-blog
   description: Easy to configure blog starter with modern, minimal theme
   tags:
-    - Language:Typescript
+    - Language:TypeScript
     - Styling:CSS-in-JS
     - Netlify
     - Markdown
