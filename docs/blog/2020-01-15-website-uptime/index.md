@@ -48,7 +48,7 @@ Wester again:
 
 Brad Redding, co-founder from digital agency and analytics provider Elevar, has been building e-commerce sites for over a decade.
 
-"We've had clients that are used to that aren't technical, who aren't skilled in HTML or CSS," Redding says.
+"We've had clients who aren't technical, who aren't skilled in HTML or CSS," Redding says.
 
 "If they actually update content, banners, or images, clicking the save or "clear cache" button could potentially take the site down. Because if you clear cache, a problem that hadn't surfaced yet, that comes to fruition and all of a sudden, checkout is broken or you could have a very funky UX error."
 
