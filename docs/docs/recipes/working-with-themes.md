@@ -4,13 +4,79 @@ title: "Recipes: Working with Themes"
 
 A [Gatsby theme](/docs/themes/what-are-gatsby-themes) abstracts Gatsby configuration (shared functionality, data sourcing, design) into an installable package. This means that the configuration and functionality isn’t directly written into your project, but rather versioned, centrally managed, and installed as a dependency. You can seamlessly update a theme, compose themes together, and even swap out one compatible theme for another.
 
+## Creating a new site using a theme
+
+Found a theme you'd like to use on your project? Awesome! You can configure it for use by following the steps below.
+
+> If you'd like to take a look at more theme options, check out [list of themes](https://www.npmjs.com/search?q=gatsby-theme).
+
+### Prerequisities
+
+Make sure you have the following installed:
+
+- [Gatsby CLI](/docs/gatsby-cli)
+- [Yarn](https://yarnpkg.com/lang/en/docs/install/#mac-stable)
+
+### Directions
+
+1. Create a gatsby site
+
+```shell
+gatsby new {your-project-name}
+```
+
+2. Change directory and install theme
+
+In this example, our theme is `gatsby-theme-blog`. You can replace that reference with whatever your theme is named.
+
+```shell
+cd {your-project-name}
+npm install gatsby-theme-blog
+```
+
+3. Add theme to `gatsby.config.js`
+
+Follow the instructions found in the README of the theme you're using to determine what configuration it requires.
+
+```shell
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-theme-blog`,
+      options: {
+        /*
+        - basePath defaults to `/`
+        - contentPath defaults to `content/posts`
+        - assetPath defaults to `content/assets`
+        - mdx defaults to `true`
+        */
+        basePath: `/blog`,
+        contentPath: `content/blogPosts`,
+        assetPath: `content/blogAssets`,
+        mdx: false,
+      },
+    },
+  ],
+}
+```
+
+4. Run `yarn develop` , the theme should be avaliable at `http://localhost:8000/{basePath}`
+
+> To learn how to further customize a theme,check out the avaliabe paths on [Gatsby-theme-blog Documentation](https://www.npmjs.com/package/gatsby-theme-blog).
+
+### Additional resources
+
+- To learn how to further customize a theme, check out the docs on [Gatsby theme shadowing.](https://www.gatsbyjs.org/docs/themes/shadowing/)
+
+- You can also [use multiple themes](https://www.gatsbyjs.org/docs/themes/using-multiple-gatsby-themes/) on a project.
+
 ## Creating a new site using a theme starter
 
 Creating a site based on a starter that configures a theme follows the same process as creating a site based on a starter that **doesn't** configure a theme. In this example you can use the [starter for creating a new site that uses the official Gatsby blog theme](https://github.com/gatsbyjs/gatsby-starter-blog-theme).
 
 ### Prerequisites
 
-- The [Gatsby CLI](/docs/gatsby-cli) installed
+- Make sure you have the [Gatsby CLI](/docs/gatsby-cli) installed
 
 ### Directions
 

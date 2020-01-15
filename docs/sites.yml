@@ -9326,3 +9326,16 @@
   built_by: Grupo Fleury
   built_by_url: http://www.grupofleury.com.br/
   featured: false
+- title: gatsby-animate-blog
+  url: https://gatsby-animate-blog.luffyzh.now.sh/
+  main_url: https://gatsby-animate-blog.luffyzh.now.sh/home
+  source_url: https://github.com/luffyZh/gatsby-animate-blog
+  description: >
+    A simple && cool blog site starter kit by Gatsby.
+  categories:
+    - Blog
+    - Open Source
+    - Web Development
+  built_by: luffyZh
+  built_by_url: https://github.com/luffyZh
+  featured: false
