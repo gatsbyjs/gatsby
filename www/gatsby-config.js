@@ -101,6 +101,7 @@ module.exports = {
       },
     },
     {
+      // FIX
       resolve: `gatsby-source-git`,
       options: {
         name: `docs-es`,
