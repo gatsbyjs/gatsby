@@ -1,25 +1,34 @@
-const fs = require(`fs-extra`)
-const manager = require(`cache-manager`)
-const fsStore = require(`cache-manager-fs-hash`)
-const path = require(`path`)
+import manager, { Store, StoreConfig, CachingConfig } from "cache-manager"
+import fs from "fs-extra"
+import fsStore from "cache-manager-fs-hash"
+import path from "path"
 
 const MAX_CACHE_SIZE = 250
 const TTL = Number.MAX_SAFE_INTEGER
 
-class Cache {
-  constructor({ name = `db`, store = fsStore } = {}) {
+interface ICacheProperties {
+  name?: string
+  store?: Store
+}
+
+export default class Cache {
+  public name: string
+  public store: Store
+  public cache?: manager.Cache
+
+  constructor({ name = `db`, store = fsStore }: ICacheProperties = {}) {
     this.name = name
     this.store = store
   }
 
-  get directory() {
+  get directory(): string {
     return path.join(process.cwd(), `.cache/caches/${this.name}`)
   }
 
-  init() {
+  init(): Cache {
     fs.ensureDirSync(this.directory)
 
-    const caches = [
+    const caches: StoreConfig[] = [
       {
         store: `memory`,
         max: MAX_CACHE_SIZE,
@@ -38,21 +47,24 @@ class Cache {
     return this
   }
 
-  get(key) {
+  get<T = unknown>(key): Promise<T | undefined> {
     return new Promise(resolve => {
-      this.cache.get(key, (err, res) => {
+      // eslint-disable-next-line no-unused-expressions
+      this.cache?.get<T>(key, (err, res) => {
         resolve(err ? undefined : res)
       })
     })
   }
 
-  set(key, value, args = {}) {
+  set<T>(
+    key: string,
+    value: T,
+    args: CachingConfig = { ttl: TTL }
+  ): Promise<T | undefined> {
     return new Promise(resolve => {
-      this.cache.set(key, value, args, err => {
+      this.cache?.set(key, value, args, err => {
         resolve(err ? undefined : value)
       })
     })
   }
 }
-
-module.exports = Cache
