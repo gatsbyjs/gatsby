@@ -1,5 +1,8 @@
 {
   "compilerOptions": {
+    "target": "ESNext",
+    "lib": ["ES2015"],
+    "moduleResolution": "node",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,

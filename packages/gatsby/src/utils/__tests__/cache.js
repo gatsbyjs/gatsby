@@ -21,7 +21,7 @@ jest.mock(`fs-extra`, () => {
     ensureDirSync: jest.fn(),
   }
 })
-const Cache = require(`../cache`)
+const Cache = require(`../cache`).default
 const fs = require(`fs-extra`)
 const manager = require(`cache-manager`)
 

@@ -3789,6 +3789,11 @@
     "@types/connect" "*"
     "@types/node" "*"
 
+"@types/cache-manager@^2.10.1":
+  version "2.10.1"
+  resolved "https://registry.yarnpkg.com/@types/cache-manager/-/cache-manager-2.10.1.tgz#c7bc354be7988659e139e10fc7bde4b221f7f128"
+  integrity sha512-oJhVIOeC8dX9RZ7OtEZvZ/6cHF5aQWoRcuJ7KwK3Xb69hIIdElpWzfJ35fOXvYOgoyRXA34jFrD8lqEjDWz37w==
+
 "@types/color-name@^1.1.1":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@types/color-name/-/color-name-1.1.1.tgz#1c1261bbeaa10a8055bbc5d8ab84b7b2afc846a0"
@@ -3838,6 +3843,13 @@
     "@types/body-parser" "*"
     "@types/express-serve-static-core" "*"
     "@types/serve-static" "*"
+
+"@types/fs-extra@^8.0.1":
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/@types/fs-extra/-/fs-extra-8.0.1.tgz#a2378d6e7e8afea1564e44aafa2e207dadf77686"
+  integrity sha512-J00cVDALmi/hJOYsunyT52Hva5TnJeKP5yd1r+mH/ZU0mbYZflR0Z5kw5kITtKTRYMhm1JMClOFYdHnQszEvqw==
+  dependencies:
+    "@types/node" "*"
 
 "@types/get-port@^0.0.4":
   version "0.0.4"
