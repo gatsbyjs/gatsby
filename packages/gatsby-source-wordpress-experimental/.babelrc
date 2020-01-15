@@ -17,6 +17,10 @@
         "dump": {
           "moduleName": "dumper.js",
           "exportName": "dump"
+        },
+        "clipboardy": {
+          "moduleName": "clipboardy",
+          "exportName": "default"
         }
       }
     ]

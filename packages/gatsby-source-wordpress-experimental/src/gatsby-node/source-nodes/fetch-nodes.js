@@ -49,8 +49,8 @@ export const fetchWPGQLContentNodes = async ({
 
   if (allNodesOfContentType && allNodesOfContentType.length) {
     return {
-      singular: queryInfo.singularName,
-      plural: queryInfo.pluralName,
+      singular: queryInfo.typeInfo.singularName,
+      plural: queryInfo.typeInfo.pluralName,
       allNodesOfContentType,
     }
   }

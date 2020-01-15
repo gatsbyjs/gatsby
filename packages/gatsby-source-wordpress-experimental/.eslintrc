@@ -1,6 +1,7 @@
 {
   "globals": {
     "dd": "readonly",
-    "dump": "readonly"
+    "dump": "readonly",
+    "clipboardy": "readonly"
   }
 }

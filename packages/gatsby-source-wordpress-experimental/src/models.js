@@ -11,6 +11,7 @@ const introspection = {
       `revisions`,
       `themes`,
       `userRoles`,
+      `users`,
       // this field is used to determine content changes in WP
       // no need to pull it into the Gatsby schema
       `actionMonitorActions`,

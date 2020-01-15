@@ -35,7 +35,7 @@ const generateQueriesFromIntrospection = async introspectionData => {
 
   // find root fields that are lists of nodes.
   const nodeListFields = rootFields.filter(field => {
-    if (field.type.kind !== `OBJECT`) {
+    if (field.type.kind !== `OBJECT` && field.type.kind !== `INTERFACE`) {
       return false
     }
 

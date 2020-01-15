@@ -42,6 +42,10 @@ const paginatedWpNodeFetch = async ({
     return allContentNodes
   }
 
+  if (allContentNodes.length > 1000) {
+    return allContentNodes
+  }
+
   const {
     [contentTypePlural]: { nodes, pageInfo: { hasNextPage, endCursor } = {} },
   } = data
