@@ -67,7 +67,19 @@ each time to re-run the query. You'll see something like this:
 The result is an array of File "nodes" (node is a fancy name for an object in a
 "graph"). Each File object has the fields you queried for.
 
-If you have multiple sets of data, you can query specific ones by referencing the `name` property from the config object in the `gatsby-config.js` file. You can then update your query using `sourceInstanceName` in a filter like so.
+If you have multiple sets of data, you can query specific ones by specifying the `name` property from the config object in the `gatsby-config.js` file. In this case, `name` is set to `src`.
+
+```javascript:title=gatsby-config.js
+{
+  resolve: `gatsby-source-filesystem`,
+  options: {
+    path: `${__dirname}/src`,
+    name: `src`,
+  },
+},
+```
+
+You can then update your query using `sourceInstanceName` and the value of the `name` property in a filter like so.
 
 ```graphql
 {
