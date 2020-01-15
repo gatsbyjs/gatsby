@@ -1,10 +1,21 @@
 ---
 title: "Incremental PRs: a new Github workflow for the Cloud team"
-date: 2020-01-08
+date: 2020-01-20
 author: "Josh Comeau"
 excerpt: "A look at how the Cloud team adopted a new workflow to achieve smaller, non-blocking PRs."
 tags: ["source control", "Github", "workflows"]
 ---
+
+import baseGithub from "./base-github.png"
+import initialSvg from "./1-initial.svg"
+import additionalWorkSvg from "./2-additional-work.svg"
+import rebasedSvg from "./3-rebased.svg"
+import mergeSrc from "./merge.png"
+import mergeCommitSvg from "./4-merge-commit.svg"
+import actualGitSvg from "./6-actual-git.svg"
+import parallelUniversesSvg from "./7-parallel-universes.svg"
+import doubleWorkSvg from "./8-double-work.svg"
+import moreIncrementalSvg from "./5-more-incremental.svg"
 
 2020 is shaping up to be a really exciting year for Gatsby, with lots of ambitious projects on the roadmap. On the Cloud team, we've been getting all of our ducks in a row, making sure we're all set to hit the ground running. One of the areas we've been focusing on is our Github workflow.
 
@@ -26,11 +37,7 @@ First, we create a new branch, `feat/headless-cms`. This will be our _root branc
 
 Right after creating that branch and pushing it to Github, we create another branch, `feat/headless-cms-pt1`. This will be an _incremental branch_, holding some of the changes needed for this feature. We get to work on the most fundamental parts of this change (for example, adding a source plugin and configuring it to pull data from our new CMS). Once we have a "hello world" based on this new architecture, we're ready to solicit some feedback. We push our branch to Github, and open a PR comparing our _incremental_ branch to our _root_ branch:
 
-import baseGithub from "./base-github.png"
-
-<img src={baseGithub} aria-describedby="base-github-description" />
-
-<VisuallyHidden id="base-github-description">4 git branches are represented with parallel lines. Our root branch, feat/headless-cms, is forked from staging, and contains no commits. feat/headless-cms-pt1 is forked from our root branch, and includes two commits, A and B. Finally, a fourth branch, feat/headless-cms-pt2, is forked after commit B, and includes one commit, C.</VisuallyHidden>
+<img src={baseGithub} alt="A screenshot from Github showing that the PR is opened against 'feat/headless-cms' instead of master." />
 
 In a traditional workflow, opening a PR makes it hard for us to keep working on that feature; we'll bloat the PR if we keep committing to it, and it's not obvious how to manage "chained" PRs. This is a big part of why teams wind up with big PRs.
 
@@ -38,11 +45,11 @@ In this alternative workflow, we can keep working. We'll create a new _increment
 
 Here's a visualization of this setup:
 
-import initialSvg from "./1-initial.svg"
-
 <Breakout>
-  <img src={initialSvg} />
+  <img src={initialSvg} aria-describedby="git-setup-description"/>
 </Breakout>
+
+<VisuallyHidden id="git-setup-description">4 git branches are represented with parallel lines. Our root branch, feat/headless-cms, is forked from staging, and contains no commits. feat/headless-cms-pt1 is forked from our root branch, and includes two commits, A and B. Finally, a fourth branch, feat/headless-cms-pt2, is forked after commit B, and includes one commit, C.</VisuallyHidden>
 
 Our first incremental branch has two commits, `A` and `B`. Our second branch is forked from that first branch, and adds a new commit `C`.
 
@@ -54,11 +61,11 @@ In fact, this workflow shines when it comes to implementing requested changes.
 
 Let's say that we get feedback that fundamentally changes how we want to approach it. It requires a good amount of restructuring. We do those changes, and create a new commit, `D`, on our `pt1` branch:
 
-import additionalWorkSvg from "./2-additional-work.svg"
-
 <Breakout>
-  <img src={additionalWorkSvg} />
+  <img src={additionalWorkSvg} aria-describedby="git-additional-work" />
 </Breakout>
+
+<VisuallyHidden id="git-additional-work">Commits A and B are on our first incremental branch, feat/headless-cms-pt1. Commit C is on its own branch, feat/headless-cms-pt2, forked right after B. Finally, commit D is added to the first incremental branch, after the fork point.</VisuallyHidden>
 
 Our `pt1` PR is approved (🎉), but now we have to reconcile our `pt2` branch. Given that it built on a now-outdated structure, there's a good chance we'll have some conflicts.
 
@@ -93,11 +100,11 @@ $ git rebase --continue
 
 After rebasing, our Git branches look like this:
 
-import rebasedSvg from "./3-rebased.svg"
-
 <Breakout>
-  <img src={rebasedSvg} />
+  <img src={rebasedSvg} aria-describedby="git-rebased" />
 </Breakout>
+
+<VisuallyHidden id="git-rebased">Our first incremental branch, feat/headless-cms-pt1, now features commits A, B, and D in series. Our second branch, feat/headless-cms-pt2, is forked <em>after</em> those 3 commits, and adds commit E.</VisuallyHidden>
 
 You'll notice that our `C` commit—the only commit in our `pt2` branch—has been replaced with `E`. This is because it's no longer the same commit; it includes the changes that we dealt with in our rebase.
 
@@ -118,8 +125,6 @@ In general, the second strategy is better, because it's more flexible; you don't
 
 We'll start by merging `pt1` into the root branch. Merge it in using the standard "Create a merge commit" option:
 
-import mergeSrc from "./merge.png"
-
 <img
   src={mergeSrc}
   alt="The Github pull request screen shows a 'merge' button with a dropdown and several options. This screenshot highlights that the first option is the desired one, 'Create a merge commit'."
@@ -131,11 +136,11 @@ We can do this on Github by _changing the base_. Github has [great docs](https:/
 
 With our new base set, our tree looks like this:
 
-import mergeCommitSvg from "./4-merge-commit.svg"
-
 <Breakout>
-  <img src={mergeCommitSvg} />
+  <img src={mergeCommitSvg} aria-describedby="git-merge-commit" />
 </Breakout>
+
+<VisuallyHidden id="git-merge-commit">Our root branch, feat/headless-cms, now has 4 commits in series: A, B, D, and M. Our second incremental branch, feat/headless-cms-pt2, is now formed directly from the root branch, and adds commit E. Our first incremental branch, feat/headless-cms-pt1, is no longer shown.</VisuallyHidden>
 
 A new commit `M` was added, representing the merge.
 
@@ -149,29 +154,29 @@ In fact, branches are much thinner abstractions than that; all they do is point 
 
 A more accurate representation of our current state would look like this:
 
-import actualGitSvg from "./6-actual-git.svg"
-
 <Breakout>
-  <img src={actualGitSvg} />
+  <img src={actualGitSvg} aria-describedby="git-actual" />
 </Breakout>
+
+<VisuallyHidden id="git-actual">Unlike the previous visualizations, which featured multiple parallel lines each holding commits, this new representation shows a single chain of commits: A, B, D, M, E. At the start of the chain, it points to the previous commits from the original branch (staging). Commit M is circled and is annotated with the branch name, feat/headless-cms. Commit E is also circled, with the annotation feat/headless-cms-pt2. In this representation, branches are simply labels applied to individual commits, which form a long, single chain.</VisuallyHidden>
 
 Every commit points to its parent, and branches are just references to a particular commit.
 
 Let's say we had squash-merged our `pt1` branch into the root branch. We would wind up with two _parallel universes_. In our root branch, we'd have a brand new commit `S`, representing the squashed contents of `pt1`. Our `pt2` branch, meanwhile, doesn't know about any of this; the chain of commits still includes the "unsquashed" `pt1` work.
 
-import parallelUniversesSvg from "./7-parallel-universes.svg"
-
 <Breakout>
-  <img src={parallelUniversesSvg} />
+  <img src={parallelUniversesSvg} aria-describedby="git-parallel-universes" />
 </Breakout>
+
+<VisuallyHidden id="git-parallel-universes">This image is split into two halves. The top half is labeled "Universe 1: feat/headless-cms-pt2", and it shows the string of commits that the feat/headless-cms-pt2 branch points to: A, B, D, M, E. This is the same chain as in the previous image. The second half shows a different chain. It's labeled "Universe 2: feat/headless-cms", and shows the chain of commits held by our root branch: S, E.</VisuallyHidden>
 
 These universes collide when we try to change the base, to point `pt2` at the root branch:
 
-import doubleWorkSvg from "./8-double-work.svg"
-
 <Breakout>
-  <img src={doubleWorkSvg} />
+  <img src={doubleWorkSvg} aria-describedby="git-double-work" />
 </Breakout>
+
+<VisuallyHidden id="git-double-work">After changing the base, we're left with this chain of commits: S, A, B, D, M, E. The "S" commit includes all the work from our first incremental branch, but that same work is included in commits A, B, D, M.</VisuallyHidden>
 
 The Git history pollution isn't a huge deal, since we'll have the chance to squash or clean this up before deploying, but it can lead to weird issues and nonsensical conflicts.
 
@@ -213,11 +218,13 @@ The neat thing about this flow is that it isn't limited to two incremental branc
 
 In this example, we could check out a new branch, `pt3`, based off of `pt2`. And then a fourth, `pt4`, from `pt3`:
 
-import moreIncrementalSvg from "./5-more-incremental.svg"
-
 <Breakout>
-  <img src={moreIncrementalSvg} />
+  <img src={moreIncrementalSvg} aria-describedby="git-on-and-on" />
 </Breakout>
+
+<VisuallyHidden id="git-on-and-on">
+  Back in the parallel tracks world-view, we can see that our root branch contains commits A, B, D, M. After the "M" commit, our feat/headless-cms-pt2 branch adds an "E" commit. After that commit, a new feat/headless-cms-pt3 branch adds an "F" commit. Finally, yet another branch is made after "F", which is labeled feat/headless-cms-pt4, and includes 1 commit, "G".
+</VisuallyHidden>
 
 No matter how many branches we have, the process is always the same when we're ready to start merging:
 
