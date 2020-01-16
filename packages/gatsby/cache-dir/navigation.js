@@ -235,10 +235,10 @@ class RouteUpdates extends React.Component {
 
   render() {
     return (
-      <div>
+      <React.Fragment>
         {this.props.children}
         <RouteAnnouncer location={location} />
-      </div>
+      </React.Fragment>
     )
   }
 }
