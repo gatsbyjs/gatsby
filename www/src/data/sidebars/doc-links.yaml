@@ -95,6 +95,8 @@
               link: /docs/multi-core-builds/
             - title: Asset Prefix
               link: /docs/asset-prefix/
+            - title: Incremental Builds
+              link: /docs/incremental-builds/
         - title: Custom Configuration
           link: /docs/customization/
           items:
