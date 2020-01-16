@@ -53,8 +53,11 @@ export default class Cache {
 
   get<T = unknown>(key): Promise<T | undefined> {
     return new Promise(resolve => {
-      // eslint-disable-next-line no-unused-expressions
-      this.cache?.get<T>(key, (err, res) => {
+      if (!this.cache) {
+        resolve(undefined)
+        return
+      }
+      this.cache.get<T>(key, (err, res) => {
         resolve(err ? undefined : res)
       })
     })
@@ -66,8 +69,11 @@ export default class Cache {
     args: CachingConfig = { ttl: TTL }
   ): Promise<T | undefined> {
     return new Promise(resolve => {
-      // eslint-disable-next-line no-unused-expressions
-      this.cache?.set(key, value, args, err => {
+      if (!this.cache) {
+        resolve(undefined)
+        return
+      }
+      this.cache.set(key, value, args, err => {
         resolve(err ? undefined : value)
       })
     })
