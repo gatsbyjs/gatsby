@@ -292,4 +292,29 @@ describe(`<Image />`, () => {
     expect(onLoadMock).toHaveBeenCalledTimes(1)
     expect(onErrorMock).toHaveBeenCalledTimes(1)
   })
+
+  it(`should have an "aria-hidden" attribute on the fluid element`, () => {
+    const divTag = setup(true).querySelector(`.gatsby-image-wrapper > div`)
+    expect(divTag.getAttribute(`aria-hidden`)).toBe(`true`)
+  })
+
+  it(`should have an "aria-hidden" attribute on the background element`, () => {
+    const BgTag = setup(true).querySelector(`.gatsby-image-wrapper > div + div`)
+    expect(BgTag.getAttribute(`aria-hidden`)).toBe(`true`)
+  })
+
+  it(`should have an "aria-hidden" attribute on the Placeholder component when fluid`, () => {
+    const placeholderImageTag = setup(true).querySelector(`img`)
+    expect(placeholderImageTag.getAttribute(`aria-hidden`)).toBe(`true`)
+  })
+
+  it(`should have an "aria-hidden" attribute on the Placeholder component when fixed`, () => {
+    const placeholderImageTag = setup().querySelector(`img`)
+    expect(placeholderImageTag.getAttribute(`aria-hidden`)).toBe(`true`)
+  })
+
+  it(`should not have an "aria-hidden" attribute on the Image`, () => {
+    const placeholderImageTag = setup().querySelector(`picture img`)
+    expect(placeholderImageTag.getAttribute(`aria-hidden`)).toBe(null)
+  })
 })
