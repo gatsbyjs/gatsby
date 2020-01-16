@@ -82,14 +82,8 @@ exports.setBoundActionCreators = actions => {
 }
 
 function prepareQueue({ file, args }) {
-  const pluginOptions = getPluginOptions()
-  const options = healOptions(pluginOptions, args, file.extension)
-  if (!options.toFormat) {
-    options.toFormat = file.extension
-  }
-
-  const argsDigestShort = createArgsDigest(options)
-  const imgSrc = `/${file.name}.${options.toFormat}`
+  const argsDigestShort = createArgsDigest(args)
+  const imgSrc = `/${file.name}.${args.toFormat}`
   const outputDir = path.join(
     process.cwd(),
     `public`,
@@ -109,30 +103,30 @@ function prepareQueue({ file, args }) {
 
   // If the width/height are both set, we're cropping so just return
   // that.
-  if (options.width && options.height) {
-    width = options.width
-    height = options.height
+  if (args.width && args.height) {
+    width = args.width
+    height = args.height
     // Recalculate the aspectRatio for the cropped photo
     aspectRatio = width / height
-  } else if (options.width) {
+  } else if (args.width) {
     // Use the aspect ratio of the image to calculate what will be the resulting
     // height.
-    width = options.width
-    height = Math.round(options.width / aspectRatio)
+    width = args.width
+    height = Math.round(args.width / aspectRatio)
   } else {
     // Use the aspect ratio of the image to calculate what will be the resulting
     // width.
-    height = options.height
-    width = Math.round(options.height * aspectRatio)
+    height = args.height
+    width = Math.round(args.height * aspectRatio)
   }
 
   // encode the file name for URL
-  const encodedImgSrc = `/${encodeURIComponent(file.name)}.${options.toFormat}`
+  const encodedImgSrc = `/${encodeURIComponent(file.name)}.${args.toFormat}`
 
   // Prefix the image src.
-  const digestDirPrefix = `${file.internal.contentDigest}/${argsDigestShort}`
+  const digestDirPrefix = `${file.internal.contentDigest}/${args.DigestShort}`
   const prefixedSrc =
-    options.pathPrefix + `/static/${digestDirPrefix}` + encodedImgSrc
+    args.pathPrefix + `/static/${digestDirPrefix}` + encodedImgSrc
 
   return {
     src: prefixedSrc,
@@ -141,7 +135,7 @@ function prepareQueue({ file, args }) {
     width,
     height,
     aspectRatio,
-    options,
+    options: args,
   }
 }
 
@@ -156,10 +150,14 @@ async function createJob(job, { reporter }) {
   pendingImagesCounter += transforms.length
   progressBar.total = pendingImagesCounter
 
-  if (boundActionCreators.createJobV2) {
-    await boundActionCreators.createJobV2(job)
-  } else {
-    await scheduleJob(job, boundActionCreators)
+  try {
+    if (boundActionCreators.createJobV2) {
+      await boundActionCreators.createJobV2(job)
+    } else {
+      await scheduleJob(job, boundActionCreators)
+    }
+  } catch (err) {
+    reporter.panic(err)
   }
 
   progressBar.tick(transforms.length)
@@ -193,9 +191,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
       },
     },
     { reporter }
-  ).catch(err => {
-    reporter.panic(err)
-  })
+  )
 
   return {
     src,
@@ -237,6 +233,7 @@ function batchQueueImageResizing({ file, transforms = [], reporter }) {
       height,
       aspectRatio,
       originalName: file.base,
+      finishedPromise: null,
     })
   })
 
@@ -256,15 +253,12 @@ function batchQueueImageResizing({ file, transforms = [], reporter }) {
       },
     },
     { reporter }
-  ).catch(err => {
-    reporter.panic(err)
-  })
+  )
 
   return images.map(image => {
-    return {
-      ...image,
-      finishedPromise,
-    }
+    image.finishedPromise = finishedPromise
+
+    return image
   })
 }
 
