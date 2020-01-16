@@ -121,7 +121,9 @@ export interface GatsbyNode {
    * @see https://www.gatsbyjs.org/docs/node-apis/#createPages
    */
   createPages?(
-    args: CreatePagesArgs & { traceId: "initial-createPages" },
+    args: CreatePagesArgs & {
+      traceId: "initial-createPages"
+    },
     options?: PluginOptions,
     callback?: PluginCallback
   ): void
@@ -141,7 +143,9 @@ export interface GatsbyNode {
    * add and remove pages.
    */
   createPagesStatefully?(
-    args: CreatePagesArgs & { traceId: "initial-createPagesStatefully" },
+    args: CreatePagesArgs & {
+      traceId: "initial-createPagesStatefully"
+    },
     options?: PluginOptions,
     callback?: PluginCallback
   ): void
@@ -190,8 +194,8 @@ export interface GatsbyNode {
    *   // create a new node field.
    * }
    */
-  onCreateNode?(
-    args: CreateNodeArgs,
+  onCreateNode?<TNode extends object = {}>(
+    args: CreateNodeArgs<TNode>,
     options?: PluginOptions,
     callback?: PluginCallback
   ): void
@@ -204,8 +208,8 @@ export interface GatsbyNode {
    * See the guide [Creating and Modifying Pages](https://www.gatsbyjs.org/docs/creating-and-modifying-pages/)
    * for more on this API.
    */
-  onCreatePage?(
-    args: CreatePageArgs,
+  onCreatePage?<TNode extends object = {}>(
+    args: CreatePageArgs<TNode>,
     options?: PluginOptions,
     callback?: PluginCallback
   ): void
@@ -657,9 +661,9 @@ export interface CreateDevServerArgs extends ParentSpanPluginArgs {
   app: any
 }
 
-export interface CreateNodeArgs<T extends object = {}>
+export interface CreateNodeArgs<TNode extends object = {}>
   extends ParentSpanPluginArgs {
-  node: Node & T
+  node: Node & TNode
   traceId: string
   traceTags: {
     nodeId: string
@@ -667,8 +671,9 @@ export interface CreateNodeArgs<T extends object = {}>
   }
 }
 
-export interface CreatePageArgs extends ParentSpanPluginArgs {
-  page: Node
+export interface CreatePageArgs<TNode extends object = {}>
+  extends ParentSpanPluginArgs {
+  page: Node & TNode
   traceId: string
 }
 
@@ -697,9 +702,9 @@ export interface SetFieldsOnGraphQLNodeTypeArgs extends ParentSpanPluginArgs {
   traceId: "initial-setFieldsOnGraphQLNodeType"
 }
 
-export interface GatsbyGraphQLObjectType<TSource = any, TContext = any> {
+export interface GatsbyGraphQLObjectType {
   kind: "OBJECT"
-  config: ComposeObjectTypeConfig<TSource, TContext>
+  config: ComposeObjectTypeConfig<any, any>
 }
 
 interface GatsbyGraphQLInputObjectType {
@@ -707,14 +712,14 @@ interface GatsbyGraphQLInputObjectType {
   config: ComposeInputObjectTypeConfig
 }
 
-interface GatsbyGraphQLUnionType<TSource = any, TContext = any> {
+interface GatsbyGraphQLUnionType {
   kind: "UNION"
-  config: ComposeUnionTypeConfig<TSource, TContext>
+  config: ComposeUnionTypeConfig<any, any>
 }
 
-interface GatsbyGraphQLInterfaceType<TSource = any, TContext = any> {
+interface GatsbyGraphQLInterfaceType {
   kind: "INTERFACE"
-  config: ComposeInterfaceTypeConfig<TSource, TContext>
+  config: ComposeInterfaceTypeConfig<any, any>
 }
 
 interface GatsbyGraphQLEnumType {
@@ -727,24 +732,24 @@ interface GatsbyGraphQLScalarType {
   config: ComposeScalarTypeConfig
 }
 
-export type GatsbyGraphQLType<TSource = any, TContext = any> =
+export type GatsbyGraphQLType =
   | GatsbyGraphQLObjectType
   | GatsbyGraphQLInputObjectType
-  | GatsbyGraphQLUnionType<TSource, TContext>
-  | GatsbyGraphQLInterfaceType<TSource, TContext>
+  | GatsbyGraphQLUnionType
+  | GatsbyGraphQLInterfaceType
   | GatsbyGraphQLEnumType
   | GatsbyGraphQLScalarType
 
-export interface SourceNodesSchemaObject<TSource = any, TContext = any> {
+export interface NodePluginSchema {
   buildObjectType(
-    config: ComposeObjectTypeConfig<TSource, TContext>
-  ): GatsbyGraphQLObjectType<TSource, TContext>
+    config: ComposeObjectTypeConfig<any, any>
+  ): GatsbyGraphQLObjectType
   buildUnionType(
-    config: ComposeUnionTypeConfig<TSource, TContext>
-  ): GatsbyGraphQLUnionType<TSource, TContext>
+    config: ComposeUnionTypeConfig<any, any>
+  ): GatsbyGraphQLUnionType
   buildInterfaceType(
-    config: ComposeInterfaceTypeConfig<TSource, TContext>
-  ): GatsbyGraphQLInterfaceType<TSource, TContext>
+    config: ComposeInterfaceTypeConfig<any, any>
+  ): GatsbyGraphQLInterfaceType
   buildInputObjectType(
     config: ComposeInputObjectTypeConfig
   ): GatsbyGraphQLInputObjectType
@@ -752,11 +757,9 @@ export interface SourceNodesSchemaObject<TSource = any, TContext = any> {
   buildScalarType(config: ComposeScalarTypeConfig): GatsbyGraphQLScalarType
 }
 
-export interface SourceNodesArgs<TSource = any, TContext = any>
-  extends ParentSpanPluginArgs {
+export interface SourceNodesArgs extends ParentSpanPluginArgs {
   traceId: "initial-sourceNodes"
   waitForCascadingActions: boolean
-  schema: SourceNodesSchemaObject<TSource, TContext>
 }
 
 export interface CreateResolversArgs extends ParentSpanPluginArgs {
@@ -778,7 +781,10 @@ export interface PreRenderHTMLArgs extends NodePluginArgs {
   replacePostBodyComponents: (comp: React.ReactNode[]) => void
 }
 
-type ReactProps<T extends Element> = React.DetailedHTMLProps<React.HTMLAttributes<T>, T>
+type ReactProps<T extends Element> = React.DetailedHTMLProps<
+  React.HTMLAttributes<T>,
+  T
+>
 export interface RenderBodyArgs extends NodePluginArgs {
   pathname: string
   setHeadComponents: (comp: React.ReactNode[]) => void
@@ -830,6 +836,7 @@ export interface NodePluginArgs {
   createNodeId: Function
   createContentDigest: typeof createContentDigest
   tracing: Tracing
+  schema: NodePluginSchema
   [key: string]: unknown
 }
 
@@ -1202,8 +1209,8 @@ export interface ReplaceComponentRendererArgs extends BrowserPluginArgs {
     children: undefined
     pageResources: object
     data: object
-    pageContext: { id: string; [key: string]: unknown }
-    pathContext: { id: string; [key: string]: unknown }
+    pageContext: { [key: string]: unknown }
+    pathContext: { [key: string]: unknown }
   }
   loader: object
 }
