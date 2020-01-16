@@ -43,16 +43,18 @@ const getNewPageKeys = (store, cacheData) =>
       resolve(newPageKeys)
       return
     }
-    console.log(cacheData.pages)
+
     if (cacheData.pages) {
       store.pages.forEach((value, key) => {
         if (!cacheData.pages.has(key)) {
           newPageKeys.push(key)
         } else {
-          const newPageContext = value.context.page
-          const previousPageContext = cacheData.pages.get(key).context.page
+          const newPageContext = JSON.stringify(value.context)
+          const previousPageContext = JSON.stringify(
+            cacheData.pages.get(key).context
+          )
 
-          if (!isEqual(newPageContext, previousPageContext)) {
+          if (newPageContext !== previousPageContext) {
             newPageKeys.push(key)
           }
         }
@@ -60,6 +62,7 @@ const getNewPageKeys = (store, cacheData) =>
       resolve(newPageKeys)
       return
     }
+
     resolve([...store.pages.keys()])
   })
 
