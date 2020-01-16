@@ -5000,3 +5000,19 @@
     - Transform links to bitly links automatically
     - Codesyntax
     - Code syntax highlighting
+- url: https://gatsby-bootstrap-italia-starter.dej611.now.sh/
+  repo: https://github.com/dej611/gatsby-bootstrap-italia-starter
+  description: Gastby starter project using the Bootstrap Italia design kit from Italian Digital Team
+  tags:
+    - Language:Javascript
+    - Styling:Bootstrap Italia
+    - Prettier
+    - Eslint
+    - design-react-kit
+    - reactstrap
+  features:
+    - Sticky header
+    - Complete header
+    - Footer
+    - Homepage and services pages ready
+    - Meta tags for improved SEO with React Helmet
