@@ -62,6 +62,7 @@ function DocsTemplate({ data, location, pageContext: { next, prev } }) {
       </Helmet>
       <Layout
         location={location}
+        locale={page.fields.locale}
         itemList={itemList}
         enableScrollSync={urlSegment === `docs` ? false : true}
       >
