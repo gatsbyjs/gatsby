@@ -1,4 +1,5 @@
 const path = require(`path`)
+const langs = require(`./i18n.json`)
 require(`dotenv`).config({
   path: `.env.${process.env.NODE_ENV}`,
 })
@@ -100,16 +101,21 @@ module.exports = {
         path: `${__dirname}/src/data/guidelines/`,
       },
     },
-    {
-      // FIX
+    ...langs.map(({ code }) => ({
       resolve: `gatsby-source-git`,
       options: {
-        name: `docs-es`,
-        remote: `https://github.com/gatsbyjs/gatsby-es.git`,
+        name: `docs-${code}`,
+        remote: `https://github.com/gatsbyjs/gatsby-${code}.git`,
         branch: `master`,
-        patterns: `docs/**`,
+        patterns: [
+          // for now, only pull in tutorial docs that don't have MDX
+          `docs/tutorial/**`,
+          `!docs/tutorial/additional-tutorials.md`,
+          `!docs/tutorial/theme-tutorials.md`,
+          `!docs/tutorial/part-five/*`,
+        ],
       },
-    },
+    })),
     `gatsby-transformer-gatsby-api-calls`,
     {
       resolve: `gatsby-plugin-typography`,
@@ -139,8 +145,7 @@ module.exports = {
           return (
             [`NPMPackage`, `NPMPackageReadme`].includes(node.internal.type) ||
             (node.internal.type === `File` &&
-              path.parse(node.dir).dir.endsWith(`packages`)) ||
-            node.sourceInstanceName === "docs-es"
+              path.parse(node.dir).dir.endsWith(`packages`))
           )
         },
         gatsbyRemarkPlugins: [
