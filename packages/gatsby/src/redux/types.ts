@@ -1,7 +1,23 @@
+export enum ProgramStatus {
+  BOOTSTRAP_FINISHED = `BOOTSTRAP_FINISHED`,
+  BOOTSTRAP_QUERY_RUNNING_FINISHED = `BOOTSTRAP_QUERY_RUNNING_FINISHED`,
+}
+
 export interface IReduxState {
-  nodes?: any // TODO
-  nodesByType: Map<any, any> // TODO
+  status: ProgramStatus
+  nodes?: {
+    id: string
+    internal: {
+      type: string
+    }
+  }[]
+  nodesByType?: Map<any, any> // TODO
   lastAction: ActionsUnion
+  componentDataDependencies: any // TODO
+  components: any // TODO
+  staticQueryComponents: any // TODO
+  webpackCompilationHash: any // TODO
+  pageDataStats: any // TODO
   jobs: {
     active: Array<any> // TODO
   }
@@ -13,9 +29,14 @@ export interface IReduxState {
   }
 }
 
-export enum ProgramStatus {
-  BOOTSTRAP_FINISHED = `BOOTSTRAP_FINISHED`,
-  BOOTSTRAP_QUERY_RUNNING_FINISHED = `BOOTSTRAP_QUERY_RUNNING_FINISHED`,
+export interface ICachedReduxState {
+  nodes: IReduxState["nodes"]
+  status: IReduxState["status"]
+  componentDataDependencies: IReduxState["componentDataDependencies"]
+  components: IReduxState["components"]
+  staticQueryComponents: IReduxState["staticQueryComponents"]
+  webpackCompilationHash: IReduxState["webpackCompilationHash"]
+  pageDataStats: IReduxState["pageDataStats"]
 }
 
 export type ActionsUnion =
