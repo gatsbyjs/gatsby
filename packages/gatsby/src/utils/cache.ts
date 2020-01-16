@@ -54,7 +54,7 @@ export default class Cache {
   get<T = unknown>(key): Promise<T | undefined> {
     return new Promise(resolve => {
       if (!this.cache) {
-        resolve(undefined)
+        resolve()
         return
       }
       this.cache.get<T>(key, (err, res) => {
@@ -70,7 +70,7 @@ export default class Cache {
   ): Promise<T | undefined> {
     return new Promise(resolve => {
       if (!this.cache) {
-        resolve(undefined)
+        resolve()
         return
       }
       this.cache.set(key, value, args, err => {
