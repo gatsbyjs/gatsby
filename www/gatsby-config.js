@@ -107,13 +107,7 @@ module.exports = {
         name: `docs-${code}`,
         remote: `https://github.com/gatsbyjs/gatsby-${code}.git`,
         branch: `master`,
-        patterns: [
-          // for now, only pull in tutorial docs that don't have MDX
-          `docs/tutorial/**`,
-          `!docs/tutorial/additional-tutorials.md`,
-          `!docs/tutorial/theme-tutorials.md`,
-          `!docs/tutorial/part-five/*`,
-        ],
+        patterns: `docs/tutorial/**`,
       },
     })),
     `gatsby-transformer-gatsby-api-calls`,

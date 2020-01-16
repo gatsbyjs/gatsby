@@ -5,8 +5,6 @@ import { navigate, PageRenderer } from "gatsby"
 import mousetrap from "mousetrap"
 import MdClose from "react-icons/lib/md/close"
 
-import { MDXProvider } from "@mdx-js/react"
-
 import { Global } from "@emotion/core"
 
 import { globalStyles } from "../utils/styles/global"
@@ -24,10 +22,8 @@ import MobileNavigation from "../components/navigation-mobile"
 import PageWithSidebar from "../components/page-with-sidebar"
 import SiteMetadata from "../components/site-metadata"
 import SkipNavLink from "../components/skip-nav-link"
-import MdxLink from "../components/mdx-link"
 import "../assets/fonts/futura"
 import LazyModal from "./lazy-modal"
-import { MDXRenderer } from "gatsby-plugin-mdx"
 
 let windowWidth
 
@@ -172,36 +168,34 @@ class DefaultLayout extends React.Component {
 
     return (
       <LocaleContext.Provider value={this.props.locale || "en"}>
-        <MDXProvider components={{ a: MdxLink }}>
-          <Global styles={globalStyles} />
-          <SiteMetadata pathname={this.props.location.pathname} />
-          <SkipNavLink />
-          <Banner />
-          <Navigation pathname={this.props.location.pathname} />
-          <div
-            className={`main-body docSearch-content`}
-            sx={{
-              px: `env(safe-area-inset-left)`,
-              pt: t => t.sizes.bannerHeight,
-              // make room for the mobile navigation
-              pb: t => t.sizes.headerHeight,
-              [breakpointGutter]: {
-                pt: t =>
-                  `calc(${t.sizes.bannerHeight} + ${t.sizes.headerHeight})`,
-                pb: 0,
-              },
-            }}
-          >
-            <PageWithSidebar
-              disable={isSidebarDisabled}
-              itemList={this.props.itemList}
-              location={this.props.location}
-              enableScrollSync={this.props.enableScrollSync}
-              renderContent={() => this.props.children}
-            />
-          </div>
-          <MobileNavigation />
-        </MDXProvider>
+        <Global styles={globalStyles} />
+        <SiteMetadata pathname={this.props.location.pathname} />
+        <SkipNavLink />
+        <Banner />
+        <Navigation pathname={this.props.location.pathname} />
+        <div
+          className={`main-body docSearch-content`}
+          sx={{
+            px: `env(safe-area-inset-left)`,
+            pt: t => t.sizes.bannerHeight,
+            // make room for the mobile navigation
+            pb: t => t.sizes.headerHeight,
+            [breakpointGutter]: {
+              pt: t =>
+                `calc(${t.sizes.bannerHeight} + ${t.sizes.headerHeight})`,
+              pb: 0,
+            },
+          }}
+        >
+          <PageWithSidebar
+            disable={isSidebarDisabled}
+            itemList={this.props.itemList}
+            location={this.props.location}
+            enableScrollSync={this.props.enableScrollSync}
+            renderContent={() => this.props.children}
+          />
+        </div>
+        <MobileNavigation />
       </LocaleContext.Provider>
     )
   }
