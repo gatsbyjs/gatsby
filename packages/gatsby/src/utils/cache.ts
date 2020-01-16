@@ -54,8 +54,9 @@ export default class Cache {
   get<T = unknown>(key): Promise<T | undefined> {
     return new Promise(resolve => {
       if (!this.cache) {
-        resolve()
-        return
+        throw new Error(
+          `Cache wasn't initialised yet, please run the init method first`
+        )
       }
       this.cache.get<T>(key, (err, res) => {
         resolve(err ? undefined : res)
@@ -70,8 +71,9 @@ export default class Cache {
   ): Promise<T | undefined> {
     return new Promise(resolve => {
       if (!this.cache) {
-        resolve()
-        return
+        throw new Error(
+          `Cache wasn't initialised yet, please run the init method first`
+        )
       }
       this.cache.set(key, value, args, err => {
         resolve(err ? undefined : value)
