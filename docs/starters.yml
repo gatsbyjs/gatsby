@@ -4982,3 +4982,21 @@
     - Styled Components for responsive component based styling with theming
     - Basic SEO, site metadata
     - Prettier
+- url: https://gatsby-starter-fusion-blog.netlify.com/
+  repo: https://github.com/robertistok/gatsby-starter-fusion-blog
+  description: Easy to configure blog starter with modern, minimal theme
+  tags:
+    - Language:TypeScript
+    - Styling:CSS-in-JS
+    - Netlify
+    - Markdown
+    - Blog
+    - SEO
+  features:
+    - Featured/Latest posts
+    - Sticky header
+    - Easy to customize -> edit config.ts with your info
+    - Meta tags for improved SEO with React Helmet
+    - Transform links to bitly links automatically
+    - Codesyntax
+    - Code syntax highlighting
