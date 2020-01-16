@@ -171,7 +171,7 @@ class DefaultLayout extends React.Component {
     }
 
     return (
-      <LocaleContext.Provider value={this.props.locale}>
+      <LocaleContext.Provider value={this.props.locale || "en"}>
         <MDXProvider components={{ a: MdxLink }}>
           <Global styles={globalStyles} />
           <SiteMetadata pathname={this.props.location.pathname} />
