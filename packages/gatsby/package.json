@@ -17,7 +17,7 @@
     "@babel/runtime": "^7.7.6",
     "@babel/traverse": "^7.7.4",
     "@hapi/joi": "^15.1.1",
-    "@mikaelkristiansson/domready": "^1.0.9",
+    "@mikaelkristiansson/domready": "^1.0.10",
     "@pieh/friendly-errors-webpack-plugin": "1.7.0-chalk-2",
     "@reach/router": "^1.2.1",
     "@typescript-eslint/eslint-plugin": "^2.11.0",
