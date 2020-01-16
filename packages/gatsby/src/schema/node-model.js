@@ -225,8 +225,8 @@ class LocalNodeModel {
     })
 
     let result = queryResult
-    if (args.firstOnly) {
-      if (result && result.length > 0) {
+    if (firstOnly) {
+      if (result?.length > 0) {
         result = result[0]
         this.trackInlineObjectsInRootNode(result)
       } else {

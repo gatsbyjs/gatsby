@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.33](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.1.32...gatsby-plugin-google-analytics@2.1.33) (2020-01-14)
+
+### Bug Fixes
+
+- **gatsby-plugin-google-analytics:** Value typing ([#20554](https://github.com/gatsbyjs/gatsby/issues/20554)) ([b6031bb](https://github.com/gatsbyjs/gatsby/commit/b6031bb))
+
 ## [2.1.32](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.1.31...gatsby-plugin-google-analytics@2.1.32) (2020-01-09)
 
 **Note:** Version bump only for package gatsby-plugin-google-analytics

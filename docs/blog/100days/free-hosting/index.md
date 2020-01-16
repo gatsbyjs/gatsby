@@ -1,5 +1,5 @@
 ---
-title: Challenge - Host Your Gatsby Site for Free
+title: Challenge 2 - Host Your Gatsby Site for Free
 date: 2020-01-08
 author: "Hashim Warren"
 tags: ["learning-to-code", "contest", "100-Days-of-Gatsby"]
@@ -31,7 +31,7 @@ Bonus: Try deploying your site to the free tier of multiple services to see firs
 
 For your git repo, you can use GitHub, Gitlab, Bitbucket, or many similar services.
 
-And for your build tool and CDN we see many people have success with [AWS Amplify](/docs/deploying-to-aws-amplify/) and [Netlify](/docs/deploying-to-netlify/). Our documentation has step-by-step tutorials for those services, [and others](/docs/deploying-and-hosting/).
+And for your build tool and CDN we see many people have success with [AWS Amplify](/docs/deploying-to-aws-amplify/), [Netlify](/docs/deploying-to-netlify/), and [ZEIT Now](/docs/deploying-to-zeit-now/). Our documentation has step-by-step tutorials for those services, [and others](/docs/deploying-and-hosting/).
 
 ### What to Do If You Need Help
 

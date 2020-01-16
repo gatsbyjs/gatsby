@@ -50,6 +50,11 @@ plugins: [
       // See: https://help.shopify.com/api/custom-storefronts/storefront-api/getting-started#authentication
       accessToken: "example-wou7evoh0eexuf6chooz2jai2qui9pae4tieph1sei4deiboj",
 
+      // Set the API version you want to use. For a list of available API versions,
+      // see: https://help.shopify.com/en/api/storefront-api/reference/queryroot
+      // Defaults to 2019-07
+      apiVersion: "2020-01",
+
       // Set verbose to true to display a verbose output on `npm run develop`
       // or `npm run build`. This prints which nodes are being fetched and how
       // much time was required to fetch and process the data.
