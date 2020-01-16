@@ -38,7 +38,7 @@ class Collapsible extends Component {
             width: `100%`,
           }}
         >
-          <h4
+          <button
             sx={{
               alignItems: `center`,
               color: `textMuted`,
@@ -47,14 +47,18 @@ class Collapsible extends Component {
               flexShrink: 0,
               fontWeight: `body`,
               fontSize: 1,
-              mt: 6,
-              mr: 7,
+              my: 6,
+              mr: 4,
+              p: 0,
               letterSpacing: `tracked`,
               textTransform: `uppercase`,
+              background: `none`,
+              border: `none`,
               "&:hover": {
                 color: `gatsby`,
               },
             }}
+            aria-expanded={!collapsed}
             onClick={this.handleClick}
           >
             {heading}
@@ -62,7 +66,7 @@ class Collapsible extends Component {
             <span sx={{ ml: `auto` }} css={{ display: `flex` }}>
               {collapsed ? <FaAngleDown /> : <FaAngleUp />}
             </span>
-          </h4>
+          </button>
           <div
             css={{
               display: collapsed ? `none` : `block`,

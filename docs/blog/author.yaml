@@ -53,7 +53,6 @@
 - id: Fernando Poumian
   bio: Full-Stack Web Developer - https://www.halfelectronic.com
   avatar: avatars/fernando-poumian.jpeg
-  twitter: "@fernandopoumian"
 - id: Josh Weaver
   bio: Developer at By the Book, Inc. Enjoys technology, writing and playing music. Can't turn down a decent board game.
   avatar: avatars/josh-weaver.jpg
@@ -245,7 +244,7 @@
 - id: Katie Fujihara
   bio: Lover of making beautiful UI. Portland tech community organizer.
   avatar: avatars/katie-fujihara.jpg
-  twitter: "@katieofcode"
+  twitter: "@KatieFujihara"
 - id: Sidhartha Chatterjee
   bio: Core team @ GatsbyJS. Full-Stack Developer. Scuba diver.
   avatar: avatars/sidhartha-chatterjee.jpg
@@ -317,7 +316,7 @@
   avatar: avatars/benjamin-lannon.jpg
   twitter: "@lannonbr"
 - id: Thomas Wang
-  bio: Founder @ DormDev. A social developer on the JAMStack.
+  bio: A social developer on the JAMStack.
   avatar: avatars/thomas-wang.jpeg
   twitter: "@thomaswangio"
 - id: Hashim Warren
@@ -365,3 +364,15 @@
   bio: Working to make the web a better place. Mental health advocate, passionate about a11y, requires strong coffee.
   avatar: avatars/madalyn-parker.jpg
   twitter: "@madalynrose"
+- id: Mark Casias
+  bio: Sr. Software Engineer for Mediacurrent. Bass player.
+  avatar: avatars/mark-casias.png
+  twitter: "@teampoop"
+- id: Jari Zwarts
+  bio: Frontend @ Oberon. Maker of things. https://jari.io
+  avatar: avatars/jari-zwarts.png
+  twitter: "@JariZwarts"
+- id: Scott Byrne
+  bio: Product Designer at Forestry.io & TinaCMS Team Member
+  avatar: avatars/scott-byrne.jpg
+  twitter: "@scottpbyrne"

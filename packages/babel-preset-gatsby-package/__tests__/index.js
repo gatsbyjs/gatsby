@@ -24,15 +24,15 @@ describe(`babel-preset-gatsby-package`, () => {
     })
 
     it(`can pass custom nodeVersion target`, () => {
-      process.env.BABEL_ENV = `production`
-    
       const nodeVersion = `6.0`
       const { presets } = preset(null, {
-        nodeVersion
+        nodeVersion,
       })
 
-      const [_, opts] = presets.find(preset => [].concat(preset).includes('@babel/preset-env'))
-      
+      const [, opts] = presets.find(preset =>
+        [].concat(preset).includes(`@babel/preset-env`)
+      )
+
       expect(opts.targets.node).toBe(nodeVersion)
     })
   })
@@ -50,22 +50,6 @@ describe(`babel-preset-gatsby-package`, () => {
 
     it(`specifies proper presets for debugging`, () => {
       const { presets } = preset(null, { browser: true, debug: true })
-      expect(presets).toMatchSnapshot()
-    })
-  })
-
-  describe(`in production mode`, () => {
-    beforeEach(() => {
-      process.env.BABEL_ENV = `production`
-    })
-
-    it(`specifies proper presets for node mode`, () => {
-      const { presets } = preset(null)
-      expect(presets).toMatchSnapshot()
-    })
-
-    it(`specifies proper presets for browser mode`, () => {
-      const { presets } = preset(null, { browser: true })
       expect(presets).toMatchSnapshot()
     })
   })

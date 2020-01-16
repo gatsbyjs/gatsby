@@ -44,7 +44,7 @@ Lastly you need to tell Jest where to find this file. Open your `package.json` a
 
 ```json:title=package.json
 "jest": {
-  "setupTestFrameworkScriptFile": "<rootDir>/setup-test-env.js"
+  "setupFilesAfterEnv": [`<rootDir>/setup-test-env.js`]
 }
 ```
 

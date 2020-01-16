@@ -12,6 +12,74 @@ type InlineTest implements Node & ITest @childOf(types: [\\"OneMoreTest\\"]) @do
 exports[`Print type definitions allows specifying types owned by plugins to exclude 1`] = `
 "### Type definitions saved at 2019-01-01 ###
 
+type File implements Node @dontInfer {
+  sourceInstanceName: String!
+  absolutePath: String!
+  relativePath: String!
+  extension: String!
+  size: Int!
+  prettySize: String!
+  modifiedTime: Date! @dateformat
+  accessTime: Date! @dateformat
+  changeTime: Date! @dateformat
+  birthTime: Date! @dateformat
+  root: String!
+  dir: String!
+  base: String!
+  ext: String!
+  name: String!
+  relativeDirectory: String!
+  dev: Int!
+  mode: Int!
+  nlink: Int!
+  uid: Int!
+  gid: Int!
+  rdev: Int!
+  ino: Float!
+  atimeMs: Float!
+  mtimeMs: Float!
+  ctimeMs: Float!
+  atime: Date! @dateformat
+  mtime: Date! @dateformat
+  ctime: Date! @dateformat
+  birthtime: Date @deprecated(reason: \\"Use \`birthTime\` instead\\")
+  birthtimeMs: Float @deprecated(reason: \\"Use \`birthTime\` instead\\")
+}
+
+type Directory implements Node @dontInfer {
+  sourceInstanceName: String!
+  absolutePath: String!
+  relativePath: String!
+  extension: String!
+  size: Int!
+  prettySize: String!
+  modifiedTime: Date! @dateformat
+  accessTime: Date! @dateformat
+  changeTime: Date! @dateformat
+  birthTime: Date! @dateformat
+  root: String!
+  dir: String!
+  base: String!
+  ext: String!
+  name: String!
+  relativeDirectory: String!
+  dev: Int!
+  mode: Int!
+  nlink: Int!
+  uid: Int!
+  gid: Int!
+  rdev: Int!
+  ino: Float!
+  atimeMs: Float!
+  mtimeMs: Float!
+  ctimeMs: Float!
+  atime: Date! @dateformat
+  mtime: Date! @dateformat
+  ctime: Date! @dateformat
+  birthtime: Date @deprecated(reason: \\"Use \`birthTime\` instead\\")
+  birthtimeMs: Float @deprecated(reason: \\"Use \`birthTime\` instead\\")
+}
+
 type InlineTest implements Node & ITest @childOf(types: [\\"OneMoreTest\\"]) @dontInfer {
   first: Inline
   second(bar: Baz): Date @dateformat(formatString: \\"MM/DD/YYYY\\")
@@ -67,6 +135,74 @@ input Baz {
 
 exports[`Print type definitions allows specifying types to exclude 1`] = `
 "### Type definitions saved at 2019-01-01 ###
+
+type File implements Node @dontInfer {
+  sourceInstanceName: String!
+  absolutePath: String!
+  relativePath: String!
+  extension: String!
+  size: Int!
+  prettySize: String!
+  modifiedTime: Date! @dateformat
+  accessTime: Date! @dateformat
+  changeTime: Date! @dateformat
+  birthTime: Date! @dateformat
+  root: String!
+  dir: String!
+  base: String!
+  ext: String!
+  name: String!
+  relativeDirectory: String!
+  dev: Int!
+  mode: Int!
+  nlink: Int!
+  uid: Int!
+  gid: Int!
+  rdev: Int!
+  ino: Float!
+  atimeMs: Float!
+  mtimeMs: Float!
+  ctimeMs: Float!
+  atime: Date! @dateformat
+  mtime: Date! @dateformat
+  ctime: Date! @dateformat
+  birthtime: Date @deprecated(reason: \\"Use \`birthTime\` instead\\")
+  birthtimeMs: Float @deprecated(reason: \\"Use \`birthTime\` instead\\")
+}
+
+type Directory implements Node @dontInfer {
+  sourceInstanceName: String!
+  absolutePath: String!
+  relativePath: String!
+  extension: String!
+  size: Int!
+  prettySize: String!
+  modifiedTime: Date! @dateformat
+  accessTime: Date! @dateformat
+  changeTime: Date! @dateformat
+  birthTime: Date! @dateformat
+  root: String!
+  dir: String!
+  base: String!
+  ext: String!
+  name: String!
+  relativeDirectory: String!
+  dev: Int!
+  mode: Int!
+  nlink: Int!
+  uid: Int!
+  gid: Int!
+  rdev: Int!
+  ino: Float!
+  atimeMs: Float!
+  mtimeMs: Float!
+  ctimeMs: Float!
+  atime: Date! @dateformat
+  mtime: Date! @dateformat
+  ctime: Date! @dateformat
+  birthtime: Date @deprecated(reason: \\"Use \`birthTime\` instead\\")
+  birthtimeMs: Float @deprecated(reason: \\"Use \`birthTime\` instead\\")
+}
 
 type AnotherTest implements Node & ITest @dontInfer {
   nested: Nested
@@ -125,6 +261,74 @@ input Language {
 
 exports[`Print type definitions saves correct type definitions 1`] = `
 "### Type definitions saved at 2019-01-01 ###
+
+type File implements Node @dontInfer {
+  sourceInstanceName: String!
+  absolutePath: String!
+  relativePath: String!
+  extension: String!
+  size: Int!
+  prettySize: String!
+  modifiedTime: Date! @dateformat
+  accessTime: Date! @dateformat
+  changeTime: Date! @dateformat
+  birthTime: Date! @dateformat
+  root: String!
+  dir: String!
+  base: String!
+  ext: String!
+  name: String!
+  relativeDirectory: String!
+  dev: Int!
+  mode: Int!
+  nlink: Int!
+  uid: Int!
+  gid: Int!
+  rdev: Int!
+  ino: Float!
+  atimeMs: Float!
+  mtimeMs: Float!
+  ctimeMs: Float!
+  atime: Date! @dateformat
+  mtime: Date! @dateformat
+  ctime: Date! @dateformat
+  birthtime: Date @deprecated(reason: \\"Use \`birthTime\` instead\\")
+  birthtimeMs: Float @deprecated(reason: \\"Use \`birthTime\` instead\\")
+}
+
+type Directory implements Node @dontInfer {
+  sourceInstanceName: String!
+  absolutePath: String!
+  relativePath: String!
+  extension: String!
+  size: Int!
+  prettySize: String!
+  modifiedTime: Date! @dateformat
+  accessTime: Date! @dateformat
+  changeTime: Date! @dateformat
+  birthTime: Date! @dateformat
+  root: String!
+  dir: String!
+  base: String!
+  ext: String!
+  name: String!
+  relativeDirectory: String!
+  dev: Int!
+  mode: Int!
+  nlink: Int!
+  uid: Int!
+  gid: Int!
+  rdev: Int!
+  ino: Float!
+  atimeMs: Float!
+  mtimeMs: Float!
+  ctimeMs: Float!
+  atime: Date! @dateformat
+  mtime: Date! @dateformat
+  ctime: Date! @dateformat
+  birthtime: Date @deprecated(reason: \\"Use \`birthTime\` instead\\")
+  birthtimeMs: Float @deprecated(reason: \\"Use \`birthTime\` instead\\")
+}
 
 type AnotherTest implements Node & ITest @dontInfer {
   nested: Nested

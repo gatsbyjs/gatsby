@@ -1,7 +1,7 @@
 const fs = require(`fs-extra`)
 const path = require(`path`)
+const { store } = require(`../redux`)
 const Promise = require(`bluebird`)
-const { isEqual } = require(`lodash`)
 const newPageKeys = []
 
 const getFilePath = ({ publicDir }, pagePath) => {
@@ -22,7 +22,19 @@ const write = async ({ publicDir }, page, result) => {
     matchPath: page.matchPath,
     result,
   }
-  await fs.outputFile(filePath, JSON.stringify(body))
+  const bodyStr = JSON.stringify(body)
+  // transform asset size to kB (from bytes) to fit 64 bit to numbers
+  const pageDataSize = Buffer.byteLength(bodyStr) / 1000
+
+  store.dispatch({
+    type: `ADD_PAGE_DATA_STATS`,
+    payload: {
+      filePath,
+      size: pageDataSize,
+    },
+  })
+
+  await fs.outputFile(filePath, bodyStr)
 }
 
 const getNewPageKeys = (store, cacheData) =>

@@ -162,6 +162,20 @@ Want to run two queries on the same datasource? You can do this by aliasing your
 
 When you use your data, you will be able to reference it using the alias instead of the root query name. In this example, that would be `data.someEntries` or `data.someMoreEntries` instead of `data.allMarkdownRemark`.
 
+## Conditionals
+
+GraphQL allows you to skip a piece of a query depending on variables. This is handy when you need to render some part of a page conditionally.
+
+Try changing variable `withDate` in the example query below:
+
+<iframe title="Using conditionals" src="https://711808k40x.sse.codesandbox.io/___graphql?query=query%20GetBlogPosts%20(%24withDate%3ABoolean%20%3D%20false)%20%7B%0A%20%20allMarkdownRemark(limit%3A%203%2C%20skip%3A%201)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20frontmatter%20%7B%0A%20%20%20%20%20%20%20%20%20%20title%0A%20%20%20%20%20%20%20%20%20%20date%20%40include(if%3A%24withDate)%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&operationName=GetBlogPosts" width="600" height="400"></iframe>
+
+Use directive `@include(if: $variable)` to conditionally include a part of a query or `@skip(if: $variable)` to exclude it.
+
+You can use those directives on any level of the query and even on fragments. Take a look at an advanced example:
+
+<iframe title="Using conditionals: Advanced" src="https://711808k40x.sse.codesandbox.io/___graphql?query=query%20GetBlogPosts%20(%24preview%3ABoolean%20%3D%20true)%20%7B%0A%20%20allMarkdownRemark(limit%3A%203%2C%20skip%3A%201)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20...BlogPost%20%40skip(if%3A%24preview)%0A%20%20%20%20%20%20%20%20...BlogPostPreview%20%40include(if%3A%24preview)%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%20%20allFile(limit%3A2)%20%40skip(if%3A%24preview)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20relativePath%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A%0Afragment%20BlogPost%20on%20MarkdownRemark%20%7B%0A%20%20html%0A%20%20frontmatter%20%7B%0A%20%20%20%20title%0A%20%20%20%20date%0A%20%20%7D%0A%7D%0A%0Afragment%20BlogPostPreview%20on%20MarkdownRemark%20%7B%0A%20%20excerpt%0A%20%20frontmatter%20%7B%0A%20%20%20%20title%0A%20%20%7D%0A%7D&operationName=GetBlogPosts" width="600" height="400"></iframe>
+
 ## Where next?
 
 Try [running your own queries](<https://711808k40x.sse.codesandbox.io/___graphql?query=%7B%0A%20%20site%20%7B%0A%20%20%20%20siteMetadata%20%7B%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20description%0A%20%20%20%20%7D%0A%20%20%7D%0A%20%20books%3A%20allMarkdownRemark(filter%3A%20%7Bfrontmatter%3A%20%7Btitle%3A%20%7Bne%3A%20%22%22%7D%7D%7D)%20%7B%0A%20%20%20%20totalCount%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20frontmatter%20%7B%0A%20%20%20%20%20%20%20%20%20%20title%0A%20%20%20%20%20%20%20%20%20%20date(fromNow%3A%20true)%0A%20%20%20%20%20%20%20%20%20%20author%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20id%0A%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%20%20authors%3A%20allAuthorYaml%20%7B%0A%20%20%20%20totalCount%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20id%0A%20%20%20%20%20%20%20%20bio%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A>), check out the rest of [the docs](/docs/) or run through [the tutorial](/tutorial/).

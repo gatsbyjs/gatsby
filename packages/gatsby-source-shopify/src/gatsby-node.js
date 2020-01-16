@@ -13,6 +13,7 @@ import {
   ProductOptionNode,
   ProductVariantNode,
   ProductMetafieldNode,
+  ProductVariantMetafieldNode,
   ShopPolicyNode,
   PageNode,
 } from "./nodes"
@@ -41,12 +42,13 @@ export const sourceNodes = async (
   {
     shopName,
     accessToken,
+    apiVersion = `2019-07`,
     verbose = true,
     paginationSize = 250,
     includeCollections = [SHOP, CONTENT],
   }
 ) => {
-  const client = createClient(shopName, accessToken)
+  const client = createClient(shopName, accessToken, apiVersion)
 
   // Convenience function to namespace console messages.
   const formatMsg = msg =>
@@ -85,9 +87,16 @@ export const sourceNodes = async (
         createNodes(COLLECTION, COLLECTIONS_QUERY, CollectionNode, args),
         createNodes(PRODUCT, PRODUCTS_QUERY, ProductNode, args, async x => {
           if (x.variants)
-            await forEach(x.variants.edges, async edge =>
-              createNode(await ProductVariantNode(imageArgs)(edge.node))
-            )
+            await forEach(x.variants.edges, async edge => {
+              const v = edge.node
+              if (v.metafields)
+                await forEach(v.metafields.edges, async edge =>
+                  createNode(
+                    await ProductVariantMetafieldNode(imageArgs)(edge.node)
+                  )
+                )
+              return createNode(await ProductVariantNode(imageArgs)(edge.node))
+            })
 
           if (x.metafields)
             await forEach(x.metafields.edges, async edge =>
@@ -145,7 +154,7 @@ const createNodes = async (
   await forEach(
     await queryAll(
       client,
-      [`shop`, NODE_TO_ENDPOINT_MAPPING[endpoint]],
+      [NODE_TO_ENDPOINT_MAPPING[endpoint]],
       query,
       paginationSize
     ),
@@ -192,7 +201,12 @@ const createPageNodes = async (
 
   if (verbose) console.time(msg)
   await forEach(
-    await queryAll(client, [endpoint], query, paginationSize),
+    await queryAll(
+      client,
+      [NODE_TO_ENDPOINT_MAPPING[endpoint]],
+      query,
+      paginationSize
+    ),
     async entity => {
       const node = await nodeFactory(entity)
       createNode(node)

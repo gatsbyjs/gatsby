@@ -105,8 +105,8 @@ const doBuildPages = async ({
   activity,
   workerPool,
 }) => {
-  telemetry.decorateEvent(`BUILD_END`, {
-    siteMeasurements: { pagesCount: pagePaths.length },
+  telemetry.addSiteMeasurement(`BUILD_END`, {
+    pagesCount: pagePaths.length,
   })
 
   try {

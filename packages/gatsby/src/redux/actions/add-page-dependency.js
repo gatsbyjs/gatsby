@@ -1,5 +1,5 @@
 const { store } = require(`../`)
-const { actions } = require(`./internal.js`)
+import * as actions from "./internal"
 
 function createPageDependency({ path, nodeId, connection }) {
   const state = store.getState()

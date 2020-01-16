@@ -4,7 +4,7 @@ Copies local files linked to/from Markdown (`.md|.markdown`) files to the root d
 
 **A sample markdown file:**
 
-```md
+```markdown
 ---
 title: My awesome blog post
 ---
