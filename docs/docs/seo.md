@@ -54,7 +54,7 @@ For example, here is a structured data snippet in the [JSON-LD format](https://d
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Company",
+    "@type": "Organization",
     "url": "http://www.spookytech.com",
     "name": "Spooky technologies",
     "contactPoint": {
