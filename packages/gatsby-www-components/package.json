@@ -10,6 +10,7 @@
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-www-components#readme",
   "dependencies": {
     "gatsby-design-tokens": "^1.0.10",
+    "prop-types": "^15.7.2",
     "@emotion/core": "^10.0.22",
     "@mdx-js/react": "^1.5.1",
     "theme-ui": "^0.2.49"

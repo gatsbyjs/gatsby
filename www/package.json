@@ -64,6 +64,7 @@
     "gatsby-transformer-screenshot": "^2.1.44",
     "gatsby-transformer-sharp": "^2.3.7",
     "gatsby-transformer-yaml": "^2.2.18",
+    "gatsby-www-components": "file:../packages/gatsby-www-components",
     "get-package-json-from-github": "^1.2.1",
     "graphql-request": "1.8.2",
     "gray-percentage": "^2.0.0",

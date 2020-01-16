@@ -1,1 +1,1 @@
-export { HorizontalNavList } from "./components"
+export { HorizontalNavList, EggheadEmbed } from "./components"
