@@ -15,7 +15,8 @@
   },
   "peerDependencies": {
     "@mdx-js/mdx": "^1.0.0",
-    "@mdx-js/react": "^1.0.0"
+    "@mdx-js/react": "^1.0.0",
+    "gatsby": ">=2.1.24"
   },
   "dependencies": {
     "@babel/core": "^7.7.5",
