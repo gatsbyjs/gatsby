@@ -1,8 +1,8 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import Link from "gatsby-link"
+import { Link } from "gatsby"
 
-import { mediaQueries } from "../gatsby-plugin-theme-ui"
+import { mediaQueries } from "gatsby-design-tokens"
 
 const HorizontalNavList = ({ items = [], slug }) => (
   <nav>

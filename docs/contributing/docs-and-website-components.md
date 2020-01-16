@@ -4,7 +4,7 @@ tableOfContentsDepth: 2
 ---
 
 import LayerModel from "../../www/src/components/layer-model"
-import HorizontalNavList from "../../www/src/components/horizontal-nav-list"
+import HorizontalNavList from "../../packages/gatsby-www-components/src/components/horizontal-nav-list"
 import Breadcrumb from "../../www/src/components/docs-breadcrumb"
 import { itemListContributing } from "../../www/src/utils/sidebar/item-list"
 import TableOfContents from "../../www/src/components/docs-table-of-contents"
@@ -185,7 +185,7 @@ The docs on Gatsbyjs.org use the [gatsby-remark-autolink-headers](/packages/gats
 title: Glossary
 ---
 
-import HorizontalNavList from "../../www/src/components/horizontal-nav-list.js"
+import HorizontalNavList from "../../packages/gatsby-www-components/src/components/horizontal-nav-list.js"
 
 The glossary defines key vocabulary...
 

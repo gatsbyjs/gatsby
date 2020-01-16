@@ -8,11 +8,22 @@
   ],
   "license": "MIT",
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-www-components#readme",
+  "dependencies": {
+    "gatsby-design-tokens": "^1.0.10",
+    "@emotion/core": "^10.0.22",
+    "@mdx-js/react": "^1.5.1",
+    "theme-ui": "^0.2.49"
+  },
   "devDependencies": {
     "@babel/cli": "^7.7.4",
     "@babel/core": "^7.7.4",
     "@babel/runtime": "^7.7.4",
     "babel-preset-gatsby-package": "^0.2.12"
+  },
+  "peerDependencies": {
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "gatsby": "^2.18.22"
   },
   "repository": {
     "type": "git",
