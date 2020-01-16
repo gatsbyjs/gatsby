@@ -25,7 +25,7 @@ But what good is a blog without beautiful images? We want you to use the resourc
 
 #### Part 2
 
-Now it’s time to get direct experience using the `Img`React component provided by [`gatsby-image` ](/packages/gatsby-image/)! Create an about page using JSX, then use the gatsby-image API to transform a normal selfie into a square, black-and-white image.
+Now it’s time to get direct experience using the `Img`React component provided by [`gatsby-image`](/packages/gatsby-image/)! Create an about page using JSX, then use the gatsby-image API to transform a normal selfie into a square, black-and-white image.
 
 Bonus: Take note of the build times for your site before and after you add images to your project. Also, record the performance of specific pages with images, using [a tool like Lighthouse](/docs/audit-with-lighthouse/). As a Gatsby Developer you should be aware of how images affect your site’s production and user experience.
 
