@@ -63,7 +63,7 @@ const finishProgressBar = () => {
 exports.onPostBuild = () => finishProgressBar()
 exports.onCreateDevServer = () => finishProgressBar()
 
-exports.onPreBootstrap = ({ actions, reporter }, pluginOptions) => {
+exports.onPreBootstrap = ({ actions }, pluginOptions) => {
   setBoundActionCreators(actions)
   setPluginOptions(pluginOptions)
   // normalizedOptions = setPluginOptions(pluginOptions)
