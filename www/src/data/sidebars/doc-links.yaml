@@ -721,6 +721,8 @@
       items:
         - title: GraphQL
           link: /docs/glossary/graphql
+        - title: JAMStack
+          link: /docs/glossary/jamstack
         - title: Node.js
           link: /docs/glossary/node
         - title: React
