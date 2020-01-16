@@ -18,7 +18,10 @@ export const runQuery = (handler, query, excludes, pathPrefix) =>
     r.data.allSitePage.edges = r.data.allSitePage.edges.filter(
       page =>
         !excludes.some(excludedRoute =>
-          minimatch(withoutTrailingSlash(page.node.path), excludedRoute)
+          minimatch(
+            withoutTrailingSlash(page.node.path),
+            withoutTrailingSlash(excludedRoute)
+          )
         )
     )
 
