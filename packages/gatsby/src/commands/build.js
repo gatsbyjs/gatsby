@@ -1,5 +1,6 @@
 /* @flow */
 const path = require(`path`)
+const fs = require(`fs-extra`)
 const report = require(`gatsby-cli/lib/reporter`)
 const buildHTML = require(`./build-html`)
 const buildProductionBundle = require(`./build-javascript`)
@@ -193,7 +194,39 @@ module.exports = async function build(program: BuildArgs) {
   workerPool.end()
   buildActivity.end()
   if (incrementalBuild && process.argv.indexOf(`--log-pages`) > -1) {
-    console.log(`incrementalBuildPages:${pagePaths.join(`|`)}`)
-    console.log(`incrementalBuildDeletedPages:${deletedPageKeys.join(`|`)}`)
+    if (pagePaths.length) {
+      report.info(
+        `Incremental build pages:\n${pagePaths.map(
+          path => `Updated page: ${path}\n`
+        )}`.replace(/,/g, ``)
+      )
+    }
+    if (deletedPageKeys.length) {
+      report.info(
+        `Incremental build deleted pages:\n${deletedPageKeys.map(
+          path => `Deleted page: ${path}\n`
+        )}`.replace(/,/g, ``)
+      )
+    }
+  }
+
+  if (incrementalBuild && process.argv.indexOf(`--write-to-file`) > -1) {
+    const createdFilesPath = path.resolve(
+      `${program.directory}/.cache`,
+      `newPages.txt`
+    )
+    const deletedFilesPath = path.resolve(
+      `${program.directory}/.cache`,
+      `deletedPages.txt`
+    )
+
+    if (pagePaths.length) {
+      fs.writeFileSync(createdFilesPath, pagePaths.join(`\n`), `utf8`)
+      report.info(`newPages.txt created`)
+    }
+    if (deletedPageKeys.length) {
+      fs.writeFileSync(deletedFilesPath, deletedPageKeys.join(`\n`), `utf8`)
+      report.info(`deletedPages.txt created`)
+    }
   }
 }
