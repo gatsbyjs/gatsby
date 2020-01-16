@@ -1,5 +1,5 @@
 ---
-title: Incremental builds
+title: Incremental Builds
 ---
 
 Currently, to ensure all pages are in sync with the latest content from content sources/CMS, a `gatsby build` requires Gatsby to repopulate the pages by rebuilding all the static assets such as HTML pages and page-data.json ready for deployment. On sites that are relatively small, this approach is fine. For larger heavy content sites that require continuous deployment, an incremental build can speed up your deployments by building only the pages that have been updated by the CMS.
