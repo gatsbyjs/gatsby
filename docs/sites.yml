@@ -7122,7 +7122,7 @@
   featured: false
 - title: Recetas El Universo
   description: >-
-    Recipes and videos with the best of Ecuadorian cuisine. 
+    Recipes and videos with the best of Ecuadorian cuisine.
     Collectable recipes from Diario El Universo.
   main_url: "https://recetas-eu.netlify.com/"
   url: "https://recetas-eu.netlify.com/"
@@ -9114,8 +9114,8 @@
   featured: false
 - title: Reeemoter
   description: >-
-    Join thousands of developers from everywhere and access to job 
-    offers from hundreds of companies worldwide right 
+    Join thousands of developers from everywhere and access to job
+    offers from hundreds of companies worldwide right
     at your inbox for free.
   main_url: "https://reeemoter.com/"
   url: "https://reeemoter.com/"
@@ -9326,6 +9326,19 @@
   built_by: Grupo Fleury
   built_by_url: http://www.grupofleury.com.br/
   featured: false
+- title: Mallikarjun Katakol Photography
+  main_url: https://mallik.in
+  url: https://mallik.in
+  built_by: Arvind Kumar
+  built_by_url: "https://arvind.io/"
+  description: >
+    Mallikarjun Katakol is an Advertising, Architecture, Editorial, Fashion and Lifestyle Photographer based in Bangalore, India.
+    Shoots Corporate & Business headshots, Portfolios for Models and Actors, Documents Projects for Architects, Fashion & Interior Designers
+  featured: false
+  categories:
+    - Gallery
+    - Photography
+    - Portfolio
 - title: gatsby-animate-blog
   url: https://gatsby-animate-blog.luffyzh.now.sh/
   main_url: https://gatsby-animate-blog.luffyzh.now.sh/home
