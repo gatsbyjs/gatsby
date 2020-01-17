@@ -1,0 +1,32 @@
+{
+  "name": "gatsby-plugin-benchmark-reporting",
+  "description": "Gatsby Benchmark Reporting",
+  "version": "0.0.0",
+  "author": "Peter van der Zee <pvdz@github>",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-plugin-benchmark-reporting"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-benchmark-reporting#readme",
+  "devDependencies": {
+    "babel-preset-gatsby-package": "^0.2.15"
+  },
+  "dependencies": {
+    "fast-glob": "^3.1.1",
+    "node-fetch": "^2.6.0",
+    "uuid": "^3.3.3"
+  },
+  "scripts": {
+    "build": "babel src --out-dir . --ignore **/__tests__",
+    "prepare": "cross-env NODE_ENV=production npm run build",
+    "watch": "babel -w src --out-dir . --ignore **/__tests__"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  }
+}
