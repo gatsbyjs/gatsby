@@ -31,18 +31,16 @@ If you're building a website, Gatsby puts an end to traffic-spike-induced downti
 Gatsby sites are simply files that can be pushed to a CDN like Cloudflare or Netlify or AWS Cloudfront. And CDNs are much less likely to go down.
 
 ## A site that's always ready for your guests
+Brian Webster, co-founder of the LA-based Delicious Simplicity, compares how Gatsby builds the site ahead-of-time to being a good party host.
 
-Brian Webster, founder/CEO of the LA-based, design-focused agency Delicious Simplicity, compares how Gatsby builds the site ahead-of-time to being a good party host.
+"We think of websites as a big event or party and visitors as our guests," says Webster. "So not pre-building and assembling web pages at request time would be the equivalent of setting up your party when the guests arrive. Why would we do that on their time?"
 
-"We think of our websites sort of as a big event or a big party and everyone coming to visit it are our guests," says Webster. "So not pre-building and assembling web pages on the fly at request time would kind of be like the equivalent of setting up your party when your guests show up. Why would we doing that on their time?"
-
-"As site owners, it's becoming more and more our responsibility to say, 'Hey, how much of this stuff can we get done before our guests show up?' Especially when we know what they're going to come and look at. Which means if we're expecting 10 people at our party or 10 thousand people show up, we're equipped to scale."
+"As site owners, it's becoming more and more our responsibility to ask, 'Hey, how much can we get done before our guests get here?' Especially when we know what they might look at. In many cases, we may prebuild the entire website." 
 
 In a world where website visitors are a source of revenue or donations, Webster points out, time is money, and traffic spikes from publicity, email newsletter blasts, should be taken advantage of rather than worried about.
 
-Wester again:
-
-"We never want our best day to be our worst day -- the site going down, or becoming slow," he says. "But with [Gatsby], everything's prebuilt. Scale is cheap, easy. I think that's just really great for your best day to be your best day and to get as many of those donations as you can."
+Webster again:
+"We never want our best day to be our worst day - the site going down, or becoming slow," he says. "But with [Gatsby], everything's prebuilt. Scale is cheap, easy. If we're expecting 10 people at our party and 10 thousand show up, we're well equipped.
 
 ## No more clearing caches and hoping for the best
 
