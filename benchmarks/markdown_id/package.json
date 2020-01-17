@@ -6,7 +6,7 @@
   "author": "PvdZ <pvdz@github>",
   "dependencies": {
     "del-cli": "^3.0.0",
-    "gatsby": "*",
+    "gatsby": ">=2.1.0",
     "gatsby-image": "*",
     "gatsby-plugin-feed": "*",
     "gatsby-plugin-google-analytics": "*",

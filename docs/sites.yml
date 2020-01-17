@@ -9363,4 +9363,16 @@
     - Finance
   built_by: Pagepro
   built_by_url: https://pagepro.co
+    featured: false
+- title: GIS-Netzwerk
+  url: https://www.gis-netzwerk.com/
+  main_url: https://www.gis-netzwerk.com/
+  description: >
+    Geoinformatik, GIS, Web-Development.
+  categories:
+    - Blog
+    - Data
+    - Technology
+  built_by: Max Dietrich
+  built_by_url: https://www.gis-netzwerk.com/
   featured: false
