@@ -67,6 +67,7 @@ OutboundLink.propTypes = {
   eventCategory: PropTypes.string,
   eventAction: PropTypes.string,
   eventLabel: PropTypes.string,
+  eventValue: PropTypes.number,
   onClick: PropTypes.func,
 }
 
