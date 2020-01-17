@@ -40,7 +40,7 @@ const handleComponentsWithRemovedQueries = (
   // If a component had static query and it doesn't have it
   // anymore - update the store
   staticQueryComponents.forEach(c => {
-    if (c.query !== `` && !queries.has(c.componentPath)) {
+    if (c.query?.text !== `` && !queries.has(c.componentPath)) {
       debug(`Static query was removed from ${c.componentPath}`)
       store.dispatch({
         type: `REMOVE_STATIC_QUERY`,
@@ -59,7 +59,8 @@ const handleQuery = (
   // If this is a static query
   // Add action / reducer + watch staticquery files
   if (query.isStaticQuery) {
-    const oldQuery = staticQueryComponents.get(query.id)
+    const staticQueryComponent = staticQueryComponents.get(query.id)
+    const oldQuery = staticQueryComponent?.query
     const isNewQuery = !oldQuery
 
     // Compare query text because text is compiled query with any attached
@@ -70,13 +71,13 @@ const handleQuery = (
     if (
       isNewQuery ||
       oldQuery.hash !== query.hash ||
-      oldQuery.query !== query.text
+      oldQuery.text !== query.text
     ) {
       boundActionCreators.replaceStaticQuery({
         name: query.name,
         componentPath: query.path,
         id: query.id,
-        query: query.text,
+        query,
         hash: query.hash,
       })
 
@@ -112,7 +113,7 @@ const updateStateAndRunQueries = (isFirstRun, { parentSpan } = {}) => {
     components.forEach(c =>
       boundActionCreators.queryExtracted({
         componentPath: c.componentPath,
-        query: queries.get(c.componentPath)?.text || ``,
+        query: queries.get(c.componentPath),
       })
     )
 

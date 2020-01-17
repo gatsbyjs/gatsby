@@ -23,7 +23,7 @@ module.exports = (state = new Map(), action) => {
       if (!services.has(action.payload.componentPath)) {
         const machine = componentMachine.withContext({
           componentPath: action.payload.componentPath,
-          query: state.get(action.payload.componentPath)?.query || ``,
+          query: state.get(action.payload.componentPath)?.query,
           pages: new Set([action.payload.path]),
           isInBootstrap: programStatus === `BOOTSTRAPPING`,
         })
@@ -52,7 +52,7 @@ module.exports = (state = new Map(), action) => {
         action.payload.componentPath,
         Object.assign(
           {
-            query: ``,
+            query: undefined,
           },
           service.state.context
         )
@@ -69,7 +69,8 @@ module.exports = (state = new Map(), action) => {
       }
 
       // Check if the query has changed or not.
-      if (service.state.context.query === action.payload.query) {
+      const queryText = service.state.context.query?.text
+      if (queryText === action.payload.query.text) {
         service.send(`QUERY_DID_NOT_CHANGE`)
       } else {
         service.send({

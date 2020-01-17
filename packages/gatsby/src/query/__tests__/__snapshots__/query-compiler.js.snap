@@ -3,6 +3,167 @@
 exports[`actual compiling accepts identical fragment definitions 1`] = `
 Map {
   "mockFile" => Object {
+    "document": Object {
+      "definitions": Array [
+        Object {
+          "directives": Array [],
+          "kind": "FragmentDefinition",
+          "loc": Object {
+            "end": 215,
+            "start": 151,
+          },
+          "name": Object {
+            "kind": "Name",
+            "loc": Object {
+              "end": 177,
+              "start": 160,
+            },
+            "value": "PostsJsonFragment",
+          },
+          "selectionSet": Object {
+            "kind": "SelectionSet",
+            "loc": Object {
+              "end": 215,
+              "start": 191,
+            },
+            "selections": Array [
+              Object {
+                "alias": undefined,
+                "arguments": Array [],
+                "directives": Array [],
+                "kind": "Field",
+                "loc": Object {
+                  "end": 205,
+                  "start": 203,
+                },
+                "name": Object {
+                  "kind": "Name",
+                  "loc": Object {
+                    "end": 205,
+                    "start": 203,
+                  },
+                  "value": "id",
+                },
+                "selectionSet": undefined,
+              },
+            ],
+          },
+          "typeCondition": Object {
+            "kind": "NamedType",
+            "loc": Object {
+              "end": 190,
+              "start": 181,
+            },
+            "name": Object {
+              "kind": "Name",
+              "loc": Object {
+                "end": 190,
+                "start": 181,
+              },
+              "value": "PostsJson",
+            },
+          },
+        },
+        Object {
+          "directives": Array [],
+          "kind": "OperationDefinition",
+          "loc": Object {
+            "end": 141,
+            "start": 0,
+          },
+          "name": Object {
+            "kind": "Name",
+            "loc": Object {
+              "end": 19,
+              "start": 6,
+            },
+            "value": "mockFileQuery",
+          },
+          "operation": "query",
+          "selectionSet": Object {
+            "kind": "SelectionSet",
+            "loc": Object {
+              "end": 141,
+              "start": 20,
+            },
+            "selections": Array [
+              Object {
+                "alias": undefined,
+                "arguments": Array [],
+                "directives": Array [],
+                "kind": "Field",
+                "loc": Object {
+                  "end": 131,
+                  "start": 33,
+                },
+                "name": Object {
+                  "kind": "Name",
+                  "loc": Object {
+                    "end": 45,
+                    "start": 33,
+                  },
+                  "value": "allPostsJson",
+                },
+                "selectionSet": Object {
+                  "kind": "SelectionSet",
+                  "loc": Object {
+                    "end": 131,
+                    "start": 46,
+                  },
+                  "selections": Array [
+                    Object {
+                      "alias": undefined,
+                      "arguments": Array [],
+                      "directives": Array [],
+                      "kind": "Field",
+                      "loc": Object {
+                        "end": 119,
+                        "start": 61,
+                      },
+                      "name": Object {
+                        "kind": "Name",
+                        "loc": Object {
+                          "end": 66,
+                          "start": 61,
+                        },
+                        "value": "nodes",
+                      },
+                      "selectionSet": Object {
+                        "kind": "SelectionSet",
+                        "loc": Object {
+                          "end": 119,
+                          "start": 67,
+                        },
+                        "selections": Array [
+                          Object {
+                            "directives": Array [],
+                            "kind": "FragmentSpread",
+                            "loc": Object {
+                              "end": 104,
+                              "start": 84,
+                            },
+                            "name": Object {
+                              "kind": "Name",
+                              "loc": Object {
+                                "end": 104,
+                                "start": 87,
+                              },
+                              "value": "PostsJsonFragment",
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+          "variableDefinitions": Array [],
+        },
+      ],
+      "kind": "Document",
+    },
     "hash": "hash",
     "isHook": false,
     "isStaticQuery": false,
@@ -37,6 +198,167 @@ query mockFileQuery {
 
 exports[`actual compiling adds fragments from different documents 1`] = `
 Object {
+  "document": Object {
+    "definitions": Array [
+      Object {
+        "directives": Array [],
+        "kind": "FragmentDefinition",
+        "loc": Object {
+          "end": 69,
+          "start": 0,
+        },
+        "name": Object {
+          "kind": "Name",
+          "loc": Object {
+            "end": 26,
+            "start": 9,
+          },
+          "value": "PostsJsonFragment",
+        },
+        "selectionSet": Object {
+          "kind": "SelectionSet",
+          "loc": Object {
+            "end": 69,
+            "start": 40,
+          },
+          "selections": Array [
+            Object {
+              "alias": undefined,
+              "arguments": Array [],
+              "directives": Array [],
+              "kind": "Field",
+              "loc": Object {
+                "end": 57,
+                "start": 55,
+              },
+              "name": Object {
+                "kind": "Name",
+                "loc": Object {
+                  "end": 57,
+                  "start": 55,
+                },
+                "value": "id",
+              },
+              "selectionSet": undefined,
+            },
+          ],
+        },
+        "typeCondition": Object {
+          "kind": "NamedType",
+          "loc": Object {
+            "end": 39,
+            "start": 30,
+          },
+          "name": Object {
+            "kind": "Name",
+            "loc": Object {
+              "end": 39,
+              "start": 30,
+            },
+            "value": "PostsJson",
+          },
+        },
+      },
+      Object {
+        "directives": Array [],
+        "kind": "OperationDefinition",
+        "loc": Object {
+          "end": 153,
+          "start": 0,
+        },
+        "name": Object {
+          "kind": "Name",
+          "loc": Object {
+            "end": 19,
+            "start": 6,
+          },
+          "value": "mockFileQuery",
+        },
+        "operation": "query",
+        "selectionSet": Object {
+          "kind": "SelectionSet",
+          "loc": Object {
+            "end": 153,
+            "start": 20,
+          },
+          "selections": Array [
+            Object {
+              "alias": undefined,
+              "arguments": Array [],
+              "directives": Array [],
+              "kind": "Field",
+              "loc": Object {
+                "end": 141,
+                "start": 35,
+              },
+              "name": Object {
+                "kind": "Name",
+                "loc": Object {
+                  "end": 47,
+                  "start": 35,
+                },
+                "value": "allPostsJson",
+              },
+              "selectionSet": Object {
+                "kind": "SelectionSet",
+                "loc": Object {
+                  "end": 141,
+                  "start": 48,
+                },
+                "selections": Array [
+                  Object {
+                    "alias": undefined,
+                    "arguments": Array [],
+                    "directives": Array [],
+                    "kind": "Field",
+                    "loc": Object {
+                      "end": 127,
+                      "start": 65,
+                    },
+                    "name": Object {
+                      "kind": "Name",
+                      "loc": Object {
+                        "end": 70,
+                        "start": 65,
+                      },
+                      "value": "nodes",
+                    },
+                    "selectionSet": Object {
+                      "kind": "SelectionSet",
+                      "loc": Object {
+                        "end": 127,
+                        "start": 71,
+                      },
+                      "selections": Array [
+                        Object {
+                          "directives": Array [],
+                          "kind": "FragmentSpread",
+                          "loc": Object {
+                            "end": 110,
+                            "start": 90,
+                          },
+                          "name": Object {
+                            "kind": "Name",
+                            "loc": Object {
+                              "end": 110,
+                              "start": 93,
+                            },
+                            "value": "PostsJsonFragment",
+                          },
+                        },
+                      ],
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+        },
+        "variableDefinitions": Array [],
+      },
+    ],
+    "kind": "Document",
+  },
   "hash": "hash",
   "isHook": false,
   "isStaticQuery": false,
@@ -66,6 +388,167 @@ query mockFileQuery {
 
 exports[`actual compiling adds fragments from same documents 1`] = `
 Object {
+  "document": Object {
+    "definitions": Array [
+      Object {
+        "directives": Array [],
+        "kind": "FragmentDefinition",
+        "loc": Object {
+          "end": 233,
+          "start": 165,
+        },
+        "name": Object {
+          "kind": "Name",
+          "loc": Object {
+            "end": 191,
+            "start": 174,
+          },
+          "value": "PostsJsonFragment",
+        },
+        "selectionSet": Object {
+          "kind": "SelectionSet",
+          "loc": Object {
+            "end": 233,
+            "start": 205,
+          },
+          "selections": Array [
+            Object {
+              "alias": undefined,
+              "arguments": Array [],
+              "directives": Array [],
+              "kind": "Field",
+              "loc": Object {
+                "end": 221,
+                "start": 219,
+              },
+              "name": Object {
+                "kind": "Name",
+                "loc": Object {
+                  "end": 221,
+                  "start": 219,
+                },
+                "value": "id",
+              },
+              "selectionSet": undefined,
+            },
+          ],
+        },
+        "typeCondition": Object {
+          "kind": "NamedType",
+          "loc": Object {
+            "end": 204,
+            "start": 195,
+          },
+          "name": Object {
+            "kind": "Name",
+            "loc": Object {
+              "end": 204,
+              "start": 195,
+            },
+            "value": "PostsJson",
+          },
+        },
+      },
+      Object {
+        "directives": Array [],
+        "kind": "OperationDefinition",
+        "loc": Object {
+          "end": 153,
+          "start": 0,
+        },
+        "name": Object {
+          "kind": "Name",
+          "loc": Object {
+            "end": 19,
+            "start": 6,
+          },
+          "value": "mockFileQuery",
+        },
+        "operation": "query",
+        "selectionSet": Object {
+          "kind": "SelectionSet",
+          "loc": Object {
+            "end": 153,
+            "start": 20,
+          },
+          "selections": Array [
+            Object {
+              "alias": undefined,
+              "arguments": Array [],
+              "directives": Array [],
+              "kind": "Field",
+              "loc": Object {
+                "end": 141,
+                "start": 35,
+              },
+              "name": Object {
+                "kind": "Name",
+                "loc": Object {
+                  "end": 47,
+                  "start": 35,
+                },
+                "value": "allPostsJson",
+              },
+              "selectionSet": Object {
+                "kind": "SelectionSet",
+                "loc": Object {
+                  "end": 141,
+                  "start": 48,
+                },
+                "selections": Array [
+                  Object {
+                    "alias": undefined,
+                    "arguments": Array [],
+                    "directives": Array [],
+                    "kind": "Field",
+                    "loc": Object {
+                      "end": 127,
+                      "start": 65,
+                    },
+                    "name": Object {
+                      "kind": "Name",
+                      "loc": Object {
+                        "end": 70,
+                        "start": 65,
+                      },
+                      "value": "nodes",
+                    },
+                    "selectionSet": Object {
+                      "kind": "SelectionSet",
+                      "loc": Object {
+                        "end": 127,
+                        "start": 71,
+                      },
+                      "selections": Array [
+                        Object {
+                          "directives": Array [],
+                          "kind": "FragmentSpread",
+                          "loc": Object {
+                            "end": 110,
+                            "start": 90,
+                          },
+                          "name": Object {
+                            "kind": "Name",
+                            "loc": Object {
+                              "end": 110,
+                              "start": 93,
+                            },
+                            "value": "PostsJsonFragment",
+                          },
+                        },
+                      ],
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+        },
+        "variableDefinitions": Array [],
+      },
+    ],
+    "kind": "Document",
+  },
   "hash": "hash",
   "isHook": false,
   "isStaticQuery": false,
@@ -99,6 +582,111 @@ query mockFileQuery {
 
 exports[`actual compiling compiles a query 1`] = `
 Object {
+  "document": Object {
+    "definitions": Array [
+      Object {
+        "directives": Array [],
+        "kind": "OperationDefinition",
+        "loc": Object {
+          "end": 135,
+          "start": 0,
+        },
+        "name": Object {
+          "kind": "Name",
+          "loc": Object {
+            "end": 19,
+            "start": 6,
+          },
+          "value": "mockFileQuery",
+        },
+        "operation": "query",
+        "selectionSet": Object {
+          "kind": "SelectionSet",
+          "loc": Object {
+            "end": 135,
+            "start": 20,
+          },
+          "selections": Array [
+            Object {
+              "alias": undefined,
+              "arguments": Array [],
+              "directives": Array [],
+              "kind": "Field",
+              "loc": Object {
+                "end": 123,
+                "start": 35,
+              },
+              "name": Object {
+                "kind": "Name",
+                "loc": Object {
+                  "end": 47,
+                  "start": 35,
+                },
+                "value": "allPostsJson",
+              },
+              "selectionSet": Object {
+                "kind": "SelectionSet",
+                "loc": Object {
+                  "end": 123,
+                  "start": 48,
+                },
+                "selections": Array [
+                  Object {
+                    "alias": undefined,
+                    "arguments": Array [],
+                    "directives": Array [],
+                    "kind": "Field",
+                    "loc": Object {
+                      "end": 109,
+                      "start": 65,
+                    },
+                    "name": Object {
+                      "kind": "Name",
+                      "loc": Object {
+                        "end": 70,
+                        "start": 65,
+                      },
+                      "value": "nodes",
+                    },
+                    "selectionSet": Object {
+                      "kind": "SelectionSet",
+                      "loc": Object {
+                        "end": 109,
+                        "start": 71,
+                      },
+                      "selections": Array [
+                        Object {
+                          "alias": undefined,
+                          "arguments": Array [],
+                          "directives": Array [],
+                          "kind": "Field",
+                          "loc": Object {
+                            "end": 92,
+                            "start": 90,
+                          },
+                          "name": Object {
+                            "kind": "Name",
+                            "loc": Object {
+                              "end": 92,
+                              "start": 90,
+                            },
+                            "value": "id",
+                          },
+                          "selectionSet": undefined,
+                        },
+                      ],
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+        },
+        "variableDefinitions": Array [],
+      },
+    ],
+    "kind": "Document",
+  },
   "hash": "hash",
   "isHook": false,
   "isStaticQuery": false,
@@ -124,6 +712,111 @@ Object {
 
 exports[`actual compiling compiles static query 1`] = `
 Object {
+  "document": Object {
+    "definitions": Array [
+      Object {
+        "directives": Array [],
+        "kind": "OperationDefinition",
+        "loc": Object {
+          "end": 135,
+          "start": 0,
+        },
+        "name": Object {
+          "kind": "Name",
+          "loc": Object {
+            "end": 19,
+            "start": 6,
+          },
+          "value": "mockFileQuery",
+        },
+        "operation": "query",
+        "selectionSet": Object {
+          "kind": "SelectionSet",
+          "loc": Object {
+            "end": 135,
+            "start": 20,
+          },
+          "selections": Array [
+            Object {
+              "alias": undefined,
+              "arguments": Array [],
+              "directives": Array [],
+              "kind": "Field",
+              "loc": Object {
+                "end": 123,
+                "start": 35,
+              },
+              "name": Object {
+                "kind": "Name",
+                "loc": Object {
+                  "end": 47,
+                  "start": 35,
+                },
+                "value": "allPostsJson",
+              },
+              "selectionSet": Object {
+                "kind": "SelectionSet",
+                "loc": Object {
+                  "end": 123,
+                  "start": 48,
+                },
+                "selections": Array [
+                  Object {
+                    "alias": undefined,
+                    "arguments": Array [],
+                    "directives": Array [],
+                    "kind": "Field",
+                    "loc": Object {
+                      "end": 109,
+                      "start": 65,
+                    },
+                    "name": Object {
+                      "kind": "Name",
+                      "loc": Object {
+                        "end": 70,
+                        "start": 65,
+                      },
+                      "value": "nodes",
+                    },
+                    "selectionSet": Object {
+                      "kind": "SelectionSet",
+                      "loc": Object {
+                        "end": 109,
+                        "start": 71,
+                      },
+                      "selections": Array [
+                        Object {
+                          "alias": undefined,
+                          "arguments": Array [],
+                          "directives": Array [],
+                          "kind": "Field",
+                          "loc": Object {
+                            "end": 92,
+                            "start": 90,
+                          },
+                          "name": Object {
+                            "kind": "Name",
+                            "loc": Object {
+                              "end": 92,
+                              "start": 90,
+                            },
+                            "value": "id",
+                          },
+                          "selectionSet": undefined,
+                        },
+                      ],
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+        },
+        "variableDefinitions": Array [],
+      },
+    ],
+    "kind": "Document",
+  },
   "hash": "hash",
   "id": Any<String>,
   "isHook": undefined,
@@ -183,6 +876,111 @@ Array [
 exports[`actual compiling errors on double root 2`] = `
 Map {
   "mockFile" => Object {
+    "document": Object {
+      "definitions": Array [
+        Object {
+          "directives": Array [],
+          "kind": "OperationDefinition",
+          "loc": Object {
+            "end": 135,
+            "start": 0,
+          },
+          "name": Object {
+            "kind": "Name",
+            "loc": Object {
+              "end": 19,
+              "start": 6,
+            },
+            "value": "mockFileQuery",
+          },
+          "operation": "query",
+          "selectionSet": Object {
+            "kind": "SelectionSet",
+            "loc": Object {
+              "end": 135,
+              "start": 20,
+            },
+            "selections": Array [
+              Object {
+                "alias": undefined,
+                "arguments": Array [],
+                "directives": Array [],
+                "kind": "Field",
+                "loc": Object {
+                  "end": 123,
+                  "start": 35,
+                },
+                "name": Object {
+                  "kind": "Name",
+                  "loc": Object {
+                    "end": 47,
+                    "start": 35,
+                  },
+                  "value": "allPostsJson",
+                },
+                "selectionSet": Object {
+                  "kind": "SelectionSet",
+                  "loc": Object {
+                    "end": 123,
+                    "start": 48,
+                  },
+                  "selections": Array [
+                    Object {
+                      "alias": undefined,
+                      "arguments": Array [],
+                      "directives": Array [],
+                      "kind": "Field",
+                      "loc": Object {
+                        "end": 109,
+                        "start": 65,
+                      },
+                      "name": Object {
+                        "kind": "Name",
+                        "loc": Object {
+                          "end": 70,
+                          "start": 65,
+                        },
+                        "value": "nodes",
+                      },
+                      "selectionSet": Object {
+                        "kind": "SelectionSet",
+                        "loc": Object {
+                          "end": 109,
+                          "start": 71,
+                        },
+                        "selections": Array [
+                          Object {
+                            "alias": undefined,
+                            "arguments": Array [],
+                            "directives": Array [],
+                            "kind": "Field",
+                            "loc": Object {
+                              "end": 92,
+                              "start": 90,
+                            },
+                            "name": Object {
+                              "kind": "Name",
+                              "loc": Object {
+                                "end": 92,
+                                "start": 90,
+                              },
+                              "value": "id",
+                            },
+                            "selectionSet": undefined,
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+          "variableDefinitions": Array [],
+        },
+      ],
+      "kind": "Document",
+    },
     "hash": "hash",
     "isHook": false,
     "isStaticQuery": false,
@@ -217,6 +1015,242 @@ Map {
 
 exports[`actual compiling handles fragments that use other fragments 1`] = `
 Object {
+  "document": Object {
+    "definitions": Array [
+      Object {
+        "directives": Array [],
+        "kind": "FragmentDefinition",
+        "loc": Object {
+          "end": 110,
+          "start": 0,
+        },
+        "name": Object {
+          "kind": "Name",
+          "loc": Object {
+            "end": 26,
+            "start": 9,
+          },
+          "value": "PostsJsonFragment",
+        },
+        "selectionSet": Object {
+          "kind": "SelectionSet",
+          "loc": Object {
+            "end": 110,
+            "start": 40,
+          },
+          "selections": Array [
+            Object {
+              "alias": undefined,
+              "arguments": Array [],
+              "directives": Array [],
+              "kind": "Field",
+              "loc": Object {
+                "end": 57,
+                "start": 55,
+              },
+              "name": Object {
+                "kind": "Name",
+                "loc": Object {
+                  "end": 57,
+                  "start": 55,
+                },
+                "value": "id",
+              },
+              "selectionSet": undefined,
+            },
+            Object {
+              "directives": Array [],
+              "kind": "FragmentSpread",
+              "loc": Object {
+                "end": 98,
+                "start": 71,
+              },
+              "name": Object {
+                "kind": "Name",
+                "loc": Object {
+                  "end": 98,
+                  "start": 74,
+                },
+                "value": "AnotherPostsJsonFragment",
+              },
+            },
+          ],
+        },
+        "typeCondition": Object {
+          "kind": "NamedType",
+          "loc": Object {
+            "end": 39,
+            "start": 30,
+          },
+          "name": Object {
+            "kind": "Name",
+            "loc": Object {
+              "end": 39,
+              "start": 30,
+            },
+            "value": "PostsJson",
+          },
+        },
+      },
+      Object {
+        "directives": Array [],
+        "kind": "FragmentDefinition",
+        "loc": Object {
+          "end": 199,
+          "start": 122,
+        },
+        "name": Object {
+          "kind": "Name",
+          "loc": Object {
+            "end": 155,
+            "start": 131,
+          },
+          "value": "AnotherPostsJsonFragment",
+        },
+        "selectionSet": Object {
+          "kind": "SelectionSet",
+          "loc": Object {
+            "end": 199,
+            "start": 169,
+          },
+          "selections": Array [
+            Object {
+              "alias": undefined,
+              "arguments": Array [],
+              "directives": Array [],
+              "kind": "Field",
+              "loc": Object {
+                "end": 187,
+                "start": 183,
+              },
+              "name": Object {
+                "kind": "Name",
+                "loc": Object {
+                  "end": 187,
+                  "start": 183,
+                },
+                "value": "text",
+              },
+              "selectionSet": undefined,
+            },
+          ],
+        },
+        "typeCondition": Object {
+          "kind": "NamedType",
+          "loc": Object {
+            "end": 168,
+            "start": 159,
+          },
+          "name": Object {
+            "kind": "Name",
+            "loc": Object {
+              "end": 168,
+              "start": 159,
+            },
+            "value": "PostsJson",
+          },
+        },
+      },
+      Object {
+        "directives": Array [],
+        "kind": "OperationDefinition",
+        "loc": Object {
+          "end": 153,
+          "start": 0,
+        },
+        "name": Object {
+          "kind": "Name",
+          "loc": Object {
+            "end": 19,
+            "start": 6,
+          },
+          "value": "mockFileQuery",
+        },
+        "operation": "query",
+        "selectionSet": Object {
+          "kind": "SelectionSet",
+          "loc": Object {
+            "end": 153,
+            "start": 20,
+          },
+          "selections": Array [
+            Object {
+              "alias": undefined,
+              "arguments": Array [],
+              "directives": Array [],
+              "kind": "Field",
+              "loc": Object {
+                "end": 141,
+                "start": 35,
+              },
+              "name": Object {
+                "kind": "Name",
+                "loc": Object {
+                  "end": 47,
+                  "start": 35,
+                },
+                "value": "allPostsJson",
+              },
+              "selectionSet": Object {
+                "kind": "SelectionSet",
+                "loc": Object {
+                  "end": 141,
+                  "start": 48,
+                },
+                "selections": Array [
+                  Object {
+                    "alias": undefined,
+                    "arguments": Array [],
+                    "directives": Array [],
+                    "kind": "Field",
+                    "loc": Object {
+                      "end": 127,
+                      "start": 65,
+                    },
+                    "name": Object {
+                      "kind": "Name",
+                      "loc": Object {
+                        "end": 70,
+                        "start": 65,
+                      },
+                      "value": "nodes",
+                    },
+                    "selectionSet": Object {
+                      "kind": "SelectionSet",
+                      "loc": Object {
+                        "end": 127,
+                        "start": 71,
+                      },
+                      "selections": Array [
+                        Object {
+                          "directives": Array [],
+                          "kind": "FragmentSpread",
+                          "loc": Object {
+                            "end": 110,
+                            "start": 90,
+                          },
+                          "name": Object {
+                            "kind": "Name",
+                            "loc": Object {
+                              "end": 110,
+                              "start": 93,
+                            },
+                            "value": "PostsJsonFragment",
+                          },
+                        },
+                      ],
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+        },
+        "variableDefinitions": Array [],
+      },
+    ],
+    "kind": "Document",
+  },
   "hash": "hash",
   "isHook": false,
   "isStaticQuery": false,
@@ -251,6 +1285,167 @@ query mockFileQuery {
 
 exports[`actual compiling removes unused fragments from documents 1`] = `
 Object {
+  "document": Object {
+    "definitions": Array [
+      Object {
+        "directives": Array [],
+        "kind": "FragmentDefinition",
+        "loc": Object {
+          "end": 233,
+          "start": 165,
+        },
+        "name": Object {
+          "kind": "Name",
+          "loc": Object {
+            "end": 191,
+            "start": 174,
+          },
+          "value": "PostsJsonFragment",
+        },
+        "selectionSet": Object {
+          "kind": "SelectionSet",
+          "loc": Object {
+            "end": 233,
+            "start": 205,
+          },
+          "selections": Array [
+            Object {
+              "alias": undefined,
+              "arguments": Array [],
+              "directives": Array [],
+              "kind": "Field",
+              "loc": Object {
+                "end": 221,
+                "start": 219,
+              },
+              "name": Object {
+                "kind": "Name",
+                "loc": Object {
+                  "end": 221,
+                  "start": 219,
+                },
+                "value": "id",
+              },
+              "selectionSet": undefined,
+            },
+          ],
+        },
+        "typeCondition": Object {
+          "kind": "NamedType",
+          "loc": Object {
+            "end": 204,
+            "start": 195,
+          },
+          "name": Object {
+            "kind": "Name",
+            "loc": Object {
+              "end": 204,
+              "start": 195,
+            },
+            "value": "PostsJson",
+          },
+        },
+      },
+      Object {
+        "directives": Array [],
+        "kind": "OperationDefinition",
+        "loc": Object {
+          "end": 153,
+          "start": 0,
+        },
+        "name": Object {
+          "kind": "Name",
+          "loc": Object {
+            "end": 19,
+            "start": 6,
+          },
+          "value": "mockFileQuery",
+        },
+        "operation": "query",
+        "selectionSet": Object {
+          "kind": "SelectionSet",
+          "loc": Object {
+            "end": 153,
+            "start": 20,
+          },
+          "selections": Array [
+            Object {
+              "alias": undefined,
+              "arguments": Array [],
+              "directives": Array [],
+              "kind": "Field",
+              "loc": Object {
+                "end": 141,
+                "start": 35,
+              },
+              "name": Object {
+                "kind": "Name",
+                "loc": Object {
+                  "end": 47,
+                  "start": 35,
+                },
+                "value": "allPostsJson",
+              },
+              "selectionSet": Object {
+                "kind": "SelectionSet",
+                "loc": Object {
+                  "end": 141,
+                  "start": 48,
+                },
+                "selections": Array [
+                  Object {
+                    "alias": undefined,
+                    "arguments": Array [],
+                    "directives": Array [],
+                    "kind": "Field",
+                    "loc": Object {
+                      "end": 127,
+                      "start": 65,
+                    },
+                    "name": Object {
+                      "kind": "Name",
+                      "loc": Object {
+                        "end": 70,
+                        "start": 65,
+                      },
+                      "value": "nodes",
+                    },
+                    "selectionSet": Object {
+                      "kind": "SelectionSet",
+                      "loc": Object {
+                        "end": 127,
+                        "start": 71,
+                      },
+                      "selections": Array [
+                        Object {
+                          "directives": Array [],
+                          "kind": "FragmentSpread",
+                          "loc": Object {
+                            "end": 110,
+                            "start": 90,
+                          },
+                          "name": Object {
+                            "kind": "Name",
+                            "loc": Object {
+                              "end": 110,
+                              "start": 93,
+                            },
+                            "value": "PostsJsonFragment",
+                          },
+                        },
+                      ],
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+        },
+        "variableDefinitions": Array [],
+      },
+    ],
+    "kind": "Document",
+  },
   "hash": "hash",
   "isHook": false,
   "isStaticQuery": false,

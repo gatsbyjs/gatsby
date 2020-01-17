@@ -18,21 +18,7 @@ class GraphQLRunner {
       createPageDependency,
     })
     this.schema = schema
-    this.parseCache = new Map()
     this.validDocuments = new WeakSet()
-    this.scheduleClearCache = debounce(this.clearCache.bind(this), 5000)
-  }
-
-  clearCache() {
-    this.parseCache.clear()
-    this.validDocuments = new WeakSet()
-  }
-
-  parse(query) {
-    if (!this.parseCache.has(query)) {
-      this.parseCache.set(query, parse(query))
-    }
-    return this.parseCache.get(query)
   }
 
   validate(schema, document) {
@@ -51,34 +37,31 @@ class GraphQLRunner {
 
     if (this.schema !== schema) {
       this.schema = schema
-      this.clearCache()
+      this.validDocuments = new WeakSet()
     }
 
-    const document = this.parse(query)
+    const document =
+      typeof query === `object` && query.kind === `Document`
+        ? query
+        : parse(query)
+
     const errors = this.validate(schema, document)
 
-    const result =
-      errors.length > 0
-        ? { errors }
-        : execute({
+    return errors.length > 0
+      ? { errors }
+      : execute({
+          schema,
+          document,
+          rootValue: context,
+          contextValue: withResolverContext({
             schema,
-            document,
-            rootValue: context,
-            contextValue: withResolverContext({
-              schema,
-              schemaComposer: schemaCustomization.composer,
-              context,
-              customContext: schemaCustomization.context,
-              nodeModel: this.nodeModel,
-            }),
-            variableValues: context,
-          })
-
-    // Queries are usually executed in batch. But after the batch is finished
-    // cache just wastes memory without much benefits.
-    // TODO: consider a better strategy for cache purging/invalidation
-    this.scheduleClearCache()
-    return result
+            schemaComposer: schemaCustomization.composer,
+            context,
+            customContext: schemaCustomization.context,
+            nodeModel: this.nodeModel,
+          }),
+          variableValues: context,
+        })
   }
 }
 

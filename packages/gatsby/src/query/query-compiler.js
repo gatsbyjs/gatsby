@@ -388,6 +388,7 @@ const processDefinitions = ({
     const query = {
       name,
       text: print(document),
+      document,
       originalText: originalDefinition.text,
       path: filePath,
       isHook: originalDefinition.isHook,

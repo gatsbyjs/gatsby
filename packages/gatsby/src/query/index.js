@@ -169,7 +169,8 @@ const createStaticQueryJob = (state, queryId) => {
   return {
     id: hash,
     hash,
-    query,
+    query: query?.text,
+    document: query?.document,
     componentPath,
     context: { path: id },
   }
@@ -270,7 +271,8 @@ const createPageQueryJob = (state, page) => {
   const { query } = component
   return {
     id: path,
-    query,
+    query: query?.text,
+    document: query?.document,
     isPage: true,
     componentPath,
     context: {

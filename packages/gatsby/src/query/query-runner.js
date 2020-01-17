@@ -16,6 +16,7 @@ type QueryJob = {
   id: string,
   hash?: string,
   query: string,
+  document: Object,
   componentPath: string,
   context: Object,
   isPage: Boolean,
@@ -25,16 +26,11 @@ type QueryJob = {
 module.exports = async (graphqlRunner, queryJob: QueryJob) => {
   const { program } = store.getState()
 
-  const graphql = (query, context) => graphqlRunner.query(query, context)
-
   // Run query
-  let result
   // Nothing to do if the query doesn't exist.
-  if (!queryJob.query || queryJob.query === ``) {
-    result = {}
-  } else {
-    result = await graphql(queryJob.query, queryJob.context)
-  }
+  const result = queryJob.document
+    ? await graphqlRunner.query(queryJob.document, queryJob.context)
+    : {}
 
   // If there's a graphql error then log the error. If we're building, also
   // quit.
