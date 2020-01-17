@@ -66,6 +66,46 @@ const findChildren = initialChildren => {
   return children
 }
 
+const alreadyTriggeredJobs = new Set()
+
+/**
+ * The jobs api will be called a lot of time during the gatsby process.
+ * A job can be queued multiple times with the same arguments. The job api
+ * is smart enought to only do the work once which means we should only run
+ * the end job redux action once. There is no need to run it on every cached promise
+ * as this will lead to doubling our promise creation.
+ */
+const wrapJobPromiseWithReduxActionOnFirstOccurence = ({
+  internalJob,
+  enqueuedJobPromise,
+  plugin,
+  dispatch,
+}) => {
+  if (alreadyTriggeredJobs.has(internalJob.contentDigest)) {
+    return enqueuedJobPromise
+  }
+
+  alreadyTriggeredJobs.add(internalJob.contentDigest)
+
+  return enqueuedJobPromise.then(result => {
+    // store the result in redux so we have it for the next run
+    dispatch({
+      type: `END_JOB_V2`,
+      plugin,
+      payload: {
+        job: internalJob,
+        result,
+      },
+    })
+
+    // remove the job from our inProgressJobQueue as it's available in our done state.
+    // this is a perf optimisations so we don't grow our memory too much when using gatsby preview
+    removeInProgressJob(internalJob.contentDigest)
+
+    return result
+  })
+}
+
 import type { Plugin } from "./types"
 
 type Job = {
@@ -1237,23 +1277,13 @@ actions.createJobV2 = (job: JobV2, plugin: Plugin) => (dispatch, getState) => {
     },
   })
 
-  // Queue the job for execution
-  return enqueueJob(internalJob).then(result => {
-    // store the result in redux so we have it for the next run
-    dispatch({
-      type: `END_JOB_V2`,
-      plugin,
-      payload: {
-        job: internalJob,
-        result,
-      },
-    })
-
-    // remove the job from our inProgressJobQueue as it's available in our done state.
-    // this is a perf optimisations so we don't grow our memory too much when using gatsby preview
-    removeInProgressJob(internalJob.contentDigest)
-
-    return result
+  const enqueuedJobPromise = enqueueJob(internalJob)
+  // Releases some memory pressure from Gatsby
+  return wrapJobPromiseWithReduxActionOnFirstOccurence({
+    internalJob,
+    enqueuedJobPromise,
+    plugin,
+    dispatch,
   })
 }
 
