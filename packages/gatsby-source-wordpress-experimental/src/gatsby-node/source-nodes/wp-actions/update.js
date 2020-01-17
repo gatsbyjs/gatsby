@@ -1,7 +1,6 @@
 import fetchGraphql from "../../../utils/fetch-graphql"
 import store from "../../../store"
 import formatLogMessage from "../../../utils/format-log-message"
-import { parse } from "url"
 import chalk from "chalk"
 
 const wpActionUPDATE = async ({
@@ -44,8 +43,8 @@ const wpActionUPDATE = async ({
 
   const updatedNodeContent = {
     ...data[wpAction.referencedPostSingularName],
-    contentType: wpAction.referencedPostSingularName,
-    path: parse(data[wpAction.referencedPostSingularName].link).pathname,
+    contentType: typeInfo.nodesTypeName,
+    type: typeInfo.nodesTypeName,
   }
 
   const { actions, getNode } = helpers

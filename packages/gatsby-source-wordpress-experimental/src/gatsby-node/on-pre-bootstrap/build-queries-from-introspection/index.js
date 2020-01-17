@@ -13,6 +13,7 @@ import {
 
 import store from "../../../store"
 import formatLogMessage from "../../../utils/format-log-message"
+import { getTypeSettingsByType } from "../../create-schema-customization/index"
 
 /**
  * generateQueriesFromIntrospection
@@ -33,15 +34,25 @@ const generateQueriesFromIntrospection = async introspectionData => {
   const typeMap = new Map(types.map(type => [type.name, type]))
   const rootFields = typeMap.get(`RootQuery`).fields
 
+  const nodeInterfaceFields = []
+
   // find root fields that are lists of nodes.
   const nodeListFields = rootFields.filter(field => {
-    if (field.type.kind !== `OBJECT` && field.type.kind !== `INTERFACE`) {
+    if (field.type.kind !== `OBJECT`) {
       return false
     }
 
     const type = typeMap.get(field.type.name)
 
-    return type && type.fields.find(nodeListFilter)
+    const nodeField = type.fields.find(nodeListFilter)
+
+    if (nodeField && nodeField.type.ofType.kind === `INTERFACE`) {
+      nodeInterfaceFields.push(type)
+
+      return false
+    }
+
+    return type && nodeField
   })
 
   const nodeListFieldNames = nodeListFields.map(field => field.name)
@@ -65,7 +76,6 @@ const generateQueriesFromIntrospection = async introspectionData => {
   // https://github.com/wp-graphql/wp-graphql/issues/928
   const {
     url,
-    type: typeOptions,
     schema: { queryDepth },
   } = pluginOptions
   const {
@@ -91,22 +101,11 @@ const generateQueriesFromIntrospection = async introspectionData => {
 
     const { fields } = nodesType
 
-    /**
-     * plugin settings for this type
-     * For example:
-     * {
-      resolve: `gatsby-source-wordpress-experimental`,
-      options: {
-        url: `http://gatsbysourcewordpressv4.local/graphql`,
-        type: {
-          Page: { // <-- this object
-            limit: 10,
-          },
-        },
-      },
-    },
-     */
-    const settings = typeOptions[nodesType.name] || {}
+    const settings = getTypeSettingsByType(nodesType.name)
+
+    if (settings.nodeInterface || settings.exclude) {
+      continue
+    }
 
     const singleTypeInfo = rootFields.find(
       field => field.type.name === nodesType.name

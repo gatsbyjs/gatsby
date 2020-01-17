@@ -1,5 +1,4 @@
 import { resolve } from "path"
-import urlToPath from "../utils/url-to-path"
 import getTemplates from "../utils/get-templates"
 import gql from "../utils/gql"
 
@@ -44,7 +43,7 @@ export default async ({ actions, graphql }) => {
       query ALL_CONTENT_NODES {
         ${gatsbyNodeListFieldName} {
           nodes {
-            link
+            uri
             id
           }
         }
@@ -55,9 +54,11 @@ export default async ({ actions, graphql }) => {
 
     await Promise.all(
       nodes.map(async (node, i) => {
+        // @todo: determine why pages using allWpContentNode queries
+        // don't get automatically updated with incremental data fetching
         await actions.createPage({
           component: resolve(contentTypeTemplate),
-          path: urlToPath(node.link),
+          path: node.uri,
           context: {
             id: node.id,
             nextPage: (nodes[i + 1] || {}).id,

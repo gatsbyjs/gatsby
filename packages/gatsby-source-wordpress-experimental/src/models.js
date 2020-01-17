@@ -90,6 +90,9 @@ const gatsbyApi = {
         MediaItem: {
           onlyFetchIfReferenced: false,
         },
+        ContentNode: {
+          nodeInterface: true,
+        },
       },
     },
   },

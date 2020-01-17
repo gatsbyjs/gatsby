@@ -14,7 +14,14 @@ module.exports = {
         url: `http://gatsbysourcewordpressv4.local/graphql`,
         // url: `https://dev-gatsby-source-wordpress-v4.pantheonsite.io/graphql`,
         verbose: true,
-        excludeFields: [`editLock`, `editLast`],
+        excludeFields: [
+          `editLock`,
+          `editLast`,
+          `contentNodes`,
+          `terms`,
+          `termNames`,
+          `termSlugs`,
+        ],
         schema: {
           queryDepth: 10,
         },
@@ -22,6 +29,9 @@ module.exports = {
           nodeUpdateInterval: 100,
         },
         type: {
+          UniformResourceIdentifiable: {
+            exclude: true,
+          },
           MediaItem: {
             onlyFetchIfReferenced: true,
           },

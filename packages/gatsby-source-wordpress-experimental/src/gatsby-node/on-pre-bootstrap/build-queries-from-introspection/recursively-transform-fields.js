@@ -1,4 +1,5 @@
 import store from "../../../store"
+import { getTypeSettingsByType } from "../../create-schema-customization/index"
 
 const transformFragments = ({
   possibleTypes,
@@ -69,6 +70,12 @@ function transformField({
 
   // if the field has no type we can't use it.
   if (!field || !field.type) {
+    return false
+  }
+
+  const typeSettings = getTypeSettingsByType(field.type)
+
+  if (typeSettings.exclude || typeSettings.nodeInterface) {
     return false
   }
 

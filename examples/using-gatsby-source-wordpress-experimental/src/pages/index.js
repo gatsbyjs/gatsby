@@ -1,24 +1,19 @@
 import React from "react"
 import { graphql, Link } from "gatsby"
 import Img from "gatsby-image"
-import urlToPath from "gatsby-source-wordpress-experimental/utils/url-to-path"
 
 import { Stack, Box, Heading, Text, Grid } from "@chakra-ui/core"
 import Layout from "../components/layout"
 
 export default ({ data }) => {
-  const pages = [
-    // ...data.allWpAlot.nodes,
-    ...data.allWpPost.nodes,
-    ...data.allWpPage.nodes,
-  ]
+  const pages = data.allWpContentNode.nodes
 
   return (
     <Layout>
       <Stack spacing={5}>
         {pages.map(page => (
           <Box key={page.link}>
-            <Link to={urlToPath(page.link)}>
+            <Link to={page.uri}>
               <Box p={5} shadow="md" borderWidth="1px">
                 <Grid templateColumns="1fr 2fr" gap={6}>
                   <Box>
@@ -63,43 +58,37 @@ export const query = graphql`
   }
 
   query HomePage {
-    allWpPage(limit: 10) {
+    allWpPost {
       nodes {
         title
-        link
-        excerpt
-        featuredImage {
-          remoteFile {
-            ...Thumbnail
+      }
+    }
+    allWpPage {
+      nodes {
+        title
+      }
+    }
+    allWpContentNode(
+      limit: 20
+      filter: { contentType: { in: ["Post", "Page"] } }
+      sort: { fields: date }
+    ) {
+      nodes {
+        uri
+        ... on WpNodeWithTitle {
+          title
+        }
+        ... on WpNodeWithExcerpt {
+          excerpt
+        }
+        ... on WpNodeWithFeaturedImage {
+          featuredImage {
+            remoteFile {
+              ...Thumbnail
+            }
           }
         }
       }
     }
-
-    allWpPost(limit: 10) {
-      nodes {
-        title
-        link
-        excerpt
-        featuredImage {
-          remoteFile {
-            ...Thumbnail
-          }
-        }
-      }
-    }
-
-    # allWpAlot(filter: { featuredImage: { sourceUrl: { ne: null } } }) {
-    #   nodes {
-    #     title
-    #     link
-    #     excerpt
-    #     featuredImage {
-    #       remoteFile {
-    #         ...Thumbnail
-    #       }
-    #     }
-    #   }
-    # }
   }
 `

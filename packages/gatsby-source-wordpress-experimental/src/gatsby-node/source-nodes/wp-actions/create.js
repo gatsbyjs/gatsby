@@ -1,4 +1,4 @@
-import { parse } from "url"
+import capitalize from "capitalize"
 import fetchGraphql from "../../../utils/fetch-graphql"
 import store from "../../../store"
 import formatLogMessage from "../../../utils/format-log-message"
@@ -43,8 +43,8 @@ const wpActionCREATE = async ({
   const node = {
     ...nodeContent,
     id: nodeId,
-    contentType: wpAction.referencedPostSingularName,
-    path: parse(nodeContent.link).pathname,
+    contentType: queryInfo.typeInfo.nodesTypeName,
+    type: queryInfo.typeInfo.nodesTypeName,
   }
 
   await actions.createNode({
