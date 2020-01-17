@@ -467,3 +467,14 @@
   for_hire: true
   hiring: false
   portfolio: true
+- name: Eric Howey
+  type: individual
+  description: >-
+    My name is Eric Howey. I am a web developer and mental health therapist. I specialize in Gatsby, React, and Theme-UI. I listen and care.
+  location: Canada
+  website: "https://www.erichowey.dev/"
+  github: "https://github.com/ehowey"
+  image: images/eric-howey.jpeg
+  for_hire: true
+  hiring: false
+  portfolio: true

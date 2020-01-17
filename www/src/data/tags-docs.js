@@ -1,6 +1,6 @@
-/* 
-  this is a whitelist of tags that can be displayed 
-  on the blog, the first value being the tag name, 
+/*
+  this is a whitelist of tags that can be displayed
+  on the blog, the first value being the tag name,
   and the second value a link to an existing doc on
   the topic, adding a new entry to this Map makes it
   a new possible tag for blog posts
@@ -93,4 +93,5 @@ export const TAGS_AND_DOCS = new Map([
     `/docs/gatsby-core-philosophy/#construct-new-higher-level-web-building-blocks`,
   ],
   [`wordpress`, `/docs/sourcing-from-wordpress/`],
+  [`100-Days-of-Gatsby`, `/docs/100days/`],
 ])

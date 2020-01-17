@@ -1,5 +1,5 @@
 ---
-title: Challenge - Track Your Coding Progress with a Blazing Fast Blog
+title: Challenge 1 - Track Your Coding Progress with a Blazing Fast Blog
 date: 2019-12-31
 author: "Hashim Warren"
 tags: ["learning-to-code", "contest", "100-Days-of-Gatsby"]

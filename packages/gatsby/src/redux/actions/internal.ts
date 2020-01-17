@@ -1,7 +1,19 @@
-// @flow
-import type { Plugin } from "./types"
+import {
+  ProgramStatus,
+  ICreatePageDependencyAction,
+  IDeleteComponentDependenciesAction,
+  IReplaceComponentQueryAction,
+  IReplaceStaticQueryAction,
+  IQueryExtractedAction,
+  IQueryExtractionGraphQLErrorAction,
+  IQueryExtractedBabelSuccessAction,
+  IQueryExtractionBabelErrorAction,
+  ISetProgramStatusAction,
+  IPageQueryRunAction,
+  IRemoveStaleJobAction,
+} from "../types"
 
-const actions = {}
+// import type { Plugin } from "./types"
 
 /**
  * Create a dependency between a page and data. Probably for
@@ -12,14 +24,14 @@ const actions = {}
  * @param {string} $0.connection A connection type
  * @private
  */
-actions.createPageDependency = (
+export const createPageDependency = (
   {
     path,
     nodeId,
     connection,
-  }: { path: string, nodeId: string, connection: string },
-  plugin: string = ``
-) => {
+  }: { path: string; nodeId: string; connection: string },
+  plugin = ``
+): ICreatePageDependencyAction => {
   return {
     type: `CREATE_COMPONENT_DEPENDENCY`,
     plugin,
@@ -37,7 +49,9 @@ actions.createPageDependency = (
  * @param {Array} paths the paths to delete.
  * @private
  */
-actions.deleteComponentsDependencies = (paths: string[]) => {
+export const deleteComponentsDependencies = (
+  paths: string[]
+): IDeleteComponentDependenciesAction => {
   return {
     type: `DELETE_COMPONENTS_DEPENDENCIES`,
     payload: {
@@ -51,13 +65,13 @@ actions.deleteComponentsDependencies = (paths: string[]) => {
  * this to store the query with its component.
  * @private
  */
-actions.replaceComponentQuery = ({
+export const replaceComponentQuery = ({
   query,
   componentPath,
 }: {
-  query: string,
-  componentPath: string,
-}) => {
+  query: string
+  componentPath: string
+}): IReplaceComponentQueryAction => {
   return {
     type: `REPLACE_COMPONENT_QUERY`,
     payload: {
@@ -72,7 +86,10 @@ actions.replaceComponentQuery = ({
  * components, it calls this to store the query with its component.
  * @private
  */
-actions.replaceStaticQuery = (args: any, plugin?: ?Plugin = null) => {
+export const replaceStaticQuery = (
+  args: any,
+  plugin: Plugin | null | undefined = null
+): IReplaceStaticQueryAction => {
   return {
     type: `REPLACE_STATIC_QUERY`,
     plugin,
@@ -91,11 +108,11 @@ actions.replaceStaticQuery = (args: any, plugin?: ?Plugin = null) => {
  * @param {query} $0.query The GraphQL query that was extracted from the component.
  * @private
  */
-actions.queryExtracted = (
-  { componentPath, query },
+export const queryExtracted = (
+  { componentPath, query }: { componentPath: string; query: string },
   plugin: Plugin,
   traceId?: string
-) => {
+): IQueryExtractedAction => {
   return {
     type: `QUERY_EXTRACTED`,
     plugin,
@@ -114,11 +131,11 @@ actions.queryExtracted = (
  * @param {error} $0.error The GraphQL query that was extracted from the component.
  * @private
  */
-actions.queryExtractionGraphQLError = (
-  { componentPath, error },
+export const queryExtractionGraphQLError = (
+  { componentPath, error }: { componentPath: string; error: string },
   plugin: Plugin,
   traceId?: string
-) => {
+): IQueryExtractionGraphQLErrorAction => {
   return {
     type: `QUERY_EXTRACTION_GRAPHQL_ERROR`,
     plugin,
@@ -137,11 +154,11 @@ actions.queryExtractionGraphQLError = (
  * its query read.
  * @private
  */
-actions.queryExtractedBabelSuccess = (
+export const queryExtractedBabelSuccess = (
   { componentPath },
   plugin: Plugin,
   traceId?: string
-) => {
+): IQueryExtractedBabelSuccessAction => {
   return {
     type: `QUERY_EXTRACTION_BABEL_SUCCESS`,
     plugin,
@@ -160,11 +177,11 @@ actions.queryExtractedBabelSuccess = (
  * @param {error} $0.error The Babel error object
  * @private
  */
-actions.queryExtractionBabelError = (
-  { componentPath, error },
+export const queryExtractionBabelError = (
+  { componentPath, error }: { componentPath: string; error: Error },
   plugin: Plugin,
   traceId?: string
-) => {
+): IQueryExtractionBabelErrorAction => {
   return {
     type: `QUERY_EXTRACTION_BABEL_ERROR`,
     plugin,
@@ -179,7 +196,11 @@ actions.queryExtractionBabelError = (
  * @param {string} Program status
  * @private
  */
-actions.setProgramStatus = (status, plugin: Plugin, traceId?: string) => {
+export const setProgramStatus = (
+  status: ProgramStatus,
+  plugin: Plugin,
+  traceId?: string
+): ISetProgramStatusAction => {
   return {
     type: `SET_PROGRAM_STATUS`,
     plugin,
@@ -194,11 +215,11 @@ actions.setProgramStatus = (status, plugin: Plugin, traceId?: string) => {
  * @param {string} Path to the page component that changed.
  * @private
  */
-actions.pageQueryRun = (
+export const pageQueryRun = (
   { path, componentPath, isPage },
   plugin: Plugin,
   traceId?: string
-) => {
+): IPageQueryRunAction => {
   return {
     type: `PAGE_QUERY_RUN`,
     plugin,
@@ -213,11 +234,11 @@ actions.pageQueryRun = (
  * @param {string} contentDigest
  * @private
  */
-actions.removeStaleJob = (
-  contentDigest,
-  plugin?: ?Plugin,
+export const removeStaleJob = (
+  contentDigest: string,
+  plugin: Plugin,
   traceId?: string
-) => {
+): IRemoveStaleJobAction => {
   return {
     type: `REMOVE_STALE_JOB_V2`,
     plugin,
@@ -227,5 +248,3 @@ actions.removeStaleJob = (
     },
   }
 }
-
-module.exports = { actions }

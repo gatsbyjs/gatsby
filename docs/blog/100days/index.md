@@ -2,7 +2,7 @@
 title: 100 Days Of Gatsby - Our Guided Coding Challenge for 2020
 date: 2019-12-20
 author: "Hashim Warren"
-tags: ["learning-to-code", "contest"]
+tags: ["learning-to-code", "contest", "100-Days-of-Gatsby"]
 ---
 
 import EmailCaptureForm100Days from "../../../www/src/components/email-capture-form-100days"

@@ -146,4 +146,20 @@ describe(`build and update schema for SitePage`, () => {
     expect(fieldsEnum.includes(`fields___oldKey`)).toBeTruthy()
     expect(fieldsEnum.includes(`fields___key`)).toBeTruthy()
   })
+
+  it(`respects @dontInfer on SitePage`, async () => {
+    const typeDefs = `
+      type SitePage implements Node @dontInfer {
+        keep: String!
+        fields: SitePageFields
+      }
+    `
+    store.dispatch({ type: `CREATE_TYPES`, payload: typeDefs })
+    store.dispatch({ type: `CREATE_NODE`, payload: secondPage() })
+
+    await rebuildWithSitePage({})
+    schema = store.getState().schema
+    expect(schema.getType(`SitePage`).getFields().context).not.toBeDefined()
+    expect(schema.getType(`SitePageFields`).getFields().key).not.toBeDefined()
+  })
 })

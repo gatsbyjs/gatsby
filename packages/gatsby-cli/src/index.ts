@@ -1,17 +1,24 @@
 #!/usr/bin/env node
 
 import "@babel/polyfill"
+import os from "os"
 import semver from "semver"
 import util from "util"
 import createCli from "./create-cli"
 import report from "./reporter"
 import pkg from "../package.json"
 import updateNotifier from "update-notifier"
+import ensureWindowsDriveLetterIsUppercase from "./util/ensure-windows-drive-letter-is-uppercase"
 
 const useJsonLogger = process.argv.slice(2).some(arg => arg.includes(`json`))
 
 if (useJsonLogger) {
   process.env.GATSBY_LOGGER = `json`
+}
+
+// Ensure stable runs on Windows when started from different shells (i.e. c:\dir vs C:\dir)
+if (os.platform() === `win32`) {
+  ensureWindowsDriveLetterIsUppercase()
 }
 
 // Check if update is available
