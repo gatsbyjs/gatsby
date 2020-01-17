@@ -217,12 +217,12 @@ describe(`Jobs manager`, () => {
       try {
         await enqueueJob(jobArgs)
       } catch (err) {
-        expect(err).toMatchInlineSnapshot(`[Error: An error occured]`)
+        expect(err).toMatchInlineSnapshot(`[WorkerError: An error occured]`)
       }
       try {
         await enqueueJob(jobArgs2)
       } catch (err) {
-        expect(err).toMatchInlineSnapshot(`[Error: An error occured]`)
+        expect(err).toMatchInlineSnapshot(`[WorkerError: An error occured]`)
       }
       expect(endActivity).toHaveBeenCalledTimes(2)
       expect(worker.TEST_JOB).toHaveBeenCalledTimes(2)
@@ -241,7 +241,7 @@ describe(`Jobs manager`, () => {
         await enqueueJob(jobArgs)
       } catch (err) {
         expect(err).toMatchInlineSnapshot(
-          `[Error: Result of a worker should be an object, type of "string" was given]`
+          `[WorkerError: Result of a worker should be an object, type of "string" was given]`
         )
       }
       await expect(enqueueJob(jobArgs2)).resolves.toBeNull()

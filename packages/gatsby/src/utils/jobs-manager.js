@@ -214,7 +214,11 @@ exports.enqueueJob = async job => {
     }
     deferred.resolve(result)
   } catch (err) {
-    deferred.reject(err)
+    if (err instanceof Error) {
+      deferred.reject(new WorkerError(err.message))
+    }
+
+    deferred.reject(new WorkerError(err))
   } finally {
     // when all jobs are done we end the activity
     if (--activeJobs === 0) {
@@ -262,4 +266,13 @@ exports.isJobStale = job => {
   })
 
   return areInputPathsStale
+}
+
+export class WorkerError extends Error {
+  constructor(message) {
+    super(message)
+    this.name = `WorkerError`
+
+    Error.captureStackTrace(this, WorkerError)
+  }
 }
