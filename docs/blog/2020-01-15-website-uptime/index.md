@@ -31,11 +31,12 @@ If you're building a website, Gatsby puts an end to traffic-spike-induced downti
 Gatsby sites are simply files that can be pushed to a CDN like Cloudflare or Netlify or AWS Cloudfront. And CDNs are much less likely to go down.
 
 ## A site that's always ready for your guests
+
 Brian Webster, co-founder of the LA-based Delicious Simplicity, compares how Gatsby builds the site ahead-of-time to being a good party host.
 
 "We think of websites as a big event or party and visitors as our guests," says Webster. "So not pre-building and assembling web pages at request time would be the equivalent of setting up your party when the guests arrive. Why would we do that on their time?"
 
-"As site owners, it's becoming more and more our responsibility to ask, 'Hey, how much can we get done before our guests get here?' Especially when we know what they might look at. In many cases, we may prebuild the entire website." 
+"As site owners, it's becoming more and more our responsibility to ask, 'Hey, how much can we get done before our guests get here?' Especially when we know what they might look at. In many cases, we may prebuild the entire website."
 
 In a world where website visitors are a source of revenue or donations, Webster points out, time is money, and traffic spikes from publicity, email newsletter blasts, should be taken advantage of rather than worried about.
 
