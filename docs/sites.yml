@@ -7339,7 +7339,8 @@
     - Conference
     - Web Development
     - Technology
-  built_by: Pagepro
+  built_by: 
+  
   built_by_url: https://pagepro.co
   featured: false
 - title: Mutual
@@ -9363,7 +9364,7 @@
     - Finance
   built_by: Pagepro
   built_by_url: https://pagepro.co
-    featured: false
+  featured: false
 - title: GIS-Netzwerk
   url: https://www.gis-netzwerk.com/
   main_url: https://www.gis-netzwerk.com/
