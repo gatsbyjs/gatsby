@@ -76,16 +76,16 @@ const alreadyTriggeredJobs = new Set()
  * as this will lead to doubling our promise creation.
  */
 const wrapJobPromiseWithReduxActionOnFirstOccurence = ({
-  internalJob,
+  jobContentDigest,
   enqueuedJobPromise,
   plugin,
   dispatch,
 }) => {
-  if (alreadyTriggeredJobs.has(internalJob.contentDigest)) {
+  if (alreadyTriggeredJobs.has(jobContentDigest)) {
     return enqueuedJobPromise
   }
 
-  alreadyTriggeredJobs.add(internalJob.contentDigest)
+  alreadyTriggeredJobs.add(jobContentDigest)
 
   return enqueuedJobPromise.then(result => {
     // store the result in redux so we have it for the next run
@@ -93,14 +93,14 @@ const wrapJobPromiseWithReduxActionOnFirstOccurence = ({
       type: `END_JOB_V2`,
       plugin,
       payload: {
-        job: internalJob,
+        jobContentDigest,
         result,
       },
     })
 
     // remove the job from our inProgressJobQueue as it's available in our done state.
     // this is a perf optimisations so we don't grow our memory too much when using gatsby preview
-    removeInProgressJob(internalJob.contentDigest)
+    removeInProgressJob(jobContentDigest)
 
     return result
   })
@@ -1280,7 +1280,7 @@ actions.createJobV2 = (job: JobV2, plugin: Plugin) => (dispatch, getState) => {
   const enqueuedJobPromise = enqueueJob(internalJob)
   // Releases some memory pressure from Gatsby
   return wrapJobPromiseWithReduxActionOnFirstOccurence({
-    internalJob,
+    jobContentDigest: internalJob.contentDigest,
     enqueuedJobPromise,
     plugin,
     dispatch,

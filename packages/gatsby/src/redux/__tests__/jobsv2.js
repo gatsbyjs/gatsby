@@ -3,7 +3,6 @@ jest.spyOn(jobsManager, `enqueueJob`)
 jest.spyOn(jobsManager, `removeInProgressJob`)
 jest.mock(`uuid/v4`, () => () => `1234`)
 
-const { actions, internalActions } = require(`../actions`)
 const jobsReducer = require(`../reducers/jobsv2`)
 
 describe(`Job v2 actions/reducer`, () => {
@@ -34,7 +33,18 @@ describe(`Job v2 actions/reducer`, () => {
     return action => action(dispatch, getState)
   }
 
+  const getIsolatedActions = () => {
+    let allActions
+    jest.isolateModules(() => {
+      const { actions, internalActions } = require(`../actions`)
+      allActions = { actions, internalActions }
+    })
+
+    return allActions
+  }
+
   it(`should enqueueJob`, async () => {
+    const { actions } = getIsolatedActions()
     const globalState = createGlobalState()
     const dispatch = createDispatcher(globalState)
 
@@ -68,6 +78,7 @@ describe(`Job v2 actions/reducer`, () => {
   })
 
   it(`should return the result when job already ran`, async () => {
+    const { actions } = getIsolatedActions()
     const globalState = createGlobalState()
     const dispatch = createDispatcher(globalState)
 
@@ -88,6 +99,7 @@ describe(`Job v2 actions/reducer`, () => {
   })
 
   it(`should remove a stale job`, async () => {
+    const { internalActions } = getIsolatedActions()
     const { jobsV2 } = createGlobalState()
     jobsV2.complete.set(`1234`, {})
     jobsV2.incomplete.set(`12345`, {})

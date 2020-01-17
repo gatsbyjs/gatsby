@@ -15,9 +15,12 @@ module.exports = (
     }
 
     case `END_JOB_V2`: {
-      const { job, result } = action.payload
+      const { jobContentDigest, result } = action.payload
+      const { job } = state.incomplete.get(jobContentDigest)
+
       state.incomplete.delete(job.contentDigest)
-      // inputPaths is used to make sure the job is still necessary
+
+      // inputPaths is used to make sure the job is not stale
       state.complete.set(job.contentDigest, {
         result,
         inputPaths: job.inputPaths,
