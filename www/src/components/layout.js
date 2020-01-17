@@ -170,7 +170,10 @@ class DefaultLayout extends React.Component {
     return (
       <LocaleContext.Provider value={this.props.locale || defaultLang}>
         <Global styles={globalStyles} />
-        <SiteMetadata pathname={this.props.location.pathname} />
+        <SiteMetadata
+          pathname={this.props.location.pathname}
+          locale={this.props.locale}
+        />
         <SkipNavLink />
         <Banner />
         <Navigation pathname={this.props.location.pathname} />
