@@ -5022,3 +5022,17 @@
     - Pagination between blog posts
     - Has a "archive" page that categorizes and displays all the blog posts by date
     - Mobile friendly
+- url: https://gatsby-starter-material-emotion.netlify.com
+  repo: https://github.com/liketurbo/gatsby-starter-material-emotion
+  description: Gatsby starter of Material-UI with Emotion 👩‍🎤
+  tags:
+    - Material-UI
+    - Emotion
+    - Typescript
+  features:
+    - Based on Gatsby Default Starter
+    - Material-UI
+    - Emotion
+    - Roboto Typeface
+    - SEO
+    - Typescript Support
