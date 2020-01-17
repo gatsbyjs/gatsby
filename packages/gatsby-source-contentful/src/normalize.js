@@ -51,16 +51,31 @@ exports.fixId = fixId
 
 const fixIds = object => _fixIds(object)
 
+// Recursively walk the object model and find any property named `sys`. If it
+// contains an `id` then make sure the id is a string and if it starts with a
+// number, prefix it with (an arbitrarily chosen) `c`, for "contentful".
+// The `front` tracks which objects have been visited to prevent infinite
+// recursion on cyclic structures.
 const _fixIds = (object, front = new Set()) => {
   if (!object || typeof object !== `object`) {
-    return undefined
+    return
   }
 
   if (Array.isArray(object)) {
-    return object.forEach(v => _fixIds(v, front))
+    object.forEach(v => _fixIds(v, front))
+    return
   }
 
+  if (front.has(object)) {
+    return
+  }
+
+  front.add(object)
   Object.getOwnPropertyNames(object).forEach(key => {
+    // The `contentful_id` is ours and we want to make sure we don't visit the
+    // same node twice (this is possible if the same node appears in two
+    // separate branches while sharing a common ancestor). This check makes
+    // sure we keep the original `id` preserved in `contentful_id`.
     if (key === `sys` && !object.sys.contentful_id) {
       object.sys.contentful_id = object.sys.id
       object.sys.id = fixId(object.sys.id)
@@ -68,8 +83,7 @@ const _fixIds = (object, front = new Set()) => {
 
     _fixIds(object[key], front)
   })
-
-  return undefined // eslint.
+  front.delete(object) // Memory vs efficiency
 }
 exports.fixIds = fixIds
 

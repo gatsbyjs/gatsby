@@ -183,6 +183,110 @@ describe(`Fix contentful IDs`, () => {
   it(`left pads ids that start with a number of a "c"`, () => {
     expect(normalize.fixId(`123`)).toEqual(`c123`)
   })
+
+  describe(`cycles`, () => {
+    it(`should return undefined`, () => {
+      const a = {}
+      a.b = a
+      expect(normalize.fixIds(a)).toEqual(undefined)
+    })
+
+    it(`should not change cycles without sys`, () => {
+      const a = {}
+      a.b = a
+
+      const b = {}
+      b.b = b
+
+      normalize.fixIds(a)
+      expect(a).toEqual(b)
+    })
+
+    it(`cycle with sys + id`, () => {
+      const original = {
+        sys: {
+          id: 500,
+        },
+      }
+      original.b = original
+
+      const fixed = {
+        sys: {
+          contentful_id: 500,
+          id: `c500`,
+        },
+      }
+      fixed.b = fixed
+
+      expect(original).not.toEqual(fixed)
+      normalize.fixIds(original)
+      expect(original).toEqual(fixed)
+    })
+
+    it(`cycle with nested sys v1`, () => {
+      const original = {
+        sys: {
+          id: 500,
+          fii: {
+            sys: {
+              id: `300x`,
+            },
+          },
+        },
+      }
+      original.b = original
+
+      const fixed = {
+        sys: {
+          id: `c500`,
+          contentful_id: 500,
+          fii: {
+            sys: {
+              id: `c300x`,
+              contentful_id: `300x`,
+            },
+          },
+        },
+      }
+      fixed.b = fixed
+
+      expect(original).not.toEqual(fixed)
+      normalize.fixIds(original)
+      expect(original).toEqual(fixed)
+    })
+
+    it(`cycle with nested sys v2`, () => {
+      const original = {
+        sys: {
+          id: 500,
+          fii: {
+            sys: {
+              id: `300x`,
+            },
+          },
+        },
+      }
+      original.sys.fii.repeat = original
+
+      const fixed = {
+        sys: {
+          id: `c500`,
+          contentful_id: 500,
+          fii: {
+            sys: {
+              id: `c300x`,
+              contentful_id: `300x`,
+            },
+          },
+        },
+      }
+      fixed.sys.fii.repeat = fixed
+
+      expect(original).not.toEqual(fixed)
+      normalize.fixIds(original)
+      expect(original).toEqual(fixed)
+    })
+  })
 })
 
 describe(`Gets field value based on current locale`, () => {
