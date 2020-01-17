@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.58](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.57...gatsby-source-wordpress@3.1.58) (2020-01-15)
+
+### Bug Fixes
+
+- **docs:** improve WordPress tutorial ([#20520](https://github.com/gatsbyjs/gatsby/issues/20520)) ([d5253f2](https://github.com/gatsbyjs/gatsby/commit/d5253f2))
+
 ## [3.1.57](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.56...gatsby-source-wordpress@3.1.57) (2020-01-09)
 
 ### Features

@@ -3,6 +3,37 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.18.25](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.24...gatsby@2.18.25) (2020-01-17)
+
+### Performance Improvements
+
+- **gatsby:** cache parsing and validation results in graphql-runner ([#20477](https://github.com/gatsbyjs/gatsby/issues/20477)) ([ac7c79f](https://github.com/gatsbyjs/gatsby/commit/ac7c79f))
+
+## [2.18.24](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.23...gatsby@2.18.24) (2020-01-17)
+
+### Bug Fixes
+
+- **gatsby:** Respect `[@dont](https://github.com/dont)Infer` directive on `SitePage` type ([#20662](https://github.com/gatsbyjs/gatsby/issues/20662)) ([631ba49](https://github.com/gatsbyjs/gatsby/commit/631ba49))
+
+## [2.18.23](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.22...gatsby@2.18.23) (2020-01-16)
+
+### Performance Improvements
+
+- **gatsby:** Create one promise per queue, not one per job ([#20606](https://github.com/gatsbyjs/gatsby/issues/20606)) ([79eb6de](https://github.com/gatsbyjs/gatsby/commit/79eb6de))
+- **gatsby:** Shortcut trivial queries by id ([#20609](https://github.com/gatsbyjs/gatsby/issues/20609)) ([fa4ff69](https://github.com/gatsbyjs/gatsby/commit/fa4ff69))
+- **gatsby:** Use a Map instead of Object for job id lookups ([#20605](https://github.com/gatsbyjs/gatsby/issues/20605)) ([54fb530](https://github.com/gatsbyjs/gatsby/commit/54fb530))
+
+## [2.18.22](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.21...gatsby@2.18.22) (2020-01-14)
+
+### Bug Fixes
+
+- **gatsby:** fix error cannot read referencePath of undefined ([#20517](https://github.com/gatsbyjs/gatsby/issues/20517)) ([c759a7d](https://github.com/gatsbyjs/gatsby/commit/c759a7d))
+- **typing:** more precise typing for ssr api ([#20564](https://github.com/gatsbyjs/gatsby/issues/20564)) ([b53ec9a](https://github.com/gatsbyjs/gatsby/commit/b53ec9a))
+
+### Features
+
+- **gatsby:** Supports multiple development proxies ([#20369](https://github.com/gatsbyjs/gatsby/issues/20369)) ([8d1e37a](https://github.com/gatsbyjs/gatsby/commit/8d1e37a))
+
 ## [2.18.21](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.20...gatsby@2.18.21) (2020-01-09)
 
 **Note:** Version bump only for package gatsby

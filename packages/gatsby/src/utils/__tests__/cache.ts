@@ -1,3 +1,7 @@
+import Cache from "../cache"
+import fs from "fs-extra"
+import manager from "cache-manager"
+
 const mockErrorValue = jest.fn()
 const mockResultValue = jest.fn()
 
@@ -6,10 +10,10 @@ jest.mock(`cache-manager`, () => {
     caching: jest.fn(),
     multiCaching: jest.fn(() => {
       return {
-        get: jest.fn((key, callback) => {
+        get: jest.fn((_key, callback) => {
           callback(mockErrorValue(), mockResultValue())
         }),
-        set: jest.fn((key, value, args, callback) => {
+        set: jest.fn((_key, _value, _args, callback) => {
           callback(mockErrorValue())
         }),
       }
@@ -21,16 +25,14 @@ jest.mock(`fs-extra`, () => {
     ensureDirSync: jest.fn(),
   }
 })
-const Cache = require(`../cache`)
-const fs = require(`fs-extra`)
-const manager = require(`cache-manager`)
 
 beforeEach(() => {
-  manager.caching.mockReset()
-  fs.ensureDirSync.mockReset()
+  ;(manager.caching as jest.Mock).mockReset()
+  ;(fs.ensureDirSync as jest.Mock).mockReset()
 })
 
-const getCache = (options = { name: `__test__` }) => new Cache(options).init()
+const getCache = (options = { name: `__test__` }): Cache =>
+  new Cache(options).init()
 
 describe(`cache`, () => {
   it(`it can be instantiated`, () => {
@@ -40,6 +42,8 @@ describe(`cache`, () => {
   it(`it can swap out cache store`, () => {
     const store = {
       custom: true,
+      get: jest.fn(),
+      set: jest.fn(),
     }
 
     new Cache({
@@ -96,13 +100,27 @@ describe(`cache`, () => {
     it(`both are promises`, () => {
       const cache = getCache()
 
-      const containsThenMethod = result =>
+      const containsThenMethod = (result): void =>
         expect(result).toEqual(
           expect.objectContaining({ then: expect.any(Function) })
         )
 
       containsThenMethod(cache.get(`a`))
       containsThenMethod(cache.set(`a`, `b`))
+    })
+
+    it(`throws if set is called without initting`, () => {
+      const cache = new Cache({ name: `__test__` })
+      return expect(cache.set(`a`, `b`)).rejects.toThrowError(
+        `Cache wasn't initialised yet, please run the init method first`
+      )
+    })
+
+    it(`throws if get is called without initting`, () => {
+      const cache = new Cache({ name: `__test__` })
+      return expect(cache.get(`a`)).rejects.toThrowError(
+        `Cache wasn't initialised yet, please run the init method first`
+      )
     })
   })
 
@@ -125,10 +143,9 @@ describe(`cache`, () => {
   describe(`get`, () => {
     it(`resolves to the found value`, () => {
       const cache = getCache()
-
       mockResultValue.mockReturnValueOnce(`result`)
 
-      return expect(cache.get()).resolves.toBe(`result`)
+      return expect(cache.get(``)).resolves.toBe(`result`)
     })
 
     it(`resolves to undefined on caching error`, () => {
@@ -136,7 +153,7 @@ describe(`cache`, () => {
 
       mockErrorValue.mockReturnValueOnce(true)
 
-      return expect(cache.get()).resolves.toBeUndefined()
+      return expect(cache.get(``)).resolves.toBeUndefined()
     })
   })
 })

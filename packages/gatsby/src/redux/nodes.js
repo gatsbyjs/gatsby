@@ -103,11 +103,45 @@ exports.saveResolvedNodes = async (nodeTypeNames, resolver) => {
   }
 }
 
+/**
+ * Get node and save path dependency.
+ *
+ * @param {string} typeName
+ * @param {string} id
+ * @returns {Object|void} node
+ */
+const getResolvedNode = (typeName, id) => {
+  const { nodesByType, resolvedNodesCache } = store.getState()
+  const nodes /*: Map<mixed> */ = nodesByType.get(typeName)
+
+  if (!nodes) {
+    return null
+  }
+
+  let node = nodes.get(id)
+
+  if (!node) {
+    return null
+  }
+
+  const resolvedNodes = resolvedNodesCache.get(typeName)
+
+  if (resolvedNodes) {
+    node.__gatsby_resolved = resolvedNodes.get(id)
+  }
+
+  return node
+}
+
+exports.getResolvedNode = getResolvedNode
+
 const addResolvedNodes = (typeName, arr) => {
   const { nodesByType, resolvedNodesCache } = store.getState()
   const nodes /*: Map<mixed> */ = nodesByType.get(typeName)
 
-  if (!nodes) return
+  if (!nodes) {
+    return
+  }
 
   const resolvedNodes = resolvedNodesCache.get(typeName)
 

@@ -8,7 +8,7 @@ tags: ["blogs", "cms", "headless-cms", "getting-started"]
 
 (Article updated on 20 March 2019. This updates the tutorial code examples. We added videos with additional explanations to each section.)
 
-![Showing the idea of using Gatsby with Strapi ](gatsby-strapi.png)
+![Showing the idea of using Gatsby with Strapi](gatsby-strapi.png)
 
 A static website contains Web pages with fixed content. Technically, it is a simple list of HTML files, which displays the same information to every visitor. Unlike dynamic websites, they do not require any backend programming or database. Publishing a static website is easy: the files are uploaded on a simple Web server or storage provider. The two main advantages of static websites are security and speed: there is no database so it can not be hacked and there is no need to render a page for each request, which makes Web browsing faster.
 
