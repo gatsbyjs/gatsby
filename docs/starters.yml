@@ -5000,3 +5000,25 @@
     - Transform links to bitly links automatically
     - Codesyntax
     - Code syntax highlighting
+- url: https://gatsby-starter-webcomic.netlify.com
+  repo: https://github.com/JLDevOps/gatsby-starter-webcomic
+  description: Gatsby blog starter that focuses on webcomics and art with a minimalistic UI.
+  tags:
+    - Markdown
+    - MDX
+    - Netlify
+    - Pagination
+    - Search
+    - Styling:Bootstrap
+    - RSS
+    - Design
+    - Media
+    - SEO
+  features:
+    - Designed to focus on blog posts with images.
+    - Search capability on blog posts
+    - Displays the latest posts
+    - Displays all the tags from the site
+    - Pagination between blog posts
+    - Has a "archive" page that categorizes and displays all the blog posts by date
+    - Mobile friendly
