@@ -59,11 +59,12 @@ describe(`Process contentful data (by name)`, () => {
     const createNodeId = jest.fn()
     createNodeId.mockReturnValue(`uuid-from-gatsby`)
     contentTypeItems.forEach((contentTypeItem, i) => {
+      entryList[i].forEach(normalize.fixIds)
       normalize.createContentTypeNodes({
         contentTypeItem,
         restrictedNodeFields,
         conflictFieldPrefix,
-        entries: entryList[i].map(normalize.fixIds),
+        entries: entryList[i],
         createNode,
         createNodeId,
         resolvable,
@@ -137,11 +138,12 @@ describe(`Process contentful data (by id)`, () => {
     const createNodeId = jest.fn()
     createNodeId.mockReturnValue(`uuid-from-gatsby`)
     contentTypeItems.forEach((contentTypeItem, i) => {
+      entryList[i].forEach(normalize.fixIds)
       normalize.createContentTypeNodes({
         contentTypeItem,
         restrictedNodeFields,
         conflictFieldPrefix,
-        entries: entryList[i].map(normalize.fixIds),
+        entries: entryList[i],
         createNode,
         createNodeId,
         resolvable,

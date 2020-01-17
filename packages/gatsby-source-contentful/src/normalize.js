@@ -49,26 +49,28 @@ const fixId = id => {
 }
 exports.fixId = fixId
 
-const fixIds = object =>
-  _.mapValues(object, (val, key) => {
-    if (key === `sys`) {
-      if (!val.contentful_id) {
-        val = {
-          ...val,
-          id: fixId(val.id),
-          contentful_id: val.id,
-        }
-      }
+const fixIds = object => _fixIds(object)
+
+const _fixIds = (object, front = new Set()) => {
+  if (!object || typeof object !== `object`) {
+    return undefined
+  }
+
+  if (Array.isArray(object)) {
+    return object.forEach(v => _fixIds(v, front))
+  }
+
+  Object.getOwnPropertyNames(object).forEach(key => {
+    if (key === `sys` && !object.sys.contentful_id) {
+      object.sys.contentful_id = object.sys.id
+      object.sys.id = fixId(object.sys.id)
     }
 
-    if (_.isArray(val)) {
-      return _.toArray(fixIds(val))
-    }
-    if (_.isPlainObject(val)) {
-      return fixIds(val)
-    }
-    return val
+    _fixIds(object[key], front)
   })
+
+  return undefined // eslint.
+}
 exports.fixIds = fixIds
 
 const makeId = ({ spaceId, id, currentLocale, defaultLocale }) =>
