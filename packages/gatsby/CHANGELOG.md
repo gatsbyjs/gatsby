@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.18.25](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.24...gatsby@2.18.25) (2020-01-17)
+
+### Performance Improvements
+
+- **gatsby:** cache parsing and validation results in graphql-runner ([#20477](https://github.com/gatsbyjs/gatsby/issues/20477)) ([ac7c79f](https://github.com/gatsbyjs/gatsby/commit/ac7c79f))
+
 ## [2.18.24](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.23...gatsby@2.18.24) (2020-01-17)
 
 ### Bug Fixes
