@@ -9364,3 +9364,14 @@
   built_by: Max Dietrich
   built_by_url: https://www.gis-netzwerk.com/
   featured: false
+- title: Hand in Hand Preschool
+  url: https://handinhand-preschool.com/
+  main_url: https://handinhand-preschool.com/
+  description: >
+    Hand in Hand Preschool is a preschool located in Geneva, IL.
+  categories:
+    - Education
+    - Business
+  built_by: ccalamos
+  built_by_url: https://github.com/ccalamos
+  featured: false
