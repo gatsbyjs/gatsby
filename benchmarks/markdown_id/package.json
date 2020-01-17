@@ -35,6 +35,7 @@
   },
   "devDependencies": {
     "faker": "^4.1.0",
+    "gatsby-plugin-benchmark-reporting": "*",
     "prettier": "^1.19.1"
   },
   "keywords": [

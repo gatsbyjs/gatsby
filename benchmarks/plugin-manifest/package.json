@@ -11,5 +11,8 @@
   "dependencies": {
     "fs-extra": "^7.0.1",
     "gatsby-plugin-manifest": "^2.0.25"
+  },
+  "devDependencies": {
+    "gatsby-plugin-benchmark-reporting": "*"
   }
 }
