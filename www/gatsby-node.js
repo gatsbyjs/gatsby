@@ -15,6 +15,7 @@ const langs = require("./i18n.json")
 const {
   generateComparisonPageSet,
 } = require(`./src/utils/generate-comparison-page-set.js`)
+const { localizedPath } = require(`./src/utils/i18n.js`)
 const yaml = require(`js-yaml`)
 const docLinksData = yaml.load(
   fs.readFileSync(`./src/data/sidebars/doc-links.yaml`)
@@ -822,13 +823,8 @@ exports.createPages = ({ graphql, actions, reporter }) => {
             )
           }
 
-          const path =
-            locale === "en"
-              ? `${node.fields.slug}`
-              : `/${locale}${node.fields.slug}`
-
           createPage({
-            path,
+            path: localizedPath(locale, node.fields.slug),
             component: slash(
               node.fields.package ? localPackageTemplate : docsTemplate
             ),
