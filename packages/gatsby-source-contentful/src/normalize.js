@@ -52,10 +52,12 @@ exports.fixId = fixId
 const fixIds = object =>
   _.mapValues(object, (val, key) => {
     if (key === `sys`) {
-      val = {
-        ...val,
-        id: fixId(val.id),
-        contentful_id: val.id,
+      if (!val.contentful_id) {
+        val = {
+          ...val,
+          id: fixId(val.id),
+          contentful_id: val.id,
+        }
       }
     }
 
