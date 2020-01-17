@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.18.24](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.23...gatsby@2.18.24) (2020-01-17)
+
+### Bug Fixes
+
+- **gatsby:** Respect `[@dont](https://github.com/dont)Infer` directive on `SitePage` type ([#20662](https://github.com/gatsbyjs/gatsby/issues/20662)) ([631ba49](https://github.com/gatsbyjs/gatsby/commit/631ba49))
+
 ## [2.18.23](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.22...gatsby@2.18.23) (2020-01-16)
 
 ### Performance Improvements
