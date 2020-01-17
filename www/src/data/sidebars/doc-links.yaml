@@ -454,6 +454,8 @@
               items:
                 - title: Building an E-commerce Site with Shopify
                   link: /docs/building-an-ecommerce-site-with-shopify/
+                - title: Processing Payments with Stripe
+                  link: /docs/processing-payments-with-stripe/
         - title: Improving Performance
           link: /docs/performance/
           items:
@@ -721,6 +723,8 @@
       items:
         - title: GraphQL
           link: /docs/glossary/graphql
+        - title: JAMStack
+          link: /docs/glossary/jamstack
         - title: Node.js
           link: /docs/glossary/node
         - title: React
