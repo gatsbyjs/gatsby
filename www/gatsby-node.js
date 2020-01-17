@@ -62,7 +62,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
   const { createPage, createRedirect } = actions
 
   redirects.forEach(redirect => {
-    createRedirect({ ...redirect, isPermanent: true })
+    createRedirect({ isPermanent: true, ...redirect })
   })
 
   Object.entries(startersRedirects).forEach(([fromSlug, toSlug]) => {
@@ -496,13 +496,6 @@ exports.createPages = ({ graphql, actions, reporter }) => {
           },
         })
       }
-
-      // redirecting cypress-gatsby => gatsby-cypress
-      createRedirect({
-        fromPath: `/packages/cypress-gatsby/`,
-        toPath: `/packages/gatsby-cypress/`,
-        isPermanent: true,
-      })
 
       // Read featured starters and plugins for Ecosystem
       ecosystemFeaturedItems = result.data.allEcosystemYaml.edges[0].node

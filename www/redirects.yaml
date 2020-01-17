@@ -132,3 +132,6 @@
   # Can be removed if SEO is no longer impacted.
 - fromPath: /docs/rendering-sidebar-navigation-dynamically/
   toPath: /docs/creating-dynamic-navigation/
+  # redirecting cypress-gatsby => gatsby-cypress
+- fromPath: /packages/cypress-gatsby/
+  toPath: /packages/gatsby-cypress/
