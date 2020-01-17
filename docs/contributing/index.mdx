@@ -3,8 +3,6 @@ title: Contributing to Gatsby.js
 disableTableOfContents: true
 ---
 
-import EmailCaptureForm from "../../www/src/components/email-capture-form"
-
 Thanks for being interested in contributing! We're so glad you want to help!
 
 Below you'll find guides on the Gatsby.js community, code of conduct, and how to get started contributing:
