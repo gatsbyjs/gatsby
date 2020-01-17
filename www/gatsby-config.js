@@ -53,6 +53,20 @@ if (process.env.AIRTABLE_API_KEY) {
   })
 }
 
+if (process.env.ENABLE_LOCALIZATIONS) {
+  dynamicPlugins.push(
+    ...langs.map(({ code }) => ({
+      resolve: `gatsby-source-git`,
+      options: {
+        name: `docs-${code}`,
+        remote: `https://github.com/gatsbyjs/gatsby-${code}.git`,
+        branch: `master`,
+        patterns: `docs/tutorial/**`,
+      },
+    }))
+  )
+}
+
 module.exports = {
   siteMetadata: {
     title: `GatsbyJS`,
@@ -101,15 +115,6 @@ module.exports = {
         path: `${__dirname}/src/data/guidelines/`,
       },
     },
-    ...langs.map(({ code }) => ({
-      resolve: `gatsby-source-git`,
-      options: {
-        name: `docs-${code}`,
-        remote: `https://github.com/gatsbyjs/gatsby-${code}.git`,
-        branch: `master`,
-        patterns: `docs/tutorial/**`,
-      },
-    })),
     `gatsby-transformer-gatsby-api-calls`,
     {
       resolve: `gatsby-plugin-typography`,
