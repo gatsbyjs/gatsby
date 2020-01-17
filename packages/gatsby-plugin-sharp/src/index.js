@@ -124,7 +124,7 @@ function prepareQueue({ file, args }) {
   const encodedImgSrc = `/${encodeURIComponent(file.name)}.${args.toFormat}`
 
   // Prefix the image src.
-  const digestDirPrefix = `${file.internal.contentDigest}/${args.DigestShort}`
+  const digestDirPrefix = `${file.internal.contentDigest}/${argsDigestShort}`
   const prefixedSrc =
     args.pathPrefix + `/static/${digestDirPrefix}` + encodedImgSrc
 
@@ -164,6 +164,7 @@ async function createJob(job, { reporter }) {
 }
 
 function queueImageResizing({ file, args = {}, reporter }) {
+  const fullOptions = healOptions(getPluginOptions(), args, file.extension)
   const {
     src,
     width,
@@ -172,7 +173,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
     relativePath,
     outputDir,
     options,
-  } = prepareQueue({ file, args })
+  } = prepareQueue({ file, args: fullOptions })
 
   // Create job and add it to the queue, the queue will be processed inside gatsby-node.js
   const finishedPromise = createJob(
