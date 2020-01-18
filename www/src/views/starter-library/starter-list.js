@@ -102,7 +102,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                     >
                       {owner} /
                     </span>
-                    <span css={{ display: `flex` }}>
+                    <span css={{ display: `flex`, maxHeight: '1rem' }}>
                       {gatsbyMajorVersion &&
                         gatsbyMajorVersion[0] &&
                         gatsbyMajorVersion[0][1] === `2` && (
