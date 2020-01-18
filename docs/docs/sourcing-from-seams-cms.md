@@ -44,7 +44,7 @@ module.exports = {
 }
 ```
 
-Change `<WORKSPACE_ID>` and `<API_KEY>` into the ID of the workspace from your own Seams-CMS account and the newly generated API key inside that workspace. Within the `contentTypes` array, you cal list all the IDs of the content types you'd like to import from Seams-CMS into your Gatsby site. For this tutorial, you'll only want to import the `blogpost` content.
+Change `<WORKSPACE_ID>` and `<API_KEY>` into the ID of the workspace from your own Seams-CMS account and the newly generated API key inside that workspace. Within the `contentTypes` array, you can list all the IDs of the content types you'd like to import from Seams-CMS into your Gatsby site. For this tutorial, you'll only want to import the `blogpost` content.
 
 ### Check your connection
 
