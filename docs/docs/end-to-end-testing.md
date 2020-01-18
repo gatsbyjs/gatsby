@@ -94,8 +94,8 @@ Create a new file inside `cypress/e2e` folder and name it `accessibility.test.js
 You'll use the `beforeEach` hook to run some commands before each test. Let's see what they do:
 
 - Cypress loads the homepage with the [cy.visit](https://docs.cypress.io/api/commands/visit.html) command and waits until the page loads ([load event](https://developer.mozilla.org/en-US/docs/Web/API/Window/load_event)).
-- It waits for the `main` element to appear with the [cy.get](https://docs.cypress.io/api/commands/get.html#Assertions) command because Gatsby (in development) can finish loading before any content is displayed on the screen. If you don't wait, the tests may fail.
-- After that, it initializes `axe` with the `injectAxe` command.
+- It waits for the `main` element to appear with the [cy.get](https://docs.cypress.io/api/commands/get.html#Assertions) command because Gatsby (in development) can trigger the load event before any content is displayed on the screen. If you don't wait, the tests may fail.
+- After that, it initializes the `axe` accessibility testing API with the `injectAxe` command.
 
 Finally, inside the first test, you'll use the `checkA11y` command from `cypress-axe` to check for accessibility violations:
 
@@ -122,7 +122,7 @@ One thing to keep in mind is that you can't always see the exact error message f
 
 You don't have to use the `checkA11y` command only on page load. You can perform an action inside your application and check for accessibility errors again. This is useful if you open a modal or click a "dark mode" switch, for example.
 
-The following test is for the [gatsby-default-starter](https://github.com/gatsbyjs/gatsby-starter-default). Cypress visits the homepage and searches for the link that goes to page 2 with the `findByText` command from `@testing-library/cypress`. Then, clicks that link and checks for accessibility errors on the second page.
+The following test is for the [gatsby-default-starter](https://github.com/gatsbyjs/gatsby-starter-default). Cypress visits the homepage and searches for the link that goes to page 2 with the `findByText` command from `@testing-library/cypress`. Then, Cypress clicks that link and `cypress-axe` checks for accessibility errors on the second page.
 
 ```js:title=cypress/e2e/accessibility.test.js
 /// <reference types="Cypress" />
