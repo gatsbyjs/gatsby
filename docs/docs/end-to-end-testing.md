@@ -91,10 +91,10 @@ Cypress will look for tests inside the `cypress/integration` folder, but you can
 
 Create a new file inside `cypress/e2e` folder and name it `accessibility.test.js`.
 
-You'll use the `beforeEach` hook to run some commands before each test. Let's see what they do:
+You'll use the `beforeEach` hook to run some commands before each test. This is what they do:
 
-- Cypress loads the homepage with the [cy.visit](https://docs.cypress.io/api/commands/visit.html) command and waits until the page loads ([load event](https://developer.mozilla.org/en-US/docs/Web/API/Window/load_event)).
-- It waits for the `main` element to appear with the [cy.get](https://docs.cypress.io/api/commands/get.html#Assertions) command because Gatsby (in development) can trigger the load event before any content is displayed on the screen. If you don't wait, the tests may fail.
+- First, Cypress loads the homepage with the [cy.visit](https://docs.cypress.io/api/commands/visit.html) command and waits until the page loads ([load event](https://developer.mozilla.org/en-US/docs/Web/API/Window/load_event)).
+- Then, Cypress waits for the `main` element to appear with the [cy.get](https://docs.cypress.io/api/commands/get.html#Assertions) command because Gatsby (in development) can trigger the load event before any content is displayed on the screen. If you don't wait, the tests may fail.
 - After that, it initializes the `axe` accessibility testing API with the `injectAxe` command.
 
 Finally, inside the first test, you'll use the `checkA11y` command from `cypress-axe` to check for accessibility violations:
