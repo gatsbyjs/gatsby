@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { Link } from "gatsby"
+import { Link, useStaticQuery, graphql } from "gatsby"
 import { colors, mediaQueries } from "../gatsby-plugin-theme-ui"
 
 function isUnderDepthLimit(depth, maxDepth) {
@@ -62,6 +62,27 @@ function createItems(items, location, depth, maxDepth) {
 }
 
 function TableOfContents({ page, location }) {
+  // TODO move this out into a custom hook
+  const { allTextYaml } = useStaticQuery(graphql`
+    query {
+      allTextYaml {
+        nodes {
+          docsTableOfContents {
+            title
+          }
+          parent {
+            ... on File {
+              sourceInstanceName
+            }
+          }
+        }
+      }
+    }
+  `)
+
+  // TODO replace with
+  const { title } = allTextYaml.nodes[0].docsTableOfContents
+
   return page.tableOfContents.items ? (
     <nav
       sx={{
@@ -86,7 +107,7 @@ function TableOfContents({ page, location }) {
           textTransform: `uppercase`,
         }}
       >
-        Table of Contents
+        {title}
       </h2>
       <ul
         sx={{
