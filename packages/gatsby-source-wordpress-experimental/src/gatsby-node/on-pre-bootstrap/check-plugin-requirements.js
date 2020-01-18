@@ -17,8 +17,8 @@ const isWpGatsby = async () =>
     panicOnError: true,
   })
 
-const checkPluginRequirements = async () => {
+const ensurePluginRequirementsAreMet = async () => {
   await isWpGatsby()
 }
 
-export default checkPluginRequirements
+export default ensurePluginRequirementsAreMet

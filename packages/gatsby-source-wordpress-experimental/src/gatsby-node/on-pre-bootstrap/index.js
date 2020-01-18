@@ -1,42 +1,19 @@
-import { buildNodeQueriesFromIntrospection } from "./build-queries-from-introspection"
-import formatLogMessage from "../../utils/format-log-message"
-import checkPluginRequirements from "./check-plugin-requirements"
-import store from "../../store"
-import { setGatsbyApiToState } from "./set-gatsby-api-to-state"
+import setGatsbyApiToState from "./set-gatsby-api-to-state"
+import ensurePluginRequirementsAreMet from "./check-plugin-requirements"
+import ingestRemoteSchema from "./ingest-remote-schema"
+import persistCachedImages from "./persist-cached-images"
+
+const startupSteps = [
+  ensurePluginRequirementsAreMet,
+  ingestRemoteSchema,
+  persistCachedImages,
+]
 
 const onPreBootstrap = async (helpers, pluginOptions) => {
   setGatsbyApiToState(helpers, pluginOptions)
 
-  //
-  // exit the build if requirements aren't met
-  await checkPluginRequirements()
-
-  //
-  // Introspect schema and build gql queries
-  const activity = helpers.reporter.activityTimer(
-    formatLogMessage(`ingest WPGraphQL schema`)
-  )
-
-  activity.start()
-  await buildNodeQueriesFromIntrospection()
-  activity.end()
-
-  // load up image node id's from cache
-  const imageNodeIds = await helpers.cache.get(`image-node-ids`)
-
-  // if they exist,
-  if (imageNodeIds && imageNodeIds.length) {
-    // touch them all so they don't get garbage collected by Gatsby
-    imageNodeIds.forEach(nodeId =>
-      helpers.actions.touchNode({
-        nodeId,
-      })
-    )
-
-    // and set them to state to set back to cache later
-    // since we may append more image id's to the store down the line
-    // in onPostBuild, all imageNodeIds in state are cached for the next build
-    store.dispatch.imageNodes.setNodeIds(imageNodeIds)
+  for (const startupStep of startupSteps) {
+    await startupStep()
   }
 }
 

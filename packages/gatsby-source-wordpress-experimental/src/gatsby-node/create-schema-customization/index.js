@@ -332,7 +332,10 @@ export default async ({ actions, schema }) => {
       })
 
       if (type.kind === `INTERFACE`) {
-        if (thisTypeSettings.nodeInterface) {
+        const state = store.getState()
+        const { nodeInterfaceTypes } = state.introspection.ingestibles
+
+        if (nodeInterfaceTypes.includes(type.name)) {
           // we add contentType (post type) to all nodes as they're fetched
           // so we can add them to node interfaces as well in order to filter
           // by a couple different content types

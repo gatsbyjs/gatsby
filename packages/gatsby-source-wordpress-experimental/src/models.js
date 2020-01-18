@@ -5,6 +5,12 @@ const introspection = {
     queries: {},
     introspectionData: null,
     schemaWasChanged: null,
+    nodeListFilter: field => field.name === `nodes`,
+    ingestibles: {
+      nodeListRootFields: null,
+      nodeInterfaceTypes: null,
+      nonNodeRootFields: [],
+    },
     fieldBlacklist: [
       // these aren't useful without authentication
       // @todo make this dynamic when authentication is added
