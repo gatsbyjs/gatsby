@@ -3,14 +3,14 @@ import formatLogMessage from "../../../utils/format-log-message"
 
 import checkIfSchemaHasChanged from "../check-if-schema-has-changed"
 import introspectAndStoreRemoteSchema from "../introspect-remote-schema"
-import identifyAndStoreIngestableFieldsAndTypes from "./identify-and-store-ingestable-types"
-import buildAndStoreQueriesFromIngestableTypes from "../build-queries-from-introspection"
+import identifyAndStoreIngestableRootFieldsAndTypes from "./identify-and-store-ingestable-types"
+import buildAndStoreIngestibleRootFieldNodeListQueries from "../build-queries-from-introspection"
 
 const ingestionSteps = [
   checkIfSchemaHasChanged,
   introspectAndStoreRemoteSchema,
-  identifyAndStoreIngestableFieldsAndTypes,
-  buildAndStoreQueriesFromIngestableTypes,
+  identifyAndStoreIngestableRootFieldsAndTypes,
+  buildAndStoreIngestibleRootFieldNodeListQueries,
 ]
 
 const ingestRemoteSchema = async () => {

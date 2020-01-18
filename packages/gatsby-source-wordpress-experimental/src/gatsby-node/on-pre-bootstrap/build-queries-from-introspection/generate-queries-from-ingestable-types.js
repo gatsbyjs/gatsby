@@ -12,7 +12,7 @@ import store from "../../../store"
 import { getTypeSettingsByType } from "../../create-schema-customization/index"
 
 /**
- * generateNodeQueriesFromIngestableFields
+ * generateNodeQueriesFromIngestibleFields
  *
  * Takes in data from an introspection query and
  * processes it to build GraphQL query strings/info
@@ -20,7 +20,7 @@ import { getTypeSettingsByType } from "../../create-schema-customization/index"
  * @param {object} introspectionData
  * @returns {Object} GraphQL query info including gql query strings
  */
-const generateNodeQueriesFromIngestableFields = async () => {
+const generateNodeQueriesFromIngestibleFields = async () => {
   const {
     introspection,
     gatsbyApi: { pluginOptions },
@@ -136,4 +136,4 @@ const generateNodeQueriesFromIngestableFields = async () => {
   return queries
 }
 
-export default generateNodeQueriesFromIngestableFields
+export default generateNodeQueriesFromIngestibleFields

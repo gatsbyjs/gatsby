@@ -1,16 +1,16 @@
 import store from "../../../store"
 import { getGatsbyApi } from "../../../utils/get-gatsby-api"
-import generateNodeQueriesFromIngestableFields from "./generate-queries-from-ingestable-types"
+import generateNodeQueriesFromIngestibleFields from "./generate-queries-from-ingestable-types"
 
 /**
- * buildAndStoreQueriesFromIngestableTypes
+ * buildAndStoreIngestibleRootFieldNodeListQueries
  *
  * Uses plugin options to introspect the remote GraphQL
  * source, run cache logic, and generate GQL query strings/info
  *
  * @returns {Object} GraphQL query info including gql query strings
  */
-const buildAndStoreQueriesFromIngestableTypes = async () => {
+const buildAndStoreIngestibleRootFieldNodeListQueries = async () => {
   const { pluginOptions, helpers } = getGatsbyApi()
 
   const QUERY_CACHE_KEY = `${pluginOptions.url}--introspection-node-queries`
@@ -21,7 +21,7 @@ const buildAndStoreQueriesFromIngestableTypes = async () => {
 
   if (schemaHasChanged || !queries) {
     // regenerate queries from introspection
-    queries = await generateNodeQueriesFromIngestableFields()
+    queries = await generateNodeQueriesFromIngestibleFields()
 
     // and cache them
     await helpers.cache.set(QUERY_CACHE_KEY, queries)
@@ -35,4 +35,4 @@ const buildAndStoreQueriesFromIngestableTypes = async () => {
   return queries
 }
 
-export default buildAndStoreQueriesFromIngestableTypes
+export default buildAndStoreIngestibleRootFieldNodeListQueries
