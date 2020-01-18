@@ -37,10 +37,45 @@ exports.setPluginOptions = opts => {
 
 exports.getPluginOptions = () => pluginOptions
 
+/**
+ * Creates the smalles possible transform object possible
+ * @param {Partial<import('./process-file').TransformArgs>} args
+ */
+exports.createTransformObject = (args, pluginOptions) => {
+  const options = {
+    height: args.height,
+    width: args.width,
+    cropFocus: args.cropFocus,
+    toFormat: args.toFormat,
+    pngCompressionLevel:
+      args.pngCompressionLevel !== generalArgs.pngCompressionLevel
+        ? args.pngCompressionLevel
+        : undefined,
+    quality:
+      args.quality !== pluginOptions.defaultQuality ? args.quality : undefined,
+    jpegQuality: args.jpegQuality,
+    pngQuality: args.pngQuality,
+    webpQuality: args.webpQuality,
+    jpegProgressive:
+      args.jpegProgressive !== generalArgs.jpegProgressive
+        ? args.jpegProgressive
+        : undefined,
+    grayscale:
+      args.grayscale !== generalArgs.grayscale ? args.grayscale : undefined,
+    rotate: args.rotate ? args.rotate : undefined,
+    trim: args.trim ? args.trim : undefined,
+    duotone: args.duotone || undefined,
+    fit: args.fit,
+    background: args.background,
+  }
+
+  return _.omitBy(options, _.isNil)
+}
+
 const healOptions = (
   { defaultQuality: quality },
   args,
-  fileExtension,
+  fileExtension = ``,
   defaultArgs = {}
 ) => {
   let options = _.defaults({}, args, { quality }, defaultArgs, generalArgs)
@@ -52,6 +87,11 @@ const healOptions = (
 
   // when toFormat is not set we set it based on fileExtension
   if (options.toFormat === ``) {
+    if (!fileExtension) {
+      throw new Error(
+        `toFormat seems to be empty, we need a fileExtension to set it.`
+      )
+    }
     options.toFormat = fileExtension.toLowerCase()
 
     if (fileExtension === `jpeg`) {

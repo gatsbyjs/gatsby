@@ -9,7 +9,11 @@ const path = require(`path`)
 const { scheduleJob } = require(`./scheduler`)
 const { createArgsDigest } = require(`./process-file`)
 const { reportError } = require(`./report-error`)
-const { getPluginOptions, healOptions } = require(`./plugin-options`)
+const {
+  getPluginOptions,
+  healOptions,
+  createTransformObject,
+} = require(`./plugin-options`)
 const { memoizedTraceSVG, notMemoizedtraceSVG } = require(`./trace-svg`)
 const duotone = require(`./duotone`)
 const { IMAGE_PROCESSING_JOB_NAME } = require(`./gatsby-worker`)
@@ -82,8 +86,9 @@ exports.setBoundActionCreators = actions => {
 }
 
 function prepareQueue({ file, args }) {
-  const argsDigestShort = createArgsDigest(args)
-  const imgSrc = `/${file.name}.${args.toFormat}`
+  const { pathPrefix, ...options } = args
+  const argsDigestShort = createArgsDigest(options)
+  const imgSrc = `/${file.name}.${options.toFormat}`
   const outputDir = path.join(
     process.cwd(),
     `public`,
@@ -103,30 +108,32 @@ function prepareQueue({ file, args }) {
 
   // If the width/height are both set, we're cropping so just return
   // that.
-  if (args.width && args.height) {
-    width = args.width
-    height = args.height
+  if (options.width && options.height) {
+    width = options.width
+    height = options.height
     // Recalculate the aspectRatio for the cropped photo
     aspectRatio = width / height
-  } else if (args.width) {
+  } else if (options.width) {
     // Use the aspect ratio of the image to calculate what will be the resulting
     // height.
-    width = args.width
-    height = Math.round(args.width / aspectRatio)
+    width = options.width
+    height = Math.round(options.width / aspectRatio)
   } else {
     // Use the aspect ratio of the image to calculate what will be the resulting
     // width.
-    height = args.height
-    width = Math.round(args.height * aspectRatio)
+    height = options.height
+    width = Math.round(options.height * aspectRatio)
   }
 
   // encode the file name for URL
-  const encodedImgSrc = `/${encodeURIComponent(file.name)}.${args.toFormat}`
+  const encodedImgSrc = `/${encodeURIComponent(file.name)}.${options.toFormat}`
 
   // Prefix the image src.
   const digestDirPrefix = `${file.internal.contentDigest}/${argsDigestShort}`
   const prefixedSrc =
-    args.pathPrefix + `/static/${digestDirPrefix}` + encodedImgSrc
+    (pathPrefix ? pathPrefix : ``) +
+    `/static/${digestDirPrefix}` +
+    encodedImgSrc
 
   return {
     src: prefixedSrc,
@@ -185,7 +192,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
         operations: [
           {
             outputPath: relativePath,
-            args: options,
+            args: createTransformObject(options, getPluginOptions()),
           },
         ],
         pluginOptions: getPluginOptions(),
@@ -504,30 +511,26 @@ async function fluid({ file, args = {}, reporter, cache }) {
   // the original image.
   filteredSizes.push(fixedDimension === `maxWidth` ? width : height)
 
-  // Sort sizes for prettiness.
-  const sortedSizes = _.sortBy(filteredSizes)
-
   // Queue sizes for processing.
   const dimensionAttr = fixedDimension === `maxWidth` ? `width` : `height`
   const otherDimensionAttr = fixedDimension === `maxWidth` ? `height` : `width`
 
+  // Sort sizes for prettiness.
+  const transforms = _.sortBy(filteredSizes).map(size => {
+    const arrrgs = createTransformObject(options, getPluginOptions())
+    if (arrrgs[otherDimensionAttr]) {
+      arrrgs[otherDimensionAttr] = undefined
+    }
+    arrrgs[dimensionAttr] = Math.round(size)
+    // we need pathPrefix to calculate the correct outputPath
+    arrrgs.pathPrefix = options.pathPrefix || ``
+
+    return arrrgs
+  })
+
   const images = batchQueueImageResizing({
     file,
-    transforms: sortedSizes.map(size => {
-      const arrrgs = {
-        ...options,
-        [otherDimensionAttr]: undefined,
-        [dimensionAttr]: Math.round(size),
-      }
-      // Queue sizes for processing.
-      if (options.maxWidth !== undefined && options.maxHeight !== undefined) {
-        arrrgs.height = Math.round(
-          size * (options.maxHeight / options.maxWidth)
-        )
-      }
-
-      return arrrgs
-    }),
+    transforms,
     reporter,
   })
 
@@ -628,22 +631,23 @@ async function fixed({ file, args = {}, reporter, cache }) {
   }
 
   // Sort images for prettiness.
-  const sortedSizes = _.sortBy(filteredSizes)
+  const transforms = _.sortBy(filteredSizes).map(size => {
+    const arrrgs = createTransformObject(options, getPluginOptions())
+    arrrgs[fixedDimension] = Math.round(size)
+
+    // Queue images for processing.
+    if (options.width !== undefined && options.height !== undefined) {
+      arrrgs.height = Math.round(size * (options.height / options.width))
+    }
+    // we need pathPrefix to calculate the correct outputPath
+    arrrgs.pathPrefix = options.pathPrefix || ``
+
+    return arrrgs
+  })
 
   const images = batchQueueImageResizing({
     file,
-    transforms: sortedSizes.map(size => {
-      const arrrgs = {
-        ...options,
-        [fixedDimension]: Math.round(size),
-      }
-      // Queue images for processing.
-      if (options.width !== undefined && options.height !== undefined) {
-        arrrgs.height = Math.round(size * (options.height / options.width))
-      }
-
-      return arrrgs
-    }),
+    transforms,
     reporter,
   })
 

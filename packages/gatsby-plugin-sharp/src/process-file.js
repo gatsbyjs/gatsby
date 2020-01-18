@@ -7,7 +7,7 @@ const imagemin = require(`imagemin`)
 const imageminMozjpeg = require(`imagemin-mozjpeg`)
 const imageminPngquant = require(`imagemin-pngquant`)
 const imageminWebp = require(`imagemin-webp`)
-const _ = require(`lodash`)
+const { healOptions } = require(`./plugin-options`)
 const { SharpError } = require(`./sharp-error`)
 const { cpuCoreCount, createContentDigest } = require(`gatsby-core-utils`)
 
@@ -23,28 +23,11 @@ sharp.simd(true)
 sharp.concurrency(cpuCoreCount())
 
 /**
- * List of arguments used by `processFile` function.
- * This is used to generate args hash using only
- * arguments that affect output of that function.
+ * @typedef DuotoneArgs
+ * @property {string} highlight
+ * @property {string} shadow
+ * @property {number} opacity
  */
-const argsWhitelist = [
-  `height`,
-  `width`,
-  `cropFocus`,
-  `toFormat`,
-  `pngCompressionLevel`,
-  `quality`,
-  `jpegQuality`,
-  `pngQuality`,
-  `webpQuality`,
-  `jpegProgressive`,
-  `grayscale`,
-  `rotate`,
-  `trim`,
-  `duotone`,
-  `fit`,
-  `background`,
-]
 
 /**
  * @typedef {Object} TransformArgs
@@ -61,7 +44,9 @@ const argsWhitelist = [
  * @property {boolean} grayscale
  * @property {number} rotate
  * @property {number} trim
- * @property {object} duotone
+ * @property {DuotoneArgs} duotone
+ * @property {string} background
+ * @property {import('sharp').FitEnum} fit
  */
 
 /**+
@@ -93,91 +78,98 @@ exports.processFile = (file, transforms, options = {}) => {
       debug(`Start processing ${outputPath}`)
       await fs.ensureDir(path.dirname(outputPath))
 
+      const transformArgs = healOptions(
+        { defaultQuality: options.defaultQuality },
+        args
+      )
+
       let clonedPipeline = transforms.length > 1 ? pipeline.clone() : pipeline
 
-      if (args.trim) {
-        clonedPipeline = clonedPipeline.trim(args.trim)
+      if (transformArgs.trim) {
+        clonedPipeline = clonedPipeline.trim(transformArgs.trim)
       }
 
-      if (!args.rotate) {
+      if (!transformArgs.rotate) {
         clonedPipeline = clonedPipeline.rotate()
       }
 
       // Sharp only allows ints as height/width. Since both aren't always
       // set, check first before trying to round them.
-      let roundedHeight = args.height
+      let roundedHeight = transformArgs.height
       if (roundedHeight) {
         roundedHeight = Math.round(roundedHeight)
       }
 
-      let roundedWidth = args.width
+      let roundedWidth = transformArgs.width
       if (roundedWidth) {
         roundedWidth = Math.round(roundedWidth)
       }
 
       clonedPipeline
         .resize(roundedWidth, roundedHeight, {
-          position: args.cropFocus,
-          fit: args.fit,
-          background: args.background,
+          position: transformArgs.cropFocus,
+          fit: transformArgs.fit,
+          background: transformArgs.background,
         })
         .png({
-          compressionLevel: args.pngCompressionLevel,
+          compressionLevel: transformArgs.pngCompressionLevel,
           adaptiveFiltering: false,
-          force: args.toFormat === `png`,
+          force: transformArgs.toFormat === `png`,
         })
         .webp({
-          quality: args.webpQuality || args.quality,
-          force: args.toFormat === `webp`,
+          quality: transformArgs.webpQuality || transformArgs.quality,
+          force: transformArgs.toFormat === `webp`,
         })
         .tiff({
-          quality: args.quality,
-          force: args.toFormat === `tiff`,
+          quality: transformArgs.quality,
+          force: transformArgs.toFormat === `tiff`,
         })
 
       // jpeg
       if (!options.useMozJpeg) {
         clonedPipeline = clonedPipeline.jpeg({
-          quality: args.jpegQuality || args.quality,
-          progressive: args.jpegProgressive,
-          force: args.toFormat === `jpg`,
+          quality: transformArgs.jpegQuality || transformArgs.quality,
+          progressive: transformArgs.jpegProgressive,
+          force: transformArgs.toFormat === `jpg`,
         })
       }
 
       // grayscale
-      if (args.grayscale) {
+      if (transformArgs.grayscale) {
         clonedPipeline = clonedPipeline.grayscale()
       }
 
       // rotate
-      if (args.rotate && args.rotate !== 0) {
-        clonedPipeline = clonedPipeline.rotate(args.rotate)
+      if (transformArgs.rotate && transformArgs.rotate !== 0) {
+        clonedPipeline = clonedPipeline.rotate(transformArgs.rotate)
       }
 
       // duotone
-      if (args.duotone) {
+      if (transformArgs.duotone) {
         clonedPipeline = await duotone(
-          args.duotone,
-          args.toFormat,
+          transformArgs.duotone,
+          transformArgs.toFormat,
           clonedPipeline
         )
       }
 
       // lets decide how we want to save this transform
-      if (args.toFormat === `png`) {
+      if (transformArgs.toFormat === `png`) {
         await compressPng(clonedPipeline, outputPath, {
-          ...args,
+          pngQuality: transformArgs.pngQuality,
+          quality: transformArgs.quality,
+          pngCompressionSpeed: transformArgs.compressionSpeed,
           stripMetadata: options.stripMetadata,
         })
         return transform
       }
 
-      if (options.useMozJpeg && args.toFormat === `jpg`) {
+      if (options.useMozJpeg && transformArgs.toFormat === `jpg`) {
         await compressJpg(clonedPipeline, outputPath, args)
         return transform
       }
 
-      if (args.toFormat === `webp`) {
+      if (transformArgs.toFormat === `webp`) {
         await compressWebP(clonedPipeline, outputPath, args)
         return transform
       }
@@ -248,37 +240,7 @@ const compressWebP = (pipeline, outputPath, options) =>
   )
 
 exports.createArgsDigest = args => {
-  const filtered = _.pickBy(args, (value, key) => {
-    // remove falsy
-    if (!value) return false
-    if (args.toFormat.match(/^jp*/) && _.includes(key, `png`)) {
-      return false
-    } else if (args.toFormat.match(/^png/) && key.match(/^jp*/)) {
-      return false
-    }
-    // after initial processing - get rid of unknown/unneeded fields
-    return argsWhitelist.includes(key)
-  })
+  const argsDigest = createContentDigest(args)
 
-  const argsDigest = createContentDigest(sortKeys(filtered))
   return argsDigest.substr(argsDigest.length - 5)
 }
-
-const sortKeys = object => {
-  var sortedObj = {},
-    keys = _.keys(object)
-
-  keys = _.sortBy(keys, key => key)
-
-  _.each(keys, key => {
-    if (typeof object[key] == `object` && !(object[key] instanceof Array)) {
-      sortedObj[key] = sortKeys(object[key])
-    } else {
-      sortedObj[key] = object[key]
-    }
-  })
-
-  return sortedObj
-}
-
-exports.sortKeys = sortKeys

@@ -4,7 +4,7 @@ jest.mock(`../safe-sharp`, () => {
     concurrency: jest.fn(),
   }
 })
-const { createArgsDigest, sortKeys } = require(`../process-file`)
+const { createArgsDigest } = require(`../process-file`)
 
 describe(`createArgsDigest`, () => {
   const defaultArgsBaseline = {
@@ -63,62 +63,5 @@ describe(`createArgsDigest`, () => {
     })
     testHashDifferent(`fit change`, { fit: `CONTAIN` })
     testHashDifferent(`background change`, { background: `#fff0` })
-  })
-
-  describe(`doesn't change hash if not used options are different`, () => {
-    const testHashEqual = (label, change, extraBaselineOptions = {}) => {
-      it(label, () => {
-        const argsBaseline = {
-          ...defaultArgsBaseline,
-          ...extraBaselineOptions,
-        }
-        const baselineHash = createArgsDigest(argsBaseline)
-        const outputHash = createArgsDigest({
-          ...defaultArgsBaseline,
-          ...change,
-        })
-        expect(baselineHash).toBe(outputHash)
-      })
-    }
-
-    testHashEqual(`unrelated argument`, { foo: `bar` })
-
-    testHashEqual(`png option change when using jpg`, {
-      pngCompressionLevel: defaultArgsBaseline.pngCompressionLevel + 1,
-    })
-    testHashEqual(
-      `jpg option change when using png`,
-      {
-        toFormat: `png`,
-        jpegProgressive: !defaultArgsBaseline.jpegProgressive,
-      },
-      {
-        toFormat: `png`,
-      }
-    )
-    describe(`not used arguments`, () => {
-      testHashEqual(`maxWidth`, { maxWidth: 500 })
-      testHashEqual(`base64`, { base64: true })
-    })
-
-    describe(`argument sorting`, () => {
-      it(`sorts nested arguments`, () => {
-        const args = {
-          duotone: {
-            shadow: `#10c5f8`,
-            highlight: `#32CD32`,
-          },
-          cropFocus: 17,
-        }
-        const actual = sortKeys(args)
-        expect(actual).toEqual({
-          cropFocus: 17,
-          duotone: {
-            highlight: `#32CD32`,
-            shadow: `#10c5f8`,
-          },
-        })
-      })
-    })
   })
 })
