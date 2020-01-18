@@ -21,10 +21,7 @@ import { getTypeSettingsByType } from "../../create-schema-customization/index"
  * @returns {Object} GraphQL query info including gql query strings
  */
 const generateNodeQueriesFromIngestibleFields = async () => {
-  const {
-    introspection,
-    gatsbyApi: { pluginOptions },
-  } = store.getState()
+  const { introspection } = store.getState()
 
   const {
     fieldBlacklist,
@@ -35,20 +32,6 @@ const generateNodeQueriesFromIngestibleFields = async () => {
 
   const rootFields = typeMap.get(`RootQuery`).fields
 
-  const nodeListFieldNames = nodeListRootFields.map(field => field.name)
-
-  const nodeListTypeNames = nodeListRootFields.map(field => {
-    const connectionType = typeMap.get(field.type.name)
-
-    const nodesField = connectionType.fields.find(nodeListFilter)
-    return nodesField.type.ofType.name
-  })
-
-  const gatsbyNodesInfo = {
-    fieldNames: nodeListFieldNames,
-    typeNames: nodeListTypeNames,
-  }
-
   // @todo This is temporary. We need a list of post types so we
   // can add field arguments just to post type fields so we can
   // get a flat list of posts and pages, instead of having them
@@ -56,12 +39,8 @@ const generateNodeQueriesFromIngestibleFields = async () => {
   // for example we need to do posts(where: { parent: null }) { nodes { ... }}
   // https://github.com/wp-graphql/wp-graphql/issues/928
   const {
-    url,
-    schema: { queryDepth },
-  } = pluginOptions
-  const {
     data: { postTypes },
-  } = await fetchGraphql({ url, query: availablePostTypesQuery })
+  } = await fetchGraphql({ query: availablePostTypesQuery })
 
   let queries = {}
 
@@ -94,27 +73,19 @@ const generateNodeQueriesFromIngestibleFields = async () => {
 
     const singleFieldName = singleTypeInfo.name
 
-    const transformedFields = recursivelyTransformFields({
-      maxDepth: queryDepth,
-      field: nodesType,
-      fields,
-      gatsbyNodesInfo,
-      typeMap,
-    })
+    const transformedFields = recursivelyTransformFields({ fields })
 
     const selectionSet = buildSelectionSet(transformedFields)
 
     const listQueryString = buildNodesQueryOnFieldName({
       fields: transformedFields,
       fieldName: name,
-      nodeListFieldNames,
       postTypes,
     })
 
     const nodeQueryString = buildNodeQueryOnFieldName({
       fields: transformedFields,
       fieldName: singleFieldName,
-      nodeListFieldNames,
     })
 
     // build a query info object containing gql query strings for fetching

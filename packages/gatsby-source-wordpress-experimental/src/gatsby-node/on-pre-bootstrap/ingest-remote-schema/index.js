@@ -5,12 +5,15 @@ import checkIfSchemaHasChanged from "../check-if-schema-has-changed"
 import introspectAndStoreRemoteSchema from "../introspect-remote-schema"
 import identifyAndStoreIngestableRootFieldsAndTypes from "./identify-and-store-ingestable-types"
 import buildAndStoreIngestibleRootFieldNodeListQueries from "../build-queries-from-introspection"
+import buildAndStoreIngestibleRootFieldNonNodeQueries from "./build-and-store-ingestible-root-field-non-node-queries"
 
 const ingestionSteps = [
   checkIfSchemaHasChanged,
   introspectAndStoreRemoteSchema,
   identifyAndStoreIngestableRootFieldsAndTypes,
+  // @todo these two should be put in one function:
   buildAndStoreIngestibleRootFieldNodeListQueries,
+  buildAndStoreIngestibleRootFieldNonNodeQueries,
 ]
 
 const ingestRemoteSchema = async () => {

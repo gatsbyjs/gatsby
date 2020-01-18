@@ -4,6 +4,7 @@ import { fetchAndCreateAllNodes } from "./fetch-nodes"
 import { LAST_COMPLETED_SOURCE_TIME } from "../constants"
 import { createContentTypeNodes } from "./get-content-types"
 import store from "../../store"
+import fetchAndCreateNonNodeRootFields from "./fetch-and-create-non-node-root-fields"
 
 const sourceNodes = async helpers => {
   // this is temporary until WPGQL can give us a node list of post types
@@ -34,6 +35,10 @@ const sourceNodes = async helpers => {
   }
 
   await cache.set(LAST_COMPLETED_SOURCE_TIME, Date.now())
+
+  // fetch non-node root fields such as settings.
+  // For now, we're refetching them on every build
+  await fetchAndCreateNonNodeRootFields()
 }
 
 export default sourceNodes

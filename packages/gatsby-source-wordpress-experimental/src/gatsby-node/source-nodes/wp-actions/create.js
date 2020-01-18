@@ -1,11 +1,9 @@
-import capitalize from "capitalize"
 import fetchGraphql from "../../../utils/fetch-graphql"
 import store from "../../../store"
 import formatLogMessage from "../../../utils/format-log-message"
 
 const wpActionCREATE = async ({
   helpers,
-  pluginOptions,
   intervalRefetching,
   cachedNodeIds,
   wpAction,
@@ -26,9 +24,7 @@ const wpActionCREATE = async ({
   const { nodeQueryString: query } = queryInfo
 
   // fetch the new post
-  const { url: wpUrl } = pluginOptions
   const { data } = await fetchGraphql({
-    url: wpUrl,
     query,
     variables: {
       id: wpAction.referencedPostGlobalRelayID,

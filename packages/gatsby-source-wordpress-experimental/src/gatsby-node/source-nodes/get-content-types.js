@@ -12,12 +12,9 @@ export const createContentTypeNodes = async () => {
 
   const { queries, fieldBlacklist } = state.introspection
 
-  const {
-    pluginOptions: { url },
-    helpers,
-  } = state.gatsbyApi
+  const { helpers } = state.gatsbyApi
 
-  const { data } = await fetchGraphql({ url, query: availablePostTypesQuery })
+  const { data } = await fetchGraphql({ query: availablePostTypesQuery })
 
   const contentTypes = data.postTypes
     .filter(

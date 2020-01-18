@@ -29,6 +29,7 @@ const buildAndStoreIngestibleRootFieldNodeListQueries = async () => {
 
   // set the queries in our redux store to use later
   store.dispatch.introspection.setState({
+    // @todo rename queries to nodeQueries
     queries,
   })
 

@@ -5,7 +5,6 @@ const transformFragments = ({
   possibleTypes,
   gatsbyNodesInfo,
   typeMap,
-  maxDepth,
   depth,
 }) =>
   possibleTypes
@@ -33,8 +32,6 @@ const transformFragments = ({
             const fields = recursivelyTransformFields({
               fields: typeInfo.fields,
               gatsbyNodesInfo,
-              typeMap,
-              maxDepth,
               depth,
             })
 
@@ -128,9 +125,7 @@ function transformField({
     const transformedFields = recursivelyTransformFields({
       fields: listOfType.fields,
       gatsbyNodesInfo,
-      typeMap,
       depth,
-      maxDepth,
     })
 
     const transformedFragments = transformFragments({
@@ -189,9 +184,7 @@ function transformField({
     const transformedFields = recursivelyTransformFields({
       fields,
       gatsbyNodesInfo,
-      typeMap,
       depth,
-      maxDepth,
     })
 
     if (!transformedFields || !transformedFields.length) {
@@ -210,7 +203,6 @@ function transformField({
     const transformedFields = recursivelyTransformFields({
       fields: typeInfo.fields,
       gatsbyNodesInfo,
-      typeMap,
       depth,
       maxDepth,
     })
@@ -233,26 +225,27 @@ function transformField({
   return false
 }
 
-const recursivelyTransformFields = ({
-  fields,
-  gatsbyNodesInfo,
-  typeMap,
-  maxDepth,
-  depth = 0,
-}) => {
-  const { fieldBlacklist, fieldAliases } = store.getState().introspection
+const recursivelyTransformFields = ({ fields, depth = 0 }) => {
+  const {
+    gatsbyApi: {
+      pluginOptions: {
+        schema: { queryDepth },
+      },
+    },
+    introspection: { fieldBlacklist, fieldAliases, typeMap, gatsbyNodesInfo },
+  } = store.getState()
 
   return fields
     ? fields
         .map(field =>
           transformField({
-            field,
+            maxDepth: queryDepth,
             gatsbyNodesInfo,
-            typeMap,
-            maxDepth,
-            depth,
             fieldBlacklist,
             fieldAliases,
+            typeMap,
+            field,
+            depth,
           })
         )
         .filter(Boolean)

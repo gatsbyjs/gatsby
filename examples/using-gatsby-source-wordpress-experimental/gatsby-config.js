@@ -21,6 +21,7 @@ module.exports = {
           `terms`,
           `termNames`,
           `termSlugs`,
+          `databaseId`,
         ],
         schema: {
           queryDepth: 10,
@@ -29,6 +30,9 @@ module.exports = {
           nodeUpdateInterval: 100,
         },
         type: {
+          NodeWithAuthor: {
+            exclude: true,
+          },
           UniformResourceIdentifiable: {
             exclude: true,
           },

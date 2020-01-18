@@ -1,9 +1,7 @@
 import fetchGraphql from "../../utils/fetch-graphql"
-import { getPluginOptions } from "../../utils/get-gatsby-api"
 
 const isWpGatsby = async () =>
   fetchGraphql({
-    url: getPluginOptions().url,
     query: `
         {
           isWpGatsby

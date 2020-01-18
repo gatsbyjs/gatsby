@@ -102,13 +102,16 @@ const handleFetchErrors = ({ e, reporter, url }) => {
 }
 
 const fetchGraphql = async ({
-  url,
   query,
   errorMap,
+  ignoreGraphQLErrors = false,
   panicOnError = false,
   variables = {},
 }) => {
-  const { helpers } = store.getState().gatsbyApi
+  const {
+    helpers,
+    pluginOptions: { url },
+  } = store.getState().gatsbyApi
   const { reporter } = helpers
 
   let response
@@ -125,14 +128,16 @@ const fetchGraphql = async ({
     handleFetchErrors({ e, reporter, url })
   }
 
-  handleGraphQLErrors({
-    query,
-    variables,
-    response,
-    errorMap,
-    panicOnError,
-    reporter,
-  })
+  if (!ignoreGraphQLErrors) {
+    handleGraphQLErrors({
+      query,
+      variables,
+      response,
+      errorMap,
+      panicOnError,
+      reporter,
+    })
+  }
 
   return response.data
 }

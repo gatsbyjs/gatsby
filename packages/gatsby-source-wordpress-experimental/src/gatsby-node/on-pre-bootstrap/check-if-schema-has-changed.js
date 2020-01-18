@@ -4,10 +4,9 @@ import gql from "../../utils/gql"
 
 const checkIfSchemaHasChanged = async () => {
   const MD5_CACHE_KEY = `introspection-node-query-md5`
-  const { helpers, pluginOptions } = store.getState().gatsbyApi
+  const { helpers } = store.getState().gatsbyApi
 
   const { data } = await fetchGraphql({
-    url: pluginOptions.url,
     query: gql`
       {
         schemaMd5

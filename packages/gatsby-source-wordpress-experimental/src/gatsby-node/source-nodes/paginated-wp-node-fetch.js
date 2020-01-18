@@ -31,7 +31,6 @@ const paginatedWpNodeFetch = async ({
   }
 
   const response = await fetchGraphql({
-    url,
     query,
     variables,
   })

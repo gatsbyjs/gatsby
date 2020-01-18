@@ -22,7 +22,6 @@ const introspectAndStoreRemoteSchema = async () => {
     }
 
     introspectionData = await fetchGraphql({
-      url: pluginOptions.url,
       query: introspectionQuery,
     })
 

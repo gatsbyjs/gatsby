@@ -14,7 +14,6 @@ import wpActionUPDATE from "./update"
  */
 export const getWpActions = async (__, { url }, variables) => {
   const { data } = await fetchGraphql({
-    url,
     query: actionMonitorQuery,
     variables,
   })

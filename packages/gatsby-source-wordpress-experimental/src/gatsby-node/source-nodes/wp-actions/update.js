@@ -8,7 +8,6 @@ const wpActionUPDATE = async ({
   wpAction,
   intervalRefetching,
   cachedNodeIds,
-  pluginOptions,
 }) => {
   const { reporter } = helpers
 
@@ -32,9 +31,7 @@ const wpActionUPDATE = async ({
     q => q.typeInfo.singularName === wpAction.referencedPostSingularName
   )
 
-  const { url } = pluginOptions
   const { data } = await fetchGraphql({
-    url,
     query,
     variables: {
       id: wpAction.referencedPostGlobalRelayID,

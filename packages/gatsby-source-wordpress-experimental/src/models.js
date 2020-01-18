@@ -1,10 +1,15 @@
 import merge from "lodash/merge"
 
+// @todo split models up into different files
+
 const introspection = {
   state: {
+    // @todo rename queries to nodeQueries
     queries: {},
+    nonNodeQuery: null,
     introspectionData: null,
     schemaWasChanged: null,
+    typeMap: null,
     nodeListFilter: field => field.name === `nodes`,
     ingestibles: {
       nodeListRootFields: null,
@@ -18,10 +23,12 @@ const introspection = {
       `themes`,
       `userRoles`,
       `users`,
+      `author`,
       // this field is used to determine content changes in WP
       // no need to pull it into the Gatsby schema
       `actionMonitorActions`,
       `edges`,
+      `isWpGatsby`,
       // the next two cause an error on the WPGQL side so I'm removing them temporarily
       // https://github.com/wp-graphql/wp-graphql/issues/848
       `postTypeInfo`,
