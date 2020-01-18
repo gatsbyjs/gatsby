@@ -336,10 +336,10 @@ export default async ({ actions, schema }) => {
         const { nodeInterfaceTypes } = state.introspection.ingestibles
 
         if (nodeInterfaceTypes.includes(type.name)) {
-          // we add contentType (post type) to all nodes as they're fetched
+          // we add nodeType (post type) to all nodes as they're fetched
           // so we can add them to node interfaces as well in order to filter
           // by a couple different content types
-          transformedFields[`contentType`] = `String`
+          transformedFields[`nodeType`] = `String`
 
           typeDefs.push(
             schema.buildInterfaceType({
@@ -380,7 +380,7 @@ export default async ({ actions, schema }) => {
         if (gatsbyNodeTypes.includes(type.name)) {
           // this is used to filter the allWpContentNode root field
           // by different content types (post types)
-          objectType.fields[`contentType`] = `String`
+          objectType.fields[`nodeType`] = `String`
 
           objectType.interfaces = [
             `Node`,

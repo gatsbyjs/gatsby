@@ -70,7 +70,7 @@ export const query = graphql`
     }
     allWpContentNode(
       limit: 20
-      filter: { contentType: { in: ["Post", "Page"] } }
+      filter: { nodeType: { in: ["Post", "Page"] } }
       sort: { fields: date }
     ) {
       nodes {

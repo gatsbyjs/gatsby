@@ -43,7 +43,7 @@ const wpActionCREATE = async ({
   const node = {
     ...nodeContent,
     id: nodeId,
-    contentType: queryInfo.typeInfo.nodesTypeName,
+    nodeType: queryInfo.typeInfo.nodesTypeName,
     type: queryInfo.typeInfo.nodesTypeName,
   }
 

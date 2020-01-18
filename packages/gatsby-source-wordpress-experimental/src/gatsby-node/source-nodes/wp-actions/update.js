@@ -43,7 +43,7 @@ const wpActionUPDATE = async ({
 
   const updatedNodeContent = {
     ...data[wpAction.referencedPostSingularName],
-    contentType: typeInfo.nodesTypeName,
+    nodeType: typeInfo.nodesTypeName,
     type: typeInfo.nodesTypeName,
   }
 
