@@ -34,6 +34,7 @@ const {
   enqueueJob,
   createInternalJob,
   removeInProgressJob,
+  getInProcessJobPromise,
 } = require(`../../utils/jobs-manager`)
 
 const actions = {}
@@ -64,46 +65,6 @@ const findChildren = initialChildren => {
     }
   }
   return children
-}
-
-const alreadyTriggeredJobs = new Set()
-
-/**
- * The jobs api will be called a lot of time during the gatsby process.
- * A job can be queued multiple times with the same arguments. The job api
- * is smart enought to only do the work once which means we should only run
- * the end job redux action once. There is no need to run it on every cached promise
- * as this will lead to doubling our promise creation.
- */
-const wrapJobPromiseWithReduxActionOnFirstOccurence = ({
-  jobContentDigest,
-  enqueuedJobPromise,
-  plugin,
-  dispatch,
-}) => {
-  if (alreadyTriggeredJobs.has(jobContentDigest)) {
-    return enqueuedJobPromise
-  }
-
-  alreadyTriggeredJobs.add(jobContentDigest)
-
-  return enqueuedJobPromise.then(result => {
-    // store the result in redux so we have it for the next run
-    dispatch({
-      type: `END_JOB_V2`,
-      plugin,
-      payload: {
-        jobContentDigest,
-        result,
-      },
-    })
-
-    // remove the job from our inProgressJobQueue as it's available in our done state.
-    // this is a perf optimisations so we don't grow our memory too much when using gatsby preview
-    removeInProgressJob(jobContentDigest)
-
-    return result
-  })
 }
 
 import type { Plugin } from "./types"
@@ -1255,17 +1216,23 @@ actions.createJob = (job: Job, plugin?: ?Plugin = null) => {
 actions.createJobV2 = (job: JobV2, plugin: Plugin) => (dispatch, getState) => {
   const currentState = getState()
   const internalJob = createInternalJob(job, plugin)
+  const jobContentDigest = internalJob.contentDigest
 
   // Check if we already ran this job before, if yes we return the result
   // We have an inflight (in progress) queue inside the jobs manager to make sure
   // we don't waste resources twice during the process
   if (
     currentState.jobsV2 &&
-    currentState.jobsV2.complete.has(internalJob.contentDigest)
+    currentState.jobsV2.complete.has(jobContentDigest)
   ) {
     return Promise.resolve(
-      currentState.jobsV2.complete.get(internalJob.contentDigest).result
+      currentState.jobsV2.complete.get(jobContentDigest).result
     )
+  }
+
+  const inProgressJobPromise = getInProcessJobPromise(jobContentDigest)
+  if (inProgressJobPromise) {
+    return inProgressJobPromise
   }
 
   dispatch({
@@ -1278,12 +1245,22 @@ actions.createJobV2 = (job: JobV2, plugin: Plugin) => (dispatch, getState) => {
   })
 
   const enqueuedJobPromise = enqueueJob(internalJob)
-  // Releases some memory pressure from Gatsby
-  return wrapJobPromiseWithReduxActionOnFirstOccurence({
-    jobContentDigest: internalJob.contentDigest,
-    enqueuedJobPromise,
-    plugin,
-    dispatch,
+  return enqueuedJobPromise.then(result => {
+    // store the result in redux so we have it for the next run
+    dispatch({
+      type: `END_JOB_V2`,
+      plugin,
+      payload: {
+        jobContentDigest,
+        result,
+      },
+    })
+
+    // remove the job from our inProgressJobQueue as it's available in our done state.
+    // this is a perf optimisations so we don't grow our memory too much when using gatsby preview
+    removeInProgressJob(jobContentDigest)
+
+    return result
   })
 }
 

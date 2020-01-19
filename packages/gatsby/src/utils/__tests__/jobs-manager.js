@@ -82,7 +82,6 @@ describe(`Jobs manager`, () => {
 
     jest.isolateModules(() => {
       jobManager = require(`../jobs-manager`)
-      jobManager.jobsInProcess.clear()
     })
   })
 
@@ -248,6 +247,21 @@ describe(`Jobs manager`, () => {
     })
   })
 
+  // getInProcessJobPromise
+  describe(`getInProcessJobPromise`, () => {
+    // unsure how to test this yet without a real worker
+    it(`should get a promise when set`, async () => {
+      worker.TEST_JOB.mockReturnValue({ output: `myresult` })
+      const { enqueueJob, getInProcessJobPromise } = jobManager
+      const internalJob = createInternalMockJob()
+      const promise = enqueueJob(internalJob)
+
+      expect(getInProcessJobPromise(internalJob.contentDigest)).toStrictEqual(
+        promise
+      )
+    })
+  })
+
   describe(`removeInProgressJob`, () => {
     // unsure how to test this yet without a real worker
     it(`should have all tasks resolved when promise is resolved`, async () => {
@@ -256,11 +270,15 @@ describe(`Jobs manager`, () => {
       const internalJob = createInternalMockJob()
       await enqueueJob(internalJob)
 
-      expect(jobManager.jobsInProcess.size).toBe(1)
+      expect(
+        jobManager.getInProcessJobPromise(internalJob.contentDigest)
+      ).not.toBeUndefined()
 
       removeInProgressJob(internalJob.contentDigest)
 
-      expect(jobManager.jobsInProcess.size).toBe(0)
+      expect(
+        jobManager.getInProcessJobPromise(internalJob.contentDigest)
+      ).toBeUndefined()
     })
   })
 

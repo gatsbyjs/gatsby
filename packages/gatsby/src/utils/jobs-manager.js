@@ -59,12 +59,6 @@ const createFileHash = path => hasha.fromFileSync(path, { algorithm: `sha1` })
 let hasActiveJobs = null
 
 /**
- * @deprecated
- * TODO: Remove for Gatsby v3 (compatibility mode)
- */
-exports.jobsInProcess = jobsInProcess
-
-/**
  * Get the local worker function and execute it on the user's machine
  *
  * @template T
@@ -231,6 +225,15 @@ exports.enqueueJob = async job => {
 
   return deferred.promise
 }
+
+/**
+ * Get in progress job promise
+ *
+ * @param {string} contentDigest
+ * @return {Promise<void>}
+ */
+exports.getInProcessJobPromise = contentDigest =>
+  jobsInProcess.get(contentDigest)?.deferred.promise
 
 /**
  * Remove a job from our inProgressQueue to reduce memory usage
