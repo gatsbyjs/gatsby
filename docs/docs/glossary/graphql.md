@@ -11,10 +11,10 @@ Facebook created GraphQL in 2012 when it realized that it needed an API capable 
 
 More traditional APIs use a separate endpoint for each piece or type of data you'd like to request. For example, a newspaper API might contain:
 
-- an `/articles/<id>` endpoint that returns a specific news story;
+- an `/articles/<id>` endpoint that returns a specific news story.
 - a `/reporters/<id>` endpoint that returns information about a particular reporter.
 
-A single news article page might require two separate network requests: one to retrieve the story data, and another for the reporter's contact details. What's more, the `/reporters` endpoint may return more data than you want to display; it might return their biography and social media accounts, when their name, email, and photo are all that you need for the page.
+A single news article page might require two separate network requests: one to retrieve the story data, and another for the reporter's contact details. What's more, the `/reporters` endpoint may return more data than you want to display. it might return their biography and social media accounts, when their name, email, and photo are all that you need for the page.
 
 A GraphQL API, on the other hand, has a single endpoint. To retrieve data, you send one request string that uses a GraphQL-specific syntax. GraphQL executes the functions necessary to retrieve the data that you've requested, and returns a single JSON response.
 
