@@ -146,28 +146,40 @@ function prepareQueue({ file, args }) {
   }
 }
 
-async function createJob(job, { reporter }) {
+function createJob(job, { reporter }) {
   const progressBar = createOrGetProgressBar(reporter)
 
   if (pendingImagesCounter === 0) {
     progressBar.start()
   }
 
-  const transforms = job.args.operations
-  pendingImagesCounter += transforms.length
+  const transformsCount = job.args.operations.length
+  pendingImagesCounter += transformsCount
   progressBar.total = pendingImagesCounter
 
-  try {
-    if (boundActionCreators.createJobV2) {
-      await boundActionCreators.createJobV2(job)
-    } else {
-      await scheduleJob(job, boundActionCreators)
-    }
-  } catch (err) {
-    reporter.panic(err)
+  // Jobs can be duplicates and usually are long running tasks.
+  // Because of that we shouldn't use async/await and instead opt to use
+  // .then() /.catch() handlers, because this allows V8 to release
+  // duplicate jobs from memory quickly (as job is not referenced
+  // in resolve / reject handlers). If we would use async/await
+  // entire closure would keep duplicate job in memory until
+  // initial job finish.
+  let promise = null
+  if (boundActionCreators.createJobV2) {
+    promise = boundActionCreators.createJobV2(job)
+  } else {
+    promise = scheduleJob(job, boundActionCreators)
   }
 
-  progressBar.tick(transforms.length)
+  promise
+    .catch(err => {
+      reporter.panic(err)
+    })
+    .then(() => {
+      progressBar.tick(transformsCount)
+    })
+
+  return promise
 }
 
 function queueImageResizing({ file, args = {}, reporter }) {
