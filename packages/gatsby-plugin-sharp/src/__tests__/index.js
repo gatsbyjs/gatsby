@@ -512,9 +512,11 @@ describe(`gatsby-plugin-sharp`, () => {
 })
 
 function getFileObject(absolutePath, name = `test`) {
+  const parsedPath = path.parse(absolutePath)
   return {
     id: `${absolutePath} absPath of file`,
     name: name,
+    base: parsedPath.base,
     absolutePath,
     extension: `png`,
     internal: {
