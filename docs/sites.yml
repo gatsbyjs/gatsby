@@ -1058,9 +1058,9 @@
     - Marketing
     - Technology
 - title: Yuuniworks Portfolio / Blog
-  main_url: "https://www.yuuniworks.com/"
-  url: "https://www.yuuniworks.com/"
-  source_url: "https://github.com/junkboy0315/yuuni-web"
+  main_url: "https://gatsby.yuuniworks.com/"
+  url: "https://gatsby.yuuniworks.com/"
+  source_url: "https://github.com/junkboy0315/gatsby-portfolio-blog"
   featured: false
   categories:
     - Portfolio
