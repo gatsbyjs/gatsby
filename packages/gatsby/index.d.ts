@@ -1209,8 +1209,8 @@ export interface ReplaceComponentRendererArgs extends BrowserPluginArgs {
     children: undefined
     pageResources: object
     data: object
-    pageContext: { [key: string]: unknown }
-    pathContext: { [key: string]: unknown }
+    pageContext: Record<string, unknown>
+    pathContext: Record<string, unknown>
   }
   loader: object
 }
