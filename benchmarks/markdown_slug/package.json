@@ -35,6 +35,7 @@
   },
   "devDependencies": {
     "faker": "^4.1.0",
+    "gatsby-plugin-benchmark-reporting": "*",
     "prettier": "^1.19.1"
   },
   "keywords": [
@@ -43,6 +44,8 @@
   "license": "MIT",
   "main": "n/a",
   "scripts": {
+    "bench": "rm -r markdown-pages; NUM_PAGES=${NUM_PAGES:-2000} node md.generate.js; gatsby clean; node --max_old_space_size=2000 node_modules/.bin/gatsby build",
+    "benchnb": "gatsby clean; node --max_old_space_size=2000 node_modules/.bin/gatsby build",
     "build": "gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
@@ -50,8 +53,6 @@
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
-    "bench": "rm -r markdown-pages; NUM_PAGES=${NUM_PAGES:-2000} node md.generate.js; gatsby clean; node --max_old_space_size=2000 node_modules/.bin/gatsby build",
-    "benchnb": "gatsby clean; node --max_old_space_size=2000 node_modules/.bin/gatsby build",
     "postinstall": "del-cli markdown-pages && gatsby clean && NUM_PAGES=${NUM_PAGES:-2000} node md.generate.js"
   }
 }
