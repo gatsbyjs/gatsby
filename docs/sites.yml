@@ -9375,3 +9375,14 @@
   built_by: ccalamos
   built_by_url: https://github.com/ccalamos
   featured: false
+- title: Krishna Gopinath
+  main_url: https://krishnagopinath.me
+  url: https://krishnagopinath.me
+  source_url: https://github.com/krishnagopinath/website
+  description: >
+    Website of Krishna Gopinath, software engineer and budding teacher.
+  categories:
+    - Portfolio
+  built_by: Krishna Gopinath
+  built_by_url: https://twitter.com/krishwader
+  featured: false
