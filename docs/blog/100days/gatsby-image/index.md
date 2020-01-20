@@ -19,7 +19,7 @@ This week’s challenge invites you to add images to your blog and learn about a
 
 #### Part 1
 
-Add images to your markdown-based blog posts. If you are doing each challenge sequentially, then you have a [Gatsby blog that uses markdown](/100days/start-blog/) for blog posts, and is [deployed live to a CDN](/blog/100days/free-hosting/).
+Add images to your markdown-based blog posts. If you are doing each challenge sequentially, then you have a [Gatsby blog that uses markdown](/blog/100days/start-blog/) for blog posts, and is [deployed live to a CDN](/blog/100days/free-hosting/).
 
 But what good is a blog without beautiful images? We want you to use the resources section below to add auto-optimized images to your markdown blog posts!
 
