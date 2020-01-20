@@ -242,7 +242,7 @@ function batchQueueImageResizing({ file, transforms = [], reporter }) {
     // queue operations of an image
     operations.push({
       outputPath: relativePath,
-      args: options,
+      args: createTransformObject(options, getPluginOptions()),
     })
 
     // create output results
@@ -529,11 +529,11 @@ async function fluid({ file, args = {}, reporter, cache }) {
 
   // Sort sizes for prettiness.
   const transforms = _.sortBy(filteredSizes).map(size => {
-    const arrrgs = createTransformObject(options, getPluginOptions())
-    if (arrrgs[otherDimensionAttr]) {
-      arrrgs[otherDimensionAttr] = undefined
+    const arrrgs = {
+      ...options,
+      [dimensionAttr]: Math.round(size),
+      [otherDimensionAttr]: undefined,
     }
-    arrrgs[dimensionAttr] = Math.round(size)
 
     // we need pathPrefix to calculate the correct outputPath
     if (options.pathPrefix) {
@@ -651,8 +651,10 @@ async function fixed({ file, args = {}, reporter, cache }) {
 
   // Sort images for prettiness.
   const transforms = _.sortBy(filteredSizes).map(size => {
-    const arrrgs = createTransformObject(options, getPluginOptions())
-    arrrgs[fixedDimension] = Math.round(size)
+    const arrrgs = {
+      ...options,
+      [fixedDimension]: Math.round(size),
+    }
 
     // Queue images for processing.
     if (options.width !== undefined && options.height !== undefined) {
