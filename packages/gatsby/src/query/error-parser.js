@@ -97,6 +97,19 @@ const errorParser = ({
         }
       },
     },
+    {
+      regex: /Variable "(.+)" is never used in operation "(.+)".*/ms,
+      cb: match => {
+        return {
+          id: `85927`,
+          context: {
+            sourceMessage: match[0],
+            variable: match[1],
+            operation: match[2],
+          },
+        }
+      },
+    },
     // Match anything with a generic catch-all error handler
     {
       regex: /[\s\S]*/gm,

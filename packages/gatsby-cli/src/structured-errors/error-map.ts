@@ -257,6 +257,12 @@ export const errorMap = {
     type: Type.GRAPHQL,
     level: Level.ERROR,
   },
+  "85927": {
+    text: (context): string =>
+      `There was an error in your GraphQL query:\n\n${context.sourceMessage}\n\nSee if ${context.variable} has a typo or ${context.operation} doesn't actually require this variable.`,
+    type: Type.GRAPHQL,
+    level: Level.ERROR,
+  },
   // Config errors
   "10123": {
     text: (context): string =>
