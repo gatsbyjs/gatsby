@@ -205,7 +205,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
         operations: [
           {
             outputPath: relativePath,
-            args: removeDefaultValues(options, getPluginOptions()),
+            args: options,
           },
         ],
         pluginOptions: getPluginOptions(),
