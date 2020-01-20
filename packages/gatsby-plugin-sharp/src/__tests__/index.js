@@ -197,6 +197,7 @@ describe(`gatsby-plugin-sharp`, () => {
       expect(boundActionCreators.createJobV2).toHaveBeenCalledTimes(1)
       expect(scheduleJob).toHaveBeenCalledTimes(1)
       expect(result).toStrictEqual(resultV2)
+      expect(boundActionCreators.createJobV2).toMatchSnapshot()
     })
 
     it(`adds pathPrefix if defined`, async () => {
@@ -210,6 +211,7 @@ describe(`gatsby-plugin-sharp`, () => {
 
       expect(result.src.indexOf(pathPrefix)).toBe(0)
       expect(result.srcSet.indexOf(pathPrefix)).toBe(0)
+      expect(boundActionCreators.createJobV2).toMatchSnapshot()
     })
 
     it(`keeps original file name`, async () => {
@@ -219,6 +221,7 @@ describe(`gatsby-plugin-sharp`, () => {
 
       expect(path.parse(result.src).name).toBe(file.name)
       expect(path.parse(result.srcSet).name).toBe(file.name)
+      expect(boundActionCreators.createJobV2).toMatchSnapshot()
     })
 
     it(`does not change the arguments object it is given`, async () => {
@@ -229,6 +232,7 @@ describe(`gatsby-plugin-sharp`, () => {
       })
 
       expect(args).toEqual({ maxWidth: 400 })
+      expect(boundActionCreators.createJobV2).toMatchSnapshot()
     })
 
     it(`infers the maxWidth if only maxHeight is given`, async () => {
@@ -239,6 +243,19 @@ describe(`gatsby-plugin-sharp`, () => {
       })
 
       expect(result.presentationWidth).toEqual(41)
+      expect(boundActionCreators.createJobV2).toMatchSnapshot()
+    })
+
+    it(`calculate height based on width when maxWidth & maxHeight are present`, async () => {
+      const args = { maxWidth: 20, maxHeight: 20 }
+      const result = await fluid({
+        file: getFileObject(path.join(__dirname, `images/144-density.png`)),
+        args,
+      })
+
+      expect(result.presentationWidth).toEqual(20)
+      expect(result.presentationHeight).toEqual(10)
+      expect(boundActionCreators.createJobV2).toMatchSnapshot()
     })
 
     it(`should throw if maxWidth is less than 1`, async () => {
@@ -249,6 +266,7 @@ describe(`gatsby-plugin-sharp`, () => {
       })
 
       await expect(result).rejects.toThrow()
+      expect(boundActionCreators.createJobV2).toMatchSnapshot()
     })
 
     it(`accepts srcSet breakpoints`, async () => {
@@ -268,6 +286,7 @@ describe(`gatsby-plugin-sharp`, () => {
       const actual = findAllBreakpoints(result.srcSet)
       // should contain all requested sizes as well as the original size
       expect(actual).toEqual(expect.arrayContaining(expected))
+      expect(boundActionCreators.createJobV2).toMatchSnapshot()
     })
 
     it(`should throw on srcSet breakpoints less than 1`, async () => {
@@ -279,6 +298,7 @@ describe(`gatsby-plugin-sharp`, () => {
       })
 
       await expect(result).rejects.toThrow()
+      expect(boundActionCreators.createJobV2).toMatchSnapshot()
     })
 
     it(`ensure maxWidth is in srcSet breakpoints`, async () => {
@@ -294,6 +314,7 @@ describe(`gatsby-plugin-sharp`, () => {
       })
 
       expect(result.srcSet).toEqual(expect.stringContaining(`${maxWidth}w`))
+      expect(boundActionCreators.createJobV2).toMatchSnapshot()
     })
 
     it(`reject any breakpoints larger than the original width`, async () => {
@@ -328,6 +349,7 @@ describe(`gatsby-plugin-sharp`, () => {
       expect(actual).toEqual(expect.arrayContaining(expected))
       // should contain no other sizes
       expect(actual.length).toEqual(expected.length)
+      expect(boundActionCreators.createJobV2).toMatchSnapshot()
     })
 
     it(`prevents duplicate breakpoints`, async () => {
@@ -348,11 +370,18 @@ describe(`gatsby-plugin-sharp`, () => {
       const actual = findAllBreakpoints(result.srcSet)
       expect(actual).toEqual(expect.arrayContaining(expected))
       expect(actual.length).toEqual(expected.length)
+      expect(boundActionCreators.createJobV2).toMatchSnapshot()
     })
   })
 
   describe(`fixed`, () => {
+    let boundActionCreators = {}
     beforeEach(() => {
+      boundActionCreators.createJobV2 = jest
+        .fn()
+        .mockReturnValue(Promise.resolve())
+      setBoundActionCreators(boundActionCreators)
+      scheduleJob.mockClear()
       console.warn = jest.fn()
     })
 
@@ -368,6 +397,7 @@ describe(`gatsby-plugin-sharp`, () => {
       expect(boundActionCreators.createJobV2).toHaveBeenCalledTimes(1)
       expect(scheduleJob).toHaveBeenCalledTimes(1)
       expect(result).toStrictEqual(resultV2)
+      expect(boundActionCreators.createJobV2).toMatchSnapshot()
     })
 
     it(`does not warn when the requested width is equal to the image width`, async () => {
@@ -380,6 +410,7 @@ describe(`gatsby-plugin-sharp`, () => {
 
       expect(result.width).toEqual(1)
       expect(console.warn).toHaveBeenCalledTimes(0)
+      expect(boundActionCreators.createJobV2).toMatchSnapshot()
     })
 
     it(`warns when the requested width is greater than the image width`, async () => {
@@ -393,6 +424,7 @@ describe(`gatsby-plugin-sharp`, () => {
 
       expect(result.width).toEqual(width)
       expect(console.warn).toHaveBeenCalledTimes(1)
+      expect(boundActionCreators.createJobV2).toMatchSnapshot()
     })
 
     it(`correctly infers the width when only the height is given`, async () => {
@@ -404,6 +436,7 @@ describe(`gatsby-plugin-sharp`, () => {
       })
 
       expect(result.width).toEqual(21)
+      expect(boundActionCreators.createJobV2).toMatchSnapshot()
     })
   })
 

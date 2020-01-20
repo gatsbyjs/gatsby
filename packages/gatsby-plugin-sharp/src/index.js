@@ -537,6 +537,10 @@ async function fluid({ file, args = {}, reporter, cache }) {
     // we need pathPrefix to calculate the correct outputPath
     arrrgs.pathPrefix = options.pathPrefix || ``
 
+    if (options.maxWidth !== undefined && options.maxHeight !== undefined) {
+      arrrgs.height = Math.round(size * (options.maxHeight / options.maxWidth))
+    }
+
     return arrrgs
   })
 
