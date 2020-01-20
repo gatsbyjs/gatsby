@@ -2,7 +2,7 @@
 title: Styled Components
 ---
 
-In this guide, you will learn how to set up a site with the CSS-in-JS library [Styled Components](https://www.styled-components.com/).
+In this guide, you will learn how to set up a site with the CSS-in-JS library [Styled Components](https://styled-components.com/).
 
 Styled Components lets you use actual CSS syntax inside your components. Styled Components is a variant on "CSS-in-JS"—which solves many of the problems with traditional CSS.
 
