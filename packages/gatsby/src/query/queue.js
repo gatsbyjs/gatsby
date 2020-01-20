@@ -7,7 +7,7 @@ const GraphQLRunner = require(`./graphql-runner`)
 
 const createBaseOptions = () => {
   return {
-    concurrent: 4,
+    concurrent: 100,
     store: FastMemoryStore(),
   }
 }
@@ -67,7 +67,7 @@ const createDevelopQueue = getRunner => {
  * Note: queue is reused in develop so make sure to thoroughly cleanup hooks
  */
 const processBatch = async (queue, jobs, activity) => {
-  let numJobs = jobs.length
+  const numJobs = jobs.length
   if (numJobs === 0) {
     return Promise.resolve()
   }

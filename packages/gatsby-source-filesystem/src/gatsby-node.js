@@ -4,6 +4,7 @@ const path = require(`path`)
 const { Machine, interpret } = require(`xstate`)
 
 const { createFileNode } = require(`./create-file-node`)
+const createRemoteFileNode = require(`./create-remote-file-node`)
 
 /**
  * Create a state machine to manage Chokidar's not-ready/ready states.
@@ -147,6 +148,9 @@ const createFSMachine = (
 }
 
 exports.sourceNodes = (api, pluginOptions) => {
+  if (pluginOptions.addResolversOnly) {
+    return undefined
+  }
   // Validate that the path exists.
   if (!fs.existsSync(pluginOptions.path)) {
     api.reporter.panic(`
@@ -214,3 +218,55 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
 }
 
 exports.setFieldsOnGraphQLNodeType = require(`./extend-file-node`)
+
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions
+  const typeDefs = `
+    type RemoteFile implements Node @dontInfer {
+        sourceInstanceName: String!
+        absolutePath: String!
+        relativePath: String!
+        extension: String!
+        root: String!
+        dir: String!
+        base: String!
+        ext: String!
+        name: String!
+        relativeDirectory: String!
+        url: String!
+    }    
+  `
+  createTypes(typeDefs)
+}
+
+exports.createResolvers = ({
+  createResolvers,
+  store,
+  cache,
+  createNodeId,
+  reporter,
+  actions,
+  ...rest
+}) => {
+  const { createNode } = actions
+  const resolvers = {
+    RemoteFile: {
+      localFile: {
+        type: `File`,
+        resolve: (source, args, context, info) =>
+          createRemoteFileNode({
+            url: source.url,
+            parentNodeId: source.id,
+            name: source.name,
+            ext: source.ext,
+            store,
+            cache,
+            createNode,
+            createNodeId,
+            reporter,
+          }),
+      },
+    },
+  }
+  createResolvers(resolvers)
+}

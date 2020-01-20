@@ -32,7 +32,7 @@ const RecipeTemplate = ({ data }) => (
           <div css={{ width: `calc(1/2*100% - (1 - 1/2) * ${rhythm(2)})` }}>
             <Img
               fluid={
-                data.recipe.relationships.image.localFile.childImageSharp.fluid
+                data.recipe.relationships.image.remoteFile.localFile.childImageSharp.fluid
               }
             />
           </div>
@@ -97,10 +97,12 @@ export const query = graphql`
           name
         }
         image: field_image {
-          localFile {
-            childImageSharp {
-              fluid(maxWidth: 470, maxHeight: 353) {
-                ...GatsbyImageSharpFluid
+          remoteFile {
+            localFile {
+              childImageSharp {
+                fluid(maxWidth: 470, maxHeight: 353) {
+                  ...GatsbyImageSharpFluid
+                }
               }
             }
           }
