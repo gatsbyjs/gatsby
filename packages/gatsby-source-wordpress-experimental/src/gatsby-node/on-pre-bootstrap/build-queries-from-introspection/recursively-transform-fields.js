@@ -6,8 +6,9 @@ const transformFragments = ({
   gatsbyNodesInfo,
   typeMap,
   depth,
+  maxDepth,
 }) =>
-  possibleTypes
+  possibleTypes && depth <= maxDepth
     ? possibleTypes
         .map(possibleType => {
           const type = typeMap.get(possibleType.name)
@@ -31,7 +32,6 @@ const transformFragments = ({
           if (typeInfo) {
             const fields = recursivelyTransformFields({
               fields: typeInfo.fields,
-              gatsbyNodesInfo,
               depth,
             })
 
@@ -124,7 +124,6 @@ function transformField({
 
     const transformedFields = recursivelyTransformFields({
       fields: listOfType.fields,
-      gatsbyNodesInfo,
       depth,
     })
 
@@ -178,12 +177,12 @@ function transformField({
   }
 
   const typeInfo = typeMap.get(fieldType.name)
+
   const { fields } = typeInfo
 
   if (fields) {
     const transformedFields = recursivelyTransformFields({
       fields,
-      gatsbyNodesInfo,
       depth,
     })
 
@@ -202,9 +201,7 @@ function transformField({
 
     const transformedFields = recursivelyTransformFields({
       fields: typeInfo.fields,
-      gatsbyNodesInfo,
       depth,
-      maxDepth,
     })
 
     const fragments = transformFragments({
@@ -234,6 +231,10 @@ const recursivelyTransformFields = ({ fields, depth = 0 }) => {
     },
     introspection: { fieldBlacklist, fieldAliases, typeMap, gatsbyNodesInfo },
   } = store.getState()
+
+  if (depth >= queryDepth) {
+    return null
+  }
 
   return fields
     ? fields

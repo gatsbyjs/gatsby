@@ -22,9 +22,10 @@ module.exports = {
           `termNames`,
           `termSlugs`,
           `databaseId`,
+          `innerBlocks`,
         ],
         schema: {
-          queryDepth: 10,
+          queryDepth: 11,
         },
         develop: {
           nodeUpdateInterval: 100,
@@ -39,15 +40,15 @@ module.exports = {
           MediaItem: {
             onlyFetchIfReferenced: true,
           },
-          Page: {
-            limit: 10,
-          },
-          Post: {
-            limit: 10,
-          },
-          Alot: {
-            limit: 50,
-          },
+          // Page: {
+          //   limit: 10,
+          // },
+          // Post: {
+          //   limit: 10,
+          // },
+          // Alot: {
+          //   limit: 50,
+          // },
         },
       },
     },
