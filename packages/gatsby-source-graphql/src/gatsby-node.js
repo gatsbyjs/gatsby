@@ -13,6 +13,7 @@ const {
   NamespaceUnderFieldTransform,
   StripNonQueryTransform,
 } = require(`./transforms`)
+const runHeaderFunctions = require(`./run-header-functions.js`)
 
 exports.sourceNodes = async (
   { actions, createNodeId, cache, createContentDigest },
@@ -51,8 +52,8 @@ exports.sourceNodes = async (
     link = createHttpLink({
       uri: url,
       fetch,
-      headers,
       fetchOptions,
+      headers: await runHeaderFunctions(headers),
     })
   }
 
