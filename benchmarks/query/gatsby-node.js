@@ -11,33 +11,53 @@ function newTypeName() {
 }
 
 let types = []
+for (let i = 0; i < NUM_TYPES; i++) {
+  types.push(newTypeName())
+}
+// Create markdown nodes
+const pagesPerType = NUM_PAGES / NUM_TYPES
+
+const links = types.reduce((links, typeName) => {
+  links[`${typeName}___NODE`] = Array.from(Array(pagesPerType).keys()).map(
+    step => `${typeName}${step.toString()}`
+  )
+  return links
+}, {})
+
+const linkedNodesQueryFields = `links { 
+  ${types
+    .map(
+      typeName => `${typeName} {
+    internal {
+      content
+    }
+  }`
+    )
+    .join(`\n`)}
+}`
 
 // Create NUM_PAGES nodes, split over NUM_TYPES types. Each node has
 // the bare minimum of content
 exports.sourceNodes = ({ actions: { createNode } }) => {
-  for (let i = 0; i < NUM_TYPES; i++) {
-    types.push(newTypeName())
-  }
-  // Create markdown nodes
-  const pagesPerType = NUM_PAGES / NUM_TYPES
-
   let step = 0
-
   _.forEach(types, typeName => {
     for (let i = 0; i < pagesPerType; i++) {
       step++
-      const id = `${typeName}${step.toString()}`
-      createNode({
+      const id = `${typeName}${i.toString()}`
+      const node = {
         id,
         parent: null,
         children: [],
+        nestedId: id,
+        links,
         internal: {
           type: typeName,
-          nestedId: id,
           content: faker.lorem.word(),
           contentDigest: step.toString(),
         },
-      })
+      }
+
+      createNode(node)
     }
   })
 }
@@ -56,14 +76,18 @@ export default ({ data }) => {
   return (
     <div>
       <h1>{node.id}. Not much ey</h1>
+      <pre>
+        {JSON.stringify(node, null, 2)}
+      </pre>
     </div>
   )
 }
 
 export const query = graphql\`
   query($id: String!) {
-    ${lowerTypeName}(internal: { nestedId: { eq: $id } }) {
+    ${lowerTypeName}(nestedId: { eq: $id }) {
       id
+      ${process.env.QUERY_LINKED_NODES ? linkedNodesQueryFields : ``}
     }
   }
 \`

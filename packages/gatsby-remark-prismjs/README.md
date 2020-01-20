@@ -20,9 +20,9 @@ plugins: [
           resolve: `gatsby-remark-prismjs`,
           options: {
             // Class prefix for <pre> tags containing syntax highlighting;
-            // defaults to 'language-' (eg <pre class="language-js">).
+            // defaults to 'language-' (e.g. <pre class="language-js">).
             // If your site loads Prism into the browser at runtime,
-            // (eg for use with libraries like react-live),
+            // (e.g. for use with libraries like react-live),
             // you may use this to prevent Prism from re-processing syntax.
             // This is an uncommon use-case though;
             // If you're unsure, it's best to use the default value.
@@ -40,9 +40,9 @@ plugins: [
             // bash highlighter.
             aliases: {},
             // This toggles the display of line numbers globally alongside the code.
-            // To use it, add the following line in src/layouts/index.js
+            // To use it, add the following line in gatsby-browser.js
             // right after importing the prism color scheme:
-            //  `require("prismjs/plugins/line-numbers/prism-line-numbers.css");`
+            //  require("prismjs/plugins/line-numbers/prism-line-numbers.css")
             // Defaults to false.
             // If you wish to only show line numbers on certain code blocks,
             // leave false and use the {numberLines: true} syntax below
@@ -50,6 +50,35 @@ plugins: [
             // If setting this to true, the parser won't handle and highlight inline
             // code used in markdown i.e. single backtick code like `this`.
             noInlineHighlight: false,
+            // This adds a new language definition to Prism or extend an already
+            // existing language definition. More details on this option can be
+            // found under the header "Add new language definition or extend an
+            // existing language" below.
+            languageExtensions: [
+              {
+                language: "superscript",
+                extend: "javascript",
+                definition: {
+                  superscript_types: /(SuperType)/,
+                },
+                insertBefore: {
+                  function: {
+                    superscript_keywords: /(superif|superelse)/,
+                  },
+                },
+              },
+            ],
+            // Customize the prompt used in shell output
+            // Values below are default
+            prompt: {
+              user: "root",
+              host: "localhost",
+              global: false,
+            },
+            // By default the HTML entities <>&'" are escaped.
+            // Add additional HTML escapes by providing a mapping
+            // of HTML entities and their escape value IE: { '}': '&#123;' }
+            escapeEntities: {},
           },
         },
       ],
@@ -172,6 +201,41 @@ Then add in the corresponding CSS:
   padding: 0;
   padding-left: 2.8em;
   overflow: initial;
+}
+```
+
+#### Optional: Add shell prompt
+
+If you want a fancy prompt on anything with `shell` or `bash`, you need to import
+the following CSS file in `gatsby-browser.js`:
+
+```javascript
+// gatsby-browser.js
+require("prismjs/plugins/command-line/prism-command-line.css")
+```
+
+If you want to change the resulting prompt, use the following CSS:
+
+```css
+.command-line-prompt > span:before {
+  color: #999;
+  content: " ";
+  display: block;
+  padding-right: 0.8em;
+}
+
+/* Prompt for all users */
+.command-line-prompt > span[data-user]:before {
+  content: "[" attr(data-user) "@" attr(data-host) "] $";
+}
+
+/* Prompt for root */
+.command-line-prompt > span[data-user="root"]:before {
+  content: "[" attr(data-user) "@" attr(data-host) "] #";
+}
+
+.command-line-prompt > span[data-prompt]:before {
+  content: attr(data-prompt);
 }
 ```
 
@@ -307,6 +371,25 @@ plugins: [
 ```
 ````
 
+### Shell prompt
+
+To show fancy prompts next to shell commands (only triggers on `bash`), either set `prompt.global` to `true` in `gatsby-config.js`,
+or pass at least one of `{outputLines: <range>}`, `{promptUser: <user>}`, or `{promptHost: <host>}` to a snippet
+
+By default, every line gets a prompt appended to the start, this behaviour can be changed by specifying `{outputLines: <range>}`
+to the language.
+
+````
+```bash{outputLines: 2-10,12}
+````
+
+The user and host used in the appended prompt is pulled from the `prompt.user` and `prompt.host` values,
+unless explicitly overridden by the `promptUser` and `promptHost` options in the snippet, e.g.:
+
+````
+```bash{promptUser: alice}{promptHost: dev.localhost}
+````
+
 ### Line hiding
 
 As well as highlighting lines, it's possible to _hide_ lines from the rendered output. Often this is handy when using `gatsby-remark-prismjs` along with [`gatsby-remark-embed-snippet`](https://www.gatsbyjs.org/packages/gatsby-remark-embed-snippet/).
@@ -340,6 +423,66 @@ highlighted) text of `.some-class { background-color: red }`
 
 If you need to prevent any escaping or highlighting, you can use the `none`
 language; the inner contents will not be changed at all.
+
+### Add new language definition or extend an existing language
+
+You can provide a language extension by giving a single object or an array of
+language extension objects as the `languageExtensions` option.
+
+A language extension object looks like this:
+
+```javascript
+languageExtensions: [
+  {
+    language: "superscript",
+    extend: "javascript",
+    definition: {
+      superscript_types: /(SuperType)/,
+    },
+    insertBefore: {
+      function: {
+        superscript_keywords: /(superif|superelse)/,
+      },
+    },
+  },
+]
+```
+
+used options:
+
+- `language` (optional) The name of the new language.
+- `extend` (optional) The language you wish to extend.
+- `definition` (optional) This is the Prism language definition.
+- `insertBefore` (optional) Is used to define where in the language definition we want to insert our extension.
+
+More information of the format can be found here:
+https://prismjs.com/extending.html
+
+Note:
+
+- One of the parameters `language` and `extend` is needed.
+- If only `language` is given, a new language will be defined from scratch.
+- If only `extend` is given, an extension will be made to the given language.
+- If both `language` and `extend` is given, a new language that extends the `extend` language will
+  be defined.
+
+In case a language is extended, note that the definitions will not be merged.
+If the extended language definition and the given definition contains the same
+token, the original pattern will be overwritten.
+
+One of the parameters `definition` and `insertBefore` needs to be defined.
+`insertBefore` needs to be combined with `definition` or `extend` (otherwise
+there will not be any language definition tokens to insert before).
+
+In addition to this extension parameters the css also needs to be updated to
+get a style for the new tokens. Prism will wrap the matched tokens with a
+`span` element and give it the classes `token` and the token name you defined.
+In the example above we would match `superif` and `superelse`. In the html
+it would result in the following when a match is found:
+
+```html
+<span class="token superscript_keywords">superif</span>
+```
 
 ## Implementation notes
 

@@ -25,10 +25,12 @@ This module currently pulls the following entities from WordPress:
       users, statuses, taxonomies, site metadata, ...)
 - [x] Any new entity should be pulled as long as the IDs are correct.
 - [x] [ACF Entities (Advanced Custom Fields)](https://www.advancedcustomfields.com/)
-- [x] Custom post types (any type you could have declared using WordPress'
-      `functions.php`)
+- [x] Custom Post Types (any type you could have registered and enabled in the REST API)
+- [x] Post Meta (any meta fields you could have registered and enabled in the REST API)
 
 We welcome PRs adding support for data from other plugins.
+
+Note : If some fields are missing, check [troubleshooting missing fields](#missing-fields) section.
 
 ## Install
 
@@ -44,24 +46,24 @@ module.exports = {
   plugins: [
     /*
      * Gatsby's data processing layer begins with “source”
-     * plugins. Here the site sources its data from Wordpress.
+     * plugins. Here the site sources its data from WordPress.
      */
     {
       resolve: "gatsby-source-wordpress",
       options: {
         /*
-         * The base URL of the Wordpress site without the trailingslash and the protocol. This is required.
-         * Example : 'gatsbyjsexamplewordpress.wordpress.com' or 'www.example-site.com'
+         * The base URL of the WordPress site without the trailingslash and the protocol. This is required.
+         * Example : 'demo.wp-api.org' or 'www.example-site.com'
          */
-        baseUrl: "gatsbyjsexamplewordpress.wordpress.com",
+        baseUrl: "live-gatbsyjswp.pantheonsite.io",
         // The protocol. This can be http or https.
-        protocol: "http",
+        protocol: "https",
         // Indicates whether the site is hosted on wordpress.com.
         // If false, then the assumption is made that the site is self hosted.
         // If true, then the plugin will source its content on wordpress.com using the JSON REST API V2.
         // If your site is hosted on wordpress.org, then set this to false.
         hostingWPCOM: false,
-        // If useACF is true, then the source plugin will try to import the Wordpress ACF Plugin contents.
+        // If useACF is true, then the source plugin will try to import the WordPress ACF Plugin contents.
         // This feature is untested for sites hosted on wordpress.com.
         // Defaults to true.
         useACF: true,
@@ -93,12 +95,14 @@ module.exports = {
           wpcom_pass: process.env.WORDPRESS_PASSWORD,
 
           // If you use "JWT Authentication for WP REST API" (https://wordpress.org/plugins/jwt-authentication-for-wp-rest-api/)
-          // or (https://github.com/jonathan-dejong/simple-jwt-authentication) requires jwt_base_path, path can be found in wordpress wp-api.
-          // plugin, you can specify user and password to obtain access token and use authenticated requests against wordpress REST API.
+          // or (https://github.com/jonathan-dejong/simple-jwt-authentication) requires jwt_base_path, path can be found in WordPress wp-api.
+          // plugin, you can specify user and password to obtain access token and use authenticated requests against WordPress REST API.
           jwt_user: process.env.JWT_USER,
           jwt_pass: process.env.JWT_PASSWORD,
           jwt_base_path: "/jwt-auth/v1/token", // Default - can skip if you are using https://wordpress.org/plugins/jwt-authentication-for-wp-rest-api/
         },
+        // Set cookies that should be send with requests to WordPress as key value pairs
+        cookies: {},
         // Set verboseOutput to true to display a verbose output on `npm run develop` or `npm run build`
         // It can help you debug specific API Endpoints problems.
         verboseOutput: false,
@@ -131,10 +135,34 @@ module.exports = {
         ],
         // Blacklisted routes using glob patterns
         excludedRoutes: ["**/posts/1456"],
+        // Set this to keep media sizes.
+        // This option is particularly useful in case you need access to
+        // URLs for thumbnails, or any other media detail.
+        // Defaults to false
+        keepMediaSizes: false,
         // use a custom normalizer which is applied after the built-in ones.
         normalizer: function({ entities }) {
           return entities
         },
+        // The normalizers option allows you to manipulate the array of internal
+        // normalizers that are applied to entities after they're fetched
+        // from WordPress.
+        // You can add your own normalizers to this array by adding an object
+        // that contains name and normalizer properties.
+        // Name is the name of your normalizer, and normalizer is a function that
+        // should return the array of entities that are passed to it.
+        // This is useful if you need more control over the order of normalizers,
+        // instead of your normalizer being applied after the built in normalizers (as is the case with the normalizer option).
+        normalizers: normalizers => [
+          ...normalizers,
+          {
+            name: "nameOfTheFunction",
+            normalizer: function({ entities }) {
+              // manipulate entities here
+              return entities
+            },
+          },
+        ],
       },
     },
   ],
@@ -177,19 +205,24 @@ plugins.
       the current locale and available translations to all post types translated with Polylang.
 
 - [x] [Yoast](https://yoast.com/wordpress/plugins/seo/)
-  - You must have the plugin [wp-api-yoast-meta](https://github.com/maru3l/wp-api-yoast-meta) installed in wordpress.
+  - You must have the plugin [wp-api-yoast-meta](https://github.com/maru3l/wp-api-yoast-meta) installed in WordPress.
   - Will pull the `yoast_meta: { ... }` field's contents in entity.
   - Work with Yoast premium :
     - Will create Yoast redirects model base on Yoast redirect
 
 ## How to use Gatsby with Wordpress.com hosting
 
+### For Blogger, Personal, and Premium Plans
+
 Set `hostingWPCOM: true`.
 
 You will need to provide an [API Key](https://en.support.wordpress.com/api-keys/).
 
-Note : you don't need this for Wordpress.org hosting in which your WordPress
-will behave like a self-hosted instance.
+Note : The WordPress.com API does not have all of the features of the WordPress.org API, specifically with respect to pagination. See ~TypeError - Cannot read property 'id' of undefined with WordPress.com~ in the troubleshooting section for more.
+
+### For Business, and eCommerce Plans
+
+Business and eCommerce plans will run the WordPress.org version, so it is recommended to set `hostingWPCOM: false`.
 
 ## Test your WordPress API
 
@@ -231,7 +264,7 @@ and would skip pulling Comments.
 
 ## How to query
 
-You can query nodes created from Wordpress using GraphQL like the following:
+You can query nodes created from WordPress using GraphQL like the following:
 Note : Learn to use the GraphQL tool and Ctrl+Spacebar at
 <http://localhost:3000/___graphiql> to discover the types and properties of your
 GraphQL model.
@@ -321,11 +354,11 @@ Whether you are using V2 or V3 of ACF to REST, the query below will return `opti
 
 If you have specified `acfOptionPageIds` in your site's `gatsby-config.js` (ex: `option_page_1`), then they will be accessible by their ID:
 
-```
+```graphql
 {
   allWordpressAcfOptions {
     edges {
-      node{
+      node {
         option_page_1 {
           test_acf
         }
@@ -410,7 +443,7 @@ To access data stored in these fields, you need to use GraphQL
 require you to know types of nodes. The easiest way to get the types of nodes is to use
 `___GraphiQL` debugger and run the below query (adjust post type and field name):
 
-```graphQL
+```graphql
 {
   allWordpressPage {
     edges {
@@ -431,7 +464,7 @@ When you have node type names, you can use them to create inline fragments.
 
 Full example:
 
-```graphQL
+```graphql
 {
   allWordpressPage {
     edges {
@@ -668,12 +701,12 @@ You can apply image processing to:
   - Image field type (return value must be set to `Image Object` or `Image URL` or field name must be `featured_media`),
   - Gallery field type.
 
-Image processing of inline images added in wordpress WYSIWIG editor is
+Image processing of inline images added in WordPress WYSIWIG editor is
 currently not supported.
 
 To access image processing in your queries you need to use this pattern:
 
-```
+```graphql
 {
   imageFieldName {
     localFile {
@@ -737,7 +770,7 @@ To learn more about image processing check
 ## Using a custom normalizer
 
 The plugin uses the concept of normalizers to transform the json data from WordPress into
-GraphQL nodes. You can extend the normalizers by passing a custom function to your `gatsby-config.js`.
+GraphQL nodes. You can extend the normalizers by modifying the normalizers array in plugin options in `gatsby-config.js`.
 
 ### Example:
 
@@ -745,7 +778,9 @@ You have a custom post type `movie` and a related custom taxonomy `genre` in you
 `gatsby-source-wordpress` doesn't know about the relation of the two, we can build an additional normalizer function to map the movie GraphQL nodes to the genre nodes:
 
 ```javascript
-function mapMoviesToGenres({ entities }) {
+const mapMoviesToGenres = {
+  name: `mapMoviesToGenres`,
+  normalizer: function({ entities }) {
   const genres = entities.filter(e => e.__type === `wordpress__wp_genre`)
 
   return entities.map(e => {
@@ -764,7 +799,7 @@ function mapMoviesToGenres({ entities }) {
 }
 ```
 
-In your `gatsby-config.js` you can then pass the function to the plugin options:
+In your `gatsby-config.js` you can then add the normalizer to the plugin options called normalizers:
 
 ```javascript
 module.exports = {
@@ -773,7 +808,7 @@ module.exports = {
       resolve: "gatsby-source-wordpress",
       options: {
         // ...
-        normalizer: mapMoviesToGenres,
+        normalizers: normalizers => [...normalizers, mapMoviesToGenres],
       },
     },
   ],
@@ -782,6 +817,35 @@ module.exports = {
 
 Next to the entities, the object passed to the custom normalizer function also contains other helpful Gatsby functions
 and also your `wordpress-source-plugin` options from `gatsby-config.js`. To learn more about the passed object see the [source code](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/src/gatsby-node.js).
+
+### Example with modyfing gatsby-source-wordpress normalizers
+
+```javascript
+const dropUnusedMediaNormalizer = {
+  name: "dropUnusedMediaNormalizer",
+  normalizer: function({ entities }) {
+    return entities.filter(
+      e => !(e.__type === "wordpress__wp_media" && !e.post)
+    )
+  },
+}
+```
+
+Adding this normalizer on top of other/builtin normalizers, so unused media entities are not further processed.
+
+```javascript
+module.exports = {
+  plugins: [
+    {
+      resolve: "gatsby-source-wordpress",
+      options: {
+        // ...
+        normalizers: normalizers => [dropUnusedMediaNormalizer, ...normalizers],
+      },
+    },
+  ],
+}
+```
 
 ## Site's `gatsby-node.js` example
 
@@ -878,6 +942,18 @@ exports.createPages = async ({ graphql, actions }) => {
 
 ## Troubleshooting
 
+### Missing Fields
+
+If you have custom post types or metadata that are not showing up within the schema, make sure that they are enabled within the REST API.
+
+- **Custom Meta**
+
+  To retrieve custom post meta in your queries, they first must be registered using WordPress' `register_meta()` function with `show_in_rest` set as `true`. You will then see your registered post meta in your Gatsby GraphQL Schema nested within the `meta` field for associated entities. For more details, see <https://developer.wordpress.org/reference/functions/register_meta/>.
+
+- **Custom Post Types**
+
+  If you are programmatically registering post types with `register_post_type()` and would like to use them in your queries, make sure to have `show_in_rest` set as `true`. Otherwise if you are using a plugin such as CPT UI to register your custom post types, check your configurations to make sure that the post types you want to query are enabled to show in REST API.
+
 ### GraphQL Error - Unknown Field on ACF
 
 ACF returns `false` in cases where there is no data to be returned. This can cause conflicting data types in GraphQL and often leads to the error: `GraphQL Error Unknown field {field} on type {type}`.
@@ -933,19 +1009,27 @@ During the upload process to the WordPress media library, the `post_parent` valu
 
 When the post an image is attached to becomes inaccessible (e.g. from changing visibility settings, or deleting the post), the image itself is restricted in the REST API:
 
-```
-   {
-      "code":"rest_forbidden",
-      "message":"You don't have permission to do this.",
-      "data":{
-         "status":403
-      }
-   }
+```json
+{
+  "code": "rest_forbidden",
+  "message": "You don't have permission to do this.",
+  "data": {
+    "status": 403
+  }
+}
 ```
 
 which prevents Gatsby from retrieving it.
 
 In order to resolve this, you can manually change the `post_parent` value of the image record to `0` in the database. The only side effect of this change is that the image will no longer appear in the "Uploaded to this post" filter in the Add Media dialog in the WordPress administration area.
+
+### TypeError - `Cannot read property 'id' of undefined` with WordPress.com
+
+While there are other reasons this can occur (see issues), a very specific version of this issue occurs when a particular tag, category, file (or any other referenced object) is referenced in a post but cannot be mapped to the list of related items to generate the proper node.
+
+This problem occurs because WordPress.com's API lacks the `X-WP-Total` and `X-WP-TotalPages` headers, which are used to determine the number of items and number of pages to pull from the API. Because of this, lower WordPress.com plans (Starter, Personal, and Premium) will not traverse the 2,...n pages and **will not be able to work with more than 100 items**.
+
+Note: The plugin is currently using `https://public-api.wordpress.com/wp/v2/sites/[site]/` base endpoint, instead of what is in the WordPress.com documentation (`https://public-api.wordpress.com/rest/v1.1/sites/[site]/`. the `wp/v2` closely resembles the WordPress.org API, whereas the `rest/v1` and `rest/v1.1` enpoints behave differently.
 
 ### ACF Option Pages - Option page data not showing or not updating
 
@@ -959,7 +1043,7 @@ When running locally, or in other situations that may involve self-signed certif
 
 To solve this, you can disable Node.js' rejection of unauthorized certificates by adding the following to `.env.development`:
 
-```
+```shell
 NODE_TLS_REJECT_UNAUTHORIZED=0
 ```
 

@@ -10,7 +10,7 @@
   "dependencies": {
     "faker": "^4.1.0",
     "gatsby": "^2.0.118",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.14",
     "react": "^16.8.0",
     "react-dom": "^16.8.0"
   }

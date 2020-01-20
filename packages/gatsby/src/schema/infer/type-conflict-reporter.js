@@ -3,7 +3,6 @@ const _ = require(`lodash`)
 const report = require(`gatsby-cli/lib/reporter`)
 const typeOf = require(`type-of`)
 const util = require(`util`)
-const { findRootNodeAncestor } = require(`../../db/node-tracking`)
 
 export type TypeConflictExample = {
   value: mixed,
@@ -22,9 +21,10 @@ const isNodeWithDescription = node =>
 
 const findNodeDescription = obj => {
   if (obj) {
-    const node = findRootNodeAncestor(obj, isNodeWithDescription)
-    if (isNodeWithDescription(node)) {
-      return node.internal.description
+    // TODO: Maybe get this back
+    // const node = findRootNodeAncestor(obj, isNodeWithDescription)
+    if (isNodeWithDescription(obj)) {
+      return obj.internal.description
     }
   }
   return ``
@@ -39,23 +39,30 @@ const formatValue = value => {
     })
   }
 
-  let wasElipsisLast = false
-  const usedTypes = []
   const output = []
 
-  value.forEach(item => {
-    const type = typeOf(item)
-    if (usedTypes.indexOf(type) !== -1) {
-      if (!wasElipsisLast) {
-        output.push(`...`)
-        wasElipsisLast = true
+  if (value.length === 1) {
+    // For arrays usually a single conflicting item is exposed vs. the whole array
+    output.push(`...`)
+    output.push(formatValue(value[0]))
+    output.push(`...`)
+  } else {
+    let wasElipsisLast = false
+    const usedTypes = []
+    value.forEach(item => {
+      const type = typeOf(item)
+      if (usedTypes.includes(type)) {
+        if (!wasElipsisLast) {
+          output.push(`...`)
+          wasElipsisLast = true
+        }
+      } else {
+        output.push(formatValue(item))
+        wasElipsisLast = false
+        usedTypes.push(type)
       }
-    } else {
-      output.push(formatValue(item))
-      wasElipsisLast = false
-      usedTypes.push(type)
-    }
-  })
+    })
+  }
 
   return `[ ${output.join(`, `)} ]`
 }
@@ -134,7 +141,14 @@ class TypeConflictReporter {
   printConflicts() {
     if (this.entries.size > 0) {
       report.warn(
-        `There are conflicting field types in your data. GraphQL schema will omit those fields.`
+        `There are conflicting field types in your data.\n\n` +
+          `If you have explicitly defined a type for those fields, you can ` +
+          `safely ignore this warning message.\n` +
+          `Otherwise, Gatsby will omit those fields from the GraphQL schema.\n\n` +
+          `If you know all field types in advance, the best strategy is to ` +
+          `explicitly define them with the \`createTypes\` action, and skip ` +
+          `inference with the \`@dontInfer\` directive.\n` +
+          `See https://www.gatsbyjs.org/docs/actions/#createTypes`
       )
       this.entries.forEach(entry => entry.printEntry())
     }

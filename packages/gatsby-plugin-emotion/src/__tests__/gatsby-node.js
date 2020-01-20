@@ -1,4 +1,5 @@
 import { onCreateBabelConfig } from "../gatsby-node"
+import * as path from "path"
 
 describe(`gatsby-plugin-emotion`, () => {
   describe(`onCreateBabelConfig`, () => {
@@ -9,7 +10,9 @@ describe(`gatsby-plugin-emotion`, () => {
 
       expect(actions.setBabelPreset).toHaveBeenCalledTimes(1)
       expect(actions.setBabelPreset).toHaveBeenCalledWith({
-        name: `@emotion/babel-preset-css-prop`,
+        name: expect.stringContaining(
+          path.join(`@emotion`, `babel-preset-css-prop`)
+        ),
         options: {
           sourceMap: true,
           autoLabel: true,
@@ -25,7 +28,9 @@ describe(`gatsby-plugin-emotion`, () => {
 
       expect(actions.setBabelPreset).toHaveBeenCalledTimes(1)
       expect(actions.setBabelPreset).toHaveBeenCalledWith({
-        name: `@emotion/babel-preset-css-prop`,
+        name: expect.stringContaining(
+          path.join(`@emotion`, `babel-preset-css-prop`)
+        ),
         options: {
           sourceMap: true,
           autoLabel: true,
@@ -53,7 +58,9 @@ describe(`gatsby-plugin-emotion`, () => {
 
         expect(actions.setBabelPreset).toHaveBeenCalledTimes(1)
         expect(actions.setBabelPreset).toHaveBeenCalledWith({
-          name: `@emotion/babel-preset-css-prop`,
+          name: expect.stringContaining(
+            path.join(`@emotion`, `babel-preset-css-prop`)
+          ),
           options: {
             sourceMap: false,
             autoLabel: false,

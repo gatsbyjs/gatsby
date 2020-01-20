@@ -1,8 +1,8 @@
-beforeEach(() => {
-  cy.visit(`/static-query/`).waitForAPIorTimeout(`onRouteUpdate`)
-})
-
 describe(`StaticQuery behavior`, () => {
+  beforeEach(() => {
+    cy.visit(`/static-query/`).waitForRouteChange()
+  })
+
   it(`works with inline query`, () => {
     cy.getTestElement(`inline`)
       .invoke(`text`)
@@ -19,6 +19,13 @@ describe(`StaticQuery behavior`, () => {
     cy.getTestElement(`exported`)
       .invoke(`text`)
       .should(`not.contain`, `Loading`)
+  })
+
+  it(`works when used in wrapRootElement API`, () => {
+    cy.getTestElement(`wrap-root-element-result`)
+      .invoke(`text`)
+      .should(`not.contain`, `Loading`)
+      .should(`contain`, `Gatsby Default Starter`)
   })
 
   describe(`useStaticQuery`, () => {

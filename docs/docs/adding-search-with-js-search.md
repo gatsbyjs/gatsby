@@ -1,10 +1,10 @@
 ---
-title: Adding search with js-search
+title: Adding Search with JS Search
 ---
 
 ## Prerequisites
 
-Before we go through the steps needed for adding client side search to your Gatsby website, you should be familiar with the basics of Gatsby. Check out the [tutorial](/tutorial/) and brush up on the [documentation](/docs/) if you need to. In addition, some knowledge of [ES6 syntax](https://medium.freecodecamp.org/write-less-do-more-with-javascript-es6-5fd4a8e50ee2) will be useful.
+Before you go through the steps needed for adding client-side search to your Gatsby website, you should be familiar with the basics of Gatsby. Check out the [tutorial](/tutorial/) and brush up on the [documentation](/docs/) if you need to. In addition, some knowledge of [ES6 syntax](https://medium.freecodecamp.org/write-less-do-more-with-javascript-es6-5fd4a8e50ee2) will be useful.
 
 ## What is JS Search
 
@@ -46,13 +46,13 @@ For larger datasets you could use the second approach, as most of the work is do
 
 Both ways are fairly generalistic, they were implemented using the default options for the library, so that it can be experimented without going through into the specifics of the library.
 
-And finally as you go through the code, be mindful it does not adhere to the best practices, it's just for demonstration purposes, in a real site it would have been implemented in a different way.
+And finally, as you go through the code, be mindful it does not adhere to the best practices, it's just for demonstration purposes, in a real site it would have been implemented in a different way.
 
 ## JS-Search with a small to medium dataset
 
 Start by creating a file named `SearchContainer.js` in the `src/components/` folder, then add the following code to get started:
 
-```javascript
+```jsx:title=src/components/SearchContainer.js
 import React, { Component } from "react"
 import Axios from "axios"
 import * as JsSearch from "js-search"
@@ -92,7 +92,7 @@ class Search extends Component {
     const dataToSearch = new JsSearch.Search("isbn")
     /**
      *  defines a indexing strategy for the data
-     * more more about it in here https://github.com/bvaughn/js-search#configuring-the-index-strategy
+     * more about it in here https://github.com/bvaughn/js-search#configuring-the-index-strategy
      */
     dataToSearch.indexStrategy = new JsSearch.PrefixIndexStrategy()
     /**
@@ -115,7 +115,7 @@ class Search extends Component {
   }
 
   /**
-   * handles the input change and perfom a search with js-search
+   * handles the input change and perform a search with js-search
    * in which the results will be added to the state
    */
   searchData = e => {
@@ -253,17 +253,17 @@ Breaking down the code into smaller parts:
 In order to get it working in your site, you would only need to import the newly created component to a page.
 As you can see [in the example site](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-js-search/src/pages/index.js).
 
-Run `gatsby develop` and if all went well, open your browser of choice and enter the url `http://localhost:8000` - you'll have a fully functional search at your disposal.
+Run `gatsby develop` and if all went well, open your browser of choice and enter the url <http://localhost:8000> - you'll have a fully functional search at your disposal.
 
 ## JS-Search with a big dataset
 
-Now let's try a different approach, this time instead of letting the component do all of the work, it's Gatsby's job to do that and pass all the data to a page defined by the path property, via [pageContext](/docs/behind-the-scenes-terminology/#pagecontext).
+Now try a different approach, this time instead of letting the component do all of the work, it's Gatsby's job to do that and pass all the data to a page defined by the path property, via [pageContext](/docs/behind-the-scenes-terminology/#pagecontext).
 
 To do this, some changes are required.
 
 Start by modifying the `gatsby-node.js` file by adding the following code:
 
-```javascript
+```javascript:title=gatsby-node.js
 const path = require("path")
 const axios = require("axios")
 
@@ -309,7 +309,7 @@ exports.createPages = ({ actions }) => {
 
 Create a file named `ClientSearchTemplate.js` in the `src/templates/` folder, then add the following code to get started:
 
-```javascript
+```jsx:title=src/templates/ClientSearchTemplate.js
 import React from "react"
 import ClientSearch from "../components/ClientSearch"
 
@@ -334,7 +334,7 @@ export default SearchTemplate
 
 Create a file named `ClientSearch.js` in the `src/components/` folder, then add the following code as a baseline:
 
-```javascript
+```jsx:title=src/components/ClientSearch.js
 import React, { Component } from "react"
 import * as JsSearch from "js-search"
 
@@ -432,7 +432,7 @@ class ClientSearch extends Component {
     this.setState({ search: dataToSearch, isLoading: false })
   }
   /**
-   * handles the input change and perfom a search with js-search
+   * handles the input change and perform a search with js-search
    * in which the results will be added to the state
    */
   searchData = e => {
@@ -571,7 +571,7 @@ Once again to get it to work on your site you would only need to copy over [the 
 
 And both the [template](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-js-search/src/templates/ClientSearchTemplate.js) and the [search component](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-js-search/src/components/ClientSearch.js).
 
-Issuing `gatsby develop` again, and if all went without any issues one more time, open your browser of choice and enter the url `http://localhost:8000/search`, you'll have a fully functional search at your disposal coupled with Gatsby API.
+Issuing `gatsby develop` again, and if all went without any issues one more time, open your browser of choice and enter the url <http://localhost:8000/search>, you'll have a fully functional search at your disposal coupled with Gatsby API.
 
 Hopefully this rather extensive guide has shed some insights on how to implement client search using js-search.
 

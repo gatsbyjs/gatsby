@@ -1,10 +1,10 @@
 ---
-title: Adding forms
+title: Adding Forms
 ---
 
 Gatsby is built on top of React. So anything that is possible with a React form is possible in Gatsby. Additional details about how to create React forms can be found in the [React forms documentation](https://reactjs.org/docs/forms.html) (which happens to be built with Gatsby!)
 
-Let's start with the following page.
+Start with the following page.
 
 ```jsx:title=src/pages/index.js
 import React from "react"
@@ -55,8 +55,14 @@ export default class IndexPage extends React.Component {
   render() {
     return (
       <form>
-        <input type="text" name="firstName" />
-        <input type="text" name="lastName" />
+        <label>
+          First name
+          <input type="text" name="firstName" />
+        </label>
+        <label>
+          Last name
+          <input type="text" name="lastName" />
+        </label>
         <button type="submit">Submit</button>
       </form>
     )

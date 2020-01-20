@@ -2,7 +2,7 @@ import _ from "lodash"
 import { writeFile, existsSync } from "fs-extra"
 import { parse } from "path"
 import kebabHash from "kebab-hash"
-import { HEADER_COMMENT } from "./constants"
+import { HEADER_COMMENT, IMMUTABLE_CACHING_HEADER } from "./constants"
 
 import {
   COMMON_BUNDLES,
@@ -12,7 +12,12 @@ import {
   NETLIFY_HEADERS_FILENAME,
 } from "./constants"
 
-function validHeaders(headers) {
+function getHeaderName(header) {
+  const matches = header.match(/^([^:]+):/)
+  return matches && matches[1]
+}
+
+function validHeaders(headers, reporter) {
   if (!headers || !_.isObject(headers)) {
     return false
   }
@@ -21,7 +26,20 @@ function validHeaders(headers) {
     headers,
     (headersList, path) =>
       _.isArray(headersList) &&
-      _.every(headersList, header => _.isString(header))
+      _.every(headersList, header => {
+        if (_.isString(header)) {
+          if (!getHeaderName(header)) {
+            // TODO panic on builds on v3
+            reporter.warn(
+              `[gatsby-plugin-netlify] ${path} contains an invalid header (${header}). Please check your plugin configuration`
+            )
+          }
+
+          return true
+        }
+
+        return false
+      })
   )
 }
 
@@ -97,6 +115,30 @@ function defaultMerge(...headers) {
   return _.mergeWith({}, ...headers, unionMerge)
 }
 
+function headersMerge(userHeaders, defaultHeaders) {
+  const merged = {}
+  Object.keys(defaultHeaders).forEach(path => {
+    if (!userHeaders[path]) {
+      merged[path] = defaultHeaders[path]
+      return
+    }
+    const headersMap = {}
+    defaultHeaders[path].forEach(header => {
+      headersMap[getHeaderName(header)] = header
+    })
+    userHeaders[path].forEach(header => {
+      headersMap[getHeaderName(header)] = header // override if exists
+    })
+    merged[path] = Object.values(headersMap)
+  })
+  Object.keys(userHeaders).forEach(path => {
+    if (!merged[path]) {
+      merged[path] = userHeaders[path]
+    }
+  })
+  return merged
+}
+
 function transformLink(manifest, publicFolder, pathPrefix) {
   return header =>
     header.replace(LINK_REGEX, (__, prefix, file, suffix) => {
@@ -135,8 +177,8 @@ function stringifyHeaders(headers) {
 
 // program methods
 
-const validateUserOptions = pluginOptions => headers => {
-  if (!validHeaders(headers)) {
+const validateUserOptions = (pluginOptions, reporter) => headers => {
+  if (!validHeaders(headers, reporter)) {
     throw new Error(
       `The "headers" option to gatsby-plugin-netlify is in the wrong shape. ` +
         `You should pass in a object with string keys (representing the paths) and an array ` +
@@ -216,15 +258,34 @@ const applySecurityHeaders = ({ mergeSecurityHeaders }) => headers => {
     return headers
   }
 
-  return defaultMerge(headers, SECURITY_HEADERS)
+  return headersMerge(headers, SECURITY_HEADERS)
 }
 
-const applyCachingHeaders = ({ mergeCachingHeaders }) => headers => {
+const applyCachingHeaders = (
+  pluginData,
+  { mergeCachingHeaders }
+) => headers => {
   if (!mergeCachingHeaders) {
     return headers
   }
 
-  return defaultMerge(headers, CACHING_HEADERS)
+  const chunks = Array.from(pluginData.pages.values()).map(
+    page => page.componentChunkName
+  )
+
+  chunks.push(`pages-manifest`, `app`)
+
+  const files = [].concat(...chunks.map(chunk => pluginData.manifest[chunk]))
+
+  const cachingHeaders = {}
+
+  files.forEach(file => {
+    if (typeof file === `string`) {
+      cachingHeaders[`/` + file] = [IMMUTABLE_CACHING_HEADER]
+    }
+  })
+
+  return defaultMerge(headers, cachingHeaders, CACHING_HEADERS)
 }
 
 const applyTransfromHeaders = ({ transformHeaders }) => headers =>
@@ -236,12 +297,16 @@ const transformToString = headers =>
 const writeHeadersFile = ({ publicFolder }) => contents =>
   writeFile(publicFolder(NETLIFY_HEADERS_FILENAME), contents)
 
-export default function buildHeadersProgram(pluginData, pluginOptions) {
+export default function buildHeadersProgram(
+  pluginData,
+  pluginOptions,
+  reporter
+) {
   return _.flow(
-    validateUserOptions(pluginOptions),
+    validateUserOptions(pluginOptions, reporter),
     mapUserLinkHeaders(pluginData),
     applySecurityHeaders(pluginOptions),
-    applyCachingHeaders(pluginOptions),
+    applyCachingHeaders(pluginData, pluginOptions),
     mapUserLinkAllPageHeaders(pluginData, pluginOptions),
     applyLinkHeaders(pluginData, pluginOptions),
     applyTransfromHeaders(pluginOptions),

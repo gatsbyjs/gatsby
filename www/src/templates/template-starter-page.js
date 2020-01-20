@@ -1,29 +1,39 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
 
 import Layout from "../components/layout"
-
-import { mediaQueries } from "../utils/presets"
 import StarterHeader from "../views/starter/header"
 import StarterMeta from "../views/starter/meta"
-import StarterScreenshot from "../views/starter/screenshot"
+import Screenshot from "../views/shared/screenshot"
 import StarterSource from "../views/starter/source"
+import StarterInstallation from "../views/starter/installation"
 import StarterDetails from "../views/starter/details"
 import FooterLinks from "../components/shared/footer-links"
+
+const getScreenshot = (data, fallback) => {
+  if (!data.screenshotFile || !data.screenshotFile.childImageSharp) {
+    return fallback
+  }
+  return data.screenshotFile
+}
 
 class StarterTemplate extends React.Component {
   state = {
     showAllDeps: false,
   }
   render() {
-    const { startersYaml } = this.props.data
+    const { fallback, startersYaml } = this.props.data
     const {
       url: demoUrl,
       repo: repoUrl,
       fields: { starterShowcase },
-      childScreenshot: { screenshotFile },
+      childScreenshot,
     } = startersYaml
+
+    const screenshot = getScreenshot(childScreenshot, fallback)
 
     // preprocessing of dependencies
     const { miscDependencies = [], gatsbyDependencies = [] } = starterShowcase
@@ -49,25 +59,21 @@ class StarterTemplate extends React.Component {
             alignItems: `center`,
             display: `flex`,
             flexDirection: `column`,
-            maxWidth: isModal ? false : 1080,
             margin: isModal ? false : `0 auto`,
+            maxWidth: isModal ? false : 1080,
           }}
         >
-          <div
-            css={{
-              width: `100%`,
-            }}
-          >
+          <div css={{ width: `100%` }}>
             <Helmet>
               <title>{`${repoName}: Gatsby Starter`}</title>
               <meta
                 property="og:image"
-                content={screenshotFile.childImageSharp.fluid.src}
+                content={screenshot.childImageSharp.fluid.src}
               />
               <meta property="og:image:alt" content="Gatsby Logo" />
               <meta
                 name="twitter:image"
-                content={screenshotFile.childImageSharp.fluid.src}
+                content={screenshot.childImageSharp.fluid.src}
               />
               <meta
                 name="description"
@@ -89,26 +95,24 @@ class StarterTemplate extends React.Component {
             </Helmet>
             <StarterHeader stub={starterShowcase.stub} />
             <div
-              css={{
+              sx={{
                 display: `flex`,
-                flexDirection: `column-reverse`,
-                [mediaQueries.sm]: {
-                  flexDirection: `column`,
-                },
+                flexDirection: [`column-reverse`, `column`],
               }}
             >
               <StarterMeta
                 starter={starterShowcase}
                 repoName={repoName}
-                imageSharp={screenshotFile}
+                imageSharp={screenshot}
                 demo={demoUrl}
               />
-              <StarterScreenshot
-                imageSharp={screenshotFile}
-                repoName={repoName}
+              <Screenshot
+                imageSharp={screenshot.childImageSharp.fluid}
+                alt={`Screenshot of ${repoName}`}
               />
             </div>
             <StarterSource repoUrl={repoUrl} startersYaml={startersYaml} />
+            <StarterInstallation repoName={repoName} repoUrl={repoUrl} />
             <StarterDetails
               startersYaml={startersYaml}
               allDeps={allDeps}
@@ -131,6 +135,15 @@ class StarterTemplate extends React.Component {
 export default StarterTemplate
 
 export const pageQuery = graphql`
+  fragment ScreenshotDetails on ImageSharp {
+    fluid(maxWidth: 700) {
+      ...GatsbyImageSharpFluid
+    }
+    resize(width: 1500, height: 1500, cropFocus: CENTER, toFormat: JPG) {
+      src
+    }
+  }
+
   query TemplateStarter($slug: String!) {
     startersYaml(fields: { starterShowcase: { slug: { eq: $slug } } }) {
       id
@@ -160,19 +173,15 @@ export const pageQuery = graphql`
       childScreenshot {
         screenshotFile {
           childImageSharp {
-            fluid(maxWidth: 700) {
-              ...GatsbyImageSharpFluid
-            }
-            resize(
-              width: 1500
-              height: 1500
-              cropFocus: CENTER
-              toFormat: JPG
-            ) {
-              src
-            }
+            ...ScreenshotDetails
           }
         }
+      }
+    }
+
+    fallback: file(relativePath: { eq: "screenshot-fallback.png" }) {
+      childImageSharp {
+        ...ScreenshotDetails
       }
     }
   }

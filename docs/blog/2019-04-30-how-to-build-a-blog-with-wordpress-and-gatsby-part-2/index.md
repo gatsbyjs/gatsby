@@ -1,13 +1,13 @@
 ---
-title: "How To Build A Blog with Wordpress and Gatsby.js - Part 2"
+title: "How To Build A Blog with WordPress and Gatsby.js - Part 2"
 date: 2019-04-30
 author: Tim Smith
 excerpt: "In the last post, you covered setting up WordPress for use with Gatsby. Today you will cover how to pull the data from WordPress into Gatsby and build pages."
 tags:
   - wordpress
   - apis
-  - blog
-  - headless cms
+  - blogs
+  - headless-cms
   - react
 canonicalLink: https://www.iamtimsmith.com/blog/how-to-build-a-blog-with-wordpress-and-gatsby-part-2/
 ---
@@ -20,7 +20,7 @@ I have set up a WordPress site for you to use with the plugins mentioned in the 
 
 <figure>
   <video autoplay muted loop width="400">
-    <source src="https://media.giphy.com/media/sDcfxFDozb3bO/giphy.mp4">
+    <source src="https://media.giphy.com/media/sDcfxFDozb3bO/giphy.mp4"/>
   </video>
   <figcaption>Shut up and take my money!</figcaption>
 </figure>
@@ -56,14 +56,13 @@ Now that you have your project created, let's take a look inside. You will see a
 - **README.md**: Markdown file with instructions for use
 - **gatsby-browser.js**: Gatsby Browser API stuff goes here. Global style calls go here too
 - **gatsby-config.js**: Configuration for your project including meta data and plugins
-- **gatsby-node.js**: Where you tell gatsby to build pages from a template using provided data
+- **gatsby-node.js**: Where you tell Gatsby to build pages from a template using provided data
 - **gatsby-ssr.js**: Gatsby Server Side Rendering APIs go here
 - **package.json**: File which holds custom scripts, dependency information, etc
 
 These files will be present in all Gatsby starters you use, so it's worth your time to have at least a basic level of understanding with each one. Let's take a look and see what dependencies and plugins you have by default. Open up the `package.json` file and scroll down to dependencies. This will tell you what packages you already have. Mine looks like this:
 
-```json
-// package.json
+```json:title=package.json
 {
   "name": "gatsby-starter-default",
   "private": true,
@@ -98,7 +97,7 @@ These files will be present in all Gatsby starters you use, so it's worth your t
     "format": "prettier --write src/**/*.{js,jsx}",
     "start": "npm run develop",
     "serve": "gatsby serve",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\""
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing \""
   },
   "repository": {
     "type": "git",
@@ -116,7 +115,7 @@ Whew! That was a mouthful.
 
 <figure>
   <video autoplay muted loop width="400">
-    <source src="https://media.giphy.com/media/eb3WAhXzlUAFi/giphy.mp4">
+    <source src="https://media.giphy.com/media/eb3WAhXzlUAFi/giphy.mp4"/>
   </video>
   <figcaption>Get on with it!</figcaption>
 </figure>
@@ -133,7 +132,7 @@ gatsby develop
 
 After running that command, you can visit [localhost:8000](http://localhost:8000) in the browser and you should see the site pictured below:
 
-![Initial appearance of Gatsby.js starter](images/gatsby1.png)
+![Initial appearance of Gatsby.js starter](./images/gatsby1.png)
 
 The site provides a navbar with a link going back to the homepage. There is also a bit of content with a link to page 2 which then provides a link back to page 1. It's a very simple site, but already you can see how fast Gatsby.js is.
 
@@ -149,8 +148,7 @@ npm install gatsby-source-wordpress gatsby-plugin-sitemap
 
 Looking at your `package.json` file will reveal that each of these packages have been added to the project, but this isn't enough to start using the gatsby-plugin files. You first need to add them to the `gatsby-config.js` file. Luckily, the docs for these plugins are awesome and do a good job explaining all of this. I'd recommend you take a look at them to find out what each of the settings does, but I'll provide the code for the `gatsby-config.js` file after adding all of these plugins to your site:
 
-```javascript
-// gatsby-config.js
+```javascript:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
     title: `Gatsby Default Starter`,
@@ -228,7 +226,7 @@ If the Gatsby site is currently running, you need to stop it and restart it so i
 
 Once you've restarted your server, you can visit [http://localhost:8000/\_\_\_graphql](http://localhost:8000/___graphql) to use the "graphical" playground. Here, you can use GraphQL to query your data for testing purposes. You should create opening and closing curly braces and then you can use shift+space (or ctrl+space on windows) to get suggestions. Once you have the data you want, you will be able to paste the query into your components, pages, and templates so you can use the information available. Here's what my query looks like for now:
 
-![GraphQL query tests](images/gatsby2.png)
+![GraphQL query tests](./images/gatsby2.png)
 
 You may notice that there are several drilldowns inside of the `acf` field. This is saying "hey, look for the ACF field called feat_img and get the local, optimized versions of these images so you can use them". Gatsby also provides fragments which means inside of your application you could just put `...GatsbyImageSharpSizes` instead of drilling down so far and Gatsby will know what to do with it.
 
@@ -236,7 +234,7 @@ Since you are seeing stuff on the right-hand side, it means that you are getting
 
 ## Creating pages in gatsby-node.js
 
-As I briefly mentioned earlier, the `gatsby-node.js` file is there so you can build pages programatically from data. There are two pieces to make this work: the logic in `gatsby-node.js` and a template file to render the data. Let's start by creating a simple template with no dynamic data just to make sure your logic is working properly.
+As I briefly mentioned earlier, the `gatsby-node.js` file is there so you can build pages programmatically from data. There are two pieces to make this work: the logic in `gatsby-node.js` and a template file to render the data. Let's start by creating a simple template with no dynamic data just to make sure your logic is working properly.
 
 ### Creating templates in Gatsby.js
 
@@ -250,8 +248,7 @@ Unless there is some special functionality needed for blog posts, you can just [
 
 Below is the code I'm using for the template starter. This is just to make sure things are working after you finish setting up your `gatsby-node.js` logic. Once you know the page is being created, you will update the template to display correctly.
 
-```javascript
-// src/templates/BlogPost.js
+```jsx:title=src/templates/BlogPost.js
 import React from "react"
 import Layout from "../components/layout"
 
@@ -272,16 +269,14 @@ The gatsby-node.js file allows you to pull in a template file, then query your d
 
 <figure>
   <video autoplay muted loop>
-    <source src="https://media.giphy.com/media/t3Mzdx0SA3Eis/giphy.mp4">
+    <source src="https://media.giphy.com/media/t3Mzdx0SA3Eis/giphy.mp4"/>
   </video>
-  <figcaption>Yes!!!<figcaption>
+  <figcaption>Yes!!!</figcaption>
 </figure>
 
 The code below pulls in the data for blog posts from WordPress and creates a page for each one using the createPage API provided by Gatsby. It is also much easier to pull in templates in this file using the path package, so I installed it using `npm install path`.
 
-```javascript
-// gatsby-node.js
-
+```javascript:title=gatsby-node.js
 /**
  * Implement Gatsby's Node APIs in this file.
  *
@@ -292,11 +287,11 @@ The code below pulls in the data for blog posts from WordPress and creates a pag
 const path = require(`path`)
 const { createFilePath } = require(`gatsby-source-filesystem`)
 
-exports.createPages = ({ graphql, actions }) => {
+exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
   const BlogPostTemplate = path.resolve("./src/templates/BlogPost.js")
 
-  return graphql(`
+  const result = await graphql(`
     {
       allWordpressPost {
         edges {
@@ -307,20 +302,21 @@ exports.createPages = ({ graphql, actions }) => {
         }
       }
     }
-  `).then(result => {
-    if (result.errors) {
-      throw result.errors
-    }
+  `)
 
-    const BlogPosts = result.data.allWordpressPost.edges
-    BlogPosts.forEach(post => {
-      createPage({
-        path: `/post/${post.node.slug}`,
-        component: BlogPostTemplate,
-        context: {
-          id: post.node.wordpress_id,
-        },
-      })
+  if (result.errors) {
+    reporter.panicOnBuild(`Error while running GraphQL query.`)
+    return
+  }
+
+  const BlogPosts = result.data.allWordpressPost.edges
+  BlogPosts.forEach(post => {
+    createPage({
+      path: `/post/${post.node.slug}`,
+      component: BlogPostTemplate,
+      context: {
+        id: post.node.wordpress_id,
+      },
     })
   })
 }
@@ -330,14 +326,13 @@ Just like before, you will need to restart your development server to see these 
 
 You can now see all of the pages available and clicking on one should take you to the blog post template you created earlier that just shows Hello World. If this is what you're seeing, congrats! You're ready to move to the next section.
 
-![See a list of pages on the development 404 page](images/gatsby3.png)
+![See a list of pages on the development 404 page](./images/gatsby3.png)
 
 ## Updating our blog post template
 
 Now that you have pages being created at the desired locations, you should update your blog post template to display the appropriate data. Although you need to make some changes, you will keep it as a stateless functional component. The code below will create your template. I would like to point out that you are using GraphQL to query the information which is then used as a prop called data.
 
-```javascript
-// src/templates/BlogPostTemplate.js
+```jsx:title=src/templates/BlogPostTemplate.js
 import React from "react"
 import { graphql } from "gatsby"
 import Img from "gatsby-image"
@@ -401,7 +396,7 @@ The SEO component allows you to pass in dynamic data such as title, description,
 
 Here's what your completed Blog Post looks like after you update the template:
 
-![Completed Blog Post Page](images/gatsby4.png)
+![Completed Blog Post Page](./images/gatsby4.png)
 
 ## Wrapping up blog posts
 
@@ -409,11 +404,11 @@ You're about half-way done with the actual Gatsby.js build. In this post I cover
 
 <figure>
   <video autoplay muted loop width="300">
-    <source src="https://media.giphy.com/media/rY93u9tQbybks/giphy.mp4">
+    <source src="https://media.giphy.com/media/rY93u9tQbybks/giphy.mp4"/>
   </video>
   <figcaption>Obligatory Great Gatsby meme</figcaption>
 </figure>
 
 The [code for this tutorial](https://github.com/iamtimsmith/building-a-blog-with-wordpress-and-gatsby) can be found on Gitub.
 
-See you in [How To Build A Blog with Wordpress and Gatsby.js - Part 3](/blog/2019-05-02-how-to-build-a-blog-with-wordpress-and-gatsby-part-3)!
+See you in [How To Build A Blog with WordPress and Gatsby.js - Part 3](/blog/2019-05-02-how-to-build-a-blog-with-wordpress-and-gatsby-part-3)!

@@ -1,17 +1,37 @@
 const axios = require(`axios`)
 const _ = require(`lodash`)
-const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
-const { URL } = require(`url`)
-const { nodeFromData } = require(`./normalize`)
+
+const { nodeFromData, downloadFile, isFileNode } = require(`./normalize`)
+const { handleReferences, handleWebhookUpdate } = require(`./utils`)
+
+const asyncPool = require(`tiny-async-pool`)
+const bodyParser = require(`body-parser`)
 
 exports.sourceNodes = async (
-  { actions, store, cache, createNodeId, createContentDigest },
-  { baseUrl, apiBase, basicAuth, filters, headers, params }
+  { actions, store, cache, createNodeId, createContentDigest, reporter },
+  pluginOptions
 ) => {
+  let {
+    baseUrl,
+    apiBase,
+    basicAuth,
+    filters,
+    headers,
+    params,
+    concurrentFileRequests,
+    disallowedLinkTypes,
+  } = pluginOptions
   const { createNode } = actions
+  const drupalFetchActivity = reporter.activityTimer(`Fetch data from Drupal`)
 
   // Default apiBase to `jsonapi`
   apiBase = apiBase || `jsonapi`
+
+  // Default disallowedLinkTypes to self, describedby.
+  disallowedLinkTypes = disallowedLinkTypes || [`self`, `describedby`]
+
+  // Default concurrentFileRequests to `20`
+  concurrentFileRequests = concurrentFileRequests || 20
 
   // Touch existing Drupal nodes so Gatsby doesn't garbage collect them.
   // _.values(store.getState().nodes)
@@ -20,7 +40,7 @@ exports.sourceNodes = async (
 
   // Fetch articles.
   // console.time(`fetch Drupal data`)
-  console.log(`Starting to fetch data from Drupal`)
+  reporter.info(`Starting to fetch data from Drupal`)
 
   // TODO restore this
   // let lastFetched
@@ -32,6 +52,8 @@ exports.sourceNodes = async (
   // .lastFetched
   // }
 
+  drupalFetchActivity.start()
+
   const data = await axios.get(`${baseUrl}/${apiBase}`, {
     auth: basicAuth,
     headers,
@@ -39,7 +61,7 @@ exports.sourceNodes = async (
   })
   const allData = await Promise.all(
     _.map(data.data.links, async (url, type) => {
-      if (type === `self`) return
+      if (disallowedLinkTypes.includes(type)) return
       if (!url) return
       if (!type) return
       const getNext = async (url, data = []) => {
@@ -75,7 +97,7 @@ exports.sourceNodes = async (
           }
         }
         data = data.concat(d.data.data)
-        if (d.data.links.next) {
+        if (d.data.links && d.data.links.next) {
           data = await getNext(d.data.links.next, data)
         }
 
@@ -94,141 +116,101 @@ exports.sourceNodes = async (
     })
   )
 
-  // Make list of all IDs so we can check against that when creating
-  // relationships.
-  const ids = {}
+  drupalFetchActivity.end()
+
+  const nodes = new Map()
+
+  // first pass - create basic nodes
   _.each(allData, contentType => {
     if (!contentType) return
-    _.each(contentType.data, datum => {
-      ids[datum.id] = true
-    })
-  })
-
-  // Create back references
-  const backRefs = {}
-
-  /**
-   * Adds back reference to linked entity, so we can later
-   * add node link.
-   */
-  const addBackRef = (linkedId, sourceDatum) => {
-    if (ids[linkedId]) {
-      if (!backRefs[linkedId]) {
-        backRefs[linkedId] = []
-      }
-      backRefs[linkedId].push({
-        id: sourceDatum.id,
-        type: sourceDatum.type,
-      })
-    }
-  }
-
-  _.each(allData, contentType => {
-    if (!contentType) return
-    _.each(contentType.data, datum => {
-      if (datum.relationships) {
-        _.each(datum.relationships, (v, k) => {
-          if (!v.data) return
-
-          if (_.isArray(v.data)) {
-            v.data.forEach(data => addBackRef(data.id, datum))
-          } else {
-            addBackRef(v.data.id, datum)
-          }
-        })
-      }
-    })
-  })
-
-  // Process nodes
-  const nodes = []
-  _.each(allData, contentType => {
-    if (!contentType) return
-
     _.each(contentType.data, datum => {
       const node = nodeFromData(datum, createNodeId)
-
-      node.relationships = {}
-
-      // Add relationships
-      if (datum.relationships) {
-        _.each(datum.relationships, (v, k) => {
-          if (!v.data) return
-          if (_.isArray(v.data) && v.data.length > 0) {
-            // Create array of all ids that are in our index
-            node.relationships[`${k}___NODE`] = _.compact(
-              v.data.map(data => (ids[data.id] ? createNodeId(data.id) : null))
-            )
-          } else if (ids[v.data.id]) {
-            node.relationships[`${k}___NODE`] = createNodeId(v.data.id)
-          }
-        })
-      }
-
-      // Add back reference relationships.
-      // Back reference relationships will need to be arrays,
-      // as we can't control how if node is referenced only once.
-      if (backRefs[datum.id]) {
-        backRefs[datum.id].forEach(ref => {
-          if (!node.relationships[`${ref.type}___NODE`]) {
-            node.relationships[`${ref.type}___NODE`] = []
-          }
-
-          node.relationships[`${ref.type}___NODE`].push(createNodeId(ref.id))
-        })
-      }
-
-      if (_.isEmpty(node.relationships)) {
-        delete node.relationships
-      }
-
-      node.internal.contentDigest = createContentDigest(node)
-      nodes.push(node)
+      nodes.set(node.id, node)
     })
   })
 
-  // Download all files.
-  await Promise.all(
-    nodes.map(async node => {
-      let fileNode
-      if (
-        node.internal.type === `files` ||
-        node.internal.type === `file__file`
-      ) {
-        try {
-          let fileUrl = node.url
-          if (typeof node.uri === `object`) {
-            // Support JSON API 2.x file URI format https://www.drupal.org/node/2982209
-            fileUrl = node.uri.url
-          }
-          // Resolve w/ baseUrl if node.uri isn't absolute.
-          const url = new URL(fileUrl, baseUrl)
-          // If we have basicAuth credentials, add them to the request.
-          const auth =
-            typeof basicAuth === `object`
-              ? {
-                  htaccess_user: basicAuth.username,
-                  htaccess_pass: basicAuth.password,
-                }
-              : {}
-          fileNode = await createRemoteFileNode({
-            url: url.href,
-            store,
-            cache,
-            createNode,
-            createNodeId,
-            parentNodeId: node.id,
-            auth,
-          })
-        } catch (e) {
-          // Ignore
-        }
-        if (fileNode) {
-          node.localFile___NODE = fileNode.id
-        }
-      }
+  // second pass - handle relationships and back references
+  nodes.forEach(node => {
+    handleReferences(node, {
+      getNode: nodes.get.bind(nodes),
+      createNodeId,
     })
-  )
+  })
 
-  nodes.forEach(n => createNode(n))
+  reporter.info(`Downloading remote files from Drupal`)
+
+  // Download all files (await for each pool to complete to fix concurrency issues)
+  const fileNodes = [...nodes.values()].filter(isFileNode)
+  if (fileNodes.length) {
+    const downloadingFilesActivity = reporter.activityTimer(
+      `Remote file download`
+    )
+    downloadingFilesActivity.start()
+    await asyncPool(concurrentFileRequests, fileNodes, async node => {
+      await downloadFile(
+        { node, store, cache, createNode, createNodeId },
+        pluginOptions
+      )
+    })
+    downloadingFilesActivity.end()
+  }
+
+  // Create each node
+  for (const node of nodes.values()) {
+    node.internal.contentDigest = createContentDigest(node)
+    createNode(node)
+  }
+}
+
+exports.onCreateDevServer = (
+  {
+    app,
+    createNodeId,
+    getNode,
+    actions,
+    store,
+    cache,
+    createContentDigest,
+    reporter,
+  },
+  pluginOptions
+) => {
+  app.use(
+    `/___updatePreview/`,
+    bodyParser.text({
+      type: `application/json`,
+    }),
+    async (req, res) => {
+      if (!_.isEmpty(req.body)) {
+        const requestBody = JSON.parse(JSON.parse(req.body))
+        const { secret, action, id } = requestBody
+        if (pluginOptions.secret && pluginOptions.secret !== secret) {
+          return reporter.warn(
+            `The secret in this request did not match your plugin options secret.`
+          )
+        }
+        if (action === `delete`) {
+          actions.deleteNode({ node: getNode(createNodeId(id)) })
+          return reporter.log(`Deleted node: ${id}`)
+        }
+        const nodeToUpdate = JSON.parse(JSON.parse(req.body)).data
+        return await handleWebhookUpdate(
+          {
+            nodeToUpdate,
+            actions,
+            cache,
+            createNodeId,
+            createContentDigest,
+            getNode,
+            reporter,
+            store,
+          },
+          pluginOptions
+        )
+      } else {
+        res.status(400).send(`Received body was empty!`)
+        return reporter.log(`Received body was empty!`)
+      }
+    }
+  )
 }

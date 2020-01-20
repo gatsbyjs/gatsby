@@ -9,7 +9,7 @@ const path = require(`path`)
  * ```
  * {
  *   "gatsby-cli": Set(["gatsby"]),
- *   "gatsby-telemtry": Set(["gatsby", "gatsby-cli"]),
+ *   "gatsby-telemetry": Set(["gatsby", "gatsby-cli"]),
  *   "gatsby-source-filesystem": Set(["gatsby-source-contentful", "gatsby-source-drupal", "gatsby-source-wordpress", etc])
  *   // no package have remark plugin in dependencies - so dependant list is empty
  *   "gatsby-transformer-remark": Set([])
@@ -19,13 +19,13 @@ const path = require(`path`)
 
 /**
  * Compile final list of packages to watch
- * This will include packages explictely defined packages and all their dependencies
+ * This will include packages explicitly defined packages and all their dependencies
  * Also creates dependency graph that is used later to determine which packages
  * would need to be published when their dependencies change
  * @param {Object} $0
  * @param {String} $0.root Path to root of Gatsby monorepo repository
  * @param {String[]} $0.packages Initial array of packages to watch
- * This can be extracted from project dependencies or explictely set by `--packages` flag
+ * This can be extracted from project dependencies or explicitly set by `--packages` flag
  * @param {String[]} $0.monoRepoPackages Array of packages in Gatsby monorepo
  * @param {String[]} [$0.seenPackages] Array of packages that were already traversed.
  * This makes sure dependencies are extracted one time for each package and avoid any

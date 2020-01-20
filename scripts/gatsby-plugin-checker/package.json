@@ -10,6 +10,7 @@
   "author": "Osmond van Hemert <osmond@vanhemert.nu>",
   "license": "MIT",
   "dependencies": {
+    "dotenv": "^8.0.0",
     "got": "^9.0.0"
   }
 }

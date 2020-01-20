@@ -2,12 +2,14 @@
 title: "Getting Started with Gatsby Themes and MDX"
 date: 2019-02-26
 author: Katie Fujihara
-tags: ["themes", "tutorials"]
+tags: ["themes", "getting-started"]
 ---
+
+> _Updated July 9, 2019 to reflect using the `gatsby-plugin-mdx` package instead of the (now deprecated) gatsby-mdx package._
 
 ### What is a Gatsby theme?
 
-<pullquote cite="Jason Lengstorf">Gatsby themes allow you to focus only on the parts of the site and app building process that you need to care about by abstracting the rest away into a package.</pullquote>
+<Pullquote cite="Jason Lengstorf">Gatsby themes allow you to focus only on the parts of the site and app building process that you need to care about by abstracting the rest away into a package.</Pullquote>
 
 ## Getting Started
 
@@ -36,7 +38,7 @@ Tidy up your _package.json_ file and create workspaces which includes the projec
 
 Next, you want to create your _site_ directory and your _packages_ directory within your _gatsby-theme_ project directory. Make sure the names that you choose for your directories are the same as what you put in your workspaces. You will also want to go into your packages directory and make another directory with the name of your theme. For the purpose of this tutorial, we will call it _theme_. Then you will want to `yarn init` the _theme_ directory and the _site_ directory.
 
-```sh
+```shell
 mkdir site
 mkdir packages
 cd packages
@@ -93,9 +95,9 @@ Read more about Gatsby+MDX [here.](https://gatsby-mdx.netlify.com/)
 
 In your _theme_ directory, add src/pages/index.mdx
 
-Then you need to add gatsby-mdx and MDX as dependencies.
+Then you need to add gatsby-plugin-mdx and MDX as dependencies.
 
-`yarn workspace theme add gatsby-mdx @mdx-js/mdx @mdx-js/react`
+`yarn workspace theme add gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react`
 
 Next, you will want to add gatsby-plugin-page-creator
 
@@ -107,7 +109,7 @@ In the future, Gatsby will automatically handle adding the page-creator plugin.
 
 Read more about the page-creator plugin [here.](/packages/gatsby-plugin-page-creator/)
 
-Next, you will want to create your _gatsby-config.js_ file under your _theme_ directory. Make sure to include 'gatsby-mdx' and 'gatsby-plugin-page-creator.'
+Next, you will want to create your _gatsby-config.js_ file under your _theme_ directory. Make sure to include 'gatsby-plugin-mdx' and 'gatsby-plugin-page-creator.'
 
 ```javascript:title=packages/theme/gatsby-config.js
 const path = require(`path`)
@@ -115,7 +117,7 @@ const path = require(`path`)
 module.exports = {
   plugins: [
     {
-      resolve: `gatsby-mdx`,
+      resolve: `gatsby-plugin-mdx`,
       options: {},
     },
     {
@@ -132,7 +134,7 @@ Lastly, you're going to want to add a _gatsby-config.js_ file to your _site_ dir
 
 ```javascript:title=site/gatsby-config.js
 module.exports = {
-  __experimentalThemes: [`theme`],
+  plugins: [`theme`],
 }
 ```
 
@@ -165,7 +167,7 @@ You will need to add `gatsby` CLI scripts and specify your newly created `theme`
 
 Now, you can make sure _site_ is linked to _theme_.
 
-```sh
+```shell
 yarn
 yarn workspaces info
 ```
@@ -191,7 +193,7 @@ Your workspace info should look similar to this:
 
 Now that we've set up the site's _package.json_ we can run the workspace:
 
-```sh
+```shell
 yarn workspace site develop
 ```
 
@@ -206,7 +208,7 @@ Your website content goes in _index.mdx_.
 
 Now, rerun the development server and see your new content:
 
-```sh
+```shell
 yarn workspace site develop
 ```
 
@@ -218,7 +220,7 @@ Next, you will navigate to the _theme_ directory. You will then create a _compon
 
 Inside of your _layout.js_ file, you can add your styling.
 
-```javascript:title=packages/theme/src/components/layout.js
+```jsx:title=packages/theme/src/components/layout.js
 export default ({ children }) => (
   <div
     style={{
@@ -240,7 +242,7 @@ const path = require(`path`)
 module.exports = {
   plugins: [
     {
-      resolve: `gatsby-mdx`,
+      resolve: `gatsby-plugin-mdx`,
       options: {
         // highlight-start
         defaultLayouts: {
@@ -263,7 +265,7 @@ If you want to reuse a specific style, you can create styled components. In your
 
 Here is an example of how you can set-up your styled component in _header.js_. Please make sure you write css-in-javascript when styling your div.
 
-```javascript:title=header.js
+```jsx:title=header.js
 export default ({ children }) => (
   <section
     style={{
@@ -322,4 +324,4 @@ If you run into an error that your theme plugin can't be found, try clearing you
 
 to your _package.json_ file. Then you can use `npm run clean` in your terminal.
 
-If you happen to find this tutorial helpful, please feel free to let me know on Twitter [@KatieofCode](https://www.twitter.com/katieofcode)! I would love to see what kind of themes you build.
+If you happen to find this tutorial helpful, please feel free to let me know on Twitter [@KatieFujihara](https://www.twitter.com/KatieFujihara)! I would love to see what kind of themes you build.

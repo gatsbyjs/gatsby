@@ -1,13 +1,15 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { graphql, Link } from "gatsby"
 import { Helmet } from "react-helmet"
 import { sortBy } from "lodash-es"
 
 import APIReference from "../../components/api-reference"
-import { space } from "../../utils/presets"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
 import { itemListDocs } from "../../utils/sidebar/item-list"
+import normalizeGatsbyApiCall from "../../utils/normalize-gatsby-api-call"
 
 class NodeAPIDocs extends React.Component {
   render() {
@@ -15,18 +17,32 @@ class NodeAPIDocs extends React.Component {
       this.props.data.file.childrenDocumentationJs,
       func => func.name
     )
+
+    const normalized = normalizeGatsbyApiCall(this.props.data.nodeAPIs.group)
+
+    const mergedFuncs = funcs.map(func => {
+      return {
+        ...func,
+        ...normalized.find(n => n.name === func.name),
+      }
+    })
+
     return (
       <Layout location={this.props.location} itemList={itemListDocs}>
         <Container>
           <Helmet>
             <title>Node APIs</title>
+            <meta
+              name="description"
+              content="Documentation on Node APIs used in Gatsby build process for common uses like creating pages"
+            />
           </Helmet>
           <h1 id="gatsby-node-apis" css={{ marginTop: 0 }}>
             Gatsby Node APIs
           </h1>
           <p>
             Gatsby gives plugins and site builders many APIs for controlling
-            your site.
+            your site's data in the GraphQL data layer.
           </p>
           <h3>Async plugins</h3>
           <p>
@@ -67,16 +83,16 @@ exports<span class="token punctuation">.</span><span class="token function-varia
             If your plugin does not do async work, you can just return directly.
           </p>
           <hr />
-          <h2 css={{ marginBottom: space[3] }}>Usage</h2>
-          <p css={{ marginBottom: space[5] }}>
+          <h2 sx={{ mb: 3 }}>Usage</h2>
+          <p sx={{ mb: 5 }}>
             Implement any of these APIs by exporting them from a file named
             {` `}
             <code>gatsby-node.js</code> in the root of your project.
           </p>
           <hr />
-          <h2 css={{ marginBottom: space[3] }}>APIs</h2>
+          <h2 sx={{ mb: 3 }}>APIs</h2>
           <ul>
-            {funcs.map((node, i) => (
+            {funcs.map(node => (
               <li key={`function list ${node.name}`}>
                 <a href={`#${node.name}`}>{node.name}</a>
               </li>
@@ -85,7 +101,7 @@ exports<span class="token punctuation">.</span><span class="token function-varia
           <br />
           <hr />
           <h2>Reference</h2>
-          <APIReference docs={funcs} />
+          <APIReference docs={mergedFuncs} />
         </Container>
       </Layout>
     )
@@ -100,6 +116,11 @@ export const pageQuery = graphql`
       childrenDocumentationJs {
         name
         ...DocumentationFragment
+      }
+    }
+    nodeAPIs: allGatsbyApiCall(filter: { group: { eq: "NodeAPI" } }) {
+      group(field: name) {
+        ...ApiCallFragment
       }
     }
   }

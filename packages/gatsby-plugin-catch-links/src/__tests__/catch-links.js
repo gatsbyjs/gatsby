@@ -257,14 +257,14 @@ describe(`anchor target attribute looks like _self if`, () => {
   })
 })
 
-describe(`navigation is routed through gatsby if the destination href`, () => {
+describe(`navigation is routed through Gatsby if the destination href`, () => {
   // We're going to manually set up the event listener here
   let hrefHandler
   let eventDestroyer
 
   beforeAll(() => {
     hrefHandler = jest.fn()
-    eventDestroyer = catchLinks.default(window, hrefHandler)
+    eventDestroyer = catchLinks.default(window, {}, hrefHandler)
   })
 
   afterAll(() => {
@@ -286,7 +286,8 @@ describe(`navigation is routed through gatsby if the destination href`, () => {
       view: window,
     })
 
-    hrefHandler.mockImplementation(() => {
+    window.addEventListener(`click`, function onClick() {
+      window.removeEventListener(`click`, onClick)
       expect(hrefHandler).toHaveBeenCalledWith(
         `${sameOriginAndTopPath.pathname}`
       )
@@ -313,7 +314,8 @@ describe(`navigation is routed through gatsby if the destination href`, () => {
       view: window,
     })
 
-    hrefHandler.mockImplementation(() => {
+    window.addEventListener(`click`, function onClick() {
+      window.removeEventListener(`click`, onClick)
       expect(hrefHandler).toHaveBeenCalledWith(
         `${withAnchor.pathname}${withAnchor.hash}`
       )
@@ -340,7 +342,8 @@ describe(`navigation is routed through gatsby if the destination href`, () => {
       view: window,
     })
 
-    hrefHandler.mockImplementation(() => {
+    window.addEventListener(`click`, function onClick() {
+      window.removeEventListener(`click`, onClick)
       expect(hrefHandler).toHaveBeenCalledWith(
         `${withSearch.pathname}${withSearch.search}${withSearch.hash}`
       )
@@ -354,6 +357,50 @@ describe(`navigation is routed through gatsby if the destination href`, () => {
   })
 })
 
+describe(`navigation is routed through browser if resources have failed and the destination href`, () => {
+  // We're going to manually set up the event listener here
+  let hrefHandler
+  let eventDestroyer
+
+  beforeAll(() => {
+    hrefHandler = jest.fn()
+    eventDestroyer = catchLinks.default(window, {}, hrefHandler)
+    global.___failedResources = true
+  })
+
+  afterAll(() => {
+    eventDestroyer()
+    global.___failedResources = false
+  })
+
+  it(`shares the same origin and top path`, done => {
+    const sameOriginAndTopPath = document.createElement(`a`)
+    sameOriginAndTopPath.setAttribute(
+      `href`,
+      `${window.location.href}/someSubPath`
+    )
+    document.body.appendChild(sameOriginAndTopPath)
+
+    // create the click event we'll be using for testing
+    const clickEvent = new MouseEvent(`click`, {
+      bubbles: true,
+      cancelable: true,
+      view: window,
+    })
+
+    window.addEventListener(`click`, function onClick() {
+      window.removeEventListener(`click`, onClick)
+      expect(hrefHandler).not.toHaveBeenCalled()
+
+      sameOriginAndTopPath.remove()
+
+      done()
+    })
+
+    sameOriginAndTopPath.dispatchEvent(clickEvent)
+  })
+})
+
 describe(`pathPrefix is handled if catched link to ${pathPrefix}/article navigates to ${pathPrefix}/article`, () => {
   // We're going to manually set up the event listener here
   let hrefHandler
@@ -361,7 +408,7 @@ describe(`pathPrefix is handled if catched link to ${pathPrefix}/article navigat
 
   beforeAll(() => {
     hrefHandler = jest.fn()
-    eventDestroyer = catchLinks.default(window, hrefHandler)
+    eventDestroyer = catchLinks.default(window, {}, hrefHandler)
   })
 
   afterAll(() => {

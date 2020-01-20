@@ -1,97 +1,70 @@
 // @flow
-const sift = require(`sift`)
+const { default: sift } = require(`sift`)
 const _ = require(`lodash`)
 const prepareRegex = require(`../utils/prepare-regex`)
-const { resolveNodes, resolveRecursive } = require(`./prepare-nodes`)
+const { makeRe } = require(`micromatch`)
+const { getValueAt } = require(`../utils/get-value-at`)
+const {
+  toDottedFields,
+  objectToDottedField,
+  liftResolvedFields,
+} = require(`../db/common/query`)
 
 /////////////////////////////////////////////////////////////////////
 // Parse filter
 /////////////////////////////////////////////////////////////////////
 
-function siftifyArgs(object) {
-  const newObject = {}
-  _.each(object, (v, k) => {
-    if (_.isPlainObject(v)) {
-      if (k === `elemMatch`) {
-        k = `$elemMatch`
-      }
-      newObject[k] = siftifyArgs(v)
+const prepareQueryArgs = (filterFields = {}) =>
+  Object.keys(filterFields).reduce((acc, key) => {
+    const value = filterFields[key]
+    if (_.isPlainObject(value)) {
+      acc[key === `elemMatch` ? `$elemMatch` : key] = prepareQueryArgs(value)
     } else {
-      // Compile regex first.
-      if (k === `regex`) {
-        newObject[`$regex`] = prepareRegex(v)
-      } else if (k === `glob`) {
-        const Minimatch = require(`minimatch`).Minimatch
-        const mm = new Minimatch(v)
-        newObject[`$regex`] = mm.makeRe()
-      } else {
-        newObject[`$${k}`] = v
+      switch (key) {
+        case `regex`:
+          acc[`$regex`] = prepareRegex(value)
+          break
+        case `glob`:
+          acc[`$regex`] = makeRe(value)
+          break
+        default:
+          acc[`$${key}`] = value
       }
-    }
-  })
-  return newObject
-}
-
-// Build an object that excludes the innermost leafs,
-// this avoids including { eq: x } when resolving fields.
-const extractFieldsToSift = filter =>
-  Object.keys(filter).reduce((acc, key) => {
-    let value = filter[key]
-    let k = Object.keys(value)[0]
-    let v = value[k]
-    if (_.isPlainObject(value) && _.isPlainObject(v)) {
-      acc[key] =
-        k === `elemMatch` ? extractFieldsToSift(v) : extractFieldsToSift(value)
-    } else {
-      acc[key] = true
     }
     return acc
   }, {})
 
-/**
- * Parse filter and returns an object with two fields:
- * - siftArgs: the filter in a format that sift understands
- * - fieldsToSift: filter with operate leaves (e.g { eq: 3 })
- *   removed. Used later to resolve all filter fields
- */
-function parseFilter(filter) {
-  const siftArgs = []
-  let fieldsToSift = {}
-  if (filter) {
-    _.each(filter, (v, k) => {
-      siftArgs.push(
-        siftifyArgs({
-          [k]: v,
-        })
-      )
-    })
-    fieldsToSift = extractFieldsToSift(filter)
-  }
-  return { siftArgs, fieldsToSift }
-}
+const getFilters = filters =>
+  Object.keys(filters).reduce(
+    (acc, key) => acc.push({ [key]: filters[key] }) && acc,
+    []
+  )
 
 /////////////////////////////////////////////////////////////////////
 // Run Sift
 /////////////////////////////////////////////////////////////////////
 
-function isEqId(firstOnly, fieldsToSift, siftArgs) {
+function isEqId(siftArgs) {
+  // The `id` of each node is invariably unique. So if a query is doing id $eq(string) it can find only one node tops
   return (
-    firstOnly &&
-    Object.keys(fieldsToSift).length === 1 &&
-    Object.keys(fieldsToSift)[0] === `id` &&
+    siftArgs.length > 0 &&
+    siftArgs[0].id &&
     Object.keys(siftArgs[0].id).length === 1 &&
     Object.keys(siftArgs[0].id)[0] === `$eq`
   )
 }
 
 function handleFirst(siftArgs, nodes) {
+  if (nodes.length === 0) {
+    return []
+  }
+
   const index = _.isEmpty(siftArgs)
     ? 0
-    : sift.indexOf(
-        {
+    : nodes.findIndex(
+        sift({
           $and: siftArgs,
-        },
-        nodes
+        })
       )
 
   if (index !== -1) {
@@ -101,23 +74,34 @@ function handleFirst(siftArgs, nodes) {
   }
 }
 
-function handleMany(siftArgs, nodes, sort) {
+function handleMany(siftArgs, nodes, sort, resolvedFields) {
   let result = _.isEmpty(siftArgs)
     ? nodes
-    : sift(
-        {
+    : nodes.filter(
+        sift({
           $and: siftArgs,
-        },
-        nodes
+        })
       )
 
   if (!result || !result.length) return null
 
   // Sort results.
-  if (sort) {
+  if (sort && result.length > 1) {
     // create functions that return the item to compare on
-    // uses _.get so nested fields can be retrieved
-    const sortFields = sort.fields.map(field => v => _.get(v, field))
+    const dottedFields = objectToDottedField(resolvedFields)
+    const dottedFieldKeys = Object.keys(dottedFields)
+    const sortFields = sort.fields
+      .map(field => {
+        if (
+          dottedFields[field] ||
+          dottedFieldKeys.some(key => field.startsWith(key))
+        ) {
+          return `__gatsby_resolved.${field}`
+        } else {
+          return field
+        }
+      })
+      .map(field => v => getValueAt(v, field))
     const sortOrder = sort.order.map(order => order.toLowerCase())
 
     result = _.orderBy(result, sortFields, sortOrder)
@@ -138,43 +122,73 @@ function handleMany(siftArgs, nodes, sort) {
  * @returns Collection of results. Collection will be limited to size
  *   if `firstOnly` is true
  */
-module.exports = (args: Object) => {
-  const { getNode, getNodesByType } = require(`../db/nodes`)
+const runSift = (args: Object) => {
+  const { getNode, addResolvedNodes, getResolvedNode } = require(`./nodes`)
 
-  const { queryArgs, gqlType, firstOnly = false } = args
+  const { nodeTypeNames } = args
+  if (
+    args.queryArgs?.filter &&
+    Object.getOwnPropertyNames(args.queryArgs.filter).length === 1 &&
+    typeof args.queryArgs.filter?.id?.eq === `string`
+  ) {
+    // The args have an id.eq which subsumes all other queries
+    // Since the id of every node is unique there can only ever be one node found this way. Find it and return it.
+    let id = args.queryArgs.filter.id.eq
+    let node = undefined
+    nodeTypeNames.some(typeName => {
+      node = getResolvedNode(typeName, id)
+      return !!node
+    })
+    if (node) {
+      return [node]
+    }
+  }
 
-  // If nodes weren't provided, then load them from the DB
-  const nodes = args.nodes || getNodesByType(gqlType.name)
+  let nodes = []
 
-  const { siftArgs, fieldsToSift } = parseFilter(queryArgs.filter)
-  // FIXME: fieldsToSift must include `sort.fields` as well as the
-  // `field` arg on `group` and `distinct`
+  nodeTypeNames.forEach(typeName => addResolvedNodes(typeName, nodes))
+
+  return runSiftOnNodes(nodes, args, getNode)
+}
+
+exports.runSift = runSift
+
+const runSiftOnNodes = (nodes, args, getNode) => {
+  const {
+    queryArgs = { filter: {}, sort: {} },
+    firstOnly = false,
+    resolvedFields = {},
+    nodeTypeNames,
+  } = args
+
+  let siftFilter = getFilters(
+    liftResolvedFields(
+      toDottedFields(prepareQueryArgs(queryArgs.filter)),
+      resolvedFields
+    )
+  )
 
   // If the the query for single node only has a filter for an "id"
   // using "eq" operator, then we'll just grab that ID and return it.
-  if (isEqId(firstOnly, fieldsToSift, siftArgs)) {
-    const node = getNode(siftArgs[0].id[`$eq`])
+  if (isEqId(siftFilter)) {
+    const node = getNode(siftFilter[0].id.$eq)
 
-    if (!node || (node.internal && node.internal.type !== gqlType.name)) {
-      return []
+    if (
+      !node ||
+      (node.internal && !nodeTypeNames.includes(node.internal.type))
+    ) {
+      if (firstOnly) return []
+      return null
     }
 
-    return resolveRecursive(node, fieldsToSift, gqlType.getFields()).then(
-      node => (node ? [node] : [])
-    )
+    return [node]
   }
 
-  return resolveNodes(
-    nodes,
-    gqlType.name,
-    firstOnly,
-    fieldsToSift,
-    gqlType.getFields()
-  ).then(resolvedNodes => {
-    if (firstOnly) {
-      return handleFirst(siftArgs, resolvedNodes)
-    } else {
-      return handleMany(siftArgs, resolvedNodes, queryArgs.sort)
-    }
-  })
+  if (firstOnly) {
+    return handleFirst(siftFilter, nodes)
+  } else {
+    return handleMany(siftFilter, nodes, queryArgs.sort, resolvedFields)
+  }
 }
+
+exports.runSiftOnNodes = runSiftOnNodes

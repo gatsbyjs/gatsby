@@ -6,7 +6,7 @@ Preloading resources is a great way to improve application performance. However,
 
 ## Introducing Guess.js
 
-By leveraging Google Analytics data and machine learning, [Guess.js](https://github.com/guess-js/guess) is able determine which pages a user is most likely to navigate to from the current page and only preload those resources. Thus, there are fewer network requests which improves performance on slower networks.
+By leveraging Google Analytics data and machine learning, [Guess.js](https://github.com/guess-js/guess) is able to determine which pages a user is most likely to navigate to from the current page and only preload those resources. Thus, there are fewer network requests which improves performance on slower networks.
 
 ## How does it work?
 

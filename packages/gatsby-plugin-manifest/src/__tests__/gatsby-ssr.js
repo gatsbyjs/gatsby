@@ -4,9 +4,11 @@ jest.mock(`fs`, () => {
   }
 })
 
-jest.mock(`gatsby/dist/utils/create-content-digest`, () =>
-  jest.fn(() => `contentDigest`)
-)
+jest.mock(`gatsby-core-utils`, () => {
+  return {
+    createContentDigest: jest.fn(() => `contentDigest`),
+  }
+})
 
 const { onRenderBody } = require(`../gatsby-ssr`)
 
@@ -15,6 +17,7 @@ const setHeadComponents = args => (headComponents = headComponents.concat(args))
 
 const ssrArgs = {
   setHeadComponents,
+  pathname: `/`,
 }
 
 describe(`gatsby-plugin-manifest`, () => {
@@ -84,13 +87,46 @@ describe(`gatsby-plugin-manifest`, () => {
       expect(headComponents).toMatchSnapshot()
     })
 
-    it(`Adds "shortcut icon" and "manifest" links and "theme_color" meta tag to head`, () => {
+    it(`Adds "icon" and "manifest" links and "theme_color" meta tag to head`, () => {
       onRenderBody(ssrArgs, {
         icon: true,
         theme_color: `#000000`,
       })
       expect(headComponents).toMatchSnapshot()
     })
+
+    const i18nArgs = [
+      {
+        ...ssrArgs,
+        pathname: `/about-us`,
+        testName: `Adds correct (default) i18n "manifest" link to head`,
+      },
+      {
+        ...ssrArgs,
+        pathname: `/es/sobre-nosotros`,
+        testName: `Adds correct (es) i18n "manifest" link to head`,
+      },
+    ]
+
+    i18nArgs.forEach(({ testName, ...args }) =>
+      it(testName, () => {
+        onRenderBody(args, {
+          start_url: `/`,
+          lang: `en`,
+          localize: [
+            {
+              start_url: `/de/`,
+              lang: `de`,
+            },
+            {
+              start_url: `/es/`,
+              lang: `es`,
+            },
+          ],
+        })
+        expect(headComponents).toMatchSnapshot()
+      })
+    )
   })
 
   describe(`Legacy Icons`, () => {

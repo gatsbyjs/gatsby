@@ -6,14 +6,14 @@ image: "ui-and-code.png"
 draft: true
 ---
 
-Imagine for a moment the perfect website framework. One that produced really
+Imagine for a moment the perfect website framework. One that produces really
 fast sites by default, that let you use the latest web tools and browser
 features without complicated setup, and that helped your team stay coordinated
 as you develop, ship, and maintain sites.
 
 This framework would have to be:
 
-- **universal**, work for all types of sites from simple brocurewares to complex
+- **universal**, work for all types of sites from simple brochureware to complex
   web-apps.
 - **simple**, not requiring any setup to start using and with thoughtful APIs to
   extend the framework.
@@ -260,7 +260,7 @@ instantly.
 
 This pattern of _colocating_ your queries next to your views is copied from the
 [Relay data framework from Facebook](https://facebook.github.io/relay/).
-Colocaton makes it easy to fully understand your views as everything necessary
+Colocation makes it easy to fully understand your views as everything necessary
 for that view is fully described there.
 
 A simple example of how this works in practice.

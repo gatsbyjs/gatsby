@@ -2,7 +2,7 @@
 title: "Turning the Static Dynamic: Gatsby + Netlify Functions + Netlify Identity"
 date: 2018-12-26
 author: swyx
-tags: ["apps"]
+tags: ["gatsby-for-apps"]
 excerpt: Gatsby is great for not only static sites but also traditional web applications. You can add authentication and serverless functionality and get up and running incredibly quickly with Netlify - here's how.
 ---
 
@@ -45,28 +45,32 @@ Let's walk through the steps:
 1. **Install dependencies**: `npm install -D http-proxy-middleware netlify-lambda npm-run-all`
 2. **Run function emulation alongside Gatsby**: replace your `scripts` in `package.json`:
 
-```js
+```json
   "scripts": {
     "develop": "gatsby develop",
     "start": "run-p start:**",
     "start:app": "npm run develop",
     "start:lambda": "netlify-lambda serve src/lambda",
-    "build": "run-p build:**",
+    "build": "gatsby build && netlify-lambda build src/lambda",
     "build:app": "gatsby build",
     "build:lambda": "netlify-lambda build src/lambda",
   },
 ```
 
+When deploying to Netlify, `gatsby build` must be run before `netlify-lambda build src/lambda` or else your Netlify function builds will fail. To avoid this, do not set your build script command to `"build": "run-p build:**"` when you replace `scripts` in `package.json`. Doing so will run all build scripts in parallel. This will make it possible for `netlify-lambda build src/lambda` to run before `gatsby build`.
+
 3. **Configure your Netlify build**: When serving your site on Netlify, `netlify-lambda` will now build each JavaScript/TypeScript file in your `src/lambda` folder as a standalone Netlify function (with a path corresponding to the filename). Make sure you have a Functions path in a `netlify.toml` file at root of your repository:
 
 ```toml
 [build]
-  Command = "npm run build"
-  Functions = "lambda"
-  Publish = "public"
+  command = "npm run build"
+  functions = "lambda"
+  publish = "public"
 ```
 
 For more info or configuration options (e.g. in different branches and build environments), check [the Netlify.toml reference](https://www.netlify.com/docs/netlify-toml-reference/).
+
+**NOTE:** the `command` specified in `netlify.toml` overrides the build command specified in your site's Netlify UI Build settings.
 
 4. **Proxy the emulated functions for local development**: Head to `gatsby-config.js` and add this to your `module.exports`:
 
@@ -117,7 +121,7 @@ fetch("/.netlify/functions/hello")
 
 and watch "Hello World!" pop up in your console. (I added a random number as well to show the endpoint is dynamic) If you are new to React, I highly recommend [reading through the React docs](https://reactjs.org/docs/handling-events.html) to understand where and how to insert event handlers so you can, for example, [respond to a button click](https://reactjs.org/docs/handling-events.html).
 
-The local proxying we are doing is only for local emulation, eg it is actually running from `http://localhost:9000/hello` despite you hitting `/.netlify/functions/hello` in your Gatsby app. When you deploy your site to Netlify (either by [hooking your site up through Git through our Web UI](http://app.netlify.com/), or our l33t new [CLI](https://www.netlify.com/docs/cli/)), that falls away, and your functions -are- hosted on the same URL and "just works". Pretty neat!
+The local proxying we are doing is only for local emulation, e.g. it is actually running from `http://localhost:9000/hello` despite you hitting `/.netlify/functions/hello` in your Gatsby app. When you deploy your site to Netlify (either by [hooking your site up through Git through our Web UI](http://app.netlify.com/), or our l33t new [CLI](https://www.netlify.com/docs/cli/)), that falls away, and your functions -are- hosted on the same URL and "just works". Pretty neat!
 
 ## That's cool, but its not an app
 
@@ -129,11 +133,11 @@ It's a different tier of concern, which makes it hard to write about in the same
 
 ## 5 Steps to add Netlify Identity and Authenticated Pages to Gatsby
 
-1. **Enable Netlify Identity**: Netlify Identity doesn't come enabled by default. You'll have to head to your site admin (eg `https://app.netlify.com/sites/YOUR_AWESOME_SITE/identity`) to turn it on. [Read the docs](https://www.netlify.com/docs/identity/) for further info on what you can do, for example add Facebook or Google social sign-on!
+1. **Enable Netlify Identity**: Netlify Identity doesn't come enabled by default. You'll have to head to your site admin (e.g. `https://app.netlify.com/sites/YOUR_AWESOME_SITE/identity`) to turn it on. [Read the docs](https://www.netlify.com/docs/identity/) for further info on what you can do, for example add Facebook or Google social sign-on!
 2. **Install dependencies**: `npm install netlify-identity-widget gatsby-plugin-create-client-paths`
 3. **Configure Gatsby**: for dynamic-ness!
 
-```jsx:title=gatsby-config.js
+```js:title=gatsby-config.js
 module.exports = {
   plugins: [
     {
@@ -150,7 +154,7 @@ module.exports = {
 
 Here's a usable example that stores your user in local storage:
 
-```jsx:title=service/auth.js
+```js:title=service/auth.js
 import netlifyIdentity from "netlify-identity-widget"
 
 export const isBrowser = () => typeof window !== "undefined"
@@ -366,15 +370,15 @@ export function handler(event, context, callback) {
     })
   } else {
     console.log(`
-    Note that netlify-lambda only locally emulates Netlify Functions, 
-    while netlify-identity-widget interacts with a real Netlify Identity instance. 
+    Note that netlify-lambda only locally emulates Netlify Functions,
+    while netlify-identity-widget interacts with a real Netlify Identity instance.
     This means that netlify-lambda doesn't support Netlify Functions + Netlify Identity integration.
     `)
     callback(null, {
       statusCode: 200,
       body: JSON.stringify({
         msg:
-          "auth-hello - no authentication detected. Note that netlify-lambda doesnt locally emulate Netlify Identity.",
+          "auth-hello - no authentication detected. Note that netlify-lambda doesn't locally emulate Netlify Identity.",
       }),
     })
   }

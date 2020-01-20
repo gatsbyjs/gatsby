@@ -9,7 +9,7 @@ Errors while building static HTML files generally happen for one of the followin
     defined". To fix this, find the offending code and either a) check before
     calling the code if window is defined so the code doesn't run while Gatsby is
     building (see code sample below) or b) if the code is in the render function
-    of a React.js component, move that code into `componentDidMount` which
+    of a React.js component, move that code into a [`componentDidMount` lifecycle](https://reactjs.org/docs/react-component.html#componentdidmount) or into a [`useEffect` hook](https://reactjs.org/docs/hooks-reference.html#useeffect), which
     ensures the code doesn't run unless it's in the browser.
 
 1.  Check that each of your JS files listed in your `pages` directory (and any
@@ -21,6 +21,10 @@ Errors while building static HTML files generally happen for one of the followin
     "WebpackError: Invariant Violation: Minified React error #130" [since Webpack 4
     is stricter than v3](/docs/migrating-from-v1-to-v2/#convert-to-either-pure-commonjs-or-pure-es6).
     The solution is to only use `import`.
+
+1.  Your app is not correctly [hydrated](https://reactjs.org/docs/react-dom.html), which results in gatsby develop and gatsby
+    build being inconsistent. It's possible that a change in a file like `gatsby-ssr` or `gatsby-browser` has a structure that is
+    not reflected in the other file, meaning that there is a mismatch between client and server output.
 
 1.  Some other reason :-) #1 is the most common reason building static files
     fail. If it's another reason, you have to be a bit more creative in figuring
@@ -37,6 +41,12 @@ const module = require("module") // Error
 if (typeof window !== `undefined`) {
   const module = require("module")
 }
+```
+
+In case the module needs to be defined for the code to run, you can use a ternary operator
+
+```javascript
+const module = typeof window !== `undefined` ? require("module") : null
 ```
 
 ## Fixing third-party modules
@@ -67,3 +77,5 @@ exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
   }
 }
 ```
+
+Another solution is to use a package like [react-loadable](https://github.com/jamiebuilds/react-loadable). The module that tries to use `window` will be dynamically loaded only on the client side (and not during SSR).

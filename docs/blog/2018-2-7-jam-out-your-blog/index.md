@@ -2,7 +2,7 @@
 title: JAM Out Your Blog - Gatsby + Prose + Netlify
 date: 2018-02-07
 author: "Vlad Pasculescu"
-tags: ["prose-io", "netlify", "ci", "jamstack"]
+tags: ["netlify", "deployment", "jamstack"]
 ---
 
 If you’re reading this, chances are you’ve heard a thing or two about Gatsby. Let me take you through a _jamstacked_ workflow that is friendly to both developers, as well as content-creators.
@@ -102,7 +102,9 @@ I should also mention that Prose is an open source project that is available for
 
 Let’s summarize where we are and why [Netlify](https://www.netlify.com/) will take care of the rest.
 
-```[ ] Lean - simplify the tools and services use to a bare minimum
+```markdown
+[ ] Lean - simplify the tools and services use to a bare minimum
+
 [ ] Inexpensive Hosting - again, to maximize value and keep personal costs down
 
 [ ] Continuous Deployment - the site needs to always be up and running and current

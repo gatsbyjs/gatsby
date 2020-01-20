@@ -26,7 +26,7 @@ const theme = {
 
 plugins: [
   {
-    resolve: "jss",
+    resolve: "gatsby-plugin-jss",
     options: { theme },
   },
 ]

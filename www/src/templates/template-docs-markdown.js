@@ -1,6 +1,10 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
+import { MDXRenderer } from "gatsby-plugin-mdx"
+import { mediaQueries } from "../gatsby-plugin-theme-ui"
 
 import Layout from "../components/layout"
 import {
@@ -10,43 +14,21 @@ import {
 } from "../utils/sidebar/item-list"
 import MarkdownPageFooter from "../components/markdown-page-footer"
 import DocSearchContent from "../components/docsearch-content"
+import TableOfContents from "../components/docs-table-of-contents"
 import FooterLinks from "../components/shared/footer-links"
-
+import Breadcrumb from "../components/docs-breadcrumb"
 import Container from "../components/container"
+import PrevAndNext from "../components/prev-and-next"
 
-import docsHierarchy from "../data/sidebars/doc-links.yaml"
-
-// Search through tree, which may be 2, 3 or more levels deep
-const childItemsBySlug = (docsHierarchy, slug) => {
-  let result
-
-  const iter = a => {
-    if (a.link === slug) {
-      result = a
-      return true
-    }
-    return Array.isArray(a.items) && a.items.some(iter)
-  }
-
-  docsHierarchy.some(iter)
-  return result && result.items
-}
-
-const getPageHTML = page => {
-  const subitemsForPage =
-    childItemsBySlug(docsHierarchy, page.fields.slug) || []
-  const subitemList = subitemsForPage
-    .map(subitem => `<li><a href="${subitem.link}">${subitem.title}</a></li>`)
-    .join(``)
-  const toc = subitemList
-    ? `
-    <h2>In this section:</h2>
-    <ul>${subitemList}</ul>
-  `
-    : ``
-
-  // This is probably a capital offense in Reactland. 😱😱😱
-  return page.html.replace(`[[guidelist]]`, toc)
+const containerStyles = {
+  // we need to account for <Container>'s horizontal padding of
+  // `space[6]` each (1.5rem), plus add a fluffy `space[9]`
+  // of whitespace in between main content and TOC
+  //
+  // could be much cleaner/clearer, please feel free to improve 🙏
+  maxWidth: t =>
+    `calc(${t.sizes.mainContentWidth.withSidebar} + ${t.sizes.tocWidth} + ${t.space[9]} + ${t.space[9]} + ${t.space[9]})`,
+  px: 9,
 }
 
 const getDocsData = location => {
@@ -60,14 +42,14 @@ const getDocsData = location => {
   return [urlSegment, itemListLookup[urlSegment]]
 }
 
-function DocsTemplate({ data, location }) {
-  const page = data.markdownRemark
-  const html = getPageHTML(page)
-
+function DocsTemplate({ data, location, pageContext: { next, prev } }) {
+  const page = data.mdx
   const [urlSegment, itemList] = getDocsData(location)
+  const toc =
+    !page.frontmatter.disableTableOfContents && page.tableOfContents.items
 
   return (
-    <>
+    <React.Fragment>
       <Helmet>
         <title>{page.frontmatter.title}</title>
         <meta name="description" content={page.excerpt} />
@@ -84,30 +66,83 @@ function DocsTemplate({ data, location }) {
         enableScrollSync={urlSegment === `docs` ? false : true}
       >
         <DocSearchContent>
-          <Container>
-            <h1 id={page.fields.anchor} css={{ marginTop: 0 }}>
+          <Container
+            overrideCSS={{
+              pb: 0,
+              [mediaQueries.lg]: {
+                pt: 9,
+              },
+              [toc && mediaQueries.xl]: {
+                ...containerStyles,
+              },
+            }}
+          >
+            <Breadcrumb location={location} itemList={itemList} />
+            <h1 id={page.fields.anchor} sx={{ mt: 0 }}>
               {page.frontmatter.title}
             </h1>
-            <div
-              dangerouslySetInnerHTML={{
-                __html: html,
-              }}
-            />
-            {page.frontmatter.issue && (
-              <a
-                href={page.frontmatter.issue}
-                target="_blank"
-                rel="noopener noreferrer"
+          </Container>
+          <Container
+            overrideCSS={{
+              pt: 0,
+              position: `static`,
+              [mediaQueries.lg]: {
+                pb: 9,
+              },
+              [toc && mediaQueries.xl]: {
+                ...containerStyles,
+                display: `flex`,
+                alignItems: `flex-start`,
+              },
+            }}
+          >
+            {toc && (
+              <div
+                sx={{
+                  order: 2,
+                  [mediaQueries.xl]: {
+                    ml: 9,
+                    maxWidth: `tocWidth`,
+                    position: `sticky`,
+                    top: t =>
+                      `calc(${t.sizes.headerHeight} + ${t.sizes.bannerHeight} + ${t.space[9]})`,
+                    maxHeight: t =>
+                      `calc(100vh - ${t.sizes.headerHeight} - ${t.sizes.bannerHeight} - ${t.space[9]} - ${t.space[9]})`,
+                    overflow: `auto`,
+                  },
+                }}
               >
-                See the issue relating to this stub on GitHub
-              </a>
+                <TableOfContents location={location} page={page} />
+              </div>
             )}
-            <MarkdownPageFooter page={page} />
-            <FooterLinks />
+            <div
+              sx={{
+                [page.tableOfContents.items && mediaQueries.xl]: {
+                  maxWidth: `mainContentWidth.withSidebar`,
+                  minWidth: 0,
+                },
+              }}
+            >
+              <div>
+                <MDXRenderer slug={page.fields.slug}>{page.body}</MDXRenderer>
+                {page.frontmatter.issue && (
+                  <a
+                    href={page.frontmatter.issue}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    See the issue relating to this stub on GitHub
+                  </a>
+                )}
+                <MarkdownPageFooter page={page} />
+                <PrevAndNext sx={{ mt: 9 }} prev={prev} next={next} />
+              </div>
+            </div>
           </Container>
         </DocSearchContent>
+        <FooterLinks />
       </Layout>
-    </>
+    </React.Fragment>
   )
 }
 
@@ -115,10 +150,11 @@ export default DocsTemplate
 
 export const pageQuery = graphql`
   query($path: String!) {
-    markdownRemark(fields: { slug: { eq: $path } }) {
-      html
+    mdx(fields: { slug: { eq: $path } }) {
+      body
       excerpt
       timeToRead
+      tableOfContents
       fields {
         slug
         anchor
@@ -127,8 +163,10 @@ export const pageQuery = graphql`
         title
         overview
         issue
+        disableTableOfContents
+        tableOfContentsDepth
       }
-      ...MarkdownPageFooter
+      ...MarkdownPageFooterMdx
     }
   }
 `

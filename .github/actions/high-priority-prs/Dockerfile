@@ -15,4 +15,4 @@ COPY . .
 RUN yarn
 
 # Run `node /index.js`
-ENTRYPOINT ["node", "/index.js"]
+ENTRYPOINT ["node", "/src/index.js"]

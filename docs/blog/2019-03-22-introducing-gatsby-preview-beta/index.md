@@ -2,11 +2,11 @@
 title: Introducing Gatsby Preview Beta
 date: 2019-03-22
 author: Marisa Morby
-excerpt: "Introducing the Gatsby Preview Beta: learn more and sign up today for early access to our first commerical product."
+excerpt: "Introducing the Gatsby Preview Beta: learn more and sign up today for early access to our first commercial product."
 tags:
-  - preview
-  - cloud
-  - commercial
+  - gatsby-preview
+  - gatsby-cloud
+  - gatsby-inc
 ---
 
 ## What we’ve been up to
@@ -47,11 +47,15 @@ We know it’s particularly frustrating if something fails to build but there’
 
 See how you can troubleshoot and add or remove contributors:
 
-<iframe width="560" height="315" title="Video: Gatsby Preview Settings Options" src="https://www.youtube.com/embed/kN5vrRVD_6Q" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+https://youtu.be/kN5vrRVD_6Q
 
 ## How to sign up
 
 We’re currently running a closed beta for Gatsby Preview. [Sign up here](https://www.gatsbyjs.com/preview/) to get added to the waitlist.
+
+## Gatsby Preview Docs
+
+Once you've been invited to Gatsby Preview, you can view the documentation for integrating Preview with the CMS platforms that are supported on [GatsbyJS.com](https://www.gatsbyjs.com/docs/).
 
 ## What’s coming next
 
@@ -59,4 +63,4 @@ The initial invites for the closed beta have just gone out! We’ll be talking d
 
 Curious to see Gatsby Preview in action? Watch our short demo to see how it works:
 
-<iframe width="560" height="315" title="Video: Gatsby Preview and Contentful demo" src="https://www.youtube.com/embed/RrQi6W_8SVQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+https://youtu.be/RrQi6W_8SVQ

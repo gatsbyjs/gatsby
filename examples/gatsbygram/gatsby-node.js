@@ -1,4 +1,3 @@
-const _ = require(`lodash`)
 const path = require(`path`)
 const slug = require(`slug`)
 const slash = require(`slash`)
@@ -7,7 +6,7 @@ const slash = require(`slash`)
 // called after the Gatsby bootstrap is finished so you have
 // access to any information necessary to programmatically
 // create pages.
-exports.createPages = ({ graphql, actions }) => {
+exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
 
   // The “graphql” function allows us to run arbitrary
@@ -20,7 +19,7 @@ exports.createPages = ({ graphql, actions }) => {
   // is a "connection" (a GraphQL convention for accessing
   // a list of nodes) gives us an easy way to query all
   // Post nodes.
-  return graphql(
+  const result = await graphql(
     `
       {
         allPostsJson(limit: 1000) {
@@ -32,32 +31,33 @@ exports.createPages = ({ graphql, actions }) => {
         }
       }
     `
-  ).then(result => {
-    if (result.errors) {
-      throw result.errors
-    }
+  )
 
-    // Create image post pages.
-    const postTemplate = path.resolve(`src/templates/post-page.js`)
-    // We want to create a detailed page for each
-    // Instagram post. Since the scraped Instagram data
-    // already includes an ID field, we just use that for
-    // each page's path.
-    _.each(result.data.allPostsJson.edges, edge => {
-      // Gatsby uses Redux to manage its internal state.
-      // Plugins and sites can use functions like "createPage"
-      // to interact with Gatsby.
-      createPage({
-        // Each page is required to have a `path` as well
-        // as a template component. The `context` is
-        // optional but is often necessary so the template
-        // can query data specific to each page.
-        path: `/${slug(edge.node.id)}/`,
-        component: slash(postTemplate),
-        context: {
-          id: edge.node.id,
-        },
-      })
+  if (result.errors) {
+    reporter.panicOnBuild(`Error while running GraphQL query.`)
+    return
+  }
+
+  // Create image post pages.
+  const postTemplate = path.resolve(`src/templates/post-page.js`)
+  // We want to create a detailed page for each
+  // Instagram post. Since the scraped Instagram data
+  // already includes an ID field, we just use that for
+  // each page's path.
+  result.data.allPostsJson.edges.forEach(edge => {
+    // Gatsby uses Redux to manage its internal state.
+    // Plugins and sites can use functions like "createPage"
+    // to interact with Gatsby.
+    createPage({
+      // Each page is required to have a `path` as well
+      // as a template component. The `context` is
+      // optional but is often necessary so the template
+      // can query data specific to each page.
+      path: `/${slug(edge.node.id)}/`,
+      component: slash(postTemplate),
+      context: {
+        id: edge.node.id,
+      },
     })
   })
 }

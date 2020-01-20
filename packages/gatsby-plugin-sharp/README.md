@@ -47,6 +47,9 @@ plugins: [
 - `width` (int, default: 400)
 - `height` (int)
 - `quality` (int, default: 50)
+- `jpegQuality` (int)
+- `pngQuality` (int)
+- `webpQuality` (int)
 - `jpegProgressive` (bool, default: true)
 - `pngCompressionLevel` (int, default: 9)
 - `base64`(bool, default: false)
@@ -60,14 +63,16 @@ plugins: [
 
 ### fixed
 
-Automatically create sizes for different resolutions — we do 1x, 1.5x, 2x, and
-3x.
+Automatically create sizes for different resolutions — we do 1x, 1.5x, and 2x.
 
 #### Parameters
 
 - `width` (int, default: 400)
 - `height` (int)
 - `quality` (int, default: 50)
+- `jpegQuality` (int)
+- `pngQuality` (int)
+- `webpQuality` (int)
 
 #### Returns
 
@@ -81,8 +86,8 @@ Automatically create sizes for different resolutions — we do 1x, 1.5x, 2x, and
 ### fluid
 
 Create fluid sizes (in width) for the image. If the max width of the container for the
-rendered markdown file is 800px, the sizes would then be: 200, 400, 800, 1200,
-1600, 2400 – enough to provide close to the optimal image size for every device
+rendered markdown file is 800px, the sizes would then be: 200px, 400px, 800px, 1200px,
+1600px – enough to provide close to the optimal image size for every device
 size / screen resolution.
 
 If you want more control over which sizes are output you can use the `srcSetBreakpoints`
@@ -107,10 +112,14 @@ fit strategies `CONTAIN` and `FILL` will not work when `cropFocus` is assigned t
 - `maxWidth` (int, default: 800)
 - `maxHeight` (int)
 - `quality` (int, default: 50)
-- `sizeByPixelDensity` (bool, default: false)
+- `jpegQuality` (int)
+- `pngQuality` (int)
+- `webpQuality` (int)
 - `srcSetBreakpoints` (array of int, default: [])
 - `fit` (string, default: '[sharp.fit.cover][6]')
 - `background` (string, default: 'rgba(0,0,0,1)')
+- [deprecated] `sizeByPixelDensity` (bool, default: false)
+  - Pixel density is only used in vector images, which Gatsby’s implementation of Sharp doesn’t support. This option is currently a no-op and will be removed in the next major version of Gatsby.
 
 #### Returns
 
@@ -153,7 +162,7 @@ Rotate the image (after cropping). See Sharp's [rotate][7].
 Uses Sharp's [greyscale][8] to convert the source image to 8-bit greyscale, 256
 shades of grey, e.g.
 
-```javascript
+```graphql
 allImageSharp {
   edges {
     node {
@@ -173,7 +182,7 @@ Applys a "duotone" effect (see [I][1], [II][2], [III][3]) to the source image if
 given two hex colors `shadow` and `highlight` defining start and end color of
 the duotone gradient, e.g.
 
-```javascript
+```graphql
 fixed(
   width: 800,
   duotone: {
@@ -193,7 +202,7 @@ Logic is borrowed from [react-duotone][5].
 
 You can pass a third optional parameter, `opacity`:
 
-```javascript
+```graphql
 fluid(
   width: 800,
   duotone: {
@@ -215,7 +224,7 @@ will be [flattened][15] before creating the composite.
 
 This works by adding an alpha channel to the duotone'd image - then we let Sharp
 do its magic via
-[`overlayWith`](http://sharp.dimens.io/en/stable/api-composite/#overlaywith);
+[`overlayWith`](http://sharp.pixelplumbing.com/en/stable/api-composite/#overlaywith);
 quoting the Sharp documentation:
 
 > If the overlay image contains an alpha channel then composition with
@@ -305,7 +314,7 @@ pre-process your images with a tool such as [ExifTool][17].
 
 This means that there are multiple incompatible versions of the `sharp` package installed in `node_modules`. The complete error typically looks like this:
 
-```
+```text
 Something went wrong installing the "sharp" module
 
 dlopen(/Users/misiek/dev/gatsby-starter-blog/node_modules/sharp/build/Release/sharp.node, 1): Library not loaded: @rpath/libglib-2.0.dylib
@@ -324,7 +333,7 @@ To fix this, you'll need to update all Gatsby plugins in the current project tha
 
 To update these packages, run:
 
-```sh
+```shell
 npm install gatsby-plugin-sharp gatsby-plugin-manifest gatsby-remark-images-contentful gatsby-source-contentful gatsby-transformer-sharp gatsby-transformer-sqip
 ```
 
@@ -335,16 +344,16 @@ If updating these doesn't fix the issue, your project probably uses other plugin
 [3]: https://ines.io/blog/dynamic-duotone-svg-jade
 [4]: https://en.wikipedia.org/wiki/Relative_luminance
 [5]: https://github.com/nagelflorian/react-duotone
-[6]: http://sharp.dimens.io/en/stable/api-resize/#crop
-[7]: http://sharp.dimens.io/en/stable/api-operation/#rotate
-[8]: http://sharp.dimens.io/en/stable/api-colour/#greyscale
+[6]: http://sharp.pixelplumbing.com/en/stable/api-resize/#crop
+[7]: http://sharp.pixelplumbing.com/en/stable/api-operation/#rotate
+[8]: http://sharp.pixelplumbing.com/en/stable/api-colour/#greyscale
 [9]: https://github.com/gatsbyjs/gatsby/issues/2435
 [10]: https://codepen.io/tigt/post/optimizing-svgs-in-data-uris
 [11]: https://github.com/tooolbox/node-potrace
 [12]: https://github.com/svg/svgo
 [13]: https://github.com/tooolbox/node-potrace#parameters
 [14]: https://github.com/oliver-moran/jimp
-[15]: http://sharp.dimens.io/en/stable/api-operation/#flatten
+[15]: http://sharp.pixelplumbing.com/en/stable/api-operation/#flatten
 [16]: https://github.com/mozilla/mozjpeg
 [17]: https://www.sno.phy.queensu.ca/~phil/exiftool/
 [18]: https://www.npmjs.com/package/color

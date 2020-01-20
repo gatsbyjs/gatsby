@@ -1,9 +1,9 @@
-import React, { Component } from "react"
-import HubspotForm from "./react-hubspot-form"
-import hex2rgba from "hex2rgba"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
+import { Component } from "react"
 
-import { colors, radii, space, fontSizes } from "../utils/presets"
-import { formInput, buttonStyles } from "../utils/styles"
+import HubspotForm from "./react-hubspot-form"
+import { formInput, formInputFocus, buttonStyles } from "../utils/styles"
 
 export default class GatsbyHubspotForm extends Component {
   render() {
@@ -15,11 +15,7 @@ export default class GatsbyHubspotForm extends Component {
     // See https://designers.hubspot.com/docs/cos/hubspot-form-markup#styling-forms for information on how to style the form
     return (
       <div
-        css={{
-          backgroundColor: colors.ui.light,
-          borderRadius: radii[1],
-          color: colors.gatsby,
-          padding: space[4],
+        sx={{
           "& form": {
             margin: 0,
           },
@@ -28,16 +24,13 @@ export default class GatsbyHubspotForm extends Component {
             width: `100%`,
           },
           "& .hs-form-field": {
-            paddingBottom: space[5],
+            pb: 5,
           },
           "& ul.hs-error-msgs": {
             listStyleType: `none`,
             margin: 0,
-            color: colors.warning,
-            fontSize: fontSizes[1],
-          },
-          "& .hs-form-required": {
-            color: colors.warning,
+            color: `warning`,
+            fontSize: 1,
           },
           "& .hs-form input": {
             ...formInput,
@@ -45,13 +38,20 @@ export default class GatsbyHubspotForm extends Component {
           '& .hs-form input[type="text"], .hs-form input[type="email"], .hs-form input[type="number"]': {
             width: `100% !important`,
             ":focus": {
-              borderColor: colors.gatsby,
-              outline: 0,
-              boxShadow: `0 0 0 ${space[1]} ${hex2rgba(colors.lilac, 0.25)}`,
+              ...formInputFocus,
             },
           },
+          "& label": {
+            // a bit unsure about the implications of the next line
+            display: `inline-block`,
+            fontSize: 1,
+            pb: 1,
+          },
+          "& .hs-form-required": {
+            color: `textMuted`,
+          },
           "& .hs-button.primary": {
-            ...buttonStyles.default,
+            ...buttonStyles().default,
           },
         }}
       >

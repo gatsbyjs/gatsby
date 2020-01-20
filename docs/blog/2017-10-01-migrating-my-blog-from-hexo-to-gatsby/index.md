@@ -4,7 +4,7 @@ date: 2017-10-01
 image: "hexo-to-gatsby.png"
 author: "Ian Sinnott"
 excerpt: "How I migrated my blog to Gatsby and how you can do the same."
-tags: ["hexo", "getting-started", "markdown"]
+tags: ["getting-started", "markdown"]
 ---
 
 _This article was originally posted on
@@ -42,7 +42,7 @@ there's a
 Let's move some files around. Gatsby gives you a good amount of flexibility when
 it comes to file structure, but for consistency with the docs I'm going to use
 the suggested file structure for migrating my blog. How you handle this step
-will depend on what you're migrating from. I am migrating form Hexo, which is
+will depend on what you're migrating from. I am migrating from Hexo, which is
 very similar to Jekyll in how it structures files.
 
 ### Clean up your source repo
@@ -55,12 +55,12 @@ doesn't interfere with anything. I chose to create `hexo.bak/` where all my old
 blog files would live (except for the content).
 
 You could also simply delete everything other than your raw content. It's up to
-you. But once your done with this cleanup you should have made a decision on
+you. But once you're done with this cleanup you should have made a decision on
 where to hold your content, and moved everything else away or removed it.
 
 Here's what that looks like for me:
 
-```
+```text
 .
 ├── content
 │   ├── _drafts
@@ -82,7 +82,7 @@ are many ways you could do this but I'll go over what I did.
 To get all the Gatsby files you can use the Gatsby CLI.
 
 ```yaml
-gatsby new temp-gatsby-files # Initialize gatsby in a temp directory
+gatsby new temp-gatsby-files # Initialize Gatsby in a temp directory
 cp -R temp-gatsby-files/* ./ # Copy all the files into your root directory
 rm -rf temp-gatsby-files     # Remove the temp directory
 ```
@@ -90,7 +90,7 @@ rm -rf temp-gatsby-files     # Remove the temp directory
 However you get Gatsby initialized in your repository root, afterwards you
 should have a file structure that looks something like this:
 
-```
+```text
 .
 ├── content
 │   └── [ Markdown files ... ]
@@ -110,7 +110,7 @@ should have a file structure that looks something like this:
 
 Now run the Gatsby dev server to make sure everything works:
 
-```
+```bash
 npm run develop
 ```
 
@@ -130,7 +130,7 @@ probably want to customize the header and overall layout.
 
 This is pretty simple. Just modify the primary layout file that was generated:
 
-```
+```text
 src/layouts/index.js
 ```
 
@@ -146,7 +146,7 @@ I talked about in part 1.
 
 Also straightforward, just edit:
 
-```
+```text
 src/pages/index.js
 ```
 
@@ -180,7 +180,7 @@ If you play around with GraphiQL you'll notice there's not that much there.
 Let's fix that. We need to teach Gatsby how to query the file system. Luckily
 this is so common it's been done for you. Install the file system source plugin:
 
-```
+```bash
 npm i --save gatsby-source-filesystem
 ```
 
@@ -229,7 +229,7 @@ Being able to query files is a big win, and if you have a directory of HTML
 files this is all you will need. But if you want to render markdown files as
 HTML you will need another plugin. Let's add that now:
 
-```
+```bash
 npm i --save gatsby-transformer-remark
 ```
 
@@ -268,7 +268,7 @@ This query gives you the full HTML for all your markdown files. If you are using
 frontmatter you can also access that here. I'm assuming you have a `title` field
 in your frontmatter:
 
-```
+```graphql
 query {
   allMarkdownRemark {
     edges {
@@ -397,27 +397,29 @@ Let's remedy that. Import the `Link` component and swap it for the simple
 `<a>` tag that was in there before:
 
 ```jsx
-import React from 'react';
-import { Link } from 'gatsby';
+import React from "react"
+import { Link } from "gatsby"
 
 export default class BlogIndex extends React.Component {
   render() {
     // Handle graphql errors
     if (this.props.errors && this.props.errors.length) {
       this.props.errors.forEach(({ message }) => {
-        console.error(`BlogIndex render errr: ${message}`);
-      });
-      return <h1>Errors found: Check the console for details</h1>;
+        console.error(`BlogIndex render errr: ${message}`)
+      })
+      return <h1>Errors found: Check the console for details</h1>
     }
 
     return (
       <div>
         <h2>Some things I wrote</h2>
         {this.props.data.allMarkdownRemark.edges.map(({ node }, i) => (
-          <Link to={/* ??? */} key={i}>{node.frontmatter.title}</Link>
+          <Link to={/* ??? */} key={i}>
+            {node.frontmatter.title}
+          </Link>
         ))}
       </div>
-    );
+    )
   }
 }
 ```
@@ -458,7 +460,7 @@ export const pageQuery = graphql`
 Many existing Gatsby examples use `path` within each markdown file's frontmatter
 to designate the url. For example:
 
-```md
+```markdown
 ---
 title: My Post
 path: my-post
@@ -618,8 +620,8 @@ work.
 ```js
 // NOTE: I'm using async/await to simplify the code since it's now natively supported
 // in Node 8.x. This means that our function will return a promise
-exports.createPages = async ({ graphql, boundActionCreators }) => {
-  const { createPage } = boundActionCreators
+exports.createPages = async ({ graphql, actions, reporter }) => {
+  const { createPage } = actions
   const postTemplate = path.resolve("./src/templates/post.js")
 
   // Using async await. Query will likely be very similar to your pageQuery in index.js
@@ -637,8 +639,8 @@ exports.createPages = async ({ graphql, boundActionCreators }) => {
   `)
 
   if (result.errors) {
-    console.log(result.errors)
-    throw new Error("Things broke, see console output above")
+    reporter.panicOnBuild(`Error while running GraphQL query.`)
+    return
   }
 
   // Create blog posts pages.

@@ -1,278 +1,467 @@
 // @flow
-import path from "path"
-const normalize = require(`normalize-path`)
-import glob from "glob"
 
-import { validate } from "graphql"
-import { IRTransforms } from "@gatsbyjs/relay-compiler"
-import RelayParser from "@gatsbyjs/relay-compiler/lib/RelayParser"
-import ASTConvert from "@gatsbyjs/relay-compiler/lib/ASTConvert"
-import GraphQLCompilerContext from "@gatsbyjs/relay-compiler/lib/GraphQLCompilerContext"
-import filterContextForNode from "@gatsbyjs/relay-compiler/lib/filterContextForNode"
+/** Query compiler extracts queries and fragments from all files, validates them
+ * and then collocates them with fragments they require. This way fragments
+ * have global scope and can be used in any other query or fragment.
+ */
+
 const _ = require(`lodash`)
 
-import { store } from "../redux"
-const { boundActionCreators } = require(`../redux/actions`)
-import FileParser from "./file-parser"
-import GraphQLIRPrinter from "@gatsbyjs/relay-compiler/lib/GraphQLIRPrinter"
-import {
-  graphqlError,
-  graphqlValidationError,
-  multipleRootQueriesError,
-} from "./graphql-errors"
-import report from "gatsby-cli/lib/reporter"
-const websocketManager = require(`../utils/websocket-manager`)
-
-import type { DocumentNode, GraphQLSchema } from "graphql"
-
-const { printTransforms } = IRTransforms
+const path = require(`path`)
+const normalize = require(`normalize-path`)
+const glob = require(`glob`)
 
 const {
-  ValuesOfCorrectTypeRule,
+  validate,
+  print,
+  visit,
+  Kind,
   FragmentsOnCompositeTypesRule,
   KnownTypeNamesRule,
   LoneAnonymousOperationRule,
   PossibleFragmentSpreadsRule,
   ScalarLeafsRule,
+  ValuesOfCorrectTypeRule,
   VariablesAreInputTypesRule,
   VariablesInAllowedPositionRule,
 } = require(`graphql`)
 
-type RootQuery = {
-  name: string,
-  path: string,
-  text: string,
-  originalText: string,
-  isStaticQuery: boolean,
-  hash: string,
-}
+const getGatsbyDependents = require(`../utils/gatsby-dependents`)
+const { store } = require(`../redux`)
+import * as actions from "../redux/actions/internal"
+const { default: FileParser } = require(`./file-parser`)
+const {
+  graphqlError,
+  multipleRootQueriesError,
+  duplicateFragmentError,
+  unknownFragmentError,
+} = require(`./graphql-errors`)
+const report = require(`gatsby-cli/lib/reporter`)
+const {
+  default: errorParser,
+  locInGraphQlToLocInFile,
+} = require(`./error-parser`)
+const websocketManager = require(`../utils/websocket-manager`)
 
-type Queries = Map<string, RootQuery>
-
-const validationRules = [
-  ValuesOfCorrectTypeRule,
-  FragmentsOnCompositeTypesRule,
-  KnownTypeNamesRule,
-  LoneAnonymousOperationRule,
-  PossibleFragmentSpreadsRule,
-  ScalarLeafsRule,
-  VariablesAreInputTypesRule,
-  VariablesInAllowedPositionRule,
-]
-
-let lastRunHadErrors = null
 const overlayErrorID = `graphql-compiler`
 
-const resolveThemes = (themes = []) =>
+export default async function compile({ parentSpan } = {}): Promise<
+  Map<string, RootQuery>
+> {
+  // TODO: swap plugins to themes
+  const { program, schema, themes, flattenedPlugins } = store.getState()
+
+  const activity = report.activityTimer(`extract queries from components`, {
+    parentSpan,
+    id: `query-extraction`,
+  })
+  activity.start()
+
+  const errors = []
+  const addError = errors.push.bind(errors)
+
+  const parsedQueries = await parseQueries({
+    base: program.directory,
+    additional: resolveThemes(
+      themes.themes
+        ? themes.themes
+        : flattenedPlugins.map(plugin => {
+            return {
+              themeDir: plugin.pluginFilepath,
+            }
+          })
+    ),
+    addError,
+    parentSpan,
+  })
+
+  const queries = processQueries({
+    schema,
+    parsedQueries,
+    addError,
+    parentSpan,
+  })
+
+  if (errors.length !== 0) {
+    const structuredErrors = activity.panicOnBuild(errors)
+    if (process.env.gatsby_executing_command === `develop`) {
+      websocketManager.emitError(overlayErrorID, structuredErrors)
+    }
+  } else {
+    if (process.env.gatsby_executing_command === `develop`) {
+      // emitError with `null` as 2nd param to clear browser error overlay
+      websocketManager.emitError(overlayErrorID, null)
+    }
+  }
+  activity.end()
+
+  return queries
+}
+
+export const resolveThemes = (themes = []) =>
   themes.reduce((merged, theme) => {
     merged.push(theme.themeDir)
     return merged
   }, [])
 
-class Runner {
-  base: string
-  additional: string[]
-  schema: GraphQLSchema
-  errors: string[]
-  fragmentsDir: string
+export const parseQueries = async ({
+  base,
+  additional,
+  addError,
+  parentSpan,
+}) => {
+  const filesRegex = `*.+(t|j)s?(x)`
+  // Pattern that will be appended to searched directories.
+  // It will match any .js, .jsx, .ts, and .tsx files, that are not
+  // inside <searched_directory>/node_modules.
+  const pathRegex = `/{${filesRegex},!(node_modules)/**/${filesRegex}}`
 
-  constructor(base: string, additional: string[], schema: GraphQLSchema) {
-    this.base = base
-    this.additional = additional
-    this.schema = schema
-  }
+  const modulesThatUseGatsby = await getGatsbyDependents()
 
-  reportError(message) {
-    const queryErrorMessage = `${report.format.red(`GraphQL Error`)} ${message}`
-    report.panicOnBuild(queryErrorMessage)
-    if (process.env.gatsby_executing_command === `develop`) {
-      websocketManager.emitError(overlayErrorID, queryErrorMessage)
-      lastRunHadErrors = true
-    }
-  }
-
-  async compileAll() {
-    let nodes = await this.parseEverything()
-    return await this.write(nodes)
-  }
-
-  async parseEverything() {
-    const filesRegex = path.join(`/**`, `*.+(t|j)s?(x)`)
-    let files = [
-      path.join(this.base, `src`),
-      path.join(this.base, `.cache`, `fragments`),
-    ]
-      .concat(this.additional.map(additional => path.join(additional, `src`)))
-      .reduce(
-        (merged, folderPath) =>
-          merged.concat(
-            glob.sync(path.join(folderPath, filesRegex), {
-              nodir: true,
-            })
-          ),
-        []
-      )
-    files = files.filter(d => !d.match(/\.d\.ts$/))
-    files = files.map(normalize)
-
-    // Ensure all page components added as they're not necessarily in the
-    // pages directory e.g. a plugin could add a page component.  Plugins
-    // *should* copy their components (if they add a query) to .cache so that
-    // our babel plugin to remove the query on building is active (we don't
-    // run babel on code in node_modules). Otherwise the component will throw
-    // an error in the browser of "graphql is not defined".
-    files = files.concat(
-      Array.from(store.getState().components.keys(), c => normalize(c))
+  let files = [
+    path.join(base, `src`),
+    path.join(base, `.cache`, `fragments`),
+    ...additional.map(additional => path.join(additional, `src`)),
+    ...modulesThatUseGatsby.map(module => module.path),
+  ].reduce((merged, folderPath) => {
+    merged.push(
+      ...glob.sync(path.join(folderPath, pathRegex), {
+        nodir: true,
+      })
     )
-    files = _.uniq(files)
+    return merged
+  }, [])
 
-    let parser = new FileParser()
+  files = files.filter(d => !d.match(/\.d\.ts$/))
 
-    return await parser.parseFiles(files)
-  }
+  files = files.map(normalize)
 
-  async write(nodes: Map<string, DocumentNode>): Promise<Queries> {
-    const compiledNodes: Queries = new Map()
-    const namePathMap = new Map()
-    const nameDefMap = new Map()
-    const nameErrorMap = new Map()
-    const documents = []
+  // We should be able to remove the following and preliminary tests do suggest
+  // that they aren't needed anymore since we transpile node_modules now
+  // However, there could be some cases (where a page is outside of src for example)
+  // that warrant keeping this and removing later once we have more confidence (and tests)
 
-    for (let [filePath, doc] of nodes.entries()) {
-      let errors = validate(this.schema, doc, validationRules)
-
-      if (errors && errors.length) {
-        this.reportError(graphqlValidationError(errors, filePath))
-        boundActionCreators.queryExtractionGraphQLError({
-          componentPath: filePath,
-        })
-        return compiledNodes
-      }
-
-      documents.push(doc)
-      doc.definitions.forEach((def: any) => {
-        const name: string = def.name.value
-        namePathMap.set(name, filePath)
-        nameDefMap.set(name, def)
-      })
-    }
-
-    let compilerContext = new GraphQLCompilerContext(this.schema)
-    try {
-      compilerContext = compilerContext.addAll(
-        ASTConvert.convertASTDocuments(
-          this.schema,
-          documents,
-          validationRules,
-          RelayParser.transform.bind(RelayParser)
-        )
-      )
-    } catch (error) {
-      const { formattedMessage, docName, message, codeBlock } = graphqlError(
-        namePathMap,
-        nameDefMap,
-        error
-      )
-      nameErrorMap.set(docName, { formattedMessage, message, codeBlock })
-      boundActionCreators.queryExtractionGraphQLError({
-        componentPath: namePathMap.get(docName),
-        error: formattedMessage,
-      })
-      this.reportError(formattedMessage)
-      return false
-    }
-
-    // relay-compiler v1.5.0 added "StripUnusedVariablesTransform" to
-    // printTransforms. Unfortunately it currently doesn't detect variables
-    // in input objects widely used in gatsby, and therefore removing
-    // variable declaration from queries.
-    // As a temporary workaround remove that transform by slicing printTransforms.
-    const printContext = printTransforms
-      .slice(0, -1)
-      .reduce((ctx, transform) => transform(ctx, this.schema), compilerContext)
-
-    compilerContext.documents().forEach((node: { name: string }) => {
-      if (node.kind !== `Root`) return
-
-      const { name } = node
-      let filePath = namePathMap.get(name) || ``
-
-      if (compiledNodes.has(filePath)) {
-        let otherNode = compiledNodes.get(filePath)
-        this.reportError(
-          multipleRootQueriesError(
-            filePath,
-            nameDefMap.get(name),
-            otherNode && nameDefMap.get(otherNode.name)
-          )
-        )
-        boundActionCreators.queryExtractionGraphQLError({
-          componentPath: filePath,
-        })
-        return
-      }
-
-      let text = filterContextForNode(printContext.getRoot(name), printContext)
-        .documents()
-        .map(GraphQLIRPrinter.print)
-        .join(`\n`)
-
-      const query = {
-        name,
-        text,
-        originalText: nameDefMap.get(name).text,
-        path: filePath,
-        isHook: nameDefMap.get(name).isHook,
-        isStaticQuery: nameDefMap.get(name).isStaticQuery,
-        hash: nameDefMap.get(name).hash,
-      }
-
-      if (query.isStaticQuery) {
-        query.jsonName =
-          `sq--` +
-          _.kebabCase(
-            `${path.relative(store.getState().program.directory, filePath)}`
-          )
-      }
-
-      if (
-        query.isHook &&
-        process.env.NODE_ENV === `production` &&
-        typeof require(`react`).useContext !== `function`
-      ) {
-        report.panicOnBuild(
-          `You're likely using a version of React that doesn't support Hooks\n` +
-            `Please update React and ReactDOM to 16.8.0 or later to use the useStaticQuery hook.`
-        )
-      }
-
-      compiledNodes.set(filePath, query)
-    })
-
-    if (
-      process.env.gatsby_executing_command === `develop` &&
-      lastRunHadErrors
-    ) {
-      websocketManager.emitError(overlayErrorID, null)
-      lastRunHadErrors = false
-    }
-
-    return compiledNodes
-  }
-}
-export { Runner, resolveThemes }
-
-export default async function compile(): Promise<Map<string, RootQuery>> {
-  // TODO: swap plugins to themes
-  const { program, schema, themes } = store.getState()
-
-  const runner = new Runner(
-    program.directory,
-    resolveThemes(themes.themes),
-    schema
+  // Ensure all page components added as they're not necessarily in the
+  // pages directory e.g. a plugin could add a page component. Plugins
+  // *should* copy their components (if they add a query) to .cache so that
+  // our babel plugin to remove the query on building is active.
+  // Otherwise the component will throw an error in the browser of
+  // "graphql is not defined".
+  files = files.concat(
+    Array.from(store.getState().components.keys(), c => normalize(c))
   )
 
-  const queries = await runner.compileAll()
+  files = _.uniq(files)
 
-  return queries
+  const parser = new FileParser({ parentSpan: parentSpan })
+
+  return await parser.parseFiles(files, addError)
+}
+
+export const processQueries = ({
+  schema,
+  parsedQueries,
+  addError,
+  parentSpan,
+}) => {
+  const { definitionsByName, operations } = extractOperations(
+    schema,
+    parsedQueries,
+    addError,
+    parentSpan
+  )
+
+  return processDefinitions({
+    schema,
+    operations,
+    definitionsByName,
+    addError,
+    parentSpan,
+  })
+}
+
+const preValidationRules = [
+  LoneAnonymousOperationRule,
+  KnownTypeNamesRule,
+  FragmentsOnCompositeTypesRule,
+  VariablesAreInputTypesRule,
+  ScalarLeafsRule,
+  PossibleFragmentSpreadsRule,
+  ValuesOfCorrectTypeRule,
+  VariablesInAllowedPositionRule,
+]
+
+const extractOperations = (schema, parsedQueries, addError, parentSpan) => {
+  const definitionsByName = new Map()
+  const operations = []
+
+  for (const {
+    filePath,
+    text,
+    templateLoc,
+    hash,
+    doc,
+    isHook,
+    isStaticQuery,
+  } of parsedQueries) {
+    const errors = validate(schema, doc, preValidationRules)
+
+    if (errors && errors.length) {
+      addError(
+        ...errors.map(error => {
+          const location = {
+            start: locInGraphQlToLocInFile(templateLoc, error.locations[0]),
+          }
+          return errorParser({ message: error.message, filePath, location })
+        })
+      )
+
+      store.dispatch(
+        actions.queryExtractionGraphQLError({
+          componentPath: filePath,
+        })
+      )
+      // Something is super wrong with this document, so we report it and skip
+      continue
+    }
+
+    doc.definitions.forEach((def: any) => {
+      const name = def.name.value
+      let printedAst = null
+      if (def.kind === Kind.OPERATION_DEFINITION) {
+        operations.push(def)
+      } else if (def.kind === Kind.FRAGMENT_DEFINITION) {
+        // Check if we already registered a fragment with this name
+        printedAst = print(def)
+        if (definitionsByName.has(name)) {
+          const otherDef = definitionsByName.get(name)
+          // If it's not an accidental duplicate fragment, but is a different
+          // one - we report an error
+          if (printedAst !== otherDef.printedAst) {
+            addError(
+              duplicateFragmentError({
+                name,
+                leftDefinition: {
+                  def,
+                  filePath,
+                  text,
+                  templateLoc,
+                },
+                rightDefinition: otherDef,
+              })
+            )
+            // We won't know which one to use, so it's better to fail both of
+            // them.
+            definitionsByName.delete(name)
+          }
+          return
+        }
+      }
+
+      definitionsByName.set(name, {
+        name,
+        def,
+        filePath,
+        text: text,
+        templateLoc,
+        printedAst,
+        isHook,
+        isStaticQuery,
+        isFragment: def.kind === Kind.FRAGMENT_DEFINITION,
+        hash: hash,
+      })
+    })
+  }
+
+  return {
+    definitionsByName,
+    operations,
+  }
+}
+
+const processDefinitions = ({
+  schema,
+  operations,
+  definitionsByName,
+  addError,
+  parentSpan,
+}) => {
+  const processedQueries: Queries = new Map()
+
+  const fragmentsUsedByFragment = new Map()
+
+  const fragmentNames = Array.from(definitionsByName.entries())
+    .filter(([_, def]) => def.isFragment)
+    .map(([name, _]) => name)
+
+  for (const operation of operations) {
+    const name = operation.name.value
+    const originalDefinition = definitionsByName.get(name)
+    const filePath = definitionsByName.get(name).filePath
+    if (processedQueries.has(filePath)) {
+      const otherQuery = processedQueries.get(filePath)
+
+      addError(
+        multipleRootQueriesError(
+          filePath,
+          originalDefinition.def,
+          otherQuery && definitionsByName.get(otherQuery.name).def
+        )
+      )
+
+      store.dispatch(
+        actions.queryExtractionGraphQLError({
+          componentPath: filePath,
+        })
+      )
+      continue
+    }
+
+    const {
+      usedFragments,
+      missingFragments,
+    } = determineUsedFragmentsForDefinition(
+      originalDefinition,
+      definitionsByName,
+      fragmentsUsedByFragment
+    )
+
+    if (missingFragments.length > 0) {
+      for (const { filePath, definition, node } of missingFragments) {
+        store.dispatch(
+          actions.queryExtractionGraphQLError({
+            componentPath: filePath,
+          })
+        )
+        addError(
+          unknownFragmentError({
+            fragmentNames,
+            filePath,
+            definition,
+            node,
+          })
+        )
+      }
+      continue
+    }
+
+    const document = {
+      kind: Kind.DOCUMENT,
+      definitions: Array.from(usedFragments.values())
+        .map(name => definitionsByName.get(name).def)
+        .concat([operation]),
+    }
+
+    const errors = validate(schema, document)
+    if (errors && errors.length) {
+      for (const error of errors) {
+        const { formattedMessage, message } = graphqlError(
+          definitionsByName,
+          error
+        )
+
+        const filePath = originalDefinition.filePath
+        store.dispatch(
+          actions.queryExtractionGraphQLError({
+            componentPath: filePath,
+            error: formattedMessage,
+          })
+        )
+        const location = locInGraphQlToLocInFile(
+          originalDefinition.templateLoc,
+          error.locations[0]
+        )
+        addError(
+          errorParser({
+            location: {
+              start: location,
+              end: location,
+            },
+            message,
+            filePath,
+          })
+        )
+      }
+      continue
+    }
+
+    const query = {
+      name,
+      text: print(document),
+      originalText: originalDefinition.text,
+      path: filePath,
+      isHook: originalDefinition.isHook,
+      isStaticQuery: originalDefinition.isStaticQuery,
+      hash: originalDefinition.hash,
+    }
+
+    if (query.isStaticQuery) {
+      query.id =
+        `sq--` +
+        _.kebabCase(
+          `${path.relative(store.getState().program.directory, filePath)}`
+        )
+    }
+
+    if (
+      query.isHook &&
+      process.env.NODE_ENV === `production` &&
+      typeof require(`react`).useContext !== `function`
+    ) {
+      report.panicOnBuild(
+        `You're likely using a version of React that doesn't support Hooks\n` +
+          `Please update React and ReactDOM to 16.8.0 or later to use the useStaticQuery hook.`
+      )
+    }
+
+    processedQueries.set(filePath, query)
+  }
+
+  return processedQueries
+}
+
+const determineUsedFragmentsForDefinition = (
+  definition,
+  definitionsByName,
+  fragmentsUsedByFragment
+) => {
+  const { def, name, isFragment, filePath } = definition
+  const cachedUsedFragments = fragmentsUsedByFragment.get(name)
+  if (cachedUsedFragments) {
+    return { usedFragments: cachedUsedFragments, missingFragments: [] }
+  } else {
+    const usedFragments = new Set()
+    const missingFragments = []
+    visit(def, {
+      [Kind.FRAGMENT_SPREAD]: node => {
+        const name = node.name.value
+        const fragmentDefinition = definitionsByName.get(name)
+        if (fragmentDefinition) {
+          usedFragments.add(name)
+          const {
+            usedFragments: usedFragmentsForFragment,
+            missingFragments: missingFragmentsForFragment,
+          } = determineUsedFragmentsForDefinition(
+            fragmentDefinition,
+            definitionsByName,
+            fragmentsUsedByFragment
+          )
+          usedFragmentsForFragment.forEach(fragmentName =>
+            usedFragments.add(fragmentName)
+          )
+          missingFragments.push(...missingFragmentsForFragment)
+        } else {
+          missingFragments.push({
+            filePath,
+            definition,
+            node,
+          })
+        }
+      },
+    })
+    if (isFragment) {
+      fragmentsUsedByFragment.set(name, usedFragments)
+    }
+    return { usedFragments, missingFragments }
+  }
 }

@@ -1,7 +1,9 @@
 const Queue = require(`better-queue`)
+const { store } = require(`../redux`)
 const FastMemoryStore = require(`../query/better-queue-custom-store`)
 const queryRunner = require(`../query/query-runner`)
 const websocketManager = require(`../utils/websocket-manager`)
+const GraphQLRunner = require(`./graphql-runner`)
 
 const createBaseOptions = () => {
   return {
@@ -11,14 +13,15 @@ const createBaseOptions = () => {
 }
 
 const createBuildQueue = () => {
+  const graphqlRunner = new GraphQLRunner(store)
   const handler = (queryJob, callback) =>
-    queryRunner(queryJob)
+    queryRunner(graphqlRunner, queryJob)
       .then(result => callback(null, result))
       .catch(callback)
   return new Queue(handler, createBaseOptions())
 }
 
-const createDevelopQueue = () => {
+const createDevelopQueue = getRunner => {
   let queue
   const processing = new Set()
   const waiting = new Map()
@@ -26,8 +29,7 @@ const createDevelopQueue = () => {
   const queueOptions = {
     ...createBaseOptions(),
     priority: (job, cb) => {
-      const activePaths = Array.from(websocketManager.activePaths.values())
-      if (job.id && activePaths.includes(job.id)) {
+      if (job.id && websocketManager.activePaths.has(job.id)) {
         cb(null, 10)
       } else {
         cb(null, 1)
@@ -50,7 +52,7 @@ const createDevelopQueue = () => {
   }
 
   const handler = (queryJob, callback) => {
-    queryRunner(queryJob).then(
+    queryRunner(getRunner(), queryJob).then(
       result => {
         if (queryJob.isPage) {
           websocketManager.emitPageData({
@@ -79,26 +81,30 @@ const createDevelopQueue = () => {
   return queue
 }
 
-const pushJob = (queue, job) =>
-  new Promise((resolve, reject) =>
-    queue
-      .push(job)
-      .on(`finish`, resolve)
-      .on(`failed`, reject)
-  )
-
 /**
  * Returns a promise that pushes jobs onto queue and resolves onces
  * they're all finished processing (or rejects if one or more jobs
  * fail)
  */
-const processBatch = async (queue, jobs) => {
+const processBatch = async (queue, jobs, activity) => {
   let numJobs = jobs.length
   if (numJobs === 0) {
     return Promise.resolve()
   }
-  const runningJobs = jobs.map(job => pushJob(queue, job))
-  return await Promise.all(runningJobs)
+
+  return new Promise((resolve, reject) => {
+    if (activity.tick) {
+      queue.on(`task_finish`, () => activity.tick())
+    }
+
+    queue
+      // Note: the first arg is the path, the second the error
+      .once(`task_failed`, (...err) => reject(err))
+      // Note: `drain` fires when all tasks _finish_, `empty` fires when queue is empty (but tasks are still running)
+      .once(`drain`, resolve)
+
+    jobs.forEach(job => queue.push(job))
+  })
 }
 
 module.exports = {
