@@ -89,7 +89,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                 />
                 <div sx={meta}>
                   <div
-                    css={{ display: `flex`, justifyContent: `space-between` }}
+                    css={{ display: `flex`, justifyContent: `space-between`, alignItems: `start` }}
                   >
                     <span
                       sx={{
