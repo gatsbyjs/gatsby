@@ -1,4 +1,4 @@
-const constructError = require(`../construct-error`)
+import constructError from "../construct-error"
 
 let log
 let processExit

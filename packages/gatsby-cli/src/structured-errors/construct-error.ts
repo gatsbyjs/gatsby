@@ -6,8 +6,8 @@ import { sanitizeStructuredStackTrace } from "../reporter/errors"
 
 interface IConstructError {
   details: {
-    id: keyof typeof errorMap
-    context?: string
+    id?: keyof typeof errorMap
+    context?: Record<string, string>
     error?: string
     [key: string]: unknown
   }
