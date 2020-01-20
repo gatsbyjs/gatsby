@@ -38,41 +38,36 @@ exports.setPluginOptions = opts => {
 exports.getPluginOptions = () => pluginOptions
 
 /**
- * Creates the smalles possible transform object possible
+ * Creates a transform object
+ *
  * @param {Partial<import('./process-file').TransformArgs>} args
  */
-exports.createTransformObject = (args, pluginOptions) => {
+exports.createTransformObject = args => {
   const options = {
     height: args.height,
     width: args.width,
     cropFocus: args.cropFocus,
     toFormat: args.toFormat,
     pngCompressionLevel:
-      args.pngCompressionLevel !== generalArgs.pngCompressionLevel
-        ? args.pngCompressionLevel
-        : undefined,
-    quality:
-      args.quality !== pluginOptions.defaultQuality ? args.quality : undefined,
+      args.pngCompressionLevel || generalArgs.pngCompressionLevel,
+    quality: args.quality,
     jpegQuality: args.jpegQuality,
     pngQuality: args.pngQuality,
     webpQuality: args.webpQuality,
-    jpegProgressive:
-      args.jpegProgressive !== generalArgs.jpegProgressive
-        ? args.jpegProgressive
-        : undefined,
-    grayscale:
-      args.grayscale !== generalArgs.grayscale ? args.grayscale : undefined,
-    rotate: args.rotate ? args.rotate : undefined,
-    trim: args.trim ? args.trim : undefined,
-    duotone: args.duotone || undefined,
+    jpegProgressive: args.jpegProgressive || generalArgs.jpegProgressive,
+    grayscale: args.grayscale || generalArgs.grayscale,
+    rotate: !!args.rotate,
+    trim: !!args.trim,
+    duotone: args.duotone ? args.duotone : null,
     fit: args.fit,
     background: args.background,
   }
 
-  return _.omitBy(options, _.isNil)
+  // get all non falsey values
+  return _.pickBy(options, _.identity)
 }
 
-const healOptions = (
+exports.healOptions = (
   { defaultQuality: quality },
   args,
   fileExtension = ``,
@@ -128,4 +123,39 @@ const healOptions = (
   return options
 }
 
-exports.healOptions = healOptions
+/**
+ * Removes all default values so we have the smallest transform args
+ *
+ * @param {Partial<import('./process-file').TransformArgs>} args
+ * @param {{defaultQuality: number }} pluginOptions
+ */
+exports.removeDefaultValues = (args, pluginOptions) => {
+  const options = {
+    height: args.height,
+    width: args.width,
+    cropFocus: args.cropFocus,
+    toFormat: args.toFormat,
+    pngCompressionLevel:
+      args.pngCompressionLevel !== generalArgs.pngCompressionLevel
+        ? args.pngCompressionLevel
+        : undefined,
+    quality:
+      args.quality !== pluginOptions.defaultQuality ? args.quality : undefined,
+    jpegQuality: args.jpegQuality,
+    pngQuality: args.pngQuality,
+    webpQuality: args.webpQuality,
+    jpegProgressive:
+      args.jpegProgressive !== generalArgs.jpegProgressive
+        ? args.jpegProgressive
+        : undefined,
+    grayscale:
+      args.grayscale !== generalArgs.grayscale ? args.grayscale : undefined,
+    rotate: args.rotate ? args.rotate : undefined,
+    trim: args.trim ? args.trim : undefined,
+    duotone: args.duotone || undefined,
+    fit: args.fit,
+    background: args.background,
+  }
+
+  return _.omitBy(options, _.isNil)
+}

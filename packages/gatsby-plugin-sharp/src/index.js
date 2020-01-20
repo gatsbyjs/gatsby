@@ -13,6 +13,7 @@ const {
   getPluginOptions,
   healOptions,
   createTransformObject,
+  removeDefaultValues,
 } = require(`./plugin-options`)
 const { memoizedTraceSVG, notMemoizedtraceSVG } = require(`./trace-svg`)
 const duotone = require(`./duotone`)
@@ -142,7 +143,7 @@ function prepareQueue({ file, args }) {
     width,
     height,
     aspectRatio,
-    options: args,
+    options: removeDefaultValues(args, getPluginOptions()),
   }
 }
 
@@ -192,7 +193,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
     relativePath,
     outputDir,
     options,
-  } = prepareQueue({ file, args: fullOptions })
+  } = prepareQueue({ file, args: createTransformObject(fullOptions) })
 
   // Create job and add it to the queue, the queue will be processed inside gatsby-node.js
   const finishedPromise = createJob(
@@ -204,7 +205,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
         operations: [
           {
             outputPath: relativePath,
-            args: createTransformObject(options, getPluginOptions()),
+            args: removeDefaultValues(options, getPluginOptions()),
           },
         ],
         pluginOptions: getPluginOptions(),
@@ -529,7 +530,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
 
   // Sort sizes for prettiness.
   const transforms = _.sortBy(filteredSizes).map(size => {
-    const arrrgs = createTransformObject(options, getPluginOptions())
+    const arrrgs = createTransformObject(options)
     if (arrrgs[otherDimensionAttr]) {
       arrrgs[otherDimensionAttr] = undefined
     }
@@ -651,7 +652,8 @@ async function fixed({ file, args = {}, reporter, cache }) {
 
   // Sort images for prettiness.
   const transforms = _.sortBy(filteredSizes).map(size => {
-    const arrrgs = createTransformObject(options, getPluginOptions())
+    const arrrgs = createTransformObject(options)
+    console.log(`transform`, arrrgs)
     arrrgs[fixedDimension] = Math.round(size)
 
     // Queue images for processing.
