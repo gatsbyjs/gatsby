@@ -30,9 +30,9 @@
     "react-dom": "^16.8.6"
   },
   "dependencies": {
-    "@emotion/core": "^10.0.22",
-    "@mdx-js/mdx": "^1.5.1",
-    "@mdx-js/react": "^1.5.1",
+    "@emotion/core": "^10.0.27",
+    "@mdx-js/mdx": "^1.5.5",
+    "@mdx-js/react": "^1.5.5",
     "gatsby-core-utils": "^1.0.26",
     "gatsby-plugin-compile-es6-packages": "^2.1.0",
     "gatsby-plugin-emotion": "^4.1.21",
@@ -40,10 +40,10 @@
     "gatsby-plugin-meta-redirect": "^1.1.1",
     "gatsby-plugin-og-image": "0.0.1",
     "gatsby-plugin-redirects": "^1.0.0",
-    "gatsby-plugin-theme-ui": "^0.2.43",
+    "gatsby-plugin-theme-ui": "^0.2.53",
     "gatsby-source-filesystem": "^2.1.46",
     "is-present": "^1.0.0",
     "react-feather": "^1.1.6",
-    "theme-ui": "^0.2.49"
+    "theme-ui": "^0.2.52"
   }
 }

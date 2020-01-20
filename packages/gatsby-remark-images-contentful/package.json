@@ -15,19 +15,19 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images-contentful#readme",
   "dependencies": {
-    "@babel/runtime": "^7.7.6",
-    "axios": "^0.19.0",
+    "@babel/runtime": "^7.8.3",
+    "axios": "^0.19.1",
     "chalk": "^2.4.2",
     "cheerio": "^1.0.0-rc.3",
     "is-relative-url": "^3.0.0",
     "lodash": "^4.17.15",
     "semver": "^5.7.1",
-    "sharp": "^0.23.4",
+    "sharp": "^0.24.0",
     "unist-util-select": "^1.5.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.7.5",
-    "@babel/core": "^7.7.5",
+    "@babel/cli": "^7.8.3",
+    "@babel/core": "^7.8.3",
     "babel-preset-gatsby-package": "^0.2.15",
     "cross-env": "^5.2.1"
   },

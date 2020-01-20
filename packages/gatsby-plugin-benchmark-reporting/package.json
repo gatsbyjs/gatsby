@@ -19,7 +19,7 @@
   "dependencies": {
     "fast-glob": "^3.1.1",
     "node-fetch": "^2.6.0",
-    "uuid": "^3.3.3"
+    "uuid": "^3.4.0"
   },
   "scripts": {
     "build": "babel src --out-dir . --ignore **/__tests__",

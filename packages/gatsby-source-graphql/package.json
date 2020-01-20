@@ -7,17 +7,17 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.7.6",
+    "@babel/runtime": "^7.8.3",
     "apollo-link": "1.2.13",
     "apollo-link-http": "^1.5.16",
-    "graphql-tools-fork": "^8.0.1",
+    "graphql-tools-fork": "^8.3.0",
     "invariant": "^2.2.4",
     "node-fetch": "^1.7.3",
-    "uuid": "^3.3.3"
+    "uuid": "^3.4.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.7.5",
-    "@babel/core": "^7.7.5",
+    "@babel/cli": "^7.8.3",
+    "@babel/core": "^7.8.3",
     "babel-preset-gatsby-package": "^0.2.15",
     "cross-env": "^5.2.1"
   },

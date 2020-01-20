@@ -18,13 +18,13 @@
     "@mdx-js/react": "^1.0.0"
   },
   "dependencies": {
-    "@babel/core": "^7.7.5",
-    "@babel/generator": "^7.7.4",
-    "@babel/helper-plugin-utils": "^7.0.0",
-    "@babel/plugin-proposal-object-rest-spread": "^7.7.4",
-    "@babel/preset-env": "^7.7.6",
-    "@babel/preset-react": "^7.7.4",
-    "@babel/types": "^7.7.4",
+    "@babel/core": "^7.8.3",
+    "@babel/generator": "^7.8.3",
+    "@babel/helper-plugin-utils": "^7.8.3",
+    "@babel/plugin-proposal-object-rest-spread": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
+    "@babel/preset-react": "^7.8.3",
+    "@babel/types": "^7.8.3",
     "camelcase-css": "^2.0.1",
     "change-case": "^3.1.0",
     "core-js": "2",
@@ -55,10 +55,10 @@
     "unist-util-visit": "^1.4.1"
   },
   "devDependencies": {
-    "@mdx-js/mdx": "^1.5.1",
-    "@mdx-js/react": "^1.5.1",
+    "@mdx-js/mdx": "^1.5.5",
+    "@mdx-js/react": "^1.5.5",
     "jest": "^24.9.0",
-    "js-combinatorics": "^0.5.4",
+    "js-combinatorics": "^0.5.5",
     "react-test-renderer": "^16.12.0"
   },
   "jest": {

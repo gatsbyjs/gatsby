@@ -10,8 +10,8 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/code-frame": "^7.5.5",
-    "@babel/runtime": "^7.7.6",
+    "@babel/code-frame": "^7.8.3",
+    "@babel/runtime": "^7.8.3",
     "@hapi/joi": "^15.1.1",
     "better-opn": "^1.0.0",
     "bluebird": "^3.7.2",
@@ -32,13 +32,13 @@
     "lodash": "^4.17.15",
     "meant": "^1.0.1",
     "node-fetch": "^2.6.0",
-    "object.entries": "^1.1.0",
+    "object.entries": "^1.1.1",
     "opentracing": "^0.14.4",
     "pretty-error": "^2.1.1",
     "progress": "^2.0.3",
     "prompts": "^2.3.0",
     "react": "^16.12.0",
-    "redux": "^4.0.4",
+    "redux": "^4.0.5",
     "resolve-cwd": "^2.0.0",
     "semver": "^6.3.0",
     "signal-exit": "^3.0.2",
@@ -46,13 +46,13 @@
     "stack-trace": "^0.0.10",
     "strip-ansi": "^5.2.0",
     "update-notifier": "^3.0.1",
-    "uuid": "3.3.3",
+    "uuid": "3.4.0",
     "yargs": "^12.0.5",
     "yurnalist": "^1.1.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.7.5",
-    "@babel/core": "^7.7.5",
+    "@babel/cli": "^7.8.3",
+    "@babel/core": "^7.8.3",
     "babel-preset-gatsby-package": "^0.2.15",
     "cross-env": "^5.2.1"
   },

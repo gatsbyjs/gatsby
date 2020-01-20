@@ -10,16 +10,16 @@
     "Noah Lange <noahrlange@gmail.com>"
   ],
   "dependencies": {
-    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.7.4",
-    "@babel/plugin-proposal-numeric-separator": "^7.7.4",
-    "@babel/plugin-proposal-optional-chaining": "^7.7.5",
-    "@babel/preset-typescript": "^7.7.4",
-    "@babel/runtime": "^7.7.6",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.8.3",
+    "@babel/plugin-proposal-numeric-separator": "^7.8.3",
+    "@babel/plugin-proposal-optional-chaining": "^7.8.3",
+    "@babel/preset-typescript": "^7.8.3",
+    "@babel/runtime": "^7.8.3",
     "babel-plugin-remove-graphql-queries": "^2.7.22"
   },
   "devDependencies": {
-    "@babel/cli": "^7.7.5",
-    "@babel/core": "^7.7.5",
+    "@babel/cli": "^7.8.3",
+    "@babel/core": "^7.8.3",
     "babel-preset-gatsby-package": "^0.2.15",
     "cross-env": "^5.2.1"
   },

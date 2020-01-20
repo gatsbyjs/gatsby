@@ -28,12 +28,12 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@babel/runtime": "^7.7.6",
-    "guess-webpack": "~0.4.12"
+    "@babel/runtime": "^7.8.3",
+    "guess-webpack": "~0.4.13"
   },
   "devDependencies": {
-    "@babel/cli": "^7.7.5",
-    "@babel/core": "^7.7.5",
+    "@babel/cli": "^7.8.3",
+    "@babel/core": "^7.8.3",
     "babel-preset-gatsby-package": "^0.2.15",
     "cross-env": "^5.2.1"
   },

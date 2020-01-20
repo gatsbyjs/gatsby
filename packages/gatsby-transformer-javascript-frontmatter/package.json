@@ -5,14 +5,14 @@
   "author": "Jacob Bolda <me@jacobbolda.com>",
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-javascript-frontmatter#readme",
   "dependencies": {
-    "@babel/parser": "^7.7.5",
-    "@babel/runtime": "^7.7.6",
-    "@babel/traverse": "^7.7.4",
+    "@babel/parser": "^7.8.3",
+    "@babel/runtime": "^7.8.3",
+    "@babel/traverse": "^7.8.3",
     "bluebird": "^3.7.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.7.5",
-    "@babel/core": "^7.7.5",
+    "@babel/cli": "^7.8.3",
+    "@babel/core": "^7.8.3",
     "babel-preset-gatsby-package": "^0.2.15",
     "cross-env": "^5.2.1"
   },
