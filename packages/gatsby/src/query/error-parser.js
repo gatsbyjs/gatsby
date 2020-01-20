@@ -85,6 +85,18 @@ const errorParser = ({
         }
       },
     },
+    {
+      regex: /Must provide Source\. Received: (.+)/m,
+      cb: match => {
+        return {
+          id: `85926`,
+          context: {
+            sourceMessage: match[0],
+            received: match[1],
+          },
+        }
+      },
+    },
     // Match anything with a generic catch-all error handler
     {
       regex: /[\s\S]*/gm,

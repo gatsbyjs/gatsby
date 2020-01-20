@@ -251,6 +251,12 @@ export const errorMap = {
     type: Type.GRAPHQL,
     level: Level.ERROR,
   },
+  "85926": {
+    text: (context): string =>
+      `There was an error in your GraphQL query:\n\n${context.sourceMessage}\n\nThis can happen when you used graphql\`{ ...yourQuery }\` instead of graphql(\`{ ...yourQuery }\`) inside gatsby-node.js\n\nYou can't use the template literal function you're used to (from page queries) and rather have to call graphql() as a normal function.`,
+    type: Type.GRAPHQL,
+    level: Level.ERROR,
+  },
   // Config errors
   "10123": {
     text: (context): string =>
