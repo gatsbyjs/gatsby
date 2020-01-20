@@ -23,6 +23,23 @@ query PageQueryName {
   foo
 }
 \``,
+    "page-query-indirect.js": `import { graphql } from 'gatsby'
+    const query = graphql\`
+query PageQueryIndirect {
+  foo
+}
+\`
+export { query }
+`,
+    "page-query-indirect-2.js": `import { graphql } from 'gatsby'
+    const query = graphql\`
+query PageQueryIndirect2 {
+  foo
+}
+\`
+const query2 = query;
+export { query2 }
+`,
     "page-query-no-name.js": `import { graphql } from 'gatsby'
   export const query = graphql\`
 query {
@@ -148,6 +165,11 @@ export default () => (
     "static-query-hooks.js": `import { graphql, useStaticQuery } from 'gatsby'
 export default () => {
   const data = useStaticQuery(graphql\`query StaticQueryName { foo }\`);
+  return <div>{data.doo}</div>;
+}`,
+    "static-query-hooks-alternative-import.js": `import * as Gatsby from 'gatsby'
+export default () => {
+  const data = Gatsby.useStaticQuery(Gatsby.graphql\`query StaticQueryName { foo }\`);
   return <div>{data.doo}</div>;
 }`,
     "static-query-hooks-with-type-parameter.ts": `import { graphql, useStaticQuery } from 'gatsby'

@@ -75,7 +75,7 @@ touch content/posts/blog-{1,2}.mdx
 
 Open up each of the files you just created and add some content.
 
-```md:title=blog-1.mdx
+```mdx:title=blog-1.mdx
 ---
 title: Blog Post 1
 ---
@@ -83,7 +83,7 @@ title: Blog Post 1
 Trying out MDX
 ```
 
-```md:title=blog-2.mdx
+```mdx:title=blog-2.mdx
 ---
 title: Blog Post 2
 ---
@@ -227,7 +227,7 @@ programmatically accessed MDX content.
 First, create a component that accepts the queried MDX data (which will be
 added in the next step).
 
-```javascript:title=src/components/posts-page-layout.js
+```jsx:title=src/components/posts-page-layout.js
 import React from "react"
 import { graphql } from "gatsby"
 import { MDXRenderer } from "gatsby-plugin-mdx"
@@ -246,7 +246,7 @@ Then, write a query that uses `id` which is passed through the
 `context` object in `createPage`. GraphQL requires you to declare
 the type of arguments at the top of the query before they're used.
 
-```javascript:title=src/components/posts-page-layout.js
+```jsx:title=src/components/posts-page-layout.js
 export const pageQuery = graphql`
   query BlogPostQuery($id: String) {
     mdx(id: { eq: $id }) {
@@ -263,7 +263,7 @@ export const pageQuery = graphql`
 When you put the component and page query all together, the
 component should look like:
 
-```javascript:title=src/components/posts-page-layout.js
+```jsx:title=src/components/posts-page-layout.js
 import React from "react"
 import { graphql } from "gatsby"
 import { MDXRenderer } from "gatsby-plugin-mdx"
@@ -299,7 +299,7 @@ more about all of the cool stuff you can do with `gatsby-plugin-mdx`.
 
 ## Bonus: Make a blog index
 
-```javascript:title=src/pages/index.js
+```jsx:title=src/pages/index.js
 import React from "react"
 import { Link, graphql } from "gatsby"
 

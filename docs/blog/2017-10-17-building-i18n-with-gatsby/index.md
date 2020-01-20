@@ -124,7 +124,7 @@ we create a JSON file for each component we want to translate.
 For our site we're currently supporting English and Welsh, so our locales folder
 looks like this.
 
-```
+```text
 - src
 	- locales
 		- en

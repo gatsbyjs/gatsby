@@ -26,9 +26,13 @@ module.exports = async function getUnownedPackages({
   // infer user from npm whoami
   // set registry because yarn run hijacks registry
   if (!user) {
-    user = await execP(`npm whoami --registry https://registry.npmjs.org`)
+    user = await execP(
+      `npm_config_username="" npm whoami --registry https://registry.npmjs.org`
+    )
       .then(({ stdout }) => stdout.trim())
-      .catch(() => process.exit(1))
+      .catch(() => {
+        throw new Error(`You are not logged-in`)
+      })
   }
 
   return getPackages(rootPath).then(async packages => {

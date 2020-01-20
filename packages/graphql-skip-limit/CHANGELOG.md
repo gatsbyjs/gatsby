@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.24](https://github.com/gatsbyjs/gatsby/compare/graphql-skip-limit@2.1.23...graphql-skip-limit@2.1.24) (2020-01-09)
+
+**Note:** Version bump only for package graphql-skip-limit
+
 ## [2.1.23](https://github.com/gatsbyjs/gatsby/compare/graphql-skip-limit@2.1.21...graphql-skip-limit@2.1.23) (2019-12-10)
 
 **Note:** Version bump only for package graphql-skip-limit

@@ -42,7 +42,7 @@ module.exports = {
 
 Then, in an example Markdown file, add a field called `featuredImage`:
 
-```md:title=src/pages/my-favorite-doggos.md
+```markdown:title=src/pages/my-favorite-doggos.md
 ---
 title: My Favorite Doggos
 featuredImage: pupperino.png
@@ -81,7 +81,7 @@ module.exports = {
 
 Then, in a Markdown file, the path to a `featuredImage` would be relative to the page file (in this case, in an `/images` directory up a level):
 
-```md:title=src/pages/about.md
+```markdown:title=src/pages/about.md
 ---
 title: About
 featuredImage: ../images/team-cat.png
@@ -249,6 +249,6 @@ module.exports = {
 
 With the configurations above, you can use the default Markdown syntax for images. They will be processed by Sharp and appear as if you placed them in a `gatsby-image` component.
 
-```md
+```markdown
 ![Hopper The Rabbit](./rabbit-friend.png)
 ```

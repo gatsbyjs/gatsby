@@ -121,7 +121,7 @@ Set after [Query Execution](/docs/query-execution/#save-query-results-to-redux-a
 
 Map of page [jsonName](#jsonname) to [dataPath](#datapath). Updated after [Query Execution](/docs/query-execution/#save-query-results-to-redux-and-disk). E.g
 
-```
+```json
 {
   // jsonName -> dataPath
   "blog-2018-07-17-announcing-gatsby-preview-995": "621/path---blog-2018-07-17-announcing-gatsby-preview-995-a74-dwfQIanOJGe2gi27a9CLKHjamc"

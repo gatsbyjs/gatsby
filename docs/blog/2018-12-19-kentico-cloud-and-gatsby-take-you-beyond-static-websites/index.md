@@ -37,7 +37,7 @@ Kentico Cloud also makes it easy for editors to understand the hierarchical stru
 
 For us developers, the headless CMS tools are very important. Apart from great technical documentation and many SDKs (including [JavaScript](http://bit.ly/2Gsq0Tb)), Kentico Cloud has a [source plugin for Gatsby](http://bit.ly/2S8ZzTO). If you decide to build a static site like I did, it's just another package that you install via npm.
 
-```
+```shell
 npm install --save gatsby-source-kentico-cloud
 ```
 
@@ -59,7 +59,7 @@ Whenever I code with a new framework or plugin, I like to take inspiration from 
 
 Almost every website has a set of content items that use the same template. It can be news articles, a list of offices, or products and other similar items. For these cases, [Gatsby allows us to programmatically generate](/tutorial/part-seven/) these pages using their content and a template. This is so cool as I was able to create the whole website using just three files representing static pages, two templates of dynamic pages and this simple piece of code using GraphQL and data from Kentico Cloud:
 
-```jsx
+```js
 graphql(`
   {
     allKenticoCloudItemPhase {

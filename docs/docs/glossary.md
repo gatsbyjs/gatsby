@@ -174,7 +174,7 @@ As part of its data layer and [build](#build) process, Gatsby will automatically
 
 ## J
 
-### JAMStack
+### [JAMStack](/docs/glossary/jamstack)
 
 JAMStack refers to a modern web architecture using [JavaScript](#javascript), [APIs](#api), and ([HTML](#html)) markup. From [JAMStack.org](https://jamstack.org): "It’s a new way of building websites and apps that delivers better performance, higher security, lower cost of scaling, and a better developer experience."
 
@@ -330,7 +330,7 @@ A UI refers to a User Interface. In the field of human-computer interaction, a U
 
 ## W
 
-### Webpack
+### [webpack](/docs/glossary/webpack)
 
 A [JavaScript](#javascript) application that Gatsby uses to bundle your website's code up. This happens automatically on [build](#build).
 

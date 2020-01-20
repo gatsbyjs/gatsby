@@ -472,15 +472,6 @@
     - Web Development
     - Open Source
     - Library
-- title: Artivest
-  main_url: "https://artivest.co/"
-  url: "https://artivest.co/what-we-do/for-advisors-and-investors/"
-  featured: false
-  categories:
-    - Marketing
-    - Blog
-    - Documentation
-    - Finance
 - title: The Audacious Project
   main_url: "https://audaciousproject.org/"
   url: "https://audaciousproject.org/"
@@ -1011,8 +1002,8 @@
     - Marketing
     - Healthcare
 - title: Moteefe
-  main_url: "http://www.moteefe.com/"
-  url: "http://www.moteefe.com/"
+  main_url: "https://www.moteefe.com/"
+  url: "https://www.moteefe.com/"
   featured: false
   categories:
     - Marketing
@@ -2290,6 +2281,19 @@
   built_by: Janosh Riebesell
   built_by_url: "https://janosh.io"
   featured: false
+- title: Gold Edge Training
+  url: "https://www.goldedgetraining.co.uk"
+  main_url: "https://www.goldedgetraining.co.uk"
+  description: >
+    AAT approved online distance learning accountancy training provider. Branded landing page / mini brochure promoting competitor differentiators, student testimonials, offers, service benefits and features. Designed to both inform potential students and encourage visits to company eCommerce site or direct company contact.
+  categories:
+    - Education
+    - Learning
+    - Landing Page
+    - Business
+    - Finance
+  built_by: Leo Furze-Waddock
+  built_by_url: "https://www.linkedin.com/in/lfurzewaddock"
 - title: Gatsby Manor
   description: >
     We build themes for gatsby. We have themes for all projects including personal,
@@ -2309,7 +2313,6 @@
 - title: Ema Suriano's Portfolio
   main_url: https://emasuriano.com/
   url: https://emasuriano.com/
-  source_url: https://github.com/EmaSuriano/emasuriano.github.io
   description: >
     Ema Suriano's portfolio to display information about him, his projects and what he's writing about.
   categories:
@@ -3744,17 +3747,6 @@
   built_by: Marcy Sutton
   built_by_url: https://marcysutton.com
   featured: true
-- title: Kepinski.me
-  main_url: https://kepinski.me
-  url: https://kepinski.me
-  description: >
-    The personal site of Antoni Kepinski, Node.js Developer.
-  categories:
-    - Portfolio
-    - Open Source
-  built_by: Antoni Kepinski
-  built_by_url: https://kepinski.me
-  featured: false
 - title: WPGraphQL Docs
   main_url: https://docs.wpgraphql.com
   url: https://docs.wpgraphql.com
@@ -5280,7 +5272,6 @@
 - title: Kenneth Kwakye-Gyamfi Portfolio Site
   url: https://www.kwakye-gyamfi.com
   main_url: https://www.kwakye-gyamfi.com
-  source_url: https://github.com/cr05s19xx/cross-site
   description: >
     Personal portfolio site for Kenneth Kwakye-Gyamfi, a mobile and web full stack applications developer currently based in Accra, Ghana.
   categories:
@@ -7131,7 +7122,7 @@
   featured: false
 - title: Recetas El Universo
   description: >-
-    Recipes and videos with the best of Ecuadorian cuisine. 
+    Recipes and videos with the best of Ecuadorian cuisine.
     Collectable recipes from Diario El Universo.
   main_url: "https://recetas-eu.netlify.com/"
   url: "https://recetas-eu.netlify.com/"
@@ -7306,7 +7297,6 @@
 - title: GatsbyFinds
   main_url: https://gatsbyfinds.netlify.com
   url: https://gatsbyfinds.netlify.com
-  source_url: https://github.com/bvlktech/GatsbyFinds
   description: >
     GatsbyFinds is a website built ontop of Gatsby v2 by providing developers with a showcase of all the lastest projects made with the beloved GatsbyJS.
   categories:
@@ -9069,6 +9059,37 @@
     - Marketing
     - Design
   built_by: João Matos (Global Creative Studio - Education First)
+- title: Codica
+  main_url: https://www.codica.com/
+  url: https://www.codica.com/
+  description: >
+    We help startups and established brands with JAMStack, Progressive Web Apps and Marketplaces development.
+  categories:
+    - Agency
+    - Web Development
+  built_by: Codica
+  built_by_url: https://www.codica.com/
+- title: Bhavani Ravi's Portfolio
+  url: https://bhavaniravi.com
+  main_url: https://bhavaniravi.com
+  description: >
+    Showcase of Bhavani Ravi's skillset and blogs
+  categories:
+    - Blog
+    - Portfolio
+  built_by: Bhavani Ravi
+  built_by_url: https://twitter.com/geeky_bhavani
+- title: Kotoriyama
+  main_url: https://kotoriyama.com/
+  url: https://kotoriyama.com/
+  description: >
+    Japanese Indie Game Creator.
+  featured: false
+  categories:
+    - App
+    - Entertainment
+    - Mobile Development
+  built_by: Motoyoshi Shiine (Kotoriyama)
 - title: PWA Shields
   url: https://www.pwa-shields.com
   main_url: https://www.pwa-shields.com
@@ -9093,8 +9114,8 @@
   featured: false
 - title: Reeemoter
   description: >-
-    Join thousands of developers from everywhere and access to job 
-    offers from hundreds of companies worldwide right 
+    Join thousands of developers from everywhere and access to job
+    offers from hundreds of companies worldwide right
     at your inbox for free.
   main_url: "https://reeemoter.com/"
   url: "https://reeemoter.com/"
@@ -9104,6 +9125,16 @@
     - Web Development
   built_by: Ramón Chancay
   built_by_url: "https://ramonchancay.me/"
+- title: Ananya Neogi
+  main_url: https://ananyaneogi.com
+  url: https://ananyaneogi.com
+  description: >
+    Showcases Ananya's work as a frontend developer and comprises of a collection of written articles on web development, programming and, user experience.
+  categories:
+    - Portfolio
+    - Blog
+  built_by: Ananya Neogi
+  built_by_url: https://ananyaneogi.com
 - title: webman.pro
   main_url: https://webman.pro/
   url: https://webman.pro/
@@ -9130,6 +9161,16 @@
   built_by: Junho Baik
   built_by_url: https://github.com/junhobaik
   featured: false
+- title: React Resume Generator
+  main_url: https://nimahkh.github.io/nima_habibkhoda
+  url: https://nimahkh.github.io/nima_habibkhoda
+  source_url: https://github.com/nimahkh/resume_generator
+  description: >
+    The resume generator is a project to create your own resume web page easyly with Gatsby.
+  categories:
+    - Portfolio
+  built_by: Nima Habibkhoda
+  featured: false
 - title: Thomas Wang's Blog
   main_url: "https://www.thomaswang.io"
   url: "https://www.thomaswang.io"
@@ -9141,3 +9182,196 @@
   categories:
     - Blog
     - Web Development
+- title: Engleezi
+  main_url: "https://www.myengleezi.com"
+  url: "https://myengleezi.com/teachers/"
+  description: >-
+    Affordable, accessible and fun, Engleezi is an English tutoring service that aims to make your child a better and more fluent English speaker. Our unique online approach gets your children learning English one-on-one from a native English teacher from the comfort of your home.
+  built_by: Suleiman Mayow
+  built_by_url: https://github.com/sullom101
+  featured: false
+  categories:
+    - Education
+    - Learning
+    - Technology
+- title: The Rebigulator
+  main_url: "https://www.rebigulator.org/"
+  source_url: "https://github.com/Me4502/Rebigulator/"
+  url: "https://rebigulator.org/"
+  description: A quote-based via game powered by Frinkiac
+  built_by: Matthew Miller
+  built_by_url: https://matthewmiller.dev/
+  featured: false
+  categories:
+    - Open Source
+    - Entertainment
+    - App
+- title: madewithlove
+  main_url: https://www.madewithlove.be
+  url: https://www.madewithlove.be
+  description: >-
+    We build digital products and create the teams around them. We can help with software engineering, product management, managing technical teams, audits and technical consulting.
+  built_by: madewithlove
+  built_by_url: https://www.madewithlove.be
+  featured: false
+  categories:
+    - Web Development
+    - Blog
+    - Agency
+    - Business
+- title: Sprucehill
+  url: https://sprucehill.ca/
+  main_url: https://sprucehill.ca/
+  description: >
+    Sprucehill is a North Vancouver based custom home builder and renovator.
+  categories:
+    - WordPress
+    - Business
+  built_by: Bare Advertising & Communications
+  built_by_url: https://www.bare.ca/
+  featured: false
+- title: Nathaniel Ryan Mathew
+  url: https://nathanielmathew.me
+  main_url: https://nathanielmathew.me
+  source_url: https://github.com/nathanielmathew/MyPortfolio
+  description: >
+    A personal online Portfolio built using GatsbyJS, that showcases Achievements, Projects and Additional information.
+  categories:
+    - Portfolio
+    - Open Source
+    - Blog
+  built_by: Nathaniel Ryan Mathew
+  built_by_url: https://github.com/nathanielmathew
+  featured: false
+- title: Kanazawa.js Community Page
+  main_url: https://kanazawajs.now.sh/
+  url: https://kanazawajs.now.sh/
+  source_url: https://github.com/kanazawa-js/community-page
+  description: >
+    Kanazawa.js is a local community for the JSer around Kanazawa to share knowledge about JavaScript.
+  categories:
+    - Community
+    - Programming
+    - Web Development
+  built_by: Kanazawa.js
+  built_by_url: https://twitter.com/knzw_js
+  featured: false
+- title: monica*dev
+  url: https://www.aboutmonica.com/
+  main_url: https://www.aboutmonica.com/
+  description: >
+    Personal site for Monica Powell, a software engineer who is passionate about making open-source more accessible and building community, online & offline.
+  categories:
+    - Web Development
+    - Blog
+    - Programming
+    - Portfolio
+  built_by: Monica Powell
+  built_by_url: https://www.aboutmonica.com/
+  featured: false
+- title: Shivam Sinha
+  url: https://www.helloshivam.com/
+  main_url: https://www.helloshivam.com/
+  description: >
+    Portfolio of Shivam Sinha, Graphic Designer and Creative Coder based in New York.
+  categories:
+    - Portfolio
+  built_by: Shivam Sinha
+  built_by_url: https://www.helloshivam.com/
+  featured: false
+- title: Brianna Sharpe - Writer
+  main_url: https://www.briannasharpe.com/
+  url: https://www.briannasharpe.com/
+  source_url: https://github.com/ehowey/briannasharpe
+  description: >
+    Brianna Sharpe is an Alberta, Canada based freelance writer and journalist focused on health, LGBTQ2S+, parenting, and the environment.
+  categories:
+    - Portfolio
+    - Media
+  built_by: Eric Howey
+  built_by_url: https://www.erichowey.dev/
+  featured: false
+- title: Eric Howey Web Development
+  main_url: https://www.erichowey.dev/
+  url: https://www.erichowey.dev/
+  source_url: https://github.com/ehowey/erichoweydev
+  description: >
+    Personal website and blog for Eric Howey. I am a freelance web developer based in Alberta, Canada specializing in Gatsby, React, Wordpress and Theme-UI.
+  categories:
+    - Portfolio
+    - Web Development
+    - Freelance
+    - Blog
+  built_by: Eric Howey
+  built_by_url: https://www.erichowey.dev/
+- title: Solfej Chord Search
+  url: https://www.solfej.io/chords
+  main_url: https://www.solfej.io/chords
+  description: >
+    Solfej Chord Search helps you master every chord imaginable. It shows you notes, intervals, guitar and piano fingerings for 1000s of chords.
+  categories:
+    - Education
+    - Music
+  built_by: Shayan Javadi
+  built_by_url: https://www.instagram.com/shawnjavadi/
+- title: a+ Saúde
+  url: https://www.amaissaude.com.br/
+  main_url: https://www.amaissaude.com.br/
+  description: >
+    An even better experience in using health services.
+  categories:
+    - Healthcare
+    - Marketing
+    - Blog
+  built_by: Grupo Fleury
+  built_by_url: http://www.grupofleury.com.br/
+  featured: false
+- title: Mallikarjun Katakol Photography
+  main_url: https://mallik.in
+  url: https://mallik.in
+  built_by: Arvind Kumar
+  built_by_url: "https://arvind.io/"
+  description: >
+    Mallikarjun Katakol is an Advertising, Architecture, Editorial, Fashion and Lifestyle Photographer based in Bangalore, India.
+    Shoots Corporate & Business headshots, Portfolios for Models and Actors, Documents Projects for Architects, Fashion & Interior Designers
+  featured: false
+  categories:
+    - Gallery
+    - Photography
+    - Portfolio
+- title: gatsby-animate-blog
+  url: https://gatsby-animate-blog.luffyzh.now.sh/
+  main_url: https://gatsby-animate-blog.luffyzh.now.sh/home
+  source_url: https://github.com/luffyZh/gatsby-animate-blog
+  description: >
+    A simple && cool blog site starter kit by Gatsby.
+  categories:
+    - Blog
+    - Open Source
+    - Web Development
+  built_by: luffyZh
+  built_by_url: https://github.com/luffyZh
+  featured: false
+- title: GIS-Netzwerk
+  url: https://www.gis-netzwerk.com/
+  main_url: https://www.gis-netzwerk.com/
+  description: >
+    Geoinformatik, GIS, Web-Development.
+  categories:
+    - Blog
+    - Data
+    - Technology
+  built_by: Max Dietrich
+  built_by_url: https://www.gis-netzwerk.com/
+  featured: false
+- title: Hand in Hand Preschool
+  url: https://handinhand-preschool.com/
+  main_url: https://handinhand-preschool.com/
+  description: >
+    Hand in Hand Preschool is a preschool located in Geneva, IL.
+  categories:
+    - Education
+    - Business
+  built_by: ccalamos
+  built_by_url: https://github.com/ccalamos
+  featured: false
