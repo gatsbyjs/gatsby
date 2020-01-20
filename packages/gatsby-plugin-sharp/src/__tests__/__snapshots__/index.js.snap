@@ -16,8 +16,8 @@ Object {
   "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAAH6ji2bAAAACXBIWXMAAAPoAAAD6AG1e1JrAAABk0lEQVQ4y7VUy07DMBDsf9IDhcauaVM4IajUIuALOFRI/R24wB8AgkpInJKI9ME5zDi24rx5HjZKvOP17Hg2neh8nNjo8CGESGL7sbpwMvrlaepriF4J3dQLMlsXvzbVFCKHLJ3J8+5PRxqlF0OzleFLkSG7Xrp4faiyRaI/Lgs13QhNVB5uCUyUTDyUloidvkjezvyMEB8B4uZkqAHCiR44bYtCcecSirD5XQDmIGzVjOrEiJo4fhvY2jWTG3C6g/TLmZ+8VwEJekWy20+loUSzA5kDp15BKJmXhmD6Iqcjtep5eSArk0ZQPPpqPNAaWiBpbKt0pLgEU2xuIOewTh7rmFWFRH9/M78uaG8yNuox4oYbbrQEhaI4HKEh7mvfS2OE98WR0r6P26zj2ofW5rWowlzY2WduAQxZ14odmNZuMWA0h6wo5pplDxj+MrgnqDM3W32E/QYNxaxN2f7ztNx6qWUCOC3H+F/Y35EU2XCw3QkGhBrHX/WXLbwG4wewoAwMst84t/0jH4ZG36DFLv9m7E/1HjvIa/canAAAAABJRU5ErkJggg==",
   "height": 100,
   "originalName": "test.png",
-  "src": "/static/1234/cc21f/test.png",
-  "srcSet": "/static/1234/cc21f/test.png 1x",
+  "src": "/static/1234/2f4e8/test.png",
+  "srcSet": "/static/1234/2f4e8/test.png 1x",
   "tracedSVG": undefined,
   "width": 100,
 }
@@ -28,15 +28,15 @@ Object {
   "aspectRatio": 1,
   "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAAH6ji2bAAAACXBIWXMAAAPoAAAD6AG1e1JrAAABk0lEQVQ4y7VUy07DMBDsf9IDhcauaVM4IajUIuALOFRI/R24wB8AgkpInJKI9ME5zDi24rx5HjZKvOP17Hg2neh8nNjo8CGESGL7sbpwMvrlaepriF4J3dQLMlsXvzbVFCKHLJ3J8+5PRxqlF0OzleFLkSG7Xrp4faiyRaI/Lgs13QhNVB5uCUyUTDyUloidvkjezvyMEB8B4uZkqAHCiR44bYtCcecSirD5XQDmIGzVjOrEiJo4fhvY2jWTG3C6g/TLmZ+8VwEJekWy20+loUSzA5kDp15BKJmXhmD6Iqcjtep5eSArk0ZQPPpqPNAaWiBpbKt0pLgEU2xuIOewTh7rmFWFRH9/M78uaG8yNuox4oYbbrQEhaI4HKEh7mvfS2OE98WR0r6P26zj2ofW5rWowlzY2WduAQxZ14odmNZuMWA0h6wo5pplDxj+MrgnqDM3W32E/QYNxaxN2f7ztNx6qWUCOC3H+F/Y35EU2XCw3QkGhBrHX/WXLbwG4wewoAwMst84t/0jH4ZG36DFLv9m7E/1HjvIa/canAAAAABJRU5ErkJggg==",
   "density": 72,
-  "originalImg": "/static/1234/32af4/test.png",
+  "originalImg": "/static/1234/2f4e8/test.png",
   "originalName": "test.png",
   "presentationHeight": 100,
   "presentationWidth": 100,
   "sizes": "(max-width: 100px) 100vw, 100px",
-  "src": "/static/1234/32af4/test.png",
-  "srcSet": "/static/1234/1b405/test.png 25w,
-/static/1234/a94dc/test.png 50w,
-/static/1234/32af4/test.png 100w",
+  "src": "/static/1234/2f4e8/test.png",
+  "srcSet": "/static/1234/e3e32/test.png 25w,
+/static/1234/281bc/test.png 50w,
+/static/1234/2f4e8/test.png 100w",
   "srcSetType": "image/png",
   "tracedSVG": undefined,
 }
@@ -54,21 +54,21 @@ exports[`gatsby-plugin-sharp fixed correctly infers the width when only the heig
                 "height": 10,
                 "toFormat": "png",
               },
-              "outputPath": "8392e/test.png",
+              "outputPath": "fb009/test.png",
             },
             Object {
               "args": Object {
                 "height": 15,
                 "toFormat": "png",
               },
-              "outputPath": "204a7/test.png",
+              "outputPath": "0314c/test.png",
             },
             Object {
               "args": Object {
                 "height": 20,
                 "toFormat": "png",
               },
-              "outputPath": "1667e/test.png",
+              "outputPath": "24504/test.png",
             },
           ],
           "pluginOptions": Object {
@@ -108,21 +108,21 @@ exports[`gatsby-plugin-sharp fixed does not warn when the requested width is equ
                 "toFormat": "png",
                 "width": 1,
               },
-              "outputPath": "70533/test.png",
+              "outputPath": "22212/test.png",
             },
             Object {
               "args": Object {
                 "toFormat": "png",
                 "width": 2,
               },
-              "outputPath": "4713b/test.png",
+              "outputPath": "1fbec/test.png",
             },
             Object {
               "args": Object {
                 "toFormat": "png",
                 "width": 2,
               },
-              "outputPath": "4713b/test.png",
+              "outputPath": "1fbec/test.png",
             },
           ],
           "pluginOptions": Object {
@@ -162,21 +162,21 @@ exports[`gatsby-plugin-sharp fixed should give the same result with createJob as
                 "toFormat": "png",
                 "width": 1,
               },
-              "outputPath": "70533/test.png",
+              "outputPath": "22212/test.png",
             },
             Object {
               "args": Object {
                 "toFormat": "png",
                 "width": 2,
               },
-              "outputPath": "4713b/test.png",
+              "outputPath": "1fbec/test.png",
             },
             Object {
               "args": Object {
                 "toFormat": "png",
                 "width": 2,
               },
-              "outputPath": "4713b/test.png",
+              "outputPath": "1fbec/test.png",
             },
           ],
           "pluginOptions": Object {
@@ -216,7 +216,7 @@ exports[`gatsby-plugin-sharp fixed warns when the requested width is greater tha
                 "toFormat": "png",
                 "width": 100,
               },
-              "outputPath": "7c15f/test.png",
+              "outputPath": "62ab9/test.png",
             },
           ],
           "pluginOptions": Object {
@@ -256,35 +256,35 @@ exports[`gatsby-plugin-sharp fluid accepts srcSet breakpoints 1`] = `
                 "toFormat": "png",
                 "width": 50,
               },
-              "outputPath": "260b9/test.png",
+              "outputPath": "2f62a/test.png",
             },
             Object {
               "args": Object {
                 "toFormat": "png",
                 "width": 70,
               },
-              "outputPath": "40cc6/test.png",
+              "outputPath": "543b9/test.png",
             },
             Object {
               "args": Object {
                 "toFormat": "png",
                 "width": 150,
               },
-              "outputPath": "bdb08/test.png",
+              "outputPath": "55f83/test.png",
             },
             Object {
               "args": Object {
                 "toFormat": "png",
                 "width": 250,
               },
-              "outputPath": "d20da/test.png",
+              "outputPath": "e633e/test.png",
             },
             Object {
               "args": Object {
                 "toFormat": "png",
                 "width": 281,
               },
-              "outputPath": "4d829/test.png",
+              "outputPath": "5bca6/test.png",
             },
           ],
           "pluginOptions": Object {
@@ -321,10 +321,11 @@ exports[`gatsby-plugin-sharp fluid adds pathPrefix if defined 1`] = `
           "operations": Array [
             Object {
               "args": Object {
+                "pathPrefix": "/blog",
                 "toFormat": "png",
                 "width": 100,
               },
-              "outputPath": "9a150/test.png",
+              "outputPath": "62ab9/test.png",
             },
           ],
           "pluginOptions": Object {
@@ -365,7 +366,7 @@ exports[`gatsby-plugin-sharp fluid calculate height based on width when maxWidth
                 "toFormat": "png",
                 "width": 5,
               },
-              "outputPath": "8878c/test.png",
+              "outputPath": "6931e/test.png",
             },
             Object {
               "args": Object {
@@ -373,7 +374,7 @@ exports[`gatsby-plugin-sharp fluid calculate height based on width when maxWidth
                 "toFormat": "png",
                 "width": 10,
               },
-              "outputPath": "86d06/test.png",
+              "outputPath": "dba9b/test.png",
             },
             Object {
               "args": Object {
@@ -381,7 +382,7 @@ exports[`gatsby-plugin-sharp fluid calculate height based on width when maxWidth
                 "toFormat": "png",
                 "width": 20,
               },
-              "outputPath": "b0ad3/test.png",
+              "outputPath": "27e70/test.png",
             },
             Object {
               "args": Object {
@@ -389,7 +390,7 @@ exports[`gatsby-plugin-sharp fluid calculate height based on width when maxWidth
                 "toFormat": "png",
                 "width": 30,
               },
-              "outputPath": "55ca2/test.png",
+              "outputPath": "1fff3/test.png",
             },
             Object {
               "args": Object {
@@ -397,7 +398,7 @@ exports[`gatsby-plugin-sharp fluid calculate height based on width when maxWidth
                 "toFormat": "png",
                 "width": 40,
               },
-              "outputPath": "41b62/test.png",
+              "outputPath": "3d276/test.png",
             },
             Object {
               "args": Object {
@@ -405,7 +406,7 @@ exports[`gatsby-plugin-sharp fluid calculate height based on width when maxWidth
                 "toFormat": "png",
                 "width": 281,
               },
-              "outputPath": "503f5/test.png",
+              "outputPath": "79217/test.png",
             },
           ],
           "pluginOptions": Object {
@@ -445,7 +446,7 @@ exports[`gatsby-plugin-sharp fluid does not change the arguments object it is gi
                 "toFormat": "png",
                 "width": 100,
               },
-              "outputPath": "41dbf/test.png",
+              "outputPath": "62ab9/test.png",
             },
           ],
           "pluginOptions": Object {
@@ -485,35 +486,35 @@ exports[`gatsby-plugin-sharp fluid ensure maxWidth is in srcSet breakpoints 1`] 
                 "toFormat": "png",
                 "width": 50,
               },
-              "outputPath": "76dd6/test.png",
+              "outputPath": "2f62a/test.png",
             },
             Object {
               "args": Object {
                 "toFormat": "png",
                 "width": 70,
               },
-              "outputPath": "1bb08/test.png",
+              "outputPath": "543b9/test.png",
             },
             Object {
               "args": Object {
                 "toFormat": "png",
                 "width": 150,
               },
-              "outputPath": "94eff/test.png",
+              "outputPath": "55f83/test.png",
             },
             Object {
               "args": Object {
                 "toFormat": "png",
                 "width": 200,
               },
-              "outputPath": "b7372/test.png",
+              "outputPath": "5da2d/test.png",
             },
             Object {
               "args": Object {
                 "toFormat": "png",
                 "width": 281,
               },
-              "outputPath": "1f56d/test.png",
+              "outputPath": "5bca6/test.png",
             },
           ],
           "pluginOptions": Object {
@@ -546,13 +547,13 @@ Object {
   "aspectRatio": 1,
   "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsSAAALEgHS3X78AAABKklEQVQ4y8WUy07DMBBFrwMpr4aybjepUeqIFd/CAgmJsuIHgWXVL+Gx4C3xCdQJnpm0UDJNAQnVuouMM8dzY4+DcoA/C/8Fe9bv4ABMMpQOZc5yFPqfwEUQY499jHoY9/BsKQyTRTNMyzu8WAwTbBnI2DY438XbPr0qFsFCvlrkMTERYFgRL3HYUvh5OMdpQqkbBtPC9NDiINQPCZM6LGVvUzIpwNch4V5EGxHS/DeYtjfHZbcyXB8yGfaPimcafLEMHqmw2L5OsWkUUuY6Ee5V28WUP25TXjwPS3iWUFnfcFQPFna98rlmSGL4IOZucQvgT76Po53qeOTYTtp4qpFKe/qM29PhJsVVl3SXsluntLfS7rPvn10MP1Aau+lKBuA9I/kV/AyW6gNTIWTuA/r8lQAAAABJRU5ErkJggg==",
   "density": 72,
-  "originalImg": "/static/1234/9a150/test.png",
+  "originalImg": "/static/1234/62ab9/test.png",
   "originalName": "test.png",
   "presentationHeight": 100,
   "presentationWidth": 100,
   "sizes": "(max-width: 100px) 100vw, 100px",
-  "src": "/static/1234/9a150/test.png",
-  "srcSet": "/static/1234/9a150/test.png 100w",
+  "src": "/static/1234/62ab9/test.png",
+  "srcSet": "/static/1234/62ab9/test.png 100w",
   "srcSetType": "image/png",
   "tracedSVG": undefined,
 }
@@ -563,13 +564,13 @@ Object {
   "aspectRatio": 1,
   "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsSAAALEgHS3X78AAABKklEQVQ4y8WUy07DMBBFrwMpr4aybjepUeqIFd/CAgmJsuIHgWXVL+Gx4C3xCdQJnpm0UDJNAQnVuouMM8dzY4+DcoA/C/8Fe9bv4ABMMpQOZc5yFPqfwEUQY499jHoY9/BsKQyTRTNMyzu8WAwTbBnI2DY438XbPr0qFsFCvlrkMTERYFgRL3HYUvh5OMdpQqkbBtPC9NDiINQPCZM6LGVvUzIpwNch4V5EGxHS/DeYtjfHZbcyXB8yGfaPimcafLEMHqmw2L5OsWkUUuY6Ee5V28WUP25TXjwPS3iWUFnfcFQPFna98rlmSGL4IOZucQvgT76Po53qeOTYTtp4qpFKe/qM29PhJsVVl3SXsluntLfS7rPvn10MP1Aau+lKBuA9I/kV/AyW6gNTIWTuA/r8lQAAAABJRU5ErkJggg==",
   "density": 72,
-  "originalImg": "/static/1234/9a150/test.png",
+  "originalImg": "/static/1234/62ab9/test.png",
   "originalName": "test.png",
   "presentationHeight": 100,
   "presentationWidth": 100,
   "sizes": "(max-width: 100px) 100vw, 100px",
-  "src": "/static/1234/9a150/test.png",
-  "srcSet": "/static/1234/9a150/test.png 100w",
+  "src": "/static/1234/62ab9/test.png",
+  "srcSet": "/static/1234/62ab9/test.png 100w",
   "srcSetType": "image/png",
   "tracedSVG": undefined,
 }
@@ -586,43 +587,49 @@ exports[`gatsby-plugin-sharp fluid infers the maxWidth if only maxHeight is give
               "args": Object {
                 "height": 5,
                 "toFormat": "png",
+                "width": undefined,
               },
-              "outputPath": "efcb8/test.png",
+              "outputPath": "c2bf1/test.png",
             },
             Object {
               "args": Object {
                 "height": 10,
                 "toFormat": "png",
+                "width": undefined,
               },
-              "outputPath": "b17a2/test.png",
+              "outputPath": "b9e31/test.png",
             },
             Object {
               "args": Object {
                 "height": 20,
                 "toFormat": "png",
+                "width": undefined,
               },
-              "outputPath": "60509/test.png",
+              "outputPath": "f589b/test.png",
             },
             Object {
               "args": Object {
                 "height": 30,
                 "toFormat": "png",
+                "width": undefined,
               },
-              "outputPath": "c68e4/test.png",
+              "outputPath": "e2b80/test.png",
             },
             Object {
               "args": Object {
                 "height": 40,
                 "toFormat": "png",
+                "width": undefined,
               },
-              "outputPath": "f2ac1/test.png",
+              "outputPath": "5760a/test.png",
             },
             Object {
               "args": Object {
                 "height": 136,
                 "toFormat": "png",
+                "width": undefined,
               },
-              "outputPath": "1a7a8/test.png",
+              "outputPath": "31b03/test.png",
             },
           ],
           "pluginOptions": Object {
@@ -662,7 +669,7 @@ exports[`gatsby-plugin-sharp fluid keeps original file name 1`] = `
                 "toFormat": "png",
                 "width": 100,
               },
-              "outputPath": "9a150/test.png",
+              "outputPath": "62ab9/test.png",
             },
           ],
           "pluginOptions": Object {
@@ -702,28 +709,28 @@ exports[`gatsby-plugin-sharp fluid prevents duplicate breakpoints 1`] = `
                 "toFormat": "png",
                 "width": 50,
               },
-              "outputPath": "9e335/test.png",
+              "outputPath": "2f62a/test.png",
             },
             Object {
               "args": Object {
                 "toFormat": "png",
                 "width": 100,
               },
-              "outputPath": "a4b69/test.png",
+              "outputPath": "62ab9/test.png",
             },
             Object {
               "args": Object {
                 "toFormat": "png",
                 "width": 250,
               },
-              "outputPath": "8869a/test.png",
+              "outputPath": "e633e/test.png",
             },
             Object {
               "args": Object {
                 "toFormat": "png",
                 "width": 281,
               },
-              "outputPath": "5a8b4/test.png",
+              "outputPath": "5bca6/test.png",
             },
           ],
           "pluginOptions": Object {
@@ -763,35 +770,35 @@ exports[`gatsby-plugin-sharp fluid reject any breakpoints larger than the origin
                 "toFormat": "png",
                 "width": 50,
               },
-              "outputPath": "26fa7/test.png",
+              "outputPath": "2f62a/test.png",
             },
             Object {
               "args": Object {
                 "toFormat": "png",
                 "width": 70,
               },
-              "outputPath": "35ff3/test.png",
+              "outputPath": "543b9/test.png",
             },
             Object {
               "args": Object {
                 "toFormat": "png",
                 "width": 150,
               },
-              "outputPath": "92f2a/test.png",
+              "outputPath": "55f83/test.png",
             },
             Object {
               "args": Object {
                 "toFormat": "png",
                 "width": 250,
               },
-              "outputPath": "3eec3/test.png",
+              "outputPath": "e633e/test.png",
             },
             Object {
               "args": Object {
                 "toFormat": "png",
                 "width": 281,
               },
-              "outputPath": "eaa0b/test.png",
+              "outputPath": "5bca6/test.png",
             },
           ],
           "pluginOptions": Object {
@@ -831,7 +838,7 @@ exports[`gatsby-plugin-sharp fluid should give the same result with createJob as
                 "toFormat": "png",
                 "width": 100,
               },
-              "outputPath": "9a150/test.png",
+              "outputPath": "62ab9/test.png",
             },
           ],
           "pluginOptions": Object {
@@ -1054,8 +1061,8 @@ Object {
   "base64": undefined,
   "height": 100,
   "originalName": "test.png",
-  "src": "/static/1234/cdb1b/test.png",
-  "srcSet": "/static/1234/cdb1b/test.png 1x",
+  "src": "/static/1234/62ab9/test.png",
+  "srcSet": "/static/1234/62ab9/test.png 1x",
   "tracedSVG": "data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20width='100'%20height='100'%3e%3cpath%20d='M41%2024c-18%207-24%2029-11%2043%2015%2017%2044%208%2046-15%201-19-17-34-35-28'%20fill='red'%20fill-rule='evenodd'/%3e%3c/svg%3e",
   "width": 100,
 }
@@ -1066,15 +1073,15 @@ Object {
   "aspectRatio": 1,
   "base64": undefined,
   "density": 72,
-  "originalImg": "/static/1234/7f092/test.png",
+  "originalImg": "/static/1234/62ab9/test.png",
   "originalName": "test.png",
   "presentationHeight": 100,
   "presentationWidth": 100,
   "sizes": "(max-width: 100px) 100vw, 100px",
-  "src": "/static/1234/7f092/test.png",
-  "srcSet": "/static/1234/b86fe/test.png 25w,
-/static/1234/415d3/test.png 50w,
-/static/1234/7f092/test.png 100w",
+  "src": "/static/1234/62ab9/test.png",
+  "srcSet": "/static/1234/bb8d1/test.png 25w,
+/static/1234/2f62a/test.png 50w,
+/static/1234/62ab9/test.png 100w",
   "srcSetType": "image/png",
   "tracedSVG": "data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20width='100'%20height='100'%3e%3cpath%20d='M41%2024c-18%207-24%2029-11%2043%2015%2017%2044%208%2046-15%201-19-17-34-35-28'%20fill='red'%20fill-rule='evenodd'/%3e%3c/svg%3e",
 }
