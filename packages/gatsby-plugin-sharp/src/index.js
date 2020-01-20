@@ -653,7 +653,6 @@ async function fixed({ file, args = {}, reporter, cache }) {
   // Sort images for prettiness.
   const transforms = _.sortBy(filteredSizes).map(size => {
     const arrrgs = createTransformObject(options)
-    console.log(`transform`, arrrgs)
     arrrgs[fixedDimension] = Math.round(size)
 
     // Queue images for processing.
