@@ -534,8 +534,11 @@ async function fluid({ file, args = {}, reporter, cache }) {
       arrrgs[otherDimensionAttr] = undefined
     }
     arrrgs[dimensionAttr] = Math.round(size)
+
     // we need pathPrefix to calculate the correct outputPath
-    arrrgs.pathPrefix = options.pathPrefix || ``
+    if (options.pathPrefix) {
+      arrrgs.pathPrefix = options.pathPrefix
+    }
 
     if (options.maxWidth !== undefined && options.maxHeight !== undefined) {
       arrrgs.height = Math.round(size * (options.maxHeight / options.maxWidth))
@@ -656,7 +659,9 @@ async function fixed({ file, args = {}, reporter, cache }) {
       arrrgs.height = Math.round(size * (options.height / options.width))
     }
     // we need pathPrefix to calculate the correct outputPath
-    arrrgs.pathPrefix = options.pathPrefix || ``
+    if (options.pathPrefix) {
+      arrrgs.pathPrefix = options.pathPrefix
+    }
 
     return arrrgs
   })
