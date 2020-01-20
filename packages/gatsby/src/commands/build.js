@@ -94,7 +94,7 @@ module.exports = async function build(program: BuildArgs) {
   const webpackCompilationHash = stats.hash
   if (
     webpackCompilationHash !== store.getState().webpackCompilationHash ||
-    !appDataUtil.exists(publicDir)
+    (!incrementalBuild && !appDataUtil.exists(publicDir))
   ) {
     store.dispatch({
       type: `SET_WEBPACK_COMPILATION_HASH`,
