@@ -17,6 +17,7 @@ const getConfigFile = require(`./get-config-file`)
 const tracer = require(`opentracing`).globalTracer()
 const preferDefault = require(`./prefer-default`)
 const safeRemoveCache = require(`./cache/remove`)
+const removeStaleJobs = require(`./remove-stale-jobs`)
 // Add `util.promisify` polyfill for old node versions
 require(`util.promisify/shim`)()
 
@@ -158,12 +159,17 @@ module.exports = async (args: BootstrapArgs) => {
 
   activity.end()
 
+  // run stale jobs
+  store.dispatch(removeStaleJobs(store.getState()))
+
   activity = report.activityTimer(`load plugins`, { parentSpan: bootstrapSpan })
   activity.start()
   const flattenedPlugins = await loadPlugins(config, program.directory)
   activity.end()
 
-  const pluginsStr = flattenedPlugins.map(p => `${p.name}@${p.version}`)
+  // Multiple occurrences of the same name-version-pair can occur,
+  // so we report an array of unique pairs
+  const pluginsStr = _.uniq(flattenedPlugins.map(p => `${p.name}@${p.version}`))
   telemetry.decorateEvent(`BUILD_END`, {
     plugins: pluginsStr,
   })
@@ -203,9 +209,7 @@ module.exports = async (args: BootstrapArgs) => {
     parentSpan: bootstrapSpan,
   })
   activity.start()
-
-  let state = store.getState()
-
+  const state = store.getState()
   let existingPluginHash
   try {
     existingPluginHash = JSON.parse(state.status.PLUGINS_HASH)

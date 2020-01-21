@@ -51,7 +51,7 @@ In addition to the name and path parameters you may pass an optional `ignore` ar
 
 They will be added to the following default list:
 
-```
+```text
 **/*.un~
 **/.DS_Store
 **/.gitignore

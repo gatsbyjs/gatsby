@@ -125,10 +125,10 @@ module.exports = (
     }
     let remark = new Remark().data(`settings`, remarkOptions)
 
-    for (let plugin of pluginOptions.plugins) {
+    for (const plugin of pluginOptions.plugins) {
       const requiredPlugin = require(plugin.resolve)
       if (_.isFunction(requiredPlugin.setParserPlugins)) {
-        for (let parserPlugin of requiredPlugin.setParserPlugins(
+        for (const parserPlugin of requiredPlugin.setParserPlugins(
           plugin.pluginOptions
         )) {
           if (_.isArray(parserPlugin)) {
@@ -214,8 +214,15 @@ module.exports = (
       // Use Bluebird's Promise function "each" to run remark plugins serially.
       await Promise.each(pluginOptions.plugins, plugin => {
         const requiredPlugin = require(plugin.resolve)
-        if (_.isFunction(requiredPlugin)) {
-          return requiredPlugin(
+        // Allow both exports = function(), and exports.default = function()
+        const defaultFunction = _.isFunction(requiredPlugin)
+          ? requiredPlugin
+          : _.isFunction(requiredPlugin.default)
+          ? requiredPlugin.default
+          : undefined
+
+        if (defaultFunction) {
+          return defaultFunction(
             {
               markdownAST,
               markdownNode,
@@ -261,7 +268,7 @@ module.exports = (
 
     async function getTableOfContents(markdownNode, gqlTocOptions) {
       // fetch defaults
-      let appliedTocOptions = { ...tocOptions, ...gqlTocOptions }
+      const appliedTocOptions = { ...tocOptions, ...gqlTocOptions }
       // get cached toc
       const cachedToc = await cache.get(
         tableOfContentsCacheKey(markdownNode, appliedTocOptions)
@@ -305,7 +312,9 @@ module.exports = (
             tocAst.map = addSlugToUrl(tocAst.map)
           }
 
-          toc = hastToHTML(toHAST(tocAst.map))
+          toc = hastToHTML(toHAST(tocAst.map, { allowDangerousHTML: true }), {
+            allowDangerousHTML: true,
+          })
         } else {
           toc = ``
         }
@@ -434,7 +443,7 @@ module.exports = (
         truncate,
         excerptSeparator,
       })
-      var excerptMarkdown = unified()
+      const excerptMarkdown = unified()
         .use(stringify)
         .stringify(excerptAST)
       return excerptMarkdown
@@ -447,7 +456,7 @@ module.exports = (
       excerptSeparator
     ) {
       const text = await getAST(markdownNode).then(ast => {
-        let excerptNodes = []
+        const excerptNodes = []
         let isBeforeSeparator = true
         visit(
           ast,
@@ -635,7 +644,7 @@ module.exports = (
       wordCount: {
         type: `MarkdownWordCount`,
         resolve(markdownNode) {
-          let counts = {}
+          const counts = {}
 
           unified()
             .use(parse)

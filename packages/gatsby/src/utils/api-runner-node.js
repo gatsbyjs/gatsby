@@ -4,6 +4,9 @@ const { bindActionCreators } = require(`redux`)
 
 const tracer = require(`opentracing`).globalTracer()
 const reporter = require(`gatsby-cli/lib/reporter`)
+const stackTrace = require(`stack-trace`)
+const { codeFrameColumns } = require(`@babel/code-frame`)
+const fs = require(`fs-extra`)
 const getCache = require(`./get-cache`)
 const createNodeId = require(`./create-node-id`)
 const { createContentDigest } = require(`gatsby-core-utils`)
@@ -19,6 +22,7 @@ const { emitter, store } = require(`../redux`)
 const getPublicPath = require(`./get-public-path`)
 const { getNonGatsbyCodeFrameFormatted } = require(`./stack-trace-utils`)
 const { trackBuildError, decorateEvent } = require(`gatsby-telemetry`)
+const { default: errorParser } = require(`./api-runner-error-parser`)
 
 // Bind action creators per plugin so we can auto-add
 // metadata to actions they create.
@@ -165,7 +169,7 @@ const runAPI = async (plugin, api, args, activity) => {
         },
       }
     }
-    let localReporter = getLocalReporter(activity, reporter)
+    const localReporter = getLocalReporter(activity, reporter)
 
     const apiCallArgs = [
       {
@@ -233,7 +237,7 @@ const runAPI = async (plugin, api, args, activity) => {
 }
 
 let apiRunnersActive = 0
-let apisRunningByTraceId = new Map()
+const apisRunningByTraceId = new Map()
 let waitingForCasacadeToFinish = []
 
 module.exports = async (
@@ -242,7 +246,7 @@ module.exports = async (
   { pluginSource, activity, subsetOfPlugins } = {}
 ) => {
   let resolve
-  let promise = new Promise(res => (resolve = res)) // This is guaranteed to assign to `resolve` in sync
+  const promise = new Promise(res => (resolve = res)) // This is guaranteed to assign to `resolve` in sync
 
   const { parentSpan, traceId, traceTags, waitForCascadingActions } = args
 
@@ -306,12 +310,12 @@ module.exports = async (
     }
   }
 
-  let results = []
+  const results = []
   for (const plugin of implementingPlugins) {
     if (stopQueuedApiRuns) {
       break
     }
-    let result = await runPlugin(
+    const result = await runPlugin(
       api,
       plugin,
       args,
@@ -367,24 +371,53 @@ function runPlugin(api, plugin, args, stopQueuedApiRuns, activity, apiSpan) {
   return new Promise(resolve => {
     resolve(runAPI(plugin, api, { ...args, parentSpan: apiSpan }, activity))
   }).catch(err => {
-    let pluginName =
+    const pluginName =
       plugin.name === `default-site-plugin` ? `gatsby-node.js` : plugin.name
 
     decorateEvent(`BUILD_PANIC`, {
       pluginName: `${plugin.name}@${plugin.version}`,
     })
 
-    let localReporter = getLocalReporter(activity, reporter)
+    const localReporter = getLocalReporter(activity, reporter)
 
-    localReporter.panicOnBuild({
-      id: `11321`,
-      context: {
-        pluginName,
-        api,
-        message: err instanceof Error ? err.message : err,
-      },
-      error: err instanceof Error ? err : undefined,
-    })
+    const file = stackTrace
+      .parse(err)
+      .find(file => /gatsby-node/.test(file.fileName))
+
+    let codeFrame = ``
+    const structuredError = errorParser({ err })
+
+    if (file) {
+      const { fileName, lineNumber: line, columnNumber: column } = file
+
+      const code = fs.readFileSync(fileName, { encoding: `utf-8` })
+      codeFrame = codeFrameColumns(
+        code,
+        {
+          start: {
+            line,
+            column,
+          },
+        },
+        {
+          highlightCode: true,
+        }
+      )
+
+      structuredError.location = {
+        start: { line: line, column: column },
+      }
+      structuredError.filePath = fileName
+    }
+
+    structuredError.context = {
+      ...structuredError.context,
+      pluginName,
+      api,
+      codeFrame,
+    }
+
+    localReporter.panicOnBuild(structuredError)
 
     return null
   })

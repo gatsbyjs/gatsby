@@ -23,7 +23,7 @@ const restrictedNodeFields = [
 exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`).extendNodeType
 
 exports.onPreBootstrap = validateOptions
-/***
+/** *
  * Localization algorithm
  *
  * 1. Make list of all resolvable IDs worrying just about the default ids not
@@ -165,6 +165,7 @@ exports.sourceNodes = async (
     defaultLocale,
     locales,
     space,
+    useNameForId: pluginConfig.get(`useNameForId`),
   })
 
   const newOrUpdatedEntries = []
@@ -208,6 +209,7 @@ exports.sourceNodes = async (
       defaultLocale,
       locales,
       space,
+      useNameForId: pluginConfig.get(`useNameForId`),
     })
   })
 

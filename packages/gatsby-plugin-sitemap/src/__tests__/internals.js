@@ -70,9 +70,17 @@ describe(`results using default settings`, () => {
       ])
     })
 
-    it(`excludes pages`, async () => {
+    it(`excludes pages without trailing slash`, async () => {
       const graphql = () => Promise.resolve(generateQueryResultsMock())
       const queryRecords = await runQuery(graphql, ``, [`/page-2`], pathPrefix)
+      const urls = serialize(queryRecords)
+
+      verifyUrlsExistInResults(urls, [`http://dummy.url${pathPrefix}/page-1`])
+    })
+
+    it(`excludes pages with trailing slash`, async () => {
+      const graphql = () => Promise.resolve(generateQueryResultsMock())
+      const queryRecords = await runQuery(graphql, ``, [`/page-2/`], pathPrefix)
       const urls = serialize(queryRecords)
 
       verifyUrlsExistInResults(urls, [`http://dummy.url${pathPrefix}/page-1`])

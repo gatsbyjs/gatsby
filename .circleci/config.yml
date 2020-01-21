@@ -199,6 +199,8 @@ jobs:
       - <<: *attach_to_bootstrap
       - run: yarn lint:code
       - run: yarn lint:other
+      - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
+      - run: yarn typecheck
       - run: yarn check-repo-fields
 
   unit_tests_node8:
@@ -420,8 +422,27 @@ jobs:
           paths:
             - "*"
 
+  run_benchmarks:
+    docker:
+      - image: circleci/node:12
+    resource_class: xlarge
+    steps:
+      - checkout
+      - run: ./scripts/build-benchmark.sh
+
 workflows:
   version: 2
+
+  run_benchmarks:
+    jobs: [run_benchmarks]
+    triggers:
+      - schedule:
+          cron: "12 3 * * *" # every day at 03:12
+          filters:
+            branches:
+              only:
+                - master
+
   nightly-react-next:
     triggers:
       - schedule:

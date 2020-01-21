@@ -30,7 +30,7 @@ Please see the Netlify docs for more information:
 
 Install:
 
-```
+```shell
 npm install --save-dev gatsby-plugin-remove-trailing-slashes
 ```
 

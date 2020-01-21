@@ -23,6 +23,7 @@ const handlerP = fn => (...args) => {
 
 function buildLocalCommands(cli, isLocalSite) {
   const defaultHost = `localhost`
+  const defaultPort = `8000`
   const directory = path.resolve(`.`)
 
   // 'not dead' query not available in browserslist used in Gatsby v1
@@ -31,7 +32,7 @@ function buildLocalCommands(cli, isLocalSite) {
       ? [`> 1%`, `last 2 versions`, `IE >= 9`]
       : [`>0.25%`, `not dead`]
 
-  let siteInfo = { directory, browserslist: DEFAULT_BROWSERS }
+  const siteInfo = { directory, browserslist: DEFAULT_BROWSERS }
   const useYarn = existsSync(path.join(directory, `yarn.lock`))
   if (isLocalSite) {
     const json = require(path.join(directory, `package.json`))
@@ -93,8 +94,8 @@ function buildLocalCommands(cli, isLocalSite) {
       process.env.gatsby_executing_command = command
       report.verbose(`set gatsby_executing_command: "${command}"`)
 
-      let localCmd = resolveLocalCommand(command)
-      let args = { ...argv, ...siteInfo, report, useYarn, setStore }
+      const localCmd = resolveLocalCommand(command)
+      const args = { ...argv, ...siteInfo, report, useYarn, setStore }
 
       report.verbose(`running command: ${command}`)
       return handler ? handler(args, localCmd) : localCmd(args)
@@ -116,8 +117,10 @@ function buildLocalCommands(cli, isLocalSite) {
         .option(`p`, {
           alias: `port`,
           type: `string`,
-          default: `8000`,
-          describe: `Set port. Defaults to 8000`,
+          default: process.env.PORT || defaultPort,
+          describe: process.env.PORT
+            ? `Set port. Defaults to ${process.env.PORT} (set by env.PORT) (otherwise defaults ${defaultPort})`
+            : `Set port. Defaults to ${defaultPort}`,
         })
         .option(`o`, {
           alias: `open`,
@@ -273,7 +276,7 @@ function buildLocalCommands(cli, isLocalSite) {
 function isLocalGatsbySite() {
   let inGatsbySite = false
   try {
-    let { dependencies, devDependencies } = require(path.resolve(
+    const { dependencies, devDependencies } = require(path.resolve(
       `./package.json`
     ))
     inGatsbySite =
@@ -305,8 +308,8 @@ Gatsby version: ${gatsbyVersion}
 }
 
 module.exports = argv => {
-  let cli = yargs()
-  let isLocalSite = isLocalGatsbySite()
+  const cli = yargs()
+  const isLocalSite = isLocalGatsbySite()
 
   cli
     .scriptName(`gatsby`)

@@ -38,7 +38,7 @@ const createFSMachine = (
   // After 'ready', we handle the 'add' event without putting it into a queue.
   let pathQueue = []
   const flushPathQueue = () => {
-    let queue = pathQueue.slice()
+    const queue = pathQueue.slice()
     pathQueue = null
     return Promise.all(
       // eslint-disable-next-line consistent-return
@@ -51,6 +51,12 @@ const createFSMachine = (
         }
       })
     )
+  }
+
+  const log = expr => (ctx, action, meta) => {
+    if (meta.state.matches(`BOOTSTRAP.BOOTSTRAPPED`)) {
+      reporter.info(expr(ctx, action, meta))
+    }
   }
 
   const fsMachine = Machine(
@@ -85,9 +91,32 @@ const createFSMachine = (
             },
             READY: {
               on: {
-                CHOKIDAR_ADD: { actions: `createAndProcessNode` },
-                CHOKIDAR_CHANGE: { actions: `createAndProcessNode` },
-                CHOKIDAR_UNLINK: { actions: `deletePathNode` },
+                CHOKIDAR_ADD: {
+                  actions: [
+                    `createAndProcessNode`,
+                    log(
+                      (_, { pathType, path }) => `added ${pathType} at ${path}`
+                    ),
+                  ],
+                },
+                CHOKIDAR_CHANGE: {
+                  actions: [
+                    `createAndProcessNode`,
+                    log(
+                      (_, { pathType, path }) =>
+                        `changed ${pathType} at ${path}`
+                    ),
+                  ],
+                },
+                CHOKIDAR_UNLINK: {
+                  actions: [
+                    `deletePathNode`,
+                    log(
+                      (_, { pathType, path }) =>
+                        `deleted ${pathType} at ${path}`
+                    ),
+                  ],
+                },
               },
             },
           },
@@ -96,16 +125,10 @@ const createFSMachine = (
     },
     {
       actions: {
-        createAndProcessNode(_, { pathType, path }, { state }) {
-          if (state.matches(`BOOTSTRAP.BOOTSTRAPPED`)) {
-            reporter.info(`added ${pathType} at ${path}`)
-          }
+        createAndProcessNode(_, { pathType, path }) {
           createAndProcessNode(path).catch(err => reporter.error(err))
         },
         deletePathNode(_, { pathType, path }, { state }) {
-          if (state.matches(`BOOTSTRAP.BOOTSTRAPPED`)) {
-            reporter.info(`${pathType} deleted at ${path}`)
-          }
           deletePathNode(path)
         },
         flushPathQueue(_, { resolve, reject }) {
@@ -128,11 +151,8 @@ exports.sourceNodes = (api, pluginOptions) => {
   if (!fs.existsSync(pluginOptions.path)) {
     api.reporter.panic(`
 The path passed to gatsby-source-filesystem does not exist on your file system:
-
 ${pluginOptions.path}
-
 Please pick a path to an existing directory.
-
 See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
       `)
   }

@@ -5,7 +5,15 @@ const getTargetOffset = hash => {
   if (id !== ``) {
     const element = document.getElementById(id)
     if (element) {
-      return element.offsetTop - offsetY
+      const scrollTop =
+        window.pageYOffset ||
+        document.documentElement.scrollTop ||
+        document.body.scrollTop
+      const clientTop =
+        document.documentElement.clientTop || document.body.clientTop || 0
+      return (
+        element.getBoundingClientRect().top + scrollTop - clientTop - offsetY
+      )
     }
   }
   return null

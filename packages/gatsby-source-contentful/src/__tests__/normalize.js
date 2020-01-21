@@ -7,9 +7,6 @@ const {
   space,
 } = require(`./data.json`)
 
-let entryList
-let resolvable
-let foreignReferenceMap
 const conflictFieldPrefix = `contentful_test`
 // restrictedNodeFields from here https://www.gatsbyjs.org/docs/node-interface/
 const restrictedNodeFields = [
@@ -21,7 +18,11 @@ const restrictedNodeFields = [
   `internal`,
 ]
 
-describe(`Process contentful data`, () => {
+describe(`Process contentful data (by name)`, () => {
+  let entryList
+  let resolvable
+  let foreignReferenceMap
+
   it(`builds entry list`, () => {
     entryList = normalize.buildEntryList({
       currentSyncData,
@@ -48,6 +49,7 @@ describe(`Process contentful data`, () => {
       defaultLocale,
       locales,
       space,
+      useNameForId: true,
     })
     expect(foreignReferenceMap).toMatchSnapshot()
   })
@@ -69,6 +71,85 @@ describe(`Process contentful data`, () => {
         defaultLocale,
         locales,
         space,
+        useNameForId: true,
+      })
+    })
+    expect(createNode.mock.calls).toMatchSnapshot()
+  })
+
+  it(`creates nodes for each asset`, () => {
+    const createNode = jest.fn()
+    const createNodeId = jest.fn()
+    createNodeId.mockReturnValue(`uuid-from-gatsby`)
+    const assets = currentSyncData.assets
+    assets.forEach(assetItem => {
+      normalize.createAssetNodes({
+        assetItem,
+        createNode,
+        createNodeId,
+        defaultLocale,
+        locales,
+        space,
+      })
+    })
+    expect(createNode.mock.calls).toMatchSnapshot()
+  })
+})
+
+describe(`Process contentful data (by id)`, () => {
+  let entryList
+  let resolvable
+  let foreignReferenceMap
+
+  it(`builds entry list`, () => {
+    entryList = normalize.buildEntryList({
+      currentSyncData,
+      contentTypeItems,
+    })
+    expect(entryList).toMatchSnapshot()
+  })
+
+  it(`builds list of resolvable data`, () => {
+    resolvable = normalize.buildResolvableSet({
+      assets: currentSyncData.assets,
+      entryList,
+      defaultLocale,
+      locales,
+    })
+    expect(resolvable).toMatchSnapshot()
+  })
+
+  it(`builds foreignReferenceMap`, () => {
+    foreignReferenceMap = normalize.buildForeignReferenceMap({
+      contentTypeItems,
+      entryList,
+      resolvable,
+      defaultLocale,
+      locales,
+      space,
+      useNameForId: false,
+    })
+    expect(foreignReferenceMap).toMatchSnapshot()
+  })
+
+  it(`creates nodes for each entry`, () => {
+    const createNode = jest.fn()
+    const createNodeId = jest.fn()
+    createNodeId.mockReturnValue(`uuid-from-gatsby`)
+    contentTypeItems.forEach((contentTypeItem, i) => {
+      normalize.createContentTypeNodes({
+        contentTypeItem,
+        restrictedNodeFields,
+        conflictFieldPrefix,
+        entries: entryList[i].map(normalize.fixIds),
+        createNode,
+        createNodeId,
+        resolvable,
+        foreignReferenceMap,
+        defaultLocale,
+        locales,
+        space,
+        useNameForId: false,
       })
     })
     expect(createNode.mock.calls).toMatchSnapshot()

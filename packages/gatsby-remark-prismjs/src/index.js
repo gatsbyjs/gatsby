@@ -1,5 +1,4 @@
 const visit = require(`unist-util-visit`)
-
 const parseOptions = require(`./parse-options`)
 const loadLanguageExtension = require(`./load-prism-language-extension`)
 const highlightCode = require(`./highlight-code`)
@@ -20,6 +19,7 @@ module.exports = (
       host: `localhost`,
       global: false,
     },
+    escapeEntities = {},
   } = {}
 ) => {
   const normalizeLanguage = lang => {
@@ -27,12 +27,12 @@ module.exports = (
     return aliases[lower] || lower
   }
 
-  //Load language extension if defined
+  // Load language extension if defined
   loadLanguageExtension(languageExtensions)
 
   visit(markdownAST, `code`, node => {
     let language = node.meta ? node.lang + node.meta : node.lang
-    let {
+    const {
       splitLanguage,
       highlightLines,
       showLineNumbersLocal,
@@ -64,7 +64,9 @@ module.exports = (
     // @see https://github.com/gatsbyjs/gatsby/issues/1486
     const className = `${classPrefix}${languageName}`
 
-    let numLinesStyle, numLinesClass, numLinesNumber
+    let numLinesStyle
+    let numLinesClass
+    let numLinesNumber
     numLinesStyle = numLinesClass = numLinesNumber = ``
     if (showLineNumbers) {
       numLinesStyle = ` style="counter-reset: linenumber ${numberLinesStartAt -
@@ -94,7 +96,7 @@ module.exports = (
     +   `<pre${numLinesStyle} class="${className}${numLinesClass}">`
     +     `<code class="${className}">`
     +       `${useCommandLine ? commandLine(node.value, outputLines, promptUser, promptHost) : ``}`
-    +       `${highlightCode(languageName, node.value, highlightLines, noInlineHighlight)}`
+    +       `${highlightCode(languageName, node.value, escapeEntities, highlightLines, noInlineHighlight)}`
     +     `</code>`
     +     `${numLinesNumber}`
     +   `</pre>`
@@ -106,7 +108,10 @@ module.exports = (
       let languageName = `text`
 
       if (inlineCodeMarker) {
-        let [language, restOfValue] = node.value.split(`${inlineCodeMarker}`, 2)
+        const [language, restOfValue] = node.value.split(
+          `${inlineCodeMarker}`,
+          2
+        )
         if (language && restOfValue) {
           languageName = normalizeLanguage(language)
           node.value = restOfValue
@@ -118,7 +123,8 @@ module.exports = (
       node.type = `html`
       node.value = `<code class="${className}">${highlightCode(
         languageName,
-        node.value
+        node.value,
+        escapeEntities
       )}</code>`
     })
   }

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.15](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby-package@0.2.14...babel-preset-gatsby-package@0.2.15) (2020-01-09)
+
+### Bug Fixes
+
+- **babel-preset-gatsby-package:** remove node-env check as it's alway… ([#20509](https://github.com/gatsbyjs/gatsby/issues/20509)) ([bafa160](https://github.com/gatsbyjs/gatsby/commit/bafa160))
+
 ## [0.2.14](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby-package@0.2.12...babel-preset-gatsby-package@0.2.14) (2019-12-10)
 
 ### Features

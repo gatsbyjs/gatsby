@@ -1010,7 +1010,7 @@ Object {
         },
       ].concat(getFileNodes())
 
-      let result = await getQueryResult(
+      const result = await getQueryResult(
         nodes,
         `
           file {
@@ -1035,7 +1035,7 @@ Object {
         },
       ].concat(getFileNodes())
 
-      let result = await getQueryResult(
+      const result = await getQueryResult(
         nodes,
         `
           files {
@@ -1051,6 +1051,39 @@ Object {
       )
       expect(result.data.allTest.edges[0].node.files[1].absolutePath).toEqual(
         slash(path.resolve(dir, `file_2.txt`))
+      )
+    })
+
+    it(`Links to file node from non-standard field name`, async () => {
+      const fieldWithSpecialChars = `file-ж-ä-!@#$%^&*()_-=+:;'"?,~\``
+      const nodes = [
+        {
+          id: `1`,
+          "file-dashed": `./file_1.jpg`,
+          [fieldWithSpecialChars]: `./file_1.jpg`,
+          parent: `parent`,
+          internal: { type: `Test` },
+        },
+      ].concat(getFileNodes())
+
+      const result = await getQueryResult(
+        nodes,
+        `
+          file_dashed {
+            absolutePath
+          }
+          file___________________________ {
+            absolutePath
+          }
+        `
+      )
+
+      expect(result.errors).not.toBeDefined()
+      const node = result.data.allTest.edges[0].node
+      const expectedFilePath = slash(path.resolve(dir, `file_1.jpg`))
+      expect(node.file_dashed.absolutePath).toEqual(expectedFilePath)
+      expect(node.file___________________________.absolutePath).toEqual(
+        expectedFilePath
       )
     })
   })
