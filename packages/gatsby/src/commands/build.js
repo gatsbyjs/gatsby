@@ -235,11 +235,15 @@ module.exports = async function build(program: BuildArgs) {
     )
 
     if (pagePaths.length) {
-      fs.writeFileSync(createdFilesPath, pagePaths.join(`\n`), `utf8`)
+      fs.writeFileSync(createdFilesPath, `${pagePaths.join(`\n`)}\n`, `utf8`)
       report.info(`newPages.txt created`)
     }
     if (deletedPageKeys.length) {
-      fs.writeFileSync(deletedFilesPath, deletedPageKeys.join(`\n`), `utf8`)
+      fs.writeFileSync(
+        deletedFilesPath,
+        `${deletedPageKeys.join(`\n`)}\n`,
+        `utf8`
+      )
       report.info(`deletedPages.txt created`)
     }
   }
