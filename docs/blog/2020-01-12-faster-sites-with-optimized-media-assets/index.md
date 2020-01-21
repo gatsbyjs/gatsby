@@ -23,7 +23,7 @@ For example, an image uploaded to Cloudinary can be retrieved with a dynamic URL
 
 https://res.cloudinary.com/demo/image/upload/w_400,h_400,c_crop,r_max/w_200/lady.jpg
 
-Several transformation parameters can be included in the URL to modify the image on the fly. You can find more about Cloudinary here.
+Several transformation parameters can be included in the URL to modify the image on the fly. You can find more about [Cloudinary here](http://bit.ly/2GbkeT3).
 
 Using the Gatsby-Cloudinary plugins, optimized media assets from Cloudinary are bundled with the static files built by Gatsby. Those optimized assets can either be— 
 
@@ -39,10 +39,10 @@ Before file nodes are created, Cloudinary optimizes media files queried from its
 ## Preliminary Steps
 The plugins can be used for various JAMstack applications built with Gatsby. The core goal is to store, optimize and deliver media assets with possible transformations. To get started on using the two Gatsby-Cloudinary plugins, follow these steps:
 
-1. [Create a free account on Cloudinary](https://cloudinary.com/users/register/free). 
+1. [Create a free account on Cloudinary](http://bit.ly/2v3sy4N). 
 2. [Create a Gatsby project](https://www.gatsbyjs.org/tutorial/) with any of the Gatsby starters.
 3. Configure either of the plugins in the `gatsby-config.js` file.
-4. Refer to the [source plugin](https://github.com/Chuloo/gatsby-source-cloudinary) or [transformer plugin](https://github.com/cloudinary-devs/gatsby-transformer-cloudinary) documentation for the procedure on how to query Cloudinary images or upload and transform them with `gatsby-image`, respectively.
+4. Refer to the [source plugin](http://bit.ly/2NHVshC) or [transformer plugin](http://bit.ly/2sMqe1u) documentation for the procedure on how to query Cloudinary images or upload and transform them with `gatsby-image`, respectively.
 
 ## Next in the Horizon
 Given the ever-growing demand for speedy and usable apps and the continual feature advancements of Cloudinary and Gatsby, maintenance and capability enhancements of the plugins are ongoing. 
