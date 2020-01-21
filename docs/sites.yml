@@ -9397,3 +9397,15 @@
   built_by: Krishna Gopinath
   built_by_url: https://twitter.com/krishwader
   featured: false
+- title: labelmake.jp
+  main_url: https://labelmake.jp/
+  url: https://labelmake.jp/
+  description: >
+    Web Application of Variable Data Printing and Blog.
+  categories:
+    - App
+    - Data
+    - Blog
+  built_by: hand-dot
+  built_by_url: https://twitter.com/hand_dot
+  featured: false
