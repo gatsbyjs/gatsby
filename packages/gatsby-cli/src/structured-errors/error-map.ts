@@ -312,7 +312,7 @@ export const errorMap = {
     text: (context): string =>
       `"${context.pluginName}" threw an error while running the ${
         context.api
-      } lifecycle:\n\n${context.message}${optionalGraphQLInfo(context)}`,
+      } lifecycle:\n\n${context.sourceMessage}${optionalGraphQLInfo(context)}`,
     type: Type.PLUGIN,
     level: Level.ERROR,
   },
@@ -408,7 +408,7 @@ export const errorMap = {
   // "X" is not defined in Gatsby's node APIs
   "11330": {
     text: (context): string =>
-      `"${context.pluginName}" threw an error while running the ${context.api} lifecycle:\n\n${context.message}\n\n${context.codeFrame}\n\nMake sure that you don't have a typo somewhere and use valid arguments in ${context.api} lifecycle.\nLearn more about ${context.api} here: https://www.gatsbyjs.org/docs/node-apis/#${context.api}`,
+      `"${context.pluginName}" threw an error while running the ${context.api} lifecycle:\n\n${context.sourceMessage}\n\n${context.codeFrame}\n\nMake sure that you don't have a typo somewhere and use valid arguments in ${context.api} lifecycle.\nLearn more about ${context.api} here: https://www.gatsbyjs.org/docs/node-apis/#${context.api}`,
     type: Type.PLUGIN,
     level: Level.ERROR,
   },

@@ -1,12 +1,4 @@
-interface IMatch {
-  id: string
-  context: {
-    message: string
-    [key: string]: string
-  }
-  error?: Error | undefined
-  [key: string]: unknown
-}
+import { IMatch } from "../types"
 
 const errorParser = ({ err }): IMatch => {
   const handlers = [
@@ -15,7 +7,7 @@ const errorParser = ({ err }): IMatch => {
       cb: (match): IMatch => {
         return {
           id: `11330`,
-          context: { message: match[0], arg: match[1] },
+          context: { sourceMessage: match[0], arg: match[1] },
         }
       },
     },
@@ -25,7 +17,7 @@ const errorParser = ({ err }): IMatch => {
       cb: (match): IMatch => {
         return {
           id: `11321`,
-          context: { message: err instanceof Error ? match[0] : err },
+          context: { sourceMessage: err instanceof Error ? match[0] : err },
           error: err instanceof Error ? err : undefined,
         }
       },
