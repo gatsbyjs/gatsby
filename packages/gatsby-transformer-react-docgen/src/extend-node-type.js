@@ -8,63 +8,66 @@ const {
 } = require(`gatsby/graphql`)
 const { stripIndent, oneLine } = require(`common-tags`)
 
-const PropDefaultValue = new GraphQLObjectType({
-  name: `PropDefaultValue`,
-  fields: () => {
-    return {
-      value: { type: GraphQLString },
-      computed: { type: GraphQLBoolean },
-    }
-  },
-})
+const PropDefaultValue = () =>
+  new GraphQLObjectType({
+    name: `PropDefaultValue`,
+    fields: () => {
+      return {
+        value: { type: GraphQLString },
+        computed: { type: GraphQLBoolean },
+      }
+    },
+  })
 
-const PropTypeValue = new GraphQLObjectType({
-  name: `PropTypeValue`,
-  fields: () => {
-    return {
-      name: { type: new GraphQLNonNull(GraphQLString) },
-      value: { type: GraphQLJSON },
-      raw: { type: GraphQLString },
-    }
-  },
-})
+const PropTypeValue = () =>
+  new GraphQLObjectType({
+    name: `PropTypeValue`,
+    fields: () => {
+      return {
+        name: { type: new GraphQLNonNull(GraphQLString) },
+        value: { type: GraphQLJSON },
+        raw: { type: GraphQLString },
+      }
+    },
+  })
 
-const Method = new GraphQLObjectType({
-  name: `ComponentMethod`,
-  fields: () => {
-    return {
-      name: { type: new GraphQLNonNull(GraphQLString) },
-      description: { type: GraphQLString },
-      docblock: {
-        type: GraphQLString,
-        description: oneLine`
-        The raw comment block leading a method declaration
-      `,
-      },
-      modifiers: {
-        type: new GraphQLList(GraphQLString),
-        description: oneLine`
-        Modifiers describing the kind and sort of method e.g. "static",
-        "generator", or "async".
-      `,
-      },
-      params: {
-        type: new GraphQLList(
-          new GraphQLObjectType({
-            name: `ComponentMethodParams`,
-            fields: () => {
-              return {
-                name: { type: GraphQLString },
-                type: { type: GraphQLJSON },
-              }
-            },
-          })
-        ),
-      },
-      returns: { type: new GraphQLList(GraphQLJSON) },
-    }
-  },
-})
+const Method = () =>
+  new GraphQLObjectType({
+    name: `ComponentMethod`,
+    fields: () => {
+      return {
+        name: { type: new GraphQLNonNull(GraphQLString) },
+        description: { type: GraphQLString },
+        docblock: {
+          type: GraphQLString,
+          description: oneLine`
+          The raw comment block leading a method declaration
+        `,
+        },
+        modifiers: {
+          type: new GraphQLList(GraphQLString),
+          description: oneLine`
+          Modifiers describing the kind and sort of method e.g. "static",
+          "generator", or "async".
+        `,
+        },
+        params: {
+          type: new GraphQLList(
+            new GraphQLObjectType({
+              name: `ComponentMethodParams`,
+              fields: () => {
+                return {
+                  name: { type: GraphQLString },
+                  type: { type: GraphQLJSON },
+                }
+              },
+            })
+          ),
+        },
+        returns: { type: new GraphQLList(GraphQLJSON) },
+      }
+    },
+  })
 
 function extendComponents() {
   return {
@@ -83,7 +86,7 @@ function extendComponents() {
       `,
     },
     methods: {
-      type: new GraphQLList(Method),
+      type: new GraphQLList(Method()),
       description: `Component methods`,
     },
   }
@@ -91,10 +94,10 @@ function extendComponents() {
 
 function extendProp() {
   return {
-    type: { type: PropTypeValue },
+    type: { type: PropTypeValue() },
     flowType: { type: GraphQLJSON },
     tsType: { type: GraphQLJSON },
-    defaultValue: { type: PropDefaultValue },
+    defaultValue: { type: PropDefaultValue() },
     doclets: { type: GraphQLJSON },
     docblock: {
       type: GraphQLString,

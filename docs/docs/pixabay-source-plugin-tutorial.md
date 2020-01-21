@@ -68,7 +68,7 @@ cd plugins
 
 The bare essentials of a plugin are a directory named after your plugin, which contains a `package.json` file and a `gatsby-node.js` file:
 
-```
+```text
 |-- plugins
     |-- gatsby-source-pixabay
         |-- gatsby-node.js

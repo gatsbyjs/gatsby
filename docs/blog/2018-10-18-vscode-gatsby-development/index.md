@@ -59,18 +59,18 @@ VS Code has a built-in debugger to enable proper runtime debugging, if you want 
 
 _NOTE_: You most likely will want to add the `.vscode` folder to your `.gitignore` file so it is not checked into source.
 
-```json5:title=launch.json
+```json:title=launch.json
 {
-  version: "0.2.0",
-  configurations: [
+  "version": "0.2.0",
+  "configurations": [
     {
-      type: "chrome",
-      request: "launch",
-      name: "Launch Chrome for Gatsby site",
-      url: "http://localhost:8000",
-      webRoot: "${workspaceFolder}",
-    },
-  ],
+      "type": "chrome",
+      "request": "launch",
+      "name": "Launch Chrome for Gatsby site",
+      "url": "http://localhost:8000",
+      "webRoot": "${workspaceFolder}"
+    }
+  ]
 }
 ```
 

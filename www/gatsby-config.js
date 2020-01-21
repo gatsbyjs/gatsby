@@ -133,8 +133,8 @@ module.exports = {
           )
         },
         gatsbyRemarkPlugins: [
+          `gatsby-remark-embedder`,
           `gatsby-remark-graphviz`,
-          `gatsby-remark-embed-video`,
           {
             resolve: `gatsby-remark-images`,
             options: {
@@ -158,8 +158,8 @@ module.exports = {
       resolve: `gatsby-transformer-remark`,
       options: {
         plugins: [
+          `gatsby-remark-embedder`,
           `gatsby-remark-graphviz`,
-          `gatsby-remark-embed-video`,
           `gatsby-remark-code-titles`,
           {
             resolve: `gatsby-remark-images`,
@@ -305,7 +305,14 @@ module.exports = {
         ],
       },
     },
-    `gatsby-plugin-netlify`,
+    {
+      resolve: `gatsby-plugin-netlify`,
+      options: {
+        headers: {
+          "/*": [`Referrer-Policy: strict-origin-when-cross-origin`],
+        },
+      },
+    },
     `gatsby-plugin-netlify-cache`,
     {
       resolve: `gatsby-plugin-mailchimp`,

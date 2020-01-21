@@ -7,7 +7,7 @@ import url from "url"
 import Img from "gatsby-image"
 import qs from "qs"
 
-import { space, mediaQueries } from "../gatsby-plugin-theme-ui"
+import { mediaQueries } from "../gatsby-plugin-theme-ui"
 import Layout from "../components/layout"
 import ShareMenu from "../components/share-menu"
 import Button from "../components/button"
@@ -29,62 +29,15 @@ const styles = {
   prevNextLink: {
     color: `lilac`,
     fontFamily: `header`,
-    position: `absolute`,
-    top: 280,
-    width: 300,
+    px: [6, null, null, 0],
   },
   prevNextLinkSiteTitle: {
-    color: `gatsby`,
+    color: `link.color`,
     fontWeight: `bold`,
   },
   prevNextImage: {
     borderRadius: 1,
     boxShadow: `overlay`,
-  },
-  prevNextPermalinkLabel: {
-    color: `textMuted`,
-    fontFamily: `header`,
-    fontWeight: `body`,
-  },
-  prevNextPermalinkImage: {
-    mb: 0,
-    mt: 6,
-  },
-  prevNextPermalinkTitle: {
-    color: `gatsby`,
-    display: `block`,
-    position: `relative`,
-  },
-  prevNextPermalinkContainer: {
-    width: `50%`,
-  },
-  truncate: {
-    whiteSpace: `nowrap`,
-    overflow: `hidden`,
-    textOverflow: `ellipsis`,
-    display: `block`,
-    width: `100%`,
-  },
-  prevNextPermalinkArrow: {
-    color: `lilac`,
-    mr: 4,
-    verticalAlign: `sub`,
-    position: `absolute`,
-    left: `-${space[6]}`,
-    top: `50%`,
-    transform: `translateY(-50%)`,
-  },
-  prevNextPermalinkMeta: {
-    mr: 8,
-    display: `flex`,
-    flexDirection: `row`,
-    justifyContent: `flex-end`,
-  },
-  prevNextPermalinkMetaInner: {
-    flexBasis: 540,
-    flexGrow: 0,
-    flexShrink: 1,
-    minWidth: 0,
   },
 }
 
@@ -193,38 +146,55 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 isModal: true,
                 filters,
               }}
-              css={{
-                display: `block`,
+              sx={{
                 order: 2,
+                m: 6,
+                mt: 0,
                 position: `relative`,
+                display: `flex`,
                 [mediaQueries.md]: {
+                  mt: 6,
+                  display: `block`,
                   top: `110px`,
                 },
               }}
             >
-              <div css={{ margin: `25px` }}>
-                <Img
-                  key={nextSite.id}
-                  sx={styles.prevNextImage}
-                  backgroundColor
-                  fixed={{
-                    srcSet: ``,
-                    src:
-                      nextSite.childScreenshot.screenshotFile.childImageSharp
-                        .resize.src,
-                    width: 100,
-                    height: 100,
-                  }}
-                  alt=""
-                />
-              </div>
+              <Img
+                key={nextSite.id}
+                sx={styles.prevNextImage}
+                backgroundColor
+                fixed={{
+                  srcSet: ``,
+                  src:
+                    nextSite.childScreenshot.screenshotFile.childImageSharp
+                      .resize.src,
+                  width: 100,
+                  height: 100,
+                }}
+                imgStyle={{
+                  margin: 0,
+                }}
+                alt=""
+              />
               <div
                 sx={{
                   ...styles.prevNextLink,
-                  transform: `translateX(-75px) rotate(90deg)`,
+                  [mediaQueries.md]: {
+                    position: `absolute`,
+                    top: 240,
+                    width: 300,
+                    transform: `translateX(-80px) rotate(90deg)`,
+                  },
                 }}
               >
-                <MdArrowUpward />
+                <MdArrowUpward
+                  sx={{
+                    transform: `rotate(90deg)`,
+                    [mediaQueries.md]: {
+                      transform: `none`,
+                    },
+                  }}
+                />
                 <div> Next Site in Showcase </div>
                 <div sx={styles.prevNextLinkSiteTitle}>{nextSite.title}</div>
               </div>
@@ -237,40 +207,57 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 isModal: true,
                 filters,
               }}
-              css={{
-                display: `block`,
+              sx={{
                 order: 1,
                 position: `relative`,
+                width: `100%`,
+                m: 6,
+                display: `flex`,
                 [mediaQueries.md]: {
+                  display: `block`,
                   order: 0,
                   top: `110px`,
+                  width: `auto`,
                 },
               }}
             >
-              <div css={{ margin: `25px` }}>
-                <Img
-                  key={previousSite.id}
-                  sx={styles.prevNextImage}
-                  backgroundColor
-                  fixed={{
-                    srcSet: ``,
-                    src:
-                      previousSite.childScreenshot.screenshotFile
-                        .childImageSharp.resize.src,
-                    width: 100,
-                    height: 100,
-                  }}
-                  alt=""
-                />
-              </div>
+              <Img
+                key={previousSite.id}
+                sx={styles.prevNextImage}
+                backgroundColor
+                fixed={{
+                  srcSet: ``,
+                  src:
+                    previousSite.childScreenshot.screenshotFile.childImageSharp
+                      .resize.src,
+                  width: 100,
+                  height: 100,
+                }}
+                imgStyle={{
+                  margin: 0,
+                }}
+                alt=""
+              />
               <div
                 sx={{
                   ...styles.prevNextLink,
-                  transform: `translateX(-75px) rotate(-90deg)`,
-                  textAlign: `right`,
+                  [mediaQueries.md]: {
+                    textAlign: `right`,
+                    position: `absolute`,
+                    top: 240,
+                    width: 300,
+                    transform: `translateX(-80px) rotate(-90deg)`,
+                  },
                 }}
               >
-                <MdArrowUpward />
+                <MdArrowUpward
+                  sx={{
+                    transform: `rotate(-90deg)`,
+                    [mediaQueries.md]: {
+                      transform: `none`,
+                    },
+                  }}
+                />
                 <div> Previous Site in Showcase </div>
                 <div sx={styles.prevNextLinkSiteTitle}>
                   {previousSite.title}
@@ -415,11 +402,7 @@ const ShowcaseDetails = ({ parent, data, isModal, categories }) => (
                 }}
               >
                 <p>{data.sitesYaml.description}</p>
-                <div
-                  sx={{
-                    display: `flex`,
-                  }}
-                >
+                <div sx={{ display: `flex` }}>
                   <div sx={{ color: `textMuted`, pr: 5 }}>Categories</div>
                   <div>
                     {categories.map((c, i) => (

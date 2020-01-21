@@ -11,7 +11,7 @@ let store = Redux.createStore(
 )
 
 const storeSwapListeners = []
-const onLogActionListeners = []
+const onLogActionListeners = new Set()
 
 const isInternalAction = action => {
   if (
@@ -58,15 +58,18 @@ const iface = {
       // deal with actions needed just for internal tracking of status
       return
     }
-    onLogActionListeners.forEach(fn => {
+    for (const fn of onLogActionListeners) {
       fn(action)
-    })
+    }
   },
   onStoreSwap: fn => {
     storeSwapListeners.push(fn)
   },
   onLogAction: fn => {
-    onLogActionListeners.push(fn)
+    onLogActionListeners.add(fn)
+    return () => {
+      onLogActionListeners.delete(fn)
+    }
   },
   setStore: s => {
     s.dispatch({

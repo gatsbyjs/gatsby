@@ -703,31 +703,32 @@ export interface CreateSchemaCustomizationArgs extends ParentSpanPluginArgs {
 }
 
 export interface PreRenderHTMLArgs extends NodePluginArgs {
-  getHeadComponents: any[]
-  replaceHeadComponents: Function
-  getPreBodyComponents: any[]
-  replacePreBodyComponents: Function
-  getPostBodyComponents: any[]
-  replacePostBodyComponents: Function
+  getHeadComponents: () => React.ReactNode[]
+  replaceHeadComponents: (comp: React.ReactNode[]) => void
+  getPreBodyComponents: () => React.ReactNode[]
+  replacePreBodyComponents: (comp: React.ReactNode[]) => void
+  getPostBodyComponents: () => React.ReactNode[]
+  replacePostBodyComponents: (comp: React.ReactNode[]) => void
 }
 
+type ReactProps<T extends Element> = React.DetailedHTMLProps<React.HTMLAttributes<T>, T>
 export interface RenderBodyArgs extends NodePluginArgs {
   pathname: string
-  setHeadComponents: Function
-  setHtmlAttributes: Function
-  setBodyAttributes: Function
-  setPreBodyComponents: Function
-  setPostBodyComponents: Function
+  setHeadComponents: (comp: React.ReactNode[]) => void
+  setHtmlAttributes: (attr: ReactProps<HTMLHtmlElement>) => void
+  setBodyAttributes: (attr: ReactProps<HTMLBodyElement>) => void
+  setPreBodyComponents: (comp: React.ReactNode[]) => void
+  setPostBodyComponents: (comp: React.ReactNode[]) => void
   setBodyProps: Function
 }
 
 export interface ReplaceRendererArgs extends NodePluginArgs {
-  replaceBodyHTMLString: Function
-  setHeadComponents: Function
-  setHtmlAttributes: Function
-  setBodyAttributes: Function
-  setPreBodyComponents: Function
-  setPostBodyComponents: Function
+  replaceBodyHTMLString: (str: string) => void
+  setHeadComponents: (comp: React.ReactNode[]) => void
+  setHtmlAttributes: (attr: ReactProps<HTMLHtmlElement>) => void
+  setBodyAttributes: (attr: ReactProps<HTMLBodyElement>) => void
+  setPreBodyComponents: (comp: React.ReactNode[]) => void
+  setPostBodyComponents: (comp: React.ReactNode[]) => void
   setBodyProps: Function
 }
 
@@ -803,7 +804,12 @@ export interface Actions {
 
   /** @see https://www.gatsbyjs.org/docs/actions/#createPage */
   createPage<TContext = Record<string, unknown>>(
-    args: { path: string; component: string; context: TContext },
+    args: {
+      path: string
+      matchPath?: string
+      component: string
+      context: TContext
+    },
     plugin?: ActionPlugin,
     option?: ActionOptions
   ): void
@@ -877,6 +883,17 @@ export interface Actions {
     plugin?: ActionPlugin
   ): void
 
+  /** @see https://www.gatsbyjs.org/docs/actions/#createJobV2 */
+  createJobV2(
+    job: {
+      name: string
+      inputPaths: string[]
+      outputDir: string
+      args: Record<string, unknown>
+    },
+    plugin?: ActionPlugin
+  ): Promise<unknown>
+
   /** @see https://www.gatsbyjs.org/docs/actions/#setJob */
   setJob(
     job: Record<string, unknown> & { id: string },
@@ -932,32 +949,50 @@ export interface Store {
   replaceReducer: Function
 }
 
-type logMessageType = (format: string, ...args: any[]) => void
-type logErrorType = (message: string, error?: Error) => void
+type LogMessageType = (format: string) => void
+type LogErrorType = (errorMeta: string | Object, error?: Object) => void
+
+export type ActivityTracker = {
+  start(): () => void
+  end(): () => void
+  span: Object
+  setStatus(status: string): void
+  panic: LogErrorType
+  panicOnBuild: LogErrorType
+}
+
+export type ProgressActivityTracker = Omit<ActivityTracker, "end"> & {
+  tick(increment?: number): void
+  done(): void
+  total: number
+}
+
+export type ActivityArgs = {
+  parentSpan?: Object
+  id?: string
+}
 
 export interface Reporter {
-  stripIndent: Function
+  stripIndent: (input: string) => string
   format: object
-  setVerbose(isVerbose: boolean): void
-  setNoColor(isNoColor: boolean): void
-  panic: logErrorType
-  panicOnBuild: logErrorType
-  error: logErrorType
+  setVerbose(isVerbose?: boolean): void
+  setNoColor(isNoColor?: boolean): void
+  panic: LogErrorType
+  panicOnBuild: LogErrorType
+  error: LogErrorType
   uptime(prefix: string): void
-  success: logMessageType
-  verbose: logMessageType
-  info: logMessageType
-  warn: logMessageType
-  log: logMessageType
-  activityTimer(
-    name: string,
-    activityArgs: { parentSpan: object }
-  ): {
-    start: () => void
-    status(status: string): void
-    end: () => void
-    span: object
-  }
+  success: LogMessageType
+  verbose: LogMessageType
+  info: LogMessageType
+  warn: LogMessageType
+  log: LogMessageType
+  activityTimer(name: string, activityArgs?: ActivityArgs): ActivityTracker
+  createProgress(
+    text: string,
+    total?: number,
+    start?: number,
+    activityArgs?: ActivityArgs
+  ): ProgressActivityTracker
 }
 
 export interface Cache {

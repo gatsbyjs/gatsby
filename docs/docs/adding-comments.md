@@ -34,7 +34,7 @@ If these concerns outweigh the benefits of Disqus, you may want to look into som
 
 ## Implementing Disqus
 
-![Disqus logo](images/disqus-logo.svg)
+![Disqus logo](./images/disqus-logo.svg)
 
 Here are the steps for adding Disqus comments to your own blog:
 
@@ -47,12 +47,12 @@ npm install disqus-react
 
 3. Add the shortname from step 1 as something like `GATSBY_DISQUS_NAME` to your `.env` and `.env.example` files so that people forking your repo will know that they need to supply this value to get comments to work. (You need to prefix the environment variable with `GATSBY_` in order to [make it available to client-side code](https://www.gatsbyjs.org/docs/environment-variables/#client-side-javascript).)
 
-```title=.env.example
+```text:title=.env.example
 # enables Disqus comments for blog posts
 GATSBY_DISQUS_NAME=insertValue
 ```
 
-```title=.env
+```text:title=.env
 GATSBY_DISQUS_NAME=yourSiteShortname
 ```
 
@@ -76,7 +76,7 @@ const disqusConfig = {
 
 Where `identifier` must be a string or number that uniquely identifies the post. It could be the post's slug, title or some ID. Finally, add `DiscussionEmbed` to the JSX of your post template.
 
-```js:title=src/templates/post.js
+```jsx:title=src/templates/post.js
 return (
   <Global>
     <PageBody>
@@ -89,4 +89,4 @@ return (
 
 And you're done. You should now see the Disqus comment form appear beneath your blog post [looking like this](https://janosh.io/blog/disqus-comments#disqus_thread). Happy blogging!
 
-[![Disqus comments](images/disqus-comments.png)](https://janosh.io/blog/disqus-comments#disqus_thread)
+[![Disqus comments](./images/disqus-comments.png)](https://janosh.io/blog/disqus-comments#disqus_thread)

@@ -29,18 +29,25 @@ Changes to the meaning of a text or code example should be done in the main [Eng
 The first step for starting a new translation is to check what exists. So far, there are repositories for the following languages:
 
 - [Arabic](https://github.com/gatsbyjs/gatsby-ar)
+- [Bengali](https://github.com/gatsbyjs/gatsby-bn)
 - [German](https://github.com/gatsbyjs/gatsby-de)
 - [Spanish](https://github.com/gatsbyjs/gatsby-es)
+- [French](https://github.com/gatsbyjs/gatsby-fr)
+- [Gujarati](https://github.com/gatsbyjs/gatsby-gu)
 - [Hindi](https://github.com/gatsbyjs/gatsby-hi)
 - [Indonesian](https://github.com/gatsbyjs/gatsby-id)
 - [Italian](https://github.com/gatsbyjs/gatsby-it)
+- [Japanese](https://github.com/gatsbyjs/gatsby-ja)
 - [Korean](https://github.com/gatsbyjs/gatsby-ko)
+- [Mongolian](https://github.com/gatsbyjs/gatsby-mn)
 - [Dutch](https://github.com/gatsbyjs/gatsby-nl)
 - [Polish](https://github.com/gatsbyjs/gatsby-pl)
 - [Brazilian Portuguese](https://github.com/gatsbyjs/gatsby-pt-BR)
 - [Russian](https://github.com/gatsbyjs/gatsby-ru)
 - [Turkish](https://github.com/gatsbyjs/gatsby-tr)
+- [Vietnamese](https://github.com/gatsbyjs/gatsby-vi)
 - [Simplified Chinese](https://github.com/gatsbyjs/gatsby-zh-Hans)
+- [Traditional Chinese](https://github.com/gatsbyjs/gatsby-zh-Hant)
 
 > Note: Once a new translation repository is created, feel free to add it here in a PR!
 
@@ -86,7 +93,7 @@ Periodically, gatsbybot will create pull requests to keep translations repos up-
 
 If for whatever reason you'd like to manually sync your translation repo, you can do so by running these commands:
 
-```
+```shell
 git remote add source https://github.com/gatsbyjs/gatsby-i18n-source.git
 git pull source master
 ```
@@ -135,7 +142,7 @@ Sometimes a PR has a valid reason to not be merged as-is. Templates can help spe
 
 If a PR includes content that is of poor quality (such as from Google Translate or missing important nuance) or doesn't meet the requirements, it would help to include a drafted reply to encourage contributors to continue with the project. Here is an example that can be translated for a given repo:
 
-```
+```text
 Hey! Thanks so much for opening a pull request!
 
 We really appreciate you sending this over, but the change you’ve proposed is not going to be accepted because it doesn't meaningfully translate the Gatsby docs content.
@@ -150,7 +157,7 @@ Thanks again, and we look forward to seeing more PRs from you in the future! �
 
 Because the main Gatsby repo is the source of content, more substantive changes should be closed and redirected there. Here is a template that could be translated for your repo:
 
-```
+```text
 Hey! Thanks so much for opening a pull request!
 
 We really appreciate you sending this over, but the change you’ve proposed is not going to be accepted because it includes broad changes to the docs content that should be done in the [main Gatsby repo](https://github.com/gatsbyjs/gatsby) instead.
@@ -163,7 +170,7 @@ Thanks again, and we look forward to seeing more PRs from you in the future! �
 
 ## Style guide for translations
 
-Each language translation may have some specific ways it differs from the advice Gatsby provides for writing in English, such as the use of "you" as the pronoun or the Oxford comma. Each translation group should decide on conventions and stick with them for consistency, documenting those decisions in the repo's [style guide](https://github.com/gatsbyjs/gatsby-i18n-source/blob/master/style-guide.md) file to set contributors up for success. Use the [English style guide](/contributing/gatsby-style-guide/) as a reference as a reference to determine the equivalent rules in your language.
+Each language translation may have some specific ways it differs from the advice Gatsby provides for writing in English, such as the use of "you" as the pronoun or the Oxford comma. Each translation group should decide on conventions and stick with them for consistency, documenting those decisions in the repo's [style guide](https://github.com/gatsbyjs/gatsby-i18n-source/blob/master/style-guide.md) file to set contributors up for success. Use the [English style guide](/contributing/gatsby-style-guide/) as a reference to determine the equivalent rules in your language.
 
 Guidelines that remain firm no matter the language stem from the goals and values of Gatsby as a project: to provide a **friendly community for Gatsby learners of all skill and experience levels** that's also **safe and welcoming to contributors**. Translated docs and learning materials should [maintain these values](/blog/2019-04-19-gatsby-why-we-write/) with **high-quality spelling and grammar**, accurate information, similar structure and purpose. For any questions about guidelines, feel free to [get in touch](/contributing/how-to-contribute/#not-sure-how-to-start-contributing) with the Gatsby team.
 
@@ -185,7 +192,7 @@ Leave text in code blocks untranslated except for comments. You may optionally t
 
 ✅ DO:
 
-```js
+```jsx
 // Ejemplo
 import React from "react"
 export default () => (
@@ -195,7 +202,7 @@ export default () => (
 
 ✅ ALSO OKAY:
 
-```js
+```jsx
 // Ejemplo
 import React from "react"
 export default () => (
@@ -205,7 +212,7 @@ export default () => (
 
 ❌ DON'T:
 
-```js
+```jsx
 // Ejemplo
 import React from "react"
 export default () => (
@@ -216,7 +223,7 @@ export default () => (
 
 ❌ DEFINITELY DON'T:
 
-```js
+```jsx
 importar Reaccionar desde "reaccionar"
 exportar defecto () => (
    <div estilo = {{color: `morado`, fontSize:` 72px`}}> ¡Hola Gatsby! </div>
@@ -229,13 +236,13 @@ Translate link text but keep all slugs and hashes in links the same as they are 
 
 ✅ OK:
 
-```md
+```markdown
 - [Configure su entorno de desarrollo](/tutorial/set-up-your-development-environment)
 ```
 
 ❌ DON'T:
 
-```md
+```markdown
 - [Configura tu entorno de desarrollo](/tutorial/configura-tu-entorno-de-desarrollo)
 ```
 
@@ -248,7 +255,7 @@ If an external link is to an article in a reference like [MDN] or [Wikipedia], a
 
 ✅ OK:
 
-```md
+```markdown
 Los elementos de React son [inmutables](https://es.wikipedia.org/wiki/Objeto_inmutable).
 ```
 

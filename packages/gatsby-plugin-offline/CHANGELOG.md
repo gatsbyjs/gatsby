@@ -3,6 +3,70 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.32](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.31...gatsby-plugin-offline@3.0.32) (2020-01-15)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+## [3.0.31](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.30...gatsby-plugin-offline@3.0.31) (2020-01-09)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+## [3.0.30](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.29...gatsby-plugin-offline@3.0.30) (2019-12-20)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+## [3.0.29](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.27...gatsby-plugin-offline@3.0.29) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+## [3.0.28](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.27...gatsby-plugin-offline@3.0.28) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+## [3.0.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.26...gatsby-plugin-offline@3.0.27) (2019-12-05)
+
+### Bug Fixes
+
+- **gatsby-plugin-offline:** Replaced cacheOnly with cacheFirst ([#19926](https://github.com/gatsbyjs/gatsby/issues/19926)) ([7e842df](https://github.com/gatsbyjs/gatsby/commit/7e842df))
+
+## [3.0.26](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.25...gatsby-plugin-offline@3.0.26) (2019-12-02)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+## [3.0.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.24...gatsby-plugin-offline@3.0.25) (2019-11-28)
+
+### Bug Fixes
+
+- **gatsby-plugin-offline:** Update incorrect casing for runtimeCachin… ([#19817](https://github.com/gatsbyjs/gatsby/issues/19817)) ([b44aca0](https://github.com/gatsbyjs/gatsby/commit/b44aca0))
+
+## [3.0.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.23...gatsby-plugin-offline@3.0.24) (2019-11-26)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+## [3.0.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.22...gatsby-plugin-offline@3.0.23) (2019-11-25)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+## [3.0.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.21...gatsby-plugin-offline@3.0.22) (2019-11-18)
+
+### Bug Fixes
+
+- **gatsby:** Handle special characters in windows paths ([#19600](https://github.com/gatsbyjs/gatsby/issues/19600)) ([9929cf0](https://github.com/gatsbyjs/gatsby/commit/9929cf0))
+
+## [3.0.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.20...gatsby-plugin-offline@3.0.21) (2019-11-15)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+## [3.0.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.19...gatsby-plugin-offline@3.0.20) (2019-11-13)
+
+### Features
+
+- **gatsby-plugin-offline:** Merge workboxConfig and default o… ([#19437](https://github.com/gatsbyjs/gatsby/issues/19437)) ([8791329](https://github.com/gatsbyjs/gatsby/commit/8791329))
+
+## [3.0.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.18...gatsby-plugin-offline@3.0.19) (2019-11-10)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
 ## [3.0.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.0.17...gatsby-plugin-offline@3.0.18) (2019-11-04)
 
 ### Bug Fixes

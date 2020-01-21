@@ -100,7 +100,7 @@ const reporter: Reporter = {
   format: chalk,
   /**
    * Toggle verbosity.
-   * @param {boolean} [isVerbose=true]
+   * @param {boolean} [_isVerbose=true]
    */
   setVerbose: (_isVerbose = true) => {
     isVerbose = _isVerbose
@@ -215,7 +215,7 @@ const reporter: Reporter = {
 
   /**
    * Time an activity.
-   * @param {string} name - Name of activity.
+   * @param {string} text - Name of activity.
    * @param {ActivityArgs} activityArgs - optional object with tracer parentSpan
    * @returns {ActivityTracker} The activity tracker.
    */
@@ -286,7 +286,7 @@ const reporter: Reporter = {
    * are visible to the user. So this function can be used to create a _hidden_ activity
    * that while not displayed in the CLI, still triggers a change in process status.
    *
-   * @param {string} name - Name of activity.
+   * @param {string} text - Name of activity.
    * @param {ActivityArgs} activityArgs - optional object with tracer parentSpan
    * @returns {ActivityTracker} The activity tracker.
    */
@@ -324,7 +324,7 @@ const reporter: Reporter = {
 
   /**
    * Create a progress bar for an activity
-   * @param {string} name - Name of activity.
+   * @param {string} text - Name of activity.
    * @param {number} total - Total items to be processed.
    * @param {number} start - Start count to show.
    * @param {ActivityArgs} activityArgs - optional object with tracer parentSpan
@@ -343,6 +343,26 @@ const reporter: Reporter = {
     }
     const span = tracer.startSpan(text, spanArgs)
 
+    let lastUpdateTime = 0
+    let unflushedProgress = 0
+    let unflushedTotal = 0
+    const progressUpdateDelay = Math.round(1000 / 10) // 10 fps *shrug*
+
+    const updateProgress = forced => {
+      const t = Date.now()
+      if (!forced && t - lastUpdateTime <= progressUpdateDelay) return
+
+      if (unflushedTotal > 0) {
+        reporterActions.setActivityTotal({ id, total: unflushedTotal })
+        unflushedTotal = 0
+      }
+      if (unflushedProgress > 0) {
+        reporterActions.activityTick({ id, increment: unflushedProgress })
+        unflushedProgress = 0
+      }
+      lastUpdateTime = t
+    }
+
     return {
       start: () => {
         reporterActions.startActivity({
@@ -360,7 +380,8 @@ const reporter: Reporter = {
         })
       },
       tick: (increment = 1) => {
-        reporterActions.activityTick({ id, increment })
+        unflushedProgress += increment // Have to manually track this :/
+        updateProgress()
       },
       panicOnBuild(...args) {
         span.finish()
@@ -382,6 +403,7 @@ const reporter: Reporter = {
         return reporter.panic(...args)
       },
       done: () => {
+        updateProgress(true)
         span.finish()
         reporterActions.endActivity({
           id,
@@ -389,7 +411,8 @@ const reporter: Reporter = {
         })
       },
       set total(value) {
-        reporterActions.setActivityTotal({ id, total: value })
+        unflushedTotal = value
+        updateProgress()
       },
       span,
     }

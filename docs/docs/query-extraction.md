@@ -11,11 +11,11 @@ title: Query Extraction
 >
 > You can help by making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228).
 
-## Extracting Queries from Files
+### Extracting queries from files
 
-Up until now, Gatsby has [sourced all nodes](/docs/node-creation/) into redux, [inferred a schema](/docs/schema-generation/) from them, and [created all pages](/docs/page-creation/). The next step is to extract and compile all graphql queries from your source files. The entrypoint to this phase is [query-watcher extractQueries()](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/query/query-watcher.js), which immediately compiles all graphql queries by calling into [query-compiler.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/query/query-compiler.js).
+Up until now, Gatsby has [sourced all nodes](/docs/node-creation/) into Redux, [inferred a schema](/docs/schema-generation/) from them, and [created all pages](/docs/page-creation/). The next step is to extract and compile all GraphQL queries from your source files. The entrypoint to this phase is [query-watcher extractQueries()](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/query/query-watcher.js), which immediately compiles all GraphQL queries by calling into [query-compiler.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/query/query-compiler.js).
 
-### Query Compilation
+#### Query compilation
 
 The first thing it does is use [babylon-traverse](https://babeljs.io/docs/en/next/babel-traverse.html) to load all JavaScript files in the site that have graphql queries in them. This produces AST results that are passed to the [relay-compiler](https://facebook.github.io/relay/docs/en/compiler-architecture.html). This accomplishes a couple of things:
 
@@ -57,7 +57,7 @@ digraph {
 }
 ```
 
-### Store Queries in Redux
+#### Store queries in Redux
 
 Gatsby is now in the [handleQuery](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/query/query-watcher.js#L54) function.
 

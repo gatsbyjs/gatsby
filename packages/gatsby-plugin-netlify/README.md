@@ -43,7 +43,7 @@ plugins: [
 
 The headers object represents a JS version of the
 [Netlify `_headers` file format](https://www.netlify.com/docs/headers-and-basic-auth/).
-You should pass in a object with string keys (representing the paths) and an
+You should pass in an object with string keys (representing the paths) and an
 array of strings for each header.
 
 An example:

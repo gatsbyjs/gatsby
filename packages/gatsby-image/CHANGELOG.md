@@ -3,6 +3,48 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.39](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.38...gatsby-image@2.2.39) (2020-01-17)
+
+### Bug Fixes
+
+- **gatsby-image:** Added aria-hidden attribute to layout elements ([#20593](https://github.com/gatsbyjs/gatsby/issues/20593)) ([3666917](https://github.com/gatsbyjs/gatsby/commit/3666917))
+
+## [2.2.38](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.37...gatsby-image@2.2.38) (2020-01-09)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.2.37](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.36...gatsby-image@2.2.37) (2019-12-17)
+
+### Bug Fixes
+
+- **gatsby-image:** add matchMedia to fix wrong aspect ratio and dimensions in art-directed image arrays ([#19887](https://github.com/gatsbyjs/gatsby/issues/19887)) ([b3c000b](https://github.com/gatsbyjs/gatsby/commit/b3c000b))
+
+## [2.2.36](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.34...gatsby-image@2.2.36) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.2.35](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.34...gatsby-image@2.2.35) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.2.34](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.33...gatsby-image@2.2.34) (2019-11-26)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.2.33](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.32...gatsby-image@2.2.33) (2019-11-15)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.2.32](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.31...gatsby-image@2.2.32) (2019-11-13)
+
+### Bug Fixes
+
+- **gatsby-image:** Remove onClick prop ([#19458](https://github.com/gatsbyjs/gatsby/issues/19458)) ([0da6dbb](https://github.com/gatsbyjs/gatsby/commit/0da6dbb))
+
+## [2.2.31](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.30...gatsby-image@2.2.31) (2019-11-10)
+
+**Note:** Version bump only for package gatsby-image
+
 ## [2.2.30](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.29...gatsby-image@2.2.30) (2019-10-28)
 
 **Note:** Version bump only for package gatsby-image

@@ -33,19 +33,19 @@ Quickly get started using the Gatsby notes theme! This starter creates a new Gat
 
     Your site is now running at `http://localhost:8000`!
 
-    To get started, check out the guide to [using a Gatsby theme](http://gatsbyjs.org/docs/themes/using-a-gatsby-theme), or the longer, [more detailed tutorial](http://gatsbyjs.org/tutorial/using-a-theme).
+    To get started, check out the guide to [using a Gatsby theme](https://gatsbyjs.org/docs/themes/using-a-gatsby-theme), or the longer, [more detailed tutorial](https://gatsbyjs.org/tutorial/using-a-theme).
 
 ## 🧐 What's inside?
 
 Here are the top-level files and directories you'll see in a site created using the notes theme starter.
 
-```
+```text
 gatsby-starter-notes-theme
 ├── content
-│ └── notes
-│ ├── example-dir
-│ │ └── hi.mdx
-│ └── hello.mdx
+│   └── notes
+│       ├── example-dir
+│       │   └── hi.mdx
+│       └── hello.mdx
 ├── .gitignore
 ├── .prettierrc
 ├── gatsby-config.js

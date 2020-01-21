@@ -7,7 +7,7 @@ As methodologies for building Gatsby Themes begin to formalize and standardize, 
 ## Naming
 
 It's required to prefix themes with `gatsby-theme-`. So if you'd like to name your theme "awesome" you
-can name it `gatsby-theme-awesome` and place that as the `name` key in your `package.json`. Prefixing themes with `gatsby-theme` enables gatsby in identifying theme packages for compilation.
+can name it `gatsby-theme-awesome` and place that as the `name` key in your `package.json`. Prefixing themes with `gatsby-theme` enables Gatsby in identifying theme packages for compilation.
 
 ## Initializing required directories
 
@@ -40,7 +40,7 @@ As a theme author, it's preferable to separate your data gathering and the compo
 
 You can use a template for top-level data collection with a page query that passes the data to a `PostList` component:
 
-```js:title=src/templates/post-list.js
+```jsx:title=src/templates/post-list.js
 import React from "react"
 import { graphql } from "gatsby"
 
@@ -79,7 +79,7 @@ export const query = graphql`
 
 You can use static queries at the top level template as well and pass the data to other presentational components as props:
 
-```js:title=src/components/layout.js
+```jsx:title=src/components/layout.js
 import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 
@@ -150,7 +150,7 @@ export default () => {
 
 Then use it in components like the a header:
 
-```js:title=src/components/header.js
+```jsx:title=src/components/header.js
 import React from "react"
 import { Link } from "gatsby"
 

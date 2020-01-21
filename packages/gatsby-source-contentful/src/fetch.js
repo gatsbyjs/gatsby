@@ -39,6 +39,11 @@ module.exports = async ({ syncToken, reporter, pluginConfig }) => {
     let errors
     if (e.code === `ENOTFOUND`) {
       details = `You seem to be offline`
+    } else if (e.code === `SELF_SIGNED_CERT_IN_CHAIN`) {
+      reporter.panic(
+        `We couldn't make a secure connection to your contentful space. Please check if you have any self-signed SSL certificates installed.`,
+        e
+      )
     } else if (e.response) {
       if (e.response.status === 404) {
         // host and space used to generate url
@@ -88,33 +93,12 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`)
 
   let contentTypeItems = contentTypes.items
 
-  // Fix IDs on entries and assets, created/updated and deleted.
-  contentTypeItems = contentTypeItems.map(c => normalize.fixIds(c))
-
-  currentSyncData.entries = currentSyncData.entries.map(e => {
-    if (e) {
-      return normalize.fixIds(e)
-    }
-    return null
-  })
-  currentSyncData.assets = currentSyncData.assets.map(a => {
-    if (a) {
-      return normalize.fixIds(a)
-    }
-    return null
-  })
-  currentSyncData.deletedEntries = currentSyncData.deletedEntries.map(e => {
-    if (e) {
-      return normalize.fixIds(e)
-    }
-    return null
-  })
-  currentSyncData.deletedAssets = currentSyncData.deletedAssets.map(a => {
-    if (a) {
-      return normalize.fixIds(a)
-    }
-    return null
-  })
+  // Fix IDs (inline) on entries and assets, created/updated and deleted.
+  contentTypeItems.forEach(normalize.fixIds)
+  currentSyncData.entries.forEach(normalize.fixIds)
+  currentSyncData.assets.forEach(normalize.fixIds)
+  currentSyncData.deletedEntries.forEach(normalize.fixIds)
+  currentSyncData.deletedAssets.forEach(normalize.fixIds)
 
   const result = {
     currentSyncData,

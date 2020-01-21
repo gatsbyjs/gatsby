@@ -117,7 +117,7 @@ const GatsbyTracing = {
    * exports.sourceNodes = async ({ actions, tracing }) => {
    *   const span = tracing.startSpan(`foo`)
    *
-   *   // Perform any span operations. E.g add a tag to your span
+   *   // Perform any span operations. E.g. add a tag to your span
    *   span.setTag(`bar`, `baz`)
    *
    *   // Rest of your plugin code

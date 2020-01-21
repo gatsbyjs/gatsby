@@ -2,9 +2,9 @@ const _ = require(`lodash`)
 const invariant = require(`invariant`)
 const { getDb, colls } = require(`./index`)
 
-/////////////////////////////////////////////////////////////////////
+// ///////////////////////////////////////////////////////////////////
 // Node collection metadata
-/////////////////////////////////////////////////////////////////////
+// ///////////////////////////////////////////////////////////////////
 
 function makeTypeCollName(type) {
   return `gatsby:nodeType:${type}`
@@ -39,7 +39,7 @@ function createNodeTypeCollection(type) {
 function getTypeCollName(type) {
   const nodeTypesColl = getDb().getCollection(colls.nodeTypes.name)
   invariant(nodeTypesColl, `Collection ${colls.nodeTypes.name} should exist`)
-  let nodeTypeInfo = nodeTypesColl.by(`type`, type)
+  const nodeTypeInfo = nodeTypesColl.by(`type`, type)
   return nodeTypeInfo ? nodeTypeInfo.collName : undefined
 }
 
@@ -72,7 +72,7 @@ function deleteNodeTypeCollections(force = false) {
   // find() returns all objects in collection
   const nodeTypes = nodeTypesColl.find()
   for (const nodeType of nodeTypes) {
-    let coll = getDb().getCollection(nodeType.collName)
+    const coll = getDb().getCollection(nodeType.collName)
     if (coll.count() === 0 || force) {
       getDb().removeCollection(coll.name)
       nodeTypesColl.remove(nodeType)
@@ -93,9 +93,9 @@ function deleteAll() {
   }
 }
 
-/////////////////////////////////////////////////////////////////////
+// ///////////////////////////////////////////////////////////////////
 // Queries
-/////////////////////////////////////////////////////////////////////
+// ///////////////////////////////////////////////////////////////////
 
 /**
  * Returns the node with `id` == id, or null if not found
@@ -191,9 +191,9 @@ function hasNodeChanged(id, digest) {
   }
 }
 
-/////////////////////////////////////////////////////////////////////
+// /////////////////////////////////////////////////////////////////
 // Create/Update/Delete
-/////////////////////////////////////////////////////////////////////
+// ///////////////////////////////////////////////////////////////////
 
 /**
  * Creates a node in the DB. Will create a collection for the node
@@ -242,11 +242,8 @@ function updateNode(node) {
   invariant(node.internal.type, `node has no "internal.type" field`)
   invariant(node.id, `node has no "id" field`)
 
-  const type = node.internal.type
-
-  let coll = getNodeTypeCollection(type)
-  invariant(coll, `${type} collection doesn't exist. When trying to update`)
-  coll.update(node)
+  const oldNode = getNode(node.id)
+  return createNode(node, oldNode)
 }
 
 /**
@@ -264,7 +261,7 @@ function deleteNode(node) {
 
   const type = node.internal.type
 
-  let nodeTypeColl = getNodeTypeCollection(type)
+  const nodeTypeColl = getNodeTypeCollection(type)
   if (!nodeTypeColl) {
     invariant(
       nodeTypeColl,
@@ -272,14 +269,15 @@ function deleteNode(node) {
     )
   }
 
-  if (nodeTypeColl.by(`id`, node.id)) {
+  const obj = nodeTypeColl.by(`id`, node.id)
+  if (obj) {
     const nodeMetaColl = getDb().getCollection(colls.nodeMeta.name)
     invariant(nodeMetaColl, `Collection ${colls.nodeMeta.name} should exist`)
     nodeMetaColl.findAndRemove({ id: node.id })
     // TODO What if this `remove()` fails? We will have removed the id
     // -> collName mapping, but not the actual node in the
     // collection. Need to make this into a transaction
-    nodeTypeColl.remove(node)
+    nodeTypeColl.remove(obj)
   }
   // idempotent. Do nothing if node wasn't already in DB
 }
@@ -326,7 +324,7 @@ function ensureFieldIndexes(typeName, lokiArgs, sortArgs) {
     const { emitter } = require(`../../redux`)
 
     emitter.on(`DELETE_CACHE`, () => {
-      for (var field in fieldUsages) {
+      for (const field in fieldUsages) {
         delete fieldUsages[field]
       }
     })
@@ -350,9 +348,9 @@ function ensureFieldIndexes(typeName, lokiArgs, sortArgs) {
   })
 }
 
-/////////////////////////////////////////////////////////////////////
+// ///////////////////////////////////////////////////////////////////
 // Reducer
-/////////////////////////////////////////////////////////////////////
+// ///////////////////////////////////////////////////////////////////
 
 function reducer(state = new Map(), action) {
   switch (action.type) {
@@ -378,7 +376,7 @@ function reducer(state = new Map(), action) {
     }
 
     case `DELETE_NODES`: {
-      deleteNodes(action.payload)
+      deleteNodes(action.fullNodes)
       return null
     }
 
@@ -387,9 +385,9 @@ function reducer(state = new Map(), action) {
   }
 }
 
-/////////////////////////////////////////////////////////////////////
+// ///////////////////////////////////////////////////////////////////
 // Exports
-/////////////////////////////////////////////////////////////////////
+// ///////////////////////////////////////////////////////////////////
 
 module.exports = {
   getNodeTypeCollection,
