@@ -13,7 +13,6 @@ const {
   NamespaceUnderFieldTransform,
   StripNonQueryTransform,
 } = require(`./transforms`)
-const runHeaderFunctions = require(`./run-header-functions.js`)
 
 exports.sourceNodes = async (
   { actions, createNodeId, cache, createContentDigest },
@@ -53,7 +52,7 @@ exports.sourceNodes = async (
       uri: url,
       fetch,
       fetchOptions,
-      headers: await runHeaderFunctions(headers),
+      headers: typeof headers === `function` ? await headers() : headers,
     })
   }
 

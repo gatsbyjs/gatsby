@@ -41,8 +41,12 @@ module.exports = {
         headers: {
           // Learn about environment variables: https://gatsby.dev/env-vars
           Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
-          // You can alternatively pass it a function (allows async)
-          Authorization: getAuthorizationToken,
+        },
+        // HTTP headers alternatively accepts a function (allows async)
+        headers: async () => {
+          return {
+            Authorization: await getAuthorizationToken(),
+          }
         },
         // Additional options to pass to node-fetch
         fetchOptions: {},
