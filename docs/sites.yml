@@ -5461,6 +5461,17 @@
   built_by: Bennett Hardwick
   built_by_url: https://bennetthardwick.com
   featured: false
+- title: Kodingnesia
+  url: https://kodingnesia.com/
+  main_url: https://kodingnesia.com/
+  description: >
+    Kodingnesia is a place for learning programming & linux in Bahasa Indonesia.
+  categories:
+    - Blog
+    - Programming
+    - Technology
+  built_by: Frisko Mayufid
+  built_by_url: https://frisko.space
 - title: Sindhuka
   url: https://sindhuka.org/
   main_url: https://sindhuka.org/
