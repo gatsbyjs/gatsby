@@ -240,7 +240,7 @@ const transformFields = ({
       return accumulator
     }
 
-    // unhandled fields are removed from the schema by not mutating the accumulatorumulator
+    // unhandled fields are removed from the schema by not mutating the accumulator
     return accumulator
   }, {})
 }
