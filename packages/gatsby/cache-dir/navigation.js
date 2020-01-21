@@ -185,19 +185,20 @@ class RouteAnnouncer extends React.Component {
   }
 
   render() {
+    const style = {
+      position: `absolute`,
+      width: 1,
+      height: 1,
+      padding: 0,
+      overflow: `hidden`,
+      clip: `rect(0, 0, 0, 0)`,
+      whiteSpace: `nowrap`,
+      border: 0,
+    }
     return (
       <div
         id="gatsby-announcer"
-        style={{
-          position: `absolute`,
-          width: 1,
-          height: 1,
-          padding: 0,
-          overflow: `hidden`,
-          clip: `rect(0, 0, 0, 0)`,
-          whiteSpace: `nowrap`,
-          border: 0,
-        }}
+        style={style}
         role="alert"
         aria-live="assertive"
         aria-atomic="true"
