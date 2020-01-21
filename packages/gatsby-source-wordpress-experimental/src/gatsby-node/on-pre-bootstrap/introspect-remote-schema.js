@@ -10,10 +10,9 @@ const introspectAndStoreRemoteSchema = async () => {
 
   if (pluginOptions.verbose && schemaWasChanged) {
     helpers.reporter.info(
-      formatLogMessage(
-        `The WPGraphQL schema has changed since the last build. \n Refetching all data.`
-      )
+      formatLogMessage(`the WPGraphQL schema has changed since the last build`)
     )
+    helpers.reporter.info(formatLogMessage(`refetching all data`))
   }
 
   const INTROSPECTION_CACHE_KEY = `${pluginOptions.url}--introspection-data`
