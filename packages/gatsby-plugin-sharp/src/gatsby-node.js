@@ -1,5 +1,6 @@
 const {
   setBoundActionCreators,
+  getProgressBar,
   // queue: jobQueue,
   // reportError,
 } = require(`./index`)
@@ -50,6 +51,17 @@ const { setPluginOptions } = require(`./plugin-options`)
 //     .catch(({ err, message }) => {
 //       reportError(message || err.message, err, reporter)
 //     })
+
+// create the progressbar once and it will be killed in another lifecycle
+const finishProgressBar = () => {
+  const progressBar = getProgressBar()
+  if (progressBar) {
+    progressBar.done()
+  }
+}
+
+exports.onPostBuild = () => finishProgressBar()
+exports.onCreateDevServer = () => finishProgressBar()
 
 exports.onPreBootstrap = ({ actions }, pluginOptions) => {
   setBoundActionCreators(actions)

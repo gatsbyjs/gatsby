@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.3.12...gatsby-transformer-sharp@2.3.13) (2020-01-17)
+
+### Bug Fixes
+
+- **gatsby-transformer-sharp:** prevent duplicate copy of the same file ([#20620](https://github.com/gatsbyjs/gatsby/issues/20620)) ([93f0645](https://github.com/gatsbyjs/gatsby/commit/93f0645))
+
 ## [2.3.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.3.11...gatsby-transformer-sharp@2.3.12) (2020-01-09)
 
 **Note:** Version bump only for package gatsby-transformer-sharp

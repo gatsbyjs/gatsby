@@ -3,13 +3,17 @@
   "description": "Gatsby hello world starter",
   "license": "MIT",
   "scripts": {
+    "bench": "set -x; gatsby clean; NUM_PAGES=${NUM_PAGES:-2000} gatsby build",
     "develop": "gatsby develop",
     "build": "gatsby build",
     "serve": "gatsby serve"
   },
   "dependencies": {
-    "gatsby": "^2.0.118",
+    "gatsby": "^2.18.25",
     "react": "^16.8.0",
     "react-dom": "^16.8.0"
+  },
+  "devDependencies": {
+    "gatsby-plugin-benchmark-reporting": "*"
   }
 }

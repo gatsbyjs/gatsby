@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.39](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.38...gatsby-image@2.2.39) (2020-01-17)
+
+### Bug Fixes
+
+- **gatsby-image:** Added aria-hidden attribute to layout elements ([#20593](https://github.com/gatsbyjs/gatsby/issues/20593)) ([3666917](https://github.com/gatsbyjs/gatsby/commit/3666917))
+
 ## [2.2.38](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.37...gatsby-image@2.2.38) (2020-01-09)
 
 **Note:** Version bump only for package gatsby-image

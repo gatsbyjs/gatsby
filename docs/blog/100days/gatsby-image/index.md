@@ -19,13 +19,13 @@ This week’s challenge invites you to add images to your blog and learn about a
 
 #### Part 1
 
-Add images to your markdown-based blog posts. If you are doing each challenge sequentially, then you have a [Gatsby blog that uses markdown](/100days/start-blog/) for blog posts, and is [deployed live to a CDN](/blog/100days/free-hosting/).
+Add images to your markdown-based blog posts. If you are doing each challenge sequentially, then you have a [Gatsby blog that uses markdown](/blog/100days/start-blog/) for blog posts, and is [deployed live to a CDN](/blog/100days/free-hosting/).
 
 But what good is a blog without beautiful images? We want you to use the resources section below to add auto-optimized images to your markdown blog posts!
 
 #### Part 2
 
-Now it’s time to get direct experience using the `Img`React component provided by [`gatsby-image` ](/packages/gatsby-image/)! Create an about page using JSX, then use the gatsby-image API to transform a normal selfie into a square, black-and-white image.
+Now it’s time to get direct experience using the `Img`React component provided by [`gatsby-image`](/packages/gatsby-image/)! Create an about page using JSX, then use the gatsby-image API to transform a normal selfie into a square, black-and-white image.
 
 Bonus: Take note of the build times for your site before and after you add images to your project. Also, record the performance of specific pages with images, using [a tool like Lighthouse](/docs/audit-with-lighthouse/). As a Gatsby Developer you should be aware of how images affect your site’s production and user experience.
 

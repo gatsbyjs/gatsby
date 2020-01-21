@@ -93,5 +93,5 @@ export const TAGS_AND_DOCS = new Map([
     `/docs/gatsby-core-philosophy/#construct-new-higher-level-web-building-blocks`,
   ],
   [`wordpress`, `/docs/sourcing-from-wordpress/`],
-  [`100-Days-of-Gatsby`, `/docs/100days/`],
+  [`100-Days-of-Gatsby`, ``],
 ])
