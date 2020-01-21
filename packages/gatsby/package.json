@@ -1,7 +1,7 @@
 {
   "name": "gatsby",
   "description": "Blazing fast modern site generator for React",
-  "version": "2.18.25",
+  "version": "2.19.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "./dist/bin/gatsby.js"
@@ -104,8 +104,8 @@
     "null-loader": "^0.1.1",
     "opentracing": "^0.14.4",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
-    "parseurl": "^1.3.3",
     "p-defer": "^3.0.0",
+    "parseurl": "^1.3.3",
     "physical-cpu-count": "^2.0.0",
     "pnp-webpack-plugin": "^1.5.0",
     "postcss-flexbugs-fixes": "^3.3.1",
