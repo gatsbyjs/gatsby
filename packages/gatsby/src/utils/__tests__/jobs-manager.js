@@ -1,6 +1,6 @@
 const path = require(`path`)
 const _ = require(`lodash`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 let jobManager = null
 
 // I need a mock to spy on

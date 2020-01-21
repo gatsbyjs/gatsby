@@ -3,9 +3,8 @@ const path = require(`path`)
 const hasha = require(`hasha`)
 const fs = require(`fs-extra`)
 const pDefer = require(`p-defer`)
-const slash = require(`slash`)
 const _ = require(`lodash`)
-const { createContentDigest } = require(`gatsby-core-utils`)
+const { createContentDigest, slash } = require(`gatsby-core-utils`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 
 let activityForJobs = null
