@@ -22,10 +22,6 @@ const createBuildQueue = () => {
 }
 
 const createDevelopQueue = getRunner => {
-  let queue
-  const processing = new Set()
-  const waiting = new Map()
-
   const queueOptions = {
     ...createBaseOptions(),
     priority: (job, cb) => {
@@ -39,15 +35,10 @@ const createDevelopQueue = getRunner => {
       cb(null, newTask)
     },
     // Filter out new query jobs if that query is already running.
-    // When the query finshes, it checks the waiting map and pushes
+    // When the query finishes, it checks the waiting map and pushes
     // another job to make sure all the user changes are captured.
     filter: (job, cb) => {
-      if (processing.has(job.id)) {
-        waiting.set(job.id, job)
-        cb(`already running`)
-      } else {
-        cb(null, job)
-      }
+      cb(null, job)
     },
   }
 
@@ -66,19 +57,13 @@ const createDevelopQueue = getRunner => {
           })
         }
 
-        processing.delete(queryJob.id)
-        if (waiting.has(queryJob.id)) {
-          queue.push(waiting.get(queryJob.id))
-          waiting.delete(queryJob.id)
-        }
         callback(null, result)
       },
       error => callback(error)
     )
   }
 
-  queue = new Queue(handler, queueOptions)
-  return queue
+  return new Queue(handler, queueOptions)
 }
 
 /**
