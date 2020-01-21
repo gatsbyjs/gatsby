@@ -7,6 +7,17 @@ import emitter from "./emitter"
 import { navigate as reachNavigate } from "@reach/router"
 import { parsePath } from "gatsby-link"
 
+const routeAnnouncerStyle = {
+  position: `absolute`,
+  width: 1,
+  height: 1,
+  padding: 0,
+  overflow: `hidden`,
+  clip: `rect(0, 0, 0, 0)`,
+  whiteSpace: `nowrap`,
+  border: 0,
+}
+
 // Convert to a map for faster lookup in maybeRedirect()
 const redirectMap = redirects.reduce((map, redirect) => {
   map[redirect.fromPath] = redirect
@@ -185,20 +196,10 @@ class RouteAnnouncer extends React.Component {
   }
 
   render() {
-    const style = {
-      position: `absolute`,
-      width: 1,
-      height: 1,
-      padding: 0,
-      overflow: `hidden`,
-      clip: `rect(0, 0, 0, 0)`,
-      whiteSpace: `nowrap`,
-      border: 0,
-    }
     return (
       <div
         id="gatsby-announcer"
-        style={style}
+        style={routeAnnouncerStyle}
         role="alert"
         aria-live="assertive"
         aria-atomic="true"
