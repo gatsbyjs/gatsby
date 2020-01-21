@@ -1,11 +1,22 @@
 import { IMatch } from "../types"
 import { SourceLocation } from "graphql"
 
+interface IErrorParser {
+  message: string
+  filePath: string | undefined
+  location:
+    | {
+        start: SourceLocation
+        end?: SourceLocation
+      }
+    | undefined
+}
+
 const errorParser = ({
   message,
   filePath = undefined,
   location = undefined,
-}): IMatch => {
+}: IErrorParser): IMatch => {
   // Handle GraphQL errors. A list of regexes to match certain
   // errors to specific callbacks
   const handlers = [
