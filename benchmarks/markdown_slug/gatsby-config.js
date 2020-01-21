@@ -9,6 +9,7 @@ module.exports = {
     },
   },
   plugins: [
+    `gatsby-plugin-benchmark-reporting`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
