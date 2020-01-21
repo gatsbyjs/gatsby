@@ -14,18 +14,21 @@ module.exports = {
         url: `http://gatsbysourcewordpressv4.local/graphql`,
         // url: `https://dev-gatsby-source-wordpress-v4.pantheonsite.io/graphql`,
         verbose: true,
+        debug: {
+          graphql: {
+            showQueryOnError: false,
+          },
+        },
         excludeFields: [
-          `editLock`,
-          `editLast`,
-          `contentNodes`,
-          `terms`,
-          `termNames`,
-          `termSlugs`,
-          `databaseId`,
+          // `editLock`,
+          // `editLast`,
+          // `databaseId`,
           `innerBlocks`,
+          `attributes`,
+          `citation`,
         ],
         schema: {
-          queryDepth: 11,
+          queryDepth: 10,
         },
         develop: {
           nodeUpdateInterval: 100,
@@ -34,7 +37,13 @@ module.exports = {
           NodeWithAuthor: {
             exclude: true,
           },
-          UniformResourceIdentifiable: {
+          BlockJsonArray: {
+            exclude: true,
+          },
+          BlockAttributesArray: {
+            exclude: true,
+          },
+          BlockAttributesObject: {
             exclude: true,
           },
           MediaItem: {
@@ -42,12 +51,6 @@ module.exports = {
           },
           // Page: {
           //   limit: 10,
-          // },
-          // Post: {
-          //   limit: 10,
-          // },
-          // Alot: {
-          //   limit: 50,
           // },
         },
       },
