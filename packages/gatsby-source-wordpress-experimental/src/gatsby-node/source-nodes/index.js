@@ -15,9 +15,9 @@ const sourceNodes = async helpers => {
 
   const lastCompletedSourceTime = await cache.get(LAST_COMPLETED_SOURCE_TIME)
 
-  const { schemaHasChanged } = store.getState().introspection
+  const { schemaWasChanged } = store.getState().introspection
 
-  const fetchEverything = !lastCompletedSourceTime || schemaHasChanged
+  const fetchEverything = !lastCompletedSourceTime || schemaWasChanged
 
   // If this is an uncached build,
   // or our initial build to fetch and cache everything didn't complete,

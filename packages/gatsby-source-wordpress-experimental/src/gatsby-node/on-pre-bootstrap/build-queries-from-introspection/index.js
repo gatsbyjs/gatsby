@@ -17,9 +17,9 @@ const buildAndStoreIngestibleRootFieldNodeListQueries = async () => {
 
   let queries = await helpers.cache.get(QUERY_CACHE_KEY)
 
-  const { schemaHasChanged } = store.getState().introspection
+  const { schemaWasChanged } = store.getState().introspection
 
-  if (schemaHasChanged || !queries) {
+  if (schemaWasChanged || !queries) {
     // regenerate queries from introspection
     queries = await generateNodeQueriesFromIngestibleFields()
 

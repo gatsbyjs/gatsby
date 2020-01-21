@@ -20,13 +20,12 @@ const checkIfSchemaHasChanged = async () => {
 
   await helpers.cache.set(MD5_CACHE_KEY, schemaMd5)
 
-  const schemaHasChanged =
-    schemaMd5 && cachedSchemaMd5 && schemaMd5 !== cachedSchemaMd5
+  const schemaWasChanged = schemaMd5 !== cachedSchemaMd5
 
   // record wether the schema changed so other logic can beware
-  store.dispatch.introspection.setSchemaWasChanged(schemaHasChanged)
+  store.dispatch.introspection.setSchemaWasChanged(schemaWasChanged)
 
-  return schemaHasChanged
+  return schemaWasChanged
 }
 
 export default checkIfSchemaHasChanged
