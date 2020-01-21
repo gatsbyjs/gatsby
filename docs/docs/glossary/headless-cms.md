@@ -9,7 +9,7 @@ Learn what a Headless CMS is, how it differs from traditional content management
 
 A content management system, or CMS, is a software application that lets you edit and publish content for your website. Most content management systems store content in a database, and use a series of HTML-based template files to manage how that content gets presented.
 
-A _headless CMS_, on the other hand, isn't concerned with presentation. Instead of merging templates and data to deliver HTML pages, headless content management systems return structured data from an [API](/docs/glossary/#api) &mdash; usually JSON or unstyled XML. Content creators still use an editing interface to add content to a headless CMS, but the [backend](/docs/glossary#frontend) management of the site's content is [_decoupled_](/docs/glossary#decoupled) from the [frontend](/docs/glossary#frontend) that displays it.
+A _headless CMS_, on the other hand, isn't concerned with presentation. Instead of merging templates and data to deliver HTML pages, headless content management systems return structured data from an [API](/docs/glossary/#api) &mdash; usually JSON or unstyled XML. Content creators still use an editing interface to add content to a headless CMS, but the [backend](/docs/glossary#backend) management of the site's content is [_decoupled_](/docs/glossary#decoupled) from the [frontend](/docs/glossary#frontend) that displays it.
 
 When your content is available as structured data, it's available to any client or application that can consume that data whether a [JAMStack](/docs/glossary/jamstack) application, or a mobile device. You can use a headless CMS to provide [JSON content source](/docs/sourcing-content-from-json-or-yaml/) for your Gatsby site and your other content channels.
 
