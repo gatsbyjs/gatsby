@@ -3,6 +3,7 @@ import axios from "axios"
 import rateLimit from "axios-rate-limit"
 import formatLogMessage from "./format-log-message"
 import store from "../store"
+import { getPluginOptions } from "./get-gatsby-api"
 
 const http = rateLimit(axios.create(), {
   maxRPS: 50,
@@ -18,6 +19,8 @@ const handleGraphQLErrors = ({
   panicOnError,
   reporter,
 }) => {
+  const pluginOptions = getPluginOptions()
+
   const json = response.data
   const { errors } = json
 
@@ -65,7 +68,9 @@ ${
     )
   }
 
-  reporter.error(formatLogMessage(`GraphQL query: ${gqlPrettier(query)}`))
+  if (pluginOptions.debug.graphql.showQueryOnError) {
+    reporter.error(formatLogMessage(`GraphQL query: ${gqlPrettier(query)}`))
+  }
 
   if (!json.data) {
     reporter.panic(

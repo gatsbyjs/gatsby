@@ -96,6 +96,11 @@ const gatsbyApi = {
     helpers: {},
     pluginOptions: {
       verbose: false,
+      debug: {
+        graphql: {
+          showQueryOnError: true,
+        },
+      },
       schema: {
         queryDepth: 10,
       },
