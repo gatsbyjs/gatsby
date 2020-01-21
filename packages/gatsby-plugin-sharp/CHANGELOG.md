@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.3.13...gatsby-plugin-sharp@2.4.0) (2020-01-21)
+
+### Features
+
+- **gatsby-plugin-sharp:** move to jobs-api v2 ([#19940](https://github.com/gatsbyjs/gatsby/issues/19940)) ([dbab3f9](https://github.com/gatsbyjs/gatsby/commit/dbab3f9))
+
 ## [2.3.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.3.12...gatsby-plugin-sharp@2.3.13) (2020-01-09)
 
 **Note:** Version bump only for package gatsby-plugin-sharp
