@@ -5044,7 +5044,6 @@
     - Language:JavaScript
     - SEO
     - MDX
-    - Accessible
     - Styling:CSS-in-JS
   features:
     - MDX Blocks for your Gatsby site.
