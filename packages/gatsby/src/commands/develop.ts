@@ -54,6 +54,8 @@ import {
   structureWebpackErrors,
 } from "../utils/webpack-error-utils"
 
+import { waitUntilAllJobsComplete as waitUntilAllJobsV2Complete } from "../utils/jobs-manager"
+
 interface ICert {
   keyPath: string
   certPath: string
@@ -75,6 +77,24 @@ interface IProgram {
   ssl?: ICert
 }
 
+const waitUntilAllJobsComplete = (): Promise<void> => {
+  const jobsV1Promise = new Promise(resolve => {
+    const onEndJob = (): void => {
+      if (store.getState().jobs.active.length === 0) {
+        resolve()
+        emitter.off(`END_JOB`, onEndJob)
+      }
+    }
+    emitter.on(`END_JOB`, onEndJob)
+    onEndJob()
+  })
+
+  return Promise.all([
+    jobsV1Promise,
+    waitUntilAllJobsV2Complete(),
+  ]).then(() => {})
+}
+
 // const isInteractive = process.stdout.isTTY
 
 // Watch the static directory and copy files to public as they're added or
@@ -87,18 +107,6 @@ setTimeout(() => {
 onExit(() => {
   telemetry.trackCli(`DEVELOP_STOP`)
 })
-
-const waitJobsFinished = (): Promise<void> =>
-  new Promise(resolve => {
-    const onEndJob = (): void => {
-      if (store.getState().jobs.active.length === 0) {
-        resolve()
-        emitter.off(`END_JOB`, onEndJob)
-      }
-    }
-    emitter.on(`END_JOB`, onEndJob)
-    onEndJob()
-  })
 
 type ActivityTracker = any // TODO: Replace this with proper type once reporter is typed
 
@@ -421,7 +429,9 @@ module.exports = async (program: IProgram): Promise<void> => {
     `BOOTSTRAP_QUERY_RUNNING_FINISHED`
   )
 
-  await waitJobsFinished()
+  await db.saveState()
+
+  await waitUntilAllJobsComplete()
   requiresWriter.startListener()
   db.startAutosave()
   queryUtil.startListeningToDevelopQueue()
@@ -457,9 +467,9 @@ module.exports = async (program: IProgram): Promise<void> => {
       })
 
     const isUnspecifiedHost = host === `0.0.0.0` || host === `::`
-    let prettyHost = host,
-      lanUrlForConfig,
-      lanUrlForTerminal
+    let prettyHost = host
+    let lanUrlForConfig
+    let lanUrlForTerminal
     if (isUnspecifiedHost) {
       prettyHost = `localhost`
 
