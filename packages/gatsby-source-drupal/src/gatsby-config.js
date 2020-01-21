@@ -1,3 +1,10 @@
 module.exports = {
-  plugins: [`gatsby-source-filesystem`],
+  plugins: [
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        addResolversOnly: true,
+      },
+    },
+  ],
 }
