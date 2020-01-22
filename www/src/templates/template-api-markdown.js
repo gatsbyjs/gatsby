@@ -7,7 +7,6 @@ import { MDXRenderer } from "gatsby-plugin-mdx"
 import { mediaQueries } from "../gatsby-plugin-theme-ui"
 
 // API Rendering Stuff
-import normalizeGatsbyApiCall from "../utils/normalize-gatsby-api-call"
 import { sortBy } from "lodash-es"
 
 import Layout from "../components/layout"
@@ -19,6 +18,26 @@ import Breadcrumb from "../components/docs-breadcrumb"
 import Container from "../components/container"
 import PrevAndNext from "../components/prev-and-next"
 import APIReference, { APIContents } from "../components/api-reference"
+
+const normalizeGatsbyApiCall = array =>
+  array.map(entry => {
+    const codeLocation =
+      entry.nodes.length > 1
+        ? entry.nodes.map(l => {
+            return {
+              file: l.file,
+              start: { line: l.codeLocation.start.line },
+              end: { line: l.codeLocation.end.line },
+            }
+          })
+        : {
+            file: entry.nodes[0].file,
+            start: { line: entry.nodes[0].codeLocation.start.line },
+            end: { line: entry.nodes[0].codeLocation.end.line },
+          }
+
+    return { name: entry.name, codeLocation }
+  })
 
 const mergeFunctions = (data, context) => {
   const normalized = normalizeGatsbyApiCall(data.nodeAPIs.group)
