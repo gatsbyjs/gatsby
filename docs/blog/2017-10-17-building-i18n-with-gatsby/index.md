@@ -235,13 +235,6 @@ class LanguageSwitcher extends Component {
     this.handleChangeLanguage = this.handleChangeLanguage.bind(this)
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if(nextProps.i18n.language !== prevState.i18n.language){
-      return { language: nextProps.i18n.language }
-    }
-    return null
-  }
-
   handleChangeLanguage(lng) {
     const { i18n } = this.props
     i18n.changeLanguage(lng)
@@ -280,8 +273,8 @@ class LanguageSwitcher extends Component {
 export default translate("LanguageSwitcher")(LanguageSwitcher)
 ```
 
-This is a pretty simple component. We're setting the `language` state based on
-the i18n prop so that we can check which language is currently active and show
+This is a pretty small component. We're getting the `language` in the
+i18n prop so that we can check which language is currently active and show
 that in our menu.
 
 The `handleLanguageChange` function just wraps the `react-i18n` function passed
