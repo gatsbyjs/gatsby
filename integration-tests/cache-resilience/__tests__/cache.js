@@ -299,7 +299,7 @@ describe(`nothing changed between gatsby runs`, () => {
   })
 })
 
-describe.skip(`some plugins changed between gatsby runs`, () => {
+describe(`some plugins changed between gatsby runs`, () => {
   let states
 
   beforeAll(() => {
