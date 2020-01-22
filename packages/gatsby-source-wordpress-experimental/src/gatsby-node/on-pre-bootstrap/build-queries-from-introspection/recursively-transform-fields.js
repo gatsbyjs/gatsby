@@ -1,5 +1,5 @@
 import store from "../../../store"
-import { getTypeSettingsByType } from "../../create-schema-customization/index"
+import { getTypeSettingsByType } from "../../create-schema-customization/helpers"
 
 const transformFragments = ({
   possibleTypes,
