@@ -1,7 +1,16 @@
 import * as React from "react"
 import { EventEmitter } from "events"
-import { WindowLocation } from "@reach/router"
+import { WindowLocation, NavigateFn } from "@reach/router"
 import { createContentDigest } from "gatsby-core-utils"
+import {
+  ComposeEnumTypeConfig,
+  ComposeInputObjectTypeConfig,
+  ComposeInterfaceTypeConfig,
+  ComposeObjectTypeConfig,
+  ComposeScalarTypeConfig,
+  ComposeUnionTypeConfig,
+} from "graphql-compose"
+import { GraphQLOutputType } from "graphql"
 
 export {
   default as Link,
@@ -112,7 +121,9 @@ export interface GatsbyNode {
    * @see https://www.gatsbyjs.org/docs/node-apis/#createPages
    */
   createPages?(
-    args: CreatePagesArgs & { traceId: "initial-createPages" },
+    args: CreatePagesArgs & {
+      traceId: "initial-createPages"
+    },
     options?: PluginOptions,
     callback?: PluginCallback
   ): void
@@ -132,7 +143,9 @@ export interface GatsbyNode {
    * add and remove pages.
    */
   createPagesStatefully?(
-    args: CreatePagesArgs & { traceId: "initial-createPagesStatefully" },
+    args: CreatePagesArgs & {
+      traceId: "initial-createPagesStatefully"
+    },
     options?: PluginOptions,
     callback?: PluginCallback
   ): void
@@ -181,8 +194,8 @@ export interface GatsbyNode {
    *   // create a new node field.
    * }
    */
-  onCreateNode?(
-    args: CreateNodeArgs,
+  onCreateNode?<TNode extends object = {}>(
+    args: CreateNodeArgs<TNode>,
     options?: PluginOptions,
     callback?: PluginCallback
   ): void
@@ -195,8 +208,8 @@ export interface GatsbyNode {
    * See the guide [Creating and Modifying Pages](https://www.gatsbyjs.org/docs/creating-and-modifying-pages/)
    * for more on this API.
    */
-  onCreatePage?(
-    args: CreatePageArgs,
+  onCreatePage?<TNode extends object = {}>(
+    args: CreatePageArgs<TNode>,
     options?: PluginOptions,
     callback?: PluginCallback
   ): void
@@ -648,8 +661,9 @@ export interface CreateDevServerArgs extends ParentSpanPluginArgs {
   app: any
 }
 
-export interface CreateNodeArgs extends ParentSpanPluginArgs {
-  node: Node
+export interface CreateNodeArgs<TNode extends object = {}>
+  extends ParentSpanPluginArgs {
+  node: Node & TNode
   traceId: string
   traceTags: {
     nodeId: string
@@ -657,8 +671,9 @@ export interface CreateNodeArgs extends ParentSpanPluginArgs {
   }
 }
 
-export interface CreatePageArgs extends ParentSpanPluginArgs {
-  page: Node
+export interface CreatePageArgs<TNode extends object = {}>
+  extends ParentSpanPluginArgs {
+  page: Node & TNode
   traceId: string
 }
 
@@ -687,6 +702,61 @@ export interface SetFieldsOnGraphQLNodeTypeArgs extends ParentSpanPluginArgs {
   traceId: "initial-setFieldsOnGraphQLNodeType"
 }
 
+export interface GatsbyGraphQLObjectType {
+  kind: "OBJECT"
+  config: ComposeObjectTypeConfig<any, any>
+}
+
+interface GatsbyGraphQLInputObjectType {
+  kind: "INPUT_OBJECT"
+  config: ComposeInputObjectTypeConfig
+}
+
+interface GatsbyGraphQLUnionType {
+  kind: "UNION"
+  config: ComposeUnionTypeConfig<any, any>
+}
+
+interface GatsbyGraphQLInterfaceType {
+  kind: "INTERFACE"
+  config: ComposeInterfaceTypeConfig<any, any>
+}
+
+interface GatsbyGraphQLEnumType {
+  kind: "ENUM"
+  config: ComposeEnumTypeConfig
+}
+
+interface GatsbyGraphQLScalarType {
+  kind: "SCALAR"
+  config: ComposeScalarTypeConfig
+}
+
+export type GatsbyGraphQLType =
+  | GatsbyGraphQLObjectType
+  | GatsbyGraphQLInputObjectType
+  | GatsbyGraphQLUnionType
+  | GatsbyGraphQLInterfaceType
+  | GatsbyGraphQLEnumType
+  | GatsbyGraphQLScalarType
+
+export interface NodePluginSchema {
+  buildObjectType(
+    config: ComposeObjectTypeConfig<any, any>
+  ): GatsbyGraphQLObjectType
+  buildUnionType(
+    config: ComposeUnionTypeConfig<any, any>
+  ): GatsbyGraphQLUnionType
+  buildInterfaceType(
+    config: ComposeInterfaceTypeConfig<any, any>
+  ): GatsbyGraphQLInterfaceType
+  buildInputObjectType(
+    config: ComposeInputObjectTypeConfig
+  ): GatsbyGraphQLInputObjectType
+  buildEnumType(config: ComposeEnumTypeConfig): GatsbyGraphQLEnumType
+  buildScalarType(config: ComposeScalarTypeConfig): GatsbyGraphQLScalarType
+}
+
 export interface SourceNodesArgs extends ParentSpanPluginArgs {
   traceId: "initial-sourceNodes"
   waitForCascadingActions: boolean
@@ -711,7 +781,10 @@ export interface PreRenderHTMLArgs extends NodePluginArgs {
   replacePostBodyComponents: (comp: React.ReactNode[]) => void
 }
 
-type ReactProps<T extends Element> = React.DetailedHTMLProps<React.HTMLAttributes<T>, T>
+type ReactProps<T extends Element> = React.DetailedHTMLProps<
+  React.HTMLAttributes<T>,
+  T
+>
 export interface RenderBodyArgs extends NodePluginArgs {
   pathname: string
   setHeadComponents: (comp: React.ReactNode[]) => void
@@ -763,6 +836,7 @@ export interface NodePluginArgs {
   createNodeId: Function
   createContentDigest: typeof createContentDigest
   tracing: Tracing
+  schema: NodePluginSchema
   [key: string]: unknown
 }
 
@@ -929,7 +1003,13 @@ export interface Actions {
 
   /** @see https://www.gatsbyjs.org/docs/actions/#createTypes */
   createTypes(
-    types: string | object | Array<string | object>,
+    types:
+      | string
+      | GraphQLOutputType
+      | GatsbyGraphQLType
+      | string[]
+      | GraphQLOutputType[]
+      | GatsbyGraphQLType[],
     plugin?: ActionPlugin,
     traceId?: string
   ): void
@@ -1135,12 +1215,13 @@ export interface ReplaceComponentRendererArgs extends BrowserPluginArgs {
     path: string
     "*": string
     uri: string
-    location: object
-    navigate: Function
+    location: Location
+    navigate: NavigateFn
     children: undefined
     pageResources: object
     data: object
-    pageContext: object
+    pageContext: Record<string, unknown>
+    pathContext: Record<string, unknown>
   }
   loader: object
 }
