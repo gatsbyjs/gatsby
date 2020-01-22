@@ -5,7 +5,9 @@ module.exports = {
     allParentChildAdditionForFields {
       nodes {
         foo
-        foo1
+        fields {
+          foo1
+        }
         id
         parent {
           id
