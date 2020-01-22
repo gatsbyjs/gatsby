@@ -57,6 +57,7 @@
     "gatsby-remark-smartypants": "^2.1.17",
     "gatsby-source-airtable": "^2.0.12",
     "gatsby-source-filesystem": "^2.1.40",
+    "gatsby-source-git": "^1.0.2",
     "gatsby-source-npm-package-search": "^2.1.19",
     "gatsby-transformer-csv": "^2.1.19",
     "gatsby-transformer-documentationjs": "^4.1.20",

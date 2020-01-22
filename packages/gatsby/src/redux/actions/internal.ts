@@ -10,6 +10,7 @@ import {
   IQueryExtractionBabelErrorAction,
   ISetProgramStatusAction,
   IPageQueryRunAction,
+  IRemoveStaleJobAction,
 } from "../types"
 
 // import type { Plugin } from "./types"
@@ -224,5 +225,26 @@ export const pageQueryRun = (
     plugin,
     traceId,
     payload: { path, componentPath, isPage },
+  }
+}
+
+/**
+ * Remove jobs which are marked as stale (inputPath doesn't exists)
+ *
+ * @param {string} contentDigest
+ * @private
+ */
+export const removeStaleJob = (
+  contentDigest: string,
+  plugin: Plugin,
+  traceId?: string
+): IRemoveStaleJobAction => {
+  return {
+    type: `REMOVE_STALE_JOB_V2`,
+    plugin,
+    traceId,
+    payload: {
+      contentDigest,
+    },
   }
 }
