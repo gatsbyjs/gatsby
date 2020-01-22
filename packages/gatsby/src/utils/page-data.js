@@ -39,7 +39,7 @@ const write = async ({ publicDir }, page, result) => {
 
 const getNewPageKeys = (store, cacheData) =>
   new Promise(resolve => {
-    if (newPageKeys.length) {
+    if (newPageKeys.length > 0) {
       resolve(newPageKeys)
       return
     }
