@@ -25,6 +25,7 @@
   },
   "keywords": [
     "gatsby",
+    "gatsby-plugin",
     "cypress",
     "cypress.io",
     "integration"
