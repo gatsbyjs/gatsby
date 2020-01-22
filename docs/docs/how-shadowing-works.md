@@ -26,7 +26,7 @@ configures two sibling themes:
 module.exports = {
   plugins: [
     "gatsby-theme-tomato-blog",
-    "gatsby-theme-tomato-portfolio"
+    "gatsby-theme-tomato-portfolio",
   ],
 }
 ```
