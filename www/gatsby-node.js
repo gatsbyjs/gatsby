@@ -447,8 +447,9 @@ exports.createPages = ({ graphql, actions, reporter }) => {
           }
 
           if (node.frontmatter.jsdoc) {
+            // API template
             createPage({
-              path: `${node.fields.slug}`, // required
+              path: `${node.fields.slug}`,
               component: slash(apiTemplate),
               context: {
                 slug: node.fields.slug,
@@ -457,12 +458,20 @@ exports.createPages = ({ graphql, actions, reporter }) => {
                 ...nextAndPrev,
               },
             })
-          } else {
+          } else if (node.fields.package) {
+            // Local package template
             createPage({
-              path: `${node.fields.slug}`, // required
-              component: slash(
-                node.fields.package ? localPackageTemplate : docsTemplate
-              ),
+              path: `${node.fields.slug}`,
+              component: slash(localPackageTemplate),
+              context: {
+                slug: node.fields.slug,
+              },
+            })
+          } else {
+            // Docs template
+            createPage({
+              path: `${node.fields.slug}`,
+              component: slash(docsTemplate),
               context: {
                 slug: node.fields.slug,
                 ...nextAndPrev,

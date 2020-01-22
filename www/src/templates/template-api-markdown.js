@@ -11,42 +11,14 @@ import normalizeGatsbyApiCall from "../utils/normalize-gatsby-api-call"
 import { sortBy } from "lodash-es"
 
 import Layout from "../components/layout"
-import {
-  itemListDocs,
-  itemListTutorial,
-  itemListContributing,
-} from "../utils/sidebar/item-list"
+import { itemListDocs } from "../utils/sidebar/item-list"
 import MarkdownPageFooter from "../components/markdown-page-footer"
 import DocSearchContent from "../components/docsearch-content"
-import TableOfContents from "../components/docs-table-of-contents"
 import FooterLinks from "../components/shared/footer-links"
 import Breadcrumb from "../components/docs-breadcrumb"
 import Container from "../components/container"
 import PrevAndNext from "../components/prev-and-next"
-
-const containerStyles = {
-  // we need to account for <Container>'s horizontal padding of
-  // `space[6]` each (1.5rem), plus add a fluffy `space[9]`
-  // of whitespace in between main content and TOC
-  //
-  // could be much cleaner/clearer, please feel free to improve 🙏
-  maxWidth: t =>
-    `calc(${t.sizes.mainContentWidth.withSidebar} + ${t.sizes.tocWidth} + ${
-      t.space[9]
-    } + ${t.space[9]} + ${t.space[9]})`,
-  px: 9,
-}
-
-const getDocsData = location => {
-  const [urlSegment] = location.pathname.split(`/`).slice(1)
-  const itemListLookup = {
-    docs: itemListDocs,
-    contributing: itemListContributing,
-    tutorial: itemListTutorial,
-  }
-
-  return [urlSegment, itemListLookup[urlSegment]]
-}
+import APIReference, { APIContents } from "../components/api-reference"
 
 const mergeFunctions = (data, context) => {
   const normalized = normalizeGatsbyApiCall(data.nodeAPIs.group)
@@ -85,14 +57,12 @@ const mergeFunctions = (data, context) => {
   return mergedFuncs
 }
 
-function DocsTemplate({ data, location, pageContext }) {
+export default function APITemplate({ data, location, pageContext }) {
   const { next, prev } = pageContext
   const page = data.mdx
-  const [urlSegment, itemList] = getDocsData(location)
-  const toc =
-    !page.frontmatter.disableTableOfContents && page.tableOfContents.items
 
   // Cleanup graphql data for usage with API rendering components
+  const mergedFuncs = mergeFunctions(data, pageContext)
 
   return (
     <React.Fragment>
@@ -106,11 +76,7 @@ function DocsTemplate({ data, location, pageContext }) {
         <meta name="twitter.label1" content="Reading time" />
         <meta name="twitter:data1" content={`${page.timeToRead} min read`} />
       </Helmet>
-      <Layout
-        location={location}
-        itemList={itemList}
-        enableScrollSync={urlSegment === `docs` ? false : true}
-      >
+      <Layout location={location} itemList={itemListDocs}>
         <DocSearchContent>
           <Container
             overrideCSS={{
@@ -118,12 +84,9 @@ function DocsTemplate({ data, location, pageContext }) {
               [mediaQueries.lg]: {
                 pt: 9,
               },
-              [toc && mediaQueries.xl]: {
-                ...containerStyles,
-              },
             }}
           >
-            <Breadcrumb location={location} itemList={itemList} />
+            <Breadcrumb location={location} itemList={itemListDocs} />
             <h1 id={page.fields.anchor} sx={{ mt: 0 }}>
               {page.frontmatter.title}
             </h1>
@@ -135,63 +98,19 @@ function DocsTemplate({ data, location, pageContext }) {
               [mediaQueries.lg]: {
                 pb: 9,
               },
-              [toc && mediaQueries.xl]: {
-                ...containerStyles,
-                display: `flex`,
-                alignItems: `flex-start`,
-              },
             }}
           >
-            {toc && (
-              <div
-                sx={{
-                  order: 2,
-                  [mediaQueries.xl]: {
-                    ml: 9,
-                    maxWidth: `tocWidth`,
-                    position: `sticky`,
-                    top: t =>
-                      `calc(${t.sizes.headerHeight} + ${
-                        t.sizes.bannerHeight
-                      } + ${t.space[9]})`,
-                    maxHeight: t =>
-                      `calc(100vh - ${t.sizes.headerHeight} - ${
-                        t.sizes.bannerHeight
-                      } - ${t.space[9]} - ${t.space[9]})`,
-                    overflow: `auto`,
-                  },
-                }}
-              >
-                <TableOfContents location={location} page={page} />
-              </div>
-            )}
-            <div
-              sx={{
-                [page.tableOfContents.items && mediaQueries.xl]: {
-                  maxWidth: `mainContentWidth.withSidebar`,
-                  minWidth: 0,
-                },
-              }}
-            >
-              <div>
-                <MDXRenderer
-                  slug={page.fields.slug}
-                  mergedFuncs={mergeFunctions(data, pageContext)}
-                >
-                  {page.body}
-                </MDXRenderer>
-                {page.frontmatter.issue && (
-                  <a
-                    href={page.frontmatter.issue}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    See the issue relating to this stub on GitHub
-                  </a>
-                )}
-                <PrevAndNext sx={{ mt: 9 }} prev={prev} next={next} />
-                <MarkdownPageFooter page={page} />
-              </div>
+            <div>
+              <MDXRenderer slug={page.fields.slug}>{page.body}</MDXRenderer>
+              <h2>{page.frontmatter.contentsHeading || "APIs"}</h2>
+              <APIContents docs={mergedFuncs} />
+              <h2>Reference</h2>
+              <APIReference
+                docs={mergedFuncs}
+                showTopLevelSignatures={page.frontmatter.showTopLevelSignatures}
+              />
+              <PrevAndNext sx={{ mt: 9 }} prev={prev} next={next} />
+              <MarkdownPageFooter page={page} />
             </div>
           </Container>
         </DocSearchContent>
@@ -201,15 +120,12 @@ function DocsTemplate({ data, location, pageContext }) {
   )
 }
 
-export default DocsTemplate
-
 export const pageQuery = graphql`
   query($path: String!, $jsdoc: [String], $apiCalls: String) {
     mdx(fields: { slug: { eq: $path } }) {
       body
       excerpt
       timeToRead
-      tableOfContents
       fields {
         slug
         anchor
@@ -217,9 +133,8 @@ export const pageQuery = graphql`
       frontmatter {
         title
         overview
-        issue
-        disableTableOfContents
-        tableOfContentsDepth
+        contentsHeading
+        showTopLevelSignatures
       }
       ...MarkdownPageFooterMdx
     }
