@@ -45,7 +45,6 @@ const generateNodeQueriesFromIngestibleFields = async () => {
   let queries = {}
 
   for (const { type, name } of nodeListRootFields) {
-    // this removes problematic root fields (themes, revisions, actionMonitorActions)
     if (fieldBlacklist.includes(name)) {
       continue
     }
