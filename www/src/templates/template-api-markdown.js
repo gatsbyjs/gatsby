@@ -55,7 +55,7 @@ const mergeFunctions = (data, context) => {
     const doc = node.childrenDocumentationJs
       .filter(def => def.kind !== `typedef` && def.memberof)
       .map(def => {
-        if (!context.apicalls) {
+        if (!context.apiCalls) {
           // When an api call list is not available, the line numbers from jsdoc
           // might be useful. Just for actions.mdx right now.
           def.codeLocation.file = node.relativePath
@@ -63,7 +63,7 @@ const mergeFunctions = (data, context) => {
             def.codeLocation = null
           }
         } else {
-          // API pages having apicalls did not query for this in the page query,
+          // API pages having apiCalls did not query for this in the page query,
           // so just remove it instead. Having one that returns nothing supresses
           // documentation git links completely.
           def.codeLocation = null
@@ -204,7 +204,7 @@ function DocsTemplate({ data, location, pageContext }) {
 export default DocsTemplate
 
 export const pageQuery = graphql`
-  query($path: String!, $jsdoc: [String], $apicalls: String) {
+  query($path: String!, $jsdoc: [String], $apiCalls: String) {
     mdx(fields: { slug: { eq: $path } }) {
       body
       excerpt
@@ -242,7 +242,7 @@ export const pageQuery = graphql`
         }
       }
     }
-    nodeAPIs: allGatsbyApiCall(filter: { group: { eq: $apicalls } }) {
+    nodeAPIs: allGatsbyApiCall(filter: { group: { eq: $apiCalls } }) {
       group(field: name) {
         ...ApiCallFragment
       }

@@ -121,7 +121,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
                 issue
                 tags
                 jsdoc
-                apicalls
+                apiCalls
               }
             }
           }
@@ -453,7 +453,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
               context: {
                 slug: node.fields.slug,
                 jsdoc: node.frontmatter.jsdoc,
-                apicalls: node.frontmatter.apicalls,
+                apiCalls: node.frontmatter.apiCalls,
                 ...nextAndPrev,
               },
             })
