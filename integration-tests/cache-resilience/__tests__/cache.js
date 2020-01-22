@@ -142,7 +142,8 @@ const useGatsbyQuery = run => {
         inputPath
       ))
 
-      const content = `
+      const content = query
+        ? `
       import { graphql } from "gatsby"
 export default () => null
 
@@ -150,6 +151,7 @@ export const query = graphql\`
   ${query}
 \`
       `
+        : `export default () => null`
 
       fs.outputFileSync(pagePath, content)
 
@@ -189,7 +191,7 @@ const build = ({ updatePlugins } = {}) => {
   })
 
   if (processOutput.status !== 0) {
-    throw new Error(`Gatsby exited with non-zero code`)
+    throw new Error(`Gatsby exited with non zero code`)
   }
 
   const preBootstrapStateFromFirstRun = loadState(ON_PRE_BOOTSTRAP_FILE_PATH)
@@ -213,7 +215,7 @@ const build = ({ updatePlugins } = {}) => {
   })
 
   if (processOutput.status !== 0) {
-    throw new Error(`Gatsby exited with non-zero code`)
+    throw new Error(`Gatsby exited with non zero code`)
   }
 
   const preBootstrapStateFromSecondRun = loadState(ON_PRE_BOOTSTRAP_FILE_PATH)
@@ -297,7 +299,7 @@ describe(`nothing changed between gatsby runs`, () => {
   })
 })
 
-describe(`some plugins changed between gatsby runs`, () => {
+describe.skip(`some plugins changed between gatsby runs`, () => {
   let states
 
   beforeAll(() => {

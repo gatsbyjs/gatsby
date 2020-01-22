@@ -1,7 +1,8 @@
 module.exports = {
   query: `
-    {
-  allParentChildAdditionForFields {
+    
+{
+  allParentChildDeletionForFields {
     nodes {
       foo
       id
@@ -19,11 +20,11 @@ module.exports = {
   expectedResult: {
     data: {
       data: {
-        allParentChildAdditionForFields: {
+        allParentChildDeletionForFields: {
           nodes: [
             {
               foo: `run-1`,
-              id: `parent_childAdditionForFields`,
+              id: `parent_childDeletionForFields`,
               parent: null,
               children: [],
             },
