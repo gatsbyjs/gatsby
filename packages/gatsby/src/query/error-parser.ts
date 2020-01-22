@@ -142,9 +142,9 @@ const errorParser = ({
     const matched = message?.match(regex)
     if (matched) {
       structured = {
+        ...cb(matched),
         ...{ location },
         ...{ filePath },
-        ...cb(matched),
       }
       break
     }
