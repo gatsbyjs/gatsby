@@ -88,3 +88,7 @@ exports.createSchemaCustomization = ({ actions }) => {
   `)
 }
 ```
+
+### Incremental builds
+
+Being able to incrementally build only the content that has changed (or new) would help reduce build times and demand on resources. See [Incremental builds](/docs/incremental-builds/).
