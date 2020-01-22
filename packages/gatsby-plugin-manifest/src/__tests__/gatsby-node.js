@@ -186,15 +186,16 @@ describe(`Test plugin manifest options`, () => {
       icon: `non/existing/path`,
     }
 
-    return onPostBootstrap(apiArgs, {
-      ...manifestOptions,
-      ...pluginSpecificOptions,
-    }).catch(err => {
-      expect(sharp).toHaveBeenCalledTimes(0)
-      expect(err).toBe(
-        `icon (non/existing/path) does not exist as defined in gatsby-config.js. Make sure the file exists relative to the root of the site.`
-      )
-    })
+    await expect(
+      onPostBootstrap(apiArgs, {
+        ...manifestOptions,
+        ...pluginSpecificOptions,
+      })
+    ).rejects.toThrow(
+      `icon (non/existing/path) does not exist as defined in gatsby-config.js. Make sure the file exists relative to the root of the site.`
+    )
+
+    expect(sharp).toHaveBeenCalledTimes(0)
   })
 
   it(`doesn't write extra properties to manifest`, async () => {

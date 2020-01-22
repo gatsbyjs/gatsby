@@ -3,8 +3,6 @@ title: Docs and Website Components
 tableOfContentsDepth: 2
 ---
 
-import LayerModel from "../../www/src/components/layer-model"
-import HorizontalNavList from "../../www/src/components/horizontal-nav-list"
 import Breadcrumb from "../../www/src/components/docs-breadcrumb"
 import { itemListContributing } from "../../www/src/utils/sidebar/item-list"
 import TableOfContents from "../../www/src/components/docs-table-of-contents"
@@ -130,14 +128,6 @@ Rendered, the component looks like this:
   To improve is to change, so to be perfect is to have changed often.
 </Pullquote>
 
----
-
-## Other available components
-
-Other less commonly used components aren't globally available, but can imported at the top of a Markdown file and used in other docs.
-
----
-
 ### Layer Model
 
 The `<LayerModel />` was made to help explain concepts of how Gatsby works at a high level. It conceptually breaks Gatsby into different layers and shows how data is pulled, aggregated, and eventually rendered as an app. It's used on docs pages to help explain how Gatsby works at different levels.
@@ -168,7 +158,7 @@ When used, it looks like this:
 
 ### Horizontal Navigation List
 
-The `<HorizontalNavList />` was made for the [Glossary](/docs/glossary/), and renders a list of links to alphabetical subheadings on the page in a horizontal format. Because of its specific use case, it isn't made globally available but can be imported if needed on other pages.
+The `<HorizontalNavList />` was made for the [Glossary](/docs/glossary/), and renders a list of links to alphabetical subheadings on the page in a horizontal format.
 
 #### Usage
 
@@ -211,6 +201,14 @@ items={[
 ]}
 slug={props.slug}
 />
+
+---
+
+## Other available components
+
+Other less commonly used components aren't globally available, but can imported at the top of a Markdown file and used in other docs.
+
+---
 
 ### Breadcrumb
 

@@ -125,7 +125,7 @@ By now, you should have all the images displaying on the home page and doing a f
 
 ### Styled Components
 
-For styling, you're going to be using [styled-components](https://www.styled-components.com/). To get it configured with Gatsby, run the following inside your terminal in your application:
+For styling, you're going to be using [styled-components](https://styled-components.com/). To get it configured with Gatsby, run the following inside your terminal in your application:
 
 ```shell
 yarn add gatsby-plugin-styled-components styled-components babel-plugin-styled-components

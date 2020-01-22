@@ -5461,6 +5461,17 @@
   built_by: Bennett Hardwick
   built_by_url: https://bennetthardwick.com
   featured: false
+- title: Kodingnesia
+  url: https://kodingnesia.com/
+  main_url: https://kodingnesia.com/
+  description: >
+    Kodingnesia is a place for learning programming & linux in Bahasa Indonesia.
+  categories:
+    - Blog
+    - Programming
+    - Technology
+  built_by: Frisko Mayufid
+  built_by_url: https://frisko.space
 - title: Sindhuka
   url: https://sindhuka.org/
   main_url: https://sindhuka.org/
@@ -9374,4 +9385,27 @@
     - Business
   built_by: ccalamos
   built_by_url: https://github.com/ccalamos
+  featured: false
+- title: Krishna Gopinath
+  main_url: https://krishnagopinath.me
+  url: https://krishnagopinath.me
+  source_url: https://github.com/krishnagopinath/website
+  description: >
+    Website of Krishna Gopinath, software engineer and budding teacher.
+  categories:
+    - Portfolio
+  built_by: Krishna Gopinath
+  built_by_url: https://twitter.com/krishwader
+  featured: false
+- title: labelmake.jp
+  main_url: https://labelmake.jp/
+  url: https://labelmake.jp/
+  description: >
+    Web Application of Variable Data Printing and Blog.
+  categories:
+    - App
+    - Data
+    - Blog
+  built_by: hand-dot
+  built_by_url: https://twitter.com/hand_dot
   featured: false

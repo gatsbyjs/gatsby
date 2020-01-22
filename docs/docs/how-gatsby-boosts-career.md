@@ -6,7 +6,7 @@ If you're a developer, and you've come to this section looking for tips about sp
 
 One, unintended, side effect: this is also good for your career.
 
-As you ship Gatsby sites and get [other developers](/docs/winning-over-developers), [engineering leaders](/docs/winning-over-engineering-leaders), [marketers](/docs/winning-over-marketers) and [executives](/docs/winning-over-executives), and [clients](/docs/winning-over-executives) excited about Gatsby, you'll notice that you gain visibility, a reputation for driving results and business value.
+As you ship Gatsby sites and get [other developers](/docs/winning-over-developers), [engineering leaders](/docs/winning-over-engineering-leaders), [marketers](/docs/winning-over-marketers) and [executives](/docs/winning-over-executives), and [clients](/docs/winning-over-clients) excited about Gatsby, you'll notice that you gain visibility, a reputation for driving results and business value.
 
 > Some insight on driving results forward from prominent React developer, Ryan Florence: https://twitter.com/ryanflorence/status/1104060348363988992
 
