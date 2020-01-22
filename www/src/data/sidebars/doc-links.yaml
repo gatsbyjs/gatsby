@@ -95,8 +95,6 @@
               link: /docs/multi-core-builds/
             - title: Asset Prefix
               link: /docs/asset-prefix/
-            - title: Incremental Builds
-              link: /docs/incremental-builds/
         - title: Custom Configuration
           link: /docs/customization/
           items:
@@ -485,6 +483,8 @@
               breadcrumbTitle: Guess.js
             - title: Scaling Issues
               link: /docs/scaling-issues/
+            - title: Incremental Builds
+              link: /docs/incremental-builds/
         - title: Localization & Internationalization with Gatsby
           link: /docs/localization-i18n/
           breadcrumbTitle: Localization
