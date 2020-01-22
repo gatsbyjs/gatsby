@@ -2,6 +2,8 @@ import * as React from "react"
 import { EventEmitter } from "events"
 import { WindowLocation } from "@reach/router"
 import { createContentDigest } from "gatsby-core-utils"
+import { GraphQLFieldConfigMap } from "graphql"
+import webpack from "webpack"
 
 export {
   default as Link,
@@ -65,6 +67,11 @@ export class StaticQuery<T = any> extends React.Component<
  */
 export const graphql: (query: TemplateStringsArray) => void
 
+export interface GatsbyPluginDefinition {
+  resolve: string
+  options: Record<string, unknown>
+}
+
 /**
  * Gatsby configuration API.
  *
@@ -74,13 +81,7 @@ export interface GatsbyConfig {
   /** When you want to reuse common pieces of data across the site (for example, your site title), you can store that here. */
   siteMetadata?: Record<string, unknown>
   /** Plugins are Node.js packages that implement Gatsby APIs. The config file accepts an array of plugins. Some plugins may need only to be listed by name, while others may take options. */
-  plugins?: Array<
-    | string
-    | {
-        resolve: string
-        options: Record<string, unknown>
-      }
-  >
+  plugins?: Array<string | GatsbyPluginDefinition>
   /** It’s common for sites to be hosted somewhere other than the root of their domain. Say we have a Gatsby site at `example.com/blog/`. In this case, we would need a prefix (`/blog`) added to all paths on the site. */
   pathPrefix?: string
   /** Gatsby uses the ES6 Promise API. Because some browsers don't support this, Gatsby includes a Promise polyfill by default. If you'd like to provide your own Promise polyfill, you can set `polyfill` to false.*/
@@ -99,6 +100,283 @@ export interface GatsbyConfig {
 }
 
 /**
+ * Tell plugins to add pages. This extension point is called only after the initial
+ * sourcing and transformation of nodes plus creation of the GraphQL schema are
+ * complete so you can query your data in order to create pages.
+ *
+ * @see https://www.gatsbyjs.org/docs/node-apis/#createPages
+ */
+export type GatsbyNodeCreatePages = (
+  args: CreatePagesArgs & { traceId: "initial-createPages" },
+  options?: PluginOptions,
+  callback?: PluginCallback
+) => void | Promise<any>
+
+/**
+ * Like `createPages` but for plugins who want to manage creating and removing
+ * pages themselves in response to changes in data *not* managed by Gatsby.
+ * Plugins implementing `createPages` will get called regularly to recompute
+ * page information as Gatsby's data changes but those implementing
+ * `createPagesStatefully` will not.
+ *
+ * An example of a plugin that uses this extension point is the plugin
+ * [gatsby-plugin-page-creator](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-page-creator)
+ * which monitors the `src/pages` directory for the adding and removal of JS
+ * pages. As its source of truth, files in the pages directory, is not known by
+ * Gatsby, it needs to keep its own state about its world to know when to
+ * add and remove pages.
+ */
+export type GatsbyNodeCreatePagesStatefully = (
+  args: CreatePagesArgs & { traceId: "initial-createPagesStatefully" },
+  options?: PluginOptions,
+  callback?: PluginCallback
+) => void | Promise<any>
+
+/**
+ * Let plugins extend/mutate the site's Babel configuration.
+ * This API will change before 2.0 as it needs still to be converted to use
+ * Redux actions.
+ */
+export type GatsbyNodeOnCreateBabelConfig = (
+  args: CreateBabelConfigArgs,
+  options?: PluginOptions,
+  callback?: PluginCallback
+) => void | Promise<any>
+
+/**
+ * Run when gatsby develop server is started, its useful to add proxy and middleware
+ * to the dev server app
+ * @param {object} $0
+ * @param {Express} $0.app The [Express app](https://expressjs.com/en/4x/api.html#app) used to run the dev server
+ *
+ * @example
+ *
+ * exports.onCreateDevServer = ({ app }) => {
+ *   app.get('/hello', function (req, res) {
+ *     res.send('hello world')
+ *   })
+ * }
+ */
+export type GatsbyNodeOnCreateDevServer = (
+  args: CreateDevServerArgs,
+  options?: PluginOptions,
+  callback?: PluginCallback
+) => void | Promise<any>
+
+/**
+ * Called when a new node is created. Plugins wishing to extend or
+ * transform nodes created by other plugins should implement this API.
+ *
+ * See also the documentation for `createNode`
+ * and [`createNodeField`](https://www.gatsbyjs.org/docs/actions/#createNodeField)
+ * @example
+ * exports.onCreateNode = ({ node, actions }) => {
+ *   const { createNode, createNodeField } = actions
+ *   // Transform the new node here and create a new node or
+ *   // create a new node field.
+ * }
+ */
+export type GatsbyNodeOnCreateNode = (
+  args: CreateNodeArgs,
+  options?: PluginOptions,
+  callback?: PluginCallback
+) => void | Promise<any>
+
+/**
+ * Called when a new page is created. This extension API is useful
+ * for programmatically manipulating pages created by other plugins e.g.
+ * if you want paths without trailing slashes.
+ *
+ * See the guide [Creating and Modifying Pages](https://www.gatsbyjs.org/docs/creating-and-modifying-pages/)
+ * for more on this API.
+ */
+export type GatsbyNodeOnCreatePage = (
+  args: CreatePageArgs,
+  options?: PluginOptions,
+  callback?: PluginCallback
+) => void | Promise<any>
+
+/**
+ * Let plugins extend/mutate the site's webpack configuration.
+ * @see https://www.gatsbyjs.org/docs/node-apis/#onCreateWebpackConfig
+ */
+export type GatsbyNodeOnCreateWebpackConfig = (
+  args: CreateWebpackConfigArgs,
+  options?: PluginOptions,
+  callback?: PluginCallback
+) => void | Promise<any>
+
+/** Called at the end of the bootstrap process after all other extension APIs have been called. */
+export type GatsbyNodeOnPostBootstrap = (
+  args: ParentSpanPluginArgs,
+  options?: PluginOptions,
+  callback?: PluginCallback
+) => void | Promise<any>
+
+/** The last extension point called after all other parts of the build process are complete. */
+export type GatsbyNodeOnPostBuild = (
+  args: BuildArgs,
+  options?: PluginOptions,
+  callback?: PluginCallback
+) => void | Promise<any>
+
+/** Called at the end of the bootstrap process after all other extension APIs have been called. */
+export type GatsbyNodeOnPreBootstrap = (
+  args: ParentSpanPluginArgs,
+  options?: PluginOptions,
+  callback?: PluginCallback
+) => void | Promise<any>
+
+/** The first extension point called during the build process. Called after the bootstrap has completed but before the build steps start. */
+export type GatsbyNodeOnPreBuild = (
+  args: BuildArgs,
+  options?: PluginOptions,
+  callback?: PluginCallback
+) => void | Promise<any>
+
+/** Called once Gatsby has initialized itself and is ready to bootstrap your site. */
+export type GatsbyNodeOnPreExtractQueries = (
+  args: ParentSpanPluginArgs,
+  options?: PluginOptions,
+  callback?: PluginCallback
+) => void | Promise<any>
+
+/** The first API called during Gatsby execution, runs as soon as plugins are loaded, before cache initialization and bootstrap preparation. */
+export type GatsbyNodeOnPreInit = (
+  args: ParentSpanPluginArgs,
+  options?: PluginOptions,
+  callback?: PluginCallback
+) => void | Promise<any>
+
+/**
+ * Ask compile-to-js plugins to process source to JavaScript so the query
+ * runner can extract out GraphQL queries for running.
+ */
+export type GatsbyNodePreprocessSource = (
+  args: PreprocessSourceArgs,
+  options?: PluginOptions,
+  callback?: PluginCallback
+) => void | Promise<any>
+
+/**
+ * Lets plugins implementing support for other compile-to-js add to the list of "resolvable" file extensions. Gatsby supports `.js` and `.jsx` by default.
+ */
+export type GatsbyNodeResolvableExtensions = (
+  args: ResolvableExtensionsArgs,
+  options?: PluginOptions
+) => string[] | Promise<string[]>
+
+export type GatsbyNodeResolvableExtensionsCallback = (
+  args: ResolvableExtensionsArgs,
+  options?: PluginOptions,
+  callback?: PluginCallback<string[]>
+) => void
+
+/**
+ * Called during the creation of the GraphQL schema. Allows plugins
+ * to add new fields to the types created from data nodes. It will be called
+ * separately for each type.
+ *
+ * This function should return an object in the shape of
+ * [GraphQLFieldConfigMap](https://graphql.org/graphql-js/type/#graphqlobjecttype)
+ * which will be appended to fields inferred by Gatsby from data nodes.
+ *
+ * *Note:* Import GraphQL types from `gatsby/graphql` and don't add the `graphql`
+ * package to your project/plugin dependencies to avoid Schema must
+ * contain unique named types but contains multiple types named errors.
+ * `gatsby/graphql` exports all builtin GraphQL types as well as the `graphQLJSON`
+ * type.
+ *
+ * Many transformer plugins use this to add fields that take arguments.
+ *
+ * @see https://www.gatsbyjs.org/docs/node-apis/#setFieldsOnGraphQLNodeType
+ */
+export type GatsbyNodeSetFieldsOnGraphQLNodeType = (
+  args: SetFieldsOnGraphQLNodeTypeArgs,
+  options: PluginOptions
+) => GraphQLFieldConfigMap<any, any> | Promise<GraphQLFieldConfigMap<any, any>>
+
+export type GatsbyNodeSetFieldsOnGraphQLNodeTypeCallback = (
+  args: SetFieldsOnGraphQLNodeTypeArgs,
+  options: PluginOptions,
+  callback: PluginCallback<GraphQLFieldConfigMap<any, any>>
+) => void
+
+/**
+ * Extension point to tell plugins to source nodes. This API is called during
+ * the Gatsby bootstrap sequence. Source plugins use this hook to create nodes.
+ * This API is called exactly once per plugin (and once for your site's
+ * `gatsby-config.js` file). If you define this hook in `gatsby-node.js` it
+ * will be called exactly once after all of your source plugins have finished
+ * creating nodes.
+ *
+ * @see https://www.gatsbyjs.org/docs/node-apis/#sourceNodes
+ */
+export type GatsbyNodeSourceNodes = (
+  args: SourceNodesArgs,
+  options: PluginOptions
+) => void
+
+/**
+ * Add custom field resolvers to the GraphQL schema.
+ *
+ * Allows adding new fields to types by providing field configs, or adding resolver
+ * functions to existing fields.
+ *
+ * Things to note:
+ * * Overriding field types is disallowed, instead use the `createTypes`
+ *   action. In case of types added from third-party schemas, where this is not
+ *   possible, overriding field types is allowed.
+ * * New fields will not be available on `filter` and `sort` input types. Extend
+ *   types defined with `createTypes` if you need this.
+ * * In field configs, types can be referenced as strings.
+ * * When extending a field with an existing field resolver, the original
+ *   resolver function is available from `info.originalResolver`.
+ * * The `createResolvers` API is called as the last step in schema generation.
+ *   Thus, an intermediate schema is made available on the `schema` property.
+ *   In resolver functions themselves, it is recommended to access the final
+ *   built schema from `info.schema`.
+ * * Gatsby's data layer, including all internal query capabilities, is
+ *   exposed on [`context.nodeModel`](/docs/node-model/). The node store can be
+ *   queried directly with `getAllNodes`, `getNodeById` and `getNodesByIds`,
+ *   while more advanced queries can be composed with `runQuery`. Note that
+ *   `runQuery` will call field resolvers before querying, so e.g. foreign-key
+ *   fields will be expanded to full nodes. The other methods on `nodeModel`
+ *   don't do this.
+ * * It is possible to add fields to the root `Query` type.
+ * * When using the first resolver argument (`source` in the example below,
+ *   often also called `parent` or `root`), take care of the fact that field
+ *   resolvers can be called more than once in a query, e.g. when the field is
+ *   present both in the input filter and in the selection set. This means that
+ *   foreign-key fields on `source` can be either resolved or not-resolved.
+ *
+ * For fuller examples, see [`using-type-definitions`](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-type-definitions).
+ *
+ * @see https://www.gatsbyjs.org/docs/node-apis/#createResolvers
+ */
+export type GatsbyNodeCreateResolvers = (
+  args: CreateResolversArgs,
+  options: PluginOptions
+) => void
+
+/**
+ * Customize Gatsby’s GraphQL schema by creating type definitions, field extensions or adding third-party schemas.
+ * The createTypes, createFieldExtension and addThirdPartySchema actions are only available in this API.
+ *
+ * For details on their usage please refer to the actions documentation.
+ *
+ * This API runs immediately before schema generation. For modifications of the generated schema, e.g.
+ * to customize added third-party types, use the createResolvers API.
+ * @see https://www.gatsbyjs.org/docs/node-apis/#createSchemaCustomization
+ */
+export type GatsbyNodeCreateSchemaCustomization = (
+  args: CreateSchemaCustomizationArgs,
+  options: PluginOptions,
+  callback?: PluginCallback
+) => void | Promise<any>
+
+// Docs need to be repeated here so that they show in the autocomplete
+/**
  * Gatsby API for Node.js.
  *
  * @see https://www.gatsbyjs.org/docs/node-apis/
@@ -111,11 +389,7 @@ export interface GatsbyNode {
    *
    * @see https://www.gatsbyjs.org/docs/node-apis/#createPages
    */
-  createPages?(
-    args: CreatePagesArgs & { traceId: "initial-createPages" },
-    options?: PluginOptions,
-    callback?: PluginCallback
-  ): void
+  createPages?: GatsbyNodeCreatePages
 
   /**
    * Like `createPages` but for plugins who want to manage creating and removing
@@ -131,22 +405,14 @@ export interface GatsbyNode {
    * Gatsby, it needs to keep its own state about its world to know when to
    * add and remove pages.
    */
-  createPagesStatefully?(
-    args: CreatePagesArgs & { traceId: "initial-createPagesStatefully" },
-    options?: PluginOptions,
-    callback?: PluginCallback
-  ): void
+  createPagesStatefully?: GatsbyNodeCreatePagesStatefully
 
   /**
    * Let plugins extend/mutate the site's Babel configuration.
    * This API will change before 2.0 as it needs still to be converted to use
    * Redux actions.
    */
-  onCreateBabelConfig?(
-    args: CreateBabelConfigArgs,
-    options?: PluginOptions,
-    callback?: PluginCallback
-  ): void
+  onCreateBabelConfig?: GatsbyNodeOnCreateBabelConfig
 
   /**
    * Run when gatsby develop server is started, its useful to add proxy and middleware
@@ -162,11 +428,7 @@ export interface GatsbyNode {
    *   })
    * }
    */
-  onCreateDevServer?(
-    args: CreateDevServerArgs,
-    options?: PluginOptions,
-    callback?: PluginCallback
-  ): void
+  onCreateDevServer?: GatsbyNodeOnCreateDevServer
 
   /**
    * Called when a new node is created. Plugins wishing to extend or
@@ -181,11 +443,7 @@ export interface GatsbyNode {
    *   // create a new node field.
    * }
    */
-  onCreateNode?(
-    args: CreateNodeArgs,
-    options?: PluginOptions,
-    callback?: PluginCallback
-  ): void
+  onCreateNode?: GatsbyNodeOnCreateNode
 
   /**
    * Called when a new page is created. This extension API is useful
@@ -195,82 +453,44 @@ export interface GatsbyNode {
    * See the guide [Creating and Modifying Pages](https://www.gatsbyjs.org/docs/creating-and-modifying-pages/)
    * for more on this API.
    */
-  onCreatePage?(
-    args: CreatePageArgs,
-    options?: PluginOptions,
-    callback?: PluginCallback
-  ): void
+  onCreatePage?: GatsbyNodeOnCreatePage
 
   /**
    * Let plugins extend/mutate the site's webpack configuration.
    * @see https://www.gatsbyjs.org/docs/node-apis/#onCreateWebpackConfig
    */
-  onCreateWebpackConfig?(
-    args: CreateWebpackConfigArgs,
-    options?: PluginOptions,
-    callback?: PluginCallback
-  ): void
+  onCreateWebpackConfig?: GatsbyNodeOnCreateWebpackConfig
 
   /** Called at the end of the bootstrap process after all other extension APIs have been called. */
-  onPostBootstrap?(
-    args: ParentSpanPluginArgs,
-    options?: PluginOptions,
-    callback?: PluginCallback
-  ): void
+  onPostBootstrap?: GatsbyNodeOnPostBootstrap
 
   /** The last extension point called after all other parts of the build process are complete. */
-  onPostBuild?(
-    args: BuildArgs,
-    options?: PluginOptions,
-    callback?: PluginCallback
-  ): void
+  onPostBuild?: GatsbyNodeOnPostBuild
 
   /** Called at the end of the bootstrap process after all other extension APIs have been called. */
-  onPreBootstrap?(
-    args: ParentSpanPluginArgs,
-    options?: PluginOptions,
-    callback?: PluginCallback
-  ): void
+  onPreBootstrap?: GatsbyNodeOnPreBootstrap
 
   /** The first extension point called during the build process. Called after the bootstrap has completed but before the build steps start. */
-  onPreBuild?(
-    args: BuildArgs,
-    options?: PluginOptions,
-    callback?: PluginCallback
-  ): void
+  onPreBuild?: GatsbyNodeOnPreBuild
 
   /** Called once Gatsby has initialized itself and is ready to bootstrap your site. */
-  onPreExtractQueries?(
-    args: ParentSpanPluginArgs,
-    options?: PluginOptions,
-    callback?: PluginCallback
-  ): void
+  onPreExtractQueries?: GatsbyNodeOnPreExtractQueries
 
   /** The first API called during Gatsby execution, runs as soon as plugins are loaded, before cache initialization and bootstrap preparation. */
-  onPreInit?(
-    args: ParentSpanPluginArgs,
-    options?: PluginOptions,
-    callback?: PluginCallback
-  ): void
+  onPreInit?: GatsbyNodeOnPreInit
 
   /**
    * Ask compile-to-js plugins to process source to JavaScript so the query
    * runner can extract out GraphQL queries for running.
    */
-  preprocessSource?(
-    args: PreprocessSourceArgs,
-    options?: PluginOptions,
-    callback?: PluginCallback
-  ): void
+  preprocessSource?: GatsbyNodePreprocessSource
 
   /**
    * Lets plugins implementing support for other compile-to-js add to the list of "resolvable" file extensions. Gatsby supports `.js` and `.jsx` by default.
    */
-  resolvableExtensions?(
-    args: ResolvableExtensionsArgs,
-    options: PluginOptions,
-    callback: PluginCallback
-  ): any[] | Promise<any[]>
+  resolvableExtensions?:
+    | GatsbyNodeResolvableExtensions
+    | GatsbyNodeResolvableExtensionsCallback
 
   /**
    * Called during the creation of the GraphQL schema. Allows plugins
@@ -291,19 +511,8 @@ export interface GatsbyNode {
    *
    * @see https://www.gatsbyjs.org/docs/node-apis/#setFieldsOnGraphQLNodeType
    */
-  setFieldsOnGraphQLNodeType?(
-    args: SetFieldsOnGraphQLNodeTypeArgs,
-    options: PluginOptions
-  ): any
-  setFieldsOnGraphQLNodeType?(
-    args: SetFieldsOnGraphQLNodeTypeArgs,
-    options: PluginOptions
-  ): Promise<any>
-  setFieldsOnGraphQLNodeType?(
-    args: SetFieldsOnGraphQLNodeTypeArgs,
-    options: PluginOptions,
-    callback: PluginCallback
-  ): void
+
+  setFieldsOnGraphQLNodeType?: GatsbyNodeSetFieldsOnGraphQLNodeType
 
   /**
    * Extension point to tell plugins to source nodes. This API is called during
@@ -315,14 +524,7 @@ export interface GatsbyNode {
    *
    * @see https://www.gatsbyjs.org/docs/node-apis/#sourceNodes
    */
-  sourceNodes?(args: SourceNodesArgs, options: PluginOptions): any
-  sourceNodes?(args: SourceNodesArgs, options: PluginOptions): Promise<any>
-  sourceNodes?(
-    args: SourceNodesArgs,
-    options: PluginOptions,
-    callback: PluginCallback
-  ): void
-
+  sourceNodes?: GatsbyNodeSourceNodes
   /**
    * Add custom field resolvers to the GraphQL schema.
    *
@@ -360,16 +562,7 @@ export interface GatsbyNode {
    *
    * @see https://www.gatsbyjs.org/docs/node-apis/#createResolvers
    */
-  createResolvers?(args: CreateResolversArgs, options: PluginOptions): any
-  createResolvers?(
-    args: CreateResolversArgs,
-    options: PluginOptions
-  ): Promise<any>
-  createResolvers?(
-    args: CreateResolversArgs,
-    options: PluginOptions,
-    callback: PluginCallback
-  ): void
+  createResolvers?: GatsbyNodeCreateResolvers
 
   /**
    * Customize Gatsby’s GraphQL schema by creating type definitions, field extensions or adding third-party schemas.
@@ -381,19 +574,7 @@ export interface GatsbyNode {
    * to customize added third-party types, use the createResolvers API.
    * @see https://www.gatsbyjs.org/docs/node-apis/#createSchemaCustomization
    */
-  createSchemaCustomization?(
-    args: CreateSchemaCustomizationArgs,
-    options: PluginOptions
-  ): any
-  createSchemaCustomization?(
-    args: CreateSchemaCustomizationArgs,
-    options: PluginOptions
-  ): Promise<any>
-  createSchemaCustomization?(
-    args: CreateSchemaCustomizationArgs,
-    options: PluginOptions,
-    callback: PluginCallback
-  ): void
+  createSchemaCustomization?: GatsbyNodeCreateSchemaCustomization
 }
 
 /**
@@ -620,7 +801,7 @@ export interface PluginOptions {
   [key: string]: unknown
 }
 
-export type PluginCallback = (err: Error | null, result?: any) => void
+export type PluginCallback<R = any> = (err: Error | null, result?: R) => void
 
 export interface CreatePagesArgs extends ParentSpanPluginArgs {
   graphql<TData, TVariables = any>(
@@ -645,7 +826,7 @@ export interface CreateBabelConfigArgs extends ParentSpanPluginArgs {
 }
 
 export interface CreateDevServerArgs extends ParentSpanPluginArgs {
-  app: any
+  app: Express.Application
 }
 
 export interface CreateNodeArgs extends ParentSpanPluginArgs {
@@ -663,7 +844,7 @@ export interface CreatePageArgs extends ParentSpanPluginArgs {
 }
 
 export interface CreateWebpackConfigArgs extends ParentSpanPluginArgs {
-  getConfig: Function
+  getConfig: () => webpack.Configuration
   stage: GatsbyStages
   rules: WebpackRules
   loaders: WebpackLoaders
@@ -711,7 +892,10 @@ export interface PreRenderHTMLArgs extends NodePluginArgs {
   replacePostBodyComponents: (comp: React.ReactNode[]) => void
 }
 
-type ReactProps<T extends Element> = React.DetailedHTMLProps<React.HTMLAttributes<T>, T>
+type ReactProps<T extends Element> = React.DetailedHTMLProps<
+  React.HTMLAttributes<T>,
+  T
+>
 export interface RenderBodyArgs extends NodePluginArgs {
   pathname: string
   setHeadComponents: (comp: React.ReactNode[]) => void
