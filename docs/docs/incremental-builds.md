@@ -2,36 +2,33 @@
 title: Incremental Builds
 ---
 
-A `gatsby build` will fetch the latest data and rebuild all the static assets such as HTML pages and page-data.json. This ensures all pages are in sync with the latest data from the content sources, ready for deployment. On sites that are relatively small, this approach is fine. For sites with large amounts of content (thousands of pages) that require continuous deployment, or require their site to be on-premises this can become an issue. Rebuilding all the pages on every content update can be expensive in terms of CPU, memory and deployment times.
+Gatsby sources data from multiple sources (CMS, static files like Markdown, databases, APIs etc) and creates an aggregated data set in GraphQL. Currently, each `gatsby build` uses the GraphQL data set and queries to do a complete rebuild of the whole app, including static assets, such as HTML, JavaScript, JSON, and media files etc) from the graphQL queries, ready for deployment. For projects that have a small (10s to 100s) to medium (100s to 1000s) amount of content, these full builds don't present a problem.
 
-An incremental build can speed up your deployments by building only the pages that have been updated by the content sources.
+Sites with large amounts of content (10,000s upwards 😱) start to see increased build times and increased demand on CPU and memory. 
+
+Also, one of the principals of modern Continous Integration/Continuous Deployment is to release change (and therefore risk) in small batches. A full app rebuild may not be in line with that principle for some projects.
+
+One solution to these problems might be to use [Gatsby Cloud](https://www.gatsbyjs.com/cloud/)'s 'Build' features (currently in [Beta](https://www.gatsbyjs.com/builds-beta/)).
+
+For projects that require self-hosted environments, where Gatsby Cloud would not be an option, being able to **incrementally build** only the content that has changed (or new) would help reduce build times and demand on resources, whilst helping keep in line with CI/CD principles. 
 
 For more info on the standard build process please see [overview of the gatsby build process](/docs/overview-of-the-gatsby-build-process/)
 
-## Warning
+## How to use
 
-Implementing incremental build will require access to your own CI/CD build pipelines. If your site is relatively small and doesn't require to be on-premise consider using [Gatsby JS cloud solution](https://www.gatsbyjs.com/cloud/).
+To enable optional incremental builds, use the environment variable `GATSBY_INCREMENTAL_BUILD=true` in your `gatsby build` command, for example: 
 
-## Setting up incremental builds
+`GATSBY_INCREMENTAL_BUILD=true gatsby build`
 
-Set the environment variable to `GATSBY_INCREMENTAL_BUILD=true` whilst running the command
+This will run the Gatsby build process, but only build assets that have changed (or are new) since your last build.
 
-`GATSBY_INCREMENTAL_BUILD=true gatsby build {optional parameter}`.
+### Reporting what has been built
 
-Optionally, if you want to list the directories of the pages that have been updated at the end of the incremental build process, you can use one of the following parameters:
+After an incremental build has completed, you might need to get a list of the assets that have been built, for example, if you want to perform a sync action in your CI/CD pipeline.
 
-### --write-to-file
+To list the paths in the build assets (`public`) folder, you can use one (or both) of the following arguments in your `build` command.
 
-The `--write-to-file` will create two text files in the gatsby `.cache` folder:
-
-- `newPages.txt` will contain a list of directory values of the pages that have changed or are new.
-- `deletedPages.txt` will contain a list of directory values of pages removed from the content sources.
-
-**Note that these files will not be created if there are no values.**
-
-### --log-pages
-
-The `--log-pages` parameter will output all the file paths that have been updated or deleted at the end of the build stage.
+- `--log-pages`  outputs the updated paths to the console at the end of the build
 
 ```
 success Building production JavaScript and CSS bundles - 82.198s
@@ -46,11 +43,19 @@ info Done building in 152.084 sec
 + info Incremental build deleted pages:
 + Deleted page: /test
 
+Done in 154.501 sec
 ```
 
-## More information
+- `--write-to-file` creates two files in the `.cache` folder, with lists of the changes paths in the build assets (`public`) folder. 
 
-- Incremental builds work by comparing the page node data from the previous build to the new page node data. An incremental build reads a file in the .cache directory named `redux.state` and compares it against the new page node data. A list of page directories are passed to the static build process.
-- An incremental build will not clear the public directory and will only build the pages that have content changes from a content source.
-- At the end of each build, gatsby creates a redux.state file in .cache that containing the all previous build data.
-- You will need to save the `.cache/redux.state` file between builds, allowing for comparison on an incremental build. If no `redux.state` file is present then a full build will be triggered.
+  - `newPages.txt` will contain a list of paths that have changed or are new
+  - `deletedPages.txt` will contain a list of paths that have been deleted
+
+If there are no changed or deleted paths, then the relevant files will not be created in the `.cache` folder.
+
+## Further considerations
+
+- To enable incremental builds you will need to set an environment variable, so you will need access to set variables in your build environment
+- You will need to persist the cached `.cache/redux.state` file between builds, allowing for comparison on an incremental build, if there is no `redux.state` file located in the `.cache` the folder then a full build will be triggered
+- The root JS bundle will still get generated on incremental builds, you will need to deploy these JS files as well as changed paths 
+- Any code changes (templates, components, source handling, new plugins etc) will require a full `gatsby build`
