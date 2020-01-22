@@ -55,9 +55,9 @@ const Title = ({ children, location }) => {
 }
 
 const iconCss = [
-  css({
+  {
     pointerEvents: `none`,
-  }),
+  },
   { margin: 4 }, // Explicitly leave margin out of theme-ui, this positioning should not change based on theme
 ]
 
