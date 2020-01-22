@@ -15,14 +15,13 @@ _Learn more about [#100DaysOfGatsby here](/blog/100days)!_
 
 The Gatsby framework is [based on React](/docs/glossary/react/). So, a Gatsby project is a React project. And the Gatsby ecosystem is a subset of the React ecosystem.
 
-This is exciting! There are hundreds of [Gatsby plugins and themes](/plugins/) you can use on your site, with more being added every day. But there are already thousands of free, well-tested React projects that you can use on your site too! 
+This is exciting! There are hundreds of [Gatsby plugins and themes](/plugins/) you can use on your site, with more being added every day. But there are already thousands of free, well-tested React projects that you can use on your site too!
 
-For example, you can hide/show your site header with [React headroom](https://kyleamathews.github.io/react-headroom/),  organize your CSS with [Theme UI](https://theme-ui.com/), or control your html head with [React Helmet](https://github.com/nfl/react-helmet). 
+For example, you can hide/show your site header with [React headroom](https://kyleamathews.github.io/react-headroom/), organize your CSS with [Theme UI](https://theme-ui.com/), or control your html head with [React Helmet](https://github.com/nfl/react-helmet).
 
-In this prompt, we invite you to add forms to your Gatsby site using [Formik, a popular and powerful React library](https://jaredpalmer.com/formik). We suggest adding the form to the “About” page you created in a previous challenge. 
+In this prompt, we invite you to add forms to your Gatsby site using [Formik, a popular and powerful React library](https://jaredpalmer.com/formik). We suggest adding the form to the “About” page you created in a previous challenge.
 
 (In a future challenge we will show you how to add your form, or any React component to your markdown-powered blog pages.)
-
 
 ### Challenge Resources
 
