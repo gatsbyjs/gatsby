@@ -11,9 +11,11 @@ const parseGHUrl = require(`parse-github-url`)
 const { GraphQLClient } = require(`@jamo/graphql-request`)
 const moment = require(`moment`)
 const startersRedirects = require(`./starter-redirects.json`)
+const langs = require("./i18n.json")
 const {
   generateComparisonPageSet,
 } = require(`./src/utils/generate-comparison-page-set.js`)
+const { localizedPath } = require(`./src/utils/i18n.js`)
 const yaml = require(`js-yaml`)
 const docLinksData = yaml.load(
   fs.readFileSync(`./src/data/sidebars/doc-links.yaml`)
@@ -57,6 +59,16 @@ const slugToAnchor = slug =>
     .split(`/`) // split on dir separators
     .filter(item => item !== ``) // remove empty values
     .pop() // take last item
+
+const docSlugFromPath = parsedFilePath => {
+  if (parsedFilePath.name !== `index` && parsedFilePath.dir !== ``) {
+    return `/${parsedFilePath.dir}/${parsedFilePath.name}/`
+  } else if (parsedFilePath.dir === ``) {
+    return `/${parsedFilePath.name}/`
+  } else {
+    return `/${parsedFilePath.dir}/`
+  }
+}
 
 exports.createPages = ({ graphql, actions, reporter }) => {
   const { createPage, createRedirect } = actions
@@ -109,6 +121,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
             node {
               fields {
                 slug
+                locale
                 package
                 released
               }
@@ -399,6 +412,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
 
       docPages.forEach(({ node }) => {
         const slug = _.get(node, `fields.slug`)
+        const locale = _.get(node, `fields.locale`)
         if (!slug) return
 
         if (!_.includes(slug, `/blog/`)) {
@@ -444,12 +458,13 @@ exports.createPages = ({ graphql, actions, reporter }) => {
           }
 
           createPage({
-            path: `${node.fields.slug}`, // required
+            path: localizedPath(locale, node.fields.slug),
             component: slash(
               node.fields.package ? localPackageTemplate : docsTemplate
             ),
             context: {
               slug: node.fields.slug,
+              locale,
               ...nextAndPrev,
             },
           })
@@ -509,16 +524,12 @@ exports.createPages = ({ graphql, actions, reporter }) => {
 exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
   const { createNodeField } = actions
   let slug
+  let locale
   if (node.internal.type === `File`) {
     const parsedFilePath = path.parse(node.relativePath)
+    // TODO add locale data for non-MDX files
     if (node.sourceInstanceName === `docs`) {
-      if (parsedFilePath.name !== `index` && parsedFilePath.dir !== ``) {
-        slug = `/${parsedFilePath.dir}/${parsedFilePath.name}/`
-      } else if (parsedFilePath.dir === ``) {
-        slug = `/${parsedFilePath.name}/`
-      } else {
-        slug = `/${parsedFilePath.dir}/`
-      }
+      slug = docSlugFromPath(parsedFilePath)
     }
     if (slug) {
       createNodeField({ node, name: `slug`, value: slug })
@@ -531,13 +542,8 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
     const parsedFilePath = path.parse(fileNode.relativePath)
     // Add slugs for docs pages
     if (fileNode.sourceInstanceName === `docs`) {
-      if (parsedFilePath.name !== `index` && parsedFilePath.dir !== ``) {
-        slug = `/${parsedFilePath.dir}/${parsedFilePath.name}/`
-      } else if (parsedFilePath.dir === ``) {
-        slug = `/${parsedFilePath.name}/`
-      } else {
-        slug = `/${parsedFilePath.dir}/`
-      }
+      slug = docSlugFromPath(parsedFilePath)
+      locale = "en"
 
       // Set released status and `published at` for blog posts.
       if (_.includes(parsedFilePath.dir, `blog`)) {
@@ -560,6 +566,16 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
         })
       }
     }
+
+    for (let { code } of langs) {
+      if (fileNode.sourceInstanceName === `docs-${code}`) {
+        // have to remove the beginning "/docs" path because of the way
+        // gatsby-source-filesystem and gatsby-source-git differ
+        slug = docSlugFromPath(path.parse(fileNode.relativePath.substring(5)))
+        locale = code
+      }
+    }
+
     // Add slugs for package READMEs.
     if (
       fileNode.sourceInstanceName === `packages` &&
@@ -576,6 +592,9 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
     if (slug) {
       createNodeField({ node, name: `anchor`, value: slugToAnchor(slug) })
       createNodeField({ node, name: `slug`, value: slug })
+    }
+    if (locale) {
+      createNodeField({ node, name: `locale`, value: locale })
     }
   } else if (node.internal.type === `AuthorYaml`) {
     slug = `/contributors/${slugify(node.id, {
