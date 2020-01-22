@@ -17,6 +17,9 @@ const appDataUtil = require(`../utils/app-data`)
 const WorkerPool = require(`../utils/worker/pool`)
 const { structureWebpackErrors } = require(`../utils/webpack-error-utils`)
 const pageDataUtil = require(`../utils/page-data`)
+const {
+  waitUntilAllJobsComplete: waitUntilAllJobsV2Complete,
+} = require(`../utils/jobs-manager`)
 
 type BuildArgs = {
   directory: string,
@@ -26,8 +29,8 @@ type BuildArgs = {
   openTracingConfigFile: string,
 }
 
-const waitJobsFinished = () =>
-  new Promise((resolve, reject) => {
+const waitUntilAllJobsComplete = () => {
+  const jobsV1Promise = new Promise(resolve => {
     const onEndJob = () => {
       if (store.getState().jobs.active.length === 0) {
         resolve()
@@ -37,6 +40,12 @@ const waitJobsFinished = () =>
     emitter.on(`END_JOB`, onEndJob)
     onEndJob()
   })
+
+  return Promise.all([
+    jobsV1Promise,
+    waitUntilAllJobsV2Complete(),
+  ]).then(() => {})
+}
 
 module.exports = async function build(program: BuildArgs) {
   const publicDir = path.join(program.directory, `public`)
@@ -130,7 +139,7 @@ module.exports = async function build(program: BuildArgs) {
   require(`../redux/actions`).boundActionCreators.setProgramStatus(
     `BOOTSTRAP_QUERY_RUNNING_FINISHED`
   )
-  await waitJobsFinished()
+  await waitUntilAllJobsComplete()
 
   activity = report.activityTimer(`Building static HTML for pages`, {
     parentSpan: buildSpan,
@@ -189,17 +198,18 @@ module.exports = async function build(program: BuildArgs) {
     activity.end()
   }
 
+  await apiRunnerNode(`onPostBuild`, {
+    graphql: graphqlRunner,
+    parentSpan: buildSpan,
+  })
+
+  // Make sure we saved the latest state so we have all jobs cached
   activity = report.activityTimer(`Update cache for next build`, {
     parentSpan: buildSpan,
   })
   activity.start()
   await db.saveState()
   activity.end()
-
-  await apiRunnerNode(`onPostBuild`, {
-    graphql: graphqlRunner,
-    parentSpan: buildSpan,
-  })
 
   report.info(`Done building in ${process.uptime()} sec`)
 

@@ -142,7 +142,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       }
     ).pop()
 
-    let NewRoot = () => WrappedRoot
+    const NewRoot = () => WrappedRoot
 
     const renderer = apiRunner(
       `replaceHydrateFunction`,

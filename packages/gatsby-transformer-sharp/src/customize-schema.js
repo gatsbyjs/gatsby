@@ -375,6 +375,12 @@ const fluidNodeType = ({
   }
 }
 
+/**
+ * Keeps track of asynchronous file copy to prevent sequence errors in the
+ * underlying fs-extra module during parallel copies of the same file
+ */
+const inProgressCopy = new Set()
+
 const createFields = ({
   pathPrefix,
   getNodeAndSavePathDependency,
@@ -428,8 +434,16 @@ const createFields = ({
           imageName
         )
 
-        if (!fsExtra.existsSync(publicPath)) {
+        if (
+          !fsExtra.existsSync(publicPath) &&
+          !inProgressCopy.has(publicPath)
+        ) {
+          // keep track of in progress copy, we should rely on `existsSync` but
+          // a race condition exists between the exists check and the copy
+          inProgressCopy.add(publicPath)
           fsExtra.copy(details.absolutePath, publicPath, err => {
+            // this is no longer in progress
+            inProgressCopy.delete(publicPath)
             if (err) {
               console.error(
                 `error copying file from ${details.absolutePath} to ${publicPath}`,
