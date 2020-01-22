@@ -231,14 +231,15 @@ import { translate } from "react-i18next"
 class LanguageSwitcher extends Component {
   constructor(props) {
     super(props)
-    const { i18n } = this.props
-    this.state = { language: i18n.language }
 
     this.handleChangeLanguage = this.handleChangeLanguage.bind(this)
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({ language: nextProps.i18n.language })
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if(nextProps.i18n.language !== prevState.i18n.language){
+      return { language: nextProps.i18n.language }
+    }
+    return null
   }
 
   handleChangeLanguage(lng) {
@@ -248,7 +249,7 @@ class LanguageSwitcher extends Component {
 
   renderLanguageChoice({ code, label }) {
     const buttonClass = classNames("LanguageSwitcher__button", {
-      "LanguageSwitcher__button--selected": this.state.language === code,
+      "LanguageSwitcher__button--selected": this.props.i18n.language === code,
     })
 
     return (
