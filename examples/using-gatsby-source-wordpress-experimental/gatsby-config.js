@@ -19,38 +19,25 @@ module.exports = {
             showQueryOnError: false,
           },
         },
-        excludeFields: [
-          // `editLock`,
-          // `editLast`,
-          // `databaseId`,
-          `innerBlocks`,
-          `attributes`,
-          `citation`,
-        ],
+        excludeFields: [`attributes`],
         schema: {
-          queryDepth: 10,
+          queryDepth: 15,
         },
         develop: {
           nodeUpdateInterval: 100,
         },
         type: {
-          NodeWithAuthor: {
-            exclude: true,
-          },
-          BlockJsonArray: {
-            exclude: true,
-          },
-          BlockAttributesArray: {
-            exclude: true,
-          },
-          BlockAttributesObject: {
-            exclude: true,
-          },
+          // NodeWithAuthor: {
+          //   exclude: true,
+          // },
           MediaItem: {
             onlyFetchIfReferenced: true,
           },
           // Page: {
           //   limit: 10,
+          // },
+          // Post: {
+          //   exclude: true,
           // },
         },
       },

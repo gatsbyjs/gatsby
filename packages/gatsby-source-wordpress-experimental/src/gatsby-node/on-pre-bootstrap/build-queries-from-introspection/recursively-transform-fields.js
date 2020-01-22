@@ -17,6 +17,9 @@ const transformFragments = ({
             return false
           }
 
+          // save this type so we can use it in schema customization
+          store.dispatch.introspection.addFetchedType(type)
+
           const isAGatsbyNode = gatsbyNodesInfo.typeNames.includes(
             possibleType.name
           )
@@ -56,7 +59,7 @@ function transformField({
   depth,
   fieldBlacklist,
   fieldAliases,
-}) {
+} = {}) {
   // we're potentially infinitely recursing when fields are connected to other types that have fields that are connections to other types
   //  so we need a maximum limit for that
   if (depth >= maxDepth) {
@@ -178,7 +181,7 @@ function transformField({
 
   const typeInfo = typeMap.get(fieldType.name)
 
-  const { fields } = typeInfo
+  const { fields } = typeInfo || {}
 
   if (fields) {
     const transformedFields = recursivelyTransformFields({
@@ -238,8 +241,8 @@ const recursivelyTransformFields = ({ fields, depth = 0 }) => {
 
   return fields
     ? fields
-        .map(field =>
-          transformField({
+        .map(field => {
+          const transformedField = transformField({
             maxDepth: queryDepth,
             gatsbyNodesInfo,
             fieldBlacklist,
@@ -248,7 +251,14 @@ const recursivelyTransformFields = ({ fields, depth = 0 }) => {
             field,
             depth,
           })
-        )
+
+          if (transformedField) {
+            // save this type so we know to use it in schema customization
+            store.dispatch.introspection.addFetchedType(field.type)
+          }
+
+          return transformedField
+        })
         .filter(Boolean)
     : null
 }

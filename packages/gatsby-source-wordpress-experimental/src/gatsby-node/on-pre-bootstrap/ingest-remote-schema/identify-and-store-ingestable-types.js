@@ -9,6 +9,22 @@ const identifyAndStoreIngestableRootFieldsAndTypes = async () => {
     introspectionData.data.__schema.types.map(type => [type.name, type])
   )
 
+  const interfaces = introspectionData.data.__schema.types.filter(
+    type => type.kind === `INTERFACE`
+  )
+
+  for (const interfaceType of interfaces) {
+    store.dispatch.introspection.addFetchedType(interfaceType)
+
+    if (interfaceType.fields) {
+      for (const interfaceField of interfaceType.fields) {
+        if (interfaceField.type) {
+          store.dispatch.introspection.addFetchedType(interfaceField.type)
+        }
+      }
+    }
+  }
+
   const rootFields = typeMap.get(`RootQuery`).fields
 
   const nodeInterfaceTypes = []
@@ -35,6 +51,15 @@ const identifyAndStoreIngestableRootFieldsAndTypes = async () => {
 
         if (nodeListField) {
           nodeInterfaceTypes.push(nodeListField.type.ofType.name)
+
+          store.dispatch.introspection.addFetchedType(nodeListField.type)
+
+          const nodeListFieldType = typeMap.get(nodeListField.type.ofType.name)
+
+          for (const innerField of nodeListFieldType.fields) {
+            store.dispatch.introspection.addFetchedType(innerField.type)
+          }
+
           continue
         }
       } else if (nodeField) {
@@ -42,18 +67,18 @@ const identifyAndStoreIngestableRootFieldsAndTypes = async () => {
           continue
         }
 
+        store.dispatch.introspection.addFetchedType(nodeField.type)
+
         nodeListRootFields.push(field)
         continue
       }
-
-      // more non-Node fields here
-      // dd(field)
     }
 
     if (fieldBlacklist.includes(field.name)) {
       continue
     }
 
+    store.dispatch.introspection.addFetchedType(field.type)
     nonNodeRootFields.push(field)
   }
 

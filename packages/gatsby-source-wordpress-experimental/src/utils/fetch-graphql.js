@@ -11,7 +11,7 @@ const http = rateLimit(axios.create(), {
 
 const timeout = 30 * 1000
 
-const handleGraphQLErrors = ({
+const handleGraphQLErrors = async ({
   query,
   variables,
   response,
@@ -70,6 +70,8 @@ ${
 
   if (pluginOptions.debug.graphql.showQueryOnError) {
     reporter.error(formatLogMessage(`GraphQL query: ${gqlPrettier(query)}`))
+  } else {
+    await clipboardy.write(gqlPrettier(query))
   }
 
   if (!json.data) {
@@ -134,7 +136,7 @@ const fetchGraphql = async ({
   }
 
   if (!ignoreGraphQLErrors) {
-    handleGraphQLErrors({
+    await handleGraphQLErrors({
       query,
       variables,
       response,

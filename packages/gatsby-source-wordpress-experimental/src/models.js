@@ -16,17 +16,11 @@ const introspection = {
       nodeInterfaceTypes: null,
       nonNodeRootFields: [],
     },
+    fetchedTypes: new Map(),
     fieldBlacklist: [
       // these aren't useful without authentication
       // @todo make this dynamic when authentication is added
       `revisions`,
-      `themes`,
-      `userRoles`,
-      `users`,
-      `author`,
-      // this field is used to determine content changes in WP
-      // no need to pull it into the Gatsby schema
-      `actionMonitorActions`,
       `edges`,
       `isWpGatsby`,
       // the next two cause an error on the WPGQL side so I'm removing them temporarily
@@ -72,6 +66,18 @@ const introspection = {
         ...state,
         ...payload,
       }
+
+      return state
+    },
+
+    addFetchedType(state, type) {
+      const key = type.name || type.ofType.name
+
+      if (!key) {
+        return state
+      }
+
+      state.fetchedTypes.set(key, type)
 
       return state
     },
