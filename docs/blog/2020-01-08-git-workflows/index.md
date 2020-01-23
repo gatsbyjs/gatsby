@@ -185,7 +185,7 @@ Let's say we had squash-merged our `pt1` branch into the root branch. We would w
 These universes collide when we try to change the base, to point `pt2` at the root branch:
 
 <Breakout>
-  <img src={doubleWorkSvg} aria-describedby="git-double-work" />
+  <img src={doubleWorkSvg} alt="" aria-describedby="git-double-work" />
 </Breakout>
 
 <VisuallyHidden id="git-double-work">This image shows the string of commits that occurs when changing the base. The string of commits is: S, A, B, D, M, E. The first commit is circled with the label "Part 1", since it includes the work contained in the "pt1" branch. Commits A, B, D, and M are circled as well, with the label "Also Part 1". This image demonstrates the problem: that the same work is repeated twice in the history.</VisuallyHidden>
