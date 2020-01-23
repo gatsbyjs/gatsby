@@ -1,6 +1,6 @@
 ---
 title: "Incremental PRs: a new Github workflow for the Cloud team"
-date: 2020-01-20
+date: 2020-01-30
 author: "Josh Comeau"
 excerpt: "A look at how the Cloud team adopted a new workflow to achieve smaller, non-blocking PRs."
 tags: ["source control", "Github", "workflows"]
