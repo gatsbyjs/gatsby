@@ -190,6 +190,7 @@ class RouteAnnouncer extends React.Component {
         id="gatsby-announcer"
         style={{
           position: `absolute`,
+          top: 0,
           width: 1,
           height: 1,
           padding: 0,
