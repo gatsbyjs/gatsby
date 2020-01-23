@@ -1,4 +1,7 @@
+const langs = require("../../i18n.json")
 const defaultLang = "en"
+
+const langCodes = langs.map(lang => lang.code)
 
 function isDefaultLang(locale) {
   return locale === defaultLang
@@ -16,4 +19,12 @@ function localizedPath(locale, path) {
   return isLocalized ? `${locale}${isIndex ? `` : `${path}`}` : path
 }
 
-module.exports = { defaultLang, localizedPath }
+function getLocaleAndBasePath(path) {
+  const [, code, ...rest] = path.split("/")
+  if (langCodes.includes(code)) {
+    return { locale: code, basePath: `/${rest.join("/")}` }
+  }
+  return { locale: defaultLang, basePath: path }
+}
+
+module.exports = { defaultLang, localizedPath, getLocaleAndBasePath }
