@@ -47,6 +47,11 @@
               link: /docs/gatsby-on-linux/
             - title: Configuring CA Certificates
               link: /docs/configuring-ca-certificates/
+        - title: Split Testing
+          link: /docs/split-testing/
+          items:
+            - title: Split Testing with Google Analytics
+              link: /docs/split-testing-with-google-analytics/
         - title: Deploying & Hosting
           link: /docs/deploying-and-hosting/
           items:
