@@ -2,7 +2,6 @@ const chokidar = require(`chokidar`)
 const fs = require(`fs`)
 const path = require(`path`)
 const { Machine, interpret } = require(`xstate`)
-const { debounce } = require(`lodash`)
 
 const { createFileNode } = require(`./create-file-node`)
 const createRemoteFileNode = require(`./create-remote-file-node`)
@@ -235,13 +234,11 @@ exports.createSchemaCustomization = ({ actions }) => {
         name: String!
         relativeDirectory: String!
         url: String!
+        localFile: File
     }    
   `
   createTypes(typeDefs)
 }
-
-const files = new Set()
-const CACHE_KEY = `NODE_ID_CACHE`
 
 exports.createResolvers = ({
   createResolvers,
@@ -250,21 +247,23 @@ exports.createResolvers = ({
   createNodeId,
   reporter,
   actions,
-  ...rest
 }) => {
   const { createNode } = actions
-
-  const persistNodes = debounce(
-    () => cache.set(CACHE_KEY, Array.from(files)),
-    1000
-  )
 
   const resolvers = {
     RemoteFile: {
       localFile: {
         type: `File`,
         resolve: async (source, args, context, info) => {
-          const node = await createRemoteFileNode({
+          const fileNode = context.nodeModel.getNodeById({
+            id: createNodeId(source.absolutePath),
+            type: `File`,
+          })
+          if (fileNode) {
+            return fileNode
+          }
+
+          return createRemoteFileNode({
             url: source.url,
             parentNodeId: source.id,
             name: source.name,
@@ -275,23 +274,9 @@ exports.createResolvers = ({
             createNodeId,
             reporter,
           })
-          console.log(node)
-          files.add(node.id)
-          await persistNodes()
-          return node
         },
       },
     },
   }
   createResolvers(resolvers)
-}
-
-exports.onPreBootstrap = async ({ cache, actions }) => {
-  const nodes = await cache.get(CACHE_KEY)
-  console.log(`Nodes post bootstrap`, nodes)
-
-  if (!Array.isArray(nodes)) {
-    return
-  }
-  nodes.map(nodeId => actions.touchNode({ nodeId }))
 }
