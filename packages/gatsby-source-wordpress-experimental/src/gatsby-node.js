@@ -1,9 +1,8 @@
 import onPreBootstrap from "./gatsby-node/on-pre-bootstrap"
 import sourceNodes from "./gatsby-node/source-nodes"
 import createSchemaCustomization from "./gatsby-node/create-schema-customization"
-import createPages from "./gatsby-node/create-pages"
-import onPostBuild from "./gatsby-node/on-post-build"
-import onCreateDevServer from "./gatsby-node/on-create-dev-server"
+import onPostBuild from "./gatsby-node/on-post-build/on-post-build"
+import onCreateDevServer from "./gatsby-node/on-post-build/on-create-dev-server"
 
 module.exports = {
   // 1. check plugin requirements
@@ -22,11 +21,6 @@ module.exports = {
   // in production, cache the image nodes we've collected up into our redux store
   // so we can touch them on the next build
   onPostBuild,
-
-  // this will be moved into our theme, but lives here for now
-  // this builds out a Gatsby page for each WordPress page/post using
-  // the path from the WordPress permalink
-  createPages,
 
   // 1. in development, cache the image nodes we've collected up into our redux store
   // so we can touch them on the next build

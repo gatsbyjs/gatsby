@@ -1,11 +1,18 @@
-import { resolve } from "path"
-import getTemplates from "../utils/get-templates"
-import gql from "../utils/gql"
+const { resolve } = require(`path`)
+const path = require(`path`)
+const glob = require(`glob`)
 
-export default async ({ actions, graphql }) => {
+const getTemplates = () => {
+  const sitePath = path.resolve(`./`)
+  return glob.sync(`./src/templates/**/*.js`, { cwd: sitePath })
+}
+
+//
+// @todo move this to gatsby-theme-wordpress
+exports.createPages = async ({ actions, graphql }) => {
   const {
     data: { allWpContentType },
-  } = await graphql(gql`
+  } = await graphql(`
     query ALL_CONTENT_TYPES {
       allWpContentType {
         nodes {

@@ -1,4 +1,4 @@
-import gql from "../utils/gql"
+import gql from "./utils/gql"
 
 /**
  * Used to fetch WP changes since a unix timestamp
