@@ -6,7 +6,7 @@ title: Sourcing from Seams-CMS
 
 [Seams-CMS](https://seams-cms.com) is a headless CMS system in which you can manage from simple content like blog posts to complex data structures like products and translations. After defining your data types you can easily add content based on your specific structures. Seams-CMS allows you to localize your content and has an advanced security and workflow model. Your content can be retrieved through different JSON API and GraphQL endpoints which allows you to use your content as you see fit.
 
-Seams-CMS makes it possible use your content in different scenario's: on your website, in your blogs, in your apps while managing your content in a single location. 
+Seams-CMS makes it possible use your content in different scenario's: on your website, in your blogs, in your apps while managing your content in a single location.
 
 Creating a Seams-CMS account is free for hobby or small sites. For this tutorial, you'll be using the demo workspace that is automatically generated when you create a new account. Make sure you add an API key to this workspace in the API key settings. You will need your workspace ID and the (read-only) API key shortly.
 
