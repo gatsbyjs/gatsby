@@ -16,7 +16,7 @@ At [Artsy](https://artsy.github.io), where I worked at before TypeScript, we had
 
 A few months later, I joined the TypeScript team and one of my goals was to provide better foundations for our documentation and reference tools. Right now, the TypeScript v1 website is about 60 pages, but if it was going to expand to handle internationalization (a multiplier on pages) and support all the wild ideas I have to make TypeScript easier to learn, we would need an abstraction aimed at handling larger sites but it had to stay statically deployed.
 
-It would also help to have a tool where we can use TypeScript, our v1 website is currently a ruby project wrapped by some JavaScript script files and Gulp. Consolidating that on JS everywhere would be a good win.
+It would also help to have a tool where we can use TypeScript. Our v1 website is currently a Ruby project wrapped by some JavaScript script files and Gulp. Consolidating that on JavaScript everywhere would be a good win.
 
 ### What Makes Gatsby Unique
 
@@ -53,7 +53,7 @@ createSite()
 
 Gatsby adds a GraphQL API which sits in-between the setup of the data and the generation of files in your static site. This abstraction provides a very strong separation of "setting up the site" vs "representation on the file system" which provides more places to introspect what is going on internally.
 
-What does this look like in practice? The server-side generation starts at [`gatsby-node.js`](https://github.com/microsoft/TypeScript-Website/blob/0afd526969d98c321787ab1962f72f9361ab54bd/packages/typescriptlang-org/gatsby-node.js) but an interesting example is how a TSConfig Reference page is set up:
+What does this look like in practice? The server-side generation starts at [`gatsby-node.`](https://github.com/microsoft/TypeScript-Website/blob/0afd526969d98c321787ab1962f72f9361ab54bd/packages/typescriptlang-org/gatsby-node.js) but an interesting example is how a TSConfig Reference page is set up:
 
 - In the Gatsby config file, [we request a plugin](https://github.com/microsoft/TypeScript-Website/blob/0afd526969d98c321787ab1962f72f9361ab54bd/packages/typescriptlang-org/gatsby-config.js#L52-L58) to look for markdown files in a particular folder and to mark them as `tsconfig-reference`.
 - Then in `onCreatePages` in `gatsby-node.js` we make a [GraphQL query to get all these files](https://github.com/microsoft/TypeScript-Website/blob/0afd526969d98c321787ab1962f72f9361ab54bd/packages/typescriptlang-org/lib/bootup/ingestion/createTSConfigReference.ts#L12-L26) via the name `"tsconfig-reference"`.
@@ -69,11 +69,11 @@ The TypeScript support in Gatsby is good, and improving as they start to port th
 
 If you're familiar with React, and clicked through into the [TSConfig Template](https://github.com/microsoft/TypeScript-Website/blob/0afd526969d98c321787ab1962f72f9361ab54bd/packages/typescriptlang-org/src/templates/tsconfigReference.tsx#L9) - you might have been a bit surprised by the somewhat unorthodox usage of React.
 
-I'm using React as a templating language, and not as a reactive UI framework, the site never use a `setState`-like API in React. Effectively meaning that React runs once when the site is generated, and then never used again.
+I'm using React as a templating language, and not as a reactive UI framework. The site never uses a `setState`-like API in React. Effectively meaning that React runs once when the site is generated, and then never used again.
 
 My goal is that the TypeScript v2 website can be understood with the least amount of abstractions possible. It should not be too surprising, but vast majority of the TypeScript compiler team have a compiler background, and don't really do web development. To ensure that they can contribute, and understand the codebase I'm aiming to use Gatsby and React to get as close to vanilla HTML + CSS + TypeScript (heh) as possible.
 
-One way to do that, is to separate the generation of HTML + CSS from any additional JS which happens at runtime. This means almost every component in the site conforms to this general pattern:
+One way to do that, is to separate the generation of HTML + CSS from any additional JavaScript which happens at runtime. This means almost every component in the site conforms to this general pattern:
 
 ```tsx
 // JS imports
@@ -136,15 +136,15 @@ In the meanwhile, anyone working on the code stills get the advantages in toolin
 - The 'runtime' code inside `useEffect` will be transpiled and verified to be correct by TypeScript
 - The 'runtime' code can re-use the same libraries as the server-side rendering, but have strong guarantees about only being optionally available
 
-By not using any of the React `setState`-ish APIs, I can guarantee there is no "runtime" React rendering happening on a user's browser either. This means the HTML in the built file is exactly what someone will see whether they have JS enabled or not. One advantage of this, has been that I can reliably run [`BackstopJS`](https://garris.github.io/BackstopJS/) to take screenshots of these static files to keep track of visual regressions as the site grows and others start to contribute.
+By not using any of the React `setState`-ish APIs, I can guarantee there is no "runtime" React rendering happening on a user's browser either. This means the HTML in the built file is exactly what someone will see whether they have JavaScript enabled or not. One advantage of this, has been that I can reliably run [`BackstopJS`](https://garris.github.io/BackstopJS/) to take screenshots of these static files to keep track of visual regressions as the site grows and others start to contribute.
 
-Would I recommend this constraint to people making Gatsby websites, probably not, it's going against the grain (React is a really good tool) of how you're expected to use Gatsby. But the trade-off is worth it for me, and it lowers the barrier if a compiler engineer wants to contribute.
+Would I recommend this constraint to people making Gatsby websites? Probably not - it's going against the grain (React is a really good tool) of how you're expected to use Gatsby. But the trade-off is worth it for me, and it lowers the barrier if a compiler engineer wants to contribute.
 
 ### Speed
 
 I'm blown away by how fast Gatsby is for a user.
 
-The founder of Gatsby, Kyle Mathews [gave a great talk in 2017 on the ways in which Gatsby is fast](https://youtu.be/Gtd-Ht-D0sg?t=961) and [here more recently](https://www.youtube.com/watch?v=HQEotVfTXwk), in rough:
+The founder of Gatsby, Kyle Matthews [gave a great talk in 2017 on the ways in which Gatsby is fast](https://youtu.be/Gtd-Ht-D0sg?t=961) and [here more recently](https://www.youtube.com/watch?v=HQEotVfTXwk), in rough:
 
 - Pre-fetching of related links
 - Clever splitting of code
@@ -152,7 +152,7 @@ The founder of Gatsby, Kyle Mathews [gave a great talk in 2017 on the ways in wh
 - Offline support
 - Native lazy loading
 
-His long term visions is to think of Gatsby as a compiler which takes a set of input source files, and will keep trying to make a static output which is faster and faster for users. Another great resource for understanding the mechanics about why Gatsby is fast is this talk by [Nicolas Goutay at GOTO 2019](https://www.youtube.com/watch?v=p14g-Sep7HY).
+His long term vision is to think of Gatsby as a compiler which takes a set of input source files, and will keep trying to make a static output which is faster and faster for users. Another great resource for understanding the mechanics about why Gatsby is fast is this talk by [Nicolas Goutay at GOTO 2019](https://www.youtube.com/watch?v=p14g-Sep7HY).
 
 ### Ecosystem Wins
 
