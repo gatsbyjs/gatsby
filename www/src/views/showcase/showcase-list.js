@@ -110,7 +110,7 @@ const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
                         },
                       },
                     }}
-                    to={`/showcase?${qs.stringify({
+                    to={`/showcase/?${qs.stringify({
                       filters: `Featured`,
                     })}`}
                     className="featured-site"

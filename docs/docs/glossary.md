@@ -3,8 +3,6 @@ title: Glossary
 disableTableOfContents: true
 ---
 
-import HorizontalNavList from "../../www/src/components/horizontal-nav-list.js"
-
 When you're new to Gatsby there can be a lot of words to learn. This glossary aims to give you a 10,000-foot overview of common terms and what they mean for Gatsby sites.
 
 <HorizontalNavList

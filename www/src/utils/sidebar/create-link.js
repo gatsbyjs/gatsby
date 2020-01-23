@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { Link } from "gatsby"
+import Link from "../../components/localized-link"
 
 import indention from "../../utils/sidebar/indention"
 
