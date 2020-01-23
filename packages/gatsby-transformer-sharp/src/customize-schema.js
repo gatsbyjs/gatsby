@@ -63,7 +63,7 @@ const fixedNodeType = ({
     type: new GraphQLObjectType({
       name: name,
       fields: {
-        base64: { type: GraphQLString },
+        base64: { type: new GraphQLNonNull(GraphQLString) },
         tracedSVG: {
           type: GraphQLString,
           resolve: parent =>
@@ -220,7 +220,7 @@ const fluidNodeType = ({
     type: new GraphQLObjectType({
       name: name,
       fields: {
-        base64: { type: GraphQLString },
+        base64: { type: new GraphQLNonNull(GraphQLString) },
         tracedSVG: {
           type: GraphQLString,
           resolve: parent =>

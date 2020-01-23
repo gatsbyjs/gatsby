@@ -318,7 +318,7 @@ const fixedNodeType = ({ name, getTracedSVG }) => {
       name: name,
       fields: {
         base64: {
-          type: GraphQLString,
+          type: new GraphQLNonNull(GraphQLString),
           resolve(imageProps) {
             return getBase64Image(imageProps)
           },
@@ -415,7 +415,7 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
       name: name,
       fields: {
         base64: {
-          type: GraphQLString,
+          type: new GraphQLNonNull(GraphQLString),
           resolve(imageProps) {
             return getBase64Image(imageProps)
           },
