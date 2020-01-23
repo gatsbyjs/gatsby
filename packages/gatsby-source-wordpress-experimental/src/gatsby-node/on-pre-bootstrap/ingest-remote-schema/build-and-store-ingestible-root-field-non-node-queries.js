@@ -3,7 +3,7 @@ import recursivelyTransformFields from "../build-queries-from-introspection/recu
 import { buildSelectionSet } from "../build-queries-from-introspection/build-query-on-field-name"
 import { getTypeSettingsByType } from "../../create-schema-customization/helpers"
 
-const buildAndStoreIngestibleRootFieldNonNodeQueries = async () => {
+const buildNonNodeQueries = async () => {
   const {
     introspection: {
       typeMap,
@@ -59,4 +59,4 @@ const buildAndStoreIngestibleRootFieldNonNodeQueries = async () => {
   store.dispatch.introspection.setState({ nonNodeQuery })
 }
 
-export default buildAndStoreIngestibleRootFieldNonNodeQueries
+export default buildNonNodeQueries

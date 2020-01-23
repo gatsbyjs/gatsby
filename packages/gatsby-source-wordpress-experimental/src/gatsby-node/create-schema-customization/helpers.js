@@ -1,4 +1,5 @@
 import store from "../../store"
+import { objectTypeFilters } from "./type-filters"
 
 /**
  * This function namespaces typenames with a prefix
@@ -9,6 +10,11 @@ export const buildTypeName = name => {
   }
 
   const prefix = `Wp`
+
+  // this is for our namespace type on the root { wp { ...fields } }
+  if (name === prefix) {
+    return name
+  }
 
   return prefix + name
 }
@@ -27,17 +33,7 @@ export const typeWasFetched = type => {
   return false
 }
 
-const supportedScalars = [
-  `Int`,
-  `Float`,
-  `String`,
-  `Boolean`,
-  `ID`,
-  `Date`,
-  `JSON`,
-]
-
-export const removeCustomScalars = type => {
+export const typeIsASupportedScalar = type => {
   if (
     type.kind !== `SCALAR` ||
     (type.ofType && type.ofType.kind !== `SCALAR`)
@@ -45,9 +41,17 @@ export const removeCustomScalars = type => {
     return true
   }
 
-  const name = type.name || type.ofType.name
+  const supportedScalars = [
+    `Int`,
+    `Float`,
+    `String`,
+    `Boolean`,
+    `ID`,
+    `Date`,
+    `JSON`,
+  ]
 
-  return supportedScalars.includes(name)
+  return supportedScalars.includes(type.name || type.ofType.name)
 }
 
 // retrieves plugin settings for the provided type
@@ -63,4 +67,16 @@ export const getTypeSettingsByType = type => {
   }
 
   return {}
+}
+
+export const filterObjectType = (objectType, typeBuilderApi) => {
+  const filter = objectTypeFilters.find(
+    filter => typeBuilderApi.type.name === filter.typeName
+  )
+
+  if (filter && typeof filter.typeDef === `function`) {
+    objectType = filter.typeDef(objectType, typeBuilderApi)
+  }
+
+  return objectType
 }

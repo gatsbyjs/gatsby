@@ -3,17 +3,14 @@ import formatLogMessage from "../../../utils/format-log-message"
 
 import checkIfSchemaHasChanged from "../check-if-schema-has-changed"
 import introspectAndStoreRemoteSchema from "../introspect-remote-schema"
-import identifyAndStoreIngestableRootFieldsAndTypes from "./identify-and-store-ingestable-types"
-import buildAndStoreIngestibleRootFieldNodeListQueries from "../build-queries-from-introspection"
-import buildAndStoreIngestibleRootFieldNonNodeQueries from "./build-and-store-ingestible-root-field-non-node-queries"
+import identifyAndStoreIngestableFieldsAndTypes from "./identify-and-store-ingestable-types"
+import buildAndStoreQueries from "../build-queries-from-introspection"
 
 const ingestionSteps = [
   checkIfSchemaHasChanged,
   introspectAndStoreRemoteSchema,
-  identifyAndStoreIngestableRootFieldsAndTypes,
-  // @todo these two should be put in one function:
-  buildAndStoreIngestibleRootFieldNodeListQueries,
-  buildAndStoreIngestibleRootFieldNonNodeQueries,
+  identifyAndStoreIngestableFieldsAndTypes,
+  buildAndStoreQueries,
 ]
 
 const ingestRemoteSchema = async () => {
@@ -28,14 +25,6 @@ const ingestRemoteSchema = async () => {
   for (const ingestionStep of ingestionSteps) {
     await ingestionStep()
   }
-
-  // build node list queries
-  // build other root field query
-
-  // use type map to:
-  // add node interfaces to schema
-  // add node list types to schema
-  // add other root field types to schema
 
   activity.end()
 }

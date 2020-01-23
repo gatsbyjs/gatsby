@@ -1,7 +1,7 @@
 import {
   buildTypeName,
   typeWasFetched,
-  removeCustomScalars,
+  typeIsASupportedScalar,
   getTypeSettingsByType,
 } from "./helpers"
 
@@ -22,7 +22,7 @@ export const transformFields = ({
 
   return fields
     .filter(
-      field => typeWasFetched(field.type) && removeCustomScalars(field.type)
+      field => typeWasFetched(field.type) && typeIsASupportedScalar(field.type)
     )
     .reduce((accumulator, current) => {
       const thisTypeSettings = getTypeSettingsByType(current.type)

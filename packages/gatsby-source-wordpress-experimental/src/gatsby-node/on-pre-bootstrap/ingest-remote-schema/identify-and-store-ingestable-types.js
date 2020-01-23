@@ -1,6 +1,6 @@
 import store from "../../../store"
 
-const identifyAndStoreIngestableRootFieldsAndTypes = async () => {
+const identifyAndStoreIngestableFieldsAndTypes = async () => {
   const nodeListFilter = field => field.name === `nodes`
 
   const { introspectionData, fieldBlacklist } = store.getState().introspection
@@ -107,4 +107,4 @@ const identifyAndStoreIngestableRootFieldsAndTypes = async () => {
   })
 }
 
-export default identifyAndStoreIngestableRootFieldsAndTypes
+export default identifyAndStoreIngestableFieldsAndTypes
