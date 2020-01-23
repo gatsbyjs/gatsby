@@ -34,12 +34,6 @@ const createDevelopQueue = getRunner => {
     merge: (oldTask, newTask, cb) => {
       cb(null, newTask)
     },
-    // Filter out new query jobs if that query is already running.
-    // When the query finishes, it checks the waiting map and pushes
-    // another job to make sure all the user changes are captured.
-    filter: (job, cb) => {
-      cb(null, job)
-    },
   }
 
   const handler = (queryJob, callback) => {
