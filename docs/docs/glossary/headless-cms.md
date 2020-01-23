@@ -1,7 +1,7 @@
 ---
-
 title: Headless CMS
 disableTableOfContents: true
+---
 
 Learn what a Headless CMS is, how it differs from traditional content management systems, and why you might choose a headless CMS for your project.
 
