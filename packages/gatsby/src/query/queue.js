@@ -85,6 +85,7 @@ const createDevelopQueue = getRunner => {
  * Returns a promise that pushes jobs onto queue and resolves onces
  * they're all finished processing (or rejects if one or more jobs
  * fail)
+ * Note: queue is reused in develop so make sure to thoroughly cleanup hooks
  */
 const processBatch = async (queue, jobs, activity) => {
   let numJobs = jobs.length
@@ -97,11 +98,25 @@ const processBatch = async (queue, jobs, activity) => {
       queue.on(`task_finish`, () => activity.tick())
     }
 
+    const gc = () => {
+      queue.removeAllListeners(`task_failed`)
+      queue.removeAllListeners(`drain`)
+      queue.removeAllListeners(`task_finish`)
+      queue = null
+    }
+
     queue
       // Note: the first arg is the path, the second the error
-      .once(`task_failed`, (...err) => reject(err))
-      // Note: `drain` fires when all tasks _finish_, `empty` fires when queue is empty (but tasks are still running)
-      .once(`drain`, resolve)
+      .on(`task_failed`, (...err) => {
+        gc()
+        reject(err)
+      })
+      // Note: `drain` fires when all tasks _finish_
+      //       `empty` fires when queue is empty (but tasks are still running)
+      .on(`drain`, () => {
+        gc()
+        resolve()
+      })
 
     jobs.forEach(job => queue.push(job))
   })
