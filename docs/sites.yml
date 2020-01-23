@@ -9409,3 +9409,16 @@
   built_by: hand-dot
   built_by_url: https://twitter.com/hand_dot
   featured: false
+- title: Adam Bowen
+  main_url: https://adamcbowen.com/
+  url: https://adamcbowen.com/
+  source_url: https://github.com/bowenac/my-website
+  description: >
+    Personal website for Adam Bowen. I am a freelance web developer based in Tacoma, WA specializing in Wordpress, Craft CMS, plus a lot more and recently fell in love with Gatsby.
+  categories:
+    - Portfolio
+    - Web Development
+    - Freelance
+  built_by: Adam Bowen
+  built_by_url: https://adamcbowen.com
+  featured: false
