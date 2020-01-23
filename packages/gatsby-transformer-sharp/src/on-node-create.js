@@ -10,10 +10,9 @@ const supportedExtensions = {
 module.exports = async function onCreateNode({ node, actions, createNodeId }) {
   const { createNode, createParentChildLink } = actions
 
-  if (!supportedExtensions[node.extension]) {
+  if (node.internal.type !== `File` || !supportedExtensions[node.extension]) {
     return
   }
-
   const imageNode = {
     id: createNodeId(`${node.id} >> ImageSharp`),
     children: [],
