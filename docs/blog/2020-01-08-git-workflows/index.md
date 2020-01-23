@@ -29,7 +29,7 @@ Ideally, the developer could spin up new PRs as they went, allowing them to soli
 
 This blog post explains how we solved for these concerns!
 
-# Workflow overview
+## Workflow overview
 
 Let's say we're working on a blog, and want to incorporate a headless CMS, switching from using local markdown files and hardcoded data.
 
