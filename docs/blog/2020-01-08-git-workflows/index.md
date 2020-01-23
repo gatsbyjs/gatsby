@@ -175,7 +175,7 @@ Every commit points to its parent, and branches are just references to a particu
 Let's say we had squash-merged our `pt1` branch into the root branch. We would wind up with two _parallel universes_. In our root branch, we'd have a brand new commit `S`, representing the squashed contents of `pt1`. Our `pt2` branch, meanwhile, doesn't know about any of this; the chain of commits still includes the "unsquashed" `pt1` work.
 
 <Breakout>
-  <img src={parallelUniversesSvg} aria-describedby="git-parallel-universes" />
+  <img src={parallelUniversesSvg} alt="" aria-describedby="git-parallel-universes" />
 </Breakout>
 
 <VisuallyHidden id="git-parallel-universes">
