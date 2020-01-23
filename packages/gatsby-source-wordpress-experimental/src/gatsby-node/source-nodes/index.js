@@ -1,7 +1,7 @@
 import fetchAndApplyNodeUpdates from "./fetch-node-updates"
 import { fetchAndCreateAllNodes } from "./fetch-nodes"
 
-import { LAST_COMPLETED_SOURCE_TIME } from "../constants"
+import { LAST_COMPLETED_SOURCE_TIME } from "../../constants"
 import { createContentTypeNodes } from "./get-content-types"
 import store from "../../store"
 import fetchAndCreateNonNodeRootFields from "./fetch-and-create-non-node-root-fields"

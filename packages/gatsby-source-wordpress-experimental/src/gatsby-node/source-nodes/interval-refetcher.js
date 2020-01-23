@@ -1,4 +1,4 @@
-import { LAST_COMPLETED_SOURCE_TIME } from "../constants"
+import { LAST_COMPLETED_SOURCE_TIME } from "../../constants"
 import fetchAndApplyNodeUpdates from "./fetch-node-updates"
 import formatLogMessage from "../../utils/format-log-message"
 import store from "../../store"
