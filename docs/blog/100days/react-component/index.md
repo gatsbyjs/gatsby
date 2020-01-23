@@ -29,6 +29,8 @@ Learn how to [import and use almost any React component](/docs/adding-react-comp
 
 Next, follow [Formik’s step-by-step tutorial](https://jaredpalmer.com/formik/docs/tutorial) for creating a newsletter signup form.
 
+Lastly, familiarize yourself with the [acessibility guidelines regarding forms](/docs/building-a-contact-form/#creating-an-accessible-form), and ensure your form meets those standards.
+
 ### What to Do If You Need Help
 
 If you get stuck during the challenge, you can ask for help from the [Gatsby community](/contributing/community/) and the [ASKGatsbyJS](https://twitter.com/AskGatsbyJS) Twitter account. You can find fellow Gatsby Developers on [Discord](https://discordapp.com/invite/gatsby), [Reddit](https://www.reddit.com/r/gatsbyjs/), [Spectrum](https://spectrum.chat/gatsby-js), and [Dev](https://dev.to/t/gatsby).
