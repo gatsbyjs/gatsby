@@ -163,7 +163,7 @@ In fact, branches are much thinner abstractions than that; all they do is point 
 A more accurate representation of our current state would look like this:
 
 <Breakout>
-  <img src={actualGitSvg} aria-describedby="git-actual" />
+  <img src={actualGitSvg} alt="" aria-describedby="git-actual" />
 </Breakout>
 
 <VisuallyHidden id="git-actual">
