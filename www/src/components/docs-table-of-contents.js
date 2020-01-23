@@ -1,7 +1,8 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { Link, useStaticQuery, graphql } from "gatsby"
+import { Link } from "gatsby"
 import { colors, mediaQueries } from "../gatsby-plugin-theme-ui"
+import useLocalizedStrings from "./use-localized-strings"
 
 function isUnderDepthLimit(depth, maxDepth) {
   if (maxDepth === null) {
@@ -62,26 +63,7 @@ function createItems(items, location, depth, maxDepth) {
 }
 
 function TableOfContents({ page, location }) {
-  // TODO move this out into a custom hook
-  const { allTextYaml } = useStaticQuery(graphql`
-    query {
-      allTextYaml {
-        nodes {
-          docsTableOfContents {
-            title
-          }
-          parent {
-            ... on File {
-              sourceInstanceName
-            }
-          }
-        }
-      }
-    }
-  `)
-
-  // TODO replace with
-  const { title } = allTextYaml.nodes[0].docsTableOfContents
+  const { title } = useLocalizedStrings("docsTableOfContents")
 
   return page.tableOfContents.items ? (
     <nav

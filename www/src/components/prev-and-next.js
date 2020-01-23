@@ -3,6 +3,7 @@ import { jsx } from "theme-ui"
 import Link from "./localized-link"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import ArrowBackIcon from "react-icons/lib/md/arrow-back"
+import useLocalizedStrings from "./use-localized-strings"
 
 import { mediaQueries } from "../gatsby-plugin-theme-ui"
 
@@ -30,6 +31,8 @@ const PrevAndNext = ({ prev = null, next = null, ...props }) => {
     return null
   }
 
+  const { prevLabel, nextLabel } = useLocalizedStrings("prevAndNext")
+
   return (
     <nav
       aria-label="pagination"
@@ -45,7 +48,7 @@ const PrevAndNext = ({ prev = null, next = null, ...props }) => {
       <div css={{ [mediaQueries.sm]: { width: `48%` } }}>
         {prev && (
           <Link to={prev.link} sx={prevNextLinkStyles}>
-            <p sx={prevNextLabelStyles}>Previous</p>
+            <p sx={prevNextLabelStyles}>{prevLabel}</p>
             <span
               sx={{
                 [mediaQueries.md]: {
@@ -76,7 +79,7 @@ const PrevAndNext = ({ prev = null, next = null, ...props }) => {
       >
         {next && (
           <Link to={next.link} sx={prevNextLinkStyles}>
-            <p sx={prevNextLabelStyles}>Next</p>
+            <p sx={prevNextLabelStyles}>{nextLabel}</p>
             <span
               sx={{
                 [mediaQueries.md]: {

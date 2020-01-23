@@ -1,0 +1,14 @@
+docsTableOfContents:
+  title: Table of Contents
+markdownPageFooter:
+  text: Edit this page on GitHub
+prevAndNext:
+  prevLabel: Previous
+  nextLabel: Next
+searchForm:
+  placeholder: Search gatsbyjs.org
+  ariaLabel: Search gatsbyjs.org
+  title: Hit 's' to search docs
+sidebarButtonExpandAll:
+  expandLabel: Expand All
+  collapseLabel: Collapse All

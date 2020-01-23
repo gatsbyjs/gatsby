@@ -745,6 +745,18 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
       lower: true,
     })}`
     createNodeField({ node, name: `slug`, value: slug })
+  } else if (node.internal.type === `StringsYaml`) {
+    const fileNode = getNode(node.parent)
+    if (fileNode.sourceInstanceName === "strings") {
+      locale === "en"
+    } else {
+      for (let { code } of langs) {
+        if (fileNode.sourceInstanceName === `docs-${code}`) {
+          locale = code
+        }
+      }
+    }
+    createNodeField({ node, name: `locale`, value: locale })
   }
   // end Creator pages
   return null

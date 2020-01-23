@@ -3,31 +3,27 @@ import { jsx } from "theme-ui"
 import React from "react"
 import { graphql } from "gatsby"
 import EditIcon from "react-icons/lib/md/create"
+import useLocalizedStrings from "./use-localized-strings"
 
-export default class MarkdownPageFooter extends React.Component {
-  constructor() {
-    super()
-    this.state = { feedbackSubmitted: false }
-  }
-  render() {
-    return (
-      <>
-        <hr sx={{ display: `none` }} />
-        {this.props.page && (
-          <a
-            sx={{ variant: `links.muted`, mt: 9 }}
-            href={`https://github.com/gatsbyjs/gatsby/blob/master/${
-              this.props.packagePage ? `packages` : `docs`
-            }/${this.props.page ? this.props.page.parent.relativePath : ``}`}
-          >
-            <EditIcon sx={{ marginRight: 2 }} />
-            {` `}
-            Edit this page on GitHub
-          </a>
-        )}
-      </>
-    )
-  }
+export default function MarkdownPageFooter({ page, packagePage }) {
+  const { text } = useLocalizedStrings("markdownPageFooter")
+  return (
+    <>
+      <hr sx={{ display: `none` }} />
+      {page && (
+        <a
+          sx={{ variant: `links.muted`, mt: 9 }}
+          href={`https://github.com/gatsbyjs/gatsby/blob/master/${
+            packagePage ? `packages` : `docs`
+          }/${page ? page.parent.relativePath : ``}`}
+        >
+          <EditIcon sx={{ marginRight: 2 }} />
+          {` `}
+          {text}
+        </a>
+      )}
+    </>
+  )
 }
 
 export const fragment = graphql`

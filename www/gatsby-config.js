@@ -133,13 +133,8 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        path: `${__dirname}/src/data/sidebars`,
-      },
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        path: `${__dirname}/src/data/text`,
+        name: "strings",
+        path: `${__dirname}/src/data/strings`,
       },
     },
     {
