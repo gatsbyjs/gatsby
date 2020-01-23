@@ -2,10 +2,11 @@
 import { jsx } from "theme-ui"
 import React from "react"
 import { Helmet } from "react-helmet"
-import { Link, graphql } from "gatsby"
+import { graphql } from "gatsby"
 import Img from "gatsby-image"
 import { MDXRenderer } from "gatsby-plugin-mdx"
 
+import Link from "../components/localized-link"
 import Layout from "../components/layout"
 import { mediaQueries } from "../gatsby-plugin-theme-ui"
 import Container from "../components/container"

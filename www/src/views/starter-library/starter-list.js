@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { Link } from "gatsby"
+import Link from "../../components/localized-link"
 import LaunchDemoIcon from "react-icons/lib/md/launch"
 import GithubIcon from "react-icons/lib/go/mark-github"
 import MdStar from "react-icons/lib/md/star"
@@ -89,7 +89,11 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                 />
                 <div sx={meta}>
                   <div
-                    css={{ display: `flex`, justifyContent: `space-between`, alignItems: `start` }}
+                    css={{
+                      display: `flex`,
+                      justifyContent: `space-between`,
+                      alignItems: `start`,
+                    }}
                   >
                     <span
                       sx={{

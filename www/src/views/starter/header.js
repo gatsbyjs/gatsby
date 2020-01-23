@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { Link } from "gatsby"
+import Link from "../../components/localized-link"
 import MdArrowBack from "react-icons/lib/md/arrow-back"
 
 import { mediaQueries } from "../../gatsby-plugin-theme-ui"

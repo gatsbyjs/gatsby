@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { Link } from "gatsby"
+import Link from "../../components/localized-link"
 import MdLaunch from "react-icons/lib/md/launch"
 
 import { mediaQueries } from "../../gatsby-plugin-theme-ui"

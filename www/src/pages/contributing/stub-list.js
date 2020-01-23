@@ -1,9 +1,9 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import React from "react"
-import { Link } from "gatsby"
 import { Helmet } from "react-helmet"
 
+import Link from "../../components/localized-link"
 import Layout from "../../components/layout"
 import {
   itemListContributing,

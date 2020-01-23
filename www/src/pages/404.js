@@ -1,7 +1,7 @@
 import React from "react"
 import Container from "../components/container"
 import Layout from "../components/layout"
-import { Link } from "gatsby"
+import Link from "../components/localized-link"
 import FooterLinks from "../components/shared/footer-links"
 
 class FourOhFour extends React.Component {

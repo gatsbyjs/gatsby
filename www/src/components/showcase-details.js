@@ -1,13 +1,14 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { Fragment } from "react"
-import { Link, StaticQuery, graphql } from "gatsby"
+import { StaticQuery, graphql } from "gatsby"
 import { Helmet } from "react-helmet"
 import url from "url"
 import Img from "gatsby-image"
 import qs from "qs"
 
 import { mediaQueries } from "../gatsby-plugin-theme-ui"
+import Link from "../components/localized-link"
 import Layout from "../components/layout"
 import ShareMenu from "../components/share-menu"
 import Button from "../components/button"

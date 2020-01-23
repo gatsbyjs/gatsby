@@ -1,13 +1,14 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import React from "react"
-import { graphql, Link } from "gatsby"
+import { graphql } from "gatsby"
 import { Helmet } from "react-helmet"
 import { sortBy } from "lodash-es"
 
 import APIReference from "../../components/api-reference"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
+import Link from "../../components/localized-link"
 import { itemListDocs } from "../../utils/sidebar/item-list"
 import normalizeGatsbyApiCall from "../../utils/normalize-gatsby-api-call"
 
