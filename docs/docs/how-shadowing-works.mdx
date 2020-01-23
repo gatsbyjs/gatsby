@@ -2,25 +2,17 @@
 title: How Shadowing Works
 ---
 
-Shadowing is a powerful feature that allows theme users to override components,
-objects, and anything else in a theme's `src` directory.
+Shadowing is a powerful feature that allows theme users to override components, objects, and anything else in a theme's `src` directory.
 
 > **Note** This is a technical deep dive into how Shadowing works. If you'd
 > like to learn about what Shadowing is, see the [What is Component Shadowing?](/blog/2019-04-29-component-shadowing/)
 > blog post.
 
-Shadowing works by using a [webpack resolver plugin](https://webpack.js.org/api/resolvers/)
-that maps themes in a `gatsby-config.js` to possible shadowed files. This gets
-especially mind melty because themes can add parent themes to a configuration so you
-need to be able to walk the composition of themes to determine the "last shadow"
-since the last shadowed theme file wins in the algorithm.
+Shadowing works by using a [webpack resolver plugin](https://webpack.js.org/api/resolvers/) that maps themes in a `gatsby-config.js` to possible shadowed files. This gets especially mind melty because themes can add parent themes to a configuration so you need to be able to walk the composition of themes to determine the "last shadow" since the last shadowed theme file wins in the algorithm.
 
 ## Theme Composition
 
-It's important to begin discussing how the composition of themes works. An
-end user of a theme can configure any number of themes. Each of these
-themes are considered sibling themes. Here is a `gatsby-config.js` that
-configures two sibling themes:
+It's important to begin discussing how the composition of themes works. An end user of a theme can configure any number of themes. Each of these themes are considered sibling themes. Here is a `gatsby-config.js` that configures two sibling themes:
 
 ```js:title=gatsby-config.js
 module.exports = {
@@ -31,9 +23,7 @@ module.exports = {
 }
 ```
 
-Both of the themes above (blog and portfolio) can install and configure
-any other theme so you end up with a tree of themes which we call a theme
-composition.
+Both of the themes above (blog and portfolio) can install and configure any other theme so you end up with a tree of themes which we call a theme composition.
 
 The theme composition itself has a few properties:
 
@@ -42,10 +32,7 @@ The theme composition itself has a few properties:
 - a theme that is used by another theme is the parent theme
 - theme trees are flattened during resolution
 
-These characteristics are used in the component shadowing algorithm
-to decide which component to render. So, for example, if `gatsby-theme-tomato-blog`
-has `gatsby-theme-parent` as a parent theme it results in the following themes
-array:
+These characteristics are used in the component shadowing algorithm to decide which component to render. So, for example, if `gatsby-theme-tomato-blog` has `gatsby-theme-parent` as a parent theme it results in the following themes array:
 
 ```js
 const themesArray = [
@@ -55,14 +42,11 @@ const themesArray = [
 ]
 ```
 
-This means that `gatsby-theme-tomato-portfolio` receives priority for
-component resolution, because it is last in the array.
+This means that `gatsby-theme-tomato-portfolio` receives priority for component resolution, because it is last in the array.
 
 ## Modifying the webpack Config
 
-Component shadowing is a bit meta because it is implemented as an internal
-Gatsby plugin that applies a webpack plugin which modifies how module
-resolution happens for files that are shadowed.
+Component shadowing is a bit meta because it is implemented as an internal Gatsby plugin that applies a webpack plugin which modifies how module resolution happens for files that are shadowed.
 
 The plugin consists of a `gatsby-node.js` and the webpack plugin code.
 The `gatsby-node` file is pretty straightforward:
@@ -95,18 +79,11 @@ exports.onCreateWebpackConfig = (
 }
 ```
 
-We first check for themes in the redux store. This is for
-backwards-compatibility since themes are now merged with
-plugins. If the `themes` key was used in the user's
-`gatsby-config.js` those are passed to the shadowing resolver
-plugin. Otherwise, the flattened plugin list is passed.
+We first check for themes in the redux store. This is for backwards-compatibility since themes are now merged with plugins. If the `themes` key was used in the user's `gatsby-config.js` those are passed to the shadowing resolver plugin. Otherwise, the flattened plugin list is passed.
 
 ## Structure of a webpack Plugin
 
-The webpack plugin itself has a constructor and an apply function which
-webpack calls as part of module resolution. We tie into the "relative"
-hook in [the
-pipeline](https://github.com/webpack/enhanced-resolve/blob/5c1495a947060cf11106abc325b8adf1a0eff9b1/lib/ResolverFactory.js#L158).
+The webpack plugin itself has a constructor and an apply function which webpack calls as part of module resolution. We tie into the "relative" hook in [the pipeline](https://github.com/webpack/enhanced-resolve/blob/5c1495a947060cf11106abc325b8adf1a0eff9b1/lib/ResolverFactory.js#L158).
 
 ```js:title=packages/gatsby/src/internal-plugins/webpack-theme-component-shadowing/index.js
 module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
@@ -126,8 +103,7 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
 
 ### Get matching themes
 
-The `request` contains the path of the file which we want to use to find
-potential matches in themes.
+The `request` contains the path of the file which we want to use to find potential matches in themes.
 
 ```js
 resolver.plugin(`relative`, (request, callback) => {
@@ -156,28 +132,17 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
 }
 ```
 
-This is run for all files in the site bundle and checks for potential matches.
-So, if a request is `/some/path/my-site/gatsby-theme-tomato/src/button/heading.js`
-and `gatsby-theme-tomato` is installed on the site, we'll return `gatsby-theme-tomato`.
+This is run for all files in the site bundle and checks for potential matches. So, if a request is `/some/path/my-site/gatsby-theme-tomato/src/button/heading.js` and `gatsby-theme-tomato` is installed on the site, we'll return `gatsby-theme-tomato`.
 
-We perform this match so that we can determine the theme that is being required
-from so we can check for shadowed files in the user's site or other themes to match
-against. We also make sure the matched themes are unique because two themes can
-bring in the same theme to the theme composition. When that's the case we won't worry
-about them being different. Though, it is important to note that when performing
-resolution to build the site, the last theme added will always win.
+We perform this match so that we can determine the theme that is being required from so we can check for shadowed files in the user's site or other themes to match against. We also make sure the matched themes are unique because two themes can bring in the same theme to the theme composition. When that's the case we won't worry about them being different. Though, it is important to note that when performing resolution to build the site, the last theme added will always win.
 
 #### Handle too many matches
 
-Next, we check to make sure that if there is more than one matching theme there
-is some sort of ambiguity and we should return an error. This can happen if there's
-a path like `gatsby-theme-blog/src/components/gatsby-theme-something/src/components`
-in the project.
+Next, we check to make sure that if there is more than one matching theme there is some sort of ambiguity and we should return an error. This can happen if there's a path like `gatsby-theme-blog/src/components/gatsby-theme-something/src/components` in the project.
 
 #### No matches
 
-If there are no theme matches we return the invoked callback because there's nothing
-more to do, time to let webpack continue on it's way with module resolution.
+If there are no theme matches we return the invoked callback because there's nothing more to do, time to let webpack continue on it's way with module resolution.
 
 ```js
 if (matchingThemes.length === 0) {
@@ -187,26 +152,18 @@ if (matchingThemes.length === 0) {
 
 ### The matched theme
 
-Now, if we still haven't returned the callback or thrown an error (due to ambiguity) it means we
-have a file being required from a theme. The file being required will look something
-like `/some/path/my-site/gatsby-theme-tomato/src/box` and so the first thing we
-want to do is get the relative path for the file within the theme's `src` directory:
+Now, if we still haven't returned the callback or thrown an error (due to ambiguity) it means we have a file being required from a theme. The file being required will look something like `/some/path/my-site/gatsby-theme-tomato/src/box` and so the first thing we want to do is get the relative path for the file within the theme's `src` directory:
 
 ```js
 const [theme] = matchingThemes
 const [, component] = request.path.split(path.join(theme, `src`))
 ```
 
-So, with the example path above we'll end up with `/box`. This can then be used to
-see if the user's site or any other themes are shadowing the file.
+So, with the example path above we'll end up with `/box`. This can then be used to see if the user's site or any other themes are shadowing the file.
 
 ### The component shadow
 
-Since a file from a theme is being required we need to figure out which path should
-be resolved for the requested component. We do this by calling `resolveComponentPath`
-which uses the theming algorithm to attempt to find a shadowed component. If nothing
-is found we return the original request which points at the original theme's
-component.
+Since a file from a theme is being required we need to figure out which path should be resolved for the requested component. We do this by calling `resolveComponentPath` which uses the theming algorithm to attempt to find a shadowed component. If nothing is found we return the original request which points at the original theme's component.
 
 ```js
 const builtComponentPath = this.resolveComponentPath({
@@ -224,9 +181,7 @@ return resolver.doResolve(
 )
 ```
 
-We call `doResolve` on the resolver which specifies the shadowed component path if
-one is found, otherwise the original request. This is what tells webpack to resolve
-and bundle that particular file.
+We call `doResolve` on the resolver which specifies the shadowed component path if one is found, otherwise the original request. This is what tells webpack to resolve and bundle that particular file.
 
 #### Resolving a shadowed component
 
@@ -237,18 +192,11 @@ When looking for a component we perform a search that occurs in two locations:
 
 ##### User's project
 
-In order to ensure that the user's project always takes precedence in terms of shadowing
-it's prepended to the theme list when attempting to resolve the component. This ensures that
-`my-site/src/gatsby-theme-tomato/box.js` will take priority over any other theme that
-might want to shadow the same component.
+In order to ensure that the user's project always takes precedence in terms of shadowing it's prepended to the theme list when attempting to resolve the component. This ensures that `my-site/src/gatsby-theme-tomato/box.js` will take priority over any other theme that might want to shadow the same component.
 
 ##### Themes
 
-As discussed before, themes are flattened into a list and then all possible shadow
-paths are constructed to match against. When concatenating with the user's project it's
-important to note again that the themes array is reversed. This is how we ensure that
-"the last theme wins" when resolving a shadowed file. We walk the list for matches
-from start to finish.
+As discussed before, themes are flattened into a list and then all possible shadow paths are constructed to match against. When concatenating with the user's project it's important to note again that the themes array is reversed. This is how we ensure that "the last theme wins" when resolving a shadowed file. We walk the list for matches from start to finish.
 
 ```js
 const locationsToCheck = [
@@ -263,8 +211,7 @@ const locationsToCheck = [
 )
 ```
 
-Additionally, the original theme is removed because that's the default
-behavior of webpack so we don't need to resolve a theme to itself.
+Additionally, the original theme is removed because that's the default behavior of webpack so we don't need to resolve a theme to itself.
 
 ```js
 const themes = ogThemes.filter(({ themeName }) => themeName !== theme)
@@ -272,8 +219,7 @@ const themes = ogThemes.filter(({ themeName }) => themeName !== theme)
 
 #### All together
 
-The shadowing algorithm can be boiled down the following function that's
-roughly 20 lines of code:
+The shadowing algorithm can be boiled down the following function that's roughly 20 lines of code:
 
 ```js
 resolveComponentPath({
@@ -322,9 +268,7 @@ resolveComponentPath({
 
 ### Handling component extending
 
-This is where things begin to get a bit whacky. In addition to overriding a file,
-we want it to be possible to import the very component you're shadowing so that
-you can wrap it or even add props.
+This is where things begin to get a bit whacky. In addition to overriding a file, we want it to be possible to import the very component you're shadowing so that you can wrap it or even add props.
 
 ```js
 import React from "react"
@@ -342,12 +286,10 @@ export default props => (
 
 This is the first case we'll handle when attempting to resolve the file.
 
-In order to do this we need to leverage the **issuer** of the request. This points to
-the file that the request came from. This means it refers to _where_ the `import` occurs.
+In order to do this we need to leverage the **issuer** of the request. This points to the file that the request came from. This means it refers to _where_ the `import` occurs.
 The **request** refers to what the import points to.
 
-This is implemented by another method on the plugin's class which we call
-`requestPathIsIssuerShadowPath` which has the following method signature:
+This is implemented by another method on the plugin's class which we call `requestPathIsIssuerShadowPath` which has the following method signature:
 
 ```js
 requestPathIsIssuerShadowPath({
@@ -358,9 +300,7 @@ requestPathIsIssuerShadowPath({
 })
 ```
 
-`requestPathIsIssuerShadowPath` checks all possible directories for shadowing and
-then returns whether the issuer's path is found. Let's first take a look at the
-code and then unpack what's happening here.
+`requestPathIsIssuerShadowPath` checks all possible directories for shadowing and then returns whether the issuer's path is found. Let's first take a look at the code and then unpack what's happening here.
 
 ```js
 requestPathIsIssuerShadowPath({ requestPath, issuerPath, theme }) {
@@ -391,15 +331,11 @@ const fullPaths = [
 ]
 ```
 
-We then know that if the issuer _matches_ one of these components that it's
-being extended. This means that a shadowed component is extending the same component
-from its parent.
+We then know that if the issuer _matches_ one of these components that it's being extended. This means that a shadowed component is extending the same component from its parent.
 
-When this happens, we return the next path, so here the original location of the theme:
-`/Users/johno/c/gatsby-theme-example-component-extending/gatsby-theme-tomato/src/box`.
+When this happens, we return the next path, so here the original location of the theme: `/Users/johno/c/gatsby-theme-example-component-extending/gatsby-theme-tomato/src/box`.
 
-This means that when our shadowed file imports Box from a shadowed file we return the
-original box component defined in the theme.
+This means that when our shadowed file imports Box from a shadowed file we return the original box component defined in the theme.
 
 As a result, the following will work as we expect:
 
@@ -415,21 +351,16 @@ export default props => (
 )
 ```
 
-Now, all usages of the Box in `gatsby-theme-tomato` will be also wrapped in a purple
-box.
+Now, all usages of the Box in `gatsby-theme-tomato` will be also wrapped in a purple box.
 
 #### An edge case
 
-If a theme sets [`module` config](https://webpack.js.org/configuration/resolve/#resolvemodules)
-the issuer will be null. As such we need to first check that the `request.context.issuer`
-is present before we attempt to resolve the shadowed component.
+If a theme sets [`module` config](https://webpack.js.org/configuration/resolve/#resolvemodules) the issuer will be null. As such we need to first check that the `request.context.issuer` is present before we attempt to resolve the shadowed component.
 
 It's important to note that we don't recommend appending to the modules list in themes.
 Though, if you do, we will make sure we don't arbitrarily error.
 
 ## Summary
 
-Shadowing uses a predictable algorithm that leverages webpack to dynamically
-change module resolution based on a `gatsby-config` and theme composition.
-The last theme will take precedence in the shadowing algorithm, and the
-user's `src` directory is always take into account first.
+Shadowing uses a predictable algorithm that leverages webpack to dynamically change module resolution based on a `gatsby-config` and theme composition.
+The last theme will take precedence in the shadowing algorithm, and the user's `src` directory is always take into account first.
