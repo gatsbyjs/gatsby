@@ -231,7 +231,7 @@ The neat thing about this flow is that it isn't limited to two incremental branc
 In this example, we could check out a new branch, `pt3`, based off of `pt2`. And then a fourth, `pt4`, from `pt3`:
 
 <Breakout>
-  <img src={moreIncrementalSvg} aria-describedby="git-on-and-on" />
+  <img src={moreIncrementalSvg} alt="" aria-describedby="git-on-and-on" />
 </Breakout>
 
 <VisuallyHidden id="git-on-and-on">
