@@ -21,7 +21,7 @@ For example, you can hide/show your site header with [React headroom](https://ky
 
 In this prompt, we invite you to add forms to your Gatsby site using [Formik, a popular and powerful React library](https://jaredpalmer.com/formik). We suggest adding the form to the “About” page you created in a previous challenge.
 
-(In a future challenge we will show you how to add your form, or any React component to your markdown-powered blog pages.)
+(In a future challenge we will show you how to add your form, or any React component to your Markdown-powered blog pages.)
 
 ### Challenge Resources
 
