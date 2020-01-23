@@ -17,7 +17,7 @@ The Gatsby framework is [based on React](/docs/glossary/react/). So, a Gatsby pr
 
 This is exciting! There are hundreds of [Gatsby plugins and themes](/plugins/) you can use on your site, with more being added every day. But there are already thousands of free, well-tested React projects that you can use on your site too!
 
-For example, you can hide/show your site header with [React headroom](https://kyleamathews.github.io/react-headroom/), organize your CSS with [Theme UI](https://theme-ui.com/), or control your html head with [React Helmet](https://github.com/nfl/react-helmet).
+For example, you can hide/show your site header with [React headroom](https://kyleamathews.github.io/react-headroom/), organize your CSS with [Theme UI](https://theme-ui.com/), or control your HTML head with [React Helmet](https://github.com/nfl/react-helmet).
 
 In this prompt, we invite you to add forms to your Gatsby site using [Formik, a popular and powerful React library](https://jaredpalmer.com/formik). We suggest adding the form to the “About” page you created in a previous challenge.
 
@@ -31,6 +31,6 @@ Next, follow [Formik’s step-by-step tutorial](https://jaredpalmer.com/formik/d
 
 ### What to Do If You Need Help
 
-If you get stuck during the challenge, you can ask for help from the [Gatsby community](/contributing/community/) and the [ASKGatsbyJS](https://twitter.com/AskGatsbyJS) twitter account. You can find fellow Gatsby Developers on [Discord](https://discordapp.com/invite/gatsby), [Reddit](https://www.reddit.com/r/gatsbyjs/), [Spectrum](https://spectrum.chat/gatsby-js), and [Dev](https://dev.to/t/gatsby).
+If you get stuck during the challenge, you can ask for help from the [Gatsby community](/contributing/community/) and the [ASKGatsbyJS](https://twitter.com/AskGatsbyJS) Twitter account. You can find fellow Gatsby Developers on [Discord](https://discordapp.com/invite/gatsby), [Reddit](https://www.reddit.com/r/gatsbyjs/), [Spectrum](https://spectrum.chat/gatsby-js), and [Dev](https://dev.to/t/gatsby).
 
 For this challenge, you can also ask the [Formik community](https://jaredpalmer.com/formik/help) for help.
