@@ -19,17 +19,15 @@ module.exports = {
   `,
   expectedResult: {
     data: {
-      data: {
-        allParentChildAdditionForTransformer: {
-          nodes: [
-            {
-              foo: `run-1`,
-              id: `parent_childAdditionForTransformer`,
-              parent: null,
-              children: [],
-            },
-          ],
-        },
+      allParentChildAdditionForTransformer: {
+        nodes: [
+          {
+            foo: `run-1`,
+            id: `parent_childAdditionForTransformer`,
+            parent: null,
+            children: [],
+          },
+        ],
       },
     },
   },

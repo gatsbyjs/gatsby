@@ -12,6 +12,10 @@ module.exports = {
       children {
         id
       }
+      childChildOfParentChildChangeForTransformer {
+        foo
+        id
+      }
     }
   }
 }
@@ -19,25 +23,23 @@ module.exports = {
   `,
   expectedResult: {
     data: {
-      data: {
-        allParentChildChangeForTransformer: {
-          nodes: [
-            {
-              foo: `run-1`,
-              id: `parent_childChangeForTransformer`,
-              parent: null,
-              children: [
-                {
-                  id: `parent_childChangeForTransformer >>> Child`,
-                },
-              ],
-              childChildOfParentChildChangeForTransformer: {
+      allParentChildChangeForTransformer: {
+        nodes: [
+          {
+            foo: `run-1`,
+            id: `parent_childChangeForTransformer`,
+            parent: null,
+            children: [
+              {
                 id: `parent_childChangeForTransformer >>> Child`,
-                foo: `bar`,
               },
+            ],
+            childChildOfParentChildChangeForTransformer: {
+              id: `parent_childChangeForTransformer >>> Child`,
+              foo: `bar`,
             },
-          ],
-        },
+          },
+        ],
       },
     },
   },

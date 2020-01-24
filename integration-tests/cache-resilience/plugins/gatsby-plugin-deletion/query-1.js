@@ -20,17 +20,15 @@ module.exports = {
   `,
   expectedResult: {
     data: {
-      data: {
-        allDeletion: {
-          nodes: [
-            {
-              foo: `bar`,
-              id: `DELETION_NODE_1`,
-              parent: null,
-              children: [],
-            },
-          ],
-        },
+      allDeletion: {
+        nodes: [
+          {
+            foo: `bar`,
+            id: `DELETION_NODE_1`,
+            parent: null,
+            children: [],
+          },
+        ],
       },
     },
   },

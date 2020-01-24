@@ -19,21 +19,19 @@ module.exports = {
   `,
   expectedResult: {
     data: {
-      data: {
-        allParentChildDeletionForTransformer: {
-          nodes: [
-            {
-              foo: `run-1`,
-              id: `parent_childDeletionForTransformer`,
-              parent: null,
-              children: [
-                {
-                  id: `parent_childDeletionForTransformer >>> Child`,
-                },
-              ],
-            },
-          ],
-        },
+      allParentChildDeletionForTransformer: {
+        nodes: [
+          {
+            foo: `run-1`,
+            id: `parent_childDeletionForTransformer`,
+            parent: null,
+            children: [
+              {
+                id: `parent_childDeletionForTransformer >>> Child`,
+              },
+            ],
+          },
+        ],
       },
     },
   },

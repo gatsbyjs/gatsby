@@ -22,24 +22,22 @@ module.exports = {
   `,
   expectedResult: {
     data: {
-      data: {
-        allParentParentDeletionForTransformer: {
-          nodes: [
-            {
-              foo: `run-1`,
-              id: `parent_parentDeletionForTransformer`,
-              parent: null,
-              children: [
-                {
-                  id: `parent_parentDeletionForTransformer >>> Child`,
-                },
-              ],
-              childChildOfParentParentDeletionForTransformer: {
+      allParentParentDeletionForTransformer: {
+        nodes: [
+          {
+            foo: `run-1`,
+            id: `parent_parentDeletionForTransformer`,
+            parent: null,
+            children: [
+              {
                 id: `parent_parentDeletionForTransformer >>> Child`,
               },
+            ],
+            childChildOfParentParentDeletionForTransformer: {
+              id: `parent_parentDeletionForTransformer >>> Child`,
             },
-          ],
-        },
+          },
+        ],
       },
     },
   },

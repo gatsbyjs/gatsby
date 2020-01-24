@@ -19,17 +19,15 @@ module.exports = {
   `,
   expectedResult: {
     data: {
-      data: {
-        allParentChildDeletionForFields: {
-          nodes: [
-            {
-              foo: `run-1`,
-              id: `parent_childDeletionForFields`,
-              parent: null,
-              children: [],
-            },
-          ],
-        },
+      allParentChildDeletionForFields: {
+        nodes: [
+          {
+            foo: `run-1`,
+            id: `parent_childDeletionForFields`,
+            parent: null,
+            children: [],
+          },
+        ],
       },
     },
   },

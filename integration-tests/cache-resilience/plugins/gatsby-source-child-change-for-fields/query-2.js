@@ -22,20 +22,18 @@ module.exports = {
     `,
   expectedResult: {
     data: {
-      data: {
-        allParentChildChangeForFields: {
-          nodes: [
-            {
-              foo: `run-1`,
-              fields: {
-                foo2: `baz`,
-              },
-              id: `parent_childChangeForFields`,
-              parent: null,
-              children: [],
+      allParentChildChangeForFields: {
+        nodes: [
+          {
+            foo: `run-1`,
+            fields: {
+              foo2: `baz`,
             },
-          ],
-        },
+            id: `parent_childChangeForFields`,
+            parent: null,
+            children: [],
+          },
+        ],
       },
     },
   },

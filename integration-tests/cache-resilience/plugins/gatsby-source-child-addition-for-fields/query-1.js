@@ -19,17 +19,15 @@ module.exports = {
   `,
   expectedResult: {
     data: {
-      data: {
-        allParentChildAdditionForFields: {
-          nodes: [
-            {
-              foo: `run-1`,
-              id: `parent_childAdditionForFields`,
-              parent: null,
-              children: [],
-            },
-          ],
-        },
+      allParentChildAdditionForFields: {
+        nodes: [
+          {
+            foo: `run-1`,
+            id: `parent_childAdditionForFields`,
+            parent: null,
+            children: [],
+          },
+        ],
       },
     },
   },

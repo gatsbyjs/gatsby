@@ -22,24 +22,22 @@ module.exports = {
     `,
   expectedResult: {
     data: {
-      data: {
-        allParentParentChangeForTransformer: {
-          nodes: [
-            {
-              bar: `run-2`,
-              id: `parent_parentChangeForTransformer`,
-              parent: null,
-              children: [
-                {
-                  id: `parent_parentChangeForTransformer >>> Child`,
-                },
-              ],
-              childChildOfParentParentChangeForTransformer: {
+      allParentParentChangeForTransformer: {
+        nodes: [
+          {
+            bar: `run-2`,
+            id: `parent_parentChangeForTransformer`,
+            parent: null,
+            children: [
+              {
                 id: `parent_parentChangeForTransformer >>> Child`,
               },
+            ],
+            childChildOfParentParentChangeForTransformer: {
+              id: `parent_parentChangeForTransformer >>> Child`,
             },
-          ],
-        },
+          },
+        ],
       },
     },
   },
