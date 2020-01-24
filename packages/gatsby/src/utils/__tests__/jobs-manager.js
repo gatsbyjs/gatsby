@@ -344,9 +344,13 @@ describe(`Jobs manager`, () => {
       jest.useFakeTimers()
     })
 
+    let originalProcessOn
+    let originalSend
     beforeEach(() => {
       process.env.ENABLE_GATSBY_EXTERNAL_JOBS = `true`
       listeners = []
+      originalProcessOn = process.on
+      originalSend = process.send
       process.on = (type, cb) => {
         listeners.push(cb)
       }
@@ -357,6 +361,8 @@ describe(`Jobs manager`, () => {
     afterAll(() => {
       delete process.env.ENABLE_GATSBY_EXTERNAL_JOBS
       jest.useRealTimers()
+      process.on = originalProcessOn
+      process.send = originalSend
     })
 
     it(`should schedule a remote job when ipc and env variable are enabled`, async () => {
