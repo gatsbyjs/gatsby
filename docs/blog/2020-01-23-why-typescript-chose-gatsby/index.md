@@ -144,7 +144,7 @@ Would I recommend this constraint to people making Gatsby websites? Probably not
 
 I'm blown away by how fast Gatsby is for a user.
 
-The founder of Gatsby, Kyle Matthews [gave a great talk in 2017 on the ways in which Gatsby is fast](https://youtu.be/Gtd-Ht-D0sg?t=961) and [here more recently](https://www.youtube.com/watch?v=HQEotVfTXwk), in rough:
+The founder of Gatsby, Kyle Mathews [gave a great talk in 2017 on the ways in which Gatsby is fast](https://youtu.be/Gtd-Ht-D0sg?t=961) and [here more recently](https://www.youtube.com/watch?v=HQEotVfTXwk), in rough:
 
 - Pre-fetching of related links
 - Clever splitting of code
