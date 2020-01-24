@@ -7,9 +7,6 @@ const _ = require(`lodash`)
 const { createContentDigest, slash } = require(`gatsby-core-utils`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 
-let activityForJobs = null
-let activeJobs = 0
-let hasShownIPCDisabledWarning = false
 
 const MESSAGE_TYPES = {
   JOB_CREATED: `JOB_CREATED`,
@@ -18,11 +15,14 @@ const MESSAGE_TYPES = {
   JOB_NOT_WHITELISTED: `JOB_NOT_WHITELISTED`,
 }
 
+const externalJobsMap = new Map()
+let activityForJobs = null
+let activeJobs = 0
+let isListeningForMessages = false
+let hasShownIPCDisabledWarning = false
+
 /** @type {Map<string, {id: string, deferred: pDefer.DeferredPromise<any>}>} */
 const jobsInProcess = new Map()
-
-let isListeningForMessages = false
-const externalJobsMap = new Map()
 
 /**
  * We want to use absolute paths to make sure they are on the filesystem
