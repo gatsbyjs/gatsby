@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.19.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.4...gatsby@2.19.5) (2020-01-24)
+
+### Features
+
+- **gatsby:** enable external jobs with ipc ([#20835](https://github.com/gatsbyjs/gatsby/issues/20835)) ([b4c5bfb](https://github.com/gatsbyjs/gatsby/commit/b4c5bfb))
+
 ## [2.19.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.3...gatsby@2.19.4) (2020-01-24)
 
 ### Bug Fixes
