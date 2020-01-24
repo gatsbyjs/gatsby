@@ -539,5 +539,5 @@ const addExtraFields = (document, schema) => {
 const hasIdField = type => {
   const idField = type.getFields()[`id`]
   const fieldType = idField ? String(idField.type) : ``
-  return (idField && fieldType === `ID`) || fieldType === `ID!`
+  return fieldType === `ID` || fieldType === `ID!`
 }
