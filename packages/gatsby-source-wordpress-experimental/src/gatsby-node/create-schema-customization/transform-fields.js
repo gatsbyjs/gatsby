@@ -21,9 +21,7 @@ export const transformFields = ({
   }
 
   return fields
-    .filter(
-      field => typeWasFetched(field.type) && typeIsASupportedScalar(field.type)
-    )
+    .filter(field => typeWasFetched(field.type))
     .reduce((accumulator, current) => {
       const thisTypeSettings = getTypeSettingsByType(current.type)
 
@@ -68,6 +66,18 @@ export const transformFields = ({
         current.type.ofType.kind === `ENUM`
       ) {
         return accumulator
+      }
+
+      if (
+        (current.type.kind === `SCALAR` &&
+          !typeIsASupportedScalar(current.type)) ||
+        (current.type.ofType &&
+          current.type.ofType.kind === `SCALAR` &&
+          !typeIsASupportedScalar(current.type))
+      ) {
+        // if this field is an unsupported custom scalar,
+        // typecast it to JSON
+        current.type.name = `JSON`
       }
 
       if (
