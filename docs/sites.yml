@@ -9469,15 +9469,31 @@
   built_by: Adam Bowen
   built_by_url: https://adamcbowen.com
   featured: false
-- title: See Kids Dream
-  url: "https://seekidsdream.org/"
-  main_url: "https://seekidsdream.org/"
+- title: tqCoders
+  main_url: https://tqcoders.com
+  url: https://tqcoders.com
   description: >
-    A not-for-profit organization dedicated to empower youth with the skills, motivation and confidence.
+    tqCoders is a software development company that focuses on the development of the most advanced websites and mobile apps. We use the most advanced technologies to make websites blazing fast, SEO-friendly and responsive for each screen resolution.
   categories:
-    - Nonprofit
+    - Web Development
+    - Mobile Development
+    - SEO
+    - Design
+    - Programming
+    - Technology
+    - Business
+  built_by: tqCoders
+  built_by_url: https://tqcoders.com
+  featured: false
+- title: ErudiCAT
+  main_url: https://www.erudicat.com
+  url: https://www.erudicat.com
+  description: >
+    ErudiCAT is an educational platform created to help PMP certification candidates to prepare for the exam. There are hundreds of sample questions and PMP mock exam.
+  categories:
     - Education
+    - Web Development
     - Learning
-  built_by: CapTech Consulting
-  built_by_url: https://www.captechconsulting.com/
+  built_by: tqCoders
+  built_by_url: https://tqcoders.com
   featured: false
