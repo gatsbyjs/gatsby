@@ -2,7 +2,7 @@ import store from "../../store"
 import { transformFields } from "./transform-fields"
 import {
   buildTypeName,
-  typeWasFetched,
+  fieldOfTypeWasFetched,
   getTypeSettingsByType,
   filterObjectType,
 } from "./helpers"
@@ -99,7 +99,7 @@ const objectType = typeBuilderApi => {
       .filter(interfaceType => {
         const interfaceTypeSettings = getTypeSettingsByType(interfaceType)
 
-        return !interfaceTypeSettings.exclude && typeWasFetched(type)
+        return !interfaceTypeSettings.exclude && fieldOfTypeWasFetched(type)
       })
       .map(({ name }) => buildTypeName(name))
   }

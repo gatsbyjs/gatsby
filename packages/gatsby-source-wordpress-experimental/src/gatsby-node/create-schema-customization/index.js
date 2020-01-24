@@ -1,7 +1,7 @@
 import store from "../../store"
 import { getContentTypeQueryInfos } from "../source-nodes/fetch-nodes"
 
-import { typeWasFetched, getTypeSettingsByType } from "./helpers"
+import { fieldOfTypeWasFetched } from "./helpers"
 
 import buildType from "./build-types"
 
@@ -12,15 +12,15 @@ export default async ({ actions, schema }) => {
   const state = store.getState()
 
   const {
-    fieldAliases,
-    fieldBlacklist,
-    introspectionData: { data },
-    ingestibles: { nonNodeRootFields },
-  } = state.remoteSchema
+    gatsbyApi: { pluginOptions },
+    remoteSchema,
+  } = state
 
   const {
-    gatsbyApi: { pluginOptions },
-  } = state
+    fieldAliases,
+    fieldBlacklist,
+    ingestibles: { nonNodeRootFields },
+  } = remoteSchema
 
   let typeDefs = []
 
@@ -28,59 +28,51 @@ export default async ({ actions, schema }) => {
     query => query.typeInfo.nodesTypeName
   )
 
+  const typeBuilderApi = {
+    typeDefs,
+    schema,
+    gatsbyNodeTypes,
+    fieldAliases,
+    fieldBlacklist,
+    pluginOptions,
+  }
+
   // create Gatsby node types
-  data.__schema.types.filter(typeWasFetched).forEach(type => {
-    //
-    // if this type is excluded via plugin options, don't add it
-    if (getTypeSettingsByType(type).exclude) {
-      return
-    }
-
-    const typeBuilderApi = {
-      typeDefs,
-      schema,
-      type,
-      gatsbyNodeTypes,
-      fieldAliases,
-      fieldBlacklist,
-      pluginOptions,
-    }
-
-    switch (type.kind) {
-      case `UNION`:
-        buildType.unionType(typeBuilderApi)
-        break
-      case `INTERFACE`:
-        buildType.interfaceType(typeBuilderApi)
-        break
-      case `OBJECT`:
-        buildType.objectType(typeBuilderApi)
-        break
-      case `SCALAR`:
-        /**
-         * custom scalar types aren't imlemented currently.
-         *  @todo make this hookable so sub-plugins or plugin options can add custom scalar support.
-         */
-        break
+  remoteSchema.introspectionData.__schema.types.forEach(type => {
+    if (fieldOfTypeWasFetched(type)) {
+      switch (type.kind) {
+        case `UNION`:
+          buildType.unionType({ ...typeBuilderApi, type })
+          break
+        case `INTERFACE`:
+          buildType.interfaceType({ ...typeBuilderApi, type })
+          break
+        case `OBJECT`:
+          buildType.objectType({ ...typeBuilderApi, type })
+          break
+        case `SCALAR`:
+          /**
+           * custom scalar types aren't imlemented currently.
+           *  @todo make this hookable so sub-plugins or plugin options can add custom scalar support.
+           */
+          break
+      }
     }
   })
 
-  // Create non Gatsby node types
+  // Create non Gatsby node types by creating a single node
+  // where the typename is the type prefix
+  // The node fields are the non-node root fields of the remote schema
+  // like so: query { prefix { ...fields } }
   buildType.objectType({
-    typeDefs,
-    schema,
+    ...typeBuilderApi,
     type: {
       kind: `OBJECT`,
-      // just use the prefix so that this node appears as { wp { ...fields } }
       name: pluginOptions.schema.typePrefix,
       description: `Non-node WPGraphQL root fields.`,
       fields: nonNodeRootFields,
       interfaces: [`Node`],
     },
-    gatsbyNodeTypes,
-    fieldAliases,
-    fieldBlacklist,
-    pluginOptions,
     isAGatsbyNode: true,
   })
 

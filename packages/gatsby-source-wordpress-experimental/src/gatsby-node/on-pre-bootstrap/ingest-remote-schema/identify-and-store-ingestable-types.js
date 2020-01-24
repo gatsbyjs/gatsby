@@ -6,10 +6,10 @@ const identifyAndStoreIngestableFieldsAndTypes = async () => {
   const { introspectionData, fieldBlacklist } = store.getState().remoteSchema
 
   const typeMap = new Map(
-    introspectionData.data.__schema.types.map(type => [type.name, type])
+    introspectionData.__schema.types.map(type => [type.name, type])
   )
 
-  const interfaces = introspectionData.data.__schema.types.filter(
+  const interfaces = introspectionData.__schema.types.filter(
     type => type.kind === `INTERFACE`
   )
 

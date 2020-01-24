@@ -1,6 +1,6 @@
 import {
   buildTypeName,
-  typeWasFetched,
+  fieldOfTypeWasFetched,
   typeIsASupportedScalar,
   getTypeSettingsByType,
 } from "./helpers"
@@ -20,231 +20,218 @@ export const transformFields = ({
     return null
   }
 
-  return fields
-    .filter(field => typeWasFetched(field.type))
-    .reduce((accumulator, current) => {
-      const thisTypeSettings = getTypeSettingsByType(current.type)
+  return fields.reduce((fieldsObject, field) => {
+    if (!fieldOfTypeWasFetched(field.type)) {
+      return fieldsObject
+    }
 
-      if (thisTypeSettings.exclude || thisTypeSettings.nodeInterface) {
-        return accumulator
+    const thisTypeSettings = getTypeSettingsByType(field.type)
+
+    if (thisTypeSettings.exclude || thisTypeSettings.nodeInterface) {
+      return fieldsObject
+    }
+
+    // this is used to alias fields that conflict with Gatsby node fields
+    // for ex Gatsby and WPGQL both have a `parent` field
+    const name =
+      fieldAliases && fieldAliases[field.name]
+        ? fieldAliases[field.name]
+        : field.name
+
+    if (fieldBlacklist.includes(name)) {
+      // skip blacklisted fields
+      return fieldsObject
+    }
+
+    // skip fields that have required arguments
+    if (field.args && field.args.find(arg => arg.type.kind === `NON_NULL`)) {
+      return fieldsObject
+    }
+
+    // if we don't have any typenames we can't use this
+    if (!field.type.name && !field.type.ofType.name) {
+      return fieldsObject
+    }
+
+    if (field.type.kind === `NON_NULL` && field.type.ofType.kind === `OBJECT`) {
+      return fieldsObject
+    }
+
+    if (field.type.kind === `NON_NULL` && field.type.ofType.kind === `ENUM`) {
+      return fieldsObject
+    }
+
+    const fieldTypeIsACustomScalar =
+      (field.type.kind === `SCALAR` && !typeIsASupportedScalar(field.type)) ||
+      (field.type.ofType &&
+        field.type.ofType.kind === `SCALAR` &&
+        !typeIsASupportedScalar(field.type))
+
+    if (fieldTypeIsACustomScalar) {
+      // if this field is an unsupported custom scalar,
+      // type it as JSON
+      field.type.name = `JSON`
+    }
+
+    if (
+      field.type &&
+      field.type.name &&
+      // @todo find a better way than checking the typeName for `Connection`
+      field.type.name.includes(`Connection`)
+    ) {
+      fieldsObject[name] = buildTypeName(field.type.name)
+      return fieldsObject
+    }
+
+    // non null scalar types
+    if (field.type.kind === `NON_NULL` && field.type.ofType.kind === `SCALAR`) {
+      fieldsObject[name] = `${field.type.ofType.name}!`
+      return fieldsObject
+    }
+
+    // non null list types
+    if (field.type.kind === `NON_NULL` && field.type.ofType.kind === `LIST`) {
+      if (!field.type.ofType.name) {
+        return fieldsObject
       }
 
-      // this is used to alias fields that conflict with Gatsby node fields
-      // for ex Gatsby and WPGQL both have a `parent` field
-      const name =
-        fieldAliases && fieldAliases[current.name]
-          ? fieldAliases[current.name]
-          : current.name
+      fieldsObject[name] = `[${field.type.ofType.name}]!`
+      return fieldsObject
+    }
 
-      if (fieldBlacklist.includes(name)) {
-        // skip blacklisted fields
-        return accumulator
-      }
+    // scalar types
+    if (field.type.kind === `SCALAR`) {
+      fieldsObject[name] = field.type.name
+      return fieldsObject
+    }
 
-      // skip fields that have required arguments
-      if (
-        current.args &&
-        current.args.find(arg => arg.type.kind === `NON_NULL`)
-      ) {
-        return accumulator
-      }
+    const typeName = buildTypeName(field.type.name)
+    const isAGatsbyNode = gatsbyNodeTypes.includes(field.type.name)
 
-      // if we don't have any typenames we can't use this
-      if (!current.type.name && !current.type.ofType.name) {
-        return accumulator
-      }
+    // link gatsby nodes by id
+    if (field.type.kind === `OBJECT` && isAGatsbyNode) {
+      fieldsObject[name] = {
+        type: typeName,
+        resolve: (source, _, context) => {
+          const field = source[name]
 
-      if (
-        current.type.kind === `NON_NULL` &&
-        current.type.ofType.kind === `OBJECT`
-      ) {
-        return accumulator
-      }
-
-      if (
-        current.type.kind === `NON_NULL` &&
-        current.type.ofType.kind === `ENUM`
-      ) {
-        return accumulator
-      }
-
-      if (
-        (current.type.kind === `SCALAR` &&
-          !typeIsASupportedScalar(current.type)) ||
-        (current.type.ofType &&
-          current.type.ofType.kind === `SCALAR` &&
-          !typeIsASupportedScalar(current.type))
-      ) {
-        // if this field is an unsupported custom scalar,
-        // typecast it to JSON
-        current.type.name = `JSON`
-      }
-
-      if (
-        current.type &&
-        current.type.name &&
-        // @todo find a better way than checking the typeName for `Connection`
-        current.type.name.includes(`Connection`)
-      ) {
-        accumulator[name] = buildTypeName(current.type.name)
-        return accumulator
-      }
-
-      // non null scalar types
-      if (
-        current.type.kind === `NON_NULL` &&
-        current.type.ofType.kind === `SCALAR`
-      ) {
-        accumulator[name] = `${current.type.ofType.name}!`
-        return accumulator
-      }
-
-      // non null list types
-      if (
-        current.type.kind === `NON_NULL` &&
-        current.type.ofType.kind === `LIST`
-      ) {
-        if (!current.type.ofType.name) {
-          return accumulator
-        }
-
-        accumulator[name] = `[${current.type.ofType.name}]!`
-        return accumulator
-      }
-
-      // scalar types
-      if (current.type.kind === `SCALAR`) {
-        accumulator[name] = current.type.name
-        return accumulator
-      }
-
-      const typeName = buildTypeName(current.type.name)
-      const isAGatsbyNode = gatsbyNodeTypes.includes(current.type.name)
-
-      // link gatsby nodes by id
-      if (current.type.kind === `OBJECT` && isAGatsbyNode) {
-        accumulator[name] = {
-          type: typeName,
-          resolve: (source, _, context) => {
-            const field = source[name]
-
-            if (!field || (field && !field.id)) {
-              return null
-            }
-
-            return context.nodeModel.getNodeById({
-              id: field.id,
-              type: typeName,
-            })
-          },
-        }
-
-        return accumulator
-
-        // for other object types, just use the default resolver
-      } else if (current.type.kind === `OBJECT` && !isAGatsbyNode) {
-        accumulator[name] = {
-          type: typeName,
-        }
-
-        return accumulator
-      }
-
-      if (current.type.kind === `LIST`) {
-        if (current.type.ofType.kind === `OBJECT`) {
-          const typeName = buildTypeName(current.type.ofType.name)
-          accumulator[name] = {
-            type: `[${typeName}]`,
-            resolve: (source, _, context) => {
-              if (source.nodes.length) {
-                return context.nodeModel.getNodesByIds({
-                  ids: source.nodes.map(node => node.id),
-                  type: typeName,
-                })
-              } else {
-                return null
-              }
-            },
+          if (!field || (field && !field.id)) {
+            return null
           }
-          return accumulator
-        }
 
-        // link unions of Gatsby nodes by id
-        if (current.type.ofType.kind === `UNION`) {
-          const typeName = buildTypeName(current.type.ofType.name)
-          accumulator[name] = {
-            type: `[${typeName}]`,
-            resolve: (source, _, context) => {
-              const field = source[name]
+          return context.nodeModel.getNodeById({
+            id: field.id,
+            type: typeName,
+          })
+        },
+      }
 
-              if (!field || !field.length) {
-                return null
-              }
+      return fieldsObject
 
-              return field.map(item => {
-                const node = context.nodeModel.getNodeById({
-                  id: item.id,
-                  type: buildTypeName(item.__typename),
-                })
+      // for other object types, just use the default resolver
+    } else if (field.type.kind === `OBJECT` && !isAGatsbyNode) {
+      fieldsObject[name] = {
+        type: typeName,
+      }
 
-                if (node) {
-                  return node
-                }
+      return fieldsObject
+    }
 
-                return item
+    if (field.type.kind === `LIST`) {
+      if (field.type.ofType.kind === `OBJECT`) {
+        const typeName = buildTypeName(field.type.ofType.name)
+        fieldsObject[name] = {
+          type: `[${typeName}]`,
+          resolve: (source, _, context) => {
+            if (source.nodes.length) {
+              return context.nodeModel.getNodesByIds({
+                ids: source.nodes.map(node => node.id),
+                type: typeName,
               })
-            },
-          }
-
-          return accumulator
+            } else {
+              return null
+            }
+          },
         }
-
-        if (current.type.ofType.kind === `SCALAR`) {
-          accumulator[name] = {
-            // this is scalar, don't namespace it with buildTypeName()
-            type: `[${current.type.ofType.name}]`,
-          }
-
-          return accumulator
-        }
-
-        if (current.type.ofType.kind === `INTERFACE`) {
-          accumulator[name] = {
-            type: `[${buildTypeName(current.type.ofType.name)}]`,
-          }
-
-          return accumulator
-        }
+        return fieldsObject
       }
 
-      if (current.type.kind === `UNION`) {
-        accumulator[name] = {
-          type: buildTypeName(current.type.name),
+      // link unions of Gatsby nodes by id
+      if (field.type.ofType.kind === `UNION`) {
+        const typeName = buildTypeName(field.type.ofType.name)
+        fieldsObject[name] = {
+          type: `[${typeName}]`,
           resolve: (source, _, context) => {
             const field = source[name]
 
-            if (!field || !field.id) {
+            if (!field || !field.length) {
               return null
             }
 
-            return context.nodeModel.getNodeById({
-              id: field.id,
-              type: field.type,
+            return field.map(item => {
+              const node = context.nodeModel.getNodeById({
+                id: item.id,
+                type: buildTypeName(item.__typename),
+              })
+
+              if (node) {
+                return node
+              }
+
+              return item
             })
           },
         }
-        return accumulator
+
+        return fieldsObject
       }
 
-      if (current.type.kind === `INTERFACE`) {
-        accumulator[name] = {
-          type: buildTypeName(current.type.name),
+      if (field.type.ofType.kind === `SCALAR`) {
+        fieldsObject[name] = {
+          // this is scalar, don't namespace it with buildTypeName()
+          type: `[${field.type.ofType.name}]`,
         }
 
-        return accumulator
+        return fieldsObject
       }
 
-      // unhandled fields are removed from the schema by not mutating the accumulator
-      return accumulator
-    }, {})
+      if (field.type.ofType.kind === `INTERFACE`) {
+        fieldsObject[name] = {
+          type: `[${buildTypeName(field.type.ofType.name)}]`,
+        }
+
+        return fieldsObject
+      }
+    }
+
+    if (field.type.kind === `UNION`) {
+      fieldsObject[name] = {
+        type: buildTypeName(field.type.name),
+        resolve: (source, _, context) => {
+          const field = source[name]
+
+          if (!field || !field.id) {
+            return null
+          }
+
+          return context.nodeModel.getNodeById({
+            id: field.id,
+            type: field.type,
+          })
+        },
+      }
+      return fieldsObject
+    }
+
+    if (field.type.kind === `INTERFACE`) {
+      fieldsObject[name] = {
+        type: buildTypeName(field.type.name),
+      }
+
+      return fieldsObject
+    }
+
+    // unhandled fields are removed from the schema by not mutating the fieldsObject
+    return fieldsObject
+  }, {})
 }

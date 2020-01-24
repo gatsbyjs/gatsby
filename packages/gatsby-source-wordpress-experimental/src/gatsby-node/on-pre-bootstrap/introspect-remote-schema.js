@@ -19,9 +19,11 @@ const introspectAndStoreRemoteSchema = async () => {
   let introspectionData = await helpers.cache.get(INTROSPECTION_CACHE_KEY)
 
   if (!introspectionData || schemaWasChanged) {
-    introspectionData = await fetchGraphql({
+    const { data } = await fetchGraphql({
       query: introspectionQuery,
     })
+
+    introspectionData = data
 
     // cache introspection response
     await helpers.cache.set(INTROSPECTION_CACHE_KEY, introspectionData)

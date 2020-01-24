@@ -22,7 +22,7 @@ export const buildTypeName = name => {
   return prefix + name
 }
 
-export const typeWasFetched = type => {
+export const fieldOfTypeWasFetched = type => {
   const { fetchedTypes } = store.getState().remoteSchema
 
   if (fetchedTypes.get(type.name)) {
