@@ -79,8 +79,6 @@ const objectType = typeBuilderApi => {
     fieldBlacklist,
     typeDefs,
     schema,
-    // this is only used for types that don't show up
-    // in the regular list of post types, for example the root Wp type
     isAGatsbyNode,
   } = typeBuilderApi
 
@@ -112,7 +110,7 @@ const objectType = typeBuilderApi => {
   }
 
   if (gatsbyNodeTypes.includes(type.name) || isAGatsbyNode) {
-    // this is used to filter the allWpContentNode root field
+    // this is used to filter the node interfaces
     // by different content types (post types)
     objectType.fields[`nodeType`] = `String`
 

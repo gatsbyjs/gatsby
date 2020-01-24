@@ -22,6 +22,7 @@ module.exports = {
         excludeFields: [`attributes`],
         schema: {
           queryDepth: 15,
+          typePrefix: `Wp`,
         },
         develop: {
           nodeUpdateInterval: 100,

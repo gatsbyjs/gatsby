@@ -4,6 +4,7 @@ const gatsbyApi = {
   state: {
     helpers: {},
     pluginOptions: {
+      url: null,
       verbose: false,
       debug: {
         graphql: {
@@ -12,6 +13,7 @@ const gatsbyApi = {
       },
       schema: {
         queryDepth: 10,
+        typePrefix: `Wp`,
       },
       type: {
         MediaItem: {

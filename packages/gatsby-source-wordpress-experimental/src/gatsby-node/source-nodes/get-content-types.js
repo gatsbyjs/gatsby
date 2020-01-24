@@ -1,6 +1,7 @@
 import { availablePostTypesQuery } from "../../utils/graphql-queries"
 import fetchGraphql from "../../utils/fetch-graphql"
 import store from "../../store"
+import { buildTypeName } from "../create-schema-customization/helpers"
 
 /**
  *
@@ -32,7 +33,7 @@ export const createContentTypeNodes = async () => {
         parent: null,
         internal: {
           contentDigest: helpers.createContentDigest(typeInfo),
-          type: `WpContentType`,
+          type: buildTypeName(`ContentType`),
         },
       })
     })

@@ -20,7 +20,7 @@ const fetchAndApplyNodeUpdates = async ({ since, intervalRefetching }) => {
 
   if (!intervalRefetching) {
     activity = reporter.activityTimer(
-      formatLogMessage`pull updates since last build`
+      formatLogMessage(`pull updates since last build`)
     )
     activity.start()
   }

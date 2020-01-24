@@ -1,5 +1,6 @@
 import store from "../../store"
 import { objectTypeFilters } from "./type-filters"
+import { getPluginOptions } from "../../utils/get-gatsby-api"
 
 /**
  * This function namespaces typenames with a prefix
@@ -9,7 +10,9 @@ export const buildTypeName = name => {
     return null
   }
 
-  const prefix = `Wp`
+  const {
+    schema: { typePrefix: prefix },
+  } = getPluginOptions()
 
   // this is for our namespace type on the root { wp { ...fields } }
   if (name === prefix) {

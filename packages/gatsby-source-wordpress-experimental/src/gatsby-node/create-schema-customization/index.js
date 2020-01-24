@@ -71,7 +71,8 @@ export default async ({ actions, schema }) => {
     schema,
     type: {
       kind: `OBJECT`,
-      name: `Wp`,
+      // just use the prefix so that this node appears as { wp { ...fields } }
+      name: pluginOptions.schema.typePrefix,
       description: `Non-node WPGraphQL root fields.`,
       fields: nonNodeRootFields,
       interfaces: [`Node`],

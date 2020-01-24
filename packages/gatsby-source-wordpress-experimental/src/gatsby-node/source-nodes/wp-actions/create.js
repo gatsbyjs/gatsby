@@ -1,6 +1,7 @@
 import fetchGraphql from "../../../utils/fetch-graphql"
 import store from "../../../store"
 import formatLogMessage from "../../../utils/format-log-message"
+import { buildTypeName } from "../../create-schema-customization/helpers"
 
 const wpActionCREATE = async ({
   helpers,
@@ -48,7 +49,7 @@ const wpActionCREATE = async ({
     parent: null,
     internal: {
       contentDigest: createContentDigest(nodeContent),
-      type: `Wp${queryInfo.typeInfo.nodesTypeName}`,
+      type: buildTypeName(queryInfo.typeInfo.nodesTypeName),
     },
   })
 

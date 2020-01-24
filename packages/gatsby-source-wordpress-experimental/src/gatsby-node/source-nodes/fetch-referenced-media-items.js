@@ -4,6 +4,7 @@ import atob from "atob"
 import { createRemoteMediaItemNode } from "./create-remote-media-item-node"
 import formatLogMessage from "../../utils/format-log-message"
 import paginatedWpNodeFetch from "./paginated-wp-node-fetch"
+import { buildTypeName } from "../create-schema-customization/helpers"
 
 export default async function fetchReferencedMediaItemsAndCreateNodes({
   referencedMediaItemNodeIds,
@@ -96,7 +97,7 @@ export default async function fetchReferencedMediaItemsAndCreateNodes({
         parent: null,
         internal: {
           contentDigest: createContentDigest(node),
-          type: `WpMediaItem`,
+          type: buildTypeName(`MediaItem`),
         },
       }
 

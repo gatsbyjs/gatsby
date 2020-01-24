@@ -2,6 +2,7 @@ import fetchGraphql from "../../../utils/fetch-graphql"
 import store from "../../../store"
 import formatLogMessage from "../../../utils/format-log-message"
 import chalk from "chalk"
+import { buildTypeName } from "../../create-schema-customization/helpers"
 
 const wpActionUPDATE = async ({
   helpers,
@@ -61,7 +62,7 @@ const wpActionUPDATE = async ({
     parent: null,
     internal: {
       contentDigest: createContentDigest(updatedNodeContent),
-      type: `Wp${typeInfo.nodesTypeName}`,
+      type: buildTypeName(typeInfo.nodesTypeName),
     },
   })
 

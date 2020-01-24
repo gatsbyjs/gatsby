@@ -25,7 +25,7 @@ const fetchAndCreateNonNodeRootFields = async () => {
     id: `${pluginOptions.url}--rootfields`,
     parent: null,
     internal: {
-      type: `Wp`,
+      type: pluginOptions.schema.typePrefix,
       contentDigest: createContentDigest(data),
     },
   })
