@@ -67,7 +67,7 @@ const _fixIds = (object, front = new Set()) => {
     }
 
     if (Array.isArray(current)) {
-      current.forEach(v => objectsToProcess.push(v))
+      objectsToProcess.push(...current)
       continue
     }
 
