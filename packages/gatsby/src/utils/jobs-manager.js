@@ -166,7 +166,7 @@ const runJob = (job, forceLocal = false) => {
       throw new Error(`No worker function found for ${job.name}`)
     }
 
-    if (!forceLocal && hasExternalJobsEnabled()) {
+    if (!forceLocal && !job.plugin.isLocal && hasExternalJobsEnabled()) {
       if (process.send) {
         if (!isListeningForMessages) {
           isListeningForMessages = true

@@ -25,6 +25,16 @@ jest.mock(
   { virtual: true }
 )
 
+jest.mock(
+  `/gatsby-plugin-local/gatsby-worker.js`,
+  () => {
+    return {
+      TEST_JOB: jest.fn(),
+    }
+  },
+  { virtual: true }
+)
+
 jest.mock(`uuid/v4`, () =>
   jest.fn().mockImplementation(jest.requireActual(`uuid/v4`))
 )
@@ -451,6 +461,21 @@ describe(`Jobs manager`, () => {
       jest.runAllTimers()
 
       await expect(promise).resolves.toStrictEqual({ output: `myresult` })
+      expect(worker.TEST_JOB).toHaveBeenCalledTimes(1)
+    })
+
+    it(`should run the worker locally when it's a local plugin`, async () => {
+      jest.useRealTimers()
+      const worker = require(`/gatsby-plugin-local/gatsby-worker.js`)
+      const { enqueueJob, createInternalJob } = jobManager
+      const jobArgs = createInternalJob(createMockJob(), {
+        name: `gatsby-plugin-local`,
+        version: `1.0.0`,
+        resolve: `/gatsby-plugin-local`,
+      })
+
+      await expect(enqueueJob(jobArgs)).resolves.toBeUndefined()
+      expect(process.send).not.toHaveBeenCalled()
       expect(worker.TEST_JOB).toHaveBeenCalledTimes(1)
     })
 
