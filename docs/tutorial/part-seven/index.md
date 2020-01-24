@@ -220,6 +220,10 @@ components. When creating a page, you need to specify which component to use.
 Create a directory at `src/templates`, and then add the following in a file named
 `src/templates/blog-post.js`.
 
+/templates is required and contains templates for programmatically creating pages. Check out the [templates](https://www.gatsbyjs.org/docs/building-with-components/#page-template-components) docs for more detail.
+
+
+
 ```jsx:title=src/templates/blog-post.js
 import React from "react"
 import Layout from "../components/layout"
