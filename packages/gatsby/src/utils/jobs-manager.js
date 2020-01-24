@@ -7,7 +7,6 @@ const _ = require(`lodash`)
 const { createContentDigest, slash } = require(`gatsby-core-utils`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 
-
 const MESSAGE_TYPES = {
   JOB_CREATED: `JOB_CREATED`,
   JOB_COMPLETED: `JOB_COMPLETED`,
