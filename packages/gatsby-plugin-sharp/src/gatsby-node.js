@@ -63,10 +63,6 @@ const finishProgressBar = () => {
 exports.onPostBuild = () => finishProgressBar()
 exports.onCreateDevServer = () => finishProgressBar()
 
-// TO-DO - figure this out before merging (it can't unconditionally return false),
-// so we don't end up with duplicate progress bars (one from this plugin and one from core)
-const GatsbyCoreVersionManagesProgressBar = () => false
-
 exports.onPreBootstrap = ({ actions, emitter, reporter }, pluginOptions) => {
   setBoundActionCreators(actions)
   setPluginOptions(pluginOptions)
@@ -79,8 +75,8 @@ exports.onPreBootstrap = ({ actions, emitter, reporter }, pluginOptions) => {
   // as soon as possible (possibly by moving progress bar handling
   // inside jobs-manager in core)
 
-  // sanity check - in case we remove `emitter` at some point
-  if (!GatsbyCoreVersionManagesProgressBar() && emitter) {
+  // only use emitter if `setJobTypeMetadata` action is not available
+  if (!actions.setJobTypeMetadata && emitter) {
     // track how many image transformation each job has
     // END_JOB_V2 doesn't contain that information
     // so we store it in <JobContentHash, TransformsCount> map
