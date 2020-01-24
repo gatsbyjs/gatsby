@@ -80,5 +80,6 @@ const createOrGetProgressBar = reporter => {
   return progressBar
 }
 
+exports.createGatsbyProgressOrFallbackToExternalProgressBar = createGatsbyProgressOrFallbackToExternalProgressBar
 exports.createOrGetProgressBar = createOrGetProgressBar
 exports.getProgressBar = () => progressBar
