@@ -119,12 +119,8 @@ const objectType = typeBuilderApi => {
     objectType.interfaces = [`Node`, ...objectType.interfaces]
   }
 
-  // if (isAGatsbyNode) dd(type)
-
   // @todo add this as a plugin option
   objectType = filterObjectType(objectType, typeBuilderApi)
-
-  if (typeBuilderApi.debug) dd(objectType)
 
   typeDefs.push(schema.buildObjectType(objectType))
 }
