@@ -9375,6 +9375,18 @@
   built_by: luffyZh
   built_by_url: https://github.com/luffyZh
   featured: false
+- title: LBI Financial
+  main_url: https://lbifinancial.com/
+  url: https://lbifinancial.com/
+  description: >
+    We help individuals and businesses with life insurance, disability, long-term care and annuities.
+  categories:
+    - Business
+    - Consulting
+    - Finance
+  built_by: Pagepro
+  built_by_url: https://pagepro.co
+  featured: false
 - title: GIS-Netzwerk
   url: https://www.gis-netzwerk.com/
   main_url: https://www.gis-netzwerk.com/
