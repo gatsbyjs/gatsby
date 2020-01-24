@@ -83,6 +83,7 @@ export const transformFields = ({
       if (
         current.type &&
         current.type.name &&
+        // @todo find a better way than checking the typeName for `Connection`
         current.type.name.includes(`Connection`)
       ) {
         accumulator[name] = buildTypeName(current.type.name)
