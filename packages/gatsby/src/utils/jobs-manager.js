@@ -14,7 +14,6 @@ const MESSAGE_TYPES = {
   JOB_NOT_WHITELISTED: `JOB_NOT_WHITELISTED`,
 }
 
-const externalJobsMap = new Map()
 let activityForJobs = null
 let activeJobs = 0
 let isListeningForMessages = false
@@ -22,6 +21,8 @@ let hasShownIPCDisabledWarning = false
 
 /** @type {Map<string, {id: string, deferred: pDefer.DeferredPromise<any>}>} */
 const jobsInProcess = new Map()
+/** @type {Map<string, {job: InternalJob, deferred: pDefer.DeferredPromise<any>}>} */
+const externalJobsMap = new Map()
 
 /**
  * We want to use absolute paths to make sure they are on the filesystem
