@@ -9497,3 +9497,17 @@
   built_by: tqCoders
   built_by_url: https://tqcoders.com
   featured: false
+- title: Qri.io Website and Docs
+  main_url: https://qri.io
+  url: https://qri.io/docs
+  source_url: https://github.com/qri-io/website
+  description: >
+    Website and Documentation for Qri, an open source version control system for datasets
+  categories:
+    - Open Source
+    - Community
+    - Data
+    - Technology
+  built_by: Qri, Inc.
+  built_by_url: https://qri.io
+  featured: false
