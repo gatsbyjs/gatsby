@@ -100,11 +100,7 @@ const objectType = typeBuilderApi => {
       .filter(interfaceType => {
         const interfaceTypeSettings = getTypeSettingsByType(interfaceType)
 
-        return (
-          !interfaceTypeSettings.exclude &&
-          typeWasFetched(type) &&
-          typeIsASupportedScalar(type)
-        )
+        return !interfaceTypeSettings.exclude && typeWasFetched(type)
       })
       .map(({ name }) => buildTypeName(name))
   }
