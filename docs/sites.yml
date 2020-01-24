@@ -9420,6 +9420,18 @@
   built_by: hand-dot
   built_by_url: https://twitter.com/hand_dot
   featured: false
+- title: Personal website of Maarten Afink
+  main_url: https://www.maarten.im/
+  url: https://www.maarten.im/
+  source_url: https://github.com/maartenafink/personal-website
+  description: >
+    Personal website of Maarten Afink, digital product designer.
+  categories:
+    - Portfolio
+    - Open Source
+    - Blog
+    - Music
+    - Design
 - title: Adam Bowen
   main_url: https://adamcbowen.com/
   url: https://adamcbowen.com/
