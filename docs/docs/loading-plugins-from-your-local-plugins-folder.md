@@ -59,6 +59,4 @@ success onPreInit - 0.023s
 
 ## Loading local plugins from _outside_ the plugins folder
 
-If you want to reference a plugin that is not in the plugins folder then you can use the built in Node.js `require.resolve` to pull in a plugin from another location. This can be helpful for developing a plugin yourself, or contributing to an existing plugin.
-
-This process is described in more detail in the [Creating a Local Plugin guide](/docs/creating-a-local-plugin/).
+If you want to reference a plugin that is not in the plugins folder, there are several options that are described in more detail in the [Creating a Local Plugin guide](/docs/creating-a-local-plugin/).

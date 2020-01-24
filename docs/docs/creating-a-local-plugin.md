@@ -38,7 +38,7 @@ Your plugin doesn't have to be in your project in order to be tested or worked o
 
 ### Using `require.resolve` and a filepath
 
-In addition to including a plugin the in `plugins` folder, you can give the path to a plugin included in a different location on your machine and `require` it.
+In addition to including a plugin in the `plugins` folder, you can give the path to a plugin included in a different location on your machine and `require` it.
 
 ```javascript:title=gatsby-config.js
 module.exports = {
@@ -58,11 +58,13 @@ module.exports = {
 
 You can use [`npm link`](https://docs.npmjs.com/cli/link.html) or [`yarn link`](https://yarnpkg.com/lang/en/docs/cli/link/) to reference a package from another location on your machine in another project.
 
+By running `npm link ../path/to/my-plugin` in the root of your Gatsby site where you would like to use the plugin, your computer will create a symlink to your package.
+
 This is a similar process to setting up yarn workspaces for development with Gatsby themes (which is the recommended approach for developing themes). You can read how to setup a site in this manner in the [Building a Theme guide](/tutorial/building-a-theme/#set-up-yarn-workspaces).
 
 **Note**: you can see an example for using a local plugin from the plugins folder, with `require.resolve`, and `npm link` demonstrated in [this example repository](https://github.com/gillkyle/local-plugins-in-gatsby).
 
-## Compilation and processing steps
+## Compilation and processing with Babel
 
 Like all `gatsby-*` files, the code is not processed by Babel. If you want
 to use JavaScript syntax which isn't supported by your version of Node.js, you
