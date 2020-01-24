@@ -76,7 +76,7 @@ const _fixIds = (object, front = new Set()) => {
     }
 
     front.add(current)
-    Object.getOwnPropertyNames(current).forEach(key => {
+    Object.keys(current).forEach(key => {
       // The `contentful_id` is ours and we want to make sure we don't visit the
       // same node twice (this is possible if the same node appears in two
       // separate branches while sharing a common ancestor). This check makes
