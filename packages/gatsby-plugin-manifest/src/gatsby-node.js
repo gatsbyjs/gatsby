@@ -147,7 +147,9 @@ const makeManifest = async (cache, reporter, pluginOptions, shouldLocalize) => {
   if (icon !== undefined) {
     // Check if the icon exists
     if (!doesIconExist(icon)) {
-      throw `icon (${icon}) does not exist as defined in gatsby-config.js. Make sure the file exists relative to the root of the site.`
+      throw new Error(
+        `icon (${icon}) does not exist as defined in gatsby-config.js. Make sure the file exists relative to the root of the site.`
+      )
     }
 
     const sharpIcon = sharp(icon)

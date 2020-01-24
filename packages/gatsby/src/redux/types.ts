@@ -111,3 +111,10 @@ export interface IPageQueryRunAction {
   traceId: string | undefined
   payload: { path: string; componentPath: string; isPage: boolean }
 }
+
+export interface IRemoveStaleJobAction {
+  type: `REMOVE_STALE_JOB_V2`
+  plugin: Plugin
+  traceId?: string
+  payload: { contentDigest: string }
+}

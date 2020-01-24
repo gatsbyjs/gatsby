@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.79](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.78...gatsby-source-contentful@2.1.79) (2020-01-23)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.78](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.77...gatsby-source-contentful@2.1.78) (2020-01-21)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.77](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.76...gatsby-source-contentful@2.1.77) (2020-01-16)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** LongText fields require markdown transformer ([#20398](https://github.com/gatsbyjs/gatsby/issues/20398)) ([1ad7bbb](https://github.com/gatsbyjs/gatsby/commit/1ad7bbb)), closes [/github.com/gatsbyjs/gatsby/issues/3205#issuecomment-351603320](https://github.com//github.com/gatsbyjs/gatsby/issues/3205/issues/issuecomment-351603320)
+
 ## [2.1.76](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.75...gatsby-source-contentful@2.1.76) (2020-01-09)
 
 **Note:** Version bump only for package gatsby-source-contentful
