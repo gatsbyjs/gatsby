@@ -39,7 +39,7 @@ const interfaceType = ({
   fieldBlacklist,
 }) => {
   const state = store.getState()
-  const { nodeInterfaceTypes } = state.introspection.ingestibles
+  const { nodeInterfaceTypes } = state.remoteSchema.ingestibles
 
   const transformedFields = transformFields({
     fields: type.fields,

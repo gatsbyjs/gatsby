@@ -6,7 +6,7 @@ import { introspectionQuery } from "../../utils/graphql-queries"
 const introspectAndStoreRemoteSchema = async () => {
   const state = store.getState()
   const { pluginOptions, helpers } = state.gatsbyApi
-  const { schemaWasChanged } = state.introspection
+  const { schemaWasChanged } = state.remoteSchema
 
   if (pluginOptions.verbose && schemaWasChanged) {
     helpers.reporter.info(
@@ -27,7 +27,7 @@ const introspectAndStoreRemoteSchema = async () => {
     await helpers.cache.set(INTROSPECTION_CACHE_KEY, introspectionData)
   }
 
-  store.dispatch.introspection.setState({ introspectionData })
+  store.dispatch.remoteSchema.setState({ introspectionData })
 }
 
 export default introspectAndStoreRemoteSchema

@@ -21,14 +21,14 @@ import { getTypeSettingsByType } from "../../create-schema-customization/helpers
  * @returns {Object} GraphQL query info including gql query strings
  */
 const generateNodeQueriesFromIngestibleFields = async () => {
-  const { introspection } = store.getState()
+  const { remoteSchema } = store.getState()
 
   const {
     fieldBlacklist,
     nodeListFilter,
     typeMap,
     ingestibles: { nodeListRootFields },
-  } = introspection
+  } = remoteSchema
 
   const rootFields = typeMap.get(`RootQuery`).fields
 
@@ -42,7 +42,7 @@ const generateNodeQueriesFromIngestibleFields = async () => {
     data: { postTypes },
   } = await fetchGraphql({ query: availablePostTypesQuery })
 
-  let queries = {}
+  let nodeQueries = {}
 
   for (const { type, name } of nodeListRootFields) {
     if (fieldBlacklist.includes(name)) {
@@ -90,7 +90,7 @@ const generateNodeQueriesFromIngestibleFields = async () => {
     // build a query info object containing gql query strings for fetching
     // node lists or single nodes, as well as type info and plugin
     // settings for this type
-    queries[name] = {
+    nodeQueries[name] = {
       typeInfo: {
         singularName: singleFieldName,
         pluralName: name,
@@ -103,7 +103,7 @@ const generateNodeQueriesFromIngestibleFields = async () => {
     }
   }
 
-  return queries
+  return nodeQueries
 }
 
 export default generateNodeQueriesFromIngestibleFields

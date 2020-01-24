@@ -5,7 +5,7 @@ import { getTypeSettingsByType } from "../../create-schema-customization/helpers
 
 const buildNonNodeQueries = async () => {
   const {
-    introspection: {
+    remoteSchema: {
       typeMap,
       fieldBlacklist,
       ingestibles: { nonNodeRootFields },
@@ -56,7 +56,7 @@ const buildNonNodeQueries = async () => {
       }
   `
 
-  store.dispatch.introspection.setState({ nonNodeQuery })
+  store.dispatch.remoteSchema.setState({ nonNodeQuery })
 }
 
 export default buildNonNodeQueries

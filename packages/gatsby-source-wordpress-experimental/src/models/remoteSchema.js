@@ -1,7 +1,7 @@
-const introspection = {
+const remoteSchema = {
   state: {
     // @todo rename queries to nodeQueries
-    queries: {},
+    nodeQueries: {},
     nonNodeQuery: null,
     introspectionData: null,
     schemaWasChanged: null,
@@ -48,7 +48,7 @@ const introspection = {
     },
 
     setQueries(state, payload) {
-      state.queries = payload
+      state.nodeQueries = payload
       return state
     },
 
@@ -80,4 +80,4 @@ const introspection = {
   },
 }
 
-export default introspection
+export default remoteSchema

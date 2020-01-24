@@ -5,7 +5,7 @@ import formatLogMessage from "../../utils/format-log-message"
 
 const fetchAndCreateNonNodeRootFields = async () => {
   const {
-    introspection: { nonNodeQuery },
+    remoteSchema: { nonNodeQuery },
     gatsbyApi: { helpers, pluginOptions },
   } = store.getState()
 

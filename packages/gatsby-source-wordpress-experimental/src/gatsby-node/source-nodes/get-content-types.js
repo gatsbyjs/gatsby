@@ -11,7 +11,7 @@ import { buildTypeName } from "../create-schema-customization/helpers"
 export const createContentTypeNodes = async () => {
   const state = store.getState()
 
-  const { queries, fieldBlacklist } = state.introspection
+  const { nodeQueries, fieldBlacklist } = state.remoteSchema
 
   const { helpers } = state.gatsbyApi
 
@@ -22,7 +22,7 @@ export const createContentTypeNodes = async () => {
       contentType => !fieldBlacklist.includes(contentType.fieldNames.plural)
     )
     .map(contentTypeObj => {
-      const contentTypeQueryInfo = queries[contentTypeObj.fieldNames.plural]
+      const contentTypeQueryInfo = nodeQueries[contentTypeObj.fieldNames.plural]
       const { typeInfo } = contentTypeQueryInfo
 
       return helpers.actions.createNode({

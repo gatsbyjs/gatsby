@@ -23,7 +23,7 @@ export const buildTypeName = name => {
 }
 
 export const typeWasFetched = type => {
-  const { fetchedTypes } = store.getState().introspection
+  const { fetchedTypes } = store.getState().remoteSchema
 
   if (fetchedTypes.get(type.name)) {
     return true

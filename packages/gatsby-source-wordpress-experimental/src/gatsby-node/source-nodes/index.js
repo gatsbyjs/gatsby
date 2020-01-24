@@ -15,7 +15,7 @@ const sourceNodes = async helpers => {
 
   const lastCompletedSourceTime = await cache.get(LAST_COMPLETED_SOURCE_TIME)
 
-  const { schemaWasChanged } = store.getState().introspection
+  const { schemaWasChanged } = store.getState().remoteSchema
 
   const fetchEverything = !lastCompletedSourceTime || schemaWasChanged
 

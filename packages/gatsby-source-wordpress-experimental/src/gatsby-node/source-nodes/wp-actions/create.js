@@ -18,8 +18,8 @@ const wpActionCREATE = async ({
 
   // otherwise we need to fetch the post
   // so get the right gql query from redux
-  const { queries } = store.getState().introspection
-  const queryInfo = Object.values(queries).find(
+  const { nodeQueries } = store.getState().remoteSchema
+  const queryInfo = Object.values(nodeQueries).find(
     q => q.typeInfo.singularName === wpAction.referencedPostSingularName
   )
   const { nodeQueryString: query } = queryInfo

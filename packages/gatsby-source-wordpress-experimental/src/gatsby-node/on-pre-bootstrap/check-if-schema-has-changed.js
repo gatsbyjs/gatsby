@@ -23,7 +23,7 @@ const checkIfSchemaHasChanged = async () => {
   const schemaWasChanged = schemaMd5 !== cachedSchemaMd5
 
   // record wether the schema changed so other logic can beware
-  store.dispatch.introspection.setSchemaWasChanged(schemaWasChanged)
+  store.dispatch.remoteSchema.setSchemaWasChanged(schemaWasChanged)
 
   return schemaWasChanged
 }

@@ -1,10 +1,10 @@
-import introspection from "./introspection"
+import remoteSchema from "./remoteSchema"
 import gatsbyApi from "./gatsby-api"
 import logger from "./logger"
 import imageNodes from "./image-nodes"
 
 export default {
-  introspection,
+  remoteSchema,
   gatsbyApi,
   logger,
   imageNodes,

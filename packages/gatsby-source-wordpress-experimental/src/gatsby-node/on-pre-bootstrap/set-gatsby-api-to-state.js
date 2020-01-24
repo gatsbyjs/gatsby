@@ -14,7 +14,7 @@ const setGatsbyApiToState = (helpers, pluginOptions) => {
   }
 
   if (pluginOptions.excludeFields && pluginOptions.excludeFields.length) {
-    store.dispatch.introspection.addFieldsToBlackList(
+    store.dispatch.remoteSchema.addFieldsToBlackList(
       pluginOptions.excludeFields
     )
   }

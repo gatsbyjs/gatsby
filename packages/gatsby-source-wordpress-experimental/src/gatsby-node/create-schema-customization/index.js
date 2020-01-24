@@ -16,7 +16,7 @@ export default async ({ actions, schema }) => {
     fieldBlacklist,
     introspectionData: { data },
     ingestibles: { nonNodeRootFields },
-  } = state.introspection
+  } = state.remoteSchema
 
   const {
     gatsbyApi: { pluginOptions },

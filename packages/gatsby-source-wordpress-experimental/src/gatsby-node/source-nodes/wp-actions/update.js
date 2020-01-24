@@ -17,7 +17,7 @@ const wpActionUPDATE = async ({
     gatsbyApi: {
       pluginOptions: { verbose },
     },
-    introspection: { queries },
+    remoteSchema: { nodeQueries },
   } = state
 
   const nodeId = wpAction.referencedPostGlobalRelayID
@@ -28,7 +28,7 @@ const wpActionUPDATE = async ({
     return cachedNodeIds.filter(cachedId => cachedId !== nodeId)
   }
 
-  const { nodeQueryString: query, typeInfo } = Object.values(queries).find(
+  const { nodeQueryString: query, typeInfo } = Object.values(nodeQueries).find(
     q => q.typeInfo.singularName === wpAction.referencedPostSingularName
   )
 

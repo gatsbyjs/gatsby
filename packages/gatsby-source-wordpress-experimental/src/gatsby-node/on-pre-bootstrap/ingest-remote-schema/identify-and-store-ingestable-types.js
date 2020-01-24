@@ -3,7 +3,7 @@ import store from "../../../store"
 const identifyAndStoreIngestableFieldsAndTypes = async () => {
   const nodeListFilter = field => field.name === `nodes`
 
-  const { introspectionData, fieldBlacklist } = store.getState().introspection
+  const { introspectionData, fieldBlacklist } = store.getState().remoteSchema
 
   const typeMap = new Map(
     introspectionData.data.__schema.types.map(type => [type.name, type])
@@ -14,12 +14,12 @@ const identifyAndStoreIngestableFieldsAndTypes = async () => {
   )
 
   for (const interfaceType of interfaces) {
-    store.dispatch.introspection.addFetchedType(interfaceType)
+    store.dispatch.remoteSchema.addFetchedType(interfaceType)
 
     if (interfaceType.fields) {
       for (const interfaceField of interfaceType.fields) {
         if (interfaceField.type) {
-          store.dispatch.introspection.addFetchedType(interfaceField.type)
+          store.dispatch.remoteSchema.addFetchedType(interfaceField.type)
         }
       }
     }
@@ -52,12 +52,12 @@ const identifyAndStoreIngestableFieldsAndTypes = async () => {
         if (nodeListField) {
           nodeInterfaceTypes.push(nodeListField.type.ofType.name)
 
-          store.dispatch.introspection.addFetchedType(nodeListField.type)
+          store.dispatch.remoteSchema.addFetchedType(nodeListField.type)
 
           const nodeListFieldType = typeMap.get(nodeListField.type.ofType.name)
 
           for (const innerField of nodeListFieldType.fields) {
-            store.dispatch.introspection.addFetchedType(innerField.type)
+            store.dispatch.remoteSchema.addFetchedType(innerField.type)
           }
 
           continue
@@ -67,7 +67,7 @@ const identifyAndStoreIngestableFieldsAndTypes = async () => {
           continue
         }
 
-        store.dispatch.introspection.addFetchedType(nodeField.type)
+        store.dispatch.remoteSchema.addFetchedType(nodeField.type)
 
         nodeListRootFields.push(field)
         continue
@@ -78,7 +78,7 @@ const identifyAndStoreIngestableFieldsAndTypes = async () => {
       continue
     }
 
-    store.dispatch.introspection.addFetchedType(field.type)
+    store.dispatch.remoteSchema.addFetchedType(field.type)
     nonNodeRootFields.push(field)
   }
 
@@ -96,7 +96,7 @@ const identifyAndStoreIngestableFieldsAndTypes = async () => {
     typeNames: nodeListTypeNames,
   }
 
-  store.dispatch.introspection.setState({
+  store.dispatch.remoteSchema.setState({
     typeMap,
     gatsbyNodesInfo,
     ingestibles: {

@@ -15,25 +15,25 @@ const buildNodeListQueries = async () => {
 
   const QUERY_CACHE_KEY = `${pluginOptions.url}--introspection-node-queries`
 
-  let queries = await helpers.cache.get(QUERY_CACHE_KEY)
+  let nodeQueries = await helpers.cache.get(QUERY_CACHE_KEY)
 
-  const { schemaWasChanged } = store.getState().introspection
+  const { schemaWasChanged } = store.getState().remoteSchema
 
-  if (schemaWasChanged || !queries) {
+  if (schemaWasChanged || !nodeQueries) {
     // regenerate queries from introspection
-    queries = await generateNodeQueriesFromIngestibleFields()
+    nodeQueries = await generateNodeQueriesFromIngestibleFields()
 
     // and cache them
-    await helpers.cache.set(QUERY_CACHE_KEY, queries)
+    await helpers.cache.set(QUERY_CACHE_KEY, nodeQueries)
   }
 
   // set the queries in our redux store to use later
-  store.dispatch.introspection.setState({
+  store.dispatch.remoteSchema.setState({
     // @todo rename queries to nodeQueries
-    queries,
+    nodeQueries,
   })
 
-  return queries
+  return nodeQueries
 }
 
 export default buildNodeListQueries

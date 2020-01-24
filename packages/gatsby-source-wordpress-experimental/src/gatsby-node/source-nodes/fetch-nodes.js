@@ -67,8 +67,8 @@ export const fetchWPGQLContentNodes = async ({
  * @returns {Array} Type info & GQL query strings
  */
 export const getContentTypeQueryInfos = () => {
-  const { queries } = store.getState().introspection
-  const queryInfos = Object.values(queries).filter(
+  const { nodeQueries } = store.getState().remoteSchema
+  const queryInfos = Object.values(nodeQueries).filter(
     ({ settings }) => !settings.exclude
   )
   return queryInfos
@@ -84,10 +84,10 @@ export const getContentTypeQueryInfos = () => {
 export const fetchWPGQLContentNodesByContentType = async () => {
   const contentNodeGroups = []
 
-  const queries = getContentTypeQueryInfos()
+  const nodeQueries = getContentTypeQueryInfos()
 
   await Promise.all(
-    queries.map(async queryInfo => {
+    nodeQueries.map(async queryInfo => {
       if (queryInfo.settings.onlyFetchIfReferenced) {
         return
       }

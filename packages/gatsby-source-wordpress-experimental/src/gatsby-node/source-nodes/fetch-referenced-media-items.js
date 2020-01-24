@@ -10,7 +10,7 @@ export default async function fetchReferencedMediaItemsAndCreateNodes({
   referencedMediaItemNodeIds,
 }) {
   const state = store.getState()
-  const queryInfo = state.introspection.queries.mediaItems
+  const queryInfo = state.remoteSchema.nodeQueries.mediaItems
 
   const { helpers, pluginOptions } = state.gatsbyApi
   const { createContentDigest, actions } = helpers

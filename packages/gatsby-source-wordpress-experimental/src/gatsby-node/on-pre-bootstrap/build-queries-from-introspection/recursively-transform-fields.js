@@ -18,7 +18,7 @@ const transformFragments = ({
           }
 
           // save this type so we can use it in schema customization
-          store.dispatch.introspection.addFetchedType(type)
+          store.dispatch.remoteSchema.addFetchedType(type)
 
           const isAGatsbyNode = gatsbyNodesInfo.typeNames.includes(
             possibleType.name
@@ -232,7 +232,7 @@ const recursivelyTransformFields = ({ fields, depth = 0 }) => {
         schema: { queryDepth },
       },
     },
-    introspection: { fieldBlacklist, fieldAliases, typeMap, gatsbyNodesInfo },
+    remoteSchema: { fieldBlacklist, fieldAliases, typeMap, gatsbyNodesInfo },
   } = store.getState()
 
   if (depth >= queryDepth) {
@@ -254,7 +254,7 @@ const recursivelyTransformFields = ({ fields, depth = 0 }) => {
 
           if (transformedField) {
             // save this type so we know to use it in schema customization
-            store.dispatch.introspection.addFetchedType(field.type)
+            store.dispatch.remoteSchema.addFetchedType(field.type)
           }
 
           return transformedField
