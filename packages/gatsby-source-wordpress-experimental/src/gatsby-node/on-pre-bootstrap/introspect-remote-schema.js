@@ -1,7 +1,7 @@
 import store from "../../store"
 import formatLogMessage from "../../utils/format-log-message"
 import fetchGraphql from "../../utils/fetch-graphql"
-import { introspectionQuery } from "../../graphql-queries"
+import { introspectionQuery } from "../../utils/graphql-queries"
 
 const introspectAndStoreRemoteSchema = async () => {
   const state = store.getState()

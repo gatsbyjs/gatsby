@@ -1,5 +1,5 @@
 import fetchGraphql from "../../../utils/fetch-graphql"
-import { actionMonitorQuery } from "../../../graphql-queries"
+import { actionMonitorQuery } from "../../../utils/graphql-queries"
 import wpActionCREATE from "./create"
 import wpActionDELETE from "./delete"
 import wpActionUPDATE from "./update"

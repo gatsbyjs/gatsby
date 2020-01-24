@@ -1,4 +1,4 @@
-import { availablePostTypesQuery } from "../../../graphql-queries"
+import { availablePostTypesQuery } from "../../../utils/graphql-queries"
 import fetchGraphql from "../../../utils/fetch-graphql"
 
 import recursivelyTransformFields from "./recursively-transform-fields"
