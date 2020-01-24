@@ -35,16 +35,17 @@ In order to deploy a Gatsby site on KintoHub, you need to:
    | ----------------------- | ---------------------------------------------------------- |
    | **Name**                | `Gatsby Website` (or your own name)                        |
    | **Language**            | `Node.js`                                                  |
-   | **Version**             | `latest` (or your own node.js version)                         |
+   | **Version**             | `latest` (or your own node.js version)                     |
    | **Build Command**       | `npm install && npm run build` (or your own build command) |
    | **Build Output Folder** | `public` (or your own output directory)                    |
+
 5. Press **Create Website**
 
 The build will automatically start on the default Github branch of your repository.
 By default, KintoHub will build all the changes you push on your default branch but you can disable it (**Build New Commits**).
 Wait for your build to be successful (green).
 
-*Note: you can build other branches.*
+_Note: you can build other branches._
 
 ### Deploy your KintoBlock
 
@@ -57,7 +58,7 @@ From your KintoBlock page, you will need to deploy your website first before acc
 The deployment will start.
 Wait for it to be successful (green).
 
-*Note: you can disable Continuous Deployments for future builds.*
+_Note: you can disable Continuous Deployments for future builds._
 
 ### Access your KintoBlock
 
@@ -72,11 +73,10 @@ And that's it!
 
 From your Project page.
 
-1. Scroll down to the **Added KintoBlocks** list.
-2. Click on the cog next to your kintoblock (`Gatsby Website`).
-
 ### Basic Auth
 
+1. Scroll down to the **Added KintoBlocks** list.
+2. Click on the cog next to your kintoblock (`Gatsby Website`).
 3. Enable **Password Protected**
 4. Enter **Username** and **Password**
 5. Press **Done Configuring** and then **Deploy**.
@@ -86,8 +86,10 @@ Refresh the page, your website is now protected.
 
 ### Custom domain
 
+1. Scroll down to the **Added KintoBlocks** list.
+2. Click on the cog next to your kintoblock (`Gatsby Website`).
 3. Under **Custom Domain**, enter your custom domain name.
-4. Follow the instructions under *Setup*
+4. Follow the instructions under _Setup_
 5. Press **Done Configuring** and then **Deploy**.
 
 Wait for the deployment to be successful.
