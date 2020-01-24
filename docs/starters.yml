@@ -5037,3 +5037,18 @@
     - Roboto Typeface
     - SEO
     - Typescript
+- url: https://flex.arshad.io
+  repo: https://github.com/arshad/gatsby-starter-flex
+  description: A Gatsby starter for the Flex theme.
+  tags:
+    - Language:JavaScript
+    - SEO
+    - MDX
+    - Styling:CSS-in-JS
+  features:
+    - MDX Blocks for your Gatsby site.
+    - Customizable, extendable and accessible.
+    - Theme UI
+    - SEO and Open graphs support
+    - Color modes
+    - Code Highlighting
