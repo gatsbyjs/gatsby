@@ -8352,10 +8352,22 @@
   url: https://www.miekefrouws.nl
   main_url: https://www.miekefrouws.nl
   description: >
-    Mieke Frouws is a freelance primary school theater teacher based in the Netherlands.
+    Mieke Frouws is a freelance primary and secondary school theatre teacher based in the Netherlands.
   categories:
     - Freelance
     - Education
+  built_by: Laurens Kling
+  built_by_url: https://www.goedideemedia.nl
+  featured: false
+- title: Paul de Vries
+  url: https://pauldevries1972.nl
+  main_url: https://pauldevries1972.nl
+  description: >
+    Paul de Vries is founder of #DCDW and Spokesperson for Marktplaats Automotive (eBay) - Making the online automotive better!
+  categories:
+    - Blog
+    - Business
+    - Consulting
   built_by: Laurens Kling
   built_by_url: https://www.goedideemedia.nl
   featured: false
