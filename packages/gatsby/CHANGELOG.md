@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.19.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.3...gatsby@2.19.4) (2020-01-24)
+
+### Bug Fixes
+
+- **gatsby:** revert [#19664](https://github.com/gatsbyjs/gatsby/issues/19664) fix duplicate runs in develop mode ([#20836](https://github.com/gatsbyjs/gatsby/issues/20836)) ([9419bb3](https://github.com/gatsbyjs/gatsby/commit/9419bb3))
+
 ## [2.19.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.2...gatsby@2.19.3) (2020-01-23)
 
 ### Bug Fixes
