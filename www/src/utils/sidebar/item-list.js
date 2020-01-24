@@ -43,9 +43,23 @@ const itemListTutorial = extendSidebarData(tutorialSidebar)
 const itemListContributing = extendSidebarData(contributingSidebar)
 const itemListFeatures = extendSidebarData(featuresSidebar)
 
+const itemListLookup = {
+  docs: itemListDocs,
+  contributing: itemListContributing,
+  tutorial: itemListTutorial,
+  features: itemListFeatures,
+}
+
+function getItemList(path) {
+  // FIXME work with localized paths
+  const [urlSegment] = path.split("/").slice(1)
+  return itemListLookup[urlSegment]
+}
+
 export {
   itemListDocs,
   itemListTutorial,
   itemListContributing,
   itemListFeatures,
+  getItemList,
 }
