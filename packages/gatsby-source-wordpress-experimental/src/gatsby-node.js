@@ -24,6 +24,6 @@ module.exports = {
 
   // 1. in development, cache the image nodes we've collected up into our redux store
   // so we can touch them on the next build
-  // 2. start the interval refetcher in development mode for real-time data updates
+  // 2. start the interval refetcher in development mode for long polling data updates
   onCreateDevServer,
 }
