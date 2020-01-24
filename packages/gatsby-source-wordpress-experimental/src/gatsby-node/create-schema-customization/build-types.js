@@ -3,7 +3,6 @@ import { transformFields } from "./transform-fields"
 import {
   buildTypeName,
   typeWasFetched,
-  typeIsASupportedScalar,
   getTypeSettingsByType,
   filterObjectType,
 } from "./helpers"
