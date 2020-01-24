@@ -93,6 +93,8 @@
     "hooks:uninstall": "node node_modules/husky/husky.js uninstall",
     "hooks:install": "node node_modules/husky/husky.js install",
     "jest": "jest",
+    "jest:inspect": "node --inspect node_modules/.bin/jest --runInBand",
+    "jest:inspect-brk": "node --inspect-brk node_modules/.bin/jest --runInBand",
     "jest:loki": "cross-env GATSBY_DB_NODES=loki jest",
     "lerna": "lerna",
     "lerna-prepare": "lerna run prepare",
