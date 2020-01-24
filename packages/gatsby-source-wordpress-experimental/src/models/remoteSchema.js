@@ -31,6 +31,7 @@ const remoteSchema = {
       `jwtRefreshToken`,
       `jwtUserSecret`,
     ],
+    // @todo make this a plugin option
     fieldAliases: {
       parent: `wpParent`,
       children: `wpChildren`,
