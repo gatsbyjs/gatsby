@@ -53,7 +53,7 @@ createSite()
 
 Gatsby adds a GraphQL API which sits in-between the setup of the data and the generation of files in your static site. This abstraction provides a very strong separation of "setting up the site" vs "representation on the file system" which provides more places to introspect what is going on internally.
 
-What does this look like in practice? The server-side generation starts at [`gatsby-node.`](https://github.com/microsoft/TypeScript-Website/blob/0afd526969d98c321787ab1962f72f9361ab54bd/packages/typescriptlang-org/gatsby-node.js) but an interesting example is how a TSConfig Reference page is set up:
+What does this look like in practice? The server-side generation starts at [`gatsby-node.js`](https://github.com/microsoft/TypeScript-Website/blob/0afd526969d98c321787ab1962f72f9361ab54bd/packages/typescriptlang-org/gatsby-node.js) but an interesting example is how a TSConfig Reference page is set up:
 
 - In the Gatsby config file, [we request a plugin](https://github.com/microsoft/TypeScript-Website/blob/0afd526969d98c321787ab1962f72f9361ab54bd/packages/typescriptlang-org/gatsby-config.js#L52-L58) to look for markdown files in a particular folder and to mark them as `tsconfig-reference`.
 - Then in `onCreatePages` in `gatsby-node.js` we make a [GraphQL query to get all these files](https://github.com/microsoft/TypeScript-Website/blob/0afd526969d98c321787ab1962f72f9361ab54bd/packages/typescriptlang-org/lib/bootup/ingestion/createTSConfigReference.ts#L12-L26) via the name `"tsconfig-reference"`.
