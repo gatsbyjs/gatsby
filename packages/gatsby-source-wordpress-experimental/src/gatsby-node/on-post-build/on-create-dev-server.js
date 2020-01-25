@@ -1,7 +1,3 @@
-import startIntervalRefetcher from "../source-nodes/interval-refetcher"
-import setImageNodeIdCache from "./set-image-node-id-cache"
+import startPollingForContentUpdates from "../source-nodes/content-update-interval"
 
-export default async (helpers, pluginOptions) => {
-  await setImageNodeIdCache()
-  startIntervalRefetcher({}, helpers, pluginOptions)
-}
+export { startPollingForContentUpdates }

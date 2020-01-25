@@ -1,5 +1,5 @@
-import store from "../../../store"
-import { getGatsbyApi } from "../../../utils/get-gatsby-api"
+import store from "../../../../store"
+import { getGatsbyApi } from "../../../../utils/get-gatsby-api"
 import generateNodeQueriesFromIngestibleFields from "./generate-queries-from-ingestable-types"
 
 /**
@@ -29,7 +29,6 @@ const buildNodeListQueries = async () => {
 
   // set the queries in our redux store to use later
   store.dispatch.remoteSchema.setState({
-    // @todo rename queries to nodeQueries
     nodeQueries,
   })
 

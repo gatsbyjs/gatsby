@@ -1,7 +1,7 @@
 import store from "../../store"
 import { getGatsbyApi } from "../../utils/get-gatsby-api"
 
-const persistCachedImages = async () => {
+const persistPreviouslyCachedImages = async () => {
   const { helpers } = getGatsbyApi()
 
   // load up image node id's from cache
@@ -23,4 +23,4 @@ const persistCachedImages = async () => {
   }
 }
 
-export default persistCachedImages
+export default persistPreviouslyCachedImages
