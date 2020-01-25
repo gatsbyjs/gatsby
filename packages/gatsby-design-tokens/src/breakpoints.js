@@ -1,5 +1,4 @@
 export default {
-  xxs: 0, // needed for styled-system
   xs: `400px`,
   sm: `550px`,
   md: `750px`,
