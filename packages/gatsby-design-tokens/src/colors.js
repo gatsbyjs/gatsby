@@ -197,6 +197,10 @@ export default preval`
       invisibles: "#e0d7d1",
       scrollbarThumb: "#f4d1c6",
       lineHighlightBorder: "#f1beb6",
+      copyButton: palette.grey[60],
+      lineHighlightBackground: "#fbf0ea",
+      scrollbarTrack: "#faede5",
+  
     },
   }
 `
