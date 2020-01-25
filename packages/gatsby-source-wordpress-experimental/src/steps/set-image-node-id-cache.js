@@ -14,4 +14,4 @@ const setImageNodeIdCache = async () => {
   }
 }
 
-export default setImageNodeIdCache
+export { setImageNodeIdCache }

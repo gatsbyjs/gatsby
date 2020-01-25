@@ -1,5 +1,5 @@
 import { runApisInSteps } from "~/utils/run-steps"
-import * as steps from "~/gatsby-node/index"
+import * as steps from "~/steps/index"
 
 module.exports = runApisInSteps({
   onPreBootstrap: [

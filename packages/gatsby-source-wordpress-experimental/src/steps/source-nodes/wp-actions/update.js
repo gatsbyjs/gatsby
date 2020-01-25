@@ -2,7 +2,7 @@ import fetchGraphql from "~/utils/fetch-graphql"
 import store from "~/store"
 import formatLogMessage from "~/utils/format-log-message"
 import chalk from "chalk"
-import { buildTypeName } from "~/gatsby-node/create-schema-customization/helpers"
+import { buildTypeName } from "~/steps/create-schema-customization/helpers"
 
 const wpActionUPDATE = async ({
   helpers,

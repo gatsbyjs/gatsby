@@ -46,4 +46,4 @@ const startPollingForContentUpdates = (helpers, pluginOptions) => {
   refetcher({ cache, helpers, pluginOptions, msRefetchInterval })
 }
 
-export default startPollingForContentUpdates
+export { startPollingForContentUpdates }

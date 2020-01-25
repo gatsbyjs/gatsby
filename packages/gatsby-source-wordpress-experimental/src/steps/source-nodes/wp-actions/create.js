@@ -1,7 +1,7 @@
 import fetchGraphql from "~/utils/fetch-graphql"
 import store from "~/store"
 import formatLogMessage from "~/utils/format-log-message"
-import { buildTypeName } from "~/gatsby-node/create-schema-customization/helpers"
+import { buildTypeName } from "~/steps/create-schema-customization/helpers"
 
 const wpActionCREATE = async ({
   helpers,

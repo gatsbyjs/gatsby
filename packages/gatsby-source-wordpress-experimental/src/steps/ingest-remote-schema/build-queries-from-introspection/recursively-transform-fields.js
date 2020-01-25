@@ -1,5 +1,5 @@
 import store from "~/store"
-import { getTypeSettingsByType } from "~/gatsby-node/create-schema-customization/helpers"
+import { getTypeSettingsByType } from "~/steps/create-schema-customization/helpers"
 
 const transformFragments = ({
   possibleTypes,

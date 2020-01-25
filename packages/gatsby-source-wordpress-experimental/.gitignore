@@ -3,4 +3,5 @@
 gatsby-node
 !src/gatsby-node
 !src
+!jsconfig.json
 yarn.lock

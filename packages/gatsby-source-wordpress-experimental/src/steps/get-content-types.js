@@ -1,7 +1,7 @@
 import { availablePostTypesQuery } from "~/utils/graphql-queries"
 import fetchGraphql from "~/utils/fetch-graphql"
 import store from "~/store"
-import { buildTypeName } from "~/gatsby-node/create-schema-customization/helpers"
+import { buildTypeName } from "~/steps/create-schema-customization/helpers"
 
 /**
  *
