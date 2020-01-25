@@ -1,4 +1,4 @@
-import store from "../store"
+import store from "~/store"
 
 export const getPluginOptions = () => store.getState().gatsbyApi.pluginOptions
 export const getHelpers = () => store.getState().gatsbyApi.helpers

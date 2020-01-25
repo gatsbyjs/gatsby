@@ -8,6 +8,13 @@
   "presets": [["babel-preset-gatsby-package"]],
   "plugins": [
     [
+      "babel-plugin-root-import",
+      {
+        "rootPathSuffix": "./src/",
+        "rootPathPrefix": "~/"
+      }
+    ],
+    [
       "import-globals",
       {
         "dd": {

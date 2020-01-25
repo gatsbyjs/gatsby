@@ -1,4 +1,4 @@
-import store from "../../store"
+import store from "~/store"
 import { transformFields } from "./transform-fields"
 import {
   buildTypeName,

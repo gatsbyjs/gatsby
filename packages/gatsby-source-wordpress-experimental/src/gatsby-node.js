@@ -1,5 +1,5 @@
-import { runApisInSteps } from "./utils/run-steps"
-import * as steps from "./gatsby-node/index"
+import { runApisInSteps } from "~/utils/run-steps"
+import * as steps from "~/gatsby-node/index"
 
 module.exports = runApisInSteps({
   onPreBootstrap: [
@@ -9,12 +9,7 @@ module.exports = runApisInSteps({
     steps.persistPreviouslyCachedImages,
   ],
 
-  sourceNodes: [
-    // createContentTypeNodes is temporary
-    // see https://github.com/wp-graphql/wp-graphql/issues/1045
-    steps.createContentTypeNodes,
-    steps.sourceNodes,
-  ],
+  sourceNodes: [steps.createContentTypeNodes, steps.sourceNodes],
 
   createSchemaCustomization: [steps.createSchemaCustomization],
 

@@ -1,6 +1,6 @@
-import fetchGraphql from "../../../utils/fetch-graphql"
-import store from "../../../store"
-import gql from "../../../utils/gql"
+import fetchGraphql from "~/utils/fetch-graphql"
+import store from "~/store"
+import gql from "~/utils/gql"
 
 const checkIfSchemaHasChanged = async () => {
   const MD5_CACHE_KEY = `introspection-node-query-md5`

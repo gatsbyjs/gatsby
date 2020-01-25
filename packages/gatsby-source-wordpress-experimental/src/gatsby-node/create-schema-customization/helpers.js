@@ -1,6 +1,6 @@
-import store from "../../store"
+import store from "~/store"
 import { objectTypeFilters } from "./type-filters"
-import { getPluginOptions } from "../../utils/get-gatsby-api"
+import { getPluginOptions } from "~/utils/get-gatsby-api"
 
 /**
  * This function namespaces typenames with a prefix

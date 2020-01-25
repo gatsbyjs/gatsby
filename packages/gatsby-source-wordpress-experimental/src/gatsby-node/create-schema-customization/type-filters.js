@@ -1,4 +1,4 @@
-import { createRemoteMediaItemNode } from "../source-nodes/create-remote-media-item-node"
+import { createRemoteMediaItemNode } from "~/gatsby-node/source-nodes/create-remote-media-item-node"
 
 export const objectTypeFilters = [
   {

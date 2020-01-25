@@ -1,5 +1,5 @@
-import formatLogMessage from "../../../utils/format-log-message"
-import store from "../../../store"
+import formatLogMessage from "~/utils/format-log-message"
+import store from "~/store"
 
 const wpActionDELETE = async ({ helpers, cachedNodeIds, wpAction }) => {
   const { reporter, actions, getNode } = helpers

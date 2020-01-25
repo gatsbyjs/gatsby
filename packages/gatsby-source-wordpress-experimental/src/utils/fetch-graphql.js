@@ -2,7 +2,7 @@ import gqlPrettier from "graphql-prettier"
 import axios from "axios"
 import rateLimit from "axios-rate-limit"
 import formatLogMessage from "./format-log-message"
-import store from "../store"
+import store from "~/store"
 import { getPluginOptions } from "./get-gatsby-api"
 
 const http = rateLimit(axios.create(), {

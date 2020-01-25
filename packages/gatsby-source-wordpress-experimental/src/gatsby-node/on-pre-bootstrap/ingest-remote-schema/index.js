@@ -1,6 +1,6 @@
-import { runSteps } from "../../../utils/run-steps"
-import { getGatsbyApi } from "../../../utils/get-gatsby-api"
-import formatLogMessage from "../../../utils/format-log-message"
+import { runSteps } from "~/utils/run-steps"
+import { getGatsbyApi } from "~/utils/get-gatsby-api"
+import formatLogMessage from "~/utils/format-log-message"
 
 import checkIfSchemaHasChanged from "./check-if-schema-has-changed"
 import introspectAndStoreRemoteSchema from "./introspect-remote-schema"

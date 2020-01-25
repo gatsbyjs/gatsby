@@ -1,7 +1,7 @@
-import store from "../../../store"
-import recursivelyTransformFields from "../build-queries-from-introspection/recursively-transform-fields"
-import { buildSelectionSet } from "../build-queries-from-introspection/build-query-on-field-name"
-import { getTypeSettingsByType } from "../../create-schema-customization/helpers"
+import store from "~/store"
+import recursivelyTransformFields from "~/gatsby-node/on-pre-bootstrap/build-queries-from-introspection/recursively-transform-fields"
+import { buildSelectionSet } from "~/gatsby-node/on-pre-bootstrap/build-queries-from-introspection/build-query-on-field-name"
+import { getTypeSettingsByType } from "~/gatsby-node/create-schema-customization/helpers"
 
 const buildNonNodeQueries = async () => {
   const {

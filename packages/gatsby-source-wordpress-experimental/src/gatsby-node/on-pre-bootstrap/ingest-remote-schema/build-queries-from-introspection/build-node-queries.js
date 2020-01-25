@@ -1,5 +1,5 @@
-import store from "../../../../store"
-import { getGatsbyApi } from "../../../../utils/get-gatsby-api"
+import store from "~/store"
+import { getGatsbyApi } from "~/utils/get-gatsby-api"
 import generateNodeQueriesFromIngestibleFields from "./generate-queries-from-ingestable-types"
 
 /**

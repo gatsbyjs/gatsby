@@ -1,5 +1,5 @@
-import { availablePostTypesQuery } from "../../../../utils/graphql-queries"
-import fetchGraphql from "../../../../utils/fetch-graphql"
+import { availablePostTypesQuery } from "~/utils/graphql-queries"
+import fetchGraphql from "~/utils/fetch-graphql"
 
 import recursivelyTransformFields from "./recursively-transform-fields"
 import {
@@ -8,8 +8,8 @@ import {
   buildSelectionSet,
 } from "./build-query-on-field-name"
 
-import store from "../../../../store"
-import { getTypeSettingsByType } from "../../../create-schema-customization/helpers"
+import store from "~/store"
+import { getTypeSettingsByType } from "~/gatsby-node/create-schema-customization/helpers"
 
 /**
  * generateNodeQueriesFromIngestibleFields

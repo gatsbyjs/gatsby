@@ -1,5 +1,5 @@
-import fetchGraphql from "../../utils/fetch-graphql"
-import store from "../../store"
+import fetchGraphql from "~/utils/fetch-graphql"
+import store from "~/store"
 
 /**
  * paginatedWpNodeFetch

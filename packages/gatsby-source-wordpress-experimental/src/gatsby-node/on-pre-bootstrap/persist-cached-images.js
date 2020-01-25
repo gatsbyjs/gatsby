@@ -1,5 +1,5 @@
-import store from "../../store"
-import { getGatsbyApi } from "../../utils/get-gatsby-api"
+import store from "~/store"
+import { getGatsbyApi } from "~/utils/get-gatsby-api"
 
 const persistPreviouslyCachedImages = async () => {
   const { helpers } = getGatsbyApi()

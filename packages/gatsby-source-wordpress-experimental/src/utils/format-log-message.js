@@ -1,5 +1,5 @@
 import chalk from "chalk"
-import store from "../store"
+import store from "~/store"
 
 export default (input, { useVerboseStyle = false } = {}) => {
   const { verbose } = store.getState().gatsbyApi.pluginOptions

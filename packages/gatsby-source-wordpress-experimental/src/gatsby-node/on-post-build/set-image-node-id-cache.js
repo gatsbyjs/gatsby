@@ -1,4 +1,4 @@
-import store from "../../store"
+import store from "~/store"
 
 // since we create image nodes in resolvers
 // we cache our image node id's on post build for production

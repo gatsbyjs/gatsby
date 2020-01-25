@@ -1,7 +1,7 @@
 import pRetry from "p-retry"
 import { createRemoteFileNode } from "gatsby-source-filesystem"
-import store from "../../store"
-import { getHelpers } from "../../utils/get-gatsby-api"
+import store from "~/store"
+import { getHelpers } from "~/utils/get-gatsby-api"
 
 export const getFileNodeMetaBySourceUrl = sourceUrl => {
   const fileNodesMetaByUrls = store.getState().imageNodes.nodeMetaByUrl

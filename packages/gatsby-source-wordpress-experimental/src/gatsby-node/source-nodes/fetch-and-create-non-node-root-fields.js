@@ -1,7 +1,7 @@
-import store from "../../store"
-import fetchGraphql from "../../utils/fetch-graphql"
+import store from "~/store"
+import fetchGraphql from "~/utils/fetch-graphql"
 import { createContentDigest } from "gatsby-core-utils"
-import formatLogMessage from "../../utils/format-log-message"
+import formatLogMessage from "~/utils/format-log-message"
 
 const fetchAndCreateNonNodeRootFields = async () => {
   const {

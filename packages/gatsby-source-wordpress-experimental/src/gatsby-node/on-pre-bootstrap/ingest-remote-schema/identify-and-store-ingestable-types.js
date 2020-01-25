@@ -1,4 +1,4 @@
-import store from "../../../store"
+import store from "~/store"
 
 const identifyAndStoreIngestableFieldsAndTypes = async () => {
   const nodeListFilter = field => field.name === `nodes`

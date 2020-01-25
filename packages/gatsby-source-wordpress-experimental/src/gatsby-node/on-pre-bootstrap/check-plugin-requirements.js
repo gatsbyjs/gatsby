@@ -1,4 +1,4 @@
-import fetchGraphql from "../../utils/fetch-graphql"
+import fetchGraphql from "~/utils/fetch-graphql"
 
 const isWpGatsby = async () =>
   fetchGraphql({

@@ -1,5 +1,5 @@
-import store from "../../store"
-import { getContentTypeQueryInfos } from "../source-nodes/fetch-nodes"
+import store from "~/store"
+import { getContentTypeQueryInfos } from "~/gatsby-node/source-nodes/fetch-nodes"
 
 import { fieldOfTypeWasFetched } from "./helpers"
 

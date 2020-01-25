@@ -1,7 +1,7 @@
-import { LAST_COMPLETED_SOURCE_TIME } from "../../constants"
+import { LAST_COMPLETED_SOURCE_TIME } from "~/constants"
 import fetchAndApplyNodeUpdates from "./fetch-node-updates"
-import formatLogMessage from "../../utils/format-log-message"
-import store from "../../store"
+import formatLogMessage from "~/utils/format-log-message"
+import store from "~/store"
 
 const refetcher = async api => {
   const { cache, helpers, pluginOptions, msRefetchInterval } = api
