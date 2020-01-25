@@ -181,8 +181,8 @@ export default preval`
       focusBoxShadow: palette.orange[20],
     },
     code: {
-      bgInline: "#fbf2e9",
-      bg: "#fdfaf6",
+      backgroundInline: "#fbf2e9",
+      background: "#fdfaf6",
       border: "#faede5",
       text: "#866c5b",
       remove: palette.red[70],
@@ -200,7 +200,6 @@ export default preval`
       copyButton: palette.grey[60],
       lineHighlightBackground: "#fbf0ea",
       scrollbarTrack: "#faede5",
-  
     },
   }
 `
