@@ -47,7 +47,7 @@ If you need to use a custom https setup, you can pass the `--https`, `--key-file
 See the example command:
 
 ```shell
-$ gatsby develop --https --key-file ../relative/path/to/key.key --cert-file ../relative/path/to/cert.crt
+gatsby develop --https --key-file ../relative/path/to/key.key --cert-file ../relative/path/to/cert.crt
 ```
 
 in most cases, the `--https` passed by itself is easier and more convenient to get local https.

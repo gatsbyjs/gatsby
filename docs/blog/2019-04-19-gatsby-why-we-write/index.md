@@ -10,7 +10,7 @@ If you're a Gatsby community member, you may have noticed something: we write _a
 
 Community members are often surprised by the comprehensiveness of our [documentation](/docs/). We publish new articles on this blog multiple times per week, from both the core team and the community.
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">The <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> docs are some of the best I&#39;ve ever read. Super clear setup instructions, especially Step 0 for those new to dev. Too many other frameworks assume dev environment setup experience, so it&#39;s nice to see the Gatsby team be better here.</p>&mdash; Matt Convente (@mattconvente) <a href="https://twitter.com/mattconvente/status/1099706762897342465?ref_src=twsrc%5Etfw">February 24, 2019</a></blockquote>
+https://twitter.com/mattconvente/status/1099706762897342465
 
 Writing isn't something we just do because we love it (although we do). Writing is core to who we are as a project, a company, and a community.
 

@@ -28,7 +28,7 @@ const {
 
 const getGatsbyDependents = require(`../utils/gatsby-dependents`)
 const { store } = require(`../redux`)
-const { actions } = require(`../redux/actions/internal`)
+import * as actions from "../redux/actions/internal"
 const { default: FileParser } = require(`./file-parser`)
 const {
   graphqlError,

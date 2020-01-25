@@ -70,7 +70,7 @@ Check out the component called "Jumbotron". This is an example of how to display
 
 And here is the code used to render it. Notice that the `title` and `subTitle` fields are available as properties of the `item.fields` object.
 
-```javascript:title=src/modules/Jumbotron.js
+```jsx:title=src/modules/Jumbotron.js
 import React, { Component } from "react"
 import { graphql, StaticQuery } from "gatsby"
 

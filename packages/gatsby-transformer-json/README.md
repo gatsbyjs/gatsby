@@ -57,7 +57,7 @@ parent directory.
 
 For example, let's say your project has a data layout like:
 
-```
+```text
 data/
     letters/
         a.json
@@ -235,7 +235,10 @@ It's probably because you have arrays of mixed values somewhere. For instance:
 ```json
 {
   "stuff": [25, "bob"],
-  "orEven": [[25, "bob"], [23, "joe"]]
+  "orEven": [
+    [25, "bob"],
+    [23, "joe"]
+  ]
 }
 ```
 
@@ -244,7 +247,10 @@ If you can rewrite your data with objects, you should be good to go:
 ```json
 {
   "stuff": [{ "count": 25, "name": "bob" }],
-  "orEven": [{ "count": 25, "name": "bob" }, { "count": 23, "name": "joe" }]
+  "orEven": [
+    { "count": 25, "name": "bob" },
+    { "count": 23, "name": "joe" }
+  ]
 }
 ```
 

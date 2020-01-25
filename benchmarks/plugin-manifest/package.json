@@ -4,12 +4,18 @@
   "description": "Run manifest lots of times",
   "main": "index.js",
   "scripts": {
-    "test": "node index.js"
+    "bench": "set -x; node index.js",
+    "build": "gatsby build",
+    "develop": "gatsby develop",
+    "serve": "gatsby serve"
   },
   "author": "Alex Moon <alex.jared.moon@gmail.com",
   "license": "MIT",
   "dependencies": {
     "fs-extra": "^7.0.1",
-    "gatsby-plugin-manifest": "^2.0.25"
+    "gatsby-plugin-manifest": "^2.2.37"
+  },
+  "devDependencies": {
+    "gatsby-plugin-benchmark-reporting": "*"
   }
 }

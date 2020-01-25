@@ -199,9 +199,9 @@
 - name: Ramón Chancay
   type: individual
   description: >-
-    Front-end / Back-end Developer in Guayaquil Ecuador.
-    Currently at Everymundo.
-    I enjoy teaching and sharing what I know.
+    Front-end Engineer in Guayaquil Ecuador.
+    Currently at Everymundo and Freelancer in other companies.
+    Fan number 1 of Jamstack, I propose solutions serverless.
     I give professional advice to developers and companies.
   location: "Guayaquil, Ecuador"
   website: "https://ramonchancay.me"
@@ -464,6 +464,17 @@
     We help startups and small business to grow their business. We provide business and tech consulting alongside web and mobile development.
   location: Brazil and Sweden
   website: "https://epicawesome.se/"
+  for_hire: true
+  hiring: false
+  portfolio: true
+- name: Eric Howey
+  type: individual
+  description: >-
+    My name is Eric Howey. I am a web developer and mental health therapist. I specialize in Gatsby, React, and Theme-UI. I listen and care.
+  location: Canada
+  website: "https://www.erichowey.dev/"
+  github: "https://github.com/ehowey"
+  image: images/eric-howey.jpeg
   for_hire: true
   hiring: false
   portfolio: true

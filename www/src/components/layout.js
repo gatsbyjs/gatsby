@@ -3,7 +3,6 @@ import { jsx } from "theme-ui"
 import React from "react"
 import { navigate, PageRenderer } from "gatsby"
 import mousetrap from "mousetrap"
-import Modal from "react-modal"
 import MdClose from "react-icons/lib/md/close"
 
 import { Global } from "@emotion/core"
@@ -24,8 +23,12 @@ import PageWithSidebar from "../components/page-with-sidebar"
 import SiteMetadata from "../components/site-metadata"
 import SkipNavLink from "../components/skip-nav-link"
 import "../assets/fonts/futura"
+import LazyModal from "./lazy-modal"
+import { defaultLang } from "../utils/i18n"
 
 let windowWidth
+
+export const LocaleContext = React.createContext(defaultLang)
 
 class DefaultLayout extends React.Component {
   constructor() {
@@ -38,8 +41,6 @@ class DefaultLayout extends React.Component {
   }
 
   componentDidMount() {
-    Modal.setAppElement(`#___gatsby`)
-
     if (this.props.isModal && window.innerWidth > 750) {
       mousetrap.bind(`left`, this.props.modalPrevious)
       mousetrap.bind(`right`, this.props.modalNext)
@@ -79,7 +80,7 @@ class DefaultLayout extends React.Component {
           <PageRenderer
             location={{ pathname: this.props.modalBackgroundPath }}
           />
-          <Modal
+          <LazyModal
             isOpen={true}
             style={{
               content: {
@@ -161,15 +162,18 @@ class DefaultLayout extends React.Component {
               {this.props.modalPreviousLink}
               {this.props.modalNextLink}
             </div>
-          </Modal>
+          </LazyModal>
         </>
       )
     }
 
     return (
-      <>
+      <LocaleContext.Provider value={this.props.locale || defaultLang}>
         <Global styles={globalStyles} />
-        <SiteMetadata pathname={this.props.location.pathname} />
+        <SiteMetadata
+          pathname={this.props.location.pathname}
+          locale={this.props.locale}
+        />
         <SkipNavLink />
         <Banner />
         <Navigation pathname={this.props.location.pathname} />
@@ -196,7 +200,7 @@ class DefaultLayout extends React.Component {
           />
         </div>
         <MobileNavigation />
-      </>
+      </LocaleContext.Provider>
     )
   }
 }
