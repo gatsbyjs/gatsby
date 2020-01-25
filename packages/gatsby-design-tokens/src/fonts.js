@@ -1,3 +1,4 @@
+// TODO re:system-ui, keep an eye on https://github.com/primer/css/issues/838
 const system = [
   `-apple-system`,
   `BlinkMacSystemFont`,
@@ -12,7 +13,7 @@ const system = [
   `Segoe UI Symbol`,
   `Noto Color Emoji`,
 ]
-const header = [`Futura PT`, ...system]
+const heading = [`Futura PT`, ...system]
 const monospace = [
   `SFMono-Regular`,
   `Menlo`,
@@ -23,8 +24,9 @@ const monospace = [
   `monospace`,
 ]
 const serif = [`Georgia`, `Times New Roman`, `Times`, `serif`]
+const body = system
 
 // @todo think about naming, e.g.
 // system -> sans
 // header -> brand
-export default { system, header, monospace, serif }
+export default { body, system, heading, monospace, serif }
