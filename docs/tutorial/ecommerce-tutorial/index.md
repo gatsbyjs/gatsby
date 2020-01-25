@@ -1,5 +1,5 @@
 ---
-title: "Gatsby E-Commerce Tutorial"
+title: "Gatsby e-commerce Tutorial"
 ---
 
 # Table of Contents
@@ -65,7 +65,7 @@ Open the root site directory in a text editor and navigate to `gatsby-config.js`
 ```js:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
-    title: "Gatsby E-Commerce Starter",
+    title: "Gatsby e-commerce Starter",
   },
   plugins: ["gatsby-plugin-react-helmet", "gatsby-plugin-stripe"],
 }
@@ -277,7 +277,7 @@ Now you can add the plugin configuration in your `gatsby-config` file:
 ```js:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
-    title: `Gatsby E-Commerce Starter`,
+    title: `Gatsby e-commerce Starter`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
