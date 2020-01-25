@@ -132,20 +132,28 @@ export default preval`
     warning: palette.red[70],
     // semi-transparent colors
     blackFade: {
-      80: 'rgba(' + blackRGB + ', 0.85)',
+      90: 'rgba(' + blackRGB + ', 0.9)',
+      80: 'rgba(' + blackRGB + ', 0.8)',
       70: 'rgba(' + blackRGB + ', 0.7)',
       60: 'rgba(' + blackRGB + ', 0.6)',
       50: 'rgba(' + blackRGB + ', 0.5)',
+      40: 'rgba(' + blackRGB + ', 0.4)',
       30: 'rgba(' + blackRGB + ', 0.3)',
+      20: 'rgba(' + blackRGB + ', 0.2)',
       10: 'rgba(' + blackRGB + ', 0.1)',
+      5: 'rgba(' + blackRGB + ', 0.05)',
     },
     whiteFade: {
-      80: 'rgba(' + whiteRGB + ', 0.85)',
+      90: 'rgba(' + whiteRGB + ', 0.9)',
+      80: 'rgba(' + whiteRGB + ', 0.8)',
       70: 'rgba(' + whiteRGB + ', 0.7)',
       60: 'rgba(' + whiteRGB + ', 0.6)',
       50: 'rgba(' + whiteRGB + ', 0.5)',
+      40: 'rgba(' + whiteRGB + ', 0.4)',
       30: 'rgba(' + whiteRGB + ', 0.3)',
+      20: 'rgba(' + whiteRGB + ', 0.2)',
       10: 'rgba(' + whiteRGB + ', 0.1)',
+      5: 'rgba(' + whiteRGB + ', 0.05)',
     },
     // role-based tokens
     // this is merely a humble start, lots to do here
