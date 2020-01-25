@@ -1,7 +1,7 @@
 import fs from "fs"
 import path from "path"
 import sharp from "./safe-sharp"
-import { createContentDigest, cpuCoreCount } from "gatsby-core-utils"
+import { createContentDigest, cpuCoreCount, slash } from "gatsby-core-utils"
 import { defaultIcons, doesIconExist, addDigestToPath } from "./common"
 
 sharp.simd(true)
@@ -107,8 +107,8 @@ exports.onPostBootstrap = async (
  * @property {Object} cache - from gatsby-node api
  * @property {Object} reporter - from gatsby-node api
  * @property {Object} pluginOptions - from gatsby-node api/gatsby config
- * @property {boolean} shouldLocalize
- * @property {string} basePath - string of base path frpvided by gatsby node
+ * @property {boolean?} shouldLocalize
+ * @property {string?} basePath - string of base path frpvided by gatsby node
  */
 
 /**
@@ -221,10 +221,10 @@ const makeManifest = async ({
   manifest.icons = manifest.icons.map(icon => {
     return {
       ...icon,
-      src: path.join(basePath, icon.src),
-      start_url: path.join(basePath, icon.start_url),
+      src: slash(path.join(basePath, icon.src)),
     }
   })
+  manifest.start_url = path.posix.join(basePath, manifest.start_url)
 
   //Write manifest
   fs.writeFileSync(
