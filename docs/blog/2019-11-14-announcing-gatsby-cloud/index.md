@@ -82,7 +82,7 @@ Preview offers a private playground for developers, designers, marketers, and co
 
 Preview has been in beta since May, and we've welcomed over 1000 beta testers and are near our 100th customer. Thank you to everyone who's helped test and support Preview! We've learned a lot from our beta users and customers.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/AmkI2iH6c40" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+https://youtu.be/AmkI2iH6c40
 
 ## Gatsby Cloud Builds (in Private Beta)
 

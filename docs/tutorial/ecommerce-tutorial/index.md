@@ -41,7 +41,7 @@ Stripe is a payment processing service that allows you to securely collect and p
 
 There are alternatives to Stripe, like Square and Braintree, and their setup is very similar to Stripe.
 
-Stripe offers a [hosted checkout](https://stripe.com/docs/payments/checkout) that doesn't require any backend component. You can configure products, SKUs, and subscription plans in the [Stripe Dashboard](https://stripe.com/docs/payments/checkout#configure). If you're selling a single product or subscription (like an eBook) you can hardcode the product's SKU ID in your Gatsby side. If you're selling multiple products, you can use the [Stripe source plugin](https://www.gatsbyjs.org/packages/gatsby-source-stripe/) to retrieve all SKUs at build time. If you want your Gatsby site to automatically update, you can use the Stripe webhook event to [trigger a redeploy](https://www.netlify.com/docs/webhooks/) when a new product or SKU is added.
+Stripe offers a [hosted checkout](https://stripe.com/docs/payments/checkout) that doesn't require any backend component. You can configure products, SKUs, and subscription plans in the [Stripe Dashboard](https://stripe.com/docs/payments/checkout#configure). If you're selling a single product or subscription (like an eBook) you can hardcode the product's SKU ID in your Gatsby site. If you're selling multiple products, you can use the [Stripe source plugin](https://www.gatsbyjs.org/packages/gatsby-source-stripe/) to retrieve all SKUs at build time. If you want your Gatsby site to automatically update, you can use the Stripe webhook event to [trigger a redeploy](https://www.netlify.com/docs/webhooks/) when a new product or SKU is added.
 
 # Setting up a Gatsby site
 
@@ -187,7 +187,7 @@ export default Checkout
 
 You imported React, added a button with some styles, and introduced some React functions. The `componentDidMount()` and `redirectToCheckout()` functions are most important for the Stripe functionality. The `componentDidMount()` function is a React lifecycle method that launches when the component is first mounted to the DOM, making it a good place to initialise the Stripe.js client. It looks like this:
 
-```js:title=src/components/checkout.js
+```jsx:title=src/components/checkout.js
   componentDidMount() {
     this.stripe = window.Stripe('pk_test_jG9s3XMdSjZF9Kdm5g59zlYd')
   }
@@ -195,7 +195,7 @@ You imported React, added a button with some styles, and introduced some React f
 
 This identifies you with the Stripe platform, validates the checkout request against your products and security settings, and processes the payment on your Stripe account.
 
-```js:title=src/components/checkout.js
+```jsx:title=src/components/checkout.js
   async redirectToCheckout(event) {
     event.preventDefault()
     const { error } = await this.stripe.redirectToCheckout({
@@ -212,7 +212,7 @@ This identifies you with the Stripe platform, validates the checkout request aga
 
 The `redirectToCheckout()` function validates your checkout request and either redirects to the Stripe hosted checkout page or resolves with an error object. Make sure to replace `successUrl` and `cancelUrl` with the appropriate URLs for your application.
 
-```js:title=src/components/checkout.js
+```jsx:title=src/components/checkout.js
   render() {
     return (
       <button
@@ -231,7 +231,7 @@ The `render()` function applies your styles to the button and binds the `redirec
 
 Now go to your `src/pages/index.js` file. This is your homepage that shows at the root URL. Import your new checkout component in the file underneath the other imports and add your `<Checkout />` component within the `<Layout>` element. Your `index.js` file should now look like similar to this:
 
-```js:title=src/pages/index.js
+```jsx:title=src/pages/index.js
 import React from "react"
 import { Link } from "gatsby"
 

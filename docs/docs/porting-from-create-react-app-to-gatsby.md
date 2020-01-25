@@ -61,7 +61,7 @@ The following sections explain the above steps as well as other changes that you
 
 To show some of the differences of how your project structure could differ by moving to Gatsby, a default Create React App project looks something like this:
 
-```
+```text
   my-create-react-app
   ├── .git
   ├── .gitignore
@@ -121,6 +121,7 @@ Some common globals that would need to be protected are:
 
 - `window`
 - `localStorage`
+- `sessionStorage`
 - `navigator`
 - `document`
 
@@ -208,7 +209,7 @@ export default Foo
 
 If these browser globals aren't protected correctly, you'll see a webpack error like the one below when building your site:
 
-```
+```text
 WebpackError: ReferenceError: window is not defined
 ```
 

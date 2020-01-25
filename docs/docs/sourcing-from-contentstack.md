@@ -26,7 +26,7 @@ This downloads the required files and initializes the site.
 
 Create copies of the `env.sample` file for `.env.development`, `.env.production` and any other environment, then add the following stack details to each respective file:
 
-```
+```text
 CONTENTSTACK_API_KEY='apikey'
 CONTENTSTACK_ACCESS_TOKEN='deliverytoken'
 CONTENTSTACK_ENVIRONMENT='development' # or production, staging, etc.
@@ -55,7 +55,7 @@ After running this, you will be able to view your site at <http://localhost:8000
 
 Now, you will able to query Contentstack data. Try the query below to get the 'Home' content type data:
 
-```
+```graphql
 {
   contentstackHome {
     title
@@ -68,9 +68,9 @@ Now, you will able to query Contentstack data. Try the query below to get the 'H
 
 Go to the pages folder inside the src folder, and create a home.js file. Add the code below to it.
 
-```
-import React from 'react';
-import { graphql } from 'gatsby';
+```jsx
+import React from "react"
+import { graphql } from "gatsby"
 
 export default ({ data }) => {
   return (

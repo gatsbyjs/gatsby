@@ -165,6 +165,7 @@ exports.sourceNodes = async (
     defaultLocale,
     locales,
     space,
+    useNameForId: pluginConfig.get(`useNameForId`),
   })
 
   const newOrUpdatedEntries = []
@@ -208,6 +209,7 @@ exports.sourceNodes = async (
       defaultLocale,
       locales,
       space,
+      useNameForId: pluginConfig.get(`useNameForId`),
     })
   })
 

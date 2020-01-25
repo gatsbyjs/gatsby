@@ -3,8 +3,6 @@ title: Docs and Website Components
 tableOfContentsDepth: 2
 ---
 
-import LayerModel from "../../www/src/components/layer-model"
-import HorizontalNavList from "../../www/src/components/horizontal-nav-list"
 import Breadcrumb from "../../www/src/components/docs-breadcrumb"
 import { itemListContributing } from "../../www/src/utils/sidebar/item-list"
 import TableOfContents from "../../www/src/components/docs-table-of-contents"
@@ -130,14 +128,6 @@ Rendered, the component looks like this:
   To improve is to change, so to be perfect is to have changed often.
 </Pullquote>
 
----
-
-## Other available components
-
-Other less commonly used components aren't globally available, but can imported at the top of a Markdown file and used in other docs.
-
----
-
 ### Layer Model
 
 The `<LayerModel />` was made to help explain concepts of how Gatsby works at a high level. It conceptually breaks Gatsby into different layers and shows how data is pulled, aggregated, and eventually rendered as an app. It's used on docs pages to help explain how Gatsby works at different levels.
@@ -168,7 +158,7 @@ When used, it looks like this:
 
 ### Horizontal Navigation List
 
-The `<HorizontalNavList />` was made for the [Glossary](/docs/glossary/), and renders a list of links to alphabetical subheadings on the page in a horizontal format. Because of its specific use case, it isn't made globally available but can be imported if needed on other pages.
+The `<HorizontalNavList />` was made for the [Glossary](/docs/glossary/), and renders a list of links to alphabetical subheadings on the page in a horizontal format.
 
 #### Usage
 
@@ -212,6 +202,14 @@ items={[
 slug={props.slug}
 />
 
+---
+
+## Other available components
+
+Other less commonly used components aren't globally available, but can imported at the top of a Markdown file and used in other docs.
+
+---
+
 ### Breadcrumb
 
 The `<Breadcrumb />` component is used in layout files to display the hierarchy of pages a user is currently browsing on.
@@ -224,7 +222,7 @@ The Breadcrumb component takes one prop:
 - `itemList` - an object comprised of the docs hierarchical structure
 
 <!-- prettier-ignore -->
-```javascript
+```jsx
 import Breadcrumb from "../../www/src/components/docs-breadcrumb"
 
 <Breadcrumb location={props.location} itemList={itemList} />
@@ -261,7 +259,7 @@ The component takes 2 props:
 - `page` - an object with data passed in from the sites `gatsby-node.js` that contains information from the MDX plugin about the structure of headings
 
 <!-- prettier-ignore -->
-```javascript
+```jsx
 import TableOfContents from "../../www/src/components/docs-table-of-contents"
 
 <TableOfContents location={props.location} page={page} />
@@ -273,7 +271,7 @@ The Table of Contents component also has some optional configurations that can b
 
 In docs where the Table of Contents isn't required and should be disabled, a key in the frontmatter called `disableTableOfContents` can be set to `true` like this:
 
-```md
+```markdown
 ---
 title: Glossary
 disableTableOfContents: true
@@ -284,7 +282,7 @@ When you're new to Gatsby there can be a lot of words to learn...
 
 In other docs where the Table of Contents is extremely long it can make sense to only show headers from the doc up to a certain level, rather than all subheadings. You can set the `tableOfContentsDepth` key to a number that will limit the subheadings shown in the table of contents to that "depth". If it is set to 2, `<h2>`/`##`, and `<h3>`/`###` headers will be listed, if set to 3, `<h2>`/`##`, `<h3>`/`###`, and `<h4>`/`####` will all be shown. It is set like this:
 
-```md
+```markdown
 ---
 title: Glossary
 tableOfContentsDepth: 2
