@@ -23,4 +23,4 @@ const persistPreviouslyCachedImages = async () => {
   }
 }
 
-export default persistPreviouslyCachedImages
+export { persistPreviouslyCachedImages }

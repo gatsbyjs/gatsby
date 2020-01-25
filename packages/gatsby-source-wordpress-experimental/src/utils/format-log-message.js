@@ -1,7 +1,7 @@
 import chalk from "chalk"
 import store from "~/store"
 
-export default (input, { useVerboseStyle = false } = {}) => {
+const formatLogMessage = (input, { useVerboseStyle = false } = {}) => {
   const { verbose } = store.getState().gatsbyApi.pluginOptions
 
   let message
@@ -15,3 +15,5 @@ export default (input, { useVerboseStyle = false } = {}) => {
     ? `${chalk.white.bgBlue(` gatsby-source-wordpress `)} ${message}`
     : `[gatsby-source-wordpress] ${message}`
 }
+
+export { formatLogMessage }

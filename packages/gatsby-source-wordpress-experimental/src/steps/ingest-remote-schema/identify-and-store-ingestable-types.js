@@ -107,4 +107,4 @@ const identifyAndStoreIngestableFieldsAndTypes = async () => {
   })
 }
 
-export default identifyAndStoreIngestableFieldsAndTypes
+export { identifyAndStoreIngestableFieldsAndTypes }

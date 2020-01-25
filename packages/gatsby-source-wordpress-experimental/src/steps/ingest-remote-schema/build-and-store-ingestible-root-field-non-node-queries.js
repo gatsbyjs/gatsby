@@ -59,4 +59,4 @@ const buildNonNodeQueries = async () => {
   store.dispatch.remoteSchema.setState({ nonNodeQuery })
 }
 
-export default buildNonNodeQueries
+export { buildNonNodeQueries }

@@ -20,4 +20,4 @@ const setGatsbyApiToState = (helpers, pluginOptions) => {
   }
 }
 
-export default setGatsbyApiToState
+export { setGatsbyApiToState }

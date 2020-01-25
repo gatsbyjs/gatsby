@@ -1,6 +1,6 @@
 import { CREATED_NODE_IDS } from "~/constants"
 import { fetchAndRunWpActions } from "./wp-actions"
-import formatLogMessage from "~/utils/format-log-message"
+import { formatLogMessage } from "~/utils/format-log-message"
 import { getGatsbyApi } from "~/utils/get-gatsby-api"
 
 /**

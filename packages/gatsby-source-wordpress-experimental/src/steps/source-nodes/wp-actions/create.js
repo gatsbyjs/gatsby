@@ -1,6 +1,6 @@
 import fetchGraphql from "~/utils/fetch-graphql"
 import store from "~/store"
-import formatLogMessage from "~/utils/format-log-message"
+import { formatLogMessage } from "~/utils/format-log-message"
 import { buildTypeName } from "~/steps/create-schema-customization/helpers"
 
 const wpActionCREATE = async ({

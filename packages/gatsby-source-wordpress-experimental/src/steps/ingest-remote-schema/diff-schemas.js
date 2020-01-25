@@ -28,4 +28,4 @@ const checkIfSchemaHasChanged = async () => {
   return schemaWasChanged
 }
 
-export default checkIfSchemaHasChanged
+export { checkIfSchemaHasChanged }

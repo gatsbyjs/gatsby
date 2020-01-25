@@ -1,5 +1,5 @@
 import store from "~/store"
-import formatLogMessage from "~/utils/format-log-message"
+import { formatLogMessage } from "~/utils/format-log-message"
 import fetchGraphql from "~/utils/fetch-graphql"
 import { introspectionQuery } from "~/utils/graphql-queries"
 
@@ -32,4 +32,4 @@ const introspectAndStoreRemoteSchema = async () => {
   store.dispatch.remoteSchema.setState({ introspectionData })
 }
 
-export default introspectAndStoreRemoteSchema
+export { introspectAndStoreRemoteSchema }

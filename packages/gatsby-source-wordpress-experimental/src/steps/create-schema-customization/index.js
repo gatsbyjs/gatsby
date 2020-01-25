@@ -8,7 +8,7 @@ import buildType from "./build-types"
 /**
  * createSchemaCustomization
  */
-export default async ({ actions, schema }) => {
+const createSchemaCustomization = async ({ actions, schema }) => {
   const state = store.getState()
 
   const {
@@ -78,3 +78,5 @@ export default async ({ actions, schema }) => {
 
   actions.createTypes(typeDefs)
 }
+
+export { createSchemaCustomization }

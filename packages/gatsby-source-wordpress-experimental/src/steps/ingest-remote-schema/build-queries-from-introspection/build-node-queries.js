@@ -3,14 +3,14 @@ import { getGatsbyApi } from "~/utils/get-gatsby-api"
 import generateNodeQueriesFromIngestibleFields from "~/steps/ingest-remote-schema/build-queries-from-introspection/generate-queries-from-ingestable-types"
 
 /**
- * buildNodeListQueries
+ * buildNodeQueries
  *
  * Uses plugin options to introspect the remote GraphQL
  * source, run cache logic, and generate GQL query strings/info
  *
  * @returns {Object} GraphQL query info including gql query strings
  */
-const buildNodeListQueries = async () => {
+const buildNodeQueries = async () => {
   const { pluginOptions, helpers } = getGatsbyApi()
 
   const QUERY_CACHE_KEY = `${pluginOptions.url}--introspection-node-queries`
@@ -35,4 +35,4 @@ const buildNodeListQueries = async () => {
   return nodeQueries
 }
 
-export default buildNodeListQueries
+export { buildNodeQueries }

@@ -1,6 +1,6 @@
 import { createGatsbyNodesFromWPGQLContentNodes } from "./create-nodes"
 import paginatedWpNodeFetch from "./paginated-wp-node-fetch"
-import formatLogMessage from "~/utils/format-log-message"
+import { formatLogMessage } from "~/utils/format-log-message"
 import { CREATED_NODE_IDS } from "~/constants"
 import store from "~/store"
 import { getGatsbyApi } from "~/utils/get-gatsby-api"

@@ -19,4 +19,4 @@ const ensurePluginRequirementsAreMet = async () => {
   await isWpGatsby()
 }
 
-export default ensurePluginRequirementsAreMet
+export { ensurePluginRequirementsAreMet }
