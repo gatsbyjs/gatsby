@@ -9521,4 +9521,14 @@
     - Agency
   built_by: Jellypepper
   built_by_url: https://jellypepper.com/
+- title: Miyamado Jinja
+  main_url: https://www.miyamadojinja.com
+  url: https://www.miyamadojinja.com
+  description: >
+    Miyamado Jinja is a Japanses Shinto Shrine in Yokkaichi, Mie, Japan.
+  categories:
+    - Nonprofit
+    - Travel
+  built_by: mnishiguchi
+  built_by_url: https://mnishiguchi.com
   featured: false
