@@ -9,7 +9,7 @@ Learn what a Headless CMS is, how it differs from traditional content management
 
 A _headless content management system_ or _headless CMS_, is a CMS in which the content is separated from its presentation. Content management systems such as WordPress and Drupal store content in a database, and use a collection of HTML-based template files to manage how that content gets presented to visitors.
 
-Headless content mananagement systems, on the other hand, return structured data from an [API](/docs/glossary/#api). Rather than merging templates and content to create HTML, a headless CMS returns JSON or unstyled XML. Content creators still use an editing interface to add content to a headless CMS, but the [backend](/docs/glossary#backend) management of the site's content is [_decoupled_](/docs/glossary#decoupled) from the [frontend](/docs/glossary#frontend) that displays it.
+Headless content management systems, on the other hand, return structured data from an [API](/docs/glossary/#api). Rather than merging templates and content to create HTML, a headless CMS returns JSON or unstyled XML. Content creators still use an editing interface to add content to a headless CMS, but the [backend](/docs/glossary#backend) management of the site's content is [_decoupled_](/docs/glossary#decoupled) from the [frontend](/docs/glossary#frontend) that displays it.
 
 When your content is available as structured data, it's available to any client or application that can consume that data whether a [JAMStack](/docs/glossary/jamstack) application, or a mobile device. You can use a headless CMS to provide [JSON content source](/docs/sourcing-content-from-json-or-yaml/) for your Gatsby site and your other content channels.
 
