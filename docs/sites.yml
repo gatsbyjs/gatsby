@@ -9511,3 +9511,14 @@
   built_by: Qri, Inc.
   built_by_url: https://qri.io
   featured: false
+- title: Jellypepper
+  main_url: https://jellypepper.com/
+  url: https://jellypepper.com/
+  description: >
+    Award-winning creative studio for disrupters. We design and build beautiful brands, apps, websites and videos for startups and tech companies.
+  categories:
+    - Portfolio
+    - Agency
+  built_by: Jellypepper
+  built_by_url: https://jellypepper.com/
+  featured: false
