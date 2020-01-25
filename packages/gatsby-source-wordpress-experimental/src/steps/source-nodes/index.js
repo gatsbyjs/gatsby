@@ -1,10 +1,10 @@
-import fetchAndApplyNodeUpdates from "./fetch-node-updates"
-import { fetchAndCreateAllNodes } from "./fetch-nodes"
+import fetchAndApplyNodeUpdates from "./update-nodes/fetch-node-updates"
+import { fetchAndCreateAllNodes } from "./fetch-nodes/fetch-nodes"
 
 import { LAST_COMPLETED_SOURCE_TIME } from "~/constants"
 import { createContentTypeNodes } from "~/steps/get-content-types"
 import store from "~/store"
-import fetchAndCreateNonNodeRootFields from "./fetch-and-create-non-node-root-fields"
+import fetchAndCreateNonNodeRootFields from "./create-nodes/fetch-and-create-non-node-root-fields"
 
 const sourceNodes = async helpers => {
   const { cache } = helpers

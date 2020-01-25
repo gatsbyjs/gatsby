@@ -1,21 +1,8 @@
-import { setGatsbyApiToState } from "~/steps/set-gatsby-api-to-state"
-import { ensurePluginRequirementsAreMet } from "~/steps/check-plugin-requirements"
-import { ingestRemoteSchema } from "~/steps/ingest-remote-schema"
-import { persistPreviouslyCachedImages } from "~/steps/persist-cached-images"
-
-import { sourceNodes, createContentTypeNodes } from "~/steps/source-nodes"
-import { createSchemaCustomization } from "~/steps/create-schema-customization"
-import { setImageNodeIdCache } from "~/steps/set-image-node-id-cache"
-import { startPollingForContentUpdates } from "~/steps/source-nodes/content-update-interval"
-
-export {
-  setGatsbyApiToState,
-  ensurePluginRequirementsAreMet,
-  ingestRemoteSchema,
-  persistPreviouslyCachedImages,
-  sourceNodes,
-  createContentTypeNodes,
-  createSchemaCustomization,
-  setImageNodeIdCache,
-  startPollingForContentUpdates,
-}
+export { setGatsbyApiToState } from "~/steps/set-gatsby-api-to-state"
+export { ensurePluginRequirementsAreMet } from "~/steps/check-plugin-requirements"
+export { ingestRemoteSchema } from "~/steps/ingest-remote-schema"
+export { persistPreviouslyCachedImages } from "~/steps/persist-cached-images"
+export { sourceNodes, createContentTypeNodes } from "~/steps/source-nodes"
+export { createSchemaCustomization } from "~/steps/create-schema-customization"
+export { setImageNodeIdCache } from "~/steps/set-image-node-id-cache"
+export { startPollingForContentUpdates } from "~/steps/source-nodes/update-nodes/content-update-interval"

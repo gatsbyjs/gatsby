@@ -1,4 +1,4 @@
-import { createRemoteMediaItemNode } from "~/steps/source-nodes/create-remote-media-item-node"
+import { createRemoteMediaItemNode } from "~/steps/source-nodes/create-nodes/create-remote-media-item-node"
 
 export const objectTypeFilters = [
   {

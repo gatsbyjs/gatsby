@@ -80,4 +80,4 @@ const paginatedWpNodeFetch = async ({
   return allContentNodes
 }
 
-export default paginatedWpNodeFetch
+export { paginatedWpNodeFetch }

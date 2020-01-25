@@ -1,5 +1,5 @@
-import { createGatsbyNodesFromWPGQLContentNodes } from "./create-nodes"
-import paginatedWpNodeFetch from "./paginated-wp-node-fetch"
+import { createGatsbyNodesFromWPGQLContentNodes } from "../create-nodes/create-nodes"
+import { paginatedWpNodeFetch } from "./fetch-nodes-paginated"
 import { formatLogMessage } from "~/utils/format-log-message"
 import { CREATED_NODE_IDS } from "~/constants"
 import store from "~/store"
@@ -130,12 +130,9 @@ export const fetchAndCreateAllNodes = async () => {
 
   //
   // Create Gatsby nodes from WPGQL response
-  const createdNodeIds = await createGatsbyNodesFromWPGQLContentNodes(
-    {
-      wpgqlNodesByContentType,
-    },
-    ...api
-  )
+  const createdNodeIds = await createGatsbyNodesFromWPGQLContentNodes({
+    wpgqlNodesByContentType,
+  })
 
   // save the node id's so we can touch them on the next build
   // so that we don't have to refetch all nodes
