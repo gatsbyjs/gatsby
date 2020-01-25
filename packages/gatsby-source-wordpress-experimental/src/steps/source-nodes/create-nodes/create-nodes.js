@@ -1,5 +1,6 @@
 import execall from "execall"
 import fetchReferencedMediaItemsAndCreateNodes from "../fetch-nodes/fetch-referenced-media-items"
+import urlToPath from "~/utils/url-to-path"
 import { getGatsbyApi } from "~/utils/get-gatsby-api"
 import { buildTypeName } from "~/steps/create-schema-customization/helpers"
 
@@ -20,6 +21,11 @@ export const createGatsbyNodesFromWPGQLContentNodes = async ({
     const wpgqlNodes = wpgqlNodesGroup.allNodesOfContentType
 
     for (const node of wpgqlNodes.values()) {
+      if (node.link) {
+        // create a pathname for the node using the WP permalink
+        node.path = urlToPath(node.link)
+      }
+
       // here we're searching for file strings in our node
       // we use this to download only the media items
       // that are being used in posts
