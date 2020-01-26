@@ -75,8 +75,7 @@ exports.onPreBootstrap = ({ actions, emitter, reporter }, pluginOptions) => {
   // as soon as possible (possibly by moving progress bar handling
   // inside jobs-manager in core)
 
-  // only use emitter if `setJobTypeMetadata` action is not available
-  if (!actions.setJobTypeMetadata && emitter) {
+  if (emitter) {
     // track how many image transformation each job has
     // END_JOB_V2 doesn't contain that information
     // so we store it in <JobContentHash, TransformsCount> map
