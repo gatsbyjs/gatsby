@@ -3,7 +3,7 @@ title: "Why the TypeScript team is using Gatsby for its new website"
 date: 2020-01-23
 author: Orta Therox
 excerpt: "Discover why the TypeScript team uses Gatsby, and what constraints they use to make it work for their team"
-tags: ["typescript", "developer-experience", "story"]
+tags: ["typescript", "developer-experience", "story", "case-studies"]
 ---
 
 ## Why are we using Gatsby for TypeScript's new Website?
