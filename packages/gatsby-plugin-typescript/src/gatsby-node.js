@@ -21,7 +21,7 @@ function onCreateWebpackConfig({
   getConfig,
   loaders,
   stage,
-  reporter
+  reporter,
 }) {
   const jsLoader = loaders.js()
 
