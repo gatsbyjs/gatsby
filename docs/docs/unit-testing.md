@@ -103,7 +103,7 @@ exclude the `gatsby` module.
   and which some components need.
 
 - You need to set `testURL` to a valid URL, because some DOM APIs such as
-  `localStorage` are unhappy with the default (`about:blank`).
+  [`localStorage`](/docs/glossary#LocalStorage) are unhappy with the default (`about:blank`).
 
 > Note: if you're using Jest 23.5.0 or later, `testURL` will default to `http://localhost` so you can skip this setting.
 

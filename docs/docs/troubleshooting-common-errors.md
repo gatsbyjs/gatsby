@@ -205,7 +205,7 @@ For more information on common problems while building your site, refer to the [
 
 ### Error: ReferenceError: window is not defined when running `gatsby build`
 
-You may encounter an error like `Error: ReferenceError: window is not defined` that you didn't see in development if you reference browser globals like `window` or `document` in your code. Because the build is not running in a browser, it will not have access to a browser, which is why objects like `window` will not be defined.
+You may encounter an error like `Error: ReferenceError: window is not defined` that you didn't see in development if you reference browser globals like [`window`](/docs/glossary#Window) or [`document`](/docs/glossary#Document) in your code. Because the build is not running in a browser, it will not have access to a browser, which is why objects like [`window`](/docs/glossary#Window) will not be defined.
 
 Exact steps for fixing this issue can be found on in the Debugging HTML Builds guide in the section on [checking if `window` is defined](/docs/debugging-html-builds/#how-to-check-if-window-is-defined).
 

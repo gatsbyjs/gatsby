@@ -57,9 +57,9 @@ More specific code examples for this pattern are outlined in the [Client-only Ro
 
 ### Protecting code from accessing browser globals during build
 
-Global objects that are accessible in the browser like `localStorage` aren't available while a Gatsby site is building, because the build runs in a Node.js environment.
+Global objects that are accessible in the browser like [`localStorage`](/docs/glossary#LocalStorage) aren't available while a Gatsby site is building, because the build runs in a Node.js environment.
 
-However, some third party services might try and access `localStorage` or the `window` object with internal methods. To keep those snippets from breaking the build, those invocations should be wrapped in checks or `useEffect` hooks to verify that the code is running in the browser and is skipped during the build process:
+However, some third party services might try and access [`localStorage`](/docs/glossary#LocalStorage) or the [`window`](/docs/glossary#Window) object with internal methods. To keep those snippets from breaking the build, those invocations should be wrapped in checks or `useEffect` hooks to verify that the code is running in the browser and is skipped during the build process:
 
 ```javascript
 import app from "firebase/app"

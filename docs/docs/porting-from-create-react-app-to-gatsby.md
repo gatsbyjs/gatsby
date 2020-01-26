@@ -119,11 +119,11 @@ The `gatsby build` command also won't be able to use browser APIs, so some code 
 
 Some common globals that would need to be protected are:
 
-- `window`
-- `localStorage`
-- `sessionStorage`
-- `navigator`
-- `document`
+- [`window`](/docs/glossary#Window)
+- [`localStorage`](/docs/glossary#LocalStorage)
+- [`sessionStorage`](/docs/glossary#SessionStorage)
+- [`navigator`](/docs/glossary#Navigator)
+- [`document`](/docs/glossary#Document)
 
 Additionally, some packages that depend on globals existing (e.g. `react-router-dom`) may need to be [patched](/docs/debugging-html-builds/#fixing-third-party-modules) or migrated to other packages.
 

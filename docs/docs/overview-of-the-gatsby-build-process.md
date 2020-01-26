@@ -19,7 +19,7 @@ A common confusion with the generation of [static](/docs/glossary#static) assets
 
 Processes that happen in a web browser that you click through and interact with can be referred to as a _browser runtime_. JavaScript code can interact with the browser and take advantage of APIs it offers, such as `window.location` to get information from a page's URL, using AJAX to submit a form, or injecting markup dynamically into the [DOM](/docs/glossary#dom). [Gatsby creates a JavaScript runtime](/docs/production-app) that takes over in the browser once the initial HTML has loaded.
 
-_Build time_, in contrast, refers to the process of using a server process to compile the site into files that can be delivered to a web browser later, so Browser APIs like `window` aren't available at that time.
+_Build time_, in contrast, refers to the process of using a server process to compile the site into files that can be delivered to a web browser later, so Browser APIs like [`window`](/docs/glossary#Window) aren't available at that time.
 
 The `gatsby develop` command doesn't perform some of the production build steps that the `gatsby build` command does. Instead, it starts up a development server that you can use to preview your site in the browser -- like a runtime. When you run `gatsby build` (build time) there won't be a browser available, so your site needs to be capable of protecting calls to browser based APIs.
 

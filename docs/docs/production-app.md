@@ -72,7 +72,7 @@ This is the entry point to webpack that outputs `app-[contenthash].js` bundle. I
 
 ### First load
 
-To show how `production-app` works, let's imagine that you've just refreshed the browser on your site's `/blog/2` page. The HTML loads immediately, painting your page quickly. It includes a CDATA section which injects page information into the `window` object so it's available in your JavaScript code (inserted during [Page HTML Generation](/docs/html-generation/#6-inject-page-info-to-cdata)).
+To show how `production-app` works, let's imagine that you've just refreshed the browser on your site's `/blog/2` page. The HTML loads immediately, painting your page quickly. It includes a CDATA section which injects page information into the [`window`](/docs/glossary#Window) object so it's available in your JavaScript code (inserted during [Page HTML Generation](/docs/html-generation/#6-inject-page-info-to-cdata)).
 
 ```html
 /*
@@ -117,7 +117,7 @@ This occurs in [loader.js](https://github.com/gatsbyjs/gatsby/blob/master/packag
 
 ### `window` variables
 
-Gatsby attaches global state to the `window` object via `window.___somevar` variables so they can be used by plugins (though this is technically unsupported). Here are a few:
+Gatsby attaches global state to the [`window`](/docs/glossary#Window) object via `window.___somevar` variables so they can be used by plugins (though this is technically unsupported). Here are a few:
 
 ##### `___loader`
 

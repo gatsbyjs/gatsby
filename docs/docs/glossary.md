@@ -52,7 +52,7 @@ Gatsby has two command line interfaces. One, [`gatsby`](/docs/gatsby-cli/), for 
 
 ### Client-side
 
-Client-side refers to operations that are performed by the user's browser in a [client–server relationship](https://en.wikipedia.org/wiki/Client%E2%80%93server_model) in a computer network. In Gatsby, this is important when [working with packages](/docs/using-client-side-only-packages/) that rely on objects in the [browser DOM](#dom), such as `window` or `navigator`. See also: [server-side](#server-side), [frontend](#frontend), and [backend](#backend).
+Client-side refers to operations that are performed by the user's browser in a [client–server relationship](https://en.wikipedia.org/wiki/Client%E2%80%93server_model) in a computer network. In Gatsby, this is important when [working with packages](/docs/using-client-side-only-packages/) that rely on objects in the [browser DOM](#dom), such as [`window`](#Window) or [`navigator`](#Navigator). See also: [server-side](#server-side), [frontend](#frontend), and [backend](#backend).
 
 ### CMS
 
@@ -166,7 +166,7 @@ A feature in use when you run `gatsby develop` that live updates your site on sa
 
 ### Hydration
 
-Once a site has been [built](#build) by Gatsby and loaded in a web browser, [client-side](#client-side) JavaScript assets will download and turn the site into a full React application that can manipulate the [DOM](#dom). This process is often called re-hydration as it runs some of the same JavaScript code used to generate Gatsby pages, but this time with browser DOM APIs like `window` available.
+Once a site has been [built](#build) by Gatsby and loaded in a web browser, [client-side](#client-side) JavaScript assets will download and turn the site into a full React application that can manipulate the [DOM](#dom). This process is often called re-hydration as it runs some of the same JavaScript code used to generate Gatsby pages, but this time with browser DOM APIs like [`window`](#Window) available.
 
 ## I
 
@@ -344,7 +344,7 @@ A UI refers to a User Interface. In the field of human-computer interaction, a U
 
 ## W
 
-### Window 
+### Window
 
 A window object represents an open window in a browser. The window object is available in javascript of all browsers.
 
