@@ -65,7 +65,7 @@ It's a few more steps then `mv ../tsconfig/en.html en/tsconfig.html` - yep, but 
 
 ### Types For Tools
 
-The TypeScript support in Gatsby is good, and improving as they start to port their own codebase to TypeScript. When I first started, I shipped [a few `d.ts`](https://github.com/gatsbyjs/gatsby/pull/13619) file improvements and welcome ANY pings from their team with questions when it changes. In the last 2-3 months, I've been running in a fully typed codebase which has been a breeze.
+The TypeScript support in Gatsby is good, and improving as they start to port their own codebase to TypeScript. When I first started, I shipped [a few `d.ts`](https://github.com/gatsbyjs/gatsby/pull/13619) file improvements and welcome any pings from their team with questions when it changes. In the last 2-3 months, I've been running in a fully typed codebase which has been a breeze.
 
 If you're familiar with React, and clicked through into the [TSConfig Template](https://github.com/microsoft/TypeScript-Website/blob/0afd526969d98c321787ab1962f72f9361ab54bd/packages/typescriptlang-org/src/templates/tsconfigReference.tsx#L9) - you might have been a bit surprised by the somewhat unorthodox usage of React.
 
@@ -75,7 +75,7 @@ My goal is that the TypeScript v2 website can be understood with the least amoun
 
 One way to do that, is to separate the generation of HTML + CSS from any additional JavaScript which happens at runtime. This means almost every component in the site conforms to this general pattern:
 
-```tsx
+```ts
 // JS imports
 import React, { useEffect } from "react"
 import { Layout } from "../components/layout"
