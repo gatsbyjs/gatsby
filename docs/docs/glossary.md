@@ -102,6 +102,10 @@ The process of [building](#build) your website or app and uploading onto a [host
 
 The [environment](#environment) when you're developing your code. It's accessed through the [CLI](#cli) using `gatsby develop`, and provides extra error reporting and things to help you debug before building for [production](#production-environment).
 
+### Document
+
+A Document Object represents any web page loaded in the browser and serves as an entry point into the web page's content
+
 ### DOM
 
 The Document Object Model, commonly referred to as "the DOM", is a standard browser API that connects web pages to scripts or programming languages by representing the structure of an HTML document in memory. Developers commonly interact with the DOM through [HTML](#html) markup (written in [JSX](#jsx) in Gatsby), as well as both [React](https://reactjs.org/docs/react-dom.html) and [vanilla JavaScript](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction#DOM_and_JavaScript) code. Another important aspect of utilizing the DOM to its full potential is writing [accessible](#accessibility) HTML markup to expose a page's structure to assistive technology.
@@ -192,6 +196,10 @@ JSX is an extension to JavaScript that allows developers to write HTML and custo
 
 Linting is the process of running a program that will analyze code for potential errors. The Gatsby project uses [prettier](https://prettier.io/) to identify and fix common style issues. Another example of a linter commonly used in React projects is [eslint-jsx-plugin-a11y](https://github.com/evcohen/eslint-plugin-jsx-a11y), which checks for common [accessibility](#accessibility) issues in development.
 
+### LocalStorage
+
+LocalStorage is the storage that to save key/value pairs in a web browser. The localStorage object stores data with no expiration date. The data will not be deleted when the browser is closed, and will be available the next day, week, or year.
+
 ## M
 
 ### MDX
@@ -203,6 +211,10 @@ Extends [Markdown](#markdown) to support [React](#react) [components](#component
 A way of writing HTML content with plain text, using special characters to denote content types such as hash symbols for [headings](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements), and underscores and asterisks for text emphasis.
 
 ## N
+
+### Navigator
+
+A Navigator object represents information about the browser. You can get the browser's language or user-agent using the Navigator object.
 
 ### NPM
 
@@ -284,6 +296,10 @@ An exact representation of how data is stored in a system, such as tables and fi
 
 The server-side part of the [client-server relationship](https://en.wikipedia.org/wiki/Client%E2%80%93server_model) refers to operations performed by a computer program which manages access to a centralized resource or service in a computer network. Gatsby uses the server-side technology [Node.js](#nodejs) to compile pages at build time, as opposed to serving them at [browser runtime](#runtime) with [client-side](#client-side) JavaScript. See also: [frontend](#frontend) and [backend](#backend).
 
+### SessionStorage
+
+SessionStorage is the storage that to save key/value pairs in a web browser. The sessionStorage object stores data for only one session (the data is deleted when the browser tab is closed).
+
 ### Source Code
 
 Source code is your code that lives in `/src/` folder and makes up the unique aspects of your website or app. It is made up of [JavaScript](#javascript) and sometimes [CSS](#css) and other files.
@@ -327,6 +343,10 @@ A UI refers to a User Interface. In the field of human-computer interaction, a U
 ## V
 
 ## W
+
+### Window 
+
+A window object represents an open window in a browser. The window object is available in javascript of all browsers.
 
 ### [webpack](/docs/glossary/webpack)
 
