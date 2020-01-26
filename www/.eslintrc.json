@@ -1,5 +1,19 @@
 {
   "globals": {
-    "graphql": true
+    "graphql": false
+  },
+  "rules": {
+    "no-restricted-imports": [
+      "error",
+      {
+        "paths": [
+          {
+            "name": "gatsby",
+            "importNames": ["Link"],
+            "message": "Please use Link from /localized-link instead."
+          }
+        ]
+      }
+    ]
   }
 }
