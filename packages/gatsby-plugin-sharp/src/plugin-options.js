@@ -56,7 +56,7 @@ exports.createTransformObject = args => {
     webpQuality: args.webpQuality,
     jpegProgressive: args.jpegProgressive || generalArgs.jpegProgressive,
     grayscale: args.grayscale || generalArgs.grayscale,
-    rotate: !!args.rotate,
+    rotate: args.rotate,
     trim: !!args.trim,
     duotone: args.duotone ? args.duotone : null,
     fit: args.fit,
