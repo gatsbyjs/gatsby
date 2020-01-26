@@ -37,9 +37,11 @@ function onCreateWebpackConfig({ actions, getConfig, loaders, stage }) {
   if (stage === `develop`) {
     let ts;
     try {
-      ts = require.resolve("typescript");
+      ts = require.resolve(`typescript`)
     } catch (e) {
-      console.warn("`typescript` is not installed. Builtin ESLint won't be working on typescript files.");
+      console.warn(
+        `"typescript" is not installed. Builtin ESLint won't be working on typescript files.`
+      )
     }
 
     if (ts) {
