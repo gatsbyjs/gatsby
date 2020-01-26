@@ -35,7 +35,7 @@ function onCreateWebpackConfig({ actions, getConfig, loaders, stage }) {
   })
 
   if (stage === `develop`) {
-    let ts;
+    let ts
     try {
       ts = require.resolve(`typescript`)
     } catch (e) {
@@ -64,7 +64,6 @@ function onCreateWebpackConfig({ actions, getConfig, loaders, stage }) {
         })
       }
     }
-    
   }
 }
 
