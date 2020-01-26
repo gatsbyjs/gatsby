@@ -72,12 +72,14 @@ apiRunnerAsync(`onClientEntry`).then(() => {
                   id="gatsby-focus-wrapper"
                 >
                   <RouteHandler
-                    path={encodeURI(
+                    path={
                       pageResources.page.path === `/404.html`
                         ? stripPrefix(location.pathname, __BASE_PATH__)
-                        : pageResources.page.matchPath ||
-                            pageResources.page.path
-                    )}
+                        : encodeURI(
+                            pageResources.page.matchPath ||
+                              pageResources.page.path
+                          )
+                    }
                     {...this.props}
                     location={location}
                     pageResources={pageResources}
@@ -140,7 +142,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       }
     ).pop()
 
-    let NewRoot = () => WrappedRoot
+    const NewRoot = () => WrappedRoot
 
     const renderer = apiRunner(
       `replaceHydrateFunction`,

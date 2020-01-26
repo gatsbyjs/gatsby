@@ -143,22 +143,22 @@ const options = {
       // Use cacheFirst since these don't need to be revalidated (same RegExp
       // and same reason as above)
       urlPattern: /(\.js$|\.css$|static\/)/,
-      handler: `CacheFirst`,
+      handler: `cacheFirst`,
     },
     {
       // page-data.json files are not content hashed
       urlPattern: /^https?:.*\page-data\/.*\/page-data\.json/,
-      handler: `NetworkFirst`,
+      handler: `networkFirst`,
     },
     {
       // Add runtime caching of various other page resources
       urlPattern: /^https?:.*\.(png|jpg|jpeg|webp|svg|gif|tiff|js|woff|woff2|json|css)$/,
-      handler: `StaleWhileRevalidate`,
+      handler: `staleWhileRevalidate`,
     },
     {
       // Google Fonts CSS (doesn't end in .css so we need to specify it)
       urlPattern: /^https?:\/\/fonts\.googleapis\.com\/css/,
-      handler: `StaleWhileRevalidate`,
+      handler: `staleWhileRevalidate`,
     },
   ],
   skipWaiting: true,
@@ -197,7 +197,15 @@ Gatsby offers great SEO capabilities and that is no different with `gatsby-plugi
 
 To see the HTML data that crawlers will receive, run this in your terminal:
 
-```bash
+**on Windows (using powershell):**
+
+```shell
+Invoke-WebRequest https://www.yourdomain.tld | Select -ExpandProperty Content
+```
+
+**on Mac OS/Linux:**
+
+```shell
 curl https://www.yourdomain.tld
 ```
 

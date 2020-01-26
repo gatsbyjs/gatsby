@@ -28,7 +28,7 @@ In these intermediate tutorials, you'll learn how to pull data from almost anywh
 
 Gatsby themes abstract all of your default configuration (shared functionality, data sourcing, design) out of your site and into an installable package.
 
-This means that the configuration and functionality isn’t directly written into your project, but rather versioned, centrally managed, and installed as a dependency. You can seamlessly update a theme, compose themes together, and even swap out one compatible theme for another.
+This means that the configuration and functionality aren’t directly written into your project, but rather versioned, centrally managed, and installed as a dependency. You can seamlessly update a theme, compose themes together, and even swap out one compatible theme for another.
 
 Learn more about using and building themes with the [Gatsby theme tutorials](/tutorial/theme-tutorials/).
 

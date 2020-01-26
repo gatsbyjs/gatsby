@@ -65,7 +65,7 @@ gradients: {
 
 You can access theme values with a function which I did in this case to be able to use my already defined colors in the gradients. So why did I set up the gradients variants? I wanted to use a **single** property in my "Shapes" component to define the color. I didn't just pass in the value in the component itself like `` backgroundImage:t=>`linear-gradient(135deg,${t.colors[colorProp][8]},${t.colors[colorProp][6]})` `` because then every shape would have had the same angle and the same spacing (value 8 and 6 here). Some colors need other values to look right so variants was the only logical choice here. The usage looks something like this:
 
-```js
+```jsx
 const Circle = ({ color, className }) => (
   <div
     sx={{
@@ -82,7 +82,7 @@ const Circle = ({ color, className }) => (
 
 While the shapes (circle, donut, grid) look really nice on bigger displays, for mobile and tablet views their initial size and position needs to be adjusted. I'm still a fan of "form follows function" so they shouldn't get in the way when reading things. When looking at the [source code](https://github.com/LekoArts/gatsby-themes/blob/569722297e73d05e0063e0333c284741c174cc2f/www/src/components/hero.tsx) for the hero section you'll see that it's very intuitive to define those properties:
 
-```js
+```jsx
 <Circle
   size="210px"
   color="orange"
@@ -97,31 +97,32 @@ I highly recommend using the breakpoint syntax and reading the [documentation](h
 So far, so normal you'd say. But I had a cool idea to solve my problem of positioning shapes around my theme entries which I collect in a `.yaml` file (see the [source file](https://github.com/LekoArts/gatsby-themes/blob/master/www/data/themes.yaml)). Just define the shapes in the respective theme entry! YAML is a great format for that as it makes it possible (together with the Gatsby transformer) to create arrays and array of objects. The shapes entry looks like this:
 
 ```yaml
-shapes: [
-  {
-    type: "circle",
-    color: "green",
-    size: ["200px", "300px"],
-    xOffset: ["-140px", "-120px"],
-    yOffset: ["-70px"],
-    opacity: 0.5,
-  },
-  {
-    type: "donut",
-    color: "teal",
-    size: ["25px", "100px"],
-    xOffset: ["50px"],
-    yOffset: ["-60px"],
-    opacity: 1,
-  },
-]
+shapes:
+  [
+    {
+      type: "circle",
+      color: "green",
+      size: ["200px", "300px"],
+      xOffset: ["-140px", "-120px"],
+      yOffset: ["-70px"],
+      opacity: 0.5,
+    },
+    {
+      type: "donut",
+      color: "teal",
+      size: ["25px", "100px"],
+      xOffset: ["50px"],
+      yOffset: ["-60px"],
+      opacity: 1,
+    },
+  ]
 ```
 
 These are all the information that my shape components need to render the desired output. I didn't use _left_ and _right_ here as the shapes should always face the outside (on the inside it could overlap the text). As you can see the array / breakpoint notation for position and size was used — I think that's just cool 😎
 
 To give you an idea how I then added this functionality to the listing here's an excerpt of the relevant file:
 
-```js:title=src/components/listing.tsx
+```jsx:title=src/components/listing.tsx
 <Container sx={{ py: 4 }}>
   {themes.map((theme, index) => {
     const isEven = index % 2 === 0

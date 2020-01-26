@@ -33,32 +33,32 @@ Quickly get started using the Gatsby blog theme, and notes theme, together! This
 
     Your site is now running at `http://localhost:8000`!
 
-    To get started, check out the guide to [getting started with using multiple themes](http://gatsbyjs.org/docs/themes/using-a-gatsby-theme), or the [general themes docs](http://gatsbyjs.org/docs/themes).
+    To get started, check out the guide to [getting started with using multiple themes](https://gatsbyjs.org/docs/themes/using-a-gatsby-theme), or the [general themes docs](https://gatsbyjs.org/docs/themes).
 
 ## 🧐 What's inside?
 
 Here are the top-level files and directories you'll see in a site created using this theme starter.
 
-```
+```text
 gatsby-starter-theme
 ├── content
-│ ├── assets
-│ │ └── avatar.jpg
-│ ├── notes
-│ │ ├── example-dir
-│ │ │ └── hi.mdx
-│ │ └── hello.mdx
-│ └── posts
-│ ├── hello-world.mdx
-│ ├── my-second-post.mdx
-│ └── new-beginnings.mdx
+│   ├── assets
+│   │   └── avatar.jpg
+│   ├── notes
+│   │   ├── example-dir
+│   │   │   └── hi.mdx
+│   │   └── hello.mdx
+│   └── posts
+│       ├── hello-world.mdx
+│       ├── my-second-post.mdx
+│       └── new-beginnings.mdx
 ├── src
-│ ├── gatsby-theme-blog
-│ │ └── components
-│ │ └── header.js
-│ └── gatsby-theme-notes
-│ └── components
-│ └── layout.js
+│   ├── gatsby-theme-blog
+│   │   └── components
+│   │       └── header.js
+│   └── gatsby-theme-notes
+│       └── components
+│           └── layout.js
 ├── .gitignore
 ├── .prettierrc
 ├── gatsby-config.js
@@ -68,7 +68,7 @@ gatsby-starter-theme
 
 1.  **`/content`**: A content folder holding assets that the blog and notes themes expect to exist. Check out the README for each theme to learn more about the demo content.
 
-2.  **`/src`**: You will probably want to customize your site to personalize it. The files under `/src/gatsby-theme-blog` and `/src/gatsby-theme-notes` _shadow_, or override the files of the same name in their respective packages. To learn more about this, check out the [guide to getting started with using the blog theme starter](http://gatsbyjs.org/docs/themes/using-a-gatsby-theme).
+2.  **`/src`**: You will probably want to customize your site to personalize it. The files under `/src/gatsby-theme-blog` and `/src/gatsby-theme-notes` _shadow_, or override the files of the same name in their respective packages. To learn more about this, check out the [guide to getting started with using the blog theme starter](https://gatsbyjs.org/docs/themes/using-a-gatsby-theme).
 
 3.  **`.gitignore`**: This file tells git which files it should not track / not maintain a version history for.
 

@@ -4,7 +4,7 @@
   </a>
 </p>
 <h1 align="center">
-  The Gatsby blog theme
+  The Gatsby Blog theme
 </h1>
 
 A Gatsby theme for creating a blog.
@@ -81,3 +81,18 @@ module.exports = {
   },
 }
 ```
+
+### Blog Post Fields
+
+The following are the defined blog post fields based on the node interface in the schema
+
+| Field    | Type     |
+| -------- | -------- |
+| id       | String   |
+| title    | String   |
+| body     | String   |
+| slug     | String   |
+| date     | Date     |
+| tags     | String[] |
+| keywords | String[] |
+| excerpt  | String   |

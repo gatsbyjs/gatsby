@@ -27,14 +27,12 @@ const containerStyles = {
   //
   // could be much cleaner/clearer, please feel free to improve 🙏
   maxWidth: t =>
-    `calc(${t.sizes.mainContentWidth.withSidebar} + ${t.sizes.tocWidth} + ${
-      t.space[9]
-    } + ${t.space[9]} + ${t.space[9]})`,
+    `calc(${t.sizes.mainContentWidth.withSidebar} + ${t.sizes.tocWidth} + ${t.space[9]} + ${t.space[9]} + ${t.space[9]})`,
   px: 9,
 }
 
-const getDocsData = location => {
-  const [urlSegment] = location.pathname.split(`/`).slice(1)
+const getDocsData = slug => {
+  const [urlSegment] = slug.split(`/`).slice(1)
   const itemListLookup = {
     docs: itemListDocs,
     contributing: itemListContributing,
@@ -46,7 +44,7 @@ const getDocsData = location => {
 
 function DocsTemplate({ data, location, pageContext: { next, prev } }) {
   const page = data.mdx
-  const [urlSegment, itemList] = getDocsData(location)
+  const [urlSegment, itemList] = getDocsData(page.fields.slug)
   const toc =
     !page.frontmatter.disableTableOfContents && page.tableOfContents.items
 
@@ -64,6 +62,7 @@ function DocsTemplate({ data, location, pageContext: { next, prev } }) {
       </Helmet>
       <Layout
         location={location}
+        locale={page.fields.locale}
         itemList={itemList}
         enableScrollSync={urlSegment === `docs` ? false : true}
       >
@@ -107,13 +106,9 @@ function DocsTemplate({ data, location, pageContext: { next, prev } }) {
                     maxWidth: `tocWidth`,
                     position: `sticky`,
                     top: t =>
-                      `calc(${t.sizes.headerHeight} + ${
-                        t.sizes.bannerHeight
-                      } + ${t.space[9]})`,
+                      `calc(${t.sizes.headerHeight} + ${t.sizes.bannerHeight} + ${t.space[9]})`,
                     maxHeight: t =>
-                      `calc(100vh - ${t.sizes.headerHeight} - ${
-                        t.sizes.bannerHeight
-                      } - ${t.space[9]} - ${t.space[9]})`,
+                      `calc(100vh - ${t.sizes.headerHeight} - ${t.sizes.bannerHeight} - ${t.space[9]} - ${t.space[9]})`,
                     overflow: `auto`,
                   },
                 }}
@@ -140,8 +135,8 @@ function DocsTemplate({ data, location, pageContext: { next, prev } }) {
                     See the issue relating to this stub on GitHub
                   </a>
                 )}
-                <PrevAndNext sx={{ mt: 9 }} prev={prev} next={next} />
                 <MarkdownPageFooter page={page} />
+                <PrevAndNext sx={{ mt: 9 }} prev={prev} next={next} />
               </div>
             </div>
           </Container>
@@ -155,14 +150,15 @@ function DocsTemplate({ data, location, pageContext: { next, prev } }) {
 export default DocsTemplate
 
 export const pageQuery = graphql`
-  query($path: String!) {
-    mdx(fields: { slug: { eq: $path } }) {
+  query($slug: String!, $locale: String!) {
+    mdx(fields: { slug: { eq: $slug }, locale: { eq: $locale } }) {
       body
       excerpt
       timeToRead
       tableOfContents
       fields {
         slug
+        locale
         anchor
       }
       frontmatter {

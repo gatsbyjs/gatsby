@@ -214,8 +214,15 @@ module.exports = (
       // Use Bluebird's Promise function "each" to run remark plugins serially.
       await Promise.each(pluginOptions.plugins, plugin => {
         const requiredPlugin = require(plugin.resolve)
-        if (_.isFunction(requiredPlugin)) {
-          return requiredPlugin(
+        // Allow both exports = function(), and exports.default = function()
+        const defaultFunction = _.isFunction(requiredPlugin)
+          ? requiredPlugin
+          : _.isFunction(requiredPlugin.default)
+          ? requiredPlugin.default
+          : undefined
+
+        if (defaultFunction) {
+          return defaultFunction(
             {
               markdownAST,
               markdownNode,
@@ -301,9 +308,13 @@ module.exports = (
 
             return node
           }
-          tocAst.map = addSlugToUrl(tocAst.map)
+          if (appliedTocOptions.absolute) {
+            tocAst.map = addSlugToUrl(tocAst.map)
+          }
 
-          toc = hastToHTML(toHAST(tocAst.map))
+          toc = hastToHTML(toHAST(tocAst.map, { allowDangerousHTML: true }), {
+            allowDangerousHTML: true,
+          })
         } else {
           toc = ``
         }
@@ -330,7 +341,9 @@ module.exports = (
     }
 
     async function getHTML(markdownNode) {
-      const cachedHTML = await cache.get(htmlCacheKey(markdownNode))
+      const shouldCache = markdownNode && markdownNode.internal
+      const cachedHTML =
+        shouldCache && (await cache.get(htmlCacheKey(markdownNode)))
       if (cachedHTML) {
         return cachedHTML
       } else {
@@ -340,17 +353,20 @@ module.exports = (
           allowDangerousHTML: true,
         })
 
-        // Save new HTML to cache and return
-        cache.set(htmlCacheKey(markdownNode), html)
+        if (shouldCache) {
+          // Save new HTML to cache
+          cache.set(htmlCacheKey(markdownNode), html)
+        }
+
         return html
       }
     }
 
     async function getExcerptAst(
+      fullAST,
       markdownNode,
       { pruneLength, truncate, excerptSeparator }
     ) {
-      const fullAST = await getHTMLAst(markdownNode)
       if (excerptSeparator && markdownNode.excerpt !== ``) {
         return cloneTreeUntil(
           fullAST,
@@ -375,12 +391,13 @@ module.exports = (
       }
 
       const lastTextNode = findLastTextNode(excerptAST)
-      const amountToPruneLastNode =
-        pruneLength - (unprunedExcerpt.length - lastTextNode.value.length)
+      const amountToPruneBy = unprunedExcerpt.length - pruneLength
+      const desiredLengthOfLastNode =
+        lastTextNode.value.length - amountToPruneBy
       if (!truncate) {
         lastTextNode.value = prune(
           lastTextNode.value,
-          amountToPruneLastNode,
+          desiredLengthOfLastNode,
           `…`
         )
       } else {
@@ -398,7 +415,8 @@ module.exports = (
       truncate,
       excerptSeparator
     ) {
-      const excerptAST = await getExcerptAst(markdownNode, {
+      const fullAST = await getHTMLAst(markdownNode)
+      const excerptAST = await getExcerptAst(fullAST, markdownNode, {
         pruneLength,
         truncate,
         excerptSeparator,
@@ -415,18 +433,20 @@ module.exports = (
       truncate,
       excerptSeparator
     ) {
-      if (excerptSeparator) {
+      // if excerptSeparator in options and excerptSeparator in content then we will get an excerpt from grayMatter that we can use
+      if (excerptSeparator && markdownNode.excerpt !== ``) {
         return markdownNode.excerpt
       }
-      // TODO truncate respecting markdown AST
-      const excerptText = markdownNode.rawMarkdownBody
-      if (!truncate) {
-        return prune(excerptText, pruneLength, `…`)
-      }
-      return _.truncate(excerptText, {
-        length: pruneLength,
-        omission: `…`,
+      const ast = await getMarkdownAST(markdownNode)
+      const excerptAST = await getExcerptAst(ast, markdownNode, {
+        pruneLength,
+        truncate,
+        excerptSeparator,
       })
+      var excerptMarkdown = unified()
+        .use(stringify)
+        .stringify(excerptAST)
+      return excerptMarkdown
     }
 
     async function getExcerptPlain(
@@ -552,14 +572,18 @@ module.exports = (
           },
         },
         resolve(markdownNode, { pruneLength, truncate }) {
-          return getExcerptAst(markdownNode, {
-            pruneLength,
-            truncate,
-            excerptSeparator: pluginOptions.excerpt_separator,
-          }).then(ast => {
-            const strippedAst = stripPosition(_.clone(ast), true)
-            return hastReparseRaw(strippedAst)
-          })
+          return getHTMLAst(markdownNode)
+            .then(fullAST =>
+              getExcerptAst(fullAST, markdownNode, {
+                pruneLength,
+                truncate,
+                excerptSeparator: pluginOptions.excerpt_separator,
+              })
+            )
+            .then(ast => {
+              const strippedAst = stripPosition(_.clone(ast), true)
+              return hastReparseRaw(strippedAst)
+            })
         },
       },
       headings: {
@@ -599,6 +623,12 @@ module.exports = (
       tableOfContents: {
         type: `String`,
         args: {
+          // TODO:(v3) set default value to false
+          absolute: {
+            type: `Boolean`,
+            defaultValue: true,
+          },
+          // TODO:(v3) set default value to empty string
           pathToSlugField: {
             type: `String`,
             defaultValue: `fields.slug`,

@@ -143,9 +143,7 @@ CMS.init({
 
 `enableIdentityWidget` is `true` by default, allowing [Netlify
 Identity](https://www.netlify.com/docs/identity/) to be used without
-configuration, but you may need to disable it in some cases, such as when using
-a Netlify CMS backend that conflicts. This is currently known to be the case
-when using the GitLab backend, but only when using implicit OAuth.
+configuration. Disable it when not using Netlify Identity to reduce bundle size.
 
 ```javascript
 plugins: [
@@ -235,6 +233,24 @@ plugins: [
     },
   },
 ]
+```
+
+## Disable widget on site
+
+If you're not using Netlify Identity within your site you have the option to completely disable the widget (and not the CMS). To do so, add the following to `gatsby-node.js`:
+
+```javascript
+const webpack = require(`webpack`)
+
+exports.onCreateWebpackConfig = ({ actions }) => {
+  actions.setWebpackConfig({
+    plugins: [
+      new webpack.IgnorePlugin({
+        resourceRegExp: /^netlify-identity-widget$/,
+      }),
+    ],
+  })
+}
 ```
 
 ## Support

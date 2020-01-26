@@ -6,14 +6,33 @@
       link: /docs/
     - title: Quick Start
       link: /docs/quick-start/
-    - title: Recipes
-      link: /docs/recipes/
     - title: Plugin Library
       link: /plugins/
     - title: Starter Library
       link: /starters/
     - title: Awesome Gatsby Resources
       link: /docs/awesome-gatsby-resources/
+    - title: Recipes
+      link: /docs/recipes/
+      items:
+        - title: Pages and Layouts
+          link: /docs/recipes/pages-layouts
+        - title: Styling with CSS
+          link: /docs/recipes/styling-css
+        - title: Working with Starters
+          link: /docs/recipes/working-with-starters
+        - title: Working with Themes
+          link: /docs/recipes/working-with-themes
+        - title: Sourcing Data
+          link: /docs/recipes/sourcing-data
+        - title: Querying Data
+          link: /docs/recipes/querying-data
+        - title: Working with Images
+          link: /docs/recipes/working-with-images
+        - title: Transforming Data
+          link: /docs/recipes/transforming-data
+        - title: Deploying Your Site
+          link: /docs/recipes/deploying-your-site
     - title: Reference Guides
       link: /docs/guides/
       items:
@@ -34,6 +53,9 @@
             - title: Preparing a Site for Deployment
               link: /docs/preparing-for-deployment/
               breadcrumbTitle: Preparing for Deployment
+            - title: Deploying to Netlify
+              link: /docs/deploying-to-netlify/
+              breadcrumbTitle: Netlify
             - title: Deploying to AWS Amplify
               link: /docs/deploying-to-aws-amplify/
               breadcrumbTitle: AWS Amplify
@@ -52,15 +74,18 @@
             - title: Deploying to GitLab Pages
               link: /docs/deploying-to-gitlab-pages/
               breadcrumbTitle: GitLab Pages
-            - title: Deploying to Netlify
-              link: /docs/deploying-to-netlify/
-              breadcrumbTitle: Netlify
             - title: Deploying to Render
               link: /docs/deploying-to-render/
               breadcrumbTitle: Render
             - title: Deploying to Surge
               link: /docs/deploying-to-surge/
               breadcrumbTitle: Surge
+            - title: Deploying to IIS
+              link: /docs/deploying-to-iis/
+              breadcrumbTitle: IIS
+            - title: Deploying to Firebase Hosting
+              link: /docs/deploying-to-firebase/
+              breadcrumbTitle: Firebase Hosting
             - title: Adding a Path Prefix
               link: /docs/path-prefix/
             - title: How Gatsby Works with GitHub Pages
@@ -129,10 +154,10 @@
             - title: Using Gatsby Without GraphQL
               link: /docs/using-gatsby-without-graphql/
               breadcrumbTitle: Gatsby Without GraphQL
-            - title: Sourcing From the Filesystem
+            - title: Sourcing from the Filesystem
               link: /docs/sourcing-from-the-filesystem/
               breadcrumbTitle: From the Filesystem
-            - title: Sourcing From Databases
+            - title: Sourcing from Databases
               link: /docs/sourcing-from-databases/
               breadcrumbTitle: From Databases
             - title: Sourcing from Hosted Services
@@ -187,7 +212,7 @@
               link: /docs/use-static-query/
               breadcrumbTitle: The useStaticQuery Hook
             - title: Using GraphQL Fragments
-              link: /docs/using-fragments/
+              link: /docs/using-graphql-fragments/
             - title: Creating Slugs for Pages
               link: /docs/creating-slugs-for-pages/
             - title: Creating Pages from Data Programmatically
@@ -234,18 +259,13 @@
                   link: /docs/remark-plugin-tutorial/
                 - title: Maintaining a Plugin*
                   link: /docs/maintaining-a-plugin/
-        - title: Starters
-          link: /docs/starters/
-          items:
-            - title: Starter Library
-              link: /starters/
-            - title: Creating a Starter
-              link: /docs/creating-a-starter/
         - title: Themes
           link: /docs/themes/
           items:
             - title: What are Gatsby Themes?
               link: /docs/themes/what-are-gatsby-themes/
+            - title: Getting Started
+              link: /docs/themes/getting-started/
             - title: Using a Gatsby Theme
               link: /docs/themes/using-a-gatsby-theme/
             - title: Using Multiple Gatsby Themes
@@ -260,6 +280,15 @@
               link: /docs/themes/theme-composition/
             - title: Conventions
               link: /docs/themes/conventions/
+        - title: Starters
+          link: /docs/starters/
+          items:
+            - title: Starter Library
+              link: /starters/
+            - title: Modifying a Starter
+              link: /docs/modifying-a-starter/
+            - title: Creating a Starter
+              link: /docs/creating-a-starter/
         - title: Styling Your Site
           link: /docs/styling/
           breadcrumbTitle: Styling
@@ -344,8 +373,10 @@
             - title: Debugging Async Lifecycles
               link: /docs/debugging-async-lifecycles/
               breadcrumbTitle: Async Lifecycles
-        - title: Adding Website Functionality
-          link: /docs/adding-website-functionality/
+            - title: Troubleshooting Common Errors
+              link: /docs/troubleshooting-common-errors/
+        - title: Adding App and Website Functionality
+          link: /docs/adding-app-and-website-functionality/
           items:
             - title: Linking Between Pages
               link: /docs/linking-between-pages/
@@ -368,6 +399,9 @@
             - title: Adding Forms
               link: /docs/adding-forms/
               breadcrumbTitle: Forms
+            - title: Adding React Components
+              link: /docs/adding-react-components/
+              breadcrumbTitle: React Components
             - title: Building a Contact Form
               link: /docs/building-a-contact-form/
             - title: Adding a 404 Page
@@ -404,19 +438,15 @@
               items:
                 - title: "@reach/router and Gatsby"
                   link: /docs/reach-router-and-gatsby/
-                - title: Linking and Prefetching with Gatsby*
-                  link: /docs/linking-and-prefetching-with-gatsby/
                 - title: Location Data from Props
                   link: /docs/location-data-from-props/
-                - title: Centralizing Your Site's Navigation
-                  link: /docs/centralizing-your-sites-navigation/
-                - title: Rendering Sidebar Navigation Dynamically*
-                  link: /docs/rendering-sidebar-navigation-dynamically/
+                - title: Creating Dynamic Navigation
+                  link: /docs/creating-dynamic-navigation/
                 - title: Client-only Routes & User Authentication
                   link: /docs/client-only-routes-and-user-authentication/
                   breadcrumbTitle: Client Routes & User Auth
-            - title: Client Data Fetching
-              link: /docs/client-data-fetching/
+            - title: Build Time and Client-side Data Fetching
+              link: /docs/data-fetching/
             - title: Using Client-Side Only Packages
               link: /docs/using-client-side-only-packages/
             - title: Building an E-commerce Site
@@ -424,6 +454,8 @@
               items:
                 - title: Building an E-commerce Site with Shopify
                   link: /docs/building-an-ecommerce-site-with-shopify/
+                - title: Processing Payments with Stripe
+                  link: /docs/processing-payments-with-stripe/
         - title: Improving Performance
           link: /docs/performance/
           items:
@@ -464,6 +496,9 @@
             - title: Porting from Create React App to Gatsby
               link: /docs/porting-from-create-react-app-to-gatsby/
               breadcrumbTitle: Create React App to Gatsby
+            - title: Porting an HTML Site to Gatsby
+              link: /docs/porting-an-html-site-to-gatsby/
+              breadcrumbTitle: HTML to Gatsby
     - title: Gatsby API
       link: /docs/api-reference/
       items:
@@ -527,12 +562,18 @@
           link: /docs/gatsby-core-philosophy/
         - title: Gatsby Project Structure
           link: /docs/gatsby-project-structure/
+        - title: Plugins, Themes, & Starters
+          link: /docs/plugins-themes-and-starters/
         - title: Overview of the Gatsby Build Process
           link: /docs/overview-of-the-gatsby-build-process/
         - title: Building with Components
           link: /docs/building-with-components/
         - title: Lifecycle APIs
           link: /docs/gatsby-lifecycle-apis/
+        - title: Gatsby Magic
+          link: /docs/gatsby-magic
+        - title: React Hydration
+          link: /docs/react-hydration
         - title: PRPL Pattern
           link: /docs/prpl-pattern/
         - title: GraphQL Concepts
@@ -617,6 +658,8 @@
               link: /docs/winning-over-executives/
             - title: Clients*
               link: /docs/winning-over-clients/
+            - title: Content Creators
+              link: /docs/winning-over-content-creators/
         - title: Spreading Gatsby In Different Types of Organizations
           link: /docs/different-organization-types/
           breadcrumbTitle: Spreading Gatsby
@@ -677,6 +720,19 @@
       link: /docs/cheat-sheet/
     - title: Glossary
       link: /docs/glossary/
+      items:
+        - title: GraphQL
+          link: /docs/glossary/graphql
+        - title: Headless CMS
+          link: /docs/glossary/headless-cms/
+        - title: JAMStack
+          link: /docs/glossary/jamstack
+        - title: Node.js
+          link: /docs/glossary/node
+        - title: React
+          link: /docs/glossary/react
+        - title: webpack
+          link: /docs/glossary/webpack
     - title: Gatsby Telemetry
       link: /docs/telemetry/
     - title: Gatsby REPL

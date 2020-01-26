@@ -87,6 +87,4 @@ Sharp uses a C library, libvips. If you are having issues while installing Sharp
 
 ## Windows Subsystem for Linux
 
-If the installation of dependencies or developing on Windows in general gives you headaches, Windows 10 provides a great alternative: [Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/about). It lets you run most command-line tools, utilities, and applications in a GNU/Linux environment directly on Windows, unmodified, without the overhead of a virtual machine. In the above scenario you would download e.g. Ubuntu, open the terminal, [install Node](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions), and run `sudo apt-get install build-essential` in the terminal — and the compilation works way more reliable. Please note that you have to delete any existing `node_modules` folder in your project and re-install the dependencies in your WSL environment.
-
-You can also visit [Gatsby on Linux](/docs/gatsby-on-linux/) to learn more.
+If the installation of dependencies or developing on Windows in general gives you headaches, Windows 10 provides a great alternative: [Windows Subsystem for Linux (WSL)](https://docs.microsoft.com/en-us/windows/wsl/about). It lets you run most command-line tools, utilities, and applications in a GNU/Linux environment directly on Windows, unmodified, without the overhead of a virtual machine. For more explicit instructions on getting set up with WSL, see the [Gatsby on Linux](/docs/gatsby-on-linux/#windows-subsystem-linux-wsl) documentation.

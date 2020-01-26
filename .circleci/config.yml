@@ -1,5 +1,6 @@
 orbs:
   win: circleci/windows@1.0.0
+  slack: circleci/slack@3.4.1
 
 executors:
   node:
@@ -35,7 +36,7 @@ aliases:
 
   attach_to_bootstrap: &attach_to_bootstrap
     attach_workspace:
-      at: packages
+      at: ./
 
   ignore_master: &ignore_master
     filters:
@@ -52,12 +53,10 @@ aliases:
 
   test_template: &test_template
     steps:
-      - checkout
-      - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
-      - <<: *restore_cache
-      - <<: *install_node_modules
-      - <<: *persist_cache
       - <<: *attach_to_bootstrap
+      - <<: *install_node_modules
+      - run: yarn list react
+      - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
       - run: yarn jest -w 1 --ci
       - run: GATSBY_DB_NODES=loki yarn jest -w 1 --ci
 
@@ -72,9 +71,70 @@ aliases:
       - lint
       - unit_tests_node8
 
+  e2e_tests_production_runtime_alias: &e2e_tests_production_runtime_alias
+    <<: *e2e-executor
+    parameters:
+      nightly:
+        type: boolean
+        default: false
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/production-runtime
+          test_command: CYPRESS_PROJECT_ID=is8aoq CYPRESS_RECORD_KEY=cb4708d2-1578-4665-9a07-c59f8db28d91 yarn test && CYPRESS_PROJECT_ID=htpvkv CYPRESS_RECORD_KEY=0d734841-c613-41d2-86e5-df0b5968f93f yarn test:offline
+          skip_file_change_test: << parameters.nightly >>
+      - notify-status:
+          condition: << parameters.nightly >>
+
+  e2e_tests_development_runtime_alias: &e2e_tests_development_runtime_alias
+    <<: *e2e-executor
+    parameters:
+      nightly:
+        type: boolean
+        default: false
+    environment:
+      CYPRESS_PROJECT_ID: s3j3qj
+      CYPRESS_RECORD_KEY: 3904ca0c-bc98-47d9-8371-b68c5e81fb9b
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/development-runtime
+          skip_file_change_test: << parameters.nightly >>
+      - notify-status:
+          condition: << parameters.nightly >>
+
+  e2e_tests_gatsby-image_alias: &e2e_tests_gatsby-image_alias
+    <<: *e2e-executor
+    parameters:
+      nightly:
+        type: boolean
+        default: false
+    environment:
+      CYPRESS_PROJECT_ID: ave32k
+      CYPRESS_RECORD_KEY: fb3cb6e0-a0f9-48b2-aa9a-95e8ef150a85
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/gatsby-image
+          skip_file_change_test: << parameters.nightly >>
+      - notify-status:
+          condition: << parameters.nightly >>
+
 commands:
+  notify-status:
+    parameters:
+      condition:
+        type: boolean
+        default: false
+    steps:
+      - when:
+          condition: << parameters.condition >>
+          steps:
+            - slack/status:
+              channel: eng-react-integration-status
+
   e2e-test:
     parameters:
+      skip_file_change_test:
+        type: boolean
+        default: false
       trigger_pattern:
         type: string
         default: "packages/*|.circleci/*"
@@ -84,12 +144,15 @@ commands:
         type: string
         default: "" # if unset, e2e-test.sh specifies the command
     steps:
-      - checkout
-      - run: ./scripts/assert-changed-files.sh "<< parameters.trigger_pattern >>|<< parameters.test_path >>/*"
-      - <<: *restore_cache
-      - <<: *install_node_modules
-      - <<: *persist_cache
       - <<: *attach_to_bootstrap
+      # In case of failure, add these steps again. Cache probably got deleted
+      #- <<: *restore_cache
+      #- <<: *install_node_modules
+      #- <<: *persist_cache
+      - unless:
+          condition: << parameters.skip_file_change_test >>
+          steps:
+            - run: ./scripts/assert-changed-files.sh "<< parameters.trigger_pattern >>|<< parameters.test_path >>/*"
       - run: ./scripts/e2e-test.sh "<< parameters.test_path >>" "<< parameters.test_command >>"
 
 version: 2.1
@@ -99,13 +162,20 @@ jobs:
     executor: node
     steps:
       - checkout
-      - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*"
       - <<: *restore_cache
       - <<: *install_node_modules
       - <<: *persist_cache
-      - run: yarn bootstrap -- concurrency=2
+      # persist our git checkout and node_modules as the next step (assert-changed-files) might exit this step
+      # when no files have changed (master). We still need to have these files for jobs like lint & unit_tests_node8
       - persist_to_workspace:
-          root: packages
+          root: ./
+          paths:
+            - "*"
+      - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*"
+      - run: yarn bootstrap -- concurrency=2
+      # Persist the workspace again with all packages already built
+      - persist_to_workspace:
+          root: ./
           paths:
             - "*"
 
@@ -113,12 +183,11 @@ jobs:
     executor: node
     parallelism: 2
     steps:
-      - checkout
-      - <<: *restore_cache
-      - <<: *install_node_modules
-      - <<: *persist_cache
+      - <<: *attach_to_bootstrap
       - run: yarn lint:code
       - run: yarn lint:other
+      - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
+      - run: yarn typecheck
       - run: yarn check-repo-fields
 
   unit_tests_node8:
@@ -176,29 +245,31 @@ jobs:
           test_path: e2e-tests/path-prefix
 
   e2e_tests_gatsby-image:
-    <<: *e2e-executor
-    environment:
-      CYPRESS_PROJECT_ID: ave32k
-      CYPRESS_RECORD_KEY: fb3cb6e0-a0f9-48b2-aa9a-95e8ef150a85
-    steps:
-      - e2e-test:
-          test_path: e2e-tests/gatsby-image
+    <<: *e2e_tests_gatsby-image_alias
+
+  e2e_tests_gatsby-image_with_experimental_react:
+    <<: *e2e_tests_gatsby-image_alias
+
+  e2e_tests_gatsby-image_with_next_react:
+    <<: *e2e_tests_gatsby-image_alias
 
   e2e_tests_development_runtime:
-    <<: *e2e-executor
-    environment:
-      CYPRESS_PROJECT_ID: s3j3qj
-      CYPRESS_RECORD_KEY: 3904ca0c-bc98-47d9-8371-b68c5e81fb9b
-    steps:
-      - e2e-test:
-          test_path: e2e-tests/development-runtime
+    <<: *e2e_tests_development_runtime_alias
+
+  e2e_tests_development_runtime_with_experimental_react:
+    <<: *e2e_tests_development_runtime_alias
+
+  e2e_tests_development_runtime_with_next_react:
+    <<: *e2e_tests_development_runtime_alias
 
   e2e_tests_production_runtime:
-    <<: *e2e-executor
-    steps:
-      - e2e-test:
-          test_path: e2e-tests/production-runtime
-          test_command: CYPRESS_PROJECT_ID=is8aoq CYPRESS_RECORD_KEY=cb4708d2-1578-4665-9a07-c59f8db28d91 yarn test && CYPRESS_PROJECT_ID=htpvkv CYPRESS_RECORD_KEY=0d734841-c613-41d2-86e5-df0b5968f93f yarn test:offline
+    <<: *e2e_tests_production_runtime_alias
+
+  e2e_tests_production_runtime_with_experimental_react:
+    <<: *e2e_tests_production_runtime_alias
+
+  e2e_tests_production_runtime_with_next_react:
+    <<: *e2e_tests_production_runtime_alias
 
   themes_e2e_tests_development_runtime:
     <<: *e2e-executor
@@ -230,15 +301,25 @@ jobs:
   starters_publish:
     executor: node
     steps:
-      - checkout
-      - <<: *restore_cache
-      - <<: *install_node_modules
-      - <<: *persist_cache
+      - <<: *attach_to_bootstrap
       - run: yarn markdown
       - run: sudo apt-get update && sudo apt-get install jq # jq is helpful for parsing json
       - run: git config --global user.name "GatsbyJS Bot"
       - run: git config --global user.email "core-team@gatsbyjs.com"
       - run: sh ./scripts/publish-starters.sh "starters/*"
+
+  update_i18n_source:
+    executor: node
+    steps:
+      - checkout
+      - run: git config --global user.name "GatsbyJS Bot"
+      - run: git config --global user.email "core-team@gatsbyjs.com"
+      - run:
+          command: yarn
+          working_directory: ~/project/scripts/i18n
+      - run:
+          command: yarn run update-source
+          working_directory: ~/project/scripts/i18n
 
   build_www:
     docker:
@@ -247,9 +328,9 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: v1_www_public_dir
+          key: v2_www_public_dir
       - restore_cache:
-          key: v1_www_cache_dir
+          key: v2_www_cache_dir
       - run:
           command: yarn
           working_directory: ~/project/www
@@ -258,11 +339,11 @@ jobs:
           command: GATSBY_CPU_COUNT=8 yarn build
           working_directory: ~/project/www
       - save_cache:
-          key: v1_www_public_dir_{{ epoch }}
+          key: v2_www_public_dir_{{ epoch }}
           paths:
             - ~/project/www/public
       - save_cache:
-          key: v1_www_cache_dir_{{ epoch }}
+          key: v2_www_cache_dir_{{ epoch }}
           paths:
             - ~/project/www/.cache
 
@@ -272,7 +353,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: v1_www_public_dir
+          key: v2_www_public_dir
       - run:
           command: yarn add netlify-cli
           working_directory: ~/project/www
@@ -302,8 +383,93 @@ jobs:
           name: "Run Tests"
           command: yarn test
 
+  bootstrap-with-experimental-react:
+    executor: node
+    parameters:
+      version:
+        type: string
+        default: "next"
+    steps:
+      - checkout
+      - run:
+          name: "Update React to prerelease"
+          command: "REACT_CHANNEL=<< parameters.version >> node ./scripts/upgrade-react"
+      - run: yarn install
+      - run: yarn bootstrap -- concurrency=2
+      - run: yarn list react
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - "*"
+
+  run_benchmarks:
+    docker:
+      - image: circleci/node:12
+    resource_class: xlarge
+    steps:
+      - checkout
+      - run: ./scripts/build-benchmark.sh
+
 workflows:
   version: 2
+
+  run_benchmarks:
+    jobs: [run_benchmarks]
+    triggers:
+      - schedule:
+          cron: "12 3 * * *" # every day at 03:12
+          filters:
+            branches:
+              only:
+                - master
+
+  nightly-react-next:
+    triggers:
+      - schedule:
+          cron: "0 0 * * 1,2,3,4,5"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - bootstrap-with-experimental-react:
+          version: "next"
+      - e2e_tests_gatsby-image_with_next_react:
+          nightly: true
+          requires:
+            - bootstrap-with-experimental-react
+      - e2e_tests_development_runtime_with_next_react:
+          nightly: true
+          requires:
+            - bootstrap-with-experimental-react
+      - e2e_tests_production_runtime_with_next_react:
+          nightly: true
+          requires:
+            - bootstrap-with-experimental-react
+  nightly-react-experimental:
+    triggers:
+      - schedule:
+          cron: "0 0 * * 1,2,3,4,5"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - bootstrap-with-experimental-react:
+          version: "experimental"
+      - e2e_tests_gatsby-image_with_experimental_react:
+          nightly: true
+          requires:
+            - bootstrap-with-experimental-react
+      - e2e_tests_development_runtime_with_experimental_react:
+          nightly: true
+          requires:
+            - bootstrap-with-experimental-react
+      - e2e_tests_production_runtime_with_experimental_react:
+          nightly: true
+          requires:
+            - bootstrap-with-experimental-react
+
   build-test:
     jobs:
       - windows_unit_tests
@@ -350,6 +516,8 @@ workflows:
       - starters_validate:
           <<: *ignore_master
       - starters_publish:
+          requires:
+            - bootstrap
           filters:
             branches:
               only:
@@ -368,6 +536,11 @@ workflows:
           requires:
             - build_www
           context: build_www
+      - update_i18n_source:
+          filters:
+            branches:
+              only:
+                - master
   www_deploy:
     triggers:
       - schedule:

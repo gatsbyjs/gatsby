@@ -7,11 +7,13 @@ exports[`<Image /> should have a transition-delay of 1sec 1`] = `
     style="position: relative; overflow: hidden; display: inline; width: 100px; height: 100px;"
   >
     <div
+      aria-hidden="true"
       style="background-color: lightgray; width: 100px; opacity: 1; height: 100px; transition-delay: 1000ms;"
       title="Title for the image"
     />
     <img
       alt=""
+      aria-hidden="true"
       class="placeholder"
       itemprop="item-prop-for-the-image"
       src="string_of_base64"
@@ -54,11 +56,13 @@ exports[`<Image /> should render fixed size images 1`] = `
     style="position: relative; overflow: hidden; display: inline; width: 100px; height: 100px;"
   >
     <div
+      aria-hidden="true"
       style="background-color: lightgray; width: 100px; opacity: 1; height: 100px; transition-delay: 500ms;"
       title="Title for the image"
     />
     <img
       alt=""
+      aria-hidden="true"
       class="placeholder"
       itemprop="item-prop-for-the-image"
       src="string_of_base64"
@@ -101,14 +105,17 @@ exports[`<Image /> should render fluid images 1`] = `
     style="position: relative; overflow: hidden; display: inline;"
   >
     <div
+      aria-hidden="true"
       style="width: 100%; padding-bottom: 66.66666666666667%;"
     />
     <div
+      aria-hidden="true"
       style="background-color: lightgray; position: absolute; top: 0px; bottom: 0px; opacity: 1; right: 0px; left: 0px; transition-delay: 500ms;"
       title="Title for the image"
     />
     <img
       alt=""
+      aria-hidden="true"
       class="placeholder"
       itemprop="item-prop-for-the-image"
       src="string_of_base64"
@@ -152,6 +159,7 @@ exports[`<Image /> should render multiple fixed image variants 1`] = `
     style="position: relative; overflow: hidden; display: inline; width: 100px; height: 100px;"
   >
     <div
+      aria-hidden="true"
       style="background-color: lightgray; width: 100px; opacity: 1; height: 100px; transition-delay: 500ms;"
       title="Title for the image"
     />
@@ -165,6 +173,7 @@ exports[`<Image /> should render multiple fixed image variants 1`] = `
       />
       <img
         alt=""
+        aria-hidden="true"
         class="placeholder"
         itemprop="item-prop-for-the-image"
         src="other_string_of_base64"
@@ -216,9 +225,11 @@ exports[`<Image /> should render multiple fluid image variants 1`] = `
     style="position: relative; overflow: hidden; display: inline;"
   >
     <div
+      aria-hidden="true"
       style="width: 100%; padding-bottom: 50%;"
     />
     <div
+      aria-hidden="true"
       style="background-color: lightgray; position: absolute; top: 0px; bottom: 0px; opacity: 1; right: 0px; left: 0px; transition-delay: 500ms;"
       title="Title for the image"
     />
@@ -232,6 +243,7 @@ exports[`<Image /> should render multiple fluid image variants 1`] = `
       />
       <img
         alt=""
+        aria-hidden="true"
         class="placeholder"
         itemprop="item-prop-for-the-image"
         src="string_of_base64"

@@ -1,7 +1,7 @@
 /* @flow */
 
 const _ = require(`lodash`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 const fs = require(`fs-extra`)
 const md5File = require(`md5-file/promise`)
 const crypto = require(`crypto`)
@@ -19,6 +19,7 @@ const report = require(`gatsby-cli/lib/reporter`)
 const getConfigFile = require(`./get-config-file`)
 const tracer = require(`opentracing`).globalTracer()
 const preferDefault = require(`./prefer-default`)
+const removeStaleJobs = require(`./remove-stale-jobs`)
 // Add `util.promisify` polyfill for old node versions
 require(`util.promisify/shim`)()
 
@@ -105,9 +106,11 @@ module.exports = async (args: BootstrapArgs) => {
     parentSpan: bootstrapSpan,
   })
   activity.start()
-  let config = await preferDefault(
-    getConfigFile(program.directory, `gatsby-config`)
+  const { configModule, configFilePath } = await getConfigFile(
+    program.directory,
+    `gatsby-config`
   )
+  let config = preferDefault(configModule)
 
   // The root config cannot be exported as a function, only theme configs
   if (typeof config === `function`) {
@@ -125,7 +128,11 @@ module.exports = async (args: BootstrapArgs) => {
     report.warn(
       `The gatsby-config key "__experimentalThemes" has been deprecated. Please use the "plugins" key instead.`
     )
-    const themes = await loadThemes(config, { useLegacyThemes: true })
+    const themes = await loadThemes(config, {
+      useLegacyThemes: true,
+      configFilePath,
+      rootDir: program.directory,
+    })
     config = themes.config
 
     store.dispatch({
@@ -133,7 +140,11 @@ module.exports = async (args: BootstrapArgs) => {
       payload: themes.themes,
     })
   } else if (config) {
-    const plugins = await loadThemes(config, { useLegacyThemes: false })
+    const plugins = await loadThemes(config, {
+      useLegacyThemes: false,
+      configFilePath,
+      rootDir: program.directory,
+    })
     config = plugins.config
   }
 
@@ -150,13 +161,23 @@ module.exports = async (args: BootstrapArgs) => {
 
   activity.end()
 
+  // run stale jobs
+  store.dispatch(removeStaleJobs(store.getState()))
+
   activity = report.activityTimer(`load plugins`, { parentSpan: bootstrapSpan })
   activity.start()
   const flattenedPlugins = await loadPlugins(config, program.directory)
   activity.end()
 
+  // Multiple occurrences of the same name-version-pair can occur,
+  // so we report an array of unique pairs
+  const pluginsStr = _.uniq(flattenedPlugins.map(p => `${p.name}@${p.version}`))
   telemetry.decorateEvent(`BUILD_END`, {
-    plugins: flattenedPlugins.map(p => `${p.name}@${p.version}`),
+    plugins: pluginsStr,
+  })
+
+  telemetry.decorateEvent(`DEVELOP_STOP`, {
+    plugins: pluginsStr,
   })
 
   // onPreInit
@@ -212,7 +233,7 @@ module.exports = async (args: BootstrapArgs) => {
     .createHash(`md5`)
     .update(JSON.stringify(pluginVersions.concat(hashes)))
     .digest(`hex`)
-  let state = store.getState()
+  const state = store.getState()
   const oldPluginsHash = state && state.status ? state.status.PLUGINS_HASH : ``
 
   // Check if anything has changed. If it has, delete the site's .cache
@@ -223,8 +244,7 @@ module.exports = async (args: BootstrapArgs) => {
   if (oldPluginsHash && pluginsHash !== oldPluginsHash) {
     report.info(report.stripIndent`
       One or more of your plugins have changed since the last time you ran Gatsby. As
-      a precaution, we're deleting your site's cache to ensure there's not any stale
-      data
+      a precaution, we're deleting your site's cache to ensure there's no stale data.
     `)
   }
   const cacheDirectory = `${program.directory}/.cache`
@@ -402,6 +422,16 @@ module.exports = async (args: BootstrapArgs) => {
   activity.start()
   await apiRunnerNode(`onPreBootstrap`, {
     parentSpan: activity.span,
+  })
+  activity.end()
+
+  // Prepare static schema types
+  activity = report.activityTimer(`createSchemaCustomization`, {
+    parentSpan: bootstrapSpan,
+  })
+  activity.start()
+  await require(`../utils/create-schema-customization`)({
+    parentSpan: bootstrapSpan,
   })
   activity.end()
 
