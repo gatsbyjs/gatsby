@@ -16,7 +16,13 @@ function onCreateBabelConfig({ actions }, options) {
   })
 }
 
-function onCreateWebpackConfig({ actions, getConfig, loaders, stage }) {
+function onCreateWebpackConfig({
+  actions,
+  getConfig,
+  loaders,
+  stage,
+  reporter
+}) {
   const jsLoader = loaders.js()
 
   if (!jsLoader) {
@@ -39,7 +45,7 @@ function onCreateWebpackConfig({ actions, getConfig, loaders, stage }) {
     try {
       ts = require.resolve(`typescript`)
     } catch (e) {
-      console.warn(
+      reporter.warn(
         `"typescript" is not installed. Builtin ESLint won't be working on typescript files.`
       )
     }
