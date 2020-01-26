@@ -12,7 +12,8 @@ peril
 docs
 plop-templates
 starters
-www
+www/public
+www/src/**/*.min.js
 benchmarks
 e2e-tests
 examples
