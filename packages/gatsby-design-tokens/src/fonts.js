@@ -26,7 +26,7 @@ const monospace = [
 const serif = [`Georgia`, `Times New Roman`, `Times`, `serif`]
 const body = system
 
-// @todo think about naming, e.g.
+// TODO think about naming, e.g.
 // system -> sans
 // header -> brand
 export default { body, system, heading, monospace, serif }
