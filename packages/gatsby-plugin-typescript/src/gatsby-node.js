@@ -35,24 +35,34 @@ function onCreateWebpackConfig({ actions, getConfig, loaders, stage }) {
   })
 
   if (stage === `develop`) {
-    const builtInEslintRule = getConfig().module.rules.find(rule => {
-      if (rule.enforce === `pre`) {
-        return rule.use.some(use => /eslint-loader/.test(use.loader))
-      }
-      return false
-    })
-
-    if (builtInEslintRule) {
-      const typescriptEslintRule = {
-        ...builtInEslintRule,
-        test: /\.tsx?$/,
-      }
-      actions.setWebpackConfig({
-        module: {
-          rules: [typescriptEslintRule],
-        },
-      })
+    let ts;
+    try {
+      ts = require.resolve("typescript");
+    } catch (e) {
+      console.warn("`typescript` is not installed. Builtin ESLint won't be working on typescript files.");
     }
+
+    if (ts) {
+      const builtInEslintRule = getConfig().module.rules.find(rule => {
+        if (rule.enforce === `pre`) {
+          return rule.use.some(use => /eslint-loader/.test(use.loader))
+        }
+        return false
+      })
+
+      if (builtInEslintRule) {
+        const typescriptEslintRule = {
+          ...builtInEslintRule,
+          test: /\.tsx?$/,
+        }
+        actions.setWebpackConfig({
+          module: {
+            rules: [typescriptEslintRule],
+          },
+        })
+      }
+    }
+    
   }
 }
 
