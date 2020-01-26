@@ -11,7 +11,7 @@ const parseGHUrl = require(`parse-github-url`)
 const { GraphQLClient } = require(`@jamo/graphql-request`)
 const moment = require(`moment`)
 const startersRedirects = require(`./starter-redirects.json`)
-const langs = require("./i18n.json")
+const langs = require(`./i18n.json`)
 const {
   generateComparisonPageSet,
 } = require(`./src/utils/generate-comparison-page-set.js`)
@@ -543,7 +543,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
     // Add slugs for docs pages
     if (fileNode.sourceInstanceName === `docs`) {
       slug = docSlugFromPath(parsedFilePath)
-      locale = "en"
+      locale = `en`
 
       // Set released status and `published at` for blog posts.
       if (_.includes(parsedFilePath.dir, `blog`)) {
