@@ -2,13 +2,12 @@
 title: Sourcing from Seams-CMS
 ---
 
-## Overview
 
-[Seams-CMS](https://seams-cms.com) is a headless CMS system in which you can manage from simple content like blog posts to complex data structures like products and translations. After defining your data types you can easily add content based on your specific structures. Seams-CMS allows you to localize your content and has an advanced security and workflow model. Your content can be retrieved through different JSON API and GraphQL endpoints which allows you to use your content as you see fit.
+[Seams-CMS](https://seams-cms.com) is a [headless CMS](/docs/glossary/headless-cms/) system in which you can manage everything from blog posts to complex data structures like products and translations. After defining your data types, you can add content based on your specific structures. Seams-CMS allows you to localize your content and has an advanced security and workflow model. Your content can be retrieved through different JSON APIs and GraphQL endpoints, which allows you to use your content as you see fit.
 
-Seams-CMS makes it possible use your content in different scenario's: on your website, in your blogs, in your apps while managing your content in a single location.
+Seams-CMS makes it possible use your content in different scenarios: on your website, in your blogs, and in your apps while managing your content in a single location.
 
-Creating a Seams-CMS account is free for hobby or small sites. For this tutorial, you'll be using the demo workspace that is automatically generated when you create a new account. Make sure you add an API key to this workspace in the API key settings. You will need your workspace ID and the (read-only) API key shortly.
+Creating a Seams-CMS account is free for hobby or small sites. The code samples in this guide assume you're using the demo workspace that is automatically generated when you create a new account. Make sure you add an API key to this workspace in the API key settings. You will need your workspace ID and the (read-only) API key shortly.
 
 ## Setup
 
@@ -22,7 +21,7 @@ cd seamscms-site
 npm install --save  seams-cms-gatsby-source
 ```
 
-### Configure the source plugin
+### Configuring the source plugin
 
 Once you have installed the plugin, it's time to configure it. Add the following code to the `gatsby-config.js` file found in the root of your project.
 
@@ -48,7 +47,7 @@ module.exports = {
 
 Change `<WORKSPACE_ID>` and `<API_KEY>` into the ID of the workspace from your own Seams-CMS account and the newly generated API key inside that workspace. Within the `contentTypes` array, you can list all the IDs of the content types you'd like to import from Seams-CMS into your Gatsby site. For this tutorial, you'll only want to import the `blogpost` content.
 
-### Check your connection
+### Checking your connection
 
 Next, run `gatsby develop` to fetch your blog posts from Seams-CMS:
 
@@ -99,7 +98,7 @@ query MyQuery {
 
 This will return the title, content, author name, and categories for each blog post.
 
-### Generate the blog post page
+### Generating a blog post page
 
 Now you can create a simple site with just one page holding all blog posts. You can do this by creating a template blog index file at `src/templates/blog-index.js` with the following content:
 
