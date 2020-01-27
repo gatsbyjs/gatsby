@@ -5066,3 +5066,20 @@
     - SEO and Open graphs support
     - Color modes
     - Code Highlighting
+- url: https://the-gatsby-bootcamp-blog.netlify.com
+  repo: https://github.com/SafdarJamal/gatsby-bootcamp-blog
+  description: A minimal blogging site built with Gatsby using Contentful and hosted on Netlify.
+  tags:
+    - Blog
+    - CMS:Contentful
+    - Netlify
+    - Styling:SCSS
+    - SEO
+    - Portfolio
+  features:
+    - Basic setup for a full-featured blog
+    - Includes React Helmet to allow editing site meta tags
+    - Uses SCSS for styling
+    - Minimal responsive design
+    - Styled components
+    - SEO Friendly Meta
