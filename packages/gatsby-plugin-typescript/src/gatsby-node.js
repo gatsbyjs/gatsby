@@ -41,16 +41,16 @@ function onCreateWebpackConfig({
   })
 
   if (stage === `develop`) {
-    let ts
+    let isTypescriptDepAvailable
     try {
-      ts = require.resolve(`typescript`)
+      isTypescriptDepAvailable = require.resolve(`typescript`)
     } catch (e) {
       reporter.warn(
         `"typescript" is not installed. Builtin ESLint won't be working on typescript files.`
       )
     }
 
-    if (ts) {
+    if (isTypescriptDepAvailable) {
       const builtInEslintRule = getConfig().module.rules.find(rule => {
         if (rule.enforce === `pre`) {
           return rule.use.some(use => /eslint-loader/.test(use.loader))
