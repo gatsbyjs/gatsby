@@ -35,6 +35,7 @@ export interface ICachedReduxState {
   status: IReduxState["status"]
   componentDataDependencies: IReduxState["componentDataDependencies"]
   components: IReduxState["components"]
+  jobsV2: IReduxState["jobsV2"]
   staticQueryComponents: IReduxState["staticQueryComponents"]
   webpackCompilationHash: IReduxState["webpackCompilationHash"]
   pageDataStats: IReduxState["pageDataStats"]
