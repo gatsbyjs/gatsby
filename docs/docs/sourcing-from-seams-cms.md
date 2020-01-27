@@ -2,7 +2,6 @@
 title: Sourcing from Seams-CMS
 ---
 
-
 [Seams-CMS](https://seams-cms.com) is a [headless CMS](/docs/glossary/headless-cms/) system in which you can manage everything from blog posts to complex data structures like products and translations. After defining your data types, you can add content based on your specific structures. Seams-CMS allows you to localize your content and has an advanced security and workflow model. Your content can be retrieved through different JSON APIs and GraphQL endpoints, which allows you to use your content as you see fit.
 
 Seams-CMS makes it possible use your content in different scenarios: on your website, in your blogs, and in your apps while managing your content in a single location.
