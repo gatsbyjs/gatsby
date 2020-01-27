@@ -9,6 +9,7 @@ const gatsbyApi = {
       debug: {
         graphql: {
           showQueryOnError: true,
+          copyQueryOnError: false,
         },
       },
       schema: {

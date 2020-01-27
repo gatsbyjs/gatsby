@@ -70,7 +70,9 @@ ${
 
   if (pluginOptions.debug.graphql.showQueryOnError) {
     reporter.error(formatLogMessage(`GraphQL query: ${gqlPrettier(query)}`))
-  } else {
+  }
+
+  if (pluginOptions.debug.graphql.copyQueryOnError) {
     await clipboardy.write(gqlPrettier(query))
   }
 

@@ -17,6 +17,7 @@ module.exports = {
         debug: {
           graphql: {
             showQueryOnError: false,
+            copyQueryOnError: true,
           },
         },
         excludeFields: [`attributes`],
