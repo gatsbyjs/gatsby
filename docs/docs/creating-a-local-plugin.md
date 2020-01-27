@@ -56,7 +56,7 @@ module.exports = {
 
 ### Using `npm link` or `yarn link`
 
-You can use [`npm link`](https://docs.npmjs.com/cli/link.html) or [`yarn link`](https://yarnpkg.com/lang/en/docs/cli/link/) to reference a package from another location on your machine in another project.
+You can use [`npm link`](https://docs.npmjs.com/cli/link.html) or [`yarn link`](https://yarnpkg.com/lang/en/docs/cli/link/) to reference a package from another location on your machine.
 
 By running `npm link ../path/to/my-plugin` in the root of your Gatsby site, your computer will create a symlink to your package.
 
