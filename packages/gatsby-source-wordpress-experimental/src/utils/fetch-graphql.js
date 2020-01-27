@@ -56,13 +56,11 @@ ${
     }
   }
 
-  if (panicOnError) {
-    reporter.panic(
-      formatLogMessage(`Encountered errors. See above for details.`)
-    )
-  }
-
-  if (variables && Object.keys(variables).length) {
+  if (
+    variables &&
+    Object.keys(variables).length &&
+    pluginOptions.debug.graphql.showQueryVarsOnError
+  ) {
     reporter.error(
       formatLogMessage(`GraphQL vars: ${JSON.stringify(variables)}`)
     )
@@ -76,7 +74,7 @@ ${
     await clipboardy.write(gqlPrettier(query))
   }
 
-  if (!json.data) {
+  if (!json.data || panicOnError || pluginOptions.debug.graphql.panicOnError) {
     reporter.panic(
       formatLogMessage(`Encountered errors. See above for details.`)
     )

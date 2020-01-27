@@ -8,8 +8,10 @@ const gatsbyApi = {
       verbose: false,
       debug: {
         graphql: {
-          showQueryOnError: true,
+          showQueryOnError: false,
+          showQueryVarsOnError: false,
           copyQueryOnError: false,
+          panicOnError: false,
         },
       },
       schema: {
