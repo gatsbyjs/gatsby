@@ -55,7 +55,7 @@ As far as pushing data out to my site goes, I didn't know which API or token I n
 
 Gatsby-config.js file:
 
-```jsx
+```js
 module.exports = {
   siteMetadata: {
     title: `Taking Care of Watson`,

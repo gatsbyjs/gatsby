@@ -13,10 +13,16 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
   )
 
   const styles = `
-    .${className} {
-      float: left;
+    .${className}.before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: translateX(-100%);
       padding-right: 4px;
-      margin-left: -20px;
+    }
+    .${className}.after {
+      display: inline-block;
+      padding-left: 4px;
     }
     h1 .${className} svg,
     h2 .${className} svg,
@@ -48,7 +54,9 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
       if (hash !== '') {
         var element = document.getElementById(hash)
         if (element) {
-          var offset = element.offsetTop
+          let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+          let clientTop = document.documentElement.clientTop || document.body.clientTop || 0
+          var offset = element.getBoundingClientRect().top + scrollTop - clientTop
           // Wait for the browser to finish rendering before scrolling.
           setTimeout((function() {
             window.scrollTo(0, offset - ${offsetY})

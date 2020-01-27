@@ -1,5 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Allow alternative import of useStaticQuery 1`] = `
+"import staticQueryData from \\"public/static/d/2626356014.json\\";
+import React from 'react';
+import * as Gatsby from 'gatsby';
+export default (() => {
+  const siteTitle = staticQueryData.data;
+  return React.createElement(\\"h1\\", null, siteTitle.site.siteMetadata.title);
+});"
+`;
+
 exports[`Doesn't add data import for non static queries 1`] = `
 "import staticQueryData from \\"public/static/d/4279313589.json\\";
 import React from 'react';

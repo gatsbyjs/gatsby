@@ -91,7 +91,7 @@ _Note_: The `forestry:preview` script can be named anything, but it must match t
 
 Now you can set up a content collection. Create the file `.forestry/front_matter/blog.yml` and paste in the following:
 
-```yml:title=.forestry/front_matter/blog.yml
+```yaml:title=.forestry/front_matter/blog.yml
 ---
 label: Blog
 hide_body: false
@@ -116,7 +116,7 @@ fields:
 
 Next, link the frontmatter collection in `.forestry/settings.yml`. This adds a template in the Forestry dashboard that allows you to add new Blog posts with the configured fields in the CMS.
 
-```yml:title=.forestry/settings.yml
+```yaml:title=.forestry/settings.yml
 ---
 new_page_extension: md
 auto_deploy: false

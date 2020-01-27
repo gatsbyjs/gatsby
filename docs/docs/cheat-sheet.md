@@ -157,7 +157,7 @@ Get the PDF: <a href="/gatsby-cheat-sheet.pdf" download>gatsby-cheat-sheet.pdf</
                     <p><code>-p, --port</code></p>
                 </td>
                 <td>
-                    <p>Set port. Defaults to <code>8000</code></p>
+                    <p>Set port. Defaults to env.PORT or <code>8000</code></p>
                 </td>
             </tr>
             <tr>
