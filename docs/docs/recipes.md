@@ -64,6 +64,7 @@ There are so many ways to add styles to your website; Gatsby supports almost eve
 
 A Gatsby theme lets you centralize the look-and-feel of your site. You can seamlessly update a theme, compose themes together, and even swap out one compatible theme for another.
 
+- [Creating a new site using a theme](/docs/recipes/working-with-themes#creating-a-new-site-using-a-theme)
 - [Creating a new site using a theme starter](/docs/recipes/working-with-themes#creating-a-new-site-using-a-theme-starter)
 - [Building a new theme](/docs/recipes/working-with-themes#building-a-new-theme)
 

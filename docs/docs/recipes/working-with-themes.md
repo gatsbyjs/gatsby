@@ -10,7 +10,7 @@ Found a theme you'd like to use on your project? Awesome! You can configure it f
 
 > If you'd like to take a look at more theme options, check out [list of themes](https://www.npmjs.com/search?q=gatsby-theme).
 
-### Prerequisities
+### Prerequisites
 
 Make sure you have the following installed:
 
@@ -60,9 +60,9 @@ module.exports = {
 }
 ```
 
-4. Run `yarn develop` , the theme should be avaliable at `http://localhost:8000/{basePath}`
+4. Run `yarn develop` , the theme should be available at `http://localhost:8000/{basePath}`
 
-> To learn how to further customize a theme,check out the avaliabe paths on [Gatsby-theme-blog Documentation](https://www.npmjs.com/package/gatsby-theme-blog).
+> To learn how to further customize a theme, check out the available paths on [Gatsby-theme-blog Documentation](https://www.npmjs.com/package/gatsby-theme-blog).
 
 ### Additional resources
 

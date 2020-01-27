@@ -2,8 +2,6 @@
 title: GraphQL Concepts
 ---
 
-import LayerModel from "../../www/src/components/layer-model"
-
 There are many options for loading data into React components. One of the most
 popular and powerful of these is a technology called
 [GraphQL](http://graphql.org/).

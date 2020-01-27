@@ -92,6 +92,18 @@ const gatsbyHighlightLanguageBadges = t => {
       content: `'jsx'`,
       background: `#61dafb`,
     },
+    ".gatsby-highlight pre[class='language-typescript']::before": {
+      content: `'ts'`,
+      background: `#294e80`,
+    },
+    ".gatsby-highlight pre[class='language-ts']::before": {
+      content: `'ts'`,
+      background: `#294e80`,
+    },
+    ".gatsby-highlight pre[class='language-tsx']::before": {
+      content: `'tsx'`,
+      background: `#294e80`,
+    },
     ".gatsby-highlight pre[class='language-graphql']::before": {
       content: `'GraphQL'`,
       background: `#E10098`,
