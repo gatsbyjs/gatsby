@@ -1,4 +1,5 @@
 const path = require(`path`)
+const langs = require(`./i18n.json`)
 require(`dotenv`).config({
   path: `.env.${process.env.NODE_ENV}`,
 })
@@ -50,6 +51,20 @@ if (process.env.AIRTABLE_API_KEY) {
       ],
     },
   })
+}
+
+if (process.env.ENABLE_LOCALIZATIONS) {
+  dynamicPlugins.push(
+    ...langs.map(({ code }) => ({
+      resolve: `gatsby-source-git`,
+      options: {
+        name: `docs-${code}`,
+        remote: `https://github.com/gatsbyjs/gatsby-${code}.git`,
+        branch: `master`,
+        patterns: `docs/tutorial/**`,
+      },
+    }))
+  )
 }
 
 module.exports = {

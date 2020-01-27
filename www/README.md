@@ -40,6 +40,16 @@ ANALYTICS_SERVICE_ACCOUNT="service account@email.com"
 ANALYTICS_SERVICE_ACCOUNT_KEY="PEM KEY VALUE"
 ```
 
+### Enabling localizations
+
+Localizations are currently a work-in-progress and are thus disabled by default. They can be enabled by setting the `ENABLE_LOCALIZATIONS` env variable:
+
+```shell
+ENABLE_LOCALIZATIONS=true
+```
+
+There is currently no UI to link to the localizations, so you'll have to type in the name of the file you want to go to using the language code (e.g. /es/tutorial/part-one).
+
 ## Running slow build? (Screenshots placeholder)
 
 If you are not working on a starter or site showcase, it might be beneficial to use a placeholder image instead of actual screenshots. It will skip downloading screenshots and generating responsive images for all screenshots and replace them with a placeholder image.

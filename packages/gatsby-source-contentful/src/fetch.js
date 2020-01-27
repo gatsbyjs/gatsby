@@ -93,33 +93,12 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`)
 
   let contentTypeItems = contentTypes.items
 
-  // Fix IDs on entries and assets, created/updated and deleted.
-  contentTypeItems = contentTypeItems.map(c => normalize.fixIds(c))
-
-  currentSyncData.entries = currentSyncData.entries.map(e => {
-    if (e) {
-      return normalize.fixIds(e)
-    }
-    return null
-  })
-  currentSyncData.assets = currentSyncData.assets.map(a => {
-    if (a) {
-      return normalize.fixIds(a)
-    }
-    return null
-  })
-  currentSyncData.deletedEntries = currentSyncData.deletedEntries.map(e => {
-    if (e) {
-      return normalize.fixIds(e)
-    }
-    return null
-  })
-  currentSyncData.deletedAssets = currentSyncData.deletedAssets.map(a => {
-    if (a) {
-      return normalize.fixIds(a)
-    }
-    return null
-  })
+  // Fix IDs (inline) on entries and assets, created/updated and deleted.
+  contentTypeItems.forEach(normalize.fixIds)
+  currentSyncData.entries.forEach(normalize.fixIds)
+  currentSyncData.assets.forEach(normalize.fixIds)
+  currentSyncData.deletedEntries.forEach(normalize.fixIds)
+  currentSyncData.deletedAssets.forEach(normalize.fixIds)
 
   const result = {
     currentSyncData,
