@@ -7,9 +7,11 @@ jest.mock(`fs-extra`, () => {
             cb()
           }
         }),
+        close: jest.fn(),
       }
     }),
     ensureDir: jest.fn(),
+    removeSync: jest.fn(),
     move: jest.fn(),
     stat: jest.fn(),
   }
@@ -213,6 +215,65 @@ describe(`create-remote-file-node`, () => {
             )
           )
         }
+      })
+
+      it(`retries if stalled`, async () => {
+        jest.useFakeTimers()
+        got.stream.mockReset()
+
+        got.stream.mockReturnValueOnce({
+          pipe: jest.fn(() => {
+            return {
+              pipe: jest.fn(),
+              on: jest.fn(),
+            }
+          }),
+          on: jest.fn((mockType, mockCallback) => {
+            if (mockType === `response`) {
+              expect(got.stream).toHaveBeenCalledTimes(1)
+              jest.advanceTimersByTime(1000)
+              expect(got.stream).toHaveBeenCalledTimes(1)
+              jest.advanceTimersByTime(30000)
+              expect(got.stream).toHaveBeenCalledTimes(2)
+
+              mockCallback({ statusCode: 200 })
+            }
+          }),
+        })
+        const result = setup()
+        jest.runAllTimers()
+        await result
+      })
+
+      it(`resets the stall timer when data is received`, async () => {
+        jest.useFakeTimers()
+        got.stream.mockReset()
+
+        got.stream.mockReturnValueOnce({
+          pipe: jest.fn(() => {
+            return {
+              pipe: jest.fn(),
+              on: jest.fn(),
+            }
+          }),
+          on: jest.fn((mockType, mockCallback) => {
+            if (mockType === `response`) {
+              expect(got.stream).toHaveBeenCalledTimes(1)
+              jest.advanceTimersByTime(1000)
+              expect(got.stream).toHaveBeenCalledTimes(1)
+              jest.advanceTimersByTime(30000)
+              expect(got.stream).toHaveBeenCalledTimes(1)
+
+              mockCallback({ statusCode: 200 })
+            }
+            if (mockType === `downloadProgress`) {
+              setTimeout(mockCallback, 20000)
+            }
+          }),
+        })
+        const result = setup()
+        jest.runAllTimers()
+        await result
       })
     })
   })
