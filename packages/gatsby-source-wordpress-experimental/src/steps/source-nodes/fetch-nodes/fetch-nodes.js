@@ -74,6 +74,9 @@ export const getContentTypeQueryInfos = () => {
   return queryInfos
 }
 
+export const getGatsbyNodeTypeNames = () =>
+  getContentTypeQueryInfos().map(query => query.typeInfo.nodesTypeName)
+
 /**
  * fetchWPGQLContentNodesByContentType
  *

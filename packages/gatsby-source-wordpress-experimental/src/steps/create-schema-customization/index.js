@@ -4,6 +4,7 @@ import { getContentTypeQueryInfos } from "~/steps/source-nodes/fetch-nodes/fetch
 import { fieldOfTypeWasFetched } from "./helpers"
 
 import buildType from "./build-types"
+import { getGatsbyNodeTypeNames } from "../source-nodes/fetch-nodes/fetch-nodes"
 
 /**
  * createSchemaCustomization
@@ -24,9 +25,7 @@ const createSchemaCustomization = async ({ actions, schema }) => {
 
   let typeDefs = []
 
-  const gatsbyNodeTypes = getContentTypeQueryInfos().map(
-    query => query.typeInfo.nodesTypeName
-  )
+  const gatsbyNodeTypes = getGatsbyNodeTypeNames()
 
   const typeBuilderApi = {
     typeDefs,
