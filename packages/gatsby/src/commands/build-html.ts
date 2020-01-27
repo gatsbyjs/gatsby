@@ -120,7 +120,7 @@ const doBuildPages = async (
   }
 }
 
-const buildHTML = async ({
+export const buildHTML = async ({
   program,
   stage,
   pagePaths,
@@ -137,5 +137,3 @@ const buildHTML = async ({
   await doBuildPages(rendererPath, pagePaths, activity, workerPool)
   await deleteRenderer(rendererPath)
 }
-
-export default buildHTML
