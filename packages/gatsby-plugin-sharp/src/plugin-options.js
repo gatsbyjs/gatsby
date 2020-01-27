@@ -25,6 +25,7 @@ const generalArgs = {
   toFormat: ``,
   toFormatBase64: ``,
   sizeByPixelDensity: false,
+  rotate: 0,
 }
 
 let pluginOptions = Object.assign({}, pluginDefaults)
@@ -150,7 +151,7 @@ exports.removeDefaultValues = (args, pluginOptions) => {
         : undefined,
     grayscale:
       args.grayscale !== generalArgs.grayscale ? args.grayscale : undefined,
-    rotate: args.rotate ? args.rotate : undefined,
+    rotate: args.rotate !== generalArgs.rotate ? args.rotate : undefined,
     trim: args.trim ? args.trim : undefined,
     duotone: args.duotone || undefined,
     fit: args.fit,
