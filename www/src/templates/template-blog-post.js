@@ -35,6 +35,7 @@ class BlogPostTemplate extends React.Component {
       </p>
     )
     let canonicalLink
+
     if (post.frontmatter.canonicalLink) {
       canonicalLink = (
         <link rel="canonical" href={post.frontmatter.canonicalLink} />

@@ -13,7 +13,7 @@ export interface CustomEventArgs {
   category: string
   action: string
   label?: string
-  value?: string
+  value?: number
   nonInteraction?: boolean
   transport?: "beacon" | "xhr" | "image"
   hitCallback?: Function

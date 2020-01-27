@@ -445,8 +445,8 @@
                 - title: Client-only Routes & User Authentication
                   link: /docs/client-only-routes-and-user-authentication/
                   breadcrumbTitle: Client Routes & User Auth
-            - title: Client Data Fetching
-              link: /docs/client-data-fetching/
+            - title: Build Time and Client-side Data Fetching
+              link: /docs/data-fetching/
             - title: Using Client-Side Only Packages
               link: /docs/using-client-side-only-packages/
             - title: Building an E-commerce Site
@@ -454,6 +454,8 @@
               items:
                 - title: Building an E-commerce Site with Shopify
                   link: /docs/building-an-ecommerce-site-with-shopify/
+                - title: Processing Payments with Stripe
+                  link: /docs/processing-payments-with-stripe/
         - title: Improving Performance
           link: /docs/performance/
           items:
@@ -568,6 +570,8 @@
           link: /docs/building-with-components/
         - title: Lifecycle APIs
           link: /docs/gatsby-lifecycle-apis/
+        - title: Gatsby Magic
+          link: /docs/gatsby-magic
         - title: React Hydration
           link: /docs/react-hydration
         - title: PRPL Pattern
@@ -719,10 +723,16 @@
       items:
         - title: GraphQL
           link: /docs/glossary/graphql
+        - title: Headless CMS
+          link: /docs/glossary/headless-cms/
+        - title: JAMStack
+          link: /docs/glossary/jamstack
         - title: Node.js
           link: /docs/glossary/node
         - title: React
           link: /docs/glossary/react
+        - title: webpack
+          link: /docs/glossary/webpack
     - title: Gatsby Telemetry
       link: /docs/telemetry/
     - title: Gatsby REPL

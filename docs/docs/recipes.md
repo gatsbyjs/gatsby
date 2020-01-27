@@ -64,6 +64,7 @@ There are so many ways to add styles to your website; Gatsby supports almost eve
 
 A Gatsby theme lets you centralize the look-and-feel of your site. You can seamlessly update a theme, compose themes together, and even swap out one compatible theme for another.
 
+- [Creating a new site using a theme](/docs/recipes/working-with-themes#creating-a-new-site-using-a-theme)
 - [Creating a new site using a theme starter](/docs/recipes/working-with-themes#creating-a-new-site-using-a-theme-starter)
 - [Building a new theme](/docs/recipes/working-with-themes#building-a-new-theme)
 
@@ -90,6 +91,7 @@ Gatsby lets you access your data across all sources using a single GraphQL inter
 - [Filtering with GraphQL](/docs/recipes/querying-data#filtering-with-graphql)
 - [GraphQL Query Aliases](/docs/recipes/querying-data#graphql-query-aliases)
 - [GraphQL Query Fragments](/docs/recipes/querying-data#graphql-query-fragments)
+- [Querying data client-side with fetch](/docs/recipes/querying-data#querying-data-client-side-with-fetch)
 
 ## [7. Working with images](/docs/recipes/working-with-images)
 

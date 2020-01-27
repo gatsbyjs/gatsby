@@ -254,8 +254,14 @@ const noscriptImg = props => {
 // Earlier versions of gatsby-image during the 2.x cycle did not wrap
 // the `Img` component in a `picture` element. This maintains compatibility
 // until a breaking change can be introduced in the next major release
-const Placeholder = ({ src, imageVariants, generateSources, spreadProps }) => {
-  const baseImage = <Img src={src} {...spreadProps} />
+const Placeholder = ({
+  src,
+  imageVariants,
+  generateSources,
+  spreadProps,
+  ariaHidden,
+}) => {
+  const baseImage = <Img src={src} {...spreadProps} ariaHidden={ariaHidden} />
 
   return imageVariants.length > 1 ? (
     <picture>
@@ -277,11 +283,14 @@ const Img = React.forwardRef((props, ref) => {
     onError,
     loading,
     draggable,
+    // `ariaHidden`props is used to exclude placeholders from the accessibility tree.
+    ariaHidden,
     ...otherProps
   } = props
 
   return (
     <img
+      aria-hidden={ariaHidden}
       sizes={sizes}
       srcSet={srcSet}
       src={src}
@@ -467,6 +476,7 @@ class Image extends React.Component {
         >
           {/* Preserve the aspect ratio. */}
           <Tag
+            aria-hidden
             style={{
               width: `100%`,
               paddingBottom: `${100 / image.aspectRatio}%`,
@@ -476,6 +486,7 @@ class Image extends React.Component {
           {/* Show a solid background color. */}
           {bgColor && (
             <Tag
+              aria-hidden
               title={title}
               style={{
                 backgroundColor: bgColor,
@@ -493,6 +504,7 @@ class Image extends React.Component {
           {/* Show the blurry base64 image. */}
           {image.base64 && (
             <Placeholder
+              ariaHidden
               src={image.base64}
               spreadProps={placeholderImageProps}
               imageVariants={imageVariants}
@@ -503,6 +515,7 @@ class Image extends React.Component {
           {/* Show the traced SVG image. */}
           {image.tracedSVG && (
             <Placeholder
+              ariaHidden
               src={image.tracedSVG}
               spreadProps={placeholderImageProps}
               imageVariants={imageVariants}
@@ -577,6 +590,7 @@ class Image extends React.Component {
           {/* Show a solid background color. */}
           {bgColor && (
             <Tag
+              aria-hidden
               title={title}
               style={{
                 backgroundColor: bgColor,
@@ -591,6 +605,7 @@ class Image extends React.Component {
           {/* Show the blurry base64 image. */}
           {image.base64 && (
             <Placeholder
+              ariaHidden
               src={image.base64}
               spreadProps={placeholderImageProps}
               imageVariants={imageVariants}
@@ -601,6 +616,7 @@ class Image extends React.Component {
           {/* Show the traced SVG image. */}
           {image.tracedSVG && (
             <Placeholder
+              ariaHidden
               src={image.tracedSVG}
               spreadProps={placeholderImageProps}
               imageVariants={imageVariants}

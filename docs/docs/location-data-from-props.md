@@ -33,7 +33,7 @@ Through client-side routing in Gatsby you can provide a location object instead 
 
 ## Example of providing state to a link component
 
-```js:title=index.js
+```jsx:title=index.js
 // usually you'd do this
 <Link to="/somepagecomponent"/>
 
@@ -46,7 +46,7 @@ Through client-side routing in Gatsby you can provide a location object instead 
 
 Then from the receiving component you can conditionally render markup based on the `location` state.
 
-```js:title=some-page-component.js
+```jsx:title=some-page-component.js
 const SomePageComponent = ({ location }) => {
   const { state = {} } = location
   const { modal } = state
