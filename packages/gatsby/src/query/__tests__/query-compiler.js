@@ -310,8 +310,34 @@ describe(`actual compiling`, () => {
         errors.push(e)
       },
     })
-    expect(errors).toEqual([])
-    expect(result.get(`mockFile`)).toMatchSnapshot()
+    expect(errors.length).toEqual(1)
+    expect(errors[0]).toMatchInlineSnapshot(
+      {
+        location: expect.any(Object),
+      },
+      `
+      Object {
+        "context": Object {
+          "sourceMessage": "Cannot spread fragment \\"Foo\\" within itself via Bar.
+
+      GraphQL request:17:13
+      16 |           children {
+      17 |             ...Bar
+         |             ^
+      18 |           }
+
+      GraphQL request:11:13
+      10 |           parent {
+      11 |             ...Foo
+         |             ^
+      12 |           }",
+        },
+        "filePath": "mockFile",
+        "id": "85901",
+        "location": Any<Object>,
+      }
+    `
+    )
   })
 
   it(`removes unused fragments from documents`, async () => {
