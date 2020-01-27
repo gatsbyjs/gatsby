@@ -30,7 +30,6 @@ module.exports = {
   plugins: [
     ...
     {
-      // Seams-CMS source plug
       resolve: 'seams-cms-gatsby-source',
       options: {
         workspace: <WORKSPACE_ID>,
