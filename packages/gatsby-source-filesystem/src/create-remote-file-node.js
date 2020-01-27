@@ -134,13 +134,19 @@ const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
     let timeout
 
     // Called if we stall for 30s without receiving any data
-    const handleTimeout = () => {
+    const handleTimeout = async () => {
       fsWriteStream.close()
       fs.removeSync(tmpFilename)
       if (attempt < RETRY_LIMIT) {
         // Retry by calling ourself recursively
         resolve(
-          requestRemoteNode(url, headers, tmpFilename, httpOpts, attempt + 1)
+          await requestRemoteNode(
+            url,
+            headers,
+            tmpFilename,
+            httpOpts,
+            attempt + 1
+          )
         )
       } else {
         reject(`Failed to download ${url} after ${RETRY_LIMIT} attempts`)
@@ -153,7 +159,7 @@ const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
       }
       timeout = setTimeout(handleTimeout, STALL_TIMEOUT)
     }
-
+    resetTimeout()
     const responseStream = got.stream(url, {
       headers,
       ...httpOpts,
