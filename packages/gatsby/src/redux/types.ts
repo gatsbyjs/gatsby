@@ -12,6 +12,7 @@ export interface IReduxState {
     }
   }[]
   nodesByType?: Map<any, any> // TODO
+  jobsV2: any // TODO
   lastAction: ActionsUnion
   componentDataDependencies: any // TODO
   components: any // TODO
@@ -131,4 +132,11 @@ export interface IPageQueryRunAction {
   plugin: Plugin
   traceId: string | undefined
   payload: { path: string; componentPath: string; isPage: boolean }
+}
+
+export interface IRemoveStaleJobAction {
+  type: `REMOVE_STALE_JOB_V2`
+  plugin: Plugin
+  traceId?: string
+  payload: { contentDigest: string }
 }

@@ -27,7 +27,7 @@ module.exports = async function getUnownedPackages({
   // set registry because yarn run hijacks registry
   if (!user) {
     user = await execP(
-      `npm_config_username="" npm whoami --registry https://registry.npmjs.org`
+      `cross-env npm_config_username="" npm whoami --registry https://registry.npmjs.org`
     )
       .then(({ stdout }) => stdout.trim())
       .catch(() => {

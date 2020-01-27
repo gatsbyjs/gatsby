@@ -31,6 +31,7 @@ export const readState = (): IReduxState => {
         state.nodesByType!.get(type).set(node.id, node)
       })
     }
+
     // jsonDataPaths was removed in the per-page-manifest
     // changes. Explicitly delete it here to cover case where user
     // runs gatsby the first time after upgrading.
@@ -70,6 +71,7 @@ export const saveState = (): void => {
     status: state.status,
     componentDataDependencies: state.componentDataDependencies,
     components: state.components,
+    jobsV2: state.jobsV2,
     staticQueryComponents: state.staticQueryComponents,
     webpackCompilationHash: state.webpackCompilationHash,
     pageDataStats: state.pageDataStats,

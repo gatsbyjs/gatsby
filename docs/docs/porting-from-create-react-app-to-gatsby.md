@@ -121,6 +121,7 @@ Some common globals that would need to be protected are:
 
 - `window`
 - `localStorage`
+- `sessionStorage`
 - `navigator`
 - `document`
 
