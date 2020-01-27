@@ -348,6 +348,12 @@ A UI refers to a User Interface. In the field of human-computer interaction, a U
 
 A [JavaScript](#javascript) application that Gatsby uses to bundle your website's code up. This happens automatically on [build](#build).
 
+### [WPGraphQL](/docs/glossary/wpgraphql)
+
+A WordPress plugin for that adds [GraphQL](#graphql) capabilities to WordPress. It's another way that you can use WordPress as a content source for Gatsby.
+
+A [JavaScript](#javascript) application that Gatsby uses to bundle your website's code up. This happens automatically on [build](#build).
+
 ## X
 
 ## Y
