@@ -5069,6 +5069,6 @@
     - Easily change the theme color
     - Post thumbnails in the homepage
     - Made for image-centric portfolios
-    - Using the London After Midnight is now “Dark mode” (the default), and the original London as “Light mode”. 
+    - Using the London After Midnight is now “Dark mode” (the default), and the original London as “Light mode”.
     - Removed Google Fonts, using system fonts in stead (for speed and privacy :)
-    - Use SASS 
+    - Use SASS
