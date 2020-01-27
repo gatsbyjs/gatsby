@@ -16,7 +16,7 @@ Eager for the details? **[Jump to the FAQ](#faqs)**.
 
 ### Try out Gatsby Builds & Reports today
 
-If you’re an existing Gatsby Cloud user you’ll find Builds and Reports already enabled in your account. New users can [sign up for a Gatsby Cloud account](https://www.gatsbyjs.com/get-started) to access these features alongside our[ previously launched real-time content Preview feature](/blog/2019-11-14-announcing-gatsby-cloud/).
+If you’re an existing Gatsby Cloud user you’ll find Builds and Reports already enabled in your account. New users can [sign up for a Gatsby Cloud account](https://www.gatsbyjs.com/get-started) to access these features alongside our [previously launched real-time content Preview feature](/blog/2019-11-14-announcing-gatsby-cloud/).
 
 ## Builds: making deploys as fast as our websites
 
