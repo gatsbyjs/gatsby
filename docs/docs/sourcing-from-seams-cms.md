@@ -46,9 +46,9 @@ module.exports = {
 
 Change `<WORKSPACE_ID>` and `<API_KEY>` into the ID of the workspace from your own Seams-CMS account and the newly generated API key inside that workspace. Within the `contentTypes` array, you can list all the IDs of the content types you'd like to import from Seams-CMS into your Gatsby site. For this tutorial, you'll only want to import the `blogpost` content.
 
-### Checking your connection
+## Checking your connection
 
-Next, run `gatsby develop` to fetch your blog posts from Seams-CMS:
+Run `gatsby develop` to fetch your blog posts from Seams-CMS:
 
 ```shell
 gatsby develop
@@ -97,9 +97,9 @@ query MyQuery {
 
 This will return the title, content, author name, and categories for each blog post.
 
-### Generating a blog post page
+## Generating a blog post page
 
-Now you can create a simple site with just one page holding all blog posts. You can do this by creating a template blog index file at `src/templates/blog-index.js` with the following content:
+You can create a simple site with just one page holding all blog posts. You can do this by creating a template blog index file at `src/templates/blog-index.js` with the following content:
 
 ```javascript:title=src/templates/blog-index.js
 import React from "react"
