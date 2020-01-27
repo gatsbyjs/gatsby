@@ -56,7 +56,8 @@ const fixIds = object => _fixIds(object)
 // number, prefix it with (an arbitrarily chosen) `c`, for "contentful".
 // The `front` tracks which objects have been visited to prevent infinite
 // recursion on cyclic structures.
-const _fixIds = (object, front = new Set()) => {
+const _fixIds = object => {
+  const alreadyWalkedObjectRefs = new Set()
   const objectsToProcess = [object]
 
   while (objectsToProcess.length !== 0) {
@@ -71,11 +72,11 @@ const _fixIds = (object, front = new Set()) => {
       continue
     }
 
-    if (front.has(current)) {
+    if (alreadyWalkedObjectRefs.has(current)) {
       continue
     }
 
-    front.add(current)
+    alreadyWalkedObjectRefs.add(current)
     Object.keys(current).forEach(key => {
       // The `contentful_id` is ours and we want to make sure we don't visit the
       // same node twice (this is possible if the same node appears in two
@@ -86,7 +87,11 @@ const _fixIds = (object, front = new Set()) => {
         current.sys.id = fixId(current.sys.id)
       }
 
-      if (!front.has(current[key])) {
+      if (
+        current[key] &&
+        typeof current[key] === `object` &&
+        !alreadyWalkedObjectRefs.has(current[key])
+      ) {
         objectsToProcess.push(current[key])
       }
     })
