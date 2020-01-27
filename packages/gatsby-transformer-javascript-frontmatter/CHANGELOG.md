@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-javascript-frontmatter@2.1.22...gatsby-transformer-javascript-frontmatter@2.1.23) (2020-01-09)
+
+**Note:** Version bump only for package gatsby-transformer-javascript-frontmatter
+
+## [2.1.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-javascript-frontmatter@2.1.20...gatsby-transformer-javascript-frontmatter@2.1.22) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-transformer-javascript-frontmatter
+
+## [2.1.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-javascript-frontmatter@2.1.20...gatsby-transformer-javascript-frontmatter@2.1.21) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-transformer-javascript-frontmatter
+
+## [2.1.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-javascript-frontmatter@2.1.19...gatsby-transformer-javascript-frontmatter@2.1.20) (2019-11-26)
+
+**Note:** Version bump only for package gatsby-transformer-javascript-frontmatter
+
+## [2.1.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-javascript-frontmatter@2.1.18...gatsby-transformer-javascript-frontmatter@2.1.19) (2019-11-15)
+
+**Note:** Version bump only for package gatsby-transformer-javascript-frontmatter
+
+## [2.1.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-javascript-frontmatter@2.1.17...gatsby-transformer-javascript-frontmatter@2.1.18) (2019-11-10)
+
+**Note:** Version bump only for package gatsby-transformer-javascript-frontmatter
+
+## [2.1.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-javascript-frontmatter@2.1.16...gatsby-transformer-javascript-frontmatter@2.1.17) (2019-11-05)
+
+### Bug Fixes
+
+- **gatsby-transformer-javascript-frontmatter:** use typescript parser instead of flow parser for typescript files ([#19271](https://github.com/gatsbyjs/gatsby/issues/19271)) ([97e5b2c](https://github.com/gatsbyjs/gatsby/commit/97e5b2c))
+
 ## [2.1.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-javascript-frontmatter@2.1.15...gatsby-transformer-javascript-frontmatter@2.1.16) (2019-10-28)
 
 ### Bug Fixes

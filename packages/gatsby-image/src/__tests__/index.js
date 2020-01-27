@@ -119,6 +119,22 @@ const setupImages = (
 }
 
 describe(`<Image />`, () => {
+  const OLD_MATCH_MEDIA = window.matchMedia
+  beforeEach(() => {
+    window.matchMedia = jest.fn(media =>
+      media === `only screen and (min-width: 1024px)`
+        ? {
+            matches: true,
+          }
+        : {
+            matches: false,
+          }
+    )
+  })
+  afterEach(() => {
+    window.matchMedia = OLD_MATCH_MEDIA
+  })
+
   it(`should render fixed size images`, () => {
     const component = setup()
     expect(component).toMatchSnapshot()
@@ -204,6 +220,66 @@ describe(`<Image />`, () => {
     expect(console.warn).toBeCalled()
   })
 
+  it(`should select the correct mocked image of fluid variants provided.`, () => {
+    const tripleFluidImageShapeMock = fluidImagesShapeMock.concat({
+      aspectRatio: 5,
+      src: `test_image_4.jpg`,
+      srcSet: `third other srcSet`,
+      srcSetWebp: `third other srcSetWebp`,
+      sizes: `(max-width: 1920px) 100vw, 1920px`,
+      base64: `string_of_base64`,
+      media: `only screen and (min-width: 1024px)`,
+    })
+    const { container } = render(
+      <Image
+        backgroundColor
+        className={`fluidArtDirectedImage`}
+        style={{ display: `inline` }}
+        title={`Title for the image`}
+        alt={`Alt text for the image`}
+        crossOrigin={`anonymous`}
+        fluid={tripleFluidImageShapeMock}
+        itemProp={`item-prop-for-the-image`}
+        placeholderStyle={{ color: `red` }}
+        placeholderClassName={`placeholder`}
+      />
+    )
+    const aspectPreserver = container.querySelector(`div div div`)
+    expect(aspectPreserver.getAttribute(`style`)).toEqual(
+      expect.stringMatching(/padding-bottom: 20%/)
+    )
+  })
+
+  it(`should select the correct mocked image of fixed variants provided.`, () => {
+    const tripleFixedImageShapeMock = fixedImagesShapeMock.concat({
+      width: 1024,
+      height: 768,
+      src: `test_image_4.jpg`,
+      srcSet: `third other srcSet`,
+      srcSetWebp: `third other srcSetWebp`,
+      base64: `string_of_base64`,
+      media: `only screen and (min-width: 1024px)`,
+    })
+    const { container } = render(
+      <Image
+        backgroundColor
+        className={`fixedArtDirectedImage`}
+        style={{ display: `inline` }}
+        title={`Title for the image`}
+        alt={`Alt text for the image`}
+        crossOrigin={`anonymous`}
+        fixed={tripleFixedImageShapeMock}
+        itemProp={`item-prop-for-the-image`}
+        placeholderStyle={{ color: `red` }}
+        placeholderClassName={`placeholder`}
+      />
+    )
+    const aspectPreserver = container.querySelector(`div div`)
+    expect(aspectPreserver.getAttribute(`style`)).toEqual(
+      expect.stringMatching(/width: 1024px; height: 768px;/)
+    )
+  })
+
   it(`should call onLoad and onError image events`, () => {
     const onLoadMock = jest.fn()
     const onErrorMock = jest.fn()
@@ -215,5 +291,30 @@ describe(`<Image />`, () => {
 
     expect(onLoadMock).toHaveBeenCalledTimes(1)
     expect(onErrorMock).toHaveBeenCalledTimes(1)
+  })
+
+  it(`should have an "aria-hidden" attribute on the fluid element`, () => {
+    const divTag = setup(true).querySelector(`.gatsby-image-wrapper > div`)
+    expect(divTag.getAttribute(`aria-hidden`)).toBe(`true`)
+  })
+
+  it(`should have an "aria-hidden" attribute on the background element`, () => {
+    const BgTag = setup(true).querySelector(`.gatsby-image-wrapper > div + div`)
+    expect(BgTag.getAttribute(`aria-hidden`)).toBe(`true`)
+  })
+
+  it(`should have an "aria-hidden" attribute on the Placeholder component when fluid`, () => {
+    const placeholderImageTag = setup(true).querySelector(`img`)
+    expect(placeholderImageTag.getAttribute(`aria-hidden`)).toBe(`true`)
+  })
+
+  it(`should have an "aria-hidden" attribute on the Placeholder component when fixed`, () => {
+    const placeholderImageTag = setup().querySelector(`img`)
+    expect(placeholderImageTag.getAttribute(`aria-hidden`)).toBe(`true`)
+  })
+
+  it(`should not have an "aria-hidden" attribute on the Image`, () => {
+    const placeholderImageTag = setup().querySelector(`picture img`)
+    expect(placeholderImageTag.getAttribute(`aria-hidden`)).toBe(null)
   })
 })

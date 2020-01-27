@@ -32,7 +32,7 @@ examples:
 - [Plugin README](/packages/gatsby-source-filesystem/)
 - [Starter README](https://github.com/gatsbyjs/gatsby-starter-default)
 
-Please see the [Docs templates](/contributing/docs-templates/) for guidelines on how to format the above kinds of documents.
+Please see the [Docs templates](/contributing/docs-templates/) for guidelines on how to format the above kinds of documents, as well as tips for different types of guide articles.
 
 ## Writing process
 
@@ -149,7 +149,7 @@ abstract syntax tree (AST) is ..."
 
 ### Use SEO optimized titles
 
-This explains how to create a doc that shows up in search engines like Google or Bing.
+This explains how to account for Search Engine Optimization (SEO) and create a doc that shows up in search engines like Google or Bing.
 
 When you create the new guide or tutorial under `/docs/`, you’ll either create a file or a folder if there will be images pulled into the doc.
 
@@ -385,7 +385,7 @@ For words that have multiple spellings, prefer the US English word over British 
 
 ### Use apps that help you edit
 
-Use the [Hemingway App](https://www.hemingwayapp.com/). There’s nothing magical
+Use the [Hemingway App](https://hemingwayapp.com/). There’s nothing magical
 about this tool, but it will automatically detect widely agreed-upon
 style issues:
 

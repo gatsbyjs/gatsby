@@ -11,6 +11,7 @@ const {
   uniqBy,
   flattenDeep,
   replace,
+  concat,
 } = require(`lodash`)
 
 const apiRunner = require(`./api-runner-ssr`)
@@ -269,7 +270,7 @@ export default (pagePath, callback) => {
 
       const childAssets = namedChunkGroups[s].childAssets
       for (const rel in childAssets) {
-        chunks = merge(
+        chunks = concat(
           chunks,
           childAssets[rel].map(chunk => {
             return { rel, name: chunk }

@@ -12,7 +12,7 @@ Gatsby, with its powerful UI toolset, serves as the “head” for your websites
 
 _**Note:** This guide uses the `gatsby-source-contentstack` plugin to create a Gatsby-powered site._
 
-## Build a Site with Contenstack and Gatsby
+## Build a site with Contentstack and Gatsby
 
 ### Step 1: Clone the starter repo and install dependencies
 
@@ -26,7 +26,7 @@ This downloads the required files and initializes the site.
 
 Create copies of the `env.sample` file for `.env.development`, `.env.production` and any other environment, then add the following stack details to each respective file:
 
-```
+```text
 CONTENTSTACK_API_KEY='apikey'
 CONTENTSTACK_ACCESS_TOKEN='deliverytoken'
 CONTENTSTACK_ENVIRONMENT='development' # or production, staging, etc.
@@ -55,7 +55,7 @@ After running this, you will be able to view your site at <http://localhost:8000
 
 Now, you will able to query Contentstack data. Try the query below to get the 'Home' content type data:
 
-```
+```graphql
 {
   contentstackHome {
     title
@@ -68,9 +68,9 @@ Now, you will able to query Contentstack data. Try the query below to get the 'H
 
 Go to the pages folder inside the src folder, and create a home.js file. Add the code below to it.
 
-```
-import React from 'react';
-import { graphql } from 'gatsby';
+```jsx
+import React from "react"
+import { graphql } from "gatsby"
 
 export default ({ data }) => {
   return (
@@ -91,7 +91,7 @@ export const pageQuery = graphql`
 
 This will display the title of your home page on <http://localhost:8000/home>. Likewise, you can query additional fields in your entry.
 
-## Closing Note
+## Closing note
 
 The above example is meant to demonstrate how to set up a simple Gatsby site that sources content directly from Contentstack. Contentstack has also published a few articles that demonstrate how Contentstack works with Gatsby in their [documentation](https://www.contentstack.com/docs/?utm_source=gatsby&utm_medium=referral&utm_campaign=2019_06_17_sourcing_from_contentstack):
 

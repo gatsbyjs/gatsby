@@ -128,7 +128,7 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
           </Button>
           <ShareMenu
             url={`https://github.com/${starter.githubFullName}`}
-            title={`Check out ${repoName} on the @Gatsby Starter Showcase!`}
+            title={`Check out ${repoName} on the @gatsbyjs Starter Showcase!`}
             image={imageSharp.childImageSharp.resize.src}
           />
         </div>

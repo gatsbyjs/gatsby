@@ -1,5 +1,6 @@
 const _ = require(`lodash`)
 const Promise = require(`bluebird`)
+const fetch = require(`node-fetch`)
 const path = require(`path`)
 const fs = require(`fs-extra`)
 const slash = require(`slash`)
@@ -7,12 +8,14 @@ const slugify = require(`slugify`)
 const url = require(`url`)
 const getpkgjson = require(`get-package-json-from-github`)
 const parseGHUrl = require(`parse-github-url`)
-const { GraphQLClient } = require(`graphql-request`)
+const { GraphQLClient } = require(`@jamo/graphql-request`)
 const moment = require(`moment`)
 const startersRedirects = require(`./starter-redirects.json`)
+const langs = require("./i18n.json")
 const {
   generateComparisonPageSet,
 } = require(`./src/utils/generate-comparison-page-set.js`)
+const { localizedPath } = require(`./src/utils/i18n.js`)
 const yaml = require(`js-yaml`)
 const docLinksData = yaml.load(
   fs.readFileSync(`./src/data/sidebars/doc-links.yaml`)
@@ -23,6 +26,7 @@ const tutorialLinksData = yaml.load(
 const contributingLinksData = yaml.load(
   fs.readFileSync(`./src/data/sidebars/contributing-links.yaml`)
 )
+const redirects = yaml.load(fs.readFileSync(`./redirects.yaml`))
 
 let ecosystemFeaturedItems
 
@@ -56,338 +60,21 @@ const slugToAnchor = slug =>
     .filter(item => item !== ``) // remove empty values
     .pop() // take last item
 
+const docSlugFromPath = parsedFilePath => {
+  if (parsedFilePath.name !== `index` && parsedFilePath.dir !== ``) {
+    return `/${parsedFilePath.dir}/${parsedFilePath.name}/`
+  } else if (parsedFilePath.dir === ``) {
+    return `/${parsedFilePath.name}/`
+  } else {
+    return `/${parsedFilePath.dir}/`
+  }
+}
+
 exports.createPages = ({ graphql, actions, reporter }) => {
   const { createPage, createRedirect } = actions
 
-  createRedirect({
-    fromPath: `/docs/themes/api-reference`,
-    toPath: `/docs/theme-api/`,
-    isPermanent: true,
-  })
-
-  createRedirect({
-    fromPath: `/docs/component-css/`, // Merged Component CSS and CSS Modules
-    toPath: `/docs/css-modules/`,
-    isPermanent: true,
-  })
-
-  createRedirect({
-    fromPath: `/blog/2018-10-25-unstructured-data/`,
-    toPath: `/blog/2018-10-25-using-gatsby-without-graphql/`,
-    isPermanent: true,
-  })
-
-  createRedirect({
-    fromPath: `/docs/using-unstructured-data/`,
-    toPath: `/docs/using-gatsby-without-graphql/`,
-    isPermanent: true,
-  })
-
-  // Random redirects
-  createRedirect({
-    fromPath: `/blog/2018-02-26-documentation-project/`, // Tweeted this link out then switched it
-    toPath: `/blog/2018-02-28-documentation-project/`,
-    isPermanent: true,
-  })
-
-  // Redirects for new top-level Contributing section
-  createRedirect({
-    fromPath: `/community/`, // Moved "Community" page from /community to /contributing/community
-    toPath: `/contributing/community/`,
-    isPermanent: true,
-  })
-  createRedirect({
-    fromPath: `/docs/community/`, // Moved "Community" page from /docs/community to /contributing/community
-    toPath: `/contributing/community/`,
-    isPermanent: true,
-  })
-  createRedirect({
-    fromPath: `/docs/deploying-to-now/`,
-    toPath: `/docs/deploying-to-zeit-now/`,
-    isPermanent: true,
-  })
-  createRedirect({
-    fromPath: `/docs/pair-programming/`,
-    toPath: `/contributing/pair-programming/`,
-    isPermanent: true,
-  })
-  createRedirect({
-    fromPath: `/docs/how-to-create-an-issue/`,
-    toPath: `/contributing/how-to-create-an-issue/`,
-    isPermanent: true,
-  })
-  createRedirect({
-    fromPath: `/docs/how-to-label-an-issue/`,
-    toPath: `/contributing/how-to-label-an-issue/`,
-    isPermanent: true,
-  })
-  createRedirect({
-    fromPath: `/docs/contributor-swag/`,
-    toPath: `/contributing/contributor-swag/`,
-    isPermanent: true,
-  })
-  createRedirect({
-    fromPath: `/docs/how-to-run-a-gatsby-workshop/`,
-    toPath: `/contributing/how-to-run-a-gatsby-workshop/`,
-    isPermanent: true,
-  })
-  createRedirect({
-    fromPath: `/docs/how-to-pitch-gatsby/`,
-    toPath: `/contributing/how-to-pitch-gatsby/`,
-    isPermanent: true,
-  })
-  createRedirect({
-    fromPath: `/docs/code-of-conduct/`,
-    toPath: `/contributing/code-of-conduct/`,
-    isPermanent: true,
-  })
-  createRedirect({
-    fromPath: `/docs/gatsby-style-guide/`,
-    toPath: `/contributing/gatsby-style-guide/`,
-    isPermanent: true,
-  })
-  createRedirect({
-    fromPath: `/docs/how-to-contribute/`,
-    toPath: `/contributing/how-to-contribute/`,
-    isPermanent: true,
-  })
-  createRedirect({
-    fromPath: `/docs/templates/`,
-    toPath: `/contributing/docs-templates/`,
-    isPermanent: true,
-  })
-  createRedirect({
-    fromPath: `/docs/site-showcase-submissions/`,
-    toPath: `/contributing/site-showcase-submissions/`,
-    isPermanent: true,
-  })
-  createRedirect({
-    fromPath: `/docs/submit-to-creator-showcase/`,
-    toPath: `/contributing/submit-to-creator-showcase/`,
-    isPermanent: true,
-  })
-  createRedirect({
-    fromPath: `/docs/submit-to-starter-library/`,
-    toPath: `/contributing/submit-to-starter-library/`,
-    isPermanent: true,
-  })
-  createRedirect({
-    fromPath: `/docs/submit-to-plugin-library/`,
-    toPath: `/contributing/submit-to-plugin-library/`,
-    isPermanent: true,
-  })
-  createRedirect({
-    fromPath: `/docs/rfc-process/`,
-    toPath: `/contributing/rfc-process/`,
-    isPermanent: true,
-  })
-
-  createRedirect({
-    fromPath: `/packages/`, // Moved "Plugins" page from /packages to /plugins
-    toPath: `/plugins/`,
-    isPermanent: true,
-  })
-
-  createRedirect({
-    fromPath: `/docs/netlify-cms/`,
-    toPath: `/docs/sourcing-from-netlify-cms/`,
-    isPermanent: true,
-  })
-  createRedirect({
-    fromPath: `/docs/sourcing-from-saas-services/`,
-    toPath: `/docs/sourcing-from-hosted-services/`,
-    isPermanent: true,
-  })
-
-  createRedirect({
-    fromPath: `/starter-showcase/`, // Moved "Starter Showcase" index page from /starter-showcase to /starters
-    toPath: `/starters/`,
-    isPermanent: true,
-  })
-
-  createRedirect({
-    fromPath: `/docs/gatsby-starters/`, // Main Gatsby starters page is the starter library
-    toPath: `/starters/`,
-    isPermanent: true,
-  })
-
-  createRedirect({
-    fromPath: `/docs/adding-third-party-services/`,
-    toPath: `/docs/adding-website-functionality/`,
-    isPermanent: true,
-  })
-
-  createRedirect({
-    fromPath: `/docs/bound-action-creators/`,
-    toPath: `/docs/actions/`,
-    isPermanent: true,
-  })
-
-  createRedirect({
-    fromPath: `/docs/bound-action-creators`,
-    toPath: `/docs/actions`,
-    isPermanent: true,
-  })
-
-  createRedirect({
-    fromPath: `/docs/adding-images-fonts-files`,
-    toPath: `/docs/importing-assets-into-files`,
-    isPermanent: true,
-  })
-
-  createRedirect({
-    fromPath: `/blog/2019-10-03-gatsby-perf`,
-    toPath: `/blog/2018-10-03-gatsby-perf`,
-    isPermanent: true,
-  })
-
-  createRedirect({
-    fromPath: `/docs/add-a-service-worker`,
-    toPath: `/docs/add-offline-support-with-a-service-worker`,
-    isPermanent: true,
-  })
-
-  createRedirect({
-    fromPath: `/docs/add-offline-support`,
-    toPath: `/docs/add-offline-support-with-a-service-worker`,
-    isPermanent: true,
-  })
-
-  createRedirect({
-    fromPath: `/docs/create-source-plugin/`,
-    toPath: `/docs/creating-a-source-plugin/`,
-    isPermanent: true,
-  })
-
-  createRedirect({
-    fromPath: `/docs/create-transformer-plugin/`,
-    toPath: `/docs/creating-a-transformer-plugin/`,
-    isPermanent: true,
-  })
-
-  createRedirect({
-    fromPath: `/docs/plugin-authoring/`,
-    toPath: `/docs/how-plugins-work/`,
-    isPermanent: true,
-  })
-
-  createRedirect({
-    fromPath: `/docs/source-plugin-tutorial/`,
-    toPath: `/docs/pixabay-source-plugin-tutorial/`,
-    isPermanent: true,
-  })
-
-  createRedirect({
-    fromPath: `/docs/how-plugins-work/`,
-    toPath: `/docs/plugins/`,
-    isPermanent: true,
-  })
-
-  createRedirect({
-    fromPath: `/blog/2018-2-16-how-to-build-a-website-with-react/`,
-    toPath: `/blog/2019-01-16-how-to-build-a-website-with-react/`,
-    isPermanent: true,
-  })
-
-  createRedirect({
-    fromPath: `/docs/advanced-tutorials/`,
-    toPath: `/tutorial/additional-tutorials/`,
-    isPermanent: true,
-  })
-  createRedirect({
-    fromPath: `/tutorial/advanced-tutorials/`,
-    toPath: `/tutorial/additional-tutorials/`,
-    isPermanent: true,
-  })
-  createRedirect({
-    fromPath: `/docs/authentication-tutorial/`,
-    toPath: `/tutorial/authentication-tutorial/`,
-    isPermanent: true,
-  })
-  createRedirect({
-    fromPath: `/docs/ecommerce-tutorial/`,
-    toPath: `/tutorial/ecommerce-tutorial/`,
-    isPermanent: true,
-  })
-  createRedirect({
-    fromPath: `/docs/image-tutorial/`,
-    toPath: `/tutorial/wordpress-image-tutorial/`,
-    isPermanent: true,
-  })
-  createRedirect({
-    fromPath: `/tutorial/image-tutorial/`,
-    toPath: `/tutorial/wordpress-image-tutorial/`,
-    isPermanent: true,
-  })
-  createRedirect({
-    fromPath: `/docs/wordpress-source-plugin-tutorial/`,
-    toPath: `/tutorial/wordpress-source-plugin-tutorial/`,
-    isPermanent: true,
-  })
-  createRedirect({
-    fromPath: `/docs/writing-documentation-with-docz/`,
-    toPath: `/tutorial/writing-documentation-with-docz/`,
-    isPermanent: true,
-  })
-
-  createRedirect({
-    fromPath: `/docs/behind-the-scenes/`,
-    toPath: `/docs/gatsby-internals/`,
-    isPermanent: true,
-  })
-
-  createRedirect({
-    fromPath: `/docs/behind-the-scenes-terminology/`,
-    toPath: `/docs/gatsby-internals-terminology/`,
-    isPermanent: true,
-  })
-
-  createRedirect({
-    fromPath: `/docs/themes/getting-started`,
-    toPath: `/docs/themes/using-a-gatsby-theme`,
-    isPermanent: true,
-  })
-
-  createRedirect({
-    fromPath: `/docs/themes/introduction`,
-    toPath: `/docs/themes/what-are-gatsby-themes`,
-    isPermanent: true,
-  })
-
-  createRedirect({
-    fromPath: `/docs/hosting-on-netlify/`,
-    toPath: `/docs/deploying-to-netlify/`,
-    isPermanent: true,
-  })
-
-  createRedirect({
-    fromPath: `/docs/querying-with-graphql/`,
-    toPath: `/docs/graphql-concepts/`,
-    isPermanent: true,
-  })
-
-  createRedirect({
-    fromPath: `/docs/introducing-graphiql/`,
-    toPath: `/docs/running-queries-with-graphiql/`,
-    isPermanent: true,
-  })
-
-  createRedirect({
-    fromPath: `/docs/life-and-times-of-a-gatsby-build/`,
-    toPath: `/docs/overview-of-the-gatsby-build-process/`,
-    isPermanent: true,
-  })
-
-  createRedirect({
-    fromPath: `/docs/awesome-gatsby/`,
-    toPath: `/docs/awesome-gatsby-resources/`,
-    isPermanent: true,
-  })
-
-  createRedirect({
-    fromPath: `/docs/using-fragments/`,
-    toPath: `/docs/using-graphql-fragments/`,
-    isPermanent: true,
+  redirects.forEach(redirect => {
+    createRedirect({ isPermanent: true, ...redirect })
   })
 
   Object.entries(startersRedirects).forEach(([fromSlug, toSlug]) => {
@@ -434,6 +121,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
             node {
               fields {
                 slug
+                locale
                 package
                 released
               }
@@ -724,6 +412,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
 
       docPages.forEach(({ node }) => {
         const slug = _.get(node, `fields.slug`)
+        const locale = _.get(node, `fields.locale`)
         if (!slug) return
 
         if (!_.includes(slug, `/blog/`)) {
@@ -769,12 +458,13 @@ exports.createPages = ({ graphql, actions, reporter }) => {
           }
 
           createPage({
-            path: `${node.fields.slug}`, // required
+            path: localizedPath(locale, node.fields.slug),
             component: slash(
               node.fields.package ? localPackageTemplate : docsTemplate
             ),
             context: {
               slug: node.fields.slug,
+              locale,
               ...nextAndPrev,
             },
           })
@@ -822,13 +512,6 @@ exports.createPages = ({ graphql, actions, reporter }) => {
         })
       }
 
-      // redirecting cypress-gatsby => gatsby-cypress
-      createRedirect({
-        fromPath: `/packages/cypress-gatsby/`,
-        toPath: `/packages/gatsby-cypress/`,
-        isPermanent: true,
-      })
-
       // Read featured starters and plugins for Ecosystem
       ecosystemFeaturedItems = result.data.allEcosystemYaml.edges[0].node
 
@@ -841,16 +524,12 @@ exports.createPages = ({ graphql, actions, reporter }) => {
 exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
   const { createNodeField } = actions
   let slug
+  let locale
   if (node.internal.type === `File`) {
     const parsedFilePath = path.parse(node.relativePath)
+    // TODO add locale data for non-MDX files
     if (node.sourceInstanceName === `docs`) {
-      if (parsedFilePath.name !== `index` && parsedFilePath.dir !== ``) {
-        slug = `/${parsedFilePath.dir}/${parsedFilePath.name}/`
-      } else if (parsedFilePath.dir === ``) {
-        slug = `/${parsedFilePath.name}/`
-      } else {
-        slug = `/${parsedFilePath.dir}/`
-      }
+      slug = docSlugFromPath(parsedFilePath)
     }
     if (slug) {
       createNodeField({ node, name: `slug`, value: slug })
@@ -863,13 +542,8 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
     const parsedFilePath = path.parse(fileNode.relativePath)
     // Add slugs for docs pages
     if (fileNode.sourceInstanceName === `docs`) {
-      if (parsedFilePath.name !== `index` && parsedFilePath.dir !== ``) {
-        slug = `/${parsedFilePath.dir}/${parsedFilePath.name}/`
-      } else if (parsedFilePath.dir === ``) {
-        slug = `/${parsedFilePath.name}/`
-      } else {
-        slug = `/${parsedFilePath.dir}/`
-      }
+      slug = docSlugFromPath(parsedFilePath)
+      locale = "en"
 
       // Set released status and `published at` for blog posts.
       if (_.includes(parsedFilePath.dir, `blog`)) {
@@ -892,6 +566,16 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
         })
       }
     }
+
+    for (let { code } of langs) {
+      if (fileNode.sourceInstanceName === `docs-${code}`) {
+        // have to remove the beginning "/docs" path because of the way
+        // gatsby-source-filesystem and gatsby-source-git differ
+        slug = docSlugFromPath(path.parse(fileNode.relativePath.substring(5)))
+        locale = code
+      }
+    }
+
     // Add slugs for package READMEs.
     if (
       fileNode.sourceInstanceName === `packages` &&
@@ -908,6 +592,9 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
     if (slug) {
       createNodeField({ node, name: `anchor`, value: slugToAnchor(slug) })
       createNodeField({ node, name: `slug`, value: slug })
+    }
+    if (locale) {
+      createNodeField({ node, name: `locale`, value: locale })
     }
   } else if (node.internal.type === `AuthorYaml`) {
     slug = `/contributors/${slugify(node.id, {
@@ -1094,7 +781,11 @@ exports.onPostBuild = () => {
 }
 
 // XXX this should probably be a plugin or something.
-exports.sourceNodes = ({ actions: { createTypes }, schema }) => {
+exports.sourceNodes = async ({
+  actions: { createTypes, createNode },
+  createContentDigest,
+  schema,
+}) => {
   /*
    * NOTE: This _only_ defines the schema we currently query for. If anything in
    * the query at `src/pages/contributing/events.js` changes, we need to make
@@ -1147,6 +838,23 @@ exports.sourceNodes = ({ actions: { createTypes }, schema }) => {
   `
 
   createTypes(typeDefs)
+
+  // get data from GitHub API at build time
+  const result = await fetch(`https://api.github.com/repos/gatsbyjs/gatsby`)
+  const resultData = await result.json()
+  // create node for build time data example in the docs
+  createNode({
+    nameWithOwner: resultData.full_name,
+    url: resultData.html_url,
+    // required fields
+    id: `example-build-time-data`,
+    parent: null,
+    children: [],
+    internal: {
+      type: `Example`,
+      contentDigest: createContentDigest(resultData),
+    },
+  })
 }
 
 exports.onCreateWebpackConfig = ({ actions, plugins }) => {

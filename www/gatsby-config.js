@@ -1,4 +1,5 @@
 const path = require(`path`)
+const langs = require(`./i18n.json`)
 require(`dotenv`).config({
   path: `.env.${process.env.NODE_ENV}`,
 })
@@ -50,6 +51,20 @@ if (process.env.AIRTABLE_API_KEY) {
       ],
     },
   })
+}
+
+if (process.env.ENABLE_LOCALIZATIONS) {
+  dynamicPlugins.push(
+    ...langs.map(({ code }) => ({
+      resolve: `gatsby-source-git`,
+      options: {
+        name: `docs-${code}`,
+        remote: `https://github.com/gatsbyjs/gatsby-${code}.git`,
+        branch: `master`,
+        patterns: `docs/tutorial/**`,
+      },
+    }))
+  )
 }
 
 module.exports = {
@@ -133,8 +148,8 @@ module.exports = {
           )
         },
         gatsbyRemarkPlugins: [
+          `gatsby-remark-embedder`,
           `gatsby-remark-graphviz`,
-          `gatsby-remark-embed-video`,
           {
             resolve: `gatsby-remark-images`,
             options: {
@@ -158,8 +173,8 @@ module.exports = {
       resolve: `gatsby-transformer-remark`,
       options: {
         plugins: [
+          `gatsby-remark-embedder`,
           `gatsby-remark-graphviz`,
-          `gatsby-remark-embed-video`,
           `gatsby-remark-code-titles`,
           {
             resolve: `gatsby-remark-images`,
@@ -305,7 +320,14 @@ module.exports = {
         ],
       },
     },
-    `gatsby-plugin-netlify`,
+    {
+      resolve: `gatsby-plugin-netlify`,
+      options: {
+        headers: {
+          "/*": [`Referrer-Policy: strict-origin-when-cross-origin`],
+        },
+      },
+    },
     `gatsby-plugin-netlify-cache`,
     {
       resolve: `gatsby-plugin-mailchimp`,

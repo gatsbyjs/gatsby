@@ -126,7 +126,7 @@ exports.onCreateNode = onCreateNode
 
 File content:
 
-```text
+```yaml
 - id: Jane Doe
   bio: Developer based in Somewhere, USA
 - id: John Smith

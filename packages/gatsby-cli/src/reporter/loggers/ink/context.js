@@ -8,9 +8,10 @@ export const StoreStateProvider = ({ children }) => {
   const [state, setState] = useState(getStore().getState())
 
   useEffect(() => {
-    onLogAction(() => {
+    const unsubscribe = onLogAction(() => {
       setState(getStore().getState())
     })
+    return unsubscribe
   }, [])
 
   return (
