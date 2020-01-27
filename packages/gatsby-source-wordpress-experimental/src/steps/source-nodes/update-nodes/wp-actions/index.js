@@ -26,7 +26,7 @@ export const getWpActions = async (__, { url }, variables) => {
   // can prefer actions at the top of the list.
   const actionabledIds = []
   const actions = data.actionMonitorActions.nodes.filter(action => {
-    const id = action.referencedPostGlobalRelayID
+    const id = action.referencedNodeGlobalRelayID
 
     // check if an action with the same id exists
     const actionExists = actionabledIds.find(

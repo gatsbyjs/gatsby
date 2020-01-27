@@ -10,7 +10,7 @@ const wpActionCREATE = async ({
   wpAction,
 }) => {
   // if this post isn't published, we don't want it.
-  if (wpAction.referencedPostStatus !== `publish`) {
+  if (wpAction.referencedNodeStatus !== `publish`) {
     return cachedNodeIds
   }
 
@@ -20,7 +20,7 @@ const wpActionCREATE = async ({
   // so get the right gql query from redux
   const { nodeQueries } = store.getState().remoteSchema
   const queryInfo = Object.values(nodeQueries).find(
-    q => q.typeInfo.singularName === wpAction.referencedPostSingularName
+    q => q.typeInfo.singularName === wpAction.referencedNodeSingularName
   )
   const { nodeQueryString: query } = queryInfo
 
@@ -28,14 +28,14 @@ const wpActionCREATE = async ({
   const { data } = await fetchGraphql({
     query,
     variables: {
-      id: wpAction.referencedPostGlobalRelayID,
+      id: wpAction.referencedNodeGlobalRelayID,
     },
   })
-  const nodeContent = data[wpAction.referencedPostSingularName]
+  const nodeContent = data[wpAction.referencedNodeSingularName]
 
   // create a node from it
   const { actions, createContentDigest } = helpers
-  const nodeId = wpAction.referencedPostGlobalRelayID
+  const nodeId = wpAction.referencedNodeGlobalRelayID
 
   const node = {
     ...nodeContent,
@@ -57,15 +57,15 @@ const wpActionCREATE = async ({
     helpers.reporter.log(``)
     helpers.reporter.info(
       formatLogMessage(
-        `created ${wpAction.referencedPostSingularName}${
+        `created ${wpAction.referencedNodeSingularName}${
           verbose
             ? `
 
   {
-    ${wpAction.referencedPostSingularName}Id: ${wpAction.referencedPostID},
+    ${wpAction.referencedNodeSingularName}Id: ${wpAction.referencedNodeID},
     id: ${nodeId}
   }`
-            : ` ${wpAction.referencedPostID}`
+            : ` ${wpAction.referencedNodeID}`
         }`
       )
     )

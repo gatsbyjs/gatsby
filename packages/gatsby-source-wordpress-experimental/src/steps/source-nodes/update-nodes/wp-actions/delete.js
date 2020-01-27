@@ -5,22 +5,22 @@ const wpActionDELETE = async ({ helpers, cachedNodeIds, wpAction }) => {
   const { reporter, actions, getNode } = helpers
 
   // get the node ID from the WPGQL id
-  const nodeId = wpAction.referencedPostGlobalRelayID
+  const nodeId = wpAction.referencedNodeGlobalRelayID
 
   const { verbose } = store.getState().gatsbyApi.pluginOptions
 
   reporter.log(``)
   reporter.info(
     formatLogMessage(
-      `deleted ${wpAction.referencedPostSingularName}${
+      `deleted ${wpAction.referencedNodeSingularName}${
         verbose
           ? `
 
   {
-    ${wpAction.referencedPostSingularName}Id: ${wpAction.referencedPostID},
+    ${wpAction.referencedNodeSingularName}Id: ${wpAction.referencedNodeID},
     id: ${nodeId}
   }`
-          : ` ${wpAction.referencedPostID}`
+          : ` ${wpAction.referencedNodeID}`
       }`
     )
   )

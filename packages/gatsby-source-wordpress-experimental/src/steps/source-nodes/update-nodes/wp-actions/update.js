@@ -20,27 +20,27 @@ const wpActionUPDATE = async ({
     remoteSchema: { nodeQueries },
   } = state
 
-  const nodeId = wpAction.referencedPostGlobalRelayID
+  const nodeId = wpAction.referencedNodeGlobalRelayID
 
-  if (wpAction.referencedPostStatus !== `publish`) {
+  if (wpAction.referencedNodeStatus !== `publish`) {
     // if the post status isn't publish anymore, we need to remove the node
     // by removing it from cached nodes so it's garbage collected by Gatsby
     return cachedNodeIds.filter(cachedId => cachedId !== nodeId)
   }
 
   const { nodeQueryString: query, typeInfo } = Object.values(nodeQueries).find(
-    q => q.typeInfo.singularName === wpAction.referencedPostSingularName
+    q => q.typeInfo.singularName === wpAction.referencedNodeSingularName
   )
 
   const { data } = await fetchGraphql({
     query,
     variables: {
-      id: wpAction.referencedPostGlobalRelayID,
+      id: wpAction.referencedNodeGlobalRelayID,
     },
   })
 
   const updatedNodeContent = {
-    ...data[wpAction.referencedPostSingularName],
+    ...data[wpAction.referencedNodeSingularName],
     nodeType: typeInfo.nodesTypeName,
     type: typeInfo.nodesTypeName,
   }
@@ -70,8 +70,8 @@ const wpActionUPDATE = async ({
     reporter.log(``)
     reporter.info(
       formatLogMessage(
-        `${chalk.bold(`updated ${wpAction.referencedPostSingularName}`)} #${
-          wpAction.referencedPostID
+        `${chalk.bold(`updated ${wpAction.referencedNodeSingularName}`)} #${
+          wpAction.referencedNodeID
         }`
       )
     )

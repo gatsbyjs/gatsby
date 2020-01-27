@@ -8,11 +8,11 @@ export const actionMonitorQuery = gql`
   query GET_ACTION_MONITOR_ACTIONS($since: Float!) {
     actionMonitorActions(where: { sinceTimestamp: $since }) {
       nodes {
-        referencedPostID
-        referencedPostStatus
-        referencedPostGlobalRelayID
-        referencedPostSingularName
-        referencedPostPluralName
+        referencedNodeID
+        referencedNodeStatus
+        referencedNodeGlobalRelayID
+        referencedNodeSingularName
+        referencedNodePluralName
         actionType
       }
     }

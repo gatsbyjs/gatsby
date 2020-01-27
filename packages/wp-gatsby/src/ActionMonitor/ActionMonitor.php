@@ -133,12 +133,8 @@ class ActionMonitor
         }
     }
 
-    /**
-     * Add post meta to schema
-     */
-    function registerGraphQLFields()
-    {
-        add_action(
+    function registerPostGraphQLFields() {
+      add_action(
             'graphql_register_types',
             function () {
                 register_graphql_field(
@@ -159,7 +155,7 @@ class ActionMonitor
                 );
                 register_graphql_field(
                     'ActionMonitorAction',
-                    'referencedPostStatus',
+                    'referencedNodeStatus',
                     [
                         'type' => 'String',
                         'description' => __(
@@ -178,7 +174,7 @@ class ActionMonitor
                 );
                 register_graphql_field(
                     'ActionMonitorAction',
-                    'referencedPostID',
+                    'referencedNodeID',
                     [
                         'type' => 'String',
                         'description' => __(
@@ -197,7 +193,7 @@ class ActionMonitor
                 );
                 register_graphql_field(
                     'ActionMonitorAction',
-                    'referencedPostGlobalRelayID',
+                    'referencedNodeGlobalRelayID',
                     [
                         'type' => 'String',
                         'description' => __(
@@ -216,7 +212,7 @@ class ActionMonitor
                 );
                 register_graphql_field(
                     'ActionMonitorAction',
-                    'referencedPostSingularName',
+                    'referencedNodeSingularName',
                     [
                         'type' => 'String',
                         'description' => __(
@@ -235,7 +231,7 @@ class ActionMonitor
                 );
                 register_graphql_field(
                     'ActionMonitorAction',
-                    'referencedPostPluralName',
+                    'referencedNodePluralName',
                     [
                         'type' => 'String',
                         'description' => __(
@@ -277,6 +273,14 @@ class ActionMonitor
                 );
             }
         );
+    }
+
+    /**
+     * Add post meta to schema
+     */
+    function registerGraphQLFields()
+    {
+        $this->registerPostGraphQLFields();
     }
 
     /**
