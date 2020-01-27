@@ -23,8 +23,23 @@ exports.onPreInit = ({ store }, { component }) => {
   absoluteComponentPath = component
 }
 
-exports.onCreateWebpackConfig = ({ actions, plugins }) => {
+exports.onCreateWebpackConfig = ({ stage, actions, plugins }) => {
+  const isDevelop = stage.startsWith(`develop`)
   actions.setWebpackConfig({
+    ...(isDevelop && {
+      module: {
+        rules: [
+          {
+            test: input => input === absoluteComponentPath,
+            use: [
+              {
+                loader: require.resolve(`react-hot-loader-loader`),
+              },
+            ],
+          },
+        ],
+      },
+    }),
     plugins: [
       plugins.define({
         GATSBY_LAYOUT_COMPONENT_PATH: JSON.stringify(absoluteComponentPath),

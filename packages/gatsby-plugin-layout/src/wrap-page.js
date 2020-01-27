@@ -1,17 +1,9 @@
 const React = require(`react`)
 
-let hot
-if (process.env.NODE_ENV === `development`) {
-    hot = require(`react-hot-loader/root`).hot
-}
-
 const preferDefault = m => (m && m.default) || m
 let Layout
 try {
   Layout = preferDefault(require(GATSBY_LAYOUT_COMPONENT_PATH))
-  if (hot) {
-    Layout = hot(Layout)
-  }
 } catch (e) {
   if (e.toString().indexOf(`Error: Cannot find module`) !== -1) {
     throw new Error(
