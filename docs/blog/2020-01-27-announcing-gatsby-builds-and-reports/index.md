@@ -72,18 +72,18 @@ In addition, we’re building a **Site Budgets** feature which will let you set 
 Gatsby was open sourced nearly five years ago, and since then hundreds of thousands of people have used it to build for the web. In that time we've learned a lot about making builds fast, and are now applying that knowledge on Gatsby Cloud.
 There are three ways to make builds faster:
 
-### 1: Optimize individual operations
+### 1. Optimize individual operations
 
 Build systems do many things. **Reducing individual operation times will lead to faster builds**.
 We've spent years improving Gatsby's complex build system to optimize it from beginning to end. This includes many contributions to upstream open source projects that benefit the broader web community.
 
-### 2: Distribute more work
+### 2. Distribute more work
 
 Even if individual operations are very fast, the overall build can be made even faster by **distributing individual operations across many machines**.
 
 Many parts of the Gatsby build are "[embarrassingly parallel](https://en.wikipedia.org/wiki/Embarrassingly_parallel)", making them perfect for distribution across many machines. Work that takes minutes on a conventional single process build will take seconds on Gatsby Cloud as it's split across hundreds of parallel cloud functions.
 
-### 3: Intelligent Caching
+### 3. Intelligent Caching
 
 By tracking dependencies between operations and their outputs **Gatsby Builds intelligently avoids re-executing redundant parts of the build**.
 
