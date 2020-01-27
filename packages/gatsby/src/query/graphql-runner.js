@@ -59,7 +59,7 @@ class GraphQLRunner {
 
     const result =
       errors.length > 0
-        ? { errors }
+        ? Promise.resolve({ errors })
         : execute({
             schema,
             document,
