@@ -62,7 +62,7 @@ But good defaults are only one part of making a website the best it can be. Perf
 
 We’ve solved this problem with **Reports**: a persistent auditing service that uses Chrome’s Lighthouse tool to catch problems with performance, accessibility, SEO, and other best practices.
 
-![Screenshot of Gatsby Cloud builds with Chrome Lighthouse reports](./gatsby-lightouse.png)
+![Screenshot of Gatsby Cloud builds with Chrome Lighthouse reports](./gatsby-lighthouse.png)
 
 We'll be adding more auditing tools in the future to ensure that you’re always shipping the best possible applications.
 In addition, we’re building a **Site Budgets** feature which will let you set speed and accessibility thresholds for key pages on your site. If a PR leads to changes that exceed your budget limits it will be blocked. This helps you and your team iterate and ship with confidence.
