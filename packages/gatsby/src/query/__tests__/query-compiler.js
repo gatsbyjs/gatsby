@@ -276,6 +276,44 @@ describe(`actual compiling`, () => {
     expect(result.get(`mockFile`)).toMatchSnapshot()
   })
 
+  it(`handles circular fragments`, async () => {
+    const nodes = [
+      createGatsbyDoc(
+        `mockFile`,
+        `query mockFileQuery {
+          allDirectory {
+            nodes {
+              ...Foo
+            }
+          }
+        }
+
+        fragment Bar on Directory {
+          parent {
+            ...Foo
+          }
+        }
+
+        fragment Foo on Directory {
+          children {
+            ...Bar
+          }
+        }`
+      ),
+    ]
+
+    const errors = []
+    const result = processQueries({
+      schema,
+      parsedQueries: nodes,
+      addError: e => {
+        errors.push(e)
+      },
+    })
+    expect(errors).toEqual([])
+    expect(result.get(`mockFile`)).toMatchSnapshot()
+  })
+
   it(`removes unused fragments from documents`, async () => {
     const nodes = [
       createGatsbyDoc(
@@ -543,7 +581,7 @@ describe(`actual compiling`, () => {
          5 |              }
          6 |           }
          7 |         }
-         8 | 
+         8 |
          9 |         fragment PostsJsonFragment on PostsJson {
         10 |           id
         11 |           node
@@ -571,7 +609,7 @@ describe(`actual compiling`, () => {
          5 |              }
          6 |           }
          7 |         }
-         8 | 
+         8 |
       >  9 |         fragment PostsJsonFragment on PostsJson {
            |                  ^^^^^^^^^^^^^^^^^
         10 |           id
