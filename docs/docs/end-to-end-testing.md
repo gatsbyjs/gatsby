@@ -97,10 +97,9 @@ You'll use the `beforeEach` hook to run some commands before each test. After cy
 /// <reference types="Cypress" />
 
 describe("Accessibility checks", () => {
-  beforeEach(() => {
+  before(() => {
     cy.visit("/")
     cy.injectAxe()
-    cy.wait(500)
   })
   it("Has no detectable a11y violations on load", () => {
     cy.checkA11y()
@@ -120,10 +119,9 @@ The following test is for the [gatsby-default-starter](https://github.com/gatsby
 /// <reference types="Cypress" />
 
 describe("Accessibility checks", () => {
-  beforeEach(() => {
+  before(() => {
     cy.visit("/")
     cy.injectAxe()
-    cy.wait(500)
   })
   it("Has no detectable a11y violations on load", () => {
     cy.checkA11y()
@@ -146,10 +144,9 @@ In `gatsby-default-starter` homepage you can write another test that focuses on 
 /// <reference types="Cypress" />
 
 describe("Accessibility checks", () => {
-  beforeEach(() => {
+  before(() => {
     cy.visit("/")
     cy.injectAxe()
-    cy.wait(500)
   })
   it("Has no detectable a11y violations on load", () => {
     cy.checkA11y()
