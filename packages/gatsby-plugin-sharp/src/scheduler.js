@@ -61,6 +61,18 @@ const scheduleJob = async (job, boundActionCreators, reporter) => {
     return cloudJob
   }
 
+  // If output file already exists don't re-run image processing
+  // this has been in here from the beginning, job api v2 does this correct
+  // to not break existing behahaviour we put this in here too.
+  job.args.operations = job.args.operations.filter(
+    operation => !fs.existsSync(path.join(job.outputDir, operation.outputPath))
+  )
+
+  if (!job.args.operations.length) {
+    jobsInFlight.set(jobDigest, Promise.resolve())
+    return jobsInFlight.get(jobDigest)
+  }
+
   const jobId = uuidv4()
   boundActionCreators.createJob(
     {
