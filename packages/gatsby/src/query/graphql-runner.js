@@ -59,7 +59,7 @@ class GraphQLRunner {
 
     const result =
       errors.length > 0
-        ? Promise.resolve({ errors })
+        ? { errors }
         : execute({
             schema,
             document,
@@ -78,7 +78,7 @@ class GraphQLRunner {
     // cache just wastes memory without much benefits.
     // TODO: consider a better strategy for cache purging/invalidation
     this.scheduleClearCache()
-    return result
+    return Promise.resolve(result)
   }
 }
 
