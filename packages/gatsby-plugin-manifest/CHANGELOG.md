@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.39](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.2.38...gatsby-plugin-manifest@2.2.39) (2020-01-27)
+
+### Bug Fixes
+
+- **gatsby-plugin-manifest:** fixes icons not getting asset pre… ([#20142](https://github.com/gatsbyjs/gatsby/issues/20142)) ([0e8ed07](https://github.com/gatsbyjs/gatsby/commit/0e8ed07))
+
 ## [2.2.38](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.2.37...gatsby-plugin-manifest@2.2.38) (2020-01-23)
 
 **Note:** Version bump only for package gatsby-plugin-manifest
