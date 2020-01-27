@@ -9532,3 +9532,14 @@
   built_by: mnishiguchi
   built_by_url: https://mnishiguchi.com
   featured: false
+- title: Calisthenics Skills
+  main_url: https://www.calisthenicsskills.com
+  url: https://www.calisthenicsskills.com
+  description: >
+    A beautiful fitness progress tracker built on Gatsby.
+  categories:
+    - Fitness
+    - App
+  built_by: Andrico Karoulla
+  built_by_url: https://andri.co
+  featured: false
