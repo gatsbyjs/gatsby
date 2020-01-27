@@ -439,6 +439,24 @@ describe(`NodeModel`, () => {
           expect(result[0].id).toBe(`file1`)
           expect(result[1].id).toBe(`file3`)
         })
+
+        it(`handles elemMatch`, async () => {
+          const type = `Post`
+          const query = {
+            filter: {
+              nestedObject: { elemMatch: { nestedValue: { eq: `2` } } },
+            },
+          }
+          const firstOnly = true
+          nodeModel.replaceTypeKeyValueCache(createIndexCache())
+          const result = await nodeModel.runQuery({
+            query,
+            firstOnly,
+            type,
+          })
+          expect(result).toBeDefined()
+          expect(result.id).toEqual(`post2`)
+        })
       })
     })
 
