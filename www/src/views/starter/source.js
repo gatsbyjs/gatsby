@@ -3,6 +3,7 @@ import { jsx } from "theme-ui"
 import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 import TechWithIcon from "../../components/tech-with-icon"
 import GithubIcon from "react-icons/lib/fa/github"
+import { CodesandboxIcon } from "../../assets/vendor-logos/codesandbox.svg"
 import { NetlifyIcon } from "../../assets/vendor-logos/netlify.svg"
 
 const Source = ({ startersYaml, repoUrl }) => (
@@ -66,6 +67,16 @@ const Source = ({ startersYaml, repoUrl }) => (
       >
         Try this starter
       </span>
+      <a
+        href={`https://codesandbox.io/s/github/${startersYaml.fields.owner}/${startersYaml.fields.stub}`}
+        sx={{
+          "&&": {
+            borderBottom: 0,
+          },
+        }}
+      >
+        <TechWithIcon icon={CodesandboxIcon}>CodeSandbox</TechWithIcon>
+      </a>, 
       <a
         href={`https://app.netlify.com/start/deploy?repository=${repoUrl}`}
         sx={{
