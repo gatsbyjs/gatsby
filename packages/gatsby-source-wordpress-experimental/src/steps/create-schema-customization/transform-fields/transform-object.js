@@ -1,19 +1,19 @@
 import { buildTypeName } from "~/steps/create-schema-customization/helpers"
 
-export const transformListOfObjects = ({ field }) => {
+export const transformListOfGatsbyNodes = ({ field }) => {
   const typeName = buildTypeName(field.type.ofType.name)
 
   return {
     type: `[${typeName}]`,
     resolve: (source, _, context) => {
-      if (source.nodes.length) {
-        return context.nodeModel.getNodesByIds({
-          ids: source.nodes.map(node => node.id),
-          type: typeName,
-        })
-      } else {
+      if (!source || !source.nodes || !source.nodes.length) {
         return null
       }
+
+      return context.nodeModel.getNodesByIds({
+        ids: source.nodes.map(node => node.id),
+        type: typeName,
+      })
     },
   }
 }

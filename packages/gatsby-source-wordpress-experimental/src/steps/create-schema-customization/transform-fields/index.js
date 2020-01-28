@@ -1,4 +1,4 @@
-import { transformMap } from "./transformer-map"
+import { fieldTransformers } from "./field-transformers"
 import {
   fieldOfTypeWasFetched,
   typeIsASupportedScalar,
@@ -29,6 +29,8 @@ const handleCustomScalars = field => {
   return field
 }
 
+// this is used to alias fields that conflict with Gatsby node fields
+// for ex Gatsby and WPGQL both have a `parent` field
 const getAliasedFieldName = ({ fieldAliases, field }) =>
   fieldAliases && fieldAliases[field.name]
     ? fieldAliases[field.name]
@@ -66,8 +68,6 @@ export const transformFields = ({ fields, fieldAliases, fieldBlacklist }) => {
   return fields.reduce((fieldsObject, field) => {
     const thisTypeSettings = getTypeSettingsByType(field.type)
 
-    // this is used to alias fields that conflict with Gatsby node fields
-    // for ex Gatsby and WPGQL both have a `parent` field
     const fieldName = getAliasedFieldName({ fieldAliases, field })
 
     if (excludeField({ field, fieldName, thisTypeSettings, fieldBlacklist })) {
@@ -76,7 +76,8 @@ export const transformFields = ({ fields, fieldAliases, fieldBlacklist }) => {
 
     field = handleCustomScalars(field)
 
-    const { transform } = transformMap.find(({ test }) => test(field)) || {}
+    const { transform } =
+      fieldTransformers.find(({ test }) => test(field)) || {}
 
     if (transform && typeof transform === `function`) {
       fieldsObject[fieldName] = transform({
