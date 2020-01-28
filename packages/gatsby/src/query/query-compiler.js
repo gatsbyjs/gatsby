@@ -445,7 +445,7 @@ const determineUsedFragmentsForDefinition = (
         const name = node.name.value
         const fragmentDefinition = definitionsByName.get(name)
         if (visitedFragmentDefinitions.has(fragmentDefinition)) {
-          return undefined
+          return
         }
         visitedFragmentDefinitions.add(fragmentDefinition)
         if (fragmentDefinition) {
