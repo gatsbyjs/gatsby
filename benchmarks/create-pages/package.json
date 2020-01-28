@@ -14,6 +14,6 @@
     "react-dom": "^16.12.0"
   },
   "devDependencies": {
-    "gatsby-plugin-benchmark-reporting": "^0.0.1"
+    "gatsby-plugin-benchmark-reporting": "*"
   }
 }

@@ -22,7 +22,7 @@
     "react-helmet": "^5.2.1"
   },
   "devDependencies": {
-    "gatsby-plugin-benchmark-reporting": "^0.0.1"
+    "gatsby-plugin-benchmark-reporting": "*"
   },
   "keywords": [
     "gatsby"

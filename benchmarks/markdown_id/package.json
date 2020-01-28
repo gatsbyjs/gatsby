@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "faker": "^4.1.0",
-    "gatsby-plugin-benchmark-reporting": "^0.0.1"
+    "gatsby-plugin-benchmark-reporting": "*"
   },
   "keywords": [
     "gatsby"
