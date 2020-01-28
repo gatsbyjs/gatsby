@@ -48,7 +48,7 @@
     "gatsby-remark-autolink-headers": "^2.1.19",
     "gatsby-remark-code-titles": "^1.1.0",
     "gatsby-remark-copy-linked-files": "^2.1.31",
-    "gatsby-remark-embedder": "^1.6.0",
+    "gatsby-remark-embedder": "^1.11.0",
     "gatsby-remark-graphviz": "^1.1.18",
     "gatsby-remark-images": "^3.1.35",
     "gatsby-remark-normalize-paths": "^1.0.0",

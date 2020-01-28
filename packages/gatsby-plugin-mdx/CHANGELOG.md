@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.68](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.67...gatsby-plugin-mdx@1.0.68) (2020-01-28)
+
+### Bug Fixes
+
+- **gatsby-plugin-mdx:** Pass node API helpers from onCreateNode and sourceNodes to remark plugins ([#20879](https://github.com/gatsbyjs/gatsby/issues/20879)) ([cd150b5](https://github.com/gatsbyjs/gatsby/commit/cd150b5))
+
 ## [1.0.67](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.0.66...gatsby-plugin-mdx@1.0.67) (2020-01-09)
 
 **Note:** Version bump only for package gatsby-plugin-mdx

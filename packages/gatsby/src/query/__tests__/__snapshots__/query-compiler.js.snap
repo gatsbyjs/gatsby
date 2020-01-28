@@ -1,5 +1,662 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Extra fields adds __typename field to abstract types 1`] = `
+Object {
+  "hash": "hash",
+  "isHook": false,
+  "isStaticQuery": false,
+  "name": "mockFileQuery",
+  "originalText": "
+      query mockFileQuery {
+        allDirectory {
+          nodes {
+            contents {
+              ... on File {
+                id
+              }
+            }
+            children {
+              id
+            }
+          }
+        }
+      }
+    ",
+  "path": "mockFile",
+  "text": "query mockFileQuery {
+  allDirectory {
+    nodes {
+      id
+      contents {
+        __typename
+        ... on File {
+          id
+        }
+      }
+      children {
+        __typename
+        id
+      }
+    }
+  }
+}
+",
+}
+`;
+
+exports[`Extra fields adds __typename field to abstract types in the query of arbitrary depth 1`] = `
+Object {
+  "hash": "hash",
+  "isHook": false,
+  "isStaticQuery": false,
+  "name": "mockFileQuery",
+  "originalText": "
+      query mockFileQuery {
+        allDirectory {
+          nodes {
+            contents {
+              ... on Directory {
+                contents {
+                  ... on Directory {
+                    contents {
+                      ... on Directory {
+                        id
+                      }
+                    }
+                    children {
+                      id
+                    }
+                  }
+                }
+              }
+            }
+            children {
+              children {
+                children {
+                  id
+                }
+                ... on Directory {
+                  contents {
+                    ... on File {
+                      id
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ",
+  "path": "mockFile",
+  "text": "query mockFileQuery {
+  allDirectory {
+    nodes {
+      id
+      contents {
+        __typename
+        ... on Directory {
+          id
+          contents {
+            __typename
+            ... on Directory {
+              id
+              contents {
+                __typename
+                ... on Directory {
+                  id
+                }
+              }
+              children {
+                __typename
+                id
+              }
+            }
+          }
+        }
+      }
+      children {
+        __typename
+        id
+        children {
+          __typename
+          id
+          children {
+            __typename
+            id
+          }
+          ... on Directory {
+            id
+            contents {
+              __typename
+              ... on File {
+                id
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+",
+}
+`;
+
+exports[`Extra fields adds __typename field to abstract types within fragments 1`] = `
+Object {
+  "hash": "hash",
+  "isHook": false,
+  "isStaticQuery": false,
+  "name": "mockFileQuery",
+  "originalText": "
+      query mockFileQuery {
+        allDirectory {
+          nodes {
+            ...DirectoryContents
+          }
+        }
+      }
+      fragment DirectoryContents on Directory {
+        contents {
+          ... on File {
+            id
+          }
+        }
+        children {
+          id
+        }
+      }
+    ",
+  "path": "mockFile",
+  "text": "fragment DirectoryContents on Directory {
+  id
+  contents {
+    __typename
+    ... on File {
+      id
+    }
+  }
+  children {
+    __typename
+    id
+  }
+}
+
+query mockFileQuery {
+  allDirectory {
+    nodes {
+      id
+      ...DirectoryContents
+    }
+  }
+}
+",
+}
+`;
+
+exports[`Extra fields adds __typename field to abstract types within inline fragments 1`] = `
+Object {
+  "hash": "hash",
+  "isHook": false,
+  "isStaticQuery": false,
+  "name": "mockFileQuery",
+  "originalText": "
+      query mockFileQuery {
+        allDirectory {
+          nodes {
+            ... on Directory {
+              contents {
+                ... on File {
+                  id
+                }
+              }
+              children {
+                id
+              }
+            }
+          }
+        }
+      }
+    ",
+  "path": "mockFile",
+  "text": "query mockFileQuery {
+  allDirectory {
+    nodes {
+      id
+      ... on Directory {
+        id
+        contents {
+          __typename
+          ... on File {
+            id
+          }
+        }
+        children {
+          __typename
+          id
+        }
+      }
+    }
+  }
+}
+",
+}
+`;
+
+exports[`Extra fields adds id field if type has it 1`] = `
+Object {
+  "hash": "hash",
+  "isHook": false,
+  "isStaticQuery": false,
+  "name": "mockFileQuery",
+  "originalText": "
+      query mockFileQuery {
+        allDirectory {
+          nodes {
+            __typename
+          }
+        }
+      }
+    ",
+  "path": "mockFile",
+  "text": "query mockFileQuery {
+  allDirectory {
+    nodes {
+      id
+      __typename
+    }
+  }
+}
+",
+}
+`;
+
+exports[`Extra fields adds id field in the query of arbitrary depth 1`] = `
+Object {
+  "hash": "hash",
+  "isHook": false,
+  "isStaticQuery": false,
+  "name": "mockFileQuery",
+  "originalText": "
+      query mockFileQuery {
+        allDirectory {
+          nodes {
+            contents {
+              ... on Directory {
+                contents {
+                  ... on Directory {
+                    contents {
+                      ... on File {
+                        __typename
+                      }
+                      ... on Directory {
+                        __typename
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            children {
+              children {
+                children {
+                  __typename
+                }
+                ... on Directory {
+                  contents {
+                    ... on File {
+                      __typename
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ",
+  "path": "mockFile",
+  "text": "query mockFileQuery {
+  allDirectory {
+    nodes {
+      id
+      contents {
+        __typename
+        ... on Directory {
+          id
+          contents {
+            __typename
+            ... on Directory {
+              id
+              contents {
+                __typename
+                ... on File {
+                  id
+                  __typename
+                }
+                ... on Directory {
+                  id
+                  __typename
+                }
+              }
+            }
+          }
+        }
+      }
+      children {
+        __typename
+        id
+        children {
+          __typename
+          id
+          children {
+            id
+            __typename
+          }
+          ... on Directory {
+            id
+            contents {
+              __typename
+              ... on File {
+                id
+                __typename
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+",
+}
+`;
+
+exports[`Extra fields adds id field within fragment if type has it 1`] = `
+Object {
+  "hash": "hash",
+  "isHook": false,
+  "isStaticQuery": false,
+  "name": "mockFileQuery",
+  "originalText": "
+      query mockFileQuery {
+        allDirectory {
+          nodes {
+            ... Directory
+          }
+        }
+      }
+      fragment Directory on Directory {
+        __typename
+      }
+
+    ",
+  "path": "mockFile",
+  "text": "fragment Directory on Directory {
+  id
+  __typename
+}
+
+query mockFileQuery {
+  allDirectory {
+    nodes {
+      id
+      ...Directory
+    }
+  }
+}
+",
+}
+`;
+
+exports[`Extra fields adds id field within inline fragment if type has it 1`] = `
+Object {
+  "hash": "hash",
+  "isHook": false,
+  "isStaticQuery": false,
+  "name": "mockFileQuery",
+  "originalText": "
+      query mockFileQuery {
+        allDirectory {
+          nodes {
+            ... on Directory {
+              __typename
+            }
+          }
+        }
+      }
+    ",
+  "path": "mockFile",
+  "text": "query mockFileQuery {
+  allDirectory {
+    nodes {
+      id
+      ... on Directory {
+        id
+        __typename
+      }
+    }
+  }
+}
+",
+}
+`;
+
+exports[`Extra fields doesn't add __typename field to abstract types twice 1`] = `
+Object {
+  "hash": "hash",
+  "isHook": false,
+  "isStaticQuery": false,
+  "name": "mockFileQuery",
+  "originalText": "
+      query mockFileQuery {
+        allDirectory {
+          nodes {
+            contents {
+              __typename
+              ... on File {
+                id
+              }
+              ... FileOrDirectory
+            }
+            children {
+              __typename
+              ... Node
+            }
+            ... on Directory {
+              contents {
+                __typename
+              }
+              children {
+                __typename
+              }
+            }
+            ...DirectoryContents
+          }
+        }
+      }
+
+      fragment DirectoryContents on Directory {
+        contents {
+          __typename
+        }
+        children {
+          __typename
+        }
+      }
+
+      fragment FileOrDirectory on FileOrDirectory {
+        __typename
+      }
+
+      fragment Node on Node {
+        __typename
+      }
+    ",
+  "path": "mockFile",
+  "text": "fragment FileOrDirectory on FileOrDirectory {
+  __typename
+}
+
+fragment Node on Node {
+  id
+  __typename
+}
+
+fragment DirectoryContents on Directory {
+  id
+  contents {
+    __typename
+  }
+  children {
+    id
+    __typename
+  }
+}
+
+query mockFileQuery {
+  allDirectory {
+    nodes {
+      id
+      contents {
+        __typename
+        ... on File {
+          id
+        }
+        ...FileOrDirectory
+      }
+      children {
+        id
+        __typename
+        ...Node
+      }
+      ... on Directory {
+        id
+        contents {
+          __typename
+        }
+        children {
+          id
+          __typename
+        }
+      }
+      ...DirectoryContents
+    }
+  }
+}
+",
+}
+`;
+
+exports[`Extra fields doesn't add id field twice 1`] = `
+Object {
+  "hash": "hash",
+  "isHook": false,
+  "isStaticQuery": false,
+  "name": "mockFileQuery",
+  "originalText": "
+      query mockFileQuery {
+        allDirectory {
+          nodes {
+            id
+            contents {
+              ... on File {
+                id
+              }
+              ... on Directory {
+                id
+              }
+            }
+            children {
+              id
+              ... Node
+            }
+            ... on Directory {
+              id
+              children {
+                id
+              }
+            }
+            ...DirectoryContents
+          }
+        }
+      }
+
+      fragment DirectoryContents on Directory {
+        contents {
+          ... on File {
+            id
+          }
+          ... on Directory {
+            id
+          }
+        }
+        children {
+          id
+        }
+      }
+
+      fragment Node on Node {
+        id
+      }
+    ",
+  "path": "mockFile",
+  "text": "fragment Node on Node {
+  __typename
+  id
+}
+
+fragment DirectoryContents on Directory {
+  id
+  contents {
+    __typename
+    ... on File {
+      id
+    }
+    ... on Directory {
+      id
+    }
+  }
+  children {
+    __typename
+    id
+  }
+}
+
+query mockFileQuery {
+  allDirectory {
+    nodes {
+      id
+      contents {
+        __typename
+        ... on File {
+          id
+        }
+        ... on Directory {
+          id
+        }
+      }
+      children {
+        __typename
+        id
+        ...Node
+      }
+      ... on Directory {
+        id
+        children {
+          __typename
+          id
+        }
+      }
+      ...DirectoryContents
+    }
+  }
+}
+",
+}
+`;
+
 exports[`actual compiling accepts identical fragment definitions 1`] = `
 Map {
   "mockFile" => Object {
@@ -26,6 +683,7 @@ Map {
 query mockFileQuery {
   allPostsJson {
     nodes {
+      id
       ...PostsJsonFragment
     }
   }
@@ -56,6 +714,7 @@ Object {
 query mockFileQuery {
   allPostsJson {
     nodes {
+      id
       ...PostsJsonFragment
     }
   }
@@ -89,6 +748,7 @@ Object {
 query mockFileQuery {
   allPostsJson {
     nodes {
+      id
       ...PostsJsonFragment
     }
   }
@@ -235,12 +895,14 @@ Object {
 }
 
 fragment AnotherPostsJsonFragment on PostsJson {
+  id
   text
 }
 
 query mockFileQuery {
   allPostsJson {
     nodes {
+      id
       ...PostsJsonFragment
     }
   }
@@ -278,6 +940,7 @@ Object {
 query mockFileQuery {
   allPostsJson {
     nodes {
+      id
       ...PostsJsonFragment
     }
   }

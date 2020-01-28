@@ -28,6 +28,14 @@ const nodes = [
     parent: `file1`,
     children: [],
     internal: { type: `Post`, contentDigest: `0` },
+    nestedObject: [
+      {
+        nestedValue: `1`,
+      },
+      {
+        nestedValue: `3`,
+      },
+    ],
     frontmatter: {
       authors: [`person1`],
       reviewers: [`person1`, `person2`],
@@ -40,6 +48,11 @@ const nodes = [
     parent: `file2`,
     children: [],
     internal: { type: `Post`, contentDigest: `0` },
+    nestedObject: [
+      {
+        nestedValue: `2`,
+      },
+    ],
     frontmatter: {
       authors: [`person1`, `person2`],
       reviewers: [],
