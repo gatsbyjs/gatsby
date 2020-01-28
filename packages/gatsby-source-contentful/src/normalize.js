@@ -60,8 +60,8 @@ const fixIds = object => _fixIds(object)
 // The `front` tracks which objects have been visited to prevent infinite
 // recursion on cyclic structures.
 const _fixIds = object => {
-  const alreadyWalkedObjectRefs = new Set()
   const objectsToProcess = [object]
+  const alreadyWalkedObjectRefs = new Set(objectsToProcess)
 
   while (objectsToProcess.length !== 0) {
     const current = objectsToProcess.pop()
