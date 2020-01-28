@@ -1,9 +1,9 @@
-const langs = require("../../i18n.json")
-const defaultLang = "en"
+const langs = require(`../../i18n.json`)
+const defaultLang = `en`
 
 const langCodes = langs.map(lang => lang.code)
 
-const localizedSections = ["tutorial"]
+const localizedSections = [`tutorial`]
 
 function isDefaultLang(locale) {
   return locale === defaultLang
@@ -22,7 +22,7 @@ function localizedPath(locale, path) {
     return path
   }
 
-  const [, base] = path.split("/")
+  const [, base] = path.split(`/`)
 
   // If for whatever reason we receive an already localized path
   // (e.g. if the path was made with location.pathname)
@@ -49,9 +49,9 @@ function localizedPath(locale, path) {
  * @param {string} path the path to extract locale information from
  */
 function getLocaleAndBasePath(path) {
-  const [, code, ...rest] = path.split("/")
+  const [, code, ...rest] = path.split(`/`)
   if (langCodes.includes(code)) {
-    return { locale: code, basePath: `/${rest.join("/")}` }
+    return { locale: code, basePath: `/${rest.join(`/`)}` }
   }
   return { locale: defaultLang, basePath: path }
 }
