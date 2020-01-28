@@ -28,7 +28,7 @@ const wpActionUPDATE = async ({
     return cachedNodeIds.filter(cachedId => cachedId !== nodeId)
   }
 
-  const { nodeQueryString: query, typeInfo } = Object.values(nodeQueries).find(
+  const { nodeQuery: query, typeInfo } = Object.values(nodeQueries).find(
     q => q.typeInfo.singularName === wpAction.referencedNodeSingularName
   )
 

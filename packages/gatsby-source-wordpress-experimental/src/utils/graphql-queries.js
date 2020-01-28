@@ -50,6 +50,9 @@ export const introspectionQuery = gql`
           kind
           name
         }
+        enumValues {
+          name
+        }
         ofType {
           kind
           name

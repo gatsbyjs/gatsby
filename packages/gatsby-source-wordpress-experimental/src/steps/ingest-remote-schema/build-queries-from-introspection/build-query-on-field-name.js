@@ -1,21 +1,28 @@
 import compress from "graphql-query-compress"
 
-export const buildNodesQueryOnFieldName = ({ fields, fieldName, postTypes }) =>
+export const buildNodesQueryOnFieldName = ({
+  fields,
+  fieldName,
+  postTypes,
+  queryVariables = ``,
+  fieldVariables = ``,
+}) =>
   compress(
     buildQuery({
       queryName: `NODE_LIST_QUERY`,
-      variables: `$first: Int!, $after: String`,
+      variables: `$first: Int!, $after: String, ${queryVariables}`,
       fieldName,
       fieldVariables: `first: $first, after: $after ${
-        postTypes.length &&
         // this is temporary until we can get a flat list of posts
         // https://github.com/wp-graphql/wp-graphql/issues/928
+        postTypes &&
+        postTypes.length &&
         postTypes
           .map(postType => postType.fieldNames.plural)
           .includes(fieldName)
           ? `, where: { parent: null }`
           : ``
-      }`,
+      }, ${fieldVariables}`,
       fields: [
         {
           fieldName: `pageInfo`,

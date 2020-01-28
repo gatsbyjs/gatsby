@@ -25,6 +25,31 @@ const gatsbyApi = {
         ContentNode: {
           nodeInterface: true,
         },
+        MenuItem: {
+          nodeListQueries: ({
+            name,
+            store,
+            transformedFields,
+            helpers: { buildNodesQueryOnFieldName },
+          }) => {
+            const menuLocationEnumValues = store
+              .getState()
+              .remoteSchema.introspectionData.__schema.types.find(
+                type => type.name === `MenuLocationEnum`
+              )
+              .enumValues.map(value => value.name)
+
+            const queries = menuLocationEnumValues.map(enumValue =>
+              buildNodesQueryOnFieldName({
+                fields: transformedFields,
+                fieldName: name,
+                fieldVariables: `where: { location: ${enumValue} }`,
+              })
+            )
+
+            return queries
+          },
+        },
       },
     },
   },

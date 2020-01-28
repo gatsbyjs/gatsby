@@ -19,7 +19,7 @@ export const fetchWPGQLContentNodes = async ({
   const { reporter } = helpers
   const { url, verbose } = pluginOptions
 
-  const { listQueryString, typeInfo, settings } = queryInfo
+  const { nodeListQueries, typeInfo, settings } = queryInfo
 
   const activity = reporter.activityTimer(
     formatLogMessage(typeInfo.nodesTypeName)
@@ -29,19 +29,25 @@ export const fetchWPGQLContentNodes = async ({
     activity.start()
   }
 
-  const allNodesOfContentType = await paginatedWpNodeFetch({
-    first: 100,
-    after: null,
-    contentTypePlural: typeInfo.pluralName,
-    nodeTypeName: typeInfo.nodesTypeName,
-    query: listQueryString,
-    url,
-    activity,
-    helpers,
-    settings,
-    allContentNodes,
-    ...variables,
-  })
+  let allNodesOfContentType = []
+
+  for (const nodeListQuery of nodeListQueries) {
+    const contentNodes = await paginatedWpNodeFetch({
+      first: 100,
+      after: null,
+      contentTypePlural: typeInfo.pluralName,
+      nodeTypeName: typeInfo.nodesTypeName,
+      query: nodeListQuery,
+      url,
+      activity,
+      helpers,
+      settings,
+      allContentNodes,
+      ...variables,
+    })
+
+    allNodesOfContentType = [...allNodesOfContentType, ...contentNodes]
+  }
 
   if (verbose) {
     activity.end()

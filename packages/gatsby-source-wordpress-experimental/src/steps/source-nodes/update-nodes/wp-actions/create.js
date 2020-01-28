@@ -22,7 +22,7 @@ const wpActionCREATE = async ({
   const queryInfo = Object.values(nodeQueries).find(
     q => q.typeInfo.singularName === wpAction.referencedNodeSingularName
   )
-  const { nodeQueryString: query } = queryInfo
+  const { nodeQuery: query } = queryInfo
 
   // fetch the new post
   const { data } = await fetchGraphql({

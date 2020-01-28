@@ -60,11 +60,13 @@ const generateNodeQueriesFromIngestibleFields = async () => {
 
     const { fields } = nodesType
 
-    const settings = getTypeSettingsByType(nodesType.name)
+    const settings = getTypeSettingsByType(nodesType)
 
-    if (settings.nodeInterface || settings.exclude) {
+    if (settings.exclude) {
       continue
     }
+
+    let nodeListQueries = []
 
     const singleTypeInfo = rootFields.find(
       field => field.type.name === nodesType.name
@@ -76,16 +78,46 @@ const generateNodeQueriesFromIngestibleFields = async () => {
 
     const selectionSet = buildSelectionSet(transformedFields)
 
-    const listQueryString = buildNodesQueryOnFieldName({
-      fields: transformedFields,
-      fieldName: name,
-      postTypes,
-    })
-
-    const nodeQueryString = buildNodeQueryOnFieldName({
+    const nodeQuery = buildNodeQueryOnFieldName({
       fields: transformedFields,
       fieldName: singleFieldName,
     })
+
+    if (
+      settings.nodeListQueries &&
+      typeof settings.nodeListQueries === `function`
+    ) {
+      const queries = settings.nodeListQueries({
+        name,
+        fields,
+        postTypes,
+        selectionSet,
+        singleFieldName,
+        singleTypeInfo,
+        settings,
+        store,
+        remoteSchema,
+        transformedFields,
+        helpers: {
+          recursivelyTransformFields,
+          buildNodesQueryOnFieldName,
+        },
+      })
+
+      if (queries && queries.length) {
+        nodeListQueries = queries
+      }
+    }
+
+    if (!nodeListQueries || !nodeListQueries.length) {
+      const nodeListQuery = buildNodesQueryOnFieldName({
+        fields: transformedFields,
+        fieldName: name,
+        postTypes,
+      })
+
+      nodeListQueries = [nodeListQuery]
+    }
 
     // build a query info object containing gql query strings for fetching
     // node lists or single nodes, as well as type info and plugin
@@ -96,8 +128,8 @@ const generateNodeQueriesFromIngestibleFields = async () => {
         pluralName: name,
         nodesTypeName: nodesType.name,
       },
-      listQueryString,
-      nodeQueryString,
+      nodeListQueries,
+      nodeQuery,
       selectionSet,
       settings,
     }
