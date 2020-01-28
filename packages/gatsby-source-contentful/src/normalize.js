@@ -49,51 +49,48 @@ const fixId = id => {
 }
 exports.fixId = fixId
 
-const shouldBeWalked = (object, alreadyWalkedObjectRefs) =>
-  object && typeof object === `object` && !alreadyWalkedObjectRefs.has(object)
-
-const fixIds = object => _fixIds(object)
+const shouldBeSkipped = (object, alreadyWalkedObjectRefs) =>
+  !object || typeof object !== `object` || alreadyWalkedObjectRefs.has(object)
 
 // Walk the object model and find any property named `sys`. If it
 // contains an `id` then make sure the id is a string and if it starts with a
 // number, prefix it with (an arbitrarily chosen) `c`, for "contentful".
 // The `front` tracks which objects have been visited to prevent infinite
 // recursion on cyclic structures.
-const _fixIds = object => {
+const fixIds = object => {
+  if (!object || typeof object !== `object`) return
+
   const objectsToProcess = [object]
   const alreadyWalkedObjectRefs = new Set(objectsToProcess)
 
   while (objectsToProcess.length !== 0) {
     const current = objectsToProcess.pop()
 
-    if (!current || typeof current !== `object`) {
-      continue
-    }
-
     if (Array.isArray(current)) {
       current.forEach(item => {
-        if (shouldBeWalked(item, alreadyWalkedObjectRefs)) {
-          objectsToProcess.push(item)
-          alreadyWalkedObjectRefs.add(item)
-        }
+        if (shouldBeSkipped(item, alreadyWalkedObjectRefs)) return
+
+        objectsToProcess.push(item)
+        alreadyWalkedObjectRefs.add(item)
       })
       continue
     }
 
     Object.keys(current).forEach(key => {
+      const currentProp = current[key]
+      if (shouldBeSkipped(currentProp, alreadyWalkedObjectRefs)) return
+
       // The `contentful_id` is ours and we want to make sure we don't visit the
       // same node twice (this is possible if the same node appears in two
       // separate branches while sharing a common ancestor). This check makes
       // sure we keep the original `id` preserved in `contentful_id`.
-      if (key === `sys` && !current.sys.contentful_id) {
-        current.sys.contentful_id = current.sys.id
-        current.sys.id = fixId(current.sys.id)
+      if (key === `sys` && !currentProp.contentful_id) {
+        currentProp.contentful_id = currentProp.id
+        currentProp.id = fixId(currentProp.id)
       }
 
-      if (shouldBeWalked(current[key], alreadyWalkedObjectRefs)) {
-        objectsToProcess.push(current[key])
-        alreadyWalkedObjectRefs.add(current[key])
-      }
+      objectsToProcess.push(currentProp)
+      alreadyWalkedObjectRefs.add(currentProp)
     })
   }
 }
