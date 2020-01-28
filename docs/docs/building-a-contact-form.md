@@ -43,6 +43,33 @@ Each method detailed below will start with the following contact form:
 
 ## Form submission options in Gatsby
 
+### Getform
+
+Getform is a form backend platform which offers a free-plan for handling form submissions on static sites. Begin by creating a form on your Gatsby site that you can receive submissions from. When creating the form, direct the HTTP POST method to the Getform, by placing the `name` attributes for the fields you want to make visible. (name, email, message etc.)
+
+```jsx:title=src/pages/contact.js
+<form method="post" action="https://getform.io/{your-unique-getform-endpoint}">
+  ...
+  <label>
+    Email
+    <input type="email" name="email" />
+  </label>
+  <label>
+    Name
+    <input type="text" name="name" />
+  </label>
+  <label>
+    Message
+    <input type="text" name="message" />
+  </label>
+  ...
+</form>
+```
+
+Once you've made the code changes to your form, you can head over to the contact page on your site and start submitting data to the form. The submissions will then be visible on the Getform dashboard. You can add multiple email addresses to receive email notifications for the forms created, as well as manipulate the data you see on Getform using Zapier and Webhooks options that are offered.
+
+You can find more info on the registration process and form setup on the [Getform website](https://getform.io/) and find code examples (AJAX, reCAPTCHA etc) on their [Codepen](https://codepen.io/getform).
+
 ### Netlify
 
 If you're hosting your site with Netlify, you gain access to their excellent [form handling feature](https://www.netlify.com/docs/form-handling/).
@@ -85,7 +112,7 @@ All forms set up in this way come with reCAPTCHA by default, but you can also en
 <input type="text" name="_gotcha" style="display:none" />
 ```
 
-Because the input is hidden, Formspree will know that only a bot could have made the submission, and it will be silently ignore it!
+Because the input is hidden, Formspree will know that only a bot could have made the submission and it will be silently ignored!
 
 ### Run your own server
 
@@ -147,4 +174,4 @@ For an in-depth guide on running your own mail server, you can refer to [this aw
 
 If you have any issues or if you want to learn more about implementing your own contact form in Gatsby, check out this tutorial from Scott Tolinski:
 
-`youtube: hF7xJhzrr9s`
+https://youtu.be/hF7xJhzrr9s

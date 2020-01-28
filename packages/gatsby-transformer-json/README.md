@@ -57,7 +57,7 @@ parent directory.
 
 For example, let's say your project has a data layout like:
 
-```
+```text
 data/
     letters/
         a.json

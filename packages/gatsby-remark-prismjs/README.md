@@ -75,6 +75,10 @@ plugins: [
               host: "localhost",
               global: false,
             },
+            // By default the HTML entities <>&'" are escaped.
+            // Add additional HTML escapes by providing a mapping
+            // of HTML entities and their escape value IE: { '}': '&#123;' }
+            escapeEntities: {},
           },
         },
       ],

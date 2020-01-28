@@ -9,7 +9,7 @@ This blogpost explains how I learned to reduce the cost of maintaining a simple 
 
 To facilitate exporting the site, the first thing I did was export the database from the mysql database server to an sqlite file that I could use locally. To do this I used the [mysql2sqlite](https://github.com/dumblob/mysql2sqlite) project, which, as described on the project page, can be done with two commands like:
 
-```
+```shell
 mysqldump --skip-extended-insert --compact DB_name > dump_mysql.sql
 ./mysql2sqlite dump_mysql.sql | sqlite3 mysqlite.db
 ```
@@ -18,15 +18,16 @@ mysqldump --skip-extended-insert --compact DB_name > dump_mysql.sql
 
 To do this yourself, you'll build a simple blog using the excellent [gatsby-starter-blog](https://github.com/gatsbyjs/gatsby-starter-blog) project. Create a new project and then add a [sqlite library](https://github.com/JoshuaWise/better-sqlite3) as a dev dependency:
 
-```
+```shell
 gatsby new gatsby-blog https://github.com/gatsbyjs/gatsby-starter-blog
 git init # so you can keep track of the changes
-npm i --save-dev better-sqlite3
+npm i # to install regular gastby requirements
+npm i --save-dev better-sqlite3 # to add an sqlite javascript client
 ```
 
 The useful commands on an sqlite3 command line to explore are `.tables` to see all tables :) and `.schema table_name` to see information about a specific table. Oh! and `.help` to know more.
 
-Next, you will be creating a new file on your project at `src/scripts/migrate.js`. Initially, what you want is to iterate through all your posts and export basic data like title, created date, body and status (published or draft). All of that data is in two tables, the _node_ table and the _field_data_body_. Initially, your script will look like this:
+Next, you will be creating a new file on your project at `src/scripts/import.js`. Initially, what you want is to iterate through all your posts and export basic data like title, created date, body and status (published or draft). All of that data is in two tables, the _node_ table and the _field_data_body_. Initially, your script will look like this:
 
 ```javascript
 const Database = require('better-sqlite3');
@@ -58,6 +59,18 @@ const tags = db
   )
   .pluck()
   .all(row.nid)
+```
+
+To avoid 404 in case you created some url aliases you can query the `url_alias` table and create an aliases frontmatter property and later (depending on your hosting platform) use a plugin like [gatsby-plugin-meta-redirect](https://github.com/nsresulta/gatsby-plugin-meta-redirect) to use the gatsby [createRedirect](https://www.gatsbyjs.org/docs/actions/#createRedirect) function:
+
+```javascript
+const aliases = db
+  .prepare(
+    `SELECT alias FROM url_alias
+    WHERE source = ? AND alias != ?`
+  )
+  .pluck()
+  .all("node/" + row.nid, slug)
 ```
 
 For the image, you will retrieve only the URL of the image, so you can download it and store it locally. And you will replace `public://` for the URL path of the images folder on your old site:
@@ -104,8 +117,8 @@ db.close();
 
 This script is now finished and you can execute it in your shell with this command:
 
-```
-> node src/scripts/import.js mysqlite.db
+```shell
+node src/scripts/import.js mysqlite.db
 ```
 
 To have comments on your site you can use a service like [Disqus](https://disqus.com/). Disqus has an import process that uses a [custom XML import format](https://help.disqus.com/developer/custom-xml-import-format) based on the WXR (WordPress eXtended RSS) schema. So the process would be the same. Create a script named `src/scripts/export_comments.js` to query the database and, in this case, write a single file containing all the comments of your old site:

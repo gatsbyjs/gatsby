@@ -2,7 +2,7 @@
 
 const path = require(`path`)
 const report = require(`gatsby-cli/lib/reporter`)
-const buildHTML = require(`./build-html`)
+import { buildHTML } from "./build-html"
 const buildProductionBundle = require(`./build-javascript`)
 const bootstrap = require(`../bootstrap`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
@@ -16,6 +16,9 @@ const queryUtil = require(`../query`)
 const appDataUtil = require(`../utils/app-data`)
 const WorkerPool = require(`../utils/worker/pool`)
 const { structureWebpackErrors } = require(`../utils/webpack-error-utils`)
+const {
+  waitUntilAllJobsComplete: waitUntilAllJobsV2Complete,
+} = require(`../utils/jobs-manager`)
 
 type BuildArgs = {
   directory: string,
@@ -25,8 +28,8 @@ type BuildArgs = {
   openTracingConfigFile: string,
 }
 
-const waitJobsFinished = () =>
-  new Promise((resolve, reject) => {
+const waitUntilAllJobsComplete = () => {
+  const jobsV1Promise = new Promise(resolve => {
     const onEndJob = () => {
       if (store.getState().jobs.active.length === 0) {
         resolve()
@@ -36,6 +39,12 @@ const waitJobsFinished = () =>
     emitter.on(`END_JOB`, onEndJob)
     onEndJob()
   })
+
+  return Promise.all([
+    jobsV1Promise,
+    waitUntilAllJobsV2Complete(),
+  ]).then(() => {})
+}
 
 module.exports = async function build(program: BuildArgs) {
   const publicDir = path.join(program.directory, `public`)
@@ -110,13 +119,31 @@ module.exports = async function build(program: BuildArgs) {
 
   await processPageQueries()
 
+  if (telemetry.isTrackingEnabled()) {
+    // transform asset size to kB (from bytes) to fit 64 bit to numbers
+    const bundleSizes = stats
+      .toJson({ assets: true })
+      .assets.filter(asset => asset.name.endsWith(`.js`))
+      .map(asset => asset.size / 1000)
+    const pageDataSizes = [...store.getState().pageDataStats.values()]
+
+    telemetry.addSiteMeasurement(`BUILD_END`, {
+      bundleStats: telemetry.aggregateStats(bundleSizes),
+      pageDataStats: telemetry.aggregateStats(pageDataSizes),
+    })
+  }
+
   require(`../redux/actions`).boundActionCreators.setProgramStatus(
     `BOOTSTRAP_QUERY_RUNNING_FINISHED`
   )
 
-  await waitJobsFinished()
-
   await db.saveState()
+
+  await waitUntilAllJobsComplete()
+
+  // we need to save it again to make sure our latest state has been saved
+  await db.saveState()
+
   const pagePaths = [...store.getState().pages.keys()]
   activity = report.createProgress(
     `Building static HTML for pages`,
@@ -128,7 +155,7 @@ module.exports = async function build(program: BuildArgs) {
   )
   activity.start()
   try {
-    await buildHTML.buildPages({
+    await buildHTML({
       program,
       stage: `build-html`,
       pagePaths,
@@ -161,6 +188,9 @@ module.exports = async function build(program: BuildArgs) {
     graphql: graphqlRunner,
     parentSpan: buildSpan,
   })
+
+  // Make sure we saved the latest state so we have all jobs cached
+  await db.saveState()
 
   report.info(`Done building in ${process.uptime()} sec`)
 

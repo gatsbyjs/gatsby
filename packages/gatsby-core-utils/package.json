@@ -1,6 +1,6 @@
 {
   "name": "gatsby-core-utils",
-  "version": "1.0.21",
+  "version": "1.0.26",
   "description": "A collection of gatsby utils used in different gatsby packages",
   "keywords": [
     "gatsby",
@@ -33,9 +33,9 @@
     "node-object-hash": "^2.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.7.4",
-    "@babel/core": "^7.7.4",
-    "babel-preset-gatsby-package": "^0.2.12",
+    "@babel/cli": "^7.7.5",
+    "@babel/core": "^7.7.5",
+    "babel-preset-gatsby-package": "^0.2.15",
     "cross-env": "^5.2.1"
   }
 }

@@ -91,4 +91,3 @@ fixed(
 - Gatsby Image docs: [/packages/gatsby-image/](/packages/gatsby-image/)
 - Image processing examples: [https://github.com/gatsbyjs/gatsby/tree/master/examples/image-processing](https://github.com/gatsbyjs/gatsby/tree/master/examples/image-processing)
 
-<!-- Docs to Markdown version 1.0β17 -->

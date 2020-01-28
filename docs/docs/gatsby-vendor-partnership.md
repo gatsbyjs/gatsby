@@ -64,7 +64,7 @@ To launch your Gatsby integration, there are two steps:
 
 1. **Publishing your integration to our [plugin library](/plugins/)**. If you built the integration, we have [developer documentation](/docs/plugin-authoring/#publishing-a-plugin-to-the-library) for publishing that integration to the Node.js package registry (npm). Once you publish it, over the next 24 hours, our system will automatically pull it in.
 
-2. **Add your example to our [starter library](/starters/)**. Most Gatsby users find it easier to try a new integration when they can start with a ready-made code example. We created [a starter library](http://gatsbyjs.org/starters/) to showcase these plugins to the community. [Here’s how you add your starter to it](/contributing/submit-to-starter-library/).
+2. **Add your example to our [starter library](/starters/)**. Most Gatsby users find it easier to try a new integration when they can start with a ready-made code example. We created [a starter library](https://gatsbyjs.org/starters/) to showcase these plugins to the community. [Here’s how you add your starter to it](/contributing/submit-to-starter-library/).
 
 ### Step Three: Co-Marketing With Gatsby
 
