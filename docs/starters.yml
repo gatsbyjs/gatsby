@@ -5025,8 +5025,6 @@
     - Search
     - Styling:Bootstrap
     - RSS
-    - Design
-    - Media
     - SEO
   features:
     - Designed to focus on blog posts with images.
@@ -5055,7 +5053,6 @@
   repo: https://github.com/arshad/gatsby-starter-flex
   description: A Gatsby starter for the Flex theme.
   tags:
-    - Language:JavaScript
     - SEO
     - MDX
     - Styling:CSS-in-JS
