@@ -6,6 +6,7 @@ const errorParser = require(`../query/error-parser`).default
 const { emitter } = require(`../redux`)
 
 module.exports = (store, reporter) => {
+  // TODO: Move tracking of changed state inside GraphQLRunner itself. https://github.com/gatsbyjs/gatsby/issues/20941
   let runner = new GraphQLRunner(store)
   ;[
     `DELETE_CACHE`,
