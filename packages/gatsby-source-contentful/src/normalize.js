@@ -49,6 +49,9 @@ const fixId = id => {
 }
 exports.fixId = fixId
 
+const shouldBeWalked = (object, alreadyWalkedObjectRefs) =>
+  object && typeof object === `object` && !alreadyWalkedObjectRefs.has(object)
+
 const fixIds = object => _fixIds(object)
 
 // Walk the object model and find any property named `sys`. If it
@@ -68,15 +71,15 @@ const _fixIds = object => {
     }
 
     if (Array.isArray(current)) {
-      objectsToProcess.push(...current)
+      current.forEach(item => {
+        if (shouldBeWalked(item, alreadyWalkedObjectRefs)) {
+          objectsToProcess.push(item)
+          alreadyWalkedObjectRefs.add(item)
+        }
+      })
       continue
     }
 
-    if (alreadyWalkedObjectRefs.has(current)) {
-      continue
-    }
-
-    alreadyWalkedObjectRefs.add(current)
     Object.keys(current).forEach(key => {
       // The `contentful_id` is ours and we want to make sure we don't visit the
       // same node twice (this is possible if the same node appears in two
@@ -87,12 +90,9 @@ const _fixIds = object => {
         current.sys.id = fixId(current.sys.id)
       }
 
-      if (
-        current[key] &&
-        typeof current[key] === `object` &&
-        !alreadyWalkedObjectRefs.has(current[key])
-      ) {
+      if (shouldBeWalked(current[key], alreadyWalkedObjectRefs)) {
         objectsToProcess.push(current[key])
+        alreadyWalkedObjectRefs.add(current[key])
       }
     })
   }
