@@ -6,7 +6,7 @@ import GithubIcon from "react-icons/lib/fa/github"
 import { CodesandboxIcon } from "../../assets/vendor-logos/codesandbox.svg"
 import { NetlifyIcon } from "../../assets/vendor-logos/netlify.svg"
 
-const Source = ({ startersYaml, repoUrl }) => (
+const Source = ({ startersYaml, repoUrl, starter }) => (
   <div
     sx={{
       display: `flex`,
@@ -68,7 +68,7 @@ const Source = ({ startersYaml, repoUrl }) => (
         Try this starter
       </span>
       <a
-        href={`https://codesandbox.io/s/github/${startersYaml.fields.owner}/${startersYaml.fields.stub}`}
+        href={`https://codesandbox.io/s/github/${starter.owner}/${starter.stub}`}
         sx={{
           "&&": {
             borderBottom: 0,
@@ -76,7 +76,7 @@ const Source = ({ startersYaml, repoUrl }) => (
         }}
       >
         <TechWithIcon icon={CodesandboxIcon}>CodeSandbox</TechWithIcon>
-      </a>, 
+      </a> &nbsp; 
       <a
         href={`https://app.netlify.com/start/deploy?repository=${repoUrl}`}
         sx={{
