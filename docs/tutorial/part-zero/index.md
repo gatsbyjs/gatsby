@@ -97,7 +97,7 @@ Once you have followed the installation steps and you have checked everything is
 
 Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency. When you install a Gatsby "starter" site, Gatsby uses Git behind the scenes to download and install the required files for your starter. You will need to have Git installed to set up your first Gatsby site.
 
-The steps to download and install Git depend on your operating system. Follow the guide for your system:
+The steps to download and install Git depends on your operating system. Follow the guide for your system:
 
 - [Install Git on macOS](https://www.atlassian.com/git/tutorials/install-git#mac-os-x)
 - [Install Git on Windows](https://www.atlassian.com/git/tutorials/install-git#windows)
@@ -212,7 +212,7 @@ It’s not necessary to be an expert with these already — if you’re not, don
 
 ### What is a website?
 
-For a comprehensive introduction to what a website is--including an intro to HTML and CSS--check out “[**Building your first web page**](https://learn.shayhowe.com/html-css/building-your-first-web-page/)”. It’s a great place to start learning about the web. For a more hands-on introduction to [**HTML**](https://www.codecademy.com/learn/learn-html), [**CSS**](https://www.codecademy.com/learn/learn-css), and [**JavaScript**](https://www.codecademy.com/learn/introduction-to-javascript), check out the tutorials from Codecademy. [**React**](https://reactjs.org/tutorial/tutorial.html) and [**GraphQL**](http://graphql.org/graphql-js/) also have their own introductory tutorials.
+For a comprehensive introduction to what a website is--including an intro to HTML and CSS--check out “[**Building your first web page**](https://learn.shayhowe.com/html-css/building-your-first-web-page/)”. It’s a great place to start learning about the web. For a more hands-on introduction to [**HTML**](https://www.codecademy.com/learn/learn-html), [**CSS**](https://www.codecademy.com/learn/learn-css), and [**JavaScript**](https://www.codecademy.com/learn/introduction-to-javascript), check out the tutorials from Codecademy. [**React**](https://reactjs.org/tutorial/tutorial.html) and [**GraphQL**](http://graphql.org/graphql-js/) also has their own introductory tutorials.
 
 ### Learn more about the command line
 
