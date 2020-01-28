@@ -10,11 +10,11 @@ GraphiQL is the GraphQL integrated development environment (IDE). It's a powerfu
 you'll use often while building Gatsby websites.
 
 You can access it when your site's development server is running--normally at
-<http://localhost:8000/___graphql>.
+`http://localhost:8000/___graphql`.
 
 ## Example of using GraphiQL
 
-When you have <http://localhost:8000/___graphql> open, it will look something like what this video shows. In the video below, watch someone poke around the built-in `Site` "type" and see what fields are available
+When you have `http://localhost:8000/___graphql` open, it will look something like what this video shows. In the video below, watch someone poke around the built-in `Site` "type" and see what fields are available
 on it—including the `siteMetadata` object.
 
 <video controls="controls" autoplay="true" loop="true">
@@ -24,7 +24,7 @@ on it—including the `siteMetadata` object.
 
 ## How to use GraphiQL
 
-When the development server is running for one of your Gatsby sites, open GraphiQL at <http://localhost:8000/___graphql> and play with your data! Press <kbd>Ctrl + Space</kbd> (or use <kbd>Shift + Space</kbd> as an alternate keyboard shortcut) to bring up the autocomplete window and <kbd>Ctrl + Enter</kbd> to run the GraphQL query.
+When the development server is running for one of your Gatsby sites, open GraphiQL at `http://localhost:8000/___graphql` and play with your data! Press <kbd>Ctrl + Space</kbd> (or use <kbd>Shift + Space</kbd> as an alternate keyboard shortcut) to bring up the autocomplete window and <kbd>Ctrl + Enter</kbd> to run the GraphQL query.
 
 Make sure to check out the GraphiQL docs in the upper right-hand corner of the IDE. It's easy to miss them, but they're worth visiting!
 

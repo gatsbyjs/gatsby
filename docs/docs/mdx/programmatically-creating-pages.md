@@ -147,7 +147,7 @@ to construct a query that finds all MDX nodes and pulls out
 the `slug` field added earlier.
 
 > **Note**: You can open up a GraphiQL console for query testing
-> in your browser at <http://localhost:8000/___graphql>
+> in your browser at `http://localhost:8000/___graphql`
 
 ```graphql
 query {

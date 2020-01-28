@@ -92,7 +92,7 @@ const typography = new Typography(
 export default typography;
 ```
 
-After completing the above steps, you can start the development server using the command `gatsby develop` and navigate to the local website <http://localhost:8000>. If all went well you should see the text on your website using the Funston typographic theme.
+After completing the above steps, you can start the development server using the command `gatsby develop` and navigate to the local website `http://localhost:8000`. If all went well you should see the text on your website using the Funston typographic theme.
 
 **Note**: If your fonts remains unchanged, remove all `font-family` calls in your CSS and check again.
 
