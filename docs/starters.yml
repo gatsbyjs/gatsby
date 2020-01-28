@@ -5066,6 +5066,26 @@
     - SEO and Open graphs support
     - Color modes
     - Code Highlighting
+- url: https://london-night-day.netlify.com/
+  repo: https://github.com/jooplaan/gatsby-london-night-and-day
+  description: A custom, image-centric dark and light mode aware theme for Gatsby. Advanced from the Gatsby starter London After Midnight.
+  tags:
+    - Blog
+    - Portfolio
+    - Gallery
+    - SEO
+    - Markdown
+    - Styling:SCSS
+    - HTML5UP
+    - CMS:Netlify
+  features:
+    - Support tags
+    - Easily change the theme color
+    - Post thumbnails in the homepage
+    - Made for image-centric portfolios
+    - Using the London After Midnight is now “Dark mode” (the default), and the original London as “Light mode”.
+    - Removed Google Fonts, using system fonts in stead (for speed and privacy :)
+    - Use SASS
 - url: https://the-gatsby-bootcamp-blog.netlify.com
   repo: https://github.com/SafdarJamal/gatsby-bootcamp-blog
   description: A minimal blogging site built with Gatsby using Contentful and hosted on Netlify.
