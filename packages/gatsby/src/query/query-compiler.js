@@ -430,7 +430,8 @@ const processDefinitions = ({
 const determineUsedFragmentsForDefinition = (
   definition,
   definitionsByName,
-  fragmentsUsedByFragment
+  fragmentsUsedByFragment,
+  visitedFragmentDefinitions = new Set()
 ) => {
   const { def, name, isFragment, filePath } = definition
   const cachedUsedFragments = fragmentsUsedByFragment.get(name)
@@ -443,6 +444,10 @@ const determineUsedFragmentsForDefinition = (
       [Kind.FRAGMENT_SPREAD]: node => {
         const name = node.name.value
         const fragmentDefinition = definitionsByName.get(name)
+        if (visitedFragmentDefinitions.has(fragmentDefinition)) {
+          return
+        }
+        visitedFragmentDefinitions.add(fragmentDefinition)
         if (fragmentDefinition) {
           usedFragments.add(name)
           const {
@@ -451,7 +456,8 @@ const determineUsedFragmentsForDefinition = (
           } = determineUsedFragmentsForDefinition(
             fragmentDefinition,
             definitionsByName,
-            fragmentsUsedByFragment
+            fragmentsUsedByFragment,
+            visitedFragmentDefinitions
           )
           usedFragmentsForFragment.forEach(fragmentName =>
             usedFragments.add(fragmentName)
