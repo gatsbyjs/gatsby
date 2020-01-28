@@ -189,7 +189,6 @@ const ensureIndexByTypedChain = (
   byKeyValue = new Map() // Map<node.value, Set<all nodes with this value for this key>>
   typedKeyValueIndexes.set(typedKey, byKeyValue)
 
-  // TODO: Is it faster to loop through the maps by type instead of all nodes?
   nodes.forEach(node => {
     if (!nodeTypeNames.includes(node.internal.type)) {
       return

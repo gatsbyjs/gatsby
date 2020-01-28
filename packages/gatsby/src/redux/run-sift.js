@@ -393,7 +393,7 @@ const _runSiftOnNodes = (
   if (firstOnly) {
     return handleFirst(siftFilter, nodes)
   } else {
-    return handleMany(siftFilter, nodes, resolvedFields)
+    return handleMany(siftFilter, nodes)
   }
 }
 
