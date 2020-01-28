@@ -1,6 +1,6 @@
 {
   "globals": {
-    "graphql": false
+    "graphql": true
   },
   "rules": {
     "no-restricted-imports": [
