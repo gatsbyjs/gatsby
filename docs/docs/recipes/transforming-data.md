@@ -88,5 +88,5 @@ fixed(
 ### Additional resources
 
 - API docs, including grayscale and duotone query tips: [/docs/gatsby-image/#shared-query-parameters](/docs/gatsby-image/#shared-query-parameters)
-- Gatsby Image docs: [/packages/gatsby-image/](/packages/gatsby-image/)
+-  [Gatsby Image docs](/packages/gatsby-image/)
 - [Image processing examples](https://github.com/gatsbyjs/gatsby/tree/master/examples/image-processing)
