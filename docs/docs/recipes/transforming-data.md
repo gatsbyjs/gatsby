@@ -55,7 +55,7 @@ export const query = graphql`
 - [Tutorial on transforming Markdown to HTML](/tutorial/part-six/#transformer-plugins) using `gatsby-transformer-remark`
 - Browse available transformer plugins in the [Gatsby plugin library](/plugins/?=transformer)
 
-## Transforming images into grayscale using GraphQL in Gatsby
+## Transforming images into grayscale using GraphQL
 
 `gatsby-image` is a React component designed to work seamlessly with Gatsby’s [native image processing](https://image-processing.gatsbyjs.org/) capabilities powered by GraphQL and [gatsby-plugin-sharp] `/packages/gatsby-plugin-sharp/` to easily and completely optimize image loading for your sites.
 
@@ -90,4 +90,3 @@ fixed(
 - API docs, including grayscale and duotone query tips: [/docs/gatsby-image/#shared-query-parameters](/docs/gatsby-image/#shared-query-parameters)
 - Gatsby Image docs: [/packages/gatsby-image/](/packages/gatsby-image/)
 - Image processing examples: [https://github.com/gatsbyjs/gatsby/tree/master/examples/image-processing](https://github.com/gatsbyjs/gatsby/tree/master/examples/image-processing)
-
