@@ -78,7 +78,7 @@ class GraphQLRunner {
     // cache just wastes memory without much benefits.
     // TODO: consider a better strategy for cache purging/invalidation
     this.scheduleClearCache()
-    return result
+    return Promise.resolve(result)
   }
 }
 

@@ -31,8 +31,8 @@ const containerStyles = {
   px: 9,
 }
 
-const getDocsData = location => {
-  const [urlSegment] = location.pathname.split(`/`).slice(1)
+const getDocsData = slug => {
+  const [urlSegment] = slug.split(`/`).slice(1)
   const itemListLookup = {
     docs: itemListDocs,
     contributing: itemListContributing,
@@ -44,7 +44,7 @@ const getDocsData = location => {
 
 function DocsTemplate({ data, location, pageContext: { next, prev } }) {
   const page = data.mdx
-  const [urlSegment, itemList] = getDocsData(location)
+  const [urlSegment, itemList] = getDocsData(page.fields.slug)
   const toc =
     !page.frontmatter.disableTableOfContents && page.tableOfContents.items
 
@@ -62,6 +62,7 @@ function DocsTemplate({ data, location, pageContext: { next, prev } }) {
       </Helmet>
       <Layout
         location={location}
+        locale={page.fields.locale}
         itemList={itemList}
         enableScrollSync={urlSegment === `docs` ? false : true}
       >
@@ -149,14 +150,15 @@ function DocsTemplate({ data, location, pageContext: { next, prev } }) {
 export default DocsTemplate
 
 export const pageQuery = graphql`
-  query($path: String!) {
-    mdx(fields: { slug: { eq: $path } }) {
+  query($slug: String!, $locale: String!) {
+    mdx(fields: { slug: { eq: $slug }, locale: { eq: $locale } }) {
       body
       excerpt
       timeToRead
       tableOfContents
       fields {
         slug
+        locale
         anchor
       }
       frontmatter {
