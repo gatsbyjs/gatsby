@@ -65,6 +65,14 @@ module.exports = async (
     }
 
     const envObject = Object.keys(parsed).reduce((acc, key) => {
+      if (/^GATSBY_/.test(key) === false) {
+        // @deprecated
+        // @see https://github.com/gatsbyjs/gatsby/issues/20646#issuecomment-575518340
+        console.warn(
+          `Deprecation Notice: \n`,
+          `Environment variables listed in .env.* must be prefixed with "GATSBY_". The key ${key} should be updated to "GATSBY_${key}" to remain compatible.`
+        )
+      }
       acc[key] = JSON.stringify(parsed[key])
       return acc
     }, {})
