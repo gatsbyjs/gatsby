@@ -147,7 +147,7 @@ There are many implications and possibilities when it comes to embracing the con
 ### How do I start using Builds & Reports?
 
 You need to be a Gatsby Cloud user in order to access the features of Builds & Reports.
-If you’re already a user you’ll find Builds and Reports enabled in your account. If you’re not a user and want to access these features alongside [real-time Preview](https://www.gatsbyjs.org/blog/2019-11-14-announcing-gatsby-cloud/)[ ](https://www.gatsbyjs.org/blog/2019-11-14-announcing-gatsby-cloud/)just [sign up for a Gatsby Cloud account](https://www.gatsbyjs.com/get-started) today.
+If you’re already a user you’ll find Builds and Reports enabled in your account. If you’re not a user and want to access these features alongside [real-time Preview](https://www.gatsbyjs.org/blog/2019-11-14-announcing-gatsby-cloud/) just [sign up for a Gatsby Cloud account](https://www.gatsbyjs.com/get-started) today.
 
 ### How much faster is Gatsby Builds compared to other CD platforms?
 
@@ -216,4 +216,4 @@ Incremental builds are key to us reaching our goal of sub 10 second build times,
 
 ### When can I expect Incremental Builds?
 
-We plan to have the next version of Builds available in Private Beta by mid to late February. If you’re interested in beta testing, please [sign up for our ](https://www.gatsbyjs.com/incremental-builds-beta/)[Incremental Builds Beta](https://www.gatsbyjs.com/incremental-builds-beta/).
+We plan to have the next version of Builds available in Private Beta by mid to late February. If you’re interested in beta testing, please [sign up for our](https://www.gatsbyjs.com/incremental-builds-beta/) [Incremental Builds Beta](https://www.gatsbyjs.com/incremental-builds-beta/).
