@@ -13,7 +13,7 @@ const {
   ensureIndexByTypedChain,
   getNodesByTypedChain,
   addResolvedNodes,
-  getNode,
+  getNode: siftGetNode,
 } = require(`./nodes`)
 
 /////////////////////////////////////////////////////////////////////
@@ -325,19 +325,22 @@ const filterWithSift = (filter, firstOnly, nodeTypeNames, resolvedFields) => {
     filter,
     firstOnly,
     nodeTypeNames,
-    resolvedFields
+    resolvedFields,
+    siftGetNode
   )
 }
 
 /**
  * Given a list of filtered nodes and sorting parameters, sort the nodes
+ * Note: this entry point is used by GATSBY_DB_NODES=loki
  *
  * @param {Array<Node>} nodes Should be all nodes of given type(s)
  * @param args Legacy api arg, see _runSiftOnNodes
+ * @param {?function(id: string): Node} getNode
  * @returns {Array<Node> | undefined | null} Collection of results. Collection
  *   will be limited to 1 if `firstOnly` is true
  */
-const runSiftOnNodes = (nodes, args) => {
+const runSiftOnNodes = (nodes, args, getNode = siftGetNode) => {
   const {
     queryArgs: { filter } = { filter: {} },
     firstOnly = false,
@@ -345,7 +348,14 @@ const runSiftOnNodes = (nodes, args) => {
     nodeTypeNames,
   } = args
 
-  return _runSiftOnNodes(filter, firstOnly, nodeTypeNames, resolvedFields)
+  return _runSiftOnNodes(
+    nodes,
+    filter,
+    firstOnly,
+    nodeTypeNames,
+    resolvedFields,
+    getNode
+  )
 }
 
 exports.runSiftOnNodes = runSiftOnNodes
@@ -358,6 +368,7 @@ exports.runSiftOnNodes = runSiftOnNodes
  * @param {boolean} firstOnly
  * @param {Array<string>} nodeTypeNames
  * @param resolvedFields
+ * @param {function(id: string): Node} getNode Note: this is different for loki
  * @returns {Array<Node> | undefined | null} Collection of results. Collection
  *   will be limited to 1 if `firstOnly` is true
  */
@@ -366,7 +377,8 @@ const _runSiftOnNodes = (
   filter,
   firstOnly,
   nodeTypeNames,
-  resolvedFields
+  resolvedFields,
+  getNode
 ) => {
   let siftFilter = getFilters(
     liftResolvedFields(toDottedFields(prepareQueryArgs(filter)), resolvedFields)
