@@ -10,8 +10,8 @@
       items:
         - title: Familiarize with the command line
           link: /tutorial/part-zero/#familiarize-yourself-with-the-command-line
-        - title: Install Node.js and npm
-          link: /tutorial/part-zero/#-install-nodejs-and-npm
+        - title: Install Node.js for your appropriate operating system
+          link: /tutorial/part-zero/#install-nodejs-for-your-appropriate-operating-system
         - title: Install Git
           link: /tutorial/part-zero/#install-git
         - title: Using the Gatsby CLI

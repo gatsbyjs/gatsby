@@ -276,6 +276,71 @@ describe(`actual compiling`, () => {
     expect(result.get(`mockFile`)).toMatchSnapshot()
   })
 
+  it(`handles circular fragments`, async () => {
+    const nodes = [
+      createGatsbyDoc(
+        `mockFile`,
+        `query mockFileQuery {
+          allDirectory {
+            nodes {
+              ...Foo
+            }
+          }
+        }
+
+        fragment Bar on Directory {
+          parent {
+            ...Foo
+          }
+        }
+
+        fragment Foo on Directory {
+          children {
+            ...Bar
+          }
+        }`
+      ),
+    ]
+
+    const errors = []
+    const result = processQueries({
+      schema,
+      parsedQueries: nodes,
+      addError: e => {
+        errors.push(e)
+      },
+    })
+    expect(errors.length).toEqual(1)
+    expect(errors[0]).toMatchInlineSnapshot(
+      {
+        location: expect.any(Object),
+      },
+      `
+      Object {
+        "context": Object {
+          "sourceMessage": "Cannot spread fragment \\"Foo\\" within itself via Bar.
+
+      GraphQL request:17:13
+      16 |           children {
+      17 |             ...Bar
+         |             ^
+      18 |           }
+
+      GraphQL request:11:13
+      10 |           parent {
+      11 |             ...Foo
+         |             ^
+      12 |           }",
+        },
+        "filePath": "mockFile",
+        "id": "85901",
+        "location": Any<Object>,
+      }
+    `
+    )
+    expect(result.size).toEqual(0)
+  })
+
   it(`removes unused fragments from documents`, async () => {
     const nodes = [
       createGatsbyDoc(
@@ -959,6 +1024,45 @@ describe(`Extra fields`, () => {
     expect(result.get(`mockFile`)).toMatchSnapshot()
   })
 
+  it(`doesn't add __typename field when alias exists`, async () => {
+    const [result, errors] = transformQuery(`
+      query mockFileQuery {
+        allDirectory {
+          nodes {
+            __typename: id
+            contents {
+              ... on File {
+                __typename: id
+              }
+            }
+            children {
+              __typename: id
+              ... Node
+            }
+            ... on Directory {
+              children {
+                __typename: id
+              }
+            }
+            ...DirectoryContents
+          }
+        }
+      }
+
+      fragment DirectoryContents on Directory {
+        children {
+          __typename: id
+        }
+      }
+
+      fragment Node on Node {
+        __typename: id
+      }
+    `)
+    expect(errors).toEqual([])
+    expect(result.get(`mockFile`)).toMatchSnapshot()
+  })
+
   it(`adds id field if type has it`, () => {
     const [result, errors] = transformQuery(`
       query mockFileQuery {
@@ -1095,6 +1199,42 @@ describe(`Extra fields`, () => {
 
       fragment Node on Node {
         id
+      }
+    `)
+    expect(errors).toEqual([])
+    expect(result.get(`mockFile`)).toMatchSnapshot()
+  })
+
+  it(`doesn't add id field when alias for id exists`, async () => {
+    const [result, errors] = transformQuery(`
+      query mockFileQuery {
+        allDirectory {
+          nodes {
+            contents {
+              ... on File {
+                id: absolutePath
+              }
+              ... on Directory {
+                id: absolutePath
+              }
+            }
+            ... on Directory {
+              id: absolutePath
+            }
+            ...DirectoryContents
+          }
+        }
+      }
+
+      fragment DirectoryContents on Directory {
+        contents {
+          ... on File {
+            id: absolutePath
+          }
+          ... on Directory {
+            id: absolutePath
+          }
+        }
       }
     `)
     expect(errors).toEqual([])
