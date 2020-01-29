@@ -1,1 +1,1 @@
-export { wrapWithProvider as wrapRootElement } from "./wrap-with-provider"
+export { wrapRootElement } from "./gatsby-browser"
