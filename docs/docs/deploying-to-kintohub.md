@@ -15,14 +15,13 @@ KintoHub has a free tier that you can use to deploy your static sites. Here are 
 
 ## Prerequisites
 
-This guide assumes you already have a Gatsby project to deploy. If you need a project, use the [Quick Start](/docs/quick-start) or use KintoHub's template [Gatsby Template](https://github.com/kintohub/gatsby-example) before continuing.
+This guide assumes you already have a Gatsby project to deploy. If you need a project, you can use the [Quick Start](/docs/quick-start) or KintoHub's template [Gatsby Template](https://github.com/kintohub/gatsby-example) before continuing.
 
 ## Setup
 
-In order to deploy a Gatsby site on KintoHub, you need to:
+In order to deploy a Gatsby site on KintoHub, you will need to create and deploy a **KintoBlock** into an **Environment** (development, staging, production).
 
-- Create a **KintoBlock** corresponding to your repository where you can manage all your branches and tags.
-- Deploy this **KintoBlock** into an **Environment**.
+_Note: A **KintoBlock** is connected to a Github repository. Accessing the kintoblock page will allow you to build, manage or tags any branches of your repository._
 
 ### Create a KintoBlock
 
@@ -39,13 +38,25 @@ In order to deploy a Gatsby site on KintoHub, you need to:
    | **Build Command**       | `npm install && npm run build` (or your own build command) |
    | **Build Output Folder** | `public` (or your own output directory)                    |
 
-5. Press **Create Website**
+5. Press **Create Website**.
 
 The build will automatically start on the default Github branch of your repository.
-By default, KintoHub will build all the changes you push on your default branch but you can disable it (**Build New Commits**).
 Wait for your build to be successful (green).
 
-_Note: you can build other branches._
+#### Multiple Branches
+
+When you create a new **KintoBlock**, KintoHub import all your branches and you can access them from your kintoblock page (new branches will also be automatically picked up).
+You can switch from one branch to another by pressing the branch name on the side panel on the left.
+
+#### Continuous Integration
+
+By default, KintoHub will build all the changes you push on your default branch.
+If you want to disable it:
+
+1. Disable the toggle **Build New Commits**.
+2. Press **Save Changes**.
+
+Your new changes will not be automatically picked up anymore and you will have to press **Build Latest Commit** to trigger a build.
 
 ### Deploy your KintoBlock
 
@@ -71,15 +82,17 @@ And that's it!
 
 ## Deployment Configuration
 
-From your Project page.
+You can configure additional features directly from your Project page.
+If you're not already there, select **Projects** on the left-hand navigation bar, and then click on the project you want to configure.
 
 ### Basic Auth
 
 1. Scroll down to the **Added KintoBlocks** list.
 2. Click on the cog next to your kintoblock (`Gatsby Website`).
-3. Enable **Password Protected**
-4. Enter **Username** and **Password**
+3. Enable **Password Protected**.
+4. Enter **Username** and **Password**.
 5. Press **Done Configuring** and then **Deploy**.
+6. You'll see a **Compare Versions** screen. Click **Confirm Deployment**.
 
 Wait for the deployment to be successful.
 Refresh the page, your website is now protected.
@@ -89,8 +102,9 @@ Refresh the page, your website is now protected.
 1. Scroll down to the **Added KintoBlocks** list.
 2. Click on the cog next to your kintoblock (`Gatsby Website`).
 3. Under **Custom Domain**, enter your custom domain name.
-4. Follow the instructions under _Setup_
+4. Follow the instructions under _Setup_.
 5. Press **Done Configuring** and then **Deploy**.
+6. You'll see a **Compare Versions** screen. Click **Confirm Deployment**.
 
 Wait for the deployment to be successful.
 Access your new custom domain.
