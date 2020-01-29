@@ -18,7 +18,7 @@ Use React components within your Markdown-based blog posts!
 
 Markdown is a great markup language for creating human readable, long form content. A writer on your team can use Markdown’s friendly syntax and contribute content to a site without having to edit HTML or JSX directly. 
 
-Today we invite you to use MDX, a new format that lets you add components in your Markdown documents. Now, editors can add interactive and styled elements to their documents, not just static, plain text. If you are familiar with using shortcodes in the classic WordPress editor, MDX enables you to have a similar editing workflow.
+Today we invite you to use MDX, a new format that lets you add components in your Markdown documents. Now, editors can add interactive and styled elements to their documents, not just static, plain text. 
 
 ### Challenge Resources
 
