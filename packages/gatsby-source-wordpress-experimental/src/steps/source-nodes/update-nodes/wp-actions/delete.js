@@ -30,8 +30,6 @@ const wpActionDELETE = async ({ helpers, cachedNodeIds, wpAction }) => {
   const node = await getNode(nodeId)
 
   if (node) {
-    // @todo figure out why touching nodes before deleting was necessary
-    await actions.touchNode({ nodeId })
     await actions.deleteNode({ node })
   }
 
