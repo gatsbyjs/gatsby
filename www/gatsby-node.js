@@ -369,7 +369,7 @@ exports.createPages = ({ graphql, actions, reporter }) => {
             context: {
               slug: node.fields.slug,
               locale,
-              ...getPrevAndNext(slug),
+              ...getPrevAndNext(node.fields.slug),
             },
           })
         }
