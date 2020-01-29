@@ -21,7 +21,6 @@ const wpActionUPDATE = async ({
     gatsbyApi: {
       pluginOptions: { verbose },
     },
-    remoteSchema: { nodeQueries },
   } = state
 
   const nodeId = wpAction.referencedNodeGlobalRelayID
@@ -52,12 +51,6 @@ const wpActionUPDATE = async ({
   const { actions, getNode } = helpers
   const node = await getNode(nodeId)
 
-  // touch the node so we own it
-  await actions.touchNode({ nodeId })
-
-  // then we can delete it
-  await actions.deleteNode({ node })
-
   // recreate the deleted node but with updated data
   const { createContentDigest } = helpers
 
@@ -70,8 +63,6 @@ const wpActionUPDATE = async ({
       type: buildTypeName(typeInfo.nodesTypeName),
     },
   }
-
-  await actions.createNode(remoteNode)
 
   const typeSettings = getTypeSettingsByType({
     name: typeInfo.nodesTypeName,
@@ -98,6 +89,8 @@ const wpActionUPDATE = async ({
     }
   }
 
+  await actions.createNode(remoteNode)
+
   if (intervalRefetching) {
     reporter.log(``)
     reporter.info(
@@ -109,26 +102,30 @@ const wpActionUPDATE = async ({
     )
 
     if (verbose) {
-      Object.entries(node)
-        .filter(([key]) => !key.includes(`modifiedGmt`) && key !== `modified`)
-        .forEach(([key, value]) => {
-          if (
-            // if the value of this field changed, log it
-            typeof updatedNodeContent[key] === `string` &&
-            value !== updatedNodeContent[key]
-          ) {
-            reporter.log(``)
-            reporter.info(chalk.bold(`${key} changed`))
-            reporter.log(``)
-            reporter.log(`${chalk.italic.bold(`    from`)}`)
-            reporter.log(`      ${value}`)
-            reporter.log(chalk.italic.bold(`    to`))
-            reporter.log(`      ${updatedNodeContent[key]}`)
-            reporter.log(``)
-          }
-        })
+      const nodeEntries = node ? Object.entries(node) : null
 
-      reporter.log(``)
+      if (nodeEntries && nodeEntries.length) {
+        nodeEntries
+          .filter(([key]) => !key.includes(`modifiedGmt`) && key !== `modified`)
+          .forEach(([key, value]) => {
+            if (
+              // if the value of this field changed, log it
+              typeof updatedNodeContent[key] === `string` &&
+              value !== updatedNodeContent[key]
+            ) {
+              reporter.log(``)
+              reporter.info(chalk.bold(`${key} changed`))
+              reporter.log(``)
+              reporter.log(`${chalk.italic.bold(`    from`)}`)
+              reporter.log(`      ${value}`)
+              reporter.log(chalk.italic.bold(`    to`))
+              reporter.log(`      ${updatedNodeContent[key]}`)
+              reporter.log(``)
+            }
+          })
+
+        reporter.log(``)
+      }
     }
   }
 

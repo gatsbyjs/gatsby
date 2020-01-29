@@ -59,10 +59,10 @@ export const handleWpActions = async api => {
       cachedNodeIds = await wpActionDELETE(api)
       break
     case `UPDATE`:
-      cachedNodeIds = await wpActionUPDATE(api)
-      break
     case `CREATE`:
-      cachedNodeIds = await wpActionCREATE(api)
+      cachedNodeIds = await wpActionUPDATE(api)
+    // break
+    // cachedNodeIds = await wpActionCREATE(api)
   }
 
   return cachedNodeIds
