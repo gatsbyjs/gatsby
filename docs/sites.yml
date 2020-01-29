@@ -9497,3 +9497,61 @@
   built_by: tqCoders
   built_by_url: https://tqcoders.com
   featured: false
+- title: Qri.io Website and Docs
+  main_url: https://qri.io
+  url: https://qri.io/docs
+  source_url: https://github.com/qri-io/website
+  description: >
+    Website and Documentation for Qri, an open source version control system for datasets
+  categories:
+    - Open Source
+    - Community
+    - Data
+    - Technology
+  built_by: Qri, Inc.
+  built_by_url: https://qri.io
+  featured: false
+- title: Jellypepper
+  main_url: https://jellypepper.com/
+  url: https://jellypepper.com/
+  description: >
+    Award-winning creative studio for disrupters. We design and build beautiful brands, apps, websites and videos for startups and tech companies.
+  categories:
+    - Portfolio
+    - Agency
+  built_by: Jellypepper
+  built_by_url: https://jellypepper.com/
+- title: Miyamado Jinja
+  main_url: https://www.miyamadojinja.com
+  url: https://www.miyamadojinja.com
+  description: >
+    Miyamado Jinja is a Japanses Shinto Shrine in Yokkaichi, Mie, Japan.
+  categories:
+    - Nonprofit
+    - Travel
+  built_by: mnishiguchi
+  built_by_url: https://mnishiguchi.com
+  featured: false
+- title: Calisthenics Skills
+  main_url: https://www.calisthenicsskills.com
+  url: https://www.calisthenicsskills.com
+  description: >
+    A beautiful fitness progress tracker built on Gatsby.
+  categories:
+    - Fitness
+    - App
+  built_by: Andrico Karoulla
+  built_by_url: https://andri.co
+  featured: false
+- title: sung.codes
+  main_url: https://sung.codes/
+  source_url: https://github.com/dance2die/sung.codes
+  url: https://sung.codes/
+  description: >
+    Blog by Sung M. Kim (a.k.a. dance2die)
+  categories:
+    - Blog
+    - Landing Page
+  built_by: Sung M. Kim
+  built_by_url: https://github.com/dance2die
+  featured: false
