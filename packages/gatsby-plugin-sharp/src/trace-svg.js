@@ -1,5 +1,4 @@
 const { promisify } = require(`bluebird`)
-const crypto = require(`crypto`)
 const _ = require(`lodash`)
 const tmpDir = require(`os`).tmpdir()
 const sharp = require(`./safe-sharp`)
@@ -7,6 +6,7 @@ const sharp = require(`./safe-sharp`)
 const duotone = require(`./duotone`)
 const { getPluginOptions, healOptions } = require(`./plugin-options`)
 const { reportError } = require(`./report-error`)
+const { createContentDigest } = require(`gatsby-core-utils`)
 
 exports.notMemoizedPrepareTraceSVGInputFile = async ({
   file,
@@ -90,12 +90,9 @@ exports.notMemoizedtraceSVG = async ({ file, args, fileArgs, reporter }) => {
     file.extension
   )
 
-  const tmpFilePath = `${tmpDir}/${file.internal.contentDigest}-${
-    file.name
-  }-${crypto
-    .createHash(`md5`)
-    .update(JSON.stringify(options))
-    .digest(`hex`)}.${file.extension}`
+  const optionsHash = createContentDigest(options)
+
+  const tmpFilePath = `${tmpDir}/${file.internal.contentDigest}-${file.name}-${optionsHash}.${file.extension}`
 
   try {
     await exports.memoizedPrepareTraceSVGInputFile({

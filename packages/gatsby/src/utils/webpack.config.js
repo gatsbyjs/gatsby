@@ -204,6 +204,7 @@ module.exports = async (
         configPlugins = configPlugins.concat([
           plugins.hotModuleReplacement(),
           plugins.noEmitOnErrors(),
+          plugins.eslintGraphqlSchemaReload(),
         ])
         break
       case `build-javascript`: {

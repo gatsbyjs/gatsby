@@ -5,6 +5,9 @@ const { bindActionCreators } = require(`redux`)
 
 const tracer = require(`opentracing`).globalTracer()
 const reporter = require(`gatsby-cli/lib/reporter`)
+const stackTrace = require(`stack-trace`)
+const { codeFrameColumns } = require(`@babel/code-frame`)
+const fs = require(`fs-extra`)
 const getCache = require(`./get-cache`)
 const createNodeId = require(`./create-node-id`)
 const { createContentDigest } = require(`gatsby-core-utils`)
@@ -20,6 +23,7 @@ const { emitter, store } = require(`../redux`)
 const getPublicPath = require(`./get-public-path`)
 const { getNonGatsbyCodeFrameFormatted } = require(`./stack-trace-utils`)
 const { trackBuildError, decorateEvent } = require(`gatsby-telemetry`)
+const { default: errorParser } = require(`./api-runner-error-parser`)
 
 // Bind action creators per plugin so we can auto-add
 // metadata to actions they create.
@@ -240,12 +244,12 @@ let waitingForCasacadeToFinish = []
 
 module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
   new Promise(resolve => {
-    const { parentSpan } = args
+    const { parentSpan, traceId, traceTags, waitForCascadingActions } = args
     const apiSpanArgs = parentSpan ? { childOf: parentSpan } : {}
     const apiSpan = tracer.startSpan(`run-api`, apiSpanArgs)
 
     apiSpan.setTag(`api`, api)
-    _.forEach(args.traceTags, (value, key) => {
+    _.forEach(traceTags, (value, key) => {
       apiSpan.setTag(key, value)
     })
 
@@ -267,7 +271,7 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
       resolve,
       span: apiSpan,
       startTime: new Date().toJSON(),
-      traceId: args.traceId,
+      traceId,
     }
 
     // Generate IDs for api runs. Most IDs we generate from the args
@@ -276,13 +280,13 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
     // large objects.
     let id
     if (api === `setFieldsOnGraphQLNodeType`) {
-      id = `${api}${apiRunInstance.startTime}${args.type.name}${args.traceId}`
+      id = `${api}${apiRunInstance.startTime}${args.type.name}${traceId}`
     } else if (api === `onCreateNode`) {
-      id = `${api}${apiRunInstance.startTime}${args.node.internal.contentDigest}${args.traceId}`
+      id = `${api}${apiRunInstance.startTime}${args.node.internal.contentDigest}${traceId}`
     } else if (api === `preprocessSource`) {
-      id = `${api}${apiRunInstance.startTime}${args.filename}${args.traceId}`
+      id = `${api}${apiRunInstance.startTime}${args.filename}${traceId}`
     } else if (api === `onCreatePage`) {
-      id = `${api}${apiRunInstance.startTime}${args.page.path}${args.traceId}`
+      id = `${api}${apiRunInstance.startTime}${args.page.path}${traceId}`
     } else {
       // When tracing is turned on, the `args` object will have a
       // `parentSpan` field that can be quite large. So we omit it
@@ -292,7 +296,7 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
     }
     apiRunInstance.id = id
 
-    if (args.waitForCascadingActions) {
+    if (waitForCascadingActions) {
       waitingForCasacadeToFinish.push(apiRunInstance)
     }
 
@@ -340,15 +344,44 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
 
         let localReporter = getLocalReporter(activity, reporter)
 
-        localReporter.panicOnBuild({
-          id: `11321`,
-          context: {
-            pluginName,
-            api,
-            message: err instanceof Error ? err.message : err,
-          },
-          error: err instanceof Error ? err : undefined,
-        })
+        const file = stackTrace
+          .parse(err)
+          .find(file => /gatsby-node/.test(file.fileName))
+
+        let codeFrame = ``
+        const structuredError = errorParser({ err })
+
+        if (file) {
+          const { fileName, lineNumber: line, columnNumber: column } = file
+
+          const code = fs.readFileSync(fileName, { encoding: `utf-8` })
+          codeFrame = codeFrameColumns(
+            code,
+            {
+              start: {
+                line,
+                column,
+              },
+            },
+            {
+              highlightCode: true,
+            }
+          )
+
+          structuredError.location = {
+            start: { line: line, column: column },
+          }
+          structuredError.filePath = fileName
+        }
+
+        structuredError.context = {
+          ...structuredError.context,
+          pluginName,
+          api,
+          codeFrame,
+        }
+
+        localReporter.panicOnBuild(structuredError)
 
         return null
       })
@@ -370,7 +403,7 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
 
       // Filter out empty responses and return if the
       // api caller isn't waiting for cascading actions to finish.
-      if (!args.waitForCascadingActions) {
+      if (!waitForCascadingActions) {
         apiSpan.finish()
         resolve(apiRunInstance.results)
       }

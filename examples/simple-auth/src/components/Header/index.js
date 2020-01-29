@@ -12,7 +12,7 @@ const Header = () => (
             styles[`header__link--home`]
           }`}
         >
-          Gatsby Profiles
+          Gatsby Auth
         </Link>
       </h1>
       <nav role="main" className={styles[`header__nav`]}>

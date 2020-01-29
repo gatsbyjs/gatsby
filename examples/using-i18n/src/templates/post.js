@@ -1,7 +1,6 @@
 import React from "react"
 import { graphql } from "gatsby"
-import MDXRenderer from "gatsby-mdx/mdx-renderer"
-import MdxLink from "../components/mdxLink"
+import { MDXRenderer } from "gatsby-plugin-mdx"
 
 // The normal <a> tag is modified here (so that internal links use gatsby-link/LocalizedLink
 // More info:
@@ -9,13 +8,7 @@ import MdxLink from "../components/mdxLink"
 const Post = ({ data: { mdx } }) => (
   <div className="blogpost">
     <h1>{mdx.frontmatter.title}</h1>
-    <MDXRenderer
-      components={{
-        a: MdxLink,
-      }}
-    >
-      {mdx.code.body}
-    </MDXRenderer>
+    <MDXRenderer>{mdx.body}</MDXRenderer>
   </div>
 )
 
@@ -30,9 +23,7 @@ export const query = graphql`
       frontmatter {
         title
       }
-      code {
-        body
-      }
+      body
     }
   }
 `

@@ -71,6 +71,5 @@ To make sure your starter is easily discoverable, you are welcome (but not requi
 
 ## Further reading:
 
-- [How to create a Gatsby Starter
-  ](https://medium.com/@emasuriano/how-to-create-a-gatsby-starter-e7d53083a880) by Emanuel Suriano
+- [How to create a Gatsby Starter](https://medium.com/@emasuriano/how-to-create-a-gatsby-starter-e7d53083a880) by Emanuel Suriano
 - [Introducing Gatsby Themes](/blog/2018-11-11-introducing-gatsby-themes/) (including info on starters)

@@ -9,25 +9,28 @@
     "develop": "gatsby develop",
     "build": "gatsby build",
     "type-check": "tsc --noEmit",
-    "lint": "tslint --project ."
+    "lint": "eslint . --ignore-path .gitignore --ext .ts,.tsx,.js"
   },
   "dependencies": {
-    "@types/node": "^10.3.1",
-    "@types/react": "^16.9.2",
-    "@types/react-dom": "^16.9.0",
-    "gatsby": "^2.0.0",
-    "gatsby-plugin-typescript": "^2.0.0",
-    "gatsby-plugin-typography": "^2.2.0",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
-    "react-typography": "^0.16.13",
-    "typography": "^0.16.17",
-    "typography-theme-bootstrap": "^0.16.7"
+    "gatsby": "^2.18.0",
+    "gatsby-plugin-typescript": "^2.1.18",
+    "gatsby-plugin-typography": "^2.3.17",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-typography": "^0.16.19",
+    "typography": "^0.16.19",
+    "typography-theme-bootstrap": "^0.16.19"
   },
   "devDependencies": {
-    "tslint": "^5.10.0",
-    "tslint-config-prettier": "^1.13.0",
-    "tslint-react": "^3.6.0",
-    "typescript": "^3.6.2"
+    "@types/node": "^12.12.11",
+    "@types/react": "^16.9.11",
+    "@types/react-dom": "^16.9.4",
+    "@typescript-eslint/eslint-plugin": "^2.8.0",
+    "@typescript-eslint/parser": "^2.8.0",
+    "eslint": "^5.16.0",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "prettier": "^1.19.1",
+    "typescript": "^3.7.2"
   }
 }

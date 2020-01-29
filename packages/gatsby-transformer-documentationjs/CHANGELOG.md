@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.1.22...gatsby-transformer-documentationjs@4.1.23) (2020-01-09)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
+## [4.1.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.1.20...gatsby-transformer-documentationjs@4.1.22) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
+## [4.1.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.1.20...gatsby-transformer-documentationjs@4.1.21) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
+## [4.1.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.1.19...gatsby-transformer-documentationjs@4.1.20) (2019-11-26)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
+## [4.1.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.1.18...gatsby-transformer-documentationjs@4.1.19) (2019-11-15)
+
+### Bug Fixes
+
+- **gatsby-transformer-documentationjs:** Add missing quotes around field names ([0c2eab0](https://github.com/gatsbyjs/gatsby/commit/0c2eab0))
+
+## [4.1.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.1.17...gatsby-transformer-documentationjs@4.1.18) (2019-11-15)
+
+### Bug Fixes
+
+- ensure all docjs elements are typed ([#19510](https://github.com/gatsbyjs/gatsby/issues/19510)) ([ab8adbc](https://github.com/gatsbyjs/gatsby/commit/ab8adbc))
+
+## [4.1.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.1.16...gatsby-transformer-documentationjs@4.1.17) (2019-11-10)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
 ## [4.1.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.1.15...gatsby-transformer-documentationjs@4.1.16) (2019-10-14)
 
 **Note:** Version bump only for package gatsby-transformer-documentationjs
