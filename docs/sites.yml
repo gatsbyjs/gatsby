@@ -9543,3 +9543,15 @@
   built_by: Andrico Karoulla
   built_by_url: https://andri.co
   featured: false
+- title: sung.codes
+  main_url: https://sung.codes/
+  source_url: https://github.com/dance2die/sung.codes
+  url: https://sung.codes/
+  description: >
+    Blog by Sung M. Kim (a.k.a. dance2die)
+  categories:
+    - Blog
+    - Landing Page
+  built_by: Sung M. Kim
+  built_by_url: https://github.com/dance2die
+  featured: false
