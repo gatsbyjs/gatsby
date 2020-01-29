@@ -1165,6 +1165,42 @@ describe(`Extra fields`, () => {
     expect(errors).toEqual([])
     expect(result.get(`mockFile`)).toMatchSnapshot()
   })
+
+  it(`doesn't add id field when alias for id exists`, async () => {
+    const [result, errors] = transformQuery(`
+      query mockFileQuery {
+        allDirectory {
+          nodes {
+            contents {
+              ... on File {
+                id: absolutePath
+              }
+              ... on Directory {
+                id: absolutePath
+              }
+            }
+            ... on Directory {
+              id: absolutePath
+            }
+            ...DirectoryContents
+          }
+        }
+      }
+
+      fragment DirectoryContents on Directory {
+        contents {
+          ... on File {
+            id: absolutePath
+          }
+          ... on Directory {
+            id: absolutePath
+          }
+        }
+      }
+    `)
+    expect(errors).toEqual([])
+    expect(result.get(`mockFile`)).toMatchSnapshot()
+  })
 })
 
 const createGatsbyDoc = (

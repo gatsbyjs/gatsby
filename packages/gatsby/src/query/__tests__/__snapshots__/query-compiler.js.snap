@@ -657,6 +657,81 @@ query mockFileQuery {
 }
 `;
 
+exports[`Extra fields doesn't add id field when alias for id exists 1`] = `
+Object {
+  "hash": "hash",
+  "isHook": false,
+  "isStaticQuery": false,
+  "name": "mockFileQuery",
+  "originalText": "
+      query mockFileQuery {
+        allDirectory {
+          nodes {
+            contents {
+              ... on File {
+                id: absolutePath
+              }
+              ... on Directory {
+                id: absolutePath
+              }
+            }
+            ... on Directory {
+              id: absolutePath
+            }
+            ...DirectoryContents
+          }
+        }
+      }
+
+      fragment DirectoryContents on Directory {
+        contents {
+          ... on File {
+            id: absolutePath
+          }
+          ... on Directory {
+            id: absolutePath
+          }
+        }
+      }
+    ",
+  "path": "mockFile",
+  "text": "fragment DirectoryContents on Directory {
+  id
+  contents {
+    __typename
+    ... on File {
+      id: absolutePath
+    }
+    ... on Directory {
+      id: absolutePath
+    }
+  }
+}
+
+query mockFileQuery {
+  allDirectory {
+    nodes {
+      id
+      contents {
+        __typename
+        ... on File {
+          id: absolutePath
+        }
+        ... on Directory {
+          id: absolutePath
+        }
+      }
+      ... on Directory {
+        id: absolutePath
+      }
+      ...DirectoryContents
+    }
+  }
+}
+",
+}
+`;
+
 exports[`actual compiling accepts identical fragment definitions 1`] = `
 Map {
   "mockFile" => Object {

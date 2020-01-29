@@ -503,7 +503,7 @@ const addExtraFields = (document, schema) => {
         if (node.name.value === `__typename`) {
           context.hasTypename = true
         }
-        if (node.name.value === `id`) {
+        if (node.name.value === `id` || node?.alias?.value === `id`) {
           context.hasId = true
         }
       },
