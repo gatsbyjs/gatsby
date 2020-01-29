@@ -3020,8 +3020,8 @@
   built_by_url: https://www.michaeluloth.com
   featured: false
 - title: Peter Barrett
-  url: "https://peterbarrett.netlify.com"
-  main_url: "https://peterbarrett.netlify.com"
+  url: "https://www.peterbarrett.ca"
+  main_url: "https://www.peterbarrett.ca"
   description: >
     Peter Barrett is a Canadian baritone from Newfoundland and Labrador who performs opera and concert repertoire in Canada, the U.S. and around the world. Site designed by Stephen Bell.
   categories:
@@ -3185,17 +3185,6 @@
     - Web Development
     - Education
     - Open Source
-  built_by: Michael Uloth
-  built_by_url: "https://www.michaeluloth.com"
-- title: Up & Running Tutorials
-  main_url: https://www.upandrunningtutorials.com
-  url: https://www.upandrunningtutorials.com
-  featured: false
-  description: >
-    Free coding tutorials for web developers. Get your web development career up and running by learning to build better, faster websites.
-  categories:
-    - Web Development
-    - Education
   built_by: Michael Uloth
   built_by_url: "https://www.michaeluloth.com"
 - title: Grooovinger
@@ -3544,8 +3533,8 @@
   built_by_url: "https://www.michaeluloth.com"
   featured: false
 - title: The AZOOR Society
-  main_url: "https://theazoorsociety.netlify.com"
-  url: "https://theazoorsociety.netlify.com"
+  main_url: "https://www.azoorsociety.org"
+  url: "https://www.azoorsociety.org"
   description: The AZOOR Society is a UK-based charity committed to promoting awareness of Acute Zonal Occult Outer Retinopathy and assisting further research. Site designed by Stephen Bell.
   categories:
     - Community
