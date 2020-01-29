@@ -2,6 +2,10 @@
 packages/*/yarn.lock
 packages/*/package-lock.json
 
+# System Files
+Thumbs.db
+
+
 # Logs
 logs
 *.log
@@ -64,3 +68,8 @@ package-lock.json
 !themes/gatsby-starter-notes-theme/package-lock.json
 !themes/gatsby-starter-theme/package-lock.json
 !themes/gatsby-starter-theme-workspace/package-lock.json
+
+jspm_packages/
+
+# Optional npm cache directory
+.npm
