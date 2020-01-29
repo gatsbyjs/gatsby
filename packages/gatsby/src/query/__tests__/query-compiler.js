@@ -1024,6 +1024,45 @@ describe(`Extra fields`, () => {
     expect(result.get(`mockFile`)).toMatchSnapshot()
   })
 
+  it(`doesn't add __typename field when alias exists`, async () => {
+    const [result, errors] = transformQuery(`
+      query mockFileQuery {
+        allDirectory {
+          nodes {
+            __typename: id
+            contents {
+              ... on File {
+                __typename: id
+              }
+            }
+            children {
+              __typename: id
+              ... Node
+            }
+            ... on Directory {
+              children {
+                __typename: id
+              }
+            }
+            ...DirectoryContents
+          }
+        }
+      }
+
+      fragment DirectoryContents on Directory {
+        children {
+          __typename: id
+        }
+      }
+
+      fragment Node on Node {
+        __typename: id
+      }
+    `)
+    expect(errors).toEqual([])
+    expect(result.get(`mockFile`)).toMatchSnapshot()
+  })
+
   it(`adds id field if type has it`, () => {
     const [result, errors] = transformQuery(`
       query mockFileQuery {
