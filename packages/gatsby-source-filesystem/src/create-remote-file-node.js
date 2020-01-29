@@ -161,6 +161,8 @@ const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
     }
     const responseStream = got.stream(url, {
       headers,
+      timeout: 30000,
+      retries: 5,
       ...httpOpts,
     })
     const fsWriteStream = fs.createWriteStream(tmpFilename)
