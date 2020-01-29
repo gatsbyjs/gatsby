@@ -2,6 +2,7 @@
 import { jsx } from "theme-ui"
 import { Link } from "gatsby"
 import { colors, mediaQueries } from "../gatsby-plugin-theme-ui"
+import { useIntl } from "react-intl"
 
 function isUnderDepthLimit(depth, maxDepth) {
   if (maxDepth === null) {
@@ -62,6 +63,7 @@ function createItems(items, location, depth, maxDepth) {
 }
 
 function TableOfContents({ page, location }) {
+  const intl = useIntl()
   return page.tableOfContents.items ? (
     <nav
       sx={{
@@ -86,7 +88,7 @@ function TableOfContents({ page, location }) {
           textTransform: `uppercase`,
         }}
       >
-        Table of Contents
+        {intl.formatMessage({ id: "tableOfContents" })}
       </h2>
       <ul
         sx={{

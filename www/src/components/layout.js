@@ -25,10 +25,33 @@ import SkipNavLink from "../components/skip-nav-link"
 import "../assets/fonts/futura"
 import LazyModal from "./lazy-modal"
 import { defaultLang } from "../utils/i18n"
+import { IntlProvider } from "react-intl"
 
 let windowWidth
 
 export const LocaleContext = React.createContext(defaultLang)
+
+const messages = {
+  en: {
+    tableOfContents: "Table of Contents",
+    previous: "Previous",
+    feedbackLegend: "Rate your experience",
+    feedbackCancel: "Cancel <srOnly>this widget</srOnly>",
+    feedback: {
+      legend: "Rate your experience",
+      cancel: "Cancel <srOnly>this widget</srOnly>",
+    },
+  },
+  es: {
+    previous: "Anterior",
+    feedbackLegend: "Ratir tu experience",
+    feedbackCancel: "Cancelar <srOnly>este widget</srOnly>",
+    feedback: {
+      legend: "Ratir tu experience",
+      cancel: "Cancelar <srOnly>este widget</srOnly>",
+    },
+  },
+}
 
 class DefaultLayout extends React.Component {
   constructor() {
@@ -167,39 +190,48 @@ class DefaultLayout extends React.Component {
       )
     }
 
+    const { locale = defaultLang } = this.props
+
     return (
-      <LocaleContext.Provider value={this.props.locale || defaultLang}>
-        <Global styles={globalStyles} />
-        <SiteMetadata
-          pathname={this.props.location.pathname}
-          locale={this.props.locale}
-        />
-        <SkipNavLink />
-        <Banner />
-        <Navigation pathname={this.props.location.pathname} />
-        <div
-          className={`main-body docSearch-content`}
-          sx={{
-            px: `env(safe-area-inset-left)`,
-            pt: t => t.sizes.bannerHeight,
-            // make room for the mobile navigation
-            pb: t => t.sizes.headerHeight,
-            [breakpointGutter]: {
-              pt: t =>
-                `calc(${t.sizes.bannerHeight} + ${t.sizes.headerHeight})`,
-              pb: 0,
-            },
-          }}
+      <LocaleContext.Provider value={locale}>
+        <IntlProvider
+          locale={locale}
+          key={locale}
+          messages={messages[locale]}
+          defaultLocale={defaultLang}
         >
-          <PageWithSidebar
-            disable={isSidebarDisabled}
-            itemList={this.props.itemList}
-            location={this.props.location}
-            enableScrollSync={this.props.enableScrollSync}
-            renderContent={() => this.props.children}
+          <Global styles={globalStyles} />
+          <SiteMetadata
+            pathname={this.props.location.pathname}
+            locale={this.props.locale}
           />
-        </div>
-        <MobileNavigation />
+          <SkipNavLink />
+          <Banner />
+          <Navigation pathname={this.props.location.pathname} />
+          <div
+            className={`main-body docSearch-content`}
+            sx={{
+              px: `env(safe-area-inset-left)`,
+              pt: t => t.sizes.bannerHeight,
+              // make room for the mobile navigation
+              pb: t => t.sizes.headerHeight,
+              [breakpointGutter]: {
+                pt: t =>
+                  `calc(${t.sizes.bannerHeight} + ${t.sizes.headerHeight})`,
+                pb: 0,
+              },
+            }}
+          >
+            <PageWithSidebar
+              disable={isSidebarDisabled}
+              itemList={this.props.itemList}
+              location={this.props.location}
+              enableScrollSync={this.props.enableScrollSync}
+              renderContent={() => this.props.children}
+            />
+          </div>
+          <MobileNavigation />
+        </IntlProvider>
       </LocaleContext.Provider>
     )
   }

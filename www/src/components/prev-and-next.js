@@ -5,6 +5,7 @@ import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import ArrowBackIcon from "react-icons/lib/md/arrow-back"
 
 import { mediaQueries } from "../gatsby-plugin-theme-ui"
+import { useIntl } from "react-intl"
 
 const prevNextLinkStyles = {
   // bump specificity to override the border applied to Link's by default
@@ -30,6 +31,8 @@ const PrevAndNext = ({ prev = null, next = null, ...props }) => {
     return null
   }
 
+  const intl = useIntl()
+
   return (
     <nav
       aria-label="pagination"
@@ -45,7 +48,9 @@ const PrevAndNext = ({ prev = null, next = null, ...props }) => {
       <div css={{ [mediaQueries.sm]: { width: `48%` } }}>
         {prev && (
           <Link to={prev.link} sx={prevNextLinkStyles}>
-            <p sx={prevNextLabelStyles}>Previous</p>
+            <p sx={prevNextLabelStyles}>
+              {intl.formatMessage({ id: "previous" })}
+            </p>
             <span
               sx={{
                 [mediaQueries.md]: {
