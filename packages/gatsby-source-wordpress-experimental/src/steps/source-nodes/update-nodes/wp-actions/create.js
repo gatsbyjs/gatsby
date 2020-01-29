@@ -2,6 +2,8 @@ import fetchGraphql from "~/utils/fetch-graphql"
 import store from "~/store"
 import { formatLogMessage } from "~/utils/format-log-message"
 import { buildTypeName } from "~/steps/create-schema-customization/helpers"
+import { getTypeSettingsByType } from "~/steps/create-schema-customization/helpers"
+import { getQueryInfoByTypeName } from "../../helpers"
 
 const wpActionCREATE = async ({
   helpers,
@@ -18,11 +20,9 @@ const wpActionCREATE = async ({
 
   // otherwise we need to fetch the post
   // so get the right gql query from redux
-  const { nodeQueries } = store.getState().remoteSchema
-  const queryInfo = Object.values(nodeQueries).find(
-    q => q.typeInfo.singularName === wpAction.referencedNodeSingularName
+  const { nodeQuery: query, typeInfo } = getQueryInfoByTypeName(
+    wpAction.referencedNodeSingularName
   )
-  const { nodeQuery: query } = queryInfo
 
   // fetch the new post
   const { data } = await fetchGraphql({
@@ -40,18 +40,45 @@ const wpActionCREATE = async ({
   const node = {
     ...nodeContent,
     id: nodeId,
-    nodeType: queryInfo.typeInfo.nodesTypeName,
-    type: queryInfo.typeInfo.nodesTypeName,
+    nodeType: typeInfo.nodesTypeName,
+    type: typeInfo.nodesTypeName,
   }
 
-  await actions.createNode({
+  const remoteNode = {
     ...node,
     parent: null,
     internal: {
       contentDigest: createContentDigest(nodeContent),
-      type: buildTypeName(queryInfo.typeInfo.nodesTypeName),
+      type: buildTypeName(typeInfo.nodesTypeName),
     },
+  }
+
+  await actions.createNode(remoteNode)
+
+  const typeSettings = getTypeSettingsByType({
+    name: typeInfo.nodesTypeName,
   })
+
+  if (
+    typeSettings.afterRemoteNodeProcessed &&
+    typeof typeSettings.afterRemoteNodeProcessed === `function`
+  ) {
+    const additionalNodeIds = await typeSettings.afterRemoteNodeProcessed({
+      actionType: `CREATE`,
+      remoteNode,
+      actions,
+      helpers,
+      typeInfo,
+      fetchGraphql,
+      typeSettings,
+      buildTypeName,
+      wpStore: store,
+    })
+
+    if (additionalNodeIds && additionalNodeIds.length) {
+      additionalNodeIds.forEach(id => cachedNodeIds.push(id))
+    }
+  }
 
   if (intervalRefetching) {
     helpers.reporter.log(``)

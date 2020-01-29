@@ -2,17 +2,22 @@ import execall from "execall"
 import fetchReferencedMediaItemsAndCreateNodes from "../fetch-nodes/fetch-referenced-media-items"
 import urlToPath from "~/utils/url-to-path"
 import { getGatsbyApi } from "~/utils/get-gatsby-api"
-import { buildTypeName } from "~/steps/create-schema-customization/helpers"
+import store from "~/store"
+import fetchGraphql from "~/utils/fetch-graphql"
+
+import {
+  buildTypeName,
+  getTypeSettingsByType,
+} from "~/steps/create-schema-customization/helpers"
 
 // const imgSrcRemoteFileRegex = /(?:src=\\")((?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#/%=~_|$?!:,.]*\)|[A-Z0-9+&@#/%=~_|$])\.(?:jpeg|jpg|png|gif|ico|pdf|doc|docx|ppt|pptx|pps|ppsx|odt|xls|psd|mp3|m4a|ogg|wav|mp4|m4v|mov|wmv|avi|mpg|ogv|3gp|3g2|svg|bmp|tif|tiff|asf|asx|wm|wmx|divx|flv|qt|mpe|webm|mkv|txt|asc|c|cc|h|csv|tsv|ics|rtx|css|htm|html|m4b|ra|ram|mid|midi|wax|mka|rtf|js|swf|class|tar|zip|gz|gzip|rar|7z|exe|pot|wri|xla|xlt|xlw|mdb|mpp|docm|dotx|dotm|xlsm|xlsb|xltx|xltm|xlam|pptm|ppsm|potx|potm|ppam|sldx|sldm|onetoc|onetoc2|onetmp|onepkg|odp|ods|odg|odc|odb|odf|wp|wpd|key|numbers|pages))(?=\\"| |\.)/gim
 
 export const createGatsbyNodesFromWPGQLContentNodes = async ({
   wpgqlNodesByContentType,
 }) => {
-  const {
-    helpers: { actions, createContentDigest },
-    pluginOptions,
-  } = getGatsbyApi()
+  const { helpers, pluginOptions } = getGatsbyApi()
+
+  const { actions, createContentDigest } = helpers
 
   const createdNodeIds = []
   const referencedMediaItemNodeIds = new Set()
@@ -52,7 +57,7 @@ export const createGatsbyNodesFromWPGQLContentNodes = async ({
         }
       }
 
-      await actions.createNode({
+      const remoteNode = {
         ...node,
         id: node.id,
         parent: null,
@@ -60,7 +65,34 @@ export const createGatsbyNodesFromWPGQLContentNodes = async ({
           contentDigest: createContentDigest(node),
           type: buildTypeName(node.type),
         },
+      }
+
+      await actions.createNode(remoteNode)
+
+      const typeSettings = getTypeSettingsByType({
+        name: node.type,
       })
+
+      if (
+        typeSettings.afterRemoteNodeProcessed &&
+        typeof typeSettings.afterRemoteNodeProcessed === `function`
+      ) {
+        const additionalNodeIds = await typeSettings.afterRemoteNodeProcessed({
+          actionType: `CREATE_ALL`,
+          remoteNode,
+          actions,
+          helpers,
+          type: node.type,
+          fetchGraphql,
+          typeSettings,
+          buildTypeName,
+          wpStore: store,
+        })
+
+        if (additionalNodeIds && additionalNodeIds.length) {
+          additionalNodeIds.forEach(id => createdNodeIds.push(id))
+        }
+      }
 
       createdNodeIds.push(node.id)
     }

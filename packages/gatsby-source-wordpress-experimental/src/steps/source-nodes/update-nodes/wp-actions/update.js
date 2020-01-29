@@ -2,7 +2,11 @@ import fetchGraphql from "~/utils/fetch-graphql"
 import store from "~/store"
 import { formatLogMessage } from "~/utils/format-log-message"
 import chalk from "chalk"
-import { buildTypeName } from "~/steps/create-schema-customization/helpers"
+import { getQueryInfoByTypeName } from "../../helpers"
+import {
+  buildTypeName,
+  getTypeSettingsByType,
+} from "~/steps/create-schema-customization/helpers"
 
 const wpActionUPDATE = async ({
   helpers,
@@ -28,8 +32,8 @@ const wpActionUPDATE = async ({
     return cachedNodeIds.filter(cachedId => cachedId !== nodeId)
   }
 
-  const { nodeQuery: query, typeInfo } = Object.values(nodeQueries).find(
-    q => q.typeInfo.singularName === wpAction.referencedNodeSingularName
+  const { nodeQuery: query, typeInfo } = getQueryInfoByTypeName(
+    wpAction.referencedNodeSingularName
   )
 
   const { data } = await fetchGraphql({
@@ -56,7 +60,8 @@ const wpActionUPDATE = async ({
 
   // recreate the deleted node but with updated data
   const { createContentDigest } = helpers
-  await actions.createNode({
+
+  const remoteNode = {
     ...updatedNodeContent,
     id: nodeId,
     parent: null,
@@ -64,7 +69,34 @@ const wpActionUPDATE = async ({
       contentDigest: createContentDigest(updatedNodeContent),
       type: buildTypeName(typeInfo.nodesTypeName),
     },
+  }
+
+  await actions.createNode(remoteNode)
+
+  const typeSettings = getTypeSettingsByType({
+    name: typeInfo.nodesTypeName,
   })
+
+  if (
+    typeSettings.afterRemoteNodeProcessed &&
+    typeof typeSettings.afterRemoteNodeProcessed === `function`
+  ) {
+    const additionalNodeIds = await typeSettings.afterRemoteNodeProcessed({
+      actionType: `UPDATE`,
+      remoteNode,
+      actions,
+      helpers,
+      typeInfo,
+      fetchGraphql,
+      typeSettings,
+      buildTypeName,
+      wpStore: store,
+    })
+
+    if (additionalNodeIds && additionalNodeIds.length) {
+      additionalNodeIds.forEach(id => cachedNodeIds.push(id))
+    }
+  }
 
   if (intervalRefetching) {
     reporter.log(``)

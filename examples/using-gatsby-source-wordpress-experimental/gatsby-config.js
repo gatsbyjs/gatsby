@@ -35,8 +35,22 @@ module.exports = {
           MediaItem: {
             onlyFetchIfReferenced: true,
           },
+          // example of afterRemoteNodeProcessed API
           // Page: {
           //   limit: 10,
+          //   afterRemoteNodeProcessed: async ({
+          //     remoteNode,
+          //     actionType,
+          //     wpStore,
+          //     fetchGraphql,
+          //     helpers,
+          //     actions,
+          //     buildTypeName,
+          //   }) => {
+          //     console.log(actionType)
+
+          //     return null
+          //   },
           // },
           // Post: {
           //   exclude: true,

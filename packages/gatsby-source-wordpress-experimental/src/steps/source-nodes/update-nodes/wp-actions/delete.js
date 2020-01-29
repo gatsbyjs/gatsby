@@ -1,5 +1,11 @@
 import { formatLogMessage } from "~/utils/format-log-message"
 import store from "~/store"
+import {
+  getTypeSettingsByType,
+  buildTypeName,
+} from "~/steps/create-schema-customization/helpers"
+import { fetchGraphql } from "~/utils/fetch-graphql"
+import { getQueryInfoByTypeName } from "../../helpers"
 
 const wpActionDELETE = async ({ helpers, cachedNodeIds, wpAction }) => {
   const { reporter, actions, getNode } = helpers
@@ -31,6 +37,35 @@ const wpActionDELETE = async ({ helpers, cachedNodeIds, wpAction }) => {
 
   if (node) {
     await actions.deleteNode({ node })
+  }
+
+  const { typeInfo } = getQueryInfoByTypeName(
+    wpAction.referencedNodeSingularName
+  )
+
+  const typeSettings = getTypeSettingsByType({
+    name: typeInfo.nodesTypeName,
+  })
+
+  if (
+    typeSettings.afterRemoteNodeProcessed &&
+    typeof typeSettings.afterRemoteNodeProcessed === `function`
+  ) {
+    const additionalNodeIds = await typeSettings.afterRemoteNodeProcessed({
+      actionType: `DELETE`,
+      remoteNode: node,
+      actions,
+      helpers,
+      typeInfo,
+      fetchGraphql,
+      typeSettings,
+      buildTypeName,
+      wpStore: store,
+    })
+
+    if (additionalNodeIds && additionalNodeIds.length) {
+      additionalNodeIds.forEach(id => cachedNodeIds.push(id))
+    }
   }
 
   // Remove this from cached node id's so we don't try to touch it
