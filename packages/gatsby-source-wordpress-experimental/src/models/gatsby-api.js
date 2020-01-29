@@ -25,6 +25,9 @@ const defaultPluginOptions = {
     ContentNode: {
       nodeInterface: true,
     },
+    ActionMonitorAction: {
+      limit: 1,
+    },
     Menu: {
       /**
        * This is used to fetch child menu items
@@ -37,6 +40,8 @@ const defaultPluginOptions = {
        *
        * This runs when initially fetching all nodes, and after an incremental
        * fetch happens
+       *
+       * When we can get a list of all menu items regardless of location in WPGQL, this can be removed.
        */
       afterRemoteNodeProcessed: async ({
         remoteNode,
@@ -48,7 +53,9 @@ const defaultPluginOptions = {
         buildTypeName,
       }) => {
         if (
-          (actionType !== `UPDATE` && actionType !== `CREATE_ALL`) ||
+          (actionType !== `UPDATE` &&
+            actionType !== `CREATE_ALL` &&
+            actionType !== `CREATE`) ||
           !remoteNode.menuItems ||
           !remoteNode.menuItems.nodes ||
           !remoteNode.menuItems.nodes.length
@@ -106,6 +113,9 @@ const defaultPluginOptions = {
        * This was my previous attempt at fetching problematic menuItems
        * I temporarily solved this above, but I'm leaving this here as
        * a reminder of the nodeListQueries API
+       *
+       * this worked to pull all menus in the initial fetch, but menus had to be assigned to a location
+       * that was problematic because saving a menu would then fetch those menu items using the incremental fetching logic in this plugin. So menu items that previously existed in WP wouldn't show up initially if they had no location set, then as menus were saved they would show up.
        */
       // nodeListQueries: ({
       //   name,
@@ -113,7 +123,6 @@ const defaultPluginOptions = {
       //   transformedFields,
       //   helpers: { buildNodesQueryOnFieldName },
       // }) => {
-      //   // return []
       //   const menuLocationEnumValues = store
       //     .getState()
       //     .remoteSchema.introspectionData.__schema.types.find(
