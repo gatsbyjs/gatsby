@@ -1,10 +1,11 @@
 import React from "react"
 import { Helmet } from "react-helmet"
 import { graphql, useStaticQuery } from "gatsby"
+import { LocaleContext } from "../layouts"
 
 import gatsbyIcon from "../assets/gatsby-icon.png"
 
-const SiteMetadata = ({ pathname, locale }) => {
+const SiteMetadata = ({ pathname }) => {
   const {
     site: {
       siteMetadata: { siteUrl, title, twitter },
@@ -20,6 +21,8 @@ const SiteMetadata = ({ pathname, locale }) => {
       }
     }
   `)
+
+  const locale = React.useContext(LocaleContext)
 
   return (
     <Helmet defer={false} defaultTitle={title} titleTemplate={`%s | ${title}`}>

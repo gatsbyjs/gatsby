@@ -24,11 +24,8 @@ import SiteMetadata from "../components/site-metadata"
 import SkipNavLink from "../components/skip-nav-link"
 import "../assets/fonts/futura"
 import LazyModal from "./lazy-modal"
-import { defaultLang } from "../utils/i18n"
 
 let windowWidth
-
-export const LocaleContext = React.createContext(defaultLang)
 
 class DefaultLayout extends React.Component {
   constructor() {
@@ -168,12 +165,9 @@ class DefaultLayout extends React.Component {
     }
 
     return (
-      <LocaleContext.Provider value={this.props.locale || defaultLang}>
+      <>
         <Global styles={globalStyles} />
-        <SiteMetadata
-          pathname={this.props.location.pathname}
-          locale={this.props.locale}
-        />
+        <SiteMetadata pathname={this.props.location.pathname} />
         <SkipNavLink />
         <Banner />
         <Navigation pathname={this.props.location.pathname} />
@@ -200,7 +194,7 @@ class DefaultLayout extends React.Component {
           />
         </div>
         <MobileNavigation />
-      </LocaleContext.Provider>
+      </>
     )
   }
 }
