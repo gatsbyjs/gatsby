@@ -90,7 +90,6 @@ class ActionMonitor
     }
 
     function deleteMenu( $menu_id ) {
-      error_log(print_r('delete menu', true)); 
 
       $global_relay_id = Relay::toGlobalId(
             'Menu',
@@ -164,10 +163,6 @@ class ActionMonitor
             return $post_id;
         }
 
-        if (did_action('save_post') > 1) {
-          return $post_id;
-        }
-
         $post_type_object = \get_post_type_object($post->post_type);
 
         $title = $post->post_title ?? '';
@@ -183,12 +178,12 @@ class ActionMonitor
           = $post_type_object->graphql_plural_name ?? null;
 
         if ($post->post_type === 'nav_menu_item') {
+            return $post_id;
             $global_relay_id = Relay::toGlobalId( 'nav_menu_item', $post_id );
             $title = "MenuItem #$post_id";
             $referenced_node_single_name = 'menuItem';
             $referenced_node_plural_name = 'menuItems';
         }
-
 
         //
         // add a check here to make sure this is a post type available in WPGQL
@@ -226,7 +221,6 @@ class ActionMonitor
 
             $action_type = $update ? 'UPDATE' : 'CREATE';
         }
-
 
         $this->insertNewAction([
           'action_type' => $action_type,
