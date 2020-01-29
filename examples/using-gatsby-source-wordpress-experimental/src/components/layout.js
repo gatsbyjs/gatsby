@@ -1,8 +1,30 @@
 import React from "react"
 import { Box, Heading, Grid } from "@chakra-ui/core"
-import { Link } from "gatsby"
+import { Link, useStaticQuery, graphql } from "gatsby"
+import { getUrlPath } from "../utils/get-url-path"
 
 function Layout({ children }) {
+  const { wpMenu } = useStaticQuery(graphql`
+    {
+      wpMenu(slug: { eq: "test-menu-2" }) {
+        name
+        menuItems {
+          nodes {
+            label
+            url
+            # @todo this is throwing an error:
+            # connectedObject {
+            #   __typename
+            #   ... on WpPost {
+            #     uri
+            #   }
+            # }
+          }
+        }
+      }
+    }
+  `)
+
   return (
     <div>
       <Grid style={{ margin: `0 auto` }} maxW="90%" w={900} alignSelf="center">
@@ -24,6 +46,14 @@ function Layout({ children }) {
               </span>
             </Link>
           </Heading>
+          {!!wpMenu &&
+            !!wpMenu.menuItems &&
+            wpMenu.menuItems.nodes.map((menuItem, i) => (
+              <Link key={i + menuItem.url} to={getUrlPath(menuItem.url)}>
+                {menuItem.label}
+                <br />
+              </Link>
+            ))}
         </Box>
         <Box mb={100}>{children}</Box>
       </Grid>
