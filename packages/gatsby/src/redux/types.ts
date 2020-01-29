@@ -1,37 +1,197 @@
+import { IProgram } from "../commands/types"
+import { GraphQLSchema } from "graphql"
+import { SchemaComposer } from "graphql-compose"
+
+type SystemPath = string
+type Identifier = string
+type StructuredLog = any // TODO this should come from structured log interface
+
 export enum ProgramStatus {
   BOOTSTRAP_FINISHED = `BOOTSTRAP_FINISHED`,
   BOOTSTRAP_QUERY_RUNNING_FINISHED = `BOOTSTRAP_QUERY_RUNNING_FINISHED`,
 }
 
-export interface IReduxState {
-  status: ProgramStatus
-  nodes?: {
-    id: string
-    internal: {
-      type: string
+export interface IGatsbyPage {
+  internalComponentName: string
+  path: string
+  matchPath: undefined | string
+  component: SystemPath
+  componentChunkName: string
+  isCreatedByStatefulCreatePages: boolean
+  context: {}
+  updatedAt: number
+  pluginCreator__NODE: Identifier
+  pluginCreatorId: Identifier
+  componentPath: SystemPath
+}
+
+export interface IGatsbyConfig {
+  plugins?: {
+    // This is the name of the plugin like `gatsby-plugin-manifest
+    resolve: string
+    options: {
+      [key: string]: unknown
     }
   }[]
-  nodesByType?: Map<any, any> // TODO
-  jobsV2: any // TODO
+  siteMetadata?: {
+    title?: string
+    author?: string
+    description?: string
+  }
+  // @deprecated
+  polyfill?: boolean
+  developMiddleware?: any
+  proxy?: any
+  pathPrefix?: string
+}
+
+export interface INode {
+  id: Identifier
+  parent: Identifier
+  children: Identifier[]
+  internal: {
+    type: string
+    counter: number
+    owner: string
+    contentDigest: string
+    mediaType?: string
+    content?: string
+    description?: string
+  }
+  __gatsby_resolved: any // TODO
+  [key: string]: unknown
+}
+
+type GatsbyNodes = Map<string, INode>
+
+export interface IReduxState {
+  program: IProgram
+  nodes: GatsbyNodes
+  nodesByType: Map<string, GatsbyNodes>
+  resolvedNodesCache: Map<string, any> // TODO
+  nodesTouched: Set<string>
   lastAction: ActionsUnion
-  componentDataDependencies: any // TODO
-  components: any // TODO
-  staticQueryComponents: any // TODO
-  webpackCompilationHash: any // TODO
-  pageDataStats: any // TODO
+  flattenedPlugins: {
+    resolve: SystemPath
+    id: Identifier
+    name: string
+    version: string
+    pluginOptions: {
+      plugins: []
+      [key: string]: unknown
+    }
+    nodeAPIs: (
+      | "onPreBoostrap"
+      | "onPostBoostrap"
+      | "onCreateWebpackConfig"
+      | "onCreatePage"
+      | "sourceNodes"
+      | "createPagesStatefully"
+      | "createPages"
+      | "onPostBuild"
+    )[]
+    browserAPIs: (
+      | "onRouteUpdate"
+      | "registerServiceWorker"
+      | "onServiceWorkerActive"
+      | "onPostPrefetchPathname"
+    )[]
+    ssrAPIs: ("onRenderBody" | "onPreRenderHTML")[]
+    pluginFilepath: SystemPath
+  }[]
+  config: IGatsbyConfig
+  pages: Map<string, IGatsbyPage>
+  schema: GraphQLSchema
+  status: {
+    plugins: {}
+    PLUGINS_HASH: Identifier
+  }
+  componentDataDependencies: {
+    nodes: Map<string, Set<string>>
+    connections: Map<string, Set<string>>
+  }
+  components: Map<
+    SystemPath,
+    {
+      componentPath: SystemPath
+      query: string
+      pages: Set<string>
+      isInBootstrap: boolean
+    }
+  >
+  staticQueryComponents: Map<
+    string,
+    {
+      name: string
+      componentPath: SystemPath
+      id: Identifier
+      query: string
+      hash: number
+    }
+  >
+  // @deprecated
   jobs: {
-    active: Array<any> // TODO
+    active: any[] // TODO
+    done: any[] // TODO
   }
-  schema: any
-  schemaCustomization: any
-  config: {
-    developMiddleware: any
-    proxy: any
+  jobsV2: {
+    incomplete: Map<any, any> // TODO
+    complete: Map<any, any>
   }
+  webpack: any // TODO This should b ethe output from ./utils/webpack.config.js
+  webpackCompilationHash: string
+  redirects: any[] // TODO
+  babelrc: {
+    stages: {
+      develop: any // TODO
+      "develop-html": any // TODO
+      "build-html": any // TODO
+      "build-javascript": any // TODO
+    }
+  }
+  schemaCustomization: {
+    composer: SchemaComposer<any>
+    context: {} // TODO
+    fieldExtensions: {} // TODO
+    printConfig: any // TODO
+    thridPartySchemas: any[] // TODO
+    types: any[] // TODO
+  }
+  themes: any // TODO
+  logs: {
+    messages: StructuredLog[]
+    activities: {
+      [key: string]: {
+        id: Identifier
+        uuid: Identifier
+        text: string
+        type: string // TODO make enum
+        status: string // TODO make enum
+        startTime: [number, number]
+        statusText: string
+        current: undefined | any // TODO
+        total: undefined | any // TODO
+        duration: number
+      }
+    }
+    status: string // TODO make enum
+  }
+  inferenceMetadata: {
+    step: string // TODO make enum or union
+    typeMap: {
+      [key: string]: {
+        ignoredFields: Set<string>
+        total: number
+        dirty: boolean
+        fieldMap: any // TODO
+      }
+    }
+  }
+  pageDataStats: Map<SystemPath, number>
 }
 
 export interface ICachedReduxState {
-  nodes: IReduxState["nodes"]
+  nodes?: IReduxState["nodes"]
   status: IReduxState["status"]
   componentDataDependencies: IReduxState["componentDataDependencies"]
   components: IReduxState["components"]

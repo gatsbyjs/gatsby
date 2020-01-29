@@ -1,13 +1,13 @@
-/* @flow */
-
-const { store } = require(`./index`)
+import { store } from "./"
+import { INode } from "./types"
+import { stringify } from "querystring"
 
 /**
  * Get all nodes from redux store.
  *
  * @returns {Array}
  */
-const getNodes = () => {
+export const getNodes = (): INode[] => {
   const nodes = store.getState().nodes
   if (nodes) {
     return Array.from(nodes.values())
@@ -16,16 +16,13 @@ const getNodes = () => {
   }
 }
 
-exports.getNodes = getNodes
-
 /** Get node by id from store.
  *
  * @param {string} id
  * @returns {Object}
  */
-const getNode = id => store.getState().nodes.get(id)
-
-exports.getNode = getNode
+export const getNode = (id: string): INode | undefined =>
+  store.getState().nodes.get(id)
 
 /**
  * Get all nodes of type from redux store.
@@ -33,7 +30,7 @@ exports.getNode = getNode
  * @param {string} type
  * @returns {Array}
  */
-const getNodesByType = type => {
+export const getNodesByType = (type: string): INode[] => {
   const nodes = store.getState().nodesByType.get(type)
   if (nodes) {
     return Array.from(nodes.values())
@@ -42,16 +39,13 @@ const getNodesByType = type => {
   }
 }
 
-exports.getNodesByType = getNodesByType
-
 /**
  * Get all type names from redux store.
  *
  * @returns {Array}
  */
-const getTypes = () => Array.from(store.getState().nodesByType.keys())
-
-exports.getTypes = getTypes
+export const getTypes = (): string[] =>
+  Array.from(store.getState().nodesByType.keys())
 
 /**
  * Determine if node has changed.
@@ -60,7 +54,7 @@ exports.getTypes = getTypes
  * @param {string} digest
  * @returns {boolean}
  */
-exports.hasNodeChanged = (id, digest) => {
+export const hasNodeChanged = (id: string, digest: string): boolean => {
   const node = store.getState().nodes.get(id)
   if (!node) {
     return true
@@ -76,30 +70,46 @@ exports.hasNodeChanged = (id, digest) => {
  * @param {string} path
  * @returns {Object} node
  */
-exports.getNodeAndSavePathDependency = (id, path) => {
+export const getNodeAndSavePathDependency = (
+  id: string,
+  path: string
+): INode | undefined => {
   const createPageDependency = require(`./actions/add-page-dependency`)
   const node = getNode(id)
+
+  if (!node) {
+    console.error(
+      `getNodeAndSavePathDependency failed for node id: ${id} as it was not found in cache`
+    )
+    return undefined
+  }
+
   createPageDependency({ path, nodeId: id })
   return node
 }
 
-exports.saveResolvedNodes = async (nodeTypeNames, resolver) => {
+type Resolver = (node: INode) => Promise<any> // TODO
+
+export const saveResolvedNodes = async (
+  nodeTypeNames: string[],
+  resolver: Resolver
+) => {
   for (const typeName of nodeTypeNames) {
     const nodes = store.getState().nodesByType.get(typeName)
+    if (!nodes) return
+
     const resolvedNodes = new Map()
-    if (nodes) {
-      for (const node of nodes.values()) {
-        const resolved = await resolver(node)
-        resolvedNodes.set(node.id, resolved)
-      }
-      store.dispatch({
-        type: `SET_RESOLVED_NODES`,
-        payload: {
-          key: typeName,
-          nodes: resolvedNodes,
-        },
-      })
+    for (const node of nodes.values()) {
+      const resolved = await resolver(node)
+      resolvedNodes.set(node.id, resolved)
     }
+    store.dispatch({
+      type: `SET_RESOLVED_NODES`,
+      payload: {
+        key: typeName,
+        nodes: resolvedNodes,
+      },
+    })
   }
 }
 
@@ -110,9 +120,9 @@ exports.saveResolvedNodes = async (nodeTypeNames, resolver) => {
  * @param {string} id
  * @returns {Object|void} node
  */
-const getResolvedNode = (typeName, id) => {
+export const getResolvedNode = (typeName: string, id: string): INode | null => {
   const { nodesByType, resolvedNodesCache } = store.getState()
-  const nodes /*: Map<mixed> */ = nodesByType.get(typeName)
+  const nodes = nodesByType.get(typeName)
 
   if (!nodes) {
     return null
@@ -133,27 +143,26 @@ const getResolvedNode = (typeName, id) => {
   return node
 }
 
-exports.getResolvedNode = getResolvedNode
-
-const addResolvedNodes = (typeName, arr) => {
+export const addResolvedNodes = (typeName: string): INode[] => {
+  const resolvedNodes: INode[] = []
   const { nodesByType, resolvedNodesCache } = store.getState()
-  const nodes /*: Map<mixed> */ = nodesByType.get(typeName)
+  const nodes = nodesByType.get(typeName)
 
   if (!nodes) {
-    return
+    return resolvedNodes
   }
 
-  const resolvedNodes = resolvedNodesCache.get(typeName)
+  const resolvedNodesFromCache = resolvedNodesCache.get(typeName)
 
   nodes.forEach(node => {
-    if (resolvedNodes) {
-      node.__gatsby_resolved = resolvedNodes.get(node.id)
+    if (resolvedNodesFromCache) {
+      node.__gatsby_resolved = resolvedNodesFromCache.get(node.id)
     }
-    arr.push(node)
+    resolvedNodes.push(node)
   })
-}
 
-exports.addResolvedNodes = addResolvedNodes
+  return resolvedNodes
+}
 
 /**
  * Given a ("flat") filter path leading up to "eq", a set of node types, and a
@@ -164,14 +173,16 @@ exports.addResolvedNodes = addResolvedNodes
  *
  * @param {Array<string>} chain
  * @param {Array<string>} nodeTypeNames
- * @param {undefined | Map<string, Map<string | number | boolean, Node>>} typedKeyValueIndexes
+ * @param {Map<string, Map<string | number | boolean, Node>>} typedKeyValueIndexes
  *   This object lives in query/query-runner.js and is passed down runQuery
  * @returns {undefined}
  */
-const ensureIndexByTypedChain = (
-  chain,
-  nodeTypeNames,
-  typedKeyValueIndexes
+export const ensureIndexByTypedChain = (
+  chain: string[],
+  nodeTypeNames: string[],
+  typedKeyValueIndexes:
+    | Map<string, Map<string, Set<Node>>>
+    | Map<string, Map<string, Node>>
 ) => {
   const chained = chain.join(`+`)
 
@@ -180,13 +191,13 @@ const ensureIndexByTypedChain = (
   const typedKey = nodeTypeNamePrefix + chained
 
   let byKeyValue = typedKeyValueIndexes.get(typedKey)
-  if (byKeyValue) {
+  if (!byKeyValue) {
     return
   }
 
   const { nodes, resolvedNodesCache } = store.getState()
 
-  byKeyValue = new Map() // Map<node.value, Set<all nodes with this value for this key>>
+  byKeyValue = new Map<string, Set<INode>>() // Map<node.value, Set<all nodes with this value for this key>>
   typedKeyValueIndexes.set(typedKey, byKeyValue)
 
   nodes.forEach(node => {
@@ -201,7 +212,7 @@ const ensureIndexByTypedChain = (
       node.__gatsby_resolved = resolvedNodes?.get(node.id)
     }
 
-    let v = node
+    let v = node as any // TODO: This might need refactoring?
     let i = 0
     while (i < chain.length && v) {
       const nextProp = chain[i++]
@@ -238,8 +249,6 @@ const ensureIndexByTypedChain = (
   })
 }
 
-exports.ensureIndexByTypedChain = ensureIndexByTypedChain
-
 /**
  * Given a ("flat") filter path leading up to "eq", a target value to filter
  * for, a set of node types, and a pre-generated lookup cache, return the set
@@ -260,11 +269,13 @@ exports.ensureIndexByTypedChain = ensureIndexByTypedChain
  *   This object lives in query/query-runner.js and is passed down runQuery
  * @returns {Array<Node> | undefined}
  */
-const getNodesByTypedChain = (
-  chain,
-  value,
-  nodeTypeNames,
-  typedKeyValueIndexes
+export const getNodesByTypedChain = (
+  chain: string[],
+  value: boolean | number | string,
+  nodeTypeNames: string[],
+  typedKeyValueIndexes:
+    | undefined
+    | Map<string, Map<string | number | boolean, Node>>
 ) => {
   const key = chain.join(`+`)
 
@@ -273,5 +284,3 @@ const getNodesByTypedChain = (
   let byTypedKey = typedKeyValueIndexes?.get(typedKey)
   return byTypedKey?.get(value)
 }
-
-exports.getNodesByTypedChain = getNodesByTypedChain

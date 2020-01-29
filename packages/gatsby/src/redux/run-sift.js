@@ -153,7 +153,7 @@ const getFlatPropertyChain = obj => {
  * @param {Array<string>} chain Note: `eq` is assumed to be the leaf prop here
  * @param {boolean | number | string} targetValue chain.chain.eq === targetValue
  * @param {Array<string>} nodeTypeNames
- * @param {undefined | Map<string, Map<string | number | boolean, Node>>} typedKeyValueIndexes
+ * @param {Map<string, Map<string | number | boolean, Node>>} typedKeyValueIndexes
  * @returns {Array<Node> | undefined}
  */
 const runFlatFilterWithoutSift = (
@@ -268,7 +268,7 @@ const applyFilters = (
  *
  * @param {Object | undefined} filter
  * @param {Array<string>} nodeTypeNames
- * @param {undefined | Map<string, Map<string | number | boolean, Node>>} typedKeyValueIndexes
+ * @param {Map<string, Map<string | number | boolean, Node>>} typedKeyValueIndexes
  * @returns {Array|undefined} Collection of results
  */
 const filterWithoutSift = (filter, nodeTypeNames, typedKeyValueIndexes) => {
@@ -316,9 +316,7 @@ const filterWithoutSift = (filter, nodeTypeNames, typedKeyValueIndexes) => {
  *   will be limited to 1 if `firstOnly` is true
  */
 const filterWithSift = (filter, firstOnly, nodeTypeNames, resolvedFields) => {
-  let nodes = []
-
-  nodeTypeNames.forEach(typeName => addResolvedNodes(typeName, nodes))
+  const nodes = nodeTypeNames.map(typeName => addResolvedNodes(typeName))
 
   return _runSiftOnNodes(
     nodes,

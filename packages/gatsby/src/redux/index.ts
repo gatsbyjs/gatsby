@@ -25,10 +25,10 @@ export const readState = (): IReduxState => {
       state.nodesByType = new Map()
       state.nodes.forEach(node => {
         const { type } = node.internal
-        if (!state.nodesByType!.has(type)) {
-          state.nodesByType!.set(type, new Map())
+        if (!state.nodesByType.has(type)) {
+          state.nodesByType.set(type, new Map())
         }
-        state.nodesByType!.get(type).set(node.id, node)
+        state.nodesByType.get(type)!.set(node.id, node)
       })
     }
 
