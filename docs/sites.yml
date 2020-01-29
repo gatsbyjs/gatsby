@@ -9543,6 +9543,18 @@
   built_by: Andrico Karoulla
   built_by_url: https://andri.co
   featured: false
+- title: Tools of Golf
+  main_url: https://toolsof.golf
+  url: https://toolsof.golf/titleist-915-d2-driver
+  description: >
+    Tools of Golf is a community dedicated to golf nerds and gear heads.
+  categories:
+    - Sports
+    - Data
+    - Documentation
+  built_by: Peter Hironaka
+  built_by_url: https://peterhironaka.com
+  featured: false
 - title: sung.codes
   main_url: https://sung.codes/
   source_url: https://github.com/dance2die/sung.codes
