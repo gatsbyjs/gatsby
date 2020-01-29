@@ -16,15 +16,15 @@ _Learn more about [#100DaysOfGatsby here](/blog/100days)!_
 
 Use React components within your Markdown-based blog posts!
 
-Markdown is a great markup language for creating human readable, long form content. A writer on your team can use Markdown’s friendly syntax and contribute content to a site without having to edit HTML or JSX directly. 
+Markdown is a great markup language for creating human readable, long form content. A writer on your team can use Markdown’s friendly syntax and contribute content to a site without having to edit HTML or JSX directly.
 
-Today we invite you to use MDX, a new format that lets you add components in your Markdown documents. Now, editors can add interactive and styled elements to their documents, not just static, plain text. 
+Today we invite you to use MDX, a new format that lets you add components in your Markdown documents. Now, editors can add interactive and styled elements to their documents, not just static, plain text.
 
 ### Challenge Resources
 
 Use [Gatsby’s MDX tutorial](/docs/mdx/) and substitute the example “chart component” with the [“form component” you created](/blog/100days/react-component/) in a previous challenge.
 
-Bonus: Learn about an advanced [MDX feature, “shortcodes”(https://mdxjs.com/blog/shortcodes)]. Then enable an example of this feature by using a Gatsby plugin from the community, [gatsby-mdx-embed](/packages/@pauliescanlon/gatsby-mdx-embed/). 
+Bonus: Learn about an advanced [MDX feature, “shortcodes”(https://mdxjs.com/blog/shortcodes)]. Then enable an example of this feature by using a Gatsby plugin from the community, [gatsby-mdx-embed](/packages/@pauliescanlon/gatsby-mdx-embed/).
 
 ### What to Do If You Need Help
 
