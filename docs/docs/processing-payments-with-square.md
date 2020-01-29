@@ -16,24 +16,93 @@ Square can handle most of your payment-related needs including accepting payment
 
 You've got two options for integrating Square payments: redirecting to a hosted checkout page with the Checkout API as well as using payments on your Gatsby site with the `SqPaymentForm` library and Payments API.
 
-## Redirecting to a hosted checkout page
+### Redirecting to a hosted checkout page
 
-Redirecting to a Square-host page takes some of the pressure off since you don't need to build a checkout page. However, getting that functionality "for free" does come with some restrictions. You will not be able to customize the UI of the page users are sent to once they're ready to checkout. Square only recommends this option for situations where accepting payments on your own site isn't feasible.
+Redirecting to a Square-hosted page takes some of the pressure off since you don't need to build a checkout page. However, getting that functionality "for free" does come with some restrictions. You will not be able to customize the UI of the page users are sent to once they're ready to checkout. Square only recommends this option for situations where accepting payments on your own site isn't feasible.
 
-## Accepting Square payments
+### Accepting Square payments
 
-Using the Payments API offers much greater flecxibility. You can customize not only the look and feel of the checkout process but also the checkout process itself. You may choose 
+Square recommends using the Payments API instead because it offers much greater flecxibility. You can customize not only the look and feel of the checkout process but also the checkout process itself.
 
 This process is broken into two steps:
 
 1. Generate a single-use token called a nonce.
 2. Charge whatever payment source the user has provided (this could be a credit card, gift card, etc.) using the nonce.
 
+To add a Square payment form to your Gatsby site, you'll need to load Square's payment form JavaScript into the `<head>` of your website. You can do this by calling `setHeadComponents()` in `gatsby-ssr.js`:
+
+```js:title=gatsby-ssr.js
+import React from "react";
+
+export const onRenderBody = ({ setHeadComponents }) => {
+  setHeadComponents([
+    <script src='https://js.squareup.com/v2/paymentform'></script>
+  ]);
+};
+
+```
+
+You'll also need to create some variation of a `PaymentForm` component. Square maintains a few [payment form templates](https://github.com/square/connect-api-examples/tree/master/templates/web-ui/payment-form) you can base your component on. Try starting with the ["basic" JavaScript file](https://github.com/square/connect-api-examples/blob/master/templates/web-ui/payment-form/basic/sqpaymentform-basic.js). They also provide a [running example](https://codesandbox.io/s/4zjrv7kry9?from-embed) using their `basic-digital-wallet` with React.
+
+Once that's done, you can use the `SqPaymentForm` object available on the `window` (you get this from the Sqaure JS you called in the `<head>`) and pass it in via props whenever you want the form to show up! In the example below, the `PaymentForm` has been added to the `Layout` component from the [default starter](/starters/gatsbyjs/gatsby-starter-default/).
+
+```js:title=layout.js
+import React from "react"
+import PropTypes from "prop-types"
+import { useStaticQuery, graphql } from "gatsby"
+
+import Header from "./header"
+import "./layout.css"
+
+import PaymentForm from './paymentForm';
+
+const Layout = ({ children }) => {
+  const data = useStaticQuery(graphql`
+    query SiteTitleQuery {
+      site {
+        siteMetadata {
+          title
+        }
+      }
+    }
+  `)
+
+  return (
+    <>
+      <Header siteTitle={data.site.siteMetadata.title} />
+      <div
+        style={{
+          margin: `0 auto`,
+          maxWidth: 960,
+          padding: `0 1.0875rem 1.45rem`,
+        }}
+      >
+        <main>{children}</main>
+        <PaymentForm paymentForm={ window.SqPaymentForm } />
+        <footer>
+          © {new Date().getFullYear()}, Built with
+          {` `}
+          <a href="https://www.gatsbyjs.org">Gatsby</a>
+        </footer>
+      </div>
+    </>
+  )
+}
+
+Layout.propTypes = {
+  children: PropTypes.node.isRequired,
+}
+
+export default Layout
+```
+
 ## The Square sandbox
 
-You can test your setup using the Square sandbox. 
+You can test your setup [using the Square sandbox](https://developer.squareup.com/docs/testing/sandbox). To do so, you'll need to return to your [developer dashboard](https://developer.squareup.com/apps). In the "Credentials" tab, you can toggle back and forth between your production and sandbox credentials!
 
 ## Other resources
 
-- [Square documentation for online payment options](https://developer.squareup.com/docs/online-payment-options)
+- [`SqPaymentForm` documentation](https://developer.squareup.com/docs/api/paymentform#navsection-paymentform)
+- [Square tutorial for online payment options](https://developer.squareup.com/docs/online-payment-options)
 - Square's blog post on [Online Payments with React + Square](https://developer.squareup.com/blog/online-payments-form-react/)
+- [`gatsby-plugin-square-payment-form`](/packages/gatsby-plugin-square-payment-form/)
