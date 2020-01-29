@@ -101,6 +101,7 @@
     "typography": "^1.0.0-alpha.4",
     "typography-plugin-code": "^1.0.0-alpha.0",
     "wcag-contrast": "^2.1.1",
+    "xmldom": "^0.2.1",
     "xstate": "^4.7.2",
     "zipkin": "^0.19.1",
     "zipkin-javascript-opentracing": "^2.0.1",

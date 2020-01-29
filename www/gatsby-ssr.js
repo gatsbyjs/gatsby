@@ -1,7 +1,8 @@
 import React from "react"
 
+global.DOMParser = require("xmldom").DOMParser
+
 export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
-  global.DOMParser = new (require("jsdom").JSDOM)().window.DOMParser
   setHeadComponents([
     <link
       rel="dns-prefetch"
