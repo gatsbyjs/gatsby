@@ -3,7 +3,19 @@ import store from "~/store"
 const identifyAndStoreIngestableFieldsAndTypes = async () => {
   const nodeListFilter = field => field.name === `nodes`
 
-  const { introspectionData, fieldBlacklist } = store.getState().remoteSchema
+  const state = store.getState()
+  const { introspectionData, fieldBlacklist } = state.remoteSchema
+  const { helpers } = state.gatsbyApi
+
+  const cachedFetchedTypes = await helpers.cache.get(`previously-fetched-types`)
+
+  if (cachedFetchedTypes) {
+    const restoredFetchedTypesMap = new Map(cachedFetchedTypes)
+
+    store.dispatch.remoteSchema.setState({
+      fetchedTypes: restoredFetchedTypesMap,
+    })
+  }
 
   const typeMap = new Map(
     introspectionData.__schema.types.map(type => [type.name, type])

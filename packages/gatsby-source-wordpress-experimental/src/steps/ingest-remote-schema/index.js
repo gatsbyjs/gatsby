@@ -7,6 +7,7 @@ import { introspectAndStoreRemoteSchema } from "./introspect-remote-schema"
 import { identifyAndStoreIngestableFieldsAndTypes } from "./identify-and-store-ingestable-types"
 import { buildNonNodeQueries } from "./build-and-store-ingestible-root-field-non-node-queries"
 import { buildNodeQueries } from "./build-queries-from-introspection/build-node-queries"
+import { cacheFetchedTypes } from "./cache-fetched-types"
 
 const ingestRemoteSchema = async () => {
   const { helpers } = getGatsbyApi()
@@ -23,6 +24,7 @@ const ingestRemoteSchema = async () => {
     identifyAndStoreIngestableFieldsAndTypes,
     buildNodeQueries,
     buildNonNodeQueries,
+    cacheFetchedTypes,
   ])
 
   activity.end()
