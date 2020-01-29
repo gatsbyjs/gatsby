@@ -217,10 +217,15 @@ describe(`create-remote-file-node`, () => {
         }
       })
 
-      it(`retries if stalled`, async () => {
+      it(`retries if stalled`, done => {
+        const fs = require(`fs-extra`)
+
+        fs.createWriteStream.mockReturnValue({
+          on: jest.fn(),
+          close: jest.fn(),
+        })
         jest.useFakeTimers()
         got.stream.mockReset()
-
         got.stream.mockReturnValueOnce({
           pipe: jest.fn(() => {
             return {
@@ -230,50 +235,20 @@ describe(`create-remote-file-node`, () => {
           }),
           on: jest.fn((mockType, mockCallback) => {
             if (mockType === `response`) {
+              mockCallback({ statusCode: 200 })
+
               expect(got.stream).toHaveBeenCalledTimes(1)
               jest.advanceTimersByTime(1000)
               expect(got.stream).toHaveBeenCalledTimes(1)
               jest.advanceTimersByTime(30000)
+
               expect(got.stream).toHaveBeenCalledTimes(2)
-
-              mockCallback({ statusCode: 200 })
+              done()
             }
           }),
         })
-        const result = setup()
+        setup()
         jest.runAllTimers()
-        await result
-      })
-
-      it(`resets the stall timer when data is received`, async () => {
-        jest.useFakeTimers()
-        got.stream.mockReset()
-
-        got.stream.mockReturnValueOnce({
-          pipe: jest.fn(() => {
-            return {
-              pipe: jest.fn(),
-              on: jest.fn(),
-            }
-          }),
-          on: jest.fn((mockType, mockCallback) => {
-            if (mockType === `response`) {
-              expect(got.stream).toHaveBeenCalledTimes(1)
-              jest.advanceTimersByTime(1000)
-              expect(got.stream).toHaveBeenCalledTimes(1)
-              jest.advanceTimersByTime(30000)
-              expect(got.stream).toHaveBeenCalledTimes(1)
-
-              mockCallback({ statusCode: 200 })
-            }
-            if (mockType === `downloadProgress`) {
-              setTimeout(mockCallback, 20000)
-            }
-          }),
-        })
-        const result = setup()
-        jest.runAllTimers()
-        await result
       })
     })
   })

@@ -159,16 +159,12 @@ const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
       }
       timeout = setTimeout(handleTimeout, STALL_TIMEOUT)
     }
-    resetTimeout()
     const responseStream = got.stream(url, {
       headers,
       ...httpOpts,
     })
     const fsWriteStream = fs.createWriteStream(tmpFilename)
     responseStream.pipe(fsWriteStream)
-
-    // As long as we're receiving data, we'll reset the timeout
-    responseStream.on(`downloadProgress`, resetTimeout)
 
     // If there's a 400/500 response or other error.
     responseStream.on(`error`, error => {
@@ -187,6 +183,8 @@ const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
     })
 
     responseStream.on(`response`, response => {
+      resetTimeout()
+
       fsWriteStream.on(`finish`, () => {
         if (timeout) {
           clearTimeout(timeout)
