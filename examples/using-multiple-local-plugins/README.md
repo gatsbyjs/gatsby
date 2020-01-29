@@ -6,7 +6,7 @@ This is an example repository demonstrating different ways to load plugins in a 
 
 The actual Gatsby site to run is in the `gatsby-site-using-local-plugins` folder.
 
-Navigate into the example site from the root of this example with this command:
+Navigate into the `gatsby-site-using-local-plugins` project directory with this command:
 
 ```sh
 cd gatsby-site-using-local-plugins
@@ -24,7 +24,7 @@ Then run `gatsby develop`:
 gatsby develop
 ```
 
-You should then see the output listed below. Showing how the code for each plugin is run sequentially thanks to the Node API implemented.
+In your command line output, you should then see the text listed below. This text is showing how the code for each plugin is run sequentially thanks to the Node API implemented.
 
 ```sh
 $ gatsby develop
