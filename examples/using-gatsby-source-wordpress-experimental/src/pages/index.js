@@ -4,6 +4,7 @@ import Img from "gatsby-image"
 
 import { Stack, Box, Heading, Text, Grid } from "@chakra-ui/core"
 import Layout from "../components/layout"
+import { normalizePath } from "../utils/get-url-path"
 
 export default ({ data }) => {
   const pages = data.allWpContentNode.nodes
@@ -13,7 +14,7 @@ export default ({ data }) => {
       <Stack spacing={5}>
         {pages.map(page => (
           <Box key={page.link}>
-            <Link to={page.uri}>
+            <Link to={normalizePath(page.uri)}>
               <Box p={5} shadow="md" borderWidth="1px">
                 <Grid templateColumns="1fr 2fr" gap={6}>
                   <Box>
@@ -71,7 +72,7 @@ export const query = graphql`
     allWpContentNode(
       limit: 20
       filter: { nodeType: { in: ["Post", "Page"] } }
-      sort: { fields: date }
+      sort: { fields: date, order: DESC }
     ) {
       nodes {
         uri
