@@ -33,7 +33,7 @@ The options are as follows:
 - `createLinkInHead` (boolean) Whether to populate the `<head>` of your site with a link to the sitemap.
 - `serialize` (function) Takes the output of the data query and lets you return an array of sitemap entries.
 
-We _ALWAYS_ exclude the following pages: `/dev-404-page/`,`/404` &`/offline-plugin-app-shell-fallback/`, this cannot be changed.
+We _ALWAYS_ exclude the following pages: `/dev-404-page`,`/404` &`/offline-plugin-app-shell-fallback`, this cannot be changed.
 
 Example:
 
@@ -50,7 +50,7 @@ plugins: [
       // Exclude specific pages or groups of pages using glob parameters
       // See: https://github.com/isaacs/minimatch
       // The example below will exclude the single `path/to/page` and all routes beginning with `category`
-      exclude: ["/category/*", `/path/to/page`],
+      exclude: [`/category/*`, `/path/to/page`],
       query: `
         {
           site {

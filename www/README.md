@@ -23,7 +23,7 @@ To develop on the starter library, you'll need to supply a GitHub personal acces
 2. In the new token's settings, grant that token the "public_repo" scope.
 3. Add the GitHub token to the `.env.development` file:
 
-```
+```shell
 GITHUB_API_TOKEN=YOUR_TOKEN_HERE
 ```
 
@@ -35,10 +35,20 @@ Guess.js is disabled by default and can be enabled by setting `ANALYTICS_SERVICE
 
 If you have access to the keys, add them like so:
 
-```
+```shell
 ANALYTICS_SERVICE_ACCOUNT="service account@email.com"
 ANALYTICS_SERVICE_ACCOUNT_KEY="PEM KEY VALUE"
 ```
+
+### Enabling localizations
+
+Localizations are currently a work-in-progress and are thus disabled by default. They can be enabled by setting the `ENABLE_LOCALIZATIONS` env variable:
+
+```shell
+ENABLE_LOCALIZATIONS=true
+```
+
+There is currently no UI to link to the localizations, so you'll have to type in the name of the file you want to go to using the language code (e.g. /es/tutorial/part-one).
 
 ## Running slow build? (Screenshots placeholder)
 
@@ -46,7 +56,7 @@ If you are not working on a starter or site showcase, it might be beneficial to 
 
 Add the following env variable to your `.env.development` file to enable placeholder behaviour:
 
-```
+```shell
 GATSBY_SCREENSHOT_PLACEHOLDER=true
 ```
 

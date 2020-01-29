@@ -12,7 +12,7 @@ Situation 2: you don’t have a Gatsby project yet
 
 ![A screenshot of the current Get Started page on gatsbyjs.com](final-state.png)
 
-Either way, Gatsby Cloud will work for you! Through the [Cloud Quickstart page](https://www.gatsbyjs.com/get-started/), you can integrate your site with its data source(s) to drive Preview and automate builds. And it’s no commitment and no credit card required. All you need is a Github account.
+Either way, Gatsby Cloud will work for you! Through the [Cloud Quickstart page](https://www.gatsbyjs.com/get-started/), you can integrate your site with its data source(s) to drive Preview and automate builds. And it’s no commitment and no credit card required. All you need is a GitHub account.
 
 Here’s the reason I’m writing this blogpost. We are making the [Cloud Quickstart page](https://www.gatsbyjs.com/get-started/) better and want to show you how it’s evolved over time and what the next steps are.
 

@@ -50,7 +50,7 @@ plugins: [
 
 Use the following Markdown syntax to create blocks in your file:
 
-```
+```markdown
 [[danger]]
 | content
 

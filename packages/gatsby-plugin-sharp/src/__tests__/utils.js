@@ -1,23 +1,28 @@
 jest.mock(`gatsby-cli/lib/reporter`)
 jest.mock(`progress`)
-const { createProgress } = require(`../utils`)
+const {
+  createGatsbyProgressOrFallbackToExternalProgressBar,
+} = require(`../utils`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 const progress = require(`progress`)
 
-describe(`createProgress`, () => {
+describe(`createGatsbyProgressOrFallbackToExternalProgressBar`, () => {
   beforeEach(() => {
     progress.mockClear()
   })
 
   it(`should use createProgress from gatsby-cli when available`, () => {
-    createProgress(`test`, reporter)
+    createGatsbyProgressOrFallbackToExternalProgressBar(`test`, reporter)
     expect(reporter.createProgress).toBeCalled()
     expect(progress).not.toBeCalled()
   })
 
   it(`should fallback to a local implementation when createProgress does not exists on reporter`, () => {
     reporter.createProgress = null
-    const bar = createProgress(`test`, reporter)
+    const bar = createGatsbyProgressOrFallbackToExternalProgressBar(
+      `test`,
+      reporter
+    )
     expect(progress).toHaveBeenCalledTimes(1)
     expect(bar).toHaveProperty(`start`, expect.any(Function))
     expect(bar).toHaveProperty(`tick`, expect.any(Function))
@@ -26,7 +31,7 @@ describe(`createProgress`, () => {
   })
 
   it(`should fallback to a local implementation when no reporter is present`, () => {
-    const bar = createProgress(`test`)
+    const bar = createGatsbyProgressOrFallbackToExternalProgressBar(`test`)
     expect(progress).toHaveBeenCalledTimes(1)
     expect(bar).toHaveProperty(`start`, expect.any(Function))
     expect(bar).toHaveProperty(`tick`, expect.any(Function))

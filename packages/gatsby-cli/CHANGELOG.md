@@ -3,6 +3,50 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.8.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.26...gatsby-cli@2.8.27) (2020-01-14)
+
+### Bug Fixes
+
+- **gatsby-cli:** normalize case of windows drive letter ([#20437](https://github.com/gatsbyjs/gatsby/issues/20437)) ([3e9bf07](https://github.com/gatsbyjs/gatsby/commit/3e9bf07))
+
+## [2.8.26](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.25...gatsby-cli@2.8.26) (2020-01-09)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.8.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.23...gatsby-cli@2.8.25) (2020-01-09)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.8.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.23...gatsby-cli@2.8.24) (2020-01-09)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.8.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.22...gatsby-cli@2.8.23) (2020-01-06)
+
+### Features
+
+- **gatsby-cli:** update docs for develop PORT env var ([#20250](https://github.com/gatsbyjs/gatsby/issues/20250)) ([ff7ad18](https://github.com/gatsbyjs/gatsby/commit/ff7ad18))
+
+## [2.8.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.21...gatsby-cli@2.8.22) (2019-12-23)
+
+### Features
+
+- **gatsby:** Improve structured errors around GraphQL ([#20120](https://github.com/gatsbyjs/gatsby/issues/20120)) ([a5740f9](https://github.com/gatsbyjs/gatsby/commit/a5740f9))
+
+## [2.8.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.20...gatsby-cli@2.8.21) (2019-12-20)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.8.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.19...gatsby-cli@2.8.20) (2019-12-18)
+
+### Features
+
+- **gatsby-cli:** support for develop PORT env var ([#20110](https://github.com/gatsbyjs/gatsby/issues/20110)) ([6ee8235](https://github.com/gatsbyjs/gatsby/commit/6ee8235))
+
+## [2.8.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.18...gatsby-cli@2.8.19) (2019-12-15)
+
+**Note:** Version bump only for package gatsby-cli
+
 ## [2.8.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.8.16...gatsby-cli@2.8.18) (2019-12-10)
 
 **Note:** Version bump only for package gatsby-cli

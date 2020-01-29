@@ -32,6 +32,7 @@ const addInferredFields = ({
     nodeStore,
     exampleObject: exampleValue,
     prefix: typeComposer.getTypeName(),
+    unsanitizedFieldPath: [typeComposer.getTypeName()],
     typeMapping,
     config,
   })
@@ -48,6 +49,7 @@ const addInferredFieldsImpl = ({
   exampleObject,
   typeMapping,
   prefix,
+  unsanitizedFieldPath,
   config,
 }) => {
   const fields = []
@@ -84,6 +86,7 @@ const addInferredFieldsImpl = ({
       typeComposer,
       nodeStore,
       prefix,
+      unsanitizedFieldPath,
       typeMapping,
       config,
     })
@@ -145,10 +148,12 @@ const getFieldConfig = ({
   exampleValue,
   key,
   unsanitizedKey,
+  unsanitizedFieldPath,
   typeMapping,
   config,
 }) => {
   const selector = `${prefix}.${key}`
+  unsanitizedFieldPath.push(unsanitizedKey)
 
   let arrays = 0
   let value = exampleValue
@@ -178,12 +183,14 @@ const getFieldConfig = ({
       key,
       value,
       selector,
+      unsanitizedFieldPath,
       typeMapping,
       config,
       arrays,
     })
   }
 
+  unsanitizedFieldPath.pop()
   if (!fieldConfig) return null
 
   // Proxy resolver to unsanitized fieldName in case it contained invalid characters
@@ -299,6 +306,7 @@ const getSimpleFieldConfig = ({
   key,
   value,
   selector,
+  unsanitizedFieldPath,
   typeMapping,
   config,
   arrays,
@@ -312,7 +320,7 @@ const getSimpleFieldConfig = ({
       if (isDate(value)) {
         return { type: `Date`, extensions: { dateformat: {} } }
       }
-      if (isFile(nodeStore, selector, value)) {
+      if (isFile(nodeStore, unsanitizedFieldPath, value)) {
         // NOTE: For arrays of files, where not every path references
         // a File node in the db, it is semi-random if the field is
         // inferred as File or String, since the exampleValue only has
@@ -387,6 +395,7 @@ const getSimpleFieldConfig = ({
             exampleObject: value,
             typeMapping,
             prefix: selector,
+            unsanitizedFieldPath,
             config: inferenceConfig,
           }),
         }
