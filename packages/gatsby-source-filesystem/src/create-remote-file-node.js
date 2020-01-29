@@ -140,13 +140,7 @@ const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
       if (attempt < RETRY_LIMIT) {
         // Retry by calling ourself recursively
         resolve(
-          await requestRemoteNode(
-            url,
-            headers,
-            tmpFilename,
-            httpOpts,
-            attempt + 1
-          )
+          requestRemoteNode(url, headers, tmpFilename, httpOpts, attempt + 1)
         )
       } else {
         reject(`Failed to download ${url} after ${RETRY_LIMIT} attempts`)
