@@ -462,10 +462,10 @@ This component renders a neat card for each individual SKU, with the SKU name, n
 Lastly, you need to refactor your `Skus` component to initialize the Stripe.js client, and render `SkuCards` while handing down the Stripe.js client in the `props`:
 
 ```jsx:title=src/components/Products/Skus.js
-import React, { Component } from "react"
+import React, { Component } from "react" // highlight-line
 import { graphql, StaticQuery } from "gatsby"
-import SkuCard from "./SkuCard" // highlight-line
-
+  // highlight-start
+import SkuCard from "./SkuCard"
 const containerStyles = {
   display: 'flex',
   flexDirection: 'row',
@@ -473,8 +473,10 @@ const containerStyles = {
   justifyContent: 'space-between',
   padding: '1rem 0 1rem 0',
 }
+  // highlight-end
 
-class Skus extends Component {
+
+class Skus extends Component { // highlight-line
   // Initialise Stripe.js with your publishable key.
   // You can find your key in the Dashboard:
   // https://dashboard.stripe.com/account/apikeys
@@ -488,9 +490,10 @@ class Skus extends Component {
     this.setState({ stripe })
   }
   // highlight-end
-
+  // highlight-start
   render() {
     return (
+  // highlight-end
       <StaticQuery
         query={graphql`
           query SkusForProduct {
@@ -516,11 +519,13 @@ class Skus extends Component {
           </div>
         )}
       />
+  // highlight-start
     )
   }
+  // highlight-end
 }
 
-export default Skus
+export default Skus //highlight-start
 ```
 
 #### Adding a cart component
