@@ -20,7 +20,7 @@ aliases:
     restore_cache:
       name: Restore node_modules cache
       keys:
-        - yarn-cypress-cache-{{ checksum "yarn.lock" }}
+        - yarn-cypress-cache-v1-{{ checksum "yarn.lock" }}
 
   install_node_modules: &install_node_modules
     run:
@@ -30,7 +30,7 @@ aliases:
   persist_cache: &persist_cache
     save_cache:
       name: Save node modules cache
-      key: yarn-cypress-cache-{{ checksum "yarn.lock" }}
+      key: yarn-cypress-cache-v1-{{ checksum "yarn.lock" }}
       paths:
         - ~/.cache
 
