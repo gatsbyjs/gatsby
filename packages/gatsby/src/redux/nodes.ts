@@ -1,6 +1,5 @@
 import { store } from "./"
 import { INode } from "./types"
-import { stringify } from "querystring"
 
 /**
  * Get all nodes from redux store.
