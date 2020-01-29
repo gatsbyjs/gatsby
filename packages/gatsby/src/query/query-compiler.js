@@ -500,10 +500,13 @@ const addExtraFields = (document, schema) => {
         // Entering a field of the current selection-set:
         //   mark which fields already exist in this selection set to avoid duplicates
         const context = contextStack[contextStack.length - 1]
-        if (node.name.value === `__typename`) {
+        if (
+          node.name.value === `__typename` ||
+          node?.alias?.value === `__typename`
+        ) {
           context.hasTypename = true
         }
-        if (node.name.value === `id`) {
+        if (node.name.value === `id` || node?.alias?.value === `id`) {
           context.hasId = true
         }
       },
