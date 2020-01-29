@@ -45,7 +45,7 @@ Wait for your build to be successful (green).
 
 #### Multiple Branches
 
-When you create a new **KintoBlock**, KintoHub import all your branches and you can access them from your kintoblock page (new branches will also be automatically picked up).
+When you create a new **KintoBlock**, KintoHub imports all your branches and you can access them from your kintoblock page (new branches will also be automatically picked up).
 You can switch from one branch to another by pressing the branch name on the side panel on the left.
 
 #### Continuous Integration
