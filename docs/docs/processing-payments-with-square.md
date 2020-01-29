@@ -2,11 +2,9 @@
 title: Processing Payments with Square
 ---
 
-## Introductory paragraph
+Square is a payment service that emphasizes quick, secure payments as well as user-friendly and affordable point of sale (POS) system. You may have already seen their tiny credit card readers, which are great for mobile businesses like those that sell via food trucks or craft fairs. This guide explains how to begin using Square with your Gatsby site.
 
-Square is a payment service that emphasizes quick secure payments as well as user-friendly and affordable point of sale (POS) system. You may have already seen their tiny credit card readers, which are great for mobile businesses like those that sell via food trucks or craft fairs. This guide explains how to begin using Square with your Gatsby site.
-
-## Prerequisites (if any)
+## Prerequisites
 
 You'll need to [set up a developer account](https://squareup.com/signup?v=developers) to get started. Create a new application from your developer dashboard. The name of your application cannot include the word "square". Once that's done, you should see your new application on your dashboard. Each application has an application ID and access token associated with it.
 
@@ -22,7 +20,7 @@ Redirecting to a Square-hosted page takes some of the pressure off since you don
 
 ### Accepting Square payments
 
-Square recommends using the Payments API instead because it offers much greater flecxibility. You can customize not only the look and feel of the checkout process but also the checkout process itself.
+Square recommends using the Payments API instead because it offers much greater flecxibility. You can customize not only the look and feel of the checkout process but also the checkout process itself, such as customizing the payment methods available.
 
 This process is broken into two steps:
 
@@ -42,7 +40,7 @@ export const onRenderBody = ({ setHeadComponents }) => {
 
 ```
 
-You'll also need to create some variation of a `PaymentForm` component. Square maintains a few [payment form templates](https://github.com/square/connect-api-examples/tree/master/templates/web-ui/payment-form) you can base your component on. Try starting with the ["basic" JavaScript file](https://github.com/square/connect-api-examples/blob/master/templates/web-ui/payment-form/basic/sqpaymentform-basic.js). They also provide a [running example](https://codesandbox.io/s/4zjrv7kry9?from-embed) using their `basic-digital-wallet` with React.
+You'll also need to create some variation of a `PaymentForm` component. Square maintains a few [payment form templates](https://github.com/square/connect-api-examples/tree/master/templates/web-ui/payment-form) you can base your component on. Try starting with the ["basic" JavaScript file](https://github.com/square/connect-api-examples/blob/master/templates/web-ui/payment-form/basic/sqpaymentform-basic.js). They also provide a [running example](https://codesandbox.io/s/4zjrv7kry9?from-embed) using their "basic-digital-wallet" template with React.
 
 Once that's done, you can use the `SqPaymentForm` object available on the `window` (you get this from the Sqaure JS you called in the `<head>`) and pass it in via props whenever you want the form to show up! In the example below, the `PaymentForm` has been added to the `Layout` component from the [default starter](/starters/gatsbyjs/gatsby-starter-default/).
 
@@ -103,6 +101,6 @@ You can test your setup [using the Square sandbox](https://developer.squareup.co
 ## Other resources
 
 - [`SqPaymentForm` documentation](https://developer.squareup.com/docs/api/paymentform#navsection-paymentform)
-- [Square tutorial for online payment options](https://developer.squareup.com/docs/online-payment-options)
+- [Square's tutorial for online payment options](https://developer.squareup.com/docs/online-payment-options)
 - Square's blog post on [Online Payments with React + Square](https://developer.squareup.com/blog/online-payments-form-react/)
 - [`gatsby-plugin-square-payment-form`](/packages/gatsby-plugin-square-payment-form/)
