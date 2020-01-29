@@ -119,7 +119,6 @@ More markdown content...
 
 > Note that you should set the `explorerIsOpen` parameter in the URL to `false` if it isn't already.
 
-
 ## Docs renaming instructions
 
 Sometimes it makes sense to move or rename a file as part of docs restructuring or for content clarification. While we recommend keeping URLs consistent as often as possible, here are some tips to minimize errors and keep the docs in a good state:
