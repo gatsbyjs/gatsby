@@ -1,8 +1,8 @@
 ---
-title: "Incremental PRs: a new Github workflow for the Cloud team"
+title: "Incremental PRs: a new Github workflow for the Gatsby Cloud team"
 date: 2020-01-30
 author: "Josh Comeau"
-excerpt: "A look at how the Cloud team adopted a new workflow to achieve smaller, non-blocking PRs."
+excerpt: "A look at how the Gatsby Cloud team adopted a new workflow to achieve smaller, non-blocking PRs."
 tags: ["source control", "Github", "workflows"]
 ---
 
@@ -17,7 +17,7 @@ import parallelUniversesSvg from "./7-parallel-universes.svg"
 import doubleWorkSvg from "./8-double-work.svg"
 import moreIncrementalSvg from "./5-more-incremental.svg"
 
-2020 is shaping up to be a really exciting year for Gatsby, with lots of ambitious projects on the roadmap. On the Cloud team, we've been getting all of our ducks in a row, making sure we're all set to hit the ground running. One of the areas we've been focusing on is our Github workflow.
+2020 is shaping up to be a really exciting year for Gatsby, with lots of ambitious projects on the roadmap. On the Gatsby Cloud team, we've been getting all of our ducks in a row, making sure we're all set to hit the ground running. One of the areas we've been focusing on is our Github workflow.
 
 We were seeing a lot of "stalled" Pull Requests (PRs) - work was being put up for review, but not receiving prompt attention. These PRs tended to be quite large and complex, essentially containing the entirety of work for a given feature or refactor.
 
