@@ -178,6 +178,10 @@ class ActionMonitor
           = $post_type_object->graphql_plural_name ?? null;
 
         if ($post->post_type === 'nav_menu_item') {
+            // for now, bail on nav menu items.
+            // we're pulling them as a side effect in Gatsby for now
+            // once we can get a flat list of all menu items regardless
+            // of location in WPGQL, this can be removed
             return $post_id;
             $global_relay_id = Relay::toGlobalId( 'nav_menu_item', $post_id );
             $title = "MenuItem #$post_id";
