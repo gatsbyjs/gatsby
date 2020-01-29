@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.83](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.82...gatsby-source-contentful@2.1.83) (2020-01-29)
+
+### Performance Improvements
+
+- **gatsby-source-contentful:** remove recursion in fixIds ([#20837](https://github.com/gatsbyjs/gatsby/issues/20837)) ([996e951](https://github.com/gatsbyjs/gatsby/commit/996e951))
+
 ## [2.1.82](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.81...gatsby-source-contentful@2.1.82) (2020-01-27)
 
 **Note:** Version bump only for package gatsby-source-contentful
