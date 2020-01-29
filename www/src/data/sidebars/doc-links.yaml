@@ -723,6 +723,8 @@
       items:
         - title: GraphQL
           link: /docs/glossary/graphql
+        - title: Headless CMS
+          link: /docs/glossary/headless-cms/
         - title: JAMStack
           link: /docs/glossary/jamstack
         - title: Node.js

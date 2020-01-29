@@ -1,7 +1,7 @@
 import fs from "fs"
 import path from "path"
 import sharp from "./safe-sharp"
-import { createContentDigest, cpuCoreCount } from "gatsby-core-utils"
+import { createContentDigest, cpuCoreCount, slash } from "gatsby-core-utils"
 import { defaultIcons, doesIconExist, addDigestToPath } from "./common"
 
 sharp.simd(true)
@@ -58,7 +58,7 @@ async function checkCache(cache, icon, srcIcon, srcIconDigest, callback) {
 }
 
 exports.onPostBootstrap = async (
-  { reporter, parentSpan },
+  { reporter, parentSpan, basePath },
   { localize, ...manifest }
 ) => {
   const activity = reporter.activityTimer(`Build manifest and related icons`, {
@@ -68,7 +68,7 @@ exports.onPostBootstrap = async (
 
   let cache = new Map()
 
-  await makeManifest(cache, reporter, manifest)
+  await makeManifest({ cache, reporter, pluginOptions: manifest, basePath })
 
   if (Array.isArray(localize)) {
     const locales = [...localize]
@@ -84,23 +84,44 @@ exports.onPostBootstrap = async (
           cacheModeOverride = { cache_busting_mode: `name` }
         }
 
-        return makeManifest(
+        return makeManifest({
           cache,
           reporter,
-          {
+          pluginOptions: {
             ...manifest,
             ...locale,
             ...cacheModeOverride,
           },
-          true
-        )
+          shouldLocalize: true,
+          basePath,
+        })
       })
     )
   }
   activity.end()
 }
 
-const makeManifest = async (cache, reporter, pluginOptions, shouldLocalize) => {
+/**
+ * The complete Triforce, or one or more components of the Triforce.
+ * @typedef {Object} makeManifestArgs
+ * @property {Object} cache - from gatsby-node api
+ * @property {Object} reporter - from gatsby-node api
+ * @property {Object} pluginOptions - from gatsby-node api/gatsby config
+ * @property {boolean?} shouldLocalize
+ * @property {string?} basePath - string of base path frpvided by gatsby node
+ */
+
+/**
+ * Build manifest
+ * @param {makeManifestArgs}
+ */
+const makeManifest = async ({
+  cache,
+  reporter,
+  pluginOptions,
+  shouldLocalize = false,
+  basePath = ``,
+}) => {
   const { icon, ...manifest } = pluginOptions
   const suffix =
     shouldLocalize && pluginOptions.lang ? `_${pluginOptions.lang}` : ``
@@ -197,6 +218,15 @@ const makeManifest = async (cache, reporter, pluginOptions, shouldLocalize) => {
       )
     }
   }
+
+  //Fix #18497 by prefixing paths
+  manifest.icons = manifest.icons.map(icon => {
+    return {
+      ...icon,
+      src: slash(path.join(basePath, icon.src)),
+    }
+  })
+  manifest.start_url = path.posix.join(basePath, manifest.start_url)
 
   //Write manifest
   fs.writeFileSync(
