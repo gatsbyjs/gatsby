@@ -226,7 +226,7 @@ const makeManifest = async ({
       src: slash(path.join(basePath, icon.src)),
     }
   })
-  
+
   if (manifest.start_url) {
     manifest.start_url = path.posix.join(basePath, manifest.start_url)
   }
