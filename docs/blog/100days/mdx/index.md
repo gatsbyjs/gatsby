@@ -14,7 +14,7 @@ _Learn more about [#100DaysOfGatsby here](/blog/100days)!_
 
 ## Challenge 5: Mix Markdown and React Using MDX
 
-React component within your Markdown-based blog posts!
+Use React components within your Markdown-based blog posts!
 
 Markdown is a great markup language for creating human readable, long form content. A writer on your team can use Markdown’s friendly syntax and contribute content to a site without having to edit HTML or JSX directly. 
 
