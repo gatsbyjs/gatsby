@@ -1024,6 +1024,45 @@ describe(`Extra fields`, () => {
     expect(result.get(`mockFile`)).toMatchSnapshot()
   })
 
+  it(`doesn't add __typename field when alias exists`, async () => {
+    const [result, errors] = transformQuery(`
+      query mockFileQuery {
+        allDirectory {
+          nodes {
+            __typename: id
+            contents {
+              ... on File {
+                __typename: id
+              }
+            }
+            children {
+              __typename: id
+              ... Node
+            }
+            ... on Directory {
+              children {
+                __typename: id
+              }
+            }
+            ...DirectoryContents
+          }
+        }
+      }
+
+      fragment DirectoryContents on Directory {
+        children {
+          __typename: id
+        }
+      }
+
+      fragment Node on Node {
+        __typename: id
+      }
+    `)
+    expect(errors).toEqual([])
+    expect(result.get(`mockFile`)).toMatchSnapshot()
+  })
+
   it(`adds id field if type has it`, () => {
     const [result, errors] = transformQuery(`
       query mockFileQuery {
@@ -1160,6 +1199,42 @@ describe(`Extra fields`, () => {
 
       fragment Node on Node {
         id
+      }
+    `)
+    expect(errors).toEqual([])
+    expect(result.get(`mockFile`)).toMatchSnapshot()
+  })
+
+  it(`doesn't add id field when alias for id exists`, async () => {
+    const [result, errors] = transformQuery(`
+      query mockFileQuery {
+        allDirectory {
+          nodes {
+            contents {
+              ... on File {
+                id: absolutePath
+              }
+              ... on Directory {
+                id: absolutePath
+              }
+            }
+            ... on Directory {
+              id: absolutePath
+            }
+            ...DirectoryContents
+          }
+        }
+      }
+
+      fragment DirectoryContents on Directory {
+        contents {
+          ... on File {
+            id: absolutePath
+          }
+          ... on Directory {
+            id: absolutePath
+          }
+        }
       }
     `)
     expect(errors).toEqual([])
