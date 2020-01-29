@@ -10,7 +10,7 @@ For more general information on gtag you can read Google's official documentatio
 
 If you're migrating from analytics.js (gatsby-plugin-google-analytics) you can read about the subtle API differences in more depth at: https://developers.google.com/analytics/devguides/collection/gtagjs/migration.
 
-NOTE: This plugin only works in production mode! To test your Global Site Tag is installed and firing events correctly run: gatsby build && gatsby serve.
+NOTE: This plugin only works in production mode! To test your Global Site Tag is installed and firing events correctly run: `gatsby build && gatsby serve.`
 
 ## Install
 

@@ -175,7 +175,7 @@ plugins: [
 In the example below, we will use a custom converter to convert paragraphs but the other nodes will be converted using the built-in HTML5 converter:
 
 ```javascript
-const asciidoc = require(`asciidoctor.js`)()
+const asciidoc = require(`asciidoctor`)()
 
 class TemplateConverter {
   constructor() {

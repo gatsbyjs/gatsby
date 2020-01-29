@@ -1,26 +1,87 @@
-const errorParser = ({ message, filePath, location }) => {
-  // Handle specific errors from Relay. A list of regexes to match certain
+const errorParser = ({
+  message,
+  filePath = undefined,
+  location = undefined,
+}) => {
+  // Handle GraphQL errors. A list of regexes to match certain
   // errors to specific callbacks
   const handlers = [
     {
-      regex: /Field "(.+)" must not have a selection since type "(.+)" has no subfields/m,
+      regex: /Variable "(.+)" of required type "(.+)" was not provided\./m,
       cb: match => {
         return {
-          id: `85909`,
+          id: `85920`,
           context: {
             sourceMessage: match[0],
-            fieldName: match[1],
-            typeName: match[2],
+            variableName: match[1],
+            variableType: match[2],
           },
         }
       },
     },
     {
-      regex: /Encountered\s\d\serror.*:\n\s*(.*)/m,
+      regex: /Variable "(.+)" of type "(.+)" used in position expecting type "(.+)"\./m,
       cb: match => {
         return {
-          id: `85907`,
-          context: { message: match[1] },
+          id: `85921`,
+          context: {
+            sourceMessage: match[0],
+            variableName: match[1],
+            inputType: match[2],
+            expectedType: match[3],
+          },
+        }
+      },
+    },
+    {
+      regex: /Field "(.+)" must not have a selection since type "(.+)" has no subfields\./m,
+      cb: match => {
+        return {
+          id: `85922`,
+          context: {
+            sourceMessage: match[0],
+            fieldName: match[1],
+            fieldType: match[2],
+          },
+        }
+      },
+    },
+    {
+      regex: /Cannot query field "(.+)" on type "(.+)"\./m,
+      cb: match => {
+        return {
+          id: `85923`,
+          context: {
+            sourceMessage: match[0],
+            field: match[1],
+            type: match[2],
+          },
+        }
+      },
+    },
+    {
+      regex: /(.+) cannot represent (.+) value: "(.+)"/m,
+      cb: match => {
+        return {
+          id: `85924`,
+          context: {
+            sourceMessage: match[0],
+            type: match[1],
+            desc: match[2],
+            value: match[3],
+          },
+        }
+      },
+    },
+    {
+      regex: /Cannot return null for non-nullable field (.+)/m,
+      cb: match => {
+        return {
+          id: `85925`,
+          context: {
+            sourceMessage: match[0],
+            field: match[1],
+          },
         }
       },
     },
@@ -39,11 +100,11 @@ const errorParser = ({ message, filePath, location }) => {
   let structured
 
   for (const { regex, cb } of handlers) {
-    let matched = message.match(regex)
+    const matched = message.match(regex)
     if (matched) {
       structured = {
-        filePath,
-        location,
+        ...(filePath && { filePath }),
+        ...(location && { location }),
         ...cb(matched),
       }
       break

@@ -22,11 +22,11 @@ code splitting, service workers, offline support, and more.
 
 Gatsby means no more compromising between developers, designers, and authors.
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">😲Gatsby now integrates multiple data sources, splits code, supports offline, lots new plugins... amazing!!  <a href="https://twitter.com/hashtag/reactjs?src=hash">#reactjs</a> <a href="https://twitter.com/hashtag/staticsitegenerator?src=hash">#staticsitegenerator</a> <a href="https://t.co/i80wYgnwhb">https://t.co/i80wYgnwhb</a></p>&mdash; Christian Mund (@krist) <a href="https://twitter.com/krist/status/882953204119556097">July 6, 2017</a></blockquote>
+https://twitter.com/krist/status/882953204119556097
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">I made this website with <a href="https://twitter.com/gatsbyjs">@gatsbyjs</a> and I&#39;m totally in love with it <a href="https://t.co/TZA064O3s0">https://t.co/TZA064O3s0</a> React SSGs are the future</p>&mdash; Charlotte Dann (@charlotte_dann) <a href="https://twitter.com/charlotte_dann/status/882596284116480000">July 5, 2017</a></blockquote>
+https://twitter.com/charlotte_dann/status/882596284116480000
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Super excited about the next version of <a href="https://twitter.com/gatsbyjs">@gatsbyjs</a>. The first GraphQL-powered static site generator as far as I know! <a href="https://t.co/poh4S9RSJH">https://t.co/poh4S9RSJH</a></p>&mdash; Sacha Greif (@SachaGreif) <a href="https://twitter.com/SachaGreif/status/841058065856192512">March 12, 2017</a></blockquote>
+https://twitter.com/SachaGreif/status/841058065856192512
 
 ## Gatsby is growing like crazy
 

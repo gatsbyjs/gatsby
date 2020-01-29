@@ -72,8 +72,18 @@ const directoryType = `
   }
 `
 
+const sitePageType = `
+  type SitePage implements Node @infer {
+    path: String!
+    component: String!
+    internalComponentName: String!
+    componentChunkName: String!
+    matchPath: String
+  }
+`
+
 const builtInTypeDefinitions = () =>
-  [fileType, directoryType].map(type => parse(type))
+  [fileType, directoryType, sitePageType].map(type => parse(type))
 
 module.exports = {
   builtInTypeDefinitions,

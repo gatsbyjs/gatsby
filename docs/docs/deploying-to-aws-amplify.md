@@ -37,4 +37,4 @@ AWS Amplify is a combination of client library, CLI toolchain, and a Console for
 
 Jason Lengstorf and Nader Dabit livestream building a site & deploying with AWS Amplify:
 
-`youtube: i9HG8CV-_dQ`
+https://youtu.be/i9HG8CV-_dQ
