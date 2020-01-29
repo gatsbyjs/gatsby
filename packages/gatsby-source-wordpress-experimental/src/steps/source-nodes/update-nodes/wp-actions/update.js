@@ -51,7 +51,6 @@ const wpActionUPDATE = async ({
   const { actions, getNode } = helpers
   const node = await getNode(nodeId)
 
-  // recreate the deleted node but with updated data
   const { createContentDigest } = helpers
 
   const remoteNode = {
@@ -73,7 +72,7 @@ const wpActionUPDATE = async ({
     typeof typeSettings.afterRemoteNodeProcessed === `function`
   ) {
     const additionalNodeIds = await typeSettings.afterRemoteNodeProcessed({
-      actionType: `UPDATE`,
+      actionType: wpAction.actionType,
       remoteNode,
       actions,
       helpers,
