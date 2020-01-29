@@ -2,7 +2,7 @@
 title: Challenge 5 - Add React Components in Markdown
 date: 2020-01-29
 author: "Hashim Warren"
-excerpt: "Learn how tomMix markdown and React using MDX"
+excerpt: "Learn how to mix markdown and React using MDX"
 tags: ["learning-to-code", "contest", "100-Days-of-Gatsby"]
 ---
 
