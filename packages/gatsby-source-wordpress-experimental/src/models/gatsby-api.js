@@ -21,7 +21,6 @@ const defaultPluginOptions = {
   },
   type: {
     MediaItem: {
-      onlyFetchIfReferenced: false,
       lazyNodes: true,
       beforeCreateNode: async ({ remoteNode, actionType }) => {
         if (actionType === `CREATE` || actionType === `UPDATE`) {
