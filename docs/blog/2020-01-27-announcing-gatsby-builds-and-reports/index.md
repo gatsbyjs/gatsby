@@ -56,7 +56,7 @@ This is what we're achieving with Gatsby and Gatsby Cloud. You get all the advan
 
 Gatsby was created to make amazing websites a possibility for _everyone_.
 
-The default Gatsby install comes with accessibility, SEO, and a blazing fast user experience out of the box. We’ve pioneered performance enhancements like [image lazy-loading](https://www.gatsbyjs.org/docs/using-gatsby-image/) and [link prefetching](https://www.gatsbyjs.org/docs/routing/#performance-and-prefetching) to deliver zero-delay client route changes. Many people say that Gatsby sites are the fastest sites they've ever seen.
+The default Gatsby install comes with accessibility, SEO, and a blazing fast user experience out of the box. We’ve pioneered performance enhancements like [image lazy-loading](/docs/using-gatsby-image/) and [link prefetching](/docs/routing/#performance-and-prefetching) to deliver zero-delay client route changes. Many people say that Gatsby sites are the fastest sites they've ever seen.
 
 But good defaults are only one part of making a website the best it can be. Performance, SEO, and accessibility can suffer over time, often by accident. An update or feature that improves one area can often lead to slowdowns on other critical pages. Staying on top of the side effects of code changes can be a real challenge without a built-in monitoring system.
 
@@ -129,7 +129,7 @@ In a world of mature cloud computing, serverless functions, and a rapidly growin
 
 **There's no going back to the old world of monolithic CMSs but what's next?**
 
-We believe the way forward is to _embrace [the content mesh](https://www.gatsbyjs.org/blog/2018-10-04-journey-to-the-content-mesh/)_. Embrace the abundance of available CMSs, design tooling, and new JavaScript frameworks. At Gatsby, we're building the control and data planes that developers and organizations need to thrive within the content mesh both now, and in the future.
+We believe the way forward is to _embrace [the content mesh](/blog/2018-10-04-journey-to-the-content-mesh/)_. Embrace the abundance of available CMSs, design tooling, and new JavaScript frameworks. At Gatsby, we're building the control and data planes that developers and organizations need to thrive within the content mesh both now, and in the future.
 
 Gatsby Builds is an incredibly important part of our efforts to make the content mesh accessible to everyone. It will:
 
@@ -147,7 +147,7 @@ There are many implications and possibilities when it comes to embracing the con
 ### How do I start using Builds & Reports?
 
 You need to be a Gatsby Cloud user in order to access the features of Builds & Reports.
-If you’re already a user you’ll find Builds and Reports enabled in your account. If you’re not a user and want to access these features alongside [real-time Preview](https://www.gatsbyjs.org/blog/2019-11-14-announcing-gatsby-cloud/) just [sign up for a Gatsby Cloud account](https://www.gatsbyjs.com/get-started) today.
+If you’re already a user you’ll find Builds and Reports enabled in your account. If you’re not a user and want to access these features alongside [real-time Preview](/blog/2019-11-14-announcing-gatsby-cloud/) just [sign up for a Gatsby Cloud account](https://www.gatsbyjs.com/get-started) today.
 
 ### How much faster is Gatsby Builds compared to other CD platforms?
 
