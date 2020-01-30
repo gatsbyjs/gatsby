@@ -12,7 +12,7 @@ You'll need to [set up a developer account](https://squareup.com/signup?v=develo
 
 Square can handle most of your payment-related needs including accepting payments, managing product catalogs, and managing payroll. Begin by determining which of these products you want to incorporate into your business. This guide focuses on [accepting payments on your website](https://developer.squareup.com/docs/online-payment-options#square-payments-in-your-own-website) but you may wish to use their in-person or in-app options as well.
 
-You've got two options for integrating Square payments: redirecting to a hosted checkout page with the Checkout API as well as using payments on your Gatsby site with the `SqPaymentForm` library and Payments API.
+You've got two options for integrating Square payments: redirecting to a hosted checkout page with the Checkout API _or_ taking payments from your Gatsby site using the `SqPaymentForm` library with the Payments API.
 
 ### Redirecting to a hosted checkout page
 
