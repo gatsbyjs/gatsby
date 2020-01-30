@@ -65,6 +65,10 @@ In addition to performance, creating a starter free of accessibility issues is a
 
 For more accessibility help, check out the [A11y Project checklist](https://a11yproject.com/checklist) and [WebAIM](https://webaim.org). You can also check out [tips on creating accessible web apps](https://www.deque.com/blog/accessibility-tips-in-single-page-applications/) heavy on client-side JavaScript.
 
+## Run your starter locally
+
+Since starters are Gatsby projects, you can run `gatsby develop` or `gatsby build` and then `gatsby serve` in order to ensure your starter is working. If you'd like to be extra thorough and make sure the `gatsby new` command works with your starter, you can run `gatsby new project-name ../relative/path/to/your/starter`, replacing the final part of that command with the appropriate relative path.
+
 ## Add your starter to the Gatsby Starter Library
 
 To make sure your starter is easily discoverable, you are welcome (but not required) to add it to the [Gatsby Starter Library](/contributing/submit-to-starter-library/). Add tags to your starter by first checking for existing ones (like `contentful`, `csv`, etc.), and adding more if needed!
