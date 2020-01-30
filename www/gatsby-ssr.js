@@ -1,7 +1,5 @@
 import React from "react"
 
-global.DOMParser = require("xmldom").DOMParser
-
 export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
   setHeadComponents([
     <link
