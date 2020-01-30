@@ -25,6 +25,17 @@ export const fetchAndCreateSingleNode = async ({
     },
   })
 
+  if (
+    !data ||
+    // deleted media items shouldn't have nodes created for them
+    // bail out.
+    // @todo abstract this logic so we're not tainting fetchAndCreateSingleNode with
+    // type specific logic
+    (data && data.hasOwnProperty(`mediaItem`) && data.mediaItem === null)
+  ) {
+    return { node: null }
+  }
+
   const createdNode = await createSingleNode({
     singleName,
     id,
@@ -33,6 +44,7 @@ export const fetchAndCreateSingleNode = async ({
     cachedNodeIds,
   })
 
+  // returns an object { node, additionalNodeIds }
   return createdNode
 }
 

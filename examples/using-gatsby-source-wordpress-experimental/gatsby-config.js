@@ -33,7 +33,7 @@ module.exports = {
           //   exclude: true,
           // },
           MediaItem: {
-            lazyNodes: false,
+            lazyNodes: true,
           },
           // example of afterRemoteNodeProcessed API
           // Page: {
