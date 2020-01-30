@@ -342,7 +342,7 @@
     - Localization (Multilanguage)
     - Dynamic content from Contentful CMS
     - Integrates i18n plugin starter and using-contentful repos
-- url: http://cranky-edison-12166d.netlify.com/
+- url: https://cranky-edison-12166d.netlify.com/
   repo: https://github.com/datocms/gatsby-portfolio
   description: n/a
   tags:
@@ -2148,7 +2148,7 @@
     - layout config either stacked or sidebar
     - theme dark/light mode
     - post support
-- url: http://gatsby-starter-default-intl.netlify.com
+- url: https://gatsby-starter-default-intl.netlify.com
   repo: https://github.com/wiziple/gatsby-starter-default-intl
   description: The default Gatsby starter with features of multi-language url routes and browser language detection.
   tags:
@@ -3611,7 +3611,7 @@
   features:
     - Simple Design
     - Made by Sumanth
-- url: http://the404blog.netlify.com
+- url: https://the404blog.netlify.com
   repo: https://github.com/algokun/the404blog
   description: An Awesome Starter Blog to help you get going with Gatsby and Markdown
   tags:
@@ -4535,7 +4535,7 @@
     - Left, Right and no sidebar templates
     - Font awesome icons
     - HTML5UP Design
-- url: http://tina-starter-grande.netlify.com/
+- url: https://tina-starter-grande.netlify.com/
   repo: https://github.com/tinacms/tina-starter-grande
   description: Feature rich Gatsby starter with full TinaCMS integration
   tags:
