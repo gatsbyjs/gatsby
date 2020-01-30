@@ -42,7 +42,7 @@ export const onRenderBody = ({ setHeadComponents }) => {
 
 You'll also need to create some variation of a `PaymentForm` component. Square maintains a few [payment form templates](https://github.com/square/connect-api-examples/tree/master/templates/web-ui/payment-form) you can base your component on. Try starting with the ["basic" JavaScript file](https://github.com/square/connect-api-examples/blob/master/templates/web-ui/payment-form/basic/sqpaymentform-basic.js). They also provide a [running example](https://codesandbox.io/s/4zjrv7kry9?from-embed) using their "basic-digital-wallet" template with React.
 
-Once that's done, you can use the `SqPaymentForm` object available on the `window` (you get this from the Sqaure JS you called in the `<head>`) and pass it in via props whenever you want the form to show up! In the example below, the `PaymentForm` has been added to the `Layout` component from the [default starter](/starters/gatsbyjs/gatsby-starter-default/).
+Once that's done, you can use the `SqPaymentForm` object available on the `window` (you get this from the Square JS you called in the `<head>`) and pass it in via props whenever you want the form to show up! In the example below, the `PaymentForm` has been added to the `Layout` component from the [default starter](/starters/gatsbyjs/gatsby-starter-default/).
 
 ```js:title=layout.js
 import React from "react"
