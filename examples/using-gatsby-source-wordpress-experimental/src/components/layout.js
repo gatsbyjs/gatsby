@@ -56,6 +56,7 @@ function Layout({ children }) {
               </span>
             </Link>
           </Heading>
+          <Heading as="h2">Test Menu</Heading>
           {!!wpMenu &&
             !!wpMenu.menuItems &&
             wpMenu.menuItems.nodes.map((menuItem, i) => (
@@ -65,7 +66,10 @@ function Layout({ children }) {
               </Link>
             ))}
         </Box>
-        <h2>Categories</h2>
+
+        <Box mb={100}>{children}</Box>
+
+        <Heading as="h2">Categories</Heading>
         <Box mb={50}>
           {allWpCategory && allWpCategory.nodes && (
             <ul>
@@ -75,7 +79,7 @@ function Layout({ children }) {
             </ul>
           )}
         </Box>
-        <h2>Tags</h2>
+        <Heading as="h2">Tags</Heading>
         <Box mb={50}>
           {allWpTag && allWpTag.nodes && (
             <ul>
@@ -85,7 +89,6 @@ function Layout({ children }) {
             </ul>
           )}
         </Box>
-        <Box mb={100}>{children}</Box>
       </Grid>
     </div>
   )
