@@ -114,7 +114,7 @@ In addition, sometimes a contributor cannot continue a PR for whatever reason. I
 
 #### Check "allow edits from maintainers"
 
-Contributors should check "allow edits from maintainers" when making PRs. This will [allow maintainers to make changes](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/allowing-changes-to-a-pull-request-branch-created-from-a-fork) directly to a PR branch created from a fork. Maintainers can add these instructions to a PR template to serve as a reminder to contributors.
+Contributors should check "allow edits from maintainers" when making Pull Requests (PRs). This will [allow maintainers to make changes](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/allowing-changes-to-a-pull-request-branch-created-from-a-fork) directly to a PR branch created from a fork. Maintainers can add these instructions to a PR template to serve as a reminder to contributors.
 
 #### Set up a review process
 
