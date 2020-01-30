@@ -8,7 +8,7 @@ tags: ["accessibility, client-side-routing, diversity-and-inclusion"]
 
 We recently released accessibility improvements to client side routing, building on previous focus management improvements [released in version 2.13.2](https://github.com/gatsbyjs/gatsby/pull/13197). These improvements enable people relying on screen readers to successfully navigate sites built with Gatsby. If you'd like an in-depth look at how we made incremental changes to get to this release, have a look at the conversation in this [issue about assistive technology and navigation](https://github.com/gatsbyjs/gatsby/issues/5581). It was opened way back in May 2018.
 
-In July of 2019, Marcy Sutton teamed up with [Fable Tech Labs](https://www.makeitfable.com/) to conduct user testing to \ determine what the best user experience is for navigating JavaScript applications. Marcy wrote a thorough [blog post](/blog/2019-07-11-user-testing-accessible-client-routing/) about that research. This left us with some concrete recommendations to execute on:
+In July of 2019, Marcy Sutton teamed up with [Fable Tech Labs](https://www.makeitfable.com/) to conduct user testing to determine what the best user experience is for navigating JavaScript applications. Marcy wrote a thorough [blog post](/blog/2019-07-11-user-testing-accessible-client-routing/) about that research. This left us with some concrete recommendations to execute on:
 
 - Provide a skip link that takes focus on a route change within the site, with a label that indicates what the link will do when activated: e.g. “skip to main navigation”.
 - Include an ARIA Live Region on page load. On a route change, append text to it indicating the current page, e.g. “Portfolio page”.
