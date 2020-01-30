@@ -67,7 +67,7 @@ For more accessibility help, check out the [A11y Project checklist](https://a11y
 
 ## Run your starter locally
 
-Running `gatsby develop` or `gatsby build` and then `gatsby serve` is all you need to do to ensure your starter is working. If you'd like to be extra thorough and make sure the `gatsby new` command works with your starter, you can run `gatsby new project-name ../relative/path/to/your/starter`.
+Since starters are Gatsby projects, you can run `gatsby develop` or `gatsby build` and then `gatsby serve` in order to ensure your starter is working. If you'd like to be extra thorough and make sure the `gatsby new` command works with your starter, you can run `gatsby new project-name ../relative/path/to/your/starter`, replacing the final part of that command with the appropriate relative path.
 
 ## Add your starter to the Gatsby Starter Library
 
