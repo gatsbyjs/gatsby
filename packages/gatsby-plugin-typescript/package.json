@@ -10,6 +10,7 @@
     "Noah Lange <noahrlange@gmail.com>"
   ],
   "dependencies": {
+    "@babel/core": "^7.7.5",
     "@babel/plugin-proposal-nullish-coalescing-operator": "^7.7.4",
     "@babel/plugin-proposal-numeric-separator": "^7.7.4",
     "@babel/plugin-proposal-optional-chaining": "^7.7.5",

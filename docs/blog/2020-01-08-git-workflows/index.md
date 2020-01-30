@@ -1,9 +1,9 @@
 ---
-title: "Incremental PRs: a new Github workflow for the Gatsby Cloud team"
+title: "Incremental PRs: a new GitHub workflow for the Gatsby Cloud team"
 date: 2020-01-30
 author: "Josh Comeau"
 excerpt: "A look at how the Gatsby Cloud team adopted a new workflow to achieve smaller, non-blocking PRs."
-tags: ["source control", "Github", "workflows"]
+tags: ["source control", "GitHub", "workflows"]
 ---
 
 import baseGithub from "./base-github.png"
@@ -17,13 +17,13 @@ import parallelUniversesSvg from "./7-parallel-universes.svg"
 import doubleWorkSvg from "./8-double-work.svg"
 import moreIncrementalSvg from "./5-more-incremental.svg"
 
-2020 is shaping up to be a really exciting year for Gatsby, with lots of ambitious projects on the roadmap. On the Gatsby Cloud team, we've been getting all of our ducks in a row, making sure we're all set to hit the ground running. One of the areas we've been focusing on is our Github workflow.
+2020 is shaping up to be a really exciting year for Gatsby, with lots of ambitious projects on the roadmap. On the Gatsby Cloud team, we've been getting all of our ducks in a row, making sure we're all set to hit the ground running. One of the areas we've been focusing on is our GitHub workflow.
 
 We were seeing a lot of "stalled" Pull Requests (PRs) - work was being put up for review, but not receiving prompt attention. These PRs tended to be quite large and complex, essentially containing the entirety of work for a given feature or refactor.
 
 Monolithic PRs are difficult to review. In addition to the time investment, they also tend to require a lot of mental energy; to be an effective reviewer, you need to build up a mental picture of the change, and the larger that change is, the more context needs to be held in focus. Additionally, large PRs tend to develop their own inertia. If a reviewer has a great idea for an alternative approach, but it would require scrapping most of the work already done in the PR, it's not likely to be acted upon (if it's even shared in the first place).
 
-It's easy to say that developers should limit the size of their PRs, but this is very much easier said than done. Github really doesn't make it clear or intuitive how to break work up into multiple reviewable units. PRs are based on branches, and it's not always clear how to juggle multiple branches. Even for folks who are comfortable with Git, the path can be very tricky.
+It's easy to say that developers should limit the size of their PRs, but this is very much easier said than done. GitHub really doesn't make it clear or intuitive how to break work up into multiple reviewable units. PRs are based on branches, and it's not always clear how to juggle multiple branches. Even for folks who are comfortable with Git, the path can be very tricky.
 
 Ideally, the developer could spin up new PRs as they went, allowing them to solicit feedback early, without being blocked while waiting for it. If the feedback _does_ require significant changes, it should be easy to integrate those changes into their more-recent work.
 
@@ -33,11 +33,11 @@ This blog post explains how we solved for these concerns!
 
 Let's say we're working on a blog, and want to incorporate a headless CMS, switching from using local markdown files and hardcoded data.
 
-First, we create a new branch, `feat/headless-cms`. This will be our _root branch_; we'll merge PRs as we go into this branch. We never commit to it directly, and so for the time being, it's a clone of our _deploy branch_ (typically master or staging, whichever branch features are typically merged into). Even though it doesn't hold any commits yet, we should push it to Github.
+First, we create a new branch, `feat/headless-cms`. This will be our _root branch_; we'll merge PRs as we go into this branch. We never commit to it directly, and so for the time being, it's a clone of our _deploy branch_ (typically master or staging, whichever branch features are typically merged into). Even though it doesn't hold any commits yet, we should push it to GitHub.
 
-Right after creating that branch and pushing it to Github, we create another branch, `feat/headless-cms-pt1`. This will be an _incremental branch_, holding some of the changes needed for this feature. We get to work on the most fundamental parts of this change (for example, adding a source plugin and configuring it to pull data from our new CMS). Once we have a "hello world" based on this new architecture, we're ready to solicit some feedback. We push our branch to Github, and open a PR comparing our _incremental_ branch to our _root_ branch:
+Right after creating that branch and pushing it to GitHub, we create another branch, `feat/headless-cms-pt1`. This will be an _incremental branch_, holding some of the changes needed for this feature. We get to work on the most fundamental parts of this change (for example, adding a source plugin and configuring it to pull data from our new CMS). Once we have a "hello world" based on this new architecture, we're ready to solicit some feedback. We push our branch to GitHub, and open a PR comparing our _incremental_ branch to our _root_ branch:
 
-<img src={baseGithub} alt="A screenshot from Github showing that the PR is opened against 'feat/headless-cms' instead of master." />
+<img src={baseGithub} alt="A screenshot from GitHub showing that the PR is opened against 'feat/headless-cms' instead of master." />
 
 In a traditional workflow, opening a PR makes it hard for us to keep working on that feature; we'll bloat the PR if we keep committing to it, and it's not obvious how to manage "chained" PRs. This is a big part of why teams wind up with big PRs.
 
@@ -114,7 +114,7 @@ After rebasing, our Git branches look like this:
 
 You'll notice that our `C` commit—the only commit in our `pt2` branch—has been replaced with `E`. This is because it's no longer the same commit; it includes the changes that we dealt with in our rebase.
 
-Because we've rewritten the history, by turning `C` into `E`, we need to force-push to update our PR on Github:
+Because we've rewritten the history, by turning `C` into `E`, we need to force-push to update our PR on GitHub:
 
 ```bash
 $ git push origin feat/headless-cms-pt2 -f
@@ -133,12 +133,12 @@ We'll start by merging `pt1` into the root branch. Merge it in using the standar
 
 <img
   src={mergeSrc}
-  alt="The Github pull request screen shows a 'merge' button with a dropdown and several options. This screenshot highlights that the first option is the desired one, 'Create a merge commit'."
+  alt="The GitHub pull request screen shows a 'merge' button with a dropdown and several options. This screenshot highlights that the first option is the desired one, 'Create a merge commit'."
 />
 
 Next, we need to update our `pt2` branch. Right now it's still being compared to `pt1`, a branch which has since been merged. We want to point it to our _root_ branch, `feat/headless-cms`, instead.
 
-We can do this on Github by _changing the base_. Github has [great docs](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/changing-the-base-branch-of-a-pull-request) that cover this. In effect, it allows us to switch which branch we want to merge our changes into.
+We can do this on GitHub by _changing the base_. GitHub has [great docs](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/changing-the-base-branch-of-a-pull-request) that cover this. In effect, it allows us to switch which branch we want to merge our changes into.
 
 With our new base set, our tree looks like this:
 
@@ -257,7 +257,7 @@ No flow is without tradeoffs, and this one has a couple:
 
 ##### 1. It rewrites history
 
-This flow relies heavily on rebasing, which rewrites history. This means that pushing to Github requires a force-push, which can be scary, especially for folks newer to using Git.
+This flow relies heavily on rebasing, which rewrites history. This means that pushing to GitHub requires a force-push, which can be scary, especially for folks newer to using Git.
 
 This also makes it harder to collaborate on a feature; you need to communicate clearly before rebasing, to make sure everyone's work is in beforehand.
 
