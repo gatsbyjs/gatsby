@@ -2,7 +2,7 @@
 title: Processing Payments with Square
 ---
 
-Square is a payment service that emphasizes quick, secure payments as well as user-friendly and affordable point of sale (POS) system. You may have already seen their tiny credit card readers, which are great for mobile businesses like those that sell via food trucks or craft fairs. This guide explains how to begin using Square with your Gatsby site.
+Square is a payment service that emphasizes quick, secure payments as well as a user-friendly and affordable point of sale (POS) system. You may have already seen their tiny credit card readers, which are great for mobile businesses like those that sell via food trucks or craft fairs. This guide explains how to begin using Square with your Gatsby site.
 
 ## Prerequisites
 
@@ -20,14 +20,14 @@ Redirecting to a Square-hosted page takes some of the pressure off since you don
 
 ### Accepting Square payments
 
-Square recommends using the Payments API instead because it offers much greater flecxibility. You can customize not only the look and feel of the checkout process but also the checkout process itself, such as customizing the payment methods available.
+Square recommends using the Payments API instead because it offers much greater flexibility. You can customize not only the look and feel of the checkout process but also the checkout process itself, such as customizing the payment methods available.
 
 This process is broken into two steps:
 
 1. Generate a single-use token called a nonce.
 2. Charge whatever payment source the user has provided (this could be a credit card, gift card, etc.) using the nonce.
 
-To add a Square payment form to your Gatsby site, you'll need to load Square's payment form JavaScript into the `<head>` of your website. You can do this by calling `setHeadComponents()` in `gatsby-ssr.js`:
+To add a Square payment form to your Gatsby site, you'll need to load the JavaScript that runs Square's payment form into the `<head>` of your website. You can do this by calling `setHeadComponents()` in `gatsby-ssr.js`:
 
 ```js:title=gatsby-ssr.js
 import React from "react";
