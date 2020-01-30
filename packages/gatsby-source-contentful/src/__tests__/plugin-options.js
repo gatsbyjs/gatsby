@@ -170,6 +170,7 @@ describe(`Options validation`, () => {
         localeFilter: `yup`,
         downloadLocal: 5,
         useNameForId: 5,
+        pageLimit: `fifty`,
       }
     )
 
@@ -198,6 +199,9 @@ describe(`Options validation`, () => {
     )
     expect(reporter.panic).toBeCalledWith(
       expect.stringContaining(`"useNameForId" must be a boolean`)
+    )
+    expect(reporter.panic).toBeCalledWith(
+      expect.stringContaining(`"pageLimit" must be a number`)
     )
   })
 
