@@ -180,7 +180,7 @@ You can currently deploy to:
 
 ### What is a Deploy Preview?
 
-A Deploy Preview is a snapshot version of your Gatsby application that we build for each commit of each Git branch. We send this the Deploy Preview’s URL to the status check on your Github pull request when the build successfully completes.
+A Deploy Preview is a snapshot version of your Gatsby application that we build for each commit of each Git branch. We send this the Deploy Preview’s URL to the status check on your GitHub pull request when the build successfully completes.
 
 ### When does a Deploy Preview expire?
 
