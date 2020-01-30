@@ -137,7 +137,7 @@ In tutorials that are meant for beginners, use as few hyperlinks as possible to 
 
 ### Mark localhost URLs as code strings
 
-Unless you're running gatsby develop or gatsby build locally, links will not work. Therefore it's reccommended to list them as code blocks so that there aren't invalid links throughout the docs.
+Unless you're running `gatsby develop` or `gatsby build` locally, localhost links will not work. Therefore it's recommended to list these URL references as code blocks so there aren't invalid links throughout the docs on Gatsbyjs.org.
 
 ### Indicate when something is optional
 
