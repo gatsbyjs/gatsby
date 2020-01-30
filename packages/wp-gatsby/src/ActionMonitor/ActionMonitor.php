@@ -95,6 +95,88 @@ class ActionMonitor
         add_filter( 'wp_save_image_editor_file', [ $this, 'updateMediaItem' ], 10, 5);
 
         add_action( 'delete_attachment', [ $this, 'deleteMediaItem' ], 10, 1);
+
+        // User actions
+        // add_action( 'user_register', [ $this, 'registerUser' ] );
+
+        // Taxonomy / term actions
+        add_action( 'created_term', function( $term_id, $tt_id, $taxonomy ) {
+          $this->saveTerm( $term_id, $taxonomy, 'CREATE' );
+        }, 10, 3 );
+
+        add_action( 'edited_terms', function( $term_id, $taxonomy ) {
+          $this->saveTerm( $term_id, $taxonomy, 'UPDATE' );
+        }, 10, 2 );
+
+        add_action( 'pre_delete_term', [ $this, 'deleteTerm' ], 10, 2 );
+    }
+
+    function getTermInfo( $term_id, $taxonomy ) {
+      error_log(print_r($taxonomy, true)); 
+      error_log(print_r($term_id, true)); 
+      $global_relay_id = Relay::toGlobalId(
+          $taxonomy,
+          $term_id
+      );
+
+      error_log(print_r($global_relay_id, true)); 
+
+      $taxonomy_object = get_taxonomy( $taxonomy );
+
+      if ( !$taxonomy_object ) {
+        return null;
+      }
+
+      $graphql_single_name = $taxonomy_object->graphql_single_name ?? null;
+      $graphql_plural_name = $taxonomy_object->graphql_plural_name ?? null;
+
+      if ( !$graphql_plural_name || !$graphql_single_name ) {
+        return null;
+      }
+
+      $term = get_term( $term_id, $taxonomy );
+
+      if (!$term) {
+        return null;
+      }
+
+      $term_info = [
+        'global_relay_id' => $global_relay_id,
+        'taxonomy_object' => $taxonomy_object,
+        'graphql_single_name' => $graphql_single_name,
+        'graphql_plural_name' => $graphql_plural_name,
+        'term' => $term,
+      ];
+
+      return $term_info;
+    }
+
+    function deleteTerm( $term_id, $taxonomy ) {
+      $term_info = $this->getTermInfo( $term_id, $taxonomy );
+
+      $this->insertNewAction([
+        'action_type' => 'DELETE',
+        'title' => $term_info['term']->name,
+        'status' => 'deleted',
+        'node_id' => $term_id,
+        'relay_id' => $term_info['global_relay_id'],
+        'graphql_single_name' => $term_info['graphql_single_name'],
+        'graphql_plural_name' => $term_info['graphql_plural_name'],
+      ]);
+    }
+
+    function saveTerm( $term_id, $taxonomy, $action_type ) {
+      $term_info = $this->getTermInfo( $term_id, $taxonomy );
+
+      $this->insertNewAction([
+        'action_type' => $action_type,
+        'title' => $term_info['term']->name,
+        'status' => 'publish', // publish means go in Gatsby @todo rename this..
+        'node_id' => $term_id,
+        'relay_id' => $term_info['global_relay_id'],
+        'graphql_single_name' => $term_info['graphql_single_name'],
+        'graphql_plural_name' => $term_info['graphql_plural_name'],
+      ]);
     }
 
     function deleteMediaItem( $attachment_id ) {

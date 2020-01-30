@@ -4,8 +4,18 @@ import { Link, useStaticQuery, graphql } from "gatsby"
 import { getUrlPath } from "../utils/get-url-path"
 
 function Layout({ children }) {
-  const { wpMenu } = useStaticQuery(graphql`
+  const { wpMenu, allWpCategory, allWpTag } = useStaticQuery(graphql`
     {
+      allWpTag {
+        nodes {
+          name
+        }
+      }
+      allWpCategory {
+        nodes {
+          name
+        }
+      }
       wpMenu(slug: { eq: "test-menu-2" }) {
         name
         menuItems {
@@ -54,6 +64,26 @@ function Layout({ children }) {
                 <br />
               </Link>
             ))}
+        </Box>
+        <h2>Categories</h2>
+        <Box mb={50}>
+          {allWpCategory && allWpCategory.nodes && (
+            <ul>
+              {allWpCategory.nodes.map(category => (
+                <li key={category.name}>{category.name}</li>
+              ))}
+            </ul>
+          )}
+        </Box>
+        <h2>Tags</h2>
+        <Box mb={50}>
+          {allWpTag && allWpTag.nodes && (
+            <ul>
+              {allWpTag.nodes.map(tag => (
+                <li key={tag.name}>{tag.name}</li>
+              ))}
+            </ul>
+          )}
         </Box>
         <Box mb={100}>{children}</Box>
       </Grid>

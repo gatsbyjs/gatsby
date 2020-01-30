@@ -16,7 +16,23 @@ export const fetchAndCreateSingleNode = async ({
   actionType,
   cachedNodeIds,
 }) => {
-  const { nodeQuery: query } = getQueryInfoBySingleFieldName(singleName)
+  const { nodeQuery: query } = getQueryInfoBySingleFieldName(singleName) || {}
+
+  if (!query) {
+    const {
+      helpers: { reporter },
+    } = getGatsbyApi()
+
+    reporter.log(``)
+    reporter.warn(
+      formatLogMessage(
+        `A ${singleName} was updated, but no query was found for this node type.`
+      )
+    )
+    reporter.log(``)
+
+    return { node: null }
+  }
 
   const { data } = await fetchGraphql({
     query,
@@ -30,7 +46,10 @@ export const fetchAndCreateSingleNode = async ({
     return { node: null }
   }
 
-  const createdNode = await createSingleNode({
+  let createdNode
+
+  // returns an object { node, additionalNodeIds }
+  createdNode = await createSingleNode({
     singleName,
     id,
     actionType,
@@ -38,8 +57,7 @@ export const fetchAndCreateSingleNode = async ({
     cachedNodeIds,
   })
 
-  // returns an object { node, additionalNodeIds }
-  return createdNode
+  return createdNode || null
 }
 
 export const createSingleNode = async ({
@@ -83,10 +101,10 @@ export const createSingleNode = async ({
   let additionalNodeIds
 
   if (
-    typeSettings.beforeCreateNode &&
-    typeof typeSettings.beforeCreateNode === `function`
+    typeSettings.beforeChangeNode &&
+    typeof typeSettings.beforeChangeNode === `function`
   ) {
-    additionalNodeIds = await typeSettings.beforeCreateNode({
+    additionalNodeIds = await typeSettings.beforeChangeNode({
       actionType: actionType,
       remoteNode,
       actions,
@@ -151,7 +169,7 @@ const wpActionUPDATE = async ({
     cachedNodeIds,
   })
 
-  if (intervalRefetching) {
+  if (intervalRefetching && node) {
     reporter.log(``)
     reporter.info(
       formatLogMessage(
@@ -160,6 +178,7 @@ const wpActionUPDATE = async ({
         }`
       )
     )
+    reporter.log(``)
 
     if (verbose) {
       const nodeEntries = existingNode ? Object.entries(existingNode) : null

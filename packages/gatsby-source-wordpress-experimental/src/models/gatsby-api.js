@@ -22,7 +22,7 @@ const defaultPluginOptions = {
   type: {
     MediaItem: {
       lazyNodes: true,
-      beforeCreateNode: async ({ remoteNode, actionType }) => {
+      beforeChangeNode: async ({ remoteNode, actionType }) => {
         if (actionType === `CREATE` || actionType === `UPDATE`) {
           const createdMediaItem = await createRemoteMediaItemNode({
             mediaItemNode: remoteNode,
@@ -57,7 +57,7 @@ const defaultPluginOptions = {
        *
        * When we can get a list of all menu items regardless of location in WPGQL, this can be removed.
        */
-      beforeCreateNode: async ({
+      beforeChangeNode: async ({
         remoteNode,
         actionType,
         wpStore,

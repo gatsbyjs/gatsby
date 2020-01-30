@@ -53,6 +53,10 @@ export const createRemoteMediaItemNode = async ({ mediaItemNode }) => {
 
   const { mediaItemUrl, modifiedGmt } = mediaItemNode
 
+  if (!mediaItemUrl) {
+    return null
+  }
+
   // Otherwise we need to download it
   const remoteFileNode = await pRetry(
     async () => {

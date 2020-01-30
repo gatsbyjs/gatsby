@@ -72,10 +72,10 @@ export const createGatsbyNodesFromWPGQLContentNodes = async ({
       })
 
       if (
-        typeSettings.beforeCreateNode &&
-        typeof typeSettings.beforeCreateNode === `function`
+        typeSettings.beforeChangeNode &&
+        typeof typeSettings.beforeChangeNode === `function`
       ) {
-        const additionalNodeIds = await typeSettings.beforeCreateNode({
+        const additionalNodeIds = await typeSettings.beforeChangeNode({
           actionType: `CREATE_ALL`,
           remoteNode,
           actions,

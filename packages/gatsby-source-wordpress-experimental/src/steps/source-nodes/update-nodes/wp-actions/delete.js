@@ -22,22 +22,7 @@ const wpActionDELETE = async ({
   // get the node ID from the WPGQL id
   const nodeId = wpAction.referencedNodeGlobalRelayID
 
-  reporter.log(``)
-  reporter.info(
-    formatLogMessage(
-      `${chalk.bold(`deleted  ${wpAction.referencedNodeSingularName}`)} #${
-        wpAction.referencedNodeID
-      }`
-    )
-  )
-
-  reporter.log(``)
-
   const node = await getNode(nodeId)
-
-  if (node) {
-    await actions.deleteNode({ node })
-  }
 
   const { typeInfo } = getQueryInfoBySingleFieldName(
     wpAction.referencedNodeSingularName
@@ -48,10 +33,10 @@ const wpActionDELETE = async ({
   })
 
   if (
-    typeSettings.beforeCreateNode &&
-    typeof typeSettings.beforeCreateNode === `function`
+    typeSettings.beforeChangeNode &&
+    typeof typeSettings.beforeChangeNode === `function`
   ) {
-    const additionalNodeIds = await typeSettings.beforeCreateNode({
+    const additionalNodeIds = await typeSettings.beforeChangeNode({
       actionType: `DELETE`,
       remoteNode: node,
       actions,
@@ -66,6 +51,21 @@ const wpActionDELETE = async ({
     if (additionalNodeIds && additionalNodeIds.length) {
       additionalNodeIds.forEach(id => cachedNodeIds.push(id))
     }
+  }
+
+  if (node) {
+    await actions.deleteNode({ node })
+
+    reporter.log(``)
+    reporter.info(
+      formatLogMessage(
+        `${chalk.bold(`deleted  ${wpAction.referencedNodeSingularName}`)} #${
+          wpAction.referencedNodeID
+        }`
+      )
+    )
+
+    reporter.log(``)
   }
 
   // Remove this from cached node id's so we don't try to touch it
