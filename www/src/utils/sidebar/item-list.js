@@ -3,6 +3,8 @@ import contributingSidebar from "../../data/sidebars/contributing-links.yaml"
 import featuresSidebar from "../../data/sidebars/features-links.yaml"
 import tutorialSidebar from "../../data/sidebars/tutorial-links.yaml"
 
+import { getLocaleAndBasePath } from "../i18n"
+
 const createHash = link => {
   let index = -1
   if (link) index = link.indexOf(`#`)
@@ -51,8 +53,8 @@ const itemListLookup = {
 }
 
 function getItemList(path) {
-  // FIXME work with localized paths
-  const [urlSegment] = path.split("/").slice(1)
+  const { basePath } = getLocaleAndBasePath(path)
+  const [urlSegment] = basePath.split("/").slice(1)
   return itemListLookup[urlSegment]
 }
 
