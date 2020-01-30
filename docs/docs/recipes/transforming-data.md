@@ -69,7 +69,7 @@ export const query = graphql`
 
 1. Set up a [GraphQL query]`/docs/graphql-reference/` and either pass it into a component as props or write it directly in the component. One technique is to leverage the <code>[useStaticQuery]`/docs/use-static-query/`</code> hook.
 
-Common GraphQL queries for sourcing images include `file` from [gatsby-source-filesystem]`/packages/gatsby-source-filesystem/`, and both `imageSharp` and `allImageSharp` from [gatsby-plugin-sharp]`/packages/gatsby-plugin-sharp/`, but ultimately the options available to you will depend on your content sources.
+Common GraphQL queries for sourcing images include `file` from [gatsby-source-filesystem](/packages/gatsby-source-filesystem/), and both `imageSharp` and `allImageSharp` from [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/), but ultimately the options available to you will depend on your content sources.
 
 2. Use the grayscale query option in `gatsby-plugin-sharp` settings in `gatsby-config.js,`this applies to both _fluid_ and _fixed_ images:
 
