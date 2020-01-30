@@ -5,7 +5,7 @@ const identifyAndStoreIngestableFieldsAndTypes = async () => {
 
   const state = store.getState()
   const { introspectionData, fieldBlacklist } = state.remoteSchema
-  const { helpers } = state.gatsbyApi
+  const { helpers, pluginOptions } = state.gatsbyApi
 
   const cachedFetchedTypes = await helpers.cache.get(`previously-fetched-types`)
 
@@ -20,6 +20,17 @@ const identifyAndStoreIngestableFieldsAndTypes = async () => {
   const typeMap = new Map(
     introspectionData.__schema.types.map(type => [type.name, type])
   )
+
+  if (pluginOptions.type) {
+    Object.entries(pluginOptions.type).forEach(([typeName, typeSettings]) => {
+      // our lazy types won't initially be fetched,
+      // so we need to mark them as fetched here
+      if (typeSettings.lazyNodes) {
+        const lazyType = typeMap.get(typeName)
+        store.dispatch.remoteSchema.addFetchedType(lazyType)
+      }
+    })
+  }
 
   const interfaces = introspectionData.__schema.types.filter(
     type => type.kind === `INTERFACE`

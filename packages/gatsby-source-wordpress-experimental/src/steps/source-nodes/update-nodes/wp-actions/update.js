@@ -2,60 +2,67 @@ import fetchGraphql from "~/utils/fetch-graphql"
 import store from "~/store"
 import { formatLogMessage } from "~/utils/format-log-message"
 import chalk from "chalk"
-import { getQueryInfoByTypeName } from "../../helpers"
+import { getQueryInfoBySingleFieldName } from "../../helpers"
+import { getGatsbyApi } from "~/utils/get-gatsby-api"
+import { CREATED_NODE_IDS } from "~/constants"
 import {
   buildTypeName,
   getTypeSettingsByType,
 } from "~/steps/create-schema-customization/helpers"
 
-const wpActionUPDATE = async ({
-  helpers,
-  wpAction,
-  intervalRefetching,
+export const fetchAndCreateSingleNode = async ({
+  singleName,
+  id,
+  actionType,
   cachedNodeIds,
 }) => {
-  const { reporter } = helpers
-
-  const state = store.getState()
-  const {
-    gatsbyApi: {
-      pluginOptions: { verbose },
-    },
-  } = state
-
-  const nodeId = wpAction.referencedNodeGlobalRelayID
-
-  if (wpAction.referencedNodeStatus !== `publish`) {
-    // if the post status isn't publish anymore, we need to remove the node
-    // by removing it from cached nodes so it's garbage collected by Gatsby
-    return cachedNodeIds.filter(cachedId => cachedId !== nodeId)
-  }
-
-  const { nodeQuery: query, typeInfo } = getQueryInfoByTypeName(
-    wpAction.referencedNodeSingularName
-  )
+  const { nodeQuery: query } = getQueryInfoBySingleFieldName(singleName)
 
   const { data } = await fetchGraphql({
     query,
     variables: {
-      id: wpAction.referencedNodeGlobalRelayID,
+      id,
     },
   })
 
+  const createdNode = await createSingleNode({
+    singleName,
+    id,
+    actionType,
+    data,
+    cachedNodeIds,
+  })
+
+  return createdNode
+}
+
+export const createSingleNode = async ({
+  singleName,
+  id,
+  actionType,
+  data,
+  cachedNodeIds,
+}) => {
+  const { helpers } = getGatsbyApi()
+  const { typeInfo } = getQueryInfoBySingleFieldName(singleName)
+
+  if (!cachedNodeIds) {
+    cachedNodeIds = await helpers.cache.get(CREATED_NODE_IDS)
+  }
+
   const updatedNodeContent = {
-    ...data[wpAction.referencedNodeSingularName],
+    ...data[singleName],
     nodeType: typeInfo.nodesTypeName,
     type: typeInfo.nodesTypeName,
   }
 
-  const { actions, getNode } = helpers
-  const node = await getNode(nodeId)
+  const { actions } = helpers
 
   const { createContentDigest } = helpers
 
   const remoteNode = {
     ...updatedNodeContent,
-    id: nodeId,
+    id: id,
     parent: null,
     internal: {
       contentDigest: createContentDigest(updatedNodeContent),
@@ -67,12 +74,14 @@ const wpActionUPDATE = async ({
     name: typeInfo.nodesTypeName,
   })
 
+  let additionalNodeIds
+
   if (
-    typeSettings.afterRemoteNodeProcessed &&
-    typeof typeSettings.afterRemoteNodeProcessed === `function`
+    typeSettings.beforeCreateNode &&
+    typeof typeSettings.beforeCreateNode === `function`
   ) {
-    const additionalNodeIds = await typeSettings.afterRemoteNodeProcessed({
-      actionType: wpAction.actionType,
+    additionalNodeIds = await typeSettings.beforeCreateNode({
+      actionType: actionType,
       remoteNode,
       actions,
       helpers,
@@ -82,13 +91,59 @@ const wpActionUPDATE = async ({
       buildTypeName,
       wpStore: store,
     })
-
-    if (additionalNodeIds && additionalNodeIds.length) {
-      additionalNodeIds.forEach(id => cachedNodeIds.push(id))
-    }
   }
 
   await actions.createNode(remoteNode)
+
+  cachedNodeIds.push(remoteNode.id)
+
+  if (additionalNodeIds && additionalNodeIds.length) {
+    additionalNodeIds.forEach(id => cachedNodeIds.push(id))
+  }
+
+  await helpers.cache.set(CREATED_NODE_IDS, cachedNodeIds)
+
+  return { additionalNodeIds, node: remoteNode }
+}
+
+const wpActionUPDATE = async ({
+  helpers,
+  wpAction,
+  intervalRefetching,
+  // cachedNodeIds,
+}) => {
+  const { reporter, cache } = helpers
+
+  let cachedNodeIds = await cache.get(CREATED_NODE_IDS)
+
+  const state = store.getState()
+  const {
+    gatsbyApi: {
+      pluginOptions: { verbose },
+      helpers: { getNode },
+    },
+  } = state
+
+  const nodeId = wpAction.referencedNodeGlobalRelayID
+
+  if (wpAction.referencedNodeStatus !== `publish`) {
+    // if the post status isn't publish anymore, we need to remove the node
+    // by removing it from cached nodes so it's garbage collected by Gatsby
+    const validNodeIds = cachedNodeIds.filter(cachedId => cachedId !== nodeId)
+
+    await cache.set(CREATED_NODE_IDS, validNodeIds)
+
+    return
+  }
+
+  const existingNode = await getNode(nodeId)
+
+  const { node } = await fetchAndCreateSingleNode({
+    id: nodeId,
+    actionType: wpAction.actionType,
+    singleName: wpAction.referencedNodeSingularName,
+    cachedNodeIds,
+  })
 
   if (intervalRefetching) {
     reporter.log(``)
@@ -101,16 +156,20 @@ const wpActionUPDATE = async ({
     )
 
     if (verbose) {
-      const nodeEntries = node ? Object.entries(node) : null
+      const nodeEntries = existingNode ? Object.entries(existingNode) : null
 
       if (nodeEntries && nodeEntries.length) {
         nodeEntries
           .filter(([key]) => !key.includes(`modifiedGmt`) && key !== `modified`)
           .forEach(([key, value]) => {
+            if (!node || !node[key]) {
+              return
+            }
+
             if (
               // if the value of this field changed, log it
-              typeof updatedNodeContent[key] === `string` &&
-              value !== updatedNodeContent[key]
+              typeof node[key] === `string` &&
+              value !== node[key]
             ) {
               reporter.log(``)
               reporter.info(chalk.bold(`${key} changed`))
@@ -118,7 +177,7 @@ const wpActionUPDATE = async ({
               reporter.log(`${chalk.italic.bold(`    from`)}`)
               reporter.log(`      ${value}`)
               reporter.log(chalk.italic.bold(`    to`))
-              reporter.log(`      ${updatedNodeContent[key]}`)
+              reporter.log(`      ${node[key]}`)
               reporter.log(``)
             }
           })
@@ -128,9 +187,7 @@ const wpActionUPDATE = async ({
     }
   }
 
-  // we can leave cachedNodeIds as-is since the ID of the edited
-  // node will be the same
-  return cachedNodeIds
+  // return cachedNodeIds
 }
 
 export default wpActionUPDATE

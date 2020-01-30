@@ -21,6 +21,14 @@ const persistPreviouslyCachedImages = async () => {
     // in onPostBuild, all imageNodeIds in state are cached for the next build
     store.dispatch.imageNodes.setNodeIds(imageNodeIds)
   }
+
+  const imageNodeMetaByUrl = await helpers.cache.get(`image-node-meta-by-url`)
+
+  if (imageNodeMetaByUrl) {
+    store.dispatch.imageNodes.setState({
+      nodeMetaByUrl: imageNodeMetaByUrl,
+    })
+  }
 }
 
 export { persistPreviouslyCachedImages }

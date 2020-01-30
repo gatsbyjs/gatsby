@@ -45,7 +45,7 @@ export const createGatsbyNodesFromWPGQLContentNodes = async ({
         //   store.dispatch.imageNodes.addImgMatches(imageUrlMatches)
         // }
 
-        if (pluginOptions.type.MediaItem.onlyFetchIfReferenced) {
+        if (!pluginOptions.type.MediaItem.lazyNodes) {
           // get an array of all referenced media file ID's
           const matchedIds = execall(/"id":"([^"]*)","sourceUrl"/gm, nodeString)
             .map(match => match.subMatches[0])
@@ -67,17 +67,15 @@ export const createGatsbyNodesFromWPGQLContentNodes = async ({
         },
       }
 
-      await actions.createNode(remoteNode)
-
       const typeSettings = getTypeSettingsByType({
         name: node.type,
       })
 
       if (
-        typeSettings.afterRemoteNodeProcessed &&
-        typeof typeSettings.afterRemoteNodeProcessed === `function`
+        typeSettings.beforeCreateNode &&
+        typeof typeSettings.beforeCreateNode === `function`
       ) {
-        const additionalNodeIds = await typeSettings.afterRemoteNodeProcessed({
+        const additionalNodeIds = await typeSettings.beforeCreateNode({
           actionType: `CREATE_ALL`,
           remoteNode,
           actions,
@@ -94,14 +92,20 @@ export const createGatsbyNodesFromWPGQLContentNodes = async ({
         }
       }
 
+      await actions.createNode(remoteNode)
+
       createdNodeIds.push(node.id)
     }
   }
 
   const referencedMediaItemNodeIdsArray = [...referencedMediaItemNodeIds]
 
+  /**
+   * if we're not lazy fetching media items, we need to fetch them
+   * upfront here
+   */
   if (
-    pluginOptions.type.MediaItem.onlyFetchIfReferenced &&
+    !pluginOptions.type.MediaItem.lazyNodes &&
     referencedMediaItemNodeIdsArray.length
   ) {
     await fetchReferencedMediaItemsAndCreateNodes({

@@ -79,7 +79,7 @@ export const fetchAndRunWpActions = async ({
   pluginOptions,
   intervalRefetching,
   since,
-  cachedNodeIds,
+  // cachedNodeIds,
 }) => {
   // check for new, edited, or deleted posts in WP "Action Monitor"
   const wpActions = await getWpActions(helpers, pluginOptions, {
@@ -91,12 +91,13 @@ export const fetchAndRunWpActions = async ({
   if (didUpdate) {
     for (const wpAction of wpActions) {
       // Create, update, and delete nodes
-      cachedNodeIds = await handleWpActions({
+      // cachedNodeIds =
+      await handleWpActions({
         helpers,
         pluginOptions,
         intervalRefetching,
         wpAction,
-        cachedNodeIds,
+        // cachedNodeIds,
       })
     }
   }
@@ -104,6 +105,6 @@ export const fetchAndRunWpActions = async ({
   return {
     wpActions,
     didUpdate,
-    validNodeIds: cachedNodeIds,
+    // validNodeIds: cachedNodeIds,
   }
 }

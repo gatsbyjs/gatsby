@@ -1,4 +1,7 @@
 import { buildTypeName } from "~/steps/create-schema-customization/helpers"
+import { fetchAndCreateSingleNode } from "~/steps/source-nodes/update-nodes/wp-actions/update"
+import { getQueryInfoByTypeName } from "~/steps/source-nodes/helpers"
+import { getGatsbyApi } from "~/utils/get-gatsby-api"
 
 export const transformListOfGatsbyNodes = ({ field }) => {
   const typeName = buildTypeName(field.type.ofType.name)
@@ -23,18 +26,41 @@ export const transformGatsbyNodeObject = ({ field, fieldName }) => {
 
   return {
     type: typeName,
-    resolve: (source, _, context) => {
-      const field = source[fieldName]
+    resolve: async (source, _, context) => {
+      const nodeField = source[fieldName]
 
-      if (!field || (field && !field.id)) {
+      if (!nodeField || (nodeField && !nodeField.id)) {
         return null
       }
 
-      // link gatsby nodes by id
-      return context.nodeModel.getNodeById({
-        id: field.id,
+      const existingNode = context.nodeModel.getNodeById({
+        id: nodeField.id,
         type: typeName,
       })
+
+      if (existingNode) {
+        return existingNode
+      }
+
+      const queryInfo = getQueryInfoByTypeName(field.type.name)
+
+      // if this node doesn't exist, fetch it and create a node
+      const { node } = await fetchAndCreateSingleNode({
+        id: nodeField.id,
+        actionType: `CREATE`,
+        singleName: queryInfo.typeInfo.singularName,
+      })
+
+      if (source.id && node) {
+        const { helpers } = getGatsbyApi()
+
+        await helpers.actions.createParentChildLink({
+          parent: source,
+          child: node,
+        })
+      }
+
+      return node || null
     },
   }
 }

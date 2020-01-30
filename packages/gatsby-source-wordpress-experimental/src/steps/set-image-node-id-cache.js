@@ -12,6 +12,13 @@ const setImageNodeIdCache = async () => {
   if (imageNodes.nodeIds && imageNodes.nodeIds.length) {
     await gatsbyApi.helpers.cache.set(`image-node-ids`, imageNodes.nodeIds)
   }
+
+  if (imageNodes.nodeMetaByUrl) {
+    await gatsbyApi.helpers.cache.set(
+      `image-node-meta-by-url`,
+      imageNodes.nodeMetaByUrl
+    )
+  }
 }
 
 export { setImageNodeIdCache }

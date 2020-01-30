@@ -86,7 +86,43 @@ class ActionMonitor
         add_action( 'wp_create_nav_menu', function( $menu_id ) { 
           $this->saveMenu( $menu_id, 'CREATE' ); 
         } );
+
         add_action( 'wp_delete_nav_menu', [ $this, 'deleteMenu' ], 10, 1 );
+
+        // Media item actions
+        add_action( 'add_attachment', [ $this, 'saveMediaItem'], 10, 1 );
+
+        add_filter( 'wp_save_image_editor_file', [ $this, 'updateMediaItem' ], 10, 5);
+    }
+
+    function updateMediaItem( $override, $filename, $image, $mime_type, $post_id ) {
+
+      $this->saveMediaItem( $post_id, 'UPDATE' );
+
+      return null;
+    }
+
+    function saveMediaItem( $attachment_id, $action_type = 'CREATE' ) {
+      $attachment = get_post( $attachment_id );
+
+      if (!$attachment) {
+        return $attachment_id;
+      }
+
+      $global_relay_id = Relay::toGlobalId(
+          'attachment',
+          $attachment_id
+      );
+
+      $this->insertNewAction([
+        'action_type' => $action_type,
+        'title' => $attachment->post_title ?? "Attachment #$attachment_id",
+        'status' => 'publish', // there is no concept of inheriting post status in Gatsby, so images will always be considered published.
+        'node_id' => $attachment_id,
+        'relay_id' => $global_relay_id,
+        'graphql_single_name' => 'mediaItem',
+        'graphql_plural_name' => 'mediaItems',
+      ]);
     }
 
     function deleteMenu( $menu_id ) {

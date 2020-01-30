@@ -1,3 +1,5 @@
+import chalk from "chalk"
+
 import { formatLogMessage } from "~/utils/format-log-message"
 import store from "~/store"
 import {
@@ -5,28 +7,26 @@ import {
   buildTypeName,
 } from "~/steps/create-schema-customization/helpers"
 import { fetchGraphql } from "~/utils/fetch-graphql"
-import { getQueryInfoByTypeName } from "../../helpers"
+import { getQueryInfoBySingleFieldName } from "../../helpers"
+import { CREATED_NODE_IDS } from "~/constants"
 
-const wpActionDELETE = async ({ helpers, cachedNodeIds, wpAction }) => {
-  const { reporter, actions, getNode } = helpers
+const wpActionDELETE = async ({
+  helpers,
+  // cachedNodeIds,
+  wpAction,
+}) => {
+  const { reporter, actions, getNode, cache } = helpers
+
+  let cachedNodeIds = await cache.get(CREATED_NODE_IDS)
 
   // get the node ID from the WPGQL id
   const nodeId = wpAction.referencedNodeGlobalRelayID
 
-  const { verbose } = store.getState().gatsbyApi.pluginOptions
-
   reporter.log(``)
   reporter.info(
     formatLogMessage(
-      `deleted ${wpAction.referencedNodeSingularName}${
-        verbose
-          ? `
-
-  {
-    ${wpAction.referencedNodeSingularName}Id: ${wpAction.referencedNodeID},
-    id: ${nodeId}
-  }`
-          : ` ${wpAction.referencedNodeID}`
+      `${chalk.bold(`deleted  ${wpAction.referencedNodeSingularName}`)} #${
+        wpAction.referencedNodeID
       }`
     )
   )
@@ -39,7 +39,7 @@ const wpActionDELETE = async ({ helpers, cachedNodeIds, wpAction }) => {
     await actions.deleteNode({ node })
   }
 
-  const { typeInfo } = getQueryInfoByTypeName(
+  const { typeInfo } = getQueryInfoBySingleFieldName(
     wpAction.referencedNodeSingularName
   )
 
@@ -48,10 +48,10 @@ const wpActionDELETE = async ({ helpers, cachedNodeIds, wpAction }) => {
   })
 
   if (
-    typeSettings.afterRemoteNodeProcessed &&
-    typeof typeSettings.afterRemoteNodeProcessed === `function`
+    typeSettings.beforeCreateNode &&
+    typeof typeSettings.beforeCreateNode === `function`
   ) {
-    const additionalNodeIds = await typeSettings.afterRemoteNodeProcessed({
+    const additionalNodeIds = await typeSettings.beforeCreateNode({
       actionType: `DELETE`,
       remoteNode: node,
       actions,
@@ -71,7 +71,9 @@ const wpActionDELETE = async ({ helpers, cachedNodeIds, wpAction }) => {
   // Remove this from cached node id's so we don't try to touch it
   const validNodeIds = cachedNodeIds.filter(cachedId => cachedId !== nodeId)
 
-  return validNodeIds
+  await cache.set(CREATED_NODE_IDS, validNodeIds)
+
+  // return validNodeIds
 }
 
 module.exports = wpActionDELETE

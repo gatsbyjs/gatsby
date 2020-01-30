@@ -6,6 +6,15 @@ const imageNodes = {
   },
 
   reducers: {
+    setState(state, payload) {
+      state = {
+        ...state,
+        ...payload,
+      }
+
+      return state
+    },
+
     setNodeIds(_, payload) {
       return {
         nodeIds: payload,

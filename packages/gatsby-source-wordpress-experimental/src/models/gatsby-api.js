@@ -1,4 +1,5 @@
 import merge from "lodash/merge"
+import { createRemoteMediaItemNode } from "~/steps/source-nodes/create-nodes/create-remote-media-item-node"
 
 const defaultPluginOptions = {
   url: null,
@@ -21,6 +22,20 @@ const defaultPluginOptions = {
   type: {
     MediaItem: {
       onlyFetchIfReferenced: false,
+      lazyNodes: true,
+      beforeCreateNode: async ({ remoteNode, actionType }) => {
+        if (actionType === `CREATE` || actionType === `UPDATE`) {
+          const createdMediaItem = await createRemoteMediaItemNode({
+            mediaItemNode: remoteNode,
+          })
+
+          if (createdMediaItem) {
+            remoteNode.remoteFile = {
+              id: createdMediaItem.id,
+            }
+          }
+        }
+      },
     },
     ContentNode: {
       nodeInterface: true,
@@ -43,7 +58,7 @@ const defaultPluginOptions = {
        *
        * When we can get a list of all menu items regardless of location in WPGQL, this can be removed.
        */
-      afterRemoteNodeProcessed: async ({
+      beforeCreateNode: async ({
         remoteNode,
         actionType,
         wpStore,

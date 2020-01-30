@@ -33,7 +33,7 @@ module.exports = {
           //   exclude: true,
           // },
           MediaItem: {
-            onlyFetchIfReferenced: true,
+            lazyNodes: false,
           },
           // example of afterRemoteNodeProcessed API
           // Page: {
