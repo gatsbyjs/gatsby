@@ -56,4 +56,25 @@ function getLocaleAndBasePath(path) {
   return { locale: defaultLang, basePath: path }
 }
 
-module.exports = { defaultLang, localizedPath, getLocaleAndBasePath }
+/**
+ * Get the messages for the given locale, filling in the default language's messages
+ * @param {string} locale the locale whose messages to get
+ */
+function getMessages(locale) {
+  const defaultMsgs = require(`../data/intl/${defaultLang}.yaml`)
+  try {
+    const msgs = require(`../data/intl/${locale}.yaml`)
+    // Replace missing messages with defaultLang ones
+    return { ...defaultMsgs, ...msgs }
+  } catch {
+    // If a module doens't exist yet, return the default language
+    return defaultMsgs
+  }
+}
+
+module.exports = {
+  defaultLang,
+  localizedPath,
+  getLocaleAndBasePath,
+  getMessages,
+}

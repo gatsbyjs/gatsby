@@ -2,6 +2,7 @@
 import { jsx } from "theme-ui"
 import { Component } from "react"
 import { navigate } from "gatsby"
+import { injectIntl } from "react-intl"
 
 import { space } from "../gatsby-plugin-theme-ui"
 import SearchIcon from "./search-icon"
@@ -375,6 +376,7 @@ class SearchForm extends Component {
   }
   render() {
     const { focussed } = this.state
+    const { intl } = this.props
     return (
       <form
         sx={{
@@ -424,9 +426,9 @@ class SearchForm extends Component {
                 `width ${t.transition.speed.default} ${t.transition.curve.default}, padding ${t.transition.speed.default} ${t.transition.curve.default}`,
             }}
             type="search"
-            placeholder={`Search gatsbyjs.org`}
-            aria-label="Search gatsbyjs.org"
-            title="Hit 's' to search docs"
+            placeholder={intl.formatMessage({ id: "search.label" })}
+            aria-label={intl.formatMessage({ id: "search.label" })}
+            title={intl.formatMessage({ id: "search.title" })}
             onFocus={() => this.setState({ focussed: true })}
             onBlur={() => this.setState({ focussed: false })}
             ref={input => {
@@ -440,4 +442,4 @@ class SearchForm extends Component {
   }
 }
 
-export default SearchForm
+export default injectIntl(SearchForm)
