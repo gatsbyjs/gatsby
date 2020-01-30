@@ -18,9 +18,7 @@ function maybeRedirect(pathname) {
 
   if (redirect != null) {
     if (process.env.NODE_ENV !== `production`) {
-      const pageResources = loader.loadPageSync(pathname)
-
-      if (pageResources != null) {
+      if (loader.isPageExist(pathname)) {
         console.error(
           `The route "${pathname}" matches both a page and a redirect; this is probably not intentional.`
         )
