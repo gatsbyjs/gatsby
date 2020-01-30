@@ -1,5 +1,8 @@
 const { URL } = require(`url`)
-const { createLazyFileNode } = require(`gatsby-source-filesystem`)
+const {
+  createLazyFileNode,
+  createRemoteFileNode,
+} = require(`gatsby-source-filesystem`)
 
 const nodeFromData = (datum, createNodeId) => {
   const { attributes: { id: _attributes_id, ...attributes } = {} } = datum
@@ -30,10 +33,12 @@ exports.isFileNode = isFileNode
 
 exports.downloadFile = async (
   { node, store, cache, createNode, createNodeId },
-  { basicAuth, baseUrl }
+  { basicAuth, baseUrl, lazyFileDownloads: lazy }
 ) => {
   // handle file downloads
   if (isFileNode(node)) {
+    const createFileNode = lazy ? createLazyFileNode : createRemoteFileNode
+
     let fileNode
     try {
       let fileUrl = node.url
@@ -51,7 +56,7 @@ exports.downloadFile = async (
               htaccess_pass: basicAuth.password,
             }
           : {}
-      fileNode = await createLazyFileNode({
+      fileNode = await createFileNode({
         url: url.href,
         store,
         cache,
@@ -64,7 +69,11 @@ exports.downloadFile = async (
       // Ignore
     }
     if (fileNode) {
-      node.remoteFile___NODE = fileNode.id
+      if (lazy) {
+        node.remoteFile___NODE = fileNode.id
+      } else {
+        node.localFile___NODE = fileNode.id
+      }
     }
   }
 }
