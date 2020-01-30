@@ -135,3 +135,5 @@
   # redirecting cypress-gatsby => gatsby-cypress
 - fromPath: /packages/cypress-gatsby/
   toPath: /packages/gatsby-cypress/
+- fromPath: /blog/2020-01-08-git-workflows/
+  toPath: /blog/2020-01-30-git-workflows/
