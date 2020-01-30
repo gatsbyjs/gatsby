@@ -5,7 +5,7 @@ overview: true
 
 A/B or split testing is when you make test changes to a website. If you have two buttons- a green “Buy Now!” button and a red “Buy Now!” button. You want to figure out which button will receive the most clicks. A split test would be an ideal way to measure engagement.
 
-vs
+![](./images/gatsby-default-starter-green-button.png) ![](/images/gatsby-default-starter-red-button.png)
 
 Split testing is a data-driven way to figure out what works on your website, and it is a great way to determine how to make impactful improvements.
 
