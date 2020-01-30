@@ -8,6 +8,9 @@
     "directory": "packages/babel-preset-gatsby-package"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/babel-preset-gatsby-package#readme",
+  "peerDependencies": {
+    "@babel/core": "^7.0.0"
+  },
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "^7.7.4",
     "@babel/plugin-proposal-nullish-coalescing-operator": "^7.7.4",
