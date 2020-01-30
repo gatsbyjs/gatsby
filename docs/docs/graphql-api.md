@@ -12,7 +12,7 @@ This doc serves as a reference for GraphQL features built into Gatsby, including
 
 ## Getting started with GraphQL
 
-GraphQL is available in Gatsby without a special install: a schema is automatically inferred and created when you run `gatsby develop` or `gatsby build`. When the site compiles, the data layer can be [explored](/docs/running-queries-with-graphiql/) at: <http://localhost:8000/___graphql>
+GraphQL is available in Gatsby without a special install: a schema is automatically inferred and created when you run `gatsby develop` or `gatsby build`. When the site compiles, the data layer can be [explored](/docs/running-queries-with-graphiql/) at: `http://localhost:8000/___graphql`
 
 ## Sourcing data
 

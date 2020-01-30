@@ -286,7 +286,7 @@ exports.createPages = async ({ graphql, actions }) => {
 Restart the development server and your pages will be created! An easy way to
 find new pages you create while developing is to go to a random path where
 Gatsby will helpfully show you a list of pages on the site. If you go to
-<http://localhost:8000/sdf>, you'll see the new pages you created.
+`http://localhost:8000/sdf`, you'll see the new pages you created.
 
 ![new-pages](new-pages.png)
 
