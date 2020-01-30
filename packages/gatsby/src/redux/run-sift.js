@@ -178,11 +178,6 @@ const runFlatFilterWithoutSift = (
     return undefined
   }
 
-  if (chain.join(`,`) === `id`) {
-    // The `id` key is not indexed in Sets (because why) so don't spread it
-    return [nodesByKeyValue]
-  }
-
   // In all other cases this must be a non-empty Set because the indexing
   // mechanism does not create a Set unless there's a Node for it
   return [...nodesByKeyValue]
@@ -316,7 +311,9 @@ const filterWithoutSift = (filter, nodeTypeNames, typedKeyValueIndexes) => {
  *   will be limited to 1 if `firstOnly` is true
  */
 const filterWithSift = (filter, firstOnly, nodeTypeNames, resolvedFields) => {
-  const nodes = nodeTypeNames.map(typeName => addResolvedNodes(typeName))
+  const nodes = _.flatten(
+    nodeTypeNames.map(typeName => addResolvedNodes(typeName))
+  )
 
   return _runSiftOnNodes(
     nodes,

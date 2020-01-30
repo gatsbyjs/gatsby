@@ -179,9 +179,7 @@ export const addResolvedNodes = (typeName: string): INode[] => {
 export const ensureIndexByTypedChain = (
   chain: string[],
   nodeTypeNames: string[],
-  typedKeyValueIndexes:
-    | Map<string, Map<string, Set<Node>>>
-    | Map<string, Map<string, Node>>
+  typedKeyValueIndexes: Map<string, Map<string | number | boolean, Set<INode>>>
 ) => {
   const chained = chain.join(`+`)
 
@@ -189,14 +187,13 @@ export const ensureIndexByTypedChain = (
   // The format of the typedKey is `type,type/path+to+eqobj`
   const typedKey = nodeTypeNamePrefix + chained
 
-  let byKeyValue = typedKeyValueIndexes.get(typedKey)
-  if (!byKeyValue) {
+  if (typedKeyValueIndexes.get(typedKey)) {
     return
   }
 
   const { nodes, resolvedNodesCache } = store.getState()
 
-  byKeyValue = new Map<string, Set<INode>>() // Map<node.value, Set<all nodes with this value for this key>>
+  const byKeyValue = new Map<string | number | boolean, Set<INode>>()
   typedKeyValueIndexes.set(typedKey, byKeyValue)
 
   nodes.forEach(node => {
@@ -228,14 +225,6 @@ export const ensureIndexByTypedChain = (
       // - The node chain ended with `undefined`, or
       // - The node chain ended in something other than a primitive, or
       // - A part in the chain in the object was not an object
-      return
-    }
-
-    // Special case `id` as that bucket never receives more than one element
-    if (chained === `id`) {
-      // Note: this is not a duplicate from `nodes` because this set only
-      //       contains nodes of this type. Page nodes are a subset of all nodes
-      byKeyValue.set(v, node)
       return
     }
 
