@@ -1,5 +1,5 @@
 ---
-title: "Flamingo, women’s body care brand from Harry’s, chooses Gatsby for critical ecommerce launch, 5X faster page loads"
+title: "Flamingo, women’s body care brand from Harry’s, chooses Gatsby for critical e-commerce launch, 5X faster page loads"
 date: 2019-01-30
 author: Linda Watkins
 tags:
@@ -10,13 +10,13 @@ image: "./images/flamingo.png"
 showImageInArticle: true
 ---
 
-Since [Harry's](https://www.harrys.com/en/us) launch in 2013, it has lit up the ecommerce market for men's care products. After years of research, the team put their expertise and technology towards a new brand, [Flamingo](https://www.shopflamingo.com/), that makes body care and hair removal products designed specifically for women. The Flamingo site went live in October 2018 with thousands of users visiting the new website and hundreds of thousands of page views in the first week. The launch triggered the need for an optimized website with performance built-in, which was delivered seamlessly by Gatsby. It also carried a surprising internal reward – Harry’s and Flamingo developers are re-engaged about learning, charging into the future of modern website development and performance on the edge.
+Since [Harry's](https://www.harrys.com/en/us) launch in 2013, it has lit up the e-commerce market for men's care products. After years of research, the team put their expertise and technology towards a new brand, [Flamingo](https://www.shopflamingo.com/), that makes body care and hair removal products designed specifically for women. The Flamingo site went live in October 2018 with thousands of users visiting the new website and hundreds of thousands of page views in the first week. The launch triggered the need for an optimized website with performance built-in, which was delivered seamlessly by Gatsby. It also carried a surprising internal reward – Harry’s and Flamingo developers are re-engaged about learning, charging into the future of modern website development and performance on the edge.
 
 Here’s some of our conversation with Tim Brown, Senior Software Engineer and Johnny Lin, Engineering Manager at Harry’s.
 
 ## Performance is King
 
-When it comes to websites, performance is king, especially for ecommerce websites. For every second it takes a page to load, the more customers (and revenue) are lost. And given the success of Harry’s and the public relations push planned for the new product launch, the development team knew they were looking at a big launch with lots of traffic and absolutely no room for failure. Having built the Harry’s site from scratch, they were looking for a fresh approach with Flamingo and **their main goals were simple**: Sell products to users; and be a positive introduction to the new Flamingo brand.
+When it comes to websites, performance is king, especially for e-commerce websites. For every second it takes a page to load, the more customers (and revenue) are lost. And given the success of Harry’s and the public relations push planned for the new product launch, the development team knew they were looking at a big launch with lots of traffic and absolutely no room for failure. Having built the Harry’s site from scratch, they were looking for a fresh approach with Flamingo and **their main goals were simple**: Sell products to users; and be a positive introduction to the new Flamingo brand.
 
 With that in mind, they also needed it to tick off some major development points, such as:
 
@@ -34,7 +34,7 @@ If the team didn’t find a solution to meet these needs, they’d have to build
 
 The manual process required to make the Harry’s website perform was what they were looking to improve for the Flamingo site. And Gatsby made building a high-performing website easy because it leverages modern website tools and is built with performance already an integral part of the technology.
 
-<Pullquote>As an ecommerce site, performance (SEO and conversion) is super important and Gatsby takes care of this for us.</Pullquote>
+<Pullquote>As an e-commerce site, performance (SEO and conversion) is super important and Gatsby takes care of this for us.</Pullquote>
 
 Since Gatsby simply serves html files that are hosted on the edge (CDN: Content Delivery Network), this dramatically improves SEO. The developers can focus on other things because Gatsby just takes care of the performance. The team was excited about the image support from Gatsby that is “out-of-the-box.” They didn’t have to write code in-house, which was game changing for a team looking to lead in mobile-optimized shopping.
 
@@ -66,9 +66,9 @@ Flamingo was able to achieve their sales and brand awareness goals with the new 
 
 **3) Seamless Integration with the CMS (Contentful):** The marketing leads and content creators are able to update most branded content (copy and images) on the site with zero developer involvement. This enables the team to work without interruption while giving their brand team the flexibility to make quick updates based on customer feedback.
 
-## Inspiring a New Frontier of Ecommerce
+## Inspiring a New Frontier of e-commerce
 
-Harry’s had a website that was working, but the web team knew it could do better for Flamingo – it could move to the edge and head for a new frontier in ecommerce.
+Harry’s had a website that was working, but the web team knew it could do better for Flamingo – it could move to the edge and head for a new frontier in e-commerce.
 
 Reflecting on it post-launch, the team says that Gatsby allowed them to focus on what they weren’t able to in the past – building a beautiful site that was inherently fast. But there’s been a surprise added value of Gatsby - the enthusiasm it has generated for the development team to push and learn.
 
@@ -76,4 +76,4 @@ Reflecting on it post-launch, the team says that Gatsby allowed them to focus on
 
 Frontend engineers are going beyond JS and tools and focusing on edge hosting, the modern web technology stack and optimizing for speed. The team is using this as a blueprint for how they’ll build websites in the future.
 
-Gatsby delivered a performance-optimized website for Flamingo, hosted on the edge. It made it easy to onboard new developers and create engaging experiences. It improved the website visitor’s experience with speed and design and it inspired the Flamingo team in a new age of ecommerce design.
+Gatsby delivered a performance-optimized website for Flamingo, hosted on the edge. It made it easy to onboard new developers and create engaging experiences. It improved the website visitor’s experience with speed and design and it inspired the Flamingo team in a new age of e-commerce design.

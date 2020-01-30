@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.38](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.0.37...gatsby-page-utils@0.0.38) (2020-01-29)
+
+**Note:** Version bump only for package gatsby-page-utils
+
 ## [0.0.37](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.0.36...gatsby-page-utils@0.0.37) (2020-01-09)
 
 **Note:** Version bump only for package gatsby-page-utils
