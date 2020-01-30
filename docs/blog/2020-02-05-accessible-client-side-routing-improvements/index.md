@@ -6,7 +6,7 @@ excerpt: "We recently released accessibility improvements to client side routing
 tags: ["accessibility, client-side-routing, diversity-and-inclusion"]
 ---
 
-We recently released accessibility improvements to client side routing, building on previous focus management improvements [released in version 2.13.2](https://github.com/gatsbyjs/gatsby/pull/13197). These improvements enable people relying on screen readers to successfully navigate sites built with Gatsby. If you'd like an in-depth look at how we made incremental changes to get to this release, have a look at this [issue](https://github.com/gatsbyjs/gatsby/issues/5581) opened way back in May 2018.
+We recently released accessibility improvements to client side routing, building on previous focus management improvements [released in version 2.13.2](https://github.com/gatsbyjs/gatsby/pull/13197). These improvements enable people relying on screen readers to successfully navigate sites built with Gatsby. If you'd like an in-depth look at how we made incremental changes to get to this release, have a look at the conversation in the ["a11y issues: page nav doesn't trigger assistive tech" issue](https://github.com/gatsbyjs/gatsby/issues/5581). It was opened way back in May 2018.
 
 In July of 2019, Marcy Sutton teamed up with [Fable Tech Labs](https://www.makeitfable.com/) to conduct user testing to \ determine what the best user experience is for navigating JavaScript applications. Marcy wrote a thorough [blog post](/blog/2019-07-11-user-testing-accessible-client-routing/) about that research. This left us with some concrete recommendations to execute on:
 
@@ -58,4 +58,6 @@ This component sets the content to be announced (e.g. "Navigated to Gatsby Blog"
 
 ### What’s Next
 
-Now that this large improvement is shipped, we'll continue building on our progress. Right now the English words "Navigated to" appear in every announcement. Because accessible solutions are meant to be [understandable](https://developer.mozilla.org/en-US/docs/Web/Accessibility/Understanding_WCAG/Understandable), we aim to localize this string based on the language a user is navigating the web in. Additionally, we would like to offer additional customization for users, offering the option to specify an element to grab announcement text from instead of the `h1` or `title` on the page. As always, we're open to suggestions from the community.
+Now that this large improvement is shipped, we'll continue building on our progress. Right now the English words "Navigated to" appear in every announcement. Because accessible solutions are meant to be [understandable](https://developer.mozilla.org/en-US/docs/Web/Accessibility/Understanding_WCAG/Understandable), we aim to localize this string based on the language a user is navigating the web in (see [issue 20801](https://github.com/gatsbyjs/gatsby/issues/20801)). Additionally, we would like to offer additional customization for users, offering the option to specify an element to grab announcement text from instead of the `h1` or `title` on the page (see [issue 21059](https://github.com/gatsbyjs/gatsby/issues/21059)). 
+
+As always, we'd love to hear ideas and suggestions from the community.
