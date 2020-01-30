@@ -2,18 +2,14 @@
   key: docs
   breadcrumbTitle: Docs
   items:
-    - title: Introduction
-      link: /docs/
-    - title: Quick Start
-      link: /docs/quick-start/
+    - link: /docs/
+    - link: /docs/quick-start/
     - title: Plugin Library
       link: /plugins/
     - title: Starter Library
       link: /starters/
-    - title: Awesome Gatsby Resources
-      link: /docs/awesome-gatsby-resources/
-    - title: Recipes
-      link: /docs/recipes/
+    - link: /docs/awesome-gatsby-resources/
+    - link: /docs/recipes/
       items:
         - title: Pages and Layouts
           link: /docs/recipes/pages-layouts
@@ -50,12 +46,8 @@
         - title: Deploying & Hosting
           link: /docs/deploying-and-hosting/
           items:
-            - title: Preparing a Site for Deployment
-              link: /docs/preparing-for-deployment/
-              breadcrumbTitle: Preparing for Deployment
-            - title: Deploying to Netlify
-              link: /docs/deploying-to-netlify/
-              breadcrumbTitle: Netlify
+            - link: /docs/preparing-for-deployment/
+            - link: /docs/deploying-to-netlify/
             - title: Deploying to AWS Amplify
               link: /docs/deploying-to-aws-amplify/
               breadcrumbTitle: AWS Amplify

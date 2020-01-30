@@ -7,7 +7,6 @@ import MdClose from "react-icons/lib/md/close"
 
 import { Global } from "@emotion/core"
 
-import { getItemList } from "../utils/sidebar/item-list"
 import { globalStyles } from "../utils/styles/global"
 import {
   colors,
@@ -62,9 +61,6 @@ class DefaultLayout extends React.Component {
   }
 
   render() {
-    const itemList = getItemList(this.props.location.pathname)
-    // SEE: template-docs-markdown for why this.props.isSidebarDisabled is here
-    const isSidebarDisabled = this.props.isSidebarDisabled || !itemList
     let isModal = false
     if (!windowWidth && typeof window !== `undefined`) {
       windowWidth = window.innerWidth
@@ -193,8 +189,6 @@ class DefaultLayout extends React.Component {
           }}
         >
           <PageWithSidebar
-            disable={isSidebarDisabled}
-            itemList={itemList}
             location={this.props.location}
             enableScrollSync={this.props.enableScrollSync}
             renderContent={() => this.props.children}

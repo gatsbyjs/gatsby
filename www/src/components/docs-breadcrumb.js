@@ -4,7 +4,7 @@ import React from "react"
 import Link from "./localized-link"
 import ChevronRight from "react-icons/lib/md/chevron-right"
 import ChevronLeft from "react-icons/lib/md/chevron-left"
-import { getItemList } from "../utils/sidebar/item-list"
+import { useItemList } from "../utils/sidebar/item-list"
 import getActiveItem from "../utils/sidebar/get-active-item"
 import getActiveItemParents from "../utils/sidebar/get-active-item-parents"
 
@@ -33,7 +33,7 @@ const BreadcrumbNav = ({ children, mobile = false }) => (
 )
 
 const Breadcrumb = ({ location }) => {
-  const itemList = getItemList(location.pathname)
+  const itemList = useItemList(location.pathname)
   // provide escape if no itemList is provided so breadcrumb isn't rendered
   if (itemList === undefined) return null
 

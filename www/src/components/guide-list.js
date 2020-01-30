@@ -1,16 +1,9 @@
 import React from "react"
 
-import docsHierarchy from "../data/sidebars/doc-links.yaml"
-import tutorialHierarchy from "../data/sidebars/tutorial-links.yaml"
-import contributingHierarchy from "../data/sidebars/contributing-links.yaml"
+import { useItemList } from "../utils/sidebar/item-list"
 
 // Search through tree, which may be 2, 3 or more levels deep
-const childItemsBySlug = (
-  docsHierarchy,
-  tutorialHierarchy,
-  contributingHierarchy,
-  slug
-) => {
+const childItemsBySlug = (hierarchy, slug) => {
   let result
 
   const iter = a => {
@@ -20,21 +13,13 @@ const childItemsBySlug = (
     }
     return Array.isArray(a.items) && a.items.some(iter)
   }
-
-  docsHierarchy.some(iter)
-  tutorialHierarchy.some(iter)
-  contributingHierarchy.some(iter)
+  hierarchy.some(iter)
   return result && result.items
 }
 
 const GuideList = ({ slug }) => {
-  const subitemsForPage =
-    childItemsBySlug(
-      docsHierarchy,
-      tutorialHierarchy,
-      contributingHierarchy,
-      slug
-    ) || []
+  const itemList = useItemList(slug)
+  const subitemsForPage = childItemsBySlug(itemList.items, slug) || []
   const subitemList = subitemsForPage.map((subitem, i) => (
     <li key={i}>
       <a href={subitem.link}>{subitem.title}</a>

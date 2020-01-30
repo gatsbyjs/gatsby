@@ -1,12 +1,14 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { Fragment } from "react"
+import { useItemList } from "../utils/sidebar/item-list"
 
 import StickyResponsiveSidebar from "./sidebar/sticky-responsive-sidebar"
 
-export default props => {
-  if (props.disable) {
-    return props.renderContent()
+export default ({ location, enableScrollSync, renderContent }) => {
+  const itemList = useItemList(location.pathname)
+  if (!itemList) {
+    return renderContent()
   } else {
     return (
       <Fragment>
@@ -21,17 +23,17 @@ export default props => {
             ],
           }}
         >
-          {props.renderContent()}
+          {renderContent()}
         </div>
         <StickyResponsiveSidebar
-          enableScrollSync={props.enableScrollSync}
-          itemList={props.itemList.items}
-          title={props.itemList.title}
-          sidebarKey={props.itemList.key}
-          disableExpandAll={props.itemList.disableExpandAll}
-          disableAccordions={props.itemList.disableAccordions}
-          key={props.location.pathname}
-          location={props.location}
+          enableScrollSync={enableScrollSync}
+          itemList={itemList.items}
+          title={itemList.title}
+          sidebarKey={itemList.key}
+          disableExpandAll={itemList.disableExpandAll}
+          disableAccordions={itemList.disableAccordions}
+          key={location.pathname}
+          location={location}
         />
       </Fragment>
     )
