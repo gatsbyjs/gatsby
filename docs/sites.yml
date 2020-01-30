@@ -6128,7 +6128,7 @@
 - title: APIs You Won't Hate
   url: https://apisyouwonthate.com/blog
   main_url: https://apisyouwonthate.com
-  source_url: http://github.com/apisyouwonthate/apisyouwonthate.com
+  source_url: https://github.com/apisyouwonthate/apisyouwonthate.com
   description: >
     API development is a topic very close to our hearts. APIs You Won't Hate is a team and community dedicated to learning, writing, sharing ideas and bettering understanding of API practices. Together we can erradicate APIs we hate.
   categories:
@@ -6822,7 +6822,7 @@
   categories:
     - eCommerce
   built_by: Kyle Kitlinski
-  built_by_url: http://github.com/k-kit
+  built_by_url: https://github.com/k-kit
   featured: false
 - title: Mill3 Studio
   main_url: https://mill3.studio/en/
