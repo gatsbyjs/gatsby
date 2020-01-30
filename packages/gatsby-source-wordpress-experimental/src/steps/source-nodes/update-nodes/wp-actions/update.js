@@ -25,14 +25,8 @@ export const fetchAndCreateSingleNode = async ({
     },
   })
 
-  if (
-    !data ||
-    // deleted media items shouldn't have nodes created for them
-    // bail out.
-    // @todo abstract this logic so we're not tainting fetchAndCreateSingleNode with
-    // type specific logic
-    (data && data.hasOwnProperty(`mediaItem`) && data.mediaItem === null)
-  ) {
+  // if we ask for a node that doesn't exist
+  if (!data || (data && data[singleName] === null)) {
     return { node: null }
   }
 
