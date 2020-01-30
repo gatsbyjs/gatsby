@@ -40,6 +40,12 @@ class EnsureResources extends React.Component {
     })
   }
 
+  componentDidMount() {
+    if (!this.state.pageResources) {
+      this.loadResources(this.props.location.pathname)
+    }
+  }
+
   shouldComponentUpdate(nextProps, nextState) {
     // Always return false if we're missing resources.
     if (!nextState.pageResources) {
