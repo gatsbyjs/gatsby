@@ -140,7 +140,7 @@ Gatsby Builds is an incredibly important part of our efforts to make the content
 
 There are many implications and possibilities when it comes to embracing the content mesh. [We'd love to chat about these with you](https://www.gatsbyjs.com/contact-us/) and help you and your organization survive the leap and thrive.
 
-[Sign up to Gatsby Cloud today](https://www.gatsbyjs.com/get-started) today to benefit from Builds, Reports, and real-time Content Preview.
+[Sign up to Gatsby Cloud today](https://www.gatsbyjs.com/get-started) to benefit from Builds, Reports, and real-time Content Preview.
 
 ## FAQs
 
