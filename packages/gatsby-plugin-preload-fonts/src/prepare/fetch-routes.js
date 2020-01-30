@@ -1,4 +1,4 @@
-import { createContentDigest } from "gatsby-core-utils"
+import { createContentDigest, isCI } from "gatsby-core-utils"
 const { request } = require(`graphql-request`)
 const { formatRelative } = require(`date-fns`)
 const { red, blue, bold, dim } = require(`chalk`)
@@ -37,6 +37,10 @@ ${red(`err`)} could not establish a connection with the dev server
 
   const routesHash = createContentDigest(routes)
   if (cache.hash === routesHash) {
+    if (isCI()) {
+      process.exit(0)
+    }
+
     const lastRun = formatRelative(new Date(cache.timestamp), new Date())
     const ok = await logger.confirm(`
 

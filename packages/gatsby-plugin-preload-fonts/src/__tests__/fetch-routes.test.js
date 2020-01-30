@@ -1,9 +1,14 @@
 const { request } = require(`graphql-request`)
+const { isCI } = require(`gatsby-core-utils`)
 const createMockLogger = require(`logger-mock`)
 const fetchRoutes = require(`../prepare/fetch-routes`)
 
 jest.mock(`graphql-request`, () => {
   return { request: jest.fn() }
+})
+
+jest.mock(`gatsby-core-utils`, () => {
+  return { isCI: jest.fn() }
 })
 
 describe(`fetch-routes`, () => {
@@ -66,6 +71,27 @@ describe(`fetch-routes`, () => {
     logger.confirm.mockImplementationOnce(() =>
       Promise.resolve(false /* don't crawl routes */)
     )
+    const mockExit = jest
+      .spyOn(process, `exit`)
+      .mockImplementationOnce(() => {})
+
+    cache.hash = `09f5b092fb87d859e0ac53dbae299a9e`
+    await fetchRoutes({ logger, endpoint, cache })
+
+    expect(mockExit).toHaveBeenCalledWith(0)
+  })
+
+  it(`doesn't prompt the user when the list of routes has not changed since last run if run in CI`, async () => {
+    expect.assertions(1)
+
+    request.mockImplementationOnce(() => {
+      return {
+        allSitePage: {
+          nodes: [{ path: `/foo` }, { path: `/bar` }, { path: `/baz` }],
+        },
+      }
+    })
+    isCI.mockImplementationOnce(true)
     const mockExit = jest
       .spyOn(process, `exit`)
       .mockImplementationOnce(() => {})
