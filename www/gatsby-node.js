@@ -70,7 +70,6 @@ const docSlugFromPath = parsedFilePath => {
   }
 }
 
-
 exports.createPages = ({ graphql, actions, reporter }) => {
   const { createPage, createRedirect } = actions
 
