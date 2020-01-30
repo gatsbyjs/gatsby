@@ -57,7 +57,7 @@ export const query = graphql`
 
 ## Transforming images into grayscale using GraphQL
 
-`gatsby-image` is a plugin designed to work seamlessly with Gatsby’s [native image processing](https://image-processing.gatsbyjs.org/) capabilities powered by GraphQL and [gatsby-plugin-sharp] `/packages/gatsby-plugin-sharp/` to optimize image loading for your sites.
+`gatsby-image` is a plugin designed to work seamlessly with Gatsby’s [native image processing](https://image-processing.gatsbyjs.org/) capabilities powered by GraphQL and [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/) to optimize image loading for your sites.
 
 ### Prerequisites
 
