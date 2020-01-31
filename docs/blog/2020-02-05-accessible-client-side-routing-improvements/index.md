@@ -58,7 +58,7 @@ exports.onRouteUpdate = ({ location, prevLocation }) => {
 }
 ```
 
-**Note:** After noticing that Gatsby's .org site was missing this, I whipped up a [Pull Request](). Incremental improvements are so important!
+**Note:** After noticing that Gatsby's .org site was missing this, I whipped up a [Pull Request](https://github.com/gatsbyjs/gatsby/pull/21108). Incremental improvements are so important!
 
 ## New Improvements
 
