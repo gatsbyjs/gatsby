@@ -24,7 +24,7 @@ Today we invite you to use MDX, a new format that lets you add components in you
 
 Use [Gatsby’s MDX tutorial](/docs/mdx/) and substitute the example “chart component” with the [“form component” you created](/blog/100days/react-component/) in a previous challenge.
 
-Bonus: Learn about an advanced [MDX feature, “shortcodes”(https://mdxjs.com/blog/shortcodes)]. Then enable an example of this feature by using a Gatsby plugin from the community, [gatsby-mdx-embed](/packages/@pauliescanlon/gatsby-mdx-embed/).
+Bonus: Learn about an advanced [MDX feature, “shortcodes”](https://mdxjs.com/blog/shortcodes). Then enable an example of this feature by using a Gatsby plugin from the community, [gatsby-mdx-embed](/packages/@pauliescanlon/gatsby-mdx-embed/).
 
 ### What to Do If You Need Help
 
