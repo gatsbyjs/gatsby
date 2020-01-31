@@ -1336,7 +1336,7 @@
   categories:
     - Portfolio
   built_by: Jonas Tebbe
-  built_by_url: "http://twitter.com/jonastebbe"
+  built_by_url: "https://twitter.com/jonastebbe"
   featured: false
 - title: Parker Sarsfield Portfolio
   description: |
@@ -1925,8 +1925,8 @@
     - Agency
     - Open Source
 - title: eworld
-  main_url: "http://eworld.herokuapp.com/"
-  url: "http://eworld.herokuapp.com/"
+  main_url: "https://eworld.herokuapp.com/"
+  url: "https://eworld.herokuapp.com/"
   featured: false
   categories:
     - eCommerce
@@ -3702,7 +3702,7 @@
     - Portfolio
     - Marketing
   built_by: Maciej Leszczyński
-  built_by_url: http://twitter.com/_maciej
+  built_by_url: https://twitter.com/_maciej
   featured: false
 - title: Frame.io Workflow Guide
   main_url: https://workflow.frame.io
