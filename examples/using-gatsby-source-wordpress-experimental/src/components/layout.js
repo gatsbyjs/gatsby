@@ -59,6 +59,7 @@ function Layout({ children }) {
           <Heading as="h2">Test Menu</Heading>
           {!!wpMenu &&
             !!wpMenu.menuItems &&
+            !!wpMenu.menuItems.nodes &&
             wpMenu.menuItems.nodes.map((menuItem, i) => (
               <Link key={i + menuItem.url} to={getUrlPath(menuItem.url)}>
                 {menuItem.label}
