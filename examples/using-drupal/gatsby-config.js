@@ -8,6 +8,7 @@ module.exports = {
       options: {
         baseUrl: `https://using-drupal.amazee.io/`,
         apiBase: `jsonapi`,
+        lazyFileDownloads: true
       },
     },
     {
