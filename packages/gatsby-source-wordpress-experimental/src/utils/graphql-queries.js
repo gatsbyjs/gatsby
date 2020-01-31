@@ -8,6 +8,7 @@ export const actionMonitorQuery = gql`
   query GET_ACTION_MONITOR_ACTIONS($since: Float!, $after: String) {
     # @todo add pagination in case there are more than 100 actions since the last build
     actionMonitorActions(
+      # @todo the orderby args aren't actually doing anything here. need to fix this
       where: { sinceTimestamp: $since, orderby: { field: DATE, order: DESC } }
       first: 100
       after: $after
