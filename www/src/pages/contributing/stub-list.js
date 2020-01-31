@@ -75,11 +75,9 @@ function StubListRoute({ location }) {
           </p>
           <section data-testid="list-of-stubs">
             {sortedCategories.map(category => {
-              let categoryTitle =
-                category.slice(-1) === `*` ? category.slice(0, -1) : category
               return (
                 <React.Fragment key={category}>
-                  <h2 sx={{ fontSize: 4, mb: 3 }}>{categoryTitle}</h2>
+                  <h2 sx={{ fontSize: 4, mb: 3 }}>{category}</h2>
                   <ul>
                     {groupedStubs[category].map(stub => (
                       <li key={stub.title}>

@@ -1,28 +1,35 @@
 jest.mock(`../../../utils/sidebar/item-list`, () => {
   return {
-    itemListContributing: {
-      title: `Contributing`,
-      items: [
-        {
-          title: `Why Contribute to Gatsby?`,
-          link: `/contributing/why-contribute-to-gatsby/`,
-        },
-        {
-          title: `Gatsby's Governance Model*`,
-          link: `/contributing/gatsby-governance-model/`,
-        },
-      ],
+    useItemList() {
+      return null
     },
-    itemListDocs: {
-      title: `Documentation`,
-      items: [
-        {
-          title: `Introduction`,
-          link: `/docs/`,
+    useItemLists() {
+      return {
+        contributing: {
+          title: `Contributing`,
+          items: [
+            {
+              title: `Why Contribute to Gatsby?`,
+              link: `/contributing/why-contribute-to-gatsby/`,
+            },
+            {
+              title: `Gatsby's Governance Model`,
+              link: `/contributing/gatsby-governance-model/`,
+              stub: true,
+            },
+          ],
         },
-      ],
+        docs: {
+          title: `Documentation`,
+          items: [
+            {
+              title: `Introduction`,
+              link: `/docs/`,
+            },
+          ],
+        },
+      }
     },
-    getItemList: jest.fn(),
   }
 })
 jest.mock(`react-modal`, () => {
@@ -94,12 +101,6 @@ describe(`StubList`, () => {
         const anchor = stub.firstChild
         expect(anchor.nodeName).toBe(`A`)
         expect(anchor.getAttribute(`href`)).toMatch(/^\//)
-      })
-    })
-
-    it(`removes the asterisks`, () => {
-      Array.from(stubs).forEach(stub => {
-        expect(stub.textContent).not.toContain(`*`)
       })
     })
   })
