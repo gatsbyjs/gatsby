@@ -135,7 +135,21 @@ const wpActionUPDATE = async ({
   wpAction,
   // intervalRefetching,
 }) => {
-  const { reporter, cache } = helpers
+  const reportUpdate = ({ setAction } = {}) => {
+    const actionType = setAction || wpAction.actionType
+
+    reporter.log(``)
+    reporter.info(
+      formatLogMessage(
+        `${chalk.bold(
+          `${actionType.toLowerCase()} ${wpAction.referencedNodeSingularName}`
+        )} ${wpAction.title} (#${wpAction.referencedNodeID})`
+      )
+    )
+    reporter.log(``)
+  }
+
+  const { reporter, cache, actions } = helpers
 
   let cachedNodeIds = await cache.get(CREATED_NODE_IDS)
 
@@ -149,6 +163,8 @@ const wpActionUPDATE = async ({
 
   const nodeId = wpAction.referencedNodeGlobalRelayID
 
+  const existingNode = await getNode(nodeId)
+
   if (wpAction.referencedNodeStatus !== `publish`) {
     // if the post status isn't publish anymore, we need to remove the node
     // by removing it from cached nodes so it's garbage collected by Gatsby
@@ -156,10 +172,14 @@ const wpActionUPDATE = async ({
 
     await cache.set(CREATED_NODE_IDS, validNodeIds)
 
+    if (existingNode) {
+      await actions.touchNode({ nodeId })
+      await actions.deleteNode({ node: existingNode })
+      reportUpdate({ setAction: `DELETE` })
+    }
+
     return
   }
-
-  const existingNode = await getNode(nodeId)
 
   const { node } = await fetchAndCreateSingleNode({
     id: nodeId,
@@ -169,17 +189,7 @@ const wpActionUPDATE = async ({
   })
 
   if (node) {
-    reporter.log(``)
-    reporter.info(
-      formatLogMessage(
-        `${chalk.bold(
-          `${wpAction.actionType.toLowerCase()} ${
-            wpAction.referencedNodeSingularName
-          }`
-        )} ${wpAction.title} (#${wpAction.referencedNodeID})`
-      )
-    )
-    reporter.log(``)
+    reportUpdate()
 
     if (verbose) {
       const nodeEntries = existingNode ? Object.entries(existingNode) : null

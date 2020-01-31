@@ -45,6 +45,7 @@ class ActionMonitor
                 'post_title'    => $args['title'],
                 'post_type'     => 'action_monitor',
                 'post_status'   => 'private',
+                'author'        => -1
             ]
       );
 
@@ -133,7 +134,76 @@ class ActionMonitor
         // we also need to hook into
         // add_action( 'user_register', [ $this, 'registerUser' ] );
 
-        // add_action( 'save_post', [ $this, 'checkIfUserIsPublic' ], 2 );
+        add_action( 'save_post', [ $this, 'updateUserIsPublic' ], 10, 2 );
+    }
+
+    function checkIfUserIsPublic() {
+      $current_user = wp_get_current_user() ?? null;
+      $user_id = $current_user->ID ?? null;
+
+      if (!$user_id) {
+        // @todo error or log here?
+        return;
+      }
+
+      $post_types = get_post_types( [ 'show_in_graphql' => true ] );
+
+      $user_is_public = false;
+      
+      foreach ($post_types as $post_type) {
+        // action monitor doesn't count
+        if ($post_type === 'action_monitor') {
+          continue;
+        }
+
+        $post_type_post_count = count_user_posts($user_id, $post_type, true);
+        if ($post_type_post_count > 0) {
+          // this user has public posts so they are public too
+          error_log(print_r($post_type, true)); 
+          error_log(print_r($post_type_post_count, true)); 
+          $user_is_public = true;
+          break;
+        }
+      }
+
+      return $user_is_public;
+    }
+
+    function updateUserIsPublic( $post_id, $post ) {
+      if (!$this->savePostGuardClauses($post)) {
+        return;
+      }
+
+      $current_user = wp_get_current_user() ?? null;
+      $user_id = $current_user->ID ?? null;
+
+      if (!$user_id) {
+        return;
+      }
+
+      $user_is_public = $this->checkIfUserIsPublic();
+      $user_was_public = \get_user_meta( $user_id, 'user_is_public', true);
+
+      if ($user_is_public === $user_was_public) {
+        // no change in privacy has happened. Do nothing
+        return;
+      }
+
+      $title = $user_is_public && isset($current_user->data->user_nicename) 
+          ? $current_user->data->user_nicename
+          : "User";
+
+      $relay_id = Relay::toGlobalId( 'user', $user_id );
+
+      $this->insertNewAction([
+        'action_type' => $user_is_public ? 'CREATE' : 'DELETE',
+        'title' => $title,
+        'status' => $user_is_public ? 'publish' : 'private',
+        'node_id' => $user_id,
+        'relay_id' => $relay_id,
+        'graphql_single_name' => 'user',
+        'graphql_plural_name' => 'users',
+      ]);
     }
 
     function getTermInfo( $term_id, $taxonomy, $deleted_term = null ) {
@@ -188,7 +258,7 @@ class ActionMonitor
       $this->insertNewAction([
         'action_type' => 'DELETE',
         'title' => $term_info['term']->name,
-        'status' => 'deleted',
+        'status' => 'private',
         'node_id' => $term_id,
         'relay_id' => $term_info['global_relay_id'],
         'graphql_single_name' => $term_info['graphql_single_name'],
@@ -312,26 +382,36 @@ class ActionMonitor
       ]);
     }
 
+    function savePostGuardClauses($post) {
+      if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+            return false;
+      }
+
+      if ($post->post_status === 'auto-draft') {
+          return false;
+      }
+
+      if ($post->post_type === 'revision') {
+          return false;
+      }
+
+      if ($post->post_type === 'action_monitor') {
+          return false;
+      }
+
+      return true;
+    }
+
     /**
      * On save post
      */
     function savePost($post_id, $post)
     {
-        if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
-            return $post_id;
+        if (!$this->savePostGuardClauses($post)) {
+          return;
         }
 
-        if ($post->post_status === 'auto-draft') {
-            return $post_id;
-        }
-
-        if ($post->post_type === 'revision') {
-            return $post_id;
-        }
-
-        if ($post->post_type === 'action_monitor') {
-            return $post_id;
-        }
+        error_log(print_r('save post', true)); 
 
         $post_type_object = \get_post_type_object($post->post_type);
 
