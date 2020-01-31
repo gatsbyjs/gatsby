@@ -25,14 +25,7 @@
   "config": {
     "optimize-autoloader": true
   },
-  "require": { },
-  "require-dev": {
-    "lucatume/wp-browser": "^2.2.",
-    "dealerdirect/phpcodesniffer-composer-installer": "^0.5.0",
-    "wp-coding-standards/wpcs": "^2.1",
-    "phpcompatibility/phpcompatibility-wp": "^2.0",
-    "squizlabs/php_codesniffer": "^3.5"
-  },
+  "require": {},
   "scripts": {
     "phpcs-i": [
       "php ./vendor/bin/phpcs -i"
