@@ -5,6 +5,7 @@ import chalk from "chalk"
 import { getQueryInfoBySingleFieldName } from "../../helpers"
 import { getGatsbyApi } from "~/utils/get-gatsby-api"
 import { CREATED_NODE_IDS } from "~/constants"
+// import { findConnectedNodeIds } from "~/steps/source-nodes/create-nodes/create-nodes"
 import {
   buildTypeName,
   getTypeSettingsByType,
@@ -93,6 +94,25 @@ export const createSingleNode = async ({
       type: buildTypeName(typeInfo.nodesTypeName),
     },
   }
+
+  /**
+   * @todo This commented code will be used to refetch connected nodes that might need to be connected back to this node but aren't currently
+   * see the note at the top find-connected-nodes.js for more info
+   */
+  // const connectedNodeIds = findConnectedNodeIds(updatedNodeContent) || []
+  // .filter(
+  //   async childNodeId => {
+  //     const childNode = await getNode(childNodeId)
+  //     return childNode
+  //   }
+  // )
+
+  // if (connectedNodeIds && connectedNodeIds.length) {
+  //   dump(childNodeIds)
+  // } else {
+  //   dump(remoteNode)
+  //   helpers.reporter.info(`no children for ${singleName}`)
+  // }
 
   const typeSettings = getTypeSettingsByType({
     name: typeInfo.nodesTypeName,
