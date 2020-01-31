@@ -8,7 +8,7 @@ export const actionMonitorQuery = gql`
   query GET_ACTION_MONITOR_ACTIONS($since: Float!, $after: String) {
     # @todo add pagination in case there are more than 100 actions since the last build
     actionMonitorActions(
-      where: { sinceTimestamp: $since, orderby: { field: DATE, order: ASC } }
+      where: { sinceTimestamp: $since, orderby: { field: DATE, order: DESC } }
       first: 100
       after: $after
     ) {
