@@ -1,7 +1,7 @@
 {
   "name": "gatsby-source-wordpress-experimental",
   "description": "Source data from WPGraphQL in an efficient and scalable way.",
-  "version": "0.0.0--alpha.1",
+  "version": "0.0.0--alpha.2",
   "author": "Tyler Barnes <tylerdbarnes@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
