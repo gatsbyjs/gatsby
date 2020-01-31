@@ -8,15 +8,15 @@ const introspectAndStoreRemoteSchema = async () => {
   const { pluginOptions, helpers } = state.gatsbyApi
   const { schemaWasChanged } = state.remoteSchema
 
-  if (pluginOptions.verbose && schemaWasChanged) {
+  const INTROSPECTION_CACHE_KEY = `${pluginOptions.url}--introspection-data`
+  let introspectionData = await helpers.cache.get(INTROSPECTION_CACHE_KEY)
+
+  if (pluginOptions.verbose && schemaWasChanged && introspectionData) {
     helpers.reporter.info(
       formatLogMessage(`the WPGraphQL schema has changed since the last build`)
     )
     helpers.reporter.info(formatLogMessage(`refetching all data`))
   }
-
-  const INTROSPECTION_CACHE_KEY = `${pluginOptions.url}--introspection-data`
-  let introspectionData = await helpers.cache.get(INTROSPECTION_CACHE_KEY)
 
   if (!introspectionData || schemaWasChanged) {
     const { data } = await fetchGraphql({
