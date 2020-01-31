@@ -6,7 +6,7 @@ import "@reach/skip-nav/styles.css"
 import typography from "../utils/typography"
 const { rhythm } = typography
 
-class DefaultLayout extends React.Component {
+class Layout extends React.Component {
   render() {
     return (
       <div
@@ -19,19 +19,31 @@ class DefaultLayout extends React.Component {
           paddingRight: rhythm(3 / 4),
         }}
       >
-        <SkipNavLink />
-        <h3 style={{ color: `tomato`, marginBottom: rhythm(1.5) }}>
-          Example of using{" "}
-          <a href="https://reacttraining.com/reach-ui/skip-nav/#reach-skip-nav">
-            @reach/skip-nav
-          </a>
-        </h3>
-        Press tab to see the skip link.
+        <header>
+          <SkipNavLink />
+          <h3 style={{ color: `tomato`, marginBottom: rhythm(1.5) }}>
+            Example of using{" "}
+            <a href="https://reacttraining.com/reach-ui/skip-nav/#reach-skip-nav">
+              @reach/skip-nav
+            </a>
+          </h3>
+          Press tab to see the skip link.
+        </header>
+        <nav className="nav">
+          <Link to="/">Page 1</Link> <Link to="page/2">Page 2</Link>
+          {` `}
+          <Link to="page/3">Page 3</Link> <Link to="page/4">Page 4</Link>
+        </nav>
         <SkipNavContent />
-        {this.props.children}
+        <main>{this.props.children}</main>
+        <footer>
+          © {new Date().getFullYear()}, Built with
+          {` `}
+          <a href="https://www.gatsbyjs.org">Gatsby</a>
+        </footer>
       </div>
     )
   }
 }
 
-export default DefaultLayout
+export default Layout
