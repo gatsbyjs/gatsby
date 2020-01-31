@@ -1,9 +1,9 @@
 import { buildTypeName } from "~/steps/create-schema-customization/helpers"
 
-export const transformUnion = ({ field }) => ({
+export const transformUnion = ({ field, fieldName }) => ({
   type: buildTypeName(field.type.name),
   resolve: (source, _, context) => {
-    const field = source[name]
+    const field = source[fieldName]
 
     if (!field || !field.id) {
       return null
