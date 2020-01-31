@@ -1057,15 +1057,6 @@
   categories:
     - Marketing
     - Technology
-- title: Yuuniworks Portfolio / Blog
-  main_url: "https://www.yuuniworks.com/"
-  url: "https://www.yuuniworks.com/"
-  source_url: "https://github.com/junkboy0315/yuuni-web"
-  featured: false
-  categories:
-    - Portfolio
-    - Web Development
-    - Blog
 - title: The Bastion Bot
   main_url: "https://bastionbot.org/"
   url: "https://bastionbot.org/"
