@@ -61,8 +61,11 @@ let totalJobs = 0
 
 const CACHE_DIR = `.cache`
 const FS_PLUGIN_DIR = `gatsby-source-filesystem`
-const RETRY_LIMIT = 3
+const STALL_RETRY_LIMIT = 3
 const STALL_TIMEOUT = 30000
+
+const CONNECTION_RETRY_LIMIT = 5
+const CONNECTION_TIMEOUT = 30000
 
 /********************
  * Queue Management *
@@ -137,13 +140,13 @@ const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
     const handleTimeout = async () => {
       fsWriteStream.close()
       fs.removeSync(tmpFilename)
-      if (attempt < RETRY_LIMIT) {
+      if (attempt < STALL_RETRY_LIMIT) {
         // Retry by calling ourself recursively
         resolve(
           requestRemoteNode(url, headers, tmpFilename, httpOpts, attempt + 1)
         )
       } else {
-        reject(`Failed to download ${url} after ${RETRY_LIMIT} attempts`)
+        reject(`Failed to download ${url} after ${STALL_RETRY_LIMIT} attempts`)
       }
     }
 
@@ -155,8 +158,8 @@ const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
     }
     const responseStream = got.stream(url, {
       headers,
-      timeout: 30000,
-      retries: 5,
+      timeout: CONNECTION_TIMEOUT,
+      retries: CONNECTION_RETRY_LIMIT,
       ...httpOpts,
     })
     const fsWriteStream = fs.createWriteStream(tmpFilename)
