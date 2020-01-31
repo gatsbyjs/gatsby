@@ -30,7 +30,7 @@ There are dozens of [static site generators available](https://www.staticgen.com
 
 ### Learn more
 
-- [StaticGen](https://www.staticgen.com/) a list of static site generators
+- [StaticGen](https://www.staticgen.com/), a list of static site generators
 - [JAMStack](/docs/glossary/jamstack.md) architecture from the Gatsby docs
 - [Sourcing Content and Data](/content-and-data/) for Gatsby
 - [Adding Markdown Pages](/docs/adding-markdown-pages/) from the Gatsby docs
