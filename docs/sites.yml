@@ -1057,15 +1057,6 @@
   categories:
     - Marketing
     - Technology
-- title: Yuuniworks Portfolio / Blog
-  main_url: "https://www.yuuniworks.com/"
-  url: "https://www.yuuniworks.com/"
-  source_url: "https://github.com/junkboy0315/yuuni-web"
-  featured: false
-  categories:
-    - Portfolio
-    - Web Development
-    - Blog
 - title: The Bastion Bot
   main_url: "https://bastionbot.org/"
   url: "https://bastionbot.org/"
@@ -1345,7 +1336,7 @@
   categories:
     - Portfolio
   built_by: Jonas Tebbe
-  built_by_url: "http://twitter.com/jonastebbe"
+  built_by_url: "https://twitter.com/jonastebbe"
   featured: false
 - title: Parker Sarsfield Portfolio
   description: |
@@ -1934,8 +1925,8 @@
     - Agency
     - Open Source
 - title: eworld
-  main_url: "http://eworld.herokuapp.com/"
-  url: "http://eworld.herokuapp.com/"
+  main_url: "https://eworld.herokuapp.com/"
+  url: "https://eworld.herokuapp.com/"
   featured: false
   categories:
     - eCommerce
@@ -3711,7 +3702,7 @@
     - Portfolio
     - Marketing
   built_by: Maciej Leszczyński
-  built_by_url: http://twitter.com/_maciej
+  built_by_url: https://twitter.com/_maciej
   featured: false
 - title: Frame.io Workflow Guide
   main_url: https://workflow.frame.io
@@ -9178,7 +9169,7 @@
   url: https://nimahkh.github.io/nima_habibkhoda
   source_url: https://github.com/nimahkh/resume_generator
   description: >
-    The resume generator is a project to create your own resume web page easyly with Gatsby.
+    The resume generator is a project to create your own resume web page easily with Gatsby.
   categories:
     - Portfolio
   built_by: Nima Habibkhoda
@@ -9521,6 +9512,18 @@
   built_by: mnishiguchi
   built_by_url: https://mnishiguchi.com
   featured: false
+- title: Hear This Idea
+  main_url: https://hearthisidea.com
+  url: https://hearthisidea.com/episodes/victoria
+  source_url: https://github.com/finmoorhouse/podcast
+  description: >
+    A podcast showcasing new thinking from top academics.
+  categories:
+    - Podcast
+    - Open Source
+  built_by: Fin Moorhouse
+  built_by_url: https://finmoorhouse.com
+  featured: false
 - title: Calisthenics Skills
   main_url: https://www.calisthenicsskills.com
   url: https://www.calisthenicsskills.com
@@ -9566,6 +9569,17 @@
   built_by: Sung M. Kim
   built_by_url: https://github.com/dance2die
   featured: false
+- title: Akash Rajpurohit
+  main_url: https://akashwho.codes/
+  url: https://akashwho.codes/
+  description: >
+    Personal portfolio website of Akash Rajpurohit made using Gatsby v2, where I  write short blogs related to software development and share my experiences.
+  categories:
+    - Portfolio
+    - Blog
+  built_by: Akash Rajpurohit
+  built_by_url: https://github.com/AkashRajpurohit
+  featured: false
 - title: See Kids Dream
   url: "https://seekidsdream.org/"
   main_url: "https://seekidsdream.org/"
@@ -9577,4 +9591,23 @@
     - Learning
   built_by: CapTech Consulting
   built_by_url: https://www.captechconsulting.com/
+  featured: false
+- title: Locale Central
+  url: https://localecentral.io/
+  main_url: https://localecentral.io/
+  description: >
+    Locale Central is a web & mobile data collection app that makes it easy to record accurate data out on the field.
+  categories:
+    - Technology
+  built_by: KiwiSprout
+  built_by_url: https://kiwisprout.nz/
+  featured: false
+- title: Cathy O'Shea
+  url: https://cathyoshea.co.nz/
+  main_url: https://cathyoshea.co.nz/
+  categories:
+    - Portfolio
+    - Real Estate
+  built_by: KiwiSprout
+  built_by_url: https://kiwisprout.nz/
   featured: false

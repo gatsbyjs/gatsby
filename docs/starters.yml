@@ -342,7 +342,7 @@
     - Localization (Multilanguage)
     - Dynamic content from Contentful CMS
     - Integrates i18n plugin starter and using-contentful repos
-- url: http://cranky-edison-12166d.netlify.com/
+- url: https://cranky-edison-12166d.netlify.com/
   repo: https://github.com/datocms/gatsby-portfolio
   description: n/a
   tags:
@@ -2148,7 +2148,7 @@
     - layout config either stacked or sidebar
     - theme dark/light mode
     - post support
-- url: http://gatsby-starter-default-intl.netlify.com
+- url: https://gatsby-starter-default-intl.netlify.com
   repo: https://github.com/wiziple/gatsby-starter-default-intl
   description: The default Gatsby starter with features of multi-language url routes and browser language detection.
   tags:
@@ -3611,7 +3611,7 @@
   features:
     - Simple Design
     - Made by Sumanth
-- url: http://the404blog.netlify.com
+- url: https://the404blog.netlify.com
   repo: https://github.com/algokun/the404blog
   description: An Awesome Starter Blog to help you get going with Gatsby and Markdown
   tags:
@@ -4535,7 +4535,7 @@
     - Left, Right and no sidebar templates
     - Font awesome icons
     - HTML5UP Design
-- url: http://tina-starter-grande.netlify.com/
+- url: https://tina-starter-grande.netlify.com/
   repo: https://github.com/tinacms/tina-starter-grande
   description: Feature rich Gatsby starter with full TinaCMS integration
   tags:
@@ -5100,3 +5100,39 @@
     - Minimal responsive design
     - Styled components
     - SEO Friendly Meta
+- url: https://gatsby-starter-catalyst-writer.netlify.com/
+  repo: https://github.com/ehowey/gatsby-starter-catalyst-writer
+  description: A full featured starter for a freelance writer or journalist to display a portfolio of their work. SANITY.io is used as the CMS. Based on Gatsby Theme Catalyst. Uses MDX and Theme-UI.
+  tags:
+    - Styling:CSS-in-JS
+    - CMS:sanity.io
+    - SEO
+    - PWA
+    - Portfolio
+  features:
+    - Based on Gatsby Theme Catalyst series of themes
+    - MDX
+    - Theme-UI integration for easy to change design tokens
+    - SEO optimized to include social media images and twitter handles
+    - Tight integration with SANITY.io including a predefined content studio.
+    - A full tutorial is available in the docs.
+- url: https://rocketdocs.netlify.com/
+  repo: https://github.com/Rocketseat/gatsby-starter-rocket-docs
+  description: Out of the box Gatsby Starter for creating documentation websites easily and quickly.
+  tags:
+    - SEO
+    - MDX
+    - Documentation
+    - Linting
+    - Markdown
+    - PWA
+    - Styling:CSS-in-JS
+  features:
+    - MDX for docs;
+    - Responsive and mobile friendly;
+    - Code highlighting with prism-react-renderer and react-live support;
+    - SEO (Sitemap, schema.org data, Open Graph and Twitter tags).
+    - Google Analytics integration;
+    - Custom docs schema;
+    - Offline Support & WebApp Manifest;
+    - Yaml-based sidebar navigation;

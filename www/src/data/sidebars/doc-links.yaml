@@ -665,6 +665,8 @@
           title: Node.js
         - link: /docs/glossary/react
           title: React
+        - link: /docs/glossary/static-site-generator
+          title: Static Site Generator
         - link: /docs/glossary/webpack
           title: webpack
     - link: /docs/telemetry/

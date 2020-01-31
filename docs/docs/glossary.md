@@ -304,6 +304,10 @@ Gatsby [builds](#build) static versions of your page that can be easily [hosted]
 
 It also refers to the `/static` folder which is automatically copied into `/public` on each [build](#build) for files that don't need to be processed by Gatsby but do need to exist in [public](#public).
 
+### [Static Site Generator](/docs/glossary/static-site-generator)
+
+A software application that creates HTML pages from templates or [components](#component) and a given content source.
+
 ## T
 
 ### Template
