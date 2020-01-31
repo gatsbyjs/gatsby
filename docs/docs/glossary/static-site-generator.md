@@ -26,11 +26,10 @@ Static site generators **reduce site complexity**. That, in turn, improves speed
 - You can use version control software to manage and track changes to your content.
 - Because your site is static, you can even forgo web servers and load balancers altogether. Instead, you can host your site with a content delivery network that scales with your site's traffic.
 
-There are dozens of [static site generators available](https://www.staticgen.com/), created with a range of programming languages. Gatsby is [JavaScript](/glossary#javascript) at its core, and is built with [React](/glossary/react), GraphQL, and [Node.js](/glossary/node/). See how Gatsby [compares to WordPress and Drupal](/features/cms/gatsby-vs-wordpress-vs-drupal) or to popular [static site generators](https://www.gatsbyjs.org/features/jamstack/).
+There are dozens of static site generators available, created with a range of programming languages. Gatsby is [JavaScript](/glossary#javascript) at its core, and is built with [React](/glossary/react), GraphQL, and [Node.js](/glossary/node/). See how Gatsby [compares to WordPress and Drupal](/features/cms/gatsby-vs-wordpress-vs-drupal) or to popular [static site generators](/features/jamstack/).
 
 ### Learn more
 
-- [StaticGen](https://www.staticgen.com/), a list of static site generators
 - [JAMStack](/docs/glossary/jamstack.md) architecture from the Gatsby docs
 - [Sourcing Content and Data](/content-and-data/) for Gatsby
 - [Adding Markdown Pages](/docs/adding-markdown-pages/) from the Gatsby docs
