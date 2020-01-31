@@ -1,6 +1,6 @@
 module.exports = {
   siteMetadata: {
-    title: `Client only paths`,
+    title: `Using @reach/skip-nav`,
   },
   plugins: [
     {

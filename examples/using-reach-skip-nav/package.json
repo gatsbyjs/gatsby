@@ -1,9 +1,9 @@
 {
-  "name": "gatsby-example-client-only-paths",
+  "name": "gatsby-example-using-reach-skip-nav",
   "private": true,
-  "description": "Gatsby example site demoing client only paths",
+  "description": "Gatsby example site demoing @reach/skip-nav",
   "version": "1.0.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "author": "Madalyn Parker <hello@madalyn.dev>",
   "dependencies": {
     "@reach/skip-nav": "^0.8.0",
     "gatsby": "^2.0.0",
@@ -19,7 +19,9 @@
     "typography-breakpoint-constants": "^0.15.10"
   },
   "keywords": [
-    "gatsby"
+    "gatsby",
+    "reach",
+    "skip-nav"
   ],
   "license": "MIT",
   "main": "n/a",
