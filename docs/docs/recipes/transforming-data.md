@@ -57,33 +57,59 @@ export const query = graphql`
 
 ## Transforming images into grayscale using GraphQL
 
-`gatsby-image` is a plugin designed to work seamlessly with Gatsby’s [native image processing](https://image-processing.gatsbyjs.org/) capabilities powered by GraphQL and [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/) to optimize image loading for your sites.
-
 ### Prerequisites
 
 - A Gatsby site with `gatsby-config.js` and an `index.js` page
-- The `gatsby-image`, `gatsby-transformer-sharp`, and `gatsby-plugin-sharp` packages installed and added to the plugins array in `gatsby-config`
+- The `gatsby-transformer-sharp` plugin installed
+- The `gatsby-plugin-sharp` plugin installed
+- A source plugin installed, such as `gatsby-source-filesystem`
 - An image (`.jpg`, `.png`, `.gif`, `.svg`, etc.) in the `src` folder
 
 ### Directions
 
-1. Set up a [GraphQL query](/docs/graphql-reference/) and either pass it into a component as props or write it directly in the component. One technique is to leverage the [useStaticQuery](/docs/use-static-query/)hook.
+1. Make sure that the config file has the correct information.
 
-Common GraphQL queries for sourcing images include `file` from [gatsby-source-filesystem](/packages/gatsby-source-filesystem/), and both `imageSharp` and `allImageSharp` from [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/), but ultimately the options available to you will depend on your content sources.
+```JavaScript:title=gatsby-config.js
 
-2. Use the grayscale query option in `gatsby-plugin-sharp` settings in `gatsby-config.js,`this applies to both _fluid_ and _fixed_ images:
-
-`grayscale` (bool, default: false)
-
-```JavaScript
-fixed(
- grayscale: true
-)
+ plugins: [
+   {
+     resolve: `gatsby-source-filesystem`,
+     options: {
+       name: `images`,
+       path: `${__dirname}/src/images`,
+     },
+   },
+   `gatsby-transformer-sharp`,
+   `gatsby-plugin-sharp`,
+ ],
 ```
 
-3. Run `gatsby develop` to start the development server.
+Note: Note the gatsby src system path
 
-4. View your image in the browser: `http://localhost:8000/`
+2.
+
+```query {
+     file(relativePath: { eq: "gatsby-astronaut.png" }) {
+       childImageSharp {
+         fluid(grayscale: true) {
+           ...GatsbyImageSharpFluid
+         }
+       }
+     }
+   }
+```
+
+Note: The relative path is the path that you config in gatsby src system.
+
+3. Next import image from "gatsby-image" line at the top
+
+ <Img fluid={data.file.childImageSharp.fluid}/>
+
+Note: `gatsby-image` is not a plugin. It gets installed but is just a component that you import. `transformer-sharp` and `plugin-sharp` have to be included as plugins.
+
+4. Run `gatsby develop` to start the development server.
+
+5. View your image in the browser: `http://localhost:8000/`
 
 ### Additional resources
 
