@@ -9592,3 +9592,22 @@
   built_by: CapTech Consulting
   built_by_url: https://www.captechconsulting.com/
   featured: false
+- title: Locale Central
+  url: https://localecentral.io/
+  main_url: https://localecentral.io/
+  description: >
+    Locale Central is a web & mobile data collection app that makes it easy to record accurate data out on the field.
+  categories:
+    - Technology
+  built_by: KiwiSprout
+  built_by_url: https://kiwisprout.nz/
+  featured: false
+- title: Cathy O'Shea
+  url: https://cathyoshea.co.nz/
+  main_url: https://cathyoshea.co.nz/
+  categories:
+    - Portfolio
+    - Real Estate
+  built_by: KiwiSprout
+  built_by_url: https://kiwisprout.nz/
+  featured: false
