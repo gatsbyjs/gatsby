@@ -8,12 +8,10 @@ import store from "~/store"
  */
 const paginatedWpNodeFetch = async ({
   contentTypePlural,
-  url,
   query,
   nodeTypeName,
   activity,
-  helpers,
-  settings,
+  settings = {},
   allContentNodes = [],
   ...variables
 }) => {
@@ -41,10 +39,6 @@ const paginatedWpNodeFetch = async ({
     return allContentNodes
   }
 
-  if (allContentNodes.length > 1000) {
-    return allContentNodes
-  }
-
   const {
     [contentTypePlural]: { nodes, pageInfo: { hasNextPage, endCursor } = {} },
   } = data
@@ -57,7 +51,9 @@ const paginatedWpNodeFetch = async ({
       allContentNodes.push(node)
     })
 
-    activity.setStatus(`fetched ${allContentNodes.length}`)
+    if (activity) {
+      activity.setStatus(`fetched ${allContentNodes.length}`)
+    }
 
     store.dispatch.logger.incrementBy(nodes.length)
   }
@@ -65,13 +61,11 @@ const paginatedWpNodeFetch = async ({
   if (hasNextPage) {
     await paginatedWpNodeFetch({
       after: endCursor,
-      url,
       contentTypePlural,
       nodeTypeName,
       query,
       allContentNodes,
       activity,
-      helpers,
       settings,
       ...variables,
     })

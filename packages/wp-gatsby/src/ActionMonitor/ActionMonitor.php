@@ -28,45 +28,62 @@ class ActionMonitor
 
     // $args = $action_type, $title, $status, $node_id, $relay_id, $graphql_single_name, $graphql_plural_name
     function insertNewAction($args) {
-      $action_monitor_post = \wp_insert_post(
+      if (
+        !$args['action_type'] ||
+        !$args['title'] ||
+        !$args['node_id'] ||
+        !$args['relay_id'] ||
+        !$args['graphql_single_name'] ||
+        !$args['graphql_plural_name']
+        ) {
+        // @todo log that this action isn't working??
+        return;
+      }
+
+      $action_monitor_post_id = \wp_insert_post(
             [
-                'post_title'    => "[{$args['action_type']}] - {$args['title']}",
+                'post_title'    => $args['title'],
                 'post_type'     => 'action_monitor',
-                'post_status'   => 'publish',
+                'post_status'   => 'private',
             ]
       );
 
-      if ($action_monitor_post !== 0) {
+      if ($action_monitor_post_id !== 0) {
           \update_post_meta(
-              $action_monitor_post,
+              $action_monitor_post_id,
               'action_type',
               $args['action_type']
           );
           \update_post_meta(
-              $action_monitor_post,
+              $action_monitor_post_id,
               'referenced_node_status',
               $args['status'], // menus don't have post status. This is for Gatsby
           );
           \update_post_meta(
-              $action_monitor_post,
+              $action_monitor_post_id,
               'referenced_node_id',
               $args['node_id']
           );
           \update_post_meta(
-              $action_monitor_post,
+              $action_monitor_post_id,
               'referenced_node_relay_id',
               $args['relay_id']
           );
           \update_post_meta(
-              $action_monitor_post,
+              $action_monitor_post_id,
               'referenced_node_single_name',
               $args['graphql_single_name']
           );
           \update_post_meta(
-              $action_monitor_post,
+              $action_monitor_post_id,
               'referenced_node_plural_name',
               $args['graphql_plural_name']
           );
+
+          \wp_update_post( [
+            'ID' => $action_monitor_post_id,
+            'post_status' => 'publish'
+          ] );
       }
     }
 
@@ -96,9 +113,6 @@ class ActionMonitor
 
         add_action( 'delete_attachment', [ $this, 'deleteMediaItem' ], 10, 1);
 
-        // User actions
-        // add_action( 'user_register', [ $this, 'registerUser' ] );
-
         // Taxonomy / term actions
         add_action( 'created_term', function( $term_id, $tt_id, $taxonomy ) {
           $this->saveTerm( $term_id, $taxonomy, 'CREATE' );
@@ -108,18 +122,25 @@ class ActionMonitor
           $this->saveTerm( $term_id, $taxonomy, 'UPDATE' );
         }, 10, 2 );
 
-        add_action( 'pre_delete_term', [ $this, 'deleteTerm' ], 10, 2 );
+        add_action( 'delete_term', [ $this, 'deleteTerm' ], 10, 5 );
+
+        // User actions
+
+        // this action isn't useful because Users are private when they initially register.
+        // We should probably hook into post save and count the users posts to see 
+        // if saving that post made them public. 
+        // Users are private until they have 1 public post.
+        // we also need to hook into
+        // add_action( 'user_register', [ $this, 'registerUser' ] );
+
+        // add_action( 'save_post', [ $this, 'checkIfUserIsPublic' ], 2 );
     }
 
-    function getTermInfo( $term_id, $taxonomy ) {
-      error_log(print_r($taxonomy, true)); 
-      error_log(print_r($term_id, true)); 
+    function getTermInfo( $term_id, $taxonomy, $deleted_term = null ) {
       $global_relay_id = Relay::toGlobalId(
           $taxonomy,
           $term_id
       );
-
-      error_log(print_r($global_relay_id, true)); 
 
       $taxonomy_object = get_taxonomy( $taxonomy );
 
@@ -134,7 +155,11 @@ class ActionMonitor
         return null;
       }
 
-      $term = get_term( $term_id, $taxonomy );
+      if ($deleted_term) {
+        $term = $deleted_term;
+      } else {
+        $term = get_term( $term_id, $taxonomy );
+      }
 
       if (!$term) {
         return null;
@@ -151,8 +176,14 @@ class ActionMonitor
       return $term_info;
     }
 
-    function deleteTerm( $term_id, $taxonomy ) {
-      $term_info = $this->getTermInfo( $term_id, $taxonomy );
+    function deleteTerm( 
+      $term_id,
+      $taxonomy_id,
+      $taxonomy,
+      $deleted_term,
+      $object_ids
+    ) {
+      $term_info = $this->getTermInfo( $term_id, $taxonomy, $deleted_term );
 
       $this->insertNewAction([
         'action_type' => 'DELETE',
@@ -170,7 +201,7 @@ class ActionMonitor
 
       $this->insertNewAction([
         'action_type' => $action_type,
-        'title' => $term_info['term']->name,
+        'title' => $term_info['term']->name ?? null,
         'status' => 'publish', // publish means go in Gatsby @todo rename this..
         'node_id' => $term_id,
         'relay_id' => $term_info['global_relay_id'],

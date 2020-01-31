@@ -19,6 +19,8 @@ const sourceNodes = async helpers => {
   // or our initial build to fetch and cache everything didn't complete,
   // pull everything from WPGQL
   if (fetchEverything) {
+    await cache.set(LAST_COMPLETED_SOURCE_TIME, Date.now())
+
     await fetchAndCreateAllNodes()
   }
 
@@ -29,8 +31,6 @@ const sourceNodes = async helpers => {
       since: lastCompletedSourceTime,
     })
   }
-
-  await cache.set(LAST_COMPLETED_SOURCE_TIME, Date.now())
 
   // fetch non-node root fields such as settings.
   // For now, we're refetching them on every build

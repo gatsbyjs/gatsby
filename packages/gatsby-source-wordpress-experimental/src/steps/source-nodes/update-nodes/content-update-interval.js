@@ -7,7 +7,7 @@ const refetcher = async api => {
   const { cache, helpers, pluginOptions, msRefetchInterval } = api
   const lastCompletedSourceTime = await cache.get(LAST_COMPLETED_SOURCE_TIME)
 
-  const { didUpdate } = await fetchAndApplyNodeUpdates(
+  await fetchAndApplyNodeUpdates(
     {
       since: lastCompletedSourceTime,
       intervalRefetching: true,
@@ -15,10 +15,6 @@ const refetcher = async api => {
     helpers,
     pluginOptions
   )
-
-  if (didUpdate) {
-    await cache.set(LAST_COMPLETED_SOURCE_TIME, Date.now())
-  }
 
   setTimeout(() => refetcher(api), msRefetchInterval)
 }

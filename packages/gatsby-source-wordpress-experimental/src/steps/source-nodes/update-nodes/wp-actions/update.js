@@ -133,8 +133,7 @@ export const createSingleNode = async ({
 const wpActionUPDATE = async ({
   helpers,
   wpAction,
-  intervalRefetching,
-  // cachedNodeIds,
+  // intervalRefetching,
 }) => {
   const { reporter, cache } = helpers
 
@@ -169,13 +168,15 @@ const wpActionUPDATE = async ({
     cachedNodeIds,
   })
 
-  if (intervalRefetching && node) {
+  if (node) {
     reporter.log(``)
     reporter.info(
       formatLogMessage(
-        `${chalk.bold(`updated ${wpAction.referencedNodeSingularName}`)} #${
-          wpAction.referencedNodeID
-        }`
+        `${chalk.bold(
+          `${wpAction.actionType.toLowerCase()} ${
+            wpAction.referencedNodeSingularName
+          }`
+        )} ${wpAction.title} (#${wpAction.referencedNodeID})`
       )
     )
     reporter.log(``)

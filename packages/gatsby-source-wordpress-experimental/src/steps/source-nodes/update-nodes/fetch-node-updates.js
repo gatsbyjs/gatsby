@@ -14,7 +14,6 @@ const fetchAndApplyNodeUpdates = async ({ since, intervalRefetching }) => {
   const { helpers, pluginOptions } = getGatsbyApi()
 
   const { cache, reporter } = helpers
-  // let cachedNodeIds = await cache.get(CREATED_NODE_IDS)
 
   let activity
 
@@ -26,14 +25,9 @@ const fetchAndApplyNodeUpdates = async ({ since, intervalRefetching }) => {
   }
 
   // Check with WPGQL to create, delete, or update cached WP nodes
-  const {
-    // validNodeIds,
-    wpActions,
-    didUpdate,
-  } = await fetchAndRunWpActions({
+  const { wpActions, didUpdate } = await fetchAndRunWpActions({
     since,
     intervalRefetching,
-    // cachedNodeIds,
     helpers,
     pluginOptions,
   })
@@ -50,8 +44,6 @@ const fetchAndApplyNodeUpdates = async ({ since, intervalRefetching }) => {
   ) {
     let validNodeIds = await cache.get(CREATED_NODE_IDS)
     validNodeIds.forEach(nodeId => actions.touchNode({ nodeId }))
-    // update cachedNodeIds
-    // await cache.set(CREATED_NODE_IDS, validNodeIds)
   }
 
   if (!intervalRefetching) {

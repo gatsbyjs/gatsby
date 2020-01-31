@@ -5,15 +5,26 @@ import gql from "./gql"
  * so we can do incremental data fetches
  */
 export const actionMonitorQuery = gql`
-  query GET_ACTION_MONITOR_ACTIONS($since: Float!) {
-    actionMonitorActions(where: { sinceTimestamp: $since }) {
+  query GET_ACTION_MONITOR_ACTIONS($since: Float!, $after: String) {
+    # @todo add pagination in case there are more than 100 actions since the last build
+    actionMonitorActions(
+      where: { sinceTimestamp: $since, orderby: { field: DATE, order: ASC } }
+      first: 100
+      after: $after
+    ) {
       nodes {
+        id
+        title
+        actionType
         referencedNodeID
         referencedNodeStatus
         referencedNodeGlobalRelayID
         referencedNodeSingularName
         referencedNodePluralName
-        actionType
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
       }
     }
   }
