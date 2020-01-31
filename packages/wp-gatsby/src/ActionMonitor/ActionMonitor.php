@@ -548,9 +548,18 @@ class ActionMonitor
             $action_type = $update ? 'UPDATE' : 'CREATE';
         }
 
+
         // update the author node so that this node is recorded as a child 
         // @todo move this logic Gatsby-side so that it works for all 2-way relationships
-        $this->updateUser( $post->post_author );
+        $previous_author = $this->post_object_before_update->post_author;
+        $new_author = $post->post_author;
+
+        if ( $previous_author !== $new_author ) {
+          // if we change the author we need to re-save the old author too
+          $this->updateUser( $previous_author );
+        }
+
+        $this->updateUser( $new_author );
 
         $previous_post_parent = $this->post_object_before_update->post_parent;
         $potentially_new_post_parent = $post->post_parent;
