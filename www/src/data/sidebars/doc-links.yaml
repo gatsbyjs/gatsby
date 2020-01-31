@@ -734,6 +734,8 @@
           link: /docs/glossary/node
         - title: React
           link: /docs/glossary/react
+        - title: Static Site Generator
+          link: /docs/glossary/static-site-generator
         - title: webpack
           link: /docs/glossary/webpack
     - title: Gatsby Telemetry
