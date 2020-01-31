@@ -95,6 +95,7 @@ class ActionMonitor
     {
         // Post / Page actions
         add_action('save_post', [$this, 'savePost'], 10, 2);
+        add_action('pre_post_update', [$this, 'preSavePost'], 10, 2);
 
         // Menu actions
         add_action( 'wp_update_nav_menu', function( $menu_id ) { 
@@ -126,21 +127,70 @@ class ActionMonitor
         add_action( 'delete_term', [ $this, 'deleteTerm' ], 10, 5 );
 
         // User actions
-
-        // this action isn't useful because Users are private when they initially register.
-        // We should probably hook into post save and count the users posts to see 
-        // if saving that post made them public. 
-        // Users are private until they have 1 public post.
-        // we also need to hook into
-        // add_action( 'user_register', [ $this, 'registerUser' ] );
-
         add_action( 'save_post', [ $this, 'updateUserIsPublic' ], 10, 2 );
+
+        add_action( 'profile_update', [ $this, 'updateUser' ], 10 );
+
+        add_action( 'delete_user', [ $this, 'deleteUser' ], 10, 2 );
     }
 
-    function checkIfUserIsPublic() {
-      $current_user = wp_get_current_user() ?? null;
-      $user_id = $current_user->ID ?? null;
+    function deleteUser( $user_id, $reassigned_user_id ) {
+      $this->updateUser( $user_id, 'DELETE', 'private ');
 
+      if ($reassigned_user_id) {
+        // get all their posts that are 
+        // available in wpgraphql and update each of them
+        $post_types = get_post_types( [ 'show_in_graphql' => true ] );
+
+        foreach ( $post_types as $post_type ) {
+          $query = new \WP_Query( [
+            'post_type' => $post_type,
+            'author' => $user_id,
+            'posts_per_page' => -1 // @todo this is a big no-no. Could break a large site. In Gatsby we should store potential 2 way connections and if there is a 2 way connection and a post is updated, check its child nodes for 2 way connections. For any 2 way connections check if this node is a child of that node. If it's not then refetch that node as well.
+          ] );
+
+          if ($query->have_posts()) {
+            while ($query->have_posts()) {
+              $query->the_post();
+              $post = get_post();
+              $this->savePost($post->ID, $post);
+            }
+
+            wp_reset_postdata();
+          }
+        }
+
+        $this->updateUser( $reassigned_user_id, 'UPDATE', 'publish' );
+      }
+    }
+
+    function updateUser( $user_id, $action_type = 'UPDATE', $status = 'publish' ) {
+      $user_data = \get_userdata( $user_id );
+
+      $user_was_public = \get_user_meta( $user_id, 'gatsby_user_is_public', true);
+
+      if (!$user_was_public) {
+        $user_is_public = $this->checkIfUserIsPublic( $user_id );
+
+        if (!$user_is_public) {
+          return;
+        }
+      }
+
+      $relay_id = $relay_id = Relay::toGlobalId( 'user', $user_id );
+
+      $this->insertNewAction([
+        'action_type' => $action_type,
+        'title' => $user_data->data->user_nicename,
+        'status' => $status,
+        'node_id' => $user_id,
+        'relay_id' => $relay_id,
+        'graphql_single_name' => 'user',
+        'graphql_plural_name' => 'users',
+      ]);
+    }
+
+    function checkIfUserIsPublic( $user_id ) {
       if (!$user_id) {
         // @todo error or log here?
         return;
@@ -159,8 +209,6 @@ class ActionMonitor
         $post_type_post_count = count_user_posts($user_id, $post_type, true);
         if ($post_type_post_count > 0) {
           // this user has public posts so they are public too
-          error_log(print_r($post_type, true)); 
-          error_log(print_r($post_type_post_count, true)); 
           $user_is_public = true;
           break;
         }
@@ -181,13 +229,22 @@ class ActionMonitor
         return;
       }
 
-      $user_is_public = $this->checkIfUserIsPublic();
-      $user_was_public = \get_user_meta( $user_id, 'user_is_public', true);
+      $user_is_public = $this->checkIfUserIsPublic( $user_id );
+      $user_was_public = \get_user_meta( $user_id, 'gatsby_user_is_public', true);
 
-      if ($user_is_public === $user_was_public) {
+      if (
+        ($user_is_public && $user_was_public) || 
+        (!$user_is_public && !$user_was_public) ||
+        $user_is_public === $user_was_public
+      ) {
         // no change in privacy has happened. Do nothing
         return;
       }
+
+      // else a change in privacy has happened. 
+      // we need to record that in WP and Gatsby
+
+      \update_user_meta( $user_id, 'gatsby_user_is_public', $user_is_public );
 
       $title = $user_is_public && isset($current_user->data->user_nicename) 
           ? $current_user->data->user_nicename
@@ -402,16 +459,31 @@ class ActionMonitor
       return true;
     }
 
+    public $post_object_before_update;
+
+    function preSavePost( $post_id, $updated_post_object ) {
+      $post = get_post($post_id);
+
+      if (!$this->savePostGuardClauses($post)) {
+        return;
+      }
+
+      $this->post_object_before_update = $post;
+    }
+
     /**
      * On save post
      */
-    function savePost($post_id, $post)
+    function savePost($post_id, $post = null, $update_post_parent = true)
     {
+        if ( !$post) {
+          error_log(print_r('no post lets get it', true)); 
+          $post = get_post( $post_id );
+        }
+
         if (!$this->savePostGuardClauses($post)) {
           return;
         }
-
-        error_log(print_r('save post', true)); 
 
         $post_type_object = \get_post_type_object($post->post_type);
 
@@ -475,6 +547,33 @@ class ActionMonitor
 
             $action_type = $update ? 'UPDATE' : 'CREATE';
         }
+
+        // update the author node so that this node is recorded as a child 
+        // @todo move this logic Gatsby-side so that it works for all 2-way relationships
+        $this->updateUser( $post->post_author );
+
+        $previous_post_parent = $this->post_object_before_update->post_parent;
+        $potentially_new_post_parent = $post->post_parent;
+
+        // @todo also move this logic Gatsby-side so it works 
+        // for all 2-way relationships
+        if (
+          $previous_post_parent !== $potentially_new_post_parent &&
+          $update_post_parent
+        ) {
+          if ( $potentially_new_post_parent !== 0 ) {
+            // if we just saved a new post parent, we need to update the parent
+            // so we have this page as a child.
+            $this->savePost( $potentially_new_post_parent, null, false );
+          }
+
+          // if we previously had this page as a child of another page,
+          // we need to update that page so this page isn't a child of it anymore..
+          if ( $previous_post_parent !== 0 ) {
+            $this->savePost( $previous_post_parent, null, false );
+          }
+        }
+
 
         $this->insertNewAction([
           'action_type' => $action_type,
