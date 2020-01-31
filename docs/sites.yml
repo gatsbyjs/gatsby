@@ -9569,6 +9569,17 @@
   built_by: Sung M. Kim
   built_by_url: https://github.com/dance2die
   featured: false
+- title: Akash Rajpurohit
+  main_url: https://akashwho.codes/
+  url: https://akashwho.codes/
+  description: >
+    Personal portfolio website of Akash Rajpurohit made using Gatsby v2, where I  write short blogs related to software development and share my experiences.
+  categories:
+    - Portfolio
+    - Blog
+  built_by: Akash Rajpurohit
+  built_by_url: https://github.com/AkashRajpurohit
+  featured: false
 - title: See Kids Dream
   url: "https://seekidsdream.org/"
   main_url: "https://seekidsdream.org/"
