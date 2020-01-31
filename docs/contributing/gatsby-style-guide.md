@@ -135,6 +135,10 @@ Hyperlinks should contain the clearest words to indicate where the link will lea
 
 In tutorials that are meant for beginners, use as few hyperlinks as possible to minimize distractions. In docs, it's ok to include as many hyperlinks as necessary to provide relevant and interesting information and resources.
 
+### Mark localhost URLs as code strings
+
+Unless you're running `gatsby develop` or `gatsby build` locally, localhost links will not work. Therefore it's recommended to list these URL references as code blocks so there aren't invalid links throughout the docs on Gatsbyjs.org.
+
 ### Indicate when something is optional
 
 When a paragraph or sentence offers an optional path, the beginning of the first sentence should indicate that it's optional. For example, "if you'd like to learn more about xyz, see our reference guide" is clearer than "Go to the reference guide if you'd like to learn more about xyz."

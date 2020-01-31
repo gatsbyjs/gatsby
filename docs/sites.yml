@@ -1057,15 +1057,6 @@
   categories:
     - Marketing
     - Technology
-- title: Yuuniworks Portfolio / Blog
-  main_url: "https://www.yuuniworks.com/"
-  url: "https://www.yuuniworks.com/"
-  source_url: "https://github.com/junkboy0315/yuuni-web"
-  featured: false
-  categories:
-    - Portfolio
-    - Web Development
-    - Blog
 - title: The Bastion Bot
   main_url: "https://bastionbot.org/"
   url: "https://bastionbot.org/"
@@ -3020,8 +3011,8 @@
   built_by_url: https://www.michaeluloth.com
   featured: false
 - title: Peter Barrett
-  url: "https://peterbarrett.netlify.com"
-  main_url: "https://peterbarrett.netlify.com"
+  url: "https://www.peterbarrett.ca"
+  main_url: "https://www.peterbarrett.ca"
   description: >
     Peter Barrett is a Canadian baritone from Newfoundland and Labrador who performs opera and concert repertoire in Canada, the U.S. and around the world. Site designed by Stephen Bell.
   categories:
@@ -3185,17 +3176,6 @@
     - Web Development
     - Education
     - Open Source
-  built_by: Michael Uloth
-  built_by_url: "https://www.michaeluloth.com"
-- title: Up & Running Tutorials
-  main_url: https://www.upandrunningtutorials.com
-  url: https://www.upandrunningtutorials.com
-  featured: false
-  description: >
-    Free coding tutorials for web developers. Get your web development career up and running by learning to build better, faster websites.
-  categories:
-    - Web Development
-    - Education
   built_by: Michael Uloth
   built_by_url: "https://www.michaeluloth.com"
 - title: Grooovinger
@@ -3544,8 +3524,8 @@
   built_by_url: "https://www.michaeluloth.com"
   featured: false
 - title: The AZOOR Society
-  main_url: "https://theazoorsociety.netlify.com"
-  url: "https://theazoorsociety.netlify.com"
+  main_url: "https://www.azoorsociety.org"
+  url: "https://www.azoorsociety.org"
   description: The AZOOR Society is a UK-based charity committed to promoting awareness of Acute Zonal Occult Outer Retinopathy and assisting further research. Site designed by Stephen Bell.
   categories:
     - Community
@@ -6139,7 +6119,7 @@
 - title: APIs You Won't Hate
   url: https://apisyouwonthate.com/blog
   main_url: https://apisyouwonthate.com
-  source_url: http://github.com/apisyouwonthate/apisyouwonthate.com
+  source_url: https://github.com/apisyouwonthate/apisyouwonthate.com
   description: >
     API development is a topic very close to our hearts. APIs You Won't Hate is a team and community dedicated to learning, writing, sharing ideas and bettering understanding of API practices. Together we can erradicate APIs we hate.
   categories:
@@ -6833,7 +6813,7 @@
   categories:
     - eCommerce
   built_by: Kyle Kitlinski
-  built_by_url: http://github.com/k-kit
+  built_by_url: https://github.com/k-kit
   featured: false
 - title: Mill3 Studio
   main_url: https://mill3.studio/en/
@@ -9189,7 +9169,7 @@
   url: https://nimahkh.github.io/nima_habibkhoda
   source_url: https://github.com/nimahkh/resume_generator
   description: >
-    The resume generator is a project to create your own resume web page easyly with Gatsby.
+    The resume generator is a project to create your own resume web page easily with Gatsby.
   categories:
     - Portfolio
   built_by: Nima Habibkhoda
@@ -9319,7 +9299,7 @@
   url: https://www.erichowey.dev/
   source_url: https://github.com/ehowey/erichoweydev
   description: >
-    Personal website and blog for Eric Howey. I am a freelance web developer based in Alberta, Canada specializing in Gatsby, React, Wordpress and Theme-UI.
+    Personal website and blog for Eric Howey. I am a freelance web developer based in Alberta, Canada specializing in Gatsby, React, WordPress and Theme-UI.
   categories:
     - Portfolio
     - Web Development
@@ -9461,7 +9441,7 @@
   url: https://adamcbowen.com/
   source_url: https://github.com/bowenac/my-website
   description: >
-    Personal website for Adam Bowen. I am a freelance web developer based in Tacoma, WA specializing in Wordpress, Craft CMS, plus a lot more and recently fell in love with Gatsby.
+    Personal website for Adam Bowen. I am a freelance web developer based in Tacoma, WA specializing in WordPress, Craft CMS, plus a lot more and recently fell in love with Gatsby.
   categories:
     - Portfolio
     - Web Development
@@ -9532,16 +9512,50 @@
   built_by: mnishiguchi
   built_by_url: https://mnishiguchi.com
   featured: false
+- title: Hear This Idea
+  main_url: https://hearthisidea.com
+  url: https://hearthisidea.com/episodes/victoria
+  source_url: https://github.com/finmoorhouse/podcast
+  description: >
+    A podcast showcasing new thinking from top academics.
+  categories:
+    - Podcast
+    - Open Source
+  built_by: Fin Moorhouse
+  built_by_url: https://finmoorhouse.com
+  featured: false
 - title: Calisthenics Skills
   main_url: https://www.calisthenicsskills.com
   url: https://www.calisthenicsskills.com
   description: >
     A beautiful fitness progress tracker built on Gatsby.
   categories:
-    - Fitness
-    - App
+    - Sports
   built_by: Andrico Karoulla
   built_by_url: https://andri.co
+  featured: false
+- title: AutoloadIT
+  main_url: https://autoloadit.com/
+  url: https://autoloadit.com/
+  description: >
+    The world's leading Enterprise Automotive imaging solution
+  categories:
+    - Business
+    - Landing Page
+  built_by: Pagepro
+  built_by_url: https://pagepro.co
+  featured: false
+- title: Tools of Golf
+  main_url: https://toolsof.golf
+  url: https://toolsof.golf/titleist-915-d2-driver
+  description: >
+    Tools of Golf is a community dedicated to golf nerds and gear heads.
+  categories:
+    - Sports
+    - Data
+    - Documentation
+  built_by: Peter Hironaka
+  built_by_url: https://peterhironaka.com
   featured: false
 - title: sung.codes
   main_url: https://sung.codes/
@@ -9565,4 +9579,16 @@
     - Blog
   built_by: Akash Rajpurohit
   built_by_url: https://github.com/AkashRajpurohit
+  featured: false
+- title: See Kids Dream
+  url: "https://seekidsdream.org/"
+  main_url: "https://seekidsdream.org/"
+  description: >
+    A not-for-profit organization dedicated to empower youth with the skills, motivation and confidence.
+  categories:
+    - Nonprofit
+    - Education
+    - Learning
+  built_by: CapTech Consulting
+  built_by_url: https://www.captechconsulting.com/
   featured: false

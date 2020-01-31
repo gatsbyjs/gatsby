@@ -3346,7 +3346,7 @@
     - Web App Manifest
     - SEO
 - url: https://contentful-starter.netlify.com/
-  repo: https://github.com/mohanmonu777/gatsby_contentful_starter
+  repo: https://github.com/algokun/gatsby_contentful_starter
   description: An Awesome Starter Kit to help you get going with Contentful and Gatsby
   tags:
     - Blog
@@ -3436,7 +3436,7 @@
     - Offline support
     - Web App Manifest
 - url: https://gatsby-starter-krisp.netlify.com/
-  repo: https://github.com/mohanmonu777/gatsby-starter-krisp
+  repo: https://github.com/algokun/gatsby-starter-krisp
   description: A minimal, clean and responsive starter built with gatsby
   tags:
     - Styling:Bootstrap
@@ -3612,7 +3612,7 @@
     - Simple Design
     - Made by Sumanth
 - url: http://the404blog.netlify.com
-  repo: https://github.com/mohanmonu777/the404blog
+  repo: https://github.com/algokun/the404blog
   description: An Awesome Starter Blog to help you get going with Gatsby and Markdown
   tags:
     - Blog
@@ -3628,7 +3628,7 @@
     - Syntax Highlight in Code.
     - Styling in Bootstrap
 - url: https://gatsby-starter-unicorn.netlify.com/
-  repo: https://github.com/mohanmonu777/gatsby_starter_unicorn
+  repo: https://github.com/algokun/gatsby_starter_unicorn
   description: An Awesome Starter Blog to help you get going with Gatsby and Markdown
   tags:
     - Blog
@@ -3690,7 +3690,7 @@
     - Pages and components are classes.
     - A skeleton SCSS project added with prefixing
 - url: https://portfolio-by-mohan.netlify.com/
-  repo: https://github.com/mohanmonu777/gatsby_starter_portfolio
+  repo: https://github.com/algokun/gatsby_starter_portfolio
   description: An Official Starter for Gatsby Tech Blog Theme
   tags:
     - SEO
