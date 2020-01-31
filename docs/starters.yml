@@ -5100,3 +5100,23 @@
     - Minimal responsive design
     - Styled components
     - SEO Friendly Meta
+- url: https://rocketdocs.netlify.com/
+  repo: https://github.com/Rocketseat/gatsby-starter-rocket-docs
+  description: Out of the box Gatsby Starter for creating documentation websites easily and quickly.
+  tags:
+    - SEO
+    - MDX
+    - Documentation
+    - Linting
+    - Markdown
+    - PWA
+    - Styling:CSS-in-JS
+  features:
+    - MDX for docs;
+    - Responsive and mobile friendly;
+    - Code highlighting with prism-react-renderer and react-live support;
+    - SEO (Sitemap, schema.org data, Open Graph and Twitter tags).
+    - Google Analytics integration;
+    - Custom docs schema;
+    - Offline Support & WebApp Manifest;
+    - Yaml-based sidebar navigation;
