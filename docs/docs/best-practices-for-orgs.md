@@ -1,5 +1,6 @@
 ---
 title: Best Practices for Organizations
+navTitle: Best Practices for Orgs
 issue: https://github.com/gatsbyjs/gatsby/issues/14042
 ---
 

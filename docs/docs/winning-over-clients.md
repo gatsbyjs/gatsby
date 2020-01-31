@@ -1,5 +1,6 @@
 ---
 title: Winning Over Clients
+navTitle: Clients
 issue: https://github.com/gatsbyjs/gatsby/issues/14040
 ---
 

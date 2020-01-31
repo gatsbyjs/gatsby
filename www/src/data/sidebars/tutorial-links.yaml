@@ -114,7 +114,6 @@
       items:
         - link: /tutorial/using-a-theme/
         - link: /tutorial/using-multiple-themes-together/
-          stub: true
         - link: /tutorial/building-a-theme/
     - link: /tutorial/additional-tutorials/
       items:

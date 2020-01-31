@@ -83,7 +83,7 @@ function StubListRoute({ location }) {
                   <ul>
                     {groupedStubs[category].map(stub => (
                       <li key={stub.title}>
-                        <Link to={stub.link}>{stub.title.slice(0, -1)}</Link>
+                        <Link to={stub.link}>{stub.title}</Link>
                       </li>
                     ))}
                   </ul>

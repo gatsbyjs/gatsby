@@ -21,6 +21,7 @@ function usePages() {
             title
             navTitle
             breadcrumbTitle
+            issue
           }
         }
       }
@@ -60,16 +61,20 @@ const extendItem = (items, parentTitle, pages, level = 1) => {
       level,
     }
 
-    if (pages[item.link] && item.title && !item.breadcrumbTitle) {
-      if (pages[item.link].frontmatter.title === item.title) {
-        console.log(item.title)
-      }
-    }
+    // TODO consolidate with extendItemList
+    if (pages[item.link]) {
+      const { title, navTitle, breadcrumbTitle, issue } = pages[
+        item.link
+      ].frontmatter
 
-    if (!item.title) {
-      const { title, navTitle, breadcrumbTitle } = pages[item.link].frontmatter
-      item.title = navTitle || title
-      item.breadcrumbTitle = breadcrumbTitle || navTitle || title
+      if (issue) {
+        item.stub = true
+      }
+
+      if (!item.title) {
+        item.title = navTitle || title
+        item.breadcrumbTitle = breadcrumbTitle || navTitle || title
+      }
     }
 
     if (item.items) {
@@ -86,12 +91,19 @@ const extendItemList = (itemList, pages) => {
       level: 0,
     }
 
-    if (!section.title) {
-      const { title, navTitle, breadcrumbTitle } = pages[
+    if (pages[section.link]) {
+      const { title, navTitle, breadcrumbTitle, issue } = pages[
         section.link
       ].frontmatter
-      section.title = navTitle || title
-      section.breadcrumbTitle = breadcrumbTitle || navTitle || title
+
+      if (issue) {
+        section.stub = true
+      }
+
+      if (!section.title) {
+        section.title = navTitle || title
+        section.breadcrumbTitle = breadcrumbTitle || navTitle || title
+      }
     }
 
     if (section.items) {

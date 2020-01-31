@@ -517,7 +517,6 @@
         - link: /docs/graphql-concepts/
           title: GraphQL Concepts
         - link: /docs/security-in-gatsby/
-          title: Security in Gatsby*
         - link: /docs/how-shadowing-works
           title: Theme Shadowing
     - link: /docs/gatsby-internals/
@@ -595,7 +594,6 @@
             - link: /docs/winning-over-executives/
               title: Executives
             - link: /docs/winning-over-clients/
-              title: Clients*
             - link: /docs/winning-over-content-creators/
               title: Content Creators
         - link: /docs/different-organization-types/
@@ -626,7 +624,6 @@
                 - link: /docs/setting-up-gatsby-without-gatsby-new/
                   title: Setting Up Gatsby Without Gatsby New
         - link: /docs/best-practices-for-orgs/
-          title: Best Practices for Orgs*
           items:
             - link: /docs/sharing-components-across-websites/
               title: Sharing Components Across Websites
@@ -635,7 +632,6 @@
                 - link: /docs/component-libraries/
                   title: Component Libraries
                 - link: /docs/making-components-discoverable/
-                  title: Making Components Discoverable*
         - link: /docs/how-gatsby-boosts-career/
           title: How Gatsby Boosts Your Career
     - link: /contributing/
