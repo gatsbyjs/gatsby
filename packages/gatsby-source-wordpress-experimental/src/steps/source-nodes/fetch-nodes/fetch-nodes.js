@@ -97,8 +97,13 @@ export const fetchWPGQLContentNodesByContentType = async () => {
 
   await Promise.all(
     nodeQueries.map(async queryInfo => {
-      // if the type settings call for a lazyNodes, don't fetch them upfront here
-      if (queryInfo.settings.lazyNodes) {
+      if (
+        // if the type settings call for a lazyNodes, don't fetch them upfront here
+        queryInfo.settings.lazyNodes ||
+        // if this is a media item and the nodes aren't lazy, we only want to fetch referenced nodes, so we don't fetch all of them here.
+        (!queryInfo.settings.lazyNodes &&
+          queryInfo.typeInfo.nodesTypeName === `MediaItem`)
+      ) {
         return
       }
 
