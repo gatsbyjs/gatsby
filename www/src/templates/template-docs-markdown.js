@@ -7,11 +7,6 @@ import { MDXRenderer } from "gatsby-plugin-mdx"
 import { mediaQueries } from "../gatsby-plugin-theme-ui"
 
 import Layout from "../components/layout"
-import {
-  itemListDocs,
-  itemListTutorial,
-  itemListContributing,
-} from "../utils/sidebar/item-list"
 import MarkdownPageFooter from "../components/markdown-page-footer"
 import DocSearchContent from "../components/docsearch-content"
 import TableOfContents from "../components/docs-table-of-contents"
@@ -31,20 +26,9 @@ const containerStyles = {
   px: 9,
 }
 
-const getDocsData = slug => {
-  const [urlSegment] = slug.split(`/`).slice(1)
-  const itemListLookup = {
-    docs: itemListDocs,
-    contributing: itemListContributing,
-    tutorial: itemListTutorial,
-  }
-
-  return [urlSegment, itemListLookup[urlSegment]]
-}
-
 function DocsTemplate({ data, location, pageContext: { next, prev } }) {
   const page = data.mdx
-  const [urlSegment, itemList] = getDocsData(page.fields.slug)
+  const [urlSegment] = page.fields.slug.split(`/`).slice(1)
   const toc =
     !page.frontmatter.disableTableOfContents && page.tableOfContents.items
 
@@ -63,7 +47,6 @@ function DocsTemplate({ data, location, pageContext: { next, prev } }) {
       <Layout
         location={location}
         locale={page.fields.locale}
-        itemList={itemList}
         enableScrollSync={urlSegment === `docs` ? false : true}
       >
         <DocSearchContent>
@@ -78,7 +61,7 @@ function DocsTemplate({ data, location, pageContext: { next, prev } }) {
               },
             }}
           >
-            <Breadcrumb location={location} itemList={itemList} />
+            <Breadcrumb location={location} />
             <h1 id={page.fields.anchor} sx={{ mt: 0 }}>
               {page.frontmatter.title}
             </h1>
