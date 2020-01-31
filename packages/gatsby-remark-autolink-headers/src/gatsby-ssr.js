@@ -48,6 +48,11 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
     }
   `
 
+  // This script used to have `let scrollTop` and `let clientTop` instead of
+  // current ones which are `var`. It is changed due to incompatibility with
+  // older browsers (that do not implement `let`). See:
+  //  - https://github.com/gatsbyjs/gatsby/issues/21058
+  //  - https://github.com/gatsbyjs/gatsby/pull/21083
   const script = `
     document.addEventListener("DOMContentLoaded", function(event) {
       var hash = window.decodeURI(location.hash.replace('#', ''))
