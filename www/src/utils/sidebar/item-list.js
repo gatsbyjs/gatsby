@@ -1,3 +1,5 @@
+import { useContext } from "react"
+import { LocaleContext } from "../../components/layout"
 import { keyBy } from "lodash-es"
 import docsSidebar from "../../data/sidebars/doc-links.yaml"
 import contributingSidebar from "../../data/sidebars/contributing-links.yaml"
@@ -52,7 +54,7 @@ const createHash = link => {
   return index >= 0 ? link.substr(index + 1) : false
 }
 
-const extendItem = (items, parentTitle, pages, level = 1) => {
+const extendItems = (items, pages, level = 0, parentTitle) => {
   return items.map(_item => {
     const item = {
       ..._item,
@@ -61,7 +63,6 @@ const extendItem = (items, parentTitle, pages, level = 1) => {
       level,
     }
 
-    // TODO consolidate with extendItemList
     if (pages[item.link]) {
       const { title, navTitle, breadcrumbTitle, issue } = pages[
         item.link
@@ -78,38 +79,9 @@ const extendItem = (items, parentTitle, pages, level = 1) => {
     }
 
     if (item.items) {
-      item.items = extendItem(item.items, item.title, pages, item.level + 1)
+      item.items = extendItems(item.items, pages, item.level + 1, item.title)
     }
     return item
-  })
-}
-
-const extendItemList = (itemList, pages) => {
-  return itemList.map(_section => {
-    const section = {
-      ..._section,
-      level: 0,
-    }
-
-    if (pages[section.link]) {
-      const { title, navTitle, breadcrumbTitle, issue } = pages[
-        section.link
-      ].frontmatter
-
-      if (issue) {
-        section.stub = true
-      }
-
-      if (!section.title) {
-        section.title = navTitle || title
-        section.breadcrumbTitle = breadcrumbTitle || navTitle || title
-      }
-    }
-
-    if (section.items) {
-      section.items = extendItem(section.items, section.title, pages)
-    }
-    return section
   })
 }
 
@@ -120,12 +92,13 @@ const extendSidebarData = (item, pages) => {
     key: item[0].key,
     disableExpandAll: item[0].disableExpandAll,
     disableAccordions: item[0].disableAccordions,
-    items: extendItemList(item[0].items, pages),
+    items: extendItems(item[0].items, pages),
   }
 }
 
 function useItemLists() {
-  const locale = "en" // FIXME get from useIntl()
+  // const locale = "en" // FIXME get from useIntl()
+  const locale = useContext(LocaleContext)
   const pages = usePages()
   const localPages = pages.filter(page => page.fields.locale === locale)
   const pagesMap = keyBy(localPages, "fields.slug")
