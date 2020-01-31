@@ -321,47 +321,6 @@ jobs:
           command: yarn run update-source
           working_directory: ~/project/scripts/i18n
 
-  build_www:
-    docker:
-      - image: circleci/node:12
-    resource_class: xlarge # ++ RAM and CPU
-    steps:
-      - checkout
-      - restore_cache:
-          key: v2_www_public_dir
-      - restore_cache:
-          key: v2_www_cache_dir
-      - run:
-          command: yarn
-          working_directory: ~/project/www
-      - run:
-          # manually match cpu_count to vcpus available in resource_class
-          command: GATSBY_CPU_COUNT=8 yarn build
-          working_directory: ~/project/www
-      - save_cache:
-          key: v2_www_public_dir_{{ epoch }}
-          paths:
-            - ~/project/www/public
-      - save_cache:
-          key: v2_www_cache_dir_{{ epoch }}
-          paths:
-            - ~/project/www/.cache
-
-  deploy_www:
-    docker:
-      - image: circleci/node:12
-    steps:
-      - checkout
-      - restore_cache:
-          key: v2_www_public_dir
-      - run:
-          command: yarn add netlify-cli
-          working_directory: ~/project/www
-      - run:
-          command: node_modules/.bin/netlify deploy --prod --dir=public --auth="$NETLIFY_ACCESS_TOKEN" --site="$NETLIFY_SITE_ID" --message "Deployed from Circle CI workflow https://circleci.com/workflow-run/$CIRCLE_WORKFLOW_ID"
-          no_output_timeout: 2h
-          working_directory: ~/project/www
-
   windows_unit_tests:
     executor:
       name: win/vs2019
@@ -522,38 +481,8 @@ workflows:
             branches:
               only:
                 - master
-      - manual_www_approval:
-          type: approval
-          filters:
-            branches:
-              only:
-                - master
-      - build_www:
-          context: build_www
-          requires:
-            - manual_www_approval
-      - deploy_www:
-          requires:
-            - build_www
-          context: build_www
       - update_i18n_source:
           filters:
             branches:
               only:
                 - master
-  www_deploy:
-    triggers:
-      - schedule:
-          cron: "0 2,6,10,14,18,22 * * *"
-          filters:
-            branches:
-              only:
-                - master
-    jobs:
-      - build_www:
-          # Check CircleCI web ui for context details (env vars)
-          context: build_www
-      - deploy_www:
-          requires:
-            - build_www
-          context: build_www
