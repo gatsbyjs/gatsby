@@ -1,5 +1,6 @@
 ---
 title: Contributing to Gatsby.js
+navTitle: Introduction
 disableTableOfContents: true
 ---
 

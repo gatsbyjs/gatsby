@@ -1,5 +1,5 @@
 ---
-title: RFC process
+title: RFC Process
 ---
 
 ## What is the RFC process?

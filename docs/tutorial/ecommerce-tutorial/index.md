@@ -1,5 +1,6 @@
 ---
 title: "Gatsby e-commerce Tutorial"
+navTitle: Making an e-commerce Gatsby Site with Stripe
 ---
 
 # Table of Contents

@@ -1,5 +1,6 @@
 ---
 title: Gatsby Contributor Covenant Code of Conduct
+navTitle: Code of Conduct
 ---
 
 ## Our Pledge

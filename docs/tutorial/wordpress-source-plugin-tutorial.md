@@ -1,5 +1,6 @@
 ---
 title: "WordPress Source Plugin Tutorial"
+navTitle: Using the WordPress Source Plugin
 ---
 
 ## How to create a site with data pulled from WordPress

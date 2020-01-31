@@ -1,5 +1,6 @@
 ---
 title: Where to Participate in the Community
+navTitle: Gatsby Community Events
 ---
 
 We want contributing to Gatsby to be fun, enjoyable, and educational for anyone and everyone. If you're interested in participating in the Gatsby.js community, contributions go far beyond pull requests and commits. We are thrilled to receive a variety of other contributions including the following:

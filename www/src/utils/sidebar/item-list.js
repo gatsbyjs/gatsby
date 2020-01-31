@@ -24,21 +24,21 @@ function usePages() {
           }
         }
       }
-      tutorialHeadings: allMdx(
-        limit: 10000
-        filter: { fields: { slug: { glob: "/tutorial/part-*" } } }
-      ) {
-        nodes {
-          fields {
-            locale
-            slug
-          }
-          headings {
-            depth
-            value
-          }
-        }
-      }
+      # tutorialHeadings: allMdx(
+      #   limit: 10000
+      #   filter: { fields: { slug: { glob: "/tutorial/part-*" } } }
+      # ) {
+      #   nodes {
+      #     fields {
+      #       locale
+      #       slug
+      #     }
+      #     headings {
+      #       depth
+      #       value
+      #     }
+      #   }
+      # }
     }
   `)
   // TODO maybe turn into an object
@@ -58,6 +58,12 @@ const extendItem = (items, parentTitle, pages, level = 1) => {
       hash: createHash(_item.link),
       parentTitle,
       level,
+    }
+
+    if (pages[item.link] && item.title && !item.breadcrumbTitle) {
+      if (pages[item.link].frontmatter.title === item.title) {
+        console.log(item.title)
+      }
     }
 
     if (!item.title) {
@@ -93,7 +99,6 @@ const extendItemList = (itemList, pages) => {
     }
     return section
   })
-  // return itemList
 }
 
 const extendSidebarData = (item, pages) => {
@@ -128,4 +133,4 @@ function useItemList(path) {
   return itemLists[urlSegment]
 }
 
-export { useItemList }
+export { useItemLists, useItemList }

@@ -1,5 +1,6 @@
 ---
 title: Making a Gatsby Blog with Netlify CMS
+navTitle: Making a Blog with Netlify CMS
 ---
 
 https://youtu.be/JeTqxCJC56Q

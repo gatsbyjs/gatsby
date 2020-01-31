@@ -4,9 +4,6 @@ import Link from "../../components/localized-link"
 
 import indention from "../../utils/sidebar/indention"
 
-const _getTitle = (title, isDraft) => (isDraft ? title.slice(0, -1) : title)
-const _isDraft = title => title.slice(-1) === `*`
-
 const bulletSize = 8
 const bulletSizeActive = 100
 const bulletOffsetTop = `1.3em`
@@ -20,8 +17,7 @@ const createLink = ({
   overrideCSS,
   level,
 }) => {
-  const isDraft = _isDraft(item.title)
-  const title = _getTitle(item.title, isDraft)
+  const { title, stub } = item
   const indent = ui === `steps` ? indention(level + 1) : indention(level)
 
   return (
@@ -56,7 +52,7 @@ const createLink = ({
             border: 0,
             color: `navigation.linkDefault`,
             fontWeight: `body`,
-            ...(isDraft && {
+            ...(stub && {
               color: `textMuted`,
             }),
             ...(isActive && {

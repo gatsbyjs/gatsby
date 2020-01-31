@@ -1,5 +1,6 @@
 ---
 title: Free Swag for Gatsby Contributors!
+navTitle: Free Swag for Contributors
 ---
 
 Gatsby relies on contributors from the open source community, and we want to make sure you know how much it means to us that you’re willing to put time and effort into [contributing to Gatsby](/contributing/how-to-contribute/).

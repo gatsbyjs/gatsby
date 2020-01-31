@@ -11,9 +11,7 @@ import DocsearchContent from "../../components/docsearch-content"
 import FooterLinks from "../../components/shared/footer-links"
 
 const findStubs = pages =>
-  pages.filter(
-    page => page.link !== undefined && page.title.indexOf(`*`) !== -1
-  )
+  pages.filter(page => page.link !== undefined && page.stub)
 
 const flatten = pages =>
   pages.reduce(
@@ -22,7 +20,7 @@ const flatten = pages =>
     []
   )
 
-function StubListRoute() {
+function StubListRoute({ location }) {
   const { docs, contributing } = useItemLists()
   const stubs = findStubs(flatten([...docs.items, ...contributing.items]))
 
@@ -52,7 +50,7 @@ function StubListRoute() {
   }
 
   return (
-    <Layout location={this.props.location}>
+    <Layout location={location}>
       <DocsearchContent>
         <Container>
           <Helmet>
