@@ -109,7 +109,7 @@ function prepareQueue({ file, args }) {
 function createJob(job, { reporter }) {
   if (!boundActionCreators) {
     reporter.panic(
-      `Gatsby-plugin-sharp wasn't setup correclty in gatsby-config.js. Make sure you add it to the plugins array.`
+      `Gatsby-plugin-sharp wasn't setup correctly in gatsby-config.js. Make sure you add it to the plugins array.`
     )
   }
 
