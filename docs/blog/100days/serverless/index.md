@@ -16,7 +16,7 @@ _Learn more about [#100DaysOfGatsby here](/blog/100days)!_
 
 In the last two challenges you added forms to Markdown and JSX-powered pages. This week we’d like you to create a home for your form data, using a new class of services that work well with [serverless websites](/blog/2018-10-10-unbundling-of-the-cms#integrating-modular-services), like your Gatsby project.
 
-Below we’ve provided resources for two paths that you can choose based on the needs for your projects, and your own interest and abilities.
+Below we’ve provided resources for two paths that you can choose based on the needs of your project, and your own interests and abilities.
 
 _Path A_ introduces you to form services for static sites, like Formik (the cloud service), Statickit, and FormKeep. Instead of giving you an all-in-one form builder to work with, these powerful, flexible, and inexpensive services provide you with endpoints to send form data to.
 
