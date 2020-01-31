@@ -25,6 +25,7 @@ const ExpandAllButton = ({ onClick, expandAll }) => (
       lineHeight: `solid`,
       py: 2,
       textAlign: `left`,
+      outlineColor: `input.focusBoxShadow`,
       transition: t => `all ${t.transition.speed.fast}`,
       "&:hover": {
         bg: `sidebar.itemHoverBackground`,

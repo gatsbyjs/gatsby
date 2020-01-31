@@ -209,6 +209,7 @@ const styles = {
     border: 0,
     cursor: `pointer`,
     padding: 0,
+    outlineColor: `input.focusBoxShadow`,
   },
   button: {
     position: `relative`,

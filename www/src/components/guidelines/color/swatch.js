@@ -73,6 +73,7 @@ export default class Swatch extends React.Component {
               right: 0,
               top: 0,
               width: `100%`,
+              outlineColor: `input.focusBoxShadow`,
               zIndex: 1,
               ":focus .tooltip, :hover .tooltip": {
                 display: `block`,

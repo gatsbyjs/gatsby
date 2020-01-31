@@ -51,6 +51,10 @@ const IconWrapper = styled.button`
   transition: opacity 0.3s ease;
   vertical-align: middle;
   width: 40px;
+  outline: none;
+  &:focus {
+    box-shadow: 0 0 0 3px ${p => p.theme.colors.input.focusBoxShadow};
+  }
 
   &:hover {
     opacity: 1;
