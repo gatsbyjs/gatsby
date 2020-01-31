@@ -7,6 +7,7 @@ import MdClose from "react-icons/lib/md/close"
 
 import { Global } from "@emotion/core"
 
+import { getItemList } from "../utils/sidebar/item-list"
 import { globalStyles } from "../utils/styles/global"
 import {
   colors,
@@ -24,8 +25,11 @@ import SiteMetadata from "../components/site-metadata"
 import SkipNavLink from "../components/skip-nav-link"
 import "../assets/fonts/futura"
 import LazyModal from "./lazy-modal"
+import { defaultLang } from "../utils/i18n"
 
 let windowWidth
+
+export const LocaleContext = React.createContext(defaultLang)
 
 class DefaultLayout extends React.Component {
   constructor() {
@@ -58,9 +62,9 @@ class DefaultLayout extends React.Component {
   }
 
   render() {
+    const itemList = getItemList(this.props.location.pathname)
     // SEE: template-docs-markdown for why this.props.isSidebarDisabled is here
-    const isSidebarDisabled =
-      this.props.isSidebarDisabled || !this.props.itemList
+    const isSidebarDisabled = this.props.isSidebarDisabled || !itemList
     let isModal = false
     if (!windowWidth && typeof window !== `undefined`) {
       windowWidth = window.innerWidth
@@ -165,9 +169,12 @@ class DefaultLayout extends React.Component {
     }
 
     return (
-      <>
+      <LocaleContext.Provider value={this.props.locale || defaultLang}>
         <Global styles={globalStyles} />
-        <SiteMetadata pathname={this.props.location.pathname} />
+        <SiteMetadata
+          pathname={this.props.location.pathname}
+          locale={this.props.locale}
+        />
         <SkipNavLink />
         <Banner />
         <Navigation pathname={this.props.location.pathname} />
@@ -187,14 +194,14 @@ class DefaultLayout extends React.Component {
         >
           <PageWithSidebar
             disable={isSidebarDisabled}
-            itemList={this.props.itemList}
+            itemList={itemList}
             location={this.props.location}
             enableScrollSync={this.props.enableScrollSync}
             renderContent={() => this.props.children}
           />
         </div>
         <MobileNavigation />
-      </>
+      </LocaleContext.Provider>
     )
   }
 }

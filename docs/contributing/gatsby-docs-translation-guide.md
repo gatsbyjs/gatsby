@@ -37,6 +37,7 @@ The first step for starting a new translation is to check what exists. So far, t
 - [Hindi](https://github.com/gatsbyjs/gatsby-hi)
 - [Indonesian](https://github.com/gatsbyjs/gatsby-id)
 - [Italian](https://github.com/gatsbyjs/gatsby-it)
+- [Japanese](https://github.com/gatsbyjs/gatsby-ja)
 - [Korean](https://github.com/gatsbyjs/gatsby-ko)
 - [Mongolian](https://github.com/gatsbyjs/gatsby-mn)
 - [Dutch](https://github.com/gatsbyjs/gatsby-nl)
@@ -110,6 +111,10 @@ Your language repo comes with a template [style guide](https://github.com/gatsby
 Some pages are very long and difficult to translate for a single contributor. Feel free to split these pages up into sections and work on them together!
 
 In addition, sometimes a contributor cannot continue a PR for whatever reason. It may help to ask them if they need assistance and to bring someone else on to complete the work in a timely fashion.
+
+#### Check "allow edits from maintainers"
+
+Contributors should check "allow edits from maintainers" when making Pull Requests (PRs). This will [allow maintainers to make changes](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/allowing-changes-to-a-pull-request-branch-created-from-a-fork) directly to a PR branch created from a fork. Maintainers can add these instructions to a PR template to serve as a reminder to contributors.
 
 #### Set up a review process
 

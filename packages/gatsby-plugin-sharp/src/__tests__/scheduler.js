@@ -1,187 +1,184 @@
-jest.mock(`lodash`, () => {
-  return {
-    throttle: cb => cb,
-  }
-})
-
-jest.mock(`../worker`, () => {
+jest.mock(`../gatsby-worker`, () => {
   return {
     IMAGE_PROCESSING: jest.fn(),
   }
 })
-jest.mock(`../utils`, () => {
-  return {
-    createProgress: jest.fn(),
-  }
-})
+jest.mock(`got`)
+const got = require(`got`)
+const fs = require(`fs-extra`)
+
+const workerMock = require(`../gatsby-worker`).IMAGE_PROCESSING
 
 describe(`scheduler`, () => {
+  let boundActionCreators = {}
+  let scheduler
   beforeEach(() => {
-    jest.resetAllMocks()
-    jest.resetModules()
+    workerMock.mockReset()
+    boundActionCreators = {
+      createJob: jest.fn(),
+      endJob: jest.fn(),
+    }
+
+    jest.isolateModules(() => {
+      scheduler = require(`../scheduler`)
+    })
   })
 
   it(`should schedule an image processing job`, async () => {
-    const { createProgress } = require(`../utils`)
-    const workerMock = require(`../worker`).IMAGE_PROCESSING
-    workerMock.mockReturnValue(Promise.resolve())
+    workerMock.mockResolvedValue()
+    const { scheduleJob } = scheduler
 
-    const { scheduleJob } = require(`../scheduler`)
-    const boundActionCreators = {
-      createJob: jest.fn(),
-      endJob: jest.fn(),
-    }
     const job = {
-      inputPath: `/test-image[new].jpg`,
-      outputPath: `/1234/test-image[new].jpg`,
+      inputPaths: [`/test-image[new].jpg`],
       outputDir: `/public/static/`,
       args: {
-        width: `100`,
+        operations: [
+          {
+            outputPath: `/1234/test-image[new].jpg`,
+            args: {
+              width: `100`,
+            },
+          },
+        ],
+        pluginOptions: {},
       },
-      contentDigest: `digest`,
-    }
-    await scheduleJob(job, boundActionCreators, `value`, {}, false)
-
-    expect(createProgress).not.toHaveBeenCalled()
-    expect(workerMock).toHaveBeenCalledWith([job.inputPath], job.outputDir, {
-      contentDigest: job.contentDigest,
-      operations: [
-        {
-          outputPath: job.outputPath,
-          transforms: job.args,
-        },
-      ],
-      pluginOptions: `value`,
-    })
-  })
-
-  it(`should create a progressbar when enabled`, async () => {
-    const { createProgress } = require(`../utils`)
-    const barStart = jest.fn()
-    const barTick = jest.fn()
-    const barEnd = jest.fn()
-    createProgress.mockReturnValue({
-      start: barStart,
-      tick: barTick,
-      done: barEnd,
-    })
-    const workerMock = require(`../worker`).IMAGE_PROCESSING
-    workerMock.mockReturnValue(Promise.resolve())
-
-    const { scheduleJob } = require(`../scheduler`)
-    const boundActionCreators = {
-      createJob: jest.fn(),
-      endJob: jest.fn(),
-    }
-    const job = {
-      inputPath: `/test-image[new].jpg`,
-      outputPath: `/1234/test-image[new].jpg`,
-      outputDir: `/public/static/`,
-      args: {
-        width: `100`,
-      },
-      contentDigest: `digest`,
     }
     await scheduleJob(job, boundActionCreators)
 
-    expect(createProgress).toHaveBeenCalledTimes(1)
-    expect(barStart).toHaveBeenCalledTimes(1)
-    expect(barTick).toHaveBeenCalledTimes(1)
-    expect(barEnd).toHaveBeenCalledTimes(1)
+    expect(workerMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        inputPaths: job.inputPaths.map(inputPath => {
+          return {
+            path: inputPath,
+            contentDigest: expect.any(String),
+          }
+        }),
+        outputDir: job.outputDir,
+        args: job.args,
+      })
+    )
   })
 
   it(`should fail the job when transform failed`, async () => {
-    const workerMock = require(`../worker`).IMAGE_PROCESSING
-    workerMock.mockReturnValue(Promise.reject(`failed transform`))
-    const { scheduleJob } = require(`../scheduler`)
-    const boundActionCreators = {
-      createJob: jest.fn(),
-      endJob: jest.fn(),
-    }
+    workerMock.mockRejectedValue(`failed transform`)
+    const { scheduleJob } = scheduler
 
     expect.assertions(1)
     try {
       await scheduleJob(
         {
-          inputPath: `/test-image.jpg`,
-          outputPath: `/1234/test-image.jpg`,
+          inputPaths: [`/test-image.jpg`],
           outputDir: `/public/static/`,
-          args: {},
+          args: {
+            operations: [
+              {
+                outputPath: `/1234/test-image.jpg`,
+                args: {},
+              },
+            ],
+            pluginOptions: {},
+          },
         },
-        boundActionCreators,
-        {},
-        {},
-        false
+        boundActionCreators
       )
     } catch (err) {
       expect(err).toEqual(`failed transform`)
     }
   })
 
-  it(`should schedule two operations when inputPath is the same`, async () => {
-    const workerMock = require(`../worker`).IMAGE_PROCESSING
-    workerMock.mockReturnValue(Promise.resolve())
-
-    const throttledFn = jest
-      .fn()
-      .mockImplementationOnce(() => {})
-      .mockImplementationOnce((cb, args) => cb(...args))
-    jest.doMock(`lodash`, () => {
-      return {
-        throttle: cb => (...args) => throttledFn(cb, args),
-      }
-    })
-
-    const { scheduleJob } = require(`../scheduler`)
-    const boundActionCreators = {
-      createJob: jest.fn(),
-      setJob: jest.fn(),
-      endJob: jest.fn(),
-    }
-
-    const job1 = {
-      inputPath: `/test-image.jpg`,
-      outputPath: `/1234/test-image.jpg`,
+  it(`Shouldn't schedule a job when outputFile already exists`, async () => {
+    workerMock.mockResolvedValue()
+    const orignalSync = fs.existsSync
+    fs.existsSync = jest.fn().mockReturnValue(true)
+    const { scheduleJob } = scheduler
+    const job = {
+      inputPaths: [`/test-image.jpg`],
       outputDir: `/public/static/`,
       args: {
-        width: `100`,
-      },
-      contentDigest: `digest`,
-    }
-    const job1Promise = scheduleJob(job1, boundActionCreators, {}, {}, false)
-
-    const job2 = {
-      inputPath: `/test-image.jpg`,
-      outputPath: `/1234/test-image-2.jpg`,
-      outputDir: `/public/static/`,
-      args: {
-        width: `200`,
-      },
-      contentDigest: `digest`,
-    }
-    const job2Promise = scheduleJob(job2, boundActionCreators, {}, {}, false)
-
-    await Promise.all([job1Promise, job2Promise])
-
-    expect(boundActionCreators.createJob).toHaveBeenCalledTimes(1)
-    expect(boundActionCreators.setJob).toHaveBeenCalledTimes(1)
-    expect(boundActionCreators.endJob).toHaveBeenCalledTimes(1)
-    expect(workerMock).toHaveBeenCalledTimes(1)
-    expect(workerMock).toHaveBeenCalledWith(
-      [job1.inputPath],
-      job1.outputDir,
-      expect.objectContaining({
         operations: [
           {
-            outputPath: job1.outputPath,
-            transforms: job1.args,
-          },
-          {
-            outputPath: job2.outputPath,
-            transforms: job2.args,
+            outputPath: `/1234/test-image.jpg`,
+            args: {},
           },
         ],
-      })
-    )
+        pluginOptions: {},
+      },
+    }
+    await scheduleJob(job, boundActionCreators)
+
+    expect(workerMock).not.toHaveBeenCalled()
+    fs.existsSync = orignalSync
+  })
+
+  it(`Shouldn't schedule a job when with same outputFile is already being queued`, async () => {
+    workerMock.mockResolvedValue()
+    const { scheduleJob } = scheduler
+    const job = {
+      inputPaths: [`/test-image.jpg`],
+      outputDir: `/public/static/`,
+      args: {
+        operations: [
+          {
+            outputPath: `/1234/test-image.jpg`,
+            args: {},
+          },
+        ],
+        pluginOptions: {},
+      },
+    }
+    const jobPromise = scheduleJob(job, boundActionCreators)
+    const job2Promise = scheduleJob(job, boundActionCreators)
+    expect(jobPromise).toStrictEqual(job2Promise)
+
+    await Promise.all([jobPromise, job2Promise])
+
+    expect(workerMock).toHaveBeenCalledTimes(1)
+  })
+
+  describe(`Gatsby cloud`, () => {
+    beforeAll(() => {
+      process.env.GATSBY_CLOUD_IMAGE_SERVICE_URL = `https://example.com/image-service`
+    })
+
+    beforeEach(() => {
+      got.post.mockReset()
+      got.post.mockResolvedValueOnce({})
+    })
+
+    afterAll(() => {
+      delete process.env.GATSBY_CLOUD_IMAGE_SERVICE_URL
+    })
+
+    it(`should offload sharp transforms to the cloud`, async () => {
+      const { scheduleJob } = scheduler
+      const job = {
+        inputPaths: [`/test-image.jpg`],
+        outputDir: `/public/static/`,
+        args: {
+          operations: [
+            {
+              outputPath: `/1234/test-image3.jpg`,
+              args: {},
+            },
+          ],
+          pluginOptions: {},
+        },
+      }
+
+      await scheduleJob(job, boundActionCreators)
+
+      expect(got.post).toHaveBeenCalledWith(
+        process.env.GATSBY_CLOUD_IMAGE_SERVICE_URL,
+        {
+          body: {
+            file: job.inputPaths[0],
+            hash: expect.any(String),
+            transforms: job.args.operations,
+            options: job.args.pluginOptions,
+          },
+          json: true,
+        }
+      )
+    })
   })
 })

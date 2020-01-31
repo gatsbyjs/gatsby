@@ -21,7 +21,7 @@ about: Suggest better docs coverage for a particular tool or process.
 
 ## Summary
 
-What problem(s) did you run into that caused you to request additional documentation? What questions do you think we should answer? What, if any, existing documenation relates to this proposal?
+What problem(s) did you run into that caused you to request additional documentation? What questions do you think we should answer? What, if any, existing documentation relates to this proposal?
 
 Some recommended topics to cover:
 

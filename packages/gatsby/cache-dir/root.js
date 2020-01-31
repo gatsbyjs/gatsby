@@ -54,7 +54,7 @@ const RouteHandler = props => (
 
 class LocationHandler extends React.Component {
   render() {
-    let { location } = this.props
+    const { location } = this.props
 
     if (!loader.isPageNotFound(location.pathname)) {
       return (

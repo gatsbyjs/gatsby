@@ -12,3 +12,9 @@ First, install node modules required by package.json. This is needed only one ti
 npm install
 npm run build
 ```
+
+Alternatively;
+
+```sh
+NUM_PAGES=2000 yarn bench
+```

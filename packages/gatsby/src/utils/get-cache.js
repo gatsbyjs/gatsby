@@ -1,6 +1,6 @@
-const Cache = require(`./cache`)
+const Cache = require(`./cache`).default
 
-let caches = new Map()
+const caches = new Map()
 
 module.exports = function getCache(name) {
   let cache = caches.get(name)

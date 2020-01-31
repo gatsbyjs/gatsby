@@ -3346,7 +3346,7 @@
     - Web App Manifest
     - SEO
 - url: https://contentful-starter.netlify.com/
-  repo: https://github.com/mohanmonu777/gatsby_contentful_starter
+  repo: https://github.com/algokun/gatsby_contentful_starter
   description: An Awesome Starter Kit to help you get going with Contentful and Gatsby
   tags:
     - Blog
@@ -3436,7 +3436,7 @@
     - Offline support
     - Web App Manifest
 - url: https://gatsby-starter-krisp.netlify.com/
-  repo: https://github.com/mohanmonu777/gatsby-starter-krisp
+  repo: https://github.com/algokun/gatsby-starter-krisp
   description: A minimal, clean and responsive starter built with gatsby
   tags:
     - Styling:Bootstrap
@@ -3612,7 +3612,7 @@
     - Simple Design
     - Made by Sumanth
 - url: http://the404blog.netlify.com
-  repo: https://github.com/mohanmonu777/the404blog
+  repo: https://github.com/algokun/the404blog
   description: An Awesome Starter Blog to help you get going with Gatsby and Markdown
   tags:
     - Blog
@@ -3628,7 +3628,7 @@
     - Syntax Highlight in Code.
     - Styling in Bootstrap
 - url: https://gatsby-starter-unicorn.netlify.com/
-  repo: https://github.com/mohanmonu777/gatsby_starter_unicorn
+  repo: https://github.com/algokun/gatsby_starter_unicorn
   description: An Awesome Starter Blog to help you get going with Gatsby and Markdown
   tags:
     - Blog
@@ -3690,7 +3690,7 @@
     - Pages and components are classes.
     - A skeleton SCSS project added with prefixing
 - url: https://portfolio-by-mohan.netlify.com/
-  repo: https://github.com/mohanmonu777/gatsby_starter_portfolio
+  repo: https://github.com/algokun/gatsby_starter_portfolio
   description: An Official Starter for Gatsby Tech Blog Theme
   tags:
     - SEO
@@ -4893,6 +4893,14 @@
     - Basic SEO, site metadata
     - Prettier
     - Social media links
+- url: https://gatsby-starter-default-nostyles.netlify.com/
+  repo: https://github.com/JuanJavier1979/gatsby-starter-default-nostyles
+  description: The default Gatsby starter with no styles.
+  tags:
+    - Styling:None
+  features:
+    - Based on gatsby-starter-default
+    - No styles
 - url: https://greater-gatsby.now.sh
   repo: https://github.com/rbutera/greater-gatsby
   description: Barebones and lightweight starter with TypeScript, PostCSS, TailwindCSS and Storybook.
@@ -4974,3 +4982,121 @@
     - Styled Components for responsive component based styling with theming
     - Basic SEO, site metadata
     - Prettier
+- url: https://gatsby-starter-fusion-blog.netlify.com/
+  repo: https://github.com/robertistok/gatsby-starter-fusion-blog
+  description: Easy to configure blog starter with modern, minimal theme
+  tags:
+    - Language:TypeScript
+    - Styling:CSS-in-JS
+    - Netlify
+    - Markdown
+    - Blog
+    - SEO
+  features:
+    - Featured/Latest posts
+    - Sticky header
+    - Easy to customize -> edit config.ts with your info
+    - Meta tags for improved SEO with React Helmet
+    - Transform links to bitly links automatically
+    - Codesyntax
+    - Code syntax highlighting
+- url: https://gatsby-bootstrap-italia-starter.dej611.now.sh/
+  repo: https://github.com/dej611/gatsby-bootstrap-italia-starter
+  description: Gastby starter project using the Bootstrap Italia design kit from Italian Digital Team
+  tags:
+    - Styling:Bootstrap
+    - SEO
+    - Linting
+  features:
+    - Bootstrap Italia - design-react-kit
+    - Prettier
+    - Sticky header
+    - Complete header
+    - Homepage and service templates pages ready to use
+    - Meta tags for improved SEO with React Helmet
+- url: https://gatsby-starter-webcomic.netlify.com
+  repo: https://github.com/JLDevOps/gatsby-starter-webcomic
+  description: Gatsby blog starter that focuses on webcomics and art with a minimalistic UI.
+  tags:
+    - Markdown
+    - MDX
+    - Netlify
+    - Pagination
+    - Search
+    - Styling:Bootstrap
+    - RSS
+    - SEO
+  features:
+    - Designed to focus on blog posts with images.
+    - Search capability on blog posts
+    - Displays the latest posts
+    - Displays all the tags from the site
+    - Pagination between blog posts
+    - Has a "archive" page that categorizes and displays all the blog posts by date
+    - Mobile friendly
+- url: https://gatsby-starter-material-emotion.netlify.com
+  repo: https://github.com/liketurbo/gatsby-starter-material-emotion
+  description: Gatsby starter of Material-UI with Emotion 👩‍🎤
+  tags:
+    - Language:TypeScript
+    - SEO
+    - Styling:Material
+    - Styling:CSS-in-JS
+  features:
+    - Based on Gatsby Default Starter
+    - Material-UI
+    - Emotion
+    - Roboto Typeface
+    - SEO
+    - Typescript
+- url: https://flex.arshad.io
+  repo: https://github.com/arshad/gatsby-starter-flex
+  description: A Gatsby starter for the Flex theme.
+  tags:
+    - SEO
+    - MDX
+    - Styling:CSS-in-JS
+  features:
+    - MDX Blocks for your Gatsby site.
+    - Customizable, extendable and accessible.
+    - Theme UI
+    - SEO and Open graphs support
+    - Color modes
+    - Code Highlighting
+- url: https://london-night-day.netlify.com/
+  repo: https://github.com/jooplaan/gatsby-london-night-and-day
+  description: A custom, image-centric dark and light mode aware theme for Gatsby. Advanced from the Gatsby starter London After Midnight.
+  tags:
+    - Blog
+    - Portfolio
+    - Gallery
+    - SEO
+    - Markdown
+    - Styling:SCSS
+    - HTML5UP
+    - CMS:Netlify
+  features:
+    - Support tags
+    - Easily change the theme color
+    - Post thumbnails in the homepage
+    - Made for image-centric portfolios
+    - Using the London After Midnight is now “Dark mode” (the default), and the original London as “Light mode”.
+    - Removed Google Fonts, using system fonts in stead (for speed and privacy :)
+    - Use SASS
+- url: https://the-gatsby-bootcamp-blog.netlify.com
+  repo: https://github.com/SafdarJamal/gatsby-bootcamp-blog
+  description: A minimal blogging site built with Gatsby using Contentful and hosted on Netlify.
+  tags:
+    - Blog
+    - CMS:Contentful
+    - Netlify
+    - Styling:SCSS
+    - SEO
+    - Portfolio
+  features:
+    - Basic setup for a full-featured blog
+    - Includes React Helmet to allow editing site meta tags
+    - Uses SCSS for styling
+    - Minimal responsive design
+    - Styled components
+    - SEO Friendly Meta

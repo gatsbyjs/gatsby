@@ -29,7 +29,13 @@ function deepMap(obj, fn) {
   return obj
 }
 
-function replaceRule(value) {
+const cssTests = []
+
+function isCssRule({ test }) {
+  return test instanceof RegExp && cssTests.includes(test.toString())
+}
+
+function replaceRule(value, stage) {
   // If `value` does not have a `test` property, it isn't a rule object.
   if (!value || !value.test) {
     return value
@@ -47,6 +53,35 @@ function replaceRule(value) {
     )
   ) {
     return null
+  }
+
+  // use MiniCssExtractPlugin.loader in development
+  if (stage === `develop` && value.test && isCssRule(value)) {
+    function replaceStyleLoader(rule) {
+      if (rule.loader.includes(`style-loader`)) {
+        return {
+          ...rule,
+          loader: MiniCssExtractPlugin.loader,
+          options: {
+            hmr: true,
+          },
+        }
+      }
+
+      return rule
+    }
+
+    if (value.use) {
+      return {
+        ...value,
+        use: value.use.map(replaceStyleLoader),
+      }
+    } else if (value.loader) {
+      return {
+        ...value,
+        loader: replaceStyleLoader(value),
+      }
+    }
   }
 
   return value
@@ -94,6 +129,21 @@ exports.onCreateWebpackConfig = (
   if (![`develop`, `build-javascript`].includes(stage)) {
     return Promise.resolve()
   }
+
+  // populate cssTests array later used by isCssRule
+  if (`develop` === stage) {
+    cssTests.push(
+      ...[
+        rules.cssModules().test,
+        rules.css().test,
+        /\.s(a|c)ss$/,
+        /\.module\.s(a|c)ss$/,
+        /\.less$/,
+        /\.module\.less$/,
+      ].map(t => t.toString())
+    )
+  }
+
   const gatsbyConfig = getConfig()
   const { program } = store.getState()
   const publicPathClean = trim(publicPath, `/`)
@@ -144,7 +194,9 @@ exports.onCreateWebpackConfig = (
       path: path.join(program.directory, `public`, publicPathClean),
     },
     module: {
-      rules: deepMap(gatsbyConfig.module.rules, replaceRule).filter(Boolean),
+      rules: deepMap(gatsbyConfig.module.rules, value =>
+        replaceRule(value, stage)
+      ).filter(Boolean),
     },
     plugins: [
       // Remove plugins that either attempt to process the core Netlify CMS
@@ -174,10 +226,9 @@ exports.onCreateWebpackConfig = (
 
       // Use a simple filename with no hash so we can access from source by
       // path.
-      stage !== `develop` &&
-        new MiniCssExtractPlugin({
-          filename: `[name].css`,
-        }),
+      new MiniCssExtractPlugin({
+        filename: `[name].css`,
+      }),
 
       // Auto generate CMS index.html page.
       new HtmlWebpackPlugin({
