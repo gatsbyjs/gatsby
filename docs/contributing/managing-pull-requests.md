@@ -41,7 +41,7 @@ We typically look for the following in [PRs that add documentation](/contributin
 - Headings – whether the heading levels in a doc start with h2 (`##` in Markdown) and grow in order, establishing an accessible content hierarchy
 - Type & Format – whether docs and learning materials align with our recommendations and [docs templates](/contributing/docs-templates/)
 
-If a PR includes code examples, tutorials, recipes, or actionable guides, the reviewer must test out the material to ensure accuracy. **No PRs should be merged that haven't been vetted for errors or omissions.**
+If a PR includes code examples, tutorials, recipes, or actionable guides, the reviewer must test out the material to ensure accuracy. **No PRs should be approved or merged that haven't been vetted for errors or omissions.**
 
 #### Code
 
