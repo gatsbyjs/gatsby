@@ -34,6 +34,7 @@ export const getWpActions = async ({ variables, helpers }) => {
 
   const actionsSinceLastUpdate = actionMonitorActions.filter(
     // remove any actions that were fetched in the last run
+    // (only needed in develop but doesn't hurt in production as previouslyFetchedActionIds will always be empty in prod)
     ({ id }) => !previouslyFetchedActionIds.includes(id)
   )
 
