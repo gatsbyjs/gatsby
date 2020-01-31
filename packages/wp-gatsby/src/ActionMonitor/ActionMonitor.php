@@ -477,7 +477,6 @@ class ActionMonitor
     function savePost($post_id, $post = null, $update_post_parent = true)
     {
         if ( !$post) {
-          error_log(print_r('no post lets get it', true)); 
           $post = get_post( $post_id );
         }
 
@@ -505,10 +504,10 @@ class ActionMonitor
             // once we can get a flat list of all menu items regardless
             // of location in WPGQL, this can be removed
             return $post_id;
-            $global_relay_id = Relay::toGlobalId( 'nav_menu_item', $post_id );
-            $title = "MenuItem #$post_id";
-            $referenced_node_single_name = 'menuItem';
-            $referenced_node_plural_name = 'menuItems';
+            // $global_relay_id = Relay::toGlobalId( 'nav_menu_item', $post_id );
+            // $title = "MenuItem #$post_id";
+            // $referenced_node_single_name = 'menuItem';
+            // $referenced_node_plural_name = 'menuItems';
         }
 
         //
@@ -548,21 +547,18 @@ class ActionMonitor
             $action_type = $update ? 'UPDATE' : 'CREATE';
         }
 
+        $this->insertNewAction([
+          'action_type' => $action_type,
+          'title' => $title,
+          'status' => $post->post_status,
+          'node_id' => $post_id,
+          'relay_id' => $global_relay_id,
+          'graphql_single_name' => $referenced_node_single_name,
+          'graphql_plural_name' => $referenced_node_plural_name,
+        ]);
 
-        // update the author node so that this node is recorded as a child 
-        // @todo move this logic Gatsby-side so that it works for all 2-way relationships
-        $previous_author = $this->post_object_before_update->post_author;
-        $new_author = $post->post_author;
-
-        if ( $previous_author !== $new_author ) {
-          // if we change the author we need to re-save the old author too
-          $this->updateUser( $previous_author );
-        }
-
-        $this->updateUser( $new_author );
-
-        $previous_post_parent = $this->post_object_before_update->post_parent;
-        $potentially_new_post_parent = $post->post_parent;
+        $previous_post_parent = $this->post_object_before_update->post_parent ?? 0;
+        $potentially_new_post_parent = $post->post_parent ?? 0;
 
         // @todo also move this logic Gatsby-side so it works 
         // for all 2-way relationships
@@ -583,16 +579,17 @@ class ActionMonitor
           }
         }
 
+        // update the author node so that this node is recorded as a child 
+        // @todo move this logic Gatsby-side so that it works for all 2-way relationships
+        $previous_author = $this->post_object_before_update->post_author ?? 0;
+        $new_author = $post->post_author ?? 0;
 
-        $this->insertNewAction([
-          'action_type' => $action_type,
-          'title' => $title,
-          'status' => $post->post_status,
-          'node_id' => $post_id,
-          'relay_id' => $global_relay_id,
-          'graphql_single_name' => $referenced_node_single_name,
-          'graphql_plural_name' => $referenced_node_plural_name,
-        ]);
+        if ( $previous_author !== $new_author && $previous_author !== 0 ) {
+          // if we change the author we need to re-save the old author too
+          $this->updateUser( $previous_author );
+        }
+
+        $this->updateUser( $new_author );
     }
 
     function registerPostGraphQLFields() {
