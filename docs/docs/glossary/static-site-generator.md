@@ -3,7 +3,7 @@ title: Static Site Generator
 disableTableOfContents: true
 ---
 
-Learn what a static site generator is, and why you might choose a static site generator, such as Gatsby, over other publishing tools.
+Learn what a static site generator is and why you might choose a static site generator, such as Gatsby, over other publishing tools.
 
 ## What is a Static Site Generator?
 
