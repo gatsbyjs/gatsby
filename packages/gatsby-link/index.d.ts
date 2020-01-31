@@ -15,7 +15,7 @@ export interface GatsbyLinkProps<TState> extends LinkProps<TState> {
   /** Used to pass state data to the linked page.
    * The linked page will have a `location` prop containing a nested `state` object structure containing the passed data.
    */
-  state?: object
+  state?: TState
   /** The URL you want to link to */
   to: string
 }
