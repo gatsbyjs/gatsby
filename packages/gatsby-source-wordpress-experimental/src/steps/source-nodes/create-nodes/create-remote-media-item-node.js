@@ -1,7 +1,8 @@
-import pRetry from "p-retry"
+import retry from "async-retry"
 import { createRemoteFileNode } from "gatsby-source-filesystem"
 import store from "~/store"
 import { getHelpers } from "~/utils/get-gatsby-api"
+import { formatLogMessage } from "~/utils/format-log-message"
 
 export const getFileNodeMetaBySourceUrl = sourceUrl => {
   const fileNodesMetaByUrls = store.getState().imageNodes.nodeMetaByUrl
@@ -57,33 +58,46 @@ export const createRemoteMediaItemNode = async ({ mediaItemNode }) => {
     return null
   }
 
-  // Otherwise we need to download it
-  const remoteFileNode = await pRetry(
-    async () => {
-      const node = await createRemoteFileNode({
-        url: mediaItemUrl,
-        parentNodeId: mediaItemNode.id,
-        store: gatsbyStore,
-        cache,
-        createNode,
-        createNodeId,
-        reporter,
-      })
+  let remoteFileNode
 
-      if (!node) {
-        throw new Error(`Couldn't create file node from ${mediaItemUrl}`)
-      }
+  try {
+    // Otherwise we need to download it
+    remoteFileNode = await retry(
+      async bail => {
+        const node = await createRemoteFileNode({
+          url: mediaItemUrl,
+          parentNodeId: mediaItemNode.id,
+          store: gatsbyStore,
+          cache,
+          createNode,
+          createNodeId,
+          reporter,
+        })
 
-      return node
-    },
-    {
-      retries: 10,
-      onFailedAttempt: error => {
-        helpers.reporter.info(`Couldn't fetch remote file ${mediaItemUrl}`)
-        helpers.reporter.error(error)
+        if (!node) {
+          bail(new Error(`Couldn't create file node from ${mediaItemUrl}`))
+        }
+
+        return node
       },
-    }
-  )
+      {
+        retries: 10,
+        minTimeout: 1000,
+        maxTimeout: 60000,
+        onRetry: error => {
+          helpers.reporter.error(error)
+          helpers.reporter.error(
+            formatLogMessage(`retrying remote file download`)
+          )
+        },
+      }
+    )
+  } catch (error) {
+    helpers.reporter.info(`Couldn't fetch remote file ${mediaItemUrl}`)
+    helpers.reporter.error(error)
+
+    return null
+  }
 
   // push it's id and url to our store for caching,
   // so we can touch this node next time
