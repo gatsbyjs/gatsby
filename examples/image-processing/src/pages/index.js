@@ -476,7 +476,7 @@ export const pageQuery = graphql`
         }
       }
     }
-    cropBottomLeft: file(relativePath: { regex: "/nyancat/" }) {
+    cropBottomLeft: file(relativePath: { regex: "/gatsby.jpg/" }) {
       childImageSharp {
         resize(width: 180, height: 180, cropFocus: SOUTHWEST) {
           src

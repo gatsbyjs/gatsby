@@ -40,7 +40,17 @@ const BabelPluginPluckImports = require(`./babel-plugin-pluck-imports`)
  *  */
 
 module.exports = async function genMDX(
-  { isLoader, node, options, getNode, getNodes, reporter, cache, pathPrefix },
+  {
+    isLoader,
+    node,
+    options,
+    getNode,
+    getNodes,
+    reporter,
+    cache,
+    pathPrefix,
+    ...helpers
+  },
   { forceDisableCache = false } = {}
 ) {
   const pathPrefixCacheStr = pathPrefix || ``
@@ -106,6 +116,7 @@ export const _frontmatter = ${JSON.stringify(data)}`
       reporter,
       cache,
       pathPrefix,
+      ...helpers,
     }
   )
 

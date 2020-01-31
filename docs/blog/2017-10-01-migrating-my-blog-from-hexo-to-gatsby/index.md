@@ -165,7 +165,7 @@ testing out GraphQL queries in any GraphQL project. Gatsby ships with it enabled
 by default, thank goodness. GraphQL can actually be oddly opaque without this
 excellent tool.
 
-Visit <http://localhost:8000/___graphql> in the browser and you'll be greeted
+Visit `http://localhost:8000/___graphql` in the browser and you'll be greeted
 with this lovely dev tool:
 
 ![Gatsby Graphiql](https://dropsinn.s3.amazonaws.com/Screen%20Shot%202017-08-26%20at%201.31.08%20PM.png)
