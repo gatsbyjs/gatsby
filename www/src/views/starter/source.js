@@ -3,8 +3,8 @@ import { jsx } from "theme-ui"
 import { mediaQueries } from "../../gatsby-plugin-theme-ui"
 import TechWithIcon from "../../components/tech-with-icon"
 import GithubIcon from "react-icons/lib/fa/github"
-import { CodesandboxIcon } from "../../assets/vendor-logos/codesandbox.svg"
-import { NetlifyIcon } from "../../assets/vendor-logos/netlify.svg"
+import CodesandboxIcon from "../../assets/vendor-logos/codesandbox.svg"
+import NetlifyIcon from "../../assets/vendor-logos/netlify.svg"
 
 const Source = ({ startersYaml, repoUrl, starter }) => (
   <div
@@ -72,6 +72,7 @@ const Source = ({ startersYaml, repoUrl, starter }) => (
         sx={{
           "&&": {
             borderBottom: 0,
+            marginRight: `5px`
           },
         }}
       >
