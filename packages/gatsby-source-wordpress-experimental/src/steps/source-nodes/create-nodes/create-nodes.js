@@ -122,8 +122,6 @@ export const createGatsbyNodesFromWPGQLContentNodes = async ({
 
       if (childNodeIds) {
         remoteNode.children = childNodeIds
-
-        dd(remoteNode)
       }
 
       const typeSettings = getTypeSettingsByType({
