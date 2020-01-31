@@ -1,20 +1,32 @@
-import { shouldRenderRawLink } from "../mdx-link"
+import React from "react"
+import { render } from "@testing-library/react"
+import MdxLink, { shouldRenderRawLink } from "../mdx-link"
+
+jest.mock("../localized-link", () => {
+  // Mock the component to use a different tag so we can easily differentiate
+  return () => <span />
+})
 
 describe("mdx-link", () => {
   it("creates a raw link on external links", () => {
-    expect(shouldRenderRawLink("https://github.com/gatsbyjs/gatsby")).toBe(true)
+    const { container } = render(
+      <MdxLink href="https://github.com/gatsbyjs.gatsby" />
+    )
+    expect(container.firstChild.nodeName).toBe("A")
   })
 
   it("creates a raw link on hashes", () => {
-    expect(shouldRenderRawLink("#gatsby")).toBe(true)
+    const { container } = render(<MdxLink href="#gatsby" />)
+    expect(container.firstChild.nodeName).toBe("A")
   })
 
   it("creates a raw link on files", () => {
-    expect(shouldRenderRawLink("gatsby-cheat-sheet.pdf")).toBe(true)
+    const { container } = render(<MdxLink href="/gatsby-cheat-sheet.pdf" />)
+    expect(container.firstChild.nodeName).toBe("A")
   })
 
   it("creates a localized link for internal links", () => {
-    expect(shouldRenderRawLink("/tutorial")).toBe(false)
-    expect(shouldRenderRawLink("/tutorial/part-zero")).toBe(false)
+    const { container } = render(<MdxLink href="/docs" />)
+    expect(container.firstChild.nodeName).toBe("SPAN")
   })
 })
