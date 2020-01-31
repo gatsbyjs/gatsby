@@ -5,9 +5,12 @@ const isHash = str => /^#/.test(str)
 const isInternal = to => /^\/(?!\/)/.test(to)
 const isFile = to => /\..+$/.test(to)
 
+export const shouldRenderRawLink = href =>
+  isHash(href) || isFile(href) || !isInternal(href)
+
 // Only use <LocalizedLink /> for internal links that aren't hashes or files
 export default function MdxLink({ href, ...props }) {
-  if (isHash(href) || !isInternal(href) || isFile(href)) {
+  if (shouldRenderRawLink(href)) {
     return <a {...props} href={href} />
   } else {
     return <LocalizedLink {...props} to={href} />
