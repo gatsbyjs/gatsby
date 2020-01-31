@@ -435,7 +435,9 @@ const determineUsedFragmentsForDefinition = (
 ) => {
   const { def, name, isFragment, filePath } = definition
   const cachedUsedFragments = fragmentsUsedByFragment.get(name)
-  if (cachedUsedFragments) {
+
+  // `cachedUsedFragments` could be a Set with size 0 which happens to be truthy
+  if (cachedUsedFragments?.size) {
     return { usedFragments: cachedUsedFragments, missingFragments: [] }
   } else {
     const usedFragments = new Set()
