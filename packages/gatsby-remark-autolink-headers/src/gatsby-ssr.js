@@ -54,8 +54,8 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
       if (hash !== '') {
         var element = document.getElementById(hash)
         if (element) {
-          let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-          let clientTop = document.documentElement.clientTop || document.body.clientTop || 0
+          var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+          var clientTop = document.documentElement.clientTop || document.body.clientTop || 0
           var offset = element.getBoundingClientRect().top + scrollTop - clientTop
           // Wait for the browser to finish rendering before scrolling.
           setTimeout((function() {
