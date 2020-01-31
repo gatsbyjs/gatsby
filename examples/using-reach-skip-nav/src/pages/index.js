@@ -1,17 +1,24 @@
 import React from "react"
 import { Router, Link, Location } from "@reach/router"
-import { TransitionGroup, CSSTransition } from "react-transition-group"
 import Layout from "../components/layout"
+import { Helmet } from "react-helmet"
 
 import "./main.css"
 
 const App = () => (
-  <Layout className="app">
-    <FadeTransitionRouter>
-      <Page path="/" page="1" />
-      <Page path="page/:page" />
-    </FadeTransitionRouter>
-  </Layout>
+  <div className="app">
+    <Helmet>
+      <meta charSet="utf-8" />
+      <title>Gatsby @reach Skip Nav Example Site</title>
+      <html lang="en" />
+    </Helmet>
+    <Layout>
+      <FadeTransitionRouter>
+        <Page path="/" page="1" />
+        <Page path="page/:page" />
+      </FadeTransitionRouter>
+    </Layout>
+  </div>
 )
 
 const FadeTransitionRouter = props => (

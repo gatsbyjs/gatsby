@@ -12,5 +12,6 @@ module.exports = {
     // used to generate rewrites for client only paths
     // on demo hosted on Netlify
     `gatsby-plugin-netlify`,
+    `gatsby-plugin-react-helmet`,
   ],
 }

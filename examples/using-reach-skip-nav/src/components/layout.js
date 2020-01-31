@@ -21,7 +21,7 @@ class Layout extends React.Component {
       >
         <header>
           <SkipNavLink />
-          <h3 style={{ color: `tomato`, marginBottom: rhythm(1.5) }}>
+          <h3 style={{ marginBottom: rhythm(1.5) }}>
             Example of using{" "}
             <a href="https://reacttraining.com/reach-ui/skip-nav/#reach-skip-nav">
               @reach/skip-nav
