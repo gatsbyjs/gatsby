@@ -26,7 +26,7 @@ module.exports = {
           typePrefix: `Wp`,
         },
         develop: {
-          nodeUpdateInterval: 100,
+          nodeUpdateInterval: 5000,
         },
         type: {
           // NodeWithAuthor: {
