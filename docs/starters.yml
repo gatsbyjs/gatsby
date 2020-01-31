@@ -5100,6 +5100,22 @@
     - Minimal responsive design
     - Styled components
     - SEO Friendly Meta
+- url: https://gatsby-starter-catalyst-writer.netlify.com/
+  repo: https://github.com/ehowey/gatsby-starter-catalyst-writer
+  description: A full featured starter for a freelance writer or journalist to display a portfolio of their work. SANITY.io is used as the CMS. Based on Gatsby Theme Catalyst. Uses MDX and Theme-UI.
+  tags:
+    - Styling:CSS-in-JS
+    - CMS:sanity.io
+    - SEO
+    - PWA
+    - Portfolio
+  features:
+    - Based on Gatsby Theme Catalyst series of themes
+    - MDX
+    - Theme-UI integration for easy to change design tokens
+    - SEO optimized to include social media images and twitter handles
+    - Tight integration with SANITY.io including a predefined content studio.
+    - A full tutorial is available in the docs.
 - url: https://rocketdocs.netlify.com/
   repo: https://github.com/Rocketseat/gatsby-starter-rocket-docs
   description: Out of the box Gatsby Starter for creating documentation websites easily and quickly.
