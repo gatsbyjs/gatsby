@@ -79,6 +79,7 @@ export const createRemoteMediaItemNode = async ({ mediaItemNode }) => {
     {
       retries: 10,
       onFailedAttempt: error => {
+        helpers.reporter.info(`Couldn't fetch remote file ${mediaItemUrl}`)
         helpers.reporter.error(error)
       },
     }
