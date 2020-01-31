@@ -32,6 +32,9 @@ export default ({ data }) => {
                     <Heading as="h2" size="md">
                       {page.title}
                     </Heading>
+                    <Heading as="h3" size="sm">
+                      Author: {page.author.name}
+                    </Heading>
 
                     <Box>
                       <Text
@@ -76,6 +79,11 @@ export const query = graphql`
     ) {
       nodes {
         uri
+        ... on WpNodeWithAuthor {
+          author {
+            name
+          }
+        }
         ... on WpNodeWithTitle {
           title
         }
