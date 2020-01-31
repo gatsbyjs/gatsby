@@ -60,7 +60,6 @@ const paginatedWpNodeFetch = async ({
 
   if (hasNextPage) {
     await paginatedWpNodeFetch({
-      after: endCursor,
       contentTypePlural,
       nodeTypeName,
       query,
@@ -68,6 +67,7 @@ const paginatedWpNodeFetch = async ({
       activity,
       settings,
       ...variables,
+      after: endCursor,
     })
   }
 

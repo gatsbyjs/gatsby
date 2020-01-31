@@ -40,7 +40,6 @@ export const fetchWPGQLContentNodes = async ({
       query: nodeListQuery,
       url,
       activity,
-      helpers,
       settings,
       allContentNodes,
       ...variables,
