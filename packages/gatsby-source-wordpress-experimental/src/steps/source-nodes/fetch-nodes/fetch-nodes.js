@@ -120,9 +120,7 @@ export const fetchWPGQLContentNodesByContentType = async () => {
  * fetch and create Gatsby nodes from any lists of nodes in the remote schema
  */
 export const fetchAndCreateAllNodes = async () => {
-  const { helpers, pluginOptions } = getGatsbyApi()
-
-  const api = [helpers, pluginOptions]
+  const { helpers } = getGatsbyApi()
   const { reporter, cache } = helpers
 
   //
