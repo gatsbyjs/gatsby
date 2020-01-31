@@ -525,7 +525,7 @@ class Skus extends Component { // highlight-line
   // highlight-end
 }
 
-export default Skus //highlight-start
+export default Skus //highlight-line
 ```
 
 #### Adding a cart component
