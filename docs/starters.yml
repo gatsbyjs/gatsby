@@ -5136,3 +5136,11 @@
     - Custom docs schema;
     - Offline Support & WebApp Manifest;
     - Yaml-based sidebar navigation;
+- url: https://gatsby-starter-typescript-default.netlify.com/
+  repo: https://github.com/lianghx-319/gatsby-starter-typescript-default
+  description: Only typescript Gatsby starter base on Default starter
+  tags:
+    - Language:TypeScript
+  features:
+    - All features same as gatsby-starter-default
+    - Only support typescript using gatsby-typescript-plugin
