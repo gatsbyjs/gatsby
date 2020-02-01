@@ -21,7 +21,7 @@ const defaultPluginOptions = {
   },
   type: {
     MediaItem: {
-      lazyNodes: true,
+      lazyNodes: false,
       beforeChangeNode: async ({ remoteNode, actionType }) => {
         if (actionType === `CREATE` || actionType === `UPDATE`) {
           const createdMediaItem = await createRemoteMediaItemNode({
