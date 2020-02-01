@@ -5143,4 +5143,4 @@
     - Language:TypeScript
   features:
     - All features same as gatsby-starter-default
-    - Only support typescript using gatsby-typescript-plugin
+    - Only support TypeScript using gatsby-typescript-plugin
