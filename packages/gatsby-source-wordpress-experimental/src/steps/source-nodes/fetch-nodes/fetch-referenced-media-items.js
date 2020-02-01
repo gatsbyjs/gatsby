@@ -18,8 +18,6 @@ export default async function fetchReferencedMediaItemsAndCreateNodes({
   const { url, verbose } = pluginOptions
   const { typeInfo, settings, selectionSet } = queryInfo
 
-  let allMediaItemNodes = []
-
   if (settings.limit && settings.limit < referencedMediaItemNodeIds.length) {
     referencedMediaItemNodeIds = referencedMediaItemNodeIds.slice(
       0,
@@ -37,6 +35,8 @@ export default async function fetchReferencedMediaItemsAndCreateNodes({
   if (verbose) {
     activity.start()
   }
+
+  let allMediaItemNodes = []
 
   for (const relayIds of chunkedIds) {
     // relay id's are base64 encoded from strings like attachment:89381

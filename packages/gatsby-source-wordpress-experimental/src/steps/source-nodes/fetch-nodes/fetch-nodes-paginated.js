@@ -12,9 +12,9 @@ const paginatedWpNodeFetch = async ({
   nodeTypeName,
   activity,
   helpers,
+  allContentNodes = [],
   after = null,
   settings = {},
-  allContentNodes = [],
   ...variables
 }) => {
   if (
@@ -26,9 +26,7 @@ const paginatedWpNodeFetch = async ({
     variables.first = settings.limit - allContentNodes.length
   }
 
-  if (variables.first === 0) {
-    return allContentNodes
-  }
+  const typeCount = store.getState().logger.typeCount[nodeTypeName] || 0
 
   const response = await fetchGraphql({
     query,
@@ -48,7 +46,7 @@ const paginatedWpNodeFetch = async ({
     [contentTypePlural]: { nodes, pageInfo: { hasNextPage, endCursor } = {} },
   } = data
 
-  if (nodes) {
+  if (nodes && nodes.length) {
     nodes.forEach(node => {
       node.type = nodeTypeName
       // this is used to filter node interfaces by content types
@@ -56,15 +54,21 @@ const paginatedWpNodeFetch = async ({
       allContentNodes.push(node)
     })
 
+    const updatedTypeCount = typeCount + nodes.length
+
     if (activity) {
-      activity.setStatus(`fetched ${allContentNodes.length}`)
+      activity.setStatus(`fetched ${updatedTypeCount}`)
     }
 
-    store.dispatch.logger.incrementBy(nodes.length)
+    store.dispatch.logger.incrementTypeBy({
+      count: nodes.length,
+      type: nodeTypeName,
+    })
   }
 
   if (hasNextPage) {
-    await paginatedWpNodeFetch({
+    return paginatedWpNodeFetch({
+      ...variables,
       contentTypePlural,
       nodeTypeName,
       query,
@@ -72,12 +76,11 @@ const paginatedWpNodeFetch = async ({
       activity,
       helpers,
       settings,
-      ...variables,
       after: endCursor,
     })
+  } else {
+    return allContentNodes
   }
-
-  return allContentNodes
 }
 
 export { paginatedWpNodeFetch }

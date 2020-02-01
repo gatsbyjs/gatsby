@@ -4,13 +4,14 @@ import { formatLogMessage } from "~/utils/format-log-message"
 import { CREATED_NODE_IDS } from "~/constants"
 import store from "~/store"
 import { getGatsbyApi } from "~/utils/get-gatsby-api"
+import chunk from "lodash/chunk"
 
 /**
  * fetchWPGQLContentNodes
  *
  * fetches and paginates remote nodes by post type while reporting progress
  */
-export const fetchWPGQLContentNodes = async ({ queryInfo, variables }) => {
+export const fetchWPGQLContentNodes = async ({ queryInfo }) => {
   const { pluginOptions, helpers } = store.getState().gatsbyApi
   const { reporter } = helpers
   const { url, verbose } = pluginOptions
@@ -27,8 +28,9 @@ export const fetchWPGQLContentNodes = async ({ queryInfo, variables }) => {
 
   let allNodesOfContentType = []
 
+  // there's normally just one query here, but more can be added using the settings.nodeListQueries api
   for (const nodeListQuery of nodeListQueries) {
-    const contentNodes = await paginatedWpNodeFetch({
+    let contentNodes = await paginatedWpNodeFetch({
       first: 100,
       after: null,
       contentTypePlural: typeInfo.pluralName,
@@ -38,7 +40,6 @@ export const fetchWPGQLContentNodes = async ({ queryInfo, variables }) => {
       activity,
       settings,
       helpers,
-      ...variables,
     })
 
     allNodesOfContentType = [...allNodesOfContentType, ...contentNodes]
@@ -90,25 +91,30 @@ export const fetchWPGQLContentNodesByContentType = async () => {
 
   const nodeQueries = getContentTypeQueryInfos()
 
-  await Promise.all(
-    nodeQueries.map(async queryInfo => {
-      if (
-        // if the type settings call for a lazyNodes, don't fetch them upfront here
-        queryInfo.settings.lazyNodes ||
-        // if this is a media item and the nodes aren't lazy, we only want to fetch referenced nodes, so we don't fetch all of them here.
-        (!queryInfo.settings.lazyNodes &&
-          queryInfo.typeInfo.nodesTypeName === `MediaItem`)
-      ) {
-        return
-      }
+  const chunkSize = process.env.GATSBY_CONCURRENT_DOWNLOAD || 50
+  const chunkedQueries = chunk(nodeQueries, chunkSize)
 
-      const contentNodeGroup = await fetchWPGQLContentNodes({ queryInfo })
+  for (const queries of chunkedQueries) {
+    await Promise.all(
+      queries.map(async queryInfo => {
+        if (
+          // if the type settings call for a lazyNodes, don't fetch them upfront here
+          queryInfo.settings.lazyNodes ||
+          // if this is a media item and the nodes aren't lazy, we only want to fetch referenced nodes, so we don't fetch all of them here.
+          (!queryInfo.settings.lazyNodes &&
+            queryInfo.typeInfo.nodesTypeName === `MediaItem`)
+        ) {
+          return
+        }
 
-      if (contentNodeGroup) {
-        contentNodeGroups.push(contentNodeGroup)
-      }
-    })
-  )
+        const contentNodeGroup = await fetchWPGQLContentNodes({ queryInfo })
+
+        if (contentNodeGroup) {
+          contentNodeGroups.push(contentNodeGroup)
+        }
+      })
+    )
+  }
 
   return contentNodeGroups
 }
