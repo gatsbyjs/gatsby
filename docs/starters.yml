@@ -5136,6 +5136,14 @@
     - Custom docs schema;
     - Offline Support & WebApp Manifest;
     - Yaml-based sidebar navigation;
+- url: https://gatsby-starter-typescript-default.netlify.com/
+  repo: https://github.com/lianghx-319/gatsby-starter-typescript-default
+  description: Only TypeScript Gatsby starter base on Default starter
+  tags:
+    - Language:TypeScript
+  features:
+    - All features same as gatsby-starter-default
+    - Only support TypeScript using gatsby-typescript-plugin
 - url: https://gatsby-starter-catalyst-basic.netlify.com/
   repo: https://github.com/ehowey/gatsby-starter-catalyst-basic
   description: A barebones starter to accelerate the Gatsby development process. Based on Gatsby Theme Catalyst. Uses MDX and Theme-UI. Includes the core theme, a header theme, and footer theme.
