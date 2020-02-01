@@ -728,6 +728,8 @@
           link: /docs/glossary/graphql
         - title: Headless CMS
           link: /docs/glossary/headless-cms/
+        - title: Headless WordPress
+          link: /docs/glossary/headless-wordpress/
         - title: JAMStack
           link: /docs/glossary/jamstack
         - title: Node.js
