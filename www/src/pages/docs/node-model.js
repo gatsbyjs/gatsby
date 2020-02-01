@@ -8,7 +8,6 @@ import { sortBy } from "lodash-es"
 import APIReference from "../../components/api-reference"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
-import { itemListDocs } from "../../utils/sidebar/item-list"
 
 class NodeModelDocs extends React.Component {
   render() {
@@ -17,7 +16,7 @@ class NodeModelDocs extends React.Component {
       func => func.name
     ).filter(func => !func.type) // Filter out @typedef
     return (
-      <Layout location={this.props.location} itemList={itemListDocs}>
+      <Layout location={this.props.location}>
         <Container>
           <Helmet>
             <title>Node Model</title>
