@@ -215,7 +215,7 @@ You imported React, added a button with some styles, and introduced some React f
 
 ```jsx:title=src/components/checkout.js
   componentDidMount() {
-    this.stripe = window.Stripe('pk_test_jG9s3XMdSjZF9Kdm5g59zlYd')
+    this.stripe = window.Stripe("pk_test_jG9s3XMdSjZF9Kdm5g59zlYd")
   }
 ```
 
@@ -225,13 +225,13 @@ This identifies you with the Stripe platform, validates the checkout request aga
   async redirectToCheckout(event) {
     event.preventDefault()
     const { error } = await this.stripe.redirectToCheckout({
-      items: [{ sku: 'sku_DjQJN2HJ1kkvI3', quantity: 1 }],
+      items: [{ sku: "sku_DjQJN2HJ1kkvI3", quantity: 1 }],
       successUrl: `http://localhost:8000/page-2/`,
       cancelUrl: `http://localhost:8000/`,
     })
 
     if (error) {
-      console.warn('Error:', error)
+      console.warn("Error:", error)
     }
   }
 ```
@@ -488,16 +488,16 @@ This component renders a neat card for each individual SKU, with the SKU name, n
 Lastly, you need to refactor your `Skus` component to initialize the Stripe.js client, and render `SkuCards` while handing down the Stripe.js client in the `props`:
 
 ```jsx:title=src/components/Products/Skus.js
-import React, { Component } from 'react'
-import { graphql, StaticQuery } from 'gatsby'
-import SkuCard from './SkuCard' // highlight-line
+import React, { Component } from "react"
+import { graphql, StaticQuery } from "gatsby"
+import SkuCard from "./SkuCard" // highlight-line
 
 const containerStyles = {
-  display: 'flex',
-  flexDirection: 'row',
-  flexWrap: 'wrap',
-  justifyContent: 'space-between',
-  padding: '1rem 0 1rem 0',
+  display: "flex",
+  flexDirection: "row",
+  flexWrap: "wrap",
+  justifyContent: "space-between",
+  padding: "1rem 0 1rem 0",
 }
 
 class Skus extends Component {
