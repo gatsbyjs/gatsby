@@ -9611,3 +9611,28 @@
   built_by: KiwiSprout
   built_by_url: https://kiwisprout.nz/
   featured: false
+- title: Bold Oak Design
+  url: https://boldoak.design/
+  main_url: https://boldoak.design/
+  description: >
+    A Milwaukee-based web design and development studio.
+  categories:
+    - Blog
+    - Business
+    - Freelance
+    - Portfolio
+    - Programming
+    - Technology
+    - Web Development
+  featured: false
+- title: Lydia Rose Eiche
+  url: https://lydiaroseeiche.com/
+  main_url: https://lydiaroseeiche.com/
+  description: >
+    Lydia Rose Eiche is a soprano, opera singer, and actress based in Milwaukee.
+  categories:
+    - Music
+    - Portfolio
+  built_by: Bold Oak Design
+  built_by_url: https://boldoak.design/
+  featured: false
