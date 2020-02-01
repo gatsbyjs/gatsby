@@ -63,7 +63,7 @@ export const createRemoteMediaItemNode = async ({ mediaItemNode }) => {
   try {
     // Otherwise we need to download it
     remoteFileNode = await retry(
-      async bail => {
+      async () => {
         const node = await createRemoteFileNode({
           url: mediaItemUrl,
           parentNodeId: mediaItemNode.id,
@@ -74,19 +74,13 @@ export const createRemoteMediaItemNode = async ({ mediaItemNode }) => {
           reporter,
         })
 
-        if (!node) {
-          bail(new Error(`Couldn't create file node from ${mediaItemUrl}`))
-        }
-
         return node
       },
       {
-        retries: 10,
-        minTimeout: 1000,
-        maxTimeout: 60000,
+        retries: 15,
         onRetry: error => {
           helpers.reporter.error(error)
-          helpers.reporter.error(
+          helpers.reporter.info(
             formatLogMessage(`retrying remote file download`)
           )
         },
@@ -94,7 +88,7 @@ export const createRemoteMediaItemNode = async ({ mediaItemNode }) => {
     )
   } catch (error) {
     helpers.reporter.info(`Couldn't fetch remote file ${mediaItemUrl}`)
-    helpers.reporter.error(error)
+    helpers.reporter.panic(error)
 
     return null
   }
