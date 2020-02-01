@@ -5136,3 +5136,20 @@
     - Custom docs schema;
     - Offline Support & WebApp Manifest;
     - Yaml-based sidebar navigation;
+- url: https://gatsby-starter-catalyst-basic.netlify.com/
+  repo: https://github.com/ehowey/gatsby-starter-catalyst-basic
+  description: A barebones starter to accelerate the Gatsby development process. Based on Gatsby Theme Catalyst. Uses MDX and Theme-UI. Includes the core theme, a header theme, and footer theme.
+  tags:
+    - MDX
+    - Styling:CSS-in-JS
+    - SEO
+    - PWA
+  features:
+    - Based on Gatsby Theme Catalyst series of themes
+    - Theme-UI integration for easy to change design tokens
+    - Developer friendly, includes basic starting styles from Tailwind that can be used as a base to enable you to focus on other design elements
+    - Color mode switching available by default
+    - SEO optimized to include social media images and twitter handles
+    - React Scroll for one page, anchor based navigation is available
+    - Code highlighting
+    - SEO optimized to include social media images and twitter handles
