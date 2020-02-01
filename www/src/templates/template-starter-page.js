@@ -111,7 +111,7 @@ class StarterTemplate extends React.Component {
                 alt={`Screenshot of ${repoName}`}
               />
             </div>
-            <StarterSource repoUrl={repoUrl} startersYaml={startersYaml} />
+            <StarterSource repoUrl={repoUrl} startersYaml={startersYaml} starter={starterShowcase} />
             <StarterInstallation repoName={repoName} repoUrl={repoUrl} />
             <StarterDetails
               startersYaml={startersYaml}

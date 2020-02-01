@@ -389,7 +389,6 @@ Once you're happy with your query, create a new page where you can import the ne
 
 ```jsx:title=src/pages/advanced.js
 import React from "react"
-import { Link } from "gatsby"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
