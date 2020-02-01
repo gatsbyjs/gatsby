@@ -22,7 +22,10 @@ exports.sourceNodes = (
   let connectionExtraParams = getConnectionExtraParams(
     pluginOptions.extraParams
   )
-  const clientOptions = pluginOptions.clientOptions || { useNewUrlParser: true }
+  const clientOptions = pluginOptions.clientOptions || {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }
   const connectionURL = pluginOptions.connectionString
     ? `${pluginOptions.connectionString}/${dbName}${connectionExtraParams}`
     : `mongodb://${authUrlPart}${serverOptions.address}:${serverOptions.port}/${dbName}${connectionExtraParams}`
