@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.29](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.2.28...gatsby-link@2.2.29) (2020-02-01)
+
+### Bug Fixes
+
+- **gatsby-link:** Adds Type, PropType, tests, and docs for `st… ([#20807](https://github.com/gatsbyjs/gatsby/issues/20807)) ([d8937d0](https://github.com/gatsbyjs/gatsby/commit/d8937d0))
+
 ## [2.2.28](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.2.27...gatsby-link@2.2.28) (2020-01-09)
 
 **Note:** Version bump only for package gatsby-link

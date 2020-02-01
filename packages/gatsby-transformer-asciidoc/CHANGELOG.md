@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-asciidoc@1.1.22...gatsby-transformer-asciidoc@1.1.23) (2020-02-01)
+
+**Note:** Version bump only for package gatsby-transformer-asciidoc
+
 ## [1.1.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-asciidoc@1.1.21...gatsby-transformer-asciidoc@1.1.22) (2020-01-09)
 
 **Note:** Version bump only for package gatsby-transformer-asciidoc

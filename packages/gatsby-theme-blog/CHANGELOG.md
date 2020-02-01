@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.39](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.2.38...gatsby-theme-blog@1.2.39) (2020-02-01)
+
+### Bug Fixes
+
+- **gatsby-theme-blog:** fix functions that are interpolated in css ([#20987](https://github.com/gatsbyjs/gatsby/issues/20987)) ([b406c08](https://github.com/gatsbyjs/gatsby/commit/b406c08))
+
 ## [1.2.38](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.2.37...gatsby-theme-blog@1.2.38) (2020-01-29)
 
 **Note:** Version bump only for package gatsby-theme-blog
