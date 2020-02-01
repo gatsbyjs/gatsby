@@ -6,7 +6,7 @@ import store from "~/store"
 import { getPluginOptions } from "./get-gatsby-api"
 
 const http = rateLimit(axios.create(), {
-  maxRPS: 50,
+  maxRPS: process.env.GATSBY_CONCURRENT_DOWNLOAD || 50,
 })
 
 const timeout = 30 * 1000
