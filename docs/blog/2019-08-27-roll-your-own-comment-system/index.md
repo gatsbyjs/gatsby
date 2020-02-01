@@ -282,7 +282,7 @@ import moment from "moment"
 
 class Comments extends Component {
   // You'll need a constructor() here if you're not using Babel transform-class-properties
-  initialState = {
+  state = {
     comments: this.props.commentsList || [],
     newComment: {
       name: "",
@@ -294,8 +294,7 @@ class Comments extends Component {
     success: false,
     error: false,
   }
-
-  state = this.initialState
+  this.initialState = this.state
 }
 ```
 
