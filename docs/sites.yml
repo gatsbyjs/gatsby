@@ -9569,6 +9569,17 @@
   built_by: Sung M. Kim
   built_by_url: https://github.com/dance2die
   featured: false
+- title: Choose Tap
+  main_url: https://www.choosetap.com.au/
+  url: https://www.choosetap.com.au/
+  featured: false
+  description: >
+    Choose Tap aims to improve the health and wellbeing of communities and the environment by promoting tap water as the best choice of hydration for all Australians.
+  built_by: Hardhat
+  built_by_url: https://www.hardhat.com.au
+  categories:
+    - Nonprofit
+    - Community
 - title: Akash Rajpurohit
   main_url: https://akashwho.codes/
   url: https://akashwho.codes/
