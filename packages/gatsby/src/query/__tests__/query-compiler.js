@@ -276,6 +276,132 @@ describe(`actual compiling`, () => {
     expect(result.get(`mockFile`)).toMatchSnapshot()
   })
 
+  it(`handles multiple fragment usages`, async () => {
+    const nodes = [
+      createGatsbyDoc(
+        `mockFile1`,
+        `query mockFileQuery1 {
+          allDirectory {
+            nodes {
+              ...Foo
+              ...Bar
+            }
+          }
+        }`
+      ),
+      createGatsbyDoc(
+        `mockFile2`,
+        `query mockFileQuery2 {
+          allDirectory {
+            nodes {
+              ...Bar
+            }
+          }
+        }`
+      ),
+      createGatsbyDoc(
+        `mockComponent1`,
+        `fragment Bar on Directory {
+          parent {
+            ...Foo
+          }
+        }
+        fragment Foo on Directory {
+          id
+        }
+        `
+      ),
+    ]
+
+    const errors = []
+    const result = processQueries({
+      schema,
+      parsedQueries: nodes,
+      addError: e => {
+        errors.push(e)
+      },
+    })
+    expect(errors.length).toEqual(0)
+    expect(result.get(`mockFile1`)).toMatchInlineSnapshot(`
+      Object {
+        "hash": "hash",
+        "isHook": false,
+        "isStaticQuery": false,
+        "name": "mockFileQuery1",
+        "originalText": "query mockFileQuery1 {
+                allDirectory {
+                  nodes {
+                    ...Foo
+                    ...Bar
+                  }
+                }
+              }",
+        "path": "mockFile1",
+        "text": "fragment Foo on Directory {
+        id
+      }
+
+      fragment Bar on Directory {
+        id
+        parent {
+          __typename
+          id
+          ...Foo
+        }
+      }
+
+      query mockFileQuery1 {
+        allDirectory {
+          nodes {
+            id
+            ...Foo
+            ...Bar
+          }
+        }
+      }
+      ",
+      }
+    `)
+    expect(result.get(`mockFile2`)).toMatchInlineSnapshot(`
+      Object {
+        "hash": "hash",
+        "isHook": false,
+        "isStaticQuery": false,
+        "name": "mockFileQuery2",
+        "originalText": "query mockFileQuery2 {
+                allDirectory {
+                  nodes {
+                    ...Bar
+                  }
+                }
+              }",
+        "path": "mockFile2",
+        "text": "fragment Bar on Directory {
+        id
+        parent {
+          __typename
+          id
+          ...Foo
+        }
+      }
+
+      fragment Foo on Directory {
+        id
+      }
+
+      query mockFileQuery2 {
+        allDirectory {
+          nodes {
+            id
+            ...Bar
+          }
+        }
+      }
+      ",
+      }
+    `)
+  })
+
   it(`handles circular fragments`, async () => {
     const nodes = [
       createGatsbyDoc(
