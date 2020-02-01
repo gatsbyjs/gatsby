@@ -73,9 +73,7 @@ export default choroplethBase
 
 let graph = {} // we namespace our d3 graph into setup and draw
 
-let graph = {} // we namespace our d3 graph into setup and draw	var graph = {} // we namespace our d3 graph into setup and draw
-
-const stateDataURL = `https://gist.githubusercontent.com/jbolda/52cd5926e9241d26489ec82fa2bddf37/raw/f409b82e51072ea23746325eff7aa85b7ef4ebbd/states.json`	var stateDataURL = `https://gist.githubusercontent.com/jbolda/52cd5926e9241d26489ec82fa2bddf37/raw/f409b82e51072ea23746325eff7aa85b7ef4ebbd/states.json`
+const stateDataURL = `https://gist.githubusercontent.com/jbolda/52cd5926e9241d26489ec82fa2bddf37/raw/f409b82e51072ea23746325eff7aa85b7ef4ebbd/states.json`
 const statisticsDataURL = `https://gist.githubusercontent.com/jbolda/52cd5926e9241d26489ec82fa2bddf37/raw/f409b82e51072ea23746325eff7aa85b7ef4ebbd/stats.csv`
 
 graph.setup = (selection, measurements) => {
