@@ -27,7 +27,7 @@ export default async function fetchReferencedMediaItemsAndCreateNodes({
     )
   }
 
-  const nodesPerFetch = 100
+  const nodesPerFetch = 50
   const chunkedIds = chunk(referencedMediaItemNodeIds, nodesPerFetch)
 
   const activity = reporter.activityTimer(
@@ -37,8 +37,6 @@ export default async function fetchReferencedMediaItemsAndCreateNodes({
   if (verbose) {
     activity.start()
   }
-
-  const allContentNodes = []
 
   for (const relayIds of chunkedIds) {
     // relay id's are base64 encoded from strings like attachment:89381
@@ -63,7 +61,7 @@ export default async function fetchReferencedMediaItemsAndCreateNodes({
     `
 
     const allNodesOfContentType = await paginatedWpNodeFetch({
-      first: nodesPerFetch,
+      first: 100,
       contentTypePlural: typeInfo.pluralName,
       nodeTypeName: typeInfo.nodesTypeName,
       query,
@@ -71,15 +69,28 @@ export default async function fetchReferencedMediaItemsAndCreateNodes({
       activity,
       helpers,
       settings,
-      allContentNodes,
       in: ids,
     })
 
     allMediaItemNodes = [...allMediaItemNodes, ...allNodesOfContentType]
+
+    if (
+      allMediaItemNodes &&
+      allMediaItemNodes.length > 9999 &&
+      allMediaItemNodes.length % 1000
+    ) {
+      reporter.info(formatLogMessage(`fetched ${allMediaItemNodes.length}`))
+    }
   }
 
   if (!allMediaItemNodes || !allMediaItemNodes.length) {
     return
+  }
+
+  if (allMediaItemNodes.length > 2001 && !(allMediaItemNodes % 1000)) {
+    reporter.info(
+      formatLogMessage(`fetched ${allMediaItemNodes.length} MediaItems`)
+    )
   }
 
   await Promise.all(
@@ -88,6 +99,10 @@ export default async function fetchReferencedMediaItemsAndCreateNodes({
         mediaItemNode: node,
         helpers,
       })
+
+      if (!remoteFile) {
+        return
+      }
 
       node = {
         ...node,

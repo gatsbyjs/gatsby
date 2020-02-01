@@ -10,11 +10,7 @@ import { getGatsbyApi } from "~/utils/get-gatsby-api"
  *
  * fetches and paginates remote nodes by post type while reporting progress
  */
-export const fetchWPGQLContentNodes = async ({
-  queryInfo,
-  variables,
-  allContentNodes = [],
-}) => {
+export const fetchWPGQLContentNodes = async ({ queryInfo, variables }) => {
   const { pluginOptions, helpers } = store.getState().gatsbyApi
   const { reporter } = helpers
   const { url, verbose } = pluginOptions
@@ -41,7 +37,7 @@ export const fetchWPGQLContentNodes = async ({
       url,
       activity,
       settings,
-      allContentNodes,
+      helpers,
       ...variables,
     })
 
