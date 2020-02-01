@@ -11,7 +11,7 @@ We recently released accessibility improvements to client side routing in Gatsby
 In July of 2019, Marcy Sutton teamed up with [Fable Tech Labs](https://www.makeitfable.com/) to conduct user testing to determine the best user experience for navigating JavaScript applications. Marcy wrote a thorough [blog post](/blog/2019-07-11-user-testing-accessible-client-routing/) about that research. This left us with some concrete recommendations to execute on:
 
 - Provide a skip link that takes focus on a route change within the site, with a label that indicates what the link will do when activated: e.g. “skip to main navigation”.
-- Include an ARIA Live Region on page load. On a route change, append text to it indicating the current page, e.g. “Portfolio page”.
+- Include an [ARIA Live Region](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Live_Regions) on page load. On a route change, append text to it indicating the current page, e.g. “Portfolio page”.
 
 ## Some Background
 
@@ -19,7 +19,7 @@ Our first step to addressing focus management (the first recommendation, above) 
 
 While this work prioritizes screen reader users, we are still far from the most accessible solution for other disabilities. For example, users who rely on magnification, voice navigation users, and users relying on switches (devices that replace the need to use a keyboard or a mouse) have a hard time orienting themselves on a new page if focus is set on too large of an element or an inoperable element (like our wrapper `div`). Sending focus directly to a smaller, interactive control like a skip link is ideal. Unfortunately, we're limited with what we can programmatically achieve at the framework level (we have no way of knowing if a skip link exists on site pages from our `Router`).
 
-For this reason, we encourage developers to take control of focus themselves. We encourage you to take advantage of `@reach/router’s` [skip nav functionality](https://reacttraining.com/reach-ui/skip-nav/) (or implement a skip link yourself) on your site.
+For this reason, we recommend that developers take control of focus themselves and assert the functionality in [automated tests](/docs/end-to-end-testing/#writing-tests). We encourage you to take advantage of `@reach/router’s` [skip nav functionality](https://reacttraining.com/reach-ui/skip-nav/) (or implement a skip link yourself) on your site.
 
 ```javascript:title=layout.js
 import { SkipNavLink, SkipNavContent } from "@reach/skip-nav"
@@ -58,7 +58,7 @@ exports.onRouteUpdate = ({ location, prevLocation }) => {
 }
 ```
 
-**Note:** After noticing that Gatsby's .org site was missing this, I whipped up a [Pull Request](https://github.com/gatsbyjs/gatsby/pull/21108). Incremental improvements are so important!
+**Note:** After noticing that Gatsby's .org site was missing this, I whipped up a [Pull Request](https://github.com/gatsbyjs/gatsby/pull/21108) to facilitate a design discussion and work through real-world feedback. Incremental improvements are so important!
 
 ## New Improvements
 
