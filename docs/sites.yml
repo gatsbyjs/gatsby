@@ -1057,15 +1057,6 @@
   categories:
     - Marketing
     - Technology
-- title: Yuuniworks Portfolio / Blog
-  main_url: "https://www.yuuniworks.com/"
-  url: "https://www.yuuniworks.com/"
-  source_url: "https://github.com/junkboy0315/yuuni-web"
-  featured: false
-  categories:
-    - Portfolio
-    - Web Development
-    - Blog
 - title: The Bastion Bot
   main_url: "https://bastionbot.org/"
   url: "https://bastionbot.org/"
@@ -1345,7 +1336,7 @@
   categories:
     - Portfolio
   built_by: Jonas Tebbe
-  built_by_url: "http://twitter.com/jonastebbe"
+  built_by_url: "https://twitter.com/jonastebbe"
   featured: false
 - title: Parker Sarsfield Portfolio
   description: |
@@ -1934,8 +1925,8 @@
     - Agency
     - Open Source
 - title: eworld
-  main_url: "http://eworld.herokuapp.com/"
-  url: "http://eworld.herokuapp.com/"
+  main_url: "https://eworld.herokuapp.com/"
+  url: "https://eworld.herokuapp.com/"
   featured: false
   categories:
     - eCommerce
@@ -3711,7 +3702,7 @@
     - Portfolio
     - Marketing
   built_by: Maciej Leszczyński
-  built_by_url: http://twitter.com/_maciej
+  built_by_url: https://twitter.com/_maciej
   featured: false
 - title: Frame.io Workflow Guide
   main_url: https://workflow.frame.io
@@ -6128,7 +6119,7 @@
 - title: APIs You Won't Hate
   url: https://apisyouwonthate.com/blog
   main_url: https://apisyouwonthate.com
-  source_url: http://github.com/apisyouwonthate/apisyouwonthate.com
+  source_url: https://github.com/apisyouwonthate/apisyouwonthate.com
   description: >
     API development is a topic very close to our hearts. APIs You Won't Hate is a team and community dedicated to learning, writing, sharing ideas and bettering understanding of API practices. Together we can erradicate APIs we hate.
   categories:
@@ -6822,7 +6813,7 @@
   categories:
     - eCommerce
   built_by: Kyle Kitlinski
-  built_by_url: http://github.com/k-kit
+  built_by_url: https://github.com/k-kit
   featured: false
 - title: Mill3 Studio
   main_url: https://mill3.studio/en/
@@ -9178,7 +9169,7 @@
   url: https://nimahkh.github.io/nima_habibkhoda
   source_url: https://github.com/nimahkh/resume_generator
   description: >
-    The resume generator is a project to create your own resume web page easyly with Gatsby.
+    The resume generator is a project to create your own resume web page easily with Gatsby.
   categories:
     - Portfolio
   built_by: Nima Habibkhoda
@@ -9308,7 +9299,7 @@
   url: https://www.erichowey.dev/
   source_url: https://github.com/ehowey/erichoweydev
   description: >
-    Personal website and blog for Eric Howey. I am a freelance web developer based in Alberta, Canada specializing in Gatsby, React, Wordpress and Theme-UI.
+    Personal website and blog for Eric Howey. I am a freelance web developer based in Alberta, Canada specializing in Gatsby, React, WordPress and Theme-UI.
   categories:
     - Portfolio
     - Web Development
@@ -9450,7 +9441,7 @@
   url: https://adamcbowen.com/
   source_url: https://github.com/bowenac/my-website
   description: >
-    Personal website for Adam Bowen. I am a freelance web developer based in Tacoma, WA specializing in Wordpress, Craft CMS, plus a lot more and recently fell in love with Gatsby.
+    Personal website for Adam Bowen. I am a freelance web developer based in Tacoma, WA specializing in WordPress, Craft CMS, plus a lot more and recently fell in love with Gatsby.
   categories:
     - Portfolio
     - Web Development
@@ -9521,6 +9512,18 @@
   built_by: mnishiguchi
   built_by_url: https://mnishiguchi.com
   featured: false
+- title: Hear This Idea
+  main_url: https://hearthisidea.com
+  url: https://hearthisidea.com/episodes/victoria
+  source_url: https://github.com/finmoorhouse/podcast
+  description: >
+    A podcast showcasing new thinking from top academics.
+  categories:
+    - Podcast
+    - Open Source
+  built_by: Fin Moorhouse
+  built_by_url: https://finmoorhouse.com
+  featured: false
 - title: Calisthenics Skills
   main_url: https://www.calisthenicsskills.com
   url: https://www.calisthenicsskills.com
@@ -9530,6 +9533,17 @@
     - Sports
   built_by: Andrico Karoulla
   built_by_url: https://andri.co
+  featured: false
+- title: AutoloadIT
+  main_url: https://autoloadit.com/
+  url: https://autoloadit.com/
+  description: >
+    The world's leading Enterprise Automotive imaging solution
+  categories:
+    - Business
+    - Landing Page
+  built_by: Pagepro
+  built_by_url: https://pagepro.co
   featured: false
 - title: Tools of Golf
   main_url: https://toolsof.golf
@@ -9566,3 +9580,91 @@
   categories:
     - Nonprofit
     - Community
+- title: Akash Rajpurohit
+  main_url: https://akashwho.codes/
+  url: https://akashwho.codes/
+  description: >
+    Personal portfolio website of Akash Rajpurohit made using Gatsby v2, where I  write short blogs related to software development and share my experiences.
+  categories:
+    - Portfolio
+    - Blog
+  built_by: Akash Rajpurohit
+  built_by_url: https://github.com/AkashRajpurohit
+  featured: false
+- title: See Kids Dream
+  url: "https://seekidsdream.org/"
+  main_url: "https://seekidsdream.org/"
+  description: >
+    A not-for-profit organization dedicated to empower youth with the skills, motivation and confidence.
+  categories:
+    - Nonprofit
+    - Education
+    - Learning
+  built_by: CapTech Consulting
+  built_by_url: https://www.captechconsulting.com/
+  featured: false
+- title: Locale Central
+  url: https://localecentral.io/
+  main_url: https://localecentral.io/
+  description: >
+    Locale Central is a web & mobile data collection app that makes it easy to record accurate data out on the field.
+  categories:
+    - Technology
+  built_by: KiwiSprout
+  built_by_url: https://kiwisprout.nz/
+  featured: false
+- title: Cathy O'Shea
+  url: https://cathyoshea.co.nz/
+  main_url: https://cathyoshea.co.nz/
+  categories:
+    - Portfolio
+    - Real Estate
+  built_by: KiwiSprout
+  built_by_url: https://kiwisprout.nz/
+  featured: false
+- title: DG Recruit
+  url: https://dgrecruit.com
+  main_url: https://dgrecruit.com
+  description: >
+    DG Recruit is a NYC recruitment agency
+  categories:
+    - Agency
+    - WordPress
+  built_by: Waverly Lab
+  built_by_url: https://waverlylab.com
+  featured: false
+- title: Smile
+  url: https://reasontosmile.com
+  main_url: https://reasontosmile.com
+  description: >
+    Smile is an online store for buying CBD products that keep you balanced and happy
+  categories:
+    - eCommerce
+    - WordPress
+  built_by: Waverly Lab
+  built_by_url: https://waverlylab.com
+- title: Bold Oak Design
+  url: https://boldoak.design/
+  main_url: https://boldoak.design/
+  description: >
+    A Milwaukee-based web design and development studio.
+  categories:
+    - Blog
+    - Business
+    - Freelance
+    - Portfolio
+    - Programming
+    - Technology
+    - Web Development
+  featured: false
+- title: Lydia Rose Eiche
+  url: https://lydiaroseeiche.com/
+  main_url: https://lydiaroseeiche.com/
+  description: >
+    Lydia Rose Eiche is a soprano, opera singer, and actress based in Milwaukee.
+  categories:
+    - Music
+    - Portfolio
+  built_by: Bold Oak Design
+  built_by_url: https://boldoak.design/
+  featured: false

@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.19.11](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.10...gatsby@2.19.11) (2020-02-01)
+
+### Bug Fixes
+
+- **gatsby:** Fix invalid algorithm of fragment cycles detection ([#21128](https://github.com/gatsbyjs/gatsby/issues/21128)) ([f570db3](https://github.com/gatsbyjs/gatsby/commit/f570db3))
+- **gatsby:** fix onCreatePage typings ([#20871](https://github.com/gatsbyjs/gatsby/issues/20871)) ([26e0cbc](https://github.com/gatsbyjs/gatsby/commit/26e0cbc))
+
 ## [2.19.10](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.9...gatsby@2.19.10) (2020-01-29)
 
 ### Bug Fixes
