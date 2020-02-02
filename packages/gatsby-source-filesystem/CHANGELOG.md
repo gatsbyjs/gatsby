@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.48](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.47...gatsby-source-filesystem@2.1.48) (2020-02-01)
+
+### Bug Fixes
+
+- **gatsby-source-filesystem:** Retry stalled remote file downloads ([#20843](https://github.com/gatsbyjs/gatsby/issues/20843)) ([536686b](https://github.com/gatsbyjs/gatsby/commit/536686b))
+
 ## [2.1.47](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.1.46...gatsby-source-filesystem@2.1.47) (2020-01-29)
 
 **Note:** Version bump only for package gatsby-source-filesystem

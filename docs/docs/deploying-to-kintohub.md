@@ -21,13 +21,13 @@ This guide assumes you already have a Gatsby project to deploy. If you need a pr
 
 In order to deploy a Gatsby site on KintoHub, you will need to create and deploy a **KintoBlock** into an **Environment** (development, staging, production).
 
-_Note: A **KintoBlock** is connected to a Github repository. Accessing the kintoblock page will allow you to build, manage or tags any branches of your repository._
+_Note: A **KintoBlock** is connected to a GitHub repository. Accessing the kintoblock page will allow you to build, manage or tags any branches of your repository._
 
 ### Create a KintoBlock
 
 1. Register on [KintoHub](https://beta.kintohub.com).
 2. Create a new **KintoBlock** of type **Website** and give KintoHub permission to access your GitHub repo.
-3. Select your Github repo from the list and press **Continue**.
+3. Select your GitHub repo from the list and press **Continue**.
 4. Choose **Static from Build** with the following values:
 
    |                         |                                                            |
@@ -40,7 +40,7 @@ _Note: A **KintoBlock** is connected to a Github repository. Accessing the kinto
 
 5. Press **Create Website**.
 
-The build will automatically start on the default Github branch of your repository.
+The build will automatically start on the default GitHub branch of your repository.
 Wait for your build to be successful (green).
 
 #### Multiple Branches

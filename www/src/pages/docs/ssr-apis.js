@@ -8,7 +8,6 @@ import { sortBy } from "lodash-es"
 import APIReference from "../../components/api-reference"
 import Layout from "../../components/layout"
 import Container from "../../components/container"
-import { itemListDocs } from "../../utils/sidebar/item-list"
 import normalizeGatsbyApiCall from "../../utils/normalize-gatsby-api-call"
 
 class SSRAPIs extends React.Component {
@@ -30,7 +29,7 @@ class SSRAPIs extends React.Component {
     })
 
     return (
-      <Layout location={this.props.location} itemList={itemListDocs}>
+      <Layout location={this.props.location}>
         <Container>
           <Helmet>
             <title>SSR APIs</title>
