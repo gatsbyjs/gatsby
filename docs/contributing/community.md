@@ -47,18 +47,18 @@ For the latest news about Gatsby,
 
 ## Where to get support
 
+### Discord
+
+If you need an answer right away, check out the
+[Gatsby Discord](https://gatsby.dev/discord). Community & team members are happy to help you out or point you to
+useful resources. You should consider Discord as the primary way to get support.
+
 ### Stack Overflow
 
 Many members of the community use Stack Overflow to ask questions. Read through
 the [existing questions](http://stackoverflow.com/questions/tagged/gatsby)
 tagged with `gatsby` or
 [ask your own](http://stackoverflow.com/questions/ask?tags=gatsby)!
-
-### Discord
-
-If you need an answer right away, check out the
-[Gatsby Discord](https://gatsby.dev/discord). Community & team members are happy to help you out or point you to
-useful resources.
 
 ### Hashnode
 
