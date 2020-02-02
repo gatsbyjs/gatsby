@@ -34,16 +34,18 @@ module.exports = {
     {
       resolve: `gatsby-plugin-typescript`,
       options: {
-        isTSX: true, // defaults to false
-        jsxPragma: `jsx`, // defaults to "React"
-        allExtensions: true, // defaults to false
+        // default values
+        isTSX: false,
+        jsxPragma: `React`,
+        allExtensions: false,
+        allowNamespaces: false,
       },
     },
   ],
 }
 ```
 
-For more detailed documentation on the available options, visit https://babeljs.io/docs/en/babel-preset-typescript#options.
+Check the documentation for details about options, visit https://babeljs.io/docs/en/babel-preset-typescript#options.
 
 ## Caveats
 
