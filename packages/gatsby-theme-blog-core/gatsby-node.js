@@ -52,6 +52,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       slug: String!
       date: Date! @dateformat
       tags: [String]!
+      categories: [String]!
       keywords: [String]!
       excerpt: String!
   }`)
@@ -69,6 +70,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
         },
         date: { type: `Date!`, extensions: { dateformat: {} } },
         tags: { type: `[String]!` },
+        categories: { type: `[String]!` },
         keywords: { type: `[String]!` },
         excerpt: {
           type: `String!`,
@@ -133,6 +135,7 @@ exports.onCreateNode = async (
     const fieldData = {
       title: node.frontmatter.title,
       tags: node.frontmatter.tags || [],
+      categories: node.frontmatter.categories || [],
       slug,
       date: node.frontmatter.date,
       keywords: node.frontmatter.keywords || [],

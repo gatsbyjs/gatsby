@@ -21,6 +21,7 @@ export const query = graphql`
       slug
       title
       tags
+      categories
       keywords
       date(formatString: "MMMM DD, YYYY")
     }

@@ -23,6 +23,7 @@ export const query = graphql`
           title
           date(formatString: "MMMM DD, YYYY")
           tags
+          categories
         }
       }
     }
