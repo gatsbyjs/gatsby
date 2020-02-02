@@ -25,6 +25,7 @@ let _excludedRoutes
 let _normalizer
 let _normalizers
 let _keepMediaSizes
+let _restApiRoutePrefix
 
 exports.sourceNodes = async (
   {
