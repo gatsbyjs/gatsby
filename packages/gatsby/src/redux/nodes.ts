@@ -1,5 +1,6 @@
 import { store } from "./"
 import { INode } from "./types"
+import createPageDependency from "./actions/add-page-dependency"
 
 /**
  * Get all nodes from redux store.
@@ -73,7 +74,6 @@ export const getNodeAndSavePathDependency = (
   id: string,
   path: string
 ): INode | undefined => {
-  const createPageDependency = require(`./actions/add-page-dependency`)
   const node = getNode(id)
 
   if (!node) {
@@ -127,7 +127,7 @@ export const getResolvedNode = (typeName: string, id: string): INode | null => {
     return null
   }
 
-  let node = nodes.get(id)
+  const node = nodes.get(id)
 
   if (!node) {
     return null
@@ -208,7 +208,7 @@ export const ensureIndexByTypedChain = (
       node.__gatsby_resolved = resolvedNodes?.get(node.id)
     }
 
-    let v = node as any // TODO: This might need refactoring?
+    let v = node as any
     let i = 0
     while (i < chain.length && v) {
       const nextProp = chain[i++]
@@ -269,6 +269,6 @@ export const getNodesByTypedChain = (
 
   const typedKey = nodeTypeNames.join(`,`) + `/` + key
 
-  let byTypedKey = typedKeyValueIndexes?.get(typedKey)
+  const byTypedKey = typedKeyValueIndexes?.get(typedKey)
   return byTypedKey?.get(value)
 }
