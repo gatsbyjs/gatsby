@@ -58,7 +58,7 @@ module.exports = {
         baseUrl: "live-gatbsyjswp.pantheonsite.io",
         // The protocol. This can be http or https.
         protocol: "https",
-        // The rest api route prefix that your WordPress site is using. 
+        // The rest api route prefix that your WordPress site is using.
         // Sometimes this is modified by WordPress plugins.
         // If not set, it uses the default of "wp-json"
         restApiRoutePrefix: "wp-json",

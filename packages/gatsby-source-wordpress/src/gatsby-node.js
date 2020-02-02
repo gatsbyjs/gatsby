@@ -54,7 +54,7 @@ exports.sourceNodes = async (
     normalizer,
     normalizers,
     keepMediaSizes = false,
-    restApiRoutePrefix = 'wp-json',
+    restApiRoutePrefix = `wp-json`,
   }
 ) => {
   const { createNode, touchNode } = actions
