@@ -58,7 +58,7 @@ module.exports = {
         baseUrl: "live-gatbsyjswp.pantheonsite.io",
         // The protocol. This can be http or https.
         protocol: "https",
-        // The rest api route prefix that your WordPress site is using. 
+        // The rest api route prefix that your WordPress site is using.
         // Sometimes this is modified by WordPress plugins.
         // If not set, it uses the default of "wp-json"
         restApiRoutePrefix: "wp-json",
@@ -270,7 +270,7 @@ and would skip pulling Comments.
 
 You can query nodes created from WordPress using GraphQL like the following:
 Note : Learn to use the GraphQL tool and Ctrl+Spacebar at
-<http://localhost:3000/___graphiql> to discover the types and properties of your
+`http://localhost:3000/___graphiql` to discover the types and properties of your
 GraphQL model.
 
 ### Query posts

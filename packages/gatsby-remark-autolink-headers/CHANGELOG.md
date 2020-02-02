@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-autolink-headers@2.1.23...gatsby-remark-autolink-headers@2.1.24) (2020-02-01)
+
+### Bug Fixes
+
+- **gatsby-remark-autolink-headers:** remove hardcoded "let" keyword ([#21083](https://github.com/gatsbyjs/gatsby/issues/21083)) ([3a70011](https://github.com/gatsbyjs/gatsby/commit/3a70011)), closes [/github.com/gatsbyjs/gatsby/blob/5e7ccd13f79e54036869a72e423bf7cf4ab486af/packages/gatsby-remark-autolink-headers/src/gatsby-ssr.js#L51-L67](https://github.com//github.com/gatsbyjs/gatsby/blob/5e7ccd13f79e54036869a72e423bf7cf4ab486af/packages/gatsby-remark-autolink-headers/src/gatsby-ssr.js/issues/L51-L67)
+
 ## [2.1.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-autolink-headers@2.1.22...gatsby-remark-autolink-headers@2.1.23) (2020-01-09)
 
 ### Bug Fixes
