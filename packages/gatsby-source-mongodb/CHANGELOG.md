@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.31](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-mongodb@2.1.30...gatsby-source-mongodb@2.1.31) (2020-02-02)
+
+### Bug Fixes
+
+- **gatsby-source-mongodb:** pass useUnifiedTopology option to MongoClient ([#21127](https://github.com/gatsbyjs/gatsby/issues/21127)) ([61ec54b](https://github.com/gatsbyjs/gatsby/commit/61ec54b))
+
 ## [2.1.30](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-mongodb@2.1.29...gatsby-source-mongodb@2.1.30) (2020-02-01)
 
 **Note:** Version bump only for package gatsby-source-mongodb
