@@ -1,10 +1,10 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { useColorMode } from "theme-ui"
-import { Link } from "gatsby"
 import GithubIcon from "react-icons/lib/go/mark-github"
 import TwitterIcon from "react-icons/lib/fa/twitter"
 
+import Link from "../components/localized-link"
 import SearchForm from "../components/search-form"
 import DiscordIcon from "../components/discord"
 import logo from "../assets/logo.svg"
@@ -188,9 +188,7 @@ const Navigation = ({ pathname }) => {
                 listStyle: `none`,
                 m: 0,
                 maskImage: t =>
-                  `linear-gradient(to right, transparent, white ${
-                    t.space[1]
-                  }, white 98%, transparent)`,
+                  `linear-gradient(to right, transparent, white ${t.space[1]}, white 98%, transparent)`,
                 overflowX: `auto`,
               },
             }}

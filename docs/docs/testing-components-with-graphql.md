@@ -254,7 +254,7 @@ the Header component as:
 
 ```jsx:title=src/components/header.js
 import React from "react"
-import { StaticQuery, graphql } from "gatsby"
+import { useStaticQuery, graphql } from "gatsby"
 
 export const PureHeader = ({ data }) => (
   <header>
@@ -262,7 +262,7 @@ export const PureHeader = ({ data }) => (
   </header>
 )
 
-export const Header = props => (
+export const Header = props => {
   const data = useStaticQuery(graphql`
     query {
       site {
@@ -274,7 +274,7 @@ export const Header = props => (
   `)
 
   return <PureHeader {...props} data={data}></PureHeader>
-)
+}
 
 export default Header
 ```

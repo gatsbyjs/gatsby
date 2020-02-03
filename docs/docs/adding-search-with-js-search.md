@@ -52,7 +52,7 @@ And finally, as you go through the code, be mindful it does not adhere to the be
 
 Start by creating a file named `SearchContainer.js` in the `src/components/` folder, then add the following code to get started:
 
-```javascript
+```jsx:title=src/components/SearchContainer.js
 import React, { Component } from "react"
 import Axios from "axios"
 import * as JsSearch from "js-search"
@@ -257,13 +257,13 @@ Run `gatsby develop` and if all went well, open your browser of choice and enter
 
 ## JS-Search with a big dataset
 
-Now let's try a different approach, this time instead of letting the component do all of the work, it's Gatsby's job to do that and pass all the data to a page defined by the path property, via [pageContext](/docs/behind-the-scenes-terminology/#pagecontext).
+Now try a different approach, this time instead of letting the component do all of the work, it's Gatsby's job to do that and pass all the data to a page defined by the path property, via [pageContext](/docs/behind-the-scenes-terminology/#pagecontext).
 
 To do this, some changes are required.
 
 Start by modifying the `gatsby-node.js` file by adding the following code:
 
-```javascript
+```javascript:title=gatsby-node.js
 const path = require("path")
 const axios = require("axios")
 
@@ -309,7 +309,7 @@ exports.createPages = ({ actions }) => {
 
 Create a file named `ClientSearchTemplate.js` in the `src/templates/` folder, then add the following code to get started:
 
-```javascript
+```jsx:title=src/templates/ClientSearchTemplate.js
 import React from "react"
 import ClientSearch from "../components/ClientSearch"
 
@@ -334,7 +334,7 @@ export default SearchTemplate
 
 Create a file named `ClientSearch.js` in the `src/components/` folder, then add the following code as a baseline:
 
-```javascript
+```jsx:title=src/components/ClientSearch.js
 import React, { Component } from "react"
 import * as JsSearch from "js-search"
 

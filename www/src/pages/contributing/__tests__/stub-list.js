@@ -22,6 +22,7 @@ jest.mock(`../../../utils/sidebar/item-list`, () => {
         },
       ],
     },
+    getItemList: jest.fn(),
   }
 })
 jest.mock(`react-modal`, () => {

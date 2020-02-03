@@ -230,13 +230,13 @@ You can install [block-content-to-react](https://www.npmjs.com/package/@sanity/b
 
 If you don't want to attach your Sanity project's ID to the repo, you can easily store it in .env files by doing the following:
 
-```js
-// In your .env file
+```text:title=.env
 SANITY_PROJECT_ID = abc123
 SANITY_DATASET = production
 SANITY_TOKEN = my-super-secret-token
+```
 
-// In your gatsby-config.js file
+```js:title=gatsby-config.js
 require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`
 })

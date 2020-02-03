@@ -169,7 +169,8 @@ export const visuallyHidden = {
 }
 
 // Layout
-export const breakpointGutter = `@media (min-width: 42rem)`
+export const blogWidth = `42rem`
+export const breakpointGutter = `@media (min-width: ${blogWidth})`
 
 export const pullIntoGutter = {
   marginLeft: `-${space[6]}`,

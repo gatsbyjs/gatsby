@@ -59,24 +59,24 @@ But for many other users, that want easy solutions to a common problems, they fi
 
 Some tweets to that effect:
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">I want to make a really basic docs website. Ideally I just want to write<br/> markdown and CSS. Nothing fancy, everything static. Trying out <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> but feel intimidated with the usage of GraphQL in the boilerplate project and having to use JS to write everything up.</p>&mdash; Sebastian McKenzie (@sebmck) <a href="https://twitter.com/sebmck/status/1085279417151057920?ref_src=twsrc%5Etfw">January 15, 2019</a></blockquote>
+https://twitter.com/sebmck/status/1085279417151057920
 
 ---
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">I’m a fan of Gatsby and similar static site generators, there should be a level of discretion exercised when using them it to build certain kinds of static websites <a href="https://twitter.com/hashtag/webdev?src=hash&amp;ref_src=twsrc%5Etfw">#webdev</a> <a href="https://twitter.com/hashtag/html?src=hash&amp;ref_src=twsrc%5Etfw">#html</a> <a href="https://twitter.com/hashtag/css?src=hash&amp;ref_src=twsrc%5Etfw">#css</a> <a href="https://twitter.com/hashtag/javascript?src=hash&amp;ref_src=twsrc%5Etfw">#javascript</a></p>&mdash; Eric Alli (@ericalli) <a href="https://twitter.com/ericalli/status/1083271854653992962?ref_src=twsrc%5Etfw">January 10, 2019</a></blockquote>
+https://twitter.com/ericalli/status/1083271854653992962
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Asses what you’re building; if it’s a landing page, marketing site or a simple portfolio for instance, throwing a fancy static site generator at it is probably overkill</p>&mdash; Eric Alli (@ericalli) <a href="https://twitter.com/ericalli/status/1083271856809897985?ref_src=twsrc%5Etfw">January 10, 2019</a></blockquote>
+https://twitter.com/ericalli/status/1083271856809897985
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">When considering to use a static site generator, if it takes a dozen “plugins” to build the approximation of a basic production-ready website, that’s probably a good place to draw a line in the sand</p>&mdash; Eric Alli (@ericalli) <a href="https://twitter.com/ericalli/status/1083271858605023232?ref_src=twsrc%5Etfw">January 10, 2019</a></blockquote>
+https://twitter.com/ericalli/status/1083271858605023232
 
 ---
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">A thread about a lesson. I want to update my website. I spent about ten hours this weekend messing with GatsbyJS, GraphQL, React, Netlify, all that. I got a working version that does some really magical stuff with a static page.</p>&mdash; jordan t. thevenow-harrison (@jtth) <a href="https://twitter.com/jtth/status/1080519113930350592?ref_src=twsrc%5Etfw">January 2, 2019</a></blockquote>
+https://twitter.com/jtth/status/1080519113930350592
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">A lot of that time was spent refreshing, learning, and digesting new technologies that are interesting and powerful. But here&#39;s the thing: there&#39;s no reason for me to use this complex stuff to make my website slightly better. It doesn&#39;t make me more likely to write.</p>&mdash; jordan t. thevenow-harrison (@jtth) <a href="https://twitter.com/jtth/status/1080519116195356674?ref_src=twsrc%5Etfw">January 2, 2019</a></blockquote>
+https://twitter.com/jtth/status/1080519116195356674
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">So I&#39;m just gonna switch to WordPress and buy a theme. I&#39;m a developer and a designer, but that time is best spent developing and designing the things I want to make for the world, not my little website.</p>&mdash; jordan t. thevenow-harrison (@jtth) <a href="https://twitter.com/jtth/status/1080519116992249858?ref_src=twsrc%5Etfw">January 2, 2019</a></blockquote>
+https://twitter.com/jtth/status/1080519116992249858
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">This year I want to cut out the little distractions that have built up like dust in the corners, those time sinks and bike-shedding and YouTube K-holes, and focus in on the things I want to make and share with the world. I want to make time for the things that galvanize my soul.</p>&mdash; jordan t. thevenow-harrison (@jtth) <a href="https://twitter.com/jtth/status/1080519117688442880?ref_src=twsrc%5Etfw">January 2, 2019</a></blockquote>
+https://twitter.com/jtth/status/1080519117688442880
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Update: I did not go with WordPress. But still. Less self-churn, more quick things to get what needs to be out there out there, less tool-mastering without explicit goals. Tool knowledge comes through purposeful use.</p>&mdash; jordan t. thevenow-harrison (@jtth) <a href="https://twitter.com/jtth/status/1081288682785726464?ref_src=twsrc%5Etfw">January 4, 2019</a></blockquote>
+https://twitter.com/jtth/status/1081288682785726464

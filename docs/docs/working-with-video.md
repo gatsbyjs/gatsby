@@ -23,7 +23,8 @@ If you would like more control over how YouTube (or similar) videos are embedded
 
 In this reusable sample component, you could include props for video data like URL or title, any necessary markup for styling purposes, and the common `iframe` embed code:
 
-```js:title=components/video.js
+```jsx:title=src/components/video.js
+import React from "react"
 const Video = ({ videoSrcURL, videoTitle, ...props }) => (
   <div className="video">
     <iframe
@@ -37,6 +38,7 @@ const Video = ({ videoSrcURL, videoTitle, ...props }) => (
     />
   </div>
 )
+export default Video
 ```
 
 You would then include this component in a template or page with a video source URL and title passed in as props. The data for video URLs and titles can be sourced in multiple ways, such as importing JSON or [querying data from Markdown with GraphQL](#querying-data-from-markdown-with-graphql). You can also hard-code video data for something fun, like a custom 404 page with an Easter egg YouTube video:
@@ -91,7 +93,7 @@ import Video from "../components/video"
 export default function VlogTemplate({
   data, // this prop will be injected by the GraphQL query below.
 }) {
-  const { markdownRemark } = data // data.markdownRemark holds our post data
+  const { markdownRemark } = data // data.markdownRemark holds your post data
   const { frontmatter, html } = markdownRemark
   return (
     <div className="blog-post-container">
@@ -138,7 +140,7 @@ HTML5 provides the `<video>` media element for working with videos. Inside the `
 If you have a video called `dog.mp4` in your site under `src/assets/dog.mp4`, you can [include that video in your page with webpack](/docs/importing-assets-into-files) like you would other assets. Then reference it in a `<source>` element, which is wrapped by a `<video>` element:
 
 <!-- prettier-ignore -->
-```javascript:title=src/pages/index.js
+```jsx:title=src/pages/index.js
 import React from "react"
 import DogVideo from "../assets/dog.mp4"
 
@@ -157,7 +159,7 @@ The `controls` attribute on the `<video>` will provide a default set of buttons 
 Adding more source tags for additional formats will allow the browser to find a source type that it supports, if there are no matching source types the video will fail to load. You can see what formats are supported in different browsers on [MDN's docs about supported media formats](https://developer.mozilla.org/en-US/docs/Web/HTML/Supported_media_formats#Browser_compatibility).
 
 <!-- prettier-ignore -->
-```javascript:title=src/pages/index.js
+```jsx:title=src/pages/index.js
 import React from "react"
 import DogMp4 from "../assets/dog.mp4"
 import DogOgg from "../assets/dog.ogg" // highlight-line
@@ -190,7 +192,7 @@ Though captions, transcripts, and audio descriptions primarily aim to assist tho
 
 HTML5 provides support for these types of assistive content through the `<track>` element. The track element is nested under a `<video`> element as an empty tag. An example usage of the `<track>` element with a video looks like this:
 
-```javascript:title=src/pages/index.js
+```jsx:title=src/pages/index.js
 import React from "react"
 import DogMp4 from "../assets/dog.mp4"
 import Captions from "file-loader!../assets/captions.vtt" // highlight-line

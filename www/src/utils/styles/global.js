@@ -92,6 +92,21 @@ const gatsbyHighlightLanguageBadges = t => {
       content: `'jsx'`,
       background: `#61dafb`,
     },
+    ".gatsby-highlight pre[class='language-typescript']::before": {
+      content: `'ts'`,
+      background: `#294e80`,
+      color: t.colors.white,
+    },
+    ".gatsby-highlight pre[class='language-ts']::before": {
+      content: `'ts'`,
+      background: `#294e80`,
+      color: t.colors.white,
+    },
+    ".gatsby-highlight pre[class='language-tsx']::before": {
+      content: `'tsx'`,
+      background: `#294e80`,
+      color: t.colors.white,
+    },
     ".gatsby-highlight pre[class='language-graphql']::before": {
       content: `'GraphQL'`,
       background: `#E10098`,
@@ -339,6 +354,7 @@ export const globalStyles = t => {
     },
     ".egghead-video": {
       border: `none`,
+      maxWidth: `100%`,
     },
     // Fancy external links in posts, borrowed from
     // https://github.com/comfusion/after-dark/
