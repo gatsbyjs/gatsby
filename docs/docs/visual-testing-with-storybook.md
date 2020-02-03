@@ -17,7 +17,7 @@ To set up Storybook you need to install dependencies and do some custom configur
 npx -p @storybook/cli sb init
 ```
 
-> Note that if you're running an older version of `npm` (>5.2.0) you should run the following command instead: `npm install -g @storybook/cli`. You can then run `sb init` from your Gatsby root directory to initialise Storybook.
+> Note that if you're running an older version of `npm` (<5.2.0) you should run the following command instead: `npm install -g @storybook/cli`. You can then run `sb init` from your Gatsby root directory to initialise Storybook.
 
 This command adds a set of boilerplate files for Storybook in your project. However, since this is for a Gatsby project, you need to update the default Storybook configuration a bit so you don't get errors when trying to use Gatsby specific components inside of the stories.
 
