@@ -5165,7 +5165,6 @@
   repo: https://github.com/alexandreramosdev/gatsby-starter-default-dark-mode
   description: A simple starter to get up and developing quickly with Gatsby, dark mode a styled-components.
   tags:
-    - MODE:Dark
     - Styling:CSS-in-JS
     - Onepage
     - Linting
