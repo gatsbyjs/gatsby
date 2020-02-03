@@ -12,7 +12,7 @@ In this document we’ll answer common questions, list guidelines and illustrate
 
 ## First touch maintenance
 
-For Gatsby the first line of communication between a user and the team is the issue tracker on GitHub. Typically, every day 20-30 issues are opened -- that's one every hour!
+For Gatsby the first line of communication between an user and the team is the issue tracker on GitHub. Typically, every day 20-30 issues are opened -- that's one every hour!
 
 An opened issue could be:
 
