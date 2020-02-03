@@ -5161,3 +5161,15 @@
     - React Scroll for one page, anchor based navigation is available
     - Code highlighting
     - SEO optimized to include social media images and twitter handles
+- url: https://gatsby-starter-default-dark-mode.netlify.com/
+  repo: https://github.com/alexandreramosdev/gatsby-starter-default-dark-mode
+  description: A simple starter to get developing quickly with Gatsby, dark mode, and styled-components.
+  tags:
+    - Styling:CSS-in-JS
+    - Onepage
+    - Linting
+  features:
+    - Dark mode
+    - Styled Components
+    - Comes with React Helmet for adding site meta tags
+    - Includes plugins for offline support out of the box
