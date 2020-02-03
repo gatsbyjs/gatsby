@@ -5163,7 +5163,7 @@
     - SEO optimized to include social media images and twitter handles
 - url: https://gatsby-starter-default-dark-mode.netlify.com/
   repo: https://github.com/alexandreramosdev/gatsby-starter-default-dark-mode
-  description: A simple starter to get up and developing quickly with Gatsby, dark mode a styled-components.
+  description: A simple starter to get developing quickly with Gatsby, dark mode, and styled-components.
   tags:
     - Styling:CSS-in-JS
     - Onepage
