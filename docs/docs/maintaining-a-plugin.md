@@ -1,6 +1,8 @@
 ---
 title: Maintaining a Plugin
----<!-- This is a stub article meant to be filled with tips on how to maintain a Gatsby plugin once you've published it as an npm package.
+---
+
+<!-- This is a stub article meant to be filled with tips on how to maintain a Gatsby plugin once you've published it as an npm package.
 -->
 
 The Gatsby community trives on the power of plugins, we often find that there is a plugin for almost everything ranging from source plugins to transformer plugins to plugins that are plugins for other plugin 😅. There is a very cool [naming convention for plugins](https://www.gatsbyjs.org/docs/naming-a-plugin/).
