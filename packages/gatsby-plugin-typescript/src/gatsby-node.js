@@ -14,6 +14,12 @@ function onCreateBabelConfig({ actions }, options) {
   actions.setBabelPlugin({
     name: require.resolve(`@babel/plugin-proposal-numeric-separator`),
   })
+  actions.setBabelPlugin({
+    name: require.resolve(`@babel/plugin-proposal-class-properties`),
+  })
+  actions.setBabelPlugin({
+    name: require.resolve(`@babel/plugin-proposal-private-methods`),
+  })
 }
 
 function onCreateWebpackConfig({ actions, loaders }) {

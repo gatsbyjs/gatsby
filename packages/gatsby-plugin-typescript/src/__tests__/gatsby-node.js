@@ -25,7 +25,7 @@ describe(`gatsby-plugin-typescript`, () => {
         name: expect.stringContaining(path.join(`@babel`, `preset-typescript`)),
         options,
       })
-      expect(actions.setBabelPlugin).toHaveBeenCalledTimes(3)
+      expect(actions.setBabelPlugin).toHaveBeenCalledTimes(5)
       expect(actions.setBabelPlugin).toHaveBeenCalledWith({
         name: expect.stringContaining(
           path.join(`@babel`, `plugin-proposal-optional-chaining`)
@@ -39,6 +39,16 @@ describe(`gatsby-plugin-typescript`, () => {
       expect(actions.setBabelPlugin).toHaveBeenCalledWith({
         name: expect.stringContaining(
           path.join(`@babel`, `plugin-proposal-numeric-separator`)
+        ),
+      })
+      expect(actions.setBabelPlugin).toHaveBeenCalledWith({
+        name: expect.stringContaining(
+          path.join(`@babel`, `plugin-proposal-class-properties`)
+        ),
+      })
+      expect(actions.setBabelPlugin).toHaveBeenCalledWith({
+        name: expect.stringContaining(
+          path.join(`@babel`, `plugin-proposal-private-methods`)
         ),
       })
     })
