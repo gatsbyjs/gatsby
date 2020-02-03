@@ -724,6 +724,8 @@
     - title: Glossary
       link: /docs/glossary/
       items:
+        - title: Decoupled Drupal
+          link: /docs/glossary/decoupled-drupal
         - title: GraphQL
           link: /docs/glossary/graphql
         - title: Headless CMS
