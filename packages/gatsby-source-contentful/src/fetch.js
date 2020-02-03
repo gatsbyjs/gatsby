@@ -75,7 +75,7 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`)
 
   let currentSyncData
   try {
-    let query = syncToken ? { nextSyncToken: syncToken } : { initial: true }
+    let query = syncToken ? { nextSyncToken: syncToken } : { initial: true, resolveLinks: false }
     currentSyncData = await client.sync(query)
   } catch (e) {
     reporter.panic(`Fetching contentful data failed`, e)
