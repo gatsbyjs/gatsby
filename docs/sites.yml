@@ -178,17 +178,6 @@
   built_by: Corey Ward
   built_by_url: "http://www.coreyward.me/"
   featured: true
-- title: Timely
-  main_url: "https://timelyapp.com/"
-  url: "https://timelyapp.com/"
-  description: |
-    Fully automatic time tracking. For those who trade in time.
-  categories:
-    - Productivity
-    - Featured
-  built_by: Timm Stokke
-  built_by_url: "https://timm.stokke.me"
-  featured: true
 - title: Snap Kit
   main_url: "https://kit.snapchat.com/"
   url: "https://kit.snapchat.com/"
@@ -615,14 +604,6 @@
   categories:
     - Web Development
     - Documentation
-- title: High School Hackathons
-  main_url: "https://hackathons.hackclub.com/"
-  url: "https://hackathons.hackclub.com/"
-  source_url: "https://github.com/hackclub/hackathons"
-  featured: false
-  categories:
-    - Education
-    - Web Development
 - title: Hapticmedia
   main_url: "https://hapticmedia.fr/en/"
   url: "https://hapticmedia.fr/en/"
@@ -1880,21 +1861,6 @@
   built_by: Just Ask Users
   built_by_url: "https://justaskusers.com/"
   featured: false
-- title: Tensiq
-  main_url: "https://tensiq.com"
-  url: "https://tensiq.com"
-  source_url: "https://github.com/Tensiq/tensiq-site"
-  description: >
-    Tensiq is an e-Residency startup, that provides development in cutting-edge
-    technology while delivering secure, resilient, performant solutions.
-  categories:
-    - Web Development
-    - Mobile Development
-    - Agency
-    - Open Source
-  built_by: Jens
-  built_by_url: "https://github.com/arrkiin"
-  featured: false
 - title: Mintfort
   main_url: "https://mintfort.com/"
   url: "https://mintfort.com/"
@@ -2493,17 +2459,6 @@
   built_by: Obytes
   built_by_url: "https://www.obytes.com/"
   featured: false
-- title: Vote Save America
-  main_url: "https://votesaveamerica.com"
-  url: "https://votesaveamerica.com"
-  description: >
-    Be a voter. Save America.
-  categories:
-    - Education
-    - Government
-  featured: false
-  built_by: Jeremy E. Miller
-  built_by_url: "https://jeremyemiller.com/"
 - title: Emergence
   main_url: https://emcap.com/
   url: https://emcap.com/
@@ -4424,17 +4379,6 @@
     - Mobile Development
   built_by: Jean Regisser
   built_by_url: "https://jeanregisser.com/"
-- title: Axcept - Visual Screenshot Testing
-  url: https://axcept.io
-  main_url: https://axcept.io
-  description: >
-    Visual Testing for everyone
-  categories:
-    - Documentation
-    - Web Development
-  built_by: d:code:it
-  built_by_url: https://dcodeit.com
-  featured: false
 - title: Chase Ohlson
   url: https://chaseohlson.com
   main_url: https://chaseohlson.com
@@ -5551,15 +5495,6 @@
     - Technology
     - User Experience
     - Web Development
-- title: Measures for Justice
-  main_url: https://www.measuresforjustice.org
-  url: https://www.measuresforjustice.org
-  description: >
-    Measures for Justice gathers criminal justice data at the county level and makes it available on a free public Data Portal. Site rebuilt from scratch with GatsbyJS.
-  categories:
-    - Nonprofit
-    - Marketing
-  featured: false
 - title: Raconteur Agency
   main_url: https://www.raconteur.net/agency
   url: https://www.raconteur.net/agency
@@ -7124,15 +7059,6 @@
     - Food
   built_by: Ramón Chancay
   built_by_url: "https://ramonchancay.me/"
-- title: NuBrakes
-  url: https://nubrakes.com/
-  main_url: https://nubrakes.com/
-  description: >
-    NuBrakes is the mobile brake repair company that comes to you! We perform brake pad, caliper, and rotor replacement at your office, apartment or home!
-  categories:
-    - Business
-    - Entrepreneurship
-  featured: false
 - title: Third and Grove
   url: https://www.thirdandgrove.com
   main_url: https://www.thirdandgrove.com
