@@ -11,6 +11,8 @@ require(`../../../db/__tests__/fixtures/ensure-loki`)()
 const report = require(`gatsby-cli/lib/reporter`)
 report.error = jest.fn()
 report.panic = jest.fn()
+report.warn = jest.fn()
+report.log = jest.fn()
 report.activityTimer = jest.fn(() => {
   return {
     start: jest.fn(),
@@ -21,6 +23,8 @@ report.activityTimer = jest.fn(() => {
 afterEach(() => {
   report.error.mockClear()
   report.panic.mockClear()
+  report.warn.mockClear()
+  report.log.mockClear()
 })
 
 describe(`GraphQL field extensions`, () => {
@@ -1311,7 +1315,10 @@ describe(`GraphQL field extensions`, () => {
       const expected = {
         nestedTest: {
           fromNextLevel: 26,
-          fromBottomLevel: [[`lorem`, `ipsum`], [`dolor`, `sit`]],
+          fromBottomLevel: [
+            [`lorem`, `ipsum`],
+            [`dolor`, `sit`],
+          ],
         },
       }
       expect(results).toEqual(expected)

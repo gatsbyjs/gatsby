@@ -43,7 +43,6 @@ const onPreRouteUpdate = (location, prevLocation) => {
 const onRouteUpdate = (location, prevLocation) => {
   if (!maybeRedirect(location.pathname)) {
     apiRunner(`onRouteUpdate`, { location, prevLocation })
-
     // Temp hack while awaiting https://github.com/reach/router/issues/119
     window.__navigatingToLink = false
   }
@@ -106,7 +105,7 @@ const navigate = (to, options = {}) => {
           navigator.serviceWorker.controller.state === `activated`
         ) {
           navigator.serviceWorker.controller.postMessage({
-            gatsbyApi: `resetWhitelist`,
+            gatsbyApi: `clearPathResources`,
           })
         }
 
@@ -141,7 +140,7 @@ function shouldUpdateScroll(prevRouterProps, { location }) {
     if (oldPathname === pathname) {
       // Scroll to element if it exists, if it doesn't, or no hash is provided,
       // scroll to top.
-      return hash ? hash.slice(1) : [0, 0]
+      return hash ? decodeURI(hash.slice(1)) : [0, 0]
     }
   }
   return true
@@ -157,6 +156,55 @@ function init() {
 
   // Check for initial page-load redirect
   maybeRedirect(window.location.pathname)
+}
+
+class RouteAnnouncer extends React.Component {
+  constructor(props) {
+    super(props)
+    this.announcementRef = React.createRef()
+  }
+
+  componentDidUpdate(prevProps, nextProps) {
+    requestAnimationFrame(() => {
+      let pageName = `new page at ${this.props.location.pathname}`
+      if (document.title) {
+        pageName = document.title
+      }
+      const pageHeadings = document
+        .getElementById(`gatsby-focus-wrapper`)
+        .getElementsByTagName(`h1`)
+      if (pageHeadings && pageHeadings.length) {
+        pageName = pageHeadings[0].textContent
+      }
+      const newAnnouncement = `Navigated to ${pageName}`
+      const oldAnnouncement = this.announcementRef.current.innerText
+      if (oldAnnouncement !== newAnnouncement) {
+        this.announcementRef.current.innerText = newAnnouncement
+      }
+    })
+  }
+
+  render() {
+    return (
+      <div
+        id="gatsby-announcer"
+        style={{
+          position: `absolute`,
+          top: 0,
+          width: 1,
+          height: 1,
+          padding: 0,
+          overflow: `hidden`,
+          clip: `rect(0, 0, 0, 0)`,
+          whiteSpace: `nowrap`,
+          border: 0,
+        }}
+        aria-live="assertive"
+        aria-atomic="true"
+        ref={this.announcementRef}
+      ></div>
+    )
+  }
 }
 
 // Fire on(Pre)RouteUpdate APIs
@@ -186,7 +234,12 @@ class RouteUpdates extends React.Component {
   }
 
   render() {
-    return this.props.children
+    return (
+      <React.Fragment>
+        {this.props.children}
+        <RouteAnnouncer location={location} />
+      </React.Fragment>
+    )
   }
 }
 

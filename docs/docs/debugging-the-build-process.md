@@ -29,7 +29,7 @@ exports.onCreateNode = args => {
 
 There is a bug in this code and using it will produce the error below:
 
-```
+```js
 TypeError: Cannot read property 'internal' of undefined
 
   - gatsby-node.js:6 Object.exports.onCreateNode.args [as onCreateNode]
@@ -42,11 +42,11 @@ One of the fastest ways to gain insight into Gatsby's build process is using the
 
 Adding a `console.log` statement in the sample from above will print the variable into your terminal. There you might notice that `args` contains a lower-cased node variable.
 
-```diff:title=gatsby-node.js
+```js:title=gatsby-node.js
 const { createFilePath } = require("gatsby-source-filesystem")
 
 exports.onCreateNode = args => {
-+ console.log(args)
+  console.log(args) // highlight-line
   const { actions, Node } = args
   if (Node.internal.type === "MarkdownRemark") {
     const { createNodeField } = actions
@@ -70,7 +70,7 @@ If you use VS Code and its integrated terminal, you can configure it to automati
 1.  Press `Ctrl + ,` or `⌘ + ,` to open your preferences. Type `node debug` into the search bar. Make sure the `Auto Attach` option is set to `on`.
     ![Search for on debug and set attach to enable](./images/set-node-attach-to-on.png)
 
-2.  Using VS Code's integrated terminal run `node --nolazy --inspect-brk node_modules/.bin/gatsby develop` instead of `gatsby develop`
+2.  Using VS Code's integrated terminal run `node --nolazy --inspect-brk node_modules/gatsby/dist/bin/gatsby develop` instead of `gatsby develop`
 
 3.  Set breakpoints and debug!
 

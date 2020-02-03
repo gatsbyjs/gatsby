@@ -37,7 +37,7 @@ async function onCreateNode({
       `functionBind`,
       `functionSent`,
       `dynamicImport`,
-      `flow`,
+      _.includes([`ts`, `tsx`], node.extension) ? `typescript` : `flow`,
     ],
   }
 

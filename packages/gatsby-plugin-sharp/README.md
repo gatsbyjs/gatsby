@@ -47,6 +47,9 @@ plugins: [
 - `width` (int, default: 400)
 - `height` (int)
 - `quality` (int, default: 50)
+- `jpegQuality` (int)
+- `pngQuality` (int)
+- `webpQuality` (int)
 - `jpegProgressive` (bool, default: true)
 - `pngCompressionLevel` (int, default: 9)
 - `base64`(bool, default: false)
@@ -67,6 +70,9 @@ Automatically create sizes for different resolutions — we do 1x, 1.5x, and 2x.
 - `width` (int, default: 400)
 - `height` (int)
 - `quality` (int, default: 50)
+- `jpegQuality` (int)
+- `pngQuality` (int)
+- `webpQuality` (int)
 
 #### Returns
 
@@ -106,6 +112,9 @@ fit strategies `CONTAIN` and `FILL` will not work when `cropFocus` is assigned t
 - `maxWidth` (int, default: 800)
 - `maxHeight` (int)
 - `quality` (int, default: 50)
+- `jpegQuality` (int)
+- `pngQuality` (int)
+- `webpQuality` (int)
 - `srcSetBreakpoints` (array of int, default: [])
 - `fit` (string, default: '[sharp.fit.cover][6]')
 - `background` (string, default: 'rgba(0,0,0,1)')
@@ -153,7 +162,7 @@ Rotate the image (after cropping). See Sharp's [rotate][7].
 Uses Sharp's [greyscale][8] to convert the source image to 8-bit greyscale, 256
 shades of grey, e.g.
 
-```javascript
+```graphql
 allImageSharp {
   edges {
     node {
@@ -173,7 +182,7 @@ Applys a "duotone" effect (see [I][1], [II][2], [III][3]) to the source image if
 given two hex colors `shadow` and `highlight` defining start and end color of
 the duotone gradient, e.g.
 
-```javascript
+```graphql
 fixed(
   width: 800,
   duotone: {
@@ -193,7 +202,7 @@ Logic is borrowed from [react-duotone][5].
 
 You can pass a third optional parameter, `opacity`:
 
-```javascript
+```graphql
 fluid(
   width: 800,
   duotone: {
@@ -305,7 +314,7 @@ pre-process your images with a tool such as [ExifTool][17].
 
 This means that there are multiple incompatible versions of the `sharp` package installed in `node_modules`. The complete error typically looks like this:
 
-```
+```text
 Something went wrong installing the "sharp" module
 
 dlopen(/Users/misiek/dev/gatsby-starter-blog/node_modules/sharp/build/Release/sharp.node, 1): Library not loaded: @rpath/libglib-2.0.dylib

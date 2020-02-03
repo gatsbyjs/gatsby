@@ -3,6 +3,154 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.85](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.84...gatsby-source-contentful@2.1.85) (2020-02-01)
+
+### Features
+
+- **gatsby-source-contentful:** Add page limit to gatsby-source-contentful ([#21030](https://github.com/gatsbyjs/gatsby/issues/21030)) ([8f11c7d](https://github.com/gatsbyjs/gatsby/commit/8f11c7d))
+
+## [2.1.84](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.83...gatsby-source-contentful@2.1.84) (2020-01-29)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.83](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.82...gatsby-source-contentful@2.1.83) (2020-01-29)
+
+### Performance Improvements
+
+- **gatsby-source-contentful:** remove recursion in fixIds ([#20837](https://github.com/gatsbyjs/gatsby/issues/20837)) ([996e951](https://github.com/gatsbyjs/gatsby/commit/996e951))
+
+## [2.1.82](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.81...gatsby-source-contentful@2.1.82) (2020-01-27)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.81](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.80...gatsby-source-contentful@2.1.81) (2020-01-27)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.80](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.79...gatsby-source-contentful@2.1.80) (2020-01-27)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.79](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.78...gatsby-source-contentful@2.1.79) (2020-01-23)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.78](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.77...gatsby-source-contentful@2.1.78) (2020-01-21)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.77](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.76...gatsby-source-contentful@2.1.77) (2020-01-16)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** LongText fields require markdown transformer ([#20398](https://github.com/gatsbyjs/gatsby/issues/20398)) ([1ad7bbb](https://github.com/gatsbyjs/gatsby/commit/1ad7bbb)), closes [/github.com/gatsbyjs/gatsby/issues/3205#issuecomment-351603320](https://github.com//github.com/gatsbyjs/gatsby/issues/3205/issues/issuecomment-351603320)
+
+## [2.1.76](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.75...gatsby-source-contentful@2.1.76) (2020-01-09)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.75](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.73...gatsby-source-contentful@2.1.75) (2020-01-09)
+
+### Bug Fixes
+
+- **gatsby-transformer-sharp:** define required image fields as non-null in schema ([#20314](https://github.com/gatsbyjs/gatsby/issues/20314)) ([e3026c9](https://github.com/gatsbyjs/gatsby/commit/e3026c9))
+
+### Features
+
+- **gatsby-source-contentful:** Add option to use Content Type ID for GraphQL schema generation ([#20265](https://github.com/gatsbyjs/gatsby/issues/20265)) ([0e71cfb](https://github.com/gatsbyjs/gatsby/commit/0e71cfb))
+
+## [2.1.74](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.73...gatsby-source-contentful@2.1.74) (2020-01-09)
+
+### Bug Fixes
+
+- **gatsby-transformer-sharp:** define required image fields as non-null in schema ([#20314](https://github.com/gatsbyjs/gatsby/issues/20314)) ([e3026c9](https://github.com/gatsbyjs/gatsby/commit/e3026c9))
+
+### Features
+
+- **gatsby-source-contentful:** Add option to use Content Type ID for GraphQL schema generation ([#20265](https://github.com/gatsbyjs/gatsby/issues/20265)) ([0e71cfb](https://github.com/gatsbyjs/gatsby/commit/0e71cfb))
+
+## [2.1.73](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.72...gatsby-source-contentful@2.1.73) (2019-12-23)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** Add contentful_id field recursi… ([#20258](https://github.com/gatsbyjs/gatsby/issues/20258)) ([deb41cd](https://github.com/gatsbyjs/gatsby/commit/deb41cd))
+
+## [2.1.72](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.71...gatsby-source-contentful@2.1.72) (2019-12-20)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.71](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.70...gatsby-source-contentful@2.1.71) (2019-12-17)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.70](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.69...gatsby-source-contentful@2.1.70) (2019-12-16)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.69](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.67...gatsby-source-contentful@2.1.69) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.68](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.67...gatsby-source-contentful@2.1.68) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.67](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.66...gatsby-source-contentful@2.1.67) (2019-12-05)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.66](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.65...gatsby-source-contentful@2.1.66) (2019-12-02)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.65](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.64...gatsby-source-contentful@2.1.65) (2019-11-28)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.64](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.63...gatsby-source-contentful@2.1.64) (2019-11-26)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.63](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.62...gatsby-source-contentful@2.1.63) (2019-11-25)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.62](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.61...gatsby-source-contentful@2.1.62) (2019-11-20)
+
+### Features
+
+- **gatsby-source-contentful:** handle SELF_SIGNED_CERT_IN_CHAIN error. ([#19161](https://github.com/gatsbyjs/gatsby/issues/19161)) ([62dd3d1](https://github.com/gatsbyjs/gatsby/commit/62dd3d1))
+
+## [2.1.61](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.60...gatsby-source-contentful@2.1.61) (2019-11-18)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.60](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.59...gatsby-source-contentful@2.1.60) (2019-11-18)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.59](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.58...gatsby-source-contentful@2.1.59) (2019-11-15)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.58](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.57...gatsby-source-contentful@2.1.58) (2019-11-15)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.57](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.56...gatsby-source-contentful@2.1.57) (2019-11-13)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.56](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.55...gatsby-source-contentful@2.1.56) (2019-11-10)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.1.55](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.54...gatsby-source-contentful@2.1.55) (2019-11-04)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** fix crash when downloading asset with a file that doesn't have a url ([#19218](https://github.com/gatsbyjs/gatsby/issues/19218)) ([0b57a3c](https://github.com/gatsbyjs/gatsby/commit/0b57a3c))
+
 ## [2.1.54](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.1.53...gatsby-source-contentful@2.1.54) (2019-10-29)
 
 **Note:** Version bump only for package gatsby-source-contentful

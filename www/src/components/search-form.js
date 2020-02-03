@@ -105,9 +105,7 @@ const algoliaStyles = t => css`
   }
 
   .algolia-autocomplete .algolia-docsearch-suggestion--highlight {
-    background-color: ${
-      t.colors.search.suggestionHighlightBackground
-    } !important;
+    background-color: ${t.colors.search.suggestionHighlightBackground} !important;
     box-shadow: 0 !important;
     color: ${t.colors.search.suggestionHighlightColor} !important;
   }

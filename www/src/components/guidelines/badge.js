@@ -5,10 +5,7 @@ import propTypes from "@styled-system/prop-types"
 
 import { Flex } from "./system"
 
-const styleProps = compose(
-  border,
-  typography
-)
+const styleProps = compose(border, typography)
 
 const BadgeBase = styled(Flex)(
   {

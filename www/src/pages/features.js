@@ -11,7 +11,6 @@ import FooterLinks from "../components/shared/footer-links"
 import LegendTable from "../components/features/legend-table"
 import FeaturesFooter from "../components/features/features-footer"
 import SimpleEvaluationTable from "../components/features/simple-evaluation-table"
-import { itemListFeatures } from "../utils/sidebar/item-list"
 
 const FeaturesHeader = () => (
   <section>
@@ -105,11 +104,7 @@ const FeaturesHeader = () => (
 class FeaturesPage extends Component {
   render() {
     return (
-      <Layout
-        location={this.props.location}
-        itemList={itemListFeatures}
-        enableScrollSync={true}
-      >
+      <Layout location={this.props.location} enableScrollSync={true}>
         <Helmet>
           <title>Features</title>
           <meta
