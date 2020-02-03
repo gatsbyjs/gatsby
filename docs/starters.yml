@@ -5161,3 +5161,17 @@
     - React Scroll for one page, anchor based navigation is available
     - Code highlighting
     - SEO optimized to include social media images and twitter handles
+- url: https://eager-memento.netlify.com/
+  repo: https://github.com/Mr404Found/gatsby-memento-blogpost
+  description: A responsive personal web site to flex your skills and a portfolio page.
+  tags:
+    - React Bootstrap
+    - Gatsby Markdown
+    - Dynamic Pages
+    - responsive
+    - SEO
+  features:
+    - flex your skills in a single page
+    - responsive portfolio page to use in social medias
+    - gets content from markdown files
+    - automatically creating blog pages
