@@ -9594,3 +9594,20 @@
   built_by: Bold Oak Design
   built_by_url: https://boldoak.design/
   featured: false
+- title: Chris Otto
+  url: https://chrisotto.dev/
+  main_url: https://chrisotto.dev/
+  source_url: https://github.com/chrisotto6/chrisottodev
+  description: >
+    Blog, portfolio and website for Chris Otto.
+  categories:
+    - Blog
+    - JavaScript
+    - Landing Page
+    - Portfolio
+    - Programming
+    - Technology
+    - Web Development
+  built_by: Chris Otto
+  built_by_url: https://github.com/chrisotto6
+  featured: false
