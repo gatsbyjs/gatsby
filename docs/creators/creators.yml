@@ -478,3 +478,14 @@
   for_hire: true
   hiring: false
   portfolio: true
+- name: App Design
+  type: agency
+  description: >-
+    My name is Oliver. I am a web developer and app designer.
+  location: Canada
+  website: "https://appdesign.dev/"
+  github: "https://github.com/appdesigndev"
+  image: images/app-design-dev.jpeg
+  for_hire: true
+  hiring: false
+  portfolio: true

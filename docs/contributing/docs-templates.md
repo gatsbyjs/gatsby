@@ -12,6 +12,8 @@ Here are some things to keep in mind when deciding where to contribute to Gatsby
 - [Recipes](#recipes) add concise, discoverable, and easy-to-follow instructions for common Gatsby tasks. They are smaller units than tutorials.
 - [Tutorials](#tutorials) should provide step-by-step guidance for Gatsby workflows, listing all pre-requisites and not assuming knowledge or skipping steps.
 
+When writing (or reviewing) learning materials that show Gatsby users how to complete tasks, you are expected to **test out any code examples or steps to ensure they work**. This can also help with writing in your own words, rather than copying from other sources. If you have a demo project or code example that strengthens docs and you don't know where to put it, mention it to the Gatsby Learning team in a PR.
+
 ### Why use templates?
 
 Here are templates (models) to follow when contributing to Gatsby docs to ensure that the docs accomplish their purpose. If you have a good reason to deviate from the following template structures, mention those reasons in the PR so others can give proper feedback.
@@ -198,6 +200,7 @@ A recipe should list requirements and include a few short instructions to comple
 
 The components of a recipe are:
 
+- Overview link on [`recipes.md`](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/recipes.md)
 - The name of the recipe, which should describe a single task
 - A 1-2 sentence description motivating what the recipe is for
 - Prerequisites and requirements
@@ -208,8 +211,6 @@ The components of a recipe are:
 Recipes should be short. This is accomplished by limiting steps to what is unique to the task at-hand; prerequisites and requirements should be mentioned but not include install steps for things like npm or Gatsby CLI. Linking to full reference guide, tutorial, or a working example can complete the loop for anyone who needs more help.
 
 If you're finding a recipe is becoming too long to fit on the Docs Recipes page due to including many prerequisites or steps, consider writing a tutorial instead.
-
-> Note: If you add a new recipe to the existing sections, be sure to add it to the list on the [`recipes.md` landing page](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/recipes.md)!
 
 ### Recipe categories
 
@@ -234,6 +235,10 @@ Here's a template for a new recipe category:
 ```
 
 ### Recipe parts
+
+#### Overview link
+
+To make sure your recipe is linked from the overview page, you must add it to the appropriate category in [`recipes.md`](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/recipes.md). Otherwise, it will be difficult for Gatsby users to find it, which isn't good for anyone!
 
 #### Title and description
 

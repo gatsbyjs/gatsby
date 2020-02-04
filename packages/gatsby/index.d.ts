@@ -208,8 +208,8 @@ export interface GatsbyNode {
    * See the guide [Creating and Modifying Pages](https://www.gatsbyjs.org/docs/creating-and-modifying-pages/)
    * for more on this API.
    */
-  onCreatePage?<TNode extends object = {}>(
-    args: CreatePageArgs<TNode>,
+  onCreatePage?<TContext = Record<string, unknown>>(
+    args: CreatePageArgs<TContext>,
     options?: PluginOptions,
     callback?: PluginCallback
   ): void
@@ -671,9 +671,9 @@ export interface CreateNodeArgs<TNode extends object = {}>
   }
 }
 
-export interface CreatePageArgs<TNode extends object = {}>
+export interface CreatePageArgs<TContext = Record<string, unknown>>
   extends ParentSpanPluginArgs {
-  page: Node & TNode
+  page: Page<TContext>
   traceId: string
 }
 
@@ -878,12 +878,7 @@ export interface Actions {
 
   /** @see https://www.gatsbyjs.org/docs/actions/#createPage */
   createPage<TContext = Record<string, unknown>>(
-    args: {
-      path: string
-      matchPath?: string
-      component: string
-      context: TContext
-    },
+    args: Page<TContext>,
     plugin?: ActionPlugin,
     option?: ActionOptions
   ): void
@@ -1283,4 +1278,11 @@ export interface Node extends NodeInput {
     owner: string
   }
   [key: string]: unknown
+}
+
+export interface Page<TContext = Record<string, unknown>> {
+  path: string
+  matchPath?: string
+  component: string
+  context: TContext
 }

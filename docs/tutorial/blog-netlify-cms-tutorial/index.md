@@ -54,7 +54,7 @@ You'll likely also want to edit the `README.md` and `package.json` files to incl
 
 ### Step 4
 
-Open [github.com](http://github.com) and create a new repository, with the same name as your project. Push your new Gatsby site's code to GitHub using the following Terminal commands:
+Open [github.com](https://github.com) and create a new repository, with the same name as your project. Push your new Gatsby site's code to GitHub using the following Terminal commands:
 
 ```shell
 git init
