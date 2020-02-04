@@ -5173,3 +5173,15 @@
     - Styled Components
     - Comes with React Helmet for adding site meta tags
     - Includes plugins for offline support out of the box
+- url: https://eager-memento.netlify.com/
+  repo: https://github.com/Mr404Found/gatsby-memento-blogpost
+  description: A responsive personal web site to flex your skills and a portfolio page.
+  tags:
+    - SEO
+    - CMS:Netlify
+    - Markdown
+    - Styling:Bootstrap
+  features:
+    - flex your skills in a single page
+    - responsive portfolio page to use in social media platforms
+    - gets content from markdown files
