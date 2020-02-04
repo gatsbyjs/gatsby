@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "Scripts for gatsby internationalization",
   "scripts": {
-    "create": "env-cmd node ./create.js",
-    "sync": "env-cmd node ./sync.js",
+    "create": "node ./create.js",
+    "sync": "node ./sync.js",
     "update-source": "node ./update-source.js"
   },
   "author": "Nat Alison",
@@ -15,6 +15,7 @@
     "dotenv": "^8.2.0",
     "js-yaml": "^3.13.1",
     "log4js": "^5.2.2",
+    "node-fetch": "^2.6.0",
     "parse-diff": "^0.6.0",
     "shelljs": "^0.8.3"
   }
