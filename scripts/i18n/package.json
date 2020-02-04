@@ -16,7 +16,6 @@
     "js-yaml": "^3.13.1",
     "log4js": "^5.2.2",
     "node-fetch": "^2.6.0",
-    "parse-diff": "^0.6.0",
     "shelljs": "^0.8.3"
   }
 }
