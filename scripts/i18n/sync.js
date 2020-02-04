@@ -88,7 +88,7 @@ async function syncTranslationRepo(code) {
   const baseHash = shell
     .exec(`git merge-base origin/master source/master`)
     .stdout.replace(`\n`, ``)
-  const shortBaseHash = shortHash(baseHash)
+  const shortBaseHash = getShortHash(baseHash)
 
   shell.exec(`git fetch source master`)
   const hash = shell.exec(`git rev-parse source/master`).stdout
@@ -145,16 +145,22 @@ async function syncTranslationRepo(code) {
 
   // TODO if there is already an existing PR, don't create a new one
 
-  const repository = getRepository(owner, transRepoName)
+  const repository = await getRepository(owner, transRepoName)
 
   const body = `
 Sync with the source repo. Please update the translations based on updated source content.
 
-The following files have conflicts:
+<details ${conflictFiles.length <= 10 ? `open` : ``}>
+<summary>The following ${
+    conflictFiles.length
+  } files have conflicts:</summary><br />
 
 ${conflictFiles.map(file => `* ${file}`).join(`\n`)}
+</details>
 
-Refer to the comments made by gatsby-bot or see all changes since the last sync here:
+Once all the commits have been fixed, mark this pull request as "Ready for review" and merge it in!
+
+Refer to the comments made by @gatsbybot or see all changes since the last sync here:
 
 ${comparisonUrl}
   `
@@ -193,9 +199,9 @@ ${comparisonUrl}
   const threads = conflictFiles.map(file => {
     const hash = hashes[file]
     const body = `
-    Compare changes for this file:
+Compare changes for this file:
 
-    ${comparisonUrl}${hash}
+${comparisonUrl}${hash}
     `
     return {
       path: file,
