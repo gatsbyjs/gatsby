@@ -21,15 +21,21 @@ async function onCreateNode(
   pluginOptions
 ) {
   const { createNode, createParentChildLink } = actions
-  // Filter out non-csv content
-  if (node.extension !== `csv`) {
-    return
-  }
-  // Load CSV contents
-  const content = await loadNodeContent(node)
 
   // Destructure out our custom options
-  const { typeName, nodePerFile, ...options } = pluginOptions || {}
+  const { typeName, nodePerFile, tsv, ...options } = pluginOptions || {}
+  if (tsv) {
+    const tab = String.fromCharCode(0x9)
+    options.delimiter = options.delimiter ? `${options.delimiter}${tab}` : tab
+  }
+
+  // Filter out unwanted content
+  const filterExtension = tsv ? `tsv` : `csv`
+  if (node.extension !== filterExtension) {
+    return
+  }
+  // Load file contents
+  const content = await loadNodeContent(node)
 
   // Parse
   let parsedContent = await convertToJson(content, options)
@@ -49,7 +55,9 @@ async function onCreateNode(
   function transformObject(obj, i) {
     const csvNode = {
       ...obj,
-      id: obj.id ? obj.id : createNodeId(`${node.id} [${i}] >>> CSV`),
+      id: obj.id
+        ? obj.id
+        : createNodeId(`${node.id} [${i}] >>> ${tsv ? `TSV` : `CSV`}`),
       children: [],
       parent: node.id,
       internal: {

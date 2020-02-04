@@ -533,6 +533,142 @@ false,nope",
 ]
 `;
 
+exports[`Process nodes correctly correctly handles the tsv option 1`] = `
+Array [
+  Array [
+    Object {
+      "children": Array [],
+      "field1": "blue",
+      "field2": "funny",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "contentDigest",
+        "type": "TestTsv",
+      },
+      "parent": "whatever",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "field1": "true",
+      "field2": "yup",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "contentDigest",
+        "type": "TestTsv",
+      },
+      "parent": "whatever",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "field1": "false",
+      "field2": "nope",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "contentDigest",
+        "type": "TestTsv",
+      },
+      "parent": "whatever",
+    },
+  ],
+]
+`;
+
+exports[`Process nodes correctly correctly handles the tsv option 2`] = `
+Array [
+  Array [
+    Object {
+      "child": Object {
+        "children": Array [],
+        "field1": "blue",
+        "field2": "funny",
+        "id": "uuid-from-gatsby",
+        "internal": Object {
+          "contentDigest": "contentDigest",
+          "type": "TestTsv",
+        },
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "blue	funny
+true	yup
+false	nope",
+        "extension": "tsv",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/tsv",
+        },
+        "name": "test",
+        "parent": null,
+      },
+    },
+  ],
+  Array [
+    Object {
+      "child": Object {
+        "children": Array [],
+        "field1": "true",
+        "field2": "yup",
+        "id": "uuid-from-gatsby",
+        "internal": Object {
+          "contentDigest": "contentDigest",
+          "type": "TestTsv",
+        },
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "blue	funny
+true	yup
+false	nope",
+        "extension": "tsv",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/tsv",
+        },
+        "name": "test",
+        "parent": null,
+      },
+    },
+  ],
+  Array [
+    Object {
+      "child": Object {
+        "children": Array [],
+        "field1": "false",
+        "field2": "nope",
+        "id": "uuid-from-gatsby",
+        "internal": Object {
+          "contentDigest": "contentDigest",
+          "type": "TestTsv",
+        },
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "blue	funny
+true	yup
+false	nope",
+        "extension": "tsv",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/tsv",
+        },
+        "name": "test",
+        "parent": null,
+      },
+    },
+  ],
+]
+`;
+
 exports[`Process nodes correctly correctly handles the typeName option with a custom function 1`] = `
 Array [
   Array [

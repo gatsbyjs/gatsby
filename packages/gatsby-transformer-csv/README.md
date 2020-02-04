@@ -263,3 +263,31 @@ Which would return:
   }
 }
 ```
+
+## TSV Files
+
+If you need to parse TSV files, you can configure the plugin like so:
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `data`,
+        path: `${__dirname}/src/data/`,
+      },
+    },
+    {
+      resolve: `gatsby-transformer-csv`,
+      options: {
+        tsv: true,
+      },
+    },
+  ];
+}
+```
+
+This will automatically configure csv2json to use a tab character as the delimiter, and the typenames
+will be suffixed with `Tsv` instead of `Csv`.
