@@ -26,9 +26,10 @@ const tutorialLinksData = yaml.load(
 const contributingLinksData = yaml.load(
   fs.readFileSync(`./src/data/sidebars/contributing-links.yaml`)
 )
+const ecosystemFeaturedItems = yaml.load(
+  fs.readFileSync(`./src/data/ecosystem/featured-items.yaml`)
+)
 const redirects = yaml.load(fs.readFileSync(`./redirects.yaml`))
-
-let ecosystemFeaturedItems
 
 if (
   process.env.gatsby_executing_command === `build` &&
@@ -187,14 +188,6 @@ exports.createPages = ({ graphql, actions, reporter }) => {
               id
               title
               slug
-            }
-          }
-        }
-        allEcosystemYaml {
-          edges {
-            node {
-              starters
-              plugins
             }
           }
         }
@@ -505,9 +498,6 @@ exports.createPages = ({ graphql, actions, reporter }) => {
         })
       }
 
-      // Read featured starters and plugins for Ecosystem
-      ecosystemFeaturedItems = result.data.allEcosystemYaml.edges[0].node
-
       return resolve()
     })
   })
@@ -606,11 +596,21 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
       .find(node => node.internal.type === `Screenshot`)
 
     createNodeField({ node, name: `hasScreenshot`, value: !!screenshotNode })
+  } else if (node.internal.type === `NPMPackage`) {
+    if (ecosystemFeaturedItems.plugins.includes(node.name)) {
+      createNodeField({ node, name: `featured`, value: true })
+    }
   } else if (node.internal.type === `StartersYaml` && node.repo) {
     // To develop on the starter showcase, you'll need a GitHub
     // personal access token. Check the `www` README for details.
     // Default fields are to avoid graphql errors.
     const { owner, name: repoStub } = parseGHUrl(node.repo)
+
+    // mark if it's a featured starter
+    if (ecosystemFeaturedItems.starters.includes(`/${owner}/${repoStub}/`)) {
+      createNodeField({ node, name: `featured`, value: true })
+    }
+
     const defaultFields = {
       slug: `/${owner}/${repoStub}/`,
       stub: repoStub,
@@ -744,18 +744,6 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
 }
 
 exports.onCreatePage = ({ page, actions }) => {
-  // add lists of featured items to Ecosystem page
-  if (page.path === `/ecosystem/` || page.path === `/`) {
-    const { createPage, deletePage } = actions
-    const oldPage = Object.assign({}, page)
-
-    page.context.featuredStarters = ecosystemFeaturedItems.starters
-    page.context.featuredPlugins = ecosystemFeaturedItems.plugins
-
-    deletePage(oldPage)
-    createPage(page)
-  }
-
   if (page.path === `/plugins/`) {
     const { createPage, deletePage } = actions
     const oldPage = Object.assign({}, page)
