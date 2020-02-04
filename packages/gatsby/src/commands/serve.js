@@ -40,6 +40,24 @@ const readMatchPaths = async program => {
   return JSON.parse(rawJSON)
 }
 
+/**
+ * Express middleware that adds url trailing slash in order to
+ * trick static middleware and thus preventing redirect
+ * This needs to be used before express static middleware
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
+const directoryRedirectPrevention = (req, res, next) => {
+  if (req.url == `/` || req.url.indexOf(`.`) || req.url.slice(-1) !== `/`)
+    return next()
+
+  req.originalUrl += `/` // https://expressjs.com/en/api.html#req.originalUrl
+  req.url += `/`
+
+  return next()
+}
+
 const matchPathRouter = (matchPaths, options) => (req, res, next) => {
   const { url } = req
   if (req.accepts(`html`)) {
@@ -85,6 +103,7 @@ module.exports = async program => {
   app.use(telemetry.expressMiddleware(`SERVE`))
 
   router.use(compression())
+  router.use(directoryRedirectPrevention)
   router.use(express.static(`public`))
   const matchPaths = await readMatchPaths(program)
   router.use(matchPathRouter(matchPaths, { root }))
