@@ -2,23 +2,17 @@
 title: Maintaining a Plugin
 ---
 
-The Gatsby community trives on the power of plugins, we often find that there is a plugin for almost everything ranging from source plugins to transformer plugins to plugins that are plugins for other plugin 😅. There is a very cool [naming convention for plugins](https://www.gatsbyjs.org/docs/naming-a-plugin/).
+The Gatsby community thrives on the power of plugins, we often find that there is a plugin for almost everything ranging from source plugins to transformer plugins to plugins that are plugins for other plugin 😅. There is a very cool [naming convention for plugins](https://www.gatsbyjs.org/docs/naming-a-plugin/).
 
-> Wondering how to [Creating a plugin](https://www.gatsbyjs.org/docs/creating-plugins/) ? Look no futher. Start contributing .
+> Wondering how to [Creating a plugin](https://www.gatsbyjs.org/docs/creating-plugins/) ? Look no further . Start contributing .
 
 ## What is a Plugin ?
 
 Gatsby plugins are Node.js packages that implement Gatsby APIs. [Learn more about Plugins](https://www.gatsbyjs.org/docs/plugins/) in this part of the Gatsby documentation.
 
-Keeping Plugins up to date becomes really tasking and can sometimes it can become really complicated since updating dependencies could potentially break your apps.
+The bulk of the work is during the development phase. However, there’s still a need to take a look at the dependecies and s security features from time to time. Keeping Plugins up to date becomes really tasking and can sometimes become really complicated since updating dependencies could potentially break your apps.
 
-Let's look at some tips to apply when maintianing plugins
-
-- Have a plan for features
-- Triage Issues
-- Develop Improvements
-- Fix bugs
-- yarn workspaces can solve yarn link inconsistencies
+However, the effects of not updating and maintaing can bring a huge security issue to your apps and we don't want that. Let's look at some tips to apply when maintaining plugins:
 
 ## Handling patches and improvements
 
@@ -32,11 +26,15 @@ Version 1.0.0 should be released when the plugin's API is considered stable. Ver
 
 ## Update ReadMe and Use cases
 
-Every major version update should also be reflexed in the READme of the Plugin and also in the usecase examples.
+Every major version update should also be reflexed in the READme of the Plugin and also in the use case examples.
 
-It would be great for users to be able reference both versions with the updated examples to see of they want to keep the current verison anf also to understnad what the new version offers. 😉
+It would be great for users to be able reference serveral versions of the plugin with the updated examples to see if they want to keep the current version or upgrade and also to understand what the new version offers. Although this is good:
 
-## Tools for dependency version maintance
+- Try to not clog your release repository with older versions of the plugin as you updtae, as they’re not often needed. Instead, simply keep the last few in place.
+
+- Try not to push every iterative change from Git live
+
+## Tools for dependency version maintenance
 
 Keeping Plugins up to date becomes really tasking and can sometimes it can become really complicated since updating dependencies could potentially break your apps. There are a couple of useful tools that can help out.
 
@@ -47,6 +45,6 @@ Keeping Plugins up to date becomes really tasking and can sometimes it can becom
 - install by running `npm i -g npm-check-updates`
 - Running `ncu -u`
 
-## Writing supporting content for plugin
+## Community supporting content and feedback.
 
-A lot of use cases for using the created plugin would be a great way to get users to have knowledge on implentaions.
+A lot of use cases for using the created plugin would be a great way to get users to have knowledge on implentaions. Also creating forums where users of your plugins have a way to get answers to questions and help with issues, whether that’s from you or from other community members.
