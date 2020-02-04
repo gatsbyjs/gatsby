@@ -255,7 +255,7 @@ The `render()` function applies your styles to the button and binds the `redirec
 
 #### Importing the checkout component into the homepage
 
-Now go to your `src/pages/index.js` file. This is your homepage that shows at the root URL. Import your new checkout component in the file underneath the other imports and add your `<Checkout />` component within the `<Layout>` element. Your `index.js` file should now look like similar to this:
+Now go to your `src/pages/index.js` file. This is your homepage that shows at the root URL. Import your new checkout component in the file underneath the other imports and add your `<Checkout />` component within the `<Layout>` element. Your `index.js` file should now look similar to this:
 
 ```jsx:title=src/pages/index.js
 import React from "react"
