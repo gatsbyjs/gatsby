@@ -145,6 +145,8 @@ async function syncTranslationRepo(code) {
 
   // TODO if there is already an existing PR, don't create a new one
 
+  const repository = getRepository(owner, transRepoName)
+
   const body = `
 Sync with the source repo. Please update the translations based on updated source content.
 
