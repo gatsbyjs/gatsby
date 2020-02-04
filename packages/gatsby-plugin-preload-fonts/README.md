@@ -56,7 +56,7 @@ See [Puppeteer](#puppeteer) for more information.
 
 ### Using with CI
 
-If you're planning to use this plugin in CI you can set environment variable `CI`. Please note that in this case `font-preload-cache.json` will only get rebuild when routes change.
+If you're planning to use this plugin in CI you can set environment variable `CI=true`. Please note that in this case `font-preload-cache.json` will only get rebuild when routes change.
 
 ## Explanation of method
 
