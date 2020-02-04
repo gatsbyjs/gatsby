@@ -1,3 +1,5 @@
+import getPageLocalization from "./get-page-localization"
+
 /**
  * Get a manifest filename depending on localized pathname
  *
@@ -6,18 +8,6 @@
  * @return string
  */
 export default (pathname, localizedManifests) => {
-  const defaultFilename = `manifest.webmanifest`
-  if (!Array.isArray(localizedManifests)) {
-    return defaultFilename
-  }
-
-  const localizedManifest = localizedManifests.find(app =>
-    pathname.startsWith(app.start_url)
-  )
-
-  if (!localizedManifest) {
-    return defaultFilename
-  }
-
-  return `manifest_${localizedManifest.lang}.webmanifest`
+  const { lang } = getPageLocalization(pathname, localizedManifests)
+  return lang ? `manifest_${lang}.webmanifest` : `manifest.webmanifest`
 }

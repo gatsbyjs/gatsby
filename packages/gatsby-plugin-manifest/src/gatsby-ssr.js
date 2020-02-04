@@ -4,6 +4,7 @@ import fs from "fs"
 import { createContentDigest } from "gatsby-core-utils"
 import { defaultIcons, addDigestToPath } from "./common.js"
 import getManifestForPathname from "./get-manifest-pathname"
+import getPageLocalization from "./get-page-localization"
 
 // TODO: remove for v3
 const withPrefix = withAssetPrefix || fallbackWithPrefix
@@ -11,7 +12,7 @@ const withPrefix = withAssetPrefix || fallbackWithPrefix
 let iconDigest = null
 
 exports.onRenderBody = (
-  { setHeadComponents, pathname = `/` },
+  { setHeadComponents, setHtmlAttributes, pathname = `/` },
   { localize, ...pluginOptions }
 ) => {
   // We use this to build a final array to pass as the argument to setHeadComponents at the end of onRenderBody.
@@ -80,6 +81,31 @@ exports.onRenderBody = (
         />
       )
     }
+  }
+
+  // Set page language if available
+  const { lang, start_url = `/` } = getPageLocalization(
+    pathname,
+    localize,
+    pluginOptions.lang
+  )
+  if (lang) {
+    setHtmlAttributes({ lang })
+  }
+
+  // Add metadata for localized page alternatives
+  if (Array.isArray(localize)) {
+    localize
+      .filter(localizedManifest => localizedManifest.lang !== lang)
+      .forEach(localizedManifest => {
+        headComponents.push(
+          <link
+            rel="alternate"
+            hrefLang={localizedManifest.lang}
+            href={pathname.replace(start_url, localizedManifest.start_url)}
+          />
+        )
+      })
   }
 
   if (legacy) {
