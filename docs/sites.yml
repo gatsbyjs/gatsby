@@ -2082,7 +2082,7 @@
   main_url: "https://madecomfy.com.au/"
   url: "https://madecomfy.com.au/"
   description: >
-    Short term rental management startup, using Contentful + Gatsby + CicleCI
+    Short term rental management startup, using Contentful + Gatsby + CircleCI
   featured: false
   categories:
     - Travel
@@ -4593,7 +4593,7 @@
   main_url: https://morello.dev
   source_url: https://gitlab.com/dennismorello/dev-blog
   description: >
-    morello.dev is a development and techology blog written by Dennis Morello.
+    morello.dev is a development and technology blog written by Dennis Morello.
   categories:
     - Blog
     - Education
@@ -5121,7 +5121,7 @@
   main_url: https://peter.macinkovic.id.au/
   source_url: https://github.com/inkovic/peter-macinkovic-static-site
   description: >
-    Personal Website and Blog of eCommerce SEO Specilaist and Digital Marketer Peter Macinkovic.
+    Personal Website and Blog of eCommerce SEO Specialist and Digital Marketer Peter Macinkovic.
   categories:
     - SEO
     - Marketing
@@ -5209,7 +5209,7 @@
   main_url: https://www.garethweaver.com/
   source_url: https://github.com/garethweaver/public-site-react
   description: >
-    A personal portofolio of a London based frontend developer built with Gatsby 2, Redux and Sass
+    A personal portfolio of a London based frontend developer built with Gatsby 2, Redux and Sass
   categories:
     - Portfolio
     - Web Development
@@ -5558,7 +5558,7 @@
   main_url: https://hiteshvaghasiya.com/
   url: https://hiteshvaghasiya.com/
   description: >
-    This is Hitesh Vaghasiya's blog. This blog is help you an E-Commerce like Magento, Shopify, and BigCommece.
+    This is Hitesh Vaghasiya's blog. This blog is help you an E-Commerce like Magento, Shopify, and BigCommerce.
   categories:
     - Blog
     - Programming
@@ -6056,7 +6056,7 @@
   main_url: https://apisyouwonthate.com
   source_url: https://github.com/apisyouwonthate/apisyouwonthate.com
   description: >
-    API development is a topic very close to our hearts. APIs You Won't Hate is a team and community dedicated to learning, writing, sharing ideas and bettering understanding of API practices. Together we can erradicate APIs we hate.
+    API development is a topic very close to our hearts. APIs You Won't Hate is a team and community dedicated to learning, writing, sharing ideas and bettering understanding of API practices. Together we can eradicate APIs we hate.
   categories:
     - Blog
     - Education
@@ -7012,7 +7012,7 @@
   main_url: https://taverasmisael.com
   source_url: https://github.com/taverasmisael/taverasmisael
   description: >
-    Personal site and bloging about learning FrontEnd web development in spanish.
+    Personal site and blogging about learning FrontEnd web development in spanish.
   categories:
     - Portfolio
     - Open Source
@@ -7215,7 +7215,7 @@
   main_url: https://gatsbyfinds.netlify.com
   url: https://gatsbyfinds.netlify.com
   description: >
-    GatsbyFinds is a website built ontop of Gatsby v2 by providing developers with a showcase of all the lastest projects made with the beloved GatsbyJS.
+    GatsbyFinds is a website built ontop of Gatsby v2 by providing developers with a showcase of all the latest projects made with the beloved GatsbyJS.
   categories:
     - Portfolio
     - Gallery
@@ -8020,7 +8020,7 @@
   main_url: https://diff001a.netlify.com/
   url: https://diff001a.netlify.com/
   description: >
-    This is diff001a's blog which contains blogs realted to programming.
+    This is diff001a's blog which contains blogs related to programming.
   categories:
     - Blog
   built_by: diff001a
@@ -8028,7 +8028,7 @@
   main_url: http://rockwong.com/blog/
   url: http://rockwong.com/blog/
   description: >
-    Rockwong is a techncal blog containing content realted to various web technologies.
+    Rockwong is a technical blog containing content related to various web technologies.
   categories:
     - Technology
     - Education
@@ -8325,7 +8325,7 @@
   url: https://quemalabs.com/
   main_url: https://quemalabs.com/
   description: >
-    WordPress themes for these moedern times
+    WordPress themes for these modern times
   categories:
     - Blog
     - Web Development
