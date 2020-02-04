@@ -3,6 +3,93 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.19.12](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.11...gatsby@2.19.12) (2020-02-02)
+
+### Bug Fixes
+
+- **gatsby:** Pin reach since they do not pass in location.href… ([#21144](https://github.com/gatsbyjs/gatsby/issues/21144)) ([f7d2f03](https://github.com/gatsbyjs/gatsby/commit/f7d2f03))
+
+## [2.19.11](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.10...gatsby@2.19.11) (2020-02-01)
+
+### Bug Fixes
+
+- **gatsby:** Fix invalid algorithm of fragment cycles detection ([#21128](https://github.com/gatsbyjs/gatsby/issues/21128)) ([f570db3](https://github.com/gatsbyjs/gatsby/commit/f570db3))
+- **gatsby:** fix onCreatePage typings ([#20871](https://github.com/gatsbyjs/gatsby/issues/20871)) ([26e0cbc](https://github.com/gatsbyjs/gatsby/commit/26e0cbc))
+
+## [2.19.10](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.9...gatsby@2.19.10) (2020-01-29)
+
+### Bug Fixes
+
+- **gatsby-plugin-mdx:** support yarn PnP ([#20638](https://github.com/gatsbyjs/gatsby/issues/20638)) ([6375ba9](https://github.com/gatsbyjs/gatsby/commit/6375ba9))
+
+## [2.19.9](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.8...gatsby@2.19.9) (2020-01-29)
+
+### Bug Fixes
+
+- **gatsby:** Do not add field `id` to the query when `id` alias exists ([#20980](https://github.com/gatsbyjs/gatsby/issues/20980)) ([acf2c35](https://github.com/gatsbyjs/gatsby/commit/acf2c35))
+- **gatsby:** Fix potential issue in fragment cycles detection ([#20953](https://github.com/gatsbyjs/gatsby/issues/20953)) ([c6f4c62](https://github.com/gatsbyjs/gatsby/commit/c6f4c62))
+
+## [2.19.8](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.7...gatsby@2.19.8) (2020-01-28)
+
+### Bug Fixes
+
+- **gatsby:** Fix stack overflow on queries with circular fragments ([#20936](https://github.com/gatsbyjs/gatsby/issues/20936)) ([094ca4c](https://github.com/gatsbyjs/gatsby/commit/094ca4c))
+- **gatsby:** remove role alert on gatsby-announcer ([#20914](https://github.com/gatsbyjs/gatsby/issues/20914)) ([0008bc4](https://github.com/gatsbyjs/gatsby/commit/0008bc4))
+- **gatsby:** structured error might be a string ([#20909](https://github.com/gatsbyjs/gatsby/issues/20909)) ([7e40b21](https://github.com/gatsbyjs/gatsby/commit/7e40b21))
+
+### Performance Improvements
+
+- **gatsby:** Create index on the fly for non-id index ([#20729](https://github.com/gatsbyjs/gatsby/issues/20729)) ([115d5c4](https://github.com/gatsbyjs/gatsby/commit/115d5c4))
+
+## [2.19.7](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.6...gatsby@2.19.7) (2020-01-27)
+
+### Bug Fixes
+
+- wrap `GraphQLRunner.query` return in Promise.resolve ([#20904](https://github.com/gatsbyjs/gatsby/issues/20904)) ([86d3cda](https://github.com/gatsbyjs/gatsby/commit/86d3cda))
+
+## [2.19.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.5...gatsby@2.19.6) (2020-01-27)
+
+### Bug Fixes
+
+- **gatsby:** Add `__typename` and `id` fields in queries to ma… ([#20849](https://github.com/gatsbyjs/gatsby/issues/20849)) ([4d27336](https://github.com/gatsbyjs/gatsby/commit/4d27336))
+
+## [2.19.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.4...gatsby@2.19.5) (2020-01-24)
+
+### Features
+
+- **gatsby:** enable external jobs with ipc ([#20835](https://github.com/gatsbyjs/gatsby/issues/20835)) ([b4c5bfb](https://github.com/gatsbyjs/gatsby/commit/b4c5bfb))
+
+## [2.19.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.3...gatsby@2.19.4) (2020-01-24)
+
+### Bug Fixes
+
+- **gatsby:** revert [#19664](https://github.com/gatsbyjs/gatsby/issues/19664) fix duplicate runs in develop mode ([#20836](https://github.com/gatsbyjs/gatsby/issues/20836)) ([9419bb3](https://github.com/gatsbyjs/gatsby/commit/9419bb3))
+
+## [2.19.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.2...gatsby@2.19.3) (2020-01-23)
+
+### Bug Fixes
+
+- remove 1px line from gatsby-announcer on 100vh pages ([#20781](https://github.com/gatsbyjs/gatsby/issues/20781)) ([3880394](https://github.com/gatsbyjs/gatsby/commit/3880394))
+- **chore:** remove processing and waiting queue ([#20757](https://github.com/gatsbyjs/gatsby/issues/20757)) ([c2ecb3a](https://github.com/gatsbyjs/gatsby/commit/c2ecb3a))
+
+## [2.19.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.1...gatsby@2.19.2) (2020-01-23)
+
+### Bug Fixes
+
+- **gatsby:** Improve `gatsby` TS types for `sourceNodes` ([#20397](https://github.com/gatsbyjs/gatsby/issues/20397)) ([2a1508e](https://github.com/gatsbyjs/gatsby/commit/2a1508e))
+
+## [2.19.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.19.0...gatsby@2.19.1) (2020-01-21)
+
+### Bug Fixes
+
+- **gatsby:** use slash from gatsby-core-utils ([#20744](https://github.com/gatsbyjs/gatsby/issues/20744)) ([00f3190](https://github.com/gatsbyjs/gatsby/commit/00f3190))
+
+# [2.19.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.25...gatsby@2.19.0) (2020-01-21)
+
+### Features
+
+- **gatsby:** enable Jobs API v2 ([#19858](https://github.com/gatsbyjs/gatsby/issues/19858)) ([039c601](https://github.com/gatsbyjs/gatsby/commit/039c601)), closes [#19831](https://github.com/gatsbyjs/gatsby/issues/19831)
+
 ## [2.18.25](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.18.24...gatsby@2.18.25) (2020-01-17)
 
 ### Performance Improvements

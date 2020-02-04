@@ -3,8 +3,6 @@ title: Glossary
 disableTableOfContents: true
 ---
 
-import HorizontalNavList from "../../www/src/components/horizontal-nav-list.js"
-
 When you're new to Gatsby there can be a lot of words to learn. This glossary aims to give you a 10,000-foot overview of common terms and what they mean for Gatsby sites.
 
 <HorizontalNavList
@@ -150,9 +148,13 @@ A [query](#query) language that allows you to pull data into your website or app
 
 A markup language that every web browser is able to understand. It stands for Hypertext Markup Language. [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML) gives your web content a universal informational structure, defining things like headings, paragraphs, and more. It is also key to providing an accessible website.
 
-### Headless CMS
+### [Headless CMS](/docs/glossary/headless-cms)
 
 A [CMS](#cms) that only handles the [backend](#backend) content management instead of handling both the backend and [frontend](#frontend). This type of setup is also referred to as [Decoupled](#decoupled).
+
+### [Headless WordPress](/docs/glossary/headless-wordpress)
+
+The practice of using JSON returned from the WordPress REST API as a [headless CMS](#headless-cms). It allows you to use WordPress to write and edit content that can be consumed by any client capable of parsing JSON.
 
 ### Hosting
 
@@ -305,6 +307,10 @@ A pre-configured Gatsby project that can be used as a starting point for your pr
 Gatsby [builds](#build) static versions of your page that can be easily [hosted](#hosting). This is in contrast to dynamic systems in which each page is generated on-the-fly. Being static affords major performance gains because the work only needs to be done once per content or code change.
 
 It also refers to the `/static` folder which is automatically copied into `/public` on each [build](#build) for files that don't need to be processed by Gatsby but do need to exist in [public](#public).
+
+### [Static Site Generator](/docs/glossary/static-site-generator)
+
+A software application that creates HTML pages from templates or [components](#component) and a given content source.
 
 ## T
 

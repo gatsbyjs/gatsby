@@ -190,6 +190,7 @@ class RouteAnnouncer extends React.Component {
         id="gatsby-announcer"
         style={{
           position: `absolute`,
+          top: 0,
           width: 1,
           height: 1,
           padding: 0,
@@ -198,7 +199,6 @@ class RouteAnnouncer extends React.Component {
           whiteSpace: `nowrap`,
           border: 0,
         }}
-        role="alert"
         aria-live="assertive"
         aria-atomic="true"
         ref={this.announcementRef}

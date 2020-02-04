@@ -4,7 +4,7 @@ contact_links:
     url: https://www.gatsbyjs.org/docs/
     about: Check out the Gatsby documentation for answers to common questions
   - name: Gatsby Discord
-    url: http://gatsby.dev/discord
+    url: https://gatsby.dev/discord
     about: Ask questions, get help and discuss new things you're building with the Gatsby community
   - name: AskGatsbyJS Twitter
     url: https://twitter.com/AskGatsbyJS
