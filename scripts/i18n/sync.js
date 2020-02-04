@@ -1,5 +1,5 @@
 const fs = require(`fs`)
-const fetch = require("node-fetch")
+const fetch = require(`node-fetch`)
 const log4js = require(`log4js`)
 const shell = require(`shelljs`)
 const { graphql } = require(`@octokit/graphql`)
@@ -19,7 +19,7 @@ const sourceRepoGitUrl = `${sourceRepoUrl}.git`
 
 function getLineNumber(filePath) {
   const contents = fs.readFileSync(filePath, `utf-8`).split(`\n`)
-  return contents.findIndex(line => line.includes("<<<<<<<"))
+  return contents.findIndex(line => line.includes(`<<<<<<<`))
 }
 
 // get the git short hash
@@ -150,7 +150,7 @@ Sync with the source repo. Please update the translations based on updated sourc
 
 The following files have conflicts:
 
-${conflictFiles.map(file => `* ${file}`).join("\n")}
+${conflictFiles.map(file => `* ${file}`).join(`\n`)}
 
 Refer to the comments made by gatsby-bot or see all changes since the last sync here:
 
@@ -199,7 +199,7 @@ ${comparisonUrl}
       path: file,
       body,
       line: lineNumbers[file],
-      side: "RIGHT",
+      side: `RIGHT`,
     }
   })
 
@@ -216,7 +216,7 @@ ${comparisonUrl}
     {
       headers: {
         authorization: `token ${process.env.GITHUB_BOT_AUTH_TOKEN}`,
-        accept: "application/vnd.github.comfort-fade-preview+json",
+        accept: `application/vnd.github.comfort-fade-preview+json`,
       },
       input: {
         pullRequestId: pullRequest.id,
