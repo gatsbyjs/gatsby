@@ -5173,3 +5173,19 @@
     - Styled Components
     - Comes with React Helmet for adding site meta tags
     - Includes plugins for offline support out of the box
+- url: https://answer.netlify.com/
+  repo: https://github.com/passwd10/gatsby-starter-answer
+  description: A simple Gatsby blog for planning, documentation
+  tags:
+    - Blog
+    - Planning
+    - Netlify
+    - Google Analytics
+    - Disqus
+  features:
+    - Emoji
+    - Social Icon(fontawesome)
+    - Google Analytics
+    - Disqus
+    - Resume
+    - Place plan on the top
