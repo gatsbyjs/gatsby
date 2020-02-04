@@ -2,7 +2,7 @@
 title: "Why Teams Using Gatsby Sleep Better At Night"
 date: 2020-01-15
 author: Sam Bhagwat
-excerpt: "Learn how a Gatsby-powered architecture increases the reliability and scalabity of your website."
+excerpt: "Learn how a Gatsby-powered architecture increases the reliability and scalability of your website."
 tags: ["cdn", "developer-experience", "performance"]
 ---
 

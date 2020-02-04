@@ -40,7 +40,7 @@ const getImageSize = file => {
 // There is no guarantee that the module resolved is the module executing!
 // This can occur in mono repos depending on how dependencies have been hoisted.
 // The direct require has been left only to avoid breaking changes.
-let { boundActionCreators } = require(`gatsby/dist/redux/actions`)
+let boundActionCreators
 exports.setBoundActionCreators = actions => {
   boundActionCreators = actions
 }
@@ -107,6 +107,12 @@ function prepareQueue({ file, args }) {
 }
 
 function createJob(job, { reporter }) {
+  if (!boundActionCreators) {
+    reporter.panic(
+      `Gatsby-plugin-sharp wasn't setup correctly in gatsby-config.js. Make sure you add it to the plugins array.`
+    )
+  }
+
   // Jobs can be duplicates and usually are long running tasks.
   // Because of that we shouldn't use async/await and instead opt to use
   // .then() /.catch() handlers, because this allows V8 to release

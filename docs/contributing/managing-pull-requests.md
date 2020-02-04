@@ -41,6 +41,8 @@ We typically look for the following in [PRs that add documentation](/contributin
 - Headings – whether the heading levels in a doc start with h2 (`##` in Markdown) and grow in order, establishing an accessible content hierarchy
 - Type & Format – whether docs and learning materials align with our recommendations and [docs templates](/contributing/docs-templates/)
 
+If a PR includes code examples, tutorials, recipes, or actionable guides, the reviewer must test out the material to ensure accuracy. **No PRs should be approved or merged that haven't been vetted for errors or omissions.**
+
 #### Code
 
 For [PRs that add code](/contributing/code-contributions/) (whether a feature or fix), we look for the following:
@@ -63,10 +65,11 @@ For PRs that add a site or a starter to the showcase, we ought to check:
 
 For PRs that add a blog post, we ought to check:
 
+- Approval – has the [blog post been approved](/contributing/blog-and-website-contributions/) by marketing or another Gatsby internal team?
 - Correctness — whether the added documentation is technically correct
 - Style — whether the written language follows our [style guide](/contributing/gatsby-style-guide/)
 - Subject matter — blog posts should not be purely promotional, spammy, or inappropriate. An author should check with a member of the Gatsby team that their post is appropriate for the blog before creating their PR.
-- Time Sensitivity — blog posts are more time dependent than docs, especially since they get buried after more posts are published. If something is continually relevant and more of a general how-to, it should probably go in the [Reference Guides](/docs/guides/) section of the docs.
+- Time Sensitivity — blog posts are more time dependent than docs, especially since they get buried after more posts are published. If something is continually relevant and more of a general how-to, it should go in the [Reference Guides](/docs/guides/) or [Tutorials](/tutorial/) section of the docs.
 
 ## Automated Checks
 
@@ -169,7 +172,7 @@ Every PR opened in the repository needs to be approved before it can be merged. 
 Typically this is:
 
 - **gatsbyjs/core** for Code
-- **gatsbyjs/docs** for Documentation
+- **gatsbyjs/learning** for Documentation
 
 We also have `CODEOWNERS` set on different parts of the repo and an approval by someone in the `CODEOWNERS` for the file(s) the PR is changing can also suffice.
 
