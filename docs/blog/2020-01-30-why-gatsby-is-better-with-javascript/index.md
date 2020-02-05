@@ -59,4 +59,4 @@ Further reading:
 [Adding App and Website Functionality](/docs/adding-app-and-website-functionality/)
 [Understanding React Hydration](/docs/react-hydration/)
 
-_This article was edited to remove an implication that images are as impactuful on performance as JavaScript_
+_This article was edited to remove an implication that images are as impactful on performance as JavaScript_
