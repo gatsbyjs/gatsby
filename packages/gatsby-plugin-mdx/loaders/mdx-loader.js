@@ -97,7 +97,7 @@ module.exports = async function(content) {
     cache,
     pathPrefix,
     pluginOptions,
-    ...helpers,
+    ...helpers
   } = getOptions(this)
 
   const options = withDefaultOptions(pluginOptions)
