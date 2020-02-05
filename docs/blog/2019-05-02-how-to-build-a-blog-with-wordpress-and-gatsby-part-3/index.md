@@ -571,4 +571,4 @@ Well done! You now have a functioning blog using WordPress and Gatsby. There are
 
 The [code for this post](https://github.com/iamtimsmith/building-a-blog-with-wordpress-and-gatsby) can be found on GitHub.
 
-If you have any thoughts or questions, you can find me on twitter at [@iam_timsmith](https://twitter.com/iam_timsmith)!
+If you have any thoughts or questions, you can find me on Twitter at [@iam_timsmith](https://twitter.com/iam_timsmith)!
