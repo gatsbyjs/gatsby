@@ -2,6 +2,7 @@
 
 const path = require(`path`)
 const report = require(`gatsby-cli/lib/reporter`)
+const fs = require(`fs-extra`)
 import { buildHTML } from "./build-html"
 const buildProductionBundle = require(`./build-javascript`)
 const bootstrap = require(`../bootstrap`)
@@ -11,7 +12,7 @@ const { initTracer, stopTracer } = require(`../utils/tracer`)
 const db = require(`../db`)
 const signalExit = require(`signal-exit`)
 const telemetry = require(`gatsby-telemetry`)
-const { store, emitter } = require(`../redux`)
+const { store, emitter, readState } = require(`../redux`)
 const queryUtil = require(`../query`)
 const appDataUtil = require(`../utils/app-data`)
 const WorkerPool = require(`../utils/worker/pool`)
@@ -19,7 +20,8 @@ const { structureWebpackErrors } = require(`../utils/webpack-error-utils`)
 const {
   waitUntilAllJobsComplete: waitUntilAllJobsV2Complete,
 } = require(`../utils/jobs-manager`)
-
+const pageDataUtil = require(`../utils/page-data`)
+const incrementalBuild = true
 type BuildArgs = {
   directory: string,
   sitePackageJson: object,
@@ -98,6 +100,7 @@ module.exports = async function build(program: BuildArgs) {
   const workerPool = WorkerPool.create()
 
   const webpackCompilationHash = stats.hash
+
   if (
     webpackCompilationHash !== store.getState().webpackCompilationHash ||
     !appDataUtil.exists(publicDir)
@@ -137,14 +140,11 @@ module.exports = async function build(program: BuildArgs) {
     `BOOTSTRAP_QUERY_RUNNING_FINISHED`
   )
 
-  await db.saveState()
-
   await waitUntilAllJobsComplete()
 
-  // we need to save it again to make sure our latest state has been saved
-  await db.saveState()
-
-  const pagePaths = [...store.getState().pages.keys()]
+  const pagePaths = incrementalBuild
+    ? await pageDataUtil.getChangedPageDataKeys(store.getState(), readState())
+    : [...store.getState().pages.keys()]
   activity = report.createProgress(
     `Building static HTML for pages`,
     pagePaths.length,
@@ -198,4 +198,45 @@ module.exports = async function build(program: BuildArgs) {
   await stopTracer()
   workerPool.end()
   buildActivity.end()
+
+  if (incrementalBuild && process.argv.indexOf(`--log-pages`) > -1) {
+    if (pagePaths.length) {
+      report.info(
+        `Incremental build pages:\n${pagePaths.map(
+          path => `Updated page: ${path}\n`
+        )}`.replace(/,/g, ``)
+      )
+    }
+    // if (deletedPageKeys.length) {
+    //   report.info(
+    //     `Incremental build deleted pages:\n${deletedPageKeys.map(
+    //       path => `Deleted page: ${path}\n`
+    //     )}`.replace(/,/g, ``)
+    //   )
+    // }
+  }
+
+  if (incrementalBuild && process.argv.indexOf(`--write-to-file`) > -1) {
+    const createdFilesPath = path.resolve(
+      `${program.directory}/.cache`,
+      `newPages.txt`
+    )
+    // const deletedFilesPath = path.resolve(
+    //   `${program.directory}/.cache`,
+    //   `deletedPages.txt`
+    // )
+
+    if (pagePaths.length) {
+      fs.writeFileSync(createdFilesPath, `${pagePaths.join(`\n`)}\n`, `utf8`)
+      report.info(`newPages.txt created`)
+    }
+    // if (deletedPageKeys.length) {
+    //   fs.writeFileSync(
+    //     deletedFilesPath,
+    //     `${deletedPageKeys.join(`\n`)}\n`,
+    //     `utf8`
+    //   )
+    //   report.info(`deletedPages.txt created`)
+    // }
+  }
 }

@@ -98,7 +98,6 @@ module.exports = async (graphqlRunner, queryJob: QueryJob) => {
     .createHash(`sha1`)
     .update(resultJSON)
     .digest(`base64`)
-
   if (resultHash !== resultHashes.get(queryJob.id)) {
     resultHashes.set(queryJob.id, resultHash)
 
@@ -117,7 +116,6 @@ module.exports = async (graphqlRunner, queryJob: QueryJob) => {
         `d`,
         `${queryJob.hash}.json`
       )
-
       await fs.outputFile(resultPath, resultJSON)
     }
   }

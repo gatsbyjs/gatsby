@@ -1,5 +1,7 @@
 const Queue = require(`better-queue`)
 const { store } = require(`../redux`)
+const { boundActionCreators } = require(`../redux/actions`)
+const { setPageData } = boundActionCreators
 const FastMemoryStore = require(`../query/better-queue-custom-store`)
 const queryRunner = require(`../query/query-runner`)
 const websocketManager = require(`../utils/websocket-manager`)
@@ -14,9 +16,19 @@ const createBaseOptions = () => {
 
 const createBuildQueue = () => {
   const graphqlRunner = new GraphQLRunner(store)
+
   const handler = (queryJob, callback) =>
     queryRunner(graphqlRunner, queryJob)
-      .then(result => callback(null, result))
+      .then(result => {
+        if (queryJob.isPage) {
+          const payload = {
+            id: queryJob.id,
+            result,
+          }
+          setPageData(payload)
+        }
+        return callback(null, result)
+      })
       .catch(callback)
   return new Queue(handler, createBaseOptions())
 }

@@ -28,6 +28,7 @@ export interface IReduxState {
     developMiddleware: any
     proxy: any
   }
+  pageData?: any
 }
 
 export interface ICachedReduxState {
@@ -39,6 +40,7 @@ export interface ICachedReduxState {
   staticQueryComponents: IReduxState["staticQueryComponents"]
   webpackCompilationHash: IReduxState["webpackCompilationHash"]
   pageDataStats: IReduxState["pageDataStats"]
+  pageData?: IReduxState["pageData"]
 }
 
 export type ActionsUnion =

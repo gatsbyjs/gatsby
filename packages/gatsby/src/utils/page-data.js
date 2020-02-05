@@ -1,6 +1,7 @@
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const { store } = require(`../redux`)
+const Promise = require(`bluebird`)
 
 const getFilePath = ({ publicDir }, pagePath) => {
   const fixedPagePath = pagePath === `/` ? `index` : pagePath
@@ -35,7 +36,49 @@ const write = async ({ publicDir }, page, result) => {
   await fs.outputFile(filePath, bodyStr)
 }
 
+const getChangedPageDataKeys = (store, cacheData) =>
+  new Promise(resolve => {
+    if (cacheData.pageData && store.pageData) {
+      const pageKeys = []
+      store.pageData.forEach((value, key) => {
+        if (!cacheData.pageData.has(key)) {
+          pageKeys.push(key)
+        } else {
+          console.log(value)
+          const newPageData = JSON.stringify(value)
+          const previousPageData = JSON.stringify(cacheData.pageData.get(key))
+
+          if (newPageData !== previousPageData) {
+            pageKeys.push(key)
+          }
+        }
+      })
+      resolve(pageKeys)
+      return
+    }
+
+    resolve([...store.pages.keys()])
+  })
+
+const removePreviousPageData = (directory, store, cacheData) =>
+  new Promise(resolve => {
+    if (cacheData.pageData && store.pageData) {
+      const deletedPageKeys = []
+      cacheData.pageData.forEach((value, key) => {
+        if (!store.pageData.has(key)) {
+          deletedPageKeys.push(key)
+          fs.removeSync(`${directory}/public${key}`)
+          fs.removeSync(`${directory}/public/page-data${key}`)
+        }
+      })
+      resolve(deletedPageKeys)
+    }
+    resolve(false)
+  })
+
 module.exports = {
   read,
   write,
+  getChangedPageDataKeys,
+  removePreviousPageData,
 }

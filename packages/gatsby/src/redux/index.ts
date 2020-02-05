@@ -53,12 +53,18 @@ const multi: Middleware = ({ dispatch }) => next => (
 ): ActionsUnion | ActionsUnion[] =>
   Array.isArray(action) ? action.filter(Boolean).map(dispatch) : next(action)
 
-export const configureStore = (initialState: IReduxState): Store<IReduxState> =>
-  createStore(
+export const configureStore = (
+  initialState: IReduxState
+): Store<IReduxState> => {
+  // Page data is not required to be in the initial redux store.
+  // This will enable us to make a comparison of the cached state and new state.
+  initialState.pageData = new Map()
+  return createStore(
     combineReducers({ ...reducers }),
     initialState,
     applyMiddleware(thunk, multi)
   )
+}
 
 export const store = configureStore(readState())
 
@@ -75,6 +81,7 @@ export const saveState = (): void => {
     staticQueryComponents: state.staticQueryComponents,
     webpackCompilationHash: state.webpackCompilationHash,
     pageDataStats: state.pageDataStats,
+    pageData: state.pageData,
   })
 }
 

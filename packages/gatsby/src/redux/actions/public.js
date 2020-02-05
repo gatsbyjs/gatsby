@@ -1405,4 +1405,11 @@ actions.createPageDependency = (
   }
 }
 
+actions.setPageData = data => {
+  return {
+    type: `CREATE_PAGE_DATA`,
+    payload: data,
+  }
+}
+
 module.exports = { actions }
