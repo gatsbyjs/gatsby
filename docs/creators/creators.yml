@@ -478,3 +478,13 @@
   for_hire: true
   hiring: false
   portfolio: true
+- name: Oliver Guirado
+  type: agency
+  image: images/app-design-dev.jpeg
+  description: >-
+    We’re an app develop agency. I am a web developer specialize in React JS and Gatsby.
+  location: Spain
+  website: "https://appdesign.dev/"
+  for_hire: true
+  hiring: false
+  portfolio: true
