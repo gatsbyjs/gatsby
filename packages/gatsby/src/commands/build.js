@@ -141,7 +141,7 @@ module.exports = async function build(program: BuildArgs) {
 
   await waitUntilAllJobsComplete()
 
-  const pagePaths = pageBuildPerformance
+  const pagePaths = process.env.GATSBY_PAGE_BUILD_ON_DATA_CHANGES
     ? await pageDataUtil.getChangedPageDataKeys(store.getState(), readState())
     : [...store.getState().pages.keys()]
   activity = report.createProgress(
