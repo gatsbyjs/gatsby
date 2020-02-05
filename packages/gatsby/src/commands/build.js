@@ -101,7 +101,6 @@ module.exports = async function build(program: BuildArgs) {
   const workerPool = WorkerPool.create()
 
   const webpackCompilationHash = stats.hash
-
   if (
     webpackCompilationHash !== store.getState().webpackCompilationHash ||
     !appDataUtil.exists(publicDir)

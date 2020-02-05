@@ -22,6 +22,7 @@ const write = async ({ publicDir }, page, result) => {
     result,
   }
   const bodyStr = JSON.stringify(body)
+
   // transform asset size to kB (from bytes) to fit 64 bit to numbers
   const pageDataSize = Buffer.byteLength(bodyStr) / 1000
 
@@ -38,6 +39,14 @@ const write = async ({ publicDir }, page, result) => {
 
 const getChangedPageDataKeys = (store, cacheData) =>
   new Promise(resolve => {
+    if (
+      cacheData.webpackCompilationHash !==
+      store.getState().webpackCompilationHash
+    ) {
+      resolve([...store.pages.keys()])
+      return
+    }
+
     if (cacheData.pageData && store.pageData) {
       const pageKeys = []
       store.pageData.forEach((value, key) => {
