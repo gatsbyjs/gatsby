@@ -1,8 +1,12 @@
 const _ = require(`lodash`)
+const Promise = require(`bluebird`)
 const path = require(`path`)
+const slash = require(`slash`)
 const url = require(`url`)
 const moment = require(`moment`)
-const langs = require("../../../i18n.json")
+const langs = require(`../../../i18n.json`)
+const { getPrevAndNext } = require(`../get-prev-and-next.js`)
+const { localizedPath } = require(`../i18n.js`)
 
 // convert a string like `/some/long/path/name-of-docs/` to `name-of-docs`
 const slugToAnchor = slug =>
@@ -19,6 +23,156 @@ const docSlugFromPath = parsedFilePath => {
   } else {
     return `/${parsedFilePath.dir}/`
   }
+}
+
+exports.createPages = ({ graphql, actions }) => {
+  const { createPage } = actions
+
+  return new Promise((resolve, reject) => {
+    const docsTemplate = path.resolve(`src/templates/template-docs-markdown.js`)
+    const blogPostTemplate = path.resolve(`src/templates/template-blog-post.js`)
+    const blogListTemplate = path.resolve(`src/templates/template-blog-list.js`)
+    const tagTemplate = path.resolve(`src/templates/tags.js`)
+    const localPackageTemplate = path.resolve(
+      `src/templates/template-docs-local-packages.js`
+    )
+
+    graphql(`
+      query {
+        allMdx(
+          sort: { order: DESC, fields: [frontmatter___date, fields___slug] }
+          limit: 10000
+          filter: { fileAbsolutePath: { ne: null } }
+        ) {
+          edges {
+            node {
+              fields {
+                slug
+                locale
+                package
+                released
+              }
+              frontmatter {
+                title
+                draft
+                canonicalLink
+                publishedAt
+                issue
+                tags
+              }
+            }
+          }
+        }
+      }
+    `).then(result => {
+      if (result.errors) {
+        return reject(result.errors)
+      }
+
+      const blogPosts = _.filter(result.data.allMdx.edges, edge => {
+        const slug = _.get(edge, `node.fields.slug`)
+        const draft = _.get(edge, `node.frontmatter.draft`)
+        if (!slug) return undefined
+
+        if (_.includes(slug, `/blog/`) && !draft) {
+          return edge
+        }
+
+        return undefined
+      })
+
+      const releasedBlogPosts = blogPosts.filter(post =>
+        _.get(post, `node.fields.released`)
+      )
+
+      // Create blog-list pages.
+      const postsPerPage = 8
+      const numPages = Math.ceil(releasedBlogPosts.length / postsPerPage)
+
+      Array.from({
+        length: numPages,
+      }).forEach((_, i) => {
+        createPage({
+          path: i === 0 ? `/blog` : `/blog/page/${i + 1}`,
+          component: slash(blogListTemplate),
+          context: {
+            limit: postsPerPage,
+            skip: i * postsPerPage,
+            numPages,
+            currentPage: i + 1,
+          },
+        })
+      })
+
+      // Create blog-post pages.
+      blogPosts.forEach((edge, index) => {
+        let next = index === 0 ? null : blogPosts[index - 1].node
+        if (next && !_.get(next, `fields.released`)) next = null
+
+        const prev =
+          index === blogPosts.length - 1 ? null : blogPosts[index + 1].node
+
+        createPage({
+          path: `${edge.node.fields.slug}`, // required
+          component: slash(blogPostTemplate),
+          context: {
+            slug: edge.node.fields.slug,
+            prev,
+            next,
+          },
+        })
+      })
+
+      const makeSlugTag = tag => _.kebabCase(tag.toLowerCase())
+
+      // Collect all tags and group them by their kebab-case so that
+      // hyphenated and spaced tags are treated the same. e.g
+      // `case-study` -> [`case-study`, `case study`]. The hyphenated
+      // version will be used for the slug, and the spaced version
+      // will be used for human readability (see templates/tags)
+      const tagGroups = _(releasedBlogPosts)
+        .map(post => _.get(post, `node.frontmatter.tags`))
+        .filter()
+        .flatten()
+        .uniq()
+        .groupBy(makeSlugTag)
+
+      tagGroups.forEach((tags, tagSlug) => {
+        createPage({
+          path: `/blog/tags/${tagSlug}/`,
+          component: tagTemplate,
+          context: {
+            tags,
+          },
+        })
+      })
+
+      // Create docs pages.
+      const docPages = result.data.allMdx.edges
+
+      docPages.forEach(({ node }) => {
+        const slug = _.get(node, `fields.slug`)
+        const locale = _.get(node, `fields.locale`)
+        if (!slug) return
+
+        if (!_.includes(slug, `/blog/`)) {
+          createPage({
+            path: localizedPath(locale, node.fields.slug),
+            component: slash(
+              node.fields.package ? localPackageTemplate : docsTemplate
+            ),
+            context: {
+              slug: node.fields.slug,
+              locale,
+              ...getPrevAndNext(node.fields.slug),
+            },
+          })
+        }
+      })
+    })
+
+    return resolve()
+  })
 }
 
 exports.onCreateNode = ({ node, actions, getNode }) => {

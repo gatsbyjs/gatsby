@@ -1,4 +1,8 @@
+const _ = require(`lodash`)
+const Promise = require(`bluebird`)
+const path = require(`path`)
 const fs = require(`fs-extra`)
+const slash = require(`slash`)
 const getpkgjson = require(`get-package-json-from-github`)
 const parseGHUrl = require(`parse-github-url`)
 const { GraphQLClient } = require(`@jamo/graphql-request`)
@@ -24,6 +28,69 @@ const githubApiClient = process.env.GITHUB_API_TOKEN
       },
     })
   : null
+
+exports.createPages = ({ graphql, actions, reporter }) => {
+  const { createPage } = actions
+
+  return new Promise((resolve, reject) => {
+    const starterTemplate = path.resolve(
+      `src/templates/template-starter-page.js`
+    )
+
+    graphql(`
+      query {
+        allStartersYaml {
+          edges {
+            node {
+              id
+              fields {
+                starterShowcase {
+                  slug
+                  stub
+                }
+                hasScreenshot
+              }
+              url
+              repo
+            }
+          }
+        }
+      }
+    `).then(result => {
+      if (result.errors) {
+        return reject(result.errors)
+      }
+
+      // Create starter pages.
+      const starters = _.filter(result.data.allStartersYaml.edges, edge => {
+        const slug = _.get(edge, `node.fields.starterShowcase.slug`)
+        if (!slug) {
+          return null
+        } else if (!_.get(edge, `node.fields.hasScreenshot`)) {
+          reporter.warn(
+            `Starter showcase entry "${edge.node.repo}" seems offline. Skipping.`
+          )
+          return null
+        } else {
+          return edge
+        }
+      })
+
+      starters.forEach((edge, index) => {
+        createPage({
+          path: `/starters${edge.node.fields.starterShowcase.slug}`,
+          component: slash(starterTemplate),
+          context: {
+            slug: edge.node.fields.starterShowcase.slug,
+            stub: edge.node.fields.starterShowcase.stub,
+          },
+        })
+      })
+    })
+
+    return resolve()
+  })
+}
 
 exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
   const { createNodeField } = actions

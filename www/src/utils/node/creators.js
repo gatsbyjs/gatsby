@@ -1,4 +1,51 @@
+const Promise = require(`bluebird`)
+const path = require(`path`)
+const slash = require(`slash`)
 const slugify = require(`slugify`)
+
+exports.createPages = ({ graphql, actions }) => {
+  const { createPage } = actions
+
+  return new Promise((resolve, reject) => {
+    const creatorPageTemplate = path.resolve(
+      `src/templates/template-creator-details.js`
+    )
+
+    graphql(`
+      query {
+        allCreatorsYaml {
+          edges {
+            node {
+              name
+              fields {
+                slug
+              }
+            }
+          }
+        }
+      }
+    `).then(result => {
+      if (result.errors) {
+        return reject(result.errors)
+      }
+
+      result.data.allCreatorsYaml.edges.forEach(edge => {
+        if (!edge.node.fields) return
+        if (!edge.node.fields.slug) return
+        createPage({
+          path: `${edge.node.fields.slug}`,
+          component: slash(creatorPageTemplate),
+          context: {
+            slug: edge.node.fields.slug,
+            name: edge.node.name,
+          },
+        })
+      })
+    })
+
+    return resolve()
+  })
+}
 
 exports.onCreateNode = ({ node, actions }) => {
   const { createNodeField } = actions
