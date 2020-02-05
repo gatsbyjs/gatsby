@@ -21,8 +21,7 @@ const {
   waitUntilAllJobsComplete: waitUntilAllJobsV2Complete,
 } = require(`../utils/jobs-manager`)
 const pageDataUtil = require(`../utils/page-data`)
-const pageBuildPerformance =
-  process.env.GATSBY_PAGE_BUILD_ON_DATA_CHANGES === `true` || false
+
 type BuildArgs = {
   directory: string,
   sitePackageJson: object,
@@ -185,7 +184,7 @@ module.exports = async function build(program: BuildArgs) {
   activity.done()
 
   let deletedPageKeys = []
-  if (pageBuildPerformance) {
+  if (process.env.GATSBY_PAGE_BUILD_ON_DATA_CHANGES) {
     activity = report.activityTimer(`Delete previous page data`)
     activity.start()
     deletedPageKeys = await pageDataUtil.removePreviousPageData(
@@ -211,7 +210,10 @@ module.exports = async function build(program: BuildArgs) {
   workerPool.end()
   buildActivity.end()
 
-  if (pageBuildPerformance && process.argv.indexOf(`--log-pages`) > -1) {
+  if (
+    process.env.GATSBY_PAGE_BUILD_ON_DATA_CHANGES &&
+    process.argv.indexOf(`--log-pages`) > -1
+  ) {
     if (pagePaths.length) {
       report.info(
         `Built pages:\n${pagePaths.map(
@@ -228,7 +230,10 @@ module.exports = async function build(program: BuildArgs) {
     }
   }
 
-  if (pageBuildPerformance && process.argv.indexOf(`--write-to-file`) > -1) {
+  if (
+    process.env.GATSBY_PAGE_BUILD_ON_DATA_CHANGES &&
+    process.argv.indexOf(`--write-to-file`) > -1
+  ) {
     const createdFilesPath = path.resolve(
       `${program.directory}/.cache`,
       `newPages.txt`

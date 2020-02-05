@@ -160,16 +160,21 @@ const groupQueryIds = queryIds => {
 
 const processQueries = async (queryJobs, activity) => {
   const queue = queryQueue.createBuildQueue()
-  const { pages } = store.getState()
   await queryQueue.processBatch(queue, queryJobs, activity)
+  if (process.env.GATSBY_PAGE_BUILD_ON_DATA_CHANGES) {
+    const { pages } = store.getState()
+    const { pageData } = readState()
 
-  readState().pageData.forEach((value, key) => {
-    if (!pages.has(key)) {
-      boundActionCreators.removePageData({
-        id: key,
+    if (pageData) {
+      readState().pageData.forEach((value, key) => {
+        if (!pages.has(key)) {
+          boundActionCreators.removePageData({
+            id: key,
+          })
+        }
       })
     }
-  })
+  }
 }
 
 const createStaticQueryJob = (state, queryId) => {
