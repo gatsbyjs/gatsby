@@ -201,7 +201,6 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   `)
   if (result.errors) {
     throw result.errors
-    // return reject(result.errors)
   }
 
   const blogPosts = _.filter(result.data.allMdx.edges, edge => {
